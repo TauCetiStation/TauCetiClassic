@@ -38,8 +38,8 @@
 	name = "Syndicate Infiltrator"
 	role_category = /datum/role/traitor
 	protected_from_jobs = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security",
-							"Captain", "Merchant", "Chief Engineer", "Chief Medical Officer", "Research Director", "Brig Medic")
-	restricted_from_jobs = list("AI","Cyborg","Mobile MMI")
+							"Captain", "Chief Engineer", "Chief Medical Officer", "Research Director")
+	restricted_from_jobs = list("AI","Cyborg")
 	required_candidates = 1
 	weight = BASE_RULESET_WEIGHT
 	cost = 5
@@ -51,7 +51,7 @@
 /datum/dynamic_ruleset/latejoin/infiltrator/execute()
 	var/mob/M = pick(assigned)
 	var/datum/role/traitor/newTraitor = new
-	newTraitor.AssignToRole(M.mind,1)
+	newTraitor.AssignToRole(M.mind, TRUE)
 	newTraitor.Greet(GREET_LATEJOIN)
 	return TRUE
 
@@ -77,11 +77,11 @@
 	high_population_requirement = 40
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/latejoin/raginmages/ready(var/forced = 0)
-	if(wizardstart.len == 0)
+/datum/dynamic_ruleset/latejoin/raginmages/ready(forced = 0)
+	if(!wizardstart.len)
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
-		return 0
+		return FALSE
 
 	return ..()
 
@@ -94,7 +94,7 @@
 		federation = create_faction(/datum/faction/wizards)
 	var/datum/role/wizard/newWizard = new
 	M.forceMove(pick(wizardstart))
-	newWizard.AssignToRole(M.mind,1)
+	newWizard.AssignToRole(M.mind, TRUE)
 	federation.HandleRecruitedRole(newWizard)
 	newWizard.Greet(GREET_LATEJOIN)
 	return TRUE
@@ -110,7 +110,7 @@
 /datum/dynamic_ruleset/latejoin/provocateur
 	name = "Provocateur"
 	role_category = /datum/role/rev_leader
-	restricted_from_jobs = list("Merchant", "Brig Medic", "AI", "Cyborg", "Mobile MMI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Internal Affairs Agent")
+	restricted_from_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Internal Affairs Agent")
 	enemy_jobs = list("AI", "Cyborg", "Security Officer","Detective","Head of Security", "Captain", "Warden")
 	required_pop = list(20,20,15,15,15,15,15,0,0,0)
 	required_candidates = 1
@@ -121,7 +121,7 @@
 	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
 
-/datum/dynamic_ruleset/latejoin/provocateur/ready(var/forced=FALSE)
+/datum/dynamic_ruleset/latejoin/provocateur/ready(forced = FALSE)
 	if(forced)
 		required_heads = 1
 	if(find_faction_by_type(/datum/faction/revolution))
@@ -139,11 +139,11 @@
 	var/antagmind = M.mind
 	var/datum/faction/F = create_faction(/datum/faction/revolution)
 	F.forgeObjectives()
+	//should i rework spawn(1sec) in addtimer(... 10)?
 	spawn(1 SECONDS)
-		var/datum/role/rev_leader/L = new(antagmind,F,HEADREV)
+		var/datum/role/rev_leader/L = new(antagmind, F, HEADREV)
 		L.Greet(GREET_LATEJOIN)
 		L.OnPostSetup()
-		//update_faction_icons()
 	return TRUE
 
 //////////////////////////////////////////////
@@ -155,9 +155,9 @@
 /datum/dynamic_ruleset/latejoin/changeling
 	name = "Changelings"
 	role_category = /datum/role/changeling
-	protected_from_jobs = list("Security Officer", "Warden","Merchant", "Head of Personnel", "Detective",
-							"Head of Security", "Captain", "Chief Engineer", "Chief Medical Officer", "Research Director", "Brig Medic")
-	restricted_from_jobs = list("AI","Cyborg","Mobile MMI")
+	protected_from_jobs = list("Security Officer", "Warden", "Head of Personnel", "Detective",
+							"Head of Security", "Captain", "Chief Engineer", "Chief Medical Officer", "Research Director")
+	restricted_from_jobs = list("AI","Cyborg",)
 	enemy_jobs = list("Security Officer","Detective", "Warden", "Head of Security", "Captain")
 	required_pop = list(15,15,15,10,10,10,10,5,5,0)
 	required_candidates = 1
@@ -170,7 +170,7 @@
 /datum/dynamic_ruleset/latejoin/changeling/execute()
 	var/mob/M = pick(assigned)
 	var/datum/role/changeling/newChangeling = new
-	newChangeling.AssignToRole(M.mind,1)
+	newChangeling.AssignToRole(M.mind, TRUE)
 	newChangeling.Greet(GREET_LATEJOIN)
 	var/datum/faction/changeling/hivemind = find_faction_by_type(/datum/faction/changeling)
 	if(!hivemind)
@@ -179,5 +179,5 @@
 	hivemind.HandleRecruitedRole(newChangeling)
 	return TRUE
 
-/datum/dynamic_ruleset/latejoin/changeling/previous_rounds_odds_reduction(var/result)
+/datum/dynamic_ruleset/latejoin/changeling/previous_rounds_odds_reduction(result)
 	return result

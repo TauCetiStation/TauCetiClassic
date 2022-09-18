@@ -16,21 +16,23 @@
 	var/makeBody = TRUE
 
 /datum/dynamic_ruleset/midround/trim_candidates()
-	//unlike the previous two types, these rulesets are not meant for /mob/new_player
-	//and since I want those rulesets to be as flexible as possible, I'm not gonna put much here,
-	//but be sure to check dynamic_rulesets_debug.dm for an example.
-	//
-	//all you need to know is that here, the candidates list contains 4 lists itself, indexed with the following defines:
-	//candidates = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
-	//so for example you can get the list of all current dead players with var/list/dead_players = candidates[CURRENT_DEAD_PLAYERS]
-	//make sure to properly typecheck the mobs in those lists, as the dead_players list could contain ghosts, or dead players still in their bodies.
-	//we're still gonna trim the obvious (mobs without clients, jobbanned players, etc)
+	/*
+	unlike the previous two types, these rulesets are not meant for /mob/new_player
+	and since I want those rulesets to be as flexible as possible, I'm not gonna put much here,
+	but be sure to check dynamic_rulesets_debug.dm for an example.
+
+	all you need to know is that here, the candidates list contains 4 lists itself, indexed with the following defines:
+	candidates = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
+	so for example you can get the list of all current dead players with var/list/dead_players = candidates[CURRENT_DEAD_PLAYERS]
+	make sure to properly typecheck the mobs in those lists, as the dead_players list could contain ghosts, or dead players still in their bodies.
+	we're still gonna trim the obvious (mobs without clients, jobbanned players, etc)
+	*/
 	living_players = trim_list(candidates[CURRENT_LIVING_PLAYERS])
 	living_antags = trim_list(candidates[CURRENT_LIVING_ANTAGS])
 	dead_players = trim_list(candidates[CURRENT_DEAD_PLAYERS], trim_prefs_set_to_no = FALSE)
 	list_observers = trim_list(candidates[CURRENT_OBSERVERS], trim_prefs_set_to_no = FALSE)
 
-/datum/dynamic_ruleset/midround/proc/trim_list(var/list/L = list(), trim_prefs_set_to_no = TRUE)
+/datum/dynamic_ruleset/midround/proc/trim_list(list/L = list(), trim_prefs_set_to_no = TRUE)
 	var/list/trimmed_list = L.Copy()
 	var/role_id = initial(role_category.id)
 	//var/role_pref = initial(role_category.required_pref)
@@ -55,19 +57,19 @@
 
 //IMPORTANT, since /datum/dynamic_ruleset/midround may accept candidates from both living, dead, and even antag players, you need to manually check whether there are enough candidates
 // (see /datum/dynamic_ruleset/midround/autotraitor/ready(var/forced = 0) for example)
-/datum/dynamic_ruleset/midround/ready(var/forced = 0)
-	if (!forced)
-		if(!check_enemy_jobs(TRUE,TRUE))
-			return 0
-	return 1
+/datum/dynamic_ruleset/midround/ready(forced = FALSE)
+	if(!forced)
+		if(!check_enemy_jobs(TRUE, TRUE))
+			return FALSE
+	return TRUE
 
 // Done via review_applications.
 /datum/dynamic_ruleset/midround/from_ghosts/choose_candidates()
 	return TRUE
 
-/datum/dynamic_ruleset/midround/from_ghosts/ready(var/forced = 0)
+/datum/dynamic_ruleset/midround/from_ghosts/ready(forced = 0)
 	if (required_candidates > (dead_players.len + list_observers.len) && !forced)
-		return 0
+		return FALSE
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/execute()
@@ -75,7 +77,7 @@
 	possible_candidates.Add(dead_players)
 	possible_candidates.Add(list_observers)
 	send_applications(possible_candidates)
-	return 1
+	return TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/review_applications()
 	var/candidate_checks = required_candidates
@@ -111,19 +113,19 @@
 
 		var/mob/new_character = applicant
 
-		if (makeBody)
+		if(makeBody)
 			new_character = generate_ruleset_body(applicant)
 
 		finish_setup(new_character, candidate_checks - (i-1)) // i = N, N - 1.... so that N - (i-1) = 1, 2, ...
 
 	applicants.Cut()
 
-/datum/dynamic_ruleset/midround/from_ghosts/proc/finish_setup(var/mob/new_character, var/index)
+/datum/dynamic_ruleset/midround/from_ghosts/proc/finish_setup(mob/new_character, index)
 	var/datum/role/new_role = new role_category
-	new_role.AssignToRole(new_character.mind,1)
+	new_role.AssignToRole(new_character.mind, TRUE)
 	setup_role(new_role)
 
-/datum/dynamic_ruleset/midround/from_ghosts/proc/setup_role(var/datum/role/new_role)
+/datum/dynamic_ruleset/midround/from_ghosts/proc/setup_role(datum/role/new_role)
 	new_role.OnPostSetup()
 	new_role.Greet(GREET_MIDROUND)
 	new_role.forgeObjectives()
@@ -134,20 +136,20 @@
 /datum/dynamic_ruleset/midround/from_ghosts/faction_based
 	weight = 0
 	var/datum/faction/my_fac = null // If the midround lawset will try to add our antag to a faction
-	var/created_a_faction = 0
+	var/created_a_faction = FALSE
 
 /datum/dynamic_ruleset/midround/from_ghosts/faction_based/review_applications()
 	var/datum/faction/active_fac = find_faction_by_type(my_fac)
 	if(!active_fac)
 		active_fac = create_faction(my_fac)
-		created_a_faction = 1
+		created_a_faction = TRUE
 	my_fac = active_fac
 	. = ..()
 	if(created_a_faction)
 		active_fac.OnPostSetup()
 	return my_fac
 
-/datum/dynamic_ruleset/midround/from_ghosts/faction_based/setup_role(var/datum/role/new_role)
+/datum/dynamic_ruleset/midround/from_ghosts/faction_based/setup_role(datum/role/new_role)
 	my_fac.HandleRecruitedRole(new_role)
 	new_role.Greet(GREET_MIDROUND)
 	new_role.forgeObjectives()
@@ -163,8 +165,8 @@
 	name = "Syndicate Sleeper Agent"
 	role_category = /datum/role/traitor
 	protected_from_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain","Head of Personnel",
-							"Cyborg", "Merchant", "Chief Engineer", "Chief Medical Officer", "Research Director", "Brig Medic")
-	restricted_from_jobs = list("AI","Mobile MMI")
+							"Cyborg", "Chief Engineer", "Chief Medical Officer", "Research Director")
+	restricted_from_jobs = list("AI")
 	required_candidates = 1
 	weight = BASE_RULESET_WEIGHT
 	cost = 10
@@ -173,14 +175,14 @@
 	high_population_requirement = 10
 	flags = TRAITOR_RULESET
 
-/datum/dynamic_ruleset/midround/autotraitor/acceptable(var/population=0,var/threat=0)
+/datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
 	var/player_count = mode.living_players.len
 	var/antag_count = mode.living_antags.len
 	var/max_traitors = round(player_count / 10) + 1
-	if ((antag_count < max_traitors) && prob(mode.midround_threat_level))//adding traitors if the antag population is getting low
+	if((antag_count < max_traitors) && prob(mode.midround_threat_level))//adding traitors if the antag population is getting low
 		return ..()
 	else
-		return 0
+		return FALSE
 
 /datum/dynamic_ruleset/midround/autotraitor/trim_candidates()
 	..()
@@ -188,9 +190,6 @@
 		if(isAI(player) || isMMI(player))
 			living_players -= player //Your assigned role doesn't change when you are turned into a MoMMI or AI
 			continue
-		/*if(!isborer(player))
-			living_players -= player //No traitors borers.
-			continue*/
 		if(isalien(player))
 			living_players -= player //Xenos don't bother with the syndicate
 			continue
@@ -200,9 +199,9 @@
 		if(player.mind && (player.mind.antag_roles.len > 0))
 			living_players -= player//we don't autotator people with roles already
 
-/datum/dynamic_ruleset/midround/autotraitor/ready(var/forced = 0)
-	if (required_candidates > living_players.len)
-		return 0
+/datum/dynamic_ruleset/midround/autotraitor/ready(forced = FALSE)
+	if(required_candidates > living_players.len)
+		return FALSE
 	return ..()
 
 /datum/dynamic_ruleset/midround/autotraitor/choose_candidates()
@@ -214,21 +213,21 @@
 /datum/dynamic_ruleset/midround/autotraitor/execute()
 	var/mob/M = pick(assigned)
 	var/datum/role/traitor/newTraitor = new
-	newTraitor.AssignToRole(M.mind,1)
+	newTraitor.AssignToRole(M.mind, TRUE)
 	newTraitor.OnPostSetup()
 	newTraitor.Greet(GREET_AUTOTRAITOR)
 	newTraitor.forgeObjectives()
 	newTraitor.AnnounceObjectives()
 	return TRUE
 
-/datum/dynamic_ruleset/midround/autotraitor/previous_rounds_odds_reduction(var/result)
+/datum/dynamic_ruleset/midround/autotraitor/previous_rounds_odds_reduction(result)
 	return result
 
 //////////////////////////////////////////////
 //                                          //
 //              RAGIN' MAGES                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                          //
-//////////////////////////////////////////////1.01 - Disabled because it caused a bit too many wizards in rounds
+//////////////////////////////////////////////
 
 /datum/dynamic_ruleset/midround/from_ghosts/faction_based/raginmages
 	name = "Ragin' Mages"
@@ -244,29 +243,21 @@
 	logo = "raginmages-logo"
 	repeatable = TRUE
 
-/*datum/dynamic_ruleset/midround/from_ghosts/faction_based/raginmages/acceptable(var/population=0,var/threat=0)
-	if(locate(/datum/dynamic_ruleset/roundstart/cwc) in mode.executed_rules)
-		message_admins("Rejected Ragin' Mages as there was a Civil War.")
-		return 0 //This is elegantly skipped by specific ruleset.
-		//This means that all ragin mages in CWC will be called only by that ruleset.
-	else
-		return ..()*/
-
-/datum/dynamic_ruleset/midround/from_ghosts/faction_based/raginmages/ready(var/forced = 0)
-	if(wizardstart.len == 0)
+/datum/dynamic_ruleset/midround/from_ghosts/faction_based/raginmages/ready(forced = FALSE)
+	if(!wizardstart.len)
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
-		return 0
+		return FALSE
 	return ..()
 
-/datum/dynamic_ruleset/midround/from_ghosts/faction_based/raginmages/setup_role(var/datum/role/new_role)
-	if (!created_a_faction)
+/datum/dynamic_ruleset/midround/from_ghosts/faction_based/raginmages/setup_role(datum/role/new_role)
+	if(!created_a_faction)
 		new_role.OnPostSetup() //Each individual role to show up gets a postsetup
-	..()
+	return ..()
 
-/datum/dynamic_ruleset/midround/from_ghosts/faction_based/raginmages/finish_setup(var/mob/new_character, var/index)
+/datum/dynamic_ruleset/midround/from_ghosts/faction_based/raginmages/finish_setup(mob/new_character, index)
 	new_character.forceMove(pick(wizardstart))
-	..()
+	return ..()
 
 //////////////////////////////////////////////
 //                                          //
@@ -291,19 +282,19 @@
 	logo = "nuke-logo"
 	flags = HIGHLANDER_RULESET
 
-/datum/dynamic_ruleset/midround/from_ghosts/faction_based/nuclear/ready(var/forced = 0)
-	if (forced)
+/datum/dynamic_ruleset/midround/from_ghosts/faction_based/nuclear/ready(forced = FALSE)
+	if(forced)
 		required_candidates = 1
 	return ..()
 
-/datum/dynamic_ruleset/midround/from_ghosts/faction_based/nuclear/acceptable(var/population = 0,var/threat = 0)
+/datum/dynamic_ruleset/midround/from_ghosts/faction_based/nuclear/acceptable(population = 0, threat = 0)
 	if(locate(/datum/dynamic_ruleset/roundstart/nuclear) in mode.executed_rules)
-		return 0 //Unavailable if nuke ops were already sent at roundstart
-	var/indice_pop = min(10,round(living_players.len/5) + 1)
+		return FALSE //Unavailable if nuke ops were already sent at roundstart
+	var/indice_pop = min(10,round(living_players.len / 5) + 1)
 	required_candidates = operative_cap[indice_pop]
 	return ..()
 
-/datum/dynamic_ruleset/midround/from_ghosts/faction_based/nuclear/finish_setup(var/mob/new_character, var/index)
+/datum/dynamic_ruleset/midround/from_ghosts/faction_based/nuclear/finish_setup(mob/new_character, index)
 	var/datum/faction/nuclear/nuclear = find_faction_by_type(/datum/faction/nuclear)
 	if(!nuclear)
 		nuclear = create_faction(/datum/faction/nuclear)
@@ -322,7 +313,7 @@
 	new_character.forceMove(synd_spawn[spawnpos])
 	if(index == 1) //Our first guy is the leader
 		var/datum/role/operative/leader/new_role = new
-		new_role.AssignToRole(new_character.mind, 1)
+		new_role.AssignToRole(new_character.mind, TRUE)
 		setup_role(new_role)
 	else
 		return ..()
@@ -349,7 +340,7 @@
 
 	var/required_heads = 3
 
-/datum/dynamic_ruleset/midround/from_ghosts/faction_based/revsquad/ready(var/forced = 0)
+/datum/dynamic_ruleset/midround/from_ghosts/faction_based/revsquad/ready(forced = FALSE)
 	if(forced)
 		required_heads = 1
 	if(find_faction_by_type(/datum/faction/revolution))
