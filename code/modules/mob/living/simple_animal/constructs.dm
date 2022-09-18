@@ -185,7 +185,8 @@
 	. = ..()
 	if(A == loc)
 		return
-
+	if(!do_after(src, 1 SECOND, TRUE, A))
+		return
 	if(istype(A, /turf/simulated/wall/cult))
 		forceMove(A)
 	if(istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult) || istype(A, /mob/living/simple_animal/construct) || istype(A, /mob/living/simple_animal/hostile/pylon))
@@ -229,7 +230,7 @@
 	health = 60
 	melee_damage = 15
 	attacktext = "prodd"
-	speed = -1
+	speed = -0.3
 	environment_smash = 1
 	see_in_dark = 7
 	density = FALSE
@@ -239,6 +240,7 @@
 	pass_flags = PASSTABLE
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke,
+		/obj/effect/proc_holder/spell/aoe_turf/area_conversion,
 		)
 
 /mob/living/simple_animal/construct/harvester/Bump(atom/A)
@@ -267,7 +269,7 @@
 	return TRUE
 
 /mob/living/simple_animal/construct/harvester/UnarmedAttack(atom/A)
-	if(ishuman(A))
+	if(ishuman(A) && prob(30))
 		var/mob/living/carbon/human/C = A
 		var/list/limbs = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG)
 		limbs -= C.get_missing_bodyparts()
@@ -275,7 +277,7 @@
 			. = ..()
 			return FALSE
 		do_attack_animation(C)
-		var/obj/item/organ/external/BP = C.get_bodypart(pick(limbs))//pick(limbs)
+		var/obj/item/organ/external/BP = C.get_bodypart(pick(limbs))
 		if(!BP.droplimb(null, null, DROPLIMB_EDGE))
 			. = ..()
 		return FALSE
