@@ -365,7 +365,7 @@
 	clothes_req = FALSE
 
 /obj/item/weapon/magic/heal_touch
-	name = "Лечение"
+	name = "healing touch"
 	invoke = "In Mani"
 	icon_state = "heal_"
 	item_state = "healing"
@@ -383,7 +383,7 @@
 
 	Spell.charge_max = initial(Spell.charge_max) * power_of_spell // 20 - 140 (2:20)
 
-	var/level_info = "<b>Уровень [power_of_spell]</b> [src] now"
+	var/level_info = "<b>Уровень [power_of_spell]</b> [src] теперь"
 	switch(power_of_spell)
 		if(2 to 3)
 			to_chat(user, "<span class='notice'>[level_info] <b> просто лечит</b>.</span>")
