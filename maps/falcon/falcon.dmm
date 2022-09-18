@@ -3572,7 +3572,6 @@
 /area/station/maintenance/science)
 "agk" = (
 /obj/structure/rack,
-/obj/item/device/camera,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
 /turf/simulated/floor/plating,
@@ -3728,6 +3727,7 @@
 	},
 /obj/item/weapon/lipstick/random,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/device/camera/oldcamera,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "agG" = (
@@ -4580,7 +4580,6 @@
 /obj/structure/closet/theatrecloset,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
-/obj/item/device/camera,
 /obj/machinery/light/small,
 /obj/item/clothing/gloves/rainbow,
 /obj/random/randomtoy,
@@ -5318,10 +5317,6 @@
 /area/station/civilian/locker)
 "aju" = (
 /obj/structure/table,
-/obj/item/device/camera{
-	pixel_x = 5;
-	pixel_y = 9
-	},
 /obj/item/weapon/storage/box/evidence{
 	pixel_x = -3;
 	pixel_y = 4
@@ -5830,6 +5825,9 @@
 	flipped = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/cloth{
+	amount = 30
+	},
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
@@ -6041,12 +6039,6 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
-"akT" = (
-/obj/item/device/camera,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/area/station/maintenance/escape)
 "akU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -6366,13 +6358,22 @@
 /area/station/engineering/atmos)
 "alE" = (
 /obj/structure/table/woodentable,
-/obj/item/device/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 5
+/obj/item/weapon/storage/fancy/crayons{
+	pixel_y = 6
 	},
-/obj/effect/spawner/lootdrop/maintenance/two,
-/turf/simulated/floor/plating,
-/area/station/maintenance/escape)
+/obj/item/weapon/pen/red{
+	pixel_x = -5
+	},
+/obj/item/weapon/pen/blue{
+	pixel_x = 5
+	},
+/obj/item/weapon/pen{
+	pixel_y = 1
+	},
+/turf/simulated/floor{
+	icon_state = "asteroid7"
+	},
+/area/station/hallway/secondary/arrival)
 "alF" = (
 /obj/machinery/computer/libraryconsole/bookmanagement/old,
 /obj/structure/table/woodentable,
@@ -6392,17 +6393,20 @@
 /turf/simulated/floor/wood,
 /area/station/maintenance/escape)
 "alI" = (
-/obj/item/weapon/flora/pottedplant{
-	icon_state = "plant-21"
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/cobweb,
-/obj/machinery/alarm{
-	pixel_y = 21
+/obj/structure/sign/painting{
+	pixel_x = 30
 	},
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken7"
+/turf/simulated/floor{
+	icon_state = "asteroid"
 	},
-/area/station/maintenance/escape)
+/area/station/hallway/secondary/arrival)
 "alJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/folder,
@@ -9817,6 +9821,30 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
+"asc" = (
+/obj/structure/table/woodentable,
+/obj/item/device/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/item/painting_frame{
+	pixel_x = -2;
+	pixel_y = -9
+	},
+/obj/item/device/camera/oldcamera,
+/turf/simulated/floor/plating,
+/area/station/maintenance/escape)
+"asd" = (
+/obj/machinery/alarm{
+	pixel_y = 21
+	},
+/obj/structure/easel,
+/obj/effect/decal/cleanable/cobweb,
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/station/maintenance/escape)
 "asi" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -11102,6 +11130,7 @@
 /obj/machinery/camera{
 	c_tag = "Theater"
 	},
+/obj/item/device/camera/polar,
 /turf/simulated/floor/carpet/purple,
 /area/station/civilian/theatre)
 "bBj" = (
@@ -19091,6 +19120,7 @@
 	pixel_x = 12;
 	pixel_y = -2
 	},
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
@@ -23905,7 +23935,7 @@
 	},
 /area/station/civilian/chapel)
 "olz" = (
-/obj/structure/flora/junglebush,
+/obj/structure/chicken_feeder,
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
 "omu" = (
@@ -24396,6 +24426,8 @@
 	pixel_y = 2
 	},
 /obj/structure/rack,
+/obj/item/device/lens/rentgene,
+/obj/item/device/camera,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
@@ -24788,13 +24820,6 @@
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30;
-	pixel_x = 13;
-	pixel_y = 6
-	},
 /obj/item/device/taperecorder{
 	pixel_x = -11
 	},
@@ -24802,6 +24827,7 @@
 	pixel_x = 7;
 	pixel_y = -4
 	},
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -27794,11 +27820,11 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "rGx" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 1
+	},
 /turf/simulated/floor{
-	icon_state = "asteroid7"
+	icon_state = "grass1"
 	},
 /area/station/hallway/secondary/arrival)
 "rHg" = (
@@ -27946,6 +27972,7 @@
 	pixel_x = 3;
 	pixel_y = -2
 	},
+/obj/item/device/lens/nude,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -29893,6 +29920,9 @@
 	c_tag = "Arrival Hallway Center";
 	pixel_x = -4
 	},
+/obj/structure/sign/painting{
+	pixel_y = 30
+	},
 /turf/simulated/floor{
 	icon_state = "grass1"
 	},
@@ -30404,9 +30434,21 @@
 /area/station/engineering/break_room)
 "umY" = (
 /obj/structure/table/woodentable,
-/obj/item/toy/cards,
+/obj/item/painting_frame{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/item/painting_frame{
+	pixel_x = -2
+	},
+/obj/item/stack/sheet/cloth{
+	amount = 30
+	},
+/obj/item/device/camera{
+	pixel_y = -12
+	},
 /turf/simulated/floor{
-	icon_state = "grass1"
+	icon_state = "asteroid"
 	},
 /area/station/hallway/secondary/arrival)
 "unh" = (
@@ -31729,15 +31771,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "vJa" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
+/obj/structure/easel,
 /turf/simulated/floor{
-	icon_state = "asteroid"
+	icon_state = "asteroid7"
 	},
 /area/station/hallway/secondary/arrival)
 "vJt" = (
@@ -52885,7 +52921,7 @@ akb
 akb
 akb
 akb
-alE
+asc
 ama
 amp
 akb
@@ -53397,7 +53433,7 @@ lIp
 pNu
 akd
 akr
-akT
+akv
 all
 alG
 amc
@@ -53913,7 +53949,7 @@ pNu
 akb
 akb
 akb
-alI
+asd
 ame
 ams
 amD
@@ -63909,7 +63945,7 @@ ccc
 dNp
 eAC
 lss
-twE
+mdk
 qct
 gGT
 jaa
@@ -64165,8 +64201,8 @@ tQc
 lef
 hbt
 yjV
-eAC
-umY
+vJa
+rGx
 ahw
 hvW
 yaA
@@ -64422,8 +64458,8 @@ tEV
 twE
 dNp
 cxV
-cxV
-rGx
+umY
+alE
 dOV
 djK
 jaa
@@ -65194,7 +65230,7 @@ pln
 bcG
 ahy
 mUR
-vJa
+alI
 lJb
 qce
 vOQ

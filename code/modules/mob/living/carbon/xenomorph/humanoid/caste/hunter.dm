@@ -5,6 +5,7 @@
 	health = 180
 	storedPlasma = 100
 	max_plasma = 150
+	speed = -1
 	icon_state = "alienh_s"	//default invisibility
 	var/invisible = FALSE
 
@@ -116,9 +117,6 @@
 	update_canmove()
 
 #undef MAX_ALIEN_LEAP_DIST
-
-/mob/living/carbon/xenomorph/humanoid/hunter/movement_delay()
-	return(-1 + move_delay_add + config.alien_delay)
 
 /mob/living/carbon/xenomorph/humanoid/hunter/crawl()
 	if(leap_on_click)

@@ -122,7 +122,7 @@
 		qdel(R)
 
 /obj/item/weapon/storage/bible/tome/proc/building_choices()
-	build_choices_image["Toggle Grind mode"] = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_grind")
+	build_choices_image["Toggle Grind mode"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind")
 	for(var/datum/building_agent/B in religion.available_buildings)
 		var/atom/build = B.building_type
 		build_choices_image[B] = image(icon = initial(build.icon), icon_state = initial(build.icon_state))

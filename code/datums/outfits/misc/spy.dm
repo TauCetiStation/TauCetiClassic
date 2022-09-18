@@ -1,5 +1,5 @@
 /datum/outfit/spy
-	name = "Espionage Agent"
+	name = "Syndicate: Espionage Agent"
 	uniform = /obj/item/clothing/under/syndicate
 	glasses = /obj/item/clothing/glasses/sunglasses/big
 	shoes = /obj/item/clothing/shoes/boots/combat

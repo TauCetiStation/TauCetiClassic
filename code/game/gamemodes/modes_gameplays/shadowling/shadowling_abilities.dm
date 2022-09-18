@@ -12,7 +12,7 @@
 			charge_counter = charge_max
 			to_chat(usr, "<span class='warning'>Your glare does not seem to affect [target].</span>")
 			return
-		if(target.stat)
+		if(target.stat != CONSCIOUS)
 			charge_counter = charge_max
 			return
 		if(isshadowling(target) || isshadowthrall(target))
@@ -137,7 +137,7 @@
 			to_chat(usr, "<span class='warning'>The target has no mind.</span>")
 			charge_counter = charge_max
 			return
-		if(target.stat)
+		if(target.stat != CONSCIOUS)
 			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
 			charge_counter = charge_max
 			return
@@ -213,9 +213,10 @@
 		if(!text)
 			return
 		log_say("Shadowling Hivemind: [key_name(usr)] : [text]")
+		var/text2speak = "<span class='shadowling [isshadowling(usr) ? "large" : ""]'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [text]</span>"
 		for(var/mob/M as anything in mob_list)
 			if(isshadowling(M) || isshadowthrall(M) || isobserver(M))
-				to_chat(M, "<span class='shadowling'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [text]</span>")
+				to_chat(M, text2speak)
 
 
 
@@ -550,7 +551,7 @@
 			to_chat(usr, "<span class='warning'>The target has no mind.</span>")
 			charge_counter = charge_max
 			return
-		if(target.stat)
+		if(target.stat != CONSCIOUS)
 			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
 			charge_counter = charge_max
 			return

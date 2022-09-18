@@ -34,11 +34,22 @@
 
 	has_resources = TRUE
 
-/turf/simulated/mineral/atom_init()
-	..()
+	var/global/list/rock_side_overlays
+
+/turf/simulated/mineral/atom_init(mapload)
+	. = ..()
 	icon_state = "rock"
 	geologic_data = new(src)
-	return INITIALIZE_HINT_LATELOAD
+	if(!rock_side_overlays)
+		rock_side_overlays = list(null, null, null, null, null, null, null, null, null) // 9 nulls to create dir -> appearance list
+		for(var/direction_to_check in cardinal)
+			var/mutable_appearance/MA = mutable_appearance('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", 6, FLOOR_PLANE)
+			rock_side_overlays[direction_to_check] = MA
+
+	if(mapload)
+		return INITIALIZE_HINT_LATELOAD
+	update_overlays_full()
+	return .
 
 /turf/simulated/mineral/atom_init_late()
 	MineralSpread()
@@ -46,16 +57,12 @@
 
 /turf/simulated/mineral/update_overlays()
 	cut_overlays()
-	if(!mineral)
+	if(!mineral || ore_amount < 8)
 		name = "Rock"
 		icon_state = "rock"
 	else
-		if(ore_amount >= 8)
-			name = "[mineral.display_name] rich deposit"
-			add_overlay("rock_[mineral.name]")
-		else
-			name = "Rock"
-			icon_state = "rock"
+		name = "[mineral.display_name] rich deposit"
+		add_overlay("rock_[mineral.name]")
 	if(excav_overlay)
 		add_overlay(excav_overlay)
 	if(archaeo_overlay)
@@ -63,12 +70,10 @@
 	var/turf/T
 	for(var/direction_to_check in cardinal)
 		T = get_step(src, direction_to_check)
-		if(isfloorturf(T) || isspaceturf(T) || istype(T, /turf/simulated/shuttle/floor))
-			var/image/I = image('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", layer=6)
-			I.plane = FLOOR_PLANE
-			T.add_overlay(I)
+		if(isfloorturf(T) || isenvironmentturf(T) || istype(T, /turf/simulated/shuttle/floor))
+			T.add_overlay(rock_side_overlays[direction_to_check])
 
-	if((excav_overlay || archaeo_overlay || mineral) && !istype(src, /turf/simulated/floor/plating/airless/asteroid))
+	if(excav_overlay || archaeo_overlay || mineral)
 		update_hud()
 
 /turf/simulated/mineral/proc/update_hud()
@@ -371,11 +376,6 @@
 
 	var/turf/N = ChangeTurf(basetype)
 	N.update_overlays_full()
-	for(var/turf/simulated/floor/plating/airless/asteroid/D in RANGE_TURFS(1, src))
-		D.update_overlays()
-	for(var/turf/simulated/mineral/F in RANGE_TURFS(2, src))
-		F.update_overlays()
-
 
 	if(prob(CRATE_DROP_CHANCE))
 		visible_message("<span class='notice'>An old dusty crate was buried within!</span>")
@@ -423,7 +423,7 @@
 				new/obj/item/stack/rods(src, rand(5,25))
 
 			if(2)
-				new/obj/item/stack/tile(src, rand(1,5))
+				new/obj/item/stack/tile/plasteel(src, rand(1,5))
 
 			if(3)
 				new/obj/item/stack/sheet/metal(src, rand(5,25))
@@ -633,22 +633,12 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/proc/update_overlays()
-
 	cut_overlays()
 
 	for(var/direction_to_check in cardinal)
-		if(istype(get_step(src, direction_to_check), /turf/simulated/mineral))
-			var/overlay_name = null
-			switch(direction_to_check)
-				if(1)
-					overlay_name = "rock_side_2"
-				if(2)
-					overlay_name = "rock_side_1"
-				if(4)
-					overlay_name = "rock_side_8"
-				if(8)
-					overlay_name = "rock_side_4"
-			add_overlay(image('icons/turf/asteroid.dmi', "[overlay_name]", layer=6))
+		var/turf/simulated/mineral/T = get_step(src, direction_to_check)
+		if(istype(T))
+			add_overlay(T.rock_side_overlays[reverse_dir[direction_to_check]])
 
 /turf/simulated/floor/plating/airless/asteroid/update_overlays()
 	..()
@@ -656,10 +646,7 @@
 	for(var/direction_to_check in cardinal)
 		T = get_step(src, direction_to_check)
 		if(T && isspaceturf(T))
-			var/lattice = 0
-			for(var/obj/O in T)
-				if(istype(O, /obj/structure/lattice))
-					lattice = 1
+			var/lattice = locate(/obj/structure/lattice) in T
 			if(!lattice)
 				var/image/I = image('icons/turf/asteroid.dmi', "asteroid_edge_[direction_to_check]")
 				add_overlay(I)

@@ -47,6 +47,9 @@
 	hud.remove_hud_from(src)
 	return ..()
 
+/mob/living/carbon/xenomorph/movement_delay()
+	return (move_delay_add + config.alien_delay + speed)
+
 /mob/living/carbon/xenomorph/adjustToxLoss(amount)
 	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) //upper limit of max_plasma, lower limit of 0
 	updatePlasmaDisplay()

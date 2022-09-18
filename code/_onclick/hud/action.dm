@@ -19,7 +19,7 @@
 	var/processing = 0
 	var/active = 0
 	var/atom/movable/screen/movable/action_button/button = null
-	var/button_icon = 'icons/mob/actions.dmi'
+	var/button_icon = 'icons/hud/actions.dmi'
 	var/button_icon_state = "default"
 	var/background_icon_state = "bg_default"
 	var/transparent_when_unavailable = TRUE
@@ -114,7 +114,7 @@
 		if(owner.lying && !owner.crawling)
 			return FALSE
 	if(check_flags & AB_CHECK_ALIVE)
-		if(owner.stat)
+		if(owner.stat != CONSCIOUS)
 			return FALSE
 	if(check_flags & AB_CHECK_INSIDE)
 		if(!(target in owner))
@@ -214,7 +214,7 @@
 //Hide/Show Action Buttons ... Button
 /atom/movable/screen/movable/action_button/hide_toggle
 	name = "Hide Buttons"
-	icon = 'icons/mob/actions.dmi'
+	icon = 'icons/hud/actions.dmi'
 	icon_state = "bg_default"
 	var/hidden = 0
 
