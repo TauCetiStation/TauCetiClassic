@@ -69,7 +69,8 @@
 		var/mob/living/carbon/human/H = AM
 		if(H.getBrainLoss() >= 60)
 			playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
-			if(!istype(H.head, /obj/item/clothing/head/helmet))
+			var/armor_block = H.run_armor_check(BP_HEAD, "melee")
+			if(armor_block < 10)
 				visible_message("<span class='warning'>[H] headbutts the airlock.</span>")
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 				H.Stun(2)

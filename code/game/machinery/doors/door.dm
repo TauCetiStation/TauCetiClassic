@@ -161,7 +161,8 @@ var/global/list/wedge_image_cache = list()
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
 			playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
-			if(!istype(H.head, /obj/item/clothing/head/helmet))
+			var/armor_block = H.run_armor_check(BP_HEAD, "melee")
+			if(armor_block < 10)
 				visible_message("<span class='userdanger'> [user] headbutts the [src].</span>")
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 				H.Stun(2)
@@ -169,6 +170,8 @@ var/global/list/wedge_image_cache = list()
 				BP.take_damage(10, 0, used_weapon = "Hematoma")
 			else
 				visible_message("<span class='userdanger'> [user] headbutts the [src]. Good thing they're wearing a helmet.</span>")
+				H.Stun(2)
+				H.Weaken(5)
 			return
 
 	user.SetNextMove(CLICK_CD_INTERACT)
