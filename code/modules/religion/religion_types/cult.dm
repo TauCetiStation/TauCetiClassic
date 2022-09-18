@@ -65,7 +65,7 @@
 	// Instead of storing links to turfs
 	var/list/coord_started_anomalies = list()
 	//Used to activating and handling pylons
-	var/pylons = list()
+	var/list/pylons = list()
 
 	// Used for ritеs
 	var/list/obj/machinery/optable/torture_table/torture_tables = list()
