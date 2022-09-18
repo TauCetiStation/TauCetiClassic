@@ -114,7 +114,20 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	test_merges = global.test_merges
 	completion_html = SSticker.mode.completition_text
 
+	var/list/black_assigned_roles = list("Animal", "Alien", "Shade", "slime", "Chaplain`s staff", "Wraith", "Artificer", "Juggernaut", "Proteon", "Positronic Brain", "Behemoth", "Corgi")
+	var/list/black_special_roles = list("Xenomorph", "Larva", "Blobbernaut")
+	var/regex/is_drone = regex(@"maintenance drone \(\d+\)")
 	for(var/datum/mind/M in SSticker.minds)
+		if(M.assigned_role == "" || M.name == "")
+			continue
+		if(M.name == "unknown")
+			continue
+		if((M.assigned_role in black_assigned_roles) || (M.special_role in black_special_roles))
+			continue
+		if(M.assigned_role == "default" && M.special_role == "")
+			continue
+		if(M.assigned_role == "Cyborg" && is_drone.Find(M.name))
+			continue
 		add_manifest_entry(M.key, M.name, M.assigned_role, M.special_role, M.antag_roles)
 
 	for(var/ckey in global.disconnected_ckey_by_stat)
