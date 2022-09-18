@@ -88,8 +88,7 @@
 		init_healing()
 
 /obj/structure/cult/pylon/proc/init_healing()
-	AddComponent(/datum/component/aura_healing, 5,  0.4, 0.4, 0.4, 1.2, FALSE, TRAIT_HEALS_FROM_PYLONS,"#960000")
-	AddComponent(/datum/component/aura_healing, 5, TRUE, 0.4, 0.4, 0, 1, 1, 0.1, 0.4, null, 1.2, \
+	AddComponent(/datum/component/aura_healing, 5, TRUE, 0.4, 0.4, 0.1, 1, 1, 0.1, 0.4, null, 1.2, \
 	TRAIT_HEALS_FROM_PYLONS,"#960000")
 	START_PROCESSING(SSprocessing, src)
 	C = cult_religion
