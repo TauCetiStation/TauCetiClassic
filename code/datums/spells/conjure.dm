@@ -176,5 +176,5 @@
 		return
 	for(var/turf/nearby_turf in range(3, user))
 		if(prob(100 - (get_dist(nearby_turf, user) * 25)))
-			playsound(nearby_turf, 'sound/items/welder.ogg', 75, TRUE)
+			playsound(nearby_turf, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
 			nearby_turf.atom_religify(global.cult_religion)
