@@ -279,14 +279,14 @@
 		src.currTag = href_list["nextTag"]
 	else if(href_list["description"])
 		var/T = sanitize(input("Введите описание:", "Маркировщик", input_default(lot_description), null)  as text)
-		lot_description = T ? T : "Это что-то"
+			lot_description = T && istext(T) ? T : "Это что-то"
 	else if(href_list["number"])
 		var/T = input("Введите номер аккаунта:", "Маркировщик", input_default(lot_account_number), null)  as num
-		if(T && T >= 111111 && T <= 999999)
+		if(T && T >= 111111 && T <= 999999 && isnum(T))
 			lot_account_number = T
 	else if(href_list["price"])
 		var/T = input("Вваедите цену:", "Маркировщик", input_default(lot_price), null)  as num
-		if(T)
+		if(T && isnum(T) && T >= 0)
 			lot_price = T
 	else if(href_list["tagger"])
 		Tagger = !Tagger

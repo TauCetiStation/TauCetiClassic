@@ -997,7 +997,7 @@
 					shop_lots[shop_lots.len] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "index" = shop_lots.len)
 		if("Add_Order_or_Offer")
 			var/T = sanitize(input(U, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
-			if(T && owner)
+			if(T && istext(T) && owner)
 				add_order_or_offer(owner, T)
 		if("Shop_Order")
 			var/i = text2num(href_list["order_item"])
@@ -1005,7 +1005,7 @@
 			var/cost = Lot["price"]
 			if(owner_account && (cost <= owner_account.money))
 				var/T = sanitize(input(U, "Введите адрес доставки или комментарий", "Комментарий", null) as text)
-				if(T)
+				if(T && istext(T))
 					order_item(Lot["number"], T)
 
 //SYNDICATE FUNCTIONS===================================

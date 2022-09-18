@@ -233,19 +233,19 @@ var/global/list/shop_categories = list("Еда", "Одежда", "Устройс
 		switch(href_list["field"])
 			if("name")
 				var/T = sanitize(input("Введите наименование:", "Shop", input_default(lot_name), null)  as text)
-				if(T)
+				if(T && istext(T))
 					lot_name = T
 			if("description")
 				var/T = sanitize(input("Введите описание:", "Shop", input_default(lot_desc), null)  as text)
-				if(T)
+				if(T && istext(T))
 					lot_desc = T
 			if("price")
 				var/T = input("Введите цену:", "Shop", input_default(lot_price), null)  as num
-				if(T)
+				if(T && isnum(T) && T >= 0)
 					lot_price = T
 			if("category")
 				var/T = input("Выберите каталог", "Shop", lot_category) in global.shop_categories
-				if(T)
+				if(T && T in global.shop_categories)
 					lot_category = T
 	else if(href_list["scan"])
 		scan_item()
