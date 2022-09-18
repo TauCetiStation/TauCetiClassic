@@ -71,11 +71,11 @@
 			playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
 			var/armor_block = H.run_armor_check(BP_HEAD, "melee")
 			if(armor_block < 10)
-				visible_message("<span class='warning'>[H] headbutts the airlock.</span>")
+				visible_message("<span class='userdanger'>[H] headbutts the airlock.</span>")
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 				BP.take_damage(10, 0)
 			else
-				visible_message("<span class='warning'>[H] headbutts the airlock. Good thing they're wearing a helmet.</span>")
+				visible_message("<span class='userdanger'>[H] headbutts the airlock. Good thing they're wearing a helmet.</span>")
 			H.Stun(2)
 			H.Weaken(5)
 			return
