@@ -6,7 +6,7 @@
 
 /datum/dna/gene/basic/nobreath
 	name="No Breathing"
-	activation_messages=list("You feel no need to breathe.")
+	activation_messages=list("Вы не чувствуете необходимости дышать.")
 	mutation=NO_BREATH
 	activation_prob=50
 
@@ -15,7 +15,7 @@
 
 /datum/dna/gene/basic/remoteview
 	name="Remote Viewing"
-	activation_messages=list("Your mind expands.")
+	activation_messages=list("Ваше сознание расширяется.")
 	mutation=REMOTE_VIEW
 	activation_prob=50
 
@@ -32,7 +32,7 @@
 
 /datum/dna/gene/basic/regenerate
 	name="Regenerate"
-	activation_messages=list("You feel better.")
+	activation_messages=list("Вы чувствуете себя намного лучше.")
 	mutation=REGEN
 	activation_prob=50
 
@@ -74,7 +74,7 @@
 
 /datum/dna/gene/basic/increaserun
 	name="Super Speed"
-	activation_messages=list("Your leg muscles pulsate.")
+	activation_messages=list("Ваши мышцы ног пульсируют.")
 	mutation=RUN
 	activation_prob=50
 
@@ -83,7 +83,7 @@
 
 /datum/dna/gene/basic/remotetalk
 	name="Telepathy"
-	activation_messages=list("You feel your voice can penetrate other minds.")
+	activation_messages=list("Вы чувствуете, что ваш голос может проникнуть в другие умы.")
 	mutation=REMOTE_TALK
 	activation_prob=50
 
@@ -104,7 +104,7 @@
 
 /datum/dna/gene/basic/morph
 	name="Morph"
-	activation_messages=list("Your skin feels strange.")
+	activation_messages=list("Ваша кожа ощущается странно.")
 	mutation=MORPH
 	activation_prob=50
 
@@ -121,7 +121,7 @@
 
 /datum/dna/gene/basic/heat_resist
 	name="Heat Resistance"
-	activation_messages=list("Your skin is icy to the touch.")
+	activation_messages=list("Ваша кожа холодная на ощупь.")
 	mutation=RESIST_HEAT
 	activation_prob=30
 
@@ -138,7 +138,7 @@
 
 /datum/dna/gene/basic/cold_resist
 	name="Cold Resistance"
-	activation_messages=list("Your body is filled with warmth.")
+	activation_messages=list("Ваше тело наполнено теплом.")
 	mutation=COLD_RESISTANCE
 	activation_prob=30
 
@@ -155,7 +155,7 @@
 
 /datum/dna/gene/basic/noprints
 	name="No Prints"
-	activation_messages=list("Your fingers feel numb.")
+	activation_messages=list("Вы чувствуете, что ваши пальцы онемели.")
 	mutation=FINGERPRINTS
 	activation_prob=50
 
@@ -164,7 +164,7 @@
 
 /datum/dna/gene/basic/noshock
 	name="Shock Immunity"
-	activation_messages=list("Your skin feels electric.")
+	activation_messages=list("Ваша кожа словно наэлектризована.")
 	mutation=NO_SHOCK
 	activation_prob=50
 
@@ -173,7 +173,7 @@
 
 /datum/dna/gene/basic/midget
 	name="Midget"
-	activation_messages=list("You feel small.")
+	activation_messages=list("Вы чувствуете, что стали меньше.")
 	mutation=SMALLSIZE
 	activation_prob=50
 
@@ -193,7 +193,7 @@
 		var/mob/living/carbon/human/H = M
 		H.ventcrawler = 1
 		H.update_size_class()
-		to_chat(H, "<span class='notice'><b>Ventcrawling allowed</b></span>")
+		to_chat(H, "<span class='notice'><b>Вы можете лазить по вентиляции</b></span>")
 		H.regenerate_icons()
 
 /datum/dna/gene/basic/midget/deactivate(mob/living/M, connected, flags)
@@ -207,7 +207,7 @@
 
 /datum/dna/gene/basic/hulk
 	name                = "Hulk"
-	activation_messages = list("Your muscles hurt and feel strange..")
+	activation_messages = list("Все Ваши мышцы болят и ощущаются странно..")
 	mutation            = HULK
 	activation_prob     = 20
 
@@ -232,15 +232,15 @@
 	if(!mind)
 		return
 	if(species.flags[NO_PAIN]) // hulk mechanic is revolving around pain, and also all the species that don't have hulk form have this flag.
-		to_chat(src, "<span class='warning'>Your hulk gene is not dominant!</span>")
+		to_chat(src, "<span class='warning'>Ваш ген халка рецессивный!</span>")
 		return
 	if(mind.hulkizing)
-		to_chat(src, "<span class='warning'>You no longer strength to transform!</span>") // Hulk transformation at most 1 time.
+		to_chat(src, "<span class='warning'>Вы больше не чувствуете способность к трансформации!</span>") // Hulk transformation at most 1 time.
 		return
 
 	mind.hulkizing = TRUE
 	message_admins("[key_name(src)] is a <span class='warning'>Monster</span> [ADMIN_JMP(src)]")
-	to_chat(src, "<span class='bold notice'>You can feel real POWER.</span>")
+	to_chat(src, "<span class='bold notice'>Вы чувствуете реальную МОЩЬ.</span>")
 	if(istype(loc, /obj/machinery/dna_scannernew))
 		var/obj/machinery/dna_scannernew/DSN = loc
 		DSN.occupant = null
@@ -266,11 +266,11 @@
 
 	Monster.attack_log = attack_log
 	Monster.attack_log += "\[[time_stamp()]\]<font color='blue'> ======MONSTER LIFE======</font>"
-	Monster.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
+	Monster.say(pick("ГРААААААААГХ!", "ХМММММММГХ!", "ГВАААААРРРРРГХ!", "РРРРРААААА!", "ХАЛК КРУШИТЬ!" ))
 
 /datum/dna/gene/basic/xray
 	name="X-Ray Vision"
-	activation_messages=list("The walls suddenly disappear.")
+	activation_messages=list("Стены внезапно исчезли.")
 	mutation=XRAY
 	activation_prob=30
 
@@ -279,7 +279,7 @@
 
 /datum/dna/gene/basic/tk
 	name="Telekenesis"
-	activation_messages=list("You feel smarter.")
+	activation_messages=list("Вы чувствуете себя намного умнее.")
 	mutation=TK
 	activation_prob=15
 
