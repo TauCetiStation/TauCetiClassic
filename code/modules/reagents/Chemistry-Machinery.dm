@@ -73,10 +73,6 @@
 			return
 	qdel(src)
 
-/obj/machinery/chem_dispenser/blob_act()
-	if (prob(50))
-		qdel(src)
-
 /obj/machinery/chem_dispenser/ui_interact(mob/user)
 	tgui_interact(user)
 
@@ -367,10 +363,6 @@
 		if(EXPLODE_LIGHT)
 			return
 	qdel(src)
-
-/obj/machinery/chem_master/blob_act()
-	if (prob(50))
-		qdel(src)
 
 /obj/machinery/chem_master/power_change()
 	if(anchored && powered())

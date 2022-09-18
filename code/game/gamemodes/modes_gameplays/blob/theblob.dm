@@ -154,6 +154,8 @@
 /obj/effect/blob/ex_act(severity)
 	var/damage = 150 - (severity * 5)
 	take_damage(damage, BRUTE, BOMB, FALSE)
+
+/obj/effect/blob/blob_act()
 	return
 
 /obj/effect/blob/Crossed(atom/movable/AM)

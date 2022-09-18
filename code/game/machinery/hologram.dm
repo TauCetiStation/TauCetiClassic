@@ -219,21 +219,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(hologram)
 		clear_holo()
 
-//Destruction procs.
-/obj/machinery/hologram/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_HEAVY)
-			if(prob(50))
-				return
-		if(EXPLODE_LIGHT)
-			if(prob(95))
-				return
-	qdel(src)
-
-/obj/machinery/hologram/blob_act()
-	qdel(src)
-	return
-
 /obj/machinery/hologram/Destroy()
 	if(hologram)
 		clear_holo()

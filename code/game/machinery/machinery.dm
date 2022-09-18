@@ -250,10 +250,6 @@ Class Procs:
 				return
 	qdel(src)
 
-/obj/machinery/blob_act()
-	if(prob(50))
-		qdel(src)
-
 // The main proc that controls power usage of a machine, change use_power only with this proc
 /obj/machinery/proc/set_power_use(new_use_power)
 	if(current_power_usage && current_power_area) // We are tracking the area that is powering us so we can remove power from the right one if we got moved or something

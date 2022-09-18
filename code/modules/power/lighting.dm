@@ -505,8 +505,7 @@
 
 /obj/machinery/light/atom_break()
 	. = ..()
-	if(.)
-		broken(TRUE)
+	broken()
 
 /obj/machinery/light/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)
@@ -681,12 +680,6 @@
 			if(prob(50))
 				return
 	broken()
-
-//blob effect
-
-/obj/machinery/light/blob_act()
-	if(prob(75))
-		broken()
 
 
 // timed process

@@ -29,11 +29,6 @@
 	if(has_buckled_mobs())
 		unbuckle_mob()
 
-/obj/structure/stool/blob_act()
-	if(prob(75))
-		new /obj/item/stack/sheet/metal(loc)
-		qdel(src)
-
 /obj/structure/stool/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W) && !(flags & NODECONSTRUCT))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)

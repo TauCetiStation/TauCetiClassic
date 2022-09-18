@@ -253,11 +253,6 @@ var/global/list/wedge_image_cache = list()
 		to_chat(user, "<span class='warning'>Why would you waste your time hacking a non-blocking airlock?</span>")
 	return FALSE
 
-/obj/machinery/door/blob_act()
-	if(prob(40))
-		qdel(src)
-	return
-
 /obj/machinery/door/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_HEAVY)

@@ -40,18 +40,6 @@
 	opacity = TRUE
 	VARSET_IN(src, opacity, FALSE, 2 SECONDS)
 
-/obj/machinery/shield/emp_act(severity)
-	switch(severity)
-		if(EXPLODE_HEAVY)
-			if(prob(50))
-				return
-		if(EXPLODE_LIGHT)
-			return
-	qdel(src)
-
-/obj/machinery/shield/blob_act()
-	qdel(src)
-
 /obj/machinery/shield/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	//Let everyone know we've been hit!
 	visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")

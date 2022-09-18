@@ -1223,12 +1223,6 @@
 				if(cell && prob(25))
 					cell.ex_act(EXPLODE_LIGHT)
 
-/obj/machinery/power/apc/blob_act()
-	if(prob(75))
-		set_broken()
-		if(cell && prob(5))
-			cell.blob_act()
-
 /obj/machinery/power/apc/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(stat & BROKEN)
 		switch(damage_type)

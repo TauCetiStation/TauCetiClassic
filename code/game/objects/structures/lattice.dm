@@ -35,10 +35,6 @@
 			L.updateOverlays(loc)
 	return ..()
 
-/obj/structure/lattice/blob_act()
-	qdel(src)
-	return
-
 /obj/structure/lattice/ex_act(severity)
 	if(severity <= EXPLODE_HEAVY)
 		qdel(src)
