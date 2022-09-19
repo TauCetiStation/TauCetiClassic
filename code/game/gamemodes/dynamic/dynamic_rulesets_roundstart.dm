@@ -40,7 +40,7 @@
 		// Above 3 traitors, we start to cost a bit more.
 	return TRUE
 
-/datum/dynamic_ruleset/roundstart/traitor/previous_rounds_odds_reduction(var/result)
+/datum/dynamic_ruleset/roundstart/traitor/previous_rounds_odds_reduction(result)
 	return result
 
 //////////////////////////////////////////////

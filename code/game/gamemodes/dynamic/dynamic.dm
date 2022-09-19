@@ -11,7 +11,7 @@ var/dynamic_classic_secret = 0 // Only one roundstart ruleset, and only autotrai
 var/dynamic_high_pop_limit = 45 // Will switch to "high pop override" if the roundstart population is above this
 var/dynamic_forced_extended = 0 // No rulesets will be drated, ever
 
-var/stacking_limit = 90
+var/global/stacking_limit = 90
 
 #define BASE_SOLO_REFUND 10
 
@@ -126,7 +126,7 @@ var/stacking_limit = 90
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker || !SSticker.mode)
-		alert("Ticker and Game Mode aren't initialized yet!", "Alert")
+		to_chat(admin, "Ticker and Game Mode aren't initialized yet!")
 		return
 
 	if(!check_rights(R_ADMIN) && (SSticker.current_state != GAME_STATE_FINISHED))
@@ -603,7 +603,7 @@ var/stacking_limit = 90
 			if(M.mind && (M.mind.antag_roles.len))
 				living_antags.Add(M)
 		else
-			if(istype(M, /mob/dead/observer))
+			if(isobserver(M))
 				var/mob/dead/observer/O = M
 				if(O.started_as_observer)//Observers
 					list_observers.Add(M)

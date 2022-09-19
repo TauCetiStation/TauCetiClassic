@@ -1,23 +1,23 @@
 /datum/dynamic_ruleset
-	var/name = ""//For admin logging, and round end scoreboard
-	var/persistent = FALSE//if set to 1, the rule won't be discarded after being executed, and /gamemode/dynamic will call process() every MC tick
-	var/repeatable = FALSE//if set to 1, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
-	var/list/candidates = list()//list of players that are being drafted for this rule
-	var/list/assigned = list()//list of players that were selected for this rule
+	var/name = ""	//For admin logging, and round end scoreboard
+	var/persistent = FALSE	//if set to 1, the rule won't be discarded after being executed, and /gamemode/dynamic will call process() every MC tick
+	var/repeatable = FALSE	//if set to 1, dynamic mode will be able to draft this ruleset again later on. (doesn't apply for roundstart rules)
+	var/list/candidates = list()	//list of players that are being drafted for this rule
+	var/list/assigned = list()	//list of players that were selected for this rule
 	var/datum/role/role_category = /datum/role/traitor //rule will only accept candidates with "Yes" or "Always" in the preferences for this role
 	var/list/protected_from_jobs = list() // if set, and config.protect_roles_from_antagonist = 0, then the rule will have a much lower chance than usual to pick those roles.
-	var/list/restricted_from_jobs = list()//if set, rule will deny candidates from those jobs
-	var/list/exclusive_to_jobs = list()//if set, rule will only accept candidates from those jobs
+	var/list/restricted_from_jobs = list()	//if set, rule will deny candidates from those jobs
+	var/list/exclusive_to_jobs = list()	//if set, rule will only accept candidates from those jobs
 	var/list/job_priority = list() //May be used by progressive_job_search for prioritizing some jobs for a role. Order matters.
-	var/list/enemy_jobs = list()//if set, there needs to be a certain amount of players doing those jobs (among the players who won't be drafted) for the rule to be drafted
-	var/list/required_pop = list(10,10,0,0,0,0,0,0,0,0)//if enemy_jobs was set, this is the amount of population required for the ruleset to fire. enemy jobs count double
+	var/list/enemy_jobs = list()	//if set, there needs to be a certain amount of players doing those jobs (among the players who won't be drafted) for the rule to be drafted
+	var/list/required_pop = list(10,10,0,0,0,0,0,0,0,0)	//if enemy_jobs was set, this is the amount of population required for the ruleset to fire. enemy jobs count double
 	var/required_enemies = list(0,0,0,0,0,0,0,0,0,0)		//If set, the ruleset requires this many enemy jobs to be filled in order to fire (per threat level)
-	var/required_candidates = 0//the rule needs this many candidates (post-trimming) to be executed (example: Cult need 4 players at round start)
-	var/weight = 5//1 -> 9, probability for this rule to be picked against other rules
+	var/required_candidates = 0	//the rule needs this many candidates (post-trimming) to be executed (example: Cult need 4 players at round start)
+	var/weight = 5	//1 -> 9, probability for this rule to be picked against other rules
 	var/list/weekday_rule_boost = list()
 	var/list/timeslot_rule_boost = list()
-	var/cost = 0//threat cost for this rule.
-	var/logo = ""//any state from /icons/logos.dmi
+	var/cost = 0	//threat cost for this rule.
+	var/logo = ""	//any state from /icons/logos.dmi
 	var/calledBy //who dunnit, for round end scoreboard
 
 	var/flags = 0
@@ -53,7 +53,7 @@
 
 /datum/dynamic_ruleset/roundstart//One or more of those drafted at roundstart
 
-/datum/dynamic_ruleset/roundstart/delayed/ // Executed with a 30 seconds delay
+/datum/dynamic_ruleset/roundstart/delayed // Executed with a 30 seconds delay
 	var/delay = 30 SECONDS
 	var/required_type = /mob/living/carbon/human // No ghosts, new players or silicons allowed.
 	var/assigned_ckeys = list()
@@ -66,7 +66,7 @@
 	if(player_list.len >= mode.high_pop_limit)
 		return (threat_level >= high_population_requirement)
 	else
-		var/indice_pop = min(10,round(population/5)+1)
+		var/indice_pop = min(10,round(population / 5) + 1)
 		return (threat_level >= requirements[indice_pop])
 
 // -- Choosing the candidate(s) for a rule which is otherwise guarenteed to be executed.
@@ -88,7 +88,7 @@
 	return TRUE
 
 //Here you can perform any additional checks you want. (such as checking the map, the amount of certain jobs, etc)
-/datum/dynamic_ruleset/proc/ready(var/forced = 0)
+/datum/dynamic_ruleset/proc/ready(forced = FALSE)
 	if(admin_disable_rulesets && !forced)
 		message_admins("Dynamic Mode: [name] was prevented from firing by admins.")
 		log_admin("Dynamic Mode: [name] was prevented from firing by admins.")
@@ -98,7 +98,7 @@
 	return TRUE
 
 // Returns TRUE if there is enough pop to execute this ruleset
-/datum/dynamic_ruleset/proc/check_enemy_jobs(var/dead_dont_count = FALSE, var/midround = FALSE)
+/datum/dynamic_ruleset/proc/check_enemy_jobs(dead_dont_count = FALSE, midround = FALSE)
 	var/enemies_count = 0
 	if(dead_dont_count)
 		for(var/mob/M in mode.living_players)
@@ -146,22 +146,22 @@
 
 	result = previous_rounds_odds_reduction(result)
 
-	if (mode.highlander_rulesets_favoured && (flags & HIGHLANDER_RULESET))
+	if(mode.highlander_rulesets_favoured && (flags & HIGHLANDER_RULESET))
 		result *= ADDITIONAL_RULESET_WEIGHT
 	message_admins("[name] had [result] weight (-[initial(weight) - result]).")
 	return result
 
-/datum/dynamic_ruleset/proc/previous_rounds_odds_reduction(var/result)
-	for (var/previous_round in mode.previously_executed_rules)
+/datum/dynamic_ruleset/proc/previous_rounds_odds_reduction(result)
+	for(var/previous_round in mode.previously_executed_rules)
 		for(var/previous_ruleset in mode.previously_executed_rules[previous_round])
 			var/datum/dynamic_ruleset/DR = previous_ruleset
 			if(initial(DR.role_category) == src.role_category)
-				switch (previous_round)
-					if ("one_round_ago")
+				switch(previous_round)
+					if("one_round_ago")
 						result *= 0.4
-					if ("two_rounds_ago")
+					if("two_rounds_ago")
 						result *= 0.7
-					if ("three_rounds_ago")
+					if("three_rounds_ago")
 						result *= 0.9
 	return result
 
@@ -171,7 +171,7 @@
 	if(time2text(world.timeofday, "DDD") in weekday_rule_boost)
 		weigh *= 2
 		for(var/i = 1 to requirements.len)
-			if ((i < requirements.len) && (requirements[i+1] == 90))//let's not actually reduce the requirement on low pop.
+			if ((i < requirements.len) && (requirements[i+1] == 90))	//let's not actually reduce the requirement on low pop.
 				continue
 			requirements[i] = clamp(requirements[i] - 20,10,90)
 		for(var/i = 1 to required_pop.len)
@@ -242,14 +242,14 @@
 /datum/dynamic_ruleset/proc/review_applications()
 	return
 
-/datum/dynamic_ruleset/Topic(var/href, var/list/href_list)
+/datum/dynamic_ruleset/Topic(href, list/href_list)
 	if(href_list["signup"])
 		var/mob/M = usr
 		if(!M)
 			return
 		volunteer(M)
 
-/datum/dynamic_ruleset/proc/volunteer(var/mob/M)
+/datum/dynamic_ruleset/proc/volunteer(mob/M)
 	if(!searching)
 		return
 	if(jobban_isbanned(M, role_category))
@@ -317,15 +317,15 @@
 			candidates.Remove(P)
 			b1++//we only count banned ones if they actually wanted to play the role
 			continue
-		if((restricted_from_jobs.len > 0) && (P.mind.assigned_role && (P.mind.assigned_role in restricted_from_jobs)) || (P.mind.role_alt_title && (P.mind.role_alt_title in restricted_from_jobs)))//does their job allow for it?
+		if((restricted_from_jobs.len) && (P.mind.assigned_role && (P.mind.assigned_role in restricted_from_jobs)) || (P.mind.role_alt_title && (P.mind.role_alt_title in restricted_from_jobs)))//does their job allow for it?
 			candidates.Remove(P)
 			d++
 			continue
-		if((exclusive_to_jobs.len > 0) && P.mind.assigned_role && !(P.mind.assigned_role in exclusive_to_jobs))//is the rule exclusive to their job?
+		if((exclusive_to_jobs.len) && P.mind.assigned_role && !(P.mind.assigned_role in exclusive_to_jobs))//is the rule exclusive to their job?
 			candidates.Remove(P)
 			e++
 			continue
-		if((protected_from_jobs.len > 0) && (P.mind.assigned_role && (P.mind.assigned_role in protected_from_jobs)) || (P.mind.role_alt_title && (P.mind.role_alt_title in protected_from_jobs)))
+		if((protected_from_jobs.len) && (P.mind.assigned_role && (P.mind.assigned_role in protected_from_jobs)) || (P.mind.role_alt_title && (P.mind.role_alt_title in protected_from_jobs)))
 			candidates.Remove(P)
 			c++
 			continue
@@ -353,16 +353,16 @@
 			candidates.Remove(P)
 			continue
 
-/datum/dynamic_ruleset/roundstart/ready(var/forced = 0)
-	if (!forced)
+/datum/dynamic_ruleset/roundstart/ready(forced = FALSE)
+	if(!forced)
 		if(!check_enemy_jobs(FALSE))
 			return FALSE
 	return ..()
 
-/datum/dynamic_ruleset/proc/latejoinprompt(var/mob/user)
+/datum/dynamic_ruleset/proc/latejoinprompt(mob/user)
 	var/turf/oldloc = get_turf(user)
 	user.forceMove(null)
-	if(alert(user,"The gamemode is trying to select you for [src], do you want this?",,"Yes","No") == "Yes")
+	if(tgui_alert(user, "The gamemode is trying to select you for [src]","Do you want this?", list("Yes","No")) == "Yes")
 		return TRUE
 	user.forceMove(oldloc)
 	message_admins("[user.key] has opted out of [src].")
