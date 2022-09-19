@@ -12,81 +12,81 @@
 // Transforms a curve-bell centered on zero with a number between 0 and 100.
 
 // Lorentz distribution
-/proc/lorentz2threat(var/x)
+/proc/lorentz2threat(x)
 	var/y
-	switch (x)
+	switch(x)
 		// Left end of the tail, the lowest bound is -inf.
 		// 0 to 10.
-		if (-INFINITY to -20)
+		if(-INFINITY to -20)
 			y = rand(0, 10)
 		// Porportional conversion from the lorentz variable to the threat.
 
 		// First, we use a rule of three to get a number from -40 to -30.
 		// Then we shift it by 50 to get a number from 10 to 20.
 		// The same process is done for other intervalls.
-		if (-20 to -10)
+		if(-20 to -10)
 			y = RULE_OF_THREE(-40, -20, x) + 50
-		if (-10 to -5)
+		if(-10 to -5)
 			y = RULE_OF_THREE(-30, -10, x) + 50
-		if (-5 to -2.5)
+		if(-5 to -2.5)
 			y = RULE_OF_THREE(-20, -5, x) + 50
-		if (-2.5 to -0)
+		if(-2.5 to -0)
 			y = RULE_OF_THREE(-10, -2.5, x) + 50
-		if (0 to 2.5)
+		if(0 to 2.5)
 			y = RULE_OF_THREE(10, 2.5, x) + 50
-		if (2.5 to 5)
+		if(2.5 to 5)
 			y = RULE_OF_THREE(20, 5, x) + 50
-		if (5 to 10)
+		if(5 to 10)
 			y = RULE_OF_THREE(30, 10, x) + 50
-		if (10 to 20)
+		if(10 to 20)
 			y = RULE_OF_THREE(40, 20, x) + 50
 
 		// Right end of the tail, higher bound is +inf.
 
-		if (20 to INFINITY)
+		if(20 to INFINITY)
 			y = rand(90, 100)
 
 	return y
 
 // Same as above, but for a Gaussian law, which has much shorter tails.
-/proc/Gauss2threat(var/x)
+/proc/Gauss2threat(x)
 	var/y
-	switch (x)
+	switch(x)
 		// Left end of the tail, the lowest bound is -inf.
 		// 0 to 10.
-		if (-INFINITY to -5)
+		if(-INFINITY to -5)
 			y = rand(0, 10)
 		// Porportional conversion from the gaussian variable to the threat.
-		if (-5 to -4)
+		if(-5 to -4)
 			y = RULE_OF_THREE(-40, -5, x) + 50
-		if (-4 to -3)
+		if(-4 to -3)
 			y = RULE_OF_THREE(-30, -4, x) + 50
-		if (-3 to -2)
+		if(-3 to -2)
 			y = RULE_OF_THREE(-20, -3, x) + 50
-		if (-2 to 0)
+		if(-2 to 0)
 			y = RULE_OF_THREE(-10, -2, x) + 50
-		if (0 to 2)
+		if(0 to 2)
 			y = RULE_OF_THREE(10, 2, x) + 50
-		if (2 to 3)
+		if(2 to 3)
 			y = RULE_OF_THREE(20, 3, x) + 50
-		if (3 to 4)
+		if(3 to 4)
 			y = RULE_OF_THREE(30, 4, x) + 50
-		if (4 to 5)
+		if(4 to 5)
 			y = RULE_OF_THREE(40, 5, x) + 50
 
 		// Right end of the tail, higher bound is +inf.
 
-		if (20 to INFINITY)
+		if(20 to INFINITY)
 			y = rand(90, 100)
 
 	return y
 
 // Exp gives us something between 0 and 5 ; we just convert it to something between 0 and 100.
 // 2.5 is 50 in that case.
-/proc/exp2threat(var/x)
+/proc/exp2threat(x)
 	var/y
 	y = RULE_OF_THREE(50, 2.5, x)
-	if (y > 100)
+	if(y > 100)
 		y = 100
 	return y
 

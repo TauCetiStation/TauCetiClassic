@@ -529,12 +529,12 @@
 #define RULE_OF_THREE(a, b, x) ((a*x)/b)
 #define tan(x) (sin(x)/cos(x))
 
-var/const/E		= 2.71828183
-var/const/Sqrt2	= 1.41421356
+var/global/const/E		= 2.71828183
+var/global/const/Sqrt2	= 1.41421356
 
 // -- Returns a Lorentz-distributed number.
 // -- The probability density function has centre x0 and width s.
-/proc/lorentz_distribution(var/x0, var/s)
+/proc/lorentz_distribution(x0, s)
 	var/x = rand()
 	var/y = s*tan_rad(PI*(x-0.5)) + x0
 	return y
@@ -554,25 +554,25 @@ var/const/Sqrt2	= 1.41421356
 	return degrees * 0.0174532925
 
 // -- Returns the Lorentz cummulative distribution of the real x.
-/proc/lorentz_cummulative_distribution(var/x, var/x0, var/s)
+/proc/lorentz_cummulative_distribution(x, x0, s)
 	var/y = (1/PI)*ToRadians(arctan((x-x0)/s)) + 1/2
 	return y
 
 // -- Returns an exponentially-distributed number.
 // -- The probability density function has mean lambda
-/proc/exp_distribution(var/desired_mean)
-	if (desired_mean <= 0)
+/proc/exp_distribution(desired_mean)
+	if(desired_mean <= 0)
 		desired_mean = 1 // Let's not allow that to happen
 	var/lambda = 1/desired_mean
 
 	var/x = rand()
-	while (x == 1)
+	while(x == 1)
 		x = rand()
 	var/y = -(1/lambda)*log(1-x)
 	return y
 
 // -- Returns the Lorentz cummulative distribution of the real x, with mean lambda
-/proc/exp_cummulative_distribution(var/x, var/lambda)
+/proc/exp_cummulative_distribution(x, lambda)
 	var/y = 1 - E**(lambda*x)
 	return y
 

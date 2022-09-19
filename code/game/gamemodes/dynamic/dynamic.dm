@@ -1,15 +1,15 @@
-var/list/forced_roundstart_ruleset = list()
+var/global/list/forced_roundstart_ruleset = list()
 
 // -- Distribution parameters chosen prior to roundstart --
-var/dynamic_curve_centre = 0
-var/dynamic_curve_width = 1.8
-var/dynamic_chosen_mode = LORENTZ
+var/global/dynamic_curve_centre = 0
+var/global/dynamic_curve_width = 1.8
+var/global/dynamic_chosen_mode = LORENTZ
 
 // -- Dynamic tweaks chosen prior to roundstart --
-var/dynamic_no_stacking = 1 // NO STACKING : only one "round-ender", except if we're above 80 threat
-var/dynamic_classic_secret = 0 // Only one roundstart ruleset, and only autotraitor + minor rules allowed
-var/dynamic_high_pop_limit = 45 // Will switch to "high pop override" if the roundstart population is above this
-var/dynamic_forced_extended = 0 // No rulesets will be drated, ever
+var/global/dynamic_no_stacking = 1 // NO STACKING : only one "round-ender", except if we're above 80 threat
+var/global/dynamic_classic_secret = 0 // Only one roundstart ruleset, and only autotraitor + minor rules allowed
+var/global/dynamic_high_pop_limit = 45 // Will switch to "high pop override" if the roundstart population is above this
+var/global/dynamic_forced_extended = 0 // No rulesets will be drated, ever
 
 var/global/stacking_limit = 90
 
@@ -189,8 +189,8 @@ var/global/stacking_limit = 90
 	var/midround_injection_cooldown_middle = 0.5*(MIDROUND_DELAY_MAX + MIDROUND_DELAY_MIN)
 	midround_injection_cooldown = round(clamp(exp_distribution(midround_injection_cooldown_middle), MIDROUND_DELAY_MIN, MIDROUND_DELAY_MAX))
 
-	message_admins("Dynamic Mode initialized with a Threat Level of... <font size='8'>[threat_level]</font> and <font size='8'>[midround_threat_level]</font> for midround!")
-	log_admin("Dynamic Mode initialized with a Threat Level of... [threat_level] and [midround_threat_level]</font> for midround!")
+	message_admins("Dynamic Mode initialized with a Threat Level of... [threat_level] and [midround_threat_level] for midround!")
+	log_admin("Dynamic Mode initialized with a Threat Level of... [threat_level] and [midround_threat_level] for midround!")
 
 	message_admins("Parameters were: centre = [curve_centre_of_round], width = [curve_width_of_round].")
 	log_admin("Parameters were: centre = [curve_centre_of_round], width = [curve_width_of_round].")
@@ -211,7 +211,7 @@ var/global/stacking_limit = 90
 	return TRUE
 
 /datum/game_mode/dynamic/Setup()
-	for(var/rule in subtypesof(/datum/dynamic_ruleset/roundstart) - /datum/dynamic_ruleset/roundstart/delayed/)
+	for(var/rule in subtypesof(/datum/dynamic_ruleset/roundstart) - /datum/dynamic_ruleset/roundstart/delayed)
 		roundstart_rules += new rule()
 	for(var/rule in subtypesof(/datum/dynamic_ruleset/latejoin))
 		latejoin_rules += new rule()
@@ -263,7 +263,7 @@ var/global/stacking_limit = 90
 					//we don't spend threat on forced rulesets
 					threat_log += "[worldtime2text()]: Roundstart [rule.name] forced"
 
-					if(istype(rule, /datum/dynamic_ruleset/roundstart/delayed/))
+					if(istype(rule, /datum/dynamic_ruleset/roundstart/delayed))
 						message_admins("DYNAMIC MODE: with a delay of [rule:delay/10] seconds.")
 						log_admin("DYNAMIC MODE: with a delay of [rule:delay/10] seconds.")
 						return pick_delay(rule)
@@ -407,7 +407,7 @@ var/global/stacking_limit = 90
 // -- Executing a rule, which means spawning the traitor, removing the threat cost, etc.
 // the_rule: the rule being executed
 // returns: 0 or 1 depending on success. (failure meaning something runtimed mid-code.)
-/datum/game_mode/dynamic/proc/executing_roundstart_rule(var/datum/dynamic_ruleset/the_rule)
+/datum/game_mode/dynamic/proc/executing_roundstart_rule(datum/dynamic_ruleset/the_rule)
 	if(istype(the_rule, /datum/dynamic_ruleset/roundstart/delayed))
 		message_admins("DYNAMIC MODE: Delayed ruleset, with a delay of [the_rule:delay/10] seconds.")
 		log_admin("DYNAMIC MODE: Delayed ruleset, with a delay of [the_rule:delay/10] seconds.")
@@ -425,7 +425,7 @@ var/global/stacking_limit = 90
 		log_admin("DYNAMIC MODE: ....except not because whomever coded that ruleset forgot some cases in ready() apparently! execute() returned 0.")
 		return FALSE
 
-/datum/game_mode/dynamic/proc/pick_delay(var/datum/dynamic_ruleset/roundstart/delayed/rule)
+/datum/game_mode/dynamic/proc/pick_delay(datum/dynamic_ruleset/roundstart/delayed/rule)
 	//v what i should do with that spawn? v
 	spawn()
 		sleep(rule.delay)

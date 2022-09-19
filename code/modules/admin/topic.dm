@@ -1116,11 +1116,11 @@
 			return
 
 		if(SSticker && SSticker.mode)
-			return alert(usr, "The game has already started.", null, null, null, null)
+			return to_chat(usr, "The game has already started.")
 		if(master_mode != "Dynamic Mode")
-			return alert(usr, "The game mode has to be Dynamic Mode!", null, null, null, null)
+			return to_chat(usr, "The game mode has to be Dynamic Mode!")
 		if(forced_roundstart_ruleset.len > 30)
-			return alert(usr, "Haven't you already forced enough rulesets?", null, null, null, null)
+			return to_chat(usr, "Haven't you already forced enough rulesets?")
 		var/list/datum/dynamic_ruleset/roundstart/roundstart_rules = list()
 		for(var/rule in subtypesof(/datum/dynamic_ruleset/roundstart))
 			var/datum/dynamic_ruleset/roundstart/newrule = rule
@@ -1164,9 +1164,9 @@
 			return
 
 		if(!SSticker || !SSticker.mode)
-			return alert(usr, "The game must start first.", null, null, null, null)
+			return to_chat(usr, "The game must start first.")
 		if(master_mode != "Dynamic Mode")
-			return alert(usr, "The game mode has to be Dynamic Mode!", null, null, null, null)
+			return to_chat(usr, "The game mode has to be Dynamic Mode!")
 		var/list/datum/dynamic_ruleset/latejoin/latejoin_rules = list()
 		for(var/rule in subtypesof(/datum/dynamic_ruleset/latejoin))
 			var/datum/dynamic_ruleset/latejoin/newrule = new rule()
@@ -1196,9 +1196,9 @@
 			return
 
 		if(!SSticker || !SSticker.mode)
-			return alert(usr, "The game must start first.", null, null, null, null)
+			return to_chat(usr, "The game must start first.", null, null, null, null)
 		if(master_mode != "Dynamic Mode")
-			return alert(usr, "The game mode has to be Dynamic Mode!", null, null, null, null)
+			return to_chat(usr, "The game mode has to be Dynamic Mode!", null, null, null, null)
 		var/midround_rules = list()
 		for(var/rule in subtypesof(/datum/dynamic_ruleset/midround))
 			var/datum/dynamic_ruleset/midround/newrule = new rule()
@@ -1216,9 +1216,9 @@
 			return
 
 		if(SSticker && SSticker.mode)
-			return alert(usr, "The game has already started.", null, null, null, null)
+			return to_chat(usr, "The game has already started.")
 		if(master_mode != "Dynamic Mode")
-			return alert(usr, "The game mode has to be Dynamic Mode!", null, null, null, null)
+			return to_chat(usr, "The game mode has to be Dynamic Mode!")
 
 		dynamic_mode_options(usr)
 
@@ -1227,24 +1227,24 @@
 			return
 
 		if(SSticker && SSticker.mode)
-			return alert(usr, "The game has already started.", null, null, null, null)
+			return to_chat(usr, "The game has already started.")
 		if(master_mode != "Dynamic Mode")
-			return alert(usr, "The game mode has to be Dynamic Mode!", null, null, null, null)
+			return to_chat(usr, "The game mode has to be Dynamic Mode!")
 
 		var/new_centre
 
 		if(dynamic_chosen_mode == DIRAC)
 			new_centre = input(usr,"Change the threat level this round will have.", "Change threat level.", null) as num
 			if(new_centre <= 0 || new_centre >= 100)
-				return alert(usr, "Only values between 0 and 100 are allowed.", null, null, null, null)
+				return to_chat(usr, "Only values between 0 and 100 are allowed.")
 		else if(dynamic_chosen_mode == EXPONENTIAL)
 			new_centre = input(usr,"Change the centre of the dynamic mode threat curve. A lower value will give a more peaceful round ; a higher value, a round with higher threat. Any number between 0 and +5 is allowed.", "Change curve centre", null) as num
 			if(new_centre < 0 || new_centre > 5)
-				return alert(usr, "Only values between 0 and +5 are allowed.", null, null, null, null)
+				return to_chat(usr, "Only values between 0 and +5 are allowed.")
 		else
 			new_centre = input(usr,"Change the centre of the dynamic mode threat curve. A negative value will give a more peaceful round ; a positive value, a round with higher threat. Any number between -5 and +5 is allowed.", "Change curve centre", null) as num
 			if(new_centre < -5 || new_centre > 5)
-				return alert(usr, "Only values between -5 and +5 are allowed.", null, null, null, null)
+				return to_chat(usr, "Only values between -5 and +5 are allowed.")
 
 		log_admin("[key_name(usr)] changed the distribution curve center to [new_centre].")
 		message_admins("[key_name(usr)] changed the distribution curve center to [new_centre]", 1)
@@ -1256,13 +1256,13 @@
 			return
 
 		if(SSticker && SSticker.mode)
-			return alert(usr, "The game has already started.", null, null, null, null)
+			return to_chat(usr, "The game has already started.")
 		if(master_mode != "Dynamic Mode")
-			return alert(usr, "The game mode has to be Dynamic Mode!", null, null, null, null)
+			return to_chat(usr, "The game mode has to be Dynamic Mode!")
 
 		var/new_width = input(usr,"Change the width of the dynamic mode threat curve. A higher value will favour extreme rounds ; a lower value, a round closer to the average. Any Number between 0.5 and 4 are allowed.", "Change curve width", null) as num
 		if(new_width < 0.5 || new_width > 4)
-			return alert(usr, "Only values between 0.5 and +2.5 are allowed.", null, null, null, null)
+			return to_chat(usr, "Only values between 0.5 and +2.5 are allowed.")
 
 		log_admin("[key_name(usr)] changed the distribution curve width to [new_width].")
 		message_admins("[key_name(usr)] changed the distribution curve width to [new_width]", 1)
@@ -1274,7 +1274,7 @@
 			return
 
 		if(master_mode != "Dynamic Mode")
-			return alert(usr, "The game mode has to be Dynamic Mode!", null, null, null, null)
+			return to_chat(usr, "The game mode has to be Dynamic Mode!")
 
 		dynamic_forced_extended = !dynamic_forced_extended
 		log_admin("[key_name(usr)] set 'forced_extended' to [dynamic_forced_extended].")
@@ -1286,7 +1286,7 @@
 			return
 
 		if(master_mode != "Dynamic Mode")
-			return alert(usr, "The game mode has to be Dynamic Mode!", null, null, null, null)
+			return to_chat(usr, "The game mode has to be Dynamic Mode!")
 
 		global.admin_disable_rulesets = !global.admin_disable_rulesets
 		log_admin("[key_name(usr)] toggled Dynamic rulesets <b>[global.admin_disable_rulesets ? "OFF" : "ON"]</b>.")
@@ -1298,7 +1298,7 @@
 			return
 
 		if(master_mode != "Dynamic Mode")
-			return alert(usr, "The game mode has to be Dynamic Mode!", null, null, null, null)
+			return to_chat(usr, "The game mode has to be Dynamic Mode!")
 
 		stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
 		log_admin("[key_name(usr)] set 'stacking_limit' to [stacking_limit].")
@@ -1310,14 +1310,14 @@
 			return
 
 		if(SSticker && SSticker.mode)
-			return alert(usr, "The game has already started.", null, null, null, null)
+			return to_chat(usr, "The game has already started.")
 
 		if(master_mode != "Dynamic Mode")
-			return alert(usr, "The game mode has to be Dynamic Mode!", null, null, null, null)
+			return to_chat(usr, "The game mode has to be Dynamic Mode!")
 
 		var/new_value = input(usr, "Enter the high-pop override threshold for dynamic mode.", "High pop override") as num
 		if (new_value < 0)
-			return alert(usr, "Only positive values allowed!", null, null, null, null)
+			return to_chat(usr, "Only positive values allowed!")
 		dynamic_high_pop_limit = new_value
 
 		log_admin("[key_name(usr)] set 'dynamic_high_pop_limit' to [dynamic_high_pop_limit].")
@@ -1329,10 +1329,10 @@
 			return
 
 		if(SSticker && SSticker.mode)
-			return alert(usr, "The game has already started.", null, null, null, null)
+			return to_chat(usr, "The game has already started.")
 
 		if(master_mode != "Dynamic Mode")
-			return alert(usr, "The game mode has to be Dynamic Mode!", null, null, null, null)
+			return to_chat(usr, "The game mode has to be Dynamic Mode!")
 
 		var/list/possible_choices = list(
 			"[LORENTZ]",
