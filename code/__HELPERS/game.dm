@@ -526,7 +526,6 @@
 
 //============VG PORTS============
 // Returns y so that y/x = a/b.
-#define RULE_OF_THREE(a, b, x) ((a*x)/b)
 #define tan(x) (sin(x)/cos(x))
 
 var/global/const/E		= 2.71828183

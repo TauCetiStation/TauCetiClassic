@@ -57,7 +57,7 @@
 	//and looks like infiltrator doesn't have faction?
 	return TRUE
 
-/datum/dynamic_ruleset/latejoin/infiltrator/previous_rounds_odds_reduction(var/result)
+/datum/dynamic_ruleset/latejoin/infiltrator/previous_rounds_odds_reduction(result)
 	return result
 
 
