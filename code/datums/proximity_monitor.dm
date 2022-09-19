@@ -37,6 +37,9 @@
 	update_connect_range()
 
 /datum/proximity_monitor/proc/update_connect_range()
+	if(isnull(current_range))
+		qdel(GetComponent(/datum/component/connect_range))
+		return
 	//If the connect_range component exists already, this will just update its args. No errors or duplicates.
 	AddComponent(/datum/component/connect_range, host, loc_connections, current_range, !ignore_if_not_on_turf)
 
@@ -49,8 +52,8 @@
 	hasprox_receiver = null
 	return ..()
 
-/datum/proximity_monitor/proc/set_range(range, force_rebuild = FALSE)
-	if(!force_rebuild && range == current_range)
+/datum/proximity_monitor/proc/set_range(range)
+	if(range == current_range)
 		return FALSE
 	. = TRUE
 	current_range = range

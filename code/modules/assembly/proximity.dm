@@ -20,7 +20,7 @@
 
 /obj/item/device/assembly/prox_sensor/atom_init()
 	. = ..()
-	proximity_monitor = new(src, 0, FALSE)
+	proximity_monitor = new(src, null, FALSE)
 
 /obj/item/device/assembly/prox_sensor/activate()
 	if(!..())	return 0//Cooldown check
@@ -92,7 +92,7 @@
 	if(scanning)
 		proximity_monitor.set_range(range)
 	else
-		proximity_monitor.set_range(0)
+		proximity_monitor.set_range(null)
 	update_icon()
 	return
 

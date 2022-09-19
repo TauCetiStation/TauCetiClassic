@@ -108,7 +108,7 @@
 
 /obj/machinery/flasher/portable/atom_init()
 	. = ..()
-	proximity_monitor = new(src, anchored ? 1 : 0)
+	proximity_monitor = new(src, anchored ? 1 : null)
 
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM)
 	if(iscarbon(AM) && COOLDOWN_FINISHED(src, cd_flash))
@@ -129,7 +129,7 @@
 		else
 			to_chat(user, "<span class='warning'>[src] can now be moved.</span>")
 			cut_overlays()
-			proximity_monitor.set_range(0)
+			proximity_monitor.set_range(null)
 
 
 /obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user)
