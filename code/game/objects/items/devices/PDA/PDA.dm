@@ -1741,8 +1741,8 @@
 	orders_and_offers[num] = null
 
 /obj/item/device/pda/proc/check_pda_server()
-	if(message_servers)
-		for (var/obj/machinery/message_server/MS in message_servers)
+	if(global.message_servers)
+		for (var/obj/machinery/message_server/MS in global.message_servers)
 			if(MS.active)
 				var/turf/pos = get_turf(src)
 				return is_station_level(pos.z)
