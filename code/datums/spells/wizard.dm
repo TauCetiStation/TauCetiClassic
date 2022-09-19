@@ -338,6 +338,23 @@
 	action_icon_state = "lesserconstruct"
 	action_background_icon_state = "bg_cult"
 
+/obj/effect/proc_holder/spell/aoe_turf/conjure/door
+	name = "Возвести Ворота"
+	desc = "Это заклинание заставляет вас возвести Ворота"
+
+	//action_icon = 'icons/obj/doors/mineral_doors.dmi'
+	action_icon_state = "cult_door"
+	action_background_icon_state = "bg_cult"
+
+	school = "conjuration"
+	charge_max = 400
+	clothes_req = 0
+	invocation = "none"
+	invocation_type = "none"
+	range = 0
+	summon_type = list(/obj/structure/mineral_door/cult)
+	centcomm_cancast = 0
+
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
 	name = "Создание камня души"
 	desc = "Это заклинание вызывает легендарнейший фрагмент обелиска душ."

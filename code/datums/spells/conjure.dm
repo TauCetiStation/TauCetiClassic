@@ -163,8 +163,8 @@
 		M.Weaken(4)
 
 /obj/effect/proc_holder/spell/aoe_turf/area_conversion
-	name = "Area Conversion"
-	desc = "This spell instantly converts a small area around you."
+	name = "Обращение Зоны"
+	desc = "Это заклинание моментально делает небольшую зону вокруг вас подвластной вашей Вере"
 	clothes_req = FALSE
 	charge_max = 5 SECONDS
 	action_icon_state = "areaconvert"
@@ -172,9 +172,9 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/area_conversion/cast(list/targets, mob/user)
 	. = ..()
-	if(!global.cult_religion)
+	if(!user.my_religion)
 		return
 	for(var/turf/nearby_turf in range(3, user))
 		if(prob(100 - (get_dist(nearby_turf, user) * 25)))
 			playsound(nearby_turf, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
-			nearby_turf.atom_religify(global.cult_religion)
+			nearby_turf.atom_religify(user.my_religion)

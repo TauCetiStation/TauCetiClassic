@@ -170,6 +170,7 @@
 	environment_smash = 2
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/door,
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
@@ -180,17 +181,6 @@
 	. = ..()
 	var/datum/atom_hud/data/medical/adv/hud = global.huds[DATA_HUD_MEDICAL_ADV]
 	hud.add_hud_to(src)
-
-/mob/living/simple_animal/construct/builder/Bump(atom/A)
-	. = ..()
-	if(A == loc)
-		return
-	if(!do_after(src, 1 SECOND, TRUE, A))
-		return
-	if(istype(A, /turf/simulated/wall/cult))
-		forceMove(A)
-	if(istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult) || istype(A, /mob/living/simple_animal/construct) || istype(A, /mob/living/simple_animal/hostile/pylon))
-		forceMove(A.loc)
 
 /////////////////////////////Behemoth/////////////////////////
 /mob/living/simple_animal/construct/behemoth
@@ -274,14 +264,13 @@
 		var/list/limbs = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG)
 		limbs -= C.get_missing_bodyparts()
 		if(!limbs.len)
-			. = ..()
-			return FALSE
+			return ..()
 		do_attack_animation(C)
 		var/obj/item/organ/external/BP = C.get_bodypart(pick(limbs))
 		if(!BP.droplimb(null, null, DROPLIMB_EDGE))
-			. = ..()
-		return FALSE
-	. = ..()
+			return ..() //Attack
+		return //No need in normal attack
+	return ..()
 /////////////////////////////////////Proteon from tg/////////////////////////////////
 /mob/living/simple_animal/construct/proteon
 	name = "Proteon"
