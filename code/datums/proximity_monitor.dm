@@ -33,13 +33,14 @@
 		hasprox_receiver = new_host
 	host = new_host
 	RegisterSignal(new_host, COMSIG_PARENT_QDELETING, .proc/on_host_or_receiver_del)
-	RegisterSignal(new_host, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	update_connect_range()
 
 /datum/proximity_monitor/proc/update_connect_range()
 	if(isnull(current_range))
 		qdel(GetComponent(/datum/component/connect_range))
+		UnregisterSignal(host, COMSIG_MOVABLE_MOVED)
 		return
+	RegisterSignal(host, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	//If the connect_range component exists already, this will just update its args. No errors or duplicates.
 	AddComponent(/datum/component/connect_range, host, loc_connections, current_range, !ignore_if_not_on_turf)
 
