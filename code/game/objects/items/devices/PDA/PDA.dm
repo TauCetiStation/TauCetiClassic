@@ -38,7 +38,7 @@
 	var/lock_code = "" // Lockcode to unlock uplink
 	var/honkamt = 0 //How many honks left when infected with honk.exe
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
-	var/note = "Спасибо за покупку КПК 9 от ООО.Тинктроник!" //Current note in the notepad function
+	var/note = "Спасибо за покупку КПК 9 от ООО Тинктроник!" //Current note in the notepad function
 	var/notehtml = ""
 	var/cart = "" //A place to stick cartridge menu information
 	var/detonate = 1 // Can the PDA be blown up?
@@ -834,7 +834,7 @@
 				mode=2
 
 		if("Ringtone")
-			var/t = sanitize(input(U, "Выберите новый рингтон", name, input_default(ttone)) as text, 20)
+			var/t = sanitize(input(U, "Установите новый рингтон", name, input_default(ttone)) as text, 20)
 			if (t && Adjacent(U))
 				if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
 					to_chat(U, "The PDA softly beeps.")
@@ -1585,7 +1585,7 @@
 
 /obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
 	if(!owner_account)
-		tgui_alert(usr, "ОШИБКА! Аккаунт не сохранён в КПК, пожалуйста вставьте свою карту и перезагрузите устройство.")
+		tgui_alert(usr, "ОШИБКА! Аккаунт не сохранён в КПК, пожалуйста, вставьте свою карту и перезагрузите устройство.")
 		return FALSE
 	if(!user.dna)	//just in case
 		tgui_alert(usr, "ОШИБКА! КПК не распознаёт ваш отпечаток пальца.")

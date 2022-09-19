@@ -78,7 +78,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
             </div>
             <div class="itemContent">
                 {{:helper.link('Блокнот', 'note', {'choice' : "1"}, null, 'fixedLeftWide')}}
-                {{:helper.link('Телеграм', data.new_Message ? 'mail-closed' : 'mail-open', {'choice' : "2"}, null, 'fixedLeftWide')}}
+                {{:helper.link('Почта', data.new_Message ? 'mail-closed' : 'mail-open', {'choice' : "2"}, null, 'fixedLeftWide')}}
                 {{:helper.link('Экипаж', 'contact', {'choice' : "41"}, null, 'fixedLeftWide')}}
 				<!-- {{:helper.link('News', data.new_News ? 'mail-closed' : 'mail-open', {'choice' : "6"}, null, 'fixedLeftWide')}} -->
 				{{:helper.link('Кошелёк', 'suitcase', {'choice' : "Finance"}, null, 'fixedLeftWide')}}
@@ -103,7 +103,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                         <b>Инженерия</b>:
                     </div>
                     <div class="itemContent">
-                        {{:helper.link('Контроллер электросетей', 'alert', {'choice' : "43"}, null, 'fixedLeftWide')}}
+                        {{:helper.link('Электросети', 'alert', {'choice' : "43"}, null, 'fixedLeftWide')}}
                     </div>
                 </div>
                  <br>
@@ -158,7 +158,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                         {{:helper.link('Мониторы станции', 'gear', {'choice' : "42"}, null, 'fixedLeftWide')}}
                     {{/if}}
                     {{if data.cartridge.access.access_janitor==1}}
-                        {{:helper.link('Локатор кладовки', 'gear', {'choice' : "49"}, null, 'fixedLeftWide')}}
+                        {{:helper.link('Инв. уборщика', 'gear', {'choice' : "49"}, null, 'fixedLeftWide')}}
                     {{/if}}
                     {{if data.cartridge.radio == 2}}
                         {{:helper.link('Радиопередатчик', 'gear', {'choice' : "40"}, null, 'fixedLeftWide')}}
@@ -214,7 +214,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 
 
     {{else data.mode == 2}} <!-- Messenger -->
-        <H2>Телеграм V4.0.1</H2>
+        <H2>Почта</H2>
         <div class="item">
             <div class="itemLabelNarrow">
                 <b>Параметры</b>:
@@ -276,7 +276,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 
 
 	{{else data.mode == 21}} <!-- Messenger -->
-	    <H2>Телеграм V4.0.1</H2>
+	    <H2>Почта</H2>
         <div class="item">
             <div class="itemLabel">
                 <b>Параметры переписки</b>:
