@@ -220,9 +220,6 @@
 	newTraitor.AnnounceObjectives()*/
 	return TRUE
 
-/datum/dynamic_ruleset/midround/autotraitor/previous_rounds_odds_reduction(result)
-	return result
-
 //////////////////////////////////////////////
 //                                          //
 //              RAGIN' MAGES                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

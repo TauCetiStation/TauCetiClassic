@@ -14,8 +14,6 @@
 	var/required_enemies = list(0,0,0,0,0,0,0,0,0,0)		//If set, the ruleset requires this many enemy jobs to be filled in order to fire (per threat level)
 	var/required_candidates = 0	//the rule needs this many candidates (post-trimming) to be executed (example: Cult need 4 players at round start)
 	var/weight = 5	//1 -> 9, probability for this rule to be picked against other rules
-	var/list/weekday_rule_boost = list()
-	var/list/timeslot_rule_boost = list()
 	var/cost = 0	//threat cost for this rule.
 	var/logo = ""	//any state from /icons/logos.dmi
 	var/calledBy //who dunnit, for round end scoreboard
@@ -144,40 +142,21 @@
 			result *= 0.5
 			break
 
-	result = previous_rounds_odds_reduction(result)
-
 	if(mode.highlander_rulesets_favoured && (flags & HIGHLANDER_RULESET))
 		result *= ADDITIONAL_RULESET_WEIGHT
 	message_admins("[name] had [result] weight (-[initial(weight) - result]).")
 	return result
 
-/datum/dynamic_ruleset/proc/previous_rounds_odds_reduction(result)
-	for(var/previous_round in mode.previously_executed_rules)
-		for(var/previous_ruleset in mode.previously_executed_rules[previous_round])
-			var/datum/dynamic_ruleset/DR = previous_ruleset
-			if(initial(DR.role_category) == src.role_category)
-				switch(previous_round)
-					if("one_round_ago")
-						result *= 0.4
-					if("two_rounds_ago")
-						result *= 0.7
-					if("three_rounds_ago")
-						result *= 0.9
-	return result
-
 //Return a multiplicative weight. 1 for nothing special.
+//unused
 /datum/dynamic_ruleset/proc/weight_time_day()
 	var/weigh = 1
-	if(time2text(world.timeofday, "DDD") in weekday_rule_boost)
-		weigh *= 2
-		for(var/i = 1 to requirements.len)
-			if ((i < requirements.len) && (requirements[i+1] == 90))	//let's not actually reduce the requirement on low pop.
-				continue
-			requirements[i] = clamp(requirements[i] - 20,10,90)
-		for(var/i = 1 to required_pop.len)
-			required_pop[i] = clamp(required_pop[i] - 5,0,100)
-	/*if(getTimeslot() in timeslot_rule_boost)
-		weigh *= 2*/
+	for(var/i = 1 to requirements.len)
+		if((i < requirements.len) && (requirements[i+1] == 90))	//let's not actually reduce the requirement on low pop.
+			continue
+		requirements[i] = clamp(requirements[i] - 20,10,90)
+	for(var/i = 1 to required_pop.len)
+		required_pop[i] = clamp(required_pop[i] - 5,0,100)
 	return weigh
 
 /datum/dynamic_ruleset/proc/trim_candidates()

@@ -57,10 +57,6 @@
 	//and looks like infiltrator doesn't have faction?
 	return TRUE
 
-/datum/dynamic_ruleset/latejoin/infiltrator/previous_rounds_odds_reduction(result)
-	return result
-
-
 //////////////////////////////////////////////
 //                                          //
 //        RAGIN' MAGES (LATEJOIN)           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -176,6 +172,3 @@
 	hivemind.HandleRecruitedRole(newChangeling)
 	// ^ should i remake this like roundstarts wizards/traitors/changelings? ^
 	return TRUE
-
-/datum/dynamic_ruleset/latejoin/changeling/previous_rounds_odds_reduction(result)
-	return result
