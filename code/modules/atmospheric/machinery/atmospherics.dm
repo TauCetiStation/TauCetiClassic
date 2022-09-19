@@ -20,6 +20,8 @@ Pipelines + Other Objects -> Pipe network
 	power_channel = STATIC_ENVIRON
 	layer = GAS_PIPE_HIDDEN_LAYER // under wires
 
+	resistance_flags = FIRE_PROOF
+
 	var/nodealert = FALSE
 	var/can_unwrench = FALSE
 	var/initialize_directions = 0
