@@ -39,8 +39,8 @@
 
 /obj/item/clothing/under/pants/tan
 	name = "tan pants"
-	desc = "Some tan pants. You look like a white collar worker with these on."
-	icon_state = "tanpants"
+	/*desc = "Some tan pants. You look like a white collar worker with these on."
+	icon_state = "tanpants"*/
 
 /obj/item/clothing/under/pants/blue
 	name = "blue pants"
