@@ -68,6 +68,10 @@
 	hidden = FALSE
 	possible_gamemodes = list(/datum/game_mode/extended)
 
+/datum/modesbundle/dynamic
+	name = "Dynamic Mode"
+	possible_gamemodes = list(/datum/game_mode/dynamic)
+
 /datum/modesbundle/all
 	name = "Random"
 	votable = FALSE
@@ -87,7 +91,7 @@
 	votable = TRUE
 
 /datum/modesbundle/all/secret/New()
-	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended, /datum/game_mode/malfunction)
+	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended, /datum/game_mode/malfunction, /datum/game_mode/dynamic)
 	..()
 
 /datum/modesbundle/run_anyway
