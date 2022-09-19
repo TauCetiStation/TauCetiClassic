@@ -295,8 +295,8 @@
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/faction_based/nuclear/finish_setup(mob/new_character, index)
-	var/datum/faction/nuclear/nuclear = create_uniq_faction(my_fac, post_setup = FALSE, give_objectives = TRUE)
-
+	create_uniq_faction(my_fac, post_setup = FALSE, give_objectives = TRUE)
+	//^ nukies get into a faction? Need test ^
 	var/list/turf/synd_spawn = list()
 
 	for(var/obj/effect/landmark/A in landmarks_list)

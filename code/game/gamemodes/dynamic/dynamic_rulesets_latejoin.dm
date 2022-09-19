@@ -21,8 +21,8 @@
 			candidates.Remove(P)
 			continue
 
-/datum/dynamic_ruleset/latejoin/ready(var/forced = 0)
-	if (!forced)
+/datum/dynamic_ruleset/latejoin/ready(forced = FALSE)
+	if(!forced)
 		if(!check_enemy_jobs(TRUE,TRUE))
 			return FALSE
 	return ..()
@@ -53,6 +53,8 @@
 	var/datum/role/traitor/newTraitor = new
 	newTraitor.AssignToRole(M.mind, TRUE)
 	newTraitor.Greet(GREET_LATEJOIN)
+	// ^ should try remake this like roundtarts threat? ^
+	//and looks like infiltrator doesn't have faction?
 	return TRUE
 
 /datum/dynamic_ruleset/latejoin/infiltrator/previous_rounds_odds_reduction(var/result)
@@ -77,7 +79,7 @@
 	high_population_requirement = 40
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/latejoin/raginmages/ready(forced = 0)
+/datum/dynamic_ruleset/latejoin/raginmages/ready(forced = FALSE)
 	if(!wizardstart.len)
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
@@ -89,17 +91,14 @@
 	var/mob/M = pick(assigned)
 	if(!latejoinprompt(M))
 		return FALSE
-	var/datum/faction/wizards/federation = find_faction_by_type(/datum/faction/wizards)
-	if(!federation)
-		federation = create_faction(/datum/faction/wizards)
-	var/datum/role/wizard/newWizard = new
-	M.forceMove(pick(wizardstart))
-	newWizard.AssignToRole(M.mind, TRUE)
-	federation.HandleRecruitedRole(newWizard)
+	var/datum/faction/wizards/federation = create_uniq_faction(/datum/faction/wizards, post_setup = FALSE, give_objectives = FALSE)
+	var/datum/role/wizard/newWizard = new role_category(M.mind, federation, TRUE)
+	if(!ishuman(M))
+		var/mob/living/carbon/C = M
+		if(istype(C))
+			C = C.humanize()
 	newWizard.Greet(GREET_LATEJOIN)
 	return TRUE
-
-
 
 //////////////////////////////////////////////
 //                                          //
@@ -139,7 +138,7 @@
 	var/antagmind = M.mind
 	var/datum/faction/F = create_faction(/datum/faction/revolution)
 	F.forgeObjectives()
-	//should i rework spawn(1sec) in addtimer(... 10)?
+	// v should i rework spawn(1sec) in addtimer(... 10)? v
 	spawn(1 SECONDS)
 		var/datum/role/rev_leader/L = new(antagmind, F, HEADREV)
 		L.Greet(GREET_LATEJOIN)
@@ -172,11 +171,10 @@
 	var/datum/role/changeling/newChangeling = new
 	newChangeling.AssignToRole(M.mind, TRUE)
 	newChangeling.Greet(GREET_LATEJOIN)
-	var/datum/faction/changeling/hivemind = find_faction_by_type(/datum/faction/changeling)
-	if(!hivemind)
-		hivemind = create_faction(/datum/faction/changeling)
-		hivemind.OnPostSetup()
+	var/datum/faction/changeling/hivemind = create_uniq_faction(/datum/faction/changeling, post_setup = FALSE, give_objectives = FALSE)
+	hivemind.OnPostSetup()
 	hivemind.HandleRecruitedRole(newChangeling)
+	// ^ should i remake this like roundstarts wizards/traitors/changelings? ^
 	return TRUE
 
 /datum/dynamic_ruleset/latejoin/changeling/previous_rounds_odds_reduction(result)
