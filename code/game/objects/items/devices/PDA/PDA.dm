@@ -988,15 +988,9 @@
 					account.change_salary(U, owner, name, ownrank)
 					break
 		if("Shop")
-			if(!check_pda_server())
-				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
-				return
 			mode = 8
 			shop_lots = list()
 		if("Shop_Category")
-			if(!check_pda_server())
-				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
-				return
 			mode = 81
 			shop_lots = list()
 			category = href_list["categ"]
@@ -1008,6 +1002,7 @@
 		if("Shop_Add_Order_or_Offer")
 			if(!check_pda_server())
 				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
+				mode = 0
 				return
 			var/T = sanitize(input(U, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
 			if(T && istext(T) && owner)
@@ -1015,6 +1010,7 @@
 		if("Shop_Order")
 			if(!check_pda_server())
 				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
+				mode = 0
 				return
 			var/i = text2num(href_list["order_item"])
 			var/list/Lot = shop_lots[i]
@@ -1023,13 +1019,11 @@
 				if(T && istext(T))
 					order_item(Lot["number"], T)
 		if("Shop_Shopping_Cart")
-			if(!check_pda_server())
-				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
-				return
 			mode = 82
 		if("Shop_Mark_As_Delivered")
 			if(!check_pda_server())
 				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
+				mode = 0
 				return
 			var/i = text2num(href_list["delivered_item"])
 			var/datum/shop_lot/Lot = global.online_shop_lots[i]
