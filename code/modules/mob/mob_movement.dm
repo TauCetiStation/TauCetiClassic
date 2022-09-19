@@ -118,13 +118,6 @@
 				else
 					M.stop_pulling()
 
-		//Relaymoves
-		if(mob.buckled) // Wheelchair driving!
-			if(isspaceturf(mob.loc))
-				return // No wheelchair driving in space
-
-			return mob.buckled.relaymove(mob, direct)
-
 		//Calculating delays
 		var/add_delay = 0
 
@@ -149,6 +142,13 @@
 		add_delay += mob.movement_delay()
 
 		move_delay = world.time + add_delay //set move delay
+
+		//Relaymoves
+		if(mob.buckled) // Wheelchair driving!
+			if(isspaceturf(mob.loc))
+				return // No wheelchair driving in space
+
+			return mob.buckled.relaymove(mob, direct)
 
 		//We are now going to move
 		moving = TRUE
@@ -195,10 +195,10 @@
 				n = get_step(get_turf(mob), direct)
 			. = mob.SelfMove(n, direct)
 
-			for(var/obj/item/weapon/grab/G in grabs)
-				if(G.state == GRAB_NECK)
-					mob.set_dir(reverse_dir[direct])
-				G.adjust_position()
+		for(var/obj/item/weapon/grab/G in grabs)
+			if(G.state == GRAB_NECK)
+				mob.set_dir(reverse_dir[direct])
+			G.adjust_position()
 
 		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
 			G.adjust_position()

@@ -81,8 +81,6 @@
 		if((!l_hand || (l_hand.is_stump)) && (!r_hand || (r_hand.is_stump)))
 			return // No hands to drive your chair? Tough luck!
 
-	user.client?.move_delay += 2
-
 	// Let's roll
 	driving = 1
 	var/turf/T = null
@@ -90,6 +88,7 @@
 	if(buckled_mob)
 		buckled_mob.buckled = null
 		step(buckled_mob, direction)
+		buckled_mob.client?.move_delay += 2
 		buckled_mob.buckled = src
 	//--2----Move driver----2--//
 	if(pulling)
