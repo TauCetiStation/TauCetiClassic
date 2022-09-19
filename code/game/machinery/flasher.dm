@@ -39,6 +39,10 @@
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
 
+/obj/machinery/flasher/Destroy()
+	QDEL_NULL(proximity_monitor)
+	return ..()
+
 /obj/machinery/flasher/power_change()
 	if (powered())
 		stat &= ~NOPOWER

@@ -22,6 +22,10 @@
 	. = ..()
 	proximity_monitor = new(src, null, FALSE)
 
+/obj/item/device/assembly/prox_sensor/Destroy()
+	QDEL_NULL(proximity_monitor)
+	return ..()
+
 /obj/item/device/assembly/prox_sensor/activate()
 	if(!..())	return 0//Cooldown check
 	timing = !timing

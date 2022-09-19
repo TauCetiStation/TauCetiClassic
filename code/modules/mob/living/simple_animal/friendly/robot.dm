@@ -34,6 +34,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 
 	var/datum/proximity_monitor/proximity_monitor
 
+/mob/living/simple_animal/det5/Destroy()
+	QDEL_NULL(proximity_monitor)
+	return ..()
+
 /mob/living/simple_animal/det5/Life()
 	..()
 	if(health <= 0)

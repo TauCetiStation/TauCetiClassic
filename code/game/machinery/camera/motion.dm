@@ -6,6 +6,9 @@
 	var/alarm_delay = 100 // Don't forget, there's another 10 seconds in queueAlarm()
 	var/datum/proximity_monitor/proximity_monitor
 
+/obj/machinery/camera/Destroy()
+	QDEL_NULL(proximity_monitor)
+	return ..()
 
 /obj/machinery/camera/process()
 	// motion camera event loop
@@ -17,7 +20,7 @@
 			triggerAlarm()
 	else if (detectTime == -1)
 		for (var/mob/target as anything in motionTargets)
-			if(target.stat == DEAD || QDELING(target))
+			if(QDELETED(target) || target.stat == DEAD)
 				lostTarget(target)
 				return
 			// If not detecting with motion camera...
