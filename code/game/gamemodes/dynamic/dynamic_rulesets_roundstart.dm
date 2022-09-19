@@ -93,7 +93,7 @@
 
 /datum/dynamic_ruleset/roundstart/wizard/acceptable(population = 0, threat = 0)
 	if(!wizardstart.len)
-		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
+		log_mode("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		return FALSE
 	return ..()
@@ -268,7 +268,7 @@
 
 /datum/dynamic_ruleset/roundstart/extended/execute()
 	message_admins("Starting a round of extended.")
-	log_admin("Starting a round of extended.")
+	log_mode("Starting a round of extended.")
 	mode.forced_extended = TRUE
 	return TRUE
 

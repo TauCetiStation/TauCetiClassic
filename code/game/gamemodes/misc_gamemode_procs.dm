@@ -217,3 +217,27 @@
 
 /proc/mode_has_antags()
 	return SSticker.mode.factions.len > 0 || SSticker.mode.orphaned_roles.len > 0
+
+/proc/IsRoundAboutToEnd()
+	//Is the round even already over?
+	if(SSticker.current_state == GAME_STATE_FINISHED)
+		return TRUE
+
+	//Is the shuttle on its way to the station? or to centcomm after having departed from the station?
+	if(SSshuttle.online && SSshuttle.direction > 0)
+		return TRUE
+
+	//Is a nuke currently ticking down?
+	for(var/obj/machinery/nuclearbomb/the_bomba in global.poi_list)
+		if(the_bomba.timing)
+			return TRUE
+
+	//Is some faction about to end the round?
+	var/datum/game_mode/dynamic/dynamic_mode = SSticker.mode
+	if(istype(dynamic_mode))
+		for(var/datum/faction/faction in dynamic_mode.factions)
+			if(faction.stage >= FS_ENDGAME)
+				return TRUE
+
+	//All is well
+	return FALSE

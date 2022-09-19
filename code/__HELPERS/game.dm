@@ -525,11 +525,6 @@
 	winset(C, "mainwindow", "flash=5")
 
 //============VG PORTS============
-// Returns y so that y/x = a/b.
-#define tan(x) (sin(x)/cos(x))
-
-var/global/const/E		= 2.71828183
-var/global/const/Sqrt2	= 1.41421356
 
 // -- Returns a Lorentz-distributed number.
 // -- The probability density function has centre x0 and width s.
@@ -539,10 +534,7 @@ var/global/const/Sqrt2	= 1.41421356
 	return y
 
 /proc/tan_rad(const/x) // This one assumes that x is in radians.
-	return Tan(ToDegrees(x))
-
-/proc/Tan(const/x)
-	return sin(x) / cos(x)
+	return tan(ToDegrees(x))
 
 /proc/ToDegrees(const/radians)
 	// 180 / Pi
@@ -557,47 +549,10 @@ var/global/const/Sqrt2	= 1.41421356
 	var/y = (1/PI)*ToRadians(arctan((x-x0)/s)) + 1/2
 	return y
 
-// -- Returns an exponentially-distributed number.
-// -- The probability density function has mean lambda
-/proc/exp_distribution(desired_mean)
-	if(desired_mean <= 0)
-		desired_mean = 1 // Let's not allow that to happen
-	var/lambda = 1/desired_mean
-
-	var/x = rand()
-	while(x == 1)
-		x = rand()
-	var/y = -(1/lambda)*log(1-x)
-	return y
-
 // -- Returns the Lorentz cummulative distribution of the real x, with mean lambda
 /proc/exp_cummulative_distribution(x, lambda)
-	var/y = 1 - E**(lambda*x)
+	var/y = 1 - EULERS_NUMBER**(lambda*x)
 	return y
-
-/proc/IsRoundAboutToEnd()
-	//Is the round even already over?
-	if(SSticker.current_state == GAME_STATE_FINISHED)
-		return TRUE
-
-	//Is the shuttle on its way to the station? or to centcomm after having departed from the station?
-	if(SSshuttle.online && SSshuttle.direction > 0)
-		return TRUE
-
-	//Is a nuke currently ticking down?
-	for(var/obj/machinery/nuclearbomb/the_bomba in global.poi_list)
-		if(the_bomba.timing)
-			return TRUE
-
-	//Is some faction about to end the round?
-	var/datum/game_mode/dynamic/dynamic_mode = SSticker.mode
-	if(istype(dynamic_mode))
-		for(var/datum/faction/faction in dynamic_mode.factions)
-			if(faction.stage >= FS_ENDGAME)
-				return TRUE
-
-	//All is well
-	return FALSE
 
 /proc/recursive_type_check(atom/O, type = /atom)
 	var/list/processing_list = list(O)

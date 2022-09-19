@@ -89,7 +89,7 @@
 /datum/dynamic_ruleset/proc/ready(forced = FALSE)
 	if(admin_disable_rulesets && !forced)
 		message_admins("Dynamic Mode: [name] was prevented from firing by admins.")
-		log_admin("Dynamic Mode: [name] was prevented from firing by admins.")
+		log_mode("Dynamic Mode: [name] was prevented from firing by admins.")
 		return FALSE
 	if(required_candidates > candidates.len)		//IMPORTANT: If ready() returns 1, that means execute() should never fail!
 		return FALSE
@@ -124,13 +124,13 @@
 		threat = mode.threat_level != 100 ? round(mode.threat_level/10)+1 : 10
 	if(enemies_count < required_enemies[threat])
 		message_admins("Dynamic Mode: There are not enough enemy jobs ready for [name]. ([enemies_count] out of [required_enemies[threat]])")
-		log_admin("Dynamic Mode: There are not enough enemy jobs ready for [name]. ([enemies_count] out of [required_enemies[threat]])")
+		log_mode("Dynamic Mode: There are not enough enemy jobs ready for [name]. ([enemies_count] out of [required_enemies[threat]])")
 		return FALSE
 	if(pop_and_enemies >= required_pop[threat])
 		return TRUE
 	if(!dead_dont_count)//roundstart check only
 		message_admins("Dynamic Mode: Despite [name] having enough candidates, there are not enough enemy jobs and pop ready ([enemies_count] and [mode.roundstart_pop_ready] out of [required_pop[threat]])")
-		log_admin("Dynamic Mode: Despite [name] having enough candidates, there are not enough enemy jobs and pop ready ([enemies_count] and [mode.roundstart_pop_ready] out of [required_pop[threat]])")
+		log_mode("Dynamic Mode: Despite [name] having enough candidates, there are not enough enemy jobs and pop ready ([enemies_count] and [mode.roundstart_pop_ready] out of [required_pop[threat]])")
 	return FALSE
 
 /datum/dynamic_ruleset/proc/get_weight()
@@ -168,7 +168,7 @@
 		message_admins("Possible volunteers was 0. This shouldn't appear, because of ready(), unless you forced it!")
 		return
 	message_admins("DYNAMIC MODE: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
-	log_admin("DYNAMIC MODE: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
+	log_mode("DYNAMIC MODE: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 
 	searching = TRUE
 	var/role_id = initial(role_category.id)
@@ -188,14 +188,14 @@
 				continue
 			to_chat(M, "[logo ? "[bicon(logo_icon)]" : ""]<span class='recruit'>Applications for [initial(role_category.id)] are now closed.</span>[logo ? "[bicon(logo_icon)]" : ""]")
 		if(!applicants || applicants.len <= 0)
-			log_admin("DYNAMIC MODE: [name] received no applications.")
+			log_mode("DYNAMIC MODE: [name] received no applications.")
 			message_admins("DYNAMIC MODE: [name] received no applications.")
 			mode.refund_midround_threat(cost)
 			mode.threat_log += "[worldtime2text()]: Rule [name] refunded [cost] (no applications)"
 			mode.executed_rules -= src
 			return
 
-		log_admin("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
+		log_mode("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
 		message_admins("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
 		review_applications()*/
 
@@ -207,14 +207,14 @@
 			continue
 		to_chat(M, "[logo ? "[bicon(logo_icon)]" : ""]<span class='recruit'>Applications for [initial(role_category.id)] are now closed.</span>[logo ? "[bicon(logo_icon)]" : ""]")
 	if(!applicants || applicants.len <= 0)
-		log_admin("DYNAMIC MODE: [name] received no applications.")
+		log_mode("DYNAMIC MODE: [name] received no applications.")
 		message_admins("DYNAMIC MODE: [name] received no applications.")
 		mode.refund_midround_threat(cost)
 		mode.threat_log += "[worldtime2text()]: Rule [name] refunded [cost] (no applications)"
 		mode.executed_rules -= src
 		return
 
-	log_admin("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
+	log_mode("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
 	message_admins("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
 	review_applications()
 
@@ -282,7 +282,6 @@
 	var/e = 0
 	//------------------------------------------------
 	var/role_id = initial(role_category.id)
-	//var/role_pref = initial(role_category.required_pref)
 	for(var/mob/P in candidates)
 		if(!P.client || !P.mind.assigned_role)//are they connected?
 			candidates.Remove(P)
@@ -309,7 +308,7 @@
 			c++
 			continue
 	message_admins("DYNAMIC MODE: [name] has [candidates.len] valid candidates out of [cand] players ([a ? "[a] disconnected, ":""][b ? "[b] didn't want the role, ":""][b1 ? "[b1] wanted the role but are banned from it, ":""][c1 ? "[c] were protected from the role, " : ""][d ? "[d] were restricted from the role, " : ""][e ? "[e] didn't pick the job necessary for the role" : ""])")
-	log_admin("DYNAMIC MODE: [name] has [candidates.len] valid candidates out of [cand] players ([a ? "[a] disconnected, ":""][b ? "[b] didn't want the role, ":""][b1 ? "[b1] wanted the role but are banned from it, ":""][c1 ? "[c] were protected from the role, " : ""][d ? "[d] were restricted from the role, " : ""][e ? "[e] didn't pick the job necessary for the role" : ""])")
+	log_mode("DYNAMIC MODE: [name] has [candidates.len] valid candidates out of [cand] players ([a ? "[a] disconnected, ":""][b ? "[b] didn't want the role, ":""][b1 ? "[b1] wanted the role but are banned from it, ":""][c1 ? "[c] were protected from the role, " : ""][d ? "[d] were restricted from the role, " : ""][e ? "[e] didn't pick the job necessary for the role" : ""])")
 
 /datum/dynamic_ruleset/roundstart/delayed/trim_candidates()
 	if(SSticker && SSticker.current_state <  GAME_STATE_PLAYING)

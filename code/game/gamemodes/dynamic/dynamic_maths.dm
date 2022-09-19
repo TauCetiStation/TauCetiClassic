@@ -93,10 +93,7 @@
 /datum/game_mode/dynamic/proc/generate_threat()
 	message_admins("Generating threat ; mode is [distribution_mode]")
 	switch(distribution_mode)
-	// Old equation.
-	//threat_level = rand(1,100)*0.6 + rand(1,100)*0.4//https://docs.google.com/spreadsheets/d/1QLN_OBHqeL4cm9zTLEtxlnaJHHUu0IUPzPbsI-DFFmc/edit#gid=499381388
-
-	// New equation : https://docs.google.com/spreadsheets/d/1qnQm5hDdwZoyVmBCtf6-jwwHKEaCnYa3ljmYPs7gkSE/edit#gid=0
+	// Equation : https://docs.google.com/spreadsheets/d/1qnQm5hDdwZoyVmBCtf6-jwwHKEaCnYa3ljmYPs7gkSE/edit#gid=0
 		if(LORENTZ)
 			relative_threat = lorentz_distribution(dynamic_curve_centre, dynamic_curve_width)
 			threat_level = lorentz2threat(relative_threat)
@@ -144,7 +141,7 @@
 			peaceful_percentage = "Undefined"
 
 		if(EXPONENTIAL)
-			relative_threat = exp_distribution(dynamic_curve_centre)
+			relative_threat = EXP_DISTRIBUTION(dynamic_curve_centre)
 			threat_level = exp2threat(relative_threat)
 			threat = round(threat, 0.1)
 
@@ -155,7 +152,7 @@
 			threat = threat_level
 			starting_threat = threat_level
 
-			relative_threat = exp_distribution(dynamic_curve_centre)
+			relative_threat = EXP_DISTRIBUTION(dynamic_curve_centre)
 			midround_threat_level = exp2threat(relative_threat)
 			midround_starting_threat = midround_threat_level
 			midround_threat = midround_threat_level

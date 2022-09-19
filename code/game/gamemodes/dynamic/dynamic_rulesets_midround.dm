@@ -35,7 +35,6 @@
 /datum/dynamic_ruleset/midround/proc/trim_list(list/L = list(), trim_prefs_set_to_no = TRUE)
 	var/list/trimmed_list = L.Copy()
 	var/role_id = initial(role_category.id)
-	//var/role_pref = initial(role_category.required_pref)
 	for(var/mob/M in trimmed_list)
 		if(!M.client)//are they connected?
 			trimmed_list.Remove(M)
@@ -242,7 +241,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/faction_based/raginmages/ready(forced = FALSE)
 	if(!wizardstart.len)
-		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
+		log_mode("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		return FALSE
 	return ..()

@@ -6,7 +6,6 @@
 
 /datum/dynamic_ruleset/latejoin/trim_candidates()
 	var/role_id = initial(role_category.id)
-	//var/role_pref = initial(role_category.required_pref)
 	for(var/mob/P in candidates)
 		if(!P.client || !P.mind || !P.mind.assigned_role)//are they connected?
 			candidates.Remove(P)
@@ -77,7 +76,7 @@
 
 /datum/dynamic_ruleset/latejoin/raginmages/ready(forced = FALSE)
 	if(!wizardstart.len)
-		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
+		log_mode("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		return FALSE
 
