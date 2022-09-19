@@ -19,8 +19,15 @@
 	var/mob/living/carbon/target = null
 	var/chase_time = 0
 
-/obj/item/clothing/mask/facehugger/atom_init()
+	var/datum/proximity_monitor/proximity_monitor
+
+/obj/item/clothing/mask/facehugger/atom_init(mapload, hugger)
 	..()
+	if(hugger)
+		current_hugger = hugger
+		hugger.forceMove(src)
+	else
+		proximity_monitor = new(src, 1)
 	facehuggers_list += src
 	return INITIALIZE_HINT_LATELOAD
 
