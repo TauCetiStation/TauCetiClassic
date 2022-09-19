@@ -273,6 +273,7 @@
 #include "code\datums\mutable_appearance.dm"
 #include "code\datums\particool.dm"
 #include "code\datums\progressbar.dm"
+#include "code\datums\proximity_monitor.dm"
 #include "code\datums\recipe.dm"
 #include "code\datums\runechat.dm"
 #include "code\datums\skills.dm"

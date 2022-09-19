@@ -75,7 +75,7 @@
 	flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
 	use_power(1000)
 
-	for (var/mob/O in viewers(range, src)))
+	for (var/mob/O in viewers(range, src))
 		if (ishuman(O))
 			var/mob/living/carbon/human/H = O
 			if(H.eyecheck() > 0)
@@ -126,7 +126,7 @@
 			to_chat(user, "<span class='warning'>[src] is now secured.</span>")
 			add_overlay("[base_state]-s")
 			proximity_monitor.set_range(1)
-		else(anchored)
+		else
 			to_chat(user, "<span class='warning'>[src] can now be moved.</span>")
 			cut_overlays()
 			proximity_monitor.set_range(0)

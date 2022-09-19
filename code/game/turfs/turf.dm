@@ -154,7 +154,6 @@
 	if(!istype(AM, /atom/movable))
 		return
 
-	var/loopsanity = 100
 	if(ismob(AM))
 		var/mob/M = AM
 		if(!M.lastarea)

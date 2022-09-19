@@ -21,7 +21,7 @@
 
 	var/datum/proximity_monitor/proximity_monitor
 
-/obj/item/clothing/mask/facehugger/atom_init(mapload, hugger)
+/obj/item/clothing/mask/facehugger/atom_init(mapload, mob/hugger)
 	..()
 	if(hugger)
 		current_hugger = hugger
