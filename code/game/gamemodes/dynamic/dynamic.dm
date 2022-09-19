@@ -166,10 +166,10 @@ var/global/stacking_limit = 90
 
 /datum/game_mode/dynamic/can_start()
 	distribution_mode = dynamic_chosen_mode
-	message_admins("Distribution mode is : [dynamic_chosen_mode].")
+	log_mode("Distribution mode is : [dynamic_chosen_mode].")
 	curve_centre_of_round = dynamic_curve_centre
 	curve_width_of_round = dynamic_curve_width
-	message_admins("Curve centre and curve width are : [curve_centre_of_round], [curve_width_of_round]")
+	log_mode("Curve centre and curve width are : [curve_centre_of_round], [curve_width_of_round]")
 	forced_extended = dynamic_forced_extended
 	if(forced_extended)
 		message_admins("The round will be forced to extended.")
@@ -190,10 +190,7 @@ var/global/stacking_limit = 90
 	var/midround_injection_cooldown_middle = 0.5*(MIDROUND_DELAY_MAX + MIDROUND_DELAY_MIN)
 	midround_injection_cooldown = round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), MIDROUND_DELAY_MIN, MIDROUND_DELAY_MAX))
 
-	message_admins("Dynamic Mode initialized with a Threat Level of... [threat_level] and [midround_threat_level] for midround!")
 	log_mode("Dynamic Mode initialized with a Threat Level of... [threat_level] and [midround_threat_level] for midround!")
-
-	message_admins("Parameters were: centre = [curve_centre_of_round], width = [curve_width_of_round].")
 	log_mode("Parameters were: centre = [curve_centre_of_round], width = [curve_width_of_round].")
 
 	var/rst_pop = 0
@@ -201,13 +198,11 @@ var/global/stacking_limit = 90
 		if(player.mind)
 			rst_pop++
 	if(rst_pop >= high_pop_limit)
-		message_admins("DYNAMIC MODE: Mode: High Population Override is in effect! ([rst_pop]/[high_pop_limit]) Threat Level will have more impact on which roles will appear, and player population less.")
 		log_mode("DYNAMIC MODE: High Population Override is in effect! ([rst_pop]/[high_pop_limit]) Threat Level will have more impact on which roles will appear, and player population less.")
 
 	if(round(threat_level*10) == 666)
 		//forced_roundstart_ruleset += new /datum/dynamic_ruleset/roundstart/bloodcult()
 		log_mode("DYNAMIC MODE: 666 threat override.")
-		message_admins("DYNAMIC MODE: 666 threat override.", 1)
 
 	return TRUE
 
@@ -221,14 +216,11 @@ var/global/stacking_limit = 90
 		if(initial(DR.weight))
 			midround_rules += new rule()
 	candidates += get_ready_players()
-	message_admins("DYNAMIC MODE: Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
 	log_mode("DYNAMIC MODE: Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
 	if(!candidates.len)
-		message_admins("DYNAMIC MODE: Not a single player readied-up. The round will begin without any roles assigned.")
 		log_mode("DYNAMIC MODE: Not a single player readied-up. The round will begin without any roles assigned.")
 		return TRUE
 	if(!roundstart_rules.len)
-		message_admins("DYNAMIC MODE: There are no roundstart rules within the code, what the fuck? The round will begin without any roles assigned.")
 		log_mode("DYNAMIC MODE: There are no roundstart rules within the code, what the fuck? The round will begin without any roles assigned.")
 		return TRUE
 	if(forced_roundstart_ruleset.len)
@@ -243,7 +235,6 @@ var/global/stacking_limit = 90
 	return TRUE
 
 /datum/game_mode/dynamic/proc/rigged_roundstart()
-	message_admins("DYNAMIC MODE: [forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
 	log_mode("DYNAMIC MODE: [forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
 	var/forced_rules = 0
 
@@ -257,15 +248,12 @@ var/global/stacking_limit = 90
 					rule.calledBy = forced_rule.calledBy
 					if(!rule.choose_candidates())
 						stack_trace("rule [rule] failed to choose candidates despite ready() returning 1.")
-
-					message_admins("DYNAMIC MODE: <font size='3'>[rule.name]</font> successfully forced!")
 					log_mode("DYNAMIC MODE: <font size='3'>[rule.name]</font> successfully forced!")
 
 					//we don't spend threat on forced rulesets
 					threat_log += "[worldtime2text()]: Roundstart [rule.name] forced"
 
 					if(istype(rule, /datum/dynamic_ruleset/roundstart/delayed))
-						message_admins("DYNAMIC MODE: with a delay of [rule:delay/10] seconds.")
 						log_mode("DYNAMIC MODE: with a delay of [rule:delay/10] seconds.")
 						return pick_delay(rule)
 
@@ -278,17 +266,14 @@ var/global/stacking_limit = 90
 							candidates -= M
 						return TRUE
 					else
-						message_admins("DYNAMIC MODE: ....except not because whomever coded that ruleset forgot some cases in ready() apparently! execute() returned 0.")
 						log_mode("DYNAMIC MODE: ....except not because whomever coded that ruleset forgot some cases in ready() apparently! execute() returned 0.")
 
 	if(!forced_rules)
-		message_admins("DYNAMIC MODE: Not a single forced ruleset could be executed. Sad! Will now start a regular round of dynamic.")
 		log_mode("DYNAMIC MODE: Not a single forced ruleset could be executed. Sad! Will now start a regular round of dynamic.")
 		roundstart()
 
 /datum/game_mode/dynamic/proc/roundstart()
 	if(forced_extended)
-		message_admins("DYNAMIC MODE: Starting a round of forced extended.")
 		log_mode("DYNAMIC MODE: Starting a round of forced extended.")
 		return TRUE
 
@@ -314,7 +299,6 @@ var/global/stacking_limit = 90
 					extra_rulesets_amount++
 
 	if(extra_rulesets_amount && prob(50))
-		message_admins("DYNAMIC MODE: Rather than extra rulesets, we'll try to draft spicier ones.")
 		log_mode("DYNAMIC MODE: Rather than extra rulesets, we'll try to draft spicier ones.")
 		highlander_rulesets_favoured = TRUE
 		extra_rulesets_amount = 0
@@ -331,10 +315,8 @@ var/global/stacking_limit = 90
 				drafted_rules[rule] = rule.get_weight()
 
 	if(classic_secret)
-		message_admins("DYNAMIC MODE: Classic secret was forced.")
 		log_mode("DYNAMIC MODE: Classic secret was forced.")
 	else
-		message_admins("DYNAMIC MODE: [i] rulesets qualify for the current pop and threat level, including [drafted_rules.len] with eligible candidates.")
 		log_mode("DYNAMIC MODE: [i] rulesets qualify for the current pop and threat level, including [drafted_rules.len] with eligible candidates.")
 
 	var/list/datum/dynamic_ruleset/roundstart/candidate_rules = list()
@@ -354,7 +336,6 @@ var/global/stacking_limit = 90
 
 		// 4. Adding to the LIST.
 		if(chosen_one)
-			message_admins("DYNAMIC MODE: Picking a [istype(chosen_one, /datum/dynamic_ruleset/roundstart/delayed) ? " delayed " : ""] ruleset...<font size='3'>[chosen_one.name]</font>!")
 			log_mode("DYNAMIC MODE: Picking a [istype(chosen_one, /datum/dynamic_ruleset/roundstart/delayed) ? " delayed " : ""] ruleset...<font size='3'>[chosen_one.name]</font>!")
 			candidate_rules += chosen_one
 			drafted_rules -= chosen_one
@@ -369,7 +350,6 @@ var/global/stacking_limit = 90
 			executing_roundstart_rule(DR)
 		return TRUE
 	else
-		message_admins("DYNAMIC MODE: The mode failed to pick a first ruleset. The round will begin without any roles assigned.")
 		log_mode("DYNAMIC MODE: The mode failed to pick a first ruleset. The round will begin without any roles assigned.")
 		return FALSE
 
@@ -379,13 +359,11 @@ var/global/stacking_limit = 90
 /datum/game_mode/dynamic/proc/picking_roundstart_rule(list/drafted_rules = list(), list/candidate_rules = list())
 	var/datum/dynamic_ruleset/my_rule = null
 	while(!my_rule && drafted_rules.len)
-		message_admins("DYNAMIC MODE: Drafted rules: [json_encode(drafted_rules)]")
 		log_mode("DYNAMIC MODE: Drafted rules: [json_encode(drafted_rules)]")
 		my_rule = pickweight(drafted_rules)
 		if(threat < stacking_limit && no_stacking)
 			for(var/datum/dynamic_ruleset/roundstart/DR in candidate_rules + executed_rules)
 				if((DR.flags & HIGHLANDER_RULESET) && (my_rule.flags & HIGHLANDER_RULESET))
-					message_admins("DYNAMIC MODE: Ruleset [my_rule.name] refused as we already have a round-ending ruleset.")
 					log_mode("DYNAMIC MODE: Ruleset [my_rule.name] refused as we already have a round-ending ruleset.")
 					drafted_rules -= my_rule
 					my_rule = null
@@ -402,7 +380,7 @@ var/global/stacking_limit = 90
 			rule.candidates -= M//removing the assigned players from the candidates for the other rules
 			if(!rule.ready())
 				drafted_rules -= rule//and removing rules that are no longer eligible
-				message_admins("[rule] no longer valid for picking.")
+				log_mode("[rule] no longer valid for picking.")
 	return drafted_rules
 
 // -- Executing a rule, which means spawning the traitor, removing the threat cost, etc.
@@ -410,7 +388,6 @@ var/global/stacking_limit = 90
 // returns: 0 or 1 depending on success. (failure meaning something runtimed mid-code.)
 /datum/game_mode/dynamic/proc/executing_roundstart_rule(datum/dynamic_ruleset/the_rule)
 	if(istype(the_rule, /datum/dynamic_ruleset/roundstart/delayed))
-		message_admins("DYNAMIC MODE: Delayed ruleset, with a delay of [the_rule:delay/10] seconds.")
 		log_mode("DYNAMIC MODE: Delayed ruleset, with a delay of [the_rule:delay/10] seconds.")
 		threat_log += "[worldtime2text()]: Roundstart [the_rule.name] spent [the_rule.cost]"
 		return pick_delay(the_rule)
@@ -422,7 +399,6 @@ var/global/stacking_limit = 90
 		if(the_rule.persistent)
 			current_rules += the_rule
 	else
-		message_admins("DYNAMIC MODE: ....except not because whomever coded that ruleset forgot some cases in ready() apparently! execute() returned 0.")
 		log_mode("DYNAMIC MODE: ....except not because whomever coded that ruleset forgot some cases in ready() apparently! execute() returned 0.")
 		return FALSE
 
@@ -438,7 +414,6 @@ var/global/stacking_limit = 90
 			if(rule.persistent)
 				current_rules += rule
 		else
-			message_admins("DYNAMIC MODE: ....except not because whomever coded that ruleset forgot some cases in ready() apparently! execute() returned 0.")
 			log_mode("DYNAMIC MODE: ....except not because whomever coded that ruleset forgot some cases in ready() apparently! execute() returned 0.")
 	return TRUE
 
@@ -453,7 +428,6 @@ var/global/stacking_limit = 90
 		if(latejoin_rule.execute())//this should never fail since ready() returned 1
 			latejoin_rule.stillborn = IsRoundAboutToEnd()
 			var/mob/M = pick(latejoin_rule.assigned)
-			message_admins("DYNAMIC MODE: [key_name(M)] joined the station, and was selected by the <font size='3'>[latejoin_rule.name]</font> ruleset.")
 			log_mode("DYNAMIC MODE: [key_name(M)] joined the station, and was selected by the [latejoin_rule.name] ruleset.")
 			executed_rules += latejoin_rule
 			if(latejoin_rule.persistent)
@@ -472,7 +446,6 @@ var/global/stacking_limit = 90
 		threat_log += "[worldtime2text()]: Midround [midround_rule.name] spent [midround_rule.cost] (midround budget)"
 		if(midround_rule.execute())//this should never fail since ready() returned 1
 			midround_rule.stillborn = IsRoundAboutToEnd()
-			message_admins("DYNAMIC MODE: Injecting some threats...<font size='3'>[midround_rule.name]</font>!")
 			log_mode("DYNAMIC MODE: Injecting some threats...[midround_rule.name]!")
 			executed_rules += midround_rule
 			if(midround_rule.persistent)
@@ -488,7 +461,6 @@ var/global/stacking_limit = 90
 	else if(istype(ruletype,/datum/dynamic_ruleset))
 		new_rule = ruletype
 	else
-		message_admins("DYNAMIC MODE: The specific ruleset failed beacuse a type other than a path or rule was sent.")
 		log_mode("DYNAMIC MODE: The specific ruleset failed beacuse a type other than a path or rule was sent.")
 		return
 	if(caller)
@@ -508,14 +480,12 @@ var/global/stacking_limit = 90
 			threat_log += "[worldtime2text()]: Forced rule [new_rule.name] spent [new_rule.cost]"
 			if(new_rule.execute())//this should never fail since ready() returned 1
 				new_rule.stillborn = IsRoundAboutToEnd()
-				message_admins("Making a call to a specific ruleset...<font size='3'>[new_rule.name]</font>!")
 				log_mode("Making a call to a specific ruleset...[new_rule.name]!")
 				executed_rules += new_rule
 				if(new_rule.persistent)
 					current_rules += new_rule
 				return TRUE
 		else if(forced)
-			message_admins("DYNAMIC MODE: The ruleset couldn't be executed due to lack of eligible players.")
 			log_mode("DYNAMIC MODE: The ruleset couldn't be executed due to lack of eligible players.")
 	return FALSE
 
@@ -541,7 +511,6 @@ var/global/stacking_limit = 90
 		if(SSshuttle.departed)//unless the shuttle is gone
 			return
 
-		message_admins("DYNAMIC MODE: Checking state of the round.")
 		log_mode("DYNAMIC MODE: Checking state of the round.")
 
 		update_playercounts()
@@ -559,7 +528,7 @@ var/global/stacking_limit = 90
 				if(rule.acceptable(living_players.len,midround_threat_level) && midround_threat >= rule.cost)
 					// Classic secret : only autotraitor/minor roles
 					if(classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
-						message_admins("[rule] was refused because we're on classic secret mode.")
+						log_mode("[rule] was refused because we're on classic secret mode.")
 						continue
 					// No stacking : only one round-enter, unless > stacking_limit threat.
 					if(midround_threat < stacking_limit && no_stacking)
@@ -569,7 +538,7 @@ var/global/stacking_limit = 90
 								skip_ruleset = TRUE
 								break
 						if(skip_ruleset)
-							message_admins("[rule] was refused because we already have a round-ender ruleset.")
+							log_mode("[rule] was refused because we already have a round-ender ruleset.")
 							continue
 					rule.candidates = list()
 					rule.candidates = current_players.Copy()
@@ -579,11 +548,9 @@ var/global/stacking_limit = 90
 						drafted_rules[rule] = rule.get_weight()
 
 			if(drafted_rules.len)
-				message_admins("DYNAMIC MODE: [drafted_rules.len] eligible rulesets.")
 				log_mode("DYNAMIC MODE: [drafted_rules.len] eligible rulesets.")
 				picking_midround_rule(drafted_rules)
 			else
-				message_admins("DYNAMIC MODE: Couldn't ready-up a single ruleset. Lack of eligible candidates, population, or threat.")
 				log_mode("DYNAMIC MODE: Couldn't ready-up a single ruleset. Lack of eligible candidates, population, or threat.")
 		else
 			midround_injection_cooldown = rand(600,1050)
@@ -638,13 +605,10 @@ var/global/stacking_limit = 90
 //will need to gather stats to refine those values later
 /datum/game_mode/dynamic/proc/injection_attempt()
 	var/chance = GetInjectionChance()
-	message_admins("DYNAMIC MODE: Chance of injection with the current player numbers and threat level is...[chance]%.")
 	log_mode("DYNAMIC MODE: Chance of injection with the current player numbers and threat level is...[chance]%.")
 	if(prob(chance))
-		message_admins("DYNAMIC MODE: Check passed! Looking for a valid ruleset to execute.")
 		log_mode("DYNAMIC MODE: Check passed! Looking for a valid ruleset to execute.")
 		return TRUE
-	message_admins("DYNAMIC MODE: Check failed!")
 	log_mode("DYNAMIC MODE: Check failed!")
 	return FALSE
 
@@ -665,7 +629,7 @@ var/global/stacking_limit = 90
 	if(forced_latejoin_rule)
 		forced_latejoin_rule.candidates = list(newPlayer)
 		forced_latejoin_rule.trim_candidates()
-		message_admins("Forcing ruleset [forced_latejoin_rule]")
+		log_mode("Forcing ruleset [forced_latejoin_rule]")
 		if(forced_latejoin_rule.ready(TRUE))
 			if(forced_latejoin_rule.choose_candidates())
 				picking_latejoin_rule(list(forced_latejoin_rule))
@@ -677,7 +641,7 @@ var/global/stacking_limit = 90
 			if(rule.acceptable(living_players.len,midround_threat_level) && midround_threat >= rule.cost)
 				// Classic secret : only autotraitor/minor roles
 				if(classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
-					message_admins("[rule] was refused because we're on classic secret mode.")
+					log_mode("[rule] was refused because we're on classic secret mode.")
 					continue
 				// No stacking : only one round-enter, unless > stacking_limit threat.
 				if(midround_threat < stacking_limit && no_stacking)
@@ -687,7 +651,7 @@ var/global/stacking_limit = 90
 							skip_ruleset = TRUE
 							break
 					if(skip_ruleset)
-						message_admins("[rule] was refused because we already have a round-ender ruleset.")
+						log_mode("[rule] was refused because we already have a round-ender ruleset.")
 						continue
 				rule.candidates = list(newPlayer)
 				rule.trim_candidates()
@@ -744,15 +708,15 @@ var/global/stacking_limit = 90
 			for(var/datum/dynamic_ruleset/roundstart/DR in rules_to_simulate)
 				if((DR.flags & HIGHLANDER_RULESET) && (to_test.flags & HIGHLANDER_RULESET))
 					skip_ruleset = TRUE
-					message_admins("Skipping ruleset")
+					log_mode("Skipping ruleset")
 					break
 			if(skip_ruleset)
-				message_admins("The rule was not added, because we already have a round-ender.")
+				log_mode("The rule was not added, because we already have a round-ender.")
 			else
-				message_admins("The rule was accepted.")
+				log_mode("The rule was accepted.")
 				rules_to_simulate += to_test
 		else
-			message_admins("The rule was accepted (no-stacking not active.)")
+			log_mode("The rule was accepted (no-stacking not active.)")
 			rules_to_simulate += to_test
 
 /datum/game_mode/dynamic/proc/simulate_midround_injection(mob/user = usr)
@@ -784,7 +748,7 @@ var/global/stacking_limit = 90
 	// Concrete testing
 
 	if(classic_secret && !((to_test.flags & TRAITOR_RULESET) || (to_test.flags & MINOR_RULESET)))
-		message_admins("[to_test] was refused because we're on classic secret mode.")
+		log_mode("[to_test] was refused because we're on classic secret mode.")
 		return
 	// No stacking : only one round-enter, unless > stacking_limit threat.
 	if(threat < stacking_limit && no_stacking)
@@ -793,10 +757,10 @@ var/global/stacking_limit = 90
 			if((DR.flags & HIGHLANDER_RULESET) && (to_test.flags & HIGHLANDER_RULESET))
 				skip_ruleset = TRUE
 			if(skip_ruleset)
-				message_admins("[to_test] was refused because we already have a round-ender ruleset.")
+				log_mode("[to_test] was refused because we already have a round-ender ruleset.")
 				return
 
-	message_admins("The rule was accepted.")
+	log_mode("The rule was accepted.")
 
 /datum/game_mode/dynamic/proc/simulate_latejoin_injection(mob/user = usr)
 	// Picking part
@@ -827,7 +791,7 @@ var/global/stacking_limit = 90
 	// Concrete testing
 
 	if(classic_secret && !((to_test.flags & TRAITOR_RULESET) || (to_test.flags & MINOR_RULESET)))
-		message_admins("[to_test] was refused because we're on classic secret mode.")
+		log_mode("[to_test] was refused because we're on classic secret mode.")
 		return
 	// No stacking : only one round-enter, unless > stacking_limit threat.
 	if(threat < stacking_limit && no_stacking)
@@ -837,10 +801,10 @@ var/global/stacking_limit = 90
 				skip_ruleset = TRUE
 				break
 		if(skip_ruleset)
-			message_admins("[to_test] was refused because we already have a round-ender ruleset.")
+			log_mode("[to_test] was refused because we already have a round-ender ruleset.")
 			return
 
-	message_admins("The rule was accepted.")
+	log_mode("The rule was accepted.")
 
 /datum/game_mode/dynamic/proc/update_stillborn_rulesets()
 	for(var/datum/dynamic_ruleset/ruleset in executed_rules)

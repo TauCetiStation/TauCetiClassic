@@ -46,7 +46,7 @@
 	if(istype(SSticker.mode, /datum/game_mode/dynamic))
 		mode = SSticker.mode
 	else
-		message_admins("A dynamic ruleset was created but server isn't on Dynamic Mode!")
+		log_mode("A dynamic ruleset was created but server isn't on Dynamic Mode!")
 		qdel(src)
 
 /datum/dynamic_ruleset/roundstart//One or more of those drafted at roundstart
@@ -88,7 +88,6 @@
 //Here you can perform any additional checks you want. (such as checking the map, the amount of certain jobs, etc)
 /datum/dynamic_ruleset/proc/ready(forced = FALSE)
 	if(admin_disable_rulesets && !forced)
-		message_admins("Dynamic Mode: [name] was prevented from firing by admins.")
 		log_mode("Dynamic Mode: [name] was prevented from firing by admins.")
 		return FALSE
 	if(required_candidates > candidates.len)		//IMPORTANT: If ready() returns 1, that means execute() should never fail!
@@ -123,13 +122,11 @@
 	else
 		threat = mode.threat_level != 100 ? round(mode.threat_level/10)+1 : 10
 	if(enemies_count < required_enemies[threat])
-		message_admins("Dynamic Mode: There are not enough enemy jobs ready for [name]. ([enemies_count] out of [required_enemies[threat]])")
 		log_mode("Dynamic Mode: There are not enough enemy jobs ready for [name]. ([enemies_count] out of [required_enemies[threat]])")
 		return FALSE
 	if(pop_and_enemies >= required_pop[threat])
 		return TRUE
 	if(!dead_dont_count)//roundstart check only
-		message_admins("Dynamic Mode: Despite [name] having enough candidates, there are not enough enemy jobs and pop ready ([enemies_count] and [mode.roundstart_pop_ready] out of [required_pop[threat]])")
 		log_mode("Dynamic Mode: Despite [name] having enough candidates, there are not enough enemy jobs and pop ready ([enemies_count] and [mode.roundstart_pop_ready] out of [required_pop[threat]])")
 	return FALSE
 
@@ -144,7 +141,7 @@
 
 	if(mode.highlander_rulesets_favoured && (flags & HIGHLANDER_RULESET))
 		result *= ADDITIONAL_RULESET_WEIGHT
-	message_admins("[name] had [result] weight (-[initial(weight) - result]).")
+	log_mode("[name] had [result] weight (-[initial(weight) - result]).")
 	return result
 
 //Return a multiplicative weight. 1 for nothing special.
@@ -165,9 +162,8 @@
 
 /datum/dynamic_ruleset/proc/send_applications(list/possible_volunteers = list())
 	if(possible_volunteers.len <= 0)//this shouldn't happen, as ready() should return 0 if there is not a single valid candidate
-		message_admins("Possible volunteers was 0. This shouldn't appear, because of ready(), unless you forced it!")
+		log_mode("Possible volunteers was 0. This shouldn't appear, because of ready(), unless you forced it!")
 		return
-	message_admins("DYNAMIC MODE: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	log_mode("DYNAMIC MODE: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 
 	searching = TRUE
@@ -189,14 +185,12 @@
 			to_chat(M, "[logo ? "[bicon(logo_icon)]" : ""]<span class='recruit'>Applications for [initial(role_category.id)] are now closed.</span>[logo ? "[bicon(logo_icon)]" : ""]")
 		if(!applicants || applicants.len <= 0)
 			log_mode("DYNAMIC MODE: [name] received no applications.")
-			message_admins("DYNAMIC MODE: [name] received no applications.")
 			mode.refund_midround_threat(cost)
 			mode.threat_log += "[worldtime2text()]: Rule [name] refunded [cost] (no applications)"
 			mode.executed_rules -= src
 			return
 
 		log_mode("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
-		message_admins("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
 		review_applications()*/
 
 //another proc for deleting SPAWN(1 minutes)
@@ -208,14 +202,12 @@
 		to_chat(M, "[logo ? "[bicon(logo_icon)]" : ""]<span class='recruit'>Applications for [initial(role_category.id)] are now closed.</span>[logo ? "[bicon(logo_icon)]" : ""]")
 	if(!applicants || applicants.len <= 0)
 		log_mode("DYNAMIC MODE: [name] received no applications.")
-		message_admins("DYNAMIC MODE: [name] received no applications.")
 		mode.refund_midround_threat(cost)
 		mode.threat_log += "[worldtime2text()]: Rule [name] refunded [cost] (no applications)"
 		mode.executed_rules -= src
 		return
 
 	log_mode("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
-	message_admins("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
 	review_applications()
 
 /datum/dynamic_ruleset/proc/review_applications()
@@ -307,7 +299,6 @@
 			candidates.Remove(P)
 			c++
 			continue
-	message_admins("DYNAMIC MODE: [name] has [candidates.len] valid candidates out of [cand] players ([a ? "[a] disconnected, ":""][b ? "[b] didn't want the role, ":""][b1 ? "[b1] wanted the role but are banned from it, ":""][c1 ? "[c] were protected from the role, " : ""][d ? "[d] were restricted from the role, " : ""][e ? "[e] didn't pick the job necessary for the role" : ""])")
 	log_mode("DYNAMIC MODE: [name] has [candidates.len] valid candidates out of [cand] players ([a ? "[a] disconnected, ":""][b ? "[b] didn't want the role, ":""][b1 ? "[b1] wanted the role but are banned from it, ":""][c1 ? "[c] were protected from the role, " : ""][d ? "[d] were restricted from the role, " : ""][e ? "[e] didn't pick the job necessary for the role" : ""])")
 
 /datum/dynamic_ruleset/roundstart/delayed/trim_candidates()
@@ -343,7 +334,7 @@
 	if(tgui_alert(user, "The gamemode is trying to select you for [src]","Do you want this?", list("Yes","No")) == "Yes")
 		return TRUE
 	user.forceMove(oldloc)
-	message_admins("[user.key] has opted out of [src].")
+	log_mode("[user.key] has opted out of [src].")
 	return FALSE
 
 /datum/dynamic_ruleset/proc/generate_ruleset_body(mob/applicant)

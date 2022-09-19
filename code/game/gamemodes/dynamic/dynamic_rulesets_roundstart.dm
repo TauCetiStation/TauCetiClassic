@@ -94,7 +94,6 @@
 /datum/dynamic_ruleset/roundstart/wizard/acceptable(population = 0, threat = 0)
 	if(!wizardstart.len)
 		log_mode("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
-		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		return FALSE
 	return ..()
 
@@ -195,7 +194,7 @@
 /datum/dynamic_ruleset/roundstart/nuclear/choose_candidates()
 	var/indice_pop = min(10, round(mode.roundstart_pop_ready / 5) + 1)
 	var/operatives = operative_cap[indice_pop]
-	message_admins("[name]: indice_pop = [indice_pop], operatives = [operatives]")
+	log_mode("[name]: indice_pop = [indice_pop], operatives = [operatives]")
 	for(var/operatives_number = 1 to operatives)
 		if(candidates.len <= 0)
 			break
@@ -267,7 +266,6 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/extended/execute()
-	message_admins("Starting a round of extended.")
 	log_mode("Starting a round of extended.")
 	mode.forced_extended = TRUE
 	return TRUE

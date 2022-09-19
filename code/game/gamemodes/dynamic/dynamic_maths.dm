@@ -91,7 +91,7 @@
 	return y
 
 /datum/game_mode/dynamic/proc/generate_threat()
-	message_admins("Generating threat ; mode is [distribution_mode]")
+	log_mode("Generating threat ; mode is [distribution_mode]")
 	switch(distribution_mode)
 	// Equation : https://docs.google.com/spreadsheets/d/1qnQm5hDdwZoyVmBCtf6-jwwHKEaCnYa3ljmYPs7gkSE/edit#gid=0
 		if(LORENTZ)

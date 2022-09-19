@@ -77,7 +77,6 @@
 /datum/dynamic_ruleset/latejoin/raginmages/ready(forced = FALSE)
 	if(!wizardstart.len)
 		log_mode("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
-		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		return FALSE
 
 	return ..()

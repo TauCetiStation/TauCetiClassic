@@ -96,19 +96,19 @@
 			if(applicant.stat == DEAD) //Not an observer? If they're dead, make them one.
 				applicant = applicant.ghostize(FALSE)
 			else //Not dead? Disregard them, pick a new applicant
-				message_admins("[name]: Rule could not use [applicant], not dead.")
+				log_mode("[name]: Rule could not use [applicant], not dead.")
 				i++
 				continue
 
 		if(!applicant)
-			message_admins("[name]: Applicant was null. This may be caused if the mind changed bodies after applying.")
+			log_mode("[name]: Applicant was null. This may be caused if the mind changed bodies after applying.")
 			i++
 			continue
 		if(!applicant.key)
-			message_admins("[name] was chosen but he logged out, picking another...")
+			log_mode("[name] was chosen but he logged out, picking another...")
 			i++
 			continue
-		message_admins("DEBUG: Selected [applicant] for rule.")
+		log_mode("DEBUG: Selected [applicant] for rule.")
 
 		var/mob/new_character = applicant
 
@@ -242,7 +242,6 @@
 /datum/dynamic_ruleset/midround/from_ghosts/faction_based/raginmages/ready(forced = FALSE)
 	if(!wizardstart.len)
 		log_mode("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
-		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		return FALSE
 	return ..()
 
