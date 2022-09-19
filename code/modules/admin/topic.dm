@@ -1131,8 +1131,7 @@
 			forcedrule.name = added_rule
 			forcedrule.calledBy = "[key_name(usr)]"
 			forced_roundstart_ruleset += forcedrule
-			log_admin("[key_name(usr)] set [added_rule] to be a forced roundstart ruleset.")
-			message_admins("[key_name(usr)] set [added_rule] to be a forced roundstart ruleset.", 1)
+			log_mode("[key_name(usr)] set [added_rule] to be a forced roundstart ruleset.")
 			Game()
 
 	else if(href_list["f_dynamic_roundstart_clear"])
@@ -1143,8 +1142,7 @@
 			qdel(rule)
 		forced_roundstart_ruleset = list()
 		Game()
-		log_admin("[key_name(usr)] cleared the rigged roundstart rulesets. The mode will pick them as normal.")
-		message_admins("[key_name(usr)] cleared the rigged roundstart rulesets. The mode will pick them as normal.", 1)
+		log_mode("[key_name(usr)] cleared the rigged roundstart rulesets. The mode will pick them as normal.")
 
 
 	else if(href_list["f_dynamic_roundstart_remove"])
@@ -1155,8 +1153,7 @@
 		forced_roundstart_ruleset -= rule
 		qdel(rule)
 		Game()
-		log_admin("[key_name(usr)] removed [rule] from the forced roundstart rulesets.")
-		message_admins("[key_name(usr)] removed [rule] from the forced roundstart rulesets.", 1)
+		log_mode("[key_name(usr)] removed [rule] from the forced roundstart rulesets.")
 
 
 	else if(href_list["f_dynamic_latejoin"])
@@ -1176,8 +1173,7 @@
 			var/datum/game_mode/dynamic/mode = SSticker.mode
 			latejoin_rules[added_rule].calledBy = "[key_name(usr)]"
 			mode.forced_latejoin_rule = latejoin_rules[added_rule]
-			log_admin("[key_name(usr)] set [added_rule] to proc on the next latejoin.")
-			message_admins("[key_name(usr)] set [added_rule] to proc on the next latejoin.", 1)
+			log_mode("[key_name(usr)] set [added_rule] to proc on the next latejoin.")
 			Game()
 
 	else if(href_list["f_dynamic_latejoin_clear"])
@@ -1188,8 +1184,7 @@
 			var/datum/game_mode/dynamic/mode = SSticker.mode
 			mode.forced_latejoin_rule = null
 			Game()
-			log_admin("[key_name(usr)] cleared the forced latejoin ruleset.")
-			message_admins("[key_name(usr)] cleared the forced latejoin ruleset.", 1)
+			log_mode("[key_name(usr)] cleared the forced latejoin ruleset.")
 
 	else if(href_list["f_dynamic_midround"])
 		if(!check_rights(R_ADMIN))
@@ -1206,8 +1201,7 @@
 		var/added_rule = input(usr,"What ruleset do you want to force right now? This will bypass threat level and population restrictions.", "Execute Ruleset", null) as null|anything in midround_rules
 		if(added_rule)
 			var/datum/game_mode/dynamic/mode = SSticker.mode
-			log_admin("[key_name(usr)] executed the [added_rule] ruleset.")
-			message_admins("[key_name(usr)] executed the [added_rule] ruleset.", 1)
+			log_mode("[key_name(usr)] executed the [added_rule] ruleset.")
 			mode.picking_specific_rule(midround_rules[added_rule],1,"[key_name(usr)]")
 
 	// -- Opens up the option window --
@@ -1246,8 +1240,7 @@
 			if(new_centre < -5 || new_centre > 5)
 				return to_chat(usr, "Only values between -5 and +5 are allowed.")
 
-		log_admin("[key_name(usr)] changed the distribution curve center to [new_centre].")
-		message_admins("[key_name(usr)] changed the distribution curve center to [new_centre]", 1)
+		log_mode("[key_name(usr)] changed the distribution curve center to [new_centre].")
 		dynamic_curve_centre = new_centre
 		dynamic_mode_options(usr)
 
@@ -1264,8 +1257,7 @@
 		if(new_width < 0.5 || new_width > 4)
 			return to_chat(usr, "Only values between 0.5 and +2.5 are allowed.")
 
-		log_admin("[key_name(usr)] changed the distribution curve width to [new_width].")
-		message_admins("[key_name(usr)] changed the distribution curve width to [new_width]", 1)
+		log_mode("[key_name(usr)] changed the distribution curve width to [new_width].")
 		dynamic_curve_width = new_width
 		dynamic_mode_options(usr)
 
@@ -1277,8 +1269,7 @@
 			return to_chat(usr, "The game mode has to be Dynamic Mode!")
 
 		dynamic_forced_extended = !dynamic_forced_extended
-		log_admin("[key_name(usr)] set 'forced_extended' to [dynamic_forced_extended].")
-		message_admins("[key_name(usr)] set 'forced_extended' to [dynamic_forced_extended].")
+		log_mode("[key_name(usr)] set 'forced_extended' to [dynamic_forced_extended].")
 		dynamic_mode_options(usr)
 
 	else if(href_list["toggle_rulesets"])
@@ -1289,8 +1280,7 @@
 			return to_chat(usr, "The game mode has to be Dynamic Mode!")
 
 		global.admin_disable_rulesets = !global.admin_disable_rulesets
-		log_admin("[key_name(usr)] toggled Dynamic rulesets <b>[global.admin_disable_rulesets ? "OFF" : "ON"]</b>.")
-		message_admins("[key_name(usr)] toggled Dynamic rulesets <b>[global.admin_disable_rulesets ? "OFF" : "ON"]</b>.")
+		log_mode("[key_name(usr)] toggled Dynamic rulesets <b>[global.admin_disable_rulesets ? "OFF" : "ON"]</b>.")
 		Game()
 
 	else if(href_list["stacking_limit"])
@@ -1301,8 +1291,7 @@
 			return to_chat(usr, "The game mode has to be Dynamic Mode!")
 
 		stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
-		log_admin("[key_name(usr)] set 'stacking_limit' to [stacking_limit].")
-		message_admins("[key_name(usr)] set 'stacking_limit' to [stacking_limit].")
+		log_mode("[key_name(usr)] set 'stacking_limit' to [stacking_limit].")
 		dynamic_mode_options(usr)
 
 	else if(href_list["high_pop_limit"])
@@ -1320,8 +1309,7 @@
 			return to_chat(usr, "Only positive values allowed!")
 		dynamic_high_pop_limit = new_value
 
-		log_admin("[key_name(usr)] set 'dynamic_high_pop_limit' to [dynamic_high_pop_limit].")
-		message_admins("[key_name(usr)] set 'dynamic_high_pop_limit' to [dynamic_high_pop_limit].")
+		log_mode("[key_name(usr)] set 'dynamic_high_pop_limit' to [dynamic_high_pop_limit].")
 		dynamic_mode_options(usr)
 
 	else if(href_list["change_distrib"])
@@ -1353,8 +1341,7 @@
 			dynamic_curve_centre = 1
 		else
 			dynamic_curve_centre = 0
-		log_admin("[key_name(usr)] set the distribution mode to [dynamic_chosen_mode].")
-		message_admins("[key_name(usr)] set the distribution mode to [dynamic_chosen_mode].")
+		log_mode("[key_name(usr)] set the distribution mode to [dynamic_chosen_mode].")
 		dynamic_mode_options(usr)
 
 	else if(href_list["f_secret"])

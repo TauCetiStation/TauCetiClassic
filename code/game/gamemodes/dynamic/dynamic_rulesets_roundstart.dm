@@ -109,14 +109,14 @@
 		roundstart_wizards += newWizard
 	return TRUE
 
-//////////////////////////////////////////////
-//                                          //
-//                BLOOD CULT                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                          //
-//////////////////////////////////////////////
+//////////////////////////////////////////
+//                                      //
+//                CULT                	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                      //
+//////////////////////////////////////////
 
-/datum/dynamic_ruleset/roundstart/bloodcult
-	name = "Blood Cult"
+/datum/dynamic_ruleset/roundstart/cult
+	name = "Cult"
 	role_category = /datum/role/cultist
 	restricted_from_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective",
 							"Head of Security", "Captain", "Chaplain", "Head of Personnel", "Internal Affairs Agent",
@@ -132,14 +132,14 @@
 	var/cultist_cap = list(2,2,3,4,4,4,4,4,4,4)
 	flags = HIGHLANDER_RULESET
 
-/datum/dynamic_ruleset/roundstart/bloodcult/ready(forced = FALSE)
+/datum/dynamic_ruleset/roundstart/cult/ready(forced = FALSE)
 	var/indice_pop = min(10,round(mode.roundstart_pop_ready / 5) + 1)
 	required_candidates = cultist_cap[indice_pop]
 	if(forced)
 		required_candidates = 1
 	. = ..()
 
-/datum/dynamic_ruleset/roundstart/bloodcult/choose_candidates()
+/datum/dynamic_ruleset/roundstart/cult/choose_candidates()
 	var/indice_pop = min(10,round(mode.roundstart_pop_ready / 5) + 1)
 	var/cultists = cultist_cap[indice_pop]
 	for (var/i = 1 to cultists)
@@ -150,7 +150,7 @@
 		candidates -= M
 	return (assigned.len > 0)
 
-/datum/dynamic_ruleset/roundstart/bloodcult/execute()
+/datum/dynamic_ruleset/roundstart/cult/execute()
 	//if ready() did its job, candidates should have 4 or more members in it
 	var/datum/faction/cult/cult = find_faction_by_type(/datum/faction/cult)
 	if(!cult)
