@@ -210,10 +210,10 @@
 	item_state = "checkered_suit"
 
 /obj/item/clothing/under/suit_jacket/tan
-	/*name = "tan suit"
+	name = "tan suit"
 	desc = "A tan suit with a yellow tie. Smart, but casual."
 	icon_state = "tan_suit"
-	item_state = "tan_suit"*/
+	item_state = "tan_suit"
 
 /obj/item/clothing/under/suit_jacket/white
 	name = "white suit"
@@ -552,10 +552,10 @@
 	item_state = "sue_vest"
 
 /obj/item/clothing/under/mafia/tan
-	/*name = "leather mafia outfit"
+	name = "leather mafia outfit"
 	desc = "The big drum sounds good only from a distance."
 	icon_state = "mafia_tan"
-	item_state = "mafia_tan"*/
+	item_state = "mafia_tan"
 
 /obj/item/clothing/under/mafia/flappers
 	name = "flappers"

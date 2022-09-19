@@ -202,7 +202,8 @@
 		window_flash(M.client)
 
 	addtimer(CALLBACK(src, .proc/recruiting_end, possible_volunteers, logo_icon), 600)
-		/*searching = FALSE
+		/* v its good? v
+		searching = FALSE
 		for(var/mob/M in possible_volunteers)
 			if(!M.client || jobban_isbanned(M, role_category) || M.client.is_afk())
 				continue
@@ -219,7 +220,7 @@
 		message_admins("DYNAMIC MODE: [applicants.len] players volunteered for [name].")
 		review_applications()*/
 
-//another proc for deleting SPAWN(1 minutes) on VG
+//another proc for deleting SPAWN(1 minutes)
 /datum/dynamic_ruleset/proc/recruiting_end(list/possible_volunteers = list(), icon/logo_icon)
 	searching = FALSE
 	for(var/mob/M in possible_volunteers)

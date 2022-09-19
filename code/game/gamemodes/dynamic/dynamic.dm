@@ -142,7 +142,7 @@ var/stacking_limit = 90
 	out += "<B>Remaining midround threat/threat_level:</B> [midround_threat]/[midround_threat_level]"
 
 	usr << browse(out, "window=threatlog;size=700x500")
-/*
+/* v is that needed for our build? v
 /datum/game_mode/dynamic/GetScoreboard()
 	dat += "<h2>Dynamic Mode - Roundstart Threat = <font color='red'>[threat_level]%</font>, Midround Threat = <font color='red'>[midround_threat_level]%</font></h2>"
 	if(executed_rules.len > 0)
@@ -426,7 +426,7 @@ var/stacking_limit = 90
 		return FALSE
 
 /datum/game_mode/dynamic/proc/pick_delay(var/datum/dynamic_ruleset/roundstart/delayed/rule)
-	//what i should do with that spawn?
+	//v what i should do with that spawn? v
 	spawn()
 		sleep(rule.delay)
 		rule.candidates = player_list.Copy()
