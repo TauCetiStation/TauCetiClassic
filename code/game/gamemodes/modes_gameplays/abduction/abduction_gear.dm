@@ -495,7 +495,7 @@
 		if(temp)
 			gland = "<span class='warning'>Experimental gland detected!</span>"
 
-	to_chat(user, "["<span class='notice'>Probing result:"][species]</span>")
+	to_chat(user, "<span class='notice'>Probing result:[species]</span>")
 	to_chat(user, "[gland]")
 	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
 						"<span class='userdanger'>[user] probes you!</span>")
