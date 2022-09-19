@@ -988,9 +988,15 @@
 					account.change_salary(U, owner, name, ownrank)
 					break
 		if("Shop")
+			if(!check_pda_server())
+				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
+				return
 			mode = 8
 			shop_lots = list()
 		if("Shop_Category")
+			if(!check_pda_server())
+				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
+				return
 			mode = 81
 			shop_lots = list()
 			category = href_list["categ"]
@@ -1000,10 +1006,16 @@
 					shop_lots.len+=1
 					shop_lots[shop_lots.len] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "account" = Acc ? Acc.owner_name : "Unknown")
 		if("Shop_Add_Order_or_Offer")
+			if(!check_pda_server())
+				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
+				return
 			var/T = sanitize(input(U, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
 			if(T && istext(T) && owner)
 				add_order_or_offer(owner, T)
 		if("Shop_Order")
+			if(!check_pda_server())
+				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
+				return
 			var/i = text2num(href_list["order_item"])
 			var/list/Lot = shop_lots[i]
 			if(owner_account)
@@ -1011,8 +1023,14 @@
 				if(T && istext(T))
 					order_item(Lot["number"], T)
 		if("Shop_Shopping_Cart")
+			if(!check_pda_server())
+				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
+				return
 			mode = 82
 		if("Shop_Mark_As_Delivered")
+			if(!check_pda_server())
+				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
+				return
 			var/i = text2num(href_list["delivered_item"])
 			var/datum/shop_lot/Lot = global.online_shop_lots[i]
 			var/payment = Lot.price - (Lot.price * 0.25)
@@ -1721,5 +1739,12 @@
 
 /obj/item/device/pda/proc/delete_order_or_offer(num)
 	orders_and_offers[num] = null
+
+/obj/item/device/pda/proc/check_pda_server()
+	if(message_servers)
+		for (var/obj/machinery/message_server/MS in message_servers)
+			if(MS.active)
+				var/turf/pos = get_turf(src)
+				return is_station_level(pos.z)
 
 #undef TRANSCATION_COOLDOWN
