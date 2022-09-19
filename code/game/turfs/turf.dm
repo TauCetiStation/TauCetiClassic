@@ -167,16 +167,6 @@
 		recalc_atom_opacity() // Make sure to do this before reconsider_lights(), incase we're on instant updates.
 		reconsider_lights()
 
-	var/objects = 0
-	for(var/atom/O as mob|obj|turf|area in range(1))
-		if(objects > loopsanity)	break
-		objects++
-		spawn( 0 )
-			if ((O && AM))
-				O.HasProximity(AM, 1)
-			return
-	return
-
 /turf/Exited(atom/movable/Obj, atom/newloc)
 	. = ..()
 
