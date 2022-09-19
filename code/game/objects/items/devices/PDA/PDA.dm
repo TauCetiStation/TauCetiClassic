@@ -38,7 +38,7 @@
 	var/lock_code = "" // Lockcode to unlock uplink
 	var/honkamt = 0 //How many honks left when infected with honk.exe
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
-	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function
+	var/note = "Спасибо за покупку КПК 9 от ООО.Тинктроник!" //Current note in the notepad function
 	var/notehtml = ""
 	var/cart = "" //A place to stick cartridge menu information
 	var/detonate = 1 // Can the PDA be blown up?
@@ -59,7 +59,7 @@
 	var/datum/money_account/owner_account = null
 	var/target_account_number = 0
 	var/funds_amount = 0
-	var/transfer_purpose = "Funds transfer"
+	var/transfer_purpose = "Перевод"
 	var/pda_paymod = FALSE // if TRUE, click on someone to pay
 	var/list/trans_log = list()
 	var/list/safe_pages = list(7, 71, 72, 73)
@@ -490,15 +490,15 @@
 
 	lastmode = mode
 
-	var/title = "Personal Data Assistant"
+	var/title = "Карманный Персональный Компьютер"
 
 	var/data[0]  // This is the data that will be sent to the PDA
 
 	data["owner"] = owner					// Who is your daddy...
 	data["ownjob"] = ownjob					// ...and what does he do?
 
-	data["money"] = owner_account ? owner_account.money : "error"
-	data["salary"] = owner_account ? owner_account.owner_salary : "error"
+	data["money"] = owner_account ? owner_account.money : "ошибка"
+	data["salary"] = owner_account ? owner_account.owner_salary : "ошибка"
 	data["target_account_number"] = target_account_number
 	data["funds_amount"] = funds_amount
 	data["purpose"] = transfer_purpose
@@ -806,7 +806,7 @@
 //MESSENGER/NOTE FUNCTIONS===================================
 
 		if("Edit")
-			var/n = sanitize(input(U, "Please enter message", name, input_default(notehtml)) as message, extra = FALSE)
+			var/n = sanitize(input(U, "Введите сообщение", name, input_default(notehtml)) as message, extra = FALSE)
 			if(Adjacent(U) && mode == 1)
 				note = n
 				notehtml = note
@@ -834,7 +834,7 @@
 				mode=2
 
 		if("Ringtone")
-			var/t = sanitize(input(U, "Please enter new ringtone", name, input_default(ttone)) as text, 20)
+			var/t = sanitize(input(U, "Выберите новый рингтон", name, input_default(ttone)) as text, 20)
 			if (t && Adjacent(U))
 				if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
 					to_chat(U, "The PDA softly beeps.")
@@ -920,11 +920,11 @@
 			mode = 41
 
 		if("target_acc_number")
-			target_account_number = text2num(input(U, "Enter an account number", name, target_account_number) as text)	//If "as num" I can't copy text from the buffer
+			target_account_number = text2num(input(U, "Введите номер счёта", name, target_account_number) as text)	//If "as num" I can't copy text from the buffer
 		if("funds_amount")
-			funds_amount =  round(text2num(input(U, "Enter the amount of funds", name, funds_amount) as text), 1)
+			funds_amount =  round(text2num(input(U, "Введите сумму перевода", name, funds_amount) as text), 1)
 		if("purpose")
-			transfer_purpose = sanitize(input(U, "Enter the purpose of the transaction", name, transfer_purpose) as text, 20)
+			transfer_purpose = sanitize(input(U, "Введите комментарий", name, transfer_purpose) as text, 20)
 
 		if("make_transfer")
 		//============check telecoms and message server=================
@@ -1230,7 +1230,7 @@
 	if(tap && iscarbon(U))
 		U.visible_message("<span class='notice'>[U] taps on \his PDA's screen.</span>")
 	U.last_target_click = world.time
-	var/t = sanitize(input(U, "Please enter message", name, null) as text)
+	var/t = sanitize(input(U, "Введите сообщение", name, null) as text)
 	t = replacetext(t, "&#34;", "\"")
 
 	if (!t || !istype(P))
@@ -1585,22 +1585,22 @@
 
 /obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
 	if(!owner_account)
-		tgui_alert(usr, "Eror! Account information not saved in this PDA, please insert your ID card in PDA and update the information.")
+		tgui_alert(usr, "ОШИБКА! Аккаунт не сохранён в КПК, пожалуйста вставьте свою карту и перезагрузите устройство.")
 		return FALSE
 	if(!user.dna)	//just in case
-		tgui_alert(usr, "Eror! PDA can't read your fingerprints.")
+		tgui_alert(usr, "ОШИБКА! КПК не распознаёт ваш отпечаток пальца.")
 		return FALSE
 	var/fingerprints = md5(user.dna.uni_identity)
 	if(fingerprints in owner_fingerprints)
 		return TRUE
 	else
-		var/tried_pin =  text2num(input(user, "[owner] please enter your account password", name) as text)
+		var/tried_pin =  text2num(input(user, "[owner], введите пароль от счёта", name) as text)
 		if(tried_pin == owner_account.remote_access_pin)
 			owner_fingerprints += fingerprints	//add new owner's fingerprints to the list
 			to_chat(user, "[bicon(src)]<span class='info'>Password is correct</span>")
 			return TRUE
 		else
-			tgui_alert(usr, "Invalid Password!")
+			tgui_alert(usr, "Неверный пароль!")
 			return FALSE
 
 /obj/item/device/pda/proc/transaction_inform(target, source, amount, salary_change = FALSE)
