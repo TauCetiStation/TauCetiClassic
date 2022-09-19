@@ -294,7 +294,6 @@
 #include "code\datums\components\bound.dm"
 #include "code\datums\components\cell_selfrecharge.dm"
 #include "code\datums\components\clickplace.dm"
-#include "code\datums\components\connect_containers.dm"
 #include "code\datums\components\connect_range.dm"
 #include "code\datums\components\footstep.dm"
 #include "code\datums\components\forcefield.dm"

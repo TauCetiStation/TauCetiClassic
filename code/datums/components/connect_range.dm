@@ -68,7 +68,7 @@
 
 /datum/component/connect_range/proc/update_signals(atom/target, atom/old_loc, forced = FALSE)
 	var/turf/current_turf = get_turf(target)
-	var/on_same_turf = current_turf == get_turf(old_loc) //Only register/unregister turf signals if it's moved to a new turf.
+	var/on_same_turf = works_in_containers ? current_turf == get_turf(old_loc) : target.loc == old_loc //Only register/unregister turf signals if it's moved to a new turf.
 	unregister_signals(old_loc, on_same_turf)
 
 	if(isnull(current_turf))

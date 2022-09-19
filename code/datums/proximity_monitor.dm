@@ -10,7 +10,6 @@
 	///The signals of the connect range component, needed to monitor the turfs in range.
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
-		COMSIG_ATOM_EXITED = .proc/on_uncrossed,
 		// COMSIG_ATOM_INITIALIZED_ON = .proc/on_entered, // TODO?
 	)
 
@@ -34,10 +33,12 @@
 		hasprox_receiver = new_host
 	host = new_host
 	RegisterSignal(new_host, COMSIG_PARENT_QDELETING, .proc/on_host_or_receiver_del)
-	var/static/list/containers_connections = list(COMSIG_MOVABLE_MOVED = .proc/on_moved)
-	AddComponent(/datum/component/connect_containers, host, containers_connections)
-	RegisterSignal(host, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	set_range(current_range, TRUE)
+	RegisterSignal(new_host, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	update_connect_range()
+
+/datum/proximity_monitor/proc/update_connect_range()
+	//If the connect_range component exists already, this will just update its args. No errors or duplicates.
+	AddComponent(/datum/component/connect_range, host, loc_connections, current_range, !ignore_if_not_on_turf)
 
 /datum/proximity_monitor/proc/on_host_or_receiver_del(datum/source)
 	SIGNAL_HANDLER
@@ -53,9 +54,7 @@
 		return FALSE
 	. = TRUE
 	current_range = range
-
-	//If the connect_range component exists already, this will just update its range. No errors or duplicates.
-	AddComponent(/datum/component/connect_range, host, loc_connections, range, !ignore_if_not_on_turf)
+	update_connect_range()
 
 /datum/proximity_monitor/proc/on_moved(atom/movable/source, atom/old_loc)
 	SIGNAL_HANDLER
@@ -66,12 +65,7 @@
 	if(ignore_if_not_on_turf == does_ignore)
 		return
 	ignore_if_not_on_turf = does_ignore
-	//Update the ignore_if_not_on_turf
-	AddComponent(/datum/component/connect_range, host, loc_connections, current_range, ignore_if_not_on_turf)
-
-/datum/proximity_monitor/proc/on_uncrossed()
-	SIGNAL_HANDLER
-	return //Used by the advanced subtype for effect fields.
+	update_connect_range()
 
 /datum/proximity_monitor/proc/on_entered(atom/source, atom/movable/arrived)
 	SIGNAL_HANDLER
