@@ -35,12 +35,8 @@
 
 /datum/dynamic_ruleset/roundstart/traitor/execute()
 	for(var/mob/M in assigned)
-		var/datum/faction/traitor/traitors = find_faction_by_type(/datum/faction/traitor)
-		if(!traitors)
-			traitors = create_faction(/datum/faction/changeling)
-		var/datum/role/traitor/newTraitor = new
-		newTraitor.AssignToRole(M.mind, TRUE)
-		newTraitor.Greet(GREET_ROUNDSTART)
+		var/datum/faction/traitor/traitors = create_uniq_faction(/datum/faction/traitor, post_setup = FALSE, give_objectives = FALSE)
+		new role_category(M.mind, traitors, TRUE)
 		// Above 3 traitors, we start to cost a bit more.
 	return TRUE
 
@@ -75,18 +71,9 @@
 	return (assigned.len > 0)
 
 /datum/dynamic_ruleset/roundstart/changeling/execute()
-	for (var/mob/M in assigned)
-		var/datum/role/changeling/newChangeling = new
-		newChangeling.AssignToRole(M.mind, TRUE)
-		//Assign to the hivemind faction
-		var/datum/faction/changeling/hivemind = find_faction_by_type(/datum/faction/changeling)
-		if(!hivemind)
-			hivemind = create_faction(/datum/faction/changeling)
-			hivemind.OnPostSetup()
-		hivemind.HandleRecruitedRole(newChangeling)
-
-		newChangeling.forgeObjectives()
-		newChangeling.Greet(GREET_ROUNDSTART)
+	for(var/mob/M in assigned)
+		var/datum/faction/changeling/hivemind = create_uniq_faction(/datum/faction/changeling, post_setup = FALSE, give_objectives = FALSE)
+		new role_category(M.mind, hivemind, TRUE)
 	return TRUE
 
 //////////////////////////////////////////////
@@ -108,7 +95,7 @@
 	var/list/roundstart_wizards = list()
 
 /datum/dynamic_ruleset/roundstart/wizard/acceptable(population = 0, threat = 0)
-	if(wizardstart.len == 0)
+	if(!wizardstart.len)
 		log_admin("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		return FALSE
@@ -117,19 +104,13 @@
 /datum/dynamic_ruleset/roundstart/wizard/execute()
 	var/mob/M = pick(assigned)
 	if(M)
-		var/datum/role/wizard/newWizard = new
-		M.forceMove(pick(wizardstart))
+		var/datum/faction/wizards/federation = create_uniq_faction(/datum/faction/wizards, post_setup = FALSE, give_objectives = FALSE)
+		var/datum/role/wizard/newWizard = new role_category(M.mind, federation, TRUE)
 		if(!ishuman(M))
 			var/mob/living/carbon/C = M
-			if(C)
+			if(istype(C))
 				C = C.humanize()
-		newWizard.AssignToRole(M.mind, TRUE)
 		roundstart_wizards += newWizard
-		var/datum/faction/wizards/federation = find_faction_by_type(/datum/faction/wizards)
-		if(!federation)
-			federation = create_faction(/datum/faction/wizards)
-		federation.HandleRecruitedRole(newWizard)//this will give the wizard their icon
-		newWizard.Greet(GREET_ROUNDSTART)
 	return TRUE
 
 //////////////////////////////////////////////
