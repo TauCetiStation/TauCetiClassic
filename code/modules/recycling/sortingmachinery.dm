@@ -20,6 +20,10 @@
 	return ..()
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
+	if(locate(/obj/lot_lock) in contents)
+		to_chat(user, "<span class='notice'>Mark as delivered to unlock the parcel</span>")
+		playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
+		return
 	if(contents.len > 0)
 		dump()
 	else
@@ -63,6 +67,10 @@
 	return ..()
 
 /obj/item/smallDelivery/attack_self(mob/user)
+	if(locate(/obj/lot_lock) in contents)
+		to_chat(user, "<span class='notice'>Mark as delivered to unlock the parcel</span>")
+		playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
+		return
 	if(contents.len > 0)
 		user.drop_from_inventory(src)
 		dump(user)

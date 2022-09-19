@@ -71,6 +71,7 @@
 	var/category
 	var/list/shop_lots = list()
 	var/list/orders_and_offers = list()
+	var/list/shopping_cart = list()
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
@@ -525,11 +526,6 @@
 	data["idInserted"] = (id ? 1 : 0)
 	data["idLink"] = (id ? text("[id.registered_name], [id.assignment]") : "--------")
 
-	data["categories"] = global.shop_categories
-	data["category"] = category
-	data["shop_lots"] = shop_lots
-	data["orders_and_offers"] = orders_and_offers
-
 	data["cart_loaded"] = cartridge ? 1:0
 	if(cartridge)
 		var/cartdata[0]
@@ -645,6 +641,13 @@
 					)
 		if(isnull(data["aircontents"]))
 			data["aircontents"] = list("reading" = 0)
+
+	if(mode == 8 || mode == 81 || mode == 82)
+		data["categories"] = global.shop_categories
+		data["category"] = category
+		data["shop_lots"] = shop_lots
+		data["orders_and_offers"] = orders_and_offers
+		data["shopping_cart"] = shopping_cart
 
 	nanoUI = data
 	// update the ui if it exists, returns null if no ui is passed/found
@@ -995,19 +998,37 @@
 				if(Lot.category == category && !Lot.sold)
 					var/datum/money_account/Acc = get_account(Lot.account)
 					shop_lots.len+=1
-					shop_lots[shop_lots.len] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "index" = shop_lots.len, "account" = Acc ? Acc.owner_name : "Unknown")
-		if("Add_Order_or_Offer")
+					shop_lots[shop_lots.len] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "account" = Acc ? Acc.owner_name : "Unknown")
+		if("Shop_Add_Order_or_Offer")
 			var/T = sanitize(input(U, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
 			if(T && istext(T) && owner)
 				add_order_or_offer(owner, T)
 		if("Shop_Order")
 			var/i = text2num(href_list["order_item"])
 			var/list/Lot = shop_lots[i]
-			var/cost = Lot["price"]
-			if(owner_account && (cost <= owner_account.money))
+			if(owner_account)
 				var/T = sanitize(input(U, "Введите адрес доставки или комментарий", "Комментарий", null) as text)
 				if(T && istext(T))
 					order_item(Lot["number"], T)
+		if("Shop_Shopping_Cart")
+			mode = 82
+		if("Shop_Mark_As_Delivered")
+			var/i = text2num(href_list["delivered_item"])
+			var/datum/shop_lot/Lot = global.online_shop_lots[i]
+			var/payment = Lot.price - (Lot.price * 0.25)
+			if(!owner_account || payment > owner_account.money)
+				return
+			Lot.delivered = TRUE
+			for(var/list/L in shopping_cart)
+				if(L["number"] == i)
+					L["delivered"] = TRUE
+
+			charge_to_account(owner_account.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -payment)
+			if(Lot.account == global.cargo_account.account_number)
+				charge_to_account(global.cargo_account.account_number, owner_account.account_number, "Покупка [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, payment)
+			else
+				charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -payment)
+			mode = 82
 
 //SYNDICATE FUNCTIONS===================================
 
@@ -1666,16 +1687,17 @@
 
 /obj/item/device/pda/proc/order_item(num, destination)
 	var/datum/shop_lot/Lot = global.online_shop_lots[num]
+	var/prepayment = Lot.price * 0.25
+	if(!owner_account || prepayment > owner_account.money)
+		return
 	Lot.sold = TRUE
-	mode = 8
+	var/datum/money_account/Acc = get_account(Lot.account)
+	shopping_cart.len+=1
+	shopping_cart[shopping_cart.len] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "account" = Acc ? Acc.owner_name : "Unknown", "delivered" = Lot.delivered)
+	mode = 82
 
-	charge_to_account(owner_account.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -Lot.price)
-	if(Lot.account == global.cargo_account.account_number)
-		charge_to_account(global.cargo_account.account_number, owner_account.account_number, "Покупка [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.price)
-	else
-		var/cargo_revenue = round(Lot.price * 0.25)
-		charge_to_account(global.cargo_account.account_number, owner_account.account_number, "Налог за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, cargo_revenue)
-		charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.price - cargo_revenue)
+	charge_to_account(owner_account.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -prepayment)
+	charge_to_account(global.cargo_account.account_number, owner_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, prepayment)
 
 	for(var/obj/machinery/packer/Packer in global.packers)
 		var/obj/item/weapon/paper/P = new(get_turf(Packer.loc))

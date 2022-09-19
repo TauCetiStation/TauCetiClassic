@@ -9,6 +9,7 @@ var/global/list/packers = list()
 	var/number = 1
 	var/category = "Разное"
 	var/sold = FALSE
+	var/delivered = FALSE
 	var/account = 111111
 
 
@@ -24,6 +25,26 @@ var/global/list/packers = list()
 /datum/shop_lot/Destroy()
 	global.online_shop_lots -= src
 	return ..()
+
+/obj/lot_lock
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "package_lock"
+	var/datum/shop_lot/lot
+	w_class = SIZE_MINUSCULE
+
+/obj/lot_lock/New(datum/shop_lot/Lot)
+	src.lot = Lot
+	return ..()
+
+/obj/verb/remove_lot_lock()
+	for(var/obj/lot_lock/P in contents)
+		if(!P.lot.delivered)
+			return
+		contents -= P
+		cut_overlay(P)
+		P.lot = null
+		qdel(P)
+		verbs -= /obj/verb/remove_lot_lock
 
 /obj/machinery/packer
 	name = "Shop Packer"
@@ -80,7 +101,6 @@ var/global/list/packers = list()
 	if(anchored)
 		return
 	emagged = !emagged
-	sparks()
 	user.visible_message("<span class='warning'>[user.name] slides something into the [src.name]'s card-reader.</span>","<span class='warning'>You short out the [src.name].</span>")
 	return TRUE
 
@@ -225,7 +245,12 @@ var/global/list/packers = list()
 	Item.name = "Посылка номер: [global.online_shop_lots.len]"
 	Item.desc = "Наименование: [lot_name], Описание: [lot_desc], Цена: [lot_price]"
 
-	new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, global.online_shop_lots.len, lot_account)
+	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, global.online_shop_lots.len, lot_account)
+
+	var/obj/lot_lock/Lock = new /obj/lot_lock(Lot)
+	Lock.loc = Item
+	Item.add_overlay(Lock)
+	Item.verbs += /obj/verb/remove_lot_lock
 
 	eject_item()
 	update_icon()
