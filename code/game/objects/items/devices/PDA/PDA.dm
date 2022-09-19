@@ -993,8 +993,9 @@
 			category = href_list["categ"]
 			for(var/datum/shop_lot/Lot in global.online_shop_lots)
 				if(Lot.category == category && !Lot.sold)
+					var/datum/money_account/Acc = get_account(Lot.account)
 					shop_lots.len+=1
-					shop_lots[shop_lots.len] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "index" = shop_lots.len)
+					shop_lots[shop_lots.len] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "index" = shop_lots.len, "account" = Acc ? Acc.owner_name : "Unknown")
 		if("Add_Order_or_Offer")
 			var/T = sanitize(input(U, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
 			if(T && istext(T) && owner)
@@ -1664,7 +1665,6 @@
 		boss_PDA = 1
 
 /obj/item/device/pda/proc/order_item(num, destination)
-	var/obj/machinery/packer/Packer = locate("Packer")
 	var/datum/shop_lot/Lot = global.online_shop_lots[num]
 	Lot.sold = TRUE
 	mode = 8
@@ -1677,18 +1677,19 @@
 		charge_to_account(global.cargo_account.account_number, owner_account.account_number, "Налог за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, cargo_revenue)
 		charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.price - cargo_revenue)
 
-	var/obj/item/weapon/paper/P = new(get_turf(Packer.loc))
+	for(var/obj/machinery/packer/Packer in global.packers)
+		var/obj/item/weapon/paper/P = new(get_turf(Packer.loc))
 
-	P.name = "Заказ предмета из магазина"
-	P.info += "Посылка номер #[Lot.number]<br>"
-	P.info += "Наименование: [Lot.name]<br>"
-	P.info += "Цена: [Lot.price]$<br>"
-	P.info += "Заказал: [owner ? owner : "Unknown"]<br>"
-	P.info += "Комментарий: [destination]<br>"
-	P.info += "<hr>"
-	P.info += "МЕСТО ДЛЯ ШТАМПОВ:<br>"
+		P.name = "Заказ предмета из магазина"
+		P.info += "Посылка номер #[Lot.number]<br>"
+		P.info += "Наименование: [Lot.name]<br>"
+		P.info += "Цена: [Lot.price]$<br>"
+		P.info += "Заказал: [owner ? owner : "Unknown"]<br>"
+		P.info += "Комментарий: [destination]<br>"
+		P.info += "<hr>"
+		P.info += "МЕСТО ДЛЯ ШТАМПОВ:<br>"
 
-	P.update_icon()
+		P.update_icon()
 
 /obj/item/device/pda/proc/add_order_or_offer(name, desc)
 	orders_and_offers.len++

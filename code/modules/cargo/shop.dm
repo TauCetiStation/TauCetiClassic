@@ -1,5 +1,6 @@
 var/global/list/online_shop_lots = list()
 var/global/list/shop_categories = list("Еда", "Одежда", "Устройства", "Инструменты", "Ресурсы", "Наборы", "Разное")
+var/global/list/packers = list()
 
 /datum/shop_lot
 	var/name = "Лот"
@@ -32,6 +33,11 @@ var/global/list/shop_categories = list("Еда", "Одежда", "Устройс
 	req_access = list(access_cargo)
 	density = TRUE
 	anchored = TRUE
+	emagged = FALSE
+
+	active_power_usage = 50
+	use_power = ACTIVE_POWER_USE
+
 	var/obj/Item = null
 	var/image/Item_Overlay
 	var/image/Screen_Overlay
@@ -56,9 +62,27 @@ var/global/list/shop_categories = list("Еда", "Одежда", "Устройс
 	Screen_Overlay = image('icons/obj/stationobjs.dmi', "packer_display", src)
 	Hand_Overlay = image('icons/obj/stationobjs.dmi', "packer_hand", src)
 
-	tag = "Packer"
+	global.packers += src
 
 	update_icon()
+
+/obj/machinery/packer/Destroy()
+	global.packers -= src
+	eject_item()
+	return ..()
+
+/obj/machinery/packer/power_change()
+	..()
+	if(stat & (NOPOWER|BROKEN) && Item)
+		eject_item()
+
+/obj/machinery/packer/emag_act(mob/user)
+	if(anchored)
+		return
+	emagged = !emagged
+	sparks()
+	user.visible_message("<span class='warning'>[user.name] slides something into the [src.name]'s card-reader.</span>","<span class='warning'>You short out the [src.name].</span>")
+	return TRUE
 
 /obj/machinery/packer/update_icon()
 	cut_overlays()
@@ -87,6 +111,13 @@ var/global/list/shop_categories = list("Еда", "Одежда", "Устройс
 /obj/machinery/packer/attackby(obj/item/O, mob/user)
 	if(Item)
 		return
+	if(iswrench(O))
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+		anchored = !anchored
+		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
+		return
+	if(!anchored)
+		return ..()
 	user.drop_from_inventory(O, src)
 	Item = O
 
@@ -133,6 +164,8 @@ var/global/list/shop_categories = list("Еда", "Одежда", "Устройс
 		return
 	if(isAI(user))
 		return
+	if(!anchored)
+		return
 
 	C.forceMove(src)
 	Item = C
@@ -177,6 +210,16 @@ var/global/list/shop_categories = list("Еда", "Одежда", "Устройс
 			C.welded = 1
 			C.loc = P
 			Item = P
+	else if(istype (Item, /mob))
+		var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(src)
+		P.w_class = SIZE_NORMAL
+		P.icon_state = "deliverycrate[SIZE_NORMAL]"
+		Item.loc = P
+		Item = P
+		lot_desc = Item.desc
+		lot_name = Item.name
+		lot_price = 200
+		lot_category = "Разное"
 
 	Item.pixel_y = 6
 	Item.name = "Посылка номер: [global.online_shop_lots.len]"
@@ -189,6 +232,8 @@ var/global/list/shop_categories = list("Еда", "Одежда", "Устройс
 	updateUsrDialog()
 
 /obj/machinery/packer/proc/eject_item()
+	if(!Item)
+		return
 	Item.loc = get_turf(src.loc)
 	Item = null
 
@@ -203,6 +248,8 @@ var/global/list/shop_categories = list("Еда", "Одежда", "Устройс
 	update_icon()
 
 /obj/machinery/packer/ui_interact(mob/user)
+	if(!anchored)
+		return
 	var/dat = "<div class='Section__title'>Упаковщик</div>"
 
 	if(Item)
@@ -228,6 +275,8 @@ var/global/list/shop_categories = list("Еда", "Одежда", "Устройс
 	. = ..()
 	if(!. || usr == occupant)
 		return FALSE
+	if(!anchored)
+		return FALSE
 
 	if (href_list["field"])
 		switch(href_list["field"])
@@ -248,8 +297,18 @@ var/global/list/shop_categories = list("Еда", "Одежда", "Устройс
 				if(T && (T in global.shop_categories))
 					lot_category = T
 	else if(href_list["scan"])
-		scan_item()
+		if(emagged)
+			pack_human_being(usr)
+		else
+			scan_item()
 	else if(href_list["eject"])
 		eject_item()
 
 	updateUsrDialog()
+
+/obj/machinery/packer/proc/pack_human_being(mob/user)
+	if(Item)
+		eject_item()
+	user.loc = src
+	Item = user
+	scan_item()

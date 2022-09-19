@@ -251,20 +251,11 @@
 
 	if(target.anchored)
 		return
-	if(target in user)
-		return
-	if(user in target) //no wrapping closets that you are inside - it's not physically possible
+	if(user in target)
 		return
 	if(locate(/obj/price_tag) in target.contents)
 		return
-
-	if(istype(target, /obj/item/smallDelivery))
-		var/obj/item/smallDelivery/D = target
-		D.sortTag = "Post"
-	else if(istype(target,/obj/structure/bigDelivery))
-		var/obj/structure/bigDelivery/D = target
-		D.sortTag = "Post"
-	else
+	if(!isitem(target))
 		return
 
 	var/obj/price_tag/Tag = new /obj/price_tag(lot_description, lot_account_number, lot_price)

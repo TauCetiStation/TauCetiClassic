@@ -556,6 +556,8 @@
 			src.destinationTag = drone.mail_destination
 		if(istype(AM, /obj/structure/closet/body_bag))
 			has_bodybag = 1
+		if(locate(/obj/price_tag) in AM.contents)
+			src.destinationTag = "Post"
 
 
 // start the movement process

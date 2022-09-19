@@ -1121,7 +1121,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 		{{for data.shop_lots}}
 				<tr><th colspan="4" class="cargo"><B>Наименование: </B><SMALL><I>{{:value.name}}</I></SMALL></th></tr>
 				<tr><td><B>Описание: </B><SMALL><I>{{:value.description}}</I></SMALL><br></td></tr>
-				<tr><td><B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
+				<tr><td><B>Продавец: </B><SMALL><I>{{:value.account}}</I></SMALL>   <B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
 				<td>{{:helper.link('Заказ', 'tag', {'choice' : "Shop_Order", 'order_item' : value.index})}}</td></tr>
 		{{empty}}
 		</tbody></table></center>
