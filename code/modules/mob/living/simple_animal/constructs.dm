@@ -269,7 +269,7 @@
 		var/obj/item/organ/external/BP = C.get_bodypart(pick(limbs))
 		if(!BP.droplimb(null, null, DROPLIMB_EDGE))
 			return ..() //Attack
-		return //No need in normal attack
+		return
 	return ..()
 /////////////////////////////////////Proteon from tg/////////////////////////////////
 /mob/living/simple_animal/construct/proteon
