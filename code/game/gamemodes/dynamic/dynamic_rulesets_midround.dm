@@ -68,7 +68,7 @@
 	return TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/ready(forced = 0)
-	if (required_candidates > (dead_players.len + list_observers.len) && !forced)
+	if(required_candidates > (dead_players.len + list_observers.len) && !forced)
 		return FALSE
 	return ..()
 
@@ -139,10 +139,8 @@
 	var/created_a_faction = FALSE
 
 /datum/dynamic_ruleset/midround/from_ghosts/faction_based/review_applications()
-	var/datum/faction/active_fac = find_faction_by_type(my_fac)
-	if(!active_fac)
-		active_fac = create_faction(my_fac)
-		created_a_faction = TRUE
+	var/datum/faction/active_fac = create_uniq_faction(my_fac, post_setup = FALSE, give_objectives = FALSE)
+	created_a_faction = TRUE
 	my_fac = active_fac
 	. = ..()
 	if(created_a_faction)
@@ -212,12 +210,14 @@
 
 /datum/dynamic_ruleset/midround/autotraitor/execute()
 	var/mob/M = pick(assigned)
+	create_and_setup_role(role_category, M, post_setup = TRUE, setup_role = TRUE)
+	/*	^ thats good? ^
 	var/datum/role/traitor/newTraitor = new
 	newTraitor.AssignToRole(M.mind, TRUE)
 	newTraitor.OnPostSetup()
 	newTraitor.Greet(GREET_AUTOTRAITOR)
 	newTraitor.forgeObjectives()
-	newTraitor.AnnounceObjectives()
+	newTraitor.AnnounceObjectives()*/
 	return TRUE
 
 /datum/dynamic_ruleset/midround/autotraitor/previous_rounds_odds_reduction(result)
@@ -295,10 +295,7 @@
 	return ..()
 
 /datum/dynamic_ruleset/midround/from_ghosts/faction_based/nuclear/finish_setup(mob/new_character, index)
-	var/datum/faction/nuclear/nuclear = find_faction_by_type(/datum/faction/nuclear)
-	if(!nuclear)
-		nuclear = create_faction(/datum/faction/nuclear)
-	nuclear.forgeObjectives()
+	var/datum/faction/nuclear/nuclear = create_uniq_faction(my_fac, post_setup = FALSE, give_objectives = TRUE)
 
 	var/list/turf/synd_spawn = list()
 
@@ -313,6 +310,7 @@
 	new_character.forceMove(synd_spawn[spawnpos])
 	if(index == 1) //Our first guy is the leader
 		var/datum/role/operative/leader/new_role = new
+		// v is that bad? v
 		new_role.AssignToRole(new_character.mind, TRUE)
 		setup_role(new_role)
 	else
