@@ -39,7 +39,7 @@
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
 
-/obj/machinery/flasher/Destroy()
+/obj/machinery/flasher/portable/Destroy()
 	QDEL_NULL(proximity_monitor)
 	return ..()
 
