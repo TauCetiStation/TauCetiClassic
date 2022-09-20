@@ -445,7 +445,8 @@
 	icon_state = "buckled"
 
 /atom/movable/screen/alert/buckled/Click()
-	master.user_unbuckle_mob(mob_viewer)
+	if(!mob_viewer.restrained())
+		master.user_unbuckle_mob(mob_viewer)
 
 /atom/movable/screen/alert/brake
 	name = "Brake is on"
