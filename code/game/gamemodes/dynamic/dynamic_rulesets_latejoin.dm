@@ -19,6 +19,9 @@
 		if((exclusive_to_jobs.len > 0) && !(P.mind.assigned_role in exclusive_to_jobs))//is the rule exclusive to their job?
 			candidates.Remove(P)
 			continue
+		if(!ishuman(P))
+			candidates.Remove(P)
+			continue
 
 /datum/dynamic_ruleset/latejoin/ready(forced = FALSE)
 	if(!forced)
@@ -49,11 +52,9 @@
 
 /datum/dynamic_ruleset/latejoin/infiltrator/execute()
 	var/mob/M = pick(assigned)
-	var/datum/role/traitor/newTraitor = new
-	newTraitor.AssignToRole(M.mind, TRUE)
-	newTraitor.Greet(GREET_LATEJOIN)
-	// ^ should try remake this like roundtarts threat? ^
-	//and looks like infiltrator doesn't have faction?
+	create_and_setup_role(role_category, M, post_setup = TRUE, setup_role = TRUE)
+	var/datum/faction/traitor/traitors = create_uniq_faction(/datum/faction/traitor, post_setup = FALSE, give_objectives = FALSE)
+	add_faction_member(traitors, M, recruit = FALSE, post_setup = TRUE, laterole = TRUE)
 	return TRUE
 
 //////////////////////////////////////////////
@@ -85,13 +86,9 @@
 	var/mob/M = pick(assigned)
 	if(!latejoinprompt(M))
 		return FALSE
+	create_and_setup_role(role_category, M, post_setup = TRUE, setup_role = TRUE)
 	var/datum/faction/wizards/federation = create_uniq_faction(/datum/faction/wizards, post_setup = FALSE, give_objectives = FALSE)
-	var/datum/role/wizard/newWizard = new role_category(M.mind, federation, TRUE)
-	if(!ishuman(M))
-		var/mob/living/carbon/C = M
-		if(istype(C))
-			C = C.humanize()
-	newWizard.Greet(GREET_LATEJOIN)
+	add_faction_member(federation, M, recruit = FALSE, post_setup = TRUE, laterole = TRUE)
 	return TRUE
 
 //////////////////////////////////////////////
@@ -129,14 +126,9 @@
 
 /datum/dynamic_ruleset/latejoin/provocateur/execute()
 	var/mob/M = pick(assigned)
-	var/antagmind = M.mind
-	var/datum/faction/F = create_faction(/datum/faction/revolution)
-	F.forgeObjectives()
-	// v should i rework spawn(1sec) in addtimer(... 10)? v
-	spawn(1 SECONDS)
-		var/datum/role/rev_leader/L = new(antagmind, F, HEADREV)
-		L.Greet(GREET_LATEJOIN)
-		L.OnPostSetup()
+	create_and_setup_role(role_category, M, post_setup = TRUE, setup_role = TRUE)
+	var/datum/faction/revolution/reva = create_uniq_faction(/datum/faction/revolution, post_setup = FALSE, give_objectives = FALSE)
+	add_faction_member(reva, M, recruit = FALSE, post_setup = TRUE, laterole = TRUE)
 	return TRUE
 
 //////////////////////////////////////////////
@@ -162,11 +154,7 @@
 
 /datum/dynamic_ruleset/latejoin/changeling/execute()
 	var/mob/M = pick(assigned)
-	var/datum/role/changeling/newChangeling = new
-	newChangeling.AssignToRole(M.mind, TRUE)
-	newChangeling.Greet(GREET_LATEJOIN)
+	create_and_setup_role(role_category, M, post_setup = TRUE, setup_role = TRUE)
 	var/datum/faction/changeling/hivemind = create_uniq_faction(/datum/faction/changeling, post_setup = FALSE, give_objectives = FALSE)
-	hivemind.OnPostSetup()
-	hivemind.HandleRecruitedRole(newChangeling)
-	// ^ should i remake this like roundstarts wizards/traitors/changelings? ^
+	add_faction_member(hivemind, M, recruit = FALSE, post_setup = TRUE, laterole = TRUE)
 	return TRUE

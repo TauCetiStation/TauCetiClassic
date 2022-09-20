@@ -34,10 +34,12 @@
 	return (assigned.len > 0)
 
 /datum/dynamic_ruleset/roundstart/traitor/execute()
+	var/datum/faction/traitor/traitors = create_uniq_faction(/datum/faction/traitor, post_setup = FALSE, give_objectives = FALSE)
 	for(var/mob/M in assigned)
-		var/datum/faction/traitor/traitors = create_uniq_faction(/datum/faction/traitor, post_setup = FALSE, give_objectives = FALSE)
-		new role_category(M.mind, traitors, TRUE)
-		// Above 3 traitors, we start to cost a bit more.
+		create_and_setup_role(role_category, M, post_setup = TRUE, setup_role = TRUE)
+		add_faction_member(traitors, M, recruit = FALSE, post_setup = TRUE, laterole = TRUE)
+
+	// Above 3 traitors, we start to cost a bit more.
 	return TRUE
 
 //////////////////////////////////////////////
@@ -68,9 +70,10 @@
 	return (assigned.len > 0)
 
 /datum/dynamic_ruleset/roundstart/changeling/execute()
+	var/datum/faction/changeling/hivemind = create_uniq_faction(/datum/faction/changeling, post_setup = FALSE, give_objectives = FALSE)
 	for(var/mob/M in assigned)
-		var/datum/faction/changeling/hivemind = create_uniq_faction(/datum/faction/changeling, post_setup = FALSE, give_objectives = FALSE)
-		new role_category(M.mind, hivemind, TRUE)
+		create_and_setup_role(role_category, M, post_setup = TRUE, setup_role = TRUE)
+		add_faction_member(hivemind, M, recruit = FALSE, post_setup = TRUE, laterole = TRUE)
 	return TRUE
 
 //////////////////////////////////////////////
@@ -89,7 +92,6 @@
 	cost = 30
 	requirements = list(90,90,70,40,30,20,10,10,10,10)
 	high_population_requirement = 40
-	var/list/roundstart_wizards = list()
 
 /datum/dynamic_ruleset/roundstart/wizard/acceptable(population = 0, threat = 0)
 	if(!wizardstart.len)
@@ -99,14 +101,10 @@
 
 /datum/dynamic_ruleset/roundstart/wizard/execute()
 	var/mob/M = pick(assigned)
-	if(M)
-		var/datum/faction/wizards/federation = create_uniq_faction(/datum/faction/wizards, post_setup = FALSE, give_objectives = FALSE)
-		var/datum/role/wizard/newWizard = new role_category(M.mind, federation, TRUE)
-		if(!ishuman(M))
-			var/mob/living/carbon/C = M
-			if(istype(C))
-				C = C.humanize()
-		roundstart_wizards += newWizard
+	create_and_setup_role(role_category, M, post_setup = TRUE, setup_role = TRUE)
+	var/datum/faction/wizards/federation = create_uniq_faction(/datum/faction/wizards, post_setup = FALSE, give_objectives = FALSE)
+	add_faction_member(federation, M, recruit = FALSE, post_setup = TRUE, laterole = TRUE)
+
 	return TRUE
 
 //////////////////////////////////////////
@@ -152,14 +150,10 @@
 
 /datum/dynamic_ruleset/roundstart/cult/execute()
 	//if ready() did its job, candidates should have 4 or more members in it
-	var/datum/faction/cult/cult = find_faction_by_type(/datum/faction/cult)
-	if(!cult)
-		cult = create_faction(/datum/faction/cult)
+	var/datum/faction/cult/cult = create_uniq_faction(/datum/faction/cult, post_setup = FALSE, give_objectives = FALSE)
 	for(var/mob/M in assigned)
-		var/datum/role/cultist/newCultist = new
-		newCultist.AssignToRole(M.mind, TRUE)
-		cult.HandleRecruitedRole(newCultist)
-		newCultist.Greet(GREET_ROUNDSTART)
+		create_and_setup_role(role_category, M, post_setup = TRUE, setup_role = TRUE)
+		add_faction_member(cult, M, recruit = FALSE, post_setup = TRUE, laterole = TRUE)
 	return TRUE
 
 //////////////////////////////////////////////
@@ -205,38 +199,15 @@
 
 /datum/dynamic_ruleset/roundstart/nuclear/execute()
 	//If ready() did its job, candidates should have 5 or more members in it
-	var/datum/faction/nuclear/nuke = find_faction_by_type(/datum/faction/nuclear)
-	if(!nuke)
-		nuke = create_faction(/datum/faction/nuclear)
-	var/list/turf/synd_spawn = list()
-
-	for(var/obj/effect/landmark/A in landmarks_list)
-		if(A.name == "Syndicate-Spawn")
-			synd_spawn += get_turf(A)
-			continue
-
-	var/spawnpos = 1
-	var/leader = TRUE
+	var/datum/faction/nuclear/nuke = create_uniq_faction(/datum/faction/nuclear, post_setup = FALSE, give_objectives = FALSE)
+	var/leader = FALSE
 	for(var/mob/M in assigned)
-		if(spawnpos > synd_spawn.len)
-			spawnpos = 1
-		M.forceMove(synd_spawn[spawnpos])
-		if(!ishuman(M))
-			var/mob/living/carbon/C = M
-			if(C)
-				C = C.humanize()
 		if(leader)
-			leader = FALSE
-			var/datum/role/operative/leader/newCop = new
-			newCop.AssignToRole(M.mind, TRUE)
-			nuke.HandleRecruitedRole(newCop)
-			newCop.Greet(GREET_ROUNDSTART)
+			leader = TRUE
+			create_and_setup_role(/datum/role/operative/leader, M, post_setup = TRUE, setup_role = TRUE)
 		else
-			var/datum/role/operative/newCop = new
-			newCop.AssignToRole(M.mind, TRUE)
-			nuke.HandleRecruitedRole(newCop)
-			newCop.Greet(GREET_ROUNDSTART)
-		spawnpos++
+			create_and_setup_role(role_category, M, post_setup = TRUE, setup_role = TRUE)
+		add_faction_member(nuke, M, recruit = FALSE, post_setup = TRUE, laterole = TRUE)
 	return TRUE
 
 //////////////////////////////////////////////
@@ -315,18 +286,9 @@
 	return (assigned.len > 0)
 
 /datum/dynamic_ruleset/roundstart/delayed/revs/execute()
-	var/datum/faction/revolution/R = find_faction_by_type(/datum/faction/revolution)
-	if(!R)
-		R = create_faction(/datum/faction/revolution)
-	for(var/rev_ckey in assigned_ckeys)
-		var/list/L = list()
-		for(var/client/C in clients)
-			if(C.ckey == rev_ckey)
-				L += C.ckey
-		var/mob/M = pick(L)
-		var/datum/role/rev_leader/lenin = new
-		lenin.AssignToRole(M.mind, TRUE)
-		R.HandleRecruitedRole(lenin)
-		lenin.Greet(GREET_ROUNDSTART)
-	R.OnPostSetup()
+	var/datum/faction/revolution/R = create_uniq_faction(/datum/faction/revolution, post_setup = FALSE, give_objectives = FALSE)
+	for(var/mob/M in assigned)
+		create_and_setup_role(role_category, M, post_setup = TRUE, setup_role = TRUE)
+		add_faction_member(R, M, recruit = FALSE, post_setup = TRUE, laterole = TRUE)
+
 	return TRUE

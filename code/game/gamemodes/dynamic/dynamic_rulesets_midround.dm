@@ -49,6 +49,9 @@
 			if((exclusive_to_jobs.len > 0) && !(M.mind.assigned_role in exclusive_to_jobs))//is the rule exclusive to their job?
 				trimmed_list.Remove(M)
 				continue
+		if(!ishuman(M))
+			trimmed_list.Remove(M)
+			continue
 	return trimmed_list
 
 //You can then for example prompt dead players in execute() to join as strike teams or whatever
@@ -110,47 +113,11 @@
 			continue
 		log_mode("DEBUG: Selected [applicant] for rule.")
 
-		var/mob/new_character = applicant
 
-		if(makeBody)
-			new_character = generate_ruleset_body(applicant)
-
-		finish_setup(new_character, candidate_checks - (i-1)) // i = N, N - 1.... so that N - (i-1) = 1, 2, ...
+		//new_character = aplicant
+		//finish_setup(new_character, candidate_checks - (i-1)) // i = N, N - 1.... so that N - (i-1) = 1, 2, ...
 
 	applicants.Cut()
-
-/datum/dynamic_ruleset/midround/from_ghosts/proc/finish_setup(mob/new_character, index)
-	var/datum/role/new_role = new role_category
-	new_role.AssignToRole(new_character.mind, TRUE)
-	setup_role(new_role)
-
-/datum/dynamic_ruleset/midround/from_ghosts/proc/setup_role(datum/role/new_role)
-	new_role.OnPostSetup()
-	new_role.Greet(GREET_MIDROUND)
-	new_role.forgeObjectives()
-	new_role.AnnounceObjectives()
-
-// -- Faction based --
-
-/datum/dynamic_ruleset/midround/from_ghosts/faction_based
-	weight = 0
-	var/datum/faction/my_fac = null // If the midround lawset will try to add our antag to a faction
-	var/created_a_faction = FALSE
-
-/datum/dynamic_ruleset/midround/from_ghosts/faction_based/review_applications()
-	var/datum/faction/active_fac = create_uniq_faction(my_fac, post_setup = FALSE, give_objectives = FALSE)
-	created_a_faction = TRUE
-	my_fac = active_fac
-	. = ..()
-	if(created_a_faction)
-		active_fac.OnPostSetup()
-	return my_fac
-
-/datum/dynamic_ruleset/midround/from_ghosts/faction_based/setup_role(datum/role/new_role)
-	my_fac.HandleRecruitedRole(new_role)
-	new_role.Greet(GREET_MIDROUND)
-	new_role.forgeObjectives()
-	new_role.AnnounceObjectives()
 
 //////////////////////////////////////////////
 //                                          //
@@ -210,13 +177,8 @@
 /datum/dynamic_ruleset/midround/autotraitor/execute()
 	var/mob/M = pick(assigned)
 	create_and_setup_role(role_category, M, post_setup = TRUE, setup_role = TRUE)
-	/*	^ thats good? ^
-	var/datum/role/traitor/newTraitor = new
-	newTraitor.AssignToRole(M.mind, TRUE)
-	newTraitor.OnPostSetup()
-	newTraitor.Greet(GREET_AUTOTRAITOR)
-	newTraitor.forgeObjectives()
-	newTraitor.AnnounceObjectives()*/
+	var/datum/faction/traitor/traitors = create_uniq_faction(/datum/faction/traitor, post_setup = FALSE, give_objectives = FALSE)
+	add_faction_member(traitors, M, recruit = FALSE, post_setup = TRUE, laterole = TRUE)
 	return TRUE
 
 //////////////////////////////////////////////
@@ -228,7 +190,6 @@
 /datum/dynamic_ruleset/midround/from_ghosts/faction_based/raginmages
 	name = "Ragin' Mages"
 	role_category = /datum/role/wizard
-	my_fac = /datum/faction/wizards
 	enemy_jobs = list("Security Officer","Detective","Head of Security", "Captain")
 	required_pop = list(20,20,15,15,15,15,15,10,10,0)
 	required_candidates = 1
@@ -245,15 +206,6 @@
 		return FALSE
 	return ..()
 
-/datum/dynamic_ruleset/midround/from_ghosts/faction_based/raginmages/setup_role(datum/role/new_role)
-	if(!created_a_faction)
-		new_role.OnPostSetup() //Each individual role to show up gets a postsetup
-	return ..()
-
-/datum/dynamic_ruleset/midround/from_ghosts/faction_based/raginmages/finish_setup(mob/new_character, index)
-	new_character.forceMove(pick(wizardstart))
-	return ..()
-
 //////////////////////////////////////////////
 //                                          //
 //          NUCLEAR OPERATIVES (MIDROUND)   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -264,7 +216,6 @@
 	name = "Nuclear Assault"
 	role_category = /datum/role/operative
 	role_category_override = "Nuke Operative" // this is what is used on the ban page
-	my_fac = /datum/faction/nuclear
 	enemy_jobs = list("AI", "Cyborg", "Security Officer", "Warden","Detective","Head of Security", "Captain")
 	required_pop = list(25, 25, 25, 25, 25, 20, 15, 15, 10, 10)
 	required_candidates = 5 // Placeholder, see op. cap
@@ -289,28 +240,6 @@
 	required_candidates = operative_cap[indice_pop]
 	return ..()
 
-/datum/dynamic_ruleset/midround/from_ghosts/faction_based/nuclear/finish_setup(mob/new_character, index)
-	create_uniq_faction(my_fac, post_setup = FALSE, give_objectives = TRUE)
-	//^ nukies get into a faction? Need test ^
-	var/list/turf/synd_spawn = list()
-
-	for(var/obj/effect/landmark/A in landmarks_list)
-		if(A.name == "Syndicate-Spawn")
-			synd_spawn += get_turf(A)
-			continue
-
-	var/spawnpos = index
-	if(spawnpos > synd_spawn.len)
-		spawnpos = 1
-	new_character.forceMove(synd_spawn[spawnpos])
-	if(index == 1) //Our first guy is the leader
-		var/datum/role/operative/leader/new_role = new
-		// v is that bad? v
-		new_role.AssignToRole(new_character.mind, TRUE)
-		setup_role(new_role)
-	else
-		return ..()
-
 //////////////////////////////////////////////
 //                                          //
 //            REVSQUAD (MIDROUND)           ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -327,7 +256,6 @@
 	cost = 30
 	requirements = list(90, 90, 90, 90, 40, 40, 30, 20, 10, 10)
 	high_population_requirement = 50
-	my_fac = /datum/faction/revolution
 	logo = "rev-logo"
 	flags = HIGHLANDER_RULESET
 
