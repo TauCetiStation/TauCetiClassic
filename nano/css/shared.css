@@ -164,6 +164,7 @@ h4 {
 	text-align: left;
 	background: #1E1D20;
 	padding: 3px;
+	border: 1px solid #312C35;
 }
 
 .message_right {
@@ -174,6 +175,7 @@ h4 {
 	text-align: left;
 	background: #4B474F;
 	padding: 3px;
+	border: 1px solid #312C35;
 }
 
 .white {
