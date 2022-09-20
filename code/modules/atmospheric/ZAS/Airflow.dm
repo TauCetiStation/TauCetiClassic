@@ -118,6 +118,8 @@ Contains helper procs for airflow, handled in /connection_group.
 	if(repelled)
 		xo = -xo
 		yo = -yo
+		// update airflow_dest for proper step_towards
+		airflow_dest = locate(clamp(src.x + xo, 1, world.maxx), clamp(src.y + yo, 1, world.maxy), src.z)
 
 	while(airflow_speed > 0)
 		airflow_speed = airflow_speed - vsc.airflow_speed_decay
