@@ -148,36 +148,6 @@ h4 {
     font-size: 12px;
 }
 
-.Chat {
-    background: #312C35;
-    color: #ffffff;
-    border: 1px solid #4B474F;
-    padding: 12px;
-    margin: 8px;
-}
-
-.message_left {
-	width: 60%;
-    color: #ffffff;
-    font-weight: bold;
-	float: left;
-	text-align: left;
-	background: #1E1D20;
-	padding: 3px;
-	border: 1px solid #312C35;
-}
-
-.message_right {
-	width: 60%;
-    color: #ffffff;
-    font-weight: bold;
-	float: right;
-	text-align: left;
-	background: #4B474F;
-	padding: 3px;
-	border: 1px solid #312C35;
-}
-
 .white {
     color: white;
     font-weight: bold;

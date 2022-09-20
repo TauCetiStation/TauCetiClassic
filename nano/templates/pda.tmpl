@@ -294,9 +294,9 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
                     {{for data.messages}}
                         {{if data.active_conversation == value.target}}
                             {{if value.sent==0}}
-                                <span class="message_left"><left><small><span class="average">{{:value.reciever}}</span></small></left><br>{{:value.message}}</span><br>
+								<span class="average"><B>Собеседник:</B>: {{:value.message}}</span><br>
                             {{else}}
-                                <span class="message_right">{{:value.message}}</span><br>
+								<span class="good"><B>Вы</B>: {{:value.message}}</span><br>
                             {{/if}}
                         {{/if}}
                     {{/for}}
