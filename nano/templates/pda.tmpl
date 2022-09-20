@@ -288,15 +288,15 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
         <br>
         <br>
         <H3>Чат с:&nbsp;<span class="average">{{:data.convo_name}}&nbsp;({{:data.convo_job}})</span></H3>
-        <div class="statusDisplay" style="overflow: auto;">
+        <div class="Chat" style="overflow: auto;">
             <div class="item">
                 <div class="itemContent" style="width: 100%;">
                     {{for data.messages}}
                         {{if data.active_conversation == value.target}}
                             {{if value.sent==0}}
-                                <left><span class="average">{{:value.message}}</span><br></left>
+                                <span class="message_left"><center><H3>{{:value.reciever}}</H3></center>{{:value.message}}</span><br>
                             {{else}}
-                                <right><span class="good">{{:value.message}}</span><br></right>
+                                <span class="message_right"><center><H3>{{:value.sender}}</H3></center>{{:value.message}}</span><br>
                             {{/if}}
                         {{/if}}
                     {{/for}}
