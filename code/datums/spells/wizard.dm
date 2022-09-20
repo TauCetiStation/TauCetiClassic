@@ -353,7 +353,7 @@
 	invocation_type = "none"
 	range = 0
 	summon_type = list(/obj/structure/mineral_door/cult)
-	centcomm_cancast = 0
+	centcomm_cancast = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
 	name = "Создание камня души"
