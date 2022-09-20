@@ -171,9 +171,9 @@
 	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/aoe_turf/area_conversion/cast(list/targets, mob/user)
-	. = ..()
 	if(!user.my_religion)
 		return
+	. = ..()
 	for(var/turf/nearby_turf in range(3, user))
 		if(prob(100 - (get_dist(nearby_turf, user) * 25)))
 			playsound(nearby_turf, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
