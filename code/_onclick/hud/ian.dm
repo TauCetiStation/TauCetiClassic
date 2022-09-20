@@ -2,7 +2,7 @@
 	if(!(is_alien_whitelisted(src, "ian") || (src.client.supporter && !is_alien_whitelisted_banned(src, "ian"))))
 		return
 
-	hud.ui_style = 'icons/mob/screen_corgi.dmi'
+	hud.ui_style = 'icons/hud/screen_corgi.dmi'
 
 	..(hud, FALSE)
 

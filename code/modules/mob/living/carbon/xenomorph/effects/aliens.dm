@@ -534,7 +534,7 @@
 /obj/structure/alien/air_plant/examine(mob/user)
 	..()
 	if(isxeno(user))
-		to_chat(user, "Сurrent ambient pressure: [pressure] kPa.")
+		to_chat(user, "Current ambient pressure: [pressure] kPa.")
 
 /obj/structure/alien/air_plant/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 290)
