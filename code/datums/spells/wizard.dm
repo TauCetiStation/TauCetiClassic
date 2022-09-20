@@ -348,7 +348,7 @@
 
 	school = "conjuration"
 	charge_max = 400
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
