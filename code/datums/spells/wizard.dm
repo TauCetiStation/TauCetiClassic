@@ -128,7 +128,7 @@
 	inner_tele_radius = 0
 	outer_tele_radius = 6
 
-	centcomm_cancast = 0 //prevent people from getting to centcomm
+	centcomm_cancast = FALSE //prevent people from getting to centcomm
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	name = "Телепорт"
@@ -317,7 +317,7 @@
 	invocation_type = "none"
 	range = 0
 	summon_type = list(/turf/simulated/floor/engine/cult, /turf/simulated/floor/engine/cult/lava)
-	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
+	centcomm_cancast = FALSE //Stop crashing the server by spawning turfs on transit tiles
 
 	action_icon_state = "floorconstruct"
 	action_background_icon_state = "bg_cult"
@@ -333,7 +333,7 @@
 	invocation_type = "none"
 	range = 0
 	summon_type = list(/turf/simulated/wall/cult, /turf/simulated/wall/cult/runed, /turf/simulated/wall/cult/runed/anim)
-	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
+	centcomm_cancast = FALSE //Stop crashing the server by spawning turfs on transit tiles
 
 	action_icon_state = "lesserconstruct"
 	action_background_icon_state = "bg_cult"
@@ -342,7 +342,6 @@
 	name = "Возвести Ворота"
 	desc = "Это заклинание заставляет вас возвести Ворота"
 
-	//action_icon = 'icons/obj/doors/mineral_doors.dmi'
 	action_icon_state = "cult_door"
 	action_background_icon_state = "bg_cult"
 

@@ -162,7 +162,7 @@
 		M.Stun(2)
 		M.Weaken(4)
 
-/obj/effect/proc_holder/spell/aoe_turf/area_conversion
+/obj/effect/proc_holder/spell/no_target/area_conversion
 	name = "Обращение Зоны"
 	desc = "Это заклинание моментально делает небольшую зону вокруг вас подвластной вашей Вере"
 	clothes_req = FALSE
@@ -170,7 +170,7 @@
 	action_icon_state = "areaconvert"
 	action_background_icon_state = "bg_cult"
 
-/obj/effect/proc_holder/spell/aoe_turf/area_conversion/cast(list/targets, mob/user)
+/obj/effect/proc_holder/spell/no_target/area_conversion/cast(list/targets, mob/user)
 	if(!user.my_religion)
 		return
 	. = ..()
