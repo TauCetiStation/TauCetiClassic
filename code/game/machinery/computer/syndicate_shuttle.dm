@@ -40,16 +40,11 @@
 
 	moving = TRUE
 	lastMove = world.time
-	if(user)
-		var/datum/mind/M = user.mind
-		if(M)
-			for(var/role in list(NUKE_OP, NUKE_OP_LEADER))
-				var/datum/role/R = M.GetRole(role)
-				if(R)
-					var/datum/faction/nuclear/mob_faction = R.GetFaction()
-					if(mob_faction)
-						SEND_SIGNAL(mob_faction, COMSIG_NUKE_OP_STARTED)
-						break
+	//mix stuff
+	var/datum/faction/nuclear/crossfire/N = find_faction_by_type(/datum/faction/nuclear/crossfire)
+	if(N)
+		N.nuke_landed = TRUE
+
 	if(curr_location.z != dest_location.z)
 		var/area/transit_location = locate(/area/shuttle/syndicate/transit)
 		curr_location.move_contents_to(transit_location)

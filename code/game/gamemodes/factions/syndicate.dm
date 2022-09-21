@@ -304,16 +304,11 @@
 /datum/faction/nuclear/crossfire
 	name = F_SYNDIOPS_CROSSFIRE
 	ID = F_SYNDIOPS_CROSSFIRE
+	var/nuke_landed = FALSE
+	var/vox_called = FALSE
 
-/datum/faction/nuclear/crossfire/OnPostSetup()
-	. = ..()
-	RegisterSignal(src, COMSIG_NUKE_OP_STARTED, .proc/call_saboteurs)
-
-/datum/faction/nuclear/crossfire/proc/call_saboteurs()
-	SIGNAL_HANDLER
-	new /datum/event/heist/saboteurs
-	UnregisterSignal(src, list(COMSIG_NUKE_OP_STARTED))
-
-/datum/faction/nuclear/crossfire/Destroy()
-	UnregisterSignal(src, list(COMSIG_NUKE_OP_STARTED))
+/datum/faction/nuclear/crossfire/process()
+	if(!vox_called)
+		if(nuke_landed)
+			new /datum/event/heist/saboteurs
 	return ..()

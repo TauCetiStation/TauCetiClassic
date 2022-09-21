@@ -735,16 +735,11 @@
 	..()
 
 /obj/structure/droppod/Syndi/StartDrop()
-	. = ..()
-	var/datum/mind/M = intruder.mind
-	if(M)
-		for(var/role in list(NUKE_OP, NUKE_OP_LEADER))
-			var/datum/role/R = M.GetRole(role)
-			if(R)
-				var/datum/faction/nuclear/mob_faction = R.GetFaction()
-				if(mob_faction)
-					SEND_SIGNAL(mob_faction, COMSIG_NUKE_OP_STARTED)
-					break
+	//mix stuff
+	var/datum/faction/nuclear/crossfire/N = find_faction_by_type(/datum/faction/nuclear/crossfire)
+	if(N)
+		N.nuke_landed = TRUE
+	return ..()
 
 /obj/structure/droppod/Syndi/perform_drop()
 	..()
