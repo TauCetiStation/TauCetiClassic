@@ -301,6 +301,10 @@
 #undef MAX_OPS
 #undef MIN_OPS
 
+/datum/faction/nuclear/crossfire
+	name = F_SYNDIOPS_CROSSFIRE
+	ID = F_SYNDIOPS_CROSSFIRE
+
 /datum/faction/nuclear/crossfire/OnPostSetup()
 	. = ..()
 	RegisterSignal(src, COMSIG_NUKE_OP_STARTED, .proc/call_saboteurs)
