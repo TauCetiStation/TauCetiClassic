@@ -20,6 +20,7 @@
 	m_amt = 3000
 	g_amt = 1000
 	var/up = 0
+	flash_protection = 2
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags_inv = (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 	body_parts_covered = HEAD|FACE|EYES
@@ -42,12 +43,14 @@
 			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
 			flags_inv |= (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = initial(icon_state)
+			flash_protection = 2
 			to_chat(usr, "You flip the [src] down to protect your eyes.")
 		else
 			src.up = !src.up
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = "[initial(icon_state)]up"
+			flash_protection = 0
 			to_chat(usr, "You push the [src] up out of your face.")
 		usr.update_inv_head()	//so our mob-overlays update
 

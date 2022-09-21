@@ -162,6 +162,7 @@
 	icon_state = "sun"
 	item_state = "sunglasses"
 	darkness_view = -1
+	flash_protection = 1
 
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
@@ -169,6 +170,7 @@
 	icon_state = "welding-g"
 	item_state = "welding-g"
 	action_button_name = "Flip Welding Goggles"
+	flash_protection = 2
 	var/up = 0
 
 /obj/item/clothing/glasses/welding/attack_self()
@@ -186,12 +188,14 @@
 			flags |= GLASSESCOVERSEYES
 			body_parts_covered |= EYES
 			icon_state = initial(icon_state)
+			flash_protection = 2
 			to_chat(usr, "You flip \the [src] down to protect your eyes.")
 		else
 			up = !up
 			flags &= ~GLASSESCOVERSEYES
 			body_parts_covered &= ~EYES
 			icon_state = "[initial(icon_state)]up"
+			flash_protection = 0
 			to_chat(usr, "You push \the [src] up out of your face.")
 
 		usr.update_inv_glasses()
@@ -256,6 +260,13 @@
 	darkness_view = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 
+/obj/item/clothing/glasses/hud/hos_aug/attack_self(mob/user)
+	. = ..()
+	if(active)
+		flash_protection = 0
+	else
+		flash_protection = 1
+
 /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
 	name = "tactical HUD"
 	desc = "Flash-resistant goggles with inbuilt combat and security information."
@@ -273,6 +284,14 @@
 	sightglassesmod = "thermal"
 	action_button_name = "Toggle Goggles"
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	flash_protection = -1
+
+/obj/item/clothing/glasses/thermal/attack_self(mob/user)
+	. = ..()
+	if(active)
+		flash_protection = -1
+	else
+		flash_protection = 0
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	if(ishuman(src.loc))
@@ -385,7 +404,7 @@
 /obj/item/clothing/glasses/sunglasses/noir/verb/toggle_noir()
 	set name = "Toggle Noir"
 	set category = "Object"
-	
+
 	if(usr.incapacitated())
 		return
 	active = !active

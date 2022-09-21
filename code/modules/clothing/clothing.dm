@@ -24,6 +24,7 @@
 	var/list/restricted_accessory_slots
 
 	var/flashbang_protection = FALSE
+	var/flash_protection = 0
 
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M, slot)
@@ -420,6 +421,7 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude", DIONA, VOX_ARMALIS)
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
+	flash_protection = 2
 
 /obj/item/clothing/suit/space
 	name = "space suit"
