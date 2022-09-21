@@ -29,7 +29,7 @@
 		if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN + 20 >= world.time)
 			updateUsrDialog()
 
-/obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination, mob/user)
+/obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination)
 	if(moving)
 		return
 	if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN > world.time)
@@ -87,23 +87,23 @@
 			return
 	else
 		war_device_activation_forbidden = TRUE
-	var/mob/M = usr
+
 	if(href_list["syndicate"])
-		syndicate_move_to(/area/shuttle/syndicate/start, M)
+		syndicate_move_to(/area/shuttle/syndicate/start)
 	else if(href_list["station_nw"])
-		syndicate_move_to(/area/shuttle/syndicate/northwest, M)
+		syndicate_move_to(/area/shuttle/syndicate/northwest)
 	else if(href_list["station_n"])
-		syndicate_move_to(/area/shuttle/syndicate/north, M)
+		syndicate_move_to(/area/shuttle/syndicate/north)
 	else if(href_list["station_ne"])
-		syndicate_move_to(/area/shuttle/syndicate/northeast, M)
+		syndicate_move_to(/area/shuttle/syndicate/northeast)
 	else if(href_list["station_sw"])
-		syndicate_move_to(/area/shuttle/syndicate/southwest, M)
+		syndicate_move_to(/area/shuttle/syndicate/southwest)
 	else if(href_list["station_s"])
-		syndicate_move_to(/area/shuttle/syndicate/south, M)
+		syndicate_move_to(/area/shuttle/syndicate/south)
 	else if(href_list["station_se"])
-		syndicate_move_to(/area/shuttle/syndicate/southeast, M)
+		syndicate_move_to(/area/shuttle/syndicate/southeast)
 	else if(href_list["mining"])
-		syndicate_move_to(/area/shuttle/syndicate/mining, M)
+		syndicate_move_to(/area/shuttle/syndicate/mining)
 
 	updateUsrDialog()
 
