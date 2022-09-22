@@ -171,6 +171,7 @@
 	if(contents)
 		for(var/atom/movable/something in contents)
 			something.loc = get_turf(src)
+	REMOVE_TRAIT(src, TRAIT_TAJARAN_HAIR, GENERIC_TRAIT)
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
