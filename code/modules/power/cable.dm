@@ -159,7 +159,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/deconstruct(disassembled, user)
 	if(flags & NODECONSTRUCT)
 		return ..()
-	remove_cable(user)
+	remove_cable(loc, user)
 
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1.0)
