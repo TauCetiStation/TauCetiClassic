@@ -216,6 +216,7 @@
 	if(!A)
 		A = teleportlocs[pick(teleportlocs)]
 	TeleportToArea(H,A)
+	remove_handcuffs(H)
 
 /obj/machinery/abductor/experiment/proc/remove_handcuffs(mob/living/carbon/human/H)
 	var/obj/item/weapon/handcuffs/alien/handcuffs = H.handcuffed
