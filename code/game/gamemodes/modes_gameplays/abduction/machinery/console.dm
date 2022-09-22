@@ -32,7 +32,7 @@
 							"decloner"							=2,
 							"advanced baton"					=2,
 							"addtional permissions"				=2,
-							"advanced console"					=1,
+							"advanced console"					="Free",
 							"radio silencer"					=1,
 							"science tool" 						=1,
 							"agent helmet" 						=1,
@@ -165,16 +165,12 @@
 				else
 					visible_message("Insufficent data!")
 			if("adv_console")
-				if(experiment && experiment.points >= 2)
-					experiment.points -= 2
-					visible_message("Agent Observation Console has been replaced with advanced one.")
-					for(var/obj/machinery/computer/security/abductor_ag/C in computer_list)
-						if(C.team == team)
-							camera = new(get_turf(C))
-							camera.console = src
-							qdel(C)
-				else
-					visible_message("Insufficent data!")
+				visible_message("Agent Observation Console has been replaced with advanced one.")
+				for(var/obj/machinery/computer/security/abductor_ag/C in computer_list)
+					if(C.team == team)
+						camera = new(get_turf(C))
+						camera.console = src
+						qdel(C)
 			if("baton")
 				Dispense(/obj/item/weapon/abductor_baton, 2)
 			if("helmet")
@@ -219,7 +215,7 @@
 		return
 
 	if(pad)
-		pad.teleport_target = location
+		pad.precise_teleport_target = location
 		to_chat(user, "<span class='notice'>Location marked as test subject release point.</span>")
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()

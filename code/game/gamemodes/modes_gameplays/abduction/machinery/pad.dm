@@ -8,6 +8,7 @@
 	anchored = TRUE
 	var/obj/machinery/abductor/console/console
 	var/area/teleport_target
+	var/turf/precise_teleport_target
 	var/target_name
 
 /obj/machinery/abductor/proc/TeleportToArea(mob/living/target, area/thearea)

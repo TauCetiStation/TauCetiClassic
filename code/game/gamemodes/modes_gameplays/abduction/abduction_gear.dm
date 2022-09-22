@@ -180,6 +180,8 @@
 	if(!isabductorsci(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
+	if(!ismob(target))
+		return
 	switch(mode)
 		if(GIZMO_SCAN)
 			scan(target, user)

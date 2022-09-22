@@ -145,12 +145,12 @@
 	if(!target || !iscarbon(owner))
 		return
 
-	var/mob/living/carbon/human/C = owner
-	var/mob/camera/Eye/remote/remote_eye = C.remote_control
+	var/mob/living/carbon/human/H = owner
+	var/mob/camera/Eye/remote/remote_eye = H.remote_control
 
 	if(remote_eye.loc.z in SSmapping.levels_by_trait(ZTRAIT_CENTCOM))
 		to_chat(owner, "<span class='warning'>This place is out of bounds of pad' working zone</span>")
 		return
-
-	var/obj/machinery/abductor/console/console = target
+	var/obj/machinery/computer/camera_advanced/abductor/C = target
+	var/obj/machinery/abductor/console/console = C.console
 	console.SetDroppoint(get_turf(remote_eye.loc),owner)
