@@ -319,7 +319,9 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.species.name == TAJARAN)
-				ADD_TRAIT(cooked, TRAIT_TAJARAN_HAIR, GENERIC_TRAIT)
+				var/check_cloth = 100 - H.getarmor(null, "bio")
+				if(prob(check_cloth))
+					ADD_TRAIT(cooked, TRAIT_TAJARAN_HAIR, GENERIC_TRAIT)
 		SSStatistics.score.meals++
 		return
 
