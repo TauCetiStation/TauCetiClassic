@@ -19,7 +19,11 @@
 		var/mob/living/L = M
 		if(taste)
 			L.taste_reagents(reagents)
-
+	if(HAS_TRAIT(src, TRAIT_TAJARAN_HAIR))
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(prob(25))
+				H.invoke_vomit_async()
 	if(!reagents.total_volume)
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
