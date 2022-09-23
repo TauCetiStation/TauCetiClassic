@@ -41,12 +41,19 @@
 	if((iscultist(user) || isobserver(user)) && religion)
 		to_chat(user, "Писание Нар-Си. Содержит подробности о тёмных ритуалах, загадочных рунах и много другой странной информации. Однако, большинство из написанного не работает.")
 		to_chat(user, "Текущее количество favor: [religion.favor] piety: <span class='cult'>[religion.piety]</span>")
+
+		var/num = 0 //Counting NOT DEAD religion members
+		for(var/mob/M in religion.members)
+			if(M.stat != DEAD)
+				num++
+
 		var/text_num = "ей" //ending for word
-		if(length(religion.members) == 1)
+		if(num == 1)
 			text_num = "ь"
-		else if(length(religion.members) <= 4)
+		else if(num <= 4)
 			text_num = "я"
-		to_chat(user, "В культе всего [length(religion.members)] последовател[text_num]")
+
+		to_chat(user, "В культе всего [num] последовател[text_num]")
 		var/list/L = LAZYACCESS(religion.runes_by_ckey, user.ckey)
 		to_chat(user, "Вами нарисовано/всего <span class='cult'>[L ? L.len : "0"]</span>/[religion.max_runes_on_mob]")
 		to_chat(user, "<a href='?src=\ref[src];del_runes_ckey=1'>Удалить все ваши руны</a>")
