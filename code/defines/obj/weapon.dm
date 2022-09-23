@@ -188,6 +188,9 @@
 	flags = CONDUCT
 	m_amt = 3750
 
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
+
 /obj/item/weapon/shard
 	name = "shard"
 	icon = 'icons/obj/shards.dmi'
@@ -351,6 +354,10 @@
 	flags = CONDUCT
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
 	var/table_type = /obj/structure/table
+	var/list/debris = list(/obj/item/stack/sheet/metal)
+
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
 
 /obj/item/weapon/table_parts/reinforced
 	name = "reinforced table parts"
@@ -360,6 +367,7 @@
 	m_amt = 7500
 	flags = CONDUCT
 	table_type = /obj/structure/table/reinforced
+	debris = list(/obj/item/stack/sheet/metal, /obj/item/stack/rods)
 
 /obj/item/weapon/table_parts/wood
 	name = "wooden table parts"
@@ -367,6 +375,7 @@
 	icon_state = "wood_tableparts"
 	flags = null
 	table_type = /obj/structure/table/woodentable
+	debris = list(/obj/item/stack/sheet/wood)
 
 /obj/item/weapon/table_parts/wood/poker
 	name = "poker table parts"
@@ -374,6 +383,7 @@
 	icon_state = "poker_tableparts"
 	flags = null
 	table_type = /obj/structure/table/woodentable/poker
+	debris = list(/obj/item/stack/sheet/wood, /obj/item/stack/tile/grass)
 
 /obj/item/weapon/table_parts/wood/fancy
 	name = "fancy table parts"
@@ -391,6 +401,7 @@
 	icon_state = "glass_tableparts"
 	flags = null
 	table_type = /obj/structure/table/glass
+	debris = list(/obj/item/stack/sheet/glass)
 
 /obj/item/weapon/wire
 	desc = "This is just a simple piece of regular insulated wire."

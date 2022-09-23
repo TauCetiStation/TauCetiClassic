@@ -703,8 +703,7 @@
 /area/shuttle/escape/centcom)
 "abC" = (
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/wall/fakeglass,
 /area/centcom/living)
@@ -5467,9 +5466,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -6189,9 +6187,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -6620,9 +6617,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
@@ -7092,9 +7088,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -7132,9 +7127,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -7291,9 +7285,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -7585,9 +7578,8 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -8081,9 +8073,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -8398,9 +8389,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -8652,9 +8642,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -9099,9 +9088,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -11241,9 +11229,8 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/indestructible{
 	dir = 5;
-	health = 1e+007
 	},
 /obj/effect/forcefield{
 	desc = "You can't get in. Heh.";
@@ -13530,8 +13517,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -13547,8 +13533,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -14908,8 +14893,7 @@
 /area/shuttle/supply/velocity)
 "aHD" = (
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/simulated/shuttle/plating,
 /area/shuttle/administration/centcom)
@@ -16028,8 +16012,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
@@ -16040,8 +16023,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
@@ -16054,8 +16036,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
@@ -16125,8 +16106,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
@@ -16229,8 +16209,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
@@ -16441,8 +16420,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
@@ -16517,8 +16495,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
@@ -16657,8 +16634,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
@@ -16669,8 +16645,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
@@ -16684,8 +16659,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
@@ -16702,8 +16676,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
@@ -17846,8 +17819,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -17863,8 +17835,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -17963,8 +17934,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -17980,8 +17950,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -18213,8 +18182,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -18242,8 +18210,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -18585,8 +18552,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -22555,9 +22521,8 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/indestructible{
 	dir = 5;
-	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -23897,9 +23862,8 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/indestructible{
 	dir = 5;
-	health = 1e+007
 	},
 /obj/structure/sign/tablo{
 	dir = 4;
@@ -24023,8 +23987,7 @@
 /obj/item/clothing/head/helmet/space/syndicate/elite,
 /obj/item/clothing/suit/space/syndicate/elite,
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /obj/item/weapon/paper{
 	info = "Just old elite space suit. MiraCorp makes your life better"
