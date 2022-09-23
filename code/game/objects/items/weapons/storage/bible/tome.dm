@@ -42,12 +42,12 @@
 		to_chat(user, "Писание Нар-Си. Содержит подробности о тёмных ритуалах, загадочных рунах и много другой странной информации. Однако, большинство из написанного не работает.")
 		to_chat(user, "Текущее количество favor: [religion.favor] piety: <span class='cult'>[religion.piety]</span>")
 
-		var/num = 0 //Counting NOT DEAD religion members
+		var/num = 0
 		for(var/mob/M in religion.members)
 			if(M.stat != DEAD)
 				num++
 
-		to_chat(user, "В культе всего [num] последовател[pluralize_russian(num, "ь", "я", "ей")]")
+		to_chat(user, "В культе всего [num] [pluralize_russian(num, "последователь", "последователя", "последователей")]")
 		var/list/L = LAZYACCESS(religion.runes_by_ckey, user.ckey)
 		to_chat(user, "Вами нарисовано/всего <span class='cult'>[L ? L.len : "0"]</span>/[religion.max_runes_on_mob]")
 		to_chat(user, "<a href='?src=\ref[src];del_runes_ckey=1'>Удалить все ваши руны</a>")
@@ -85,7 +85,7 @@
 
 /obj/item/weapon/storage/bible/tome/Topic(href, href_list)
 	..()
-	if(usr.stat || !Adjacent(usr))
+	if(!Adjacent(usr) || usr.stat || !iscultist(usr))
 		return
 	var/list/L = LAZYACCESS(usr.my_religion.runes_by_ckey, usr.ckey)
 	if(href_list["del_runes_ckey"])
