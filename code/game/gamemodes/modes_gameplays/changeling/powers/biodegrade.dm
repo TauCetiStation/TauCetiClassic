@@ -91,7 +91,7 @@
 		C.open(TRUE)
 		to_chat(user,"<span class='warning'>We open the container restraining us!</span>")
 
-/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_cocoon(mob/living/carbon/human/user, obj/effect/spider/cocoon/O)
+/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_cocoon(mob/living/carbon/human/user, obj/structure/spider/cocoon/O)
 	if(istype(O) && user.loc == O)
 		qdel(O) //The cocoon's destroy will move the changeling outside of it without interference
 		to_chat(user,"<span class='warning'>We dissolve the cocoon!</span>")
