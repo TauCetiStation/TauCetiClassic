@@ -167,7 +167,7 @@
 		var/obj/item/weapon/grab/G = W
 		var/mob/living/L = G.affecting
 		user.visible_message("<span class='notice'>[user] attempts to buckle [L] into \the [src]!</span>")
-		if(G.use_tool(src, user, 20, volume = 50))
+		if(G.use_tool(src, user, HUMAN_INTERACTION_DELAY, volume = 50))
 			L.loc = loc
 			if(buckle_mob(L))
 				L.visible_message(

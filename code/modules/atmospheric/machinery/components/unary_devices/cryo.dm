@@ -138,7 +138,7 @@
 		user.visible_message("<span class='danger'>[src] is closed!</span>")
 		return
 	visible_message("<span class='danger'>[user] is trying to put [target] into [src]!</span>")
-	if(do_after(user, 24, target = target))	
+	if(do_after(user, HUMAN_INTERACTION_DELAY, target = target))	
 		close_machine(target)
 		visible_message("<span class='danger'>[user] has put [target] into [src]!</span>")
 
