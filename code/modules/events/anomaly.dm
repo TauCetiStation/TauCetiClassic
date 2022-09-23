@@ -22,6 +22,8 @@
 		return
 	var/turf/T = pick(turfs)
 	newAnomaly = new anomaly_type(T)
+	if (newAnomaly)
+		announce_to_ghosts(src, newAnomaly)
 
 /datum/event/anomaly/tick()
 	if(QDELETED(newAnomaly))

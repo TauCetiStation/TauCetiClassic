@@ -17,7 +17,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/turf/startT = spaceDebrisStartLoc(startside, z)
 	var/turf/endT = spaceDebrisFinishLoc(startside, z)
 	//rod time!
-	new /obj/effect/immovable_rod(startT, endT)
+	var/obj/O = new /obj/effect/immovable_rod(startT, endT)
+	announce_to_ghosts(O.name, O)
 
 /obj/effect/immovable_rod
 	name = "Immovable Rod"

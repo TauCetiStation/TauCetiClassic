@@ -12,8 +12,10 @@
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/simulated/floor/T = pick(turfs)
 		if(prob(50))
-			new/obj/effect/spacevine_controller(T) //spawn a controller at turf
+			var/atom/A = new/obj/effect/spacevine_controller(T) //spawn a controller at turf
+			announce_to_ghosts("Event Spacevines", A)
 			message_admins("<span class='notice'>Event: Spacevines spawned at [T.loc] [COORD(T)] [ADMIN_JMP(T)]</span>")
 		else
-			new/obj/effect/biomass_controller(T) //spawn a controller at turf
+			var/atom/A = new/obj/effect/biomass_controller(T) //spawn a controller at turf
+			announce_to_ghosts("Event Biomass", A)
 			message_admins("<span class='notice'>Event: Biomass spawned at [T.loc] [COORD(T)] [ADMIN_JMP(T)]</span>")
