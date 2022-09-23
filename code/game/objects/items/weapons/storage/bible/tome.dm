@@ -41,8 +41,15 @@
 	if((iscultist(user) || isobserver(user)) && religion)
 		to_chat(user, "Писание Нар-Си. Содержит подробности о тёмных ритуалах, загадочных рунах и много другой странной информации. Однако, большинство из написанного не работает.")
 		to_chat(user, "Текущее количество favor: [religion.favor] piety: <span class='cult'>[religion.piety]</span>")
+		var/text_num = "ей" //ending for word
+		if(length(religion.members) == 1)
+			text_num = "ь"
+		else if(length(religion.members) <= 4)
+			text_num = "я"
+		to_chat(user, "В культе всего [length(religion.members)] последовател[text_num]")
 		var/list/L = LAZYACCESS(religion.runes_by_ckey, user.ckey)
 		to_chat(user, "Вами нарисовано/всего <span class='cult'>[L ? L.len : "0"]</span>/[religion.max_runes_on_mob]")
+		to_chat(user, "<a href='?src=\ref[src];del_runes_ckey=1'>Удалить все ваши руны</a>")
 	else
 		..()
 
@@ -74,6 +81,17 @@
 			to_chat(user, "<span class='warning'>Вы не можете уничтожить стол, пока идёт исследование.</span>")
 			return FALSE
 	return TRUE
+
+/obj/item/weapon/storage/bible/tome/Topic(href, href_list)
+	..()
+	if(usr.stat || !Adjacent(usr))
+		return
+	var/list/L = LAZYACCESS(usr.my_religion.runes_by_ckey, usr.ckey)
+	if(href_list["del_runes_ckey"])
+		for(var/obj/effect/rune/R in L)
+			qdel(R)
+		to_chat(usr, "<span class='warning'>Все вами начерченные руны были стёрты.</span>")
+		return
 
 /obj/item/weapon/storage/bible/tome/afterattack(atom/target, mob/user, proximity, params)
 	..()
