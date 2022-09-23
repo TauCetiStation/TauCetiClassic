@@ -4,10 +4,10 @@
 		if(attack_atom(target, user, params))
 			return
 
-	if(target.attackby(W, src, params) || QDELING(A) || QDELING(W))
+	if(target.attackby(src, user, params) || QDELING(src) || QDELING(target))
 		return
 
-	afterattack(target, src, TRUE, params)
+	afterattack(target, user, TRUE, params)
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'Click On Held Object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
