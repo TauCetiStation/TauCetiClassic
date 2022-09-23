@@ -1117,3 +1117,8 @@
 	else if(icon_state != item_state_world)
 		// moving to world, change icon
 		icon_state = item_state_world
+
+/obj/item/CtrlShiftClick(mob/user)
+	. = ..()
+	var/mob/living/carbon/human/H = user
+	SEND_SIGNAL(H, COMSIG_CLICK_CTRL_SHIFT, src)
