@@ -255,7 +255,7 @@
 		alien_weeds.take_damage(rand(15, 35), BURN, ACID, FALSE)
 	else if(istype(O,/obj/structure/glowshroom)) //even a small amount is enough to kill it
 		qdel(O)
-	else if(istype(O,/obj/effect/spacevine))
+	else if(istype(O,/obj/structure/spacevine))
 		if(prob(50))
 			qdel(O) //Kills kudzu too.
 	// Damage that is done to growing plants is separately at code/game/machinery/hydroponics at obj/item/hydroponics
