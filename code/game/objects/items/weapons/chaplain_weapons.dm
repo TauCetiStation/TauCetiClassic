@@ -102,7 +102,7 @@
 		return
 
 	if(iscultist(user))
-		to_chat(user, "<span class='danger'>Жезл выскальзывает из руки и ударяет вас об голову.</span>")
+		to_chat(user, "<span class='danger'>The rod slips out of your hand and hits your head.</span>")
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.adjustBruteLoss(10)
@@ -112,7 +112,7 @@
 	// Captured area is too strong
 	var/area/A = get_area(target)
 	if(A.religion && istype(A.religion, global.cult_religion.type))
-		to_chat(user, "<span class='danger'>Вам не хватает силы для этого!</span>")
+		to_chat(user, "<span class='danger'>You don't have the dexterity to do this!</span>")
 		return
 
 	// If it's not a cult type, then don't do it.
@@ -126,7 +126,7 @@
 
 /obj/item/weapon/nullrod/attack(mob/living/M, mob/living/user) //Paste from old-code to decult with a null rod.
 	if((CLUMSY in user.mutations) && prob(50))
-		to_chat(user, "<span class='danger'>Жезл выскальзывает из руки и ударяет вас об голову.</span>")
+		to_chat(user, "<span class='danger'>The rod slips out of your hand and hits your head.</span>")
 		user.adjustBruteLoss(10)
 		user.Paralyse(20)
 		return
@@ -134,7 +134,7 @@
 	if(user.mind?.holy_role < HOLY_ROLE_HIGHPRIEST || deconverting)
 		return
 
-	user.visible_message("<span class='danger'>[user] заряжает [src] и целится в [M].</span>")
+	user.visible_message("<span class='danger'>[user] waves [src] over [M]'s head.</span>")
 
 	deconverting = TRUE
 	if(!do_after(user, 50, target = M))
@@ -147,26 +147,26 @@
 	if(M.stat != DEAD)
 		if(iscultist(M))
 			if(iscultist(user))
-				to_chat(user, "<span class='danger'>Жезл выскальзывает из руки и ударяет вас об голову.</span>")
+				to_chat(user, "<span class='danger'>The rod slips out of your hand and hits your head.</span>")
 				user.adjustBruteLoss(10)
 				user.Paralyse(20)
 				return
-			to_chat(M, "<span class='danger'>Сила [src] очищает твой разум от влияния древних богов!</span>")
+			to_chat(M, "<span class='danger'>The power of [src] clears your mind of the evil gods influence!</span>")
 
 			var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
 			C.Deconvert()
 			M.Paralyse(5)
-			to_chat(M, "<span class='danger'><FONT size = 3>Незнакомый белый свет очищает твой разум от порчи и воспоминаний, когда ты был Его слугой.</span></FONT>")
+			to_chat(M, "<span class='danger'><FONT size = 3>An unfamiliar white light cleanses your mind of corruption and memories of when you were His servant.</span></FONT>")
 			M.mind.memory = ""
-			M.visible_message("<span class='danger'><FONT size = 3>[M] выглядит так, будто вернулся к своей старой вере!</span></FONT>")
+			M.visible_message("<span class='danger'><FONT size = 3>[M]'s head and see their eyes become clear, their mind returning to normal!</span></FONT>")
 
 			new /obj/effect/temp_visual/religion/pulse(M.loc)
-			M.visible_message("<span class='danger'>[user] извергает силу [src] в [M].</span>")
+			M.visible_message("<span class='danger'>[user] spews strength [src] into [M].</span>")
 		else
-			to_chat(user, "<span class='danger'>Жезл наказывает вас за ложное использование.</span>")
+			to_chat(user, "<span class='danger'>The rod punishes you for making the wrong choice.</span>")
 			new /obj/effect/temp_visual/religion/pulse(user.loc)
 			user.apply_damage(50, BURN, null, used_weapon="Electrocution")
-			user.visible_message("<span class='danger'>[src] извергает свою силу [user].</span>")
+			user.visible_message("<span class='danger'>[src] spews his power [user].</span>")
 			M.AdjustConfused(10)
 
 /obj/item/weapon/nullrod/staff
