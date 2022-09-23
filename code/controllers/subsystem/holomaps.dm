@@ -83,7 +83,7 @@ SUBSYSTEM_DEF(holomaps)
 /datum/controller/subsystem/holomaps/proc/process_holomap_markers()
 	for(var/freq in SSholomaps.holochips)
 		for(var/obj/item/holochip/HC in SSholomaps.holochips[freq])
-			var/turf/marker_location = get_turf(HC)
+			var/turf/marker_location = get_turf(HC.holder)
 			if(!marker_location)
 				stack_trace("[HC.holder] | [HC.holder.loc] | [HC.frequency] without turf.")
 				continue
