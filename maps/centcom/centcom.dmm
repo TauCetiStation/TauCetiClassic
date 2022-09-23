@@ -1321,7 +1321,7 @@
 /area/shuttle/arrival/velocity)
 "adv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/effect/landmark/heist_spawn,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
@@ -2361,7 +2361,7 @@
 "agd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/pizzabox/vegetable,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
@@ -3366,7 +3366,7 @@
 /area/shuttle/vox/arkship_hold)
 "aiF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "aiG" = (
@@ -3763,7 +3763,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/item/weapon/reagent_containers/food/snacks/bearmeat,
 /obj/structure/rack,
 /obj/item/weapon/handcuffs/cable,
@@ -5185,7 +5185,7 @@
 /area/shuttle/vox/arkship)
 "amL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "amM" = (
@@ -5230,7 +5230,7 @@
 /area/shuttle/vox/arkship)
 "amR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -5801,7 +5801,7 @@
 /area/shuttle/vox/arkship)
 "aoh" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
@@ -7035,7 +7035,7 @@
 	},
 /area/velocity)
 "arf" = (
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/structure/rack,
 /obj/item/device/radio/off{
 	pixel_x = -2;
@@ -9292,7 +9292,7 @@
 /area/shuttle/vox/arkship)
 "avR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
@@ -10766,7 +10766,7 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "azd" = (
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -23992,7 +23992,7 @@
 /obj/item/weapon/paper{
 	info = "Just old elite space suit. MiraCorp makes your life better"
 	},
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "podhatch"
