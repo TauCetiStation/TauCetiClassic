@@ -184,6 +184,7 @@
 				"Service" = "Service",
 				"Security" = "secborg",
 				"Science" = "toxbot",
+				"PeaceKeeper" = "marina-peace"
 				)
 
 		choose_module = list()
@@ -299,6 +300,14 @@
 			module_sprites["Mop Gear Rex"] = "mopgearrex"
 			module_sprites["Drone"] = "drone-janitor"
 			module_sprites["Acheron"] = "mechoid-Janitor"
+
+		if("PeaceKeeper")
+			if(!can_be_security)
+				to_chat(src, "<span class='warning'>#Error: Needed security circuitboard.</span>")
+				return
+			module = new /obj/item/weapon/robot_module/peacekeeper(src)
+			module_sprites["Marina"] = "marina-peace"
+			module_sprites["Sleak"] = "sleek-peace"
 
 		if("Combat")
 			build_combat_borg()

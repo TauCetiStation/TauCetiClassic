@@ -308,7 +308,7 @@
 			return FALSE
 	if (isbot(target_mob))
 		var/obj/machinery/bot/B = target_mob
-		if(B.health > 0)
+		if(B.get_integrity() > 0)
 			return FALSE
 	return TRUE
 
