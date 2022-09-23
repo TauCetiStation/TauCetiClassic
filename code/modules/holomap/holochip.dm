@@ -66,7 +66,7 @@
 	START_PROCESSING(SSholomaps, src)
 
 /obj/item/holochip/proc/deactivate_holomap()
-	if(!activator)
+	if(!activator || !activator.holomap_obj) //Clientless case
 		return
 	activator.holomap_obj.cut_overlay(holomap_base)
 	if(length(holomap_images) && activator.client)
@@ -201,6 +201,7 @@
 	name = "Toggle holomap"
 	check_flags = AB_CHECK_ALIVE
 	action_type = AB_INNATE
+	button_icon_state = "holomap"
 
 /datum/action/toggle_holomap/Activate()
 	to_chat(owner, "<span class='notice'>You activate the holomap.</span>")
