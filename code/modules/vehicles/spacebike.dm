@@ -6,8 +6,9 @@
 
 	load_item_visible = 1
 	mob_offset_y = 5
-	health = 300
-	maxhealth = 300
+
+	max_integrity = 300
+	resistance_flags = CAN_BE_HIT
 
 	fire_dam_coeff = 0.6
 	brute_dam_coeff = 0.5
@@ -162,7 +163,7 @@
 	. = ..()
 	if(kickstand)
 		return 0
-	if(buckled_mob && (buckled_mob.stat || buckled_mob.lying))
+	if(buckled_mob && (buckled_mob.stat != CONSCIOUS || buckled_mob.lying))
 		return 0
 
 /obj/vehicle/space/spacebike/turn_on()

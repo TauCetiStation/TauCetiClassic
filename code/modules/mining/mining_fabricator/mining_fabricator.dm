@@ -1,6 +1,6 @@
 /obj/machinery/mecha_part_fabricator/mining_fabricator
 	icon = 'icons/obj/robotics.dmi'
-	icon_state = "fab-idle"
+	icon_state = "fab"
 	name = "Mining fabricator"
 	desc = "Nothing is being built."
 	density = TRUE
@@ -146,7 +146,8 @@
 
 /obj/machinery/mecha_part_fabricator/mining_fabricator/attackby(obj/W, mob/user, params)
 
-	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
+	if(default_deconstruction_screwdriver(user, "fab", "fab", W))
+		update_icon()
 		return
 
 	if(exchange_parts(user, W))
@@ -154,8 +155,6 @@
 
 	if(panel_open)
 		if(iscrowbar(W))
-			for(var/material in resources)
-				remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
 			default_deconstruction_crowbar(W)
 			return 1
 		else

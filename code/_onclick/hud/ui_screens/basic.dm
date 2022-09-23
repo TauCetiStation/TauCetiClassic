@@ -1,7 +1,7 @@
 // Hotkeys
 /atom/movable/screen/pull
 	name = "stop pulling"
-	icon = 'icons/mob/screen1_Midnight.dmi'
+	icon = 'icons/hud/screen1_Midnight.dmi'
 	icon_state = "pull1"
 	screen_loc = ui_pull_resist
 
@@ -77,7 +77,7 @@
 // Status screens
 /atom/movable/screen/health
 	name = "health"
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "health0"
 	screen_loc = ui_health
 
@@ -104,7 +104,7 @@
 	add_filter("inset_drop_shadow", 2, drop_shadow_filter(size = -1))
 
 /atom/movable/screen/health_doll
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	name = "health doll"
 	screen_loc = ui_healthdoll
 
@@ -122,7 +122,7 @@
 	copy_flags = NONE
 
 /atom/movable/screen/nutrition/update_icon(mob/living/carbon/human/mymob)
-	icon = mymob.species.flags[IS_SYNTHETIC] ? 'icons/mob/screen_alert.dmi' : 'icons/mob/screen_gen.dmi'
+	icon = mymob.species.flags[IS_SYNTHETIC] ? 'icons/hud/screen_alert.dmi' : 'icons/hud/screen_gen.dmi'
 
 /atom/movable/screen/nutrition/add_to_hud(datum/hud/hud)
 	..()
@@ -132,7 +132,7 @@
 // Gun screens
 /atom/movable/screen/gun
 	name = "gun"
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	COOLDOWN_DECLARE(gun_click_time)
 
 	copy_flags = NONE
@@ -230,7 +230,7 @@
 	vis_contents += overlay_object
 
 /obj/effect/overlay/zone_sel
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 128
 	anchored = TRUE
@@ -295,7 +295,7 @@
 
 /atom/movable/screen/zone_sel/update_icon()
 	cut_overlays()
-	add_overlay(image('icons/mob/zone_sel.dmi', "[selecting]"))
+	add_overlay(image('icons/hud/zone_sel.dmi', "[selecting]"))
 
 /atom/movable/screen/zone_sel/add_to_hud(datum/hud/hud)
 	..()
@@ -344,7 +344,7 @@
 		return
 
 	var/mob/living/carbon/C = usr
-	if(C.stat || C.stunned || C.paralysis || C.restrained() || (internal_switch > world.time))
+	if(C.stat != CONSCIOUS || C.stunned || C.paralysis || C.restrained() || (internal_switch > world.time))
 		return
 
 	internal_switch = world.time + 16

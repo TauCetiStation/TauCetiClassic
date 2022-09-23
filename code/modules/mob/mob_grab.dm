@@ -9,7 +9,7 @@
 
 /obj/item/weapon/grab
 	name = "grab"
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	icon_state = "reinforce"
 	flags = DROPDEL|NOBLUDGEON
 	var/atom/movable/screen/grab/hud = null
@@ -448,7 +448,7 @@
 								var/armor_block = H.run_armor_check(BP, "melee")
 
 								var/chance_to_force_vomit = 30
-								if(H.stat >= UNCONSCIOUS)
+								if(H.stat != CONSCIOUS)
 									chance_to_force_vomit += 20
 								if(prob(armor_block))
 									chance_to_force_vomit = 0

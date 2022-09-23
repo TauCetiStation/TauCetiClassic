@@ -14,6 +14,8 @@
 	if(!thearea)
 		return
 	for(var/turf/T in get_area_turfs(thearea.type))
+		if(SEND_SIGNAL(T, COMSIG_ATOM_INTERCEPT_TELEPORT))
+			continue
 		if(!T.density)
 			var/clear = 1
 			for(var/obj/O in T)

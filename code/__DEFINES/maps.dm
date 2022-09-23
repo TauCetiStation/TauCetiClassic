@@ -14,6 +14,7 @@
 #define ZTRAIT_SPACE_RUINS "Space Ruins"
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
 #define ZTRAIT_JUNKYARD "Junkyard"
+#define ZTRAIT_SNOWSTORM "Snowstorm"
 
 // number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
@@ -33,7 +34,7 @@
 // enum - environment type
 #define ZTRAIT_ENV_TYPE "Environment Type"
     // ENV_TYPE_SPACE if absent - no environment generation
-    #define ENV_TYPE_SPACE null
+    #define ENV_TYPE_SPACE "Space"
     // ENV_TYPE_SNOW - snow environment generation
     #define ENV_TYPE_SNOW "Snow"
 

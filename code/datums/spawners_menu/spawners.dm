@@ -180,6 +180,7 @@ var/global/list/datum/spawners_cooldown = list()
 	ranks = list(ROLE_FAMILIES)
 
 	var/roletype
+	var/list/prefixes = list("Officer")
 
 /datum/spawner/cop/spawn_ghost(mob/dead/observer/ghost)
 	var/spawnloc = pick(copsstart)
@@ -189,7 +190,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 	var/mob/living/carbon/human/cop = new(null)
 
-	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
+	var/new_name = "[pick(prefixes)] [pick(last_names)]"
 	C.create_human_apperance(cop, new_name)
 
 	cop.loc = spawnloc
@@ -202,8 +203,7 @@ var/global/list/datum/spawners_cooldown = list()
 	add_faction_member(faction, cop, TRUE, TRUE)
 
 	var/obj/item/weapon/card/id/W = cop.wear_id
-	W.name = "[cop.real_name]'s ID Card ([W.assignment])"
-	W.registered_name = cop.real_name
+	W.assign(cop.real_name)
 
 /datum/spawner/cop/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(copsstart)
@@ -223,16 +223,20 @@ var/global/list/datum/spawners_cooldown = list()
 	name = "Боец Тактической Группы ОБОП"
 	id = "c_swat"
 	roletype = /datum/role/cop/beatcop/swat
+	prefixes = list("Sergeant", "Captain")
 
 /datum/spawner/cop/fbi
 	name = "Инспектор ОБОП"
 	id = "c_fbi"
 	roletype = /datum/role/cop/beatcop/fbi
+	prefixes = list("Inspector")
 
 /datum/spawner/cop/military
 	name = "Боец ВСНТ ОБОП"
 	id = "c_military"
 	roletype = /datum/role/cop/beatcop/military
+	prefixes = list("Pvt.", "PFC", "Cpl.", "LCpl.", "SGT")
+
 
 /*
  * ERT
