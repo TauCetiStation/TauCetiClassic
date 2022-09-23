@@ -63,7 +63,7 @@
 
 
 /mob/living/blob/Process_Spacemove()
-	if(locate(/obj/effect/blob) in oview(1,src))
+	if(locate(/obj/structure/blob) in oview(1,src))
 		return 1
 	return (..())
 
@@ -78,7 +78,7 @@
 	if(!T)
 		creating_blob = 0
 		return
-	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
+	var/obj/structure/blob/B = locate() in T
 	if(!B)//We are on a blob
 		to_chat(usr, "There is no blob here!")
 		creating_blob = 0
@@ -87,11 +87,11 @@
 		to_chat(usr, "Unable to use this blob, find a normal one.")
 		creating_blob = 0
 		return
-	for(var/obj/effect/blob/node/blob in orange(5))
+	for(var/obj/structure/blob/node/blob in orange(5))
 		to_chat(usr, "There is another node nearby, move more than 5 tiles  away from it!")
 		creating_blob = 0
 		return
-	for(var/obj/effect/blob/factory/blob in orange(2))
+	for(var/obj/structure/blob/factory/blob in orange(2))
 		to_chat(usr, "There is a porus blob nearby, move more than 2 tiles away from it!")
 		creating_blob = 0
 	B.change_to("Node")
@@ -109,7 +109,7 @@
 	if(!T)
 		creating_blob = 0
 		return
-	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
+	var/obj/structure/blob/B = locate() in T
 	if(!B)
 		to_chat(usr, "You must be on a blob!")
 		creating_blob = 0
@@ -118,7 +118,7 @@
 		to_chat(usr, "Unable to use this blob, find a normal one.")
 		creating_blob = 0
 		return
-	for(var/obj/effect/blob/blob in orange(2))//Not right next to nodes/cores
+	for(var/obj/structure/blob/blob in orange(2))//Not right next to nodes/cores
 		if(isblobnode(B))
 			to_chat(usr, "There is a node nearby, move away from it!")
 			creating_blob = 0
@@ -146,7 +146,7 @@
 	if(!T)
 		creating_blob = 0
 		return
-	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
+	var/obj/structure/blob/B = locate(/obj/structure/blob) in T
 	if(!B)
 		to_chat(usr, "You must be on a blob!")
 		creating_blob = 0
@@ -170,12 +170,12 @@
 	if(!T)
 		creating_blob = 0
 		return
-	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
+	var/obj/structure/blob/B = locate() in T
 	if(B)
 		to_chat(usr, "There is a blob here!")
 		creating_blob = 0
 		return
-	new/obj/effect/blob(src.loc)
+	new/obj/structure/blob(loc)
 	dust()
 	return
 
@@ -230,7 +230,7 @@
 		G_found.client.screen.len = null
 	var/mob/living/blob/B = new/mob/living/blob(locate(0,0,1))//temp area also just in case should do this better but tired
 	if(blob_cores.len > 0)
-		var/obj/effect/blob/core/core = pick(blob_cores)
+		var/obj/structure/blob/core/core = pick(blob_cores)
 		if(core)
 			B.loc = core.loc
 	B.ghost_name = G_found.real_name

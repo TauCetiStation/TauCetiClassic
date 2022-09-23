@@ -313,7 +313,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/blob_event/spawn_ghost(mob/dead/observer/ghost)
 	var/turf/spawn_turf = pick(blobstart)
-	new /obj/effect/blob/core(spawn_turf, ghost.client, 120)
+	new /obj/structure/blob/core(spawn_turf, ghost.client, 120)
 
 /*
  * Ninja
