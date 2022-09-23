@@ -166,10 +166,12 @@ field_generator power level display
 		..()
 
 /obj/machinery/field_generator/bullet_act(obj/item/projectile/Proj, def_zone)
+	switch(Proj.flag)
+		if(LASER, ENERGY)
+			power += Proj.damage
+			update_icon()
+			return
 	. = ..()
-	if(Proj.flag != "bullet")
-		power += Proj.damage
-		update_icon()
 
 /obj/machinery/field_generator/proc/turn_off()
 	active = FG_OFFLINE

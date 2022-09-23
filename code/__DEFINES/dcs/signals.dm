@@ -200,6 +200,8 @@
 /// from base of obj/item/attack_self(): (/mob/user)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 	#define COMPONENT_NO_INTERACT 1
+///from base of obj/item/attack_atom(): (atom/attacked_atom, mob/living/user, params)
+#define COMSIG_ITEM_ATTACK_OBJ "item_attack_obj"
 ///from base of obj/item/pickup(): (/mob/user)
 #define COMSIG_ITEM_PICKUP "item_pickup"
 	#define COMPONENT_ITEM_NO_PICKUP 1

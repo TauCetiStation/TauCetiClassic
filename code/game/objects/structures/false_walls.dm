@@ -25,6 +25,9 @@
 	var/opening = FALSE
 	var/block_air_zones = TRUE
 
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/falsewall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group) return !block_air_zones
 	if(istype(mover, /obj/effect/beam))
@@ -120,6 +123,15 @@
 			T = get_turf(src)
 			T.attackby(W, user)
 		qdel(src)
+
+/obj/structure/falsewall/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	var/turf/T = loc
+	T.ChangeTurf(walltype)
+	var/turf/simulated/wall/wall = loc
+	wall.dismantle_wall(!disassembled)
+	..()
 
 /*
  * False R-Walls

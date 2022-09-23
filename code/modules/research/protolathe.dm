@@ -164,6 +164,10 @@ Note: Must be placed west/left of and R&D console to function.
 	if(linked_console)
 		nanomanager.update_uis(linked_console)
 
+/obj/machinery/r_n_d/protolathe/deconstruct(disassembled)
+	log_game("Protolathe of type [type] [disassembled ? "disassembled" : "deconstructed"] by [key_name(usr)] at [get_area_name(src, TRUE)]")
+	return ..()
+
 /obj/machinery/r_n_d/protolathe/deconstruction()
 	. = ..()
 	for(var/M in loaded_materials)
