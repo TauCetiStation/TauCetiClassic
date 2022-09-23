@@ -47,13 +47,7 @@
 			if(M.stat != DEAD)
 				num++
 
-		var/text_num = "ей" //ending for word
-		if(num == 1)
-			text_num = "ь"
-		else if(num <= 4)
-			text_num = "я"
-
-		to_chat(user, "В культе всего [num] последовател[text_num]")
+		to_chat(user, "В культе всего [num] последовател[pluralize_russian(num, "ь", "я", "ей")]")
 		var/list/L = LAZYACCESS(religion.runes_by_ckey, user.ckey)
 		to_chat(user, "Вами нарисовано/всего <span class='cult'>[L ? L.len : "0"]</span>/[religion.max_runes_on_mob]")
 		to_chat(user, "<a href='?src=\ref[src];del_runes_ckey=1'>Удалить все ваши руны</a>")
