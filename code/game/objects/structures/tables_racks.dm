@@ -638,7 +638,7 @@
 /obj/structure/rack/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)
 		return ..()
-	var/obj/item/weapon/rack_parts/r_parts = new /obj/item/weapon/table_parts(loc)
+	var/obj/item/weapon/rack_parts/r_parts = new (loc)
 	if(disassembled)
 		transfer_fingerprints_to(r_parts)
 	else
