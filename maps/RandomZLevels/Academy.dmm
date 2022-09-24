@@ -7,9 +7,8 @@
 /area/awaymission/academy/headmaster)
 "ac" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/headmaster)
@@ -578,9 +577,8 @@
 /area/awaymission/academy/headmaster)
 "bP" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -664,9 +662,8 @@
 /area/awaymission/academy/headmaster)
 "cd" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -941,9 +938,8 @@
 /area/awaymission/academy/headmaster)
 "cS" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable,
 /turf/simulated/floor/plating,
@@ -1457,9 +1453,8 @@
 /area/awaymission/academy/classrooms)
 "eo" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/classrooms)
@@ -1976,9 +1971,8 @@
 /area/awaymission/academy/classrooms)
 "fy" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -1989,9 +1983,8 @@
 /area/awaymission/academy/classrooms)
 "fz" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -2002,9 +1995,8 @@
 /area/awaymission/academy/classrooms)
 "fA" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -2029,9 +2021,8 @@
 /area/awaymission/academy/academyaft)
 "fE" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -2157,9 +2148,8 @@
 /area/awaymission/academy/classrooms)
 "fW" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3283,9 +3273,8 @@
 /area/awaymission/academy/academyaft)
 "iJ" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -3309,9 +3298,8 @@
 /area/awaymission/academy/academyaft)
 "iL" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -3368,9 +3356,8 @@
 /area/awaymission/academy/academyaft)
 "iR" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/academyaft)
@@ -3382,9 +3369,8 @@
 /area/awaymission/academy/academyaft)
 "iT" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3422,9 +3408,8 @@
 /area/awaymission/academy/academyaft)
 "iW" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -3586,9 +3571,8 @@
 /area/awaymission/academy/academyaft)
 "js" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable,
 /turf/simulated/floor/plating,
@@ -3697,9 +3681,8 @@
 /area/awaymission/academy/academygate)
 "jK" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/academygate)

@@ -305,6 +305,12 @@ var/global/list/dyed_item_types = list(
 		..()
 	update_icon()
 
+/obj/machinery/washing_machine/deconstruct(disassembled)
+	if (flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 2)
+	..()
+
 /obj/machinery/washing_machine/attack_ai(mob/user)
 	if(IsAdminGhost(user))
 		return ..()

@@ -212,6 +212,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 	health = 50
 	changes_color = FALSE
 	can_emote_snuffles = FALSE
+	holder_type = null
 
 /mob/living/simple_animal/mouse/rat/atom_init()
 	. = ..()

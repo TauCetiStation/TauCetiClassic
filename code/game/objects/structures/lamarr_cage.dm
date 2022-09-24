@@ -1,4 +1,4 @@
-/obj/structure/lamarr
+/obj/structure/lamarr // TODO, refactor into displaycase
 	name = "Lab Cage"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "labcage1"
@@ -6,50 +6,28 @@
 	density = TRUE
 	anchored = TRUE
 	unacidable = 1//Dissolving the case would also delete Lamarr
-	var/health = 30
+
+	max_integrity = 100
+	integrity_failure = 0.7
+	resistance_flags = UNACIDABLE | CAN_BE_HIT
+
 	var/occupied = 1
 	var/destroyed = 0
 
-/obj/structure/lamarr/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			new /obj/item/weapon/shard( src.loc )
-			Break()
-			qdel(src)
-			return
-		if(EXPLODE_HEAVY)
-			if(prob(50))
-				src.health -= 15
-		if(EXPLODE_LIGHT)
-			if(prob(50))
-				src.health -= 5
-	healthcheck()
+/obj/structure/lamarr/play_attack_sound(damage_amount, damage_type, damage_flag)
+	switch(damage_type)
+		if(BRUTE, BURN)
+			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 
-
-/obj/structure/lamarr/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-	health -= Proj.damage
-	healthcheck()
-
-
-/obj/structure/lamarr/blob_act()
-	if (prob(75))
-		new /obj/item/weapon/shard( src.loc )
-		Break()
-		qdel(src)
-
-
-/obj/structure/lamarr/proc/healthcheck()
-	if (src.health <= 0)
-		if (!( src.destroyed ))
-			src.density = FALSE
-			src.destroyed = 1
-			new /obj/item/weapon/shard( src.loc )
-			playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-			Break()
-	else
-		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-	return
+/obj/structure/lamarr/atom_break(damage_flag)
+	..()
+	if(flags & NODECONSTRUCT || destroyed)
+		return
+	density = FALSE
+	destroyed = TRUE
+	new /obj/item/weapon/shard(loc)
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+	Break()
 
 /obj/structure/lamarr/update_icon()
 	if(src.destroyed)
@@ -57,12 +35,6 @@
 	else
 		src.icon_state = "labcage[src.occupied]"
 	return
-
-
-/obj/structure/lamarr/attackby(obj/item/weapon/W, mob/user)
-	src.health -= W.force
-	healthcheck()
-	..()
 
 /obj/structure/lamarr/attack_paw(mob/user)
 	return attack_hand(user)
@@ -73,8 +45,7 @@
 	else
 		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='userdanger'>[user] kicks the lab cage.</span>")
-		src.health -= 2
-		healthcheck()
+		take_damage(2, BRUTE, MELEE)
 		return
 
 /obj/structure/lamarr/proc/Break()
