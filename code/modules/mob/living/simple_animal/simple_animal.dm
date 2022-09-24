@@ -405,5 +405,5 @@
 /mob/living/simple_animal/crawl()
 	return FALSE
 
-mob/living/simple_animal/can_pickup(obj/O)
+/mob/living/simple_animal/can_pickup(obj/O)
 	return FALSE
