@@ -273,29 +273,31 @@
 	icon_state = "implant"
 //	activated = 1
 	var/obj/machinery/abductor/pad/home
-	var/cooldown = 30
+	var/cooldown = 30 SECONDS
 
 	action_button_name = "Activate Implant"
 	action_button_is_hands_free = 1
 
 /obj/item/weapon/implant/abductor/attack_self()
-	if(cooldown == initial(cooldown))
+	if(cooldown >= initial(cooldown))
 		if(imp_in.buckled)
 			imp_in.buckled.unbuckle_mob()
 		home.Retrieve(imp_in)
 		cooldown = 0
-		START_PROCESSING(SSobj, src)
+		INVOKE_ASYNC(src, .proc/start_recharge, imp_in)
 	else
-		to_chat(imp_in, "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>")
+		to_chat(imp_in, "<span class='warning'>You must wait [300 - cooldown] seconds to use [src] again!</span>")
 	return
 
-/obj/item/weapon/implant/abductor/process()
-	if(cooldown < initial(cooldown))
+/obj/item/weapon/implant/abductor/proc/start_recharge(mob/user = usr)
+	var/atom/movable/screen/cooldown_overlay/cooldowne = start_cooldown(action.button, initial(cooldown))
+	while(cooldown < initial(cooldown))
+		sleep(1)
 		cooldown++
-		if(cooldown == initial(cooldown))
-			to_chat(imp_in, "<span class='warning'>Your [name] recharged!</span>")
-			STOP_PROCESSING(SSobj, src)
-
+		if(cooldowne)
+			cooldowne.tick()
+	to_chat(imp_in, "<span class='warning'>Your [name] recharged!</span>")
+	qdel(cooldowne)
 
 //ALIEN DECLONER
 /obj/item/weapon/gun/energy/decloner/alien
