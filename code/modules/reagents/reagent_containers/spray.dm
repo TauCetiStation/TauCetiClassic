@@ -391,10 +391,19 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_l
 	desc = "BLAM!-brand non-foaming space cleaner!"
 	volume = 50
 
+
+/obj/item/weapon/reagent_containers/spray/cleaner/atom_init()
+	. = ..()
+	reagents.add_reagent(space_cleaner, volume)
+
 /obj/item/weapon/reagent_containers/spray/cleaner/cyborg //Credit @Deahaka for rechargable extinguisher
 	name = "Cyborg cleaner"
 	desc = "Self-recharging cleaner spray."
-	var/closed = TRUE
+
+/obj/item/weapon/reagent_containers/spray/cleaner/cyborg/drone
+	name = "Drone cleaner"
+	desc = "Self-recharging cleaner spray."
+	volume = 50
 
 /obj/item/weapon/reagent_containers/spray/cleaner/cyborg/attackby(obj/item/I, mob/user, params)
 	to_chat(user, "<span class='notice'>[src] reagents are under pressure, don't open.</span>")
@@ -415,9 +424,6 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_l
 	// 5/250 cleaner per 2 seconds
 	reagents.add_reagent(space_cleaner, reagents.maximum_volume / 50)
 
-/obj/item/weapon/reagent_containers/spray/cleaner/atom_init()
-	. = ..()
-	reagents.add_reagent("cleaner", volume)
 
 //pepperspray
 /obj/item/weapon/reagent_containers/spray/pepper
