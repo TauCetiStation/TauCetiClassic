@@ -4,16 +4,8 @@
 	icon_state = "blob_idle"
 	desc = "Some blob creature thingy."
 	opacity = TRUE
-	max_health = 75
-	health = 75
+	max_integrity = 75
 	fire_resist = 2
-
-
-/obj/effect/blob/shield/update_icon()
-	if(health <= 0)
-		qdel(src)
-		return
-	return
 
 /obj/effect/blob/shield/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
@@ -25,7 +17,7 @@
 	name = "reflective blob"
 	icon_state = "blob_reflect"
 	desc = "A solid wall of slightly twitching tendrils with a reflective glow."
-	health = 30 //Normal blob
+	max_integrity = 30 //Normal blob
 	brute_resist = 1 //Normal is 4
 	fire_resist = 1 //2 welder hits
 	var/static/list/reflects = list(/obj/item/projectile/energy, /obj/item/projectile/beam, /obj/item/projectile/pyrometer,

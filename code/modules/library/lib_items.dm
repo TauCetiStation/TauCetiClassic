@@ -19,6 +19,9 @@
 	density = TRUE
 	opacity = 1
 
+	max_integrity = 200
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/bookcase/atom_init()
 	. = ..()
 	for(var/obj/item/I in loc)
@@ -38,6 +41,14 @@
 			name = ("bookcase ([sanitize(newname)])")
 	else
 		..()
+
+/obj/structure/bookcase/deconstruct(disassembled)
+	for(var/obj/item/I as anything in contents)
+		I.forceMove(loc)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/wood(loc, 4)
+	..()
 
 /obj/structure/bookcase/attack_hand(mob/user)
 	if(contents.len)

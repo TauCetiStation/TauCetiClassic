@@ -50,7 +50,7 @@
 
 /mob/camera/blob/proc/update_health_hud()
 	if(blob_core && hud_used)
-		healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
+		healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.get_integrity())]</font></div>"
 		for(var/mob/living/simple_animal/hostile/blob/blobbernaut/B in blob_mobs)
 			if(B.hud_used && B.pwr_display)
 				B.pwr_display.maptext = healths.maptext
@@ -101,7 +101,7 @@
 	..()
 	if(statpanel("Status"))
 		if(blob_core)
-			stat(null, "Core Health: [blob_core.health]")
+			stat(null, "Core Health: [blob_core.get_integrity()]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
 		stat(null, "Progress: [blobs.len]/[b_congl.blobwincount]")
 		stat(null, "Total Nodes: [blob_nodes.len]")

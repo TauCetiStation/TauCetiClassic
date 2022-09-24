@@ -50,6 +50,13 @@
 	else
 		..()
 
+/obj/structure/musician/piano/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			playsound(loc, 'sound/effects/piano_hit.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
 /obj/structure/device/piano/minimoog
 	name = "space minimoog"
 	desc = "Space minimoog. For a long time even doesn't exist in reality."

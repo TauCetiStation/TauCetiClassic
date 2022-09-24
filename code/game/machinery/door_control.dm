@@ -182,11 +182,17 @@
 				return
 			else if(iswrench(W))
 				to_chat(user, "You remove the door control assembly from the wall!")
-				var/obj/item/door_control_frame/frame = new
-				frame.loc = user.loc
+				deconstruct(TRUE)
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				qdel(src)
 				return
+
+/obj/machinery/door_control/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	var/obj/item/door_control_frame/frame = new(loc)
+	transfer_fingerprints_to(frame)
+	..()
 
 /obj/machinery/door_control/emag_act(mob/user)
 	if((buildstage == DOOR_CONTROL_COMPLETE) && !emagged)

@@ -7,7 +7,7 @@
 #define MECHA_TIME_TO_ENTER 4 SECOND
 #define TIME_TO_RECALIBRATION 10 SECOND
 
-#define MELEE 1
+#define RANGE_MELEE 1
 #define RANGED 2
 
 
@@ -398,7 +398,7 @@
 ////////  Health related procs  ////////
 ////////////////////////////////////////
 
-/obj/mecha/proc/take_damage(amount, type="brute")
+/obj/mecha/take_damage(amount, type=BRUTE) // TODO port tg mechs
 	if(amount)
 		var/damage = absorbDamage(amount,type)
 		health -= damage
@@ -981,7 +981,6 @@
 		brainmob.loc = src //should allow relaymove
 		brainmob.canmove = 1
 		mmi_as_oc.loc = src
-		mmi_as_oc.mecha = src
 		Entered(mmi_as_oc)
 		Move(src.loc)
 		src.icon_state = reset_icon()
@@ -1040,7 +1039,6 @@
 			var/obj/item/device/mmi/mmi = mob_container
 			if(mmi.brainmob)
 				occupant.loc = mmi
-			mmi.mecha = null
 			src.occupant.canmove = 0
 		src.occupant = null
 		src.icon_state = reset_icon()+"-open"
