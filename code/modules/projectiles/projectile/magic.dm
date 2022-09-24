@@ -103,7 +103,7 @@
 		if("humanoid")
 			var/mob/living/carbon/human/new_human = new (get_turf(loc))
 			if(prob(80))
-				var/list/possibilites = all_species
+				var/list/possibilites = all_species.Copy()
 				possibilites -= list(ZOMBIE, ZOMBIE_TAJARAN, ZOMBIE_SKRELL, ZOMBIE_UNATHI)
 				new_human.set_species(pick(possibilites))
 
