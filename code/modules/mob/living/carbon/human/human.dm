@@ -302,7 +302,7 @@
 	to_chat(src, "<span class='danger'>The blob attacks you!</span>")
 	var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG, BP_HEAD)
 	var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
-	apply_damage(rand(30, 40), BRUTE, BP, run_armor_check(BP, "melee"))
+	apply_damage(rand(30, 40), BRUTE, BP, run_armor_check(BP, MELEE))
 	return
 
 /mob/living/carbon/human/proc/can_use_two_hands(broken = TRUE) // Replace arms with hands in case of reverting Kurshan's PR.

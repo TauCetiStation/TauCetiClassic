@@ -300,7 +300,7 @@
 	else
 		visible_message("<span class='userdanger'>[src] has been attacked in the [hit_area] with [I.name] by [user]!</span>", ignored_mobs = alt_alpperances_vieawers)
 
-	var/armor = run_armor_check(BP, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
+	var/armor = run_armor_check(BP, MELEE, "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
 	if(armor >= 100 || !I.force)
 		return FALSE
 
@@ -387,7 +387,7 @@
 	var/hit_area = parse_zone(zone)
 	visible_message("<span class='warning'>[src] has been hit in the [hit_area] by [O].</span>")
 
-	var/armor = run_armor_check(zone, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].") //I guess "melee" is the best fit here
+	var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].") //I guess MELEE is the best fit here
 	..(O, throw_damage, dtype, zone, armor)
 
 /mob/living/carbon/human/embed(obj/item/I, zone, created_wound)
