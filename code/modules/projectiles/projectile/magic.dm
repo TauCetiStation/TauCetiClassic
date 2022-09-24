@@ -77,8 +77,6 @@
 			/mob/living/simple_animal/hostile/giant_spider,
 			/mob/living/simple_animal/hostile/giant_spider/hunter,
 			/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
-			//mob/living/simple_animal/hostile/carp/ranged,
-			//mob/living/simple_animal/hostile/carp/ranged/chaos,
 			/mob/living/simple_animal/hostile/asteroid/basilisk,
 			/mob/living/simple_animal/hostile/asteroid/goliath,
 			/mob/living/simple_animal/construct/proteon,
