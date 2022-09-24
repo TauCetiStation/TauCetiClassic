@@ -51,6 +51,7 @@
 #define CORRUPT_FORBIDDEN 0
 #define CORRUPT_NOT_ALLOWED 1 //We don't know whether we should or not corrupt
 #define CORRUPT_ALLOWED 2
+ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 /obj/structure/cult/pylon
 	name = "pylon"
 	desc = "A floating crystal that hums with an unearthly energy."
@@ -69,7 +70,6 @@
 
 /obj/structure/cult/pylon/atom_init()
 	. = ..()
-	global.pylons += src
 	if(global.cult_religion && global.cult_religion.get_tech(RTECH_IMPROVED_PYLONS))
 		init_healing()
 
@@ -86,7 +86,6 @@
 	new /obj/item/stack/sheet/metal(loc)
 	STOP_PROCESSING(SSprocessing, src)
 	validturfs = null
-	global.pylons -= src
 	return ..()
 
 /obj/structure/cult/pylon/process()
