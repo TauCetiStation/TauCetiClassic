@@ -26,20 +26,14 @@
 /mob/living/proc/wabbajack(new_body, permanent = FALSE)
 	if(!istype(src)|| notransform || isxenoqueen(src))
 		return
-	if(!isliving(new_body))
-		for(var/mob/living/L in src.contents)
-			if(L || (GODMODE & status_flags))
-				return
-			if(!L && stat == DEAD)
-				return
+
+	for(var/mob/living/L in contents)
+		if(L || (GODMODE & status_flags))
+			return
+		if(stat == DEAD)
+			return
 
 	var/mob/living/new_mob
-
-	if(isliving(new_body)) //Returny case
-		var/mob/L = new_body
-		L.forceMove(get_turf(src))
-		L.notransform = FALSE
-		new_mob = L
 
 	if(!new_body)
 		new_body = pick("monkey", "animal", "hostile", "hostile", "cyborg", "xeno", "humanoid")
@@ -71,18 +65,18 @@
 			new_mob.health = 10000
 		if("hostile")
 			var/beast = pick(
-			/mob/living/simple_animal/hostile/carp,
 			/mob/living/simple_animal/hostile/tree,
 			/mob/living/simple_animal/hostile/tomato,
+			/mob/living/carbon/xenomorph/humanoid/maid,
 			/mob/living/simple_animal/hostile/giant_spider,
 			/mob/living/simple_animal/hostile/giant_spider/hunter,
 			/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
 			/mob/living/simple_animal/hostile/asteroid/basilisk,
 			/mob/living/simple_animal/hostile/asteroid/goliath,
-			/mob/living/simple_animal/construct/proteon,
 			/mob/living/simple_animal/construct/behemoth,
+			/mob/living/simple_animal/construct/proteon,
 			/mob/living/simple_animal/construct/wraith,
-			/mob/living/carbon/xenomorph/humanoid/maid,
+			/mob/living/simple_animal/hostile/carp,
 			)
 			new_mob = new beast(get_turf(loc))
 			new_mob.universal_speak = TRUE
@@ -122,31 +116,51 @@
 	else
 		new_mob.key = key
 
-	if(isliving(new_body)) //Returny case
+	to_chat(new_mob,"<font color='red'>============Полиморфизм - краткий курс============</font><BR>\
+	- Хоть ваше тело и изменилось (быть может, до неузнаваемости) - это не значит, что ваш разум также прерпет изменение!<BR>\
+	- Ваш разум - всё тот же, как и раньше. Вы были членом экипажа? Им вы и остались!<BR>\
+	- На вас действуют те же правила и ограничения, что и до превращения.<BR>\
+	<font color='red'>============Прочие детали============</font><<BR>\
+	- В таком обличии вам предстоит провести некоторое время: иногда это может занять минуту, а иногда это до конца (может быть и вашего).<BR>\
+	- В случае временного превращения полученный вами урон перейдёт на старое тело. Если раньше вы были человеком, то смерть в новом теле вас не убьёт моментально, однако может сильно ранить, в ином случае всё может быть печальнее.<BR>\
+	- Если раньше вы были человеком, то смерть в новом теле вас не убьёт моментально, однако может сильно ранить, в ином случае всё может быть печальнее.")
+
+	new_mob.set_a_intent(INTENT_HARM)
+	if(!permanent)
+		forceMove(new_mob)
+		addtimer(CALLBACK(new_mob, .proc/return_body, src), 10 SECONDS)
+		notransform = TRUE
+	else
+		qdel(src)
+
+	return new_mob
+
+/mob/living/proc/return_body(mob/new_body)
+	if(!istype(src) || notransform)
+		return
+
+	var/mob/living/new_mob
+
+	var/mob/L = new_body
+	L.forceMove(get_turf(src))
+	L.notransform = FALSE
+	new_mob = L
+
+	if(!new_mob)
+		return
+
+	if(mind)
+		mind.transfer_to(new_mob)
+	else
+		new_mob.key = key
+
+	if(stat == DEAD)
 		var/mob/dead/observer/ghost = new_mob.get_ghost()
 		if(ghost)
 			ghost.reenter_corpse()
-		new_mob.burn_skin((maxHealth - health) / maxHealth * new_mob.maxHealth) //You can bring them to the doorstep of death
-		qdel(src)
-	else
-		to_chat(new_mob,"<font color='red'>============Полиморфизм - краткий курс============</font><BR>\
-		- Хоть ваше тело и изменилось (быть может, до неузнаваемости) - это не значит, что ваш разум также прерпет изменение!<BR>\
-		- Ваш разум - всё тот же, как и раньше. Вы были членом экипажа? Им вы и остались!<BR>\
-		- На вас действуют те же правила и ограничения, что и до превращения.<BR>\
-		<font color='red'>============Прочие детали============</font><<BR>\
-		- В таком обличии вам предстоит провести некоторое время: иногда это может занять минуту, а иногда это до конца (может быть и вашего).<BR>\
-		- В случае временного превращения полученный вами урон перейдёт на старое тело. Если раньше вы были человеком, то смерть в новом теле вас не убьёт моментально, однако может сильно ранить, в ином случае всё может быть печальнее.<BR>\
-		- Если раньше вы были человеком, то смерть в новом теле вас не убьёт моментально, однако может сильно ранить, в ином случае всё может быть печальнее.")
 
-		new_mob.set_a_intent(INTENT_HARM)
-		if(!permanent)
-			forceMove(new_mob)
-			addtimer(CALLBACK(new_mob, .proc/wabbajack, src), 40 SECONDS)
-			notransform = TRUE
-		else
-			qdel(src)
-
-	return new_mob
+	new_mob.burn_skin((maxHealth - health) / maxHealth * new_mob.maxHealth) //You can bring them to the doorstep of death
+	qdel(src)
 
 /obj/item/projectile/magic/animate
 	name = "bolt of animation"
