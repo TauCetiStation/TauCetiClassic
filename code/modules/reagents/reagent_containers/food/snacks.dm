@@ -22,7 +22,11 @@
 	if(HAS_TRAIT(src, TRAIT_TAJARAN_HAIR))
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if(prob(25))
+			var/chance = 25
+			//less puke to tajaran, usually eat
+			if(H.species.name == TAJARAN)
+				chance = 1
+			if(prob(chance))
 				H.invoke_vomit_async()
 	if(!reagents.total_volume)
 		if(M == usr)

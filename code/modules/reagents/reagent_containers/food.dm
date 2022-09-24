@@ -12,9 +12,12 @@
 	pixel_x = rand(-10.0, 10) //Randomizes postion
 	pixel_y = rand(-10.0, 10)
 
-	RegisterSignal(src, list(COMSIG_ATOM_START_PULL), .proc/tajaran_effect)
+	RegisterSignal(src, list(COMSIG_ATOM_START_PULL), .proc/transfer_argument)
 
-/obj/item/weapon/reagent_containers/food/proc/tajaran_effect(obj/item, mob/M)
+/obj/item/weapon/reagent_containers/food/proc/transfer_argument(obj/O, mob/M)
+	tajaran_effect(M)
+
+/obj/item/weapon/reagent_containers/food/proc/tajaran_effect(mob/M)
 	if(!ishuman(M))
 		return
 	var/mob/living/carbon/human/H = M
