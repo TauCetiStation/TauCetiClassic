@@ -10,7 +10,6 @@
 	brainmob = null
 	req_access = list(access_robotics)
 	locked = 0
-	mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
 	var/ping_cd = 0//attack_ghost cooldown
 
@@ -81,7 +80,7 @@
 	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>!\n[desc]</span>\n"
 
 	if(src.brainmob && src.brainmob.key)
-		switch(src.brainmob.stat)
+		switch(brainmob.stat != CONSCIOUS)
 			if(CONSCIOUS)
 				if(!src.brainmob.client)
 					msg += "<span class='warning'>It appears to be in stand-by mode.</span>\n" //afk

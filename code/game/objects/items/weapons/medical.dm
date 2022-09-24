@@ -173,7 +173,7 @@
 /obj/item/weapon/reagent_containers/hypospray/combat/intdam
 	name = "internal damage hypospray"
 	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field. This one is filled with reagents which will restore internal organs of patient."
-	icon_state = "atox_hypo"
+	icon_state = "intdam_hypo"
 	volume = 100
 	list_reagents = list("peridaxon" = 25, "dextromethorphan" = 25, "alkysine" = 25, "imidazoline" = 25)
 

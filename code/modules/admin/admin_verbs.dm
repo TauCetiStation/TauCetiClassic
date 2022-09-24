@@ -1204,7 +1204,7 @@ var/global/centcom_barriers_stat = 1
 	anchored = TRUE
 	density = TRUE
 	invisibility = 101
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	icon_state = "x3"
 
 /obj/structure/centcom_barrier/atom_init()

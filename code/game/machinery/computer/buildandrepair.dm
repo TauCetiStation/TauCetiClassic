@@ -8,6 +8,12 @@
 	var/obj/item/weapon/circuitboard/circuit = null
 //	weight = 1.0E8
 
+	resistance_flags = CAN_BE_HIT
+
+/obj/structure/computerframe/Destroy()
+	QDEL_NULL(circuit)
+	return ..()
+
 /obj/item/weapon/circuitboard
 	density = FALSE
 	anchored = FALSE
@@ -96,7 +102,7 @@
 			return ..()
 
 	for(var/mob/living/silicon/ai/shuttlecaller as anything in ai_list)
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
+		if(shuttlecaller.stat == CONSCIOUS && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
 	if(find_faction_by_type(/datum/faction/revolution) || find_faction_by_type(/datum/faction/malf_silicons) || sent_strike_team)
@@ -493,9 +499,24 @@
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/machinery/computer/new_computer = new src.circuit.build_path (src.loc, circuit)
+				circuit = null
 				new_computer.set_dir(dir)
 				transfer_fingerprints_to(new_computer)
 				qdel(src)
+
+/obj/structure/computerframe/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 5)
+	if(circuit)
+		circuit.forceMove(loc)
+		circuit = null
+	if(state == 4)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
+	if(state >= 3)
+		new /obj/item/stack/cable_coil(loc, 5)
+	..()
 
 /obj/structure/computerframe/verb/rotate()
 	set category = "Object"

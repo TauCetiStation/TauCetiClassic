@@ -359,6 +359,7 @@
 	cost = 2
 	uplink_types = list("nuclear", "traitor")
 
+
 // AMMUNITION
 
 /datum/uplink_item/ammo
@@ -387,7 +388,7 @@
 
 /datum/uplink_item/ammo/smg
 	name = "Ammo-.45 ACP"
-	desc = "A 20-round .45 ACP magazine for use in the C-20r submachine gun."
+	desc = "A 30-round .45 ACP magazine for use in the C-20r submachine gun."
 	item = /obj/item/ammo_box/magazine/m12mm
 	cost = 1
 	uplink_types = list("nuclear")
@@ -415,21 +416,21 @@
 
 /datum/uplink_item/ammo/smg_hp
 	name = "Ammo-.45 ACP High Power"
-	desc = "A 15-round .45 ACP HP magazine for use in the C-20r submachine gun. These rounds have better overall damage."
+	desc = "A 20-round .45 ACP HP magazine for use in the C-20r submachine gun. These rounds have better overall damage."
 	item = /obj/item/ammo_box/magazine/m12mm/hp
 	cost = 2
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/smg_hv
 	name = "Ammo-.45 ACP High Velocity"
-	desc = "A 15-round .45 ACP HV magazine for use in the C-20r submachine gun. These rounds used to hit target almost instantly."
+	desc = "A 20-round .45 ACP HV magazine for use in the C-20r submachine gun. These rounds used to hit target almost instantly."
 	item = /obj/item/ammo_box/magazine/m12mm/hv
 	cost = 2
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/smg_imp
 	name = "Ammo-.45 ACP Impact"
-	desc = "A 15-round .45 ACP IMP magazine for use in the C-20r submachine gun. These rounds will push enemies back and shortly stun unarmored targets."
+	desc = "A 20-round .45 ACP IMP magazine for use in the C-20r submachine gun. These rounds will push enemies back and shortly stun unarmored targets."
 	item = /obj/item/ammo_box/magazine/m12mm/imp
 	cost = 2
 	uplink_types = list("nuclear")
@@ -595,6 +596,13 @@
 	desc = "A sharp, concealable, spring-loaded knife."
 	item = /obj/item/weapon/switchblade
 	cost = 2
+	uplink_types = list("dealer")
+
+/datum/uplink_item/stealthy_tools/throwingknives
+	name = "Throwing Knives"
+	desc = "Belt with a bunch of deadly sharp throwing knives."
+	item = /obj/item/weapon/storage/belt/security/tactical/throwing
+	cost = 9
 	uplink_types = list("dealer")
 
 /datum/uplink_item/stealthy_tools/icepick
@@ -903,6 +911,20 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/drone
 	cost = 14
 	uplink_types = list("nuclear", "traitor")
+
+/datum/uplink_item/device_tools/fake_nuke
+	name = "Fake Nuke"
+	desc = "The most common nuclear bomb. With one but: it doesn't explode. You can <activate> it by double deploying."
+	item = /obj/machinery/nuclearbomb/fake
+	cost = 6
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/device_tools/nuke_teleporter
+	name = "Nuke Recaller"
+	desc = "A device that can teleport a nuclear bomb directly to the user. It takes a lot of time to activate. There will be an announce upon activation."
+	item = /obj/item/nuke_teleporter
+	cost = 17
+	uplink_types = list("nuclear")
 
 // IMPLANTS
 

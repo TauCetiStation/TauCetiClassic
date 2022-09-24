@@ -23,6 +23,8 @@
 	anchored = FALSE
 	light_range = 4
 
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 	var/gasefficency = 0.25
 
 	var/base_icon_state = "darkmatter"

@@ -5,51 +5,16 @@
 	icon = 'icons/effects/effects.dmi'
 	anchored = TRUE
 	density = FALSE
-	var/health = 15
+	max_integrity = 15
+	resistance_flags = CAN_BE_HIT
 
-//similar to weeds, but only barfed out by nurses manually
-/obj/effect/spider/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_HEAVY)
-			if(prob(50))
-				return
-		if(EXPLODE_LIGHT)
-			if(prob(95))
-				return
-	qdel(src)
-
-/obj/effect/spider/attackby(obj/item/weapon/W, mob/user)
-	if(W.attack_verb.len)
-		visible_message("<span class='danger'>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]</span>")
-	else
-		visible_message("<span class='danger'>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]</span>")
-	user.SetNextMove(CLICK_CD_MELEE)
-
-	var/damage = W.force / 4.0
-
-	if(iswelder(W))
-		var/obj/item/weapon/weldingtool/WT = W
-
-		if(WT.use(0, user))
-			damage = 15
-			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
-
-	health -= damage
-	healthcheck()
-
-/obj/effect/spider/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-	health -= Proj.damage
-	healthcheck()
-
-/obj/effect/spider/proc/healthcheck()
-	if(health <= 0)
-		qdel(src)
+/obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
+		playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/effect/spider/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		health -= 5
-		healthcheck()
+		take_damage(5, BURN, FIRE)
 
 /obj/effect/spider/stickyweb
 	icon_state = "stickyweb1"
@@ -97,7 +62,7 @@
 	icon_state = "spiderling"
 	anchored = FALSE
 	layer = 2.7
-	health = 3
+	max_integrity = 3
 	var/amount_grown = -1
 	var/grow_as = null
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
@@ -126,20 +91,17 @@
 	playsound(src, pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
 	visible_message("<span class='alert'>\The [user] has punched [src]!</span>")
 	var/list/damObj = user.get_unarmed_attack()
-	var/damage = damObj["damage"]
-	health -= damage
-	healthcheck()
+	take_damage(damObj["damage"], damObj["type"], MELEE)
 
-/obj/effect/spider/spiderling/proc/die()
+/obj/effect/spider/spiderling/deconstruct(disassembled)
 	visible_message("<span class='alert'>[src] dies!</span>")
 	new /obj/effect/decal/cleanable/spiderling_remains(get_turf(src))
-	qdel(src)
-
-/obj/effect/spider/spiderling/healthcheck()
-	if(health <= 0)
-		die()
+	..()
 
 /obj/effect/spider/spiderling/proc/cancel_vent_move()
+	if(!entry_vent)
+		forceMove(get_turf(src))
+		return
 	forceMove(entry_vent.loc)
 	entry_vent = null
 
@@ -223,7 +185,7 @@
 	name = "cocoon"
 	desc = "Something wrapped in silky spider web."
 	icon_state = "cocoon1"
-	health = 60
+	max_integrity = 60
 
 /obj/effect/spider/cocoon/atom_init()
 	. = ..()
