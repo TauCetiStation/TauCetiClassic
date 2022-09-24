@@ -204,7 +204,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "plasmacutter"
 	item_state = "plasmacutter"
 	w_class = SIZE_SMALL //it is smaller than the pickaxe
-	damtype = "fire"
+	damtype = BURN
 	toolspeed = 0.4 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
 	origin_tech = "materials=4;phorontech=3;engineering=3"
 	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."

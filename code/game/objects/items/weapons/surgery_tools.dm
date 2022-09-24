@@ -118,7 +118,7 @@
 	name = "laser scalpel"
 	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks basic and could be improved."
 	icon_state = "scalpel_laser1_on"
-	damtype = "fire"
+	damtype = BURN
 	usesound = 'sound/items/surgery/laserscalp.ogg'
 	toolspeed = 1.2
 
@@ -126,7 +126,7 @@
 	name = "laser scalpel"
 	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks somewhat advanced."
 	icon_state = "scalpel_laser2_on"
-	damtype = "fire"
+	damtype = BURN
 	force = 12.0
 	usesound = 'sound/items/surgery/laserscalp.ogg'
 
@@ -134,7 +134,7 @@
 	name = "laser scalpel"
 	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks to be the pinnacle of precision energy cutlery!"
 	icon_state = "scalpel_laser3_on"
-	damtype = "fire"
+	damtype = BURN
 	force = 15.0
 	usesound = 'sound/items/surgery/laserscalp.ogg'
 	toolspeed = 0.6
