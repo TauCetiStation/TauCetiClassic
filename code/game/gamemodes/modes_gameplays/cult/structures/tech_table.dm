@@ -141,7 +141,7 @@
 		for(var/aspect_name in cult_religion.aspects)
 			var/datum/aspect/asp = cult_religion.aspects[aspect_name]
 			all_aspects += asp.power
-		var/cost = max(50, 50*all_aspects-250) //We don't count 6 initial aspects and scale for static 50, +50 piety for each new aspect
+		var/cost = max(50, 50*all_aspects-150) //We don't count 6 initial aspects and scale for static 150, +50 piety for each new aspect
 		return cost
 	return in_religion.power * 50
 
