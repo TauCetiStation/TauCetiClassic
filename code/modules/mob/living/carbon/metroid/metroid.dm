@@ -136,8 +136,7 @@
 		if(reagents.has_reagent("frostoil")) // frostoil also makes them move VEEERRYYYYY slow
 			tally *= 5
 
-	if(pull_debuff)
-		tally += pull_debuff
+	tally += count_pull_debuff()
 
 	return tally + config.slime_delay
 
@@ -499,7 +498,7 @@
 	if(isslimeadult(M)) //Can't tame adults
 		to_chat(user, "<span class='warning'>Only baby slimes can be tamed!</span>")
 		return..()
-	if(M.stat)
+	if(M.stat != CONSCIOUS)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	var/mob/living/simple_animal/slime/pet = new /mob/living/simple_animal/slime(M.loc)
@@ -527,7 +526,7 @@
 	if(!isslimeadult(M))//If target is not a slime.
 		to_chat(user, "<span class='warning'>The potion only works on adult slimes!</span>")
 		return ..()
-	if(M.stat)
+	if(M.stat != CONSCIOUS)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	var/mob/living/simple_animal/adultslime/pet = new /mob/living/simple_animal/adultslime(M.loc)
@@ -559,7 +558,7 @@
 	if(isslimeadult(M)) //Can't tame adults
 		to_chat(user, "<span class='warning'>Only baby slimes can use the steroid!</span>")
 		return..()
-	if(M.stat)
+	if(M.stat != CONSCIOUS)
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return..()
 	if(M.cores == 3)

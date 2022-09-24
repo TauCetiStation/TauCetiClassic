@@ -1,10 +1,10 @@
 // basic screens
 /atom/movable/screen/health/alien
-	icon = 'icons/mob/screen1_xeno.dmi'
+	icon = 'icons/hud/screen1_xeno.dmi'
 	screen_loc = ui_alien_health
 
 /atom/movable/screen/xenomorph
-	icon = 'icons/mob/screen1_xeno.dmi'
+	icon = 'icons/hud/screen1_xeno.dmi'
 
 /atom/movable/screen/xenomorph/plasma_display
 	name = "plasma stored"
@@ -68,7 +68,7 @@
 // larva
 /atom/movable/screen/inventory/larva_mouth
 	name = "mouth"
-	icon = 'icons/mob/screen1_xeno.dmi'
+	icon = 'icons/hud/screen1_xeno.dmi'
 	icon_state = "hand_larva_active"
 	screen_loc = ui_rhand
 	slot_id = SLOT_R_HAND
@@ -80,7 +80,7 @@
 // facehugger
 /atom/movable/screen/inventory/tail
 	name = "tail"
-	icon = 'icons/mob/screen1_xeno.dmi'
+	icon = 'icons/hud/screen1_xeno.dmi'
 	icon_state = "hand_tail_active"
 	screen_loc = ui_rhand
 	slot_id = SLOT_R_HAND

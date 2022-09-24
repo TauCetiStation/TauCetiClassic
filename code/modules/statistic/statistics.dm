@@ -17,7 +17,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 // To ensure that if output file syntax is changed, we will still be able to process
 // new and old files
 // please increment this version whenever making changes
-#define STAT_OUTPUT_VERSION 3
+#define STAT_OUTPUT_VERSION 4
 #define STAT_FILE_NAME "stat.json"
 
 // Documentation rules:

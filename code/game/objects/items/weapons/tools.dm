@@ -384,7 +384,7 @@
 // Removes fuel from the welding tool. If a mob is passed, it will perform an eyecheck on the mob. This should probably be renamed to use()
 /obj/item/weapon/weldingtool/use(used = 1, mob/M = null)
 	if(used < 0)
-		stack_trace("[src.type]/use() called with a negative parameter [used]")
+		stack_trace("[src.type]/use() called with a negative parameter")
 		return 0
 	if(!active || !check_fuel())
 		return 0

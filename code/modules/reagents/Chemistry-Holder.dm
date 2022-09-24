@@ -399,6 +399,7 @@ var/global/const/INGEST = 2
 						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_obj, A, R.volume+volume_modifier)
 	return
 
+// adds new reagent by ID, mix it with those already present if needed
 /datum/reagents/proc/add_reagent(reagent, amount, list/data = null, safety = FALSE, datum/religion/_religion)
 	if(!isnum(amount) || amount < 0 || amount > 2000)
 		return FALSE
@@ -407,15 +408,19 @@ var/global/const/INGEST = 2
 	if(total_volume + amount > maximum_volume)
 		amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 
+	// if we already have this reagent just trasnfer new data and update volume
 	for(var/datum/reagent/R in reagent_list)
 		if (R.id == reagent)
 			R.volume += amount
 
-			// Data:
+			// blood is one common datum /datum/reagent/blood with different data uploads, we mix it here manually
+			// todo: currently only viruses, else it can break mobs
+			// part of the work happens in /inject_blood()
 			if(R.id == "blood" && reagent == "blood")
 				if(R.data && R.data["virus2"])
-					R.data["virus2"] += virus_copylist(data["virus2"])
+					R.data["virus2"] |= virus_copylist(data["virus2"])
 
+			// not blood, but same problems
 			else if(R.id == "customhairdye" || R.id == "paint_custom")
 				for(var/color in R.data)
 					R.data[color] = (R.data[color] + data[color]) * 0.5
@@ -430,6 +435,7 @@ var/global/const/INGEST = 2
 				handle_reactions()
 			return TRUE
 
+	// new reagent we don't have, need to create
 	var/datum/reagent/D = chemical_reagents_list[reagent]
 	if(D)
 		var/datum/reagent/R = new D.type()
@@ -438,12 +444,11 @@ var/global/const/INGEST = 2
 		R.volume = amount
 		R.religion = _religion
 
-		// Data:
 		if(data)
-			if(data["virus2"])
-				R.data["virus2"] = virus_copylist(data["virus2"])
-			else
-				R.data = data
+			R.data = data.Copy()
+			
+			if(data["virus2"]) // list of datums, need to copy manually through virus_copylist()
+				R.data["virus2"] |= virus_copylist(data["virus2"])
 
 		if(reagent == "customhairdye" || reagent == "paint_custom")
 			R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))

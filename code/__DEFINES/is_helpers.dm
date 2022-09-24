@@ -19,8 +19,6 @@
 
 // HUMAN
 
-#define isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
-
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
 #define isskeleton(A) (A.get_species() in list(SKELETON, SKELETON_UNATHI, SKELETON_TAJARAN, SKELETON_SKRELL, SKELETON_VOX))
@@ -160,6 +158,8 @@
 #define isrolebytype(type, H) (H?.mind ? H.mind.GetRoleByType(type) : FALSE)
 
 #define isanyantag(H) (H?.mind && H.mind.antag_roles.len)
+
+#define isabductor(H) isrolebytype(/datum/role/abductor, H)
 
 #define isabductorsci(H) isrole(ABDUCTOR_SCI, H)
 

@@ -12,6 +12,8 @@
 	var/last_update = 0
 	var/list/stored_ore = list()
 
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/ore_box/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/ore))
 		user.drop_from_inventory(W, src)
@@ -39,6 +41,17 @@
 			if(S.use(choosed_quantity))
 				increase_integrity(int_amount)
 				to_chat(user, "The box is reinforced by [S]")
+
+/obj/structure/ore_box/proc/dump_box_contents()
+	for (var/obj/item/weapon/ore/O as anything in contents)
+		O.Move(loc)
+
+/obj/structure/ore_box/deconstruct(disassembled)
+	dump_box_contents()
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/wood(loc, 4)
+	..()
 
 /obj/structure/ore_box/Entered(atom/movable/ORE)
 	if(istype(ORE, /obj/item/weapon/ore))
@@ -128,8 +141,7 @@
 		to_chat(usr, "<span class='warning'>The ore box is empty</span>")
 		return
 
-	for (var/obj/item/weapon/ore/O in contents)
-		O.Move(src.loc)
+	dump_box_contents()
 
 	to_chat(usr, "<span class='notice'>You empty the ore box</span>")
 

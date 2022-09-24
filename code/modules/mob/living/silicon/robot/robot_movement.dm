@@ -13,7 +13,7 @@
 	var/tally = speed //Incase I need to add stuff other than "speed" later
 
 	if(module_active && istype(module_active, /obj/item/borg/combat/mobility))
-		tally -= 3
+		tally -= 2
 
 	if(confused)
 		tally += 8

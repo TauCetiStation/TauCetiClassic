@@ -2,18 +2,13 @@
 	name = "factory blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_factory"
-	max_health = 100
-	health = 100
+	max_integrity = 100
 	fire_resist = 2
 	var/list/spores = list()
 	var/max_spores = 3
 	var/spore_delay = 0
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
 	var/mob/camera/blob/overmind = null
-
-/obj/effect/blob/factory/update_icon()
-	if(health <= 0)
-		qdel(src)
 
 /obj/effect/blob/factory/Destroy()
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore as anything in spores)
@@ -94,7 +89,7 @@
 	if(statpanel("Status") && !independent)
 		if(overmind)
 			if(overmind.blob_core)
-				stat(null, "Core Health: [overmind.blob_core.health]")
+				stat(null, "Core Health: [overmind.blob_core.get_integrity()]")
 			stat(null, "Progress: [blobs.len]/[overmind.b_congl.blobwincount]")
 
 /mob/living/simple_animal/hostile/blob/blob_act(/obj/effect/blob/B)
@@ -124,7 +119,7 @@
 		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	if (stat)
+	if (stat != CONSCIOUS)
 		return
 
 	message = sanitize(message)
@@ -296,7 +291,7 @@
 	if(independent) //Was it with blob or not
 		return
 	if(overmind.blob_core && pwr_display) //Just in case, otherwise it is looped runtime
-		pwr_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(overmind.blob_core.health)]</font></div>"
+		pwr_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(overmind.blob_core.get_integrity())]</font></div>"
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/attack_animal(mob/user)
 	if(faction == user.faction) //To avoid blobbernaut vs blobbernaut and spore's kills
@@ -345,7 +340,7 @@
 	..(gibbed)
 	if(factory)
 		factory.naut = null //remove this naut from its factory
-		factory.max_health = initial(factory.max_health)
+		factory.max_integrity = initial(max_integrity)
 	flick("blobbernaut_death", src)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/independent
