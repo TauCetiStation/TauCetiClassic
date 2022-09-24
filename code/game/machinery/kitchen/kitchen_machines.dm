@@ -255,7 +255,7 @@
 *   Kitchen Machine Handling/Cooking
 ************************************/
 
-/obj/machinery/kitchen_machine/proc/cook(mob/user)
+/obj/machinery/kitchen_machine/proc/cook()
 	if(stat & (NOPOWER|BROKEN))
 		return
 	start()
@@ -316,12 +316,6 @@
 			cooked = new cooked.type(loc)
 		if(byproduct)
 			new byproduct(loc)
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(H.species.name == TAJARAN)
-				var/check_cloth = 100 - H.getarmor(null, "bio")
-				if(prob(check_cloth))
-					ADD_TRAIT(cooked, TRAIT_TAJARAN_HAIR, GENERIC_TRAIT)
 		SSStatistics.score.meals++
 		return
 
@@ -427,7 +421,7 @@
 
 	switch(href_list["action"])
 		if ("cook")
-			cook(usr)
+			cook()
 
 		if ("dispose")
 			dispose()
