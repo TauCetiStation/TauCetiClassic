@@ -557,7 +557,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = null
 	damage = 10
 	damage_type = BRUTE
-	flag = "bomb"
+	flag = BOMB
 	var/range = 3
 	var/power = 4
 

@@ -85,7 +85,7 @@
 					return PROJECTILE_ACTED
 
 		BP = bodyparts_by_name[check_zone(def_zone)]
-		var/armorblock = run_armor_check(BP, "energy")
+		var/armorblock = run_armor_check(BP, ENERGY)
 		apply_damage(P.damage, P.damage_type, BP, armorblock, P.damage_flags(), P)
 		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
 		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
@@ -99,7 +99,7 @@
 		var/obj/item/projectile/bullet/B = P
 
 		var/obj/item/organ/external/BP = bodyparts_by_name[check_zone(def_zone)]
-		var/armor = getarmor_organ(BP, "bullet")
+		var/armor = getarmor_organ(BP, BULLET)
 
 		var/delta = max(0, P.damage - (P.damage * (armor/100)))
 		if(delta)

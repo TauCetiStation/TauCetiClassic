@@ -88,7 +88,7 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 	temperature = 50
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
@@ -505,9 +505,9 @@
 			if(D.hides < 3)
 				D.hides++
 				damage_absorption[BRUTE] = max(damage_absorption[BRUTE] - 0.1, 0.3)
-				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
+				damage_absorption[BULLET] = damage_absorption[BULLET] - 0.05
 				damage_absorption[BURN] = damage_absorption[BURN] - 0.05
-				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
+				damage_absorption[LASER] = damage_absorption[LASER] - 0.025
 				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				D.update_icon()
 				if(D.hides == 3)

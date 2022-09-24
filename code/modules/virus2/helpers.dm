@@ -55,7 +55,7 @@
 		var/mob/living/carbon/human/H = M
 
 		var/armor = H.getarmor(target_zone, "melee")
-		var/bioarmor = H.getarmor(target_zone, "bio")
+		var/bioarmor = H.getarmor(target_zone, BIO)
 
 		return max((100 - max(armor, bioarmor/2)), 0) / 2
 	return 100

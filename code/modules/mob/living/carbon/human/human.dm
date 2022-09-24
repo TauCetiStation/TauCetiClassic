@@ -222,7 +222,7 @@
 	switch (severity)
 		if(EXPLODE_DEVASTATE)
 			b_loss += 500
-			if (!prob(getarmor(null, "bomb")))
+			if (!prob(getarmor(null, BOMB)))
 				gib()
 				return
 			else
@@ -238,7 +238,7 @@
 
 			f_loss += 60
 
-			if (prob(getarmor(null, "bomb")))
+			if (prob(getarmor(null, BOMB)))
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 
@@ -250,7 +250,7 @@
 
 		if(EXPLODE_LIGHT)
 			b_loss += 30
-			if (prob(getarmor(null, "bomb")))
+			if (prob(getarmor(null, BOMB)))
 				b_loss = b_loss/2
 			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 15
