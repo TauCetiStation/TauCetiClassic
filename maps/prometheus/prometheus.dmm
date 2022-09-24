@@ -84045,7 +84045,7 @@
 	dir = 1
 	},
 /obj/item/stack/sheet/glass{
-	amount = 50
+	amount = 27
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -93377,7 +93377,7 @@
 	},
 /obj/random/tools/toolbox,
 /obj/item/stack/sheet/metal{
-	amount = 50
+	amount = 34
 	},
 /obj/random/tools/tool,
 /obj/random/tools/tool,
