@@ -406,6 +406,24 @@
 
 	emag.name = "Hand tele"
 
+/obj/item/weapon/robot_module/peacekeeper
+	name = "peacekeeper robot module"
+
+/obj/item/weapon/robot_module/peacekeeper/atom_init()
+	. = ..()
+
+	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/weapon/rsf/cookiesynth(src)
+	modules += new /obj/item/harmalarm(src)
+	modules += new /obj/item/weapon/reagent_containers/borghypo/peace(src)
+	modules += new /obj/item/weapon/cyborghug(src)
+	modules += new /obj/item/borg/bubble_creator(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg(src)
+	modules += new /obj/item/weapon/crowbar/red(src)
+	modules += new /obj/item/device/gps/cyborg(src)
+
+	emag = new /obj/item/weapon/gun/grenadelauncher/cyborg(src)
+
 /obj/item/weapon/robot_module/drone
 	name = "drone module"
 	stacktypes = list(

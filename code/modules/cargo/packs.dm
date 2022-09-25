@@ -67,6 +67,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/device/camera,
 					/obj/item/device/camera_film,
 					/obj/item/device/camera_film,
+					/obj/item/weapon/storage/box/box_lenses,
 					/obj/item/weapon/storage/photo_album,
 					/obj/item/weapon/packageWrap,
 					/obj/item/weapon/reagent_containers/glass/paint/red,

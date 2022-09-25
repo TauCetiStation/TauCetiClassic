@@ -895,7 +895,7 @@
 				else
 					icon_num = 5
 
-			healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]"))
+			healthdoll.add_overlay(image('icons/hud/screen_gen.dmi',"[BP.body_zone][icon_num]"))
 
 	if(!healths)
 		return

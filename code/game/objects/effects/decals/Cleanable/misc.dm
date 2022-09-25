@@ -28,6 +28,11 @@
 		F.dirt += 4
 	qdel(src)
 
+/obj/effect/decal/cleanable/ash/large
+	name = "large pile of ashes"
+	icon_state = "big_ash"
+	beauty = -100
+
 /obj/effect/decal/cleanable/greenglow
 
 /obj/effect/decal/cleanable/greenglow/atom_init()
@@ -129,6 +134,19 @@
 	sleep(rand(150,300))
 	if(!src) return
 	set_light(0)
+
+/obj/effect/decal/cleanable/shreds
+	name = "shreds"
+	desc = "The shredded remains of what appears to be clothing."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shreds"
+
+/obj/effect/decal/cleanable/shreds/atom_init(mapload, oldname)
+	. = ..()
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
+	if(!isnull(oldname))
+		desc = "The sad remains of what used to be [oldname]"
 
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "tomato smudge"

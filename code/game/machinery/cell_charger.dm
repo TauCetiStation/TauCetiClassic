@@ -103,3 +103,13 @@
 	use_power(power_used)
 
 	updateicon()
+
+/obj/machinery/cell_charger/deconstruct()
+	if(charging)
+		charging.forceMove(loc)
+		charging = null
+	..()
+
+/obj/machinery/cell_charger/Destroy()
+	QDEL_NULL(charging)
+	return ..()
