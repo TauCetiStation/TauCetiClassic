@@ -43,7 +43,7 @@
 	if(src.range == range && src.works_in_containers == works_in_containers)
 		return
 	//Unregister the signals with the old settings.
-	unregister_signals(isturf(tracked) ? tracked : tracked.loc)
+	unregister_signals()
 	src.range = range
 	src.works_in_containers = works_in_containers
 	//Re-register the signals with the new settings.
@@ -51,7 +51,7 @@
 
 /datum/component/connect_range/proc/set_tracked(atom/new_tracked)
 	if(tracked) //Unregister the signals from the old tracked and its surroundings
-		unregister_signals(isturf(tracked) ? tracked : tracked.loc)
+		unregister_signals()
 		UnregisterSignal(tracked, list(
 			COMSIG_MOVABLE_MOVED,
 			COMSIG_PARENT_QDELETING,
@@ -75,7 +75,7 @@
 		on_same_turf = FALSE
 	else
 		on_same_turf = works_in_containers ? current_turf == old_turf : target.loc == old_turf //Only register/unregister turf signals if it's moved to a new turf.
-	unregister_signals(old_loc, on_same_turf)
+	unregister_signals(on_same_turf)
 
 	if(isnull(current_turf))
 		return
