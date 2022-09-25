@@ -7,7 +7,6 @@
 	name = "Ore Box"
 	desc = "A heavy box used for storing ore."
 	density = TRUE
-	//environment_smash argument increase animal damage x10!!!
 	max_integrity = 150
 	integrity_failure = 0.4
 	var/last_update = 0
