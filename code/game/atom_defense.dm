@@ -18,15 +18,7 @@
 
 	. = damage_amount
 
-	update_integrity(atom_integrity - damage_amount)
-
-	//BREAKING FIRST
-	if(integrity_failure && atom_integrity <= integrity_failure * max_integrity)
-		atom_break(damage_flag)
-
-	//DESTROYING SECOND
-	if(atom_integrity <= 0)
-		atom_destruction(damage_flag)
+	update_integrity(atom_integrity - damage_amount, damage_flag)
 
 /// Proc for recovering atom_integrity. Returns the amount repaired by
 /atom/proc/repair_damage(amount)
@@ -37,11 +29,8 @@
 
 	update_integrity(new_integrity)
 
-	if(integrity_failure && atom_integrity > integrity_failure * max_integrity)
-		atom_fix()
-
 /// Handles the integrity of an atom changing. This must be called instead of changing integrity directly.
-/atom/proc/update_integrity(new_value)
+/atom/proc/update_integrity(new_value, damage_flag = null)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!uses_integrity)
 		CRASH("/atom/proc/update_integrity() was called on [src] when it doesnt use integrity!")
@@ -51,6 +40,18 @@
 		return
 	atom_integrity = new_value
 	SEND_SIGNAL(src, COMSIG_ATOM_INTEGRITY_CHANGED, old_value, new_value)
+
+	if(old_value < new_value)
+		if(integrity_failure && atom_integrity > integrity_failure * max_integrity)
+			atom_fix()
+		return
+	//DESTROYING FIRST
+	if(new_value <= 0)
+		atom_destruction(damage_flag)
+		return
+	//BREAKING/FIXING SECOND
+	if(integrity_failure && atom_integrity <= integrity_failure * max_integrity)
+		atom_break(damage_flag)
 
 /// This mostly exists to keep atom_integrity private. Might be useful in the future.
 /atom/proc/get_integrity()
@@ -100,7 +101,7 @@
 /// Called after the atom takes damage and integrity is below integrity_failure level
 /atom/proc/atom_break(damage_flag)
 	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ATOM_BREAK, damage_flag) // TODO add comsigs
+	SEND_SIGNAL(src, COMSIG_ATOM_BREAK, damage_flag) // TODO use comsigs?
 
 /// Called when integrity is repaired above the breaking point having been broken before
 /atom/proc/atom_fix()
@@ -113,7 +114,7 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_DESTRUCTION, damage_flag)
 
 ///changes max_integrity while retaining current health percentage, returns TRUE if the atom got broken.
-/atom/proc/modify_max_integrity(new_max, can_break = TRUE, damage_type = BRUTE)
+/atom/proc/modify_max_integrity(new_max)
 	if(!uses_integrity)
 		CRASH("/atom/proc/modify_max_integrity() was called on [src] when it doesnt use integrity!")
 	var/current_integrity = atom_integrity
@@ -125,11 +126,6 @@
 		atom_integrity = current_integrity
 
 	max_integrity = new_max
-
-	if(can_break && integrity_failure && current_integrity <= integrity_failure * max_integrity)
-		atom_break(damage_type)
-		return TRUE
-	return FALSE
 
 /// A cut-out proc for [/atom/proc/bullet_act] so living mobs can have their own armor behavior checks without causing issues with needing their own on_hit call
 /atom/proc/check_projectile_armor(def_zone, obj/item/projectile/impacting_projectile, is_silent)
