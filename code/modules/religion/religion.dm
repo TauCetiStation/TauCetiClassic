@@ -462,6 +462,7 @@
 	R.religion = src
 	rites_by_name[R.name] = R
 	ritename_by_count[R.name] = 0
+	affect_divine_power_rite(R)
 
 // Adds all spells related to asp.
 /datum/religion/proc/add_aspect_spells(datum/aspect/asp, datum/callback/aspect_pred)
