@@ -15,7 +15,7 @@
 	var/used_power_this_tick = 0
 	var/sight_mode = 0
 	var/custom_name = ""
-	var/crisis //Admin-settable for combat module use.
+	var/crisis = FALSE //Admin-settable for combat module use.
 	var/datum/wires/robot/wires = null
 
 //Hud stuff
@@ -66,7 +66,6 @@
 	var/lawcheck[1] //For stating laws.
 	var/ioncheck[1] //Ditto.
 	var/lockcharge //Used when locking down a borg to preserve cell charge
-	var/speed = 0 //Cause sec borgs gotta go fast //No they dont!
 	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
 	var/tracking_entities = 0 //The number of known entities currently accessing the internal camera
 	var/braintype = "Cyborg"
@@ -159,6 +158,9 @@
 	if(connected_ai) // Remove robot from connected to ai robots
 		connected_ai.connected_robots -= src
 		connected_ai = null
+	//selfdestruct mode on
+	if(istype(module, /obj/item/weapon/robot_module/combat))
+		return ..()
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
@@ -182,13 +184,14 @@
 				"Service" = "Service",
 				"Security" = "secborg",
 				"Science" = "toxbot",
+				"PeaceKeeper" = "marina-peace"
 				)
 
 		choose_module = list()
 		for(var/mod in modules)
 			choose_module[mod] = image(icon = 'icons/mob/robots.dmi', icon_state = modules[mod])
 
-	if(crisis && security_level == SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
+	if(crisis && security_level >= SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
 		to_chat(src, "<span class='warning'>Crisis mode active. Combat available.</span>")
 		choose_module["Combat"] = image(icon = 'icons/mob/robots.dmi', icon_state = "droid-combat")
 
@@ -298,12 +301,17 @@
 			module_sprites["Drone"] = "drone-janitor"
 			module_sprites["Acheron"] = "mechoid-Janitor"
 
+		if("PeaceKeeper")
+			if(!can_be_security)
+				to_chat(src, "<span class='warning'>#Error: Needed security circuitboard.</span>")
+				return
+			module = new /obj/item/weapon/robot_module/peacekeeper(src)
+			module_sprites["Marina"] = "marina-peace"
+			module_sprites["Sleak"] = "sleek-peace"
+
 		if("Combat")
-			module = new /obj/item/weapon/robot_module/combat(src)
-			module_sprites["Combat Android"] = "droid-combat"
-			module_sprites["Acheron"] = "mechoid-Combat"
-			module_sprites["Kodiak"] = "kodiak-combat"
-			module.channels = list("Security" = 1)
+			build_combat_borg()
+			return
 
 	module_icon.update_icon(src)
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
@@ -325,6 +333,12 @@
 		icon_state = module_sprites[new_icon_state]
 
 	radio.config(module.channels)
+
+/mob/living/silicon/robot/proc/build_combat_borg()
+	var/mob/living/silicon/robot/combat/C = new(get_turf(src))
+	module = new /obj/item/weapon/robot_module/combat(src)
+	C.key = key
+	qdel(src)
 
 /mob/living/silicon/robot/proc/updatename(prefix)
 	if(prefix)
@@ -494,16 +508,16 @@
 		to_chat(usr, "<span class='warning'>Невозможно заблокировать интерфейс, если открыта панель.</span>")
 		emote("buzz")
 		return
-	
+
 	if(!do_after(usr, 10, target = usr))
 		return
-	
+
 	if(locked)
-		to_chat(usr, "<span class='notice'>Интерфейс разблокирован.</span>")		
+		to_chat(usr, "<span class='notice'>Интерфейс разблокирован.</span>")
 	else
 		to_chat(usr, "<span class='notice'>Интерфейс заблокирован.</span>")
 
-	playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/items/swipe_card.ogg', VOL_EFFECTS_MASTER)
 	locked = !locked
 
 /mob/living/silicon/robot/verb/open_hatch()
@@ -516,17 +530,17 @@
 		to_chat(usr, "<span class='warning'>Невозможно открыть панель, если заблокирован интерфейс.</span>")
 		emote("buzz")
 		return
-	
+
 	if(!do_after(usr, 10, target = usr))
 		return
-	
+
 	if(opened)
 		to_chat(usr, "<span class='notice'>Панель закрыта.</span>")
 		playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)
 	else
 		to_chat(usr, "<span class='notice'>Панель открыта.</span>")
 		playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
-	
+
 	opened = !opened
 	updateicon()
 
@@ -749,7 +763,7 @@
 				else
 					clear_alert("not_locked")
 				to_chat(user, "You [ locked ? "lock" : "unlock"] [src]'s interface.")
-				playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
+				playsound(src, 'sound/items/swipe_card.ogg', VOL_EFFECTS_MASTER)
 				updateicon()
 			else
 				to_chat(user, "<span class='warning'>Access denied.</span>")
@@ -922,20 +936,6 @@
 			add_overlay("ov-openpanel +c")
 		else
 			add_overlay("ov-openpanel -c")
-
-
-
-	if(module_active && istype(module_active,/obj/item/borg/combat/shield))
-		add_overlay("[icon_state]-shield")
-
-	if(modtype == "Combat")
-//		var/base_icon = ""
-//		base_icon = icon_state
-		if(module_active && istype(module_active,/obj/item/borg/combat/mobility))
-			icon_state = "droid-combat-roll"
-		else
-			icon_state = "droid-combat"
-		return
 
 //Call when target overlay should be added/removed
 /mob/living/silicon/robot/update_targeted()
@@ -1160,16 +1160,16 @@
 /mob/living/silicon/robot/proc/cell_use_power(amount = 0)
 	// No cell inserted
 	if(!cell)
-		return 0
+		return FALSE
 
 	// Power cell is empty.
 	if(cell.charge == 0)
-		return 0
+		return FALSE
 
 	if(cell.use(amount * CELLRATE * CYBORG_POWER_USAGE_MULTIPLIER))
 		used_power_this_tick += amount * CYBORG_POWER_USAGE_MULTIPLIER
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/robot/proc/toggle_all_components()
 	for(var/V in components)

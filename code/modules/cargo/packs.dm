@@ -67,6 +67,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/device/camera,
 					/obj/item/device/camera_film,
 					/obj/item/device/camera_film,
+					/obj/item/weapon/storage/box/box_lenses,
 					/obj/item/weapon/storage/photo_album,
 					/obj/item/weapon/packageWrap,
 					/obj/item/weapon/reagent_containers/glass/paint/red,
@@ -350,6 +351,15 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_armory
 	group = "Security"
 
+/datum/supply_pack/ion_rifle
+	name = "ion rifles"
+	contains = list(/obj/item/weapon/gun/energy/ionrifle,
+					/obj/item/weapon/gun/energy/ionrifle)
+	cost = 14000
+	crate_type = /obj/structure/closet/crate/secure/weapon
+	crate_name = "ion rifles crate"
+	access = access_armory
+	group = "Security"
 
 /datum/supply_pack/expenergy
 	name = "Experimental energy gear crate"
@@ -1014,23 +1024,24 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	group = "Engineering"
 	access = access_ce
 
-/*/datum/supply_pack/teg // teg currently were broken for a long time ago, so no point to have it in-game until fixed.
+/datum/supply_pack/teg
 	contains = list(/obj/machinery/power/generator)
 	name = "Mark I Thermoelectric Generator"
 	cost = 7500
 	crate_type = /obj/structure/closet/crate/secure/large
 	crate_name = "Mk1 TEG crate"
 	group = "Engineering"
-	access = access_engine*/
+	access = access_engine
 
-/*/datum/supply_pack/circulator
-	contains = list(/obj/machinery/atmospherics/components/binary/circulator)
+/datum/supply_pack/circulator
+	contains = list(/obj/machinery/atmospherics/components/binary/circulator,
+					/obj/machinery/atmospherics/components/binary/circulator)
 	name = "Binary atmospheric circulator"
-	cost = 6000
+	cost = 3000
 	crate_type = /obj/structure/closet/crate/secure/large
 	crate_name = "Atmospheric circulator crate"
 	group = "Engineering"
-	access = access_engine*/
+	access = access_engine
 
 /datum/supply_pack/air_dispenser
 	contains = list(/obj/machinery/pipedispenser/orderable)

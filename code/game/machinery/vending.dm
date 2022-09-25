@@ -116,7 +116,7 @@
 		return TRUE
 	return FALSE
 
-/obj/machinery/vending/proc/take_damage(amount)
+/obj/machinery/vending/take_damage(amount)
 	if(amount <= 0)
 		return
 	if(amount < 30)
@@ -133,8 +133,16 @@
 	if(integrity < 15)
 		make_me_broken()
 
-/obj/machinery/vending/deconstruction()
-	new /obj/machinery/constructable_frame/machine_frame(loc)
+
+/obj/machinery/vending/deconstruct(disassembled = TRUE)
+	if(refill_canister)
+		return ..()
+	//the non constructable vendors drop metal instead of a machine frame.
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 3)
+	qdel(src)
+  
+  new /obj/machinery/constructable_frame/machine_frame(loc)
 	new /obj/item/weapon/shard(loc)
 	new /obj/item/stack/rods(loc, 2)
 	new /obj/item/stack/cable_coil/red(loc, 2)
@@ -144,6 +152,12 @@
 			continue
 		I.forceMove(loc)
 	qdel(src)
+
+/obj/machinery/vending/atom_break(damage_flag)
+	. = ..()
+	if(.)
+		malfunction()
+
 
 /obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0,req_emag=0)
 	for(var/typepath in productlist)

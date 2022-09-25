@@ -113,8 +113,6 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "newscaster_normal"
-	var/isbroken = 0  //1 if someone banged it with something heavy
-	var/ispowered = 1 //starts powered, changes with power_change()
 	//var/list/datum/feed_channel/channel_list = list() //This list will contain the names of the feed channels. Each name will refer to a data region where the messages of the feed channels are stored.
 	//OBSOLETE: We're now using a global news network
 	var/screen = 0                  //Or maybe I'll make it into a list within a list afterwards... whichever I prefer, go fuck yourselves :3
@@ -187,11 +185,11 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	return ..()
 
 /obj/machinery/newscaster/update_icon()
-	if(!ispowered || isbroken)
+	if(stat & (NOPOWER | BROKEN))
 		icon_state = "newscaster_off"
-		if(isbroken) //If the thing is smashed, add crack overlay on top of the unpowered sprite.
+		if(stat & BROKEN) //If the thing is smashed, add crack overlay on top of the unpowered sprite.
 			cut_overlays()
-			add_overlay(image(src.icon, "crack3"))
+			add_overlay(image(icon, "crack3"))
 		return
 
 	cut_overlays() //reset overlays
@@ -210,15 +208,13 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	return
 
 /obj/machinery/newscaster/power_change()
-	if(isbroken) //Broken shit can't be powered.
+	if(stat & BROKEN) //Broken shit can't be powered.
 		return
-	if( powered() )
-		src.ispowered = 1
+	if(powered())
 		stat &= ~NOPOWER
 		update_icon()
 	else
 		spawn(rand(0, 15))
-			src.ispowered = 0
 			stat |= NOPOWER
 			update_icon()
 	update_power_use()
@@ -236,11 +232,11 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			if(prob(50))
 				return
 
-	src.isbroken=1
+	stat |= BROKEN
 	update_icon()
 
 /obj/machinery/newscaster/ui_interact(mob/user)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
-	if(isbroken)
+	if(stat & BROKEN)
 		return
 
 	if(isobserver(user))
@@ -535,14 +531,6 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		var/datum/browser/popup = new(human_or_robot_user, "window=newscaster_main", src.name, 400, 600)
 		popup.set_content(dat)
 		popup.open()
-
-	/*if(src.isbroken) //debugging shit
-		return
-	src.hitstaken++
-	if(src.hitstaken==3)
-		src.isbroken = 1
-	update_icon()*/
-
 
 /obj/machinery/newscaster/Topic(href, href_list)
 	. = ..()
@@ -860,38 +848,48 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 			return
 		to_chat(user, "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>")
 		if(I.use_tool(src, user, 60, volume = 50))
-			new /obj/item/newscaster_frame(loc)
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
-			qdel(src)
+			deconstruct(TRUE)
 		return
 
-	if (src.isbroken)
-		playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
-		user.visible_message("<EM>[user.name]</EM> further abuses the shattered [src.name].")
-	else
-		if(istype(I, /obj/item/weapon) )
-			user.do_attack_animation(src)
-			user.SetNextMove(CLICK_CD_MELEE)
-			var/obj/item/weapon/W = I
-			if(W.force <15)
-				user.visible_message("[user.name] hits the [src.name] with the [W.name] with no visible effect.")
-				playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+	..()
+
+/obj/machinery/newscaster/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(stat & BROKEN)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 			else
-				src.hitstaken++
-				if(src.hitstaken==3)
-					user.visible_message("[user.name] smashes the [src.name]!")
-					src.isbroken=1
-					playsound(src, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER)
-				else
-					user.visible_message("[user.name] forcefully slams the [src.name] with the [I.name]!")
-					playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-		else
-			to_chat(user, "<span class='info'>This does nothing.</span>")
-	update_icon()
+				playsound(loc, 'sound/effects/glasshit.ogg', VOL_EFFECTS_MASTER, 90, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+
+/obj/machinery/newscaster/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(disassembled)
+		new /obj/item/newscaster_frame(loc)
+	else
+		new /obj/item/stack/sheet/metal(loc, 2)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
+	..()
+
+/obj/machinery/newscaster/atom_break(damage_flag)
+	. = ..()
+	if(.)
+		playsound(loc, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/machinery/newscaster/attack_paw(mob/user)
 	to_chat(user, "<span class='info'>The newscaster controls are far too complicated for your tiny brain!</span>")
 	return
+
+/obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	if(. && hitstaken < 3)
+		hitstaken++
+		update_icon()
 
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user)
 	if(photo)

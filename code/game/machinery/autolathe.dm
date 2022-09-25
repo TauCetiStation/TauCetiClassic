@@ -276,7 +276,8 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		to_chat(user, "<span class='warning'>The autolathe is busy. Please wait for completion of previous operation.</span>")
 		return 1
 
-	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", I))
+	if(default_deconstruction_screwdriver(user, "autolathe", "autolathe", I))
+		update_icon()
 		updateUsrDialog()
 		return
 
@@ -285,10 +286,6 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 
 	if(panel_open)
 		if(iscrowbar(I))
-			if(stored_material[MAT_METAL] >= 3750)
-				new /obj/item/stack/sheet/metal(loc, round(stored_material[MAT_METAL] / 3750))
-			if(stored_material[MAT_GLASS] >= 3750)
-				new /obj/item/stack/sheet/glass(loc, round(stored_material[MAT_GLASS] / 3750))
 			default_deconstruction_crowbar(I)
 			return 1
 		else if(is_wire_tool(I))
@@ -307,10 +304,10 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		amount = stack.get_amount()
 		if(m_amt)
 			amount = min(amount, round((storage_capacity[MAT_METAL] - stored_material[MAT_METAL]) / m_amt))
-			flick("autolathe_o",src)//plays metal insertion animation
+			flick("[initial(icon_state)]_metal", src)
 		if(g_amt)
 			amount = min(amount, round((storage_capacity[MAT_GLASS] - stored_material[MAT_GLASS]) / g_amt))
-			flick("autolathe_r",src)//plays glass insertion animation
+			flick("[initial(icon_state)]_glass", src)
 	else if(istype(I, /obj/item/ammo_box))
 		m_amt = 0
 		g_amt = 0
@@ -340,6 +337,26 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		qdel(I)
 	busy = FALSE
 	updateUsrDialog()
+
+/obj/machinery/autolathe/deconstruction()
+	. = ..()
+	if(stored_material[MAT_METAL] >= 3750)
+		new /obj/item/stack/sheet/metal(loc, round(stored_material[MAT_METAL] / 3750))
+	if(stored_material[MAT_GLASS] >= 3750)
+		new /obj/item/stack/sheet/glass(loc, round(stored_material[MAT_GLASS] / 3750))
+
+/obj/machinery/autolathe/update_icon()
+	cut_overlays()
+	if(panel_open)
+		add_overlay("[initial(icon_state)]-open")
+	if(powered())
+		icon_state = initial(icon_state)
+	else
+		icon_state = "[initial(icon_state)]-off"
+
+/obj/machinery/autolathe/power_change()
+	..()
+	update_icon()
 
 /obj/machinery/autolathe/proc/take_item(obj/item/I, amount)
 	if(istype(I, /obj/item/stack))

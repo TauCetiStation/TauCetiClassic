@@ -8,7 +8,7 @@
 	// Whether this aspect is allowed roundstart.
 	var/starter = TRUE
 	// Used in the radial menu when choosing a ritual
-	var/icon = 'icons/mob/radial.dmi'
+	var/icon = 'icons/hud/radial.dmi'
 	var/icon_state = "radial_magic"
 	var/image/aspect_image
 
@@ -270,7 +270,7 @@
 		return
 
 	// It ain't no fun if they don't suffer!
-	if(M.stat || !M.client)
+	if(M.stat != CONSCIOUS || !M.client)
 		return
 
 	F.holy.religion.adjust_favor(weaken_duration * power * 0.5)

@@ -106,6 +106,12 @@ Class Procs:
 	icon = 'icons/obj/stationobjs.dmi'
 	layer = DEFAULT_MACHINERY_LAYER
 	w_class = SIZE_MASSIVE
+
+	max_integrity = 200
+	integrity_failure = 0.3
+	damage_deflection = 15
+	resistance_flags = CAN_BE_HIT
+
 	var/stat = 0
 	var/emagged = 0 // Can be 0, 1 or 2
 	var/use_power = IDLE_POWER_USE
@@ -192,14 +198,7 @@ Class Procs:
 	if(use_power && stat == 0)
 		use_power(7500/severity)
 
-		var/obj/effect/overlay/pulse2 = new /obj/effect/overlay(loc)
-		pulse2.icon = 'icons/effects/effects.dmi'
-		pulse2.icon_state = "empdisable"
-		pulse2.name = "emp sparks"
-		pulse2.anchored = TRUE
-		pulse2.set_dir(pick(cardinal))
-
-		QDEL_IN(pulse2, 10)
+		new /obj/effect/overlay/pulse2(loc, 1)
 	..()
 
 /obj/machinery/proc/open_machine()
@@ -250,10 +249,6 @@ Class Procs:
 			if (prob(75))
 				return
 	qdel(src)
-
-/obj/machinery/blob_act()
-	if(prob(50))
-		qdel(src)
 
 // The main proc that controls power usage of a machine, change use_power only with this proc
 /obj/machinery/proc/set_power_use(new_use_power)
@@ -387,7 +382,7 @@ Class Procs:
 
 // set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user)
-	if((user.lying || user.stat) && !IsAdminGhost(user))
+	if((user.lying || user.stat != CONSCIOUS) && !IsAdminGhost(user))
 		return TRUE
 	if(!(ishuman(user) || issilicon(user) || ismonkey(user) || isxenoqueen(user) || IsAdminGhost(user)))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
@@ -439,17 +434,8 @@ Class Procs:
 	if(.)
 		if(!handle_fumbling(usr, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around, figuring out how to deconstruct [src].</span>"))
 			return
-		deconstruction()
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
-		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)
-		transfer_fingerprints_to(M)
-		M.state = 2
-		M.icon_state = "box_1"
-		for(var/obj/item/I in component_parts)
-			if(I.reliability != 100 && crit_fail)
-				I.crit_fail = 1
-			I.loc = loc
-		qdel(src)
+		deconstruct(TRUE)
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
@@ -533,6 +519,39 @@ Class Procs:
 //called on machinery construction (i.e from frame to machinery) but not on initialization
 /obj/machinery/proc/construction()
 	return
+
+/obj/machinery/proc/spawn_frame(disassembled)
+	var/obj/machinery/constructable_frame/machine_frame/new_frame = new /obj/machinery/constructable_frame/machine_frame(loc)
+
+	new_frame.state = 2
+	new_frame.icon_state = "box_1"
+	. = new_frame
+	if(!disassembled)
+		new_frame.update_integrity(new_frame.max_integrity * 0.5) //the frame is already half broken
+	transfer_fingerprints_to(new_frame)
+
+/obj/machinery/atom_break(damage_flag)
+	. = ..()
+	if(stat & BROKEN || flags & NODECONSTRUCT)
+		return
+	stat |= BROKEN
+	update_icon()
+	return TRUE
+
+/obj/machinery/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..() //Just delete us, no need to call anything else.
+
+	deconstruction()
+	if(!length(component_parts))
+		return ..() //we don't have any parts.
+	spawn_frame(disassembled)
+	for(var/obj/item/part in component_parts)
+		part.forceMove(loc)
+		if(part.reliability != 100 && crit_fail)
+			part.crit_fail = 1
+	LAZYCLEARLIST(component_parts)
+	..()
 
 //called on deconstruction before the final deletion
 /obj/machinery/proc/deconstruction()

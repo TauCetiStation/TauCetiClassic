@@ -50,7 +50,7 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 	var/centcomm_cancast = TRUE //Whether or not the spell should be allowed on z2
 
 	var/datum/action/spell_action/action = null
-	var/action_icon = 'icons/mob/actions.dmi'
+	var/action_icon = 'icons/hud/actions.dmi'
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
 	var/static/list/casting_clothes
@@ -88,7 +88,7 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 					to_chat(user, "<span class ='warning'>You need [favor_cost - user.my_religion.favor] more favors.</span>")
 				return FALSE
 
-	if(user.stat && !stat_allowed)
+	if(user.stat != CONSCIOUS && !stat_allowed)
 		if(try_start)
 			to_chat(user, "Not when you're incapacitated.")
 		return FALSE

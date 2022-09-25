@@ -12,7 +12,7 @@
 			charge_counter = charge_max
 			to_chat(usr, "<span class='warning'>Your glare does not seem to affect [target].</span>")
 			return
-		if(target.stat)
+		if(target.stat != CONSCIOUS)
 			charge_counter = charge_max
 			return
 		if(isshadowling(target) || isshadowthrall(target))
@@ -137,7 +137,7 @@
 			to_chat(usr, "<span class='warning'>The target has no mind.</span>")
 			charge_counter = charge_max
 			return
-		if(target.stat)
+		if(target.stat != CONSCIOUS)
 			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
 			charge_counter = charge_max
 			return
@@ -404,7 +404,7 @@
 				sp.start()
 				S.Stun(6)
 		for(var/obj/structure/window/W in T.contents)
-			W.take_damage(rand(80, 100))
+			W.take_damage(rand(80, 100), BRUTE, BOMB)
 
 
 
@@ -551,7 +551,7 @@
 			to_chat(usr, "<span class='warning'>The target has no mind.</span>")
 			charge_counter = charge_max
 			return
-		if(target.stat)
+		if(target.stat != CONSCIOUS)
 			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
 			charge_counter = charge_max
 			return

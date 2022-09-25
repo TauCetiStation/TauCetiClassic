@@ -125,6 +125,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	valid_territory = 0
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 	sound_environment = SOUND_AREA_SMALL_METALLIC
+	outdoors = TRUE
 
 /area/station/solar/auxport
 	name = "Fore Port Solar Array"
@@ -248,6 +249,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "nuke_storage"
 	is_force_ambience = TRUE
 	ambience = list('sound/ambience/vault_1.ogg')
+	sound_environment = SOUND_AREA_SMALL_METALLIC
+
+/area/station/bridge/cmf_room
+	name = "CMF altering room"
+	icon_state = "cmf"
+	is_force_ambience = TRUE
+	ambience = list('sound/ambience/bridge_1.ogg')
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 //Civilian
