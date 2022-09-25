@@ -203,7 +203,7 @@
 			else
 				msg += "[t_He] [t_has] [bicon(glasses)] \a [glasses] covering [t_his] eyes.\n"
 		else if(HAS_TRAIT(src, TRAIT_CULT_EYES))
-			msg += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span> "
+			msg += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>\n"
 
 	//left ear
 	if(l_ear && !skipears)
