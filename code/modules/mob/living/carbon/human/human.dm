@@ -2481,3 +2481,9 @@
 		return 0
 
 	return BP.pumped
+
+/mob/living/carbon/human/start_pulling(atom/movable/AM)
+	. = ..()
+	if(istype(AM, /obj/item/weapon/reagent_containers/food))
+		var/obj/item/weapon/reagent_containers/food/F = AM
+		F.tajaran_effect(src)

@@ -12,11 +12,6 @@
 	pixel_x = rand(-10.0, 10) //Randomizes postion
 	pixel_y = rand(-10.0, 10)
 
-	RegisterSignal(src, list(COMSIG_ATOM_START_PULL), .proc/transfer_argument)
-
-/obj/item/weapon/reagent_containers/food/proc/transfer_argument(obj/O, mob/M)
-	tajaran_effect(M)
-
 /obj/item/weapon/reagent_containers/food/proc/tajaran_effect(mob/M)
 	if(!ishuman(M))
 		return
@@ -31,7 +26,6 @@
 	tajaran_effect(user)
 
 /obj/item/weapon/reagent_containers/food/Destroy()
-	UnregisterSignal(src, list(COMSIG_ATOM_START_PULL))
 	REMOVE_TRAIT(src, TRAIT_TAJARAN_HAIR, GENERIC_TRAIT)
 
 	return ..()
