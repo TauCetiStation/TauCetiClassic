@@ -592,7 +592,6 @@
 		while(R.amount > 0)
 			new dump_path(loc)
 			R.amount--
-		continue
 
 /obj/machinery/vending/proc/destroy_some_content(hit_damage)
 	for(var/datum/data/vending_product/R in product_records)
