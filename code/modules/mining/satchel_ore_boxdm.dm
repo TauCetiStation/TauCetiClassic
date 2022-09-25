@@ -7,8 +7,9 @@
 	name = "Ore Box"
 	desc = "A heavy box used for storing ore."
 	density = TRUE
-	var/max_integrity = 150
-	var/integrity = 100
+	//environment_smash argument increase animal damage x10!!!
+	max_integrity = 150
+	integrity_failure = 0.4
 	var/last_update = 0
 	var/list/stored_ore = list()
 
@@ -28,22 +29,24 @@
 		var/choosed_quantity = round(input("How many sheets do you want to add?") as num)
 		if(!S)
 			return
+		var/integrity_restore
+		if(istype(S, /obj/item/stack/sheet/wood))
+			integrity_restore = 5
+		if(istype(S, /obj/item/stack/sheet/metal))
+			//metal is infinite in asteroid, no need much repair wood box
+			integrity_restore = 2
+		if(istype(S, /obj/item/stack/sheet/plasteel))
+			integrity_restore = 40
 		if(choosed_quantity > S.get_amount())
 			choosed_quantity = S.get_amount()
-		var/int_amount
-		if(istype(S, /obj/item/stack/sheet/wood))
-			int_amount = (5 * choosed_quantity)
-		if(istype(S, /obj/item/stack/sheet/metal))
-			int_amount = (2 * choosed_quantity)	//metal is infinite in asteroid, no need much repair wood box
-		if(istype(S, /obj/item/stack/sheet/plasteel))
-			int_amount = (40 * choosed_quantity)
-		if(can_increase_integrity(int_amount, user))
-			if(S.use(choosed_quantity))
-				increase_integrity(int_amount)
-				to_chat(user, "The box is reinforced by [S]")
+		if(choosed_quantity * integrity_restore > max_integrity)
+			choosed_quantity = round((max_integrity - atom_integrity) / integrity_restore)
+		if(S.use(choosed_quantity))
+			repair_damage(choosed_quantity * integrity_restore)
+			to_chat(user, "The box is reinforced by [choosed_quantity] [S]")
 
 /obj/structure/ore_box/proc/dump_box_contents()
-	for (var/obj/item/weapon/ore/O as anything in contents)
+	for(var/obj/item/weapon/ore/O as anything in contents)
 		O.Move(loc)
 
 /obj/structure/ore_box/deconstruct(disassembled)
@@ -76,11 +79,6 @@
 
 	return
 
-/obj/structure/ore_box/attack_animal(mob/living/simple_animal/animal)
-	. = ..()
-	if(istype(animal, /mob/living/simple_animal/hostile/asteroid))
-		take_damage(animal.melee_damage)
-
 /obj/structure/ore_box/examine(mob/user)
 	..()
 
@@ -92,11 +90,11 @@
 		return
 
 	add_fingerprint(user)
-	if(integrity)
-		if(integrity >= 40)
-			to_chat(user, "<span class='notice'>looks reinforced</span>")
-		if(isSeriouslyDamaged())
-			to_chat(user, "<span class='warning'>looks seriously damaged</span>")
+
+	if(atom_integrity >= max_integrity * integrity_failure)
+		to_chat(user, "<span class='notice'>looks reinforced</span>")
+	else
+		to_chat(user, "<span class='warning'>looks seriously damaged</span>")
 
 	if(!contents.len)
 		to_chat(user, "It is empty.")
@@ -147,64 +145,22 @@
 
 	return
 
-/obj/structure/ore_box/proc/take_damage(amount)
-	if(integrity <= 0 || max_integrity <= 0 || amount <= 0)
-		return
-	integrity -= amount
-	check_integrity()
-
-/obj/structure/ore_box/proc/can_increase_integrity(amount, mob/user)
-	if(amount + integrity >= max_integrity)
-		to_chat(user, "<span class='notice'>There is too much for ore box</span>")
-		return FALSE
-	if(max_integrity <= 0)
-		return FALSE
-	if(integrity <= 0)
-		return FALSE
-	return TRUE
-
-/obj/structure/ore_box/proc/increase_integrity(amount)
-	integrity += amount
-	if(integrity > max_integrity)
-		integrity = max_integrity
-
-/obj/structure/ore_box/proc/check_integrity()
-	if(integrity <= 0)
-		broke_box()
-	else if(integrity < 40)
-		make_hole()
-	else if(integrity >= 40)
-		repair_hole()
-
-/obj/structure/ore_box/proc/broke_box()
-	if(contents.len > 0)
-		for(var/obj/item/weapon/ore/O in contents)
-			O.forceMove(loc)
-	new /obj/item/stack/sheet/wood(loc, 4)
-	new /obj/item/stack/sheet/metal(loc)
+/obj/structure/ore_box/atom_destruction()
 	STOP_PROCESSING(SSobj, src)
-	qdel(src)
+	return ..()
 
-/obj/structure/ore_box/proc/make_hole()
-	if(isSeriouslyDamaged())
-		return
-	START_PROCESSING(SSobj, src)
+/obj/structure/ore_box/atom_break()
+	. = ..()
+	if(atom_integrity <= max_integrity * integrity_failure)
+		START_PROCESSING(SSobj, src)
 
-/obj/structure/ore_box/proc/repair_hole()
-	if(!isSeriouslyDamaged())
-		return
-	STOP_PROCESSING(SSobj, src)
-
-/obj/structure/ore_box/proc/isSeriouslyDamaged()
-	if(integrity <= 0)
-		return FALSE
-	else if(integrity < 40)
-		return TRUE
-	return FALSE
+/obj/structure/ore_box/atom_fix()
+	. = ..()
+	if(atom_integrity > max_integrity * integrity_failure)
+		STOP_PROCESSING(SSobj, src)
 
 /obj/structure/ore_box/process()
 	if(contents.len > 0)
 		for(var/obj/item/weapon/ore/O in contents)
 			if(prob(20))
 				O.forceMove(loc)
-	check_integrity()

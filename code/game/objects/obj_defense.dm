@@ -61,11 +61,9 @@
 		return FALSE
 
 	var/play_soundeffect = TRUE
-	var/damage = user.melee_damage
 	if(user.environment_smash)
 		play_soundeffect = FALSE
-		damage *= 10
-	. = attack_generic(user, damage, user.melee_damtype, MELEE, play_soundeffect)
+	. = attack_generic(user, user.melee_damage, user.melee_damtype, MELEE, play_soundeffect)
 	if(. && !play_soundeffect)
 		playsound(loc, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
