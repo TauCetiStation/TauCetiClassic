@@ -138,7 +138,7 @@
 
 	return
 
-/obj/structure/ore_box/atom_destruction()
+/obj/structure/ore_box/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
