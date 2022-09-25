@@ -613,17 +613,16 @@
 		return FALSE
 
 	for(var/datum/data/vending_product/R in product_records)
-		if (R.amount <= 0) //Try to use a record that actually has something to dump.
+		if(R.amount <= 0) //Try to use a record that actually has something to dump.
 			continue
 		var/dump_path = R.product_path
-		if (!dump_path)
+		if(!dump_path)
 			continue
 		if(prob(30))
 			R.amount--
 			throw_item = new dump_path(loc)
 			break
-		continue
-	if (!throw_item)
+	if(!throw_item)
 		return FALSE
 	if(throw_item.throw_speed)
 		throw_item.throw_speed = 0.8
