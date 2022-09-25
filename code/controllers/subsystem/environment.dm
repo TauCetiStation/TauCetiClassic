@@ -14,76 +14,52 @@ SUBSYSTEM_DEF(environment)
 	var/list/air = list()
 	var/list/air_pressure = list()
 
-	var/list/post_gen_type = list()
+	// Environment datums by environment types (names)
+	var/list/env_datums = list()
+	// z_levels without initialized environment
+	var/list/to_initialize = list()
+
+/datum/controller/subsystem/environment/PreInit()
+	for(var/type in subtypesof(/datum/environment))
+		var/datum/environment/E = new type
+		env_datums[E.name] = E
+
+/datum/controller/subsystem/environment/proc/initialize_zlevels()
+	for(var/z_value in to_initialize)
+		var/datum/environment/E = env_datums[envtype[z_value]]
+		E.initialize_zlevel(z_value)
+
+	to_initialize.Cut()
 
 /datum/controller/subsystem/environment/Initialize(timeofday)
-	for(var/z_value in 1 to post_gen_type.len)
-		populate(z_value)
-
+	initialize_zlevels()
 	..()
-
-/datum/controller/subsystem/environment/proc/populate(z_value)
-	if(!post_gen_type[z_value])
-		return
-
-	var/gen_type = post_gen_type[z_value]
-	var/datum/map_generator/gen = new gen_type
-	gen.defineRegion(locate(1, 1, z_value), locate(world.maxx, world.maxy, z_value))
-	gen.generate()
 
 /datum/controller/subsystem/environment/proc/update(z_value, new_envtype)
 	if(envtype.len < z_value)
 		envtype.len = turf_type.len = turf_image.len = turf_light_color.len = \
-			air.len = air_pressure.len = post_gen_type.len = z_value
+			air.len = air_pressure.len = z_value
 
-	if(envtype[z_value] == new_envtype && turf_type[z_value]) // same envtype and initialized
+	if(!env_datums[new_envtype])
+		error("[new_envtype] is not valid environment type, revert to space")
+		new_envtype = ENV_TYPE_SPACE
+
+	if(envtype[z_value] == new_envtype) // same envtype and initialized
 		return
 
-	var/envtype_ = new_envtype
-	var/turf/turf_type_
-	var/image/turf_image_
-	var/turf_light_color_
-	var/datum/gas_mixture/air_
-	var/air_pressure_
-	var/post_gen_type_
+	var/datum/environment/E = env_datums[new_envtype]
+	envtype[z_value] = new_envtype
+	turf_type[z_value] = E.turf_type
+	turf_image[z_value] = E.turf_image
+	turf_light_color[z_value] = E.turf_light_color
+	air[z_value] = E.air
+	air_pressure[z_value] = E.air_pressure
 
-	switch(envtype_)
-		if (ENV_TYPE_SPACE)
-			turf_type_ = /turf/environment/space
-		if (ENV_TYPE_SNOW)
-			turf_type_ = /turf/environment/snow
-			post_gen_type_ = /datum/map_generator/snow
-			turf_light_color_ = COLOR_BLUE
-		else
-			error("[envtype_] is not valid environment type, revert to space")
-			envtype_ = ENV_TYPE_SPACE
-			turf_type_ = /turf/environment/space
+	to_initialize |= z_value
 
-	//Properties for environment tiles
-	var/oxygen = initial(turf_type_.oxygen)
-	var/carbon_dioxide = initial(turf_type_.carbon_dioxide)
-	var/nitrogen = initial(turf_type_.nitrogen)
-	var/phoron = initial(turf_type_.phoron)
+/datum/controller/subsystem/environment/StopLoadingMap()
+	if(!initialized)
+		return
 
-	air_ = new(_temperature=initial(turf_type_.temperature))
-	air_.adjust_multi(
-		"oxygen", oxygen, "carbon_dioxide", carbon_dioxide,
-		"nitrogen", nitrogen, "phoron", phoron
-		)
+	initialize_zlevels()
 
-	air_pressure_ = air_.return_pressure()
-
-	turf_image_ = image(
-		initial(turf_type_.icon),
-		initial(turf_type_.icon_state),
-		layer=initial(turf_type_.layer)
-	)
-	turf_image_.plane = initial(turf_type_.plane)
-
-	envtype[z_value] = envtype_
-	turf_type[z_value] = turf_type_
-	turf_image[z_value] = turf_image_
-	turf_light_color[z_value] = turf_light_color_
-	air[z_value] = air_
-	air_pressure[z_value] = air_pressure_
-	post_gen_type[z_value] = post_gen_type_

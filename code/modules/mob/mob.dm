@@ -550,8 +550,6 @@
 			if(H.pull_damage())
 				to_chat(src, "<span class='danger'>Pulling \the [H] in their current condition would probably be a bad idea.</span>")
 
-		count_pull_debuff()
-
 /mob/verb/stop_pulling()
 	set name = "Stop Pulling"
 	set category = "IC"
@@ -566,10 +564,9 @@
 			pulling = null
 		if(pullin)
 			pullin.update_icon(src)
-		count_pull_debuff()
 
 /mob/proc/count_pull_debuff()
-	return
+	return 0
 
 /mob/proc/can_use_hands()
 	return
@@ -1132,7 +1129,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(HUD_LIST_LIST)
 				hud_list[hud] = list()
 			else
-				var/image/I = image('icons/mob/hud.dmi', src, "")
+				var/image/I = image('icons/hud/hud.dmi', src, "")
 				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 				hud_list[hud] = I
 

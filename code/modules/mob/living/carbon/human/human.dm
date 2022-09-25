@@ -65,6 +65,7 @@
 		dna.real_name = real_name
 
 	handcrafting = new()
+	AddComponent(/datum/component/altcraft)
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
@@ -299,7 +300,7 @@
 /mob/living/carbon/human/blob_act()
 	if(stat == DEAD)	return
 	to_chat(src, "<span class='danger'>The blob attacks you!</span>")
-	var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
+	var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG, BP_HEAD)
 	var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
 	apply_damage(rand(30, 40), BRUTE, BP, run_armor_check(BP, "melee"))
 	return
@@ -920,6 +921,10 @@
 			number -= 1
 	if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
 		number += 1
+	if(istype(glasses, /obj/item/clothing/glasses/hud/hos_aug))
+		var/obj/item/clothing/glasses/hud/hos_aug/G = glasses
+		if(!G.active)
+			number += 1
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/welding))
 		var/obj/item/clothing/mask/gas/welding/W = wear_mask
 		if(!W.up)
@@ -1740,7 +1745,7 @@
 
 /atom/movable/screen/leap
 	name = "toggle leap"
-	icon = 'icons/mob/screen1_action.dmi'
+	icon = 'icons/hud/screen1_action.dmi'
 	icon_state = "action"
 	screen_loc = ui_human_leap
 

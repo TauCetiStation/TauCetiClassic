@@ -28,7 +28,7 @@
 	uniform = /obj/item/clothing/under/lawyer/black
 	shoes = /obj/item/clothing/shoes/black
 	belt = /obj/item/device/pda/reporter
-	l_pocket = /obj/item/device/camera
+	l_pocket = /obj/item/device/camera/polar
 
 /datum/outfit/job/assistant/test_subject
 	name = OUTFIT_JOB_NAME("Test Subject")

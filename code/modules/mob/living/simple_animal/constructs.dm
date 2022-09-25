@@ -311,7 +311,7 @@
 
 /mob/living/simple_animal/hostile/pylon/proc/deactivate()
 	for(var/obj/structure/cult/pylon/P in contents)
-		P.health = health
+		P.update_integrity(health)
 		P.forceMove(loc)
 	qdel(src)
 
