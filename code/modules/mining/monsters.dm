@@ -51,6 +51,7 @@
 /mob/living/simple_animal/hostile/asteroid/DestroySurroundings()
 	for(var/obj/structure/ore_box/B in range(1, src))
 		B.attack_animal(src)
+		break
 	return ..()
 
 ////////////////////////////////////////////////////////////////

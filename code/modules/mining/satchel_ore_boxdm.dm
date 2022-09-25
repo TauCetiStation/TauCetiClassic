@@ -23,19 +23,13 @@
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
 		to_chat(user, "<span class='notice'>You empty the satchel into the box.</span>")
-	else if(istype(W, /obj/item/stack/sheet))
-		var/obj/item/stack/sheet/S = W
+	else if(istype(W, /obj/item/stack/sheet/wood))
+		var/obj/item/stack/sheet/wood/S = W
 		var/choosed_quantity = round(input("How many sheets do you want to add?") as num)
 		if(!S)
 			return
-		var/integrity_restore
-		if(istype(S, /obj/item/stack/sheet/wood))
-			integrity_restore = 5
-		if(istype(S, /obj/item/stack/sheet/metal))
-			//metal is infinite in asteroid, no need much repair wood box
-			integrity_restore = 2
-		if(istype(S, /obj/item/stack/sheet/plasteel))
-			integrity_restore = 40
+		//how many integrity wood plank restores
+		var/integrity_restore = 5
 		if(choosed_quantity > S.get_amount())
 			choosed_quantity = S.get_amount()
 		if(choosed_quantity * integrity_restore > max_integrity)
@@ -150,16 +144,13 @@
 
 /obj/structure/ore_box/atom_break()
 	. = ..()
-	if(atom_integrity <= max_integrity * integrity_failure)
-		START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/ore_box/atom_fix()
 	. = ..()
-	if(atom_integrity > max_integrity * integrity_failure)
-		STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSobj, src)
 
 /obj/structure/ore_box/process()
 	if(contents.len > 0)
-		for(var/obj/item/weapon/ore/O in contents)
-			if(prob(20))
-				O.forceMove(loc)
+		var/obj/item/weapon/ore/O = pick(contents)
+		O.forceMove(loc)
