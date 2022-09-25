@@ -13,34 +13,8 @@
 		return TRUE
 	return FALSE
 
-/atom/movable/attackby(obj/item/W, mob/user, params)
-	. = ..()
-	if(.) // Clickplace, no need for attack animation.
-		return FALSE
-
-	if(user.a_intent != INTENT_HARM)
-		return FALSE
-
-	var/had_effect = FALSE
-	if(!(W.flags & NOATTACKANIMATION))
-		user.do_attack_animation(src)
-		had_effect = TRUE
-
-	if(!(W.flags & NOBLUDGEON))
-		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
-		had_effect = TRUE
-
-	if(!had_effect)
-		return FALSE
-
-	user.SetNextMove(CLICK_CD_MELEE)
-	add_fingerprint(user)
-
-	SSdemo.mark_dirty(src)
-	SSdemo.mark_dirty(W)
-	SSdemo.mark_dirty(user)
-
-	return TRUE
+/obj/attackby(obj/item/attacking_item, mob/user, params)
+	return ..() || ((resistance_flags & CAN_BE_HIT) && attacking_item.attack_atom(src, user, params))
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -280,3 +254,45 @@
 	SSdemo.mark_dirty(M)
 	SSdemo.mark_dirty(user)
 	return TRUE
+
+/// The equivalent of the standard version of [/obj/item/proc/attack] but for non mob targets.
+/obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user, params)
+	if(user.a_intent != INTENT_HARM)
+		return
+
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, attacked_atom, user) & COMPONENT_ITEM_NO_ATTACK)
+		return
+
+	if(!(flags & NOATTACKANIMATION))
+		user.do_attack_animation(attacked_atom)
+
+	if(flags & NOBLUDGEON)
+		return
+
+	user.SetNextMove(CLICK_CD_MELEE)
+	attacked_atom.attacked_by(src, user)
+	add_fingerprint(user)
+
+	SSdemo.mark_dirty(src)
+	SSdemo.mark_dirty(attacked_atom)
+	SSdemo.mark_dirty(user)
+
+/// Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds
+/atom/proc/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(!uses_integrity)
+		CRASH("attacked_by() was called on an object that doesnt use integrity!")
+
+	if(!attacking_item.force)
+		return
+
+	var/damage = take_damage(attacking_item.force, attacking_item.damtype, MELEE, 1, get_dir(src, attacking_item))
+	//only witnesses close by and the victim see a hit message.
+	user.visible_message(
+		"<span class='danger'>[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]</span>",
+		"<span class='danger'>You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]</span>",
+		viewing_distance = COMBAT_MESSAGE_RANGE
+	)
+	return damage
+
+/area/attacked_by(obj/item/attacking_item, mob/living/user)
+	CRASH("areas are NOT supposed to have attacked_by() called on them!")

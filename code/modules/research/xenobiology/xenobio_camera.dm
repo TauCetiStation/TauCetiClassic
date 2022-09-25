@@ -172,7 +172,7 @@
 
 /datum/action/slime_place
 	name = "Place Slimes"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "slime_down"
 	action_type = AB_INNATE
 
@@ -197,7 +197,7 @@
 
 /datum/action/slime_pick_up
 	name = "Pick up Slime"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "slime_up"
 	action_type = AB_INNATE
 
@@ -212,7 +212,7 @@
 		for(var/mob/living/carbon/slime/S in remote_eye.loc)
 			if(X.stored_slimes.len >= X.max_slimes)
 				break
-			if(S.stat)
+			if(S.stat != CONSCIOUS)
 				if(!X.connected_recycler)
 					to_chat(owner, "<span class='warning'>There is no connected recycler. Use a multitool to link one.</span>")
 					return
@@ -233,7 +233,7 @@
 
 /datum/action/feed_slime
 	name = "Feed Slimes"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "monkey_down"
 	action_type = AB_INNATE
 
@@ -259,7 +259,7 @@
 
 /datum/action/innate/slime_scan
 	name = "Scan Slime"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "slime_scan"
 	action_type = AB_INNATE
 
@@ -278,7 +278,7 @@
 
 /datum/action/monkey_recycle
 	name = "Recycle Monkeys"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "monkey_up"
 	action_type = AB_INNATE
 
@@ -295,7 +295,7 @@
 		return
 	if(cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
-			if(M.stat)
+			if(M.stat != CONSCIOUS)
 				M.visible_message("<span class='notice'>[M] vanishes!</span>")
 				X.connected_recycler.grind(M,owner)
 	else
@@ -304,7 +304,7 @@
 
 /datum/action/hotkey_help
 	name = "Hotkey Help"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "hotkey_help"
 	action_type = AB_INNATE
 
@@ -368,7 +368,7 @@
 	var/mob/camera/Eye/remote/xenobio/E = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
 	if (istype(get_area(S), E.allowed_area_type))
-		if(S.stat)
+		if(S.stat != CONSCIOUS)
 			if(!X.connected_recycler)
 				to_chat(C, "<span class='warning'>There is no connected recycler. Use a multitool to link one.</span>")
 				return
@@ -442,7 +442,7 @@
 		return
 
 	if (istype(get_area(M), E.allowed_area_type))
-		if(!M.stat)
+		if(M.stat == CONSCIOUS)
 			return
 		M.visible_message("<span class='notice'>[M] vanishes!</span>")
 		X.connected_recycler.grind(M,user)

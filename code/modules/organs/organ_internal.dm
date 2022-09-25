@@ -76,7 +76,9 @@
 			if (prob(3))	//about once every 30 seconds
 				take_damage(1,silent=prob(30))
 
-/obj/item/organ/internal/proc/take_damage(amount, silent=0)
+/obj/item/organ/internal/take_damage(amount, silent=0)
+	if(!isnum(silent))
+		return // prevent basic take_damage usage (TODO remove workaround)
 	if(src.robotic == 2)
 		src.damage += (amount * 0.8)
 	else

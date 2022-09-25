@@ -11,12 +11,6 @@
 	abductor_machinery_list -= src
 	return ..()
 
-/obj/machinery/abductor/proc/IsAgent(mob/living/carbon/human/H)
-	return isabductoragent(H)
-
-/obj/machinery/abductor/proc/IsScientist(mob/living/carbon/human/H)
-	return isabductorsci(H)
-
 //*************-Console-*************//
 
 /obj/machinery/abductor/console

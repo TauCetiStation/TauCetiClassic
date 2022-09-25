@@ -711,7 +711,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("scan_console", "clonecontrol", "clonepod", "clonescanner")
+	unlocks_designs = list("scan_console", "clonecontrol", "clonepod", "clonescanner", "cmf_console", "cmf_scanner")
 
 /datum/technology/hydroponics
 	name = "Hydroponics"
@@ -1131,7 +1131,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("mrspacman")
+	unlocks_designs = list("mrspacman", "circ", "teg")
 
 /datum/technology/fusion_power_generation
 	name = "R-UST Mk. 8 Tokamak Generator"
@@ -1567,7 +1567,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("rigadvancedai", "riggrenadelauncherflashbang", "rigdrill", "rigselfrepair", "rigmountedtaser", "rigcombatinjector", "rigmedicalinjector", "rigstabilizer")
+	unlocks_designs = list("rigadvancedai", "riggrenadelauncherflashbang", "rigdrill", "rigselfrepair", "rigmountedtaser", "rigcombatinjector", "rigmedicalinjector", "rigstabilizer", "rigempshield")
 
 /datum/technology/toptier_hardsuit_modules
 	name = "Top-Tier Hardsuit Modules"

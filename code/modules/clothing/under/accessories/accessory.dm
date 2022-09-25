@@ -154,13 +154,11 @@
 	name = "bronze cross"
 	desc = "That's a little bronze cross for wearing under the clothes."
 	icon_state = "bronze_cross"
-	item_state = "bronze_cross"
 
 /obj/item/clothing/accessory/metal_cross
 	name = "metal cross"
 	desc = "That's a little metal cross for wearing under the clothes."
 	icon_state = "metal_cross"
-	item_state = "metal_cross"
 
 //Medals
 /obj/item/clothing/accessory/medal

@@ -29,3 +29,10 @@
 	icon_state = "staffofdoor"
 	item_state = "staffofdoor"
 	fire_sound = 'sound/magic/Staff_Door.ogg'
+
+/obj/item/weapon/gun/magic/fireball
+	name = "staff of fireball"
+	icon_state = "lavastaff"
+	item_state = "lavastaff"
+	desc = "An artefact that spits a fireball."
+	ammo_type = /obj/item/ammo_casing/magic/fireball

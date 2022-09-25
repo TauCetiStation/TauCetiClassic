@@ -42,6 +42,7 @@
 		if(user)
 			to_chat(user, "<span class='danger big'>Я УЖЕ ЗДЕСЬ!</span>")
 		return FALSE
+	return TRUE
 
 /datum/religion_rites/pedestals/cult/narsie/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
@@ -66,7 +67,6 @@
 		to_chat(user, "<span class='cult'>Вы решили подготовиться перед началом ритуала</span>")
 		return FALSE
 
-	playsound_frequency_admin = 0.96 //Something is coming
 	addtimer(CALLBACK(src, .proc/announce_summon, user), 15 SECONDS)
 
 	return TRUE
@@ -82,14 +82,9 @@
 		return FALSE
 	return TRUE
 
-/datum/religion_rites/pedestals/cult/narsie/reset_rite()
-	. = ..()
-	playsound_frequency_admin = 1
-
 /datum/religion_rites/pedestals/cult/narsie/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
 	..()
 	SSticker.nar_sie_has_risen = TRUE
-	playsound_frequency_admin = 1
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
 			M.playsound_local(null, 'sound/effects/dimensional_rend.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)

@@ -6,8 +6,7 @@
 	var/icon_state_arrest = "secbot-c"
 	density = FALSE
 	anchored = FALSE
-	health = 25
-	maxhealth = 25
+	max_integrity = 25
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
 
@@ -241,7 +240,7 @@
 							addtimer(CALLBACK(src, /atom.proc/update_icon), 2)
 							do_attack_animation(target)
 							target.adjustBruteLoss(15)
-							if(target.stat)
+							if(target.stat != CONSCIOUS)
 								forgetCurrentTarget()
 								playsound(src, pick(SOUNDIN_BEEPSKY), VOL_EFFECTS_MASTER, null, FALSE)
 
@@ -544,7 +543,7 @@
 /obj/machinery/bot/secbot/proc/look_for_perp()
 	anchored = FALSE
 	for(var/mob/living/L in view(7, src)) //Let's find us a criminal
-		if(L.stat)
+		if(L.stat != CONSCIOUS)
 			continue
 
 		if(iscarbon(L))

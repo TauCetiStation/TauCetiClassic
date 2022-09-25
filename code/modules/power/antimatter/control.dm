@@ -9,6 +9,8 @@
 	idle_power_usage = 100
 	active_power_usage = 1000
 
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 	var/list/obj/machinery/am_shielding/linked_shielding
 	var/list/obj/machinery/am_shielding/linked_cores
 	var/obj/item/weapon/am_containment/fueljar
