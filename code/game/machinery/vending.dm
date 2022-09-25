@@ -16,8 +16,8 @@
 	anchored = TRUE
 	density = TRUE
 	allowed_checks = ALLOWED_CHECK_NONE
-	var/max_integrity = 100
-	var/integrity = 100
+	max_integrity = 100
+	integrity_failure = 0.15
 	var/vend_ready = TRUE //Are we ready to vend?? Is it time??
 	var/vend_delay = 10 //How long does it take to vend?
 	var/datum/data/vending_product/currently_vending = null // A /datum/data/vending_product instance of what we're paying for right now.
@@ -85,64 +85,17 @@
 	QDEL_NULL(coin)
 	return ..()
 
-/obj/machinery/vending/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_HEAVY)
-			take_damage(75)
-		if(EXPLODE_LIGHT)
-			take_damage(40)
-
-/obj/machinery/vending/blob_act()
-	take_damage(50)
-
-/obj/machinery/vending/bullet_act(obj/item/projectile/P, def_zone)
-	if(P.damage < 15)	//no need much damaging from rubber and other proj, i think
-		P.damage -= 10
-	take_damage(P.damage)
-
-/obj/machinery/vending/attack_animal(mob/living/simple_animal/user)
+/obj/machinery/vending/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir)
 	. = ..()
-	if(ismouse(user))	//no need destroying by clicking mice
-		return
-	if(istype(user, /mob/living/simple_animal/hostile))
-		take_damage(10)
-	else if(istype(user, /mob/living/simple_animal/construct))
-		take_damage(20)
-	else
-		take_damage(1)
-
-/obj/machinery/vending/proc/is_item_in_blacklist(obj/item/I)
-	if(I.damtype == HALLOSS)
-		return TRUE
-	return FALSE
-
-/obj/machinery/vending/take_damage(amount)
-	if(amount <= 0)
-		return
-	if(amount < 30)
-		if(prob(50 - amount))
+	if(damage_amount < 30)
+		if(prob(50 - damage_amount))
 			throw_item()	//throw VEND item, not a item which attacked
-	destroy_some_content(amount)	//some content was damaged, unlucky
-	integrity -= amount
-	check_integrity()
-
-/obj/machinery/vending/proc/check_integrity()
-	if(integrity <= 0)
-		malfunction()
-		deconstruction()
-	if(integrity < 15)
-		make_me_broken()
-
+	destroy_some_content(damage_amount)	//some content was damaged, unlucky
 
 /obj/machinery/vending/deconstruct(disassembled = TRUE)
-	if(refill_canister)
-		return ..()
 	//the non constructable vendors drop metal instead of a machine frame.
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/metal(loc, 3)
-	qdel(src)
-  
-  new /obj/machinery/constructable_frame/machine_frame(loc)
 	new /obj/item/weapon/shard(loc)
 	new /obj/item/stack/rods(loc, 2)
 	new /obj/item/stack/cable_coil/red(loc, 2)
@@ -151,13 +104,12 @@
 			qdel(I)
 			continue
 		I.forceMove(loc)
-	qdel(src)
+	malfunction()
+	return ..()
 
 /obj/machinery/vending/atom_break(damage_flag)
 	. = ..()
-	if(.)
-		malfunction()
-
+	power_change()
 
 /obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0,req_emag=0)
 	for(var/typepath in productlist)
@@ -299,9 +251,6 @@
 				qdel(W)
 	else
 		..()
-		if(is_item_in_blacklist(W))
-			return
-		take_damage(W.force)		//for saving animation attack
 
 /obj/machinery/vending/emag_act(mob/user)
 	if(emagged)
@@ -645,22 +594,16 @@
 			R.amount--
 		continue
 
-/obj/machinery/vending/proc/make_me_broken()
-	if(stat & BROKEN)
-		return
-	stat |= BROKEN
-	icon_state = "[initial(icon_state)]-broken"
-	set_light(0)
-
 /obj/machinery/vending/proc/destroy_some_content(hit_damage)
 	for(var/datum/data/vending_product/R in product_records)
-		if(hit_damage > 50)	//lasercannon or explode
+		if(hit_damage >= 50)
 			R.amount = 0
 			continue
-		if(prob(25))
-			break
 		if(R.amount > 0)
 			R.amount--
+		//less damage => more content saving
+		if(prob(50 - hit_damage))
+			break
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item()
