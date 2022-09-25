@@ -20,6 +20,8 @@
 	var/works_in_containers
 	// Central turf with signals
 	var/turf/old_turf
+	// Movable atoms with moved signal
+	var/list/old_locs
 
 /datum/component/connect_range/Initialize(atom/tracked, list/connections, range, works_in_containers = TRUE)
 	if(!isatom(tracked) || isarea(tracked) || range < 0)
@@ -85,7 +87,9 @@
 		if(!works_in_containers)
 			return
 		//Keep track of possible movement of all movables the target is in.
-		for(var/atom/movable/container as anything in get_nested_locs(target))
+		ASSERT(isnull(old_locs))
+		old_locs = get_nested_locs(target)
+		for(var/atom/movable/container as anything in old_locs)
 			RegisterSignal(container, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 
 	if(on_same_turf)
@@ -100,14 +104,14 @@
 	if(isnull(old_turf))
 		return
 
-	var/atom/location = tracked.loc
-	if(ismovable(location))
-		for(var/atom/movable/target as anything in (get_nested_locs(location) + location))
+	if(islist(old_locs))
+		for(var/atom/movable/target as anything in old_locs)
 			UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+		old_locs = null
 
 	if(on_same_turf)
 		return
-	var/turf/previous_turf = get_turf(location)
+	var/turf/previous_turf = old_turf
 	for(var/turf/target_turf in RANGE_TURFS(range, previous_turf))
 		parent.UnregisterSignal(target_turf, connections)
 	old_turf = null
