@@ -17602,6 +17602,7 @@
 /obj/structure/curtain/medical{
 	icon_state = "open"
 	},
+/obj/structure/curtain/open/privacy,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -88331,9 +88332,7 @@
 	},
 /area/station/medical/cryo)
 "vEd" = (
-/obj/structure/curtain/medical{
-	icon_state = "open"
-	},
+/obj/structure/curtain/open/privacy,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -90014,9 +90013,7 @@
 /area/station/cargo/recycler)
 "vZR" = (
 /obj/machinery/hologram/holopad,
-/obj/structure/curtain/medical{
-	icon_state = "open"
-	},
+/obj/structure/curtain/open/privacy,
 /turf/simulated/floor{
 	icon_state = "white"
 	},

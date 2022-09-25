@@ -208,6 +208,8 @@ var/global/list/wedge_image_cache = list()
 			close()
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user)
+	if(user.a_intent == INTENT_HARM)
+		return ..()
 	if(istype(I, /obj/item/device/detective_scanner))
 		return
 	if(src.operating)
@@ -224,6 +226,19 @@ var/global/list/wedge_image_cache = list()
 	add_fingerprint(user)
 	try_open(user, I)
 
+/obj/machinery/door/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(glass)
+				playsound(loc, 'sound/effects/glasshit.ogg', VOL_EFFECTS_MASTER, 90, TRUE)
+			else if(damage_amount)
+				playsound(loc, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+
 /obj/machinery/door/emag_act(mob/user)
 	if(density && hasPower() && !wedged_item)
 		update_icon(AIRLOCK_EMAG)
@@ -237,11 +252,6 @@ var/global/list/wedge_image_cache = list()
 	else if(wedged_item)
 		to_chat(user, "<span class='warning'>Why would you waste your time hacking a non-blocking airlock?</span>")
 	return FALSE
-
-/obj/machinery/door/blob_act()
-	if(prob(40))
-		qdel(src)
-	return
 
 /obj/machinery/door/ex_act(severity)
 	switch(severity)

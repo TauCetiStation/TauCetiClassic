@@ -24,11 +24,16 @@
 
 /obj/item/light_fixture_frame/attackby(obj/item/I, mob/user, params)
 	if(iswrench(I))
-		new /obj/item/stack/sheet/metal(get_turf(loc), sheets_refunded)
+		deconstruct(TRUE)
 		user.SetNextMove(CLICK_CD_RAPID)
-		qdel(src)
 		return
 	return ..()
+
+/obj/item/light_fixture_frame/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(get_turf(loc), sheets_refunded)
+	..()
 
 /obj/item/light_fixture_frame/proc/try_build(turf/on_wall)
 	if (get_dist(on_wall,usr)>1)
@@ -107,11 +112,11 @@
 			to_chat(user, "You begin deconstructing [src].")
 			if(!W.use_tool(src, usr, 30, volume = 75))
 				return
-			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
 			user.visible_message("[user.name] deconstructs [src].", \
 				"You deconstruct [src].", "You hear a noise.")
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
-			qdel(src)
+			deconstruct(TRUE)
+			return
 		if (src.stage == 2)
 			to_chat(usr, "You have to remove the wires first.")
 			return
@@ -174,6 +179,12 @@
 			transfer_fingerprints_to(newlight)
 			qdel(src)
 			return
+	..()
+
+/obj/machinery/light_construct/deconstruct(disassembled) // why tf construct is machinery?
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, sheets_refunded)
 	..()
 
 /obj/machinery/light_construct/small
@@ -479,6 +490,46 @@
 			if (prob(75))
 				electrocute_mob(user, get_area(src), src, rand(70, 100) * 0.01)
 
+/obj/machinery/light/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			switch(status)
+				if(LIGHT_EMPTY)
+					playsound(loc, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+				if(LIGHT_BROKEN)
+					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER, 90, TRUE)
+				else
+					playsound(loc, 'sound/effects/glasshit.ogg', VOL_EFFECTS_MASTER, 90, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/obj/machinery/light/atom_break()
+	. = ..()
+	broken()
+
+/obj/machinery/light/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	var/obj/machinery/light_construct/new_light = null
+	var/current_stage = disassembled ? 2 : 1
+	switch(fitting)
+		if("tube")
+			new_light = new /obj/machinery/light_construct(loc)
+			new_light.icon_state = "tube-construct-stage[current_stage]"
+
+		if("bulb")
+			new_light = new /obj/machinery/light_construct/small(loc)
+			new_light.icon_state = "bulb-construct-stage[current_stage]"
+	new_light.set_dir(dir)
+	new_light.stage = current_stage
+	if(!disassembled)
+		if(status != LIGHT_EMPTY)
+			if(status != LIGHT_BROKEN)
+				broken()
+			drop_light_tube()
+		new /obj/item/stack/cable_coil(loc, 1, COLOR_RED)
+	transfer_fingerprints_to(new_light)
+	..()
 
 // returns whether this light has power
 // true if area has power and lightswitch is on
@@ -565,28 +616,32 @@
 	else
 		to_chat(user, "You remove the light [fitting].")
 
-	// create a light tube/bulb item and put it in the user's hand
-	var/obj/item/weapon/light/L = new light_type()
-	L.status = status
-	L.rigged = rigged
-	L.brightness_range = brightness_range
-	L.brightness_power = brightness_power
-	L.brightness_color = brightness_color
-
 	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 25)
 	user.SetNextMove(CLICK_CD_INTERACT)
 
+	drop_light_tube(user)
+
+/obj/machinery/light/proc/drop_light_tube(mob/living/user)
+	var/obj/item/weapon/light/light_object = new light_type(loc)
+	light_object.status = status
+	light_object.rigged = rigged
+	light_object.brightness_range = brightness_range
+	light_object.brightness_power = brightness_power
+	light_object.brightness_color = brightness_color
+
 	// light item inherits the switchcount, then zero it
-	L.switchcount = switchcount
+	light_object.switchcount = switchcount
 	switchcount = 0
 
-	L.update()
-	L.add_fingerprint(user)
+	light_object.update()
 
-	user.try_take(L, loc)
+	if(user) //puts it in our hands
+		light_object.add_fingerprint(user)
+		user.try_take(light_object)
 
 	status = LIGHT_EMPTY
 	update()
+
 
 // break the light and make sparks if was on
 /obj/machinery/light/proc/broken(skip_sound_and_sparks = 0)
@@ -625,12 +680,6 @@
 			if(prob(50))
 				return
 	broken()
-
-//blob effect
-
-/obj/machinery/light/blob_act()
-	if(prob(75))
-		broken()
 
 
 // timed process

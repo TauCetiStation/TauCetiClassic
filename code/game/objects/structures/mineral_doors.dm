@@ -10,10 +10,12 @@
 	var/close_state = TRUE
 	var/isSwitchingStates = FALSE
 	var/sheetAmount = 7
-	var/health = 100
 	var/can_unwrench = TRUE
 
 	var/sheetType
+
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/mineral_door/atom_init()
 	. = ..()
@@ -123,7 +125,7 @@
 		to_chat(user, "<span class='notice'>You start digging the [name].</span>")
 		if(W.use_tool(src, user, 50, volume = 100))
 			to_chat(user, "<span class='notice'>You finished digging!</span>")
-			Dismantle()
+			deconstruct(TRUE)
 
 	else if(iswrench(W) && can_unwrench)
 		if(user.is_busy(src))
@@ -151,44 +153,20 @@
 					set_opacity(TRUE)
 
 	else
-		. = ..()
-		if(!.)
-			return FALSE
-		health -= W.force
-		CheckHealth()
+		..()
 
-/obj/structure/mineral_door/proc/CheckHealth()
-	if(health <= 0)
-		Dismantle(TRUE)
-
-/obj/structure/mineral_door/proc/Dismantle(devastated = FALSE)
+/obj/structure/mineral_door/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT || !sheetType)
+		return ..()
 	var/turf/T = get_turf(src)
-	if(!devastated)
-		for(var/i in 1 to sheetAmount)
-			new sheetType(T)
-	else
-		for(var/i in 3 to sheetAmount)
-			new sheetType(T)
-	qdel(src)
-
-/obj/structure/mineral_door/ex_act(severity = 1)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			Dismantle(TRUE)
-		if(EXPLODE_HEAVY)
-			if(prob(20))
-				Dismantle(TRUE)
-			else
-				health--
-				CheckHealth()
-		if(EXPLODE_LIGHT)
-			health -= 0.1
-			CheckHealth()
+	for(var/i in (disassembled ? 1 : 3) to sheetAmount)
+		new sheetType(T)
+	..()
 
 /obj/structure/mineral_door/metal
 	name = "metal door"
 	icon_state = "metal"
-	health = 300
+	max_integrity = 300
 	sheetType = /obj/item/stack/sheet/metal
 
 /obj/structure/mineral_door/metal/attackby(obj/item/weapon/W, mob/user)
@@ -200,7 +178,7 @@
 			to_chat(user, "<span class='notice'>You start dissassembling the [name] to the metal sheets.</span>")
 			if(WT.use_tool(src, user, 60, volume = 100))
 				to_chat(user, "<span class='notice'>You dissassembled the [name] to the metal sheets!</span>")
-				Dismantle()
+				deconstruct(TRUE)
 		else
 			to_chat(user, "<span class='warning'>You need more welding fuel!</span>")
 		return
@@ -208,7 +186,7 @@
 /obj/structure/mineral_door/silver
 	name = "silver door"
 	icon_state = "silver"
-	health = 300
+	max_integrity = 300
 	sheetType = /obj/item/stack/sheet/mineral/silver
 
 /obj/structure/mineral_door/gold
@@ -219,14 +197,14 @@
 /obj/structure/mineral_door/uranium
 	name = "uranium door"
 	icon_state = "uranium"
-	health = 300
+	max_integrity = 300
 	light_range = 2
 	sheetType = /obj/item/stack/sheet/mineral/uranium
 
 /obj/structure/mineral_door/sandstone
 	name = "sandstone door"
 	icon_state = "sandstone"
-	health = 50
+	max_integrity = 50
 	sheetType = /obj/item/stack/sheet/mineral/sandstone
 
 /obj/structure/mineral_door/transparent
@@ -253,20 +231,18 @@
 		TemperatureAct(exposed_temperature)
 
 /obj/structure/mineral_door/transparent/phoron/proc/TemperatureAct(temperature)
+	var/phoronToDeduce = temperature * 0.012
+	var/tiles = 0
 	for(var/turf/simulated/floor/target_tile in range(2, loc))
-
-		var/phoronToDeduce = temperature * 0.012
-
+		tiles++
 		target_tile.assume_gas("phoron", phoronToDeduce)
 		target_tile.hotspot_expose(temperature, 400)
-
-		health -= phoronToDeduce * 0.01
-		CheckHealth()
+	take_damage(tiles * phoronToDeduce * 0.01, BURN, FIRE, FALSE)
 
 /obj/structure/mineral_door/transparent/diamond
 	name = "diamond door"
 	icon_state = "diamond"
-	health = 1000
+	max_integrity = 1000
 	sheetType = /obj/item/stack/sheet/mineral/diamond
 
 /obj/structure/mineral_door/wood
@@ -282,7 +258,7 @@
 		to_chat(user, "<span class='notice'>You start cutting the [name] with the axe.</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			to_chat(user, "<span class='notice'>You finished cutting the [name]!</span>")
-			Dismantle()
+			deconstruct(TRUE)
 		return
 	..()
 
@@ -290,7 +266,7 @@
 	icon = 'icons/mob/alien.dmi'
 	operating_sound = 'sound/effects/attackblob.ogg'
 	icon_state = "resin"
-	health = 250
+	max_integrity = 250
 	can_unwrench = FALSE
 	var/close_delay = 100
 
@@ -319,28 +295,20 @@
 	if(!isSwitchingStates && !close_state)
 		Close()
 
-/obj/structure/mineral_door/resin/Dismantle(devastated = FALSE)
-	qdel(src)
+/obj/structure/mineral_door/resin/play_attack_sound(damage_amount, damage_type, damage_flag)
+	switch(damage_type)
+		if(BRUTE)
+			playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
+		if(BURN)
+			playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
-/obj/structure/mineral_door/resin/CheckHealth()
-	playsound(src, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
-	..()
-
-/obj/structure/mineral_door/resin/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-	health -= Proj.damage
-	CheckHealth()
-
-/obj/structure/mineral_door/resin/attack_hand(mob/user)
+/obj/structure/mineral_door/resin/attack_alien(mob/living/carbon/xenomorph/humanoid/user)
 	if(isxenoadult(user) && user.a_intent == INTENT_HARM)
-		user.do_attack_animation(src)
-		user.SetNextMove(CLICK_CD_MELEE)
-		health -= rand(40, 60)
-		if(health <= 0)
+		attack_generic(user, 50, BRUTE, MELEE)
+		if(QDELING(src))
 			user.visible_message("<span class='danger'>[user] slices the [name] to pieces!</span>")
 		else
 			user.visible_message("<span class='danger'>[user] claws at the resin!</span>")
-		CheckHealth()
-	else if(isxeno(user) && !isSwitchingStates)
+	else if(!isSwitchingStates)
 		add_fingerprint(user)
 		SwitchState()

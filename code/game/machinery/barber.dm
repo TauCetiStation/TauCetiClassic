@@ -7,6 +7,7 @@
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 	var/list/obj/item/weapon/reagent_containers/glass/beaker/beakers = list()
 	var/processing = FALSE
