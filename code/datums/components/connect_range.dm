@@ -87,7 +87,6 @@
 		if(!works_in_containers)
 			return
 		//Keep track of possible movement of all movables the target is in.
-		ASSERT(isnull(old_locs))
 		old_locs = get_nested_locs(target)
 		for(var/atom/movable/container as anything in old_locs)
 			RegisterSignal(container, COMSIG_MOVABLE_MOVED, .proc/on_moved)
