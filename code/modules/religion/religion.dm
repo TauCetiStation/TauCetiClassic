@@ -461,7 +461,6 @@
 	R.religion = src
 	rites_by_name[R.name] = R
 	ritename_by_count[R.name] = 0
-	affect_divine_power_rite(R)
 
 // Adds all spells related to asp.
 /datum/religion/proc/add_aspect_spells(datum/aspect/asp, datum/callback/aspect_pred)
@@ -477,6 +476,10 @@
 /datum/religion/proc/add_aspect_rites(datum/aspect/asp, datum/callback/aspect_pred)
 	for(var/rite_type in global.rites_by_aspects[asp.name])
 		var/datum/religion_rites/RR = new rite_type
+
+		if(rites_by_name[RR.name]) //Updating existing rites
+			var/datum/religion_rites/rite = rites_by_name[RR.name]
+			affect_divine_power_rite(rite)
 
 		if(rites_by_name[RR.name] || (RR.religion_type && !istype(src, RR.religion_type)))
 			QDEL_NULL(RR)
