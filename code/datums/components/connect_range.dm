@@ -18,6 +18,8 @@
 	var/range
 	/// Whether the component works when the movable isn't directly located on a turf.
 	var/works_in_containers
+	// Central turf with signals
+	var/turf/old_turf
 
 /datum/component/connect_range/Initialize(atom/tracked, list/connections, range, works_in_containers = TRUE)
 	if(!isatom(tracked) || isarea(tracked) || range < 0)
@@ -66,9 +68,13 @@
 	SIGNAL_HANDLER
 	qdel(src)
 
-/datum/component/connect_range/proc/update_signals(atom/target, atom/old_loc, forced = FALSE)
+/datum/component/connect_range/proc/update_signals(atom/target, forced = FALSE)
 	var/turf/current_turf = get_turf(target)
-	var/on_same_turf = works_in_containers ? current_turf == get_turf(old_loc) : target.loc == old_loc //Only register/unregister turf signals if it's moved to a new turf.
+	var/on_same_turf
+	if(forced)
+		on_same_turf = FALSE
+	else
+		on_same_turf = works_in_containers ? current_turf == old_turf : target.loc == old_turf //Only register/unregister turf signals if it's moved to a new turf.
 	unregister_signals(old_loc, on_same_turf)
 
 	if(isnull(current_turf))
@@ -81,15 +87,16 @@
 		for(var/atom/movable/container as anything in get_nested_locs(target))
 			RegisterSignal(container, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 
-	if(on_same_turf && !forced)
+	if(on_same_turf)
 		return
+	old_turf = current_turf
 	for(var/turf/target_turf in RANGE_TURFS(range, current_turf))
 		for(var/signal in connections)
 			parent.RegisterSignal(target_turf, signal, connections[signal])
 
-/datum/component/connect_range/proc/unregister_signals(atom/location, on_same_turf = FALSE)
-	//The location is null or is a container and the component shouldn't have register signals on it
-	if(isnull(location) || (!works_in_containers && !isturf(location)))
+/datum/component/connect_range/proc/unregister_signals(on_same_turf = FALSE)
+	//Old turf is null == no signals.
+	if(isnull(old_turf))
 		return
 
 	if(ismovable(location))
@@ -101,7 +108,8 @@
 	var/turf/previous_turf = get_turf(location)
 	for(var/turf/target_turf in RANGE_TURFS(range, previous_turf))
 		parent.UnregisterSignal(target_turf, connections)
+	old_turf = null
 
 /datum/component/connect_range/proc/on_moved(atom/movable/movable, atom/old_loc)
 	SIGNAL_HANDLER
-	update_signals(movable, old_loc)
+	update_signals(movable)
