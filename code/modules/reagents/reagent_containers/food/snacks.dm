@@ -28,6 +28,7 @@
 				chance = 1
 			if(prob(chance))
 				H.invoke_vomit_async()
+				to_chat(H, "<span class='warning'>You feel like something is stuck in your throat...</span>")
 	if(!reagents.total_volume)
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
