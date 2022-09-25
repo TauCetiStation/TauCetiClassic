@@ -47,7 +47,7 @@
 	src.range = range
 	src.works_in_containers = works_in_containers
 	//Re-register the signals with the new settings.
-	update_signals(src.tracked)
+	update_signals()
 
 /datum/component/connect_range/proc/set_tracked(atom/new_tracked)
 	if(tracked) //Unregister the signals from the old tracked and its surroundings
@@ -62,13 +62,14 @@
 	//Register signals on the new tracked atom and its surroundings.
 	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(tracked, COMSIG_PARENT_QDELETING, .proc/handle_tracked_qdel)
-	update_signals(tracked)
+	update_signals()
 
 /datum/component/connect_range/proc/handle_tracked_qdel()
 	SIGNAL_HANDLER
 	qdel(src)
 
-/datum/component/connect_range/proc/update_signals(atom/target, forced = FALSE)
+/datum/component/connect_range/proc/update_signals(forced = FALSE)
+	var/atom/target = tracked
 	var/turf/current_turf = get_turf(target)
 	var/on_same_turf
 	if(forced)
@@ -99,6 +100,7 @@
 	if(isnull(old_turf))
 		return
 
+	var/atom/location = tracked.loc
 	if(ismovable(location))
 		for(var/atom/movable/target as anything in (get_nested_locs(location) + location))
 			UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
@@ -112,4 +114,4 @@
 
 /datum/component/connect_range/proc/on_moved(atom/movable/movable, atom/old_loc)
 	SIGNAL_HANDLER
-	update_signals(movable)
+	update_signals()
