@@ -319,7 +319,7 @@
 	A.circuit = new /obj/item/weapon/circuitboard/solar_control(A)
 	A.anchored = TRUE
 	transfer_fingerprints_to(A)
-	if(stat & BROKEN)
+	if(stat & BROKEN || !disassembled)
 		if(user)
 			to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 		else
