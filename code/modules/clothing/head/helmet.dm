@@ -28,12 +28,14 @@
 		if(user.hud_used) //NPCs don't need a map
 			user.hud_used.init_screen(/atom/movable/screen/holomap)
 		holochip.add_action(user)
+		SSholomaps.holochips[num2text(frequency)] += holochip
 	..()
 
 /obj/item/clothing/head/helmet/dropped(mob/user)
 	if(holochip)
 		holochip.remove_action(user)
 		holochip.deactivate_holomap()
+		SSholomaps.holochips[num2text(holochip.frequency)] -= holochip
 	..()
 
 /obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user)
@@ -259,6 +261,11 @@
 	item_state = "assaulthelmet_b"
 	armor = list(melee = 80, bullet = 70, laser = 55, energy = 70, bomb = 50, bio = 0, rad = 50)
 	siemens_coefficient = 0.2
+
+/obj/item/clothing/head/helmet/syndiassault/atom_init()
+	. = ..()
+	holochip = new /obj/item/holochip/nuclear(src)
+	holochip.holder = src
 
 /obj/item/clothing/head/helmet/syndiassault/alternate
 	icon_state = "assaulthelmet"

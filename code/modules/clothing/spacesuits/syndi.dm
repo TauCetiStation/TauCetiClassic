@@ -122,6 +122,11 @@
 	armor = list(melee = 75, bullet = 65, laser = 65, energy = 65, bomb = 70, bio = 100, rad = 20)
 	action_button_name = null
 
+/obj/item/clothing/head/helmet/space/syndicate/elite/atom_init()
+	. = ..()
+	holochip = new /obj/item/holochip/nuclear(src)
+	holochip.holder = src
+
 /obj/item/clothing/head/helmet/space/syndicate/elite/attack_self(mob/user)
 	return
 
