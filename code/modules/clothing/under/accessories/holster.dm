@@ -116,8 +116,7 @@
 /obj/item/clothing/accessory/holster/armpit
 	name = "shoulder holster"
 	desc = "A worn-out handgun holster. Perfect for concealed carry."
-	icon_state = "holster_armpit"
-	item_state = "holster"
+	icon_state = "holster"
 
 /obj/item/clothing/accessory/holster/armpit/update_icon()
 	..()
