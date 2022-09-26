@@ -45,9 +45,6 @@
 /obj/structure/window/atom_break(damage_flag)
 	. = ..()
 
-	if(get_integrity() <= 0)
-		return
-
 	var/ratio = get_integrity() / max_integrity
 
 	switch(ratio)
