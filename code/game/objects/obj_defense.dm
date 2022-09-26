@@ -1,8 +1,19 @@
 /obj/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	..()
+	var/throwdamage
 	if(isobj(AM))
 		var/obj/O = AM
-		take_damage(O.throwforce, BRUTE, MELEE, 1, get_dir(src, AM)) // TODO add throwforce to atom movable
+		throwdamage = O.throwforce
+	else if(ismob(AM)) // TODO add throwforce to atom movable
+		throwdamage = 10
+	else
+		return
+	throwdamage *= (AM.fly_speed / 5)
+	take_damage(throwdamage, BRUTE, MELEE, 1, get_dir(src, AM))
+	//Let everyone know we've been hit!
+	visible_message(
+		"<span class='warning'>[src] was hit by [AM].</span>",
+		viewing_distance = COMBAT_MESSAGE_RANGE
+	)
 
 /obj/ex_act(severity)
 	if(resistance_flags & INDESTRUCTIBLE)

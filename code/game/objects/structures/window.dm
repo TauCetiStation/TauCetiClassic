@@ -133,19 +133,6 @@
 		return 0
 	return 1
 
-
-/obj/structure/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 40
-	else if(isobj(AM))
-		var/obj/item/I = AM
-		tforce = I.throwforce
-	if(reinf)
-		tforce *= 0.25
-	take_damage(tforce, BRUTE, MELEE, TRUE, get_dir(src, AM))
-
 /obj/structure/window/attack_hand(mob/user)	//specflags please!!
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations)
