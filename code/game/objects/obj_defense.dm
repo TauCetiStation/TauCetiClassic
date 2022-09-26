@@ -7,8 +7,6 @@
 /obj/ex_act(severity)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
-
-	. = ..() //contents explosion
 	if(QDELETED(src))
 		return
 	switch(severity)
