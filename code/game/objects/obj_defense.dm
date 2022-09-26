@@ -1,4 +1,6 @@
 /obj/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
+	if(!(resistance_flags & CAN_BE_HIT))
+		return
 	var/throwdamage
 	if(isobj(AM))
 		var/obj/O = AM
