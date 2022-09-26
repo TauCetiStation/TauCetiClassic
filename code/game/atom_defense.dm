@@ -49,7 +49,7 @@
 	if(new_value <= 0)
 		atom_destruction(damage_flag)
 		return
-	//BREAKING/FIXING SECOND
+	//BREAKING SECOND
 	if(integrity_failure && atom_integrity <= integrity_failure * max_integrity)
 		atom_break(damage_flag)
 
