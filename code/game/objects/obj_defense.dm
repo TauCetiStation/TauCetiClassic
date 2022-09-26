@@ -14,7 +14,6 @@
 	)
 	if(!throwdamage)
 		return
-	throwdamage *= (AM.fly_speed / 5)
 	take_damage(throwdamage, BRUTE, MELEE, 1, get_dir(src, AM))
 
 /obj/ex_act(severity)
