@@ -603,15 +603,15 @@
 		if(hit_damage >= 50)
 			R.amount = 0
 			continue
-		//less damage => more content saving
-		var/skip_chance = 50 - hit_damage * (R.amount / product_records.len)
-		if(skip_chance > 100)
-			skip_chance = 100
-		if(prob(skip_chance))
-			continue
 		if(R.amount > 0)
+			//less damage => more content saving
+			var/skip_chance = 50 - hit_damage * (product_records.len / R.amount)
+			if(skip_chance > 100)
+				skip_chance = 100
+			if(prob(skip_chance))
+				continue
 			if(hit_damage > 10)
-				R.amount -= round(R.amount / 2)
+				R.amount = rand(0,(R.amount / 2))
 			else
 				R.amount--
 
