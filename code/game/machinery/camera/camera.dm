@@ -8,10 +8,9 @@
 	active_power_usage = 10
 	layer = 5
 	anchored = TRUE
+	max_integrity = 25	//1 shot from any gun is normal
 	var/status = TRUE	//simple var for non-standart cameras
 	var/camera_base = "camera" //used for icon_state overriding in update_icon()
-	var/max_integrity = 65	////ready to full_destruction system
-	var/integrity = 25	//1 shot from any gun is normal
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
@@ -56,6 +55,7 @@
 		ASSERT(network.len > 0)
 
 /obj/machinery/camera/Destroy()
+	cancelCameraAlarm()
 	disconnect_viewers()
 	QDEL_NULL(wires)
 	QDEL_NULL(assembly)
@@ -77,18 +77,20 @@
 		icon_state = "[camera_base]1"
 	if(stat & EMPED)
 		icon_state = "[camera_base]emp"
-	if(stat & BROKEN || isGlassPainted())
+	if(stat & BROKEN || isGlassPainted() || isHandBlockedView())
 		icon_state = "[camera_base]x"
 
 /obj/machinery/camera/examine(mob/user)
 	. = ..()
 	if(isGlassPainted())
 		to_chat(user, "<span class='warning'>The lens of [src] is obscured by paint.</span>")
+	if(isHandBlockedView())
+		to_chat(user, "<span class='warning'>The lens of [src] is obscured by somebodie's hand!</span>")
 
 /obj/machinery/camera/emp_act(severity)
 	if(isEmpProof() || (stat & (BROKEN|EMPED)))
 		return
-	if(prob(100/severity))
+	if(prob(100 / severity))
 		de_energize_cam()
 		addtimer(CALLBACK(src, .proc/energize_cam, network), 300)
 		return ..()
@@ -96,21 +98,14 @@
 /obj/machinery/camera/ex_act(severity)
 	if(isExplosiveImmune())
 		return
-	switch(severity)
-		if(EXPLODE_HEAVY)
-			take_damage(60)
-		if(EXPLODE_LIGHT)
-			take_damage(30)
-
-/obj/machinery/camera/blob_act()
-	take_damage(15, alarm = TRUE)
+	return ..()
 
 /obj/machinery/camera/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		take_damage(1, alarm = TRUE)
+		take_damage(1)
 
 /obj/machinery/camera/bullet_act(obj/item/projectile/P, def_zone)
-	take_damage(P.damage, alarm = TRUE)
+	take_damage(P.damage)
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
 	view_range = num
@@ -124,6 +119,15 @@
 	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
 	playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 	broke_cam()
+
+/obj/machinery/camera/attack_hand(mob/user)
+	if(!ishuman(user) || (user.a_intent != INTENT_HELP) || isHandBlockedView())
+		return ..()
+	hand_block(user)
+	update_icon()
+	if(!do_after(user, INFINITY, TRUE, src, FALSE, FALSE))
+		hand_block_off(user)
+		try_enable_cam()
 
 /obj/machinery/camera/attackby(W, mob/living/user)
 	// DECONSTRUCTION
@@ -140,11 +144,8 @@
 
 	else if(iswelder(W) && wires.is_deconstructable())
 		if(weld(W, user))
-
-		//deconstruction(sparks = FALSE)
+			deconstruct(TRUE, FALSE)
 	//upgrades
-
-			deconstruct(TRUE)
 	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
 		if(!isXRay())
 			upgradeXRay(user)
@@ -153,9 +154,10 @@
 			to_chat(user, "<span class='notice'>[src] already have that upgrade.</span>")
 
 	else if(istype(W, /obj/item/stack/sheet/mineral/phoron) && panel_open)
+		var/obj/item/stack/sheet/mineral/phoron/P = W
 		if(!isEmpProof())
 			upgradeEmpProof(user)
-			qdel(W)
+			P.use(1)
 		else
 			to_chat(user, "<span class='notice'>[src] already have that upgrade.</span>")
 	else if(istype(W, /obj/item/device/assembly/prox_sensor) && panel_open)
@@ -165,22 +167,25 @@
 		else
 			to_chat(user, "<span class='notice'>[src] already have that upgrade.</span>")
 	else if(istype(W, /obj/item/stack/sheet/plasteel) && panel_open)
+		var/obj/item/stack/sheet/plasteel/P = W
 		if(!isExplosiveImmune())
 			upgradeExplosiveImmune(user)
-			qdel(W)
+			P.use(1)
 		else
 			to_chat(user, "<span class='notice'>[src] already have that upgrade.</span>")
 	//repair broken stat
 	else if(istype(W, /obj/item/stack/sheet/glass) && panel_open)
+		var/obj/item/stack/sheet/glass/G = W
 		fix_broking_cam(user)
 		try_enable_cam()
-		to_chat(user, "<span class='notice'>You fixed some [src] damage.</span>")
-		qdel(W)
+		to_chat(user, "<span class='notice'>You fixed [src] lens.</span>")
+		W.use(1)
 	//repair damage
 	else if(istype(W, /obj/item/stack/sheet/metal) && panel_open)
-		if(try_increase_integrity(10))
+		var/obj/item/stack/sheet/metal/M = W
+		if(repair_damage(10))
 			to_chat(user, "<span class='notice'>[src] looks stronger than before.</span>")
-			qdel(W)
+			M.use(1)
 		else
 			to_chat(user, "<span class='notice'>[src] has enough margin of safety.</span>")
 	// OTHER
@@ -220,8 +225,6 @@
 			bug = null
 		else
 			to_chat(user, "<span class='notice'>Camera bugged.</span>")
-
-/*
 			bug = W
 			bug.bugged_cameras[c_tag] = src
 
@@ -229,10 +232,15 @@
 		bombastic_shot(W, user)
 	else
 		..()
-		if(isitem(W))
+		//delete this if fulldestruct system already have damage from all items to machinery
+		if(isitem(W) && user.a_intent == INTENT_HARM)
 			var/obj/item/I = W
-			if(I.force >= 15)		//some sharp items have less than 15 damage, but its needed for balance
-				take_damage(I.force, user, alarm = TRUE)		//cameras immune to things that are easy to get (like air tank, fire extinguisher)
+			var/damage = I.force
+			if(damage && damage < 15)
+				if(!do_after(user, 50, target = src))
+					return
+			take_damage(damage)
+
 // maybe in future it can triggering AI or human on the computer
 /obj/machinery/camera/proc/bombastic_shot(obj/item/weapon/gun, mob/living/user)
 	user.visible_message("<span class='warning'>[user] looks at the [src] and raise weapon!</span>",
@@ -242,33 +250,6 @@
 		user.visible_message("<span class='warning'>[user] shoots in the [src]!</span>",
 		"<span class='notice'>You fire into the [src] lens.</span>")
 		gun.afterattack(src, user)
-
-/obj/machinery/camera/proc/try_increase_integrity(amount)
-	if(!integrity || !max_integrity)
-		return FALSE
-	if(amount + integrity > max_integrity)
-		amount = max_integrity - integrity
-	if(0 >= amount)
-		return FALSE
-	integrity += amount
-	return TRUE*/
-
-			src.bug = W
-			src.bug.bugged_cameras[src.c_tag] = src
-	else if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W, /obj/item/weapon/dualsaber))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
-		if(W:force > 3)
-			user.do_attack_animation(src)
-			disconnect_viewers()
-			var/datum/effect/effect/system/spark_spread/spark_system = new()
-			spark_system.set_up(5, 0, loc)
-			spark_system.start()
-			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
-			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-			visible_message("<span class='notice'>The camera has been sliced apart by [user] with [W]!</span>")
-			deconstruct()
-	else
-		..()
-	return
 
 /obj/machinery/camera/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(stat & BROKEN)
@@ -281,12 +262,9 @@
 /obj/machinery/camera/atom_break(damage_flag)
 	if(!status)
 		return
-	. = ..()
-	if(.)
-		triggerCameraAlarm()
-		toggle_cam(FALSE)
+	return ..()
 
-/obj/machinery/camera/deconstruct(disassembled = TRUE)
+/obj/machinery/camera/deconstruct(disassembled = TRUE, sparks = TRUE)
 	if(flags & NODECONSTRUCT)
 		return ..()
 	if(disassembled)
@@ -294,7 +272,12 @@
 	else
 		drop_assembly()
 		new /obj/item/stack/cable_coil(loc, 2)
-	..()
+	if(sparks)
+		var/datum/effect/effect/system/spark_spread/spark_system = new()
+		spark_system.set_up(5, 0, loc)
+		spark_system.start()
+		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+	return ..()
 
 /obj/machinery/camera/proc/drop_assembly(state = 0)
 	if(assembly)
@@ -347,48 +330,11 @@
 		stat &= ~EMPED
 	try_enable_cam()
 
-/obj/machinery/camera/proc/is_item_in_blacklist(obj/item/I)
-	if(I.damtype == HALLOSS)
-		return TRUE
-	return FALSE
-
-/obj/machinery/camera/proc/take_damage(amount, mob/attacker = null, alarm = FALSE)
+/obj/machinery/camera/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, alarm = TRUE)
+	. = ..()
 	if(alarm)
 		triggerCameraAlarm()
 		addtimer(CALLBACK(src, .proc/try_cancel_alarm), 100)
-	if(amount <= 0)
-		return
-	if(is_item_in_blacklist())
-		return
-	integrity -= amount
-	check_integrity(attacker)
-
-/obj/machinery/camera/proc/check_integrity(mob/attacker = null)
-	if(integrity <= 0)
-		if(alarm_on)
-			cancelCameraAlarm()
-		disconnect_viewers()
-		deconstruction(attacker)
-
-/obj/machinery/camera/deconstruction(state = 0, sparks = TRUE, mob/living/carbon/human/attacker = null)
-	if(flags & NODECONSTRUCT)
-		qdel(src)
-		return
-	if(assembly)
-		assembly.state = state
-		assembly.anchored = FALSE
-		assembly.forceMove(loc)
-		assembly.update_icon()
-		assembly = null
-		if(attacker != null)
-			assembly.add_fingerprint(attacker)
-	new /obj/item/stack/cable_coil/cut/red(loc)
-	if(sparks)
-		var/datum/effect/effect/system/spark_spread/spark_system = new()
-		spark_system.set_up(5, 0, loc)
-		spark_system.start()
-		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-	qdel(src)
 
 /obj/machinery/camera/proc/disconnect_viewers()
 	for(var/mob/O in player_list)
@@ -418,7 +364,7 @@
 		return FALSE
 	if(!status)
 		return FALSE
-	if(isGlassPainted() && check_paint)
+	if(isGlassPainted() && check_paint || isHandBlockedView())
 		if(isXRay())
 			return TRUE
 		return FALSE
@@ -431,14 +377,21 @@
 		stat &= ~BROKEN
 	if(isGlassPainted())
 		remove_painted_lens()
+	if(isHandBlockedView())
+		hand_block_off()
 	try_enable_cam()
+
 //failings checks
 /obj/machinery/camera/proc/isGlassPainted()
 	for(var/failin in camera_failings)
 		if(failin == "paint")
 			return TRUE
-		else
-			continue
+	return FALSE
+
+/obj/machinery/camera/proc/isHandBlockedView()
+	for(var/failin in camera_failings)
+		if(failin == "human palm")
+			return TRUE
 	return FALSE
 
 //upgrade checks
@@ -490,7 +443,8 @@
 	if(user)
 		to_chat(user, "<span class='notice'>[src] upgraded!</span>")
 	camera_upgrades += "plasteel"
-	try_increase_integrity(max_integrity)
+	modify_max_integrity(max_integrity * 3)
+	repair_damage(max_integrity - get_integrity())
 	update_icon()
 //camera failings
 /obj/machinery/camera/proc/paint_lens(mob/user = null)
@@ -506,6 +460,21 @@
 	if(isGlassPainted())
 		for(var/failin in camera_failings)
 			if(failin == "paint")
+				camera_failings -= failin
+
+/obj/machinery/camera/proc/hand_block(mob/user = null)
+	if(user)
+		to_chat(user, "<span class='notice'>You blocked the view of the [src]!!</span>")
+	camera_failings += "human palm"
+	if(!isXRay())
+		disconnect_viewers()
+
+/obj/machinery/camera/proc/hand_block_off(mob/user = null)
+	if(user)
+		to_chat(user, "<span class='notice'>You stop blocking the view of the [src]!</span>")
+	if(isHandBlockedView())
+		for(var/failin in camera_failings)
+			if(failin == "human palm")
 				camera_failings -= failin
 
 /obj/machinery/camera/proc/can_see()
