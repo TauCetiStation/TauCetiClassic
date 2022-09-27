@@ -47,6 +47,12 @@
 		playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			var/net_damage = H.run_armor_check(def_zone) / 3
-			H.apply_damage(net_damage, BRUTE, def_zone, blocked = 0)	//damage through armor
-		return..()	//+15 brute damage to target
+			var/armor_coef = H.getarmor(def_zone, "melee") / 100
+			if(armor_coef > 0 && armor_coef < 100)
+				//~23 damage to armored bodypart
+				var/net_damage = 23 - (force - (force * armor_coef))
+				if(net_damage < 0)
+					//if force or armor_coef was really big
+					return ..()
+				H.apply_damage(net_damage, BRUTE, def_zone, blocked = 0)	//damage through armor
+		return..()
