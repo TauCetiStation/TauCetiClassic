@@ -11,6 +11,9 @@
 
 	logo_state = "shadowling-logo"
 
+	skillset_type = /datum/skillset/shadowling
+	change_to_maximum_skills = TRUE
+
 /datum/role/shadowling/Greet(greeting, custom)
 	. = ..()
 	to_chat(antag.current, "<b>Currently, you are disguised as an employee aboard [station_name()].</b>")
@@ -38,6 +41,9 @@
 	antag_hud_name = "hudthrall"
 
 	logo_state = "thrall-logo"
+
+	skillset_type = /datum/skillset/threll
+	change_to_maximum_skills = TRUE
 
 /datum/role/thrall/OnPreSetup(greeting, custom)
 	. = ..()

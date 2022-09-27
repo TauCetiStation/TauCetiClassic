@@ -180,6 +180,29 @@
 		/datum/skill/melee = SKILL_LEVEL_PRO
 	)
 
+/datum/skillset/shadowling
+	name = SHADOWLING
+	initial_skills = list(
+		/datum/skill/police = SKILL_LEVEL_MASTER,
+		/datum/skill/melee = SKILL_LEVEL_MASTER,
+		/datum/skill/engineering = SKILL_LEVEL_MASTER,
+		/datum/skill/construction = SKILL_LEVEL_MASTER,
+		/datum/skill/atmospherics = SKILL_LEVEL_MASTER,
+		/datum/skill/surgery = SKILL_LEVEL_MASTER,
+		/datum/skill/medical = SKILL_LEVEL_MASTER,
+		/datum/skill/chemistry = SKILL_LEVEL_MASTER,
+		/datum/skill/research = SKILL_LEVEL_MASTER,
+		/datum/skill/command = SKILL_LEVEL_MASTER
+	)
+
+/datum/skillset/threll
+	name = THRELL
+	initial_skills = list(
+		/datum/skill/police = SKILL_LEVEL_MASTER,
+		/datum/skill/melee = SKILL_LEVEL_MASTER,
+		/datum/skill/construction = SKILL_LEVEL_PRO,
+	)
+
 /datum/skillset/cyborg
 	name = "Cyborg"
 	initial_skills = list(
