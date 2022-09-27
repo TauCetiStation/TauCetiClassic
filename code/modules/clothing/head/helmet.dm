@@ -28,7 +28,7 @@
 		if(user.hud_used) //NPCs don't need a map
 			user.hud_used.init_screen(/atom/movable/screen/holomap)
 		holochip.add_action(user)
-		SSholomaps.holochips[num2text(frequency)] += holochip
+		holochip.update_freq(holochip.frequency)
 	..()
 
 /obj/item/clothing/head/helmet/dropped(mob/user)
