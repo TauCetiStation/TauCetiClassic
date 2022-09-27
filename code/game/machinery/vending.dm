@@ -92,10 +92,7 @@
 			throw_item()	//throw VEND item, not a item which attacked
 	destroy_some_content(damage_amount)	//some content was damaged, unlucky
 
-/obj/machinery/vending/deconstruct(disassembled = TRUE)
-	//the non constructable vendors drop metal instead of a machine frame.
-	if(!(flags & NODECONSTRUCT))
-		new /obj/item/stack/sheet/metal(loc, 3)
+/obj/machinery/vending/atom_destruction()
 	new /obj/item/weapon/shard(loc)
 	new /obj/item/stack/rods(loc, 2)
 	new /obj/item/stack/cable_coil/red(loc, 2)
@@ -106,6 +103,14 @@
 		I.forceMove(loc)
 	malfunction()
 	return ..()
+
+/obj/machinery/vending/deconstruct(disassembled = TRUE)
+	if(refill_canister)
+		return ..()
+	//the non constructable vendors drop metal instead of a machine frame.
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 3)
+	qdel(src)
 
 /obj/machinery/vending/atom_break(damage_flag)
 	. = ..()
@@ -598,11 +603,14 @@
 		if(hit_damage >= 50)
 			R.amount = 0
 			continue
-		if(R.amount > 0)
-			R.amount--
 		//less damage => more content saving
-		if(prob(50 - hit_damage))
-			break
+		if(prob(50 - hit_damage * (R.amount / product_records.len)))
+			continue
+		if(R.amount > 0)
+			if(hit_damage > 10)
+				R.amount -= round(R.amount / 2)
+			else
+				R.amount--
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item()
