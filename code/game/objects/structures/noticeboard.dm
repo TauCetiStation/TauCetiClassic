@@ -11,13 +11,19 @@
 	var/material
 	var/noticeboard
 
+	max_integrity = 150
+	resistance_flags = CAN_BE_HIT
+
 /obj/item/noticeboard_frame/attackby(obj/item/I, mob/user, params)
 	if(iswrench(I))
 		user.SetNextMove(CLICK_CD_RAPID)
-		new material(loc, 10)
-		qdel(src)
+		deconstruct(TRUE)
 		return
 	return ..()
+
+/obj/item/noticeboard_frame/deconstruct(disassembled)
+	new material(get_turf(loc), disassembled ? 10 : 5)
+	..()
 
 /obj/item/noticeboard_frame/proc/try_build(mob/user, turf/on_wall)
 	if(!in_range(user, on_wall))
@@ -71,9 +77,12 @@
 
 	var/datum/atom_hud/alternate_appearance/basic/exclude_ckeys/quest
 
-	var/frame_type = /obj/item/noticeboard_frame/wood
+	var/obj/item/noticeboard_frame/frame_type = /obj/item/noticeboard_frame/wood
 
 	var/static/list/note_typecache
+
+	max_integrity = 150
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/noticeboard/atom_init(mapload, dir, building)
 	. = ..()
@@ -250,10 +259,7 @@
 //attaching papers!!
 /obj/structure/noticeboard/attackby(obj/item/I, mob/user)
 	if(iswrench(I) && !user.is_busy() && do_after(user, 40, TRUE, src, FALSE, TRUE))
-		for(var/notice in notices)
-			remove_note(notices[notice])
-		new frame_type(get_turf(src))
-		qdel(src)
+		deconstruct(TRUE)
 		return
 
 	if(!is_type_in_typecache(I, note_typecache))
@@ -271,6 +277,15 @@
 	add_fingerprint(user)
 	add_note(I)
 	to_chat(user, "<span class='notice'>You pin [I] to [src].</span>")
+
+/obj/structure/noticeboard/deconstruct(disassembled)
+	if(!(flags & NODECONSTRUCT))
+		var/obj/frame = new frame_type(loc)
+		if(!disassembled)
+			frame.deconstruct(FALSE)
+	for(var/notice in notices)
+		remove_note(notices[notice])
+	..()
 
 /obj/structure/noticeboard/examine(mob/user)
 	var/datum/tgui/ui = tgui_interact(user)

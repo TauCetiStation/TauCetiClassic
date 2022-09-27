@@ -361,7 +361,7 @@
 /obj/item/weapon/robot_module/combat/atom_init()
 	. = ..()
 	modules += new /obj/item/device/flash(src)
-	modules += new /obj/item/borg/sight/thermal(src)
+	modules += new /obj/item/borg/sight/night(src)
 	modules += new /obj/item/weapon/gun/energy/laser/selfcharging/cyborg(src)
 	modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
 	modules += new /obj/item/borg/combat/shield(src)
@@ -405,6 +405,24 @@
 	emag = new /obj/item/weapon/hand_tele(src) //To fuck people's shit up
 
 	emag.name = "Hand tele"
+
+/obj/item/weapon/robot_module/peacekeeper
+	name = "peacekeeper robot module"
+
+/obj/item/weapon/robot_module/peacekeeper/atom_init()
+	. = ..()
+
+	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/weapon/rsf/cookiesynth(src)
+	modules += new /obj/item/harmalarm(src)
+	modules += new /obj/item/weapon/reagent_containers/borghypo/peace(src)
+	modules += new /obj/item/weapon/cyborghug(src)
+	modules += new /obj/item/borg/bubble_creator(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg(src)
+	modules += new /obj/item/weapon/crowbar/red(src)
+	modules += new /obj/item/device/gps/cyborg(src)
+
+	emag = new /obj/item/weapon/gun/grenadelauncher/cyborg(src)
 
 /obj/item/weapon/robot_module/drone
 	name = "drone module"
