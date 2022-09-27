@@ -42,12 +42,12 @@
 		to_chat(user, "Писание Нар-Си. Содержит подробности о тёмных ритуалах, загадочных рунах и много другой странной информации. Однако, большинство из написанного не работает.")
 		to_chat(user, "Текущее количество favor: [religion.favor] piety: <span class='cult'>[religion.piety]</span>")
 
-		var/num = 0
+		var/cultists = 0
 		for(var/mob/M in religion.members)
 			if(M.stat != DEAD)
-				num++
+				cultists++
 
-		to_chat(user, "В культе всего [num] [pluralize_russian(num, "последователь", "последователя", "последователей")]")
+		to_chat(user, "В культе всего [cultists] [pluralize_russian(cultists, "последователь", "последователя", "последователей")]")
 		var/list/L = LAZYACCESS(religion.runes_by_ckey, user.ckey)
 		to_chat(user, "Вами нарисовано/всего <span class='cult'>[L ? L.len : "0"]</span>/[religion.max_runes_on_mob]")
 		to_chat(user, "<a href='?src=\ref[src];del_runes_ckey=1'>Удалить все ваши руны</a>")
