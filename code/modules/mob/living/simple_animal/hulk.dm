@@ -239,6 +239,8 @@
 	if(A.attack_hulk(src))
 		do_attack_animation(A)
 		SetNextMove(CLICK_CD_MELEE)
+		return
+	..()
 
 /mob/living/simple_animal/hulk/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
