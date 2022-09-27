@@ -604,7 +604,6 @@
 			R.amount = 0
 			continue
 		if(R.amount > 0)
-			//less damage => more content saving
 			var/skip_chance = 50 - hit_damage * (product_records.len / R.amount)
 			if(skip_chance > 100)
 				skip_chance = 100
