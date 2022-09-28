@@ -76,13 +76,14 @@
 	return ..()
 
 /obj/machinery/camera/update_icon()
-	icon_state = "[camera_base]"
-	if(!status)
-		icon_state = "[camera_base]1"
-	if(stat & BROKEN)
-		icon_state = "[camera_base]x"
 	if(stat & EMPED)
 		icon_state = "[camera_base]emp"
+	else if(stat & BROKEN)
+		icon_state = "[camera_base]x"
+	else if(!status)
+		icon_state = "[camera_base]1"
+	else
+		icon_state = "[camera_base]"
 
 /obj/machinery/camera/examine(mob/user)
 	..()
@@ -160,8 +161,9 @@
 			deconstruct(TRUE)
 	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
 		if(!isXRay())
-			upgradeXRay()
-			qdel(W)
+			var/obj/item/device/analyzer/A = W
+			upgradeXRay(A)
+			user.drop_from_inventory(A, src)
 			to_chat(user, "[msg]")
 		else
 			to_chat(user, "[msg2]")
@@ -171,23 +173,25 @@
 			var/obj/item/stack/sheet/mineral/phoron/P = W
 			var/obj/item/stack/sheet/mineral/phoron/S = P.change_stack(user, 1, FALSE)
 			upgradeEmpProof(S)
+			S.forceMove(src)
 			to_chat(user, "[msg]")
 		else
 			to_chat(user, "[msg2]")
 
 	else if(istype(W, /obj/item/device/assembly/prox_sensor) && panel_open)
 		if(!isMotion())
-			upgradeMotion()
+			var/obj/item/device/assembly/prox_sensor/P = W
+			upgradeMotion(P)
+			user.drop_from_inventory(P, src)
 			to_chat(user, "[msg]")
-			qdel(W)
 		else
 			to_chat(user, "[msg2]")
 
 	else if(istype(W, /obj/item/stack/sheet/plasteel) && panel_open)
 		if(!invuln)
 			var/obj/item/stack/sheet/plasteel/P = W
-			var/obj/item/stack/sheet/plasteel/S = P.change_stack(user, 1, FALSE)
-			upgradeExplosiveImmune(S)
+			P.use(1)
+			upgradeExplosiveImmune()
 			to_chat(user, "[msg]")
 		else
 			to_chat(user, "[msg2]")
@@ -446,41 +450,49 @@
 //upgrade checks
 /obj/machinery/camera/proc/isEmpProof()
 	var/list/L = camera_upgrades["phoron"]
-	var/type = pick(L)
-	if(istype(type, /obj/item/stack/sheet/mineral/phoron))
+	var/obj/item/stack/sheet/mineral/phoron/I = pick(L)
+	if(I)
 		return TRUE
 	return FALSE
 
 /obj/machinery/camera/proc/isXRay()
 	var/list/L = camera_upgrades["analyzer"]
-	var/type = pick(L)
-	if(istype(type, /obj/item/device/analyzer))
+	var/obj/item/device/analyzer/I = pick(L)
+	if(I)
 		return TRUE
 	return FALSE
 
 /obj/machinery/camera/proc/isMotion()
 	var/list/L = camera_upgrades["sensor"]
-	var/type = pick(L)
-	if(istype(type, /obj/item/device/assembly/prox_sensor))
+	var/obj/item/device/assembly/prox_sensor/I = pick(L)
+	if(I)
 		return TRUE
 	return FALSE
 
 //upgrading procs
 /obj/machinery/camera/proc/upgradeEmpProof(obj/item/I)
+	if(!I)
+		var/obj/item/stack/sheet/mineral/phoron/newitem = new(src)
+		I = newitem
 	camera_upgrades["phoron"] = I
 	update_icon()
 
 /obj/machinery/camera/proc/upgradeXRay(obj/item/I)
+	if(!I)
+		var/obj/item/device/analyzer/newitem = new(src)
+		I = newitem
 	camera_upgrades["analyzer"] = I
 	camera_base = "xraycam"
 	update_icon()
 
 /obj/machinery/camera/proc/upgradeMotion(obj/item/I)
+	if(!I)
+		var/obj/item/device/assembly/prox_sensor/newitem = new(src)
+		I = newitem
 	camera_upgrades["sensor"] = I
 	update_icon()
 
-/obj/machinery/camera/proc/upgradeExplosiveImmune(obj/item/I)
-	camera_upgrades["plasteel"] = I
+/obj/machinery/camera/proc/upgradeExplosiveImmune()
 	invuln = TRUE
 	modify_max_integrity(max_integrity * 3)
 	repair_damage(max_integrity - get_integrity())
