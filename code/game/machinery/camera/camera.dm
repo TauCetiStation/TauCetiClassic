@@ -110,7 +110,8 @@
 	if(!(stat & EMPED))
 		visible_message("[bicon(src)] <span class='notice'>Paint drips from [src].</span>")
 		cancelCameraAlarm()
-		toggle_cam(FALSE)
+		if(!status)
+			toggle_cam(FALSE)
 
 /obj/machinery/camera/ex_act(severity)
 	if(src.invuln)
