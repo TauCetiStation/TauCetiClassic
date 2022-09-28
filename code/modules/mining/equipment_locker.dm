@@ -271,29 +271,32 @@
 	RefreshParts()
 	prize_list = list()
 	prize_list["Gear"] = list(
-		EQUIPMENT("GPS Device",									/obj/item/device/gps/mining,										100),
+		EQUIPMENT("GPS Device",						/obj/item/device/gps/mining,													200),
 	)
 	prize_list["Consumables"] = list(
-		EQUIPMENT("Stimpack",					/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,			100),
-		EQUIPMENT("lipozine pill",				/obj/item/weapon/reagent_containers/pill/lipozine,								200),
-		EQUIPMENT("leporazine autoinjector",	/obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine,			300),
-		EQUIPMENT("Stimpack Bundle",			/obj/item/weapon/storage/box/autoinjector/stimpack,								400),
-		EQUIPMENT("Space first-aid kit",		/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,						1000),
-		EQUIPMENT("Standart capsule",			/obj/item/weapon/survivalcapsule,												500),
-		EQUIPMENT("Improved capsule",			/obj/item/weapon/survivalcapsule/improved,										1000),
-		EQUIPMENT("Elite capsule(Bar)",			/obj/item/weapon/survivalcapsule/elite,											1500),
+		EQUIPMENT("Stimpack",						/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,			150),
+		EQUIPMENT("lipozine pill",					/obj/item/weapon/reagent_containers/pill/lipozine,								200),
+		EQUIPMENT("leporazine autoinjector",		/obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine,			300),
+		EQUIPMENT("Stimpack Bundle",				/obj/item/weapon/storage/box/autoinjector/stimpack,								700),
+		EQUIPMENT("Space first-aid kit",			/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,						1200),
+		EQUIPMENT("Standart capsule",				/obj/item/weapon/survivalcapsule,												1300),
+		EQUIPMENT("Improved capsule",				/obj/item/weapon/survivalcapsule/improved,										1900),
+		EQUIPMENT("Elite capsule(Bar)",				/obj/item/weapon/survivalcapsule/elite,											3000),
 	)
 	prize_list["Digging Tools"] = list(
-		EQUIPMENT("Accelerator upgrade",			/obj/item/kinetic_upgrade/speed,	2500),
+		EQUIPMENT("Accelerator resources upgrade",	/obj/item/kinetic_upgrade/resources,											1750),
+		EQUIPMENT("Accelerator damage upgrade",		/obj/item/kinetic_upgrade/damage,												2000),
+		EQUIPMENT("Accelerator recharge upgrade",	/obj/item/kinetic_upgrade/speed,												2250),
+		EQUIPMENT("Accelerator range upgrade",		/obj/item/kinetic_upgrade/range,												2500),
 	)
 	prize_list["Miscellaneous"] = list(
-		EQUIPMENT("Chili",						/obj/item/weapon/reagent_containers/food/snacks/hotchili,			100),
-		EQUIPMENT("Vodka",						/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,		150),
-		EQUIPMENT("Soap",						/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,									150),
-		EQUIPMENT("Alien toy",					/obj/item/clothing/mask/facehugger_toy,								250),
-		EQUIPMENT("Point card",					/obj/item/weapon/card/mining_point_card,							500),
-		EQUIPMENT("Space cash",					/obj/item/weapon/spacecash/c1000,									5000),
-		EQUIPMENT("Mining voucher",				/obj/item/weapon/mining_voucher,									10000),
+		EQUIPMENT("Chili",							/obj/item/weapon/reagent_containers/food/snacks/hotchili,						150),
+		EQUIPMENT("Vodka",							/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,					200),
+		EQUIPMENT("Soap",							/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,				250),
+		EQUIPMENT("Alien toy",						/obj/item/clothing/mask/facehugger_toy,											300),
+		EQUIPMENT("Point card",						/obj/item/weapon/card/mining_point_card,										1000),
+		EQUIPMENT("Space cash",						/obj/item/weapon/spacecash/c1000,												5000),
+		EQUIPMENT("Mining voucher",					/obj/item/weapon/mining_voucher,												10000),
 	)
 
 
@@ -394,6 +397,7 @@
 
 			remove_points(inserted_id, prize.cost)
 			new prize.equipment_path(loc)
+			playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
 		else
 			return FALSE
 	add_fingerprint()
@@ -457,7 +461,8 @@
 	return
 
 
-/**********************Mining Equipment Locker Items**************************/
+/************************Mining Equipment Locker Items****************************/
+
 /**********************Mining Rig Pack**********************/
 
 /obj/item/mining_rig_pack/atom_init()
@@ -491,7 +496,7 @@
 	name = "mining point card"
 	desc = "A small card preloaded with mining points. Swipe your ID card over it to transfer the points, then discard."
 	icon_state = "data"
-	var/points = 500
+	var/points = 1000
 
 /obj/item/weapon/card/mining_point_card/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id))
@@ -544,7 +549,7 @@
 		if(!chosen_beacon)
 			chosen_beacon = pick(L)
 		var/obj/effect/portal/jaunt_tunnel/J = new /obj/effect/portal/jaunt_tunnel(get_turf(src), chosen_beacon)
-		spawn(100) qdel(J)	//Portal will disappear after 10 sec
+		QDEL_IN(J, 10 SECOND) //Portal will disappear after 10 sec
 		J.target = chosen_beacon
 		try_move_adjacent(J)
 		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
@@ -592,16 +597,31 @@
 	w_class = SIZE_SMALL
 	force = 10
 	throwforce = 10
-	var/cooldown = 0
+	var/charged = TRUE
+	var/recharge_time = 2.3 SECONDS
 
-/obj/item/weapon/resonator/proc/CreateResonance(target, creator)
-	if(cooldown <= 0)
-		playsound(src, 'sound/effects/stealthoff.ogg', VOL_EFFECTS_MASTER)
+/obj/item/weapon/resonator/proc/lower_recharge_time()
+	var/old_recharge_time = recharge_time
+	recharge_time = max(recharge_time - 0.05 SECOND, 1.1 SECOND)
+	var/difference = old_recharge_time - recharge_time
+	if(difference)
+		addtimer(CALLBACK(src, .proc/increase_recharge_time), 50 SECOND)
+
+/obj/item/weapon/resonator/proc/increase_recharge_time()
+	recharge_time += 0.05 SECOND
+
+/obj/item/weapon/resonator/proc/recharge()
+	if(!charged)
+		playsound(src, 'sound/items/resonator_ready.ogg', VOL_EFFECTS_MASTER)
+		charged = TRUE
+
+/obj/item/weapon/resonator/proc/CreateResonance(target)
+	if(charged)
+		charged = FALSE
+		playsound(src, 'sound/items/resonator_use.ogg', VOL_EFFECTS_MASTER)
 		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
-		R.creator = creator
-		cooldown = 1
-		spawn(20)
-			cooldown = 0
+		addtimer(CALLBACK(src, .proc/recharge), recharge_time)
+		lower_recharge_time()
 
 /obj/item/weapon/resonator/attack_self(mob/user)
 	CreateResonance(src, user)
@@ -621,7 +641,6 @@
 	layer = 4.1
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/resonance_damage = 30
-	var/creator = null
 
 /obj/effect/resonance/atom_init()
 	..()
@@ -631,12 +650,13 @@
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
+
 	if(istype(proj_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = proj_turf
 		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
-		M.GetDrilled()
-		spawn(5)
-			qdel(src)
+		M.GetDrilled(mineral_drop_coefficient = 1.25) // resonator is efficient for mining ore
+
+		QDEL_IN(src, 0.4 SECOND)
 	else
 		var/datum/gas_mixture/environment = proj_turf.return_air()
 		var/pressure = environment.return_pressure()
@@ -645,17 +665,11 @@
 			resonance_damage = 60
 		spawn(50)
 			playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
-			if(creator)
-				for(var/mob/living/L in src.loc)
-					usr.attack_log += text("\[[time_stamp()]\] used a resonator field on [L.name] ([L.ckey])")
-					to_chat(L, "<span class='danger'>The [src.name] ruptured with you in it!</span>")
-					L.adjustBruteLoss(resonance_damage)
-			else
-				for(var/mob/living/L in src.loc)
-					to_chat(L, "<span class='danger'>The [src.name] ruptured with you in it!</span>")
-					L.adjustBruteLoss(resonance_damage)
+			for(var/mob/living/L in src.loc)
+				usr.attack_log += text("\[[time_stamp()]\] used a resonator field on [L.name] ([L.ckey])")
+				to_chat(L, "<span class='danger'>The [src.name] ruptured with you in it!</span>")
+				L.adjustBruteLoss(resonance_damage)
 			qdel(src)
-
 
 /**********************Facehugger toy**********************/
 
@@ -922,7 +936,7 @@
 	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 5
-	var/loaded = 1
+	var/loaded = TRUE
 
 /obj/item/weapon/patcher/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
@@ -951,7 +965,7 @@
 		C.brute_damage = 0
 		C.burn_damage = 0
 		C.name = C.base_name
-		loaded = 0
+		loaded = FALSE
 		user.visible_message("<span class='notice'>[user] fixes [C] with [src].</span>")
 		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER)
 		icon_state = "patcher_empty"
