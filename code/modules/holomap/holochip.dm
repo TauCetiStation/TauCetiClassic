@@ -24,12 +24,6 @@
 	holomap_base = SSholomaps.default_holomap
 	instantiate_self_marker()
 
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/item/holochip/atom_init_late()
-	. = ..()
-	update_freq(frequency) //Because child defines it's freq in init
-
 /obj/item/holochip/Destroy()
 	STOP_PROCESSING(SSholomaps, src)
 	deactivate_holomap()
