@@ -357,6 +357,8 @@
 			user.visible_message("<span class='warning'>[user] paints the [C] lens!</span>",
 			"<span class='notice'>You paint over the [C] lens. Respect received.</span>")
 			C.painted = TRUE
+			C.toggle_cam(FALSE)
+			C.color = colour
 	playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 5)
 	..()
 
