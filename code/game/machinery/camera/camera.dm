@@ -183,7 +183,7 @@
 		var/obj/item/stack/sheet/glass/G = W
 		painted = FALSE
 		to_chat(user, "<span class='notice'>You fixed [src] lens.</span>")
-		W.use(1)
+		G.use(1)
 	// OTHER
 	else if(istype(W, /obj/item/weapon/paper))
 		user.SetNextMove(CLICK_CD_INTERACT)
