@@ -36,7 +36,7 @@
 		to_chat(receiver, "<span class='notice'>A wave of energy invigorates you.</span>")
 		heal_target(receiver, 5 * used_power)
 
-/datum/artifact_effect/heal/DoEffectDestroy()
+/datum/artifact_effect/heal/DoEffectDeconstruct()
 	var/turf/curr_turf = get_turf(holder)
 	for(var/mob/living/receiver in range(7, curr_turf))
 		to_chat(receiver, "<span class='notice'>A wave of energy healed your wounds.</span>")
@@ -80,7 +80,7 @@
 		to_chat(receiver, "<span class='notice'>SYSTEM ALERT: Structural damage has been repaired by energy pulse!</span>")
 		heal_target(receiver, 5 * used_power)
 
-/datum/artifact_effect/roboheal/DoEffectDestroy()
+/datum/artifact_effect/roboheal/DoEffectDeconstruct()
 	var/turf/curr_turf = get_turf(holder)
 	for(var/mob/living/silicon/receiver in range(7, curr_turf))
 		to_chat(receiver, "<span class='notice'>SYSTEM ALERT: Structural damage has been repaired by energy pulse!</span>")
@@ -124,7 +124,7 @@
 		to_chat(receiver, "<span class='notice'>A wave of energy invigorates you.</span>")
 		deal_damage(receiver, 5 * used_power)
 
-/datum/artifact_effect/hurt/DoEffectDestroy()
+/datum/artifact_effect/hurt/DoEffectDeconstruct()
 	var/turf/curr_turf = get_turf(holder)
 	for(var/mob/living/receiver in range(7, curr_turf))
 		to_chat(receiver, "<span class='warning'>You feel tremendous pain</span>")
@@ -168,7 +168,7 @@
 		to_chat(receiver, "<span class='warning'>SYSTEM ALERT: Structural damage inflicted by energy pulse!</span>")
 		deal_damage(receiver, 0.5 * used_power)
 
-/datum/artifact_effect/robohurt/DoEffectDestroy()
+/datum/artifact_effect/robohurt/DoEffectDeconstruct()
 	var/turf/curr_turf = get_turf(holder)
 	for(var/mob/living/receiver in range(7, curr_turf))
 		to_chat(receiver, "<span class='warning'>SYSTEM ALERT: Critical structural damage inflicted by energy pulse!</span>")

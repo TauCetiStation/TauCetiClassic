@@ -25,7 +25,7 @@
 #define TRIGGER_NITRO 12
 #define TRIGGER_PROXY 13
 
-///list of possible artifact triggers
+///list of all possible artifact triggers to spawn randomly
 #define ARTIFACT_POSSIBLE_TRIGGERS list(\
     TRIGGER_TOUCH,\
     TRIGGER_WATER,\

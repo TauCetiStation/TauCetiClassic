@@ -28,7 +28,7 @@
 		return FALSE
 	return env
 
-/datum/artifact_effect/temperature/DoEffectDestroy()
+/datum/artifact_effect/temperature/DoEffectDeconstruct()
 	var/datum/gas_mixture/env = holder.loc.return_air()
 	if(!env)
 		return FALSE
@@ -55,7 +55,7 @@
 	if(env.temperature > target_temp)
 		env.temperature -= pick(0, 0, 1)
 
-/datum/artifact_effect/temperature/cold/DoEffectDestroy()
+/datum/artifact_effect/temperature/cold/DoEffectDeconstruct()
 	. = ..()
 	if(!.)
 		return
@@ -83,7 +83,7 @@
 	if(env.temperature > target_temp)
 		env.temperature += pick(0, 0, 1)
 
-/datum/artifact_effect/temperature/heat/DoEffectDestroy()
+/datum/artifact_effect/temperature/heat/DoEffectDeconstruct()
 	. = ..()
 	if(!.)
 		return

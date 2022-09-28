@@ -4,7 +4,6 @@
 	icon_state = "artifact_13"
 	icon_num = 0
 	density = TRUE
-	being_used = 0
 	need_init = FALSE
 	anchored = TRUE
 	light_color = "#24c1ff"
@@ -26,9 +25,9 @@
 	tesla_zap(src, 1, power / 2)
 	return
 
-/obj/machinery/artifact/bluespace_crystal/Destroy()
+/obj/machinery/artifact/bluespace_crystal/deconstruct(disassembled)
 	var/turf/mainloc = get_turf(src)
-	var/count_crystal = rand(1,5)
+	var/count_crystal = rand(1, 5)
 	for(var/i = 0 to count_crystal - 1)
 		new /obj/item/bluespace_crystal(mainloc)
 	if(prob(80))
@@ -47,7 +46,7 @@
 				anom.origin_tech = "materials=[rand(3,7)];combat=[rand(2,5)];engineering=[rand(2,5)]"
 	if(prob(50))
 		teleport()
-	return ..()
+	. = ..()
 
 /obj/machinery/artifact/bluespace_crystal/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
 	. = ..()

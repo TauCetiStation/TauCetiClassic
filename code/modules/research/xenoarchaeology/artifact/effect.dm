@@ -40,9 +40,9 @@
 	///activation cost for touch cast
 	var/activation_touch_cost = 3
 	///activation cost for aura cast
-	var/activation_aura_cost = 0
+	var/activation_aura_cost = 1
 	///activation cost for pulse cast
-	var/activation_pulse_cost = 0
+	var/activation_pulse_cost = 1
 	///used for logs and science tool
 	var/log_name = "unknown"
 	///purely used for getDescription
@@ -115,8 +115,8 @@
 		activated = FALSE
 
 /**
- * Checks for a user, anomaly protection, tries to drain artifact charg
- * returns true if charge was drained, otherwise returns false
+ * Checks for a user, anomaly protection, tries to drain artifact charge
+ * returns true on success, otherwise returns false
  */
 /datum/artifact_effect/proc/DoEffectTouch(mob/user)
 	if(!user)
@@ -129,26 +129,28 @@
 
 /**
  * Tries to drain charge
- * returns true if charge was drained, otherwise returns false
+ * returns drained charge on success, otherwise returns false
  */
-/datum/artifact_effect/proc/DoEffectAura()
-	if(try_drain_charge(activation_aura_cost))
-		return TRUE
+/datum/artifact_effect/proc/DoEffectAura(cost = activation_aura_cost)
+	SHOULD_CALL_PARENT(TRUE)
+	if(try_drain_charge(cost))
+		return cost
 	return FALSE
 
 /**
  * Tries to drain charge
- * returns true if charge was drained, otherwise returns false
+ * returns drained charge on success, otherwise returns false
  */
-/datum/artifact_effect/proc/DoEffectPulse()
-	if(try_drain_charge(activation_pulse_cost))
-		return activation_pulse_cost
+/datum/artifact_effect/proc/DoEffectPulse(cost = activation_pulse_cost)
+	SHOULD_CALL_PARENT(TRUE)
+	if(try_drain_charge(cost))
+		return cost
 	return FALSE
 
 /**
- * Only called in artifact_unknown code on qdel
+ * Special effect on /deconstruct
  */
-/datum/artifact_effect/proc/DoEffectDestroy()
+/datum/artifact_effect/proc/DoEffectDeconstruct()
 	return
 
 /**

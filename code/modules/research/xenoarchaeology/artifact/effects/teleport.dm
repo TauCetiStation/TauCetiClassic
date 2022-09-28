@@ -28,7 +28,7 @@
 		if(teleport_around(M, round(1 * used_power)))
 			to_chat(M, "<span class='warning'>You are displaced by a strange force!</span>")
 
-/datum/artifact_effect/teleport/DoEffectDestroy()
+/datum/artifact_effect/teleport/DoEffectDeconstruct()
 	var/turf/curr_turf = get_turf(holder)
 	for(var/mob/living/M in range(7, curr_turf))
 		if(teleport_around(M, 50))

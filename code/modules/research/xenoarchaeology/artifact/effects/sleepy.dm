@@ -29,8 +29,7 @@
 	for(var/mob/living/L in range(range, curr_turf))
 		apply_sleepy(L, used_power)
 
-
-/datum/artifact_effect/sleepy/DoEffectDestroy()
+/datum/artifact_effect/sleepy/DoEffectDeconstruct()
 	var/turf/curr_turf = get_turf(holder)
 	for(var/mob/living/L in range(7, curr_turf))
 		var/weakness = get_anomaly_protection(L)

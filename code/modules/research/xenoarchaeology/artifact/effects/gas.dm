@@ -28,7 +28,7 @@
 	if(isturf(holder_loc))
 		holder_loc.assume_gas(current_gas_type, pick(0, 0, 0.1, rand()))
 
-/datum/artifact_effect/gas/DoEffectDestroy()
+/datum/artifact_effect/gas/DoEffectDeconstruct()
 	. = ..()
 	var/turf/holder_loc = holder.loc
 	if(isturf(holder_loc))

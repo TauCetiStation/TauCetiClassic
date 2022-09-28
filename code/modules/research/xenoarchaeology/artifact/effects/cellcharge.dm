@@ -24,7 +24,7 @@
 	var/used_power = .
 	recharge_everything_in_range(200 * used_power, range, holder)
 
-/datum/artifact_effect/cellcharge/DoEffectDestroy()
+/datum/artifact_effect/cellcharge/DoEffectDeconstruct()
 	recharge_everything_in_range(10000, 7, holder)
 
 /datum/artifact_effect/cellcharge/proc/try_give_charge(atom/reciever_atmon, power)

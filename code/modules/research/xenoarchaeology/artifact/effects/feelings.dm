@@ -83,7 +83,7 @@
 		if(prob(25))
 			H.dizziness += rand(5, 15)
 
-/datum/artifact_effect/feelings/DoEffectDestroy()
+/datum/artifact_effect/feelings/DoEffectDeconstruct()
 	var/turf/curr_turf = get_turf(holder)
 	for(var/mob/living/carbon/human/H in range(7, curr_turf))
 		run_send_messages(H, 100, 0)

@@ -18,5 +18,5 @@
 	radius = radius + 2
 	tesla_zap(holder, radius, radius * 25000)
 
-/datum/artifact_effect/tesla/DoEffectDestroy()
+/datum/artifact_effect/tesla/DoEffectDeconstruct()
 	tesla_zap(holder, 7, 2500000)

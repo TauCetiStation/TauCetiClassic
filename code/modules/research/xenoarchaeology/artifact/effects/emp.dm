@@ -12,5 +12,5 @@
 		return
 	empulse(get_turf(holder), range / 2, range)
 
-/datum/artifact_effect/emp/DoEffectDestroy()
+/datum/artifact_effect/emp/DoEffectDeconstruct()
 	empulse(get_turf(holder), 7, range)

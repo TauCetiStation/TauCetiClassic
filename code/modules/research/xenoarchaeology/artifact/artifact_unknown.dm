@@ -11,31 +11,33 @@
 	///artifact second effect
 	var/datum/artifact_effect/secondary_effect
 	///is artifact busy right now, used it harvester code
-	var/being_used = 0
+	var/being_used = FALSE
 	///does our artifact needs an init, dont forget to init turfs in prebuild artifacts if needed
 	var/need_init = TRUE
-	///how often do we scan
-	var/scan_delay = 2 SECONDS
 	///list of turfs around us
 	var/list/turf/turfs_around = list()
 	///list of mobs inside of turfs around us
 	var/list/mob/mobs_around = list()
-	///touch cooldown to prevent spam in /bumped
-	var/touch_cooldown = 3 SECONDS
 	///last time mob touched us
 	var/last_time_touched = 0
 	///our health
 	max_integrity = 1000
+	///we dont drop anything yet
+	flags = NODECONSTRUCT
 
 /obj/machinery/artifact/Destroy()
 	clear_turfs_around()
-	do_destroy_effects()
-	visible_message("<span class='danger'>[src] breaks in pieces, releasing a wave of energy</span>")
+
 	if(first_effect)
 		QDEL_NULL(first_effect)
 	if(secondary_effect)
 		QDEL_NULL(secondary_effect)
 	return ..()
+
+/obj/machinery/artifact/deconstruct(disassembled)
+	do_deconstruct_effects()
+	visible_message("<span class='danger'>[src] breaks in pieces, releasing a wave of energy</span>")
+	. = ..()
 
 /obj/machinery/artifact/atom_init()
 	. = ..()
@@ -51,7 +53,7 @@
 		secondary_effect = new effecttype(src)
 
 	init_artifact_type()
-	if(first_effect?.trigger == TRIGGER_PROXY || secondary_effect?.trigger == TRIGGER_PROXY)
+	if(first_effect.trigger == TRIGGER_PROXY || secondary_effect?.trigger == TRIGGER_PROXY)
 		init_turfs_around()
 
 /**
@@ -97,7 +99,7 @@
  * Tries to toggle both effects on or off if trigger is correct
  */
 /obj/machinery/artifact/proc/try_toggle_effects(trigger)
-	if(first_effect?.trigger == trigger)
+	if(first_effect.trigger == trigger)
 		first_effect.ToggleActivate()
 	if(secondary_effect?.trigger == trigger)
 		secondary_effect.ToggleActivate(FALSE)
@@ -137,9 +139,9 @@
 /**
  * Tries to do the destroy reaction of BOTH effects
  */
-/obj/machinery/artifact/proc/do_destroy_effects()
-	first_effect?.DoEffectDestroy()
-	secondary_effect?.DoEffectDestroy()
+/obj/machinery/artifact/proc/do_deconstruct_effects()
+	first_effect.DoEffectDeconstruct()
+	secondary_effect?.DoEffectDeconstruct()
 
 /**
  * Picks random artifact icon, changes its name, description
@@ -172,7 +174,7 @@
 
 /obj/machinery/artifact/process()
 	//if either of our effects rely on environmental factors, work that out
-	if((first_effect?.trigger >= TRIGGER_HEAT && first_effect?.trigger <= TRIGGER_NITRO) ||\
+	if((first_effect.trigger >= TRIGGER_HEAT && first_effect.trigger <= TRIGGER_NITRO) ||\
 	 (secondary_effect?.trigger >= TRIGGER_HEAT && secondary_effect.trigger <= TRIGGER_NITRO))
 		var/turf/T = get_turf(src)
 		var/datum/gas_mixture/env = T.return_air()
@@ -202,7 +204,7 @@
 				toggle_effects_on(TRIGGER_NITRO)
 			else toggle_effects_off(TRIGGER_NITRO)
 	//TRIGGER_PROXY ACTIVATION
-	if((first_effect?.trigger >= TRIGGER_PROXY || secondary_effect?.trigger >= TRIGGER_PROXY))
+	if((first_effect.trigger >= TRIGGER_PROXY || secondary_effect?.trigger >= TRIGGER_PROXY))
 		if(mobs_around.len != 0)
 			toggle_effects_on(TRIGGER_PROXY)
 		else
@@ -260,7 +262,7 @@
 			istype(W, /obj/item/weapon/card/emag) ||\
 			ismultitool(W))
 			try_toggle_effects(TRIGGER_ENERGY)
-	if(first_effect?.trigger == TRIGGER_HEAT || secondary_effect?.trigger == TRIGGER_HEAT)
+	if(first_effect.trigger == TRIGGER_HEAT || secondary_effect?.trigger == TRIGGER_HEAT)
 		if(W.get_current_temperature() > 700)
 			try_toggle_effects(TRIGGER_HEAT)
 			return
@@ -287,7 +289,7 @@
 		var/obj/O = AM
 		if(O.throwforce >= 10)
 			try_toggle_effects(TRIGGER_FORCE)
-	if(world.time >= last_time_touched + touch_cooldown)
+	if(world.time >= last_time_touched + 3 SECONDS)
 		last_time_touched = world.time
 		try_toggle_effects(TRIGGER_TOUCH)
 		if(first_effect.release_method == ARTIFACT_EFFECT_TOUCH && first_effect.activated && prob(50))
@@ -307,17 +309,17 @@
 
 	if(pulledby)
 		Bumped(pulledby)
-	first_effect?.UpdateMove()
+	first_effect.UpdateMove()
 	secondary_effect?.UpdateMove()
 
-	if(first_effect?.trigger == TRIGGER_PROXY || secondary_effect?.trigger == TRIGGER_PROXY)
+	if(first_effect.trigger == TRIGGER_PROXY || secondary_effect?.trigger == TRIGGER_PROXY)
 		if(turfs_around.len != 0)
 			clear_turfs_around()
 		addtimer(CALLBACK(src, .proc/init_turfs_around), 3 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /obj/machinery/artifact/update_icon()
 	var/check_activity = null
-	if(first_effect?.activated || secondary_effect?.activated)
+	if(first_effect.activated || secondary_effect?.activated)
 		check_activity = "_active"
 	icon_state = "artifact_[icon_num][check_activity]"
 	return
