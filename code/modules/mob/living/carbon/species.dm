@@ -418,6 +418,7 @@
 	,HAS_HAIR = TRUE
 	,FACEHUGGABLE = TRUE
 	,IS_SOCIAL = TRUE
+	,FUR = TRUE
 	)
 
 	flesh_color = "#afa59e"

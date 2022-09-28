@@ -417,6 +417,11 @@
 				else if(H.gloves && !istype(H.gloves, /obj/item/clothing/gloves/latex))
 					return 0
 
+		if(H.species.flags[FUR])
+			var/check_cloth = 100 - H.getarmor(null, "bio")
+			if(prob(check_cloth))
+				ADD_TRAIT(src, TRAIT_XENO_FUR, GENERIC_TRAIT)
+
 		//More adminstuffz
 		if(fingerprintslast != H.key)
 			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), H.real_name, H.key)

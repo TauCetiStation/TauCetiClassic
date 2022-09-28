@@ -19,12 +19,12 @@
 		var/mob/living/L = M
 		if(taste)
 			L.taste_reagents(reagents)
-	if(HAS_TRAIT(src, TRAIT_TAJARAN_HAIR))
+	if(HAS_TRAIT(src, TRAIT_XENO_FUR))
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/chance = 25
-			//less puke to tajaran, usually eat
-			if(H.species.name == TAJARAN)
+			//less puke to tajaran or other xenos with hair
+			if(H.species.flags[FUR])
 				chance = 1
 			if(prob(chance))
 				H.invoke_vomit_async()
@@ -176,7 +176,6 @@
 	if(contents)
 		for(var/atom/movable/something in contents)
 			something.loc = get_turf(src)
-	REMOVE_TRAIT(src, TRAIT_TAJARAN_HAIR, GENERIC_TRAIT)
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)

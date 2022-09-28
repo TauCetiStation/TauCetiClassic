@@ -166,7 +166,6 @@
 #define TRAIT_SOULSTONE_IMMUNE    "soulstone_immune"
 #define TRAIT_CULT_EYES           "cult_eyes"
 #define TRAIT_CULT_HALO           "cult_halo"
-#define TRAIT_TAJARAN_HAIR        "tajaran_hair"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -198,3 +197,6 @@
 #define OBESITY_TRAIT      "obesity"
 #define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"
 #define FEAR_TRAIT         "fear"
+
+// atom traits
+#define TRAIT_XENO_FUR "xeno_fur"
