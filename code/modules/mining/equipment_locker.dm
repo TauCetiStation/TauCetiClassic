@@ -619,7 +619,7 @@
 	if(charged)
 		charged = FALSE
 		playsound(src, 'sound/items/resonator_use.ogg', VOL_EFFECTS_MASTER)
-		var/obj/effect/resonance/R = new /obj/effect/resonance(get_turf(target))
+		new /obj/effect/resonance(get_turf(target))
 		addtimer(CALLBACK(src, .proc/recharge), recharge_time)
 		lower_recharge_time()
 
