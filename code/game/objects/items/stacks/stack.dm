@@ -320,9 +320,10 @@
 			change_stack(user, stackmaterial)
 			to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack</span>")
 
-/obj/item/stack/proc/change_stack(mob/living/user, amount)
+/obj/item/stack/proc/change_stack(mob/living/user, amount, try_put_in_hand = TRUE)
 	var/obj/item/stack/F = new type(loc, amount, FALSE)
-	user.try_take(F, loc)
+	if(try_put_in_hand)
+		user.try_take(F, loc)
 	. = F
 	F.copy_evidences(src)
 	add_fingerprint(user)

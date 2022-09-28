@@ -111,24 +111,7 @@
 				to_chat(user, "You cut the wires from the circuits.")
 				state = 2
 				return
-
-	// Upgrades!
-	if(is_type_in_list(I, possible_upgrades) && !is_type_in_list(I, upgrades)) // Is a possible upgrade and isn't in the camera already.
-		to_chat(user, "You attach the [I] into the assembly inner circuits.")
-		upgrades += I
-		user.drop_from_inventory(I, src)
-
-	// Taking out upgrades
-	else if(iscrowbar(I) && upgrades.len)
-		var/obj/U = locate(/obj) in upgrades
-		if(U)
-			to_chat(user, "You unattach an upgrade from the assembly.")
-			playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
-			U.loc = get_turf(src)
-			upgrades -= U
-
-	else
-		return ..()
+	return ..()
 
 /obj/item/weapon/camera_assembly/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)

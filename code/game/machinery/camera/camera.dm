@@ -27,6 +27,8 @@
 	var/light_disabled = 0
 	var/alarm_on = 0
 	var/painted = FALSE // Barber's paint can obstruct camera's view.
+	var/camera_base = "camera" //used for icon_state overriding in update_icon()
+	var/list/camera_upgrades = list()
 
 	var/show_paper_cooldown = 0
 
@@ -74,12 +76,13 @@
 	return ..()
 
 /obj/machinery/camera/update_icon()
+	icon_state = "[camera_base]"
 	if(!status)
-		icon_state = "[initial(icon_state)]1"
-	else if(stat & EMPED)
-		icon_state = "[initial(icon_state)]emp"
-	else
-		icon_state = "[initial(icon_state)]"
+		icon_state = "[camera_base]1"
+	if(stat & BROKEN)
+		icon_state = "[camera_base]x"
+	if(stat & EMPED)
+		icon_state = "[camera_base]emp"
 
 /obj/machinery/camera/examine(mob/user)
 	..()
@@ -165,16 +168,27 @@
 
 	else if(istype(W, /obj/item/stack/sheet/mineral/phoron) && panel_open)
 		if(!isEmpProof())
-			upgradeEmpProof()
+			var/obj/item/stack/sheet/mineral/phoron/P = W
+			var/obj/item/stack/sheet/mineral/phoron/S = P.change_stack(user, 1, FALSE)
+			upgradeEmpProof(S)
 			to_chat(user, "[msg]")
-			qdel(W)
 		else
 			to_chat(user, "[msg2]")
+
 	else if(istype(W, /obj/item/device/assembly/prox_sensor) && panel_open)
 		if(!isMotion())
 			upgradeMotion()
 			to_chat(user, "[msg]")
 			qdel(W)
+		else
+			to_chat(user, "[msg2]")
+
+	else if(istype(W, /obj/item/stack/sheet/plasteel) && panel_open)
+		if(!invuln)
+			var/obj/item/stack/sheet/plasteel/P = W
+			var/obj/item/stack/sheet/plasteel/S = P.change_stack(user, 1, FALSE)
+			upgradeExplosiveImmune(S)
+			to_chat(user, "[msg]")
 		else
 			to_chat(user, "[msg2]")
 
@@ -428,3 +442,46 @@
 	cam["z"] = z
 	cam["isonstation"] = is_station_level(z)
 	return cam
+
+//upgrade checks
+/obj/machinery/camera/proc/isEmpProof()
+	var/list/L = camera_upgrades["phoron"]
+	var/type = pick(L)
+	if(istype(type, /obj/item/stack/sheet/mineral/phoron))
+		return TRUE
+	return FALSE
+
+/obj/machinery/camera/proc/isXRay()
+	var/list/L = camera_upgrades["analyzer"]
+	var/type = pick(L)
+	if(istype(type, /obj/item/device/analyzer))
+		return TRUE
+	return FALSE
+
+/obj/machinery/camera/proc/isMotion()
+	var/list/L = camera_upgrades["sensor"]
+	var/type = pick(L)
+	if(istype(type, /obj/item/device/assembly/prox_sensor))
+		return TRUE
+	return FALSE
+
+//upgrading procs
+/obj/machinery/camera/proc/upgradeEmpProof(obj/item/I)
+	camera_upgrades["phoron"] = I
+	update_icon()
+
+/obj/machinery/camera/proc/upgradeXRay(obj/item/I)
+	camera_upgrades["analyzer"] = I
+	camera_base = "xraycam"
+	update_icon()
+
+/obj/machinery/camera/proc/upgradeMotion(obj/item/I)
+	camera_upgrades["sensor"] = I
+	update_icon()
+
+/obj/machinery/camera/proc/upgradeExplosiveImmune(obj/item/I)
+	camera_upgrades["plasteel"] = I
+	invuln = TRUE
+	modify_max_integrity(max_integrity * 3)
+	repair_damage(max_integrity - get_integrity())
+	update_icon()

@@ -15,6 +15,15 @@
 	. = ..()
 	upgradeXRay()
 
+//EXPL-IMMUNE
+
+/obj/machinery/camera/ex_immune/
+	name = "reinforced security camera"
+
+/obj/machinery/camera/ex_immune/atom_init()
+	. = ..()
+	upgradeExplosiveImmune()
+
 // MOTION
 /obj/machinery/camera/motion
 	name = "motion-sensitive security camera"
@@ -30,6 +39,7 @@
 	upgradeEmpProof()
 	upgradeXRay()
 	upgradeMotion()
+	upgradeExplosiveImmune()
 
 // AUTONAME
 
@@ -53,30 +63,3 @@
 				if(C.number)
 					number = max(number, C.number+1)
 		c_tag = "[A.name] #[number]"
-
-
-// CHECKS
-
-/obj/machinery/camera/proc/isEmpProof()
-	var/O = locate(/obj/item/stack/sheet/mineral/phoron) in assembly.upgrades
-	return O
-
-/obj/machinery/camera/proc/isXRay()
-	var/O = locate(/obj/item/device/analyzer) in assembly.upgrades
-	return O
-
-/obj/machinery/camera/proc/isMotion()
-	var/O = locate(/obj/item/device/assembly/prox_sensor) in assembly.upgrades
-	return O
-
-// UPGRADE PROCS
-
-/obj/machinery/camera/proc/upgradeEmpProof()
-	assembly.upgrades.Add(new /obj/item/stack/sheet/mineral/phoron(assembly))
-
-/obj/machinery/camera/proc/upgradeXRay()
-	assembly.upgrades.Add(new /obj/item/device/analyzer(assembly))
-
-// If you are upgrading Motion, and it isn't in the camera's New(), add it to the machines list.
-/obj/machinery/camera/proc/upgradeMotion()
-	assembly.upgrades.Add(new /obj/item/device/assembly/prox_sensor(assembly))
