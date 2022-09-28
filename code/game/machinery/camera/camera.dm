@@ -181,7 +181,7 @@
 
 	else if(istype(W, /obj/item/stack/sheet/glass) && panel_open)
 		var/obj/item/stack/sheet/glass/G = W
-		painted = FALSE
+		remove_paint_state()
 		to_chat(user, "<span class='notice'>You fixed [src] lens.</span>")
 		G.use(1)
 	// OTHER
