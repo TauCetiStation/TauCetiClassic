@@ -674,6 +674,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_upgrade/resources/atom_init()
 	desc += "Повышает <span class='notice'><B>эффективность добычи ресурсов</B></span> на <span class='notice'><B>[additional_coefficient * 100]%</B></span>. "
 	return ..()
+
 /obj/item/kinetic_upgrade/range
 	name = "accelerator upgrade(range)"
 	icon_state = "accelerator_upg_range"
