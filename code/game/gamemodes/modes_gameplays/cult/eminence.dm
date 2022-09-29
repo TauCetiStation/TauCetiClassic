@@ -56,9 +56,10 @@
 					to_chat(src, "<span class='warning'>The Chapel is hallowed ground under a heretical deity, and can't be accessed!</span>")
 				return
 		else*/
-		for(var/turf/TT in range(5, src))
-			if(prob(166 - (get_dist(src, TT) * 33)))
-				TT.atom_religify(my_religion) //Causes moving to leave a swath of proselytized area behind the Eminence
+		if(SSticker.nar_sie_has_risenen)
+			for(var/turf/TT in range(5, src))
+				if(prob(166 - (get_dist(src, TT) * 33)))
+					TT.atom_religify(my_religion) //Causes moving to leave a swath of proselytized area behind the Eminence
 		forceMove(NewLoc)
 		Moved(OldLoc, direct)
 
@@ -102,7 +103,7 @@
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message)
 		return
-	log_say(message)//src.log_talk(, LOG_SAY, tag="clockwork eminence")
+	log_say(message)
 	if(SSticker.nar_sie_has_risen)
 		visible_message("<span class='cult big'><b>You feel light slam into your mind and form words:</b> \"[capitalize(message)]\"</span>")
 		//playsound(src, 'sound/machines/clockcult/ark_scream.ogg', 50, FALSE)
@@ -113,23 +114,12 @@
 			to_chat(M, "[link] [message]")
 		else
 			to_chat(M, message)
-/*
-/mob/camera/eminence/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
-	. = ..()
-	if(is_reebe(z) || iscultist(speaker)  || SSticker.nar_sie_has_risenens) //Away from Reebe, the Eminence can't hear anything
-		to_chat(src, message)//|| ratvar_approaches
-		return
-	to_chat(src, "<i>[speaker] says something, but you can't understand any of it...</i>")
-*/
 
 /mob/camera/eminence/ClickOn(atom/A, params)
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"])
 		A.examine(src)
 		return
-	/*if(modifiers["alt"] && istype(A, /obj/structure/mineral_door/cult))
-		superheat_wall(A)
-		return*/
 	if(modifiers["middle"] || modifiers["ctrl"])
 		issue_command(A)
 		return
@@ -150,46 +140,17 @@
 		var/obj/structure/cult/anomaly/F = A
 		F.destroying(my_religion)
 
-	/*if(GLOB.ark_of_the_clockwork_justiciar == A)
-		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
-		if(G.recalling)
-			return
-		if(!G.recalls_remaining)
-			to_chat(src, "<span class='warning'>The Ark can no longer recall!</span>")
-			return
-		if(alert(src, "Initiate mass recall?", "Mass Recall", "Yes", "No") != "Yes" || QDELETED(src) || QDELETED(G) || !G.obj_integrity)
-			return
-		G.initiate_mass_recall() //wHOOPS LOOKS LIKE A HULK GOT THROUGH
-	else if(istype(A, /obj/structure/destructible/clockwork/trap/trigger))
-		var/obj/structure/destructible/clockwork/trap/trigger/T = A
-		T.visible_message("<span class='danger'>[T] clunks as it's activated remotely.</span>")
-		to_chat(src, "<span class='brass'>You activate [T].</span>")
-		T.activate()*/
-
-/*
-/mob/camera/eminence/ratvar_act()
-	name = "\improper Radiance"
-	real_name = "\improper Radiance"
-	desc = "The light, forgotten."
-	transform = matrix() * 2
-	invisibility = SEE_INVISIBLE_MINIMUM
-*/
 /mob/camera/eminence/proc/issue_command(atom/movable/A)
+	if(!COOLDOWN_FINISHED(src, command_point))
+		to_chat(src, "<span class='cult'>Слишком рано для новой команды!</span>")
+		return
 	var/list/commands
 	var/atom/movable/command_location
-	if(!COOLDOWN_FINISHED(src, command_point))
-		to_chat(src, "<span class='cult'>It is too soon to issue new command!</span>")
 	if(A == src)
 		commands = list("Defend the Ark!", "Advance!", "Retreat!", "Generate Power", "Build Defenses (Bottom-Up)", "Build Defenses (Top-Down)")
 	else
 		command_location = A
 		commands = list("Rally Here", "Regroup Here", "Avoid This Area", "Reinforce This Area")
-		/*if(istype(A, /obj/structure/destructible/clockwork/powered))
-			var/obj/structure/destructible/clockwork/powered/P = A
-			if(!can_access_clockwork_power(P))
-				commands += "Power This Structure"
-			if(P.obj_integrity < P.max_integrity)
-				commands += "Repair This Structure"*/
 	var/roma_invicta = input(src, "Choose a command to issue to your cult!", "Issue Commands") as null|anything in commands
 	if(!roma_invicta)
 		return
@@ -251,7 +212,6 @@
 	icon_state = "eminence"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	resistance_flags = INDESTRUCTIBLE
-	//layer = MASSIVE_OBJ_LAYER
 	duration = 300
 	var/image/cult_vis
 
