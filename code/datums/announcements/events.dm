@@ -100,7 +100,7 @@
 	sound = "pyroanom"
 /datum/announcement/centcomm/anomaly/pyro/play(area/A)
 	if(A)
-		message = "На сканерах дальнего действия обнаружена пирокластическая аномалия. Ожидаемое местоположение: [initial(A.name)]."
+		message = "На сканерах дальнего действия обнаружена пирокластическая аномалия. Ожидаемое местоположение: [A.name != initial(A.name) ? initial(A.name) : A.name]."
 	..()
 
 /datum/announcement/centcomm/anomaly/vortex
