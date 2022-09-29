@@ -227,3 +227,6 @@
 
 	// Reason of logout
 	var/logout_reason
+
+	/// List of action hud items the user has
+	var/list/datum/action/actions = list()

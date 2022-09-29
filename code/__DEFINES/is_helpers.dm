@@ -64,6 +64,7 @@
 
 #define issilicon(A) (istype(A, /mob/living/silicon))
 
+
 // LIVING
 
 #define iscorgi(A) (istype(A, /mob/living/simple_animal/corgi))
@@ -174,6 +175,8 @@
 #define isshadowthrall(H) isrole(SHADOW_THRALL, H)
 
 #define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
+
+#define iseminence(A) (istype(A, /mob/camera/eminence))
 
 #define isvoxraider(H) isrole(VOXRAIDER, H)
 
