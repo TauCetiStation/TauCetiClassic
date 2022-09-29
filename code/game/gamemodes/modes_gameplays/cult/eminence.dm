@@ -21,13 +21,17 @@
 	//var/static/superheated_walls = 0
 	var/lastWarning = 0
 	var/image/eminence_image = null
+	var/obj/item/weapon/storage/bible/tome/upgraded/tome
+	COOLDOWN_DECLARE(command_point)
 
 /mob/camera/eminence/atom_init()
 	. = ..()
+	tome = new(src)
 
 /mob/camera/eminence/Destroy()
 	. = ..()
 	QDEL_NULL(eminence_image)
+	QDEL_NULL(tome)
 
 /mob/camera/eminence/CanPass(atom/movable/mover, turf/target)
 	return TRUE
@@ -62,8 +66,11 @@
 	return TRUE
 
 /mob/camera/eminence/Login()
-	..()
-	cult_religion.add_member(src)//add_servant_of_ratvar(src, TRUE)
+	..()//add_servant_of_ratvar(src, TRUE)
+	cult_religion.add_member(src)
+	eminence_image = image(icon, src, icon_state)
+	for(var/mob/M in cult_religion.members)
+		M.client?.images |= eminence_image //Only for clients
 	//var/datum/antagonist/clockcult/C = mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
 	if(cult_religion)
 		if(cult_religion.eminence && cult_religion.eminence != src)
@@ -72,13 +79,9 @@
 			return
 		else
 			cult_religion.eminence = src
-	eminence_image = image(icon, src, icon_state)
-	for(var/mob/M in cult_religion.members)
-		M.client.images |= eminence_image
-	to_chat(src, "<span class='bold large_brass'>You have been selected as the Eminence!</span>")
-	to_chat(src, "<span class='brass'>As the Eminence, you lead the servants. Anything you say will be heard by the entire cult.</span>")
-	to_chat(src, "<span class='brass'>Though you can move through walls, you're also incorporeal, and largely can't interact with the world except for a few ways.</span>")
-	to_chat(src, "<span class='brass'>Additionally, unless the herald's beacon is activated, you can't understand any speech while away from Reebe.</span>")
+	to_chat(src, "<span class='cult large'>You have been selected as the Eminence!</span>")
+	to_chat(src, "<span class='cult'>As the Eminence, you lead the cultists. Anything you say will be heard by the entire cult.</span>")
+	to_chat(src, "<span class='cult'>Though you can move through walls, you're also incorporeal, and largely can't interact with the world except for a few ways.</span>")
 	eminence_help()
 	for(var/V in actions)
 		var/datum/action/A = V
@@ -88,9 +91,7 @@
 	for(var/V in subtypesof(/datum/action/innate/eminence))
 		E = new V (src)
 		E.Grant(src)
-	/*for(var/obj/item/rig_module/module in installed_modules)
-		var/datum/action/module_select/action = new(module)
-		action.Grant(H)*/
+
 /mob/camera/eminence/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
@@ -103,9 +104,9 @@
 		return
 	log_say(message)//src.log_talk(, LOG_SAY, tag="clockwork eminence")
 	if(SSticker.nar_sie_has_risen)
-		visible_message("<span class='brass'><b>You feel light slam into your mind and form words:</b> \"[capitalize(message)]\"</span>")
+		visible_message("<span class='cult big'><b>You feel light slam into your mind and form words:</b> \"[capitalize(message)]\"</span>")
 		//playsound(src, 'sound/machines/clockcult/ark_scream.ogg', 50, FALSE)
-	message = "<span class='big brass'><b>The [SSticker.nar_sie_has_risen ? "Radiance" : "Eminence"]:</b> \"[message]\"</span>"
+	message = "<span class='big cult'><b>The [SSticker.nar_sie_has_risen ? "Radiance" : "Eminence"]:</b> \"[message]\"</span>"
 	for(var/mob/M in servants_and_ghosts())
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
@@ -132,9 +133,23 @@
 	if(modifiers["middle"] || modifiers["ctrl"])
 		issue_command(A)
 		return
+
 	if(istype(A, /obj/structure/mineral_door/cult))
 		var/obj/structure/mineral_door/cult/D = A
 		D.attack_hand(src)
+	else if(istype(A, /obj/structure/altar_of_gods/cult))
+		var/obj/structure/altar_of_gods/alt = A
+		alt.attackby(tome, src)
+	else if(istype(A, /obj/structure/cult/tech_table))
+		var/obj/structure/cult/tech_table/T = A
+		T.attack_hand(src)
+	else if(istype(A, /obj/structure/cult/forge))
+		var/obj/structure/cult/forge/F = A
+		F.attack_hand(src)
+	else if(istype(A, /obj/structure/cult/anomaly))
+		var/obj/structure/cult/anomaly/F = A
+		F.destroying(my_religion)
+
 	/*if(GLOB.ark_of_the_clockwork_justiciar == A)
 		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
 		if(G.recalling)
@@ -162,6 +177,8 @@
 /mob/camera/eminence/proc/issue_command(atom/movable/A)
 	var/list/commands
 	var/atom/movable/command_location
+	if(!COOLDOWN_FINISHED(src, command_point))
+		to_chat(src, "<span class='cult'>It is too soon to issue new command!</span>")
 	if(A == src)
 		commands = list("Defend the Ark!", "Advance!", "Retreat!", "Generate Power", "Build Defenses (Bottom-Up)", "Build Defenses (Top-Down)")
 	else
@@ -211,12 +228,13 @@
 			command_text = "The Eminence orders that defenses should be built starting from the top of Reebe!"
 	if(marker_icon)
 		new/obj/effect/temp_visual/ratvar/command_point(get_turf(A), marker_icon)
+		COOLDOWN_START(src, command_point, 2 MINUTES)
 		/*for(var/mob/M in servants_and_ghosts())
 			to_chat(M, "<span class='large_brass'>[replacetext(command_text, "GETDIR", dir2text(get_dir(M, command_location)))]</span>")
 			M.playsound_local(M, 'sound/machines/clockcult/eminence_command.ogg', 75, FALSE, pressure_affected = FALSE)
 	*/
 	else
-		hierophant_message("<span class='bold large_brass'>[command_text]</span>")
+		hierophant_message("<span class='bold large cult'>[command_text]</span>")
 		//for(var/mob/M in servants_and_ghosts())
 		//	M.playsound_local(M, 'sound/machines/clockcult/eminence_command.ogg', 75, FALSE, pressure_affected = FALSE)
 
@@ -239,9 +257,41 @@
 
 /obj/effect/temp_visual/ratvar/command_point/atom_init(marker_icon)
 	. = ..()
-	cult_vis = image(icon, src, icon_state)
+	cult_vis = image(icon, src, marker_icon)
 	for(var/mob/M in servants_and_ghosts())
 		M.client.images |= cult_vis
+		if(!isliving(M))
+			return
+		var/mob/living/L = M
+		if(get_dist(src, L) >= 3) //Remove stuns
+			if(L.reagents)
+				L.reagents.clear_reagents()
+			L.beauty.AddModifier("stat", additive=L.beauty_living)
+			L.setOxyLoss(0)
+			L.setHalLoss(0)
+			L.SetParalysis(0)
+			L.SetStunned(0)
+			L.SetWeakened(0)
+			L.setDrugginess(0)
+			L.radiation = 0
+			L.nutrition = NUTRITION_LEVEL_NORMAL
+			L.bodytemperature = T20C
+			L.blinded = 0
+			L.eye_blind = 0
+			L.setBlurriness(0)
+			L.ear_deaf = 0
+			L.ear_damage = 0
+			L.stat = CONSCIOUS
+			L.SetDrunkenness(0)
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
+				C.shock_stage = 0
+				if(ishuman(L))
+					var/mob/living/carbon/human/H = src
+					H.restore_blood()
+					H.full_prosthetic = null
+					var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
+					Heart?.heart_normalize()
 
 /obj/effect/temp_visual/ratvar/command_point/Destroy()
 	. = ..()
@@ -264,19 +314,19 @@
 		to_chat(src, "<span class='neovgre_small'>You cool [wall]. <b>Superheated walls:</b> [superheated_walls]/[SUPERHEATED_CLOCKWORK_WALL_LIMIT]</span>")
 */
 /mob/camera/eminence/proc/eminence_help()
-	to_chat(src, "<span class='bold alloy'>You can make use of certain shortcuts to perform different actions:</span>")
-	to_chat(src, "<span class='alloy'><b>Interact with the Ark</b> to initiate an emergency recall that teleports all servants directly to its location after a short delay. \
+	to_chat(src, "<span class='bold cult'>Вы можете взаимодействовать с внешним миром несколькими способами:</span>")
+	to_chat(src, "<span class='cult'><b>You can interact with cult structures</b> to initiate an emergency recall that teleports all servants directly to its location after a short delay. \
 	This can only be used a single time, or twice if the herald's beacon was activated,</span>")
-	to_chat(src, "<span class='alloy'><b>Middle or Ctrl-Click anywhere</b> to allow you to issue a variety of contextual commands to your cult. Different objects allow for different \
+	to_chat(src, "<span class='cult'><b>Middle or Ctrl-Click anywhere</b> to allow you to issue a variety of contextual commands to your cult. Different objects allow for different \
 	commands. <i>Doing this on yourself will provide commands that tell the entire cult a goal.</i></span>")
 
 //Eminence actions below this point
 /datum/action/innate/eminence
 	name = "Eminence Action"
 	//desc = "You shouldn't see this. File a bug report!"
-	button_icon = 'icons/mob/actions_clockcult.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "clockcult"
-	//background_icon_state = "bg_clock"
+	background_icon_state = "bg_cult"
 	action_type = AB_INNATE
 
 /datum/action/innate/eminence/IsAvailable()
@@ -294,36 +344,56 @@
 /datum/action/innate/eminence/power_list/Activate()
 	var/mob/camera/eminence/E = owner
 	E.eminence_help()
-/*
-//Returns to the Ark
-/datum/action/innate/eminence/ark_jump
-	name = "Return to Ark"
-	//desc = "Warps you to the Ark."
-	button_icon_state = "Abscond"
 
-/datum/action/innate/eminence/ark_jump/Activate()
-	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
-	if(G)
-		owner.forceMove(get_turf(G))
+/proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
+	var/client/C
+	if(ismob(mob_or_client))
+		var/mob/M = mob_or_client
+		if(M.client)
+			C = M.client
+		else
+			return
+	else if(istype(mob_or_client, /client))
+		C = mob_or_client
+
+	if(!istype(C))
+		return
+
+	var/animate_color = C.color
+	C.color = flash_color
+	animate(C, color = animate_color, time = flash_time)
+
+//Returns to the heaven
+/datum/action/innate/eminence/heaven_jump
+	name = "Return to Heaven"
+	//desc = "Warps you to the Ark."
+	button_icon_state = "abscond"
+
+/datum/action/innate/eminence/heaven_jump/Activate()
+	if(cult_religion)
+		if(!length(cult_religion.altars))
+			to_chat(src, "<span class='bold cult'>У культа нет алтарей!</span>")
+			return
+		owner.forceMove(get_turf(pick(cult_religion.altars)))
 		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', 50, TRUE)
-		flash_color(owner, flash_color = "#AF0AAF", flash_time = 25)
+		flash_color(owner, flash_time = 25)
 	else
-		to_chat(owner, "<span class='warning'>There is no Ark!</span>")
-*//*
+		to_chat(owner, "<span class='warning'>Something is wrong in everything! Tell the gods about it!!</span>")
+
 //Warps to the Station
 /datum/action/innate/eminence/station_jump
 	name = "Warp to Station"
-	desc = "Warps to Space Station 13. You cannot hear anything while there!</span>"
+	//desc = "Warps to Space Station 13. You cannot hear anything while there!</span>"
 	button_icon_state = "warp_down"
 
 /datum/action/innate/eminence/station_jump/Activate()
-	if(is_reebe(owner.z))
-		owner.forceMove(get_turf(pick(generic_event_spawns)))
-		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', 50, TRUE)
-		flash_color(owner, flash_color = "#AF0AAF", flash_time = 25)
-	else
-		to_chat(owner, "<span class='warning'>You're already on the station!</span>")
-		*/
+	if(cult_religion)
+		for(var/obj/effect/rune/rune as anything in cult_religion.runes)
+			if(!is_centcom_level(rune.z))
+				owner.forceMove(get_turf(pick(cult_religion.runes)))
+				owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', 50, TRUE)
+				flash_color(owner, flash_time = 25)
+				break
 /*
 //A quick-use button for recalling the servants to the Ark
 /datum/action/innate/eminence/mass_recall

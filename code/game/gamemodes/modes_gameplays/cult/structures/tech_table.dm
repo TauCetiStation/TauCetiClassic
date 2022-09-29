@@ -49,7 +49,7 @@
 		var/datum/aspect/A = religion.aspects[name]
 		to_chat(user, "\t<font color='[A.color]'>[name]</font> с силой <font size='[1+A.power]'><i>[A.power]</i></font>")
 
-/obj/structure/cult/tech_table/attack_hand(mob/living/user)
+/obj/structure/cult/tech_table/attack_hand(mob/user)
 	if(!user.mind.holy_role || !user.my_religion)
 		return
 
@@ -79,7 +79,7 @@
 		if("Уникальные технологии")
 			choose_uniq_tech(user)
 
-/obj/structure/cult/tech_table/proc/choose_uniq_tech(mob/living/user)
+/obj/structure/cult/tech_table/proc/choose_uniq_tech(mob/user)
 	for(var/datum/building_agent/B in uniq_images)
 		B.name = "[initial(B.name)] [B.get_costs()]"
 
@@ -107,7 +107,7 @@
 
 	end_activity()
 
-/obj/structure/cult/tech_table/proc/choose_aspect(mob/living/user)
+/obj/structure/cult/tech_table/proc/choose_aspect(mob/user)
 	// Generates a name with the power of an aspect and upgrade cost
 	for(var/datum/aspect/A in aspect_images)
 		var/datum/aspect/in_religion = religion.aspects[initial(A.name)]
@@ -146,7 +146,7 @@
 		"Уникальные технологии" = uniq_images[pick(uniq_images)],
 	)
 
-/obj/structure/cult/tech_table/proc/gen_tech_images(mob/living/user)
+/obj/structure/cult/tech_table/proc/gen_tech_images(mob/user)
 	uniq_images = list()
 	for(var/datum/building_agent/tech/BA in religion.available_techs)
 		uniq_images[BA] = image(icon = BA.icon, icon_state = BA.icon_state)
