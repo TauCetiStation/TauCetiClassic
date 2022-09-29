@@ -218,7 +218,6 @@
 	icon_state = "energy2"
 	damage = 5
 	weaken = 10
-	stun = 10
 	damage_type = TOX
 	flag = "bio"
 
@@ -246,30 +245,42 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		var/obj/item/organ/external/BP = H.get_bodypart(def_zone) // We're checking the outside, buddy!
-		var/list/body_parts = list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.gloves, H.shoes) // What all are we checking?
-		for(var/bp in body_parts) //Make an unregulated var to pass around.
-			if(istype(bp ,/obj/item/clothing)) // If it exists, and it's clothed
-				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
-				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
-					if(prob(60))
-						C.make_old()
-						if(bp == H.head)
-							H.update_inv_head()
-						if(bp == H.wear_mask)
-							H.update_inv_wear_mask()
-						if(bp == H.wear_suit)
-							H.update_inv_wear_suit()
-						if(bp == H.w_uniform)
-							H.update_inv_w_uniform()
-						if(bp == H.gloves)
-							H.update_inv_gloves()
-						if(bp == H.shoes)
-							H.update_inv_shoes()
-					visible_message("<span class='warning'>The [target.name] gets absorbed by [H]'s [C.name]!</span>")
-					return
+		var/list/X = H.get_all_slots()
+		var/obj/item/I = H.wear_suit
+		var/obj/item/C = H.head
+		if(!I && !C)
+			//containment all slots
+			for(var/obj/item/A in X)
+				if(A.can_contaminate())
+					A.contaminate()
+		if(I)
+			//check already containment on suit
+			if(!I.contaminated)
+				if(I.can_contaminate())
+					I.contaminate()
 			else
-				continue //Does this thing we're shooting even exist?
+				//containment gloves, uniform, boots
+				H.contaminate()
+		else
+			//containment gloves, uniform, boots
+			H.contaminate()
+		if(C)
+			//check already containment on head
+			if(!C.contaminated)
+				if(C.can_contaminate())
+					C.contaminate()
+			else
+				var/list/L = H.get_head_slots()
+				//containment head-slots
+				for(var/obj/item/V in L)
+					if(V.can_contaminate())
+						V.contaminate()
+		else
+			//containment head-slots
+			var/list/L = H.get_head_slots()
+			for(var/obj/item/Z in L)
+				if(Z.can_contaminate())
+					Z.contaminate()
 
 /obj/item/projectile/bullet/scrap
 	icon_state = "scrap_shot"
