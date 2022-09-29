@@ -5,7 +5,6 @@
 	selected from available ghosts. Once an Eminence is selected, they can't normally be changed."
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "spire"
-	//break_message = "<span class='warning'>The spire screeches with crackling power and collapses into scrap!</span>"
 	max_integrity = 400
 	var/mob/eminence_nominee
 	var/selection_timer //Timer ID; this is canceled if the vote is canceled
@@ -36,9 +35,6 @@
 	if(kingmaking)
 		return
 
-	/*var/datum/antagonist/clockcult/C = user.mind.has_antag_datum(/datum/antagonist/clockcult)
-	if(!C || !C.clock_team)
-		return*/
 	if(!cult_religion)
 		to_chat(user, "<span class='warning'>The Ark isn't active!</span>")
 		return
@@ -60,29 +56,7 @@
 	else
 		to_chat(user, "<span class='warning'>You feel the omniscient gaze turn into a puzzled frown. Perhaps you should just stick to building.</span>")
 		return
-/*
-//ATTACK GHOST IGNORING PARENT RETURN VALUE
-//Used to nominate oneself or ghosts for the role of Eminence.
-/obj/structure/eminence_spire/attack_ghost(mob/user)
-	if(!IsAdminGhost(user))
-		return
 
-	if(!cult_religion)
-		to_chat(user, "<span class='warning'>The Ark must be active first!</span>")
-		return
-	if(cult_religion && cult_religion.eminence)
-		to_chat(user, "<span class='warning'>There's already an Eminence - too late!</span>")
-		return
-	if(alert(user, "Become the Eminence using admin?", "Become Eminence", "Yes", "No") != "Yes")
-		return
-	message_admins("<span class='danger'>Admin [key_name_admin(user)] directly became the Eminence of the cult!</span>")
-	log_admin("Admin [key_name(user)] made themselves the Eminence.")
-	var/mob/camera/eminence/eminence = new(get_turf(src))
-	eminence.key = user.key
-	hierophant_message("<span class='bold large_brass'>Ratvar has directly assigned the Eminence!</span>")
-	for(var/mob/M in servants_and_ghosts())
-		M.playsound_local(M, 'sound/machines/clockcult/eminence_selected.ogg', 50, FALSE)
-*/
 //Used to nominate oneself or ghosts for the role of Eminence.
 /obj/structure/eminence_spire/proc/nomination(mob/living/nominee) //A user is nominating themselves or ghosts to become Eminence
 	var/nomination_choice = alert(nominee, "Who would you like to nominate?", "Eminence Nomination", "Nominate Yourself", "Nominate Ghosts", "Cancel")
@@ -140,23 +114,23 @@
 			eminence_nominee = null
 			return
 		//playsound(eminence_nominee, 'sound/machines/clockcult/ark_damage.ogg', 50, FALSE)
-		eminence_nominee.visible_message("<span class='warning'>A blast of white-hot light flows into [eminence_nominee], vaporizing them in an instant!</span>", \
-		"<span class='userdanger'>allthelightintheuniverseflowing.into.YOU</span>")
+		eminence_nominee.visible_message("<span class='warning'>A blast of darkness flows into [eminence_nominee], devouring them in an instant!</span>", \
+		"<span class='userdanger'>All the darkness in the universe flowing into YOU</span>")
 		for(var/obj/item/I in eminence_nominee)
 			eminence_nominee.drop_item(get_turf(src))
 		var/mob/camera/eminence/eminence = new(get_turf(src))
 		eminence_nominee.mind.transfer_to(eminence)
 		eminence_nominee.dust()
-		hierophant_message("<span class='bold large_brass'>[eminence_nominee] has ascended into the Eminence!</span>")
+		hierophant_message("<span class='bold cult'>[eminence_nominee] has ascended into the Eminence!</span>")
 	else if(eminence_nominee == "ghosts")
 		kingmaking = TRUE
-		hierophant_message("<span class='brass'><b>The eminence spire is now selecting a ghost to be the Eminence...</b></span>")
+		hierophant_message("<span class='cult'><b>The eminence spire is now selecting a ghost to be the Eminence...</b></span>")
 		var/list/candidates = pollGhostCandidates("Would you like to play as the servants' Eminence?", ROLE_CULTIST, null, ROLE_CULTIST, poll_time = 100)
 		kingmaking = FALSE
 		if(!length(candidates))
 			//for(var/mob/M in servants_and_ghosts())
 			//	M.playsound_local(M, 'sound/machines/clockcult/integration_cog_install.ogg', 50, FALSE)
-			hierophant_message("<span class='brass'><b>No ghosts accepted the offer!</b> The eminence spire has been reset.</span>")
+			hierophant_message("<span class='cult'><b>No ghosts accepted the offer!</b> The eminence spire has been reset.</span>")
 			eminence_nominee = null
 			return
 		visible_message("<span class='warning'>A blast of white-hot light spirals from [src] in waves!</span>")
@@ -164,7 +138,7 @@
 		var/mob/camera/eminence/eminence = new(get_turf(src))
 		eminence_nominee = pick(candidates)
 		eminence.key = eminence_nominee.key
-		hierophant_message("<span class='bold large_brass'>A ghost has ascended into the Eminence!</span>")
-//	for(var/mob/M in servants_and_ghosts())
-//		M.playsound_local(M, 'sound/machines/clockcult/eminence_selected.ogg', 50, FALSE)
+		hierophant_message("<span class='cult'>A ghost has ascended into the Eminence!</span>")
+	for(var/mob/M in servants_and_ghosts())
+		M.playsound_local(M, 'sound/antag/eminence_selected.ogg', 50, VOL_EFFECTS_MASTER)
 	eminence_nominee = null

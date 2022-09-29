@@ -187,8 +187,8 @@
 		data["can_talismaning"] = istype(user.get_active_hand(), /obj/item/weapon/paper/talisman)
 
 	if(iseminence(user))
-		var/mob/camera/eminence/E = cult_religion.eminence.current
-		data["holds_religious_tool"] = E.tome
+		//var/mob/camera/eminence/E = cult_religion.eminence.current
+		data["holds_religious_tool"] = TRUE//E.tome
 	else
 		data["holds_religious_tool"] = istype(user.get_active_hand(), religion.religious_tool_type)
 
