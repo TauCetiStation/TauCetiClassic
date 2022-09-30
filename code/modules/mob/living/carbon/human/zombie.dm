@@ -52,7 +52,7 @@
 							 "<span class='warning'>You start forcing the door to open.</span>",\
 							 "<span class='warning'>You hear metal strain.</span>")
 		playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		if(do_after(user, 70, target = A, can_move = TRUE))
+		if(do_after(user, 70, target = A))
 			if(A.density && user.Adjacent(A))
 				user.visible_message("<span class='warning'>[user] forces the door to open with [src]!</span>",\
 									 "<span class='warning'>You force the door to open.</span>",\
@@ -69,7 +69,7 @@
 								 "<span class='warning'>You attempt to break open the airlock.</span>",\
 								 "<span class='warning'>You hear metal strain.</span>")
 			playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			if(do_after(user, 100, target = A, can_move = TRUE))
+			if(do_after(user, 100, target = A))
 				if(A && A.density && user.Adjacent(A))
 					if(attempts >= 2 && prob(attempts*5))
 						user.visible_message("<span class='warning'>[user] broke the airlock with [src]!</span>",\
@@ -92,7 +92,7 @@
 							 "<span class='warning'>You attempt to break open the emergency shutter.</span>",\
 							 "<span class='warning'>You hear metal strain.</span>")
 		playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		if(do_after(user, 200, target = A, can_move = TRUE))
+		if(do_after(user, 200, target = A))
 			if(A.density && user.Adjacent(A))
 				user.visible_message("<span class='warning'>[user] broke the emergency shutter with [src]!</span>",\
 									 "<span class='warning'>You break the emergency shutter.</span>",\
