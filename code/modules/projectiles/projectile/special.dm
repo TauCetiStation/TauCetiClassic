@@ -245,11 +245,11 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		var/list/X = H.get_all_slots()
 		var/obj/item/I = H.wear_suit
 		var/obj/item/C = H.head
 		if(!I && !C)
 			//containment all slots
+			var/list/X = H.get_all_slots()
 			for(var/obj/item/A in X)
 				if(!isprotected(A))
 					A.contaminate()
@@ -283,11 +283,9 @@
 					Z.contaminate()
 
 /obj/item/projectile/acid_special/proc/isprotected(obj/item/I)
-	if(istype(I, /obj/item/clothing/suit/bio_suit))
-		return TRUE
-	if(istype(I, /obj/item/clothing/head/bio_hood))
-		return TRUE
 	if(!istype(I, /obj/item/clothing))
+		return TRUE
+	if(I.flags & ALIENACIDPROTECTED)
 		return TRUE
 	return FALSE
 

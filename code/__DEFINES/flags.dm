@@ -64,6 +64,8 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IN_INVENTORY           (1<<23)
 #define IN_STORAGE             (1<<23) // reuse of last bit we have
 
+#define ALIENACIDPROTECTED     (1<<24)
+
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
 #define HOLOGRAM_2         (1<<0)
 /// atom queued to SSoverlay
