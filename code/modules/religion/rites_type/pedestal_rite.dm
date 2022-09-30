@@ -37,7 +37,7 @@
 /datum/religion_rites/pedestals/get_count_steps()
 	return rules.len
 
-/datum/religion_rites/pedestals/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/can_start(mob/user, obj/structure/altar_of_gods/AOG)
 	if(!rules || !rules.len)
 		return FALSE
 
@@ -54,7 +54,7 @@
 
 	return TRUE
 
-/datum/religion_rites/pedestals/on_chosen(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/on_chosen(mob/user, obj/structure/altar_of_gods/AOG)
 	..()
 
 	init_pedestals(AOG)
@@ -91,7 +91,7 @@
 		return FALSE
 	return TRUE
 
-/datum/religion_rites/pedestals/pre_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/pre_start(mob/user, obj/structure/altar_of_gods/AOG)
 	var/rules_indx = 1
 	var/for_step = pedestals.len/rules.len
 	for(var/i in 1 to pedestals.len step for_step)
@@ -131,7 +131,7 @@
 		qdel(ill)
 		B.End()
 
-/datum/religion_rites/pedestals/end(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/end(mob/user, obj/structure/altar_of_gods/AOG)
 	if(invoke_msg)
 		user.say(invoke_msg)
 
