@@ -4,7 +4,7 @@
 	icon_state = "bio"
 	desc = "A hood that protects the head and face from biological comtaminants."
 	permeability_coefficient = 0.01
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR|PHORONGUARD|ALIENACIDPROTECTED
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR|PHORONGUARD|ALIENPROTECTED
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	body_parts_covered = HEAD|FACE|EYES
@@ -20,7 +20,7 @@
 	w_class = SIZE_NORMAL//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
-	flags = PHORONGUARD|ALIENACIDPROTECTED
+	flags = PHORONGUARD|ALIENPROTECTED
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	slowdown = 0.5

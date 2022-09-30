@@ -23,7 +23,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define ABSTRACT               (1<<6)   // For all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way.
 #define NODECONSTRUCT          (1<<6)   // For machines and structures that should not break into parts, eg, holodeck stuff.
-
+#define ALIENPROTECTED         (1<<6)
 #define ON_BORDER              (1<<7)   // Item has priority to check when entering or leaving.
 
 #define GLASSESCOVERSEYES      (1<<8)
@@ -63,8 +63,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define IN_INVENTORY           (1<<23)
 #define IN_STORAGE             (1<<23) // reuse of last bit we have
-
-#define ALIENACIDPROTECTED     (1<<24)
 
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
 #define HOLOGRAM_2         (1<<0)

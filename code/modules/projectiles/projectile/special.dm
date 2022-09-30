@@ -285,7 +285,8 @@
 /obj/item/projectile/acid_special/proc/isprotected(obj/item/I)
 	if(!istype(I, /obj/item/clothing))
 		return TRUE
-	if(I.flags & ALIENACIDPROTECTED)
+	var/obj/item/clothing/C = I
+	if(C && C.flags & ALIENPROTECTED)
 		return TRUE
 	return FALSE
 
