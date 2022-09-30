@@ -38,7 +38,7 @@
 /////////////////////////// DNA MACHINES
 /obj/machinery/dna_scannernew
 	name = "DNA modifier"
-	desc = "It scans DNA structures."
+	desc = "Сканирует структуру ДНК."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "scanner"
 	density = TRUE
@@ -109,7 +109,7 @@
 /obj/machinery/dna_scannernew/proc/close(mob/user)
 	if(open)
 		if(panel_open)
-			to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
+			to_chat(user, "<span class='notice'>Закройте панель техобслуживания для начала.</span>")
 			return
 		open = 0
 		density = TRUE
@@ -160,10 +160,10 @@
 /obj/machinery/dna_scannernew/proc/open(mob/user)
 	if(!open)
 		if(panel_open)
-			to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
+			to_chat(user, "<span class='notice'>Закройте панель техобслуживания для начала.</span>")
 			return
 		if(locked)
-			to_chat(user, "<span class='notice'>The bolts are locked down, securing the door shut.</span>")
+			to_chat(user, "<span class='notice'>Болты опущены,блокируя дверь.</span>")
 			return
 		var/turf/T = get_turf(src)
 		if(T)
@@ -215,7 +215,7 @@
 			return FALSE
 
 		if(!open)
-			to_chat(user, "<span class='notice'>Open the scanner first.</span>")
+			to_chat(user, "<span class='notice'>Для начала открой сканнер.</span>")
 			return FALSE
 
 		var/mob/M = G.affecting
@@ -252,7 +252,7 @@
 //DNA COMPUTER
 /obj/machinery/computer/scan_consolenew
 	name = "DNA Modifier Access Console"
-	desc = "Scand DNA."
+	desc = "Сканирует ДНК."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
 	state_broken_preset = "crewb"
@@ -427,7 +427,7 @@
 			// auto update every Master Controller tick
 			ui.set_auto_update(1)
 	else
-		to_chat(user, "<span class='warning'>Error: No scanner detected</span>")
+		to_chat(user, "<span class='warning'>Ошибка: Сканнер не обнаружен</span>")
 
 /obj/machinery/computer/scan_consolenew/Topic(href, href_list)
 	. = ..()

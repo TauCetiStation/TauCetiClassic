@@ -83,7 +83,7 @@
 
 /datum/dna/gene/basic/remotetalk
 	name="Telepathy"
-	activation_messages=list("Вы чувствуете, что ваш голос может проникнуть в другие умы.")
+	activation_messages=list("Ваш голос может проникнуть в другие умы.")
 	mutation=REMOTE_TALK
 	activation_prob=50
 
@@ -207,7 +207,7 @@
 
 /datum/dna/gene/basic/hulk
 	name                = "Hulk"
-	activation_messages = list("Все Ваши мышцы болят и ощущаются странно..")
+	activation_messages = list("Ваши мышцы болят и ощущаются странно..")
 	mutation            = HULK
 	activation_prob     = 20
 
