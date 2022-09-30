@@ -17613,6 +17613,7 @@
 /obj/structure/curtain/medical{
 	icon_state = "open"
 	},
+/obj/structure/curtain/open/privacy,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -88425,9 +88426,7 @@
 	},
 /area/station/medical/cryo)
 "vEd" = (
-/obj/structure/curtain/medical{
-	icon_state = "open"
-	},
+/obj/structure/curtain/open/privacy,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -90116,9 +90115,7 @@
 /area/station/cargo/recycler)
 "vZR" = (
 /obj/machinery/hologram/holopad,
-/obj/structure/curtain/medical{
-	icon_state = "open"
-	},
+/obj/structure/curtain/open/privacy,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -115504,12 +115501,12 @@ sHx
 sHx
 sHx
 hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
+cJy
+iRy
+iRy
+cJy
+cJy
+iRy
 cJy
 iRy
 cJy
@@ -115761,11 +115758,11 @@ vVH
 lqA
 hGN
 hGN
-rKO
-rKO
-rKO
-rKO
-rKO
+hGN
+hGN
+hGN
+hGN
+hGN
 hGN
 cJy
 iRy
@@ -118331,11 +118328,11 @@ vjk
 xAe
 vlL
 hGN
-hGN
 rKO
 rKO
 rKO
-hGN
+rKO
+rKO
 hGN
 cJy
 cJy
@@ -118587,13 +118584,13 @@ uem
 enF
 eGP
 vlL
-iRy
+hGN
 hGN
 uEs
 lzP
 lqA
 hGN
-cJy
+hGN
 cJy
 cJy
 hGN
