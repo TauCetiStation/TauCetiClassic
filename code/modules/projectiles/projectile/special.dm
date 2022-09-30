@@ -251,12 +251,12 @@
 		if(!I && !C)
 			//containment all slots
 			for(var/obj/item/A in X)
-				if(A.can_contaminate())
+				if(!isprotected(A))
 					A.contaminate()
 		if(I)
 			//check already containment on suit
 			if(!I.contaminated)
-				if(I.can_contaminate())
+				if(!isprotected(I))
 					I.contaminate()
 			else
 				//containment gloves, uniform, boots
@@ -267,20 +267,29 @@
 		if(C)
 			//check already containment on head
 			if(!C.contaminated)
-				if(C.can_contaminate())
+				if(!isprotected(C))
 					C.contaminate()
 			else
 				var/list/L = H.get_head_slots()
 				//containment head-slots
 				for(var/obj/item/V in L)
-					if(V.can_contaminate())
+					if(!isprotected(V))
 						V.contaminate()
 		else
 			//containment head-slots
 			var/list/L = H.get_head_slots()
 			for(var/obj/item/Z in L)
-				if(Z.can_contaminate())
+				if(!isprotected(Z))
 					Z.contaminate()
+
+/obj/item/projectile/acid_special/proc/isprotected(obj/item/I)
+	if(istype(I, /obj/item/clothing/suit/bio_suit))
+		return TRUE
+	if(istype(I, /obj/item/clothing/head/bio_hood))
+		return TRUE
+	if(!istype(I, /obj/item/clothing))
+		return TRUE
+	return FALSE
 
 /obj/item/projectile/bullet/scrap
 	icon_state = "scrap_shot"
