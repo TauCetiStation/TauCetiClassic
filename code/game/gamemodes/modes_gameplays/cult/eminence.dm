@@ -31,7 +31,7 @@
 
 /mob/camera/eminence/Move(NewLoc, direct)
 	var/OldLoc = loc
-	if(NewLoc && !istype(NewLoc, /turf/environment/space))
+	if(NewLoc && !istype(NewLoc, /turf/environment/space) && !istype(NewLoc, /turf/unsimulated/wall))
 		//var/turf/T = get_turf(NewLoc)
 		/*if(!SSticker.nar_sie_has_risenen)
 			if(locate(/obj/effect/blessing, T))
@@ -53,8 +53,9 @@
 			for(var/turf/TT in range(5, src))
 				if(prob(166 - (get_dist(src, TT) * 33)))
 					TT.atom_religify(my_religion) //Causes moving to leave a swath of proselytized area behind the Eminence
-		forceMove(NewLoc)
-		Moved(OldLoc, direct)
+		..()
+		/*forceMove(NewLoc)
+		Moved(OldLoc, direct)*/
 
 /mob/camera/eminence/Process_Spacemove(movement_dir = 0)
 	return TRUE
