@@ -72,7 +72,7 @@
 			return
 		else
 			cult_religion.eminence = src
-	tome.religion = my_religion
+	tome.religion = cult_religion
 	to_chat(src, "<span class='cult large'>You have been selected as the Eminence!</span>")
 	to_chat(src, "<span class='cult'>As the Eminence, you lead the cultists. Anything you say will be heard by the entire cult.</span>")
 	to_chat(src, "<span class='cult'>Though you can move through walls, you're also incorporeal, and largely can't interact with the world except for a few ways.</span>")
@@ -107,6 +107,23 @@
 			to_chat(M, "[link] [message]")
 		else
 			to_chat(M, message)
+
+/mob/camera/eminence/can_use_topic(src_object)
+	if(!client)
+		return STATUS_CLOSE
+	if(get_dist(src_object, src) <= client.view)
+		return STATUS_INTERACTIVE
+
+	return STATUS_CLOSE
+
+/mob/camera/eminence/physical_can_use_topic(src_object)
+	return STATUS_INTERACTIVE
+
+/mob/camera/eminence/physical_obscured_can_use_topic(src_object)
+	return STATUS_INTERACTIVE
+
+/mob/camera/eminence/default_can_use_topic(src_object)
+	return STATUS_INTERACTIVE
 
 /mob/camera/eminence/ClickOn(atom/A, params)
 	var/list/modifiers = params2list(params)
@@ -330,14 +347,17 @@
 //Activates tome
 /datum/action/innate/eminence/tome
 	name = "Использовать том"
-/*
+	action_type = AB_ITEM
+
 /datum/action/innate/eminence/tome/New(Target)
 	. = ..()
-	var/mob/camera/eminence/E = cult_religion.eminence.current
-	button_icon = E.tome.icon
+	var/mob/camera/eminence/E = cult_religion.eminence
+	target = E.tome
+/*	button_icon = E.tome.icon
 	button_icon_state = E.tome.icon_state
 	button.UpdateIcon()
-*/
+
 /datum/action/innate/eminence/tome/Activate()
 	var/mob/camera/eminence/E = cult_religion.eminence
 	E.tome.attack_self(E)
+	to_chat(world,"attack_self")*/

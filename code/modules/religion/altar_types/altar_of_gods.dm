@@ -294,7 +294,7 @@
 	tgui_interact(user)
 
 /obj/structure/altar_of_gods/proc/sect_select(mob/user, sect_type)
-	if(!istype(user.get_active_hand(), religion.religious_tool_type))
+	if(!istype(user.get_active_hand(), religion.religious_tool_type) && !iseminence(user))
 		return
 
 	if(!sect_type || chosen_aspect)
