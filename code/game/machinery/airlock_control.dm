@@ -70,7 +70,7 @@
 		if(H.getBrainLoss() >= 60)
 			playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
 			var/armor_block = H.run_armor_check(BP_HEAD, "melee")
-			if(armor_block < 10)
+			if(armor_block)
 				visible_message("<span class='userdanger'>[H] headbutts the airlock.</span>")
 			else
 				visible_message("<span class='userdanger'>[H] headbutts the airlock. Good thing they're wearing a helmet.</span>")
