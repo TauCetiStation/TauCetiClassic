@@ -136,7 +136,7 @@
 	set name = "Resurrection"
 
 	var/mob/living/carbon/C = usr
-	if(!C.stat)
+	if(C.stat == CONSCIOUS)
 		C << "<span class='notice'>You're not dead yet!</span>"
 		return
 	C << "<span class='notice'>Death is not your end!</span>"

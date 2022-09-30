@@ -84,11 +84,13 @@
 			return 0
 	return 1
 
-/datum/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
+/datum/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R, overrided_time = null)
 	var/list/contents = get_surroundings(user)
 	if(check_contents(R, contents))
 		if(check_tools(user, R, contents))
-			var/required_time = R.time
+			var/required_time = overrided_time
+			if(!required_time)
+				required_time = R.time
 			if(R.required_proficiency)
 				required_time = apply_skill_bonus(user, R.time, R.required_proficiency, multiplier = -0.4)
 			if(do_after(user, required_time, target = user))
@@ -100,6 +102,8 @@
 				var/list/parts = del_reqs(R, user)
 				var/atom/movable/I = new R.result (get_turf(user.loc))
 				I.CheckParts(parts, R)
+				I.pixel_x = rand(-10, 10)
+				I.pixel_y = rand(-10, 10)
 				return 0
 			return "."
 		return ", missing tool."
@@ -373,3 +377,27 @@
 	recipe_image_cache[R.result] = bicon_raw(icon(stored_result.icon, stored_result.icon_state))
 	qdel(stored_result)
 	return recipe_image_cache[R.result]
+
+/datum/personal_crafting/proc/craft_until_cant(datum/crafting_recipe/recipe_to_use, mob/chef, turf/craft_location, craft_time)
+	if(!craft_time)
+		craft_time = recipe_to_use.time
+	while(TRUE)
+		// attempt_craft_loop sleeps, so this won't freeze the server while we craft
+		if(!attempt_craft_loop(recipe_to_use, chef, craft_location, craft_time))
+			break
+		craft_time = max(5, craft_time * 0.75) // speed up the more you craft in a batch
+
+/// Attempts a crafting loop. Returns true if it succeeds, false otherwise
+/datum/personal_crafting/proc/attempt_craft_loop(datum/crafting_recipe/recipe_to_use, mob/chef, turf/craft_location, craft_time)
+	var/list/surroundings = get_surroundings(chef)
+	if(!check_contents(recipe_to_use, surroundings))
+		to_chat(chef, "failed to craft, missing ingredients!")
+		return FALSE
+
+	var/atom/movable/result = construct_item(chef, recipe_to_use, craft_time)
+	if(istext(result))
+		to_chat(chef, "failed to craft[result]")
+		return FALSE
+	to_chat(chef, "[chef] crafted [recipe_to_use]")
+	recipe_to_use.on_craft_completion(chef, result)
+	return TRUE

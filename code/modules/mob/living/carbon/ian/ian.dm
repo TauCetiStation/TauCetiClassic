@@ -264,12 +264,12 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 				if(istype(H.dna, /datum/dna))
 					var/their_smell = md5(H.dna.uni_identity)
 					if(nose_memory == their_smell)
-						I = image('icons/mob/screen_corgi.dmi', A, "smell")
+						I = image('icons/hud/screen_corgi.dmi', A, "smell")
 			else
 				if(A.fingerprints && (nose_memory in A.fingerprints))
-					I = image('icons/mob/screen_corgi.dmi', A, "smell")
+					I = image('icons/hud/screen_corgi.dmi', A, "smell")
 				else if(A.blood_DNA && islist(A.blood_DNA) && (nose_memory in A.blood_DNA))
-					I = image('icons/mob/screen_corgi.dmi', A, "smell")
+					I = image('icons/hud/screen_corgi.dmi', A, "smell")
 
 			if(I)
 				if((nose_memory in nose_database) && nose_database[nose_memory] == "Unknown")
@@ -302,8 +302,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	if(health_deficiency >= 45)
 		tally += (health_deficiency / 25)
 
-	if(pull_debuff)
-		tally += pull_debuff
+	tally += count_pull_debuff()
 
 	if(bodytemperature < BODYTEMP_NORMAL - 30)
 		tally += 1.75 * (BODYTEMP_NORMAL - 30 - bodytemperature) / 10
@@ -431,7 +430,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	if(back && istype(back,/obj/item/clothing/suit/armor))
 		chance += luck
 
-	if(chance && prob(chance) && !stat)
+	if(chance && prob(chance) && stat == CONSCIOUS)
 		switch(msg)
 			if("dodges")
 				msg = "<span class='notice'>[src] dodges [AM]'s attack!</span>"
@@ -461,7 +460,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	..()
 
 /mob/living/carbon/ian/say(message)
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 
 	message = sanitize(message)

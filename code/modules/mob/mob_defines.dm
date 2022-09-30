@@ -7,7 +7,7 @@
 	var/datum/mind/mind
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 
-	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
+	var/stat = CONSCIOUS //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
 	var/old_x = 0
 	var/old_y = 0
@@ -132,8 +132,6 @@
 	var/in_throw_mode = 0
 
 	var/coughedtime = null
-
-	var/next_point_to = 0
 
 	var/job = null//Living
 

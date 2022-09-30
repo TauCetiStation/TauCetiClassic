@@ -36,7 +36,7 @@
 	for(var/datum/role/ninja_role in members)
 		if(!ishuman(ninja_role.antag.current))
 			continue
-		if(ninja_role.antag.current.stat==2)
+		if(ninja_role.antag.current.stat==DEAD)
 			continue
 		ninjas_alive++
 	if(ninjas_alive)

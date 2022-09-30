@@ -972,7 +972,7 @@
 	var/obj/effect/glowshroom/planted = new /obj/effect/glowshroom(user.loc)
 
 	planted.delay = lifespan * 50
-	planted.endurance = endurance
+	planted.update_integrity(endurance)
 	planted.yield = yield
 	planted.potency = potency
 	qdel(src)

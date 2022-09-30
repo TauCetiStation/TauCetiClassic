@@ -283,7 +283,7 @@ var/global/dmm_suite/preloader/_preloader = new
 //Helpers procs
 ////////////////
 
-/dmm_suite/proc/load_new_z_level(mappath, linkage)
+/dmm_suite/proc/load_new_z_level(mappath, traits, name = null)
 	var/file = file(mappath)
 
 	if(!isfile(file))
@@ -294,7 +294,7 @@ var/global/dmm_suite/preloader/_preloader = new
 	if(!(bounds && bounds.len))
 		return FALSE
 
-	SSmapping.add_new_zlevel(mappath, list(ZTRAIT_AWAY = TRUE, ZTRAIT_LINKAGE = linkage))
+	SSmapping.add_new_zlevel(name || mappath, traits)
 
 	var/loaded_stuff = pm.loadMap(world.maxz)
 

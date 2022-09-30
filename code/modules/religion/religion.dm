@@ -441,7 +441,7 @@
 
 	return name_entry
 
-// Generate new rite_list
+// Generate new rite_list and updating existing rites' divine power
 /datum/religion/proc/update_rites()
 	if(rites_by_name.len > 0)
 		rites_info = list()
@@ -449,6 +449,7 @@
 		for(var/i in rites_by_name)
 			var/datum/religion_rites/RI = rites_by_name[i]
 			rites_info[RI.name] = get_rite_info(RI)
+			affect_divine_power_rite(RI)
 
 // Adds all binding rites once
 /datum/religion/proc/give_binding_rites()
@@ -644,7 +645,7 @@
 	var/list/acolytes = list()
 	var/turf/center = get_turf(target)
 	for(var/mob/living/carbon/C in range(range, center))
-		if(is_member(C) && !C.stat)
+		if(is_member(C) && C.stat == CONSCIOUS)
 			acolytes += C
 			if(message)
 				C.say(message)

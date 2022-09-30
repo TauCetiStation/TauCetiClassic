@@ -144,13 +144,19 @@
 /obj/item/organ/external/proc/update_sprite()
 	var/gender = owner ? owner.gender : MALE
 	var/mutations = owner ? owner.mutations : list()
-	var/fat
+	var/fat = null
 	var/g
 	var/pump
 
-	if(body_zone == BP_CHEST && owner)
-		fat = HAS_TRAIT(owner, TRAIT_FAT) ? "fat" : null
+	if(owner && HAS_TRAIT(owner, TRAIT_FAT))
+		if(body_zone == BP_CHEST)
+			fat = "fat"
+		else if(species.fat_limb_icons == TRUE && (body_zone in list(BP_GROIN, BP_HEAD, BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)))
+			fat = "fat"
+
 	if(body_zone in list(BP_CHEST, BP_GROIN, BP_HEAD))
+		g = (gender == FEMALE ? "f" : "m")
+	else if(species.gender_limb_icons == TRUE && (body_zone in list(BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)))
 		g = (gender == FEMALE ? "f" : "m")
 
 	if (!species.has_gendered_icons)
@@ -187,7 +193,9 @@
 /obj/item/organ/external/emp_act(severity)
 	controller.emp_act(severity)
 
-/obj/item/organ/external/proc/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
+/obj/item/organ/external/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
+	if(!isnum(burn))
+		return // prevent basic take_damage usage (TODO remove workaround)
 	return controller.take_damage(brute, burn, damage_flags, used_weapon)
 
 /obj/item/organ/external/proc/heal_damage(brute, burn, internal = 0, robo_repair = 0)
