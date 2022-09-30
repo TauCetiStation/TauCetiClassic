@@ -15,6 +15,8 @@
 	var/lastMove = 0
 
 /obj/effect/landmark/lop_shuttle
+	name = "lone oper shuttle landmark"
+
 
 /obj/machinery/computer/lop_shuttle/atom_init()
 	..()
