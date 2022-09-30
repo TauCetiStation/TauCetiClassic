@@ -122,7 +122,7 @@
 		D.attack_hand(src)
 	else if(istype(A, /obj/structure/altar_of_gods/cult))
 		var/obj/structure/altar_of_gods/alt = A
-		alt.attackby(tome, src)
+		alt.attackby(tome, src, params)
 	else if(istype(A, /obj/structure/cult/tech_table))
 		var/obj/structure/cult/tech_table/T = A
 		T.attack_hand(src)
@@ -330,14 +330,14 @@
 //Activates tome
 /datum/action/innate/eminence/tome
 	name = "Использовать том"
-
+/*
 /datum/action/innate/eminence/tome/New(Target)
 	. = ..()
-	var/mob/camera/eminence/E = owner
+	var/mob/camera/eminence/E = cult_religion.eminence.current
 	button_icon = E.tome.icon
 	button_icon_state = E.tome.icon_state
 	button.UpdateIcon()
-
+*/
 /datum/action/innate/eminence/tome/Activate()
-	var/mob/camera/eminence/E = owner
+	var/mob/camera/eminence/E = cult_religion.eminence
 	E.tome.attack_self(E)
