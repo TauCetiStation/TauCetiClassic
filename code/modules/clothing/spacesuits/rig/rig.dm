@@ -909,6 +909,7 @@
 	icon_state = "rig0-hazmat"
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	unacidable = TRUE
+	flags = ALIENPROTECTED
 	combat_armor = list(melee = 55, bullet = 60, laser = 50, energy = 55, bomb = 100, bio = 100, rad = 100)
 	space_armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
 	glowtype = "terrohazmat"
@@ -921,6 +922,7 @@
 	item_state = "syndie_hazmat"
 	rig_variant = "rig-hazmat"
 	slowdown = 0.7
+	flags = ALIENPROTECTED
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	unacidable = TRUE
 	allowed = list(/obj/item/device/flashlight,
