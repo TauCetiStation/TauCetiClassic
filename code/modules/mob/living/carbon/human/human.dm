@@ -1347,7 +1347,7 @@
 				if(!BP.is_robotic()) //There is no blood in protheses.
 					if(!reagents.has_reagent("metatrombine")) // metatrombine just prevents bleeding, not toxication
 						BP.status |= ORGAN_BLEEDING
-					adjustToxLoss(rand(1,3))
+					apply_damage(rand(1,3), TOX)
 
 /mob/living/carbon/human/verb/check_pulse()
 	set category = "Object"
@@ -2470,7 +2470,7 @@
 				next_allergy_message = world.time + 10 SECONDS
 				to_chat(src, "<span class='userdanger'>I THINK I'M DYING!</span>")
 
-	adjustToxLoss(effect_coeff)
+	apply_damage(effect_coeff, TOX)
 
 	adjust_bodytemperature(10 * effect_coeff * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 20)
 

@@ -99,8 +99,7 @@
 		var/mob/living/carbon/human/H = M
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))
 			if(prob(15))
-				M.apply_effect((rand(30,80)),IRRADIATE)
-				M.apply_effects(2, 5)
+				M.apply_effects(stun = 2, weaken = 5, irradiate = (rand(30,80)))
 				visible_message("<span class='warning'>[M] writhes in pain as \his vacuoles boil.</span>", blind_message = "<span class='warning'>You hear the crunching of leaves.</span>")
 			if(prob(35))
 			//	for (var/mob/V in viewers(src)) //Public messages commented out to prevent possible metaish genetics experimentation and stuff. - Cheridan
@@ -112,7 +111,7 @@
 					randmutg(M)
 					domutcheck(M,null)
 			else
-				M.adjustFireLoss(rand(5,15))
+				M.apply_damage(rand(5,15), BURN)
 				to_chat(M, "<span class='warning'>The radiation beam singes you!</span>")
 			//	for (var/mob/V in viewers(src))
 			//		V.show_messageold("<span class='warning'>[M] is singed by the radiation beam.</span>", 3, "<span class='warning'>You hear the crackle of burning leaves.</span>", 2)

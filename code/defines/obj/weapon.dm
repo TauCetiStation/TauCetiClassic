@@ -152,7 +152,7 @@
 		C.update_inv_legcuffed()
 		feedback_add_details("handcuffs","B")
 		to_chat(C,"<span class='userdanger'>\The [src] ensnares you!</span>")
-		C.Weaken(weaken)
+		C.apply_effect(weaken, WEAKEN)
 
 /obj/item/weapon/legcuffs/bola/tactical//traitor variant
 	name = "reinforced bola"
