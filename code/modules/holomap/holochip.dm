@@ -33,7 +33,8 @@
 	QDEL_NULL(holomap_toggle_action)
 	holder = null
 	activator = null
-	SSholomaps.holochips[num2text(frequency)] -= src
+	if(SSholomaps.holochips[num2text(frequency)] && (src in SSholomaps.holochips[num2text(frequency)]))
+		SSholomaps.holochips[num2text(frequency)] -= src
 	return ..()
 
 /obj/item/holochip/proc/add_action(mob/living/carbon/human/wearer)
