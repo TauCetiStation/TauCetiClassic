@@ -64,7 +64,6 @@
 
 #define issilicon(A) (istype(A, /mob/living/silicon))
 
-
 // LIVING
 
 #define iscorgi(A) (istype(A, /mob/living/simple_animal/corgi))

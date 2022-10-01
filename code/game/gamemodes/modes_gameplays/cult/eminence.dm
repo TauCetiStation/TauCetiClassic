@@ -77,7 +77,7 @@
 		return
 	log_say(message)
 	if(SSticker.nar_sie_has_risen)
-		visible_message("<span class='cult big'><b>Ты чувствуешь, как тьма врывается в твой мозг и формирует слова:</b> \"[capitalize(message)]\"</span>")
+		visible_message("<span class='cult large'><b>Ты чувствуешь, как тьма врывается в твой мозг и формирует слова:</b> \"[capitalize(message)]\"</span>")
 		//playsound(src, 'sound/machines/clockcult/ark_scream.ogg', VOL_EFFECTS_MASTER)
 	message = "<span class='big cult'><b>[SSticker.nar_sie_has_risen ? "Преосвященство" : "Возвышенный"]:</b> \"[message]\"</span>"
 	for(var/mob/M in servants_and_ghosts())
@@ -189,11 +189,11 @@
 
 	for(var/mob/M in cult_religion.members)
 		if(!isliving(M))
-			return
+			continue
 		var/mob/living/L = M
 		if(get_dist(src, L) < 4) //Stand up and fight, almost no heal but stuns
 			if(L.stat == DEAD)
-				return
+				continue
 			if(L.reagents)
 				L.reagents.clear_reagents()
 			L.beauty.AddModifier("stat", additive=L.beauty_living)
@@ -227,7 +227,7 @@
 	QDEL_NULL(cult_vis)
 
 /mob/camera/eminence/proc/eminence_help()
-	to_chat(src, "<span class='bold cult'>Вы можете взаимодействовать с внешним миром несколькими способами:</span>")
+	to_chat(src, "<span class='cult'>Вы можете взаимодействовать с внешним миром несколькими способами:</span>")
 	to_chat(src, "<span class='cult'><b>Со всеми структурами культа </b> вы можете взаимодействовать как обычный культист, такими как алтарь, кузня, исследовательскими столами, аномалиями и дверьми.</span>")
 	to_chat(src, "<span class='cult'><b>Средняя кнопка мыши или CTRL</b> для отдачи команды всему культу. Это может помочь даже в бою - убирает большинство причин, по которой последователь не может драться, кроме смертельных.</span>")
 	to_chat(src, "<span class='cult'><b>Вернуться в Рай</b> телепортирует вас на алтари.</span>")
@@ -304,7 +304,7 @@
 
 /datum/action/innate/eminence/station_jump/Activate()
 	if(cult_religion)
-		var/possible_runes
+		var/list/possible_runes = list()
 		for(var/obj/effect/rune/rune as anything in cult_religion.runes)
 			if(!is_centcom_level(rune.z))
 				possible_runes += rune

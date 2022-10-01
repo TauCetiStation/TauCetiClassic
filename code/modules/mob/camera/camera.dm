@@ -9,8 +9,8 @@
 /mob/camera/update_canmove()
 	return
 
-/mob/camera/eminence/CanPass(atom/movable/mover, turf/target)
+/mob/camera/CanPass(atom/movable/mover, turf/target)
 	return TRUE
 
-/mob/camera/eminence/Process_Spacemove(movement_dir = 0)
+/mob/camera/Process_Spacemove(movement_dir = 0)
 	return TRUE

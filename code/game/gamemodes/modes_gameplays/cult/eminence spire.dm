@@ -63,7 +63,7 @@
 
 //Used to nominate oneself or ghosts for the role of Eminence.
 /obj/structure/eminence_spire/proc/nomination(mob/living/nominee) //A user is nominating themselves or ghosts to become Eminence
-	var/nomination_choice = alert(nominee, "Who would you like to nominate?", "Eminence Nomination", "Nominate Yourself", "Nominate Ghosts", "Cancel")
+	var/nomination_choice = tgui_alert(nominee, "Who would you like to nominate?", "Eminence Nomination", list("Nominate Yourself", "Nominate Ghosts", "Cancel"))
 	if(!iscultist(nominee) || eminence_nominee)
 		return
 	switch(nomination_choice)
@@ -81,7 +81,7 @@
 
 //Used to nominate oneself or ghosts for the role of Eminence.
 /obj/structure/eminence_spire/proc/objection(mob/living/wright)
-	if(alert(wright, "Object to the selection of [eminence_nominee] as Eminence?", "Objection!", "Object", "Cancel") == "Cancel" || !iscultist(wright) || !eminence_nominee)
+	if(tgui_alert(wright, "Object to the selection of [eminence_nominee] as Eminence?", "Objection!", list("Object", "Cancel")) == "Cancel" || !iscultist(wright) || !eminence_nominee)
 		return
 	hierophant_message("<span class='cult'><b>[wright] objects to the nomination of [eminence_nominee]!</b> The eminence spire has been reset.</span>")
 	//for(var/mob/M in servants_and_ghosts())
@@ -121,11 +121,11 @@
 		eminence_nominee.visible_message("<span class='warning'>A blast of darkness flows into [eminence_nominee], devouring them in an instant!</span>", \
 		"<span class='userdanger'>All the darkness in the universe flowing into YOU</span>")
 		for(var/obj/item/I in eminence_nominee) //drops all items
-			eminence_nominee.drop_from_inventory(get_turf(eminence_nominee))
+			eminence_nominee.drop_from_inventory(I, get_turf(eminence_nominee))
 		var/mob/camera/eminence/eminence = new(get_turf(src))
 		eminence_nominee.mind.transfer_to(eminence)
 		eminence_nominee.dust()
-		hierophant_message("<span class='bold cult'>[eminence_nominee] has ascended into the Eminence!</span>")
+		hierophant_message("<span class='large cult'>[eminence_nominee] has ascended into the Eminence!</span>")
 	else if(eminence_nominee == "ghosts")
 		kingmaking = TRUE
 		hierophant_message("<span class='cult'><b>The eminence spire is now selecting a ghost to be the Eminence...</b></span>")
@@ -137,12 +137,12 @@
 			hierophant_message("<span class='cult'><b>No ghosts accepted the offer!</b> The eminence spire has been reset.</span>")
 			eminence_nominee = null
 			return
-		visible_message("<span class='warning'>A blast of spears of cold darkness pierced [src], destroying into dust!</span>")
+		visible_message("<span class='warning'>A blast of cold darkness devours [src]!</span>")
 		//playsound(src, 'sound/machines/clockcult/ark_damage.ogg', VOL_EFFECTS_MASTER)
 		var/mob/camera/eminence/eminence = new(get_turf(src))
 		eminence_nominee = pick(candidates)
 		eminence.key = eminence_nominee.key
-		hierophant_message("<span class='bold cult'>A ghost has ascended into the Eminence!</span>")
+		hierophant_message("<span class='large cult'>A ghost has ascended into the Eminence!</span>")
 	for(var/mob/M in servants_and_ghosts())
 		M.playsound_local(M, 'sound/antag/eminence_selected.ogg', VOL_EFFECTS_MASTER)
 	eminence_nominee = null
