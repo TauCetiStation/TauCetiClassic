@@ -1028,8 +1028,7 @@
 			else
 				if(!prob((reagents.total_volume * 9) + 10))
 					H.visible_message("<span class='warning'>[H] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but it gets stuck in your throat!</span>")
-					H.adjustOxyLoss(3)
-					H.adjustHalLoss(5)
+					H.apply_damages(oxy = 3, hallos = 5)
 					return FALSE
 				H.vomit()
 		else
@@ -2465,7 +2464,7 @@
 			to_chat(src, "<span class='danger'>AAAH THE RASH IS UNBEARABLE!</span>")
 		if(ALLERGY_LETHAL to INFINITY)
 			effect_coeff = 2.0
-			adjustOxyLoss(effect_coeff)
+			apply_damage(effect_coeff, OXY)
 			if(next_allergy_message < world.time)
 				next_allergy_message = world.time + 10 SECONDS
 				to_chat(src, "<span class='userdanger'>I THINK I'M DYING!</span>")
