@@ -67,10 +67,10 @@
 			return
 		if("Nominate Yourself")
 			eminence_nominee = nominee
-			hierophant_message("<span class='brass'><b>[nominee] nominates themselves as the Eminence!</b> You may object by interacting with the eminence spire. The vote will otherwise pass in 30 seconds.</span>")
+			hierophant_message("<span class='cult'><b>[nominee] nominates themselves as the Eminence!</b> You may object by interacting with the eminence spire. The vote will otherwise pass in 30 seconds.</span>")
 		if("Nominate Ghosts")
 			eminence_nominee = "ghosts"
-			hierophant_message("<span class='brass'><b>[nominee] proposes selecting an Eminence from ghosts!</b> You may object by interacting with the eminence spire. The vote will otherwise pass in 30 seconds.</span>")
+			hierophant_message("<span class='cult'><b>[nominee] proposes selecting an Eminence from ghosts!</b> You may object by interacting with the eminence spire. The vote will otherwise pass in 30 seconds.</span>")
 	//for(var/mob/M in servants_and_ghosts())
 	//	M.playsound_local(M, 'sound/machines/clockcult/ocularwarden-target.ogg', 50, FALSE)
 	selection_timer = addtimer(CALLBACK(src, .proc/kingmaker), 30 SECONDS, TIMER_STOPPABLE)
@@ -79,7 +79,7 @@
 /obj/structure/eminence_spire/proc/objection(mob/living/wright)
 	if(alert(wright, "Object to the selection of [eminence_nominee] as Eminence?", "Objection!", "Object", "Cancel") == "Cancel" || !iscultist(wright) || !eminence_nominee)
 		return
-	hierophant_message("<span class='brass'><b>[wright] objects to the nomination of [eminence_nominee]!</b> The eminence spire has been reset.</span>")
+	hierophant_message("<span class='cult'><b>[wright] objects to the nomination of [eminence_nominee]!</b> The eminence spire has been reset.</span>")
 	//for(var/mob/M in servants_and_ghosts())
 	//	M.playsound_local(M, 'sound/machines/clockcult/integration_cog_install.ogg', 50, FALSE)
 	eminence_nominee = null
@@ -96,7 +96,7 @@
 /obj/structure/eminence_spire/proc/cancelation(mob/living/cold_feet)
 	if(alert(cold_feet, "Cancel your nomination?", "Cancel Nomination", "Withdraw Nomination", "Cancel") == "Cancel" || !iscultist(cold_feet) || !eminence_nominee)
 		return
-	hierophant_message("<span class='brass'><b>[eminence_nominee] has withdrawn their nomination!</b> The eminence spire has been reset.</span>")
+	hierophant_message("<span class='cult'><b>[eminence_nominee] has withdrawn their nomination!</b> The eminence spire has been reset.</span>")
 	//for(var/mob/M in servants_and_ghosts())
 	//	M.playsound_local(M, 'sound/machines/clockcult/integration_cog_install.ogg', 50, FALSE)
 	eminence_nominee = null
@@ -108,7 +108,7 @@
 		return
 	if(ismob(eminence_nominee))
 		if(!eminence_nominee.client || !eminence_nominee.mind)
-			hierophant_message("<span class='brass'><b>[eminence_nominee] somehow lost their sentience!</b> The eminence spire has been reset.</span>")
+			hierophant_message("<span class='cult'><b>[eminence_nominee] somehow lost their sentience!</b> The eminence spire has been reset.</span>")
 			//for(var/mob/M in servants_and_ghosts())
 			//	M.playsound_local(M, 'sound/machines/clockcult/integration_cog_install.ogg', 50, FALSE)
 			eminence_nominee = null
@@ -121,7 +121,7 @@
 		var/mob/camera/eminence/eminence = new(get_turf(src))
 		eminence_nominee.mind.transfer_to(eminence)
 		eminence_nominee.dust()
-		hierophant_message("<span class='bold cult'>[eminence_nominee] has ascended into the Eminence!</span>")
+		hierophant_message("<span class='cult'>[eminence_nominee] has ascended into the Eminence!</span>")
 	else if(eminence_nominee == "ghosts")
 		kingmaking = TRUE
 		hierophant_message("<span class='cult'><b>The eminence spire is now selecting a ghost to be the Eminence...</b></span>")

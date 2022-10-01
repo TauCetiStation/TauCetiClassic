@@ -275,7 +275,7 @@
 /datum/action/innate/eminence/heaven_jump/Activate()
 	if(cult_religion)
 		if(!length(cult_religion.altars))
-			to_chat(src, "<span class='bold cult'>У культа нет алтарей!</span>")
+			to_chat(src, "<span class='bold cult'>У вас нет алтарей!</span>")
 			return
 		owner.forceMove(get_turf(pick(cult_religion.altars)))
 		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', 50, TRUE)
@@ -298,7 +298,7 @@
 				break
 
 //Activates tome
-/datum/action/innate/eminence/tome
+/datum/action/innate/eminence/forbid_research
 	name = "Использовать том"
 	action_type = AB_ITEM
 
@@ -306,3 +306,19 @@
 	. = ..()
 	var/mob/camera/eminence/E = cult_religion.eminence
 	target = E.tome
+
+//Forbids research to cultists
+/datum/action/innate/eminence/forbid_research
+	name = "Запретить/разрешить исследования"
+	button_icon_state = "research"
+	action_type = AB_INNATE
+
+/datum/action/innate/eminence/forbid_research/Activate()
+	if(!cult_religion.research_forbidden)
+		cult_religion.research_forbidden = TRUE
+		for(var/mob/L in cult_religion.members)
+			to_chat(src, "<span class='cult'>Возвышенный ЗАПРЕТИЛ самостоятельное исследование последователям!</span>")
+	else
+		cult_religion.research_forbidden = FALSE
+		for(var/mob/L in cult_religion.members)
+			to_chat(src, "<span class='cult'>Возвышенный РАЗРЕШИЛ самостоятельное исследование последователям!</span>")

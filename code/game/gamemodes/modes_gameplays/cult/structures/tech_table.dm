@@ -64,6 +64,12 @@
 		to_chat(user, "<span class='warning'>Осталось [round((end_research_time - world.time) * 0.1)] секунд до конца исследования.</span>")
 		return
 
+	var/datum/religion/cult/R = religion
+	if(R)
+		if(R.research_forbidden && !iseminence(user))
+			to_chat(user, "<span class='warning'>По решению Возвышенного последователям запрещено самим исследовать!</span>")
+			return
+
 	if(!aspect_images.len)
 		gen_aspect_images()
 	if(uniq_images.len < religion.available_techs.len)

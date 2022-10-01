@@ -87,6 +87,7 @@
 	var/ascendent = FALSE
 
 	var/mob/camera/eminence/eminence
+	var/research_forbidden = FALSE
 
 /datum/religion/cult/New()
 	..()
