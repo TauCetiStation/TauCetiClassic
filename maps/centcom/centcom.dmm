@@ -18438,6 +18438,22 @@
 	},
 /turf/environment/space,
 /area/custom/syndicate_mothership/armory)
+"aPf" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/syndicate_mothership/elite_squad)
 "aPg" = (
 /obj/structure/table,
 /obj/machinery/light{
@@ -18498,6 +18514,21 @@
 	icon_state = "carpet"
 	},
 /area/centcom/living)
+"aPm" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/syndicate_mothership/elite_squad)
 "aPn" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -18520,6 +18551,31 @@
 	icon_state = "floor"
 	},
 /area/centcom/holding)
+"aPq" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/syndicate_mothership/elite_squad)
+"aPr" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/syndicate_mothership/elite_squad)
 "aPy" = (
 /turf/unsimulated/floor{
 	dir = 8;
@@ -30424,7 +30480,9 @@
 	name = "Restroom";
 	req_access = list(150)
 	},
-/turf/simulated/shuttle/floor/vox,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
+	},
 /area/custom/syndicate_mothership/elite_squad)
 "yea" = (
 /turf/unsimulated/floor/cult,
@@ -67735,7 +67793,7 @@ aaM
 aaM
 mAb
 mYv
-fqy
+xsM
 ycG
 xsM
 fqy
@@ -68251,9 +68309,9 @@ lZv
 lZv
 lZv
 lZv
-mAb
+aPf
 aaw
-mAb
+aPf
 mAb
 mAb
 mAb
@@ -69279,14 +69337,14 @@ lZv
 lZv
 lZv
 lZv
-mAb
+aPf
 ahK
+aPf
 mAb
 mAb
-mAb
-mAb
-mAb
-mAb
+aPm
+aPq
+aPr
 aMJ
 mAb
 mAb
