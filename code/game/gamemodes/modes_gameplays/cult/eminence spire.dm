@@ -6,6 +6,8 @@
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "spire"
 	max_integrity = 400
+	pixel_x = -16
+	pixel_y = -2
 	var/mob/eminence_nominee
 	var/selection_timer //Timer ID; this is canceled if the vote is canceled
 	var/kingmaking
@@ -13,7 +15,7 @@
 /proc/hierophant_message(message, servantsonly, atom/target)
 	if(!message)
 		return FALSE
-	for(var/M in mob_list)
+	for(var/M in player_list)
 		if(!servantsonly && isobserver(M))
 			if(target)
 				var/link = FOLLOW_LINK(M, target)
@@ -36,7 +38,7 @@
 		return
 
 	if(!cult_religion)
-		to_chat(user, "<span class='warning'>The Ark isn't active!</span>")
+		to_chat(user, "<span class='warning'>The Heaven isn't awake!</span>")
 		return
 	if(cult_religion.eminence)
 		to_chat(user, "<span class='warning'>There's already an Eminence!</span>")

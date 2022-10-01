@@ -19,15 +19,16 @@
 
 /mob/camera/eminence/atom_init()
 	. = ..()
-	tome = new(src)
+	tome = new(src) //Let's pretend that they have a special one
+	tome.destr_cd = 10 SECONDS
+	tome.rune_cd = 10 SECONDS
+	tome.cost_coef = 1.5
+	tome.build_cd = 5 SECONDS
 
 /mob/camera/eminence/Destroy()
 	. = ..()
 	QDEL_NULL(eminence_image)
 	QDEL_NULL(tome)
-
-/mob/camera/eminence/CanPass(atom/movable/mover, turf/target)
-	return TRUE
 
 /mob/camera/eminence/Move(NewLoc, direct)
 	if(NewLoc && !isspaceturf(NewLoc) && !istype(NewLoc, /turf/unsimulated/wall))
@@ -36,9 +37,6 @@
 				if(prob(166 - (get_dist(src, TT) * 33)))
 					TT.atom_religify(my_religion) //Causes moving to leave a swath of proselytized area behind the Eminence
 		forceMove(NewLoc)
-
-/mob/camera/eminence/Process_Spacemove(movement_dir = 0)
-	return TRUE
 
 /mob/camera/eminence/Login()
 	..()
@@ -54,9 +52,9 @@
 		else
 			cult_religion.eminence = src
 	tome.religion = cult_religion
-	to_chat(src, "<span class='cult large'>You have been selected as the Eminence!</span>")
-	to_chat(src, "<span class='cult'>As the Eminence, you lead the cultists. Anything you say will be heard by the entire cult.</span>")
-	to_chat(src, "<span class='cult'>Though you can move through walls, you're also incorporeal, and largely can't interact with the world except for a few ways.</span>")
+	to_chat(src, "<span class='cult large'>Вы стали Возвышенным!</span>")
+	to_chat(src, "<span class='cult'>Будучи Возвышенным, вы ведёте весь культ за собой. Весь культ услышит то, что вы скажите.</span>")
+	to_chat(src, "<span class='cult'>Вы можете двигаться невзирая на стены, вы бестелесны, и в большинстве случаев не сможете напрямую влиять на мир, за исключением нескольких особых способов.</span>")
 	eminence_help()
 	for(var/V in actions)
 		var/datum/action/A = V
@@ -114,6 +112,11 @@
 	if(modifiers["middle"] || modifiers["ctrl"])
 		issue_command(A)
 		return
+
+	if(tome.toggle_deconstruct)
+		for(var/datum/building_agent/B in tome.religion.available_buildings)
+			if(istype(A, B.building_type))
+				tome.afterattack(A, src, , params)
 
 	if(istype(A, /obj/structure/mineral_door/cult))
 		var/obj/structure/mineral_door/cult/D = A
@@ -189,6 +192,8 @@
 			return
 		var/mob/living/L = M
 		if(get_dist(src, L) < 4) //Stand up and fight, almost no heal but stuns
+			if(L.stat == DEAD)
+				return
 			if(L.reagents)
 				L.reagents.clear_reagents()
 			L.beauty.AddModifier("stat", additive=L.beauty_living)
@@ -223,8 +228,15 @@
 
 /mob/camera/eminence/proc/eminence_help()
 	to_chat(src, "<span class='bold cult'>Вы можете взаимодействовать с внешним миром несколькими способами:</span>")
-	to_chat(src, "<span class='cult'><b>Со всеми структурами культа </b> вы можете взаимодействовать как обычный культист</span>")
-	to_chat(src, "<span class='cult'><b>Средняя кнопка мыши или CTRL</b> для отдачи команы всему культу. Это может помочь даже в бою.</span>")
+	to_chat(src, "<span class='cult'><b>Со всеми структурами культа </b> вы можете взаимодействовать как обычный культист, такими как алтарь, кузня, исследовательскими столами, аномалиями и дверьми.</span>")
+	to_chat(src, "<span class='cult'><b>Средняя кнопка мыши или CTRL</b> для отдачи команды всему культу. Это может помочь даже в бою - убирает большинство причин, по которой последователь не может драться, кроме смертельных.</span>")
+	to_chat(src, "<span class='cult'><b>Вернуться в Рай</b> телепортирует вас на алтари.</span>")
+	to_chat(src, "<span class='cult'><b>Переместиться на станцию</b> телепортирует вас на случайную руну, которая вне Рая.</span>")
+	to_chat(src, "<span class='cult'><b>Использовать том</b> те же, функции, что и у тома в руках культиста. ВЫ НЕ МОЖЕТЕ АКТИВИРОВАТЬ РУНЫ САМОСТОЯТЕЛЬНО.</span>")
+	to_chat(src, "<span class='cult'><b>Запретить/разрешить исследования</b> включив это, обычные последователи культа не смогут сами изучать, а отключив, сможете как и вы, так и остальные культисты</span>")
+	to_chat(src, "<span class='cult'><b>Вернуться в Рай</b> телепортирует вас на алтари.</span>")
+	to_chat(src, "<span class='cult'><b>Стереть свои руны</b> стирает все ваши руны в мире.</span>")
+	to_chat(src, "<span class='cult'><b>Телепорт к последователю</b> позволяет вам телепортироваться к любого последователю в культе по вашему желанию.</span>")
 
 //Eminence actions below this point
 /datum/action/innate/eminence
@@ -290,12 +302,16 @@
 
 /datum/action/innate/eminence/station_jump/Activate()
 	if(cult_religion)
+		var/possible_runes
 		for(var/obj/effect/rune/rune as anything in cult_religion.runes)
 			if(!is_centcom_level(rune.z))
-				owner.forceMove(get_turf(pick(cult_religion.runes)))
-				owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', VOL_EFFECTS_MASTER)
-				flash_color(owner, flash_time = 25)
-				break
+				possible_runes += rune
+		if(length(possible_runes))
+			owner.forceMove(get_turf(pick(possible_runes)))
+			owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', VOL_EFFECTS_MASTER)
+			flash_color(owner, flash_time = 25)
+		else
+			to_chat(owner, "<span class='warning'>Нет рун вне Рая, что бы на них телепортироваться!</span>")
 
 //Activates tome
 /datum/action/innate/eminence/tome
@@ -317,8 +333,33 @@
 	if(!cult_religion.research_forbidden)
 		cult_religion.research_forbidden = TRUE
 		for(var/mob/L in cult_religion.members)
-			to_chat(src, "<span class='cult'>Возвышенный ЗАПРЕТИЛ самостоятельное исследование последователям!</span>")
+			to_chat(L, "<span class='cult'>Возвышенный ЗАПРЕТИЛ самостоятельное исследование последователям!</span>")
 	else
 		cult_religion.research_forbidden = FALSE
 		for(var/mob/L in cult_religion.members)
-			to_chat(src, "<span class='cult'>Возвышенный РАЗРЕШИЛ самостоятельное исследование последователям!</span>")
+			to_chat(L, "<span class='cult'>Возвышенный РАЗРЕШИЛ самостоятельное исследование последователям!</span>")
+
+//Activates tome
+/datum/action/innate/eminence/del_runes
+	name = "Стереть свои руны"
+	button_icon_state = "del_runes"
+	action_type = AB_INNATE
+
+/datum/action/innate/eminence/del_runes/Activate()
+	. = ..()
+	var/list/L = LAZYACCESS(owner.my_religion.runes_by_ckey, owner.ckey)
+	for(var/obj/effect/rune/R in L)
+		qdel(R)
+		to_chat(owner, "<span class='warning'>Все вами начерченные руны были стёрты.</span>")
+
+//Teleports to any cultist
+/datum/action/innate/eminence/teleport2cultist
+	name = "Телепорт к последователю"
+	button_icon_state = "eminence_teleport"
+	action_type = AB_INNATE
+
+/datum/action/innate/eminence/teleport2cultist/Activate()
+	. = ..()
+	var/mob/M = input(owner, "Выберите последователя для телепорта", "Телепорт к последователю") as null|anything in cult_religion.members
+	if(M)
+		owner.forceMove(get_turf(M))
