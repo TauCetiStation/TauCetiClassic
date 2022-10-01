@@ -3,7 +3,7 @@
 	name = "\the Emininence"
 	real_name = "\the Eminence"
 	desc = "The leader-elect of the servants of Ratvar."
-	icon = 'icons/mob/actions_clockcult.dmi'
+	icon = 'icons/obj/cult.dmi'
 	icon_state = "eminence"
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	see_in_dark = 8
@@ -234,9 +234,8 @@
 //Eminence actions below this point
 /datum/action/innate/eminence
 	name = "Умение Возвышенного"
-	//desc = "You shouldn't see this. File a bug report!"
 	button_icon = 'icons/hud/actions.dmi'
-	button_icon_state = "clockcult"
+	button_icon_state = "warp_down"
 	background_icon_state = "bg_cult"
 	action_type = AB_INNATE
 
