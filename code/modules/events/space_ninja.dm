@@ -1,8 +1,7 @@
 /datum/event/space_ninja/setup()
 	//Here we pick a location and spawn the ninja.
 	if(ninjastart.len == 0)
-		ninjastart = landmarks_list["ninja"]
-		ninjastart = ninjastart.Copy()
+		ninjastart = landmarks_list["ninja"].Copy()
 
 	create_spawner(/datum/spawner/ninja_event)
 
@@ -41,8 +40,7 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 
 	//Here we pick a location and spawn the ninja.
 	if(ninjastart.len == 0)
-		ninjastart = landmarks_list["ninja"]
-		ninjastart = ninjastart.Copy()
+		ninjastart = landmarks_list["ninja"].Copy()
 
 	//The ninja will be created on the right spawn point or at late join.
 	var/mob/living/carbon/human/new_ninja = create_space_ninja(pick(ninjastart.len ? ninjastart : latejoin))

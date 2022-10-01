@@ -256,13 +256,11 @@ var/global/list/datum/spawners_cooldown = list()
 	important_info += mission
 
 /datum/spawner/ert/jump(mob/dead/observer/ghost)
-	var/list/correct_landmarks = landmarks_list["Commando"]
-	var/jump_to = pick(correct_landmarks)
+	var/jump_to = pick(landmarks_list["Commando"])
 	ghost.forceMove(get_turf(jump_to))
 
 /datum/spawner/ert/spawn_ghost(mob/dead/observer/ghost)
-	var/list/correct_landmarks = landmarks_list["Commando"]
-	var/obj/spawnloc = pick(correct_landmarks)
+	var/obj/spawnloc = pick(landmarks_list["Commando"])
 	var/new_name = sanitize_safe(input(ghost, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
 
 	var/datum/faction/strike_team/ert/ERT_team = find_faction_by_type(/datum/faction/strike_team/ert)
