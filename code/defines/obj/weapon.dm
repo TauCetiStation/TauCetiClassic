@@ -226,7 +226,7 @@
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
 		to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
-		M.adjustBruteLoss(force / 2)
+		M.apply_damage(force / 2, BRUTE)
 
 /*/obj/item/weapon/syndicate_uplink
 	name = "station bounced radio"

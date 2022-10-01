@@ -243,9 +243,9 @@
 					return
 				var/time = rand(2, 6)
 				if (prob(75))
-					H.Paralyse(time)
+					H.apply_effects(time, PARALYZE)
 				else
-					H.Stun(time)
+					H.apply_effects(time, STUN)
 				if(H.stat != DEAD)	H.stat = UNCONSCIOUS
 				user.visible_message("<span class='warning'><B>[H] has been knocked unconscious!</B></span>", "<span class='warning'><B>You knock [H] unconscious!</B></span>")
 				return

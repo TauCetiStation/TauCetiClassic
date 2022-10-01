@@ -100,8 +100,7 @@
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))
 			if(prob(15))
 				M.apply_effect((rand(30,80)),IRRADIATE)
-				M.Stun(2)
-				M.Weaken(5)
+				M.apply_effects(2, 5)
 				visible_message("<span class='warning'>[M] writhes in pain as \his vacuoles boil.</span>", blind_message = "<span class='warning'>You hear the crunching of leaves.</span>")
 			if(prob(35))
 			//	for (var/mob/V in viewers(src)) //Public messages commented out to prevent possible metaish genetics experimentation and stuff. - Cheridan
@@ -237,7 +236,7 @@
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_bodypart_damage(damage)
-		S.Stun(2)
+		S.apply_effect(2, STUN)
 
 	if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target

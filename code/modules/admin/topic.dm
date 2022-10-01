@@ -1600,10 +1600,8 @@
 		if(M.health == 1)
 			M.gib()
 		else
-			M.adjustBruteLoss( min( 99 , (M.health - 1) )    )
-			M.Stun(20)
-			M.Weaken(20)
-			M.setStuttering(20)
+			M.apply_damage((min(99,(M.health - 1))), BRUTE)
+			M.apply_effects(20, 20, 0, 0, 20)
 
 	else if(href_list["CentcommReply"])
 		var/mob/living/H = locate(href_list["CentcommReply"])

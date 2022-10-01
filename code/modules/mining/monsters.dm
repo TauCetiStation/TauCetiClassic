@@ -107,9 +107,9 @@
 		if(EXPLODE_DEVASTATE)
 			gib()
 		if(EXPLODE_HEAVY)
-			adjustBruteLoss(maxHealth * 0.8)
+			apply_damage((maxHealth * 0.8), BRUTE)
 		if(EXPLODE_LIGHT)
-			adjustBruteLoss(maxHealth * 0.4)
+			apply_damage((maxHealth * 0.4), BRUTE)
 
 ////////////Drone(miniBoss)/////////////
 
@@ -466,7 +466,7 @@
 		visible_message("<span class='warning'>The [src.name] knocks [M.name] down!</span>")
 		playsound(M, 'sound/misc/goliath_tentacle_hit.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		M.Weaken(strength * 0.1)
-		M.adjustBruteLoss(strength * 0.4) // 40% pure damage of Goliath force
+		M.apply_damage((strength * 0.4), BRUTE) // 40% pure damage of Goliath force
 	qdel(src)
 
 /obj/effect/goliath_tentacle/Crossed(atom/movable/AM)
