@@ -14,17 +14,17 @@
 
 	switch(damagetype)
 		if(BRUTE)
-			adjustBruteLoss(damage * blocked_mult(blocked))
+			adjustBruteLoss(damage * blocked_mult(blocked) * global.damage_multiplier)
 		if(BURN)
-			adjustFireLoss(damage * blocked_mult(blocked))
+			adjustFireLoss(damage * blocked_mult(blocked) * global.damage_multiplier)
 		if(TOX)
-			adjustToxLoss(damage * blocked_mult(blocked))
+			adjustToxLoss(damage * blocked_mult(blocked) * global.damage_multiplier)
 		if(OXY)
-			adjustOxyLoss(damage * blocked_mult(blocked))
+			adjustOxyLoss(damage * blocked_mult(blocked) * global.damage_multiplier)
 		if(CLONE)
-			adjustCloneLoss(damage * blocked_mult(blocked))
+			adjustCloneLoss(damage * blocked_mult(blocked) * global.damage_multiplier)
 		if(HALLOSS)
-			adjustHalLoss(damage * blocked_mult(blocked))
+			adjustHalLoss(damage * blocked_mult(blocked) * global.damage_multiplier)
 
 	updatehealth()
 	return TRUE
@@ -49,22 +49,22 @@
 	if(!effect || (blocked <= 0))	return 0
 	switch(effecttype)
 		if(STUN)
-			Stun(effect * blocked)
+			Stun(effect * blocked * global.damage_multiplier)
 		if(WEAKEN)
-			Weaken(effect * blocked)
+			Weaken(effect * blocked * global.damage_multiplier)
 		if(PARALYZE)
-			Paralyse(effect * blocked)
+			Paralyse(effect * blocked * global.damage_multiplier)
 		if(AGONY)
-			adjustHalLoss(effect) // Useful for objects that cause "subdual" damage. PAIN!
+			adjustHalLoss(effect * global.damage_multiplier) // Useful for objects that cause "subdual" damage. PAIN!
 		if(IRRADIATE)
-			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm.", "Your clothes feel warm."))/100),0)//Rads auto check armor
+			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm.", "Your clothes feel warm."))/100) * global.damage_multiplier,0)//Rads auto check armor
 		if(STUTTER)
 			if(status_flags & CANSTUN) // stun is usually associated with stutter
-				Stuttering(effect * blocked)
+				Stuttering(effect * blocked * global.damage_multiplier)
 		if(EYE_BLUR)
-			blurEyes(effect * blocked)
+			blurEyes(effect * blocked * global.damage_multiplier)
 		if(DROWSY)
-			drowsyness = max(drowsyness,(effect * blocked))
+			drowsyness = max(drowsyness,(effect * blocked * global.damage_multiplier))
 	updatehealth()
 	return 1
 
