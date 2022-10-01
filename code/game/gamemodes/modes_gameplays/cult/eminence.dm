@@ -156,7 +156,7 @@
 			command_text = "The Eminence orders the defense and fortification of the area to your GETDIR!"
 			marker_icon = "eminence_reinforce"
 	if(marker_icon)
-		var/obj/effect/temp_visual/ratvar/command_point/P = new (get_turf(A))
+		var/obj/effect/temp_visual/command_point/P = new (get_turf(A))
 		P.icon_state = marker_icon
 		COOLDOWN_START(src, command_point, 2 MINUTES)
 		for(var/mob/M in servants_and_ghosts())
@@ -168,7 +168,7 @@
 			M.playsound_local(M, 'sound/antag/eminence_command.ogg', 75, VOL_EFFECTS_MASTER)
 
 //Used by the Eminence to coordinate the cult
-/obj/effect/temp_visual/ratvar/command_point
+/obj/effect/temp_visual/command_point
 	name = "Маркер Возвышенного"
 	desc = "Важная точка, помеченная Возвышенным."
 	icon = 'icons/hud/actions.dmi'
@@ -178,7 +178,7 @@
 	duration = 300
 	var/image/cult_vis
 
-/obj/effect/temp_visual/ratvar/command_point/atom_init(marker_icon)
+/obj/effect/temp_visual/command_point/atom_init(marker_icon)
 	. = ..()
 	cult_vis = image(icon, src, marker_icon)
 	for(var/mob/M in servants_and_ghosts())
@@ -217,7 +217,7 @@
 					var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
 					Heart?.heart_normalize()
 
-/obj/effect/temp_visual/ratvar/command_point/Destroy()
+/obj/effect/temp_visual/command_point/Destroy()
 	. = ..()
 	QDEL_NULL(cult_vis)
 
