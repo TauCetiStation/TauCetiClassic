@@ -545,7 +545,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return FALSE
 	
 	if(count_by_type(installed_upgrades, UPG.type) >= 2)
-		to_chat(user, "<span class='warning'>Достигнут лимит улучшений данного типа!<span>")
+		to_chat(user, "<span class='warning'>Достигнут лимит улучшений данного типа!</span>")
 		return FALSE
 	return TRUE
 
