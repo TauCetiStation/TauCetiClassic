@@ -589,17 +589,16 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 				return
 			if("freezing")
 				C.adjust_bodytemperature(-80, min_temp = 80)
-				C.adjustHalLoss(1)
+				C.apply_damage(1, HALLOS)
 				C.AdjustStunned(-1)
-				C.AdjustWeakened(1)
+				C.apply_effect(1, WEAKEN)
 				to_chat(C, "<span class='warning'>The water is freezing!</span>")
 				return
 			if("boiling")
 				C.adjust_bodytemperature(35, max_temp = 500)
-				C.adjustFireLoss(5)
-				C.adjustHalLoss(1)
+				C.apply_damages(burn = 5, hallos = 1)
 				C.AdjustStunned(-1)
-				C.AdjustWeakened(1)
+				C.apply_effect(1, WEAKEN)
 				to_chat(C, "<span class='danger'>The water is searing!</span>")
 				return
 

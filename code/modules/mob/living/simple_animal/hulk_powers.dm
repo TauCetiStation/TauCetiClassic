@@ -101,8 +101,7 @@
 	if (istype(usr.loc,/obj))
 		var/obj/container = usr.loc
 		to_chat(usr, "<span class='warning'>You leap and slam your head against the inside of [container]! Ouch!</span>")
-		usr.AdjustParalysis(3)
-		usr.AdjustWeakened(5)
+		usr.apply_effects(weaken = 5, paralyze = 3)
 		container.visible_message("<span class='warning'><b>[usr.loc]</b> emits a loud thump and rattles a bit.</span>")
 		playsound(usr, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 		var/wiggle = 6
@@ -277,8 +276,7 @@
 	if (istype(usr.loc,/obj))
 		var/obj/container = usr.loc
 		to_chat(usr, "<span class='warning'>You dash and slam your head against the inside of [container]! Ouch!</span>")
-		usr.AdjustParalysis(3)
-		usr.AdjustWeakened(5)
+		apply_effects(weaken = 5, paralyze = 3)
 		container.visible_message("<span class='warning'><b>[usr.loc]</b> emits a loud thump and rattles a bit.</span>")
 		playsound(usr, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 		var/wiggle = 6

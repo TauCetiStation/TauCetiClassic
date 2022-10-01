@@ -335,7 +335,7 @@
 		L.visible_message(
 			"<span class='warning'>[L] unties the noose over their neck!</span>",
 			"<span class='notice'>You untie the noose over your neck!</span>")
-	L.AdjustWeakened(5)
+	L.apply_effect(5, WEAKEN)
 	unbuckle_mob(L)
 
 /obj/structure/stool/bed/chair/noose/can_user_buckle(mob/living/carbon/human/M, mob/user)
@@ -414,7 +414,7 @@
 			playsound(src, 'sound/effects/noose_idle.ogg', VOL_EFFECTS_MASTER)
 		else
 			bm.visible_message("<span class='danger'>[bm] drops from the noose!</span>")
-			bm.AdjustWeakened(5)
+			bm.apply_effect(5, WEAKEN)
 			bm.pixel_z = initial(bm.pixel_z)
 			pixel_z = initial(pixel_z)
 			bm.pixel_x = initial(bm.pixel_x)
@@ -438,8 +438,8 @@
 	if(has_buckled_mobs() && buckled_mob.mob_has_gravity())
 		buckled_mob.visible_message("<span class='danger'>[buckled_mob] falls over and hits the ground!</span>")
 		to_chat(buckled_mob, "<span class='userdanger'>You fall over and hit the ground!</span>")
-		buckled_mob.adjustBruteLoss(10)
-		buckled_mob.AdjustWeakened(5)
+		buckled_mob.apply_damage(10, BRUTE)
+		buckled_mob.apply_effect(5, WEAKEN)
 		unbuckle_mob(buckled_mob)
 	if(forced)
 		var/obj/item/stack/cable_coil/C = new(get_turf(src))

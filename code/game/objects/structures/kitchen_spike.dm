@@ -146,8 +146,8 @@
 	m.Turn(180)
 	animate(L, transform = m, time = 3)
 	L.pixel_y = L.default_pixel_y
-	L.adjustBruteLoss(15)
+	L.apply_damage(15, BRUTE)
 	visible_message("<span class='danger'>[L] falls free of the [src]!</span>")
 	unbuckle_mob()
 	L.emote("scream")
-	L.AdjustWeakened(10)
+	L.apply_effect(10, WEAKEN)
