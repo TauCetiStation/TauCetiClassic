@@ -140,5 +140,5 @@
 		eminence.key = eminence_nominee.key
 		hierophant_message("<span class='cult'>A ghost has ascended into the Eminence!</span>")
 	for(var/mob/M in servants_and_ghosts())
-		M.playsound_local(M, 'sound/antag/eminence_selected.ogg', 50, VOL_EFFECTS_MASTER)
+		M.playsound_local(M, 'sound/antag/eminence_selected.ogg', VOL_EFFECTS_MASTER)
 	eminence_nominee = null

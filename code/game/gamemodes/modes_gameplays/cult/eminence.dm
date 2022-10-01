@@ -161,11 +161,11 @@
 		COOLDOWN_START(src, command_point, 2 MINUTES)
 		for(var/mob/M in servants_and_ghosts())
 			to_chat(M, "<span class='large cult'>[replacetext(command_text, "GETDIR", dir2text(get_dir(M, command_location)))]</span>")
-			M.playsound_local(M, 'sound/antag/eminence_command.ogg', 75, VOL_EFFECTS_MASTER)
+			M.playsound_local(M, 'sound/antag/eminence_command.ogg', VOL_EFFECTS_MASTER)
 	else
 		hierophant_message("<span class='large cult'>[command_text]</span>")
 		for(var/mob/M in servants_and_ghosts())
-			M.playsound_local(M, 'sound/antag/eminence_command.ogg', 75, VOL_EFFECTS_MASTER)
+			M.playsound_local(M, 'sound/antag/eminence_command.ogg', VOL_EFFECTS_MASTER)
 
 //Used by the Eminence to coordinate the cult
 /obj/effect/temp_visual/command_point
@@ -257,7 +257,7 @@
 			C = M.client
 		else
 			return
-	else if(istype(mob_or_client, /client))
+	else if(isclient(mob_or_client))
 		C = mob_or_client
 
 	if(!istype(C))
@@ -278,7 +278,7 @@
 			to_chat(src, "<span class='bold cult'>У вас нет алтарей!</span>")
 			return
 		owner.forceMove(get_turf(pick(cult_religion.altars)))
-		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', 50, TRUE)
+		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', VOL_EFFECTS_MASTER)
 		flash_color(owner, flash_time = 25)
 	else
 		to_chat(owner, "<span class='warning'>Случилось что-то ужасное! Время достать богов по этому поводу!</span>")
@@ -293,7 +293,7 @@
 		for(var/obj/effect/rune/rune as anything in cult_religion.runes)
 			if(!is_centcom_level(rune.z))
 				owner.forceMove(get_turf(pick(cult_religion.runes)))
-				owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', 50, TRUE)
+				owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', VOL_EFFECTS_MASTER)
 				flash_color(owner, flash_time = 25)
 				break
 
