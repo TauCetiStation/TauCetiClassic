@@ -459,7 +459,7 @@
 	icon_state = "hatchet"
 	flags = CONDUCT
 	force = 12.0
-	hitsound = list("sound/weapons/bladeslice.ogg")
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	sharp = 1
 	edge = 1
 	w_class = SIZE_TINY
