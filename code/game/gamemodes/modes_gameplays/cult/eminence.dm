@@ -78,7 +78,7 @@
 	log_say(message)
 	if(SSticker.nar_sie_has_risen)
 		visible_message("<span class='cult big'><b>Ты чувствуешь, как тьма врывается в твой мозг и формирует слова:</b> \"[capitalize(message)]\"</span>")
-		//playsound(src, 'sound/machines/clockcult/ark_scream.ogg', 50, FALSE)
+		//playsound(src, 'sound/machines/clockcult/ark_scream.ogg', VOL_EFFECTS_MASTER)
 	message = "<span class='big cult'><b>[SSticker.nar_sie_has_risen ? "Преосвященство" : "Возвышенный"]:</b> \"[message]\"</span>"
 	for(var/mob/M in servants_and_ghosts())
 		if(isobserver(M))
