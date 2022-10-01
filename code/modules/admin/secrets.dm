@@ -29,6 +29,7 @@
 					<A href='?src=\ref[src];secretsadmin=night_shift_set'>Set Night Shift Mode</A><BR>
 					<A href='?src=\ref[src];secretsadmin=clear_virus'>Cure all diseases currently in existence</A><BR>
 					<A href='?src=\ref[src];secretsadmin=restore_air'>Restore air in your zone</A><BR>
+					<A href='?src=\ref[src];secretsadmin=damage_multiplier'>Global Damage Multiplier</A><BR>
 					<h4>Bombs</h4>
 					[check_rights(R_SERVER,0) ? "<A href='?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>" : "<BR>"]
 					<h4>Lists</h4>
@@ -585,6 +586,13 @@
 				message_admins("[key_name_admin(usr)] has restored air in [COORD(T)] <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>.")
 			else
 				to_chat(usr, "<span class='userdanger'>You are staying on incorrect turf.</span>")
+		if("damage_multiplier")
+			if(!check_rights(R_VAREDIT, 0))
+				return
+			var/var_value = input(usr, ">1.0 - battles will speed up, <1.0 battles will go longer and bloodier!","Enter new number") as null|num
+			if(var_value)
+				global.damage_multiplier = var_value
+				message_admins("<span class='notice'>[key_name_admin(usr)] change Global Damage Multiplier to [var_value].</span>", 1)
 		// Bombing List
 		if("list_bombers")
 			var/dat = ""

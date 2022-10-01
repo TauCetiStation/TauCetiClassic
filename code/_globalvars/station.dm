@@ -10,3 +10,5 @@ var/global/datum/moduletypes/mods = new()
 
 // Reference list for disposal sort junctions. Filled up by sorting junction's New()
 var/global/list/tagger_locations = list()
+
+var/global/damage_multiplier = 1.0
