@@ -135,13 +135,8 @@
 	if(!COOLDOWN_FINISHED(src, command_point))
 		to_chat(src, "<span class='cult'>Слишком рано для новой команды!</span>")
 		return
-	var/list/commands
-	var/atom/movable/command_location
-	if(A == src)
-		commands = list("Defend the Ark!", "Advance!", "Retreat!", "Generate Power")
-	else
-		command_location = A
-		commands = list("Rally Here", "Regroup Here", "Avoid This Area", "Reinforce This Area")
+	var/list/commands = list("Rally Here", "Regroup Here", "Avoid This Area", "Reinforce This Area")
+	var/atom/movable/command_location = A
 	var/roma_invicta = input(src, "Choose a command to issue to your cult!", "Issue Commands") as null|anything in commands
 	if(!roma_invicta)
 		return
