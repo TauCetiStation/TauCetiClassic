@@ -5,7 +5,7 @@
 	desc = "The leader-elect of the servants of Ratvar."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "eminence"
-	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	mouse_opacity = MOUSE_OPACITY_ICON
 	see_in_dark = 8
 	invisibility = INVISIBILITY_OBSERVER
 	layer = FLY_LAYER
@@ -238,6 +238,25 @@
 	to_chat(src, "<span class='cult'><b>Стереть свои руны</b> стирает все ваши руны в мире.</span>")
 	to_chat(src, "<span class='cult'><b>Телепорт к последователю</b> позволяет вам телепортироваться к любого последователю в культе по вашему желанию.</span>")
 
+//Animated fading color on client's screen
+/proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
+	var/client/C
+	if(ismob(mob_or_client))
+		var/mob/M = mob_or_client
+		if(M.client)
+			C = M.client
+		else
+			return
+	else if(isclient(mob_or_client))
+		C = mob_or_client
+
+	if(!istype(C))
+		return
+
+	var/animate_color = C.color
+	C.color = flash_color
+	animate(C, color = animate_color, time = flash_time)
+
 //Eminence actions below this point
 /datum/action/innate/eminence
 	name = "Умение Возвышенного"
@@ -261,23 +280,6 @@
 	var/mob/camera/eminence/E = owner
 	E.eminence_help()
 
-/proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
-	var/client/C
-	if(ismob(mob_or_client))
-		var/mob/M = mob_or_client
-		if(M.client)
-			C = M.client
-		else
-			return
-	else if(isclient(mob_or_client))
-		C = mob_or_client
-
-	if(!istype(C))
-		return
-
-	var/animate_color = C.color
-	C.color = flash_color
-	animate(C, color = animate_color, time = flash_time)
 
 //Returns to the heaven
 /datum/action/innate/eminence/heaven_jump
