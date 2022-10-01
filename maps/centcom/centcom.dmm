@@ -3663,6 +3663,12 @@
 /area/custom/syndicate_mothership)
 "ajr" = (
 /obj/structure/table/reinforced,
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
+	},
+/obj/item/weapon/pen/red{
+	pixel_y = 6
+	},
 /obj/effect/landmark{
 	name = "Syndicate-Commando-Paper"
 	},
@@ -17413,6 +17419,7 @@
 /area/custom/syndicate_mothership/elite_squad)
 "aNj" = (
 /obj/machinery/door/poddoor/shutters/syndi{
+	id = "Esyndimech";
 	name = "Mech Bay"
 	},
 /turf/simulated/shuttle/floor/vox{
@@ -30263,6 +30270,9 @@
 /area/custom/syndicate_mothership/control)
 "uDv" = (
 /obj/structure/table/reinforced,
+/obj/item/weapon/folder/red{
+	pixel_y = 4
+	},
 /turf/simulated/shuttle/floor/vox,
 /area/custom/syndicate_mothership/elite_squad)
 "uEr" = (
