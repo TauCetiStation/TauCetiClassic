@@ -11,7 +11,7 @@
 	..()
 	MAP_JOB_CHECK
 	minimal_player_ingame_minutes = 3600
-	skillsets = list("Station Engineer" = /datum/skillset/falcon/engineer)
+	skillsets = list("Chief Engineer" = /datum/skillset/falcon/ce)
 
 /datum/job/engineer/New()
 	..()
@@ -24,8 +24,8 @@
 /datum/job/atmos/New()
 	..()
 	MAP_JOB_CHECK
-	total_positions = 6
-	spawn_positions = 6
+	total_positions = 3
+	spawn_positions = 3
 	minimal_player_ingame_minutes = 600
 	skillsets = list("Station Engineer" = /datum/skillset/falcon/engineer)
 
@@ -34,7 +34,7 @@
 	MAP_JOB_CHECK
 	total_positions = -1
 	spawn_positions = -1
-	skillsets = list("Station Engineer" = /datum/skillset/falcon/engineer)
+	skillsets = list("Technical Assistant" = /datum/skillset/falcon/engineer)
 
 MAP_REMOVE_JOB(assistant)
 

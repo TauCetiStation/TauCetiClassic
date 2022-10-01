@@ -1494,10 +1494,6 @@
 	},
 /turf/simulated/floor,
 /area/station/rnd/chargebay)
-"lG" = (
-/obj/structure/lattice,
-/turf/environment/space,
-/area/station/cargo/storage)
 "lJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -1925,9 +1921,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engineering/engine)
-"oG" = (
-/turf/environment/space,
-/area/station/cargo/storage)
 "oH" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 8
@@ -1966,6 +1959,10 @@
 	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/item/device/megaphone{
+	pixel_x = 3;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -3679,15 +3676,16 @@
 /obj/item/weapon/storage/fancy/cigarettes{
 	pixel_y = 1
 	},
-/obj/item/clothing/glasses/meson{
-	pixel_y = 12
-	},
 /obj/machinery/alarm{
 	pixel_x = -28;
 	pixel_y = -6
 	},
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/item/weapon/lighter/zippo{
+	pixel_x = -5;
+	pixel_y = -6
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -5590,7 +5588,7 @@
 	},
 /area/station/engineering/engine)
 "Pi" = (
-/obj/structure/closet/emcloset,
+/obj/structure/bookcase/manuals/engineering,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -5734,13 +5732,8 @@
 /area/station/hallway/secondary/exit)
 "Qi" = (
 /obj/structure/table,
-/obj/item/device/megaphone{
-	pixel_x = 3;
-	pixel_y = 5
-	},
-/obj/item/weapon/lighter/zippo{
-	pixel_x = -5;
-	pixel_y = -6
+/obj/machinery/faxmachine{
+	department = "Chief Engineer Office"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -20498,7 +20491,7 @@ si
 si
 SY
 SY
-lG
+ap
 MC
 ap
 MC
@@ -20756,7 +20749,7 @@ YO
 du
 SY
 SY
-lG
+ap
 ap
 MC
 ap
@@ -21013,7 +21006,7 @@ ou
 wO
 at
 si
-oG
+MC
 ap
 MC
 ap
@@ -21270,7 +21263,7 @@ gp
 RP
 OI
 si
-lG
+ap
 ap
 ap
 ap
@@ -21527,7 +21520,7 @@ FA
 Db
 xk
 si
-oG
+MC
 ap
 MC
 ap
@@ -21784,7 +21777,7 @@ mT
 nV
 SY
 SY
-lG
+ap
 ap
 ap
 ap
@@ -22040,8 +22033,8 @@ SY
 SY
 SY
 SY
-oG
-lG
+ap
+as
 as
 as
 as
