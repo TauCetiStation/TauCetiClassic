@@ -2978,15 +2978,14 @@
 /turf/environment/space,
 /area/shuttle/syndicate_elite/mothership)
 "ahQ" = (
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/machinery/door/airlock/centcom{
+	name = "Custodial Closet";
+	req_access = list(101)
 	},
-/obj/structure/shuttle/engine/heater{
-	dir = 8;
-	icon_state = "heater1"
+/turf/unsimulated/floor{
+	icon_state = "dark"
 	},
-/turf/unsimulated/floor,
-/area/shuttle/specops/centcom)
+/area/centcom/specops)
 "ahR" = (
 /obj/structure/object_wall/standart{
 	dir = 1;
@@ -4852,6 +4851,12 @@
 	icon_state = "red"
 	},
 /area/custom/syndicate_mothership)
+"amd" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/centcom/specops)
 "ame" = (
 /obj/machinery/shower{
 	dir = 1
@@ -5503,6 +5508,15 @@
 	icon_state = "floor5"
 	},
 /area/velocity)
+"anv" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
 "anw" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 9
@@ -10618,10 +10632,12 @@
 /turf/environment/space,
 /area/shuttle/specops/centcom)
 "ayL" = (
-/obj/structure/object_wall/standart{
-	icon_state = "wall3"
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 1
 	},
-/turf/environment/space,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
+	},
 /area/shuttle/specops/centcom)
 "ayM" = (
 /turf/unsimulated/floor{
@@ -10689,47 +10705,58 @@
 /turf/environment/space,
 /area/shuttle/specops/centcom)
 "ayU" = (
-/obj/structure/table/reinforced,
-/obj/item/device/radio/intercom{
-	frequency = 1443;
-	name = "Spec Ops Intercom";
-	pixel_y = 28
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
-	},
-/area/shuttle/specops/centcom)
-"ayV" = (
-/obj/machinery/computer/specops_shuttle,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
-	},
-/area/shuttle/specops/centcom)
-"ayW" = (
-/obj/machinery/camera{
-	c_tag = "Spec. Ops. Shuttle";
-	network = list("ERT")
-	},
-/obj/structure/stool/bed/chair/metal,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
-	},
-/area/shuttle/specops/centcom)
-"ayX" = (
-/obj/structure/stool/bed/chair/metal,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
-	},
-/area/shuttle/specops/centcom)
-"ayY" = (
-/obj/structure/stool/bed/chair/metal,
-/obj/machinery/light/small{
+/obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "black"
 	},
-/area/shuttle/specops/centcom)
+/area/centcom/specops)
+"ayV" = (
+/obj/structure/closet/secure_closet/hos,
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/centcom/specops)
+"ayW" = (
+/obj/structure/centcom_barrier,
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/centcom/specops)
+"ayX" = (
+/obj/structure/rack,
+/obj/item/mecha_parts/mecha_equipment/sleeper{
+	pixel_y = 4
+	},
+/obj/item/mecha_parts/mecha_equipment/sleeper{
+	pixel_y = 4
+	},
+/obj/item/mecha_parts/mecha_equipment/syringe_gun,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"ayY" = (
+/obj/structure/rack,
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/taser{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/ion{
+	pixel_y = 4
+	},
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy,
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser{
+	pixel_y = -4
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
 "ayZ" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 9
@@ -10827,37 +10854,34 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "azl" = (
-/obj/machinery/computer/security/telescreen{
-	name = "Spec. Ops. Monitor";
-	network = list("CREED");
-	pixel_y = 30
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "warndark"
 	},
-/obj/structure/stool/bed/chair/metal{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
-	},
-/area/shuttle/specops/centcom)
+/area/centcom/specops)
 "azm" = (
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
+/obj/structure/cryofeed/right,
+/turf/unsimulated/floor{
+	name = "plating"
 	},
-/area/shuttle/specops/centcom)
+/area/centcom/specops)
 "azn" = (
-/obj/machinery/door/airlock/external,
-/obj/machinery/door/poddoor{
-	id = "NTrasen";
-	name = "Outer Airlock"
+/obj/structure/rack,
+/obj/item/weapon/gun/grenadelauncher,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
 	},
-/turf/simulated/shuttle/plating,
-/area/shuttle/specops/centcom)
+/area/centcom/specops)
 "azo" = (
-/turf/simulated/shuttle/plating,
-/area/shuttle/specops/centcom)
+/obj/machinery/door/airlock/external{
+	dock_tag = "centcomm_specops"
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "warnplate"
+	},
+/area/centcom/specops)
 "azp" = (
 /obj/structure/object_wall/vox/internal{
 	icon_state = "8,0"
@@ -11002,33 +11026,53 @@
 	},
 /area/velocity)
 "azE" = (
-/obj/machinery/computer/pod{
-	id = "NTrasen";
-	name = "Hull Door Control"
+/obj/structure/rack,
+/obj/item/clothing/suit/space/rig/ert/security,
+/obj/item/clothing/head/helmet/space/rig/ert/security,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/melee/baton,
+/obj/item/device/flash,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/plastique,
+/obj/item/clothing/accessory/storage/black_vest,
+/obj/item/weapon/storage/belt/security,
+/obj/item/clothing/glasses/night,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
+/obj/item/weapon/storage/backpack/ert/security,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
-	},
-/area/shuttle/specops/centcom)
+/area/centcom/specops)
 "azF" = (
-/obj/structure/stool/bed/chair/metal{
-	dir = 1
+/obj/structure/rack,
+/obj/item/weapon/reagent_containers/hypospray{
+	pixel_x = 6
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
+/obj/item/weapon/reagent_containers/hypospray,
+/obj/item/weapon/reagent_containers/hypospray{
+	pixel_x = -6
 	},
-/area/shuttle/specops/centcom)
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Medical";
+	dir = 8;
+	network = list("ERT")
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/centcom/specops)
 "azG" = (
-/obj/structure/stool/bed/chair/metal{
-	dir = 1
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "warndark"
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
-	},
-/area/shuttle/specops/centcom)
+/area/centcom/specops)
 "azH" = (
 /turf/unsimulated/floor{
 	icon = 'icons/turf/carpets.dmi';
@@ -11123,18 +11167,10 @@
 /turf/environment/space,
 /area/shuttle/specops/centcom)
 "azR" = (
-/obj/machinery/door/airlock/external,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "NTrasen";
-	name = "Outer Airlock";
-	opacity = 0
+/turf/unsimulated/floor{
+	icon_state = "warndark"
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor4"
-	},
-/area/shuttle/specops/centcom)
+/area/centcom/specops)
 "azS" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
@@ -11230,7 +11266,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/indestructible{
-	dir = 5;
+	dir = 5
 	},
 /obj/effect/forcefield{
 	desc = "You can't get in. Heh.";
@@ -11471,29 +11507,17 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "aAD" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 1;
-	frequency = 1441;
-	listening = 0;
-	name = "Spec Ops Intercom";
-	pixel_y = 28
-	},
-/obj/machinery/power/port_gen/riteg,
-/obj/machinery/light{
-	dir = 1
-	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "black"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aAE" = (
-/obj/machinery/iv_drip,
-/obj/machinery/iv_drip,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "black"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aAF" = (
 /obj/structure/object_wall/vox{
 	density = 0;
@@ -11530,53 +11554,45 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "aAJ" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/hypospray,
-/obj/item/weapon/storage/belt/medical,
-/obj/item/weapon/storage/firstaid/adv,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/o2,
-/obj/item/weapon/storage/pill_bottle/inaprovaline,
-/obj/item/weapon/storage/pill_bottle/inaprovaline,
-/obj/item/weapon/storage/pill_bottle/inaprovaline,
-/obj/item/weapon/storage/pill_bottle/bicaridine,
-/obj/item/weapon/storage/pill_bottle/bicaridine,
-/obj/item/weapon/storage/pill_bottle/dermaline,
-/obj/item/weapon/storage/pill_bottle/dermaline,
-/obj/item/weapon/storage/pill_bottle/dylovene,
-/obj/item/weapon/storage/pill_bottle/dylovene,
-/obj/item/weapon/storage/pill_bottle/tramadol,
-/obj/item/weapon/storage/pill_bottle/tramadol,
-/obj/item/weapon/storage/box/autoinjectors,
-/obj/item/clothing/glasses/hud/health,
-/obj/item/weapon/shockpaddles/standalone,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/weapon/melee/baton,
-/obj/item/weapon/gun/energy/taser/stunrevolver,
-/obj/structure/window/reinforced/holowindow{
-	dir = 8
+/obj/machinery/door/poddoor/shutters/syndi{
+	id = "DropPodGarage"
 	},
-/obj/structure/window/reinforced/holowindow{
-	dir = 4
+/obj/structure/sign/warning/pods{
+	desc = "A sign which reads 'DROP PODS'.";
+	name = "\improper DROP PODS";
+	pixel_w = 33;
+	pixel_y = 32
 	},
-/obj/item/weapon/storage/box/syringes,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aAK" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/medbeam,
+/obj/item/weapon/weldpack{
+	pixel_y = 6
+	},
+/obj/item/weapon/weldpack,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "darkblue"
+	},
+/area/centcom/specops)
+"aAL" = (
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = 22
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/living)
-"aAL" = (
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/centcom/living)
+/area/centcom/specops)
 "aAM" = (
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -11598,18 +11614,11 @@
 	},
 /area/custom/tophat)
 "aAP" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 1;
-	frequency = 1441;
-	listening = 0;
-	name = "Spec Ops Intercom";
-	pixel_y = 28
-	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "darkblue"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aAQ" = (
 /obj/item/device/radio/intercom{
 	name = "Magic intercom";
@@ -11684,112 +11693,47 @@
 	},
 /area/custom/tophat)
 "aAY" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/hypospray,
-/obj/item/weapon/storage/belt/medical,
-/obj/item/weapon/storage/firstaid/adv,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/o2,
-/obj/item/weapon/storage/pill_bottle/inaprovaline,
-/obj/item/weapon/storage/pill_bottle/inaprovaline,
-/obj/item/weapon/storage/pill_bottle/inaprovaline,
-/obj/item/weapon/storage/pill_bottle/bicaridine,
-/obj/item/weapon/storage/pill_bottle/bicaridine,
-/obj/item/weapon/storage/pill_bottle/dermaline,
-/obj/item/weapon/storage/pill_bottle/dermaline,
-/obj/item/weapon/storage/pill_bottle/dylovene,
-/obj/item/weapon/storage/pill_bottle/dylovene,
-/obj/item/weapon/storage/pill_bottle/tramadol,
-/obj/item/weapon/storage/pill_bottle/tramadol,
-/obj/item/weapon/storage/box/autoinjectors,
-/obj/item/clothing/glasses/hud/health,
-/obj/item/weapon/shockpaddles/standalone,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/weapon/melee/baton,
-/obj/item/weapon/gun/energy/taser/stunrevolver,
-/obj/structure/window/reinforced/holowindow{
-	dir = 8
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Drop Pod Garage";
+	network = list("ERT")
 	},
-/obj/item/weapon/storage/box/syringes,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "darkblue"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aAZ" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/hypospray,
-/obj/item/weapon/storage/belt/medical,
-/obj/item/weapon/storage/firstaid/adv,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/o2,
-/obj/item/weapon/storage/pill_bottle/inaprovaline,
-/obj/item/weapon/storage/pill_bottle/inaprovaline,
-/obj/item/weapon/storage/pill_bottle/inaprovaline,
-/obj/item/weapon/storage/pill_bottle/bicaridine,
-/obj/item/weapon/storage/pill_bottle/bicaridine,
-/obj/item/weapon/storage/pill_bottle/dermaline,
-/obj/item/weapon/storage/pill_bottle/dermaline,
-/obj/item/weapon/storage/pill_bottle/dylovene,
-/obj/item/weapon/storage/pill_bottle/dylovene,
-/obj/item/weapon/storage/pill_bottle/tramadol,
-/obj/item/weapon/storage/pill_bottle/tramadol,
-/obj/item/weapon/storage/box/autoinjectors,
-/obj/item/clothing/glasses/hud/health,
-/obj/item/weapon/shockpaddles/standalone,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/weapon/melee/baton,
-/obj/item/weapon/gun/energy/taser/stunrevolver,
-/obj/structure/window/reinforced/holowindow{
-	dir = 8
-	},
-/obj/structure/window/reinforced/holowindow{
+/obj/structure/rack,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd,
+/obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/item/weapon/storage/box/syringes,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "yellow"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aBa" = (
-/obj/structure/table/reinforced,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 6;
+	icon_state = "darkblue"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aBb" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 1;
-	frequency = 1441;
-	listening = 0;
-	name = "Spec Ops Intercom";
-	pixel_y = 28
-	},
-/obj/machinery/light{
-	dir = 1
-	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "darkblue"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aBc" = (
-/obj/structure/rack,
-/obj/item/clothing/head/helmet/space/rig/ert/engineer,
-/obj/item/clothing/suit/space/rig/ert/engineer,
-/obj/item/clothing/accessory/storage/brown_vest,
-/obj/item/clothing/head/helmet/space/rig/ert/engineer,
-/obj/item/clothing/suit/space/rig/ert/engineer,
-/obj/item/clothing/accessory/storage/brown_vest,
-/obj/item/clothing/head/helmet/space/rig/ert/engineer,
-/obj/item/clothing/suit/space/rig/ert/engineer,
-/obj/item/clothing/accessory/storage/brown_vest,
+/obj/machinery/mech_bay_recharge_port,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "platebot";
+	name = "plating"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aBd" = (
 /obj/structure/device/piano/minimoog,
 /obj/structure/extinguisher_cabinet{
@@ -11800,23 +11744,21 @@
 	},
 /area/custom/tophat)
 "aBe" = (
-/obj/structure/table/reinforced,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = 22
+	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/unsimulated/floor{
 	dir = 1;
-	icon_state = "vault"
+	icon_state = "darkblue"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aBf" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -11848,46 +11790,42 @@
 	},
 /area/custom/tophat)
 "aBj" = (
-/obj/structure/rack,
-/obj/item/ammo_casing/caseless/rocket/anti_singulo,
-/obj/item/ammo_casing/caseless/rocket/anti_singulo,
-/obj/item/ammo_casing/caseless/rocket/anti_singulo,
-/obj/item/ammo_casing/caseless/rocket/anti_singulo,
-/obj/item/ammo_casing/caseless/rocket/anti_singulo,
-/obj/item/ammo_casing/caseless/rocket/anti_singulo,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 10;
+	icon_state = "yellow"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aBk" = (
 /obj/structure/rack,
-/obj/item/ammo_casing/caseless/rocket/anti_singulo,
-/obj/item/ammo_casing/caseless/rocket/anti_singulo,
-/obj/item/ammo_casing/caseless/rocket/anti_singulo,
-/obj/item/ammo_casing/caseless/rocket/anti_singulo,
-/obj/item/ammo_casing/caseless/rocket/anti_singulo,
-/turf/unsimulated/floor{
-	icon_state = "dark"
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/plasteel{
+	amount = 50
 	},
-/area/centcom/living)
+/obj/item/stack/sheet/plasteel{
+	amount = 50
+	},
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "yellow"
+	},
+/area/centcom/specops)
 "aBl" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "yellow"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aBm" = (
-/obj/machinery/vending/tool,
-/turf/unsimulated/floor{
-	icon_state = "dark"
+/obj/structure/stool/bed/chair/metal{
+	dir = 8
 	},
-/area/centcom/living)
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "darkblue"
+	},
+/area/centcom/specops)
 "aBn" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 4
@@ -12009,22 +11947,33 @@
 	},
 /area/custom/tophat)
 "aBC" = (
-/obj/machinery/mech_bay_recharge_port,
-/turf/unsimulated/floor{
-	icon_state = "bot"
+/obj/structure/rack,
+/obj/item/device/remote_device/ERT,
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = 22
 	},
-/area/centcom/living)
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
 "aBD" = (
-/obj/machinery/camera{
-	c_tag = "Assault Armor North";
-	network = list("ERT")
-	},
-/obj/mecha/combat/gygax/dark,
+/obj/structure/rack,
+/obj/item/weapon/storage/backpack/ert/commander,
+/obj/item/weapon/storage/belt/security,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
 /turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "delivery"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aBE" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -12032,121 +11981,91 @@
 	},
 /area/centcom/living)
 "aBF" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/box/flashbangs,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aBG" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "black"
+	},
+/area/centcom/specops)
+"aBH" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/rig/ert/engineer,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/head/helmet/space/rig/ert/engineer,
+/obj/item/device/flash,
+/obj/item/device/multitool,
+/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/accessory/storage/brown_vest,
+/obj/item/weapon/storage/belt/utility/full,
+/obj/item/clothing/glasses/meson,
+/obj/item/weapon/storage/backpack/ert/engineer,
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
-	dir = 1;
 	frequency = 1441;
 	listening = 0;
 	name = "Spec Ops Intercom";
-	pixel_y = 28
+	pixel_x = -28;
+	pixel_y = -5
+	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Engineering";
+	dir = 4;
+	network = list("ERT")
 	},
 /turf/unsimulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/living)
-"aBG" = (
-/obj/item/clothing/glasses/meson,
-/obj/item/clothing/glasses/meson,
-/obj/item/clothing/glasses/meson,
-/obj/item/weapon/storage/belt/utility/full,
-/obj/item/weapon/storage/belt/utility/full,
-/obj/item/weapon/storage/belt/utility/full,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/gloves/yellow,
-/obj/structure/closet/secure_closet,
-/obj/item/weapon/storage/backpack/ert/engineer,
-/obj/item/weapon/storage/backpack/ert/engineer,
-/obj/item/weapon/storage/backpack/ert/engineer,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
-"aBH" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/belt/medical/surg/full,
-/obj/item/weapon/storage/belt/medical/surg/full,
-/obj/item/weapon/tank/anesthetic,
-/obj/item/weapon/tank/anesthetic,
-/obj/item/clothing/mask/breath/medical,
-/obj/item/clothing/mask/breath/medical,
-/obj/item/roller/roller_holder_surg,
-/obj/item/roller/roller_holder_surg,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
+/area/centcom/specops)
 "aBI" = (
-/obj/structure/table/reinforced,
-/obj/item/stack/sheet/glass{
-	amount = 50
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
 	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/stack/sheet/plasteel{
-	amount = 50
-	},
-/obj/item/stack/sheet/plasteel{
-	amount = 50
+/area/centcom/specops)
+"aBJ" = (
+/obj/machinery/door/poddoor/shutters/syndi{
+	id = "DropPodGarage"
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/living)
-"aBJ" = (
-/obj/structure/rack,
-/obj/item/clothing/head/helmet/space/rig/ert/commander,
-/obj/item/clothing/suit/space/rig/ert/commander,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
-	},
-/area/centcom/living)
+/area/centcom/specops)
 "aBK" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
 /area/centcom/living)
 "aBL" = (
-/obj/structure/stool/bed/chair/metal/black,
-/obj/effect/landmark/cops_spawn,
+/obj/structure/rack,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd,
 /turf/unsimulated/floor{
-	icon_state = "floor"
+	dir = 4;
+	icon_state = "yellow"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aBM" = (
 /obj/structure/rack,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/melee/baton,
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aBN" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/wiz,
@@ -12155,56 +12074,38 @@
 	},
 /area/custom/wizard_station)
 "aBO" = (
-/obj/effect/landmark{
-	name = "Commando"
-	},
-/obj/machinery/light{
-	dir = 1
+/obj/structure/rack,
+/obj/item/device/aicard,
+/obj/item/weapon/pinpointer/advpinpointer,
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
 	},
 /turf/unsimulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "vault"
 	},
 /area/centcom/specops)
 "aBP" = (
-/obj/effect/landmark{
-	name = "Commando"
-	},
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	dir = 9;
+	icon_state = "darkblue"
 	},
 /area/centcom/specops)
 "aBQ" = (
-/obj/structure/table,
-/obj/machinery/recharger{
-	pixel_y = 4
-	},
-/obj/item/weapon/handcuffs,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "black"
 	},
 /area/centcom/specops)
 "aBR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /turf/unsimulated/floor{
-	name = "plating"
+	dir = 10;
+	icon_state = "black"
 	},
 /area/centcom/specops)
 "aBS" = (
 /turf/unsimulated/floor{
-	icon_state = "asteroid6";
-	name = "sand"
+	dir = 6;
+	icon_state = "black"
 	},
 /area/centcom/specops)
 "aBT" = (
@@ -12229,80 +12130,120 @@
 	},
 /area/velocity)
 "aBW" = (
-/obj/effect/landmark{
-	name = "Marauder Exit"
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Shuttle Dock";
+	dir = 4;
+	network = list("ERT")
 	},
 /turf/unsimulated/floor{
-	name = "plating"
+	dir = 8;
+	icon_state = "black"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aBX" = (
-/turf/unsimulated/floor{
-	name = "plating"
+/obj/structure/rack,
+/obj/item/weapon/storage/briefcase/inflatable{
+	pixel_y = 6
 	},
-/area/centcom/living)
+/obj/item/weapon/storage/briefcase/inflatable,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "yellow"
+	},
+/area/centcom/specops)
 "aBY" = (
-/obj/machinery/door/poddoor{
-	id = "ASSAULT3";
-	name = "Launch Bay #3"
+/obj/machinery/door/airlock/centcom{
+	name = "General Access";
+	req_access = list(101)
 	},
 /turf/unsimulated/floor{
-	name = "plating"
+	icon_state = "dark"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aBZ" = (
+/obj/structure/rack,
+/obj/item/clothing/head/helmet/space/rig/ert/commander,
+/obj/item/clothing/suit/space/rig/ert/commander,
+/obj/item/clothing/shoes/magboots,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aCa" = (
+/obj/structure/sign/mark{
+	icon_state = "yup"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
+"aCb" = (
+/obj/structure/rack,
+/obj/item/clothing/mask/gas/sechailer{
+	pixel_x = 6
+	},
+/obj/item/clothing/mask/gas/sechailer{
+	pixel_x = 6
+	},
+/obj/item/clothing/mask/gas/sechailer{
+	pixel_x = 3
+	},
+/obj/item/clothing/mask/gas/sechailer{
+	pixel_x = 3
+	},
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/gas/sechailer{
+	pixel_x = -3
+	},
+/obj/item/clothing/mask/gas/sechailer{
+	pixel_x = -3
+	},
+/obj/item/clothing/mask/gas/sechailer{
+	pixel_x = -6
+	},
+/obj/item/clothing/mask/gas/sechailer{
+	pixel_x = -6
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aCc" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aCd" = (
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "warnplate"
 	},
-/area/centcom/living)
-"aCa" = (
+/area/centcom/specops)
+"aCe" = (
 /turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "warnplate"
+	name = "plating"
 	},
-/area/centcom/living)
-"aCb" = (
+/area/centcom/specops)
+"aCf" = (
 /obj/machinery/mass_driver{
 	dir = 8;
 	id = "ASSAULT3";
 	name = "gravpult"
 	},
 /turf/unsimulated/floor{
-	icon_state = "bot"
+	icon_state = "platebot";
+	name = "plating"
 	},
-/area/centcom/living)
-"aCc" = (
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "loadingarea"
-	},
-/area/centcom/living)
-"aCd" = (
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/centcom/living)
-"aCe" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
-	},
-/area/centcom/living)
-"aCf" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Medical Special Operations";
-	req_access = list(103)
-	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/centcom/living)
+/area/centcom/specops)
 "aCg" = (
 /mob/living/simple_animal/hostile/shantak{
 	a_intent = "help";
@@ -12321,44 +12262,80 @@
 	req_access = list(103)
 	},
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	icon_state = "dark"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aCi" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Special Operations";
-	req_access = list(103)
+/turf/unsimulated/floor{
+	icon_state = "bcircuit"
+	},
+/area/centcom/specops)
+"aCj" = (
+/obj/structure/rack,
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = 6
+	},
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = 6
+	},
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = 3
+	},
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/weapon/tank/emergency_oxygen/double,
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = -3
+	},
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = -3
+	},
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = -6
+	},
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = -6
+	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Conference Hall North";
+	network = list("ERT")
 	},
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aCk" = (
-/obj/structure/stool/bed/chair/metal/black{
-	dir = 4
-	},
-/obj/effect/landmark/cops_spawn,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/living)
-"aCl" = (
 /obj/structure/table/reinforced,
-/turf/unsimulated/floor{
-	icon_state = "floor"
+/obj/machinery/recharger{
+	pixel_y = 4
 	},
-/area/centcom/living)
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
+"aCl" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
 "aCm" = (
-/obj/structure/stool/bed/chair/metal/black{
-	dir = 8
-	},
-/obj/effect/landmark/cops_spawn,
+/obj/mecha/combat/gygax/ultra,
 /turf/unsimulated/floor{
-	icon_state = "floor"
+	dir = 8;
+	icon_state = "recharge_floor"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aCn" = (
 /obj/structure/flora/ausbushes/pointybush,
 /obj/effect/landmark/blockway,
@@ -12370,14 +12347,11 @@
 	},
 /area/space)
 "aCo" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Special Operations";
-	req_access = list(103)
-	},
 /turf/unsimulated/floor{
-	icon_state = "floor"
+	dir = 1;
+	icon_state = "darkyellow"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aCp" = (
 /obj/structure/snowman,
 /turf/unsimulated/floor/snow{
@@ -12387,17 +12361,27 @@
 	},
 /area/space)
 "aCq" = (
+/obj/effect/landmark{
+	name = "Commando"
+	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops.";
+	network = list("ERT")
+	},
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
 	},
 /area/centcom/specops)
 "aCr" = (
-/obj/structure/stool/bed/chair/metal{
-	dir = 8
+/obj/structure/stool/bed/chair/metal/black,
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Hall";
+	network = list("ERT")
 	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "darkyellowcorners"
 	},
 /area/centcom/specops)
 "aCs" = (
@@ -12498,21 +12482,20 @@
 	},
 /area/velocity)
 "aCD" = (
-/obj/machinery/mech_bay_recharge_port,
-/obj/machinery/light{
-	dir = 8
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "bot"
+	icon_state = "bcircuit"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aCE" = (
-/obj/mecha/medical/odysseus,
+/obj/machinery/light/small,
 /turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "delivery"
+	dir = 9;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aCF" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/cleanable/blood,
@@ -12581,13 +12564,14 @@
 	},
 /area/custom/wizard_station)
 "aCL" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/structure/rack,
+/obj/item/weapon/handcuffs,
+/obj/item/device/flash,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aCM" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -12612,14 +12596,9 @@
 	},
 /area/centcom/specops)
 "aCO" = (
-/obj/structure/window/reinforced,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+	dir = 10;
+	icon_state = "darkblue"
 	},
 /area/centcom/specops)
 "aCP" = (
@@ -12636,20 +12615,34 @@
 	},
 /area/centcom/specops)
 "aCQ" = (
-/obj/structure/window/reinforced,
-/obj/structure/centcom_barrier,
-/turf/unsimulated/floor,
+/obj/machinery/recharge_station,
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
 /area/centcom/specops)
 "aCR" = (
-/obj/structure/window/reinforced,
+/obj/item/weapon/flora/random,
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aCS" = (
+/obj/machinery/recharge_station,
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = 22
+	},
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor,
-/area/centcom/specops)
-"aCS" = (
-/obj/structure/window/reinforced,
-/turf/unsimulated/floor,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
 /area/centcom/specops)
 "aCT" = (
 /turf/unsimulated/floor{
@@ -12786,14 +12779,12 @@
 	},
 /area/custom/wizard_station)
 "aDi" = (
-/obj/machinery/door/poddoor{
-	id = "ASSAULT2";
-	name = "Launch Bay #2"
-	},
+/obj/structure/stool/bed/chair/metal/black,
+/obj/effect/landmark/cops_spawn,
 /turf/unsimulated/floor{
-	name = "plating"
+	icon_state = "floor"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aDj" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -12801,9 +12792,10 @@
 	name = "gravpult"
 	},
 /turf/unsimulated/floor{
-	icon_state = "bot"
+	icon_state = "platebot";
+	name = "plating"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aDk" = (
 /turf/unsimulated/floor{
 	icon = 'icons/turf/carpets.dmi';
@@ -12836,14 +12828,12 @@
 	},
 /area/custom/wizard_station)
 "aDo" = (
-/obj/structure/stool/bed/chair/metal/black{
-	dir = 1
-	},
-/obj/effect/landmark/cops_spawn,
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/fancy/donut_box,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aDp" = (
 /obj/structure/torch_holder/magic{
 	dir = 8
@@ -12855,33 +12845,40 @@
 	},
 /area/custom/wizard_station)
 "aDq" = (
+/obj/effect/landmark/cops_spawn,
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 8
+	},
 /turf/unsimulated/floor{
-	icon_state = "bot"
+	icon_state = "floor"
 	},
 /area/centcom/specops)
 "aDr" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Special Operations";
-	req_access = list(103)
+/obj/structure/table/reinforced,
+/obj/item/weapon/folder/red{
+	pixel_y = 4
 	},
-/obj/effect/landmark/trololo,
 /turf/unsimulated/floor{
-	icon_state = "delivery"
+	icon_state = "floor"
 	},
 /area/centcom/specops)
 "aDs" = (
-/obj/structure/centcom_barrier,
+/obj/machinery/door/poddoor{
+	id = "ASSAULT1";
+	name = "Launch Bay #1"
+	},
 /turf/unsimulated/floor{
-	icon_state = "bot"
+	dir = 4;
+	icon_state = "warnplate"
 	},
 /area/centcom/specops)
 "aDt" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Special Operations";
-	req_access = list(103)
+/obj/machinery/door/poddoor{
+	id = "ASSAULT1";
+	name = "Launch Bay #1"
 	},
 /turf/unsimulated/floor{
-	icon_state = "delivery"
+	name = "plating"
 	},
 /area/centcom/specops)
 "aDu" = (
@@ -12957,17 +12954,26 @@
 	},
 /area/custom/wizard_station)
 "aDC" = (
-/obj/mecha/working/ripley/firefighter,
-/turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "delivery"
+/obj/effect/landmark{
+	name = "Marauder Exit"
 	},
-/area/centcom/living)
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/centcom/specops)
 "aDD" = (
-/turf/unsimulated/floor{
-	icon_state = "red"
+/obj/structure/rack,
+/obj/item/weapon/gun/projectile/glock/spec,
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Commander";
+	dir = 4;
+	network = list("ERT")
 	},
-/area/centcom/living)
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
 "aDE" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/effect/decal/cleanable/blood,
@@ -12978,87 +12984,69 @@
 	},
 /area/space)
 "aDF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/door/poddoor{
+	id = "ASSAULT3";
+	name = "Launch Bay #3"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
 	},
 /area/centcom/specops)
 "aDG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /turf/unsimulated/floor{
-	name = "plating"
+	dir = 8;
+	icon_state = "loadingarea"
 	},
 /area/centcom/specops)
 "aDH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/door/poddoor{
+	id = "ASSAULT3";
+	name = "Launch Bay #3"
 	},
 /turf/unsimulated/floor{
-	name = "plating"
+	dir = 4;
+	icon_state = "warnplate"
 	},
 /area/centcom/specops)
 "aDI" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Creed's Office";
-	req_access = list(108)
+	name = "Special Operations";
+	req_access = list(103)
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
+"aDJ" = (
+/obj/structure/sign/departments/engineering,
+/turf/unsimulated/wall/fakeglass,
+/area/centcom/specops)
+"aDK" = (
+/obj/effect/landmark{
+	name = "Commando"
 	},
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
 	},
 /area/centcom/specops)
-"aDJ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
+"aDL" = (
+/obj/machinery/computer/atmos_alert{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
 	},
 /turf/unsimulated/floor{
-	name = "plating"
+	dir = 5;
+	icon_state = "vault"
 	},
-/area/centcom/specops)
-"aDK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/specops)
-"aDL" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/centcom_barrier,
-/turf/unsimulated/floor,
 /area/centcom/specops)
 "aDM" = (
-/obj/structure/window/reinforced{
-	dir = 1
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "darkyellowcorners"
 	},
-/turf/unsimulated/floor,
 /area/centcom/specops)
 "aDN" = (
 /obj/machinery/light{
@@ -13121,110 +13109,85 @@
 	},
 /area/custom/wizard_station)
 "aDV" = (
-/obj/machinery/door/poddoor{
-	id = "ASSAULT1";
-	name = "Launch Bay #1"
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/stool/bed/chair/metal/black,
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
 	},
 /turf/unsimulated/floor{
-	name = "plating"
+	icon_state = "dark"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aDW" = (
+/obj/structure/stool/bed/chair/metal/black,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
+"aDX" = (
+/obj/mecha/combat/gygax/dark,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "recharge_floor"
+	},
+/area/centcom/specops)
+"aDY" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "black"
+	},
+/area/centcom/specops)
+"aDZ" = (
+/obj/item/weapon/flora/random,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "darkbluecorners"
+	},
+/area/centcom/specops)
+"aEa" = (
 /obj/machinery/mass_driver{
 	dir = 8;
 	id = "ASSAULT1";
 	name = "gravpult"
 	},
 /turf/unsimulated/floor{
-	icon_state = "bot"
-	},
-/area/centcom/living)
-"aDX" = (
-/obj/structure/rack,
-/obj/item/clothing/head/helmet/space/rig/ert/medical,
-/obj/item/clothing/suit/space/rig/ert/medical,
-/obj/item/clothing/head/helmet/space/rig/ert/medical,
-/obj/item/clothing/suit/space/rig/ert/medical,
-/obj/item/clothing/head/helmet/space/rig/ert/medical,
-/obj/item/clothing/suit/space/rig/ert/medical,
-/obj/item/weapon/storage/backpack/ert/medical,
-/obj/item/weapon/storage/backpack/ert/medical,
-/obj/item/weapon/storage/backpack/ert/medical,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
-"aDY" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 1;
-	frequency = 1441;
-	listening = 0;
-	name = "Spec Ops Intercom";
-	pixel_x = -32
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
-"aDZ" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
-"aEa" = (
-/turf/unsimulated/floor{
-	icon_state = "grass1";
-	name = "grass"
-	},
-/area/centcom/specops)
-"aEb" = (
-/obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "grass1";
-	name = "grass"
-	},
-/area/centcom/specops)
-"aEc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor{
+	icon_state = "platebot";
 	name = "plating"
 	},
 /area/centcom/specops)
-"aEd" = (
-/obj/effect/landmark/trololo,
+"aEb" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/box{
+	pixel_y = 8
+	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aEc" = (
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 1
+	},
+/obj/effect/landmark/cops_spawn,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/specops)
+"aEd" = (
+/obj/mecha/working/ripley/firefighter,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "recharge_floor"
 	},
 /area/centcom/specops)
 "aEe" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "asteroid8";
-	name = "sand"
+	dir = 5;
+	icon_state = "black"
 	},
 /area/centcom/specops)
 "aEf" = (
@@ -13251,162 +13214,107 @@
 	},
 /area/custom/wizard_station)
 "aEi" = (
+/obj/item/weapon/flora/random,
 /turf/unsimulated/floor{
-	dir = 1;
+	icon_state = "darkgreencorners"
+	},
+/area/centcom/specops)
+"aEj" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkgreencorners"
+	},
+/area/centcom/specops)
+"aEk" = (
+/turf/unsimulated/floor{
+	icon_state = "darkgreen"
+	},
+/area/centcom/specops)
+"aEl" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/electrical{
+	pixel_y = 10
+	},
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/toolbox/emergency,
+/turf/unsimulated/floor{
+	icon_state = "darkblue"
+	},
+/area/centcom/specops)
+"aEm" = (
+/obj/machinery/portable_atmospherics/powered/scrubber,
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = 22
+	},
+/turf/unsimulated/floor{
+	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/living)
-"aEj" = (
-/obj/structure/rack,
-/obj/item/bodybag/cryobag,
-/obj/item/bodybag/cryobag,
-/obj/item/bodybag/cryobag,
-/obj/item/bodybag/cryobag,
-/obj/item/bodybag/cryobag,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
-"aEk" = (
-/obj/structure/closet/crate/medical,
-/obj/item/weapon/storage/firstaid/adv,
-/obj/item/weapon/storage/firstaid/adv,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/o2,
-/obj/item/weapon/storage/firstaid/o2,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/regular,
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/item/weapon/storage/box/autoinjectors,
-/obj/item/weapon/storage/box/autoinjectors,
-/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
-/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
-/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
-/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
-"aEl" = (
-/obj/machinery/vending/engivend,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
-"aEm" = (
-/obj/item/device/multitool,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
-/obj/item/device/flash,
-/obj/item/device/flash,
-/obj/item/device/flash,
-/obj/item/weapon/rcd,
-/obj/item/weapon/rcd,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/structure/closet/secure_closet,
-/obj/item/weapon/storage/briefcase/inflatable,
-/obj/item/weapon/storage/briefcase/inflatable,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
+/area/centcom/specops)
 "aEn" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/box/bodybags,
-/obj/item/weapon/storage/box/bodybags,
-/obj/item/weapon/storage/box/bodybags,
-/obj/item/weapon/storage/box/bodybags,
-/obj/item/weapon/reagent_containers/spray/cleaner,
-/obj/item/weapon/reagent_containers/spray/cleaner,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "darkred"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aEo" = (
-/obj/structure/closet/crate/plastic,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "darkredcorners"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aEp" = (
 /obj/machinery/light,
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aEq" = (
-/turf/unsimulated/wall,
-/area/centcom/creed)
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkredcorners"
+	},
+/area/centcom/specops)
 "aEr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/door/poddoor{
+	id = "ASSAULT0";
+	name = "Launch Bay #0"
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
-	name = "plating"
+	dir = 4;
+	icon_state = "warnplate"
 	},
-/area/centcom/creed)
+/area/centcom/specops)
 "aEs" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
 /obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
-	name = "plating"
+	dir = 4;
+	icon_state = "black"
 	},
-/area/centcom/creed)
+/area/centcom/specops)
 "aEt" = (
-/obj/structure/centcom_barrier,
+/obj/machinery/door/airlock/centcom{
+	name = "Medical Special Operations";
+	req_access = list(103)
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/creed)
+/area/centcom/specops)
 "aEu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/centcom_barrier,
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/creed)
+/obj/structure/sign/departments/medbay/alt,
+/turf/unsimulated/wall/fakeglass,
+/area/centcom/specops)
 "aEv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/centcom_barrier,
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/creed)
+/obj/structure/sign/departments/security,
+/turf/unsimulated/wall,
+/area/centcom/specops)
 "aEw" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -13477,68 +13385,66 @@
 	icon_state = "cult"
 	},
 /area/custom/wizard_station)
-"aEG" = (
-/obj/machinery/door/poddoor{
-	id = "ASSAULT0";
-	name = "Launch Bay #0"
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom/living)
-"aEH" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	id = "ASSAULT0";
-	name = "gravpult"
-	},
-/turf/unsimulated/floor{
-	icon_state = "bot"
-	},
-/area/centcom/living)
-"aEI" = (
+"aEF" = (
 /obj/machinery/camera{
-	c_tag = "Assault Armor South";
-	dir = 1;
+	c_tag = "Spec. Ops. Cryogenic Storage";
+	dir = 8;
 	network = list("ERT")
 	},
 /turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "loadingarea"
+	dir = 4;
+	icon_state = "black"
 	},
-/area/centcom/living)
+/area/centcom/specops)
+"aEG" = (
+/obj/structure/sign/mark{
+	icon_state = "rlf"
+	},
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "black"
+	},
+/area/centcom/specops)
+"aEH" = (
+/obj/machinery/door/poddoor{
+	id = "ASSAULT2";
+	name = "Launch Bay #2"
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "warnplate"
+	},
+/area/centcom/specops)
+"aEI" = (
+/obj/machinery/door/poddoor{
+	id = "ASSAULT2";
+	name = "Launch Bay #2"
+	},
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/centcom/specops)
 "aEJ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/box{
+	pixel_y = 8
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/item/weapon/storage/box{
+	pixel_y = -8
 	},
 /turf/unsimulated/floor{
-	name = "plating"
+	dir = 5;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aEK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/machinery/door/poddoor/shutters/syndi{
+	id = "Mecha"
 	},
 /turf/unsimulated/floor{
-	name = "plating"
+	icon_state = "dark"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aEL" = (
 /obj/item/clothing/shoes/sandal/marisa{
 	desc = "A set of fancy shoes that are as functional as they are comfortable.";
@@ -13558,53 +13464,68 @@
 	},
 /area/custom/wizard_station)
 "aEM" = (
-/obj/structure/bookcase{
-	name = "bookcase (Tactics)"
-	},
+/obj/machinery/light/small,
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	dir = 10;
+	icon_state = "black"
 	},
-/area/centcom/creed)
+/area/centcom/specops)
 "aEN" = (
-/obj/structure/closet/secure_closet/hos,
+/obj/structure/stool/bed/chair/metal/black,
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	dir = 4;
+	icon_state = "darkbluecorners"
 	},
-/area/centcom/creed)
+/area/centcom/specops)
 "aEO" = (
+/obj/machinery/light/small,
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	dir = 6;
+	icon_state = "black"
 	},
-/area/centcom/creed)
+/area/centcom/specops)
 "aEP" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/secure/briefcase,
-/obj/item/weapon/storage/fancy/cigarettes,
-/obj/item/weapon/lighter/zippo,
-/obj/item/weapon/storage/belt/utility,
-/obj/item/weapon/storage/backpack/satchel,
-/obj/machinery/light{
-	dir = 1
+/obj/structure/table/reinforced,
+/obj/machinery/faxmachine{
+	department = "Central Command";
+	dptdest = "Captain's Office"
 	},
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	icon_state = "floor"
 	},
-/area/centcom/creed)
+/area/centcom/specops)
 "aEQ" = (
-/obj/structure/bookcase{
-	name = "bookcase (Reports)"
+/obj/effect/landmark/cops_spawn,
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	icon_state = "floor"
 	},
-/area/centcom/creed)
+/area/centcom/specops)
 "aER" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo,
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/box{
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/box{
+	pixel_y = -8
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aES" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/unsimulated/floor/snow{
@@ -13703,12 +13624,14 @@
 	},
 /area/custom/wizard_station)
 "aFd" = (
-/obj/structure/mopbucket,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
+/obj/machinery/door/airlock/centcom{
+	name = "Armory Special Operations";
+	req_access = list(103)
 	},
-/area/centcom/living)
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
 "aFe" = (
 /obj/item/device/radio/intercom{
 	desc = "Talk through this. Evilly";
@@ -13738,17 +13661,9 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/wizard_station)
 "aFh" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 8;
-	listening = 0;
-	name = "Station Intercom (General)";
-	pixel_x = -28
-	},
-/turf/unsimulated/floor{
-	icon_state = "grimy"
-	},
-/area/centcom/creed)
+/obj/structure/sign/warning/secure_area/armory,
+/turf/unsimulated/wall,
+/area/centcom/specops)
 "aFi" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall_f9"
@@ -13777,100 +13692,76 @@
 	},
 /area/custom/wizard_station)
 "aFm" = (
-/obj/machinery/vending/engineering,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
+/obj/structure/sign/nanotrasen,
+/turf/unsimulated/wall,
+/area/centcom/specops)
 "aFn" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/fancy/donut_box,
-/turf/unsimulated/floor{
-	icon_state = "floor"
+/obj/structure/sign/nanotrasen{
+	pixel_x = -32
 	},
-/area/centcom/living)
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Mecha";
+	dir = 4;
+	network = list("ERT")
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
+/area/centcom/specops)
 "aFo" = (
-/obj/structure/rack,
-/obj/item/clothing/head/helmet/space/rig/ert/security,
-/obj/item/clothing/suit/space/rig/ert/security,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/head/helmet/space/rig/ert/security,
-/obj/item/clothing/suit/space/rig/ert/security,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/head/helmet/space/rig/ert/security,
-/obj/item/clothing/suit/space/rig/ert/security,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/weapon/storage/backpack/ert/security,
-/obj/item/weapon/storage/backpack/ert/security,
-/obj/item/weapon/storage/backpack/ert/security,
+/obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	dir = 6;
+	icon_state = "black"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aFp" = (
-/obj/structure/rack,
-/obj/item/clothing/head/helmet/space/rig/ert/security,
-/obj/item/clothing/suit/space/rig/ert/security,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/head/helmet/space/rig/ert/security,
-/obj/item/clothing/suit/space/rig/ert/security,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/head/helmet/space/rig/ert/security,
-/obj/item/clothing/suit/space/rig/ert/security,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/weapon/storage/backpack/ert/security,
-/obj/item/weapon/storage/backpack/ert/security,
-/obj/item/weapon/storage/backpack/ert/security,
-/obj/machinery/light{
-	dir = 1
+/obj/machinery/recharge_station,
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
 	},
 /turf/unsimulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aFq" = (
-/obj/machinery/recharge_station,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 9;
+	icon_state = "whiteblue"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aFr" = (
-/obj/structure/table/reinforced,
+/obj/structure/rack,
+/obj/item/clothing/suit/space/rig/ert/medical,
+/obj/item/clothing/head/helmet/space/rig/ert/medical,
+/obj/item/weapon/gun/energy/taser/stunrevolver,
 /obj/item/weapon/melee/baton,
-/obj/item/weapon/storage/belt/security,
-/obj/item/device/flash,
-/obj/item/weapon/grenade/flashbang,
-/obj/item/weapon/grenade/flashbang,
-/obj/item/weapon/handcuffs,
-/obj/item/weapon/handcuffs,
-/obj/item/weapon/handcuffs,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/clothing/glasses/night,
-/obj/item/weapon/gun/projectile/glock/spec,
-/obj/item/clothing/glasses/sunglasses/hud/sechud,
-/obj/item/weapon/plastique,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/item/weapon/kitchenknife/combat,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+/obj/item/weapon/shockpaddles/standalone,
+/obj/item/weapon/storage/box/autoinjectors,
+/obj/item/weapon/storage/box/syringes,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/pill_bottle/tramadol,
+/obj/item/weapon/storage/pill_bottle/dylovene,
+/obj/item/weapon/storage/pill_bottle/dermaline,
+/obj/item/weapon/storage/pill_bottle/bicaridine,
+/obj/item/weapon/storage/pill_bottle/inaprovaline,
+/obj/item/weapon/storage/firstaid/o2,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/item/weapon/storage/belt/medical,
+/obj/item/weapon/storage/backpack/ert/medical,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aFs" = (
-/obj/machinery/door/window{
-	dir = 1;
-	name = "armory door"
-	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "whiteblue"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aFt" = (
 /turf/unsimulated/floor{
 	icon = 'icons/turf/carpets.dmi';
@@ -13879,22 +13770,41 @@
 	},
 /area/custom/wizard_station)
 "aFu" = (
-/obj/machinery/door/airlock/centcom{
-	name = "General Access";
-	req_access = list(101)
+/obj/structure/rack,
+/obj/item/weapon/shield/riot{
+	pixel_x = 7
+	},
+/obj/item/weapon/shield/riot{
+	pixel_x = 4
+	},
+/obj/item/weapon/shield/riot{
+	pixel_x = 1
+	},
+/obj/item/weapon/shield/riot{
+	pixel_x = -2
+	},
+/obj/item/weapon/shield/riot{
+	pixel_x = -5
+	},
+/obj/item/weapon/shield/riot{
+	pixel_x = -8
 	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aFv" = (
-/obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/rglass,
-/obj/item/stack/sheet/plasteel,
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/structure/rack,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "whiteblue"
 	},
 /area/centcom/specops)
 "aFw" = (
@@ -14031,31 +13941,21 @@
 	},
 /area/custom/wizard_station)
 "aFM" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/melee/baton,
-/obj/item/weapon/storage/belt/security,
-/obj/item/device/flash,
-/obj/item/weapon/grenade/flashbang,
-/obj/item/weapon/grenade/flashbang,
-/obj/item/weapon/handcuffs,
-/obj/item/weapon/handcuffs,
-/obj/item/weapon/handcuffs,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/clothing/glasses/night,
-/obj/item/weapon/gun/projectile/glock/spec,
-/obj/item/clothing/glasses/sunglasses/hud/sechud,
-/obj/item/weapon/plastique,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/effect/landmark{
+	name = "Commando"
 	},
-/obj/item/weapon/kitchenknife/combat,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/structure/window/reinforced,
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = 22
+	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aFN" = (
 /obj/structure/table/woodentable,
 /obj/item/candle/infinite{
@@ -14083,42 +13983,46 @@
 	},
 /area/custom/wizard_station)
 "aFQ" = (
-/obj/structure/table/woodentable{
-	dir = 9
+/obj/machinery/door/poddoor{
+	id = "CREED";
+	name = "Ready Room"
 	},
-/obj/item/weapon/reagent_containers/food/drinks/flask,
-/obj/item/clothing/mask/cigarette/cigar/havana,
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	icon_state = "dark"
 	},
-/area/centcom/creed)
+/area/centcom/specops)
 "aFR" = (
-/obj/machinery/computer/security/telescreen{
-	name = "Spec. Ops. Monitor";
-	network = list("ERT")
-	},
-/obj/structure/table/woodentable{
-	dir = 5
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = -32
 	},
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	icon_state = "dark"
 	},
-/area/centcom/creed)
+/area/centcom/specops)
 "aFS" = (
-/obj/structure/table/woodentable{
-	dir = 5
+/obj/machinery/mass_driver{
+	dir = 8;
+	id = "ASSAULT0";
+	name = "gravpult"
 	},
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	icon_state = "platebot";
+	name = "plating"
 	},
-/area/centcom/creed)
+/area/centcom/specops)
 "aFT" = (
-/obj/machinery/computer/card/centcom,
-/obj/item/weapon/card/id/centcom,
-/turf/unsimulated/floor{
-	icon_state = "grimy"
+/obj/machinery/door/poddoor{
+	id = "ASSAULT0";
+	name = "Launch Bay #0"
 	},
-/area/centcom/creed)
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/centcom/specops)
 "aFU" = (
 /obj/structure/flora/tree/pine{
 	layer = 9.1
@@ -14295,25 +14199,11 @@
 	},
 /area/custom/wizard_station)
 "aGm" = (
-/obj/item/weapon/storage/box/flashbangs,
-/obj/item/device/flash,
-/obj/item/weapon/melee/baton,
-/obj/item/weapon/handcuffs,
-/obj/item/clothing/glasses/sunglasses/hud/sechud,
-/obj/item/device/aicard,
-/obj/item/weapon/pinpointer/advpinpointer,
-/obj/structure/closet/secure_closet,
-/obj/item/weapon/storage/backpack/ert/commander,
-/obj/item/weapon/storage/belt/security,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
-/obj/item/weapon/kitchenknife/combat,
-/obj/item/weapon/gun/projectile/glock/spec,
-/obj/item/device/remote_device/ERT,
 /turf/unsimulated/floor{
 	dir = 1;
-	icon_state = "vault"
+	icon_state = "darkred"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aGn" = (
 /turf/environment/space,
 /area/shuttle/escape_pod1/centcom)
@@ -14322,19 +14212,16 @@
 /area/shuttle/escape_pod2/centcom)
 "aGp" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/mask/gas,
-/obj/item/weapon/storage/backpack/security,
-/obj/item/weapon/grenade/chem_grenade/cleaner,
-/obj/item/weapon/grenade/chem_grenade/cleaner,
-/obj/item/weapon/grenade/chem_grenade/cleaner,
-/obj/item/weapon/reagent_containers/glass/bucket,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
+/obj/item/weapon/handcuffs{
+	pixel_y = 2
 	},
-/area/centcom/living)
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
 "aGq" = (
 /obj/structure/table/woodentable,
 /obj/item/toy/plushie/octopus{
@@ -14348,18 +14235,22 @@
 /area/custom/wizard_station)
 "aGr" = (
 /obj/structure/rack,
-/obj/item/clothing/under/syndicate/combat,
-/obj/item/clothing/gloves/purple,
-/obj/item/clothing/suit/bio_suit/new_hazmat/janitor,
-/obj/item/clothing/head/bio_hood/new_hazmat/janitor,
-/obj/item/device/radio/headset/ert,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/glasses/science,
+/obj/item/weapon/gun/projectile/automatic{
+	pixel_y = 6
+	},
+/obj/item/weapon/gun/projectile/automatic{
+	pixel_y = 3
+	},
+/obj/item/weapon/gun/projectile/automatic,
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Armory North";
+	network = list("ERT")
+	},
 /turf/unsimulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aGs" = (
 /obj/item/clothing/shoes/sandal/marisa,
 /obj/effect/decal/cleanable/cobweb2,
@@ -14382,13 +14273,15 @@
 	},
 /area/custom/wizard_station)
 "aGt" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/structure/rack,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/creed)
+/area/centcom/specops)
 "aGu" = (
 /obj/structure/bookcase/manuals/security,
 /turf/unsimulated/floor{
@@ -14396,13 +14289,19 @@
 	},
 /area/custom/wizard_station)
 "aGv" = (
-/obj/structure/stool/bed/chair/metal{
-	dir = 1
+/obj/structure/rack,
+/obj/item/weapon/storage/box/r4046/EMP{
+	pixel_y = 8
 	},
+/obj/item/weapon/storage/box/r4046/rubber{
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/box/r4046/teargas,
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/creed)
+/area/centcom/specops)
 "aGw" = (
 /obj/structure/stool/bed/chair/wood/wings{
 	dir = 4
@@ -14594,13 +14493,13 @@
 	},
 /area/custom/wizard_station)
 "aGP" = (
-/obj/machinery/door/airlock/glass{
-	req_access = list(101)
-	},
+/obj/mecha/medical/odysseus,
+/obj/machinery/light,
 /turf/unsimulated/floor{
-	icon_state = "white"
+	dir = 8;
+	icon_state = "recharge_floor"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aGQ" = (
 /obj/structure/stool/bed/roller,
 /turf/unsimulated/floor{
@@ -14749,26 +14648,70 @@
 /turf/environment/space,
 /area/shuttle/supply/velocity)
 "aHl" = (
-/obj/machinery/cryopod/right{
-	storage = 0
+/obj/structure/rack,
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/msmg9mm{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = 22
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/unsimulated/floor{
-	icon_state = "white"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aHm" = (
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
 /area/centcom/living)
 "aHn" = (
-/obj/machinery/cryopod{
-	storage = 0
+/obj/structure/rack,
+/obj/item/weapon/gun/projectile/shotgun/combat{
+	pixel_y = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "white"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aHo" = (
 /obj/structure/object_wall/vox{
 	density = 0;
@@ -14953,36 +14896,38 @@
 	},
 /area/custom/syndicate_mothership/droppod_garage)
 "aHL" = (
-/obj/machinery/light,
 /turf/unsimulated/floor{
-	icon_state = "white"
+	dir = 9;
+	icon_state = "darkred"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aHM" = (
-/obj/machinery/cryopod{
-	density = 0;
-	storage = 0
-	},
 /turf/unsimulated/floor{
-	icon_state = "white"
+	dir = 5;
+	icon_state = "darkred"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aHN" = (
-/turf/unsimulated/wall{
-	density = 0
+/obj/machinery/light,
+/obj/machinery/recharge_station,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aHO" = (
-/obj/structure/toilet{
-	pixel_y = 7
-	},
-/obj/machinery/light/small{
-	dir = 8
+/obj/machinery/light,
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = -32
 	},
 /turf/unsimulated/floor{
-	icon_state = "freezerfloor"
+	icon_state = "black"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aHP" = (
 /obj/effect/landmark/droppod_spawn{
 	pods_spawned = 1
@@ -15108,13 +15053,22 @@
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "aIf" = (
-/obj/machinery/door/airlock{
-	name = "Unit 1"
+/obj/structure/rack,
+/obj/item/ammo_box/shotgun{
+	pixel_y = 6
+	},
+/obj/item/ammo_box/shotgun{
+	pixel_y = 3
+	},
+/obj/item/ammo_box/shotgun,
+/obj/item/ammo_box/shotgun{
+	pixel_y = -3
 	},
 /turf/unsimulated/floor{
-	icon_state = "freezerfloor"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "aIg" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 4
@@ -16325,6 +16279,18 @@
 	icon_state = "wood-broken2"
 	},
 /area/custom/syndicate_mothership)
+"aLb" = (
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 1
+	},
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
 "aLc" = (
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 8
@@ -16408,6 +16374,23 @@
 /obj/machinery/computer/communications,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
+"aLm" = (
+/obj/item/weapon/flora/random,
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "black"
+	},
+/area/centcom/specops)
+"aLn" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
 "aLo" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -16424,6 +16407,12 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
+"aLp" = (
+/obj/item/weapon/flora/random,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
 "aLq" = (
 /obj/machinery/computer/communications,
 /turf/unsimulated/floor{
@@ -16444,6 +16433,16 @@
 	icon_state = "floor"
 	},
 /area/centcom/control)
+"aLt" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
 "aLu" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -16451,6 +16450,26 @@
 	icon_state = "warning"
 	},
 /area/centcom/control)
+"aLv" = (
+/obj/structure/rack,
+/obj/item/roller/roller_holder_surg,
+/obj/item/roller/roller_holder_surg,
+/obj/item/weapon/tank/anesthetic,
+/obj/item/weapon/tank/anesthetic,
+/obj/item/clothing/mask/breath/medical,
+/obj/item/clothing/mask/breath/medical,
+/obj/item/weapon/storage/belt/medical/surg/full,
+/obj/item/weapon/storage/belt/medical/surg/full,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
+"aLw" = (
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "whiteblue"
+	},
+/area/centcom/specops)
 "aLx" = (
 /obj/structure/stool/bed/chair/schair,
 /turf/simulated/shuttle/floor,
@@ -16460,6 +16479,11 @@
 /obj/item/device/radio,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
+"aLz" = (
+/turf/unsimulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/centcom/specops)
 "aLA" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atm{
@@ -16482,6 +16506,12 @@
 	icon_state = "floor"
 	},
 /area/centcom/control)
+"aLC" = (
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "whiteblue"
+	},
+/area/centcom/specops)
 "aLD" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -16499,6 +16529,17 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
+"aLE" = (
+/obj/structure/table/reinforced,
+/obj/machinery/kitchen_machine/microwave{
+	pixel_x = -1;
+	pixel_y = 6
+	},
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
 "aLF" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Teleport Room";
@@ -16547,6 +16588,56 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"aLM" = (
+/obj/structure/rack,
+/obj/item/weapon/tank/emergency_oxygen/double,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aLN" = (
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = -32
+	},
+/obj/machinery/light,
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/box/donkpockets{
+	pixel_y = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
+"aLO" = (
+/obj/structure/rack,
+/obj/item/bodybag/cryobag,
+/obj/item/bodybag/cryobag,
+/obj/item/bodybag/cryobag,
+/obj/item/bodybag/cryobag,
+/obj/item/bodybag/cryobag,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
+"aLP" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/box/bodybags{
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/box/bodybags{
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/box/bodybags,
+/obj/machinery/light/small,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
 "aLQ" = (
 /obj/structure/table/reinforced,
 /obj/item/device/pda/captain,
@@ -16578,6 +16669,45 @@
 	icon_state = "engine"
 	},
 /area/centcom/control)
+"aLV" = (
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = -4;
+	pixel_y = 9
+	},
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/structure/table/reinforced,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
+"aLW" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/projectile/glock/spec{
+	pixel_y = 6
+	},
+/obj/item/weapon/gun/projectile/glock/spec{
+	pixel_y = 6
+	},
+/obj/item/weapon/gun/projectile/glock/spec{
+	pixel_y = 3
+	},
+/obj/item/weapon/gun/projectile/glock/spec{
+	pixel_y = 3
+	},
+/obj/item/weapon/gun/projectile/glock/spec,
+/obj/item/weapon/gun/projectile/glock/spec,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
 "aLX" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -16608,6 +16738,12 @@
 	},
 /turf/simulated/shuttle/plating,
 /area/centcom/evac)
+"aMa" = (
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "darkred"
+	},
+/area/centcom/specops)
 "aMb" = (
 /obj/machinery/light{
 	dir = 8
@@ -16624,6 +16760,58 @@
 	icon_state = "bot"
 	},
 /area/centcom/evac)
+"aMd" = (
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "darkred"
+	},
+/area/centcom/specops)
+"aMe" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/box/flashbangs{
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/box/flashbangs{
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/box/flashbangs,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aMf" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/box/handcuffs{
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/box/handcuffs{
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/box/handcuffs,
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aMg" = (
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Conference Hall South";
+	dir = 1;
+	network = list("ERT")
+	},
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
 "aMh" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -16663,6 +16851,53 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
+"aMk" = (
+/obj/structure/centcom_barrier,
+/obj/item/weapon/flora/random,
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/centcom/specops)
+"aMl" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/rig/ert/security,
+/obj/item/clothing/head/helmet/space/rig/ert/security,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/melee/baton,
+/obj/item/device/flash,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/plastique,
+/obj/item/clothing/accessory/storage/black_vest,
+/obj/item/weapon/storage/belt/security,
+/obj/item/clothing/glasses/night,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
+/obj/item/weapon/storage/backpack/ert/security,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aMm" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/energy/sniperrifle,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aMn" = (
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "warndark"
+	},
+/area/centcom/specops)
 "aMo" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -16680,6 +16915,153 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"aMp" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "warndark"
+	},
+/area/centcom/specops)
+"aMq" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/box/teargas{
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/box/teargas{
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/box/smokegrenades,
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Armory South";
+	dir = 1;
+	network = list("ERT")
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aMr" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/centcom/specops)
+"aMs" = (
+/obj/structure/sign/warning/securearea{
+	name = "За этой стеной ничего нету";
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "black"
+	},
+/area/centcom/specops)
+"aMt" = (
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "black"
+	},
+/area/centcom/specops)
+"aMu" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/box{
+	pixel_y = 8
+	},
+/obj/item/weapon/grenade/chem_grenade/cleaner,
+/obj/item/weapon/grenade/chem_grenade/cleaner,
+/obj/item/weapon/grenade/chem_grenade/cleaner,
+/obj/item/weapon/grenade/chem_grenade/cleaner,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aMv" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/energy/ionrifle{
+	pixel_y = 4
+	},
+/obj/item/weapon/gun/energy/ionrifle,
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aMw" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/energy/gun/nuclear{
+	pixel_y = 6
+	},
+/obj/item/weapon/gun/energy/gun/nuclear{
+	pixel_y = 3
+	},
+/obj/item/weapon/gun/energy/gun/nuclear,
+/obj/item/weapon/gun/energy/gun/nuclear{
+	pixel_y = -3
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"aMx" = (
+/turf/unsimulated/wall{
+	density = 0
+	},
+/area/centcom/specops)
+"aMy" = (
+/obj/structure/toilet{
+	pixel_y = 7
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/landmark/trololo,
+/obj/item/mine/shock/anchored,
+/obj/structure/sign/nanotrasen{
+	desc = ")))))))))))))))))))))";
+	icon = 'icons/obj/status_display.dmi';
+	icon_state = "ai_trollface";
+	name = "Trololo Logo";
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/centcom/living)
+"aMz" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/unsimulated/floor,
+/area/centcom/living)
+"aMA" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/obj/machinery/porta_turret/stationary{
+	lethal = 0
+	},
+/turf/unsimulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/centcom/living)
 "aMC" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -21057,20 +21439,14 @@
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
 "bcT" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/box/flashbangs,
-/obj/item/weapon/storage/box/flashbangs,
-/obj/item/weapon/storage/box/flashbangs,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/cryopod/right{
+	storage = 0
 	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "bde" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien10"
@@ -21280,27 +21656,21 @@
 /area/custom/abductor_ship)
 "bez" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/sniperrifle,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/item/weapon/storage/backpack/security,
+/obj/item/weapon/reagent_containers/watertank_backpack/janitor,
+/obj/item/clothing/mask/gas,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "beC" = (
-/obj/structure/table/reinforced,
-/obj/machinery/recharger,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/item/weapon/flora/random,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "black"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "beI" = (
 /obj/effect/landmark/abductor/agent{
 	team = 3
@@ -21322,34 +21692,19 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "beQ" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/melee/baton,
-/obj/item/weapon/storage/belt/security,
-/obj/item/device/flash,
-/obj/item/weapon/grenade/flashbang,
-/obj/item/weapon/grenade/flashbang,
-/obj/item/weapon/handcuffs,
-/obj/item/weapon/handcuffs,
-/obj/item/weapon/handcuffs,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/clothing/glasses/night,
-/obj/item/weapon/gun/projectile/glock/spec,
-/obj/item/clothing/glasses/sunglasses/hud/sechud,
-/obj/item/weapon/plastique,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/item/weapon/kitchenknife/combat,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/structure/rack,
+/obj/item/clothing/head/bio_hood/new_hazmat/janitor,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/glasses/science,
+/obj/item/device/radio/headset/ert,
+/obj/item/clothing/suit/bio_suit/new_hazmat/janitor,
+/obj/item/clothing/gloves/purple,
+/obj/item/clothing/under/syndicate/combat,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "beT" = (
 /obj/effect/landmark/abductor/scientist{
 	team = 4
@@ -21373,256 +21728,320 @@
 /area/velocity)
 "bfh" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/box/handcuffs,
-/obj/item/weapon/storage/box/handcuffs,
-/obj/item/weapon/storage/box/handcuffs,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
+/obj/item/mecha_parts/mecha_equipment/repair_droid,
+/obj/item/mecha_parts/mecha_equipment/repair_droid,
+/obj/item/mecha_parts/mecha_equipment/repair_droid,
+/obj/item/mecha_parts/mecha_equipment/repair_droid,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "bfi" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/gun/nuclear,
-/obj/item/weapon/gun/energy/gun/nuclear,
-/obj/item/weapon/gun/energy/gun/nuclear,
-/obj/item/weapon/gun/energy/gun/nuclear,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_y = 9
+	},
+/obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/spray/plantbgone{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/device/flash{
+	pixel_y = -6
 	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "bfj" = (
+/obj/machinery/computer/pod{
+	dir = 8;
+	id = "NTrasen";
+	name = "Hull Door Control"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/centcom/specops)
+"bfk" = (
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/centcom/specops)
+"bfl" = (
+/obj/structure/rack,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/item/mecha_parts/mecha_equipment/rcd{
+	pixel_y = 6
+	},
+/obj/item/mecha_parts/mecha_equipment/rcd,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"bfm" = (
+/obj/structure/rack,
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive{
+	pixel_y = 8
+	},
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang{
+	pixel_y = 2
+	},
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang{
+	pixel_y = -4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Mecha Modules";
+	dir = 4;
+	network = list("ERT")
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"bfn" = (
+/obj/structure/rack,
+/obj/machinery/light/small,
+/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster,
+/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"bfo" = (
+/obj/structure/closet/crate/medical,
+/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/item/weapon/storage/firstaid/regular,
+/obj/item/weapon/storage/firstaid/o2,
+/obj/item/weapon/storage/firstaid/o2,
+/obj/item/weapon/storage/firstaid/fire,
+/obj/item/weapon/storage/firstaid/fire,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/item/weapon/storage/firstaid/adv,
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/table/reinforced,
-/obj/machinery/recharger,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "whiteblue"
 	},
-/area/centcom/living)
-"bfk" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/melee/baton,
-/obj/item/weapon/storage/belt/security,
-/obj/item/device/flash,
-/obj/item/weapon/grenade/flashbang,
-/obj/item/weapon/grenade/flashbang,
-/obj/item/weapon/handcuffs,
-/obj/item/weapon/handcuffs,
-/obj/item/weapon/handcuffs,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/clothing/glasses/night,
-/obj/item/weapon/gun/projectile/glock/spec,
-/obj/item/clothing/glasses/sunglasses/hud/sechud,
-/obj/item/weapon/plastique,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/item/weapon/kitchenknife/combat,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
-"bfl" = (
-/obj/structure/rack,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/item/weapon/storage/box/r4046/rubber,
-/obj/item/weapon/storage/box/r4046/teargas,
-/obj/item/weapon/storage/box/r4046/EMP,
-/obj/item/weapon/gun/projectile/grenade_launcher/m79,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
-"bfm" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/ionrifle,
-/obj/item/weapon/gun/energy/ionrifle,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
-"bfn" = (
-/obj/structure/table/reinforced,
-/obj/machinery/recharger,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
-"bfo" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/box/smokegrenades,
-/obj/item/weapon/storage/box/teargas,
-/obj/item/weapon/storage/box/teargas,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
+/area/centcom/specops)
 "bfp" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/automatic,
-/obj/item/weapon/gun/projectile/automatic,
-/obj/item/weapon/gun/projectile/automatic,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/item/ammo_box/magazine/m9mm_2/rubber{
+	pixel_x = 9
+	},
+/obj/item/ammo_box/magazine/m9mm_2/rubber{
+	pixel_x = 9
+	},
+/obj/item/ammo_box/magazine/m9mm_2/rubber{
+	pixel_x = 9
+	},
+/obj/item/ammo_box/magazine/m9mm_2/rubber{
+	pixel_x = 6
+	},
+/obj/item/ammo_box/magazine/m9mm_2/rubber{
+	pixel_x = 6
+	},
+/obj/item/ammo_box/magazine/m9mm_2/rubber{
+	pixel_x = 6
+	},
+/obj/item/ammo_box/magazine/m9mm_2/rubber{
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m9mm_2/rubber{
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m9mm_2/rubber{
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/m9mm_2/rubber{
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m9mm_2/rubber{
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m9mm_2/rubber{
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m9mm_2/rubber{
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m9mm_2/rubber{
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m9mm_2/rubber{
+	pixel_x = -6
 	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "bfq" = (
 /obj/structure/rack,
-/obj/item/ammo_box/magazine/msmg9mm,
-/obj/item/ammo_box/magazine/msmg9mm,
-/obj/item/ammo_box/magazine/msmg9mm,
-/obj/item/ammo_box/magazine/msmg9mm,
-/obj/item/ammo_box/magazine/msmg9mm,
-/obj/item/ammo_box/magazine/msmg9mm,
-/obj/item/ammo_box/magazine/msmg9mm,
-/obj/item/ammo_box/magazine/msmg9mm,
-/obj/item/ammo_box/magazine/msmg9mm,
-/turf/unsimulated/floor{
-	icon_state = "dark"
+/obj/item/ammo_box/magazine/m9mm_2{
+	pixel_x = 9
 	},
-/area/centcom/living)
+/obj/item/ammo_box/magazine/m9mm_2{
+	pixel_x = 9
+	},
+/obj/item/ammo_box/magazine/m9mm_2{
+	pixel_x = 9
+	},
+/obj/item/ammo_box/magazine/m9mm_2{
+	pixel_x = 6
+	},
+/obj/item/ammo_box/magazine/m9mm_2{
+	pixel_x = 6
+	},
+/obj/item/ammo_box/magazine/m9mm_2{
+	pixel_x = 6
+	},
+/obj/item/ammo_box/magazine/m9mm_2{
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m9mm_2{
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m9mm_2{
+	pixel_x = 3
+	},
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/m9mm_2{
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m9mm_2{
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m9mm_2{
+	pixel_x = -3
+	},
+/obj/item/ammo_box/magazine/m9mm_2{
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m9mm_2{
+	pixel_x = -6
+	},
+/obj/item/ammo_box/magazine/m9mm_2{
+	pixel_x = -6
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
 "bfr" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/box/flashbangs,
-/obj/item/weapon/gun/grenadelauncher,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
-"bfs" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/projectile/shotgun/combat,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
+/obj/structure/sign/departments/custodian,
+/turf/unsimulated/wall/fakeglass,
+/area/centcom/specops)
 "bft" = (
-/obj/structure/rack,
-/obj/item/ammo_box/shotgun,
-/obj/item/ammo_box/shotgun,
-/obj/item/ammo_box/shotgun,
-/obj/item/ammo_box/shotgun,
-/turf/unsimulated/floor{
-	icon_state = "dark"
+/obj/structure/table/woodentable{
+	dir = 5
 	},
-/area/centcom/living)
+/obj/item/weapon/reagent_containers/food/drinks/flask{
+	pixel_y = 8
+	},
+/obj/item/clothing/mask/cigarette/cigar/havana{
+	pixel_y = -7
+	},
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/centcom/specops)
 "bfu" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/melee/baton,
-/obj/item/weapon/storage/belt/security,
-/obj/item/device/flash,
-/obj/item/weapon/grenade/flashbang,
-/obj/item/weapon/grenade/flashbang,
-/obj/item/weapon/handcuffs,
-/obj/item/weapon/handcuffs,
-/obj/item/weapon/handcuffs,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/clothing/glasses/night,
-/obj/item/weapon/gun/projectile/glock/spec,
-/obj/item/clothing/glasses/sunglasses/hud/sechud,
-/obj/item/weapon/plastique,
-/obj/item/weapon/kitchenknife/combat,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/item/weapon/storage/box/lights/mixed{
+	pixel_y = 4
+	},
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "bfv" = (
-/obj/structure/rack,
-/obj/item/weapon/shield/riot,
-/obj/item/weapon/shield/riot,
-/obj/item/weapon/shield/riot,
-/obj/item/weapon/shield/riot,
-/obj/item/weapon/shield/riot,
-/obj/item/weapon/shield/riot,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "grimy"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "bfw" = (
-/obj/structure/rack,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/structure/window/reinforced{
+/obj/structure/stool/bed/chair/comfy/brown,
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/centcom/specops)
+"bfx" = (
+/obj/machinery/computer/card/centcom{
 	dir = 8
 	},
+/obj/item/weapon/card/id/centcom,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "grimy"
 	},
-/area/centcom/living)
-"bfx" = (
-/obj/structure/rack,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
+/area/centcom/specops)
 "bgb" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/structure/rack,
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine{
+	pixel_y = 6
+	},
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg{
+	pixel_y = -2
+	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/centcom/specops)
 "bhb" = (
-/obj/machinery/computer/atmos_alert,
+/obj/structure/rack,
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp{
+	pixel_y = 6
+	},
+/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_x = 28;
+	pixel_y = -5
+	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/centcom/specops)
 "bib" = (
@@ -21637,24 +22056,38 @@
 	},
 /area/centcom/specops)
 "bkb" = (
-/obj/structure/droppod/Legitimate,
-/obj/machinery/light/small{
-	dir = 4
+/obj/structure/closet/crate/medical,
+/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
+/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
+/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
+/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
+/obj/item/weapon/storage/box/autoinjectors,
+/obj/item/weapon/storage/box/autoinjectors,
+/obj/item/weapon/storage/box/syringes,
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_x = 28;
+	pixel_y = -5
 	},
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	dir = 4;
+	icon_state = "whiteblue"
 	},
 /area/centcom/specops)
 "blb" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/structure/sign/nanotrasen{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "darkred"
 	},
 /area/centcom/specops)
 "bmb" = (
-/obj/effect/decal/cleanable/blood/oil,
+/obj/machinery/light/small,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -21666,39 +22099,75 @@
 	},
 /area/custom/syndicate_mothership/droppod_garage)
 "bob" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/toolbox/emergency,
-/obj/item/weapon/weldpack,
-/obj/item/weapon/weldpack,
-/obj/machinery/light{
-	dir = 1
+/obj/structure/mopbucket,
+/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/weapon/mop,
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_x = 28;
+	pixel_y = -5
+	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Custodial Closet";
+	dir = 8;
+	network = list("ERT")
 	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/centcom/specops)
 "bpb" = (
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "vault"
+/obj/structure/table/reinforced,
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
 	},
-/area/centcom/living)
+/obj/item/weapon/pen{
+	pixel_y = 6
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/specops)
 "bqb" = (
-/obj/machinery/door/poddoor/shutters/syndi{
-	id = "DropPodGarage"
+/obj/structure/table/woodentable{
+	dir = 5
+	},
+/obj/item/weapon/storage/secure/briefcase{
+	pixel_y = 6
+	},
+/obj/item/weapon/lighter/zippo{
+	pixel_y = 4
 	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "grimy"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "bqK" = (
 /obj/effect/decal/cleanable/blood/gibs/robot/up,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "brb" = (
-/obj/machinery/light,
+/obj/structure/table/woodentable{
+	dir = 5
+	},
+/obj/machinery/light/small,
+/obj/machinery/door_control{
+	id = "MechaModule";
+	name = "Mecha Module";
+	pixel_w = 10;
+	pixel_y = 2;
+	pixel_z = 10
+	},
+/obj/structure/mirror/magic{
+	pixel_w = 30;
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	icon_state = "grimy"
 	},
 /area/centcom/specops)
 "bry" = (
@@ -21723,24 +22192,51 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "btb" = (
-/obj/machinery/computer/mech_bay_power_console{
-	dir = 4
+/obj/structure/table/woodentable{
+	dir = 5
+	},
+/obj/machinery/door_control{
+	id = "Mecha";
+	name = "Mecha";
+	pixel_w = 10;
+	pixel_y = 2;
+	pixel_z = 10
+	},
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Creed's Office";
+	dir = 1;
+	network = list("ERT")
+	},
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
 	},
 /turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "warning"
+	icon_state = "grimy"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "bub" = (
-/obj/machinery/faxmachine{
-	department = "Central Command";
-	dptdest = "Captain's Office"
+/obj/structure/table/woodentable{
+	dir = 5
 	},
-/obj/structure/table/reinforced,
+/obj/machinery/light/small,
+/obj/machinery/door_control{
+	id = "DropPodGarage";
+	name = "Drop Pod Garage";
+	pixel_w = 10;
+	pixel_y = 2;
+	pixel_z = 10
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 1;
+	frequency = 1441;
+	listening = 0;
+	name = "Spec Ops Intercom";
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
-	icon_state = "floor"
+	icon_state = "grimy"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "buc" = (
 /obj/structure/table/woodentable,
 /obj/item/clothing/shoes/boots/cult{
@@ -21750,21 +22246,29 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bvb" = (
-/obj/machinery/door/poddoor/shutters/syndi{
-	id = "Mecha"
+/obj/structure/table/woodentable{
+	dir = 5
 	},
+/obj/machinery/computer/security/telescreen{
+	name = "Spec. Ops. Monitor";
+	network = list("ERT");
+	pixel_y = 2
+	},
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/centcom/specops)
+"bwb" = (
+/obj/structure/rack,
+/obj/item/mecha_parts/mecha_equipment/Drop_system,
+/obj/item/mecha_parts/mecha_equipment/Drop_system,
+/obj/item/mecha_parts/mecha_equipment/Drop_system,
+/obj/item/mecha_parts/mecha_equipment/Drop_system,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/living)
-"bwb" = (
-/obj/mecha/combat/gygax/ultra,
-/turf/unsimulated/floor{
-	dir = 6;
-	icon_state = "delivery"
-	},
-/area/centcom/living)
+/area/centcom/specops)
 "bxb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "centcomm_admin"
@@ -21774,19 +22278,25 @@
 	},
 /area/centcom/specops)
 "byb" = (
-/obj/machinery/door/poddoor/shutters/syndi{
-	id = "MechaModule"
+/obj/structure/rack,
+/obj/item/mecha_parts/mecha_equipment/cable_layer{
+	pixel_y = 6
 	},
+/obj/item/mecha_parts/mecha_equipment/extinguisher,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "bzb" = (
-/obj/structure/stool/bed/chair/metal{
-	dir = 4
+/obj/structure/rack,
+/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
+/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
 	},
-/turf/simulated/shuttle/floor4,
-/area/centcom/living)
+/area/centcom/specops)
 "bAb" = (
 /obj/machinery/gateway{
 	dir = 9
@@ -21797,60 +22307,44 @@
 	},
 /area/custom/syndicate_mothership)
 "bBb" = (
-/turf/simulated/shuttle/floor4,
-/area/centcom/living)
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
 "bCb" = (
-/obj/machinery/light/small{
-	dir = 8
+/obj/structure/stool/bed/chair/metal/black{
+	dir = 1
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/centcom/specops)
 "bDb" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Airlock";
-	req_access = list(103)
+/obj/machinery/door/airlock/centcom{
+	name = "Creed's Office";
+	req_access = list(108)
 	},
-/turf/simulated/shuttle/floor4,
-/area/centcom/living)
-"bEb" = (
-/obj/item/mecha_parts/mecha_equipment/Drop_system,
-/obj/item/mecha_parts/mecha_equipment/Drop_system,
-/obj/item/mecha_parts/mecha_equipment/Drop_system,
-/obj/item/mecha_parts/mecha_equipment/Drop_system,
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine,
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive,
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang,
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang,
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/ion,
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy,
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser,
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/taser,
-/obj/structure/table/reinforced,
+/obj/effect/landmark/trololo,
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	icon_state = "dark"
+	},
+/area/centcom/specops)
+"bEb" = (
+/obj/machinery/door/poddoor/shutters/syndi{
+	id = "MechaModule"
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
 	},
 /area/centcom/specops)
 "bFb" = (
-/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster,
-/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster,
-/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
-/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
-/obj/item/mecha_parts/mecha_equipment/repair_droid,
-/obj/item/mecha_parts/mecha_equipment/repair_droid,
-/obj/item/mecha_parts/mecha_equipment/repair_droid,
-/obj/item/mecha_parts/mecha_equipment/repair_droid,
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
-/obj/structure/table/reinforced,
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	dir = 8;
+	icon_state = "whiteblue"
 	},
 /area/centcom/specops)
 "bFc" = (
@@ -21861,19 +22355,13 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bGb" = (
-/obj/item/mecha_parts/mecha_equipment/cable_layer,
-/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,
-/obj/item/mecha_parts/mecha_equipment/extinguisher,
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
-/obj/item/mecha_parts/mecha_equipment/rcd,
-/obj/item/mecha_parts/mecha_equipment/rcd,
-/obj/item/mecha_parts/mecha_equipment/sleeper,
-/obj/item/mecha_parts/mecha_equipment/sleeper,
-/obj/item/mecha_parts/mecha_equipment/syringe_gun,
-/obj/structure/table/reinforced,
+/obj/structure/rack,
+/obj/item/weapon/gun/medbeam{
+	pixel_y = 2
+	},
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	dir = 4;
+	icon_state = "whiteblue"
 	},
 /area/centcom/specops)
 "bHb" = (
@@ -21891,52 +22379,17 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bIb" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/lights/mixed,
-/obj/item/device/flash,
-/obj/item/weapon/mop,
-/obj/item/weapon/reagent_containers/spray/cleaner,
-/obj/item/weapon/reagent_containers/spray/cleaner,
-/obj/item/weapon/reagent_containers/spray/plantbgone,
-/obj/item/weapon/reagent_containers/glass/rag,
-/obj/item/weapon/reagent_containers/watertank_backpack/janitor,
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
+	dir = 8;
+	icon_state = "darkred"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "bJb" = (
-/obj/structure/table/woodentable{
-	dir = 10
-	},
-/obj/machinery/door_control{
-	desc = "A remote control switch to block view of the singularity.";
-	id = "CREED";
-	name = "Spec Ops Ready Room";
-	pixel_w = 10;
-	req_access = list(11)
-	},
-/obj/machinery/door_control{
-	desc = "A remote control switch to block view of the singularity.";
-	id = "Mecha";
-	name = "Mech Storage";
-	req_access = list(11)
-	},
-/obj/machinery/door_control{
-	id = "MechaModule";
-	name = "Mech Module Storage";
-	pixel_z = 10
-	},
-/obj/machinery/door_control{
-	id = "DropPodGarage";
-	name = "Drop Pod Garage";
-	pixel_w = 10;
-	pixel_z = 10
-	},
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	dir = 4;
+	icon_state = "darkred"
 	},
-/area/centcom/creed)
+/area/centcom/specops)
 "bJl" = (
 /obj/structure/stool/bed/chair/schair/wagon,
 /obj/structure/extinguisher_cabinet{
@@ -21946,43 +22399,32 @@
 /turf/simulated/shuttle/floor/evac/place,
 /area/shuttle/escape/centcom)
 "bKb" = (
-/obj/machinery/computer/pod{
-	id = "NTrasen";
-	name = "Hull Door Control"
-	},
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	dir = 9;
+	icon_state = "warndark"
 	},
-/area/centcom/creed)
+/area/centcom/specops)
 "bKC" = (
 /obj/structure/cult/forge,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bLb" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 1;
-	frequency = 1441;
-	name = "Spec Ops Intercom";
-	pixel_y = -20
-	},
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	dir = 1;
+	icon_state = "warndark"
 	},
-/area/centcom/creed)
+/area/centcom/specops)
 "bLC" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/book/manual/wiki/cult,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "bMb" = (
-/obj/structure/mirror/magic{
-	pixel_w = 30
-	},
 /turf/unsimulated/floor{
-	icon_state = "grimy"
+	dir = 5;
+	icon_state = "warndark"
 	},
-/area/centcom/creed)
+/area/centcom/specops)
 "bNb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_specops";
@@ -22522,7 +22964,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced/indestructible{
-	dir = 5;
+	dir = 5
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -23863,7 +24305,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/indestructible{
-	dir = 5;
+	dir = 5
 	},
 /obj/structure/sign/tablo{
 	dir = 4;
@@ -23975,14 +24417,10 @@
 	},
 /area/space)
 "fqb" = (
-/obj/machinery/light/small{
-	dir = 8
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
 	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "loadingarea"
-	},
-/area/centcom/living)
+/area/shuttle/specops/centcom)
 "fqy" = (
 /obj/item/clothing/head/helmet/space/syndicate/elite,
 /obj/item/clothing/suit/space/syndicate/elite,
@@ -23999,14 +24437,18 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "frb" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/structure/rack,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "loadingarea"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "fsb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Brig";
@@ -24069,14 +24511,11 @@
 	},
 /area/velocity)
 "fzb" = (
-/obj/machinery/door/airlock/external{
-	dock_tag = "centcomm_specops"
-	},
 /turf/unsimulated/floor{
 	dir = 5;
-	icon_state = "vault"
+	icon_state = "yellow"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "fAb" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -24090,36 +24529,41 @@
 	},
 /area/velocity)
 "fBb" = (
-/obj/structure/sign/mark{
-	icon_state = "yrt"
+/obj/structure/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "heater1"
 	},
-/obj/machinery/light{
-	dir = 1
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
 	},
-/area/centcom/living)
+/area/shuttle/specops/centcom)
 "fCb" = (
-/obj/structure/sign/mark{
-	icon_state = "yup"
+/obj/structure/stool/bed/chair/schair/wagon,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
 	},
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "delivery"
-	},
-/area/centcom/living)
+/area/shuttle/specops/centcom)
 "fDb" = (
-/obj/structure/sign/mark{
-	icon_state = "ylf"
+/obj/machinery/computer/pod{
+	id = "NTrasen";
+	name = "Hull Door Control"
 	},
-/obj/machinery/light{
-	dir = 1
+/obj/item/device/radio/intercom{
+	frequency = 1443;
+	name = "Spec Ops Intercom";
+	pixel_y = 22
 	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
+/obj/machinery/camera{
+	c_tag = "Spec. Ops. Shuttle";
+	network = list("ERT")
 	},
-/area/centcom/living)
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
+	},
+/area/shuttle/specops/centcom)
 "fEb" = (
 /obj/structure/sign/directions/security{
 	dir = 1
@@ -24142,13 +24586,14 @@
 	},
 /area/velocity)
 "fHb" = (
-/obj/structure/sign/mark{
-	icon_state = "x4"
+/obj/machinery/computer/specops_shuttle,
+/obj/machinery/light/small{
+	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "bot"
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
 	},
-/area/centcom/living)
+/area/shuttle/specops/centcom)
 "fIb" = (
 /obj/machinery/light{
 	dir = 1
@@ -24158,17 +24603,16 @@
 	},
 /area/velocity)
 "fLb" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/structure/sign/warning/pods{
-	desc = "A sign which reads 'DROP PODS'.";
-	name = "\improper DROP PODS";
-	pixel_w = 33
+/obj/structure/table/reinforced,
+/obj/machinery/computer/security/telescreen{
+	name = "Spec. Ops. Monitor";
+	network = list("CREED");
+	pixel_y = 2
 	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
 	},
-/area/centcom/living)
+/area/shuttle/specops/centcom)
 "fMb" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'LETHAL TURRETS'. Enter at your own risk!";
@@ -24245,20 +24689,18 @@
 	},
 /area/centcom/specops)
 "fUb" = (
-/obj/structure/sign/departments/medbay/old,
-/turf/unsimulated/wall,
-/area/centcom/living)
+/turf/simulated/shuttle/floor/vox,
+/area/shuttle/specops/centcom)
 "fVb" = (
-/obj/structure/sign/mark{
-	icon_state = "x4"
+/obj/machinery/door/airlock/external,
+/obj/machinery/door/poddoor{
+	id = "NTrasen";
+	name = "Outer Airlock"
 	},
-/obj/machinery/light{
-	dir = 8
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
 	},
-/turf/unsimulated/floor{
-	icon_state = "bot"
-	},
-/area/centcom/living)
+/area/shuttle/specops/centcom)
 "fWb" = (
 /obj/structure/sign/mark{
 	icon_state = "rlf"
@@ -24279,32 +24721,76 @@
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
 "fYb" = (
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "whitehall"
+/obj/structure/rack,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo{
+	pixel_y = 8
 	},
-/area/centcom/living)
+/obj/item/ammo_casing/caseless/rocket/anti_singulo{
+	pixel_y = 8
+	},
+/obj/item/ammo_casing/caseless/rocket/anti_singulo{
+	pixel_y = 4
+	},
+/obj/item/ammo_casing/caseless/rocket/anti_singulo{
+	pixel_y = 4
+	},
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo,
+/obj/item/ammo_casing/caseless/rocket/anti_singulo{
+	pixel_y = -4
+	},
+/obj/item/ammo_casing/caseless/rocket/anti_singulo{
+	pixel_y = -4
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
 "fZb" = (
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "orange"
+/obj/structure/rack,
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo{
+	pixel_y = 6
 	},
-/area/centcom/living)
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
 "gab" = (
-/obj/structure/sign/warning/securearea{
-	name = "ENGINEERING ACCESS";
-	pixel_y = 32
+/obj/machinery/door/airlock/external,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "NTrasen";
+	name = "Outer Airlock";
+	opacity = 0
 	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplace"
 	},
-/area/centcom/living)
+/area/shuttle/specops/centcom)
 "gbb" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/rig/ert/engineer,
+/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/head/helmet/space/rig/ert/engineer,
+/obj/item/device/flash,
+/obj/item/device/multitool,
+/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/accessory/storage/brown_vest,
+/obj/item/weapon/storage/belt/utility/full,
+/obj/item/clothing/glasses/meson,
+/obj/item/weapon/storage/backpack/ert/engineer,
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "blue"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "gcb" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -24494,23 +24980,17 @@
 	},
 /area/centcom/living)
 "gqb" = (
-/obj/structure/sign/mark{
-	icon_state = "rlf"
-	},
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/living)
-"grb" = (
-/obj/machinery/door/poddoor{
-	id = "CREED";
-	name = "Ready Room"
-	},
 /turf/unsimulated/floor{
 	dir = 8;
-	icon_state = "vault"
+	icon_state = "yellow"
 	},
-/area/centcom/living)
+/area/centcom/specops)
+"grb" = (
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "yellow"
+	},
+/area/centcom/specops)
 "gsb" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -24633,14 +25113,12 @@
 	},
 /area/velocity)
 "gAb" = (
-/obj/structure/sign/warning/securearea{
-	name = "\improper ARMORY";
-	pixel_y = -32
-	},
+/obj/machinery/power/port_gen/riteg,
 /turf/unsimulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "gBb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "General Access";
@@ -24710,15 +25188,14 @@
 	},
 /area/velocity)
 "gGb" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Armory Special Operations";
-	req_access = list(103)
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 1
 	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
+/obj/machinery/light/small,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
 	},
-/area/centcom/living)
+/area/shuttle/specops/centcom)
 "gHb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -24875,15 +25352,11 @@
 	},
 /area/velocity)
 "gSb" = (
-/obj/machinery/door/airlock/centcom{
-	name = "General Access";
-	req_access = list(101)
-	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	dir = 9;
+	icon_state = "yellow"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "gTb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/gun/energy,
@@ -24949,47 +25422,39 @@
 	},
 /area/velocity)
 "gZb" = (
-/obj/structure/sign/mark{
-	icon_state = "x3"
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "yellow"
 	},
-/turf/simulated/shuttle/floor4,
-/area/centcom/living)
+/area/centcom/specops)
 "hab" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/machinery/light{
+/obj/machinery/vending/engivend,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/centcom/specops)
+"hbb" = (
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "darkblue"
+	},
+/area/centcom/specops)
+"hcb" = (
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "darkblue"
+	},
+/area/centcom/specops)
+"hdb" = (
+/obj/machinery/light/small{
 	dir = 1
 	},
 /turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
-	},
-/area/centcom/living)
-"hbb" = (
-/obj/machinery/portable_atmospherics/powered/scrubber,
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	dir = 1;
-	frequency = 1441;
-	listening = 0;
-	name = "Spec Ops Intercom";
-	pixel_y = 28
-	},
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/centcom/living)
-"hcb" = (
-/obj/machinery/portable_atmospherics/powered/scrubber,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/centcom/living)
-"hdb" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/unsimulated/floor{
-	dir = 8;
+	dir = 9;
 	icon_state = "vault"
 	},
 /area/centcom/specops)
@@ -25062,26 +25527,23 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "hib" = (
-/obj/structure/sign/mark{
-	icon_state = "x3"
+/obj/structure/droppod/Legitimate,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "vault"
 	},
-/obj/machinery/light/small,
-/turf/simulated/shuttle/floor4,
-/area/centcom/living)
+/area/centcom/specops)
 "hjb" = (
-/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/vending/engineering,
 /turf/unsimulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "hkb" = (
-/obj/machinery/light{
-	dir = 8
-	},
 /turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	dir = 9;
+	icon_state = "black"
 	},
 /area/centcom/specops)
 "hlb" = (
@@ -25261,13 +25723,12 @@
 	},
 /area/centcom/evac)
 "hAb" = (
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/machinery/light,
+/obj/machinery/vending/tool,
 /turf/unsimulated/floor{
-	dir = 1;
+	dir = 8;
 	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "hBb" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -25431,21 +25892,25 @@
 	},
 /area/centcom/evac)
 "hXb" = (
-/obj/machinery/shower{
-	dir = 4
+/obj/structure/stool/bed/chair/schair/wagon,
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
 	},
-/turf/unsimulated/floor{
-	icon_state = "freezerfloor"
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
 	},
-/area/centcom/living)
+/area/shuttle/specops/centcom)
 "hYb" = (
-/obj/machinery/shower{
-	dir = 8
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "freezerfloor"
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
 	},
-/area/centcom/living)
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
+	},
+/area/shuttle/specops/centcom)
 "hZb" = (
 /obj/structure/sign/mark{
 	icon_state = "rdn"
@@ -26635,11 +27100,13 @@
 	},
 /area/centcom/living)
 "kEE" = (
-/obj/effect/landmark/cops_spawn,
+/obj/structure/rack,
+/obj/item/weapon/gun/projectile/grenade_launcher/m79,
 /turf/unsimulated/floor{
-	icon_state = "floor"
+	dir = 8;
+	icon_state = "vault"
 	},
-/area/centcom/living)
+/area/centcom/specops)
 "kFb" = (
 /obj/machinery/light{
 	dir = 1
@@ -26918,26 +27385,11 @@
 	},
 /area/centcom/holding)
 "lpG" = (
-/obj/effect/landmark{
-	name = "Commando"
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
 	},
-/obj/effect/landmark{
-	name = "Commando"
-	},
-/obj/effect/landmark{
-	name = "Commando"
-	},
-/obj/effect/landmark{
-	name = "Commando"
-	},
-/obj/effect/landmark{
-	name = "Commando"
-	},
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "vault"
-	},
-/area/centcom/specops)
+/turf/simulated/shuttle/floor/vox,
+/area/shuttle/specops/centcom)
 "lqb" = (
 /turf/unsimulated/floor{
 	icon_state = "brown"
@@ -46650,13 +47102,13 @@ aaM
 aaM
 aaM
 aaM
-aBW
 aaM
-aBW
 aaM
-aBW
 aaM
-aBW
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -46904,17 +47356,17 @@ aaM
 aaM
 aaM
 aaM
+aDC
+aaM
+aDC
+aaM
+aDC
+aaM
+aDC
 aaM
 aaM
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -47160,18 +47612,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
 aaM
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
 aaM
 aaM
 aaM
@@ -47417,18 +47869,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
 aaM
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
 aaM
 aaM
 aaM
@@ -47674,18 +48126,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
 aaM
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
 aaM
 aaM
 aaM
@@ -47931,18 +48383,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
 aaM
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
 aaM
 aaM
 aKl
@@ -48188,18 +48640,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
 aaM
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
 aaM
 aaM
 aKl
@@ -48445,18 +48897,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
 aaM
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
 aaM
 aaM
 aKl
@@ -48702,18 +49154,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
 aaM
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
 aaM
 aaM
 aKl
@@ -48959,18 +49411,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
 aaM
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
 aaM
 aHv
 abn
@@ -49216,18 +49668,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
 aaM
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
 aHv
 aHv
 hwb
@@ -49473,18 +49925,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
 aaM
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
 aHv
 hgb
 hxb
@@ -49730,18 +50182,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
 aaM
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
 aHv
 hgb
 hyb
@@ -49987,18 +50439,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
 aaM
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
 aHv
 hhb
 hzb
@@ -50244,18 +50696,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
 aaM
-aAm
-aBY
-aAm
-aDi
-aAm
-aDV
-aAm
-aEG
-aAm
 aHv
 aHv
 aIy
@@ -50501,18 +50953,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aDF
+aBp
+aEI
+aBp
+aDt
+aBp
+aFT
+aBp
 aaM
 aaM
 aaM
-aAm
-aBZ
-aAm
-aBZ
-aAm
-aBZ
-aAm
-aBZ
-aAm
 aaM
 aHv
 aHv
@@ -50758,18 +51210,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCd
+aBp
+aCd
+aBp
+aCd
+aBp
+aCd
+aBp
 aaM
 aaM
 aaM
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
 aaM
 aaM
 abn
@@ -51015,18 +51467,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
 aaM
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
 aaM
 aaM
 aID
@@ -51272,18 +51724,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
 aaM
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
 aaM
 aaM
 aID
@@ -51529,18 +51981,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
 aaM
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
-aBX
-aAm
 aaM
 aaM
 aID
@@ -51786,18 +52238,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
 aaM
-aAm
-aCa
-aAm
-aCa
-aAm
-aCa
-aAm
-aCa
-aAm
 aaM
 aaM
 aID
@@ -52043,18 +52495,18 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
+aCe
+aBp
 aaM
 aaM
-aAm
-aAm
-aBY
-aAm
-aDi
-aAm
-aDV
-aAm
-aEG
-aAm
+aaM
 aaM
 aaM
 aaM
@@ -52299,22 +52751,22 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aAm
-aBC
-aCb
-aCD
-aDj
-aBC
-aDW
-aCD
+aBp
+aBp
+aDH
+aBp
 aEH
-aAm
+aBp
+aDs
+aBp
+aEr
 aBp
 aBp
-aBp
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aHv
@@ -52555,23 +53007,23 @@ aaM
 aaM
 aaM
 aaM
-aAm
-aAm
-aAm
-aAm
-aAm
-aBD
-aCc
-aCE
-aCc
-aDC
-aCc
-bwb
-aEI
-aAm
-bCb
-bEb
+aaM
 aBp
+aBc
+aCf
+aBc
+aDj
+aBp
+aEa
+aBc
+aFS
+aBc
+aBp
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aHv
@@ -52812,22 +53264,22 @@ aaM
 aaM
 aaM
 aaM
-aAm
-aAK
+aaM
+aBp
 aDX
-aDX
-aAm
-btb
-aCd
-btb
-aCd
-btb
-aCd
-btb
-aCd
-byb
-bib
-bFb
+aDG
+aCm
+aDG
+aBp
+aDG
+aEd
+aDG
+aGP
+aBp
+aBp
+aBp
+aBp
+aBp
 aBp
 aaM
 aaM
@@ -53069,24 +53521,24 @@ aaM
 aaM
 aaM
 aaM
-aAm
-aCH
-aAM
-aAM
-aAm
-aBF
-aCe
-aEi
-bpb
-aEi
-aCe
-aEi
-aEi
-aAm
-bib
-bGb
-aBp
 aaM
+aBp
+aCD
+aCi
+aCD
+aCi
+aBp
+aCi
+aCD
+aCi
+aCD
+aBp
+ayY
+bfm
+bgb
+bwb
+aBp
+aBp
 aaM
 aHv
 hWb
@@ -53326,25 +53778,25 @@ aaM
 aaM
 aaM
 aaM
-aAm
-aBH
-aAM
-aAE
-aAm
-aAm
-aAm
-aAm
-bvb
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
+aaM
+aBp
+aBP
+aBI
+aBI
+aBI
+aFn
+aBI
+aBI
+aBI
+aCO
+bEb
+aBP
+aBI
+aBI
+aCO
+bfh
+aBp
+aaM
 aHv
 hWb
 aId
@@ -53583,26 +54035,26 @@ aaM
 aaM
 aaM
 aaM
-aAm
-aAJ
-aAM
-aAM
-aEj
-aEn
-aAm
-aAM
-gpb
-aAM
-aAm
-aFo
-aAL
-aFr
-beQ
-bfk
-aFr
-aFM
-bfu
-aAm
+aaM
+aBp
+aBe
+bib
+bib
+bib
+bib
+bib
+bib
+bib
+aBb
+bEb
+hcb
+aAP
+aAP
+aBa
+bfn
+aBp
+aaM
+aHv
 aHv
 aHv
 aHv
@@ -53840,26 +54292,26 @@ aaM
 aaM
 aaM
 aaM
-aAm
-aAZ
-aAM
-aAM
-aAM
-aAM
-aCf
-fYb
-aBK
-aAM
-aAm
-aFo
-aAL
-aFs
-aAM
-aAM
-aAM
-aAM
-aAM
-aAm
+aaM
+aBp
+hcb
+aAP
+aAP
+aAP
+aAP
+aAP
+aAP
+aAP
+aBa
+aBp
+ayX
+bfl
+bhb
+byb
+bzb
+aBp
+aaM
+aHv
 hWb
 aIc
 aIC
@@ -54097,26 +54549,26 @@ aaM
 aaM
 aaM
 aaM
-aAm
-aAY
-aAM
-aBl
-aEk
-aEo
-fUb
-aAM
-aBK
-aAM
-aAm
-aFp
-aAL
-aFs
-aAM
-aAM
-aAM
-aAM
-aEp
-aAm
+aaM
+aBp
+aBp
+aBp
+bib
+bjb
+bjb
+bjb
+bib
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
+aaM
+aHv
 hWb
 aId
 aIy
@@ -54352,28 +54804,28 @@ aaM
 aaM
 aaM
 aaM
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aCH
-aBK
-aAM
-aAm
-aFo
-aAL
-bcT
-bfh
-bfl
-bfo
-bfr
-bfv
-aAm
+aaM
+aaM
+aaM
+aaM
+aaM
+aBp
+aBp
+aEK
+aEK
+aEK
+aBp
+aBp
+frb
+aFr
+aFr
+aFr
+aFr
+aFr
+aLv
+aBp
+aBp
+aHv
 aHv
 aHv
 abn
@@ -54609,28 +55061,28 @@ aaM
 aaM
 aaM
 aaM
-aAm
-aBc
-aAM
-aBj
-aER
-aBm
-aEl
-aFm
-aAm
-aAM
-aBK
-aAM
-aAm
-aAP
-aAM
-aFs
-aAM
-aAM
-aAM
-aAM
-aAM
-aAm
+aaM
+aaM
+aaM
+aaM
+aaM
+aBp
+gKb
+hkb
+aDY
+aBR
+aEi
+aEu
+aFq
+bFb
+bFb
+bFb
+bFb
+bFb
+aLw
+aLO
+aBp
+aaM
 aaM
 aaM
 abn
@@ -54866,28 +55318,28 @@ aaM
 aaM
 aaM
 aaM
-aAm
-aAD
-aAM
-aAM
-aAM
-aAM
-aAM
-aAM
-aCh
-fZb
-aBK
-aDD
-gGb
-aAM
-aAM
+aaM
+aaM
+aaM
+aaM
+aaM
+aBp
+aCl
+aAE
+aCV
+aBQ
+aEk
+aEt
 aFs
-aAM
-aAM
-aAM
-aAM
-aAM
-aAm
+aFW
+aFW
+aFW
+aFW
+aFW
+aLz
+aLP
+aBp
+aaM
 aaM
 aaM
 abn
@@ -55120,31 +55572,31 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aAm
-aBc
-aAM
-aBk
-aER
-aBG
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
 aEm
-aBI
-aAm
-gab
-aBK
-gAb
-aAm
-aAM
-aAM
-bez
-bfi
-bfm
-bfp
-bfs
-bfw
-aAm
+aAE
+aCV
+aBQ
+aEj
+aaR
+aFv
+bGb
+azF
+bfo
+bkb
+amd
+aLC
+aLV
+aBp
+aaM
 aaM
 aaM
 aGn
@@ -55376,32 +55828,32 @@ aaM
 aaM
 aaM
 aaM
+aBp
+aBp
+gbb
+gbb
+aBH
+gbb
+gbb
+gbb
+frb
+aBp
+bib
+aAE
+aCV
+aBQ
+aFp
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
 aaM
-aaM
-aaM
-aaM
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aCH
-aBK
-aAM
-aAm
-aAM
-aAM
-aFs
-aAM
-aAM
-aAM
-aAM
-aAM
-aAm
 aaM
 aaM
 aGn
@@ -55633,33 +56085,33 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aAm
-aBa
-aBn
-aAM
-aAm
-aAM
-aBK
-aAM
-aAm
-aAM
-aAM
-aFs
-aAM
-aAM
-aAM
-aAM
-aEp
-aAm
-aaM
+aBp
+fYb
+gSb
+gqb
+gqb
+gqb
+gqb
+gqb
+aBj
+aDJ
+aDM
+aAE
+aCV
+aBQ
+aHN
+aBp
+aGt
+aLt
+aMl
+azE
+azE
+azE
+aMl
+aFu
+aBp
+aBp
+aBp
 aaM
 aGn
 aGn
@@ -55890,33 +56342,33 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aAm
-aBb
-aAL
-aAL
-aCi
-gbb
-aBK
-aAM
-aAm
-aAM
-aAM
-aFs
-aAM
-aAM
-aAM
-aAM
-aAM
-aAm
-aaM
+aBp
+fZb
+gZb
+aCV
+aCV
+aCV
+aCV
+aCV
+aBl
+aCh
+aCo
+aAE
+aCV
+aBQ
+aEo
+aEv
+aHL
+bIb
+bIb
+bIb
+bIb
+bIb
+bIb
+bIb
+aMa
+aMe
+aBp
 aaM
 aGn
 aGn
@@ -56147,33 +56599,33 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aAm
+aBp
+gAb
+fzb
+grb
+grb
+aAZ
+aBL
+aBX
+aBk
+aBp
+aCr
+aAE
+aCV
+aBQ
+aEn
+aFd
 aGm
-aAM
-aBJ
-aAm
-aAM
-aBK
-aAM
-aAm
-aFq
-aFq
-beC
-bfj
-bfn
-bfq
-bft
-bfx
-aAm
-aaM
+bib
+bib
+bib
+bib
+bib
+bib
+bib
+aEn
+aMf
+aBp
 aaM
 aaM
 aaM
@@ -56404,33 +56856,33 @@ aaM
 aaM
 aaM
 aaM
-aaM
-ayK
-ayT
-ayT
-ayT
-azQ
-aaM
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aCo
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
-aaM
+aBp
+aBp
+hAb
+hab
+hjb
+aBp
+aBp
+aBp
+aBp
+aBp
+aDV
+aAE
+aCV
+aBQ
+aEq
+aFh
+aHM
+bJb
+bJb
+bJb
+bJb
+blb
+bJb
+bJb
+aMd
+aMq
+aBp
 aaM
 aaM
 aaM
@@ -56662,32 +57114,32 @@ aaM
 aaM
 aaM
 aaM
-ayL
-ahQ
-ahQ
-ahQ
-ayL
-aaM
-aAm
-aAm
-fHb
-fHb
-fHb
-fVb
-fHb
-gqb
-aAM
-aDY
-aAm
-aAm
-bzb
-bzb
-bzb
-aAm
-aaM
-aaM
-aaM
-aaM
+aBp
+aBp
+aBp
+aBp
+aBp
+aBM
+aDD
+aCL
+aBp
+aDW
+aAE
+aCV
+aBQ
+aFR
+aBp
+aGr
+bKb
+aMn
+azG
+aLW
+aBp
+anv
+bKb
+azG
+aMv
+aBp
 aaM
 aaM
 aaM
@@ -56919,32 +57371,32 @@ aaM
 aaM
 aaM
 aaM
-ayL
-ayU
-azl
-azE
-ayL
-aaM
-aAm
-aAM
-aAM
-aAM
-aAM
-aAM
-aAM
-aAM
-aAM
-aAM
-aAM
-aEJ
-gZb
-gZb
-hib
-aAm
 aaM
 aaM
 aaM
-aaM
+aBp
+aBD
+aBP
+aBI
+aCO
+aBp
+aEN
+aAE
+aCV
+aBQ
+aEp
+aBp
+aHl
+bLb
+bib
+azR
+bfq
+aBp
+anv
+bLb
+azR
+aMw
+aBp
 aaM
 aaM
 aaM
@@ -57176,33 +57628,33 @@ aaM
 aaM
 aaM
 aaM
-ayL
-ayV
-azm
-azm
-ayL
 aaM
-aAm
-fBb
-aAM
-aAM
-aAM
-aBK
-aBK
-aAM
-aAM
-aAM
-aAM
-aEK
-bBb
-bBb
-bBb
-aAm
-aAm
-aAm
-aAm
-aAm
-aAm
+aaM
+aaM
+aBp
+aBC
+hbb
+bib
+aBb
+aDI
+hbb
+aAE
+aCV
+aBQ
+gLb
+aBp
+aHn
+bLb
+bib
+azR
+bfp
+aBp
+anv
+bMb
+azl
+aMm
+aBp
+aaM
 aaM
 aaM
 aaM
@@ -57433,33 +57885,33 @@ aaM
 aaM
 aaM
 aaM
-ayL
-ayW
-azm
-azm
-ayL
-abC
-aAm
-aAM
-aAM
-aAM
-kEE
-aCk
-aCk
-kEE
-aAM
-aAM
-aAM
-aAm
-aAm
-bDb
-aAm
-aAm
-aAm
-aHl
-aHl
-aHl
-aAm
+aaM
+aaM
+aaM
+aBp
+aBF
+hcb
+aAP
+aBm
+aBp
+aDZ
+aAD
+aBG
+aBS
+gLb
+aBp
+aIf
+bMb
+aMp
+azl
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
+aaM
 aaM
 aaM
 aaM
@@ -57687,36 +58139,36 @@ aaM
 aaM
 aaM
 aaM
+azQ
+ayT
+ayT
+ayT
+ayK
+aaM
+aBp
+aBp
+aBO
+aBZ
+aBp
+aBp
+aBp
+aDI
+aaR
+aDI
+aBp
+aBp
+aBp
+kEE
+azn
+aGv
+aBp
 aaM
 aaM
 aaM
-ayL
-ayX
-azm
-azm
-azR
-fqb
-fzb
-fCb
-aAM
-aAM
-aBL
-aFn
-aCl
-aDo
-aAM
-aAM
-aAM
-gSb
-aAM
-gqb
-aFO
-aAM
-aGP
-aHm
-aHm
-aHm
-aAm
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -57944,36 +58396,36 @@ aaM
 aaM
 aaM
 aaM
+lpG
+fBb
+fBb
+fBb
+lpG
+aaM
+aaM
+aBp
+aBp
+aBp
+aBp
+aCk
+gtb
+fWb
+aCR
+fWb
+gtb
+aGp
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
 aaM
 aaM
 aaM
-ayL
-ayX
-azm
-azm
-azR
-frb
-fzb
-fCb
-aAM
-aAM
-aBL
-aCl
-bub
-aDo
-aAM
-aAM
-aAM
-gSb
-aAM
-aAM
-aAM
-aAM
-aGP
-aHm
-aHm
-aHL
-aAm
 aaM
 aaM
 aAm
@@ -58201,36 +58653,36 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
+lpG
+fCb
+fUb
 ayL
-ayX
+lpG
+aaM
+aaM
+aaM
+aaM
+aaR
+aCQ
+hkb
+aDY
+aDY
+aDY
+aDY
+aDY
+aBR
+aLE
+aBp
 azm
-azF
-ayL
-abC
-aAm
-aAP
-aAM
-aAM
-kEE
-aCm
-aCm
-kEE
-aAM
-aAM
-aEp
-aAm
-aAm
-aFu
-aFu
-aAm
-aAm
-aHn
-aHn
-aHM
-aAm
+azm
+azm
+azm
+azm
+azm
+aBp
+aaM
+aaM
+aaM
 aaM
 aaM
 aAm
@@ -58458,36 +58910,36 @@ aaM
 aaM
 aaM
 aaM
+lpG
+fCb
+fUb
+gGb
+lpG
+aBp
+aBp
+aBp
+aBp
+aBp
+aCS
+aAE
+aCV
+aCV
+aEQ
+aCV
+aCV
+aBQ
+aLN
+aBp
+bcT
+bcT
+bcT
+bcT
+bcT
+bcT
+aBp
+aBp
 aaM
 aaM
-aaM
-ayL
-ayY
-azm
-azG
-ayL
-aaM
-aAm
-fDb
-aAM
-aAM
-aAM
-aBK
-aBK
-aAM
-aAM
-aAM
-aAM
-aAm
-aFd
-aAM
-aAM
-aGp
-aAm
-aAm
-aAm
-aHN
-aAm
 aaM
 aaM
 aAm
@@ -58715,35 +59167,35 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-afr
-ayL
-azn
-ayL
-afs
-aaM
+lpG
+hXb
+fUb
+hYb
+lpG
+aaR
+hkb
+aBW
+aBR
+aaR
+aCR
+aAE
+aCV
+aDi
+aDo
+aEc
+aCV
+aBQ
+aMg
+aBp
+hkb
+aDY
+aDY
+aDY
+aDY
+aDY
+aLm
+aBp
 aAm
-aBe
-aAM
-aAM
-aAM
-aAM
-aAM
-aAM
-aAM
-aAM
-aAM
-aAm
-hab
-aAM
-aAM
-bIb
-aAm
-aaM
-aAm
-aHN
 aAm
 aAm
 aAm
@@ -58972,36 +59424,36 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-afr
+lpG
+fDb
+fUb
+fqb
+gab
 azo
-afs
-aaM
-aaM
-aAm
-aAm
+aAE
+aCV
+aBQ
+aBY
+aCa
+aAE
+aCV
+aDi
 bpb
-fLb
-aBM
-bpb
-aCL
-bpb
-aAM
-aDZ
+aEc
+aCV
+aBQ
+bib
+aBY
+aAE
+aCV
+aCV
+aCV
+aCV
+aCV
+aMs
+aMx
+aMy
 aAm
-aAm
-hbb
-aAM
-aAM
-aGr
-aAm
-aaM
-aAm
-aHO
-aIf
 aIh
 aAm
 aAm
@@ -59229,35 +59681,35 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aAm
-aAm
-bqb
-aAm
-aAm
-aCo
-aAm
-grb
-aAm
-aAm
-aAm
-aAm
-hcb
-aAM
-aAM
-hAb
-aAm
-aaM
-aAm
-aAm
+lpG
+fHb
+fUb
+fqb
+gab
+azo
+aAE
+aCV
+aBQ
+aBY
+aCa
+aAE
+aCV
+aDi
+aEP
+aEc
+aCV
+aBQ
+bib
+aBY
+aAE
+aCV
+aCV
+aCV
+aCV
+aCV
+aMt
+aBp
+aMz
 aAm
 aIh
 aAm
@@ -59486,35 +59938,35 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+lpG
+fLb
+fUb
+ayL
+lpG
+aaR
+aAD
+aBG
+aBS
+aaR
+aCc
+aAE
+aCV
+aDi
+aDr
+aEc
+aCV
+aBQ
+bBb
 aBp
+beC
+aBG
+aBG
+ayU
+aEF
+aBG
+aBS
 aBp
-bib
-bib
-aBp
-aBP
-fWb
-aCM
-aDq
-aDF
-aEa
-aBp
-aAm
-hcb
-aAM
-hjb
-hjb
-aAm
-aaM
-aAm
-hXb
+aIh
 iab
 aIh
 aIU
@@ -59743,34 +60195,34 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+lpG
+lpG
+fVb
+lpG
+lpG
 aBp
+aAJ
+aBJ
+aBJ
 aBp
-bob
-bib
-brb
-aBp
-aBO
-aCq
-aCN
+aCj
+aAE
+aCV
+aCV
 aDq
-aDG
-aEb
-aEq
-aEq
-aEq
-aEq
-aEq
-aEq
-aEq
-aEq
-aAm
+aCV
+aCV
+aBQ
+bCb
+aBp
+aBp
+bfr
+ahQ
+aBp
+aBp
+aBp
+aBp
+aBp
 aHQ
 aIh
 aIh
@@ -60000,35 +60452,35 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+afr
+lpG
+fUb
+lpG
+afs
 aBp
+aBI
+aBI
+aBI
 aBp
-blb
-bib
-bib
-bib
+aCb
+aAD
+aBG
+aBG
+aBG
+aBG
+aBG
+aBS
+aLb
 aBp
-aBP
-aCq
-aCN
-aDq
-aDG
-aEa
-aEr
-aEM
-aFh
-aEO
-aEO
-aGt
-aEO
-aEq
-aAm
-hYb
+beQ
+hkb
+aDY
+aDY
+aDY
+aBR
+aMu
+aBp
+aMA
 ibb
 aIE
 aAm
@@ -60261,30 +60713,30 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
 aBp
-bgb
+aBp
+aAL
+bib
 bmb
-bib
-bib
-bib
 aBp
-lpG
-aCq
-aCN
-aDq
-aDH
-aEc
-aEs
-aEN
-aEO
-aEO
-aFQ
-bJb
-aEO
-aEq
-aAm
+aBp
+aDL
+bib
+aEJ
+aER
+aEb
+bib
+gtb
+aLp
+aBp
+bez
+aAD
+aBG
+aBG
+aBG
+aBS
+aLM
+aBp
 aAm
 aAm
 aAm
@@ -60518,30 +60970,30 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
 aBp
-bhb
+aAK
 bib
 bib
 bib
-bib
+aEl
 aBp
-aBP
-aCq
-aCO
-aDq
+aaR
 aDI
-aEd
-aEt
-aEO
-aEO
-aEO
-aFR
-aGv
-aEO
-aEq
-aaM
+aaR
+aBp
+aaR
+aFQ
+aaR
+aBp
+aBp
+aBp
+aBp
+bfi
+bfu
+bob
+aLn
+aBp
+aBp
 aaM
 aaM
 aaM
@@ -60775,29 +61227,29 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
 aBp
-bib
-bib
-bib
-bmb
-bib
+aAY
+aAP
+aAP
+aAP
+aBa
 aBp
-aBO
-aCq
-aCN
-aDq
-aDJ
-aEc
-aEu
-aEP
-aEO
-aEO
-aFS
-bKb
-bLb
-aEq
+aDK
+aEG
+aEM
+aFm
+hkb
+aDY
+aBR
+aBp
+aMk
+aMr
+aBp
+aBp
+aBp
+aBp
+aBp
+aBp
 aaM
 aaM
 aaM
@@ -61032,29 +61484,29 @@ aaM
 aaM
 aaM
 aaM
-aaM
-aaM
 aBp
-bjb
+hdb
 bib
 bjb
 bib
-bjb
+aCE
 aBp
-aBQ
-aCr
-aCP
-aDq
 aDK
-aEe
-aEv
-aEQ
-aEO
-aEO
-aFT
-aGv
-bMb
-aEq
+aAE
+aBQ
+aCM
+aAE
+aCV
+aBQ
+bDb
+ayW
+bfk
+bft
+bqb
+aBp
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -61289,31 +61741,31 @@ aaM
 aaM
 aaM
 aaM
+aBp
+hib
+bib
+hib
+bib
+hib
+aBp
+aFM
+aAE
+aBQ
+aCN
+aAE
+aCV
+aHO
+aBp
+ayW
+bfk
+bfw
+brb
+aBp
 aaM
 aaM
-aBp
-bkb
-bib
-bkb
-bib
-bkb
-aBp
-aBR
-aBp
-aBp
-aDr
-aBp
-aBp
-aBp
-aBp
-aBp
-aBp
-aBp
-aBp
-aBp
-aBp
-aBp
-aBp
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -61553,24 +62005,24 @@ avI
 avI
 avI
 avI
+aCq
+aAE
+aBQ
+aCN
+aAE
+aCV
+aBQ
+aaR
+bfk
+bfk
+bfk
+btb
 aBp
-aBp
-aBS
-aBp
-aCQ
-aDs
-aDL
-aBp
-gKb
-gKb
-gKb
-aFv
-hkb
-gtb
-gtb
-gtb
-gtb
-aBp
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -61810,24 +62262,24 @@ avI
 awt
 awt
 avI
+aDK
+aAE
+aBQ
+aCP
+aAE
+aCV
+aBQ
+aaR
+bfk
+bfk
+bfv
+bub
+aBp
 aaM
-aBp
-aBp
-aBp
-aCR
-aDq
-aDM
-aBp
-gfb
-gtb
-gtb
-gtb
-gtb
-gtb
-gtb
-gtb
-gVb
-aBp
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -62067,24 +62519,24 @@ avI
 awu
 awT
 avI
+aDK
+aAD
+aEO
+aFm
+aEe
+aEs
+aFo
+aBp
+ayV
+bfj
+bfx
+bvb
+aBp
 aaM
 aaM
 aaM
-aBp
-aCS
-aDq
-aDM
-aBp
-gLb
-gLb
-gLb
-hdb
-gtb
-gtb
-gtb
-gtb
-gtb
-aBp
+aaM
+aaM
 aaM
 aBp
 aBp
@@ -62329,14 +62781,14 @@ avI
 aBp
 aBp
 aBp
-aDt
+aDI
 aBp
 aBp
 aBp
 aBp
 aBp
 aBp
-gBb
+aBp
 aBp
 aBp
 aBp

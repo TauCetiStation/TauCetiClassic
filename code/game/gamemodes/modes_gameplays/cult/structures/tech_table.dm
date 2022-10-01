@@ -143,7 +143,11 @@
 
 /obj/structure/cult/tech_table/proc/get_upgrade_cost(datum/aspect/in_religion)
 	if(!in_religion)
-		return 300
+		var/all_aspects = 0
+		for(var/aspect_name in cult_religion.aspects)
+			all_aspects++
+		var/cost = max(100, 50 + 25 * all_aspects) //We don't count 6 initial aspects and scale for static 150, +50 piety for each new aspect
+		return cost
 	return in_religion.power * 50
 
 /obj/structure/cult/tech_table/proc/gen_category_images()
