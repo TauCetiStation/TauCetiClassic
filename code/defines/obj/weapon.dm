@@ -212,21 +212,36 @@
 						"<span class='danger'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>"))
 	return (BRUTELOSS)
 
+/obj/item/weapon/shard/attack(mob/living/M, mob/living/user, def_zone)
+	. = ..()
+	cut_hand(user)
+
 /obj/item/weapon/shard/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 	if(isturf(target))
 		return
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(!H.gloves && !H.species.flags[NO_MINORCUTS]) //specflags please..
-			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
-			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
+	cut_hand(user)
+
+/obj/item/weapon/shard/proc/cut_hand(mob/user)
+	var/mob/living/L = user
+	if(!L)
+		return
+	if(!ishuman(L))
+		L.adjustBruteLoss(force / 2)
+		to_chat(L, "<span class='warning'>[src] cuts into your hand!</span>")
+		return
+	var/mob/living/carbon/human/H = L
+	if(!H.gloves && !H.species.flags[NO_MINORCUTS]) //specflags please..
+		var/bodypart_name
+		if(H.hand)
+			bodypart_name = BP_L_ARM
+		else
+			bodypart_name = BP_R_ARM
+		var/obj/item/organ/external/BP = H.get_bodypart(bodypart_name)
+		if(BP)
 			BP.take_damage(force / 2, null, damage_flags())
-	else if(ismonkey(user))
-		var/mob/living/carbon/monkey/M = user
-		to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
-		M.adjustBruteLoss(force / 2)
+			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 
 /*/obj/item/weapon/syndicate_uplink
 	name = "station bounced radio"
