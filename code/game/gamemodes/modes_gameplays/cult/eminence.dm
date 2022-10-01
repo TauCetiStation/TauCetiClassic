@@ -30,7 +30,7 @@
 	return TRUE
 
 /mob/camera/eminence/Move(NewLoc, direct)
-	if(NewLoc && !istype(NewLoc, /turf/environment/space) && !istype(NewLoc, /turf/unsimulated/wall))
+	if(NewLoc && !isspaceturf(NewLoc) && !istype(NewLoc, /turf/unsimulated/wall))
 		if(SSticker.nar_sie_has_risen)
 			for(var/turf/TT in range(5, src))
 				if(prob(166 - (get_dist(src, TT) * 33)))

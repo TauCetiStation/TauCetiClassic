@@ -94,7 +94,7 @@
 
 //Used to nominate oneself or ghosts for the role of Eminence.
 /obj/structure/eminence_spire/proc/cancelation(mob/living/cold_feet)
-	if(alert(cold_feet, "Cancel your nomination?", "Cancel Nomination", "Withdraw Nomination", "Cancel") == "Cancel" || !iscultist(cold_feet) || !eminence_nominee)
+	if(tgui_alert(cold_feet, "Cancel your nomination?", "Cancel Nomination", list("Withdraw Nomination", "Cancel")) == "Cancel" || !iscultist(cold_feet) || !eminence_nominee)
 		return
 	hierophant_message("<span class='cult'><b>[eminence_nominee] has withdrawn their nomination!</b> The eminence spire has been reset.</span>")
 	//for(var/mob/M in servants_and_ghosts())

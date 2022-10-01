@@ -153,7 +153,7 @@
 		scribing = FALSE
 		return
 	scribing = FALSE
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman)
 		var/mob/living/carbon/human/H = user
 		H.take_certain_bodypart_damage(list(BP_L_ARM, BP_R_ARM), (rand(9) + 1) / 10)
 
