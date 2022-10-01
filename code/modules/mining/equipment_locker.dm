@@ -283,11 +283,12 @@
 		EQUIPMENT("Improved capsule",				/obj/item/weapon/survivalcapsule/improved,										1900),
 		EQUIPMENT("Elite capsule(Bar)",				/obj/item/weapon/survivalcapsule/elite,											3000),
 	)
-	prize_list["Digging Tools"] = list(
+	prize_list["Upgrades"] = list(
 		EQUIPMENT("Accelerator resources upgrade",	/obj/item/kinetic_upgrade/resources,											1750),
 		EQUIPMENT("Accelerator damage upgrade",		/obj/item/kinetic_upgrade/damage,												2000),
 		EQUIPMENT("Accelerator recharge upgrade",	/obj/item/kinetic_upgrade/speed,												2250),
 		EQUIPMENT("Accelerator range upgrade",		/obj/item/kinetic_upgrade/range,												2500),
+		EQUIPMENT("Expander for accelerator",		/obj/item/kinetic_expander,														3000),
 	)
 	prize_list["Miscellaneous"] = list(
 		EQUIPMENT("Chili",							/obj/item/weapon/reagent_containers/food/snacks/hotchili,						150),
@@ -598,17 +599,15 @@
 	force = 10
 	throwforce = 10
 	var/charged = TRUE
-	var/recharge_time = 2.3 SECONDS
+	var/recharge_time = 2.4 SECONDS
 
 /obj/item/weapon/resonator/proc/lower_recharge_time()
-	var/old_recharge_time = recharge_time
-	recharge_time = max(recharge_time - 0.05 SECOND, 1.1 SECOND)
-	var/difference = old_recharge_time - recharge_time
-	if(difference)
-		addtimer(CALLBACK(src, .proc/increase_recharge_time), 50 SECOND)
+	recharge_time = max(recharge_time * 0.965, 1.1 SECOND) // speed up reloading by 3.5% for each shot
+	addtimer(CALLBACK(src, .proc/reset_recharge_time), 5 SECOND, TIMER_UNIQUE|TIMER_OVERRIDE) // reset the recharge time if we haven't fired for 5 seconds
 
-/obj/item/weapon/resonator/proc/increase_recharge_time()
-	recharge_time += 0.05 SECOND
+/obj/item/weapon/resonator/proc/reset_recharge_time()
+	recharge_time = initial(recharge_time)
+	playsound(src, 'sound/items/surgery/defib_failed.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 /obj/item/weapon/resonator/proc/recharge()
 	if(!charged)
@@ -653,7 +652,7 @@
 
 	if(istype(proj_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = proj_turf
-		playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, 'sound/effects/resonator_effect_disappear.ogg', VOL_EFFECTS_MASTER)
 		M.GetDrilled(mineral_drop_coefficient = 1.25) // resonator is efficient for mining ore
 
 		QDEL_IN(src, 0.4 SECOND)
@@ -664,7 +663,7 @@
 			name = "strong resonance field"
 			resonance_damage = 60
 		spawn(50)
-			playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, 'sound/effects/resonator_effect_disappear.ogg', VOL_EFFECTS_MASTER)
 			for(var/mob/living/L in src.loc)
 				usr.attack_log += text("\[[time_stamp()]\] used a resonator field on [L.name] ([L.ckey])")
 				to_chat(L, "<span class='danger'>The [src.name] ruptured with you in it!</span>")
