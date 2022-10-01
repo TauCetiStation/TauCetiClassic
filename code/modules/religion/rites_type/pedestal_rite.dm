@@ -65,7 +65,7 @@
 
 	return TRUE
 
-/datum/religion_rites/pedestals/can_invocate(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/can_invocate(mob/user, obj/structure/altar_of_gods/AOG)
 	if(!AOG || !get_turf(AOG)) // Due to the working beam, it will not be able to properly delete at this stage
 		if(user)
 			to_chat(user, "<span class='warning'>Алтарь исчез.</span>")
@@ -102,7 +102,7 @@
 		P.create_illusions(rules[rules_indx], rules[rules[rules_indx]])
 		rules_indx += 1
 
-/datum/religion_rites/pedestals/rite_step(mob/living/user, obj/structure/altar_of_gods/AOG, current_stage)
+/datum/religion_rites/pedestals/rite_step(mob/user, obj/structure/altar_of_gods/AOG, current_stage)
 	var/obj/structure/pedestal/cult/P = involved_pedestals[current_stage]
 	P.create_holy_outline("#c50404")
 	for(var/ill in P.lying_illusions)

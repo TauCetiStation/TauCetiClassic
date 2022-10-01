@@ -30,32 +30,12 @@
 	return TRUE
 
 /mob/camera/eminence/Move(NewLoc, direct)
-	var/OldLoc = loc
 	if(NewLoc && !istype(NewLoc, /turf/environment/space) && !istype(NewLoc, /turf/unsimulated/wall))
-		//var/turf/T = get_turf(NewLoc)
-		/*if(!SSticker.nar_sie_has_risenen)
-			if(locate(/obj/effect/blessing, T))
-				if(last_failed_turf != T)
-					T.visible_message("<span class='warning'>[T] suddenly emits a ringing sound!</span>", null, null, null, src)
-					playsound(T, 'sound/machines/clockcult/ark_damage.ogg', 75, FALSE)
-					last_failed_turf = T
-				if((world.time - lastWarning) >= 30)
-					lastWarning = world.time
-					to_chat(src, "<span class='warning'>This turf is consecrated and can't be crossed!</span>")
-				return
-			if(istype(get_area(T), /area/chapel))
-				if((world.time - lastWarning) >= 30)
-					lastWarning = world.time
-					to_chat(src, "<span class='warning'>The Chapel is hallowed ground under a heretical deity, and can't be accessed!</span>")
-				return
-		else*/
 		if(SSticker.nar_sie_has_risen)
 			for(var/turf/TT in range(5, src))
 				if(prob(166 - (get_dist(src, TT) * 33)))
 					TT.atom_religify(my_religion) //Causes moving to leave a swath of proselytized area behind the Eminence
-		..()
-		/*forceMove(NewLoc)
-		Moved(OldLoc, direct)*/
+		forceMove(NewLoc)
 
 /mob/camera/eminence/Process_Spacemove(movement_dir = 0)
 	return TRUE
@@ -158,7 +138,7 @@
 	var/list/commands
 	var/atom/movable/command_location
 	if(A == src)
-		commands = list("Defend the Ark!", "Advance!", "Retreat!", "Generate Power", "Build Defenses (Bottom-Up)", "Build Defenses (Top-Down)")
+		commands = list("Defend the Ark!", "Advance!", "Retreat!", "Generate Power")
 	else
 		command_location = A
 		commands = list("Rally Here", "Regroup Here", "Avoid This Area", "Reinforce This Area")
@@ -180,47 +160,24 @@
 		if("Reinforce This Area")
 			command_text = "The Eminence orders the defense and fortification of the area to your GETDIR!"
 			marker_icon = "eminence_reinforce"
-		if("Power This Structure")
-			command_text = "[command_location] to your GETDIR has no power! Turn it on and make sure there's a sigil of transmission nearby!"
-			marker_icon = "eminence_unlimited_power"
-		if("Repair This Structure")
-			command_text = "The Eminence orders that [command_location] to your GETDIR should be repaired ASAP!"
-			marker_icon = "eminence_repair"
-		if("Defend the Ark!")
-			command_text = "The Eminence orders immediate defense of the Ark!"
-		if("Advance!")
-			command_text = "The Eminence commands you push forward!"
-		if("Retreat!")
-			command_text = "The Eminence has sounded the retreat! Fall back!"
-		if("Generate Power")
-			command_text = "The Eminence orders more power! Build power generations on the station!"
-		if("Build Defenses (Bottom-Up)")
-			command_text = "The Eminence orders that defenses should be built starting from the bottom of Reebe!"
-		if("Build Defenses (Top-Down)")
-			command_text = "The Eminence orders that defenses should be built starting from the top of Reebe!"
 	if(marker_icon)
-		new /obj/effect/temp_visual/ratvar/command_point(get_turf(A), marker_icon)
+		var/obj/effect/temp_visual/ratvar/command_point/P = new (get_turf(A))
+		P.icon_state = marker_icon
 		COOLDOWN_START(src, command_point, 2 MINUTES)
 		for(var/mob/M in servants_and_ghosts())
-			to_chat(M, "<span class='large_brass'>[replacetext(command_text, "GETDIR", dir2text(get_dir(M, command_location)))]</span>")
+			to_chat(M, "<span class='large cult'>[replacetext(command_text, "GETDIR", dir2text(get_dir(M, command_location)))]</span>")
 			M.playsound_local(M, 'sound/antag/eminence_command.ogg', 75, VOL_EFFECTS_MASTER)
-
 	else
-		hierophant_message("<span class='bold large cult'>[command_text]</span>")
+		hierophant_message("<span class='large cult'>[command_text]</span>")
 		for(var/mob/M in servants_and_ghosts())
 			M.playsound_local(M, 'sound/antag/eminence_command.ogg', 75, VOL_EFFECTS_MASTER)
-
-
-/obj/effect/temp_visual/ratvar/warp_marker/atom_init()
-	. = ..()
-	animate(src, alpha = 255, time = 50)
 
 //Used by the Eminence to coordinate the cult
 /obj/effect/temp_visual/ratvar/command_point
 	name = "Маркер Возвышенного"
 	desc = "Важная точка, помеченная Возвышенным."
-	icon = 'icons/mob/actions_clockcult.dmi'
-	icon_state = "eminence"
+	icon = 'icons/hud/actions.dmi'
+	icon_state = ""
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	resistance_flags = INDESTRUCTIBLE
 	duration = 300
@@ -231,10 +188,12 @@
 	cult_vis = image(icon, src, marker_icon)
 	for(var/mob/M in servants_and_ghosts())
 		M.client.images |= cult_vis
+
+	for(var/mob/M in cult_religion.members)
 		if(!isliving(M))
 			return
 		var/mob/living/L = M
-		if(get_dist(src, L) >= 3) //Remove stuns
+		if(get_dist(src, L) < 4) //Stand up and fight, almost no heal but stuns
 			if(L.reagents)
 				L.reagents.clear_reagents()
 			L.beauty.AddModifier("stat", additive=L.beauty_living)
@@ -244,7 +203,6 @@
 			L.SetStunned(0)
 			L.SetWeakened(0)
 			L.setDrugginess(0)
-			L.radiation = 0
 			L.nutrition = NUTRITION_LEVEL_NORMAL
 			L.bodytemperature = T20C
 			L.blinded = 0
@@ -354,11 +312,3 @@
 	. = ..()
 	var/mob/camera/eminence/E = cult_religion.eminence
 	target = E.tome
-/*	button_icon = E.tome.icon
-	button_icon_state = E.tome.icon_state
-	button.UpdateIcon()
-
-/datum/action/innate/eminence/tome/Activate()
-	var/mob/camera/eminence/E = cult_religion.eminence
-	E.tome.attack_self(E)
-	to_chat(world,"attack_self")*/

@@ -138,7 +138,7 @@
 		return TRUE
 	return FALSE
 
-/obj/structure/altar_of_gods/attack_hand(mob/living/carbon/human/user)
+/obj/structure/altar_of_gods/attack_hand(mob/user)
 	if(can_buckle && buckled_mob && istype(user))
 		user_unbuckle_mob(user)
 		return
@@ -246,7 +246,7 @@
 	return FALSE
 
 /obj/structure/altar_of_gods/proc/perform_rite(mob/user, rite_name)
-	if(!istype(user.get_active_hand(), religion.religious_tool_type))
+	if(!istype(user.get_active_hand(), religion.religious_tool_type) && !iseminence(user))
 		return
 
 	if(!rite_name)
