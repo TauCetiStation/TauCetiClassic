@@ -17,7 +17,8 @@
 	return length(landmarks_list["ninja"]) > 0
 
 /datum/faction/ninja/OnPostSetup()
-	ninjastart = landmarks_list["ninja"].Copy()
+	ninjastart = landmarks_list["ninja"]
+	ninjastart = ninjastart.Copy()
 	for(var/datum/role/role in members)
 		var/obj/effect/landmark/start_point = pick(ninjastart)
 		ninjastart -= start_point

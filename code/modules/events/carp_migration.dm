@@ -36,9 +36,9 @@
 				qdel(C)
 
 /datum/event/carp_migration/proc/spawn_fish(num_groups, group_size_min = 3, group_size_max = 5)
-	var/list/spawn_locations = list()
+	var/list/spawn_locations = landmarks_list["carpspawn"]
 
-	spawn_locations = shuffle(landmarks_list["carpspawn"].Copy())
+	spawn_locations = shuffle(spawn_locations.Copy())
 	num_groups = min(num_groups, spawn_locations.len)
 
 	for(var/i in 1 to num_groups)
