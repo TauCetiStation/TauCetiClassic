@@ -42,7 +42,7 @@
 	..()
 	cult_religion.add_member(src)
 	eminence_image = image(icon, src, icon_state)
-	for(var/mob/M in cult_religion.members)
+	for(var/mob/M as anything in cult_religion.members)
 		M.client?.images |= eminence_image //Only for clients
 	if(cult_religion)
 		if(cult_religion.eminence && cult_religion.eminence != src)
@@ -80,7 +80,7 @@
 		visible_message("<span class='cult large'><b>Ты чувствуешь, как тьма врывается в твой мозг и формирует слова:</b> \"[capitalize(message)]\"</span>")
 		//playsound(src, 'sound/machines/clockcult/ark_scream.ogg', VOL_EFFECTS_MASTER)
 	message = "<span class='big cult'><b>[SSticker.nar_sie_has_risen ? "Преосвященство" : "Возвышенный"]:</b> \"[message]\"</span>"
-	for(var/mob/M in servants_and_ghosts())
+	for(var/mob/M as anything in servants_and_ghosts())
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [message]")
@@ -116,7 +116,7 @@
 	if(tome.toggle_deconstruct)
 		for(var/datum/building_agent/B in tome.religion.available_buildings)
 			if(istype(A, B.building_type))
-				tome.afterattack(A, src, , params)
+				tome.afterattack(A, src, TRUE, params)
 
 	if(istype(A, /obj/structure/mineral_door/cult))
 		var/obj/structure/mineral_door/cult/D = A
@@ -184,10 +184,10 @@
 /obj/effect/temp_visual/command_point/atom_init(marker_icon)
 	. = ..()
 	cult_vis = image(icon, src, marker_icon)
-	for(var/mob/M in servants_and_ghosts())
+	for(var/mob/M as anything in servants_and_ghosts())
 		M.client.images |= cult_vis
 
-	for(var/mob/M in cult_religion.members)
+	for(var/mob/M as anything in cult_religion.members)
 		if(!isliving(M))
 			continue
 		var/mob/living/L = M
@@ -334,11 +334,11 @@
 /datum/action/innate/eminence/forbid_research/Activate()
 	if(!cult_religion.research_forbidden)
 		cult_religion.research_forbidden = TRUE
-		for(var/mob/L in cult_religion.members)
+		for(var/mob/L as anything in cult_religion.members)
 			to_chat(L, "<span class='cult'>Возвышенный ЗАПРЕТИЛ самостоятельное исследование последователям!</span>")
 	else
 		cult_religion.research_forbidden = FALSE
-		for(var/mob/L in cult_religion.members)
+		for(var/mob/L as anything in cult_religion.members)
 			to_chat(L, "<span class='cult'>Возвышенный РАЗРЕШИЛ самостоятельное исследование последователям!</span>")
 
 //Activates tome
