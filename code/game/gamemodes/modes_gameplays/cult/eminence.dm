@@ -298,7 +298,7 @@
 				break
 
 //Activates tome
-/datum/action/innate/eminence/forbid_research
+/datum/action/innate/eminence/tome
 	name = "Использовать том"
 	action_type = AB_ITEM
 
