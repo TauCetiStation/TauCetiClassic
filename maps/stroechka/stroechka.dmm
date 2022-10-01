@@ -172,6 +172,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/item/device/radio/off,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -1935,6 +1936,7 @@
 /obj/item/clothing/glasses/welding,
 /obj/item/clothing/gloves/yellow,
 /obj/item/device/gps/engineering,
+/obj/item/device/radio/off,
 /turf/simulated/floor{
 	icon_state = "caution"
 	},
@@ -2014,6 +2016,7 @@
 /obj/structure/closet/secure_closet/atmos_personal{
 	req_access = list(71)
 	},
+/obj/item/device/radio/off,
 /turf/simulated/floor{
 	icon_state = "caution"
 	},
@@ -3142,6 +3145,16 @@
 /area/station/engineering/engine)
 "xk" = (
 /obj/structure/closet/crate/engi,
+/obj/item/weapon/tank/oxygen/yellow,
+/obj/item/weapon/tank/oxygen/yellow,
+/obj/item/weapon/tank/oxygen/yellow,
+/obj/item/weapon/tank/oxygen/yellow,
+/obj/item/weapon/tank/oxygen/yellow,
+/obj/item/weapon/tank/oxygen/yellow,
+/obj/item/weapon/tank/oxygen/yellow,
+/obj/item/weapon/tank/oxygen/yellow,
+/obj/item/weapon/tank/oxygen/yellow,
+/obj/item/weapon/tank/oxygen/yellow,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -4283,14 +4296,14 @@
 /area/station/engineering/engine)
 "Fv" = (
 /obj/structure/table,
-/obj/item/weapon/storage/belt/utility{
-	pixel_y = 4
-	},
 /obj/item/clothing/gloves/latex{
 	pixel_y = 4
 	},
 /obj/item/clothing/glasses/science{
 	pixel_y = 6
+	},
+/obj/item/device/radio/beacon/interaction_watcher{
+	pixel_x = 17
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -4405,6 +4418,7 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
+/obj/item/device/radio/off,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -4724,6 +4738,7 @@
 	req_access = list(71)
 	},
 /obj/machinery/light,
+/obj/item/device/radio/off,
 /turf/simulated/floor{
 	icon_state = "caution"
 	},
@@ -4800,6 +4815,7 @@
 	req_access = list(71)
 	},
 /obj/item/device/gps/engineering,
+/obj/item/device/radio/off,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -5509,6 +5525,7 @@
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp{
 	pixel_x = -2
 	},
+/obj/item/weapon/stock_parts/cell/bluespace,
 /obj/item/mecha_parts/mecha_equipment/rcd{
 	pixel_y = -4
 	},
@@ -6391,6 +6408,7 @@
 	pixel_x = 29;
 	pixel_y = -6
 	},
+/obj/item/device/radio/off,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
