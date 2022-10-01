@@ -47,11 +47,11 @@
 			//world.log << "Added fibertext: [fibertext]"
 			suit_fibers += "Material from a pair of [M.gloves.name]."
 	if(M.species.flags[FUR])
-		fibertext = "Small particles of xeno-fur."
+		fibertext = "Small particles of [M.species.name] fur."
 		var/check_cloth = 100 - M.getarmor(null, "bio")
 		if(prob(check_cloth) && !(fibertext in suit_fibers))
 			ADD_TRAIT(src, TRAIT_XENO_FUR, GENERIC_TRAIT)
-			suit_fibers += "Small particles of xeno-fur."
+			suit_fibers += "Small particles of [M.species.name] fur."
 
 	if(!suit_fibers.len) suit_fibers = null
 
