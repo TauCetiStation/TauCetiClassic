@@ -490,11 +490,9 @@ var/global/list/ghostteleportlocs = list()
 			return
 
 		if(H.m_intent == "run")
-			H.AdjustStunned(2)
-			H.AdjustWeakened(2)
+			H.apply_effects(stun = 2, weaken = 2)
 		else
-			H.AdjustStunned(1)
-			H.AdjustWeakened(1)
+			H.apply_effects(stun = 1, weaken = 1)
 		to_chat(mob, "<span class='notice'>The sudden appearance of gravity makes you fall to the floor!</span>")
 
 /proc/has_gravity(atom/AT, turf/T)

@@ -38,7 +38,5 @@
 	var/weakened = get_anomaly_protection(receiver)
 	if(!weakened)
 		return FALSE
-	receiver.AdjustWeakened(power)
-	receiver.AdjustStunned(power)
-	receiver.AdjustStuttering(power)
+	receiver.apply_effects(stun = power, weaken = power, stutter = power)
 	return TRUE

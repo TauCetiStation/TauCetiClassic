@@ -69,13 +69,13 @@
 			if(get_dist(center, G) <= 2) //Very small radius
 				G.visible_message("<span class='warning'>\The [G] withers away!</span>")
 				qdel(G)
-		
+
 		if(T.is_light_floor())
 			var/turf/simulated/floor/F = T
 			F.set_lightfloor_on(FALSE)
 			F.visible_message("<span class='danger'>\The [T] suddenly turns off!</span>")
 			F.update_icon()
-				
+
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
 	name = "Flash Freeze"
 	desc = "Instantly freezes the blood of nearby people, stunning them and causing burn damage."
@@ -432,7 +432,7 @@
 			U.adjustOxyLoss(-10)
 			U.AdjustWeakened(-1)
 			U.AdjustStunned(-1)
-			M.adjustOxyLoss(20)
+			M.apply_damage(20, OXY)
 			to_chat(M, "<span class='boldannounce'>You feel a wave of exhaustion and a curious draining sensation directed towards [usr]!</span>")
 			to_chat(usr, "<span class='shadowling'>You draw the life from [M] to heal your wounds.</span>")
 	if(!targetsDrained)

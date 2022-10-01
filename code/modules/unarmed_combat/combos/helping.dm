@@ -76,9 +76,8 @@
 
 	var/wake_up_amount = -shake_time * effectiveness
 
-	victim.adjustHalLoss(wake_up_amount)
-	victim.AdjustStunned(wake_up_amount)
-	victim.AdjustWeakened(wake_up_amount)
+	victim.apply_damage(wake_up_amount, HALLOS)
+	victim.apply_effects(stun = wake_up_amount, weaken = wake_up_amount)
 
 	step_away(victim, attacker)
 

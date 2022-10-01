@@ -221,8 +221,7 @@
 		if("carbon")
 			success = 1
 			for(var/mob/living/carbon/C in T)
-				C.AdjustStunned(5)
-				C.AdjustWeakened(5)
+				C.apply_effects(stun = 5, weaken = 5)
 				C.visible_message("<span class='notice'>[bicon(C)] [C] begins to float in the air!</span>","You feel tingly and light, but it is difficult to move.")
 		if("nitrogen")
 			success = 1
@@ -245,7 +244,7 @@
 		if("iron")
 			success = 1
 			for(var/mob/living/silicon/R in T)
-				R.AdjustStunned(5)
+				R.apply_effect(5, STUN)
 				R.visible_message("<span class='notice'>[bicon(R)] [R] begins to float in the air!</span>","You feel tingly and light, but it is difficult to move.")
 			//
 	//in case we have a bad field type
@@ -254,8 +253,7 @@
 
 	for(var/mob/living/simple_animal/C in T)
 		C.visible_message("<span class='notice'>[bicon(C)] [C] begins to float in the air!</span>","You feel tingly and light, but it is difficult to move.")
-		C.AdjustStunned(5)
-		C.AdjustWeakened(5)
+		C.apply_effects(stun = 5, weaken = 5)
 
 	suspension_field = new(T)
 	suspension_field.field_type = field_type

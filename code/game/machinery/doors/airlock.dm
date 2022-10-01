@@ -126,8 +126,8 @@ var/global/list/airlock_overlays = list()
 				return
 		else if(user.hallucination > 50 && prob(10) && !operating)
 			to_chat(user, "<span class='warning'><B>You feel a powerful shock course through your body!</B></span>")
-			user.halloss += 10
-			user.AdjustStunned(10)
+			user.apply_damage(10, HALLOS)
+			user.apply_effect(10, STUN)
 			return
 	..(user)
 

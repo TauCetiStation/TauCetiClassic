@@ -89,8 +89,7 @@
 		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
 			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
 			playsound(usr, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
-			usr.AdjustStunned(5)
-			usr.AdjustWeakened(10)
+			usr.apply_effects(stun = 5, weaken = 10)
 
 		usr.density = TRUE
 		usr.canmove = 1
@@ -266,8 +265,7 @@
 		if (HAS_TRAIT(usr, TRAIT_FAT) && prob(66))
 			usr.visible_message("<span class='warning'><b>[usr.name]</b> crashes due to their heavy weight!</span>")
 			playsound(usr, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
-			usr.AdjustStunned(5)
-			usr.AdjustWeakened(10)
+			usr.apply_effects(stun = 5, weaken = 10)
 
 		usr.density = TRUE
 		usr.canmove = 1
@@ -700,10 +698,8 @@
 				var/mob/living/carbon/human/H = M
 				if(istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
 					continue
-			M.AdjustStuttering(2)
+			M.apply_effects(stun = 1, weaken = 2, stutter = 2)
 			M.ear_deaf += 2
-			M.Stun(1)
-			M.Weaken(2)
 			M.make_jittery(500)
 
 /obj/item/organ/attack_hulk(mob/living/simple_animal/hulk/unathi/user)

@@ -454,8 +454,7 @@
 		var/turf/new_turf = get_step(mob_turf, dir)
 		if(Move(new_turf))
 			break
-	AdjustStunned(5)
-	AdjustWeakened(5)
+	apply_effects(stun = 5, weaken = 5)
 	take_overall_damage(brute = DOOR_CRUSH_DAMAGE, used_weapon = "Crushed")
 	visible_message("<span class='red'>[src] was crushed by the door.</span>",
 					"<span class='danger'>The door crushed you.</span>")
