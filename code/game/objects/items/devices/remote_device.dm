@@ -6,7 +6,7 @@
 /obj/item/device/remote_device
 	name = "Remote Controller Device"
 	icon = 'icons/obj/remote_device.dmi'
-	icon_state = "rdc_white"
+	icon_state = "rdc_open"
 	item_state = "electronic"
 	w_class = SIZE_TINY
 	var/mode = REMOTE_OPEN
@@ -14,6 +14,7 @@
 	var/obj/item/weapon/card/id/ID
 	var/emagged = FALSE
 	var/disabled = FALSE
+	var/overlay = "rdc_white"
 
 /obj/item/device/remote_device/atom_init()
 	. = ..()
@@ -22,7 +23,7 @@
 	ID.access = list()
 	for(var/access in region_access)
 		ID.access += get_region_accesses(access)
-	icon_state = "[initial(icon_state)]_open"
+	add_overlay(image(icon, overlay))
 
 /obj/item/device/remote_device/Destroy()
 	remote_device_list -= src
@@ -46,16 +47,16 @@
 			mode = REMOTE_ELECT
 		else
 			mode = REMOTE_BOLT
-			icon_state = "[initial(icon_state)]_bolt"
+			icon_state = "rdc_bolt"
 	else if(mode == REMOTE_BOLT)
 		mode = REMOTE_EMERGENCY
-		icon_state = "[initial(icon_state)]_emergency"
+		icon_state = "rdc_emergency"
 	else if(mode == REMOTE_EMERGENCY)
 		mode = REMOTE_OPEN
-		icon_state = "[initial(icon_state)]_open"
+		icon_state = "rdc_open"
 	else if(mode == REMOTE_ELECT)
 		mode = REMOTE_BOLT
-		icon_state = "[initial(icon_state)]_bolt"
+		icon_state = "rdc_bolt"
 	to_chat(user, "Now in mode: [mode].")
 	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
@@ -108,42 +109,41 @@
 /obj/item/device/remote_device/ERT
 	name = "ERT door remote"
 	desc = "This remote control device can access any door on the station."
-	icon_state = "rdc_white"
 	region_access = list(0)
 
 /obj/item/device/remote_device/captain
 	name = "command door remote"
-	icon_state = "rdc_cap"
+	overlay = "rdc_cap"
 	region_access = list(5)
 
 /obj/item/device/remote_device/chief_engineer
 	name = "engineering door remote"
-	icon_state = "rdc_ce"
+	overlay = "rdc_ce"
 	region_access = list(4)
 
 /obj/item/device/remote_device/research_director
 	name = "research door remote"
-	icon_state = "rdc_rd"
+	overlay = "rdc_rd"
 	region_access = list(3)
 
 /obj/item/device/remote_device/head_of_security
 	name = "security door remote"
-	icon_state = "rdc_hos"
+	overlay = "rdc_hos"
 	region_access = list(1)
 
 /obj/item/device/remote_device/quartermaster
 	name = "supply door remote"
-	icon_state = "rdc_qm"
+	overlay = "rdc_qm"
 	region_access = list(7)
 
 /obj/item/device/remote_device/chief_medical_officer
 	name = "medical door remote"
-	icon_state = "rdc_cmo"
+	overlay = "rdc_cmo"
 	region_access = list(2)
 
 /obj/item/device/remote_device/head_of_personal
 	name = "civillian door remote"
-	icon_state = "rdc_hop"
+	overlay = "rdc_hop"
 	region_access = list(6, 7, 57)
 
 #undef REMOTE_OPEN
