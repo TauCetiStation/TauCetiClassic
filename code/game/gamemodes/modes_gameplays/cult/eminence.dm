@@ -29,16 +29,17 @@
 	. = ..()
 	QDEL_NULL(eminence_image)
 	QDEL_NULL(tome)
+	STOP_PROCESSING(SSprocessing, src)
 
 /mob/camera/eminence/Move(NewLoc, direct)
 	if(NewLoc && !isspaceturf(NewLoc) && !istype(NewLoc, /turf/unsimulated/wall))
 		forceMove(NewLoc)
 		client.move_delay = world.time + 1 //What could possibly go wrong?
 
-		if(SSticker.nar_sie_has_risen)
-			for(var/turf/TT in range(5, src))
-				if(prob(166 - (get_dist(src, TT) * 33)))
-					TT.atom_religify(my_religion) //Causes moving to leave a swath of proselytized area behind the Eminence
+/mob/camera/eminence/process()
+	for(var/turf/TT in range(5, src))
+		if(min(prob(166 - (get_dist(src, TT) * 33)), 75))
+			TT.atom_religify(my_religion) //Causes moving to leave a swath of proselytized area behind the Eminence
 
 /mob/camera/eminence/Login()
 	..()
@@ -80,7 +81,7 @@
 	log_say(message)
 	if(SSticker.nar_sie_has_risen)
 		visible_message("<span class='cult large'><b>Ты чувствуешь, как тьма врывается в твой мозг и формирует слова:</b> \"[capitalize(message)]\"</span>")
-		//playsound(src, 'sound/machines/clockcult/ark_scream.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, 'sound/antag/eminence_hit.ogg', VOL_EFFECTS_MASTER)
 	message = "<span class='big cult'><b>[SSticker.nar_sie_has_risen ? "Преосвященство" : "Возвышенный"]:</b> \"[message]\"</span>"
 	for(var/mob/M as anything in servants_and_ghosts())
 		if(isobserver(M))
@@ -105,6 +106,9 @@
 
 /mob/camera/eminence/default_can_use_topic(src_object)
 	return STATUS_INTERACTIVE
+
+/mob/camera/eminence/get_active_hand()
+	return tome
 
 /mob/camera/eminence/ClickOn(atom/A, params)
 	var/list/modifiers = params2list(params)

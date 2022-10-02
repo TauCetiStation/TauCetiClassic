@@ -49,7 +49,7 @@
 
 	var/can_i_see = FALSE
 	var/msg = ""
-	if(isobserver(user))
+	if(isobserver(user) || iseminence(user))
 		can_i_see = TRUE
 	else if(isliving(user))
 		var/mob/living/L = user
@@ -186,11 +186,7 @@
 		data["faith_reactions"] = get_reactions_list()
 		data["can_talismaning"] = istype(user.get_active_hand(), /obj/item/weapon/paper/talisman)
 
-	if(iseminence(user))
-		//var/mob/camera/eminence/E = cult_religion.eminence.current
-		data["holds_religious_tool"] = TRUE//E.tome
-	else
-		data["holds_religious_tool"] = istype(user.get_active_hand(), religion.religious_tool_type)
+	data["holds_religious_tool"] = istype(user.get_active_hand(), religion.religious_tool_type)
 
 	return data
 
@@ -246,7 +242,7 @@
 	return FALSE
 
 /obj/structure/altar_of_gods/proc/perform_rite(mob/user, rite_name)
-	if(!istype(user.get_active_hand(), religion.religious_tool_type) && !iseminence(user))
+	if(!istype(user.get_active_hand(), religion.religious_tool_type))
 		return
 
 	if(!rite_name)
@@ -293,8 +289,8 @@
 
 	tgui_interact(user)
 
-/obj/structure/altar_of_gods/proc/sect_select(mob/user, sect_type)
-	if(!istype(user.get_active_hand(), religion.religious_tool_type) && !iseminence(user))
+/obj/structure/altar_of_gods/proc/sect_select(mob/living/user, sect_type)
+	if(!istype(user.get_active_hand(), religion.religious_tool_type))
 		return
 
 	if(!sect_type || chosen_aspect)

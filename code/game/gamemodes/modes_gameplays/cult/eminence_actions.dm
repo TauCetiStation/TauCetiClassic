@@ -41,7 +41,6 @@
 	var/mob/camera/eminence/E = owner
 	E.eminence_help()
 
-
 //Returns to the heaven
 /datum/action/innate/eminence/heaven_jump
 	name = "Вернуться в Рай"

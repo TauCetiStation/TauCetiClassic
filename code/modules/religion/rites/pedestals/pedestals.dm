@@ -93,6 +93,7 @@
 
 /datum/religion_rites/pedestals/cult/narsie/proc/summon(turf/T)
 	new /obj/singularity/narsie(T, religion)
+	START_PROCESSING(SSprocessing, cult_religion.eminence)
 
 /datum/religion_rites/pedestals/cult/cult_portal
 	name = "Призыв Портала"
