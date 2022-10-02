@@ -75,17 +75,17 @@
 		if("Nominate Ghosts")
 			eminence_nominee = "ghosts"
 			hierophant_message("<span class='cult'><b>[nominee] proposes selecting an Eminence from ghosts!</b> You may object by interacting with the eminence spire. The vote will otherwise pass in 30 seconds.</span>")
-	//for(var/mob/M in servants_and_ghosts())
-	//	M.playsound_local(M, 'sound/machines/clockcult/ocularwarden-target.ogg', VOL_EFFECTS_MASTER)
-	selection_timer = addtimer(CALLBACK(src, .proc/kingmaker), 30 SECONDS, TIMER_STOPPABLE)
+	for(var/mob/M as anything in servants_and_ghosts())
+		M.playsound_local(M, 'sound/antag/eminence_hit.ogg', VOL_EFFECTS_MASTER)
+	selection_timer = addtimer(CALLBACK(src, .proc/kingmaker), 3 SECONDS, TIMER_STOPPABLE)
 
 //Used to nominate oneself or ghosts for the role of Eminence.
 /obj/structure/eminence_spire/proc/objection(mob/living/wright)
 	if(tgui_alert(wright, "Object to the selection of [eminence_nominee] as Eminence?", "Objection!", list("Object", "Cancel")) == "Cancel" || !iscultist(wright) || !eminence_nominee)
 		return
 	hierophant_message("<span class='cult'><b>[wright] objects to the nomination of [eminence_nominee]!</b> The eminence spire has been reset.</span>")
-	//for(var/mob/M in servants_and_ghosts())
-	//	M.playsound_local(M, 'sound/machines/clockcult/integration_cog_install.ogg', VOL_EFFECTS_MASTER)
+	for(var/mob/M as anything in servants_and_ghosts())
+		M.playsound_local(M, 'sound/antag/eminence_hit.ogg', VOL_EFFECTS_MASTER)
 	eminence_nominee = null
 	deltimer(selection_timer)
 
@@ -101,8 +101,8 @@
 	if(tgui_alert(cold_feet, "Cancel your nomination?", "Cancel Nomination", list("Withdraw Nomination", "Cancel")) == "Cancel" || !iscultist(cold_feet) || !eminence_nominee)
 		return
 	hierophant_message("<span class='cult'><b>[eminence_nominee] has withdrawn their nomination!</b> The eminence spire has been reset.</span>")
-	//for(var/mob/M in servants_and_ghosts())
-	//	M.playsound_local(M, 'sound/machines/clockcult/integration_cog_install.ogg', VOL_EFFECTS_MASTER)
+	for(var/mob/M in servants_and_ghosts())
+		M.playsound_local(M, 'sound/antag/eminence_hit.ogg', VOL_EFFECTS_MASTER)
 	eminence_nominee = null
 	deltimer(selection_timer)
 
@@ -113,11 +113,11 @@
 	if(ismob(eminence_nominee))
 		if(!eminence_nominee.client || !eminence_nominee.mind)
 			hierophant_message("<span class='cult'><b>[eminence_nominee] somehow lost their sentience!</b> The eminence spire has been reset.</span>")
-			//for(var/mob/M in servants_and_ghosts())
-			//	M.playsound_local(M, 'sound/machines/clockcult/integration_cog_install.ogg', VOL_EFFECTS_MASTER)
+			for(var/mob/M as anything in servants_and_ghosts())
+				M.playsound_local(M, 'sound/antag/eminence_stop.ogg', VOL_EFFECTS_MASTER)
 			eminence_nominee = null
 			return
-		//playsound(eminence_nominee, 'sound/machines/clockcult/ark_damage.ogg', VOL_EFFECTS_MASTER)
+		playsound(eminence_nominee, 'sound/antag/eminence_ready.ogg', VOL_EFFECTS_MASTER)
 		eminence_nominee.visible_message("<span class='warning'>A blast of darkness flows into [eminence_nominee], devouring them in an instant!</span>", \
 		"<span class='userdanger'>All the darkness in the universe flowing into YOU</span>")
 		for(var/obj/item/I in eminence_nominee) //drops all items
@@ -132,17 +132,17 @@
 		var/list/candidates = pollGhostCandidates("Would you like to play as the servants' Eminence?", ROLE_CULTIST, null, ROLE_CULTIST, poll_time = 100)
 		kingmaking = FALSE
 		if(!length(candidates))
-			//for(var/mob/M in servants_and_ghosts())
-			//	M.playsound_local(M, 'sound/machines/clockcult/integration_cog_install.ogg', VOL_EFFECTS_MASTER)
+			for(var/mob/M as anything in servants_and_ghosts())
+				M.playsound_local(M, 'sound/antag/eminence_stop.ogg', VOL_EFFECTS_MASTER)
 			hierophant_message("<span class='cult'><b>No ghosts accepted the offer!</b> The eminence spire has been reset.</span>")
 			eminence_nominee = null
 			return
 		visible_message("<span class='warning'>A blast of cold darkness devours [src]!</span>")
-		//playsound(src, 'sound/machines/clockcult/ark_damage.ogg', VOL_EFFECTS_MASTER)
+		//playsound(src, 'sound/antag/eminence_ready.ogg', VOL_EFFECTS_MASTER)
 		var/mob/camera/eminence/eminence = new(get_turf(src))
 		eminence_nominee = pick(candidates)
 		eminence.key = eminence_nominee.key
 		hierophant_message("<span class='large cult'>A ghost has ascended into the Eminence!</span>")
 	for(var/mob/M as anything in servants_and_ghosts())
-		M.playsound_local(M, 'sound/antag/eminence_selected.ogg', VOL_EFFECTS_MASTER)
+		M.playsound_local(M, 'sound/antag/eminence_ready.ogg', VOL_EFFECTS_MASTER)
 	eminence_nominee = null

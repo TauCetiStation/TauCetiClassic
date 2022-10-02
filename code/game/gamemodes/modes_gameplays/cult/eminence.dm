@@ -32,11 +32,13 @@
 
 /mob/camera/eminence/Move(NewLoc, direct)
 	if(NewLoc && !isspaceturf(NewLoc) && !istype(NewLoc, /turf/unsimulated/wall))
+		forceMove(NewLoc)
+		client.move_delay = world.time + 1 //What could possibly go wrong?
+
 		if(SSticker.nar_sie_has_risen)
 			for(var/turf/TT in range(5, src))
 				if(prob(166 - (get_dist(src, TT) * 33)))
 					TT.atom_religify(my_religion) //Causes moving to leave a swath of proselytized area behind the Eminence
-		forceMove(NewLoc)
 
 /mob/camera/eminence/Login()
 	..()
@@ -159,6 +161,9 @@
 			command_text = "The Eminence orders the defense and fortification of the area to your GETDIR!"
 			marker_icon = "eminence_reinforce"
 	if(marker_icon)
+		if(!COOLDOWN_FINISHED(src, command_point)) //Player can double click to issue two commands
+			to_chat(src, "<span class='cult'>Слишком рано для новой команды!</span>")
+			return
 		var/obj/effect/temp_visual/command_point/P = new (get_turf(A))
 		P.icon_state = marker_icon
 		COOLDOWN_START(src, command_point, 2 MINUTES)
@@ -320,10 +325,11 @@
 	name = "Использовать том"
 	action_type = AB_ITEM
 
-/datum/action/innate/eminence/tome/New(Target)
+/datum/action/innate/eminence/tome/Grant(mob/T)
 	. = ..()
-	var/mob/camera/eminence/E = cult_religion.eminence
+	var/mob/camera/eminence/E = owner
 	target = E.tome
+	button.UpdateIcon()
 
 //Forbids research to cultists
 /datum/action/innate/eminence/forbid_research
@@ -365,3 +371,4 @@
 	var/mob/M = input(owner, "Выберите последователя для телепорта", "Телепорт к последователю") as null|anything in cult_religion.members
 	if(M)
 		owner.forceMove(get_turf(M))
+		flash_color(owner, flash_time = 25)
