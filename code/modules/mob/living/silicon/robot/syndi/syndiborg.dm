@@ -46,6 +46,7 @@
 
 /obj/item/weapon/melee/energy/sword/cyborg
 	blade_color = "blue"
+	force_active = 200
 
 /obj/item/weapon/melee/energy/sword/cyborg/attack_self(mob/living/user)
 	..()
