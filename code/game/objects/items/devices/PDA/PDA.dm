@@ -1322,9 +1322,8 @@
 		nanomanager.update_user_uis(U, P) // Update the sending user's PDA UI so that they can see the new message
 
 		log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
-		P.cut_overlays()
-		P.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 		P.newmessage = 1
+		P.update_icon()
 	else
 		to_chat(U, "<span class='notice'>ERROR: Messaging server is not responding.</span>")
 
