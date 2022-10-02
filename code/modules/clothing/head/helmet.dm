@@ -35,7 +35,8 @@
 	if(holochip)
 		holochip.remove_action(user)
 		holochip.deactivate_holomap()
-		SSholomaps.holochips[num2text(holochip.frequency)] -= holochip
+		if(SSholomaps.holochips[num2text(holochip.frequency)] && (holochip in SSholomaps.holochips[num2text(holochip.frequency)]))
+			SSholomaps.holochips[num2text(holochip.frequency)] -= holochip
 	..()
 
 /obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user)
