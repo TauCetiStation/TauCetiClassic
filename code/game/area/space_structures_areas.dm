@@ -188,3 +188,9 @@
 	icon_state = "yellow"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = TRUE
+
+/area/space_structures/research_ship
+	name = "Research Ship"
+	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = TRUE

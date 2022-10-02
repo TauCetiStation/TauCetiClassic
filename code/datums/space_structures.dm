@@ -152,9 +152,14 @@
 	desc = "Unknown huge object"
 	mappath = "maps/templates/space_structures/broken_breacher.dmm"
 
-
 /datum/map_template/space_structure/export_outpost
 	name = "Export Outpost"
 	structure_id = "export_outpost"
 	desc = "Unknown object"
 	mappath = "maps/templates/space_structures/export_outpost.dmm"
+
+/datum/map_template/space_structure/research_ship
+	name = "Research ship"
+	structure_id = "research_ship"
+	desc = "Unknown object"
+	mappath = "maps/templates/space_structures/research_ship.dmm"
