@@ -740,8 +740,11 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/tail_state = species.tail
 			if(random_tail_holder)
 				tail_state = random_tail_holder
-
-			var/image/tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = tail_state)
+			var/tail_gender_appendix = null
+			if(species.gender_tail_icons && gender == FEMALE)
+				tail_gender_appendix = "_fem"
+			
+			var/image/tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = "[tail_state][tail_gender_appendix]")
 
 			var/obj/item/organ/external/chest/BP = bodyparts_by_name[BP_CHEST]
 			if(BP.status & ORGAN_DEAD)
