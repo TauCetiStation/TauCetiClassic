@@ -103,9 +103,6 @@
 	else
 		to_chat(user, "<span class='danger'>[src] does not have access to this door.</span>")
 
-/obj/item/device/remote_device/update_icon()
-
-
 /obj/item/device/remote_device/ERT
 	name = "ERT door remote"
 	desc = "This remote control device can access any door on the station."
