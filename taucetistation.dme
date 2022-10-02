@@ -581,6 +581,7 @@
 #include "code\game\gamemodes\modes_gameplays\cult\cult_items.dm"
 #include "code\game\gamemodes\modes_gameplays\cult\eminence spire.dm"
 #include "code\game\gamemodes\modes_gameplays\cult\eminence.dm"
+#include "code\game\gamemodes\modes_gameplays\cult\eminence_actions.dm"
 #include "code\game\gamemodes\modes_gameplays\cult\narsie.dm"
 #include "code\game\gamemodes\modes_gameplays\cult\rune_datum.dm"
 #include "code\game\gamemodes\modes_gameplays\cult\talisman.dm"
