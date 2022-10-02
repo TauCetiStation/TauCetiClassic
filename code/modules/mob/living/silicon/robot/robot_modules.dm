@@ -110,9 +110,9 @@
 /obj/item/weapon/robot_module/medical
 	name = "medical robot module"
 	stacktypes = list(
-		/obj/item/stack/medical/advanced/bruise_pack = 5,
-		/obj/item/stack/medical/advanced/ointment = 5,
-		/obj/item/stack/nanopaste = 5,
+		/obj/item/stack/medical/advanced/bruise_pack = 6,
+		/obj/item/stack/medical/advanced/ointment = 6,
+		/obj/item/stack/nanopaste = 10,
 		/obj/item/stack/medical/splint = 5,
 		/obj/item/stack/medical/suture = 3
 		)
@@ -405,6 +405,24 @@
 	emag = new /obj/item/weapon/hand_tele(src) //To fuck people's shit up
 
 	emag.name = "Hand tele"
+
+/obj/item/weapon/robot_module/peacekeeper
+	name = "peacekeeper robot module"
+
+/obj/item/weapon/robot_module/peacekeeper/atom_init()
+	. = ..()
+
+	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/weapon/rsf/cookiesynth(src)
+	modules += new /obj/item/harmalarm(src)
+	modules += new /obj/item/weapon/reagent_containers/borghypo/peace(src)
+	modules += new /obj/item/weapon/cyborghug(src)
+	modules += new /obj/item/borg/bubble_creator(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg(src)
+	modules += new /obj/item/weapon/crowbar/red(src)
+	modules += new /obj/item/device/gps/cyborg(src)
+
+	emag = new /obj/item/weapon/gun/grenadelauncher/cyborg(src)
 
 /obj/item/weapon/robot_module/drone
 	name = "drone module"

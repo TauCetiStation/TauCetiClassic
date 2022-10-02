@@ -9,6 +9,7 @@
 	icon_state = "safe"
 	anchored = TRUE
 	density = TRUE
+	resistance_flags = FULL_INDESTRUCTIBLE
 	/// The maximum combined w_class of stuff in the safe
 	var/maxspace = 24
 	/// The amount of tumblers that will be generated
@@ -25,7 +26,6 @@
 	var/current_tumbler_index = 1
 	/// The combined w_class of everything in the safe
 	var/space = 0
-	/// Tough, but breakable if explosion counts reaches set value
 
 /obj/structure/safe/atom_init()
 	. = ..()

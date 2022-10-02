@@ -258,7 +258,7 @@
 	..()
 
 
-/mob/living/carbon/human/proc/attacked_by(obj/item/I, mob/living/user, def_zone)
+/mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(!I || !user)
 		return FALSE
 

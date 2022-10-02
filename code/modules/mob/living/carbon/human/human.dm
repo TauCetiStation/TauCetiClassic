@@ -65,6 +65,7 @@
 		dna.real_name = real_name
 
 	handcrafting = new()
+	AddComponent(/datum/component/altcraft)
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
@@ -920,6 +921,10 @@
 			number -= 1
 	if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
 		number += 1
+	if(istype(glasses, /obj/item/clothing/glasses/hud/hos_aug))
+		var/obj/item/clothing/glasses/hud/hos_aug/G = glasses
+		if(!G.active)
+			number += 1
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/welding))
 		var/obj/item/clothing/mask/gas/welding/W = wear_mask
 		if(!W.up)
@@ -1740,7 +1745,7 @@
 
 /atom/movable/screen/leap
 	name = "toggle leap"
-	icon = 'icons/mob/screen1_action.dmi'
+	icon = 'icons/hud/screen1_action.dmi'
 	icon_state = "action"
 	screen_loc = ui_human_leap
 

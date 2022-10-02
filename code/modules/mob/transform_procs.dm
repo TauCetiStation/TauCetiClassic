@@ -122,14 +122,12 @@
 			O.changeling_update_languages(C.absorbed_languages)
 			for(var/mob/living/parasite/essence/M in src)
 				M.transfer(O)
-
+	SEND_SIGNAL(O, COMSIG_HUMAN_MONKEYIZE)
 	transfer_trait_datums(O)
 
 	if(tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a monkey.</B>")
-
 	. = O
-
 	qdel(src)
 
 //////////////////////////           Humanize               //////////////////////////////
@@ -256,10 +254,9 @@
 
 	if(tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a human.</B>")
-
 	. = O
-
 	qdel(src)
+	SEND_SIGNAL(O, COMSIG_MONKEY_HUMANIZE)
 
 /mob/dead/new_player/AIize()
 	spawning = 1
