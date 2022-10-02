@@ -194,3 +194,9 @@
 	icon_state = "yellow"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = TRUE
+
+/area/space_structures/cult_ship
+	name = "Spaceship"
+	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = TRUE
