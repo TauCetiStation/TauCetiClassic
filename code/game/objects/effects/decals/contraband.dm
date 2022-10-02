@@ -606,33 +606,6 @@
 	poster_item_desc = "Some weird poster shaming Nanotrasen for things they never did... or did they?"
 	poster_item_icon_state = "rolled_poster"
 
-/obj/structure/sign/poster/revolution/attack_hand(mob/user)
-	if(ruined)
-		return
-	var/temp_loc = user.loc
-	switch(tgui_alert(usr,"Do I want to rip the poster from the wall or does it inspire me to join the cuase?","You think...", list("Rip Off","Join Revolution")))
-		if("Rip Off")
-			if(user.loc != temp_loc || ruined)
-				return
-			visible_message("<span class='warning'>[user] rips [src] in a single, decisive motion!</span>" )
-			playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
-			ruined = 1
-			icon_state = "poster_ripped"
-			name = "ripped poster"
-			desc = "You can't make out anything from the poster's original print. It's ruined."
-			add_fingerprint(user)
-		if("Join Revolution")
-			if(user.ismindprotect())
-				to_chat(user, "<span class='warning'><b>You shake your head in disapproval. Who in their right mind would even believe such blatant lies?</b></span>")
-				return
-			else if(jobban_isbanned(user, ROLE_REV) || jobban_isbanned(user, "Syndicate"))
-				to_chat(user, "<span class='warning'><b>You can't overcome the guilt to join the revolutionaries. (You are banned.)</b></span>")
-				return
-			else if(!isrevhead(user) || !isrev(user))
-				var/datum/faction/revolution/rev = find_faction_by_type(/datum/faction/revolution)
-				if(add_faction_member(rev, user, TRUE))
-					to_chat(user, "<span class='notice'>You join the revolution!</span>")
-
 /obj/structure/sign/poster/revolution/random
 	name = "random official poster"
 	icon_state = "random_official"
