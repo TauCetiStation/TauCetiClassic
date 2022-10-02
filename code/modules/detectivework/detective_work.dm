@@ -87,6 +87,28 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 	. = ..()
 	new /obj/item/weapon/book/manual/detective(get_turf(src))
 
+/obj/machinery/computer/forensic_scanning/attackby(obj/item/I, mob/user)
+	. = ..()
+	if(istype(I, /obj/item/weapon/card/id))
+		if(authenticated)
+			authenticated = FALSE
+			to_chat(user, "<span class='notice'>Logging out</span>")
+		else
+			if(allowed(user))
+				authenticated = TRUE
+				to_chat(user, "<span class='notice'>Access granted</span>")
+			else
+				to_chat(user, "<span class='warning'>Access denied</span>")
+	else if(!scanning)
+		if(!authenticated)
+			if(allowed(user))
+				authenticated = TRUE
+				to_chat(user, "<span class='notice'>Access granted</span>")
+			else
+				to_chat(user, "<span class='warning'>Access denied</span>")
+				return
+		user.drop_from_inventory(I, src)
+		scanning = I
 
 /obj/machinery/computer/forensic_scanning/ui_interact(mob/user)
 	var/dat = ""
@@ -137,7 +159,8 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 				temp = null
 		if("eject")
 			if(scanning)
-				scanning.loc = loc
+				scanning.forceMove(loc)
+				usr.put_in_any_hand_if_possible(scanning)
 				scanning = null
 			else
 				temp = "Eject Failed: No Object"
