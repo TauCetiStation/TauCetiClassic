@@ -143,6 +143,12 @@
 
 /datum/reagent/sterilizine/reaction_obj(obj/O, volume)
 	O.germ_level -= min(volume*20, O.germ_level)
+	REMOVE_TRAIT(O, TRAIT_XENO_FUR, GENERIC_TRAIT)
+	if(istype(O, /obj/item/weapon/reagent_containers/food))
+		var/obj/item/weapon/reagent_containers/food/F = O
+		//constituent components precipitate into food as unwanted sediment. No need use sterilizine into food
+		F.reagents.add_reagent("chlorine", 1)
+		F.reagents.add_reagent("ethanol", 1)
 
 /datum/reagent/sterilizine/reaction_turf(turf/T, volume)
 	. = ..()
