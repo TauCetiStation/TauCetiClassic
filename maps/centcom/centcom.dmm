@@ -17062,6 +17062,11 @@
 	icon_state = "freezerfloor"
 	},
 /area/centcom/living)
+"aMB" = (
+/obj/structure/cult/statue/camera/gargoyle,
+/obj/structure/eminence_spire,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "aMC" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -71089,7 +71094,7 @@ aaM
 aaM
 aaM
 adx
-tqh
+aMB
 wfy
 aZI
 bKC
