@@ -1,10 +1,73 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/structure/alien/weeds,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"ac" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"ad" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien{
+	desc = "It looks like a weird egg";
+	icon_state = "egg";
+	name = "egg"
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"ae" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/machinery/power/terminal,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
 "af" = (
 /obj/structure/alien/weeds,
 /mob/living/simple_animal/hostile/xenomorph,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/vox,
+/area/space_structures/research_ship)
+"ag" = (
+/obj/structure/alien/weeds,
+/obj/machinery/light_construct/small,
+/obj/machinery/power/smes,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "ap" = (
@@ -13,6 +76,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "aY" = (
@@ -31,16 +95,15 @@
 /obj/machinery/light_construct/small{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "ea" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/obj/machinery/power/terminal,
-/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "eq" = (
@@ -50,6 +113,7 @@
 	icon_state = "egg";
 	name = "egg"
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "fs" = (
@@ -89,6 +153,7 @@
 "gY" = (
 /obj/structure/alien/weeds,
 /obj/effect/landmark/corpse/scientist,
+/obj/effect/decal/cleanable/blood,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "ie" = (
@@ -118,12 +183,14 @@
 "nP" = (
 /obj/item/weapon/shard,
 /obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "of" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
 /obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "ot" = (
@@ -140,6 +207,7 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
 /obj/item/weapon/gun/energy/gun,
+/obj/effect/decal/cleanable/blood/gibs,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "qf" = (
@@ -168,6 +236,8 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "tt" = (
@@ -204,16 +274,9 @@
 /area/space_structures/research_ship)
 "uV" = (
 /obj/structure/alien/weeds,
-/obj/machinery/light_construct/small,
-/obj/machinery/power/smes,
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -22
-	},
+/obj/structure/alien/weeds/node,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "vd" = (
@@ -223,6 +286,7 @@
 /obj/machinery/alarm{
 	pixel_y = 22
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "wO" = (
@@ -233,6 +297,7 @@
 	icon_state = "egg";
 	name = "egg"
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "xE" = (
@@ -285,17 +350,21 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "BY" = (
 /obj/structure/alien/weeds,
-/obj/structure/alien/weeds/node,
-/obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "DK" = (
@@ -309,6 +378,7 @@
 /obj/structure/alien/weeds,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "Ex" = (
@@ -332,11 +402,13 @@
 /area/space_structures/research_ship)
 "EU" = (
 /obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "EZ" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "Fh" = (
@@ -395,6 +467,8 @@
 /obj/effect/landmark/corpse/scientist,
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "Hd" = (
@@ -430,6 +504,7 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "Ju" = (
@@ -438,6 +513,8 @@
 /obj/item/device/flashlight/seclite{
 	on = 1
 	},
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "Kb" = (
@@ -477,6 +554,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "OD" = (
@@ -568,6 +646,8 @@
 /obj/machinery/light_construct/small{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
 "UV" = (
@@ -695,7 +775,7 @@ EZ
 SX
 Iz
 FT
-eq
+ad
 gx
 aY
 Sm
@@ -709,12 +789,12 @@ xZ
 xZ
 ap
 ON
-EZ
+uV
 EU
 ik
 NF
-ea
-uV
+ae
+ag
 xZ
 xZ
 ie
@@ -729,8 +809,8 @@ wO
 du
 nP
 xE
-EZ
-FL
+ea
+BY
 nL
 xZ
 xZ
@@ -766,7 +846,7 @@ qn
 ot
 FD
 tt
-FL
+ab
 EZ
 zF
 xZ
@@ -784,7 +864,7 @@ af
 sb
 ya
 Es
-BY
+ac
 uR
 Hd
 xZ
@@ -799,10 +879,10 @@ xZ
 Qw
 of
 AC
-EZ
+ea
 Fq
 OD
-FL
+ab
 UV
 us
 xZ
