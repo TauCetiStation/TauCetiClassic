@@ -41,7 +41,7 @@
 			QUALITY_KNIFE = 1
 		)
 		sharp = TRUE
-		force = 30
+		force = force_active
 		hitsound = list('sound/weapons/blade1.ogg')
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass1"
