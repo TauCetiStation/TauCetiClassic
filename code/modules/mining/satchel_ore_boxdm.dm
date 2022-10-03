@@ -11,6 +11,8 @@
 /obj/structure/ore_box/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/ore))
 		user.drop_from_inventory(W, src)
+		updateUsrDialog()
+
 	else if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		user.SetNextMove(CLICK_CD_INTERACT)
@@ -26,31 +28,33 @@
 			playsound(src, 'sound/items/mining_satchel_unload.ogg', VOL_EFFECTS_MASTER)
 		else
 			to_chat(user, "<span class='warning'>There is no ore to unload here!</span>")
+		updateUsrDialog()
 
 
 /obj/structure/ore_box/Entered(atom/movable/ORE)
 	if(istype(ORE, /obj/item/weapon/ore))
-		// stored ore is association list: ore sprite -> quantity
-		stored_ore[bicon(ORE, "style='position: relative; width:40px; height:40px; top:15px'")]++
-		//stored_ore[ORE.name] = ORE.type
+		// stored ore is association list: ore name -> list(ore_amt, ore_icon)
+		if(!stored_ore[ORE.name])
+			stored_ore[ORE.name] = list(1, bicon(ORE))
+		else
+			stored_ore[ORE.name][1]++
+
 
 /obj/structure/ore_box/Exited(atom/movable/ORE)
 	if(istype(ORE, /obj/item/weapon/ore))
-		stored_ore[bicon(ORE, "style='position: relative; width:40px; height:40px; top:15px'")]--
+		stored_ore[ORE.name][1]--
 	if(!contents.len)
 		stored_ore = list()
 
 /obj/structure/ore_box/attack_hand(mob/user)
 	var/dat = ""
-	var/num_of_columns = 0
-	for(var/ore in stored_ore)
-		if(!(num_of_columns % 4) && num_of_columns > 0)
-			dat += "<br>"
-		num_of_columns++
-		dat += "[ore]x[stored_ore[ore]]"
+
 
 	if(length(contents))
-		dat += "<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>"
+		for(var/ore in stored_ore)
+			dat += "[stored_ore[ore][2]] <span style='vertical-align: super'><span class='orange'><B>x[stored_ore[ore][1]]</B></span> [ore]</span><br>"
+
+		dat += "<br><A href='?src=\ref[src];removeall=1'>Empty box</A>"
 	else
 		dat += "The box is empty"
 
@@ -70,13 +74,16 @@
 
 	add_fingerprint(user)
 
-	if(!contents.len)
+	if(!length(contents))
 		to_chat(user, "It is empty.")
 		return
 
 	to_chat(user, "It holds:")
+	var/dat = ""
 	for(var/ore in stored_ore)
-		to_chat(user, "- [ore]x[stored_ore[ore]]")
+		dat += "[stored_ore[ore][2]] <B>x[stored_ore[ore][1]]</B> [ore]<br>"
+	to_chat(user, dat)
+
 
 /obj/structure/ore_box/Topic(href, href_list)
 	if(..())
