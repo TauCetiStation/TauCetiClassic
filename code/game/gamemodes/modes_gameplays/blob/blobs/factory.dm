@@ -38,8 +38,6 @@
 		S.overmind = overmind
 		overmind.blob_mobs.Add(S)
 
-/obj/effect/blob/factory
-
 ////////////////
 // BASE TYPE //
 ////////////////
@@ -337,14 +335,14 @@
 		damagesources++
 	else
 		if(locate(/obj/effect/blob/core) in blobs_in_area)
-			health += maxHealth*0.05
+			health += maxHealth*0.07
 			update_health_hud()
 		if(locate(/obj/effect/blob/node) in blobs_in_area)
-			health += maxHealth*0.025
+			health += maxHealth*0.03
 			update_health_hud()
 
 	if(damagesources)
-		health -= maxHealth * 0.05 * damagesources //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
+		health -= maxHealth * 0.04 * damagesources //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
 		update_health_hud()
 		var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
 		I.appearance_flags = RESET_COLOR
