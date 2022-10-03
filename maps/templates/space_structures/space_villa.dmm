@@ -543,6 +543,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/constructable_frame/machine_frame,
+/obj/item/weapon/circuitboard/smes,
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
