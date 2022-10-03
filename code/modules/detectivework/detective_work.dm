@@ -152,8 +152,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 		return
 	switch(href_list["operation"])
 		if("login")
-			if(allowed(usr))
-				authenticated = 1
+			authorization(usr)
 		if("logout")
 			authenticated = 0
 		if("clear")
