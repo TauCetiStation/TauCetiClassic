@@ -97,6 +97,12 @@
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
+/area/space_structures/robostation2
+	name = "Robostation2"
+	icon_state = "yellow"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
 /area/space_structures/ghostship
 	name = "Ghost Ship"
 	icon_state = "yellow"

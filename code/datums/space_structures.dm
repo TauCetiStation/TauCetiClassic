@@ -62,6 +62,12 @@
 	desc = "Unknown huge object"
 	mappath = "maps/templates/space_structures/robostation.dmm"
 
+/datum/map_template/space_structure/robostation2
+	name = "robostation2"
+	structure_id = "robostation2"
+	desc = "Unknown huge object"
+	mappath = "maps/templates/space_structures/robostation2.dmm"
+
 /datum/map_template/space_structure/planetarium
 	name = "planetarium"
 	structure_id = "planetarium"
