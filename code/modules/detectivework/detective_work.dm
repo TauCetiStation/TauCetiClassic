@@ -90,15 +90,27 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 /obj/machinery/computer/forensic_scanning/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/id))
 		if(!authenticated)
-			if(!allowed(user))
-				to_chat(user, "<span class='warning'>Access denied</span>")
+			if(!authorization(user))
 				return ..()
-			else
-				authenticated = TRUE
-				to_chat(user, "<span class='notice'>Access granted</span>")
+		ui_interact(user)
+	else if(istype(I, /obj/item/weapon/evidencebag))
+		if(!authenticated)
+			if(!authorization(user))
+				return ..()
+		var/obj/item/weapon/evidencebag/E = I
+		evidencebag_drop(E)
 		ui_interact(user)
 	else
 		return ..()
+
+/obj/machinery/computer/forensic_scanning/proc/authorization(mob/user)
+	if(!allowed(user))
+		to_chat(user, "<span class='warning'>Access denied</span>")
+		return FALSE
+	else
+		authenticated = TRUE
+		to_chat(user, "<span class='notice'>Access granted</span>")
+		return TRUE
 
 /obj/machinery/computer/forensic_scanning/ui_interact(mob/user)
 	var/dat = ""
@@ -158,11 +170,8 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 			var/obj/item/I = M.get_active_hand()
 			if(I && istype(I))
 				if(istype(I, /obj/item/weapon/evidencebag))
-					scanning = I.contents[1]
-					scanning.loc = src
-					I.underlays.Cut()
-					I.w_class = initial(I.w_class)
-					I.icon_state = "evidenceobj"
+					var/obj/item/weapon/evidencebag/E = I
+					evidencebag_drop(E)
 				else
 					scanning = I
 					M.drop_from_inventory(I, src)
@@ -466,6 +475,18 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 /obj/machinery/computer/forensic_scanning/ex_act()
 	return
 
+/obj/machinery/computer/forensic_scanning/proc/evidencebag_drop(obj/item/I)
+	var/obj/item/weapon/evidencebag/E = I
+	if(!E.contents.len)
+		return
+	if(scanning)
+		scanning.forceMove(loc)
+		scanning = null
+	scanning = E.contents[1]
+	scanning.forceMove(src)
+	E.underlays.Cut()
+	E.w_class = initial(I.w_class)
+	E.icon_state = "evidenceobj"
 
 /obj/machinery/computer/forensic_scanning/proc/add_data_scanner(obj/item/device/W)
 	if(istype(W, /obj/item/device/detective_scanner))
