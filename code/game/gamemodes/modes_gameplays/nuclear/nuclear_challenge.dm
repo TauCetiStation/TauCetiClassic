@@ -63,6 +63,17 @@ var/global/war_device_activation_forbidden
 	U.hidden_uplink.uses = CHALLENGE_TELECRYSTALS
 	U.hidden_uplink.uplink_type = "nuclear"
 
+	var/obj/structure/closet/crate/C = new(get_turf(user))
+	for(var/i in 1 to 2)
+		new /obj/item/clothing/head/helmet/space/rig/syndi/elite(C)
+		new /obj/item/clothing/suit/space/rig/syndi/elite(C)
+	new /obj/item/weapon/antag_spawner/borg_tele(C)
+	new /obj/item/nuke_teleporter(C)
+	new /obj/item/device/radio/beacon/syndicate_bomb(C)
+	new /obj/item/weapon/shield/energy(C)
+
+	global.cargo_account.money += 30000
+
 	message_admins("[key_name_admin(usr)] is declaring war on station.")
 	log_admin("[key_name(usr)] is declaring war on station.")
 	feedback_set_details("NUCLEAR_WAR", "Declared by [key_name(usr)]")

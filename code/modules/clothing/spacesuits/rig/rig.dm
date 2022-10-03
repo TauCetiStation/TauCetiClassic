@@ -849,7 +849,7 @@
 	desc = "An advanced helmet designed for work in special operations. Created using older design of armored hardsuits."
 	icon_state = "rig0-heavy"
 	item_state = "syndie_helm"
-	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
+	combat_armor = list(melee = 75, bullet = 80, laser = 70, energy = 55, bomb = 50, bio = 100, rad = 30)
 	space_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	rig_type = "heavy"
 
@@ -861,7 +861,7 @@
 	rig_variant = "rig-heavy"
 	slowdown = 1.2
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/chem_dispenser/combat)
-	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
+	combat_armor = list(melee = 75, bullet = 80, laser = 70, energy = 55, bomb = 50, bio = 100, rad = 30)
 	space_armor = list(melee = 45, bullet = 30, laser = 30, energy = 45, bomb = 50, bio = 100, rad = 60)
 	combat_slowdown = 0.5
 
@@ -871,8 +871,8 @@
 	icon_state = "rig0-syndie_elit"
 	rig_type = "syndie_elit"
 	item_state = "syndicate-helm-elite"
-	space_armor = list(melee = 65, bullet = 65, laser = 55,energy = 40, bomb = 50, bio = 100, rad = 70)
 	combat_armor = list(melee = 85, bullet = 80, laser = 70,energy = 70, bomb = 75, bio = 75, rad = 70)
+	space_armor = list(melee = 65, bullet = 65, laser = 55,energy = 40, bomb = 50, bio = 100, rad = 70)
 	glowtype = "terrorelit"
 	light_color = "#e51a1a"
 
