@@ -6,7 +6,7 @@
 
 /datum/dna/gene/basic/nobreath
 	name="No Breathing"
-	activation_messages=list("Вы не чувствуете необходимости дышать.")
+	activation_messages=list("Вы заметили как перестали дышать.")
 	mutation=NO_BREATH
 	activation_prob=50
 
@@ -155,7 +155,7 @@
 
 /datum/dna/gene/basic/noprints
 	name="No Prints"
-	activation_messages=list("Вы чувствуете, что ваши пальцы онемели.")
+	activation_messages=list("Вы чувствуете онемение в пальцах.")
 	mutation=FINGERPRINTS
 	activation_prob=50
 
@@ -193,7 +193,7 @@
 		var/mob/living/carbon/human/H = M
 		H.ventcrawler = 1
 		H.update_size_class()
-		to_chat(H, "<span class='notice'><b>Вы можете лазить по вентиляции</b></span>")
+		to_chat(H, "<span class='notice'><b>Вы можете лазать по вентиляции</b></span>")
 		H.regenerate_icons()
 
 /datum/dna/gene/basic/midget/deactivate(mob/living/M, connected, flags)
@@ -207,7 +207,7 @@
 
 /datum/dna/gene/basic/hulk
 	name                = "Hulk"
-	activation_messages = list("Ваши мышцы болят и ощущаются странно..")
+	activation_messages = list("Вы чувствуете странную боль в мышцах.")
 	mutation            = HULK
 	activation_prob     = 20
 

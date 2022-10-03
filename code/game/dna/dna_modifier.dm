@@ -109,7 +109,7 @@
 /obj/machinery/dna_scannernew/proc/close(mob/user)
 	if(open)
 		if(panel_open)
-			to_chat(user, "<span class='notice'>Закройте панель техобслуживания для начала.</span>")
+			to_chat(user, "<span class='notice'>Закройте панель техобслуживания.</span>")
 			return
 		open = 0
 		density = TRUE
@@ -160,10 +160,10 @@
 /obj/machinery/dna_scannernew/proc/open(mob/user)
 	if(!open)
 		if(panel_open)
-			to_chat(user, "<span class='notice'>Закройте панель техобслуживания для начала.</span>")
+			to_chat(user, "<span class='notice'>Закройте панель техобслуживания.</span>")
 			return
 		if(locked)
-			to_chat(user, "<span class='notice'>Болты опущены,блокируя дверь.</span>")
+			to_chat(user, "<span class='notice'>Болты опускаются, блокируя дверь.</span>")
 			return
 		var/turf/T = get_turf(src)
 		if(T)
@@ -215,7 +215,7 @@
 			return FALSE
 
 		if(!open)
-			to_chat(user, "<span class='notice'>Для начала открой сканнер.</span>")
+			to_chat(user, "<span class='notice'>Для начала откройте сканер.</span>")
 			return FALSE
 
 		var/mob/M = G.affecting
@@ -427,7 +427,7 @@
 			// auto update every Master Controller tick
 			ui.set_auto_update(1)
 	else
-		to_chat(user, "<span class='warning'>Ошибка: Сканнер не обнаружен</span>")
+		to_chat(user, "<span class='warning'>Ошибка: Сканер не обнаружен</span>")
 
 /obj/machinery/computer/scan_consolenew/Topic(href, href_list)
 	. = ..()
