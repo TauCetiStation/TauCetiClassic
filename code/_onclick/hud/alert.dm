@@ -356,6 +356,13 @@
 	icon_state = "alien_queen"
 	alerttooltipstyle = "alien"
 
+//BLOBS
+/atom/movable/screen/alert/nofactory
+	name = "No Factory"
+	desc = "You have no factory, and are slowly dying!"
+	icon_state = "blobbernaut"
+//	alerttooltipstyle = "blob"
+
 //changeling
 /atom/movable/screen/alert/regen_stasis
 	name = "Regenerative Stasis"

@@ -10,10 +10,53 @@
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
 	var/mob/camera/blob/overmind = null
 
+/obj/effect/blob/factory/testblobbernaut/New(loc, ...)
+	. = ..()
+	var/turf/T = get_turf(src)
+	var/obj/effect/blob/factory/B = locate(/obj/effect/blob/factory) in T
+	if(!B)
+		return
+	if(B.naut) //if it already made a blobbernaut, it can't do it again
+		return
+
+	B.naut = TRUE //temporary placeholder to prevent creation of more than one per factory.
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a blobbernaut?", ROLE_BLOB, ROLE_BLOB, 50) //players must answer rapidly
+	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
+		B.max_integrity = B.max_integrity * 0.25 //factories that produced a blobbernaut have much lower health
+		//B.update_appearance()
+		B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
+		playsound(B.loc, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, 50)
+		var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
+		flick("blobbernaut_produce", blobber)
+		B.naut = blobber
+		blobber.factory = B
+		for(var/mob/camera/blob/C in range(5))
+			overmind = C
+			blobber.overmind = C
+			C.blob_mobs += blobber
+		blobber.update_icons()
+		blobber.health = blobber.maxHealth * 0.5
+		var/mob/dead/observer/C = pick(candidates)
+		blobber.key = C.key
+		playsound(blobber, 'sound/effects/blobattack.ogg', VOL_EFFECTS_MASTER)
+		playsound(blobber, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
+		to_chat(blobber, "<b>You are a blobbernaut!</b>")
+		to_chat(blobber, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, <span class='danger'>but will slowly die if not near the blob </span> or if the factory that made you is killed.")
+		to_chat(blobber, "You can communicate with other blobbernauts and overminds")
+	else
+		to_chat(src, "<span class='warning'>You could not conjure a sentience for your blobbernaut. Your points have been refunded. Try again later.</span>")
+		B.naut = null
+
 /obj/effect/blob/factory/Destroy()
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore as anything in spores)
 		if(spore.factory == src)
 			spore.factory = null
+	if(naut)
+		naut.factory = null
+		to_chat(naut, "<span class='danger'>Your factory was destroyed! You feel yourself dying!</span>")
+		naut.throw_alert("nofactory", /atom/movable/screen/alert/nofactory)
+	if(overmind)
+		overmind.factory_blobs -= src
 	return ..()
 
 /obj/effect/blob/factory/run_action()
@@ -31,6 +74,8 @@
 	if(overmind) //if we don't have an overmind, we don't need to do anything but make a spore
 		S.overmind = overmind
 		overmind.blob_mobs.Add(S)
+
+/obj/effect/blob/factory
 
 ////////////////
 // BASE TYPE //
@@ -251,7 +296,7 @@
 	melee_damage = 20
 	attack_sound = 'sound/effects/blobattack.ogg'
 	environment_smash = 1
-	speed = 3 //Bots
+	speed = 2
 	sight = SEE_TURFS | SEE_MOBS
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/atom_init()
@@ -309,8 +354,15 @@
 	. = ..()
 	update_health_hud()
 
+/mob/living/simple_animal/hostile/blob/blobbernaut/blob_act()
+	if(!factory)
+		return
+	..()
+
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	. = ..()
+	if(stat == DEAD)
+		return //No funny ressurections
 	if(independent)
 		return // strong independent blobbernaut that don't need blob
 	var/list/blobs_in_area = range(2, src)
@@ -329,12 +381,12 @@
 			update_health_hud()
 
 	if(damagesources)
-		health -= maxHealth * 0.0125 * damagesources *2 //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
+		health -= maxHealth * 0.05 * damagesources //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
 		update_health_hud()
 		var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
 		I.appearance_flags = RESET_COLOR
 		flick_overlay_view(I, src, 8)
-	if(stat != DEAD)
+
 		return 1
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/death(gibbed)
