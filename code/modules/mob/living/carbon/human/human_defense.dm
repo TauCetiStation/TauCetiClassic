@@ -345,7 +345,7 @@
 
 		switch(hit_area)
 			if(BP_HEAD)//Harder to score a stun but if you do it lasts a bit longer
-				if(prob(force_with_melee_skill * (100-armor) / 100))
+				if(prob(force_with_melee_skill * (100 - armor) / 100))
 					apply_effect(20, PARALYZE, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
 				if(prob(force_with_melee_skill + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
