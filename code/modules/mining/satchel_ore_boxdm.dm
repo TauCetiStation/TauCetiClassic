@@ -62,7 +62,6 @@
 /obj/structure/ore_box/attack_hand(mob/user)
 	var/dat = ""
 
-
 	if(length(contents))
 		for(var/ore in stored_ore)
 			dat += "[stored_ore[ore][2]] <span style='vertical-align: super'><span class='orange'><B>x[stored_ore[ore][1]]</B></span> [ore]</span><br>"
@@ -125,13 +124,11 @@
 
 	add_fingerprint(usr)
 
-	if(contents.len < 1)
+	if(length(contents) < 1)
 		to_chat(usr, "<span class='warning'>The ore box is empty!</span>")
 		return
 
 	dump_box_contents()
-
-	to_chat(usr, "<span class='notice'>You empty the ore box</span>")
 
 	playsound(src, 'sound/items/orebox_unload.ogg', VOL_EFFECTS_MASTER)
 	to_chat(usr, "<span class='notice'>You empty the ore box.</span>")
