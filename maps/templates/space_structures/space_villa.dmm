@@ -1,137 +1,26 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"ab" = (
-/obj/machinery/porta_turret/crescent,
-/turf/simulated/floor/plating{
-	icon_state = "platebot"
-	},
-/area/space)
 "ac" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/book/manual/wiki/barman_recipes,
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
-"ad" = (
-/obj/effect/overlay/palmtree_r,
-/turf/simulated/floor/beach/sand,
-/area/space)
-"ae" = (
-/obj/structure/signpost,
-/turf/simulated/floor/beach/sand,
-/area/space)
-"af" = (
-/obj/structure/table/woodentable,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/head/collectable/paper{
-	pixel_y = 5
-	},
-/turf/simulated/floor/beach/sand,
-/area/space)
-"ag" = (
-/obj/structure/table/woodentable,
-/obj/item/clothing/head/collectable/petehat{
-	pixel_y = 8
-	},
-/obj/item/weapon/reagent_containers/food/snacks/chips,
-/turf/simulated/floor/beach/sand,
-/area/space)
-"ah" = (
-/obj/effect/overlay/coconut,
-/turf/simulated/floor/beach/sand,
-/area/space)
-"ai" = (
-/mob/living/simple_animal/crab,
-/turf/simulated/floor/beach/sand,
-/area/space)
-"aj" = (
-/obj/effect/overlay/palmtree_l,
-/turf/simulated/floor/beach/sand,
-/area/space)
-"ak" = (
-/obj/structure/stool/bed/chair/wood/normal,
-/turf/simulated/floor/beach/sand,
-/area/space)
-"al" = (
-/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/turf/simulated/floor/beach/sand,
-/area/space)
-"am" = (
-/obj/item/weapon/beach_ball,
-/turf/simulated/floor/beach/sand,
-/area/space)
-"an" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 10
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/space)
-"ao" = (
-/obj/structure/flora/ausbushes/fullgrass{
-	layer = 2.7
-	},
-/turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/space_villa)
 "ap" = (
-/obj/structure/flora/ausbushes/fullgrass{
-	layer = 2.7
-	},
-/obj/structure/flora/ausbushes/brflowers{
-	layer = 2.7
-	},
-/obj/machinery/alarm{
-	pixel_y = 22
-	},
-/turf/simulated/floor/grass,
-/area/space)
-"aq" = (
-/obj/machinery/atmospherics/pipe/manifold4w/visible,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/space)
-"ar" = (
-/obj/machinery/atmospherics/pipe/manifold4w/visible,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/flora/ausbushes/fullgrass{
-	layer = 2.7
-	},
-/turf/simulated/floor/plating,
-/area/space)
-"as" = (
-/obj/machinery/atmospherics/pipe/simple/visible,
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/cable/yellow,
-/obj/machinery/power/apc/largecell{
-	dir = 8;
-	name = "largecell apc left";
-	pixel_x = -28
-	},
-/turf/simulated/floor/grass,
-/area/space)
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/floor/beach/sand,
+/area/space_structures/space_villa)
 "ay" = (
 /obj/structure/flora/tree/jungle/small,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "az" = (
 /obj/machinery/computer/arcade,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
 "aR" = (
 /obj/structure/table/woodentable,
 /obj/machinery/chem_dispenser/beer{
@@ -142,13 +31,39 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
 "aS" = (
-/obj/machinery/light/small,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken3"
+/obj/item/stack/tile/carpet/black,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/simulated/floor/plating,
+/area/space_structures/space_villa)
+"bq" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/floor/wood,
+/area/space_structures/space_villa)
+"br" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/floor/wood,
+/area/space_structures/space_villa)
+"bz" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/space_villa)
+"bE" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 10
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/space_villa)
 "bX" = (
 /obj/structure/drain{
 	drainage = 2
@@ -159,44 +74,84 @@
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "ct" = (
 /obj/structure/flora/ausbushes/sparsegrass{
 	layer = 2.7
 	},
 /obj/structure/flora/tree/jungle/small,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "cB" = (
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/green,
-/area/space)
+/area/space_structures/space_villa)
+"cJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/simulated/floor/wood,
+/area/space_structures/space_villa)
+"cS" = (
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/simulated/floor/wood,
+/area/space_structures/space_villa)
 "dh" = (
 /obj/structure/flora/ausbushes/pointybush,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "dw" = (
 /obj/structure/easel,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken5"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "dy" = (
 /obj/structure/stool/bed,
+/obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor/wood,
-/area/space)
-"eo" = (
+/area/space_structures/space_villa)
+"ee" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor/carpet,
-/area/space)
+/area/space_structures/space_villa)
+"ek" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/floor/grass,
+/area/space_structures/space_villa)
+"eo" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/floor/carpet,
+/area/space_structures/space_villa)
+"eu" = (
+/obj/structure/stool/bar,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space_structures/space_villa)
 "ev" = (
 /obj/structure/flora/ausbushes/sparsegrass{
 	layer = 2.7
 	},
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/beach/sand,
-/area/space)
+/area/space_structures/space_villa)
+"ex" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/floor/carpet/green,
+/area/space_structures/space_villa)
 "eG" = (
 /obj/machinery/hydroponics/soil,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "fm" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/shaker{
@@ -206,22 +161,48 @@
 /obj/item/weapon/reagent_containers/glass/rag{
 	pixel_x = 6
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
 "fq" = (
 /turf/simulated/mineral,
-/area/space)
+/area/space_structures/space_villa)
+"fT" = (
+/obj/item/stack/tile/wood,
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space_structures/space_villa)
+"fW" = (
+/obj/item/stack/tile/carpet/black,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space_structures/space_villa)
 "fZ" = (
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "gc" = (
 /turf/simulated/floor/wood{
 	icon_state = "wood_stairs2"
 	},
-/area/space)
+/area/space_structures/space_villa)
+"gA" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/beach/sand,
+/area/space_structures/space_villa)
+"gM" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/space_villa)
 "hq" = (
 /obj/machinery/light{
 	dir = 1
@@ -229,8 +210,17 @@
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
+"ht" = (
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/space_structures/space_villa)
 "hu" = (
 /obj/structure/table/woodentable,
 /obj/item/device/camera_film{
@@ -240,8 +230,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
 "hZ" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
@@ -249,22 +240,33 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken3"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "ir" = (
-/turf/simulated/wall/r_wall,
-/area/space)
-"iJ" = (
-/obj/structure/closet/athletic_mixed,
-/turf/simulated/floor{
-	icon_state = "freezerfloor"
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
 	},
-/area/space)
+/turf/simulated/floor/plating,
+/area/space_structures/space_villa)
+"iJ" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "asteroidder_inner";
+	req_access = list(101)
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
+/turf/simulated/floor/plating{
+	dir = 4;
+	icon_state = "warnplate"
+	},
+/area/space_structures/space_villa)
 "iZ" = (
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
 /turf/simulated/floor/beach/sand,
-/area/space)
+/area/space_structures/space_villa)
 "jT" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -276,7 +278,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/space_villa)
 "kf" = (
 /obj/structure/table/woodentable/poker,
 /obj/item/weapon/storage/pill_bottle/dice,
@@ -286,14 +288,28 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken4"
 	},
-/area/space)
+/area/space_structures/space_villa)
+"kx" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/simulated/floor/wood,
+/area/space_structures/space_villa)
+"kF" = (
+/turf/simulated/floor/carpet,
+/area/space_structures/space_villa)
 "kN" = (
 /obj/structure/easel,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
+"lq" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/obj/item/ammo_casing,
+/turf/simulated/floor/grass,
+/area/space_structures/space_villa)
 "lE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -301,35 +317,36 @@
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "lG" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/fancy/crayons{
 	pixel_y = 5
 	},
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
 "lQ" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor/wood{
 	dir = 6;
 	icon_state = "wood_stairs2"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "me" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken5"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "mD" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/floor/beach/sand,
-/area/space)
+/area/space_structures/space_villa)
 "mK" = (
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
@@ -339,33 +356,49 @@
 	dir = 8
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "nf" = (
 /obj/structure/device/piano/minimoog,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
 "ng" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/suit/plaid,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "no" = (
 /obj/structure/stool/bed/chair/comfy/brown,
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
+"nr" = (
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/space_structures/space_villa)
+"nz" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/item/ammo_casing,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space_structures/space_villa)
 "nD" = (
 /obj/structure/flora/tree/jungle,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "nK" = (
 /obj/machinery/light,
 /turf/simulated/floor/beach/water,
-/area/space)
+/area/space_structures/space_villa)
 "nO" = (
 /turf/unsimulated/wall/log,
-/area/space)
+/area/space_structures/space_villa)
 "oa" = (
 /obj/machinery/atmospherics/components/unary/tank/air{
 	dir = 4
@@ -373,17 +406,17 @@
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "op" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
 "ow" = (
 /obj/structure/flora/ausbushes/palebush,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "oL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 4;
@@ -393,23 +426,50 @@
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "oT" = (
 /obj/structure/flora/ausbushes/ywflowers{
 	layer = 2.7
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
+"pk" = (
+/obj/structure/flora/ausbushes/brflowers{
+	layer = 2.7
+	},
+/obj/item/ammo_casing,
+/turf/simulated/floor/grass,
+/area/space_structures/space_villa)
+"pZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/remains/human{
+	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
+	name = "Syndicate agent remains"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space_structures/space_villa)
 "qg" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/simulated/floor/beach/water,
-/area/space)
+/area/space_structures/space_villa)
 "qp" = (
 /obj/structure/table/woodentable,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/black,
-/area/space)
+/area/space_structures/space_villa)
+"qC" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space_structures/space_villa)
 "qY" = (
 /obj/structure/flora/ausbushes/sparsegrass{
 	layer = 2.7
@@ -418,19 +478,27 @@
 	dir = 4
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
+"rb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/floor/carpet/green,
+/area/space_structures/space_villa)
+"rc" = (
+/turf/simulated/wall/r_wall,
+/area/space_structures/space_villa)
 "rf" = (
 /obj/machinery/washing_machine,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "ro" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
 "rs" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
@@ -439,34 +507,81 @@
 	dir = 1
 	},
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
+"rt" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/structure/flora/ausbushes/brflowers{
+	layer = 2.7
+	},
+/obj/machinery/alarm{
+	pixel_y = 22
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/space_villa)
+"rO" = (
+/obj/item/weapon/flora/random,
+/turf/simulated/floor/wood,
+/area/space_structures/space_villa)
+"sk" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/item/ammo_casing,
+/turf/simulated/floor/grass,
+/area/space_structures/space_villa)
+"tb" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space_structures/space_villa)
 "td" = (
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/smes/fullcharge,
+/obj/machinery/constructable_frame/machine_frame,
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "ti" = (
 /obj/item/weapon/flora/random,
+/obj/effect/decal/cleanable/blood/gibs/body,
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
 "tA" = (
 /obj/structure/flora/ausbushes/brflowers{
 	layer = 2.7
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
+"tR" = (
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/turf/simulated/floor/beach/sand,
+/area/space_structures/space_villa)
+"tX" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/simulated/floor/carpet/black,
+/area/space_structures/space_villa)
+"tY" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/grass,
+/area/space_structures/space_villa)
 "uf" = (
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "ui" = (
 /obj/structure/stool/bar,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/drip,
 /turf/simulated/floor/carpet/black,
-/area/space)
+/area/space_structures/space_villa)
 "uJ" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 4
@@ -475,7 +590,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "uP" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -484,18 +599,25 @@
 /obj/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/space_villa)
 "vh" = (
 /obj/structure/flora/ausbushes/leafybush,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
+"vn" = (
+/turf/simulated/floor/carpet/black,
+/area/space_structures/space_villa)
+"vw" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/space_structures/space_villa)
 "vF" = (
 /turf/simulated/wall,
-/area/space)
+/area/space_structures/space_villa)
 "vM" = (
 /obj/structure/stool/bar,
 /turf/simulated/floor/carpet/green,
-/area/space)
+/area/space_structures/space_villa)
 "vR" = (
 /obj/structure/rack,
 /obj/item/clothing/under/bathtowel,
@@ -509,79 +631,101 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "vY" = (
 /obj/structure/mineral_door/wood,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "wg" = (
 /obj/structure/stool/bed/chair/comfy/brown,
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
 "wq" = (
 /obj/item/weapon/flora/random,
-/obj/machinery/light/small{
+/obj/machinery/light_construct/small{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken6"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "wQ" = (
 /turf/simulated/floor/beach/sand,
-/area/space)
+/area/space_structures/space_villa)
 "xd" = (
 /turf/simulated/floor/beach/coastline,
-/area/space)
+/area/space_structures/space_villa)
 "xg" = (
 /turf/simulated/floor/plating/airless{
 	dir = 4;
 	icon_state = "warnplatecorner"
 	},
 /area/space)
+"xt" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/floor/plating,
+/area/space_structures/space_villa)
 "xy" = (
 /obj/structure/mineral_door/wood,
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
 "yb" = (
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	dir = 6;
 	icon_state = "wood_stairs"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "yf" = (
 /obj/structure/flora/ausbushes/ppflowers{
 	layer = 2.7
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
+"yF" = (
+/turf/simulated/floor/wood{
+	dir = 6;
+	icon_state = "wood_stairs"
+	},
+/area/space_structures/space_villa)
 "yT" = (
 /obj/structure/table/woodentable,
 /obj/machinery/chem_dispenser/soda{
 	pixel_y = 4
 	},
-/obj/machinery/light/small{
+/obj/machinery/light_construct/small{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken7"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "yZ" = (
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/black,
-/area/space)
+/area/space_structures/space_villa)
+"zn" = (
+/obj/item/stack/tile/wood,
+/turf/simulated/floor/plating,
+/area/space_structures/space_villa)
 "zo" = (
 /obj/structure/flora/ausbushes/stalkybush,
-/turf/simulated/floor/grass,
-/area/space)
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space_structures/space_villa)
 "zy" = (
 /obj/structure/table/woodentable,
 /obj/item/painting_frame{
@@ -594,18 +738,45 @@
 	amount = 50;
 	pixel_y = -11
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
+"Ah" = (
+/obj/structure/flora/ausbushes/sparsegrass{
+	layer = 2.7
+	},
+/turf/simulated/floor/beach/sand,
+/area/space_structures/space_villa)
+"Ai" = (
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space_structures/space_villa)
+"Aq" = (
+/obj/effect/overlay/palmtree_l,
+/turf/simulated/floor/beach/sand,
+/area/space_structures/space_villa)
+"At" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken4"
+	},
+/area/space_structures/space_villa)
 "AB" = (
 /turf/simulated/floor/wood{
 	dir = 5;
 	icon_state = "wood_stairs"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "AX" = (
 /obj/structure/dresser,
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
+"Bf" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/carpet/red,
+/area/space_structures/space_villa)
 "Bi" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper_bin{
@@ -622,36 +793,58 @@
 /obj/item/weapon/pen{
 	pixel_y = 6
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken3"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "Bj" = (
 /obj/structure/flora/ausbushes/sparsegrass{
 	layer = 2.7
 	},
 /obj/machinery/hydroponics/soil,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "By" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/suit/plaid,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
+"BD" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/plating,
+/area/space_structures/space_villa)
 "Ch" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor/beach/sand,
-/area/space)
+/area/space_structures/space_villa)
 "Cn" = (
 /obj/machinery/vending/boozeomat{
 	req_access = list()
 	},
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
+"Dt" = (
+/obj/machinery/atmospherics/pipe/manifold4w/visible,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/space_villa)
 "Dz" = (
 /obj/structure/flora/ausbushes/fernybush,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
+"DE" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/beach/sand,
+/area/space_structures/space_villa)
 "Ed" = (
 /obj/machinery/light{
 	dir = 1
@@ -662,8 +855,14 @@
 /obj/structure/flora/ausbushes/ppflowers{
 	layer = 2.7
 	},
-/turf/simulated/floor/grass,
-/area/space)
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/space_structures/space_villa)
+"Fw" = (
+/obj/effect/overlay/palmtree_r,
+/turf/simulated/floor/beach/sand,
+/area/space_structures/space_villa)
 "FB" = (
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
@@ -672,16 +871,17 @@
 	layer = 2.7
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "FD" = (
 /obj/structure/stool/bed,
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken7"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "FX" = (
 /obj/structure/flora/ausbushes/sparsegrass{
 	layer = 2.7
@@ -690,12 +890,13 @@
 	layer = 2.7
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "Gy" = (
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken4"
+/obj/item/weapon/gun/projectile/automatic/silenced,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "GE" = (
 /obj/structure/table/woodentable,
 /obj/item/device/camera_film{
@@ -704,7 +905,7 @@
 	},
 /obj/item/device/camera/lomo,
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
 "GS" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -716,14 +917,14 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/space_villa)
 "Hj" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/wood{
 	dir = 5;
 	icon_state = "wood_stairs2"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "Hl" = (
 /obj/structure/flora/ausbushes/sparsegrass{
 	layer = 2.7
@@ -735,7 +936,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "Hq" = (
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
@@ -744,48 +945,61 @@
 	layer = 2.7
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "HB" = (
 /turf/simulated/floor/wood{
 	dir = 6;
 	icon_state = "wood_stairs2"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "HI" = (
 /obj/structure/flora/ausbushes/grassybush,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "HW" = (
 /obj/structure/table/woodentable/poker,
 /obj/item/toy/cards,
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
 "Iq" = (
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/space_villa)
+"Ix" = (
+/obj/structure/signpost,
+/turf/simulated/floor/beach/sand,
+/area/space_structures/space_villa)
 "IL" = (
 /obj/item/weapon/flora/random,
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
+"IW" = (
+/obj/structure/table/woodentable,
+/obj/item/clothing/head/collectable/petehat{
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/food/snacks/chips,
+/turf/simulated/floor/beach/sand,
+/area/space_structures/space_villa)
 "Jc" = (
 /obj/structure/flora/ausbushes/sparsegrass{
 	layer = 2.7
 	},
 /obj/item/weapon/flora/random,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "Ji" = (
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
 /obj/item/weapon/flora/random,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "JA" = (
 /obj/structure/sink{
 	dir = 8;
@@ -794,10 +1008,11 @@
 /obj/structure/mirror{
 	pixel_x = -28
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "Kb" = (
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
@@ -807,22 +1022,37 @@
 	layer = 2.7
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "Kd" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
+"Kh" = (
+/obj/structure/closet/athletic_mixed,
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/space_structures/space_villa)
+"Kn" = (
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/carpet/green,
+/area/space_structures/space_villa)
 "Kx" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/game_kit/random,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken"
 	},
-/area/space)
+/area/space_structures/space_villa)
+"Kz" = (
+/obj/structure/flora/ausbushes/leafybush,
+/obj/item/ammo_casing,
+/turf/simulated/floor/grass,
+/area/space_structures/space_villa)
 "KI" = (
 /turf/simulated/floor/beach/water,
-/area/space)
+/area/space_structures/space_villa)
 "KN" = (
 /obj/machinery/access_button{
 	command = "cycle_exterior";
@@ -840,44 +1070,45 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/wood,
-/area/space)
+/turf/simulated/floor/plating,
+/area/space_structures/space_villa)
+"Lo" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood,
+/obj/item/ammo_casing,
+/turf/simulated/floor/plating,
+/area/space_structures/space_villa)
 "Lq" = (
 /obj/structure/table/woodentable,
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/wood,
-/area/space)
+/turf/simulated/floor/plating,
+/area/space_structures/space_villa)
 "LJ" = (
 /obj/structure/stool/bar,
 /obj/machinery/light/small,
-/turf/simulated/floor/wood,
-/area/space)
+/obj/item/stack/tile/wood,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space_structures/space_villa)
 "LN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	frequency = 1379;
 	id_tag = "asteroidder_pump"
 	},
 /turf/simulated/floor/plating{
-	icon_state = "platebotc"
+	icon_state = "platingdmg2"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "LV" = (
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	id_tag = "asteroidder_inner";
-	locked = 1;
-	req_access = list(101)
-	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
+/obj/machinery/porta_turret_construct,
 /turf/simulated/floor/plating{
-	dir = 4;
-	icon_state = "warnplate"
+	icon_state = "platingdmg1"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "Ma" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/shoes/laceup,
@@ -885,60 +1116,92 @@
 /obj/item/clothing/suit/wcoat,
 /obj/item/clothing/head/that,
 /obj/item/weapon/staff/gentcane,
-/turf/simulated/floor/wood,
-/area/space)
+/turf/simulated/floor/plating,
+/area/space_structures/space_villa)
+"Mn" = (
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/beach/sand,
+/area/space_structures/space_villa)
+"Na" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space_structures/space_villa)
 "Nj" = (
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
 /obj/structure/flora/tree/jungle,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
+"Nv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space_structures/space_villa)
 "NE" = (
 /obj/random/vending/snack,
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
 "NF" = (
 /obj/structure/flora/ausbushes/sparsegrass{
 	layer = 2.7
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
+"NM" = (
+/obj/structure/stool/bed,
+/turf/simulated/floor/wood,
+/area/space_structures/space_villa)
 "NT" = (
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "asteroidder_outer";
-	locked = 1;
 	req_access = list(101)
 	},
 /turf/simulated/floor/plating{
 	dir = 8;
 	icon_state = "warnplate"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "OB" = (
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
 	},
 /obj/structure/flora/tree/jungle/small,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "OX" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/simulated/floor/beach/water,
-/area/space)
+/area/space_structures/space_villa)
 "Pf" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
+"Pz" = (
+/obj/item/weapon/beach_ball,
+/turf/simulated/floor/beach/sand,
+/area/space_structures/space_villa)
 "PE" = (
 /obj/structure/stool/bar,
+/obj/structure/sign/poster/official/high_class_martini{
+	pixel_y = 32
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken6"
 	},
-/area/space)
+/area/space_structures/space_villa)
+"PT" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/item/ammo_casing,
+/turf/simulated/floor/wood,
+/area/space_structures/space_villa)
 "Qc" = (
 /obj/machinery/light{
 	dir = 4
@@ -947,7 +1210,7 @@
 	layer = 2.7
 	},
 /turf/simulated/floor/beach/sand,
-/area/space)
+/area/space_structures/space_villa)
 "Qf" = (
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "asteroidder_airlock";
@@ -957,14 +1220,14 @@
 	tag_exterior_door = "asteroidder_outer";
 	tag_interior_door = "asteroidder_inner"
 	},
-/obj/machinery/porta_turret/crescent,
+/obj/machinery/porta_turret_construct,
 /turf/simulated/floor/plating{
-	icon_state = "platebot"
+	icon_state = "panelscorched"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "QJ" = (
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
 "Rb" = (
 /turf/environment/space,
 /area/space)
@@ -976,33 +1239,38 @@
 	layer = 2.7
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
+"Sw" = (
+/obj/item/stack/tile/wood,
+/obj/item/ammo_casing,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/space_structures/space_villa)
 "SD" = (
 /obj/structure/sink/puddle,
 /obj/structure/flora/ausbushes/reedbush{
 	pixel_y = 6
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "SG" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "SN" = (
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
-	},
-/obj/machinery/power/terminal{
+/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platebotc"
-	},
-/area/space)
+/obj/structure/cable/yellow,
+/turf/simulated/floor/grass,
+/area/space_structures/space_villa)
 "SP" = (
 /turf/simulated/floor/plating/airless{
 	dir = 4;
@@ -1012,7 +1280,40 @@
 "Th" = (
 /obj/structure/flora/ausbushes/genericbush,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
+"Tl" = (
+/turf/simulated/floor/plating,
+/area/space_structures/space_villa)
+"Tw" = (
+/obj/effect/overlay/coconut,
+/turf/simulated/floor/beach/sand,
+/area/space_structures/space_villa)
+"TQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/remains/human{
+	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
+	name = "Syndicate agent remains"
+	},
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/carpet/green,
+/area/space_structures/space_villa)
+"TV" = (
+/obj/effect/decal/droppod_wreckage{
+	anchored = 1
+	},
+/obj/effect/decal/cleanable/blood/oil,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/space_structures/space_villa)
+"TZ" = (
+/obj/structure/table/woodentable,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/head/collectable/paper{
+	pixel_y = 5
+	},
+/turf/simulated/floor/beach/sand,
+/area/space_structures/space_villa)
 "Uq" = (
 /obj/machinery/door/window/eastright{
 	base_state = "left";
@@ -1021,22 +1322,28 @@
 	name = "Shower"
 	},
 /obj/structure/curtain/open/shower,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/space_villa)
+"UE" = (
+/obj/item/stack/tile/carpet/black,
+/turf/simulated/floor/plating,
+/area/space_structures/space_villa)
 "Vg" = (
 /turf/simulated/floor/carpet/red,
-/area/space)
+/area/space_structures/space_villa)
 "VF" = (
 /obj/structure/dryer{
 	dir = 4;
 	pixel_x = -6
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "VQ" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -1045,12 +1352,19 @@
 	dir = 4;
 	icon_state = "wood_stairs2"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "VR" = (
 /obj/structure/table/woodentable,
 /obj/item/toy/crayon/rainbow,
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
+"Wf" = (
+/obj/machinery/light/small,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/space_structures/space_villa)
 "WG" = (
 /obj/structure/flora/ausbushes/sparsegrass{
 	layer = 2.7
@@ -1059,13 +1373,24 @@
 	layer = 2.7
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "WK" = (
 /obj/item/weapon/flora/random,
+/obj/structure/sign/poster/contraband/syndicate_recruitment{
+	pixel_x = 4;
+	pixel_y = 32
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken"
 	},
-/area/space)
+/area/space_structures/space_villa)
+"WR" = (
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/space_structures/space_villa)
 "Xp" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -1073,7 +1398,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood_stairs2"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "Xx" = (
 /obj/machinery/airlock_sensor{
 	id_tag = "asteroidder_sensor";
@@ -1088,7 +1413,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "XF" = (
 /obj/structure/sign/poster/official/cohiba_robusto_ad{
 	pixel_x = -32
@@ -1100,14 +1425,14 @@
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken5"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "XN" = (
 /obj/structure/flora/ausbushes/sparsegrass{
 	layer = 2.7
 	},
 /obj/structure/flora/tree/jungle,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "XQ" = (
 /obj/structure/toilet{
 	dir = 8
@@ -1115,10 +1440,11 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
-/area/space)
+/area/space_structures/space_villa)
 "XS" = (
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
@@ -1128,11 +1454,28 @@
 	layer = 2.7
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "XV" = (
 /obj/structure/flora/ausbushes/sunnybush,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
+"Yv" = (
+/obj/machinery/atmospherics/pipe/manifold4w/visible,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/flora/ausbushes/fullgrass{
+	layer = 2.7
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/space_villa)
+"Yw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/carpet/black,
+/area/space_structures/space_villa)
 "YC" = (
 /obj/structure/flora/ausbushes/fullgrass{
 	layer = 2.7
@@ -1141,7 +1484,7 @@
 	layer = 2.7
 	},
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
 "YF" = (
 /obj/machinery/access_button{
 	command = "cycle_interior";
@@ -1153,15 +1496,55 @@
 /obj/structure/flora/ausbushes/pointybush,
 /obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/grass,
-/area/space)
+/area/space_structures/space_villa)
+"YH" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/simulated/floor/plating,
+/area/space_structures/space_villa)
+"YS" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/item/weapon/transparant/no_nt,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/space_structures/space_villa)
 "Zf" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible,
-/turf/simulated/floor/plating,
-/area/space)
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/space_structures/space_villa)
+"Zg" = (
+/mob/living/simple_animal/crab,
+/turf/simulated/floor/beach/sand,
+/area/space_structures/space_villa)
 "ZD" = (
-/obj/machinery/light/small,
+/obj/machinery/light_construct/small,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
-/area/space)
+/area/space_structures/space_villa)
+"ZH" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/simulated/floor/wood{
+	dir = 6;
+	icon_state = "wood_stairs"
+	},
+/area/space_structures/space_villa)
+"ZO" = (
+/obj/structure/closet/secure_closet/personal/cabinet,
+/obj/item/clothing/suit/plaid,
+/turf/simulated/floor/wood,
+/area/space_structures/space_villa)
+"ZQ" = (
+/obj/item/weapon/flora/random,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/wood,
+/area/space_structures/space_villa)
+"ZY" = (
+/obj/structure/stool/bed/chair/wood/normal,
+/turf/simulated/floor/beach/sand,
+/area/space_structures/space_villa)
 
 (1,1,1) = {"
 Rb
@@ -1395,11 +1778,11 @@ fq
 fq
 fq
 fq
-ir
-ir
+rc
+rc
 NT
-ir
-ir
+rc
+rc
 Rb
 Rb
 Rb
@@ -1447,11 +1830,11 @@ fq
 fq
 fq
 fq
-ir
+rc
 Qf
 oL
-ab
-ir
+LV
+rc
 fq
 fq
 fq
@@ -1495,18 +1878,18 @@ fq
 fq
 fq
 fq
-ir
-ir
-ir
-ir
-ir
+rc
+rc
+rc
+rc
+rc
 LN
 Zf
 Xx
-ir
-ir
-ir
-ir
+rc
+rc
+rc
+rc
 fq
 fq
 fq
@@ -1540,28 +1923,28 @@ fq
 fq
 fq
 fq
-ir
-ir
-ir
-ir
-ir
-ir
-ir
-ir
+rc
+rc
+rc
+rc
+rc
+rc
+rc
+rc
 oa
 oa
 uJ
-ir
-ir
-LV
-ir
-ir
+rc
+rc
+iJ
+rc
+rc
 fq
 fq
-ir
-ir
-ir
-ir
+rc
+rc
+rc
+rc
 fq
 fq
 fq
@@ -1590,9 +1973,9 @@ fq
 fq
 fq
 fq
-ir
-ir
-ir
+rc
+rc
+rc
 fq
 fq
 fq
@@ -1600,10 +1983,10 @@ fq
 fq
 vF
 td
-an
-aq
-ar
-as
+bE
+Dt
+Yv
+SN
 YF
 Hl
 Jc
@@ -1613,11 +1996,11 @@ fq
 fq
 fq
 fq
-ir
-ir
-ir
-ir
-ir
+rc
+rc
+rc
+rc
+rc
 fq
 fq
 fq
@@ -1640,9 +2023,9 @@ Rb
 Rb
 fq
 fq
-ir
-ir
-ir
+rc
+rc
+rc
 fq
 fq
 fq
@@ -1651,8 +2034,8 @@ fq
 fq
 fq
 vF
-SN
-ao
+ht
+ir
 lE
 lE
 RR
@@ -1669,9 +2052,9 @@ fq
 fq
 fq
 fq
-ir
-ir
-ir
+rc
+rc
+rc
 fq
 fq
 fq
@@ -1692,7 +2075,7 @@ Rb
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -1704,7 +2087,7 @@ uf
 fq
 vF
 vF
-ap
+rt
 fZ
 fZ
 fZ
@@ -1723,9 +2106,9 @@ fq
 fq
 fq
 fq
-ir
-ir
-ir
+rc
+rc
+rc
 fq
 fq
 Rb
@@ -1744,7 +2127,7 @@ Rb
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -1777,8 +2160,8 @@ fq
 fq
 fq
 fq
-ir
-ir
+rc
+rc
 fq
 Rb
 Rb
@@ -1796,7 +2179,7 @@ Rb
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -1818,7 +2201,7 @@ uf
 XS
 wQ
 wQ
-ad
+Fw
 wQ
 wQ
 wQ
@@ -1830,7 +2213,7 @@ KI
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 Rb
@@ -1848,7 +2231,7 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -1871,8 +2254,8 @@ fZ
 fZ
 iZ
 wQ
-ah
-wQ
+Tw
+ap
 wQ
 xd
 OX
@@ -1882,8 +2265,8 @@ KI
 KI
 KI
 fq
-ir
-ir
+rc
+rc
 fq
 Rb
 Rb
@@ -1899,8 +2282,8 @@ Rb
 fq
 fq
 fq
-ir
-ir
+rc
+rc
 fq
 fq
 NF
@@ -1923,9 +2306,9 @@ Th
 uf
 wQ
 wQ
-wQ
-wQ
-wQ
+ap
+ap
+ap
 xd
 KI
 KI
@@ -1935,7 +2318,7 @@ KI
 KI
 KI
 fq
-ir
+rc
 fq
 fq
 Rb
@@ -1951,7 +2334,7 @@ Rb
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -1974,10 +2357,10 @@ FB
 fZ
 fZ
 wQ
-wQ
-wQ
-wQ
-wQ
+ap
+ap
+DE
+ap
 xd
 KI
 KI
@@ -1987,8 +2370,8 @@ KI
 KI
 nK
 vF
-ir
-ir
+rc
+rc
 fq
 Rb
 Rb
@@ -2003,7 +2386,7 @@ Rb
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -2026,10 +2409,10 @@ Nj
 Kd
 YC
 iZ
-ae
+Ix
 wQ
-wQ
-wQ
+ap
+ap
 xd
 KI
 KI
@@ -2040,7 +2423,7 @@ KI
 KI
 KI
 fq
-ir
+rc
 fq
 fq
 Rb
@@ -2055,7 +2438,7 @@ Rb
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -2079,9 +2462,9 @@ fZ
 fZ
 iZ
 wQ
+gA
 wQ
-wQ
-wQ
+ap
 xd
 KI
 KI
@@ -2092,8 +2475,8 @@ KI
 KI
 KI
 fq
-ir
-ir
+rc
+rc
 fq
 Rb
 Rb
@@ -2107,7 +2490,7 @@ Rb
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -2117,11 +2500,11 @@ nO
 rs
 cB
 cB
-QJ
+vw
 xy
-Gy
+At
 Vg
-Vg
+Bf
 lG
 jT
 RR
@@ -2131,7 +2514,7 @@ uf
 fZ
 uf
 wQ
-wQ
+ap
 wQ
 wQ
 xd
@@ -2145,7 +2528,7 @@ KI
 KI
 KI
 fq
-ir
+rc
 fq
 Rb
 Rb
@@ -2159,7 +2542,7 @@ Rb
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -2173,7 +2556,7 @@ Kx
 nO
 kN
 Vg
-Vg
+Bf
 Bi
 uP
 fZ
@@ -2183,7 +2566,7 @@ fZ
 OB
 fZ
 iZ
-wQ
+Mn
 wQ
 wQ
 xd
@@ -2197,7 +2580,7 @@ KI
 KI
 KI
 fq
-ir
+rc
 fq
 fq
 Rb
@@ -2211,7 +2594,7 @@ Rb
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 uf
@@ -2225,7 +2608,7 @@ nO
 nO
 dw
 Vg
-Vg
+Bf
 VR
 GS
 Ji
@@ -2233,7 +2616,7 @@ fZ
 zo
 fZ
 uf
-NF
+lq
 wQ
 wQ
 wQ
@@ -2249,7 +2632,7 @@ KI
 KI
 KI
 fq
-ir
+rc
 fq
 fq
 Rb
@@ -2263,7 +2646,7 @@ Rb
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 tA
@@ -2272,7 +2655,7 @@ nO
 nO
 NE
 XF
-QJ
+bz
 nf
 nO
 nO
@@ -2282,13 +2665,13 @@ nO
 nO
 nO
 Ed
+qC
 fZ
-fZ
-fZ
+sk
 FB
 wQ
 wQ
-aj
+Aq
 wQ
 xd
 KI
@@ -2301,7 +2684,7 @@ KI
 KI
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -2315,7 +2698,7 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fZ
@@ -2323,20 +2706,20 @@ fZ
 nO
 IL
 yZ
-yZ
-yZ
+Yw
+YH
 LJ
 nO
 WK
-QJ
+cJ
 ZD
 nO
-ti
+rO
 gc
-fZ
-uf
-fZ
-tA
+WR
+TV
+nz
+pk
 wQ
 wQ
 wQ
@@ -2353,8 +2736,8 @@ KI
 KI
 fq
 fq
-ir
-ir
+rc
+rc
 fq
 fq
 Rb
@@ -2367,7 +2750,7 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 NF
@@ -2375,24 +2758,24 @@ fZ
 nO
 PE
 ui
-ui
-yZ
+eu
+UE
 Gy
-xy
+tb
 eo
-eo
-eo
-xy
+ee
+kF
 QJ
+vw
 yb
-fZ
-NF
-fZ
+tY
+gM
+qC
 fZ
 iZ
 wQ
 wQ
-ak
+ZY
 wQ
 xd
 KI
@@ -2406,7 +2789,7 @@ KI
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 Rb
@@ -2419,7 +2802,7 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 FX
@@ -2428,15 +2811,15 @@ nO
 fm
 qp
 qp
-yZ
+Na
+pZ
+Tl
+Sw
+Lo
+eo
 QJ
-xy
-eo
-eo
-eo
-xy
-QJ
-yb
+vw
+yF
 uf
 NF
 oT
@@ -2458,7 +2841,7 @@ nK
 vF
 fq
 fq
-ir
+rc
 fq
 fq
 Rb
@@ -2471,32 +2854,32 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
 fZ
 nO
 ac
-yZ
-yZ
-yZ
+vn
+Nv
+nr
 aS
-nO
+Na
 ti
-QJ
-aS
+PT
+Wf
 nO
-ti
+ZQ
 HB
+tY
 fZ
 fZ
-fZ
-fZ
+sk
 wQ
 wQ
 wQ
-ak
+ZY
 wQ
 xd
 KI
@@ -2510,7 +2893,7 @@ KI
 KI
 fq
 fq
-ir
+rc
 fq
 fq
 Rb
@@ -2523,7 +2906,7 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -2536,7 +2919,7 @@ Cn
 Ma
 nO
 nO
-xy
+br
 nO
 nO
 nO
@@ -2546,7 +2929,7 @@ uf
 ay
 fZ
 NF
-ev
+Ah
 wQ
 wQ
 wQ
@@ -2562,7 +2945,7 @@ KI
 KI
 KI
 fq
-ir
+rc
 fq
 fq
 Rb
@@ -2575,8 +2958,8 @@ fq
 fq
 fq
 fq
-ir
-ir
+rc
+rc
 fq
 fq
 fZ
@@ -2588,7 +2971,7 @@ nO
 nO
 nO
 AX
-cB
+ex
 cB
 ng
 jT
@@ -2596,11 +2979,11 @@ Pf
 fZ
 FB
 fZ
-fZ
-NF
-af
+sk
+lq
+TZ
 wQ
-ak
+ZY
 wQ
 xd
 KI
@@ -2614,7 +2997,7 @@ KI
 KI
 KI
 fq
-ir
+rc
 fq
 fq
 Rb
@@ -2628,31 +3011,31 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 NF
 NF
 nO
-iJ
+Kh
 VF
 JA
 JA
 nO
 wq
-cB
-cB
+ex
+Kn
 By
 uP
 fZ
 fZ
 nD
 fZ
-vh
+Kz
 eG
-ag
+IW
 wQ
-al
+tR
 wQ
 xd
 KI
@@ -2666,7 +3049,7 @@ KI
 KI
 KI
 fq
-ir
+rc
 fq
 fq
 Rb
@@ -2680,7 +3063,7 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 yf
@@ -2691,10 +3074,10 @@ Iq
 SG
 Iq
 vY
-QJ
-cB
-cB
-By
+br
+TQ
+rb
+ZO
 GS
 fZ
 fZ
@@ -2703,9 +3086,9 @@ fZ
 YC
 fZ
 wQ
-ai
+Zg
 wQ
-am
+Pz
 xd
 KI
 KI
@@ -2718,7 +3101,7 @@ KI
 KI
 KI
 fq
-ir
+rc
 fq
 Rb
 Rb
@@ -2732,7 +3115,7 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -2745,7 +3128,7 @@ vY
 nO
 dy
 FD
-dy
+NM
 nO
 nO
 fZ
@@ -2753,7 +3136,7 @@ uf
 fZ
 fZ
 nD
-wQ
+ap
 wQ
 wQ
 wQ
@@ -2770,7 +3153,7 @@ KI
 KI
 KI
 fq
-ir
+rc
 fq
 Rb
 Rb
@@ -2784,7 +3167,7 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -2805,8 +3188,8 @@ fZ
 uf
 fZ
 fZ
-wQ
-wQ
+ap
+Mn
 wQ
 wQ
 wQ
@@ -2822,7 +3205,7 @@ KI
 KI
 KI
 fq
-ir
+rc
 fq
 Rb
 Rb
@@ -2836,7 +3219,7 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -2856,10 +3239,10 @@ eG
 fZ
 NF
 tA
-fZ
+ek
 ev
-wQ
-wQ
+ap
+ap
 wQ
 wQ
 xd
@@ -2874,7 +3257,7 @@ KI
 nK
 vF
 fq
-ir
+rc
 fq
 Rb
 Rb
@@ -2888,7 +3271,7 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -2909,8 +3292,8 @@ fZ
 OB
 fZ
 fZ
-wQ
-wQ
+ap
+ap
 wQ
 wQ
 wQ
@@ -2926,7 +3309,7 @@ KI
 KI
 fq
 fq
-ir
+rc
 fq
 Rb
 Rb
@@ -2940,7 +3323,7 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -2978,7 +3361,7 @@ KI
 KI
 fq
 fq
-ir
+rc
 fq
 Rb
 Rb
@@ -2992,8 +3375,8 @@ fq
 fq
 fq
 fq
-ir
-ir
+rc
+rc
 fq
 fq
 fq
@@ -3015,8 +3398,8 @@ NF
 fZ
 wQ
 wQ
-ad
-ah
+Fw
+Tw
 wQ
 xd
 KI
@@ -3029,8 +3412,8 @@ KI
 KI
 fq
 fq
-ir
-ir
+rc
+rc
 fq
 Rb
 Rb
@@ -3045,7 +3428,7 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fZ
@@ -3057,8 +3440,8 @@ fZ
 YC
 nO
 nO
-QJ
-QJ
+Ai
+fT
 QJ
 nO
 nO
@@ -3081,7 +3464,7 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 Rb
@@ -3097,7 +3480,7 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fZ
@@ -3109,10 +3492,10 @@ fZ
 Nj
 nO
 no
-yZ
-yZ
-yZ
-QJ
+fW
+xt
+xt
+bq
 Xp
 fZ
 Dz
@@ -3133,7 +3516,7 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 Rb
 Rb
@@ -3149,7 +3532,7 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -3161,12 +3544,12 @@ fZ
 tA
 nO
 Ln
-yZ
-yZ
-yZ
-QJ
-yb
-fZ
+Tl
+YS
+tb
+zn
+ZH
+ek
 NF
 fZ
 uf
@@ -3184,8 +3567,8 @@ fq
 fq
 fq
 fq
-ir
-ir
+rc
+rc
 fq
 Rb
 Rb
@@ -3201,7 +3584,7 @@ Rb
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -3213,10 +3596,10 @@ FB
 fZ
 nO
 no
-yZ
-yZ
-yZ
-QJ
+tX
+fW
+BD
+kx
 lQ
 fZ
 FB
@@ -3236,7 +3619,7 @@ fq
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 Rb
@@ -3253,8 +3636,8 @@ Rb
 Rb
 fq
 fq
-ir
-ir
+rc
+rc
 fq
 fq
 fq
@@ -3267,7 +3650,7 @@ nO
 nO
 op
 Lq
-op
+cS
 nO
 nO
 Ji
@@ -3287,8 +3670,8 @@ fq
 fq
 fq
 fq
-ir
-ir
+rc
+rc
 fq
 Rb
 Rb
@@ -3306,7 +3689,7 @@ Rb
 fq
 fq
 fq
-ir
+rc
 fq
 fq
 fq
@@ -3337,9 +3720,9 @@ fq
 fq
 fq
 fq
-ir
-ir
-ir
+rc
+rc
+rc
 fq
 fq
 Rb
@@ -3358,10 +3741,10 @@ Rb
 Rb
 fq
 fq
-ir
-ir
-ir
-ir
+rc
+rc
+rc
+rc
 fq
 fq
 fq
@@ -3387,9 +3770,9 @@ fq
 fq
 fq
 fq
-ir
-ir
-ir
+rc
+rc
+rc
 fq
 fq
 fq
@@ -3413,11 +3796,11 @@ fq
 fq
 fq
 fq
-ir
-ir
-ir
-ir
-ir
+rc
+rc
+rc
+rc
+rc
 fq
 fq
 fq
@@ -3437,9 +3820,9 @@ fq
 fq
 fq
 fq
-ir
-ir
-ir
+rc
+rc
+rc
 fq
 fq
 fq
@@ -3469,11 +3852,11 @@ fq
 fq
 fq
 fq
-ir
-ir
-ir
-ir
-ir
+rc
+rc
+rc
+rc
+rc
 fq
 fq
 fq
@@ -3485,11 +3868,11 @@ fq
 fq
 fq
 fq
-ir
-ir
-ir
-ir
-ir
+rc
+rc
+rc
+rc
+rc
 fq
 fq
 fq
@@ -3525,19 +3908,19 @@ fq
 fq
 fq
 fq
-ir
-ir
-ir
-ir
-ir
-ir
-ir
-ir
-ir
-ir
-ir
-ir
-ir
+rc
+rc
+rc
+rc
+rc
+rc
+rc
+rc
+rc
+rc
+rc
+rc
+rc
 fq
 fq
 fq

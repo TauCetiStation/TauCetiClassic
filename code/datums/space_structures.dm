@@ -169,3 +169,9 @@
 	structure_id = "cult_ship"
 	desc = "Unknown object"
 	mappath = "maps/templates/space_structures/cult_ship.dmm"
+
+/datum/map_template/space_structure/space_villa
+	name = "SpaceVilla"
+	structure_id = "space_villa"
+	desc = "Unknown object"
+	mappath = "maps/templates/space_structures/space_villa.dmm"
