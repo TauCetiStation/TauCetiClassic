@@ -70,7 +70,6 @@ var/global/war_device_activation_forbidden
 	new /obj/item/weapon/antag_spawner/borg_tele(C)
 	new /obj/item/nuke_teleporter(C)
 	new /obj/item/device/radio/beacon/syndicate_bomb(C)
-	new /obj/item/weapon/shield/energy(C)
 
 	global.cargo_account.money += 30000
 
