@@ -1,4 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/machinery/porta_turret/crescent,
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
+	},
+/area/space)
 "ac" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/book/manual/wiki/barman_recipes,
@@ -6,6 +12,54 @@
 	dir = 1
 	},
 /turf/simulated/floor/wood,
+/area/space)
+"ad" = (
+/obj/effect/overlay/palmtree_r,
+/turf/simulated/floor/beach/sand,
+/area/space)
+"ae" = (
+/obj/structure/signpost,
+/turf/simulated/floor/beach/sand,
+/area/space)
+"af" = (
+/obj/structure/table/woodentable,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/head/collectable/paper{
+	pixel_y = 5
+	},
+/turf/simulated/floor/beach/sand,
+/area/space)
+"ag" = (
+/obj/structure/table/woodentable,
+/obj/item/clothing/head/collectable/petehat{
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/food/snacks/chips,
+/turf/simulated/floor/beach/sand,
+/area/space)
+"ah" = (
+/obj/effect/overlay/coconut,
+/turf/simulated/floor/beach/sand,
+/area/space)
+"ai" = (
+/mob/living/simple_animal/crab,
+/turf/simulated/floor/beach/sand,
+/area/space)
+"aj" = (
+/obj/effect/overlay/palmtree_l,
+/turf/simulated/floor/beach/sand,
+/area/space)
+"ak" = (
+/obj/structure/stool/bed/chair/wood/normal,
+/turf/simulated/floor/beach/sand,
+/area/space)
+"al" = (
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+/turf/simulated/floor/beach/sand,
+/area/space)
+"am" = (
+/obj/item/weapon/beach_ball,
+/turf/simulated/floor/beach/sand,
 /area/space)
 "ay" = (
 /obj/structure/flora/tree/jungle/small,
@@ -140,17 +194,9 @@
 /turf/simulated/floor/plating,
 /area/space)
 "iJ" = (
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	id_tag = "asteroidder_inner";
-	locked = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
-/turf/simulated/floor/plating{
-	dir = 4;
-	icon_state = "warnplate"
+/obj/structure/closet/athletic_mixed,
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
 	},
 /area/space)
 "iZ" = (
@@ -279,10 +325,14 @@
 /turf/simulated/floor/grass,
 /area/space)
 "oL" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 8
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1379;
+	id_tag = "asteroidder_pump"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
 /area/space)
 "oT" = (
 /obj/structure/flora/ausbushes/ywflowers{
@@ -750,13 +800,18 @@
 	},
 /area/space)
 "LV" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 1;
+/obj/machinery/door/airlock/external{
 	frequency = 1379;
-	id_tag = "asteroidder_pump"
+	id_tag = "asteroidder_inner";
+	locked = 1;
+	req_access = list(101)
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
 	},
 /turf/simulated/floor/plating{
-	icon_state = "platebotc"
+	dir = 4;
+	icon_state = "warnplate"
 	},
 /area/space)
 "Ma" = (
@@ -789,7 +844,8 @@
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "asteroidder_outer";
-	locked = 1
+	locked = 1;
+	req_access = list(101)
 	},
 /turf/simulated/floor/plating{
 	dir = 8;
@@ -837,12 +893,9 @@
 	tag_exterior_door = "asteroidder_outer";
 	tag_interior_door = "asteroidder_inner"
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	frequency = 1379;
-	id_tag = "asteroidder_pump"
-	},
+/obj/machinery/porta_turret/crescent,
 /turf/simulated/floor/plating{
-	icon_state = "platebotc"
+	icon_state = "platebot"
 	},
 /area/space)
 "QJ" = (
@@ -1329,7 +1382,7 @@ fq
 vF
 Qf
 oL
-LV
+ab
 vF
 fq
 fq
@@ -1432,7 +1485,7 @@ oa
 uJ
 vF
 vF
-iJ
+LV
 vF
 vF
 fq
@@ -1697,7 +1750,7 @@ uf
 XS
 wQ
 wQ
-wQ
+ad
 wQ
 wQ
 wQ
@@ -1750,7 +1803,7 @@ fZ
 fZ
 iZ
 wQ
-wQ
+ah
 wQ
 wQ
 xd
@@ -1905,7 +1958,7 @@ Nj
 Kd
 YC
 iZ
-wQ
+ae
 wQ
 wQ
 wQ
@@ -2167,7 +2220,7 @@ fZ
 FB
 wQ
 wQ
-wQ
+aj
 wQ
 xd
 KI
@@ -2271,7 +2324,7 @@ fZ
 iZ
 wQ
 wQ
-wQ
+ak
 wQ
 xd
 KI
@@ -2375,7 +2428,7 @@ fZ
 wQ
 wQ
 wQ
-wQ
+ak
 wQ
 xd
 KI
@@ -2477,9 +2530,9 @@ FB
 fZ
 fZ
 NF
+af
 wQ
-wQ
-wQ
+ak
 wQ
 xd
 KI
@@ -2513,7 +2566,7 @@ fq
 NF
 NF
 nO
-rf
+iJ
 VF
 JA
 JA
@@ -2529,9 +2582,9 @@ nD
 fZ
 vh
 eG
+ag
 wQ
-wQ
-wQ
+al
 wQ
 xd
 KI
@@ -2582,9 +2635,9 @@ fZ
 YC
 fZ
 wQ
+ai
 wQ
-wQ
-wQ
+am
 xd
 KI
 KI
@@ -2894,8 +2947,8 @@ NF
 fZ
 wQ
 wQ
-wQ
-wQ
+ad
+ah
 wQ
 xd
 KI
