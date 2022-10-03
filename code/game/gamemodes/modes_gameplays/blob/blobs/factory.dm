@@ -253,8 +253,8 @@
 	icon_state = "blobbernaut"
 	icon_living = "blobbernaut"
 	icon_dead = "blobbernaut_dead"
-	health = 200
-	maxHealth = 200
+	health = 300
+	maxHealth = 300
 	attacktext = "slams"
 	melee_damage = 20
 	attack_sound = 'sound/effects/blobattack.ogg'
