@@ -65,6 +65,7 @@
 		dna.real_name = real_name
 
 	handcrafting = new()
+	AddComponent(/datum/component/altcraft)
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
@@ -1744,7 +1745,7 @@
 
 /atom/movable/screen/leap
 	name = "toggle leap"
-	icon = 'icons/mob/screen1_action.dmi'
+	icon = 'icons/hud/screen1_action.dmi'
 	icon_state = "action"
 	screen_loc = ui_human_leap
 

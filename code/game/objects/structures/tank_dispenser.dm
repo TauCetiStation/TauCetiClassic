@@ -75,6 +75,22 @@ ADD_TO_GLOBAL_LIST(/obj/structure/dispenser, tank_dispenser_list)
 			anchored = TRUE
 		return
 
+/obj/structure/dispenser/deconstruct(disassembled)
+	for(var/obj/item/I as anything in contents)
+		I.forceMove(loc)
+	oxytanks -= oxytanks.len
+	phorontanks -= platanks.len
+	oxytanks.Cut()
+	platanks.Cut()
+	if(flags & NODECONSTRUCT)
+		return ..()
+	for(var/i in 1 to oxygentanks)
+		new /obj/item/weapon/tank/oxygen(loc)
+	for(var/i in 1 to phorontanks)
+		new /obj/item/weapon/tank/phoron(loc)
+	new /obj/item/stack/sheet/metal(loc, 2)
+	..()
+
 /obj/structure/dispenser/Topic(href, href_list)
 	if(usr.incapacitated())
 		return

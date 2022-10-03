@@ -22,7 +22,7 @@ var/global/list/capture_statues_list = list()
 	name = "statue of gargoyle"
 	icon_state = "gargoyle"
 
-	health = 81
+	max_integrity = 81
 	can_unwrench = FALSE
 	var/obj/effect/rune/capture_rune
 

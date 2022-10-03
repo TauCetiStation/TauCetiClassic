@@ -41,8 +41,16 @@
 	if((iscultist(user) || isobserver(user)) && religion)
 		to_chat(user, "Писание Нар-Си. Содержит подробности о тёмных ритуалах, загадочных рунах и много другой странной информации. Однако, большинство из написанного не работает.")
 		to_chat(user, "Текущее количество favor: [religion.favor] piety: <span class='cult'>[religion.piety]</span>")
+
+		var/cultists = 0
+		for(var/mob/M in religion.members)
+			if(M.stat != DEAD)
+				cultists++
+
+		to_chat(user, "В культе всего [cultists] [pluralize_russian(cultists, "последователь", "последователя", "последователей")]")
 		var/list/L = LAZYACCESS(religion.runes_by_ckey, user.ckey)
 		to_chat(user, "Вами нарисовано/всего <span class='cult'>[L ? L.len : "0"]</span>/[religion.max_runes_on_mob]")
+		to_chat(user, "<a href='?src=\ref[src];del_runes_ckey=1'>Удалить все ваши руны</a>")
 	else
 		..()
 
@@ -74,6 +82,17 @@
 			to_chat(user, "<span class='warning'>Вы не можете уничтожить стол, пока идёт исследование.</span>")
 			return FALSE
 	return TRUE
+
+/obj/item/weapon/storage/bible/tome/Topic(href, href_list)
+	..()
+	if(!Adjacent(usr) || usr.stat || !iscultist(usr))
+		return
+	var/list/L = LAZYACCESS(usr.my_religion.runes_by_ckey, usr.ckey)
+	if(href_list["del_runes_ckey"])
+		for(var/obj/effect/rune/R in L)
+			qdel(R)
+		to_chat(usr, "<span class='warning'>Все вами начерченные руны были стёрты.</span>")
+		return
 
 /obj/item/weapon/storage/bible/tome/afterattack(atom/target, mob/user, proximity, params)
 	..()
@@ -122,7 +141,7 @@
 		qdel(R)
 
 /obj/item/weapon/storage/bible/tome/proc/building_choices()
-	build_choices_image["Toggle Grind mode"] = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_grind")
+	build_choices_image["Toggle Grind mode"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind")
 	for(var/datum/building_agent/B in religion.available_buildings)
 		var/atom/build = B.building_type
 		build_choices_image[B] = image(icon = initial(build.icon), icon_state = initial(build.icon_state))

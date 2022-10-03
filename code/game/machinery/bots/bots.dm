@@ -16,8 +16,7 @@
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/weapon/card/id/botcard			// the ID card that the bot "holds"
 	var/on = 1
-	var/health = 0 //do not forget to set health for your bot!
-	var/maxhealth = 0
+	max_integrity = 1
 	var/fire_dam_coeff = 1.0
 	var/brute_dam_coeff = 1.0
 	var/open = 0//Maint panel
@@ -48,9 +47,9 @@
 /obj/machinery/bot/proc/explode()
 	qdel(src)
 
-/obj/machinery/bot/proc/healthcheck()
-	if (src.health <= 0)
-		explode()
+/obj/machinery/bot/deconstruct(disassembled)
+	explode()
+	..()
 
 /obj/machinery/bot/emag_act(mob/user)
 	if(emagged >= 2)
@@ -67,36 +66,34 @@
 
 /obj/machinery/bot/examine(mob/user)
 	..()
-	if (health < maxhealth)
-		if (health > maxhealth/3)
-			to_chat(user, "<span class='warning'>[src]'s parts look loose.</span>")
-		else
-			to_chat(user, "<span class='danger'>[src]'s parts look very loose!</span>")
+	if(get_integrity() == max_integrity)
+		return
+	if(get_integrity() > max_integrity / 3)
+		to_chat(user, "<span class='warning'>[src]'s parts look loose.</span>")
+	else
+		to_chat(user, "<span class='danger'>[src]'s parts look very loose!</span>")
+
+/obj/machinery/bot/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
+	switch(damage_type)
+		if(BRUTE)
+			return damage_amount * brute_dam_coeff
+		if(BURN)
+			return damage_amount * fire_dam_coeff
+	
+/obj/machinery/bot/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
+	. = ..()
+	if(.)
+		new /obj/effect/decal/cleanable/blood/oil(loc)
 
 /obj/machinery/bot/attack_alien(mob/living/carbon/xenomorph/user)
-	user.do_attack_animation(src)
-	user.SetNextMove(CLICK_CD_MELEE)
-	src.health -= rand(15,30)*brute_dam_coeff
-	visible_message("<span class='warning'><B>[user] has slashed [src]!</B></span>")
-	playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER, 25)
-	if(prob(10))
-		new /obj/effect/decal/cleanable/blood/oil(src.loc)
-	healthcheck()
+	. = ..()
+	if(.)
+		visible_message("<span class='warning'><B>[user] has slashed [src]!</B></span>")
 
-
-/obj/machinery/bot/attack_animal(mob/living/simple_animal/attacker)
-	..()
-	if(attacker.melee_damage == 0)
-		return
-	src.health -= attacker.melee_damage
-	visible_message("<span class='warning'><B>[attacker] has [attacker.attacktext] [src]!</B></span>")
-	attacker.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
-	if(prob(10))
-		new /obj/effect/decal/cleanable/blood/oil(src.loc)
-	healthcheck()
-
-
-
+/obj/machinery/bot/attack_animal(mob/living/simple_animal/user)
+	. = ..()
+	if(.)
+		visible_message("<span class='warning'><B>[user] has slashed [src]!</B></span>")
 
 /obj/machinery/bot/attackby(obj/item/weapon/W, mob/user)
 	if(isscrewdriver(W))
@@ -105,64 +102,35 @@
 			to_chat(user, "<span class='notice'>Maintenance panel is now [src.open ? "opened" : "closed"].</span>")
 	else if(iswelder(W))
 		if(W.use(0, user))
-			if(health < maxhealth)
+			if(get_integrity() < max_integrity)
 				if(open)
 					user.visible_message("<span class='warning'>[user] start repair [src]!</span>","<span class='notice'>You start repair [src]!</span>")
 					if(W.use_tool(src, user, 20, volume = 50))
-						health = min(maxhealth, health+10)
+						repair_damage(10)
 						user.visible_message("<span class='warning'>[user] repaired [src]!</span>","<span class='notice'>You repaired [src]!</span>")
 				else
 					to_chat(user, "<span class='notice'>Unable to repair with the maintenance panel closed.</span>")
 			else
 				to_chat(user, "<span class='notice'>[src] does not need a repair.</span>")
 	else
-		if(hasvar(W,"force") && hasvar(W,"damtype"))
-			switch(W.damtype)
-				if("fire")
-					src.health -= W.force * fire_dam_coeff
-				if("brute")
-					src.health -= W.force * brute_dam_coeff
-			..()
-			healthcheck()
-		else
-			..()
-
-/obj/machinery/bot/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-	health -= Proj.damage
-	healthcheck()
-
-/obj/machinery/bot/blob_act()
-	src.health -= rand(20,40)*fire_dam_coeff
-	healthcheck()
-	return
+		..()
 
 /obj/machinery/bot/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
-			explode()
+			deconstruct()
 			return
 		if(EXPLODE_HEAVY)
-			src.health -= rand(5,10)*fire_dam_coeff
-			src.health -= rand(10,20)*brute_dam_coeff
+			take_damage(20, BRUTE, BOMB)
 		if(EXPLODE_LIGHT)
 			if(prob(50))
-				src.health -= rand(1,5)*fire_dam_coeff
-				src.health -= rand(1,5)*brute_dam_coeff
-	healthcheck()
+				take_damage(5, BRUTE, BOMB)
 
 /obj/machinery/bot/emp_act(severity)
 	var/was_on = on
 	stat |= EMPED
-	var/obj/effect/overlay/pulse2 = new /obj/effect/overlay(loc)
-	pulse2.icon = 'icons/effects/effects.dmi'
-	pulse2.icon_state = "empdisable"
-	pulse2.name = "emp sparks"
-	pulse2.anchored = TRUE
-	pulse2.set_dir(pick(cardinal))
+	new /obj/effect/overlay/pulse2(loc, 2)
 
-	spawn(10)
-		qdel(pulse2)
 	if (on)
 		turn_off()
 	spawn(severity*300)

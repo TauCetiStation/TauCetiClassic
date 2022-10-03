@@ -36,11 +36,13 @@ Note: Must be placed within 3 tiles of the R&D Console
 /obj/machinery/r_n_d/destructive_analyzer/attackby(obj/O, mob/user)
 	if (shocked)
 		shock(user,50)
-	if (default_deconstruction_screwdriver(user, "d_analyzer_t", "d_analyzer", O))
-		if(linked_console)
-			linked_console.linked_destroy = null
-			linked_console = null
-		return
+	if(!loaded_item)
+		if (default_deconstruction_screwdriver(user, "d_analyzer", "d_analyzer", O))
+			update_icon()
+			if(linked_console)
+				linked_console.linked_destroy = null
+				linked_console = null
+			return
 
 	if(exchange_parts(user, O))
 		return
@@ -51,21 +53,23 @@ Note: Must be placed within 3 tiles of the R&D Console
 		return
 	if (disabled)
 		return
+	if (!powered())
+		return
 	if (!linked_console)
-		to_chat(user, "<span class='warning'>The protolathe must be linked to an R&D console first!</span>")
+		to_chat(user, "<span class='warning'>\The [name] must be linked to an R&D console first!</span>")
 		return
 	if (busy)
-		to_chat(user, "<span class='warning'> The protolathe is busy right now.</span>")
+		to_chat(user, "<span class='warning'>\The [name] is busy right now.</span>")
 		return
 	if (isitem(O) && !loaded_item)
 		if(isrobot(user)) //Don't put your module items in there!
 			return
 		if(!O.origin_tech)
-			to_chat(user, "<span class='warning'> This doesn't seem to have a tech origin!</span>")
+			to_chat(user, "<span class='warning'>This doesn't seem to have a tech origin!</span>")
 			return
 		var/list/temp_tech = ConvertReqString2List(O.origin_tech)
 		if (temp_tech.len == 0)
-			to_chat(user, "<span class='warning'> You cannot deconstruct this item!</span>")
+			to_chat(user, "<span class='warning'>You cannot deconstruct this item!</span>")
 			return
 		if(!do_skill_checks(user))
 			return
@@ -115,13 +119,13 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/obj/item/stack/sheet/S = loaded_item
 		if(S.amount == 1)
 			qdel(S)
-			icon_state = "d_analyzer"
+			update_icon()
 			loaded_item = null
 		else
 			S.use(1)
 	else
 		qdel(loaded_item)
-		icon_state = "d_analyzer"
+		update_icon()
 		loaded_item = null
 
 	use_power(250)
@@ -137,4 +141,4 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if(loaded_item)
 		loaded_item.forceMove(loc)
 		loaded_item = null
-		icon_state = "d_analyzer"
+		update_icon()
