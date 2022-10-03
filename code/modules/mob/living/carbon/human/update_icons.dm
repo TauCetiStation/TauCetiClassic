@@ -118,12 +118,12 @@ Please contact me on #coderbus IRC. ~Carn x
 	else if(S.sprite_sheets[sprite_sheet_slot])
 		icon_path = S.sprite_sheets[sprite_sheet_slot]
 
-	var/fem = null
+	var/fem = ""
 	if(H.gender == FEMALE && S.gender_limb_icons)
 		if(item_state != null) // some sprites have null item_state, so check icon_states for sure
-			if((item_state + "_fem") in icon_states(def_icon_path))
+			if("[item_state]_fem" in icon_states(def_icon_path))
 				fem = "_fem"
-		else if((icon_state + "_fem") in icon_states(def_icon_path))
+		else if("[icon_state]_fem" in icon_states(def_icon_path))
 			fem = "_fem"
 
 	var/image/I = image(icon = icon_path, icon_state = "[t_state][fem][icon_state_appendix]", layer = layer)
