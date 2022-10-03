@@ -107,18 +107,18 @@
 		return message
 	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.</span>","<span class='notice'>You have analyzed [M]'s vitals.</span>")
 
-	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
-	var/OX = M.getOxyLoss() > 50 	? 	"<b>[M.getOxyLoss()]</b>" 		: M.getOxyLoss()
-	var/TX = M.getToxLoss() > 50 	? 	"<b>[M.getToxLoss()]</b>" 		: M.getToxLoss()
-	var/BU = M.getFireLoss() > 50 	? 	"<b>[M.getFireLoss()]</b>" 		: M.getFireLoss()
-	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getBruteLoss()]</b>" 	: M.getBruteLoss()
+	var/fake_oxy = M.getLossString(OXY, fake = TRUE)
+	var/OX = M.getOxyLoss() > 50 	? 	"<b>[M.getLossString(OXY)]</b>" 		: M.getLossString(OXY)
+	var/TX = M.getToxLoss() > 50 	? 	"<b>[M.getLossString(TOX)]</b>" 		: M.getLossString(TOX)
+	var/BU = M.getFireLoss() > 50 	? 	"<b>[M.getLossString(BURN)]</b>" 		: M.getLossString(BURN)
+	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getLossString(BRUTE)]</b>" 	: M.getLossString(BRUTE)
 	if(M.status_flags & FAKEDEATH)
 		OX = fake_oxy > 50 			? 	"<b>[fake_oxy]</b>" 			: fake_oxy
 		message += "<span class='notice'>Analyzing Results for [M]:\n&emsp; Overall Status: dead</span><br>"
 	else
 		message += "<span class='notice'>Analyzing Results for [M]:\n&emsp; Overall Status: [M.stat > 1 ? "dead" : "[M.health - M.halloss]% healthy"]</span><br>"
 	message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
-	message += "&emsp; Damage Specifics: <font color='blue'>[OX]</font> - <font color='green'>[TX]</font> - <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font><br>"
+	message += "&emsp; Damage: <font color='blue'>[OX]</font> - <font color='green'>[TX]</font> - <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font><br>"
 	message += "<span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
 		message += "<span class='notice'>Time of Death: [M.tod]</span><br>"
@@ -128,7 +128,7 @@
 		message += "<span class='notice'>Localized Damage, Brute/Burn:</span><br>"
 		if(length(damaged))
 			for(var/obj/item/organ/external/BP in damaged)
-				message += "<span class='notice'>&emsp; [capitalize(BP.name)]: [(BP.brute_dam > 0) ? "<span class='warning'>[BP.brute_dam]</span>" : 0][(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'>\[Bleeding\]</span>" : "&emsp;"] - [(BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.burn_dam]</font>" : 0]</span><br>"
+				message += "<span class='notice'>&emsp; [capitalize(BP.name)]: [(BP.brute_dam > 0) ? "<span class='warning'>[BP.getOrganDamageString(BRUTE)]</span>" : "None"][(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'>\[Bleeding\]</span>" : "&emsp;"] - [(BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.getOrganDamageString(BURN)]</font>" : "None"]</span><br>"
 		else
 			message += "<span class='notice'>&emsp; Limbs are OK.</span><br>"
 
@@ -1108,7 +1108,7 @@
 
 /obj/item/burn()
 	var/turf/T = get_turf(src)
-	var/ash_type 
+	var/ash_type
 	if(w_class >= SIZE_BIG)
 		ash_type = /obj/effect/decal/cleanable/ash/large
 	else

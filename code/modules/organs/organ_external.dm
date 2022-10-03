@@ -550,6 +550,25 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/proc/get_damage()	//returns total damage
 	return max(brute_dam + burn_dam - perma_injury, perma_injury)	//could use health?
 
+/obj/item/organ/external/proc/getOrganDamageString(type_damage)
+	var/numbers = 0
+	switch(type_damage)
+		if(BRUTE)
+			numbers = brute_dam
+		if(BURN)
+			numbers = burn_dam
+	var/text = ""
+	switch(numbers)
+		if(0)
+			text = NO_DAMAGE
+		if(1 to 25)
+			text = MILD_DAMAGE
+		if(25 to 50)
+			text = SEVERE_DAMAGE
+		if(50 to INFINITY)
+			text = ACUTE_DAMAGE
+	return text
+
 /obj/item/organ/external/proc/has_infected_wound()
 	for(var/datum/wound/W in wounds)
 		if(W.germ_level > INFECTION_LEVEL_ONE)

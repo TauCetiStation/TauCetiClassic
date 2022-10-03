@@ -1442,7 +1442,7 @@
 				var/has_tox_damage = (C.getToxLoss() > 50)
 				var/has_fire_damage = (C.getFireLoss() > 50)
 				var/has_brute_damage = (C.getBruteLoss() > 50)
-				data_message += "<span class='notice'>&emsp; Damage Specifics: <span class='[has_oxy_damage ? "warning" : "notice"]'>[C.getOxyLoss()]</span>-<span class='[has_tox_damage ? "warning" : "notice"]'>[C.getToxLoss()]</span>-<span class='[has_fire_damage ? "warning" : "notice"]'>[C.getFireLoss()]</span>-<span class='[has_brute_damage ? "warning" : "notice"]'>[C.getBruteLoss()]</span></span>"
+				data_message += "<span class='notice'>&emsp; Damage Specifics: <span class='[has_oxy_damage ? "warning" : "notice"]'>[C.getLossString(OXY)]</span>-<span class='[has_tox_damage ? "warning" : "notice"]'>[C.getLossString(TOX)]</span>-<span class='[has_fire_damage ? "warning" : "notice"]'>[C.getLossString(BURN)]</span>-<span class='[has_brute_damage ? "warning" : "notice"]'>[C.getLossString(BRUTE)]</span></span>"
 				data_message += "<span class='notice'>&emsp; Key: Suffocation/Toxin/Burns/Brute</span>"
 				data_message += "<span class='notice'>&emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span>"
 				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
@@ -1453,7 +1453,7 @@
 					data_message += "<span class='notice'>Localized Damage, Brute/Burn:</span>"
 					if(length(damaged)>0)
 						for(var/obj/item/organ/external/BP in damaged)
-							data_message += text("<span class='notice'>&emsp; []: []-[]</span>",capitalize(BP.name),(BP.brute_dam > 0)?"<span class='warning'>[BP.brute_dam]</span>":0,(BP.burn_dam > 0)?"<span class='warning'>[BP.burn_dam]</span>":0)
+							data_message += text("<span class='notice'>&emsp; []: []-[]</span>",capitalize(BP.name),(BP.brute_dam > 0)?"<span class='warning'>[BP.getOrganDamageString(BRUTE)]</span>": "None",(BP.burn_dam > 0)?"<span class='warning'>[BP.getOrganDamageString(BURN)]</span>": "None")
 					else
 						data_message += "<span class='notice'>&emsp; Limbs are OK.</span>"
 

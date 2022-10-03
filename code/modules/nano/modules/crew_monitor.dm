@@ -47,10 +47,10 @@
 					crewmemberData["dead"] = H.stat > UNCONSCIOUS
 
 				if(C.sensor_mode >= SUIT_SENSOR_VITAL)
-					crewmemberData["oxy"] = round(H.getOxyLoss(), 1)
-					crewmemberData["tox"] = round(H.getToxLoss(), 1)
-					crewmemberData["fire"] = round(H.getFireLoss(), 1)
-					crewmemberData["brute"] = round(H.getBruteLoss(), 1)
+					crewmemberData["oxy"] = H.getLossString(OXY) //round(H.getOxyLoss(), 1)
+					crewmemberData["tox"] = H.getLossString(TOX) //round(H.getToxLoss(), 1)
+					crewmemberData["fire"] = H.getLossString(BURN) //round(H.getFireLoss(), 1)
+					crewmemberData["brute"] = H.getLossString(BRUTE) //round(H.getBruteLoss(), 1)
 
 				if(C.sensor_mode >= SUIT_SENSOR_TRACKING)
 					var/area/A = get_area(H)

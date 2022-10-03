@@ -1,3 +1,8 @@
+#define NO_DAMAGE "None"
+#define MILD_DAMAGE "Mild"
+#define SEVERE_DAMAGE "Severe"
+#define ACUTE_DAMAGE "Acute"
+
 /mob/living/atom_init()
 	. = ..()
 	living_list += src
@@ -291,6 +296,33 @@
 // ==================================
 // ========== DAMAGE PROCS ==========
 // ==================================
+
+/mob/living/proc/getLossString(type_damage, fake = FALSE)
+	var/function
+	switch(type_damage)
+		if(BRUTE)
+			function = getBruteLoss()
+		if(OXY)
+			function = getOxyLoss()
+		if(TOX)
+			function = getToxLoss()
+		if(BURN)
+			function = getFireLoss()
+	var/numbers = function
+	if(fake)
+		//copypast from healthanalyzer
+		numbers = max(rand(1,40), getOxyLoss(), (300 - (getToxLoss() + getFireLoss() + getBruteLoss())))
+	var/text = ""
+	switch(numbers)
+		if(0)
+			text = NO_DAMAGE
+		if(1 to 50)
+			text = MILD_DAMAGE
+		if(50 to 100)
+			text = SEVERE_DAMAGE
+		if(100 to INFINITY)
+			text = ACUTE_DAMAGE
+	return text
 
 // ========== BRUTE ==========
 /mob/living/proc/getBruteLoss()
