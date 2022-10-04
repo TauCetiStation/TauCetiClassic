@@ -12,6 +12,9 @@
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
 
+	max_integrity = 300
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/reagent_dispensers/AltClick(mob/user)
 	if(!Adjacent(user))
 		return
@@ -59,25 +62,6 @@
 	var/trans = t_from.reagents.trans_to(t_to, transfer_amount)
 	to_chat(user, "<span class = 'notice'>You fill [t_to] with [trans] units of the contents of [t_from]. </span>")
 
-/obj/structure/reagent_dispensers/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			qdel(src)
-			return
-		if(EXPLODE_HEAVY)
-			if(prob(50))
-				return
-		if(EXPLODE_LIGHT)
-			if(prob(95))
-				return
-	new /obj/effect/effect/water(src.loc)
-	qdel(src)
-
-/obj/structure/reagent_dispensers/blob_act()
-	if(prob(50))
-		new /obj/effect/effect/water(src.loc)
-		qdel(src)
-
 /obj/structure/reagent_dispensers/proc/leak(amount)
 	if(reagents.total_volume == 0)
 		return
@@ -111,17 +95,21 @@
 			rig = null
 			cut_overlays()
 
+/obj/structure/reagent_dispensers/proc/start_leaking()
+	modded = TRUE
+	START_PROCESSING(SSobj, src)
+	leak(amount_per_transfer_from_this)
+
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
 	if (iswrench(W))
 		user.SetNextMove(CLICK_CD_RAPID)
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
 		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [COORD(src)] [ADMIN_JMP(src)]")
-		modded = !modded
-		if (modded)
-			START_PROCESSING(SSobj, src)
-			leak(amount_per_transfer_from_this)
-
+		if(modded)
+			modded = FALSE
+		else
+			start_leaking()
 		return
 	else if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
@@ -149,11 +137,28 @@
 	add_fingerprint(usr)
 	return
 
-/obj/structure/reagent_dispensers/bullet_act(obj/item/projectile/Proj, def_zone)
+/obj/structure/reagent_dispensers/atom_break()
+	..()
+	if(!modded)
+		start_leaking()
+	
+/obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
 	. = ..()
-	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-		if(!istype(Proj ,/obj/item/projectile/beam/lasertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
+	if(.)
+		if(damage_type == BURN)
 			explode()
+			return
+
+		switch(damage_flag)
+			if(BULLET, BOMB)
+				explode()
+				return
+
+/obj/structure/reagent_dispensers/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/effect/effect/water(loc)
+	..()
 
 /obj/structure/reagent_dispensers/blob_act()
 	explode()
@@ -162,22 +167,25 @@
 	explode()
 
 /obj/structure/reagent_dispensers/proc/explode(mob/user)
+	if(QDELETED(src)) // prevent double explosion
+		return
 	var/fuel_am = reagents.get_reagent_amount("fuel") + reagents.get_reagent_amount("phoron") * 5
-	if(fuel_am > 0)
-		if (fuel_am > 500)
-			explosion(loc, 1, 2, 4)
-		else if (fuel_am > 100)
+	if(fuel_am <= 0)
+		return FALSE
+	switch(fuel_am)
+		if(0 to 100)
+			explosion(loc, -1, 1, 2)
+		if(100 to 500)
 			explosion(loc, 0, 1, 3)
 		else
-			explosion(loc, -1, 1, 2)
-		if(src)
-			qdel(src)
-		return TRUE
-	return FALSE
+			explosion(loc, 1, 2, 4)
+	qdel(src)
+	return TRUE
 
 /obj/structure/reagent_dispensers/fire_act(datum/gas_mixture/air, temperature, volume)
 	if(temperature > T0C+500)
-		explode()
+		if(explode())
+			return
 	return ..()
 
 /obj/structure/reagent_dispensers/tesla_act()

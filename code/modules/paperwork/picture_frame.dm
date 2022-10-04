@@ -127,9 +127,12 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "wooden_frame"
 	anchored = TRUE
+
+	max_integrity = 50
+	resistance_flags = CAN_BE_HIT
+
 	var/obj/item/weapon/photo/framed
 	var/frame_type = /obj/item/weapon/picture_frame/wooden
-	var/health = 50
 	var/frame_glass = FALSE
 	var/glass_health = 10
 	var/screwed = FALSE
@@ -153,7 +156,7 @@
 	name = "metal picture frame"
 	icon_state = "metal_frame"
 	frame_type = /obj/item/weapon/picture_frame/metal
-	health = 100
+	max_integrity = 100
 
 /obj/structure/picture_frame/examine(mob/user)
 	if(in_range(src, user) && framed)
@@ -214,35 +217,73 @@
 			to_chat(user, "<span class='notice'>\The [src] already contains a photo.</span>")
 		return
 	else
-		if(frame_glass && O.force > 3)
-			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-			glass_health -= O.force
-			if(glass_health <= 0)
-				frame_glass = null
-				playsound(src, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER)
-				new /obj/item/weapon/shard(get_turf(src))
-				new /obj/item/weapon/shard(get_turf(src))
-				update_icon()
-		else if(O.force > 5)
-			switch(O.damtype)
-				if("fire")
-					playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
-					health -= O.force * 1
-				if("brute")
-					playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-					health -= O.force * 0.75
-			if(health <= 0)
-				visible_message("<span class='warning'>[user] smashed [src] apart!</span>")
-				if(frame_type == /obj/item/weapon/picture_frame/wooden)
-					new /obj/item/stack/sheet/wood(get_turf(src))
-				if(frame_type == /obj/item/weapon/picture_frame/metal)
-					new /obj/item/stack/sheet/metal(get_turf(src))
-				if(framed)
-					var/obj/item/I = framed
-					framed = null
-					I.forceMove(get_turf(src))
-				qdel(src)
 		..()
+
+// TODO move all handling into picture_frame item
+/obj/structure/picture_frame/play_attack_sound(damage_amount, damage_type, damage_flag)
+	if(frame_glass)
+		switch(damage_type)
+			if(BRUTE, BURN)
+				playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+		return
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(loc, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/obj/structure/picture_frame/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
+	if(frame_glass)
+		if(damage_amount < 3)
+			return
+		switch(damage_type)
+			if(BRUTE, BURN)
+			else
+				return
+		glass_health -= damage_amount
+		if(glass_health > 0)
+			return
+		frame_glass = null
+		playsound(loc, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER)
+		new /obj/item/weapon/shard(loc)
+		update_icon()
+		damage_amount = -glass_health
+
+	if(damage_amount < 5)
+		return
+	switch(damage_type)
+		if(BRUTE)
+			return 0.75 * damage_amount
+		if(BURN)
+			return damage_amount
+
+/obj/structure/picture_frame/deconstruct(disassembled, mob/living/user)
+	var/turf/T = get_turf(user || loc)
+	if(framed && (flags & NODECONSTRUCT || !disassembled))
+		framed.forceMove(T)
+		framed = null
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(disassembled)
+		var/obj/item/weapon/picture_frame/F = new frame_type(T)
+		if(framed)
+			F.displayed = framed
+			framed.forceMove(F)
+			framed = null
+		if(frame_glass)
+			F.frame_glass = TRUE
+		F.update_icon()
+		if(user && !issilicon(user))
+			user.put_in_hands(F)
+	else
+		if(frame_type == /obj/item/weapon/picture_frame/wooden)
+			new /obj/item/stack/sheet/wood(T)
+		if(frame_type == /obj/item/weapon/picture_frame/metal)
+			new /obj/item/stack/sheet/metal(T)
+	..()
 
 /obj/structure/picture_frame/attack_hand(mob/user)
 	if(framed)
@@ -254,18 +295,7 @@
 		if(do_after(user, 8, target = src))
 			user.visible_message("<span class='notice'>[user] takes off \the [src] from the wall.</span>",
 								 "<span class='notice'>You take off \the [src] from the wall.</span>")
-			var/obj/item/weapon/picture_frame/F = new frame_type(get_turf(user))
-			if(framed)
-				var/obj/item/I = framed
-				framed = null
-				I.forceMove(F)
-				F.displayed = I
-			if(frame_glass)
-				F.frame_glass = TRUE
-			F.update_icon()
-			if(!issilicon(user))
-				user.put_in_hands(F)
-			qdel(src)
+			deconstruct(TRUE, user)
 		return
 
 /obj/structure/picture_frame/MouseDrop(obj/over_object)
@@ -292,18 +322,7 @@
 				if(do_after(M, 8, target = src))
 					M.visible_message("<span class='notice'>[M] takes off \the [src] from the wall.</span>",
 									 "<span class='notice'>You take off \the [src] from the wall.</span>")
-					var/obj/item/weapon/picture_frame/F = new frame_type(get_turf(M))
-					if(framed)
-						var/obj/item/I = framed
-						framed = null
-						I.forceMove(F)
-						F.displayed = I
-					if(frame_glass)
-						F.frame_glass = TRUE
-					F.update_icon()
-					if(!issilicon(M))
-						M.put_in_hands(F)
-					qdel(src)
+					deconstruct(TRUE, M)
 					return
 
 			add_fingerprint(usr)

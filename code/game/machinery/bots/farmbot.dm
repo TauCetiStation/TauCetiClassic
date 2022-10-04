@@ -30,8 +30,7 @@
 	icon_state = "farmbot0"
 	density = TRUE
 	anchored = FALSE
-	health = 50
-	maxhealth = 50
+	max_integrity = 50
 	req_access =list(access_hydroponics)
 
 	var/Max_Fertilizers = 10
