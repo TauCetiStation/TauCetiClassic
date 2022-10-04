@@ -229,7 +229,7 @@
 		return
 
 	var/obj/structure/blob/factory/F = B.change_to(/obj/structure/blob/factory)
-	F.overmind = src
+	F.OV = src
 	factory_blobs += F
 
 /mob/camera/blob/verb/revert()

@@ -126,7 +126,7 @@
 	blob_mobs = null
 
 	for(var/obj/structure/blob/factory/F in factory_blobs)
-		F.overmind = null
+		F.OV = null
 	factory_blobs = null
 
 	return ..()

@@ -17,8 +17,8 @@
 		naut.factory = null
 		to_chat(naut, "<span class='danger'>Your factory was destroyed! You feel yourself dying!</span>")
 		naut.throw_alert("nofactory", /atom/movable/screen/alert/nofactory)
-	if(overmind)
-		overmind.factory_blobs -= src
+	if(OV)
+		OV.factory_blobs -= src
 	return ..()
 
 /obj/structure/blob/factory/run_action()
