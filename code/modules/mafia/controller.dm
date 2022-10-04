@@ -107,8 +107,7 @@
 	map_deleter.defineRegion(spawn_area, locate(spawn_area.x + 23,spawn_area.y + 23,spawn_area.z), replace = TRUE) //so we're ready to mass delete when round ends
 
 	if(!landmarks.len)//we grab town center when we grab landmarks, if there is none (the first game signed up for let's grab them post load)
-		landmarks = landmarks_list["Mafia Player Spawn"]
-		landmarks = landmarks.Copy()
+		landmarks = landmarks_list["Mafia Player Spawn"].Copy()
 		town_center_landmark = locate("landmark*Mafia Town Center")
 
 	current_setup_text = list()
