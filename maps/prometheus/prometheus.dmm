@@ -88701,7 +88701,7 @@
 "vIV" = (
 /obj/structure/table/woodentable,
 /obj/machinery/faxmachine{
-	department = "Captain's Office"
+	department = "Bridge"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -115391,12 +115391,12 @@ sHx
 sHx
 sHx
 hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
+cJy
+iRy
+iRy
+cJy
+cJy
+iRy
 cJy
 iRy
 cJy
@@ -115648,11 +115648,11 @@ vVH
 lqA
 hGN
 hGN
-rKO
-rKO
-rKO
-rKO
-rKO
+hGN
+hGN
+hGN
+hGN
+hGN
 hGN
 cJy
 iRy
@@ -118218,11 +118218,11 @@ vjk
 xAe
 vlL
 hGN
-hGN
 rKO
 rKO
 rKO
-hGN
+rKO
+rKO
 hGN
 cJy
 cJy
@@ -118474,13 +118474,13 @@ uem
 enF
 eGP
 vlL
-iRy
+hGN
 hGN
 uEs
 lzP
 lqA
 hGN
-cJy
+hGN
 cJy
 cJy
 hGN
