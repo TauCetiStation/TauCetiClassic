@@ -73,7 +73,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return
 		if(!do_skill_checks(user))
 			return
-		busy = 1
+		busy = TRUE
 		loaded_item = O
 		user.drop_from_inventory(O, src)
 		to_chat(user, "<span class='notice'>You add the [O.name] to the machine!</span>")
@@ -81,12 +81,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 		flick("d_analyzer_la", src)
 		if(linked_console)
 			nanomanager.update_uis(linked_console)
-		addtimer(CALLBACK(src, .proc/unbusy), 6)
+		VARSET_IN(src, busy, FALSE, 6)
 		return 1
 	return
-
-/obj/machinery/r_n_d/destructive_analyzer/proc/unbusy()
-	busy = 0
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/deconstruct_item()
 	if(busy)
