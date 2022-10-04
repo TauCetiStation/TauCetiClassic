@@ -77,7 +77,7 @@
 			hierophant_message("<span class='cult'><b>[nominee] proposes selecting an Eminence from ghosts!</b> You may object by interacting with the eminence spire. The vote will otherwise pass in 30 seconds.</span>")
 	for(var/mob/M as anything in servants_and_ghosts())
 		M.playsound_local(M, 'sound/antag/eminence_hit.ogg', VOL_EFFECTS_MASTER)
-	selection_timer = addtimer(CALLBACK(src, .proc/kingmaker), 3 SECONDS, TIMER_STOPPABLE)
+	selection_timer = addtimer(CALLBACK(src, .proc/kingmaker), 30 SECONDS, TIMER_STOPPABLE)
 
 //Used to nominate oneself or ghosts for the role of Eminence.
 /obj/structure/eminence_spire/proc/objection(mob/living/wright)

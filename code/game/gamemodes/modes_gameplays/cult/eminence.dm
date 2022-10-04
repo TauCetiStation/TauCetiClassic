@@ -11,13 +11,14 @@
 	layer = FLY_LAYER
 	faction = "cult"
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	var/turf/last_failed_turf
-	var/lastWarning = 0
 	var/image/eminence_image = null
 	var/obj/item/weapon/storage/bible/tome/upgraded/tome
 	COOLDOWN_DECLARE(command_point)
 
 /mob/camera/eminence/atom_init()
+	eminence_image = image(icon, src, icon_state)
+	ghost_sightless_images |= eminence_image
+	updateallghostimages()
 	. = ..()
 	tome = new(src) //Let's pretend that they have a special one
 	tome.destr_cd = 10 SECONDS
@@ -26,10 +27,10 @@
 	tome.build_cd = 5 SECONDS
 
 /mob/camera/eminence/Destroy()
-	. = ..()
 	QDEL_NULL(eminence_image)
 	QDEL_NULL(tome)
 	STOP_PROCESSING(SSprocessing, src)
+	return ..()
 
 /mob/camera/eminence/Move(NewLoc, direct)
 	if(NewLoc && !isspaceturf(NewLoc) && !istype(NewLoc, /turf/unsimulated/wall))
@@ -44,7 +45,6 @@
 /mob/camera/eminence/Login()
 	..()
 	cult_religion.add_member(src)
-	eminence_image = image(icon, src, icon_state)
 	for(var/mob/M as anything in cult_religion.members)
 		M.client?.images |= eminence_image //Only for clients
 	if(cult_religion)
@@ -232,12 +232,12 @@
 					Heart?.heart_normalize()
 
 /obj/effect/temp_visual/command_point/Destroy()
-	. = ..()
 	QDEL_NULL(cult_vis)
+	return ..()
 
 /mob/camera/eminence/proc/eminence_help()
 	to_chat(src, "<span class='cult'>Вы можете взаимодействовать с внешним миром несколькими способами:</span>")
-	to_chat(src, "<span class='cult'><b>Со всеми структурами культа </b>вы можете взаимодействовать как обычный культист, такими как алтарь, кузня, исследовательскими столами, аномалиями и дверьми.</span>")
+	to_chat(src, "<span class='cult'><b>Со всеми структурами культа</b> вы можете взаимодействовать как обычный культист, такими как алтарь, кузня, исследовательскими столами, аномалиями и дверьми.</span>")
 	to_chat(src, "<span class='cult'><b>Средняя кнопка мыши или CTRL</b> для отдачи команды всему культу. Это может помочь даже в бою - убирает большинство причин, по которой последователь не может драться, кроме смертельных.</span>")
 	to_chat(src, "<span class='cult'><b>Вернуться в Рай</b> телепортирует вас на алтари.</span>")
 	to_chat(src, "<span class='cult'><b>Переместиться на станцию</b> телепортирует вас на случайную руну, которая вне Рая.</span>")
