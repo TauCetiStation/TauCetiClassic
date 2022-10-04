@@ -423,7 +423,7 @@
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 15
-	var/restoring_moles = MOLES_CELLSTANDARD / 2
+	var/restoring_moles = MOLES_CELLSTANDARD
 	var/animating = FALSE
 	var/pressure = 0
 
