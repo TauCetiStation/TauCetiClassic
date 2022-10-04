@@ -88700,7 +88700,7 @@
 "vIV" = (
 /obj/structure/table/woodentable,
 /obj/machinery/faxmachine{
-	department = "Captain's Office"
+	department = "Bridge"
 	},
 /turf/simulated/floor{
 	dir = 9;
