@@ -17596,7 +17596,6 @@
 /obj/structure/curtain/medical{
 	icon_state = "open"
 	},
-/obj/structure/curtain/open/privacy,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -88328,7 +88327,9 @@
 	},
 /area/station/medical/cryo)
 "vEd" = (
-/obj/structure/curtain/open/privacy,
+/obj/structure/curtain/medical{
+	icon_state = "open"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -88703,7 +88704,7 @@
 "vIV" = (
 /obj/structure/table/woodentable,
 /obj/machinery/faxmachine{
-	department = "Bridge"
+	department = "Captain's Office"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -90009,7 +90010,9 @@
 /area/station/cargo/recycler)
 "vZR" = (
 /obj/machinery/hologram/holopad,
-/obj/structure/curtain/open/privacy,
+/obj/structure/curtain/medical{
+	icon_state = "open"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -115395,12 +115398,12 @@ sHx
 sHx
 sHx
 hGN
-cJy
-iRy
-iRy
-cJy
-cJy
-iRy
+hGN
+hGN
+hGN
+hGN
+hGN
+hGN
 cJy
 iRy
 cJy
@@ -115652,11 +115655,11 @@ vVH
 lqA
 hGN
 hGN
-hGN
-hGN
-hGN
-hGN
-hGN
+rKO
+rKO
+rKO
+rKO
+rKO
 hGN
 cJy
 iRy
@@ -118222,11 +118225,11 @@ vjk
 xAe
 vlL
 hGN
+hGN
 rKO
 rKO
 rKO
-rKO
-rKO
+hGN
 hGN
 cJy
 cJy
@@ -118478,13 +118481,13 @@ uem
 enF
 eGP
 vlL
-hGN
+iRy
 hGN
 uEs
 lzP
 lqA
 hGN
-iRy
+cJy
 cJy
 cJy
 hGN
