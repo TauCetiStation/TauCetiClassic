@@ -566,3 +566,18 @@
 							I.reagents.add_reagent(pick(contraband_reagents), reagents_to_add)
 						else if(length(danger_reagents))
 							I.reagents.add_reagent(pick(danger_reagents), reagents_to_add)
+
+/obj/structure/closet/crate/war_crate
+	name = "Crate of War"
+	desc = "All you need to destroy those pesky crew and xenos."
+
+/obj/structure/closet/crate/war_crate/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/clothing/head/helmet/space/rig/syndi/elite(src)
+		new /obj/item/clothing/suit/space/rig/syndi/elite(src)
+		new /obj/item/rig_module/emp_shield(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen(src)
+		new /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat(src)
+	new /obj/item/weapon/antag_spawner/borg_tele(src)
+	new /obj/item/nuke_teleporter(src)
+	new /obj/item/device/radio/beacon/syndicate_bomb(src)

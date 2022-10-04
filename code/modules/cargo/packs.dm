@@ -1929,3 +1929,18 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Xeno arsonist crate"
 	group = "xeno"
 	hidden = TRUE
+
+//----------------------------------------------
+//-----------------WAR WITH SYNDIE--------------
+//----------------------------------------------
+/datum/supply_pack/war_with_syndie //The main idea is to give the crew more protection from space
+	name = "Syndicate liquidator"
+	contains = list(/obj/item/clothing/head/helmet/space/rig/security,
+					/obj/item/clothing/suit/space/rig/security,
+					/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+					/obj/item/clothing/shoes/magboots,
+					/obj/item/clothing/shoes/magboots)
+	cost = 10000
+	crate_name = "War of Crate"
+	group = "syndie"
+	hidden = TRUE

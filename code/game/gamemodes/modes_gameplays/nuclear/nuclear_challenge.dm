@@ -63,15 +63,16 @@ var/global/war_device_activation_forbidden
 	U.hidden_uplink.uses = CHALLENGE_TELECRYSTALS
 	U.hidden_uplink.uplink_type = "nuclear"
 
-	var/obj/structure/closet/crate/C = new(get_turf(user))
-	for(var/i in 1 to 2)
-		new /obj/item/clothing/head/helmet/space/rig/syndi/elite(C)
-		new /obj/item/clothing/suit/space/rig/syndi/elite(C)
-	new /obj/item/weapon/antag_spawner/borg_tele(C)
-	new /obj/item/nuke_teleporter(C)
-	new /obj/item/device/radio/beacon/syndicate_bomb(C)
+	new /obj/structure/closet/crate/war_crate(get_turf(user))
 
-	global.cargo_account.money += 30000
+	var/crates = list("Riot gear crate" = 1, "Weapons crate" = 3, "Syndicate liquidator" = 2)
+	for(var/crate_name in crates)
+		var/datum/supply_pack/P = SSshuttle.supply_packs[ckey(crate_name)]
+		var/datum/supply_order/O = new /datum/supply_order(P, "Cent Comm", "Cent Comm", "", "Declaration of War")
+		for(var/i in 1 to crates[crate_name])
+			SSshuttle.shoppinglist += O
+
+	global.cargo_account.money += 10000
 
 	message_admins("[key_name_admin(usr)] is declaring war on station.")
 	log_admin("[key_name(usr)] is declaring war on station.")
@@ -80,7 +81,7 @@ var/global/war_device_activation_forbidden
 	qdel(src)
 
 /obj/item/device/nuclear_challenge/proc/check_allowed(mob/living/user)
-	if(declaring_war)
+/*	if(declaring_war)
 		to_chat(user, "You are already in the process of declaring war! Make your mind up.")
 		return FALSE
 	if(player_list.len < CHALLENGE_MIN_PLAYERS)
@@ -94,7 +95,7 @@ var/global/war_device_activation_forbidden
 		return FALSE
 	if(war_device_activation_forbidden)
 		to_chat(user, "The invasion has already begun. War can not be declared at this point.")
-		return FALSE
+		return FALSE*/
 	return TRUE
 
 #undef CHALLENGE_TELECRYSTALS
