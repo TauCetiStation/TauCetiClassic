@@ -54,11 +54,11 @@
 	switch(damage)
 		if(0)
 			text = NO_INT_ORGAN_DAMAGE
-		if(1 to 25)
+		if(1 to 5)
 			text = MILD_INT_ORGAN_DAMAGE
-		if(25 to 50)
+		if(6 to 10)
 			text = SEVERE_INT_ORGAN_DAMAGE
-		if(50 to INFINITY)
+		if(11 to INFINITY)
 			text = ACUTE_INT_ORGAN_DAMAGE
 	return text
 

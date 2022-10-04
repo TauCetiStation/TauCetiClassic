@@ -324,9 +324,9 @@
 			text = NO_DAMAGE
 		if(1 to 50)
 			text = MILD_DAMAGE
-		if(50 to 100)
+		if(51 to 100)
 			text = SEVERE_DAMAGE
-		if(100 to INFINITY)
+		if(101 to INFINITY)
 			text = ACUTE_DAMAGE
 	return text
 

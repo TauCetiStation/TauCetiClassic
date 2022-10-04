@@ -568,9 +568,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 			text = NO_EXT_ORGAN_DAMAGE
 		if(1 to 25)
 			text = MILD_EXT_ORGAN_DAMAGE
-		if(25 to 50)
+		if(26 to 50)
 			text = SEVERE_EXT_ORGAN_DAMAGE
-		if(50 to INFINITY)
+		if(51 to INFINITY)
 			text = ACUTE_EXT_ORGAN_DAMAGE
 	return text
 
