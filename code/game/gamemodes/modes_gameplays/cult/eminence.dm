@@ -11,14 +11,10 @@
 	layer = FLY_LAYER
 	faction = "cult"
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	var/image/eminence_image = null
 	var/obj/item/weapon/storage/bible/tome/upgraded/tome
 	COOLDOWN_DECLARE(command_point)
 
 /mob/camera/eminence/atom_init()
-	eminence_image = image(icon, src, icon_state)
-	ghost_sightless_images |= eminence_image
-	updateallghostimages()
 	. = ..()
 	tome = new(src) //Let's pretend that they have a special one
 	tome.destr_cd = 10 SECONDS
@@ -27,7 +23,6 @@
 	tome.build_cd = 5 SECONDS
 
 /mob/camera/eminence/Destroy()
-	QDEL_NULL(eminence_image)
 	QDEL_NULL(tome)
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
@@ -45,8 +40,7 @@
 /mob/camera/eminence/Login()
 	..()
 	cult_religion.add_member(src)
-	for(var/mob/M as anything in cult_religion.members)
-		M.client?.images |= eminence_image //Only for clients
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/my_religion, "eminence", image(icon, src, icon_state), src, my_religion)
 	if(cult_religion)
 		if(cult_religion.eminence && cult_religion.eminence != src)
 			cult_religion.remove_member(src)
