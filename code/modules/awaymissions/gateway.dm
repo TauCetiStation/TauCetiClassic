@@ -5,6 +5,7 @@
 	icon_state = "off"
 	density = TRUE
 	anchored = TRUE
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 	var/active = FALSE  // on away missions you should activate gateway from start, or place "awaystart" landmarks somewhere
 	var/hacked = FALSE

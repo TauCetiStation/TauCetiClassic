@@ -61,6 +61,9 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define HEAR_PASS_SAY          (1<<21)   // temp for say code, for objects that need to pass SAY to inner mobs through get_listeners()
 #define HEAR_TA_SAY            (1<<22)   // temp for talking_atoms
 
+#define IN_INVENTORY           (1<<23)
+#define IN_STORAGE             (1<<23) // reuse of last bit we have
+
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
 #define HOLOGRAM_2         (1<<0)
 /// atom queued to SSoverlay
@@ -127,6 +130,22 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PASSBLOB     8
 #define PASSCRAWL   16
 #define PASSMOB     32
+
+//Fire and Acid stuff, for resistance_flags
+#define LAVA_PROOF (1<<0)
+/// 100% immune to fire damage (but not necessarily to lava or heat)
+#define FIRE_PROOF (1<<1)
+#define FLAMMABLE (1<<2)
+/// acid can't even appear on it, let alone melt it.
+#define UNACIDABLE (1<<4)
+/// acid stuck on it doesn't melt it.
+#define ACID_PROOF (1<<5)
+/// doesn't take damage
+#define INDESTRUCTIBLE (1<<6)
+/// can be hit with melee (mb change to CANT_BE_HIT)
+#define CAN_BE_HIT (1<<7)
+
+#define FULL_INDESTRUCTIBLE INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 //turf-only flags
 #define NOSTEPSOUND   1

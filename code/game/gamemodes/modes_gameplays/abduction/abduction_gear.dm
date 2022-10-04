@@ -87,19 +87,16 @@
 	DeactivateStealth()
 
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/AbductorCheck(user)
+/obj/item/clothing/suit/armor/abductor/vest/proc/AbductorCheck(mob/user)
 	if(isabductor(user))
 		return TRUE
 	to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
 	return FALSE
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/AgentCheck(mob/living/carbon/human/user)
-	return isabductoragent(user)
-
 /obj/item/clothing/suit/armor/abductor/vest/attack_self(mob/user)
 	if(!AbductorCheck(user))
 		return
-	if(!AgentCheck(user))
+	if(!isabductoragent(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	switch(mode)
@@ -131,14 +128,11 @@
 
 
 //SCIENCE TOOL
-/obj/item/device/abductor/proc/AbductorCheck(user)
+/obj/item/device/abductor/proc/AbductorCheck(mob/user)
 	if(isabductor(user))
 		return TRUE
 	to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
 	return FALSE
-
-/obj/item/device/abductor/proc/ScientistCheck(mob/living/carbon/human/user)
-	return isabductorsci(user)
 
 /obj/item/device/abductor/gizmo
 	name = "science tool"
@@ -154,7 +148,7 @@
 /obj/item/device/abductor/gizmo/attack_self(mob/user)
 	if(!AbductorCheck(user))
 		return
-	if(!ScientistCheck(user))
+	if(!isabductorsci(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	if(mode == GIZMO_SCAN)
@@ -168,7 +162,7 @@
 /obj/item/device/abductor/gizmo/attack(mob/living/M, mob/user)
 	if(!AbductorCheck(user))
 		return
-	if(!ScientistCheck(user))
+	if(!isabductorsci(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	switch(mode)
@@ -183,7 +177,7 @@
 		return
 	if(!AbductorCheck(user))
 		return
-	if(!ScientistCheck(user))
+	if(!isabductorsci(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	switch(mode)
@@ -203,7 +197,8 @@
 		to_chat(user, "<span class='notice'>This specimen is already marked.</span>")
 		return
 	if(ishuman(target))
-		if(isabductor(target))
+		var/mob/M = target
+		if(isabductor(M))
 			marked = target
 			to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
 		else
@@ -374,7 +369,7 @@
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
 	if(!isabductor(user))
 		return
-	if(!AgentCheck(user))
+	if(!isabductoragent(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	mode = (mode + 1) % BATON_MODES
@@ -408,9 +403,6 @@
 		if(BATON_PROBE)
 			icon_state = "wonderprodProbe"
 			item_state = "wonderprodProbe"
-
-/obj/item/weapon/abductor_baton/proc/AgentCheck(mob/living/carbon/human/user)
-	return isabductoragent(user)
 
 /obj/item/weapon/abductor_baton/attack(mob/target, mob/living/user)
 	if(!isabductor(user))

@@ -11,6 +11,8 @@
 	door_open_sound  = 'sound/machines/blast_door.ogg'
 	door_close_sound = 'sound/machines/blast_door.ogg'
 
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 /obj/machinery/door/poddoor/cargo
 	icon = 'icons/locations/shuttles/cargo.dmi'
 

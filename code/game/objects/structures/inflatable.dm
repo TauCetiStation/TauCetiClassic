@@ -34,7 +34,8 @@
 	icon = 'icons/obj/inflatable.dmi'
 	icon_state = "wall"
 
-	var/health = 50.0
+	max_integrity = 50
+	resistance_flags = CAN_BE_HIT
 
 
 /obj/structure/inflatable/atom_init()
@@ -48,86 +49,26 @@
 /obj/structure/inflatable/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	return 0
 
-/obj/structure/inflatable/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-	health -= Proj.damage
-	if(health <= 0)
-		deflate(1)
-
-
-/obj/structure/inflatable/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			qdel(src)
-			return
-		if(EXPLODE_LIGHT)
-			if(prob(50))
-				return
-	deflate(1)
-
-/obj/structure/inflatable/blob_act()
-	deflate(1)
-
-
 /obj/structure/inflatable/attack_paw(mob/user)
-	user.SetNextMove(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	return attack_generic(user, 15)
+	return attack_generic(user, 15, BRUTE, MELEE)
 
 /obj/structure/inflatable/attack_hand(mob/user)
 	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
 	return
 
-
-/obj/structure/inflatable/proc/attack_generic(mob/user, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
-	health -= damage
-	if(health <= 0)
-		user.visible_message("<span class='danger'>[user] tears open [src]!</span>")
-		deflate(1)
-	else	//for nicer text~
-		user.visible_message("<span class='danger'>[user] tears at [src]!</span>")
-
-/obj/structure/inflatable/attack_alien(mob/user)
-	if(isxenolarva(user) || isfacehugger(user))
-		return
-	user.do_attack_animation(src)
-	user.SetNextMove(CLICK_CD_MELEE)
-	attack_generic(user, 15)
-
-/obj/structure/inflatable/attack_animal(mob/living/simple_animal/attacker)
-	..()
-	if(attacker.melee_damage <= 0)
-		return
-	attack_generic(attacker, attacker.melee_damage)
-
-
-/obj/structure/inflatable/attack_slime(mob/user)
-	if(!isslimeadult(user))
-		return
-	user.SetNextMove(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	attack_generic(user, rand(10, 15))
-
+/obj/structure/inflatable/deconstruct(disassembled)
+	deflate(1)
 
 /obj/structure/inflatable/attackby(obj/item/weapon/W, mob/user)
-	if(!istype(W))
-		return
-
 	if(W.can_puncture())
 		visible_message("<span class='warning'><b>[user] pierces [src] with [W]!</b></span>")
 		deflate(1)
-	if(W.damtype == BRUTE || W.damtype == BURN)
-		hit(W.force)
-		..()
+		return
+	..()
 
-/obj/structure/inflatable/proc/hit(damage, sound_effect = 1)
-	health = max(0, health - damage)
-	if(sound_effect)
-		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-	if(health <= 0)
-		deflate(1)
-
+/obj/structure/inflatable/play_attack_sound(damage_amount, damage_type, damage_flag)
+	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 
 /obj/structure/inflatable/proc/deflate(violent=0)
 	playsound(src, 'sound/machines/hiss.ogg', VOL_EFFECTS_MASTER)

@@ -25,6 +25,8 @@ var/global/list/mechtoys = list(
 	layer = 4
 	explosion_resistance = 5
 
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/plasticflaps/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	if(istype(caller, /obj/machinery/bot/mulebot))
 		return TRUE
@@ -57,6 +59,11 @@ var/global/list/mechtoys = list(
 		if(!M.lying) //If your not laying down, or a small creature, no pass.
 			return FALSE
 	return ..()
+
+/obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/mineral/plastic(loc, 5)
+	..()
 
 /obj/structure/plasticflaps/ex_act(severity)
 	switch(severity)

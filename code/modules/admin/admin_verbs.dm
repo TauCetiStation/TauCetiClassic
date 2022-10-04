@@ -1142,7 +1142,7 @@ var/global/list/admin_verbs_hideable = list(
 	message_admins("[key_name_admin(src)] started loading event-map [choice]")
 	log_admin("[key_name(src)] started loading event-map [choice]")
 
-	if(maploader.load_new_z_level(choice, linkage))//, load_speed = 100)
+	if(maploader.load_new_z_level(choice, list(ZTRAIT_AWAY = TRUE, ZTRAIT_LINKAGE = linkage)))//, load_speed = 100)
 		message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz], linkage [linkage ? linkage : "not set"]")
 		log_admin("[key_name(src)] loaded event-map [choice], zlevel [world.maxz], linkage [linkage ? linkage : "not set"]")
 	else
@@ -1204,7 +1204,7 @@ var/global/centcom_barriers_stat = 1
 	anchored = TRUE
 	density = TRUE
 	invisibility = 101
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	icon_state = "x3"
 
 /obj/structure/centcom_barrier/atom_init()
