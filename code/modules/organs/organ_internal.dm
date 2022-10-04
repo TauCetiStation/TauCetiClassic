@@ -1,3 +1,8 @@
+#define NO_INT_ORGAN_DAMAGE "None"
+#define MILD_INT_ORGAN_DAMAGE "Mild"
+#define SEVERE_INT_ORGAN_DAMAGE "Severe"
+#define ACUTE_INT_ORGAN_DAMAGE "Acute"
+
 /****************************************************
 				INTERNAL ORGANS
 ****************************************************/
@@ -44,6 +49,18 @@
 /obj/item/organ/internal/proc/is_broken()
 	return damage >= min_broken_damage
 
+/obj/item/organ/internal/proc/getInternalOrganDamageString()
+	var/text = ""
+	switch(damage)
+		if(0)
+			text = NO_INT_ORGAN_DAMAGE
+		if(1 to 25)
+			text = MILD_INT_ORGAN_DAMAGE
+		if(25 to 50)
+			text = SEVERE_INT_ORGAN_DAMAGE
+		if(50 to INFINITY)
+			text = ACUTE_INT_ORGAN_DAMAGE
+	return text
 
 /obj/item/organ/internal/process()
 	//Process infections
@@ -418,3 +435,8 @@
 		owner.blurEyes(20)
 	if(is_broken())
 		owner.eye_blind = 20
+
+#undef NO_INT_ORGAN_DAMAGE
+#undef MILD_INT_ORGAN_DAMAGE
+#undef SEVERE_INT_ORGAN_DAMAGE
+#undef ACUTE_INT_ORGAN_DAMAGE

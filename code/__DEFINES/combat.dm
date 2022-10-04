@@ -6,6 +6,7 @@
 #define OXY       "oxy"
 #define CLONE     "clone"
 #define HALLOSS   "halloss"
+#define BRAINLOSS "brainloss"
 
 //Damage flag defines //
 /// Involves a melee attack or a thrown object.

@@ -128,7 +128,7 @@
 		message += "<span class='notice'>Localized Damage, Brute/Burn:</span><br>"
 		if(length(damaged))
 			for(var/obj/item/organ/external/BP in damaged)
-				message += "<span class='notice'>&emsp; [capitalize(BP.name)]: [(BP.brute_dam > 0) ? "<span class='warning'>[BP.getOrganDamageString(BRUTE)]</span>" : "None"][(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'>\[Bleeding\]</span>" : "&emsp;"] - [(BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.getOrganDamageString(BURN)]</font>" : "None"]</span><br>"
+				message += "<span class='notice'>&emsp; [capitalize(BP.name)]: [(BP.brute_dam > 0) ? "<span class='warning'>[BP.getExternalOrganDamageString(BRUTE)]</span>" : "None"][(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'>\[Bleeding\]</span>" : "&emsp;"] - [(BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.getExternalOrganDamageString(BURN)]</font>" : "None"]</span><br>"
 		else
 			message += "<span class='notice'>&emsp; Limbs are OK.</span><br>"
 

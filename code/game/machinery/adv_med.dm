@@ -183,14 +183,14 @@
 				if(occupant.virus2.len)
 					dat += text("<font color='red'>Viral pathogen detected in blood stream.</font><BR>")
 
-				dat += text("<font color='[]'>\t-Brute Damage %: []</font><BR>", (occupant.getBruteLoss() < 60 ? "blue" : "red"), occupant.getBruteLoss())
-				dat += text("<font color='[]'>\t-Respiratory Damage %: []</font><BR>", (occupant.getOxyLoss() < 60 ? "blue" : "red"), occupant.getOxyLoss())
-				dat += text("<font color='[]'>\t-Toxin Content %: []</font><BR>", (occupant.getToxLoss() < 60 ? "blue" : "red"), occupant.getToxLoss())
-				dat += text("<font color='[]'>\t-Burn Severity %: []</font><BR><BR>", (occupant.getFireLoss() < 60 ? "blue" : "red"), occupant.getFireLoss())
+				dat += text("<font color='[]'>\t-Brute Damage: []</font><BR>", (occupant.getBruteLoss() < 60 ? "blue" : "red"), occupant.getLossString(BRUTE))
+				dat += text("<font color='[]'>\t-Respiratory Damage: []</font><BR>", (occupant.getOxyLoss() < 60 ? "blue" : "red"), occupant.getLossString(OXY))
+				dat += text("<font color='[]'>\t-Toxin Content: []</font><BR>", (occupant.getToxLoss() < 60 ? "blue" : "red"), occupant.getLossString(TOX))
+				dat += text("<font color='[]'>\t-Burn Severity: []</font><BR><BR>", (occupant.getFireLoss() < 60 ? "blue" : "red"), occupant.getLossString(BURN))
 
-				dat += text("<font color='[]'>\tRadiation Level %: []</font><BR>", (occupant.radiation < 10 ?"blue" : "red"), occupant.radiation)
-				dat += text("<font color='[]'>\tGenetic Tissue Damage %: []</font><BR>", (occupant.getCloneLoss() < 1 ?"blue" : "red"), occupant.getCloneLoss())
-				dat += text("<font color='[]'>\tApprox. Brain Damage %: []</font><BR>", (occupant.getBrainLoss() < 1 ?"blue" : "red"), occupant.getBrainLoss())
+				dat += text("<font color='[]'>\tRadiation Level: []</font><BR>", (occupant.radiation < 10 ?"blue" : "red"), occupant.getLossString(IRRADIATE))
+				dat += text("<font color='[]'>\tGenetic Tissue Damage: []</font><BR>", (occupant.getCloneLoss() < 1 ?"blue" : "red"), occupant.getLossString(CLONE))
+				dat += text("<font color='[]'>\tApprox. Brain Damage: []</font><BR>", (occupant.getBrainLoss() < 1 ?"blue" : "red"), occupant.getLossString(BRAINLOSS))
 				var/occupant_paralysis = occupant.AmountParalyzed()
 				dat += text("Paralysis Summary %: [] ([] seconds left!)<BR>", occupant_paralysis, round(occupant_paralysis / 4))
 				dat += text("Body Temperature: [occupant.bodytemperature-T0C]&deg;C ([occupant.bodytemperature*1.8-459.67]&deg;F)<BR><HR>")
@@ -281,8 +281,8 @@
 					if(!AN && !open && !infected && !imp)
 						AN = "None:"
 					if(!(BP.is_stump))
-						dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
-						storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
+						dat += "<td>[BP.name]</td><td>[BP.getExternalOrganDamageString(BURN)]</td><td>[BP.getExternalOrganDamageString(BRUTE)]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
+						storedinfo += "<td>[BP.name]</td><td>[BP.getExternalOrganDamageString(BURN)]</td><td>[BP.getExternalOrganDamageString(BRUTE)]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
 					else
 						dat += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
 						storedinfo += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
@@ -334,10 +334,10 @@
 					if(!organ_status && !infection)
 						infection = "None:"
 					dat += "<tr>"
-					dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection][organ_status]|[mech]</td><td></td>"
+					dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.getInternalOrganDamageString()]</td><td>[infection][organ_status]|[mech]</td><td></td>"
 					dat += "</tr>"
 					storedinfo += "<tr>"
-					storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection][organ_status]|[mech]</td><td></td>"
+					storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[IO.getInternalOrganDamageString()]</td><td>[infection][organ_status]|[mech]</td><td></td>"
 					storedinfo += "</tr>"
 				dat += "</table>"
 				storedinfo += "</table>"

@@ -308,6 +308,12 @@
 			function = getToxLoss()
 		if(BURN)
 			function = getFireLoss()
+		if(IRRADIATE)
+			function = radiation
+		if(CLONE)
+			function = getCloneLoss()
+		if(BRAINLOSS)
+			function = getBrainLoss()
 	var/numbers = function
 	if(fake)
 		//copypast from healthanalyzer
@@ -1542,3 +1548,8 @@
 
 /mob/living/proc/get_pumped(bodypart)
 	return 0
+
+#undef NO_DAMAGE
+#undef MILD_DAMAGE
+#undef SEVERE_DAMAGE
+#undef ACUTE_DAMAGE

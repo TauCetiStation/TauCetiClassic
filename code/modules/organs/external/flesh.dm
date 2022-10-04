@@ -1,8 +1,3 @@
-#define NO_ORGAN_DAMAGE "None"
-#define MILD_ORGAN_DAMAGE "Mild"
-#define SEVERE_ORGAN_DAMAGE "Severe"
-#define ACUTE_ORGAN_DAMAGE "Acute"
-
 // This thing allows to create unique bodyparts very easy just by changing bodypart controller type
 /datum/bodypart_controller
 	var/name = "Flesh bodypart controller"
