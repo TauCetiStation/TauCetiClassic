@@ -23,8 +23,7 @@
 	var/last_screech = 0
 	var/screech_delay = 900
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/xenomeat = 5)
-	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds,
-						/obj/effect/proc_holder/spell/targeted/xeno_whisp,
+	alien_spells = list(/obj/effect/proc_holder/spell/targeted/xeno_whisp,
 						/obj/effect/proc_holder/spell/no_target/xenowinds,
 						/obj/effect/proc_holder/spell/targeted/transfer_plasma)
 
