@@ -70,10 +70,11 @@ SUBSYSTEM_DEF(holomaps)
 #undef HOLOMAP_CONCRETE_TILE
 
 /datum/controller/subsystem/holomaps/proc/generate_holochip_encryption()		// Here we generate unique combinations of frequency/encryption for each predefined holochip sets
-	nuclear_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,1000))
-	ert_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,1000))
-	deathsquad_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,1000))
-	vox_transport_layer = list(frequency = rand(1200,1600), encryption = rand(1,1000))
+	//We need frequency in TEXT and encryption in NUMBER
+	nuclear_transport_layer = list(frequency = num2text(rand(1200,1600)), encryption = rand(1,1000))
+	ert_transport_layer = list(frequency = num2text(rand(1200,1600)), encryption = rand(1,1000))
+	deathsquad_transport_layer = list(frequency = num2text(rand(1200,1600)), encryption = rand(1,1000))
+	vox_transport_layer = list(frequency = num2text(rand(1200,1600)), encryption = rand(1,1000))
 
 #define COLOR_HMAP_DEAD "#d3212d"
 #define COLOR_HMAP_INCAPACITATED "#ffef00"

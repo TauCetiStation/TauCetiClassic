@@ -14,7 +14,7 @@
 	var/image/holomap_base
 	var/image/self_marker
 
-	var/frequency = 1400		//Frequency for transmitting data
+	var/frequency = "1400"		//Frequency for transmitting data
 	var/encryption = 500	//Encryption for double security
 
 /obj/item/holochip/atom_init(obj/item/I)
@@ -33,8 +33,7 @@
 	QDEL_NULL(holomap_toggle_action)
 	holder = null
 	activator = null
-	if(SSholomaps.holochips[num2text(frequency)] && (src in SSholomaps.holochips[num2text(frequency)]))
-		SSholomaps.holochips[num2text(frequency)] -= src
+	freq_remove()
 	return ..()
 
 /obj/item/holochip/proc/add_action(mob/living/carbon/human/wearer)
@@ -53,6 +52,7 @@
 /obj/item/holochip/proc/activate_holomap(mob/user)
 	if(activator)
 		return
+	update_freq(frequency)
 	activator = user
 	holomap_base = SSholomaps.default_holomap
 	if(color_filter)
@@ -61,7 +61,9 @@
 	START_PROCESSING(SSholomaps, src)
 
 /obj/item/holochip/proc/deactivate_holomap()
-	if(!activator || !activator.holomap_obj) //Clientless case
+	freq_remove()
+	STOP_PROCESSING(SSholomaps, src) //No matter what
+	if(!activator || !activator.holomap_obj)
 		return
 	activator.holomap_obj.cut_overlay(holomap_base)
 	if(length(holomap_images) && activator.client)
@@ -69,7 +71,6 @@
 		QDEL_LIST(holomap_images)
 	holomap_base = null
 	activator = null
-	STOP_PROCESSING(SSholomaps, src)
 
 /obj/item/holochip/proc/handle_markers()
 	if(!activator || !activator.client)
@@ -78,7 +79,7 @@
 	if(length(holomap_images))
 		activator.client.images -= holomap_images
 		QDEL_LIST(holomap_images)
-	for(var/obj/item/holochip/HC in SSholomaps.holochips[num2text(frequency)])
+	for(var/obj/item/holochip/HC in SSholomaps.holochips[frequency])
 		if(HC.frequency != frequency)
 			HC.update_freq(HC.frequency)
 			continue
@@ -123,14 +124,15 @@
 /obj/item/holochip/attack_self(mob/user)
 	if(!ishuman(user))
 		return
+	var/num_frequency = text2num(frequency)
 	var/dat = {"<TT>
 				<B>Transport layer</B> for holochip:<BR>
 				Frequency:
-				<A href='byond://?src=\ref[src];frequency=-10'>-</A>
-				<A href='byond://?src=\ref[src];frequency=-1'>-</A>
-				[format_frequency(frequency)]
-				<A href='byond://?src=\ref[src];frequency=1'>+</A>
-				<A href='byond://?src=\ref[src];frequency=10'>+</A><BR>
+				<A href='byond://?src=\ref[src];num_frequency=-10'>-</A>
+				<A href='byond://?src=\ref[src];num_frequency=-1'>-</A>
+				[format_frequency(num_frequency)]
+				<A href='byond://?src=\ref[src];num_frequency=1'>+</A>
+				<A href='byond://?src=\ref[src];num_frequency=10'>+</A><BR>
 				Encryption:
 				<A href='byond://?src=\ref[src];encryption=-100'>---</A>
 				<A href='byond://?src=\ref[src];encryption=-50'>--</A>
@@ -142,6 +144,7 @@
 				<A href='byond://?src=\ref[src];encryption=50'>++</A>
 				<A href='byond://?src=\ref[src];encryption=100'>+++</A><BR>
 				</TT>"}
+	frequency = num2text(num_frequency)
 
 	var/datum/browser/popup = new(user, "holochip")
 	popup.set_content(dat)
@@ -153,19 +156,23 @@
 		return
 
 	if(frequency)
-		var/old_freq = num2text(frequency) //Handle old freq
+		var/old_freq = frequency //Handle old freq
 		if(SSholomaps.holochips[old_freq])
 			SSholomaps.holochips[old_freq] -= src
 			if(!length(SSholomaps.holochips[old_freq]))
 				SSholomaps.holochips -= old_freq
 
-	var/texted_freq = num2text(new_frequency) //Hande new freq
+	var/texted_freq = new_frequency //Handle new freq
 	var/freque = SSholomaps.holochips[texted_freq]
 	if(!freque) //We need new freq
 		SSholomaps.holochips[texted_freq] = list()
 		SSholomaps.holochips[texted_freq] += src
 	else //Add to existing freq
 		freque += src
+
+/obj/item/holochip/proc/freq_remove()
+	if(SSholomaps.holochips[frequency] && (src in SSholomaps.holochips[frequency]))
+		SSholomaps.holochips[frequency] -= src
 
 /obj/item/holochip/Topic(href, href_list)
 	if(usr.incapacitated() || !Adjacent(usr) || !ishuman(usr))
@@ -201,8 +208,8 @@
 /datum/action/toggle_holomap/Activate()
 	to_chat(owner, "<span class='notice'>You activate the holomap.</span>")
 	var/obj/item/holochip/target_holochip = target
-	target_holochip.activate_holomap(owner)
 	target_holochip.update_freq(target_holochip.frequency)
+	target_holochip.activate_holomap(owner)
 	target_holochip = null
 	active = TRUE
 
