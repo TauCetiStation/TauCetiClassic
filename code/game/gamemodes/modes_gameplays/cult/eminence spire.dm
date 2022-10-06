@@ -131,7 +131,7 @@
 	else if(eminence_nominee == "ghosts")
 		kingmaking = TRUE
 		hierophant_message("<span class='cult'><b>The eminence spire is now selecting a ghost to be the Eminence...</b></span>")
-		var/list/candidates = pollGhostCandidates("Would you like to play as the servants' Eminence?", ROLE_CULTIST, IGNORE_EMINENCE_TODO, poll_time = 100)
+		var/list/candidates = pollGhostCandidates("Would you like to play as the servants' Eminence?", ROLE_CULTIST, IGNORE_EMINENCE, poll_time = 100)
 		kingmaking = FALSE
 		if(!length(candidates))
 			for(var/mob/M as anything in servants_and_ghosts())
