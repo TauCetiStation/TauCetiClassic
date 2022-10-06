@@ -89,14 +89,9 @@
 	action_type = AB_INNATE
 
 /datum/action/innate/eminence/forbid_research/Activate()
-	if(!global.cult_religion.research_forbidden)
-		global.cult_religion.research_forbidden = TRUE
-		for(var/mob/L as anything in global.cult_religion.members)
-			to_chat(L, "<span class='cult'>Возвышенный ЗАПРЕТИЛ самостоятельное исследование последователям!</span>")
-	else
-		global.cult_religion.research_forbidden = FALSE
-		for(var/mob/L as anything in global.cult_religion.members)
-			to_chat(L, "<span class='cult'>Возвышенный РАЗРЕШИЛ самостоятельное исследование последователям!</span>")
+	for(var/mob/L as anything in global.cult_religion.members)
+		to_chat(L, "<span class='cult'>Возвышенный [global.cult_religion.research_forbidden ? "РАЗРЕШИЛ" : "ЗАПРЕТИЛ"]самостоятельное исследование последователям!</span>")
+	global.cult_religion.research_forbidden = !global.cult_religion.research_forbidden
 
 //Activates tome
 /datum/action/innate/eminence/del_runes
