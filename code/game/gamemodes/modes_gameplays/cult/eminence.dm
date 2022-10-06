@@ -54,8 +54,7 @@
 		R.remove_member(src)
 		qdel(src)
 		return
-	else
-		R.eminence = src
+	R.eminence = src
 	tome.religion = R
 	to_chat(src, "<span class='cult large'>Вы стали Возвышенным!</span>")
 	to_chat(src, "<span class='cult'>Будучи Возвышенным, вы ведёте весь культ за собой. Весь культ услышит то, что вы скажите.</span>")
