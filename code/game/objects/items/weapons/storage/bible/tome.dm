@@ -252,9 +252,7 @@
 	var/to_anchor = src
 	if(iseminence(user))
 		to_anchor = user
-		choice = show_radial_menu(user, to_anchor, temp_images, tooltips = TRUE, require_near = TRUE)
-	else
-		choice = show_radial_menu(user, to_anchor, temp_images, tooltips = TRUE, require_near = TRUE)
+	choice = show_radial_menu(user, to_anchor, temp_images, tooltips = TRUE, require_near = TRUE)
 
 	switch(choice)
 		if(CHAPEL_LOOK)
