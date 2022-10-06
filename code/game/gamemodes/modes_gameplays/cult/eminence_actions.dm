@@ -47,11 +47,11 @@
 	button_icon_state = "abscond"
 
 /datum/action/innate/eminence/heaven_jump/Activate()
-	if(cult_religion)
+	if(global.cult_religion)
 		if(!length(cult_religion.altars))
 			to_chat(src, "<span class='bold cult'>У вас нет алтарей!</span>")
 			return
-		owner.forceMove(get_turf(pick(cult_religion.altars)))
+		owner.forceMove(get_turf(pick(global.cult_religion.altars)))
 		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', VOL_EFFECTS_MASTER)
 		flash_color(owner, flash_time = 25)
 	else
@@ -63,9 +63,9 @@
 	button_icon_state = "warp_down"
 
 /datum/action/innate/eminence/station_jump/Activate()
-	if(cult_religion)
+	if(global.cult_religion)
 		var/list/possible_runes = list()
-		for(var/obj/effect/rune/rune as anything in cult_religion.runes)
+		for(var/obj/effect/rune/rune as anything in global.cult_religion.runes)
 			if(!is_centcom_level(rune.z))
 				possible_runes += rune
 		if(length(possible_runes))
@@ -93,13 +93,13 @@
 	action_type = AB_INNATE
 
 /datum/action/innate/eminence/forbid_research/Activate()
-	if(!cult_religion.research_forbidden)
-		cult_religion.research_forbidden = TRUE
-		for(var/mob/L as anything in cult_religion.members)
+	if(!global.cult_religion.research_forbidden)
+		global.cult_religion.research_forbidden = TRUE
+		for(var/mob/L as anything in global.cult_religion.members)
 			to_chat(L, "<span class='cult'>Возвышенный ЗАПРЕТИЛ самостоятельное исследование последователям!</span>")
 	else
-		cult_religion.research_forbidden = FALSE
-		for(var/mob/L as anything in cult_religion.members)
+		global.cult_religion.research_forbidden = FALSE
+		for(var/mob/L as anything in global.cult_religion.members)
 			to_chat(L, "<span class='cult'>Возвышенный РАЗРЕШИЛ самостоятельное исследование последователям!</span>")
 
 //Activates tome

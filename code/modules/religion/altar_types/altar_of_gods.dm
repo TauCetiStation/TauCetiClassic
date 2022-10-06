@@ -49,12 +49,10 @@
 
 	var/can_i_see = FALSE
 	var/msg = ""
-	if(isobserver(user) || iseminence(user))
+	if(isobserver(user))
 		can_i_see = TRUE
-	else if(isliving(user))
-		var/mob/living/L = user
-		if(L.mind && L.mind.holy_role)
-			can_i_see = TRUE
+	else if(user.my_religion == religion)
+		can_i_see = TRUE
 
 	if(!can_i_see)
 		return

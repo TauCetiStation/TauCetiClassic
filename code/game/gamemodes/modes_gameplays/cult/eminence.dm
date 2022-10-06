@@ -12,7 +12,8 @@
 	faction = "cult"
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/image/eminence_image = null
-	var/obj/item/weapon/storage/bible/tome/upgraded/tome
+	var/obj/item/weapon/storage/bible/tome/eminence/tome //They have a special one
+	var/mob/living/cameraFollow = null
 	COOLDOWN_DECLARE(command_point)
 
 /mob/camera/eminence/atom_init()
@@ -20,22 +21,23 @@
 	ghost_sightless_images |= eminence_image
 	updateallghostimages()
 	. = ..()
-	tome = new(src) //Let's pretend that they have a special one
-	tome.destr_cd = 10 SECONDS
-	tome.rune_cd = 10 SECONDS
-	tome.cost_coef = 1.5
-	tome.build_cd = 5 SECONDS
+	tome = new(src)
 
 /mob/camera/eminence/Destroy()
 	QDEL_NULL(eminence_image)
 	QDEL_NULL(tome)
+	global.cult_religion.eminence = null
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
 /mob/camera/eminence/Move(NewLoc, direct)
 	if(NewLoc && !isspaceturf(NewLoc) && !istype(NewLoc, /turf/unsimulated/wall))
 		forceMove(NewLoc)
+		cameraFollow = null
 		client.move_delay = world.time + 1 //What could possibly go wrong?
+
+/mob/camera/eminence/proc/start_process()
+	START_PROCESSING(SSreligion, src)
 
 /mob/camera/eminence/process()
 	for(var/turf/TT in range(5, src))
@@ -44,21 +46,20 @@
 
 /mob/camera/eminence/Login()
 	..()
-	cult_religion.add_member(src)
-	for(var/mob/M as anything in cult_religion.members)
+	var/datum/religion/cult/R = global.cult_religion
+	R.add_member(src)
+	for(var/mob/M as anything in R.members)
 		M.client?.images |= eminence_image //Only for clients
-	if(cult_religion)
-		if(cult_religion.eminence && cult_religion.eminence != src)
-			cult_religion.remove_member(src)
-			qdel(src)
-			return
-		else
-			cult_religion.eminence = src
-	tome.religion = cult_religion
+	if(R.eminence && R.eminence != src)
+		R.remove_member(src)
+		qdel(src)
+		return
+	else
+		R.eminence = src
+	tome.religion = R
 	to_chat(src, "<span class='cult large'>Вы стали Возвышенным!</span>")
 	to_chat(src, "<span class='cult'>Будучи Возвышенным, вы ведёте весь культ за собой. Весь культ услышит то, что вы скажите.</span>")
 	to_chat(src, "<span class='cult'>Вы можете двигаться невзирая на стены, вы бестелесны, и в большинстве случаев не сможете напрямую влиять на мир, за исключением нескольких особых способов.</span>")
-	eminence_help()
 	for(var/V in actions)
 		var/datum/action/A = V
 		A.Remove(src) //So we get rid of duplicate actions; this also removes Hierophant network, since our say() goes across it anyway
@@ -67,6 +68,18 @@
 	for(var/V in subtypesof(/datum/action/innate/eminence))
 		E = new V (src)
 		E.Grant(src)
+
+/mob/camera/eminence/proc/eminence_help()
+	to_chat(src, "<span class='cult'>Вы можете взаимодействовать с внешним миром несколькими способами:</span>")
+	to_chat(src, "<span class='cult'><b>Со всеми структурами культа</b> вы можете взаимодействовать как обычный культист, такими как алтарь, кузня, исследовательскими столами, аномалиями и дверьми.</span>")
+	to_chat(src, "<span class='cult'><b>Средняя кнопка мыши или CTRL</b> для отдачи команды всему культу. Это может помочь даже в бою - убирает большинство причин, по которой последователь не может драться, кроме смертельных.</span>")
+	to_chat(src, "<span class='cult'><b>Вернуться в Рай</b> телепортирует вас на алтари.</span>")
+	to_chat(src, "<span class='cult'><b>Переместиться на станцию</b> телепортирует вас на случайную руну, которая вне Рая.</span>")
+	to_chat(src, "<span class='cult'><b>Использовать том</b> имеет такие же функции, как если бы этот том был в руках обычного культиста. ВЫ НЕ МОЖЕТЕ АКТИВИРОВАТЬ РУНЫ САМОСТОЯТЕЛЬНО.</span>")
+	to_chat(src, "<span class='cult'><b>Запретить/разрешить исследования</b> включив это, обычные последователи культа не смогут сами изучать, а отключив, сможете как и вы, так и остальные культисты</span>")
+	to_chat(src, "<span class='cult'><b>Вернуться в Рай</b> телепортирует вас на алтари.</span>")
+	to_chat(src, "<span class='cult'><b>Стереть свои руны</b> стирает все ваши руны в мире.</span>")
+	to_chat(src, "<span class='cult'><b>Телепорт к последователю</b> позволяет вам телепортироваться к любого последователю в культе по вашему желанию.</span>")
 
 /mob/camera/eminence/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(client)
@@ -110,12 +123,50 @@
 /mob/camera/eminence/get_active_hand()
 	return tome
 
+/mob/camera/eminence/DblClickOn(atom/A, params)
+	if(client.click_intercept) // handled in normal click.
+		return
+	SetNextMove(CLICK_CD_AI)
+
+	if(ismob(A))
+		eminence_track(A)
+	else if (!istype(A, /atom/movable/screen))
+		cameraFollow = null
+		setLoc(A)
+
+/mob/camera/eminence/proc/eminence_track(mob/living/target)
+	set waitfor = FALSE
+	if(!istype(target))	return
+	var/mob/camera/eminence/U = usr
+
+	U.cameraFollow = target
+	to_chat(U, "Now tracking [target.name].")
+	target.tracking_initiated()
+
+	while (U.cameraFollow == target)
+		if (U.cameraFollow == null)
+			return
+
+		if(istype(target.loc,/obj/effect/dummy))
+			to_chat(U, "Follow ended.")
+			U.cameraFollow = null
+			return
+		sleep(10)
+		setLoc(get_turf(target))
+
 /mob/camera/eminence/ClickOn(atom/A, params)
+	if(world.time <= next_click)
+		return
+	next_click = world.time + 1
+	if(client.click_intercept) // comes after object.Click to allow buildmode gui objects to be clicked
+		client.click_intercept.InterceptClickOn(src, params, A)
+		return
+
 	var/list/modifiers = params2list(params)
-	if(modifiers["shift"])
+	if(modifiers[SHIFT_CLICK])
 		A.examine(src)
 		return
-	if(modifiers["middle"] || modifiers["ctrl"])
+	if(modifiers[MIDDLE_CLICK] || modifiers[CTRL_CLICK])
 		issue_command(A)
 		return
 
@@ -139,6 +190,11 @@
 	else if(istype(A, /obj/structure/cult/anomaly))
 		var/obj/structure/cult/anomaly/F = A
 		F.destroying(my_religion)
+
+	A.add_hiddenprint(src)
+	if(world.time <= next_move)
+		return
+	SetNextMove(CLICK_CD_AI)
 
 /mob/camera/eminence/proc/issue_command(atom/movable/A)
 	if(!COOLDOWN_FINISHED(src, command_point))
@@ -196,7 +252,7 @@
 	for(var/mob/M as anything in servants_and_ghosts())
 		M.client.images |= cult_vis
 
-	for(var/mob/M as anything in cult_religion.members)
+	for(var/mob/M as anything in global.cult_religion.members)
 		if(!isliving(M))
 			continue
 		var/mob/living/L = M
@@ -234,15 +290,3 @@
 /obj/effect/temp_visual/command_point/Destroy()
 	QDEL_NULL(cult_vis)
 	return ..()
-
-/mob/camera/eminence/proc/eminence_help()
-	to_chat(src, "<span class='cult'>Вы можете взаимодействовать с внешним миром несколькими способами:</span>")
-	to_chat(src, "<span class='cult'><b>Со всеми структурами культа</b> вы можете взаимодействовать как обычный культист, такими как алтарь, кузня, исследовательскими столами, аномалиями и дверьми.</span>")
-	to_chat(src, "<span class='cult'><b>Средняя кнопка мыши или CTRL</b> для отдачи команды всему культу. Это может помочь даже в бою - убирает большинство причин, по которой последователь не может драться, кроме смертельных.</span>")
-	to_chat(src, "<span class='cult'><b>Вернуться в Рай</b> телепортирует вас на алтари.</span>")
-	to_chat(src, "<span class='cult'><b>Переместиться на станцию</b> телепортирует вас на случайную руну, которая вне Рая.</span>")
-	to_chat(src, "<span class='cult'><b>Использовать том</b> имеет такие же функции, как если бы этот том был в руках обычного культиста. ВЫ НЕ МОЖЕТЕ АКТИВИРОВАТЬ РУНЫ САМОСТОЯТЕЛЬНО.</span>")
-	to_chat(src, "<span class='cult'><b>Запретить/разрешить исследования</b> включив это, обычные последователи культа не смогут сами изучать, а отключив, сможете как и вы, так и остальные культисты</span>")
-	to_chat(src, "<span class='cult'><b>Вернуться в Рай</b> телепортирует вас на алтари.</span>")
-	to_chat(src, "<span class='cult'><b>Стереть свои руны</b> стирает все ваши руны в мире.</span>")
-	to_chat(src, "<span class='cult'><b>Телепорт к последователю</b> позволяет вам телепортироваться к любого последователю в культе по вашему желанию.</span>")

@@ -20,7 +20,7 @@
 	selected from available ghosts. Once an Eminence is selected, they can't normally be changed."
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "spire"
-	max_integrity = 400
+	max_integrity = 1500
 	pixel_x = -16
 	pixel_y = -2
 	var/mob/eminence_nominee
@@ -39,10 +39,10 @@
 	if(kingmaking)
 		return
 
-	if(!cult_religion)
+	if(!global.cult_religion)
 		to_chat(user, "<span class='warning'>The Heaven isn't awake!</span>")
 		return
-	if(cult_religion.eminence)
+	if(global.cult_religion.eminence)
 		to_chat(user, "<span class='warning'>There's already an Eminence!</span>")
 		return
 	if(eminence_nominee) //This could be one large proc, but is split into three for ease of reading
@@ -123,8 +123,10 @@
 		for(var/obj/item/I in eminence_nominee) //drops all items
 			eminence_nominee.drop_from_inventory(I, get_turf(eminence_nominee))
 		var/mob/camera/eminence/eminence = new(get_turf(src))
-		eminence_nominee.mind.transfer_to(eminence)
+		eminence.mind_initialize()
+		eminence.key = eminence_nominee.key
 		eminence_nominee.dust()
+		eminence.eminence_help()
 		hierophant_message("<span class='large cult'>[eminence_nominee] has ascended into the Eminence!</span>")
 	else if(eminence_nominee == "ghosts")
 		kingmaking = TRUE
@@ -138,10 +140,10 @@
 			eminence_nominee = null
 			return
 		visible_message("<span class='warning'>A blast of cold darkness devours [src]!</span>")
-		//playsound(src, 'sound/antag/eminence_ready.ogg', VOL_EFFECTS_MASTER)
 		var/mob/camera/eminence/eminence = new(get_turf(src))
 		eminence_nominee = pick(candidates)
 		eminence.key = eminence_nominee.key
+		eminence.eminence_help()
 		hierophant_message("<span class='large cult'>A ghost has ascended into the Eminence!</span>")
 	for(var/mob/M as anything in servants_and_ghosts())
 		M.playsound_local(M, 'sound/antag/eminence_ready.ogg', VOL_EFFECTS_MASTER)

@@ -87,7 +87,7 @@
 	var/ascendent = FALSE
 
 	var/mob/camera/eminence/eminence
-	var/research_forbidden = FALSE
+	var/research_forbidden = FALSE //If Eminence forbade research for fellow cultist
 
 /datum/religion/cult/New()
 	..()
