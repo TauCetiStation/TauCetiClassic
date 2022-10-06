@@ -47,15 +47,12 @@
 	button_icon_state = "abscond"
 
 /datum/action/innate/eminence/heaven_jump/Activate()
-	if(global.cult_religion)
-		if(!length(cult_religion.altars))
-			to_chat(src, "<span class='bold cult'>У вас нет алтарей!</span>")
-			return
-		owner.forceMove(get_turf(pick(global.cult_religion.altars)))
-		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', VOL_EFFECTS_MASTER)
-		flash_color(owner, flash_time = 25)
-	else
-		to_chat(owner, "<span class='warning'>Случилось что-то ужасное! Время достать богов по этому поводу!</span>")
+	if(!length(cult_religion.altars))
+		to_chat(src, "<span class='bold cult'>У вас нет алтарей!</span>")
+		return
+	owner.forceMove(get_turf(pick(global.cult_religion.altars)))
+	owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', VOL_EFFECTS_MASTER)
+	flash_color(owner, flash_time = 25)
 
 //Warps to the Station
 /datum/action/innate/eminence/station_jump
@@ -63,17 +60,16 @@
 	button_icon_state = "warp_down"
 
 /datum/action/innate/eminence/station_jump/Activate()
-	if(global.cult_religion)
-		var/list/possible_runes = list()
-		for(var/obj/effect/rune/rune as anything in global.cult_religion.runes)
-			if(!is_centcom_level(rune.z))
-				possible_runes += rune
-		if(length(possible_runes))
-			owner.forceMove(get_turf(pick(possible_runes)))
-			owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', VOL_EFFECTS_MASTER)
-			flash_color(owner, flash_time = 25)
-		else
-			to_chat(owner, "<span class='warning'>Нет рун вне Рая, что бы на них телепортироваться!</span>")
+	var/list/possible_runes = list()
+	for(var/obj/effect/rune/rune as anything in global.cult_religion.runes)
+		if(!is_centcom_level(rune.z))
+			possible_runes += rune
+	if(length(possible_runes))
+		owner.forceMove(get_turf(pick(possible_runes)))
+		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', VOL_EFFECTS_MASTER)
+		flash_color(owner, flash_time = 25)
+	else
+		to_chat(owner, "<span class='warning'>Нет рун вне Рая, что бы на них телепортироваться!</span>")
 
 //Activates tome
 /datum/action/innate/eminence/tome

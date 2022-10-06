@@ -60,9 +60,6 @@
 	to_chat(src, "<span class='cult large'>Вы стали Возвышенным!</span>")
 	to_chat(src, "<span class='cult'>Будучи Возвышенным, вы ведёте весь культ за собой. Весь культ услышит то, что вы скажите.</span>")
 	to_chat(src, "<span class='cult'>Вы можете двигаться невзирая на стены, вы бестелесны, и в большинстве случаев не сможете напрямую влиять на мир, за исключением нескольких особых способов.</span>")
-	for(var/V in actions)
-		var/datum/action/A = V
-		A.Remove(src) //So we get rid of duplicate actions; this also removes Hierophant network, since our say() goes across it anyway
 
 	var/datum/action/innate/eminence/E
 	for(var/V in subtypesof(/datum/action/innate/eminence))
@@ -201,7 +198,6 @@
 		to_chat(src, "<span class='cult'>Слишком рано для новой команды!</span>")
 		return
 	var/list/commands = list("Rally Here", "Regroup Here", "Avoid This Area", "Reinforce This Area")
-	var/atom/movable/command_location = A
 	var/roma_invicta = input(src, "Choose a command to issue to your cult!", "Issue Commands") as null|anything in commands
 	if(!roma_invicta)
 		return
@@ -209,10 +205,10 @@
 	var/marker_icon
 	switch(roma_invicta)
 		if("Rally Here")
-			command_text = "The Eminence orders an offensive rally at [command_location] to the GETDIR!"
+			command_text = "The Eminence orders an offensive rally at [A] to the GETDIR!"
 			marker_icon = "eminence_rally"
 		if("Regroup Here")
-			command_text = "The Eminence orders a regroup to [command_location] to the GETDIR!"
+			command_text = "The Eminence orders a regroup to [A] to the GETDIR!"
 			marker_icon = "eminence_rally"
 		if("Avoid This Area")
 			command_text = "The Eminence has designated the area to your GETDIR as dangerous and to be avoided!"
@@ -228,7 +224,7 @@
 		P.icon_state = marker_icon
 		COOLDOWN_START(src, command_point, 2 MINUTES)
 		for(var/mob/M in servants_and_ghosts())
-			to_chat(M, "<span class='large cult'>[replacetext(command_text, "GETDIR", dir2text(get_dir(M, command_location)))]</span>")
+			to_chat(M, "<span class='large cult'>[replacetext(command_text, "GETDIR", dir2text(get_dir(M, A)))]</span>")
 			M.playsound_local(M, 'sound/antag/eminence_command.ogg', VOL_EFFECTS_MASTER)
 	else
 		hierophant_message("<span class='large cult'>[command_text]</span>")
