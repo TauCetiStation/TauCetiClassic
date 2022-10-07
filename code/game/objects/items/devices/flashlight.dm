@@ -46,7 +46,6 @@
 	on = !on
 	last_button_sound = world.time + 3
 	update_brightness(user)
-	action_button_name = null
 	return 1
 
 /obj/item/device/flashlight/get_current_temperature()
