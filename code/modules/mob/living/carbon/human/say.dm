@@ -156,7 +156,7 @@
 					//return - technically you can add more aliens to a team
 				for(var/mob/M as anything in observer_list)
 					var/link = FOLLOW_LINK(M, user)
-					to_chat(M, text("[link]<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
+					to_chat(M, "[link]<span class='abductor_team[A.get_team_num()]'><b>[user.real_name]:</b> [sm]</span>")
 				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
 
