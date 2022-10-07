@@ -43,7 +43,7 @@
 
 //Returns to the heaven
 /datum/action/innate/eminence/heaven_jump
-	name = "Вернуться в Рай"
+	name = "Переместиться на алтарь"
 	button_icon_state = "abscond"
 
 /datum/action/innate/eminence/heaven_jump/Activate()
@@ -56,7 +56,7 @@
 
 //Warps to the Station
 /datum/action/innate/eminence/station_jump
-	name = "Переместиться на станцию"
+	name = "Переместиться на станцию к руне"
 	button_icon_state = "warp_down"
 
 /datum/action/innate/eminence/station_jump/Activate()

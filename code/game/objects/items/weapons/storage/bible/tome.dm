@@ -181,11 +181,7 @@
 	R.power = new choice.rune_type(R)
 	R.power.religion = religion
 	R.blood_DNA = list()
-	if(iseminence(user))
-		var/mob/living/M = pick(religion.members)
-		if(M) //Rare case if eminence get roll
-			R.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-	else
+	if(!iseminence(user))
 		R.blood_DNA[user.dna.unique_enzymes] = user.dna.b_type
 
 	new /obj/effect/temp_visual/cult/sparks(get_turf(R))

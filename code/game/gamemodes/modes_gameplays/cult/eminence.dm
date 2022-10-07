@@ -126,9 +126,6 @@
 
 	if(ismob(A))
 		eminence_track(A)
-	else if (!istype(A, /atom/movable/screen))
-		cameraFollow = null
-		setLoc(A)
 
 /mob/camera/eminence/proc/eminence_track(mob/living/target)
 	set waitfor = FALSE
@@ -221,6 +218,7 @@
 			return
 		var/obj/effect/temp_visual/command_point/P = new (get_turf(A))
 		P.icon_state = marker_icon
+		command_buff(get_turf(A))
 		COOLDOWN_START(src, command_point, 2 MINUTES)
 		for(var/mob/M in servants_and_ghosts())
 			to_chat(M, "<span class='large cult'>[replacetext(command_text, "GETDIR", dir2text(get_dir(M, A)))]</span>")
@@ -247,11 +245,12 @@
 	for(var/mob/M as anything in servants_and_ghosts())
 		M.client.images |= cult_vis
 
+/mob/camera/eminence/proc/command_buff(turf/T)
 	for(var/mob/M as anything in global.cult_religion.members)
 		if(!isliving(M))
 			continue
 		var/mob/living/L = M
-		if(get_dist(src, L) < 4) //Stand up and fight, almost no heal but stuns
+		if(get_dist(T, L) < 4) //Stand up and fight, almost no heal but stuns
 			if(L.stat == DEAD)
 				continue
 			if(L.reagents)
@@ -275,8 +274,8 @@
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				C.shock_stage = 0
-				if(ishuman(L))
-					var/mob/living/carbon/human/H = src
+				if(ishuman(C))
+					var/mob/living/carbon/human/H = C
 					H.restore_blood()
 					H.full_prosthetic = null
 					var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
