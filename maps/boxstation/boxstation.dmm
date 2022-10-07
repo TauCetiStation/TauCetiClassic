@@ -8729,12 +8729,28 @@
 	},
 /area/station/security/prison)
 "aox" = (
-/obj/item/weapon/cigbutt,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
+/obj/machinery/door_control{
+	id = "Disposal Exit";
+	name = "Disposal Vent Control";
+	pixel_x = -25;
+	pixel_y = 4;
+	req_access = list(12)
+	},
+/obj/machinery/driver_button{
+	id = "trash";
+	pixel_x = -26;
+	pixel_y = -6
+	},
+/obj/machinery/conveyor_switch/oneway{
+	convdir = -1;
+	id = "garbage";
+	name = "disposal coveyor"
+	},
+/obj/effect/landmark{
+	name = "blobstart"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/incinerator)
+/area/station/maintenance/disposal)
 "aoy" = (
 /obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor{
@@ -10269,11 +10285,18 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "ark" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stool,
+/obj/effect/decal/remains/human{
+	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
+	name = "Syndicate agent remains"
+	},
+/obj/item/clothing/glasses/regular/hipster,
 /obj/effect/landmark{
 	name = "blobstart"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/dormitory)
+/area/station/maintenance/medbay)
 "arl" = (
 /obj/item/weapon/cigbutt{
 	pixel_x = 5;
@@ -11260,6 +11283,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/effect/landmark{
+	name = "blobstart"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
@@ -13702,6 +13728,9 @@
 /turf/simulated/wall/r_wall,
 /area/station/security/iaa_office)
 "axO" = (
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/eva)
 "axP" = (
@@ -17624,14 +17653,8 @@
 /obj/effect/landmark{
 	name = "blobstart"
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/recharge_station,
-/turf/simulated/floor{
-	icon_state = "freezerfloor"
-	},
-/area/station/civilian/toilet)
+/turf/simulated/floor/plating,
+/area/station/maintenance/chapel)
 "aFn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -18154,15 +18177,13 @@
 	},
 /area/station/civilian/bar)
 "aGl" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/stool,
-/obj/effect/decal/remains/human{
-	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
-	name = "Syndicate agent remains"
+/obj/effect/landmark{
+	name = "blobstart"
 	},
-/obj/item/clothing/glasses/regular/hipster,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/civilian/toilet)
 "aGm" = (
 /obj/structure/holohoop{
 	dir = 8
@@ -20380,6 +20401,9 @@
 /area/station/maintenance/escape)
 "aKq" = (
 /obj/effect/decal/cleanable/blood/drip,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aKr" = (
@@ -20981,9 +21005,6 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "aLt" = (
-/obj/effect/landmark{
-	name = "blobstart"
-	},
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -36050,6 +36071,13 @@
 	icon_state = "white"
 	},
 /area/station/medical/reception)
+"bmu" = (
+/obj/effect/decal/cleanable/generic,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
+/turf/simulated/floor/plating,
+/area/station/construction/assembly_line)
 "bmv" = (
 /obj/machinery/camera{
 	c_tag = "Medbay Security Checkpoint";
@@ -37647,9 +37675,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "bpz" = (
-/obj/effect/landmark{
-	name = "blobstart"
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -44574,6 +44599,11 @@
 /obj/machinery/meter,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"bBH" = (
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/construction/assembly_line)
 "bBI" = (
 /obj/machinery/alarm{
 	dir = 1;
@@ -45648,22 +45678,14 @@
 	},
 /area/station/hallway/primary/central)
 "bDG" = (
-/obj/effect/landmark{
-	name = "blobstart"
+/obj/machinery/light/small{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/recharge_station,
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
+/area/station/civilian/toilet)
 "bDH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -52839,6 +52861,22 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"bQM" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/engineering)
+"bQN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
+/turf/simulated/floor/wood,
+/area/station/maintenance/engineering)
 "bQO" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
@@ -52864,6 +52902,16 @@
 "bQR" = (
 /turf/simulated/wall,
 /area/station/medical/surgery)
+"bQS" = (
+/obj/item/weapon/cigbutt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/obj/effect/landmark{
+	name = "blobstart"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/incinerator)
 "bQT" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 8
@@ -55104,11 +55152,22 @@
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
 "bWW" = (
-/obj/item/weapon/shard{
-	icon_state = "medium"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/effect/landmark{
+	name = "blobstart"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/engineering)
+/area/station/storage/tech)
 "bWX" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -55947,13 +56006,17 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "bZC" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/landmark{
 	name = "blobstart"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/station/construction/assembly_line)
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "bZD" = (
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
@@ -74907,25 +74970,12 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "jxb" = (
-/obj/machinery/door_control{
-	id = "Disposal Exit";
-	name = "Disposal Vent Control";
-	pixel_x = -25;
-	pixel_y = 4;
-	req_access = list(12)
-	},
-/obj/machinery/driver_button{
-	id = "trash";
-	pixel_x = -26;
-	pixel_y = -6
-	},
-/obj/machinery/conveyor_switch/oneway{
-	convdir = -1;
-	id = "garbage";
-	name = "disposal coveyor"
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark{
+	name = "blobstart"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
+/area/station/maintenance/dormitory)
 "jyb" = (
 /obj/machinery/camera{
 	c_tag = "Disposals";
@@ -98261,7 +98311,7 @@ wnx
 bir
 bXq
 bnf
-jxb
+aox
 bgp
 bgp
 bWt
@@ -107793,7 +107843,7 @@ cDL
 cjO
 cjQ
 cHG
-cER
+bQN
 cld
 cMu
 bIZ
@@ -108586,7 +108636,7 @@ bYR
 cMb
 bkS
 bSL
-aox
+bQS
 beg
 nCG
 mXO
@@ -111636,7 +111686,7 @@ bVq
 bVk
 bIZ
 mnb
-bWW
+bQM
 bQl
 bKj
 bIZ
@@ -113947,7 +113997,7 @@ bLZ
 bLZ
 bLW
 dJZ
-bPG
+bmu
 ckI
 cjy
 bRJ
@@ -114455,14 +114505,14 @@ bLW
 bKo
 bLZ
 bNB
-bDG
+bWW
 bQr
 bLZ
 bSK
 bLW
 bVr
 brB
-bZC
+bBH
 bZD
 lmg
 bPG
@@ -117737,7 +117787,7 @@ aqA
 aqk
 pPF
 arz
-aEi
+jxb
 avq
 aef
 afY
@@ -118764,7 +118814,7 @@ ajo
 apb
 aql
 pPF
-ark
+aeJ
 arT
 aef
 avj
@@ -119043,7 +119093,7 @@ aCE
 aDO
 aEw
 aEa
-aFm
+bDG
 aEa
 nMk
 aKx
@@ -120326,7 +120376,7 @@ aEa
 thb
 aEa
 aEa
-thb
+aGl
 aEa
 aCD
 aEa
@@ -132442,7 +132492,7 @@ bMk
 bNq
 bFo
 jgb
-aGl
+ark
 cak
 bFo
 mTb
@@ -133936,7 +133986,7 @@ aaa
 aup
 czq
 aup
-axj
+aFm
 att
 aIL
 aur
@@ -135530,7 +135580,7 @@ blC
 bJh
 aVF
 lQb
-mIb
+bZC
 mIb
 qmb
 rPb
