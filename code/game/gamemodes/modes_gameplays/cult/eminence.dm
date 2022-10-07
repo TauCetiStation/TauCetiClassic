@@ -224,7 +224,7 @@
 			to_chat(M, "<span class='large cult'>[replacetext(command_text, "GETDIR", dir2text(get_dir(M, A)))]</span>")
 			M.playsound_local(M, 'sound/antag/eminence_command.ogg', VOL_EFFECTS_MASTER)
 	else
-		hierophant_message("<span class='large cult'>[command_text]</span>")
+		cult_religion.send_message_to_members("<span class='large'>[command_text]</span>")
 		for(var/mob/M in servants_and_ghosts())
 			M.playsound_local(M, 'sound/antag/eminence_command.ogg', VOL_EFFECTS_MASTER)
 
