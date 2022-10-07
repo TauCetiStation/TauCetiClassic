@@ -17077,10 +17077,11 @@
 	},
 /area/centcom/living)
 "aMB" = (
-/obj/structure/cult/statue/camera/gargoyle,
-/obj/structure/eminence_spire,
-/turf/unsimulated/floor/cult/lava,
-/area/custom/cult)
+/obj/machinery/door/airlock/external,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
 "aMC" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -17097,6 +17098,11 @@
 	icon_state = "white"
 	},
 /area/centcom/evac)
+"aME" = (
+/obj/structure/cult/statue/camera/gargoyle,
+/obj/structure/eminence_spire,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "aMF" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -59452,7 +59458,7 @@ azo
 aAE
 aCV
 aBQ
-aBY
+aMB
 aCa
 aAE
 aCV
@@ -59709,7 +59715,7 @@ azo
 aAE
 aCV
 aBQ
-aBY
+aMB
 aCa
 aAE
 aCV
@@ -71108,7 +71114,7 @@ aaM
 aaM
 aaM
 adx
-aMB
+aME
 wfy
 aZI
 bKC

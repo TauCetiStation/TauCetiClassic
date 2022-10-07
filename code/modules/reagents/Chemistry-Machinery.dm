@@ -231,7 +231,7 @@
 				"ethanol",
 				"chlorine",
 				"potassium",
-				"aluminium",
+				"aluminum",
 				"radium",
 				"fluorine",
 				"iron",
