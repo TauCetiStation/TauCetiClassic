@@ -1,18 +1,3 @@
-//For easy cult chatting
-/proc/hierophant_message(message, servantsonly, atom/target)
-	if(!message)
-		return FALSE
-	for(var/M in player_list)
-		if(!servantsonly && isobserver(M))
-			if(target)
-				var/link = FOLLOW_LINK(M, target)
-				to_chat(M, "[link] [message]")
-			else
-				to_chat(M, message)
-		else if(iscultist(M))
-			to_chat(M, message)
-	return TRUE
-
 //Used to nominate oneself or ghosts for the role of Eminence.
 /obj/structure/eminence_spire
 	name = "eminence spire"
@@ -23,10 +8,17 @@
 	max_integrity = 1500
 	pixel_x = -16
 	pixel_y = -2
-	var/mob/eminence_nominee
+	var/mob/eminence_nominee //Exactly for mob that wants to be an eminence
+	var/ghost_nomination = FALSE
 	var/selection_timer //Timer ID; this is canceled if the vote is canceled
 	var/kingmaking
 
+//Returns a list of all servants of Ratvar and observers.
+/proc/servants_and_ghosts()
+	. = list()
+	for(var/V in player_list)
+		if(iscultist(V) || isobserver(V))
+			. += V
 
 //Used to nominate oneself or ghosts for the role of Eminence.
 /obj/structure/eminence_spire/attack_hand(mob/living/user)
@@ -45,7 +37,7 @@
 	if(global.cult_religion.eminence)
 		to_chat(user, "<span class='warning'>There's already an Eminence!</span>")
 		return
-	if(eminence_nominee) //This could be one large proc, but is split into three for ease of reading
+	if(eminence_nominee || ghost_nomination) //This could be one large proc, but is split into three for ease of reading
 		if(eminence_nominee == user)
 			cancelation(user)
 		else
@@ -58,49 +50,43 @@
 	if(!iscultist(user))
 		..()
 	else
-		to_chat(user, "<span class='warning'>You feel the omniscient gaze turn into a puzzled frown. Perhaps you should just stick to building.</span>")
+		to_chat(user, "<span class='warning'>Вы чувствуете, как всевидящий взгляд превращается в озадаченно-нахмуренный. Возможно, вам следует просто продолжить то, что делали до этого.</span>")
 		return
 
 //Used to nominate oneself or ghosts for the role of Eminence.
 /obj/structure/eminence_spire/proc/nomination(mob/living/nominee) //A user is nominating themselves or ghosts to become Eminence
-	var/nomination_choice = tgui_alert(nominee, "Who would you like to nominate?", "Eminence Nomination", list("Nominate Yourself", "Nominate Ghosts", "Cancel"))
-	if(!iscultist(nominee) || eminence_nominee)
+	var/nomination_choice = tgui_alert(nominee, "Чью кандидатуру вы хотите выдвинуть?", "Номинация Возвышенного", list("Стать самому", "Призраков", "Оставить"))
+	if(!iscultist(nominee) || eminence_nominee || ghost_nomination)
 		return
 	switch(nomination_choice)
-		if("Cancel")
+		if("Оставить")
 			return
-		if("Nominate Yourself")
+		if("Стать самому")
 			eminence_nominee = nominee
-			hierophant_message("<span class='cult'><b>[nominee] nominates themselves as the Eminence!</b> You may object by interacting with the eminence spire. The vote will otherwise pass in 30 seconds.</span>")
-		if("Nominate Ghosts")
-			eminence_nominee = "ghosts"
-			hierophant_message("<span class='cult'><b>[nominee] proposes selecting an Eminence from ghosts!</b> You may object by interacting with the eminence spire. The vote will otherwise pass in 30 seconds.</span>")
+			cult_religion.send_message_to_members("[nominee] хочет стать Возвышенным! Вы можете возразить, дотронувшись до обелиска Возвышенного. В ином случае, кандидат станет Возвышенным через 30 секунд.", , 3, nominee)
+		if("Призраков")
+			ghost_nomination = TRUE
+			cult_religion.send_message_to_members("[nominee] предлагает призракам стать Возвышенным! Вы можете возразить, дотронувшись до обелиска Возвышенного. В ином случае, кандидат станет Возвышенным через 30 секунд.", , 3)
 	for(var/mob/M as anything in servants_and_ghosts())
 		M.playsound_local(M, 'sound/antag/eminence_hit.ogg', VOL_EFFECTS_MASTER)
 	selection_timer = addtimer(CALLBACK(src, .proc/kingmaker), 30 SECONDS, TIMER_STOPPABLE)
 
 //Used to nominate oneself or ghosts for the role of Eminence.
 /obj/structure/eminence_spire/proc/objection(mob/living/wright)
-	if(tgui_alert(wright, "Object to the selection of [eminence_nominee] as Eminence?", "Objection!", list("Object", "Cancel")) == "Cancel" || !iscultist(wright) || !eminence_nominee)
+	if(tgui_alert(wright, "Возразить против [eminence_nominee] как Возвышенного?", "Возражение!", list("Возразить!", "Отказаться")) == "Отказаться" || !iscultist(wright) || (!eminence_nominee && !ghost_nomination))
 		return
-	hierophant_message("<span class='cult'><b>[wright] objects to the nomination of [eminence_nominee]!</b> The eminence spire has been reset.</span>")
+	cult_religion.send_message_to_members("[wright] возражает на счёт кандидатуры [eminence_nominee]! Обелиск Возвышенного вновь спокоен.", , 3, wright)
 	for(var/mob/M as anything in servants_and_ghosts())
 		M.playsound_local(M, 'sound/antag/eminence_hit.ogg', VOL_EFFECTS_MASTER)
 	eminence_nominee = null
+	ghost_nomination = FALSE
 	deltimer(selection_timer)
-
-//Returns a list of all servants of Ratvar and observers.
-/proc/servants_and_ghosts()
-	. = list()
-	for(var/V in player_list)
-		if(iscultist(V) || isobserver(V))
-			. += V
 
 //Used to nominate oneself or ghosts for the role of Eminence.
 /obj/structure/eminence_spire/proc/cancelation(mob/living/cold_feet)
-	if(tgui_alert(cold_feet, "Cancel your nomination?", "Cancel Nomination", list("Withdraw Nomination", "Cancel")) == "Cancel" || !iscultist(cold_feet) || !eminence_nominee)
+	if(tgui_alert(cold_feet, "Отказаться от номинации?", "Отказ от номинации", list("Отказ от номинации", "Оставить")) == "Оставить" || !iscultist(cold_feet) || !eminence_nominee)
 		return
-	hierophant_message("<span class='cult'><b>[eminence_nominee] has withdrawn their nomination!</b> The eminence spire has been reset.</span>")
+	cult_religion.send_message_to_members("[eminence_nominee] исключил свою кандидатуру! Обелиск Возвышенного вновь спокоен.", , 3)
 	for(var/mob/M in servants_and_ghosts())
 		M.playsound_local(M, 'sound/antag/eminence_hit.ogg', VOL_EFFECTS_MASTER)
 	eminence_nominee = null
@@ -112,39 +98,39 @@
 		return
 	if(ismob(eminence_nominee))
 		if(!eminence_nominee.client || !eminence_nominee.mind)
-			hierophant_message("<span class='cult'><b>[eminence_nominee] somehow lost their sentience!</b> The eminence spire has been reset.</span>")
+			cult_religion.send_message_to_members("[eminence_nominee] каким-то образом потерял сознание! Обелиск Возвышенного вновь спокоен.", , 3, eminence_nominee)
 			for(var/mob/M as anything in servants_and_ghosts())
 				M.playsound_local(M, 'sound/antag/eminence_stop.ogg', VOL_EFFECTS_MASTER)
 			eminence_nominee = null
 			return
 		playsound(eminence_nominee, 'sound/antag/eminence_ready.ogg', VOL_EFFECTS_MASTER)
-		eminence_nominee.visible_message("<span class='warning'>A blast of darkness flows into [eminence_nominee], devouring them in an instant!</span>", \
-		"<span class='userdanger'>All the darkness in the universe flowing into YOU</span>")
+		eminence_nominee.visible_message("<span class='warning'>Тьма в один миг поглощает [eminence_nominee]!</span>", \
+		"<span class='userdanger'>Холодная тьма устремляется к тебе!</span>")
 		for(var/obj/item/I in eminence_nominee) //drops all items
 			eminence_nominee.drop_from_inventory(I, get_turf(eminence_nominee))
 		var/mob/camera/eminence/eminence = new(get_turf(src))
+		cult_religion.send_message_to_members("<span class='large'>[eminence_nominee] стал Возвышенным!</span>", , 4, eminence) //Before key transfer
 		eminence.mind_initialize()
 		eminence.key = eminence_nominee.key
 		eminence_nominee.dust()
 		eminence.eminence_help()
-		hierophant_message("<span class='large cult'>[eminence_nominee] has ascended into the Eminence!</span>")
-	else if(eminence_nominee == "ghosts")
+	else if(ghost_nomination)
 		kingmaking = TRUE
-		hierophant_message("<span class='cult'><b>The eminence spire is now selecting a ghost to be the Eminence...</b></span>")
-		var/list/candidates = pollGhostCandidates("Would you like to play as the servants' Eminence?", ROLE_CULTIST, IGNORE_EMINENCE, poll_time = 100)
+		cult_religion.send_message_to_members("Обелиск Возвышенного выбирает себе призрака для превращения в Возвышенного...", , 3)
+		var/list/candidates = pollGhostCandidates("Хотели бы вы сыграть в роли Возвышенного?", ROLE_CULTIST, IGNORE_EMINENCE, poll_time = 100)
 		kingmaking = FALSE
 		if(!length(candidates))
 			for(var/mob/M as anything in servants_and_ghosts())
 				M.playsound_local(M, 'sound/antag/eminence_stop.ogg', VOL_EFFECTS_MASTER)
-			hierophant_message("<span class='cult'><b>No ghosts accepted the offer!</b> The eminence spire has been reset.</span>")
-			eminence_nominee = null
+			cult_religion.send_message_to_members("Ни один из призраков не принял предложение! Обелиск Возвышенного вновь спокоен.", , 3)
+			ghost_nomination = FALSE
 			return
-		visible_message("<span class='warning'>A blast of cold darkness devours [src]!</span>")
+		visible_message("<span class='warning'>Тьма окутывает [src]!</span>")
 		var/mob/camera/eminence/eminence = new(get_turf(src))
+		cult_religion.send_message_to_members("<span class='large'>Призрак стал Возвышенным!</span>", , 4, eminence) //Before key transfer
 		eminence_nominee = pick(candidates)
 		eminence.key = eminence_nominee.key
 		eminence.eminence_help()
-		hierophant_message("<span class='large cult'>A ghost has ascended into the Eminence!</span>")
 	for(var/mob/M as anything in servants_and_ghosts())
 		M.playsound_local(M, 'sound/antag/eminence_ready.ogg', VOL_EFFECTS_MASTER)
 	eminence_nominee = null

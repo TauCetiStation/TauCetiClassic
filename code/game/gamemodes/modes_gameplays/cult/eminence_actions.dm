@@ -90,7 +90,7 @@
 
 /datum/action/innate/eminence/forbid_research/Activate()
 	for(var/mob/L as anything in global.cult_religion.members)
-		to_chat(L, "<span class='cult'>Возвышенный [global.cult_religion.research_forbidden ? "РАЗРЕШИЛ" : "ЗАПРЕТИЛ"]самостоятельное исследование последователям!</span>")
+		to_chat(L, "<span class='cult'>Возвышенный [global.cult_religion.research_forbidden ? "РАЗРЕШИЛ" : "ЗАПРЕТИЛ"] самостоятельное исследование последователям!</span>")
 	global.cult_religion.research_forbidden = !global.cult_religion.research_forbidden
 
 //Activates tome

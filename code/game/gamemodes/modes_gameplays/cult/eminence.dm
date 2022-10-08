@@ -85,15 +85,9 @@
 		return
 	log_say(message)
 	if(SSticker.nar_sie_has_risen)
-		visible_message("<span class='cult large'><b>Ты чувствуешь, как тьма врывается в твой мозг и формирует слова:</b> \"[capitalize(message)]\"</span>")
+		visible_message("<span class='cult large'><b>Ты чувствуешь, как хаос врывается в твой мозг, формируя слова:</b> \"[capitalize(message)]\"</span>")
 		playsound(src, 'sound/antag/eminence_hit.ogg', VOL_EFFECTS_MASTER)
-	message = "<span class='big cult'><b>[SSticker.nar_sie_has_risen ? "Преосвященство" : "Возвышенный"]:</b> \"[message]\"</span>"
-	for(var/mob/M as anything in servants_and_ghosts())
-		if(isobserver(M))
-			var/link = FOLLOW_LINK(M, src)
-			to_chat(M, "[link] [message]")
-		else
-			to_chat(M, message)
+	cult_religion.send_message_to_members("[message]", SSticker.nar_sie_has_risen ? "Преосвященство" : "Возвышенный", 4, src)
 
 /mob/camera/eminence/can_use_topic(src_object)
 	if(!client)
@@ -220,7 +214,7 @@
 			to_chat(M, "<span class='large cult'>[replacetext(command_text, "GETDIR", dir2text(get_dir(M, A)))]</span>")
 			M.playsound_local(M, 'sound/antag/eminence_command.ogg', VOL_EFFECTS_MASTER)
 	else
-		hierophant_message("<span class='large cult'>[command_text]</span>")
+		cult_religion.send_message_to_members("<span class='large'>[command_text]</span>")
 		for(var/mob/M in servants_and_ghosts())
 			M.playsound_local(M, 'sound/antag/eminence_command.ogg', VOL_EFFECTS_MASTER)
 
