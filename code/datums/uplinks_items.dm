@@ -866,7 +866,7 @@
 	cost = 1
 	uplink_types = list("traitor", "dealer")
 
-/* pls return this shit when the admins stop banning for releasing singularity
+/* pls return this shit when the admins stop banning for releasing singularity, or it wont be such an easy
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"
 	desc = "When screwed to wiring attached to an electric grid, then activated, this large device pulls the singularity towards it. \
