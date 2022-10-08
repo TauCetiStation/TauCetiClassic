@@ -866,6 +866,7 @@
 	cost = 1
 	uplink_types = list("traitor", "dealer")
 
+/* pls return this shit when the admins stop banning for releasing singularity
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Singularity Beacon"
 	desc = "When screwed to wiring attached to an electric grid, then activated, this large device pulls the singularity towards it. \
@@ -873,7 +874,7 @@
 	leading to an emergency evacuation. Because of its size, it cannot be carried. Ordering this sends you a small beacon that will teleport the larger beacon to your location on activation."
 	item = /obj/item/device/radio/beacon/syndicate
 	cost = 14
-	uplink_types = list("nuclear")
+	uplink_types = list("nuclear") */
 
 /datum/uplink_item/device_tools/syndicate_bomb
 	name = "Syndicate Bomb"
