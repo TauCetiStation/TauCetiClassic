@@ -63,10 +63,10 @@
 			return
 		if("Стать самому")
 			eminence_nominee = nominee
-			cult_religion.send_message_to_members("[nominee] хочет стать Возвышенным!</b> Вы можете возразить, дотронувшись до обелиска Возвышенного. В ином случае, кандидат станет Возвышенным через 30 секунд.", , 3, nominee)
+			cult_religion.send_message_to_members("[nominee] хочет стать Возвышенным! Вы можете возразить, дотронувшись до обелиска Возвышенного. В ином случае, кандидат станет Возвышенным через 30 секунд.", , 3, nominee)
 		if("Призраков")
 			ghost_nomination = TRUE
-			cult_religion.send_message_to_members("[nominee] предлагает призракам стать Возвышенным!</b> Вы можете возразить, дотронувшись до обелиска Возвышенного. В ином случае, кандидат станет Возвышенным через 30 секунд.", , 3)
+			cult_religion.send_message_to_members("[nominee] предлагает призракам стать Возвышенным! Вы можете возразить, дотронувшись до обелиска Возвышенного. В ином случае, кандидат станет Возвышенным через 30 секунд.", , 3)
 	for(var/mob/M as anything in servants_and_ghosts())
 		M.playsound_local(M, 'sound/antag/eminence_hit.ogg', VOL_EFFECTS_MASTER)
 	selection_timer = addtimer(CALLBACK(src, .proc/kingmaker), 30 SECONDS, TIMER_STOPPABLE)
@@ -75,7 +75,7 @@
 /obj/structure/eminence_spire/proc/objection(mob/living/wright)
 	if(tgui_alert(wright, "Возразить против [eminence_nominee] как Возвышенного?", "Возражение!", list("Возразить!", "Отказаться")) == "Отказаться" || !iscultist(wright) || (!eminence_nominee && !ghost_nomination))
 		return
-	cult_religion.send_message_to_members("<b>[wright] возражает на счёт кандидатуры [eminence_nominee]!</b> Обелиск Возвышенного вновь спокоен.", , 3, wright)
+	cult_religion.send_message_to_members("[wright] возражает на счёт кандидатуры [eminence_nominee]! Обелиск Возвышенного вновь спокоен.", , 3, wright)
 	for(var/mob/M as anything in servants_and_ghosts())
 		M.playsound_local(M, 'sound/antag/eminence_hit.ogg', VOL_EFFECTS_MASTER)
 	eminence_nominee = null
