@@ -651,11 +651,14 @@
 				C.say(message)
 	return acolytes
 
-/datum/religion/proc/send_message_to_members(message, name, font_size = 6)
+/datum/religion/proc/send_message_to_members(message, name, font_size = 6, mob/source)
 	var/format_name = name ? "[name]: " : ""
 	for(var/mob/M in global.mob_list)
 		if(is_member(M) || isobserver(M))
-			to_chat(M, "<span class='[style_text]'><font size='[font_size]'>[format_name][message]</font></span>")
+			if(source)
+				to_chat(M, "<font size='[font_size]'>[(iseminence(M) || isobserver(M)) ? FOLLOW_LINK(M, source) : ""]<span class='[style_text]'>[format_name][message]</span></font>")
+			else
+				to_chat(M, "<span class='[style_text]'><font size='[font_size]'>[format_name][message]</font></span>")
 
 /datum/religion/proc/add_tech(tech_type)
 	var/datum/religion_tech/T = new tech_type
