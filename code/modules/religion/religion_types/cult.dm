@@ -244,9 +244,7 @@
 		add_faction_member(mode, M, TRUE)
 	handle_appearence(M)
 	ADD_TRAIT(M, TRAIT_HEALS_FROM_PYLONS, RELIGION_TRAIT)
-	var/mob/camera/eminence/E = eminence
-	if(E)
-		M.client?.images |= E.eminence_image
+	eminence?.eminence_image.add_hud_to(M)
 	return TRUE
 
 /datum/religion/cult/proc/handle_appearence(mob/M)
@@ -318,3 +316,4 @@
 		L.RemoveElement(/datum/element/cult_eyes)
 	if(HAS_TRAIT(L, TRAIT_CULT_HALO))
 		L.RemoveElement(/datum/element/cult_halo)
+	eminence.eminence_image.remove_hud_from(M)

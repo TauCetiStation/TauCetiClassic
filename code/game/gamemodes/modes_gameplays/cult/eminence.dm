@@ -11,16 +11,14 @@
 	layer = FLY_LAYER
 	faction = "cult"
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	var/image/eminence_image = null
+	var/datum/atom_hud/alternate_appearance/basic/my_religion/eminence_image = null
 	var/obj/item/weapon/storage/bible/tome/eminence/tome //They have a special one
 	var/mob/living/cameraFollow = null
 	COOLDOWN_DECLARE(command_point)
 
 /mob/camera/eminence/atom_init()
-	eminence_image = image(icon, src, icon_state)
-	ghost_sightless_images |= eminence_image
-	updateallghostimages()
 	. = ..()
+	eminence_image = add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/my_religion, "eminence", image(icon, src, icon_state), src, cult_religion)
 	tome = new(src)
 
 /mob/camera/eminence/Destroy()
@@ -47,15 +45,13 @@
 /mob/camera/eminence/Login()
 	..()
 	var/datum/religion/cult/R = global.cult_religion
-	R.add_member(src)
-	for(var/mob/M as anything in R.members)
-		M.client?.images |= eminence_image //Only for clients
 	if(R.eminence && R.eminence != src)
 		R.remove_member(src)
 		qdel(src)
 		return
 	R.eminence = src
 	tome.religion = R
+	R.add_member(src)
 	to_chat(src, "<span class='cult large'>Вы стали Возвышенным!</span>")
 	to_chat(src, "<span class='cult'>Будучи Возвышенным, вы ведёте весь культ за собой. Весь культ услышит то, что вы скажите.</span>")
 	to_chat(src, "<span class='cult'>Вы можете двигаться невзирая на стены, вы бестелесны, и в большинстве случаев не сможете напрямую влиять на мир, за исключением нескольких особых способов.</span>")
