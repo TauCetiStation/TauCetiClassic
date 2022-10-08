@@ -17076,6 +17076,15 @@
 	icon_state = "freezerfloor"
 	},
 /area/centcom/living)
+"aMB" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "podhatch"
+	},
+/area/shuttle/syndicate/start)
 "aMC" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -17092,6 +17101,12 @@
 	icon_state = "white"
 	},
 /area/centcom/evac)
+"aME" = (
+/obj/machinery/door/poddoor/shutters/war,
+/turf/unsimulated/floor{
+	icon_state = "darkred"
+	},
+/area/custom/syndicate_mothership)
 "aMF" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -17122,6 +17137,67 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/living)
+"aMI" = (
+/obj/structure/closet/syndicate,
+/obj/item/clothing/suit/space/syndicate/elite,
+/obj/item/clothing/head/helmet/space/syndicate/elite,
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "darkred"
+	},
+/area/custom/syndicate_mothership)
+"aMJ" = (
+/obj/structure/rack,
+/obj/item/rig_module/emp_shield,
+/obj/item/rig_module/emp_shield,
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "darkred"
+	},
+/area/custom/syndicate_mothership)
+"aMK" = (
+/obj/structure/closet/syndicate,
+/obj/item/clothing/suit/space/syndicate/elite,
+/obj/item/clothing/head/helmet/space/syndicate/elite,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkred"
+	},
+/area/custom/syndicate_mothership)
+"aML" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "darkred"
+	},
+/area/custom/syndicate_mothership)
+"aMM" = (
+/obj/structure/rack,
+/obj/item/nuke_teleporter,
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "darkred"
+	},
+/area/custom/syndicate_mothership)
+"aMN" = (
+/obj/structure/rack,
+/obj/item/weapon/antag_spawner/borg_tele,
+/obj/item/device/radio/beacon/syndicate_bomb,
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "darkred"
+	},
+/area/custom/syndicate_mothership)
+"aMO" = (
+/obj/machinery/door/airlock/external,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
 "aMR" = (
 /obj/machinery/computer/teleporter,
 /turf/unsimulated/floor{
@@ -59447,7 +59523,7 @@ azo
 aAE
 aCV
 aBQ
-aBY
+aMO
 aCa
 aAE
 aCV
@@ -59704,7 +59780,7 @@ azo
 aAE
 aCV
 aBQ
-aBY
+aMO
 aCa
 aAE
 aCV
@@ -85572,7 +85648,7 @@ aku
 aku
 aku
 aku
-aku
+aMB
 aku
 ajt
 alH
@@ -88153,10 +88229,10 @@ amm
 aIb
 aHF
 aie
-ahF
-ahF
-ahF
-ahF
+aie
+aie
+aie
+aie
 ahF
 ahF
 ahF
@@ -88410,10 +88486,10 @@ amm
 aIb
 aHF
 aie
-ahF
-ahF
-ahF
-ahF
+aMI
+aMK
+aMM
+aie
 ahF
 ahF
 ahF
@@ -88666,11 +88742,11 @@ akQ
 aml
 alY
 aHH
+aME
+adc
+aii
+akO
 aie
-ahF
-ahF
-ahF
-ahF
 ahF
 ahF
 ahF
@@ -88924,10 +89000,10 @@ aie
 axb
 aHI
 aie
-ahF
-ahF
-ahF
-ahF
+aMJ
+aML
+aMN
+aie
 ahF
 ahF
 ahF

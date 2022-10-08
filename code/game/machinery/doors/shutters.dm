@@ -26,3 +26,11 @@
 
 /obj/machinery/door/poddoor/shutters/syndi/ex_act()
 	return
+
+/obj/machinery/door/poddoor/shutters/war
+
+/obj/machinery/door/poddoor/shutters/war/emag_act(mob/user)
+	return FALSE
+
+/obj/machinery/door/poddoor/shutters/war/ex_act()
+	return
