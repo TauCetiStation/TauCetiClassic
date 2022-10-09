@@ -9,16 +9,10 @@ var/global/list/global_map = null
 	//3 - AI satellite
 	//5 - empty space
 
-var/global/shuttle_z = 2	//default
-var/global/airtunnel_start = 68 // default
-var/global/airtunnel_stop = 68 // default
-var/global/airtunnel_bottom = 72 // default
-var/global/list/monkeystart = list()
 var/global/list/wizardstart = list()
 var/global/list/newplayer_start = list()
 var/global/list/latejoin = list()
 var/global/list/prisonwarp = list()	//prisoners go to these
-var/global/list/holdingfacility = list()	//captured people go here
 var/global/list/xeno_spawn = list()//Aliens spawn at these.
 var/global/list/tdome1 = list()
 var/global/list/tdome2 = list()

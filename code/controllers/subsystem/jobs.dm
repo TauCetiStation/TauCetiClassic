@@ -450,19 +450,19 @@ SUBSYSTEM_DEF(job)
 	H.job = rank
 
 	if(!joined_late)
-		var/obj/effect/landmark/start/spawn_mark = null
-		for(var/obj/effect/landmark/start/landmark in landmarks_list)
-			if((landmark.name == rank) && !(locate(/mob/living) in landmark.loc))
-				spawn_mark = landmark
-				break
+		var/obj/effect/landmark/start/spawn_mark
+		var/list/rank_landmarks = landmarks_list[rank]
+		if(length(rank_landmarks))
+			for(var/obj/effect/landmark/start/landmark as anything in rank_landmarks)
+				if(!(locate(/mob/living) in landmark.loc))
+					spawn_mark = landmark
+					break
 		if(!spawn_mark)
 			spawn_mark = locate("start*[rank]") // use old stype
 
 		if(!spawn_mark)
 			if(!fallback_landmark)
-				for(var/obj/effect/landmark/start/landmark in landmarks_list)
-					if(landmark.name == "Fallback-Start")
-						fallback_landmark = landmark
+				fallback_landmark = locate("start*Fallback-Start")
 			warning("Failed to find spawn position for [rank]. Using fallback spawn position!")
 			spawn_mark = fallback_landmark
 

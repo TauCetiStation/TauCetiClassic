@@ -17077,13 +17077,11 @@
 	},
 /area/centcom/living)
 "aMB" = (
-/obj/structure/object_wall/standart{
-	icon_state = "wall3"
+/obj/machinery/door/airlock/external,
+/turf/unsimulated/floor{
+	icon_state = "dark"
 	},
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
-/area/shuttle/lone_op/start)
+/area/centcom/specops)
 "aMC" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -17610,6 +17608,14 @@
 	icon_state = "wood"
 	},
 /area/centcom/living)
+"aNE" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/lone_op/start)
 "aNG" = (
 /obj/structure/sign/poster/official/cleanliness{
 	pixel_y = -32
@@ -59799,7 +59805,7 @@ azo
 aAE
 aCV
 aBQ
-aBY
+aMB
 aCa
 aAE
 aCV
@@ -60056,7 +60062,7 @@ azo
 aAE
 aCV
 aBQ
-aBY
+aMB
 aCa
 aAE
 aCV
@@ -78464,11 +78470,11 @@ aaM
 aaM
 aaM
 aMQ
-aMB
-aMB
-aMB
-aMB
-aMB
+aNE
+aNE
+aNE
+aNE
+aNE
 aNv
 aaM
 aaM
@@ -78718,10 +78724,10 @@ aaM
 aaM
 aaM
 aMQ
-aMB
-aMB
-aMB
-aMB
+aNE
+aNE
+aNE
+aNE
 aML
 aMY
 aMO
@@ -78974,16 +78980,16 @@ aaM
 aaM
 aaM
 aMQ
-aMB
-aMB
+aNE
+aNE
 aNf
 aNa
 aNi
 aNm
 aNm
-aMB
-aMB
-aMB
+aNE
+aNE
+aNE
 aNv
 aaM
 aaM
@@ -79749,10 +79755,10 @@ aMP
 aMU
 aNm
 aNm
-aMB
+aNE
 aNe
-aMB
-aMB
+aNE
+aNE
 aMO
 aNh
 aaM
@@ -80002,16 +80008,16 @@ aaM
 aaM
 aaM
 aMK
-aMB
-aMB
+aNE
+aNE
 aMN
 aNp
-aMB
+aNE
 aNu
 aNg
-aMB
-aMB
-aMB
+aNE
+aNE
+aNE
 aMM
 aaM
 aaM
@@ -80260,10 +80266,10 @@ aaM
 aaM
 aaM
 aMK
-aMB
-aMB
-aMB
-aMB
+aNE
+aNE
+aNE
+aNE
 aNb
 aMI
 aMO
@@ -80520,11 +80526,11 @@ aaM
 aaM
 aaM
 aMK
-aMB
+aNE
 aMJ
-aMB
-aMB
-aMB
+aNE
+aNE
+aNE
 aMM
 aaM
 aaM
