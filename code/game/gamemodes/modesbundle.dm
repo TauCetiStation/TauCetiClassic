@@ -43,7 +43,6 @@
 /datum/modesbundle/teambased
 	name = "Team Based"
 	possible_gamemodes = list(
-		/datum/game_mode/abduction,
 		/datum/game_mode/blob,
 		/datum/game_mode/cult,
 		/datum/game_mode/infestation,

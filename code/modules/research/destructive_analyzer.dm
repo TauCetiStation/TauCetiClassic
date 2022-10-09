@@ -73,20 +73,17 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return
 		if(!do_skill_checks(user))
 			return
-		busy = 1
+		busy = TRUE
 		loaded_item = O
 		user.drop_from_inventory(O, src)
 		to_chat(user, "<span class='notice'>You add the [O.name] to the machine!</span>")
+		icon_state = "d_analyzer_l"
 		flick("d_analyzer_la", src)
 		if(linked_console)
 			nanomanager.update_uis(linked_console)
-		addtimer(CALLBACK(src, .proc/unbusy), 10)
+		VARSET_IN(src, busy, FALSE, 6)
 		return 1
 	return
-
-/obj/machinery/r_n_d/destructive_analyzer/proc/unbusy()
-	icon_state = "d_analyzer_l"
-	busy = 0
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/deconstruct_item()
 	if(busy)
@@ -99,7 +96,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	flick("d_analyzer_process", src)
 	if(linked_console)
 		linked_console.screen = "working"
-	addtimer(CALLBACK(src, .proc/finish_deconstructing), 24)
+	addtimer(CALLBACK(src, .proc/finish_deconstructing), 15)
 
 /obj/machinery/r_n_d/destructive_analyzer/proc/finish_deconstructing()
 	busy = FALSE
@@ -142,3 +139,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		loaded_item.forceMove(loc)
 		loaded_item = null
 		update_icon()
+
+/obj/machinery/r_n_d/destructive_analyzer/power_change()
+	. = ..()
+	eject_item()
