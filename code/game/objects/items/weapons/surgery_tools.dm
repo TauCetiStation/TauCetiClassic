@@ -92,6 +92,7 @@
 	force = 10.0
 	sharp = 1
 	edge = 1
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	w_class = SIZE_TINY
 	throwforce = 5.0
 	throw_speed = 3
