@@ -24,6 +24,9 @@
 	var/beeper = TRUE // currently cooldown for sound is included with check_delay.
 	var/emagged = FALSE
 
+	max_integrity = 400
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/morgue/Destroy()
 	QDEL_NULL(connected)
 	return ..()
@@ -122,6 +125,13 @@
 		update_icon()
 		update()
 
+/obj/structure/morgue/proc/move_contents(new_loc)
+	for(var/atom/movable/A in src)
+		A.forceMove(new_loc)
+		if(ismob(A))
+			var/mob/M = A
+			M.instant_vision_update(0)
+
 /obj/structure/morgue/proc/open()
 	if (!connected)
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER, 25)
@@ -133,11 +143,7 @@
 		if (T.contents.Find(connected))
 			connected.connected = src
 			update_icon()
-			for(var/atom/movable/A in src)
-				A.forceMove(connected.loc)
-				if(ismob(A))
-					var/mob/M = A
-					M.instant_vision_update(0)
+			move_contents(connected.loc)
 			connected.icon_state = "morguet"
 			connected.set_dir(dir)
 		else
@@ -173,6 +179,12 @@
 			src.name = "Morgue"
 	else
 		..()
+
+/obj/structure/morgue/deconstruct(disassembled)
+	move_contents(loc)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 5)
+	..()
 
 /obj/structure/morgue/emag_act(mob/user)
 	if(emagged)
@@ -216,6 +228,9 @@
 	anchored = TRUE
 	throwpass = 1
 
+	max_integrity = 350
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/m_tray/Destroy()
 	if(connected && connected.connected == src)
 		connected.connected = null
@@ -243,7 +258,6 @@
 			if ((B.client && !( B.blinded )))
 				to_chat(B, text("<span class='rose'>[] stuffs [] into []!</span>", user, O, src))
 	return
-
 
 /*
  * Crematorium
@@ -292,8 +306,8 @@
 				return
 
 	for(var/atom/movable/A as mob|obj in src)
-		A.loc = src.loc
-		ex_act(severity)
+		A.forceMove(loc)
+		A.ex_act(severity)
 	qdel(src)
 
 /obj/structure/crematorium/alter_health()
@@ -301,6 +315,10 @@
 
 /obj/structure/crematorium/attack_paw(mob/user)
 	return attack_hand(user)
+
+/obj/structure/crematorium/proc/move_contents(new_loc)
+	for(var/atom/movable/A as mob|obj in src)
+		A.forceMove(new_loc)
 
 /obj/structure/crematorium/attack_hand(mob/user)
 //	if (cremating) AWW MAN! THIS WOULD BE SO MUCH MORE FUN ... TO WATCH
@@ -329,8 +347,7 @@
 		if (T.contents.Find(src.connected))
 			src.connected.connected = src
 			src.icon_state = "crema0"
-			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.connected.loc
+			move_contents(connected.loc)
 			src.connected.icon_state = "cremat"
 		else
 			qdel(src.connected)
@@ -410,6 +427,11 @@
 		playsound(src, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
 	return
 
+/obj/structure/crematorium/deconstruct(disassembled)
+	move_contents(loc)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 5)
+	..()
 
 /*
  * Crematorium tray

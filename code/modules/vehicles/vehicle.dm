@@ -22,8 +22,6 @@
 	var/attack_log = null
 	var/on = 0
 	var/open = 0
-	var/health = 0	//do not forget to set health for your vehicle!
-	var/maxhealth = 0
 	var/fire_dam_coeff = 1.0
 	var/brute_dam_coeff = 1.0
 	var/stat = 0
@@ -63,6 +61,17 @@
 	else
 		return FALSE
 
+/obj/vehicle/space/spacebike/relaymove(mob/user, direction)
+	if(!user)
+		return
+	//manually set move_delay for vehicles so we don't inherit any mob movement penalties
+	//specific vehicle move delays are set in code\modules\vehicles\vehicle.dm
+	user.client?.move_delay = world.time
+	//drunk driving
+	if(user.confused)
+		direction = user.confuse_input(direction)
+	return Move(get_step(src, direction))
+
 /obj/vehicle/proc/can_move()
 	if(world.time <= l_move_time + move_delay)
 		return 0
@@ -86,9 +95,9 @@
 		var/obj/item/weapon/weldingtool/T = W
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(T.isOn())
-			if(health < maxhealth)
+			if(get_integrity() < max_integrity)
 				if(open)
-					health = min(maxhealth, health + 20)
+					repair_damage(20)
 					playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
 					user.visible_message("<span class='red'>[user] repairs \the [src]!</span>","<span class='notice'>You repair \the [src]!</span>")
 					check_move_delay()
@@ -99,37 +108,26 @@
 		else
 			to_chat(user, "<span class='notice'>Unable to repair while [src] is off.</span>")
 	else
-		switch(W.damtype)
-			if("fire")
-				health -= W.force * fire_dam_coeff
-			if("brute")
-				health -= W.force * brute_dam_coeff
-		healthcheck()
 		return ..()
 
-/obj/vehicle/bullet_act(obj/item/projectile/Proj, def_zone)
+/obj/vehicle/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
+	switch(damage_type)
+		if(BRUTE)
+			return damage_amount * brute_dam_coeff
+		if(BURN)
+			return damage_amount * fire_dam_coeff
+
+/obj/vehicle/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
 	. = ..()
-	health -= Proj.damage
-	healthcheck()
+	if(QDELING(src))
+		return
+	if(.)
+		if(prob(10))
+			new /obj/effect/decal/cleanable/blood/oil(loc)
+		check_move_delay()
 
-/obj/vehicle/blob_act()
-	src.health -= rand(20,40)*fire_dam_coeff
-	healthcheck()
-	return
-
-/obj/vehicle/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			explode()
-			return
-		if(EXPLODE_HEAVY)
-			health -= rand(5,10)*fire_dam_coeff
-			health -= rand(10,20)*brute_dam_coeff
-		if(EXPLODE_LIGHT)
-			if(prob(50))
-				health -= rand(1,5)*fire_dam_coeff
-				health -= rand(1,5)*brute_dam_coeff
-	healthcheck()
+/obj/vehicle/deconstruct(disassembled)
+	explode()
 
 /obj/vehicle/attack_ai(mob/user)
 	return
@@ -178,11 +176,6 @@
 	new /obj/effect/decal/cleanable/blood/oil(src.loc)
 
 	qdel(src)
-
-/obj/vehicle/proc/healthcheck()
-	check_move_delay()
-	if(health <= 0)
-		explode()
 
 /obj/vehicle/proc/RunOver(mob/living/carbon/human/H)
 	return		//write specifics for different vehicles
@@ -270,16 +263,13 @@
 	return 1
 
 /obj/vehicle/proc/check_move_delay()
-	var/health_procent = (health / maxhealth) * 100
-	if(health_procent >= 66)
-		slow_cooef = 0
-		return
-	if(health_procent >= 33)
-		slow_cooef = 1
-		return
-	slow_cooef = 2
-	return
-
+	switch(get_integrity() / max_integrity)
+		if(0 to 0.33)
+			slow_cooef = 2
+		if(0.33 to 0.66)
+			slow_cooef = 1
+		else
+			slow_cooef = 0
 
 //-------------------------------------------------------
 // Stat update procs
@@ -293,8 +283,4 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	visible_message("<span class='danger'>[user] [attack_message] the [src]!</span>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
-	src.health -= damage
-	if(prob(10))
-		new /obj/effect/decal/cleanable/blood/oil(src.loc)
-	healthcheck()
-	return 1
+	take_damage(damage, BRUTE, MELEE)

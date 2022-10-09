@@ -238,7 +238,7 @@
 	if(istype(A, /turf/simulated/wall/cult))
 		its_wall = TRUE
 
-	if(its_wall || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult) || istype(A, /mob/living/simple_animal/construct) || istype(A, /mob/living/simple_animal/hostile/pylon))
+	if(its_wall || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult) || isconstruct(A) || istype(A, /mob/living/simple_animal/hostile/pylon))
 		var/atom/movable/stored_pulling = pulling
 		if(stored_pulling)
 			stored_pulling.set_dir(get_dir(stored_pulling.loc, loc))
@@ -311,7 +311,7 @@
 
 /mob/living/simple_animal/hostile/pylon/proc/deactivate()
 	for(var/obj/structure/cult/pylon/P in contents)
-		P.health = health
+		P.update_integrity(health)
 		P.forceMove(loc)
 	qdel(src)
 

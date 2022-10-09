@@ -147,9 +147,12 @@
 	else if(last_command_report == 1 && world.time >= 30 MINUTES)
 		command_report("Statistics hint that a high amount of leisure time, and associated activities, are responsible for the poor performance of many of our stations. You are to bolt and close down any leisure facilities, such as the holodeck, the theatre and the bar. Food can be distributed through vendors and the kitchen.")
 		last_command_report = 2
-	else if(last_command_report == 2 && world.time >= 60 MINUTES)
-		command_report("It is reported that merely closing down leisure facilities has not been successful. You and your Heads of Staff are to ensure that all crew are working hard, and not wasting time or energy. Any crew caught off duty without leave from their Head of Staff are to be warned, and on repeated offence, to be brigged until the next transfer shuttle arrives, which will take them to facilities where they can be of more use.")
+	else if(last_command_report == 2 && world.time >= 45 MINUTES)
+		command_report("We began to suspect that the heads of staff might be disloyal to Nanotrasen. We ask you and other heads to implant the loyalty implant, if you have not already implanted it in yourself. Heads who do not want to implant themselves should be arrested for disobeying the orders of the Central Command until the end of the shift.")
 		last_command_report = 3
+	else if(last_command_report == 3 && world.time >= 60 MINUTES)
+		command_report("It is reported that merely closing down leisure facilities has not been successful. You and your Heads of Staff are to ensure that all crew are working hard, and not wasting time or energy. Any crew caught off duty without leave from their Head of Staff are to be warned, and on repeated offence, to be brigged until the next transfer shuttle arrives, which will take them to facilities where they can be of more use.")
+		last_command_report = 4
 
 /datum/faction/revolution/proc/command_report(message)
 	for (var/obj/machinery/computer/communications/comm in communications_list)

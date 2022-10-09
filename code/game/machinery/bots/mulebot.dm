@@ -13,8 +13,7 @@
 	density = TRUE
 	anchored = TRUE
 	animate_movement=1
-	health = 150 //yeah, it's tougher than ed209 because it is a big metal box with wheels --rastaf0
-	maxhealth = 150
+	max_integrity = 150 //yeah, it's tougher than ed209 because it is a big metal box with wheels --rastaf0
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
 
@@ -118,8 +117,8 @@
 	else if(is_wire_tool(I))
 		wires.interact(user)
 	else if (iswrench(I))
-		if (src.health < maxhealth)
-			src.health = min(maxhealth, src.health+25)
+		if (get_integrity() < max_integrity)
+			repair_damage(25)
 			user.visible_message(
 				"<span class='warning'>[user] repairs [src]!</span>",
 				"<span class='notice'>You repair [src]!</span>"
