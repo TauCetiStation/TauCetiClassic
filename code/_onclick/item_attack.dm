@@ -234,7 +234,7 @@
 		return H.attacked_by(src, user, def_zone)	//make sure to return whether we have hit or miss
 	else
 		switch(damtype)
-			if("brute")
+			if(BRUTE)
 				if(isslime(src))
 					M.adjustBrainLoss(power)
 
@@ -244,7 +244,7 @@
 						if(istype(T))
 							T.add_blood_floor(M)
 					M.take_bodypart_damage(power)
-			if("fire")
+			if(BURN)
 				if (!(COLD_RESISTANCE in M.mutations))
 					to_chat(M, "Aargh it burns!")
 					M.take_bodypart_damage(0, power)

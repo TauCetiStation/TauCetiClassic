@@ -33,7 +33,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 /obj/item/candle/proc/light(flavor_text = "<span class='warning'>[usr] lights the [name].</span>")
 	if(!lit)
 		lit = TRUE
-		//src.damtype = "fire"
+		//src.damtype = BURN
 		visible_message(flavor_text)
 		set_light(CANDLE_LUMINOSITY, 1)
 		START_PROCESSING(SSobj, src)
