@@ -147,6 +147,7 @@
 	modules += new /obj/item/weapon/shockpaddles/robot(src)
 	modules += new /obj/item/device/gps/cyborg(src)
 	modules += new /obj/item/stack/medical/suture(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/cleaner/cyborg(src)
 
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
@@ -450,7 +451,7 @@
 	modules += new /obj/item/device/t_scanner(src)
 	modules += new /obj/item/weapon/gripper(src)
 	modules += new /obj/item/weapon/matter_decompiler(src)
-	modules += new /obj/item/weapon/reagent_containers/spray/cleaner/drone(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/cleaner/cyborg/drone(src)
 
 	emag = new /obj/item/weapon/pickaxe/plasmacutter(src)
 	emag.name = "Plasma Cutter"
