@@ -655,7 +655,7 @@
 	var/format_name = name ? "[name]: " : ""
 	for(var/mob/M in global.player_list)
 		if(is_member(M) || isobserver(M))
-			var/link
+			var/link = ""
 			if(source && (iseminence(M) || isobserver(M)))
 				link = FOLLOW_LINK(M, source)
 			to_chat(M, "<font size='[font_size]'><span class='[style_text]'>[link][format_name][message]</span></font>")
