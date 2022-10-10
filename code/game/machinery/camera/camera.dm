@@ -173,6 +173,7 @@
 			var/obj/item/stack/sheet/mineral/phoron/P = W
 			var/obj/item/stack/sheet/mineral/phoron/S = P.change_stack(user, 1, FALSE)
 			upgradeEmpProof(S)
+			S.forceMove(src)
 			to_chat(user, "[msg]")
 		else
 			to_chat(user, "[msg2]")
@@ -448,42 +449,25 @@
 
 //upgrade checks
 /obj/machinery/camera/proc/isEmpProof()
-	if(!isnull(camera_upgrades["emp_proof"]))
-		return TRUE
-	return FALSE
+	return camera_upgrades["emp_proof"]
 
 /obj/machinery/camera/proc/isXRay()
-	if(!isnull(camera_upgrades["xray"]))
-		return TRUE
-	return FALSE
+	return camera_upgrades["xray"]
 
 /obj/machinery/camera/proc/isMotion()
-	if(!isnull(camera_upgrades["motion"]))
-		return TRUE
-	return FALSE
+	return camera_upgrades["motion"]
 
 //upgrading procs
 /obj/machinery/camera/proc/upgradeEmpProof(obj/item/I)
-	if(!I)
-		var/obj/item/stack/sheet/mineral/phoron/newitem = new(src)
-		I = newitem
-	else
-		I.forceMove(src)
 	camera_upgrades["emp_proof"] = I
 	update_icon()
 
 /obj/machinery/camera/proc/upgradeXRay(obj/item/I)
-	if(!I)
-		var/obj/item/device/analyzer/newitem = new(src)
-		I = newitem
 	camera_upgrades["xray"] = I
 	camera_base = "xraycam"
 	update_icon()
 
 /obj/machinery/camera/proc/upgradeMotion(obj/item/I)
-	if(!I)
-		var/obj/item/device/assembly/prox_sensor/newitem = new(src)
-		I = newitem
 	camera_upgrades["motion"] = I
 	update_icon()
 
