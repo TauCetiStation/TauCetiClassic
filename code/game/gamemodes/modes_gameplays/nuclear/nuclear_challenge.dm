@@ -84,7 +84,7 @@ var/global/war_device_activation_forbidden
 	qdel(src)
 
 /obj/item/device/nuclear_challenge/proc/check_allowed(mob/living/user)
-/*	if(declaring_war)
+	if(declaring_war)
 		to_chat(user, "You are already in the process of declaring war! Make your mind up.")
 		return FALSE
 	if(player_list.len < CHALLENGE_MIN_PLAYERS)
@@ -98,7 +98,7 @@ var/global/war_device_activation_forbidden
 		return FALSE
 	if(war_device_activation_forbidden)
 		to_chat(user, "The invasion has already begun. War can not be declared at this point.")
-		return FALSE*/
+		return FALSE
 	return TRUE
 
 #undef CHALLENGE_TELECRYSTALS
