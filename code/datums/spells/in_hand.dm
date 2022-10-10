@@ -274,7 +274,7 @@
 	icon_state = "arcane_bolt"
 	damage = 20
 	nodamage = 0
-	flag = "laser"
+	flag = LASER
 	damage_type = BURN
 	light_color = COLOR_PINK
 

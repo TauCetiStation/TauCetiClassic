@@ -653,7 +653,7 @@
 
 /datum/religion/proc/send_message_to_members(message, name, font_size = 6, mob/source)
 	var/format_name = name ? "[name]: " : ""
-	for(var/mob/M in global.mob_list)
+	for(var/mob/M in global.player_list)
 		if(is_member(M) || isobserver(M))
 			var/link
 			if(source && (iseminence(M) || isobserver(M)))

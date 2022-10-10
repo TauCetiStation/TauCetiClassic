@@ -110,7 +110,8 @@
 	if(!(stat & EMPED))
 		visible_message("[bicon(src)] <span class='notice'>Paint drips from [src].</span>")
 		cancelCameraAlarm()
-		toggle_cam(FALSE)
+		if(!status)
+			toggle_cam(FALSE)
 
 /obj/machinery/camera/ex_act(severity)
 	if(src.invuln)
@@ -178,6 +179,11 @@
 		else
 			to_chat(user, "[msg2]")
 
+	else if(istype(W, /obj/item/stack/sheet/glass) && panel_open)
+		var/obj/item/stack/sheet/glass/G = W
+		remove_paint_state()
+		to_chat(user, "<span class='notice'>You fixed [src] lens.</span>")
+		G.use(1)
 	// OTHER
 	else if(istype(W, /obj/item/weapon/paper))
 		user.SetNextMove(CLICK_CD_INTERACT)

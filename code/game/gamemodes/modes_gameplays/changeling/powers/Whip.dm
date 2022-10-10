@@ -61,7 +61,7 @@
 	damage = 0
 	kill_count = 7
 	damage_type = BRUTE
-	flag = "bullet"
+	flag = BULLET
 	var/grabber = FALSE
 	var/mob/living/carbon/human/host
 	tracer_list = list()

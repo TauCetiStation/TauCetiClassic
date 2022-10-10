@@ -785,6 +785,7 @@
 #include "code\game\machinery\bots\medbot.dm"
 #include "code\game\machinery\bots\mulebot.dm"
 #include "code\game\machinery\bots\secbot.dm"
+#include "code\game\machinery\camera\abductors_console.dm"
 #include "code\game\machinery\camera\camera.dm"
 #include "code\game\machinery\camera\camera_advanced.dm"
 #include "code\game\machinery\camera\camera_assembly.dm"
