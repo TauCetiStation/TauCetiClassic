@@ -1,4 +1,3 @@
-
 //Animated fading color on client's screen
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
 	var/client/C
