@@ -254,7 +254,7 @@
 	if(!isturf(L.loc))
 		return
 	L.water_act(5)
-	if(!prob(L.getarmor(null, "bio")))
+	if(!prob(L.getarmor(null, BIO)))
 		L.adjustFireLoss(1)
 
 /datum/weather/acid_rain/additional_action() //Proc for other actions?
