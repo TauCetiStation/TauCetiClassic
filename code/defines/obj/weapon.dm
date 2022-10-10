@@ -223,22 +223,14 @@
 		return
 	cut_hand(user)
 
-/obj/item/weapon/shard/proc/cut_hand(mob/user)
-	var/mob/living/L = user
-	if(!L)
-		return
+/obj/item/weapon/shard/proc/cut_hand(mob/living/L)
 	if(!ishuman(L))
 		L.adjustBruteLoss(force / 2)
 		to_chat(L, "<span class='warning'>[src] cuts into your hand!</span>")
 		return
 	var/mob/living/carbon/human/H = L
 	if(!H.gloves && !H.species.flags[NO_MINORCUTS]) //specflags please..
-		var/bodypart_name
-		if(H.hand)
-			bodypart_name = BP_L_ARM
-		else
-			bodypart_name = BP_R_ARM
-		var/obj/item/organ/external/BP = H.get_bodypart(bodypart_name)
+		var/obj/item/organ/external/BP = H.get_bodypart(BP_ACTIVE_ARM)
 		if(BP)
 			BP.take_damage(force / 2, null, damage_flags())
 			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
