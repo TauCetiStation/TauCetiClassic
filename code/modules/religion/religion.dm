@@ -655,10 +655,10 @@
 	var/format_name = name ? "[name]: " : ""
 	for(var/mob/M in global.mob_list)
 		if(is_member(M) || isobserver(M))
-			if(source)
-				to_chat(M, "<font size='[font_size]'>[(iseminence(M) || isobserver(M)) ? FOLLOW_LINK(M, source) : ""]<span class='[style_text]'>[format_name][message]</span></font>")
-			else
-				to_chat(M, "<span class='[style_text]'><font size='[font_size]'>[format_name][message]</font></span>")
+			var/link
+			if(source && (iseminence(M) || isobserver(M)))
+				link = FOLLOW_LINK(M, source)
+			to_chat(M, "<font size='[font_size]'><span class='[style_text]'>[link][format_name][message]</span></font>")
 
 /datum/religion/proc/add_tech(tech_type)
 	var/datum/religion_tech/T = new tech_type

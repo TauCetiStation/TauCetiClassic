@@ -84,7 +84,7 @@
 
 //Used to nominate oneself or ghosts for the role of Eminence.
 /obj/structure/eminence_spire/proc/cancelation(mob/living/cold_feet)
-	if(tgui_alert(cold_feet, "Отказаться от номинации?", "Отказ от номинации", list("Отказ от номинации", "Оставить")) == "Оставить" || !iscultist(cold_feet) || !eminence_nominee)
+	if(tgui_alert(cold_feet, "Отказаться от номинации?", "Отказ от номинации", list("Отказ от номинации", "Оставить")) == "Оставить" || !iscultist(cold_feet) || (!eminence_nominee && !ghost_nomination))
 		return
 	cult_religion.send_message_to_members("[eminence_nominee] исключил свою кандидатуру! Обелиск Возвышенного вновь спокоен.", , 3)
 	for(var/mob/M in servants_and_ghosts())
@@ -94,9 +94,9 @@
 
 //Used to nominate oneself or ghosts for the role of Eminence.
 /obj/structure/eminence_spire/proc/kingmaker()
-	if(!eminence_nominee)
+	if(!eminence_nominee && !ghost_nomination)
 		return
-	if(ismob(eminence_nominee))
+	if(eminence_nominee)
 		if(!eminence_nominee.client || !eminence_nominee.mind)
 			cult_religion.send_message_to_members("[eminence_nominee] каким-то образом потерял сознание! Обелиск Возвышенного вновь спокоен.", , 3, eminence_nominee)
 			for(var/mob/M as anything in servants_and_ghosts())
@@ -114,7 +114,7 @@
 		eminence.key = eminence_nominee.key
 		eminence_nominee.dust()
 		eminence.eminence_help()
-	else if(ghost_nomination)
+	else
 		kingmaking = TRUE
 		cult_religion.send_message_to_members("Обелиск Возвышенного выбирает себе призрака для превращения в Возвышенного...", , 3)
 		var/list/candidates = pollGhostCandidates("Хотели бы вы сыграть в роли Возвышенного?", ROLE_CULTIST, IGNORE_EMINENCE, poll_time = 100)
