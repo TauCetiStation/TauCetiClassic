@@ -316,4 +316,4 @@
 		L.RemoveElement(/datum/element/cult_eyes)
 	if(HAS_TRAIT(L, TRAIT_CULT_HALO))
 		L.RemoveElement(/datum/element/cult_halo)
-	eminence.eminence_image.remove_hud_from(M)
+	M.update_alt_apperance_by(/datum/atom_hud/alternate_appearance/basic/my_religion)

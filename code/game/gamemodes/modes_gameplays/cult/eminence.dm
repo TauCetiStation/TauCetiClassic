@@ -11,18 +11,16 @@
 	layer = FLY_LAYER
 	faction = "cult"
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
-	var/datum/atom_hud/alternate_appearance/basic/my_religion/eminence_image = null
 	var/obj/item/weapon/storage/bible/tome/eminence/tome //They have a special one
 	var/mob/living/cameraFollow = null
 	COOLDOWN_DECLARE(command_point)
 
 /mob/camera/eminence/atom_init()
 	. = ..()
-	eminence_image = add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/my_religion, "eminence", image(icon, src, icon_state), src, cult_religion)
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/my_religion, "eminence", image(icon, src, icon_state), src, cult_religion)
 	tome = new(src)
 
 /mob/camera/eminence/Destroy()
-	QDEL_NULL(eminence_image)
 	QDEL_NULL(tome)
 	global.cult_religion.eminence = null
 	STOP_PROCESSING(SSprocessing, src)
@@ -184,7 +182,7 @@
 		to_chat(src, "<span class='cult'>Слишком рано для новой команды!</span>")
 		return
 	var/list/commands = list("Rally Here", "Regroup Here", "Avoid This Area", "Reinforce This Area")
-	var/roma_invicta = input(src, "Choose a command to issue to your cult!", "Issue Commands") as null|anything in commands
+	var/roma_invicta = input(src, "Какой приказ отдать культу?", "Отдать Приказ") as null|anything in commands
 	if(!roma_invicta)
 		return
 	var/command_text = ""
@@ -227,13 +225,10 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	resistance_flags = INDESTRUCTIBLE
 	duration = 300
-	var/image/cult_vis
 
 /obj/effect/temp_visual/command_point/atom_init(marker_icon)
 	. = ..()
-	cult_vis = image(icon, src, marker_icon)
-	for(var/mob/M as anything in servants_and_ghosts())
-		M.client.images |= cult_vis
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/my_religion, "command_point", image(icon, src, icon_state), src, cult_religion)
 
 /mob/camera/eminence/proc/command_buff(turf/T)
 	for(var/mob/M as anything in global.cult_religion.members)
@@ -270,7 +265,3 @@
 					H.full_prosthetic = null
 					var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
 					Heart?.heart_normalize()
-
-/obj/effect/temp_visual/command_point/Destroy()
-	QDEL_NULL(cult_vis)
-	return ..()
