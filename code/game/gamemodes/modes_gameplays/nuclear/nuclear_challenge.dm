@@ -63,11 +63,10 @@ var/global/war_device_activation_forbidden
 	U.hidden_uplink.uses = CHALLENGE_TELECRYSTALS
 	U.hidden_uplink.uplink_type = "nuclear"
 
-	for(var/area/A in areas_by_type[/area/custom/syndicate_mothership])
-		for(var/obj/machinery/door/poddoor/shutters/war/H in A)
-			to_chat(user, "<span class='notice'>Special armory has been opened!</span>")
-			H.do_open()
-			playsound(H, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+	var/area/custom/syndicate_mothership/syndi_area = locate()
+	var/obj/machinery/door/poddoor/shutters/war/H = locate() in syndi_area
+	to_chat(user, "<span class='notice'>Special armory has been opened!</span>")
+	H.do_open()
 
 	var/crates = list("Riot gear crate" = 1, "Weapons crate" = 3, "Syndicate liquidator" = 2)
 	for(var/crate_name in crates)

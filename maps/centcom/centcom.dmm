@@ -17139,8 +17139,8 @@
 /area/centcom/living)
 "aMI" = (
 /obj/structure/closet/syndicate,
-/obj/item/clothing/suit/space/syndicate/elite,
-/obj/item/clothing/head/helmet/space/syndicate/elite,
+/obj/item/clothing/suit/space/rig/syndi/elite,
+/obj/item/clothing/head/helmet/space/rig/syndi/elite,
 /turf/unsimulated/floor{
 	dir = 9;
 	icon_state = "darkred"
@@ -17157,8 +17157,8 @@
 /area/custom/syndicate_mothership)
 "aMK" = (
 /obj/structure/closet/syndicate,
-/obj/item/clothing/suit/space/syndicate/elite,
-/obj/item/clothing/head/helmet/space/syndicate/elite,
+/obj/item/clothing/suit/space/rig/syndi/elite,
+/obj/item/clothing/head/helmet/space/rig/syndi/elite,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "darkred"
