@@ -121,7 +121,7 @@
 					H.update_inv_legcuffed()
 					H.visible_message("<span class='danger'>[H] steps on \the [src].</span>", "<span class='danger'>You step on \the [src]!</span>")
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
-		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
+		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !isconstruct(AM) && !isshade(AM) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
 			armed = 0
 			var/mob/living/simple_animal/SA = AM
 			SA.health -= 20
@@ -470,6 +470,7 @@
 	icon_state = "hatchet"
 	flags = CONDUCT
 	force = 12.0
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	sharp = 1
 	edge = 1
 	w_class = SIZE_TINY
@@ -488,10 +489,6 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 	AddComponent(/datum/component/swiping, SCB)
-
-/obj/item/weapon/hatchet/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
-	return ..()
 
 /obj/item/weapon/hatchet/unathiknife
 	name = "duelling knife"

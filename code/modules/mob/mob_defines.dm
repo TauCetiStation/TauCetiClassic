@@ -135,8 +135,6 @@
 
 	var/coughedtime = null
 
-	var/next_point_to = 0
-
 	var/job = null//Living
 
 	var/datum/dna/dna = null//Carbon

@@ -268,7 +268,7 @@
 		return
 
 	var/target_zone = attacker.get_targetzone()
-	var/armor_check = victim.run_armor_check(target_zone, "melee")
+	var/armor_check = victim.run_armor_check(target_zone, MELEE)
 
 	if(ishuman(victim))
 		var/mob/living/carbon/human/H = victim
