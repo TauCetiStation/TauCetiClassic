@@ -41,7 +41,7 @@
 
 /datum/announcement/centcomm/aliens
 	name = "Event: Infestation"
-	subtitle = "Тревога.Неопознанные Формы Жизни"
+	subtitle = "Тревога. Неопознанные Формы Жизни"
 	sound = "lifesigns"
 /datum/announcement/centcomm/aliens/New()
 	message = "Обнаружены неопознанные формы жизни на [station_name_ru()]. Обезопасьте внешние доступы, включая трубопровод и вентиляцию."
