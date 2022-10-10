@@ -4,7 +4,7 @@
 	damage = 60
 	damage_type = BRUTE
 	nodamage = 0
-	flag = "bullet"
+	flag = BULLET
 	embed = 1
 	sharp = 1
 	var/stoping_power = 0
@@ -207,7 +207,7 @@
 /obj/item/projectile/bullet/stunshot
 	name = "stunshot"
 	icon_state = "spark"
-	flag = "energy"
+	flag = ENERGY
 	damage = 5
 	stun = 0
 	weaken = 0

@@ -227,7 +227,7 @@
 
 		user.visible_message("<span class='notice'>[user] activates the flare.</span>", "<span class='notice'>You pull the cord on the flare, activating it!</span>")
 		src.force = on_damage
-		src.damtype = "fire"
+		src.damtype = BURN
 		item_state = icon_state
 		update_inv_mob()
 		START_PROCESSING(SSobj, src)
