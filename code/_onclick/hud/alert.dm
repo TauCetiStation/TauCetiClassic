@@ -445,7 +445,10 @@
 	icon_state = "buckled"
 
 /atom/movable/screen/alert/buckled/Click()
-	if(!mob_viewer.restrained())
+	if(mob_viewer.restrained())
+		to_chat(mob_viewer, "You are restrained! You need to remove handcuffs first!")
+		return
+	if(mob_viewer.next_move < world.time && mob_viewer.stat == CONSCIOUS && !mob_viewer.stunned && !mob_viewer.paralysis)
 		master.user_unbuckle_mob(mob_viewer)
 
 /atom/movable/screen/alert/brake
