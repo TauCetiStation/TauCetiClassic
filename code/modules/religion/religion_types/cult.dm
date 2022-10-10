@@ -244,7 +244,7 @@
 		add_faction_member(mode, M, TRUE)
 	handle_appearence(M)
 	ADD_TRAIT(M, TRAIT_HEALS_FROM_PYLONS, RELIGION_TRAIT)
-	eminence?.eminence_image.add_hud_to(M)
+	M.update_alt_apperance_by(/datum/atom_hud/alternate_appearance/basic/my_religion)
 	return TRUE
 
 /datum/religion/cult/proc/handle_appearence(mob/M)
