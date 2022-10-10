@@ -19,6 +19,7 @@
 /* Command */
 /datum/announcement/station/command/department
 	name = "Heads: Department"
+	sound = "department"
 /datum/announcement/station/command/department/play(department, message)
 	if(department && message)
 		title = "Оповещение из [department]"
@@ -36,8 +37,8 @@
 /* Alerts */
 /datum/announcement/station/nuke
 	name = "Alert: Nuke Activation"
-	message =  "Обнаружена активация ядерной боеголовки где-то на станции. Кто-то пытается взорвать станцию!"
-	sound = "nuke"
+	message =  "На станции была обнаружена активация ядерной боеголовки. Кто-то пытается её взорвать!"
+	sound = "nuke1"
 /datum/announcement/station/nuke/play(area/A)
 	if(A)
 		message = "Обнаружена активация ядерной боеголовки в [initial(A.name)]. Кто-то пытается взорвать станцию!"
@@ -45,8 +46,8 @@
 
 /datum/announcement/station/nuke_teleport
 	name = "Alert: Nuke Translocation"
-	message =  "Обнаружено подпространственное перемещение ядерной боеголовки где-то на станции. Кто-то пытается взорвать станцию!"
-	sound = "commandreport"
+	message =  "Обнаружено подпространственное перемещение ядерной боеголовки. Кто-то пытается взорвать станцию!"
+	sound = "nuke2"
 
 /datum/announcement/station/nuke_teleport/play(area/new_loc, area/old_loc)
 	if(new_loc && old_loc)
@@ -55,10 +56,12 @@
 
 /datum/announcement/station/maint_revoke
 	name = "Alert: Maintenance Access Revoked"
+	sound = "maint_revoke"
 	message = "Был аннулирован доступ на все технические туннели."
 
 /datum/announcement/station/maint_readd
 	name = "Alert: Maintenance Access Readded"
+	sound = "maint_readd"
 	message = "Требование доступа вернулось на все технические туннели."
 
 /datum/announcement/station/gravity_on
@@ -70,8 +73,8 @@
 
 /datum/announcement/station/gravity_off
 	name = "Secret: Gravity Off"
-	message = "Всплеск ошибок обнаружен в системе распределения массы. Искусственная гравитация будет выключена для перезагрузки системы. " + \
-			"Дальнейшие ошибки могут привести к гравитационному коллапсу и формированию черной дыры. Хорошего дня."
+	message = "Обнаружен всплеск ошибок в системе распределения массы. Дальнейшие ошибки могут привести к гравитационному коллапсу и формированию черной дыры. " + \
+			"Для перезагрузки системы, искусственная гравитация будет выключена. Хорошего дня."
 	sound = "gravoff"
 /datum/announcement/station/gravity_off/New()
 	subtitle = "Система Предотвращения Аварий [station_name_ru()]"
@@ -146,7 +149,7 @@
 
 /datum/announcement/station/code/uptoblue
 	name = "Code: Up to Blue"
-	subtitle = "Внимание! Код безопасности повышен до Синего"
+	subtitle = "Внимание! Код Синий."
 	message = "Командование получило надежную информацию о возможной враждебной активности на борту станции. " + \
 			"Служба безопасности может носить оружие на виду, однако, не следует вынимать его без необходимости. " + \
 			"Разрешается личный обыск персонала и отсеков станции без предварительных санкций."
@@ -162,7 +165,7 @@
 
 /datum/announcement/station/code/uptored
 	name = "Code: Up to Red"
-	subtitle = "Внимание! Красный код!"
+	subtitle = "Внимание! Код красный!"
 	message = "Существует прямая угроза станции или возможно причинение значительного ущерба. " + \
 			"Боевое положение! Служба безопасности имеет право носить оружие наготове по собственному усмотрению. " + \
 			"Рекомендуются спонтанные обыски персонала и отсеков. Весь персонал станции обязан оставаться в своих отделах. " + \
@@ -171,7 +174,7 @@
 
 /datum/announcement/station/code/downtored
 	name = "Code: Down to Red"
-	subtitle = "Внимание! Красный код!"
+	subtitle = "Внимание! Код понижен до красного!"
 	message = "Механизм самоуничтожения деактивирован и над ситуацией был вернут частичный контроль. " + \
 			"Тем не менее существует прямая угроза станции. Служба безопасности имеет право носить оружие наготове по собственному усмотрению. " + \
 			"Рекомендуются спонтанные обыски персонала и отсеков."
@@ -179,8 +182,8 @@
 
 /datum/announcement/station/code/delta
 	name = "Code: Up to Delta"
-	subtitle = "Внимание! Код безопасности Дельта!"
-	message = "Внимание, активирован механизм самоуничтожения или ситуация вышла полностью из под контроля! " + \
+	subtitle = "Тревога! Код Дельта!"
+	message = "Активирован механизм самоуничтожения или ситуация вышла полностью из под контроля! " + \
 			"Все приказы глав станции должны выполняться беспрекословно, любое неповиновение карается смертью! " + \
 			"Всему персоналу перевести датчики костюмов в третий режим! Это не учебная тревога!"
 	sound = "delta"
