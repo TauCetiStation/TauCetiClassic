@@ -220,7 +220,7 @@
 	health = 60
 	melee_damage = 8
 	attacktext = "prodd"
-	speed = -0.3
+	speed = 0
 	environment_smash = 1
 	see_in_dark = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
@@ -265,7 +265,7 @@
 			return ..()
 		var/mob/living/carbon/human/C = A
 		var/obj/item/organ/external/BP = C.get_bodypart(get_targetzone())
-		if(BP && !BP.droplimb(null, null, DROPLIMB_EDGE))
+		if(BP && !BP.droplimb(FALSE, FALSE, DROPLIMB_EDGE))
 			return ..() //Attack
 		return
 	return ..()
