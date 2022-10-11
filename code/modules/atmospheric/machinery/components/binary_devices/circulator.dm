@@ -123,6 +123,7 @@
 
 		SetInitDirections()
 		var/obj/machinery/atmospherics/node1 = NODE1
+
 		if(node1)
 			node1.disconnect(src)
 			NODE1 = null
@@ -130,26 +131,27 @@
 			nullifyPipenet(PARENT1)
 
 		var/obj/machinery/atmospherics/node2 = NODE2
+
 		if(node2)
 			node2.disconnect(src)
 			NODE2 = null
 		if(PARENT2)
 			nullifyPipenet(PARENT2)
 
-		if(anchored)
-			atmos_init()
+		atmos_init()
 
-			node1 = NODE1
-			node2 = NODE2
+		node1 = NODE1
+		node2 = NODE2
 
-			if(node1)
-				node1.atmos_init()
-				node1.addMember(src)
-			if(node2)
-				node2.atmos_init()
-				node2.addMember(src)
+		if(node1)
+			node1.atmos_init()
+			node1.addMember(src)
 
-			build_network()
+		if(node2)
+			node2.atmos_init()
+			node2.addMember(src)
+
+		build_network()
 
 		if(gen)
 			gen.reconnect()

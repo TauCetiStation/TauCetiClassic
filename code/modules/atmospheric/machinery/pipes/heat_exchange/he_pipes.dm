@@ -5,8 +5,6 @@
 	color = "#404040"
 	level = PIPE_VISIBLE_LEVEL
 	connect_types = CONNECT_TYPE_HE
-	var/initialize_directions_he
-	var/surface = 2	//surface area in m^2
 	var/icon_temperature = T20C //stop small changes in temperature causing an icon refresh
 
 	minimum_temperature_difference = 20
@@ -28,16 +26,9 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/can_be_node(obj/machinery/atmospherics/pipe/simple/heat_exchanging/target)
-	if(!istype(target))
-		return 0
-	if(target.initialize_directions_he & get_dir(target,src))
-		return 1
-
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/SetInitDirections()
-	initialize_directions_he = initialize_directions
-
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/GetInitDirections()
-	return ..() | initialize_directions_he
+	var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/H = target
+	if(istype(H) && (target.initialize_directions & get_dir(target, src)) && (target.initialize_directions & initialize_directions))
+		. = TRUE
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/process_atmos()
 	last_power_draw = 0

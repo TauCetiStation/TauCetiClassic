@@ -500,7 +500,6 @@ Buildable meters
 			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/P = new (loc)
 			P.set_dir(dir)
 			P.initialize_directions = pipe_dir //this var it's used to know if the pipe is bent or not
-			P.initialize_directions_he = pipe_dir
 
 			P.construction()
 
@@ -576,8 +575,7 @@ Buildable meters
 		if(PIPE_JUNCTION)
 			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/P = new (loc)
 			P.set_dir(src.dir)
-			P.initialize_directions = get_pdir()
-			P.initialize_directions_he = get_hdir()
+			P.initialize_directions = pipe_dir
 			P.construction()
 
 		if(PIPE_UVENT)		//unary vent
