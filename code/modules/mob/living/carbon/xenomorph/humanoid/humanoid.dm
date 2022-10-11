@@ -5,6 +5,7 @@
 
 	pass_flags = PASSTABLE
 	w_class = SIZE_HUMAN
+	ventcrawler = 0
 	var/obj/item/clothing/suit/wear_suit = null		//TODO: necessary? Are they even used? ~Carn
 	var/obj/item/weapon/r_store = null
 	var/obj/item/weapon/l_store = null

@@ -12,6 +12,8 @@
 #define WEED_WEST_EDGING  4
 #define WEED_EAST_EDGING  8
 
+#define TUNNEL_CLIMB_DELAY 50
+
 /obj/structure/alien
 	name = "alien thing"
 	desc = "theres something alien about this."
@@ -107,6 +109,83 @@
 		return !opacity
 	return !density
 
+/obj/structure/alien/resin/tunnel
+	name = "Tunnel"
+	desc = "A tunnel entrance. Looks like it was dug by some kind of clawed beast."
+	icon = 'icons/mob/xenomorph.dmi'
+	icon_state = "hole"
+	density = FALSE
+	opacity = FALSE
+	canSmoothWith = list()
+	smooth = SMOOTH_FALSE
+
+/obj/structure/alien/resin/tunnel/atom_init()
+	. = ..()
+	name = "Tunnel in [get_area(get_turf(src))]-[rand(1,999)]"
+	global.xeno_tunnel_list[name] = src
+
+	var/turf/turf_with_hole = get_turf(src)
+	if(isfloorturf(turf_with_hole))
+		var/turf/simulated/floor/F = turf_with_hole
+		F.break_tile()
+
+/obj/structure/alien/resin/tunnel/attack_facehugger(mob/user)
+	if(!user)
+		return ..()
+	travel(user)
+
+/obj/structure/alien/resin/tunnel/attack_larva(mob/user)
+	if(!user || user.a_intent != INTENT_HELP)
+		return ..()
+	travel(user)
+
+/obj/structure/alien/resin/tunnel/attack_alien(mob/user)
+	if(!user || user.a_intent != INTENT_HELP)
+		return ..()
+	travel(user)
+
+/obj/structure/alien/resin/tunnel/proc/travel(mob/living/carbon/xenomorph/user)
+	if(!user || !istype(user))
+		return ..()
+
+	if(isxenoqueen(user))
+		to_chat(user, "<span class='userdanger'>You are too thicc for that hole.</span>")
+		return
+
+	for(var/obj/structure/hindrance in get_turf(user))
+		if(!istype(hindrance, /obj/structure/alien/weeds))
+			return
+
+	var/target_tunnel = input(user, "Выберите конечную цель путешествия", "Вход в тоннель") as null|anything in global.xeno_tunnel_list + "Cancel"
+	if(!target_tunnel)
+		return
+	var/picked_tunnel = global.xeno_tunnel_list[target_tunnel]
+
+	if(picked_tunnel)
+		var/turf/target_turf = get_turf(picked_tunnel)
+
+		if(target_turf.z != z)
+			to_chat(user, "<span class='warning'>Too far from here.</span>")
+			return
+
+		user.visible_message("<span class='warning'>[user] climbing in a [src]!</span>", "<span class='notice'>You start climbing in [src].</span>")
+		if(do_after(user, TUNNEL_CLIMB_DELAY, target = src)) //TODO: distance param when do_after() update
+			user.forceMove(target_turf)
+
+/obj/structure/alien/resin/tunnel/examine(mob/user)
+	. = ..()
+	var/count_holes = global.xeno_tunnel_list.len
+	if(!count_holes)
+		to_chat(user, "<span class='notice'>Stuffy air is felt inside, there is no through exit.</span>")
+		return
+	if(isxeno(user))
+		to_chat(user, "<span class='notice'>Number of tunnels - [count_holes]</span")
+	else
+		to_chat(user, "<span class='notice'>You feel a draft in the hole.</span")
+
+/obj/structure/alien/resin/tunnel/Destroy()
+	global.xeno_tunnel_list.Remove(src)
+	return ..()
 
 //Weeds
 /obj/structure/alien/weeds
@@ -457,3 +536,5 @@
 #undef WEED_NORTH_EDGING
 #undef WEED_WEST_EDGING
 #undef WEED_EAST_EDGING
+
+#undef TUNNEL_CLIMB_DELAY

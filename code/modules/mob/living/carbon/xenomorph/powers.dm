@@ -1,8 +1,10 @@
 #define ALREADY_STRUCTURE_THERE(user) (locate(/obj/structure/alien/air_plant) in get_turf(user))      || (locate(/obj/structure/alien/egg) in get_turf(user)) \
                              || (locate(/obj/structure/mineral_door/resin) in get_turf(user))   || (locate(/obj/structure/alien/resin/wall) in get_turf(user)) \
-                             || (locate(/obj/structure/alien/resin/membrane) in get_turf(user)) || (locate(/obj/structure/stool/bed/nest) in get_turf(user))
+                             || (locate(/obj/structure/alien/resin/membrane) in get_turf(user)) || (locate(/obj/structure/stool/bed/nest) in get_turf(user)) \
+							 || (locate(/obj/structure/alien/resin/tunnel) in get_turf(user))
 
 #define CHECK_WEEDS(user) (locate(/obj/structure/alien/weeds) in get_turf(user))
+#define MAX_TUNNELS 4
 
 /mob/living/carbon/xenomorph/proc/check_enough_plasma(cost)
 	if(getPlasma() < cost)
@@ -113,6 +115,64 @@
 	alien.adjustToxLoss(-plasma_cost)
 	user.visible_message("<span class='notice'><B>[user]</B> has planted some alien weeds.</span>", "<span class='notice'>You plant some alien weeds.</span>")
 	new /obj/structure/alien/air_plant(user.loc)
+
+//----------------------------------------------
+//------------------Tunnel----------------------
+//----------------------------------------------
+
+/obj/effect/proc_holder/spell/no_target/dig_tunnel
+	name = "Dig Tunnel"
+	desc = "Lay an egg to produce huggers to impregnate prey with."
+	charge_max = 0
+	charge_type = "none"
+	clothes_req = FALSE
+	invocation = "none"
+	invocation_type = "none"
+	centcomm_cancast = FALSE
+	action_background_icon_state = "bg_alien"
+	action_icon_state = "build_tunnel"
+	plasma_cost = 200
+	sound = 'sound/effects/resin_build.ogg'
+	var/list/blacklisted_zone = list()
+
+/obj/effect/proc_holder/spell/no_target/dig_tunnel/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
+	if(ALREADY_STRUCTURE_THERE(user))
+		if(try_start)
+			to_chat(user, "<span class='warning'>There is already a structure there.</span>")
+		return FALSE
+	if(!CHECK_WEEDS(user))
+		if(try_start)
+			to_chat (user, "<span class='warning'>You can dig tunnel on weeds only.</span>")
+		return FALSE
+	if(isAllowedZone(get_turf(user)) && isAllowedTurf(get_turf(user)))
+		if(try_start)
+			to_chat (user, "<span class='warning'>You can't dig tunnel in this area.</span>")
+		return FALSE
+	return ..()
+
+/obj/effect/proc_holder/spell/no_target/dig_tunnel/cast(list/targets, mob/user = usr)
+	var/mob/living/carbon/xenomorph/alien = user
+	alien.adjustToxLoss(-plasma_cost)
+	user.visible_message("<span class='notice'><B>[user]</B> dug a tunnel entrance.</span>", "<span class='notice'>You dug a tunnel entrance.</span>")
+	if(global.xeno_tunnel_list.len >= MAX_TUNNELS)
+		var/obj/structure/alien/resin/tunnel/old_tunnel = global.xeno_tunnel_list[1]
+		qdel(old_tunnel)
+		to_chat(user, "<span class='warning'>Having exceeding our tunnel limit, our oldest tunnel has collapsed.</span>")
+	new /obj/structure/alien/resin/tunnel(user.loc)
+
+/obj/effect/proc_holder/spell/no_target/dig_tunnel/proc/isAllowedZone(turf/user_turf)
+	if(!is_station_level(user_turf.z) || !is_mining_level(user_turf.z))
+		return FALSE
+	blacklisted_zone += subtypesof(/area/station/aisat) + subtypesof(/area/station/tcommsat)
+	var/area/user_area = get_area(user_turf)
+	for(var/area/not_allowed_area in blacklisted_zone)
+		return !istype(user_area, not_allowed_area)
+
+/obj/effect/proc_holder/spell/no_target/dig_tunnel/proc/isAllowedTurf(turf/user_turf)
+	for(var/obj/structure/hindrance in user_turf)
+		if(!istype(hindrance, /obj/structure/alien/weeds))
+			return FALSE
+	return TRUE
 
 //----------------------------------------------
 //-----------------Whisper----------------------
@@ -489,3 +549,4 @@
 
 #undef ALREADY_STRUCTURE_THERE
 #undef CHECK_WEEDS
+#undef MAX_TUNNELS
