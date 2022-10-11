@@ -83,7 +83,7 @@
 
 /datum/dna/gene/basic/remotetalk
 	name="Telepathy"
-	activation_messages=list("Ваш голос может проникнуть в другие умы.")
+	activation_messages=list("Ваш голос может проникать в другие умы.")
 	mutation=REMOTE_TALK
 	activation_prob=50
 
@@ -104,7 +104,7 @@
 
 /datum/dna/gene/basic/morph
 	name="Morph"
-	activation_messages=list("Ваша кожа ощущается странно.")
+	activation_messages=list("Вы чувствуете странное ощущение под кожей.")
 	mutation=MORPH
 	activation_prob=50
 
@@ -121,7 +121,7 @@
 
 /datum/dna/gene/basic/heat_resist
 	name="Heat Resistance"
-	activation_messages=list("Ваша кожа холодная на ощупь.")
+	activation_messages=list("Вы чувствуете холодок по коже..")
 	mutation=RESIST_HEAT
 	activation_prob=30
 
@@ -138,7 +138,7 @@
 
 /datum/dna/gene/basic/cold_resist
 	name="Cold Resistance"
-	activation_messages=list("Ваше тело наполнено теплом.")
+	activation_messages=list("Ваше тело наполняется теплом.")
 	mutation=COLD_RESISTANCE
 	activation_prob=30
 
