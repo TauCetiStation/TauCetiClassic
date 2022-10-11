@@ -86,7 +86,7 @@
 		if(firer && iswizard(firer))
 			var/datum/role/wizard/mage = firer.mind.GetRole(WIZARD)
 			var/datum/faction/wizards/federation = mage.GetFaction()
-			if(federation)
+			if(federation && M.mind)
 				var/datum/role/wizard_apprentice/recruit = add_faction_member(federation, M)
 				var/datum/objective/target/protect/new_objective = recruit.AppendObjective(/datum/objective/target/protect)
 				new_objective.explanation_text = "Help [firer.real_name], the Demiurgos of your new life."
