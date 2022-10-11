@@ -15,12 +15,11 @@
 	return list(reverse_dir[dir], dir)
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/can_be_node(obj/machinery/atmospherics/target)
-	. = FALSE
 	var/searchDir
-	var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/H = target
-	if(istype(H))
+	if(istype(target, /obj/machinery/atmospherics/pipe/simple/heat_exchanging))
 		searchDir = dir
 	else
 		searchDir = reverse_dir[dir]
 	if((searchDir & get_dir(src, target)) && (target.initialize_directions & initialize_directions))
-		. = TRUE
+		return TRUE
+	return FALSE

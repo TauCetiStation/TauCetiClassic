@@ -26,9 +26,8 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/can_be_node(obj/machinery/atmospherics/pipe/simple/heat_exchanging/target)
-	var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/H = target
-	if(istype(H) && (target.initialize_directions & get_dir(target, src)) && (target.initialize_directions & initialize_directions))
-		. = TRUE
+	if(istype(target, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) && (target.initialize_directions & get_dir(target, src)) && (target.initialize_directions & initialize_directions))
+		return TRUE
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/process_atmos()
 	last_power_draw = 0
