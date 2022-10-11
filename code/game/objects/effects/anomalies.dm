@@ -324,11 +324,11 @@
 		to_chat(user, "<span class='warning'>Нар-Си создаст нового раба через [round((next_spawn - world.time) * 0.1)] секунд.</span>")
 		return
 
-	var/type = pick(50; /mob/living/simple_animal/construct/wraith,\
+	var/type = pick(70; /mob/living/simple_animal/construct/harvester,\
+					50; /mob/living/simple_animal/construct/wraith,\
 					30; /mob/living/simple_animal/construct/armoured,\
 					40; /mob/living/simple_animal/construct/proteon,\
-					70; /mob/living/simple_animal/construct/builder,\
-					20;/mob/living/simple_animal/construct/harvester,\
+					50; /mob/living/simple_animal/construct/builder,\
 					1;  /mob/living/simple_animal/construct/behemoth)
 	create_shell(user, type)
 	next_spawn = world.time + spawn_cd
