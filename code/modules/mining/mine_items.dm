@@ -34,7 +34,7 @@
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
-		new /obj/item/clothing/suit/hooded/wintercoat/cargo
+		new /obj/item/clothing/suit/hooded/wintercoat/miner(src)
 		new /obj/item/clothing/head/santa(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 
@@ -204,7 +204,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "plasmacutter"
 	item_state = "plasmacutter"
 	w_class = SIZE_SMALL //it is smaller than the pickaxe
-	damtype = "fire"
+	damtype = BURN
 	toolspeed = 0.4 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
 	origin_tech = "materials=4;phorontech=3;engineering=3"
 	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
@@ -557,7 +557,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = null
 	damage = 10
 	damage_type = BRUTE
-	flag = "bomb"
+	flag = BOMB
 	var/range = 3
 	var/power = 4
 
@@ -744,7 +744,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "surv_wall0"
 	var/basestate = "surv_wall"
 	opacity = TRUE
-	health = 100
+	max_integrity = 100
 
 /obj/structure/inflatable/survival/atom_init()
 	. = ..()

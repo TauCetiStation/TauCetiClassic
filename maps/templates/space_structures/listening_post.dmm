@@ -430,10 +430,10 @@
 /obj/structure/drain{
 	drainage = 2
 	},
-/obj/machinery/shower{
+/obj/item/weapon/reagent_containers/food/snacks/soap/syndie,
+/obj/machinery/shower/free{
 	dir = 1
 	},
-/obj/item/weapon/reagent_containers/food/snacks/soap/syndie,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -887,8 +887,6 @@
 /obj/item/weapon/storage/secure/briefcase/syndie,
 /obj/item/clothing/suit/syndieshirt,
 /obj/structure/closet/cabinet,
-/obj/item/ammo_box/magazine/m9mm,
-/obj/item/ammo_box/magazine/m9mm,
 /obj/item/clothing/head/ushanka/black,
 /obj/item/clothing/suit/jacket/letterman_syndie,
 /turf/simulated/floor{
@@ -915,7 +913,6 @@
 /turf/simulated/floor/plating,
 /area/space_structures/listening_post)
 "bH" = (
-/obj/structure/table/holotable/wooden,
 /obj/item/device/flashlight/lamp/green{
 	layer = 3.3;
 	on = 0;
@@ -931,6 +928,7 @@
 	pixel_x = 24
 	},
 /obj/item/clothing/mask/cigarette/cigar/havana,
+/obj/structure/table/woodentable,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -1006,6 +1004,9 @@
 	req_access = list(150)
 	},
 /obj/item/clothing/accessory/stethoscope,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/suture,
+/obj/item/weapon/storage/pill_bottle/spaceacillin,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whiteblue"
@@ -1040,7 +1041,6 @@
 	},
 /area/space_structures/listening_post)
 "bS" = (
-/obj/structure/table/holotable/wooden,
 /obj/item/toy/figure/syndie{
 	pixel_x = 7;
 	pixel_y = 11
@@ -1057,6 +1057,7 @@
 /obj/item/ammo_casing/a357,
 /obj/item/ammo_casing/a357,
 /obj/item/ammo_casing/a357,
+/obj/structure/table/woodentable,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -1104,23 +1105,25 @@
 /area/space_structures/listening_post)
 "bW" = (
 /obj/item/weapon/storage/firstaid/tactical{
-	pixel_x = 6;
-	pixel_y = 9
+	pixel_y = 7
 	},
 /obj/item/weapon/storage/firstaid/o2{
-	pixel_x = 4;
-	pixel_y = 6
+	pixel_y = 4
 	},
 /obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = 2;
-	pixel_y = 3
+	pixel_y = 1
 	},
-/obj/item/weapon/storage/firstaid/adv,
+/obj/item/weapon/storage/firstaid/adv{
+	pixel_y = -2
+	},
 /obj/item/weapon/storage/firstaid/fire{
-	pixel_x = -2;
-	pixel_y = -3
+	pixel_y = -5
 	},
-/obj/structure/table/glass,
+/obj/machinery/vending/wallmed1{
+	pixel_y = -32;
+	req_access = list(150)
+	},
+/obj/structure/rack,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -1186,11 +1189,11 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
 	},
-/obj/structure/table/holotable/wooden,
 /obj/machinery/computer/libraryconsole/bookmanagement{
 	layer = 4.1;
 	pixel_y = 6
 	},
+/obj/structure/table/woodentable,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},

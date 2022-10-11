@@ -1197,7 +1197,7 @@
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
-	damtype = "fire"
+	damtype = BURN
 	force = 0
 	throwforce = 1
 	w_class = SIZE_MINUSCULE
@@ -1211,7 +1211,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	name = "nettle"
 	icon_state = "nettle"
-	damtype = "fire"
+	damtype = BURN
 	force = 15
 	throwforce = 1
 	w_class = SIZE_TINY
@@ -1233,7 +1233,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	name = "deathnettle"
 	icon_state = "deathnettle"
-	damtype = "fire"
+	damtype = BURN
 	force = 30
 	throwforce = 1
 	w_class = SIZE_TINY

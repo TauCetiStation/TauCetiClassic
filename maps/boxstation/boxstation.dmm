@@ -4969,11 +4969,6 @@
 /area/station/medical/cryo)
 "aiE" = (
 /obj/structure/table,
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
 /obj/item/device/taperecorder,
 /obj/item/weapon/storage/box/evidence,
 /obj/machinery/camera{
@@ -4982,6 +4977,7 @@
 	network = list("SS13","Security");
 	pixel_y = -18
 	},
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -10506,11 +10502,6 @@
 /area/station/security/detectives_office)
 "arL" = (
 /obj/structure/table/woodentable,
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
 /obj/item/weapon/storage/photo_album{
 	pixel_y = -10
 	},
@@ -10520,6 +10511,7 @@
 	dir = 1;
 	network = list("SS13","Security")
 	},
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -12247,10 +12239,6 @@
 /obj/machinery/newscaster{
 	pixel_x = -28
 	},
-/obj/item/device/camera{
-	pixel_x = -4;
-	pixel_y = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/painting_frame{
 	pixel_y = -10
@@ -12262,6 +12250,7 @@
 	amount = 50;
 	pixel_y = -11
 	},
+/obj/item/device/camera/lomo,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "auV" = (
@@ -13448,9 +13437,7 @@
 	pixel_x = -4;
 	pixel_y = 15
 	},
-/obj/item/device/camera{
-	pixel_x = -5
-	},
+/obj/item/device/camera,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -16539,6 +16526,7 @@
 "aDg" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/razor,
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood,
 /area/station/maintenance/chapel)
 "aDh" = (
@@ -18643,10 +18631,10 @@
 /obj/structure/table/woodentable,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
-/obj/item/device/camera,
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "aHh" = (
@@ -19364,6 +19352,7 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/item/device/lens/invert,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aIA" = (
@@ -21141,7 +21130,6 @@
 /area/station/maintenance/chapel)
 "aLG" = (
 /obj/structure/rack,
-/obj/item/device/camera,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
 /turf/simulated/floor/wood{
@@ -27106,10 +27094,6 @@
 	pixel_x = -24
 	},
 /obj/structure/table,
-/obj/item/device/camera{
-	pixel_x = -2;
-	pixel_y = 5
-	},
 /obj/item/weapon/paper/pamphlet{
 	pixel_x = 9;
 	pixel_y = 1
@@ -30706,7 +30690,6 @@
 /obj/structure/closet{
 	name = "Evidence Closet"
 	},
-/obj/item/device/camera,
 /obj/item/device/taperecorder,
 /obj/item/weapon/storage/box/evidence,
 /turf/simulated/floor/wood,
@@ -36242,7 +36225,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/item/device/camera,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -45888,7 +45870,6 @@
 /area/station/civilian/locker)
 "bEa" = (
 /obj/structure/table/woodentable,
-/obj/item/device/camera,
 /obj/item/weapon/storage/photo_album{
 	pixel_y = -10
 	},
@@ -45898,6 +45879,7 @@
 /obj/machinery/telescience_jammer{
 	radius = 2
 	},
+/obj/item/device/camera,
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
 "bEb" = (
@@ -47823,10 +47805,6 @@
 	},
 /area/station/medical/storage)
 "bHz" = (
-/obj/item/device/camera{
-	pixel_x = 8;
-	pixel_y = 7
-	},
 /obj/structure/table/woodentable,
 /obj/item/device/taperecorder{
 	pixel_x = -8;
@@ -47835,6 +47813,7 @@
 /obj/machinery/newscaster{
 	pixel_y = -28
 	},
+/obj/item/device/camera,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -55581,7 +55560,25 @@
 	},
 /area/station/maintenance/engineering)
 "bYp" = (
-/obj/structure/closet/crate,
+/obj/structure/closet/crate{
+	name = "TEG crate"
+	},
+/obj/item/weapon/circuitboard/teg,
+/obj/item/weapon/circuitboard/circulator,
+/obj/item/weapon/circuitboard/circulator,
+/obj/item/weapon/stock_parts/capacitor,
+/obj/item/weapon/stock_parts/capacitor,
+/obj/item/weapon/stock_parts/capacitor,
+/obj/item/weapon/stock_parts/console_screen,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/manipulator,
+/obj/item/weapon/stock_parts/matter_bin,
+/obj/item/weapon/stock_parts/matter_bin,
+/obj/item/stack/cable_coil,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -55702,7 +55699,6 @@
 /area/station/civilian/library)
 "bYL" = (
 /obj/structure/closet/cabinet,
-/obj/item/device/camera,
 /obj/item/clothing/under/suit_jacket/red,
 /obj/item/device/eftpos{
 	eftpos_name = "Library EFTPOS scanner"
@@ -55716,6 +55712,10 @@
 /obj/item/clothing/suit/wcoat,
 /obj/item/clothing/head/beret/black,
 /obj/effect/decal/cleanable/cobweb,
+/obj/item/device/camera,
+/obj/item/device/lens/posterization,
+/obj/item/device/lens/sepia,
+/obj/item/device/lens/grayscale,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -57302,11 +57302,11 @@
 /area/station/security/armoury)
 "ceV" = (
 /obj/structure/table/woodentable,
-/obj/item/device/camera,
 /obj/machinery/newscaster{
 	pixel_x = -28;
 	pixel_y = 1
 	},
+/obj/item/device/camera/oldcamera,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken7"
 	},
@@ -65942,6 +65942,8 @@
 /obj/item/weapon/gun/syringe,
 /obj/item/weapon/medical/teleporter,
 /obj/item/weapon/medical/teleporter,
+/obj/item/device/lens/rentgene,
+/obj/item/device/camera,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -74633,6 +74635,7 @@
 /obj/item/weapon/folder,
 /obj/item/weapon/pen,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/device/lens/nude,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "jhb" = (
@@ -91577,16 +91580,16 @@ aaa
 aaa
 aaa
 aaa
-btD
-btD
-btD
-btD
 aaa
-btD
-btD
-btD
-btD
-aag
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -91833,17 +91836,17 @@ aaa
 aaa
 aaa
 aaa
+aaa
 btD
 btD
 btD
 btD
+aaa
 btD
 btD
 btD
 btD
-btD
-btD
-btD
+aag
 aaa
 aaa
 aaa
@@ -92089,6 +92092,7 @@ aaa
 aaa
 aaa
 aaa
+aaa
 btD
 btD
 btD
@@ -92100,8 +92104,7 @@ btD
 btD
 btD
 btD
-btD
-btD
+aaa
 aaa
 aaa
 aaa
@@ -92336,15 +92339,16 @@ aaa
 aaa
 aaa
 aaa
-bgj
-bgj
-bgj
-bgj
-bgj
 aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 btD
 btD
 btD
@@ -92358,8 +92362,7 @@ btD
 btD
 btD
 btD
-btD
-btD
+aaa
 aaa
 aaa
 aaa
@@ -93112,7 +93115,7 @@ bgj
 bgj
 bgj
 bgj
-hVb
+aaa
 aaa
 aaa
 aaa
@@ -93369,10 +93372,10 @@ bgj
 bgj
 bgj
 bgj
-apo
-aEb
-aEb
-aEb
+hVb
+aaa
+aaa
+aaa
 btD
 btD
 btD
@@ -93626,10 +93629,10 @@ bgj
 bgj
 bgj
 bgj
-evb
-boX
-aro
-fab
+apo
+aEb
+aEb
+aEb
 btD
 btD
 btD
@@ -93884,7 +93887,7 @@ bgj
 bgj
 bgj
 evb
-aro
+boX
 aro
 fab
 btD
@@ -94140,10 +94143,10 @@ bgj
 bgj
 bgj
 bgj
-apT
-baY
-baY
-apT
+evb
+aro
+aro
+fab
 btD
 btD
 btD
@@ -94398,9 +94401,9 @@ bgj
 bgj
 bgj
 apT
-uDb
-urb
-icb
+baY
+baY
+apT
 btD
 btD
 btD
@@ -94413,7 +94416,7 @@ btD
 btD
 btD
 btD
-tQb
+btD
 btD
 btD
 aaa
@@ -94657,7 +94660,7 @@ bgj
 apT
 uDb
 urb
-aEb
+icb
 btD
 btD
 btD
@@ -94670,7 +94673,7 @@ btD
 btD
 btD
 btD
-btD
+tQb
 btD
 btD
 aaa
@@ -94906,24 +94909,24 @@ avy
 avy
 avy
 apT
-aah
 bgj
 bgj
 bgj
-aah
+bgj
+bgj
 apT
-cMC
-dBb
-bdz
+uDb
+urb
+aEb
 btD
 btD
 btD
 btD
 btD
 btD
-aaa
-aaa
-aaa
+btD
+btD
+btD
 btD
 btD
 btD
@@ -95169,9 +95172,9 @@ evb
 aEb
 aaa
 apT
-uDb
-urb
-apT
+cMC
+dBb
+bdz
 btD
 btD
 btD
@@ -95429,21 +95432,21 @@ apT
 dCb
 aml
 apT
-aaa
 btD
-btD
-btD
-btD
-btD
-aaa
-aaa
-aaa
 btD
 btD
 btD
 btD
 btD
 aaa
+aaa
+aaa
+btD
+btD
+btD
+btD
+btD
+btD
 aaa
 aaa
 aaa
@@ -95944,19 +95947,19 @@ bwx
 aYh
 aEb
 aaa
-aaa
 btD
-btD
-btD
-btD
-aaa
-aaa
-aaa
 btD
 btD
 btD
 btD
 aaa
+aaa
+aaa
+btD
+btD
+btD
+btD
+btD
 aaa
 aaa
 aaa
@@ -96202,17 +96205,17 @@ bhj
 aEb
 aaa
 aaa
+btD
+btD
+btD
+btD
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+btD
+btD
+btD
+btD
 aaa
 aaa
 aaa

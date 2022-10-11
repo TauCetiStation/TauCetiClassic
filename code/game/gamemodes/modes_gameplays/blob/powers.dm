@@ -55,7 +55,7 @@
 		return
 
 	if(isblobshield(B))
-		if(B.health < initial(B.health) / 2)
+		if(B.get_integrity() < B.max_integrity / 2)
 			to_chat(src, "<span class='warning'>This shield blob is too damaged to be modified!</span>")
 			return
 		B.change_to(/obj/effect/blob/shield/reflective,src)
@@ -100,7 +100,7 @@
 	if(B.naut) //if it already made a blobbernaut, it can't do it again
 		to_chat(src, "<span class='warning'>This factory blob is already sustaining a blobbernaut.</span>")
 		return
-	if(B.health < B.max_health * 0.5)
+	if(B.get_integrity() < B.max_integrity * 0.5)
 		to_chat(src, "<span class='warning'>This factory blob is too damaged to sustain a blobbernaut.</span>")
 		return
 	if(blob_points < 40)
@@ -111,7 +111,7 @@
 	to_chat(src, "<span class='notice'>You attempt to produce a blobbernaut.</span>")
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a blobbernaut?", ROLE_BLOB, ROLE_BLOB, 50) //players must answer rapidly
 	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
-		B.max_health = B.max_health * 0.25 //factories that produced a blobbernaut have much lower health
+		B.max_integrity = B.max_integrity * 0.25 //factories that produced a blobbernaut have much lower health
 		B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
 		playsound(B.loc, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, 50)
 		var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
@@ -234,6 +234,7 @@
 
 	var/obj/effect/blob/factory/F = B.change_to(/obj/effect/blob/factory)
 	F.overmind = src
+	factory_blobs += F
 
 /mob/camera/blob/verb/revert()
 	set category = "Blob"
