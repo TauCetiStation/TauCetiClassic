@@ -9,7 +9,7 @@
 	device_type = BINARY
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/SetInitDirections()
-	initialize_directions = reverse_dir[dir]
+	initialize_directions = dir|reverse_dir[dir]
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/getNodeConnects()
 	return list(reverse_dir[dir], dir)
