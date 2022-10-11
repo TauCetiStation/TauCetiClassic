@@ -653,7 +653,7 @@
 
 /datum/religion/proc/send_message_to_members(message, name, font_size = 6)
 	var/format_name = name ? "[name]: " : ""
-	for(var/mob/M in global.mob_list)
+	for(var/mob/M in global.player_list)
 		if(is_member(M) || isobserver(M))
 			to_chat(M, "<span class='[style_text]'><font size='[font_size]'>[format_name][message]</font></span>")
 
