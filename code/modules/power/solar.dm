@@ -21,8 +21,10 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
+	max_integrity = 150
+	integrity_failure = 0.33
+
 	var/id = 0
-	var/health = 10
 	var/obscured = 0
 	var/sunfrac = 0
 	var/adir = SOUTH
@@ -63,39 +65,41 @@
 		if(user.is_busy()) return
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		if(do_after(user, 50,target = src))
-			var/obj/item/solar_assembly/S = locate() in src
-			if(S)
-				S.loc = src.loc
-				S.give_glass()
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='notice'>[user] takes the glass off the solar panel.</span>")
-			qdel(src)
+			deconstruct(TRUE)
 		return
-	else if (W)
-		add_fingerprint(user)
-		src.health -= W.force
-		user.SetNextMove(CLICK_CD_MELEE)
-		healthcheck()
+	else
+		..()
+
+/obj/machinery/power/solar/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(stat & BROKEN)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER, 60, TRUE)
+			else
+				playsound(loc, 'sound/effects/glasshit.ogg', VOL_EFFECTS_MASTER, 90, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/obj/machinery/power/solar/atom_break(damage_flag)
+	. = ..()
+	if(.)
+		playsound(loc, 'sound/effects/glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/obj/machinery/power/solar/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(disassembled)
+		var/obj/item/solar_assembly/S = locate() in src
+		if(S)
+			S.forceMove(loc)
+			S.give_glass(stat & BROKEN)
+	else
+		playsound(loc, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER, 70, TRUE)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
 	..()
-
-
-/obj/machinery/power/solar/blob_act()
-	src.health--
-	healthcheck()
-	return
-
-
-/obj/machinery/power/solar/proc/healthcheck()
-	if (src.health <= 0)
-		if(!(stat & BROKEN))
-			broken()
-		else
-			new /obj/item/weapon/shard(src.loc)
-			new /obj/item/weapon/shard(src.loc)
-			qdel(src)
-			return
-	return
-
 
 /obj/machinery/power/solar/update_icon()
 	..()
@@ -138,37 +142,6 @@
 		if(powernet.nodes[control])
 			control.gen += sgen
 
-
-/obj/machinery/power/solar/proc/broken()
-	stat |= BROKEN
-	update_icon()
-	return
-
-
-/obj/machinery/power/solar/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			qdel(src)
-			if(prob(15))
-				new /obj/item/weapon/shard( src.loc )
-		if(EXPLODE_HEAVY)
-			if(prob(25))
-				new /obj/item/weapon/shard( src.loc )
-				qdel(src)
-				return
-			if(prob(50))
-				broken()
-		if(EXPLODE_LIGHT)
-			if(prob(25))
-				broken()
-
-
-/obj/machinery/power/solar/blob_act()
-	if(prob(75))
-		broken()
-		src.density = FALSE
-
-
 /obj/machinery/power/solar/fake/atom_init(mapload, obj/item/solar_assembly/S)
 	. = ..(mapload, S, 0)
 
@@ -197,10 +170,16 @@
 		..()
 
 // Give back the glass type we were supplied with
-/obj/item/solar_assembly/proc/give_glass()
-	if(glass_type)
-		new glass_type(src.loc, 2)
-		glass_type = null
+/obj/item/solar_assembly/proc/give_glass(device_broken)
+	if(!glass_type)
+		return
+	var/turf/T = get_turf(loc)
+	if(device_broken)
+		new /obj/item/weapon/shard(T)
+		new /obj/item/weapon/shard(T)
+	else
+		new glass_type(T, 2)
+	glass_type = null
 
 
 /obj/item/solar_assembly/attackby(obj/item/I, mob/user, params)
@@ -257,6 +236,10 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 20
+
+	max_integrity = 200
+	integrity_failure = 0.5
+
 	var/light_range_on = 1.5
 	var/light_power_on = 3
 	var/id = 0
@@ -308,32 +291,50 @@
 		if(user.is_busy()) return
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(do_after(user, 20, target = src))
-			if (src.stat & BROKEN)
-				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				new /obj/item/weapon/shard( src.loc )
-				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = TRUE
-				qdel(src)
-			else
-				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
-				var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-				var/obj/item/weapon/circuitboard/solar_control/M = new /obj/item/weapon/circuitboard/solar_control( A )
-				for (var/obj/C in src)
-					C.loc = src.loc
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = TRUE
-				qdel(src)
+			deconstruct(TRUE)
 	else
 		attack_hand(user)
 	return
+
+/obj/machinery/power/solar_control/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(stat & BROKEN)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER, 70, TRUE)
+			else
+				playsound(loc, 'sound/effects/glasshit.ogg', VOL_EFFECTS_MASTER, 75, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/obj/machinery/power/solar_control/atom_break(damage_flag)
+	. = ..()
+	if(.)
+		playsound(loc, 'sound/effects/glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/obj/machinery/power/solar_control/deconstruct(disassembled = TRUE, mob/user) // TODO change to computer?
+	if(flags & NODECONSTRUCT)
+		return ..()
+	var/obj/structure/computerframe/A = new /obj/structure/computerframe(loc)
+	A.set_dir(dir)
+	A.circuit = new /obj/item/weapon/circuitboard/solar_control(A)
+	A.anchored = TRUE
+	transfer_fingerprints_to(A)
+	if(stat & BROKEN || !disassembled)
+		if(user)
+			to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
+		else
+			playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER, 70, TRUE)
+		new /obj/item/weapon/shard(loc)
+		A.state = 3
+		A.icon_state = "3"
+	else
+		if(user)
+			to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
+		A.state = 4
+		A.icon_state = "4"
+	for(var/obj/C in src)
+		C.forceMove(loc)
+	..()
 
 
 /obj/machinery/power/solar_control/process()
@@ -463,32 +464,6 @@
 			update_icon()
 			update_power_use()
 	update_power_use()
-
-
-/obj/machinery/power/solar_control/proc/broken()
-	stat |= BROKEN
-	update_icon()
-
-
-/obj/machinery/power/solar_control/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			qdel(src)
-			return
-		if(EXPLODE_HEAVY)
-			if(prob(50))
-				return
-		if(EXPLODE_LIGHT)
-			if(prob(75))
-				return
-	broken()
-
-
-/obj/machinery/power/solar_control/blob_act()
-	if (prob(75))
-		broken()
-		src.density = FALSE
-
 
 //
 // MISC

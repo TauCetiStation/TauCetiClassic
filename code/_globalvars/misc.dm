@@ -49,6 +49,9 @@ var/global/datum/religion/chaplain/chaplain_religion
 var/global/datum/religion/cult/cult_religion
 var/global/list/datum/religion/all_religions = list()
 
+//Used for global activation of pylons
+var/global/list/pylons = list()
+
 var/global/wizard_shades_count = 0
 var/global/peacekeeper_shields_count = 0
 var/global/timezoneOffset = 0       // The difference betwen midnight (of the host computer) and 0 world.ticks.

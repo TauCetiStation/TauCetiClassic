@@ -14,6 +14,7 @@
 
 	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
 	var/list/blob_mobs = list()
+	var/list/factory_blobs = list()
 	var/blob_points = 0
 	var/max_blob_points = 100
 	var/victory_in_progress = FALSE
@@ -50,7 +51,7 @@
 
 /mob/camera/blob/proc/update_health_hud()
 	if(blob_core && hud_used)
-		healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
+		healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.get_integrity())]</font></div>"
 		for(var/mob/living/simple_animal/hostile/blob/blobbernaut/B in blob_mobs)
 			if(B.hud_used && B.pwr_display)
 				B.pwr_display.maptext = healths.maptext
@@ -101,7 +102,7 @@
 	..()
 	if(statpanel("Status"))
 		if(blob_core)
-			stat(null, "Core Health: [blob_core.health]")
+			stat(null, "Core Health: [blob_core.get_integrity()]")
 		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
 		stat(null, "Progress: [blobs.len]/[b_congl.blobwincount]")
 		stat(null, "Total Nodes: [blob_nodes.len]")
@@ -119,9 +120,13 @@
 		ghost_sightless_images -= ghostimage
 		QDEL_NULL(ghostimage)
 		updateallghostimages()
-	for(var/BLO as anything in blob_mobs)
-		var/mob/living/simple_animal/hostile/blob/BM = BLO
-		if(BM)
-			BM.overmind = null
+
+	for(var/mob/living/simple_animal/hostile/blob/BLO in blob_mobs)
+		BLO.overmind = null
 	blob_mobs = null
+
+	for(var/obj/effect/blob/factory/F in factory_blobs)
+		F.overmind = null
+	factory_blobs = null
+
 	return ..()

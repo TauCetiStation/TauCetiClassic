@@ -81,7 +81,7 @@
 		var/mob/living/simple_animal/hostile/mimic/copy/C = change
 		C.ChangeOwner(firer)
 		create_spawner(/datum/spawner/living/mimic, C)
-	else if(istype(change, /mob/living/simple_animal/shade) || isxeno(change))
+	else if(isshade(change) || isxeno(change))
 		var/mob/living/M = wabbajack(change)
 		if(firer && iswizard(firer))
 			var/datum/role/wizard/mage = firer.mind.GetRole(WIZARD)
