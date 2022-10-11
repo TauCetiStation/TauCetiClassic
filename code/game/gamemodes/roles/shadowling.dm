@@ -42,7 +42,7 @@
 
 	logo_state = "thrall-logo"
 
-	skillset_type = /datum/skillset/threll
+	skillset_type = /datum/skillset/thrall
 	change_to_maximum_skills = TRUE
 
 /datum/role/thrall/OnPreSetup(greeting, custom)

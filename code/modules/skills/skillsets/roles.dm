@@ -195,8 +195,8 @@
 		/datum/skill/command = SKILL_LEVEL_MASTER
 	)
 
-/datum/skillset/threll
-	name = THRELL
+/datum/skillset/thrall
+	name = "Thrall"
 	initial_skills = list(
 		/datum/skill/police = SKILL_LEVEL_MASTER,
 		/datum/skill/melee = SKILL_LEVEL_MASTER,
