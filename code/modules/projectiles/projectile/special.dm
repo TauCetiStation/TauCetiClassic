@@ -245,50 +245,30 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		var/obj/item/I = H.wear_suit
-		var/obj/item/C = H.head
-		if(!I && !C)
-			//containment all slots
-			var/list/X = H.get_all_slots()
-			for(var/obj/item/A in X)
-				if(!isprotected(A))
-					A.contaminate()
-		if(I)
-			//check already containment on suit
-			if(!I.contaminated)
-				if(!isprotected(I))
-					I.contaminate()
-			else
-				//containment gloves, uniform, boots
-				H.contaminate()
-		else
-			//containment gloves, uniform, boots
-			H.contaminate()
-		if(C)
-			//check already containment on head
-			if(!C.contaminated)
-				if(!isprotected(C))
-					C.contaminate()
-			else
-				var/list/L = H.get_head_slots()
-				//containment head-slots
-				for(var/obj/item/V in L)
-					if(!isprotected(V))
-						V.contaminate()
-		else
-			//containment head-slots
-			var/list/L = H.get_head_slots()
-			for(var/obj/item/Z in L)
-				if(!isprotected(Z))
-					Z.contaminate()
+		var/list/all_slots = H.get_all_slots()
+		if(!all_slots.len)
+			return
 
-/obj/item/projectile/acid_special/proc/isprotected(obj/item/I)
-	if(!istype(I, /obj/item/clothing))
-		return TRUE
-	var/obj/item/clothing/C = I
-	if(C && C.flags & ALIENPROTECTED)
-		return TRUE
-	return FALSE
+		var/obj/item/head_cloth = H.head
+		if(head_cloth && (head_cloth.body_parts_covered & (HEAD|FACE|EYES) || head_cloth.flags_inv & (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)))
+			var/list/covered_head_slots = H.get_head_slots() - list(H.head)
+			all_slots -= covered_head_slots
+
+		var/obj/item/suit_cloth = H.wear_suit
+		if(suit_cloth && (suit_cloth.body_parts_covered & (UPPER_TORSO|LOWER_TORSO|LEGS|ARMS) || suit_cloth.body_parts_covered & (HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)))
+			var/list/covered_body_slots = H.get_body_slots() - list(H.wear_suit)
+			all_slots -= covered_body_slots
+
+		for(var/obj/item/equipped_cloth in all_slots)
+			if(!equipped_cloth)
+				return
+			if(equipped_cloth.unacidable)
+				continue
+			//contaminate are checks type.
+			//should make backpacks/PDA/headphones contaminate?
+			if(!istype(equipped_cloth, /obj/item/clothing))
+				continue
+			equipped_cloth.contaminate()
 
 /obj/item/projectile/bullet/scrap
 	icon_state = "scrap_shot"
