@@ -232,6 +232,8 @@
 	desc = "The wooden base of a display case."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "glassbox_chassis"
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
 	var/obj/item/weapon/airlock_electronics/electronics
 
 
@@ -241,6 +243,13 @@
 		if(I.use_tool(src, user, 3 SECONDS, volume = 50))
 			playsound(loc, 'sound/items/deconstruct.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 			deconstruct(TRUE)
+
+	else if(iscrowbar(I) && electronics)
+		to_chat(user, "<span class='notice'>You start to remove the electronics from [src]...</span>")
+		if(I.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 100))
+			to_chat(user, "<span class='notice'>You have removed the electronics from [src]!</span>")
+			electronics.forceMove(loc)
+			electronics = null
 
 	else if(istype(I, /obj/item/weapon/airlock_electronics))
 		var/obj/item/weapon/airlock_electronics/AE = I
@@ -273,6 +282,9 @@
 /obj/structure/displaycase_chassis/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)
 		return ..()
+	if(electronics)
+		electronics.forceMove(loc)
+		electronics = null
 	new /obj/item/stack/sheet/wood(loc, 5)
 	..()
 	
