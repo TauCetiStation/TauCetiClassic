@@ -49,9 +49,9 @@
 /obj/structure/displaycase/get_examine_string(mob/user)
 	. = ..()
 	if(alert)
-		. += "<span class='notice'>Hooked up with an anti-theft system.</span>"
+		. += "\n<span class='notice'>Hooked up with an anti-theft system.</span>"
 	if(showpiece)
-		. += "<span class='notice'>There's \a [showpiece] inside.</span>"
+		. += "\n<span class='notice'>There's \a [showpiece] inside.</span>"
 
 /obj/structure/displaycase/proc/dump()
 	if(QDELETED(showpiece))
@@ -72,8 +72,24 @@
 		return ..()
 	dump()
 	if(!broken)
-		new /obj/item/weapon/shard(loc)
+		if(disassembled)
+			new /obj/item/stack/sheet/glass(loc, 2)
+		else
+			new /obj/item/weapon/shard(loc)
 		trigger_alarm()
+	var/obj/structure/displaycase_chassis/chassis = new (loc)
+	var/obj/item/weapon/airlock_electronics/AE = electronics
+	if(!AE)
+		AE = new(chassis)
+		if(length(req_access))
+			AE.conf_access = req_access
+		else if(length(req_one_access))
+			AE.conf_access = req_one_access
+			AE.one_access = TRUE
+	else
+		electronics = null
+		AE.forceMove(chassis)
+	chassis.electronics = AE
 	..()
 
 /obj/structure/displaycase/atom_break(damage_flag)
@@ -110,8 +126,10 @@
 		managed_overlays = null
 	if(length(new_overlays))
 		add_overlay(new_overlays)
+		managed_overlays = new_overlays
 
 /obj/structure/displaycase/proc/update_overlays()
+	. = list()
 	if(showpiece)
 		var/mutable_appearance/showpiece_overlay = mutable_appearance(showpiece.icon, showpiece.icon_state)
 		showpiece_overlay.copy_overlays(showpiece)
