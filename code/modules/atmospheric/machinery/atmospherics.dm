@@ -232,7 +232,6 @@ Pipelines + Other Objects -> Pipe network
 		if(can_be_node(A) && A.can_be_node(src))
 			A.atmos_init()
 			A.addMember(src)
-			flag = TRUE
 	build_network()
 
 /obj/machinery/atmospherics/singularity_pull(S, current_size)
