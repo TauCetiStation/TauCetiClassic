@@ -972,7 +972,7 @@
 	var/obj/structure/glowshroom/planted = new /obj/structure/glowshroom(user.loc)
 
 	planted.delay = lifespan * 50
-	planted.update_integrity(endurance)
+	planted.modify_max_integrity(endurance)
 	planted.yield = yield
 	planted.potency = potency
 	qdel(src)

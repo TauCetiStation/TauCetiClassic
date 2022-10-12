@@ -96,7 +96,7 @@
 				child.potency = potency
 				child.yield = yield
 				child.delay = delay
-				child.update_integrity(get_integrity())
+				child.modify_max_integrity(get_integrity())
 
 				spreaded++
 

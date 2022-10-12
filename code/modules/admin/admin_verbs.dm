@@ -1178,9 +1178,9 @@ var/global/centcom_barriers_stat = 1
 	if(!check_rights(R_FUN))
 		return
 
-	for(var/obj/effect/landmark/trololo/L in landmarks_list)
+	for(var/obj/effect/landmark/trololo/L as anything in landmarks_list["Rickroll"])
 		L.active = centcom_barriers_stat
-	for(var/obj/structure/centcom_barrier/B in centcom_barrier_list)
+	for(var/obj/structure/centcom_barrier/B as anything in centcom_barrier_list)
 		B.density = centcom_barriers_stat
 
 	log_admin("[key_name(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")

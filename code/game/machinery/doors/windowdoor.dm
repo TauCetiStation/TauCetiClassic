@@ -208,17 +208,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		return PROJECTILE_FORCE_MISS
 	return ..()
 
-//When an object is thrown at the window
-/obj/machinery/door/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	visible_message("<span class='warning'><B>The glass door was hit by [AM].</B></span>")
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 40
-	else
-		tforce = AM:throwforce
-	take_damage(tforce, BRUTE, MELEE, TRUE, get_dir(src, AM))
-	return
-
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type, damage_flag)
 	switch(damage_type)
 		if(BRUTE)

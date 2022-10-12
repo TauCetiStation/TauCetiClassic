@@ -17593,9 +17593,6 @@
 	},
 /area/station/security/secconfhall)
 "ecz" = (
-/obj/structure/curtain/medical{
-	icon_state = "open"
-	},
 /obj/structure/curtain/open/privacy,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
@@ -84042,9 +84039,11 @@
 /area/station/rnd/storage)
 "uDl" = (
 /obj/structure/rack,
-/obj/item/stack/sheet/glass,
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/item/stack/sheet/glass{
+	amount = 27
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -93366,15 +93365,17 @@
 	req_access = list(31)
 	},
 /obj/structure/closet/crate/engi,
-/obj/item/stack/sheet/metal,
 /obj/item/stack/cable_coil/random,
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/random/tools/tool,
-/obj/random/tools/tool,
-/obj/random/tools/tool,
 /obj/random/tools/toolbox,
+/obj/item/stack/sheet/metal{
+	amount = 34
+	},
+/obj/random/tools/tool,
+/obj/random/tools/tool,
+/obj/random/tools/tool,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"

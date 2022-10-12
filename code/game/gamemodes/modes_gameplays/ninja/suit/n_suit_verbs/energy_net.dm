@@ -55,17 +55,6 @@
 		return
 	take_damage(50, BRUTE, BOMB)
 
-/obj/structure/energy_net/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	..()
-	visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 10
-	else
-		tforce = AM:throwforce
-	
-	take_damage(tforce, BRUTE, MELEE)
-
 /obj/structure/energy_net/attack_hand(mob/living/carbon/human/user)
 	if (HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)

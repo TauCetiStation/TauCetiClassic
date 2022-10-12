@@ -119,7 +119,7 @@
 
 /obj/machinery/am_shielding/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
-	if(Proj.flag != "bullet")
+	if(Proj.flag != BULLET)
 		stability -= Proj.force/2
 
 /obj/machinery/am_shielding/update_icon()
