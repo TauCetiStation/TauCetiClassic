@@ -138,18 +138,19 @@
 		if(PARENT2)
 			nullifyPipenet(PARENT2)
 
-		atmos_init()
+		if(anchored)
+			atmos_init()
 
-		node1 = NODE1
-		node2 = NODE2
+			node1 = NODE1
+			node2 = NODE2
 
-		if(node1)
-			node1.atmos_init()
-			node1.addMember(src)
+			if(node1)
+				node1.atmos_init()
+				node1.addMember(src)
 
-		if(node2)
-			node2.atmos_init()
-			node2.addMember(src)
+			if(node2)
+				node2.atmos_init()
+				node2.addMember(src)
 
 		build_network()
 
@@ -201,3 +202,6 @@
 	flipped = !flipped
 
 	update_icon()
+
+/obj/machinery/atmospherics/components/binary/circulator/can_be_node(obj/machinery/atmospherics/target)
+	return anchored && ..() && (target.initialize_directions & initialize_directions)

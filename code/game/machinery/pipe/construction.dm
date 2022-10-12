@@ -409,18 +409,6 @@ Buildable meters
 			return flip
 	return 0
 
-/obj/item/pipe/proc/get_hdir() // endpoints for h/e pipes
-
-	switch(pipe_type)
-		if(PIPE_HE_STRAIGHT)
-			return get_pipe_dir()
-		if(PIPE_HE_BENT)
-			return get_pipe_dir()
-		if(PIPE_JUNCTION)
-			return dir
-		else
-			return 0
-
 /obj/item/pipe/attack_self(mob/user)
 	return rotate()
 

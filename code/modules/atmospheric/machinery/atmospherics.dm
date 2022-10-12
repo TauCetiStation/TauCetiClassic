@@ -95,7 +95,7 @@ Pipelines + Other Objects -> Pipe network
 
 	for(DEVICE_TYPE_LOOP)
 		for(var/obj/machinery/atmospherics/target in get_step(src, node_connects[I]))
-			if(can_be_node(target, I))
+			if(can_be_node(target, I) && target.can_be_node(src))
 				if(check_connect_types(target, src))
 					NODE_I = target
 					break
@@ -229,8 +229,10 @@ Pipelines + Other Objects -> Pipe network
 	atmos_init()
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)
-		A.atmos_init()
-		A.addMember(src)
+		if(can_be_node(A) && A.can_be_node(src))
+			A.atmos_init()
+			A.addMember(src)
+			flag = TRUE
 	build_network()
 
 /obj/machinery/atmospherics/singularity_pull(S, current_size)
