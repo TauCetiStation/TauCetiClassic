@@ -24,7 +24,6 @@
 	var/list/restricted_accessory_slots
 
 	var/flashbang_protection = FALSE
-	var/flash_protection = 0
 
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M, slot)

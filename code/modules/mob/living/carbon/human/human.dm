@@ -906,10 +906,12 @@
 /mob/living/carbon/human/eyecheck()
 	if(blinded)
 		return 2
-	var/obj/item/clothing/H = head
-	var/obj/item/clothing/M = wear_mask
-	var/obj/item/clothing/G = glasses
-	return (H ? H.flash_protection : 0) + (M ? M.flash_protection : 0) + (G ? G.flash_protection : 0)
+	var/protection = 0
+	for(var/obj/item/I in get_all_slots())
+		if(I in list(r_hand, l_hand, r_store, l_store))
+			continue
+		protection += I.flash_protection
+	return protection
 
 /mob/living/carbon/human/IsAdvancedToolUser()
 	return 1//Humans can use guns and such
