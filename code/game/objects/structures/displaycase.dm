@@ -5,6 +5,7 @@
 	desc = "A display case for prized possessions."
 	density = TRUE
 	anchored = TRUE
+	unacidable = TRUE
 	resistance_flags = ACID_PROOF | CAN_BE_HIT
 	armor = list(MELEE = 30, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 70, ACID = 100)
 	max_integrity = 200
@@ -13,27 +14,23 @@
 	var/obj/item/showpiece_type = null //This allows for showpieces that can only hold items if they're the same istype as this.
 	var/alert = TRUE
 	var/open = FALSE
+	var/broken = FALSE
 	var/openable = TRUE
 
-	var/obj/item/electronics/airlock/electronics
+	var/obj/item/weapon/airlock_electronics/electronics
 	var/start_showpiece_type = null //add type for items on display
-	///Represents a signel source of screaming when broken
-	var/datum/alarm_handler/alarm_manager
+	///Represents a signel source of screaming when broken (TODO)
+	//var/datum/alarm_handler/alarm_manager
 
 	// Tg update_icon workaround
 	var/list/managed_overlays
 
-/obj/structure/displaycase/Initialize(mapload)
+/obj/structure/displaycase/atom_init(mapload)
 	. = ..()
 	if(start_showpiece_type)
 		showpiece = new start_showpiece_type(src)
 	update_icon()
-	alarm_manager = new(src)
-
-/obj/structure/displaycase/vv_edit_var(vname, vval)
-	. = ..()
-	if(vname in list(NAMEOF(src, open), NAMEOF(src, showpiece), NAMEOF(src, custom_glass_overlay)))
-		update_icon()
+	//alarm_manager = new(src)
 
 /obj/structure/displaycase/handle_atom_del(atom/A)
 	if(A == electronics)
@@ -46,7 +43,7 @@
 /obj/structure/displaycase/Destroy()
 	QDEL_NULL(electronics)
 	QDEL_NULL(showpiece)
-	QDEL_NULL(alarm_manager)
+	//QDEL_NULL(alarm_manager)
 	return ..()
 
 /obj/structure/displaycase/get_examine_string(mob/user)
@@ -75,7 +72,7 @@
 		return ..()
 	dump()
 	if(!broken)
-		new /obj/item/shard(loc)
+		new /obj/item/weapon/shard(loc)
 		trigger_alarm()
 	..()
 
@@ -86,8 +83,8 @@
 	
 	density = FALSE
 	broken = TRUE
-	new /obj/item/shard(loc)
-	playsound(loc, SFX_SHATTER, VOL_EFFECTS_MASTER, 70, TRUE)
+	new /obj/item/weapon/shard(loc)
+	playsound(loc, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER, 70, TRUE)
 	update_icon()
 	trigger_alarm()
 
@@ -95,13 +92,16 @@
 /obj/structure/displaycase/proc/trigger_alarm()
 	if(!alert)
 		return
+	// TODO copy alers from tg
+	/*
 	var/area/alarmed = get_area(src)
 	alarmed.burglaralert(src)
 
 	alarm_manager.send_alarm(ALARM_BURGLAR)
 	addtimer(CALLBACK(alarm_manager, /datum/alarm_handler/proc/clear_alarm, ALARM_BURGLAR), 1 MINUTES)
+	*/
 
-	playsound(src, 'sound/effects/alert.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/alert.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 
 /obj/structure/displaycase/update_icon()
 	var/list/new_overlays = update_overlays()
@@ -137,6 +137,7 @@
 				broken = FALSE
 				update_integrity(max_integrity)
 				update_icon()
+			return
 	else
 		if(W.GetID() && openable)
 			if(allowed(user))
@@ -151,68 +152,60 @@
 					return
 
 				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-				if(W.use_tool(src, user, 40, amount=5, volume=50))
+				if(W.use_tool(src, user, 4 SECONDS, amount=5, volume=50))
 					atom_integrity = max_integrity
 					update_icon()
 					to_chat(user, "<span class='notice'>You repair [src].</span>")
 			else
 				to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 			return
-	else if(!alert && W.tool_behaviour == TOOL_CROWBAR && openable) //Only applies to the lab cage and player made display cases
+	if(!alert && iscrowbar(W) && openable) //Only applies to the lab cage and player made display cases
 		if(broken)
 			if(showpiece)
-				to_chat(user, span_warning("Remove the displayed object first!"))
+				to_chat(user, "<span class='warning'>Remove the displayed object first!</span>")
 			else
-				to_chat(user, span_notice("You remove the destroyed case."))
-				qdel(src)
+				to_chat(user, "<span class='notice'>You remove the destroyed case.</span>")
+				deconstruct(TRUE)
 		else
-			to_chat(user, span_notice("You start to [open ? "close":"open"] [src]..."))
-			if(W.use_tool(src, user, 20))
-				to_chat(user,  span_notice("You [open ? "close":"open"] [src]."))
+			to_chat(user, "<span class='notice'>You start to [open ? "close":"open"] [src]...</span>")
+			if(W.use_tool(src, user, 2 SECONDS))
+				to_chat(user,  "<span class='notice'>You [open ? "close":"open"] [src].</span>")
 				toggle_lock(user)
-	if(open && !showpiece)
-		insert_showpiece(W, user)
-		return ..()
+		return
+	if(open && !showpiece && insert_showpiece(W, user))
+		return
+	return ..()
 
 /obj/structure/displaycase/proc/insert_showpiece(obj/item/wack, mob/user)
 	if(showpiece_type && !istype(wack, showpiece_type))
-		to_chat(user, span_notice("This doesn't belong in this kind of display."))
-		return TRUE
-	if(user.transferItemToLoc(wack, src))
+		to_chat(user, "<span class='notice'>This doesn't belong in this kind of display.</span>")
+		return FALSE
+	if(user.remove_from_mob(wack, src))
 		showpiece = wack
-		to_chat(user, span_notice("You put [wack] on display."))
+		to_chat(user, "<span class='notice'>You put [wack] on display.</span>")
 		update_icon()
+		return TRUE
 
 /obj/structure/displaycase/proc/toggle_lock(mob/user)
 	open = !open
 	update_icon()
 
-/obj/structure/displaycase/attack_paw(mob/user, list/modifiers)
-	return attack_hand(user, modifiers)
+/obj/structure/displaycase/attack_paw(mob/user)
+	return attack_hand(user)
 
-/obj/structure/displaycase/attack_hand(mob/living/user, list/modifiers)
+/obj/structure/displaycase/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
-	if (showpiece && (broken || open))
-		to_chat(user, span_notice("You deactivate the hover field built into the case."))
-		log_combat(user, src, "deactivates the hover field of")
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(showpiece && (broken || open))
+		to_chat(user, "<span class='notice'>You deactivate the hover field built into the case.</span>")
 		dump()
 		add_fingerprint(user)
 		return
-	else
-	    //prevents remote "kicks" with TK
-		if (!Adjacent(user))
-			return
-		if (!user.combat_mode)
-			if(!user.is_blind())
-				user.examinate(src)
-			return
-		user.visible_message(span_danger("[user] kicks the display case."), null, null, COMBAT_MESSAGE_RANGE)
-		log_combat(user, src, "kicks")
-		user.do_attack_animation(src, ATTACK_EFFECT_KICK)
-		take_damage(2)
+	visible_message("<span class='userdanger'>[user] kicks the display case.</span>", viewing_distance = COMBAT_MESSAGE_RANGE)
+	user.do_attack_animation(src, visual_effect_icon = ATTACK_EFFECT_KICK)
+	take_damage(2, BRUTE, MELEE)
 
 /obj/structure/displaycase_chassis
 	anchored = TRUE
@@ -221,59 +214,50 @@
 	desc = "The wooden base of a display case."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "glassbox_chassis"
-	var/obj/item/electronics/airlock/electronics
+	var/obj/item/weapon/airlock_electronics/electronics
 
 
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH) //The player can only deconstruct the wooden frame
-		to_chat(user, span_notice("You start disassembling [src]..."))
-		I.play_tool_sound(src)
-		if(I.use_tool(src, user, 30))
-			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-			new /obj/item/stack/sheet/mineral/wood(get_turf(src), 5)
-			qdel(src)
+	if(iswrench(I)) //The player can only deconstruct the wooden frame
+		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
+		if(I.use_tool(src, user, 3 SECONDS, volume = 50))
+			playsound(loc, 'sound/items/deconstruct.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+			deconstruct(TRUE)
 
-	else if(istype(I, /obj/item/electronics/airlock))
-		to_chat(user, span_notice("You start installing the electronics into [src]..."))
-		I.play_tool_sound(src)
-		if(do_after(user, 30, target = src) && user.transferItemToLoc(I,src))
-			electronics = I
-			to_chat(user, span_notice("You install the airlock electronics."))
-
-	else if(istype(I, /obj/item/stock_parts/card_reader))
-		var/obj/item/stock_parts/card_reader/C = I
-		to_chat(user, span_notice("You start adding [C] to [src]..."))
-		if(do_after(user, 20, target = src))
-			var/obj/structure/displaycase/forsale/sale = new(src.loc)
-			if(electronics)
-				electronics.forceMove(sale)
-				sale.electronics = electronics
-				if(electronics.one_access)
-					sale.req_one_access = electronics.accesses
-				else
-					sale.req_access = electronics.accesses
-			qdel(src)
-			qdel(C)
+	else if(istype(I, /obj/item/weapon/airlock_electronics))
+		var/obj/item/weapon/airlock_electronics/AE = I
+		if(!AE.broken) // why are we have broken electronics as the same item?
+			to_chat(user, "<span class='notice'>You start installing the electronics into [src]...</span>")
+			I.play_tool_sound(src, 50)
+			if(do_after(user, 3 SECONDS, target = src) && user.remove_from_mob(I, src))
+				electronics = I
+				to_chat(user, "<span class='notice'>You install the airlock electronics.</span>")
 
 	else if(istype(I, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = I
 		if(G.get_amount() < 10)
-			to_chat(user, span_warning("You need ten glass sheets to do this!"))
+			to_chat(user, "<span class='warning'>You need ten glass sheets to do this!</span>")
 			return
-		to_chat(user, span_notice("You start adding [G] to [src]..."))
-		if(do_after(user, 20, target = src))
-			G.use(10)
-			var/obj/structure/displaycase/noalert/display = new(src.loc)
+		to_chat(user, "<span class='notice'>You start adding [G] to [src]...</span>")
+		if(I.use_tool(src, user, 2 SECONDS, 10, volume = 50))
+			var/obj/structure/displaycase/noalert/display = new(loc)
 			if(electronics)
 				electronics.forceMove(display)
 				display.electronics = electronics
 				if(electronics.one_access)
-					display.req_one_access = electronics.accesses
+					display.req_one_access = electronics.conf_access
 				else
-					display.req_access = electronics.accesses
+					display.req_access = electronics.conf_access
 			qdel(src)
 	else
 		return ..()
+
+/obj/structure/displaycase_chassis/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/wood(loc, 5)
+	..()
+	
 
 //The lab cage and captain's display case do not spawn with electronics, which is why req_access is needed.
 /obj/structure/displaycase/captain
@@ -286,78 +270,21 @@
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
 	req_access = list(access_rd)
 
+/obj/item/clothing/mask/facehugger/lamarr
+	name = "Lamarr"
+	desc = "The worst she might do is attempt to... couple with your head."//hope we don't get sued over a harmless reference, rite?
+	sterile = 1
+	gender = FEMALE
+
+/obj/item/clothing/mask/facehugger/lamarr/atom_init_late()//to prevent deleting it if aliums are disabled
+	return
+
+
 /obj/structure/displaycase/noalert
 	alert = FALSE
 
-/obj/item/showpiece_dummy/Initialize(mapload, path)
+/obj/item/showpiece_dummy/atom_init(mapload, obj/item/path)
 	. = ..()
-	var/obj/item/I = path
-	name = initial(I.name)
-	icon = initial(I.icon)
-	icon_state = initial(I.icon_state)
-
-/obj/structure/displaycase
-	name = "display case"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "glassbox1"
-	desc = "A display case for prized possessions. It taunts you to kick it."
-	density = TRUE
-	anchored = TRUE
-	unacidable = 1//Dissolving the case would also delete the gun.
-	max_integrity = 60
-	integrity_failure = 0.5
-	resistance_flags = UNACIDABLE | CAN_BE_HIT
-
-	var/occupied = 1
-	var/destroyed = 0
-
-/obj/structure/displaycase/update_icon()
-	if(src.destroyed)
-		src.icon_state = "glassboxb[src.occupied]"
-	else
-		src.icon_state = "glassbox[src.occupied]"
-	return
-
-/obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	switch(damage_type)
-		if(BRUTE)
-			playsound(loc, 'sound/effects/glasshit.ogg', VOL_EFFECTS_MASTER, 75, TRUE)
-		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
-
-/obj/structure/displaycase/atom_break()
-	..()
-	if(destroyed || flags & NODECONSTRUCT)
-		return
-	density = FALSE
-	destroyed = TRUE
-	new /obj/item/weapon/shard(loc)
-	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	update_icon()
-
-/obj/structure/displaycase/deconstruct(disassembled)
-	if(flags & NODECONSTRUCT)
-		return ..()
-	if(occupied)
-		new /obj/item/weapon/gun/energy/laser/selfcharging/captain(loc)
-		occupied = FALSE
-	if(!destroyed)
-		new /obj/item/weapon/shard(loc)
-	..()
-
-/obj/structure/displaycase/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/structure/displaycase/attack_hand(mob/user)
-	if(destroyed && occupied)
-		new /obj/item/weapon/gun/energy/laser/selfcharging/captain(loc)
-		occupied = FALSE
-		to_chat(user, "<b>You deactivate the hover field built into the case.</b>")
-		add_fingerprint(user)
-		update_icon()
-		return
-	user.SetNextMove(CLICK_CD_MELEE)
-	visible_message("<span class='userdanger'>[user] kicks the display case.</span>")
-	take_damage(2, BRUTE, MELEE)
-
-
+	name = initial(path.name)
+	icon = initial(path.icon)
+	icon_state = initial(path.icon_state)
