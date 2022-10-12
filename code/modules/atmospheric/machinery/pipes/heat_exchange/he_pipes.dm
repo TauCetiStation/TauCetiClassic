@@ -58,6 +58,8 @@
 
 	var/datum/gas_mixture/pipe_air = return_air()
 
+	set_light(0, 0, null)
+
 	//fancy radiation glowing
 	if(pipe_air.temperature && (icon_temperature > 500 || pipe_air.temperature > 500)) //start glowing at 500K
 		if(abs(pipe_air.temperature - icon_temperature) > 10)
@@ -74,6 +76,8 @@
 				h_b = 64 + (h_b - 64) * scale
 
 			animate(src, color = rgb(h_r, h_g, h_b), time = 20, easing = SINE_EASING)
+
+			set_light(1, clamp(pipe_air.temperature * 0.03, 0, 30), rgb(h_r, h_g, h_b))
 
 	if(buckled_mob)
 		var/heat_limit = 1000
