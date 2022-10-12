@@ -35,7 +35,7 @@
 /obj/structure/displaycase/handle_atom_del(atom/A)
 	if(A == electronics)
 		electronics = null
-	if(A == showpiece)
+	else if(A == showpiece)
 		showpiece = null
 		update_icon()
 	return ..()
