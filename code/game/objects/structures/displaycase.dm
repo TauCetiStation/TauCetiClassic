@@ -108,14 +108,12 @@
 /obj/structure/displaycase/proc/trigger_alarm()
 	if(!alert)
 		return
-	// TODO copy alers from tg
-	/*
+	
 	var/area/alarmed = get_area(src)
-	alarmed.burglaralert(src)
+	alarmed.airlocks_close(TRUE)
 
-	alarm_manager.send_alarm(ALARM_BURGLAR)
-	addtimer(CALLBACK(alarm_manager, /datum/alarm_handler/proc/clear_alarm, ALARM_BURGLAR), 1 MINUTES)
-	*/
+	// alarm_manager.send_alarm(ALARM_BURGLAR)
+	// addtimer(CALLBACK(alarm_manager, /datum/alarm_handler/proc/clear_alarm, ALARM_BURGLAR), 1 MINUTES)
 
 	playsound(src, 'sound/effects/alert.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 
