@@ -1,5 +1,5 @@
 #define BUCKET_LEN (world.fps*1*60) //how many ticks should we keep in the bucket. (1 minutes worth)
-#define BUCKET_POS(timer) (round((timer.timeToRun - SStimer.head_offset) / world.tick_lag) + 1)
+#define BUCKET_POS(timer) (round((timer.timeToRun - timer.timer_subsystem.head_offset) / world.tick_lag) + 1)
 
 SUBSYSTEM_DEF(timer)
 	name = "Timer"
@@ -23,6 +23,8 @@ SUBSYSTEM_DEF(timer)
 
 	var/list/clienttime_timers //special snowflake timers that run on fancy pansy "client time"
 
+	var/list/spent = list()
+	var/datum/timedevent/timer
 
 /datum/controller/subsystem/timer/PreInit()
 	processing        = list()
@@ -50,9 +52,6 @@ SUBSYSTEM_DEF(timer)
 
 			if (MC_TICK_CHECK)
 				return
-
-	var/static/list/spent = list()
-	var/static/datum/timedevent/timer
 
 	if (practical_offset > BUCKET_LEN || (!resumed  && length(src.bucket_list) != BUCKET_LEN || world.tick_lag != bucket_resolution))
 		shift_buckets()
@@ -186,45 +185,48 @@ SUBSYSTEM_DEF(timer)
 	//cicular doublely linked list
 	var/datum/timedevent/next
 	var/datum/timedevent/prev
+	/// The timer subsystem this event is associated with
+	var/datum/controller/subsystem/timer/timer_subsystem
 
 	var/static/nextid = 1
 
-/datum/timedevent/New(datum/callback/callBack, timeToRun, flags, hash)
+/datum/timedevent/New(datum/callback/callBack, timeToRun, flags, datum/controller/subsystem/timer/timer_subsystem, hash)
 	id = nextid++
 	src.callBack = callBack
 	src.timeToRun = timeToRun
 	src.flags = flags
 	src.hash = hash
+	src.timer_subsystem = timer_subsystem || SStimer
 
 	if (flags & TIMER_UNIQUE)
-		SStimer.hashes[hash] = src
+		timer_subsystem.hashes[hash] = src
 
 	if (flags & TIMER_STOPPABLE)
-		SStimer.timer_id_dict["timerid[id]"] = src
+		timer_subsystem.timer_id_dict["timerid[id]"] = src
 
 	if (callBack.object != GLOBAL_PROC)
 		LAZYADD(callBack.object.active_timers, src)
 
 	if (flags & TIMER_CLIENT_TIME)
-		SStimer.clienttime_timers += src
+		timer_subsystem.clienttime_timers += src
 		return
 
 	//get the list of buckets
-	var/list/bucket_list = SStimer.bucket_list
+	var/list/bucket_list = timer_subsystem.bucket_list
 	//calculate our place in the bucket list
 	var/bucket_pos = BUCKET_POS(src)
 	//we are too far aways from needing to run to be in the bucket list, shift_buckets() will handle us.
 	if (bucket_pos > length(bucket_list))
-		SStimer.processing += src
+		timer_subsystem.processing += src
 		return
 	//get the bucket for our tick
 	var/datum/timedevent/bucket_head = bucket_list[bucket_pos]
-	SStimer.bucket_count++
+	timer_subsystem.bucket_count++
 	//empty bucket, we will just add ourselves
 	if (!bucket_head)
 		bucket_list[bucket_pos] = src
-		if (bucket_pos < SStimer.practical_offset)
-			SStimer.practical_offset = bucket_pos
+		if (bucket_pos < timer_subsystem.practical_offset)
+			timer_subsystem.practical_offset = bucket_pos
 		return
 	//other wise, lets do a simplified linked list add.
 	if (bucket_head.next)
@@ -236,7 +238,7 @@ SUBSYSTEM_DEF(timer)
 /datum/timedevent/Destroy()
 	..()
 	if (flags & TIMER_UNIQUE)
-		SStimer.hashes -= hash
+		timer_subsystem.hashes -= hash
 
 
 	if (callBack && callBack.object && callBack.object != GLOBAL_PROC && callBack.object.active_timers)
@@ -245,10 +247,10 @@ SUBSYSTEM_DEF(timer)
 	callBack = null
 
 	if (flags & TIMER_STOPPABLE)
-		SStimer.timer_id_dict -= "timerid[id]"
+		timer_subsystem.timer_id_dict -= "timerid[id]"
 
 	if (flags & TIMER_CLIENT_TIME)
-		SStimer.clienttime_timers -= src
+		timer_subsystem.clienttime_timers -= src
 		return QDEL_HINT_IWILLGC
 
 	if (!spent)
@@ -263,13 +265,13 @@ SUBSYSTEM_DEF(timer)
 
 		var/bucketpos = BUCKET_POS(src)
 		var/datum/timedevent/buckethead
-		var/list/bucket_list = SStimer.bucket_list
+		var/list/bucket_list = timer_subsystem.bucket_list
 
 		if (bucketpos > 0 && bucketpos <= length(bucket_list))
 			buckethead = bucket_list[bucketpos]
-			SStimer.bucket_count--
+			timer_subsystem.bucket_count--
 		else
-			SStimer.processing -= src
+			timer_subsystem.processing -= src
 
 		if (buckethead == src)
 			bucket_list[bucketpos] = next
@@ -284,11 +286,13 @@ SUBSYSTEM_DEF(timer)
 	return QDEL_HINT_IWILLGC
 
 
-/proc/addtimer(datum/callback/callback, wait, flags)
+/proc/addtimer(datum/callback/callback, wait, flags, datum/controller/subsystem/timer/timer_subsystem)
 	if (!callback)
 		return
 
 	wait = max(wait, 0)
+
+	timer_subsystem = timer_subsystem || SStimer
 
 	var/hash
 
@@ -301,11 +305,11 @@ SUBSYSTEM_DEF(timer)
 		hashlist += callback.arguments
 		hash = hashlist.Join("|||||||")
 
-		var/datum/timedevent/hash_timer = SStimer.hashes[hash]
+		var/datum/timedevent/hash_timer = timer_subsystem.hashes[hash]
 		if(hash_timer)
 			if (hash_timer.spent)  // It's pending deletion, pretend it doesn't exist.
 				hash_timer.hash = null
-				SStimer.hashes -= hash
+				timer_subsystem.hashes -= hash
 			else
 				if (flags & TIMER_OVERRIDE)
 					qdel(hash_timer)
@@ -318,20 +322,22 @@ SUBSYSTEM_DEF(timer)
 	if (flags & TIMER_CLIENT_TIME)
 		timeToRun = REALTIMEOFDAY + wait
 
-	var/datum/timedevent/timer = new(callback, timeToRun, flags, hash)
+	var/datum/timedevent/timer = new(callback, timeToRun, flags, timer_subsystem, hash)
 
 	if (flags & TIMER_STOPPABLE)
 		return timer.id
 
 
-/proc/deltimer(id)
+/proc/deltimer(id, datum/controller/subsystem/timer/timer_subsystem)
 	if (!id)
 		return FALSE
 	if (!istext(id))
 		if (istype(id, /datum/timedevent))
 			qdel(id)
 			return TRUE
-	var/datum/timedevent/timer = SStimer.timer_id_dict["timerid[id]"]
+	timer_subsystem = timer_subsystem || SStimer
+
+	var/datum/timedevent/timer = timer_subsystem.timer_id_dict["timerid[id]"]
 	if (timer && !timer.spent)
 		qdel(timer)
 		return TRUE

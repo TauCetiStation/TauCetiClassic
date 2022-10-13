@@ -354,5 +354,5 @@ using /obj/effect/datacore/proc/manifest_inject( ), or manifest_insert( )
 		L.fields["image"]		= ticon
 		locked += L
 
-		score["crew_total"]++
+		SSStatistics.score.crew_total++
 	return

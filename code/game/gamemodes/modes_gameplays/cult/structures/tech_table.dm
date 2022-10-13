@@ -15,7 +15,7 @@
 	var/static/list/category_images = list()
 
 	var/researching = FALSE
-	var/research_time = 18 MINUTES
+	var/research_time = 15 MINUTES
 	var/end_research_time
 
 	var/current_research = "Ничего"
@@ -137,7 +137,11 @@
 
 /obj/structure/cult/tech_table/proc/get_upgrade_cost(datum/aspect/in_religion)
 	if(!in_religion)
-		return 300
+		var/all_aspects = 0
+		for(var/aspect_name in cult_religion.aspects)
+			all_aspects++
+		var/cost = max(100, 50 + 25 * all_aspects) //We don't count 6 initial aspects and scale for static 150, +50 piety for each new aspect
+		return cost
 	return in_religion.power * 50
 
 /obj/structure/cult/tech_table/proc/gen_category_images()
@@ -171,7 +175,7 @@
 		P.icon_state = "pylon_glow"
 		P.can_unwrench = FALSE
 	researching = TRUE
-	var/time_reduce = sqrt(pylon_around.len)MINUTE
+	var/time_reduce = 2.2*sqrt(pylon_around.len)MINUTE //https://www.desmos.com/Calculator/acwqntgi7v 1 pylon = 2 mins, 4 pyls = 4 mins, 10=7, 45=15
 	end_research_time = max(1, world.time + research_time - time_reduce)
 	can_unwrench = FALSE
 	tech_timer = addtimer(end_activity, research_time - time_reduce, TIMER_STOPPABLE)

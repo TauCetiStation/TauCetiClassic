@@ -59,8 +59,8 @@
 	changeling.absorb_dna(target)
 
 	var/nutr = user.get_nutrition()
-	if(nutr < 400)
-		user.nutrition += min(target.nutrition, 400 - nutr)
+	if(nutr < NUTRITION_LEVEL_NORMAL)
+		user.nutrition += min(target.nutrition, NUTRITION_LEVEL_NORMAL - nutr)
 
 	//Steal all of their languages!
 	for(var/language in target.languages)
@@ -77,7 +77,7 @@
 
 		target.mind.show_memory(user) //I can read your mind, kekeke. Output all their notes.
 		changeling.geneticpoints += 2
-
+		user.mind.skills.transfer_skills(target.mind)
 		var/datum/role/changeling/C = target.mind.GetRoleByType(/datum/role/changeling)
 		if(C)//If the target was a changeling, suck out their extra juice and objective points!
 			changeling.chem_charges += min(C.chem_charges, changeling.chem_storage)
@@ -146,7 +146,6 @@
 			if(T.dna.uni_identity == D.uni_identity)
 				if(T.dna.struc_enzymes == D.struc_enzymes)
 					if(T.dna.real_name == D.real_name)
-						if(T.dna.mutantrace == D.mutantrace)
-							to_chat(U, "<span class='warning'>We already have that DNA in storage.</span>")
-							return FALSE
+						to_chat(U, "<span class='warning'>We already have that DNA in storage.</span>")
+						return FALSE
 	return TRUE

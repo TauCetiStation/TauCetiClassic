@@ -44,18 +44,17 @@
 	last_flow_rate = 0
 
 	var/datum/gas_mixture/pipe_air = return_air()
+	var/turf/local_turf = loc
 
-	if(istype(loc, /turf/simulated))
-		var/environment_temperature = 0
-		if(loc:blocks_air)
-			environment_temperature = loc:temperature
-		else
-			var/datum/gas_mixture/environment = loc.return_air()
-			environment_temperature = environment.temperature
-		if(abs(environment_temperature-pipe_air.temperature) > minimum_temperature_difference)
-			parent.temperature_interact(loc, volume, thermal_conductivity)
-	else if(istype(loc, /turf/space))
-		parent.radiate_heat_to_space(surface, 1)
+	var/environment_temperature
+	if(istype(loc, /turf/simulated) && !local_turf.blocks_air)
+		var/datum/gas_mixture/environment = loc.return_air()
+		environment_temperature = environment.temperature
+	else
+		environment_temperature = local_turf.temperature
+
+	if(abs(environment_temperature-pipe_air.temperature) > minimum_temperature_difference)
+		parent.temperature_interact(loc, volume, thermal_conductivity)
 
 	if(buckled_mob)
 		var/hc = pipe_air.heat_capacity()

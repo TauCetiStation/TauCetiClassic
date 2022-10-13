@@ -5,7 +5,7 @@
 	flags = ANNOUNCE_TEXT | ANNOUNCE_SOUND
 /datum/announcement/station/play()
 	..()
-	add_communication_log(type = "station", title = title ? title : subtitle, author = announcer, content = message)
+	SSStatistics.add_communication_log(type = "station", title = title ? title : subtitle, author = announcer, content = message)
 
 /datum/announcement/station/command/play(message)
 	if(message)
@@ -41,6 +41,16 @@
 /datum/announcement/station/nuke/play(area/A)
 	if(A)
 		message = "Обнаружена активация ядерной боеголовки в [initial(A.name)]. Кто-то пытается взорвать станцию!"
+	..()
+
+/datum/announcement/station/nuke_teleport
+	name = "Alert: Nuke Translocation"
+	message =  "Обнаружено подпространственное перемещение ядерной боеголовки где-то на станции. Кто-то пытается взорвать станцию!"
+	sound = "commandreport"
+
+/datum/announcement/station/nuke_teleport/play(area/new_loc, area/old_loc)
+	if(new_loc && old_loc)
+		message = "Обнаружено подпространственное перемещение ядерной боеголовки из [initial(old_loc.name)] в [initial(new_loc.name)]. Требуется немедленное вмешательство!"
 	..()
 
 /datum/announcement/station/maint_revoke

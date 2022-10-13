@@ -87,6 +87,23 @@
 		console.tools -= src
 		qdel(src)
 
+	if(user.mind)
+		for(var/role in user.mind.antag_roles)
+			var/datum/role/R = user.mind.antag_roles[role]
+			var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
+			if(!S)
+				continue
+			S.spent_TC += cost
+			if(istype(R, /datum/role/operative))
+				R.faction.faction_scoreboard_data += {"[name] for [cost] TC."}
+			else
+				S.uplink_items_bought += {"[name] for [cost] TC."}
+
+			var/datum/stat/uplink_purchase/stat = new
+			stat.bundlename = name
+			stat.cost = cost
+			stat.item_type = item
+			S.uplink_purchases += stat
 
 /datum/intruder_tools/war_device
 	name = "War Device"
@@ -98,9 +115,9 @@
 
 /datum/intruder_tools/shuttle_unlocker
 	name = "Shuttle Unlocker"
-	desc = "An unlocker of the Shuttle, which Parked near your base. In Bonus aboard, will be tactical aid and instruments. Caution. You'll have to buy spacesuit's in addition."
+	desc = "An unlocker of the Shuttle, which Parked near your base. In Bonus aboard, will be instruments. Caution. You'll have to buy spacesuit's in addition."
 	delete_dat_after_buying = TRUE
-	cost = 30
+	cost = 25
 
 /datum/intruder_tools/shuttle_unlocker/buy(obj/machinery/computer/intruder_station/console, mob/living/user)
 	var/area/cur_area = get_area(console)
@@ -126,7 +143,7 @@
 	After Hack, you can switch entering through gateway."
 	item = /obj/item/device/gateway_locker
 	delete_dat_after_buying = TRUE
-	cost = 15
+	cost = 25
 
 /datum/intruder_tools/gateway_locker/buy(obj/machinery/computer/intruder_station/console, mob/living/user)
 	..()
@@ -138,48 +155,22 @@
 	name = "Exosuit Drop System"
 	desc = "A module for exosuit, that allow you launching at Long distances"
 	item = /obj/item/mecha_parts/mecha_equipment/Drop_system
-	cost = 15
+	cost = 5
 
 /datum/intruder_tools/droppod
 	name = "Drop Pod"
 	desc = "A two-seater pod, that can fall into station, aim system can be upgraded with camera bug and simple Drop System."
 	item = /obj/item/device/drop_caller/Syndi
-	cost = 14
+	cost = 5
 
 /datum/intruder_tools/drop_aim
 	name = "Simple Drop System"
 	desc = "A simple drop system, which can be installed in pods to increase accuracy of droping"
 	item =  /obj/item/weapon/simple_drop_system
-	cost = 8
+	cost = 4
 
 /datum/intruder_tools/camera_bug
 	name = "Camera Bug"
 	desc = "Can be attached to Drop Pod to reach exemplary accuracy and allow to return to the base."
 	item = /obj/item/device/camera_bug
 	cost = 2
-
-/datum/intruder_tools/rig
-	name = "Syndi Rig"
-	desc = "The red syndicate space rig with additional armor plating.\
-	 Nanotrasen crewmembers are trained to report red space suit sightings."
-	item = /obj/item/weapon/storage/box/syndie_kit/rig
-	cost = 8
-
-/datum/intruder_tools/heavy_rig
-	name = "Heavy Syndi Rig"
-	desc = "Combat rig fitted with heavy armor plates made to endure even the greatest damage, developed off existing 'Striker' space suit."
-	item = /obj/item/weapon/storage/box/syndie_kit/heavy_rig
-	cost = 12
-
-/datum/intruder_tools/armor
-	name = "Syndi Assault Armor"
-	desc = "The red syndicate heavy armor with additional armor plating and helmet to it."
-	item = /obj/item/weapon/storage/box/syndie_kit/armor
-	cost = 4
-
-/datum/intruder_tools/hazmat
-	name = "Experimental Chemical Warfare Kit"
-	desc = "Experimental kit consisting of menacing hazmat space suit designed to strike terror into Nanotrasen employees and chemical tank filled with deadly mix of poisons, drugs and combustible fuel. The tank comes with a handy meister attached. Additional chemicals can be bought via uplink to refill the tank."
-	item = /obj/item/weapon/storage/box/syndie_kit/chemical
-	cost = 20
-	delete_dat_after_buying = TRUE

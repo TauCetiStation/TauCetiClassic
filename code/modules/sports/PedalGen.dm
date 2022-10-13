@@ -25,7 +25,8 @@
 	density = FALSE
 	//copypaste sorry
 	var/obj/machinery/power/dynamo/Generator = null
-	var/pedaled = 0
+	var/next_pedal = 0
+	var/pedal_left_leg = FALSE
 
 /obj/structure/stool/bed/chair/pedalgen/atom_init()
 	. = ..()
@@ -55,37 +56,49 @@
 			Generator.loc = null
 
 /obj/structure/stool/bed/chair/pedalgen/attack_hand(mob/user)
-	if(buckled_mob)
+	if(buckled_mob && next_pedal < world.time)
 		pedal(user)
 	return 0
 
 /obj/structure/stool/bed/chair/pedalgen/proc/pedal(mob/user)
-	pedaled = 1
-	if(buckled_mob.buckled == src)
-		if(buckled_mob != user)
-			buckled_mob.visible_message(\
-				"<span class='notice'>[buckled_mob.name] was unbuckled by [user.name]!</span>",\
-				"You were unbuckled from [src] by [user.name].",\
-				"You hear metal clanking")
-			unbuckle_mob()
-			add_fingerprint(user)
-		else
-			user.SetNextMove(CLICK_CD_INTERACT)
-			if(buckled_mob.nutrition > 10)
-				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER, 20)
-				Generator.Rotated()
-				var/mob/living/carbon/human/pedaler = buckled_mob
-				pedaler.nutrition -= 0.5
-				pedaler.apply_effect(1,AGONY,0)
-				if(pedaler.halloss > 80)
-					to_chat(user, "You pushed yourself too hard.")
-					pedaler.apply_effect(24,AGONY,0)
-					unbuckle_mob()
-				sleep(5)
-				pedaled = 0
-			else
-				to_chat(user, "You are too exausted to pedal that thing.")
-		return 1
+	if(buckled_mob.buckled != src)
+		return FALSE
+
+	if(buckled_mob != user)
+		buckled_mob.visible_message(\
+			"<span class='notice'>[buckled_mob.name] was unbuckled by [user.name]!</span>",\
+			"You were unbuckled from [src] by [user.name].",\
+			"You hear metal clanking")
+		unbuckle_mob()
+		add_fingerprint(user)
+		return FALSE
+
+	if(buckled_mob.nutrition <= 10)
+		to_chat(user, "You are too exausted to pedal that thing.")
+		return FALSE
+
+	next_pedal = world.time + 4
+
+	playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER, 20)
+	Generator.Rotated()
+
+	var/mob/living/carbon/human/pedaler = buckled_mob
+	if(ishuman(pedaler))
+		var/leg = pedal_left_leg ? BP_L_LEG : BP_R_LEG
+		var/obj/item/organ/external/BP = pedaler.get_bodypart(leg)
+		if(BP)
+			pedaler.apply_effect(BP.adjust_pumped(1), AGONY, 0)
+			pedaler.update_body()
+
+	buckled_mob.nutrition -= 0.5
+
+	pedal_left_leg = !pedal_left_leg
+	if(buckled_mob.halloss > 80)
+		to_chat(user, "You pushed yourself too hard.")
+		buckled_mob.apply_effect(24,AGONY,0)
+		unbuckle_mob()
+
+	return TRUE
 
 /obj/structure/stool/bed/chair/pedalgen/relaymove(mob/user, direction)
 	if(!ishuman(user))
@@ -93,9 +106,8 @@
 	var/mob/living/carbon/human/pedaler = user
 	if(!pedaler.handcuffed)
 		unbuckle_mob()
-	else
-		if(!pedaled)
-			pedal(user)
+	else if(next_pedal < world.time)
+		pedal(user)
 
 
 /obj/structure/stool/bed/chair/pedalgen/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
@@ -106,8 +118,8 @@
 			update_mob(buckled_mob)
 
 
-/obj/structure/stool/bed/chair/pedalgen/post_buckle_mob(mob/user)
-	update_mob(user,1)
+/obj/structure/stool/bed/chair/pedalgen/post_buckle_mob(mob/living/user)
+	update_mob(user, TRUE)
 
 /obj/structure/stool/bed/chair/pedalgen/handle_rotation()
 	if(dir == SOUTH)
@@ -122,7 +134,7 @@
 		update_mob(buckled_mob)
 
 
-/obj/structure/stool/bed/chair/pedalgen/proc/update_mob(mob/M, buckling = 0)
+/obj/structure/stool/bed/chair/pedalgen/proc/update_mob(mob/living/M, buckling = 0)
 	if(M == buckled_mob)
 		M.set_dir(dir)
 		var/new_pixel_x = 0
@@ -146,13 +158,14 @@
 			M.pixel_x = new_pixel_x
 			M.pixel_y = new_pixel_y
 	else
-		animate(M, pixel_x = 0, pixel_y = 0, 2, 1, LINEAR_EASING)
+		animate(M, pixel_x = M.default_pixel_x, pixel_y = M.default_pixel_y, 2, 1, LINEAR_EASING)
 
-/obj/structure/stool/bed/chair/pedalgen/bullet_act(obj/item/projectile/Proj)
+/obj/structure/stool/bed/chair/pedalgen/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(buckled_mob)
 		if(prob(85))
 			return buckled_mob.bullet_act(Proj)
 	visible_message("<span class='warning'>[Proj] ricochets off the [src]!</span>")
+	return ..()
 
 /obj/structure/stool/bed/chair/pedalgen/Destroy()
 	qdel(Generator)

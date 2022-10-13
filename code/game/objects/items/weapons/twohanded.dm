@@ -49,7 +49,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_TINY
-	item_color = "green"
 	var/hacked
 	var/slicing
 	var/wieldsound = 'sound/weapons/saberon.ogg'
@@ -63,11 +62,13 @@
 
 	sweep_step = 2
 
+	var/blade_color
+
 /obj/item/weapon/dualsaber/atom_init()
 	. = ..()
 	reflect_chance = rand(50, 65)
-	item_color = pick("red", "blue", "green", "purple","yellow","pink","black")
-	switch(item_color)
+	blade_color = pick("red", "blue", "green", "purple","yellow","pink","black")
+	switch(blade_color)
 		if("red")
 			light_color = COLOR_RED
 		if("blue")
@@ -131,7 +132,7 @@
 
 /obj/item/weapon/dualsaber/update_icon()
 	if(HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
-		icon_state = "dualsaber[item_color]1"
+		icon_state = "dualsaber[blade_color]1"
 	else
 		icon_state = "dualsaber0"
 	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
@@ -162,7 +163,7 @@
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user,"<span class='warning'>2XRNBW_ENGAGE</span>")
-			item_color = "rainbow"
+			blade_color = "rainbow"
 			light_color = ""
 			update_icon()
 		else

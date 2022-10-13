@@ -5,6 +5,7 @@
 	health = 180
 	storedPlasma = 100
 	max_plasma = 150
+	speed = -1
 	icon_state = "alienh_s"	//default invisibility
 	var/invisible = FALSE
 
@@ -29,19 +30,17 @@
 	..()
 
 //Hunter verbs
-/mob/living/carbon/xenomorph/humanoid/hunter/proc/toggle_leap(message = 1)
-	if(resting)
-		lay_down()
+/mob/living/carbon/xenomorph/humanoid/hunter/proc/toggle_leap(message = TRUE)
+	if(crawling)
+		crawl()
 	leap_on_click = !leap_on_click
-	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
+	leap_icon.update_icon(src)
 	update_icons()
 	if(message)
 		if(leap_on_click)
 			to_chat(src, "<span class='noticealien'>You will now leap at enemies with a middle click!</span>")
 		else
 			to_chat(src, "<span class='noticealien'>You will no longer leap at enemies with a middle click!</span>")
-	else
-		return
 
 /mob/living/carbon/xenomorph/humanoid/hunter/MiddleClickOn(atom/A, params)
 	if(next_move <= world.time && leap_on_click)
@@ -64,7 +63,7 @@
 	if(leaping) //Leap while you leap, so you can leap while you leap
 		return
 
-	if((istype(src.loc, /turf/space)) || (istype(A.loc, /turf/space)))
+	if(isspaceturf(src.loc) || isspaceturf(A.loc))
 		to_chat(src, "<span class='alertalien'>It is unsafe to leap without gravity!</span>")
 		//It's also extremely buggy visually, so it's balance+bugfix
 		return
@@ -94,12 +93,15 @@
 		var/obj/item/weapon/shield/shield = L.is_in_hands(/obj/item/weapon/shield)
 		if(shield && check_shield_dir(hit_atom) && prob(shield.Get_shield_chance() + 20))
 			L.visible_message("<span class='danger'>[src] smashed into [L]'s [shield]!</span>", "<span class='userdanger'>[src] pounces on your [shield]!</span>")
-			weakened = 2
+			Stun(2)
+			Weaken(2)
 		else
 			L.visible_message("<span class='danger'>[src] pounces on [L]!</span>", "<span class='userdanger'>[src] pounces on you!</span>")
 			if(issilicon(L))
+				L.Stun(1)
 				L.Weaken(1) //Only brief stun
 			else
+				L.Stun(5)
 				L.Weaken(5)
 			sleep(2)  // Runtime prevention (infinite bump() calls on hulks)
 			step_towards(src, L)
@@ -109,16 +111,14 @@
 			playsound(src, pick(SOUNDIN_HUNTER_LEAP), VOL_EFFECTS_MASTER, vary = FALSE)
 	else if(hit_atom.density)
 		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='alertalien'>You smashes into [hit_atom]!</span>")
-		weakened = 2
+		Stun(2)
+		Weaken(2)
 
 	update_canmove()
 
 #undef MAX_ALIEN_LEAP_DIST
 
-/mob/living/carbon/xenomorph/humanoid/hunter/movement_delay()
-	return(-1 + move_delay_add + config.alien_delay)
-
-/mob/living/carbon/xenomorph/humanoid/hunter/lay_down()
+/mob/living/carbon/xenomorph/humanoid/hunter/crawl()
 	if(leap_on_click)
 		toggle_leap()
 	..()

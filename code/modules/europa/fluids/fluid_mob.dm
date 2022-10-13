@@ -44,7 +44,8 @@
 				var/obj/item/clothing/shoes/S = H.shoes
 				S.make_wet()
 
-/obj/effect/fluid/bullet_act(obj/item/projectile/Proj)
+/obj/effect/fluid/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(istype(Proj, /obj/item/projectile/energy/electrode) || istype(Proj, /obj/item/projectile/beam/stun))
 		var/power = Proj.agony * 5
 		electrocute_act(power)
@@ -126,7 +127,7 @@
 				power_calculated = 0
 				continue
 
-			if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig && H.wear_suit.flags & NOSLIP))
+			if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && (H.wear_suit.flags & NOSLIP))
 				power_calculated = 0
 				continue
 

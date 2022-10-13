@@ -38,7 +38,7 @@
 	return ismob(mover) || (stat == DEAD)
 
 /obj/item/clothing/mask/facehugger/process()
-	if(stat) //if UNCONSCIOUS or DEAD
+	if(stat != CONSCIOUS)
 		return
 	if(isturf(loc))
 		if(!target)
@@ -68,7 +68,7 @@
 		if(!isturf(loc))
 			target = null
 			return
-		else if(stat)
+		else if(stat != CONSCIOUS)
 			target = null
 			return
 
@@ -157,10 +157,10 @@
 	attack_hand(user)
 	return
 
-/obj/item/clothing/mask/facehugger/bullet_act(obj/item/projectile/P)
+/obj/item/clothing/mask/facehugger/bullet_act(obj/item/projectile/P, def_zone)
+	. = ..()
 	if(P.damage)
 		Die()
-	return
 
 /obj/item/clothing/mask/facehugger/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
@@ -217,7 +217,7 @@
 		Attach(hit_atom)
 
 /obj/item/clothing/mask/facehugger/proc/CanHug(mob/living/carbon/C, check = 1)
-	if(!istype(C, /mob/living/carbon)) //without this check, we will get a runtime because in C there will be a turf when throwing a facehugger
+	if(!iscarbon(C)) //without this check, we will get a runtime because in C there will be a turf when throwing a facehugger
 		return FALSE
 	if(!C.is_facehuggable() || stat || istype(C.wear_mask, src) || loc == C)
 		return FALSE
@@ -315,7 +315,7 @@
 			new_xeno.key = FH.key
 			qdel(current_hugger)
 		target.unEquip(src)
-		target.status_flags |= XENO_HOST
+		target.add_status_flags(XENO_HOST)
 		target.med_hud_set_status()
 
 	else
@@ -346,7 +346,9 @@
 	STOP_PROCESSING(SSobj, src)
 
 	playsound(src, 'sound/voice/xenomorph/facehugger_dies.ogg', VOL_EFFECTS_MASTER)
-	visible_message("<span class='warning'>[src] curls up into a ball!</span>")
+	visible_message("<span class='warning'>[src] curls up into a ball and exudes a strange substance!</span>")
+	for(var/mob/living/carbon/human/H in view(2, src))
+		H.invoke_vomit_async()
 
 /obj/item/clothing/mask/facehugger/verb/hide_fh()
 	set name = "Спрятать"

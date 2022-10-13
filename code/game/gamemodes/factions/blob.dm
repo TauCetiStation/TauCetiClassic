@@ -114,7 +114,7 @@
 		if(FS_ACTIVE)
 			for(var/mob/M in player_list)
 				var/T = M.loc
-				if(istype(T, /turf/space) || istype(T, /turf) && !is_station_level(M.z))
+				if(isspaceturf(T) || isturf(T) && !is_station_level(M.z))
 					pre_escapees += M.real_name
 			send_intercept(FS_ACTIVE)
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
@@ -202,13 +202,11 @@ Message ends."}
 
 /datum/faction/blob_conglomerate/GetScoreboard()
 	var/dat = ..()
-
 	var/list/result = check_quarantaine()
 	if (detect_overminds() && (result["numOffStation"] + result["numSpace"]))
 		dat += "<span class='danger'>The AI has failed to enforce the quarantine.</span>"
 	else
 		dat += "<span class='good'>The AI has managed to enforce the quarantine.</span><BR>"
-
 	return dat
 
 /datum/faction/blob_conglomerate/get_scorestat()
@@ -248,9 +246,9 @@ Message ends."}
 			continue
 		else
 			var/T = M.loc
-			if (istype(T, /turf/space))
+			if (isspaceturf(T))
 				result["numSpace"]++
-			else if(istype(T, /turf))
+			else if(isturf(T))
 				if (M.z!=1)
 					result["numOffStation"]++
 				else
@@ -270,14 +268,14 @@ Message ends."}
 /datum/station_state/proc/count(count_territories)
 	for(var/Z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		for(var/turf/T in block(locate(1, 1, Z), locate(world.maxx, world.maxy, Z)))
-			if(istype(T,/turf/simulated/floor))
+			if(isfloorturf(T))
 				var/turf/simulated/floor/F = T
 				if(!F.burnt)
 					floor += 12
 				else
 					floor += 1
 
-			if(istype(T, /turf/simulated/wall))
+			if(iswallturf(T))
 				if(T.intact)
 					wall += 2
 				else
@@ -298,7 +296,7 @@ Message ends."}
 						grille += 1
 				else if(istype(O, /obj/machinery/door))
 					door += 1
-				else if(istype(O, /obj/machinery))
+				else if(ismachinery(O))
 					mach += 1
 
 	if(count_territories)

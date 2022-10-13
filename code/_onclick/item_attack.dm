@@ -13,34 +13,8 @@
 		return TRUE
 	return FALSE
 
-/atom/movable/attackby(obj/item/W, mob/user, params)
-	. = ..()
-	if(.) // Clickplace, no need for attack animation.
-		return FALSE
-
-	if(user.a_intent != INTENT_HARM)
-		return FALSE
-
-	var/had_effect = FALSE
-	if(!(W.flags & NOATTACKANIMATION))
-		user.do_attack_animation(src)
-		had_effect = TRUE
-
-	if(!(W.flags & NOBLUDGEON))
-		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
-		had_effect = TRUE
-
-	if(!had_effect)
-		return FALSE
-
-	user.SetNextMove(CLICK_CD_MELEE)
-	add_fingerprint(user)
-
-	SSdemo.mark_dirty(src)
-	SSdemo.mark_dirty(W)
-	SSdemo.mark_dirty(user)
-
-	return TRUE
+/obj/attackby(obj/item/attacking_item, mob/user, params)
+	return ..() || ((resistance_flags & CAN_BE_HIT) && attacking_item.attack_atom(src, user, params))
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -110,8 +84,7 @@
 	if (length(hitsound))
 		playsound(M, pick(hitsound), VOL_EFFECTS_MASTER)
 	/////////////////////////
-	user.lastattacked = M
-	M.lastattacker = user
+	M.set_lastattacker_info(user)
 	user.do_attack_animation(M)
 
 	if(slot_flags & SLOT_FLAGS_HEAD && def_zone == BP_HEAD && mob_can_equip(M, SLOT_HEAD, TRUE) && user.a_intent != INTENT_HARM)
@@ -132,9 +105,14 @@
 	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 
 	var/power = force
+	if(ishuman(user) && damtype == BRUTE)
+		var/mob/living/carbon/human/H = user
+		var/obj/item/organ/external/BP = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
+		if(BP.pumped)
+			power += max(round((PARABOLIC_SCALING(force, 1, 0.01) * BP.pumped * 0.1)), 0) //We need a pumped force multiplied by parabolic scaled item's force with a borders of 1 to 0
+	power = apply_skill_bonus(user, power, list(/datum/skill/melee = SKILL_LEVEL_NOVICE), 0.15) // 15% for each level
 	if(HULK in user.mutations)
 		power *= 2
-
 	if(!ishuman(M))
 		if(isslime(M))
 			var/mob/living/carbon/slime/slime = M
@@ -149,7 +127,7 @@
 				slime.Discipline = 0
 
 			if(power >= 3)
-				if(istype(slime, /mob/living/carbon/slime/adult))
+				if(isslimeadult(slime))
 					if(prob(5 + round(power/2)))
 
 						if(slime.Victim)
@@ -256,17 +234,17 @@
 		return H.attacked_by(src, user, def_zone)	//make sure to return whether we have hit or miss
 	else
 		switch(damtype)
-			if("brute")
-				if(istype(src, /mob/living/carbon/slime))
+			if(BRUTE)
+				if(isslime(src))
 					M.adjustBrainLoss(power)
 
 				else
 					if(prob(33)) // Added blood for whacking non-humans too
-						var/turf/simulated/T = M.loc
+						var/turf/T = M.loc
 						if(istype(T))
 							T.add_blood_floor(M)
 					M.take_bodypart_damage(power)
-			if("fire")
+			if(BURN)
 				if (!(COLD_RESISTANCE in M.mutations))
 					to_chat(M, "Aargh it burns!")
 					M.take_bodypart_damage(0, power)
@@ -276,3 +254,45 @@
 	SSdemo.mark_dirty(M)
 	SSdemo.mark_dirty(user)
 	return TRUE
+
+/// The equivalent of the standard version of [/obj/item/proc/attack] but for non mob targets.
+/obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user, params)
+	if(user.a_intent != INTENT_HARM)
+		return
+
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, attacked_atom, user) & COMPONENT_ITEM_NO_ATTACK)
+		return
+
+	if(!(flags & NOATTACKANIMATION))
+		user.do_attack_animation(attacked_atom)
+
+	if(flags & NOBLUDGEON)
+		return
+
+	user.SetNextMove(CLICK_CD_MELEE)
+	attacked_atom.attacked_by(src, user)
+	add_fingerprint(user)
+
+	SSdemo.mark_dirty(src)
+	SSdemo.mark_dirty(attacked_atom)
+	SSdemo.mark_dirty(user)
+
+/// Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds
+/atom/proc/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(!uses_integrity)
+		CRASH("attacked_by() was called on an object that doesnt use integrity!")
+
+	if(!attacking_item.force)
+		return
+
+	var/damage = take_damage(attacking_item.force, attacking_item.damtype, MELEE, 1, get_dir(src, attacking_item))
+	//only witnesses close by and the victim see a hit message.
+	user.visible_message(
+		"<span class='danger'>[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]</span>",
+		"<span class='danger'>You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]</span>",
+		viewing_distance = COMBAT_MESSAGE_RANGE
+	)
+	return damage
+
+/area/attacked_by(obj/item/attacking_item, mob/living/user)
+	CRASH("areas are NOT supposed to have attacked_by() called on them!")

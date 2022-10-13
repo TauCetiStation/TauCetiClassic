@@ -19,6 +19,8 @@
 	storedPlasma = 50
 	max_plasma = 50
 
+	speed = -1
+
 	density = FALSE
 	w_class = SIZE_SMALL
 
@@ -38,16 +40,12 @@
 	name = "alien facehugger ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
-	a_intent = INTENT_GRAB
+	set_a_intent(INTENT_GRAB)
 	alien_list[ALIEN_FACEHUGGER] += src
 
 /mob/living/carbon/xenomorph/facehugger/Destroy()
 	alien_list[ALIEN_FACEHUGGER] -= src
 	return ..()
-
-/mob/living/carbon/xenomorph/facehugger/update_canmove(no_transform = FALSE)
-	..()
-	density = initial(density)
 
 /mob/living/carbon/xenomorph/facehugger/start_pulling(atom/movable/AM)
 	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
@@ -55,12 +53,6 @@
 
 /mob/living/carbon/xenomorph/facehugger/swap_hand()
 	return
-
-/mob/living/carbon/xenomorph/facehugger/movement_delay()
-	var/tally = 0
-	if (istype(src, /mob/living/carbon/xenomorph/facehugger)) //just in case
-		tally = -1
-	return (tally + move_delay_add + config.alien_delay)
 
 /mob/living/carbon/xenomorph/facehugger/u_equip(obj/item/W)
 	if (W == r_hand)
@@ -135,7 +127,7 @@
 	cut_overlays()
 	if(stat == DEAD)
 		icon_state = "facehugger_dead"
-	else if(stat == UNCONSCIOUS || lying || resting)
+	else if(stat == UNCONSCIOUS || lying || crawling)
 		icon_state = "facehugger_inactive"
 	else
 		icon_state = "facehugger"
@@ -199,7 +191,7 @@ This is chestburster mechanic for damaging
 	affecting = victim
 
 	hud = new /atom/movable/screen/larva_bite(src)
-	hud.icon = 'icons/mob/screen1_xeno.dmi'
+	hud.icon = 'icons/hud/screen1_xeno.dmi'
 	hud.icon_state = "chest_burst"
 	hud.name = "Burst thru chest"
 	hud.master = src
@@ -259,6 +251,7 @@ This is chestburster mechanic for damaging
 			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 			H.apply_damage(rand(7, 14), BRUTE, BP_CHEST)
 			H.SetShockStage(20)
+			H.Stun(1)
 			H.Weaken(1)
 			H.emote("scream")
 	else if(ismonkey(affecting))
@@ -273,6 +266,7 @@ This is chestburster mechanic for damaging
 			last_bite = world.time
 			M.adjustBruteLoss(rand(35, 65))
 			playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
+			M.Stun(8)
 			M.Weaken(8)
 
 /obj/item/weapon/larva_bite/proc/confirm()
@@ -281,7 +275,7 @@ This is chestburster mechanic for damaging
 		return FALSE
 
 	if(affecting)
-		if(istype(chestburster.loc, /mob/living))
+		if(isliving(chestburster.loc))
 			return TRUE
 		else
 			qdel(src)
@@ -354,7 +348,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	affecting = victim
 
 	hud = new /atom/movable/screen/fh_grab(src)
-	hud.icon = 'icons/mob/screen1_xeno.dmi'
+	hud.icon = 'icons/hud/screen1_xeno.dmi'
 	hud.icon_state = "leap"
 	hud.name = "Leap at face"
 	hud.master = src

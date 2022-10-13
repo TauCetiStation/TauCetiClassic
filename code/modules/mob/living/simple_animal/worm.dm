@@ -137,7 +137,7 @@
 	return
 
 /mob/living/simple_animal/space_worm/proc/AttemptToEat(atom/target)
-	if(istype(target,/turf/simulated/wall))
+	if(iswallturf(target))
 		if((!istype(target,/turf/simulated/wall/r_wall) && eatingDuration >= 100) || eatingDuration >= 200) //need 20 ticks to eat an rwall, 10 for a regular one
 			var/turf/simulated/wall/wall = target
 			wall.ChangeTurf(/turf/simulated/floor)
@@ -182,7 +182,7 @@
 					new /obj/item/stack/sheet/mineral/phoron(src, oldStack.get_amount())
 					qdel(oldStack)
 					continue
-			else if(istype(stomachContent,/obj/item)) //converts to plasma, keeping the w_class
+			else if(isitem(stomachContent)) //converts to plasma, keeping the w_class
 				var/obj/item/oldItem = stomachContent
 				new /obj/item/stack/sheet/mineral/phoron(src, oldItem.w_class)
 				qdel(oldItem)

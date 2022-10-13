@@ -15,7 +15,7 @@
 	var/used_power_this_tick = 0
 	var/sight_mode = 0
 	var/custom_name = ""
-	var/crisis //Admin-settable for combat module use.
+	var/crisis = FALSE //Admin-settable for combat module use.
 	var/datum/wires/robot/wires = null
 
 //Hud stuff
@@ -25,8 +25,6 @@
 	var/atom/movable/screen/inv3 = null
 
 	var/shown_robot_modules = 0 //Used to determine whether they have the module menu shown or not
-	var/shown_robot_pda = 0
-	var/shown_robot_foto = 0
 	var/atom/movable/screen/robot_modules_background
 
 //3 Modules can be activated at any one time.
@@ -68,7 +66,6 @@
 	var/lawcheck[1] //For stating laws.
 	var/ioncheck[1] //Ditto.
 	var/lockcharge //Used when locking down a borg to preserve cell charge
-	var/speed = 0 //Cause sec borgs gotta go fast //No they dont!
 	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
 	var/tracking_entities = 0 //The number of known entities currently accessing the internal camera
 	var/braintype = "Cyborg"
@@ -77,6 +74,8 @@
 
 	// Radial menu for choose module
 	var/static/list/choose_module
+
+	spawner_args = list(/datum/spawner/living/robot)
 
 /mob/living/silicon/robot/atom_init(mapload, name_prefix = "Default", laws_type = /datum/ai_laws/nanotrasen, ai_link = TRUE, datum/religion/R)
 	spark_system = new /datum/effect/effect/system/spark_spread()
@@ -87,7 +86,6 @@
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
-	robot_modules_background.layer = HUD_LAYER	 //Objects that appear on screen are on layer 20, UI should be just below it.
 	robot_modules_background.plane = HUD_PLANE
 	ident = rand(1, 999)
 	updatename(name_prefix)
@@ -124,6 +122,10 @@
 
 	diag_hud_set_borgcell()
 
+/mob/living/silicon/robot/Login()
+	..()
+	set_all_components(TRUE)
+
 /mob/living/silicon/robot/proc/set_ai_link(link)
 	if (connected_ai != link)
 		connected_ai = link
@@ -156,10 +158,15 @@
 	if(connected_ai) // Remove robot from connected to ai robots
 		connected_ai.connected_robots -= src
 		connected_ai = null
+	//selfdestruct mode on
+	if(istype(module, /obj/item/weapon/robot_module/combat))
+		return ..()
 	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
 		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
-		if(mind)	mind.transfer_to(mmi.brainmob)
+		if(mind)
+			mind.transfer_to(mmi.brainmob)
+			mmi.brainmob.mind.skills.remove_available_skillset(/datum/skillset/max)
 		mmi = null
 	return ..()
 
@@ -177,13 +184,14 @@
 				"Service" = "Service",
 				"Security" = "secborg",
 				"Science" = "toxbot",
+				"PeaceKeeper" = "marina-peace"
 				)
 
 		choose_module = list()
 		for(var/mod in modules)
 			choose_module[mod] = image(icon = 'icons/mob/robots.dmi', icon_state = modules[mod])
 
-	if(crisis && security_level == SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
+	if(crisis && security_level >= SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
 		to_chat(src, "<span class='warning'>Crisis mode active. Combat available.</span>")
 		choose_module["Combat"] = image(icon = 'icons/mob/robots.dmi', icon_state = "droid-combat")
 
@@ -293,19 +301,24 @@
 			module_sprites["Drone"] = "drone-janitor"
 			module_sprites["Acheron"] = "mechoid-Janitor"
 
-		if("Combat")
-			module = new /obj/item/weapon/robot_module/combat(src)
-			module_sprites["Combat Android"] = "droid-combat"
-			module_sprites["Acheron"] = "mechoid-Combat"
-			module_sprites["Kodiak"] = "kodiak-combat"
-			module.channels = list("Security" = 1)
+		if("PeaceKeeper")
+			if(!can_be_security)
+				to_chat(src, "<span class='warning'>#Error: Needed security circuitboard.</span>")
+				return
+			module = new /obj/item/weapon/robot_module/peacekeeper(src)
+			module_sprites["Marina"] = "marina-peace"
+			module_sprites["Sleak"] = "sleek-peace"
 
-	hands.icon_state = lowertext(modtype)
+		if("Combat")
+			build_combat_borg()
+			return
+
+	module_icon.update_icon(src)
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
 	updatename()
 
 	if(modtype == "Medical" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
-		status_flags &= ~CANPUSH
+		remove_status_flags(CANPUSH)
 
 	// Radial menu for choose icon_state
 	var/choose_icon = list()
@@ -320,6 +333,12 @@
 		icon_state = module_sprites[new_icon_state]
 
 	radio.config(module.channels)
+
+/mob/living/silicon/robot/proc/build_combat_borg()
+	var/mob/living/silicon/robot/combat/C = new(get_turf(src))
+	module = new /obj/item/weapon/robot_module/combat(src)
+	C.key = key
+	qdel(src)
 
 /mob/living/silicon/robot/proc/updatename(prefix)
 	if(prefix)
@@ -479,6 +498,52 @@
 
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
 
+/mob/living/silicon/robot/verb/unlock_hatch()
+	set name = "Unlock maintenance hatch"
+	set category = "Commands"
+
+	if(incapacitated())
+		return
+	if(opened)
+		to_chat(usr, "<span class='warning'>Невозможно заблокировать интерфейс, если открыта панель.</span>")
+		emote("buzz")
+		return
+
+	if(!do_after(usr, 10, target = usr))
+		return
+
+	if(locked)
+		to_chat(usr, "<span class='notice'>Интерфейс разблокирован.</span>")
+	else
+		to_chat(usr, "<span class='notice'>Интерфейс заблокирован.</span>")
+
+	playsound(src, 'sound/items/swipe_card.ogg', VOL_EFFECTS_MASTER)
+	locked = !locked
+
+/mob/living/silicon/robot/verb/open_hatch()
+	set name = "Open maintenance hatch"
+	set category = "Commands"
+
+	if(incapacitated())
+		return
+	if(locked)
+		to_chat(usr, "<span class='warning'>Невозможно открыть панель, если заблокирован интерфейс.</span>")
+		emote("buzz")
+		return
+
+	if(!do_after(usr, 10, target = usr))
+		return
+
+	if(opened)
+		to_chat(usr, "<span class='notice'>Панель закрыта.</span>")
+		playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER)
+	else
+		to_chat(usr, "<span class='notice'>Панель открыта.</span>")
+		playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER)
+
+	opened = !opened
+	updateicon()
+
 /mob/living/silicon/robot/restrained()
 	return 0
 
@@ -487,27 +552,24 @@
 	emote("buzz")
 
 /mob/living/silicon/robot/ex_act(severity)
+	if(stat == DEAD)
+		return
 	if(!blinded)
 		flash_eyes()
-
 	switch(severity)
-		if(1.0)
-			if (stat != DEAD)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
-				gib()
-				return
-		if(2.0)
-			if (stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-		if(3.0)
-			if (stat != DEAD)
-				adjustBruteLoss(30)
-
+		if(EXPLODE_DEVASTATE)
+			adjustBruteLoss(100)
+			adjustFireLoss(100)
+			gib()
+			return
+		if(EXPLODE_HEAVY)
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
+		if(EXPLODE_LIGHT)
+			adjustBruteLoss(30)
 	updatehealth()
 
-/mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj)
+/mob/living/silicon/robot/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return
@@ -573,7 +635,7 @@
 			to_chat(user, "Need more welding fuel!")
 			return
 
-	else if(iscoil(W) && (wiresexposed || istype(src,/mob/living/silicon/robot/drone)))
+	else if(iscoil(W) && (wiresexposed || isdrone(src)))
 		if (!getFireLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
@@ -696,8 +758,12 @@
 		else
 			if(allowed(usr))
 				locked = !locked
+				if(!locked)
+					throw_alert("not_locked", /atom/movable/screen/alert/not_locked)
+				else
+					clear_alert("not_locked")
 				to_chat(user, "You [ locked ? "lock" : "unlock"] [src]'s interface.")
-				playsound(src, 'sound/items/card.ogg', VOL_EFFECTS_MASTER)
+				playsound(src, 'sound/items/swipe_card.ogg', VOL_EFFECTS_MASTER)
 				updateicon()
 			else
 				to_chat(user, "<span class='warning'>Access denied.</span>")
@@ -789,7 +855,7 @@
 
 /mob/living/silicon/robot/attack_hand(mob/living/carbon/human/attacker)
 	add_fingerprint(attacker)
-	if(opened && !wiresexposed && (!istype(attacker, /mob/living/silicon)))
+	if(opened && !wiresexposed && (!issilicon(attacker)))
 		var/datum/robot_component/cell_component = components["power cell"]
 		if(cell)
 			cell.updateicon()
@@ -811,12 +877,12 @@
 	//check if it doesn't require any access at all
 	if(check_access(null))
 		return 1
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
 		if(check_access(H.get_active_hand()) || check_access(H.wear_id))
 			return 1
-	else if(istype(M, /mob/living/carbon/monkey))
+	else if(ismonkey(M))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
 		if(george.get_active_hand() && istype(george.get_active_hand(), /obj/item/weapon/card/id) && check_access(george.get_active_hand()))
@@ -870,20 +936,6 @@
 			add_overlay("ov-openpanel +c")
 		else
 			add_overlay("ov-openpanel -c")
-
-
-
-	if(module_active && istype(module_active,/obj/item/borg/combat/shield))
-		add_overlay("[icon_state]-shield")
-
-	if(modtype == "Combat")
-//		var/base_icon = ""
-//		base_icon = icon_state
-		if(module_active && istype(module_active,/obj/item/borg/combat/mobility))
-			icon_state = "droid-combat-roll"
-		else
-			icon_state = "droid-combat"
-		return
 
 //Call when target overlay should be added/removed
 /mob/living/silicon/robot/update_targeted()
@@ -957,21 +1009,18 @@
 			return
 		if(!module_state_1)
 			module_state_1 = O
-			O.layer = ABOVE_HUD_LAYER
 			O.plane = ABOVE_HUD_PLANE
 			contents += O
 			if(istype(module_state_1,/obj/item/borg/sight))
 				sight_mode |= module_state_1:sight_mode
 		else if(!module_state_2)
 			module_state_2 = O
-			O.layer = ABOVE_HUD_LAYER
 			O.plane = ABOVE_HUD_PLANE
 			contents += O
 			if(istype(module_state_2,/obj/item/borg/sight))
 				sight_mode |= module_state_2:sight_mode
 		else if(!module_state_3)
 			module_state_3 = O
-			O.layer = ABOVE_HUD_LAYER
 			O.plane = ABOVE_HUD_PLANE
 			contents += O
 			if(istype(module_state_3,/obj/item/borg/sight))
@@ -1038,10 +1087,10 @@
 					if(istype(A, /obj/effect))
 						if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
 							qdel(A)
-					else if(istype(A, /obj/item))
+					else if(isitem(A))
 						var/obj/item/cleaned_item = A
 						cleaned_item.clean_blood()
-					else if(istype(A, /mob/living/carbon/human))
+					else if(ishuman(A))
 						var/mob/living/carbon/human/cleaned_human = A
 						if(cleaned_human.lying)
 							if(cleaned_human.head)
@@ -1111,16 +1160,16 @@
 /mob/living/silicon/robot/proc/cell_use_power(amount = 0)
 	// No cell inserted
 	if(!cell)
-		return 0
+		return FALSE
 
 	// Power cell is empty.
 	if(cell.charge == 0)
-		return 0
+		return FALSE
 
 	if(cell.use(amount * CELLRATE * CYBORG_POWER_USAGE_MULTIPLIER))
 		used_power_this_tick += amount * CYBORG_POWER_USAGE_MULTIPLIER
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /mob/living/silicon/robot/proc/toggle_all_components()
 	for(var/V in components)
@@ -1129,6 +1178,14 @@
 		var/datum/robot_component/C = components[V]
 		if(C.installed)
 			C.toggled = !C.toggled
+
+/mob/living/silicon/robot/proc/set_all_components(state)
+	for(var/V in components)
+		if(V == "power cell")
+			continue
+		var/datum/robot_component/C = components[V]
+		if(C.installed)
+			C.toggled = state
 
 /mob/living/silicon/robot/swap_hand()
 	cycle_modules()

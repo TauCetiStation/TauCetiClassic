@@ -25,11 +25,11 @@
 	name = "Random Energy Weapon"
 	desc = "This is a random energy weapon."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "laser"
+	icon_state = LASER
 /obj/random/guns/energy_weapon/item_to_spawn()
 		return pick(\
 						prob(25);/obj/item/weapon/gun/energy/taser/stunrevolver,\
-						prob(15);/obj/item/weapon/gun/energy/laser/retro,\
+						prob(15);/obj/item/weapon/gun/energy/retro,\
 						prob(15);/obj/item/weapon/gun/energy/laser/practice,\
 						prob(10);/obj/item/weapon/gun/energy/toxgun,\
 						prob(10);/obj/item/weapon/gun/energy/laser,\
@@ -155,7 +155,7 @@
 /obj/random/guns/set_shotgun/item_to_spawn()
 		return pick(\
 						prob(100);/obj/item/ammo_casing/shotgun/beanbag,\
-						prob(75);/obj/item/ammo_casing/shotgun/stunslug,\
+						prob(75);/obj/item/ammo_casing/shotgun/stunshot,\
 						prob(50);/obj/item/ammo_casing/shotgun/buckshot,\
 						prob(50);/obj/item/ammo_casing/shotgun/incendiary,\
 						prob(50);/obj/item/ammo_casing/shotgun/dart,\

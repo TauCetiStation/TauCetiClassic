@@ -34,11 +34,18 @@
 	// What are the goals of this faction?
 	var/datum/objective_holder/objective_holder
 
+	// Type for collector of statistics by this faction
+	var/datum/stat/faction/stat_type = /datum/stat/faction
+
 /datum/faction/New()
 	SHOULD_CALL_PARENT(TRUE)
 	..()
 	objective_holder = new
 	objective_holder.faction = src
+
+/datum/faction/Destroy(force, ...)
+	QDEL_NULL(objective_holder)
+	return ..()
 
 /datum/faction/proc/OnPostSetup()
 	SHOULD_CALL_PARENT(TRUE)
@@ -171,6 +178,12 @@
 /datum/faction/proc/CheckObjectives()
 	return objective_holder.GetObjectiveString(check_success = TRUE)
 
+/datum/faction/proc/calculate_completion()
+	for(var/datum/objective/O in GetObjectives())
+		O.calculate_completion()
+	for(var/datum/role/R in members)
+		R.calculate_completion()
+
 // Numbers!!
 /datum/faction/proc/build_scorestat()
 	return
@@ -197,7 +210,7 @@
 			if (IsSuccessful())
 				score_results += "<span class='green'><B>\The [capitalize(name)] was successful!</B></span>"
 				feedback_add_details("[ID]_success","SUCCESS")
-				score["roleswon"]++
+				SSStatistics.score.roleswon++
 			else if (minor_victory)
 				score_results += "<span class='orange'><B>\The [capitalize(name)] has achieved a minor victory.</B> [minorVictoryText()]</span>"
 				feedback_add_details("[ID]_success","HALF")
@@ -208,7 +221,6 @@
 		score_results += "<br><br>"
 		for (var/datum/objective/objective in objective_holder.GetObjectives())
 			objective.extra_info()
-			objective.calculate_completion()
 			score_results += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
 			feedback_add_details("[ID]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
 			count++
@@ -216,8 +228,6 @@
 				score_results += "<br>"
 
 		score_results += "</ul>"
-
-	antagonists_completion += list(list("faction" = ID, "html" = score_results))
 
 	score_results += "<ul>"
 
@@ -266,7 +276,7 @@
 /datum/faction/proc/IsSuccessful()
 	if(objective_holder.objectives.len > 0)
 		for(var/datum/objective/objective in objective_holder.GetObjectives())
-			if(!objective.check_completion())
+			if(objective.completed == OBJECTIVE_LOSS)
 				return FALSE
 	for(var/datum/role/R in members)
 		if(!R.IsSuccessful())

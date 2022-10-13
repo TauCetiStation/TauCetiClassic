@@ -21,7 +21,6 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 	desc = "An energy ball."
 	icon = 'icons/obj/tesla_engine/energy_ball.dmi'
 	icon_state = "energy_ball"
-	layer = LIGHTING_LAYER + 1
 	plane = ABOVE_LIGHTING_PLANE
 	pixel_x = -32
 	pixel_y = -32
@@ -150,7 +149,7 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 		qdel(src)
 
 /obj/singularity/energy_ball/proc/dust_mobs(atom/A)
-	if(istype(A, /mob/living/carbon))
+	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		C.dust()
 	return
@@ -215,7 +214,7 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 		else if(closest_mob)
 			continue
 
-		else if(istype(A, /obj/machinery))
+		else if(ismachinery(A))
 			var/obj/machinery/M = A
 			var/dist = get_dist(source, A)
 			if((dist < closest_dist || !closest_machine) && !M.being_shocked)
@@ -238,7 +237,7 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 	//Alright, we've done our loop, now lets see if was anything interesting in range
 	if(closest_atom)
 		//common stuff
-		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5, beam_layer=LIGHTING_LAYER+1)
+		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5, beam_plane=ABOVE_LIGHTING_PLANE)
 		var/zapdir = get_dir(source, closest_atom)
 		if(zapdir)
 			. = zapdir
@@ -253,7 +252,7 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 	else if(closest_mob)
 		var/shock_damage = clamp(round(power/400), 10, 90) + rand(-5, 5)
 		closest_mob.electrocute_act(shock_damage, source, 1, tesla_shock = 1)
-		if(istype(closest_mob, /mob/living/silicon))
+		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob
 			S.emplode(2)
 			tesla_zap(S, 7, power / 1.5) // metallic folks bounce it further

@@ -34,8 +34,9 @@ var/global/const/HOLOPAD_MODE = 0
 	desc = "It's a floor-mounted device for projecting holographic images. It is activated remotely."
 	icon_state = "holopad0"
 
-	layer = TURF_LAYER+0.1 //Preventing mice and drones from sneaking under them.
 	plane = FLOOR_PLANE
+
+	flags = HEAR_TALK
 
 	var/mob/living/silicon/ai/master//Which AI, if any, is controlling the object? Only one AI may control a hologram at any time.
 	var/last_request = 0 //to prevent request spam. ~Carn
@@ -157,7 +158,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.name = "space carp"
 	hologram.desc = "Hologram of cute space carp... Wait, WHAT?"
 
-/obj/machinery/hologram/holopad/proc/clear_holo()
+/obj/machinery/hologram/holopad/clear_holo()
 //	hologram.set_light(0)//Clear lighting.	//handled by the lighting controller when its ower is deleted
 	qdel(hologram)//Get rid of hologram.
 	hologram = null
@@ -203,6 +204,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	active_power_usage = 100
 	var/obj/effect/overlay/hologram//The projection itself. If there is one, the instrument is on, off otherwise.
 
+/obj/machinery/hologram/proc/clear_holo()
+	return
+
 /obj/machinery/hologram/power_change()
 	if (powered())
 		stat &= ~NOPOWER
@@ -210,26 +214,14 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		stat |= ~NOPOWER
 	update_power_use()
 
-//Destruction procs.
-/obj/machinery/hologram/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-		if(3.0)
-			if (prob(5))
-				qdel(src)
-	return
-
-/obj/machinery/hologram/blob_act()
-	qdel(src)
-	return
+/obj/machinery/hologram/atom_break()
+	. = ..()
+	if(hologram)
+		clear_holo()
 
 /obj/machinery/hologram/Destroy()
 	if(hologram)
-		src:clear_holo()
+		clear_holo()
 	return ..()
 /*
 Holographic project of everything else.

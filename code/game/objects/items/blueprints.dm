@@ -23,7 +23,7 @@
 	var/const/ROOM_ERR_TOOLARGE = -2
 
 /obj/item/blueprints/attack_self(mob/M)
-	if (!istype(M,/mob/living/carbon/human))
+	if (!ishuman(M))
 		to_chat(M, "This stack of blue paper means nothing to you.")//monkeys cannot into projecting
 		return
 	interact()
@@ -181,13 +181,13 @@ move an amendment</a> to the drawing.</p>
 	//TODO: much much more. Unnamed airlocks, cameras, etc.
 
 /obj/item/blueprints/proc/check_tile_is_border(turf/T2,dir)
-	if (istype(T2, /turf/space))
+	if (isenvironmentturf(T2))
 		return BORDER_SPACE //omg hull breach we all going to die here
 	if (istype(T2, /turf/simulated/shuttle))
 		return BORDER_SPACE
 	if (get_area_by_type(T2.loc)!=AREA_SPACE)
 		return BORDER_BETWEEN
-	if (istype(T2, /turf/simulated/wall))
+	if (iswallturf(T2))
 		return BORDER_2NDTILE
 	if (!istype(T2, /turf/simulated) || (dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
 		return BORDER_BETWEEN

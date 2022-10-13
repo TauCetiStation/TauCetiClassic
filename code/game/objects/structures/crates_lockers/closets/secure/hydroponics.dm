@@ -25,6 +25,6 @@
 	new /obj/item/weapon/hatchet(src)
 //	new /obj/item/weapon/bee_net(src) //No more bees, March 2014
 	new /obj/item/clothing/gloves/botanic_leather(src)
-	if(SSholiday.holidays[NEW_YEAR])
+	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/hydro(src)
 		new /obj/item/clothing/head/santa(src)

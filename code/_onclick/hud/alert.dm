@@ -2,7 +2,7 @@
 	if (!user)
 		user = usr
 	if (!istype(user))
-		if (istype(user, /client))
+		if (isclient(user))
 			var/client/client = user
 			user = client.mob
 		else
@@ -30,7 +30,7 @@
 	if (!user)
 		user = usr
 	if (!istype(user))
-		if (!istype(user, /client))
+		if (!isclient(user))
 			return
 		var/client/client = user
 		user = client.mob
@@ -238,7 +238,7 @@
 	return TRUE
 
 /atom/movable/screen/alert
-	icon = 'icons/mob/screen_alert.dmi'
+	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "default"
 	name = "Alert"
 	desc = "Something seems to have gone wrong with this alert, so report this bug please"
@@ -356,6 +356,12 @@
 	icon_state = "alien_queen"
 	alerttooltipstyle = "alien"
 
+//BLOBS
+/atom/movable/screen/alert/nofactory
+	name = "No Factory"
+	desc = "You have no factory, and are slowly dying!"
+	icon_state = "blobbernaut"
+
 //changeling
 /atom/movable/screen/alert/regen_stasis
 	name = "Regenerative Stasis"
@@ -406,6 +412,11 @@
 	name = "Hacked"
 	desc = "Hazardous non-standard equipment detected. Please ensure any usage of this equipment is in line with unit's laws, if any."
 	icon_state = "hacked"
+
+/atom/movable/screen/alert/not_locked
+	name = "Interface Unlocked"
+	desc = "Unit's interface has been unlocked. Somebody accidentally or intentionally left it open. Robotics may provide assistance."
+	icon_state = "not_locked"
 
 /atom/movable/screen/alert/locked
 	name = "Locked Down"

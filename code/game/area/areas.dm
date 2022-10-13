@@ -51,6 +51,8 @@
 
 	var/list/canSmoothWithAreas //typecache to limit the areas that atoms in this area can smooth with
 
+	var/sound_environment = SOUND_AREA_DEFAULT // Used to decide what kind of reverb the area makes sound have
+
 	var/looped_ambience = null
 	var/is_force_ambience = FALSE
 	var/ambience = list(
@@ -122,7 +124,6 @@ var/global/list/ghostteleportlocs = list()
 
 /area/New() // not ready for transfer, problems with alarms raises if this part moved into init (requires more time)
 	icon_state = ""
-	layer = 10
 	uid = ++global_uid
 	all_areas += src
 	areas_by_type[type] = src
@@ -175,16 +176,13 @@ var/global/list/ghostteleportlocs = list()
 /area/proc/update_beauty()
 	if(!areasize)
 		beauty = 0
-		SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
 		return FALSE
 
 	if(areasize >= beauty_threshold)
 		beauty = 0
-		SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
 		return FALSE
 
 	beauty = totalbeauty / areasize
-	SEND_SIGNAL(src, COMSIG_AREA_UPDATE_BEAUTY)
 
 /area/proc/poweralert(state, obj/source)
 	if (state != poweralm)
@@ -215,16 +213,16 @@ var/global/list/ghostteleportlocs = list()
 
 /area/proc/atmosalert(danger_level)
 	//Check all the alarms before lowering atmosalm. Raising is perfectly fine.
-	for (var/obj/machinery/alarm/AA in src)
-		if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
+	for(var/obj/machinery/alarm/AA in src)
+		if(!(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
 			danger_level = max(danger_level, AA.danger_level)
 
 	if(danger_level != atmosalm)
-		if (danger_level < 1 && atmosalm >= 1)
+		if(danger_level < 1 && atmosalm >= 1)
 			//closing the doors on red and opening on green provides a bit of hysteresis that will hopefully prevent fire doors from opening and closing repeatedly due to noise
 			air_doors_open()
 
-		if (danger_level < 2 && atmosalm >= 2)
+		if(danger_level < 2 && atmosalm >= 2)
 			for(var/obj/machinery/camera/C in src)
 				C.remove_network("Atmosphere Alarms")
 			for(var/mob/living/silicon/aiPlayer as anything in silicon_list)
@@ -234,21 +232,24 @@ var/global/list/ghostteleportlocs = list()
 			for(var/obj/machinery/computer/station_alert/a in station_alert_list)
 				a.cancelAlarm("Atmosphere", src, src)
 
-		if (danger_level >= 2 && atmosalm < 2)
-			var/list/cameras = list()
-			for(var/obj/machinery/camera/C in src)
-				cameras += C
-				C.add_network("Atmosphere Alarms")
-			for(var/mob/living/silicon/aiPlayer as anything in silicon_list)
-				if(!aiPlayer.client)
+		if(danger_level >= 2 && atmosalm < 2)
+			for(var/obj/machinery/alarm/AA in src)
+				if(AA.hidden_from_console)
 					continue
-				aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
-			for(var/obj/machinery/computer/station_alert/a in station_alert_list)
-				a.triggerAlarm("Atmosphere", src, cameras, src)
+				var/list/cameras = list()
+				for(var/obj/machinery/camera/C in src)
+					cameras += C
+					C.add_network("Atmosphere Alarms")
+				for(var/mob/living/silicon/aiPlayer as anything in silicon_list)
+					if(!aiPlayer.client)
+						continue
+					aiPlayer.triggerAlarm("Atmosphere", src, cameras, src)
+				for(var/obj/machinery/computer/station_alert/a in station_alert_list)
+					a.triggerAlarm("Atmosphere", src, cameras, src)
 			air_doors_close()
 
 		atmosalm = danger_level
-		for (var/obj/machinery/alarm/AA in src)
+		for(var/obj/machinery/alarm/AA in src)
 			AA.update_icon()
 
 		return TRUE
@@ -478,10 +479,10 @@ var/global/list/ghostteleportlocs = list()
 			thunk(H)
 
 /area/proc/thunk(mob)
-	if(istype(get_turf(mob), /turf/space)) // Can't fall onto nothing.
+	if(isspaceturf(get_turf(mob))) // Can't fall onto nothing.
 		return
 
-	if(istype(mob,/mob/living/carbon/human))  // Only humans can wear magboots, so we give them a chance to.
+	if(ishuman(mob))  // Only humans can wear magboots, so we give them a chance to.
 		var/mob/living/carbon/human/H = mob
 		if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP)))
 			return
@@ -499,9 +500,7 @@ var/global/list/ghostteleportlocs = list()
 /proc/has_gravity(atom/AT, turf/T)
 	if(!T)
 		T = get_turf(AT)
-	var/area/A = get_area(T)
-	if(istype(T, /turf/space)) // Turf never has gravity
+	if(isspaceturf(T)) // Turf never has gravity
 		return FALSE
-	else if(A && A.has_gravity) // Areas which always has gravity
-		return TRUE
-	return FALSE
+	var/area/A = get_area(T)
+	return A?.has_gravity // Areas which always has gravity

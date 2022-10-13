@@ -1,5 +1,6 @@
-/mob/living/var/traumatic_shock = 0
-/mob/living/carbon/var/shock_stage = 0
+/mob/living/carbon
+	var/traumatic_shock = 0
+	var/shock_stage = 0
 
 // proc to find out in how much pain the mob is at the moment
 /mob/living/carbon/proc/updateshock()
@@ -25,13 +26,13 @@
 		src.traumatic_shock -= 80
 	if(reagents.has_reagent("oxycodone"))
 		src.traumatic_shock -= 200
-	if(src.slurring)
-		src.traumatic_shock -= 20
+	if(src.slurring && drunkenness > DRUNKENNESS_SLUR)
+		src.traumatic_shock -= min(drunkenness - DRUNKENNESS_SLUR, 40)
 	if(src.analgesic)
 		src.traumatic_shock = 0
 
 	// broken or ripped off bodyparts will add quite a bit of pain
-	if(istype(src,/mob/living/carbon/human))
+	if(ishuman(src))
 		var/mob/living/carbon/human/M = src
 		for(var/obj/item/organ/external/BP in M.bodyparts)
 			if(BP.is_stump)
@@ -89,7 +90,7 @@
 			else
 				pain_sound_name = "scream"
 	if(pain_sound_name)
-		emote(pain_sound_name, auto = TRUE)
+		emote(pain_sound_name)
 		last_pain_emote_sound = world.time + (HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) ? rand(15 SECONDS, 30 SECONDS) : rand(30 SECONDS, 60 SECONDS))
 		if(pain_sound_name == "scream") // don't cry out in pain too often
 			last_pain_emote_sound += (HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) ? rand(5 SECONDS, 10 SECONDS) : rand(10 SECONDS, 20 SECONDS))

@@ -7,8 +7,7 @@
 		opacity = 0
 		anchored = TRUE
 		unacidable = 1
-		var/const/max_health = 200
-		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
+		max_integrity = 200
 
 /obj/machinery/shield/atom_init()
 	set_dir(pick(1,2,3,4))
@@ -25,93 +24,21 @@
 	if(!height || air_group) return 0
 	else return ..()
 
-/obj/machinery/shield/attackby(obj/item/weapon/W, mob/user)
-	if(!istype(W)) return
+/obj/machinery/shield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BURN, BRUTE)
+			playsound(loc, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER, 75, TRUE)
 
-	//Calculate damage
-	var/aforce = W.force
-	if(W.damtype == BRUTE || W.damtype == BURN)
-		src.health -= aforce
-
-	//Play a fitting sound
-	playsound(src, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER)
-
-	user.SetNextMove(CLICK_CD_MELEE)
-	if (src.health <= 0)
-		visible_message("<span class='notice'>The [src] dissipates!</span>")
-		qdel(src)
-		return
-
-	opacity = 1
-	spawn(20) if(src) opacity = 0
-
+/obj/machinery/shield/deconstruct(disassembled)
+	visible_message("<span class='notice'>The [src] dissipates!</span>")
 	..()
 
-/obj/machinery/shield/bullet_act(obj/item/projectile/Proj)
-	health -= Proj.damage
-	..()
-	if(health <=0)
-		visible_message("<span class='notice'>The [src] dissipates!</span>")
-		qdel(src)
+/obj/machinery/shield/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
+	. = ..()
+	if(!.)
 		return
-	opacity = 1
-	spawn(20) if(src) opacity = 0
-
-/obj/machinery/shield/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			if (prob(75))
-				qdel(src)
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-		if(3.0)
-			if (prob(25))
-				qdel(src)
-	return
-
-/obj/machinery/shield/emp_act(severity)
-	switch(severity)
-		if(1)
-			qdel(src)
-		if(2)
-			if(prob(50))
-				qdel(src)
-
-/obj/machinery/shield/blob_act()
-	qdel(src)
-
-
-/obj/machinery/shield/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	//Let everyone know we've been hit!
-	visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
-
-	//Super realistic, resource-intensive, real-time damage calculations.
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 40
-	else
-		tforce = AM:throwforce
-
-	src.health -= tforce
-
-	//This seemed to be the best sound for hitting a force field.
-	playsound(src, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER)
-
-	//Handle the destruction of the shield
-	if (src.health <= 0)
-		visible_message("<span class='notice'>The [src] dissipates!</span>")
-		qdel(src)
-		return
-
-	//The shield becomes dense to absorb the blow.. purely asthetic.
-	opacity = 1
-	spawn(20) if(src) opacity = 0
-
-	..()
-	return
-
-
+	opacity = TRUE
+	VARSET_IN(src, opacity, FALSE, 2 SECONDS)
 
 /obj/machinery/shieldgen
 	name = "Emergency shield projector"
@@ -122,13 +49,13 @@
 	opacity = FALSE
 	anchored = FALSE
 	req_access = list(access_engine)
-	var/const/max_health = 100
-	var/health = max_health
+	max_integrity = 200
 	var/active = FALSE
 	var/malfunction = FALSE //Malfunction causes parts of the shield to slowly dissapate
 	var/list/deployed_shields = list()
 	var/is_open = FALSE //Whether or not the wires are exposed
 	var/locked = FALSE
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
 
 /obj/machinery/shieldgen/Destroy()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
@@ -143,8 +70,8 @@
 	src.active = 1
 	update_icon()
 
-	for(var/turf/target_tile in range(2, src))
-		if (istype(target_tile,/turf/space) && !(locate(/obj/machinery/shield) in target_tile))
+	for(var/turf/environment/target_tile in range(2, src))
+		if (!(locate(/obj/machinery/shield) in target_tile))
 			if (malfunction && prob(33) || !malfunction)
 				deployed_shields += new /obj/machinery/shield(target_tile)
 
@@ -165,40 +92,16 @@
 
 	return
 
-/obj/machinery/shieldgen/proc/checkhp()
-	if(health <= 30)
-		src.malfunction = 1
-	if(health <= 0)
-		qdel(src)
-	update_icon()
-	return
-
-/obj/machinery/shieldgen/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			src.health -= 75
-			checkhp()
-		if(2.0)
-			src.health -= 30
-			if (prob(15))
-				src.malfunction = 1
-			checkhp()
-		if(3.0)
-			src.health -= 10
-			checkhp()
-	return
-
 /obj/machinery/shieldgen/emp_act(severity)
 	switch(severity)
 		if(1)
-			src.health /= 2 //cut health in half
-			malfunction = 1
-			locked = pick(0,1)
+			take_damage(get_integrity() * 0.5, BURN, ENERGY)
+			malfunction = TRUE
+			locked = pick(0, 1)
 		if(2)
 			if(prob(50))
-				src.health *= 0.3 //chop off a third of the health
-				malfunction = 1
-	checkhp()
+				take_damage(get_integrity() * 0.3, BURN, ENERGY) //chop off a third of the health
+				malfunction = TRUE
 
 /obj/machinery/shieldgen/attack_hand(mob/user)
 	. = ..()
@@ -238,11 +141,12 @@
 	else if(iscoil(W) && malfunction && is_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if(user.is_busy(src)) return
+		if(!do_skill_checks(user))
+			return
 		to_chat(user, "<span class='notice'>You begin to replace the wires.</span>")
-		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
 		if(coil.use_tool(src, user, 30, amount = 1, volume = 50))
-			health = max_health
-			malfunction = 0
+			update_integrity(max_integrity)
+			malfunction = FALSE
 			to_chat(user, "<span class='notice'>You repair the [src]!</span>")
 			update_icon()
 
@@ -251,13 +155,17 @@
 			to_chat(user, "The bolts are covered, unlocking this would retract the covers.")
 			return
 		if(anchored)
+			if(!do_skill_checks(user))
+				return
+			if(!do_skill_checks(user))
+				return
 			to_chat(user, "<span class='notice'>You unsecure the [src] from the floor!</span>")
 			if(active)
 				to_chat(user, "<span class='notice'>The [src] shuts off!</span>")
 				shields_down()
 			anchored = FALSE
 		else
-			if(istype(get_turf(src), /turf/space)) return //No wrenching these in space!
+			if(isspaceturf(get_turf(src))) return //No wrenching these in space!
 			to_chat(user, "<span class='notice'>You secure the [src] to the floor!</span>")
 			anchored = TRUE
 
@@ -271,6 +179,14 @@
 
 	else
 		..()
+
+/obj/machinery/shieldgen/atom_break(damage_flag)
+	. = ..()
+	if(!.)
+		return
+	locked = FALSE
+	malfunction = TRUE
+	update_icon()
 
 /obj/machinery/shieldgen/emag_act(mob/user)
 	if(malfunction)
@@ -310,6 +226,7 @@
 	var/destroyed = FALSE
 	var/obj/structure/cable/attached		// the attached cable
 	var/storedpower = 0
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/shieldwallgen/proc/power()
 	if(!anchored)
@@ -454,6 +371,8 @@
 		if(state == 0)
 			state = 1
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+			if(!do_skill_checks(user))
+				return
 			to_chat(user, "You secure the external reinforcing bolts to the floor.")
 			src.anchored = TRUE
 			return
@@ -461,6 +380,8 @@
 		else if(state == 1)
 			state = 0
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+			if(!do_skill_checks(user))
+				return
 			to_chat(user, "You undo the external reinforcing bolts.")
 			src.anchored = FALSE
 			return
@@ -503,11 +424,9 @@
 	attached = null
 	return ..()
 
-/obj/machinery/shieldwallgen/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/shieldwallgen/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	storedpower -= Proj.damage
-	..()
-	return
-
 
 //////////////Containment Field START
 /obj/machinery/shieldwall
@@ -529,6 +448,8 @@
 		var/mob/U
 		var/obj/machinery/shieldwallgen/gen_primary
 		var/obj/machinery/shieldwallgen/gen_secondary
+
+		resistance_flags = FULL_INDESTRUCTIBLE
 
 /obj/machinery/shieldwall/atom_init(mapload, obj/machinery/shieldwallgen/A, obj/machinery/shieldwallgen/B)
 	. = ..()
@@ -556,8 +477,13 @@
 		else
 			gen_secondary.storedpower -=10
 
+/obj/machinery/shieldwall/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BURN, BRUTE)
+			playsound(loc, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER, 75, TRUE)
 
-/obj/machinery/shieldwall/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/shieldwall/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
 		if(prob(50))
@@ -565,36 +491,23 @@
 		else
 			G = gen_secondary
 		G.storedpower -= Proj.damage
-	..()
-	return
-
 
 /obj/machinery/shieldwall/ex_act(severity)
 	if(needs_power)
 		var/obj/machinery/shieldwallgen/G
+		if(prob(50))
+			G = gen_primary
+		else
+			G = gen_secondary
 		switch(severity)
-			if(1.0) //big boom
-				if(prob(50))
-					G = gen_primary
-				else
-					G = gen_secondary
+			if(EXPLODE_DEVASTATE)
 				G.storedpower -= 200
 
-			if(2.0) //medium boom
-				if(prob(50))
-					G = gen_primary
-				else
-					G = gen_secondary
+			if(EXPLODE_HEAVY) //medium boom
 				G.storedpower -= 50
 
-			if(3.0) //lil boom
-				if(prob(50))
-					G = gen_primary
-				else
-					G = gen_secondary
+			if(EXPLODE_LIGHT) //lil boom
 				G.storedpower -= 20
-	return
-
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1

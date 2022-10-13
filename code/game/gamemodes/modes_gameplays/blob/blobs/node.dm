@@ -2,7 +2,7 @@
 	name = "blob node"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_node"
-	health = 100
+	max_integrity = 100
 	fire_resist = 2
 	var/given_name = null
 
@@ -24,10 +24,5 @@
 /obj/effect/blob/node/Life()
 	for(var/dir in cardinal)
 		Pulse(BLOB_NODE_MAX_PATH, dir)
-	health = min(initial(health), health + 1)
-
-/obj/effect/blob/node/update_icon()
-	if(health <= 0)
-		qdel(src)
-		return
-	return
+	if(get_integrity() < max_integrity)
+		repair_damage(1)

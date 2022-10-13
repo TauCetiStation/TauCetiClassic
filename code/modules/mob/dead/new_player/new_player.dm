@@ -87,6 +87,22 @@
 			client << output(ready, "lobbybrowser:setReadyStatus")
 		return
 
+	if(href_list["lobby_be_special"])
+		if(client.prefs.selected_quality_name)
+			to_chat(src, "<font color='green'><b>Выбор сделан.</b></font>")
+			return
+		if(!client.prefs.selecting_quality)
+			var/datum/preferences/P = client.prefs
+			P.selecting_quality = TRUE
+			if(tgui_alert(
+				src,
+				"Вы уверенны, что хотите быть особенным? Вам будет выдана случайная положительная, нейтральная или отрицательная черта.",
+				"Особенность",
+				list("ДА!!!", "Нет")) == "ДА!!!")
+				SSqualities.register_client(client)
+			P.selecting_quality = FALSE
+		return
+
 	if(href_list["lobby_observe"])
 		if(!(ckey in admin_datums) && jobban_isbanned(src, "Observer"))
 			to_chat(src, "<span class='red'>You have been banned from observing. Declare yourself.</span>")
@@ -201,9 +217,13 @@
 	SSjob.AssignRole(src, rank, 1)
 
 	var/mob/living/carbon/human/character = create_character()	//creates the human and transfers vars and mind
+
+
+	SSjob.EquipRank(character, rank, TRUE)					//equips the human
+
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
-	SSjob.EquipRank(character, rank, 1)					//equips the human
+		SSqualities.give_quality(character, TRUE)
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")
@@ -224,13 +244,8 @@
 		qdel(src)
 		return
 
-	character.loc = pick(latejoin)
-	character.lastarea = get_area(loc)
+	character.forceMove(pick(latejoin), keep_buckled = TRUE)
 	show_location_blurb(character.client)
-	// Moving wheelchair if they have one
-	if(character.buckled && istype(character.buckled, /obj/structure/stool/bed/chair/wheelchair))
-		character.buckled.loc = character.loc
-		character.buckled.set_dir(character.dir)
 
 	SSticker.mode.latespawn(character)
 
@@ -386,7 +401,7 @@
 
 	new_character.lastarea = get_area(loc)
 	if(client.prefs.language)
-		new_character.add_language(client.prefs.language)
+		new_character.add_language(client.prefs.language, LANGUAGE_NATIVE)
 
 	if(SSticker.random_players)
 		new_character.gender = pick(MALE, FEMALE)

@@ -28,8 +28,7 @@
 
 	for(var/obj/effect/blob/B in hear(flashbang_range + 1, flashbang_turf))	//Blob damage here
 		var/damage = round(30 / (get_dist(B, flashbang_turf) + 1))
-		B.health -= damage
-		B.update_icon()
+		B.take_damage(damage * B.brute_resist, BRUTE, ENERGY) // workaround to deal full damage
 
 	qdel(src)
 
@@ -48,14 +47,14 @@
 				ear_safety += 2
 			if(HULK in M.mutations)
 				ear_safety += 1
-			if(istype(H.head, /obj/item/clothing/head/helmet))
-				ear_safety += 1
+			if(H.head)
+				var/obj/item/clothing/C = H.head
+				if(istype(C) && C.flashbang_protection)
+					ear_safety += 1
 
 //Flashing everyone
 	if(eye_safety < 1)
 		M.flash_eyes()
-		M.Stun(2)
-		M.Weaken(10)
 
 //Now applying sound
 	var/distance = get_dist(M, T)

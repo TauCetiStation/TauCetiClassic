@@ -386,10 +386,9 @@
 			if(prob(33))
 				new_gun.magazine.caliber = "999"
 
-			// 33% chance to fill it with a random amount of bullets
-			new_gun.magazine.max_ammo = rand(1,12)
+			// 33% chance to make the gun non-empty
 			if(prob(33))
-				var/num_bullets = rand(1,new_gun.magazine.max_ammo)
+				var/num_bullets = rand(1, new_gun.magazine.max_ammo)
 				new_gun.magazine.stored_ammo.len = num_bullets
 			else
 				new_gun.magazine.stored_ammo.len = 0
@@ -552,11 +551,9 @@
 		new_item.desc = src.desc
 
 		if(talkative)
-			new_item.talking_atom = new()
-			new_item.talking_atom.init(new_item)
+			new_item.AddComponent(/datum/component/talking_atom)
 
 		return INITIALIZE_HINT_QDEL
 
 	else if(talkative)
-		src.talking_atom = new()
-		talking_atom.init(src)
+		AddComponent(/datum/component/talking_atom)

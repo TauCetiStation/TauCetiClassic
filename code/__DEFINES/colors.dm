@@ -5,7 +5,11 @@
 
 #define COLOR_BLACK                     "#000000"
 #define COLOR_NAVY_BLUE                 "#000080"
+#define COLOR_ADMIRAL_BLUE              "#051094"
+#define COLOR_INDIGO                    "#281e5d"
 #define COLOR_GREEN                     "#008000"
+#define COLOR_CROCODILE                 "#607d3b"
+#define COLOR_SEAWEED                   "#354a21"
 #define COLOR_DARK_GRAY                 "#404040"
 #define COLOR_MAROON                    "#800000"
 #define COLOR_PURPLE                    "#800080"
@@ -23,10 +27,15 @@
 #define COLOR_CYAN                      "#00ffff"
 #define COLOR_TEAL                      "#33cccc"
 #define COLOR_RED                       "#ff0000"
+#define COLOR_CRIMSON                   "#dc143c"
+#define COLOR_CRIMSON_RED               "#990000"
 #define COLOR_PINK                      "#ff00ff"
+#define COLOR_ROSE_PINK                 "#ffc0cb"
 #define COLOR_LIGHT_PINK                "#ff87ff"
 #define COLOR_ORANGE                    "#ff9900"
+#define COLOR_TIGER                     "#fc6a03"
 #define COLOR_YELLOW                    "#ffff00"
+#define COLOR_GOLD                      "#d4af37"
 #define COLOR_GRAY                      "#808080"
 #define COLOR_RED_GRAY                  "#aa5f61"
 #define COLOR_BROWN                     "#b19664"
@@ -83,10 +92,12 @@
 
 //These ones aren't a direct colour like the ones above, because nothing would fit
 #define LIGHT_COLOR_FIRE         "#faa019" //Warm orange color, leaning strongly towards yellow. rgb(250, 160, 25)
+#define LIGHT_COLOR_FIREPLACE    "#f07f13"
 #define LIGHT_COLOR_FLARE        "#fa644b" //Bright, non-saturated red. Leaning slightly towards pink for visibility. rgb(250, 100, 75)
 #define LIGHT_COLOR_GHOST_CANDLE "#a2fad1" // Used by ghost candles. rgb(162, 250, 209)
 #define LIGHT_COLOR_PLASMA       "#2be4b8" // Used in plasma gun. rgb(43, 228, 184)
 #define LIGHT_COLOR_PLASMA_OC    "#e88893" // Used in plasma gun overcharge mode. rgb(232, 136, 147)
+#define LIGHT_COLOR_LIGHTNING	 "#5eacb6" // Used in lightning bolt projectiles
 
 //Human organ color mods
 #define HULK_SKIN_TONE rgb(48, 224, 40) // human
@@ -107,3 +118,94 @@
 #define SLIME_COLOR_BLUE SLIME_COLOR(0.2, 0.2, 0.5)
 #define SLIME_COLOR_YELLOW SLIME_COLOR(0.5, 0.5, 0.2)
 #define SLIME_COLOR_CYAN SLIME_COLOR(0.2, 0.5, 0.5)
+
+#define SADNESS_COLOR(amount) list( \
+	0.3 + 0.7 * (1.0 - amount), \
+	0.3 - 0.3 * (1.0 - amount), \
+	0.2 - 0.2 * (1.0 - amount), \
+	0.7 - 0.7 * (1.0 - amount), \
+	0.6 + 0.4 * (1.0 - amount), \
+	0.5 - 0.5 * (1.0 - amount), \
+	0.1 - 0.1 * (1.0 - amount), \
+	0.1 - 0.1 * (1.0 - amount), \
+	0.1 + 0.9 * (1.0 - amount), \
+	0.0, \
+	0.0, \
+	0.0 \
+)
+
+
+// FILTER EFFECTS
+/* #define EFFECT_FILTER 	list(1, 0, 0, 0, \
+                                 0, 1, 0, 0, \
+                                 0, 0, 1, 0, \
+                                 0, 0, 0, 1, \
+                                 0, 0, 0, 0) */
+
+#define LOMO_FILTER  list(1.6,  0.1,  0.95, 0, \
+                         -0.2,  0.7,  0,    0, \
+                          0.2,  0.2, -0.35, 0.5, \
+                          0,    0,   -0.35, 1, \
+                          0,    0,    0,    0)
+
+#define POSTERIZATION_FILTER   list(5,   -2.5, -2.5, 0, \
+                                   -2.5,  5,   -2.5, 0, \
+                                   -2.5, -2.5,  5,   0, \
+                                    0,    0,    0,   1, \
+                                    0,    0,    0,   0)
+
+
+#define GRAYSCALE_FILTER    list(0.33, 0.33, 0.33, 0, \
+                                 0.59, 0.59, 0.59, 0, \
+                                 0.11, 0.11, 0.11, 0, \
+                                 0,    0,    0,    1, \
+                                 0,    0,    0,    0)
+
+#define INVERT_FILTER  list(-1, 0, 0, 0, \
+                             0,-1, 0, 0, \
+                             0, 0,-1, 0, \
+                             0, 0, 0, 1, \
+                             1, 1, 1, 0)
+
+#define SEPIA_FILTER    list(0.393, 0.349, 0.272, 0, \
+                             0.769, 0.686, 0.534, 0, \
+                             0.189, 0.168, 0.131, 0, \
+                             0,     0,     0,     1, \
+                             0,     0,     0,     0)
+
+#define BLACKANDWHITE_FILTER   list(1.5,  1.5, 1.5, 0, \
+                                    1.5,  1.5, 1.5, 0, \
+                                    1.5,  1.5, 1.5, 0, \
+                                    0,    0,   0,   1, \
+                                   -1,   -1,  -1,   0)
+
+#define POLAROID_FILTER list(1.438,  -0.062, -0.062, 0, \
+                            -0.122,  1.378, -0.122, 0, \
+                            -0.016, -0.016,  1.483, 0, \
+                             0,      0,      0,     1, \
+                            -0.03,   0.05,  -0.02,  0)
+
+#define OLD_1_FILTER list(0.25,   0.25,   0.25,  0, \
+                          0.5,    0.5,    0.5,   0, \
+                          0.125,  0.125,  0.125, 0, \
+                          0,      0,      0,     1, \
+                          0.2,    0.2,    0.2,   0)
+
+#define OLD_2_FILTER list(3,    0,    0,   0, \
+                          0,    3,    0,   0, \
+                          0,    0,    3,   0, \
+                          0,    0,    0,   1, \
+                         -0.5, -0.5, -0.5, 0)
+
+#define XRAY_FILTER    list(0.95, 0,    0,     0, \
+                            0,    0.95, 0,     0, \
+                            0,    0,    1.05, -0.5, \
+                            0,    0,    0,     1, \
+                           -0.1, -0.1, -0.1,   0)
+
+#define NUDE_FILTER    list(1.2,  0,    0,     0, \
+                            0,    1,    0,     0, \
+                            0,    0,    1,     0, \
+                            0,    0,    0,     1, \
+                            0,    0,    0,     0)
+

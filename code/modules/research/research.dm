@@ -681,22 +681,6 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	unlocks_designs = list("med_data", "operating")
 
-/datum/technology/virology
-	name = "Virology"
-	desc = "Virology"
-	id = "virology"
-	tech_type = RESEARCH_BIOTECH
-
-	x = 0.4
-	y = 0.8
-	icon = "vialbox"
-
-	required_technologies = list("basic_med_machines")
-	required_tech_levels = list()
-	cost = 500
-
-	unlocks_designs = list("pandemic")
-
 /datum/technology/adv_med_machines
 	name = "Advanced Medical Machines"
 	desc = "Advanced Medical Machines"
@@ -727,7 +711,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("scan_console", "clonecontrol", "clonepod", "clonescanner")
+	unlocks_designs = list("scan_console", "clonecontrol", "clonepod", "clonescanner", "cmf_console", "cmf_scanner")
 
 /datum/technology/hydroponics
 	name = "Hydroponics"
@@ -807,7 +791,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("adv_sensor", "nano_mani", "implant_chem", "implant_death", "implant_tracking", "defibrillators_compact", "sensor_device", "scalpel_laser2", "biocan", "secmed_hud", "implanter", "airbag", "lazarus")
+	unlocks_designs = list("adv_sensor", "nano_mani", "implant_chem", "implant_death", "implant_tracking", "defibrillators_compact", "sensor_device", "scalpel_laser2", "biocan", "secmed_hud", "implanter", "airbag", "lazarus", "hud_calibrator")
 
 /datum/technology/med_teleportation
 	name = "Medical Teleportation"
@@ -839,7 +823,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("phasic_sensor", "pico_mani", "adv_mass_spectrometer", "adv_reagent_scanner", "implant_loyal", "implant_mindshield", "defibrillators_standalone", "scalpel_laser3", "chemsprayer", "rapidsyringe")
+	unlocks_designs = list("phasic_sensor", "pico_mani", "adv_mass_spectrometer", "adv_reagent_scanner", "implant_loyal", "implant_mindshield", "defibrillators_standalone", "scalpel_laser3", "chemsprayer", "rapidsyringe", "changtest")
 
 /datum/technology/portable_chemistry
 	name = "Portable Chemistry"
@@ -969,7 +953,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("large_Grenade", "ammo_9mm")
+	unlocks_designs = list("large_Grenade", "smg_ammo_9mm")
 
 /datum/technology/exotic_weaponry
 	name = "Exotic Weaponry"
@@ -1147,7 +1131,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("mrspacman")
+	unlocks_designs = list("mrspacman", "circ", "teg")
 
 /datum/technology/fusion_power_generation
 	name = "R-UST Mk. 8 Tokamak Generator"
@@ -1343,7 +1327,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 0
 
-	unlocks_designs = list("mechrecharger", "cyborgrecharger", "cyborg_analyzer", "mmi")
+	unlocks_designs = list("mechrecharger", "cyborgrecharger", "cyborg_analyzer", "mmi", "borg_upgrade_hud")
 
 /datum/technology/mech_ripley
 	name = "Ripley"
@@ -1391,7 +1375,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("mechacontrol", "mechapower", "mechfab", "robocontrol", "dronecontrol", "mmi_radio", "intellicard", "paicard", "posibrain", "borg_upgrade_security")
+	unlocks_designs = list("mechacontrol", "mechapower", "mechfab", "robocontrol", "dronecontrol", "mmi_radio", "intellicard", "paicard", "posibrain")
 
 /datum/technology/artificial_intelligence
 	name = "Artificial intelligence"
@@ -1583,7 +1567,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("rigadvancedai", "riggrenadelauncherflashbang", "rigdrill", "rigselfrepair", "rigmountedtaser", "rigcombatinjector", "rigmedicalinjector", "rigstabilizer")
+	unlocks_designs = list("rigadvancedai", "riggrenadelauncherflashbang", "rigdrill", "rigselfrepair", "rigmountedtaser", "rigcombatinjector", "rigmedicalinjector", "rigstabilizer", "rigempshield")
 
 /datum/technology/toptier_hardsuit_modules
 	name = "Top-Tier Hardsuit Modules"

@@ -18,8 +18,7 @@
 	icon_state = "dropod_opened"
 	var/item_state = null
 
-	var/max_integrity = 100
-	var/obj_integrity = 100
+	max_integrity = 100
 
 	var/mob/living/carbon/intruder
 	var/mob/living/second_intruder
@@ -31,7 +30,7 @@
 	var/obj/machinery/nuclearbomb/Stored_Nuclear
 	var/list/stored_items = list()
 
-	var/static/datum/droppod_allowed/allowed_areas
+	var/static/datum/droppod_vision/allowed_areas
 
 	var/static/initial_eyeobj_location = null
 	var/image/mob_overlay
@@ -39,7 +38,7 @@
 /obj/structure/droppod/atom_init()
 	. = ..()
 	if(!initial_eyeobj_location)
-		initial_eyeobj_location = locate(/obj/effect/landmark/droppod) in landmarks_list
+		initial_eyeobj_location = locate("landmark*Droppod")
 	if(!allowed_areas)
 		allowed_areas = new
 
@@ -92,11 +91,12 @@
 
 /********Datum helper with restricted and allowed areas for droping********/
 
-/datum/droppod_allowed
+/datum/droppod_vision
 	var/static/list/areas
 	var/static/list/black_list_areas
+	var/static/list/image/obscured_turfs
 
-/datum/droppod_allowed/New()
+/datum/droppod_vision/New()
 	..()
 	if(!black_list_areas)
 		black_list_areas = list(
@@ -134,7 +134,17 @@
 			if(is_type_in_list(areas[i], black_list_areas))
 				areas -= i
 
+	if(obscured_turfs)
+		return
+	obscured_turfs = list()
+	for(var/A in black_list_areas)
+		for(var/turf/simulated/turf in get_area_turfs(A))
+			var/image/i = image('icons/effects/cameravis.dmi', turf, "black", ABOVE_LIGHTING_LAYER)
+			i.plane = ABOVE_LIGHTING_PLANE
+			obscured_turfs += i
+
 /obj/effect/landmark/droppod
+	name = "Droppod"
 
 /********Move in and out********/
 
@@ -254,8 +264,14 @@
 	var/area/area_to_deploy = allowed_areas.areas[pick(allowed_areas.areas)]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(area_to_deploy.type))
-		if(!T.density && !istype(T, /turf/space) && !T.obscured)
-			L+=T
+		if(!T.density && !isenvironmentturf(T) && !T.obscured)
+			var/clear = TRUE
+			for(var/obj/O in T)
+				if(O.density)
+					clear = FALSE
+					break
+			if(clear)
+				L+=T
 	if(isemptylist(L))
 		to_chat(intruder, "<span class='notice'>Automatic Aim System cannot find an appropriate target!</span>")
 		return
@@ -269,7 +285,7 @@
 	var/area/thearea = allowed_areas.areas[A]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!T.density && !istype(T, /turf/space) && !T.obscured)
+		if(!T.density && !isenvironmentturf(T) && !T.obscured)
 			L+=T
 	flags &= ~STATE_AIMING
 	if(isemptylist(L))
@@ -287,12 +303,15 @@
 	eyeobj.name = "[intruder.name] (Eye)"
 	intruder.client.images += eyeobj.ghostimage
 	intruder.client.eye = eyeobj
+	if (!(flags & IS_LEGITIMATE))
+		intruder.client.images += allowed_areas.obscured_turfs
+	intruder.client.show_popup_menus = FALSE
 
 /obj/structure/droppod/proc/ChooseTarget()
 	if(!eyeobj || is_centcom_level(eyeobj.z))
 		return
 	var/turf/teleport_turf = get_turf(eyeobj.loc)
-	if(teleport_turf.obscured)
+	if(teleport_turf.obscured || isenvironmentturf(teleport_turf))
 		to_chat(intruder, "<span class='userdanger'>No signal here! It might be unsafe to deploy here!</span>")
 		return
 	if(!(flags & IS_LEGITIMATE) && is_type_in_list(teleport_turf.loc, allowed_areas.black_list_areas))
@@ -309,6 +328,7 @@
 			if(I.icon_state == "black") // deleting interferences
 				intruder.client.images -= I
 		intruder.client.adminobs = FALSE
+		intruder.client.show_popup_menus = TRUE
 		intruder.reset_view(deleting ? loc : src)
 	flags &= ~STATE_AIMING
 
@@ -367,7 +387,7 @@
 /obj/structure/droppod/proc/perform_drop()
 	for(var/atom/movable/T in loc)
 		if(T != src && !(istype(T, /obj/structure/window) || istype(T, /obj/machinery/door/airlock) || istype(T, /obj/machinery/door/poddoor)))
-			T.ex_act(1)
+			T.ex_act(EXPLODE_DEVASTATE)
 	for(var/mob/living/M in oviewers(6, src))
 		shake_camera(M, 2, 2)
 	for(var/turf/simulated/floor/T in RANGE_TURFS(1, src))
@@ -410,17 +430,13 @@
 	else if(iswelder(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(obj_integrity < max_integrity && WT.use(0, user))
+		if(get_integrity() < max_integrity && WT.use(0, user))
 			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
-			obj_integrity = min(obj_integrity + 10, max_integrity)
+			repair_damage(10)
 			visible_message("<span class='notice'>[user] has repaired some dents on [src]!</span>")
 
 	else if(user.a_intent == INTENT_HARM || (O.flags & ABSTRACT))
-		playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
-		user.SetNextMove(CLICK_CD_MELEE)
-		take_damage(O.force)
 		return ..()
-
 	else
 		if(istype(O, /obj/item/weapon/simple_drop_system))
 			if(!(flags & POOR_AIMING))
@@ -487,27 +503,25 @@
 
 /********Damage system********/
 
-/obj/structure/droppod/bullet_act(obj/item/projectile/Proj)
-	if((Proj.damage && Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
-		visible_message("<span class='danger'>[src] was hit by [Proj].</span>")
-		take_damage(Proj.damage)
-		if(!(flags & IS_LOCKED))
-			if(intruder && prob(60))
-				intruder.bullet_act(Proj)
-			if(second_intruder && prob(40))
-				second_intruder.bullet_act(Proj)
+/obj/structure/droppod/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
+	if(flags & IS_LOCKED)
+		return
+	if(intruder && prob(60))
+		intruder.bullet_act(Proj)
+	if(second_intruder && prob(40))
+		second_intruder.bullet_act(Proj)
 
-/obj/structure/droppod/proc/take_damage(amount)
-	obj_integrity -= amount / 2
-	if(obj_integrity <= 0)
-		visible_message("<span class='warning'>The [src] has been destroyed!</span>")
-		qdel(src)
+/obj/structure/droppod/play_attack_sound(damage_amount, damage_type, damage_flag)
+	if(damage_amount)
+		playsound(loc, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
 
-/obj/structure/droppod/attack_animal(mob/living/simple_animal/attacker)
-	..()
-	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
-	take_damage(attacker.melee_damage)
+/obj/structure/droppod/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir)
+	..(damage_amount * 0.5, damage_type, damage_flag, sound_effect, attack_dir)
+
+/obj/structure/droppod/deconstruct()
+	visible_message("<span class='warning'>The [src] has been destroyed!</span>")
+	. = ..()
 
 /********Stats********/
 
@@ -608,7 +622,7 @@
 		state = "Aiming"
 	if(flags & STATE_DROPING)
 		state = "Droping"
-	var/output = {"<b>Integrity: </b> [obj_integrity/max_integrity * 100]%<br>
+	var/output = {"<b>Integrity: </b> [get_integrity()/max_integrity * 100]%<br>
 					<b>Advanced Aiming System: </b> [(flags & ADVANCED_AIMING_INSTALLED) ? "" : "Un"]installed<br>
 					<b>Second Passenger: </b>[second_intruder ? "[second_intruder.name]" : "None"]<br>
 					<b>Nuclear bomb: </b> [Stored_Nuclear ? "" : "Un"]installed<br>

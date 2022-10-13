@@ -3,6 +3,8 @@
 	desc = "Used for advanced medical procedures."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "table2-idle"
+	var/icon_state_active = "table2-active"
+	var/icon_state_idle = "table2-idle"
 	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
@@ -21,28 +23,6 @@
 			computer.table = src
 			break
 	AddComponent(/datum/component/clickplace)
-
-/obj/machinery/optable/ex_act(severity)
-
-	switch(severity)
-		if(1.0)
-			//SN src = null
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				//SN src = null
-				qdel(src)
-				return
-		if(3.0)
-			if (prob(25))
-				src.density = FALSE
-		else
-	return
-
-/obj/machinery/optable/blob_act()
-	if(prob(75))
-		qdel(src)
 
 /obj/machinery/optable/attack_paw(mob/user)
 	if ((HULK in usr.mutations))
@@ -86,12 +66,12 @@
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))
 		var/mob/living/carbon/human/M = locate(/mob/living/carbon/human, src.loc)
-		if(M.resting)
+		if(M.crawling)
 			src.victim = M
-			icon_state = M.pulse ? "table2-active" : "table2-idle"
+			icon_state = M.pulse ? icon_state_active : icon_state_idle
 			return 1
 	src.victim = null
-	icon_state = "table2-idle"
+	icon_state = icon_state_idle
 	return 0
 
 /obj/machinery/optable/process()
@@ -105,17 +85,16 @@
 	if (C.client)
 		C.client.perspective = EYE_PERSPECTIVE
 		C.client.eye = src
-	C.resting = 1
+	C.SetCrawling(TRUE)
 	C.loc = src.loc
-	for(var/obj/O in src)
-		O.loc = src.loc
+
 	add_fingerprint(user)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		src.victim = H
-		icon_state = H.pulse ? "table2-active" : "table2-idle"
+		icon_state = H.pulse ? icon_state_active : icon_state_idle
 	else
-		icon_state = "table2-idle"
+		icon_state = icon_state_idle
 
 /obj/machinery/optable/verb/climb_on()
 	set name = "Climb On Table"

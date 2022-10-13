@@ -91,11 +91,11 @@
 			clients++
 			var/area/mob_area = get_area(M)
 			if(ishuman(M))
-				if(!M.stat)
+				if(M.stat == CONSCIOUS)
 					surviving_humans++
 					if(mob_area.type in escape_locations)
 						escaped_humans++
-			if(!M.stat)
+			if(M.stat == CONSCIOUS)
 				surviving_total++
 				if(mob_area.type in escape_locations)
 					escaped_total++
@@ -123,10 +123,10 @@
 		feedback_set("survived_human",surviving_humans)
 	if(surviving_total > 0)
 		feedback_set("survived_total",surviving_total)
-		score["crew_survived"] = surviving_total
+		SSStatistics.score.crew_survived = surviving_total
 	if(escaped_humans > 0)
 		feedback_set("escaped_human",escaped_humans)
-		score["crew_escaped"] = escaped_humans
+		SSStatistics.score.crew_escaped = escaped_humans
 	if(escaped_total > 0)
 		feedback_set("escaped_total",escaped_total)
 	if(escaped_on_shuttle > 0)
@@ -161,7 +161,7 @@
 			if(L.client.inactivity >= (ROUNDSTART_LOGOUT_REPORT_TIME / 2))	//Connected, but inactive (alt+tabbed or something)
 				msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='#ffcc00'><b>Connected, Inactive</b></font>)\n"
 				continue //AFK client
-			if(L.stat)
+			if(L.stat != CONSCIOUS)
 				if(L.suiciding)	//Suicider
 					msg += "<b>[L.name]</b> ([L.ckey]), the [L.job] (<font color='red'><b>Suicide</b></font>)\n"
 					continue //Disconnected client
@@ -214,3 +214,6 @@
 	if(dudes.len == 0)
 		return null
 	return pick(dudes)
+
+/proc/mode_has_antags()
+	return SSticker.mode.factions.len > 0 || SSticker.mode.orphaned_roles.len > 0

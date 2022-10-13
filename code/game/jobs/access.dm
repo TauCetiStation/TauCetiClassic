@@ -138,7 +138,7 @@
 	return null
 
 /obj/proc/check_access(atom/movable/AM)
-	if(istype(src, /obj/machinery))
+	if(ismachinery(src))
 		var/obj/machinery/Machine = src
 		if(Machine.emagged)
 			return TRUE

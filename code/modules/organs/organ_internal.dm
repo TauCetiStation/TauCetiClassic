@@ -25,7 +25,7 @@
 			owner.organs_by_name -= organ_tag
 	return ..()
 
-/obj/item/organ/internal/insert_organ()
+/obj/item/organ/internal/insert_organ(mob/living/carbon/human/H, surgically = FALSE, datum/species/S)
 	..()
 
 	owner.organs += src
@@ -76,15 +76,16 @@
 			if (prob(3))	//about once every 30 seconds
 				take_damage(1,silent=prob(30))
 
-/obj/item/organ/internal/proc/take_damage(amount, silent=0)
+/obj/item/organ/internal/take_damage(amount, silent=0)
+	if(!isnum(silent))
+		return // prevent basic take_damage usage (TODO remove workaround)
 	if(src.robotic == 2)
 		src.damage += (amount * 0.8)
 	else
 		src.damage += amount
 
-	var/obj/item/organ/external/BP = owner.bodyparts_by_name[parent_bodypart]
 	if (!silent)
-		owner.custom_pain("Something inside your [BP.name] hurts a lot.", 1)
+		owner.custom_pain("What a pain! My [name]!", 1)
 
 /obj/item/organ/internal/emp_act(severity)
 	switch(robotic)
@@ -133,25 +134,32 @@
 	var/fibrillation_timer_id = null
 	var/failing_interval = 1 MINUTE
 
+/obj/item/organ/internal/heart/insert_organ()
+	..()
+	owner.metabolism_factor.AddModifier("Heart", multiple = 1.0)
+
 /obj/item/organ/internal/heart/proc/heart_stop()
-	if(!owner.reagents.has_reagent("inaprovaline"))
+	if(!owner.reagents.has_reagent("inaprovaline") || owner.stat == DEAD)
 		heart_status = HEART_FAILURE
+		deltimer(fibrillation_timer_id)
+		fibrillation_timer_id = null
+		owner.metabolism_factor.AddModifier("Heart", multiple = 0.0)
 	else
 		take_damage(1, 0)
 		fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
-	to_chat(owner, "<span class='warning'>Your feel a prick in your heart.</span>")
 
 /obj/item/organ/internal/heart/proc/heart_fibrillate()
 	heart_status = HEART_FIBR
 	if(HAS_TRAIT(owner, TRAIT_FAT))
 		failing_interval = 30 SECONDS
 	fibrillation_timer_id = addtimer(CALLBACK(src, .proc/heart_stop), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
-	to_chat(owner, "<span class='warning'>Your heart hurts a little.</span>")
+	owner.metabolism_factor.AddModifier("Heart", multiple = 0.5)
 
 /obj/item/organ/internal/heart/proc/heart_normalize()
 	heart_status = HEART_NORMAL
 	deltimer(fibrillation_timer_id)
 	fibrillation_timer_id = null
+	owner.metabolism_factor.AddModifier("Heart", multiple = 1.0)
 
 /obj/item/organ/internal/heart/ipc
 	name = "cooling pump"
@@ -216,39 +224,11 @@
 
 	if(is_bruised())
 		if(prob(2))
-			owner.emote("cough", message = "coughs up blood!")
+			owner.emote("cough")
 			owner.drip(10)
 		if(prob(4)  && !HAS_TRAIT(owner, TRAIT_AV))
-			owner.emote("gasp", message = "gasps for air!")
+			owner.emote("gasp")
 			owner.losebreath += 15
-
-/obj/item/organ/internal/lungs/diona/process()
-	..()
-	if(is_bruised())
-		if(prob(2))
-			owner.emote("me", 2, "annoyingly creaks!")
-			owner.drip(10)
-		if(prob(4))
-			owner.emote("me", 2, "smells of rot.")
-			owner.apply_damage(rand(1,15), TOX, BP_CHEST, 0)		//Diona's lungs are used to dispose of toxins, so when lungs are broken, diona gets intoxified.
-	if(owner.life_tick % process_accuracy == 0)
-		if(damage < 0)
-			damage = 0
-
-		if(owner.getToxLoss() >= 60 && !owner.reagents.has_reagent("anti_toxin"))
-			if(damage < min_broken_damage)
-				damage += 0.2 * process_accuracy
-			else
-				var/obj/item/organ/internal/IO = pick(owner.organs)
-				if(IO)
-					IO.damage += 0.2  * process_accuracy
-
-		if(damage >= min_bruised_damage)
-			for(var/datum/reagent/R in owner.reagents.reagent_list)
-				if(istype(R, /datum/reagent/consumable/ethanol))
-					owner.adjustToxLoss(0.1 * process_accuracy)
-				if(istype(R, /datum/reagent/toxin))
-					owner.adjustToxLoss(0.3 * process_accuracy)
 
 /obj/item/organ/internal/lungs/ipc/process()
 	if(owner.nutrition < 1)
@@ -269,12 +249,10 @@
 			temp_gain -= refrigerant_spent
 
 	if(HAS_TRAIT(owner, TRAIT_COOLED) & owner.bodytemperature > 290)
-		owner.bodytemperature -= 50
+		owner.adjust_bodytemperature(-50)
 
 	if(temp_gain > 0)
-		owner.bodytemperature += temp_gain
-		if(owner.bodytemperature > owner.species.synth_temp_max)
-			owner.bodytemperature = owner.species.synth_temp_max
+		owner.adjust_bodytemperature(temp_gain, max_temp = owner.species.synth_temp_max)
 
 /obj/item/organ/internal/lungs/ipc/proc/add_refrigerant(volume)
 	if(refrigerant < refrigerant_max)
@@ -298,7 +276,7 @@
 	name = "accumulator"
 	var/accumulator_warning = 0
 
-/obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H)
+/obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H, datum/species/S)
 	..()
 	new/obj/item/weapon/stock_parts/cell/crap(src)
 	RegisterSignal(owner, COMSIG_ATOM_ELECTROCUTE_ACT, .proc/ipc_cell_explode)
@@ -368,7 +346,7 @@
 	var/turf/T = get_turf(owner.loc)
 	if(owner.nutrition > (C.maxcharge * 1.2))
 		explosion(T, 1, 0, 1, 1)
-		C.ex_act(1.0)
+		C.ex_act(EXPLODE_DEVASTATE)
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"
@@ -381,13 +359,6 @@
 /obj/item/organ/internal/kidneys/diona
 	name = "vacuole"
 	parent_bodypart = BP_GROIN
-
-/obj/item/organ/internal/kidneys/diona/process()
-	if(damage)
-		if(prob(10))
-			damage -= 1
-		if(prob(2))
-			to_chat(owner, "<span class='warning'>You notice slight discomfort in your groin.</span>")
 
 /obj/item/organ/internal/kidneys/ipc
 	name = "self-diagnosis unit"

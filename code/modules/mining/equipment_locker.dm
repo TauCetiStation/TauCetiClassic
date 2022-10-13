@@ -206,14 +206,15 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if(severity == 1)
-		if(prob(50))
-			empty_content()
-			qdel(src)
-	else if(severity == 2)
-		if(prob(25))
-			empty_content()
-			qdel(src)
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			if(prob(50))
+				return
+		if(EXPLODE_HEAVY)
+			if(prob(75))
+				return
+	empty_content()
+	qdel(src)
 
 //empty the redemption machine by stacks of at most max_amount (50 at this time) size
 /obj/machinery/mineral/ore_redemption/proc/empty_content()
@@ -288,7 +289,7 @@
 	prize_list["Miscellaneous"] = list(
 		EQUIPMENT("Chili",						/obj/item/weapon/reagent_containers/food/snacks/hotchili,			100),
 		EQUIPMENT("Vodka",						/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,		150),
-		EQUIPMENT("Soap",						/obj/item/weapon/soap/nanotrasen,									150),
+		EQUIPMENT("Soap",						/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,									150),
 		EQUIPMENT("Alien toy",					/obj/item/clothing/mask/facehugger_toy,								250),
 		EQUIPMENT("Point card",					/obj/item/weapon/card/mining_point_card,							500),
 		EQUIPMENT("Space cash",					/obj/item/weapon/spacecash/c1000,									5000),
@@ -474,6 +475,15 @@
 	icon_state = "mining_voucher"
 	w_class = SIZE_MINUSCULE
 
+/obj/item/weapon/mining_voucher/armour
+	name = "armor voucher"
+	desc = "A totaly not stolen and modified token to redeem a piece of equipment. Use it on KillNTVendor and get your armor."
+	icon_state = "armour_voucher"
+
+/obj/item/weapon/mining_voucher/kit
+	name = "kit voucher"
+	desc = "A totaly not stolen and modified token to redeem a piece of equipment. Use it on KillNTVendor and get your equipment."
+	icon_state = "kit_voucher"
 
 /**********************Mining Point Card**********************/
 
@@ -563,6 +573,7 @@
 		if(do_teleport(M, target, 3))
 			if(isliving(M))
 				var/mob/living/L = M
+				L.Stun(1)
 				L.Weaken(3)
 				shake_camera(L, 20, 1)
 				if(ishuman(L))
@@ -717,7 +728,7 @@
 	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/W = I
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(W.use(0, user) && !stat)
+		if(W.use(0, user) && stat == CONSCIOUS)
 			if(stance != HOSTILE_STANCE_IDLE)
 				to_chat(user, "<span class='info'>You can't repair the [src] while it is moving!</span>")
 				return

@@ -2,13 +2,15 @@
 Contains helper procs for airflow, handled in /connection_group.
 */
 
-/mob/var/tmp/last_airflow_stun = 0
+/mob
+	COOLDOWN_DECLARE(last_airflow_stun)
+
 /mob/proc/airflow_stun()
 	if(stat == DEAD)
 		return FALSE
-	if(last_airflow_stun > world.time - vsc.airflow_stun_cooldown)
+	if(!COOLDOWN_FINISHED(src, last_airflow_stun))
 		return FALSE
-	if(!(status_flags & CANSTUN) && !(status_flags & CANWEAKEN))
+	if(!(status_flags & CANWEAKEN))
 		to_chat(src, "<span class='notice'>You stay upright as the air rushes past you.</span>")
 		return FALSE
 	if(buckled)
@@ -16,8 +18,9 @@ Contains helper procs for airflow, handled in /connection_group.
 		return FALSE
 	if(!lying)
 		to_chat(src, "<span class='warning'>The sudden rush of air knocks you over!</span>")
+	Stun(2)
 	Weaken(5)
-	last_airflow_stun = world.time
+	COOLDOWN_START(src, last_airflow_stun, vsc.airflow_stun_cooldown)
 
 /mob/living/silicon/airflow_stun()
 	return
@@ -35,9 +38,9 @@ Contains helper procs for airflow, handled in /connection_group.
 	return
 
 /mob/living/carbon/human/airflow_stun()
-	if(shoes && (shoes.flags & NOSLIP))
+	if(shoes?.flags & NOSLIP)
 		return FALSE
-	if(wear_suit && (wear_suit.flags & NOSLIP))
+	if(wear_suit?.flags & NOSLIP)
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_FAT))
 		to_chat(src, "<span class='notice'>Air suddenly rushes past you!</span>")
@@ -45,227 +48,139 @@ Contains helper procs for airflow, handled in /connection_group.
 	..()
 
 /atom/movable/proc/check_airflow_movable(n)
-
-	if(anchored && !ismob(src))
+	if(anchored)
 		return FALSE
 
-	if(!isobj(src) && n < vsc.airflow_dense_pressure)
-		return FALSE
-
-	return TRUE
+	return n >= vsc.airflow_dense_pressure
 
 /mob/check_airflow_movable(n)
-	if(n < vsc.airflow_heavy_pressure)
+	if(status_flags & GODMODE)
 		return FALSE
-	return TRUE
+	if(buckled || anchored)
+		return FALSE
+	return n >= vsc.airflow_heavy_pressure
 
 /mob/living/silicon/check_airflow_movable()
 	return FALSE
 
-
-/obj/check_airflow_movable(n)
-	//if(isnull(w_class))
-	if(!istype(src, /obj/item))
-		if(n < vsc.airflow_dense_pressure)
-			return FALSE //most non-item objs don't have a w_class yet
-	else
-		var/obj/item/I = src
-		switch(I.w_class)
-			if(1, 2)
-				if(n < vsc.airflow_lightest_pressure)
-					return FALSE
-			if(3)
-				if(n < vsc.airflow_light_pressure)
-					return FALSE
-			if(4, 5)
-				if(n < vsc.airflow_medium_pressure)
-					return FALSE
-			if(6)
-				if(n < vsc.airflow_heavy_pressure)
-					return FALSE
-			if(7 to INFINITY)
-				if(n < vsc.airflow_dense_pressure)
-					return FALSE
-	return ..()
-
-
-/atom/movable/var/tmp/turf/airflow_dest
-/atom/movable/var/tmp/airflow_speed = 0
-/atom/movable/var/tmp/airflow_time = 0
-/atom/movable/var/tmp/last_airflow = 0
-/atom/movable/var/tmp/airborne_acceleration = 0
-
-/atom/movable/proc/AirflowCanMove(n)
-	return TRUE
-
-/mob/AirflowCanMove(n)
-	if(status_flags & GODMODE)
-		return FALSE
-	if(buckled)
-		return FALSE
-	return TRUE
-
-/mob/living/carbon/human/AirflowCanMove(n)
+/mob/living/carbon/human/check_airflow_movable(n)
 	if(shoes && (shoes.flags & NOSLIP))
 		return FALSE
 	if(wear_suit && (wear_suit.flags & NOSLIP))
 		return FALSE
 	return ..()
 
-/atom/movable/proc/GotoAirflowDest(n)
+/obj/item/check_airflow_movable(n)
+	var/obj/item/I = src
+	switch(I.w_class)
+		if(SIZE_MINUSCULE, SIZE_TINY)
+			if(n < vsc.airflow_lightest_pressure)
+				return FALSE
+		if(SIZE_SMALL)
+			if(n < vsc.airflow_light_pressure)
+				return FALSE
+		if(SIZE_NORMAL, SIZE_BIG)
+			if(n < vsc.airflow_medium_pressure)
+				return FALSE
+		if(SIZE_LARGE)
+			if(n < vsc.airflow_heavy_pressure)
+				return FALSE
+		if(SIZE_HUMAN to INFINITY)
+			if(n < vsc.airflow_dense_pressure)
+				return FALSE
+
+	return ..()
+
+/atom/movable
+	var/tmp/turf/airflow_dest
+	var/tmp/airflow_speed = 0
+	var/tmp/airborne_acceleration = 0
+	COOLDOWN_DECLARE(last_airflow)
+
+/atom/movable/proc/AirflowDest(n, turf/dest, repelled)
 	set waitfor = FALSE
-	if(!airflow_dest)
-		return
-	if(airflow_speed < 0)
-		return
-	if(last_airflow > world.time - vsc.airflow_delay)
-		return
-	if(airflow_speed)
-		airflow_speed = n / max(get_dist(src, airflow_dest), 1)
-		return
-	if(airflow_dest == loc)
+	if(dest == loc)
 		step_away(src, loc)
-	if(!AirflowCanMove(n))
-		return
 	if(ismob(src))
-		to_chat(src, "<span class='danger'>You are sucked away by airflow!</span>")
-	last_airflow = world.time
-	var/airflow_falloff = 9 - sqrt((x - airflow_dest.x) ** 2 + (y - airflow_dest.y) ** 2)
+		to_chat(src, "<span clas='danger'>You are [repelled ? "pushed" : "sucked"] away by airflow!</span>")
+	COOLDOWN_START(src, last_airflow, vsc.airflow_delay)
+	var/airflow_falloff = 9 - get_dist_euclidian(src, dest)
 	if(airflow_falloff < 1)
-		airflow_dest = null
 		return
-	airflow_speed = min(max(n * (9/airflow_falloff),1),9)
-	var/xo = airflow_dest.x - src.x
-	var/yo = airflow_dest.y - src.y
-	var/od = FALSE
-	airflow_dest = null
-	if(!density)
-		density = TRUE
-		od = TRUE
+	airflow_dest = dest
+	airflow_speed = clamp(n * (9 / airflow_falloff), 1, 9)
+	airborne_acceleration = 0
+	var/od
+	var/sleep_time
+	var/airflow_time = 7
+	var/xo = dest.x - src.x
+	var/yo = dest.y - src.y
+	if(repelled)
+		xo = -xo
+		yo = -yo
+		// update airflow_dest for proper step_towards
+		airflow_dest = locate(clamp(src.x + xo, 1, world.maxx), clamp(src.y + yo, 1, world.maxy), src.z)
+
 	while(airflow_speed > 0)
-		if(airflow_speed <= 0) break
-		airflow_speed = min(airflow_speed, 15)
-		airflow_speed -= vsc.airflow_speed_decay
+		airflow_speed = airflow_speed - vsc.airflow_speed_decay
+		sleep_time = 0
 		if(airflow_speed > 7)
-			if(airflow_time++ >= airflow_speed - 7)
-				if(od)
-					density = FALSE
-				sleep(1 * SSAIR_TICK_MULTIPLIER)
+			if(airflow_time++ >= airflow_speed)
+				sleep_time = SSAIR_TICK_MULTIPLIER
 		else
-			if(od)
-				density = FALSE
-			sleep(max(1, 10 - (airflow_speed + 3)) * SSAIR_TICK_MULTIPLIER)
+			sleep_time = max(1, 10 - (airflow_speed + 3)) * SSAIR_TICK_MULTIPLIER
+		if(sleep_time)
+			sleep(sleep_time)
+			if(!(isturf(loc) && airflow_speed > 0))
+				break
+		if (loc == airflow_dest)
+			airflow_dest = locate(clamp(src.x + xo, 1, world.maxx), clamp(src.y + yo, 1, world.maxy), src.z)
+		od = !density
+		density = TRUE
+		step_towards(src, airflow_dest)
 		if(od)
-			density = TRUE
-		if ((!( src.airflow_dest ) || src.loc == src.airflow_dest))
-			src.airflow_dest = locate(min(max(src.x + xo, 1), world.maxx), min(max(src.y + yo, 1), world.maxy), src.z)
-		if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
-			break
-		if(!istype(loc, /turf))
-			break
-		step_towards(src, src.airflow_dest)
+			density = FALSE
 		var/mob/M = src
 		if(istype(M) && M.client)
 			M.setMoveCooldown(vsc.airflow_mob_slowdown)
 		airborne_acceleration++
+
 	airflow_dest = null
 	airflow_speed = 0
-	airflow_time = 0
 	airborne_acceleration = 0
-	if(od)
-		density = FALSE
-
-
-/atom/movable/proc/RepelAirflowDest(n)
-	set waitfor = FALSE
-	if(!airflow_dest)
-		return
-	if(airflow_speed < 0)
-		return
-	if(last_airflow > world.time - vsc.airflow_delay) return
-	if(airflow_speed)
-		airflow_speed = n / max(get_dist(src, airflow_dest), 1)
-		return
-	if(airflow_dest == loc)
-		step_away(src, loc)
-	if(!AirflowCanMove(n))
-		return
-	if(ismob(src))
-		to_chat(src, "<span clas='danger'>You are pushed away by airflow!</span>")
-	last_airflow = world.time
-	var/airflow_falloff = 9 - sqrt((x - airflow_dest.x) ** 2 + (y - airflow_dest.y) ** 2)
-	if(airflow_falloff < 1)
-		airflow_dest = null
-		return
-	airflow_speed = min(max(n * (9 / airflow_falloff), 1), 9)
-	var/xo = -(airflow_dest.x - src.x)
-	var/yo = -(airflow_dest.y - src.y)
-	var/od = FALSE
-	airflow_dest = null
-	if(!density)
-		density = TRUE
-		od = TRUE
-	while(airflow_speed > 0)
-		if(airflow_speed <= 0)
-			return
-		airflow_speed = min(airflow_speed, 15)
-		airflow_speed -= vsc.airflow_speed_decay
-		if(airflow_speed > 7)
-			if(airflow_time++ >= airflow_speed - 7)
-				sleep(1 * SSAIR_TICK_MULTIPLIER)
-		else
-			sleep(max(1, 10 - (airflow_speed + 3)) * SSAIR_TICK_MULTIPLIER)
-		if ((!( src.airflow_dest ) || src.loc == src.airflow_dest))
-			src.airflow_dest = locate(min(max(src.x + xo, 1), world.maxx), min(max(src.y + yo, 1), world.maxy), src.z)
-		if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
-			return
-		if(!istype(loc, /turf))
-			return
-		step_towards(src, src.airflow_dest)
-		var/mob/M = src
-		if(istype(M) && M.client)
-			M.setMoveCooldown(vsc.airflow_mob_slowdown)
-		airborne_acceleration++
-	airflow_dest = null
-	airflow_speed = 0
-	airflow_time = 0
-	airborne_acceleration = 0
-	if(od)
-		density = FALSE
 
 /atom/movable/Bump(atom/A)
-	if(airflow_speed > 0 && airflow_dest)
+	if(airflow_speed > 0)
 		if(airborne_acceleration > 1)
 			airflow_hit(A)
-		else if(istype(src, /mob/living/carbon/human))
+		else if(ishuman(src))
 			to_chat(src, "<span class='notice'>You are pinned against [A] by airflow!</span>")
-			airborne_acceleration = 0
-	else
-		airflow_speed = 0
-		airflow_time = 0
-		airborne_acceleration = 0
-		. = ..()
+			airflow_speed = 0
+	return ..()
 
 /atom/movable/proc/airflow_hit(atom/A)
 	airflow_speed = 0
-	airflow_dest = null
-	airborne_acceleration = 0
 
 /obj/airflow_hit(atom/A)
 	visible_message("<span class='danger'>\The [src] slams into \a [A]!</span>", blind_message = "<span class='danger'>You hear a loud slam!</span>")
 	playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER, 25)
-	. = ..()
+	..()
 
 /obj/item/airflow_hit(atom/A)
 	airflow_speed = 0
-	airflow_dest = null
 
 /mob/airflow_hit(atom/A)
 	visible_message("<span class='danger'>\The [src] slams into \a [A]!</span>", blind_message = "<span class='danger'>You hear a loud slam!</span>")
 	playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER, 25)
-	var/weak_amt = istype(A,/obj/item) ? A:w_class : rand(1, 5) //Heheheh
+	var/weak_amt
+	if(isitem(A))
+		var/obj/item/I = A
+		weak_amt = I.w_class
+	else
+		weak_amt = rand(1, 5)
+	Stun(weak_amt * 0.5)
 	Weaken(weak_amt)
-	. = ..()
+	..()
 
 /mob/living/simple_animal/construct/airflow_hit(atom/A)
 	return
@@ -277,32 +192,35 @@ Contains helper procs for airflow, handled in /connection_group.
 	return
 
 /mob/living/carbon/human/airflow_hit(atom/A)
-	playsound(src, pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER, 25)
+	playsound(src, pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER, 25)
 	var/obj/item/airbag/I = locate() in get_contents()
 	if(I)
 		I.deploy(src)
 		return
 
-	var/b_loss = min(airflow_speed, (airborne_acceleration*2)) * vsc.airflow_damage
-	if(prob(33) && b_loss > 0)
-		loc:add_blood(src)
-		bloody_body(src)
+	var/b_loss = min(airflow_speed, 2*airborne_acceleration) * vsc.airflow_damage
 
-	var/blocked = run_armor_check(BP_HEAD,"melee")
-	apply_damage(b_loss / 3, BRUTE, BP_HEAD, blocked, 0, "Airflow")
+	if(b_loss > 0)
+		if(prob(33))
+			loc.add_blood(src)
+			bloody_body(src)
 
-	blocked = run_armor_check(BP_CHEST,"melee")
-	apply_damage(b_loss / 3, BRUTE, BP_CHEST, blocked, 0, "Airflow")
+		var/blocked = run_armor_check(BP_HEAD,MELEE)
+		apply_damage(b_loss / 3, BRUTE, BP_HEAD, blocked, 0, "Airflow")
 
-	blocked = run_armor_check(BP_GROIN,"melee")
-	apply_damage(b_loss / 3, BRUTE, BP_GROIN, blocked, 0, "Airflow")
+		blocked = run_armor_check(BP_CHEST,MELEE)
+		apply_damage(b_loss / 3, BRUTE, BP_CHEST, blocked, 0, "Airflow")
+
+		blocked = run_armor_check(BP_GROIN,MELEE)
+		apply_damage(b_loss / 3, BRUTE, BP_GROIN, blocked, 0, "Airflow")
 
 	if(airflow_speed > 10)
-		Paralyse(round(airflow_speed * vsc.airflow_stun))
-		Stun(paralysis + 3)
+		var/airflow_paralysis = round(airflow_speed * vsc.airflow_stun)
+		Paralyse(airflow_paralysis)
+		Stun(airflow_paralysis + 3)
 	else
 		Stun(round(airflow_speed * vsc.airflow_stun / 2))
-	. = ..()
+	..()
 
 /zone/proc/movables()
 	. = list()

@@ -46,7 +46,7 @@
 /obj/machinery/drone_fabricator/examine(mob/user)
 	..()
 	if(produce_drones && drone_progress >= 100 && istype(user,/mob/dead) && config.allow_drone_spawn && count_drones() < config.max_maint_drones)
-		to_chat(user, "<BR><B>A drone is prepared. Select 'Join As Drone' from the Ghost tab to spawn as a maintenance drone.</B>")
+		to_chat(user, "<BR><B>A drone is prepared. Select 'Spawners Menu' from the Ghost tab, and choose the Drone role to spawn as a maintenance drone.</B>")
 
 /obj/machinery/drone_fabricator/proc/count_drones()
 	var/drones = 0
@@ -72,8 +72,22 @@
 	time_last_drone = world.time
 	var/mob/living/silicon/robot/drone/maintenance/new_drone = new(get_turf(src))
 	new_drone.transfer_personality(player)
-
+	new_drone.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+	new_drone.mind.skills.maximize_active_skills()
 	drone_progress = 0
+
+/obj/machinery/drone_fabricator/atom_break(damage_flag)
+	. = ..()
+	if(!.)
+		return
+	audible_message("<span class='warning'>[src] lets out a tinny alarm before falling dark.</span>")
+	playsound(loc, 'sound/machines/warning-buzzer.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+
+/obj/machinery/drone_fabricator/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 5)
+	..()
 
 /mob/proc/dronize()
 

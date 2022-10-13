@@ -41,10 +41,16 @@
 	if((iscultist(user) || isobserver(user)) && religion)
 		to_chat(user, "Писание Нар-Си. Содержит подробности о тёмных ритуалах, загадочных рунах и много другой странной информации. Однако, большинство из написанного не работает.")
 		to_chat(user, "Текущее количество favor: [religion.favor] piety: <span class='cult'>[religion.piety]</span>")
-		var/list/L
-		if(religion.runes_by_mob[user])
-			L = religion.runes_by_mob[user]
+
+		var/cultists = 0
+		for(var/mob/M in religion.members)
+			if(M.stat != DEAD)
+				cultists++
+
+		to_chat(user, "В культе всего [cultists] [pluralize_russian(cultists, "последователь", "последователя", "последователей")]")
+		var/list/L = LAZYACCESS(religion.runes_by_ckey, user.ckey)
 		to_chat(user, "Вами нарисовано/всего <span class='cult'>[L ? L.len : "0"]</span>/[religion.max_runes_on_mob]")
+		to_chat(user, "<a href='?src=\ref[src];del_runes_ckey=1'>Удалить все ваши руны</a>")
 	else
 		..()
 
@@ -76,6 +82,17 @@
 			to_chat(user, "<span class='warning'>Вы не можете уничтожить стол, пока идёт исследование.</span>")
 			return FALSE
 	return TRUE
+
+/obj/item/weapon/storage/bible/tome/Topic(href, href_list)
+	..()
+	if(!Adjacent(usr) || usr.stat || !iscultist(usr))
+		return
+	var/list/L = LAZYACCESS(usr.my_religion.runes_by_ckey, usr.ckey)
+	if(href_list["del_runes_ckey"])
+		for(var/obj/effect/rune/R in L)
+			qdel(R)
+		to_chat(usr, "<span class='warning'>Все вами начерченные руны были стёрты.</span>")
+		return
 
 /obj/item/weapon/storage/bible/tome/afterattack(atom/target, mob/user, proximity, params)
 	..()
@@ -124,7 +141,7 @@
 		qdel(R)
 
 /obj/item/weapon/storage/bible/tome/proc/building_choices()
-	build_choices_image["Toggle Grind mode"] = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_grind")
+	build_choices_image["Toggle Grind mode"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_grind")
 	for(var/datum/building_agent/B in religion.available_buildings)
 		var/atom/build = B.building_type
 		build_choices_image[B] = image(icon = initial(build.icon), icon_state = initial(build.icon_state))
@@ -142,11 +159,10 @@
 		to_chat(H, "<span class='warning'>Ты сможешь разметить следующую руну через [round((rune_next[H.ckey] - world.time) * 0.1)+1] секунд!</span>")
 		return
 
-	if(religion.runes_by_mob[H])
-		var/list/L = religion.runes_by_mob[H]
-		if(L.len > religion.max_runes_on_mob)
-			to_chat(H, "<span class='warning'>Ваше тело слишком слабо, чтобы выдержать ещё больше рун!</span>")
-			return
+	var/list/L = LAZYACCESS(religion.runes_by_ckey, H.ckey)
+	if(!isnull(L) && L.len >= religion.max_runes_on_mob)
+		to_chat(H, "<span class='warning'>Ваше тело слишком слабо, чтобы выдержать ещё больше рун!</span>")
+		return
 
 	if(!religion.check_costs(choice.favor_cost * cost_coef, choice.piety_cost * cost_coef, H))
 		return
@@ -200,6 +216,10 @@
 		return
 
 	var/turf/targeted_turf = get_step(src, user.dir)
+	for(var/atom/A in targeted_turf.contents)
+		if(A.density)
+			to_chat(user, "<span class='warning'>Что-то мешает построить!</span>")
+			return
 	if(ispath(choice.building_type, /turf))
 		targeted_turf.ChangeTurf(choice.building_type)
 	else if(ispath(choice.building_type, /obj/structure/altar_of_gods/cult))

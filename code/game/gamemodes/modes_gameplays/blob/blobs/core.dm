@@ -8,7 +8,7 @@ var/global/list/blob_nodes = list()
 	name = "blob core"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_core"
-	health = 200
+	max_integrity = 200
 	fire_resist = 2
 	var/mob/camera/blob/overmind = null // the blob core's overmind
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
@@ -23,7 +23,7 @@ var/global/list/blob_nodes = list()
 		INVOKE_ASYNC(src, .proc/create_overmind, new_overmind)
 	point_rate = new_rate
 	last_resource_collection = world.time
-	health = h
+	update_integrity(h)
 	. = ..()
 
 
@@ -38,13 +38,6 @@ var/global/list/blob_nodes = list()
 /obj/effect/blob/core/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
 
-/obj/effect/blob/core/update_icon()
-	if(health <= 0)
-		qdel(src)
-		return
-	// update_icon is called when health changes so... call update_health in the overmind
-	return
-
 /obj/effect/blob/core/RegenHealth()
 	return // Don't regen, we handle it in Life()
 
@@ -56,7 +49,8 @@ var/global/list/blob_nodes = list()
 		overmind.add_points(points_to_collect)
 		last_resource_collection = world.time
 
-	health = min(initial(health), health + 1)
+	if(get_integrity() < max_integrity)
+		repair_damage(1)
 	if(overmind)
 		overmind.update_health_hud()
 	for(var/dir in cardinal)
@@ -98,23 +92,15 @@ var/global/list/blob_nodes = list()
 	B.blob_core = src
 	src.overmind = B
 
-	var/datum/faction/blob_conglomerate/conglomerate = find_faction_by_type(/datum/faction/blob_conglomerate)
-	if(conglomerate) //Faction exists
-		if(!conglomerate.get_member_by_mind(B.mind)) //We are not a member yet
-			var/ded = TRUE
-			if(conglomerate.members.len)
-				for(var/datum/role/R in conglomerate.members)
-					if (R.antag.current && !(R.antag.current.is_dead()))
-						ded = FALSE
-						break
-			add_faction_member(conglomerate, B, !ded)
-
-	else //No faction? Make one and you're the overmind.
-		conglomerate = SSticker.mode.CreateFaction(/datum/faction/blob_conglomerate)
-		if(conglomerate)
-			conglomerate.OnPostSetup()
-			conglomerate.forgeObjectives()
-			add_faction_member(conglomerate, B, FALSE)
+	var/datum/faction/blob_conglomerate/conglomerate = create_uniq_faction(/datum/faction/blob_conglomerate)
+	if(!conglomerate.get_member_by_mind(B.mind)) //We are not a member yet
+		var/ded = TRUE
+		if(conglomerate.members.len)
+			for(var/datum/role/R in conglomerate.members)
+				if (R.antag.current && !(R.antag.current.is_dead()))
+					ded = FALSE
+					break
+		add_faction_member(conglomerate, B, !ded)
 
 	conglomerate.declared = TRUE
 

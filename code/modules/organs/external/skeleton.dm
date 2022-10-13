@@ -8,6 +8,9 @@
 /datum/bodypart_controller/skeleton/emp_act(severity)
 	return
 
+/datum/bodypart_controller/skeleton/adjust_pumped(value)
+	return 0
+
 // Bones just fly away if damage is too high. They also don't care about lasers
 /datum/bodypart_controller/skeleton/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
 	if(!BP.owner)

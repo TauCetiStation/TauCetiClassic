@@ -211,16 +211,14 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if( search_id && istype(A,/obj/item/weapon/card/id) )
 				var/obj/item/weapon/card/id/ID = A
 				if(ID.registered_name == oldname)
-					ID.registered_name = newname
-					ID.name = "[newname]'s ID Card ([ID.assignment])"
+					ID.assign(newname)
 					if(!search_pda)	break
 					search_id = 0
 
 			else if( search_pda && istype(A,/obj/item/device/pda) )
 				var/obj/item/device/pda/PDA = A
 				if(PDA.owner == oldname)
-					PDA.owner = newname
-					PDA.name = "PDA-[newname] ([PDA.ownjob])"
+					PDA.assign(newname)
 					if(!search_id)	break
 					search_pda = 0
 	return TRUE
@@ -282,7 +280,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/select = null
 	var/list/borgs = list()
 	for (var/mob/living/silicon/robot/A in player_list)
-		if (A.stat == DEAD || A.connected_ai || A.scrambledcodes || istype(A,/mob/living/silicon/robot/drone))
+		if (A.stat == DEAD || A.connected_ai || A.scrambledcodes || isdrone(A))
 			continue
 		var/name = "[A.real_name] ([A.modtype] [A.braintype])"
 		borgs[name] = A
@@ -345,7 +343,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if (M.real_name && M.real_name != M.name)
 				name += " \[[M.real_name]\]"
 			if (M.stat == DEAD)
-				if(istype(M, /mob/dead/observer))
+				if(isobserver(M))
 					name += " \[ghost\]"
 				else
 					name += " \[dead\]"
@@ -420,7 +418,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	if(!whom)
 		return "*null*"
-	if(istype(whom, /client))
+	if(isclient(whom))
 		C = whom
 		M = C.mob
 		key = C.ckey
@@ -789,12 +787,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					var/old_icon_state1 = T.icon_state
 					var/old_icon1 = T.icon
 
+					if(locate(/obj/structure/flora) in B.contents) // cleaning trees/bushes at LZ
+						for(var/obj/structure/flora/O in B.contents)
+							qdel(O)
 
 					var/turf/X = T.MoveTurf(B)
 
-					X.set_dir(old_dir1)
-					X.icon_state = old_icon_state1
-					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
+					if(!isenvironmentturf(X))
+						X.set_dir(old_dir1)
+						X.icon_state = old_icon_state1
+						X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
 
 					var/turf/simulated/ST = T
 					if(istype(ST) && ST.zone)
@@ -819,7 +821,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 						// Find a new turf to take on the property of
 						var/turf/nextturf = get_step(corner, direction)
-						if(!nextturf || !istype(nextturf, /turf/space))
+						if(!nextturf || !isenvironmentturf(nextturf))
 							nextturf = get_step(corner, turn(direction, 180))
 
 
@@ -865,8 +867,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					continue moving
 	return TRUE
 
-
-/proc/DuplicateObject(obj/original, perfectcopy = 0 , sameloc = 0)
+/proc/DuplicateObject(obj/original, perfectcopy = FALSE, sameloc = FALSE, atom/newloc = null)
 	if(!original)
 		return null
 
@@ -875,13 +876,30 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	if(sameloc)
 		O=new original.type(original.loc)
 	else
-		O=new original.type(locate(0,0,0))
+		O=new original.type(newloc)
 
-	if(perfectcopy)
-		if((O) && (original))
-			for(var/V in original.vars)
-				if(!(V in list("type","loc","locs","vars", "parent", "parent_type","verbs","ckey","key")))
-					O.vars[V] = original.vars[V]
+	if(perfectcopy && O && original)
+		for(var/V in original.vars - global.duplicate_forbidden_vars)
+			var/smt = original.vars[V]
+			if(O.vars[V] == smt)
+				continue // check for consts
+			if(islist(smt))
+				var/list/L = smt
+				O.vars[V] = L.Copy()
+			else if(istype(smt, /datum) || ismob(smt))
+				continue // this would reference the original's object, that will break when it is used or deleted.
+			else
+				O.vars[V] = smt
+
+	if(ismachinery(O))
+		var/obj/machinery/M = O
+		M.power_change()
+
+	if(ismob(O)) //Overlays are carried over despite disallowing them, if a fix is found remove this.
+		var/mob/M = O
+		M.cut_overlays()
+		M.regenerate_icons()
+	
 	return O
 
 
@@ -942,7 +960,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					var/old_icon1 = T.icon
 
 					if(platingRequired)
-						if(istype(B, /turf/space))
+						if(isenvironmentturf(B))
 							continue moving
 
 					var/turf/X = new T.type(B)
@@ -1191,7 +1209,7 @@ var/global/list/common_tools = list(
 
 //check if mob is lying down on something we can operate him on.
 /proc/can_operate(mob/living/carbon/M)
-	if(locate(/obj/machinery/optable, M.loc) && M.resting)
+	if(locate(/obj/machinery/optable, M.loc) && M.crawling)
 		return TRUE
 	if((M.buckled || M.lying || M.incapacitated()) && prob(get_surg_chance(M.loc)))
 		return TRUE
@@ -1207,7 +1225,8 @@ var/global/list/WALLITEMS = typecacheof(list(
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/door_control,
 	/obj/machinery/computer/security/telescreen,
 	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
-	/obj/structure/mirror, /obj/structure/closet/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment
+	/obj/structure/mirror, /obj/structure/closet/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment,
+	/obj/structure/sign/painting,
 ))
 /proc/gotwallitem(loc, dir)
 	for(var/obj/O in loc)

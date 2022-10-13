@@ -9,7 +9,7 @@
 	var/shadeColour = "#220000" // RGB
 	var/uses = 30 // 0 for unlimited uses
 	var/instant = 0
-	var/colourName = "red" // for updateIcon purposes
+	var/colourName = DYE_RED // for updateIcon purposes
 	var/list/validSurfaces = list(/turf/simulated/floor)
 	var/edible = 1
 
@@ -49,7 +49,7 @@
 /obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(!istype(target, /turf/simulated/wall) && !target.CanPass(null, target))
+	if(!iswallturf(target) && !target.CanPass(null, target))
 		return
 	if(!uses)
 		to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
@@ -212,37 +212,37 @@
 	icon_state = "crayonred"
 	colour = "#da0000"
 	shadeColour = "#810c0c"
-	colourName = "red"
+	colourName = DYE_RED
 
 /obj/item/toy/crayon/orange
 	icon_state = "crayonorange"
 	colour = "#ff9300"
 	shadeColour = "#a55403"
-	colourName = "orange"
+	colourName = DYE_ORANGE
 
 /obj/item/toy/crayon/yellow
 	icon_state = "crayonyellow"
 	colour = "#fff200"
 	shadeColour = "#886422"
-	colourName = "yellow"
+	colourName = DYE_YELLOW
 
 /obj/item/toy/crayon/green
 	icon_state = "crayongreen"
 	colour = "#a8e61d"
 	shadeColour = "#61840f"
-	colourName = "green"
+	colourName = DYE_GREEN
 
 /obj/item/toy/crayon/blue
 	icon_state = "crayonblue"
 	colour = "#00b7ef"
 	shadeColour = "#0082a8"
-	colourName = "blue"
+	colourName = DYE_BLUE
 
 /obj/item/toy/crayon/purple
 	icon_state = "crayonpurple"
 	colour = "#da00ff"
 	shadeColour = "#810cff"
-	colourName = "purple"
+	colourName = DYE_PURPLE
 
 /obj/item/toy/crayon/chalk
 	name = "white chalk"
@@ -250,14 +250,14 @@
 	icon_state = "chalk"
 	colour = "#ffffff"
 	shadeColour = "#cecece"
-	colourName = "white"
+	colourName = DYE_WHITE
 
 /obj/item/toy/crayon/mime
 	icon_state = "crayonmime"
 	desc = "A very sad-looking crayon."
 	colour = "#ffffff"
 	shadeColour = "#000000"
-	colourName = "mime"
+	colourName = DYE_MIME
 
 /obj/item/toy/crayon/mime/attack_self(mob/living/user) //inversion
 	if(colour != "#ffffff" && shadeColour != "#000000")
@@ -274,7 +274,7 @@
 	icon_state = "crayonrainbow"
 	colour = "#fff000"
 	shadeColour = "#000fff"
-	colourName = "rainbow"
+	colourName = DYE_RAINBOW
 
 /obj/item/toy/crayon/rainbow/attack_self(mob/living/user)
 	colour = input(user, "Please select the main colour.", "Crayon colour") as color
@@ -303,19 +303,20 @@
 	else
 		to_chat(user, "It is empty.")
 
+/obj/item/toy/crayon/spraycan/verb/toggle_cap()
+	set name = "Toggle Cap"
+	set category = "Object"
+
+	to_chat(usr, "<span class='notice'>You [capped ? "Remove" : "Replace"] the cap of the [src]</span>")
+	capped = !capped
+	update_icon()
+
 /obj/item/toy/crayon/spraycan/attack_self(mob/living/user)
-	var/choice = input(user,"Spraycan options") as null|anything in list("Toggle Cap","Change Drawing","Change Color")
-	switch(choice)
-		if("Toggle Cap")
-			to_chat(user, "<span class='notice'>You [capped ? "Remove" : "Replace"] the cap of the [src]</span>")
-			capped = capped ? 0 : 1
-			icon_state = "spraycan[capped ? "_cap" : ""]"
-			update_icon()
-		if("Change Drawing")
-			..()
-		if("Change Color")
-			colour = input(user,"Choose Color") as color
-			update_icon()
+	if(capped)
+		toggle_cap()
+		return
+	colour = input(user,"Choose Color") as color
+	update_icon()
 
 /obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
@@ -347,11 +348,23 @@
 	if((istype(target, /obj/mecha) || isrobot(target)) && uses >= 10)
 		target.color = normalize_color(colour)
 		uses -= 10
+	if(istype(target, /obj/machinery/camera))
+		var/obj/machinery/camera/C = target
+		if(do_after(user, 20, target = C))		//can_move = TRUE, when reworking
+			if(C.painted)
+				to_chat(user, "<span class='notice'>[src] already spoiled!</span>")
+				return
+			user.visible_message("<span class='warning'>[user] paints the [C] lens!</span>",
+			"<span class='notice'>You paint over the [C] lens. Respect received.</span>")
+			C.painted = TRUE
+			C.toggle_cam(FALSE)
+			C.color = colour
 	playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 5)
 	..()
 
 /obj/item/toy/crayon/spraycan/update_icon()
 	cut_overlays()
+	icon_state = "spraycan[capped ? "_cap" : ""]"
 	var/image/I = image('icons/obj/crayons.dmi',icon_state = "[capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 	I.color = colour
 	add_overlay(I)

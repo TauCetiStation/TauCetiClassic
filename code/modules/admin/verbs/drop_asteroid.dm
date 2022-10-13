@@ -30,6 +30,7 @@
 				shake_camera(C, 4, 1)
 			else
 				shake_camera(C, 10, 2)
+				C.Stun(4)
 				C.Weaken(8)
 				C.throw_at(get_step(C,pick(1,2,4,8)),16,3)
 
@@ -47,7 +48,7 @@
 			if(prob(5))
 				H.gib()
 		else
-			M.ex_act(pick(1,3))
+			M.ex_act(pick(EXPLODE_DEVASTATE,EXPLODE_LIGHT))
 
 	asteroid.load(T)
 
@@ -67,7 +68,7 @@
 
 /proc/generate_asteroid_mapfile(size_x, size_y)
 	var/map = "\
-		\"[SPACETURF]\" = (/turf/space,/area/space)\n\
+		\"[SPACETURF]\" = (/turf/environment/space,/area/space)\n\
 		\"[FLOORTURF]\" = (/turf/simulated/floor/plating/airless/asteroid,/area/asteroid/mine/unexplored)\n\
 		\"[CAVETURF]\" = (/turf/simulated/mineral/random/caves,/area/asteroid/mine/unexplored)\n\
 		\"[RESCAVETURF]\" = (/turf/simulated/mineral/random/high_chance,/area/asteroid/mine/unexplored)\n\

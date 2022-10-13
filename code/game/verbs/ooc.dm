@@ -1,5 +1,5 @@
 
-var/global/normal_ooc_colour = "#002eb8"
+var/global/normal_ooc_colour = null
 var/global/bridge_ooc_colour = "#7b804f"
 
 /client/verb/ooc(msg as text)
@@ -67,6 +67,9 @@ var/global/bridge_ooc_colour = "#7b804f"
 	else
 		log_ooc("[name]: [msg]")
 
+	var/msg_start = "<span class='ooc'><font[colour ? " color='[colour]'" : ""]><span class='prefix'>OOC"
+	var/msg_end = "</EM> <span class='message emojify linkify'>[msg]</span></font></span>"
+
 	for(var/client/C in clients)
 		// Lobby people can only say in OOC to other lobby people.
 		if(!ooc_allowed && !istype(C.mob, /mob/dead/new_player) && !C.holder)
@@ -86,16 +89,16 @@ var/global/bridge_ooc_colour = "#7b804f"
 					display_name = sender.holder.fakekey
 
 		if(C.prefs.chat_toggles & CHAT_OOC)
-			var/chat_suffix = "[C.holder && istype(sender, /mob/dead/new_player) && !ooc_allowed ? " (LOBBY)" : ""]"
-			to_chat(C, "<font color='[colour]'><span class='ooc'><span class='prefix'>OOC[chat_suffix]:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></span></font>")
+			var/chat_suffix = C.holder && istype(sender, /mob/dead/new_player) && !ooc_allowed ? " (LOBBY)" : ""
+			to_chat(C, "[msg_start][chat_suffix]:</span> <EM>[display_name]:[msg_end]")
 
 /client/proc/set_global_ooc(newColor as color)
 	set name = "Set Global OOC Colour"
-	set desc = "Set to yellow for eye burning goodness."
+	set desc = "Set to yellow for eye burning goodness. #000000 reset colour."
 	set category = "OOC"
 	if(!holder)
 		return
-	normal_ooc_colour = newColor
+	normal_ooc_colour = newColor != "#000000" ? newColor : null
 
 /client/verb/set_name_ooc()
 	set name = "Set Name OOC Colour"
@@ -170,7 +173,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 		if(C.prefs.chat_toggles & CHAT_LOOC)
 			if(is_fake_key && C.holder)
 				display_name = "[holder.fakekey]/([key])"
-			to_chat(C, "<font color='#6699CC'><span class='ooc'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></span></font>")
+			to_chat(C, "<span class='looc'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message emojify linkify'>[msg]</span></span>")
 
 	for(var/client/C as anything in admins)
 		if(C.prefs.chat_toggles & CHAT_LOOC)
@@ -180,88 +183,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 			var/prefix = "(R)LOOC"
 			if (C.mob in heard)
 				prefix = "LOOC"
-			to_chat(C, "[track]<font color='#6699CC'><span class='ooc'><span class='prefix'>[prefix]:</span> <EM>[mob.name]/([key]):</EM> <span class='message emojify linkify'>[msg]</span></span></font>")
-
-/client/verb/fix_chat()
-	set name = "Fix chat"
-	set category = "OOC"
-	if (!chatOutput || !istype(chatOutput))
-		var/action = tgui_alert(src, "Invalid Chat Output data found!\nRecreate data?", "Wot?", list("Recreate Chat Output data", "Cancel"))
-		if (action != "Recreate Chat Output data")
-			return
-		chatOutput = new /datum/chatOutput(src)
-		chatOutput.start()
-		action = tgui_alert(src, "Goon chat reloading, wait a bit and tell me if it's fixed",, list("Fixed", "Nope"))
-		if (action == "Fixed")
-			log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by re-creating the chatOutput datum")
-		else
-			chatOutput.load()
-			action = tgui_alert(src, "How about now? (give it a moment (it may also try to load twice))",, list("Yes", "No"))
-			if (action == "Yes")
-				log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by re-creating the chatOutput datum and forcing a load()")
-			else
-				action = tgui_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat",, list("Thanks anyways", "Switch to old chat"))
-				if (action == "Switch to old chat")
-					winset(src, "output", "is-visible=true;is-disabled=false")
-					winset(src, "browseroutput", "is-visible=false")
-				log_game("GOONCHAT: [key_name(src)] Failed to fix their goonchat window after recreating the chatOutput and forcing a load()")
-
-	else if (chatOutput.loaded)
-		var/action = tgui_alert(src, "ChatOutput seems to be loaded\nDo you want me to force a reload, wiping the chat log or just refresh the chat window because it broke/went away?", "Hmmm", list("Force Reload", "Refresh", "Cancel"))
-		switch (action)
-			if ("Force Reload")
-				chatOutput.loaded = FALSE
-				chatOutput.start() //this is likely to fail since it asks , but we should try it anyways so we know.
-				action = tgui_alert(src, "Goon chat reloading, wait a bit and tell me if it's fixed",, list("Fixed", "Nope"))
-				if (action == "Fixed")
-					log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a start()")
-				else
-					chatOutput.load()
-					action = tgui_alert(src, "How about now? (give it a moment (it may also try to load twice))",, list("Yes", "No"))
-					if (action == "Yes")
-						log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a load()")
-					else
-						action = tgui_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat",, list("Thanks anyways", "Switch to old chat"))
-						if (action == "Switch to old chat")
-							winset(src, "output", "is-visible=true;is-disabled=false")
-							winset(src, "browseroutput", "is-visible=false")
-						log_game("GOONCHAT: [key_name(src)] Failed to fix their goonchat window forcing a start() and forcing a load()")
-
-			if ("Refresh")
-				chatOutput.showChat()
-				action = tgui_alert(src, "Goon chat refreshing, wait a bit and tell me if it's fixed",, list("Fixed", "Nope, force a reload"))
-				if (action == "Fixed")
-					log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a show()")
-				else
-					chatOutput.loaded = FALSE
-					chatOutput.load()
-					action = tgui_alert(src, "How about now? (give it a moment)",, list("Yes", "No"))
-					if (action == "Yes")
-						log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by forcing a load()")
-					else
-						action = tgui_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat",, list("Thanks anyways", "Switch to old chat"))
-						if (action == "Switch to old chat")
-							winset(src, "output", "is-visible=true;is-disabled=false")
-							winset(src, "browseroutput", "is-visible=false")
-						log_game("GOONCHAT: [key_name(src)] Failed to fix their goonchat window forcing a show() and forcing a load()")
-		return
-
-	else
-		chatOutput.start()
-		var/action = tgui_alert(src, "Manually loading Chat, wait a bit and tell me if it's fixed",, list("Fixed", "Nope"))
-		if (action == "Fixed")
-			log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by manually calling start()")
-		else
-			chatOutput.load()
-			tgui_alert(src, "How about now? (give it a moment (it may also try to load twice))",, list("Yes", "No"))
-			if (action == "Yes")
-				log_game("GOONCHAT: [key_name(src)] Had to fix their goonchat by manually calling start() and forcing a load()")
-			else
-				action = tgui_alert(src, "Welp, I'm all out of ideas. Try closing byond and reconnecting.\nWe could also disable fancy chat and re-enable oldchat",, list("Thanks anyways", "Switch to old chat"))
-				if (action == "Switch to old chat")
-					winset(src, "output", list2params(list("on-show" = "", "is-disabled" = "false", "is-visible" = "true")))
-					winset(src, "browseroutput", "is-disabled=true;is-visible=false")
-				log_game("GOONCHAT: [key_name(src)] Failed to fix their goonchat window after manually calling start() and forcing a load()")
+			to_chat(C, "[track]<span class='looc'><span class='prefix'>[prefix]:</span> <EM>[mob.name]/([key]):</EM> <span class='message emojify linkify'>[msg]</span></span>")
 
 /client/verb/fix_ui()
 	set name = "Fix UI"
@@ -275,7 +197,7 @@ var/global/bridge_ooc_colour = "#7b804f"
 
 	// Close all NanoUI/TGUI windows
 	nanomanager.close_user_uis(usr)
-	SStgui.force_close_all_windows(usr)
+	SStgui.close_user_uis(usr)
 
 	// Clear the user's cache so they get resent.
 	// This is not fully clearing their BYOND cache, just their assets sent from the server this round

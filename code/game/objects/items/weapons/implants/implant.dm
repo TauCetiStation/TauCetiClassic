@@ -7,10 +7,11 @@
 	var/implanted = null
 	var/mob/imp_in = null
 	var/obj/item/organ/external/part = null
-	item_color = "b"
 	var/allow_reagents = 0
 	var/malfunction = 0
 	var/uses = 0
+
+	var/implant_type = "b"
 
 /obj/item/weapon/implant/atom_init()
 	. = ..()
@@ -54,6 +55,12 @@
 		BP.implants += src
 		C.sec_hud_set_implants()
 		part = BP
+
+/obj/item/weapon/implant/proc/stealth_inject(mob/living/carbon/C)
+	forceMove(C)
+	imp_in = C
+	implanted = TRUE
+	C.sec_hud_set_implants()
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
@@ -154,6 +161,7 @@ Implant Specifics:<BR>"}
 	var/elevel = "Localized Limb"
 	var/phrase = "supercalifragilisticexpialidocious"
 	icon_state = "implant_evil"
+	flags = HEAR_TALK
 
 /obj/item/weapon/implant/explosive/get_data()
 	var/dat = {"
@@ -305,9 +313,9 @@ Implant Specifics:<BR>"}
 	imp_in.SetParalysis(0)
 	imp_in.SetStunned(0)
 	imp_in.SetWeakened(0)
-	imp_in.lying = 0
-	imp_in.update_canmove()
-	imp_in.reagents.add_reagent("hyperzine", 1)
+	imp_in.reagents.add_reagent("tricordrazine", 20)
+	imp_in.reagents.add_reagent("doctorsdelight", 25)
+	imp_in.reagents.add_reagent("oxycodone", 5)
 	imp_in.reagents.add_reagent("stimulants", 4)
 	if (!uses)
 		qdel(src)

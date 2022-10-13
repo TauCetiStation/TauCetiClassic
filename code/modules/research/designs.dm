@@ -111,16 +111,6 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/camera_advanced/xenobio
 	category = list("Computer")
 
-
-/datum/design/pandemic
-	name = "Circuit Design (PanD.E.M.I.C. 2200)"
-	desc = "Allows for the construction of circuit boards used to build a PanD.E.M.I.C. 2200 console."
-	id = "pandemic"
-	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 2000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/pandemic
-	category = list("Machine")
-
 /datum/design/scan_console
 	name = "Circuit Design (DNA Machine)"
 	desc = "Allows for the construction of circuit boards used to build a new DNA scanning console."
@@ -372,6 +362,24 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/libraryconsole
 	category = list("Computer")
+
+/datum/design/cmf_console
+	name = "Circuit Design (CMF Console)"
+	desc = "Allows for the construction of circuit boards used to build a CMF modifier console."
+	id = "cmf_console"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/skills_console
+	category = list("Computer")
+
+/datum/design/cmf_scanner
+	name = "Circuit Design (CMF table)"
+	desc = "Allows for the construction of circuit boards used to build a CMF manipulation table."
+	id = "cmf_scanner"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/skill_scanner
+	category = list("Machine")
 
 ///////////////////////////////////
 //////////AI Module Disks//////////
@@ -1546,6 +1554,23 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/pacman/mrs
 	category = list("Power")
 
+/datum/design/circulator
+	name = "Circulator Board"
+	desc = "The circuit board for a TEG circulator."
+	id = "circ"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/circulator
+	category = list("Power")
+
+/datum/design/teg
+	name = "TEG Board"
+	desc = "The circuit board for a TEG generator."
+	id = "teg"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/teg
+	category = list("Power")
 
 /////////////////////////////////////////
 ////////////Medical Tools////////////////
@@ -1814,6 +1839,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/device/biocan
 	category = list("Support")
 
+/datum/design/changeling_test
+	name = "Changeling test"
+	desc = "Allows you to identify hidden changelings"
+	id = "changtest"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 12500, MAT_GOLD = 2000, MAT_DIAMOND = 3750, MAT_URANIUM = 4000)
+	build_path = /obj/item/weapon/changeling_test
+	category = list("Support")
+
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
 /////////////////////////////////////////
@@ -1971,22 +2005,22 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/gun/projectile/automatic
 	category = list("Weapons")
 
-/datum/design/ammo_9mm
-	name = "Ammunition Box (9mm)"
-	desc = "A box of prototype 9mm ammunition."
-	id = "ammo_9mm"
+/datum/design/msmg9mm
+	name = "SMG magazine (9mm)"
+	desc = "Magazine, full of 9mm submachine gun ammo."
+	id = "smg_ammo_9mm"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3750, MAT_SILVER = 100)
 	build_path = /obj/item/ammo_box/magazine/msmg9mm
 	category = list("Weapons")
 
-/datum/design/stunslug
-	name = "Stun Slug"
-	desc = "Box of eight stunning, electrified slugs for a shotgun."
+/datum/design/stunshot
+	name = "Stun Shot"
+	desc = "Box of eight stunning, electrified shells for a shotgun."
 	id = "stunshell"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 20000)
-	build_path = /obj/item/ammo_box/eight_shells/stunslug
+	build_path = /obj/item/ammo_box/eight_shells/stunshot
 	category = list("Weapons")
 
 /datum/design/phoronpistol
@@ -2181,6 +2215,15 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/hud/mining
+	category = list("Support")
+
+/datum/design/hud_calibrator
+	name = "Рекалибратор дисплея"
+	desc = "Рекалибрует дисплей с помощью интерференции волн, улучшая опыт пользования визуальным интерфейсом."
+	id = "hud_calibrator"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 150)
+	build_path = /obj/item/device/hud_calibrator
 	category = list("Support")
 
 /////////////////////////////////////////
@@ -2757,4 +2800,13 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_GOLD = 2000, MAT_PHORON = 4000)
 	build_path = /obj/item/rig_module/teleporter_stabilizer
+	category = list("Rig Modules")
+
+/datum/design/hardsuit_emp_shield
+	name = "Hardsuit EMP shield"
+	desc = "Device for protecting hardsuit against EMPs."
+	id = "rigempshield"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
+	build_path = /obj/item/rig_module/emp_shield
 	category = list("Rig Modules")

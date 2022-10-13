@@ -8,6 +8,7 @@
 /obj/item/weapon/storage
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
+	flags = HEAR_TALK
 	w_class = SIZE_SMALL
 	var/list/can_hold = list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = list() //List of objects which this item can't store (in effect only if can_hold isn't set)
@@ -66,10 +67,11 @@
 		remove_outline()
 	if(!(ishuman(usr) || ismonkey(usr) || isIAN(usr))) //so monkeys can take off their backpacks -- Urist
 		return
-	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+	if (istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
 		return
 
 	var/mob/M = usr
+	add_fingerprint(M)
 	if(isturf(over_location) && over_object != M)
 		if(M.incapacitated())
 			return
@@ -96,37 +98,15 @@
 				remove_from_storage(I, M.loc)
 				I.add_fingerprint(M)
 				step(I, dir_target)
-			add_fingerprint(M)
 		return
 
 	if(!over_object)
 		return
-	if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
-		open(usr)
-		return
-	if (!( istype(over_object, /atom/movable/screen) ))
-		return ..()
-
-	//makes sure that the storage is equipped, so that we can't drag it into our hand from miles away.
-	//there's got to be a better way of doing this.
-	if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
+	if(over_object == usr) // this must come before the screen objects only block
+		try_open(usr)
 		return
 
-	if (!usr.incapacitated())
-		switch(over_object.name)
-			if("r_hand")
-				if(!M.unEquip(src))
-					return
-				M.put_in_r_hand(src)
-			if("l_hand")
-				if(!M.unEquip(src))
-					return
-				M.put_in_l_hand(src)
-			if("mouth")
-				if(!M.unEquip(src))
-					return
-				M.put_in_active_hand(src)
-		add_fingerprint(usr)
+	return ..()
 
 /obj/item/weapon/storage/proc/return_inv()
 	var/list/L = list(  )
@@ -156,6 +136,16 @@
 	prepare_ui()
 	storage_ui.on_open(user)
 	show_to(user)
+
+// Returns TRUE if user can open the storage and opens it. Returns FALSE otherwise.
+/obj/item/weapon/storage/proc/try_open(mob/user)
+	if(!user)
+		return FALSE
+	if(!user.in_interaction_vicinity(src))
+		return FALSE
+
+	open(user)
+	return TRUE
 
 /obj/item/weapon/storage/proc/prepare_ui()
 	if(!storage_ui)
@@ -252,9 +242,14 @@
 /obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
 	if(!istype(W))
 		return FALSE
+
+	if(SEND_SIGNAL(src, COMSIG_STORAGE_ENTERED, W, prevent_warning, NoUpdate) & COMSIG_STORAGE_PROHIBIT)
+		return
+
 	if(usr)
 		usr.remove_from_mob(W)
 		usr.update_icons()	//update our overlays
+
 	W.loc = src
 	W.on_enter_storage(src)
 	if(usr)
@@ -300,12 +295,13 @@
 	if(storage_ui)
 		storage_ui.on_pre_remove(usr, W)
 
+	SEND_SIGNAL(src, COMSIG_STORAGE_EXITED, W, new_location, NoUpdate)
+
 	if(new_location)
 		if(ismob(loc))
 			var/mob/M = loc
 			W.dropped(M)
 		if(ismob(new_location))
-			W.layer = ABOVE_HUD_LAYER
 			W.plane = ABOVE_HUD_PLANE
 		else
 			W.layer = initial(W.layer)
@@ -352,13 +348,19 @@
 	return
 
 /obj/item/weapon/storage/attack_hand(mob/user)
-	if (src.loc == user)
+	add_fingerprint(user)
+	if(loc == user)
 		open(user)
 	else
 		..()
 		if(storage_ui)
 			storage_ui.on_hand_attack(user)
+
+/obj/item/weapon/storage/AltClick(mob/user)
 	add_fingerprint(user)
+	if(try_open(user))
+		return
+	return ..(user)
 
 //Should be merged into attack_hand() later, i mean whole attack_paw() proc, but thats probably a lot of work.
 /obj/item/weapon/storage/attack_paw(mob/user) // so monkey, ian or something will open it, istead of unequip from back
@@ -409,7 +411,7 @@
 	finish_bulk_removal()
 
 /obj/item/weapon/storage/emp_act(severity)
-	if(!istype(src.loc, /mob/living))
+	if(!isliving(src.loc))
 		for(var/obj/O in contents)
 			O.emplode(severity)
 	..()
@@ -445,7 +447,7 @@
 //BubbleWrap END
 
 /obj/item/weapon/storage/hear_talk(mob/M, text, verb, datum/language/speaking)
-	for (var/atom/A in src)
+	for (var/atom/A in src) // todo: we need it? say() should already catch all objects recursively
 		if(istype(A,/obj))
 			var/obj/O = A
 			O.hear_talk(M, text, verb, speaking)
