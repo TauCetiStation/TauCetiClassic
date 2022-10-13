@@ -76,17 +76,21 @@
 		new /obj/item/stack/sheet/glass(loc, 10)
 	else
 		new /obj/item/weapon/shard(loc)
+		new /obj/item/stack/sheet/glass(loc, 8)
 		trigger_alarm()
 	var/obj/structure/displaycase_chassis/chassis = new (loc)
 	transfer_fingerprints_to(chassis)
 	var/obj/item/weapon/airlock_electronics/AE = electronics
 	if(!AE)
-		AE = new(chassis)
 		if(length(req_access))
+			AE = new(chassis)
 			AE.conf_access = req_access
 		else if(length(req_one_access))
+			AE = new(chassis)
 			AE.conf_access = req_one_access
 			AE.one_access = TRUE
+		else // no electronics & no access requirements -> chassis without electronics
+			return ..()
 	else
 		electronics = null
 		AE.forceMove(chassis)
