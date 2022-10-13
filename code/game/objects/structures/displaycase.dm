@@ -67,16 +67,18 @@
 			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/structure/displaycase/deconstruct(disassembled = TRUE)
+	dump()
 	if(flags & NODECONSTRUCT)
 		return ..()
-	dump()
-	if(!broken)
-		if(disassembled)
-			new /obj/item/stack/sheet/glass(loc, 2)
-		else
-			new /obj/item/weapon/shard(loc)
+	if(broken)
+		new /obj/item/stack/sheet/glass(loc, 8)
+	else if(disassembled)
+		new /obj/item/stack/sheet/glass(loc, 10)
+	else
+		new /obj/item/weapon/shard(loc)
 		trigger_alarm()
 	var/obj/structure/displaycase_chassis/chassis = new (loc)
+	transfer_fingerprints_to(chassis)
 	var/obj/item/weapon/airlock_electronics/AE = electronics
 	if(!AE)
 		AE = new(chassis)
@@ -98,6 +100,7 @@
 	
 	density = FALSE
 	broken = TRUE
+	open = TRUE
 	new /obj/item/weapon/shard(loc)
 	playsound(loc, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER, 70, TRUE)
 	update_icon()
@@ -114,7 +117,7 @@
 	// alarm_manager.send_alarm(ALARM_BURGLAR)
 	// addtimer(CALLBACK(alarm_manager, /datum/alarm_handler/proc/clear_alarm, ALARM_BURGLAR), 1 MINUTES)
 
-	playsound(src, 'sound/effects/alert.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+	playsound(loc, 'sound/effects/alert.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 
 /obj/structure/displaycase/update_icon()
 	var/list/new_overlays = update_overlays()
@@ -147,9 +150,10 @@
 				to_chat(user, "<span class='warning'>You need two glass sheets to fix the case!</span>")
 				return
 			to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
-			if(do_after(user, 2 SECONDS, target = src))
+			if(do_after(user, SKILL_TASK_VERY_EASY, target = src))
 				G.use(2)
 				broken = FALSE
+				density = initial(density)
 				update_integrity(max_integrity)
 				update_icon()
 			return
@@ -167,14 +171,13 @@
 					return
 
 				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-				if(W.use_tool(src, user, 4 SECONDS, amount=5, volume=50))
-					atom_integrity = max_integrity
-					update_icon()
+				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, amount = 5, volume = 50))
+					update_integrity(max_integrity)
 					to_chat(user, "<span class='notice'>You repair [src].</span>")
 			else
 				to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 			return
-	if(!alert && iscrowbar(W) && openable) //Only applies to the lab cage and player made display cases
+	if(!alert && iscrowbar(W) && openable) //Only applies to the player made display cases
 		if(broken)
 			if(showpiece)
 				to_chat(user, "<span class='warning'>Remove the displayed object first!</span>")
@@ -183,7 +186,7 @@
 				deconstruct(TRUE)
 		else
 			to_chat(user, "<span class='notice'>You start to [open ? "close":"open"] [src]...</span>")
-			if(W.use_tool(src, user, 2 SECONDS))
+			if(W.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50))
 				to_chat(user,  "<span class='notice'>You [open ? "close":"open"] [src].</span>")
 				toggle_lock(user)
 		return
@@ -213,7 +216,7 @@
 	if(.)
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(showpiece && (broken || open))
+	if(showpiece && open)
 		to_chat(user, "<span class='notice'>You deactivate the hover field built into the case.</span>")
 		dump()
 		add_fingerprint(user)
@@ -233,11 +236,14 @@
 	resistance_flags = CAN_BE_HIT
 	var/obj/item/weapon/airlock_electronics/electronics
 
+/obj/structure/displaycase_chassis/Destroy()
+	QDEL_NULL(electronics)
+	return ..()
 
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I)) //The player can only deconstruct the wooden frame
+	if(iswrench(I))
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
-		if(I.use_tool(src, user, 3 SECONDS, volume = 50))
+		if(I.use_tool(src, user, SKILL_TASK_EASY, volume = 50))
 			playsound(loc, 'sound/items/deconstruct.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 			deconstruct(TRUE)
 
@@ -248,12 +254,11 @@
 			electronics.forceMove(loc)
 			electronics = null
 
-	else if(istype(I, /obj/item/weapon/airlock_electronics))
+	else if(istype(I, /obj/item/weapon/airlock_electronics) && !electronics)
 		var/obj/item/weapon/airlock_electronics/AE = I
 		if(!AE.broken) // why are we have broken electronics as the same item?
 			to_chat(user, "<span class='notice'>You start installing the electronics into [src]...</span>")
-			I.play_tool_sound(src, 50)
-			if(do_after(user, 3 SECONDS, target = src) && user.remove_from_mob(I, src))
+			if(I.use_tool(src, user, SKILL_TASK_EASY, volume = 50) && user.remove_from_mob(I, src))
 				electronics = I
 				to_chat(user, "<span class='notice'>You install the airlock electronics.</span>")
 
@@ -263,15 +268,17 @@
 			to_chat(user, "<span class='warning'>You need ten glass sheets to do this!</span>")
 			return
 		to_chat(user, "<span class='notice'>You start adding [G] to [src]...</span>")
-		if(I.use_tool(src, user, 2 SECONDS, 10, volume = 50))
+		if(I.use_tool(src, user, SKILL_TASK_VERY_EASY, amount = 10, volume = 50))
 			var/obj/structure/displaycase/noalert/display = new(loc)
 			if(electronics)
-				electronics.forceMove(display)
-				display.electronics = electronics
-				if(electronics.one_access)
-					display.req_one_access = electronics.conf_access
+				var/obj/item/weapon/airlock_electronics/AE = electronics
+				electronics = null
+				AE.forceMove(display)
+				display.electronics = AE
+				if(AE.one_access)
+					display.req_one_access = AE.conf_access
 				else
-					display.req_access = electronics.conf_access
+					display.req_access = AE.conf_access
 			qdel(src)
 	else
 		return ..()
