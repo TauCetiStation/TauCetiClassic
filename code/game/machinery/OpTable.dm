@@ -110,7 +110,7 @@
 
 	take_victim(usr,usr)
 
-/obj/machinery/optable/proc/destroy()
+/obj/machinery/optable/proc/Destroy()
 	new /obj/item/stack/sheet/plasteel(loc, 5)
 	density = FALSE
 	qdel(src)
