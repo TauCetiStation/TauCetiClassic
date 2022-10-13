@@ -568,11 +568,7 @@
 "bj" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/syndicate/civilian,
-/obj/item/clothing/head/helmet/space/syndicate/civilian,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/weapon/tank/jetpack/oxygen,
-/obj/item/clothing/mask/gas/coloured,
 /turf/simulated/floor,
 /area/space_structures/agrospheregarden)
 "bk" = (
@@ -1441,6 +1437,12 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/agrospheregarden)
+"da" = (
+/obj/structure/rack,
+/obj/item/clothing/head/helmet/space/syndicate/civilian,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
 "fK" = (
 /obj/structure/flora/ausbushes/grassybush,
 /obj/effect/decal/cleanable/dirt,
@@ -1516,7 +1518,7 @@ aE
 aA
 aD
 bj
-bj
+da
 bL
 aD
 co
