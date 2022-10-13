@@ -125,7 +125,7 @@
 			return FALSE
 		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
 		if(W.use_tool(src, user, 50, volume = 50))
-			destroy()
+			Destroy()
 		return TRUE
 
 	if (istype(W, /obj/item/weapon/grab))
