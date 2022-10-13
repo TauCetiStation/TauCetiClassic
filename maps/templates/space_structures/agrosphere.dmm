@@ -4,9 +4,6 @@
 /area/space)
 "ab" = (
 /obj/structure/table/glass,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -28
-	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -16,6 +13,9 @@
 	},
 /obj/item/weapon/reagent_containers/syringe/antitoxin{
 	pixel_y = 1
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
 	},
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
@@ -92,12 +92,13 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 28
-	},
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 28
+	},
+/obj/effect/decal/remains/human,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -236,11 +237,8 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
 	id = "agro blast";
-	name = "Blast Doors";
-	opacity = 0
+	name = "Blast Doors"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/agrospheregarden)
@@ -329,15 +327,14 @@
 	},
 /obj/item/weapon/storage/belt/utility,
 /obj/item/device/radio/off,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Head of Personnel APC";
-	pixel_y = 24;
-	req_access = list()
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	name = "apc top";
+	pixel_y = 28;
+	start_charge = 0
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -347,8 +344,8 @@
 "aO" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical,
-/obj/item/clothing/gloves/yellow,
 /obj/item/device/t_scanner,
+/obj/item/clothing/gloves/fyellow,
 /obj/item/device/multitool,
 /turf/simulated/floor{
 	dir = 1;
@@ -436,13 +433,12 @@
 	icon_state = "4-8"
 	},
 /obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/wiz,
+/obj/item/weapon/bedsheet/clown,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/agrospheregarden)
 "aY" = (
-/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -452,16 +448,18 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/constructable_frame,
+/obj/item/weapon/circuitboard/smes,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/agrospheregarden)
 "aZ" = (
-/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/constructable_frame,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -469,7 +467,7 @@
 "ba" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/phoron{
-	amount = 25
+	amount = 13
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb2,
@@ -489,7 +487,7 @@
 /obj/item/seeds/surik,
 /obj/item/weapon/reagent_containers/glass/bucket,
 /obj/machinery/newscaster{
-	pixel_x = -30
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	dir = 3;
@@ -617,6 +615,7 @@
 /area/space_structures/agrospheregarden)
 "bq" = (
 /mob/living/simple_animal/pug{
+	faction = "tomato";
 	name = "El Muchacho"
 	},
 /turf/simulated/floor,
@@ -633,8 +632,7 @@
 	},
 /obj/machinery/alarm{
 	hidden_from_console = 1;
-	pixel_y = 23;
-	req_one_access = list()
+	pixel_y = 22
 	},
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
@@ -817,6 +815,7 @@
 	pixel_x = -7;
 	pixel_y = 10
 	},
+/obj/effect/decal/remains/human,
 /turf/simulated/floor,
 /area/space_structures/agrospheregarden)
 "bN" = (
@@ -873,11 +872,15 @@
 /obj/structure/window/reinforced,
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/weapon/bikehorn/dogtoy,
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
 "bW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/mob/living/simple_animal/hostile/tomato{
+	faction = "tomato"
+	},
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
 "bX" = (
@@ -982,7 +985,7 @@
 /obj/machinery/door_control{
 	id = "agro blast";
 	name = "Bridge Blast Door Control";
-	pixel_y = -26
+	pixel_y = -28
 	},
 /obj/structure/flora/ausbushes/grassybush,
 /turf/simulated/floor/beach/water/waterpool,
@@ -1058,6 +1061,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/stool{
+	pixel_y = 8
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1066,6 +1072,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/mob/living/simple_animal/hostile/tomato{
+	faction = "tomato"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1087,18 +1096,17 @@
 /area/space_structures/agrospheregarden)
 "ct" = (
 /obj/machinery/vending/sovietsoda,
-/turf/simulated/floor/grass,
-/area/space_structures/agrospheregarden)
-"cu" = (
-/obj/structure/flora/ausbushes/lavendergrass,
 /obj/machinery/access_button{
 	command = "cycle_interior";
 	frequency = 1380;
 	master_tag = "agrosphere_airlock";
 	name = "interior access button";
-	pixel_x = 32;
-	pixel_y = -26
+	pixel_y = -28
 	},
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"cu" = (
+/obj/structure/flora/ausbushes/lavendergrass,
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
@@ -1176,9 +1184,6 @@
 /area/space_structures/agrospheregarden)
 "cD" = (
 /obj/structure/table/glass,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -28
-	},
 /obj/item/weapon/reagent_containers/glass/beaker/large{
 	pixel_x = -3;
 	pixel_y = 6
@@ -1189,6 +1194,9 @@
 /obj/item/weapon/reagent_containers/spray/cleaner{
 	desc = "Someone has crossed out the 'Space' from Space Cleaner and written in Chemistry. Scrawled on the back is, 'Okay, whoever filled this with polytrinic acid, it was only funny the first time. It was hard enough replacing the CMO's first cat!'";
 	name = "Chemistry Cleaner"
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1238,11 +1246,12 @@
 	pixel_x = -11;
 	pixel_y = 4
 	},
+/obj/machinery/vending/wallmed1{
+	name = "Emergency NanoMed";
+	pixel_y = -30
+	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 28
-	},
-/obj/machinery/vending/wallmed1{
-	pixel_y = -32
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1353,7 +1362,7 @@
 /obj/machinery/airlock_sensor{
 	frequency = 1380;
 	id_tag = "agrosphere_sensor";
-	pixel_x = -26
+	pixel_x = -28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 4;
@@ -1375,7 +1384,7 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	frequency = 1380;
 	id_tag = "agrosphere_airlock";
-	pixel_x = 26;
+	pixel_x = 28;
 	tag_airpump = "agrosphere_pump";
 	tag_chamber_sensor = "agrosphere_sensor";
 	tag_exterior_door = "agrosphere_outer";
@@ -1428,8 +1437,7 @@
 	frequency = 1380;
 	master_tag = "agrosphere_airlock";
 	name = "exterior access button";
-	pixel_x = 32;
-	pixel_y = 26
+	pixel_y = 28
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/agrospheregarden)
@@ -1437,6 +1445,9 @@
 /obj/structure/flora/ausbushes/grassybush,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/reagent_containers/pill/methylphenidate,
+/mob/living/simple_animal/hostile/tomato{
+	faction = "tomato"
+	},
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
 "OZ" = (
@@ -1660,7 +1671,7 @@ cG
 cN
 cT
 cW
-cZ
+cY
 aa
 "}
 (11,1,1) = {"
@@ -1681,7 +1692,7 @@ aD
 cO
 cU
 aD
-cY
+cZ
 aa
 "}
 (12,1,1) = {"
