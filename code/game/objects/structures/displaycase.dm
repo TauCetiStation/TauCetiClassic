@@ -18,7 +18,6 @@
 	var/openable = TRUE
 
 	var/obj/item/weapon/airlock_electronics/electronics
-	var/start_showpiece_type = null //add type for items on display
 	///Represents a signel source of screaming when broken (TODO)
 	//var/datum/alarm_handler/alarm_manager
 
@@ -27,8 +26,8 @@
 
 /obj/structure/displaycase/atom_init(mapload)
 	. = ..()
-	if(start_showpiece_type)
-		showpiece = new start_showpiece_type(src)
+	if(ispath(showpiece))
+		showpiece = new showpiece(src)
 	update_icon()
 	//alarm_manager = new(src)
 
@@ -289,13 +288,13 @@
 
 //The lab cage and captain's display case do not spawn with electronics, which is why req_access is needed.
 /obj/structure/displaycase/captain
-	start_showpiece_type = /obj/item/weapon/gun/energy/laser/selfcharging/captain
+	showpiece = /obj/item/weapon/gun/energy/laser/selfcharging/captain
 	req_access = list(access_cent_specops) //this was intentional, presumably to make it slightly harder for caps to grab their gun roundstart
 
 /obj/structure/displaycase/labcage
 	name = "lab cage"
 	desc = "A glass lab container for storing interesting creatures."
-	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
+	showpiece = /obj/item/clothing/mask/facehugger/lamarr
 	req_access = list(access_rd)
 
 /obj/item/clothing/mask/facehugger/lamarr
@@ -310,9 +309,3 @@
 
 /obj/structure/displaycase/noalert
 	alert = FALSE
-
-/obj/item/showpiece_dummy/atom_init(mapload, obj/item/path)
-	. = ..()
-	name = initial(path.name)
-	icon = initial(path.icon)
-	icon_state = initial(path.icon_state)
