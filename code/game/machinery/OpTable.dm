@@ -110,7 +110,7 @@
 
 	take_victim(usr,usr)
 
-/obj/machinery/optable/proc/Destroy()
+/obj/machinery/optable/proc/destroy()
 	new /obj/item/stack/sheet/plasteel(loc, 5)
 	density = FALSE
 	qdel(src)
@@ -125,7 +125,7 @@
 			return FALSE
 		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
 		if(W.use_tool(src, user, 50, volume = 50))
-			Destroy()
+			destroy()
 		return TRUE
 
 	if (istype(W, /obj/item/weapon/grab))
