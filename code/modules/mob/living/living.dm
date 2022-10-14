@@ -974,7 +974,7 @@
 					displaytime = breakouttime / 600 //Minutes
 				CM.visible_message("<span class='danger'>[usr] attempts to remove \the [HC]!</span>", self_message = "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
 				spawn(0)
-					if(do_after(CM, breakouttime, target = usr))
+					if(do_after(CM, breakouttime, target = usr, can_move = TRUE))
 						if(!CM.handcuffed || CM.buckled)
 							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
 						if(istype(HC, /obj/item/weapon/handcuffs/alien))

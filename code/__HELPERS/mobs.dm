@@ -165,7 +165,6 @@
 	var/atom/Uloc = null
 	if(!can_move)
 		Uloc = user.loc
-	ADD_TRAIT(user, TRAIT_BUSY_DELAY, GENERIC_TRAIT)
 	var/obj/item/holding = user.get_active_hand()
 
 	var/holdingnull = TRUE //User's hand started out empty, check for an empty hand
@@ -232,7 +231,8 @@
 				if(user.get_active_hand() != holding)
 					. = FALSE
 					break
-		if(!HAS_TRAIT_FROM(user, TRAIT_BUSY_DELAY, GENERIC_TRAIT))
+		if(user.flags & INTERRUPT_DO_AFTER)
+			user.flags &= ~INTERRUPT_DO_AFTER
 			. = FALSE
 			break
 
@@ -242,7 +242,9 @@
 		user.become_not_busy(_hand = busy_hand)
 	if(target && target != user)
 		target.in_use_action = FALSE
-	REMOVE_TRAIT(user, TRAIT_BUSY_DELAY, GENERIC_TRAIT)
+
+proc/do_after_interrupt(mob/user)
+	user.flags |= INTERRUPT_DO_AFTER
 
 //Returns true if this person has a job which is a department head
 /mob/proc/is_head_role()

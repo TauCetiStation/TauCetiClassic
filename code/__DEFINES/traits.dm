@@ -127,8 +127,6 @@
 #define TRAIT_IMMOBILIZED "immobilized"
 /// Prevents hands and legs usage
 #define TRAIT_INCAPACITATED "incapacitated"
-/// using in do_after() for break loop
-#define TRAIT_BUSY_DELAY "busy_delay"
 
 #define TRAIT_ALCOHOL_TOLERANCE   "alcohol_tolerance"
 #define TRAIT_BLIND               "blind"
