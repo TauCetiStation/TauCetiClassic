@@ -384,7 +384,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	clientfps		= sanitize_integer(clientfps, -1, 1000, -1)
 	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
-	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
 	chat_ghostsight	= sanitize_integer(chat_ghostsight, CHAT_GHOSTSIGHT_ALL, CHAT_GHOSTSIGHT_NEARBYMOBS, CHAT_GHOSTSIGHT_ALL)
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
 	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
