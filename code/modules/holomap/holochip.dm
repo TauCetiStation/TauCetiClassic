@@ -57,7 +57,7 @@
 	holomap_base = SSholomaps.default_holomap
 	if(color_filter)
 		holomap_base.color = color_filter
-	activator.holomap_obj.add_overlay(holomap_base)
+	activator.holomap_obj?.add_overlay(holomap_base)
 	START_PROCESSING(SSholomaps, src)
 
 /obj/item/holochip/proc/deactivate_holomap()
@@ -65,7 +65,7 @@
 	STOP_PROCESSING(SSholomaps, src) //No matter what
 	if(!activator || !activator.holomap_obj)
 		return
-	activator.holomap_obj.cut_overlay(holomap_base)
+	activator.holomap_obj?.cut_overlay(holomap_base)
 	if(length(holomap_images) && activator.client)
 		activator.client.images -= holomap_images
 		QDEL_LIST(holomap_images)
