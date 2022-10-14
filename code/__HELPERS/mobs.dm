@@ -198,14 +198,12 @@
 			. = FALSE
 			break
 
-		if(can_move)
-			if(distance >= 1 && get_dist(user, target) > distance)
-				. = FALSE
-				break
-		else
-			if(Uloc && (user.loc != Uloc))
-				. = FALSE
-				break
+		if(distance >= 1 && get_dist(user, target) > distance)
+			. = FALSE
+			break
+		if(Uloc && (user.loc != Uloc))
+			. = FALSE
+			break
 		if(Tloc && (Tloc != target.loc))
 			. = FALSE
 			break
