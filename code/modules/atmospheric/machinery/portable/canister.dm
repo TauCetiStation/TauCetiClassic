@@ -80,6 +80,42 @@
 	icon_state = "grey"
 	canister_color = "grey"
 
+/obj/machinery/portable_atmospherics/canister/bz
+	name = "Canister: \[BZ\]"
+	icon_state = "purplews"
+	canister_color = "purplews"
+	gas_type = "bz"
+
+/obj/machinery/portable_atmospherics/canister/constantium
+	name = "Canister: \[Constantium\]"
+	icon_state = "black"
+	canister_color = "black"
+	gas_type = "const"
+
+/obj/machinery/portable_atmospherics/canister/trioxium
+	name = "Canister: \[Trioxium\]"
+	icon_state = "darkblue"
+	canister_color = "darkblue"
+	gas_type = "trioxium"
+
+/obj/machinery/portable_atmospherics/canister/proto_hydrate
+	name = "Canister: \[Proto-hydrate\]"
+	icon_state = "orangews"
+	canister_color = "orangews"
+	gas_type = "phydr"
+
+/obj/machinery/portable_atmospherics/canister/cardotirin
+	name = "Canister: \[Cardotirin\]"
+	icon_state = "redmed"
+	canister_color = "redmed"
+	gas_type = "ctirin"
+
+/obj/machinery/portable_atmospherics/canister/metastabilium
+	name = "Canister: \[Metastabilium\]"
+	icon_state = "black"
+	canister_color = "black"
+	gas_type = "mstab"
+
 /obj/machinery/portable_atmospherics/canister/air/airlock
 	start_pressure = 3 * ONE_ATMOSPHERE
 

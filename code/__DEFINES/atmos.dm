@@ -131,3 +131,6 @@
 #define PARENT2    parents[2]
 #define PARENT3    parents[3]
 #define PARENT_I   parents[I]
+
+//atmos reaction list
+#define ATMOS_REACTIONS = list()

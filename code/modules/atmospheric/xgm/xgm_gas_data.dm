@@ -23,6 +23,8 @@
 	var/list/gases_dangerous = list()
 	//Knowable Gases
 	var/list/gases_knowable = list()
+	//inhalation proc
+	var/list/gases_inhalation_proc = list()
 
 /datum/xgm_gas
 	var/id = ""
@@ -38,6 +40,7 @@
 	var/dangerous = FALSE // currently used by canisters
 	/// This variable determines whether the crew knows about this gas from the round start.
 	var/knowable = FALSE
+	var/inhalation_proc = null //path to proc used to determine inhalation effects for living stuff (oxygen, phoron, n2o and co2 are processed separately)
 
 /datum/xgm_temperature_overlay
 	var/id = ""
@@ -83,6 +86,7 @@
 		gas_data.burn_product[gas.id] = gas.burn_product
 		gas_data.gases_dangerous[gas.id] = gas.dangerous
 		gas_data.gases_knowable[gas.id] = gas.knowable
+		gas_data.gases_inhalation_proc[gas.id] = gas.inhalation_proc
 
 	for(var/p in subtypesof(/datum/xgm_temperature_overlay))
 		var/datum/xgm_temperature_overlay/overlay = new p

@@ -89,3 +89,60 @@
 
 	specific_heat = 30	// J/(mol*K)
 	molar_mass = 0.020	// kg/mol
+
+/datum/xgm_gas/bz
+	id = "bz"
+	name = "BZ"
+
+	specific_heat = 100
+	molar_mass = 0.12
+
+	dangerous = TRUE
+	knowable = FALSE
+
+/datum/xgm_gas/constantium
+	id = "const"
+	name = "Constantium"
+
+	specific_heat = 50
+	molar_mass = 0.06
+
+	knowable = FALSE
+
+/datum/xgm_gas/trioxium
+	id = "triox"
+	name = "Trioxium"
+
+	specific_heat = 25
+	molar_mass = 0.06
+
+	flags = XGM_GAS_OXIDIZER
+	knowable = FALSE
+
+/datum/xgm_gas/proto_hydrate
+	id = "phydr"
+	name = "Proto-Hydrate"
+
+	specific_heat = 150
+	molar_mass = 0.01
+
+	flags = XGM_GAS_FUEL | XGM_GAS_FUSION_FUEL
+	knowable = FALSE
+
+/datum/xgm_gas/cardotirin
+	id = "ctirin"
+	name = "Cardotirin"
+
+	specific_heat = 50
+	molar_mass = 0.06
+
+	knowable = FALSE
+
+/datum/xgm_gas/metastabilium
+	id = "mstab"
+	name = "Meta-Stabilium"
+
+	specific_heat = 100
+	molar_mass = 0.2
+
+	knowable = FALSE
