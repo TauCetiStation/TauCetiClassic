@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	unacidable = TRUE
-	resistance_flags = ACID_PROOF | CAN_BE_HIT
+	resistance_flags = UNACIDABLE | CAN_BE_HIT
 	armor = list(MELEE = 30, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 70, ACID = 100)
 	max_integrity = 200
 	integrity_failure = 0.25
@@ -89,7 +89,7 @@
 			AE = new(chassis)
 			AE.conf_access = req_one_access
 			AE.one_access = TRUE
-		else // no electronics & no access requirements -> chassis without electronics
+		else // no electronics & no access requirements -> chassis without electronicst
 			return ..()
 	else
 		electronics = null
