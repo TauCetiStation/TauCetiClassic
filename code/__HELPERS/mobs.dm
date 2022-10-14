@@ -165,6 +165,7 @@
 	var/atom/Uloc = null
 	if(!can_move)
 		Uloc = user.loc
+
 	var/obj/item/holding = user.get_active_hand()
 
 	var/holdingnull = TRUE //User's hand started out empty, check for an empty hand
@@ -243,7 +244,7 @@
 	if(target && target != user)
 		target.in_use_action = FALSE
 
-proc/do_after_interrupt(mob/user)
+/proc/do_after_interrupt(mob/user)
 	user.flags |= INTERRUPT_DO_AFTER
 
 //Returns true if this person has a job which is a department head
