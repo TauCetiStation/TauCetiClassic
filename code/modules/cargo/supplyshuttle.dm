@@ -75,6 +75,9 @@ var/global/list/mechtoys = list(
 				return
 	qdel(src)
 
+/obj/structure/plasticflaps/explosion_proof
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 0, FIRE = 100, ACID = 100)
+
 /obj/structure/plasticflaps/explosion_proof/ex_act(severity)
 	return
 
