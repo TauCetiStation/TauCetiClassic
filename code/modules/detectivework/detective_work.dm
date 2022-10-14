@@ -99,7 +99,9 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 				return ..()
 		var/obj/item/weapon/evidencebag/E = I
 		evidencebag_drop(E)
-		ui_interact(user)
+		//prevent remove interactions that were not intended
+		if(ishuman(user))
+			attack_hand(user)
 	else
 		return ..()
 
