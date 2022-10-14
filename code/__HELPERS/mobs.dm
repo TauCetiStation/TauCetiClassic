@@ -149,6 +149,9 @@
 	if(!user || target && QDELING(target))
 		return FALSE
 
+	if(TK in user.mutations)
+		distance = -1
+
 	delay *= (1.0 + user.mood_multiplicative_actionspeed_modifier)
 
 	var/busy_hand = user.hand
@@ -195,12 +198,14 @@
 			. = FALSE
 			break
 
-		if(distance >= 1 && get_dist(user, target) > distance)
-			. = FALSE
-			break
-		if(Uloc && (user.loc != Uloc))
-			. = FALSE
-			break
+		if(can_move)
+			if(distance >= 1 && get_dist(user, target) > distance)
+				. = FALSE
+				break
+		else
+			if(Uloc && (user.loc != Uloc))
+				. = FALSE
+				break
 		if(Tloc && (Tloc != target.loc))
 			. = FALSE
 			break
