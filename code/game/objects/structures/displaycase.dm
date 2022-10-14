@@ -161,6 +161,12 @@
 				update_integrity(max_integrity)
 				update_icon()
 			return
+		else if(iscrowbar(W))
+			if(showpiece)
+				to_chat(user, "<span class='warning'>Remove the displayed object first!</span>")
+			else
+				to_chat(user, "<span class='notice'>You remove the destroyed case.</span>")
+				deconstruct(TRUE)
 	else
 		if(W.GetID() && openable)
 			if(allowed(user))
@@ -181,19 +187,6 @@
 			else
 				to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 			return
-	if(!alert && iscrowbar(W) && openable) //Only applies to the player made display cases
-		if(broken)
-			if(showpiece)
-				to_chat(user, "<span class='warning'>Remove the displayed object first!</span>")
-			else
-				to_chat(user, "<span class='notice'>You remove the destroyed case.</span>")
-				deconstruct(TRUE)
-		else
-			to_chat(user, "<span class='notice'>You start to [open ? "close":"open"] [src]...</span>")
-			if(W.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50))
-				to_chat(user,  "<span class='notice'>You [open ? "close":"open"] [src].</span>")
-				toggle_lock(user)
-		return
 	if(open && !showpiece && insert_showpiece(W, user))
 		return
 	return ..()
