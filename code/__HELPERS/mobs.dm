@@ -149,8 +149,10 @@
 	if(!user || target && QDELING(target))
 		return FALSE
 
-	if(TK in user.mutations)
-		distance = -1
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(TK in C.mutations)
+			distance = -1
 
 	delay *= (1.0 + user.mood_multiplicative_actionspeed_modifier)
 
