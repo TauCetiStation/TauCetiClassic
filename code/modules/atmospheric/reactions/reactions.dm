@@ -1,5 +1,3 @@
-//don't forget to add your reactions to ATMOS_REACTIONS (_DEFINES/atmos.dm)
-
 #define HVAL 999999 //infinity is kind of overkill anyway
 
 /datum/atmosReaction/bzSynthesis
@@ -87,7 +85,7 @@
     inhibitors = list("const" = 1)
 
 /datum/atmosReaction/phydrDecomposition
-    id = "bzdec"
+    id = "phydrdec"
     minTemp = -HVAL
     maxTemp = 273.15
     minPressure = 0
@@ -101,7 +99,7 @@
     inhibitors = list()
 
 /datum/atmosReaction/phydrDecompositionConst
-    id = "bzdecconst"
+    id = "phydrdecconst"
     minTemp = -HVAL
     maxTemp = HVAL
     minPressure = -HVAL

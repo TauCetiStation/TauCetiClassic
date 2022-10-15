@@ -141,6 +141,7 @@
 #include "code\_globalvars\misc.dm"
 #include "code\_globalvars\regexes.dm"
 #include "code\_globalvars\station.dm"
+#include "code\_globalvars\lists\atmos_reactions.dm"
 #include "code\_globalvars\lists\client.dm"
 #include "code\_globalvars\lists\flavor_misc.dm"
 #include "code\_globalvars\lists\maintenance_loot.dm"

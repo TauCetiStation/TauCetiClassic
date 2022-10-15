@@ -97,8 +97,12 @@
 	specific_heat = 100
 	molar_mass = 0.12
 
+	tile_overlay = "sleeping_agent"
+	overlay_limit = 1
+
 	dangerous = TRUE
 	knowable = FALSE
+	inhalation_proc = /datum/xgm_gas/bz/on_inhalation
 
 /datum/xgm_gas/constantium
 	id = "const"
@@ -107,7 +111,11 @@
 	specific_heat = 50
 	molar_mass = 0.06
 
+	tile_overlay = "meta_stabilium"
+	overlay_limit = 1
+
 	knowable = FALSE
+	inhalation_proc = /datum/xgm_gas/constantium/on_inhalation
 
 /datum/xgm_gas/trioxium
 	id = "triox"
@@ -116,8 +124,12 @@
 	specific_heat = 25
 	molar_mass = 0.06
 
+	tile_overlay = "trioxium"
+	overlay_limit = 0.7
+
 	flags = XGM_GAS_OXIDIZER
 	knowable = FALSE
+	inhalation_proc = /datum/xgm_gas/trioxium/on_inhalation
 
 /datum/xgm_gas/proto_hydrate
 	id = "phydr"
@@ -126,21 +138,33 @@
 	specific_heat = 150
 	molar_mass = 0.01
 
+	tile_overlay = "proto_hydrate"
+	overlay_limit = 0.7
+
+	burn_product = "watervapor"
 	flags = XGM_GAS_FUEL | XGM_GAS_FUSION_FUEL
 	knowable = FALSE
+	inhalation_proc = /datum/xgm_gas/proto_hydrate/on_inhalation
 
 /datum/xgm_gas/cardotirin
 	id = "ctirin"
 	name = "Cardotirin"
 
+	tile_overlay = "cardotirin"
+	overlay_limit = 0.7
+
 	specific_heat = 50
 	molar_mass = 0.06
 
 	knowable = FALSE
+	inhalation_proc = /datum/xgm_gas/cardotirin/on_inhalation
 
 /datum/xgm_gas/metastabilium
 	id = "mstab"
 	name = "Meta-Stabilium"
+
+	tile_overlay = "meta_stabilium"
+	overlay_limit = 1
 
 	specific_heat = 100
 	molar_mass = 0.2

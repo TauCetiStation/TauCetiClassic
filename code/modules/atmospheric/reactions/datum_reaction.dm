@@ -12,6 +12,9 @@
     var/list/catalysts = list()
     var/list/inhibitors = list()
 
+/datum/atmosReaction/New() //for world-creation init only
+    atmosReactionList.Add(src)
+
 /datum/atmosReaction/proc/canReact(datum/gas_mixture/G)
     var/count = 0
     var/list/toRemove = list()
@@ -43,7 +46,9 @@
             for(var/gas in R)
                 G.gas[gas] -= R[gas]
             G.add_thermal_energy(producedHeat)
-    postReact(G)
+            postReact(G)
+            return TRUE
+    return FALSE
 
 /datum/atmosReaction/proc/postReact(datum/gas_mixture/G)
     return //insert your own code here

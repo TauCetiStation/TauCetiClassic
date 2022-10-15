@@ -6,6 +6,7 @@
 #define SSAIR_FIRE_ZONES       6
 #define SSAIR_HOTSPOTS         7
 #define SSAIR_ZONES            8
+#define SSAIR_REACTIONS        9
 
 #define SSAIR_TICK_MULTIPLIER 2
 
@@ -31,6 +32,7 @@ SUBSYSTEM_DEF(air)
 	var/cost_fire_zones      = 0
 	var/cost_hotspots        = 0
 	var/cost_zones           = 0
+	var/cost_reactions       = 0
 
 	// Geometry lists
 	var/list/zones = list()
@@ -64,6 +66,7 @@ SUBSYSTEM_DEF(air)
 	msg += "FZ:[round(cost_fire_zones,1)]|"
 	msg += "HS:[round(cost_hotspots,1)]|"
 	msg += "Z:[round(cost_zones,1)]|"
+	msg += "R:[round(cost_reactions,1)]|"
 	msg += "} "
 	msg += "PN:[networks.len]|"
 	msg += "AM:[atmos_machinery.len]|"
@@ -164,6 +167,16 @@ SUBSYSTEM_DEF(air)
 		timer = TICK_USAGE_REAL
 		process_zones(resumed)
 		cost_zones = MC_AVERAGE(cost_zones, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		if(state != SS_RUNNING)
+			return
+		resumed = 0
+		currentpart = SSAIR_REACTIONS
+
+	//process atmos reactions
+	if(currentpart == SSAIR_REACTIONS)
+		timer = TICK_USAGE_REAL
+		process_reactions(resumed)
+		cost_reactions = MC_AVERAGE(cost_reactions, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -283,6 +296,25 @@ SUBSYSTEM_DEF(air)
 		Z.needs_update = FALSE
 		if (MC_TICK_CHECK)
 			return
+
+/datum/controller/subsystem/air/proc/process_reactions(resumed = 0)
+	for(var/turf/T as anything in possibleReactionTurfs)
+		var/FI = FALSE
+		var/FO = FALSE
+		for(var/datum/atmosReaction/R in atmosReactionList)
+			if(R.react(T.return_air()))
+				FO = TRUE
+				recentReactions.Add(R.id)
+				if(!FI) //to not add same tiles over again if multiple reactions happened
+					FI = TRUE
+					var/list/N = list()
+					N.Add(step(T, NORTH, 1), step(T, SOUTH, 1), step(T, WEST, 1), step(T, EAST, 1))
+					for(var/turf/NT as anything in N)
+						if(is_possible_reaction_turf(NT))
+							possibleReactionTurfs.Add(NT)
+		if(!FO)
+			if(!is_possible_reaction_turf(T))
+				possibleReactionTurfs.Remove(T)
 
 /*********** Setup procs ***********/
 
@@ -526,6 +558,19 @@ SUBSYSTEM_DEF(air)
 
 	return TRUE
 
+/datum/controller/subsystem/air/proc/is_possible_reaction_turf(turf/T)
+	var/datum/gas_mixture/G = T.return_air()
+	var/H = G.temperature > REACTION_TF_HI || G.temperature < REACTION_TF_LO
+	var/P = G.return_pressure() > REACTION_PF_HI
+	var/E = G.specific_entropy() > REACTION_EF_HI || G.specific_entropy() > REACTION_EF_LO
+	var/S = FALSE
+	for(var/gas in G.gas)
+		if(!gas_data.gases_knowable[gas] || gas_data.gases_dangerous[gas])
+			S = TRUE
+	if(H || P || E || S)
+		return TRUE
+	return FALSE
+
 #undef SSAIR_PIPENETS
 #undef SSAIR_ATMOSMACHINERY
 #undef SSAIR_TILES_CUR
@@ -534,3 +579,4 @@ SUBSYSTEM_DEF(air)
 #undef SSAIR_FIRE_ZONES
 #undef SSAIR_HOTSPOTS
 #undef SSAIR_ZONES
+#undef SSAIR_REACTIONS

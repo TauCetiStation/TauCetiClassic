@@ -132,5 +132,9 @@
 #define PARENT3    parents[3]
 #define PARENT_I   parents[I]
 
-//atmos reaction list
-#define ATMOS_REACTIONS = list()
+//used for filtering possible reaction turfs from the rest
+#define REACTION_TF_HI = 373.15 //100c
+#define REACTION_TF_LO = 273.15 //0c
+#define REACTION_PF_HI = 1000 //1 mPa
+#define REACTION_EF_HI = 100 //entropy
+#define REACTION_EF_LO = 10 //entropy
