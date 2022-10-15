@@ -795,8 +795,8 @@
 	desc = "A human meat, on a stick."
 	trash = /obj/item/stack/rods
 	filling_color = "#a85340"
-	bitesize = 2
-	list_reagents = list("protein" = 8)
+	bitesize = 3
+	list_reagents = list("protein" = 15)
 
 /obj/item/weapon/reagent_containers/food/snacks/kabob
 	name = "Meat-kabob"
@@ -804,8 +804,8 @@
 	desc = "Delicious meat, on a stick."
 	trash = /obj/item/stack/rods
 	filling_color = "#a85340"
-	bitesize = 2
-	list_reagents = list("protein" = 8)
+	bitesize = 3
+	list_reagents = list("protein" = 15)
 
 /obj/item/weapon/reagent_containers/food/snacks/tofukabob
 	name = "Tofu-kabob"
@@ -1006,7 +1006,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#7a3d11"
 	bitesize = 3
-	list_reagents = list("protein" = 6, "sodiumchloride" = 1, "blackpepper" = 1)
+	list_reagents = list("protein" = 12, "sodiumchloride" = 1, "blackpepper" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff
 	name = "Spacy Liberty Duff"
@@ -1423,7 +1423,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#d9be29"
 	bitesize = 2
-	list_reagents = list("nutriment" = 6, "vitamin" = 1)
+	list_reagents = list("protein" = 12,"nutriment" = 4, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/toastedsandwich
 	name = "Toasted Sandwich"
@@ -1432,7 +1432,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#d9be29"
 	bitesize = 2
-	list_reagents = list("nutriment" = 6, "carbon" = 2)
+	list_reagents = list("protein" = 13,"nutriment" = 4, "carbon" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/grilledcheese
 	name = "Grilled Cheese Sandwich"
@@ -1548,7 +1548,7 @@
 	icon_state = "spesslaw"
 	filling_color = "#de4545"
 	bitesize = 2
-	list_reagents = list("protein" = 8, "vitamin" = 4)
+	list_reagents = list("protein" = 12, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
 	name = "Poppy Pretzel"
@@ -2349,7 +2349,7 @@
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "dough"
 	bitesize = 2
-	list_reagents = list("nutriment" = 6)
+	list_reagents = list("nutriment" = 4)
 
 // Dough + rolling pin = flat dough
 /obj/item/weapon/reagent_containers/food/snacks/dough/attackby(obj/item/I, mob/user, params)
@@ -2390,7 +2390,7 @@
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "bun"
 	bitesize = 2
-	list_reagents = list("nutriment" = 1)
+	list_reagents = list("nutriment" = 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/bun/attackby(obj/item/I, mob/user, params)
 	// Bun + cutlet = hamburger
@@ -2438,7 +2438,7 @@
 	desc = "Take a bite!"
 	icon_state = "taco"
 	bitesize = 3
-	list_reagents = list("nutriment" = 7, "vitamin" = 1)
+	list_reagents = list("protein" = 4,"nutriment" = 6, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/rawcutlet
 	name = "raw cutlet"
@@ -2446,7 +2446,7 @@
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "rawcutlet"
 	bitesize = 1
-	list_reagents = list("nutriment" = 1)
+	list_reagents = list("protein" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/cutlet
 	name = "cutlet"
@@ -2485,7 +2485,7 @@
 	desc = "Unrelated to dogs, maybe."
 	icon_state = "hotdog"
 	bitesize = 2
-	list_reagents = list("protein" = 6)
+	list_reagents = list("protein" = 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/flatbread
 	name = "flatbread"
