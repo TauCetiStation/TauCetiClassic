@@ -175,6 +175,8 @@
 
 #define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
 
+#define iseminence(A) (istype(A, /mob/camera/eminence))
+
 #define isvoxraider(H) isrole(VOXRAIDER, H)
 
 #define ischangeling(H) isrolebytype(/datum/role/changeling, H)

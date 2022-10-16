@@ -7,7 +7,7 @@
 	dir_in = 1 //Facing North.
 	health = 300
 	deflect_chance = 15
-	damage_absorption = list("brute"=0.75,"fire"=1,"bullet"=0.8,"laser"=0.7,"energy"=0.85,"bomb"=1)
+	damage_absorption = list(BRUTE=0.75,BURN=1,BULLET=0.8,LASER=0.7,ENERGY=0.85,BOMB=1)
 	max_temperature = 25000
 	infra_luminosity = 6
 	var/overload_coeff = 2
@@ -38,7 +38,7 @@
 	initial_icon = "ultra"
 	health = 350
 	deflect_chance = 20
-	damage_absorption = list("brute"=0.65,"fire"=0.9,"bullet"=0.7,"laser"=0.6,"energy"=0.75,"bomb"=0.9)
+	damage_absorption = list(BRUTE=0.65,BURN=0.9,BULLET=0.7,LASER=0.6,ENERGY=0.75,BOMB=0.9)
 	max_temperature = 30000
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax/ultra
 	animated = 1
@@ -50,7 +50,7 @@
 	initial_icon = "darkgygax"
 	health = 400
 	deflect_chance = 25
-	damage_absorption = list("brute"=0.6,"fire"=0.8,"bullet"=0.6,"laser"=0.5,"energy"=0.65,"bomb"=0.8)
+	damage_absorption = list(BRUTE=0.6,BURN=0.8,BULLET=0.6,LASER=0.5,ENERGY=0.65,BOMB=0.8)
 	max_temperature = 45000
 	overload_coeff = 1
 	wreckage = /obj/effect/decal/mecha_wreckage/gygax/dark

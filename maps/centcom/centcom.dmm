@@ -17077,14 +17077,11 @@
 	},
 /area/centcom/living)
 "aMB" = (
-/obj/structure/object_wall/standart{
-	icon_state = "wall3"
-	},
+/obj/machinery/door/airlock/external,
 /turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "podhatch"
+	icon_state = "dark"
 	},
-/area/shuttle/syndicate/start)
+/area/centcom/specops)
 "aMC" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -17102,11 +17099,10 @@
 	},
 /area/centcom/evac)
 "aME" = (
-/obj/machinery/door/poddoor/shutters/war,
-/turf/unsimulated/floor{
-	icon_state = "darkred"
-	},
-/area/custom/syndicate_mothership)
+/obj/structure/cult/statue/camera/gargoyle,
+/obj/structure/eminence_spire,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "aMF" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -17193,11 +17189,20 @@
 	},
 /area/custom/syndicate_mothership)
 "aMO" = (
-/obj/machinery/door/airlock/external,
-/turf/unsimulated/floor{
-	icon_state = "dark"
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
 	},
-/area/centcom/specops)
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "podhatch"
+	},
+/area/shuttle/syndicate/start)
+"aMP" = (
+/obj/machinery/door/poddoor/shutters/war,
+/turf/unsimulated/floor{
+	icon_state = "darkred"
+	},
+/area/custom/syndicate_mothership)
 "aMR" = (
 /obj/machinery/computer/teleporter,
 /turf/unsimulated/floor{
@@ -59523,7 +59528,7 @@ azo
 aAE
 aCV
 aBQ
-aMO
+aMB
 aCa
 aAE
 aCV
@@ -59780,7 +59785,7 @@ azo
 aAE
 aCV
 aBQ
-aMO
+aMB
 aCa
 aAE
 aCV
@@ -71179,7 +71184,7 @@ aaM
 aaM
 aaM
 adx
-tqh
+aME
 wfy
 aZI
 bKC
@@ -85648,7 +85653,7 @@ aku
 aku
 aku
 aku
-aMB
+aMO
 aku
 ajt
 alH
@@ -88742,7 +88747,7 @@ akQ
 aml
 alY
 aHH
-aME
+aMP
 adc
 aii
 akO

@@ -40,19 +40,6 @@
 	opacity = TRUE
 	VARSET_IN(src, opacity, FALSE, 2 SECONDS)
 
-/obj/machinery/shield/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	//Let everyone know we've been hit!
-	visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
-
-	//Super realistic, resource-intensive, real-time damage calculations.
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 40
-	else
-		tforce = AM:throwforce
-
-	take_damage(tforce, BRUTE, MELEE)
-
 /obj/machinery/shieldgen
 	name = "Emergency shield projector"
 	desc = "Used to seal minor hull breaches."
