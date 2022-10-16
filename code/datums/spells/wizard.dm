@@ -340,7 +340,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/door
 	name = "Возвести Ворота"
-	desc = "Это заклинание создает Ворота."
+	desc = "Это заклинание создает Врата."
 
 	action_icon_state = "cult_door"
 	action_background_icon_state = "bg_cult"
