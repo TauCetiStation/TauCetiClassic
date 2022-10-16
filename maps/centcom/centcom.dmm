@@ -17098,6 +17098,11 @@
 	icon_state = "white"
 	},
 /area/centcom/evac)
+"aME" = (
+/obj/structure/cult/statue/camera/gargoyle,
+/obj/structure/eminence_spire,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "aMF" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -71109,7 +71114,7 @@ aaM
 aaM
 aaM
 adx
-tqh
+aME
 wfy
 aZI
 bKC

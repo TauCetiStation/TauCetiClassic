@@ -19,10 +19,15 @@
 
 /obj/machinery/computer/syndicate_station/atom_init()
 	..()
+	SSholomaps.holomap_landmarks += src
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/syndicate_station/atom_init_late()
 	curr_location = get_area(locate("landmark*Syndi shuttle"))
+
+/obj/machinery/computer/syndicate_station/Destroy()
+	SSholomaps.holomap_landmarks -= src
+	return ..()
 
 /obj/machinery/computer/syndicate_station/process()
 	if(..())

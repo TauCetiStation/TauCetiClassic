@@ -112,7 +112,7 @@
 				reset_view(null)
 
 
-/mob/living/update_action_buttons()
+/mob/update_action_buttons()
 	if(!hud_used) return
 	if(!client) return
 

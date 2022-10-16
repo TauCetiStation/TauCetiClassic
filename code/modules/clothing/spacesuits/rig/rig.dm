@@ -677,6 +677,9 @@
 	. = ..()
 	armor = combat_mode ? combat_armor : space_armor // in case some child spawns with combat mode on
 
+	holochip = new /obj/item/holochip/nuclear(src)
+	holochip.holder = src
+
 /obj/item/clothing/head/helmet/space/rig/syndi/AltClick(mob/user)
 	var/mob/living/carbon/wearer = loc
 	if(!istype(wearer) || wearer.head != src)
