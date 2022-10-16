@@ -46,9 +46,9 @@
 /obj/structure/displaycase/get_examine_string(mob/user)
 	. = ..()
 	if(alert)
-		. += "\n<span class='notice'>Hooked up with an anti-theft system.</span>"
+		. += "<br><span class='notice'>Hooked up with an anti-theft system.</span>"
 	if(showpiece)
-		. += "\n<span class='notice'>There's \a [showpiece] inside.</span>"
+		. += "<br><span class='notice'>There's \a [showpiece] inside.</span>"
 
 /obj/structure/displaycase/proc/dump()
 	if(QDELETED(showpiece))
