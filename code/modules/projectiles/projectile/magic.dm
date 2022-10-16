@@ -128,7 +128,7 @@
 	new_mob.set_a_intent(INTENT_HARM)
 	if(!permanent)
 		forceMove(new_mob)
-		addtimer(CALLBACK(new_mob, .proc/return_body, src), 10 SECONDS)
+		addtimer(CALLBACK(new_mob, .proc/return_body, src), 3 MINUTE)
 		notransform = TRUE
 	else
 		qdel(src)
