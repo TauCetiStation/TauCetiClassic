@@ -177,7 +177,7 @@
 		var/mob/living/simple_animal/hostile/mimic/copy/C = change
 		C.ChangeOwner(firer)
 		create_spawner(/datum/spawner/living/mimic, C)
-	else if(istype(change, /mob/living/simple_animal/shade))
+	else if(isshade(change))
 		var/mob/living/M = change
 		M = M.wabbajack("animal", TRUE)
 		if(firer && iswizard(firer))

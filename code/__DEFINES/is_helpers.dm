@@ -86,6 +86,10 @@
 
 #define isessence(A) (istype(A, /mob/living/parasite/essence))
 
+#define isshade(A) (istype(A, /mob/living/simple_animal/shade))
+
+#define isconstruct(A) istype(A, /mob/living/simple_animal/construct)
+
 #define isgod(A) (istype(A, /mob/living/simple_animal/shade/god))
 
 // MOB
@@ -170,6 +174,8 @@
 #define isshadowthrall(H) isrole(SHADOW_THRALL, H)
 
 #define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
+
+#define iseminence(A) (istype(A, /mob/camera/eminence))
 
 #define isvoxraider(H) isrole(VOXRAIDER, H)
 

@@ -62,6 +62,12 @@
 	desc = "Unknown huge object"
 	mappath = "maps/templates/space_structures/robostation.dmm"
 
+/datum/map_template/space_structure/robostation2
+	name = "robostation2"
+	structure_id = "robostation2"
+	desc = "Unknown huge object"
+	mappath = "maps/templates/space_structures/robostation2.dmm"
+
 /datum/map_template/space_structure/planetarium
 	name = "planetarium"
 	structure_id = "planetarium"
@@ -152,9 +158,26 @@
 	desc = "Unknown huge object"
 	mappath = "maps/templates/space_structures/broken_breacher.dmm"
 
-
 /datum/map_template/space_structure/export_outpost
 	name = "Export Outpost"
 	structure_id = "export_outpost"
 	desc = "Unknown object"
 	mappath = "maps/templates/space_structures/export_outpost.dmm"
+
+/datum/map_template/space_structure/research_ship
+	name = "Research ship"
+	structure_id = "research_ship"
+	desc = "Unknown object"
+	mappath = "maps/templates/space_structures/research_ship.dmm"
+
+/datum/map_template/space_structure/cult_ship
+	name = "Cultship"
+	structure_id = "cult_ship"
+	desc = "Unknown object"
+	mappath = "maps/templates/space_structures/cult_ship.dmm"
+
+/datum/map_template/space_structure/space_villa
+	name = "SpaceVilla"
+	structure_id = "space_villa"
+	desc = "Unknown object"
+	mappath = "maps/templates/space_structures/space_villa.dmm"
