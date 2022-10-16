@@ -11,11 +11,9 @@
 	max_integrity = 200
 	integrity_failure = 0.25
 	var/obj/item/showpiece = null
-	var/obj/item/showpiece_type = null //This allows for showpieces that can only hold items if they're the same istype as this.
 	var/alert = TRUE
 	var/open = FALSE
 	var/broken = FALSE
-	var/openable = TRUE
 
 	var/obj/item/weapon/airlock_electronics/electronics
 	///Represents a signel source of screaming when broken (TODO)
@@ -168,7 +166,7 @@
 				to_chat(user, "<span class='notice'>You remove the destroyed case.</span>")
 				deconstruct(TRUE)
 	else
-		if(W.GetID() && openable)
+		if(W.GetID())
 			if(allowed(user))
 				to_chat(user, "<span class='notice'>You [open ? "close" : "open"] [src].</span>")
 				toggle_lock(user)
@@ -192,9 +190,6 @@
 	return ..()
 
 /obj/structure/displaycase/proc/insert_showpiece(obj/item/wack, mob/user)
-	if(showpiece_type && !istype(wack, showpiece_type))
-		to_chat(user, "<span class='notice'>This doesn't belong in this kind of display.</span>")
-		return FALSE
 	if(user.remove_from_mob(wack, src))
 		showpiece = wack
 		to_chat(user, "<span class='notice'>You put [wack] on display.</span>")
