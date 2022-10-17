@@ -298,23 +298,21 @@ SUBSYSTEM_DEF(air)
 			return
 
 /datum/controller/subsystem/air/proc/process_reactions(resumed = 0)
+	if(possibleReactionTurfs.len > 40)
+		possibleReactionTurfs = possibleReactionTurfs.Copy(0, 39)
 	for(var/turf/T as anything in possibleReactionTurfs)
-		var/FI = FALSE
-		var/FO = FALSE
-		for(var/datum/atmosReaction/R in atmosReactionList)
-			if(R.react(T.return_air()))
-				FO = TRUE
-				recentReactions.Add(R.id)
-				if(!FI) //to not add same tiles over again if multiple reactions happened
-					FI = TRUE
-					var/list/N = list()
-					N.Add(step(T, NORTH, 1), step(T, SOUTH, 1), step(T, WEST, 1), step(T, EAST, 1))
-					for(var/turf/NT as anything in N)
-						if(is_possible_reaction_turf(NT))
-							possibleReactionTurfs.Add(NT)
-		if(!FO)
-			if(!is_possible_reaction_turf(T))
-				possibleReactionTurfs.Remove(T)
+		var/F = FALSE
+		var/datum/gas_mixture/G = T.return_air()
+		var/datum/atmosReaction/R = is_possible_reaction_mix(G)
+		if(R.react(G))
+			recentReactions.Add(R.id)
+			if(!F) //to not add same tiles over again if multiple reactions happened
+				F = TRUE
+				var/list/N = list()
+				N.Add(step(T, NORTH, 1), step(T, SOUTH, 1), step(T, WEST, 1), step(T, EAST, 1))
+				for(var/turf/NT as anything in N)
+					if(is_possible_reaction_mix(NT.return_air()))
+						possibleReactionTurfs.Add(NT)
 
 /*********** Setup procs ***********/
 
@@ -558,17 +556,11 @@ SUBSYSTEM_DEF(air)
 
 	return TRUE
 
-/datum/controller/subsystem/air/proc/is_possible_reaction_turf(turf/T)
-	var/datum/gas_mixture/G = T.return_air()
-	var/H = G.temperature > REACTION_TF_HI || G.temperature < REACTION_TF_LO
-	var/P = G.return_pressure() > REACTION_PF_HI
-	var/E = G.specific_entropy() > REACTION_EF_HI || G.specific_entropy() > REACTION_EF_LO
-	var/S = FALSE
-	for(var/gas in G.gas)
-		if(!gas_data.gases_knowable[gas] || gas_data.gases_dangerous[gas])
-			S = TRUE
-	if(H || P || E || S)
-		return TRUE
+/datum/controller/subsystem/air/proc/is_possible_reaction_mix(datum/gas_mixture/G)
+	for(var/datum/atmosReaction/R as anything in global.atmosReactionList)
+		var/datum/atmosReaction/O = new(R)
+		if(O.canReact(G))
+			return O
 	return FALSE
 
 #undef SSAIR_PIPENETS

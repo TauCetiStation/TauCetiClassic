@@ -12,9 +12,6 @@
     var/list/catalysts = list()
     var/list/inhibitors = list()
 
-/datum/atmosReaction/New() //for world-creation init only
-    atmosReactionList.Add(src)
-
 /datum/atmosReaction/proc/canReact(datum/gas_mixture/G)
     var/count = 0
     var/list/toRemove = list()

@@ -64,6 +64,9 @@
 
 	sink.merge(removed)
 
+	if(SSair.is_possible_reaction_mix(sink))
+		possibleReactionTurfs.Add(M.loc)
+
 	return power_draw TAUCETI_POWER_DRAW_MOD
 
 //Gas 'pumping' proc for the case where the gas flow is passive and driven entirely by pressure differences (but still one-way).
@@ -97,6 +100,9 @@
 	if(!removed) //Just in case
 		return -1
 	sink.merge(removed)
+
+	if(SSair.is_possible_reaction_mix(sink))
+		possibleReactionTurfs.Add(M.loc)
 
 	return 0
 

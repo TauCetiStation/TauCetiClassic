@@ -2,8 +2,8 @@
 
 /datum/atmosReaction/bzSynthesis
     id = "bzsynt"
-    minTemp = 573.15
-    maxTemp = 973.15
+    minTemp = 373.15
+    maxTemp = 573.15
     minPressure = 100
     maxPressure = HVAL
     minEntropy = 0
@@ -16,7 +16,7 @@
 
 /datum/atmosReaction/bzDecomposition
     id = "bzdec"
-    minTemp = 973.15
+    minTemp = 573.15
     maxTemp = HVAL
     minPressure = 0
     maxPressure = HVAL
