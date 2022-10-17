@@ -10,6 +10,7 @@
 	var/damage_mask = TRUE
 	var/eyes = "eyes"                                    // Icon for eyes.
 	var/eyes_glowing = FALSE                             // To make those eyes gloooow.
+	var/gender_tail_icons = FALSE
 	var/gender_limb_icons = FALSE
 	var/fat_limb_icons = FALSE
 
@@ -326,6 +327,9 @@
 	name = UNATHI
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
 	deform = 'icons/mob/human_races/r_def_lizard.dmi'
+	gender_tail_icons = TRUE
+	gender_limb_icons = TRUE
+	fat_limb_icons = TRUE
 	language = LANGUAGE_SINTAUNATHI
 	tail = "unathi"
 	unarmed_type = /datum/unarmed_attack/claws

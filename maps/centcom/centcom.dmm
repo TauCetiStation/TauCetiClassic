@@ -17099,11 +17099,10 @@
 	},
 /area/centcom/evac)
 "aME" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/shuttle/floor{
-	icon_state = "floor6"
-	},
-/area/shuttle/lone_op/start)
+/obj/structure/cult/statue/camera/gargoyle,
+/obj/structure/eminence_spire,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "aMF" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -17612,6 +17611,12 @@
 /obj/structure/object_wall/standart{
 	icon_state = "wall3"
 	},
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/lone_op/start)
+"aNF" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -71461,7 +71466,7 @@ aaM
 aaM
 aaM
 adx
-tqh
+aME
 wfy
 aZI
 bKC
@@ -79244,7 +79249,7 @@ aNm
 aNm
 aNm
 aNm
-aME
+aNF
 aMO
 aNj
 aaM
