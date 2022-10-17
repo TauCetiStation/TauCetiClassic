@@ -28,7 +28,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 #define SAVEFILE_UP_TO_DATE -1 // everything is okay, nothing to update.
 #define SAVEFILE_TOO_OLD    -2 // savefile is too old, all data will be wiped.
 
-#define CHAT_TOGGLES_FLAG_NUMBER 2**34
+#define CHAT_TOGGLES_FLAG_MAX_NUM 11111111111
 
 /datum/preferences/proc/savefile_needs_update(savefile/S)
 	S["version"] >> savefile_version
@@ -386,7 +386,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	clientfps		= sanitize_integer(clientfps, -1, 1000, -1)
 	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
-	chat_toggles	= sanitize_integer(chat_toggles, 0, CHAT_TOGGLES_FLAG_NUMBER, initial(chat_toggles))
+	chat_toggles	= sanitize_integer(chat_toggles, 0, CHAT_TOGGLES_FLAG_MAX_NUM, initial(chat_toggles))
 	chat_ghostsight	= sanitize_integer(chat_ghostsight, CHAT_GHOSTSIGHT_ALL, CHAT_GHOSTSIGHT_NEARBYMOBS, CHAT_GHOSTSIGHT_ALL)
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
 	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
@@ -773,4 +773,4 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 #undef SAVEFILE_UP_TO_DATE
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN
-#undef CHAT_TOGGLES_FLAG_NUMBER
+#undef CHAT_TOGGLES_FLAG_MAX_NUM
