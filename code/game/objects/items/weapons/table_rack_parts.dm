@@ -17,9 +17,7 @@
 // Return TRUE if reacted to a tool.
 /obj/item/weapon/table_parts/proc/attack_tools(obj/item/W, mob/user)
 	if(iswrench(W))
-		new /obj/item/stack/sheet/metal( user.loc )
-		//SN src = null
-		qdel(src)
+		deconstruct(TRUE, user)
 		return TRUE
 
 	else if(istype(W, /obj/item/stack/rods))
@@ -39,6 +37,14 @@
 
 	return ..()
 
+/obj/item/weapon/table_parts/deconstruct(disassembled, user = FALSE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	var/turf/T = get_turf(user || src)
+	for(var/debrit_type in debris)
+		new debrit_type(T)
+	..()
+
 /obj/item/weapon/table_parts/attack_self(mob/user)
 	var/turf/simulated/T = get_turf(user)
 	if (T.CanPass(null, T))
@@ -55,9 +61,7 @@
  */
 /obj/item/weapon/table_parts/reinforced/attack_tools(obj/item/W, mob/user)
 	if(iswrench(W))
-		new /obj/item/stack/sheet/metal(user.loc)
-		new /obj/item/stack/rods(user.loc)
-		qdel(src)
+		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
 
@@ -66,8 +70,7 @@
  */
 /obj/item/weapon/table_parts/glass/attack_tools(obj/item/W, mob/user)
 	if(iswrench(W))
-		new /obj/item/stack/sheet/glass( user.loc )
-		qdel(src)
+		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
 
@@ -77,8 +80,7 @@
  */
 /obj/item/weapon/table_parts/wood/attack_tools(obj/item/W, mob/user)
 	if(iswrench(W))
-		new /obj/item/stack/sheet/wood(user.loc)
-		qdel(src)
+		deconstruct(TRUE, user)
 		return TRUE
 
 	else if(istype(W, /obj/item/stack/tile/grass))
@@ -96,8 +98,7 @@
  */
 /obj/item/weapon/table_parts/wood/fancy/attack_tools(obj/item/W, mob/user)
 	if(iswrench(W))
-		new /obj/item/stack/sheet/wood(user.loc)
-		qdel(src)
+		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
 
@@ -107,9 +108,7 @@
 
 /obj/item/weapon/table_parts/wood/poker/attack_tools(obj/item/W, mob/user)
 	if(iswrench(W))
-		new /obj/item/stack/sheet/wood(user.loc)
-		new /obj/item/stack/tile/grass(user.loc)
-		qdel(src)
+		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
 
@@ -118,10 +117,14 @@
  */
 /obj/item/weapon/rack_parts/attackby(obj/item/I, mob/user, params)
 	if(iswrench(I))
-		new /obj/item/stack/sheet/metal( user.loc )
-		qdel(src)
+		deconstruct(TRUE, user)
 		return
 	return ..()
+
+/obj/item/weapon/rack_parts/deconstruct(disassembled, user = FALSE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(get_turf(user || src))
+	..()
 
 /obj/item/weapon/rack_parts/attack_self(mob/user)
 	var/turf/simulated/T = get_turf(user)

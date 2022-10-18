@@ -24,21 +24,6 @@
 			break
 	AddComponent(/datum/component/clickplace)
 
-/obj/machinery/optable/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_HEAVY)
-			if(prob(50))
-				return
-		if(EXPLODE_LIGHT)
-			if(prob(25))
-				src.density = FALSE
-				return
-	qdel(src)
-
-/obj/machinery/optable/blob_act()
-	if(prob(75))
-		qdel(src)
-
 /obj/machinery/optable/attack_paw(mob/user)
 	if ((HULK in usr.mutations))
 		user.SetNextMove(CLICK_CD_MELEE)

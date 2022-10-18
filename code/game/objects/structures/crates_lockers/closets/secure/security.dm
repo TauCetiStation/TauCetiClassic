@@ -145,7 +145,7 @@
 	new /obj/item/device/radio/headset/heads/hos(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/clothing/gloves/black/hos(src)
-	new /obj/item/clothing/glasses/night/hos_nights(src)
+	new /obj/item/clothing/glasses/hud/hos_aug(src)
 	new /obj/item/weapon/shield/riot/tele(src)
 	new /obj/item/weapon/storage/lockbox/loyalty(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)

@@ -245,7 +245,10 @@
 	icon = 'icons/holidays/new_year/decorations.dmi'
 	icon_state = "snowman_s"
 	anchored = FALSE
-	var/health = 50
+
+	max_integrity = 50
+	damage_deflection = 5
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/snowman/attackby(obj/item/W, mob/user)
 	. = ..()
@@ -258,17 +261,22 @@
 		else
 			to_chat(user, "<span class='warning'>But snowman already has a hat!</span>")
 		return
-	if(W.force > 4)
-		health -= W.force
-		if(health <= 0)
-			visible_message("<span class='warning'>[src] is destroyed!</span>")
-			for(var/i = 0 to 6)
-				new /obj/item/snowball(get_turf(src))
-			if(icon_state == "snowman_hat")
-				new /obj/item/clothing/head/that(get_turf(src))
-			qdel(src)
-		else
-			visible_message("<span class='notice'>[src] is damaged!</span>")
+	..()
+
+/obj/structure/snowman/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
+	. = ..()
+	if(. && !QDELING(src))
+		visible_message("<span class='notice'>[src] is damaged!</span>")
+
+/obj/structure/snowman/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	visible_message("<span class='warning'>[src] is destroyed!</span>")
+	for(var/i in 1 to 6)
+		new /obj/item/snowball(loc)
+	if(icon_state == "snowman_hat")
+		new /obj/item/clothing/head/that(loc)
+	..()
 
 #undef FLICKER_CD_MAX
 #undef FLICKER_CD_MIN

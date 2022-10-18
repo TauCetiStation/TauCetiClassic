@@ -7,7 +7,7 @@
 #define M_MASK_LAYER             4
 #define M_HEAD_LAYER             3
 #define M_FIRE_UPPER_LAYER       2
-#define TARGETED_LAYER           1
+//#define TARGETED_LAYER           1 // For recordkeeping
 #define M_TOTAL_LAYERS           8
 /////////////////////////////////
 
@@ -170,6 +170,5 @@
 #undef M_MASK_LAYER
 #undef M_HEAD_LAYER
 #undef M_FIRE_UPPER_LAYER
-#undef TARGETED_LAYER
 #undef M_TOTAL_LAYERS
 

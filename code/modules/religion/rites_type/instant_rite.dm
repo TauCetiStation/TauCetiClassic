@@ -7,7 +7,7 @@
 /datum/religion_rites/instant/get_count_steps()
 	return 1 // Dont forget about invoke_msg
 
-/datum/religion_rites/instant/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/can_start(mob/user, obj/AOG)
 	if(user.is_busy(AOG))
 		return FALSE
 
