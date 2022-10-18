@@ -148,7 +148,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ESSENCE_EMOTE 256
 #define ESSENCE_ALL 511
 
-
 //dir macros
 ///Returns true if the dir is diagonal, false otherwise
 #define ISDIAGONALDIR(d) (d&(d-1))

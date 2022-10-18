@@ -13,12 +13,12 @@
 
 	return TRUE
 
-/datum/religion_rites/instant/can_invocate(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/can_invocate(mob/user, obj/AOG)
 	if(!do_after(user, target = AOG, delay = ritual_length, can_move = TRUE))
 		return FALSE
 
 	return TRUE
 
-/datum/religion_rites/instant/end(mob/living/user, obj/AOG)
+/datum/religion_rites/instant/end(mob/user, obj/AOG)
 	if(invoke_msg)
 		user.say(invoke_msg)
