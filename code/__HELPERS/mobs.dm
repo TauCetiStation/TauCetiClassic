@@ -245,6 +245,7 @@
 		qdel(progbar)
 	if(user)
 		user.become_not_busy(_hand = busy_hand)
+		user.do_after_interrupt = FALSE
 	if(target && target != user)
 		target.in_use_action = FALSE
 
