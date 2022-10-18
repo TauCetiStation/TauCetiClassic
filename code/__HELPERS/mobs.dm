@@ -237,8 +237,7 @@
 				if(user.get_active_hand() != holding)
 					. = FALSE
 					break
-		if(user.flags & INTERRUPT_DO_AFTER)
-			user.flags &= ~INTERRUPT_DO_AFTER
+		if(user.do_after_interrupt)
 			. = FALSE
 			break
 
@@ -248,9 +247,6 @@
 		user.become_not_busy(_hand = busy_hand)
 	if(target && target != user)
 		target.in_use_action = FALSE
-
-/proc/do_after_interrupt(mob/user)
-	user.flags |= INTERRUPT_DO_AFTER
 
 //Returns true if this person has a job which is a department head
 /mob/proc/is_head_role()

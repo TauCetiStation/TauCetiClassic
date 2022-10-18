@@ -199,6 +199,7 @@
 
 	var/fake_death = 0 //New changeling statis
 	var/busy_with_action = FALSE // do_after() and do_mob() sets this to TRUE while in progress, use is_busy() before anything if you want to prevent user to do multiple actions.
+	var/do_after_interrupt = FALSE //setting 0 in do_after's loop
 
 	var/list/weather_immunities = list()
 

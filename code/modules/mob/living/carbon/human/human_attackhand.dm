@@ -57,7 +57,7 @@
 	if(w_uniform)
 		w_uniform.add_fingerprint(attacker)
 	if(is_busy())
-		do_after_interrupt(src)
+		do_after_interrupt = TRUE
 	return ..()
 
 /*
