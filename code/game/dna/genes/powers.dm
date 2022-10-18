@@ -74,7 +74,7 @@
 
 /datum/dna/gene/basic/increaserun
 	name="Super Speed"
-	activation_messages=list("Ваши мышцы ног пульсируют.")
+	activation_messages=list("Мышцы ваших ног пульсируют.")
 	mutation=RUN
 	activation_prob=50
 
@@ -235,7 +235,7 @@
 		to_chat(src, "<span class='warning'>Ваш ген халка рецессивный!</span>")
 		return
 	if(mind.hulkizing)
-		to_chat(src, "<span class='warning'>Вы больше не чувствуете способность к трансформации!</span>") // Hulk transformation at most 1 time.
+		to_chat(src, "<span class='warning'>Вы больше не чувствуете способности к трансформации!</span>") // Hulk transformation at most 1 time.
 		return
 
 	mind.hulkizing = TRUE

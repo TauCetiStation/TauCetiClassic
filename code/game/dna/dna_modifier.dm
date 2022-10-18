@@ -215,7 +215,7 @@
 			return FALSE
 
 		if(!open)
-			to_chat(user, "<span class='notice'>Для начала откройте сканер.</span>")
+			to_chat(user, "<span class='notice'>Откройте сканер.</span>")
 			return FALSE
 
 		var/mob/M = G.affecting
