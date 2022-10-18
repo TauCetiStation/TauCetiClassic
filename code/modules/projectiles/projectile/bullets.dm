@@ -8,6 +8,7 @@
 	embed = 1
 	sharp = 1
 	var/stoping_power = 0
+	var/shake_camera = TRUE
 
 	muzzle_type = /obj/effect/projectile/bullet/muzzle
 
@@ -17,6 +18,8 @@
 
 /obj/item/projectile/bullet/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if (..())
+		if(!shake_camera)
+			return
 		var/mob/living/L = target
 		shake_camera(L, 3, 2)
 
@@ -208,14 +211,18 @@
 	name = "stunshot"
 	icon_state = "spark"
 	flag = ENERGY
+	damage_type = HALLOSS
 	damage = 5
 	stun = 0
 	weaken = 0
 	stutter = 10
-	agony = 80
+	agony = 30
 	embed = 0
-	sharp = 0
+	sharp = FALSE
+	shake_camera = FALSE
 	dispersion = 2.0
+	light_power = 2
+	light_range = 2
 
 /obj/item/projectile/bullet/stunshot/atom_init()
 	. = ..()
