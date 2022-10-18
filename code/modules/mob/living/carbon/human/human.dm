@@ -65,6 +65,7 @@
 		dna.real_name = real_name
 
 	handcrafting = new()
+	AddComponent(/datum/component/altcraft)
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
@@ -221,7 +222,7 @@
 	switch (severity)
 		if(EXPLODE_DEVASTATE)
 			b_loss += 500
-			if (!prob(getarmor(null, "bomb")))
+			if (!prob(getarmor(null, BOMB)))
 				gib()
 				return
 			else
@@ -237,7 +238,7 @@
 
 			f_loss += 60
 
-			if (prob(getarmor(null, "bomb")))
+			if (prob(getarmor(null, BOMB)))
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 
@@ -249,7 +250,7 @@
 
 		if(EXPLODE_LIGHT)
 			b_loss += 30
-			if (prob(getarmor(null, "bomb")))
+			if (prob(getarmor(null, BOMB)))
 				b_loss = b_loss/2
 			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 15
@@ -299,9 +300,9 @@
 /mob/living/carbon/human/blob_act()
 	if(stat == DEAD)	return
 	to_chat(src, "<span class='danger'>The blob attacks you!</span>")
-	var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
+	var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG, BP_HEAD)
 	var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
-	apply_damage(rand(30, 40), BRUTE, BP, run_armor_check(BP, "melee"))
+	apply_damage(rand(30, 40), BRUTE, BP, run_armor_check(BP, MELEE))
 	return
 
 /mob/living/carbon/human/proc/can_use_two_hands(broken = TRUE) // Replace arms with hands in case of reverting Kurshan's PR.
@@ -920,6 +921,10 @@
 			number -= 1
 	if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
 		number += 1
+	if(istype(glasses, /obj/item/clothing/glasses/hud/hos_aug))
+		var/obj/item/clothing/glasses/hud/hos_aug/G = glasses
+		if(!G.active)
+			number += 1
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/welding))
 		var/obj/item/clothing/mask/gas/welding/W = wear_mask
 		if(!W.up)
@@ -1740,7 +1745,7 @@
 
 /atom/movable/screen/leap
 	name = "toggle leap"
-	icon = 'icons/mob/screen1_action.dmi'
+	icon = 'icons/hud/screen1_action.dmi'
 	icon_state = "action"
 	screen_loc = ui_human_leap
 

@@ -126,6 +126,7 @@
 	sharp = 1
 	edge = 1
 	force = 10.0
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	w_class = SIZE_TINY
 	throwforce = 6.0
 	throw_speed = 3
@@ -178,6 +179,16 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "combat_knife"
 	origin_tech = "materials=1;combat=1"
+
+/obj/item/weapon/kitchenknife/throwing
+	name = "throwing knife"
+	desc = "A blade designed to be apparently useless for normal melee combat, but very useful for throwing."
+	force = 5
+	throwforce = 18
+	throw_speed = 6
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "throwing_knife"
+
 /*
  * Bucher's cleaver
  */

@@ -108,12 +108,27 @@
 				open(1)
 	return
 
-/obj/machinery/door/firedoor/attack_animal(mob/user)
-	if(istype(user, /mob/living/simple_animal/hulk))
-		var/mob/living/simple_animal/hulk/H = user
-		H.attack_hulk(src)
+/obj/machinery/door/firedoor/attack_hulk(mob/living/user)
+	. = ..()
+
+	if(.)
+		return .
+
+	user.SetNextMove(CLICK_CD_INTERACT)
+	
+	if(blocked)
+		if(user.hulk_scream(src))
+			qdel(src)
 		return
 
+	if(density)
+		to_chat(user, "<span class='userdanger'>You force your fingers between \
+		 the doors and begin to pry them open...</span>")
+		playsound(src, 'sound/machines/firedoor_open.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
+		if (!user.is_busy() && do_after(user, 4 SECONDS, target = src) && !QDELETED(src))
+			open(1)
+
+/obj/machinery/door/firedoor/attack_animal(mob/user)
 	..()
 	if(density && !blocked)
 		open()
@@ -198,14 +213,7 @@
 					user.visible_message("<span class='danger'>[user] has removed the electronics from \the [src].</span>",
 										"You have removed the electronics from [src].")
 
-					new/obj/item/weapon/airalarm_electronics(src.loc)
-					take_out_wedged_item()
-					var/obj/structure/firedoor_assembly/FA = new/obj/structure/firedoor_assembly(src.loc)
-					FA.anchored = TRUE
-					FA.density = TRUE
-					FA.wired = 1
-					FA.update_icon()
-					qdel(src)
+					deconstruct(TRUE)
 		return
 
 	if(blocked)
@@ -243,6 +251,18 @@
 					close()
 			return
 
+/obj/machinery/door/firedoor/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	take_out_wedged_item()
+	if(disassembled || prob(40))
+		var/obj/structure/firedoor_assembly/FA = new (loc)
+		if(disassembled)
+			FA.anchored = TRUE
+			FA.density = TRUE
+			FA.wired = TRUE
+			FA.update_icon()
+	..()
 
 /obj/machinery/door/firedoor/proc/latetoggle()
 	if(operating || stat & NOPOWER || !nextstate)

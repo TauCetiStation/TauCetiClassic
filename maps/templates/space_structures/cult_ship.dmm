@@ -1,0 +1,1098 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/structure/cult/anomaly/timewhole,
+/turf/environment/space,
+/area/space)
+"ay" = (
+/obj/item/weapon/ore/iron,
+/turf/environment/space,
+/area/space)
+"aT" = (
+/obj/structure/object_wall/standart{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/space_structures/cult_ship)
+"aV" = (
+/turf/simulated/wall/cult,
+/area/space_structures/cult_ship)
+"bc" = (
+/turf/simulated/wall/cult/runed/anim,
+/area/space_structures/cult_ship)
+"by" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"bQ" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/fans/tiny,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"bV" = (
+/obj/structure/object_wall/standart{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/space_structures/cult_ship)
+"cf" = (
+/obj/structure/scrap_cube,
+/turf/environment/space,
+/area/space)
+"ej" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "burst_l"
+	},
+/turf/environment/space,
+/area/space_structures/cult_ship)
+"eD" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "heater1"
+	},
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"fE" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"fV" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"gk" = (
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"gl" = (
+/obj/machinery/recharge_station,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"gZ" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8
+	},
+/turf/environment/space,
+/area/space_structures/cult_ship)
+"hp" = (
+/obj/structure/dispenser/oxygen,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"hD" = (
+/obj/structure/cult/anomaly/orb,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"hU" = (
+/obj/effect/decal/cleanable/blood,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"ih" = (
+/obj/machinery/light_construct/small{
+	dir = 4
+	},
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"iU" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 29
+	},
+/obj/machinery/bodyscanner,
+/obj/item/weapon/storage/firstaid/adv,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"ja" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
+	},
+/obj/machinery/body_scanconsole,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/device/flashlight/seclite,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"jh" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"jo" = (
+/obj/structure/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "burst_r"
+	},
+/turf/environment/space,
+/area/space_structures/cult_ship)
+"lJ" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "heater1"
+	},
+/turf/simulated/shuttle/floor/evac/eng1,
+/area/space_structures/cult_ship)
+"lY" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"mM" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"mS" = (
+/obj/structure/mineral_door/cult,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"oy" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"oH" = (
+/mob/living/simple_animal/hostile/cellular/meat/flesh,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"oM" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/remains/human,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"pe" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/door_assembly/door_assembly_hatch,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"pq" = (
+/obj/item/weapon/reagent_containers/glass/bucket/full,
+/obj/item/weapon/mop,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"qK" = (
+/obj/structure/cult/anomaly/shell,
+/turf/environment/space,
+/area/space)
+"qV" = (
+/obj/structure/object_wall/standart{
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/space_structures/cult_ship)
+"rK" = (
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -28;
+	pixel_y = -5
+	},
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"sd" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"sq" = (
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"sG" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"sM" = (
+/obj/effect/landmark/corpse/securityofficer,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"tq" = (
+/obj/structure/cult/anomaly/timewhole,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light_construct/small,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"tJ" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/gun/projectile/glock/spec,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"uJ" = (
+/obj/item/weapon/storage/firstaid/regular,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"uT" = (
+/obj/structure/table,
+/obj/machinery/cell_charger{
+	pixel_y = 5
+	},
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"vb" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"vh" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"vR" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"wd" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/belt/utility{
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/toolbox/mechanical,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"wv" = (
+/turf/simulated/shuttle/floor/evac/eng1,
+/area/space_structures/cult_ship)
+"wy" = (
+/obj/structure/table,
+/obj/item/pizzabox/meat{
+	pixel_y = 10
+	},
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"wL" = (
+/obj/structure/table,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
+	},
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"wR" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"xd" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"xK" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"yh" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/metal{
+	amount = 15;
+	pixel_x = -6
+	},
+/obj/item/stack/sheet/glass{
+	amount = 17
+	},
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"yX" = (
+/obj/machinery/autolathe{
+	desc = "Your typical Autolathe. It appears to have much more options than your regular one, however...";
+	hacked = 1;
+	name = "Thunderdome Autolathe"
+	},
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"zi" = (
+/obj/item/weapon/disk/research_points/rare,
+/obj/structure/closet/crate/scicrate,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"zj" = (
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"zO" = (
+/obj/structure/cult/anomaly/shell,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"zS" = (
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/door_assembly/door_assembly_hatch,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"Af" = (
+/obj/structure/computerframe{
+	dir = 8
+	},
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"AA" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -28;
+	pixel_y = -5
+	},
+/obj/machinery/light_construct/small{
+	dir = 8
+	},
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"Ca" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"Dr" = (
+/obj/effect/decal/cleanable/blood/drip,
+/mob/living/simple_animal/hostile/cellular/meat/creep_standing,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"DY" = (
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"EH" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"EN" = (
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"Fe" = (
+/obj/structure/computerframe{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"FK" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/closet/crate,
+/obj/random/tools/tool,
+/obj/random/tools/tool,
+/obj/random/tools/tool,
+/obj/random/tools/tool,
+/obj/random/tools/toolbox,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"FL" = (
+/obj/machinery/computer/mech_bay_power_console,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"FW" = (
+/obj/structure/pedestal/cult,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"FX" = (
+/obj/structure/table/woodentable/fancy/black,
+/obj/item/device/soulstone{
+	pixel_y = 6
+	},
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"Gy" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"GP" = (
+/obj/structure/cult/anomaly/spacewhole,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"Ha" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"Hg" = (
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/gun/energy/gun,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"Hy" = (
+/obj/structure/computerframe{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"HN" = (
+/obj/item/weapon/scrap_lump,
+/turf/environment/space,
+/area/space)
+"Ia" = (
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
+	},
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"IG" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"JA" = (
+/obj/effect/decal/mecha_wreckage/ripley/deathripley,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"JG" = (
+/obj/item/weapon/bananapeel,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"Kf" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"Kr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/constructable_frame/machine_frame,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"KA" = (
+/obj/structure/table,
+/obj/item/weapon/handcuffs,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -32
+	},
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"LA" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -28;
+	pixel_y = -5
+	},
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"LG" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/door_assembly/door_assembly_hatch,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"LM" = (
+/obj/machinery/mech_bay_recharge_port{
+	dir = 1
+	},
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"Mz" = (
+/obj/structure/cult/anomaly/shell,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"Nk" = (
+/obj/effect/landmark/corpse/clown,
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana/honk,
+/obj/structure/sign/poster/contraband/clown{
+	pixel_y = 32
+	},
+/obj/machinery/light_construct/small{
+	dir = 1
+	},
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"ND" = (
+/obj/item/weapon/kitchenknife/ritual,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"NP" = (
+/turf/environment/space,
+/area/space)
+"Oe" = (
+/obj/structure/cult/statue/camera/gargoyle,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"OI" = (
+/obj/structure/object_wall/standart{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/turf/environment/space,
+/area/space_structures/cult_ship)
+"Ph" = (
+/obj/structure/stool/bed/chair/schair/wagon{
+	dir = 4
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 8;
+	name = "largecell apc left";
+	pixel_x = -28
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"PH" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"PO" = (
+/obj/effect/decal/remains/human,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"Qa" = (
+/obj/structure/mineral_door/cult,
+/turf/simulated/shuttle/floor/evac/eng1,
+/area/space_structures/cult_ship)
+"Qd" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"QT" = (
+/obj/item/weapon/book/manual/wiki/cult,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"Ry" = (
+/obj/effect/decal/cleanable/blood/drip,
+/mob/living/simple_animal/hostile/cellular/meat/maniac,
+/obj/item/clothing/suit/necromancer_hoodie,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"RF" = (
+/obj/structure/cult/anomaly/orb,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"RG" = (
+/obj/item/weapon/bananapeel,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"Sb" = (
+/obj/structure/pedestal/cult,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"SD" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"SP" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"TK" = (
+/obj/structure/cult/anomaly/timewhole,
+/obj/machinery/power/terminal,
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"UI" = (
+/obj/effect/decal/cleanable/blood,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"UJ" = (
+/obj/machinery/optable/torture_table,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"VH" = (
+/obj/structure/altar_of_gods/cult,
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana{
+	pixel_y = 8
+	},
+/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -32
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"WW" = (
+/obj/structure/cult/statue/camera/jew,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"Xm" = (
+/obj/structure/cult/anomaly/orb,
+/turf/environment/space,
+/area/space)
+"XH" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/engine/cult/lava,
+/area/space_structures/cult_ship)
+"XP" = (
+/obj/machinery/power/smes,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/light/small{
+	brightness_color = "#008000"
+	},
+/turf/simulated/shuttle/floor/evac/eng2,
+/area/space_structures/cult_ship)
+"YJ" = (
+/obj/machinery/power/port_gen/riteg,
+/obj/structure/cable,
+/turf/simulated/floor/engine/cult,
+/area/space_structures/cult_ship)
+"YT" = (
+/obj/structure/cult/anomaly/spacewhole,
+/turf/environment/space,
+/area/space)
+"ZB" = (
+/obj/item/weapon/ore/glass,
+/turf/environment/space,
+/area/space)
+
+(1,1,1) = {"
+NP
+ay
+NP
+NP
+NP
+NP
+NP
+NP
+NP
+NP
+NP
+NP
+NP
+NP
+NP
+NP
+NP
+"}
+(2,1,1) = {"
+NP
+aT
+ej
+gZ
+jo
+qV
+NP
+NP
+NP
+NP
+HN
+aT
+ej
+gZ
+jo
+qV
+NP
+"}
+(3,1,1) = {"
+NP
+aV
+eD
+eD
+lJ
+by
+ej
+gZ
+gZ
+gZ
+jo
+by
+eD
+lJ
+eD
+by
+NP
+"}
+(4,1,1) = {"
+aa
+bc
+fE
+hp
+bc
+aV
+lJ
+eD
+lJ
+eD
+eD
+aV
+by
+SD
+SD
+aV
+YT
+"}
+(5,1,1) = {"
+NP
+by
+fV
+hD
+lY
+rK
+vb
+wR
+by
+FK
+Ia
+LA
+Ph
+SP
+XH
+bc
+NP
+"}
+(6,1,1) = {"
+NP
+bQ
+gk
+hU
+mM
+sd
+vh
+xd
+wv
+fV
+IG
+LG
+PH
+TK
+XP
+aV
+NP
+"}
+(7,1,1) = {"
+NP
+by
+gl
+ih
+mM
+sq
+vR
+xK
+aV
+FL
+JA
+LM
+PO
+UI
+YJ
+by
+NP
+"}
+(8,1,1) = {"
+NP
+aV
+by
+by
+mS
+bc
+aV
+by
+aV
+bc
+bc
+aV
+Qa
+aV
+aV
+by
+ZB
+"}
+(9,1,1) = {"
+NP
+bV
+by
+iU
+oy
+sG
+wd
+yh
+aV
+FW
+JG
+DY
+Qd
+UJ
+aV
+OI
+NP
+"}
+(10,1,1) = {"
+NP
+NP
+aV
+ja
+fV
+sM
+sq
+yX
+bc
+FX
+Kf
+Mz
+QT
+VH
+bc
+NP
+NP
+"}
+(11,1,1) = {"
+NP
+NP
+bc
+jh
+oH
+tq
+by
+bc
+bc
+aV
+bc
+Nk
+Ry
+WW
+bc
+NP
+NP
+"}
+(12,1,1) = {"
+NP
+NP
+aV
+aV
+oM
+tJ
+by
+zi
+AA
+Gy
+aV
+ND
+RF
+aV
+aV
+NP
+NP
+"}
+(13,1,1) = {"
+NP
+cf
+bV
+by
+pe
+uJ
+wv
+xd
+Ca
+mM
+mS
+lY
+RG
+bc
+aV
+NP
+NP
+"}
+(14,1,1) = {"
+NP
+NP
+NP
+aV
+pq
+uT
+by
+zj
+Dr
+GP
+aV
+Oe
+Sb
+aV
+NP
+NP
+NP
+"}
+(15,1,1) = {"
+NP
+NP
+NP
+by
+by
+bc
+aV
+by
+DY
+by
+aV
+bc
+bc
+aV
+NP
+NP
+NP
+"}
+(16,1,1) = {"
+NP
+NP
+NP
+bV
+by
+aV
+wy
+zO
+EH
+Ha
+Kr
+aV
+by
+OI
+NP
+NP
+NP
+"}
+(17,1,1) = {"
+NP
+NP
+NP
+NP
+by
+by
+wL
+zS
+EN
+Hg
+KA
+bc
+bc
+Xm
+NP
+NP
+NP
+"}
+(18,1,1) = {"
+NP
+NP
+NP
+NP
+bV
+aV
+by
+Af
+Fe
+Hy
+by
+by
+OI
+NP
+NP
+NP
+NP
+"}
+(19,1,1) = {"
+NP
+NP
+NP
+NP
+qK
+bV
+by
+aV
+bc
+aV
+aV
+OI
+NP
+NP
+NP
+NP
+NP
+"}
+(20,1,1) = {"
+NP
+NP
+NP
+NP
+NP
+NP
+NP
+NP
+NP
+ay
+NP
+NP
+NP
+NP
+NP
+NP
+NP
+"}

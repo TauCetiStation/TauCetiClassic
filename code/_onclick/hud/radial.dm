@@ -4,7 +4,7 @@
 var/global/list/radial_menus = list()
 
 /atom/movable/screen/radial
-	icon = 'icons/mob/radial.dmi'
+	icon = 'icons/hud/radial.dmi'
 	plane = ABOVE_HUD_PLANE
 	var/datum/radial_menu/parent
 
