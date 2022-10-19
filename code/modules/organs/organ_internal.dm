@@ -1,7 +1,7 @@
 #define NO_INT_ORGAN_DAMAGE "None"
 #define MILD_INT_ORGAN_DAMAGE "Mild"
 #define SEVERE_INT_ORGAN_DAMAGE "Severe"
-#define ACUTE_INT_ORGAN_DAMAGE "Acute"
+#define CRITICAL_INT_ORGAN_DAMAGE "Critical"
 
 /****************************************************
 				INTERNAL ORGANS
@@ -54,12 +54,12 @@
 	switch(damage)
 		if(0)
 			text = NO_INT_ORGAN_DAMAGE
-		if(1 to 5)
+		if(1 to 10)
 			text = MILD_INT_ORGAN_DAMAGE
-		if(6 to 10)
+		if(11 to 20)
 			text = SEVERE_INT_ORGAN_DAMAGE
-		if(11 to INFINITY)
-			text = ACUTE_INT_ORGAN_DAMAGE
+		if(21 to INFINITY)
+			text = CRITICAL_INT_ORGAN_DAMAGE
 	return text
 
 /obj/item/organ/internal/process()
@@ -439,4 +439,4 @@
 #undef NO_INT_ORGAN_DAMAGE
 #undef MILD_INT_ORGAN_DAMAGE
 #undef SEVERE_INT_ORGAN_DAMAGE
-#undef ACUTE_INT_ORGAN_DAMAGE
+#undef CRITICAL_INT_ORGAN_DAMAGE

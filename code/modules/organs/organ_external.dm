@@ -1,7 +1,7 @@
 #define NO_EXT_ORGAN_DAMAGE "None"
 #define MILD_EXT_ORGAN_DAMAGE "Mild"
 #define SEVERE_EXT_ORGAN_DAMAGE "Severe"
-#define ACUTE_EXT_ORGAN_DAMAGE "Acute"
+#define CRITICAL_EXT_ORGAN_DAMAGE "Critical"
 
 /****************************************************
 				BODYPARTS
@@ -571,7 +571,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(26 to 50)
 			text = SEVERE_EXT_ORGAN_DAMAGE
 		if(51 to INFINITY)
-			text = ACUTE_EXT_ORGAN_DAMAGE
+			text = CRITICAL_EXT_ORGAN_DAMAGE
 	return text
 
 /obj/item/organ/external/proc/has_infected_wound()
@@ -1201,4 +1201,4 @@ Note that amputating the affected organ does in fact remove the infection from t
 #undef NO_EXT_ORGAN_DAMAGE
 #undef MILD_EXT_ORGAN_DAMAGE
 #undef SEVERE_EXT_ORGAN_DAMAGE
-#undef ACUTE_EXT_ORGAN_DAMAGE
+#undef CRITICAL_EXT_ORGAN_DAMAGE

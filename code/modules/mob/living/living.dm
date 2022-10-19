@@ -1,7 +1,7 @@
 #define NO_DAMAGE "None"
 #define MILD_DAMAGE "Mild"
 #define SEVERE_DAMAGE "Severe"
-#define ACUTE_DAMAGE "Acute"
+#define CRITICAL_DAMAGE "Critical"
 
 /mob/living/atom_init()
 	. = ..()
@@ -314,12 +314,11 @@
 			function = getCloneLoss()
 		if(BRAINLOSS)
 			function = getBrainLoss()
-	var/numbers = function
 	if(fake)
 		//copypast from healthanalyzer
-		numbers = max(rand(1,40), getOxyLoss(), (300 - (getToxLoss() + getFireLoss() + getBruteLoss())))
+		function = max(rand(1,40), getOxyLoss(), (300 - (getToxLoss() + getFireLoss() + getBruteLoss())))
 	var/text = ""
-	switch(numbers)
+	switch(function)
 		if(0)
 			text = NO_DAMAGE
 		if(1 to 50)
@@ -327,7 +326,7 @@
 		if(51 to 100)
 			text = SEVERE_DAMAGE
 		if(101 to INFINITY)
-			text = ACUTE_DAMAGE
+			text = CRITICAL_DAMAGE
 	return text
 
 // ========== BRUTE ==========
@@ -1552,4 +1551,4 @@
 #undef NO_DAMAGE
 #undef MILD_DAMAGE
 #undef SEVERE_DAMAGE
-#undef ACUTE_DAMAGE
+#undef CRITICAL_DAMAGE
