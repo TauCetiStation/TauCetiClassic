@@ -456,7 +456,7 @@ var/global/list/datum/spawners_cooldown = list()
 	name = "Взломанный киборг"
 	id = "malf_unit"
 	ranks = list(ROLE_MALF)
-	desc = "Киборг с сброшенными закономами."
+	desc = "Киборг с сброшенными законами."
 	wiki_ref = "Cyborg"
 
 /datum/spawner/malf_borg/spawn_ghost(mob/dead/observer/ghost)
