@@ -111,7 +111,7 @@
 	var/OX = M.getOxyLoss() > 50 	? 	"<b>[M.getLossString(OXY)]</b>" 		: M.getLossString(OXY)
 	var/TX = M.getToxLoss() > 50 	? 	"<b>[M.getLossString(TOX)]</b>" 		: M.getLossString(TOX)
 	var/BU = M.getFireLoss() > 50 	? 	"<b>[M.getLossString(BURN)]</b>" 		: M.getLossString(BURN)
-	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getLossString(BRUTE)]</b>" 	: M.getLossString(BRUTE)
+	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getLossString(BRUTE)]</b>" 		: M.getLossString(BRUTE)
 	if(M.status_flags & FAKEDEATH)
 		OX = fake_oxy > 50 			? 	"<b>[fake_oxy]</b>" 			: fake_oxy
 		message += "<span class='notice'>Analyzing Results for [M]:\n&emsp; Overall Status: dead</span><br>"
