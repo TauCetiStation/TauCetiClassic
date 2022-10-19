@@ -28,7 +28,7 @@
     id = "constsynth"
     minTemp = 773.15
     maxTemp = HVAL
-    minPressure = 1000
+    minPressure = 2000
     maxPressure = HVAL
     producedHeat = 1
     consumed = list("carbon_dioxide" = 3, "tritium" = 1)
@@ -40,7 +40,7 @@
     id = "trioxsynth"
     minTemp = 0
     maxTemp = 273.15
-    minPressure = 1000
+    minPressure = 4000
     maxPressure = HVAL
     producedHeat = 4
     consumed = list("oxygen" = 3)
@@ -64,7 +64,7 @@
     id = "phydrsynt"
     minTemp = 573.15
     maxTemp = HVAL
-    minPressure = 3000
+    minPressure = 2000
     maxPressure = HVAL
     producedHeat = -4
     consumed = list("hydrogen" = 2, "triox" = 1)
@@ -100,7 +100,7 @@
     id = "ctirinsynth"
     minTemp = 373.15
     maxTemp = HVAL
-    minPressure = 7000
+    minPressure = 6000
     maxPressure = HVAL
     producedHeat = 4
     consumed = list("triox" = 3, "helium" = 1)
@@ -112,7 +112,7 @@
     id = "ctirinsynthbz"
     minTemp = 373.15
     maxTemp = HVAL
-    minPressure = 5000
+    minPressure = 4000
     maxPressure = HVAL
     producedHeat = -1
     consumed = list("triox" = 1, "helium" = 1)
@@ -134,8 +134,5 @@
 
 /datum/atmosReaction/mstabSynthesis
     id = "mstabsynth"
-    
-/datum/atmosReaction/mstabSynthesis/New()
-    return
 
 #undef HVAL

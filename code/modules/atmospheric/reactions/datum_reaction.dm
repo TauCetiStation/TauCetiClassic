@@ -2,8 +2,8 @@
     var/id = ""
     var/minTemp = 0 //kelvins
     var/maxTemp = 0 //kelvins
-    var/minPressure = 0 //kpa
-    var/maxPressure = 0 //kpa
+    var/minPressure = 0 //kilo pascals
+    var/maxPressure = 0 //kilo pascals
     var/producedHeat = 0 //joules
     var/list/consumed = list()
     var/list/created = list()
@@ -27,7 +27,7 @@
                 count = 0
 
     if(count == consumed.len + catalysts.len)
-        if((G.return_pressure() > minPressure && G.return_pressure() < maxPressure) && (G.temperature > minTemp && G.temperature < maxTemp))
+        if((G.return_pressure() > minPressure * 1000 && G.return_pressure() < maxPressure * 1000) && (G.temperature > minTemp && G.temperature < maxTemp))
             return toRemove
     return FALSE
 
