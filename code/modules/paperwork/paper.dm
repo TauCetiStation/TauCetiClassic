@@ -889,8 +889,11 @@ var/global/list/contributor_names
 	global.contributor_names = list()
 
 	var/page = 1
+
+	var/owner = config.github_repository_owner
+	var/name = config.github_repository_name
 	while(TRUE)
-		var/list/response = get_webpage("https://api.github.com/repos/TauCetiStation/TauCetiClassic/contributors?anon=[anon]&per_page=[per_page]&page=[page]")
+		var/list/response = get_webpage("https://api.github.com/repos/[owner]/[name]/contributors?anon=[anon]&per_page=[per_page]&page=[page]")
 		if(!response)
 			return
 		response = json_decode(response)
