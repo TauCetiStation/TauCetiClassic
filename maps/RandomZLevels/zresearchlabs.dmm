@@ -117,8 +117,8 @@
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
 "ay" = (
-/obj/machinery/artifact,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/artifact,
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
 "az" = (
