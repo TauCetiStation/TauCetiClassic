@@ -537,7 +537,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 		qdel(src)
 		return
 
-	if(user.a_intent != INTENT_HARM && anchored && book.attackby(W, user, params))
+	if(anchored && book.attackby(W, user, params))
 		return
 
 	return ..()
