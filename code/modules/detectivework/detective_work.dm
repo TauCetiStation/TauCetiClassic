@@ -88,6 +88,8 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 	new /obj/item/weapon/book/manual/detective(get_turf(src))
 
 /obj/machinery/computer/forensic_scanning/attackby(obj/item/I, mob/user)
+	if(!ishuman(user))
+		return ..()
 	if(istype(I, /obj/item/weapon/card/id))
 		if(!authenticated)
 			if(!authorization(user))
@@ -100,8 +102,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 		var/obj/item/weapon/evidencebag/E = I
 		evidencebag_drop(E)
 		//prevent remove interactions that were not intended
-		if(ishuman(user))
-			attack_hand(user)
+		attack_hand(user)
 	else
 		return ..()
 
@@ -476,8 +477,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 /obj/machinery/computer/forensic_scanning/ex_act()
 	return
 
-/obj/machinery/computer/forensic_scanning/proc/evidencebag_drop(obj/item/I)
-	var/obj/item/weapon/evidencebag/E = I
+/obj/machinery/computer/forensic_scanning/proc/evidencebag_drop(obj/item/weapon/evidencebag/E)
 	if(!E.contents.len)
 		return
 	if(scanning)
@@ -486,7 +486,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 	scanning = E.contents[1]
 	scanning.forceMove(src)
 	E.underlays.Cut()
-	E.w_class = initial(I.w_class)
+	E.w_class = initial(E.w_class)
 	E.icon_state = "evidenceobj"
 
 /obj/machinery/computer/forensic_scanning/proc/add_data_scanner(obj/item/device/W)
