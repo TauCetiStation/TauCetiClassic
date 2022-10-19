@@ -55,6 +55,11 @@ var/global/list/assistant_occupations = list(
 )
 
 
+/*
+Attention!
+Order of ranks in *_positions lists below is used to sort crew manifest by such ranks
+*/
+
 var/global/list/command_positions = list(
 	"Captain",
 	"Head of Personnel",

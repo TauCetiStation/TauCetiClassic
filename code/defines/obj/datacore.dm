@@ -14,77 +14,6 @@ var/global/ManifestJSON
 	//This list tracks characters spawned in the world and cannot be modified in-game. Currently referenced by respawn_character().
 	var/locked[] = list()
 
-	var/list/command_ordered = list(
-		"Captain"                 = 1,
-		"Head of Personnel"       = 2,
-		"Head of Security"        = 3,
-		"Chief Engineer"          = 4,
-		"Research Director"       = 5,
-		"Chief Medical Officer"   = 6
-	)
-
-	var/list/security_ordered = list(
-		"Head of Security"        = 1,
-		"Warden"                  = 2,
-		"Detective"               = 3,
-		"Forensic Technician"     = 4,
-		"Security Officer"        = 5,
-		"Security Cadet"          = 6
-	)
-
-	var/list/engineering_ordered = list(
-		"Chief Engineer"          = 1,
-		"Station Engineer"        = 2,
-		"Atmospheric Technician"  = 3,
-		"Technical Assistant"     = 4
-	)
-
-	var/list/medical_ordered = list(
-		"Chief Medical Officer"   = 1,
-		"Medical Doctor"          = 2,
-		"Paramedic"               = 3,
-		"Chemist"                 = 4,
-		"Geneticist"              = 5,
-		"Virologist"              = 6,
-		"Psychiatrist"            = 7,
-		"Medical Intern"          = 8
-	)
-
-	var/list/science_ordered = list(
-		"Research Director"       = 1,
-		"Scientist"               = 2,
-		"Roboticist"              = 3,
-		"Geneticist"              = 4,
-		"Xenobiologist"           = 5,
-		"Xenoarchaeologist"       = 6,
-		"Research Assistant"      = 7
-	)
-
-	var/list/civilian_ordered = list(
-		"Head of Personnel"       =  1,
-		"Internal Affairs Agent"  =  2,
-		"Quartermaster"           =  3,
-		"Cargo Technician"        =  4,
-		"Shaft Miner"             =  5,
-		"Recycler"                =  6,
-		"Chef"                    =  7,
-		"Bartender"               =  8,
-		"Botanist"                =  9,
-		"Clown"                   = 10,
-		"Mime"                    = 11,
-		"Chaplain"                = 12,
-		"Janitor"                 = 13,
-		"Barber"                  = 14,
-		"Librarian"               = 15,
-		"Test Subject"            = 16
-	)
-
-	var/list/nonhuman_ordered = list(
-		"AI"                      = 1,
-		"Cyborg"                  = 2,
-		"pAI"                     = 3
-	)
-
 
 /obj/effect/datacore/proc/remove_priority_field(list/L)
 	for(var/list/R in L)
@@ -121,31 +50,31 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		var/in_department = FALSE
 
 		if(real_rank in command_positions)
-			heads[++heads.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = command_ordered[real_rank])
+			heads[++heads.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = command_positions.Find(real_rank))
 			in_department = TRUE
 
 		if(real_rank in security_positions)
-			sec[++sec.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = security_ordered[real_rank])
+			sec[++sec.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = security_positions.Find(real_rank))
 			in_department = TRUE
 
 		if(real_rank in engineering_positions)
-			eng[++eng.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = engineering_ordered[real_rank])
+			eng[++eng.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = engineering_positions.Find(real_rank))
 			in_department = TRUE
 
 		if(real_rank in medical_positions)
-			med[++med.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = medical_ordered[real_rank])
+			med[++med.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = medical_positions.Find(real_rank))
 			in_department = TRUE
 
 		if(real_rank in science_positions)
-			sci[++sci.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = science_ordered[real_rank])
+			sci[++sci.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = science_positions.Find(real_rank))
 			in_department = TRUE
 
 		if(real_rank in civilian_positions)
-			civ[++civ.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = civilian_ordered[real_rank])
+			civ[++civ.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = civilian_positions.Find(real_rank))
 			in_department = TRUE
 
 		if(real_rank in nonhuman_positions)
-			bot[++bot.len] = list("name" = name, "rank" = rank, "active" = isactive, "priority" = nonhuman_ordered[real_rank])
+			bot[++bot.len] = list("name" = name, "rank" = rank, "active" = isactive, "priority" = nonhuman_positions.Find(real_rank))
 			in_department = TRUE
 
 		if(!in_department)
