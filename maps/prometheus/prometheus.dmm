@@ -17593,9 +17593,6 @@
 	},
 /area/station/security/secconfhall)
 "ecz" = (
-/obj/structure/curtain/medical{
-	icon_state = "open"
-	},
 /obj/structure/curtain/open/privacy,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
@@ -84042,9 +84039,11 @@
 /area/station/rnd/storage)
 "uDl" = (
 /obj/structure/rack,
-/obj/item/stack/sheet/glass,
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/item/stack/sheet/glass{
+	amount = 27
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -88701,7 +88700,7 @@
 "vIV" = (
 /obj/structure/table/woodentable,
 /obj/machinery/faxmachine{
-	department = "Captain's Office"
+	department = "Bridge"
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -93366,15 +93365,17 @@
 	req_access = list(31)
 	},
 /obj/structure/closet/crate/engi,
-/obj/item/stack/sheet/metal,
 /obj/item/stack/cable_coil/random,
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/random/tools/tool,
-/obj/random/tools/tool,
-/obj/random/tools/tool,
 /obj/random/tools/toolbox,
+/obj/item/stack/sheet/metal{
+	amount = 34
+	},
+/obj/random/tools/tool,
+/obj/random/tools/tool,
+/obj/random/tools/tool,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
@@ -115391,12 +115392,12 @@ sHx
 sHx
 sHx
 hGN
-hGN
-hGN
-hGN
-hGN
-hGN
-hGN
+cJy
+iRy
+iRy
+cJy
+cJy
+iRy
 cJy
 iRy
 cJy
@@ -115648,11 +115649,11 @@ vVH
 lqA
 hGN
 hGN
-rKO
-rKO
-rKO
-rKO
-rKO
+hGN
+hGN
+hGN
+hGN
+hGN
 hGN
 cJy
 iRy
@@ -118218,11 +118219,11 @@ vjk
 xAe
 vlL
 hGN
-hGN
 rKO
 rKO
 rKO
-hGN
+rKO
+rKO
 hGN
 cJy
 cJy
@@ -118474,13 +118475,13 @@ uem
 enF
 eGP
 vlL
-iRy
+hGN
 hGN
 uEs
 lzP
 lqA
 hGN
-cJy
+hGN
 cJy
 cJy
 hGN

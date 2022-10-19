@@ -334,6 +334,9 @@
 /mob/living/carbon/slime/is_usable_leg(targetzone = null)
 	return FALSE
 
+/mob/living/carbon/slime/can_pickup(obj/O)
+	return FALSE
+
 /mob/living/carbon/slime/get_species()
 	return SLIME
 
