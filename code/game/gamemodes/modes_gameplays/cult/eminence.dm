@@ -172,8 +172,8 @@
 		var/obj/structure/cult/forge/F = A
 		F.attack_hand(src)
 	else if(istype(A, /obj/structure/cult/anomaly))
-		var/obj/structure/cult/anomaly/F = A
-		F.destroying(my_religion)
+		for(var/obj/structure/cult/anomaly/F in range(1, A))
+			F.destroying(my_religion)
 
 	A.add_hiddenprint(src)
 	if(world.time <= next_move)

@@ -2,7 +2,7 @@
 /obj/item/weapon/storage/bible/tome/upgraded
 	name = "strange book"
 	icon_state = "strange_book"
-	build_cd = 15
+	build_cd = 70
 	rune_cd = 5
 	scribe_time = 1
 	cost_coef = 0.5
