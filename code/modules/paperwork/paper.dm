@@ -890,7 +890,7 @@ var/global/list/contributor_names
 
 	var/page = 1
 	while(TRUE)
-		var/list/response = get_webpage("\"https://api.github.com/repos/TauCetiStation/TauCetiClassic/contributors?anon=[anon]&per_page=[per_page]&page=[page]\"")
+		var/list/response = get_webpage("https://api.github.com/repos/TauCetiStation/TauCetiClassic/contributors?anon=[anon]&per_page=[per_page]&page=[page]")
 		if(!response)
 			return
 		response = json_decode(response)
