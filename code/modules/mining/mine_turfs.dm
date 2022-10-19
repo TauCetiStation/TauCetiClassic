@@ -326,7 +326,7 @@
 	playsound(src, 'sound/effects/rockfall.ogg', VOL_EFFECTS_MASTER)
 	// var/destroyed = 0 //used for breaking strange rocks
 	if (mineral && ore_amount)
-		
+
 		// if the turf has already been excavated, some of it's ore has been removed
 		for (var/i = 1 to round((ore_amount - mined_ore) * mineral_drop_coefficient, 1))
 			DropMineral()
@@ -568,9 +568,9 @@
 	if(prob(6))
 		if(istype(loc, /area/asteroid/mine/explored))
 			return
-		for(var/obj/machinery/artifact/bluespace_crystal/BC in range(DISTANCE_BEETWEEN_MOSTERS, T)) //Lowers chance of crystal clumps
+		for(var/obj/structure/artifact/bluespace_crystal/BC in range(DISTANCE_BEETWEEN_MOSTERS, T)) //Lowers chance of crystal clumps
 			return
-		new /obj/machinery/artifact/bluespace_crystal(T)
+		new /obj/structure/artifact/bluespace_crystal(T)
 
 	var/turf/t
 	if(SSticker.current_state > GAME_STATE_SETTING_UP)

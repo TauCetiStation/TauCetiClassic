@@ -73,7 +73,7 @@
 		\"[CAVETURF]\" = (/turf/simulated/mineral/random/caves,/area/asteroid/mine/unexplored)\n\
 		\"[RESCAVETURF]\" = (/turf/simulated/mineral/random/high_chance,/area/asteroid/mine/unexplored)\n\
 		\"[MOBTURF]\" = (/mob/living/simple_animal/hostile/asteroid/goliath,/turf/simulated/floor/plating/airless/asteroid,/area/asteroid/mine/unexplored)\n\
-		\"[ARTTURF]\" = (/obj/machinery/artifact,/turf/simulated/floor/plating/airless/asteroid,/area/asteroid/mine/unexplored)\n\
+		\"[ARTTURF]\" = (/obj/structure/artifact,/turf/simulated/floor/plating/airless/asteroid,/area/asteroid/mine/unexplored)\n\
 		(1,1,1) = {\""
 
 	var/side_x = round(size_x / 10)//10% space from side

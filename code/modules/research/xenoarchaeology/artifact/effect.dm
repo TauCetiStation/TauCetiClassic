@@ -90,8 +90,8 @@
 		START_PROCESSING(SSobj, src)
 	if(!activated)
 		STOP_PROCESSING(SSobj, src)
-	if(istype(holder, /obj/machinery/artifact))
-		var/obj/machinery/artifact/A = holder
+	if(istype(holder, /obj/structure/artifact))
+		var/obj/structure/artifact/A = holder
 		A.update_icon()
 	if(!reveal_toggle)
 		return

@@ -90,14 +90,14 @@
 		S.stamp_paper(P)
 		playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
 
-		if(scanned_object && istype(scanned_object, /obj/machinery/artifact))
-			var/obj/machinery/artifact/A = scanned_object
+		if(scanned_object && istype(scanned_object, /obj/structure/artifact))
+			var/obj/structure/artifact/A = scanned_object
 			P.artifact_type = A.name
 			if(A.first_effect)
 				P.artifact_first_effect = A.first_effect.log_name
 			if(A.secondary_effect)
 				P.artifact_second_effect = A.secondary_effect.log_name
-			A.being_used = 0
+			A.being_used = FALSE
 
 /obj/machinery/artifact_analyser/Topic(href, href_list)
 	. = ..()
@@ -118,19 +118,19 @@
 					continue
 				if(O.invisibility)
 					continue
-				if(istype(scanned_object, /obj/machinery/artifact))
-					var/obj/machinery/artifact/A = scanned_object
+				if(istype(scanned_object, /obj/structure/artifact))
+					var/obj/structure/artifact/A = scanned_object
 					if(A.being_used)
 						artifact_in_use = 1
 					else
-						A.being_used = 1
+						A.being_used = TRUE
 
 				if(artifact_in_use)
 					visible_message("<b>[name]</b> states, \"Cannot scan. Too much interference.\"")
 					playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER, 20)
 				else
 					scanned_object = O
-					scan_in_progress = 1
+					scan_in_progress = TRUE
 					scan_completion_time = world.time + scan_duration
 					visible_message("<b>[name]</b> states, \"Scanning begun.\"")
 					owned_scanner.icon_state = "xenoarch_scanner_scanning"
@@ -141,7 +141,7 @@
 	if(href_list["halt_scan"])
 		playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
 		owned_scanner.icon_state = "xenoarch_scanner"
-		scan_in_progress = 0
+		scan_in_progress = FALSE
 		visible_message("<b>[name]</b> states, \"Scanning halted.\"")
 
 	updateDialog()
@@ -178,8 +178,8 @@
 		if(/obj/machinery/power/crystal)
 			return "Crystal formation - Pseudo organic crystalline matrix, unlikely to have formed naturally. No known technology exists to synthesize this exact composition. \
 			Attention: energetic excitement is noticed. The appearance of current is possible. Connect the crystal to the network, using wrench and wires on it. Make sure there is a cable underneath."
-		if(/obj/machinery/artifact) // a fun one
-			var/obj/machinery/artifact/A = scanned_obj
+		if(/obj/structure/artifact) // a fun one
+			var/obj/structure/artifact/A = scanned_obj
 			var/out = "Anomalous alien device - composed of an unknown alloy.<br><br>"
 
 			if(A.first_effect)

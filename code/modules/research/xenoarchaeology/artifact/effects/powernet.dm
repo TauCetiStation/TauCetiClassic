@@ -2,12 +2,12 @@
 	log_name = "Powernet"
 	type_name = ARTIFACT_EFFECT_ELECTRO
 
-/datum/artifact_effect/Powernet/New()
+/datum/artifact_effect/powernet/New()
 	..()
 	trigger = TRIGGER_TOUCH
 	release_method = ARTIFACT_EFFECT_PULSE
 
-/datum/artifact_effect/noise/DoEffectPulse()
+/datum/artifact_effect/powernet/DoEffectPulse()
 	. = ..()
 	if(!.)
 		return

@@ -1,10 +1,11 @@
-/obj/machinery/artifact
+/obj/structure/artifact
 	name = "alien artifact"
 	desc = "A large alien device."
 	icon = 'icons/obj/xenoarchaeology/artifacts.dmi'
 	icon_state = "artifact_1"
-	interact_offline = TRUE
-	var/icon_num = 0
+	resistance_flags = CAN_BE_HIT
+	flags = NODECONSTRUCT
+	max_integrity = 1000
 	density = TRUE
 	///artifact first effect
 	var/datum/artifact_effect/first_effect
@@ -12,63 +13,30 @@
 	var/datum/artifact_effect/secondary_effect
 	///is artifact busy right now, used it harvester code
 	var/being_used = FALSE
-	///does our artifact needs an init, dont forget to init turfs in prebuild artifacts if needed
-	var/need_init = TRUE
 	///list of turfs around us
-	var/list/turf/turfs_around = list()
+	var/list/turf/turfs_around
 	///list of mobs inside of turfs around us
-	var/list/mob/mobs_around = list()
+	var/list/mob/mobs_around
 	///last time mob touched us
 	var/last_time_touched = 0
-	///our health
-	max_integrity = 1000
-	///we dont drop anything yet
-	flags = NODECONSTRUCT
-
-/obj/machinery/artifact/Destroy()
-	clear_turfs_around()
-
-	if(first_effect)
-		QDEL_NULL(first_effect)
-	if(secondary_effect)
-		QDEL_NULL(secondary_effect)
-	return ..()
-
-/obj/machinery/artifact/deconstruct(disassembled)
-	do_deconstruct_effects()
-	visible_message("<span class='danger'>[src] breaks in pieces, releasing a wave of energy</span>")
-	. = ..()
-
-/obj/machinery/artifact/atom_init()
-	. = ..()
-	if(!need_init)
-		return
-	//setup primary effect - these are the main ones (mixed)
-	var/effecttype = pick(global.valid_primary_effect_types)
-	first_effect = new effecttype(src)
-
-	//65% chance to have a secondary effect
-	if(prob(65))
-		effecttype = pick(global.valid_secondary_effect_types)
-		secondary_effect = new effecttype(src)
-
-	init_artifact_type()
-	if(first_effect.trigger == TRIGGER_PROXY || secondary_effect?.trigger == TRIGGER_PROXY)
-		init_turfs_around()
+	///number for icon_state
+	var/icon_num = 1
 
 /**
- * Adds a entered/exited signal to each turf around RANGE_TURFS(3 , src)
+ * Adds an entered/exited signal to each turf around RANGE_TURFS(3 , src)
  */
-/obj/machinery/artifact/proc/init_turfs_around()
+/obj/structure/artifact/proc/init_turfs_around()
+	turfs_around = list()
+	mobs_around = list()
 	for(var/turf/T as anything in RANGE_TURFS(3, src))
 		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), .proc/turf_around_enter)
 		RegisterSignal(T, list(COMSIG_ATOM_EXITED), .proc/turf_around_exit)
 		turfs_around += T
 
 /**
- * Clears both mob/turf lists, unregisters entered sinal
+ * Clears both mob/turf lists, unregisters entered & exited signals
  */
-/obj/machinery/artifact/proc/clear_turfs_around()
+/obj/structure/artifact/proc/clear_turfs_around()
 	for(var/turf/T in turfs_around)
 		UnregisterSignal(T, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
 		turfs_around -= T
@@ -78,27 +46,28 @@
 /**
  * Checks if entered atom is mob, adds it to proxy list
  */
-/obj/machinery/artifact/proc/turf_around_enter(atom/source, atom/movable/mover, atom/oldLoc)
+/obj/structure/artifact/proc/turf_around_enter(atom/source, atom/movable/mover, atom/oldLoc)
 	if(ismob(mover))
 		mobs_around |= mover
 
 /**
  * Checks if exited atom is mob, removes it from proxy list
  */
-/obj/machinery/artifact/proc/turf_around_exit(atom/source, atom/movable/mover, atom/newLoc)
-	mobs_around -= mover
+/obj/structure/artifact/proc/turf_around_exit(atom/source, atom/movable/mover, atom/newLoc)
+	if(ismob(mover))
+		mobs_around -= mover
 
 /**
  * Rebuilds proxy trigger zone, does this if after moved then stayed in one place for 3 seconds
  */
-/obj/machinery/artifact/proc/rebuild_zone()
+/obj/structure/artifact/proc/rebuild_zone()
 	clear_turfs_around()
 	init_turfs_around()
 
 /**
  * Tries to toggle both effects on or off if trigger is correct
  */
-/obj/machinery/artifact/proc/try_toggle_effects(trigger)
+/obj/structure/artifact/proc/try_toggle_effects(trigger)
 	if(first_effect.trigger == trigger)
 		first_effect.ToggleActivate()
 	if(secondary_effect?.trigger == trigger)
@@ -107,46 +76,44 @@
 /**
  * Tries to toggle both effects on if trigger is correct
  */
-/obj/machinery/artifact/proc/toggle_effects_on(trigger)
-	if(first_effect)
-		try_turn_on_effect(trigger, first_effect)
+/obj/structure/artifact/proc/toggle_effects_on(trigger)
+	try_turn_on_effect(trigger, first_effect)
 	if(secondary_effect)
 		try_turn_on_effect(trigger, secondary_effect, FALSE)
 
 /**
  * Activates passed effect if trigger is correct and effect is not activated
  */
-/obj/machinery/artifact/proc/try_turn_on_effect(trigger, datum/artifact_effect/first_effect, announce_triggered = TRUE)
+/obj/structure/artifact/proc/try_turn_on_effect(trigger, datum/artifact_effect/first_effect, announce_triggered = TRUE)
 	if(first_effect.trigger == trigger && !first_effect.activated)
 		first_effect.ToggleActivate(announce_triggered)
 
 /**
  * Deactivates both effects if trigger is correct
  */
-/obj/machinery/artifact/proc/toggle_effects_off(trigger)
-	if(first_effect)
-		try_turn_off_effect(trigger, first_effect)
+/obj/structure/artifact/proc/toggle_effects_off(trigger)
+	try_turn_off_effect(trigger, first_effect)
 	if(secondary_effect)
 		try_turn_off_effect(trigger, secondary_effect, FALSE)
 
 /**
  * Deactivates passed effect if trigger is correct and effect is activated
  */
-/obj/machinery/artifact/proc/try_turn_off_effect(trigger, datum/artifact_effect/first_effect, announce_triggered = TRUE)
+/obj/structure/artifact/proc/try_turn_off_effect(trigger, datum/artifact_effect/first_effect, announce_triggered = TRUE)
 	if(first_effect.trigger == trigger && first_effect.activated)
 		first_effect.ToggleActivate(announce_triggered)
 
 /**
  * Tries to do the destroy reaction of BOTH effects
  */
-/obj/machinery/artifact/proc/do_deconstruct_effects()
+/obj/structure/artifact/proc/do_deconstruct_effects()
 	first_effect.DoEffectDeconstruct()
 	secondary_effect?.DoEffectDeconstruct()
 
 /**
  * Picks random artifact icon, changes its name, description
  */
-/obj/machinery/artifact/proc/init_artifact_type()
+/obj/structure/artifact/proc/init_artifact_type()
 	icon_num = pick(ARTIFACT_WIZARD_LARGE,  ARTIFACT_WIZARD_SMALL, ARTIFACT_MARTIAN_LARGE,
                     ARTIFACT_MARTIAN_SMALL, ARTIFACT_MARTIAN_PINK, ARTIFACT_CUBE,
                     ARTIFACT_PILLAR,        ARTIFACT_COMPUTER,	   ARTIFACT_VENTS, ARTIFACT_FLOATING,
@@ -172,45 +139,76 @@
                         "It's mesmerizing to behold.")
 	update_icon()
 
-/obj/machinery/artifact/process()
-	//if either of our effects rely on environmental factors, work that out
-	if((first_effect.trigger >= TRIGGER_HEAT && first_effect.trigger <= TRIGGER_NITRO) ||\
-	 (secondary_effect?.trigger >= TRIGGER_HEAT && secondary_effect.trigger <= TRIGGER_NITRO))
-		var/turf/T = get_turf(src)
-		var/datum/gas_mixture/env = T.return_air()
-		if(env)
-			//COLD ACTIVATION
-			if(env.temperature < 225)
-				toggle_effects_on(TRIGGER_COLD)
-			else toggle_effects_off(TRIGGER_COLD)
-			//HEAT ACTIVATION
-			if(env.temperature > 375)
-				toggle_effects_on(TRIGGER_HEAT)
-			else toggle_effects_off(TRIGGER_HEAT)
-			//PHORON GAS ACTIVATION
-			if(env.gas["phoron"] >= 10)
-				toggle_effects_on(TRIGGER_PHORON)
-			else toggle_effects_off(TRIGGER_PHORON)
-			//OXYGEN GAS ACTIVATION
-			if(env.gas["oxygen"] >= 10)
-				toggle_effects_on(TRIGGER_OXY)
-			else toggle_effects_off(TRIGGER_OXY)
-			//CO2 GAS ACTIVATION
-			if(env.gas["carbon_dioxide"] >= 10)
-				toggle_effects_on(TRIGGER_CO2)
-			else toggle_effects_off(TRIGGER_CO2)
-			//NITROGEN GAS ACTIVATION
-			if(env.gas["nitrogen"] >= 10)
-				toggle_effects_on(TRIGGER_NITRO)
-			else toggle_effects_off(TRIGGER_NITRO)
-	//TRIGGER_PROXY ACTIVATION
-	if((first_effect.trigger >= TRIGGER_PROXY || secondary_effect?.trigger >= TRIGGER_PROXY))
-		if(mobs_around.len != 0)
-			toggle_effects_on(TRIGGER_PROXY)
-		else
-			toggle_effects_off(TRIGGER_PROXY)
+/obj/structure/artifact/atom_init()
+	..()
+	//not a custom artifact
+	if(!first_effect)
+		var/effectType = pick(global.valid_primary_effect_types)
+		first_effect = new effectType(src)
+		if(prob(65))
+			effectType = pick(global.valid_secondary_effect_types)
+			secondary_effect = new effectType(src)
+	else
+		first_effect = new first_effect(src)
+		if(secondary_effect)
+			secondary_effect = new secondary_effect(src)
+	init_artifact_type()
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/artifact/examine(mob/user)
+/obj/structure/artifact/atom_init_late()
+	. = ..()
+	if(first_effect.trigger == TRIGGER_PROXY || secondary_effect?.trigger == TRIGGER_PROXY)
+		init_turfs_around()
+	if(IS_IN_RANGE(first_effect.trigger, TRIGGER_HEAT, TRIGGER_PROXY) || IS_IN_RANGE(secondary_effect?.trigger, TRIGGER_HEAT, TRIGGER_PROXY))
+		START_PROCESSING(SSobj, src)
+
+/obj/structure/artifact/Destroy()
+	clear_turfs_around()
+	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(first_effect)
+	QDEL_NULL(secondary_effect)
+	return ..()
+
+/obj/structure/artifact/deconstruct(disassembled)
+	do_deconstruct_effects()
+	visible_message("<span class='danger'>[src] breaks in pieces, releasing a wave of energy</span>")
+	. = ..()
+
+/obj/structure/artifact/process()
+	if(mobs_around)
+		if(mobs_around.len)
+			toggle_effects_on(TRIGGER_PROXY)
+		else toggle_effects_off(TRIGGER_PROXY)
+	var/turf/T = get_turf(src)
+	var/datum/gas_mixture/env = T.return_air()
+	if(!env)
+		return
+	//COLD ACTIVATION
+	if(env.temperature < 225)
+		toggle_effects_on(TRIGGER_COLD)
+	else toggle_effects_off(TRIGGER_COLD)
+	//HEAT ACTIVATION
+	if(env.temperature > 375)
+		toggle_effects_on(TRIGGER_HEAT)
+	else toggle_effects_off(TRIGGER_HEAT)
+	//PHORON GAS ACTIVATION
+	if(env.gas["phoron"] >= 10)
+		toggle_effects_on(TRIGGER_PHORON)
+	else toggle_effects_off(TRIGGER_PHORON)
+	//OXYGEN GAS ACTIVATION
+	if(env.gas["oxygen"] >= 10)
+		toggle_effects_on(TRIGGER_OXY)
+	else toggle_effects_off(TRIGGER_OXY)
+	//CO2 GAS ACTIVATION
+	if(env.gas["carbon_dioxide"] >= 10)
+		toggle_effects_on(TRIGGER_CO2)
+	else toggle_effects_off(TRIGGER_CO2)
+	//NITROGEN GAS ACTIVATION
+	if(env.gas["nitrogen"] >= 10)
+		toggle_effects_on(TRIGGER_NITRO)
+	else toggle_effects_off(TRIGGER_NITRO)
+
+/obj/structure/artifact/examine(mob/user)
 	..()
 	switch(round(100 * (get_integrity() / max_integrity)))
 		if(85 to 100)
@@ -224,7 +222,7 @@
 		if(0 to 10)
 			to_chat(user, "Appears to have to be barely intanct.")
 
-/obj/machinery/artifact/attack_hand(mob/user)
+/obj/structure/artifact/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
@@ -241,7 +239,7 @@
 	if(secondary_effect?.release_method == ARTIFACT_EFFECT_TOUCH && secondary_effect.activated)
 		secondary_effect.DoEffectTouch(user)
 
-/obj/machinery/artifact/attackby(obj/item/weapon/W, mob/living/user)
+/obj/structure/artifact/attackby(obj/item/weapon/W, mob/living/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/weapon/reagent_containers))
 		if(W.reagents.has_reagent("hydrogen", 1) || W.reagents.has_reagent("water", 1))
@@ -268,7 +266,7 @@
 			return
 	..()
 
-/obj/machinery/artifact/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
+/obj/structure/artifact/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
 	. = ..()
 	if(QDELING(src))
 		return
@@ -283,7 +281,7 @@
 		else
 			try_toggle_effects(TRIGGER_FORCE)
 
-/obj/machinery/artifact/Bumped(atom/AM)
+/obj/structure/artifact/Bumped(atom/AM)
 	..()
 	if(isobj(AM))
 		var/obj/O = AM
@@ -298,26 +296,21 @@
 			secondary_effect.DoEffectTouch(AM)
 		if(ismob(AM))
 			to_chat(AM, "<b>You accidentally touch [src].</b>")
-	..()
 
-
-/obj/machinery/artifact/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+/obj/structure/artifact/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-
 	if(ISDIAGONALDIR(Dir))
 		return .
-
 	if(pulledby)
 		Bumped(pulledby)
 	first_effect.UpdateMove()
 	secondary_effect?.UpdateMove()
-
 	if(first_effect.trigger == TRIGGER_PROXY || secondary_effect?.trigger == TRIGGER_PROXY)
 		if(turfs_around.len != 0)
 			clear_turfs_around()
 		addtimer(CALLBACK(src, .proc/init_turfs_around), 3 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
-/obj/machinery/artifact/update_icon()
+/obj/structure/artifact/update_icon()
 	var/check_activity = null
 	if(first_effect.activated || secondary_effect?.activated)
 		check_activity = "_active"

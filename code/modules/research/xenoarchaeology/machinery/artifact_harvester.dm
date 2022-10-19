@@ -12,7 +12,7 @@
 	var/is_harvesting = FALSE
 	var/is_draining = FALSE
 	var/obj/item/weapon/particles_battery/inserted_battery
-	var/obj/machinery/artifact/current_artifact
+	var/obj/structure/artifact/current_artifact
 	var/obj/machinery/artifact_scanpad/owned_scanner
 	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED)
 
@@ -39,7 +39,7 @@
 	if(inserted_battery.battery_effect?.current_charge >= inserted_battery.capacity)
 		visible_message("<b>[name]</b> states, \"Cannot harvest. battery is full.\"")
 		return FALSE
-	for(var/obj/machinery/artifact/Art in get_turf(owned_scanner))
+	for(var/obj/structure/artifact/Art in get_turf(owned_scanner))
 		current_artifact = Art
 		break
 	if(!current_artifact)

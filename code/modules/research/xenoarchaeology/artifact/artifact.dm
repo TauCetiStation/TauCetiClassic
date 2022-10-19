@@ -30,7 +30,7 @@
 	100;/obj/mecha/working/hoverpod,\
 	100;/obj/machinery/replicator,\
 	150;/obj/machinery/power/crystal,\
-	1000;/obj/machinery/artifact)
+	1000;/obj/structure/artifact)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Boulders - sometimes turn up after excavating turf - excavate further to try and find large xenoarch finds
@@ -111,8 +111,8 @@
 			if(artifact_find)
 				var/spawn_type = artifact_find.artifact_find_type
 				var/obj/O = new spawn_type(get_turf(src))
-				if(istype(O,/obj/machinery/artifact))
-					var/obj/machinery/artifact/A = O
+				if(istype(O,/obj/structure/artifact))
+					var/obj/structure/artifact/A = O
 					if(A.first_effect)
 						A.first_effect.artifact_id = artifact_find.artifact_id
 				visible_message("<span class='danger'>[src] suddenly crumbles away.</span>")
