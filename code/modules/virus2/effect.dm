@@ -363,7 +363,7 @@
 
 	M.heal_bodypart_damage(heal_amt, heal_amt)
 
-	if(M.getBruteLoss() + M.getFireLoss() == 0)
+	if(active_coma && M.getBruteLoss() + M.getFireLoss() == 0)
 		uncoma(M)
 	return 1
 
