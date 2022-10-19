@@ -64,8 +64,9 @@
 
 	sink.merge(removed)
 
-	if(SSair.is_possible_reaction_mix(sink))
-		possibleReactionTurfs.Add(M.loc)
+	var/P = SSair.get_reaction_mix_priority(sink)
+	if(P)
+		SSair.add_reaction_turf(M.loc, P)
 
 	return power_draw TAUCETI_POWER_DRAW_MOD
 
@@ -101,8 +102,9 @@
 		return -1
 	sink.merge(removed)
 
-	if(SSair.is_possible_reaction_mix(sink))
-		possibleReactionTurfs.Add(M.loc)
+	var/P = SSair.get_reaction_mix_priority(sink)
+	if(P)
+		SSair.add_reaction_turf(M.loc, P)
 
 	return 0
 

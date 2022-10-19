@@ -59,7 +59,7 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "\nC:{"
 	msg += "PN:[round(cost_pipenets,1)]|"
-	msg += "AM:[round(cost_atmos_machinery,1)]"
+	msg += "AM:[round(cost_atmos_machinery,1)]|"
 	msg += "TC:[round(cost_tiles_curr,1)]|"
 	msg += "TD:[round(cost_tiles_def,1)]|"
 	msg += "E:[round(cost_edges,1)]|"
@@ -78,6 +78,10 @@ SUBSYSTEM_DEF(air)
 	msg += "ZTU:[zones_to_update.len]|"
 	msg += "E:[edges.len]|"
 	msg += "Z:[zones.len]|"
+	var/list/p1 = possibleReactionTurfs["1"]
+	var/list/p2 = possibleReactionTurfs["2"]
+	var/list/p3 = possibleReactionTurfs["3"]
+	msg += "PRT:[p1.len + p2.len + p3.len]"
 	..(msg)
 
 
@@ -298,21 +302,18 @@ SUBSYSTEM_DEF(air)
 			return
 
 /datum/controller/subsystem/air/proc/process_reactions(resumed = 0)
-	if(possibleReactionTurfs.len > 40)
-		possibleReactionTurfs = possibleReactionTurfs.Copy(0, 39)
-	for(var/turf/T as anything in possibleReactionTurfs)
-		var/F = FALSE
-		var/datum/gas_mixture/G = T.return_air()
-		var/datum/atmosReaction/R = is_possible_reaction_mix(G)
-		if(R.react(G))
-			recentReactions.Add(R.id)
-			if(!F) //to not add same tiles over again if multiple reactions happened
-				F = TRUE
-				var/list/N = list()
-				N.Add(step(T, NORTH, 1), step(T, SOUTH, 1), step(T, WEST, 1), step(T, EAST, 1))
-				for(var/turf/NT as anything in N)
-					if(is_possible_reaction_mix(NT.return_air()))
-						possibleReactionTurfs.Add(NT)
+	for(var/P in list("3", "2", "1"))
+		var/list/L = possibleReactionTurfs[P]
+		if(L.len > 40)
+			var/list/NL = possibleReactionTurfs[P]
+			NL = NL.Copy(0, 39)
+			possibleReactionTurfs[P] = NL
+		for(var/turf/T in possibleReactionTurfs[P])
+			var/datum/gas_mixture/G = T.return_air()
+			for(var/datum/atmosReaction/R as anything in global.atmosReactionList)
+				var/datum/atmosReaction/O = new R()
+				O.react(G)
+				recentReactions.Add(O.id)
 
 /*********** Setup procs ***********/
 
@@ -556,12 +557,38 @@ SUBSYSTEM_DEF(air)
 
 	return TRUE
 
-/datum/controller/subsystem/air/proc/is_possible_reaction_mix(datum/gas_mixture/G)
-	for(var/datum/atmosReaction/R as anything in global.atmosReactionList)
-		var/datum/atmosReaction/O = new(R)
-		if(O.canReact(G))
-			return O
-	return FALSE
+/datum/controller/subsystem/air/proc/get_reaction_mix_priority(datum/gas_mixture/G)
+	var/P = 0
+	if(G.temperature >= 303.15 || G.temperature <= 273.15)
+		P++
+	if(G.return_pressure() >= ONE_ATMOSPHERE * 2)
+		P++
+	for(var/gas in G.gas)
+		if(!gas_data.gases_knowable[gas] || gas_data.gases_dangerous[gas])
+			P++
+			break
+	return P
+
+/datum/controller/subsystem/air/proc/add_reaction_turf(turf/T, P)
+	P = num2text(P)
+	var/list/L = possibleReactionTurfs[P]
+	if(L.Find(T) || isspaceturf(T))
+		return
+	L.Add(T)
+	possibleReactionTurfs[P] = L
+	var/obj/effect/overlay/O = new/obj/effect/overlay(T)
+	O.name = "PRT"
+	O.desc = "Possible reaction turf"
+	O.icon = 'icons/obj/atmos.dmi'
+	O.icon_state = "prt" + P
+	O.anchored = TRUE
+	O.layer = 5
+	var/list/N = list(get_step(T, NORTH), get_step(T, SOUTH), get_step(T, WEST), get_step(T, EAST))
+	for(var/turf/NT as anything in N)
+		if(NT)
+			var/NP = get_reaction_mix_priority(NT.return_air())
+			if(NP && !possibleReactionTurfs.Find(NT))
+				add_reaction_turf(NT, NP)
 
 #undef SSAIR_PIPENETS
 #undef SSAIR_ATMOSMACHINERY

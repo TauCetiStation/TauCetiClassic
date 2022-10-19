@@ -6,8 +6,6 @@
     maxTemp = 573.15
     minPressure = 100
     maxPressure = HVAL
-    minEntropy = 0
-    maxEntropy = 100
     producedHeat = -2
     consumed = list("sleeping_agent" = 2, "phoron" = 1)
     created = list("bz" = 3)
@@ -20,8 +18,6 @@
     maxTemp = HVAL
     minPressure = 0
     maxPressure = HVAL
-    minEntropy = 0
-    maxEntropy = HVAL
     producedHeat = 2
     consumed = list("bz" = 3)
     created = list("sleeping_agent" = 2, "phoron" = 1)
@@ -34,8 +30,6 @@
     maxTemp = HVAL
     minPressure = 1000
     maxPressure = HVAL
-    minEntropy = 0
-    maxEntropy = 30
     producedHeat = 1
     consumed = list("carbon_dioxide" = 3, "tritium" = 1)
     created = list("const" = 4)
@@ -48,8 +42,6 @@
     maxTemp = 273.15
     minPressure = 1000
     maxPressure = HVAL
-    minEntropy = 0
-    maxEntropy = 100
     producedHeat = 4
     consumed = list("oxygen" = 3)
     created = list("triox" = 3)
@@ -62,8 +54,6 @@
     maxTemp = HVAL
     minPressure = 0
     maxPressure = HVAL
-    minEntropy = 0
-    maxEntropy = HVAL
     producedHeat = -4
     consumed = list("triox" = 3)
     created = list("ox" = 3)
@@ -76,8 +66,6 @@
     maxTemp = HVAL
     minPressure = 3000
     maxPressure = HVAL
-    minEntropy = 0
-    maxEntropy = 200
     producedHeat = -4
     consumed = list("hydrogen" = 2, "triox" = 1)
     created = list("phydr" = 3)
@@ -90,8 +78,6 @@
     maxTemp = 273.15
     minPressure = 0
     maxPressure = HVAL
-    minEntropy = 0
-    maxEntropy = HVAL
     producedHeat = 4
     consumed = list("phydr" = 3)
     created = list("hydrogen" = 2, "triox" = 1)
@@ -104,8 +90,6 @@
     maxTemp = HVAL
     minPressure = -HVAL
     maxPressure = HVAL
-    minEntropy = -HVAL
-    maxEntropy = HVAL
     producedHeat = 4
     consumed = list("phydr" = 1)
     created = list("hydrogen" = 2, "triox" = 1)
@@ -118,8 +102,6 @@
     maxTemp = HVAL
     minPressure = 7000
     maxPressure = HVAL
-    minEntropy = 0
-    maxEntropy = 30
     producedHeat = 4
     consumed = list("triox" = 3, "helium" = 1)
     created = list("ctirin" = 1, "oxygen" = 3)
@@ -132,8 +114,6 @@
     maxTemp = HVAL
     minPressure = 5000
     maxPressure = HVAL
-    minEntropy = 0
-    maxEntropy = 30
     producedHeat = -1
     consumed = list("triox" = 1, "helium" = 1)
     created = list("ctirin" = 2)
@@ -146,8 +126,6 @@
     maxTemp = HVAL
     minPressure = 0
     maxPressure = HVAL
-    minEntropy = 0
-    maxEntropy = HVAL
     producedHeat = 1
     consumed = list("ctirin" = 3)
     created = list("triox" = 2, "helium" = 1)
