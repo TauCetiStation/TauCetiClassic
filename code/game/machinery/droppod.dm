@@ -435,7 +435,7 @@
 			repair_damage(10)
 			visible_message("<span class='notice'>[user] has repaired some dents on [src]!</span>")
 
-	else if(user.a_intent == INTENT_HARM || (O.flags & ABSTRACT))
+	else if(O.flags & ABSTRACT)
 		return ..()
 	else
 		if(istype(O, /obj/item/weapon/simple_drop_system))

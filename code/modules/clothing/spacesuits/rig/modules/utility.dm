@@ -143,14 +143,12 @@
 		return TRUE
 
 	var/turf/T = get_turf(target)
-	if(need_adjacent && istype(T) && !T.Adjacent(get_turf(src)))
-		return FALSE
-
-	var/resolved
 	if(need_adjacent) // so we don't telepathically bash the target
-		resolved = target.attackby(device,holder.wearer)
-	if(!resolved && device && target)
-		device.afterattack(target,holder.wearer,1)
+		if(istype(T) && !T.Adjacent(get_turf(src)))
+			return FALSE
+		device.melee_attack_chain(target, holder.wearer)
+	else
+		device.afterattack(target, holder.wearer, FALSE)
 	return TRUE
 
 /obj/item/rig_module/chem_dispenser

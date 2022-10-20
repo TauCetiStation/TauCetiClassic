@@ -7210,7 +7210,7 @@
 	},
 /area/awaymission/labs/command)
 "qE" = (
-/obj/structure/displaycase,
+/obj/structure/displaycase/captain,
 /turf/simulated/floor{
 	icon_state = "wood"
 	},
