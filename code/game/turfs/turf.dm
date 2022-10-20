@@ -386,7 +386,7 @@
 			M.gib()
 	for(var/obj/mecha/M in src)//Mecha are not gibbed but are damaged.
 		spawn(0)
-			M.take_damage(100, "brute")
+			M.take_damage(100, BRUTE)
 
 ////////////////
 //Distance procs

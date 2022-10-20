@@ -1041,16 +1041,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(!disfigured)
 		if(brute_dam > 40)
 			if (prob(50))
-				disfigure("brute")
+				disfigure(BRUTE)
 		if(burn_dam > 40)
-			disfigure("burn")
+			disfigure(BURN)
 
 	return ..()
 
-/obj/item/organ/external/head/proc/disfigure(type = "brute")
+/obj/item/organ/external/head/proc/disfigure(type = BRUTE)
 	if (disfigured)
 		return
-	if(type == "brute")
+	if(type == BRUTE)
 		owner.visible_message("<span class='warning'>You hear a sickening cracking sound coming from \the [owner]'s face.</span>",	\
 		"<span class='warning'><b>Your face becomes unrecognizible mangled mess!</b></span>",	\
 		"<span class='warning'>You hear a sickening crack.</span>")

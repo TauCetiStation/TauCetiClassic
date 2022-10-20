@@ -2217,6 +2217,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/clothing/glasses/hud/mining
 	category = list("Support")
 
+/datum/design/holochip
+	name = "Holographic chip"
+	desc = "A holographic chip for space helmet's HUD."
+	id = "holochip"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 100, MAT_GLASS = 100, MAT_GOLD = 200)
+	build_path = /obj/item/holochip
+	category = list("Support")
+
 /datum/design/hud_calibrator
 	name = "Рекалибратор дисплея"
 	desc = "Рекалибрует дисплей с помощью интерференции волн, улучшая опыт пользования визуальным интерфейсом."

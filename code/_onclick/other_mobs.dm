@@ -61,7 +61,7 @@
 	SetNextMove(CLICK_CD_MELEE)
 	var/mob/living/carbon/ML = A
 	var/dam_zone = ran_zone(pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG))
-	var/armor = ML.run_armor_check(dam_zone, "melee")
+	var/armor = ML.run_armor_check(dam_zone, MELEE)
 
 	if(!prob(75))
 		visible_message("<span class='danger'>[src] has attempted to bite [ML]!</span>")

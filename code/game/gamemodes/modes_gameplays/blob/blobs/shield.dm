@@ -25,7 +25,13 @@
 
 /obj/effect/blob/shield/reflective/bullet_act(obj/item/projectile/P, def_zone)
 	if(is_type_in_list(P,reflects))
-	//Basically all of energy type projes...
+		if(istype(P, /obj/item/projectile/beam/emitter))
+			return ..()
+		else if(istype(P, /obj/item/projectile/plasma))
+			P.damage /= 4
+			return ..()
+
+		//Basically all of other energy type projes...
 		if(P.starting)
 			var/new_x = P.starting.x + pick(0, 0, 0, 0, -1, 1, -2, 2, -3, 3)
 			var/new_y = P.starting.y + pick(0, 0, 0, 0, -1, 1, -2, 2, -3, 3)
