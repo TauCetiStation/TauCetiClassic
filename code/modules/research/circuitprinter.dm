@@ -43,10 +43,6 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		T += M.rating
 	efficiency_coeff = 2 ** (T - 1)
 
-/obj/machinery/r_n_d/circuit_imprinter/blob_act()
-	if (prob(50))
-		qdel(src)
-
 /obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)
 	if(loaded_materials[M])
 		return (loaded_materials[M].amount - (being_built.materials[M]/efficiency_coeff) >= 0) ? 1 : 0

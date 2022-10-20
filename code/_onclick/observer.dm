@@ -51,6 +51,9 @@
 		return
 
 	var/list/modifiers = params2list(params)
+	if(modifiers[SHIFT_CLICK] && modifiers[MIDDLE_CLICK])
+		MiddleShiftClickOn(A)
+		return
 	if(modifiers[SHIFT_CLICK])
 		ShiftClickOn(A)
 		return

@@ -235,28 +235,12 @@
 
 	health -= P.agony / 10
 
-/mob/living/simple_animal/hulk/proc/attack_hulk(obj/machinery/door/D)
-	do_attack_animation(D)
-	SetNextMove(CLICK_CD_MELEE)
-
-	if(istype(D,/obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/A = D
-		if(A.welded || A.locked)
-			if(hulk_scream(A, 75))
-				A.door_rupture(src)
-			return
-	if(istype(D,/obj/machinery/door/firedoor))
-		var/obj/machinery/door/firedoor/F = D
-		if(F.blocked)
-			if(hulk_scream(F))
-				qdel(F)
-				return
-	if(D.density)
-		to_chat(src, "<span class='userdanger'>You force your fingers between \
-		 the doors and begin to pry them open...</span>")
-		playsound(D, 'sound/machines/firedoor_open.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
-		if (!is_busy() && do_after(src, 40, target = D) && D)
-			D.open(1)
+/mob/living/simple_animal/hulk/UnarmedAttack(atom/A)
+	if(A.attack_hulk(src))
+		do_attack_animation(A)
+		SetNextMove(CLICK_CD_MELEE)
+		return
+	..()
 
 /mob/living/simple_animal/hulk/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()

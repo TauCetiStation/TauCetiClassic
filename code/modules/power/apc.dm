@@ -595,19 +595,7 @@
 			return
 		to_chat(user, "You start welding the APC frame...")
 		if(WT.use_tool(src, user, 50, amount = 3, volume = 50))
-			if(emagged || malfhack || (stat & BROKEN) || opened == APC_COVER_REMOVED)
-				new /obj/item/stack/sheet/metal(loc)
-				user.visible_message(\
-					"<span class='warning'>[src] has been cut apart by [user.name] with the weldingtool.</span>",\
-					"You disassembled the broken APC frame.",\
-					"<span class='warning'>You hear welding.</span>")
-			else
-				new /obj/item/apc_frame(loc)
-				user.visible_message(\
-					"<span class='warning'>[src] has been cut from the wall by [user.name] with the weldingtool.</span>",\
-					"You cut the APC frame from the wall.",\
-					"<span class='warning'>You hear welding.</span>")
-			qdel(src)
+			deconstruct(TRUE, user)
 			return
 
 	else if(istype(W, /obj/item/apc_frame) && opened != APC_COVER_CLOSED && emagged)
@@ -646,7 +634,27 @@
 			"<span class='warning'>You hit the [src.name] with your [W.name]!</span>", \
 			"You hear bang")
 		return wires.interact(user)
+	else
+		..()
 
+
+/obj/machinery/power/apc/deconstruct(disassembled, mob/user)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(!disassembled || emagged || malfhack || (stat & BROKEN) || opened == APC_COVER_REMOVED)
+		new /obj/item/stack/sheet/metal(loc)
+		user?.visible_message(\
+			"<span class='warning'>[src] has been cut apart by [user.name] with the weldingtool.</span>",\
+			"You disassembled the broken APC frame.",\
+			"<span class='warning'>You hear welding.</span>")
+	else
+		new /obj/item/apc_frame(loc)
+		user?.visible_message(\
+				"<span class='warning'>[src] has been cut from the wall by [user.name] with the weldingtool.</span>",\
+				"You cut the APC frame from the wall.",\
+				"<span class='warning'>You hear welding.</span>")
+
+	..()
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
@@ -1215,11 +1223,18 @@
 				if(cell && prob(25))
 					cell.ex_act(EXPLODE_LIGHT)
 
-/obj/machinery/power/apc/blob_act()
-	if(prob(75))
+/obj/machinery/power/apc/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(stat & BROKEN)
+		switch(damage_type)
+			if(BRUTE, BURN)
+				return damage_amount
+		return
+	. = ..()
+
+/obj/machinery/power/apc/atom_break(damage_flag)
+	. = ..()
+	if(.)
 		set_broken()
-		if(cell && prob(5))
-			cell.blob_act()
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)

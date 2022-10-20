@@ -317,8 +317,7 @@ What a mess.*/
 			temp = "<b>Error!</b> This function does not appear to be working at the moment. Our apologies."
 
 		if ("Purge All Records")
-			if(PDA_Manifest.len)
-				PDA_Manifest.Cut()
+			PDA_Manifest.Cut()
 			for(var/datum/data/record/R in data_core.security)
 				qdel(R)
 			temp = "All Employment records deleted."
@@ -330,8 +329,6 @@ What a mess.*/
 				temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
 		// RECORD CREATE
 		if ("New Record (General)")
-			if(PDA_Manifest.len)
-				PDA_Manifest.Cut()
 			active1 = CreateGeneralRecord() // todo: datacore.manifest_inject or scaner (Identity Analyser)
 
 		// FIELD FUNCTIONS
@@ -344,6 +341,7 @@ What a mess.*/
 						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr))) || active1 != a1)
 							return FALSE
 						active1.fields["name"] = t1
+						PDA_Manifest.Cut()
 				if("id")
 					if (istype(active1, /datum/data/record))
 						var/t1 = sanitize(input("Please input id:", "Secure. records", input_default(active1.fields["id"]), null)  as text)
@@ -392,20 +390,17 @@ What a mess.*/
 			switch(href_list["choice"])
 				if ("Change Rank")
 					if (active1)
-						if(PDA_Manifest.len)
-							PDA_Manifest.Cut()
+						PDA_Manifest.Cut()
 						active1.fields["rank"] = href_list["rank"]
 						if(href_list["rank"] in joblist)
 							active1.fields["real_rank"] = href_list["real_rank"]
 
 				if ("Delete Record (ALL) Execute")
 					if (active1)
-						if(PDA_Manifest.len)
-							PDA_Manifest.Cut()
+						PDA_Manifest.Cut()
 						for(var/datum/data/record/R in data_core.medical)
 							if ((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
 								qdel(R)
-							else
 						qdel(active1)
 				else
 					temp = "This function does not appear to be working at the moment. Our apologies."
@@ -429,7 +424,7 @@ What a mess.*/
 				if(4)
 					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Paroled", "Released")
 				if(5)
-					R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
+					R.fields["p_stat"] = pick("*SSD*", "Active", "Physically Unfit", "Disabled")
 				if(6)
 					R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
 			continue
