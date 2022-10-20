@@ -11,6 +11,8 @@
 	layer = FLY_LAYER
 	faction = "cult"
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	universal_understand = TRUE
+	universal_speak = TRUE
 	var/obj/item/weapon/storage/bible/tome/eminence/tome //They have a special one
 	var/mob/living/cameraFollow = null
 	COOLDOWN_DECLARE(command_point)
