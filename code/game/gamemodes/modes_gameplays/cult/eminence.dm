@@ -2,7 +2,7 @@
 /mob/camera/eminence
 	name = "\the Emininence"
 	real_name = "\the Eminence"
-	desc = "The leader-elect of the servants of Ratvar."
+	desc = "The leader-elect of the servants of Nar-Sie."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "eminence"
 	mouse_opacity = MOUSE_OPACITY_ICON

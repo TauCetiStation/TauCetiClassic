@@ -13,7 +13,7 @@
 	var/selection_timer //Timer ID; this is canceled if the vote is canceled
 	var/kingmaking
 
-//Returns a list of all servants of Ratvar and observers.
+//Returns a list of all servants of Nar-Sie and observers.
 /proc/servants_and_ghosts()
 	. = list()
 	for(var/V in player_list)
