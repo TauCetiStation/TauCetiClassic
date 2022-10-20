@@ -79,11 +79,9 @@
 			harvested_effect = current_artifact.first_effect
 		else
 			harvested_effect = current_artifact.secondary_effect
-		// copy vars from datum
-		// battery_effect should not be compared directly because comparison will fail
 		var/new_effect_type = harvested_effect.type
 		var/datum/artifact_effect/E = new new_effect_type(inserted_battery)
-		for(var/varname in list("activation_touch_cost", "activation_aura_cost", "activation_pulse_cost", "artifact_id", "release_method", "range", "trigger"))
+		for(var/varname in list("release_method", "range", "trigger"))
 			E.vars[varname] = harvested_effect.vars[varname]
 		E.maximum_charges = inserted_battery.capacity
 		inserted_battery.battery_effect = E

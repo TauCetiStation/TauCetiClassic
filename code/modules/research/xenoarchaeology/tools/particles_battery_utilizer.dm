@@ -6,6 +6,9 @@
 	var/datum/artifact_effect/battery_effect
 	var/capacity = 200
 	var/effect_id = ""
+	var/touch_cost = 3
+	var/aura_cost = 1
+	var/pulse_cost = 10
 
 /obj/item/weapon/particles_battery/update_icon()
 	var/power_stored = (battery_effect?.current_charge / capacity) * 100
@@ -114,18 +117,18 @@
 			. = TRUE
 			if(!ismob(loc))
 				return
-			inserted_battery.battery_effect.DoEffectTouch(loc)
-			if(inserted_battery.battery_effect.current_charge < 3)
+			inserted_battery.battery_effect.DoEffectTouch(loc, inserted_battery.touch_cost)
+			if(inserted_battery.battery_effect.current_charge < inserted_battery.touch_cost)
 				turn_off()
 		if(ARTIFACT_EFFECT_AURA)
 			. = TRUE
-			inserted_battery.battery_effect.DoEffectAura(1)
-			if(inserted_battery.battery_effect.current_charge < 1)
+			inserted_battery.battery_effect.DoEffectAura(inserted_battery.aura_cost)
+			if(inserted_battery.battery_effect.current_charge < inserted_battery.aura_cost)
 				turn_off()
 		if(ARTIFACT_EFFECT_PULSE)
 			. = TRUE
-			inserted_battery.battery_effect.DoEffectPulse(10)
-			if(inserted_battery.battery_effect.current_charge < 10)
+			inserted_battery.battery_effect.DoEffectPulse(inserted_battery.pulse_cost)
+			if(inserted_battery.battery_effect.current_charge < inserted_battery.pulse_cost)
 				turn_off()
 	if(inserted_battery.battery_effect.current_charge <= 0)
 		turn_off()

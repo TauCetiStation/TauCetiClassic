@@ -118,13 +118,13 @@
  * Checks for a user, anomaly protection, tries to drain artifact charge
  * returns true on success, otherwise returns false
  */
-/datum/artifact_effect/proc/DoEffectTouch(mob/user)
+/datum/artifact_effect/proc/DoEffectTouch(mob/user, cost = activation_touch_cost)
 	if(!user)
 		return FALSE
 	if(!get_anomaly_protection(user)) //we ignore things with full anomaly protection
 		return FALSE
-	if(try_drain_charge(activation_touch_cost))
-		return TRUE
+	if(try_drain_charge(cost))
+		return cost
 	return FALSE
 
 /**
