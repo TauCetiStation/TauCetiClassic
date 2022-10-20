@@ -395,7 +395,7 @@ to destroy them and players will be able to make replacements.
 	origin_tech = "engineering=1;magnets=1;programming=2"
 	req_components = list(
 							/obj/item/weapon/tank = 1,
-							/obj/item/stack/console_screen = 1,
+							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/micro_laser/high = 1)
 
