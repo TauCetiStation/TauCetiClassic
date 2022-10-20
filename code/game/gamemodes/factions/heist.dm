@@ -16,9 +16,11 @@
 		return TRUE
 	return FALSE
 
-/datum/faction/heist/forgeObjectives()
+/datum/faction/heist/forgeObjectives(objectives_limited = FALSE)
 	if(!..())
 		return FALSE
+	if(objectives_limited)
+		return TRUE
 	var/max_objectives = pick(2,2,2,2,3,3,3,4)
 	var/list/goals = list("kidnap","loot","salvage")
 
@@ -88,5 +90,6 @@
 	return ..()
 
 /datum/faction/heist/saboteurs/forgeObjectives()
+	. = ..(objectives_limited = TRUE)
 	AppendObjective(/datum/objective/heist/stealnuke)
 	AppendObjective(/datum/objective/heist/inviolate_death)
