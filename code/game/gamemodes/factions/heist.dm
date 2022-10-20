@@ -92,4 +92,4 @@
 /datum/faction/heist/saboteurs/forgeObjectives()
 	. = ..(objectives_limited = TRUE)
 	AppendObjective(/datum/objective/heist/stealnuke)
-	AppendObjective(/datum/objective/heist/inviolate_death)
+	AppendObjective(/datum/objective/heist/inviolate_crew)
