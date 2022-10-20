@@ -172,8 +172,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 			var/obj/item/I = M.get_active_hand()
 			if(I && istype(I))
 				if(istype(I, /obj/item/weapon/evidencebag))
-					var/obj/item/weapon/evidencebag/E = I
-					evidencebag_drop(E)
+					evidencebag_drop(I)
 				else
 					scanning = I
 					M.drop_from_inventory(I, src)
