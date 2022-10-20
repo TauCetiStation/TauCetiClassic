@@ -9235,7 +9235,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/eva)
 "arf" = (
-/obj/structure/lamarr,
+/obj/structure/displaycase/labcage,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -22
@@ -27617,7 +27617,7 @@
 	},
 /area/station/civilian/locker)
 "ryd" = (
-/obj/structure/displaycase,
+/obj/structure/displaycase/captain,
 /obj/machinery/newscaster/security_unit{
 	pixel_y = -28
 	},
