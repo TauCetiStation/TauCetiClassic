@@ -388,11 +388,22 @@ to destroy them and players will be able to make replacements.
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/console_screen = 4)
 
+/obj/item/weapon/circuitboard/gas_analyzer
+	name = "circuit board (stationary gas analyzer)"
+	build_path = /obj/machinery/atmospherics/components/unary/gas_analyzer
+	board_type = "machine"
+	origin_tech = "engineering=1;magnets=1;programming=2"
+	req_components = list(
+							/obj/item/weapon/tank = 1,
+							/obj/item/stack/console_screen = 1,
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/micro_laser/high = 1)
+
 /obj/item/weapon/circuitboard/heater
 	name = "circuit board (Heater)"
 	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
 	board_type = "machine"
-	origin_tech = "powerstorage=2;engineering=1)"
+	origin_tech = "powerstorage=2;engineering=1"
 	req_components = list(
 							/obj/item/stack/cable_coil = 5,
 							/obj/item/weapon/stock_parts/matter_bin = 1,

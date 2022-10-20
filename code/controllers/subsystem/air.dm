@@ -589,6 +589,33 @@ SUBSYSTEM_DEF(air)
 			var/NP = get_reaction_mix_priority(NT.return_air())
 			if(NP && !possibleReactionTurfs.Find(NT))
 				add_reaction_turf(NT, NP)
+	/*
+	too slow, cost is insane, still need to deal with duplicates (or maybe not?)
+	P = num2text(P)
+	var/list/PO = possibleReactionTurfs[P]
+	if(PO.Find(T) || isspaceturf(T)) //turf has same priority as previous time/is space
+		return
+	for(var/PN in list("3", "2", "1"))
+		var/list/C = possibleReactionTurfs[PN]
+		if(C.Find(T))
+			C.Remove(T)
+			possibleReactionTurfs[PN] = C
+	var/list/PC = possibleReactionTurfs[P]
+	PC.Add(T)
+	var/obj/effect/overlay/O = new/obj/effect/overlay(T)
+	O.name = "PRT"
+	O.desc = "Possible reaction turf"
+	O.icon = 'icons/obj/atmos.dmi'
+	O.icon_state = "prt" + P
+	O.anchored = TRUE
+	O.layer = 5
+	var/list/N = list(get_step(T, NORTH), get_step(T, SOUTH), get_step(T, WEST), get_step(T, EAST))
+	for(var/turf/NT as anything in N)
+		if(NT)
+			var/NP = get_reaction_mix_priority(NT.return_air())
+			if(NP && !possibleReactionTurfs.Find(NT))
+				add_reaction_turf(NT, NP)
+	*/
 
 #undef SSAIR_PIPENETS
 #undef SSAIR_ATMOSMACHINERY

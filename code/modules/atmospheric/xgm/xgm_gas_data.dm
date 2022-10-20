@@ -5,6 +5,8 @@
 	var/list/gases = list()
 	//The friendly, human-readable name for the gas.
 	var/list/name = list()
+	//detailed description of the gas
+	var/list/desc = list()
 	//Specific heat of the gas.  Used for calculating heat capacity.
 	var/list/specific_heat = list()
 	//Molar mass of the gas.  Used for calculating specific entropy.
@@ -25,10 +27,13 @@
 	var/list/gases_knowable = list()
 	//inhalation proc
 	var/list/gases_inhalation_proc = list()
+	//initial amount of rnd points
+	var/list/gases_initial_rnd_points = list()
 
 /datum/xgm_gas
 	var/id = ""
 	var/name = "Unnamed Gas"
+	var/desc = ""
 	var/specific_heat = 20	// J/(mol*K)
 	var/molar_mass = 0.032	// kg/mol
 
@@ -41,6 +46,7 @@
 	/// This variable determines whether the crew knows about this gas from the round start.
 	var/knowable = FALSE
 	var/inhalation_proc = /datum/xgm_gas/proc/on_inhalation //path to proc used to determine inhalation effects for living stuff (oxygen, phoron, n2o and co2 are processed separately)
+	var/initial_rnd_points = 0 //initial amount of research points which can be gained with the help of stationary gas analyzer
 
 /datum/xgm_temperature_overlay
 	var/id = ""
@@ -73,6 +79,7 @@
 
 		gas_data.gases += gas.id
 		gas_data.name[gas.id] = gas.name
+		gas_data.desc[gas.id] = gas.desc
 		gas_data.specific_heat[gas.id] = gas.specific_heat
 		gas_data.molar_mass[gas.id] = gas.molar_mass
 
@@ -87,6 +94,7 @@
 		gas_data.gases_dangerous[gas.id] = gas.dangerous
 		gas_data.gases_knowable[gas.id] = gas.knowable
 		gas_data.gases_inhalation_proc[gas.id] = gas.inhalation_proc
+		gas_data.gases_initial_rnd_points[gas.id] = gas.initial_rnd_points
 
 	for(var/p in subtypesof(/datum/xgm_temperature_overlay))
 		var/datum/xgm_temperature_overlay/overlay = new p

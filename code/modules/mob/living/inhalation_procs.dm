@@ -83,7 +83,6 @@
 		C.AdjustStunned(-1)
 		C.AdjustWeakened(-1)
 		C.adjustToxLoss(1)
-		C.adjustToxLoss(5)
 		if(prob(10))
 			to_chat(C, "<span class='warning'>You feel energy overflowing you! And also chemical poisoning.</span>")
 

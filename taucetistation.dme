@@ -1314,6 +1314,7 @@
 #include "code\modules\atmospheric\machinery\components\trinary_devices\trinary_devices.dm"
 #include "code\modules\atmospheric\machinery\components\trinary_devices\tvalve.dm"
 #include "code\modules\atmospheric\machinery\components\unary_devices\cryo.dm"
+#include "code\modules\atmospheric\machinery\components\unary_devices\gas_analyzer.dm"
 #include "code\modules\atmospheric\machinery\components\unary_devices\generator_input.dm"
 #include "code\modules\atmospheric\machinery\components\unary_devices\heat_exchanger.dm"
 #include "code\modules\atmospheric\machinery\components\unary_devices\outlet_injector.dm"

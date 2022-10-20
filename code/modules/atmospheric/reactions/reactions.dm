@@ -1,5 +1,41 @@
 #define HVAL 999999 //infinity is kind of overkill anyway
 
+/datum/atmosReaction/n2oSynthesis
+    id = "n2osynth"
+    minTemp = 373.15
+    maxTemp = 773.15
+    minPressure = 100
+    maxPressure = HVAL
+    producedHeat = -4
+    consumed = list("nitrogen" = 2, "oxygen" = 1)
+    created = list("sleeping_agent" = 3)
+    catalysts = list()
+    inhibitors = list("const" = 10)
+
+/datum/atmosReaction/n2oSynthesisPhydr
+    id = "n2osynthphydr"
+    minTemp = 273.15
+    maxTemp = 773.15
+    minPressure = 50
+    maxPressure = HVAL
+    producedHeat = -4
+    consumed = list("nitrogen" = 2, "oxygen" = 1)
+    created = list("sleeping_agent" = 3)
+    catalysts = list("phydr" = 5)
+    inhibitors = list("const" = 10)
+
+/datum/atmosReaction/n2oDecomposition
+    id = "n2odec"
+    minTemp = 773.15
+    maxTemp = HVAL
+    minPressure = -HVAL
+    maxPressure = HVAL
+    producedHeat = 4
+    consumed = list("sleeping_agent" = 3)
+    created = list("nitrogen" = 2, "oxygen" = 1)
+    catalysts = list()
+    inhibitors = list("phydr" = 10)
+
 /datum/atmosReaction/bzSynthesis
     id = "bzsynt"
     minTemp = 373.15
@@ -34,11 +70,11 @@
     consumed = list("carbon_dioxide" = 3, "tritium" = 1)
     created = list("const" = 4)
     catalysts = list()
-    inhibitors = list("const" = 20, "oxygen" = 1, "nitrogen" = 1, "hydrogen" = 1, "phoron" = 1, "sleeping_agent" = 1, "phydr" = 1, "triox" = 1, "bz" = 1)
+    inhibitors = list("const" = 30, "oxygen" = 1, "nitrogen" = 1, "hydrogen" = 1, "phoron" = 1, "sleeping_agent" = 1, "phydr" = 1, "triox" = 1, "bz" = 1)
 
 /datum/atmosReaction/trioxSynthesis
     id = "trioxsynth"
-    minTemp = 0
+    minTemp = -HVAL
     maxTemp = 273.15
     minPressure = 4000
     maxPressure = HVAL
@@ -82,7 +118,7 @@
     consumed = list("phydr" = 3)
     created = list("hydrogen" = 2, "triox" = 1)
     catalysts = list()
-    inhibitors = list()
+    inhibitors = list("phydr" = 30)
 
 /datum/atmosReaction/phydrDecompositionConst
     id = "phydrdecconst"
