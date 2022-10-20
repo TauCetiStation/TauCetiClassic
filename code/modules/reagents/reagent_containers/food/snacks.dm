@@ -20,13 +20,9 @@
 		if(taste)
 			L.taste_reagents(reagents)
 	if(HAS_TRAIT(src, TRAIT_XENO_FUR))
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			var/chance = 50
-			//for tajaran or other xenos with hair its ordinary feeling
-			if(H.species.flags[FUR])
-				chance = 0
-			if(prob(chance) && SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nasty_throat_feel", /datum/mood_event/nasty_throat_feel))
+		var/mob/living/carbon/human/H = M
+		if(istype(H) && !H.species.flags[FUR])
+			if(prob(50) && SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nasty_throat_feel", /datum/mood_event/nasty_throat_feel))
 				to_chat(H, "<span class='warning'>You feel like something enveloping in your throat...</span>")
 	if(!reagents.total_volume)
 		if(M == usr)

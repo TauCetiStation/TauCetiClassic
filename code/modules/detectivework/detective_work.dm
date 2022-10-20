@@ -49,7 +49,7 @@
 	if(M.species.flags[FUR])
 		fibertext = "Small particles of [M.species.name] fur."
 		var/bio_restriction = 100 - M.getarmor(null, "bio")
-		if(prob(check_cloth) && !(fibertext in suit_fibers))
+		if(prob(bio_restriction) && !(fibertext in suit_fibers))
 			ADD_TRAIT(src, TRAIT_XENO_FUR, GENERIC_TRAIT)
 			suit_fibers += "Small particles of [M.species.name] fur."
 
