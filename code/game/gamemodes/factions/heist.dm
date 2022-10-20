@@ -83,11 +83,10 @@
 /datum/faction/heist/saboteurs/can_setup()
 	if(!is_type_in_list(/obj/machinery/nuclearbomb, poi_list))
 		return FALSE
+	if(!global.heiststart.len)
+		return FALSE
 	return ..()
 
-/datum/faction/heist/saboteurs/is_raider_crew_safe()
-	return TRUE
-
 /datum/faction/heist/saboteurs/forgeObjectives()
-	. = ..()
 	AppendObjective(/datum/objective/heist/stealnuke)
+	AppendObjective(/datum/objective/heist/inviolate_death)

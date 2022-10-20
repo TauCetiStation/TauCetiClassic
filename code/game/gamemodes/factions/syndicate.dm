@@ -305,10 +305,7 @@
 	name = F_SYNDIOPS_CROSSFIRE
 	ID = F_SYNDIOPS_CROSSFIRE
 	var/nuke_landed = FALSE
-	var/vox_called = FALSE
 
-/datum/faction/nuclear/crossfire/process()
-	if(!vox_called)
-		if(nuke_landed)
-			new /datum/event/heist/saboteurs
-	return ..()
+/datum/faction/nuclear/crossfire/proc/landing_nuke()
+	if(!nuke_landed)
+		create_uniq_faction(/datum/faction/heist/saboteurs)

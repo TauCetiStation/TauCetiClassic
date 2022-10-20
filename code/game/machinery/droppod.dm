@@ -738,7 +738,7 @@
 	//mix stuff
 	var/datum/faction/nuclear/crossfire/N = find_faction_by_type(/datum/faction/nuclear/crossfire)
 	if(N)
-		N.nuke_landed = TRUE
+		N.landing_nuke()
 	return ..()
 
 /obj/structure/droppod/Syndi/perform_drop()
