@@ -597,6 +597,11 @@ var/global/list/datum/spawners_cooldown = list()
 	..()
 	religion.add_member(mob, HOLY_ROLE_PRIEST)
 
+
+/datum/spawner/living/eminence
+	name = "Возвышенный культа"
+	desc = "Вы станете Возвышенным, ментором и лидером всего культа."
+
 /datum/spawner/living/mimic
 	name = "Оживлённый предмет"
 	id = "mimic"
