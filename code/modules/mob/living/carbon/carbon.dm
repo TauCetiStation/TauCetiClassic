@@ -581,9 +581,14 @@
 				if(O_EYES)
 					M.visible_message("<span class='notice'>[M] looks into [src]'s eyes.</span>", \
 									"<span class='notice'>You look into [src]'s eyes.</span>", )
-				if(BP_GROIN)
+				if(BP_R_LEG, BP_L_LEG)
 					M.visible_message("<span class='notice'>[M] does something to [src] to make [t_him] feel better!</span>", \
 									"<span class='notice'>You do something to [src] to make [t_him] feel better!</span>", )
+				if(BP_GROIN)
+					M.visible_message("<span class='notice'>[M] slaps [src]'s ass!</span>", \
+									"<span class='notice'>You slap [src]'s ass. Cool!</span>", )
+					playsound(src, 'sound/weapons/slap.ogg', VOL_EFFECTS_MASTER)
+					return
 				else
 					M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
 									"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
