@@ -600,7 +600,9 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/living/eminence
 	name = "Возвышенный культа"
-	desc = "Вы станете Возвышенным, ментором и лидером всего культа."
+	id = "eminence"
+	desc = "Вы станете Возвышенным - ментором и неформальным лидером всего культа."
+	ranks = list(ROLE_CULTIST, ROLE_GHOSTLY)
 
 /datum/spawner/living/mimic
 	name = "Оживлённый предмет"

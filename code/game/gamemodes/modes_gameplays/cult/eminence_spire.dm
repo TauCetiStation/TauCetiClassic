@@ -110,6 +110,7 @@
 			eminence_nominee.drop_from_inventory(I, get_turf(eminence_nominee))
 		var/mob/camera/eminence/eminence = new(get_turf(src))
 		cult_religion.send_message_to_members("<span class='large'>[eminence_nominee] стал Возвышенным!</span>", , 4, eminence) //Before key transfer
+		eminence.mind_initialize()
 		eminence.key = eminence_nominee.key
 		eminence_nominee.dust()
 		eminence.eminence_help()

@@ -115,11 +115,9 @@
 	. = ..()
 	var/list/cultists = list()
 	var/list/dead_cultists = list()
-	for(var/mob/M as anything in cult_religion.members)
+	for(var/mob/M as anything in global.cult_religion.members - owner)
 		if(M.stat != DEAD)
 			cultists += M
-		else if(iseminence(M))
-			continue
 		else
 			dead_cultists += M
 	cultists += "------DEAD CULTISTS------"
