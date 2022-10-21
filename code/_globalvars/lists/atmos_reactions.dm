@@ -3,4 +3,4 @@ var/global/list/possibleReactionTurfs = list( //associative list (with priority 
 "1" = list(), 
 "2" = list(),
 "3" = list())
-var/global/list/recentReactions = list() //reactions put themselves here after they were completed
+var/global/list/recentReactions = list() //logging purpouses

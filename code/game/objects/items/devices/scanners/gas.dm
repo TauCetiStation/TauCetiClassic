@@ -44,3 +44,8 @@
 	var/obj/O = target
 	if(O.simulated)
 		analyze_gases(O, user, advanced_mode)
+
+/obj/item/device/analyzer/advanced
+	name = "advanced analyzer"
+	icon_state = "atmos_adv"
+	advanced_mode = TRUE

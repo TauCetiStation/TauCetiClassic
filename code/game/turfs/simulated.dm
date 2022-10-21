@@ -13,6 +13,8 @@
 
 	var/wet_timer_id
 
+	var/last_reaction_priority = 0 //used for atmos reactions
+
 /turf/simulated/atom_init()
 	..()
 	return INITIALIZE_HINT_LATELOAD

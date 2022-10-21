@@ -18,6 +18,8 @@
 	dangerous = TRUE
 	knowable = TRUE
 
+	initial_rnd_points = 1000
+
 /datum/xgm_gas/oxygen
 	id = "oxygen"
 	name = "Oxygen"
@@ -76,11 +78,15 @@
 	desc = "Isotope of hydrogen with an extra neutron. Good fusion fuel."
 	knowable = FALSE
 
+	initial_rnd_points = 500
+
 /datum/xgm_gas/hydrogen/tritium
 	id = "tritium"
 	name = "Tritium"
 	knowable = FALSE
 	desc = "Isotope of hydrogen with two extra neutrons. Good fusion fuel."
+
+	initial_rnd_points = 500
 
 /datum/xgm_gas/helium
 	id = "helium"
@@ -91,6 +97,8 @@
 	molar_mass = 0.004	// kg/mol
 
 	flags = XGM_GAS_FUSION_FUEL
+
+	initial_rnd_points = 500
 
 /datum/xgm_gas/vapor
 	id = "watervapor"
@@ -115,6 +123,8 @@
 	knowable = FALSE
 	inhalation_proc = /datum/xgm_gas/bz/on_inhalation
 
+	initial_rnd_points = 3000
+
 /datum/xgm_gas/constantium
 	id = "const"
 	name = "Constantium"
@@ -128,6 +138,8 @@
 
 	knowable = FALSE
 	inhalation_proc = /datum/xgm_gas/constantium/on_inhalation
+
+	initial_rnd_points = 3000
 
 /datum/xgm_gas/trioxium
 	id = "triox"
@@ -143,6 +155,8 @@
 	flags = XGM_GAS_OXIDIZER
 	knowable = FALSE
 	inhalation_proc = /datum/xgm_gas/trioxium/on_inhalation
+
+	initial_rnd_points = 7000
 
 /datum/xgm_gas/proto_hydrate
 	id = "phydr"
@@ -160,6 +174,8 @@
 	knowable = FALSE
 	inhalation_proc = /datum/xgm_gas/proto_hydrate/on_inhalation
 
+	initial_rnd_points = 7000
+
 /datum/xgm_gas/cardotirin
 	id = "ctirin"
 	name = "Cardotirin"
@@ -174,6 +190,8 @@
 	knowable = FALSE
 	inhalation_proc = /datum/xgm_gas/cardotirin/on_inhalation
 
+	initial_rnd_points = 10000
+
 /datum/xgm_gas/metastabilium
 	id = "mstab"
 	name = "Meta-Stabilium"
@@ -186,3 +204,5 @@
 	molar_mass = 0.2
 
 	knowable = FALSE
+
+	initial_rnd_points = 30000

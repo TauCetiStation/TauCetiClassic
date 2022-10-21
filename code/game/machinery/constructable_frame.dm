@@ -396,8 +396,8 @@ to destroy them and players will be able to make replacements.
 	req_components = list(
 							/obj/item/weapon/tank = 1,
 							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/micro_laser/high = 1)
+							/obj/item/weapon/stock_parts/matter_bin = 2,
+							/obj/item/weapon/stock_parts/micro_laser = 2)
 
 /obj/item/weapon/circuitboard/heater
 	name = "circuit board (Heater)"

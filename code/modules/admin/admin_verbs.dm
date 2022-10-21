@@ -187,6 +187,7 @@ var/global/list/admin_verbs_debug = list(
 	/client/proc/debugNatureMapGenerator,
 	/datum/admins/proc/run_unit_test,
 	/client/proc/event_manager_panel,
+	/client/proc/atmos_reactions_panel,
 #ifdef REFERENCE_TRACKING
 /client/proc/find_refs,
 /client/proc/qdel_then_find_references,

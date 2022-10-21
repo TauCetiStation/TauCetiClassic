@@ -56,6 +56,9 @@ SUBSYSTEM_DEF(air)
 	var/map_init_levels = 0 // number of z-levels initialized under this type of SS.
 	var/list/queued_for_update
 
+	var/log_recent_reactions = TRUE
+	var/temp = ""
+
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "\nC:{"
 	msg += "PN:[round(cost_pipenets,1)]|"
@@ -312,8 +315,14 @@ SUBSYSTEM_DEF(air)
 			var/datum/gas_mixture/G = T.return_air()
 			for(var/datum/atmosReaction/R as anything in global.atmosReactionList)
 				var/datum/atmosReaction/O = new R()
-				O.react(G)
-				recentReactions.Add(O.id)
+				if(O.react(G))
+					recentReactions.Insert(1, list(O.id, T))
+					if(log_recent_reactions)
+						var/list/M = recentReactions
+						if(M.len > 10)
+							var/list/NM = recentReactions
+							NM = NM.Copy(0, 9)
+							recentReactions = NM
 
 /*********** Setup procs ***********/
 
@@ -569,39 +578,19 @@ SUBSYSTEM_DEF(air)
 			break
 	return P
 
-/datum/controller/subsystem/air/proc/add_reaction_turf(turf/T, P)
-	P = num2text(P)
-	var/list/L = possibleReactionTurfs[P]
-	if(L.Find(T) || isspaceturf(T))
+/datum/controller/subsystem/air/proc/add_reaction_turf(turf/simulated/T, P)
+	if(isspaceturf(T))
 		return
-	L.Add(T)
-	possibleReactionTurfs[P] = L
-	var/obj/effect/overlay/O = new/obj/effect/overlay(T)
-	O.name = "PRT"
-	O.desc = "Possible reaction turf"
-	O.icon = 'icons/obj/atmos.dmi'
-	O.icon_state = "prt" + P
-	O.anchored = TRUE
-	O.layer = 5
-	var/list/N = list(get_step(T, NORTH), get_step(T, SOUTH), get_step(T, WEST), get_step(T, EAST))
-	for(var/turf/NT as anything in N)
-		if(NT)
-			var/NP = get_reaction_mix_priority(NT.return_air())
-			if(NP && !possibleReactionTurfs.Find(NT))
-				add_reaction_turf(NT, NP)
+	P = num2text(P)
+	var/OP = T.last_reaction_priority
+	if(OP == P) //turf has same priority as previous time/is space
+		return
+	T.last_reaction_priority = P
+	var/list/L
+	if(OP)
+		L = possibleReactionTurfs[OP]; L.Remove(T); possibleReactionTurfs[OP] = L;
+	L = possibleReactionTurfs[P]; L.Insert(1, T); possibleReactionTurfs[P] = L;
 	/*
-	too slow, cost is insane, still need to deal with duplicates (or maybe not?)
-	P = num2text(P)
-	var/list/PO = possibleReactionTurfs[P]
-	if(PO.Find(T) || isspaceturf(T)) //turf has same priority as previous time/is space
-		return
-	for(var/PN in list("3", "2", "1"))
-		var/list/C = possibleReactionTurfs[PN]
-		if(C.Find(T))
-			C.Remove(T)
-			possibleReactionTurfs[PN] = C
-	var/list/PC = possibleReactionTurfs[P]
-	PC.Add(T)
 	var/obj/effect/overlay/O = new/obj/effect/overlay(T)
 	O.name = "PRT"
 	O.desc = "Possible reaction turf"
@@ -609,13 +598,68 @@ SUBSYSTEM_DEF(air)
 	O.icon_state = "prt" + P
 	O.anchored = TRUE
 	O.layer = 5
+	*/
 	var/list/N = list(get_step(T, NORTH), get_step(T, SOUTH), get_step(T, WEST), get_step(T, EAST))
 	for(var/turf/NT as anything in N)
 		if(NT)
 			var/NP = get_reaction_mix_priority(NT.return_air())
 			if(NP && !possibleReactionTurfs.Find(NT))
 				add_reaction_turf(NT, NP)
-	*/
+
+/datum/controller/subsystem/air/proc/atmos_reactions_panel()
+	var/html = ""
+	if(temp)
+		html = temp
+	else
+		if(!SSair)
+			html += "<span class='red'>Подсистема воздуха в данный момент не активна.</span><br>"
+		else
+			html += "Нагрузка: [SSair.cost_reactions]<br>"
+			var/list/p1 = possibleReactionTurfs["1"]
+			var/list/p2 = possibleReactionTurfs["2"]
+			var/list/p3 = possibleReactionTurfs["3"]
+			html += "Количество возможных турфов для реакций: [p1.len + p2.len + p3.len]<br>"
+			html += "Запись недавних реакций: [SSair.log_recent_reactions ? "Включена" : "Выключена"]<br>"
+			html += "<A align='right' href='?src=\ref[src];viewrlog=1'>Просмотреть недавние реакции</A><br>"
+			html += "<A align='right' href='?src=\ref[src];enablerlog=1'>Включить запись реакций</A><br>"
+			html += "<A align='right' href='?src=\ref[src];checkt=1'>Проверить текущий турф</A><br>"
+			html += "<A align='right' href='?src=\ref[src];checkz=1'>Проверить текущую зону</A><br>"
+			html += "<A align='right' href='?src=\ref[src];refresh=1'>Обновить</A><br>"
+	return html
+
+/datum/controller/subsystem/air/Topic(href, href_list)
+	if(href_list["back"])
+		temp = ""
+	if(href_list["viewrlog"])
+		temp += "<A align='right' href='?src=\ref[src];back=1'>Назад</A><br>"
+		for(var/list/L in recentReactions)
+			var/turf/T = L[1]
+			temp += "Имя: [L[0]]; Турф: [initial(T.name)]; <href='?src=\ref[src];teleport=\ref[L[1]];teleport=1'>Телепортироваться</A>";
+	if(href_list["enablerlog"])
+		SSair.log_recent_reactions = !SSair.log_recent_reactions
+	if(href_list["checkt"])
+		var/turf/T = usr.loc
+		var/P = get_reaction_mix_priority(T.return_air())
+		if(P)
+			add_reaction_turf(T, P)
+	if(href_list["checkz"])
+		if(tgui_alert(usr, "Вы хотите проверить все турфы в данной зоне, это может вызвать лаги если зона большая. Всё равно продолжить?", "Проверка зоны", list("Да","Нет")) == "Да")
+			var/area/A = get_area(usr)
+			if(A)
+				for(var/turf/T in A)
+					var/P = get_reaction_mix_priority(T.return_air())
+					if(P)
+						add_reaction_turf(T, P)
+	if(href_list["teleport"])
+		var/turf/TT = locate(href_list["teleport"])
+		usr.Move(TT)
+	atmos_reactions_panel_interact(usr)
+
+/datum/controller/subsystem/air/proc/atmos_reactions_panel_interact(mob/living/user)
+	var/html = atmos_reactions_panel()
+	var/datum/browser/popup = new(user, "atmos_reactions_panel", "Atmos Reactions Panel", 400, 400)
+	popup.set_content(html)
+	popup.open()
 
 #undef SSAIR_PIPENETS
 #undef SSAIR_ATMOSMACHINERY

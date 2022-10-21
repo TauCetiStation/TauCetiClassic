@@ -80,3 +80,7 @@
 	set category = "Debug"
 
 	vsc.SetDefault(mob)
+
+/client/proc/atmos_reactions_panel()
+	set category = "Debug"
+	SSair.atmos_reactions_panel_interact(usr)
