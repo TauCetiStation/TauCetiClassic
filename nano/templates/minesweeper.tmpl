@@ -1,0 +1,28 @@
+<div class="minesweeper">
+{{for data.grid}}
+	{{props value}}
+	{{if value.state == "empty"}}
+		{{if value.nearest == 1}}
+			<span class="minesweeper_button_pressed" style="color: #0092cc;"><B>{{:value.nearest}}</B></span>
+		{{else value.nearest == 2}}
+			<span class="minesweeper_button_pressed" style="color: #779933;"><B>{{:value.nearest}}</B></span>
+		{{else value.nearest == 3}}
+			<span class="minesweeper_button_pressed" style="color: #ff3333;"><B>{{:value.nearest}}</B></span>
+		{{else value.nearest == 4}}
+			<span class="minesweeper_button_pressed" style="color: #087099;"><B>{{:value.nearest}}</B></span>
+		{{else value.nearest == 5}}
+			<span class="minesweeper_button_pressed" style="color: #cc3333;"><B>{{:value.nearest}}</B></span>
+		{{else value.nearest == 6}}
+			<span class="minesweeper_button_pressed" style="color: #A6B2EC;"><B>{{:value.nearest}}</B></span>
+		{{else value.nearest == 7}}
+			<span class="minesweeper_button_pressed" style="color: #600095;"><B>{{:value.nearest}}</B></span>
+		{{else}}
+			<span class="minesweeper_button_pressed" style="color: #E5E5E5;"><B>{{:value.nearest}}</B></span>
+		{{/if}}
+	{{else}}
+		{{:helper.link("", null, {'choice_x' : value.x, 'choice_y' : value.y}, null, 'minesweeper_button')}}
+	{{/if}}
+	{{/props}}
+	<br>
+{{/for}}
+</div>

@@ -497,6 +497,44 @@ div.notice {
     text-align: center;
 }
 
+.minesweeper {
+	width: 100%;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+
+.minesweeper_button_pressed {
+	width: 26px;
+    height: 26px;
+    float: left;
+	font-size: 20px;
+    font-weight: bold;
+	background: #4b4b4b;
+	color: #Afde28;
+	border: 2px solid #2f2f2f;
+	text-align: center;
+	margin: 0px;
+	padding: 0px;
+}
+
+.minesweeper_button {
+	width: 20px;
+    height: 20px;
+    float: left;
+	background: #5f5f5f;
+	color: #111111;
+	border: 5px solid #404040;
+	border-left-color: #808080;
+	border-top-color: #808080;
+	text-align: center;
+	margin: 0px;
+	padding: 0px;
+}
+
 table.fixed {
 	table-layout:fixed;
 }
