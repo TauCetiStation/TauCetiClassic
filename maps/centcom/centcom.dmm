@@ -17646,6 +17646,12 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"aNI" = (
+/obj/machinery/computer/lop_shuttle,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/lone_op/start)
 "aNK" = (
 /obj/machinery/door/airlock/centcom{
 	name = "General Access";
@@ -79500,7 +79506,7 @@ aaM
 aaM
 abu
 aNd
-aNm
+aNI
 aMW
 aNm
 aNm

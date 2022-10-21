@@ -1,5 +1,6 @@
 #define SYNDICATE_SHUTTLE_MOVE_TIME 215
 #define SYNDICATE_SHUTTLE_COOLDOWN 200
+#define SYNDICATE_SHUTTLE_ALERT_DELAY (1 MINUTES)
 
 /obj/machinery/computer/lop_shuttle
 	name = "syndicate shuttle terminal"
@@ -13,6 +14,7 @@
 	var/area/curr_location
 	var/moving = FALSE
 	var/lastMove = 0
+	var/datum/announcement/centcomm/syndi_shuttle/announce
 
 /obj/effect/landmark/lop_shuttle
 	name = "lone oper shuttle landmark"
@@ -54,6 +56,9 @@
 	curr_location.move_contents_to(dest_location)
 	curr_location = dest_location
 	moving = FALSE
+	if(!announce)
+		announce = new
+		addtimer(CALLBACK(announce, /datum/announcement.proc/play), SYNDICATE_SHUTTLE_ALERT_DELAY)
 	return TRUE
 
 /obj/machinery/computer/lop_shuttle/ui_interact(mob/user)
@@ -88,4 +93,4 @@
 
 #undef SYNDICATE_SHUTTLE_MOVE_TIME
 #undef SYNDICATE_SHUTTLE_COOLDOWN
-
+#undef SYNDICATE_SHUTTLE_ALERT_DELAY
