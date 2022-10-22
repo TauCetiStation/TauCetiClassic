@@ -9,11 +9,12 @@
 	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/atmospherics = SKILL_LEVEL_TRAINED)
 	var/currentGasMoles = 0
 	var/currentGas = "phoron"
-	var/amountPerLevel = 100 //moles
+	var/amountPerLevel = 200 //moles
 	var/temp = ""
 	var/radioEnabled = FALSE
 	var/list/radioChannels = list("Science")
 	var/lastResearch = 31
+	var/researchDrained = FALSE
 
 /obj/machinery/atmospherics/components/unary/gas_analyzer/atom_init()
 	. = ..()
@@ -47,8 +48,10 @@
 			currentGasMoles += air1.gas[gas]
 			air1.gas[gas] = 0
 			var/L = round(currentGasMoles / amountPerLevel)
-			if(L)
+			if(L && !researchDrained)
 				var/P = researchGas(currentGas, L)
+				if(P < 0)
+					researchDrained = TRUE
 				researchMessage(L, P)
 				currentGasMoles -= L * amountPerLevel
 				lastResearch = 0
@@ -58,23 +61,29 @@
 				lastResearch ++
 				set_power_use(active_power_usage)
 			
-/obj/machinery/atmospherics/components/unary/gas_analyzer/proc/researchGas(gas, level, repetitionCoeff = 0.5, add = TRUE)
+/obj/machinery/atmospherics/components/unary/gas_analyzer/proc/researchGas(gas, levels, repetitionCoeff = 0.5, add = TRUE)
 	var/exType = "Gas research ([gas])"
-	var/points = 0
-
+	var/points = -1
+	if(!levels)
+		return
 	for(var/obj/machinery/computer/rdconsole/RD in RDcomputer_list)
 		if(RD.id == 1)
 			var/earned = RD.files.experiments.earned_score[exType]
+			var/best = RD.files.experiments.saved_best_score[exType]
 			if(!earned)
 				points = gas_data.gases_initial_rnd_points[gas]
 				if(!add)
 					return points
 				RD.files.experiments.saved_best_score[exType] = points //amount on other research iterations will always be lower
+				RD.files.experiments.earned_score[exType] += points
 				RD.files.research_points += points
 				return points
-			var/best = RD.files.experiments.saved_best_score[exType]
-			var/totalLevel = log(repetitionCoeff, ((earned * repetitionCoeff - 1) / best) + 1) + level
-			points = ((best * (repetitionCoeff ** totalLevel - 1)) / repetitionCoeff - 1) - earned
+			//formulas below are for geometric progressions if someone needs to know that
+			//points for every iterations are equal to points from previous one, multiplied by repetitionCoeff
+			var/last = (earned * (repetitionCoeff - 1) + best) / repetitionCoeff
+			if(last < 10)
+				return points
+			points = ((last * (repetitionCoeff ** levels - 1)) / (repetitionCoeff - 1)) * repetitionCoeff
 			if(add)
 				RD.files.experiments.earned_score[exType] += points
 				RD.files.research_points += points
@@ -139,6 +148,8 @@
 	else
 		if(!checkRdConsole())
 			html += "<span class='red'>Рабочих консолей РнД не обнаружено - очки не будут генерироватся.</span><br>"
+		if(researchDrained)
+			html += "<span class='red'>Газ полностью изучен и более не представляет научной ценности.</span><br>"
 		html += "Текущий изучаемый газ: [gas_data.name[currentGas]]<br>"
 		html += "Необходимый объём: [currentGasMoles]/[amountPerLevel]<br>"
 		html += "Ожидаемые очки за итерацию: [researchGas(currentGas, 1, add = FALSE)]<br>"
@@ -155,6 +166,7 @@
 		for(var/gas in gas_data.gases)
 			temp += "[gas_data.name[gas]]; <A href='?src=\ref[src];changegs=\ref[gas]'>Выбрать</A><br>"
 	if(href_list["changegs"])
+		researchDrained = FALSE
 		currentGas = locate(href_list["changegs"])
 		temp = ""
 	interact(usr)

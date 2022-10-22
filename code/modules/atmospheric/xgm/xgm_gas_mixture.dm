@@ -349,6 +349,8 @@
 
 
 /datum/gas_mixture/proc/react()
+	if(SSair.process_reactions && SSair.get_reaction_mix_priority(src))
+		SSair.try_react(src)
 	zburn(null, force_burn = FALSE, no_check = FALSE) //could probably just call zburn() here with no args but I like being explicit.
 
 

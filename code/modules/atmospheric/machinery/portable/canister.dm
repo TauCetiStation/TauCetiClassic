@@ -96,7 +96,7 @@
 	name = "Canister: \[Trioxium\]"
 	icon_state = "darkblue"
 	canister_color = "darkblue"
-	gas_type = "trioxium"
+	gas_type = "triox"
 
 /obj/machinery/portable_atmospherics/canister/proto_hydrate
 	name = "Canister: \[Proto-hydrate\]"

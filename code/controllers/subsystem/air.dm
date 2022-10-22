@@ -317,16 +317,7 @@ SUBSYSTEM_DEF(air)
 			possibleReactionTurfs[P] = NL
 		for(var/turf/T in possibleReactionTurfs[P])
 			var/datum/gas_mixture/G = T.return_air()
-			for(var/datum/atmosReaction/R as anything in global.atmosReactionList)
-				var/datum/atmosReaction/O = new R()
-				if(O.react(G))
-					recentReactions.Insert(1, list(O.id, T))
-					if(log_recent_reactions)
-						var/list/M = recentReactions
-						if(M.len > 10)
-							var/list/NM = recentReactions
-							NM = NM.Copy(0, 9)
-							recentReactions = NM
+			try_react(G, T)
 
 /*********** Setup procs ***********/
 
@@ -610,6 +601,18 @@ SUBSYSTEM_DEF(air)
 			if(NP && !possibleReactionTurfs.Find(NT))
 				add_reaction_turf(NT, NP)
 
+/datum/controller/subsystem/air/proc/try_react(datum/gas_mixture/G, turf/T = null)
+	for(var/datum/atmosReaction/R as anything in global.atmosReactionList)
+		var/datum/atmosReaction/O = new R()
+		if(O.react(G))
+			recentReactions.Insert(1, list(O.id, T))
+			if(log_recent_reactions)
+				var/list/M = recentReactions
+				if(M.len > 10)
+					var/list/NM = recentReactions
+					NM = NM.Copy(0, 9)
+					recentReactions = NM
+
 /datum/controller/subsystem/air/proc/atmos_reactions_panel()
 	var/html = ""
 	if(temp)
@@ -660,7 +663,8 @@ SUBSYSTEM_DEF(air)
 						add_reaction_turf(T, P)
 	if(href_list["teleport"])
 		var/turf/TT = locate(href_list["teleport"])
-		usr.Move(TT)
+		if(TT)
+			usr.Move(TT)
 	atmos_reactions_panel_interact(usr)
 
 /datum/controller/subsystem/air/proc/atmos_reactions_panel_interact(mob/living/user)
