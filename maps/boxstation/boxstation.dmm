@@ -14353,7 +14353,7 @@
 /area/station/maintenance/dormitory)
 "azc" = (
 /obj/machinery/computer/arcade,
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/contraband{
 	pixel_y = -32
 	},
 /turf/simulated/floor{
@@ -23331,13 +23331,12 @@
 	},
 /area/station/storage/tools)
 "aPP" = (
-/obj/structure/sign/poster{
-	official = 1;
-	pixel_x = 30
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
+/obj/structure/sign/poster/contraband{
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutralcorner"
@@ -24135,10 +24134,10 @@
 /turf/simulated/wall,
 /area/station/hallway/secondary/exit)
 "aRo" = (
-/obj/structure/lamarr,
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/structure/displaycase/labcage,
 /turf/simulated/floor{
 	icon_state = "whitebot"
 	},
@@ -42594,9 +42593,6 @@
 	},
 /area/station/rnd/chargebay)
 "bxN" = (
-/obj/structure/sign/poster{
-	pixel_y = -32
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/device/flashlight/seclite,
 /turf/simulated/floor/wood,
@@ -48099,8 +48095,7 @@
 	stamp_message = "Cargo"
 	},
 /obj/item/weapon/hand_labeler,
-/obj/structure/sign/poster{
-	official = 1;
+/obj/structure/sign/poster/contraband{
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -72177,14 +72172,13 @@
 /area/station/engineering/break_room)
 "gib" = (
 /obj/structure/table,
-/obj/structure/sign/poster{
-	official = 1;
-	pixel_x = -32
-	},
 /obj/item/device/flashlight,
 /obj/item/weapon/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000
+	},
+/obj/structure/sign/poster/contraband{
+	pixel_x = -32
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -76085,8 +76079,7 @@
 "kss" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/sign/poster{
-	official = 1;
+/obj/structure/sign/poster/contraband{
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -76345,13 +76338,11 @@
 	},
 /area/station/cargo/office)
 "kFh" = (
-/obj/structure/sign/poster{
-	dir = 6;
-	official = 1;
-	pixel_x = 32
-	},
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 1
+	},
+/obj/structure/sign/poster/contraband{
+	pixel_x = 32
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -79221,14 +79212,13 @@
 	},
 /area/station/maintenance/engineering)
 "obL" = (
-/obj/structure/sign/poster{
-	official = 1;
-	pixel_x = 32
-	},
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/sign/poster/contraband{
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	icon_state = "bar"
 	},
@@ -82318,6 +82308,18 @@
 /obj/structure/sign/warning/biohazard,
 /turf/simulated/wall/r_wall,
 /area/station/security/execution)
+"rQR" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/sign/poster/contraband{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "rRb" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -99757,7 +99759,7 @@ brC
 bvj
 bxN
 aSM
-dQb
+rQR
 aBW
 bhR
 bio
