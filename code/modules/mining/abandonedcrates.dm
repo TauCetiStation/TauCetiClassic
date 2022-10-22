@@ -67,16 +67,38 @@
 		ui.open()
 	ui.set_auto_update(auto_update)
 
-/obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
-	if(!locked)
-		return ..()
-	ui_interact(user)
-
 /obj/structure/closet/crate/secure/loot/Topic(href, href_list)
 	..()
 
 	if(href_list["choice_x"])
 		press_button(href_list["choice_x"], href_list["choice_y"])
+
+/*/obj/structure/closet/crate/secure/loot/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Minesweeper")
+		ui.open()
+
+/obj/structure/closet/crate/secure/loot/tgui_data(mob/user)
+	var/list/data = list()
+	data["grid"] = grid
+
+	return data
+
+/obj/machinery/my_machine/tgui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	if(action == "press_button")
+		var/x = params["choice_x"]
+		var/y = params["choice_y"]
+		press_button(x, y)*/
+
+/obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
+	if(!locked)
+		return ..()
+	ui_interact(user)
+	tgui_interact(user)
 
 /obj/structure/closet/crate/secure/loot/proc/check_in_grid(x, y)
 	return x >= 1 && x <= grid_x && y >= 1 && y <= grid_y
@@ -101,7 +123,7 @@
 		grid[y][x]["nearest"] = num2text(mi)
 		return
 	for(var/list/mask in nearest_mask)
-		addtimer(CALLBACK(src, .proc/reveal_button, x + mask[1],y + mask[2]), 1)
+		reveal_button(x + mask[1], y + mask[2])
 
 /obj/structure/closet/crate/secure/loot/proc/check_mines(x,y)
 	var/mins = 0
