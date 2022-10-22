@@ -57,6 +57,7 @@ SUBSYSTEM_DEF(air)
 	var/list/queued_for_update
 
 	var/log_recent_reactions = TRUE
+	var/process_reactions = TRUE
 	var/temp = ""
 
 /datum/controller/subsystem/air/stat_entry(msg)
@@ -177,7 +178,10 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
-		currentpart = SSAIR_REACTIONS
+		if(process_reactions)
+			currentpart = SSAIR_REACTIONS
+		else
+			currentpart = SSAIR_PIPENETS
 
 	//process atmos reactions
 	if(currentpart == SSAIR_REACTIONS)
@@ -579,7 +583,7 @@ SUBSYSTEM_DEF(air)
 	return P
 
 /datum/controller/subsystem/air/proc/add_reaction_turf(turf/simulated/T, P)
-	if(isspaceturf(T))
+	if(isspaceturf(T) || !process_reactions)
 		return
 	P = num2text(P)
 	var/OP = T.last_reaction_priority
@@ -614,12 +618,14 @@ SUBSYSTEM_DEF(air)
 		if(!SSair)
 			html += "<span class='red'>Подсистема воздуха в данный момент не активна.</span><br>"
 		else
+			html += "Обработка реакций: [SSair.process_reactions ? "Включена" : "Выключена"]<br>"
 			html += "Нагрузка: [SSair.cost_reactions]<br>"
 			var/list/p1 = possibleReactionTurfs["1"]
 			var/list/p2 = possibleReactionTurfs["2"]
 			var/list/p3 = possibleReactionTurfs["3"]
 			html += "Количество возможных турфов для реакций: [p1.len + p2.len + p3.len]<br>"
 			html += "Запись недавних реакций: [SSair.log_recent_reactions ? "Включена" : "Выключена"]<br>"
+			html += "<A align='right' href='?src=\ref[src];enabler=1'>Включить обработку реакций</A><br>"
 			html += "<A align='right' href='?src=\ref[src];viewrlog=1'>Просмотреть недавние реакции</A><br>"
 			html += "<A align='right' href='?src=\ref[src];enablerlog=1'>Включить запись реакций</A><br>"
 			html += "<A align='right' href='?src=\ref[src];checkt=1'>Проверить текущий турф</A><br>"
@@ -630,6 +636,8 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/Topic(href, href_list)
 	if(href_list["back"])
 		temp = ""
+	if(href_list["enabler"])
+		SSair.process_reactions = !SSair.process_reactions
 	if(href_list["viewrlog"])
 		temp += "<A align='right' href='?src=\ref[src];back=1'>Назад</A><br>"
 		for(var/list/L in recentReactions)

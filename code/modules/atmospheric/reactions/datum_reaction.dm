@@ -15,7 +15,7 @@
     var/list/toRemove[0]
     if(!consumed.len)
         return
-    for(var/gas in G.gas)
+    for(var/gas in consumed)
         if(consumed[gas] <= G.gas[gas])
             count ++
             toRemove[gas] = consumed[gas]
@@ -27,7 +27,7 @@
                 count = 0
 
     if(count == consumed.len + catalysts.len)
-        if((G.return_pressure() > minPressure * 1000 && G.return_pressure() < maxPressure * 1000) && (G.temperature > minTemp && G.temperature < maxTemp))
+        if((G.return_pressure() > minPressure && G.return_pressure() < maxPressure) && (G.temperature > minTemp && G.temperature < maxTemp))
             return toRemove
     return FALSE
 
