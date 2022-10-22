@@ -6531,16 +6531,6 @@
 /obj/effect/landmark/start/assistant/test_subject,
 /turf/simulated/floor,
 /area/station/storage/primary)
-"ala" = (
-/obj/machinery/power/apc{
-	name = "Arrival Shuttle Hallway APC";
-	pixel_y = -24
-	},
-/obj/structure/cable,
-/turf/simulated/floor{
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/secondary/entry)
 "alb" = (
 /obj/machinery/door_timer/cell_3,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -16033,28 +16023,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/station/cargo/office)
-"aCe" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "aCf" = (
 /obj/effect/landmark{
 	name = "Holodeck Base"
@@ -102301,8 +102269,8 @@ bhj
 aWv
 aYU
 bbd
-aCe
-ala
+bdB
+bhj
 aGn
 bwC
 bDZ
