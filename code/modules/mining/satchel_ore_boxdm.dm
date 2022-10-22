@@ -24,19 +24,10 @@
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
 		to_chat(user, "<span class='notice'>You empty the satchel into the box.</span>")
 	else if(istype(W, /obj/item/stack/sheet/wood))
-		var/obj/item/stack/sheet/wood/S = W
-		var/choosed_quantity = round(input("How many sheets do you want to add?") as num)
-		if(!S)
-			return
-		//how many integrity wood plank restores
-		var/integrity_restore = 5
-		if(choosed_quantity > S.get_amount())
-			choosed_quantity = S.get_amount()
-		if(choosed_quantity * integrity_restore > max_integrity)
-			choosed_quantity = round((max_integrity - atom_integrity) / integrity_restore)
-		if(S.use(choosed_quantity))
-			repair_damage(choosed_quantity * integrity_restore)
-			to_chat(user, "The box is reinforced by [choosed_quantity] [S]")
+		var/obj/item/stack/sheet/wood/sheet = W
+		if(sheet.use(1))
+			repair_damage(5)
+			to_chat(user, "[src] reinforced, current integrity is [get_integrity()]")
 
 /obj/structure/ore_box/proc/dump_box_contents()
 	for(var/obj/item/weapon/ore/O as anything in contents)
@@ -85,9 +76,9 @@
 	add_fingerprint(user)
 
 	if(atom_integrity >= max_integrity * integrity_failure)
-		to_chat(user, "<span class='notice'>looks reinforced</span>")
+		to_chat(user, "<span class='notice'>Looks reinforced</span>")
 	else
-		to_chat(user, "<span class='warning'>looks seriously damaged</span>")
+		to_chat(user, "<span class='warning'>Looks seriously damaged</span>")
 
 	if(!contents.len)
 		to_chat(user, "It is empty.")
