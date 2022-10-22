@@ -98,7 +98,7 @@
 	if(!locked)
 		return ..()
 	ui_interact(user)
-	tgui_interact(user)
+	//tgui_interact(user)
 
 /obj/structure/closet/crate/secure/loot/proc/check_in_grid(x, y)
 	return x >= 1 && x <= grid_x && y >= 1 && y <= grid_y
