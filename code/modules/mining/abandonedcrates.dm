@@ -11,6 +11,7 @@
 	var/grid_mines = 0
 	var/grid_blanks = 0
 	var/grid_pressed = 0
+	var/list/nearest_mask = list(list(-1, -1), list(0, -1), list(1, -1), list(-1, 0), list(1, 0), list(-1, 1), list(0, 1), list(1, 1))
 
 /obj/structure/closet/crate/secure/loot/atom_init()
 	. = ..()
@@ -47,12 +48,7 @@
 
 	var/data[0]  // This is the data that will be sent to the PDA
 
-	data["rows"] = grid_y
-
 	data["grid"] = grid
-
-	for(var/i = 1 to grid_y)
-		data["grid_[i]"] = grid[i]
 
 	if(ui)
 		ui.load_cached_data(ManifestJSON)
@@ -82,6 +78,9 @@
 	if(href_list["choice_x"])
 		press_button(href_list["choice_x"], href_list["choice_y"])
 
+/obj/structure/closet/crate/secure/loot/proc/check_in_grid(x, y)
+	return x >= 1 && x <= grid_x && y >= 1 && y <= grid_y
+
 /obj/structure/closet/crate/secure/loot/proc/press_button(x, y)
 	if(grid[text2num(y)][text2num(x)]["state"] == "mine")
 		SpawnDeathLoot()
@@ -90,7 +89,7 @@
 	nanomanager.update_uis(src)
 
 /obj/structure/closet/crate/secure/loot/proc/reveal_button(x,y)
-	if(x < 1 || x > grid_x || y < 1 || y > grid_y || grid[y][x]["state"] == "empty")
+	if(!check_in_grid(x, y) || grid[y][x]["state"] == "empty")
 		return
 	grid[y][x]["state"] = "empty"
 	grid_pressed++
@@ -101,44 +100,14 @@
 			mi = ""
 		grid[y][x]["nearest"] = num2text(mi)
 		return
-	addtimer(CALLBACK(src, .proc/reveal_button, x-1,y-1), 1)
-	addtimer(CALLBACK(src, .proc/reveal_button, x,y-1), 1)
-	addtimer(CALLBACK(src, .proc/reveal_button, x+1,y-1), 1)
-
-	addtimer(CALLBACK(src, .proc/reveal_button, x-1,y), 1)
-	addtimer(CALLBACK(src, .proc/reveal_button, x+1,y), 1)
-
-	addtimer(CALLBACK(src, .proc/reveal_button, x-1,y+1), 1)
-	addtimer(CALLBACK(src, .proc/reveal_button, x,y+1), 1)
-	addtimer(CALLBACK(src, .proc/reveal_button, x+1,y+1), 1)
+	for(var/list/mask in nearest_mask)
+		addtimer(CALLBACK(src, .proc/reveal_button, x + mask[1],y + mask[2]), 1)
 
 /obj/structure/closet/crate/secure/loot/proc/check_mines(x,y)
 	var/mins = 0
-	if(x-1 >= 1 && y-1 >= 1)
-		if(grid[y-1][x-1]["state"] == "mine")
-			mins++
-	if(y-1 >= 1)
-		if(grid[y-1][x]["state"] == "mine")
-			mins++
-	if(x+1 <= grid_x && y-1 >= 1)
-		if(grid[y-1][x+1]["state"] == "mine")
-			mins++
 
-	if(x-1 >= 1)
-		if(grid[y][x-1]["state"] == "mine")
-			mins++
-	if(x+1 <= grid_x)
-		if(grid[y][x+1]["state"] == "mine")
-			mins++
-
-	if(x-1 >= 1 && y+1 <= grid_y)
-		if(grid[y+1][x-1]["state"] == "mine")
-			mins++
-	if(y+1 <= grid_y)
-		if(grid[y+1][x]["state"] == "mine")
-			mins++
-	if(x+1 <= grid_x && y+1 <= grid_y)
-		if(grid[y+1][x+1]["state"] == "mine")
+	for(var/list/mask in nearest_mask)
+		if(check_in_grid(x + mask[1], y + mask[2]) && grid[y + mask[2]][x + mask[1]]["state"] == "mine")
 			mins++
 
 	return mins
