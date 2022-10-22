@@ -73,10 +73,34 @@
 	if(href_list["choice_x"])
 		press_button(href_list["choice_x"], href_list["choice_y"])
 
+/obj/structure/closet/crate/secure/loot/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Minesweeper")
+		ui.open()
+
+/obj/structure/closet/crate/secure/loot/tgui_data(mob/user)
+	var/list/data = list()
+
+	data["grid"] = grid
+	data["width"] = grid_x*30
+	data["height"] = grid_y*30+32
+
+	return data
+
+/obj/structure/closet/crate/secure/loot/tgui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	if(action == "button_press")
+		press_button(params["choice_x"], params["choice_y"])
+	update_icon()
+
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(!locked)
 		return ..()
 	ui_interact(user)
+	tgui_interact(user)
 
 /obj/structure/closet/crate/secure/loot/proc/check_in_grid(x, y)
 	return x >= 1 && x <= grid_x && y >= 1 && y <= grid_y
