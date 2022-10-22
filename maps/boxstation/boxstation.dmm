@@ -72092,8 +72092,7 @@
 "gdb" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp/green,
-/obj/structure/sign/poster{
-	official = 1;
+/obj/structure/sign/poster/contraband{
 	pixel_x = -32
 	},
 /turf/simulated/floor/wood,
