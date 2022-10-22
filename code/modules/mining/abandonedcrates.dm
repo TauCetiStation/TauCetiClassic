@@ -46,7 +46,7 @@
 
 	var/title = "Crate Lock. [grid_mines] mines."
 
-	var/data[0]  // This is the data that will be sent to the PDA
+	var/data[0]
 
 	data["grid"] = grid
 
