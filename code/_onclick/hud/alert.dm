@@ -263,7 +263,7 @@
 	if(!usr || !usr.client)
 		return
 	var/paramslist = params2list(params)
-	if(paramslist["shift"]) // screen objects don't do the normal Click() stuff so we'll cheat
+	if(paramslist[SHIFT_CLICK]) // screen objects don't do the normal Click() stuff so we'll cheat
 		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
 		return
 	if(master)
@@ -445,11 +445,14 @@
 	icon_state = "buckled"
 
 /atom/movable/screen/alert/buckled/Click()
+	if(!mob_viewer)
+		return
 	if(mob_viewer.restrained())
 		to_chat(mob_viewer, "You are restrained! You need to remove handcuffs first!")
 		return
-	if(mob_viewer.next_move < world.time && mob_viewer.stat == CONSCIOUS && !mob_viewer.stunned && !mob_viewer.paralysis)
-		master.user_unbuckle_mob(mob_viewer)
+	if(mob_viewer.incapacitated() || mob_viewer.crawling || mob_viewer.is_busy())
+		return
+	master.user_unbuckle_mob(mob_viewer)
 
 /atom/movable/screen/alert/brake
 	name = "Brake is on"
