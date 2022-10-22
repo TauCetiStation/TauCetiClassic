@@ -8,6 +8,7 @@
 	max_integrity = 1500
 	pixel_x = -16
 	pixel_y = -2
+	anchored = TRUE
 	var/mob/eminence_nominee //Exactly for mob that wants to be an eminence
 	var/ghost_nomination = FALSE
 	var/selection_timer //Timer ID; this is canceled if the vote is canceled
