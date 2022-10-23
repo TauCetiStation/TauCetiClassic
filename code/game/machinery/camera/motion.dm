@@ -41,8 +41,7 @@
 	return 1
 
 /obj/machinery/camera/proc/lostTarget(mob/target)
-	if (target in motionTargets)
-		motionTargets -= target
+	motionTargets -= target
 	if (motionTargets.len == 0)
 		cancelAlarm()
 
