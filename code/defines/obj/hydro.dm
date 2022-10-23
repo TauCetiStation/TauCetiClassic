@@ -72,7 +72,7 @@
 		if(potency != -1)
 			to_chat(user, "-Plant Potency: <span class='notice'>[potency]</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
-		return
+		return FALSE
 	return ..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
 /obj/item/seeds/blackpepper
@@ -1132,7 +1132,7 @@
 	plant_type = 1
 
 /obj/item/seeds/kudzuseed/attack_self(mob/user)
-	if(istype(user.loc,/turf/space) || istype(user.loc,/turf/simulated/shuttle))
+	if(isspaceturf(user.loc) || istype(user.loc, /turf/simulated/shuttle))
 		to_chat(user, "<span class='notice'>You cannot plant kudzu on a moving shuttle or space.</span>")
 		return
 	to_chat(user, "<span class='notice'>You plant the kudzu. You monster.</span>")
@@ -1188,7 +1188,7 @@
 		for(var/i in 1 to 2)
 			new/obj/item/stack/sheet/wood(user.loc)
 		qdel(src)
-		return
+		return FALSE
 	return ..()
 
 
@@ -1197,7 +1197,7 @@
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
-	damtype = "fire"
+	damtype = BURN
 	force = 0
 	throwforce = 1
 	w_class = SIZE_MINUSCULE
@@ -1211,7 +1211,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	name = "nettle"
 	icon_state = "nettle"
-	damtype = "fire"
+	damtype = BURN
 	force = 15
 	throwforce = 1
 	w_class = SIZE_TINY
@@ -1233,7 +1233,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	name = "deathnettle"
 	icon_state = "deathnettle"
-	damtype = "fire"
+	damtype = BURN
 	force = 30
 	throwforce = 1
 	w_class = SIZE_TINY

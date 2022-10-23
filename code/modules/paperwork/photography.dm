@@ -1,3 +1,7 @@
+#define MASK_NOTHING ""
+#define MASK_VIGNETTE "vignette"
+#define MASK_OLDVIGNETTE "old_vignette"
+
 /*	Photography!
  *	Contains:
  *		Camera
@@ -33,19 +37,27 @@
 	var/icon/tiny
 	var/list/photographed_names = list() // For occult purposes.
 
+/obj/item/weapon/photo/atom_init()
+	. = ..()
+	RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/summon_ectoplasm)
+
 /obj/item/weapon/photo/Destroy()
 	img = null
 	qdel(tiny)
 	tiny = null
 	return ..()
 
-/obj/item/weapon/photo/burnpaper(obj/item/weapon/lighter/P, mob/user)
-	..()
+/obj/item/weapon/photo/proc/summon_ectoplasm()
+	var/ghost_count = 0
 	for(var/A in photographed_names)
 		if(photographed_names[A] == /mob/dead/observer)
-			if(prob(10))
-				new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(loc) // I mean, it is already dropped in the parent proc, so this is pretty safe to do.
-			break
+			ghost_count++
+
+	if(!ghost_count)
+		return
+
+	for(var/i in 1 to round(ghost_count / 3))
+		new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(get_turf(src))
 
 /obj/item/weapon/photo/attack_self(mob/user)
 	user.examinate(src)
@@ -71,7 +83,8 @@
 	set src in oview(1)
 	if(in_range(usr, src))
 		show(usr)
-		to_chat(usr, desc)
+		if(desc)
+			to_chat(usr, desc)
 	else
 		to_chat(usr, "<span class='notice'>It is too far away.</span>")
 
@@ -107,6 +120,130 @@
 	desc = indesc
 
 
+// Camera filters
+/obj/item/device/lens
+	w_class = SIZE_TINY
+	var/list/effect = list("effect1", "mask", "effect2")
+
+/obj/item/device/lens/lomo
+	name = "lomo filter lens"
+	icon = 'icons/obj/items.dmi'
+	desc = "A LOMOgraphy filter lens."
+	icon_state = "lomo_filter"
+	effect = list("effect1" = LOMO_FILTER, "mask" = MASK_VIGNETTE, "effect2" = null)
+
+/obj/item/device/lens/posterization
+	name = "poster filter lens"
+	icon = 'icons/obj/items.dmi'
+	desc = "A poster filter lens."
+	icon_state = "poster_filter"
+	effect = list("effect1" = POSTERIZATION_FILTER, "mask" = MASK_NOTHING, "effect2" = null)
+
+/obj/item/device/lens/grayscale
+	name = "gray filter lens"
+	icon = 'icons/obj/items.dmi'
+	desc = "A gray filter lens."
+	icon_state = "grey_filter"
+	effect = list("effect1" = GRAYSCALE_FILTER, "mask" = MASK_NOTHING, "effect2" = null)
+
+/obj/item/device/lens/invert
+	name = "invert filter lens"
+	icon = 'icons/obj/items.dmi'
+	desc = "A invert filter lens."
+	icon_state = "invert_filter"
+	effect = list("effect1" = INVERT_FILTER, "mask" = MASK_VIGNETTE, "effect2" = null)
+
+/obj/item/device/lens/sepia
+	name = "sepia filter lens"
+	icon = 'icons/obj/items.dmi'
+	desc = "A sepia filter lens."
+	icon_state = "sepia_filter"
+	effect = list("effect1" = SEPIA_FILTER, "mask" = MASK_NOTHING, "effect2" = null)
+
+/obj/item/device/lens/detective
+	name = "detective filter lens"
+	icon = 'icons/obj/items.dmi'
+	desc = "A detective filter lens."
+	icon_state = "detective_filter"
+	effect = list("effect1" = BLACKANDWHITE_FILTER, "mask" = MASK_VIGNETTE, "effect2" = null)
+
+/obj/item/device/lens/polar
+	name = "polaroid filter lens"
+	icon = 'icons/obj/items.dmi'
+	desc = "A Polaroid filter lens."
+	icon_state = "polaroid_filter"
+	effect = list("effect1" = POLAROID_FILTER, "mask" = MASK_NOTHING, "effect2" = null)
+
+/obj/item/device/lens/old
+	name = "old film filter lens"
+	icon = 'icons/obj/items.dmi'
+	desc = "An old filter lens."
+	icon_state = "old_filter"
+	effect = list("effect1" = OLD_1_FILTER, "mask" = MASK_OLDVIGNETTE, "effect2" = OLD_2_FILTER)
+
+/obj/item/device/lens/rentgene
+	name = "rentgene filter lens"
+	icon = 'icons/obj/items.dmi'
+	desc = "A rentgene filter lens that shows people's sceletones."
+	icon_state = "rentgene_filter"
+	effect = list("effect1" = XRAY_FILTER, "mask" = MASK_NOTHING, "effect2" = null)
+
+/obj/item/device/lens/rentgene/process_icon(atom/A)
+	if(!ishuman(A))
+		return getFlatIcon(A)
+	return icon("icons/mob/human.dmi","electrocuted_generic",A.dir)
+
+/obj/item/device/lens/nude
+	name = "red film filter lens"
+	icon = 'icons/obj/items.dmi'
+	desc = "A red filter lens that shows people nude."
+	icon_state = "nude_filter"
+	effect = list("effect1" = NUDE_FILTER, "mask" = MASK_NOTHING, "effect2" = null)
+
+/obj/item/device/lens/nude/process_icon(atom/A)
+	if(!ishuman(A))
+		return getFlatIcon(A)
+	var/icon/img = icon('icons/effects/32x32.dmi', "")
+	var/mob/living/carbon/human/H = A
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		if(BP.is_stump)
+			continue
+		var/icon/part = icon(BP.icon, BP.icon_state, A.dir)
+		if(H.species.flags[HAS_SKIN_COLOR])
+			part.MapColors(1, 0, 0, 0, 1, 0, 0, 0, 1, H.r_skin/255, H.g_skin/255, H.b_skin/255)
+		else
+			part.MapColors(1, 0, 0, 0, 1, 0, 0, 0, 1, H.s_tone/255, H.s_tone/255, H.s_tone/255)
+		img.Blend(part, ICON_OVERLAY)
+	if(H.f_style)
+		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]
+		if(facial_hair_style)
+			var/icon/mustage = icon(facial_hair_style.icon, "[facial_hair_style.icon_state]_s", A.dir)
+			if(facial_hair_style.do_colouration)
+				mustage.MapColors(1, 0, 0, 1, 0, 0, 0, 1, H.r_facial/255, H.g_facial/255, H.b_facial/255)
+			else
+				mustage.MapColors(1, 0, 0, 1, 0, 0, 0, 1, H.dyed_r_facial/255, H.dyed_g_facial/255, H.dyed_b_facial/255)
+			img.Blend(mustage, ICON_OVERLAY)
+	if(H.h_style && !(H.head && (H.head.flags & BLOCKHEADHAIR)) && !(H.wear_mask && (H.wear_mask.flags & BLOCKHEADHAIR)) && !(H.wear_suit && (H.wear_suit.flags & BLOCKHEADHAIR)) && !(H.w_uniform && (H.w_uniform.flags & BLOCKHEADHAIR)))
+		var/datum/sprite_accessory/hair_style = hair_styles_list[H.h_style]
+		if(hair_style)
+			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s")
+			if(hair_style.do_colouration)
+				var/icon/grad_s = new/icon("icon" = 'icons/mob/hair_gradients.dmi', "icon_state" = hair_gradients[H.grad_style])
+				grad_s.Blend(hair_s, ICON_AND)
+				if(!H.hair_painted)
+					hair_s.Blend(rgb(H.r_hair, H.g_hair, H.b_hair), ICON_AND)
+					grad_s.Blend(rgb(H.r_grad, H.g_grad, H.b_grad), ICON_AND)
+				else
+					hair_s.Blend(rgb(H.dyed_r_hair, H.dyed_g_hair, H.dyed_b_hair), ICON_AND)
+					grad_s.Blend(rgb(H.dyed_r_hair, H.dyed_g_hair, H.dyed_b_hair), ICON_AND)
+				hair_s.Blend(grad_s, ICON_OVERLAY)
+			img.Blend(hair_s, ICON_OVERLAY)
+	return img
+
+/obj/item/device/lens/proc/process_icon(atom/A)
+	return getFlatIcon(A)
+
+
 /**************
 * photo album *
 **************/
@@ -119,38 +256,43 @@
 	max_storage_space = DEFAULT_BOX_STORAGE
 
 /obj/item/weapon/storage/photo_album/MouseDrop(obj/over_object as obj)
+	if(!ishuman(usr))
+		return FALSE
 
-	if((istype(usr, /mob/living/carbon/human)))
-		var/mob/M = usr
-		if(!( istype(over_object, /atom/movable/screen) ))
-			return ..()
+	if(istype(over_object, /atom/movable/screen/inventory/hand))
 		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
-		if(!M.incapacitated() && M.back == src)
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
-			add_fingerprint(usr)
-			return
-		if(over_object == usr && usr.Adjacent(src))
-			if(usr.s_active)
-				usr.s_active.close(usr)
-			show_to(usr)
-			return
-	return
+		over_object.MouseDrop_T(src, usr)
+		return TRUE
+	else if(over_object == usr && usr.Adjacent(src))
+		if(usr.s_active)
+			usr.s_active.close(usr)
+		show_to(usr)
+		return TRUE
+	return ..()
+
+
+/obj/item/weapon/storage/box/box_lenses
+	name = "photo lenses box"
+	desc = "It's just an ordinary box. Nothing special."
+	item_state = "syringe_kit"
+	max_storage_space = DEFAULT_BOX_STORAGE
+	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
+	startswith = list(/obj/item/device/lens/lomo,
+					  /obj/item/device/lens/posterization,
+					  /obj/item/device/lens/grayscale,
+					  /obj/item/device/lens/invert,
+					  /obj/item/device/lens/sepia,
+					  /obj/item/device/lens/detective,
+					  /obj/item/device/lens/polar,
+					  /obj/item/device/lens/old)
 
 /*********
 * camera *
 *********/
 /obj/item/device/camera
-	name = "camera"
+	name = "zenit 122"
 	icon = 'icons/obj/items.dmi'
-	desc = "A polaroid camera."
+	desc = "High quality photos, capable of installing filters."
 	icon_state = "camera"
 	item_state = "photocamera"
 	w_class = SIZE_TINY
@@ -164,22 +306,94 @@
 	var/icon_on = "camera"
 	var/icon_off = "camera_off"
 	var/see_ghosts = 0 //for the spoop of it
-	var/photo_size = 3 //Default is 3x3. 1x1, 5x5, 7x7 are also options
+	var/photo_size = 3 //Default is 3x3. 1x1, 5x5 are also options
+	var/can_put_lens = TRUE
+	var/obj/item/device/lens/lens
+	var/base_lens
+	var/reloaded = TRUE
 
-/obj/item/device/camera/atom_init()
-	. = ..()
-	update_desc()
+/obj/item/device/camera/polar
+	name = "polaroid"
+	icon = 'icons/obj/items.dmi'
+	desc = "A polaroid camera."
+	icon_state = "polaroid"
+	icon_on = "polaroid"
+	icon_off = "polaroid_off"
+	can_put_lens = FALSE
+	base_lens = /obj/item/device/lens/polar
 
-/obj/item/device/camera/spooky
+/obj/item/device/camera/polar/spooky
 	name = "camera obscura"
 	desc = "A polaroid camera, some say it can see ghosts!"
 	see_ghosts = 1
+	can_put_lens = FALSE
+	base_lens = /obj/item/device/lens/invert
 
-/obj/item/device/camera/proc/update_desc()
-	desc = "[initial(desc)]. [pictures_left ? "[pictures_left]" : "No"] photos left."
+/obj/item/device/camera/polar/detective
+	name = "detectives camera"
+	desc = "A black&white filter camera."
+	can_put_lens = FALSE
+	base_lens = /obj/item/device/lens/detective
 
-/obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
-	return
+/obj/item/device/camera/lomo
+	name = "lomo lc-a"
+	desc = "'Lomo' Kompakt Automat."
+	icon_state = "lomo"
+	icon_on = "lomo"
+	icon_off = "lomo_off"
+	pictures_left = 30
+	can_put_lens = FALSE
+	base_lens = /obj/item/device/lens/lomo
+
+/obj/item/device/camera/oldcamera
+	name = "fed"
+	desc = "'Felix Edmundovich Dzerzhinsky' photo camera."
+	icon_state = "fed"
+	icon_on = "fed"
+	icon_off = "fed_off"
+	pictures_left = 30
+	can_put_lens = FALSE
+	base_lens = /obj/item/device/lens/old
+
+/obj/item/device/camera/atom_init()
+	. = ..()
+	if(base_lens)
+		lens = new base_lens(src)
+	update_desc()
+
+/obj/item/device/camera/Destroy()
+	if(lens)
+		lens = null
+		qdel(lens)
+	return ..()
+
+/obj/item/device/camera/AltClick(mob/user)
+	if(!Adjacent(user))
+		return ..()
+	if(user.incapacitated())
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+	if(usr.get_active_hand() != src && !isAI(usr))
+		return ..()
+
+	change_zoom(user)
+
+/obj/item/device/camera/CtrlClick(mob/user)
+	if(!Adjacent(user))
+		return ..()
+	if(user.incapacitated())
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+	if(!can_put_lens || !lens)
+		return ..()
+	if(usr.get_active_hand() != src && !isAI(usr))
+		return ..()
+
+	eject_lens(user)
 
 /obj/item/device/camera/attack_self(mob/user)
 	on = !on
@@ -188,6 +402,12 @@
 	else
 		src.icon_state = icon_off
 	to_chat(user, "You switch the camera [on ? "on" : "off"].")
+	return
+
+/obj/item/device/camera/proc/update_desc()
+	desc = "[initial(desc)]. [pictures_left ? "[pictures_left]" : "No"] photos left."
+
+/obj/item/device/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
 
 /obj/item/device/camera/attackby(obj/item/I, mob/user, params)
@@ -202,6 +422,12 @@
 		update_desc()
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 		return
+	if(istype(I, /obj/item/device/lens) && can_put_lens && !lens)
+		var/obj/item/device/lens/F = I
+		if(!user.unEquip(F))
+			return
+		user.drop_from_inventory(F, src)
+		lens = F
 	return ..()
 
 /obj/item/device/camera/spooky/attackby(obj/item/I, mob/user, params)
@@ -211,6 +437,24 @@
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 		return
 	return ..()
+
+/obj/item/device/camera/proc/change_zoom(mob/user)
+	switch(photo_size)
+		if(1)
+			photo_size = 3
+			to_chat(user, "<span class='warning'>You set zoom level to 3.</span>")
+		if(3)
+			photo_size = 5
+			to_chat(user, "<span class='warning'>You set zoom level to 5.</span>")
+		if(5)
+			photo_size = 1
+			to_chat(user, "<span class='warning'>You set zoom level to 1.</span>")
+
+/obj/item/device/camera/proc/eject_lens(mob/user)
+	if(lens)
+		usr.put_in_hands(lens)
+		lens = null
+		to_chat(user, "<span class='warning'>You detach the filter out of camera's lens.</span>")
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
 	var/atoms[] = list()
@@ -233,8 +477,13 @@
 	var/icon/res = get_base_photo_icon()
 
 	for(var/atom/A in sorted)
-		var/icon/img = getFlatIcon(A)
-		if(istype(A, /mob/living) && A:lying)
+		var/icon/img
+		if(lens)
+			img = lens.process_icon(A)
+		else
+			img = getFlatIcon(A)
+
+		if(isliving(A) && A:lying)
 			img.Turn(A:lying_current)
 
 		var/offX = 1 + (photo_size-1)*16 + (A.x - center.x) * 32 + A.pixel_x
@@ -256,7 +505,7 @@
 	var/names_detail = list()
 	for(var/mob/M in the_turf)
 		if(M.invisibility)
-			if(see_ghosts && istype(M,/mob/dead/observer))
+			if(see_ghosts && isobserver(M))
 				var/mob/dead/observer/O = M
 				if(O.orbiting)
 					continue
@@ -270,7 +519,7 @@
 
 		var/holding = null
 
-		if(istype(M, /mob/living))
+		if(isliving(M))
 			var/mob/living/L = M
 			if(L.l_hand || L.r_hand)
 				if(L.l_hand) holding = "They are holding \a [L.l_hand]"
@@ -289,7 +538,7 @@
 	return list("mob_detail" = mob_detail, "names_detail" = names_detail)
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, proximity, params)
-	if(!on || ismob(target.loc))
+	if(!on || !reloaded || ismob(target.loc))
 		return
 	if(!pictures_left)
 		to_chat(user, "<span class='warning'>There is no photos left. Insert more camera film.</span>")
@@ -302,12 +551,12 @@
 	update_desc()
 	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	icon_state = icon_off
-	on = 0
+	reloaded = FALSE
 	addtimer(CALLBACK(src, .proc/reload), 64)
 
 /obj/item/device/camera/proc/reload()
 	icon_state = icon_on
-	on = 1
+	reloaded = TRUE
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
 	if(flash_enabled)
@@ -315,7 +564,7 @@
 
 	var/mobs = ""
 	var/list/mob_names = list()
-	var/isAi = istype(user, /mob/living/silicon/ai)
+	var/isAi = isAI(user)
 	var/list/seen
 	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
 		if(user.client)		//To make shooting through security cameras possible
@@ -340,6 +589,29 @@
 	temp.Blend("#000", ICON_OVERLAY)
 	temp.Blend(camera_get_icon(turfs, target), ICON_OVERLAY)
 
+	//Photo Effects
+	if(lens)
+		if(lens.effect)
+			//First Flter
+			if(lens.effect["effect1"])
+				temp.MapColors(arglist(lens.effect["effect1"]))
+
+			//Additions
+			if(lens.effect["mask"])
+				var/icon/vign
+				switch(photo_size)
+					if(1)
+						vign = icon('icons/effects/32x32.dmi', lens.effect["mask"])
+					if(3)
+						vign = icon('icons/effects/96x96.dmi', lens.effect["mask"])
+					if(5)
+						vign = icon('icons/effects/160x160.dmi', lens.effect["mask"])
+				temp.Blend(vign, ICON_OVERLAY, 1, 1)
+
+			//Second Filter
+			if(lens.effect["effect2"])
+				temp.MapColors(arglist(lens.effect["effect2"]))
+
 	var/datum/picture/P = createpicture(user, temp, mobs, mob_names, flag)
 	printpicture(user, P)
 
@@ -352,6 +624,7 @@
 	tiny_img.Scale(4, 4)
 	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
 	pc.Blend(tiny_img,ICON_OVERLAY, 12, 19)
+
 
 	var/datum/picture/P = new()
 	P.fields["author"] = user
@@ -388,48 +661,6 @@
 
 	return res
 
-/obj/item/device/camera/verb/set_zoom()
-	set name = "Set Camera Zoom"
-	set category = "Object"
-
-	if(usr.incapacitated())
-		return
-	if(usr.get_active_hand() != src && !isAI(usr))
-		to_chat(usr, "You need to hold \the [src] in your active hand.")
-		return
-
-	if(photo_size == 1)
-		photo_size = 3
-		to_chat(usr, "<span class='info'>You set the camera zoom to normal.</span>")
-	else if(photo_size == 3)
-		photo_size = 5
-		to_chat(usr, "<span class='info'>You set the camera zoom to big.</span>")
-	else
-		photo_size = 1
-		to_chat(usr, "<span class='info'>You set the camera zoom to small.</span>")
-
-/obj/item/device/camera/AltClick(mob/user)
-	if(!Adjacent(user))
-		return
-	if(user.incapacitated())
-		return
-	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
-		return
-	set_zoom()
-
-/obj/item/device/camera/big_photos
-	photo_size = 5
-
-/obj/item/device/camera/big_photos/set_zoom()
-	return
-
-/obj/item/device/camera/huge_photos
-	photo_size = 7
-
-/obj/item/device/camera/huge_photos/set_zoom()
-	return
-
 /obj/item/weapon/photo/proc/construct(datum/picture/P)
 	icon = P.fields["icon"]
 	tiny = P.fields["tiny"]
@@ -438,3 +669,7 @@
 	photographed_names = P.fields["mob_names"]
 	pixel_x = P.fields["pixel_x"]
 	pixel_y = P.fields["pixel_y"]
+
+#undef MASK_NOTHING
+#undef MASK_VIGNETTE
+#undef MASK_OLDVIGNETTE

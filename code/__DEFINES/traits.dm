@@ -119,7 +119,15 @@
 		: FALSE)
 #define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (length(target.status_traits[trait] - source) > 0) : FALSE) : FALSE)
 
+
 //mob traits
+/// Forces user to be unmovable
+#define TRAIT_ANCHORED "anchored"
+/// Prevents voluntary movement.
+#define TRAIT_IMMOBILIZED "immobilized"
+/// Prevents hands and legs usage
+#define TRAIT_INCAPACITATED "incapacitated"
+
 #define TRAIT_ALCOHOL_TOLERANCE   "alcohol_tolerance"
 #define TRAIT_BLIND               "blind"
 #define TRAIT_COUGH               "cough"
@@ -145,7 +153,20 @@
 #define TRAIT_DALTONISM           "daltonism"
 #define TRAIT_COOLED              "external_cooling_device"
 #define TRAIT_NO_RUN              "no_run"
+#define TRAIT_FAST_EQUIP          "fast_equip"
 #define TRAIT_NO_CLONE            "no_clone"
+#define TRAIT_VACCINATED          "vaccinated"
+#define TRAIT_DWARF               "dwarf"
+#define TRAIT_NO_SOUL             "no_soul"
+#define TRAIT_SEE_GHOSTS          "see_ghosts"
+#define TRAIT_SYRINGE_FEAR        "syringe_fear"
+#define TRAIT_WET_HANDS           "wet_hands"
+#define TRAIT_GREASY_FINGERS      "greasy_fingers"
+#define TRAIT_ANATOMIST           "anatomist"
+#define TRAIT_SOULSTONE_IMMUNE    "soulstone_immune"
+#define TRAIT_CULT_EYES           "cult_eyes"
+#define TRAIT_CULT_HALO           "cult_halo"
+#define TRAIT_HEALS_FROM_PYLONS   "heals_from_pylons"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -153,13 +174,26 @@
  */
 #define TRAIT_AREA_SENSITIVE "area-sensitive"
 
+/*
+ * Used for items that have different behaviour when they are two-hand wielded
+ */
+#define TRAIT_DOUBLE_WIELDED "double_wielded"
+
+// item trait
+#define TRAIT_NO_SACRIFICE "religion_no_sacrifice"
+
 // idk why this exists on TG
 #define GENERIC_TRAIT "generic"
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
+#define QUALITY_TRAIT      "quality"
+#define TWOHANDED_TRAIT    "twohanded"
+#define RELIGION_TRAIT     "religion"
+
 // self explanatory
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
 #define MOOD_COMPONENT_TRAIT "mood_component"
+#define SPAWN_AREA_TRAIT "spawn_area_trait"
 // medical stuff I guess
 #define OBESITY_TRAIT      "obesity"
 #define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"

@@ -12,18 +12,18 @@
 		if(iscarbon(M))
 			if(!ischangeling(M))
 				M.ear_deaf += 30
-				M.confused += 20
+				M.AdjustConfused(20)
 				M.make_jittery(500)
 			else
 				M.playsound_local(null, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 		if(issilicon(M))
 			M.playsound_local(null, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			M.Weaken(rand(5,10))
+			M.Stun(rand(5,10))
 
 	for(var/obj/machinery/light/L in range(4, user))
 		L.on = 1
 		L.broken()
 
 	feedback_add_details("changeling_powers","RES")
-	return 1
+	return TRUE

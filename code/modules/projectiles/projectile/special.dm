@@ -7,7 +7,7 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 
 /obj/item/projectile/ion/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	empulse(target, 1, 1)
@@ -21,7 +21,7 @@
 	name ="explosive bolt"
 	icon_state= "bolter"
 	damage = 50
-	flag = "bullet"
+	flag = BULLET
 	sharp = 1
 	edge = 1
 
@@ -38,12 +38,12 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 	var/temperature = 100
 
 
 /obj/item/projectile/temp/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0) //These two could likely check temp protection on the mob
-	if(istype(target, /mob/living))
+	if(isliving(target))
 		var/mob/M = target
 		M.bodytemperature = temperature
 	return 1
@@ -62,7 +62,7 @@
 	damage = 0
 	damage_type = BRUTE
 	nodamage = 1
-	flag = "bullet"
+	flag = BULLET
 
 /obj/item/projectile/meteor/Bump(atom/A)
 	if(A == firer)
@@ -74,11 +74,11 @@
 	if(src)//Do not add to this if() statement, otherwise the meteor won't delete them
 		if(A)
 
-			A.ex_act(2)
+			A.ex_act(EXPLODE_HEAVY)
 			playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER, 40)
 
 			for(var/mob/M in range(10, src))
-				if(!M.stat && !istype(M, /mob/living/silicon/ai))\
+				if(M.stat == CONSCIOUS && !isAI(M))\
 					shake_camera(M, 3, 1)
 			qdel(src)
 			return 1
@@ -91,16 +91,16 @@
 	damage = 0
 	damage_type = TOX
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 
 /obj/item/projectile/energy/floramut/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	var/mob/living/M = target
-//	if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = M
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))
 			if(prob(15))
 				M.apply_effect((rand(30,80)),IRRADIATE)
+				M.Stun(2)
 				M.Weaken(5)
 				visible_message("<span class='warning'>[M] writhes in pain as \his vacuoles boil.</span>", blind_message = "<span class='warning'>You hear the crunching of leaves.</span>")
 			if(prob(35))
@@ -117,7 +117,7 @@
 				to_chat(M, "<span class='warning'>The radiation beam singes you!</span>")
 			//	for (var/mob/V in viewers(src))
 			//		V.show_messageold("<span class='warning'>[M] is singed by the radiation beam.</span>", 3, "<span class='warning'>You hear the crackle of burning leaves.</span>", 2)
-	else if(istype(target, /mob/living/carbon))
+	else if(iscarbon(target))
 	//	for (var/mob/V in viewers(src))
 	//		V.show_messageold("The radiation beam dissipates harmlessly through [M]", 3)
 		to_chat(M, "<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
@@ -130,16 +130,15 @@
 	damage = 0
 	damage_type = TOX
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 
 /obj/item/projectile/energy/florayield/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	var/mob/M = target
-//	if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //These rays make plantmen fat.
 	if(ishuman(target)) //These rays make plantmen fat.
 		var/mob/living/carbon/human/H = M
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))
 			M.nutrition += 30
-	else if (istype(target, /mob/living/carbon))
+	else if (iscarbon(target))
 		to_chat(M, "<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 	else
 		return 1
@@ -164,7 +163,7 @@
 	light_power = 2
 	light_range = 2
 	damage = 20
-	flag = "bullet"
+	flag = BULLET
 	sharp = 0
 	edge = 0
 
@@ -219,15 +218,16 @@
 	icon_state = "energy2"
 	damage = 5
 	weaken = 10
+	stun = 10
 	damage_type = TOX
-	flag = "bio"
+	flag = BIO
 
 /obj/item/projectile/acid_special
 	name = "acid"
 	icon_state = "neurotoxin"
 	damage = 25
 	damage_type = TOX
-	flag = "bullet"
+	flag = BULLET
 
 /obj/item/projectile/acid_special/atom_init()
 	. = ..()
@@ -237,12 +237,14 @@
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_bodypart_damage(damage)
+		S.Stun(2)
 
 	if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
-		M.take_damage(damage)
+		M.take_damage(50)
+		M.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 
-	if(istype(target, /mob/living/carbon/human))
+	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone) // We're checking the outside, buddy!
 		var/list/body_parts = list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.gloves, H.shoes) // What all are we checking?
@@ -250,7 +252,7 @@
 			if(istype(bp ,/obj/item/clothing)) // If it exists, and it's clothed
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
 				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
-					if(prob(30))
+					if(prob(60))
 						C.make_old()
 						if(bp == H.head)
 							H.update_inv_head()
@@ -279,14 +281,13 @@
 	name = "plasma"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "plasma_bolt"
-	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
 	light_color = LIGHT_COLOR_PLASMA
 	light_power = 2
 	light_range = 2
 	damage = 18
 	damage_type = BURN
-	flag = "energy"
+	flag = ENERGY
 	eyeblur = 4
 	sharp = 0
 	edge = 0
@@ -301,6 +302,7 @@
 	icon_state = "plasma_bolt_oc"
 	light_color = LIGHT_COLOR_PLASMA_OC
 	damage = 25
+	impact_force = 1
 
 	muzzle_type = /obj/effect/projectile/plasma/muzzle/overcharge
 
@@ -325,7 +327,7 @@
 
 	kill_count = 13
 
-	flag = "laser"
+	flag = LASER
 	hitscan = TRUE
 	// eyeblur = 3
 
@@ -347,7 +349,7 @@
 	if(!firer)
 		return
 
-	if(istype(target, /turf/space))
+	if(isspaceturf(target))
 		return
 
 	if(iscarbon(target) && def_zone == O_EYES)
@@ -429,7 +431,7 @@
 	damage = 10
 	damage_type = BURN
 	sharp = TRUE // concentrated burns
-	flag = "laser"
+	flag = LASER
 
 /obj/item/projectile/pyrometer/emagged
 
@@ -532,3 +534,27 @@
 		term_color = COLOR_RED
 
 	return term_color
+
+/obj/item/projectile/beam/wormhole
+	name = "bluespace beam"
+	damage = 0
+
+	muzzle_type = /obj/effect/projectile/laser_blue/muzzle
+	tracer_type = /obj/effect/projectile/laser_blue/tracer
+	impact_type = /obj/effect/projectile/laser_blue/impact
+
+/obj/item/projectile/beam/wormhole/orange
+	name = "orange bluespace beam"
+
+	muzzle_type = /obj/effect/projectile/laser/muzzle
+	tracer_type = /obj/effect/projectile/laser/tracer
+	impact_type = /obj/effect/projectile/laser/impact
+
+/obj/item/projectile/beam/wormhole/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	var/obj/item/weapon/gun/energy/gun/portal/P = shot_from
+	if(!P)
+		qdel(src)
+		return
+	if(istype(target, /obj/effect/portal/portalgun))
+		return
+	P.create_portal(src, get_turf(src))

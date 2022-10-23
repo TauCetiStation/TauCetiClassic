@@ -28,7 +28,7 @@
 	if(M.stat != DEAD)
 		to_chat(user, "<span class='warning'>This artifact can only affect the dead!</span>")
 		return
-	if(M.species.name == SKELETON)
+	if(isskeleton(M))
 		to_chat(user, "<span class='warning'>This body has been already dried!</span>")
 		return
 
@@ -40,7 +40,8 @@
 	if(spooky_scaries.len >= 3 && !unlimited)
 		to_chat(user, "<span class='warning'>This artifact can only affect three undead at a time!</span>")
 		return
-	M.set_species(SKELETON)
+
+	M.makeSkeleton()
 	M.revive()
 	spooky_scaries |= M
 	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
@@ -73,7 +74,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), SLOT_SHOES)
 	H.put_in_any_hand_if_possible(new /obj/item/weapon/shield/riot/roman(H))
 	H.put_in_any_hand_if_possible(new /obj/item/weapon/claymore/light(H))
-	H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/spear(H), SLOT_BACK)
+	H.equip_to_slot_or_del(new /obj/item/weapon/spear(H), SLOT_BACK)
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -120,7 +121,7 @@
 /obj/item/weapon/contract/Topic(href, href_list)
 	..()
 	if(!ishuman(usr))
-		return 1
+		return TRUE
 	var/mob/living/carbon/human/H = usr
 	if(iswizard(H))
 		to_chat(H, "<span class='danger'>Your school years have long passed.</span>")

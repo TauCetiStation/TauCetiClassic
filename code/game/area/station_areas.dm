@@ -21,6 +21,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/engineering
 	icon_state = "engine"
 	looped_ambience = 'sound/ambience/loop_engine.ogg'
+	sound_environment = SOUND_AREA_STATION_HALLWAY
 
 /area/station/engineering/engine
 	name = "Engineering"
@@ -33,14 +34,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/station/engineering/break_room
 	name = "Engineering Break Room"
+	sound_environment = SOUND_AREA_DEFAULT
 
 /area/station/engineering/chiefs_office
 	name = "Chief Engineer's office"
 	icon_state = "engine_control"
+	sound_environment = SOUND_AREA_DEFAULT
 
 /area/station/engineering/atmos
 	name = "Atmospherics"
 	icon_state = "atmos"
+	ambience = list('sound/ambience/atmos_1.ogg', 'sound/ambience/atmos_2.ogg')
 
 /area/station/engineering/drone_fabrication
 	name = "Drone Fabrication"
@@ -49,6 +53,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/maintenance
 	looped_ambience = 'sound/ambience/loop_maintenance.ogg'
 	valid_territory = 0
+	sound_environment = SOUND_AREA_MAINTENANCE
 
 /area/station/maintenance/eva
 	name = "EVA Maintenance"
@@ -97,6 +102,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/maintenance/disposal
 	name = "Waste Disposal"
 	icon_state = "disposal"
+	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 //Construction
 
@@ -118,6 +124,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
 	valid_territory = 0
 	looped_ambience = 'sound/ambience/loop_space.ogg'
+	sound_environment = SOUND_AREA_SMALL_METALLIC
+	outdoors = TRUE
 
 /area/station/solar/auxport
 	name = "Fore Port Solar Array"
@@ -152,6 +160,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "SolarcontrolA"
 
 //Hallway
+/area/station/hallway
+	sound_environment = SOUND_AREA_STATION_HALLWAY
 
 /area/station/hallway/primary/fore
 	name = "Fore Primary Hallway"
@@ -198,6 +208,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/bridge
 	name = "Bridge"
 	icon_state = "bridge"
+	ambience = list('sound/ambience/bridge_1.ogg')
 
 /area/station/bridge/meeting_room
 	name = "Heads of Staff Meeting Room"
@@ -217,18 +228,35 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/bridge/ai_upload
 	name = "AI Upload Chamber"
 	icon_state = "ai_upload"
+	ambience = null
+	looped_ambience = 'sound/ambience/loop_aisatelite.ogg'
+	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/bridge/comms
 	name = "Communications Relay"
 	icon_state = "tcomsatcham"
+	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/bridge/server
 	name = "Messaging Server Room"
 	icon_state = "server"
+	is_force_ambience = TRUE
+	ambience = list('sound/ambience/tcomms_1.ogg', 'sound/ambience/tcomms_2.ogg')
+	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/bridge/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
+	is_force_ambience = TRUE
+	ambience = list('sound/ambience/vault_1.ogg')
+	sound_environment = SOUND_AREA_SMALL_METALLIC
+
+/area/station/bridge/cmf_room
+	name = "CMF altering room"
+	icon_state = "cmf"
+	is_force_ambience = TRUE
+	ambience = list('sound/ambience/bridge_1.ogg')
+	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 //Civilian
 
@@ -239,6 +267,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/civilian/toilet
 	name = "Dormitory Toilets"
 	icon_state = "toilet"
+	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/civilian/dormitories/security
 	name = "Security Wing Dormitories"
@@ -252,10 +281,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/civilian/locker
 	name = "Locker Room"
 	icon_state = "locker"
+	sound_environment = SOUND_AREA_STATION_HALLWAY
 
 /area/station/civilian/locker/locker_toilet
 	name = "Locker Toilets"
 	icon_state = "toilet"
+	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/civilian/fitness
 	name = "Fitness Room"
@@ -276,6 +307,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/civilian/cold_room
 	name = "Cold Room"
 	icon_state = "coldroom"
+	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/civilian/barbershop
 	name = "Barbershop"
@@ -301,18 +333,22 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Chapel"
 	icon_state = "chapel"
 	ambience = list('sound/ambience/chapel_1.ogg', 'sound/ambience/chapel_2.ogg', 'sound/ambience/chapel_3.ogg', 'sound/ambience/chapel_4.ogg')
+	sound_environment = SOUND_ENVIRONMENT_ARENA
 
 /area/station/civilian/chapel/office
 	name = "Chapel Office"
 	icon_state = "chapeloffice"
+	sound_environment = SOUND_AREA_DEFAULT
 
 /area/station/civilian/chapel/altar
 	name = "Altar"
 	icon_state = "altar"
+	sound_environment = SOUND_AREA_DEFAULT
 
 /area/station/civilian/chapel/crematorium
 	name = "Crematorium"
 	icon_state = "crematorium"
+	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/civilian/chapel/mass_driver
 	name = "Chapel Mass Driver"
@@ -321,6 +357,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/civilian/garden
 	name = "Garden"
 	icon_state = "garden"
+	looped_ambience = 'sound/ambience/loop_garden.ogg'
+	sound_environment = SOUND_ENVIRONMENT_ALLEY
 
 /area/station/civilian/janitor
 	name = "Custodial Closet"
@@ -407,10 +445,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/medical
 	name = "Medbay"
 	icon_state = "medbay"
+	ambience = list('sound/ambience/medbay_1.ogg', 'sound/ambience/medbay_2.ogg', 'sound/ambience/medbay_3.ogg', 'sound/ambience/medbay_4.ogg', 'sound/ambience/medbay_5.ogg')
 
 //Medbay is a large area, these additional areas help level out APC load.
 /area/station/medical/hallway
 	icon_state = "medbay2"
+	sound_environment = SOUND_AREA_STATION_HALLWAY
 
 /area/station/medical/reception
 	name = "Medbay Reception"
@@ -452,14 +492,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Morgue"
 	icon_state = "morgue"
 	ambience = list('sound/ambience/morgue_1.ogg', 'sound/ambience/morgue_2.ogg', 'sound/ambience/morgue_3.ogg')
+	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/medical/chemistry
 	name = "Chemistry"
 	icon_state = "chem"
+	ambience = list('sound/ambience/chemistry_1.ogg', 'sound/ambience/chemistry_2.ogg')
 
 /area/station/medical/surgery
 	name = "Operating Theatre 1"
 	icon_state = "surgery"
+	ambience = list('sound/ambience/surgery_1.ogg', 'sound/ambience/surgery_2.ogg')
 
 /area/station/medical/surgery2
 	name = "Operating Theatre 2"
@@ -485,10 +528,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Emergency Treatment Centre"
 	icon_state = "exam_room"
 
-/area/station/medical/checkpoint
-	name = "Medical Checkpoint"
-	icon_state = "exam_room"
-
 //Security
 
 /area/station/security/main
@@ -498,26 +537,35 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/security/lobby
 	name = "Security lobby"
 	icon_state = "security"
+	sound_environment = SOUND_AREA_STATION_HALLWAY
 
 /area/station/security/brig
 	name = "Brig"
 	icon_state = "brig"
 
+/area/station/security/interrogation
+	name = "Interrogation"
+	icon_state = "interrogation"
+	looped_ambience = 'sound/ambience/loop_interrogation.ogg'
+
 /area/station/security/execution
 	name = "Execution"
-	icon_state = "brig"
+	icon_state = "execution_room"
+	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/security/prison
 	name = "Prison Wing"
 	icon_state = "sec_prison"
+	ambience = list('sound/ambience/prison_1.ogg')
 
 /area/station/security/warden
 	name = "Warden"
-	icon_state = "Warden"
+	icon_state = "warden"
 
 /area/station/security/armoury
 	name = "Armory"
-	icon_state = "Warden"
+	icon_state = "armory"
+	looped_ambience = 'sound/ambience/loop_armory.ogg'
 
 /area/station/security/hos
 	name = "Head of Security's Office"
@@ -526,25 +574,36 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/security/detectives_office
 	name = "Detective's Office"
 	icon_state = "detective"
+	ambience = list('sound/ambience/detective_1.ogg')
 
 /area/station/security/forensic_office
 	name = "Forensic's Office"
 	icon_state = "detective"
+	ambience = list('sound/ambience/detective_1.ogg')
 
 /area/station/security/range
 	name = "Firing Range"
 	icon_state = "firingrange"
+
+/area/station/security/processing
+	name = "Labor Shuttle Dock"
+	icon_state = "sec_processing"
 
 /area/station/security/checkpoint
 	name = "Security Checkpoint"
 	icon_state = "security"
 
 /area/station/security/vacantoffice
-	name = "Vacant Office"
+	name = "Coworking"
 	icon_state = "security"
+	ambience = list('sound/ambience/vacant_1.ogg')
 
-/area/station/security/lawoffice
+/area/station/security/iaa_office
 	name = "Internal Affairs"
+	icon_state = "law"
+
+/area/station/security/lawyer_office
+	name = "Lawyer Office"
 	icon_state = "law"
 
 //Cargo bay
@@ -555,10 +614,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/cargo/office
 	name = "Cargo Office"
 	icon_state = "quartoffice"
+	sound_environment = SOUND_AREA_STATION_HALLWAY
 
 /area/station/cargo/storage
 	name = "Cargo Bay"
 	icon_state = "quartstorage"
+	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/cargo/qm
 	name = "Quartermaster's Office"
@@ -571,6 +632,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/cargo/recycleroffice
 	name = "Recycleroffice"
 	icon_state = "recycleroffice"
+	sound_environment = SOUND_AREA_STATION_HALLWAY
 
 /area/station/cargo/miningbreaktime
 	name = "Cargo Breaktime Room"
@@ -582,6 +644,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //rnd (Research and Development)
 
+/area/station/rnd
+	ambience = list('sound/ambience/rnd_1.ogg', 'sound/ambience/rnd_2.ogg')
+
 /area/station/rnd/lab
 	name = "Research and Development"
 	icon_state = "scilab"
@@ -589,6 +654,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/rnd/hallway
 	name = "Research Division"
 	icon_state = "research"
+	sound_environment = SOUND_AREA_STATION_HALLWAY
 
 /area/station/rnd/xenobiology
 	name = "Xenobiology Lab"
@@ -597,6 +663,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/rnd/storage
 	name = "Toxins Storage"
 	icon_state = "toxstorage"
+	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/rnd/test_area
 	name = "Toxins Test Site"
@@ -629,6 +696,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/rnd/server
 	name = "Server Room"
 	icon_state = "server"
+	is_force_ambience = TRUE
+	ambience = list('sound/ambience/tcomms_1.ogg', 'sound/ambience/tcomms_2.ogg')
+	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/rnd/chargebay
 	name = "Mech Bay"
@@ -637,6 +707,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/rnd/robotics
 	name = "Robotics Lab"
 	icon_state = "scirobo"
+	ambience = list('sound/ambience/robotics_1.ogg', 'sound/ambience/robotics_2.ogg')
 
 /area/station/rnd/brainstorm_center
 	name = "Brainstorm Center"
@@ -659,14 +730,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/storage/emergency
 	name = "Starboard Emergency Storage"
 	icon_state = "emergencystorage"
+	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/storage/emergency2
 	name = "Port Emergency Storage"
 	icon_state = "emergencystorage"
+	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/storage/emergency3
 	name = "Central Emergency Storage"
 	icon_state = "emergencystorage"
+	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/storage/tech
 	name = "Technical Storage"
@@ -674,16 +748,21 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/station/storage/tech/north
 	name = "North Technical Storage"
+	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 //AI
 
 /area/station/aisat
 	name = "AI Satellite Exterior"
 	icon_state = "storage"
+	looped_ambience = 'sound/ambience/loop_aisatelite.ogg'
+	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/ai_monitored/storage_secure
 	name = "Secure Storage"
 	icon_state = "storage"
+	looped_ambience = 'sound/ambience/loop_aisatelite.ogg'
+	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/aisat/ai_chamber
 	name = "AI Chamber"
@@ -701,14 +780,22 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/aisat/teleport
 	name = "AI Satellite Teleporter Room"
 	icon_state = "teleporter"
+	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 // Telecommunications Satellite
+
+/area/station/tcommsat
+	is_force_ambience = TRUE
+	ambience = list('sound/ambience/tcomms_1.ogg', 'sound/ambience/tcomms_2.ogg')
+	looped_ambience = 'sound/ambience/loop_aisatelite.ogg'
+	sound_environment = SOUND_AREA_SMALL_METALLIC
 
 /area/station/tcommsat/chamber
 	name = "Telecoms Central Compartment"
 	icon_state = "tcomsatcham"
-	ambience = list('sound/ambience/engine_2.ogg', 'sound/ambience/tcomms.ogg')
+	sound_environment = SOUND_AREA_LARGE_METALLIC
 
 /area/station/tcommsat/computer
 	name = "Telecoms Control Room"
 	icon_state = "tcomsatcomp"
+	sound_environment = SOUND_AREA_DEFAULT

@@ -10,10 +10,10 @@
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
 */
 /mob/living/silicon/ai/DblClickOn(atom/A, params)
-	if(client.buildmode) // handled in normal click.
+	if(client.click_intercept) // handled in normal click.
 		return
 
-	if(control_disabled || stat) return
+	if(control_disabled || stat != CONSCIOUS) return
 	SetNextMove(CLICK_CD_AI)
 
 	if(ismob(A))
@@ -27,11 +27,11 @@
 		return
 	next_click = world.time + 1
 
-	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
-		build_click(src, client.buildmode, params, A)
+	if(client.click_intercept) // comes after object.Click to allow buildmode gui objects to be clicked
+		client.click_intercept.InterceptClickOn(src, params, A)
 		return
 
-	if(control_disabled || stat)
+	if(control_disabled || stat != CONSCIOUS)
 		return
 
 	A.add_hiddenprint(src)
@@ -145,7 +145,6 @@
 
 /obj/machinery/power/apc/AICtrlClick() // turns off APCs.
 	Topic("breaker=1", list("breaker"="1"), 0) // 0 meaning no window (consistency! wait...)
-
 
 /atom/proc/AIAltClick()
 	return

@@ -1,5 +1,5 @@
-var/list/obj/machinery/faxmachine/allfaxes = list()
-var/list/alldepartments = list("Central Command")
+var/global/list/obj/machinery/faxmachine/allfaxes = list()
+var/global/list/alldepartments = list("Central Command")
 
 /obj/machinery/faxmachine
 	name = "fax machine"
@@ -13,6 +13,8 @@ var/list/alldepartments = list("Central Command")
 	active_power_usage = 200
 	interact_offline = TRUE
 	allowed_checks = ALLOWED_CHECK_NONE
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 	var/obj/item/weapon/card/id/scan = null // identification
 	var/authenticated = 0
 
@@ -21,6 +23,8 @@ var/list/alldepartments = list("Central Command")
 
 	var/department = "Unknown" // our department
 	var/dptdest = "Central Command" // the department we're sending to
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_TRAINED)
+
 
 /obj/machinery/faxmachine/atom_init()
 	. = ..()
@@ -191,12 +195,12 @@ var/list/alldepartments = list("Central Command")
 	"(<a href='?_src_=holder;CentcommFaxReply=\ref[sender];CentcommFaxReplyDestination=\ref[fax.department]'>RPLY</a>)",
 	"<a href='?_src_=holder;CentcommFaxViewInfo=\ref[P.info];CentcommFaxViewStamps=\ref[P.stamp_text]'>view message</a>")  // Some weird BYOND bug doesn't allow to send \ref like `[P.info + P.stamp_text]`.
 
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		to_chat(C, msg)
 
 	send_fax(sender, P, "Central Command")
 
-	add_communication_log(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
+	SSStatistics.add_communication_log(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
 
 	for(var/client/X in global.admins)
 		X.mob.playsound_local(null, 'sound/machines/fax_centcomm.ogg', VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)

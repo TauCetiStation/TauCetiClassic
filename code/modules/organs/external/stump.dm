@@ -4,17 +4,19 @@
 	icon_state = ""
 	is_stump = TRUE
 
-/obj/item/organ/external/stump/insert_organ(mob/living/carbon/human/H, surgically, obj/item/organ/external/limb)
-	if(istype(limb))
-		name = "[limb.is_robotic()?"mechanical ":""]stump of \a [limb.name]"
-		limb_layer = limb.limb_layer
-		body_part = limb.body_part
-		body_zone = limb.body_zone
-		parent_bodypart = limb.parent_bodypart
-		artery_name = "mangled [limb.artery_name]"
-		arterial_bleed_severity = limb.arterial_bleed_severity
-		regen_bodypart_penalty = limb.regen_bodypart_penalty
-	..()
+/datum/bodypart_controller/stump/adjust_pumped(value)
+	return 0
+
+/obj/item/organ/external/stump/proc/copy_original_limb(obj/item/organ/external/limb)
+	name = "[limb.is_robotic() ? "mechanical " : ""]stump of \a [limb.name]"
+	limb_layer = limb.limb_layer
+	body_part = limb.body_part
+	body_zone = limb.body_zone
+	parent_bodypart = limb.parent_bodypart
+	artery_name = "mangled [limb.artery_name]"
+	arterial_bleed_severity = limb.arterial_bleed_severity
+	regen_bodypart_penalty = limb.regen_bodypart_penalty
+	species = limb.species
 
 /obj/item/organ/external/stump/update_sprite()
 	return

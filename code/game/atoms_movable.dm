@@ -1,6 +1,7 @@
 /atom/movable
-	layer = 3
+	layer = OBJ_LAYER
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
+
 	var/last_move = null
 	var/anchored = FALSE
 	var/move_speed = 10
@@ -26,7 +27,7 @@
 
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 
-	var/list/client_mobs_in_contents
+	var/list/clients_in_contents
 	var/freeze_movement = FALSE
 
 	// A (nested) list of contents that need to be sent signals to when moving between areas. Can include src.
@@ -42,19 +43,22 @@
 		loc.handle_atom_del(src)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
-	loc = null
 	invisibility = 101
 	if(pulledby)
 		pulledby.stop_pulling()
 
 	. = ..()
 
+	loc = null
 	// If we have opacity, make sure to tell (potentially) affected light sources.
 	if (opacity && istype(T))
 		var/old_has_opaque_atom = T.has_opaque_atom
 		T.recalc_atom_opacity()
 		if (old_has_opaque_atom != T.has_opaque_atom)
 			T.reconsider_lights()
+
+	vis_locs = null //clears this atom out of all viscontents
+	vis_contents.Cut()
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
@@ -128,8 +132,8 @@
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
-	if(length(client_mobs_in_contents))
-		update_parallax_contents()
+
+	update_parallax_contents()
 
 	if (orbiters)
 		for (var/thing in orbiters)
@@ -156,7 +160,7 @@
 		A.Bumped(src)
 
 
-/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE)
+/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE)
 	if(destination)
 		if(pulledby && !keep_pulling)
 			pulledby.stop_pulling()
@@ -186,15 +190,18 @@
 		return TRUE
 	return FALSE
 
-/mob/living/forceMove(atom/destination, keep_pulling = FALSE)
+/mob/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE)
 	if(!keep_pulling)
 		stop_pulling()
-	if(buckled)
+	if(buckled && !keep_buckled)
 		buckled.unbuckle_mob()
 	. = ..()
+	if(buckled && keep_buckled)
+		buckled.loc = loc
+		buckled.set_dir(dir)
 	update_canmove()
 
-/mob/dead/observer/forceMove(atom/destination, keep_pulling)
+/mob/dead/observer/forceMove(atom/destination, keep_pulling, keep_buckled)
 	if(destination)
 		if(loc)
 			loc.Exited(src)
@@ -291,7 +298,7 @@
 //Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
 //movement_dir == 0 when stopping or any dir when trying to move
 /atom/movable/proc/Process_Spacemove(movement_dir = 0)
-	if(has_gravity(src))
+	if(has_gravity(src) && !(ice_slide_count && isiceturf(get_turf(src))))
 		return 1
 
 	if(pulledby)
@@ -357,7 +364,7 @@
 	return 1
 
 /atom/movable/CanPass(atom/movable/mover, turf/target, height=1.5)
-	if(buckled_mob == mover)
+	if(istype(mover) && buckled_mob == mover)
 		return 1
 	return ..()
 
@@ -399,6 +406,8 @@
 
 /atom/movable/proc/get_size_flavor()
 	switch(w_class)
+		if(SIZE_MIDGET)
+			. = "midget"
 		if(SIZE_MINUSCULE)
 			. = "minuscule"
 		if(SIZE_TINY)
@@ -429,3 +438,81 @@
 
 /atom/movable/proc/update_size_class()
 	return w_class
+
+/client/var/list/image/outlined_item = list()
+/atom/movable/proc/apply_outline(color)
+	if(anchored || !usr.client.prefs.outline_enabled)
+		return
+	if(!color)
+		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
+	if(usr.client.outlined_item[src])
+		return
+
+	if(usr.client.outlined_item.len)
+		remove_outline()
+
+	var/image/IMG = image(null, src, layer = layer, pixel_x = -pixel_x, pixel_y = -pixel_y)
+	IMG.appearance_flags |= KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	IMG.vis_contents += src
+
+	IMG.filters += filter(type = "outline", size = 1, color = color)
+	usr.client.images |= IMG
+	usr.client.outlined_item[src] = IMG
+
+
+/atom/movable/proc/remove_outline()
+	usr.client.images -= usr.client.outlined_item[src]
+	usr.client.outlined_item -= src
+
+/**
+ * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)
+ * if you want something to move onto a tile with a beartrap or recycler or tripmine or mouse without that object knowing about it at all, use this
+ * most of the time you want forceMove()
+ */
+/atom/movable/proc/abstract_move(atom/new_loc)
+	var/atom/old_loc = loc
+	loc = new_loc
+	Moved(old_loc)
+
+// Return what item *should* be thrown, when a mob tries to throw us. Return null for no throw to happen.
+/atom/movable/proc/be_thrown(mob/living/thrower, atom/target)
+	return src
+
+/*
+	Handle trying to be taken by user.
+	If it's impossible to be taken by user, appear in fallback.
+	If it's impossible to resolve those two rules - return FALSE.
+*/
+/atom/movable/proc/taken(mob/living/user, atom/fallback)
+	forceMove(fallback)
+	// We failed to be taken, but still are in some mob. Drop down.
+	if(ismob(loc))
+		forceMove(loc.loc)
+
+/atom/movable/proc/jump_from_contents(rec_level=1)
+	for(var/i in 1 to rec_level)
+		if(!ismovable(loc))
+			return
+		var/atom/movable/AM = loc
+
+		if(!AM.drop_from_contents(src))
+			return
+
+/*
+	Return TRUE on successful drop.
+*/
+/atom/movable/proc/drop_from_contents(atom/movable/AM)
+	return FALSE
+
+/mob/drop_from_contents(atom/movable/AM)
+	if(isitem(AM))
+		var/obj/item/I = AM
+		if(I.slot_equipped)
+			return drop_from_inventory(I, loc, putdown_anim=FALSE)
+
+	AM.forceMove(loc)
+	return TRUE
+
+/obj/item/weapon/holder/drop_from_contents(atom/movable/AM)
+	AM.forceMove(loc)
+	return TRUE

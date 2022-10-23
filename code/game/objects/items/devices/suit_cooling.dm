@@ -29,8 +29,7 @@
 
 /obj/item/device/suit_cooling_unit/atom_init()
 	. = ..()
-	cell = new/obj/item/weapon/stock_parts/cell() // comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
-	cell.loc = src
+	cell = new(src) // comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
 
 /obj/item/device/suit_cooling_unit/Destroy()
 	QDEL_NULL(cell)
@@ -77,7 +76,7 @@
 		return FALSE
 
 	var/charge_usage = (temp_adj / max_cooling) * charge_consumption
-	user.bodytemperature -= temp_adj * efficiency
+	user.adjust_bodytemperature(-temp_adj * efficiency)
 	cell.use(charge_usage)
 
 	return TRUE
@@ -93,7 +92,7 @@
 
 	var/turf/T = get_turf(user)
 
-	if(istype(T, /turf/space))
+	if(isspaceturf(T))
 		return 0 //space has no temperature, this just makes sure the cooling unit works in space
 
 	var/datum/gas_mixture/environment = T.return_air()

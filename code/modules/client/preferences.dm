@@ -1,6 +1,6 @@
-var/list/preferences_datums = list()
+var/global/list/preferences_datums = list()
 
-var/const/MAX_SAVE_SLOTS = 10
+var/global/const/MAX_SAVE_SLOTS = 10
 
 #define MAX_GEAR_COST 5
 #define MAX_GEAR_COST_SUPPORTER MAX_GEAR_COST+3
@@ -33,7 +33,6 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/chat_ghostsight = CHAT_GHOSTSIGHT_ALL
-	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/clientfps = -1
 
@@ -51,6 +50,8 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/outline_enabled = TRUE
 	var/outline_color = COLOR_BLUE_LIGHT
 	var/eorg_enabled = TRUE
+
+	var/show_runechat = TRUE
 
 	//TGUI
 	var/tgui_fancy = TRUE
@@ -76,6 +77,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/be_random_name = 0				//whether we are a random name every round
 	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
+	var/height = HUMANHEIGHT_MEDIUM			//height of character
 	var/b_type = "A+"					//blood type (not-chooseable)
 	var/underwear = 1					//underwear type
 	var/undershirt = 1					//undershirt type
@@ -110,6 +112,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/faction = "None"                //Antag faction/general associated faction.
 	var/religion = "None"               //Religious association.
 	var/nanotrasen_relation = "Neutral"
+	var/vox_rank = "Larva"              //Vox ranks
 
 	//Job preferences 2.0 - indexed by job title , no key or value implies never
 	var/list/job_preferences = list()
@@ -128,6 +131,11 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/med_record = ""
 	var/sec_record = ""
 	var/gen_record = ""
+
+	// Qualities
+	// Quality selected.
+	var/selected_quality_name
+	var/selecting_quality = FALSE
 
 	// Quirk list
 	var/list/positive_quirks = list()
@@ -342,7 +350,10 @@ var/const/MAX_SAVE_SLOTS = 10
 
 	character.gender = gender
 	character.age = age
+	character.height = height
 	character.b_type = b_type
+
+	character.regenerate_icons()
 
 	if(species == IPC)
 		qdel(character.bodyparts_by_name[BP_HEAD])
@@ -393,6 +404,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.citizenship = citizenship
 	character.personal_faction = faction
 	character.religion = religion
+	character.vox_rank = vox_rank
 
 	// Destroy/cyborgize bodyparts & organs
 
@@ -442,11 +454,8 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/obj/item/organ/external/r_leg = character.bodyparts_by_name[BP_R_LEG]
 	if(!l_leg && !r_leg) // TODO cane if its only single leg.
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
-		character.buckled = W
-		character.update_canmove()
 		W.set_dir(character.dir)
-		W.buckled_mob = character
-		W.add_fingerprint(character)
+		W.buckle_mob(character)
 
 	if(underwear > underwear_m.len || underwear < 1)
 		underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES

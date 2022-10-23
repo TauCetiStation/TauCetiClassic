@@ -33,12 +33,14 @@
 	. = ..()
 	if(.)
 		return
-	for(var/client/C in admins)
+	if(world.has_round_finished())
+		return "Раунд закончен"
+	for(var/client/C as anything in admins)
 		if((C.holder.rights & R_ADMIN) && !C.holder.fakekey && !C.is_afk())
 			return "Администрация сейчас в сети"
 
-/datum/poll/restart/get_vote_power(client/C)
-	return get_vote_power_by_role(C)
+/datum/poll/restart/get_vote_power(client/C, datum/vote_choice/choice)
+	return get_vote_power_by_role(C) * choice.vote_weight
 
 /datum/vote_choice/restart
 	text = "Рестарт"
@@ -48,7 +50,7 @@
 
 /datum/vote_choice/restart/on_win()
 	var/active_admins = FALSE
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(!C.is_afk() && (R_SERVER & C.holder.rights))
 			active_admins = TRUE
 			break
@@ -102,8 +104,8 @@
 	if(security_level >= SEC_LEVEL_RED)
 		return "Код безопасности КРАСНЫЙ или выше"
 
-/datum/poll/crew_transfer/get_vote_power(client/C)
-	return get_vote_power_by_role(C)
+/datum/poll/crew_transfer/get_vote_power(client/C, datum/vote_choice/choice)
+	return get_vote_power_by_role(C) * choice.vote_weight
 
 /datum/vote_choice/crew_transfer
 	text = "Конец смены"
@@ -204,6 +206,60 @@
 		master_mode = new_gamemode
 		world.save_mode(new_gamemode)
 
+/*********************
+	Map
+**********************/
+/datum/poll/nextmap
+	name = "Карта на следующий раунд"
+	question = "Выберите карту для следующего раунда"
+	choice_types = list()
+	minimum_voters = 0 // todo: server vote need to change map at any cost, meanwhile for player vote minimum will be good
+	only_admin = FALSE
+
+	multiple_votes = TRUE
+	can_revote = TRUE
+	can_unvote = TRUE
+	detailed_result = TRUE
+
+	vote_period = 600 // same as ticker.restart_timeout
+
+	description = "Некоторые карты могут быть не доступны в голосовании из-за ограничений на количество игроков или других настроек сервера."
+
+/datum/poll/nextmap/get_force_blocking_reason()
+	. = ..()
+	if(!world.has_round_finished())
+		return "Доступно только по окончанию раунда"
+	if(!config.maplist.len)
+		return "Отсутствует конфиг карт"
+
+/datum/poll/nextmap/init_choices()
+	for (var/map in config.maplist)
+		var/datum/map_config/VM = config.maplist[map]
+		
+		if (!VM.votable)
+			continue
+
+		if (VM.config_min_users > 0 && length(player_list) < VM.config_min_users)
+			continue
+
+		if (VM.config_max_users > 0 && length(player_list) > VM.config_max_users)
+			continue
+
+		var/datum/vote_choice/nextmap/vc = new
+		vc.text = VM.GetFullMapName()
+		if(VM.voteweight != 1)
+			vc.text += "\[vote weight: [VM.voteweight]\]"
+		vc.mapname = VM.map_name
+		vc.vote_weight = VM.voteweight
+		choices.Add(vc)
+
+/datum/vote_choice/nextmap
+	text = "Box Station"
+	var/mapname = "Box Station"
+
+/datum/vote_choice/nextmap/on_win()
+	var/datum/map_config/VM = config.maplist[mapname]
+	SSmapping.changemap(VM)
 
 /*********************
 	Custom

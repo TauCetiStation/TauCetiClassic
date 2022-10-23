@@ -6,8 +6,9 @@
 
 	load_item_visible = 1
 	mob_offset_y = 5
-	health = 300
-	maxhealth = 300
+
+	max_integrity = 300
+	resistance_flags = CAN_BE_HIT
 
 	fire_dam_coeff = 0.6
 	brute_dam_coeff = 0.5
@@ -110,11 +111,11 @@
 	return ..()
 
 /obj/vehicle/space/spacebike/Bump(atom/A)
-	if(istype(loc, /turf/space) && isliving(load) && isliving(A))
+	if(isspaceturf(loc) && isliving(load) && isliving(A))
 		var/mob/living/L = A
 		var/mob/living/Driver = load
-		if(istype(L,/mob/living/silicon/robot))
-			if(istype(L,/mob/living/silicon/robot/drone))
+		if(isrobot(L))
+			if(isdrone(L))
 				visible_message("<span class='danger'>[Driver] drives over [L]!</span>")
 				L.gib()
 			else
@@ -142,13 +143,9 @@
 			L.apply_damage(0.5*damage, BRUTE, BP_R_ARM)
 	..()
 
-/obj/vehicle/space/spacebike/relaymove(mob/user, direction)
-	return Move(get_step(src, direction))
-
-
 /obj/vehicle/space/spacebike/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	//these things like space, not turf. Dragging shouldn't weigh you down.
-	if(istype(NewLoc, /turf/space) || pulledby)
+	if(isspaceturf(NewLoc) || pulledby)
 		if(!space_speed)
 			return FALSE
 		move_delay = space_speed + slow_cooef
@@ -162,7 +159,7 @@
 	. = ..()
 	if(kickstand)
 		return 0
-	if(buckled_mob && (buckled_mob.stat || buckled_mob.lying))
+	if(buckled_mob && (buckled_mob.stat != CONSCIOUS || buckled_mob.lying))
 		return 0
 
 /obj/vehicle/space/spacebike/turn_on()
@@ -237,7 +234,7 @@
 	if(kickstand)
 		visible_message("[usr.name] puts up \the [src]'s kickstand.", "<span class='notice'>You put up \the [src]'s kickstand.</span>")
 	else
-		if(istype(src.loc,/turf/space))
+		if(isspaceturf(src.loc))
 			to_chat(usr, "<span class='warning'>You don't think kickstands work in space...</span>")
 			return
 		visible_message("[usr.name] puts down \the [src]'s kickstand.", "<span class='notice'>You put down \the [src]'s kickstand.</span>")
@@ -247,12 +244,11 @@
 	kickstand = !kickstand
 	anchored = (kickstand || on)
 
-/obj/vehicle/space/spacebike/bullet_act(obj/item/projectile/Proj)
+/obj/vehicle/space/spacebike/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(isliving(load) && prob(protection_percent))
 		var/mob/living/M = load
-		M.bullet_act(Proj)
-		return
-	..()
+		return M.bullet_act(Proj)
+	return ..()
 
 /obj/vehicle/space/spacebike/update_icon()
 	cut_overlays()

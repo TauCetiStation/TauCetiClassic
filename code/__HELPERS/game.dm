@@ -5,29 +5,49 @@
     locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
   )
 
-/proc/dopage(src,target)
-	var/href_list
-	var/href
-	href_list = params2list("src=\ref[src]&[target]=1")
-	href = "src=\ref[src];[target]=1"
-	src:temphtml = null
-	src:Topic(href, href_list)
-	return null
+//gets an empty square with RADIUS from CENTER
+#define BORDER_TURFS(RADIUS, CENTER) \
+	block( \
+		locate(max(CENTER.x-(RADIUS),1), min(CENTER.y+(RADIUS),world.maxy),CENTER.z), \
+		locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy),CENTER.z) \
+	) + \
+	block( \
+		locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy),CENTER.z), \
+		locate(min(CENTER.x+(RADIUS),world.maxx), max(CENTER.y-(RADIUS),1),CENTER.z) \
+	) + \
+	block( \
+		locate(max(CENTER.x-(RADIUS),1), max(CENTER.y-(RADIUS),1),CENTER.z), \
+		locate(min(CENTER.x+(RADIUS),world.maxx), max(CENTER.y-(RADIUS),1),CENTER.z) \
+	) + \
+	block( \
+		locate(max(CENTER.x-(RADIUS),1), min(CENTER.y+(RADIUS),world.maxy),CENTER.z), \
+		locate(max(CENTER.x-(RADIUS),1), max(CENTER.y-(RADIUS),1),CENTER.z), \
+	)
 
-/proc/get_area_name(N) //get area by its name
+///Returns the name of the area the atom is in
+/proc/get_area_name(atom/checked_atom)
+	var/area/checked_area = isarea(checked_atom) ? checked_atom : get_area(checked_atom)
+	if(!checked_area)
+		return null
+	return checked_area.name
+
+/proc/get_area_by_name(N) //get area by its name
 	for(var/area/A in all_areas)
 		if(A.name == N)
 			return A
 	return null
 
 /proc/get_area_by_type(type) //get area by its type
+	var/area/area = areas_by_type[type]
+	if(area)
+		return area
 	return locate(type) in all_areas
 
 /proc/in_range(source, user)
 	if(get_dist(source, user) <= 1)
-		return 1
+		return TRUE
 
-	return 0 //not in range and not telekinetic
+	return FALSE //not in range and not telekinetic
 
 /**
  * Get a bounding box of a list of atoms.
@@ -134,7 +154,7 @@
 // It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
 // being unable to hear people due to being in a box within a bag.
 
-/proc/recursive_mob_check(atom/O,  list/L = list(), recursion_limit = 3, client_check = 1, sight_check = 1, include_radio = 1)
+/proc/recursive_mob_check(atom/O,  list/L = list(), recursion_limit = 3, client_check = TRUE, sight_check = TRUE, include_radio = TRUE)
 
 	//debug_mob += O.contents.len
 	if(!recursion_limit)
@@ -188,7 +208,7 @@
 
 	return hear
 
-// todo: tg
+// todo: https://github.com/tgstation/tgstation/pull/61422
 /proc/get_hearers_in_view(R, atom/source)
 	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
@@ -230,13 +250,12 @@
 
 
 	// Try to find all the players who can hear the message
-	for(var/i = 1; i <= player_list.len; i++)
-		var/mob/M = player_list[i]
+	for(var/mob/M as anything in player_list)
 		if(M)
 			var/turf/ear = get_turf(M)
 			if(ear)
 				// Ghostship is magic: Ghosts can hear radio chatter from anywhere
-				if(speaker_coverage[ear] || (istype(M, /mob/dead/observer) && (M.client) && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO)))
+				if(speaker_coverage[ear] || (isobserver(M) && (M.client) && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO)))
 					. |= M		// Since we're already looping through mobs, why bother using |= ? This only slows things down.
 	return .
 
@@ -244,7 +263,7 @@
 	return
 
 /obj/machinery/bot/mulebot/get_mob()
-	if(load && istype(load, /mob/living))
+	if(load && isliving(load))
 		return load
 
 /obj/mecha/get_mob()
@@ -266,14 +285,14 @@
 	var/turf/T
 	if(X1==X2)
 		if(Y1==Y2)
-			return 1 //Light cannot be blocked on same tile
+			return TRUE //Light cannot be blocked on same tile
 		else
 			var/s = SIGN(Y2-Y1)
 			Y1+=s
 			while(Y1!=Y2)
 				T=locate(X1,Y1,Z)
 				if(T.opacity)
-					return 0
+					return FALSE
 				Y1+=s
 	else
 		var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
@@ -289,21 +308,21 @@
 				X1+=signX //Line exits tile horizontally
 			T=locate(X1,Y1,Z)
 			if(T.opacity)
-				return 0
-	return 1
+				return FALSE
+	return TRUE
 
 /proc/isInSight(atom/A, atom/B)
 	var/turf/Aturf = get_turf(A)
 	var/turf/Bturf = get_turf(B)
 
 	if(!Aturf || !Bturf)
-		return 0
+		return FALSE
 
 	if(inLineOfSight(Aturf.x,Aturf.y, Bturf.x,Bturf.y,Aturf.z))
-		return 1
+		return TRUE
 
 	else
-		return 0
+		return FALSE
 
 /proc/mobs_in_area(area/the_area, client_needed=0, moblist=mob_list)
 	var/list/mobs_found[0]
@@ -338,7 +357,7 @@
 			break
 
 /proc/get_mob_by_key(key)
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if(M.ckey == lowertext(key))
 			return M
 	return null
@@ -450,20 +469,22 @@
 	var/player_assigned_role = (M.mind.assigned_role ? " ([M.mind.assigned_role])" : "")
 	var/player_byond_profile = "http://www.byond.com/members/[M.ckey]"
 	if(M.client.player_age == 0)
-		var/adminmsg = {"New player notify
-					Player '[M.ckey]' joined to the game as [M.mind.name][player_assigned_role] [ADMIN_FLW(M)] [ADMIN_PP(M)] [ADMIN_VV(M)]
-					Byond profile: <a href='[player_byond_profile]'>open</a>
-					Guard report: <a href='?_src_=holder;guard=\ref[M]'>show</a>"}
+		var/adminmsg = trim_margin({"
+		|New player notify
+		|Player '[M.ckey]' joined to the game as [M.mind.name][player_assigned_role] [ADMIN_FLW(M)] [ADMIN_PP(M)] [ADMIN_VV(M)]
+		|Byond profile: <a href='[player_byond_profile]'>open</a>
+		|Guard report: <a href='?_src_=holder;guard=\ref[M]'>show</a>"})
 
-		message_admins(adminmsg)
+		message_admins(adminmsg, emphasize = TRUE)
 
 	if((isnum(M.client.player_age) && M.client.player_age < 5) || (isnum(M.client.player_ingame_age) && M.client.player_ingame_age < 600)) //less than 5 days on server OR less than 10 hours in game
-		var/mentormsg = {"New player notify
-					Player '[M.key]' joined to the game as [M.mind.name][player_assigned_role] (<a href='byond://?_src_=usr;track=\ref[M]'>FLW</a>)
-					Days on server: [M.client.player_age]; Minutes played: [M.client.player_ingame_age < 120 ? "<span class='alert'>[M.client.player_ingame_age]</span>" : M.client.player_ingame_age]
-					Byond profile: <a href='[player_byond_profile]'>open</a> (can be experienced player from another server)"}
+		var/mentormsg = trim_margin({"
+		|New player notify
+		|Player '[M.key]' joined to the game as [M.mind.name][player_assigned_role] (<a href='byond://?_src_=usr;track=\ref[M]'>FLW</a>)
+		|Days on server: [M.client.player_age]; Minutes played: [M.client.player_ingame_age < 120 ? "<span class='alert'>[M.client.player_ingame_age]</span>" : M.client.player_ingame_age]
+		|Byond profile: <a href='[player_byond_profile]'>open</a> (can be experienced player from another server)"})
 
-		message_mentors(mentormsg, 1)
+		message_mentors(mentormsg, TRUE, TRUE)
 
 // Better get_dir proc
 /proc/get_general_dir(atom/Loc1, atom/Loc2)
@@ -596,7 +617,7 @@
 /proc/pollGhostCandidates(Question, be_special_type, Ignore_Role, poll_time = 300, check_antaghud = TRUE)
 	var/list/mob/dead/observer/candidates = list()
 
-	for(var/mob/dead/observer/O in observer_list)
+	for(var/mob/dead/observer/O as anything in observer_list)
 		if(check_antaghud && O.has_enabled_antagHUD == TRUE && config.antag_hud_restricted)
 			continue
 		candidates += O
@@ -615,7 +636,7 @@
 	for(var/mob/M in group)
 		if(!M.client)
 			continue
-		if(jobban_isbanned(M, be_special_type) || jobban_isbanned(M, "Syndicate") || !M.client.prefs.be_role.Find(be_special_type) || role_available_in_minutes(be_special_type))
+		if(jobban_isbanned(M, be_special_type) || jobban_isbanned(M, "Syndicate") || !M.client.prefs.be_role.Find(be_special_type) || role_available_in_minutes(M, be_special_type))
 			continue
 		if(Ignore_Role && M.client.prefs.ignore_question.Find(Ignore_Role))
 			continue
@@ -657,7 +678,7 @@
 	if(key || mind || stat != CONSCIOUS || !M.client)
 		return
 
-	if(Ignore_Role && M.client.prefs.ignore_question.Find(IGNORE_BORER))
+	if(Ignore_Role && M.client.prefs.ignore_question.Find(Ignore_Role))
 		return
 
 	if(isobserver(M))
@@ -688,7 +709,7 @@
 	if(ans == "No")
 		return
 	if(ans == "Not This Round")
-		M.client.prefs.ignore_question |= IGNORE_BORER
+		M.client.prefs.ignore_question |= Ignore_Role
 		return
 
 	if(key || mind || stat != CONSCIOUS)
@@ -698,3 +719,30 @@
 
 /mob/proc/transfer_personality(client/C)
 	return
+
+/atom/proc/has_valid_appearance()
+	if(!check_sprite())
+		return FALSE
+	if(alpha != 255)
+		return FALSE
+	if(invisibility != INVISIBILITY_NONE)
+		return FALSE
+	return TRUE
+
+/atom/proc/check_sprite()
+	if(icon_state in icon_states(icon))
+		return TRUE
+	return FALSE
+
+/**
+ * Returns the atom sitting on the turf.
+ * For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
+ * Optional arg 'type' to stop once it reaches a specific type instead of a turf.
+**/
+/proc/get_atom_on_turf(atom/movable/atom_on_turf, stop_type)
+	var/atom/turf_to_check = atom_on_turf
+	while(turf_to_check?.loc && !isturf(turf_to_check.loc))
+		turf_to_check = turf_to_check.loc
+		if(stop_type && istype(turf_to_check, stop_type))
+			break
+	return turf_to_check

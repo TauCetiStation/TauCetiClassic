@@ -3,12 +3,15 @@ var/global/BSACooldown = 0
 
 
 ////////////////////////////////
-/proc/message_admins(msg, reg_flag = R_ADMIN)
+/proc/message_admins(msg, reg_flag = R_ADMIN, emphasize = FALSE)
 	log_adminwarn(msg) // todo: msg in html format, dublicates other logs; must be removed, use logs_*() where necessary (also, thanks you dear ZVE)
-	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-	for(var/client/C in admins)
+	var/style = "admin"
+	if (emphasize)
+		style += " emphasized"
+	msg = "<span class='[style]'><span class='prefix'>ADMIN LOG:</span> <span class='message'>[msg]</span></span>"
+	for(var/client/C as anything in admins)
 		if(C.holder.rights & reg_flag)
-			to_chat(C, msg)
+			to_chat_admin_log(C, msg)
 
 // do not use with formatted messages (html), we don't need it in logs
 /proc/admin_log_and_message_admins(message as text)
@@ -24,12 +27,12 @@ var/global/BSACooldown = 0
 	if(!target.client && !ishuman(target))
 		require_flags |= CHAT_NOCLIENT_ATTACK
 
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(!(R_ADMIN & C.holder.rights))
 			continue
 		if((C.prefs.chat_toggles & require_flags) != require_flags)
 			continue
-		to_chat(C, msg)
+		to_chat_attack_log(C, msg)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
@@ -99,7 +102,8 @@ var/global/BSACooldown = 0
 		<br><br>
 		[check_rights(R_ADMIN,0) ? "<A href='?src=\ref[src];traitor=\ref[M]'>Traitor panel</A> | " : "" ]
 		<A href='?src=\ref[src];narrateto=\ref[M]'>Narrate to</A> |
-		<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>
+		<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A> |
+		<A href='?src=\ref[src];skills=\ref[M]'>Skills panel</A>
 	"}
 
 	if (M.client)
@@ -177,8 +181,7 @@ var/global/BSACooldown = 0
 				Construct: <A href='?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A>
 				<A href='?src=\ref[src];simplemake=constructbuilder;mob=\ref[M]'>Builder</A>
 				<A href='?src=\ref[src];simplemake=constructwraith;mob=\ref[M]'>Wraith</A>
-				<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>|
-				<A href='?src=\ref[src];simplemake=meme;mob=\ref[M]'>Meme</A>
+				<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>
 				<br>
 			"}
 			body += "</div>"
@@ -975,12 +978,12 @@ var/global/BSACooldown = 0
 
 	if(!check_rights(R_SERVER))	return
 	if(SSticker.current_state > GAME_STATE_PREGAME)
-		SSticker.delay_end = !SSticker.delay_end
-		log_admin("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
-		message_admins("<span class='adminnotice'>[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].</span>")
+		SSticker.admin_delayed = !SSticker.admin_delayed
+		log_admin("[key_name(usr)] [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].")
+		message_admins("<span class='adminnotice'>[key_name(usr)] [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].</span>")
 		world.send2bridge(
 			type = list(BRIDGE_ROUNDSTAT),
-			attachment_msg = "**[key_name(usr)]** [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
+			attachment_msg = "**[key_name(usr)]** [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].",
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
 	else
@@ -1100,29 +1103,22 @@ var/global/BSACooldown = 0
 		else
 			return "Error: Invalid sabotage target: [target]"
 */
-/datum/admins/proc/spawn_atom(object as text)
+/datum/admins/proc/spawn_atom()
 	set category = "Debug"
-	set desc = "(atom path) Spawn an atom."
 	set name = "Spawn"
 
-	if(!check_rights(R_SPAWN))	return
-
-	var/list/types = typesof(/atom)
-	var/list/matches = new()
-
-	for(var/path in types)
-		if(findtext("[path]", object))
-			matches += path
-
-	if(matches.len==0)
+	if(!check_rights(R_SPAWN))
 		return
 
-	var/chosen
-	if(matches.len==1)
-		chosen = matches[1]
-	else
-		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
+	var/target_path = input("Enter typepath:", "Typepath", "mob/living/carbon/human?")
+	var/chosen = text2path(target_path)
+	if(!ispath(chosen))
+		chosen = pick_closest_path(target_path)
 		if(!chosen)
+			tgui_alert(usr, "No path was selected")
+			return
+		else if(ispath(chosen, /area))
+			tgui_alert(usr, "That path is not allowed.")
 			return
 
 	if(ispath(chosen,/turf))
@@ -1150,6 +1146,17 @@ var/global/BSACooldown = 0
 	M.mind.edit_memory()
 	feedback_add_details("admin_verb","STP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/show_skills_panel(mob/M)
+
+	if(!istype(M))
+		to_chat(usr, "This can only be used on instances of type /mob")
+		return
+	if(!M.mind)
+		to_chat(usr, "This mob has no mind! So no skills!")
+		return
+
+	M.mind.edit_skills()
+	feedback_add_details("admin_verb","SKP") 
 
 /datum/admins/proc/toggletintedweldhelmets()
 	set category = "Debug"
@@ -1179,7 +1186,7 @@ var/global/BSACooldown = 0
 
 /datum/admins/proc/output_ai_laws()
 	var/ai_number = 0
-	for(var/mob/living/silicon/S in silicon_list)
+	for(var/mob/living/silicon/S as anything in silicon_list)
 		ai_number++
 		if(isAI(S))
 			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")
@@ -1218,7 +1225,7 @@ var/global/BSACooldown = 0
 		return "<b>(*null*)</b>"
 	var/mob/M
 	var/client/C
-	if(istype(whom, /client))
+	if(isclient(whom))
 		C = whom
 		M = C.mob
 	else if(istype(whom, /mob))
@@ -1278,7 +1285,7 @@ var/global/BSACooldown = 0
 
 /**********************Administration Shuttle**************************/
 
-var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
+var/global/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 
 /proc/move_admin_shuttle()
 	var/area/fromArea
@@ -1319,7 +1326,7 @@ var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 
 /**********************Centcom Ferry**************************/
 
-var/ferry_location = 0 // 0 = centcom , 1 = station
+var/global/ferry_location = 0 // 0 = centcom , 1 = station
 
 /proc/move_ferry()
 	var/area/fromArea
@@ -1360,7 +1367,7 @@ var/ferry_location = 0 // 0 = centcom , 1 = station
 
 /**********************Alien ship**************************/
 
-var/alien_ship_location = 1 // 0 = base , 1 = mine
+var/global/alien_ship_location = 1 // 0 = base , 1 = mine
 
 /proc/move_alien_ship()
 	var/area/fromArea

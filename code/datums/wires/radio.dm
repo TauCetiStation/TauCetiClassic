@@ -1,6 +1,6 @@
-var/const/RADIO_WIRE_SIGNAL   = 1
-var/const/RADIO_WIRE_RECEIVE  = 2
-var/const/RADIO_WIRE_TRANSMIT = 4
+var/global/const/RADIO_WIRE_SIGNAL   = 1
+var/global/const/RADIO_WIRE_RECEIVE  = 2
+var/global/const/RADIO_WIRE_TRANSMIT = 4
 
 /datum/wires/radio
 	holder_type = /obj/item/device/radio

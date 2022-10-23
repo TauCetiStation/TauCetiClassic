@@ -22,7 +22,6 @@
 	var/settableTemperatureMedian = 30 + T0C
 	var/settableTemperatureRange = 30
 
-
 /obj/machinery/space_heater/atom_init()
 	. = ..()
 	cell = new(src)
@@ -120,9 +119,8 @@
 		..()
 
 /obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main")
-	if(user.stat) // this probably handled by nano itself, a check would be nice.
+	if(user.stat != CONSCIOUS) // this probably handled by nano itself, a check would be nice.
 		return
-
 	var/data[0]
 	data["open"] = panel_open
 	data["on"] = on

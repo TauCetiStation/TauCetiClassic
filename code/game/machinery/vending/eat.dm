@@ -36,6 +36,9 @@
 	contraband = list(
 		/obj/item/weapon/reagent_containers/food/drinks/tea = 10,
 	)
+	syndie = list (
+		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/beepskysmash = 1,
+	)
 	vend_delay = 15
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
@@ -76,24 +79,28 @@
 		/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 6,
 		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,
 		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 6,
-		/obj/item/weapon/reagent_containers/food/snacks/chips = 6,
-		/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 6,
-		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,
+		/obj/item/weapon/storage/food/small/chips = 6,
+		/obj/item/weapon/storage/food/normal/chips = 6,
+		/obj/item/weapon/storage/food/normal/sosjerky = 6,
+		/obj/item/weapon/storage/food/normal/no_raisin = 6,
 		/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
-		/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6,
+		/obj/item/weapon/storage/food/normal/honkers = 6,
 	)
 	contraband = list(
-		/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6,
+		/obj/item/weapon/storage/food/normal/syndi_cakes = 6,
+		/obj/item/weapon/storage/food/big/chips = 6,
 	)
 	prices = list(
 		/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 5,
 		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 25,
 		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 25,
-		/obj/item/weapon/reagent_containers/food/snacks/chips = 10,
-		/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 14,
-		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 10,
-		/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 10,
-		/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 10,
+		/obj/item/weapon/storage/food/small/chips = 10,
+		/obj/item/weapon/storage/food/normal/chips = 20,
+		/obj/item/weapon/storage/food/big/chips = 50,
+		/obj/item/weapon/storage/food/normal/sosjerky = 14,
+		/obj/item/weapon/storage/food/normal/no_raisin = 15,
+		/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 20,
+		/obj/item/weapon/storage/food/normal/honkers = 15,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/snack
 
@@ -229,6 +236,9 @@
 	)
 	contraband = list(
 		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola = 20,
+	)
+	syndie = list(
+		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/kvass = 10,
 	)
 
 /obj/machinery/vending/junkfood

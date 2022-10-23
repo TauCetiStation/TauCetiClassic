@@ -37,7 +37,7 @@
 	var/datum/callback/can_show
 
 /datum/component/mechanic_desc/Initialize(list/datum/mechanic_tip/tips_to_add, datum/callback/_can_show)
-	if(!istype(parent, /atom))
+	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	can_show = _can_show
@@ -73,7 +73,7 @@
 		remove_tip(tip_name)
 
 /datum/component/mechanic_desc/proc/show_tips(datum/source, mob/user)
-	if(!can_show?.Invoke(source, user))
+	if(can_show && !can_show.Invoke(source, user))
 		return
 
 	for(var/tip_name in tips)

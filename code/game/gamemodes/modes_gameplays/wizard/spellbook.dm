@@ -14,33 +14,33 @@
 	var/buy_word = "Выучить"
 
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
-	return 1
+	return TRUE
 
 /datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) // Specific circumstances
 	if(book.uses < cost)
-		return 0
+		return FALSE
 	for(var/obj/effect/proc_holder/spell/spell in user.mind.spell_list)
 		if(istype(spell, spell_type))
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
-/datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) //return 1 on success
+/datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) //return TRUE on success
 	if(!S || QDELETED(S))
 		S = new spell_type()
 	feedback_add_details("wizard_spell_learned",log_name)
 	user.AddSpell(S)
 	to_chat(user, "<span class='notice'>Вы выучили [S.name].</span>")
-	return 1
+	return TRUE
 
 /datum/spellbook_entry/proc/CanRefund(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
 	if(!refundable)
-		return 0
+		return FALSE
 	if(!S)
 		S = new spell_type()
 	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
 		if(initial(S.name) == initial(aspell.name))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) //return point value or -1 for failure
 	if(!istype(get_area(user), /area/custom/wizard_station))
@@ -71,6 +71,24 @@
 	spell_type = /obj/effect/proc_holder/spell/in_hand/fireball
 	log_name = "FB"
 
+/datum/spellbook_entry/icebolt
+	name = "Ледяная стрела"
+	spell_type = /obj/effect/proc_holder/spell/in_hand/icebolt
+	log_name = "IB"
+	cost = 1 // because this spell does not deal much damage and only slows down
+
+/datum/spellbook_entry/acid
+	name = "Кислотный чих"
+	spell_type = /obj/effect/proc_holder/spell/in_hand/acid
+	log_name = "ACI"
+	cost = 1
+
+/datum/spellbook_entry/item/fireballstaff
+	name = "Посох Огненных Шаров"
+	item_path = /obj/item/weapon/gun/magic/fireball
+	desc = "Старый посох, позволяет создавать огненные шары"
+	cost = 5
+
 /datum/spellbook_entry/res_touch
 	name = "Воскрешение"
 	spell_type = /obj/effect/proc_holder/spell/in_hand/res_touch
@@ -83,6 +101,13 @@
 	spell_type = /obj/effect/proc_holder/spell/in_hand/heal
 	log_name = "HT"
 	category = "Оборона"
+
+/datum/spellbook_entry/carp
+	name = "Призыв Карпа"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
+	log_name = "SC"
+	category = "Оборона"
+	cost = 2
 
 /datum/spellbook_entry/magicm
 	name = "Магическая ракета"
@@ -177,7 +202,7 @@
 	log_name = "LB"
 	cost = 3
 
-/datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
+/datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return TRUE on success
 	. = ..()
 	user.tesla_ignore = TRUE
 
@@ -243,7 +268,7 @@
 		surplus = max(surplus - 1, 0)
 	new item_path (get_turf(user))
 	feedback_add_details("wizard_spell_learned", log_name)
-	return 1
+	return TRUE
 
 /datum/spellbook_entry/item/GetInfo()
 	var/dat =""
@@ -287,6 +312,14 @@
 	category = "Оборона"
 	cost = 4
 
+/datum/spellbook_entry/item/jakboots
+	name = "Сапоги Быстроногого Джека"
+	desc = "Ботинки, способные ускорять того, кто их носит."
+	item_path = /obj/item/clothing/shoes/boots/work/jak
+	log_name = "JB"
+	category = "Мобильность"
+	cost = 3
+
 /datum/spellbook_entry/item/soulstones
 	name = "Шесть осколков камня душ и заклинание ремесленника"
 	desc = "Осколки камня душ это древний инструмент, способный захватить и содержать в себе душу. Заклинание ремесленника позволяет создать тело для захваченной души."
@@ -320,6 +353,7 @@
 	if(.)
 		new /obj/item/clothing/shoes/sandal(get_turf(user)) //In case they've lost them.
 		new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(user))//To complete the outfit
+		new /obj/item/clothing/gloves/combat/wizard(get_turf(user))//To complete the outfit COMPLETELY
 
 /datum/spellbook_entry/item/contract
 	name = "Контракт ученичества"
@@ -333,7 +367,7 @@
 	var/obj/item/weapon/contract/contract = new(get_turf(user))
 	contract.wizard = user.mind
 	feedback_add_details("wizard_spell_learned",log_name)
-	return 1
+	return TRUE
 
 /datum/spellbook_entry/item/tophat
 	name = "Шляпа Wabbajack"
@@ -366,7 +400,7 @@
 	category = "Rituals"
 	refundable = 0
 	buy_word = "Cast"
-	var/active = 0
+	var/active = FALSE
 
 /datum/spellbook_entry/summon/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
 	return ..() && !active
@@ -432,8 +466,8 @@
 			to_chat(user, "<span class='notice'>Вы скормили контракт обратно книге. Очки возвращены.</span>")
 			uses += CONTRACT_PRICE
 			qdel(I)
-	else
-		return ..()
+		return FALSE
+	return ..()
 
 /obj/item/weapon/spellbook/proc/GetCategoryHeader(category)
 	var/dat = ""
@@ -528,7 +562,7 @@
 /obj/item/weapon/spellbook/Topic(href, href_list)
 	..()
 	if(!ishuman(usr))
-		return 1
+		return TRUE
 	var/mob/living/carbon/human/H = usr
 
 	if(H.incapacitated())
@@ -551,4 +585,3 @@
 		else if(href_list["page"])
 			tab = sanitize(href_list["page"])
 	attack_self(H)
-	return

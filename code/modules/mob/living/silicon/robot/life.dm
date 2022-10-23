@@ -25,9 +25,7 @@
 
 /mob/living/silicon/robot/proc/clamp_values()
 
-//	SetStunned(min(stunned, 30))
-	SetParalysis(min(paralysis, 30))
-//	SetWeakened(min(weakened, 20))
+	SetParalysis(min(AmountParalyzed(), 30))
 	SetSleeping(0)
 	adjustBruteLoss(0)
 	adjustToxLoss(0)
@@ -75,7 +73,7 @@
 	if(IsSleeping())
 		Paralyse(3)
 
-	if(src.resting)
+	if(crawling)
 		Weaken(5)
 
 	if(health < config.health_threshold_dead && src.stat != DEAD) //die only once
@@ -84,16 +82,7 @@
 	if (src.stat != DEAD) //Alive.
 		if (src.paralysis || src.stunned || src.weakened || !src.has_power) //Stunned etc.
 			src.stat = UNCONSCIOUS
-			if (src.stunned > 0)
-				AdjustStunned(-1)
-			if (src.weakened > 0)
-				AdjustWeakened(-1)
-			if (src.paralysis > 0)
-				AdjustParalysis(-1)
-				src.blinded = 1
-			else
-				src.blinded = 0
-
+			blinded = paralysis
 		else	//Not stunned.
 			src.stat = CONSCIOUS
 
@@ -127,9 +116,8 @@
 		src.druggy--
 		src.druggy = max(0, src.druggy)
 
-	if (src.confused > 0)
-		src.confused--
-		src.confused = max(0, src.confused)
+	AdjustConfused(-1)
+	AdjustDrunkenness(-1)
 
 	//update the state of modules and components here
 	if (src.stat != CONSCIOUS)
@@ -152,75 +140,38 @@
 
 	return 1
 
-/mob/living/silicon/robot/handle_regular_hud_updates()
-	if(!client)
-		return 0
+/mob/living/silicon/robot/update_sight()
+	if(!..())
+		return FALSE
 
-	if (stat == DEAD || (XRAY in mutations) || (sight_mode & BORGXRAY))
-		set_EyesVision()
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
+	sight = initial(sight)
+	lighting_alpha = initial(lighting_alpha)
+	see_in_dark = 8
+	var/sight_modifier = null
+	if (sight_mode & BORGXRAY)
+		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+		see_invisible = SEE_INVISIBLE_OBSERVER
 	else if (sight_mode & BORGMESON)
-		set_EyesVision("meson")
+		sight_modifier = "meson"
 		sight |= SEE_TURFS
-		see_in_dark = 8
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	else if (sight_mode & BORGNIGHT)
-		set_EyesVision("nvg")
-		see_in_dark = 8
-	else if (sight_mode & BORGTHERM)
-		set_EyesVision("thermal")
-		sight |= SEE_MOBS
-		see_in_dark = 8
+		sight_modifier = "nvg"
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-	else if (stat != DEAD)
-		set_EyesVision()
-		sight &= ~SEE_MOBS
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_OBJS
-		see_in_dark = 8
-		lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
-	regular_hud_updates()
+	else if (sight_mode & BORGTHERM)
+		sight_modifier = "thermal"
+		sight |= SEE_MOBS
+	sight_modifier = sight_mode & BORGIGNORESIGHT ? null : sight_modifier
+	set_EyesVision(sight_modifier)
+	return TRUE
 
-	if (src.healths)
-		if (src.stat != DEAD)
-			if(istype(src,/mob/living/silicon/robot/drone))
-				switch(health)
-					if(15 to INFINITY)
-						src.healths.icon_state = "health0"
-					if(10 to 14)
-						src.healths.icon_state = "health1"
-					if(8 to 10)
-						src.healths.icon_state = "health2"
-					if(5 to 8)
-						src.healths.icon_state = "health3"
-					if(0 to 5)
-						src.healths.icon_state = "health4"
-					if(-15 to 0)
-						src.healths.icon_state = "health5"
-					else
-						src.healths.icon_state = "health6"
-			else
-				switch(health)
-					if(200 to INFINITY)
-						src.healths.icon_state = "health0"
-					if(150 to 200)
-						src.healths.icon_state = "health1"
-					if(100 to 150)
-						src.healths.icon_state = "health2"
-					if(50 to 100)
-						src.healths.icon_state = "health3"
-					if(0 to 50)
-						src.healths.icon_state = "health4"
-					if(config.health_threshold_dead to 0)
-						src.healths.icon_state = "health5"
-					else
-						src.healths.icon_state = "health6"
-		else
-			src.healths.icon_state = "health7"
+/mob/living/silicon/robot/handle_regular_hud_updates()
+	if(!client)
+		return
+
+	regular_hud_updates()
+	update_sight()
 
 	if (src.cell)
 		var/cellcharge = src.cell.charge/src.cell.maxcharge
@@ -238,21 +189,13 @@
 	else
 		throw_alert("charge", /atom/movable/screen/alert/nocell)
 
-	if(pullin)
-		if(pulling)
-			pullin.icon_state = "pull1"
-		else
-			pullin.icon_state = "pull0"
-
 	..()
-
-	return 1
 
 /mob/living/silicon/robot/proc/update_items()
 	if (src.client)
 		src.client.screen -= src.contents
 		for(var/obj/I in src.contents)
-			if(I && !(istype(I,/obj/item/weapon/stock_parts/cell) || istype(I,/obj/item/device/radio)  || istype(I,/obj/machinery/camera) || istype(I,/obj/item/device/mmi)))
+			if(I && !(istype(I,/obj/item/weapon/stock_parts/cell) || istype(I,/obj/item/device/radio)  || istype(I,/obj/machinery/camera) || isMMI(I)))
 				src.client.screen += I
 	if(src.module_state_1)
 		src.module_state_1:screen_loc = ui_inv1
@@ -283,17 +226,15 @@
 			weaponlock_time = 120
 
 /mob/living/silicon/robot/update_canmove()
-	if(paralysis || stunned || weakened || buckled || lockcharge || pinned.len)
-		canmove = FALSE
-	else
-		canmove = TRUE
-	return canmove
+	anchored = HAS_TRAIT(src, TRAIT_ANCHORED)
+	canmove = !(buckled || anchored || weakened || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 
 //Robots on fire
 /mob/living/silicon/robot/handle_fire()
 	if(..())
 		return
 	if(fire_stacks > 0)
+		adjustFireLoss(4)
 		fire_stacks--
 		fire_stacks = max(0, fire_stacks)
 	else
@@ -302,6 +243,8 @@
 
 /mob/living/silicon/robot/update_fire()
 	if(on_fire)
-		add_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning"))
+		underlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay")
+		add_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay"))
 	else
-		cut_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning"))
+		underlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay")
+		cut_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay"))

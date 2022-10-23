@@ -87,18 +87,14 @@
 
 /obj/machinery/suit_storage_unit/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			if(prob(50))
 				dump_everything() //So suits dont survive all the time
 			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
 				dump_everything()
 				qdel(src)
-			return
-		else
-			return
 
 /obj/machinery/suit_storage_unit/ui_interact(mob/user)
 	var/dat = ""
@@ -538,6 +534,23 @@
 	updateUsrDialog()
 	return
 
+/obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	
+	if(HELMET)
+		HELMET.forceMove(loc)
+		HELMET = null
+	if(SUIT)
+		SUIT.forceMove(loc)
+		SUIT = null
+	if(MASK)
+		MASK.forceMove(loc)
+		MASK = null
+	eject_occupant(OCCUPANT)
+
+	new /obj/item/stack/sheet/metal(loc, 2)
+	..()
 
 /obj/machinery/suit_storage_unit/attack_paw(mob/user)
 	to_chat(user, "<span class='info'>The console controls are far too complicated for your tiny brain!</span>")

@@ -55,7 +55,7 @@
 	var/obj/item/weapon/tank/nitrogen/NITRO = new
 	equip_to_slot_or_del(NITRO, SLOT_S_STORE)
 	internal = NITRO
-	internals.icon_state = "internal1"
+	internals.update_icon(src)
 
 	var/obj/item/weapon/card/id/syndicate/C = new(src)
 	C.name = "[real_name]'s Legitimate Human ID Card"
@@ -72,5 +72,3 @@
 
 	if(vox_tick > 4)
 		vox_tick = 1
-
-	return 1

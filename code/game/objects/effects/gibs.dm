@@ -1,14 +1,14 @@
-/proc/gibs(atom/location, list/viruses, datum/dna/MobDNA)		//CARN MARKER
-	new /obj/effect/gibspawner/generic(get_turf(location), viruses, MobDNA)
+/proc/gibs(atom/location, datum/dna/MobDNA)		//CARN MARKER
+	new /obj/effect/gibspawner/generic(get_turf(location), MobDNA)
 
-/proc/hgibs(atom/location, list/viruses, datum/dna/MobDNA, fleshcolor, bloodcolor)
-	new /obj/effect/gibspawner/human(get_turf(location), viruses, MobDNA, fleshcolor, bloodcolor)
+/proc/hgibs(atom/location, datum/dna/MobDNA, fleshcolor, bloodcolor)
+	new /obj/effect/gibspawner/human(get_turf(location), MobDNA, fleshcolor, bloodcolor)
 
-/proc/xgibs(atom/location, list/viruses)
-	new /obj/effect/gibspawner/xeno(get_turf(location), viruses)
+/proc/xgibs(atom/location)
+	new /obj/effect/gibspawner/xeno(get_turf(location))
 
-/proc/robogibs(atom/location, list/viruses)
-	new /obj/effect/gibspawner/robot(get_turf(location), viruses)
+/proc/robogibs(atom/location)
+	new /obj/effect/gibspawner/robot(get_turf(location))
 
 /obj/effect/gibspawner
 	var/sparks = 0 //whether sparks spread on Gib()
@@ -19,7 +19,7 @@
 	var/fleshcolor //Used for gibbed humans.
 	var/datum/dirt_cover/blooddatum //Used for gibbed humans.
 
-/obj/effect/gibspawner/atom_init(location, list/viruses, datum/dna/MobDNA, _fleshcolor, datum/dirt_cover/_blooddatum)
+/obj/effect/gibspawner/atom_init(location, datum/dna/MobDNA, _fleshcolor, datum/dirt_cover/_blooddatum)
 	..()
 
 	if(_fleshcolor)
@@ -28,19 +28,16 @@
 		blooddatum = new(_blooddatum)
 
 	if(isturf(loc)) // basically if a badmin spawns it
-		Gib(loc, viruses, MobDNA)
+		Gib(loc, MobDNA)
 
 	return INITIALIZE_HINT_QDEL
 
-/obj/effect/gibspawner/proc/Gib(atom/location, list/viruses = list(), datum/dna/MobDNA = null)
+/obj/effect/gibspawner/proc/Gib(atom/location, datum/dna/MobDNA = null)
 	if(gibtypes.len != gibamounts.len || gibamounts.len != gibdirections.len)
 		to_chat(world, "<span class='warning'>Gib list length mismatch!</span>")
 		return
 
 	var/obj/effect/decal/cleanable/blood/gibs/gib = null
-	for(var/datum/disease/D in viruses)
-		if(D.spread_type == SPECIAL)
-			qdel(D)
 
 	if(sparks)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
@@ -60,13 +57,6 @@
 					gib.basedatum = new/datum/dirt_cover(blooddatum)
 
 				gib.update_icon()
-
-				if(viruses.len > 0)
-					for(var/datum/disease/D in viruses)
-						if(prob(virusProb))
-							var/datum/disease/viruus = D.Copy(1)
-							gib.viruses += viruus
-							viruus.holder = gib
 
 				gib.blood_DNA = list()
 				if(MobDNA)

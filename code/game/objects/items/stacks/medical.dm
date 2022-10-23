@@ -9,8 +9,8 @@
 	throw_speed = 4
 	throw_range = 20
 
-	var/self_delay = 25
-	var/other_delay = 5
+	var/self_delay = SKILL_TASK_TOUGH
+	var/other_delay = 40
 
 	var/repeating = FALSE
 
@@ -34,6 +34,8 @@
 		"<span class='notice'>You begin applying \the [src] on [to_self ? "yourself" : L].</span>")
 
 /obj/item/stack/medical/proc/can_heal(mob/living/L, mob/user)
+	if(zero_amount())
+		return FALSE
 	if(!istype(L))
 		to_chat(user, "<span class='warning'>\The [src] cannot be applied to [L]!</span>")
 		return FALSE
@@ -65,15 +67,15 @@
 		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "self_tending", /datum/mood_event/self_tending)
 
 	var/delay = L == user ? self_delay : other_delay
+	delay = apply_skill_bonus(user, delay, required_skills, multiplier = -0.125)
 	if(delay)
 		if(!silent)
 			announce_heal(L, user)
-		if(!do_mob(user, L, time = self_delay, check_target_zone = TRUE))
+		if(!do_mob(user, L, time = delay, check_target_zone = TRUE))
 			return
 
-	if(heal(L, user) && use(1) && repeating && !zero_amount())
+	if(use(1) && heal(L, user) && repeating)
 		try_heal(L, user, TRUE)
-		return
 
 	L.updatehealth()
 
@@ -100,6 +102,8 @@
 
 	repeating = TRUE
 	heal_brute = 1
+
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
 
 /obj/item/stack/medical/bruise_pack/announce_heal(mob/living/L, mob/user)
 	..()
@@ -150,7 +154,7 @@
 	return ..()
 
 /obj/item/stack/medical/bruise_pack/update_icon()
-	var/icon_amount = min(amount, max_amount)
+	var/icon_amount = clamp(amount, 1, max_amount)
 	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/ointment
@@ -162,8 +166,10 @@
 	item_state = "ointment"
 	origin_tech = "biotech=1"
 
-	repeating = TRUE
+	repeating = FALSE
 	heal_burn = 1
+
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
 
 /obj/item/stack/medical/ointment/can_heal(mob/living/L, mob/living/user)
 	. = ..()
@@ -191,7 +197,7 @@
 	return ..()
 
 /obj/item/stack/medical/ointment/update_icon()
-	var/icon_amount = min(amount, max_amount)
+	var/icon_amount = clamp(amount, 1, max_amount)
 	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/bruise_pack/tajaran
@@ -227,12 +233,12 @@
 	max_amount = 6
 	origin_tech = "biotech=1"
 
-	other_delay = 10
-
 	repeating = TRUE
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
 
 /obj/item/stack/medical/advanced/bruise_pack/update_icon()
-	icon_state = "[initial(icon_state)][amount]"
+	var/icon_amount = clamp(amount, 1, max_amount)
+	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/advanced/bruise_pack/announce_heal(mob/living/L, mob/user)
 	..()
@@ -290,13 +296,12 @@
 	heal_burn = 12
 	origin_tech = "biotech=1"
 
-	other_delay = 10
-
-	repeating = TRUE
-
+	repeating = FALSE
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
 
 /obj/item/stack/medical/advanced/ointment/update_icon()
-	icon_state = "[initial(icon_state)][amount]"
+	var/icon_amount = clamp(amount, 1, max_amount)
+	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/advanced/ointment/can_heal(mob/living/L, mob/living/user)
 	. = ..()
@@ -334,10 +339,11 @@
 	w_class = SIZE_TINY
 	full_w_class = SIZE_TINY
 
-	self_delay = 50
-	other_delay = 25
+	other_delay = 100
+	self_delay = 200
 
 	repeating = FALSE
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_PRO, /datum/skill/surgery = SKILL_LEVEL_NOVICE)
 
 /obj/item/stack/medical/splint/can_heal(mob/living/L, mob/living/user)
 	. = ..()
@@ -386,13 +392,12 @@
 	max_amount = 3
 	origin_tech = "biotech=2"
 
-	self_delay = 20
-	other_delay = 5
-
 	repeating = FALSE
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_MASTER, /datum/skill/surgery = SKILL_LEVEL_TRAINED)
 
 /obj/item/stack/medical/suture/update_icon()
-	icon_state = "[initial(icon_state)][amount]"
+	var/icon_amount = clamp(amount, 1, max_amount)
+	icon_state = "[initial(icon_state)][icon_amount]"
 
 /obj/item/stack/medical/suture/heal(mob/living/L, mob/living/user)
 	if(ishuman(L))
@@ -402,7 +407,7 @@
 		// Suturing yourself brings much more pain.
 		var/pain_factor = H == user ? 40 : 20
 		if(H.stat == CONSCIOUS)
-			H.shock_stage += pain_factor
+			H.AdjustShockStage(pain_factor)
 		BP.status &= ~ORGAN_ARTERY_CUT
 		BP.strap()
 		user.visible_message(

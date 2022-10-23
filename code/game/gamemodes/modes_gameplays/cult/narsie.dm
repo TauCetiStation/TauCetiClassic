@@ -5,12 +5,12 @@
 	icon = 'icons/obj/magic_terror.dmi'
 	pixel_x = -46
 	pixel_y = -43
-	plane = ABOVE_LIGHTING_LAYER
-	density = TRUE
+	plane = SINGULARITY_PLANE
 	layer = SINGULARITY_LAYER
+	density = TRUE
 
 /atom/proc/notify_ghosts(message, ghost_sound = null) //Easy notification of ghosts.
-	for(var/mob/M in observer_list)
+	for(var/mob/M as anything in observer_list)
 		if(!M.client)
 			continue
 		var/turf/T = get_turf(src)
@@ -24,7 +24,6 @@
 	// Pixel stuff centers Narsie.
 	pixel_x = -236
 	pixel_y = -256
-	plane = ABOVE_LIGHTING_LAYER
 	light_range = 1
 	light_color = "#3e0000"
 	current_size = 12
@@ -127,7 +126,7 @@
 		qdel(A)
 		return
 
-	if(istype(A, /turf/simulated/floor))
+	if(isfloorturf(A))
 		var/turf/T = A
 		if(prob(50))
 			T.ChangeTurf(pick(my_religion.floor_types))
@@ -137,7 +136,7 @@
 		var/area/area = get_area(A)
 		area.religion = global.cult_religion
 		return
-	if(istype(A, /turf/simulated/wall))
+	if(iswallturf(A))
 		var/turf/T = A
 		if(prob(20))
 			T.ChangeTurf(pick(my_religion.wall_types))
@@ -176,7 +175,7 @@
 			return
 
 	//no living players, follow a clientless instead.
-	for(var/mob/mob in alive_mob_list)
+	for(var/mob/mob as anything in alive_mob_list)
 		if(mob.faction == "cult")
 			continue
 		var/turf/pos = get_turf(mob)
@@ -190,7 +189,7 @@
 		return
 
 	//no living humans, follow a ghost instead.
-	for(var/mob/dead/observer/ghost in observer_list)
+	for(var/mob/dead/observer/ghost as anything in observer_list)
 		if(!ghost.client)
 			continue
 		var/turf/pos = get_turf(ghost)
@@ -219,3 +218,6 @@
 	sleep(11)
 	move_self = TRUE
 	icon = initial(icon)
+
+/obj/singularity/narsie/update_icon(stage)
+	return

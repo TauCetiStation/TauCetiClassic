@@ -116,7 +116,7 @@
 	name = "Stechkin pistol"
 	desc = "A small, easily concealable gun. Uses 9mm rounds."
 	icon_state = "stechkin"
-	item_state = "stechkin"
+	item_state = "9mm_glock"
 	w_class = SIZE_TINY
 	silenced = 0
 	origin_tech = "combat=2;materials=2;syndicate=2"
@@ -165,43 +165,27 @@
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/sec_pistol
-	name = "pistol"
-	desc = "AT-7 .45 caliber pistol."
-	icon_state = "at7"
-	fire_sound = 'sound/weapons/guns/gunshot_at7.ogg'
-	mag_type = /obj/item/ammo_box/magazine/at7_45
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer
+	name = "Derringer"
+	desc = "A small pocket pistol and your best friend. Manufactured by Hephaestus Industries without much changes from the earliest designs. Chambered in .38."
+	icon_state = "derringer"
+	item_state = null
+	w_class = SIZE_TINY
+	force = 2
+	flags =  CONDUCT
+	slot_flags = SLOT_FLAGS_BELT
+	origin_tech = "combat=1;materials=1"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer
+	can_be_holstered = TRUE
+	can_be_shortened = FALSE
+	fire_sound = 'sound/weapons/guns/gunshot_derringer.ogg'
+	recoil = 2
 
-/obj/item/weapon/gun/projectile/sec_pistol/atom_init()
-	. = ..()
-	update_icon()
-
-/obj/item/weapon/gun/projectile/sec_pistol/proc/update_magazine()
-	if(magazine)
-		cut_overlays()
-		add_overlay(image('icons/obj/gun.dmi', "at7-mag"))
-		return
-
-/obj/item/weapon/gun/projectile/sec_pistol/update_icon(load = 0)
-	cut_overlays()
-	update_magazine()
-	if(load)
-		icon_state = "[initial(icon_state)]"
-		return
-	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
-	return
-
-/obj/item/weapon/gun/projectile/sec_pistol/acm38
-	name = "pistol"
-	desc = "Seegert ACM38 pistol - when you need be TACTICOOL."
-	icon_state = "acm38"
-	item_state = "colt"
-	fire_sound = 'sound/weapons/guns/gunshot_acm38.ogg'
-	mag_type = /obj/item/ammo_box/magazine/acm38_38
-
-/obj/item/weapon/gun/projectile/sec_pistol/update_icon(load = 0)
-	if(load)
-		icon_state = "[initial(icon_state)]"
-		return
-	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
-	return
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer/syndicate
+	name = "Opressor"
+	desc = "Issued to Syndicate agents who aren't really valuable to HQ. Atleast the name sounds badass. Chambered in .357 Magnum."
+	icon_state = "synderringer"
+	force = 5
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer/syndicate
+	recoil = 3
+	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'

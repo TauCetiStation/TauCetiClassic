@@ -13,7 +13,7 @@
 	var/list/modcount = list()	// assoc list of the count of modules for a type
 
 
-var/list/modules = list(			// global associative list
+var/global/list/modules = list(			// global associative list
 /obj/machinery/power/apc = "card_reader,power_control,id_auth,cell_power,cell_charge")
 
 

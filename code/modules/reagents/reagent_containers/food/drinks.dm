@@ -156,6 +156,9 @@
 	set name = "Gulp Down"
 	set src in view(1)
 
+	if(usr.incapacitated())
+		return
+
 	if(!is_open_container())
 		to_chat(usr, "<span class='notice'>You need to open [src]!</span>")
 		return

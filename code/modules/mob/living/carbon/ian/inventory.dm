@@ -45,8 +45,7 @@
 		update_inv_mouth() //So items actually disappear from mouth.
 
 	W.screen_loc = null // will get moved if inventory is visible
-
-	W.loc = src
+	W.forceMove(src)
 
 	switch(slot)
 		if(SLOT_HEAD)
@@ -73,7 +72,6 @@
 			to_chat(usr, "<span class='red'>You are trying to equip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>")
 			return
 
-	W.layer = ABOVE_HUD_LAYER
 	W.plane = ABOVE_HUD_PLANE
 	W.appearance_flags = APPEARANCE_UI
 	W.slot_equipped = slot
@@ -89,7 +87,6 @@
 	if(!mouth)
 		W.loc = src
 		mouth = W
-		W.layer = ABOVE_HUD_LAYER
 		W.plane = ABOVE_HUD_PLANE
 		W.appearance_flags = APPEARANCE_UI
 		W.equipped(src,SLOT_MOUTH)
@@ -105,6 +102,13 @@
 	return FALSE
 
 /mob/living/carbon/ian/put_in_inactive_hand(obj/item/W)
+	return put_in_active_hand(W)
+
+// ian have only one hand
+/mob/living/carbon/ian/put_in_r_hand(obj/item/W)
+	return put_in_active_hand(W)
+
+/mob/living/carbon/ian/put_in_l_hand(obj/item/W)
 	return put_in_active_hand(W)
 
 /mob/living/carbon/ian/put_in_hands(obj/item/W)

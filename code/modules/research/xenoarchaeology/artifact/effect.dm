@@ -93,7 +93,9 @@
 	if(istype(holder, /obj/machinery/artifact))
 		var/obj/machinery/artifact/A = holder
 		A.update_icon()
-	if(!reveal_toggle && !holder)
+	if(!reveal_toggle)
+		return
+	if(!holder)
 		return
 	var/display_msg = activated ? pick(ARTIFACT_ACTIVATION_MESSAGES): pick(ARTIFACT_DEACTIVATION_MESSAGES)
 	var/atom/toplevelholder = holder
@@ -235,12 +237,20 @@
 	// particle protection suits give best protection, but science space suits are almost as good
 	if(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit/particle_protection))
 		protection += 0.6
+	else if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig/science/rd))
+		protection += 0.6
 	else if(istype(H.wear_suit, /obj/item/clothing/suit/space/globose/science))
+		protection += 0.5
+	else if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig/science))
 		protection += 0.5
 
 	if(istype(H.head, /obj/item/clothing/head/bio_hood/particle_protection))
 		protection += 0.3
+	else if (istype(H.head, /obj/item/clothing/head/helmet/space/rig/science/rd))
+		protection += 0.3
 	else if(istype(H.head, /obj/item/clothing/head/helmet/space/globose/science))
+		protection += 0.2
+	else if (istype(H.head, /obj/item/clothing/head/helmet/space/rig/science))
 		protection += 0.2
 
 	// latex gloves and science goggles also give a bit of bonus protection

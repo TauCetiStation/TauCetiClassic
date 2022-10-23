@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(nightshift)
 	init_order = SS_INIT_NIGHTSHIFT
 	wait = SS_WAIT_NIGHTSHIFT
 	priority = SS_PRIORITY_NIGHTSHIFT
-	flags = SS_NO_FIRE // change to SS_NO_TICK_CHECK for dynamic ligthing changes
+	flags = SS_NO_FIRE
 
 	var/nightshift_active = FALSE
 	var/nightshift_start_time = 23
@@ -44,7 +44,7 @@ SUBSYSTEM_DEF(nightshift)
 			APC.set_nightshift(active, preset)
 			CHECK_TICK
 
-var/list/lighting_presets = list(
+var/global/list/lighting_presets = list(
 	"soft" = list("color" = "#ffe4c9", "power" = 0.8, "range" = 8),
 	"hard" = list("color" = "#e8e9ff", "power" = 0.8, "range" = 8),
 	"3000K" = list("color" = "#ffb46b", "power" = 0.8, "range" = 8),
@@ -53,4 +53,4 @@ var/list/lighting_presets = list(
 	"6000K" = list("color" = "#fff3ef", "power" = 0.8, "range" = 8),
 )
 
-var/hard_lighting_arealist = typecacheof(typesof(/area/station/medical) + typesof(/area/station/rnd) + typesof(/area/asteroid/research_outpost))
+var/global/hard_lighting_arealist = typecacheof(typesof(/area/station/medical) + typesof(/area/station/rnd) + typesof(/area/asteroid/research_outpost))

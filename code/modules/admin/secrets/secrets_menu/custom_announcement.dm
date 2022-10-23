@@ -1,7 +1,7 @@
 /* Custom Announcements UI */
 
-var/list/announcement_sounds_cache = list()
-var/list/datum/announcement/announcements_list
+var/global/list/announcement_sounds_cache = list()
+var/global/list/datum/announcement/announcements_list
 
 /datum/secrets_menu/custom_announce
 	title = "Custom Announce"

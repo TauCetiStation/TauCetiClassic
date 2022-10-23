@@ -7,6 +7,7 @@
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 	var/list/obj/item/weapon/reagent_containers/glass/beaker/beakers = list()
 	var/processing = FALSE
@@ -314,7 +315,7 @@ A proc that does all the animations before mix()-ing.
 			return attack_hand(user)
 		else if(ismultitool(O))
 			return attack_hand(user)
-		else if(istype(O, /obj/item/device/assembly/signaler))
+		else if(issignaler(O))
 			return attack_hand(user)
 
 	if(exchange_parts(user, O))

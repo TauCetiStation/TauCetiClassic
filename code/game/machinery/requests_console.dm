@@ -1,10 +1,10 @@
 /******************** Requests Console ********************/
 /** Originally written by errorage, updated by: Carn, needs more work though. I just added some security fixes */
 
-var/list/req_console_assistance = list()
-var/list/req_console_supplies = list()
-var/list/req_console_information = list()
-var/list/departments_genitive = list()
+var/global/list/req_console_assistance = list()
+var/global/list/req_console_supplies = list()
+var/global/list/req_console_information = list()
+var/global/list/departments_genitive = list()
 
 #define RC_ASSIST 1
 #define RC_SUPPLY 2
@@ -268,6 +268,7 @@ var/list/departments_genitive = list()
 			return FALSE
 
 		announcement.play(department_genitive, message)
+		message_admins("[key_name_admin(usr)] has made a department announcement. [ADMIN_JMP(usr)]")
 
 		announceAuth = FALSE
 		message = ""

@@ -472,7 +472,7 @@
 
 		playsound(src, 'sound/items/matchstick_light.ogg', VOL_EFFECTS_MASTER, 20)
 		M.lit = TRUE
-		M.damtype = "burn"
+		M.damtype = BURN
 		M.icon_state = "match_lit"
 		START_PROCESSING(SSobj, M)
 		M.update_icon()
@@ -716,6 +716,11 @@
 	for(var/i in 1 to 4)
 		new /obj/item/mine/shock(src)
 	make_exact_fit()
+
+/obj/item/weapon/storage/box/rare_seeds
+	name = "granny's gift"
+	desc = "XOXO! - Granny"
+	startswith = list(/obj/item/seeds/gelthi = 1, /obj/item/seeds/vale = 1, /obj/item/seeds/surik = 1, /obj/item/seeds/blackberry = 1, /obj/item/seeds/amauri = 1, /obj/item/seeds/jurlmah = 1)
 
 //NOT USED ANYWHERE
 /obj/item/weapon/storage/box/syndielogo_box

@@ -52,7 +52,7 @@
 
 /datum/event/anomaly/cult_portal/massive/proc/spawn_portals()
 	for(var/i in 1 to 50)
-		impact_area = findEventArea()
+		impact_area = SSevents.findEventArea()
 		var/list/turfs = get_area_turfs(impact_area, black_list=list(/turf/simulated/wall/r_wall, /turf/simulated/wall))
 		if(!turfs)
 			continue

@@ -14,6 +14,8 @@
 	var/stop = 0.0
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
 
+	required_skills = list(/datum/skill/police = SKILL_LEVEL_PRO)
+
 /obj/machinery/computer/prisoner/ui_interact(mob/user)
 	var/dat = ""
 	if(screen == 0)
@@ -37,8 +39,8 @@
 			if(!T.implanted) continue
 			var/loc_display = "Unknown"
 			var/mob/living/carbon/M = T.imp_in
-			if(is_station_level(M.z) && !istype(M.loc, /turf/space))
-				var/turf/mob_loc = get_turf_loc(M)
+			var/turf/mob_loc = get_turf_loc(M)
+			if(!isenvironmentturf(mob_loc))
 				loc_display = mob_loc.loc
 			if(T.malfunction)
 				loc_display = pick(teleportlocs)
@@ -62,7 +64,6 @@
 	. = ..()
 	if(!.)
 		return
-
 	if(href_list["inject1"])
 		var/obj/item/weapon/implant/I = locate(href_list["inject1"])
 		if(I)	I.activate(1)

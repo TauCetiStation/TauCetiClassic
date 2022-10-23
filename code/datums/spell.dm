@@ -1,7 +1,7 @@
 /obj/effect/proc_holder
 	var/panel = "Debug"//What panel the proc holder needs to go on.
 
-var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
+var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin verb for now
 
 /obj/effect/proc_holder/spell
 	name = "Spell"
@@ -24,6 +24,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/list/needed_aspects
 	/****RELIGIOUS ASPECT****/
 
+	var/plasma_cost = 0 //for xenomorph powers
+
 	var/holder_var_type = "bruteloss" //only used if charge_type equals to "holder_var"
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
 
@@ -45,24 +47,27 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/smoke_spread = 0 //1 - harmless, 2 - harmful
 	var/smoke_amt = 0 //cropped at 10
 
-	var/critfailchance = 0
 	var/centcomm_cancast = TRUE //Whether or not the spell should be allowed on z2
 
 	var/datum/action/spell_action/action = null
-	var/action_icon = 'icons/mob/actions.dmi'
+	var/action_icon = 'icons/hud/actions.dmi'
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
 	var/static/list/casting_clothes
+
+/obj/effect/proc_holder/spell/Destroy()
+	QDEL_NULL(action)
+	return ..()
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.spell_list))
 		if(try_start)
 			to_chat(user, "<span class='red'> You shouldn't have this spell! Something's wrong.</span>")
-		return 0
+		return FALSE
 
 	if(is_centcom_level(user.z) && !centcomm_cancast) //Certain spells are not allowed on the centcomm zlevel
-		return 0
+		return FALSE
 
 	if(!skipcharge)
 		switch(charge_type)
@@ -70,48 +75,55 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				if(charge_counter < charge_max)
 					if(try_start)
 						to_chat(user, "[name] is still recharging.")
-					return 0
+					return FALSE
 			if("charges")
 				if(!charge_counter)
 					if(try_start)
 						to_chat(user, "[name] has no charges left.")
-					return 0
+					return FALSE
 
 		if(favor_cost > 0 && user.mind.holy_role)
 			if(user.my_religion.favor < favor_cost)
 				if(try_start)
 					to_chat(user, "<span class ='warning'>You need [favor_cost - user.my_religion.favor] more favors.</span>")
-				return 0
+				return FALSE
 
-	if(user.stat && !stat_allowed)
+	if(user.stat != CONSCIOUS && !stat_allowed)
 		if(try_start)
 			to_chat(user, "Not when you're incapacitated.")
-		return 0
+		return FALSE
+
+	if(plasma_cost && isxeno(user))
+		var/mob/living/carbon/xenomorph/alien = user
+		if(!alien.check_enough_plasma(plasma_cost))
+			if(try_start)
+				to_chat(user, "<span class='warning'>Not enough plasma stored.</span>")
+			return FALSE
 
 	if(ishuman(user) || ismonkey(user))
 		if(istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 			if(try_start)
 				user.say("Mmmf mrrfff!")
-			return 0
+			return FALSE
 
 	if(clothes_req) //clothes check
 		if(!ishuman(user))
 			if(try_start)
 				to_chat(user, "You aren't a human, Why are you trying to cast a human spell, silly non-human? Casting human spells is for humans.")
-			return 0
+			return FALSE
 		var/mob/living/carbon/human/H = user
-		if(!is_type_in_typecache(H.wear_suit, casting_clothes))
+		if(!H.wear_suit?.GetComponent(/datum/component/magic_item/wizard))
 			if(try_start)
 				to_chat(user, "I don't feel strong enough without my robe.")
-			return 0
-		if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
+			return FALSE
+		if(!H.shoes?.GetComponent(/datum/component/magic_item/wizard))
 			if(try_start)
 				to_chat(user, "I don't feel strong enough without my sandals.")
-			return 0
-		if(!is_type_in_typecache(H.head, casting_clothes))
+			return FALSE
+		if(!H.head?.GetComponent(/datum/component/magic_item/wizard))
 			if(try_start)
 				to_chat(user, "I don't feel strong enough without my hat.")
-			return 0
+			return FALSE
 
 	if(try_start && !skipcharge)
 		switch(charge_type)
@@ -125,7 +137,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		if(favor_cost > 0 && user.mind.holy_role)
 			user.my_religion.adjust_favor(-favor_cost)  //steals favor from spells per favor
 
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
 
@@ -149,29 +161,33 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(!casting_clothes)
 		casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/suit/space/rig/wizard,
 		/obj/item/clothing/head/wizard, /obj/item/clothing/head/helmet/space/rig/wizard))
+	if(plasma_cost)
+		name += " ([plasma_cost])"
 
 /obj/effect/proc_holder/spell/Click()
 	if(cast_check())
 		choose_targets()
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
 	return
 
 /obj/effect/proc_holder/spell/proc/start_recharge(mob/user = usr)
+	var/atom/movable/screen/cooldown_overlay/cooldown = start_cooldown(action.button, charge_max)
 	while(charge_counter < charge_max)
 		sleep(1)
 		charge_counter++
+		if(cooldown)
+			cooldown.tick()
+
+	qdel(cooldown)
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets, user)
 	invocation(user)
 	if(charge_type == "recharge" && recharge)
 		INVOKE_ASYNC(src, .proc/start_recharge, user)
-	if(prob(critfailchance))
-		critfail(targets, user)
-	else
-		cast(targets, user)
+	cast(targets, user)
 	after_cast(targets, user)
 
 /obj/effect/proc_holder/spell/proc/before_cast(list/targets, mob/user = usr)
@@ -214,9 +230,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				smoke.start()
 
 /obj/effect/proc_holder/spell/proc/cast(list/targets, mob/user = usr)
-	return
-
-/obj/effect/proc_holder/spell/proc/critfail(list/targets, mob/user = usr)
 	return
 
 /obj/effect/proc_holder/spell/proc/revert_cast(mob/user = usr) //resets recharge or readds a charge
@@ -273,7 +286,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 			if(range < 0)
 				targets += user // use spell/no_target instead
 			else
-				var/possible_targets = list()
+				var/list/possible_targets = list()
 
 				for(var/mob/living/M in view_or_range(range, user, selection_type))
 					if(!include_user && user == M)
@@ -282,9 +295,12 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 					I.appearance = M
 					possible_targets[M] = I
 
-				var/radial_choose = show_radial_menu(user, user, possible_targets, tooltips = TRUE)
-				if(radial_choose)
-					targets += radial_choose
+				if(possible_targets.len == 1) //We have only one possible target
+					targets += possible_targets[1]
+				else //We have 2 and more targets
+					var/radial_choose = show_radial_menu(user, user, possible_targets, tooltips = TRUE)
+					if(radial_choose)
+						targets += radial_choose
 		else
 			var/list/possible_targets = list()
 			for(var/mob/living/target in view_or_range(range, user, selection_type))

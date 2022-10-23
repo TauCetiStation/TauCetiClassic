@@ -19,5 +19,4 @@
 
 	if(target && target.current)
 		explanation_text = format_explanation()
-
 	return TRUE

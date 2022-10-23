@@ -37,6 +37,8 @@
 
 	var/datum/announcement/station/command/announcement = new
 
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_PRO)
+
 /obj/machinery/computer/communications/atom_init()
 	. = ..()
 	communications_list += src
@@ -52,8 +54,8 @@
 		if(istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage))
 			return ..()
 
-	for(var/mob/living/silicon/ai/shuttlecaller in ai_list)
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
+	for(var/mob/living/silicon/ai/shuttlecaller as anything in ai_list)
+		if(shuttlecaller.stat == CONSCIOUS && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
 	if(sent_strike_team)
@@ -65,12 +67,6 @@
 	SSshuttle.announce_emer_called.play()
 
 	return ..()
-
-/obj/machinery/computer/communications/process()
-	if(..())
-		if(state != STATE_STATUSDISPLAY)
-			updateDialog()
-
 
 /obj/machinery/computer/communications/Topic(href, href_list)
 	. = ..()

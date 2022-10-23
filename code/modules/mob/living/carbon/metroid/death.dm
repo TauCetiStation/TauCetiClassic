@@ -6,7 +6,7 @@
 	cut_overlays()
 
 	if(!gibbed)
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(isslimeadult(src))
 			ghostize(bancheck = TRUE)
 			var/mob/living/carbon/slime/M1 = new primarytype(loc)
 			M1.rabid = 1

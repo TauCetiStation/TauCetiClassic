@@ -1,31 +1,21 @@
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
-/datum/asset/group/goonchat
-	children = list(
-		/datum/asset/simple/jquery,
-		/datum/asset/simple/goonchat,
-		/datum/asset/simple/fontawesome,
-		/datum/asset/simple/error_handler_js
-	)
-
 /datum/asset/simple/tgui
 	assets = list(
-		"tgui.bundle.js" = 'tgui/packages/tgui/public/tgui.bundle.js',
-		"tgui.bundle.css" = 'tgui/packages/tgui/public/tgui.bundle.css',
+		"tgui.bundle.js" = 'tgui/public/tgui.bundle.js',
+		"tgui.bundle.css" = 'tgui/public/tgui.bundle.css',
 	)
+
+/datum/asset/simple/tgui_panel
+	assets = list(
+		"tgui-panel.bundle.js" = 'tgui/public/tgui-panel.bundle.js',
+		"tgui-panel.bundle.css" = 'tgui/public/tgui-panel.bundle.css',
+	)
+
 
 /datum/asset/simple/jquery
 	assets = list(
 		"jquery.min.js" = 'code/modules/goonchat/browserassets/js/jquery.min.js'
-	)
-
-/datum/asset/simple/goonchat
-	assets = list(
-		"jquery.mark.min.js" = 'code/modules/goonchat/browserassets/js/jquery.mark.min.js',
-		"json2.min.js" = 'code/modules/goonchat/browserassets/js/json2.min.js',
-		"browserOutput.js" = 'code/modules/goonchat/browserassets/js/browserOutput.js',
-		"emojib64.css" = 'code/modules/goonchat/browserassets/css/emojib64.css',
-		"browserOutput.css" = 'code/modules/goonchat/browserassets/css/browserOutput.css'
 	)
 
 /datum/asset/simple/fontawesome
@@ -190,7 +180,7 @@
 			/obj/item/kinetic_upgrade/speed,
 			/obj/item/weapon/reagent_containers/food/snacks/hotchili,
 			/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,
-			/obj/item/weapon/soap/nanotrasen,
+			/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,
 			/obj/item/clothing/mask/facehugger_toy,
 			/obj/item/weapon/card/mining_point_card,
 			/obj/item/weapon/spacecash/c1000,

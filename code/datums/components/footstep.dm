@@ -37,8 +37,8 @@
 
 ///Prepares a footstep. Determines if it should get played. Returns the turf it should get played on. Note that it is always a /turf/open
 /datum/component/footstep/proc/prepare_step()
-	var/turf/simulated/T = get_turf(parent)
-	if(!istype(T))
+	var/turf/T = get_turf(parent)
+	if(!istype(T) || (T.flags & NOSTEPSOUND))
 		return
 
 	var/mob/living/LM = parent
@@ -66,7 +66,7 @@
 	return T
 
 /datum/component/footstep/proc/play_simplestep()
-	var/turf/simulated/T = prepare_step()
+	var/turf/T = prepare_step()
 	if(!T)
 		return
 	if(isfile(footstep_sounds) || istext(footstep_sounds))
@@ -87,7 +87,7 @@
 	playsound(T, pick(footstep_sounds[turf_footstep][1]), VOL_EFFECTS_MASTER, footstep_sounds[turf_footstep][2] * volume, TRUE, null, footstep_sounds[turf_footstep][3] + e_range)
 
 /datum/component/footstep/proc/play_humanstep()
-	var/turf/simulated/T = prepare_step()
+	var/turf/T = prepare_step()
 	if(!T)
 		return
 	var/mob/living/carbon/human/H = parent

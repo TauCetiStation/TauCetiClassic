@@ -2,12 +2,12 @@
 	var/msg = "<span class='info'>*---------*\nThis is [bicon(src)] \a <EM>[src]</EM>[custom_name ? ", [modtype] [braintype]" : ""]!\n"
 	msg += "<span class='warning'>"
 	if (getBruteLoss())
-		if (getBruteLoss() < 75)
+		if (getBruteLoss() < maxHealth * 0.375)
 			msg += "It looks slightly dented.\n"
 		else
 			msg += "<B>It looks severely dented!</B>\n"
 	if (getFireLoss())
-		if (getFireLoss() < 75)
+		if (getFireLoss() < maxHealth * 0.375)
 			msg += "It looks slightly charred.\n"
 		else
 			msg += "<B>It looks severely burnt and heat-warped!</B>\n"

@@ -10,8 +10,6 @@
 	if(stat != DEAD)
 		add_ingame_age()
 
-	if(pull_debuff && !pulling)	//For cases when pulling was stopped by 'pulling = null'
-		pull_debuff = 0
 	update_gravity(mob_has_gravity())
 
 	handle_combat()
@@ -34,23 +32,44 @@
 				I.action.name = I.action_button_name
 				I.action.target = I
 			I.action.Grant(src)
-	return
+
+/mob/living/proc/update_health_hud()
+	if(!healths)
+		return
+
+	if(stat == DEAD)
+		healths.icon_state = "health7"
+		return
+
+	var/severity
+	switch(100 * health / maxHealth)
+		if(100 to INFINITY)
+			severity = 0
+		if(80 to 100)
+			severity = 1
+		if(60 to 80)
+			severity = 2
+		if(40 to 60)
+			severity = 3
+		if(20 to 40)
+			severity = 4
+		if(0 to 20)
+			severity = 5
+		else
+			severity = 6
+
+	healths.icon_state = "health[severity]"
 
 /mob/living/proc/handle_regular_hud_updates()
 	if(!client)
-		return FALSE
+		return
 
 	handle_vision()
 	handle_actions()
 	update_action_buttons()
+	update_health_hud()
 
-	if(pullin)
-		if(pulling)
-			pullin.icon_state = "pull1"
-		else
-			pullin.icon_state = "pull0"
-
-	return TRUE
+	pullin?.update_icon(src)
 
 /mob/living/proc/is_vision_obstructed()
 	if(istype(loc, /obj/item/weapon/holder))
@@ -93,12 +112,9 @@
 				reset_view(null)
 
 
-/mob/living/update_action_buttons()
+/mob/update_action_buttons()
 	if(!hud_used) return
 	if(!client) return
-
-	if(hud_used.hud_shown != 1)	//Hud toggled to minimal
-		return
 
 	client.screen -= hud_used.hide_actions_toggle
 	for(var/datum/action/A in actions)

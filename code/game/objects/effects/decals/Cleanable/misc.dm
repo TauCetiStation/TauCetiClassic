@@ -28,6 +28,11 @@
 		F.dirt += 4
 	qdel(src)
 
+/obj/effect/decal/cleanable/ash/large
+	name = "large pile of ashes"
+	icon_state = "big_ash"
+	beauty = -100
+
 /obj/effect/decal/cleanable/greenglow
 
 /obj/effect/decal/cleanable/greenglow/atom_init()
@@ -118,13 +123,10 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "vomit_1"
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
-	var/list/viruses = list()
 
 	beauty = -250
 
 /obj/effect/decal/cleanable/vomit/Destroy()
-	for(var/datum/disease/D in viruses)
-		D.cure(0)
 	set_light(0)
 	return ..()
 
@@ -132,6 +134,19 @@
 	sleep(rand(150,300))
 	if(!src) return
 	set_light(0)
+
+/obj/effect/decal/cleanable/shreds
+	name = "shreds"
+	desc = "The shredded remains of what appears to be clothing."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "shreds"
+
+/obj/effect/decal/cleanable/shreds/atom_init(mapload, oldname)
+	. = ..()
+	pixel_x = rand(-10, 10)
+	pixel_y = rand(-10, 10)
+	if(!isnull(oldname))
+		desc = "The sad remains of what used to be [oldname]"
 
 /obj/effect/decal/cleanable/tomato_smudge
 	name = "tomato smudge"
@@ -174,7 +189,7 @@
 
 	beauty = -100
 
-var/list/toilet_overlay_cache = list()
+var/global/list/toilet_overlay_cache = list()
 
 /obj/effect/decal/cleanable/toilet_paint/atom_init(mapload, main = random_color(), shade = random_color())
 	. = ..()

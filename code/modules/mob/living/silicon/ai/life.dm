@@ -38,7 +38,7 @@
 			adjustOxyLoss(-1)
 
 		//stage = 1
-		//if (istype(src, /mob/living/silicon/ai)) // Are we not sure what we are?
+		//if (isAI(src)) // Are we not sure what we are?
 		var/blind = 0
 		//stage = 2
 		var/area/loc = null
@@ -47,19 +47,13 @@
 			loc = T.loc
 			if (istype(loc, /area))
 				//stage = 4
-				if (!loc.power_equip && !istype(src.loc,/obj/item))
+				if (!loc.power_equip && !isitem(src.loc))
 					//stage = 5
 					blind = 1
 
+		update_sight(blind)
 		if (!blind)	//lol? if(!blind)	#if(src.blind.layer)    <--something here is clearly wrong :P
 					//I'll get back to this when I find out  how this is -supposed- to work ~Carn //removed this shit since it was confusing as all hell --39kk9t
-			//stage = 4.5
-			src.sight |= SEE_TURFS
-			src.sight |= SEE_MOBS
-			src.sight |= SEE_OBJS
-			src.see_in_dark = 8
-			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
-
 
 			//Congratulations!  You've found a way for AI's to run without using power!
 			//Todo:  Without snowflaking up master_controller procs find a way to make AI use_power but only when APC's clear the area usage the tick prior
@@ -85,14 +79,7 @@
 				return
 		else
 
-			//stage = 6
-			src.sight = src.sight&~SEE_TURFS
-			src.sight = src.sight&~SEE_MOBS
-			src.sight = src.sight&~SEE_OBJS
-			src.see_in_dark = 0
-			src.see_invisible = SEE_INVISIBLE_LIVING
-
-			if (((!loc.power_equip) || istype(T, /turf/space)) && !istype(src.loc,/obj/item))
+			if (((!loc.power_equip) || isenvironmentturf(T)) && !isitem(src.loc))
 				if (src:aiRestorePowerRoutine==0)
 					src:aiRestorePowerRoutine = 1
 
@@ -107,7 +94,7 @@
 						to_chat(src, "Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection.")
 						sleep(50)
 						if (loc.power_equip)
-							if (!istype(T, /turf/space))
+							if (!isenvironmentturf(T))
 								to_chat(src, "Alert cancelled. Power has been restored without our assistance.")
 								src:aiRestorePowerRoutine = 0
 								return
@@ -115,7 +102,7 @@
 						sleep(20)
 						to_chat(src, "Emergency control system online. Verifying connection to power network.")
 						sleep(50)
-						if (istype(T, /turf/space))
+						if (isenvironmentturf(T))
 							to_chat(src, "Unable to verify! No power connection detected!")
 							src:aiRestorePowerRoutine = 2
 							return
@@ -145,7 +132,7 @@
 								src:aiRestorePowerRoutine = 2
 								return
 							if(loc.power_equip)
-								if(!istype(T, /turf/space))
+								if(!isenvironmentturf(T))
 									to_chat(src, "Alert cancelled. Power has been restored without our assistance.")
 									src:aiRestorePowerRoutine = 0
 									return
@@ -189,3 +176,18 @@
 /mob/living/silicon/ai/rejuvenate()
 	..()
 	add_ai_verbs(src)
+
+/mob/living/silicon/ai/update_sight(blind)
+	if(!..())
+		return FALSE
+
+	sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_LEVEL_TWO
+
+	if(blind)
+		sight = initial(sight)
+		see_in_dark = 0
+		see_invisible = SEE_INVISIBLE_LIVING
+
+	return TRUE

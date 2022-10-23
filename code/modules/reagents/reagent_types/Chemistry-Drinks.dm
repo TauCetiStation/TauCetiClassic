@@ -20,8 +20,7 @@
 	if(adj_sleepy)
 		M.AdjustSleeping(adj_sleepy)
 	if(adj_temp)
-		if(M.bodytemperature >= BODYTEMP_COLD_DAMAGE_LIMIT && M.bodytemperature <= TEMPERATURE_DAMAGE_COEFFICIENT)
-			M.bodytemperature = clamp(M.bodytemperature + adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+		M.adjust_bodytemperature(adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
 
 /datum/reagent/consumable/drink/orangejuice
 	name = "Orange juice"
@@ -158,6 +157,10 @@
 
 /datum/reagent/consumable/drink/milk/on_general_digest(mob/living/M)
 	..()
+
+	if(M.IsSleeping())
+		M.AdjustDrunkenness(-1)
+
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1, 0)
 	if(holder.has_reagent("capsaicin"))
@@ -208,6 +211,11 @@
 
 /datum/reagent/consumable/drink/coffee/on_general_digest(mob/living/M)
 	..()
+
+	M.AdjustDrunkenness(-1)
+	if(M.IsSleeping())
+		M.AdjustDrunkenness(-2)
+
 	M.make_jittery(5)
 	if(adj_temp > 0 && holder.has_reagent("frostoil"))
 		holder.remove_reagent("frostoil", 10 * REAGENTS_METABOLISM)
@@ -395,21 +403,21 @@
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1 to 15)
-			M.bodytemperature -= 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(holder.has_reagent("capsaicin"))
 				holder.remove_reagent("capsaicin", 5)
-			if(istype(M, /mob/living/carbon/slime))
-				M.bodytemperature -= rand(5,20)
+			if(isslime(M))
+				M.adjust_bodytemperature(-rand(5,20))
 		if(15 to 25)
-			M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(istype(M, /mob/living/carbon/slime))
-				M.bodytemperature -= rand(10,20)
+			M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT)
+			if(isslime(M))
+				M.adjust_bodytemperature(-rand(10,20))
 		if(25 to INFINITY)
-			M.bodytemperature -= 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.adjust_bodytemperature(-15 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(prob(1))
 				M.emote("shiver")
-			if(istype(M, /mob/living/carbon/slime))
-				M.bodytemperature -= rand(15,20)
+			if(isslime(M))
+				M.adjust_bodytemperature(-rand(15,20))
 	data["ticks"]++
 
 /datum/reagent/consumable/drink/cold/milkshake/chocolate
@@ -440,7 +448,7 @@
 	M.make_jittery(5)
 
 /datum/reagent/consumable/drink/cold/kvass
-	name = "kvass"
+	name = "Kvass"
 	id = "kvass"
 	description = "A cool refreshing drink with a taste of socialism."
 	reagent_state = LIQUID
@@ -471,7 +479,7 @@
 	if(M.dizziness !=0)
 		M.dizziness = max(0, M.dizziness - 15)
 	if(M.confused !=0)
-		M.confused = max(0, M.confused - 5)
+		M.AdjustConfused(-5)
 
 /datum/reagent/consumable/honey
 	name = "Honey"
@@ -511,7 +519,7 @@
 	..()
 	M.adjustDrugginess(5)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
-		M.confused = max(M.confused + 2,0)
+		M.AdjustConfused(2)
 		M.make_dizzy(10)
 	M.AdjustStuttering(4)
 	if(!data["ticks"])
@@ -542,7 +550,7 @@
 	if(data["ticks"] >= 15 && data["ticks"] < 45)
 		M.AdjustStuttering(4)
 	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] < 55)
-		M.confused = max(M.confused + 3,0)
+		M.AdjustConfused(3)
 	else if(data["ticks"] >=55)
 		M.adjustDrugginess(5)
 	else if(data["ticks"] >=200)
@@ -559,7 +567,8 @@
 
 /datum/reagent/consumable/neurotoxin/on_general_digest(mob/living/M)
 	..()
-	M.weakened = max(M.weakened, 3)
+	M.Stun(3)
+	M.Weaken(3)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
@@ -567,7 +576,7 @@
 	if(data["ticks"] >= 15 && data["ticks"] < 45)
 		M.AdjustStuttering(4)
 	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] <55)
-		M.confused = max(M.confused + 3,0)
+		M.AdjustConfused(3)
 	else if(data["ticks"] >=55)
 		M.adjustDrugginess(5)
 	else if(data["ticks"] >=200)
@@ -619,6 +628,27 @@
 			if(prob(30))
 				M.adjustToxLoss(2)
 
+/datum/reagent/consumable/lean
+	name = "Lean"
+	id = "lean"
+	description = "An opiod-based recreational drug beverage, made using cough syrup, soft drink and some sugar."
+	reagent_state = LIQUID
+	color = "#de55ed" // rgb: 222, 85, 237
+	custom_metabolism = FOOD_METABOLISM * 0.5
+	taste_message = "sweet druggy soda"
+	restrict_species = list(IPC, DIONA)
+	overdose = 20
+
+/datum/reagent/consumable/lean/on_general_digest(mob/living/M)
+	..()
+	M.adjustDrugginess(5)
+	if(!M.stuttering)
+		M.stuttering = 1
+	if(volume >= overdose)
+		if(M.losebreath <= 3)
+			M.losebreath = max(0, M.losebreath + 3)
+			M.adjustOxyLoss(1)
+
 /*boozepwr chart
 1-2 = non-toxic alcohol
 3 = medium-toxic
@@ -635,16 +665,15 @@
 	nutriment_factor = 0 //So alcohol can fill you up! If they want to.
 	color = "#404030" // rgb: 64, 64, 48
 	custom_metabolism = DRINK_METABOLISM * 0.4
+
 	var/boozepwr = 5 //higher numbers mean the booze will have an effect faster.
-	var/dizzy_adj = 3
+
+	var/dizzy_adj = 0
 	var/adj_drowsy = 0
 	var/adj_sleepy = 0
-	var/slurr_adj = 3
-	var/confused_adj = 2
-	var/slur_start = 90			//amount absorbed after which mob starts slurring
-	var/confused_start = 150	//amount absorbed after which mob starts confusing directions
-	var/blur_start = 300	//amount absorbed after which mob starts getting blurred vision
-	var/pass_out = 400	//amount absorbed after which mob starts passing out
+	var/slurr_adj = 0
+	var/confused_adj = 0
+
 	taste_message = "liquid fire"
 	restrict_species = list(IPC, DIONA)
 	flags = list(IS_ORGANIC)
@@ -653,49 +682,23 @@
 	if(!..())
 		return
 
-	if(adj_drowsy)
-		M.drowsyness = max(0,M.drowsyness + adj_drowsy)
-	if(adj_sleepy)
-		M.SetSleeping(adj_sleepy)
+	M.drowsyness = max(0, M.drowsyness + adj_drowsy)
+	M.SetSleeping(adj_sleepy)
 
-	if(!data["ticks"])
-		data["ticks"] = 1   //if it doesn't exist we set it.
-	data["ticks"] += boozepwr						//avoid a runtime error associated with drinking blood mixed in drinks (demon's blood).
-
-	var/d = 0
-
-	// make all the beverages work together
-	for(var/datum/reagent/consumable/ethanol/A in holder.reagent_list)
-		if(A.data["ticks"])
-			d += A.data["ticks"]
+	var/drunkpwr = boozepwr
 
 	if(HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
-		d *= 0.7
+		drunkpwr *= 0.7
 
 	if(HAS_TRAIT(M, TRAIT_LIGHT_DRINKER))
-		d *= 2
+		drunkpwr *= 2
+
+	M.AdjustDrunkenness(drunkpwr)
 
 	M.dizziness += dizzy_adj
-	if(d >= slur_start && d < pass_out)
-		if(!M.slurring)
-			M.slurring = 1
-		M.slurring += slurr_adj
-	if(d >= confused_start && prob(33))
-		if(!M.confused)
-			M.confused = 1
-		M.confused = max(M.confused + confused_adj, 0)
-	if(d >= blur_start)
-		M.blurEyes(10)
-		M.drowsyness = max(M.drowsyness, 0)
-	if(d >= pass_out)
-		M.paralysis = max(M.paralysis, 20)
-		M.drowsyness = max(M.drowsyness, 30)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			var/obj/item/organ/internal/liver/IO = H.organs_by_name[O_LIVER]
-			if(istype(IO))
-				IO.take_damage(0.1, 1)
-			H.adjustToxLoss(0.1)
+	M.slurring += slurr_adj
+	M.AdjustConfused(confused_adj)
+
 	return TRUE
 
 /datum/reagent/consumable/ethanol/on_skrell_digest(mob/living/M)
@@ -719,7 +722,7 @@
 			to_chat(usr, "It wasn't enough...")
 	return
 /datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with ethanol isn't quite as good as fuel.
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH)
 		M.adjust_fire_stacks(volume / 15)
@@ -738,6 +741,8 @@
 /datum/reagent/consumable/ethanol/beer/on_general_digest(mob/living/M)
 	..()
 	M.jitteriness = max(M.jitteriness - 3,0)
+	if(HAS_TRAIT(M, TRAIT_DWARF))
+		M.heal_bodypart_damage(1, 1)
 
 /datum/reagent/consumable/ethanol/kahlua
 	name = "Kahlua"
@@ -768,7 +773,6 @@
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 2
 	dizzy_adj = 4
-	slur_start = 30		//amount absorbed after which mob starts slurring
 	taste_message = "class"
 
 /datum/reagent/consumable/ethanol/thirteenloko
@@ -783,8 +787,7 @@
 /datum/reagent/consumable/ethanol/thirteenloko/on_general_digest(mob/living/M)
 	..()
 	M.drowsyness = max(0, M.drowsyness - 7)
-	if(M.bodytemperature > BODYTEMP_NORMAL)
-		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = BODYTEMP_NORMAL)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.make_jittery(5)
 
@@ -868,8 +871,6 @@
 	color = "#7e4043" // rgb: 126, 64, 67
 	boozepwr = 1.5
 	dizzy_adj = 2
-	slur_start = 65			//amount absorbed after which mob starts slurring
-	confused_start = 145	//amount absorbed after which mob starts confusing directions
 	taste_message = "wine"
 
 	needed_aspects = list(ASPECT_FOOD = 1, ASPECT_RESCUE = 1)
@@ -881,7 +882,6 @@
 	color = "#ab3c05" // rgb: 171, 60, 5
 	boozepwr = 1.5
 	dizzy_adj = 4
-	confused_start = 115	//amount absorbed after which mob starts confusing directions
 	taste_message = "cognac"
 
 /datum/reagent/consumable/ethanol/hooch
@@ -892,8 +892,6 @@
 	boozepwr = 2
 	dizzy_adj = 6
 	slurr_adj = 5
-	slur_start = 35			//amount absorbed after which mob starts slurring
-	confused_start = 90	//amount absorbed after which mob starts confusing directions
 	taste_message = "puke"
 
 /datum/reagent/consumable/ethanol/ale
@@ -904,6 +902,11 @@
 	boozepwr = 1
 	taste_message = "ale"
 
+/datum/reagent/consumable/ethanol/ale/on_general_digest(mob/living/M)
+	..()
+	if(HAS_TRAIT(M, TRAIT_DWARF))
+		M.heal_bodypart_damage(1, 1)
+
 /datum/reagent/consumable/ethanol/absinthe
 	name = "Absinthe"
 	id = "absinthe"
@@ -911,8 +914,6 @@
 	color = "#33ee00" // rgb: 51, 238, 0
 	boozepwr = 4
 	dizzy_adj = 5
-	slur_start = 15
-	confused_start = 30
 	taste_message = "absinthe"
 
 
@@ -923,8 +924,6 @@
 	color = "#000000" // rgb: 0, 0, 0 SHOCKER
 	boozepwr = 1
 	dizzy_adj = 1
-	slur_start = 1
-	confused_start = 1
 	taste_message = "bitter wine"
 
 	needed_aspects = list(ASPECT_FOOD = 1, ASPECT_OBSCURE = 1)
@@ -1122,8 +1121,7 @@
 
 /datum/reagent/consumable/ethanol/toxins_special/on_general_digest(mob/living/M)
 	..()
-	if (M.bodytemperature < 330)
-		M.bodytemperature = min(330, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 20)
 
 /datum/reagent/consumable/ethanol/beepsky_smash
 	name = "Beepsky Smash"
@@ -1154,6 +1152,11 @@
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 2
 	taste_message = "manliness"
+
+/datum/reagent/consumable/ethanol/manly_dorf/on_general_digest(mob/living/M)
+	..()
+	if(HAS_TRAIT(M, TRAIT_DWARF))
+		M.heal_bodypart_damage(3, 3)
 
 /datum/reagent/consumable/ethanol/longislandicedtea
 	name = "Long Island Iced Tea"
@@ -1241,8 +1244,7 @@
 
 /datum/reagent/consumable/ethanol/antifreeze/on_general_digest(mob/living/M)
 	..()
-	if (M.bodytemperature < 330)
-		M.bodytemperature = min(330, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 20)
 
 /datum/reagent/consumable/ethanol/barefoot
 	name = "Barefoot"
@@ -1340,8 +1342,7 @@
 
 /datum/reagent/consumable/ethanol/sbiten/on_general_digest(mob/living/M)
 	..()
-	if (M.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT)
-		M.bodytemperature = min(BODYTEMP_HEAT_DAMAGE_LIMIT, M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	M.adjust_bodytemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_HEAT_DAMAGE_LIMIT)
 
 /datum/reagent/consumable/ethanol/devilskiss
 	name = "Devils Kiss"
@@ -1379,8 +1380,7 @@
 
 /datum/reagent/consumable/ethanol/iced_beer/on_general_digest(mob/living/M)
 	..()
-	if(M.bodytemperature > 270)
-		M.bodytemperature = max(270, M.bodytemperature - (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	M.adjust_bodytemperature(-20 * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = BODYTEMP_NORMAL - 40)
 
 /datum/reagent/consumable/ethanol/grog
 	name = "Grog"
@@ -1503,7 +1503,7 @@
 	if(data["ticks"] >= 55 && data["ticks"] < 115)
 		M.AdjustStuttering(11)
 	else if(data["ticks"] >= 115 && prob(33))
-		M.confused = max(M.confused + 15, 15)
+		M.AdjustConfused(15)
 
 /datum/reagent/consumable/ethanol/bacardi
 	name = "Bacardi"
@@ -1529,5 +1529,60 @@
 	description = "Mixture of refreshing lemonade and sweet rum."
 	reagent_state = LIQUID
 	color = "#c5f415" // rgb: 197, 244, 21
+	boozepwr = 3
+	taste_message = "sweet alcohol"
+
+/datum/reagent/consumable/ethanol/sangria
+	name = "Sangria"
+	id = "sangria"
+	description = "You feel the freshness and tranquility of this berry-wine drink. Drink up!"
+	reagent_state = LIQUID
+	color = "#9d40c1" // rgb: 157, 64, 93
+	boozepwr = 3
+	taste_message = "sweet alcohol"
+
+/datum/reagent/consumable/ethanol/strongmandrink
+	name = "Strongman's Drink"
+	id = "strongmandrink"
+	description = "Strength and life in one glass, what more can you want?"
+	reagent_state = LIQUID
+	color = "#f36bad" // rgb: 243, 107, 173
+	boozepwr = 3
+	taste_message = "health alcohol"
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/consumable/ethanol/bluelagoone
+	name = "The Blue Lagoone"
+	id = "bluelagoone"
+	description = "Sea.. Adrenaline.. How these times are missing."
+	reagent_state = LIQUID
+	color = "#4272ae" // rgb: 66, 114, 174
+	boozepwr = 5
+	taste_message = "beach alcohol"
+
+/datum/reagent/consumable/ethanol/bloodykuds
+	name = "Bloody Kuds"
+	id = "bloodykuds"
+	description = "A madman's drink. Scared?"
+	reagent_state = LIQUID
+	color = "#831d21" // rgb: 131, 29, 33
+	boozepwr = 5
+	taste_message = "heavy alcohol. How tight!"
+
+/datum/reagent/consumable/ethanol/sexbeach
+	name = "Sex On The Beach"
+	id = "sexbeach"
+	description = "For those who miss beach parties!"
+	reagent_state = LIQUID
+	color = "#831d21" // rgb: 131, 29, 33
+	boozepwr = 3
+	taste_message = "beach alcohol"
+
+/datum/reagent/consumable/ethanol/mojito
+	name = "Mojito"
+	id = "mojito"
+	description = "Good old mojito, not an aging classic."
+	reagent_state = LIQUID
+	color = "#831d21" // rgb: 131, 29, 33
 	boozepwr = 3
 	taste_message = "sweet alcohol"

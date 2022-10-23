@@ -13,7 +13,7 @@
 	var/static/list/allowed_items = list(
                                         /obj/item/weapon/gun/energy,
                                         /obj/item/weapon/melee/baton,
-                                        /obj/item/weapon/twohanded/shockpaddles/standalone,
+                                        /obj/item/weapon/shockpaddles/standalone,
                                         /obj/item/ammo_box/magazine/plasma
                                     )
 
@@ -29,7 +29,7 @@
 		recharge_coeff = C.rating
 
 /obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
-	if(istype(user,/mob/living/silicon))
+	if(issilicon(user))
 		return
 	if(is_type_in_list(G, allowed_items))
 		if(charging || panel_open)
@@ -111,8 +111,8 @@
 			else
 				icon_state = "recharger2"
 			return
-		if(istype(charging, /obj/item/weapon/twohanded/shockpaddles/standalone))
-			var/obj/item/weapon/twohanded/shockpaddles/standalone/D = charging
+		if(istype(charging, /obj/item/weapon/shockpaddles/standalone))
+			var/obj/item/weapon/shockpaddles/standalone/D = charging
 			if(D.charges < initial(D.charges))
 				D.charges++
 				icon_state = "recharger1"
@@ -182,8 +182,8 @@
 			else
 				icon_state = "wrecharger2"
 			return
-		if(istype(charging, /obj/item/weapon/twohanded/shockpaddles/standalone))
-			var/obj/item/weapon/twohanded/shockpaddles/standalone/D = charging
+		if(istype(charging, /obj/item/weapon/shockpaddles/standalone))
+			var/obj/item/weapon/shockpaddles/standalone/D = charging
 			if(D.charges < initial(D.charges))
 				D.charges++
 				icon_state = "wrecharger1"

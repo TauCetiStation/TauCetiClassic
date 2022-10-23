@@ -78,13 +78,16 @@
 		uses--
 
 	if(uses < 1)
-		user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
-		var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
-		junk.add_fingerprint(user)
-		qdel(src)
+		emag_break(user)
 		return
 
 	..()
+
+/obj/item/weapon/card/emag/proc/emag_break(mob/user)
+	var/obj/item/weapon/card/emag_broken/junk = new(user.loc)
+	junk.add_fingerprint(user)
+	user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
+	qdel(src)
 
 /obj/item/weapon/card/id
 	name = "identification card"
@@ -109,14 +112,16 @@
 /obj/item/weapon/card/id/atom_init()
 	. = ..()
 
-	if(ishuman(loc)) // this should be ok without any spawn as long, as item spawned inside mob by equip procs.
-		var/mob/living/carbon/human/H = loc
-		blood_type = H.dna.b_type
-		dna_hash = H.dna.unique_enzymes
-		fingerprint_hash = md5(H.dna.uni_identity)
-		for(var/datum/quirk/Q in H.roundstart_quirks)
-			if(Q.disability)
-				disabilities += Q.name
+	if(!ishuman(loc))
+		return
+
+	var/mob/living/carbon/human/H = loc
+	blood_type = H.dna.b_type
+	dna_hash = H.dna.unique_enzymes
+	fingerprint_hash = md5(H.dna.uni_identity)
+	for(var/datum/quirk/Q in H.roundstart_quirks)
+		if(Q.disability)
+			disabilities += Q.name
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]")
@@ -144,18 +149,6 @@
 		msg += "[disabilities[disabilities.len]].</B></span>"
 		return msg
 
-/obj/item/weapon/card/id/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/id_wallet))
-		to_chat(user, "You slip [src] into [I].")
-		src.name = "[src.registered_name]'s [I.name] ([src.assignment])"
-		src.desc = I.desc
-		src.icon = I.icon
-		src.icon_state = I.icon_state
-		qdel(I)
-
-	else
-		return ..()
-
 /obj/item/weapon/card/id/verb/read()
 	set name = "Read ID Card"
 	set category = "Object"
@@ -168,6 +161,10 @@
 	if(disabilities.len)
 		to_chat(usr, GetDisabilities())
 	return
+
+/obj/item/weapon/card/id/proc/assign(real_name)
+	name = "[real_name]'s ID Card[assignment ? " ([assignment])" : ""]"
+	registered_name = real_name
 
 
 /obj/item/weapon/card/id/silver
@@ -285,32 +282,21 @@
 	item_state = "cargoGold_id"
 
 /obj/item/weapon/card/id/syndicate
-	name = "agent card"
+	name = "Agent card"
 	access = list(access_maint_tunnels, access_syndicate, access_external_airlocks)
 	origin_tech = "syndicate=3"
+	assignment = "Agent"
 	var/registered_user=null
 	var/obj/item/weapon/card/id/scard = null
 	customizable_view = TRAITOR_VIEW
 	var/list/radial_chooses
-
-
-
-/obj/item/weapon/card/id/syndicate/atom_init()
-	. = ..()
-	if(ismob(loc)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
-		var/mob/user = loc
-		registered_name = ishuman(user) ? user.real_name : user.name
-	else
-		registered_name = "Agent Card"
-	assignment = "Agent"
-	name = "[registered_name]'s ID Card ([assignment])"
 
 /obj/item/weapon/card/id/syndicate/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if(istype(target, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = target
 		src.access |= I.access
-		if(istype(user, /mob/living) && user.mind)
+		if(isliving(user) && user.mind)
 			if(user.mind.special_role)
 				to_chat(usr, "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>")
 
@@ -321,7 +307,6 @@
 		if(!t) //Same as mob/dead/new_player/prefrences.dm
 			tgui_alert(usr, "Invalid name.")
 			return
-		src.registered_name = t
 
 		var/u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Agent"))
 		if(!u)
@@ -329,7 +314,7 @@
 			src.registered_name = ""
 			return
 		src.assignment = u
-		src.name = "[src.registered_name]'s ID Card ([src.assignment])"
+		assign(registered_name)
 		to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
 		registered_user = user
 	else if(!registered_user || registered_user == user)
@@ -342,14 +327,13 @@
 				if(!t) //Same as mob/dead/new_player/prefrences.dm
 					tgui_alert(usr, "Invalid name.")
 					return
-				src.registered_name = t
 
 				var/u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Test Subject"))
 				if(!u)
 					tgui_alert(usr, "Invalid assignment.")
 					return
 				src.assignment = u
-				src.name = "[src.registered_name]'s ID Card ([src.assignment])"
+				assign(t)
 				to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
 				return
 			if("Change look")
@@ -420,6 +404,23 @@
 	. = ..()
 	access = get_all_accesses() + get_all_centcom_access()
 
+/obj/item/weapon/card/id/centcom/representative
+	assignment = "NanoTrasen Navy Representative"
+
+/obj/item/weapon/card/id/centcom/officer
+	assignment = "NanoTrasen Navy Officer"
+
+/obj/item/weapon/card/id/centcom/captain
+	assignment = "NanoTrasen Navy Captain"
+
+/obj/item/weapon/card/id/centcom/special_ops
+	assignment = "Special Operations Officer"
+
+/obj/item/weapon/card/id/centcom/ert
+	icon_state = "ert"
+	assignment = "Emergency Response Team"
+	rank = "Emergency Response Team"
+
 /obj/item/weapon/card/id/velocity
 	name = "Cargo Industries. ID"
 	desc = "An ID designed for Velocity crew workers."
@@ -432,10 +433,17 @@
 	. = ..()
 	access = get_all_centcom_access()
 
-/obj/item/weapon/card/id/centcom/ert
-	icon_state = "ert"
-	assignment = "Emergency Response Team"
-	rank = "Emergency Response Team"
+/obj/item/weapon/card/id/velocity/officer
+	assignment = "Velocity Officer"
+	rank = "Velocity Officer"
+
+/obj/item/weapon/card/id/velocity/chief
+	assignment = "Velocity Chief"
+	rank = "Velocity Chief"
+
+/obj/item/weapon/card/id/velocity/doctor
+	assignment = "Velocity Medical Doctor"
+	rank = "Velocity Medical Doctor"
 
 /obj/item/weapon/card/id/space_police
 	assignment = "Organized Crimes Department"
@@ -444,5 +452,44 @@
 	icon_state = "ert"
 
 /obj/item/weapon/card/id/space_police/atom_init()
+	. = ..()
+	access = get_all_accesses()
+
+/obj/item/weapon/card/id/admiral
+	assignment = "Admiral"
+	rank = "Admiral"
+
+/obj/item/weapon/card/id/admiral/atom_init()
+	. = ..()
+	access = get_all_accesses() + get_all_centcom_access()
+
+/obj/item/weapon/card/id/clown/tunnel
+	assignment = "Tunnel Clown!"
+	rank = "Tunnel Clown!"
+
+/obj/item/weapon/card/id/clown/tunnel/atom_init()
+	. = ..()
+	access = get_all_accesses()
+
+/obj/item/weapon/card/id/syndicate/reaper
+	assignment = "Reaper"
+	rank = "Reaper"
+
+/obj/item/weapon/card/id/syndicate/reaper/atom_init()
+	. = ..()
+	access = get_all_accesses()
+
+/obj/item/weapon/card/id/syndicate/strike
+	icon_state = "syndicate"
+	assignment = "Syndicate Commando"
+
+/obj/item/weapon/card/id/syndicate/strike/leader
+	icon_state = "syndicate-command"
+	assignment = "Syndicate Commando Leader"
+
+/obj/item/weapon/card/id/syndicate/unknown
+	assignment = "Unknown"
+
+/obj/item/weapon/card/id/syndicate/unknown/atom_init()
 	. = ..()
 	access = get_all_accesses()

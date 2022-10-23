@@ -20,7 +20,7 @@
 	var/body = ""
 
 	if(!D)	return
-	if(istype(D, /atom))
+	if(isatom(D))
 		var/atom/A = D
 		title = "[A.name] (\ref[A]) = [A.type]"
 
@@ -31,7 +31,7 @@
 
 	var/sprite
 
-	if(istype(D,/atom))
+	if(isatom(D))
 		var/atom/AT = D
 		if(AT.icon && AT.icon_state)
 			sprite = 1
@@ -172,7 +172,7 @@
 
 	body += "<div align='center'>"
 
-	if(istype(D,/atom))
+	if(isatom(D))
 		var/atom/A = D
 		if(isliving(A))
 			body += "<a href='?_src_=vars;rename=\ref[D]'><b>[D]</b></a>"
@@ -262,13 +262,14 @@
 		body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
 		body += "<option value='?_src_=vars;addlanguage=\ref[D]'>Add Language</option>"
 		body += "<option value='?_src_=vars;remlanguage=\ref[D]'>Remove Language</option>"
+		if(ishuman(D) || istype(D, /mob/dead/new_player))
+			body += "<option value='?_src_=vars;give_quality=\ref[D]'>Give Quality</option>"
 
 		body += "<option value='?_src_=vars;addverb=\ref[D]'>Add Verb</option>"
 		body += "<option value='?_src_=vars;remverb=\ref[D]'>Remove Verb</option>"
 		body += "<option value='?_src_=vars;setckey=\ref[D]'>Set Client</option>"
 		if(ishuman(D))
 			body += "<option value>---</option>"
-			body += "<option value='?_src_=vars;setmutantrace=\ref[D]'>Set Mutantrace</option>"
 			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
 			body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
 			body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
@@ -281,11 +282,18 @@
 		body += "<option value='?_src_=vars;dust=\ref[D]'>Turn to dust</option>"
 	if(isatom(D))
 		body += "<option value='?_src_=vars;delthis=\ref[D]'>Delete this object</option>"
+		body += "<option value='?_src_=vars;edit_filters=\ref[D]'>Edit Filters</option>"
+		body += "<option value='?_src_=vars;edit_particles=\ref[D]'>Edit Particles</option>"
 	if(isobj(D))
 		body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
 	if(isobj(D) || ismob(D) || isturf(D))
 		body += "<option value='?_src_=vars;explode=\ref[D]'>Trigger explosion</option>"
 		body += "<option value='?_src_=vars;emp=\ref[D]'>Trigger EM pulse</option>"
+	if(istype(D, /datum/reagents))
+		body += "<option value='?_src_=vars;action=addreag;reagents=\ref[D]'>Add reagent</option>"
+		body += "<option value='?_src_=vars;action=remreag;reagents=\ref[D]'>Remove reagent</option>"
+		body += "<option value='?_src_=vars;action=isoreag;reagents=\ref[D]'>Isolate reagent</option>"
+		body += "<option value='?_src_=vars;action=clearreags;reagents=\ref[D]'>Clear reagents</option>"
 
 	body += "</select></form>"
 
@@ -378,7 +386,7 @@ body
 		var/datum/D = value
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [D.type]"
 
-	else if (istype(value, /client))
+	else if (isclient(value))
 		var/client/C = value
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [C] [C.type]"
 //
@@ -444,7 +452,7 @@ body
 			return
 
 		var/D = locate(href_list["datumedit"])
-		if(!istype(D,/datum) && !istype(D,/client))
+		if(!istype(D,/datum) && !isclient(D))
 			to_chat(usr, "This can only be used on instances of types /client or /datum")
 			return
 
@@ -455,7 +463,7 @@ body
 			return
 
 		var/D = locate(href_list["datumchange"])
-		if(!istype(D,/datum) && !istype(D,/client))
+		if(!istype(D,/datum) && !isclient(D))
 			to_chat(usr, "This can only be used on instances of types /client or /datum")
 			return
 
@@ -494,18 +502,6 @@ body
 			return
 
 		give_spell(M)
-		href_list["datumrefresh"] = href_list["give_spell"]
-
-	else if(href_list["give_disease"])
-		if(!check_rights(R_ADMIN|R_FUN))
-			return
-
-		var/mob/M = locate(href_list["give_disease"])
-		if(!istype(M))
-			to_chat(usr, "This can only be used on instances of type /mob")
-			return
-
-		give_disease(M)
 		href_list["datumrefresh"] = href_list["give_spell"]
 
 	else if(href_list["give_religion"])
@@ -628,6 +624,18 @@ body
 
 		if(usr.client)
 			usr.client.cmd_assume_direct_control(M)
+
+	else if(href_list["edit_filters"])
+		if(!check_rights(R_DEBUG|R_VAREDIT))
+			return
+		var/atom/A = locate(href_list["edit_filters"])
+		open_filter_editor(A)
+
+	else if(href_list["edit_particles"])
+		if(!check_rights(R_DEBUG|R_VAREDIT))
+			return
+		var/atom/A = locate(href_list["edit_particles"])
+		open_particles_editor(A)
 
 	else if(href_list["delthis"])
 		//Rights check are in cmd_admin_delete() proc
@@ -769,7 +777,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		if(tgui_alert(usr, "Confirm mob type change?",, list("Transform","Cancel") != "Transform"))	return
+		if(tgui_alert(usr, "Confirm mob type change?",, list("Transform","Cancel")) != "Transform")	return
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
 			return
@@ -848,28 +856,6 @@ body
 			return
 		holder.Topic(href, list("makeai"=href_list["makeai"]))
 
-	else if(href_list["setmutantrace"])
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/mob/living/carbon/human/H = locate(href_list["setmutantrace"])
-		if(!istype(H))
-			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
-			return
-
-		var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","adamantine","golem","shadow","shadowling","slime")
-		switch(new_mutantrace)
-			if(null)
-				return
-			if("NONE")
-				new_mutantrace = ""
-		if(!H)
-			to_chat(usr, "Mob doesn't exist anymore")
-			return
-		if(H.dna)
-			H.dna.mutantrace = new_mutantrace
-			H.update_mutantrace()
-
 	else if(href_list["setspecies"])
 		if(!check_rights(R_SPAWN))
 			return
@@ -890,6 +876,28 @@ body
 			H.regenerate_icons()
 		else
 			to_chat(usr, "Failed! Something went wrong.")
+
+	else if(href_list["give_quality"])
+		if(!check_rights(R_VAREDIT))
+			return
+
+		var/mob/M = locate(href_list["give_quality"])
+
+		var/quality_name = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.qualities_by_name
+		if(!quality_name)
+			return
+
+		if(QDELETED(M))
+			return
+
+		var/datum/quality/Q = SSqualities.qualities_by_name[quality_name]
+
+		if(ishuman(M))
+			SSqualities.force_give_quality(M, Q, usr)
+		else if(istype(M, /mob/dead/new_player) && M.client)
+			SSqualities.force_register_client(M.client, Q)
+		else
+			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 
 	else if(href_list["addlanguage"])
 		if(!check_rights(R_VAREDIT))
@@ -1050,5 +1058,36 @@ body
 			return
 		var/last_search = href_list["filter"] ? href_list["filter"] : ""
 		debug_variables_browse(DAT, usr, last_search)
-
+	else if(href_list["reagents"])
+		if(!check_rights(R_DEBUG|R_ADMIN|R_FUN))
+			return
+		var/datum/reagents/R = locate(href_list["reagents"])
+		var/list/current_ids = list()
+		for(var/datum/reagent/reag in R.reagent_list)
+			current_ids += reag.id
+		switch(href_list["action"])
+			if("addreag")
+				var/reagent_id = input(usr, "Reagent ID to add:", "Add Reagent") as null|anything in chemical_reagents_list
+				if(!reagent_id)
+					return
+				var/reagent_amt = input(usr, "Reagent amount to add:", "Add Reagent") as num|null
+				if(!reagent_amt)
+					return
+				R.add_reagent(reagent_id, reagent_amt)
+			if("remreag")
+				var/reagent_id = input(usr, "Reagent ID to remove:", "Remove Reagent") as null|anything in current_ids
+				if(!reagent_id)
+					return
+				var/reagent_amt = input(usr, "Reagent amount to remove:", "Remove Reagent", R.get_reagent_amount(reagent_id)) as num|null
+				if(!reagent_amt)
+					return
+				R.remove_reagent(reagent_id, reagent_amt)
+			if("isoreag")
+				var/reagent_id = input(usr, "Reagent ID to isolate:", "Isolate Reagent") as null|anything in current_ids
+				if(!reagent_id)
+					return
+				R.isolate_reagent(reagent_id)
+			if("clearreags")
+				if(tgui_alert(usr, "Are you sure you want to clear reagents?", "Clear Reagents", list("Yes", "No")) == "Yes")
+					R.clear_reagents()
 	return

@@ -7,8 +7,6 @@
 	w_class = SIZE_SMALL
 	max_storage_space = DEFAULT_BOX_STORAGE
 
-	var/deity_name = "Christ"
-
 	var/datum/religion/religion
 	var/religify_next = list()
 	var/religify_cd = 3 MINUTE
@@ -19,7 +17,7 @@
 	. = ..()
 	rad_choices = list(
 		"Altar" = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "altar"),
-		"Pews" = image(icon = 'icons/obj/structures/chapel.dmi', icon_state = "christianity_left"),
+		"Emblem" = image(icon = 'icons/obj/lectern.dmi', icon_state = "christianity"),
 		"Mat symbol" = image(icon = 'icons/turf/carpets.dmi', icon_state = "carpetsymbol")
 	)
 
@@ -85,14 +83,14 @@
 
 	return ..()
 
-/obj/item/weapon/storage/bible/proc/change_chapel_looks(mob/user)
+/obj/item/weapon/storage/bible/proc/change_chapel_looks(mob/user, mob/to_anchor)
 	if(religify_next[user.ckey] > world.time)
 		to_chat(user, "<span class='warning'>You can't be changing the look of your entire church so often! Please wait about [round((religify_next[user.ckey] - world.time) * 0.1)] seconds to try again.</span>")
 		return
 
 	var/done = FALSE
 	var/changes = FALSE
-	var/list/choices = list("Altar", "Pews", "Mat symbol")
+	var/list/choices = list("Altar", "Emblem", "Mat symbol")
 
 	to_chat(user, "<span class='notice'>Select chapel attributes.</span>")
 	while(!done)
@@ -104,14 +102,14 @@
 		for(var/choose in choices)
 			temp_images[choose] += rad_choices[choose]
 
-		var/looks = show_radial_menu(user, src, temp_images, tooltips = TRUE, require_near = TRUE)
+		var/looks = show_radial_menu(user, to_anchor, temp_images, tooltips = TRUE, require_near = TRUE)
 		if(!looks)
 			done = TRUE
 			break
 
 		switch(looks)
 			if("Altar")
-				var/new_look = show_radial_menu(user, src, religion.altar_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
+				var/new_look = show_radial_menu(user, to_anchor, religion.altar_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
 				if(!new_look)
 					continue
 
@@ -119,17 +117,17 @@
 				changes = TRUE
 				choices -= "Altar"
 
-			if("Pews")
-				var/new_look = show_radial_menu(user, src, religion.pews_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
+			if("Emblem")
+				var/new_look = show_radial_menu(user, to_anchor, religion.emblem_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
 				if(!new_look)
 					continue
 
-				religion.pews_icon_state = religion.pews_info_by_name[new_look]
+				religion.emblem_icon_state = religion.emblem_info_by_name[new_look]
 				changes = TRUE
-				choices -= "Pews"
+				choices -= "Emblem"
 
 			if("Mat symbol")
-				var/new_mat = show_radial_menu(user, src, religion.carpet_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
+				var/new_mat = show_radial_menu(user, to_anchor, religion.carpet_skins, radius = 38, require_near = TRUE, tooltips = TRUE)
 				if(!new_mat)
 					continue
 

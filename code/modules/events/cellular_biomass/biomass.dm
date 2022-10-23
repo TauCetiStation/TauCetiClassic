@@ -19,28 +19,11 @@
 
 /obj/effect/biomass/attackby(obj/item/weapon/W, mob/user)
 	if (!W || !user || !W.type) return
-	switch(W.type)
-		if(/obj/item/weapon/circular_saw) qdel(src)
-		if(/obj/item/weapon/kitchenknife) qdel(src)
-		if(/obj/item/weapon/scalpel) qdel(src)
-		if(/obj/item/weapon/twohanded/fireaxe) qdel(src)
-		if(/obj/item/weapon/hatchet) qdel(src)
-		if(/obj/item/weapon/melee/energy) qdel(src)
-
-		//less effective weapons
-		if(/obj/item/weapon/wirecutters)
-			if(prob(25)) qdel(src)
-		if(/obj/item/weapon/shard)
-			if(prob(25)) qdel(src)
-
-		else //weapons with subtypes
-			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
-			else if(iswelder(W))
-				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.use(0, user)) qdel(src)
-			else
-				return
-	return ..()
+	var/temperature = W.get_current_temperature()
+	if(W.sharp || W.get_quality(QUALITY_CUTTING) > 0 || temperature > 3000)
+		qdel(src)
+	else
+		return ..()
 
 /obj/effect/biomass_controller
 	var/list/obj/effect/biomass/vines = list()
@@ -52,7 +35,7 @@
 
 /obj/effect/biomass_controller/atom_init()
 	. = ..()
-	if(!istype(loc, /turf/simulated/floor))
+	if(!isfloorturf(loc))
 		return INITIALIZE_HINT_QDEL
 
 	spawn_biomass_piece(loc)
@@ -128,7 +111,7 @@
 /obj/effect/biomass/proc/spread()
 	var/direction = pick(cardinal)
 	var/step = get_step(src,direction)
-	if(istype(step,/turf/simulated/floor))
+	if(isfloorturf(step))
 		var/turf/simulated/floor/F = step
 		if(!locate(/obj/effect/biomass,F))
 			if(F.Enter(src))
@@ -139,18 +122,13 @@
 
 /obj/effect/biomass/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(90))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(10))
 				return
-		if(3.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(50))
 				return
-	return
+	qdel(src)
 
 /obj/effect/biomass/fire_act(null, temperature, volume) //hotspots kill biomass
 	if(temperature > T0C+100)

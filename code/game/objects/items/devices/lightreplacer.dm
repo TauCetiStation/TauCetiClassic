@@ -125,9 +125,9 @@
 	uses = min(max(uses + amount, 0), max_uses)
 
 /obj/item/device/lightreplacer/proc/Charge(mob/user)
-	charge += 1
+	charge += 5
 	if(charge > 7)
-		AddUses(1)
+		AddUses(5)
 		charge = 1
 
 /obj/item/device/lightreplacer/proc/ReplaceLight(obj/machinery/light/target, mob/living/U)

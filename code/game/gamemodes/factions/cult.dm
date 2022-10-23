@@ -9,6 +9,8 @@
 	min_roles = 3
 	max_roles = 3
 
+	stat_type = /datum/stat/faction/cult
+
 	// For objectives
 	var/datum/mind/sacrifice_target = null
 	var/list/sacrificed = list()
@@ -38,7 +40,7 @@
 	if(!..())
 		return FALSE
 
-	var/list/possibles_objectives = subtypesof(/datum/objective/cult)
+	var/list/possibles_objectives = subtypesof(/datum/objective/cult) + /datum/objective/target/sacrifice
 	for(var/i in 1 to rand(2, 3))
 		AppendObjective(pick_n_take(possibles_objectives))
 	return TRUE
@@ -67,7 +69,7 @@
 					R = HandleNewMind(H.mind)
 					R.OnPostSetup(TRUE)
 
-					to_chat(H, "<span class='warning'>Вы теперь новый лидер культа.</span>")
+					to_chat(H, "<span class='warning'>Вы теперь новый предвестник культа.</span>")
 					added_lead = TRUE
 					break
 
@@ -114,7 +116,7 @@
 	<B>Захвачено зон:</B> [religion.captured_areas.len - religion.area_types.len]<BR>
 	<B>Накоплено Favor/Piety:</B> [religion.favor]/[religion.piety]<BR>
 	<B>Рун на станции:</B> [religion.runes.len]<BR>
-	<B>Аномалий уничтожено:</B> [score["destranomaly"]]<BR>
+	<B>Аномалий уничтожено:</B> [SSStatistics.score.destranomaly]<BR>
 	<HR>"}
 
 	return dat
@@ -122,7 +124,7 @@
 /datum/faction/cult/proc/get_active_leads()
 	var/active_leads = 0
 	for(var/datum/role/cultist/leader/R in members)
-		var/mob/M = R?.antag?.current
+		var/mob/M = R.antag.current
 		if(M && M.client && M.client.inactivity <= 20 MINUTES) // 20 minutes inactivity are OK
 			active_leads++
 	return active_leads
@@ -130,7 +132,7 @@
 /datum/faction/cult/proc/get_cultists_out()
 	var/acolytes_out = 0
 	for(var/datum/role/R in members)
-		if(R.antag?.current?.stat != DEAD)
+		if(R.antag.current?.stat != DEAD)
 			var/area/A = get_area(R.antag.current)
 			if(is_type_in_typecache(A, centcom_areas_typecache))
 				acolytes_out++

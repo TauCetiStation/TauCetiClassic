@@ -196,7 +196,6 @@
 		can_spin = TRUE
 		can_spin_call = SCB.can_spin_call
 		on_spin = SCB.on_spin
-		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/sweep_spin)
 		RegisterSignal(parent, list(COMSIG_ITEM_MIDDLECLICKWITH), .proc/sweep_spin_click)
 
 	RegisterSignal(parent, list(COMSIG_ITEM_MOUSEDROP_ONTO), .proc/sweep_mousedrop)
@@ -273,12 +272,10 @@
 	var/turf/T_target = get_turf(target)
 
 	if(user.a_intent != INTENT_HELP)
-		var/resolved = target.attackby(parent, user, list())
-		if(!resolved && parent)
-			var/obj/item/I = parent
-			I.afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+		var/obj/item/I = parent
+		I.melee_attack_chain(target, user)
 
-	if(!has_gravity(parent) && !istype(target, /turf/space))
+	if(!has_gravity(parent) && !isspaceturf(target))
 		step_away(user, T_target)
 	else if(istype(target, /atom/movable))
 		var/atom/movable/AM = target
@@ -305,7 +302,7 @@
 	var/turf/T_target = get_turf(target)
 
 	var/obj/effect/effect/weapon_sweep/WS = new(W_turf, W, list(), W.sweep_step)
-	WS.invisibility = 101
+	WS.invisibility = INVISIBILITY_ABSTRACT
 	WS.pass_flags = W.pass_flags
 
 	step(WS, get_dir(W_turf, T_target))
@@ -368,12 +365,10 @@
 	var/turf/T_target = get_turf(target)
 
 	if(user.a_intent != INTENT_HELP)
-		var/resolved = target.attackby(parent, user, list())
-		if(!resolved && parent)
-			var/obj/item/I = parent
-			I.afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+		var/obj/item/I = parent
+		I.melee_attack_chain(target, user)
 
-	if(!has_gravity(parent) && !istype(target, /turf/space))
+	if(!has_gravity(parent) && !isspaceturf(target))
 		step_to(user, T_target)
 	else if(istype(target, /atom/movable))
 		var/atom/movable/AM = target
@@ -400,7 +395,7 @@
 	var/turf/T_target = get_turf(target)
 
 	var/obj/effect/effect/weapon_sweep/WS = new(W_turf, W, list(), W.sweep_step)
-	WS.invisibility = 101
+	WS.invisibility = INVISIBILITY_ABSTRACT
 	WS.pass_flags = W.pass_flags
 
 	step(WS, get_dir(W_turf, T_target))
@@ -465,23 +460,13 @@
 	if(on_sweep_hit)
 		return on_sweep_hit.Invoke(current_turf, sweep_image, target, user)
 
-	if(user.a_intent == INTENT_HARM && is_type_in_list(target, list(/obj/machinery/disposal, /obj/structure/table, /obj/structure/rack)))
-		/*
-		A very weird snowflakey thing but very crucial to keeping this fun.
-		If we're on I_HURT and we hit anything that should drop our item from the hands,
-		we just ignore the click to it.
-		*/
-		return FALSE
-
 	var/obj/item/weapon/W = parent
 
 	var/is_stunned = is_type_in_list(target, interupt_on_sweep_hit_types)
 	if(is_stunned)
 		to_chat(user, "<span class='warning'>Your [W] has hit [target]! There's not enough space for broad sweeps here!</span>")
 
-	var/resolved = target.attackby(W, user, list())
-	if(!resolved && W)
-		W.afterattack(target, user, TRUE, list()) // TRUE indicates adjacency
+	W.melee_attack_chain(target, user)
 
 	return is_stunned
 

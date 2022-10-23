@@ -32,15 +32,15 @@
 
 /obj/item/weapon/proc/use_charge(mob/living/carbon/human/user, req_chem = 3)
 	if(!ischangeling(user))
-		return 0
+		return FALSE
 	var/datum/role/changeling/C = user.mind.GetRoleByType(/datum/role/changeling)
 	if(!C)
-		return 0
+		return FALSE
 	if(C.chem_charges < req_chem)
 		to_chat(user, "<span class='warning'>We require at least [req_chem] units of chemicals to do that!</span>")
-		return 0
+		return FALSE
 	C.chem_charges -= req_chem
-	return 1
+	return TRUE
 
 /obj/item/weapon/changeling_hammer/attack(atom/target, mob/living/carbon/human/user, def_zone)
 	if(user.a_intent == INTENT_HARM && use_charge(user, 4))
@@ -49,7 +49,7 @@
 			var/mob/living/carbon/human/H = target
 			var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 			for(var/obj/item/organ/external/BP_CHILD in BP.children)
-				H.apply_damage(force / 2, BRUTE, BP_CHILD.body_zone, H.getarmor(BP_CHILD.body_zone, "melee"))
+				H.apply_damage(force / 2, BRUTE, BP_CHILD.body_zone, H.getarmor(BP_CHILD.body_zone, MELEE))
 			if(BP.parent)
-				H.apply_damage(force / 2, BRUTE, BP.parent.body_zone, H.getarmor(BP.parent.body_zone, "melee"))
+				H.apply_damage(force / 2, BRUTE, BP.parent.body_zone, H.getarmor(BP.parent.body_zone, MELEE))
 		return..()

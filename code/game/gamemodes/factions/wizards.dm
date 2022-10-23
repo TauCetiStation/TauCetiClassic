@@ -30,6 +30,5 @@
 
 	if (wizards_alive)
 		return FALSE
-	else
-		stage = FS_DEFEATED
-		return TRUE
+	stage = FS_DEFEATED
+	return TRUE

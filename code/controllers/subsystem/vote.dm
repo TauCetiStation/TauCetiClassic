@@ -1,7 +1,10 @@
 SUBSYSTEM_DEF(vote)
 	name = "Vote"
+
 	wait = SS_WAIT_VOTE
-	flags = SS_FIRE_IN_LOBBY | SS_KEEP_TIMING | SS_NO_INIT
+
+	flags = SS_KEEP_TIMING | SS_NO_INIT
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	var/list/votes = list()  // List of all possible votes (datum/poll)
 	var/list/voters = list() //List of clients with opened vote window
@@ -71,7 +74,14 @@ SUBSYSTEM_DEF(vote)
 	return TRUE
 
 /datum/controller/subsystem/vote/proc/get_vote_time()	//How many seconds vote lasts
-	return round((vote_start_time + config.vote_period - world.time)/10)
+	var/vote_period
+
+	if(active_vote && active_vote.vote_period)
+		vote_period = active_vote.vote_period
+	else
+		vote_period = config.vote_period
+
+	return round((vote_start_time + vote_period - world.time)/10)
 
 /datum/controller/subsystem/vote/proc/interface(client/C)
 	if(!C)

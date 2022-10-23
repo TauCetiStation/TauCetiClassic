@@ -60,12 +60,16 @@
 
 	//put this here for easier tracking ingame
 	var/datum/money_account/initial_account
+	//skills
+	var/datum/skills/skills = new
 
 	var/creation_time = 0 //World time when this datum was New'd. Useful to tell how long since a character spawned
+	var/creation_roundtime
 
 /datum/mind/New(key)
 	src.key = key
 	creation_time = world.time
+	creation_roundtime = roundduration2text()
 
 /datum/mind/proc/transfer_to(mob/new_character)
 	for(var/role in antag_roles)
@@ -77,7 +81,7 @@
 		current.mind = null
 
 	if(new_character.mind)		//remove any mind currently in our new body's mind variable
-		new_character.mind.current = null
+		new_character.mind.set_current(null)
 
 	nanomanager.user_transferred(current, new_character) // transfer active NanoUI instances to new user
 
@@ -96,7 +100,9 @@
 		var/datum/role/R = antag_roles[role]
 		R.PostMindTransfer(new_character, old_character)
 
+	old_character.logout_reason = LOGOUT_SWAP
 	if(active)
+		new_character.logout_reason = LOGOUT_SWAP
 		new_character.key = key		//now transfer the key to link the client to our new body
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
@@ -139,7 +145,7 @@
 
 	var/text = ""
 	var/mob/living/carbon/human/H = current
-	if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
+	if (ishuman(current) || ismonkey(current))
 		/** Impanted**/
 		if(ishuman(current))
 			if(H.ismindshielded())
@@ -182,6 +188,40 @@
 	out += "<a href='?src=\ref[src];refresh=1'>Refresh</a>"
 
 	var/datum/browser/popup = new(usr, "window=edit_memory", "Memory", 700, 700)
+	popup.set_content(out)
+	popup.open()
+
+/datum/mind/proc/edit_skills()
+	if(!SSticker || !SSticker.mode)
+		tgui_alert(usr, "Not before round-start!", "Alert")
+		return
+	var/out = "<B>[name]</B>[(current && (current.real_name != name)) ? " (as [current.real_name])": ""]<br>"
+	out += "Mind currently owned by key: [key] [active ? "(synced)" : "(not synced)"]<br>"
+
+	out +="<B>Available skillsets:</B><br>"
+	if(!length(skills.available_skillsets))
+		out +="<i>This mob has no skillsets.</i><br>"
+	for(var/datum/skillset/skillset in skills.available_skillsets)
+		out +="<i>[skillset]</i><a href='?src=\ref[src];delete_skillset=[skillset]'>-</a><br>"
+	out += "<B>Maximum skill values:</B><br><table>"
+	var/sorted_max = list()
+	for(var/skill_type in all_skills)
+		sorted_max[skill_type] = skills.get_max(skill_type)
+	sorted_max = sortTim(sorted_max, /proc/cmp_numeric_dsc, TRUE)
+	var/row = 0
+	for(var/skill_type in sorted_max)
+		var/datum/skill/skill = all_skills[skill_type]
+		if(row % 3 == 0)
+			out += "</tr><tr>"
+		var/rank_name = skill.custom_ranks[skills.get_max(skill.type) + 1]
+		out +="<td>[skill]:  [rank_name] ([skills.get_max(skill.type)])</td>"
+		row++
+	out +="</table>"
+	out += "<br><a href='?src=\ref[src];add_skillset=1'>Add skillset</a><br>"
+	out += "<a href='?src=\ref[src];maximize_skills=1'>Set current skills equal to available skills</a><br>"
+	out += "<a href='?src=\ref[src];add_max=1'>Add maximal skillset</a><br>"
+	out += "<a href='?src=\ref[src];refresh=2'>Refresh</a>"
+	var/datum/browser/popup = new(usr, "window=edit_skills", "Skills", 700, 700)
 	popup.set_content(out)
 	popup.open()
 
@@ -390,7 +430,7 @@
 			else
 				for (var/datum/objective/objective in unique_objectives_role)
 					log_admin("[usr.key]/([usr.name]) gave [key]/([name]) the objective: [objective.explanation_text]")
-		else if(istype(owner, /datum/faction))
+		else if(isfaction(owner))
 			var/datum/faction/F = owner
 			var/list/faction_objectives = F.GetObjectives()
 			var/list/prev_objectives = faction_objectives.Copy()
@@ -447,7 +487,7 @@
 					continue
 				var/datum/role/R = GetRole(type)
 				if(R)
-					R.RemoveFromRole(src)
+					R.Deconvert()
 
 			to_chat(src, "<span class='warning'><Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove all evil thoughts about the company.</B></Font></span>")
 
@@ -456,8 +496,38 @@
 			if("undress")
 				for(var/obj/item/W in current)
 					current.drop_from_inventory(W)
-
+	else if (href_list["maximize_skills"])
+		skills.maximize_active_skills()
+		message_admins("[usr.key]/([usr.name]) set up the skills of \the [key]/[name] to their maximum.")
+		log_admin("[usr.key]/([usr.name]) set up the skills of \the [key]/[name] to their maximum.")
+		edit_skills()
+		return
+	else if (href_list["delete_skillset"])
+		var/to_delete = global.skillset_names_aliases[href_list["delete_skillset"]]
+		skills.remove_available_skillset(to_delete)
+		message_admins("[usr.key]/([usr.name]) removed skillset [to_delete] from \the [key]/[name].")
+		log_admin("[usr.key]/([usr.name]) removed skillset [to_delete] from \the [key]/[name].")
+		edit_skills()
+		return
+	else if (href_list["add_max"])
+		skills.add_available_skillset(/datum/skillset/max)
+		message_admins("[usr.key]/([usr.name]) gave \the [key]/[name] maximal skillset.")
+		log_admin("[usr.key]/([usr.name]) gave \the [key]/[name] maximal skillset.")
+		edit_skills()
+		return
+	else if (href_list["add_skillset"])
+		var/new_skillset = input("Select new skillset", "Skillsets selection", null) as null|anything in global.skillset_names_aliases
+		if (!new_skillset)
+			return
+		skills.add_available_skillset(skillset_names_aliases[new_skillset])
+		message_admins("[usr.key]/([usr.name]) gave \the [key]/[name] new skillset: [new_skillset]")
+		log_admin("[usr.key]/([usr.name]) gave \the [key]/[name] new skillset: [new_skillset]")
+		edit_skills()
+		return
 	else if (href_list["refresh"])
+		if(href_list["refresh"]=="2")
+			edit_skills()
+			return
 		edit_memory()
 		return
 
@@ -482,13 +552,24 @@
 		return R.GetFaction()
 	return FALSE
 
+/datum/mind/proc/set_current(mob/new_current)
+	if(current)
+		UnregisterSignal(src, COMSIG_PARENT_QDELETING)
+	current = new_current
+	if(current)
+		RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/clear_current)
+
+/datum/mind/proc/clear_current(datum/source)
+	SIGNAL_HANDLER
+	set_current(null)
+
 // check whether this mind's mob has been brigged for the given duration
 // have to call this periodically for the duration to work properly
 /datum/mind/proc/is_brigged(duration)
 	var/turf/T = current.loc
 	if(!istype(T))
 		brigged_since = -1
-		return 0
+		return FALSE
 
 	var/is_currently_brigged = 0
 
@@ -504,7 +585,7 @@
 
 	if(!is_currently_brigged)
 		brigged_since = -1
-		return 0
+		return FALSE
 
 	if(brigged_since == -1)
 		brigged_since = world.time
@@ -537,13 +618,7 @@
 	candidates = shuffle(candidates)
 
 	if(fac_type)
-		var/datum/faction/FF = find_faction_by_type(fac_type)
-		if(!FF)
-			FF = SSticker.mode.CreateFaction(fac_type, FALSE, TRUE)
-			FF.forgeObjectives()
-		if(!FF)
-			return FALSE
-
+		var/datum/faction/FF = create_uniq_faction(fac_type)
 		while(count > 0 && candidates.len)
 			var/mob/M = pick(candidates)
 			candidates -= M
@@ -629,14 +704,17 @@
 	if(mind)
 		mind.key = key
 	else
-		mind = new /datum/mind(key)
-		mind.original = src
-		if(SSticker)
-			SSticker.minds += mind
-		else
-			world.log << "## DEBUG: mind_initialize(): No SSticker ready yet! Please inform Carn"
+		create_mind()
 	if(!mind.name)	mind.name = real_name
-	mind.current = src
+	mind.set_current(src)
+
+/mob/proc/create_mind()
+	mind = new /datum/mind(key)
+	mind.original = src
+	if(SSticker)
+		SSticker.minds += mind
+	else
+		world.log << "## DEBUG: mind_initialize(): No SSticker ready yet! Please inform Carn"
 
 //HUMAN
 /mob/living/carbon/human/mind_initialize()
@@ -655,10 +733,7 @@
 	mind.assigned_role = "Alien"
 
 	if(!isalien(src))
-		var/datum/faction/infestation/I = find_faction_by_type(/datum/faction/infestation)
-		if(!I)
-			I = SSticker.mode.CreateFaction(/datum/faction/infestation)
-			I.forgeObjectives()
+		var/datum/faction/infestation/I = create_uniq_faction(/datum/faction/infestation)
 		add_faction_member(I, src, TRUE)
 
 	//XENO HUMANOID
@@ -681,6 +756,10 @@
 /mob/living/carbon/xenomorph/larva/mind_initialize()
 	..()
 	mind.special_role = "Larva"
+
+/mob/living/carbon/xenomorph/humanoid/maid/mind_initialize()
+	..()
+	mind.special_role = "Drone"
 
 //AI
 /mob/living/silicon/ai/mind_initialize()
@@ -740,3 +819,9 @@
 	..()
 	mind.assigned_role = "Armalis"
 	mind.special_role = "Vox Raider"
+
+/mob/living/simple_animal/hostile/mimic/prophunt/mind_initialize()
+	..()
+
+	var/datum/faction/infestation/I = create_uniq_faction(/datum/faction/props)
+	add_faction_member(I, src, TRUE)

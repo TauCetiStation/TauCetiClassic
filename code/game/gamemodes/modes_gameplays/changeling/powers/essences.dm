@@ -1,14 +1,13 @@
 /mob/living/parasite/essence
 	alpha = 127
 	icon = 'icons/mob/human.dmi'
-	stat = DEAD
 	var/datum/role/changeling/changeling
 	var/flags_allowed = (ESSENCE_HIVEMIND | ESSENCE_PHANTOM | ESSENCE_POINT | ESSENCE_SPEAK_TO_HOST)
 	var/obj/effect/essence_phantom/phantom
 	var/self_voice = FALSE
 	var/is_changeling = FALSE
-	var/atom/movable/screen/essence_voice/voice
-	var/atom/movable/screen/essence_phantom/phantom_s
+	var/atom/movable/screen/essence/voice/voice
+	var/atom/movable/screen/essence/phantom/phantom_s
 	var/rehost_timer_id = 0
 
 /mob/living/parasite/essence/atom_init(mapload, mob/living/carbon/host, mob/living/carbon/victim)
@@ -18,9 +17,8 @@
 	name = victim.mind.name
 	victim.mind.transfer_to(src)
 	enter_host(host)
-	copy_overlays(victim, TRUE)
 	phantom = new(src, src)
-	phantom.create_overlay(src)
+	phantom.create_overlay(victim)
 
 /mob/living/parasite/essence/Destroy()
 	if(host)
@@ -38,6 +36,7 @@
 		for(var/mob/living/parasite/essence/E in changeling.essences)
 			if(E.phantom && E.phantom.showed)
 				client.images += E.phantom.overlay
+		changeling.add_ui(hud_used)
 	if(rehost_timer_id)
 		deltimer(rehost_timer_id)
 		rehost_timer_id = 0
@@ -77,13 +76,12 @@
 	if(!host)
 		to_chat(src, "<span class='userdanger'>You can't speak without host!</span>")
 		return
-
 	var/message_mode = parse_message_mode(message)
 	if(message_mode == "alientalk")
 		if(!(flags_allowed & ESSENCE_SPEAK_TO_HOST))
 			to_chat(src, "<span class='userdanger'>Your host forbade you speaking to him</span>")
 			return
-		message = copytext_char(message, 2 + length(message[2])) // deleting prefix
+		message = copytext(message, 2 + length(message[2])) // deleting prefix
 		var/n_message = sanitize(message)
 		for(var/M in changeling.essences)
 			to_chat(M, "<span class='shadowling'><b>[name]:</b> [n_message]</span>")
@@ -97,9 +95,9 @@
 		if(!(flags_allowed & ESSENCE_HIVEMIND))
 			to_chat(src, "<span class='userdanger'>Your host forbade you speaking in hivemind</span>")
 			return
-		message = copytext_char(message, 3) // deleting prefix
+		message = copytext(message, 2 + length(message[2])) // deleting prefix
 		var/n_message = sanitize(message)
-		for(var/mob/M in mob_list)
+		for(var/mob/M as anything in mob_list)
 			if(ischangeling(M))
 				to_chat(M, "<span class='changeling'><b>[changeling.changelingID]'s Essence of [name]:</b> [n_message]</span>")
 				var/datum/role/changeling/C = M.mind.GetRoleByType(/datum/role/changeling)
@@ -117,6 +115,7 @@
 	if(message_mode && !(flags_allowed & ESSENCE_SPEAK_IN_RADIO))
 		to_chat(src, "<span class='userdanger'>Your host forbade you speaking in radio!</span>")
 		return
+
 	if(host.stat == DEAD)
 		return
 
@@ -149,11 +148,11 @@
 
 	return host.whisper(message)
 
-/mob/living/parasite/essence/me_verb(message as text)
-	set name = "Me"
-	if(!host)
+/mob/living/parasite/essence/me_emote(message, message_type = SHOWMSG_VISUAL, intentional=FALSE)
+	if(!host && intentional)
 		to_chat(src, "<span class='userdanger'>You can't speak without host!</span>")
 		return
+
 	if(host.stat == DEAD)
 		return
 
@@ -161,7 +160,7 @@
 		to_chat(src, "<span class='userdanger'>Your host forbade you emoting!</span>")
 		return
 
-	return host.custom_emote(1, message)
+	return host.me_emote(message, message_type, intentional)
 
 /mob/living/parasite/essence/say_understands(mob/other, datum/language/speaking)
 	if(!host)
@@ -177,7 +176,7 @@
 	set name = "Point To"
 	set category = "Object"
 
-	if(!host || host.stat)
+	if(!host || host.stat != CONSCIOUS)
 		return
 	if(!(flags_allowed & ESSENCE_POINT))
 		to_chat(src, "<span class='userdanger'>Your host forbade you pointing!</span>")
@@ -204,7 +203,7 @@
 	if(!host)
 		return
 	if(changeling)
-		hud_used?.lingchemdisplay.maptext = host.hud_used.lingchemdisplay.maptext
+		client.screen += changeling.lingchemdisplay
 
 	sight = host.sight
 	see_in_dark = host.see_in_dark
@@ -215,7 +214,7 @@
 		if(H.glasses)
 			set_EyesVision(H.sightglassesmod)
 
-		for(var/scr in screens) // screens shit
+		for(var/scr in screens)
 			if(!(scr in host.screens))
 				clear_fullscreen(scr)
 
@@ -223,7 +222,7 @@
 			var/atom/movable/screen/fullscreen/host_screen = host.screens[scr]
 			overlay_fullscreen(scr, host_screen.type, host_screen.severity)
 
-		for(var/alert in alerts) // alerts shit
+		for(var/alert in alerts)
 			if(!(alert in host.alerts))
 				clear_alert(alert)
 
@@ -259,7 +258,7 @@
 /obj/effect/proc_holder/changeling/manage_essencies/sting_action(mob/user)
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	if(!changeling || changeling.controled_by)
-		return
+		return FALSE
 	var/dat = ""
 	for(var/mob/living/parasite/essence/M in changeling.essences)
 		dat += "Essence of [M.name] is [M.client ? "<font color='green'>active</font>" : "<font color='red'>hibernating</font>"]<BR> \
@@ -311,6 +310,7 @@
 	var/datum/browser/popup = new(user, "essence_managing", "Essence Management Panel", 350)
 	popup.set_content(dat)
 	popup.open()
+	return FALSE
 
 /mob/living/carbon/proc/delegate_body_to_essence(mob/living/parasite/essence/E)
 	if(!ischangeling(src))
@@ -378,7 +378,7 @@
 	else if(href_list["toggle_voice"])
 		choosen_essence.flags_allowed ^= ESSENCE_SELF_VOICE
 		choosen_essence.self_voice = FALSE
-		choosen_essence.voice.icon_state = "voice_off"
+		choosen_essence.voice.update_icon(choosen_essence)
 	else if(href_list["toggle_phantom"])
 		choosen_essence.flags_allowed ^= ESSENCE_PHANTOM
 		choosen_essence.phantom.hide_phantom()
@@ -404,8 +404,6 @@
 	if(overlay)
 		hide_phantom()
 		QDEL_NULL(overlay)
-
-	name = f_overlay.name
 	overlay = image(f_overlay.icon, f_overlay.icon_state)
 	overlay.alpha = 200
 	overlay.copy_overlays(f_overlay)
@@ -416,10 +414,9 @@
 		return
 	if(showed)
 		return
-	if(host.phantom_s)
-		host.phantom_s.icon_state = "phantom_on"
 	loc = get_turf(place ? place : host)
 	showed = TRUE
+	host.phantom_s?.update_icon(host)
 	for(var/mob/living/M in host.changeling.essences)
 		if(!M.client)
 			continue
@@ -433,9 +430,9 @@
 		return
 	if(!showed)
 		return
-	host.phantom_s.icon_state = "phantom_off"
 	showed = FALSE
 	loc = host
+	host.phantom_s?.update_icon(host)
 	for(var/mob/living/M in host.changeling.essences)
 		if(!M.client)
 			continue

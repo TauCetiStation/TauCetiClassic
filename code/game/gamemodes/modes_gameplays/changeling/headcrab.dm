@@ -9,6 +9,7 @@
 	req_human = 1
 	req_stat = DEAD
 	max_genetic_damage = 10
+	can_be_used_in_abom_form = FALSE
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
 	var/datum/mind/M = user.mind
@@ -16,10 +17,10 @@
 		to_chat(H,"<span class='userdanger'>You are blinded by a shower of blood!</span>")
 		H.Stun(1)
 		H.apply_effect(20,EYE_BLUR)
-		H.confused += 3
+		H.AdjustConfused(3)
 	for(var/mob/living/silicon/S in range(2,user))
 		to_chat(S,"<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
-		S.Weaken(3)
+		S.Stun(3)
 
 	// Prevents having Regenerate verb after rebirth.
 	var/datum/role/changeling/C = M.GetRoleByType(/datum/role/changeling)
@@ -45,7 +46,7 @@
 		user.gib()
 	else
 		qdel(user)
-	return 1
+	return TRUE
 
 /mob/living/simple_animal/headcrab
 	name = "headslug"

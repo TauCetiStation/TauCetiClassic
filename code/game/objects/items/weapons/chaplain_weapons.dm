@@ -134,7 +134,7 @@
 	if(user.mind?.holy_role < HOLY_ROLE_HIGHPRIEST || deconverting)
 		return
 
-	user.visible_message("<span class='danger'>[user] заряжает [src] и целится в [M].</span>")
+	user.visible_message("<span class='danger'>[user] waves [src] over [M]'s head.</span>")
 
 	deconverting = TRUE
 	if(!do_after(user, 50, target = M))
@@ -151,23 +151,23 @@
 				user.adjustBruteLoss(10)
 				user.Paralyse(20)
 				return
-			to_chat(M, "<span class='danger'>Сила [src] очищает твой разум от влияния древних богов!</span>")
+			to_chat(M, "<span class='danger'>Сила жезла очищает твой разум от влияния древних богов!</span>")
 
 			var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
-			C.RemoveFromRole(M.mind)
+			C.Deconvert()
 			M.Paralyse(5)
 			to_chat(M, "<span class='danger'><FONT size = 3>Незнакомый белый свет очищает твой разум от порчи и воспоминаний, когда ты был Его слугой.</span></FONT>")
 			M.mind.memory = ""
-			M.visible_message("<span class='danger'><FONT size = 3>[M] выглядит так, будто вернулся к своей старой вере!</span></FONT>")
+			M.visible_message("<span class='danger'><FONT size = 3>[M]'s head and see their eyes become clear, their mind returning to normal!</span></FONT>")
 
 			new /obj/effect/temp_visual/religion/pulse(M.loc)
-			M.visible_message("<span class='danger'>[user] извергает силу [src] в [M].</span>")
+			M.visible_message("<span class='danger'>[user] spews strength [src] into [M].</span>")
 		else
 			to_chat(user, "<span class='danger'>Жезл наказывает вас за ложное использование.</span>")
 			new /obj/effect/temp_visual/religion/pulse(user.loc)
 			user.apply_damage(50, BURN, null, used_weapon="Electrocution")
-			user.visible_message("<span class='danger'>[src] извергает свою силу [user].</span>")
-			M.confused += 10
+			user.visible_message("<span class='danger'>[src] spews his power [user].</span>")
+			M.AdjustConfused(10)
 
 /obj/item/weapon/nullrod/staff
 	name = "divine staff"
@@ -280,8 +280,7 @@
 	// All of this could be made religion-dependant.
 	brainmob = new(get_turf(src))
 	brainmob.mutations.Add(XRAY) //its the god
-	brainmob.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-	brainmob.status_flags |= GODMODE
+	brainmob.add_status_flags(GODMODE)
 
 	var/god_name = pick(summoner.my_religion.deity_names)
 	var/god_lore = summoner.my_religion.lore
@@ -303,7 +302,7 @@
 
 	summoner.my_religion.add_deity(brainmob)
 
-	for(var/datum/language/L in summoner.languages)
+	for(var/datum/language/L as anything in summoner.languages)
 		brainmob.add_language(L.name)
 
 	name = "staff of the [god_name]"

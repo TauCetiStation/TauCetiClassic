@@ -1,4 +1,4 @@
-/obj/item/weapon/twohanded/spear
+/obj/item/weapon/spear
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "spearglass0"
 	name = "spear"
@@ -6,14 +6,11 @@
 	force = 10
 	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
-	force_unwielded = 10
-	force_wielded = 18 // Was 13, Buffed - RR
 	throwforce = 15
-	flags = NOSHIELD
 	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 
-/obj/item/weapon/twohanded/spear/atom_init()
+/obj/item/weapon/spear/atom_init()
 	. = ..()
 	var/datum/swipe_component_builder/SCB = new
 	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
@@ -21,21 +18,25 @@
 	SCB.can_push = TRUE
 	SCB.can_pull = TRUE
 
-	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_push)
-	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_pull)
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/spear.proc/can_sweep_push)
+	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/spear.proc/can_sweep_pull)
 
 	AddComponent(/datum/component/swiping, SCB)
 
-/obj/item/weapon/twohanded/spear/proc/can_sweep_push(atom/target, mob/user)
-	return wielded
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.force_wielded = 18
+	TCB.force_unwielded = 10
+	TCB.icon_wielded = "spearglass1"
 
-/obj/item/weapon/twohanded/spear/proc/can_sweep_pull(atom/target, mob/user)
-	return wielded
+	AddComponent(/datum/component/twohanded, TCB)
 
-/obj/item/weapon/twohanded/spear/update_icon()
-	icon_state = "spearglass[wielded]"
+/obj/item/weapon/spear/proc/can_sweep_push(atom/target, mob/user)
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
 
-/obj/item/weapon/twohanded/spear/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/spear/proc/can_sweep_pull(atom/target, mob/user)
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
+
+/obj/item/weapon/spear/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/organ/external/head))
 		if(loc == user)
 			user.drop_from_inventory(src)
@@ -147,10 +148,10 @@
 	else
 		return ..()
 
-/obj/item/weapon/melee/cattleprod/attack(mob/M, mob/user)
+/obj/item/weapon/melee/cattleprod/attack(mob/M, mob/living/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='danger'>You accidentally hit yourself with [src]!</span>")
-		user.Weaken(stunforce*3)
+		user.apply_effect(120, AGONY, 0)
 		deductcharge(hitcost)
 		return
 
@@ -175,8 +176,7 @@
 		//H.Weaken(stunforce)
 		//H.apply_effect(STUTTER, stunforce)
 		H.apply_effect(60,AGONY,0)
-		user.lastattacked = M
-		H.lastattacker = user
+		H.set_lastattacker_info(user)
 		if(isrobot(src.loc))
 			var/mob/living/silicon/robot/R = src.loc
 			if(R && R.cell)
@@ -267,7 +267,6 @@
 	force = 8
 	w_class = SIZE_NORMAL
 	throwforce = 5
-//	flags = NOSHIELD
 		//var/protest_text
  		//	var/protest_text_length = 100
  	//var/image/inhand_blood_overlay
@@ -317,7 +316,7 @@
 
 /obj/item/weapon/transparant/attack(mob/M, mob/user)
 	..()
-	M.show_message("<span class='attack'>\The <EM>[src.blood_DNA ? "bloody " : ""][bicon(src)][src.name]</EM> says: <span class='emojify bold'>[src.desc]</span></span>", SHOWMSG_VISUAL)
+	M.show_message("<span class='red'>\The <EM>[src.blood_DNA ? "bloody " : ""][bicon(src)][src.name]</EM> says: <span class='emojify bold'>[src.desc]</span></span>", SHOWMSG_VISUAL)
 
 /obj/item/weapon/transparant/update_icon()
 	if(blood_DNA)
@@ -327,7 +326,7 @@
 		icon_state = not_bloody_state
 		item_state = not_bloody_item_state
 	..()
-	if(istype(src.loc, /mob/living))
+	if(isliving(src.loc))
 		var/mob/living/user = src.loc
 		user.update_inv_l_hand()
 		user.update_inv_r_hand()
