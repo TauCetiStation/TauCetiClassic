@@ -209,6 +209,19 @@
 				return TRUE
 	return FALSE
 
+/mob/living/carbon/human/handle_vision()
+	if(!istype(species, /datum/species/zombie))
+		return ..()
+	clear_fullscreen("blind", 0)
+
+/mob/living/carbon/human/update_eye_blur()
+	if(!istype(species, /datum/species/zombie))
+		return ..()
+	if(client && eye_blurry)
+		var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+		game_plane_master_controller.remove_filter("eye_blur_angular")
+		game_plane_master_controller.remove_filter("eye_blur_gauss")
+
 /mob/living/carbon/human/proc/infect_zombie_virus(target_zone = null, forced = FALSE, fast = FALSE)
 	if(!forced && !prob(get_bite_infection_chance(src, target_zone)))
 		return
