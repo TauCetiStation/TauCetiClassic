@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Section } from '../components';
+import { Box, Button, Flex, Input, Tooltip, Section, Dropdown, Icon } from "../components";
 import { Window } from '../layouts';
 
 export const Minesweeper = (props, context) => {
@@ -12,21 +12,24 @@ export const Minesweeper = (props, context) => {
   return (
     <Window width={width} height={height} theme="ntos">
       <Window.Content>
-        <Section>
-          {grid.map(line => (
-            <>
-			  {line.map((butn, index) => (
+        {grid.map(line => (
+          <>
+		    {line.map((butn, index) => (
+		      <>
                 <Button key={index}
-                  width={1.75}
-                  heigth={1}
-                  content={index}
+		          disabled={butn.state == 'empty' ? 1 : 0}
+                  width='25px'
+                  height='25px'
+                  content={butn.nearest ? butn.nearest : ' '}
+				  textAlign="center"
+				  font="normal normal bold 12px arial"
                   onClick={() => act('button_press', { choice_x: butn.x, choice_y: butn.y })}
                 />
-              ))}
-              <br />
-            </>
-          ))}
-        </Section>
+		      </>
+		    ))}
+            <br />
+          </>
+        ))}
       </Window.Content>
     </Window>
   );
