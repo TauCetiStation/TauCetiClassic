@@ -14,18 +14,16 @@ export const Minesweeper = (props, context) => {
       <Window.Content>
         {grid.map(line => (
           <>
-		    {line.map((butn, index) => (
-		      <>
-                <Button key={index}
-		          disabled={butn.state == 'empty' ? 1 : 0}
-                  width='27px'
-                  height='27px'
-                  content={butn.nearest ? butn.nearest : ' '}
-				  textAlign="center"
-                  onClick={() => act('button_press', { choice_x: butn.x, choice_y: butn.y })}
-                />
-		      </>
-		    ))}
+            {line.map((butn, index) => (
+              <Button key={index}
+                disabled={butn.state === 'empty' ? 1 : 0}
+                width="27px"
+                height="27px"
+                content={butn.nearest ? butn.nearest : ' '}
+                textAlign="center"
+                onClick={() => act('button_press', { choice_x: butn.x, choice_y: butn.y })}
+              />
+            ))}
             <br />
           </>
         ))}
