@@ -22,7 +22,7 @@
 		for (var/mob/target as anything in motionTargets)
 			if(QDELETED(target) || target.stat == DEAD)
 				lostTarget(target)
-				return
+				continue
 			// If not detecting with motion camera...
 			if (!area_motion)
 				// See if the camera is still in range
