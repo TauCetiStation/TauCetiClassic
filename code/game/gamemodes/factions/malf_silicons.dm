@@ -255,7 +255,7 @@
 		finished = TRUE
 		return FALSE
 	for(var/datum/objective/turn_into_zombie/Z in objective_holder.GetObjectives())
-		if(Z.check_completion())
+		if(Z.check_completion() == OBJECTIVE_WIN)
 			return TRUE
 	return FALSE
 
