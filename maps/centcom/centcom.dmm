@@ -12011,11 +12011,9 @@
 "aBH" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/ert/engineer,
-/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/ert/engineer,
 /obj/item/device/flash,
 /obj/item/device/multitool,
-/obj/item/clothing/gloves/yellow,
 /obj/item/clothing/accessory/storage/brown_vest,
 /obj/item/weapon/storage/belt/utility/full,
 /obj/item/clothing/glasses/meson,
@@ -12181,7 +12179,6 @@
 /obj/structure/rack,
 /obj/item/clothing/head/helmet/space/rig/ert/commander,
 /obj/item/clothing/suit/space/rig/ert/commander,
-/obj/item/clothing/shoes/magboots,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /turf/unsimulated/floor{
 	dir = 8;
@@ -24802,11 +24799,9 @@
 "gbb" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/ert/engineer,
-/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/ert/engineer,
 /obj/item/device/flash,
 /obj/item/device/multitool,
-/obj/item/clothing/gloves/yellow,
 /obj/item/clothing/accessory/storage/brown_vest,
 /obj/item/weapon/storage/belt/utility/full,
 /obj/item/clothing/glasses/meson,
