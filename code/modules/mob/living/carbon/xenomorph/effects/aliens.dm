@@ -83,19 +83,6 @@
 	update_nearby_tiles()
 	return ..()
 
-/obj/structure/alien/resin/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	..()
-	visible_message("<span class='warning'><B>[src] was hit by [AM].</B></span>")
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 10
-	else if(isitem(AM))
-		var/obj/item/T = AM
-		tforce = T.throwforce
-	else
-		return
-	take_damage(tforce, BRUTE, MELEE)
-
 /obj/structure/alien/resin/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations)

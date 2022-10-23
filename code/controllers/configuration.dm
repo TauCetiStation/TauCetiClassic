@@ -104,6 +104,9 @@ var/global/bridge_secret = null
 
 	var/repository_link = ""
 
+	var/github_repository_owner = ""
+	var/github_repository_name = ""
+
 	var/forbid_singulo_possession = 0
 
 	var/allow_holidays = FALSE
@@ -621,6 +624,11 @@ var/global/bridge_secret = null
 
 				if("repository_link")
 					config.repository_link = value
+					var/repo_path = replacetext(config.repository_link, "https://github.com/", "")
+					if(repo_path != config.repository_link)
+						var/split = splittext(repo_path, "/")
+						github_repository_owner = split[1]
+						github_repository_name = split[2]
 
 				if("registration_panic_bunker_age")
 					config.registration_panic_bunker_age = value

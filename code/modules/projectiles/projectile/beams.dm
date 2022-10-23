@@ -5,7 +5,7 @@
 	damage = 40
 	damage_type = BURN
 	sharp = TRUE // concentrated burns
-	flag = "laser"
+	flag = LASER
 	eyeblur = 4
 	var/frequency = 1
 	hitscan = 1
@@ -25,7 +25,7 @@
 	damage = 0
 	damage_type = BURN
 	fake = 1
-	flag = "laser"
+	flag = LASER
 	eyeblur = 2
 
 /obj/item/projectile/beam/practice/atom_init()
@@ -93,7 +93,7 @@
 	damage = 0
 	damage_type = BURN
 	fake = TRUE
-	flag = "laser"
+	flag = LASER
 
 	var/lasertag_color = "none"
 
@@ -154,7 +154,7 @@
 	weaken = 5
 	stutter = 5
 
-	flag = "bullet"
+	flag = BULLET
 	pass_flags = PASSTABLE
 	damage_type = BRUTE
 	sharp = TRUE

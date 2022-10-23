@@ -11840,14 +11840,28 @@
 /area/centcom/specops)
 "aBk" = (
 /obj/structure/rack,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/glass,
-/obj/item/stack/sheet/metal,
-/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/glass{
+	amount = 50
+	},
+/obj/item/stack/sheet/glass{
+	amount = 50
+	},
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
 /obj/item/stack/sheet/plasteel{
 	amount = 50
 	},
 /obj/item/stack/sheet/plasteel{
+	amount = 50
+	},
+/obj/item/stack/rods{
+	amount = 50
+	},
+/obj/item/stack/rods{
 	amount = 50
 	},
 /turf/unsimulated/floor{
@@ -17106,12 +17120,11 @@
 	},
 /area/centcom/living)
 "aMB" = (
-/obj/structure/closet/syndicate,
-/obj/item/clothing/suit/syndieshirt,
-/turf/simulated/shuttle/floor/vox{
-	icon_state = "floorcatwalk"
+/obj/machinery/door/airlock/external,
+/turf/unsimulated/floor{
+	icon_state = "dark"
 	},
-/area/custom/syndicate_mothership/elite_squad)
+/area/centcom/specops)
 "aMC" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -17129,10 +17142,10 @@
 	},
 /area/centcom/evac)
 "aME" = (
-/turf/simulated/shuttle/floor/vox{
-	icon_state = "floorcatwalk"
-	},
-/area/shuttle/syndicate_elite/mothership)
+/obj/structure/cult/statue/camera/gargoyle,
+/obj/structure/eminence_spire,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "aMF" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -18814,6 +18827,13 @@
 	icon_state = "warningcorner"
 	},
 /area/centcom/holding)
+"aPQ" = (
+/obj/structure/closet/syndicate,
+/obj/item/clothing/suit/syndieshirt,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
+	},
+/area/custom/syndicate_mothership/elite_squad)
 "aPR" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -18842,6 +18862,11 @@
 	icon_state = "floor"
 	},
 /area/centcom/holding)
+"aPV" = (
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
+	},
+/area/shuttle/syndicate_elite/mothership)
 "aPW" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Holding Facility"
@@ -60334,7 +60359,7 @@ azo
 aAE
 aCV
 aBQ
-aBY
+aMB
 aCa
 aAE
 aCV
@@ -60591,7 +60616,7 @@ azo
 aAE
 aCV
 aBQ
-aBY
+aMB
 aCa
 aAE
 aCV
@@ -67956,8 +67981,8 @@ ajm
 axL
 aMM
 aMM
-aME
-aME
+aPV
+aPV
 aib
 aib
 ajw
@@ -71034,7 +71059,7 @@ mAb
 mAb
 mAb
 mAb
-aMB
+aPQ
 aMK
 mAb
 mAb
@@ -71990,7 +72015,7 @@ aaM
 aaM
 aaM
 adx
-tqh
+aME
 wfy
 aZI
 bKC
