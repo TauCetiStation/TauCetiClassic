@@ -84,7 +84,7 @@
 
 	data["grid"] = grid
 	data["width"] = grid_x*30
-	data["height"] = grid_y*30+32
+	data["height"] = grid_y*30+30
 
 	return data
 
@@ -151,6 +151,7 @@
 		locked = FALSE
 		add_overlay(greenlight)
 		nanomanager.close_uis(src)
+		SStgui.close_uis(src)
 
 
 /obj/structure/closet/crate/secure/loot/proc/SpawnGoodLoot()

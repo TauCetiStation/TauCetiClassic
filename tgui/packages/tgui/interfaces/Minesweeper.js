@@ -18,11 +18,10 @@ export const Minesweeper = (props, context) => {
 		      <>
                 <Button key={index}
 		          disabled={butn.state == 'empty' ? 1 : 0}
-                  width='25px'
-                  height='25px'
+                  width='27px'
+                  height='27px'
                   content={butn.nearest ? butn.nearest : ' '}
 				  textAlign="center"
-				  font="normal normal bold 12px arial"
                   onClick={() => act('button_press', { choice_x: butn.x, choice_y: butn.y })}
                 />
 		      </>
