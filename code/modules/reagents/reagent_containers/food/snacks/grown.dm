@@ -969,7 +969,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
 	if(isspaceturf(user.loc))
 		return
-	var/obj/effect/glowshroom/planted = new /obj/effect/glowshroom(user.loc)
+	var/obj/structure/glowshroom/planted = new /obj/structure/glowshroom(user.loc)
 
 	planted.delay = lifespan * 50
 	planted.modify_max_integrity(endurance)

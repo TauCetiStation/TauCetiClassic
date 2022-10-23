@@ -6855,7 +6855,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "brI" = (
@@ -12802,7 +12802,7 @@
 "cXt" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance/three,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -31764,7 +31764,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -34013,7 +34013,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille,
 /obj/structure/window/reinforced,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 22
@@ -37978,7 +37978,7 @@
 "iQW" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "iRk" = (
@@ -44597,7 +44597,7 @@
 "kEv" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/three,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "kEE" = (
@@ -49312,7 +49312,7 @@
 "lKH" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/three,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "lKJ" = (
@@ -51838,7 +51838,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/three,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -53395,7 +53395,7 @@
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/mask/bandana/skull,
 /obj/effect/decal/cleanable/cobweb,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "mJn" = (
@@ -55140,7 +55140,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/random/scrap/safe_even,
 /obj/effect/decal/cleanable/cobweb2,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /obj/machinery/alarm{
 	pixel_y = 22
 	},
@@ -57558,7 +57558,7 @@
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/five,
 /obj/random/tools/tool,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "nNu" = (
@@ -62848,7 +62848,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "pfg" = (
@@ -72170,7 +72170,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/three,
 /obj/effect/decal/cleanable/cobweb2,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "rAQ" = (
@@ -78156,7 +78156,7 @@
 /obj/effect/decal/cleanable/molten_item,
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/five,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "tbo" = (
@@ -88844,7 +88844,7 @@
 /obj/structure/rack,
 /obj/item/stack/rods,
 /obj/effect/spawner/lootdrop/maintenance/three,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "vIV" = (
@@ -89066,7 +89066,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/three,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -92679,7 +92679,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/four,
 /obj/item/device/radio/off,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "wGL" = (
