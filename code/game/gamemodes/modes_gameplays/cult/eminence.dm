@@ -299,7 +299,6 @@
 	var/style = "font-family: 'Fixedsys'; -dm-text-outline: 1 black; font-size: 20px; color: #973e3b;"
 	var/obj/effect/overlay/blurb_cult/B = new()
 
-	var/list/style_for_line[2]
 	var/list/lines[2]
 
 	lines[1] = "[src]"
@@ -312,30 +311,29 @@
 
 	var/newline_flag = TRUE
 	for(var/j in 1 to lines.len)
-		var/new_line = uppertext(lines[j])
-		var/old_line = j > 1 ? "<span style=\"[style_for_line[j - 1]]\">[uppertext(lines[j - 1])]</span>" : null
+		var/old_line = j > 1 ? "[uppertext(lines[j - 1])]" : null
 		animate(B, alpha = 255, time = 20)
 		newline_flag = !newline_flag
-		for(var/i = 2 to length_char(new_line) + 1)
-			var/cur_line = "<span style=\"[style_for_line[j]]\">[copytext_char(new_line, 1, i)]</span>"
+		for(var/i = 2 to length_char(uppertext(lines[j])) + 1)
+			var/cur_line = "[copytext_char(uppertext(lines[j]), 1, i)]"
 			if(newline_flag)
 				B.maptext = "<div style=\"[style]\">[old_line]<br>[cur_line]</div>"
 			else
 				B.maptext = "<div style=\"line-height: 0.9;[style]\">[cur_line]</div><br><br></br>"
 			sleep(1)
 		if(newline_flag || j == lines.len)
-			sleep(15)
-			animate(B, alpha = 0, time = 120)
-			sleep(15)
+			sleep(40)
+			animate(B, alpha = 0, time = 70)
+			sleep(50)
 	for(var/mob/M as anything in affectees)
 		M.client?.screen -= B
 	qdel(B)
 
 /obj/effect/overlay/blurb_cult
 	maptext_height = 128
-	maptext_width = 312
+	maptext_width = 318
 	layer = FLOAT_LAYER
 	plane = HUD_PLANE
 	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	screen_loc = "CENTER-3,TOP-3"
+	screen_loc = "CENTER-3,TOP-4"
