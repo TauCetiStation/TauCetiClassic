@@ -13,7 +13,7 @@
 /datum/events/proc/addEventType(event_type)
 	if(!(event_type in events) || !islist(events[event_type]))
 		events[event_type] = list()
-		return 1
+		return TRUE
 	return
 
 
@@ -24,7 +24,7 @@
 		return
 	addEventType(event_type)
 	var/list/event = events[event_type]
-	var/datum/event/E = new /datum/event(proc_holder,proc_name)
+	var/datum/event_mecha/E = new /datum/event_mecha(proc_holder,proc_name)
 	event += E
 	return E
 
@@ -35,33 +35,33 @@
 	var/list/event = listgetindex(events,args[1])
 	if(istype(event))
 		spawn(-1)
-			for(var/datum/event/E in event)
+			for(var/datum/event_mecha/E in event)
 				if(!E.Fire(arglist(args.Copy(2))))
 					clearEvent(args[1],E)
 	return
 
-// Arguments: event_type as text, E as /datum/event
-// Returns: 1 if event cleared, null on error
+// Arguments: event_type as text, E as /datum/event_mecha
+// Returns: TRUE if event cleared, FALSE on error
 /datum/events/proc/clearEvent(event_type, datum/event/E)
 	if(!event_type || !E)
-		return
+		return FALSE
 	var/list/event = listgetindex(events,event_type)
 	event -= E
-	return 1
+	return TRUE
 
 
-/datum/event
+/datum/event_mecha
 	var/listener
 	var/proc_name
 
-/datum/event/New(tlistener,tprocname)
+/datum/event_mecha/New(tlistener,tprocname)
 	listener = tlistener
 	proc_name = tprocname
 	return ..()
 
-/datum/event/proc/Fire()
+/datum/event_mecha/proc/Fire()
 	//world << "Event fired"
 	if(listener)
 		call(listener,proc_name)(arglist(args))
-		return 1
-	return
+		return TRUE
+	return FALSE

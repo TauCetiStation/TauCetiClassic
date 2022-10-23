@@ -8,7 +8,7 @@
 	throwforce = 2.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	attack_verb = list("called", "rang")
 	hitsound = list('sound/weapons/ring.ogg')
 
@@ -18,11 +18,11 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "rcd"
 	opacity = 0
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	var/matter = 0
 	var/mode = 1
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/weapon/corncob
 	name = "corn cob"
@@ -30,7 +30,7 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "corncob"
 	item_state = "corncob"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
@@ -41,7 +41,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "c_tube"
 	throwforce = 1
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 5
 
@@ -55,7 +55,7 @@
 	flags = CONDUCT
 	force = 5.0
 	throwforce = 7.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 50
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
@@ -72,8 +72,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "gift3"
 	item_state = "gift"
-	w_class = ITEM_SIZE_NORMAL
-	var/size = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
+	var/size = SIZE_SMALL
 	var/sender = FALSE
 	var/recipient = FALSE
 
@@ -85,7 +85,7 @@
 	icon_state = "handcuff"
 	flags = CONDUCT
 	throwforce = 0
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	origin_tech = "materials=1"
 	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
@@ -103,7 +103,7 @@
 
 /obj/item/weapon/legcuffs/beartrap/attack_self(mob/user)
 	..()
-	if(ishuman(user) && !user.stat && !user.restrained())
+	if(ishuman(user) && user.stat == CONSCIOUS && !user.restrained())
 		armed = !armed
 		icon_state = "beartrap[armed]"
 		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"].</span>")
@@ -121,7 +121,7 @@
 					H.update_inv_legcuffed()
 					H.visible_message("<span class='danger'>[H] steps on \the [src].</span>", "<span class='danger'>You step on \the [src]!</span>")
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
-		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
+		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !isconstruct(AM) && !isshade(AM) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
 			armed = 0
 			var/mob/living/simple_animal/SA = AM
 			SA.health -= 20
@@ -135,7 +135,7 @@
 	breakouttime = 35 //easy to apply, easy to break out of
 	origin_tech = "engineering=3;combat=1"
 	throw_speed = 5
-	var/weaken = 0.8
+	var/weaken = 0
 
 /obj/item/weapon/legcuffs/bola/after_throw(datum/callback/callback)
 	..()
@@ -160,8 +160,8 @@
 	icon_state = "bola_r"
 	breakouttime = 70
 	origin_tech = "engineering=4;combat=3"
-	weaken = 6
-
+	weaken = 2
+	throw_range = 5
 
 /obj/item/weapon/caution
 	desc = "Caution! Wet Floor!"
@@ -172,7 +172,7 @@
 	throwforce = 3.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	attack_verb = list("warned", "cautioned", "smashed")
 
 /obj/item/weapon/caution/cone
@@ -188,6 +188,9 @@
 	flags = CONDUCT
 	m_amt = 3750
 
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
+
 /obj/item/weapon/shard
 	name = "shard"
 	icon = 'icons/obj/shards.dmi'
@@ -195,7 +198,7 @@
 	sharp = 1
 	edge = 1
 	desc = "Could probably be used as ... a throwing weapon?"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	force = 5.0
 	throwforce = 8.0
 	item_state = "shard-glass"
@@ -237,7 +240,7 @@
 	var/mob/currentUser = null
 	var/obj/item/device/radio/origradio = null
 	flags = CONDUCT | ONBELT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_state = "radio"
 	throw_speed = 4
 	throw_range = 20
@@ -280,7 +283,7 @@
 	slot_flags = SLOT_FLAGS_BELT
 	item_state = "radio"
 	throwforce = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
@@ -296,8 +299,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_SMALL
-	flags = NOSHIELD
+	w_class = SIZE_TINY
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 
 /obj/item/weapon/staff/atom_init()
@@ -340,8 +342,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_SMALL
-	flags = NOSHIELD
+	w_class = SIZE_TINY
 
 /obj/item/weapon/table_parts
 	name = "table parts"
@@ -352,6 +353,11 @@
 	m_amt = 3750
 	flags = CONDUCT
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
+	var/table_type = /obj/structure/table
+	var/list/debris = list(/obj/item/stack/sheet/metal)
+
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
 
 /obj/item/weapon/table_parts/reinforced
 	name = "reinforced table parts"
@@ -360,32 +366,42 @@
 	icon_state = "reinf_tableparts"
 	m_amt = 7500
 	flags = CONDUCT
+	table_type = /obj/structure/table/reinforced
+	debris = list(/obj/item/stack/sheet/metal, /obj/item/stack/rods)
 
 /obj/item/weapon/table_parts/wood
 	name = "wooden table parts"
 	desc = "Keep away from fire."
 	icon_state = "wood_tableparts"
 	flags = null
+	table_type = /obj/structure/table/woodentable
+	debris = list(/obj/item/stack/sheet/wood)
 
 /obj/item/weapon/table_parts/wood/poker
 	name = "poker table parts"
 	desc = "Keep away from fire, and keep near seedy dealers."
 	icon_state = "poker_tableparts"
 	flags = null
+	table_type = /obj/structure/table/woodentable/poker
+	debris = list(/obj/item/stack/sheet/wood, /obj/item/stack/tile/grass)
 
 /obj/item/weapon/table_parts/wood/fancy
 	name = "fancy table parts"
 	desc = "Covered with an amazingly fancy, patterned cloth."
 	icon_state = "fancy_tableparts"
+	table_type = /obj/structure/table/woodentable/fancy
 
 /obj/item/weapon/table_parts/wood/fancy/black
 	icon_state = "fancyblack_tableparts"
+	table_type = /obj/structure/table/woodentable/fancy/black
 
 /obj/item/weapon/table_parts/glass
 	name = "glass table parts"
 	desc = "Very fragile."
 	icon_state = "glass_tableparts"
 	flags = null
+	table_type = /obj/structure/table/glass
+	debris = list(/obj/item/stack/sheet/glass)
 
 /obj/item/weapon/wire
 	desc = "This is just a simple piece of regular insulated wire."
@@ -405,7 +421,7 @@
 /obj/item/weapon/module
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_state = "electronic"
 	flags = CONDUCT
 	usesound = 'sound/items/Deconstruct.ogg'
@@ -444,7 +460,7 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "meat"
 	flags = CONDUCT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	origin_tech = "biotech=2"
 
 /obj/item/weapon/hatchet
@@ -454,9 +470,10 @@
 	icon_state = "hatchet"
 	flags = CONDUCT
 	force = 12.0
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	sharp = 1
 	edge = 1
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 15.0
 	throw_speed = 4
 	throw_range = 4
@@ -472,10 +489,6 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 	AddComponent(/datum/component/swiping, SCB)
-
-/obj/item/weapon/hatchet/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
-	return ..()
 
 /obj/item/weapon/hatchet/unathiknife
 	name = "duelling knife"
@@ -494,8 +507,7 @@
 	edge = 1
 	throw_speed = 1
 	throw_range = 3
-	w_class = ITEM_SIZE_LARGE
-	flags = NOSHIELD
+	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "materials=2;combat=2"
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
@@ -511,8 +523,8 @@
 
 /obj/item/weapon/scythe/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(istype(target, /obj/effect/spacevine))
-		for(var/obj/effect/spacevine/B in orange(target, 1))
+	if(istype(target, /obj/structure/spacevine))
+		for(var/obj/structure/spacevine/B in orange(target, 1))
 			if(prob(80))
 				qdel(B)
 		qdel(target)
@@ -524,7 +536,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigarpacket"
 	item_state = "cigarpacket"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throwforce = 2
 	var/cigarcount = 6
 	flags = ONBELT */
@@ -535,22 +547,9 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "wire1"
 	flags = NOBLUDGEON | NOATTACKANIMATION | CONDUCT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 	var/obj/machinery/machine
-
-/obj/item/weapon/plastique
-	name = "plastic explosives"
-	desc = "Used to put holes in specific areas without too much extra hole."
-	gender = PLURAL
-	icon = 'icons/obj/assemblies.dmi'
-	icon_state = "plastic-explosive0"
-	item_state = "plasticx"
-	flags = NOBLUDGEON
-	w_class = ITEM_SIZE_SMALL
-	origin_tech = "syndicate=2"
-	var/timer = 10
-	var/atom/target = null
 
 ///////////////////////////////////////Stock Parts /////////////////////////////////
 
@@ -559,7 +558,7 @@
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "RPED"
 	item_state = "RPED"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	can_hold = list(/obj/item/weapon/stock_parts)
 	storage_slots = 50
 	use_to_pickup = 1
@@ -567,7 +566,7 @@
 	allow_quick_empty = 1
 	collection_mode = 1
 	display_contents_with_number = 1
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	var/works_from_distance = 0
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
@@ -575,7 +574,7 @@
 /obj/item/weapon/storage/part_replacer/afterattack(atom/target, mob/user, proximity, params)
 	if(proximity)
 		return
-	if(!istype(target, /obj/machinery))
+	if(!ismachinery(target))
 		return
 	var/obj/machinery/T = target
 	if(works_from_distance && T.component_parts)
@@ -587,9 +586,9 @@
 	desc = "A version of the RPED that allows for replacement of parts and scanning from a distance, along with higher capacity for parts."
 	icon_state = "BS_RPED"
 	item_state = "BS_RPED"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	storage_slots = 400
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	works_from_distance = 1
 	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/PSHOOM.ogg'
 	alt_sound = 'sound/items/PSHOOM_2.ogg'
@@ -602,7 +601,7 @@
 		playsound(src, pshoom_or_beepboopblorpzingshadashwoosh, VOL_EFFECTS_MASTER)
 
 //Sorts stock parts inside an RPED by their rating.
-//Only use /obj/item/weapon/stock_parts/ with this sort proc!
+//Only use /obj/item/weapon/stock_parts with this sort proc!
 /proc/cmp_rped_sort(obj/item/weapon/stock_parts/A, obj/item/weapon/stock_parts/B)
 	return B.rating - A.rating
 
@@ -610,7 +609,7 @@
 	name = "stock part"
 	desc = "What?"
 	icon = 'icons/obj/stock_parts.dmi'
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/rating = 1
 
 /obj/item/weapon/stock_parts/atom_init()
@@ -881,12 +880,19 @@
 		to_chat(user, "<span class='userdanger'>[M] Must be lie down first!</span>")
 		return
 
-	var/zone = check_zone(user.zone_sel.selecting)
+	var/zone = check_zone(user.get_targetzone())
 	var/obj/item/organ/external/BP = M.get_bodypart(zone)
 	for(var/obj/item/clothing/C in M.get_equipped_items())
 		if(C.body_parts_covered & BP.body_part)
 			to_chat(user, "<span class='userdanger'>Take off [M]'s clothes first!</span>")
 			return
+
+	M.adjustHalLoss(-1)
+	M.AdjustStunned(-1)
+	M.AdjustWeakened(-1)
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "sauna relax", /datum/mood_event/sauna)
+
+	playsound(src, 'sound/weapons/sauna_broom.ogg', VOL_EFFECTS_MASTER)
 
 	zone = parse_zone(zone)
 	wet -= 5

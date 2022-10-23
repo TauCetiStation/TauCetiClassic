@@ -6,14 +6,18 @@
 
 
 /obj/mecha/medical/mechturn(direction)
-	dir = direction
+	set_dir(direction)
 	playsound(src, 'sound/mecha/mechmove01.ogg', VOL_EFFECTS_MASTER, 40)
 	return 1
 
 /obj/mecha/medical/mechstep(direction)
+	var/old_loc = loc
 	var/result = step(src,direction)
 	if(result)
 		playsound(src, 'sound/mecha/mechstep.ogg', VOL_EFFECTS_MASTER, 25)
+		direction = get_dir(src, old_loc)
+		if(ISDIAGONALDIR(direction))
+			return 2
 	return result
 
 /obj/mecha/medical/mechsteprand()

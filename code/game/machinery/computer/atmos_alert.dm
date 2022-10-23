@@ -1,6 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
-
 /obj/machinery/computer/atmos_alert
 	name = "Atmospheric Alert Computer"
 	desc = "Used to access the station's atmospheric sensors."
@@ -10,7 +7,6 @@
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
 	var/receive_frequency = 1437
-
 
 /obj/machinery/computer/atmos_alert/atom_init()
 	. = ..()
@@ -48,7 +44,7 @@
 
 /obj/machinery/computer/atmos_alert/process()
 	if(..())
-		src.updateDialog()
+		updateDialog()
 
 /obj/machinery/computer/atmos_alert/update_icon()
 	if(stat & NOPOWER)

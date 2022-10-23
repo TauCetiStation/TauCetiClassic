@@ -8,7 +8,7 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
 	force = 16
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
@@ -44,7 +44,7 @@
 		if(O.can_buckle && O.buckled_mob)
 			O.user_unbuckle_mob(user)
 
-/obj/item/weapon/melee/zombie_hand/proc/opendoor(mob/user, var/obj/machinery/door/A)
+/obj/item/weapon/melee/zombie_hand/proc/opendoor(mob/user, obj/machinery/door/A)
 	if(!A.density)
 		return
 	else if(!user.is_busy(A))
@@ -53,13 +53,13 @@
 							 "<span class='warning'>You hear metal strain.</span>")
 		playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(do_after(user, 70, target = A))
-			if(A.density && in_range(A, user))
+			if(A.density && user.Adjacent(A))
 				user.visible_message("<span class='warning'>[user] forces the door to open with [src]!</span>",\
 									 "<span class='warning'>You force the door to open.</span>",\
 									 "<span class='warning'>You hear a metal screeching sound.</span>")
 				A.open(1)
 
-/obj/item/weapon/melee/zombie_hand/proc/breakairlock(mob/user, var/obj/machinery/door/airlock/A)
+/obj/item/weapon/melee/zombie_hand/proc/breakairlock(mob/user, obj/machinery/door/airlock/A)
 	if(!A.density)
 		return
 	else if(!user.is_busy(A))
@@ -70,7 +70,7 @@
 								 "<span class='warning'>You hear metal strain.</span>")
 			playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			if(do_after(user, 100, target = A))
-				if(A && A.density && in_range(A, user))
+				if(A && A.density && user.Adjacent(A))
 					if(attempts >= 2 && prob(attempts*5))
 						user.visible_message("<span class='warning'>[user] broke the airlock with [src]!</span>",\
 											 "<span class='warning'>You break the airlock.</span>",\
@@ -84,7 +84,7 @@
 			else
 				return
 
-/obj/item/weapon/melee/zombie_hand/proc/breakfiredoor(mob/user, var/obj/machinery/door/firedoor/A)
+/obj/item/weapon/melee/zombie_hand/proc/breakfiredoor(mob/user, obj/machinery/door/firedoor/A)
 	if(!A.density)
 		return
 	else if(!user.is_busy(A))
@@ -93,7 +93,7 @@
 							 "<span class='warning'>You hear metal strain.</span>")
 		playsound(A, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		if(do_after(user, 200, target = A))
-			if(A.density && in_range(A, user))
+			if(A.density && user.Adjacent(A))
 				user.visible_message("<span class='warning'>[user] broke the emergency shutter with [src]!</span>",\
 									 "<span class='warning'>You break the emergency shutter.</span>",\
 									 "<span class='warning'>You hear a metal screeching sound.</span>")
@@ -105,7 +105,7 @@
 	if(. && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(!iszombie(H))
-			var/target_zone = user.zone_sel.selecting
+			var/target_zone = user.get_targetzone()
 
 			if((target_zone == BP_HEAD || target_zone == BP_CHEST) && prob(40))
 				target_zone = pick(BP_L_ARM, BP_R_ARM)
@@ -131,7 +131,7 @@
 	if(brain)
 		brain.damage = 0
 	H.setBrainLoss(0)
-	H.eye_blurry = 0
+	H.setBlurriness(0)
 	H.eye_blind = 0
 
 	if(LArm && !(LArm.is_stump) && !istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
@@ -146,7 +146,6 @@
 
 /datum/species/zombie/handle_death(mob/living/carbon/human/H)
 	addtimer(CALLBACK(null, .proc/prerevive_zombie, H), rand(600,700))
-	H.update_mutantrace()
 
 /proc/handle_infected_death(mob/living/carbon/human/H)
 	if(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL))
@@ -158,7 +157,7 @@
 		if(!H.key && H.mind)
 			for(var/mob/dead/observer/ghost in player_list)
 				if(ghost.mind == H.mind && ghost.can_reenter_corpse)
-					var/answer = alert(ghost,"You are about to turn into a zombie. Do you want to return to body?","I'm a zombie!","Yes","No")
+					var/answer = tgui_alert(ghost,"You are about to turn into a zombie. Do you want to return to body?","I'm a zombie!", list("Yes","No"))
 					if(answer == "Yes")
 						ghost.reenter_corpse()
 
@@ -171,14 +170,17 @@
 		return
 	if(!iszombie(H))
 		H.zombify()
-	//H.rejuvenate()
+
+	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)  // restore every thing in this dumb head (brain and eyes)
+		IO.rejuvenate()
+
 	H.setCloneLoss(0)
 	H.setBrainLoss(0)
 	H.setHalLoss(0)
 	H.SetParalysis(0)
 	H.SetStunned(0)
 	H.SetWeakened(0)
-	H.nutrition = 400
+	H.nutrition = NUTRITION_LEVEL_NORMAL
 	H.SetSleeping(0)
 	H.radiation = 0
 	H.heal_overall_damage(H.getBruteLoss(), H.getFireLoss())
@@ -232,7 +234,7 @@
 	D.uniqueID = rand(0,10000)
 	D.infectionchance = 100
 	D.antigen |= ANTIGEN_Z
-	D.spreadtype = "Blood" // not airborn and not contact, because spreading zombie virus through air or hugs is silly
+	D.spreadtype = DISEASE_SPREAD_BLOOD // not airborn and not contact, because spreading zombie virus through air or hugs is silly
 
 	infect_virus2(src, D, forced = TRUE, ignore_antibiotics = TRUE)
 
@@ -250,60 +252,24 @@
 		else
 			set_species(ZOMBIE, TRUE, TRUE)
 
-/mob/living/carbon/human/proc/zombie_movement_delay()
-	if(!has_gravity(src))
-		return -1
-
-	var/tally = species.speed_mod
-	if(crawling)
-		tally += 7
-	else
-		var/has_leg = FALSE
-		for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG))
-			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
-			if(BP && !(BP.is_stump))
-				has_leg = TRUE
-		if(!has_leg)
-			tally += 10
-
-	if(embedded_flag)
-		handle_embedded_objects()
-
-	if(buckled)
-		tally += 5.5
-
-	if(pull_debuff)
-		tally += pull_debuff
-
-	if(wear_suit)
-		tally += wear_suit.slowdown
-
-	if(back)
-		tally += back.slowdown
-
-	if(shoes)
-		tally += shoes.slowdown
-
-	if(health <= 0)
-		tally += 0.5
-	if(health <= -50)
-		tally += 0.5
-
-	return (tally + config.human_delay)
-
-var/list/zombie_list = list()
+var/global/list/zombie_list = list()
 
 /proc/add_zombie(mob/living/carbon/human/H)
 	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/zombie_findbrains)
 	zombie_list += H
-	H.mind.add_antag_hud(ANTAG_HUD_ZOMB, "hudzombie", H)
+
+	var/datum/faction/zombie/Z = create_uniq_faction(/datum/faction/zombie)
+	add_faction_member(Z, H, FALSE)
 
 /proc/remove_zombie(mob/living/carbon/human/H)
 	var/obj/effect/proc_holder/spell/targeted/zombie_findbrains/spell = locate() in H.spell_list
 	H.RemoveSpell(spell)
 	qdel(spell)
 	zombie_list -= H
-	H.mind.remove_antag_hud(ANTAG_HUD_ZOMB, H)
+
+	var/datum/role/R = H.mind.GetRole(ZOMBIE)
+	if(R)
+		R.Deconvert()
 
 /obj/effect/proc_holder/spell/targeted/zombie_findbrains
 	name = "Find brains"
@@ -320,7 +286,7 @@ var/list/zombie_list = list()
 	var/mob/living/carbon/human/target = null
 	var/min_dist = 999
 
-	for(var/mob/living/carbon/human/H in human_list)
+	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(H.stat == DEAD || iszombie(H) || H.z != user.z)
 			continue
 		var/turf/target_turf = get_turf(H)

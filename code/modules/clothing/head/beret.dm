@@ -52,7 +52,7 @@
 	desc = "A peaked cap with the security insignia emblazoned on it. For officers that are really miss the army."
 	icon_state = "sec_peakedcap"
 	item_state = "sec_peakedcap"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 
@@ -63,8 +63,10 @@
 
 /obj/item/clothing/head/beret/sec/hos
 	name = "head of security's beret"
-	desc = "A beret with the gold security insignia emblazoned on it. Shows who has the longest baton on the station."
+	desc = "A beret with the gold security insignia emblazoned on it. Shows who has the longest baton on the station. Also has some space for special armor plate."
 	icon_state = "beret_hos"
+	valid_accessory_slots = list("dermal")
+	restricted_accessory_slots = list("dermal")
 
 // Engineering
 
@@ -72,3 +74,11 @@
 	name = "engineering beret"
 	desc = "A beret with the engineering insignia emblazoned on it. For engineers that are more inclined towards style than safety."
 	icon_state = "e_beret_badge"
+
+//Medical
+
+
+/obj/item/clothing/head/beret/paramed
+	name = "first responder beret"
+	desc = "A beret with the medical insignia emblazoned on it. Noticable beret for paramedics, shows who's saving lives here."
+	icon_state = "beret_fr"

@@ -9,8 +9,11 @@
  * Misc
  */
 
+/proc/get_russian_list(list/input, nothing_text = "ничего", and_text = " и ", comma_text = ", ", final_comma_text = "")
+	return get_english_list(input, nothing_text, and_text, comma_text, final_comma_text)
+
 //Returns a list in plain english as a string
-/proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
+/proc/get_english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
 	var/total = input.len
 	if (!total)
 		return "[nothing_text]"
@@ -49,17 +52,25 @@
 //Checks if the list is empty
 /proc/isemptylist(list/list)
 	if(!list.len)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
-	if(!L || !L.len || !A)
-		return 0
+	if(!length(L) || !A)
+		return FALSE
 	for(var/type in L)
 		if(istype(A, type))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
+
+/proc/get_type_in_list(atom/A, list/L)
+	if(!length(L) || !A)
+		return null
+	for(var/type in L)
+		if(istype(A, type))
+			return type
+	return null
 
 //Empties the list by setting the length to 0. Hopefully the elements get garbage collected
 /proc/clearlist(list/list)
@@ -133,7 +144,7 @@
 
 	total = rand(1, total)
 	for (item in L)
-		total -=L [item]
+		total -= L[item]
 		if (total <= 0)
 			return item
 
@@ -397,10 +408,10 @@
 	var/list/out = list(pop(L))
 	for(var/entry in L)
 		if(isnum(entry))
-			var/success = 0
+			var/success = FALSE
 			for(var/i=1, i<=out.len, i++)
 				if(entry <= out[i])
-					success = 1
+					success = TRUE
 					out.Insert(i, entry)
 					break
 			if(!success)
@@ -527,7 +538,7 @@
 	return sorted_list
 */
 
-/proc/dd_sortedtextlist(list/incoming, case_sensitive = 0)
+/proc/dd_sortedtextlist(list/incoming, case_sensitive = FALSE)
 	// Returns a new list with the text values sorted.
 	// Use binary search to order by sortValue.
 	// This works by going to the half-point of the list, seeing if the node in question is higher or lower cost,
@@ -587,7 +598,7 @@
 
 
 /proc/dd_sortedTextList(list/incoming)
-	var/case_sensitive = 1
+	var/case_sensitive = TRUE
 	return dd_sortedtextlist(incoming, case_sensitive)
 
 /datum/proc/dd_SortValue()
@@ -599,7 +610,7 @@
 /obj/machinery/camera/dd_SortValue()
 	return "[c_tag]"
 
-/proc/filter_list(var/list/L, var/type)
+/proc/filter_list(list/L, type)
 	. = list()
 	for(var/entry in L)
 		if(istype(entry, type))
@@ -715,6 +726,23 @@
 					L[T] = TRUE
 		return L
 
+//returns a new list with only atoms that are in typecache L
+/proc/typecache_filter_list(list/atoms, list/typecache)
+	RETURN_TYPE(/list)
+	. = list()
+	for(var/thing in atoms)
+		var/atom/A = thing
+		if (typecache[A.type])
+			. += A
+
+/proc/typecache_filter_list_reverse(list/atoms, list/typecache)
+	RETURN_TYPE(/list)
+	. = list()
+	for(var/thing in atoms)
+		var/atom/A = thing
+		if(!typecache[A.type])
+			. += A
+
 //Copies a list, and all lists inside it recusively
 //Does not copy any other reference type
 /proc/deepCopyList(list/l)
@@ -760,22 +788,39 @@
 
 	return TRUE
 
+/proc/make_associative(list/flat_list)
+	. = list()
+	for(var/thing in flat_list)
+		.[thing] = TRUE
+
 /proc/is_associative_list(list/L)
-    var/index = 0
-    for(var/key in L)
-        index++
+	var/index = 0
+	for(var/key in L)
+		index++
 
-        var/value = null
-        // if key not num we can check L[key] without fear of "out of bound"
-        // else compare to index to prevent runtime error in e.g. list(5, 1)
-        // L[key] will exist and be same as key if we iterating through not associative list e.g. list(1, 2, 3)
-        if(!isnum(key) || (!(isnum(key) && index != key) && L[key] != key))
-            value = L[key]
+		var/value = null
+		// if key not num we can check L[key] without fear of "out of bound"
+		// else compare to index to prevent runtime error in e.g. list(5, 1)
+		// L[key] will exist and be same as key if we iterating through not associative list e.g. list(1, 2, 3)
+		if(!isnum(key) || (!(isnum(key) && index != key) && L[key] != key))
+			value = L[key]
 
-        if(!isnull(value))
-            return TRUE
+		if(!isnull(value))
+			return TRUE
 
-    return FALSE
+	return FALSE
+
+/proc/get_list_of_primary_keys(list/L)
+	var/primary_keys = list()
+	for (var/primary_key in L)
+		primary_keys += primary_key
+	return primary_keys
+
+/proc/get_list_of_keys_from_values_as_list_from_associative_list(list/assoc_list)
+	var/sub_keys = list()
+	for (var/primary_key in assoc_list)
+		sub_keys |= assoc_list[primary_key]
+	return sub_keys
 
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !L.len) L = null
@@ -785,5 +830,17 @@
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 //#define LAZYLEN(L) length(L) // don't return it, pointless now
 #define LAZYCLEARLIST(L) if(L) L.Cut()
+// This is used to add onto lazy assoc list when the value you're adding is a /list/. This one has extra safety over lazyaddassoc because the value could be null (and thus cant be used to += objects)
+#define LAZYADDASSOCLIST(L, K, V) if(!L) { L = list(); } L[K] += list(V);
+// Removes value V and key K from associative list L
+#define LAZYREMOVEASSOC(L, K, V) if(L) { if(L[K]) { L[K] -= V; if(!length(L[K])) L -= K; } if(!length(L)) L = null; }
+///Accesses an associative list, returns null if nothing is found
+#define LAZYACCESSASSOC(L, I, K) L ? L[I] ? L[I][K] ? L[I][K] : null : null : null
 #define LAZYCOPY(L) L && L.len ? L.Copy() : null
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
+
+// Helper macros to aid in optimizing lazy instantiation of lists.
+// All of these are null-safe, you can use them without knowing if the list var is initialized yet
+
+// Adds I to L, initalizing L if necessary, if I is not already in L
+#define LAZYDISTINCTADD(L, I) if(!L) { L = list(); } L |= I;

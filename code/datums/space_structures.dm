@@ -62,6 +62,12 @@
 	desc = "Unknown huge object"
 	mappath = "maps/templates/space_structures/robostation.dmm"
 
+/datum/map_template/space_structure/robostation2
+	name = "robostation2"
+	structure_id = "robostation2"
+	desc = "Unknown huge object"
+	mappath = "maps/templates/space_structures/robostation2.dmm"
+
 /datum/map_template/space_structure/planetarium
 	name = "planetarium"
 	structure_id = "planetarium"
@@ -92,11 +98,11 @@
 	desc = "Unknown shuttle"
 	mappath = "maps/templates/space_structures/delivery_shuttle.dmm"
 
-/datum/map_template/space_structure/lost_pod
-	name = "lost_pod"
-	structure_id = "lost_pod"
+/datum/map_template/space_structure/escape_pod
+	name = "escape_pod"
+	structure_id = "escape_pod"
 	desc = "Unknown small object"
-	mappath = "maps/templates/space_structures/lost_pod.dmm"
+	mappath = "maps/templates/space_structures/escape_pod.dmm"
 
 /datum/map_template/space_structure/cloning_lab
 	name = "cloning_lab"
@@ -121,3 +127,57 @@
 	structure_id = "NASA satellite"
 	desc = "Unknown small object"
 	mappath = "maps/templates/space_structures/satellite.dmm"
+
+/datum/map_template/space_structure/tree_asteroid
+	name = "Tree Asteroid"
+	structure_id = "tree_asteroid"
+	desc = "Unknown object"
+	mappath = "maps/templates/space_structures/tree_asteroid.dmm"
+
+/datum/map_template/space_structure/resource_shuttle
+	name = "Abandoned Cargo Shuttle"
+	structure_id = "resource_shuttle"
+	desc = "Unknown shuttle"
+	mappath = "maps/templates/space_structures/resource_shuttle.dmm"
+
+/datum/map_template/space_structure/ships_squad
+	name = "NT Ships Squad"
+	structure_id = "ships_squad"
+	desc = "Unknown shuttle"
+	mappath = "maps/templates/space_structures/ships_squad.dmm"
+
+/datum/map_template/space_structure/secrete_lab
+	name = "Secrete Lab"
+	structure_id = "secrete_lab"
+	desc = "Debris of an unknown lab"
+	mappath = "maps/templates/space_structures/secrete_lab.dmm"
+
+/datum/map_template/space_structure/broken_breacher
+	name = "Broken Breacher"
+	structure_id = "broken_breacher"
+	desc = "Unknown huge object"
+	mappath = "maps/templates/space_structures/broken_breacher.dmm"
+
+/datum/map_template/space_structure/export_outpost
+	name = "Export Outpost"
+	structure_id = "export_outpost"
+	desc = "Unknown object"
+	mappath = "maps/templates/space_structures/export_outpost.dmm"
+
+/datum/map_template/space_structure/research_ship
+	name = "Research ship"
+	structure_id = "research_ship"
+	desc = "Unknown object"
+	mappath = "maps/templates/space_structures/research_ship.dmm"
+
+/datum/map_template/space_structure/cult_ship
+	name = "Cultship"
+	structure_id = "cult_ship"
+	desc = "Unknown object"
+	mappath = "maps/templates/space_structures/cult_ship.dmm"
+
+/datum/map_template/space_structure/space_villa
+	name = "SpaceVilla"
+	structure_id = "space_villa"
+	desc = "Unknown object"
+	mappath = "maps/templates/space_structures/space_villa.dmm"

@@ -14,6 +14,10 @@
 
 	roll_sound = 'sound/effects/roll.ogg'
 
+	material = /obj/item/stack/sheet/mineral/plastic
+
+	max_integrity = 400
+
 	//copypaste sorry
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 	var/obj/item/weapon/storage/bag/trash/mybag	= null
@@ -106,13 +110,15 @@
 		..()
 
 /obj/structure/stool/bed/chair/janitorialcart/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/reagent_containers/glass/rag) || istype(I, /obj/item/weapon/soap))
+	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/reagent_containers/glass/rag) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/soap))
 		if(mybucket)
 			if(I.reagents.total_volume < I.reagents.maximum_volume)
 				if(mybucket.reagents.total_volume < 1)
 					to_chat(user, "<span class='notice'>[mybucket] is empty.</span>")
 				else
 					mybucket.reagents.trans_to(I, 5)
+					if(mybucket.reagents.total_volume == 0)
+						update_icon()
 					to_chat(user, "<span class='notice'>You wet [I] in [mybucket].</span>")
 					playsound(src, 'sound/effects/slosh.ogg', VOL_EFFECTS_MASTER, 25)
 			else
@@ -192,7 +198,7 @@
 	popup.open()
 
 /obj/structure/stool/bed/chair/janitorialcart/Topic(href, href_list)
-	if(!in_range(src, usr))
+	if(!Adjacent(usr))
 		return
 	if(!isliving(usr))
 		return
@@ -321,5 +327,6 @@
 	spill(100 / severity)
 	..()
 
-/obj/structure/stool/bed/chair/janitorialcart/bullet_act(obj/item/projectile/Proj)
+/obj/structure/stool/bed/chair/janitorialcart/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	spill(Proj.damage * 10)

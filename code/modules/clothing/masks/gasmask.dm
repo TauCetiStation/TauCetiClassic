@@ -6,7 +6,7 @@
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = FACE|EYES
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	item_state = "gas_mask_tc"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -27,7 +27,7 @@
 	action_button_name = "Toggle Welding Mask"
 	siemens_coefficient = 0.9
 	body_parts_covered = FACE|EYES
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	var/up = 0
 
 /obj/item/clothing/mask/gas/welding/attack_self()
@@ -96,7 +96,7 @@
 	set category = "Object"
 	set name = "HALT"
 	set src in usr
-	if(!istype(usr, /mob/living)) return
+	if(!isliving(usr)) return
 	if(usr.incapacitated())
 		return
 
@@ -175,6 +175,12 @@
 		usr.visible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[phrase_text]</b></font>")
 		playsound(src, phrase_sound, VOL_EFFECTS_MASTER, vary = FALSE)
 		cooldown = world.time
+
+/obj/item/clothing/mask/gas/sechailer/police
+	name = "police respirator"
+	desc = "A standard issue police respirator with integrated 'Compli-o-nator 3000' device, plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you detain them. Do not tamper with the device."
+	icon_state = "police_mask"
+	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
 //Plague Dr suit can be found in clothing/suits/bio.dm
 /obj/item/clothing/mask/gas/plaguedoctor
@@ -292,7 +298,7 @@
 	flags = MASKCOVERSMOUTH | MASKINTERNALS | BLOCK_GAS_SMOKE_EFFECT
 	flags_inv = 0
 	body_parts_covered = 0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	gas_transfer_coefficient = 0.10
 	filter = list("phoron", "sleeping_agent", "oxygen")
 	species_restricted = list(VOX , VOX_ARMALIS)
@@ -301,4 +307,3 @@
 	name = "German Gas Mask"
 	desc = "Soldier's black gas mask."
 	icon_state = "German_gasmask"
-	item_color = "German_gasmask"

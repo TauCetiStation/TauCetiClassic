@@ -16,7 +16,7 @@
 
 /area/awaymission/jungle
 	name = "jungle"
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "area"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
@@ -34,11 +34,7 @@
 /obj/effect/landmark/temple/atom_init()
 	..()
 	//pick a random temple to link to
-	var/list/waypoints = list()
-	for(var/obj/effect/landmark/temple/destination/T in landmarks_list)
-		waypoints.Add(T)
-		continue
-
+	var/list/waypoints = landmarks_list["Temple destination"]
 	var/obj/effect/landmark/temple/destination/dest_temple = pick(waypoints)
 	dest_temple.init()
 
@@ -50,6 +46,9 @@
 	//delete the landmarks now that we're finished
 	qdel(dest_temple)
 	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/temple/destination
+	name = "Temple destination"
 
 /obj/effect/landmark/temple/destination/proc/init()
 	my_ladder = new /obj/structure/ladder(src.loc)
@@ -75,7 +74,7 @@
 		for(var/obj/effect/landmark/door_spawner/D in T.contents)
 			var/spawn_type
 			if(mineral == "iron")
-				spawn_type = text2path("/obj/machinery/door/airlock/vault")
+				spawn_type = /obj/machinery/door/airlock/vault
 			else
 				spawn_type = text2path("/obj/machinery/door/airlock/[mineral]")
 			new spawn_type(D.loc)
@@ -160,7 +159,7 @@
 		num_spawned++
 
 	//make some randomly pathing rivers
-	for(var/obj/effect/landmark/river_waypoint/W in landmarks_list)
+	for(var/obj/effect/landmark/river_waypoint/W as anything in landmarks_list["river source waypoint"])
 		if (W.z != src.z || W.connected)
 			continue
 
@@ -233,7 +232,7 @@
 		num_spawned++
 
 	//get any path nodes placed on the map
-	for(var/obj/effect/landmark/path_waypoint/W in landmarks_list)
+	for(var/obj/effect/landmark/path_waypoint/W as anything in landmarks_list["path waypoint"])
 		if (W.z == src.z)
 			path_nodes.Add(W)
 

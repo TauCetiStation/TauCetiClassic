@@ -284,7 +284,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "datadisk2"
 	item_state = "card-id"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	m_amt = 30
 	g_amt = 10
 	var/datum/tech/stored
@@ -348,9 +348,9 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = RESEARCH_POWERSTORAGE
 
 /datum/tech/bluespace
-	name = "'Blue-space' Research"
-	shortname = "Blue-space"
-	desc = "Research into the sub-reality known as 'blue-space'."
+	name = "'Bluespace' Research"
+	shortname = "Bluespace"
+	desc = "Research into the sub-reality known as 'bluespace'."
 	id = RESEARCH_BLUESPACE
 	rare = 2
 
@@ -517,7 +517,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("mining_drill", "mining_drill_brace", "excavation_drill_diamond", "drill_diamond", "scaner_adv", "jackhammer", "space_suit_medical", "space_suit_helmet_medical", "space_suit_mining_rig", "space_suit_helmet_mining_rig", "space_suit_security", "space_suit_helmet_security", "resonator", "kinetic_accelerator", "mining_drone", "mining_jetpack", "stimpack_adv")
+	unlocks_designs = list("mining_drill", "mining_drill_brace", "excavation_drill_diamond", "drill_diamond", "scaner_adv", "jackhammer", "space_suit_medical", "space_suit_helmet_medical", "space_suit_mining_rig", "space_suit_helmet_mining_rig", "space_suit_security", "space_suit_helmet_security", "space_suit_science_rig", "space_suit_helmet_science_rig", "resonator", "kinetic_accelerator", "mining_drone", "mining_jetpack", "stimpack_adv", "meson_geo_glasses")
 
 /datum/technology/basic_handheld
 	name = "Basic Handheld"
@@ -681,22 +681,6 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	unlocks_designs = list("med_data", "operating")
 
-/datum/technology/virology
-	name = "Virology"
-	desc = "Virology"
-	id = "virology"
-	tech_type = RESEARCH_BIOTECH
-
-	x = 0.4
-	y = 0.8
-	icon = "vialbox"
-
-	required_technologies = list("basic_med_machines")
-	required_tech_levels = list()
-	cost = 500
-
-	unlocks_designs = list("pandemic")
-
 /datum/technology/adv_med_machines
 	name = "Advanced Medical Machines"
 	desc = "Advanced Medical Machines"
@@ -727,7 +711,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("scan_console", "clonecontrol", "clonepod", "clonescanner")
+	unlocks_designs = list("scan_console", "clonecontrol", "clonepod", "clonescanner", "cmf_console", "cmf_scanner")
 
 /datum/technology/hydroponics
 	name = "Hydroponics"
@@ -807,7 +791,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("adv_sensor", "nano_mani", "implant_chem", "implant_death", "implant_tracking", "defibrillators_compact", "sensor_device", "scalpel_laser2", "biocan", "secmed_hud", "implanter", "airbag", "lazarus")
+	unlocks_designs = list("adv_sensor", "nano_mani", "implant_chem", "implant_death", "implant_tracking", "defibrillators_compact", "sensor_device", "scalpel_laser2", "biocan", "secmed_hud", "implanter", "airbag", "lazarus", "hud_calibrator")
 
 /datum/technology/med_teleportation
 	name = "Medical Teleportation"
@@ -839,7 +823,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("phasic_sensor", "pico_mani", "adv_mass_spectrometer", "adv_reagent_scanner", "implant_loyal", "implant_mindshield", "defibrillators_standalone", "scalpel_laser3", "chemsprayer", "rapidsyringe")
+	unlocks_designs = list("phasic_sensor", "pico_mani", "adv_mass_spectrometer", "adv_reagent_scanner", "implant_loyal", "implant_mindshield", "defibrillators_standalone", "scalpel_laser3", "chemsprayer", "rapidsyringe", "changtest")
 
 /datum/technology/portable_chemistry
 	name = "Portable Chemistry"
@@ -969,7 +953,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("large_Grenade", "ammo_9mm")
+	unlocks_designs = list("large_Grenade", "smg_ammo_9mm")
 
 /datum/technology/exotic_weaponry
 	name = "Exotic Weaponry"
@@ -985,7 +969,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 3000
 
-	unlocks_designs = list("temp_gun")
+	unlocks_designs = list("temp_gun", "emp_mine")
 
 /datum/technology/adv_exotic_weaponry
 	name = "Advanced Exotic Weaponry"
@@ -1147,7 +1131,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("mrspacman")
+	unlocks_designs = list("mrspacman", "circ", "teg")
 
 /datum/technology/fusion_power_generation
 	name = "R-UST Mk. 8 Tokamak Generator"
@@ -1184,8 +1168,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 // Bluespace
 
 /datum/technology/basic_bluespace
-	name = "Basic 'Blue-space'"
-	desc = "Basic 'Blue-space'"
+	name = "Basic 'Bluespace'"
+	desc = "Basic 'Bluespace'"
 	id = "basic_bluespace"
 	tech_type = RESEARCH_BLUESPACE
 
@@ -1245,7 +1229,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("comm_monitor", "comm_server", "message_monitor", "s-receiver", "s-bus", "s-hub", "s-relay", "s-processor", "s-server", "s-broadcaster", "s-ansible", "s-filter", "s-amplifier", "s-treatment", "s-analyzer", "s-crystal", "s-transmitter")
+	unlocks_designs = list("comm_monitor", "comm_server", "message_monitor", "s-receiver", "s-bus", "s-hub", "s-relay", "s-processor", "s-server", "s-broadcaster", "s-ansible", "s-filter", "s-amplifier", "s-treatment", "s-analyzer", "s-crystal", "s-transmitter", "holochip")
 
 /datum/technology/bluespace_shield
 	name = "Bluespace Shields"
@@ -1309,7 +1293,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("bluespacebeaker", "splitbeaker", "bag_holding", "minerbag_holding", "blutrash", "survivalcapsule")
+	unlocks_designs = list("bluespacebeaker", "splitbeaker", "bag_holding", "minerbag_holding", "blutrash", "survivalcapsule", "portalgun")
 
 /datum/technology/bluespace_rped
 	name = "Bluespace RPED"
@@ -1343,7 +1327,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 0
 
-	unlocks_designs = list("mechrecharger", "cyborgrecharger", "cyborg_analyzer", "mmi")
+	unlocks_designs = list("mechrecharger", "cyborgrecharger", "cyborg_analyzer", "mmi", "borg_upgrade_hud")
 
 /datum/technology/mech_ripley
 	name = "Ripley"
@@ -1567,11 +1551,11 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("rigsimpleai", "rigflash", "righealthscanner", "riganomalyscanner", "rigorescanner", "rigextinguisher", "rigmetalfoamspray", "rigcoolingunit")
+	unlocks_designs = list("rigsimpleai", "rigflash", "righealthscanner", "riganomalyscanner", "rigorescanner", "rigextinguisher", "rigmetalfoamspray", "rigcoolingunit", "riganalyzer", "rigsciencetool")
 
 /datum/technology/advanced_hardsuit_modules
 	name = "Advanced Hardsuit Modules"
-	desc = "Basic Hardsuit Modules"
+	desc = "Advanced Hardsuit Modules"
 	id = "advanced_hardsuit_modules"
 	tech_type = RESEARCH_ROBOTICS
 
@@ -1583,7 +1567,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 2000
 
-	unlocks_designs = list("rigadvancedai", "riggrenadelauncherflashbang", "rigdrill", "rigselfrepair", "rigmountedtaser", "rigcombatinjector", "rigmedicalinjector")
+	unlocks_designs = list("rigadvancedai", "riggrenadelauncherflashbang", "rigdrill", "rigselfrepair", "rigmountedtaser", "rigcombatinjector", "rigmedicalinjector", "rigstabilizer", "rigempshield")
 
 /datum/technology/toptier_hardsuit_modules
 	name = "Top-Tier Hardsuit Modules"
@@ -1599,7 +1583,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 5000
 
-	unlocks_designs = list("rigmountedlaserrifle", "rigrcd", "rigmedteleport", "rignuclearreactor")
+	unlocks_designs = list("rigmountedlaserrifle", "rigrcd", "rigmedteleport", "rignuclearreactor", "rigrelay")
 
 // Illegal
 

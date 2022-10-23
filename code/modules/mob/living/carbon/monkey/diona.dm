@@ -9,6 +9,7 @@
 	speak_emote = list("chirrups")
 	icon_state = "nymph1"
 	hazard_low_pressure = DIONA_HAZARD_LOW_PRESSURE
+	speed = 3.5
 	var/list/donors = list()
 	var/ready_evolve = 0
 	var/mob/living/carbon/human/gestalt = null
@@ -27,25 +28,51 @@
 	holder_type = /obj/item/weapon/holder/diona
 	blood_datum = /datum/dirt_cover/green_blood
 
+	var/list/saved_quirks
+
+/mob/living/carbon/monkey/diona/podman
+	name = "podkid"
+	voice_name = "podkid"
+	icon_state = "podkid1"
+	speed = 0.5
+	race = PODMAN
+	holder_type = /obj/item/weapon/holder/diona/podkid
+
+	spawner_args = list(/datum/spawner/living/podman/podkid, 2 MINUTES)
+
+/mob/living/carbon/monkey/diona/podman/fake
+	name = "diona nymph"
+	voice_name = "diona nymph"
+	icon_state = "nymph1"
+	holder_type = /obj/item/weapon/holder/diona
+
+	spawner_args = list(/datum/spawner/living/podman/fake_nymph, 2 MINUTES)
+
+/mob/living/carbon/monkey/diona/atom_init()
+	. = ..()
+	gender = NEUTER
+	greaterform = DIONA
+	add_language(LANGUAGE_ROOTSPEAK)
+
+/mob/living/carbon/monkey/diona/podman/atom_init()
+	. = ..()
+	greaterform = PODMAN
+	verbs -= /mob/living/carbon/monkey/diona/verb/merge
+	verbs -= /mob/living/carbon/monkey/diona/verb/split
+	verbs -= /mob/living/carbon/monkey/diona/verb/pass_knowledge
+	verbs -= /mob/living/carbon/monkey/diona/verb/synthesize
 
 /mob/living/carbon/monkey/diona/is_facehuggable()
 	return FALSE
 
 /mob/living/carbon/monkey/diona/grabReaction(mob/living/carbon/human/attacker, show_message = TRUE)
-	if(attacker.get_species() == DIONA)
+	if(attacker.get_species() == DIONA && get_species() == DIONA)
 		visible_message("<span class='notice'>[attacker] starts to merge [src] into themselves.</span>","<span class='notice'>You start merging [src] into you.</span>")
 		if(attacker.is_busy() || !do_after(attacker, 4 SECONDS, target = src))
 			return TRUE
 		merging(attacker)
 		return TRUE
 	return ..()
-
-/mob/living/carbon/monkey/diona/atom_init()
-	. = ..()
-	gender = NEUTER
-	dna.mutantrace = "plant"
-	greaterform = DIONA
-	add_language("Rootspeak")
 
 /mob/living/carbon/monkey/diona/proc/merging(mob/living/carbon/human/M)
 	var/count = 0
@@ -55,7 +82,7 @@
 		visible_message(src, "<span class='notice'>[M]'s body seems to repel [src], as it attempts to twine with it's being.</span>")
 		return
 	to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
-	M.status_flags |= PASSEMOTES
+	M.add_status_flags(PASSEMOTES)
 	to_chat(src, "You feel your being twine with that of [M] as you merge with its biomass.")
 	forceMove(M)
 	gestalt = M
@@ -86,7 +113,7 @@
 		if(C.get_species() == DIONA)
 			choices += C
 	var/mob/living/carbon/human/M = input(src,"Who do you wish to merge with?") in null|choices
-	if(!M || !src || !(src.Adjacent(M)))
+	if(!M || !src || !(Adjacent(M)))
 		return
 	if(is_busy() || !do_after(src, 40, target = M))
 		return
@@ -166,7 +193,7 @@
 		return
 
 	if(injecting)
-		switch(alert("Would you like to stop injecting, or change chemical?","Choose.","Stop injecting","Change chemical"))
+		switch(tgui_alert(usr, "Would you like to stop injecting, or change chemical?","Choose.", list("Stop injecting","Change chemical")))
 			if("Stop injecting")
 				injecting = null
 				return
@@ -194,7 +221,7 @@
 
 	src.nutrition -= ((10-target.nutrilevel)*5)
 	target.nutrilevel = 10
-	src.visible_message("<span class='warning'>[src] secretes a trickle of green liquid from its tail, refilling [target]'s nutrient tray.</span>","<span class='warning'>You secrete a trickle of green liquid from your tail, refilling [target]'s nutrient tray.</span>")
+	visible_message("<span class='warning'>[src] secretes a trickle of green liquid from its tail, refilling [target]'s nutrient tray.</span>","<span class='warning'>You secrete a trickle of green liquid from your tail, refilling [target]'s nutrient tray.</span>")
 
 /mob/living/carbon/monkey/diona/verb/eat_weeds()
 
@@ -211,9 +238,53 @@
 
 	if(!src || !target || target.weedlevel == 0) return //Sanity check.
 
-	src.reagents.add_reagent("nutriment", target.weedlevel)
+	reagents.add_reagent("nutriment", target.weedlevel)
 	target.weedlevel = 0
-	src.visible_message("<span class='warning'>[src] begins rooting through [target], ripping out weeds and eating them noisily.</span>","<span class='warning'>You begin rooting through [target], ripping out weeds and eating them noisily.</span>")
+	visible_message("<span class='warning'>[src] begins rooting through [target], ripping out weeds and eating them noisily.</span>","<span class='warning'>You begin rooting through [target], ripping out weeds and eating them noisily.</span>")
+
+/mob/living/carbon/monkey/diona/proc/evolve_message()
+	visible_message(
+		"<span class='warning'>[src] begins to shift and quiver, and erupts in a shower of shed bark as it splits into a tangle of nearly a dozen new dionaea.</span>",
+		"<span class='warning'>You begin to shift and quiver, feeling your awareness splinter. All at once, we consume our stored nutrients to surge with growth, splitting into a tangle of at least a dozen new dionaea. We have attained our gestalt form.</span>"
+	)
+
+/mob/living/carbon/monkey/diona/podman/evolve_message()
+	visible_message(
+		"<span class='warning'>[src] begins to shift and quiver, and erupts in a shower of shed bark.</span>",
+		"<span class='warning'>You begin to shift and quiver, feeling your go hollow. All at once, we consume our stored nutrients to surge with growth, splitting into shattered remains of nothing. I can never attain my true form.</span>"
+	)
+
+/mob/living/carbon/monkey/diona/proc/evolved_form()
+	evolve_message()
+
+	var/mob/living/carbon/human/adult = new(get_turf(src.loc))
+	adult.set_species(get_species())
+	adult.dna = dna.Clone()
+
+	adult.UpdateAppearance()
+
+	if(istype(loc,/obj/item/weapon/holder/diona))
+		var/obj/item/weapon/holder/diona/L = loc
+		forceMove(L.loc)
+		qdel(L)
+
+	for(var/datum/language/L as anything in languages)
+		adult.add_language(L.name, languages[L])
+
+	for(var/quirk in saved_quirks)
+		new quirk(adult)
+
+	adult.regenerate_icons()
+
+	adult.name = name
+	adult.real_name = adult.name
+
+	if(mind)
+		mind.transfer_to(adult)
+
+	for (var/obj/item/W in contents)
+		drop_from_inventory(W, loc)
+	qdel(src)
 
 /mob/living/carbon/monkey/diona/verb/evolve()
 
@@ -221,8 +292,8 @@
 	set name = "Evolve"
 	set desc = "Grow to a more complex form."
 
-	if(!is_alien_whitelisted(src, DIONA) && config.usealienwhitelist)
-		to_chat(src, alert("You are currently not whitelisted to play as a full diona."))
+	if(config.usealienwhitelist && get_species() == DIONA && !is_alien_whitelisted(src, DIONA))
+		to_chat(src, tgui_alert(usr, "You are currently not whitelisted to play as a full diona."))
 		return 0
 
 	if(gestalt)
@@ -233,32 +304,12 @@
 		to_chat(src, "You are not yet ready for your growth...")
 		return
 
-	if(nutrition < 400)
+	if(nutrition < NUTRITION_LEVEL_NORMAL)
 		to_chat(src, "You have not yet consumed enough to grow...")
 		return
 
-	src.split()
-	src.visible_message("<span class='warning'>[src] begins to shift and quiver, and erupts in a shower of shed bark as it splits into a tangle of nearly a dozen new dionaea.</span>","<span class='warning'>You begin to shift and quiver, feeling your awareness splinter. All at once, we consume our stored nutrients to surge with growth, splitting into a tangle of at least a dozen new dionaea. We have attained our gestalt form.</span>")
-
-	var/mob/living/carbon/human/adult = new(get_turf(src.loc))
-	adult.set_species(DIONA)
-
-	if(istype(loc,/obj/item/weapon/holder/diona))
-		var/obj/item/weapon/holder/diona/L = loc
-		src.loc = L.loc
-		qdel(L)
-
-	for(var/datum/language/L in languages)
-		adult.add_language(L.name)
-	adult.regenerate_icons()
-
-	adult.name = "diona ([rand(100,999)])"
-	adult.real_name = adult.name
-	adult.ckey = src.ckey
-
-	for (var/obj/item/W in src.contents)
-		src.drop_from_inventory(W)
-	qdel(src)
+	split()
+	evolved_form()
 
 /mob/living/carbon/monkey/diona/verb/steal_blood()
 	set category = "Diona"
@@ -281,16 +332,14 @@
 		to_chat(src, "<span class='warning'>That donor offers you nothing new.</span>")
 		return
 
-	src.visible_message("<span class='warning'>[src] flicks out a feeler and neatly steals a sample of [M]'s blood.</span>","<span class='warning'>You flick out a feeler and neatly steal a sample of [M]'s blood.</span>")
+	visible_message("<span class='warning'>[src] flicks out a feeler and neatly steals a sample of [M]'s blood.</span>","<span class='warning'>You flick out a feeler and neatly steal a sample of [M]'s blood.</span>")
 	donors += M.real_name
 	for(var/datum/language/L in M.languages)
-		languages |= L
+		add_language(L.name)
 
-	spawn(25)
-		update_progression()
+	addtimer(CALLBACK(src, .proc/update_progression), 25)
 
 /mob/living/carbon/monkey/diona/proc/update_progression()
-
 	if(!donors.len)
 		return
 
@@ -303,15 +352,14 @@
 	else
 		to_chat(src, "<span class='notice'>The blood seeps into your small form, and you draw out the echoes of memories and personality from it, working them into your budding mind.</span>")
 
-
 /mob/living/carbon/monkey/diona/say_understands(mob/other,datum/language/speaking = null)
-
-	if (istype(other, /mob/living/carbon/human) && !speaking)
+	if(ishuman(other) && !speaking)
 		if(languages.len >= 2) // They have sucked down some blood.
 			return 1
+
 	return ..()
 
-/mob/living/carbon/monkey/diona/say(var/message)
+/mob/living/carbon/monkey/diona/say(message)
 	var/verb = "says"
 	var/message_range = world.view
 
@@ -325,12 +373,15 @@
 	if(stat == DEAD)
 		return say_dead(message)
 
-	var/datum/language/speaking = parse_language(message)
-	if(speaking)
-		verb = speaking.speech_verb
-		message = trim(copytext_char(message,2+length_char(speaking.key)))
+	var/ending = copytext(message, -1)
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
 
-	if(!message || stat)
+	if(speaking)
+		verb = speaking.get_spoken_verb(ending)
+
+	if(!message || stat != CONSCIOUS)
 		return
 
 	..(message, speaking, verb, null, null, message_range, null)

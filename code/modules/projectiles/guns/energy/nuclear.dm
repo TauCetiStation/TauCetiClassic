@@ -20,27 +20,6 @@
 	desc = "A basic energy-based gun with two settings: Stun and kill. This one has a grip made of wood."
 	icon_state = "energy"
 
-/obj/item/weapon/gun/energy/gun/carbine
-	name = "energy carbine"
-	desc = "A basic energy-based carbine with two settings: Stun and kill."
-	icon = 'icons/obj/gun.dmi'
-	icon_state = "ecar"
-	icon_custom = null
-	can_be_holstered = FALSE
-
-/obj/item/weapon/gun/energy/gun/carbine/atom_init()
-	. = ..()
-	if(power_supply)
-		power_supply.maxcharge = 1500
-		power_supply.charge = 1500
-
-/obj/item/weapon/gun/energy/gun/pistol
-	icon = 'icons/obj/gun.dmi'
-	icon_state = "egun"
-	icon_custom = null
-	fire_delay = 0
-	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser_pulse)
-
 /obj/item/weapon/gun/energy/gun/hos
 	name = "\"Revenant\" Energy Advanced Pistol"
 	desc = "Feat of weapon engineering, this pistol is able to fire taser bolts, lasers and EMP bursts. Only issued to high-ranking members of security teams."
@@ -86,7 +65,7 @@
 	if (prob(src.reliability)) return 1 //No failure
 	if (prob(src.reliability))
 		for (var/mob/living/M in range(0,src)) //Only a minor failure, enjoy your radiation if you're in the same tile or carrying it
-			if (src in M.contents)
+			if (loc == M)
 				to_chat(M, "<span class='warning'>Your gun feels pleasantly warm for a moment.</span>")
 			else
 				to_chat(M, "<span class='warning'>You feel a warm sensation.</span>")
@@ -94,7 +73,7 @@
 		lightfail = 1
 	else
 		for (var/mob/living/M in range(rand(1,4),src)) //Big failure, TIME FOR RADIATION BITCHES
-			if (src in M.contents)
+			if (loc == M)
 				to_chat(M, "<span class='warning'>Your gun's reactor overloads!</span>")
 			to_chat(M, "<span class='warning'>You feel a wave of heat wash over you.</span>")
 			M.apply_effect(300, IRRADIATE)

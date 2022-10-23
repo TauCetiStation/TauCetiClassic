@@ -1,8 +1,7 @@
-
 /datum/artifact_effect/forcefield
-	effect_name = "Force Field"
+	log_name = "Force Field"
 	var/list/created_field = list()
-	effect_type = ARTIFACT_EFFECT_PARTICLE
+	type_name = ARTIFACT_EFFECT_PARTICLE
 
 /datum/artifact_effect/forcefield/New()
 	..()
@@ -20,12 +19,11 @@
 			var/obj/effect/energy_field/E = new (locate(T.x,T.y,T.z))
 			created_field.Add(E)
 			E.strength = 1
-			E.density = 1
-			E.anchored = 1
+			E.density = TRUE
+			E.anchored = TRUE
 			E.invisibility = 0
-		spawn(10)
-			UpdateMove()
-	return 1
+		addtimer(CALLBACK(src, .proc/UpdateMove), 10)
+	return FALSE
 
 /datum/artifact_effect/forcefield/process()
 	..()
@@ -42,8 +40,8 @@
 			//for now, just instantly respawn the fields when they get destroyed
 			var/obj/effect/energy_field/E = new (locate(T.x,T.y,T))
 			created_field.Add(E)
-			E.anchored = 1
-			E.density = 1
+			E.anchored = TRUE
+			E.density = TRUE
 			E.invisibility = 0
 
 		var/obj/effect/energy_field/E = created_field[1]

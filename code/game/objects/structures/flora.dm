@@ -1,207 +1,210 @@
 // random plants
-/obj/item/weapon/twohanded/flora
+/obj/item/weapon/flora
 	name = "marvelous potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-10"
-	only_twohand = TRUE
-	force_unwielded = 2
-	force_wielded = 5
 
-/obj/item/weapon/twohanded/flora/atom_init()
+/obj/item/weapon/flora/atom_init()
 	. = ..()
 	AddComponent(/datum/component/tactical, null, FALSE)
+	AddElement(/datum/element/beauty, 300)
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.require_twohands = TRUE
+	TCB.force_wielded = 5
+	TCB.force_unwielded = 2
+	AddComponent(/datum/component/twohanded, TCB)
 
-/obj/item/weapon/twohanded/flora/random/atom_init()
+/obj/item/weapon/flora/random/atom_init()
 	. = ..()
-	var/newtype = pick(subtypesof(/obj/item/weapon/twohanded/flora/pottedplant))
+	var/newtype = pick(subtypesof(/obj/item/weapon/flora/pottedplant))
 	new newtype(get_turf(src))
 	return INITIALIZE_HINT_QDEL
 
-/obj/item/weapon/twohanded/flora/pottedplant
+/obj/item/weapon/flora/pottedplant
 	name = "potted plant"
 	desc = "Really brings the room together."
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-1"
 
-/obj/item/weapon/twohanded/flora/pottedplant/fern
+/obj/item/weapon/flora/pottedplant/fern
 	name = "potted fern"
 	desc = "This is an ordinary looking fern. It looks like it could do with some water."
 	icon_state = "plant-2"
 
-/obj/item/weapon/twohanded/flora/pottedplant/overgrown
+/obj/item/weapon/flora/pottedplant/overgrown
 	name = "overgrown potted plants"
 	desc = "This is an assortment of colourful plants. Some parts are overgrown."
 	icon_state = "plant-3"
 
-/obj/item/weapon/twohanded/flora/pottedplant/bamboo
+/obj/item/weapon/flora/pottedplant/bamboo
 	name = "potted bamboo"
 	desc = "These are bamboo shoots. The tops looks like they've been cut short."
 	icon_state = "plant-4"
 
-/obj/item/weapon/twohanded/flora/pottedplant/largebush
+/obj/item/weapon/flora/pottedplant/largebush
 	name = "large potted bush"
 	desc = "This is a large bush. The leaves stick upwards in an odd fashion."
 	icon_state = "plant-5"
 
-/obj/item/weapon/twohanded/flora/pottedplant/thinbush
+/obj/item/weapon/flora/pottedplant/thinbush
 	name = "thin potted bush"
 	desc = "This is a thin bush. It appears to be flowering."
 	icon_state = "plant-6"
 
-/obj/item/weapon/twohanded/flora/pottedplant/mysterious
+/obj/item/weapon/flora/pottedplant/mysterious
 	name = "mysterious potted bulbs"
 	desc = "This is a mysterious looking plant. Touching the bulbs cause them to shrink."
 	icon_state = "plant-7"
 
-/obj/item/weapon/twohanded/flora/pottedplant/smalltree
+/obj/item/weapon/flora/pottedplant/smalltree
 	name = "small potted tree"
 	desc = "This is a small tree. It is rather pleasant."
 	icon_state = "plant-8"
 
-/obj/item/weapon/twohanded/flora/pottedplant/unusual
+/obj/item/weapon/flora/pottedplant/unusual
 	name = "unusual potted plant"
 	desc = "This is an unusual plant. It's bulbous ends emit a soft blue light."
 	icon_state = "plant-9"
 
-/obj/item/weapon/twohanded/flora/pottedplant/unusual/atom_init()
+/obj/item/weapon/flora/pottedplant/unusual/atom_init()
 	. = ..()
 	set_light(2, 0.5, "#007fff")
 
-/obj/item/weapon/twohanded/flora/pottedplant/orientaltree
+/obj/item/weapon/flora/pottedplant/orientaltree
 	name = "potted oriental tree"
 	desc = "This is a rather oriental style tree. It's flowers are bright pink."
 	icon_state = "plant-10"
 
-/obj/item/weapon/twohanded/flora/pottedplant/smallcactus
+/obj/item/weapon/flora/pottedplant/smallcactus
 	name = "small potted cactus"
 	desc = "This is a small cactus. Its needles are sharp."
 	icon_state = "plant-11"
 
-/obj/item/weapon/twohanded/flora/pottedplant/tall
+/obj/item/weapon/flora/pottedplant/tall
 	name = "tall potted plant"
 	desc = "This is a tall plant. Tiny pores line its surface."
 	icon_state = "plant-12"
 
-/obj/item/weapon/twohanded/flora/pottedplant/sticky
+/obj/item/weapon/flora/pottedplant/sticky
 	name = "sticky potted plant"
 	desc = "This is an odd plant. Its sticky leaves trap insects."
 	icon_state = "plant-13"
 
-/obj/item/weapon/twohanded/flora/pottedplant/smelly
+/obj/item/weapon/flora/pottedplant/smelly
 	name = "smelly potted plant"
 	desc = "This is some kind of tropical plant. It reeks of rotten eggs."
 	icon_state = "plant-14"
 
-/obj/item/weapon/twohanded/flora/pottedplant/small
+/obj/item/weapon/flora/pottedplant/small
 	name = "small potted plant"
 	desc = "This is a pot of assorted small flora. Some look familiar."
 	icon_state = "plant-15"
 
-/obj/item/weapon/twohanded/flora/pottedplant/aquatic
+/obj/item/weapon/flora/pottedplant/aquatic
 	name = "aquatic potted plant"
 	desc = "This is apparently an aquatic plant. It's probably fake."
 	icon_state = "plant-16"
 
-/obj/item/weapon/twohanded/flora/pottedplant/shoot
+/obj/item/weapon/flora/pottedplant/shoot
 	name = "small potted shoot"
 	desc = "This is a small shoot. It still needs time to grow."
 	icon_state = "plant-17"
 
-/obj/item/weapon/twohanded/flora/pottedplant/flower
+/obj/item/weapon/flora/pottedplant/flower
 	name = "potted flower"
 	desc = "This is a slim plant. Sweet smelling flowers are supported by spindly stems."
 	icon_state = "plant-18"
 
-/obj/item/weapon/twohanded/flora/pottedplant/crystal
+/obj/item/weapon/flora/pottedplant/crystal
 	name = "crystalline potted plant"
 	desc = "These are rather cubic plants. Odd crystal formations grow on the end."
 	icon_state = "plant-19"
 
-/obj/item/weapon/twohanded/flora/pottedplant/subterranean
+/obj/item/weapon/flora/pottedplant/subterranean
 	name = "subterranean potted plant"
 	desc = "This is a subterranean plant. It's bulbous ends glow faintly."
 	icon_state = "plant-20"
 
-/obj/item/weapon/twohanded/flora/pottedplant/subterranean/atom_init()
+/obj/item/weapon/flora/pottedplant/subterranean/atom_init()
 	. = ..()
 	set_light(2, 0.5, "#ff6633")
 
-/obj/item/weapon/twohanded/flora/pottedplant/minitree
+/obj/item/weapon/flora/pottedplant/minitree
 	name = "potted tree"
 	desc = "This is a miniature tree. Apparently it was grown to 1/5 scale."
 	icon_state = "plant-21"
 
-/obj/item/weapon/twohanded/flora/pottedplant/stoutbush
+/obj/item/weapon/flora/pottedplant/stoutbush
 	name = "stout potted bush"
 	desc = "This is a stout bush. Its leaves point up and outwards."
 	icon_state = "plant-22"
 
-/obj/item/weapon/twohanded/flora/pottedplant/drooping
+/obj/item/weapon/flora/pottedplant/drooping
 	name = "drooping potted plant"
 	desc = "This is a small plant. The drooping leaves make it look like its wilted."
 	icon_state = "plant-23"
 
-/obj/item/weapon/twohanded/flora/pottedplant/tropical_1
+/obj/item/weapon/flora/pottedplant/tropical_1
 	name = "tropical potted plant"
 	desc = "This is some kind of tropical plant. It hasn't begun to flower yet."
 	icon_state = "plant-24"
 
-/obj/item/weapon/twohanded/flora/pottedplant/dead
+/obj/item/weapon/flora/pottedplant/dead
 	name = "dead potted plant"
 	desc = "This is the dried up remains of a dead plant. Someone should replace it."
 	icon_state = "plant-25"
 
-/obj/item/weapon/twohanded/flora/pottedplant/large
+/obj/item/weapon/flora/pottedplant/large
 	name = "large potted plant"
 	desc = "This is a large plant. Three branches support pairs of waxy leaves."
 	icon_state = "plant-26"
 
-/obj/item/weapon/twohanded/flora/pottedplant/tropicalfern
+/obj/item/weapon/flora/pottedplant/tropicalfern
 	name = "tropical fern"
 	desc = "This is a tropical fern. It looks like it could do with some water"
 	icon_state = "plant-27"
 
-/obj/item/weapon/twohanded/flora/pottedplant/palm
+/obj/item/weapon/flora/pottedplant/palm
 	name = "palm potted plant"
 	desc = "This is some kind of tropical palm. It is unlikely that you'll find coconuts under it."
 	icon_state = "plant-28"
 
-/obj/item/weapon/twohanded/flora/pottedplant/ficus
+/obj/item/weapon/flora/pottedplant/ficus
 	name = "ficus plant"
 	desc = "This is a ficus. Also known as fig tree."
 	icon_state = "plant-29"
 
-/obj/item/weapon/twohanded/flora/pottedplant/tropical_2
+/obj/item/weapon/flora/pottedplant/tropical_2
 	name = "tropical potted plant"
 	desc = "This is some kind of tropical plant. It has large smelly leaves without flowers."
 	icon_state = "plant-30"
 
-/obj/item/weapon/twohanded/flora/pottedplant/decorative
+/obj/item/weapon/flora/pottedplant/decorative
 	name = "decorative potted plant"
 	desc = "This is a decorative shrub. It's been trimmed into the shape of an apple."
 	icon_state = "applebush"
 
-/obj/item/weapon/twohanded/flora/monkey
+/obj/item/weapon/flora/monkey
 	name = "monkeyplant"
 	desc = "This is a monkey plant. Made by one mad scientist."
 	icon_state = "monkeyplant"
 
-/obj/item/weapon/twohanded/flora/deskfern
+/obj/item/weapon/flora/deskfern
 	name = "fancy ferny potted plant"
 	desc = "This leafy desk fern could do with a trim."
 	icon_state = "plant-31"
 
-/obj/item/weapon/twohanded/flora/floorleaf
+/obj/item/weapon/flora/floorleaf
 	name = "fancy leafy floor plant"
 	desc = "This plant has remarkably waxy leaves."
 	icon_state = "plant-32"
 
-/obj/item/weapon/twohanded/flora/deskleaf
+/obj/item/weapon/flora/deskleaf
 	name = "fancy leafy potted desk plant"
 	desc = "A tiny waxy leafed plant specimen."
 	icon_state = "plant-33"
 
-/obj/item/weapon/twohanded/flora/deskferntrim
+/obj/item/weapon/flora/deskferntrim
 	name = "fancy trimmed ferny potted plant"
 	desc = "This leafy desk fern seems to have been trimmed too much."
 	icon_state = "plant-34"
@@ -210,35 +213,46 @@
 	name = "bush"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-10"
-	var/can_be_cut = FALSE
-	var/health_flora = 40
-	var/damage_threshhold = 5
+	max_integrity = 40
+	damage_deflection = 5
+	flags = NODECONSTRUCT // prevent getting drop without harvesting
+	resistance_flags = FULL_INDESTRUCTIBLE
 	var/cutting_sound = 'sound/weapons/bladeslice.ogg'
 	var/list/drop_on_destroy = list()
 
-/obj/structure/flora/attackby(obj/item/weapon/W, mob/user)
-	. = ..()
-	if(can_be_cut && W.is_sharp() && W.force >= damage_threshhold)
-		playsound(src, cutting_sound, VOL_EFFECTS_MASTER)
-		health_flora -= W.force
-		if(health_flora <= 0)
-			visible_message("<span class='warning'>[src] is hacked into pieces!</span>")
-			if(drop_on_destroy.len)
-				for(var/type_drop in drop_on_destroy)
-					new type_drop(get_turf(src))
-			qdel(src)
+/obj/structure/flora/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(!attacking_item.is_sharp())
 		return
+	flags &= ~NODECONSTRUCT
+	. = ..()
+	flags |= NODECONSTRUCT
+
+/obj/structure/flora/play_attack_sound(damage_amount, damage_type, damage_flag)
+	if(flags & NODECONSTRUCT)
+		return ..()
+
+	if(damage_amount)
+		playsound(loc, cutting_sound, VOL_EFFECTS_MASTER)
+
+/obj/structure/flora/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	visible_message("<span class='warning'>[src] is hacked into pieces!</span>")
+	if(drop_on_destroy.len)
+		for(var/type_drop in drop_on_destroy)
+			new type_drop(loc)
+	..()
 
 // trees
 /obj/structure/flora/tree
 	name = "tree"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	pixel_x = -16
 	layer = 9
-	health_flora = 150
-	damage_threshhold = 15
-	can_be_cut = TRUE
+	max_integrity = 150
+	damage_deflection = 15
+	resistance_flags = CAN_BE_HIT
 	cutting_sound = 'sound/items/Axe.ogg'
 	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log)
 
@@ -247,6 +261,10 @@
 	name = "pine tree"
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_1"
+
+/obj/structure/flora/tree/pine/unbreakable
+	resistance_flags = FULL_INDESTRUCTIBLE
+	desc = "A massive pine. Looks a lot thicker than a normal one.\n<i>You don't think you can break it without a chainsaw</i>"
 
 /obj/structure/flora/tree/pine/atom_init()
 	. = ..()
@@ -296,9 +314,9 @@
 /obj/structure/flora/grass
 	name = "grass"
 	icon = 'icons/obj/flora/snowflora.dmi'
-	anchored = 1
-	can_be_cut = TRUE
-	health_flora = 60
+	anchored = TRUE
+	resistance_flags = CAN_BE_HIT
+	max_integrity = 60
 
 /obj/structure/flora/grass/brown
 	icon_state = "snowgrass1bb"
@@ -328,9 +346,9 @@
 	name = "bush"
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
-	anchored = 1
-	can_be_cut = TRUE
-	health_flora = 50
+	anchored = TRUE
+	resistance_flags = CAN_BE_HIT
+	max_integrity = 50
 
 /obj/structure/flora/bush/atom_init()
 	. = ..()
@@ -342,9 +360,9 @@
 	name = "bush"
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "firstbush_1"
-	anchored = 1
-	can_be_cut = TRUE
-	health_flora = 50
+	anchored = TRUE
+	resistance_flags = CAN_BE_HIT
+	max_integrity = 50
 
 /obj/structure/flora/ausbushes/atom_init()
 	. = ..()
@@ -463,8 +481,8 @@
 	icon_state = "rock"
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	density = FALSE
-	can_be_cut = TRUE
-	health_flora = 50
+	resistance_flags = CAN_BE_HIT
+	max_integrity = 50
 
 /obj/structure/flora/rock/jungle/atom_init()
 	. = ..()
@@ -477,9 +495,9 @@
 	desc = "A wild plant that is found in jungles."
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "busha"
-	anchored = 1
-	can_be_cut = TRUE
-	health_flora = 40
+	anchored = TRUE
+	resistance_flags = CAN_BE_HIT
+	max_integrity = 40
 
 /obj/structure/flora/junglebush/atom_init()
 	. = ..()
@@ -502,7 +520,7 @@
 	name = "rocks"
 	icon_state = "rocks"
 	icon = 'icons/obj/flora/largejungleflora.dmi'
-	density = 1
+	density = TRUE
 	pixel_x = -16
 	pixel_y = -16
 

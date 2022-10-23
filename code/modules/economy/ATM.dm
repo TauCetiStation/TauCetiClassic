@@ -19,9 +19,10 @@ log transactions
 	desc = "For all your monetary needs!"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "atm"
-	anchored = 1
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
+	resistance_flags = FULL_INDESTRUCTIBLE
 	var/datum/money_account/authenticated_account
 	var/number_incorrect_tries = 0
 	var/previous_account_number = 0
@@ -78,8 +79,7 @@ log transactions
 
 		var/obj/item/weapon/card/id/idcard = I
 		if(!held_card)
-			usr.drop_item()
-			idcard.loc = src
+			usr.drop_from_inventory(idcard, src)
 			held_card = idcard
 			if(authenticated_account && held_card.associated_account_number != authenticated_account.account_number)
 				authenticated_account = null
@@ -89,7 +89,7 @@ log transactions
 			//consume the money
 			if(!istype(SC, /obj/item/weapon/spacecash/ewallet))
 				if((money_stock + SC.worth) > money_stock_max)
-					alert("Sorry, the ATM cash storage is full and can only hold $[money_stock_max]")
+					tgui_alert(usr, "Sorry, the ATM cash storage is full and can only hold $[money_stock_max]")
 					return
 				else
 					money_stock += SC.worth
@@ -110,7 +110,7 @@ log transactions
 			authenticated_account.transaction_log.Add(T)
 
 			to_chat(user, "<span class='info'>You insert [I] into [src].</span>")
-			src.attack_hand(user)
+			attack_hand(user)
 			qdel(I)
 	else
 		..()
@@ -230,10 +230,10 @@ log transactions
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/atm/is_operational_topic()
+/obj/machinery/atm/is_operational()
 	return TRUE
 
-/obj/machinery/atm/Topic(var/href, var/href_list)
+/obj/machinery/atm/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -244,7 +244,7 @@ log transactions
 				if(authenticated_account)
 					var/transfer_amount = text2num(href_list["funds_amount"])
 					if(transfer_amount <= 0)
-						alert("That is not a valid amount.")
+						tgui_alert(usr, "That is not a valid amount.")
 					else if(transfer_amount <= authenticated_account.money)
 						var/target_account_number = text2num(href_list["target_acc_number"])
 						var/transfer_purpose = href_list["purpose"]
@@ -277,9 +277,11 @@ log transactions
 				// check if they have low security enabled
 				scan_user(usr)
 
-				if(!ticks_left_locked_down && held_card)
-					var/tried_account_num = text2num(href_list["account_num"])
-					if(!tried_account_num)
+				if(!ticks_left_locked_down)
+					var/tried_account_num
+					if(!held_card)
+						tried_account_num = text2num(href_list["account_num"])
+					else
 						tried_account_num = held_card.associated_account_number
 					var/tried_pin = text2num(href_list["account_pin"])
 
@@ -329,29 +331,30 @@ log transactions
 			if("withdrawal")
 				var/amount = max(text2num(href_list["funds_amount"]),0)
 				if(amount <= 0)
-					alert("That is not a valid amount.")
+					tgui_alert(usr, "That is not a valid amount.")
 				else if(authenticated_account && amount > 0)
-					var/response = alert(usr.client, "In what way would you like to recieve your money?", "Choose money format", "Chip", "Cash")
-					if(amount <= authenticated_account.money)
-						authenticated_account.adjust_money(-amount)
-						playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
-						if(response == "Chip")
-							spawn_ewallet(amount,src.loc)
+					var/response = tgui_alert(usr.client, "In what way would you like to recieve your money?", "Choose money format", list("Chip", "Cash"))
+					if(authenticated_account)
+						if(amount <= authenticated_account.money)
+							authenticated_account.adjust_money(-amount)
+							playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
+							if(response == "Chip")
+								spawn_ewallet(amount,src.loc)
+							else
+								print_money_stock(amount)
+
+
+							//create an entry in the account transaction log
+							var/datum/transaction/T = new()
+							T.target_name = authenticated_account.owner_name
+							T.purpose = "Credit withdrawal"
+							T.amount = "([amount])"
+							T.source_terminal = machine_id
+							T.date = current_date_string
+							T.time = worldtime2text()
+							authenticated_account.transaction_log.Add(T)
 						else
-							print_money_stock(amount)
-
-
-						//create an entry in the account transaction log
-						var/datum/transaction/T = new()
-						T.target_name = authenticated_account.owner_name
-						T.purpose = "Credit withdrawal"
-						T.amount = "([amount])"
-						T.source_terminal = machine_id
-						T.date = current_date_string
-						T.time = worldtime2text()
-						authenticated_account.transaction_log.Add(T)
-					else
-						to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough funds to do that!</span>")
+							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough funds to do that!</span>")
 			if("balance_statement")
 				if(authenticated_account)
 					var/obj/item/weapon/paper/R = new(src.loc)
@@ -419,8 +422,7 @@ log transactions
 					else
 						var/obj/item/I = usr.get_active_hand()
 						if (istype(I, /obj/item/weapon/card/id))
-							usr.drop_item()
-							I.loc = src
+							usr.drop_from_inventory(I, src)
 							held_card = I
 							if(ishuman(usr))
 								var/mob/living/carbon/human/H = usr
@@ -460,17 +462,15 @@ log transactions
 					view_screen = NO_SCREEN
 
 // put the currently held id on the ground or in the hand of the user
-/obj/machinery/atm/proc/release_held_id(mob/living/carbon/human/human_user)
+/obj/machinery/atm/proc/release_held_id(mob/living/carbon/human/user)
 	if(!held_card)
 		return
+	if(!ishuman(user))
+		return
 
-	held_card.loc = src.loc
+	user.put_in_hands(held_card)
 	authenticated_account = null
-
-	if(ishuman(human_user) && !human_user.get_active_hand())
-		human_user.put_in_hands(held_card)
 	held_card = null
-
 
 /obj/machinery/atm/proc/spawn_ewallet(sum, loc)
 	var/obj/item/weapon/spacecash/ewallet/E = new /obj/item/weapon/spacecash/ewallet(loc)
@@ -482,10 +482,10 @@ log transactions
 		if(money_stock)
 			sum = money_stock
 			money_stock = 0
-			alert("ATM doesn't have enough funds to give the full amount of money!")
+			tgui_alert(usr, "ATM doesn't have enough funds to give the full amount of money!")
 			spawn_money(sum, src.loc)
 		else
-			alert("ATM doesn't have enough funds to do that!")
+			tgui_alert(usr, "ATM doesn't have enough funds to do that!")
 			return
 	else
 		money_stock -= sum

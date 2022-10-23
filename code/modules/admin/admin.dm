@@ -3,15 +3,18 @@ var/global/BSACooldown = 0
 
 
 ////////////////////////////////
-proc/message_admins(msg, reg_flag = R_ADMIN)
+/proc/message_admins(msg, reg_flag = R_ADMIN, emphasize = FALSE)
 	log_adminwarn(msg) // todo: msg in html format, dublicates other logs; must be removed, use logs_*() where necessary (also, thanks you dear ZVE)
-	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-	for(var/client/C in admins)
+	var/style = "admin"
+	if (emphasize)
+		style += " emphasized"
+	msg = "<span class='[style]'><span class='prefix'>ADMIN LOG:</span> <span class='message'>[msg]</span></span>"
+	for(var/client/C as anything in admins)
 		if(C.holder.rights & reg_flag)
-			to_chat(C, msg)
+			to_chat_admin_log(C, msg)
 
 // do not use with formatted messages (html), we don't need it in logs
-/proc/admin_log_and_message_admins(var/message as text)
+/proc/admin_log_and_message_admins(message as text)
 	log_admin("[key_name(usr)] " + message)
 	message_admins("[key_name_admin(usr)] " + message, 1)
 
@@ -24,12 +27,12 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	if(!target.client && !ishuman(target))
 		require_flags |= CHAT_NOCLIENT_ATTACK
 
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(!(R_ADMIN & C.holder.rights))
 			continue
 		if((C.prefs.chat_toggles & require_flags) != require_flags)
 			continue
-		to_chat(C, msg)
+		to_chat_attack_log(C, msg)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
@@ -99,7 +102,8 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		<br><br>
 		[check_rights(R_ADMIN,0) ? "<A href='?src=\ref[src];traitor=\ref[M]'>Traitor panel</A> | " : "" ]
 		<A href='?src=\ref[src];narrateto=\ref[M]'>Narrate to</A> |
-		<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>
+		<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A> |
+		<A href='?src=\ref[src];skills=\ref[M]'>Skills panel</A>
 	"}
 
 	if (M.client)
@@ -170,15 +174,14 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 				Slime: <A href='?src=\ref[src];simplemake=slime;mob=\ref[M]'>Baby</A>
 				<A href='?src=\ref[src];simplemake=adultslime;mob=\ref[M]'>Adult</A>|
 				<A href='?src=\ref[src];simplemake=cat;mob=\ref[M]'>Cat</A>
-				<A href='?src=\ref[src];simplemake=runtime;mob=\ref[M]'>Runtime</A>
+				<A href='?src=\ref[src];simplemake=dusty;mob=\ref[M]'>Dusty</A>
 				<A href='?src=\ref[src];simplemake=corgi;mob=\ref[M]'>Corgi</A>
 				<A href='?src=\ref[src];simplemake=crab;mob=\ref[M]'>Crab</A>
 				<A href='?src=\ref[src];simplemake=coffee;mob=\ref[M]'>Coffee</A>|
 				Construct: <A href='?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A>
 				<A href='?src=\ref[src];simplemake=constructbuilder;mob=\ref[M]'>Builder</A>
 				<A href='?src=\ref[src];simplemake=constructwraith;mob=\ref[M]'>Wraith</A>
-				<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>|
-				<A href='?src=\ref[src];simplemake=meme;mob=\ref[M]'>Meme</A>
+				<A href='?src=\ref[src];simplemake=shade;mob=\ref[M]'>Shade</A>
 				<br>
 			"}
 			body += "</div>"
@@ -203,12 +206,14 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 #define PLAYER_INFO_MISSING_RANK_TEXT       "N/A"
 #define PLAYER_INFO_MISSING_TIMESTAMP_TEXT  "N/A"
 #define PLAYER_INFO_MISSING_JOB_TEXT        "N/A"
+#define PLAYER_INFO_MISSING_ROUND_ID_TEXT   "N/A"
 
 /datum/player_info
 	var/author = PLAYER_INFO_MISSING_AUTHOR_TEXT        // admin who authored the information
 	var/content = PLAYER_INFO_MISSING_CONTENT_TEXT      // text content of the information
 	var/timestamp = PLAYER_INFO_MISSING_TIMESTAMP_TEXT  // Because this is bloody annoying
 	var/days_timestamp = 0 // number of day after 1 Jan 2000
+	var/round_id = PLAYER_INFO_MISSING_ROUND_ID_TEXT
 
 /datum/player_info/proc/get_days_timestamp()
 	return isnum(days_timestamp) ? days_timestamp : 0
@@ -222,8 +227,8 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	if(!key || !config.sql_enabled)
 		return
 
-	if(!establish_db_connection())
-		usr.show_message("Notes [key] from DB don't available.")
+	if(!establish_db_connection("erro_messages", "erro_ban"))
+		to_chat(usr, "Notes [key] from DB don't available.")
 		return
 
 	//Display player age and player warn bans
@@ -246,7 +251,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	else
 		var/list/infos = generalized_players_info(db_messages, db_bans)
 		for(var/datum/player_info/I in infos)
-			dat += "<font color=#008800>[I.content]</font> <i>by [I.author]</i> on <i><font color=blue>[I.timestamp]</i></font> "
+			dat += "<font color=#008800>[I.content]</font> <i>by [I.author]</i> on <i><font color=blue>#[I.round_id], [I.timestamp]</i></font> "
 			dat += "<br><br>"
 	dat += "<br>"
 	dat += "<A href='?src=\ref[src];add_player_info=[key]'>Add Comment</A><br>"
@@ -278,6 +283,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		"text",
 		"DATE_FORMAT(timestamp, '[timestamp_format]')",
 		"DATEDIFF(timestamp, '[days_ago_start_date]')",
+		"round_id"
 	 )
 	var/DBQuery/query = dbcon.NewQuery("SELECT " + sql_fields.Join(", ") + " FROM erro_messages WHERE (targetckey = '[ckey(player_ckey)]') AND (deleted = 0) ORDER BY id LIMIT 100")
 	if(!query.Execute())
@@ -289,6 +295,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		var/text = query.item[2]
 		var/timestamp = query.item[3]
 		var/days_ago = text2num(query.item[4])
+		var/rid = text2num(query.item[5])
 
 		if(length(a_ckey))
 			notes_record.author = a_ckey
@@ -298,6 +305,8 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			notes_record.timestamp = timestamp
 		if(days_ago)
 			notes_record.days_timestamp = days_ago
+		if(rid)
+			notes_record.round_id = rid
 
 		db_player_notes += notes_record
 
@@ -325,7 +334,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		"DATE_FORMAT(unbanned_datetime, '[timestamp_format]')",
 		"DATEDIFF(unbanned_datetime, '[days_ago_start_date]')",
 		"unbanned_ckey",
-		"rounds"
+		"round_id"
 	 )
 	var/DBQuery/query = dbcon.NewQuery("SELECT " + sql_fields.Join(", ") + " FROM erro_ban WHERE (ckey = '[ckey(player_ckey)]') ORDER BY id LIMIT 100")
 	if(!query.Execute())
@@ -349,7 +358,10 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		var/unbanned_timestamp = query.item[11]
 		var/unbanned_days_ago = text2num(query.item[12])
 		var/unbanned_a_ckey = query.item[13]
-		var/rounds_ban_counter = text2num(query.item[14])  // legacy field, but it can be in DB now
+		var/rid = text2num(query.item[14])
+
+		if(rid)
+			notes_record.round_id = rid
 
 		// -1 = perma, duration in minutes come
 		if(!duration)
@@ -362,8 +374,6 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		// Ban Record creating
 		if(length(a_ckey))
 			notes_record.author = a_ckey
-		if(rounds_ban_counter)
-			duration += " and [rounds_ban_counter] rounds"
 		var/description = "([ip_cid.Join(", ")]): [reason]"
 		switch(bantype)
 			if (BANTYPE_JOB_PERMA_STR)
@@ -404,6 +414,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			db_player_notes += unban_notes_record
 	return db_player_notes
 
+#undef PLAYER_INFO_MISSING_ROUND_ID_TEXT
 #undef PLAYER_INFO_MISSING_CONTENT_TEXT
 #undef PLAYER_INFO_MISSING_AUTHOR_TEXT
 #undef PLAYER_INFO_MISSING_RANK_TEXT
@@ -661,7 +672,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	var/dat = {"
 		<A href='?src=\ref[src];c_mode=1'>Change Game Mode</A><br>
 		"}
-	if(master_mode == "secret")
+	if(master_mode == "Secret")
 		dat += "<A href='?src=\ref[src];f_secret=1'>Force Secret Mode</A><br>"
 
 	dat += {"
@@ -721,7 +732,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set desc="Restarts the world"
 	if (!usr.client.holder)
 		return
-	var/confirm = alert("Restart the game world? Warning: game stats will be lost if round not ended.", "Restart", "Yes", "Cancel")
+	var/confirm = tgui_alert(usr, "Restart the game world? Warning: game stats will be lost if round not ended.", "Restart", list("Yes", "Cancel"))
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
@@ -748,21 +759,31 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	var/message = sanitize(input("Global message to send:", "Admin Announce", null, null)  as message, MAX_PAPER_MESSAGE_LEN, extra = 0)
 
 	if(message)
-		to_chat(world, "<span class='admin_announce'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n <span class='italic emojify linkify'>[message]</span></span>")
+		do_admin_announce(message, (usr.client.holder.fakekey ? "Administrator" : usr.key))
 		log_admin("Announce: [key_name(usr)] : [message]")
 		feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/proc/do_admin_announce(message, from)
+	to_chat(world, "<span class='admin_announce'><b>[from] Announces:</b>\n <span class='italic emojify linkify'>[message]</span></span>")
 
 /datum/admins/proc/toggleooc()
 	set category = "Server"
 	set desc="Globally Toggles OOC"
 	set name="Toggle OOC"
-	ooc_allowed = !( ooc_allowed )
-	if (ooc_allowed)
-		to_chat(world, "<B>The OOC channel has been globally enabled!</B>")
-	else
-		to_chat(world, "<B>The OOC channel has been globally disabled!</B>")
-	log_admin("[key_name(usr)] toggled OOC.")
-	message_admins("[key_name_admin(usr)] toggled OOC.")
+
+	ooc_allowed = !ooc_allowed
+
+	world.send2bridge(
+		type = list(BRIDGE_OOC),
+		attachment_msg = "[key_name(usr)] toggled OOC [ooc_allowed ? "on" : "off"]",
+		attachment_color = BRIDGE_COLOR_BRIDGE,
+	)
+
+	to_chat(world, "<B>The OOC channel has been globally [ooc_allowed ? "enabled" : "disabled"]!</B>")
+
+	log_admin("[key_name(usr)] toggled OOC [ooc_allowed ? "on" : "off"].")
+	message_admins("[key_name_admin(usr)] toggled OOC [ooc_allowed ? "on" : "off"].")
+
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/togglelooc()
@@ -816,18 +837,28 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set name="Start Now"
 
 	if(SSticker.current_state < GAME_STATE_PREGAME)
-		to_chat(usr, "<span class='warning'>Error: Start Now: Game is in startup, please wait until it has finished.</span>")
-		return 0
+		to_chat(usr, "<span class='danger large'>Unable to start the game as it is not yet set up.</span>")
+		SSticker.start_ASAP = !SSticker.start_ASAP
+		if(SSticker.start_ASAP)
+			to_chat(usr, "<span class='warning large'>The game will begin as soon as possible.</span>")
+			log_admin("[key_name(usr)] will begin the game as soon as possible.")
+			message_admins("<font color='blue'>[key_name_admin(usr)] will begin the game as soon as possible.</font>")
+		else
+			to_chat(usr, "<span class='warning large'>The game will begin as normal.</span>")
+			log_admin("[key_name(usr)] will begin the game as normal.")
+			message_admins("<font color='blue'>[key_name_admin(usr)] will begin the game as normal.</font>")
+		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		return FALSE
 
 	if(SSticker.start_now())
 		log_admin("[key_name(usr)] has started the game.")
 		message_admins("<font color='blue'>[key_name_admin(usr)] has started the game.</font>")
 		feedback_add_details("admin_verb","SN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		return 1
+		return TRUE
 	else
 		to_chat(usr, "<span class='warning'>Error: Start Now: Game has already started.</span>")
 
-	return 0
+	return FALSE
 
 /datum/admins/proc/toggleenter()
 	set category = "Server"
@@ -892,10 +923,10 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set category = "Server"
 	set desc="Change facehuggers control type"
 	set name="Change FH control type"
-	var/FH_control_type = input("Choose a control type of facehuggers.","FH control type") as null|anything in list("Static AI(default)", "Dynamic AI", "Playable(+SAI)")
+	var/FH_control_type = input("Choose a control type of facehuggers.","FH control type") as null|anything in list("Playable(+SAI)(default)", "Dynamic AI", "Static AI")
 	feedback_add_details("admin_verb","CFHAI") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	switch(FH_control_type)
-		if("Static AI(default)")
+		if("Static AI")
 			facehuggers_control_type = FACEHUGGERS_STATIC_AI
 			for(var/obj/item/clothing/mask/facehugger/FH in facehuggers_list)
 				STOP_PROCESSING(SSobj, FH)
@@ -903,7 +934,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			facehuggers_control_type = FACEHUGGERS_DYNAMIC_AI
 			for(var/obj/item/clothing/mask/facehugger/FH in facehuggers_list)
 				START_PROCESSING(SSobj, FH)
-		if("Playable(+SAI)")
+		if("Playable(+SAI)(default)")
 			facehuggers_control_type = FACEHUGGERS_PLAYABLE
 			for(var/obj/item/clothing/mask/facehugger/FH in facehuggers_list)
 				STOP_PROCESSING(SSobj, FH)
@@ -919,7 +950,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	if(!check_rights(R_SERVER))	return
 	var/newtime = input("Set a new time in seconds. Set -1 for indefinite delay.","Set Delay",round(SSticker.timeLeft/10)) as num|null
 	if(SSticker.current_state > GAME_STATE_PREGAME)
-		return alert("Too late... The game has already started!")
+		return tgui_alert(usr, "Too late... The game has already started!")
 	if(newtime)
 		SSticker.timeLeft = newtime * 10
 		if(newtime < 0)
@@ -947,16 +978,16 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 
 	if(!check_rights(R_SERVER))	return
 	if(SSticker.current_state > GAME_STATE_PREGAME)
-		SSticker.delay_end = !SSticker.delay_end
-		log_admin("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
-		message_admins("<span class='adminnotice'>[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].</span>")
+		SSticker.admin_delayed = !SSticker.admin_delayed
+		log_admin("[key_name(usr)] [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].")
+		message_admins("<span class='adminnotice'>[key_name(usr)] [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].</span>")
 		world.send2bridge(
 			type = list(BRIDGE_ROUNDSTAT),
-			attachment_msg = "**[key_name(usr)]** [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
+			attachment_msg = "**[key_name(usr)]** [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].",
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
 	else
-		return alert("The game has not started yet!")
+		return tgui_alert(usr, "The game has not started yet!")
 
 /datum/admins/proc/adjump()
 	set category = "Server"
@@ -987,7 +1018,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	set desc="Reboots the server post haste"
 	set name="Immediate Reboot"
 	if(!usr.client.holder)	return
-	if( alert("Reboot server?",,"Yes","No") == "No")
+	if(tgui_alert(usr, "Reboot server?",, list("Yes","No")) == "No")
 		return
 	to_chat(world, "<span class='warning'><b>Rebooting world!</b> <span class='notice'>Initiated by [usr.client.holder.fakekey ? "Admin" : usr.key]!</span></span>")
 	log_admin("[key_name(usr)] initiated an immediate reboot.")
@@ -1012,6 +1043,15 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	message_admins("[key_name(usr)] toggled Job restrictions for xenos.")
 	feedback_add_details("admin_verb","TJR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/toggle_deathmatch_arena()
+	set category = "Server"
+	set desc = "Toggle arena on the round end."
+	set name = "Toggle Roundend Deathmatch"
+	config.deathmatch_arena = !config.deathmatch_arena
+	log_admin("[key_name(usr)] toggled Deathmatch Arena to [config.deathmatch_arena].")
+	message_admins("[key_name_admin(usr)] toggled Deathmatch Arena [config.deathmatch_arena ? "on" : "off"].")
+	feedback_add_details("admin_verb","TDA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /datum/admins/proc/unprison(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
@@ -1021,54 +1061,27 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 			message_admins("[key_name_admin(usr)] has unprisoned [key_name_admin(M)]")
 			log_admin("[key_name(usr)] has unprisoned [key_name(M)]")
 		else
-			alert("Admin jumping disabled")
+			tgui_alert(usr, "Admin jumping disabled")
 	else
-		alert("[M.name] is not prisoned.")
+		tgui_alert(usr, "[M.name] is not prisoned.")
 	feedback_add_details("admin_verb","UP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 ////////////////////////////////////////////////////////////////////////////////////////////////ADMIN HELPER PROCS
 
 /proc/is_special_character(mob/M) // returns 1 for specail characters and 2 for heroes of gamemode
-	if(!SSticker || !SSticker.mode)
+	if(!SSticker || !SSticker.mode || !istype(M))
 		return 0
-	if (!istype(M))
-		return 0
-	if((M.mind in SSticker.mode.head_revolutionaries) || (M.mind in SSticker.mode.revolutionaries))
-		if (SSticker.mode.config_tag == "revolution")
-			return 2
-		return 1
-	if(M.mind in SSticker.mode.cult)
-		if (SSticker.mode.config_tag == "cult")
-			return 2
-		return 1
-	if(M.mind in SSticker.mode.malf_ai)
-		if (SSticker.mode.config_tag == "malfunction")
-			return 2
-		return 1
-	if(M.mind in SSticker.mode.syndicates)
-		if (SSticker.mode.config_tag == "nuclear")
-			return 2
-		return 1
-	if(M.mind in SSticker.mode.wizards)
-		if (SSticker.mode.config_tag == "wizard")
-			return 2
-		return 1
-	if(M.mind in SSticker.mode.changelings)
-		if (SSticker.mode.config_tag == "changeling")
-			return 2
+	if(isanyantag(M) || M.mind?.special_role)
+		for(var/id in M.mind.antag_roles)
+			var/datum/role/role = M.mind.antag_roles[id]
+			if(role.is_roundstart_role)
+				return 2
 		return 1
 
-	for(var/datum/disease/D in M.viruses)
-		if(istype(D, /datum/disease/jungle_fever))
-			if (SSticker.mode.config_tag == "monkey")
-				return 2
-			return 1
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if(R.emagged)
 			return 1
-	if(M.mind&&M.mind.special_role)//If they have a mind and special role, they are some type of traitor or antagonist.
-		return 1
 
 	return 0
 
@@ -1090,29 +1103,22 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		else
 			return "Error: Invalid sabotage target: [target]"
 */
-/datum/admins/proc/spawn_atom(object as text)
+/datum/admins/proc/spawn_atom()
 	set category = "Debug"
-	set desc = "(atom path) Spawn an atom."
 	set name = "Spawn"
 
-	if(!check_rights(R_SPAWN))	return
-
-	var/list/types = typesof(/atom)
-	var/list/matches = new()
-
-	for(var/path in types)
-		if(findtext("[path]", object))
-			matches += path
-
-	if(matches.len==0)
+	if(!check_rights(R_SPAWN))
 		return
 
-	var/chosen
-	if(matches.len==1)
-		chosen = matches[1]
-	else
-		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
+	var/target_path = input("Enter typepath:", "Typepath", "mob/living/carbon/human?")
+	var/chosen = text2path(target_path)
+	if(!ispath(chosen))
+		chosen = pick_closest_path(target_path)
 		if(!chosen)
+			tgui_alert(usr, "No path was selected")
+			return
+		else if(ispath(chosen, /area))
+			tgui_alert(usr, "That path is not allowed.")
 			return
 
 	if(ispath(chosen,/turf))
@@ -1121,7 +1127,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	else
 		new chosen(usr.loc)
 
-	log_admin("[key_name(usr)] spawned [chosen] at ([usr.x],[usr.y],[usr.z])")
+	log_admin("[key_name(usr)] spawned [chosen] at [COORD(usr)]")
 	feedback_add_details("admin_verb","SA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -1140,6 +1146,17 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 	M.mind.edit_memory()
 	feedback_add_details("admin_verb","STP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/show_skills_panel(mob/M)
+
+	if(!istype(M))
+		to_chat(usr, "This can only be used on instances of type /mob")
+		return
+	if(!M.mind)
+		to_chat(usr, "This mob has no mind! So no skills!")
+		return
+
+	M.mind.edit_skills()
+	feedback_add_details("admin_verb","SKP") 
 
 /datum/admins/proc/toggletintedweldhelmets()
 	set category = "Debug"
@@ -1169,7 +1186,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 
 /datum/admins/proc/output_ai_laws()
 	var/ai_number = 0
-	for(var/mob/living/silicon/S in silicon_list)
+	for(var/mob/living/silicon/S as anything in silicon_list)
 		ai_number++
 		if(isAI(S))
 			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>")
@@ -1208,7 +1225,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		return "<b>(*null*)</b>"
 	var/mob/M
 	var/client/C
-	if(istype(whom, /client))
+	if(isclient(whom))
 		C = whom
 		M = C.mob
 	else if(istype(whom, /mob))
@@ -1248,7 +1265,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 		question = "This mob already has a user ([tomob.key]) in control of it! "
 	question += "Are you sure you want to place [frommob.name]([frommob.key]) in control of [tomob.name]?"
 
-	var/ask = alert(question, "Place ghost in control of mob?", "Yes", "No")
+	var/ask = tgui_alert(usr, question, "Place ghost in control of mob?", list("Yes", "No"))
 	if (ask != "Yes")
 		return 1
 
@@ -1268,7 +1285,7 @@ proc/message_admins(msg, reg_flag = R_ADMIN)
 
 /**********************Administration Shuttle**************************/
 
-var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
+var/global/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 
 /proc/move_admin_shuttle()
 	var/area/fromArea
@@ -1309,7 +1326,7 @@ var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 
 /**********************Centcom Ferry**************************/
 
-var/ferry_location = 0 // 0 = centcom , 1 = station
+var/global/ferry_location = 0 // 0 = centcom , 1 = station
 
 /proc/move_ferry()
 	var/area/fromArea
@@ -1350,7 +1367,7 @@ var/ferry_location = 0 // 0 = centcom , 1 = station
 
 /**********************Alien ship**************************/
 
-var/alien_ship_location = 1 // 0 = base , 1 = mine
+var/global/alien_ship_location = 1 // 0 = base , 1 = mine
 
 /proc/move_alien_ship()
 	var/area/fromArea

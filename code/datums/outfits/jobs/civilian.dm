@@ -87,10 +87,10 @@
 
 	l_hand = /obj/item/weapon/storage/briefcase/centcomm
 
-	r_pocket = /obj/item/device/flash
+	l_pocket = /obj/item/device/flash
 
 	implants = list(
-		/obj/item/weapon/implant/mindshield/loyalty
+		/obj/item/weapon/implant/mind_protect/loyalty
 		)
 
 // CLOWN OUTFIT

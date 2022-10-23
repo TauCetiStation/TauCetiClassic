@@ -7,6 +7,7 @@
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 	var/list/obj/item/weapon/reagent_containers/glass/beaker/beakers = list()
 	var/processing = FALSE
@@ -90,9 +91,6 @@
 	return wires.is_index_cut(wireIndex)
 
 /obj/machinery/color_mixer/is_operational()
-	return ..() && !isWireCut(COLOR_MIXER_POWER)
-
-/obj/machinery/color_mixer/is_operational_topic()
 	return ..() && !isWireCut(COLOR_MIXER_POWER)
 
 /obj/machinery/color_mixer/proc/Spray_at(atom/A, quantity)
@@ -268,7 +266,8 @@ A proc that does all the animations before mix()-ing.
 
 /obj/machinery/color_mixer/attackby(obj/item/O, mob/user)
 	if(processing)
-		if(user.a_intent != INTENT_HARM)
+		. = ..()
+		if(!.)
 			to_chat(user, "<span class='warning'>Doing this while [src] is working would be mighty dangerous!</span>")
 			if(prob(10))
 				to_chat(user, "<span class='warning'>You feel determined to harm this machine!</span>")
@@ -316,7 +315,7 @@ A proc that does all the animations before mix()-ing.
 			return attack_hand(user)
 		else if(ismultitool(O))
 			return attack_hand(user)
-		else if(istype(O, /obj/item/device/assembly/signaler))
+		else if(issignaler(O))
 			return attack_hand(user)
 
 	if(exchange_parts(user, O))
@@ -339,7 +338,7 @@ A proc that does all the animations before mix()-ing.
 		return
 	if(user.incapacitated() || !istype(target))
 		return
-	if(target.buckled || !in_range(user, src) || !in_range(user, target))
+	if(target.buckled)
 		return
 	if(!user.IsAdvancedToolUser() && target != user)
 		return
@@ -361,7 +360,7 @@ A proc that does all the animations before mix()-ing.
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(C.client)
-			C.eye_blurry = max(C.eye_blurry, 3)
+			C.blurEyes(3)
 			C.eye_blind = max(C.eye_blind, 1)
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
@@ -380,9 +379,6 @@ A proc that does all the animations before mix()-ing.
 			L.adjustBruteLoss(50)
 
 /obj/machinery/color_mixer/ui_interact(mob/user)
-	if(!is_operational())
-		return
-
 	var/dat
 	dat += "<div class='Section'>"
 	for(var/tab in tabs)

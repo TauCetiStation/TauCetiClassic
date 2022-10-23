@@ -44,6 +44,7 @@
 	icon_type = "donut"
 	storage_slots = 6
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/donut)
+	startswith = list(/obj/random/foods/donuts = 6)
 
 /obj/item/weapon/storage/fancy/donut_box/update_icon()
 	cut_overlays()
@@ -56,11 +57,14 @@
 
 	add_overlay(icon('icons/obj/storage.dmi', "donutbox_front"))
 
-/obj/item/weapon/storage/fancy/donut_box/atom_init()
-	. = ..()
-	for (var/i in 1 to storage_slots)
-		new /obj/item/weapon/reagent_containers/food/snacks/donut/normal(src)
-	update_icon()
+/obj/item/weapon/storage/fancy/donut_box/traitor
+	startswith = list(
+		/obj/item/weapon/reagent_containers/food/snacks/donut/syndie = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/banana = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/slimejelly = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/berry = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/ambrosia = 1
+	)
 
 /*
  * Egg Box
@@ -92,8 +96,9 @@
 	item_state = "candlebox"
 	storage_slots = 5
 	throwforce = 2
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
+	can_hold = list(/obj/item/candle)
 	var/candle_type = "white"
 
 /obj/item/weapon/storage/fancy/candle_box/atom_init()
@@ -135,7 +140,7 @@
 	item_state = "black_candlebox5"
 	storage_slots = 5
 	throwforce = 2
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
 	var/cooldown = 0
 	var/teleporter_delay = 0
@@ -178,7 +183,7 @@
 					visible_message("<span class='warning'>You hear a loud pop, as [src] poofs into existence.</span>")
 					playsound(src, 'sound/effects/bubble_pop.ogg', VOL_EFFECTS_MASTER)
 					for(var/mob/living/A in viewers(3, loc))
-						A.confused += 10
+						A.AdjustConfused(10)
 						A.make_jittery(150)
 					break
 			teleporter_delay += rand(5,10) // teleporter_delay-- is ran only once half a minute. This seems reasonable.
@@ -201,7 +206,7 @@
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox_preview"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	storage_slots = 6
 	icon_type = "crayon"
 	can_hold = list(
@@ -251,7 +256,7 @@
 	desc = "A box of glowsticks (Do not eat)."
 	icon = 'icons/obj/glowsticks.dmi'
 	icon_state = "sticksbox"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	storage_slots = 5
 	icon_type = "glowstick"
 	can_hold = list(
@@ -295,7 +300,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigpacket"
 	item_state = "cigpacket"
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_BELT
 	storage_slots = 6
@@ -317,7 +322,7 @@
 	if(istype(W, /obj/item/clothing/mask/cigarette))
 		if(reagents)
 			reagents.trans_to(W, (reagents.total_volume/contents.len))
-	..()
+	return ..()
 
 /obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(!istype(M))
@@ -346,7 +351,7 @@
 	item_state = "Dpacket"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
-	name = "unknown"
+	name = "obscure cigarette packet"
 	desc = "An obscure brand of cigarettes."
 	icon_state = "syndie"
 
@@ -385,7 +390,7 @@
 	icon = 'icons/obj/vialbox.dmi'
 	icon_state = "vialbox0"
 	item_state = "syringe_kit"
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	can_hold = list(/obj/item/weapon/reagent_containers/glass/beaker/vial)
 	storage_slots = 6
 	req_access = list(access_virology)
@@ -397,7 +402,7 @@
 /obj/item/weapon/storage/lockbox/vials/update_icon(itemremoved = 0)
 	var/total_contents = src.contents.len - itemremoved
 	src.icon_state = "vialbox[total_contents]"
-	src.cut_overlays()
+	cut_overlays()
 	if (!broken)
 		add_overlay(image(icon, src, "led[locked]"))
 		if(locked)
@@ -409,3 +414,51 @@
 /obj/item/weapon/storage/lockbox/vials/attackby(obj/item/I, mob/user, params)
 	. = ..()
 	update_icon()
+
+
+/obj/item/weapon/storage/fancy/heart_box
+	name = "heart-shaped box"
+	desc = "A heart-shaped box for holding tiny chocolates. It says <span class='rose'>\"From NanoTrasen With Love\"</span> on its back.<br><i>If you look closer, you can see <span class='danger'>\"Cost of the box will be deducted from your salary.\"</span></i>"
+
+	icon = 'icons/obj/valentines.dmi'
+	icon_state = "heartbox"
+	item_state = "heartbox"
+	icon_type = "heart"
+
+	storage_slots = 5
+	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/candyheart)
+
+	var/opened = FALSE
+
+/obj/item/weapon/storage/fancy/heart_box/attack_hand(mob/user)
+	. = ..()
+	if(!opened)
+		opened = TRUE
+
+/obj/item/weapon/storage/fancy/heart_box/atom_init()
+	. = ..()
+	for (var/i in 1 to storage_slots)
+		new /obj/item/weapon/reagent_containers/food/snacks/candyheart(src)
+	update_icon()
+
+/obj/item/weapon/storage/fancy/heart_box/update_icon()
+	if(!opened)
+		cut_overlays()
+		icon_state = "heartbox_full"
+		item_state = "heartbox"
+		return
+	icon_state = "heartbox"
+	var/list/candy_overlays = list()
+	var/candy_position = 0
+	for(var/obj/item/weapon/reagent_containers/food/snacks/candyheart/C in contents)
+		candy_position ++
+		var/candy_color = "pink_"
+		if(C.icon_state == "candyheart_green")
+			candy_color = "green_"
+		if(C.icon_state == "candyheart_blue")
+			candy_color = "blue_"
+		if(C.icon_state == "candyheart_yellow")
+			candy_color = "yellow_"
+		candy_overlays += image('icons/obj/valentines.dmi', "[candy_color][candy_position]")
+	add_overlay(candy_overlays)
+	return

@@ -5,8 +5,8 @@
 	icon_state = "syndbeacon"
 
 	use_power = NO_POWER_USE
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 	var/charges = 1
 	var/insisting = 0
@@ -48,9 +48,7 @@
 
 		if (!(XRAY in user.mutations))
 			user.mutations.Add(XRAY)
-			user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-			user.see_in_dark = 8
-			user.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+			user.update_sight()
 
 		if (!(COLD_RESISTANCE in user.mutations))
 			user.mutations.Add(COLD_RESISTANCE)
@@ -60,16 +58,6 @@
 
 		user.update_mutations()
 
-		SSticker.mode.traitors += user.mind
-		user.mind.special_role = "Avatar of the Wish Granter"
-
-		var/datum/objective/silence/silence = new
-		silence.owner = user.mind
-		user.mind.objectives += silence
-
-		var/obj_count = 1
-		for(var/datum/objective/OBJ in user.mind.objectives)
-			to_chat(user, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
-			obj_count++
+		create_and_setup_role(/datum/role/traitor/wishgranter, user)
 
 		to_chat(user, "You have a very bad feeling about this.")

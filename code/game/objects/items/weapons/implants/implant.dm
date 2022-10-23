@@ -7,10 +7,11 @@
 	var/implanted = null
 	var/mob/imp_in = null
 	var/obj/item/organ/external/part = null
-	item_color = "b"
 	var/allow_reagents = 0
 	var/malfunction = 0
 	var/uses = 0
+
+	var/implant_type = "b"
 
 /obj/item/weapon/implant/atom_init()
 	. = ..()
@@ -18,13 +19,14 @@
 
 /obj/item/weapon/implant/Destroy()
 	implant_list -= src
+	implanted = FALSE
+	imp_in = null
 	if(part)
 		part.implants.Remove(src)
+		part = null
 		if(isliving(imp_in))
 			var/mob/living/L = imp_in
 			L.sec_hud_set_implants()
-		part = null
-	imp_in = null
 	return ..()
 
 /obj/item/weapon/implant/proc/trigger(emote, source)
@@ -53,6 +55,12 @@
 		BP.implants += src
 		C.sec_hud_set_implants()
 		part = BP
+
+/obj/item/weapon/implant/proc/stealth_inject(mob/living/carbon/C)
+	forceMove(C)
+	imp_in = C
+	implanted = TRUE
+	C.sec_hud_set_implants()
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
@@ -134,14 +142,14 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/dexplosive/trigger(emote, source)
 	if(emote == "deathgasp")
-		src.activate("death")
+		activate("death")
 	return
 
 /obj/item/weapon/implant/dexplosive/activate(cause)
 	if((!cause) || (!src.imp_in))	return 0
 	explosion(src, -1, 0, 2, 3, 0)//This might be a bit much, dono will have to see.
 	if(src.imp_in)
-		src.imp_in.gib()
+		imp_in.gib()
 
 /obj/item/weapon/implant/dexplosive/islegal()
 	return 0
@@ -153,6 +161,7 @@ Implant Specifics:<BR>"}
 	var/elevel = "Localized Limb"
 	var/phrase = "supercalifragilisticexpialidocious"
 	icon_state = "implant_evil"
+	flags = HEAR_TALK
 
 /obj/item/weapon/implant/explosive/get_data()
 	var/dat = {"
@@ -224,7 +233,7 @@ Implant Specifics:<BR>"}
 		t.hotspot_expose(3500,125)
 
 /obj/item/weapon/implant/explosive/implanted(mob/source)
-	elevel = alert("What sort of explosion would you prefer?", "Implant Intent", "Localized Limb", "Destroy Body", "Full Explosion")
+	elevel = tgui_alert(usr, "What sort of explosion would you prefer?", "Implant Intent", list("Localized Limb", "Destroy Body", "Full Explosion"))
 	var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
 	phrase = sanitize_safe(replace_characters(input("Choose activation phrase:") as text, replacechars))
 	usr.mind.store_memory("Explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.", 0)
@@ -304,9 +313,9 @@ Implant Specifics:<BR>"}
 	imp_in.SetParalysis(0)
 	imp_in.SetStunned(0)
 	imp_in.SetWeakened(0)
-	imp_in.lying = 0
-	imp_in.update_canmove()
-	imp_in.reagents.add_reagent("hyperzine", 1)
+	imp_in.reagents.add_reagent("tricordrazine", 20)
+	imp_in.reagents.add_reagent("doctorsdelight", 25)
+	imp_in.reagents.add_reagent("oxycodone", 5)
 	imp_in.reagents.add_reagent("stimulants", 4)
 	if (!uses)
 		qdel(src)
@@ -360,14 +369,14 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 /obj/item/weapon/implant/chem/trigger(emote, source)
 	if(emote == "deathgasp")
-		src.activate(src.reagents.total_volume)
+		activate(src.reagents.total_volume)
 	return
 
 
 /obj/item/weapon/implant/chem/activate(cause)
 	if((!cause) || (!src.imp_in))	return 0
 	var/mob/living/carbon/R = src.imp_in
-	src.reagents.trans_to(R, cause)
+	reagents.trans_to(R, cause)
 	to_chat(R, "You hear a faint *beep*.")
 	if(!src.reagents.total_volume)
 		to_chat(R, "You hear a faint click from your chest.")
@@ -391,6 +400,12 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	spawn(20)
 		malfunction--
 
+var/global/list/death_alarm_stealth_areas = list(
+	/area/shuttle/syndicate,
+	/area/custom/syndicate_mothership,
+	/area/shuttle/syndicate_elite,
+	/area/custom/cult,
+)
 /obj/item/weapon/implant/death_alarm
 	name = "death alarm implant"
 	desc = "An alarm which monitors host vital signs and transmits a radio message upon death."
@@ -428,7 +443,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	switch (cause)
 		if("death")
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
-			if(istype(t, /area/shuttle/syndicate) || istype(t, /area/custom/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) )
+			if(is_type_in_list(t, global.death_alarm_stealth_areas))
 				//give the syndies a bit of stealth
 				a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
 			else
@@ -520,7 +535,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	///////////////////////////////////////////////////////////
 /obj/item/weapon/storage/internal/imp
 	name = "bluespace pocket"
-	max_w_class = ITEM_SIZE_NORMAL
+	max_w_class = SIZE_SMALL
 	storage_slots = 2
 	cant_hold = list(/obj/item/weapon/disk/nuclear)
 
@@ -551,3 +566,20 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 /obj/item/weapon/implant/storage/islegal()
 	return 0
+
+/obj/item/weapon/implant/obedience
+	name = "L.E.A.S.H. obedience implant"
+	desc = "Keep your herds obedient."
+
+/obj/item/weapon/implant/obedience/get_data()
+	var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> NanoTrasen \"Profit Margin\" Class Employee Obedience Imbuer<BR>
+<b>Life:</b> Activates upon recieveing coded signal.<BR>
+<b>Important Notes:</b> Allows to shock host via special tool.<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains a compact signaler that triggers microtaser upon recieveing signal.<BR>
+<b>Special Features:</b> Less-than-lethal controlled shocks.<BR>
+<b>Integrity:</b> Implant will last even after host's death, allowing re-implanting using special tools. Said tools are never delivered to station, however."}
+	return dat

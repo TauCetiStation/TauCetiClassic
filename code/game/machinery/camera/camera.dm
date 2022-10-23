@@ -12,7 +12,7 @@
 	var/c_tag = null
 	var/c_tag_order = 999
 	var/status = 1
-	anchored = 1
+	anchored = TRUE
 	var/invuln = null
 	var/obj/item/device/camera_bug/bug = null
 	var/obj/item/weapon/camera_assembly/assembly = null
@@ -27,6 +27,8 @@
 	var/light_disabled = 0
 	var/alarm_on = 0
 	var/painted = FALSE // Barber's paint can obstruct camera's view.
+
+	var/show_paper_cooldown = 0
 
 /obj/machinery/camera/atom_init(mapload, obj/item/weapon/camera_assembly/CA)
 	. = ..()
@@ -45,11 +47,11 @@
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		var/list/tempnetwork = C.network&src.network
 		if(C != src && C.c_tag == src.c_tag && tempnetwork.len)
-			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
+			world.log << "[src.c_tag] [COORD(src)] conflicts with [C.c_tag] [COORD(C)]"
 	*/
 	if(!network || network.len < 1)
 		if(loc)
-			error("[name] in [get_area(src)] ([COORD(src)]) has errored. [network ? "Empty network list" : "Null network list"]")
+			error("[name] in [get_area(src)] [COORD(src)] has errored. [network ? "Empty network list" : "Null network list"]")
 		else
 			error("[name] in [get_area(src)]has errored. [network ? "Empty network list" : "Null network list"]")
 		ASSERT(network)
@@ -65,6 +67,7 @@
 			bug.current = null
 		bug = null
 	cameranet.cameras -= src
+	invalidateCameraCache()
 	var/list/open_networks = difflist(network, RESTRICTED_CAMERA_NETWORKS)
 	if(open_networks.len)
 		cameranet.removeCamera(src)
@@ -107,7 +110,8 @@
 	if(!(stat & EMPED))
 		visible_message("[bicon(src)] <span class='notice'>Paint drips from [src].</span>")
 		cancelCameraAlarm()
-		toggle_cam(FALSE)
+		if(!status)
+			toggle_cam(FALSE)
 
 /obj/machinery/camera/ex_act(severity)
 	if(src.invuln)
@@ -151,8 +155,7 @@
 
 	else if(iswelder(W) && wires.is_deconstructable())
 		if(weld(W, user))
-			drop_assembly(1)
-			qdel(src)
+			deconstruct(TRUE)
 	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
 		if(!isXRay())
 			upgradeXRay()
@@ -176,47 +179,40 @@
 		else
 			to_chat(user, "[msg2]")
 
+	else if(istype(W, /obj/item/stack/sheet/glass) && panel_open)
+		var/obj/item/stack/sheet/glass/G = W
+		remove_paint_state()
+		to_chat(user, "<span class='notice'>You fixed [src] lens.</span>")
+		G.use(1)
 	// OTHER
-	else if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
-		var/mob/living/U = user
-		var/obj/item/weapon/paper/X = null
-		var/obj/item/device/pda/P = null
-
-		var/itemname = ""
-		var/info = ""
-		if(istype(W, /obj/item/weapon/paper))
-			X = W
-			if(X.crumpled)
-				to_chat(usr, "Paper to crumpled for anything.")
-				return
-			itemname = X.name
-			info = X.info
-		else
-			P = W
-			itemname = P.name
-			info = P.notehtml
-		to_chat(U, "You hold \the [itemname] up to the camera...")
-		for(var/mob/living/silicon/ai/O in ai_list)
+	else if(istype(W, /obj/item/weapon/paper))
+		user.SetNextMove(CLICK_CD_INTERACT)
+		if(show_paper_cooldown > world.time)
+			return
+		show_paper_cooldown = world.time + 5 SECONDS
+		var/obj/item/weapon/paper/P = W
+		if(P.crumpled)
+			to_chat(usr, "Paper too crumpled for anything.")
+			return
+		if(tgui_alert(user, "Would you like to hold up \the [P] to the camera?", "Let AI see your text!", list("Yes!", "No!")) != "Yes!")
+			return
+		to_chat(user, "You hold \the [P] up to the camera...")
+		for(var/mob/living/silicon/ai/O as anything in ai_list)
 			if(!O.client || O.stat == DEAD)
 				continue
-			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U];trackname=[U.name]'>[U.name]</a></b> holds \a [itemname] up to one of your cameras...")
+			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[user];trackname=[user.name]'>[user.name]</a></b> holds \the [P] up to one of your cameras...")
+			P.show_content(O)
 
-			var/dat = "<TT>[info]</TT>"
-			var/datum/browser/popup = new(O, "[itemname]", "[itemname]")
-			popup.set_content(dat)
-			popup.open()
-
-		for(var/mob/O in player_list)
-			if(O.client && O.client.eye == src)
-				to_chat(O, "[U] holds \a [itemname] up to one of the cameras...")
-
-				var/dat = "<TT>[info]</TT>"
-				var/datum/browser/popup = new(O, "[itemname]", "[itemname]")
-				popup.set_content(dat)
-				popup.open()
+		for(var/obj/machinery/computer/security/S in computer_list) // show the paper to all people watching this camera. except ghosts, fuck ghosts
+			if(S.active_camera != src)
+				continue
+			for(var/M in S.concurrent_users)
+				var/mob/living/L = locate(M) // M is a \ref. weird
+				to_chat(L, "You can see [user] holding \the [P] to the camera you're watching...")
+				P.show_content(L)
 
 	else if (istype(W, /obj/item/device/camera_bug))
-		if(!src.can_use())
+		if(!can_use())
 			to_chat(user, "<span class='notice'>Camera non-functional</span>")
 			return
 		if(bug)
@@ -227,7 +223,7 @@
 			to_chat(user, "<span class='notice'>Camera bugged.</span>")
 			src.bug = W
 			src.bug.bugged_cameras[src.c_tag] = src
-	else if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W, /obj/item/weapon/twohanded/dualsaber))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
+	else if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W, /obj/item/weapon/dualsaber))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
 		if(W:force > 3)
 			user.do_attack_animation(src)
 			disconnect_viewers()
@@ -237,12 +233,36 @@
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>The camera has been sliced apart by [user] with [W]!</span>")
-			drop_assembly()
-			new /obj/item/stack/cable_coil/cut/red(loc)
-			qdel(src)
+			deconstruct()
 	else
 		..()
 	return
+
+/obj/machinery/camera/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(stat & BROKEN)
+		switch(damage_type)
+			if(BRUTE, BURN)
+				return damage_amount
+		return
+	. = ..()
+
+/obj/machinery/camera/atom_break(damage_flag)
+	if(!status)
+		return
+	. = ..()
+	if(.)
+		triggerCameraAlarm()
+		toggle_cam(FALSE)
+
+/obj/machinery/camera/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(disassembled)
+		drop_assembly(1)
+	else
+		drop_assembly()
+		new /obj/item/stack/cable_coil(loc, 2)
+	..()
 
 /obj/machinery/camera/proc/drop_assembly(state = 0)
 	if(assembly)
@@ -286,13 +306,13 @@
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = 1
-	for(var/mob/living/silicon/S in silicon_list)
+	for(var/mob/living/silicon/S as anything in silicon_list)
 		S.triggerAlarm("Camera", get_area(src), list(src), src)
 
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = 0
-	for(var/mob/living/silicon/S in silicon_list)
+	for(var/mob/living/silicon/S as anything in silicon_list)
 		S.cancelAlarm("Camera", get_area(src), src)
 
 /obj/machinery/camera/proc/can_use(check_paint = TRUE)
@@ -322,13 +342,13 @@
 			//If someone knows a better way to do this, let me know. -Giacom
 			switch(i)
 				if(NORTH)
-					src.dir = SOUTH
+					set_dir(SOUTH)
 				if(SOUTH)
-					src.dir = NORTH
+					set_dir(NORTH)
 				if(WEST)
-					src.dir = EAST
+					set_dir(EAST)
 				if(EAST)
-					src.dir = WEST
+					set_dir(WEST)
 			break
 
 //Return a working camera that can see a given mob

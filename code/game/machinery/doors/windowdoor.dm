@@ -1,3 +1,5 @@
+ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
+
 /obj/machinery/door/window
 	name = "interior door"
 	desc = "A strong door."
@@ -10,9 +12,16 @@
 	air_properties_vary_with_direction = 1
 	door_open_sound  = 'sound/machines/windowdoor.ogg'
 	door_close_sound = 'sound/machines/windowdoor.ogg'
+
+	can_wedge_items = FALSE
+
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/base_state = "left"
-	var/health = 150.0 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	max_integrity = 150
+	integrity_failure = 0
+	armor = list(MELEE = 20, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 0, FIRE = 70, ACID = 100)
+	// For use with door control buttons. Currently just that.
+	var/id = null
 
 /obj/machinery/door/window/atom_init()
 	. = ..()
@@ -24,14 +33,14 @@
 	color = color_windows()
 
 /obj/machinery/door/window/Destroy()
-	density = 0
+	density = FALSE
 	update_nearby_tiles()
 	electronics = null
 	return ..()
 
 /obj/machinery/door/window/proc/open_and_close()
 	open()
-	if(src.check_access(null))
+	if(check_access(null))
 		sleep(50)
 	else //secure doors close faster
 		sleep(20)
@@ -44,7 +53,7 @@
 		icon_state = "[src.base_state]open"
 	SSdemo.mark_dirty(src)
 
-/obj/machinery/door/window/proc/shatter(display_message = 1)
+/obj/machinery/door/window/proc/shatter()
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/weapon/shard(loc)
 		new /obj/item/weapon/shard(loc)
@@ -54,7 +63,7 @@
 		if(!electronics)
 			ae = new/obj/item/weapon/airlock_electronics( src.loc )
 			if(!src.req_access)
-				src.check_access()
+				check_access()
 			if(src.req_access.len)
 				ae.conf_access = src.req_access
 			else if (src.req_one_access.len)
@@ -68,10 +77,8 @@
 			ae.icon_state = "door_electronics_smoked"
 			ae.broken = TRUE
 			operating = 0
-	src.density = 0
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	if(display_message)
-		visible_message("[src] shatters!")
+	visible_message("[src] shatters!")
 	qdel(src)
 
 //painter
@@ -88,7 +95,7 @@
 	var/new_color = input(user, "Choose color!") as color|null
 	if(!new_color) return
 
-	if((!in_range(src, usr) && src.loc != usr) || !W.use(1))
+	if((!Adjacent(usr) && src.loc != usr) || !W.use(1))
 		return
 	else
 		color = new_color
@@ -99,13 +106,13 @@
 	if (!( ismob(AM) ))
 		var/obj/machinery/bot/bot = AM
 		if(istype(bot))
-			if(src.check_access(bot.botcard))
+			if(check_access(bot.botcard))
 				open_and_close()
 			else
 				do_animate("deny")
 		else if(istype(AM, /obj/mecha))
 			var/obj/mecha/mecha = AM
-			if(mecha.occupant && src.allowed(mecha.occupant))
+			if(mecha.occupant && allowed(mecha.occupant))
 				open_and_close()
 			else
 				do_animate("deny")
@@ -120,8 +127,8 @@
 /obj/machinery/door/window/bumpopen(mob/user)
 	if( operating || !src.density )
 		return
-	src.add_fingerprint(user)
-	if(!src.requiresID())
+	add_fingerprint(user)
+	if(!requiresID())
 		user = null
 
 	if(allowed(user))
@@ -193,58 +200,31 @@
 			flick("[base_state]deny", src)
 	return
 
+/obj/machinery/door/window/deconstruct(disassembled)
+	shatter()
 
-/obj/machinery/door/window/proc/take_damage(damage)
-	src.health = max(0, src.health - damage)
-	if(src.health <= 0)
-		shatter()
+/obj/machinery/door/window/bullet_act(obj/item/projectile/Proj, def_zone)
+	if(Proj.pass_flags & PASSGLASS)
+		return PROJECTILE_FORCE_MISS
+	return ..()
+
+/obj/machinery/door/window/play_attack_sound(damage_amount, damage_type, damage_flag)
+	switch(damage_type)
+		if(BRUTE)
+			playsound(loc, 'sound/effects/glasshit.ogg', VOL_EFFECTS_MASTER, 90, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/obj/machinery/door/window/attack_generic(mob/user)
+	if(operating)
 		return
-
-/obj/machinery/door/window/bullet_act(obj/item/projectile/Proj)
-	if(Proj.damage)
-		take_damage(round(Proj.damage / 2))
-	..()
-
-//When an object is thrown at the window
-/obj/machinery/door/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-
-	..()
-	visible_message("<span class='warning'><B>The glass door was hit by [AM].</B></span>")
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 40
-	else
-		tforce = AM:throwforce
-	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-	take_damage(tforce)
-	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
-	return
-
-/obj/machinery/door/window/proc/attack_generic(mob/user, damage = 0)
-	if(src.operating)
-		return
-	user.do_attack_animation(src)
-	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='danger'>[user] smashes against the [src.name].</span>", \
 						"<span class='userdanger'>[user] smashes against the [src.name].</span>")
-	take_damage(damage)
-
-/obj/machinery/door/window/attack_alien(mob/user)
-	if(isxenolarva(user))
-		return
-	user.SetNextMove(CLICK_CD_MELEE)
-	attack_generic(user, 25)
-
-/obj/machinery/door/window/attack_animal(mob/living/simple_animal/attacker)
-	..()
-	if(attacker.melee_damage <= 0)
-		return
-	attack_generic(attacker, attacker.melee_damage)
+	return ..()
 
 /obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user)
-	if(!istype(user, /mob/living/carbon/slime/adult))
+	if(!isslimeadult(user))
 		return
-	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 25)
 
 /obj/machinery/door/window/attackby(obj/item/weapon/I, mob/user)
@@ -309,9 +289,9 @@
 							if("rightsecure")
 								WA.icon_state = "r_secure_windoor_assembly02"
 								WA.secure = 1
-								WA.anchored = 1
+								WA.anchored = TRUE
 						WA.state= "02"
-						WA.dir = src.dir
+						WA.set_dir(src.dir)
 						WA.ini_dir = src.dir
 						WA.update_icon()
 						WA.created_name = src.name
@@ -344,7 +324,7 @@
 
 
 	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
-	if(iscrowbar(I) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
+	if(iscrowbar(I) || istype(I, /obj/item/weapon/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
 		if(!hasPower())
 			user.SetNextMove(CLICK_CD_INTERACT)
 			if(density)
@@ -355,16 +335,7 @@
 
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
-		user.do_attack_animation(src)
-		user.SetNextMove(CLICK_CD_MELEE)
-		if( (I.flags&NOBLUDGEON) || !I.force )
-			return
-		var/aforce = I.force
-		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-		visible_message("<span class='warning'><B>[src] was hit by [I].</B></span>")
-		if(I.damtype == BRUTE || I.damtype == BURN)
-			take_damage(aforce)
-		return
+		return ..()
 
 	try_open(user)
 
@@ -378,14 +349,25 @@
 		return TRUE
 	return FALSE
 
+/obj/machinery/door/window/emp_act(severity)
+	if(prob(20/severity))
+		open()
+	if(prob(40/severity))
+		if(secondsElectrified == 0)
+			secondsElectrified = -1
+			diag_hud_set_electrified()
+			spawn(300)
+				secondsElectrified = 0
+				diag_hud_set_electrified()
+	..()
+
 /obj/machinery/door/window/brigdoor
 	name = "Secure Door"
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
 	req_access = list(access_security)
-	var/id = null
-	health = 300.0 //Stronger doors for prison (regular window door health is 200)
+	max_integrity = 300 //Stronger doors for prison (regular window door health is 150)
 
 /obj/machinery/door/window/brigdoor/atom_init()
 	. = ..()

@@ -2,7 +2,7 @@
 	name = "Teleporter Control Console"
 	desc = "Used to control a linked teleportation Hub and Station."
 	icon_state = "teleport"
-	circuit = "/obj/item/weapon/circuitboard/teleporter"
+	circuit = /obj/item/weapon/circuitboard/teleporter
 	var/obj/item/device/gps/locked = null
 	var/regime_set = "Teleporter"
 	var/id = null
@@ -173,7 +173,7 @@
 				continue
 			else
 				var/mob/M = I.loc
-				if (M.stat == 2)
+				if (M.stat == DEAD)
 					if (M.timeofdeath + 6000 < world.time)
 						continue
 				var/turf/T = get_turf(M)
@@ -226,8 +226,8 @@
 /obj/machinery/teleport
 	name = "teleport"
 	icon = 'icons/obj/stationobjs.dmi'
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
 /obj/machinery/teleport/hub
 	name = "teleporter hub"
@@ -307,6 +307,11 @@
 			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
+					var/list/stabilizer = M.search_contents_for(/obj/item/rig_module/teleporter_stabilizer)
+					for(var/obj/item/rig_module/teleporter_stabilizer/s in stabilizer)
+						if (s.stabilize_teleportation(2))
+							calibrated = 0
+							return
 					// Effects similar to mutagen.
 					if(!human.species.flags[IS_SYNTHETIC])
 						randmuti(human)
@@ -448,7 +453,7 @@
 		visible_message("<span class='alert'>No target detected.</span>")
 		src.engaged = 0
 	teleporter_hub.update_icon()
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 /obj/machinery/teleport/station/power_change()

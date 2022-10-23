@@ -7,7 +7,7 @@
 
 /obj/random/materials/rods_scrap/atom_init()
 	..()
-	new /obj/item/stack/rods/(loc, rand(3,8))
+	new /obj/item/stack/rods(loc, rand(3,8))
 	return INITIALIZE_HINT_QDEL
 
 /obj/random/materials/plastic_scrap/atom_init()

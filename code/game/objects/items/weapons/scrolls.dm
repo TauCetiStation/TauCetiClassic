@@ -4,7 +4,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
 	var/uses = 4.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_state = "paper"
 	throw_speed = 4
 	throw_range = 20
@@ -31,9 +31,9 @@
 	if (usr.incapacitated() || src.loc != usr)
 		return
 	var/mob/living/carbon/human/H = usr
-	if (!( istype(H, /mob/living/carbon/human)))
+	if (!( ishuman(H)))
 		return 1
-	if ((usr == src.loc || (in_range(src, usr) && istype(src.loc, /turf))))
+	if (Adjacent(usr))
 		usr.set_machine(src)
 		if (href_list["spell_teleport"])
 			if (src.uses >= 1)
@@ -45,14 +45,14 @@
 
 	var/A
 
-	A = input(user, "Area to jump to", "BOOYEA", A) as null|anything in teleportlocs
+	A = tgui_input_list(user, "Area to jump to", "BOOYEA", teleportlocs)
 	if(!A)
 		return
 	var/area/thearea = teleportlocs[A]
 
 	if (user.incapacitated())
 		return
-	if(!((user == loc || (in_range(src, user) && istype(src.loc, /turf)))))
+	if(!Adjacent(user))
 		return
 
 	var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
@@ -61,7 +61,7 @@
 	smoke.start()
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!T.density)
+		if(!T.density && !SEND_SIGNAL(T, COMSIG_ATOM_INTERCEPT_TELEPORT))
 			var/clear = 1
 			for(var/obj/O in T)
 				if(O.density)

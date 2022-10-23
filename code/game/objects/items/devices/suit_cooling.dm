@@ -1,7 +1,7 @@
 /obj/item/device/suit_cooling_unit
 	name = "portable suit cooling unit"
 	desc = "A portable heat sink and liquid cooled radiator that can be hooked up to a space suit's existing temperature controls to provide industrial levels of cooling."
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	icon = 'icons/obj/device.dmi'
 	icon_state = "suitcooler0"
 	slot_flags = SLOT_FLAGS_BACK  // you can carry it on your back if you want, but it won't do anything unless attached to suit storage
@@ -29,8 +29,7 @@
 
 /obj/item/device/suit_cooling_unit/atom_init()
 	. = ..()
-	cell = new/obj/item/weapon/stock_parts/cell() // comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
-	cell.loc = src
+	cell = new(src) // comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
 
 /obj/item/device/suit_cooling_unit/Destroy()
 	QDEL_NULL(cell)
@@ -77,7 +76,7 @@
 		return FALSE
 
 	var/charge_usage = (temp_adj / max_cooling) * charge_consumption
-	user.bodytemperature -= temp_adj * efficiency
+	user.adjust_bodytemperature(-temp_adj * efficiency)
 	cell.use(charge_usage)
 
 	return TRUE
@@ -93,7 +92,7 @@
 
 	var/turf/T = get_turf(user)
 
-	if(istype(T, /turf/space))
+	if(isspaceturf(T))
 		return 0 //space has no temperature, this just makes sure the cooling unit works in space
 
 	var/datum/gas_mixture/environment = T.return_air()
@@ -107,7 +106,7 @@
 	if (cell.charge <= 0)
 		turn_off()
 		return
-	
+
 	if (cell.charge <= (cell.maxcharge * low_charge_warning_threshold_percent) && last_low_charge_warning_msg < world.time)
 		to_chat(user, "<span class='warning'>Cooling unit charge is below [round(cell.percent())]%.</span>")
 		playsound(user, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
@@ -148,7 +147,7 @@
 	if (istype(I, /obj/item/weapon/stock_parts/cell))
 		if (cover_open)
 			if (cell)
-				to_chat(user, "<span class='info'>There is a [cell] already installed here.<span>")
+				to_chat(user, "<span class='info'>There is a [cell] already installed here.</span>")
 			else
 				user.drop_from_inventory(I, src)
 				cell = I
@@ -192,7 +191,7 @@
 /obj/item/device/suit_cooling_unit/miniature
 	name = "Miniature suit cooling device"
 	desc = "Minituarized heat sink that can be hooked up to a space suit's existing temperature controls to cool down the suit's internals. Weaker than it's bigger counterpart."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/device.dmi'
 	icon_state = "miniaturesuitcooler0"
 	max_cooling = 8

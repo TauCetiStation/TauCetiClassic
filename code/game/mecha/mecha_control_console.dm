@@ -6,10 +6,11 @@
 	state_nopower_preset = "tech0"
 	light_color = "#a97faa"
 	req_access = list(access_robotics)
-	circuit = "/obj/item/weapon/circuitboard/mecha_control"
+	circuit = /obj/item/weapon/circuitboard/mecha_control
 	var/list/located = list()
 	var/screen = 0
 	var/stored_data
+	required_skills = list(/datum/skill/civ_mech = SKILL_LEVEL_PRO)
 
 /obj/machinery/computer/mecha/ui_interact(mob/user)
 	var/dat = ""
@@ -41,21 +42,27 @@
 	var/datum/topic_input/F = new /datum/topic_input(href,href_list)
 	if(href_list["send_message"])
 		var/obj/item/mecha_parts/mecha_tracking/MT = F.getObj("send_message")
+		if(!istype(MT))
+			return
 		var/message = sanitize(input(usr,"Input message","Transmit message") as text)
 		var/obj/mecha/M = MT.in_mecha()
 		if(message && M)
 			M.occupant_message(message)
 	else if(href_list["shock"])
 		var/obj/item/mecha_parts/mecha_tracking/MT = F.getObj("shock")
+		if(!istype(MT))
+			return
 		MT.shock()
 	else if(href_list["get_log"])
 		var/obj/item/mecha_parts/mecha_tracking/MT = F.getObj("get_log")
+		if(!istype(MT))
+			return
 		stored_data = MT.get_mecha_log()
 		screen = 1
 	else if(href_list["return"])
 		screen = 0
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 
@@ -112,7 +119,7 @@
 	qdel(src)
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_log()
-	if(!src.in_mecha())
+	if(!in_mecha())
 		return 0
 	var/obj/mecha/M = src.loc
 	return M.get_log_html()

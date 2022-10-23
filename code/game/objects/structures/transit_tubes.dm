@@ -6,9 +6,9 @@
 /obj/structure/transit_tube
 	icon = 'icons/obj/pipes/transit_tube.dmi'
 	icon_state = "E-W"
-	density = 1
-	layer = 3.1
-	anchored = 1.0
+	density = TRUE
+	layer = SHUTTERS_LAYER
+	anchored = TRUE
 	var/list/tube_dirs = null
 	var/exit_delay = 2
 	var/enter_delay = 1
@@ -46,6 +46,8 @@
 	density = TRUE
 	var/moving = 0
 	var/datum/gas_mixture/air_contents = new()
+	var/image/occupant
+	var/occupant_angle = 0
 
 /obj/structure/transit_tube_pod/Destroy()
 	move_out_content()
@@ -69,9 +71,23 @@
 	if(istype(M))
 		M.forceMove(src)
 
+		occupant_angle = dir2angle(dir)
+		occupant = image(M.appearance, loc, layer = ABOVE_OBJ_LATER)
+		if(M.w_class == SIZE_HUMAN)
+			occupant.transform = occupant.transform.Scale(0.9, 0.9)
+		occupant.transform = occupant.transform.Turn(occupant_angle)
+		add_overlay(occupant)
+
 /obj/structure/transit_tube_pod/proc/move_out_content()
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(loc)
+		cut_overlay(occupant)
+		occupant = null
+		occupant_angle = initial(occupant_angle)
+
+/obj/structure/transit_tube_pod/deconstruct(disassembled)
+	move_out_content()
+	..()
 
 /obj/structure/transit_tube_pod/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -98,12 +114,15 @@
 		to_chat(M, "<span class='warning'>The tube's support pylons block your way.</span>")
 		return ..()
 	else
-		M.forceMove(loc)
+		M.forceMove(loc, TRUE)
 		to_chat(M, "<span class='info'>You slip under the tube.</span>")
 
 /obj/structure/transit_tube/station/Bumped(mob/M)
 	if(!pod_moving && icon_state == "open" && istype(M))
 		for(var/obj/structure/transit_tube_pod/pod in loc)
+			if(M.w_class > SIZE_HUMAN)
+				to_chat(M, "<span class='notice'>You can't fit into a pod.</span>")
+				return
 			if(locate(/mob) in pod.contents)
 				to_chat(M, "<span class='notice'>The pod is already occupied.</span>")
 				return
@@ -158,7 +177,7 @@
 			nexttube = tube
 			break
 	if(!nexttube)
-		pod.dir = turn(pod.dir, 180)
+		pod.set_dir(turn(pod.dir, 180))
 
 	if(icon_state == "closed" && pod)
 		pod.follow_tube()
@@ -308,13 +327,21 @@
 				break
 
 		if(current_tube == null)
-			dir = next_dir
+			set_dir(next_dir)
 			Move(get_step(loc, dir), dir) // Allow collisions when leaving the tubes.
 			break
 
 		last_delay = current_tube.enter_delay(src, next_dir)
 		sleep(last_delay)
-		dir = next_dir
+		set_dir(next_dir)
+
+		if(occupant)
+			var/angle = dir2angle(dir)
+			cut_overlay(occupant)
+			occupant.transform = occupant.transform.Turn(angle - occupant_angle)
+			occupant_angle = angle
+			add_overlay(occupant)
+
 		loc = next_loc // When moving from one tube to another, skip collision and such.
 		density = current_tube.density
 
@@ -322,7 +349,7 @@
 			current_tube.pod_stopped(src, dir)
 			break
 
-	density = 1
+	density = TRUE
 
 	moving = 0
 
@@ -362,7 +389,7 @@
 			move_out_content()
 			mob.client.Move(get_step(loc, direction), direction)
 
-			//if(moving && istype(loc, /turf/space))
+			//if(moving && isspaceturf(loc))
 				// Todo: If you get out of a moving pod in space, you should move as well.
 				//  Same direction as pod? Direcion you moved? Halfway between?
 
@@ -379,14 +406,14 @@
 								station.open_animation()
 
 						else if(direction in station.directions())
-							dir = direction
+							set_dir(direction)
 							station.launch_pod()
 					return
 
 			for(var/obj/structure/transit_tube/tube in loc)
 				if(dir in tube.directions())
 					if(tube.has_exit(direction))
-						dir = direction
+						set_dir(direction)
 						return
 
 
@@ -405,7 +432,7 @@
 		tube_dirs = parse_dirs(icon_state)
 
 		if(copytext(icon_state, 1, 3) == "D-" || findtextEx(icon_state, "Pass"))
-			density = 0
+			density = FALSE
 
 
 
@@ -586,3 +613,24 @@
 			return "SW"
 		else
 	return
+
+/obj/structure/transit_tube_pod/proc/dir2angle()
+	var/angle = 0
+	switch(dir)
+		if(NORTH)
+			angle = 0
+		if(NORTHEAST)
+			angle = 45
+		if(EAST)
+			angle = 90
+		if(SOUTHEAST)
+			angle = 135
+		if(SOUTH)
+			angle = 180
+		if(SOUTHWEST)
+			angle = 225
+		if(WEST)
+			angle = 270
+		if(NORTHWEST)
+			angle = 315
+	return angle

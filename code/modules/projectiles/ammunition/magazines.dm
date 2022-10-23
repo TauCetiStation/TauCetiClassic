@@ -60,6 +60,9 @@
 	max_ammo = 1
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/m79/underslung
+	ammo_type = /obj/item/ammo_casing/r4046/explosive
+
 /obj/item/ammo_box/magazine/internal/shotcom
 	name = "combat shotgun internal magazine"
 	desc = "Oh god, this shouldn't be here!"
@@ -79,11 +82,31 @@
 	max_ammo = 2
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer
+	name = "derringer internal magazine"
+	desc = "This doesn't even exist!"
+	ammo_type = /obj/item/ammo_casing/c38m
+	caliber = "38"
+	max_ammo = 2
+	multiload = 0
+
+/obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer/syndicate
+	ammo_type = /obj/item/ammo_casing/a357
+	caliber = "357"
+
 /obj/item/ammo_box/magazine/internal/cylinder/rocket
 	name = "bazooka internal magazine"
 	desc = "This doesn't even exist!"
 	ammo_type = /obj/item/ammo_casing/caseless/rocket
 	caliber = "rocket"
+	max_ammo = 1
+	multiload = 0
+
+/obj/item/ammo_box/magazine/internal/cylinder/rocket/anti_singulo
+	name = "bazooka internal magazine"
+	desc = "This doesn't even exist!"
+	ammo_type = /obj/item/ammo_casing/caseless/rocket/anti_singulo
+	caliber = "rocket_as"
 	max_ammo = 1
 	multiload = 0
 
@@ -94,6 +117,9 @@
 	caliber = ".45"
 	max_ammo = 6
 	multiload = 0
+
+/obj/item/ammo_box/magazine/internal/cylinder/rev45/rubber
+	ammo_type = /obj/item/ammo_casing/c45r
 
 /obj/item/ammo_box/magazine/internal/cylinder/flaregun
 	name = "Flare gun cylinder"
@@ -123,12 +149,22 @@
 ///////////EXTERNAL MAGAZINES////////////////
 /obj/item/ammo_box/magazine/m9mm
 	name = "magazine (9mm)"
-	icon_state = "9x19p"
+	icon_state = "9x19stech"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
-	max_ammo = 8
+	max_ammo = 7
 	multiple_sprites = 2
+
+/obj/item/ammo_box/magazine/m9mm/update_icon()
+	..()
+	icon_state = "[initial(icon_state)]-[round(ammo_count(),1)]"
+
+
+/obj/item/ammo_box/magazine/m9mm/ex
+	name = "extended capacity magazine (9mm)"
+	icon_state = "9x19exstech"
+	max_ammo = 16
 
 /obj/item/ammo_box/magazine/m9mm_2
 	name = "magazine (9mm)"
@@ -166,11 +202,16 @@
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
-	max_ammo = 20
+	max_ammo = 30
 
 /obj/item/ammo_box/magazine/m12mm/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[round(ammo_count(),2)]"
+	cut_overlays()
+	if(ammo_count() == 0)
+		return
+	var/ammo_perc = (ammo_count() * 100) / max_ammo 
+	var/image/ammo_icon = image('icons/obj/ammo.dmi', "12mmsh-[round(ammo_perc, 25)]")
+	add_overlay(ammo_icon)
 
 /obj/item/ammo_box/magazine/m12mm/hp
 	name = "magazine (.45 HP)"
@@ -178,15 +219,8 @@
 	icon_state = "12mmhp"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45hp
-	caliber = ".45S"
-	max_ammo = 15
-
-/obj/item/ammo_box/magazine/m12mm/hp/update_icon()
-	..()
-	if(ammo_count() == 1)
-		icon_state = "[initial(icon_state)]-1"
-	else
-		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
+	caliber = ".45"
+	max_ammo = 20
 
 /obj/item/ammo_box/magazine/m12mm/hv
 	name = "magazine (.45 HV)"
@@ -194,16 +228,8 @@
 	icon_state = "12mmhv"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45hv
-	caliber = ".45S"
-	max_ammo = 15
-
-/obj/item/ammo_box/magazine/m12mm/hv/update_icon()
-	..()
-	if(ammo_count() == 1)
-		icon_state = "[initial(icon_state)]-1"
-	else
-		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
-
+	caliber = ".45"
+	max_ammo = 20
 
 /obj/item/ammo_box/magazine/m12mm/imp
 	name = "magazine (.45 IMP)"
@@ -211,16 +237,8 @@
 	icon_state = "12mmimp"
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45imp
-	caliber = ".45S"
-	max_ammo = 15
-
-/obj/item/ammo_box/magazine/m12mm/imp/update_icon()
-	..()
-	if(ammo_count() == 1)
-		icon_state = "[initial(icon_state)]-1"
-	else
-		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
-
+	caliber = ".45"
+	max_ammo = 20
 
 /obj/item/ammo_box/magazine/sm45
 	name = "magazine (.45)"
@@ -296,6 +314,9 @@
 	max_ammo = 7
 	multiple_sprites = 1
 
+/obj/item/ammo_box/magazine/m50/weakened
+	ammo_type = /obj/item/ammo_casing/a50/weakened
+
 /obj/item/ammo_box/magazine/m75
 	name = "magazine (.75)"
 	icon_state = "75"
@@ -319,42 +340,9 @@
 /obj/item/ammo_box/magazine/chameleon
 	name = "magazine (.45)"
 	icon_state = "45"
-	ammo_type = "/obj/item/ammo_casing/chameleon"
+	ammo_type = /obj/item/ammo_casing/chameleon
 	max_ammo = 7
 	multiple_sprites = 1
-
-/obj/item/ammo_box/magazine/c5_9mm
-	name = "magazine (9mm rubber)"
-	icon_state = "c5_mag"
-	origin_tech = "combat=1"
-	ammo_type = /obj/item/ammo_casing/c9mmr
-	caliber = "9mm"
-	max_ammo = 20
-
-/obj/item/ammo_box/magazine/c5_9mm/update_icon()
-	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
-
-/obj/item/ammo_box/magazine/c5_9mm/letal
-	name = "magazine (9mm)"
-	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/c9mm
-
-/obj/item/ammo_box/magazine/at7_45
-	name = "magazine (.45 rubber)"
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "at7_mag"
-	origin_tech = "combat=1"
-	ammo_type = /obj/item/ammo_casing/c45r
-	caliber = ".45"
-	max_ammo = 8
-
-/obj/item/ammo_box/magazine/at7_45/update_icon()
-	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
-
-/obj/item/ammo_box/magazine/at7_45/letal
-	name = "magazine (.45)"
-	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/c45
 
 /obj/item/ammo_box/magazine/l13_38
 	name = "magazine (.38 rubber)"
@@ -368,23 +356,6 @@
 	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
 
 /obj/item/ammo_box/magazine/l13_38/lethal
-	name = "magazine (.38)"
-	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/c38m
-
-/obj/item/ammo_box/magazine/acm38_38
-	name = "magazine (.38 rubber)"
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "38_mag"
-	origin_tech = "combat=1"
-	ammo_type = /obj/item/ammo_casing/c38
-	caliber = "38"
-	max_ammo = 12
-
-/obj/item/ammo_box/magazine/acm38_38/update_icon()
-	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
-
-/obj/item/ammo_box/magazine/acm38_38/lethal
 	name = "magazine (.38)"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c38m
@@ -477,9 +448,9 @@
 
 
 /obj/item/ammo_box/magazine/m12g/stun
-	name = "shotgun magazine (12g stun slug)"
+	name = "shotgun magazine (12g stun shot)"
 	icon_state = "m12gs"
-	ammo_type = /obj/item/ammo_casing/shotgun/stunslug
+	ammo_type = /obj/item/ammo_casing/shotgun/stunshot
 	caliber = "shotgun"
 	max_ammo = 8
 
@@ -588,3 +559,15 @@
 
 /obj/item/ammo_box/magazine/plasma/emp_act() // just incase if someone adds emp_act in parent.
 	return
+
+/obj/item/ammo_box/magazine/drozd127
+	name = "Drozd magazine (12.7mm)"
+	icon_state = "12.7"
+	origin_tech = "combat=3"
+	ammo_type = /obj/item/ammo_casing/drozd127
+	caliber = "12.7mm"
+	max_ammo = 12
+
+/obj/item/ammo_box/magazine/drozd127/update_icon()
+	..()
+	icon_state = "[initial(icon_state)]-[CEIL(ammo_count(0) / 12) * 12]"

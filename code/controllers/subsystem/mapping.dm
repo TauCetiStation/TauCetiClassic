@@ -1,5 +1,6 @@
 // How many structures will be spawned
 #define SPACE_STRUCTURES_AMOUNT 7
+#define MAX_MINING_SECRET_ROOM 5
 // Uncomment to enable debug output of structure coords
 //#define SPACE_STRUCTURES_DEBUG 1
 
@@ -7,11 +8,11 @@ SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
 	init_order = SS_INIT_MAPPING
 	flags = SS_NO_FIRE
+	msg_lobby = "Строим станцию..."
 
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
 
-	var/const/max_secret_rooms = 3
 	var/list/spawned_structures = list()
 	var/list/reserved_space = list()
 
@@ -30,7 +31,9 @@ SUBSYSTEM_DEF(mapping)
 	LoadMapConfig()
 	station_image = config.station_image
 	station_name = config.station_name
+	station_name_ru = config.station_name_ru
 	system_name = config.system_name
+	system_name = config.system_name_ru
 
 	loadWorld()
 	renameAreas()
@@ -45,11 +48,12 @@ SUBSYSTEM_DEF(mapping)
 	preloadTemplates()
 	// Space structures
 	spawn_space_structures()
+
 	..()
 
 /datum/controller/subsystem/mapping/proc/make_mining_asteroid_secrets()
-	for(var/i in 1 to max_secret_rooms)
-		make_mining_asteroid_secret()
+	for(var/i in 1 to MAX_MINING_SECRET_ROOM)
+		make_mining_asteroid_secret(3)
 
 /datum/controller/subsystem/mapping/proc/populate_distribution_map()
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_MINING))
@@ -101,15 +105,15 @@ SUBSYSTEM_DEF(mapping)
 
 			structure.load(T, centered = TRUE, initBounds = FALSE)
 #ifdef SPACE_STRUCTURES_DEBUG
-			info("[structure_id] was created in [T.x],[T.y],[T.z]")
-			message_admins("[structure_id] was created in [T.x],[T.y],[T.z] [ADMIN_JMP(T)]")
+			info("[structure_id] was created in [COORD(T)]")
+			message_admins("[structure_id] was created in [COORD(T)] [ADMIN_JMP(T)]")
 #endif
 
 /datum/controller/subsystem/mapping/proc/find_spot(datum/map_template/space_structure/structure)
 	var/structure_size = CEIL(max(structure.width / 2, structure.height / 2))
 	var/structure_padding = structure_size + TRANSITIONEDGE + 5
 	for (var/try_count in 1 to 10)
-		var/turf/space/T = locate(rand(structure_padding, world.maxx - structure_padding), rand(structure_padding, world.maxy - structure_padding), pick(levels_by_trait(ZTRAIT_SPACE_RUINS)))
+		var/turf/environment/T = locate(rand(structure_padding, world.maxx - structure_padding), rand(structure_padding, world.maxy - structure_padding), pick(levels_by_trait(ZTRAIT_SPACE_RUINS)))
 		if(!istype(T))
 			continue
 
@@ -143,8 +147,6 @@ SUBSYSTEM_DEF(mapping)
 
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
-
-#undef SPACE_STRUCTURES_AMOUNT
 
 #define INIT_ANNOUNCE(X) info(X)
 /datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
@@ -204,24 +206,27 @@ SUBSYSTEM_DEF(mapping)
 	// load the station
 	station_start = world.maxz + 1
 	INIT_ANNOUNCE("Loading [config.map_name]...")
-	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_STATION)
+	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, default_traits = ZTRAITS_STATION)
 	station_loaded = TRUE
+	change_lobbyscreen()
 
-	while (space_levels_so_far < config.space_ruin_levels)
-		++space_levels_so_far
-		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
+	if(global.config.load_space_levels)
+		while (space_levels_so_far < config.space_ruin_levels)
+			++space_levels_so_far
+			add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 
-	for (var/i in 1 to config.space_empty_levels)
-		++space_levels_so_far
-		add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
+		for (var/i in 1 to config.space_empty_levels)
+			++space_levels_so_far
+			add_new_zlevel("Empty Area [space_levels_so_far]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 
 	// load mining
-	if(config.minetype == "asteroid")
-		LoadGroup(FailedZs, "Asteroid", "asteroid", "asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
-	else if (!isnull(config.minetype))
-		INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
+	if(global.config.load_mine)
+		if(config.minetype == "asteroid")
+			LoadGroup(FailedZs, "Asteroid", "asteroid", "asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
+		else if (!isnull(config.minetype))
+			INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
 
-	if(config.load_junkyard)
+	if(global.config.load_junkyard && config.load_junkyard)
 		LoadGroup(FailedZs, "Junkyard", "junkyard", "junkyard.dmm", default_traits = list(ZTRAIT_JUNKYARD = TRUE))
 
 	if(length(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
@@ -248,7 +253,7 @@ SUBSYSTEM_DEF(mapping)
 		if(areas_by_type[/area/shuttle/officer/station])
 			areas_by_type[/area/shuttle/officer/station].name = config.station_name
 
-/datum/controller/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
+/datum/controller/subsystem/mapping/proc/changemap(datum/map_config/VM)
 	if(!VM.MakeNextMap())
 		next_map_config = load_map_config(default_to_box = TRUE)
 		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")
@@ -256,3 +261,29 @@ SUBSYSTEM_DEF(mapping)
 
 	next_map_config = VM
 	return TRUE
+
+/datum/controller/subsystem/mapping/proc/autovote_next_map()
+	var/datum/map_config/current_next_map
+	var/should_revote = FALSE
+	
+	 // todo: for some reason maps in SSmapping don't have config/maps.txt params?
+	if(next_map_config)	// maybe we shouldn't if it's admin choice
+		current_next_map = global.config.maplist[next_map_config.map_name]
+	else
+		current_next_map =  global.config.maplist[src.config.map_name]
+
+	if (current_next_map.config_min_users > 0 && length(player_list) < current_next_map.config_min_users)
+		should_revote = TRUE
+	else if (current_next_map.config_max_users > 0 && length(player_list) > current_next_map.config_max_users)
+		should_revote = TRUE
+
+	if(!should_revote)
+		return
+
+	var/datum/poll/map_poll = SSvote.votes[/datum/poll/nextmap]
+	if(map_poll && map_poll.can_start())
+		to_chat(world, "<span class='notice'>Current next map is inappropriate for ammount of players online. Map vote will be forced.</span>")
+		SSvote.start_vote(map_poll.type)
+
+#undef SPACE_STRUCTURES_AMOUNT
+#undef MAX_MINING_SECRET_ROOM

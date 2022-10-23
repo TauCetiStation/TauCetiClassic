@@ -1,8 +1,8 @@
 /obj/machinery/r_n_d
 	name = "R&D Device"
 	icon = 'icons/obj/machines/research.dmi'
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	var/busy = 0
 	var/hacked = 0
@@ -38,3 +38,16 @@
 /obj/machinery/r_n_d/attack_hand(mob/user)
 	if(!shock(user, 50) && !disabled)
 		return ..()
+
+/obj/machinery/r_n_d/update_icon()
+	if(powered())
+		icon_state = initial(icon_state)
+	else
+		icon_state = "[initial(icon_state)]-off"
+	cut_overlays()
+	if(panel_open)
+		add_overlay("[initial(icon_state)]-open")
+
+/obj/machinery/r_n_d/power_change()
+	..()
+	update_icon()

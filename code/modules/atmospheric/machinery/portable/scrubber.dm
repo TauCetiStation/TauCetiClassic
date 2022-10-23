@@ -19,6 +19,7 @@
 	var/volume_rate = SCRUBBER_DEFAULT_RATE
 
 	var/list/scrubbing_gas
+	required_skills = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/portable_atmospherics/powered/scrubber/atom_init()
 	. = ..()
@@ -122,10 +123,15 @@
 		data["holding"] = null
 	return data
 
+/obj/machinery/portable_atmospherics/powered/scrubber/tgui_state(mob/user)
+	return global.physical_state
+
 /obj/machinery/portable_atmospherics/powered/scrubber/tgui_act(action, params)
 	. = ..()
+
 	if(.)
 		return
+
 	switch(action)
 		if("power")
 			on = !on
@@ -157,7 +163,7 @@
 /obj/machinery/portable_atmospherics/powered/scrubber/huge
 	name = "Huge Air Scrubber"
 	icon_state = "scrubber:0"
-	anchored = 1
+	anchored = TRUE
 	volume = 50000
 	volume_rate = 5000
 

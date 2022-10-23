@@ -11,7 +11,7 @@
 	var/select = 1 //The state of the select fire switch. Determines from the ammo_type list what kind of shot is fired next.
 
 /obj/item/weapon/gun/energy/emp_act(severity)
-	power_supply.use(round(power_supply.maxcharge / severity))
+	power_supply.use(round(power_supply.charge / severity))
 	update_icon()
 	..()
 
@@ -39,13 +39,13 @@
 
 /obj/item/weapon/gun/energy/proc/newshot()
 	if (!ammo_type || !power_supply)
-		return
+		return FALSE
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	if (power_supply.charge < shot.e_cost)
-		return
+		return FALSE
 	chambered = shot
 	chambered.newshot()
-	return
+	return TRUE
 
 /obj/item/weapon/gun/energy/process_chamber()
 	if (chambered) // incase its out of energy - since then this will be null.

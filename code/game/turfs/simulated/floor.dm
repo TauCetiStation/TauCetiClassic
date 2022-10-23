@@ -7,7 +7,7 @@
 #define LIGHTFLOOR_STATE_BITS 3
 
 //This is so damaged or burnt tiles or platings don't get remembered as the default tile
-var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","damaged4",
+var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","damaged4",
 				"damaged5","panelscorched","floorscorched1","floorscorched2","platingdmg1","platingdmg2",
 				"platingdmg3","plating","light_on","light_on_flicker1","light_on_flicker2",
 				"light_on_clicker3","light_on_clicker4","light_on_clicker5","light_broken",
@@ -20,11 +20,11 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 				"ironsand6", "ironsand7", "ironsand8", "ironsand9", "ironsand10", "ironsand11",
 				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
 
-var/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3","asteroid","asteroid_dug",
+var/global/list/plating_icons = list("plating","platingdmg1","platingdmg2","platingdmg3","asteroid","asteroid_dug",
 				"ironsand1", "ironsand2", "ironsand3", "ironsand4", "ironsand5", "ironsand6", "ironsand7",
 				"ironsand8", "ironsand9", "ironsand10", "ironsand11",
 				"ironsand12", "ironsand13", "ironsand14", "ironsand15")
-var/list/wood_icons = list("wood","wood-broken")
+var/global/list/wood_icons = list("wood","wood-broken")
 
 /turf/simulated/floor
 
@@ -37,7 +37,6 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
 	thermal_conductivity = 0.040
-	heat_capacity = 10000
 	var/broken = 0
 	var/burnt = 0
 	var/mineral = "metal"
@@ -47,6 +46,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	can_deconstruct = TRUE
 
 	var/datum/holy_turf/holy
 
@@ -90,27 +90,26 @@ var/list/wood_icons = list("wood","wood-broken")
 /turf/simulated/floor/ex_act(severity)
 	//set src in oview(1)
 	switch(severity)
-		if(1.0)
-			src.ChangeTurf(basetype)
-		if(2.0)
+		if(EXPLODE_DEVASTATE)
+			ChangeTurf(basetype)
+		if(EXPLODE_HEAVY)
 			switch(pick(1,2;75,3))
-				if (1)
-					src.ReplaceWithLattice()
+				if(1)
+					ReplaceWithLattice()
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 				if(2)
-					src.ChangeTurf(basetype)
+					ChangeTurf(basetype)
 				if(3)
 					if(prob(80))
-						src.break_tile_to_plating()
+						break_tile_to_plating()
 					else
-						src.break_tile()
-					src.hotspot_expose(1000,CELL_VOLUME)
+						break_tile()
+					hotspot_expose(1000,CELL_VOLUME)
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
-		if(3.0)
-			if (prob(50))
-				src.break_tile()
-				src.hotspot_expose(1000,CELL_VOLUME)
-	return
+		if(EXPLODE_LIGHT)
+			if(prob(50))
+				break_tile()
+				hotspot_expose(1000,CELL_VOLUME)
 
 /turf/simulated/floor/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(!burnt && prob(5))
@@ -230,7 +229,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				icon_state = "wood"
 				//world << "[icon_state]y's got [icon_state]"
 	/*spawn(1)
-		if(istype(src,/turf/simulated/floor)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
+		if(isfloorturf(src)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
 			if(air)
 				update_visuals(air)*/
 	..()
@@ -250,7 +249,7 @@ var/list/wood_icons = list("wood","wood-broken")
 
 
 /turf/simulated/floor/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /turf/simulated/floor/attack_hand(mob/user)
 	if (is_light_floor())
@@ -310,7 +309,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	if(istype(src,/turf/simulated/floor/plating/airless/asteroid))
 		return
 	if(istype(src,/turf/simulated/floor/mech_bay_recharge_floor))
-		src.ChangeTurf(/turf/simulated/floor/plating)
+		ChangeTurf(/turf/simulated/floor/plating)
 	if(broken)
 		return
 	if(is_plasteel_floor())
@@ -501,9 +500,9 @@ var/list/wood_icons = list("wood","wood-broken")
 		return 0
 	user.SetNextMove(CLICK_CD_INTERACT)
 
-	if(istype(C, /obj/item/weapon/twohanded/sledgehammer))
-		var/obj/item/weapon/twohanded/sledgehammer/S = C
-		if(S.wielded)
+	if(istype(C, /obj/item/weapon/sledgehammer))
+		var/obj/item/weapon/sledgehammer/S = C
+		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED))
 			playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
 			shake_camera(user, 1, 1)
 			break_tile()
@@ -515,23 +514,23 @@ var/list/wood_icons = list("wood","wood-broken")
 				qdel(C)
 				set_lightfloor_state(0) //fixing it by bashing it with a light bulb, fun eh?
 				update_icon()
-				to_chat(user, "<span class='notice'>You replace the light bulb.</span>")
+				to_chat(user, "<span class='notice'>Вы заменили лампочку.</span>")
 			else
-				to_chat(user, "<span class='notice'>The lightbulb seems fine, no need to replace it.</span>")
+				to_chat(user, "<span class='notice'>Похоже, лампочка в порядке, менять её не нужно.</span>")
 
 	if(iscrowbar(C) && (!(is_plating())))
 		if(broken || burnt)
-			to_chat(user, "<span class='warning'>You remove the broken plating.</span>")
+			to_chat(user, "<span class='warning'>Вы сняли поврежденное покрытие.</span>")
 		else
 			if(is_wood_floor())
-				to_chat(user, "<span class='warning'>You forcefully pry off the planks, destroying them in the process.</span>")
+				to_chat(user, "<span class='warning'>Вы с трудом отодрали доски, сломав их.</span>")
 			else
 				var/obj/item/I = new floor_type(src)
 				if(is_light_floor())
 					var/obj/item/stack/tile/light/L = I
 					L.on = get_lightfloor_on()
 					L.state = get_lightfloor_state()
-				to_chat(user, "<span class='warning'>You remove the [I.name].</span>")
+				to_chat(user, "<span class='warning'>Вы демонтировали плитку.</span>")
 
 		make_plating()
 		// Can't play sounds from areas. - N3X
@@ -545,7 +544,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				return
 			else
 				if(is_wood_floor())
-					to_chat(user, "<span class='warning'>You unscrew the planks.</span>")
+					to_chat(user, "<span class='warning'>Вы открутили доски.</span>")
 					new floor_type(src)
 
 			make_plating()
@@ -563,22 +562,22 @@ var/list/wood_icons = list("wood","wood-broken")
 			if (R.get_amount() >= 2)
 				if(user.is_busy(src))
 					return
-				to_chat(user, "<span class='notice'>Reinforcing the floor...</span>")
+				to_chat(user, "<span class='notice'>Вы начинаете укреплять обшивку.</span>")
 				if(R.use_tool(src, user, 30, amount = 2, volume = 50) && is_plating())
 					ChangeTurf(/turf/simulated/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					return
 			else
-				to_chat(user, "<span class='warning'>You need more rods.</span>")
+				to_chat(user, "<span class='warning'>Нужно больше стержней.</span>")
 		else if (is_catwalk())
-			to_chat(user, "<span class='warning'>The entire thing is 100% rods already, it doesn't need any more.</span>")
+			to_chat(user, "<span class='warning'>Объект уже на 100% состоит из стержней, больше не нужно.</span>")
 		else
-			to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
+			to_chat(user, "<span class='warning'>Сначала нужно удалить покрытие.</span>")
 		return
 
 	if(istype(C, /obj/item/stack/tile))
 		if (is_catwalk())
-			to_chat(user, "<span class='warning'>The catwalk is too primitive to support tiling.</span>")
+			to_chat(user, "<span class='warning'>Помост не приспособлен для установки на нем покрытия.</span>")
 		if(is_plating())
 			if(!broken && !burnt)
 				var/obj/item/stack/tile/T = C
@@ -606,7 +605,7 @@ var/list/wood_icons = list("wood","wood-broken")
 				levelupdate()
 				playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER)
 			else
-				to_chat(user, "<span class='notice'>This section is too damaged to support a tile. Use a welder to fix the damage.</span>")
+				to_chat(user, "<span class='notice'>Эта секция слишком повреждена, чтобы выдержать покрытие. Используйте сварочный аппарат для ремонта.</span>")
 
 
 	if(iscoil(C))
@@ -618,30 +617,48 @@ var/list/wood_icons = list("wood","wood-broken")
 					return
 			coil.turf_place(src, user)
 		else
-			to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
+			to_chat(user, "<span class='warning'>Сначала нужно удалить покрытие.</span>")
 
 	if(istype(C, /obj/item/weapon/shovel))
 		if(is_grass_floor())
 			new /obj/item/weapon/ore/glass(src)
 			new /obj/item/weapon/ore/glass(src) //Make some sand if you shovel grass
-			to_chat(user, "<span class='notice'>You shovel the grass.</span>")
+			to_chat(user, "<span class='notice'>Вы вскапываете траву.</span>")
 			make_plating()
 		else
-			to_chat(user, "<span class='warning'>You cannot shovel this.</span>")
+			to_chat(user, "<span class='warning'>Это нельзя вскопать.</span>")
 
 	if(iswelder(C))
-		var/obj/item/weapon/weldingtool/welder = C
-		if(welder.isOn() && (is_plating()))
-			if(broken || burnt)
-				if(welder.use(0,user))
-					to_chat(user, "<span class='warning'>You fix some dents on the broken plating.</span>")
-					playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
-					icon_state = "plating"
-					burnt = 0
-					broken = 0
-				else
-					to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
-
+		var/obj/item/weapon/weldingtool/W = C
+		if(!is_plating())
+			return
+		if(!can_deconstruct)
+			return
+		if(!W.use(0, user))
+			to_chat(user, "<span class='notice'>Нужно больше топлива для сварки.</span>")
+			return
+		if(user.a_intent == INTENT_HELP)
+			if(!broken && !burnt)
+				return
+			to_chat(user, "<span class='warning'>Вы отремонтировали обшивку.</span>")
+			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
+			icon_state = "plating"
+			burnt = 0
+			broken = 0
+		else
+			user.visible_message(
+				"<span class='warning'><B>[user]</B> начинает разбирать обшивку! По ту сторону открытый космос!</span>",
+				"<span class='warning'>Вы начинаете разрезать обшивку! За ней открытый космос!</span>",
+				"<span class='warning'>Вы слышите звуки будто разрезают обшивку! По ту сторону должен быть открытый космос!</span>",
+				viewing_distance = 5)
+			if(W.use_tool(src, user, 100, 3, 100))
+				user.visible_message(
+					"<span class='warning'><B>[user]</B> завершает разборку обшивки!</span>",
+					"<span class='warning'>Вы разобрали обшивку!</span>",
+					"<span class='warning'>Звуки прекратились. Похоже, обшивка была разрезана на части!</span>",
+					viewing_distance = 5)
+				new /obj/item/stack/tile/plasteel(src)
+				ReplaceWithLattice()
 #undef LIGHTFLOOR_ON_BIT
 
 #undef LIGHTFLOOR_STATE_OK

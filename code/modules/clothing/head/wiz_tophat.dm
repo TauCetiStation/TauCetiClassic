@@ -63,7 +63,7 @@ var/global/list/tophats_list = list()
 			continue
 
 		R.amount--
-		M.a_intent = INTENT_HARM
+		M.set_a_intent(INTENT_HARM)
 		M.equip_to_slot(new /obj/item/clothing/head/rabbitears(M), SLOT_HEAD)
 		break
 	return M
@@ -139,7 +139,7 @@ var/global/list/tophats_list = list()
 
 		var/matrix/M = matrix()
 		M.Scale(0.5)
-		animate(AM, pixel_y=AM.pixel_y + 32, transform=M, time=5)
+		animate(AM, pixel_y=AM.pixel_y - 32, transform=M, time=5)
 		sleep(5)
 
 		AM.visible_message("<span class='warning'>[AM] dissapears into [src]!</span>")
@@ -185,24 +185,25 @@ var/global/list/tophats_list = list()
 
 	tp_to_tophat(AM)
 
-/obj/effect/overlay/tophat_portal/examine(mob/living/user)
+/obj/effect/overlay/tophat_portal/examine(mob/user)
 	..()
-	if(user.client && global.tophats_list.len && in_range(user, src))
-		user.visible_message("<span class='notice'>[user] peaks through [src].</span>", "<span class='notice'>You peak through [src].</span>")
+	if(user.client && global.tophats_list.len && isliving(user) && Adjacent(user))
+		var/mob/living/L = user
+		L.visible_message("<span class='notice'>[user] peaks through [src].</span>", "<span class='notice'>You peak through [src].</span>")
 		var/obj/item/clothing/head/wizard/tophat/TP = pick(global.tophats_list)
 
 		if(TP)
-			user.force_remote_viewing = TRUE
-			user.reset_view(TP)
+			L.force_remote_viewing = TRUE
+			L.reset_view(TP)
 
 			for(var/i in 1 to 30)
-				if(do_after(user, 1 SECONDS, needhand = FALSE, target = src, progress = FALSE))
-					user.reset_view(TP)
+				if(do_after(L, 1 SECONDS, needhand = FALSE, target = src, progress = FALSE))
+					L.reset_view(TP)
 				else
 					break
 
-			user.reset_view(null)
-			user.force_remote_viewing = FALSE
+			L.reset_view(null)
+			L.force_remote_viewing = FALSE
 
 /obj/effect/overlay/tophat_portal/get_listeners()
 	. = list()
@@ -222,6 +223,9 @@ var/global/list/tophats_list = list()
 	desc = "You feel as if a bunch of rabbits could fit in it. Or perhaps monkeys."
 	icon_state = "tophat"
 	item_state = "that"
+
+	flags = HEAR_PASS_SAY
+
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 
@@ -291,7 +295,7 @@ var/global/list/tophats_list = list()
 	return FALSE
 
 /obj/item/clothing/head/wizard/tophat/pickup(mob/living/user)
-	..()
+	. = ..()
 	var/matrix/M = matrix()
 	animate(src, transform=M, time=3)
 
@@ -408,10 +412,10 @@ var/global/list/tophats_list = list()
 	var/put_in_delay = 0
 	if(user == AM)
 		put_in_delay += 5 // Most of the delay will come in dive_into proc.
-	else if(istype(AM, /obj/item))
+	else if(isitem(AM))
 		var/obj/item/I = AM
 		put_in_delay += I.w_class * 2 SECONDS
-	else if(istype(AM, /obj/structure) || istype(AM, /obj/machinery))
+	else if(istype(AM, /obj/structure) || ismachinery(AM))
 		put_in_delay += 8 SECONDS
 	else if(isliving(AM))
 		var/mob/living/L = AM
@@ -461,7 +465,7 @@ var/global/list/tophats_list = list()
 			return
 		drop_into(I, user)
 		return TRUE
-	if(user.mind && user.mind.special_role == "Wizard")
+	if(iswizard(user))
 		drop_into(I, user)
 		return TRUE
 	return ..()
@@ -472,7 +476,7 @@ var/global/list/tophats_list = list()
 			to_chat(user, "<span class='notice'>There's nothing in the hat.</span>")
 			return
 		next_trick = world.time + trick_delay
-		if(user.mind && user.mind.special_role == "Wizard")
+		if(iswizard(user))
 			if(try_get_monkey(user))
 				user.visible_message("<span class='notice'>[user] takes something big out of [src]!</span>",
 									 "<span class='notice'>You take something unproportionally big out of [src].</span>")

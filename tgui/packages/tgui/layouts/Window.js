@@ -5,16 +5,17 @@
  */
 
 import { classes } from 'common/react';
+import { useDispatch } from 'common/redux';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
-import { Component, Fragment } from 'inferno';
+import { Component } from 'inferno';
 import { backendSuspendStart, useBackend } from '../backend';
-import { Icon } from '../components';
+import { Icon, Flex } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
-import { toggleKitchenSink, useDebug } from '../debug';
+import { useDebug } from '../debug';
+import { toggleKitchenSink } from '../debug/actions';
 import { dragStartHandler, recallWindowGeometry, resizeStartHandler, setWindowKey } from '../drag';
 import { createLogger } from '../logging';
-import { useDispatch } from '../store';
-import { Layout, refocusLayout } from './Layout';
+import { Layout } from './Layout';
 
 const logger = createLogger('Window');
 
@@ -22,11 +23,30 @@ const DEFAULT_SIZE = [400, 600];
 
 export class Window extends Component {
   componentDidMount() {
-    const { config, suspended } = useBackend(this.context);
+    const { suspended } = useBackend(this.context);
+    const { canClose = true } = this.props;
     if (suspended) {
       return;
     }
+    Byond.winset(window.__windowId__, {
+      'can-close': Boolean(canClose),
+    });
     logger.log('mounting');
+    this.updateGeometry();
+  }
+
+  componentDidUpdate(prevProps) {
+    const shouldUpdateGeometry = (
+      this.props.width !== prevProps.width
+      || this.props.height !== prevProps.height
+    );
+    if (shouldUpdateGeometry) {
+      this.updateGeometry();
+    }
+  }
+
+  updateGeometry() {
+    const { config } = useBackend(this.context);
     const options = {
       size: DEFAULT_SIZE,
       ...config.window,
@@ -34,17 +54,19 @@ export class Window extends Component {
     if (this.props.width && this.props.height) {
       options.size = [this.props.width, this.props.height];
     }
-    setWindowKey(config.window.key);
-    recallWindowGeometry(config.window.key, options);
-    refocusLayout();
+    if (config.window?.key) {
+      setWindowKey(config.window.key);
+    }
+    recallWindowGeometry(options);
   }
 
   render() {
     const {
-      resizable,
+      canClose = true,
       theme,
       title,
       children,
+      buttons,
     } = this.props;
     const {
       config,
@@ -54,9 +76,11 @@ export class Window extends Component {
     const dispatch = useDispatch(this.context);
     const fancy = config.window?.fancy;
     // Determine when to show dimmer
-    const showDimmer = config.user.observer
-      ? config.status < UI_DISABLED
-      : config.status < UI_INTERACTIVE;
+    const showDimmer = config.user && (
+      config.user.observer
+        ? config.status < UI_DISABLED
+        : config.status < UI_INTERACTIVE
+    );
     return (
       <Layout
         className="Window"
@@ -70,7 +94,10 @@ export class Window extends Component {
           onClose={() => {
             logger.log('pressed close');
             dispatch(backendSuspendStart());
-          }} />
+          }}
+          canClose={canClose}>
+          {buttons}
+        </TitleBar>
         <div
           className={classes([
             'Window__rest',
@@ -81,15 +108,15 @@ export class Window extends Component {
             <div className="Window__dimmer" />
           )}
         </div>
-        {fancy && resizable && (
-          <Fragment>
+        {fancy && (
+          <>
             <div className="Window__resizeHandle__e"
               onMousedown={resizeStartHandler(1, 0)} />
             <div className="Window__resizeHandle__s"
               onMousedown={resizeStartHandler(0, 1)} />
             <div className="Window__resizeHandle__se"
               onMousedown={resizeStartHandler(1, 1)} />
-          </Fragment>
+          </>
         )}
       </Layout>
     );
@@ -103,8 +130,6 @@ const WindowContent = props => {
     children,
     ...rest
   } = props;
-  // A bit lazy to actually write styles for it,
-  // so we simply include a Box with margins.
   return (
     <Layout.Content
       className={classes([
@@ -140,9 +165,11 @@ const TitleBar = (props, context) => {
     className,
     title,
     status,
+    canClose,
     fancy,
     onDragStart,
     onClose,
+    children,
   } = props;
   const dispatch = useDispatch(context);
   return (
@@ -151,19 +178,31 @@ const TitleBar = (props, context) => {
         'TitleBar',
         className,
       ])}>
-      <Icon
-        className="TitleBar__statusIcon"
-        color={statusToColor(status)}
-        name="eye" />
+      {status === undefined && (
+        <Icon
+          className="TitleBar__statusIcon"
+          name="tools"
+          opacity={0.5} />
+      ) || (
+        <Icon
+          className="TitleBar__statusIcon"
+          color={statusToColor(status)}
+          name="eye" />
+      )}
+      <div
+        className="TitleBar__dragZone"
+        onMousedown={e => fancy && onDragStart(e)} />
       <div className="TitleBar__title">
         {typeof title === 'string'
           && title === title.toLowerCase()
           && toTitleCase(title)
           || title}
+        {!!children && (
+          <div className="TitleBar__buttons">
+            {children}
+          </div>
+        )}
       </div>
-      <div
-        className="TitleBar__dragZone"
-        onMousedown={e => fancy && onDragStart(e)} />
       {process.env.NODE_ENV !== 'production' && (
         <div
           className="TitleBar__devBuildIndicator"
@@ -171,7 +210,7 @@ const TitleBar = (props, context) => {
           <Icon name="bug" />
         </div>
       )}
-      {!!fancy && (
+      {Boolean(fancy && canClose) && (
         <div
           className="TitleBar__close TitleBar__clickable"
           // IE8: Synthetic onClick event doesn't work on IE8.

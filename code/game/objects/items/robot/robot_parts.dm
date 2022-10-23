@@ -64,7 +64,7 @@
 	var/obj/item/robot_parts/chest/chest = null
 	var/obj/item/robot_parts/head/head = null
 	var/created_name = ""
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 
 /obj/item/robot_parts/robot_suit/atom_init()
 	. = ..()
@@ -139,7 +139,7 @@
 			return
 		user.drop_from_inventory(I, src)
 		l_leg = I
-		w_class = ITEM_SIZE_LARGE
+		w_class = SIZE_NORMAL
 		update_icon()
 
 	else if(istype(I, /obj/item/robot_parts/r_leg))
@@ -147,7 +147,7 @@
 			return
 		user.drop_from_inventory(I, src)
 		r_leg = I
-		w_class = ITEM_SIZE_LARGE
+		w_class = SIZE_NORMAL
 		update_icon()
 
 	else if(istype(I, /obj/item/robot_parts/l_arm))
@@ -155,7 +155,7 @@
 			return
 		user.drop_from_inventory(I, src)
 		l_arm = I
-		w_class = ITEM_SIZE_LARGE
+		w_class = SIZE_NORMAL
 		update_icon()
 
 	else if(istype(I, /obj/item/robot_parts/r_arm))
@@ -163,7 +163,7 @@
 			return
 		user.drop_from_inventory(I, src)
 		r_arm = I
-		w_class = ITEM_SIZE_LARGE
+		w_class = SIZE_NORMAL
 		update_icon()
 
 	else if(istype(I, /obj/item/robot_parts/chest))
@@ -173,7 +173,7 @@
 		if(C.can_attach())
 			user.drop_from_inventory(C, src)
 			chest = C
-			w_class = ITEM_SIZE_LARGE
+			w_class = SIZE_NORMAL
 			update_icon()
 		else if(!C.wires)
 			to_chat(user, "<span class='info'>You need to attach wires to [C] first!</span>")
@@ -187,12 +187,12 @@
 		if(H.can_attach())
 			user.drop_from_inventory(H, src)
 			head = H
-			w_class = ITEM_SIZE_LARGE
+			w_class = SIZE_NORMAL
 			update_icon()
 		else
 			to_chat(user, "<span class='info'>You need to attach a flash to [H] first!</span>")
 
-	else if(istype(I, /obj/item/device/mmi))
+	else if(isMMI(I))
 		var/obj/item/device/mmi/M = I
 		if(check_completion())
 			if(!istype(loc,/turf))
@@ -216,7 +216,7 @@
 				to_chat(user, "<span class='warning'>Sticking a dead [M] into the frame would sort of defeat the purpose.</span>")
 				return
 
-			if((M.brainmob.mind in SSticker.mode.head_revolutionaries) || (M.brainmob.mind in SSticker.mode.A_bosses) || (M.brainmob.mind in SSticker.mode.B_bosses))
+			if(isrevhead(M.brainmob))
 				to_chat(user, "<span class='warning'>The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the [M].</span>")
 				return
 
@@ -240,7 +240,8 @@
 				O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 
 			O.job = "Cyborg"
-
+			O.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+			O.mind.skills.maximize_active_skills()
 			O.cell = chest.cell
 			O.cell.forceMove(O)
 			I.forceMove(O) //Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
@@ -252,9 +253,6 @@
 				cell_component.installed = 1
 
 			feedback_inc("cyborg_birth",1)
-			var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-			if(mode)
-				mode.borgify_directive(O)
 			O.Namepick()
 
 			qdel(src)
@@ -264,7 +262,7 @@
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, created_name), MAX_NAME_LEN)
 		if (!t)
 			return
-		if (!in_range(src, usr) && loc != usr)
+		if (!Adjacent(usr))
 			return
 
 		created_name = t
@@ -317,14 +315,13 @@
 
 /obj/item/robot_parts/head/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/flash))
-		if(istype(user, /mob/living/silicon/robot))
-			to_chat(user, "<span class='warning'>How do you propose to do that?</span>")
-			return
-		else if(flash1 && flash2)
+		if(flash1 && flash2)
 			to_chat(user, "<span class='info'>You have already inserted the eyes!</span>")
 			return
+		if(!user.drop_from_inventory(I, src))
+			to_chat(user, "<span class='warning'>How do you propose to do that?</span>")
+			return
 		else
-			user.drop_from_inventory(I, src)
 			to_chat(user, "<span class='info'>You insert the flash into the eye socket!</span>")
 			if(flash1)
 				flash2 = I

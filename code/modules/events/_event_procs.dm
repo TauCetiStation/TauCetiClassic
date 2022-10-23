@@ -1,4 +1,4 @@
-/client/proc/forceEvent(var/type in SSevents.allEvents)
+/client/proc/forceEvent(type in SSevents.allEvents)
 	set name = "Trigger Event (Debug Only)"
 	set category = "Debug"
 
@@ -29,6 +29,7 @@
 	active_with_role["AI"] = 0
 	active_with_role["Cyborg"] = 0
 	active_with_role["Janitor"] = 0
+	active_with_role["Clown"] = 0
 	active_with_role["Botanist"] = 0
 	active_with_role["Any"] = player_list.len
 
@@ -41,7 +42,7 @@
 			if(R.module && (R.modtype == "Engineering"))
 				active_with_role["Engineer"]++
 
-			if(R.module && (R.modtype in list("Surgeon", "Crisis")))
+			if(R.module && (R.modtype == "Medical"))
 				active_with_role["Medical"]++
 
 			if(R.module && (R.modtype == "Security"))
@@ -68,6 +69,9 @@
 		if(M.mind.assigned_role == "Cyborg")
 			active_with_role["Cyborg"]++
 
+		if(M.mind.assigned_role == "Clown")
+			active_with_role["Clown"]++
+
 		if(M.mind.assigned_role == "Janitor")
 			active_with_role["Janitor"]++
 
@@ -76,7 +80,7 @@
 
 	return active_with_role
 
-/datum/event/proc/num_players()
+/proc/num_players()
 	var/players = 0
 	for(var/mob/living/carbon/human/P in player_list)
 		if(P.client)

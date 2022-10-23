@@ -11,7 +11,7 @@
 	response_disarm = "shoves the"
 	response_harm = "hits the"
 	speed = 4
-	stop_automated_movement_when_pulled = 0
+	stop_automated_movement_when_pulled = FALSE
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
@@ -83,12 +83,11 @@
 		visible_message("<span class='warning'>[user] gently taps [src] with the [O]. </span>")
 
 
-/mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
+/mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(prob(65))
 		return ..()
-	else
-		visible_message("<span class='warning'><B>[src] blocks [Proj] with its shield!</B></span>")
-		return PROJECTILE_ABSORBED
+	visible_message("<span class='warning'><B>[src] blocks [Proj] with its shield!</B></span>")
+	return PROJECTILE_ABSORBED
 
 /mob/living/simple_animal/hostile/syndicate/melee/space
 	min_oxy = 0
@@ -110,8 +109,8 @@
 	return
 
 /mob/living/simple_animal/hostile/syndicate/ranged
-	ranged = 1
-	rapid = 1
+	ranged = TRUE
+	amount_shoot = 3
 	icon_state = "syndicateranged"
 	icon_living = "syndicateranged"
 	casingtype = /obj/item/ammo_casing/a12mm
@@ -169,6 +168,7 @@
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE
+	w_class= SIZE_TINY
 	health = 15
 	maxHealth = 15
 	melee_damage = 15
@@ -184,6 +184,7 @@
 	min_n2 = 0
 	max_n2 = 0
 	minbodytemp = 0
+	environment_smash = 1
 
 /mob/living/simple_animal/hostile/viscerator/death()
 	..()

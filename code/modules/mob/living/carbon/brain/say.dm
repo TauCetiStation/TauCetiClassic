@@ -1,9 +1,9 @@
 
-/mob/living/carbon/brain/say(var/message)
+/mob/living/carbon/brain/say(message)
 	if (silent)
 		return
 	if(container)
-		if(istype(container, /obj/item/device/mmi) || istype(container, /obj/item/device/mmi/posibrain))
+		if(isMMI(container))
 			message = sanitize(message)
 			if ((department_radio_keys[copytext(message, 1, 2 + length(message[2]))] == "binary") && (container && istype(container, /obj/item/device/mmi/posibrain)))
 				message = copytext(message, 2 + length(message[2]))

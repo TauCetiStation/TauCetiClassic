@@ -23,7 +23,7 @@
 		keyslot1 = new ks1type(src)
 	if(ks2type)
 		keyslot2 = new ks2type(src)
-	recalculateChannels()
+	INVOKE_ASYNC(src, .proc/recalculateChannels)
 
 /obj/item/device/radio/headset/Destroy()
 	qdel(keyslot1)
@@ -50,6 +50,15 @@
 	. = ..()
 	set_frequency(SYND_FREQ)
 
+/obj/item/device/radio/headset/heist
+	syndie = TRUE
+	ks1type = /obj/item/device/encryptionkey/heist
+	grid = TRUE
+
+/obj/item/device/radio/headset/heist/atom_init()
+	. = ..()
+	set_frequency(HEIST_FREQ)
+
 /obj/item/device/radio/headset/ninja
 	grid = TRUE
 
@@ -69,10 +78,13 @@
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/headset_sec
 
+/obj/item/device/radio/headset/headset_sec/alt
+	name = "security radio headset"
+	icon_state = "sec_headset_alt"
+
 /obj/item/device/radio/headset/headset_sec/nt_pmc
 	name = "NT PMC Radio Headset. Works with default security frequency."
 	icon_state = "nt_pmc_earset"
-	item_color = "nt_pmc_earset"
 
 /obj/item/device/radio/headset/headset_sec/marinad
 	name = "marine headset"
@@ -241,7 +253,7 @@
 	set_frequency(1341)
 
 /obj/item/device/radio/headset/velocity
-	name = "Velocity Crew headset"
+	name = "velocity crew headset"
 	desc = "The headset, if you wish to talk to your fellow crew-nies. ; - Velocity crew channel."
 	icon_state = "vel_headset"
 	item_state = "headset"

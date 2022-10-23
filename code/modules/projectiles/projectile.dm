@@ -1,23 +1,12 @@
-/*
-#define BRUTE "brute"
-#define BURN "burn"
-#define TOX "tox"
-#define OXY "oxy"
-#define CLONE "clone"
-
-#define ADD "add"
-#define SET "set"
-*/
-
 /obj/item/projectile
 	name = "projectile"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bullet"
-	density = 1
+	density = TRUE
 	unacidable = 1
-	anchored = 1 //There's a reason this is here, Mport. God fucking damn it -Agouri. Find&Fix by Pete. The reason this is here is to stop the curving of emitter shots.
+	anchored = TRUE //There's a reason this is here, Mport. God fucking damn it -Agouri. Find&Fix by Pete. The reason this is here is to stop the curving of emitter shots.
 	pass_flags = PASSTABLE
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = 0
 	var/bumped = 0		//Prevents it from hitting more than one guy at once
 	var/def_zone = ""	//Aiming at
@@ -40,8 +29,7 @@
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
 	var/fake = 0 //Fake projectile won't spam chat for admins with useless logs
-	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb	//Cael - bio and rad are also valid
-	var/projectile_type = "/obj/item/projectile"
+	var/flag = BULLET //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb	//Cael - bio and rad are also valid
 	var/kill_count = 50 //This will de-increment every process(). When 0, it will delete the projectile.
 	var/paused = FALSE //for suspending the projectile midair
 		//Effects
@@ -53,6 +41,7 @@
 	var/eyeblur = 0
 	var/drowsy = 0
 	var/agony = 0
+	var/incendiary = 0
 	var/embed = 0 // whether or not the projectile can embed itself in the mob
 	var/impact_force = 0
 
@@ -110,9 +99,14 @@
 	return H
 
 /obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	if(!isliving(target))	return 0
-	if(isanimal(target))	return 0
+	if(!isliving(target))
+		return 0
+	if(isanimal(target))
+		return 0
 	var/mob/living/L = target
+	if(incendiary && blocked <= 100)
+		L.adjust_fire_stacks(incendiary)
+		L.IgniteMob(target)
 	return L.apply_effects(stun, weaken, paralyze, irradiate, stutter, eyeblur, drowsy, agony, blocked) // add in AGONY!
 
 	//called when the projectile stops flying because it collided with something
@@ -122,32 +116,22 @@
 		playsound(src, proj_impact_sound, VOL_EFFECTS_MASTER)
 
 /obj/item/projectile/proc/check_fire(mob/living/target, mob/living/user)  //Checks if you can hit them or not.
-	if(!istype(target) || !istype(user))
-		return 0
-	var/obj/item/projectile/test/in_chamber = new /obj/item/projectile/test(get_step_to(user,target)) //Making the test....
-	in_chamber.target = target
-	in_chamber.flags = flags //Set the flags...
-	in_chamber.pass_flags = pass_flags //And the pass flags to that of the real projectile...
-	in_chamber.firer = user
-	var/output = in_chamber.process() //Test it!
-	qdel(in_chamber) //No need for it anymore
-	return output //Send it back to the gun!
+	return check_trajectory(target, src, pass_flags, flags)
 
-/proc/check_trajectory(atom/target, atom/firer, pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE, flags = null) //Spherical test in vacuum
-	if(!istype(target) || !istype(firer))
-		return 0
+/proc/check_trajectory(atom/target, atom/gun, pass_flags = PASSTABLE|PASSGLASS|PASSGRILLE, flags = 0) //Spherical test in vacuum
+	if(!istype(target) || !istype(gun))
+		return FALSE
 
-	var/obj/item/projectile/test/dummy/trace = new /obj/item/projectile/test/dummy(get_turf(firer)) //Making the test....
+	var/obj/item/projectile/test/trace = new /obj/item/projectile/test(get_turf(gun)) //Making the test....
 
 	//Set the flags and pass flags to that of the real projectile...
-	if(!isnull(flags))
-		trace.flags = flags
+	trace.flags = flags
 	trace.target = target
 	trace.pass_flags = pass_flags
 
-	var/output = trace.process() //Test it!
+	var/atom/output = trace.process() //Test it!
 	qdel(trace) //No need for it anymore
-	return output //Send it back to the gun!
+	return target == output //Send it back to the gun!
 
 //Used to change the direction of the projectile in flight.
 /obj/item/projectile/proc/redirect(new_x, new_y, atom/starting_loc, mob/new_firer=null)
@@ -180,7 +164,7 @@
 	var/mob/old_firer = firer
 	bumped = 1
 	if(firer && M)
-		if(!istype(A, /mob/living))
+		if(!isliving(A))
 			loc = A.loc
 			return 0// nope.avi
 		var/distance = get_dist(starting,loc) //More distance = less damage, except for high fire power weapons.
@@ -235,15 +219,13 @@
 
 
 	if(istype(A,/turf))
-		for(var/obj/O in A)
-			O.bullet_act(src)
 		for(var/mob/Mob in A)
 			Mob.bullet_act(src, def_zone)
 
 	//stop flying
 	on_impact(A)
 
-	density = 0
+	density = FALSE
 	invisibility = 101
 	qdel(src)
 	return 1
@@ -252,10 +234,9 @@
 /obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
 
-	if(istype(mover, /obj/item/projectile))
+	if(istype(mover, /obj/item/projectile) && (reverse_dir[dir] & mover.dir))
 		return prob(95)
-	else
-		return 1
+	return 1
 
 
 /obj/item/projectile/process(boolet_number = 1) // we add default arg value, because there is alot of uses of projectiles without guns (e.g turrets).
@@ -286,6 +267,8 @@
 
 		before_move()
 		Move(location.return_turf())
+		if(QDELING(src))
+			return
 
 		if(!bumped && !isturf(original))
 			if(loc == get_turf(original))
@@ -329,7 +312,7 @@
 	effect_transform.Scale(trajectory.return_hypotenuse(), 1)
 	effect_transform.Turn(-trajectory.return_angle())		//no idea why this has to be inverted, but it works
 
-/obj/item/projectile/proc/muzzle_effect(var/matrix/T)
+/obj/item/projectile/proc/muzzle_effect(matrix/T)
 	if(silenced)
 		return
 
@@ -372,7 +355,7 @@
 	var/turf/T = get_turf(user)
 	var/turf/U = get_turf(A)
 	firer = user
-	def_zone = check_zone(user.zone_sel.selecting)
+	def_zone = check_zone(user.get_targetzone())
 	starting = T
 	original = A
 	current = T
@@ -385,7 +368,7 @@
 	yo = null
 	xo = null
 	var/target = null
-	var/result = 0 //To pass the message back to the gun.
+	var/atom/result = null //To pass the bumped atom back to the gun.
 
 /obj/item/projectile/test/Bump(atom/A)
 	if(A == firer)
@@ -393,15 +376,15 @@
 		return //cannot shoot yourself
 	if(istype(A, /obj/item/projectile))
 		return
-	if(istype(A, /mob/living))
-		result = 2 //We hit someone, return 1 (in process() 2 will be decremented to 1)!
+	if(isliving(A))
+		result = A
 		bumped = TRUE
 		return
 	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window))
 		return
 	if(checkpass(PASSGRILLE) && istype(A, /obj/structure/grille))
 		return
-	result = 1
+	result = A
 	bumped = TRUE
 
 /obj/item/projectile/test/process()
@@ -419,8 +402,8 @@
 	setup_trajectory()
 
 	while(src) //Loop on through!
-		if(result)
-			return (result - 1)
+		if(bumped)
+			return result
 		if(!target || loc == target)
 			target = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
 		if(x == 1 || x == world.maxx || y == 1 || y == world.maxy || kill_count-- < 1)
@@ -441,22 +424,13 @@
 			else
 				Bump(original.loc) //if target is in mecha/crate/MULE/etc
 
-/obj/item/projectile/test/dummy/Bump(atom/A) //Another test projectile with increased checklist
-	..()
-	if(result != 1)
-		return
-	//bumped is already set to TRUE
-	if(is_type_in_list(A, list(/obj/structure/closet, /obj/mecha, /obj/machinery/bot/mulebot)))
-		result = 2
-	return
-
 /obj/item/projectile/proc/Range() ///tg/
 	return
 
 /obj/item/projectile/Process_Spacemove(movement_dir = 0)
 	return 1 //Bullets don't drift in space
 
-var/static/list/taser_projectiles = list(
+var/global/static/list/taser_projectiles = list(
 	/obj/item/projectile/beam/stun,
 	/obj/item/ammo_casing/energy/electrode
 )

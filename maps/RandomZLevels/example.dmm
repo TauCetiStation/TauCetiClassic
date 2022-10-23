@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/environment/space,
 /area)
 "ab" = (
 /turf/simulated/wall,
@@ -15,9 +15,7 @@
 /turf/simulated/floor,
 /area/awaymission/example)
 "ae" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
+/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";

@@ -1,25 +1,3 @@
-#define CHANGELING_STATPANEL_STATS(BYOND) \
-	if(mind && mind.changeling) \
-	{ \
-		stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]"); \
-		stat("Genetic Damage Time", mind.changeling.geneticdamage); \
-		stat("Absorbed DNA", mind.changeling.absorbedcount); \
-	}
-
-
-#define CHANGELING_STATPANEL_POWERS(BYOND) \
-	if(mind && mind.changeling && mind.changeling.purchasedpowers.len) \
-	{ \
-		for(var/P in mind.changeling.purchasedpowers) \
-		{ \
-			var/obj/effect/proc_holder/changeling/S = P; \
-			if(S.chemical_cost >=0 && S.can_be_used_by(src)) \
-			{ \
-				statpanel("[S.panel]", ((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""), S); \
-			} \
-		} \
-	}
-
 // see _DEFINES/is_helpers.dm for mob type checks
 #define SAFE_PERP -50
 
@@ -47,16 +25,26 @@
 /proc/hsl2rgb(h, s, l)
 	return
 
-/proc/ismindshielded(A, only_mindshield = FALSE) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
-	for(var/obj/item/weapon/implant/mindshield/L in A)
-		if(only_mindshield && L.type != /obj/item/weapon/implant/mindshield || istype(L, /obj/item/weapon/implant/mindshield/loyalty))
-			continue
+/mob/proc/ismindshielded() //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
+	for(var/obj/item/weapon/implant/mind_protect/mindshield/L in src)
 		if(L.implanted)
 			return TRUE
 	return FALSE
 
-/proc/isloyal(A)
-	for(var/obj/item/weapon/implant/mindshield/loyalty/L in A)
+/mob/proc/isloyal()
+	for(var/obj/item/weapon/implant/mind_protect/loyalty/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
+/mob/proc/ismindprotect()
+	for(var/obj/item/weapon/implant/mind_protect/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
+/mob/proc/isimplantedobedience()
+	for(var/obj/item/weapon/implant/obedience/L in src)
 		if(L.implanted)
 			return TRUE
 	return FALSE
@@ -214,12 +202,14 @@
 					new_letter = "х"
 
 		switch(rand(1,15))
-			if(1,3,5,8)
+			if(1 to 4)
 				new_letter = lowertext(new_letter)
-			if(2,4,6,15)
+			if(5 to 9)
 				new_letter = uppertext(new_letter)
-			if(7)
+			if(10)
 				new_letter += "'"
+			if(11 to 15)
+				SWITCH_PASS
 
 		new_text += new_letter
 
@@ -300,7 +290,7 @@
 
 	return html_encode(new_text)
 
-/proc/zombie_talk(var/message)
+/proc/zombie_talk(message)
 	var/list/message_list = splittext(message, " ")
 	var/maxchanges = max(round(message_list.len / 1.5), 2)
 
@@ -322,37 +312,69 @@
 
 	return jointext(message_list, " ")
 
+#define TILES_PER_SECOND 0.7
+///Shake the camera of the person viewing the mob SO REAL!
+///Takes the mob to shake, the time span to shake for, and the amount of tiles we're allowed to shake by in tiles
+///Duration isn't taken as a strict limit, since we don't trust our coders to not make things feel shitty. So it's more like a soft cap.
 /proc/shake_camera(mob/M, duration, strength=1)
-	if(!M || !M.client || !strength) return
-	spawn()
-		strength *= 32
-		for(var/i=0; i<duration, i++)
-			animate(M.client, pixel_x = rand(-strength,strength), pixel_y = rand(-strength,strength), time = 2)
-			sleep(2)
-		animate(M.client, pixel_x = 0, pixel_y = 0, time = 2)
+	if(!M || !M.client || duration < 1)
+		return
+	var/client/C = M.client
+	var/oldx = C.pixel_x
+	var/oldy = C.pixel_y
+	var/max = strength*world.icon_size
+	var/min = -(strength*world.icon_size)
+
+	//How much time to allot for each pixel moved
+	var/time_scalar = (1 / world.icon_size) * TILES_PER_SECOND
+	var/last_x = oldx
+	var/last_y = oldy
+
+	var/time_spent = 0
+	while(time_spent < duration)
+		//Get a random pos in our box
+		var/x_pos = rand(min, max) + oldx
+		var/y_pos = rand(min, max) + oldy
+
+		//We take the smaller of our two distances so things still have the propencity to feel somewhat jerky
+		var/time = round(max(min(abs(last_x - x_pos), abs(last_y - y_pos)) * time_scalar, 1))
+
+		if (time_spent == 0)
+			animate(C, pixel_x=x_pos, pixel_y=y_pos, time=time)
+		else
+			animate(pixel_x=x_pos, pixel_y=y_pos, time=time)
+
+		last_x = x_pos
+		last_y = y_pos
+		//We go based on time spent, so there is a chance we'll overshoot our duration. Don't care
+		time_spent += time
+
+	animate(pixel_x=oldx, pixel_y=oldy, time=3)
+
+#undef TILES_PER_SECOND
 
 
 /proc/findname(msg)
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if (M.real_name == text("[msg]"))
 			return 1
 	return 0
 
 
-/mob/proc/abiotic(var/full_body = 0)
+/mob/proc/abiotic(full_body = 0)
 	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask)))
 		return 1
 
 	if((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )))
 		return 1
 
-	if(l_hand && !l_hand.flags&ABSTRACT || r_hand && !r_hand.flags&ABSTRACT)
+	if(l_hand && !(l_hand.flags & ABSTRACT) || r_hand && !(r_hand.flags & ABSTRACT))
 		return 1
 
 	return 0
 
 //converts intent-strings into numbers and back
-var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
+var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 /proc/intent_numeric(argument)
 	if(istext(argument))
 		switch(argument)
@@ -375,6 +397,12 @@ var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 			else
 				return INTENT_HARM
 
+/mob/proc/set_a_intent(new_intent)
+	SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, new_intent)
+	a_intent = new_intent
+	if(hud_used)
+		action_intent?.update_icon(src)
+
 //change a mob's act-intent. Use the defines of style INTENT_%thingy%
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
@@ -383,13 +411,11 @@ var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 	if(isliving(src))
 		switch(input)
 			if(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
-				a_intent = input
+				set_a_intent(input)
 			if(INTENT_HOTKEY_RIGHT)
-				a_intent = intent_numeric((intent_numeric(a_intent)+1) % 4)
+				set_a_intent(intent_numeric((intent_numeric(a_intent)+1) % 4))
 			if(INTENT_HOTKEY_LEFT)
-				a_intent = intent_numeric((intent_numeric(a_intent)+3) % 4)
-		if(hud_used && hud_used.action_intent)
-			hud_used.action_intent.icon_state = "intent_[a_intent]"
+				set_a_intent(intent_numeric((intent_numeric(a_intent)+3) % 4))
 
 /proc/broadcast_security_hud_message(message, broadcast_source)
 	var/datum/atom_hud/hud = huds[DATA_HUD_SECURITY]

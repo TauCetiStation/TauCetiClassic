@@ -9,6 +9,7 @@
 	var/virusing
 
 	var/obj/item/weapon/reagent_containers/container = null
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/medical = SKILL_LEVEL_PRO)
 
 /obj/machinery/computer/curer/attackby(obj/I, mob/user)
 	if(istype(I,/obj/item/weapon/reagent_containers))
@@ -18,15 +19,17 @@
 			C.drop_from_inventory(I, src)
 		return
 
-	if(istype(I,/obj/item/weapon/virusdish))
+	if(istype(I, /obj/item/weapon/virusdish))
 		if(virusing)
 			to_chat(user, "<b>The pathogen materializer is still recharging..</b>")
 			return
+		if(!do_skill_checks(user))
+			return
 		var/obj/item/weapon/reagent_containers/glass/beaker/product = new(src.loc)
 
-		var/list/data = list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"virus2"=list(),"antibodies"=0)
-		data["virus2"] |= I:virus2
-		product.reagents.add_reagent("blood",30,data)
+		var/obj/item/weapon/virusdish/Vd = I
+		var/list/data = list("virus2" = virus_copylist(Vd.virus2))
+		product.reagents.add_reagent("blood", 30, data)
 
 		virusing = TRUE
 		VARSET_IN(src, virusing, FALSE, 1200)
@@ -89,7 +92,7 @@
 		container.loc = src.loc
 		container = null
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /obj/machinery/computer/curer/proc/createcure(obj/item/weapon/reagent_containers/container)

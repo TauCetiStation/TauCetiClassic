@@ -10,7 +10,7 @@
 	usesound = 'sound/weapons/thudswoosh.ogg'
 	drill_verb = "drilling"
 	force = 15.0
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	attack_verb = list("drills")
 	hitsound = list('sound/weapons/circsawhit.ogg')
 

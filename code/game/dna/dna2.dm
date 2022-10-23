@@ -4,43 +4,6 @@
 * @author N3X15 <nexisentertainment@gmail.com>
 */
 
-// What each index means:
-#define DNA_OFF_LOWERBOUND 0
-#define DNA_OFF_UPPERBOUND 1
-#define DNA_ON_LOWERBOUND  2
-#define DNA_ON_UPPERBOUND  3
-
-// Define block bounds (off-low,off-high,on-low,on-high)
-// Used in setupgame.dm
-#define DNA_DEFAULT_BOUNDS list(1,2049,2050,4095) //2050 = 8 0 2 #Z2(Added some comments)
-#define DNA_HARDER_BOUNDS  list(1,3049,3050,4095) //3050 = B E A
-#define DNA_HARD_BOUNDS    list(1,3490,3500,4095) //3500 = D A C ##Z2
-
-// UI Indices (can change to mutblock style, if desired)
-#define DNA_UI_HAIR_R      1
-#define DNA_UI_HAIR_G      2
-#define DNA_UI_HAIR_B      3
-#define DNA_UI_BEARD_R     4
-#define DNA_UI_BEARD_G     5
-#define DNA_UI_BEARD_B     6
-#define DNA_UI_SKIN_TONE   7
-#define DNA_UI_SKIN_R      8
-#define DNA_UI_SKIN_G      9
-#define DNA_UI_SKIN_B      10
-#define DNA_UI_EYES_R      11
-#define DNA_UI_EYES_G      12
-#define DNA_UI_EYES_B      13
-#define DNA_UI_GENDER      14
-#define DNA_UI_BEARD_STYLE 15
-#define DNA_UI_HAIR_STYLE  16
-#define DNA_UI_LENGTH      16 // Update this when you add something, or you WILL break shit.
-
-#define DNA_SE_LENGTH 27
-#define DNA_UNIQUE_ENZYMES_LEN 32
-// For later:
-//#define DNA_SE_LENGTH 50 // Was STRUCDNASIZE, size 27. 15 new blocks added = 42, plus room to grow.
-
-
 // Defines which values mean "on" or "off".
 //  This is to make some of the more OP superpowers a larger PITA to activate,
 //  and to tell our new DNA datum which values to set in order to turn something
@@ -83,7 +46,6 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 	// From old dna.
 	var/b_type = "A+"  // Should probably change to an integer => string map but I'm lazy.
-	var/mutantrace = null  // The type of mutant race the player is, if applicable (i.e. potato-man)
 	var/real_name          // Stores the real name of the person who originally got this dna datum. Used primarily for changelings,
 
 	// New stuff
@@ -95,7 +57,6 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	var/datum/dna/new_dna = new()
 	new_dna.unique_enzymes=unique_enzymes
 	new_dna.b_type=b_type
-	new_dna.mutantrace=mutantrace
 	new_dna.real_name=real_name
 	new_dna.species=species
 
@@ -141,6 +102,8 @@ var/global/list/datum/dna/gene/dna_genes[0]
 		character.f_style = "Shaved"
 	var/beard	= facial_hair_styles_list.Find(character.f_style)
 
+	var/height = heights_list.Find(character.height)
+
 	SetUIValueRange(DNA_UI_HAIR_R,    character.r_hair,    255,    1)
 	SetUIValueRange(DNA_UI_HAIR_G,    character.g_hair,    255,    1)
 	SetUIValueRange(DNA_UI_HAIR_B,    character.b_hair,    255,    1)
@@ -157,12 +120,14 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	SetUIValueRange(DNA_UI_SKIN_G,    character.g_skin,    255,    1)
 	SetUIValueRange(DNA_UI_SKIN_B,    character.b_skin,    255,    1)
 
+
 	SetUIValueRange(DNA_UI_SKIN_TONE, 35-character.s_tone, 220,    1) // Value can be negative.
 
-	SetUIState(DNA_UI_GENDER,         character.gender!=MALE,        1)
+	SetUIState(DNA_UI_GENDER,         character.gender!=MALE,      1)
 
-	SetUIValueRange(DNA_UI_HAIR_STYLE,  hair,  hair_styles_list.len,       1)
-	SetUIValueRange(DNA_UI_BEARD_STYLE, beard, facial_hair_styles_list.len,1)
+	SetUIValueRange(DNA_UI_HAIR_STYLE,  hair,  hair_styles_list.len,       	1)
+	SetUIValueRange(DNA_UI_BEARD_STYLE, beard, facial_hair_styles_list.len,	1)
+	SetUIValueRange(DNA_UI_HEIGHT,    	height,heights_list.len,    		1)
 
 	UpdateUI()
 
@@ -178,7 +143,8 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 // Get a DNA UI block's raw value.
 /datum/dna/proc/GetUIValue(block)
-	if (block<=0) return 0
+	if (block <= 0)
+		return 0
 	return UI[block]
 
 // Set a DNA UI block's value, given a value and a max possible value.
@@ -193,7 +159,8 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 // Getter version of above.
 /datum/dna/proc/GetUIValueRange(block,maxvalue)
-	if (block<=0) return 0
+	if (block <= 0)
+		return 0
 	var/value = GetUIValue(block)
 	return round(1 +(value / 4096)*maxvalue)
 
@@ -265,7 +232,8 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 // Get a DNA SE block's raw value.
 /datum/dna/proc/GetSEValue(block)
-	if (block<=0) return 0
+	if (block <= 0)
+		return 0
 	return SE[block]
 
 // Set a DNA SE block's value, given a value and a max possible value.
@@ -279,15 +247,17 @@ var/global/list/datum/dna/gene/dna_genes[0]
 
 // Getter version of above.
 /datum/dna/proc/GetSEValueRange(block,maxvalue)
-	if (block<=0) return 0
+	if (block <= 0)
+		return 0
 	var/value = GetSEValue(block)
-	return round(1 +(value / 4096)*maxvalue)
+	return round(1 + (value / 4096) * maxvalue)
 
-// Is the block "on" (1) or "off" (0)? (Un-assigned genes are always off.)
+// Is the block "on" (TRUE) or "off" (FALSE)? (Un-assigned genes are always off.)
 /datum/dna/proc/GetSEState(block)
-	if (block<=0) return 0
-	var/list/BOUNDS=GetDNABounds(block)
-	var/value=GetSEValue(block)
+	if (block <= 0)
+		return FALSE
+	var/list/BOUNDS = GetDNABounds(block)
+	var/value = GetSEValue(block)
 	return (value > BOUNDS[DNA_ON_LOWERBOUND])
 
 // Set a block "on" or "off".
@@ -298,7 +268,7 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	if(on)
 		val=rand(BOUNDS[DNA_ON_LOWERBOUND],BOUNDS[DNA_ON_UPPERBOUND])
 	else
-		val=rand(1,BOUNDS[DNA_OFF_UPPERBOUND])
+		val=rand(BOUNDS[DNA_OFF_LOWERBOUND],BOUNDS[DNA_OFF_UPPERBOUND])
 	SetSEValue(block,val,defer)
 
 // Get hex-encoded SE block.

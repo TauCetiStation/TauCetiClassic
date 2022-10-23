@@ -1,6 +1,6 @@
 //SYNDICATE STRIKE TEAMS
 
-var/const/syndicate_commandos_possible = 6 //if more Commandos are needed in the future
+var/global/const/syndicate_commandos_possible = 6 //if more Commandos are needed in the future
 var/global/sent_syndicate_strike_team = FALSE
 
 /client/proc/syndicate_strike_team()
@@ -13,9 +13,9 @@ var/global/sent_syndicate_strike_team = FALSE
 	if(sent_syndicate_strike_team == 1)
 		to_chat(usr, "<span class='warning'>The Syndicate are already sending a team, Mr. Dumbass.</span>")
 		return
-	if(alert("Do you want to send in the Syndicate Strike Team? Once enabled, this is irreversible.",,"Yes","No")=="No")
+	if(tgui_alert(usr, "Do you want to send in the Syndicate Strike Team? Once enabled, this is irreversible.",, list("Yes","No"))=="No")
 		return
-	alert("This 'mode' will go on until everyone is dead or the station is destroyed. You may also admin-call the evac shuttle when appropriate. Spawned syndicates have internals cameras which are viewable through a monitor inside the Syndicate Mothership Bridge. Assigning the team's detailed task is recommended from there. While you will be able to manually pick the candidates from active ghosts, their assignment in the squad will be random.")
+	tgui_alert(usr, "This 'mode' will go on until everyone is dead or the station is destroyed. You may also admin-call the evac shuttle when appropriate. Spawned syndicates have internals cameras which are viewable through a monitor inside the Syndicate Mothership Bridge. Assigning the team's detailed task is recommended from there. While you will be able to manually pick the candidates from active ghosts, their assignment in the squad will be random.")
 
 	if(sent_syndicate_strike_team)
 		to_chat(src, "Looks like someone beat you to it.")
@@ -24,7 +24,7 @@ var/global/sent_syndicate_strike_team = FALSE
 	var/mission = null
 	mission = sanitize(input(src, "Please specify which mission the syndicate strike team shall undertake.", "Specify Mission", ""))
 	if(!mission)
-		if(alert("Error, no mission set. Do you want to exit the setup process?",,"Yes","No")=="Yes")
+		if(tgui_alert(usr, "Error, no mission set. Do you want to exit the setup process?",, list("Yes","No"))=="Yes")
 			return
 
 	var/paper_text = sanitize(input(usr, "Please, enter the text if you want to leave job details for an elite syndicate on paper.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
@@ -70,18 +70,15 @@ var/global/sent_syndicate_strike_team = FALSE
 		return
 
 	syndicate_commando_leader = TRUE
-	var/list/landmarkpos = list()
-	var/obj/effect/landmark/SCP = null
-	for(var/obj/effect/landmark/L in landmarks_list)
-		if (L.name == "Syndicate-Commando")
-			landmarkpos += L
-		if(L.name == "Syndicate-Commando-Paper")
-			SCP = L
+	var/list/landmarkpos = landmarks_list["Syndicate-Commando"]
+	var/obj/effect/landmark/SCP = locate("landmark*Syndicate-Commando-Paper")
 
+	var/datum/faction/strike_team/syndiesquad/S = create_faction(/datum/faction/strike_team/syndiesquad, FALSE, FALSE)
+	S.forgeObjectives(mission)
 	for(var/i = 1; i <= commandos.len; i++)
 		var/mob/living/carbon/human/new_syndicate_commando = new(get_turf(landmarkpos[i]))
 		new_syndicate_commando.key = commandos[i]
-		initial_syndicate_commando(new_syndicate_commando, syndicate_commando_leader, mission)
+		initial_syndicate_commando(new_syndicate_commando, syndicate_commando_leader)
 		new_syndicate_commando.internal = new_syndicate_commando.s_store
 		new_syndicate_commando.internals.icon_state = "internal1"
 
@@ -100,7 +97,7 @@ var/global/sent_syndicate_strike_team = FALSE
 		if(syndicate_commando_leader)
 			syndicate_commando_leader = FALSE
 
-	for(var/obj/effect/landmark/L in landmarkpos)
+	for(var/obj/effect/landmark/L as anything in landmarkpos)
 		qdel(L)
 
 	if(paper_text)
@@ -125,7 +122,7 @@ var/global/sent_syndicate_strike_team = FALSE
 	log_admin("[key_name(usr)] used Spawn Syndicate Squad.")
 	feedback_add_details("admin_verb","SDTHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/initial_syndicate_commando(syndicate_commando, syndicate_leader_selected = FALSE, objectiv = null)
+/client/proc/initial_syndicate_commando(syndicate_commando, syndicate_leader_selected = FALSE)
 	var/mob/living/carbon/human/new_syndicate_commando = syndicate_commando
 	var/syndicate_commando_leader_rank = pick("Lieutenant", "Captain", "Major")
 	var/syndicate_commando_rank = pick("Corporal", "Sergeant", "Staff Sergeant", "Sergeant 1st Class", "Master Sergeant", "Sergeant Major")
@@ -143,85 +140,15 @@ var/global/sent_syndicate_strike_team = FALSE
 
 	//Creates mind stuff.
 	new_syndicate_commando.mind_initialize()
-	new_syndicate_commando.mind.assigned_role = "MODE"
-	new_syndicate_commando.mind.special_role = "Syndicate Elite Commando"
 	new_syndicate_commando.mind.current.faction = "syndicate"
-	SSticker.mode.syndicates += new_syndicate_commando.mind
-	add_antag_hud(ANTAG_HUD_OPS, "hudsyndicate", new_syndicate_commando)
-	if(objectiv)
-		var/datum/objective/syndi_elit_obj = new
-		new_syndicate_commando.mind.objectives += syndi_elit_obj
-		syndi_elit_obj.owner = new_syndicate_commando
-		syndi_elit_obj.explanation_text = objectiv
 
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 	new_syndicate_commando.playsound_local(null, 'sound/antag/ops.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
+	var/datum/faction/strike_team/syndiesquad/S = create_uniq_faction(/datum/faction/strike_team/syndiesquad)
+	add_faction_member(S, new_syndicate_commando, FALSE)
+
 /mob/living/carbon/human/proc/equip_syndicate_commando(syndicate_leader = FALSE)
-
-	var/obj/item/device/radio/headset/syndicate/R = new (src)
-	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
-	equip_to_slot_or_del(R, SLOT_L_EAR)
-	var/obj/item/weapon/implant/dexplosive/DE = new(src)
-	DE.imp_in = src
-	DE.implanted = TRUE
-	var/obj/item/clothing/under/syndicate/US = new (src)
-	var/obj/item/clothing/accessory/storage/syndi_vest/SV = new (US)
-	US.accessories += SV
-	SV.on_attached(US, src, TRUE)
-	new /obj/item/weapon/screwdriver/power(SV.hold)
-	new /obj/item/weapon/wirecutters/power(SV.hold)
-	new /obj/item/weapon/weldingtool/largetank(SV.hold)
-	new /obj/item/device/multitool(SV.hold)
-	equip_to_slot_or_del(US, SLOT_W_UNIFORM)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat(src), SLOT_SHOES)
-	equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(src), SLOT_GLOVES)
-	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/syndicate(src), SLOT_WEAR_MASK)
-	equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal(src), SLOT_GLASSES)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(src), SLOT_BACK)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/box(src), SLOT_IN_BACKPACK)
-	equip_to_slot_or_del(new /obj/item/ammo_box/magazine/sm45(src), SLOT_IN_BACKPACK)
-	equip_to_slot_or_del(new /obj/item/ammo_box/magazine/sm45(src), SLOT_IN_BACKPACK)
-	var/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/SFKE = new (src)
-	var/obj/item/stack/medical/suture/ST = new (src)
-	SFKE.contents += ST
-	SFKE.name = "Emergency Small first-aid kit"
-	equip_to_slot_or_del(SFKE, SLOT_IN_BACKPACK)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment(src), SLOT_IN_BACKPACK)
-	var/obj/item/device/radio/uplink/SDCU = new (src)
-	equip_to_slot_or_del(SDCU, SLOT_IN_BACKPACK)
-	equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(src), SLOT_L_STORE)
-	equip_to_slot_or_del(new /obj/item/weapon/grenade/empgrenade(src), SLOT_R_STORE)
-	equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/silenced(src), SLOT_BELT)
-	var/obj/item/clothing/suit/space/rig/syndi/elite/SER = null
-	if(syndicate_leader)
-		SDCU.hidden_uplink.uses = 15
-		SER = new /obj/item/clothing/suit/space/rig/syndi/elite/comander(src)
-		equip_to_slot_or_del(SER, SLOT_WEAR_SUIT)
-		equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/syndi/elite/comander(src), SLOT_HEAD)
-		equip_to_slot_or_del(new /obj/item/weapon/pinpointer/advpinpointer(src), SLOT_IN_BACKPACK)
-	else
-		SDCU.hidden_uplink.uses = 10
-		SER = new(src)
-		equip_to_slot_or_del(SER, SLOT_WEAR_SUIT)
-		equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/syndi/elite(src), SLOT_HEAD)
-
-	var/obj/item/clothing/shoes/magboots/syndie/SB = new(SER)
-	SB.name = "The syndicate magboots"
-	SER.boots = SB
-
-	equip_to_slot_or_del(new /obj/item/weapon/tank/oxygen/red(src), SLOT_S_STORE)
-
-	var/obj/item/weapon/card/id/syndicate/W = new(src) //Untrackable by AI
-	W.name = "[real_name]'s ID Card"
-	if(syndicate_leader)
-		W.icon_state = "syndicate-command"
-		W.assignment = "Syndicate Commando Leader"
-	else
-		W.icon_state = "syndicate"
-		W.assignment = "Syndicate Commando"
-	W.registered_name = real_name
-
-	equip_to_slot_or_del(W, SLOT_WEAR_ID)
-
-	return 1
+	var/outfit_type = syndicate_leader ? /datum/outfit/syndicate_commando/leader : /datum/outfit/syndicate_commando
+	var/datum/outfit/outfit = new outfit_type
+	outfit.equip(src)

@@ -31,7 +31,6 @@
 		theme = ntheme
 
 	add_stylesheet("common", 'html/browser/common.css') // this CSS sheet is common to all UIs
-	register_asset("error_handler.js", 'code/modules/error_handler_js/error_handler.js') // error_handler - same name as in other places, add_script do ckey with names.
 
 /datum/browser/Destroy()
 	user.browsers -= window_id
@@ -96,7 +95,8 @@
 	var/window_size
 	if(width && height)
 		window_size = "size=[width]x[height];"
-	send_asset(user, "error_handler.js")
+	var/datum/asset/error_handler_js = get_asset_datum(/datum/asset/simple/error_handler_js) // error_handler - same name as in other places, add_script do ckey with names.
+	error_handler_js.send(user)
 	if(stylesheets.len)
 		send_asset_list(user, stylesheets)
 	if(scripts.len)
@@ -313,12 +313,12 @@
 		if(hsrc)
 			//world << "[src] Topic [href] [hsrc]"
 			usr = src.mob
-			src.Topic(href, params2list(href), hsrc)	// this will direct to the atom's
+			Topic(href, params2list(href), hsrc)	// this will direct to the atom's
 			return										// Topic() proc via client.Topic()
 
 	// no atomref specified (or not found)
 	// so just reset the user mob's machine var
 	if(src && src.mob)
 		//world << "[src] was [src.mob.machine], setting to null"
-		src.mob.unset_machine()
+		mob.unset_machine()
 	return

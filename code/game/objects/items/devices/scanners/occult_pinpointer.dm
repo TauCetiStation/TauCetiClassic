@@ -4,7 +4,7 @@
 	icon_state = "locoff"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
@@ -46,6 +46,6 @@
 		if(!target)
 			icon_state = "locnull"
 			return
-	dir = get_dir(src,target)
+	set_dir(get_dir(src,target))
 	if(get_dist(src,target))
 		icon_state = "locon"

@@ -59,8 +59,7 @@
 		user.unset_machine()
 		return 0
 
-	var/turf/T = get_turf(user.loc)
-	if(T.z != current.z || !current.can_use())
+	if(!current.can_use())
 		to_chat(user, "<span class='danger'>[src] has lost the signal.</span>")
 		current = null
 		user.reset_view(null)
@@ -76,7 +75,7 @@
 		for(var/obj/machinery/camera/camera in cameranet.cameras)
 			if(camera.stat || !camera.can_use())
 				continue
-			if(length(list("SS13","MINE")&camera.network))
+			if(length(list("SS13","MINE", "SECURITY UNIT")&camera.network))
 				bugged_cameras[camera.c_tag] = camera
 	bugged_cameras = sortAssoc(bugged_cameras)
 	return bugged_cameras
@@ -222,13 +221,9 @@
 			if(!C.can_use())
 				to_chat(usr, "<span class='danger'>Something's wrong with that camera.  You can't get a feed.</span>")
 				return
-			var/turf/T = get_turf(loc)
-			if(!T || C.z != T.z)
-				to_chat(usr, "<span class='danger'>You can't get a signal.</span>")
-				return
 			current = C
 			spawn(6)
-				if(src.check_eye(usr))
+				if(check_eye(usr))
 					usr.reset_view(C)
 					interact()
 				else
@@ -249,7 +244,7 @@
 		// Note that it will be tricked if your name appears to change.
 		// This is not optimal but it is better than tracking you relentlessly despite everything.
 		if(!tracking)
-			src.updateSelfDialog()
+			updateSelfDialog()
 			return
 
 		if(tracking.name != tracked_name) // Hiding their identity, tricksy
@@ -257,10 +252,10 @@
 			if(istype(M))
 				if(!(tracked_name == "Unknown" && findtext(tracking.name,"Unknown"))) // we saw then disguised before
 					if(!(tracked_name == M.real_name && findtext(tracking.name,M.real_name))) // or they're still ID'd
-						src.updateSelfDialog()//But if it's neither of those cases
+						updateSelfDialog()//But if it's neither of those cases
 						return // you won't find em on the cameras
 			else
-				src.updateSelfDialog()
+				updateSelfDialog()
 				return
 
 		var/list/tracking_cams = list()
@@ -276,7 +271,7 @@
 				last_found = C.c_tag
 				last_seen = world.time
 				break
-	src.updateSelfDialog()
+	updateSelfDialog()
 
 #undef BUGMODE_LIST
 #undef BUGMODE_MONITOR

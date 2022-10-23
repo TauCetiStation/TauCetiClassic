@@ -4,7 +4,7 @@
 	icon_state = "occult_scan"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	item_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
@@ -17,6 +17,8 @@
 		to_chat(user, "<span class='notice'>You reset the scanned object of the scanner.</span>")
 
 /obj/item/device/occult_scanner/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
 	if(!ishuman(target))
 		return
 	var/mob/living/carbon/human/H = target

@@ -1,4 +1,6 @@
 /datum/event/wallrot
+	announcement = new /datum/announcement/centcomm/fungi
+
 	var/turf/simulated/wall/center = null
 
 /datum/event/wallrot/setup()
@@ -7,13 +9,13 @@
 
 /datum/event/wallrot/announce()
 	if(center)
-		command_alert("Harmful fungi detected on station. Station structures may be contaminated.", "Biohazard Alert", "fungi")
+		announcement.play()
 
 /datum/event/wallrot/start()
 	// 100 attempts
 	for(var/i in 1 to 100)
 		var/turf/candidate = locate(rand(1, world.maxx), rand(1, world.maxy), pick(SSmapping.levels_by_trait(ZTRAIT_STATION)))
-		if(istype(candidate, /turf/simulated/wall))
+		if(iswallturf(candidate))
 			center = candidate
 			break
 

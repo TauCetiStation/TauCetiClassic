@@ -5,7 +5,7 @@
 	state_broken_preset = "atmosb"
 	state_nopower_preset = "atmos0"
 	light_color = "#e6ffff"
-	circuit = "/obj/item/weapon/circuitboard/area_atmos"
+	circuit = /obj/item/weapon/circuitboard/area_atmos
 
 	var/list/connectedscrubbers = new()
 	var/status = ""
@@ -88,13 +88,13 @@
 			spawn(20)
 				status = "ERROR: Couldn't connect to scrubber! (timeout)"
 				connectedscrubbers -= scrubber
-				src.updateUsrDialog()
+				updateUsrDialog()
 			return
 
 		scrubber.on = text2num(href_list["toggle"])
 		scrubber.update_icon()
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/area_atmos/proc/validscrubber(obj/machinery/portable_atmospherics/powered/scrubber/huge/scrubber)
 	if(!isobj(scrubber) || get_dist(scrubber.loc, src.loc) > src.range || scrubber.loc.z != src.loc.z)
@@ -114,7 +114,7 @@
 	if(!found)
 		status = "ERROR: No scrubber found!"
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /obj/machinery/computer/area_atmos/area
@@ -149,4 +149,4 @@
 	if(!length(connectedscrubbers))
 		status = "ERROR: No scrubber found!"
 
-	src.updateUsrDialog()
+	updateUsrDialog()

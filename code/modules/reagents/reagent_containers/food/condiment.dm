@@ -65,9 +65,11 @@
 		playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
 		return 1
 	else
-		user.visible_message("<span class='rose'> [user] attempts to feed [M] [src].</span>")
+		M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> attempts to feed you <B>[src]</B>.</span>")
 		if(!do_mob(user, M)) return
-		user.visible_message("<span class='rose'> [user] feeds [M] [src].</span>")
+		M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
+						"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
 
 		M.log_combat(user, "fed with [name] (INTENT: [uppertext(user.a_intent)])")
 
@@ -78,7 +80,7 @@
 		return 1
 
 /obj/item/weapon/reagent_containers/food/condiment/afterattack(atom/target, mob/user, proximity, params)
-	if(get_dist(src, target) > 1)
+	if(!proximity)
 		return
 	if(istype(target, /obj/structure/reagent_dispensers)) // A dispenser. Transfer FROM it TO us.
 
@@ -105,7 +107,7 @@
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, "<span class='rose'> you can't add anymore to [target].</span>")
 			return
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'> You transfer [trans] units of the condiment to [target].</span>")
 
 /obj/item/weapon/reagent_containers/food/condiment/on_reagent_change()
@@ -127,7 +129,7 @@
 	desc = "Its a small wooden shelf for spices and seasonings. All you need is to place it onto the wall. Buon appetito!"
 	icon = 'icons/obj/cond_shelf.dmi'
 	icon_state = "cond_shelf_item"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	force = 8
 	throwforce = 10
 	throw_speed = 2
@@ -135,7 +137,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /obj/item/weapon/condiment_shelf/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(iswrench(I))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		new /obj/item/stack/sheet/wood(loc)
 		qdel(src)
@@ -149,9 +151,9 @@
 
 /obj/item/weapon/condiment_shelf/afterattack(atom/target, mob/user, proximity, params)
 	var/turf/T = target
-	if(get_dist(T, user) > 1)
+	if(!proximity)
 		return
-	if(!istype(T, /turf/simulated/wall))
+	if(!iswallturf(T))
 		return
 	var/ndir = get_dir(user, T)
 	if(!(ndir in cardinal))
@@ -196,7 +198,7 @@
 	update_icon()
 
 /obj/structure/condiment_shelf/attackby(obj/O, mob/user)
-	if(istype(O, /obj/item/weapon/wrench))
+	if(iswrench(O))
 		if(user.is_busy())
 			return
 		user.visible_message("<span class='warning'>[user] starts to disassemble \the [src].</span>")
@@ -210,8 +212,7 @@
 
 	if(O.type in can_be_placed)
 		if(contents.len < max_items_inside)
-			user.drop_item()
-			O.forceMove(src)
+			user.drop_from_inventory(O, src)
 			update_icon()
 		else
 			to_chat(user, "<span class='rose'>\The [src] is full!</span>")
@@ -222,7 +223,7 @@
 	if(contents.len)
 		var/obj/item/weapon/reagent_containers/food/condiment/choice = input("Which condiment would you like to remove from the shelf?") in contents
 		if(choice)
-			if(!in_range(loc, usr) || usr.incapacitated())
+			if(!Adjacent(usr) || usr.incapacitated())
 				return
 			if(ishuman(user))
 				user.put_in_hands(choice)
@@ -232,21 +233,20 @@
 
 /obj/structure/condiment_shelf/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			for(var/obj/item/weapon/reagent_containers/food/condiment/b in contents)
 				qdel(b)
-			qdel(src)
-		if(2.0)
+
+		if(EXPLODE_HEAVY)
 			for(var/obj/item/weapon/reagent_containers/food/condiment/b in contents)
 				if(prob(50))
 					b.forceMove(get_turf(src))
 				else qdel(b)
-			qdel(src)
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			if(prob(50))
 				for(var/obj/item/weapon/reagent_containers/food/condiment/b in contents)
 					b.forceMove(get_turf(src))
-				qdel(src)
+	qdel(src)
 
 /obj/structure/condiment_shelf/update_icon()
 	cut_overlays()

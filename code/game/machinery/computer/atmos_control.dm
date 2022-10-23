@@ -7,12 +7,13 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	light_color = "#00b000"
-	circuit = "/obj/item/weapon/circuitboard/atmoscontrol"
+	circuit = /obj/item/weapon/circuitboard/atmoscontrol
 	req_access = list(access_ce)
 	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/obj/machinery/alarm/current
 	var/overridden = FALSE //not set yet, can't think of a good way to do it
+	required_skills = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/computer/atmoscontrol/ui_interact(mob/user)
 	if(allowed(user)) // this is very strange when you know, that this var will be set everytime someone opens with and without access and interfere with each other... but maybe i don't understand smth.
@@ -144,7 +145,6 @@ Toxins: <span class='dl[phoron_dangerlevel]'>[phoron_percent]</span>%<br>
 	. = ..()
 	if(!.)
 		return
-
 	if(href_list["reset"])
 		current = null
 	if(href_list["alarm"])

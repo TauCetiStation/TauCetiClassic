@@ -22,10 +22,62 @@
 	if(needs_update_stat || issilicon(owner)) //silicons need stat updates in addition to normal canmove updates
 		owner.update_stat()
 
+//STUN
+/datum/status_effect/incapacitating/stun
+	id = "stun"
+
+/datum/status_effect/incapacitating/stun/on_apply()
+	. = ..()
+	if(!.)
+		return
+	owner.stunned = TRUE
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
+
+/datum/status_effect/incapacitating/stun/on_remove()
+	owner.stunned = FALSE
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, id)
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, id)
+	return ..()
+
+//PARALYZED
+/datum/status_effect/incapacitating/paralyzed
+	id = "paralyzed"
+
+/datum/status_effect/incapacitating/paralyzed/on_apply()
+	. = ..()
+	if(!.)
+		return
+	owner.paralysis = TRUE
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
+
+/datum/status_effect/incapacitating/paralyzed/on_remove()
+	owner.paralysis = FALSE
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, id)
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, id)
+	return ..()
+
+//WEAKENED
+/datum/status_effect/incapacitating/weakened
+	id = "weakened"
+
+/datum/status_effect/incapacitating/weakened/on_apply()
+	. = ..()
+	if(!.)
+		return
+	owner.weakened = TRUE
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
+
+/datum/status_effect/incapacitating/weakened/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, id)
+	owner.weakened = FALSE
+	return ..()
+
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
 	id = "sleeping"
-	alert_type = /obj/screen/alert/status_effect/asleep
+	alert_type = /atom/movable/screen/alert/status_effect/asleep
 	needs_update_stat = TRUE
 	var/mob/living/carbon/carbon_owner
 	var/mob/living/carbon/human/human_owner
@@ -52,7 +104,8 @@
 	if(human_owner)
 		human_owner.drowsyness = max(0, human_owner.drowsyness * 0.997)
 		human_owner.slurring = max(0, human_owner.slurring * 0.997)
-		human_owner.confused = max(0, human_owner.confused * 0.997)
+		human_owner.SetConfused(human_owner.confused * 0.997)
+		human_owner.SetDrunkenness(human_owner.drunkenness * 0.997)
 
 	if(prob(20))
 		if(carbon_owner)
@@ -61,7 +114,7 @@
 			if(!carbon_owner || !carbon_owner.hal_crit)
 				owner.emote("snore")
 
-/obj/screen/alert/status_effect/asleep
+/atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
@@ -71,7 +124,7 @@
 	id = "stasis_bag"
 	duration = -1
 	tick_interval = 10
-	alert_type = /obj/screen/alert/status_effect/stasis_bag
+	alert_type = /atom/movable/screen/alert/status_effect/stasis_bag
 	var/last_dead_time
 
 /datum/status_effect/incapacitating/stasis_bag/proc/update_time_of_death()
@@ -108,7 +161,32 @@
 	update_time_of_death()
 	return ..()
 
-/obj/screen/alert/status_effect/stasis_bag
+/atom/movable/screen/alert/status_effect/stasis_bag
 	name = "Stasis Bag"
 	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
 	icon_state = "stasis"
+
+/datum/status_effect/remove_trait
+	id = "remove_traits"
+	tick_interval = 10
+	alert_type = null
+	status_type = STATUS_EFFECT_REFRESH
+	var/trait
+	var/trait_source
+
+/datum/status_effect/remove_trait/on_creation(mob/living/new_owner, time_amount)
+	duration = time_amount
+	. = ..()
+	REMOVE_TRAIT(owner, trait, trait_source)
+
+/datum/status_effect/remove_trait/on_remove()
+	ADD_TRAIT(owner, trait, trait_source)
+	. = ..()
+
+/datum/status_effect/remove_trait/wet_hands
+	trait = TRAIT_WET_HANDS
+	trait_source = QUALITY_TRAIT
+
+/datum/status_effect/remove_trait/greasy_hands
+	trait = TRAIT_GREASY_FINGERS
+	trait_source = QUALITY_TRAIT

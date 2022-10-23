@@ -8,15 +8,20 @@
 	action_button_name = "Toggle Helmet Light"
 	var/brightness = 3 //light_range when on
 	var/lit = FALSE
-	species_restricted = list("exclude" , DIONA , VOX)
+	species_restricted = list("exclude" , DIONA)
 	var/image/lamp = null
+
+/obj/item/clothing/head/helmet/space/syndicate/atom_init()
+	. = ..()
+	holochip = new /obj/item/holochip/nuclear(src)
+	holochip.holder = src
 
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
 	desc = "Has a tag on it: Totally not property of of a hostile corporation, honest!"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	allowed = list(/obj/item/weapon/gun,
 	               /obj/item/ammo_box/magazine,
 	               /obj/item/ammo_casing,
@@ -24,9 +29,9 @@
 	               /obj/item/weapon/melee/energy/sword,
 	               /obj/item/weapon/handcuffs,
 	               /obj/item/weapon/tank/emergency_oxygen)
-	slowdown = 1
+	slowdown = 0.5
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
-	species_restricted = list("exclude" , DIONA , VOX)
+	species_restricted = list("exclude" , DIONA)
 
 /obj/item/clothing/head/helmet/space/syndicate/update_icon(mob/user)
 	. = ..()
@@ -116,6 +121,11 @@
 	item_state = "syndicate-helm-elite"
 	armor = list(melee = 75, bullet = 65, laser = 65, energy = 65, bomb = 70, bio = 100, rad = 20)
 	action_button_name = null
+
+/obj/item/clothing/head/helmet/space/syndicate/elite/atom_init()
+	. = ..()
+	holochip = new /obj/item/holochip/nuclear(src)
+	holochip.holder = src
 
 /obj/item/clothing/head/helmet/space/syndicate/elite/attack_self(mob/user)
 	return

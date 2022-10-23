@@ -8,6 +8,8 @@
 	var/mob/living/silicon/ai/occupier = null
 	var/active = 0
 	circuit = /obj/item/weapon/circuitboard/aifixer
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_MASTER)
+	fumbling_time = 7 SECONDS
 
 /obj/machinery/computer/aifixer/atom_init()
 	add_overlay(image('icons/obj/computer.dmi', "ai-fixer-empty"))
@@ -64,37 +66,36 @@
 
 /obj/machinery/computer/aifixer/process()
 	if(..())
-		src.updateDialog()
+		updateDialog()
 		return
 
 /obj/machinery/computer/aifixer/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
-
 	if (href_list["fix"])
 		src.active = 1
 		add_overlay(image('icons/obj/computer.dmi', "ai-fixer-on"))
 		while (src.occupier.health < 100)
-			src.occupier.adjustOxyLoss(-1)
-			src.occupier.adjustFireLoss(-1)
-			src.occupier.adjustToxLoss(-1)
-			src.occupier.adjustBruteLoss(-1)
-			src.occupier.updatehealth()
+			occupier.adjustOxyLoss(-1)
+			occupier.adjustFireLoss(-1)
+			occupier.adjustToxLoss(-1)
+			occupier.adjustBruteLoss(-1)
+			occupier.updatehealth()
 			if (src.occupier.health >= 0 && src.occupier.stat == DEAD)
 				src.occupier.stat = CONSCIOUS
 				src.occupier.lying = 0
 				dead_mob_list -= src.occupier
 				alive_mob_list += src.occupier
-				src.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-404"))
+				cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-404"))
 				add_overlay(image('icons/obj/computer.dmi', "ai-fixer-full"))
-				src.occupier.add_ai_verbs()
-			src.updateUsrDialog()
+				occupier.add_ai_verbs()
+			updateUsrDialog()
 			sleep(10)
 		src.active = 0
-		src.cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-on"))
+		cut_overlay(image('icons/obj/computer.dmi', "ai-fixer-on"))
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /obj/machinery/computer/aifixer/update_icon()

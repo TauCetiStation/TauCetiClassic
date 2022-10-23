@@ -36,12 +36,12 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 		create_fire(exposed_temperature)
 
 		if(firestarter)
-			if (firestarter.fingerprintslast && istype(firestarter, /obj/item))
-				message_admins("Fire started at ([x],[y],[z]) [ADMIN_JMP(src)] by [firestarter] [ADMIN_JMP(firestarter)] [ADMIN_FLW(firestarter)] Last touched by: <B>[firestarter.fingerprintslast]</B>")
-				log_game("Fire started at ([x],[y],[z]) by [firestarter]. Last touched by: [firestarter.fingerprintslast].")
+			if (firestarter.fingerprintslast && isitem(firestarter))
+				message_admins("Fire started at [COORD(src)] [ADMIN_JMP(src)] by [firestarter] [ADMIN_JMP(firestarter)] [ADMIN_FLW(firestarter)] Last touched by: <B>[firestarter.fingerprintslast]</B>")
+				log_game("Fire started at [COORD(src)] by [firestarter]. Last touched by: [firestarter.fingerprintslast].")
 			else
-				message_admins("Fire started at ([x],[y],[z]) [ADMIN_JMP(src)] by [firestarter] [ADMIN_JMP(firestarter)] [ADMIN_FLW(firestarter)]")
-				log_game("Fire started at ([x],[y],[z]) by [firestarter].")
+				message_admins("Fire started at [COORD(src)] [ADMIN_JMP(src)] by [firestarter] [ADMIN_JMP(firestarter)] [ADMIN_FLW(firestarter)]")
+				log_game("Fire started at [COORD(src)] by [firestarter].")
 
 	return igniting
 
@@ -120,7 +120,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	// Icon for fire on turfs.
 
 	anchored = TRUE
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	blend_mode = BLEND_ADD
 
@@ -128,6 +128,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	icon_state = "1"
 	light_color = LIGHT_COLOR_FIRE
 	layer = OBJ_LAYER
+	flags = ABSTRACT
 
 	var/firelevel = 1 //Calculated by gas_mixture.calculate_firelevel()
 
@@ -154,7 +155,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 		set_light(3, 1)
 
 	for(var/mob/living/L in loc)
-		L.FireBurn(firelevel, air_contents.temperature, air_contents.return_pressure())  //Burn the mobs!
+		L.FireBurn(firelevel, air_contents.temperature, air_contents.return_relative_density())  //Burn the mobs!
 
 	loc.fire_act(air_contents, air_contents.temperature, air_contents.volume)
 	for(var/atom/A in loc)
@@ -206,7 +207,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	firelevel = fl
 	SSair.active_hotspots.Add(src)
 
-/obj/fire/proc/fire_color(var/env_temperature)
+/obj/fire/proc/fire_color(env_temperature)
 	var/temperature = max(4000 * sqrt(firelevel / vsc.fire_firelevel_multiplier), env_temperature)
 	return heat2color(temperature)
 
@@ -399,12 +400,12 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	return max(0, firelevel)
 
 
-/mob/living/proc/FireBurn(firelevel, last_temperature, pressure)
-	var/mx = 5 * firelevel / vsc.fire_firelevel_multiplier * min(pressure / ONE_ATMOSPHERE, 1)
+/mob/living/proc/FireBurn(firelevel, last_temperature, air_multiplier)
+	var/mx = 5 * firelevel / vsc.fire_firelevel_multiplier * air_multiplier
 	apply_damage(2.5 * mx, BURN)
 
 
-/mob/living/carbon/human/FireBurn(firelevel, last_temperature, pressure)
+/mob/living/carbon/human/FireBurn(firelevel, last_temperature, air_multiplier)
 	//Burns mobs due to fire. Respects heat transfer coefficients on various body parts.
 	//Due to TG reworking how fireprotection works, this is kinda less meaningful.
 
@@ -431,8 +432,8 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 				legs_exposure = 0
 			if(C.body_parts_covered & ARMS)
 				arms_exposure = 0
-	//minimize this for low-pressure enviroments
-	var/mx = 5 * firelevel/vsc.fire_firelevel_multiplier * min(pressure / ONE_ATMOSPHERE, 1)
+
+	var/mx = 5 * firelevel/vsc.fire_firelevel_multiplier * air_multiplier
 
 	//Always check these damage procs first if fire damage isn't working. They're probably what's wrong.
 

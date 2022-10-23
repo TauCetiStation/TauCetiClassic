@@ -5,9 +5,15 @@
 //VELOCITY
 /area/velocity
 	name = "Velocity Dock 42"
-	icon_state = "centcom"
+	icon_state = "velocity"
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	ambience = null
+	looped_ambience = 'sound/ambience/loop_velocity.ogg'
+
+/area/velocity/monorailwagon
+	name = "Velocity Monorail Wagon"
+	icon_state = "velocity_wagon"
 
 //Alien base
 /area/custom/alien
@@ -65,3 +71,31 @@
 /area/custom/tophat
 	name = "Tophat"
 	icon_state = "tophat-room"
+
+/area/custom/cult
+	name = "Cult Heaven"
+	icon_state = "cult-heaven"
+	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	is_force_ambience = TRUE
+	looped_ambience = 'sound/ambience/ambiruin7_looped.ogg'
+	ambience = list(
+		'sound/ambience/ambiruin1.ogg',
+		'sound/ambience/ambiruin2.ogg',
+		'sound/ambience/ambiruin3.ogg',
+		'sound/ambience/ambiruin4.ogg',
+		'sound/ambience/ambiruin5.ogg',
+		'sound/ambience/ambiruin6.ogg',
+	)
+
+/area/custom/ninjaspawn
+	name = "Space Dojo"
+	icon_state = "red"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
+/area/custom/arena
+	name = "Deathmatch Arena"
+	icon_state = "red"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED

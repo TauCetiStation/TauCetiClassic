@@ -4,8 +4,8 @@
 	desc = "An Odd Device which produces a Gravitational Singularity when set up."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "TheSingGen"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	use_power = NO_POWER_USE
 	var/energy = 0
 	var/creation_type = /obj/singularity
@@ -19,7 +19,8 @@
 		animation.master = src
 		animation.pixel_x = -32
 		animation.pixel_y = -32
-		animation.layer = SINGULARITY_EFFECT_LAYER
+		animation.plane = SINGULARITY_PLANE
+		animation.layer = ABOVE_SINGULARITY_LAYER
 		flick('icons/effects/singularity_effect.dmi', animation)
 		sleep(60)
 		new creation_type(T, 50)

@@ -2,11 +2,11 @@
 	gender = NEUTER
 	robot_talk_understand = 1
 	voice_name = "synthesized voice"
-	hud_possible = list(ANTAG_HUD, GOLEM_MASTER_HUD, DIAG_STAT_HUD, DIAG_HUD)
+	hud_possible = list(ANTAG_HUD, HOLY_HUD, DIAG_STAT_HUD, DIAG_HUD)
+	typing_indicator_type = "machine"
 
 	var/list/sensor_huds = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY, DATA_HUD_DIAGNOSTIC)
 	var/list/def_sensor_huds
-	var/syndicate = 0
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	immune_to_ssd = 1
 
@@ -25,14 +25,17 @@
 	diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
+	update_manifest()
 
 /mob/living/silicon/Destroy()
 	silicon_list -= src
+	update_manifest()
 	return ..()
 
 /mob/living/silicon/death(gibbed)
 	diag_hud_set_status()
 	diag_hud_set_health()
+	update_manifest()
 	return ..(gibbed)
 
 /mob/living/silicon/proc/show_laws()
@@ -56,10 +59,10 @@
 /mob/living/silicon/emp_act(severity)
 	switch(severity)
 		if(1)
-			src.take_bodypart_damage(20)
+			take_bodypart_damage(20)
 			Stun(rand(5,10))
 		if(2)
-			src.take_bodypart_damage(10)
+			take_bodypart_damage(10)
 			Stun(rand(1,5))
 	flash_eyes(affect_silicon = 1)
 	to_chat(src, "<span class='warning'><B>*BZZZT*</B></span>")
@@ -74,25 +77,6 @@
 
 /mob/living/silicon/apply_effect(effect = 0,effecttype = STUN, blocked = 0)
 	return 0//The only effect that can hit them atm is flashes and they still directly edit so this works for now
-/*
-	if(!effect || (blocked >= 2))	return 0
-	switch(effecttype)
-		if(STUN)
-			stunned = max(stunned,(effect/(blocked+1)))
-		if(WEAKEN)
-			weakened = max(weakened,(effect/(blocked+1)))
-		if(PARALYZE)
-			paralysis = max(paralysis,(effect/(blocked+1)))
-		if(IRRADIATE)
-			radiation += min((effect - (effect*getarmor(null, "rad"))), 0)//Rads auto check armor
-		if(STUTTER)
-			stuttering = max(stuttering,(effect/(blocked+1)))
-		if(EYE_BLUR)
-			eye_blurry = max(eye_blurry,(effect/(blocked+1)))
-		if(DROWSY)
-			drowsyness = max(drowsyness,(effect/(blocked+1)))
-	updatehealth()
-	return 1*/
 
 /proc/islinked(mob/living/silicon/robot/bot, mob/living/silicon/ai/ai)
 	if(!istype(bot) || !istype(ai))
@@ -125,7 +109,7 @@
 /mob/living/silicon/proc/show_station_manifest()
 	var/dat
 	if(data_core)
-		dat += data_core.get_manifest(1) // make it monochrome
+		dat += data_core.html_manifest(monochrome=1, silicon=1) // make it monochrome
 	dat += "<br>"
 
 	var/datum/browser/popup = new(src, "airoster", "Crew Manifest")
@@ -144,8 +128,9 @@
 /mob/living/silicon/can_speak(datum/language/speaking)
 	return universal_speak || (speaking in src.speech_synthesizer_langs)	//need speech synthesizer support to vocalize a language
 
-/mob/living/silicon/add_language(language, can_speak=1)
-	if (..(language) && can_speak)
+/mob/living/silicon/add_language(language, flags=LANGUAGE_CAN_SPEAK)
+	. = ..()
+	if(. && flags >= LANGUAGE_CAN_SPEAK)
 		speech_synthesizer_langs.Add(all_languages[language])
 
 /mob/living/silicon/remove_language(rem_language)
@@ -162,7 +147,7 @@
 
 	var/dat = ""
 
-	for(var/datum/language/L in languages)
+	for(var/datum/language/L as anything in languages)
 		dat += "<b>[L.name] "
 		for(var/l_key in L.key)
 			dat += "(:[l_key])"
@@ -197,10 +182,10 @@
 
 /mob/living/silicon/proc/write_laws()
 	if(laws)
-		var/text = src.laws.write_laws()
+		var/text = laws.write_laws()
 		return text
 
-/mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash/noise)
+/mob/living/silicon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash/noise)
 	if(affect_silicon)
 		return ..()
 
@@ -208,3 +193,12 @@
 	if(show_message)
 		to_chat(user, "<span class='alert'>[src]'s outer shell is too tough.</span>")
 	return FALSE
+
+/mob/living/silicon/proc/give_hud(hud, reset_to_def = TRUE)
+	if(reset_to_def)
+		sensor_huds = def_sensor_huds
+
+	sensor_huds += hud
+
+/mob/living/silicon/proc/update_manifest()
+	Silicon_Manifest.Cut()

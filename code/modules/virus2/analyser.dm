@@ -2,13 +2,14 @@
 	name = "Disease Analyser"
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "analyser"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 	var/scanning = 0
 	var/pause = 0
 
 	var/obj/item/weapon/virusdish/dish = null
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/chemistry = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/disease2/diseaseanalyser/attackby(obj/O, mob/user)
 	if(!istype(O,/obj/item/weapon/virusdish))
@@ -17,7 +18,8 @@
 	if(dish)
 		to_chat(user, "\The [src] is already loaded.")
 		return
-
+	if(!do_skill_checks(user))
+		return
 	dish = O
 	user.drop_from_inventory(O, src)
 
@@ -57,7 +59,7 @@
 			dish = null
 
 			icon_state = "analyser"
-			src.state("\The [src] prints a sheet of paper.")
+			state("\The [src] prints a sheet of paper.")
 
 	else if(dish && !scanning && !pause)
 		if(dish.virus2)
@@ -69,6 +71,6 @@
 				dish.loc = src.loc
 				dish = null
 
-				src.state("\The [src] buzzes, \"Insufficient growth density to complete analysis.\"")
+				state("\The [src] buzzes, \"Insufficient growth density to complete analysis.\"")
 				pause = 0
 	return

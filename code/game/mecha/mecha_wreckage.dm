@@ -7,9 +7,10 @@
 	name = "Exosuit wreckage"
 	desc = "Remains of some unfortunate mecha. Completely unrepairable."
 	icon = 'icons/mecha/mecha.dmi'
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	opacity = 0
+	plane = GAME_PLANE
 	var/list/salvage  = list(
 		"welder" = list(
 			/obj/item/stack/sheet/metal,
@@ -27,11 +28,8 @@
 	var/salvage_num = 15
 
 /obj/effect/decal/mecha_wreckage/ex_act(severity)
-	if(severity == 1)
+	if(severity == EXPLODE_DEVASTATE)
 		qdel(src)
-	return
-
-/obj/effect/decal/mecha_wreckage/bullet_act(obj/item/projectile/Proj)
 	return
 
 /obj/effect/decal/mecha_wreckage/attackby(obj/item/weapon/W, mob/user)
@@ -60,7 +58,7 @@
 		to_chat(user, "You failed to salvage anything valuable from [src].")
 
 
-/obj/effect/decal/mecha_wreckage/proc/detach_part(var/where)
+/obj/effect/decal/mecha_wreckage/proc/detach_part(where)
 	var/obj/to_salvage = pick(salvage[where])
 	if(to_salvage)
 		var/obj/salvaged = new to_salvage(get_turf(src))

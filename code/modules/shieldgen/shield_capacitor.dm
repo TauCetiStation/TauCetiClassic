@@ -8,7 +8,7 @@
 	icon = 'icons/obj/machines/shielding.dmi'
 	icon_state = "capacitor"
 	var/active = 1
-	density = 1
+	density = TRUE
 	var/stored_charge = 0
 	var/time_since_fail = 100
 	var/max_charge = 5e6
@@ -45,7 +45,7 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 	else if(iswrench(W))
 		src.anchored = !src.anchored
-		src.visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].</span>")
+		visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].</span>")
 
 		if(anchored)
 			spawn(0)
@@ -72,7 +72,7 @@
 	return TRUE
 
 /obj/machinery/shield_capacitor/ui_interact(mob/user)
-	if ( !in_range(src, user) || (stat & (BROKEN|NOPOWER)) )
+	if (!Adjacent(user) || stat & (BROKEN|NOPOWER))
 		if (!issilicon(user) && !isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=shield_capacitor")
@@ -162,5 +162,5 @@
 	if (src.anchored)
 		to_chat(usr, "It is fastened to the floor!")
 		return
-	src.dir = turn(src.dir, 270)
+	set_dir(turn(src.dir, 270))
 	return

@@ -10,7 +10,7 @@
 	var/sound_path = "sound/musical_instruments/piano"
 
 /obj/structure/device/piano/unable_to_play(mob/living/user)
-	return ..() || !in_range(src, user) || !anchored
+	return ..() || !Adjacent(user) || !anchored
 
 /obj/structure/device/piano/atom_init()
 	. = ..()
@@ -49,6 +49,13 @@
 		anchored = !anchored
 	else
 		..()
+
+/obj/structure/musician/piano/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			playsound(loc, 'sound/effects/piano_hit.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/structure/device/piano/minimoog
 	name = "space minimoog"

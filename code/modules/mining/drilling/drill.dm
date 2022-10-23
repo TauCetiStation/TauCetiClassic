@@ -1,14 +1,15 @@
 /obj/machinery/mining
 	icon = 'icons/obj/mining_drill.dmi'
-	anchored = 0
+	anchored = FALSE
 	use_power = NO_POWER_USE         //The drill takes power directly from a cell.
-	density = 1
+	density = TRUE
 	layer = MOB_LAYER+0.1 //So it draws over mobs in the tile north of it.
 
 /obj/machinery/mining/drill
 	name = "mining drill head"
 	desc = "An enormous drill."
 	icon_state = "mining_drill"
+	interact_open = TRUE
 
 	var/braces_needed = 2
 	var/list/supports = list()
@@ -96,7 +97,7 @@
 				T.gets_dug()
 		else if(istype(get_turf(src), /turf/simulated/floor))
 			var/turf/simulated/floor/T = get_turf(src)
-			T.ex_act(2.0)
+			T.ex_act(EXPLODE_HEAVY)
 
 	dig_ore()
 
@@ -131,7 +132,7 @@
 /obj/machinery/mining/drill/proc/system_error(error)
 
 	if(error)
-		src.visible_message("<span class='notice'>\The [src] flashes a '[error]' warning.</span>")
+		visible_message("<span class='notice'>\The [src] flashes a '[error]' warning.</span>")
 	need_player_check = 1
 	active = 0
 	update_icon()
@@ -167,6 +168,8 @@
 		harvesting.has_resources = 0
 		harvesting.resources = null
 		resource_field -= harvesting
+		if(resource_field.len <= 0)
+			break
 		harvesting = pick(resource_field)
 
 	if(!harvesting)
@@ -216,7 +219,7 @@
 		supports = list()
 
 	supports += brace
-	anchored = 1
+	anchored = TRUE
 
 	if(supports && supports.len >= braces_needed)
 		supported = 1
@@ -233,9 +236,9 @@
 	supports -= brace
 
 	if((!supports || !supports.len))
-		anchored = 0
+		anchored = FALSE
 	else
-		anchored = 1
+		anchored = TRUE
 
 	if(supports && supports.len >= braces_needed)
 		supported = 1
@@ -301,8 +304,7 @@
 		if(cell)
 			to_chat(user, "The drill already has a cell installed.")
 		else
-			user.drop_item()
-			O.loc = src
+			user.drop_from_inventory(O, src)
 			cell = O
 			component_parts += O
 			to_chat(user, "You install \the [O].")
@@ -312,7 +314,7 @@
 		return
 	..()
 
-/obj/machinery/mining/drill/is_interactable()
+/obj/machinery/mining/drill/is_operational()
 	return TRUE
 
 /obj/machinery/mining/drill/attack_hand(mob/user)
@@ -355,7 +357,7 @@
 /obj/machinery/mining/drill/proc/shock(mob/user)
 	if(!cell || wires_power_disable )
 		return 0
-	if(!istype(user, /mob/living/carbon))
+	if(!iscarbon(user))
 		return 0
 
 	var/mob/living/carbon/C = user
@@ -383,7 +385,7 @@
 	if(!BP || !BP.is_usable())
 		return
 
-	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, "melee")/2, 1)
+	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, MELEE)/2, 1)
 	to_chat(H, "<span class='danger'>You feel, that [src] try to cut your [BP]!</span>")
 
 	if(BP.is_stump)
@@ -391,7 +393,7 @@
 
 	BP = BP.parent
 
-	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, "melee")/2, 1)
+	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, MELEE)/2, 1)
 	to_chat(H, "<span class='danger'>You feel, that [src] try to cut your [BP]!</span>")
 
 /obj/machinery/mining/drill/update_icon()
@@ -420,6 +422,5 @@
 		to_chat(usr, "<span class='notice'>You unload the drill's storage cache into the ore box.</span>")
 	else
 		to_chat(usr, "<span class='notice'>You must move an ore box up to the drill before you can unload it.</span>")
-
 
 

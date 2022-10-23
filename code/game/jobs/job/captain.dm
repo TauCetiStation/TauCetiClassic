@@ -14,6 +14,7 @@
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 3900
 	outfit = /datum/outfit/job/captain
+	skillsets = list("Captain" = /datum/skillset/captain)
 
 // Non-human species can't be captains.
 /datum/job/captain/special_species_check(datum/species/S)
@@ -22,7 +23,7 @@
 /datum/job/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
 		to_chat(world, "<b>[H.real_name] is the captain!</b>")//maybe should be announcment, not OOC notification?
-		score["captain"] += H.real_name
+		SSStatistics.score.captain += H.real_name
 
 /datum/job/captain/get_access()
 	return get_all_accesses()
@@ -43,7 +44,7 @@
 	minimal_player_ingame_minutes = 2400
 	access = list(
 		access_security, access_sec_doors, access_brig, access_forensics_lockers,
-		access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads,
+		access_medical, access_change_ids, access_ai_upload, access_eva, access_heads,
 		access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue,
 		access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
 		access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
@@ -53,8 +54,8 @@
 	/*
 		HEY YOU!
 		ANY TIME YOU TOUCH THIS, PLEASE CONSIDER GOING TO preferences_savefile.dm
-		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND ALSO LOCATING THE "job_loop:" THINGY AND CHANGING
-		THE VERSION THERE. CURRENTLY THE VERSION THERE IS 26.
+		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
+	skillsets = list("Head of Personnel" = /datum/skillset/hop)

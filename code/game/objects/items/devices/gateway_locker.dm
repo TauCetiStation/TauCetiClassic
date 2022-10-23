@@ -5,7 +5,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "recaller"
 	item_state = "walkietalkie"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	var/obj/machinery/gateway/center/stationgate
 	var/used = FALSE
 	var/opened = FALSE
@@ -33,25 +33,16 @@
 			return
 	else
 		war_device_activation_forbidden = TRUE
-	var/obj/effect/landmark/syndie_gateway/Syndie_landmark = locate(/obj/effect/landmark/syndie_gateway) in landmarks_list
-	if(!istype(Syndie_landmark))
+	var/obj/effect/landmark/syndie_gateway/Syndie_landmark = locate("landmark*Syndie gateway")
+	if(QDELETED(Syndie_landmark))
 		to_chat(user,"<span class='danger'>You already perform hack process</span>")
 		return
 	used = TRUE
 	var/turf/turf = Syndie_landmark.loc
 	qdel(Syndie_landmark)
-	var/obj/item/device/radio/intercom/radio = new(null)
-	radio.autosay("Unregistered logon in the System in Progress.", "Gateway Message System", "Common")
-	addtimer(CALLBACK(src, .proc/perform_gate, turf, radio), GATEWAY_HACK_TIME)
+	addtimer(CALLBACK(src, .proc/perform_gate, turf), GATEWAY_HACK_TIME)
 
-	stationgate.hacked = TRUE
-	stationgate.update_icon()
-	stationgate.detect()
-	for(var/obj/machinery/gateway/G in stationgate.linked)
-		G.hacked = TRUE
-		G.update_icon()
-
-/obj/item/device/gateway_locker/proc/perform_gate(turf/turf, obj/item/device/radio/intercom/radio)
+/obj/item/device/gateway_locker/proc/perform_gate(turf/turf)
 	new /obj/effect/effect/sparks(turf)
 	var/obj/machinery/gateway/center/Gate = new(turf)
 	Gate.detect()
@@ -62,11 +53,19 @@
 	Gate.update_icon()
 	Gate.destination = stationgate
 	stationgate.destination = Gate
+
+	stationgate.hacked = TRUE
+	stationgate.update_icon()
+	stationgate.detect()
+	for(var/obj/machinery/gateway/G in stationgate.linked)
+		G.hacked = TRUE
+		G.update_icon()
 	opened = TRUE
-	radio.autosay("Access was granted, It's Nice day to die, Crew.", "Gateway Message System", "Common")
-	qdel(radio)
+	var/datum/announcement/centcomm/nuclear/gateway/announce = new
+	announce.play()
 	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 /obj/effect/landmark/syndie_gateway
+	name = "Syndie gateway"
 
 #undef GATEWAY_HACK_TIME

@@ -3,22 +3,20 @@
 	desc = "A neosilk clip-on tie."
 	icon = 'icons/obj/clothing/accessory.dmi'
 	icon_state = "bluetie"
-	item_state = "" // no inhands
-	item_color = "bluetie"
 	slot_flags = SLOT_FLAGS_TIE
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 
 	var/slot = "decor"
-	var/obj/item/clothing/under/has_suit = null // the suit the tie may be attached to
+	var/obj/item/clothing/has_suit = null // the suit the accessory may be attached to
 	var/image/inv_overlay = null                // overlay used when attached to clothing.
 	var/layer_priority = 0                      // so things such as medals won't be drawn under webbings or holsters on mob, still problem with inside inventory.
 
 /obj/item/clothing/accessory/atom_init()
 	. = ..()
-	inv_overlay = image("icon" = 'icons/obj/clothing/accessory_overlay.dmi', "icon_state" = "[item_color ? "[item_color]" : "[icon_state]"]")
+	inv_overlay = image("icon" = 'icons/obj/clothing/accessory_overlay.dmi', "icon_state" = icon_state)
 
 //when user attached an accessory to S
-/obj/item/clothing/accessory/proc/on_attached(obj/item/clothing/under/S, mob/user, silent)
+/obj/item/clothing/accessory/proc/on_attached(obj/item/clothing/S, mob/user, silent)
 	if(!istype(S))
 		return
 	has_suit = S
@@ -58,36 +56,33 @@
 /obj/item/clothing/accessory/tie/blue
 	name = "blue tie"
 	icon_state = "bluetie"
-	item_color = "bluetie"
 
 /obj/item/clothing/accessory/tie/red
 	name = "red tie"
 	icon_state = "redtie"
-	item_color = "redtie"
 
 /obj/item/clothing/accessory/tie/black
 	name = "black tie"
 	icon_state = "blacktie"
-	item_color = "blacktie"
 
 /obj/item/clothing/accessory/tie/horrible
 	name = "horrible tie"
 	desc = "A neosilk clip-on tie. This one is disgusting."
 	icon_state = "horribletie"
-	item_color = "horribletie"
 
 /obj/item/clothing/accessory/stethoscope
 	name = "stethoscope"
 	desc = "An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing."
 	icon_state = "stethoscope"
-	item_color = "stethoscope"
 	layer_priority = 0.1
+	m_amt = 150
+	g_amt = 20
 
 /obj/item/clothing/accessory/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))
 		var/obj/item/organ/internal/heart/H = M.organs_by_name[O_HEART]
 		if(user.a_intent == INTENT_HELP)
-			var/target_zone = parse_zone(user.zone_sel.selecting)
+			var/target_zone = parse_zone(user.get_targetzone())
 			if(target_zone)
 				var/their = "their"
 				switch(M.gender)
@@ -156,45 +151,82 @@
 	return ..(M, user)
 
 /obj/item/clothing/accessory/bronze_cross
-    name = "bronze cross"
-    desc = "That's a little bronze cross for wearing under the clothes."
-    icon_state = "bronze_cross"
-    item_state = "bronze_cross"
-    item_color = "bronze_cross"
+	name = "bronze cross"
+	desc = "That's a little bronze cross for wearing under the clothes."
+	icon_state = "bronze_cross"
 
 /obj/item/clothing/accessory/metal_cross
-    name = "metal cross"
-    desc = "That's a little metal cross for wearing under the clothes."
-    icon_state = "metal_cross"
-    item_state = "metal_cross"
-    item_color = "metal_cross"
+	name = "metal cross"
+	desc = "That's a little metal cross for wearing under the clothes."
+	icon_state = "metal_cross"
 
 //Medals
 /obj/item/clothing/accessory/medal
 	name = "bronze medal"
 	desc = "A bronze medal."
 	icon_state = "bronze"
-	item_color = "bronze"
 	layer_priority = 0.1
+	m_amt = 1000
+	var/medaltype = "medal" //Sprite used for medalbox
+	var/commended = FALSE
+
+//Pinning medals on people
+/obj/item/clothing/accessory/medal/attack(mob/living/M, mob/living/user, def_zone)
+	if(ishuman(M) && user.a_intent != INTENT_HARM)
+		var/mob/living/carbon/human/H = M
+		var/obj/item/wearing = H.w_uniform
+
+		if(!wearing || H.wear_suit?.flags_inv & HIDEJUMPSUIT) //Check if the jumpsuit is covered
+			wearing = H.wear_suit
+
+		if(!wearing || !istype(wearing, /obj/item/clothing))
+			to_chat(user, "<span class='warning'>You can't pin a medal to [H].</span>")
+			return
+		var/obj/item/clothing/C = wearing
+
+		var/delay = 20
+		if(user == H)
+			delay = 0
+		else
+			user.visible_message("<span class='notice'>[user] is trying to pin [src] on [H]'s chest.</span>", \
+				"<span class='notice'>You try to pin [src] on [H]'s chest.</span>")
+		var/input
+		if(!commended && user != H)
+			input = sanitize(input(user, "Reason for this commendation? Describe their accomplishments", "Commendation") as null|text)
+		if(do_after(user, delay, target = H))
+			C.attach_accessory(src, user)
+			if(user != H)
+				user.visible_message("<span class='notice'>[user] pins \the [src] on [H]'s chest.</span>", \
+					"<span class='notice'>You pin \the [src] on [H]'s chest.</span>")
+				if(input)
+					commended = TRUE
+					desc += "<br>The inscription reads: [input] - [user.real_name]"
+					log_game("<b>[key_name(H)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
+					message_admins("<b>[key_name_admin(H)]</b> was given the following commendation by <b>[key_name_admin(user)]</b>: [input]")
+		return
+
+	..()
 
 /obj/item/clothing/accessory/medal/conduct
 	name = "distinguished conduct medal"
-	desc = "A bronze medal awarded for distinguished conduct. Whilst a great honor, this is most basic award given by Nanotrasen. It is often awarded by a captain to a member of his crew."
+	desc = "A bronze medal awarded for distinguished conduct. Whilst a great honor, this is the most basic award given by Nanotrasen. It is often awarded by a captain to a member of his crew."
 
 /obj/item/clothing/accessory/medal/bronze_heart
 	name = "bronze heart medal"
 	desc = "A bronze heart-shaped medal awarded for sacrifice. It is often awarded posthumously or for severe injury in the line of duty."
 	icon_state = "bronze_heart"
 
-/obj/item/clothing/accessory/medal/nobel_science
-	name = "nobel sciences award"
-	desc = "A bronze medal which represents significant contributions to the field of science or engineering."
+/obj/item/clothing/accessory/medal/cargo
+	name = "\"cargo tech of the shift\" award"
+	desc = "An award bestowed only upon those cargotechs who have exhibited devotion to their duty in keeping with the highest traditions of Cargonia."
+	icon_state = "ribbon_cargo"
 
 /obj/item/clothing/accessory/medal/silver
 	name = "silver medal"
 	desc = "A silver medal."
 	icon_state = "silver"
-	item_color = "silver"
+	medaltype = "medal-silver"
+	m_amt = 0
 
 /obj/item/clothing/accessory/medal/silver/valor
 	name = "medal of valor"
@@ -204,20 +236,55 @@
 	name = "robust security award"
 	desc = "An award for distinguished combat and sacrifice in defence of Nanotrasen's commercial interests. Often awarded to security staff."
 
+/obj/item/clothing/accessory/medal/silver/excellence
+	name = "\proper the head of personnel award for outstanding achievement in the field of excellence"
+	desc = "Nanotrasen's dictionary defines excellence as \"the quality or condition of being excellent\". This is awarded to those rare crewmembers who fit that definition."
+
+/obj/item/clothing/accessory/medal/silver/med_medal
+	name = "exemplary performance medal"
+	desc = "A medal awarded to those who have shown distinguished conduct, performance, and initiative within the medical department."
+	icon_state = "med_medal"
+
+/obj/item/clothing/accessory/medal/silver/med_medal2
+	name = "excellence in medicine medal"
+	desc = "A medal awarded to those who have shown legendary performance, competence, and initiative beyond all expectations within the medical department."
+	icon_state = "med_medal2"
+
 /obj/item/clothing/accessory/medal/gold
 	name = "gold medal"
 	desc = "A prestigious golden medal."
 	icon_state = "gold"
-	item_color = "gold"
+	medaltype = "medal-gold"
+	m_amt = 0
+	unacidable = TRUE
 
 /obj/item/clothing/accessory/medal/gold/captain
 	name = "medal of captaincy"
 	desc = "A golden medal awarded exclusively to those promoted to the rank of captain. It signifies the codified responsibilities of a captain to Nanotrasen, and their undisputable authority over their crew."
-	icon_state = "gold_nt"
 
 /obj/item/clothing/accessory/medal/gold/heroism
 	name = "medal of exceptional heroism"
-	desc = "An extremely rare golden medal awarded only by CentComm. To recieve such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
+	desc = "An extremely rare golden medal awarded only by CentCom. To receive such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
+
+/obj/item/clothing/accessory/medal/gold/bureaucracy
+	name = "\improper Excellence in Bureaucracy Medal"
+	desc = "Awarded for exemplary managerial services rendered while under contract with Nanotrasen."
+	icon_state = "medal_paperwork"
+
+/obj/item/clothing/accessory/medal/gold/nanotrasen
+	name = "NanoTrasen Exclusive award"
+	desc = "The most rare golden medal ever awarded only by highest NanoTrasen officers. There aren't any specific instructions how to get this award, because it hasn't been received by anyone before. If you received this one, you are most likely the most helpful person at NanoTrasen."
+	icon_state = "gold_nt"
+
+/obj/item/clothing/accessory/medal/plasma
+	name = "plasma medal"
+	desc = "An eccentric medal made of plasma."
+	icon_state = "plasma"
+	medaltype = "medal-plasma"
+
+/obj/item/clothing/accessory/medal/plasma/nobel_science
+	name = "nobel sciences award"
+	desc = "A plasma medal which represents significant contributions to the field of science or engineering."
 
 /*
 	Holobadges are worn on the belt or neck, and can be used to show that the holder is an authorized
@@ -226,19 +293,17 @@
 */
 
 /obj/item/clothing/accessory/holobadge
-
 	name = "holobadge"
-	desc = "This glowing blue badge marks the holder as THE LAW."
+	desc = "This glowing blue badge marks the holder as THE LAW. Also has an in-built camera."
 	icon_state = "holobadge"
-	item_color = "holobadge"
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_TIE
 
 	var/emagged = FALSE // Emagging removes Sec check.
 	var/stored_name = null
+	var/obj/machinery/camera/camera
 
 /obj/item/clothing/accessory/holobadge/cord
 	icon_state = "holobadge-cord"
-	item_color = "holobadge-cord"
 	slot_flags = SLOT_FLAGS_MASK | SLOT_FLAGS_TIE
 
 /obj/item/clothing/accessory/holobadge/attack_self(mob/user)
@@ -265,7 +330,20 @@
 			to_chat(user, "You imprint your ID details onto the badge.")
 			stored_name = id_card.registered_name
 			name = "holobadge ([stored_name])"
-			desc = "This glowing blue badge marks [stored_name] as THE LAW."
+			desc = "This glowing blue badge marks [stored_name] as THE LAW. Also has an in-built camera."
+
+			if(stored_name && !camera)
+				camera = new /obj/machinery/camera(src)
+				camera.name = "bodycam"
+				camera.replace_networks(list("SECURITY UNIT"))
+				cameranet.removeCamera(camera)
+				camera.status = FALSE
+				if(has_suit)
+					camera.status = TRUE
+					to_chat(user, "<span class='notice'>[bicon(src)]Camera activated.</span>")
+			to_chat(user, "<span class='notice'>User registered as [stored_name].</span>")
+			if(camera)
+				camera.c_tag = "[stored_name] #[rand(999)]"
 		else
 			to_chat(user, "[src] rejects your insufficient access rights.")
 		return TRUE
@@ -283,4 +361,22 @@
 		return FALSE
 	emagged = TRUE
 	to_chat(user, "<span class='warning'>You swipe card and crack the holobadge security checks.</span>")
+	if(camera)
+		camera.status = FALSE
 	return TRUE
+
+/obj/item/clothing/accessory/holobadge/on_attached(obj/item/clothing/S, mob/user, silent)
+	..()
+	if(camera && !emagged)
+		camera.status = TRUE
+		to_chat(user, "<span class='notice'>[bicon(src)]Camera activated.</span>")
+
+/obj/item/clothing/accessory/holobadge/on_removed(mob/user)
+	..()
+	if(camera && !emagged)
+		camera.status = FALSE
+		to_chat(user, "<span class='notice'>[bicon(src)]Camera deactivated.</span>")
+
+/obj/item/clothing/accessory/holobadge/emp_act(severity)
+	if(camera)
+		camera.emp_act(1)

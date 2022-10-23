@@ -18,31 +18,37 @@
 /obj/item/weapon/book/manual/wiki/atom_init_late()
 	if(config.wikiurl)
 		dat = {"
-
-			<html><head>
-			<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
-			<style>
-				html, body, iframe {
-					padding: 0px; margin: 0px;
-				}
-				iframe {
-					display: none;
-				}
-			</style>
-			</head>
-			<body>
-			<script type="text/javascript">
-				function pageloaded(myframe) {
-					document.getElementById("loading").style.display = "none";
-					myframe.style.display = "inline";
-				}
-			</script>
-			<p id='loading'>You start skimming through the manual...</p>
-			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[config.wikiurl]/[wiki_page]?printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
-			</body>
-
+			<!DOCTYPE html>
+			<html>
+				<head>
+					<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+					<meta http-equiv="X-UA-Compatible" content="IE=edge">
+					<title>[name] by [author]</title>
+					<style>
+						html, body {
+							box-sizing: border-box;
+							height: 100%;
+							margin: 0px;
+							padding: 0px;
+						}
+						iframe {
+							padding: 0px;
+							margin: 0px;
+							display: none;
+						}
+					</style>
+				</head>
+				<body>
+					<script type="text/javascript">
+						function pageloaded(myframe) {
+							document.getElementById("loading").style.display = "none";
+							myframe.style.display = "inline";
+						}
+					</script>
+					<p id='loading'>You start skimming through the manual...</p>
+					<iframe width='100%' height='97%' onload="pageloaded(this)" src="[config.wikiurl]/[wiki_page]?printable=yes" frameborder="0" id="main_frame"></iframe>
+				</body>
 			</html>
-
 			"}
 	return ..()
 
@@ -206,6 +212,15 @@
 
 //Law and Order
 
+/obj/item/weapon/book/manual/wiki/possible_threats
+	name = "Possible Threats"
+	desc = "A Nanotrasen warning about possible threats"
+	icon_state = "bookThreats"
+	item_state = "book9"
+	author = "NanoTrasen"
+	title = "Возможные угрозы"
+	wiki_page = "Возможные_угрозы"
+
 /obj/item/weapon/book/manual/wiki/security_space_law
 	name = "Space Law"
 	desc = "A set of NanoTrasen guidelines for keeping law and order on their space stations."
@@ -312,6 +327,14 @@
 	author = "Tau Ceti Classic"
 	title = "Rules"
 	wiki_page = "Rules"
+
+/obj/item/weapon/book/manual/wiki/cult
+	name = "Ordhu'rug'ar"
+	icon_state = "book"
+	item_state = "book2"
+	author = "Bok'irg"
+	title = "Магия культа"
+	wiki_page = "Cult_Magic"
 
 //Old manuals that we should keep for a while
 
@@ -420,6 +443,6 @@
 			"<span class='warning'>[user] perks at \the [src] and nods. Suddenly, \the [src] burns to ashes!</span>",
 			"<span class='warning'>As soon as you finish reading \the [src], you become the speaker of Sy-Code and [src] burns to ashes.</span>"
 		)
-		user.add_language("Sy-Code")
+		user.add_language(LANGUAGE_SYCODE)
 		new /obj/effect/decal/cleanable/ash(user.loc)
 		qdel(src)

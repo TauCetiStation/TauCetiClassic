@@ -3,7 +3,7 @@
 	name = "analyzer"
 	icon_state = "atmos"
 	item_state = "analyzer"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	flags = CONDUCT | NOBLUDGEON | NOATTACKANIMATION
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 5
@@ -30,9 +30,6 @@
 
 	if (user.incapacitated())
 		return
-	if (!(istype(usr, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
-		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return
 
 	analyze_gases(user.loc, user,advanced_mode)
 	return TRUE
@@ -41,9 +38,6 @@
 	if(!proximity)
 		return
 	if (user.incapacitated())
-		return
-	if (!(istype(usr, /mob/living/carbon/human) || SSticker) && SSticker.mode.name != "monkey")
-		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	if(!isobj(target))
 		return

@@ -9,6 +9,9 @@
 	var/obj/item/target = null
 	var/creator = null
 	anchored = TRUE
+	var/portal_density_check = TELE_CHECK_NONE
+	var/portal_respect_dir = FALSE
+	var/portal_use_forceMove = TRUE
 
 /obj/effect/portal/atom_init(mapload, turf/target, creator = null, lifespan = 300)
 	. = ..()
@@ -48,6 +51,9 @@
 	if(!target)
 		qdel(src)
 		return FALSE
+	density_check = portal_density_check
+	respect_entrydir = portal_respect_dir
+	use_forceMove = portal_use_forceMove
 	if(istype(M, /atom/movable))
 		if(prob(failchance)) //oh dear a problem, put em in deep space
 			src.icon_state = "portal1"
@@ -59,7 +65,7 @@
 /obj/effect/portal/tsci_wormhole
 	name = "wormhole"
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "anom"
+	icon_state = "bluespace_wormhole_enter"
 	failchance = 0
 
 	var/obj/effect/portal/tsci_wormhole/linked_portal = null
@@ -67,7 +73,9 @@
 
 /obj/effect/portal/tsci_wormhole/atom_init(mapload, turf/target, creator = null, lifespan = 0, other_side_portal = FALSE)
 	. = ..()
-	if(!other_side_portal)
+	if(other_side_portal)
+		icon_state = "bluespace_wormhole_exit"
+	else
 		linked_portal = new(target, get_turf(src), null, 0, TRUE)
 		linked_portal.linked_portal = src
 		target = linked_portal
@@ -96,7 +104,7 @@
 /obj/effect/portal/tsci_wormhole/Crossed(atom/movable/AM)
 	set waitfor = 0
 
-	. = .()
+	. = ..()
 	if(teleport(AM, TELE_CHECK_ALL, TRUE, FALSE))
 		handle_special_effects(AM)
 
@@ -106,9 +114,15 @@
 		var/bad_effects = 0
 		if(H.species.flags[IS_SYNTHETIC])
 			return
+
+		var/list/stabilizer = H.search_contents_for(/obj/item/rig_module/teleporter_stabilizer)
+		for(var/obj/item/rig_module/teleporter_stabilizer/s in stabilizer)
+			if (s.stabilize_teleportation())
+				return
+
 		if(prob(20))
 			bad_effects += 1
-			H.confused += 3
+			H.AdjustConfused(3)
 			var/msg = pick("You feel dizzy.", "Your head starts spinning.")
 			to_chat(H, "<span class='warning'>[msg]</span>")
 		if(prob(20))
@@ -116,3 +130,9 @@
 			H.invoke_vomit_async() //No msg required, since vomit() will handle this.
 		if(bad_effects == 2)
 			H.Paralyse(3)
+
+/obj/effect/portal/portalgun
+	failchance = 0
+	portal_density_check = TELE_CHECK_ALL
+	portal_respect_dir = TRUE
+	portal_use_forceMove = FALSE

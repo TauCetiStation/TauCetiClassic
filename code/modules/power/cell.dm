@@ -3,8 +3,10 @@
 // fits in APC to provide backup power
 /obj/item/weapon/stock_parts/cell/atom_init()
 	. = ..()
-	charge = maxcharge
-	addtimer(CALLBACK(src, .proc/updateicon), 5)
+	if(init_full)
+		charge = maxcharge
+		if(isturf(loc))
+			updateicon()
 
 /obj/item/weapon/stock_parts/cell/proc/updateicon()
 	cut_overlays()
@@ -22,7 +24,7 @@
 // use power from a cell, returns the amount actually used
 /obj/item/weapon/stock_parts/cell/use(amount)
 	if(amount < 0)
-		stack_trace("[src.type]/use() called with a negative parameter [amount]")
+		stack_trace("[src.type]/use() called with a negative parameter")
 		return 0
 	if(rigged && amount > 0)
 		explode()
@@ -30,17 +32,17 @@
 
 	var/used = min(charge, amount)
 	charge -= used
+	SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED, charge, maxcharge)
 	return used
 
 // recharge the cell
 /obj/item/weapon/stock_parts/cell/proc/give(amount)
 	if(amount < 0)
-		stack_trace("[src.type]/give() called with a negative parameter [amount]")
+		stack_trace("[src.type]/give() called with a negative parameter")
 		return 0
 	if(rigged && amount > 0)
 		explode()
 		return 0
-
 	if(maxcharge < amount)	return 0
 	var/power_used = min(maxcharge-charge,amount)
 	if(crit_fail)	return 0
@@ -50,21 +52,21 @@
 			crit_fail = 1
 			return 0
 	charge += power_used
+	SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED, charge, maxcharge)
 	return power_used
-
 
 /obj/item/weapon/stock_parts/cell/examine(mob/user)
 	..()
 	if(src in view(1, user))
 		if(maxcharge <= 2500)
-			to_chat(user, "[desc]\nThe manufacturer's label states this cell has a power rating of [maxcharge], and that you should not swallow it.\nThe charge meter reads [round(src.percent() )]%.")
+			to_chat(user, "[desc]\nThe manufacturer's label states this cell has a power rating of [maxcharge], and that you should not swallow it.\nThe charge meter reads [round(percent() )]%.")
 		else
-			to_chat(user, "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!\nThe charge meter reads [round(src.percent() )]%.")
+			to_chat(user, "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!\nThe charge meter reads [round(percent() )]%.")
 		if(crit_fail)
 			to_chat(user, "<span class='red'>This power cell seems to be faulty.</span>")
 
 /obj/item/weapon/stock_parts/cell/attack_self(mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -91,7 +93,7 @@
 					var/drain = C.maxcharge-H.nutrition
 					if(drain > src.charge)
 						drain = src.charge
-					H.nutrition += src.use(drain)
+					H.nutrition += use(drain)
 					updateicon()
 					to_chat(user, "<span class='notice'>[round(100.0*drain/maxcharge, 1)]% of energy gained from the cell.</span>")
 				else
@@ -164,22 +166,17 @@
 /obj/item/weapon/stock_parts/cell/ex_act(severity)
 
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				if(prob(50))
+					corrupt()
 				return
-			if (prob(50))
-				corrupt()
-		if(3.0)
-			if (prob(25))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(75))
+				if(prob(25))
+					corrupt()
 				return
-			if (prob(25))
-				corrupt()
-	return
+	qdel(src)
 
 /obj/item/weapon/stock_parts/cell/blob_act()
 	if(prob(75))

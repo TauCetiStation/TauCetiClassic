@@ -4,8 +4,8 @@
 	icon = 'icons/obj/pit.dmi'
 	icon_state = "pit1"
 	blend_mode = BLEND_MULTIPLY
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/open = 1
 
 /obj/structure/pit/attackby(obj/item/weapon/W, mob/user)
@@ -126,7 +126,7 @@
 
 	var/loot
 	var/list/suits = list(
-		/obj/item/clothing/suit/wintercoat/captain,
+		/obj/item/clothing/suit/hooded/wintercoat/captain,
 		/obj/item/clothing/suit/storage/labcoat,
 		/obj/item/clothing/suit/storage/det_suit,
 		/obj/item/clothing/suit/storage/hazardvest,
@@ -153,7 +153,6 @@
 
 	if(prob(30))
 		var/list/misc = list(
-			/obj/item/clothing/accessory/fluff/altair_locket,
 			/obj/item/clothing/accessory/holobadge,
 			/obj/item/clothing/accessory/tie/horrible,
 			/obj/item/clothing/accessory/medal,
@@ -161,7 +160,7 @@
 			/obj/item/clothing/accessory/medal/silver/valor,
 			/obj/item/clothing/accessory/medal/gold,
 			/obj/item/clothing/accessory/medal/gold/heroism,
-			/obj/item/weapon/gun/energy/laser/retro/jetsons
+			/obj/item/weapon/gun/energy/laser/jetsons
 			)
 		loot = pick(misc)
 		new loot(C)
@@ -177,7 +176,7 @@
 	icon_state = "wood"
 	pixel_x = 15
 	pixel_y = 8
-	anchored = 1
+	anchored = TRUE
 	var/message = "Unknown."
 
 /obj/structure/gravemarker/cross
@@ -195,9 +194,8 @@
 	icon_state = pick("wood","cross")
 
 	var/nam = random_name(pick(MALE,FEMALE))
-	var/cur_year = text2num(time2text(world.timeofday, "YYYY"))+544
-	var/born = cur_year - rand(5,150)
-	var/died = max(cur_year - rand(0,70),born)
+	var/born = game_year - rand(70, 150)
+	var/died = born + rand(20, 60)
 
 	message = "Here lies [nam], [born] - [died]."
 
@@ -221,16 +219,17 @@
 //Grave jetsons items
 
 
-/obj/item/weapon/gun/energy/laser/retro/jetsons
+/obj/item/weapon/gun/energy/laser/jetsons
 	name ="unwanted laser"
 	icon_state = "jetsons"
 	item_state = "jetsons"
 	desc = "Very unusual version of laser gun, oldschool style"
 	origin_tech = "combat=2;magnets=1"
+	can_be_holstered = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice/jetsons)
 
 
-/obj/item/weapon/gun/energy/laser/retro/jetsons/update_icon()
+/obj/item/weapon/gun/energy/laser/jetsons/update_icon()
 	return 0
 
 /obj/item/ammo_casing/energy/laser/practice/jetsons
@@ -244,18 +243,15 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 7 //lucky shot
 	damage_type = BURN
-	flag = "laser"
+	flag = LASER
 	eyeblur = 2
 
 /obj/item/clothing/under/jetsons
 	name = "old overall"
 	desc = "Mr. Spacely's favorite overalls"
 	icon_state = "jetsons_s"
-	item_color = "jetsons_s"
 
 /obj/item/clothing/under/jetsons/j2
 	name = "old dress"
 	desc = "Jetson is coming appart"
 	icon_state = "jetsons_f"
-	item_color = "jetsons_f"
-

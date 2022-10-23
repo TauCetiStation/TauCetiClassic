@@ -1,8 +1,9 @@
 /atom/movable
-	layer = 3
+	layer = OBJ_LAYER
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
+
 	var/last_move = null
-	var/anchored = 0
+	var/anchored = FALSE
 	var/move_speed = 10
 	var/l_move_time = 1
 	var/throwing = 0
@@ -14,14 +15,23 @@
 	var/mob/pulledby = null
 	var/can_be_pulled = TRUE
 
+	var/moving_diagonally = 0
+
+	var/w_class = 0
+
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc
 	var/inertia_moving = 0
 	var/inertia_next_move = 0
 	var/inertia_move_delay = 5
 
-	var/list/client_mobs_in_contents
+	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
+
+	var/list/clients_in_contents
 	var/freeze_movement = FALSE
+
+	// A (nested) list of contents that need to be sent signals to when moving between areas. Can include src.
+	var/list/area_sensitive_contents
 
 /atom/movable/Destroy()
 
@@ -33,19 +43,22 @@
 		loc.handle_atom_del(src)
 	for(var/atom/movable/AM in contents)
 		qdel(AM)
-	loc = null
 	invisibility = 101
 	if(pulledby)
 		pulledby.stop_pulling()
 
 	. = ..()
 
+	loc = null
 	// If we have opacity, make sure to tell (potentially) affected light sources.
 	if (opacity && istype(T))
 		var/old_has_opaque_atom = T.has_opaque_atom
 		T.recalc_atom_opacity()
 		if (old_has_opaque_atom != T.has_opaque_atom)
 			T.reconsider_lights()
+
+	vis_locs = null //clears this atom out of all viscontents
+	vis_contents.Cut()
 
 // Previously known as HasEntered()
 // This is automatically called when something enters your square
@@ -60,60 +73,67 @@
 	if (SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, dir) & COMPONENT_MOVABLE_BLOCK_PRE_MOVE)
 		return
 
+	var/is_diagonal = ISDIAGONALDIR(Dir)
 	var/atom/oldloc = loc
+	var/old_dir = dir
 
 	if(loc != NewLoc)
-		if (!(Dir & (Dir - 1))) //Cardinal move
+		if (!is_diagonal) //Cardinal move
 			. = ..()
-		else //Diagonal move, split it into cardinal moves
-			if (Dir & NORTH)
-				if (Dir & EAST)
-					if (step(src, NORTH))
-						. = step(src, EAST)
-					else if (step(src, EAST))
-						. = step(src, NORTH)
-				else if (Dir & WEST)
-					if (step(src, NORTH))
-						. = step(src, WEST)
-					else if (step(src, WEST))
-						. = step(src, NORTH)
-			else if (Dir & SOUTH)
-				if (Dir & EAST)
-					if (step(src, SOUTH))
-						. = step(src, EAST)
-					else if (step(src, EAST))
-						. = step(src, SOUTH)
-				else if (Dir & WEST)
-					if (step(src, SOUTH))
-						. = step(src, WEST)
-					else if (step(src, WEST))
-						. = step(src, SOUTH)
+		else //Diagonal move, split it into cardinal
+			var/v = Dir & NORTH_SOUTH
+			var/h = Dir & EAST_WEST
+
+			moving_diagonally = FIRST_DIAG_STEP
+			. = step(src, v)
+			if(.)
+				moving_diagonally = SECOND_DIAG_STEP
+				if(!step(src, h))
+					set_dir(v)
+			else
+				dir = old_dir // blood trails uses dir
+				. = step(src, h)
+				if(.)
+					moving_diagonally = SECOND_DIAG_STEP
+					if(!step(src, v))
+						set_dir(h)
+
+			moving_diagonally = 0
 
 	if(!loc || (loc == oldloc && oldloc != NewLoc))
 		last_move = 0
 		return FALSE
 
-	src.move_speed = world.time - src.l_move_time
-	src.l_move_time = world.time
+	if(!is_diagonal && moving_diagonally != SECOND_DIAG_STEP)
+		move_speed = world.time - l_move_time
+		l_move_time = world.time
 
 	last_move = Dir
 
 	if(. && buckled_mob && !handle_buckled_mob_movement(loc,Dir)) //movement failed due to buckled mob
 		. = 0
 
+	if(dir != old_dir)
+		SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
+
 	if(.)
 		Moved(oldloc, Dir)
 
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
-	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
+	if(!ISDIAGONALDIR(Dir))
+		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, OldLoc, Dir)
+
+		if(moving_diagonally)
+			return
+
 	for(var/atom/movable/AM in contents)
 		AM.locMoved(OldLoc, Dir)
 
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
-	if(length(client_mobs_in_contents))
-		update_parallax_contents()
+
+	update_parallax_contents()
 
 	if (orbiters)
 		for (var/thing in orbiters)
@@ -122,7 +142,7 @@
 	if (orbiting)
 		orbiting.Check()
 	SSdemo.mark_dirty(src)
-	return 1
+	return
 
 /atom/movable/proc/locMoved(atom/OldLoc, Dir)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_LOC_MOVED, OldLoc, Dir)
@@ -140,7 +160,7 @@
 		A.Bumped(src)
 
 
-/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE)
+/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE)
 	if(destination)
 		if(pulledby && !keep_pulling)
 			pulledby.stop_pulling()
@@ -166,20 +186,22 @@
 				if(AM == src)
 					continue
 				AM.Crossed(src, oldloc)
-
 		Moved(oldloc, 0)
 		return TRUE
 	return FALSE
 
-/mob/living/forceMove(atom/destination, keep_pulling = FALSE)
+/mob/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE)
 	if(!keep_pulling)
 		stop_pulling()
-	if(buckled)
+	if(buckled && !keep_buckled)
 		buckled.unbuckle_mob()
 	. = ..()
+	if(buckled && keep_buckled)
+		buckled.loc = loc
+		buckled.set_dir(dir)
 	update_canmove()
 
-/mob/dead/observer/forceMove(atom/destination, keep_pulling)
+/mob/dead/observer/forceMove(atom/destination, keep_pulling, keep_buckled)
 	if(destination)
 		if(loc)
 			loc.Exited(src)
@@ -231,17 +253,7 @@
 			if (speed <= 0)
 				return //no throw speed, the user was moving too fast.
 
-	var/datum/thrownthing/TT = new()
-	TT.thrownthing = src
-	TT.target = target
-	TT.target_turf = get_turf(target)
-	TT.init_dir = get_dir(src, target)
-	TT.maxrange = range
-	TT.speed = speed
-	TT.thrower = thrower
-	TT.diagonals_first = diagonals_first
-	TT.callback = callback
-	TT.early_callback = early_callback
+	var/datum/thrownthing/TT = new(src, target, get_turf(target), get_dir(src, target), range, speed, thrower, diagonals_first, callback, early_callback)
 
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
@@ -286,7 +298,7 @@
 //Mobs should return 1 if they should be able to move of their own volition, see client/Move() in mob_movement.dm
 //movement_dir == 0 when stopping or any dir when trying to move
 /atom/movable/proc/Process_Spacemove(movement_dir = 0)
-	if(has_gravity(src))
+	if(has_gravity(src) && !(ice_slide_count && isiceturf(get_turf(src))))
 		return 1
 
 	if(pulledby)
@@ -317,7 +329,7 @@
 //Overlays
 /atom/movable/overlay
 	var/atom/master = null
-	anchored = 1
+	anchored = TRUE
 
 /atom/movable/overlay/atom_init()
 	. = ..()
@@ -326,17 +338,17 @@
 
 /atom/movable/overlay/attackby(a, b, params)
 	if (src.master)
-		return src.master.attackby(a, b)
+		return master.attackby(a, b)
 	return
 
 /atom/movable/overlay/attack_paw(a, b, c)
 	if (src.master)
-		return src.master.attack_paw(a, b, c)
+		return master.attack_paw(a, b, c)
 	return
 
 /atom/movable/overlay/attack_hand(a, b, c)
 	if (src.master)
-		return src.master.attack_hand(a, b, c)
+		return master.attack_hand(a, b, c)
 	return
 
 /atom/movable/proc/handle_rotation()
@@ -352,6 +364,155 @@
 	return 1
 
 /atom/movable/CanPass(atom/movable/mover, turf/target, height=1.5)
-	if(buckled_mob == mover)
+	if(istype(mover) && buckled_mob == mover)
 		return 1
 	return ..()
+
+/**
+* A wrapper for setDir that should only be able to fail by living mobs.
+*
+* Called from [/atom/movable/proc/keyLoop], this exists to be overwritten by living mobs with a check to see if we're actually alive enough to change directions
+*/
+/atom/movable/proc/keybind_face_direction(direction)
+	return
+
+/atom/movable/Exited(atom/movable/AM, atom/newLoc)
+	. = ..()
+	if(AM.area_sensitive_contents)
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+			LAZYREMOVE(location.area_sensitive_contents, AM.area_sensitive_contents)
+
+/atom/movable/Entered(atom/movable/AM, atom/oldLoc)
+	. = ..()
+	if(AM.area_sensitive_contents)
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+			LAZYADD(location.area_sensitive_contents, AM.area_sensitive_contents)
+
+/// See traits.dm. Use this in place of ADD_TRAIT.
+/atom/movable/proc/become_area_sensitive(trait_source = GENERIC_TRAIT)
+	if(!HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
+		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE), .proc/on_area_sensitive_trait_loss)
+		for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+			LAZYADD(location.area_sensitive_contents, src)
+	ADD_TRAIT(src, TRAIT_AREA_SENSITIVE, trait_source)
+
+/atom/movable/proc/on_area_sensitive_trait_loss()
+	SIGNAL_HANDLER
+
+	UnregisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE))
+	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
+		LAZYREMOVE(location.area_sensitive_contents, src)
+/* Sizes stuff */
+
+/atom/movable/proc/get_size_flavor()
+	switch(w_class)
+		if(SIZE_MIDGET)
+			. = "midget"
+		if(SIZE_MINUSCULE)
+			. = "minuscule"
+		if(SIZE_TINY)
+			. = "tiny"
+		if(SIZE_SMALL)
+			. = "small"
+		if(SIZE_NORMAL to SIZE_LARGE)
+			. = "medium"
+		if(SIZE_HUMAN)
+			. = "human"
+		if(SIZE_BIG_HUMAN to SIZE_MASSIVE)
+			. = "huge"
+		if(SIZE_GYGANT to SIZE_GARGANTUAN)
+			. = "gygant"
+		else
+			. = "unknown"
+
+	. = EMBED_TIP_MINI(., repeat_string_times("*", w_class))
+
+// This proc guarantees no mouse vs queen tomfuckery.
+/atom/movable/proc/is_bigger_than(mob/living/target)
+	if(w_class - target.w_class >= 3)
+		return TRUE
+	return FALSE
+
+/proc/get_size_ratio(atom/movable/dividend, atom/movable/divisor)
+	return (dividend.w_class / divisor.w_class)
+
+/atom/movable/proc/update_size_class()
+	return w_class
+
+/client/var/list/image/outlined_item = list()
+/atom/movable/proc/apply_outline(color)
+	if(anchored || !usr.client.prefs.outline_enabled)
+		return
+	if(!color)
+		color = usr.client.prefs.outline_color || COLOR_BLUE_LIGHT
+	if(usr.client.outlined_item[src])
+		return
+
+	if(usr.client.outlined_item.len)
+		remove_outline()
+
+	var/image/IMG = image(null, src, layer = layer, pixel_x = -pixel_x, pixel_y = -pixel_y)
+	IMG.appearance_flags |= KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	IMG.vis_contents += src
+
+	IMG.filters += filter(type = "outline", size = 1, color = color)
+	usr.client.images |= IMG
+	usr.client.outlined_item[src] = IMG
+
+
+/atom/movable/proc/remove_outline()
+	usr.client.images -= usr.client.outlined_item[src]
+	usr.client.outlined_item -= src
+
+/**
+ * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)
+ * if you want something to move onto a tile with a beartrap or recycler or tripmine or mouse without that object knowing about it at all, use this
+ * most of the time you want forceMove()
+ */
+/atom/movable/proc/abstract_move(atom/new_loc)
+	var/atom/old_loc = loc
+	loc = new_loc
+	Moved(old_loc)
+
+// Return what item *should* be thrown, when a mob tries to throw us. Return null for no throw to happen.
+/atom/movable/proc/be_thrown(mob/living/thrower, atom/target)
+	return src
+
+/*
+	Handle trying to be taken by user.
+	If it's impossible to be taken by user, appear in fallback.
+	If it's impossible to resolve those two rules - return FALSE.
+*/
+/atom/movable/proc/taken(mob/living/user, atom/fallback)
+	forceMove(fallback)
+	// We failed to be taken, but still are in some mob. Drop down.
+	if(ismob(loc))
+		forceMove(loc.loc)
+
+/atom/movable/proc/jump_from_contents(rec_level=1)
+	for(var/i in 1 to rec_level)
+		if(!ismovable(loc))
+			return
+		var/atom/movable/AM = loc
+
+		if(!AM.drop_from_contents(src))
+			return
+
+/*
+	Return TRUE on successful drop.
+*/
+/atom/movable/proc/drop_from_contents(atom/movable/AM)
+	return FALSE
+
+/mob/drop_from_contents(atom/movable/AM)
+	if(isitem(AM))
+		var/obj/item/I = AM
+		if(I.slot_equipped)
+			return drop_from_inventory(I, loc, putdown_anim=FALSE)
+
+	AM.forceMove(loc)
+	return TRUE
+
+/obj/item/weapon/holder/drop_from_contents(atom/movable/AM)
+	AM.forceMove(loc)
+	return TRUE

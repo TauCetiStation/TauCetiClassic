@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /*
 CONTAINS:
 RCD
@@ -10,14 +8,14 @@ RCD
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
 	opacity = 0
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	flags = CONDUCT
 	force = 10.0
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 50000
 	origin_tech = "engineering=4;materials=2"
 	var/datum/effect/effect/system/spark_spread/spark_system
@@ -61,6 +59,8 @@ RCD
 /obj/item/weapon/rcd/attack_self(mob/user)
 	//Change the mode
 	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED)))
+		return
 	switch(mode)
 		if(1)
 			mode = 2
@@ -96,17 +96,23 @@ RCD
 
 	switch(mode)
 		if(1)
-			if(istype(target, /turf/space))
-				var/turf/space/S = target
+			if(isenvironmentturf(target))
+				var/turf/T = target
+				if(!canBuildOnTurf(T))
+					to_chat(user, "<span class='warning'>You can't build floor here.</span>")
+					return 0
 				if(useResource(1, user))
 					to_chat(user, "Building Floor...")
 					activate()
-					S.ChangeTurf(/turf/simulated/floor/plating/airless)
+					T.ChangeTurf(/turf/simulated/floor/plating/airless)
 					return 1
 				return 0
 
-			if(istype(target, /turf/simulated/floor) && !user.is_busy())
+			if(isfloorturf(target) && !user.is_busy())
 				var/turf/simulated/floor/F = target
+				if(!canBuildOnTurf(F))
+					to_chat(user, "<span class='warning'>You can't build wall here.</span>")
+					return 0
 				if(checkResource(3, user))
 					to_chat(user, "Building Wall ...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
@@ -119,11 +125,10 @@ RCD
 				return 0
 
 		if(2)
-			if(istype(target, /turf/simulated/floor))
-				for(var/atom/AT in target)
-					if(AT.density || istype(AT, /obj/machinery/door) || istype(AT, /obj/structure/mineral_door))
-						to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
-						return 0
+			if(isfloorturf(target))
+				if(!canBuildOnTurf(target))
+					to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
+					return 0
 				if(checkResource(10, user) && !user.is_busy())
 					to_chat(user, "Building Airlock...")
 					playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
@@ -137,7 +142,7 @@ RCD
 				return 0
 
 		if(3)
-			if(istype(target, /turf/simulated/wall))
+			if(iswallturf(target))
 				var/turf/simulated/wall/W = target
 				if(istype(W, /turf/simulated/wall/r_wall) && !canRwall)
 					return 0
@@ -152,7 +157,7 @@ RCD
 						return 1
 				return 0
 
-			if(istype(target, /turf/simulated/floor))
+			if(isfloorturf(target))
 				var/turf/simulated/floor/F = target
 				if(checkResource(5, user) && !user.is_busy())
 					to_chat(user, "Deconstructing Floor...")
@@ -180,6 +185,12 @@ RCD
 		else
 			to_chat(user, "ERROR: RCD in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin.")
 			return 0
+
+/obj/item/weapon/rcd/proc/canBuildOnTurf(turf/target)
+	for(var/atom/AT in target)
+		if(AT.density || istype(AT, /obj/machinery/door) || istype(AT, /obj/structure/mineral_door))
+			return 0
+	return 1
 
 /obj/item/weapon/rcd/proc/useResource(amount, mob/user)
 	if(matter < amount)
@@ -212,8 +223,8 @@ RCD
 	icon_state = "rcd"
 	item_state = "rcdammo"
 	opacity = 0
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	origin_tech = "materials=2"
 	m_amt = 30000
 	g_amt = 15000

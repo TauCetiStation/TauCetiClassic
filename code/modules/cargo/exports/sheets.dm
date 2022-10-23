@@ -37,7 +37,7 @@
 	unit_name = "goliath hide"
 	export_types = list(/obj/item/asteroid/goliath_hide)
 
-// Cat hide. Just in case Runtime is catsploding again.
+// Cat hide. Just in case Dusty is catsploding again.
 /datum/export/stack/skin/cat
 	cost = 2000
 	contraband = 1

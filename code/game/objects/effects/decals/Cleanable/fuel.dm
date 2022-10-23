@@ -3,7 +3,9 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "fuel"
 	layer = TURF_LAYER + 0.2
-	anchored = 1
+	anchored = TRUE
+
+	beauty = -50
 
 	var/amount = 1 //Basically moles.
 
@@ -52,10 +54,10 @@
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel
 		icon_state = "mustard"
-		anchored = 0
+		anchored = FALSE
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/atom_init(mapload, amt = 1, d = 0)
-	dir = d //Setting this direction means you won't get torched by your own flamethrower.
+	set_dir(d) //Setting this direction means you won't get torched by your own flamethrower.
 	. = ..()
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/Spread()

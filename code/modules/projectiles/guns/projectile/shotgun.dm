@@ -3,7 +3,7 @@
 	desc = "Useful for sweeping alleys."
 	icon_state = "shotgun"
 	item_state = "shotgun"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
@@ -36,12 +36,6 @@
 		recentpump = 0
 	return
 
-/obj/item/weapon/gun/projectile/shotgun/classic
-	icon_state = "oldshotgun"
-
-/obj/item/weapon/gun/projectile/shotgun/tactifool
-	icon_state = "shotgun_tg"
-
 /obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M)
 	playsound(M, pick('sound/weapons/guns/shotgun_pump1.ogg', 'sound/weapons/guns/shotgun_pump2.ogg', 'sound/weapons/guns/shotgun_pump3.ogg'), VOL_EFFECTS_MASTER, null, FALSE)
 	pumped = 0
@@ -66,7 +60,7 @@
 	item_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 
 /obj/item/weapon/gun/projectile/shotgun/combat/nonlethal
 	mag_type = /obj/item/ammo_box/magazine/internal/shotcom/nonlethal
@@ -75,27 +69,31 @@
 	name = "double-barreled shotgun"
 	desc = "A true classic."
 	icon_state = "dshotgun"
-	item_state = "shotgun"
-	w_class = ITEM_SIZE_LARGE
+	item_state = "dshotgun"
+	w_class = SIZE_NORMAL
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "combat=3;materials=1"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	can_be_holstered = FALSE
-	var/open = 0
-	var/short = 0
+	var/open = FALSE
+	var/short = FALSE
+	var/can_be_shortened = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/update_icon()
 	if(short)
-		icon_state = "sawnshotgun[open ? "-o" : ""]"
+		icon_state = "[initial(icon_state)][short ? "-short" : ""][open ? "-o" : ""]"
 	else
-		icon_state = "dshotgun[open ? "-o" : ""]"
+		icon_state = "[initial(icon_state)][open ? "-o" : ""]"
+	cut_overlays()
+	if(open)
+		add_overlay("[initial(icon_state)]shell-[magazine.ammo_count()]")
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/melee/energy) || istype(I, /obj/item/weapon/pickaxe/plasmacutter))
-		if(short)
+		if(short || !can_be_shortened)
 			return
 		if(get_ammo())
 			to_chat(user, "<span class='notice'>You try to shorten the barrel of \the [src].</span>")
@@ -109,10 +107,10 @@
 			return
 
 		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
-		if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50))
-			icon_state = "sawnshotgun[open ? "-o" : ""]"
-			w_class = ITEM_SIZE_NORMAL
-			item_state = "gun"
+		if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50, required_skills_override = list(/datum/skill/firearms = SKILL_LEVEL_TRAINED)))
+			icon_state = "dshotgun"
+			item_state = "shotgun-short"
+			w_class = SIZE_SMALL
 			slot_flags &= ~SLOT_FLAGS_BACK	//you can't sling it on your back
 			slot_flags |= SLOT_FLAGS_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 			to_chat(user, "<span class='warning'>You shorten the barrel of \the [src]!</span>")
@@ -120,17 +118,14 @@
 			desc = "Omar's coming!"
 			short = TRUE
 			can_be_holstered = TRUE
+			update_icon()
 		return
 
 	else if(istype(I, /obj/item/ammo_box) || istype(I, /obj/item/ammo_casing))
 		if(open)
-			to_chat(user, "<span class='notice'>You load shell into \the [src]!</span>")
-			playsound(src, 'sound/weapons/guns/reload_shotgun.ogg', VOL_EFFECTS_MASTER)
-			chamber_round()
+			return ..()
 		else
 			to_chat(user, "<span class='notice'>You can't load shell while [src] is closed!</span>")
-
-	return ..()
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attack_self(mob/living/user)
 	add_fingerprint(user)
@@ -182,7 +177,7 @@
 	item_state = "repeater"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/repeater
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	slot_flags = 0
 
 /obj/item/weapon/gun/projectile/shotgun/repeater/attack_self(mob/living/user)
@@ -212,7 +207,7 @@
 	item_state = "bolt-action"
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/a3006_clip
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	slot_flags = 0
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action/pump(mob/M)

@@ -130,7 +130,7 @@
 	var/ban = role_whitelist[target_ckey][role]["ban"]
 
 	if(ban_edit)
-		ban_edit = alert(usr, ban ? "Do you want to UNBAN [role] for [target_ckey]?" : "Do you want to BAN [role] for [target_ckey]?",,ban ? "Unban" : "Ban", "Cancel")
+		ban_edit = tgui_alert(usr, ban ? "Do you want to UNBAN [role] for [target_ckey]?" : "Do you want to BAN [role] for [target_ckey]?",, list(ban ? "Unban" : "Ban", "Cancel"))
 		switch(ban_edit)
 			if("Cancel")
 				return
@@ -172,17 +172,14 @@
 			to_chat(usr, "<span class='warning'>[role] for [target_ckey] already exists in whitelist.</span>")
 		return FALSE
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_whitelist"))
 		if(!added_by_bot)
 			to_chat(usr, "<span class='warning'>Failed to establish database connection.</span>")
 		return FALSE
 
-	var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO `whitelist` (`ckey`, `role`, `ban`, `reason`, `addby`, `addtm`, `editby`, `edittm`) VALUES ('[target_ckey]', '[role]', '0', '[reason]', '[adm_ckey]', NOW(), '[adm_ckey]', NOW());")
+	var/DBQuery/insert_query = dbcon.NewQuery("INSERT INTO `erro_whitelist` (`ckey`, `role`, `ban`, `reason`, `addby`, `addtm`, `editby`, `edittm`) VALUES ('[target_ckey]', '[sanitize_sql(role)]', '0', '[reason]', '[adm_ckey]', NOW(), '[adm_ckey]', NOW());")
 	if(!insert_query.Execute())
-		var/fail_msg = insert_query.ErrorMsg()
-		world.log << "SQL ERROR (I): [fail_msg]"
-		message_admins("SQL ERROR (I): [fail_msg]")
+		message_admins("SQL ERROR")
 		return FALSE
 
 	if(!role_whitelist[target_ckey])
@@ -240,21 +237,18 @@
 		to_chat(usr, "<span class='warning'>[role] for [target_ckey] does not exist in whitelist.</span>")
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_whitelist"))
 		to_chat(usr, "<span class='warning'>Failed to establish database connection.</span>")
 		return
 
 	var/sql_update
 	if(ban_edit)
-		sql_update = "UPDATE `whitelist` SET ban = '[ban]', reason = '[reason]', editby = '[adm_ckey]', edittm = Now() WHERE ckey = '[target_ckey]' AND role = '[role]'"
+		sql_update = "UPDATE `erro_whitelist` SET ban = '[sanitize_sql(ban)]', reason = '[reason]', editby = '[adm_ckey]', edittm = Now() WHERE ckey = '[target_ckey]' AND role = '[sanitize_sql(role)]'"
 	else
-		sql_update = "UPDATE `whitelist` SET reason = '[reason]', editby = '[adm_ckey]', edittm = Now() WHERE ckey = '[target_ckey]' AND role = '[role]'"
+		sql_update = "UPDATE `erro_whitelist` SET reason = '[reason]', editby = '[adm_ckey]', edittm = Now() WHERE ckey = '[target_ckey]' AND role = '[sanitize_sql(role)]'"
 	var/DBQuery/query_update = dbcon.NewQuery(sql_update)
 	if(!query_update.Execute())
-		var/fail_msg = query_update.ErrorMsg()
-		world.log << "SQL ERROR (U): [fail_msg]"
-		message_admins("SQL ERROR (U): [fail_msg]")
+		message_admins("SQL ERROR")
 		return
 
 	var/msg = "changed reason in whitelist from [sanitize(role_whitelist[target_ckey][role]["reason"])] to [sanitize(reason)] for [target_ckey] as [role]."
@@ -283,12 +277,11 @@
 
 	role_whitelist = list()
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!establish_db_connection("erro_whitelist"))
 		world.log << "SQL ERROR (L): whitelist: connection failed to SQL database."
 		return
 
-	var/DBQuery/select_query = dbcon.NewQuery("SELECT * FROM whitelist")
+	var/DBQuery/select_query = dbcon.NewQuery("SELECT * FROM erro_whitelist")
 
 	if(!select_query.Execute())
 		world.log << "SQL ERROR (L): whitelist: [select_query.ErrorMsg()]."

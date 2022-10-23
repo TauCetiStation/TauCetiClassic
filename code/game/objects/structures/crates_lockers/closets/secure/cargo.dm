@@ -15,13 +15,12 @@
 	new /obj/item/clothing/gloves/brown(src)
 	new /obj/item/clothing/head/soft(src)
 //	new /obj/item/weapon/cartridge/quartermaster(src)
-	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/cargo(src)
-	new /obj/item/clothing/suit/wintercoat/cargo(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/head/santa(src)
-	#endif
+	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
+		new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
 
 /obj/structure/closet/secure_closet/quartermaster
 	name = "Quartermaster's Locker"
@@ -51,11 +50,11 @@
 	new /obj/item/clothing/head/soft(src)
 	new /obj/item/weapon/mining_voucher(src)
 	new /obj/item/weapon/survivalcapsule(src)
-	#ifdef NEWYEARCONTENT
-	new /obj/item/clothing/suit/wintercoat/cargo(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/head/santa(src)
-	#endif
+	new /obj/item/clothing/accessory/medal/cargo(src)
+	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
+		new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
 
 /obj/structure/closet/secure_closet/recycler
 	name = "Recycler's Locker"
@@ -80,3 +79,7 @@
 	new /obj/item/clothing/head/soft/trash(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/clothing/suit/recyclervest(src)
+	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
+		new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)

@@ -17,7 +17,10 @@ SUBSYSTEM_DEF(shuttle)
 	init_order = SS_INIT_SHUTTLES
 	wait       = SS_WAIT_SHUTTLES
 
-	flags = SS_KEEP_TIMING | SS_NO_TICK_CHECK
+	flags = SS_KEEP_TIMING
+	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
+
+	msg_lobby = "Заправляем шаттлы..."
 
 		//emergency shuttle stuff
 	var/alert = 0				//0 = emergency, 1 = crew cycle
@@ -27,13 +30,11 @@ SUBSYSTEM_DEF(shuttle)
 	var/endtime					// timeofday that shuttle arrives
 	var/timelimit				//important when the shuttle gets called for more than shuttlearrivetime
 		//timeleft = 360 //600
-	var/fake_recall = 0			//Used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
-	var/always_fake_recall = 0
+	var/time_for_fake_recall = 0 // used in rounds to prevent "ON NOES, IT MUST [INSERT ROUND] BECAUSE SHUTTLE CAN'T BE CALLED"
+	var/fake_recall = 0 // flag if we need to make fake recall, gamemode fractions set it. Does nothing for crew transfer vote
 	var/deny_shuttle = 0		//for admins not allowing it to be called.
 	var/departed = 0
 
-		//supply shuttle stuff
-	var/points = 5000
 	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
 	var/contraband = FALSE
 	var/hacked = FALSE
@@ -54,6 +55,17 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/status_display_last_mode
 
+		//announce stuff
+	var/datum/announcement/station/shuttle/crew_called/announce_crew_called = new
+	var/datum/announcement/station/shuttle/crew_recalled/announce_crew_recalled = new
+	var/datum/announcement/station/shuttle/crew_docked/announce_crew_docked = new
+	var/datum/announcement/station/shuttle/crew_left/announce_crew_left = new
+
+	var/datum/announcement/station/shuttle/emer_called/announce_emer_called = new
+	var/datum/announcement/station/shuttle/emer_recalled/announce_emer_recalled = new
+	var/datum/announcement/station/shuttle/emer_docked/announce_emer_docked = new
+	var/datum/announcement/station/shuttle/emer_left/announce_emer_left = new
+
 	//var/datum/round_event/shuttle_loan/shuttle_loan
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
@@ -62,13 +74,13 @@ SUBSYSTEM_DEF(shuttle)
 
 	for(var/typepath in subtypesof(/datum/supply_pack))
 		var/datum/supply_pack/P = new typepath()
-		supply_packs[P.name] = P
+		supply_packs[ckey(P.name)] = P		//Convert to canonical form to avoid possible problems resulting from punctuation
 
 	..()
 
 /datum/controller/subsystem/shuttle/fire()
 	if(moving == 1)
-		var/ticksleft = (eta_timeofday - world.timeofday)
+		var/ticksleft = (eta_timeofday - REALTIMEOFDAY)
 		if(ticksleft > 0)
 			eta = round(ticksleft/600,1)
 		else
@@ -98,7 +110,7 @@ SUBSYSTEM_DEF(shuttle)
 					stop_parallax = locate(/area/shuttle/escape_pod4/transit)
 					stop_parallax.parallax_slowdown()
 				if(timeleft > 0)
-					return 0
+					return FALSE
 
 				/* --- Shuttle has arrived at Centrcal Command --- */
 				else
@@ -118,7 +130,7 @@ SUBSYSTEM_DEF(shuttle)
 
 					for(var/mob/M in end_location)
 						M.playsound_local(null, 'sound/effects/escape_shuttle/es_cc_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-					shake_mobs_in_area(end_location, WEST)
+					shake_mobs_in_area(end_location, SOUTH)
 
 					dock_act(end_location, "shuttle_escape")
 					dock_act(/area/centcom/evac, "shuttle_escape")
@@ -162,29 +174,29 @@ SUBSYSTEM_DEF(shuttle)
 
 					online = 0
 
-					return 1
+					return TRUE
 
 					/* --- Shuttle has docked centcom after being recalled --- */
 			if(timeleft>timelimit)
 				online = 0
 				direction = 1
 				endtime = null
-				return 0
+				return FALSE
 
-			else if((fake_recall != 0) && (timeleft <= fake_recall))
+			else if((time_for_fake_recall != 0) && (timeleft <= time_for_fake_recall))
 				log_admin("Gamemode fake-recalled the shuttle.")
 				message_admins("<span class='notice'>Gamemode fake-recalled the shuttle.</span>")
 				recall()
-				fake_recall = 0
-				return 0
+				time_for_fake_recall = 0
+				return FALSE
 
 			else if(timeleft == 22)
 				if(last_es_sound < world.time)
 					var/area/escape_hallway = locate(/area/station/hallway/secondary/exit)
 					for(var/obj/effect/landmark/sound_source/shuttle_docking/SD in escape_hallway)
-						playsound(SD, 'sound/effects/escape_shuttle/es_ss_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE, -2, voluminosity = FALSE)
+						playsound(SD, 'sound/effects/escape_shuttle/es_ss_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -2, voluminosity = FALSE)
 					last_es_sound = world.time + 10
-				return 0
+				return FALSE
 
 					/* --- Shuttle has docked with the station - begin countdown to transit --- */
 			else if(timeleft <= 0)
@@ -192,34 +204,7 @@ SUBSYSTEM_DEF(shuttle)
 				var/area/start_location = locate(/area/shuttle/escape/centcom)
 				var/area/end_location = locate(/area/shuttle/escape/station)
 
-				var/list/dstturfs = list()
-				var/throwy = world.maxy
-
-				for(var/turf/T in end_location)
-					dstturfs += T
-					if(T.y < throwy)
-						throwy = T.y
-					CHECK_TICK
-
-				// hey you, get out of the way!
-				for(var/turf/T in dstturfs)
-					// find the turf to move things to
-					var/turf/D = locate(T.x, throwy - 1, 1)
-					//var/turf/E = get_step(D, SOUTH)
-					for(var/atom/movable/AM as mob|obj in T)
-						AM.Move(D)
-
-					if(istype(T, /turf/simulated) || T.is_catwalk())
-						qdel(T)
-					CHECK_TICK
-
-				for(var/mob/living/carbon/bug in end_location) // If someone somehow is still in the shuttle's docking area...
-					bug.gib()
-					CHECK_TICK
-
-				for(var/mob/living/simple_animal/pest in end_location) // And for the other kind of bug...
-					pest.gib()
-					CHECK_TICK
+				clean_arriving_area(end_location)
 
 				start_location.move_contents_to(end_location)
 
@@ -228,9 +213,9 @@ SUBSYSTEM_DEF(shuttle)
 
 				settimeleft(SHUTTLELEAVETIME)
 				if(alert == 0)
-					captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.", sound = "emer_shut_docked")
+					announce_emer_docked.play()
 				else
-					captain_announce("The scheduled Crew Transfer Shuttle has docked with the station. It will depart in approximately [round(timeleft()/60,1)] minutes.", sound = "crew_shut_docked")
+					announce_crew_docked.play()
 
 				world.send2bridge(
 					type = list(BRIDGE_ROUNDSTAT),
@@ -239,7 +224,7 @@ SUBSYSTEM_DEF(shuttle)
 					attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 				)
 
-				return 1
+				return TRUE
 
 		if(SHUTTLE_AT_STATION)
 			// Just before it leaves, close the damn doors!
@@ -266,12 +251,11 @@ SUBSYSTEM_DEF(shuttle)
 								M.playsound_local(null, 'sound/effects/escape_shuttle/ep_undocking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 							CHECK_TICK
 						last_es_sound = world.time + 10
-				return 0
+				return FALSE
 
 			/* --- Shuttle leaves the station, enters transit --- */
 			else
 				//if(alert == 1)
-				//	captain_announce("Departing...")
 				//	sleep(100)
 				// Turn on the star effects
 
@@ -288,14 +272,14 @@ SUBSYSTEM_DEF(shuttle)
 				//main shuttle
 				var/area/start_location = locate(/area/shuttle/escape/station)
 				var/area/end_location = locate(/area/shuttle/escape/transit)
-				end_location.parallax_movedir = WEST
+				end_location.parallax_movedir = NORTH
 				settimeleft(SHUTTLETRANSITTIME)
 				start_location.move_contents_to(end_location, null, NORTH)
 
 				// Some aesthetic turbulance shaking
 				for(var/mob/M in end_location)
 					M.playsound_local(null, 'sound/effects/escape_shuttle/es_acceleration.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-				shake_mobs_in_area(end_location, EAST)
+				shake_mobs_in_area(end_location, SOUTH)
 
 				//pods
 				if(alert == 0) // Crew Transfer not for pods
@@ -347,14 +331,40 @@ SUBSYSTEM_DEF(shuttle)
 						M.playsound_local(null, ep_shot_sound_type, VOL_EFFECTS_MASTER, null, FALSE)
 					shake_mobs_in_area(end_location, EAST)
 
-					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.", sound = "emer_shut_left")
+					announce_emer_left.play()
 				else
-					captain_announce("The Crew Transfer Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.", sound = "crew_shut_left")
+					announce_crew_left.play()
 
-				return 1
+				return TRUE
 
 		else
-			return 1
+			return TRUE
+
+/**
+ * Cleans passed area, gibs any mob inside area, unachored movable gets moved, everything else will be qdeled
+ *
+ * vars:
+ * * arriving_area (required) area that is gonna get used in proc
+ */
+/datum/controller/subsystem/shuttle/proc/clean_arriving_area(area/arriving_area)
+	var/throw_y = world.maxy
+	for(var/turf/turf_to_check in arriving_area)
+		if(turf_to_check.y < throw_y)
+			throw_y = turf_to_check.y
+		var/turf/target_turf = locate(turf_to_check.x, throw_y - 1, turf_to_check.z)
+		for(var/i in turf_to_check.contents)
+			var/atom/movable/thing = i
+			if(isliving(thing))
+				var/mob/living/mob_to_gib = thing
+				mob_to_gib.gib()
+			else
+				if(istype(thing, /obj/singularity))
+					continue
+				if(!thing.anchored)
+					thing.Move(target_turf)
+				else
+					qdel(thing)
+			CHECK_TICK
 
 /datum/controller/subsystem/shuttle/proc/shake_mobs_in_area(area/A, fall_direction)
 	for(var/mob/M in A)
@@ -363,6 +373,7 @@ SUBSYSTEM_DEF(shuttle)
 				shake_camera(M, 2, 1) // buckled, not a lot of shaking
 			else
 				shake_camera(M, 4, 2)// unbuckled, HOLY SHIT SHAKE THE ROOM
+				M.Stun(1)
 				M.Weaken(3)
 		if(isliving(M) && !issilicon(M) && !M.buckled)
 			var/mob/living/L = M
@@ -422,57 +433,50 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/send()
 	var/area/from
 	var/area/dest
-	var/area/the_shuttles_way
 	switch(at_station)
 		if(1)
 			from = locate(SUPPLY_STATION_AREATYPE)
 			dest = locate(SUPPLY_DOCK_AREATYPE)
-			the_shuttles_way = from
 			undock_act(/area/station/cargo/storage, "supply_dock")
 			at_station = 0
 		if(0)
 			from = locate(SUPPLY_DOCK_AREATYPE)
 			dest = locate(SUPPLY_STATION_AREATYPE)
-			the_shuttles_way = dest
 			dock_act(/area/station/cargo/storage, "supply_dock")
 			at_station = 1
 	moving = 0
 
-	//Do I really need to explain this loop?
-	for(var/mob/living/unlucky_person in the_shuttles_way)
-		unlucky_person.gib()
-		CHECK_TICK
-
+	clean_arriving_area(dest)
 	from.move_contents_to(dest)
 
 //Check whether the shuttle is allowed to move
 /datum/controller/subsystem/shuttle/proc/can_move()
-	if(moving) return 0
-	if(!at_station) return 1
+	if(moving) return FALSE
+	if(!at_station) return TRUE
 
 	var/area/shuttle = locate(/area/shuttle/supply/station)
-	if(!shuttle) return 0
+	if(!shuttle) return FALSE
 
 	if(forbidden_atoms_check(shuttle))
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 //To stop things being sent to centcom which should not be sent to centcom. Recursively checks for these types.
 /datum/controller/subsystem/shuttle/proc/forbidden_atoms_check(atom/A)
-	if(istype(A,/mob/living))
-		return 1
+	if(isliving(A))
+		return TRUE
 	if(istype(A,/obj/item/weapon/disk/nuclear))
-		return 1
+		return TRUE
 	if(istype(A,/obj/machinery/nuclearbomb))
-		return 1
+		return TRUE
 	if(istype(A,/obj/item/device/radio/beacon))
-		return 1
+		return TRUE
 
 	for(var/i=1, i<=A.contents.len, i++)
 		var/atom/B = A.contents[i]
 		if(.(B))
-			return 1
+			return TRUE
 
 	//Sellin
 /datum/controller/subsystem/shuttle/proc/sell()
@@ -507,7 +511,9 @@ SUBSYSTEM_DEF(shuttle)
 			continue
 
 		msg += export_text + "\n"
-		SSshuttle.points += E.total_cost
+		var/tax = round(E.total_cost * SSeconomy.tax_cargo_export * 0.01)
+		station_account.money += tax
+		global.cargo_account.money += E.total_cost - tax
 		E.export_end()
 
 	centcom_message = msg
@@ -559,7 +565,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(SO.object.dangerous)
 			message_admins("[SO.object.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
 
-		score["stuffshipped"]++
+		SSStatistics.score.stuffshipped++
 		CHECK_TICK
 
 	SSshuttle.shoppinglist.Cut()
@@ -580,15 +586,11 @@ SUBSYSTEM_DEF(shuttle)
 	else
 		settimeleft(get_shuttle_arrive_time()*coeff)
 		online = 1
-		if(always_fake_recall)
-			fake_recall = rand(300,500)		//turning on the red lights in hallways
+		if(fake_recall)
+			time_for_fake_recall = rand(300,500)		//turning on the red lights in hallways
 
 
 /datum/controller/subsystem/shuttle/proc/get_shuttle_arrive_time()
-	// During mutiny rounds, the shuttle takes twice as long.
-	if(SSticker && istype(SSticker.mode,/datum/game_mode/mutiny))
-		return SHUTTLEARRIVETIME * 2
-
 	return SHUTTLEARRIVETIME
 
 /datum/controller/subsystem/shuttle/proc/shuttlealert(X)
@@ -605,13 +607,13 @@ SUBSYSTEM_DEF(shuttle)
 		if(alert == 0)
 			if(timeleft >= get_shuttle_arrive_time())
 				return
-			captain_announce("The emergency shuttle has been recalled.", sound = "emer_shut_recalled")
+			announce_emer_recalled.play()
 			setdirection(-1)
 			online = 1
 
 			return
 		else //makes it possible to send shuttle back.
-			captain_announce("The shuttle has been recalled.", sound = "crew_shut_recalled")
+			announce_crew_recalled.play()
 			setdirection(-1)
 			online = 1
 			alert = 0 // set alert back to 0 after an admin recall
@@ -621,7 +623,7 @@ SUBSYSTEM_DEF(shuttle)
 	// note if direction = -1, gives a count-up to SHUTTLEARRIVETIME
 /datum/controller/subsystem/shuttle/proc/timeleft()
 	if(online)
-		var/timeleft = round((endtime - world.timeofday)/10 ,1)
+		var/timeleft = round((endtime - REALTIMEOFDAY)/10 ,1)
 		if(direction == 1 || direction == 2)
 			return timeleft
 		else
@@ -631,7 +633,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	// sets the time left to a given delay (in seconds)
 /datum/controller/subsystem/shuttle/proc/settimeleft(delay)
-	endtime = world.timeofday + delay * 10
+	endtime = REALTIMEOFDAY + delay * 10
 	timelimit = delay
 
 	// sets the shuttle direction
@@ -641,15 +643,18 @@ SUBSYSTEM_DEF(shuttle)
 		return
 	direction = dirn
 	// if changing direction, flip the timeleft by SHUTTLEARRIVETIME
-	var/ticksleft = endtime - world.timeofday
-	endtime = world.timeofday + (get_shuttle_arrive_time()*10 - ticksleft)
+	var/ticksleft = endtime - REALTIMEOFDAY
+	endtime = REALTIMEOFDAY + (get_shuttle_arrive_time()*10 - ticksleft)
 	return
+
+/datum/controller/subsystem/shuttle/proc/set_eta_timeofday(flytime = SSshuttle.movetime)
+	eta_timeofday = (REALTIMEOFDAY + flytime) % MIDNIGHT_ROLLOVER
 
 /obj/effect/bgstar
 	name = "star"
 	var/speed = 10
 	var/direction = SOUTH
-	layer = 2 // TURF_LAYER
+	layer = TURF_LAYER
 
 /obj/effect/bgstar/New()
 	..()
@@ -671,10 +676,10 @@ SUBSYSTEM_DEF(shuttle)
 
 
 /obj/effect/starender
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/effect/starspawner
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	var/spawndir = SOUTH
 	var/spawning = 0
 

@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/machinery/computer/card
 	name = "Identification Computer"
 	desc = "Terminal for programming NanoTrasen employee ID cards to access parts of the station."
@@ -13,6 +11,8 @@
 	var/mode = 0.0
 	var/printing = null
 	var/datum/money_account/datum_account = null	//if money account is tied to the card and the card is inserted into the console, the account is stored here
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_PRO)
+	fumbling_time = SKILL_TASK_TOUGH
 
 /obj/machinery/computer/card/proc/is_centcom()
 	return istype(src, /obj/machinery/computer/card/centcom)
@@ -37,7 +37,7 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
 		return
-	if(in_range(user, src))
+	if(Adjacent(user))
 		eject_id()
 
 /obj/machinery/computer/card/verb/eject_id()
@@ -48,6 +48,8 @@
 	if(!usr || usr.incapacitated() || issilicon(usr))	return
 
 	if(modify)
+		if(!do_skill_checks(usr))
+			return
 		to_chat(usr, "You remove \the [modify] from \the [src].")
 		modify.loc = get_turf(src)
 		if(!usr.get_active_hand())
@@ -55,6 +57,8 @@
 		modify = null
 		playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	else if(scan)
+		if(!do_skill_checks(usr))
+			return
 		to_chat(usr, "You remove \the [scan] from \the [src].")
 		scan.loc = get_turf(src)
 		if(!usr.get_active_hand())
@@ -70,12 +74,10 @@
 		return ..()
 
 	if(!scan && (access_change_ids in id_card.access))
-		user.drop_item()
-		id_card.loc = src
+		user.drop_from_inventory(id_card, src)
 		scan = id_card
 	else if(!modify)
-		user.drop_item()
-		id_card.loc = src
+		user.drop_from_inventory(id_card, src)
 		modify = id_card
 		if(id_card.associated_account_number)
 			datum_account = get_account(id_card.associated_account_number)
@@ -92,7 +94,7 @@
 	data["station_name"] = station_name()
 	data["mode"] = mode
 	data["printing"] = printing
-	data["manifest"] = data_core ? data_core.get_manifest(0) : null
+	data["manifest"] = data_core ? data_core.html_manifest(monochrome=0) : null
 	data["target_name"] = modify ? modify.name : "-----"
 	data["target_owner"] = modify && modify.registered_name ? modify.registered_name : "-----"
 	data["target_rank"] = get_target_rank()
@@ -112,6 +114,9 @@
 	data["civilian_jobs"] = format_jobs(civilian_positions)
 	data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
 
+	data["fast_modify_region"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_PRO))
+	data["fast_full_access"] = is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_MASTER))
+
 	if (modify && is_centcom())
 		var/list/all_centcom_access = list()
 		for(var/access in get_all_centcom_access())
@@ -125,8 +130,10 @@
 		var/list/regions = list()
 		for(var/i = 1; i <= 7; i++)
 			var/list/accesses = list()
+			var/region_allowed = 0
 			for(var/access in get_region_accesses(i))
 				if (get_access_desc(access))
+					region_allowed += (access in modify.access) ? 1 : 0
 					accesses.Add(list(list(
 						"desc" = replacetext(get_access_desc(access), " ", "&nbsp"),
 						"ref" = access,
@@ -134,7 +141,9 @@
 
 			regions.Add(list(list(
 				"name" = get_region_accesses_name(i),
-				"accesses" = accesses)))
+				"accesses" = accesses,
+				"id" = i,
+				"region_allowed" =  (region_allowed == length(get_region_accesses(i)) ? 1 : 0))))
 
 		data["regions"] = regions
 
@@ -166,8 +175,7 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
-					I.loc = src
+					usr.drop_from_inventory(I, src)
 					modify = I
 					var/obj/item/weapon/card/id/id_card = I
 					if(id_card.associated_account_number)
@@ -193,8 +201,7 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
-					I.loc = src
+					usr.drop_from_inventory(I, src)
 					scan = I
 					playsound(src, 'sound/machines/terminal_insert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			if(ishuman(usr))
@@ -210,10 +217,20 @@
 						modify.access -= access_type
 						if(!access_allowed)
 							modify.access += access_type
-
+		if("access_region")
+			if(is_authenticated())
+				var/region_id = text2num(href_list["region_id"])
+				var/region_accesses = get_region_accesses(region_id)
+				var/region_allowed = text2num(href_list["region_allowed"])
+				modify.access -= region_accesses
+				if(!region_allowed)
+					modify.access += region_accesses
+		if("access_full")
+			if(is_authenticated())
+				modify.access += get_all_accesses()
 		if ("assign")
 			if (is_authenticated() && modify)
-				var/t1 = href_list["assign_target"]
+				var/t1 = sanitize(href_list["assign_target"] , 45)
 				var/new_salary = 0
 				var/datum/job/jobdatum
 				if(t1 == "Custom")
@@ -244,25 +261,19 @@
 					if(datum_account)
 						datum_account.set_salary(new_salary, jobdatum.salary_ratio)	//set the new salary equal to job
 
-				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-				if(mode)
-					mode.reassign_employee(modify)
-
 		if ("reg")
 			if (is_authenticated())
-				var/t2 = modify
-				if ((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
+				if (Adjacent(usr) || issilicon(usr))
 					var/temp_name = sanitize_name(href_list["reg"])
 					if(temp_name)
 						modify.registered_name = temp_name
 					else
-						src.visible_message("<span class='notice'>[src] buzzes rudely.</span>")
+						visible_message("<span class='notice'>[src] buzzes rudely.</span>")
 			nanomanager.update_uis(src)
 
 		if ("account")
 			if (is_authenticated())
-				var/t2 = modify
-				if ((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
+				if (Adjacent(usr) || issilicon(usr))
 					var/datum/money_account/account = get_account(text2num(href_list["account"]))
 					if(account)
 						modify.associated_account_number = account.account_number
@@ -285,13 +296,13 @@
 						P.name = text("crew manifest ([])", worldtime2text())
 						P.info = {"<h4>Crew Manifest</h4>
 							<br>
-							[data_core ? data_core.get_manifest(0) : ""]
+							[data_core ? data_core.html_manifest(monochrome=0) : ""]
 						"}
 						P.update_icon()
 					else if (modify)
 						P.name = "access report"
 						P.info = {"<h4>Access Report</h4>
-							<u>Prepared By:</u> [scan.registered_name ? scan.registered_name : "Unknown"]<br>
+							<u>Prepared By:</u> [scan?.registered_name ? scan.registered_name : "Unknown"]<br>
 							<u>For:</u> [modify.registered_name ? modify.registered_name : "Unregistered"]<br>
 							<hr>
 							<u>Assignment:</u> [modify.assignment]<br>
@@ -310,10 +321,6 @@
 				modify.access = list()
 				if(datum_account)
 					datum_account.set_salary(0)		//no salary
-
-				var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-				if(mode)
-					mode.terminate_employee(modify)
 
 	if (modify)
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")

@@ -2,6 +2,7 @@
 	icon = 'icons/obj/structures.dmi'
 	var/climbable
 	var/list/climbers = list()
+	w_class = SIZE_MASSIVE
 
 /obj/structure/atom_init()
 	. = ..()
@@ -20,23 +21,28 @@
 	if(prob(50))
 		qdel(src)
 
+/obj/structure/airlock_crush_act()
+	if(anchored)
+		return
+	if(!density)
+		return
+	var/turf/src_turf = get_turf(src)
+	for(var/dir in cardinal)
+		var/turf/new_turf = get_step(src_turf, dir)
+		if(Move(new_turf))
+			break
+
 /obj/structure/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			for(var/atom/movable/AM in contents)
-				AM.forceMove(loc)
-				AM.ex_act(severity++)
-			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
-				for(var/atom/movable/AM in contents)
-					AM.forceMove(loc)
-					AM.ex_act(severity++)
-				qdel(src)
 				return
-		if(3.0)
+		if(EXPLODE_LIGHT)
 			return
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(loc)
+		AM.ex_act(severity++)
+	qdel(src)
 
 /obj/structure/proc/climb_on()
 

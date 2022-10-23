@@ -1,4 +1,4 @@
-var/list/department_radio_keys = list(
+var/global/list/department_radio_keys = list(
 	  ":r" = "right ear",	"#r" = "right ear",		".r" = "right ear",
 	  ":l" = "left ear",	"#l" = "left ear",		".l" = "left ear",
 	  ":i" = "intercom",	"#i" = "intercom",		".i" = "intercom",
@@ -15,6 +15,7 @@ var/list/department_radio_keys = list(
 	  ":u" = "Supply",		"#u" = "Supply",		".u" = "Supply",
 	  ":g" = "changeling",	"#g" = "changeling",	".g" = "changeling",
 	  ":d" = "dronechat",	"#d" = "dronechat",		".d" = "dronechat",
+	  ":z" = "mafia",		"#z" = "mafia",			".z" = "mafia",
 
 	  ":R" = "right ear",	"#R" = "right ear",		".R" = "right ear",
 	  ":L" = "left ear",	"#L" = "left ear",		".L" = "left ear",
@@ -32,6 +33,7 @@ var/list/department_radio_keys = list(
 	  ":U" = "Supply",		"#U" = "Supply",		".U" = "Supply",
 	  ":G" = "changeling",	"#G" = "changeling",	".G" = "changeling",
 	  ":D" = "dronechat",	"#D" = "dronechat",		".D" = "dronechat",
+	  ":Z" = "mafia",		"#Z" = "mafia",			".Z" = "mafia",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
@@ -51,6 +53,7 @@ var/list/department_radio_keys = list(
 	  ":г" = "Supply",		"#г" = "Supply",		".г" = "Supply",
 	  ":п" = "changeling",	"#п" = "changeling",	".п" = "changeling",
 	  ":в" = "dronechat",	"#в" = "dronechat",		".в" = "dronechat",
+	  ":я" = "mafia",		"#я" = "mafia",			".я" = "mafia",
 
 	  ":К" = "right ear",	"#К" = "right ear",		".К" = "right ear",
 	  ":Д" = "left ear",	"#Д" = "left ear",		".Д" = "left ear",
@@ -67,30 +70,14 @@ var/list/department_radio_keys = list(
 	  ":Е" = "Syndicate",	"#Е" = "Syndicate",		".Е" = "Syndicate",
 	  ":Г" = "Supply",		"#Г" = "Supply",		".Г" = "Supply",
 	  ":П" = "changeling",	"#П" = "changeling",	".П" = "changeling",
-	  ":В" = "dronechat",	"#В" = "dronechat",		".В" = "dronechat"
+	  ":В" = "dronechat",	"#В" = "dronechat",		".В" = "dronechat",
+	  ":Я" = "mafia",		"#Я" = "mafia",			".Я" = "mafia",
 )
 
 /mob/living/proc/binarycheck()
-	if (istype(src, /mob/living/silicon/pai))
+	if (ispAI(src))
 		return
 	if (issilicon(src))
-		return 1
-	if (!ishuman(src))
-		return
-	var/mob/living/carbon/human/H = src
-	if (H.l_ear || H.r_ear)
-		var/obj/item/device/radio/headset/dongle
-		if(istype(H.l_ear,/obj/item/device/radio/headset))
-			dongle = H.l_ear
-		else
-			dongle = H.r_ear
-		if(!istype(dongle))
-			return
-		if(dongle.translate_binary)
-			return 1
-
-/mob/living/proc/hivecheck()
-	if (isxeno(src))
 		return 1
 	if (!ishuman(src))
 		return
@@ -111,13 +98,18 @@ var/list/department_radio_keys = list(
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
-
 	if(sanitize)
 		message = sanitize(message)
 		if(!message)
 			return
+
+		if(message[1] == "*")
+			return emote(copytext(message, 2))
+
+		message = capitalize(trim(message))
+		message = add_period(message)
 
 	var/turf/T = get_turf(src)
 
@@ -128,8 +120,8 @@ var/list/department_radio_keys = list(
 	//handle nonverbal and sign languages here
 	if (speaking)
 		if (speaking.flags & NONVERBAL)
-			if (prob(30))
-				src.custom_emote(1, "[pick(speaking.signlang_verb)].")
+			if(prob(30))
+				me_emote("[pick(speaking.signlang_verb)].", SHOWMSG_AUDIO)
 
 		if (speaking.flags & SIGNLANG)
 			say_signlang(message, pick(speaking.signlang_verb), speaking)
@@ -140,7 +132,7 @@ var/list/department_radio_keys = list(
 		italics = 1
 		message_range = 1
 
-		if (!istype(src, /mob/living/silicon/ai)) // Atlantis: Prevents nearby people from hearing the AI when it talks using it's integrated radio.
+		if (!isAI(src)) // Atlantis: Prevents nearby people from hearing the AI when it talks using it's integrated radio.
 			for(var/mob/living/M in hearers(5, src))
 				if(M != src)
 					M.show_message("<span class='notice'>[src] talks into [used_radios.len ? used_radios[1] : "the radio."]</span>", SHOWMSG_VISUAL|SHOWMSG_AUDIO)
@@ -160,10 +152,15 @@ var/list/department_radio_keys = list(
 			if (speech_sound)
 				sound_vol *= 0.5	//muffle the sound a bit, so it's like we're actually talking through contact
 
+	//make sure we actually can hear there
+	if (T.sound_coefficient < 0.5)
+		message = Gibberish(message, (1.0 - max(0.0, T.sound_coefficient)) * 100 + 20)
+
 	var/list/listening = list()
 	var/list/listening_obj = list()
+	var/list/listening_talking_atoms = list()
 
-	if(T)
+	if(T) // todo: get_hearers_in_view
 		var/list/hear = hear(message_range, T)
 		var/list/hearturfs = list()
 
@@ -172,7 +169,20 @@ var/list/department_radio_keys = list(
 			listening_obj |= AM.get_listening_objs()
 			hearturfs += AM.locs[1]
 
+		// need to do second pass because of mobs who can hold objects who can hold mobs
+		// also because of half baked talking_atom
+		// future refactoring needed
+		for(var/atom/movable/AM in listening_obj)
+			if(AM.flags & HEAR_PASS_SAY)
+				listening |= AM.get_listeners()
+			if(AM.flags & HEAR_TA_SAY)
+				listening_talking_atoms += AM
+			if(!(AM.flags & HEAR_TALK)) // if we don't need it anymore
+				listening_obj -= AM
+
 		for(var/mob/M in player_list)
+			if(QDELETED(M)) // avoid not hard-deleted mobs with client
+				continue
 			if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 				listening |= M
 				continue
@@ -184,12 +194,10 @@ var/list/department_radio_keys = list(
 	for(var/mob/M in listening)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
-	var/speech_bubble_test = say_test(message)
-	var/image/I = image('icons/mob/talk.dmi', src, "h[speech_bubble_test]", MOB_LAYER+1)
-	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	var/image/I = image('icons/mob/talk.dmi', src, "[typing_indicator_type][say_test(message)]", MOB_LAYER + 1)
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	spawn(0)
-		flick_overlay(I, speech_bubble_recipients, 30)
+	INVOKE_ASYNC(GLOBAL_PROC, .proc/flick_overlay, I, speech_bubble_recipients, 30)
 	for(var/mob/M in listening)
 		M.hear_say(message, verb, speaking, alt_name, italics, src, used_radios.len, speech_sound, sound_vol)
 
@@ -198,11 +206,23 @@ var/list/department_radio_keys = list(
 			if(O) //It's possible that it could be deleted in the meantime.
 				O.hear_talk(src, message, verb, speaking)
 
+	for(var/atom/TA in listening_talking_atoms)
+		SEND_SIGNAL(TA, COMSIG_MOVABLE_HEAR, message, src)
+
 	return 1
 
-/mob/living/proc/say_signlang(var/message, var/verb="gestures", var/datum/language/language)
+/mob/living/proc/say_signlang(message, verb="gestures", datum/language/language)
 	for (var/mob/O in viewers(src, null))
 		O.hear_signlang(message, verb, language, src)
 
 /obj/effect/speech_bubble
 	var/mob/parent
+
+/mob/living/init_languages()
+	for(var/name in all_languages)
+		var/datum/language/L = all_languages[name]
+		if(languages[L] >= LANGUAGE_CAN_SPEAK)
+			continue
+
+		for(var/sound in L.approximations)
+			add_approximation(sound, L.approximations[sound])

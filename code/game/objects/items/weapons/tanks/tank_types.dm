@@ -100,7 +100,7 @@
 	icon_state = "emergency"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	force = 2.0
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
 	volume = 2 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
@@ -129,13 +129,19 @@
 	name = "emergency nitrogen tank"
 	desc = "Used for Vox-related emergencies. Contains very little nitrogen, so try to conserve it until you actually need it."
 	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
-	icon_state = "emergency"
+	icon_state = "ni_emergency"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	force = 2.0
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
 	volume = 2
+
+/obj/item/weapon/tank/emergency_nitrogen/double
+	name = "double emergency nitrogen tank"
+	force = 3.0
+	icon_state = "ni_double"
+	volume = 7
 
 /obj/item/weapon/tank/emergency_nitrogen/atom_init()
 	. = ..()

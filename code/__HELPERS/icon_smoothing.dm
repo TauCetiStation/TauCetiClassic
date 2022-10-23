@@ -291,7 +291,7 @@
 		return A && A.type == source.type ? A : null
 
 //Icon smoothing helpers
-/proc/smooth_zlevel(var/zlevel, now = FALSE)
+/proc/smooth_zlevel(zlevel, now = FALSE)
 	var/list/away_turfs = block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel))
 	for(var/V in away_turfs)
 		var/turf/T = V
@@ -373,7 +373,7 @@
 		return
 
 	SSicon_smooth.smooth_queue += A
-	SSicon_smooth.can_fire = 1
+	SSicon_smooth.can_fire = TRUE
 	A.smooth |= SMOOTH_QUEUED
 
 /turf/proc/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
@@ -382,9 +382,9 @@
 	underlay_appearance.dir = adjacency_dir
 	return TRUE
 
-/turf/space/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
-	underlay_appearance.icon = 'icons/turf/space.dmi'
-	underlay_appearance.icon_state = SPACE_ICON_STATE
+/turf/environment/space/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = icon
+	underlay_appearance.icon_state = icon_state
 	underlay_appearance.plane = PLANE_SPACE
 	return TRUE
 

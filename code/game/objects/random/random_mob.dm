@@ -3,7 +3,7 @@
 /obj/random/mobs/peacefull
 	name = "Random peacefull mob"
 	desc = "This is a peacefull mob."
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "tindalos"
 /obj/random/mobs/peacefull/item_to_spawn()
 		return pick(\
@@ -16,7 +16,7 @@
 /obj/random/mobs/moderate
 	name = "Random moderate mob"
 	desc = "This is a random moderate mob."
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "samas"
 /obj/random/mobs/moderate/item_to_spawn()
 		return pick(subtypesof(/mob/living/simple_animal/hostile/asteroid))

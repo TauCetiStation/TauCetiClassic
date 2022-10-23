@@ -8,8 +8,9 @@
 	icon_state = null
 	item_state = "pill"
 	possible_transfer_amounts = null
-	w_class = ITEM_SIZE_TINY
+	w_class = SIZE_MINUSCULE
 	volume = 50
+	var/halved = FALSE // if set to TRUE pill cannot be split in halves again
 
 /obj/item/weapon/reagent_containers/pill/atom_init()
 	. = ..()
@@ -17,7 +18,22 @@
 		icon_state = "pill[rand(1,20)]"
 
 /obj/item/weapon/reagent_containers/pill/attack_self(mob/user)
-	return
+	if(halved)
+		return
+	user.drop_from_inventory(src)
+	var/volume_half = reagents.total_volume / 2
+	for(var/part in list("top", "bottom"))
+		var/obj/item/weapon/reagent_containers/pill/P = new(user.loc)
+		P.name = "half of [name]"
+		P.icon_state = icon_state
+		P.add_filter("pill_alpha", 3, alpha_mask_filter(icon = icon(icon, "pill_half_[part]")))
+		P.add_overlay(icon(icon, "pill_half_border_[part]"))
+		P.halved = TRUE
+		reagents.trans_to(P.reagents, volume_half)
+		user.put_in_any_hand_if_possible(P)
+	to_chat(user, "<span class='notice'>You split [src] in two halves.</span>")
+	qdel(src)
+
 /obj/item/weapon/reagent_containers/pill/attack(mob/living/M, mob/user, def_zone)
 	if(!CanEat(user, M, src, "take")) return
 	if(M == user)
@@ -34,7 +50,9 @@
 	else
 		user.visible_message("<span class='warning'>[user] attempts to force [M] to swallow [src].</span>")
 
-		if(!do_mob(user, M)) return
+		var/ingestion_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical = SKILL_LEVEL_NOVICE), -0.2)
+		if(!do_mob(user, M, ingestion_time))
+			return
 
 		user.drop_from_inventory(src) //icon update
 		user.visible_message("<span class='warning'>[user] forces [M] to swallow [src].</span>")
@@ -69,6 +87,15 @@
 			qdel(src)
 
 	return
+
+/obj/item/weapon/reagent_containers/pill/examine(mob/user)
+	..()
+	if(!is_skill_competent(user, list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)))
+		return
+	to_chat(user, "It contains:")
+	if(reagents.reagent_list.len)
+		for(var/datum/reagent/R in reagents.reagent_list)
+			to_chat(user, "<span class='info'>[R.volume + R.volume * rand(-25,25) / 100] units of [R.name]</span>")
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Pills. END
@@ -237,8 +264,9 @@
 /obj/item/weapon/reagent_containers/pill/zoom/atom_init()
 	. = ..()
 	reagents.add_reagent("impedrezene", 10)
-	reagents.add_reagent("synaptizine", 5)
-	reagents.add_reagent("hyperzine", 5)
+	reagents.add_reagent("tramadol", 10)
+	reagents.add_reagent("stimulants",5)
+	reagents.add_reagent("toxin", 5)
 
 /obj/item/weapon/reagent_containers/pill/lipozine
 	name = "Lipozine (15u)"
@@ -274,3 +302,12 @@
 	. = ..()
 	reagents.add_reagent("hyronalin", 5)
 	reagents.add_reagent("anti_toxin", 10)
+
+/obj/item/weapon/reagent_containers/pill/adminordrazine
+	name = "AB-X-7921 compound pill."
+	desc = "Experimental chemical agent which is believed to completely heal a human being of any damage upon consumption."
+	icon_state = "pillA"
+
+/obj/item/weapon/reagent_containers/pill/adminordrazine/atom_init()
+	. = ..()
+	reagents.add_reagent("adminordrazine", 1)

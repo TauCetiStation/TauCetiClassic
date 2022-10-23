@@ -1,5 +1,6 @@
-/mob/living/silicon/ai/var/max_locations = 5
-/mob/living/silicon/ai/var/stored_locations[0]
+/mob/living/silicon/ai
+	var/max_locations = 5
+	var/list/stored_locations = list()
 
 /mob/living/silicon/ai/proc/InvalidTurf(turf/T)
 	if(!T)
@@ -44,7 +45,7 @@
 
 	var/obj/machinery/camera/C = track.cameras[camera]
 	track = null
-	src.eyeobj.setLoc(C)
+	eyeobj.setLoc(C)
 
 	return
 
@@ -66,7 +67,7 @@
 		to_chat(src, "<span class='warning'>There is already a stored location by this name</span>")
 		return
 
-	var/L = src.eyeobj.getLoc()
+	var/L = eyeobj.getLoc()
 	if (InvalidTurf(get_turf(L)))
 		to_chat(src, "<span class='warning'>Unable to store this location</span>")
 		return
@@ -87,7 +88,7 @@
 		return
 
 	var/L = stored_locations[loc]
-	src.eyeobj.setLoc(L)
+	eyeobj.setLoc(L)
 
 /mob/living/silicon/ai/proc/ai_remove_location(loc in sorted_stored_locations())
 	set category = "AI Commands"
@@ -115,7 +116,7 @@
 		return list()
 
 	var/datum/trackable/TB = new()
-	for(var/mob/living/M in living_list)
+	for(var/mob/living/M as anything in living_list)
 		// Easy checks first.
 		// Don't detect mobs on Centcom. Since the wizard den is on Centcomm, we only need this.
 		if(InvalidTurf(get_turf(M)))
@@ -129,7 +130,7 @@
 
 		// Human check
 		var/human = 0
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			human = 1
 			var/mob/living/carbon/human/H = M
 			//Cameras can't track people wearing an agent card or hat with blockTracking.
@@ -197,7 +198,7 @@
 		while (U.cameraFollow == target)
 			if (U.cameraFollow == null)
 				return
-			if (istype(target, /mob/living/carbon/human))
+			if (ishuman(target))
 				var/mob/living/carbon/human/H = target
 				if(H.wear_id && istype(H.wear_id.GetID(), /obj/item/weapon/card/id/syndicate))
 					to_chat(U, "Follow camera mode terminated.")
@@ -245,7 +246,7 @@
 /obj/machinery/camera/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
 		return
-	if (!src.can_use())
+	if (!can_use())
 		return
 	user.eyeobj.setLoc(get_turf(src))
 

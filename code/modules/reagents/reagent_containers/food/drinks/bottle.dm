@@ -49,14 +49,27 @@
 					sleep_not_stacking = 25
 
 			stop_spin_bottle = TRUE
+			playsound(src, 'sound/items/glass_containers/bottle_spin.ogg', VOL_EFFECTS_MASTER)
 			SpinAnimation(speed, loops, pick(0, 1)) //SpinAnimation(speed, loops, clockwise, segments)
 			transform = turn(matrix(), dir2angle(pick(alldirs)))
 			sleep(sleep_not_stacking) //Not stacking
 			stop_spin_bottle = FALSE
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/pickup(mob/living/user)
+	. = ..()
 	animate(src, transform = null, time = 0) //Restore bottle to its original position
+	if(reagents.total_volume > 0)
+		playsound(user, 'sound/items/glass_containers/bottle_take-liquid.ogg', VOL_EFFECTS_MASTER)
+	else
+		playsound(user, 'sound/items/glass_containers/bottle_take-empty.ogg', VOL_EFFECTS_MASTER)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/dropped(mob/user)
+	. = ..()
+	if(isturf(loc) && (user.loc != loc))
+		if(reagents.total_volume > 0)
+			playsound(user, 'sound/items/glass_containers/bottle_put-liquid.ogg', VOL_EFFECTS_MASTER)
+		else
+			playsound(user, 'sound/items/glass_containers/bottle_put-empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
 
@@ -75,7 +88,7 @@
 
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	user.put_in_active_hand(B)
-	src.transfer_fingerprints_to(B)
+	transfer_fingerprints_to(B)
 
 	qdel(src)
 
@@ -87,13 +100,11 @@
 	show_filler_on_icon(3, 24, 0)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user, def_zone)
-
-	if(!target)
-		return
-
 	if(user.a_intent != INTENT_HARM || !is_glass)
 		return ..()
 
+	if(!target)
+		return
 
 	force = 15 //Smashing bottles over someoen's head hurts.
 
@@ -104,26 +115,15 @@
 	if(ishuman(target))
 
 		var/mob/living/carbon/human/H = target
-		var/headarmor = 0 // Target's head armour
-		armor_block = H.run_armor_check(def_zone, "melee") // For normal attack damage
+		armor_block = H.run_armor_check(def_zone, MELEE) // For normal attack damage
 
-		//If they have a hat/helmet and the user is targeting their head.
-		if(istype(H.head, /obj/item/clothing/head) && def_zone == BP_HEAD)
-
-			// If their head has an armour value, assign headarmor to it, else give it 0.
-			if(H.head.armor["melee"])
-				headarmor = H.head.armor["melee"]
-			else
-				headarmor = 0
-		else
-			headarmor = 0
-
-		//Calculate the weakening duration for the target.
-		armor_duration = (duration - headarmor) + force
+		//Calculating the weakening duration for the target.
+		if(def_zone == BP_HEAD)
+			armor_duration = (duration - armor_block) + force
 
 	else
 		//Only humans can have armour, right?
-		armor_block = target.run_armor_check(def_zone, "melee")
+		armor_block = target.run_armor_check(def_zone, MELEE)
 		if(def_zone == BP_HEAD)
 			armor_duration = duration + force
 	armor_duration /= 10
@@ -157,13 +157,19 @@
 	if(src.reagents)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("<span class='notice'><B>The contents of the [src] splashes all over [target]!</B></span>"), 1)
-		src.reagents.reaction(target, TOUCH)
+		reagents.reaction(target, TOUCH)
 
 	//Finally, smash the bottle. This kills (del) the bottle.
-	src.smash(target, user)
+	smash(target, user)
 
 	// We're smashing the bottle into mob's face. There's no need for an afterattack.
 	return TRUE
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/afterattack(atom/target, mob/user, proximity, params)
+	. = ..()
+	if(target.is_open_container())
+		if(reagents.total_volume && target.reagents.total_volume < target.reagents.maximum_volume)
+			playsound(user, 'sound/items/glass_containers/bottle_pouring.ogg', VOL_EFFECTS_MASTER, 800)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/after_throw(datum/callback/callback)
 	..()
@@ -175,8 +181,7 @@
 		BB.icon = I
 		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 		new /obj/item/weapon/shard(loc)
-		if(reagents && reagents.total_volume)
-			src.reagents.reaction(loc, TOUCH)
+		reagents.standard_splash(loc)
 		qdel(src)
 
 
@@ -185,7 +190,7 @@
 
 	name = "Broken Bottle"
 	desc = "A bottle with a sharp broken bottom."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "broken_bottle"
 	force = 9.0
@@ -256,10 +261,10 @@
 	list_reagents = list("champagne" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater
-	name = "Flask of Holy Water"
-	desc = "A flask of the chaplain's holy water."
+	name = "Holy Flask"
+	desc = "A flask of the chaplain's water."
 	icon_state = "holyflask"
-	list_reagents = list("holywater" = 100)
+	list_reagents = list("water" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"

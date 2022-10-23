@@ -14,6 +14,7 @@
 	var/efficiency
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/list/cryo_medicine = list("cryoxadone", "clonexadone")
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_PRO)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/atom_init()
 	. = ..()
@@ -111,8 +112,9 @@
 		return
 
 	if(occupant)
-		occupant.bodytemperature += 2 * (air1.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air1.heat_capacity())
-		occupant.bodytemperature = max(occupant.bodytemperature, air1.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
+		var/affecting_temp = air1.temperature - occupant.bodytemperature
+		affecting_temp *= min(1, 2 * current_heat_capacity / (current_heat_capacity + air1.heat_capacity()))
+		occupant.adjust_bodytemperature(affecting_temp)
 
 		/* heat_gas_contents */
 		if(air1.total_moles < 1)
@@ -125,10 +127,12 @@
 
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
-	if(user.incapacitated() || !Adjacent(user) || !target.Adjacent(user) || !iscarbon(target))
+	if(user.incapacitated() || !iscarbon(target))
 		return
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
+		return
+	if(!do_skill_checks(user))
 		return
 	close_machine(target)
 
@@ -142,28 +146,32 @@
 	if(user.is_busy(null, FALSE)) // prevents spam too.
 		return
 
-	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
-	audible_message("<span class='notice'>You hear a thump from [src].</span>")
+	to_chat(user, "<span class='notice'>Вы пытаетесь выбраться из криокамеры, толкаясь ногами... (Потребуется около 30 секунд.)</span>")
+	audible_message("<span class='notice'>Вы слышите глухой стук из криокамеры.</span>")
 	if(do_after(user, 300, target = src))
 		if(occupant == user) // Check they're still here.
 			open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/verb/move_eject()
 	set name = "Eject Cryo Cell"
-	set desc = "Begin the release sequence inside the cryo tube."
+	set desc = "Начать процедуру открытия криокамеры."
 	set category = "Object"
 	set src in oview(1)
 	if(usr == occupant || contents.Find(usr))	//If the user is inside the tube...
 		if(usr.stat == DEAD)	//and he's not dead....
 			return
-		to_chat(usr, "<span class='notice'>Release sequence activated. This will take about a minute.</span>")
+		to_chat(usr, "<span class='notice'>Процедура открытия активирована. Это займет около минуты.</span>")
 		sleep(600)
 		if(!src || !usr || (!occupant && !contents.Find(usr)))	//Check if someone's released/replaced/bombed him already
+			return
+		if(!do_skill_checks(usr))
 			return
 		open_machine()
 		add_fingerprint(usr)
 	else
 		if(isobserver(usr) && !IsAdminGhost(usr))
+			return
+		if(!do_skill_checks(usr))
 			return
 		open_machine()
 
@@ -171,11 +179,11 @@
 	..()
 	if(occupant)
 		if(on)
-			to_chat(user, "Someone's inside [src]!")
+			to_chat(user, "Кто-то внутри криокамеры!")
 		else
-			to_chat(user, "You can barely make out a form floating in [src].")
+			to_chat(user, "Вы едва можете различить форму того, что плавает в криокамере.")
 	else
-		to_chat(user, "[src] seems empty.")
+		to_chat(user, "Криокамера выглядит пустой.")
 
  /**
   * The ui_interact proc is used to open and update Nano UIs
@@ -189,7 +197,7 @@
   * @return nothing
   */
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main")
-	if(user == occupant || (user.stat && !isobserver(user)) || panel_open)
+	if(user == occupant || (user.stat != CONSCIOUS && !isobserver(user)) || panel_open)
 		return
 
 	// this is the data which will be sent to the ui
@@ -247,23 +255,35 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
 		return
 
-	if(!user.incapacitated() && in_range(user, src))
+	if(user == occupant)
+		return
+
+	if(!user.incapacitated() && Adjacent(user))
 		if(!state_open)
+			if(!do_skill_checks(user))
+				return
 			on = !on
 			update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
 		return
 
-	if(!user.incapacitated() && in_range(user, src))
+	if(user == occupant)
+		return
+
+	if(!user.incapacitated() && Adjacent(user))
 		if(state_open)
+			if(!do_skill_checks(user))
+				return
 			close_machine()
 		else
+			if(!do_skill_checks(user))
+				return
 			open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Topic(href, href_list)
@@ -297,15 +317,14 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			to_chat(user, "<span class='warning'>A beaker is already loaded into [src]!</span>")
+			to_chat(user, "<span class='warning'>Что-то уже загружено в криокамеру!</span>")
 			return
-		if(!user.drop_item())
+		if(!user.drop_from_inventory(I, src))
 			return
 		beaker = I
-		I.forceMove(src)
 		user.visible_message(
-			"[user] places [I] in [src].",
-			"<span class='notice'>You place [I] in [src].</span>")
+			"[user] inserts [I] into cryocell.",
+			"<span class='notice'>You insert [I] into cryocell.</span>")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
 		return

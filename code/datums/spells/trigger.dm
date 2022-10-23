@@ -8,9 +8,8 @@
 /obj/effect/proc_holder/spell/targeted/trigger/atom_init()
 	. = ..()
 
-	for(var/spell in starting_spells)
-		var/spell_to_add = text2path(spell)
-		new spell_to_add(src) //should result in adding to contents, needs testing
+	for(var/spell_type in starting_spells)
+		new spell_type(src)
 
 /obj/effect/proc_holder/spell/targeted/trigger/Destroy()
 	for(var/spell in contents)

@@ -8,11 +8,12 @@
 /obj/item/weapon/storage
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
-	w_class = ITEM_SIZE_NORMAL
-	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
-	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
+	flags = HEAR_TALK
+	w_class = SIZE_SMALL
+	var/list/can_hold = list() //List of objects which this item can store (if set, it can't store anything else)
+	var/list/cant_hold = list() //List of objects which this item can't store (in effect only if can_hold isn't set)
 
-	var/max_w_class = ITEM_SIZE_SMALL //Max size of objects that this object can store (in effect only if can_hold isn't set)
+	var/max_w_class = SIZE_TINY //Max size of objects that this object can store (in effect only if can_hold isn't set)
 	var/max_storage_space = null //Total storage cost of items this can hold. Will be autoset based on storage_slots if left null.
 	var/storage_slots = null //The number of storage slots in this container.
 
@@ -61,46 +62,51 @@
 	QDEL_NULL(storage_ui)
 	return ..()
 
-/obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
-	if (ishuman(usr) || ismonkey(usr) || isIAN(usr)) //so monkeys can take off their backpacks -- Urist
-		var/mob/M = usr
+/obj/item/weapon/storage/MouseDrop(obj/over_object, src_location, turf/over_location)
+	if(src != over_object)
+		remove_outline()
+	if(!(ishuman(usr) || ismonkey(usr) || isIAN(usr))) //so monkeys can take off their backpacks -- Urist
+		return
+	if (istype(usr.loc, /obj/mecha)) // stops inventory actions in a mech
+		return
 
-		if(!over_object)
+	var/mob/M = usr
+	add_fingerprint(M)
+	if(isturf(over_location) && over_object != M)
+		if(M.incapacitated())
 			return
-
-		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+		if(slot_equipped && (slot_equipped != SLOT_L_HAND && slot_equipped != SLOT_R_HAND))
 			return
-
-		if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
-			src.open(usr)
+		if(!isturf(M.loc))
 			return
-
-		if (!( istype(over_object, /obj/screen) ))
-			return ..()
-
-		//makes sure that the storage is equipped, so that we can't drag it into our hand from miles away.
-		//there's got to be a better way of doing this.
-		if (!(src.loc == usr) || (src.loc && src.loc.loc == usr))
+		if(istype(src, /obj/item/weapon/storage/lockbox))
+			var/obj/item/weapon/storage/lockbox/L = src
+			if(L.locked)
+				return
+		if(istype(loc, /obj/item/weapon/storage)) //Prevent dragging /storage contents from backpack on floor.
 			return
+		if(M.a_intent == INTENT_HELP)
+			var/dir_target = get_dir(M.loc, over_location)
+			M.SetNextMove(CLICK_CD_MELEE)
+			for(var/obj/item/I in contents)
+				if(M.is_busy())
+					return
+				if(!Adjacent(M) || !over_location.Adjacent(src) || !over_location.Adjacent(M))
+					return
+				if(!do_after(M, 2, target = M))
+					return
+				remove_from_storage(I, M.loc)
+				I.add_fingerprint(M)
+				step(I, dir_target)
+		return
 
-		if (!usr.incapacitated())
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
-				if("mouth")
-					if(!M.unEquip(src))
-						return
-					M.put_in_active_hand(src)
-			src.add_fingerprint(usr)
-			return
-	return
+	if(!over_object)
+		return
+	if(over_object == usr) // this must come before the screen objects only block
+		try_open(usr)
+		return
 
+	return ..()
 
 /obj/item/weapon/storage/proc/return_inv()
 	var/list/L = list(  )
@@ -125,11 +131,21 @@
 
 /obj/item/weapon/storage/proc/open(mob/user)
 	if (length(use_sound))
-		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, null, -5)
+		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 
 	prepare_ui()
 	storage_ui.on_open(user)
 	show_to(user)
+
+// Returns TRUE if user can open the storage and opens it. Returns FALSE otherwise.
+/obj/item/weapon/storage/proc/try_open(mob/user)
+	if(!user)
+		return FALSE
+	if(!user.in_interaction_vicinity(src))
+		return FALSE
+
+	open(user)
+	return TRUE
 
 /obj/item/weapon/storage/proc/prepare_ui()
 	if(!storage_ui)
@@ -204,12 +220,14 @@
 				to_chat(usr, "<span class='notice'>[src] cannot hold [W] as it's a storage item of the same size.</span>")
 			return FALSE //To prevent the stacking of same sized storage items.
 
-	var/total_storage_space = W.get_storage_cost()
-	if(total_storage_space == ITEM_SIZE_NO_CONTAINER)
+	// by design SIZE_LARGE can't be placed in storages
+	// and now this check works correctly
+	if(W.w_class >= SIZE_LARGE)
 		if(!stop_messages)
 			to_chat(usr, "<span class='notice'>\The [W] cannot be placed in [src].</span>")
 		return FALSE
 
+	var/total_storage_space = W.get_storage_cost()
 	total_storage_space += storage_space_used() //Adds up the combined w_classes which will be in the storage item if the item is added to it.
 	if(total_storage_space > max_storage_space)
 		if(!stop_messages)
@@ -224,25 +242,26 @@
 /obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
 	if(!istype(W))
 		return FALSE
-	if(usr)
-		usr.remove_from_mob(W)
-		usr.update_icons()	//update our overlays
-	W.loc = src
+
+	if(SEND_SIGNAL(src, COMSIG_STORAGE_ENTERED, W, prevent_warning, NoUpdate) & COMSIG_STORAGE_PROHIBIT)
+		return
+
+	if(usr && W.loc == usr)
+		usr.remove_from_mob(W, src)
+	else
+		W.forceMove(src)
+
 	W.on_enter_storage(src)
 	if(usr)
-		if (usr.client && usr.s_active != src)
-			usr.client.screen -= W
-		W.dropped(usr)
 		add_fingerprint(usr)
 
-		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/crossbow))
-			for(var/mob/M in viewers(usr, null))
-				if (M == usr)
-					to_chat(usr, "<span class='notice'>You put \the [W] into [src].</span>")
-				else if (M in range(1)) //If someone is standing close enough, they can tell what it is...
-					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>", SHOWMSG_VISUAL)
-				else if (W && W.w_class >= ITEM_SIZE_NORMAL) //Otherwise they can only see large or normal items from a distance...
-					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>", SHOWMSG_VISUAL)
+		if(!(prevent_warning || istype(W, /obj/item/weapon/gun/energy/crossbow)))
+			//If someone is standing close enough or item is larger than TINY, they can tell what it is...
+			usr.visible_message(
+				"<span class='notice'>[usr] puts [W] into [src].</span>",
+				"<span class='notice'>You put \the [W] into [src].</span>",
+				viewing_distance = (W.w_class > SIZE_TINY ? world.view : 1)
+				)
 		if(crit_fail && prob(25))
 			remove_from_storage(W, get_turf(src))
 		if(!NoUpdate)
@@ -272,17 +291,17 @@
 	if(storage_ui)
 		storage_ui.on_pre_remove(usr, W)
 
+	SEND_SIGNAL(src, COMSIG_STORAGE_EXITED, W, new_location, NoUpdate)
+
 	if(new_location)
 		if(ismob(loc))
 			var/mob/M = loc
 			W.dropped(M)
 		if(ismob(new_location))
-			W.layer = ABOVE_HUD_LAYER
 			W.plane = ABOVE_HUD_PLANE
 		else
 			W.layer = initial(W.layer)
 			W.plane = initial(W.plane)
-		W.set_alt_apperances_layers()
 		W.Move(new_location)
 	else
 		W.Move(get_turf(src))
@@ -313,20 +332,6 @@
 	if(istype(I, /obj/item/weapon/implanter/compressed))
 		return FALSE
 
-	if(istype(I, /obj/item/weapon/tray))
-		var/obj/item/weapon/tray/T = I
-		if(T.calc_carry() > 0)
-			if(prob(85))
-				to_chat(user, "<span class='warning'>The tray won't fit in [src].</span>")
-				return FALSE
-			else
-				I.forceMove(user.loc)
-				if(user.client && user.s_active != src)
-					user.client.screen -= I
-				I.dropped(user)
-				to_chat(user, "<span class='warning'>God damnit!</span>")
-			return
-
 	if(istype(I, /obj/item/weapon/packageWrap) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
 		return FALSE
 
@@ -339,19 +344,25 @@
 	return
 
 /obj/item/weapon/storage/attack_hand(mob/user)
-	if (src.loc == user)
-		src.open(user)
+	add_fingerprint(user)
+	if(loc == user)
+		open(user)
 	else
 		..()
 		if(storage_ui)
 			storage_ui.on_hand_attack(user)
-	src.add_fingerprint(user)
+
+/obj/item/weapon/storage/AltClick(mob/user)
+	add_fingerprint(user)
+	if(try_open(user))
+		return
+	return ..(user)
 
 //Should be merged into attack_hand() later, i mean whole attack_paw() proc, but thats probably a lot of work.
 /obj/item/weapon/storage/attack_paw(mob/user) // so monkey, ian or something will open it, istead of unequip from back
 	return attack_hand(user)                  // to unequip - there is drag n drop available for this task - same as humans do.
 
-/obj/item/weapon/storage/proc/gather_all(var/turf/T, var/mob/user)
+/obj/item/weapon/storage/proc/gather_all(turf/T, mob/user)
 	var/success = 0
 	var/failure = 0
 
@@ -396,7 +407,7 @@
 	finish_bulk_removal()
 
 /obj/item/weapon/storage/emp_act(severity)
-	if(!istype(src.loc, /mob/living))
+	if(!isliving(src.loc))
 		for(var/obj/O in contents)
 			O.emplode(severity)
 	..()
@@ -406,8 +417,8 @@
 
 	//Clicking on itself will empty it, if it has the verb to do that.
 	if(user.get_active_hand() == src)
-		if(src.verbs.Find(/obj/item/weapon/storage/proc/quick_empty))
-			src.quick_empty()
+		if(verbs.Find(/obj/item/weapon/storage/proc/quick_empty))
+			quick_empty()
 			return
 
 	//Otherwise we'll try to fold it.
@@ -420,19 +431,19 @@
 	// Close any open UI windows first
 	for(var/mob/M in range(1))
 		if (M.s_active == src)
-			src.close(M)
+			close(M)
 		if ( M == user )
 			found = 1
 	if ( !found )	// User is too far away
 		return
 	// Now make the cardboard
 	to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
-	new src.foldable(get_turf(src))
+	new foldable(get_turf(src))
 	qdel(src)
 //BubbleWrap END
 
 /obj/item/weapon/storage/hear_talk(mob/M, text, verb, datum/language/speaking)
-	for (var/atom/A in src)
+	for (var/atom/A in src) // todo: we need it? say() should already catch all objects recursively
 		if(istype(A,/obj))
 			var/obj/O = A
 			O.hear_talk(M, text, verb, speaking)
@@ -490,7 +501,7 @@
 	return depth
 
 /obj/item/weapon/storage/handle_atom_del(atom/A)
-	if(A in contents)
+	if(A.loc == src)
 		usr = null
 		remove_from_storage(A, loc)
 
@@ -506,3 +517,11 @@
 	for(var/obj/O in contents)
 		remove_from_storage(O, T)
 		INVOKE_ASYNC(O, /obj.proc/tumble_async, 2)
+
+/obj/item/weapon/storage/proc/make_empty(delete = TRUE)
+	var/turf/T = get_turf(src)
+	for(var/A in contents)
+		if(delete)
+			qdel(A)
+		else
+			remove_from_storage(A, T)

@@ -1,6 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
-
 /obj/machinery/computer/robotics
 	name = "Robotics Control"
 	desc = "Used to remotely lockdown or detonate linked Cyborgs."
@@ -11,6 +8,8 @@
 	light_color = "#a97faa"
 	req_access = list(access_robotics)
 	circuit = /obj/item/weapon/circuitboard/robotics
+
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_PRO)
 
 	var/id = 0.0
 	var/temp = null
@@ -40,19 +39,19 @@
 			dat += "<A href='?src=\ref[src];screen=2'>2. Emergency Full Destruct</A><BR>"
 		if(screen == 1)
 			for(var/mob/living/silicon/robot/R in silicon_list)
-				if(istype(R, /mob/living/silicon/robot/drone))
+				if(isdrone(R))
 					continue //There's a specific console for drones.
-				if(istype(user, /mob/living/silicon/ai))
+				if(isAI(user))
 					if (R.connected_ai != user)
 						continue
-				if(istype(user, /mob/living/silicon/robot))
+				if(isrobot(user))
 					if (R != user)
 						continue
 				if(R.scrambledcodes)
 					continue
 
 				dat += "[R.name] |"
-				if(R.stat)
+				if(R.stat != CONSCIOUS)
 					dat += " Not Responding |"
 				else if (!R.canmove)
 					dat += " Locked Down |"
@@ -71,7 +70,7 @@
 					dat += " Slaved to [R.connected_ai.name] |"
 				else
 					dat += " Independent from AI |"
-				if (istype(user, /mob/living/silicon))
+				if (issilicon(user))
 					if((user.mind.special_role && user.mind.original == user) && !R.emagged)
 						dat += "<A class='violet' href='?src=\ref[src];magbot=\ref[R]'><i>Hack</i></A> "
 				dat += "<A class='green' href='?src=\ref[src];stopbot=\ref[R]'><i>[R.canmove ? "Lockdown" : "Release"]</i></A> "
@@ -112,7 +111,7 @@
 				message_admins("<span class='notice'>[key_name_admin(usr)] has initiated the global cyborg killswitch! [ADMIN_JMP(usr)]</span>")
 				log_game("[key_name(usr)] has initiated the global cyborg killswitch!")
 				src.status = 1
-				src.start_sequence()
+				start_sequence()
 				src.temp = null
 		else
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
@@ -142,7 +141,7 @@
 			if("2")
 				screen = 2
 	else if (href_list["killbot"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["killbot"])
 			if(R)
 				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
@@ -160,7 +159,7 @@
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
 
 	else if (href_list["stopbot"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["stopbot"])
 			if(R && istype(R)) // Extra sancheck because of input var references
 				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
@@ -174,18 +173,18 @@
 						//	R.cell.charge = R.lockcharge
 							R.lockcharge = !R.lockcharge
 							to_chat(R, "Your lockdown has been lifted!")
-							playsound(R, 'sound/effects/robot_unlocked.ogg', VOL_EFFECTS_MASTER, , FALSE)
+							playsound(R, 'sound/effects/robot_unlocked.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 						else
-							R.throw_alert("locked", /obj/screen/alert/locked)
+							R.throw_alert("locked", /atom/movable/screen/alert/locked)
 							R.lockcharge = !R.lockcharge
 					//		R.cell.charge = 0
 							to_chat(R, "You have been locked down!")
-							playsound(R, 'sound/effects/robot_locked.ogg', VOL_EFFECTS_MASTER, , FALSE)
+							playsound(R, 'sound/effects/robot_locked.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
 
 	else if (href_list["magbot"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["magbot"])
 			if(R)
 				var/choice = input("Are you certain you wish to hack [R.name]?") in list("Confirm", "Abort")
@@ -199,7 +198,7 @@
 						if(R.mind.special_role)
 							R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/robotics/proc/start_sequence()
 
@@ -212,7 +211,7 @@
 	while(src.timeleft)
 
 	for(var/mob/living/silicon/robot/R in silicon_list)
-		if(!R.scrambledcodes && !istype(R, /mob/living/silicon/robot/drone))
+		if(!R.scrambledcodes && !isdrone(R))
 			R.self_destruct()
 
 	return

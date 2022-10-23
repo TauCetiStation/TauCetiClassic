@@ -13,11 +13,11 @@
 	var/list/modcount = list()	// assoc list of the count of modules for a type
 
 
-var/list/modules = list(			// global associative list
-"/obj/machinery/power/apc" = "card_reader,power_control,id_auth,cell_power,cell_charge")
+var/global/list/modules = list(			// global associative list
+/obj/machinery/power/apc = "card_reader,power_control,id_auth,cell_power,cell_charge")
 
 
-/datum/module/New(var/obj/O)
+/datum/module/New(obj/O)
 
 	var/type = O.type		// the type of the creating object
 

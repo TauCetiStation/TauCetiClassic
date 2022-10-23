@@ -1,5 +1,5 @@
 //admin verb groups - They can overlap if you so wish. Only one of each verb will exist in the verbs list regardless
-var/list/admin_verbs_default = list(
+var/global/list/admin_verbs_default = list(
 	/client/proc/deadmin_self,			//destroys our own admin datum so we can play as a regular player,
 	/client/proc/hide_verbs,			//hides all our adminverbs,
 	/client/proc/hide_most_verbs,		//hides all our hideable adminverbs,
@@ -7,7 +7,7 @@ var/list/admin_verbs_default = list(
 	/datum/admins/proc/show_player_panel,	//shows an interface for individual players, with various links (links require additional flags,
 	/client/proc/player_panel,
 	)
-var/list/admin_verbs_admin = list(
+var/global/list/admin_verbs_admin = list(
 	/client/proc/player_panel_new,		//shows an interface for all players, with links to various panels,
 	/client/proc/invisimin,				//allows our mob to go invisible/visible,
 	/datum/admins/proc/toggleenter,		//toggles whether people can join the current game,
@@ -40,7 +40,6 @@ var/list/admin_verbs_admin = list(
 	/client/proc/cmd_admin_direct_narrate,	//send text directly to a player with no padding. Useful for narratives and fluff-text,
 	/client/proc/cmd_admin_world_narrate,	//sends text to all players with no padding,
 	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/check_words,			//displays cult-words,
 	/client/proc/check_ai_laws,			//shows AI and borg laws,
 	/client/proc/check_antagonists,
 	/client/proc/admin_memo,			//admin memo system. show/delete/write. +SERVER needed to delete admin memos of others,
@@ -71,9 +70,11 @@ var/list/admin_verbs_admin = list(
 	/client/proc/empty_ai_core_toggle_latejoin,
 	/client/proc/send_fax_message,
 	/client/proc/debug_variables, 		//allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify,
-	/client/proc/toggle_combo_hud, // Toggle all aviables huds, except mining hud
+	/client/proc/toggle_combo_hud, // Toggle all aviables huds, except mining hud,
+	/client/proc/set_bwoink_sound, // affects only the admin that put it there,
+	/client/proc/send_gods_message,
 	)
-var/list/admin_verbs_log = list(
+var/global/list/admin_verbs_log = list(
 	/client/proc/show_player_notes,
 	/client/proc/getserverlogs,			//allows us to fetch server logs (diary) for other days,
 	/client/proc/getcurrentlogs,			//allows us to fetch logs for other days,
@@ -82,22 +83,24 @@ var/list/admin_verbs_log = list(
 	/client/proc/investigate_show,		//various admintools for investigation. Such as a singulo grief-log,
 	/client/proc/view_runtimes
 	)
-var/list/admin_verbs_variables = list(
+var/global/list/admin_verbs_variables = list(
 	/client/proc/debug_variables,
 	/client/proc/add_player_age,
 	/client/proc/grand_guard_pass,
 	/client/proc/mass_apply_status_effect,
 )
-var/list/admin_verbs_ban = list(
+var/global/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
 	/client/proc/stickybanpanel,
 	)
-var/list/admin_verbs_sounds = list(
+var/global/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
 	/client/proc/play_global_sound,
-	/client/proc/stop_server_sound
+	/client/proc/stop_server_sound,
+	/client/proc/play_server_sound
 	)
-var/list/admin_verbs_fun = list(
+var/global/list/admin_verbs_fun = list(
+	/client/proc/change_title_screen,
 	/client/proc/object_talk,
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
@@ -122,13 +125,12 @@ var/list/admin_verbs_fun = list(
 	/client/proc/centcom_barriers_toggle,
 	/client/proc/gateway_toggle
 	)
-var/list/admin_verbs_spawn = list(
+var/global/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		//allows us to spawn instances,
 	/client/proc/respawn_character,
 	/datum/admins/proc/spawn_fluid_verb
 	)
-var/list/admin_verbs_server = list(
-	/client/proc/Set_Holiday,
+var/global/list/admin_verbs_server = list(
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
 	/datum/admins/proc/delay,
@@ -149,9 +151,13 @@ var/list/admin_verbs_server = list(
 	/client/proc/toggle_random_events,
 	/client/proc/nanomapgen_DumpImage,
 	/client/proc/adminchangemap,
+	/datum/admins/proc/toggle_deathmatch_arena,
 	)
-var/list/admin_verbs_debug = list(
+var/global/list/admin_verbs_debug = list(
+	/client/proc/edit_color_matrix,
 	/client/proc/restart_controller,
+	/client/proc/generate_round_scoreboard,
+	/client/proc/save_statistics,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
 	/client/proc/forceEvent,
@@ -168,7 +174,6 @@ var/list/admin_verbs_debug = list(
 	/client/proc/reload_admins,
 	/client/proc/reload_mentors,
 	/client/proc/reload_config,
-	/client/proc/reload_nanoui_resources,
 //	/client/proc/remake_distribution_map,
 //	/client/proc/show_distribution_map,
 	/client/proc/enable_debug_verbs,
@@ -179,31 +184,38 @@ var/list/admin_verbs_debug = list(
 	/client/proc/getdebuglogsbyid,
 	/client/proc/cmd_display_del_log,
 	/client/proc/cmd_display_init_log,
+	/client/proc/debugNatureMapGenerator,
 	/datum/admins/proc/run_unit_test,
+	/client/proc/event_manager_panel,
+#ifdef REFERENCE_TRACKING
+/client/proc/find_refs,
+/client/proc/qdel_then_find_references,
+/client/proc/qdel_then_if_fail_find_references,
+#endif
 	)
-var/list/admin_verbs_possess = list(
+var/global/list/admin_verbs_possess = list(
 	/proc/possess,
 	/proc/release
 	)
-var/list/admin_verbs_permissions = list(
+var/global/list/admin_verbs_permissions = list(
 	/client/proc/edit_admin_permissions,
-	/client/proc/gsw_add,
 	/client/proc/library_debug_remove,
 	/client/proc/library_debug_read,
 	/client/proc/regisration_panic_bunker,
 	/client/proc/host_announcements,
+	/client/proc/add_round_admin,
 	)
-var/list/admin_verbs_rejuv = list(
+var/global/list/admin_verbs_rejuv = list(
 	/client/proc/cmd_admin_rejuvenate,
 	/client/proc/respawn_character
 	)
-var/list/admin_verbs_whitelist = list(
+var/global/list/admin_verbs_whitelist = list(
 	/client/proc/get_whitelist, 			//Whitelist,
 	/client/proc/add_to_whitelist,
 	/datum/admins/proc/whitelist_panel,
 	/datum/admins/proc/toggle_job_restriction
 	)
-var/list/admin_verbs_event = list(
+var/global/list/admin_verbs_event = list(
 	/client/proc/event_map_loader,
 	/client/proc/admin_crew_salary,
 	/client/proc/event_manager_panel,
@@ -211,7 +223,7 @@ var/list/admin_verbs_event = list(
 	)
 
 //verbs which can be hidden - needs work
-var/list/admin_verbs_hideable = list(
+var/global/list/admin_verbs_hideable = list(
 	/client/proc/set_global_ooc,
 	/datum/admins/proc/library_recycle_bin,
 	/client/proc/deadmin_self,
@@ -239,7 +251,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/admin_cancel_shuttle,
 	/client/proc/cmd_admin_direct_narrate,
 	/client/proc/cmd_admin_world_narrate,
-	/client/proc/check_words,
 	/client/proc/play_local_sound,
 	/client/proc/play_global_sound,
 	/client/proc/object_talk,
@@ -249,7 +260,6 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/get_whitelist, 			//Whitelist,
 	/client/proc/add_to_whitelist,
 	/datum/admins/proc/whitelist_panel,
-	/client/proc/gsw_add,
 	/datum/admins/proc/toggle_aliens,
 	/datum/admins/proc/toggle_space_ninja,
 	/client/proc/send_space_ninja,
@@ -259,7 +269,6 @@ var/list/admin_verbs_hideable = list(
 //	/client/proc/make_sound,
 	/client/proc/toggle_random_events,
 	/client/proc/cmd_admin_add_random_ai_law,
-	/client/proc/Set_Holiday,
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
 	/datum/admins/proc/delay,
@@ -270,6 +279,8 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/everyone_random,
 	/datum/admins/proc/toggleAI,
 	/client/proc/restart_controller,
+	/client/proc/generate_round_scoreboard,
+	/client/proc/save_statistics,
 	/datum/admins/proc/adrev,
 	/datum/admins/proc/adspawn,
 	/datum/admins/proc/adjump,
@@ -344,25 +355,11 @@ var/list/admin_verbs_hideable = list(
 		admin_verbs_rejuv,
 		admin_verbs_sounds,
 		admin_verbs_spawn,
+		admin_verbs_whitelist,
 		admin_verbs_event,
 		admin_verbs_log,
 		admin_verbs_variables,
-		//Debug verbs added by "show debug verbs",
-		/client/proc/Cell,
-		/client/proc/do_not_use_these,
-		/client/proc/camera_view,
-		/client/proc/sec_camera_report,
-		/client/proc/intercom_view,
-		/client/proc/atmosscan,
-		/client/proc/powerdebug,
-		/client/proc/count_objects_on_z_level,
-		/client/proc/count_objects_all,
-		/client/proc/cmd_assume_direct_control,
-		/client/proc/startSinglo,
-		/client/proc/set_fps,
-		/client/proc/cmd_admin_grantfullaccess,
-		/client/proc/splash,
-		/client/proc/cmd_admin_areatest
+		debug_verbs
 		)
 
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
@@ -405,7 +402,7 @@ var/list/admin_verbs_hideable = list(
 	set category = "Admin"
 	set name = "Aghost"
 	if(!holder)	return
-	if(istype(mob,/mob/dead/observer))
+	if(isobserver(mob))
 		//re-enter
 		var/mob/dead/observer/ghost = mob
 		ghost.can_reenter_corpse = TRUE
@@ -508,23 +505,26 @@ var/list/admin_verbs_hideable = list(
 /client/proc/stealth()
 	set category = "Admin"
 	set name = "Stealth Mode"
-	if(holder)
-		if(holder.fakekey)
-			holder.fakekey = null
-			mob.invisibility = initial(mob.invisibility)
-			mob.alpha = 127//initial(mob.alpha)
-			mob.name = initial(mob.name)
-		else
-			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
-			if(!new_key)	return
-			if(length(new_key) >= 26)
-				new_key = copytext(new_key, 1, 26)
-			holder.fakekey = new_key
-			mob.invisibility = INVISIBILITY_MAXIMUM + 1 //JUST IN CASE
-			mob.alpha = 0 //JUUUUST IN CASE
-			mob.name = " "
-		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
-		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
+
+	if(!holder || !(holder.rights & R_STEALTH))
+		return
+
+	if(holder.fakekey)
+		holder.fakekey = null
+		mob.invisibility = initial(mob.invisibility)
+		mob.alpha = 127//initial(mob.alpha)
+		mob.name = initial(mob.name)
+	else
+		var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
+		if(!new_key)	return
+		if(length(new_key) >= 26)
+			new_key = copytext(new_key, 1, 26)
+		holder.fakekey = new_key
+		mob.invisibility = INVISIBILITY_MAXIMUM + 1 //JUST IN CASE
+		mob.alpha = 0 //JUUUUST IN CASE
+		mob.name = " "
+	log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
+	message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/warn(warned_ckey)
@@ -558,7 +558,7 @@ var/list/admin_verbs_hideable = list(
 
 	var/list/params = admin_spawn_status_effect(usr)
 	if(params)
-		if(alert("Confirm applying the status effect to every mob?", , "Yes", "No") == "Yes")
+		if(tgui_alert(usr, "Confirm applying the status effect to every mob?",, list("Yes", "No")) == "Yes")
 			for(var/mob/living/L in global.living_list)
 				L.apply_status_effect(arglist(params))
 
@@ -597,7 +597,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Gives a spell to a mob."
 	var/list/spell_names = list()
 	for(var/v in spells)
-	//	"/obj/effect/proc_holder/spell/" 30 symbols ~Intercross21
+	//	"[/obj/effect/proc_holder/spell]/" 30 symbols ~Intercross21
 		spell_names.Add(copytext("[v]", 31, 0))
 	var/S = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in spell_names
 	if(!S) return
@@ -606,22 +606,6 @@ var/list/admin_verbs_hideable = list(
 	feedback_add_details("admin_verb","GS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
 	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] the spell [S].</span>")
-
-/client/proc/give_disease(mob/T as mob in mob_list) // -- Giacom
-	set category = "Fun"
-	set name = "Give Disease (old)"
-	set desc = "Gives a (tg-style) Disease to a mob."
-	var/list/disease_names = list()
-	for(var/v in diseases)
-	//	"/datum/disease/" 15 symbols ~Intercross
-		disease_names.Add(copytext("[v]", 16, 0))
-	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in disease_names
-	if(!D) return
-	var/path = text2path("/datum/disease/[D]")
-	T.contract_disease(new path, 1)
-	feedback_add_details("admin_verb","GD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
-	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>")
 
 /client/proc/give_disease2(mob/T as mob in mob_list) // -- Giacom
 	set category = "Fun"
@@ -698,17 +682,44 @@ var/list/admin_verbs_hideable = list(
 			return
 		for (var/mob/V in hearers(O))
 			V.show_messageold(message, 2)
-		log_admin("[key_name(usr)] made [O] at [O.x], [O.y], [O.z]. make a sound")
-		message_admins("<span class='notice'>[key_name_admin(usr)] made [O] at [O.x], [O.y], [O.z] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[O.x];Y=[O.y];Z=[O.z]'>JMP</a>) make a sound</span>")
+		log_admin("[key_name(usr)] made [O] at [COORD(O)]. make a sound")
+		message_admins("<span class='notice'>[key_name_admin(usr)] made [O] at [COORD(O)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[O.x];Y=[O.y];Z=[O.z]'>JMP</a>) make a sound</span>")
 		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 */
 
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
 	set category = "Special Verbs"
-	if(src.mob)
-		togglebuildmode(src.mob)
+	if(!mob || !(holder.rights & R_BUILDMODE))
+		return
+
+	togglebuildmode(mob)
 	feedback_add_details("admin_verb","TBMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/change_title_screen()
+	set name = "Title Screen: Change"
+	set category = "Fun"
+
+	if(!check_rights(R_FUN))
+		return
+
+	log_admin("[key_name(usr)] try change the title screen.")
+	message_admins("[key_name_admin(usr)] try change the title screen.")
+	feedback_add_details("admin_verb", "CTS")
+
+	switch(tgui_alert(usr, "How change Title Screen?", "Title Screen", list("Change", "Reset", "Cancel")))
+		if("Change")
+			var/file = input(usr) as icon|null
+			if(!file)
+				return
+			change_lobbyscreen(file)
+		if("Reset")
+			change_lobbyscreen()
+		if("Cancel")
+			return
+
+	for(var/mob/dead/new_player/N as anything in new_player_list)
+		N.show_titlescreen()
 
 /client/proc/object_talk(msg as text) // -- TLE
 	set category = "Special Verbs"
@@ -739,7 +750,7 @@ var/list/admin_verbs_hideable = list(
 	if(!holder)
 		return
 
-	if(alert("Confirm self-deadmin for the round?",,"Yes","No") == "Yes")
+	if(tgui_alert(usr, "Confirm self-deadmin for the round?",, list("Yes","No")) == "Yes")
 		if(has_antag_hud())
 			toggle_combo_hud()
 
@@ -766,7 +777,7 @@ var/list/admin_verbs_hideable = list(
 	set name = "Check AI Laws"
 	set category = "Admin"
 	if(holder)
-		src.holder.output_ai_laws()
+		holder.output_ai_laws()
 
 //---- bs12 verbs ----
 
@@ -785,10 +796,10 @@ var/list/admin_verbs_hideable = list(
 	if(!check_rights(R_FUN))
 		return
 
-	if(!istype(M, /mob/living/carbon/human))
+	if(!ishuman(M))
 		to_chat(usr, "<span class='warning'>You can only do this to humans!</span>")
 		return
-	switch(alert("Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",,"Yes","No"))
+	switch(tgui_alert(usr, "Are you sure you wish to edit this mob's appearance? Skrell, Unathi, Vox and Tajaran can result in unintended consequences.",, list("Yes","No")))
 		if("No")
 			return
 	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
@@ -821,7 +832,7 @@ var/list/admin_verbs_hideable = list(
 		M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
 		M.s_tone =  -M.s_tone + 35
 
-	var/new_gender = alert(usr, "Please select gender.", "Character Generation", "Male", "Female")
+	var/new_gender = tgui_alert(usr, "Please select gender.", "Character Generation", list("Male", "Female"))
 	if (new_gender)
 		if(new_gender == "Male")
 			M.gender = MALE
@@ -880,10 +891,11 @@ var/list/admin_verbs_hideable = list(
 
 	var/adding_hud = !has_antag_hud()
 
-	for(var/hudtype in list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC)) // add data huds
+	for(var/hudtype in list(DATA_HUD_SECURITY, DATA_HUD_MEDICAL_ADV, DATA_HUD_DIAGNOSTIC, DATA_HUD_HOLY)) // add data huds
 		var/datum/atom_hud/H = global.huds[hudtype]
 		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
-	for(var/datum/atom_hud/antag/H in global.huds) // add antag huds
+	for(var/hud in get_all_antag_huds())
+		var/datum/atom_hud/antag/H = hud
 		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
 
 	if(ishuman(mob))
@@ -980,6 +992,7 @@ var/list/admin_verbs_hideable = list(
 
 	log_admin("[key_name(usr)] told everyone to man up and deal with it.")
 	message_admins("<span class='notice'>[key_name_admin(usr)] told everyone to man up and deal with it.</span>")
+	mob.eject_from_wall()
 
 /client/proc/achievement()
 	set name = "Give Achievement"
@@ -998,10 +1011,10 @@ var/list/admin_verbs_hideable = list(
 	var/name = sanitize(input("What will you call your achievement?", "Achievement Winner", "New Achievement"))
 	var/desc = sanitize(input("What description will you give it?", "Achievement Description", "You Win"))
 
-	if(istype(winner, /mob/living))
-		achoice = alert("Give our winner his own trophy?","Achievement Trophy", "Confirm","Cancel")
+	if(isliving(winner))
+		achoice = tgui_alert(usr, "Give our winner his own trophy?","Achievement Trophy", list("Confirm","Cancel"))
 
-	var/glob = alert("Announce the achievement globally? (Beware! Ruins immersion!)","Last Question", "No!","Yes!")
+	var/glob = tgui_alert(usr, "Announce the achievement globally? (Beware! Ruins immersion!)","Last Question", list("No!","Yes!"))
 
 	if(achoice == "Confirm")
 		var/obj/item/weapon/reagent_containers/food/drinks/golden_cup/C = new(get_turf(winner))
@@ -1023,7 +1036,7 @@ var/list/admin_verbs_hideable = list(
 
 	to_chat(winner, "<span class='danger'>Congratulations!</span>")
 
-	achievements += list(list("key" = winner.key, "name" = winner.name, "title" = name, "desc" = desc))
+	SSStatistics.add_achievement(winner.key, winner.name, name, desc)
 
 /client/proc/aooc()
 	set category = "Admin"
@@ -1040,8 +1053,8 @@ var/list/admin_verbs_hideable = list(
 		display_name = holder.fakekey
 
 	for(var/mob/M in player_list)
-		if((M.mind && M.mind.special_role) || (M.client && M.client.holder))
-			to_chat(M, "<font color='#960018'><span class='ooc'><span class='prefix'>Antag-OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
+		if((isanyantag(M)) || (M.client && M.client.holder))
+			to_chat(M, "<span class='antagooc'><span class='prefix'>Antag-OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span>")
 
 	log_ooc("Antag-OOC: [key_name(src)] : [msg]")
 
@@ -1067,11 +1080,15 @@ var/list/admin_verbs_hideable = list(
 	set name = "Change Blobs to Win"
 	set category = "Event"
 	if(holder)
-		var/new_count =  input(src, "Enter new Blobs count to Win", "New Blobwincount", blobwincount) as num|null
+		var/datum/faction/blob_conglomerate/conglomerate = find_faction_by_type(/datum/faction/blob_conglomerate)
+		if(!conglomerate)
+			return
+
+		var/new_count =  input(src, "Enter new Blobs count to Win", "New Blobwincount", conglomerate.blobwincount) as num|null
 		if(new_count)
-			blobwincount = new_count
-			log_admin("[key_name(usr)] changed blobwincount to [blobwincount]")
-			message_admins("[key_name_admin(usr)] changed blobwincount to [blobwincount]")
+			conglomerate.blobwincount = new_count
+			log_admin("[key_name(usr)] changed blobwincount to [conglomerate.blobwincount]")
+			message_admins("[key_name_admin(usr)] changed blobwincount to [conglomerate.blobwincount]")
 			feedback_add_details("admin_verb","Blobwincount") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -1125,36 +1142,12 @@ var/list/admin_verbs_hideable = list(
 	message_admins("[key_name_admin(src)] started loading event-map [choice]")
 	log_admin("[key_name(src)] started loading event-map [choice]")
 
-	if(maploader.load_new_z_level(choice, linkage))//, load_speed = 100)
+	if(maploader.load_new_z_level(choice, list(ZTRAIT_AWAY = TRUE, ZTRAIT_LINKAGE = linkage)))//, load_speed = 100)
 		message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz], linkage [linkage ? linkage : "not set"]")
 		log_admin("[key_name(src)] loaded event-map [choice], zlevel [world.maxz], linkage [linkage ? linkage : "not set"]")
 	else
 		message_admins("[key_name_admin(src)] failed to load event-map [choice].")
 
-//////////////////////////////
-// Noir event
-//////////////////////////////
-/*
-/client/proc/Noir_anomaly()
-	set category = "Event"
-	set name = "Noir event(in dev!)"
-	if(!check_rights(R_PERMISSIONS))	return
-
-	if(alert("Are you really sure?",,"Yes","No") != "Yes")
-		return
-
-	for(var/atom/O in not_world)
-		if(O.icon)
-			if(O.color)
-				O.color = null
-
-			var/icon/newIcon = icon(O.icon)
-			newIcon.GrayScale()
-			O.icon = newIcon
-
-	log_admin("[key_name(src)] started noir event!", 1)
-	message_admins("<span class='notice'>[key_name_admin(src)] started noir event!</span>", 1)
-*/
 //////////////////////////////
 // Gateway
 //////////////////////////////
@@ -1174,7 +1167,7 @@ var/list/admin_verbs_hideable = list(
 //////////////////////////////
 // Velocity\Centcomm barriers
 //////////////////////////////
-var/centcom_barriers_stat = 1
+var/global/centcom_barriers_stat = 1
 
 /client/proc/centcom_barriers_toggle()
 	set category = "Event"
@@ -1185,9 +1178,9 @@ var/centcom_barriers_stat = 1
 	if(!check_rights(R_FUN))
 		return
 
-	for(var/obj/effect/landmark/trololo/L in landmarks_list)
+	for(var/obj/effect/landmark/trololo/L as anything in landmarks_list["Rickroll"])
 		L.active = centcom_barriers_stat
-	for(var/obj/structure/centcom_barrier/B in centcom_barrier_list)
+	for(var/obj/structure/centcom_barrier/B as anything in centcom_barrier_list)
 		B.density = centcom_barriers_stat
 
 	log_admin("[key_name(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
@@ -1203,15 +1196,15 @@ var/centcom_barriers_stat = 1
 /obj/effect/landmark/trololo/Crossed(atom/movable/AM)
 	. = ..()
 	if(!active) return
-	/*if(istype(M, /mob/living/carbon))
+	/*if(iscarbon(M))
 		M.playsound_local(null, melody, VOL_EFFECTS_MASTER, 20, FALSE, channel = lchannel, wait = TRUE, ignore_environment = TRUE)*/
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	invisibility = 101
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	icon_state = "x3"
 
 /obj/structure/centcom_barrier/atom_init()

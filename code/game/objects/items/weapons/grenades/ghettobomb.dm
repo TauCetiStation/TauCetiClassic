@@ -1,7 +1,7 @@
 /obj/item/weapon/grenade/cancasing
 	name = "can explosive"
 	desc = "A weak, improvised incendiary device."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "can_grenade_preview"
 	item_state = "flashbang"
@@ -122,7 +122,7 @@
 			is_W_lit = TRUE
 	else if(iswelder(I))
 		var/obj/item/weapon/weldingtool/O = I
-		if(O.welding)
+		if(O.isOn())
 			is_W_lit = TRUE
 
 	if(!is_W_lit)

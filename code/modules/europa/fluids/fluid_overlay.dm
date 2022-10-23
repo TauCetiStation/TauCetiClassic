@@ -1,10 +1,10 @@
 /obj/effect/fluid
 	name = ""
 	icon = 'icons/effects/liquids.dmi'
-	anchored = 1
+	anchored = TRUE
 	simulated = 0
 	opacity = 0
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = FLY_LAYER
 	alpha = 0
 	color = "#66d1ff"

@@ -36,16 +36,16 @@
 	var/type_change = "temp"	//permanent or temporary change?
 	if(force_rate == null)
 		if(change == "temp")
-			if(alert(user, "The salary of [owner_name] has already changed. Are you sure you want to change your salary?", "Confirm", "Yes", "No") != "Yes")
+			if(tgui_alert(user, "The salary of [owner_name] has already changed. Are you sure you want to change your salary?", "Confirm", list("Yes", "No")) != "Yes")
 				return
 		var/list/rate = list("+100%", "+50%", "+25%", "0", "-25%", "-50%", "-100%")
 		if(user_rank != "Admin")
 			if(change == "perm")
-				alert(user, "Central Command blocked salary change!")
+				tgui_alert(user, "Central Command blocked salary change!")
 				return
 			rate = rate.Copy(2,7)
 		else
-			if(alert(user, "Permanent - only admin can return the base salary.\
+			if(tgui_alert(user, "Permanent - only admin can return the base salary.\
 			Temporarily - any head can return the base salary.", "Choose type of salary change.", "Permanent", "Temporarily") == "Permanent")
 				type_change = "perm"
 		input_rate = input(user, "Please, select a rate!", "Salary Rate", null) as null|anything in rate
@@ -53,7 +53,7 @@
 			return
 		salary_rate = text2num(replacetext(replacetext(input_rate, "+", ""), "%", ""))
 		new_salary = round(base_salary + (base_salary * (salary_rate/100)))
-		if(alert(user, "Now [owner_name] will start receiving a salary of [new_salary] credits. Are you sure?", "Confirm", "Yes", "No") != "Yes")
+		if(tgui_alert(user, "Now [owner_name] will start receiving a salary of [new_salary] credits. Are you sure?", "Confirm", list("Yes", "No")) != "Yes")
 			return
 	else
 		new_salary = round(base_salary + (base_salary * (force_rate/100)))
@@ -78,7 +78,7 @@
 	var/source_terminal = ""
 
 /proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H, start_money = rand(50, 200) * 10)
-	var/datum/money_account/M = create_account(H.real_name, start_money, null)
+	var/datum/money_account/M = create_account(H.real_name, start_money, null, H.age)
 	if(H.mind)
 		var/remembered_info = ""
 		remembered_info += "<b>Your account number is:</b> #[M.account_number]<br>"
@@ -91,7 +91,7 @@
 		H.mind.initial_account = M
 	return M
 
-/proc/create_account(new_owner_name = "Default user", starting_funds = 0, obj/machinery/account_database/source_db)
+/proc/create_account(new_owner_name = "Default user", starting_funds = 0, obj/machinery/account_database/source_db, age = 10)
 
 	//create a new account
 	var/datum/money_account/M = new()
@@ -106,7 +106,7 @@
 	T.amount = starting_funds
 	if(!source_db)
 		//set a random date, time and location some time over the past decade
-		T.date = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year-rand(1,10)]"
+		T.date = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year-rand(1,age)]"
 		T.time = "[rand(0,23)]:[rand(11,59)]"
 		T.source_terminal = "NTGalaxyNet Terminal #[rand(111,1111)]"
 

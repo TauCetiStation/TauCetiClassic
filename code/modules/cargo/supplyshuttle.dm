@@ -1,5 +1,5 @@
 //Config stuff
-var/list/mechtoys = list(
+var/global/list/mechtoys = list(
 	/obj/item/toy/prize/ripley,
 	/obj/item/toy/prize/fireripley,
 	/obj/item/toy/prize/deathripley,
@@ -20,10 +20,12 @@ var/list/mechtoys = list(
 	desc = "Completely impassable - or are they?"
 	icon = 'icons/obj/stationobjs.dmi' //Change this.
 	icon_state = "plasticflaps"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	layer = 4
 	explosion_resistance = 5
+
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/plasticflaps/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	if(istype(caller, /obj/machinery/bot/mulebot))
@@ -37,33 +39,44 @@ var/list/mechtoys = list(
 	return TRUE
 
 /obj/structure/plasticflaps/CanPass(atom/A, turf/T)
-	if(istype(A) && A.checkpass(PASSGLASS))
+	if(!istype(A))
+		return
+	if(A.checkpass(PASSGLASS)) // for laser projectile
 		return prob(60)
+	if(A.checkpass(PASSTABLE))
+		return TRUE
 
 	var/obj/structure/stool/bed/B = A
-	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
+	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob) //if it's a bed/chair and someone is buckled, it will not pass
 		return FALSE
 
-	else if(istype(A, /mob/living)) // You Shall Not Pass!
+	else if(isliving(A)) // You Shall Not Pass!
 		var/mob/living/M = A
 		if(M.throwing) // so disposal outlets can throw mobs through plastic flaps
 			return TRUE
 		if(istype(M, /mob/living/simple_animal/hostile))
 			return FALSE
-		if(!M.lying && !istype(M, /mob/living/carbon/monkey) && !istype(M, /mob/living/carbon/slime) && !istype(M, /mob/living/simple_animal/mouse) && !istype(M, /mob/living/silicon/robot/drone))  //If your not laying down, or a small creature, no pass.
+		if(!M.lying) //If your not laying down, or a small creature, no pass.
 			return FALSE
 	return ..()
 
+/obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/mineral/plastic(loc, 5)
+	..()
+
 /obj/structure/plasticflaps/ex_act(severity)
 	switch(severity)
-		if (1)
-			qdel(src)
-		if (2)
-			if (prob(50))
-				qdel(src)
-		if (3)
-			if (prob(5))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(95))
+				return
+	qdel(src)
+
+/obj/structure/plasticflaps/explosion_proof
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 /obj/structure/plasticflaps/explosion_proof/ex_act(severity)
 	return
@@ -81,6 +94,6 @@ var/list/mechtoys = list(
 /obj/structure/plasticflaps/mining/Destroy() //lazy hack to set the turf to allow air to pass if it's a simulated floor
 	var/turf/T = get_turf(loc)
 	if(T)
-		if(istype(T, /turf/simulated/floor))
+		if(isfloorturf(T))
 			T.blocks_air = 0
 	return ..()

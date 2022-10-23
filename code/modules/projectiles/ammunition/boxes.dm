@@ -1,137 +1,8 @@
-/*/obj/item/ammo_magazine/a357
-	name = "ammo box (.357)"
-	desc = "A box of .357 ammo"
-	icon_state = "357"
-	ammo_type = "/obj/item/ammo_casing/a357"
-	max_ammo = 7
-	multiple_sprites = 1
-
-/obj/item/ammo_magazine/c38
-	name = "speed loader (.38)"
-	icon_state = "38"
-	ammo_type = "/obj/item/ammo_casing/c38"
-	max_ammo = 6
-	multiple_sprites = 1
-
-
-/obj/item/ammo_magazine/c45m
-	name = "magazine (.45)"
-	icon_state = "45"
-	ammo_type = "/obj/item/ammo_casing/c45"
-	max_ammo = 7
-	multiple_sprites = 1
-
-/obj/item/ammo_magazine/c45/empty
-	max_ammo = 0
-
-/obj/item/ammo_magazine/c45r
-	name = "magazine (.45 rubber)"
-	icon_state = "45"
-	ammo_type = "/obj/item/ammo_casing/c45r"
-	max_ammo = 7
-	multiple_sprites = 1
-
-/obj/item/ammo_magazine/c45r/empty
-	max_ammo = 0
-
-/obj/item/ammo_magazine/a418
-	name = "ammo box (.418)"
-	icon_state = "418"
-	ammo_type = "/obj/item/ammo_casing/a418"
-	max_ammo = 7
-	multiple_sprites = 1
-
-/obj/item/ammo_magazine/a666
-	name = "ammo box (.666)"
-	icon_state = "666"
-	ammo_type = "/obj/item/ammo_casing/a666"
-	max_ammo = 4
-	multiple_sprites = 1
-
-/obj/item/ammo_magazine/mc9mm
-	name = "magazine (9mm)"
-	icon_state = "9x19p"
-	origin_tech = "combat=2"
-	ammo_type = "/obj/item/ammo_casing/c9mm"
-	max_ammo = 8
-	multiple_sprites = 1
-
-/obj/item/ammo_magazine/mc9mm/empty
-	max_ammo = 0
-
-/obj/item/ammo_magazine/c9mm
-	name = "Ammunition Box (9mm)"
-	icon_state = "9mm"
-	origin_tech = "combat=2"
-	ammo_type = "/obj/item/ammo_casing/c9mm"
-	max_ammo = 30
-
-/obj/item/ammo_magazine/c45
-	name = "Ammunition Box (.45)"
-	icon_state = "9mm"
-	origin_tech = "combat=2"
-	ammo_type = "/obj/item/ammo_casing/c45"
-	max_ammo = 30
-
-/obj/item/ammo_magazine/a12mm
-	name = "magazine (12mm)"
-	icon_state = "12mm"
-	origin_tech = "combat=2"
-	ammo_type = "/obj/item/ammo_casing/a12mm"
-	max_ammo = 20
-	multiple_sprites = 1
-
-/obj/item/ammo_magazine/a12mm/empty
-	name = "magazine (12mm)"
-	icon_state = "12mm"
-	ammo_type = "/obj/item/ammo_casing/12mm"
-	max_ammo = 0
-
-/obj/item/ammo_magazine/a50
-	name = "magazine (.50)"
-	icon_state = "50ae"
-	origin_tech = "combat=2"
-	ammo_type = "/obj/item/ammo_casing/a50"
-	max_ammo = 7
-	multiple_sprites = 1
-
-/obj/item/ammo_magazine/a50/empty
-	name = "magazine (.50)"
-	icon_state = "50ae"
-	ammo_type = "/obj/item/ammo_casing/a50"
-	max_ammo = 0
-
-/obj/item/ammo_magazine/a75
-	name = "ammo magazine (.75)"
-	icon_state = "75"
-	ammo_type = "/obj/item/ammo_casing/a75"
-	multiple_sprites = 1
-	max_ammo = 8
-
-/obj/item/ammo_magazine/a75/empty
-	name = "ammo magazine (.75)"
-	icon_state = "75"
-	ammo_type = "/obj/item/ammo_casing/a75"
-	max_ammo = 0
-
-/obj/item/ammo_magazine/a762
-	name = "magazine (a762)"
-	icon_state = "a762"
-	origin_tech = "combat=2"
-	ammo_type = "/obj/item/ammo_casing/a762"
-	max_ammo = 50
-	multiple_sprites = 1
-
-/obj/item/ammo_magazine/a762/empty
-	name = "magazine (a762)"
-	icon_state = "a762"
-	ammo_type = "/obj/item/ammo_casing/a762"
-	max_ammo = 0
-	multiple_sprites = 1 */
 //TG-stuff
 /obj/item/ammo_box/a357
 	name = "speedloader (.357)"
 	desc = "A .357 speedloader."
+	caliber = "357"
 	icon_state = "357"
 	ammo_type = /obj/item/ammo_casing/a357
 	max_ammo = 7
@@ -140,6 +11,7 @@
 /obj/item/ammo_box/c38
 	name = "speedloader (.38 rubber)"
 	desc = "A .38 speedloader."
+	caliber = "38"
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c38
 	max_ammo = 6
@@ -150,6 +22,15 @@
 	icon_state = "418"
 	ammo_type = /obj/item/ammo_casing/a418
 	max_ammo = 7
+	multiple_sprites = 1
+
+/obj/item/ammo_box/c45rubber
+	name = "speedloader (.45 rubber)"
+	desc = "A .45 speedloader."
+	caliber = ".45"
+	icon_state = "38"
+	ammo_type = /obj/item/ammo_casing/c45r
+	max_ammo = 6
 	multiple_sprites = 1
 
 /obj/item/ammo_box/a666
@@ -174,16 +55,10 @@
 	ammo_type = /obj/item/ammo_casing/c9mmr
 	max_ammo = 12
 	multiple_sprites = 2
-/*
-/obj/item/ammo_box/c10mm
-	name = "Ammunition Box (10mm)"
-	icon_state = "9mm"
-	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/c10mm
-	max_ammo = 30 */
 
 /obj/item/ammo_box/c45
 	name = "Ammunition Box (.45)"
+	caliber = ".45"
 	icon_state = "c45"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c45
@@ -192,6 +67,7 @@
 
 /obj/item/ammo_box/c45r
 	name = "Ammunition Box (.45 rubber)"
+	caliber = ".45"
 	icon_state = "c45r"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c45r
@@ -209,8 +85,9 @@
 /obj/item/ammo_box/shotgun
 	name = "shotgun shells box (buckshot)"
 	icon = 'icons/obj/ammo.dmi'
+	caliber = "shotgun"
 	icon_state = "pellet_box"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 	max_ammo = 20
@@ -229,3 +106,36 @@
 	name = "shotgun shells box (beanbag)"
 	icon_state = "beanbag_box"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
+
+/obj/item/ammo_box/eight_shells
+	name = "shotgun shells box (slug)"
+	icon_state = "blushellbox"
+	ammo_type = /obj/item/ammo_casing/shotgun
+	caliber = "shotgun"
+	multiple_sprites = 1
+	max_ammo = 8
+
+/obj/item/ammo_box/eight_shells/buckshot
+	name = "shotgun shells box (buckshot)"
+	icon_state = "redshellbox"
+	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
+
+/obj/item/ammo_box/eight_shells/beanbag
+	name = "shotgun shells box (beanbag)"
+	icon_state = "greenshellbox"
+	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
+
+/obj/item/ammo_box/eight_shells/incendiary
+	name = "shotgun shells box (incendiary)"
+	icon_state = "orangeshellbox"
+	ammo_type = /obj/item/ammo_casing/shotgun/incendiary
+
+/obj/item/ammo_box/eight_shells/dart
+	name = "shotgun shells box (dart)"
+	icon_state = "purpleshellbox"
+	ammo_type = /obj/item/ammo_casing/shotgun/dart
+
+/obj/item/ammo_box/eight_shells/stunshot
+	name = "shotgun shells box (stunshot)"
+	icon_state = "stanshellbox"
+	ammo_type = /obj/item/ammo_casing/shotgun/stunshot

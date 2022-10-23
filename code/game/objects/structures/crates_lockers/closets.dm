@@ -3,8 +3,14 @@
 	desc = "It's a basic storage unit."
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "closed"
-	density = 1
+	flags = HEAR_TALK
+	density = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
+
+	max_integrity = 100
+	damage_deflection = 15
+	resistance_flags = CAN_BE_HIT
+
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
 	var/opened = 0
@@ -12,7 +18,6 @@
 	var/locked = 0
 	var/broken = 0
 	var/wall_mounted = 0 //never solid (You can always pass over it)
-	var/health = 100
 	var/lastbang
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
@@ -21,10 +26,10 @@
 	. = ..()
 	closet_list += src
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
-		for(var/obj/item/I in src.loc)
-			if(I.density || I.anchored || I == src)
+		for(var/obj/O in src.loc)
+			if(O.density || O.anchored || O == src)
 				continue
-			I.forceMove(src)
+			O.forceMove(src)
 	PopulateContents()
 	update_icon()
 
@@ -102,26 +107,26 @@
 	if(src.opened)
 		return 0
 
-	if(!src.can_open())
+	if(!can_open())
 		return 0
 
 	src.icon_state = src.icon_opened
 	src.opened = 1
 
-	src.dump_contents()
+	dump_contents()
 
 	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
+		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 	else
-		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
-	density = 0
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
+	density = FALSE
 	SSdemo.mark_dirty(src)
 	return 1
 
 /obj/structure/closet/proc/close()
 	if(!src.opened)
 		return 0
-	if(!src.can_close())
+	if(!can_close())
 		return 0
 
 	collect_contents()
@@ -129,60 +134,31 @@
 	src.icon_state = src.icon_closed
 	src.opened = 0
 	if(istype(src, /obj/structure/closet/body_bag))
-		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
+		playsound(src, 'sound/items/zip.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 	else
-		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, null, -3)
-	density = 1
+		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
+	density = TRUE
 	SSdemo.mark_dirty(src)
 	return 1
 
 /obj/structure/closet/proc/toggle(mob/user)
-	if(!(src.opened ? src.close() : src.open()))
+	if(!(src.opened ? close() : open()))
 		to_chat(user, "<span class='notice'>It won't budge!</span>")
 	return
 
 // this should probably use dump_contents()
 /obj/structure/closet/ex_act(severity)
 	switch(severity)
-		if(1)
-			for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
-				A.ex_act(severity++)
-			dump_contents()
-			qdel(src)
-		if(2)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
-				for (var/atom/movable/A as mob|obj in src)
-					A.ex_act(severity++)
-				dump_contents()
-				qdel(src)
-		if(3)
-			if(prob(5))
-				for(var/atom/movable/A as mob|obj in src)
-					A.ex_act(severity++)
-				dump_contents()
-				qdel(src)
-
-/obj/structure/closet/bullet_act(obj/item/projectile/Proj)
-	health -= Proj.damage
-	..()
-	if(health <= 0)
-		dump_contents()
-		qdel(src)
-
-	return
-
-/obj/structure/closet/attack_animal(mob/living/simple_animal/user)
-	if(user.environment_smash)
-		..()
-		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		visible_message("<span class='warning'>[user] destroys the [src]. </span>")
-		open()
-		qdel(src)
-
-/obj/structure/closet/blob_act()
-	if(prob(75))
-		dump_contents()
-		qdel(src)
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(95))
+				return
+	for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
+		A.ex_act(severity++)
+	dump_contents()
+	qdel(src)
 
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user)
 	if(tools_interact(W, user))
@@ -192,7 +168,7 @@
 	else if(opened || istype(W, /obj/item/weapon/grab))
 		return ..()
 
-	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))
+	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
 
 	else
@@ -202,24 +178,33 @@
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(!WT.welding)
+		if(!WT.isOn())
 			return FALSE
-		if(!WT.use(0,user))
+		if(WT.use(0, user) && W.use_tool(src, user, 20, volume = 100))
+			if(opened)
+				new /obj/item/stack/sheet/metal(loc)
+				user.visible_message("[user] cut apart [src] with [WT].",
+				                     "<span class='notice'>You cut apart [src] with [WT].</span>")
+				deconstruct(TRUE)
+				return TRUE
+			else
+				src.welded = !src.welded
+				update_icon()
+				user.visible_message("[user] [welded?"welded":"unwelded"] [src]'s shutter with [WT].",
+				                     "<span class='notice'>You [welded?"welded":"remove weld from"] [src]'s shutter with [WT].</span>")
+				return TRUE
+		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return TRUE
-		switch(opened)
-			if(1)
-				new /obj/item/stack/sheet/metal(loc)
-				visible_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>",
-								"<span class='notice'>You hear welding.</span>")
-				qdel(src)
-				return TRUE
-			if(0)
-				src.welded = !src.welded
-				src.update_icon()
-				visible_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>",
-								"<span class='warning'>You hear welding.</span>")
-				return TRUE
+
+/obj/structure/closet/deconstruct(disassembled)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 2)
+	dump_contents()
+	return ..()
+
+/obj/structure/closet/play_attack_sound(damage_amount, damage_type, damage_flag)
+	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 
 /obj/structure/closet/attack_ai(mob/user)
 	if(isrobot(user) && Adjacent(user)) //Robots can open/close it, but not the AI
@@ -229,7 +214,7 @@
 	if(user.incapacitated() || !isturf(src.loc))
 		return
 
-	if(!src.open())
+	if(!open())
 		to_chat(user, "<span class='notice'>It won't budge!</span>")
 		if(!lastbang)
 			lastbang = 1
@@ -240,18 +225,12 @@
 
 
 /obj/structure/closet/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/closet/attack_hand(mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
-	src.toggle(user)
-
-// tk grab then use on self
-/obj/structure/closet/attack_self_tk(mob/user)
-	src.add_fingerprint(user)
-	if(!src.toggle())
-		to_chat(usr, "<span class='notice'>It won't budge!</span>")
+	toggle(user)
 
 /obj/structure/closet/verb/verb_toggleopen()
 	set src in oview(1)
@@ -262,8 +241,8 @@
 		return
 
 	if(ishuman(usr))
-		src.add_fingerprint(usr)
-		src.toggle(usr)
+		add_fingerprint(usr)
+		toggle(usr)
 	else
 		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
 
@@ -278,7 +257,7 @@
 	SSdemo.mark_dirty(src)
 
 /obj/structure/closet/hear_talk(mob/M, text, verb, datum/language/speaking)
-	for (var/atom/A in src)
+	for (var/atom/A in src) // todo: we need it? say() should already catch all objects recursively
 		if(istype(A,/obj))
 			var/obj/O = A
 			O.hear_talk(M, text, verb, speaking)

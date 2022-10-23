@@ -4,9 +4,13 @@
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
-	density = 0
-	anchored = 1
+	density = FALSE
+	anchored = TRUE
 	var/shattered = 0
+
+	max_integrity = 200
+	integrity_failure = 0.5
+	resistance_flags = UNACIDABLE | CAN_BE_HIT
 
 
 /obj/structure/mirror/attack_hand(mob/user)
@@ -35,14 +39,13 @@
 	desc = "Oh no, seven years of bad luck!"
 
 
-/obj/structure/mirror/bullet_act(obj/item/projectile/Proj)
+/obj/structure/mirror/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(prob(Proj.damage * 2))
 		if(!shattered)
 			shatter()
 		else
 			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
-	..()
-
 
 /obj/structure/mirror/attackby(obj/item/I, mob/user)
 	user.do_attack_animation(src)
@@ -58,6 +61,26 @@
 		visible_message("<span class='warning'>[user] hits [src] with [I]!</span>")
 		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 
+/obj/structure/mirror/play_attack_sound(damage_amount, damage_type, damage_flag)
+	if(damage_type == BRUTE)
+		if(shattered)
+			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
+		else
+			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+	else
+		..()
+
+/obj/structure/mirror/atom_break(damage_flag, mapload)
+	. = ..()
+	if(!shattered)
+		shatter()
+
+/obj/structure/mirror/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(!disassembled)
+		new /obj/item/weapon/shard(loc)
+	..()
 
 /obj/structure/mirror/attack_alien(mob/user)
 	user.do_attack_animation(src)
@@ -108,7 +131,7 @@
 
 	var/mob/living/carbon/human/H = user
 
-	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "skin tone", "xenos skin",  "gender", "hair", "eyes")
+	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "skin tone", "xenos skin",  "gender", "hair", "eyes", "height")
 
 	switch(choice)
 		if("name")
@@ -182,14 +205,14 @@
 				return
 
 			if(H.gender == "male")
-				if(alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
+				if(tgui_alert(H, "Become a Witch?", "Confirmation", list("Yes", "No")) == "Yes")
 					H.gender = "female"
 					to_chat(H, "<span class='notice'>Man, you feel like a woman!</span>")
 				else
 					return
 
 			else
-				if(alert(H, "Become a Warlock?", "Confirmation", "Yes", "No") == "Yes")
+				if(tgui_alert(H, "Become a Warlock?", "Confirmation", list("Yes", "No")) == "Yes")
 					H.gender = "male"
 					to_chat(H, "<span class='notice'>Whoa man, you feel like a man!</span>")
 				else
@@ -199,7 +222,7 @@
 			H.check_dna(H)
 
 		if("hair")
-			var/hairchoice = alert(H, "Hair style or hair color?", "Change Hair", "Style", "Color")
+			var/hairchoice = tgui_alert(H, "Hair style or hair color?", "Change Hair", list("Style", "Color"))
 
 			if(hairchoice == "Style") //So you just want to use a mirror then?
 				var/userloc = H.loc
@@ -243,3 +266,11 @@
 			H.update_hair()
 			H.update_body()
 			H.check_dna(H)
+		if("height")
+			var/new_height = input(H, "Choose your character's height:", "Character Height", H.height) as null|anything in heights_list
+			if(new_height)
+				H.height = new_height
+				H.update_hair()
+				H.update_body()
+				H.regenerate_icons()
+				H.check_dna(H)

@@ -4,8 +4,8 @@
 
 
 /obj/machinery/space_heater
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "sheater-off"
 	name = "space heater"
@@ -21,7 +21,6 @@
 	var/efficiency = 20000
 	var/settableTemperatureMedian = 30 + T0C
 	var/settableTemperatureRange = 30
-
 
 /obj/machinery/space_heater/atom_init()
 	. = ..()
@@ -101,9 +100,8 @@
 				// insert cell
 				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 				if(istype(C))
-					user.drop_item()
+					user.drop_from_inventory(C, src)
 					cell = C
-					C.loc = src
 					C.add_fingerprint(usr)
 					user.visible_message("\The [user] inserts a power cell into \the [src].", "<span class='notice'>You insert the power cell into \the [src].</span>")
 		else
@@ -121,9 +119,8 @@
 		..()
 
 /obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main")
-	if(user.stat) // this probably handled by nano itself, a check would be nice.
+	if(user.stat != CONSCIOUS) // this probably handled by nano itself, a check would be nice.
 		return
-
 	var/data[0]
 	data["open"] = panel_open
 	data["on"] = on
@@ -161,7 +158,7 @@
 		// The UI is already open so push the new data to it
 		ui.push_data(data)
 
-/obj/machinery/space_heater/is_operational_topic()
+/obj/machinery/space_heater/is_operational()
 	return !(stat & BROKEN)
 
 /obj/machinery/space_heater/Topic(href, href_list)
@@ -207,10 +204,9 @@
 		if(!cell)
 			var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 			if(istype(C))
-				if(!usr.drop_item())
+				if(!usr.drop_from_inventory(C, src))
 					return
 				cell = C
-				C.loc = src
 				C.add_fingerprint(usr)
 
 				usr.visible_message("\The [usr] inserts \a [C] into \the [src].", "<span class='notice'>You insert \the [C] into \the [src].</span>")

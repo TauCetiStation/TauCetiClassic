@@ -233,11 +233,11 @@
 	passive_message = "<span class='notice'>You miss the feeling of starlight on your skin.</span>"
 
 /datum/disease2/effect/heal/starlight/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
-	if(istype(get_turf(M), /turf/space))
+	if(isspaceturf(get_turf(M)))
 		return 1
 	else
 		for(var/turf/T in view(M, 2))
-			if(istype(T, /turf/space))
+			if(isspaceturf(T))
 				return 0.5
 
 /datum/disease2/effect/heal/starlight/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
@@ -295,7 +295,7 @@
 
 /datum/disease2/effect/heal/darkness/can_heal(mob/living/carbon/human/M,datum/disease2/disease/disease)
 	var/light_amount = 0
-	if(M.loc && istype(M.loc.type, /turf/space))
+	if(M.loc && isspaceturf(M.loc))
 		return 0
 	if(isturf(M.loc))
 		var/turf/T = M.loc
@@ -344,7 +344,7 @@
 
 /datum/disease2/effect/heal/coma/proc/coma(mob/living/carbon/human/M)
 	//M.emote("deathgasp")
-	M.status_flags |= FAKEDEATH
+	M.add_status_flags(FAKEDEATH)
 	M.SetSleeping(999 SECONDS) //Well, I hope its good enough
 	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
 
@@ -352,7 +352,7 @@
 	if(!active_coma)
 		return
 	active_coma = FALSE
-	M.status_flags &= ~FAKEDEATH
+	M.remove_status_flags(FAKEDEATH)
 	M.SetSleeping(0)
 
 /datum/disease2/effect/heal/coma/heal(mob/living/carbon/human/M,datum/disease2/disease/disease, actual_power)
@@ -388,8 +388,8 @@
 		M.dizziness = max(0, M.dizziness - 2)
 		M.drowsyness = max(0, M.drowsyness - 2)
 		M.slurring = max(0, M.slurring - 2)
-		M.confused = max(0, M.confused - 2)
-		M.druggy = max(M.druggy - 5, 0)
+		M.AdjustConfused(-2)
+		M.adjustDrugginess(-2)
 	if(holder.stage	>= 4)
 		M.drowsyness = max(0, M.drowsyness - 2)
 		if(M.reagents.has_reagent("mindbreaker"))
@@ -409,7 +409,7 @@
 
 /datum/disease2/effect/sensory_restoration/activate(mob/living/carbon/M,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 	if(holder.stage	== 4)
-		M.eye_blurry = max(M.eye_blurry - 5, 0)
+		M.adjustBlurriness(-5)
 		M.eye_blind = max(M.eye_blind - 5, 0)
 		M.ear_damage = max(M.ear_damage - 1, 0)
 		M.ear_deaf = max(M.ear_deaf - 1, 0)
@@ -542,7 +542,7 @@
 	cooldown = 30
 
 /datum/disease2/effect/monkey/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(istype(mob,/mob/living/carbon/human))
+	if(ishuman(mob))
 		var/mob/living/carbon/human/h = mob
 		switch(holder.stage)
 			if(1,2,3)
@@ -659,7 +659,7 @@
 	level = 7
 
 /datum/disease2/effect/immortal/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(istype(mob, /mob/living/carbon/human))
+	if(ishuman(mob))
 		var/mob/living/carbon/human/H = mob
 		for (var/obj/item/organ/external/BP in H.bodyparts)
 			if (BP.status & ORGAN_BROKEN && prob(30))
@@ -668,7 +668,7 @@
 	mob.apply_damages(heal_amt,heal_amt,heal_amt,heal_amt)
 
 /datum/disease2/effect/immortal/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-	if(istype(mob, /mob/living/carbon/human))
+	if(ishuman(mob))
 		var/mob/living/carbon/human/H = mob
 		to_chat(H, "<span class='notice'>You suddenly feel hurt and old...</span>")
 		H.age += 8
@@ -860,10 +860,10 @@
 		to_chat(mob, "<span class='notice'>[pick("You suddenly forget where your right is.", "You suddenly forget where your left is.")]</span>")
 	else if(prob(20) || holder.stage == 2)
 		to_chat(mob, "<span class='notice'>You have trouble telling right and left apart all of a sudden.</span>")
-		mob.confused = max(mob.confused, 2)
+		mob.MakeConfused(2)
 	else if(holder.stage == 3)
 		to_chat(mob, "<span class='warning'><i>Where am I?</i></span>")
-		mob.confused = max(mob.confused, 10)
+		mob.MakeConfused(10)
 
 /*/datum/disease2/effect/mutation
 	name = "DNA Degradation"
@@ -948,13 +948,13 @@
 		to_chat(mob, "<span class='notice'>Your eyes itch.</span>")
 	else if(prob(20) || holder.stage == 2)
 		to_chat(mob, "<span class='warning'><i>Your eyes burn!</i></span>")
-		mob.eye_blurry = max(mob.eye_blurry, 2)
+		mob.blurEyes(5)
 	else if(holder.stage == 3)
-		mob.eye_blurry = max(mob.eye_blurry, 4)
+		mob.blurEyes(10)
 		mob.eye_blind = max(mob.eye_blind, 2)
 		to_chat(mob, "<span class='warning'>Your eyes burn very much!</span>")
 	else if(holder.stage == 4)
-		mob.eye_blurry = max(mob.eye_blurry, 6)
+		mob.blurEyes(20)
 		mob.eye_blind = max(mob.eye_blind, 2)
 		to_chat(mob, "<span class='userdanger'>[pick("Your eyes burn!", "Your eyes hurt!")]</span>")
 
@@ -970,7 +970,7 @@
 	level = 2
 	max_stage = 3
 	cooldown = 10
-	var/target_nutrition = 400
+	var/target_nutrition = NUTRITION_LEVEL_NORMAL
 
 /datum/disease2/effect/weight_even/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 	var/speed = 0
@@ -1090,7 +1090,7 @@
 
 /datum/disease2/effect/stimulant
 	name = "Adrenaline Extra"
-	desc = "The virus synthesizes hyperzine in the bloodstream, giving host a lot of energy."
+	desc = "The virus synthesizes stimulants in the bloodstream, giving host a lot of energy."
 	level = 2
 	max_stage = 3
 	cooldown = 10
@@ -1100,13 +1100,13 @@
 	if(prob(20) || holder.stage	== 1)
 		to_chat(mob, "<span class = 'notice'>[pick("You want to jump around.", "You want to run.")]</span>")
 	else if(prob(20) || holder.stage == 2)
-		if (mob.reagents.get_reagent_amount("hyperzine") < 1)
+		if (mob.reagents.get_reagent_amount("stimulants") < 1)
 			to_chat(mob, "<span class='notice'>You feel a small boost of energy.</span>")
-			mob.reagents.add_reagent("hyperzine", 1)
+			mob.reagents.add_reagent("stimulants", 1)
 	else if(holder.stage == 3)
-		if (mob.reagents.get_reagent_amount("hyperzine") < 10)
+		if (mob.reagents.get_reagent_amount("stimulants") < 10)
 			to_chat(mob, "<span class='notice'>You feel a rush of energy inside you!</span>")
-			mob.reagents.add_reagent("hyperzine", 4)
+			mob.reagents.add_reagent("stimulants", 4)
 		else if(prob(muscles_ache_chance))
 			to_chat(mob, "<span class='userdanger'>Your muscles ache.</span>")
 			mob.apply_effect(35,AGONY,0)
@@ -1139,7 +1139,7 @@
 			var/mob/living/carbon/human/H = mob
 			if(prob(drop_item_chance))
 				var/obj/item/I = H.get_active_hand()
-				if(I && I.w_class <= ITEM_SIZE_SMALL)
+				if(I && I.w_class <= SIZE_TINY)
 					H.drop_item()
 			if(prob(couthing_fit_chance))
 				to_chat(mob, "<span notice='userdanger'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")

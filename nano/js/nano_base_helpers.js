@@ -200,11 +200,11 @@ NanoBaseHelpers = function ()
 				{
 					NanoTemplate.removeHelper(helperKey);
 				}
-			}            
+			}
         }
 	};
 } ();
- 
+
 
 
 

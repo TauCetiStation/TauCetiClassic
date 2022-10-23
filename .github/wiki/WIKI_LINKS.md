@@ -1,0 +1,12 @@
+### Все нужные ссылки
+ - **Contributing**
+   - [Contribution Guide](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/CONTRIBUTING.md)
+   - [Code Convention](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/CODE_CONVENTION.md)
+   - [Styling of Pull Requests for Dummies](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/STYLING_OF_PR.md)
+   - [F.A.Q. по работе с картой](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/WORK_WITH_MAP.md)
+   - [Добавление своей станции](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/HOW_ADD_STATION.md)
+   - [Перевод](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/TRANSLATION.md)
+ - **Coding**
+    - [New(), atom_init()](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/ABOUT_INIT.md)
+ - **Reviewing**
+    - [For Reviewers](https://github.com/TauCetiStation/TauCetiClassic/blob/master/.github/wiki/FOR_REVIEWERS.md)

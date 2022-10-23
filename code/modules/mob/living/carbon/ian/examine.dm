@@ -90,11 +90,11 @@
 			msg += "[t_He] [t_is] covered in something flammable.\n"
 		if(fire_stacks < 0)
 			msg += "[t_He] look[t_is] a little soaked.\n"
-		if (stat)
+		if (stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.\n"
 		msg += "</span>"
 
-	if(ishuman(user) && !user.stat && distance <= 1)
+	if(ishuman(user) && user.stat == CONSCIOUS && distance <= 1)
 		visible_message("[user] checks [src]'s pulse.")
 		spawn(15)
 			if(distance <= 1 && user && user.stat != UNCONSCIOUS)
@@ -102,6 +102,9 @@
 					to_chat(user, "<span class='deadsay'>[t_He] has no pulse[src.client ? "" : " and [t_his] soul has departed"]...</span>")
 				else
 					to_chat(user, "<span class='deadsay'>[t_He] has a pulse!</span>")
+
+	if(w_class)
+		msg += "[t_He] [t_is] a [get_size_flavor()] sized creature.\n"
 
 	msg += "*---------*</span>"
 

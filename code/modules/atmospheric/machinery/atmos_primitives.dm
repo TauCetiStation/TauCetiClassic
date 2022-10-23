@@ -14,7 +14,7 @@
 
 /obj/machinery/atmospherics/var/debug = 0
 
-/client/proc/atmos_toggle_debug(var/obj/machinery/atmospherics/M in range(world.view))
+/client/proc/atmos_toggle_debug(obj/machinery/atmospherics/M in range(world.view))
 	set name = "Toggle Debug Messages"
 	set category = "Debug"
 	M.debug = !M.debug
@@ -335,13 +335,12 @@
 	var/total_input_moles = 0		//for flow rate calculation
 	var/list/source_specific_power = list()
 	for (var/datum/gas_mixture/source in mix_sources)
-		if (source.total_moles < MINIMUM_MOLES_TO_FILTER)
-			return -1	//either mix at the set ratios or mix no gas at all
-
 		var/mix_ratio = mix_sources[source]
 		if (!mix_ratio)
 			continue	//this gas is not being mixed in
 
+		if (source.total_moles < MINIMUM_MOLES_TO_FILTER)
+			return -1
 		//mixing rate is limited by the source with the least amount of available gas
 		var/this_mixing_moles = source.total_moles/mix_ratio
 		if (isnull(total_mixing_moles) || total_mixing_moles > this_mixing_moles)
@@ -410,7 +409,7 @@
 	return specific_power
 
 //Calculates the amount of power needed to move one mole of a certain gas from source to sink.
-/proc/calculate_specific_power_gas(var/gasid, datum/gas_mixture/source, datum/gas_mixture/sink)
+/proc/calculate_specific_power_gas(gasid, datum/gas_mixture/source, datum/gas_mixture/sink)
 	//Calculate the amount of energy required
 	var/air_temperature = (sink.temperature > 0) ? sink.temperature : source.temperature
 	var/specific_entropy = sink.specific_entropy_gas(gasid) - source.specific_entropy_gas(gasid) //sink is gaining moles, source is loosing

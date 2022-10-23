@@ -2,6 +2,7 @@
 	name = "voice analyzer"
 	desc = "A small electronic device able to record a voice sample, and send a signal when that sample is repeated."
 	icon_state = "voice"
+	flags = HEAR_TALK
 	materials = list(MAT_METAL=500, MAT_GLASS=50)
 	origin_tech = "magnets=1"
 	m_amt = 500
@@ -16,6 +17,9 @@
 	msg = lowertext(msg)
 
 	if(listening)
+		msg = trim(replace_characters(msg, list("." = "", "?" = "", "!" = "", ";" = ""))) // deleting last symbol
+		if(!msg)
+			return
 		recorded = msg
 		listening = 0
 		audible_message("Activation message is '[recorded]'.", hearing_distance = 1)
@@ -23,9 +27,9 @@
 		if(findtext(msg, recorded))
 			var/time = time2text(world.realtime,"hh:mm:ss")
 			var/turf/T = get_turf(src)
-			lastsignalers.Add("[time] <B>:</B> [M.ckey] activated [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> \"[recorded]\"")
-			message_admins("[src] activated by [key_name_admin(M)], location ([T.x],[T.y],[T.z]) <B>:</B> \"[recorded]\" [ADMIN_JMP(usr)]")
-			log_game("[src] activated by [key_name(M)], location ([T.x],[T.y],[T.z]), code: \"[recorded]\"")
+			lastsignalers.Add("[time] <B>:</B> [M.ckey] activated [src] @ location [COORD(T)] <B>:</B> \"[recorded]\"")
+			message_admins("[src] activated by [key_name_admin(M)], location [COORD(T)] <B>:</B> \"[recorded]\" [ADMIN_JMP(usr)]")
+			log_game("[src] activated by [key_name(M)], location [COORD(T)], code: \"[recorded]\"")
 			audible_message("Beeeep", hearing_distance = 1)
 			spawn(10)
 				pulse(0)

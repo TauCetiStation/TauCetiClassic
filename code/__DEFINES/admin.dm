@@ -28,6 +28,11 @@
 #define BANTYPE_ANY_FULLBAN_STR	"ANY"
 #define BANTYPE_ANY_JOB_STR		"ANYJOB"
 
+#define STICKYBAN_TABLENAME "erro_stickyban"
+#define STICKYBAN_CKEY_MATCHED_TABLENAME "erro_stickyban_matched_ckey"
+#define STICKYBAN_CID_MATCHED_TABLENAME "erro_stickyban_matched_cid"
+#define STICKYBAN_IP_MATCHED_TABLENAME "erro_stickyban_matched_ip"
+
 //Please don't edit these values without speaking to Errorage first	~Carn
 //Admin Permissions
 #define R_BUILDMODE		1
@@ -51,6 +56,10 @@
 
 #define R_HOST			65535
 
+#define ADMIN_RANK_ROUND   "Temporary Round Admin"
+#define ADMIN_RANK_SANDBOX "Sandbox Admin"
+#define ADMIN_RANK_REMOVED "Removed"
+
 #define ADMIN_QUE(user) "(<a href='?_src_=holder;adminmoreinfo=\ref[user]'>?</a>)"
 #define ADMIN_FLW(target) "(<a href='?_src_=holder;adminplayerobservefollow=\ref[target]'>FLW</a>)"
 #define ADMIN_JMP(target) "(<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>)"
@@ -58,9 +67,24 @@
 #define ADMIN_PP(user)  "(<a href='?_src_=holder;adminplayeropts=\ref[user]'>PP</a>)"
 #define ADMIN_SM(user) "(<a href='?_src_=holder;subtlemessage=\ref[user]'>SM</a>)"
 #define ADMIN_TP(user) "(<a href='?_src_=holder;traitor=\ref[user]'>TP</a>)"
+#define ADMIN_KICK(user) "(<a href='?_src_=holder;boot2=\ref[user]'>KICK</a>)"
 #define ADMIN_LOOKUPFLW(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_FLW(user)]"
 #define ADMIN_PPJMPFLW(user) "[ADMIN_PP(user)] [ADMIN_FLW(user)] [ADMIN_JMP(user)]"
 #define ADMIN_FULLMONTY_NONAME(user) "[ADMIN_QUE(user)] [ADMIN_PP(user)] [ADMIN_VV(user)] [ADMIN_SM(user)] [ADMIN_FLW(user)] [ADMIN_TP(user)]"
+
+#define COORD(A) "[A ? A.Admin_Coordinates_Readable() : "nonexistent location"]"
+#define AREACOORD(A) "[A ? A.Admin_Coordinates_Readable(TRUE) : "nonexistent location"]"
+
+/atom/proc/Admin_Coordinates_Readable(area_name, admin_jump_ref)
+	var/turf/T = Safe_COORD_Location()
+	return T ? "[area_name ? "[get_area_name(T)] " : " "]([T.x],[T.y],[T.z])[admin_jump_ref ? " [ADMIN_JMP(T)]" : ""]" : "nonexistent location"
+
+// +- tg placeholder
+/atom/proc/Safe_COORD_Location()
+	return get_step(src, 0) //resolve where the thing is.
+
+/turf/Safe_COORD_Location()
+	return src
 
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2
@@ -68,6 +92,17 @@
 
 #define AHELP_REPLY 1 // actually not used anywhere, remove this comment otherwise.
 #define MHELP_REPLY 2
+
+///Max length of a keypress command before it's considered to be a forged packet/bogus command
+#define MAX_KEYPRESS_COMMANDLENGTH 16
+///Maximum keys that can be bound to one button
+#define MAX_COMMANDS_PER_KEY 5
+///Maximum keys per keybind
+#define MAX_KEYS_PER_KEYBIND 3
+///Max amount of keypress messages per second over two seconds before client is autokicked
+#define MAX_KEYPRESS_AUTOKICK 50
+///Length of held key buffer
+#define HELD_KEY_BUFFER_LENGTH 15
 
 #define STICKYBAN_DB_CACHE_TIME    10 SECONDS // DB update cache
 #define STICKYBAN_ROGUE_CHECK_TIME 5 // Timeout for rogue check

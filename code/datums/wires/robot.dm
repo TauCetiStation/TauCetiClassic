@@ -1,8 +1,8 @@
-var/const/BORG_WIRE_LAWCHECK    = 1
-var/const/BORG_WIRE_MAIN_POWER  = 2
-var/const/BORG_WIRE_LOCKED_DOWN = 4
-var/const/BORG_WIRE_AI_CONTROL  = 8
-var/const/BORG_WIRE_CAMERA      = 16
+var/global/const/BORG_WIRE_LAWCHECK    = 1
+var/global/const/BORG_WIRE_MAIN_POWER  = 2
+var/global/const/BORG_WIRE_LOCKED_DOWN = 4
+var/global/const/BORG_WIRE_AI_CONTROL  = 8
+var/global/const/BORG_WIRE_CAMERA      = 16
 
 /datum/wires/robot
 	random = TRUE
@@ -37,7 +37,7 @@ var/const/BORG_WIRE_CAMERA      = 16
 		if(BORG_WIRE_AI_CONTROL)
 			if(!mended)
 				if (R.connected_ai)
-					R.connected_ai = null
+					R.set_ai_link(null)
 
 		if(BORG_WIRE_CAMERA)
 			if(!isnull(R.camera) && !R.scrambledcodes)
@@ -50,7 +50,7 @@ var/const/BORG_WIRE_CAMERA      = 16
 	switch(index)
 		if(BORG_WIRE_AI_CONTROL)
 			if(!R.emagged)
-				R.connected_ai = select_active_ai()
+				R.set_ai_link(select_active_ai())
 
 		if(BORG_WIRE_CAMERA)
 			if(!isnull(R.camera) && R.camera.status && !R.scrambledcodes)

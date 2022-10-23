@@ -1,8 +1,6 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 /obj/structure/computerframe
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	name = "Computer-frame"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "0"
@@ -10,10 +8,16 @@
 	var/obj/item/weapon/circuitboard/circuit = null
 //	weight = 1.0E8
 
+	resistance_flags = CAN_BE_HIT
+
+/obj/structure/computerframe/Destroy()
+	QDEL_NULL(circuit)
+	return ..()
+
 /obj/item/weapon/circuitboard
-	density = 0
-	anchored = 0
-	w_class = ITEM_SIZE_SMALL
+	density = FALSE
+	anchored = FALSE
+	w_class = SIZE_TINY
 	name = "Circuit board"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
@@ -71,10 +75,6 @@
 /obj/item/weapon/circuitboard/med_data
 	name = "Circuit board (Medical Records)"
 	build_path = /obj/machinery/computer/med_data
-/obj/item/weapon/circuitboard/pandemic
-	name = "Circuit board (PanD.E.M.I.C. 2200)"
-	build_path = /obj/machinery/computer/pandemic
-	origin_tech = "programming=2;biotech=2"
 /obj/item/weapon/circuitboard/scan_consolenew
 	name = "Circuit board (DNA Machine)"
 	build_path = /obj/machinery/computer/scan_consolenew
@@ -101,17 +101,17 @@
 		if((istype(commboard.loc,/turf) || istype(commboard.loc,/obj/item/weapon/storage)))
 			return ..()
 
-	for(var/mob/living/silicon/ai/shuttlecaller in ai_list)
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
+	for(var/mob/living/silicon/ai/shuttlecaller as anything in ai_list)
+		if(shuttlecaller.stat == CONSCIOUS && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
-	if(SSticker.mode.name == "revolution" || SSticker.mode.name == "AI malfunction" || sent_strike_team)
+	if(find_faction_by_type(/datum/faction/revolution) || find_faction_by_type(/datum/faction/malf_silicons) || sent_strike_team)
 		return ..()
 
 	SSshuttle.incall(2)
 	log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 	message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-	captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
+	SSshuttle.announce_emer_called.play()
 
 	return ..()
 
@@ -193,6 +193,7 @@
 /obj/item/weapon/circuitboard/rdconsole
 	name = "Circuit Board (RD Console)"
 	build_path = /obj/machinery/computer/rdconsole/core
+	req_access = list(access_heads)
 /obj/item/weapon/circuitboard/mecha_control
 	name = "Circuit Board (Exosuit Control Console)"
 	build_path = /obj/machinery/computer/mecha
@@ -289,8 +290,7 @@
 			opposite_catastasis = "BROAD"
 			catastasis = "STANDARD"
 
-		switch( alert("Current receiver spectrum is set to: [catastasis]","Multitool-Circuitboard interface","Switch to [opposite_catastasis]","Cancel") )
-		//switch( alert("Current receiver spectrum is set to: " {(src.contraband_enabled) ? ("BROAD") : ("STANDARD")} , "Multitool-Circuitboard interface" , "Switch to " {(src.contraband_enabled) ? ("STANDARD") : ("BROAD")}, "Cancel") )
+		switch(tgui_alert(usr, "Current receiver spectrum is set to: [catastasis]","Multitool-Circuitboard interface", list("Switch to [opposite_catastasis]","Cancel")) )
 			if("Switch to STANDARD","Switch to BROAD")
 				src.contraband_enabled = !src.contraband_enabled
 
@@ -359,33 +359,27 @@
 	return TRUE
 
 /obj/item/weapon/circuitboard/rdconsole/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
-		user.visible_message("<span class='notice'>\the [user] adjusts the jumper on the [src]'s access protocol pins.</span>", "<span class='notice'>You adjust the jumper on the access protocol pins.</span>")
-		switch(src.build_path)
+	if(istype(I, /obj/item/weapon/card/id))
+		if(check_access(I))
+			user.visible_message("<span class='notice'>\the [user] adjusts the jumper on the [src]'s access protocol pins.</span>", "<span class='notice'>You adjust the jumper on the access protocol pins.</span>")
+			switch(src.build_path)
 
-			if(/obj/machinery/computer/rdconsole/core)
-				src.name = "Circuit Board (RD Console - Robotics)"
-				src.build_path = /obj/machinery/computer/rdconsole/robotics
-				to_chat(user, "<span class='notice'>Access protocols set to robotics.</span>")
+				if(/obj/machinery/computer/rdconsole/core)
+					src.name = "Circuit Board (RD Console - Robotics)"
+					src.build_path = /obj/machinery/computer/rdconsole/robotics
+					to_chat(user, "<span class='notice'>Access protocols set to robotics.</span>")
 
-			if(/obj/machinery/computer/rdconsole/robotics)
-				src.name = "Circuit Board (RD Console - Mining)"
-				src.build_path = /obj/machinery/computer/rdconsole/mining
-				to_chat(user, "<span class='notice'>Access protocols set to mining.</span>")
+				if(/obj/machinery/computer/rdconsole/robotics)
+					src.name = "Circuit Board (RD Console - Mining)"
+					src.build_path = /obj/machinery/computer/rdconsole/mining
+					to_chat(user, "<span class='notice'>Access protocols set to mining.</span>")
 
-			if(/obj/machinery/computer/rdconsole/mining)
-				src.name = "Circuit Board (RD Console)"
-				src.build_path = /obj/machinery/computer/rdconsole/core
-				to_chat(user, "<span class='notice'>Access protocols set to default.</span>")
-
-		/*if(src.build_path == /obj/machinery/computer/rdconsole/core)
-			src.name = "Circuit Board (RD Console - Robotics)"
-			src.build_path = /obj/machinery/computer/rdconsole/robotics
-			to_chat(user, "<span class='notice'>Access protocols set to robotics.</span>")
+				if(/obj/machinery/computer/rdconsole/mining)
+					src.name = "Circuit Board (RD Console)"
+					src.build_path = /obj/machinery/computer/rdconsole/core
+					to_chat(user, "<span class='notice'>Access protocols set to default.</span>")
 		else
-			src.name = "Circuit Board (RD Console)"
-			src.build_path = /obj/machinery/computer/rdconsole/core
-			to_chat(user, "<span class='notice'>Access protocols set to default.</span>")*/
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 	else
 		return ..()
 
@@ -409,7 +403,7 @@
 
 		if(P.use_tool(src, user, 20, volume = 50) && src && P)
 			user.visible_message("<span class='notice'>[user] turns \the [src] [dir_choise].</span>", "<span class='notice'>You turn \the [src] [dir_choise].</span>")
-			dir = text2dir(dir_choise)
+			set_dir(text2dir(dir_choise))
 
 		return
 
@@ -420,7 +414,7 @@
 					return
 				if(P.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
-					src.anchored = 1
+					src.anchored = TRUE
 					src.state = 1
 			if(iswelder(P))
 				var/obj/item/weapon/weldingtool/WT = P
@@ -436,7 +430,7 @@
 					return
 				if(P.use_tool(src, user, 20, volume = 50))
 					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
-					src.anchored = 0
+					src.anchored = FALSE
 					src.state = 0
 			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
 				var/obj/item/weapon/circuitboard/B = P
@@ -505,9 +499,24 @@
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/machinery/computer/new_computer = new src.circuit.build_path (src.loc, circuit)
-				new_computer.dir = dir
+				circuit = null
+				new_computer.set_dir(dir)
 				transfer_fingerprints_to(new_computer)
 				qdel(src)
+
+/obj/structure/computerframe/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 5)
+	if(circuit)
+		circuit.forceMove(loc)
+		circuit = null
+	if(state == 4)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
+	if(state >= 3)
+		new /obj/item/stack/cable_coil(loc, 5)
+	..()
 
 /obj/structure/computerframe/verb/rotate()
 	set category = "Object"
@@ -518,7 +527,7 @@
 	if (isAI(usr) || ispAI(usr))
 		return
 	// state restrict
-	if(!in_range(src, usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
+	if(!Adjacent(usr) || usr.incapacitated() || usr.lying || usr.is_busy(src))
 		return
 	// species restrict
 	if(!usr.IsAdvancedToolUser())
@@ -542,4 +551,4 @@
 
 	if(I.use_tool(src, usr, 20, volume = 50) && src && I)
 		usr.visible_message("<span class='notice'>[usr] turns \the [src] [dir_choise].</span>", "<span class='notice'>You turn \the [src] [dir_choise].</span>")
-		dir = text2dir(dir_choise)
+		set_dir(text2dir(dir_choise))

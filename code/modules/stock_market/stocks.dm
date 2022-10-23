@@ -67,7 +67,7 @@
 	else if (findtext(name, "Wholesale") || findtext(name, "Stores"))
 		industry = new /datum/industry/consumer
 	else
-		var/ts = typesof(/datum/industry) - /datum/industry
+		var/ts = subtypesof(/datum/industry)
 		var/in_t = pick(ts)
 		industry = new in_t
 	for (var/i = 0, i < rand(2, 5), i++)
@@ -109,8 +109,8 @@
 
 /datum/stock/proc/modifyAccount(whose, amount)
 	. = FALSE
-	if (SSshuttle && isnum(SSshuttle.points) && (amount > 0 || SSshuttle.points + amount > 0))
-		SSshuttle.points += amount
+	if (global.cargo_account && (amount > 0 || global.cargo_account.money + amount > 0))
+		global.cargo_account.money += amount
 		stockExchange.balanceLog(whose, amount)
 		. = TRUE
 

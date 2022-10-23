@@ -117,34 +117,48 @@
 	if(!UI_style_new)
 		return
 
-	var/UI_style_alpha_new = input(usr, "Select a new alpha(transparence) parametr for UI, between 50 and 255") as num
-	if(!UI_style_alpha_new || !(UI_style_alpha_new <= 255 && UI_style_alpha_new >= 50))
+	var/UI_alpha_new = input(usr, "Select a new alpha(transparence) parametr for UI, between 50 and 255") as num
+	if(!UI_alpha_new || !(UI_alpha_new <= 255 && UI_alpha_new >= 50))
 		return
 
-	var/UI_style_color_new = input(usr, "Choose your UI color, dark colors are not recommended!") as color|null
-	if(!UI_style_color_new)
+	var/UI_color_new = input(usr, "Choose your UI color, dark colors are not recommended!") as color|null
+	if(!UI_color_new)
 		return
+
+	var/datum/hud/hud = usr.hud_used
 
 	//update UI
-	var/list/icons = usr.hud_used.adding + usr.hud_used.other + usr.hud_used.hotkeybuttons
-	icons.Add(usr.zone_sel)
+	var/list/screens = hud.main + hud.adding + hud.hotkeybuttons
+
+	for(var/atom/movable/screen/complex/complex as anything in hud.complex)
+		screens += complex.screens
 
 	var/ui_style = ui_style2icon(UI_style_new)
 	var/list/icon_states = icon_states(ui_style) // so it wont break hud with dmi that has no specific icon_state.
 
-	for(var/obj/screen/I in icons)
-		if(I.alpha && (I.icon_state in icon_states)) // I.color can AND will be null if player doesn't use it, don't check it.
-			I.icon = ui_style
-			I.color = UI_style_color_new
-			I.alpha = UI_style_alpha_new
+	hud.ui_style = ui_style
+	hud.ui_color = UI_color_new
+	hud.ui_alpha = UI_alpha_new
 
+	for(var/atom/movable/screen/screen as anything in screens)
+		if(screen.alpha && (screen.icon_state in icon_states))
+			screen.update_by_hud(hud)
 
-	if(alert("Like it? Save changes?",,"Yes", "No") == "Yes")
+	if(tgui_alert(usr, "Like it? Save changes?",, list("Yes", "No")) == "Yes")
 		prefs.UI_style = UI_style_new
-		prefs.UI_style_alpha = UI_style_alpha_new
-		prefs.UI_style_color = UI_style_color_new
+		prefs.UI_style_alpha = UI_alpha_new
+		prefs.UI_style_color = UI_color_new
 		prefs.save_preferences()
 		to_chat(usr, "UI was saved")
+		return
+
+	hud.ui_style = ui_style2icon(prefs.UI_style)
+	hud.ui_color = prefs.UI_style_color
+	hud.ui_alpha = prefs.UI_style_alpha
+
+	for(var/atom/movable/screen/screen as anything in screens)
+		if(screen.alpha && (screen.icon_state in icon_states))
+			screen.update_by_hud(hud)
 
 /client/verb/toggle_anim_attacks()
 	set name = "Show/Hide Melee Animations"
@@ -164,21 +178,6 @@
 	to_chat(src, "You will [(prefs.toggles & SHOW_PROGBAR) ? "now" : "no longer"] see progress bars.")
 	feedback_add_details("admin_verb","PRB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON)
-
-/client/verb/pick_ghost_orbit()
-	set name = "Choose Ghost Orbit"
-	set category = "Preferences"
-	set desc = "Choose your preferred ghostly orbit."
-
-	var/new_orbit = input(src, "Choose your ghostly orbit:") as null|anything in ghost_orbits
-	if(new_orbit)
-		prefs.ghost_orbit = new_orbit
-		prefs.save_preferences()
-		if(istype(mob, /mob/dead/observer))
-			var/mob/dead/observer/O = mob
-			O.ghost_orbit = new_orbit
-
 /client/verb/set_ckey_show()
 	set name = "Show/Hide Ckey"
 	set desc = "Toggle between showing your Ckey in LOOC and dead chat."
@@ -197,7 +196,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	to_chat(src, "Ambient Occlusion: [prefs.ambientocclusion ? "Enabled" : "Disabled"].")
 	prefs.save_preferences()
 	if(screen && screen.len)
-		var/obj/screen/plane_master/game_world/PM = locate() in screen
+		var/atom/movable/screen/plane_master/game_world/PM = locate() in screen
 		PM.backdrop(mob)
 	feedback_add_details("admin_verb","TAC")
 
@@ -228,24 +227,6 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 	if (mob && mob.hud_used)
 		mob.hud_used.update_parallax_pref()
-
-/client/verb/set_parallax_theme()
-	set name = "Set Parallax Theme"
-	set category = "Preferences"
-	set desc = "Set space parallax theme."
-
-	var/new_setting = input(src, "Parallax theme:") as null|anything in list(PARALLAX_THEME_CLASSIC, PARALLAX_THEME_TG)
-	if(!new_setting)
-		return
-
-	prefs.parallax_theme = new_setting
-	to_chat(src, "Parallax theme: [new_setting].")
-	prefs.save_preferences()
-	feedback_add_details("admin_verb","SPX")
-
-	if (mob && mob.hud_used)
-		mob.hud_used.update_parallax_pref()
-
 
 /client/verb/toggle_ghost_sight()
 	set name = "Change Ghost Sight Options"
@@ -278,3 +259,102 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.tgui_fancy = !prefs.tgui_fancy
 	prefs.save_preferences()
 	feedback_add_details("admin_verb", "TFTGUI")
+
+/client/verb/toggle_tooltip()
+	set name = "Tooltip: Show/Hide"
+	set category = "Preferences"
+	set desc = "Toggle Name of Items"
+
+	prefs.tooltip = !prefs.tooltip
+
+	if(prefs.tooltip)
+		tooltip.set_state(TRUE)
+	else
+		tooltip.set_state(FALSE)
+
+	prefs.save_preferences()
+	to_chat(src, "Name of items [prefs.tooltip ? "enabled" : "disabled"].")
+	feedback_add_details("admin_verb", "TTIP")
+
+/client/verb/change_font_tooltip()
+	set name = "Tooltip: Change Font"
+	set category = "Preferences"
+	set desc = "Toggle Font of Names of Items"
+
+	var/list/fonts = list("System", "Fixedsys", "Small Fonts", "Times New Roman", "Serif", "Verdana", "Custom Font")
+
+	var/font = input(usr, "Font of Names of Items:", "Font", prefs.tooltip_font) as null|anything in fonts | prefs.tooltip_font
+
+	if(font == "Custom Font")
+		font = sanitize(input("Enter the font that you have on your computer:", "Font") as null|text)
+
+	if(!font)
+		return
+
+	prefs.tooltip_font = font
+
+	prefs.save_preferences()
+	feedback_add_details("admin_verb", "FTIP")
+
+/client/verb/change_size_tooltip()
+	set name = "Tooltip: Change Size"
+	set category = "Preferences"
+	set desc = "Change Size of Names of Items"
+
+	prefs.tooltip_size = input(usr, "Введите размер Названий Предметов") as num
+
+	tooltip.font_size = prefs.tooltip_size
+	prefs.save_preferences()
+	feedback_add_details("admin_verb", "LTIP")
+
+/client/verb/toggle_outline()
+	set name = "Toggle Outline"
+	set category = "Preferences"
+	set desc = "Toggle Outline"
+
+	prefs.outline_enabled = !prefs.outline_enabled
+	prefs.save_preferences()
+	to_chat(src, "Outline is [prefs.outline_enabled ? "enabled" : "disabled"].")
+	feedback_add_details("admin_verb", "TO")
+
+/client/verb/change_outline_color()
+	set name = "Change Outline Color"
+	set category = "Preferences"
+	set desc = "Change Outline Color"
+
+	var/pickedOutlineColor = input(usr, "Choose your outline color.", "General Preference", prefs.outline_color) as color|null
+	if(!pickedOutlineColor)
+		return
+	prefs.outline_color = pickedOutlineColor
+	prefs.save_preferences()
+	to_chat(src, "Outline color changed.")
+	feedback_add_details("admin_verb", "COC")
+
+/client/verb/toggle_eorg()
+	set name = "Toggle End of Round Deathmatch"
+	set category = "Preferences"
+	set desc = "At the end of the round you will be teleported to thunderdome to freely bash your fellow colleagues."
+
+	prefs.eorg_enabled = !prefs.eorg_enabled
+	prefs.save_preferences()
+	to_chat(src, "You [prefs.eorg_enabled ? "will be" : "won't be"] teleported to Thunderdome at round end.")
+	feedback_add_details("admin_verb", "ED")
+
+/client/verb/toggle_runechat()
+	set name = "Toggle Runechat (Above-Head-Speech)"
+	set category = "Preferences"
+	prefs.show_runechat = !prefs.show_runechat
+
+	to_chat(src, "Runechat is [prefs.show_runechat ? "enabled" : "disabled"].")
+	feedback_add_details("admin_verb", "TRC")
+
+/client/verb/toggle_hotkeys_mode()
+	set name = "Toggle Hotkeys Mode"
+	set category = "Preferences"
+
+	prefs.toggle_hotkeys_mode()
+	if(prefs.hotkeys)
+		to_chat(src, "Режим хоткеев переключен: при клике в окно игры фокус будет переключен на окно игры")
+	else
+		to_chat(src, "Режим хоткеев переключен: при клике в окно игры фокус останется на чате.")
+	feedback_add_details("admin_verb", "thm")

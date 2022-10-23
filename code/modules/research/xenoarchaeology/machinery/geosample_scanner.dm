@@ -1,4 +1,3 @@
-
 /obj/machinery/radiocarbon_spectrometer
 	name = "Radiocarbon spectrometer"
 	desc = "A specialised, complex scanner for gleaning information on all manner of small things."
@@ -43,6 +42,8 @@
 	var/radiation = 0 // 0-100 mSv
 	var/t_left_radspike = 0
 	var/rad_shield = 0
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED)
+
 
 /obj/machinery/radiocarbon_spectrometer/atom_init()
 	. = ..()
@@ -55,7 +56,6 @@
 	coolant_reagents_purity["kelotane"] = 0.7
 	coolant_reagents_purity["sterilizine"] = 0.7
 	coolant_reagents_purity["dermaline"] = 0.7
-	coolant_reagents_purity["hyperzine"] = 0.8
 	coolant_reagents_purity["cryoxadone"] = 0.9
 	coolant_reagents_purity["coolant"] = 1
 	coolant_reagents_purity["adminordrazine"] = 2
@@ -66,7 +66,7 @@
 	else
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(istype(I, /obj/item/stack/nanopaste))
-			var/choice = alert("What do you want to do with the nanopaste?","Radiometric Scanner","Scan nanopaste","Fix seal integrity")
+			var/choice = tgui_alert(usr, "What do you want to do with the nanopaste?","Radiometric Scanner", list("Scan nanopaste","Fix seal integrity"))
 			if(choice == "Fix seal integrity")
 				var/obj/item/stack/nanopaste/N = I
 				var/amount_used = min(N.get_amount(), 10 - scanner_seal_integrity / 10)
@@ -74,7 +74,7 @@
 				scanner_seal_integrity = round(scanner_seal_integrity + amount_used * 10)
 				return
 		if(istype(I, /obj/item/weapon/reagent_containers/glass))
-			var/choice = alert("What do you want to do with the container?","Radiometric Scanner","Add coolant","Empty coolant","Scan container")
+			var/choice = tgui_alert(usr, "What do you want to do with the container?","Radiometric Scanner", list("Add coolant","Empty coolant","Scan container"))
 			if(choice == "Add coolant")
 				var/obj/item/weapon/reagent_containers/glass/G = I
 				var/amount_transferred = min(src.reagents.maximum_volume - src.reagents.total_volume, G.reagents.total_volume)
@@ -85,13 +85,15 @@
 			else if(choice == "Empty coolant")
 				var/obj/item/weapon/reagent_containers/glass/G = I
 				var/amount_transferred = min(G.reagents.maximum_volume - G.reagents.total_volume, src.reagents.total_volume)
-				src.reagents.trans_to(G, amount_transferred)
+				reagents.trans_to(G, amount_transferred)
 				to_chat(user, "<span class='info'>You remove [amount_transferred]u of coolant from [src].</span>")
 				update_coolant()
 				return
-		user.drop_item()
-		I.loc = src
-		scanned_item = I
+		if(!scanned_item)
+			user.drop_from_inventory(I, src)
+			scanned_item = I
+		else
+			to_chat(user, "<span class='warning'>There is already something in [src].</span>")
 
 /obj/machinery/radiocarbon_spectrometer/proc/update_coolant()
 	var/total_purity = 0
@@ -114,9 +116,8 @@
 
 /obj/machinery/radiocarbon_spectrometer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 
-	if(user.stat && !isobserver(user))
+	if(user.stat != CONSCIOUS && !isobserver(user))
 		return
-
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["scanned_item"] = (scanned_item ? scanned_item.name : "")
@@ -230,16 +231,16 @@
 			//emergency stop if seal integrity reaches 0
 			if(scanner_seal_integrity <= 0 || (scanner_temperature >= 1273 && !rad_shield))
 				stop_scanning()
-				src.visible_message("<span class='notice'>[bicon(src)] [src] buzzes unhappily. It has failed mid-scan!</span>", 2)
+				visible_message("<span class='notice'>[bicon(src)] [src] buzzes unhappily. It has failed mid-scan!</span>", 2)
 
 			if(prob(5))
-				src.visible_message("<span class='notice'>[bicon(src)] [src] [pick("whirrs", "chuffs", "clicks")][pick(" excitedly", " energetically", " busily")].</span>", 2)
+				visible_message("<span class='notice'>[bicon(src)] [src] [pick("whirrs", "chuffs", "clicks")][pick(" excitedly", " energetically", " busily")].</span>", 2)
 	else
 		//gradually cool down over time
 		if(scanner_temperature > 0)
 			scanner_temperature = max(scanner_temperature - 5 - 10 * rand(), 0)
 		if(prob(0.75))
-			src.visible_message("<span class='notice'>[bicon(src)] [src] [pick("plinks", "hisses")][pick(" quietly", " softly", " sadly", " plaintively")].</span>", 2)
+			visible_message("<span class='notice'>[bicon(src)] [src] [pick("plinks", "hisses")][pick(" quietly", " softly", " sadly", " plaintively")].</span>", 2)
 	last_process_worldtime = world.time
 
 /obj/machinery/radiocarbon_spectrometer/proc/stop_scanning()
@@ -254,11 +255,11 @@
 	radiation = 0
 	t_left_radspike = 0
 	if(used_coolant)
-		src.reagents.remove_any(used_coolant)
+		reagents.remove_any(used_coolant)
 		used_coolant = 0
 
 /obj/machinery/radiocarbon_spectrometer/proc/complete_scan()
-	src.visible_message("<span class='notice'>[bicon(src)] [src] makes an insistent chime.</span>", 2)
+	visible_message("<span class='notice'>[bicon(src)] [src] makes an insistent chime.</span>", 2)
 
 	if(scanned_item)
 		//create report
@@ -286,7 +287,7 @@
 				data = " - Mundane object (archaic xenos origins)<br>"
 
 				var/obj/item/weapon/archaeological_find/A = scanned_item
-				if(A.talking_atom)
+				if(A.GetComponent(/datum/component/talking_atom))
 					data = " - Exhibits properties consistent with sonic reproduction and audio capture technologies.<br>"
 
 		var/anom_found = 0

@@ -2,14 +2,9 @@
 	startWhen = 3
 	announceWhen = 10
 	endWhen = 95
-
-/datum/event/anomaly/anomaly_bluespace/announce()
-	command_alert("Unstable bluespace anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert", sound = "bluspaceanom")
-
-/datum/event/anomaly/anomaly_bluespace/start()
-	var/turf/T = pick(get_area_turfs(impact_area))
-	if(T)
-		newAnomaly = new /obj/effect/anomaly/bluespace(T)
+	announcement = new /datum/announcement/centcomm/anomaly/bluespace
+	anomaly_type = /obj/effect/anomaly/bluespace
+	var/datum/announcement/announcement_trigger = new /datum/announcement/centcomm/anomaly/bluespace_trigger
 
 /datum/event/anomaly/anomaly_bluespace/end()
 	if(!QDELETED(newAnomaly))//If it hasn't been neutralized, it's time to warp half the station away jeez
@@ -31,7 +26,7 @@
 				var/turf/TO = get_turf(chosen)			 // the turf of origin we're travelling TO
 
 				playsound(TO, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
-				command_alert("Massive bluespace translocation detected.", "Anomaly Alert", sound = "bluspacetrans")
+				announcement_trigger.play()
 
 				var/list/flashers = list()
 				for(var/mob/living/carbon/human/M in viewers(TO, null))
@@ -59,7 +54,7 @@
 								blueeffect.icon_state = "shieldsparkles"
 								blueeffect.layer = FLASH_LAYER
 								blueeffect.plane = FULLSCREEN_PLANE
-								blueeffect.mouse_opacity = 0
+								blueeffect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 								M.client.screen += blueeffect
 								sleep(20)
 								M.client.screen -= blueeffect

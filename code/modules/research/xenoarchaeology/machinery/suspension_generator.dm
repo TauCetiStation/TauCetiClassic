@@ -3,7 +3,7 @@
 	desc = "It has stubby legs bolted up against it's body for stabilising."
 	icon = 'icons/obj/xenoarchaeology/machinery.dmi'
 	icon_state = "suspension_closed_panel"
-	density = 1
+	density = TRUE
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/locked = 1
 	var/open = 0
@@ -12,6 +12,7 @@
 	var/power_use = 25
 	var/obj/effect/suspension_field/suspension_field
 	var/list/secured_mobs = list()
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/suspension_gen/atom_init()
 	cell = new/obj/item/weapon/stock_parts/cell/high(src)
@@ -46,9 +47,9 @@
 	else if (iswrench(W))
 		if(!suspension_field)
 			if(anchored)
-				anchored = 0
+				anchored = FALSE
 			else
-				anchored = 1
+				anchored = TRUE
 			icon_state = "suspension_[open ? (cell ? "cell" : "no_cell") : "closed_panel"][anchored ? "_anchored" : ""]"
 			to_chat(user, "<span class='info'>You wrench the stabilising legs [anchored ? "into place" : "up against the body"].</span>")
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
@@ -63,8 +64,7 @@
 			if(cell)
 				to_chat(user, "<span class='warning'>There is a power cell already installed.</span>")
 			else
-				user.drop_item()
-				W.loc = src
+				user.drop_from_inventory(W, src)
 				cell = W
 				to_chat(user, "<span class='info'>You insert the power cell.</span>")
 				playsound(src, 'sound/items/Screwdriver2.ogg', VOL_EFFECTS_MASTER)
@@ -136,14 +136,15 @@
 		var/turf/T = get_turf(suspension_field)
 		if(field_type == "carbon")
 			for(var/mob/living/carbon/M in T)
-				M.weakened = max(M.weakened, 3)
+				M.Stun(3)
+				M.Weaken(3)
 				cell.charge -= power_use
 				if(prob(5))
 					to_chat(M, "<span class='notice'>[pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]</span>")
 
 		if(field_type == "iron")
 			for(var/mob/living/silicon/M in T)
-				M.weakened = max(M.weakened, 3)
+				M.Stun(3)
 				cell.charge -= power_use
 				if(prob(5))
 					to_chat(M, "<span class='notice'>[pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]</span>")
@@ -155,7 +156,8 @@
 			I.loc = suspension_field
 
 		for(var/mob/living/simple_animal/M in T)
-			M.weakened = max(M.weakened, 3)
+			M.Stun(3)
+			M.Weaken(3)
 			cell.charge -= power_use
 			if(prob(5))
 				to_chat(M, "<span class='notice'>[pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]</span>")
@@ -163,7 +165,7 @@
 		if(cell.charge <= 0)
 			deactivate()
 
-/obj/machinery/suspension_gen/is_operational_topic()
+/obj/machinery/suspension_gen/is_operational()
 	return TRUE
 
 /obj/machinery/suspension_gen/Topic(href, href_list)
@@ -219,7 +221,8 @@
 		if("carbon")
 			success = 1
 			for(var/mob/living/carbon/C in T)
-				C.weakened += 5
+				C.AdjustStunned(5)
+				C.AdjustWeakened(5)
 				C.visible_message("<span class='notice'>[bicon(C)] [C] begins to float in the air!</span>","You feel tingly and light, but it is difficult to move.")
 		if("nitrogen")
 			success = 1
@@ -242,7 +245,7 @@
 		if("iron")
 			success = 1
 			for(var/mob/living/silicon/R in T)
-				R.weakened += 5
+				R.AdjustStunned(5)
 				R.visible_message("<span class='notice'>[bicon(R)] [R] begins to float in the air!</span>","You feel tingly and light, but it is difficult to move.")
 			//
 	//in case we have a bad field type
@@ -251,11 +254,12 @@
 
 	for(var/mob/living/simple_animal/C in T)
 		C.visible_message("<span class='notice'>[bicon(C)] [C] begins to float in the air!</span>","You feel tingly and light, but it is difficult to move.")
-		C.weakened += 5
+		C.AdjustStunned(5)
+		C.AdjustWeakened(5)
 
 	suspension_field = new(T)
 	suspension_field.field_type = field_type
-	src.visible_message("<span class='notice'>[bicon(src)] [src] activates with a low hum.</span>")
+	visible_message("<span class='notice'>[bicon(src)] [src] activates with a low hum.</span>")
 	icon_state = "suspension_working"
 
 	for(var/obj/item/I in T)
@@ -265,9 +269,9 @@
 	if(collected)
 		suspension_field.icon_state = "energynet"
 		suspension_field.add_overlay("shield2")
-		src.visible_message("<span class='notice'>[bicon(suspension_field)] [suspension_field] gently absconds [collected > 1 ? "something" : "several things"].</span>")
+		visible_message("<span class='notice'>[bicon(suspension_field)] [suspension_field] gently absconds [collected > 1 ? "something" : "several things"].</span>")
 	else
-		if(istype(T,/turf/simulated/mineral) || istype(T,/turf/simulated/wall))
+		if(istype(T,/turf/simulated/mineral) || iswallturf(T))
 			suspension_field.icon_state = "shieldsparkles"
 		else
 			suspension_field.icon_state = "shield2"
@@ -279,9 +283,9 @@
 
 		for(var/mob/M in T)
 			to_chat(M, "<span class='info'>You no longer feel like floating.</span>")
-			M.weakened = min(M.weakened, 3)
+			M.Weaken(3)
 
-		src.visible_message("<span class='notice'>[bicon(src)] [src] deactivates with a gentle shudder.</span>")
+		visible_message("<span class='notice'>[bicon(src)] [src] deactivates with a gentle shudder.</span>")
 		qdel(suspension_field)
 		suspension_field = null
 		icon_state = "suspension_[open ? (cell ? "cell" : "no_cell") : "closed_panel"][anchored ? "_anchored" : ""]"
@@ -318,8 +322,8 @@
 /obj/effect/suspension_field
 	name = "energy field"
 	icon = 'icons/effects/effects.dmi'
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/field_type = "chlorine"
 
 /obj/effect/suspension_field/Destroy()

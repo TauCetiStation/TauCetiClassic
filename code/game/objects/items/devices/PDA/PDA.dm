@@ -8,7 +8,7 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pda"
 	item_state = "electronic"
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_ID | SLOT_FLAGS_BELT
 
 	//Main variables
@@ -16,6 +16,9 @@
 	var/default_cartridge = 0 // Access level defined by cartridge
 	var/obj/item/weapon/cartridge/cartridge = null //current cartridge
 	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
+
+	var/default_pen = /obj/item/weapon/pen
+	var/obj/item/weapon/pen/pen = null
 
 	var/lastmode = 0
 	var/ui_tick = 0
@@ -67,18 +70,26 @@
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
+	action_button_name = "Toggle light"
+
 /obj/item/device/pda/atom_init()
 	. = ..()
 	PDAs += src
 	PDAs = sortAtom(PDAs)
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
-	new /obj/item/weapon/pen(src)
+	if(default_pen)
+		pen = new default_pen(src)
 
 /obj/item/device/pda/Destroy()
 	PDAs -= src
-	if (src.id && prob(90)) //IDs are kept in 90% of the cases
-		src.id.loc = get_turf(src.loc)
+	if (id)
+		if (prob(90)) //IDs are kept in 90% of the cases
+			id.forceMove(get_turf(loc))
+			id = null
+		else
+			QDEL_NULL(id)
+	QDEL_NULL(pen)
 	return ..()
 
 /obj/item/device/pda/examine(mob/user)
@@ -91,10 +102,35 @@
 
 /obj/item/device/pda/AltClick(mob/user)
 	if (can_use(user) && id)
-		remove_id()
-		update_icon()
-	else if (can_use(user))
-		verb_remove_pen()
+		remove_id(user)
+
+/obj/item/device/pda/CtrlClick(mob/user)
+	if (can_use(user))
+		remove_pen(user)
+		return
+
+	return ..()
+
+/obj/item/device/pda/ui_action_click()
+	toggle_light()
+
+/obj/item/device/pda/verb/toggle_light()
+	set name = "Toggle light"
+	set category = "Object"
+
+	if(usr.incapacitated())
+		return
+
+	if(fon)
+		fon = FALSE
+		set_light(0)
+	else
+		fon = TRUE
+		set_light(f_lum)
+
+/obj/item/device/pda/proc/assign(real_name)
+	owner = real_name
+	name = "PDA-[real_name][ownjob ? " ([ownjob])" : ""]"
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -145,6 +181,44 @@
 		var/obj/item/weapon/cartridge/clown/cart = cartridge
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
+
+/obj/item/device/pda/clown/Destroy()
+	if(slot_equipped)
+		unslip_lying_user(loc)
+		var/mob/living/carbon/human/H = loc
+		if(istype(H) && H.lying)
+			remove_user_slip(loc)
+	return ..()
+
+/obj/item/device/pda/clown/proc/make_user_slip(mob/living/carbon/user)
+	user.AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
+
+/obj/item/device/pda/clown/proc/remove_user_slip(mob/living/carbon/user)
+	qdel(user.GetComponent(/datum/component/slippery))
+
+/obj/item/device/pda/clown/equipped(mob/living/carbon/user, slot)
+	..()
+	if(slot in list(SLOT_L_STORE, SLOT_R_STORE, SLOT_BELT, SLOT_WEAR_ID))
+		slip_lying_user(user)
+		if(user.lying)
+			make_user_slip(user)
+	else
+		unslip_lying_user(user)
+		if(user.lying)
+			remove_user_slip(user)
+
+/obj/item/device/pda/clown/proc/slip_lying_user(mob/living/carbon/user)
+	RegisterSignal(user, COMSIG_MOB_STATUS_LYING, .proc/make_user_slip)
+	RegisterSignal(user, COMSIG_MOB_STATUS_NOT_LYING, .proc/remove_user_slip)
+
+/obj/item/device/pda/clown/proc/unslip_lying_user(mob/living/carbon/user)
+	UnregisterSignal(user, list(COMSIG_MOB_STATUS_LYING, COMSIG_MOB_STATUS_NOT_LYING))
+
+/obj/item/device/pda/clown/dropped(mob/living/carbon/user)
+	..()
+	unslip_lying_user(user)
+	if(user.lying)
+		remove_user_slip(user)
 
 /obj/item/device/pda/mime
 	default_cartridge = /obj/item/weapon/cartridge/mime
@@ -202,6 +276,7 @@
 
 /obj/item/device/pda/syndicate
 	default_cartridge = /obj/item/weapon/cartridge/syndicate
+	default_pen = /obj/item/weapon/pen/edagger
 	icon_state = "pda-syn"
 	name = "Military PDA"
 	owner = "John Doe"
@@ -380,15 +455,12 @@
 /obj/item/device/pda/proc/can_use()
 
 	if(!ismob(loc))
-		return 0
+		return FALSE
 
 	var/mob/M = loc
 	if(M.incapacitated())
-		return 0
-	if((src in M.contents) || ( istype(loc, /turf) && in_range(src, M) ))
-		return 1
-	else
-		return 0
+		return FALSE
+	return TRUE
 
 /obj/item/device/pda/GetAccess()
 	if(id)
@@ -400,8 +472,9 @@
 	return id
 
 /obj/item/device/pda/MouseDrop(obj/over_object as obj, src_location, over_location)
+	. = ..()
 	var/mob/M = usr
-	if((!istype(over_object, /obj/screen)) && can_use())
+	if((!istype(over_object, /atom/movable/screen)) && can_use())
 		return attack_self(M)
 	return
 
@@ -535,7 +608,7 @@
 				data["convo_job"] = sanitize(c["job"])
 				break
 	if(mode==41)
-		data_core.get_manifest_json()
+		data_core.load_manifest()
 
 	if(mode==3)
 		var/turf/T = get_turf(user.loc)
@@ -574,7 +647,7 @@
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
 	        // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "pda.tmpl", title, 520, 400)
+		ui = new(user, src, ui_key, "pda.tmpl", title, 640, 420)
 		// when the ui is first opened this is the data it will use
 
 		ui.load_cached_data(ManifestJSON)
@@ -612,8 +685,8 @@
 	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, "main")
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
-	//if ((src in U.contents) || ( istype(loc, /turf) && in_range(src, U) ) )
-	if(!can_use()) //Why reinvent the wheel? There's a proc that does exactly that.
+	// if(!can_use()) //Why reinvent the wheel? There's a proc that does exactly that. // Actually, not
+	if (!can_use() || !Adjacent(U))
 		U.unset_machine()
 		if(ui)
 			ui.close()
@@ -651,9 +724,9 @@
 			id_check(U, 1)
 		if("UpdateInfo")
 			ownjob = id.assignment
+			assign(id.registered_name)
 			ownrank = id.rank
 			check_rank(id.rank)		//check if we became the head
-			name = "PDA-[owner] ([ownjob])"
 			if(owner_account && owner_account.account_number == id.associated_account_number)
 				return
 			ui.close()
@@ -732,9 +805,9 @@
 
 //MESSENGER/NOTE FUNCTIONS===================================
 
-		if ("Edit")
+		if("Edit")
 			var/n = sanitize(input(U, "Please enter message", name, input_default(notehtml)) as message, extra = FALSE)
-			if (in_range(src, U) && loc == U && mode == 1)
+			if(Adjacent(U) && mode == 1)
 				note = n
 				notehtml = note
 				note = replacetext(note, "\n", "<br>")
@@ -762,7 +835,7 @@
 
 		if("Ringtone")
 			var/t = sanitize(input(U, "Please enter new ringtone", name, input_default(ttone)) as text, 20)
-			if (t && in_range(src, U) && loc == U)
+			if (t && Adjacent(U))
 				if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
 					to_chat(U, "The PDA softly beeps.")
 					ui.close()
@@ -774,11 +847,15 @@
 		if("Message")
 
 			var/obj/item/device/pda/P = locate(href_list["target"])
-			src.create_message(U, P, !href_list["notap"])
+			create_message(U, P, !href_list["notap"])
 			if(mode == 2)
 				if(href_list["target"] in conversations)            // Need to make sure the message went through, if not welp.
 					active_conversation = href_list["target"]
 					mode = 21
+
+		if("DM")		// Choice for sending messages from Crew Manifest
+			var/obj/item/device/pda/P = dm_find_pda(href_list["reciever"])
+			create_message(U, P, !href_list["notap"])
 
 		if("Select Conversation")
 			var/P = href_list["convo"]
@@ -859,7 +936,7 @@
 						useMS = TRUE
 						break
 
-			var/datum/signal/signal = src.telecomms_process()
+			var/datum/signal/signal = telecomms_process()
 
 			if(signal && signal.data["done"])
 				useTC = TRUE
@@ -921,7 +998,7 @@
 						useMS = MS
 						break
 
-			var/datum/signal/signal = src.telecomms_process()
+			var/datum/signal/signal = telecomms_process()
 
 			var/useTC = 0
 			if(signal)
@@ -963,7 +1040,7 @@
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed. [ADMIN_JMP(U)]")
 						else
-							to_chat("<span class='notice'>Success!</span>")
+							to_chat(U, "<span class='notice'>Success!</span>")
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded. [ADMIN_JMP(U)]")
 							detonate_act(P)
@@ -1052,14 +1129,14 @@
 		var/datum/effect/effect/system/smoke_spread/S = new /datum/effect/effect/system/smoke_spread
 		S.attach(P.loc)
 		S.set_up(n = 10, c = 0, loca = P.loc, direct = 0)
-		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		S.start()
 		message += "Large clouds of smoke billow forth from your [P]!"
 	if(i>=40 && i<=45) //Bad smoke
 		var/datum/effect/effect/system/smoke_spread/bad/B = new /datum/effect/effect/system/smoke_spread/bad
 		B.attach(P.loc)
 		B.set_up(n = 10, c = 0, loca = P.loc, direct = 0)
-		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		B.start()
 		message += "Large clouds of noxious smoke billow forth from your [P]!"
 	if(i>=65 && i<=75) //Weaken
@@ -1080,25 +1157,74 @@
 		j = prob(10)
 
 	if(j) //This kills the PDA
-		P.Destroy()
 		if(message)
 			message += "It melts in a puddle of plastic."
 		else
 			message += "Your [P] shatters in a thousand pieces!"
+		qdel(P)
 
 	if(M && isliving(M))
 		message = "<span class='warning'></span>" + message
 		M.show_message(message, SHOWMSG_ALWAYS) //vas visual only before, it's important message so I changed this. You can add more different messages
 
-/obj/item/device/pda/proc/remove_id()
-	if (id)
-		if (ismob(loc))
-			var/mob/M = loc
-			M.put_in_hands(id)
-			to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
+/obj/item/device/pda/proc/remove_id(mob/user)
+	if(issilicon(user))
+		return
+
+	if (can_use(user))
+		if (id)
+			if (loc == user)
+				user.put_in_hands(id)
+			else
+				id.forceMove(get_turf(src))
+			to_chat(user, "<span class='notice'>You remove the ID from the [name].</span>")
+			id = null
+			update_icon()
 		else
-			id.loc = get_turf(src)
-		id = null
+			to_chat(user, "<span class='notice'>This PDA does not have an ID in it.</span>")
+	else
+		to_chat(user, "<span class='notice'>You cannot do this while restrained.</span>")
+
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(H.wear_id == src)
+			H.sec_hud_set_ID()
+
+/obj/item/device/pda/proc/remove_pen(mob/user)
+	if(issilicon(user))
+		return
+
+	if (can_use(user))
+		if(pen)
+			if (loc == user)
+				user.put_in_hands(pen)
+				playsound(src, 'sound/items/penclick.ogg', VOL_EFFECTS_MASTER, 20)
+			else
+				pen.forceMove(get_turf(src))
+			to_chat(user, "<span class='notice'>You remove \the [pen] from \the [src].</span>")
+			pen = null
+		else
+			to_chat(user, "<span class='notice'>This PDA does not have a pen in it.</span>")
+	else
+		to_chat(user, "<span class='notice'>You cannot do this while restrained.</span>")
+
+/obj/item/device/pda/proc/dm_find_pda(owner_name) // Find reciever PDA by name from Crew Manifest
+	var/pda_ref = null
+
+	for (var/obj/item/device/pda/P in PDAs)
+		if (!P.owner)
+			continue
+		else if(P.hidden)
+			continue
+		else if (P == src)
+			continue
+		else if (P.toff)
+			continue
+		else if (P.owner == owner_name)
+			pda_ref = P
+			continue
+
+	return pda_ref
 
 /obj/item/device/pda/proc/create_message(mob/living/U = usr, obj/item/device/pda/P, tap = 1)
 	if(tap && iscarbon(U))
@@ -1109,7 +1235,7 @@
 
 	if (!t || !istype(P))
 		return
-	if (!in_range(src, U) && loc != U)
+	if (!Adjacent(U))
 		return
 
 	if (isnull(P)||P.toff || toff)
@@ -1132,7 +1258,7 @@
 				useMS = MS
 				break
 
-	var/datum/signal/signal = src.telecomms_process()
+	var/datum/signal/signal = telecomms_process()
 
 	var/useTC = 0
 	if(signal)
@@ -1168,7 +1294,7 @@
 			var/who = src.owner
 			if(prob(50))
 				who = P.owner
-			for(var/mob/living/silicon/ai/ai in ai_list)
+			for(var/mob/living/silicon/ai/ai as anything in ai_list)
 				// Allows other AIs to intercept the message but the AI won't intercept their own message.
 				if(ai.pda != P && ai.pda != src)
 					to_chat(ai, "<i>Intercepted message from <b>[who]</b>: <span class='emojify linkify'>[t]</span></i>")
@@ -1177,7 +1303,7 @@
 
 		if (!P.message_silent)
 			playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-			audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)
+			P.audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)
 
 		//Search for holder of the PDA.
 		var/mob/living/L = null
@@ -1190,15 +1316,14 @@
 
 
 		if(L)
-			to_chat(L, "[bicon(P)] <b>Message from [src.owner] ([ownjob]), </b>\"<span class='message emojify linkify'>[t]</span>\" (<a href='byond://?src=\ref[P];choice=Message;notap=[istype(loc, /mob/living/silicon)];skiprefresh=1;target=\ref[src]'>Reply</a>)")
+			to_chat(L, "[bicon(P)] <b>Message from [src.owner] ([ownjob]), </b>\"<span class='message emojify linkify'>[t]</span>\" (<a href='byond://?src=\ref[P];choice=Message;notap=[issilicon(loc)];skiprefresh=1;target=\ref[src]'>Reply</a>)")
 			nanomanager.update_user_uis(L, P) // Update the receiving user's PDA UI so that they can see the new message
 
 		nanomanager.update_user_uis(U, P) // Update the sending user's PDA UI so that they can see the new message
 
 		log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
-		P.cut_overlays()
-		P.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 		P.newmessage = 1
+		P.update_icon()
 	else
 		to_chat(U, "<span class='notice'>ERROR: Messaging server is not responding.</span>")
 
@@ -1222,22 +1347,7 @@
 	set name = "Remove id"
 	set src in usr
 
-	if(issilicon(usr))
-		return
-
-	if ( can_use(usr) )
-		if(id)
-			remove_id()
-			update_icon()
-		else
-			to_chat(usr, "<span class='notice'>This PDA does not have an ID in it.</span>")
-	else
-		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
-
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		if(H.wear_id == src)
-			H.sec_hud_set_ID()
+	remove_id(usr)
 
 
 /obj/item/device/pda/verb/verb_remove_pen()
@@ -1245,24 +1355,7 @@
 	set name = "Remove pen"
 	set src in usr
 
-	if(issilicon(usr))
-		return
-
-	if ( can_use(usr) )
-		var/obj/item/weapon/pen/O = locate() in src
-		if(O)
-			if (istype(loc, /mob))
-				var/mob/M = loc
-				if(M.get_active_hand() == null)
-					M.put_in_hands(O)
-					to_chat(usr, "<span class='notice'>You remove \the [O] from \the [src].</span>")
-					playsound(src, 'sound/items/penclick.ogg', VOL_EFFECTS_MASTER, 20)
-					return
-			O.loc = get_turf(src)
-		else
-			to_chat(usr, "<span class='notice'>This PDA does not have a pen in it.</span>")
-	else
-		to_chat(usr, "<span class='notice'>You cannot do this while restrained.</span>")
+	remove_pen(usr)
 
 
 /obj/item/device/pda/proc/id_check(mob/user, choice)//To check for IDs; 1 for in-pda use, 2 for out of pda use.
@@ -1272,15 +1365,13 @@
 		else
 			var/obj/item/I = user.get_active_hand()
 			if (istype(I, /obj/item/weapon/card/id))
-				user.drop_item()
-				I.loc = src
+				user.drop_from_inventory(I, src)
 				id = I
 	else
 		var/obj/item/weapon/card/I = user.get_active_hand()
 		if (istype(I, /obj/item/weapon/card/id) && I:registered_name)
 			var/obj/old_id = id
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			id = I
 			user.put_in_hands(old_id)
 	update_icon()
@@ -1302,8 +1393,8 @@
 			to_chat(user, "<span class='notice'>\The [src] rejects the ID.</span>")
 			return
 		if(!owner)
-			owner = idcard.registered_name
 			ownjob = idcard.assignment
+			assign(idcard.registered_name)
 			ownrank = idcard.rank
 			check_rank(idcard.rank)
 			var/datum/money_account/account = get_account(idcard.associated_account_number)
@@ -1311,11 +1402,10 @@
 				account.owner_PDA = src			//set PDA in /datum/money_account
 				owner_account = account			//bind the account to the pda
 				owner_fingerprints = list()		//remove old fingerprints
-			name = "PDA-[owner] ([ownjob])"
 			to_chat(user, "<span class='notice'>Card scanned.</span>")
 		else
-			//Basic safety check. If either both objects are held by user or PDA is on ground and card is in hand.
-			if(((src in user.contents) && (idcard in user.contents)) || (istype(loc, /turf) && in_range(src, user) && (idcard in user.contents)) )
+			//Basic safety check. If card is held by user and PDA is near user or in user's hand.
+			if(idcard.loc == user)
 				id_check(user, 2)
 				to_chat(user, "<span class='notice'>You put the ID into \the [src]'s slot.</span>")
 				updateSelfDialog()//Update self dialog on success.
@@ -1331,17 +1421,17 @@
 		to_chat(user, "<span class='notice'>You slot \the [I] into [src].</span>")
 		nanomanager.update_uis(src) // update all UIs attached to src
 	else if(istype(I, /obj/item/weapon/pen))
-		var/obj/item/weapon/pen/O = locate() in src
-		if(O)
+		if(pen)
 			to_chat(user, "<span class='notice'>There is already a pen in \the [src].</span>")
 		else
+			pen = I
 			user.drop_from_inventory(I, src)
 			to_chat(user, "<span class='notice'>You slide \the [I] into \the [src].</span>")
 	else
 		return ..()
 
 /obj/item/device/pda/attack(mob/living/L, mob/living/user)
-	if (istype(L, /mob/living/carbon))
+	if (iscarbon(L))
 		var/mob/living/carbon/C = L
 		var/data_message = ""
 		switch(scanmode)
@@ -1357,7 +1447,7 @@
 				data_message += "<span class='notice'>&emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span>"
 				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
 					data_message += "<span class='notice'>&emsp; Time of Death: [C.tod]</span>"
-				if(istype(C, /mob/living/carbon/human))
+				if(ishuman(C))
 					var/mob/living/carbon/human/H = C
 					var/list/damaged = H.get_damaged_bodyparts(1, 1)
 					data_message += "<span class='notice'>Localized Damage, Brute/Burn:</span>"
@@ -1367,17 +1457,13 @@
 					else
 						data_message += "<span class='notice'>&emsp; Limbs are OK.</span>"
 
-				for(var/datum/disease/D in C.viruses)
-					if(!D.hidden[SCANNER])
-						data_message += "<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>"
-
 				visible_message("<span class='warning'>[user] has analyzed [C]'s vitals!</span>")
 				to_chat(user, data_message)
 
 			if(2)
 				if (!istype(C.dna, /datum/dna))
 					data_message += "<span class='notice'>No fingerprints found on [C]</span>"
-				else if(istype(C, /mob/living/carbon/human))
+				else if(ishuman(C))
 					var/mob/living/carbon/human/H = C
 					if(H.gloves)
 						data_message += "<span class='notice'>No fingerprints found on [C]</span>"
@@ -1478,7 +1564,7 @@
 		A.emplode(severity)
 
 /obj/item/device/pda/proc/click_to_pay(atom/target)
-	if(istype(target, /mob/living/carbon/human))
+	if(ishuman(target))
 		var/mob/living/carbon/human/receiver = target
 		if(receiver.mind.initial_account)
 			target_account_number = text2num(receiver.mind.initial_account.account_number)
@@ -1498,10 +1584,10 @@
 
 /obj/item/device/pda/proc/check_owner_fingerprints(mob/living/carbon/human/user)
 	if(!owner_account)
-		alert("Eror! Account information not saved in this PDA, please insert your ID card in PDA and update the information.")
+		tgui_alert(usr, "Eror! Account information not saved in this PDA, please insert your ID card in PDA and update the information.")
 		return FALSE
 	if(!user.dna)	//just in case
-		alert("Eror! PDA can't read your fingerprints.")
+		tgui_alert(usr, "Eror! PDA can't read your fingerprints.")
 		return FALSE
 	var/fingerprints = md5(user.dna.uni_identity)
 	if(fingerprints in owner_fingerprints)
@@ -1513,7 +1599,7 @@
 			to_chat(user, "[bicon(src)]<span class='info'>Password is correct</span>")
 			return TRUE
 		else
-			alert("Invalid Password!")
+			tgui_alert(usr, "Invalid Password!")
 			return FALSE
 
 /obj/item/device/pda/proc/transaction_inform(target, source, amount, salary_change = FALSE)

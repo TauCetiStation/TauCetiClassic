@@ -6,8 +6,8 @@
 	name = "Sleeper Console"
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeperconsole"
-	anchored = 1 //About time someone fixed this.
-	density = 0
+	anchored = TRUE //About time someone fixed this.
+	density = FALSE
 	light_color = "#7bf9ff"
 
 /obj/machinery/sleeper
@@ -15,8 +15,9 @@
 	desc = "Used for the rapid introduction of chemicals from the internal storage."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeper-open"
-	density = 0
-	anchored = 1
+	layer = BELOW_CONTAINERS_LAYER
+	density = FALSE
+	anchored = TRUE
 	state_open = 1
 	light_color = "#7bf9ff"
 	allowed_checks = ALLOWED_CHECK_TOPIC
@@ -32,6 +33,7 @@
 		list("dexalinp", "alkysine")
 	)
 	var/upgraded = FALSE
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/sleeper/upgraded
 	upgraded = TRUE
@@ -71,10 +73,24 @@
 	return 0
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
-	if(user.incapacitated() || !Adjacent(user) || !target.Adjacent(user) || !iscarbon(target) || target.buckled)
+	if(user.incapacitated() || !iscarbon(target) || target.buckled)
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+	close_machine(target)
+
+/obj/machinery/sleeper/AltClick(mob/user)
+	if(user.incapacitated() || !Adjacent(user))
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+	if(occupant && is_operational())
+		open_machine()
+		return
+	var/mob/living/carbon/target = locate() in loc
+	if(!target)
 		return
 	close_machine(target)
 
@@ -84,18 +100,16 @@
 		if(filtering > 0)
 			if(beaker)
 				if(beaker.reagents.total_volume < beaker.reagents.maximum_volume)
-					H.vessel.trans_to(beaker, 1)
+					H.blood_trans_to(beaker, 1)
 					for(var/datum/reagent/x in src.occupant.reagents.reagent_list)
 						H.reagents.trans_to(beaker, 3)
-						H.vessel.trans_to(beaker, 1)
+						H.blood_trans_to(beaker, 1)
 	return
 
-/obj/machinery/sleeper/blob_act()
-	if(prob(75))
-		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.loc
-			A.blob_act()
-		qdel(src)
+/obj/machinery/sleeper/deconstruct(disassembled)
+	for(var/atom/movable/A as anything in src)
+		A.forceMove(loc)
+	..()
 
 /obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
 	..()
@@ -108,10 +122,9 @@
 	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(!beaker)
 			beaker = I
-			user.drop_item()
-			I.loc = src
+			user.drop_from_inventory(I, src)
 			user.visible_message("[user] adds \a [I] to \the [src]!", "You add \a [I] to \the [src]!")
-			src.updateUsrDialog()
+			updateUsrDialog()
 			return
 		else
 			to_chat(user, "<span class='warning'>The sleeper has a beaker already.</span>")
@@ -133,27 +146,16 @@
 	if(filtering)
 		toggle_filter()
 	switch(severity)
-		if(1.0)
-			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.loc
-				ex_act(severity)
-			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
-				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
-					ex_act(severity)
-				qdel(src)
 				return
-		if(3.0)
-			if(prob(25))
-				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
-					ex_act(severity)
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(75))
 				return
-	return
+	for(var/atom/movable/A as anything in src)
+		A.loc = src.loc
+		ex_act(severity)
+	qdel(src)
 
 /obj/machinery/sleeper/emp_act(severity)
 	if(filtering)
@@ -235,8 +237,8 @@
 		dat +=  "<div class='line'><div class='statusLabel'>\> Toxin Content:</div><div class='progressBar'><div style='width: [occupant.getToxLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getToxLoss()]%</div></div>"
 		dat +=  "<div class='line'><div class='statusLabel'>\> Burn Severity:</div><div class='progressBar'><div style='width: [occupant.getFireLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getFireLoss()]%</div></div>"
 
-		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant.paralysis)]% [occupant.paralysis ? "([round(occupant.paralysis / 4)] seconds left)" : ""]</div></div>"
-		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant.paralysis)]% [occupant.paralysis ? "([round(occupant.paralysis / 4)] seconds left)" : ""]</div></div>"
+		var/occupant_paralysis = occupant.AmountParalyzed()
+		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant_paralysis)]% [occupant_paralysis ? "([round(occupant_paralysis / 4)] seconds left)" : ""]</div></div>"
 		if(occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in occupant.reagents.reagent_list)
 				dat += text("<div class='line'><div class='statusLabel'>[R.name]:</div><div class='statusValue'>[] units</div></div>", round(R.volume, 0.1))
@@ -296,8 +298,8 @@
 		remove_beaker()
 	else if(href_list["togglefilter"])
 		toggle_filter()
-	else if(occupant && occupant.stat != DEAD && is_operational())
-		if(href_list["inject"] == "inaprovaline" || occupant.health > min_health)
+	else if(occupant && occupant.stat != DEAD)
+		if(href_list["inject"] == "inaprovaline" || (occupant.health > min_health && (href_list["inject"] in available_chems)))
 			inject_chem(usr, href_list["inject"])
 		else
 			to_chat(usr, "<span class='notice'>ERROR: Subject is not in stable condition for auto-injection.</span>")

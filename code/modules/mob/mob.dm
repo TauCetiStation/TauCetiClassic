@@ -1,6 +1,3 @@
-/mob
-	hud_possible = list(ANTAG_HUD)
-
 /**
   * Delete a mob
   *
@@ -11,20 +8,33 @@
   * Clears alerts for this mob
   *
   * Parent call
-  *
-  * Returns QDEL_HINT_HARDDEL (don't change this)
   */
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	global.mob_list -= src
 	global.dead_mob_list -= src
 	global.alive_mob_list -= src
-	for (var/alert in alerts)
+	for(var/alert in alerts)
 		clear_alert(alert, TRUE)
 	remote_control = null
-	qdel(hud_used)
+	QDEL_NULL(hud_used)
 	ghostize(bancheck = TRUE)
-	..()
-	return QDEL_HINT_HARDDEL_NOW
+	my_religion?.remove_member(src)
+
+	// I dont known how
+	global.player_list -= src
+
+	if(mind)
+		if(mind.current == src)
+			mind.set_current(null)
+		if(mind.original == src)
+			mind.original = null
+	return ..()
+
+
+/mob/examine(mob/user)
+	. = ..()
+	if(w_class)
+		to_chat(user, "It is a [get_size_flavor()] sized creature.")
 
 /mob/atom_init()
 	spawn()
@@ -37,10 +47,9 @@
 		alive_mob_list += src
 	. = ..()
 	prepare_huds()
-	for(var/datum/atom_hud/alternate_appearance/AA in global.active_alternate_appearances)
-		if(!AA)
-			continue
-		AA.update_alt_appearance(src)
+	update_all_alt_apperance()
+
+	init_languages()
 
 /mob/proc/Cell()
 	set category = "Admin"
@@ -53,7 +62,7 @@
 
 	var/datum/gas_mixture/env = T.return_air()
 
-	var/t = "<span class='notice'>Coordinates: [T.x],[T.y],[T.z]</span>\n"
+	var/t = "<span class='notice'>Coordinates: [COORD(T)]</span>\n"
 	t += "<span class='warning'>Temperature: [env.temperature]</span>\n"
 	t += "<span class='warning'>Pressure: [env.return_pressure()]kPa</span>\n"
 	for(var/g in env.gas)
@@ -129,7 +138,6 @@
 // WHY this self_message/blind_message/deaf_message so inconsistent as positional args!
 // todo:
 // * need to combine visible_message/audible_message to one proc (something like show_message) (maybe it will be a mess because of *_distance ?)
-// * replace show_message in /emote()'s & custom_emote()
 // * need some version combined with playsound (one cycle for audio message and sound)
 /mob/visible_message(message, self_message, blind_message, viewing_distance = world.view, list/ignored_mobs)
 	for(var/mob/M in (viewers(get_turf(src), viewing_distance) - ignored_mobs)) //todo: get_hearers_in_view() (tg)
@@ -163,7 +171,11 @@
 			to_chat(M, self_message)
 			continue
 
-		M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
+		var/turf/T = get_turf(M)
+		if (T.sound_coefficient == 0.0)
+			M.show_message(deaf_message, SHOWMSG_VISUAL)
+		else
+			M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
 
 // Show a message to all mobs in earshot of this atom
 // Use for objects performing audible actions
@@ -176,7 +188,7 @@
 		M.show_message(message, SHOWMSG_AUDIO, deaf_message, SHOWMSG_VISUAL)
 
 /mob/proc/findname(msg)
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if(M.real_name == text("[]", msg))
 			return M
 	return 0
@@ -207,7 +219,6 @@
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = loc
 	return
-
 
 /mob/proc/show_inv(mob/user)
 	return
@@ -275,17 +286,6 @@
 	else
 		to_chat(src, "The game appears to have misplaced your mind datum, so we can't show you your notes.")
 
-/mob/proc/store_memory(msg, popup)
-	msg = sanitize(msg)
-
-	if(length(memory) == 0)
-		memory += msg
-	else
-		memory += "<BR>[msg]"
-
-	if(popup)
-		memory()
-
 /mob/proc/update_flavor_text()
 	set src in usr
 	if(usr != src)
@@ -315,39 +315,40 @@
 	face_atom(A)
 	A.examine(src)
 	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
+	SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
+	if(isobserver(src))
+		return
+	var/mob/living/carbon/human/H = src
+	if(ishuman(src))
+		if(H.head && H.head.flags_inv && HIDEEYES)
+			return
+		if(H.wear_mask && H.wear_mask.flags_inv && HIDEEYES)
+			return
+	if(!A.z) //no message if we examine something in a backpack
+		return
+	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
-/mob/verb/pointed(atom/A as mob|obj|turf in oview())
+/mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
 	set category = "Object"
 
-	if(!usr || !isturf(usr.loc))
-		return
-	if(usr.incapacitated())
-		return
-	if(usr.status_flags & FAKEDEATH)
-		return
-	if(!(A in oview(usr.loc)))
-		return
 	if(istype(A, /obj/effect/decal/point))
-		return
+		return FALSE
 
-	var/tile = get_turf(A)
-	if(!tile)
-		return
+	// Removes an ability to point to the object which is out of our sight.
+	// Mostly for cases when we have mesons, thermals etc. equipped.
+	if(client && !(A in view(client.view, src)))
+		return FALSE
 
-	var/obj/P = new /obj/effect/decal/point(tile)
-	P.pixel_x = A.pixel_x
-	P.pixel_y = A.pixel_y
-	P.plane = GAME_PLANE
+	point_at(A)
 
-	QDEL_IN(P, 20)
-
-	usr.visible_message("<span class='notice'><b>[usr]</b> points to [A].</span>")
-
-	if(isliving(A))
-		for(var/mob/living/carbon/slime/S in oview())
-			if(usr in S.Friends)
+	// TODO: replace with a "COMSIG_MOB_POINTED" signal
+	if (isliving(A))
+		for (var/mob/living/carbon/slime/S in oview())
+			if (usr in S.Friends)
 				S.last_pointed = A
+
+	return TRUE
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"
@@ -359,12 +360,9 @@
 	if(stat != DEAD || !SSticker)
 		to_chat(usr, "<span class='notice'><B>You must be dead to use this!</B></span>")
 		return
-	if(SSticker && istype(SSticker.mode, /datum/game_mode/meteor))
-		to_chat(usr, "<span class='notice'>Respawn is disabled for this roundtype.</span>")
-		return
 	else
 		var/deathtime = world.time - src.timeofdeath
-		if(istype(src,/mob/dead/observer))
+		if(isobserver(src))
 			var/mob/dead/observer/G = src
 			if(G.has_enabled_antagHUD == 1 && config.antag_hud_restricted)
 				to_chat(usr, "<span class='notice'><B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
@@ -405,6 +403,9 @@
 		qdel(M)
 		return
 
+	// New life, new quality.
+	client.prefs.selected_quality_name = null
+
 	M.key = key
 //	M.Login()	//wat
 	return
@@ -430,7 +431,7 @@
 	var/eye_name = null
 
 	var/ok = "[is_admin ? "Admin Observe" : "Observe"]"
-	eye_name = input("Please, select a player!", ok, null, null) as null|anything in creatures
+	eye_name = input("Please, select a mob!", ok, null, null) as null|anything in creatures
 
 	if(!eye_name)
 		return
@@ -469,7 +470,7 @@
 
 /mob/Topic(href, href_list)
 	if (href_list["refresh"])
-		if(machine && in_range(src, usr))
+		if(machine && in_range(src, usr)) // ? i'm sure changing this to Adjacent() will bug something
 			show_inv(machine)
 
 	if(href_list["flavor_more"])
@@ -549,8 +550,6 @@
 			if(H.pull_damage())
 				to_chat(src, "<span class='danger'>Pulling \the [H] in their current condition would probably be a bad idea.</span>")
 
-		count_pull_debuff()
-
 /mob/verb/stop_pulling()
 	set name = "Stop Pulling"
 	set category = "IC"
@@ -565,16 +564,15 @@
 			pulling = null
 		if(pullin)
 			pullin.update_icon(src)
-		count_pull_debuff()
 
 /mob/proc/count_pull_debuff()
-	return
+	return 0
 
 /mob/proc/can_use_hands()
 	return
 
 /mob/proc/is_active()
-	return (usr.stat <= 0)
+	return (usr.stat <= CONSCIOUS)
 
 /mob/proc/is_dead()
 	return stat == DEAD
@@ -582,7 +580,7 @@
 /mob/proc/is_mechanical()
 	if(mind && (mind.assigned_role == "Cyborg" || mind.assigned_role == "AI"))
 		return 1
-	return istype(src, /mob/living/silicon) || get_species() == IPC
+	return issilicon(src) || get_species() == IPC
 
 /mob/proc/is_ready()
 	return client && !!mind
@@ -659,8 +657,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 	..()
 
 	if(statpanel("Status"))
-		if(round_id)
-			stat(null, "Round ID: #[round_id]")
+		if(global.round_id)
+			stat(null, "Round ID: #[global.round_id]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(client)
 			stat(null, "Your in-game age: [isnum(client.player_ingame_age) ? client.player_ingame_age : 0]")
@@ -671,10 +669,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(client.holder)
 				if (config.registration_panic_bunker_age)
 					stat(null, "Registration panic bunker age: [config.registration_panic_bunker_age]")
-				if(SSticker.mode && SSticker.mode.config_tag == "malfunction")
-					var/datum/game_mode/malfunction/GM = SSticker.mode
-					if(GM.malf_mode_declared)
-						stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
+				var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
+				if(GM?.malf_mode_declared)
+					stat(null, "Time left: [max(GM.AI_win_timeleft / (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
 				if(SSshuttle.online && SSshuttle.location < 2)
 					stat(null, "ETA-[shuttleeta2text()]")
 
@@ -685,7 +682,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(statpanel("MC"))
 				stat("CPU:", "[world.cpu]")
 				if(client.holder.rights & R_DEBUG)
-					stat("Location:", "([x], [y], [z])")
+					stat("Location:", "[COORD(src)]")
 					stat("Instances:", "[world.contents.len]")
 					config.stat_entry()
 					stat(null)
@@ -732,7 +729,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(!canmove)						return 0
 	if(client.moving)					return 0
 	if(world.time < client.move_delay)	return 0
-	if(stat==2)							return 0
+	if(stat==DEAD)						return 0
 	if(anchored)						return 0
 	if(notransform)						return 0
 	if(restrained())					return 0
@@ -742,11 +739,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 // We need speed out of this proc, thats why using incapacitated() helper here is a bad idea.
 /mob/proc/update_canmove(no_transform = FALSE)
 
-	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+	var/ko = paralysis || stat || (status_flags & FAKEDEATH)
 
-	lying = (ko || crawling || resting) && !captured && !buckled && !pinned.len
-	canmove = !(ko || resting || stunned || captured || pinned.len)
-	anchored = captured || pinned.len
+	anchored = HAS_TRAIT(src, TRAIT_ANCHORED)
+	lying = (ko || weakened || crawling) && !anchored
+	canmove = !(ko || anchored || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
 
 	if(buckled)
 		if(buckled.buckle_lying != -1)
@@ -760,22 +757,24 @@ note dizziness decrements automatically in the mob's Life() proc.
 				V.unload(src)
 			else
 				pixel_y = V.mob_offset_y
-		else
-			if(istype(buckled, /obj/structure/stool/bed/chair))
-				var/obj/structure/stool/bed/chair/C = buckled
-				if(C.flipped)
-					lying = 1
 
 	density = !lying
 
-	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isxeno(src))
+	if(lying != was_lying)
+		if(lying)
+			SEND_SIGNAL(src, COMSIG_MOB_STATUS_LYING)
+		else
+			SEND_SIGNAL(src, COMSIG_MOB_STATUS_NOT_LYING)
+		was_lying = lying
+
+	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)))
 		drop_l_hand()
 		drop_r_hand()
 
 	for(var/obj/item/weapon/grab/G in grabbed_by)
 		if(G.state >= GRAB_AGGRESSIVE)
 			canmove = FALSE
-			if(G.state == GRAB_NECK && G.assailant.zone_sel.selecting == BP_CHEST)
+			if(G.state == GRAB_NECK && G.assailant.get_targetzone() == BP_CHEST)
 				lying = FALSE
 				density = TRUE
 			break
@@ -789,15 +788,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(update_icon)	//forces a full overlay update
 		update_icon = FALSE
 		regenerate_icons()
-	return canmove
 
 
 /mob/proc/facedir(ndir)
 	if(!canface())
 		return 0
-	dir = ndir
+	set_dir(ndir)
 	if(buckled && buckled.buckle_movable)
-		buckled.dir = ndir
+		buckled.set_dir(ndir)
 		buckled.handle_rotation()
 	client.move_delay += movement_delay()
 	return 1
@@ -826,116 +824,83 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
 
-// ========== STUN ==========
-/mob/proc/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
-	if(!isnull(lock))
-		if(lock)
-			status_flags |= LOCKSTUN
-		else
-			status_flags &= ~LOCKSTUN
-	else if(status_flags & LOCKSTUN)
-		return
-
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(max(stunned, amount), 0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-		if(updating)
-			update_canmove()
-	else
-		stunned = 0
-
-/mob/proc/SetStunned(amount, updating = 1, ignore_canstun = 0, lock = null) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
-	if(!isnull(lock))
-		if(lock)
-			status_flags |= LOCKSTUN
-		else
-			status_flags &= ~LOCKSTUN
-	else if(status_flags & LOCKSTUN)
-		return
-
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(amount, 0)
-		if(updating)
-			update_canmove()
-	else
-		stunned = 0
-
-/mob/proc/AdjustStunned(amount, updating = 1, ignore_canstun = 0, lock = null)
-	if(!isnull(lock))
-		if(lock)
-			status_flags |= LOCKSTUN
-		else
-			status_flags &= ~LOCKSTUN
-	else if(status_flags & LOCKSTUN)
-		return
-
-	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(stunned + amount, 0)
-		if(updating)
-			update_canmove()
-	else
-		stunned = 0
-
-// ========== WEAKEN ==========
-/mob/proc/Weaken(amount)
-	if(status_flags & CANWEAKEN)
-		weakened = max(max(weakened, amount), 0)
-		update_canmove() // updates lying, canmove and icons
-	else
-		weakened = 0
-
-/mob/proc/SetWeakened(amount)
-	if(status_flags & CANWEAKEN)
-		weakened = max(amount, 0)
+// ======STATUS_FLAGS=======
+/mob/proc/remove_status_flags(remove_flags)
+	if(remove_flags & CANSTUN)
+		SetStunned(0, TRUE)
+	if(remove_flags & CANWEAKEN)
+		SetWeakened(0, TRUE)
+	if(remove_flags & CANPARALYSE)
+		SetParalysis(0, TRUE)
+	if(remove_flags & (CANSTUN|CANPARALYSE|CANWEAKEN))
 		update_canmove()
-	else
-		weakened = 0
+	status_flags &= ~remove_flags
 
-/mob/proc/AdjustWeakened(amount)
-	if(status_flags & CANWEAKEN)
-		weakened = max(weakened + amount, 0)
-		update_canmove()
-	else
-		weakened = 0
+/mob/proc/add_status_flags(add_flags)
+	if(add_flags & GODMODE)
+		stuttering = 0
+	status_flags |= add_flags
 
-// ========== PARALYSE ==========
-/mob/proc/Paralyse(amount)
-	if(status_flags & CANPARALYSE)
-		paralysis = max(max(paralysis, amount), 0)
+// ========== CRAWLING ==========
+/mob/proc/SetCrawling(value)
+	crawling = value
+	if(value)
+		pass_flags |= PASSCRAWL
 	else
-		paralysis = 0
+		pass_flags &= ~PASSCRAWL
+// ========== DRUGGINESS ==========
+/mob/proc/adjustDrugginess(amount)
+	druggy = max(druggy + amount, 0)
+	updateDrugginesOverlay()
 
-/mob/proc/SetParalysis(amount)
-	if(status_flags & CANPARALYSE)
-		paralysis = max(amount, 0)
+/mob/proc/setDrugginess(amount)
+	druggy = max(amount, 0)
+	updateDrugginesOverlay()
+
+/mob/proc/updateDrugginesOverlay()
+	if(druggy)
+		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
+		throw_alert("high", /atom/movable/screen/alert/high)
 	else
-		paralysis = 0
+		clear_fullscreen("high")
+		clear_alert("high")
 
-/mob/proc/AdjustParalysis(amount)
-	if(status_flags & CANPARALYSE)
-		paralysis = max(paralysis + amount, 0)
-	else
-		paralysis = 0
+// ========== STUTTERING ==========
+/mob/proc/Stuttering(amount)
+	if(status_flags & GODMODE)
+		return
+	stuttering = max(stuttering, amount, 0)
 
-// ========== RESTING ==========
-/mob/proc/Resting(amount)
-	resting = max(max(resting, amount), 0)
+/mob/proc/AdjustStuttering(amount)
+	if(status_flags & GODMODE)
+		return
+	stuttering = max(stuttering + amount, 0)
+
+/mob/proc/setStuttering(amount)
+	if(status_flags & GODMODE)
+		return
+	stuttering = max(amount, 0)
+
+//========== Shock Stage =========
+/mob/proc/AdjustShockStage(amount)
 	return
 
-/mob/proc/SetResting(amount)
-	resting = max(amount, 0)
+/mob/proc/SetShockStage(amount)
 	return
 
-/mob/proc/AdjustResting(amount)
-	resting = max(resting + amount, 0)
-	return
+//======= Bodytemperature =======
+/mob/proc/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY)
+	if(amount > 0)
+		if(bodytemperature < max_temp)
+			bodytemperature = min(max_temp, bodytemperature + amount)
+	else
+		if(bodytemperature > min_temp)
+			bodytemperature = max(min_temp, bodytemperature + amount)
 
 // =============================
 
 /mob/proc/get_species()
 	return ""
-
-/mob/proc/flash_weak_pain()
-	flick("weak_pain",pain)
 
 /mob/proc/get_visible_implants(class = 0)
 	var/list/visible_implants = list()
@@ -960,11 +925,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	var/mob/S = src
 	var/mob/U = usr
-	var/list/valid_objects = list()
-	var/self = FALSE
-
-	if(S == U)
-		self = TRUE // Removing object from yourself.
+	var/list/valid_objects
+	var/self = S == U // Removing object from yourself.
 
 	valid_objects = get_visible_implants(1)
 	if(!valid_objects.len)
@@ -981,19 +943,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 	else
 		to_chat(U, "<span class='warning'>You attempt to get a good grip on the [selection] in [S]'s body.</span>")
 
-	if(!do_after(U, 80, target = S))
+	if(!do_skilled(U, S, SKILL_TASK_DIFFICULT, list(/datum/skill/medical = SKILL_LEVEL_TRAINED), -0.2))
 		return
-	if(!selection || !S || !U)
+	if(QDELETED(S) || QDELETED(U) || selection.loc != S)
 		return
 
 	if(self)
 		visible_message("<span class='warning'><b>[src] rips [selection] out of their body.</b></span>","<span class='warning'><b>You rip [selection] out of your body.</b></span>")
 	else
 		visible_message("<span class='warning'><b>[usr] rips [selection] out of [src]'s body.</b></span>","<span class='warning'><b>[usr] rips [selection] out of your body.</b></span>")
-	valid_objects = get_visible_implants(0)
-	if(valid_objects.len == 1) //Yanking out last object - removing verb.
-		src.verbs -= /mob/proc/yank_out_object
-		clear_alert("embeddedobject")
 
 	embedded -= selection
 
@@ -1003,16 +961,16 @@ note dizziness decrements automatically in the mob's Life() proc.
 		var/obj/item/organ/external/BP
 
 		for(var/obj/item/organ/external/limb in H.bodyparts) //Grab the organ holding the implant.
-			for(var/obj/item/weapon/O in limb.implants)
-				if(O == selection)
-					BP = limb
+			if(selection in limb.implants)
+				BP = limb
+				break
 
 		BP.implants -= selection
 		H.sec_hud_set_implants()
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection
 
-		H.shock_stage += 20
+		H.AdjustShockStage(20)
 		BP.take_damage((selection.w_class * 3), null, DAM_EDGE, "Embedded object extraction")
 
 		if(prob(selection.w_class * 5) && BP.sever_artery()) // I'M SO ANEMIC I COULD JUST -DIE-.
@@ -1022,14 +980,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 			var/mob/living/carbon/human/human_user = U
 			human_user.bloody_hands(H)
 
-	selection.loc = get_turf(src)
+	selection.forceMove(get_turf(S))
 
-	for(var/obj/item/weapon/O in pinned)
-		if(O == selection)
-			pinned -= O
-		if(!pinned.len)
-			anchored = 0
-	return 1
+	valid_objects = get_visible_implants(1)
+	if(!valid_objects.len) //Yanked out last object - removing verb.
+		src.verbs -= /mob/proc/yank_out_object
+		clear_alert("embeddedobject")
 
 ///Get the ghost of this mob (from the mind)
 /mob/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
@@ -1066,6 +1022,10 @@ note dizziness decrements automatically in the mob's Life() proc.
 	spell_list -= S
 	if(mind)
 		mind.spell_list -= S
+		if(isliving(mind.current))
+			var/mob/living/L = mind.current
+			if(S.action)
+				S.action.Remove(L)
 	qdel(S)
 
 /mob/proc/ClearSpells()
@@ -1074,20 +1034,17 @@ note dizziness decrements automatically in the mob's Life() proc.
 		qdel(spell)
 
 	if(mind)
-		for(var/spell in mind.spell_list)
-			mind.spell_list -= spell
-			qdel(spell)
+		for(var/obj/effect/proc_holder/spell/S in mind.spell_list)
+			mind.spell_list -= S
+			if(isliving(mind.current))
+				var/mob/living/L = mind.current
+				if(S.action)
+					S.action.Remove(L)
+			qdel(S)
 
 /mob/proc/set_EyesVision(preset = null, transition_time = 5)
 	if(!client) return
-	if(ishuman(src) && druggy)
-		var/datum/ColorMatrix/DruggyMatrix = new(pick("bgr_d","brg_d","gbr_d","grb_d","rbg_d","rgb_d"))
-		var/multiplied
-		if(preset)
-			var/datum/ColorMatrix/CM = new(preset)
-			multiplied = matrixMultiply(DruggyMatrix.matrix, CM.matrix)
-		animate(client, color = multiplied ? multiplied : DruggyMatrix.matrix, time = 40)
-	else if(preset)
+	if(preset)
 		var/datum/ColorMatrix/CM = new(preset)
 		animate(client, color = CM.matrix, time = transition_time)
 	else
@@ -1107,7 +1064,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(XRAY in mutations)
 				return
 			else
-				overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+				overlay_fullscreen("blind", /atom/movable/screen/fullscreen/blind)
 				if(A)
 					client.perspective = EYE_PERSPECTIVE
 				client.eye = A
@@ -1115,15 +1072,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M)
 	if(M.buckled)
-		return 0
+		return FALSE
 	var/turf/T = get_turf(src)
 	if(M.loc != T)
 		var/old_density = density
-		density = 0
+		density = FALSE
 		var/can_step = step_towards(M, T)
 		density = old_density
 		if(!can_step)
-			return 0
+			return FALSE
 	return ..()
 
 //Default buckling shift visual for mobs
@@ -1133,12 +1090,11 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(M.layer < layer)
 			M.layer = layer + 0.1
 	else //post unbuckling
-		M.layer = initial(M.layer)
-		M.plane = initial(M.plane)
-		M.pixel_y = initial(M.pixel_y)
+		M.layer = M.default_layer
+		M.pixel_y = M.default_pixel_y
 
 /mob/proc/can_unbuckle(mob/user)
-	return 1
+	return TRUE
 
 /mob/proc/get_targetzone()
 	return null
@@ -1147,7 +1103,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return
 
 /mob/proc/can_pickup(obj/O)
-	return TRUE
+	return Adjacent(O)
 
 /atom/movable/proc/is_facehuggable()
 	return FALSE
@@ -1173,6 +1129,110 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(HUD_LIST_LIST)
 				hud_list[hud] = list()
 			else
-				var/image/I = image('icons/mob/hud.dmi', src, "")
+				var/image/I = image('icons/hud/hud.dmi', src, "")
 				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 				hud_list[hud] = I
+
+/mob/keybind_face_direction(direction)
+	facedir(direction)
+
+///Spin this mob around it's central axis
+/mob/proc/spin(spintime, speed)
+	set waitfor = 0
+	var/D = dir
+	if((spintime < 1) || (speed < 1) || !spintime|| !speed)
+		return
+
+	flags |= IS_SPINNING
+	while(spintime >= speed)
+		sleep(speed)
+		switch(D)
+			if(NORTH)
+				D = EAST
+			if(SOUTH)
+				D = WEST
+			if(EAST)
+				D = SOUTH
+			if(WEST)
+				D = NORTH
+		set_dir(D)
+		spintime -= speed
+	flags &= ~IS_SPINNING
+
+/mob/proc/in_interaction_vicinity(atom/target)
+	return Adjacent(target)
+
+/mob/proc/confuse_input(dir)
+	return input_offsets["[dir]"]
+
+/mob/proc/randomise_inputs()
+	if(!confused)
+		return
+	if(next_randomise_inputs > world.time)
+		return
+
+	next_randomise_inputs = world.time + randomise_inputs_cooldown
+
+	input_offsets = list()
+	var/list/pos_dirs = list() + cardinal
+
+	for(var/d in cardinal)
+		var/map_to = pick(pos_dirs)
+		input_offsets["[d]"] = map_to
+		pos_dirs -= map_to
+
+	addtimer(CALLBACK(src, .proc/randomise_inputs), randomise_inputs_cooldown)
+
+/mob/proc/AdjustConfused(amount)
+	confused += amount
+	if(confused < 0)
+		confused = 0
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time
+
+/mob/proc/SetConfused(value)
+	confused = value
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time
+
+/mob/proc/MakeConfused(value)
+	confused = max(value, confused)
+
+	if(confused > 0)
+		randomise_inputs()
+	else
+		input_offsets = null
+		next_randomise_inputs = world.time
+
+/mob/proc/parse_language(message)
+	if(forced_language)
+		return list(message, all_languages[forced_language])
+
+	var/datum/language/speaking = parse_language_code(message)
+	if(speaking)
+		var/new_msg = copytext_char(message, 2 + length_char(speaking.key))
+		return list(new_msg, speaking)
+
+	if(default_language)
+		return list(message, all_languages[default_language])
+
+	var/datum/species/S = all_species[get_species()]
+	if(S && S.species_common_language)
+		return list(message, all_languages[S.language])
+
+	if(common_language)
+		return list(message, all_languages[common_language])
+
+	return list(message, null)
+
+/mob/proc/set_lastattacker_info(mob/M)
+	lastattacker_name = M.real_name
+	lastattacker_key = M.key

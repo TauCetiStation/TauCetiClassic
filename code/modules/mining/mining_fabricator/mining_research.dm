@@ -51,7 +51,7 @@
 	construction_time = 400
 	category = list("Spacesuit")
 
-datum/design/space_suit_helmet_science
+/datum/design/space_suit_helmet_science
 	name = "Science space suit helmet"
 	id = "space_suit_helmet_science"
 	build_type = MINEFAB
@@ -70,7 +70,7 @@ datum/design/space_suit_helmet_science
 	construction_time = 400
 	category = list("Spacesuit")
 
-datum/design/space_suit_helmet_recycler
+/datum/design/space_suit_helmet_recycler
 	name = "Recycler space suit helmet"
 	id = "space_suit_helmet_recycler"
 	build_type = MINEFAB
@@ -193,6 +193,25 @@ datum/design/space_suit_helmet_recycler
 	construction_time = 800
 	category = list("Spacesuit")
 
+//Science rig
+/datum/design/space_suit_science_rig
+	name = "science hardsuit"
+	id = "space_suit_science_rig"
+	build_type = MINEFAB
+	build_path = /obj/item/clothing/suit/space/rig/science
+	materials = list(MAT_METAL=35000, MAT_GLASS=5000, MAT_PLASTIC=10000, MAT_SILVER=6000, MAT_PHORON=8000, MAT_DIAMOND=2000, MAT_GOLD=3000)
+	construction_time = 1750
+	category = list("Spacesuit")
+
+/datum/design/space_suit_helmet_science_rig
+	name = "science hardsuit helmet"
+	id = "space_suit_helmet_science_rig"
+	build_type = MINEFAB
+	build_path = /obj/item/clothing/head/helmet/space/rig/science
+	materials = list(MAT_METAL=8000, MAT_GLASS=4000, MAT_PLASTIC=5000, MAT_SILVER=6000, MAT_PHORON=2000, MAT_DIAMOND=500, MAT_GOLD=1000)
+	construction_time = 1000
+	category = list("Spacesuit")
+
 //------------TOOLS------------
 //other in rnd
 //pickaxe
@@ -226,6 +245,16 @@ datum/design/space_suit_helmet_recycler
 	materials = list(MAT_METAL=50,MAT_GLASS=40)
 	construction_time = 50
 	starts_unlocked = TRUE
+	category = list("Tools")
+
+//meson_geo_hud
+/datum/design/meson_geo_hud
+	name = "Geological Meson Optical Scanner"
+	id = "meson_geo_glasses"
+	build_type = MINEFAB
+	build_path = /obj/item/clothing/glasses/hud/mining/meson
+	materials = list(MAT_METAL = 50, MAT_GLASS = 50,MAT_SILVER=20, MAT_GOLD=20)
+	construction_time = 100
 	category = list("Tools")
 
 //mine_flashlight

@@ -8,7 +8,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	var/created_name = "Floorbot"
 
 /obj/item/weapon/toolbox_tiles_sensor
@@ -20,7 +20,7 @@
 	throwforce = 10.0
 	throw_speed = 2
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	var/created_name = "Floorbot"
 
 // Floorbot states
@@ -43,11 +43,9 @@
 	desc = "A little floor repairing robot, he looks so excited!"
 	icon = 'icons/obj/aibots.dmi'
 	icon_state = "floorbot0"
-	layer = 5.0
 	density = FALSE
 	anchored = FALSE
-	health = 25
-	maxhealth = 25
+	max_integrity = 25
 	//weight = 1.0E7
 	var/amount = 10
 	var/eattiles = FALSE
@@ -169,7 +167,7 @@
 
 
 /obj/machinery/bot/floorbot/proc/is_hull_breach(turf/t) //Ignore space tiles not considered part of a structure, also ignores shuttle docking areas.
-	if(!t || !istype(t, /turf/space))
+	if(!t || !isenvironmentturf(t))
 		return FALSE
 
 	if(targetdirection) // Bridge mode, ignore areas
@@ -177,8 +175,7 @@
 
 	var/area/t_area = get_area(t)
 
-	if(istype(t_area, /area/station/))
-		return TRUE
+	return istype(t_area, /area/station)
 
 /obj/machinery/bot/floorbot/proc/is_broken(turf/simulated/floor/t)
 	if(!istype(t))
@@ -236,7 +233,7 @@
 		icon_state = "floorbot-c"
 
 		addtimer(CALLBACK(src, .proc/finish_task), 50)
-	else if(task == FLOORBOT_TASK_BREAKTILE && istype(t, /turf/simulated/floor))
+	else if(task == FLOORBOT_TASK_BREAKTILE && isfloorturf(t))
 		state = FLOORBOT_BUSY
 		visible_message("<span class='warning'>[src] begins repairing the floor.</span>") // troll message
 		anchored = TRUE
@@ -266,7 +263,7 @@
 		else
 			F.make_plasteel_floor()
 			amount -= 1
-	else if(task == FLOORBOT_TASK_BREAKTILE && istype(t, /turf/simulated/floor))
+	else if(task == FLOORBOT_TASK_BREAKTILE && isfloorturf(t))
 		var/turf/simulated/floor/F = t
 		if(prob(90))
 			F.break_tile_to_plating()
@@ -316,7 +313,7 @@
 	if(state == FLOORBOT_IDLE)
 
 		if(emagged == 2)
-			for (var/turf/simulated/floor/F in shuffle(view(7,src)))
+			for (var/turf/simulated/floor/F in view(7, src))
 				if(F.floor_type)
 					do_task(F, FLOORBOT_TASK_BREAKTILE)
 					return
@@ -328,14 +325,14 @@
 
 
 		if(amount > 0)
-			for (var/turf/space/D in shuffle(view(7,src)))
+			for (var/turf/environment/D in view(7, src))
 				if(is_hull_breach(D))
 					boringness = 0
 					do_task(D, FLOORBOT_TASK_FIXHOLE)
 					return
 
 			if(placetiles || fixtiles)
-				for (var/turf/simulated/floor/F in shuffle(view(7,src)))
+				for (var/turf/simulated/floor/F in view(7, src))
 					if(placetiles && is_plating(F))
 						boringness = 0
 						do_task(F, FLOORBOT_TASK_PLACETILE)
@@ -346,15 +343,15 @@
 						return
 		else
 			if(eattiles)
-				for(var/obj/item/stack/tile/plasteel/T in shuffle(view(7, src)))
+				for(var/obj/item/stack/tile/plasteel/T in view(7, src))
 					state = FLOORBOT_MOVING_TO_PICKUP
 					boringness = 0
 					target = T
 					path = new()
 					return
 			if(maketiles)
-				for(var/obj/item/stack/sheet/metal/M in shuffle(view(7, src)))
-					if(M.get_amount() == 1 && !(istype(M.loc, /turf/simulated/wall)))
+				for(var/obj/item/stack/sheet/metal/M in view(7, src))
+					if(M.get_amount() == 1 && !(iswallturf(M.loc)))
 						state = FLOORBOT_MOVING_TO_PICKUP
 						boringness = 0
 						target = M
@@ -414,7 +411,7 @@
 			return
 
 		var/turf/s = get_turf(src)
-		if(istype(s, /turf/space))
+		if(isenvironmentturf(s))
 			task = FLOORBOT_TASK_FIXHOLE
 			target = s
 			start_task()
@@ -438,7 +435,7 @@
 
 /obj/machinery/bot/floorbot/explode()
 	src.on = 0
-	src.visible_message("<span class='warning'><B>[src] blows apart!</B></span>")
+	visible_message("<span class='warning'><B>[src] blows apart!</B></span>")
 	var/turf/Tsec = get_turf(src)
 
 	var/obj/item/weapon/storage/toolbox/mechanical/N = new /obj/item/weapon/storage/toolbox/mechanical(Tsec)
@@ -493,7 +490,7 @@
 		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)),MAX_NAME_LEN)
 		if (!t)
 			return
-		if (!in_range(src, usr) && src.loc != usr)
+		if (!user.Adjacent(src))
 			return
 
 		created_name = t
@@ -515,7 +512,7 @@
 
 		if (!t)
 			return
-		if (!in_range(src, usr) && src.loc != usr)
+		if (!user.Adjacent(src))
 			return
 
 		created_name = t

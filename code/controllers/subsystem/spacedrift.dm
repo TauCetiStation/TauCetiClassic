@@ -5,6 +5,7 @@ SUBSYSTEM_DEF(spacedrift)
 	wait     = SS_WAIT_SPACEDRIFT
 
 	flags = SS_NO_INIT | SS_KEEP_TIMING
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()
 	var/list/processing = list()
@@ -53,7 +54,7 @@ SUBSYSTEM_DEF(spacedrift)
 		if (AM.loc == old_loc)
 			AM.inertia_dir = 0
 
-		AM.dir = old_dir
+		AM.set_dir(old_dir)
 		AM.inertia_last_loc = AM.loc
 		if (MC_TICK_CHECK)
 			return

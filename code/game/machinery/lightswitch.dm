@@ -35,8 +35,8 @@
 
 /obj/machinery/light_switch/proc/updateicon()
 	if(!overlay)
-		overlay = image(icon, "light1-overlay")
-		overlay.plane = LIGHTING_PLANE + 1
+		overlay = image(icon, "light1-overlay", layer = ABOVE_LIGHTING_LAYER)
+		overlay.plane = ABOVE_LIGHTING_PLANE
 
 	cut_overlays()
 	if(stat & (NOPOWER|BROKEN))

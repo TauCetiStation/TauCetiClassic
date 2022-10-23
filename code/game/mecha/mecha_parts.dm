@@ -6,7 +6,7 @@
 	name = "mecha part"
 	icon = 'icons/mecha/mech_construct.dmi'
 	icon_state = "blank"
-	w_class = ITEM_SIZE_HUGE
+	w_class = SIZE_BIG
 	flags = CONDUCT
 	origin_tech = "programming=2;materials=2"
 
@@ -323,7 +323,7 @@
 	board_type = "other"
 	flags = CONDUCT
 	force = 5.0
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 15

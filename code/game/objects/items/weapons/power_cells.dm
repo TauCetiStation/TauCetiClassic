@@ -10,9 +10,10 @@
 	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 5
-	w_class = ITEM_SIZE_NORMAL
-	var/charge = 0	// note %age conveted to actual charge in New
+	w_class = SIZE_SMALL
+	var/charge = 0
 	var/maxcharge = 1000
+	var/init_full = TRUE // initialize charge with maxcharge
 	m_amt = 700
 	g_amt = 50
 	var/rigged = 0		// true if rigged to explode
@@ -38,12 +39,9 @@
 	desc = "You can't top the plasma top." //TOTALLY TRADEMARK INFRINGEMENT
 	origin_tech = "powerstorage=1"
 	maxcharge = 500
+	init_full = FALSE
 	g_amt = 40
 	rating = 2
-
-/obj/item/weapon/stock_parts/cell/crap/empty/atom_init()
-	. = ..()
-	charge = 0
 
 /obj/item/weapon/stock_parts/cell/secborg
 	name = "security borg rechargable D battery"
@@ -52,9 +50,8 @@
 	g_amt = 40
 	rating = 2.5
 
-/obj/item/weapon/stock_parts/cell/secborg/empty/atom_init()
-	. = ..()
-	charge = 0
+/obj/item/weapon/stock_parts/cell/secborg/empty
+	init_full = FALSE
 
 /obj/item/weapon/stock_parts/cell/apc
 	name = "APC power cell"
@@ -71,9 +68,8 @@
 	g_amt = 60
 	rating = 3
 
-/obj/item/weapon/stock_parts/cell/high/empty/atom_init()
-	. = ..()
-	charge = 0
+/obj/item/weapon/stock_parts/cell/high/empty
+	init_full = FALSE
 
 /obj/item/weapon/stock_parts/cell/super
 	name = "super-capacity power cell"
@@ -83,9 +79,8 @@
 	g_amt = 70
 	rating = 4
 
-/obj/item/weapon/stock_parts/cell/super/empty/atom_init()
-	. = ..()
-	charge = 0
+/obj/item/weapon/stock_parts/cell/super/empty
+	init_full = FALSE
 
 /obj/item/weapon/stock_parts/cell/hyper
 	name = "hyper-capacity power cell"
@@ -95,9 +90,8 @@
 	g_amt = 80
 	rating = 5
 
-/obj/item/weapon/stock_parts/cell/hyper/empty/atom_init()
-	. = ..()
-	charge = 0
+/obj/item/weapon/stock_parts/cell/hyper/empty
+	init_full = FALSE
 
 /obj/item/weapon/stock_parts/cell/bluespace
 	name = "bluespace power cell"
@@ -108,9 +102,8 @@
 	rating = 6
 	//chargerate = 4000
 
-/obj/item/weapon/stock_parts/cell/bluespace/empty/atom_init()
-	. = ..()
-	charge = 0
+/obj/item/weapon/stock_parts/cell/bluespace/empty
+	init_full = FALSE
 
 /obj/item/weapon/stock_parts/cell/infinite
 	name = "infinite-capacity power cell!"
@@ -142,7 +135,6 @@
 	origin_tech = "powerstorage=2;biotech=4"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "yellow slime extract"
-	maxcharge = 10000
 	maxcharge = 10000
 	m_amt = 0
 	g_amt = 0

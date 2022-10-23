@@ -8,33 +8,340 @@
 	return ..()
 
 /mob/living/carbon/Life()
+	if(!loc)
+		return
+
 	..()
 
 	// Increase germ_level regularly
 	if(germ_level < GERM_LEVEL_AMBIENT && prob(80) && !IS_IN_STASIS(src))	//if you're just standing there, you shouldn't get more germs beyond an ambient level
 		germ_level++
 
+/mob/living/carbon/proc/reset_alerts()
+	inhale_alert = FALSE
+	poison_alert = FALSE
+	pressure_alert = 0
+	temp_alert = 0
+
+/mob/living/carbon/proc/handle_alerts()
+	if(inhale_alert)
+		throw_alert("oxy", /atom/movable/screen/alert/oxy)
+	else
+		clear_alert("oxy")
+
+	if(poison_alert)
+		throw_alert("tox", /atom/movable/screen/alert/tox_in_air)
+	else
+		clear_alert("tox")
+
+	if(temp_alert > 0)
+		throw_alert("temp", /atom/movable/screen/alert/hot, temp_alert)
+	else if(temp_alert < 0)
+		throw_alert("temp", /atom/movable/screen/alert/cold, -temp_alert)
+	else
+		clear_alert("temp")
+
+	if(pressure_alert > 0)
+		throw_alert("pressure", /atom/movable/screen/alert/highpressure, pressure_alert)
+	else if(pressure_alert < 0)
+		throw_alert("pressure", /atom/movable/screen/alert/lowpressure, -pressure_alert)
+	else
+		clear_alert("pressure")
+
+/mob/living/carbon/proc/is_skip_breathe()
+	return !loc || (flags & GODMODE)
+
+/mob/living/carbon/proc/is_cant_breathe()
+	return handle_drowning() || health < 0
+
+/mob/living/carbon/proc/get_breath_from_internal(volume_needed)
+	return null
+
+/mob/living/carbon/proc/handle_external_pre_breathing(datum/gas_mixture/breath)
+	if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
+		var/obj/item/clothing/mask/gas/G = wear_mask
+		for(var/g in  G.filter)
+			if(breath.gas[g])
+				breath.gas[g] -= breath.gas[g] * G.gas_filter_strength
+
+		breath.update_values()
+
+/mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
+	if(breath.temperature > BODYTEMP_HEAT_DAMAGE_LIMIT) // Hot air hurts :(
+		if(prob(20))
+			to_chat(src, "<span class='warning'>You feel a searing heat in your lungs!</span>")
+		temp_alert = 1
+
+/mob/living/carbon/proc/handle_suffocating(datum/gas_mixture/breath)
+	adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+
+/mob/living/carbon/proc/handle_breath(datum/gas_mixture/breath)
+	var/const/safe_pressure_min = 16 // Minimum safe partial pressure of breathable gas in kPa
+	var/const/safe_exhaled_max = 10 // Yes it's an arbitrary value who cares?
+	var/const/safe_toxins_max = 0.005
+	var/const/SA_para_min = 1
+	var/const/SA_sleep_min = 5
+	var/const/SA_giggle_min = 0.15
+
+	var/list/breath_gas = breath.gas
+	var/breath_total_moles = breath.total_moles
+
+	var/inhale_type = inhale_gas
+	var/exhale_type = exhale_gas
+	var/poison_type = poison_gas
+
+	var/inhaling = breath_gas[inhale_type]
+	var/exhaling = breath_gas[exhale_type]
+	var/poison = breath_gas[poison_type]
+	var/sleeping_agent = breath_gas["sleeping_agent"]
+
+	var/inhaled_gas_used = 0
+	var/breath_pressure = breath.return_pressure()
+
+	var/inhale_pp = inhaling ? (inhaling / breath_total_moles) * breath_pressure : 0
+	var/exhaled_pp = exhaling ? (exhaling / breath_total_moles) * breath_pressure : 0
+	var/poison_pp = poison ? (poison / breath_total_moles) * breath_pressure : 0
+	var/SA_pp = sleeping_agent ? (sleeping_agent / breath_total_moles) * breath_pressure : 0
+
+	if(inhale_pp < safe_pressure_min)
+		if(prob(20))
+			emote("gasp")
+		if(inhale_pp > 0)
+			var/ratio = inhale_pp / safe_pressure_min
+
+			// Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
+			adjustOxyLoss(HUMAN_MAX_OXYLOSS * (1 - ratio))
+			inhaled_gas_used = inhaling * ratio * BREATH_USED_PART
+		else
+			adjustOxyLoss(HUMAN_MAX_OXYLOSS)
+
+		inhale_alert = TRUE
+	else
+		// We're in safe limits
+		adjustOxyLoss(-5)
+		inhaled_gas_used = inhaling * BREATH_USED_PART
+
+	breath.adjust_gas(inhale_type, -inhaled_gas_used, update = FALSE) //update afterwards
+
+	if(exhale_type)
+		breath.adjust_gas_temp(exhale_type, inhaled_gas_used, bodytemperature, update = FALSE) //update afterwards
+
+		// CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2,
+		// this will hurt you, but only once per 4 ticks, instead of once per tick.
+
+		if(exhaled_pp > safe_exhaled_max)
+
+			// If it's the first breath with too much CO2 in it, lets start a counter,
+			// then have them pass out after 12s or so.
+			if(!co2overloadtime)
+				co2overloadtime = world.time
+			else if(world.time - co2overloadtime > 120)
+				// Lets hurt em a little, let them know we mean business
+				Paralyse(3)
+				adjustOxyLoss(3)
+
+				// They've been in here 30s now, lets start to kill them for their own good!
+				if(world.time - co2overloadtime > 300)
+					adjustOxyLoss(8)
+
+			// Lets give them some chance to know somethings not right though I guess.
+			if(prob(20))
+				emote("cough")
+		else
+			co2overloadtime = null
+
+	// Too much poison in the air.
+	if(poison_pp > safe_toxins_max)
+		var/ratio = (poison / safe_toxins_max) * 10
+		if(reagents)
+			reagents.add_reagent("toxin", clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
+		breath.adjust_gas(poison_type, -poison * BREATH_USED_PART, update = FALSE) //update after
+		poison_alert = TRUE
+
+	// If there's some other shit in the air lets deal with it here.
+	if(sleeping_agent)
+		// Enough to make us paralysed for a bit
+		if(SA_pp > SA_para_min)
+			// 3 gives them one second to wake up and run away a bit!
+			Paralyse(3)
+
+			// Enough to make us sleep as well
+			if(SA_pp > SA_sleep_min)
+				Sleeping(10 SECONDS)
+
+		// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+		else if(SA_pp > SA_giggle_min)
+			if(prob(20))
+				emote(pick("giggle", "laugh"))
+
+		breath.adjust_gas("sleeping_agent", -sleeping_agent * BREATH_USED_PART, update = FALSE) //update after
+
+	handle_breath_temperature(breath)
+
+	breath.update_values()
+
+/mob/living/carbon/proc/breathe()
+	if(is_skip_breathe())
+		return null
+
+	//First, check if we can breathe at all
+	if(suiciding || is_cant_breathe())
+		losebreath = max(2, losebreath + 1)
+
+	if(losebreath > 0) //Suffocating so do not take a breath
+		losebreath--
+		if (prob(10)) //Gasp per 10 ticks? Sounds about right.
+			emote("gasp")
+		if(isobj(loc))
+			var/obj/location_as_object = loc
+			location_as_object.handle_internal_lifeform(src, 0)
+
+		handle_suffocating()
+		inhale_alert = TRUE
+		return null
+
+	//First, check for air from internal atmosphere (using an air tank and mask generally)
+	var/datum/gas_mixture/breath = get_breath_from_internal(BREATH_VOLUME)
+
+	if(breath)
+		if(isobj(loc)) //Still give containing object the chance to interact
+			var/obj/location_as_object = loc
+			location_as_object.handle_internal_lifeform(src, 0)
+	else //No breath from internal atmosphere so get breath from location
+		if(isobj(loc))
+			var/obj/location_as_object = loc
+			breath = location_as_object.handle_internal_lifeform(src, BREATH_MOLES)
+		else if(isturf(loc))
+			var/datum/gas_mixture/environment = loc.return_air()
+			breath = loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
+
+			if(!(wear_mask && (wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)))
+				for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
+					if(smoke.reagents.total_volume)
+						smoke.reagents.reaction(src, INGEST)
+						spawn(5)
+							if(smoke)
+								smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
+						break
+
+		handle_external_pre_breathing(breath)
+
+	if(!breath || (breath.total_moles <= 0))
+		handle_suffocating()
+		inhale_alert = TRUE
+		return
+
+	breath.volume = BREATH_VOLUME
+
+	handle_breath(breath)
+
+	loc.assume_air(breath)
+
+	return breath
+
+/mob/living/carbon/calculate_affecting_pressure(pressure)
+	return pressure
+
+/mob/living/carbon/proc/stabilize_body_temperature()
+	adjust_bodytemperature((BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR)
+
+/mob/living/carbon/handle_environment(datum/gas_mixture/environment)
+	if(stat != DEAD) // lets put this shit somewhere here
+		stabilize_body_temperature()
+
+	if(!environment)
+		return
+
+	var/pressure = environment.return_pressure()
+	var/temperature = environment.temperature
+	var/affecting_temp = (temperature - bodytemperature) * environment.return_relative_density()
+	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
+
+	if(!on_fire)
+		adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
+
+	if(flags & GODMODE)
+		return
+
+	switch(bodytemperature)
+		if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
+			temp_alert = 2
+			adjustFireLoss(HEAT_DAMAGE_LEVEL_2)
+		if(-INFINITY to BODYTEMP_COLD_DAMAGE_LIMIT)
+			temp_alert = -2
+			adjustFireLoss(COLD_DAMAGE_LEVEL_2)
+
+	//Account for massive pressure differences
+	switch(adjusted_pressure)
+		if(HAZARD_HIGH_PRESSURE to INFINITY)
+			adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 ) * PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
+			pressure_alert = 2
+		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
+			pressure_alert = 1
+		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
+			pressure_alert = -1
+		if(-INFINITY to HAZARD_LOW_PRESSURE)
+			if( !(COLD_RESISTANCE in mutations) )
+				adjustBruteLoss( LOW_PRESSURE_DAMAGE )
+				pressure_alert = -2
+			else
+				pressure_alert = -1
+
 /mob/living/carbon/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	var/turf/oldLoc = loc
+
 	. = ..()
-	if(.)
-		handle_phantom_move(NewLoc, Dir)
-		if(nutrition && stat != DEAD)
-			var/met_factor = get_metabolism_factor()
+
+	if(!. || ISDIAGONALDIR(Dir))
+		return .
+
+	handle_phantom_move(NewLoc, Dir)
+	if(nutrition && stat != DEAD)
+		var/met_factor = get_metabolism_factor()
+		nutrition -= met_factor * 0.01
+		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
+			var/pain = getHalLoss()
+			if(pain > 0)
+				nutrition -= met_factor * pain * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
+		if(m_intent == "run")
 			nutrition -= met_factor * 0.01
-			if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
-				var/pain = getHalLoss()
-				if(pain > 0)
-					nutrition -= met_factor * pain * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
-			if(m_intent == "run")
-				nutrition -= met_factor * 0.01
-		if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == "run" && bodytemperature <= 360)
-			bodytemperature += 2
+	if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == "run" && bodytemperature <= 360)
+		adjust_bodytemperature(2)
 
-		// Moving around increases germ_level faster
-		if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))
-			germ_level++
+	// Moving around increases germ_level faster
+	if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))
+		germ_level++
 
-		handle_rig_move(NewLoc, Dir)
+	handle_rig_move(NewLoc, Dir)
+
+	handle_footsteps(oldLoc, NewLoc, Dir)
+
+/mob/living/carbon/proc/handle_footsteps(turf/oldLoc, turf/newLoc, Dir)
+	if(lying && !crawling)
+		return
+
+	// check if oldLoc and newLoc are turfs and at least one doesn't have the NOBLOODY flag
+	if(!isturf(oldLoc) || !isturf(newLoc) || ((oldLoc.flags & NOBLOODY) && (newLoc.flags & NOBLOODY)))
+		return
+
+	// Tracking blood
+	var/list/bloodDNA = null
+	var/datum/dirt_cover/blooddatum
+	if(shoes)
+		var/obj/item/clothing/shoes/S = shoes
+		if(S.track_blood && S.blood_DNA)
+			bloodDNA   = S.blood_DNA
+			blooddatum = new/datum/dirt_cover(S.dirt_overlay)
+			S.track_blood--
+	else
+		if(track_blood && feet_blood_DNA)
+			bloodDNA   = feet_blood_DNA
+			blooddatum = new/datum/dirt_cover(feet_dirt_color)
+			track_blood--
+
+	if (bloodDNA)
+		oldLoc.AddTracks(src, bloodDNA, 0, Dir, blooddatum) // from
+		newLoc.AddTracks(src, bloodDNA, Dir, 0, blooddatum) // to
 
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(isessence(user))
@@ -49,30 +356,9 @@
 			return
 		var/tile = get_turf(get_step(essence.phantom, direction))
 		if(get_dist(tile, essence.host) < 8)
-			essence.phantom.dir = direction
+			essence.phantom.set_dir(direction)
 			essence.phantom.loc = tile
 		return
-	if(user in src.stomach_contents)
-		if(prob(40))
-			audible_message("<span class='rose'>You hear something rumbling inside [src]'s stomach...</span>", hearing_distance = 4)
-			var/obj/item/I = user.get_active_hand()
-			if(I && I.force)
-				var/d = rand(round(I.force / 4), I.force)
-				if(istype(src, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = src
-					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
-					BP.take_damage(d, 0)
-					H.updatehealth()
-				else
-					src.take_bodypart_damage(d)
-				visible_message("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>")
-				playsound(user, 'sound/effects/attackblob.ogg', VOL_EFFECTS_MASTER)
-
-				if(prob(src.getBruteLoss() - 50))
-					for(var/atom/movable/A in stomach_contents)
-						A.loc = loc
-						stomach_contents.Remove(A)
-					src.gib()
 
 /mob/living/carbon/attack_animal(mob/living/simple_animal/attacker)
 	if(istype(attacker, /mob/living/simple_animal/headcrab))
@@ -83,25 +369,27 @@
 
 /mob/living/carbon/gib()
 	for(var/mob/M in src)
-		if(M in src.stomach_contents)
-			src.stomach_contents.Remove(M)
 		M.loc = src.loc
 		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
 	. = ..()
 
 /mob/living/carbon/MiddleClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
-		..()
+	if(mind)
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+		if(stat == CONSCIOUS && C && C.chosen_sting && (iscarbon(A)) && (A != src))
+			next_click = world.time + 5
+			C.chosen_sting.try_to_sting(src, A)
+		else
+			..()
 
 /mob/living/carbon/AltClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
-		next_click = world.time + 5
-		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else
-		..()
+	if(mind)
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+		if(stat == CONSCIOUS && C && C.chosen_sting && (iscarbon(A)) && (A != src))
+			next_click = world.time + 5
+			C.chosen_sting.try_to_sting(src, A)
+		else
+			..()
 
 /mob/living/carbon/attack_unarmed(mob/living/carbon/attacker)
 	if(istype(attacker))
@@ -112,15 +400,8 @@
 				spread = FALSE
 
 		if(spread)
-			attacker.spread_disease_to(src, "Contact")
+			attacker.spread_disease_to(src, DISEASE_SPREAD_CONTACT)
 
-			for(var/datum/disease/D in viruses)
-				if(D.spread_by_touch())
-					attacker.contract_disease(D, 0, 1, CONTACT_HANDS)
-
-			for(var/datum/disease/D in attacker.viruses)
-				if(D.spread_by_touch())
-					contract_disease(D, 0, 1, CONTACT_HANDS)
 	return ..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
@@ -136,7 +417,11 @@
 	shock_damage *= siemens_coeff
 	if(shock_damage<1)
 		return 0
-	apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
+	if(def_zone)
+		apply_damage(shock_damage, BURN, def_zone, used_weapon = "Electrocution")
+	else
+		take_overall_damage(burn = shock_damage, used_weapon = "Electrocution")
+
 	if(shock_damage > 10)
 		playsound(src, 'sound/effects/electric_shock.ogg', VOL_EFFECTS_MASTER, tesla_shock ? 10 : 50, FALSE) //because Tesla proc causes a lot of sounds
 		visible_message(
@@ -145,7 +430,7 @@
 			"<span class='rose'>You hear a heavy electrical crack.</span>" \
 		)
 		make_jittery(1000)
-		stuttering += 2
+		AdjustStuttering(2)
 		if(!tesla_shock || (tesla_shock && siemens_coeff > 0.5))
 			Stun(2)
 		spawn(20)
@@ -163,29 +448,23 @@
 	return shock_damage
 
 
-/mob/living/carbon/proc/swap_hand()
-	var/obj/item/item_in_hand = src.get_active_hand()
-	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		if(istype(item_in_hand, /obj/item/weapon/twohanded) || istype(item_in_hand, /obj/item/weapon/gun/projectile/automatic/l6_saw))	//OOP? Generics? Hue hue hue hue ...
-			if(item_in_hand:wielded)
-				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
-				return
-		else if(istype(item_in_hand, /obj/item/weapon/gun/energy/sniperrifle))
-			var/obj/item/weapon/gun/energy/sniperrifle/s = item_in_hand
-			if(s.zoom)
-				s.toggle_zoom()
-		else if(istype(item_in_hand, /obj/item/weapon/gun/energy/pyrometer/ce))
-			var/obj/item/weapon/gun/energy/pyrometer/ce/C = item_in_hand
-			if(C.zoomed)
-				C.toggle_zoom()
+/mob/living/carbon/swap_hand()
+	var/obj/item/item_in_hand = get_active_hand()
+	if(SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, item_in_hand) & COMPONENT_BLOCK_SWAP)
+		to_chat(src, "<span class='warning'>Your other hand is too busy holding [item_in_hand].</span>")
+		return
+
+	if(item_in_hand)
+		SEND_SIGNAL(item_in_hand, COMSIG_ITEM_BECOME_INACTIVE, src)
+
 	src.hand = !( src.hand )
-	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
-		if(hand)	//This being 1 means the left hand is in use
-			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
-		else
-			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
+	item_in_hand = get_active_hand()
+	if(item_in_hand)
+		SEND_SIGNAL(item_in_hand, COMSIG_ITEM_BECOME_ACTIVE, src)
+	if(hud_used && l_hand_hud_object && r_hand_hud_object)
+		l_hand_hud_object.update_icon(src)
+		r_hand_hud_object.update_icon(src)
+
 	/*if (!( src.hand ))
 		src.hands.dir = NORTH
 	else
@@ -211,9 +490,9 @@
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if (src.health >= config.health_threshold_crit)
-		if(src == M && istype(src, /mob/living/carbon/human))
+		if(src == M && ishuman(src))
 			var/mob/living/carbon/human/H = src
-			src.visible_message( \
+			visible_message( \
 				text("<span class='notice'>[src] examines [].</span>",src.gender==MALE?"himself":"herself"), \
 				"<span class='notice'>You check yourself for injuries.</span>" \
 				)
@@ -258,7 +537,7 @@
 			if(roundstart_quirks.len)
 				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
 
-			if(H.species && (H.species.name == SKELETON) && !H.w_uniform && !H.wear_suit)
+			if((isskeleton(H)) && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
 			var/t_him = "it"
@@ -266,19 +545,23 @@
 				t_him = "him"
 			else if (src.gender == FEMALE)
 				t_him = "her"
-			if (istype(src,/mob/living/carbon/human) && src:w_uniform)
+			if (ishuman(src) && src:w_uniform)
 				var/mob/living/carbon/human/H = src
 				H.w_uniform.add_fingerprint(M)
 
-			if(lying)
+			if(on_fire && M != src)
+				fire_stacks--
+				M.visible_message("<span class='danger'>[M] trying to extinguish [src].</span>", \
+								"<span class='rose'>You trying to extinguish [src].</span>")
+				if(fire_stacks <= 0)
+					ExtinguishMob()
+					M.visible_message("<span class='danger'>[M] has successfully extinguished [src]!</span>", \
+									"<span class='notice'>You extinguish [src]!</span>")
+			else if(lying)
 				AdjustSleeping(-10 SECONDS)
 				if (!M.lying)
-					if(!IsSleeping())
-						src.resting = 0
-					if(src.crawling)
-						if(crawl_can_use() && src.pass_flags & PASSCRAWL)
-							src.pass_flags ^= PASSCRAWL
-							src.crawling = 0
+					if((!IsSleeping()) || ((src.crawling) && (crawl_can_use())))
+						SetCrawling(FALSE)
 					M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
 				else
@@ -289,7 +572,7 @@
 						M.visible_message("<span class='notice'>[M] gently touches [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You gently touch [src] trying to wake [t_him] up!</span>")
 			else switch(M.get_targetzone())
-				if(BP_R_ARM || BP_L_ARM)
+				if(BP_R_ARM, BP_L_ARM)
 					M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
 									"<span class='notice'>You shake [src]'s hand.</span>", )
 				if(BP_HEAD)
@@ -311,56 +594,10 @@
 
 			playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 
-/mob/living/carbon/proc/crawl_can_use()
-	var/turf/T = get_turf(src)
-	if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) || (locate(/obj/structure/plasticflaps) in T))
-		return FALSE
-	return TRUE
-
-/mob/living/carbon/var/crawl_getup = FALSE
-/mob/living/carbon/proc/crawl()
-	set name = "Crawl"
-	set category = "IC"
-
-	if(incapacitated() || (status_flags & FAKEDEATH) || buckled)
-		return
-	if(crawl_getup)
-		return
-
-	if(crawling)
-		crawl_getup = TRUE
-		if(do_after(src, 10, target = src))
-			crawl_getup = FALSE
-			if(!crawl_can_use())
-				playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-				if(ishuman(src))
-					var/mob/living/carbon/human/H = src
-					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-					BP.take_damage(5, used_weapon = "Facepalm") // what?.. that guy was insane anyway.
-				else
-					take_overall_damage(5, used_weapon = "Table")
-				Stun(1)
-				to_chat(src, "<span class='danger'>Ouch!</span>")
-				return
-			layer = 4.0
-		else
-			crawl_getup = FALSE
-			return
-	else
-		if(!crawl_can_use())
-			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
-			return
-
-	pass_flags ^= PASSCRAWL
-	crawling = !crawling
-
-	to_chat(src, "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>")
-	update_canmove()
-
 /mob/living/carbon/proc/eyecheck()
 	return 0
 
-/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
+/mob/living/carbon/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
 	if(eyecheck() < intensity || override_blindness_check)
 		return ..()
 
@@ -392,22 +629,15 @@
 
 
 //Throwing stuff
+/mob/living/carbon/throw_mode_off()
+	..()
+	if(throw_icon) //in case we don't have the HUD and we use the hotkey
+		throw_icon.icon_state = "act_throw_off"
 
-/mob/living/carbon/proc/toggle_throw_mode()
-	if (src.in_throw_mode)
-		throw_mode_off()
-	else
-		throw_mode_on()
-
-/mob/living/carbon/proc/throw_mode_off()
-	src.in_throw_mode = 0
-	if(src.throw_icon) //in case we don't have the HUD and we use the hotkey
-		src.throw_icon.icon_state = "act_throw_off"
-
-/mob/living/carbon/proc/throw_mode_on()
-	src.in_throw_mode = 1
-	if(src.throw_icon)
-		src.throw_icon.icon_state = "act_throw_on"
+/mob/living/carbon/throw_mode_on()
+	..()
+	if(throw_icon)
+		throw_icon.icon_state = "act_throw_on"
 
 /mob/proc/throw_item(atom/target)
 	return
@@ -416,39 +646,36 @@
 	throw_mode_off()
 	if(usr.incapacitated() || !target)
 		return
-	if(target.type == /obj/screen)
+	if(target.type == /atom/movable/screen)
 		return
 
 	var/atom/movable/item = get_active_hand()
 	if(!item)
 		return
 
-	if(istype(item, /obj/item))
-		var/obj/item/W = item
-		if(!W.canremove || W.flags & NODROP)
+	item = item.be_thrown(src, target)
+
+	if(!item)
+		return // Some items may not want to be thrown
+
+	if(item.loc == src)
+		// Holder and the mob holding it.
+		item.jump_from_contents(rec_level=2)
+		if(!isturf(item.loc))
 			return
-
-	if (istype(item, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = item
-		item = G.throw_held() //throw the person instead of the grab
-		qdel(G)
-		if(isliving(item))
-			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
-			var/turf/end_T = get_turf(target)
-			if(start_T && end_T)
-				var/mob/living/M = item
-				var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
-				var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
-
-				M.log_combat(usr, "thrown from [start_T_descriptor] with the target [end_T_descriptor]")
-
-	if(!item) return //Grab processing has a chance of returning null
-
-	src.remove_from_mob(item)
+		if(!remove_from_mob(item, item.loc))
+			return
 
 	//actually throw it!
 	if (item)
-		src.visible_message("<span class='rose'>[src] has thrown [item].</span>")
+		visible_message("<span class='rose'>[src] has thrown [item].</span>")
+
+		if(isitem(item))
+			var/obj/item/O = item
+			if(O.w_class >= SIZE_SMALL)
+				playsound(loc, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
+
+		do_attack_animation(target, has_effect = FALSE)
 
 		newtonian_move(get_dir(target, src))
 
@@ -549,18 +776,22 @@
 	if(IsSleeping())
 		to_chat(src, "<span class='rose'>You are already sleeping</span>")
 		return
-	if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
+	if(tgui_alert(src, "You sure you want to sleep for a while?","Sleep", list("Yes","No")) == "Yes")
 		SetSleeping(40 SECONDS) //Short nap
+
+//Check for brain worms in head.
+/mob/proc/has_brain_worms()
+	for(var/mob/living/simple_animal/borer/B in contents)
+		return B
+	return null
 
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
-
 	set category = "Borer"
 	set name = "Release Control"
 	set desc = "Release control of your host's body."
 
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
-
 	if(!B)
 		return
 
@@ -568,7 +799,8 @@
 		to_chat(src, "<span class='danger'>You withdraw your probosci, releasing control of [B.host_brain].</span>")
 		to_chat(B.host_brain, "<span class='danger'>Your vision swims as the alien parasite releases control of your body.</span>")
 		B.ckey = ckey
-		B.controlling = 0
+		B.controlling = FALSE
+
 	if(B.host_brain.ckey)
 		ckey = B.host_brain.ckey
 		B.host_brain.ckey = null
@@ -579,6 +811,8 @@
 	verbs -= /mob/living/carbon/proc/punish_host
 	verbs -= /mob/living/carbon/proc/spawn_larvae
 
+	med_hud_set_status()
+
 //Brain slug proc for tormenting the host.
 /mob/living/carbon/proc/punish_host()
 	set category = "Borer"
@@ -586,7 +820,6 @@
 	set desc = "Punish your host with agony."
 
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
-
 	if(!B)
 		return
 
@@ -594,35 +827,25 @@
 		to_chat(src, "<span class='danger'>You send a punishing spike of psychic agony lancing into your host's brain.</span>")
 		to_chat(B.host_brain, "<span class='danger'><FONT size=3>Horrific, burning agony lances through you, ripping a soundless scream from your trapped mind!</FONT></span>")
 
-//Check for brain worms in head.
-/mob/proc/has_brain_worms()
-
-	for(var/I in contents)
-		if(istype(I,/mob/living/simple_animal/borer))
-			return I
-
-	return 0
-
 /mob/living/carbon/proc/spawn_larvae()
 	set category = "Borer"
-	set name = "Reproduce"
+	set name = "Reproduce(100)"
 	set desc = "Spawn several young."
 
 	var/mob/living/simple_animal/borer/B = has_brain_worms()
-
 	if(!B)
 		return
 
-	if(B.chemicals >= 100)
-		to_chat(src, "<span class='danger'>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</span>")
-		B.chemicals -= 100
-		B.has_reproduced = 1
-
-		vomit()
-		new/mob/living/simple_animal/borer(get_turf(src), TRUE)
-	else
+	if(B.chemicals < 100)
 		to_chat(src, "<span class='info'>You do not have enough chemicals stored to reproduce.</span>")
 		return
+
+	to_chat(src, "<span class='danger'>Your host twitches and quivers as you rapdly excrete several larvae from your sluglike body.</span>")
+	B.chemicals -= 100
+	B.has_reproduced = TRUE
+
+	vomit()
+	new /mob/living/simple_animal/borer(loc, TRUE, B.generation + 1)
 
 /mob/living/carbon/proc/uncuff()
 	if(handcuffed)
@@ -732,10 +955,13 @@
 	return is_nude(maximum_coverage = 20) && !istype(head, /obj/item/clothing/head/bearpelt) && !istype(head, /obj/item/weapon/holder)
 
 /mob/living/carbon/proc/handle_phantom_move(NewLoc, direct)
-	if(!mind || !mind.changeling || length(mind.changeling.essences) < 1)
+	if(!ischangeling(src))
+		return
+	var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+	if(length(C.essences) < 1)
 		return
 	if(loc == NewLoc)
-		for(var/mob/living/parasite/essence/essence in mind.changeling.essences)
+		for(var/mob/living/parasite/essence/essence in C.essences)
 			if(essence.phantom.showed)
 				essence.phantom.loc = get_turf(get_step(essence.phantom, direct))
 
@@ -745,7 +971,7 @@
 			return
 		if(istype(thing, /mob/living/carbon/monkey/diona))
 			return
-	status_flags &= ~PASSEMOTES
+	remove_status_flags(PASSEMOTES)
 
 /mob/living/carbon/proc/can_eat(flags = 255) //I don't know how and why does it work
 	return TRUE
@@ -754,10 +980,17 @@
 	return
 
 /mob/living/carbon/get_nutrition()
-	return nutrition + (reagents.get_reagent("nutriment") + reagents.get_reagent("plantmatter") + reagents.get_reagent("protein") + reagents.get_reagent("dairy")) * 2.5 // We multiply by this "magic" number, because all of these are equal to 2.5 nutrition.
+	return nutrition + (reagents.get_reagent_amount("nutriment") \
+					+ reagents.get_reagent_amount("plantmatter") \
+					+ reagents.get_reagent_amount("protein") \
+					+ reagents.get_reagent_amount("dairy") \
+				) * 8 // We multiply by this "magic" number, because all of these are equal to 8 nutrition.
 
 /mob/living/carbon/get_metabolism_factor()
-	. = metabolism_factor
+	var/met = metabolism_factor.Get()
+	if(met < 0)
+		met = 0
+	return met
 
 
 /mob/living/carbon/proc/perform_av(mob/living/carbon/human/user) // don't forget to INVOKE_ASYNC this proc if sleep is a problem.
@@ -813,14 +1046,14 @@
 			item_to_add = null
 
 		if(item_to_add && get_slot_ref(slot))
-			if(item_to_add.w_class > ITEM_SIZE_SMALL)
+			if(item_to_add.w_class > SIZE_TINY)
 				to_chat(usr, "<span class='red'>[src] is already wearing something. You need empty hand to take that off (or holding small item).</span>")
 				return
 			item_to_add = null
 
 		stripPanelUnEquip(usr, slot, item_to_add)
 
-		if(usr.machine == src && in_range(src, usr))
+		if(usr.machine == src && Adjacent(usr))
 			show_inv(usr)
 		else
 			usr << browse(null, "window=mob\ref[src]")
@@ -838,25 +1071,23 @@
 				if (internal)
 					internal.add_fingerprint(usr)
 					internal = null
-					if (internals)
-						internals.icon_state = "internal0"
+					internals?.update_icon(src)
 					internalsound = 'sound/misc/internaloff.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = C
 						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 							internalsound = 'sound/misc/riginternaloff.ogg'
-					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
+					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 				else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
 					internal = ITEM
 					internal.add_fingerprint(usr)
-					if (internals)
-						internals.icon_state = "internal1"
+					internals?.update_icon(src)
 					internalsound = 'sound/misc/internalon.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = C
 						if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 							internalsound = 'sound/misc/riginternalon.ogg'
-					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, -5)
+					playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 
 					if(ITEM.air_contents && length(ITEM.air_contents.gas))
 						gas_log_string = " (gases:"
@@ -898,6 +1129,7 @@
 					break
 			R.reaction(loc)
 			adjustToxLoss(-toxins_puked)
+			AdjustDrunkenness(-toxins_puked * 2)
 
 /mob/living/carbon/update_stat()
 	if(stat == DEAD)
@@ -907,13 +1139,68 @@
 		blinded = TRUE
 	med_hud_set_status()
 
+/mob/living/carbon/update_sight()
+	if(!..())
+		return FALSE
+
+	if(blinded)
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_MINIMUM
+		set_EyesVision("greyscale")
+		return FALSE
+
+	sight = initial(sight)
+	lighting_alpha = initial(lighting_alpha)
+
+	var/datum/species/S = all_species[get_species()]
+	if(S)
+		see_in_dark = S.darksight
+
+	see_invisible = see_in_dark > 2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
+
+	if(changeling_aug)
+		sight |= SEE_MOBS
+		see_in_dark = 8
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+	if(XRAY in mutations)
+		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+		see_in_dark = 8
+		if(!druggy)
+			see_invisible = SEE_INVISIBLE_LEVEL_TWO
+
+	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
+		var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
+		switch(O.mode)
+			if(0)
+				O.togge_huds()
+				if(!druggy)
+					lighting_alpha = initial(lighting_alpha)
+					see_invisible = SEE_INVISIBLE_LIVING
+			if(1)
+				see_in_dark = 8
+				if(!druggy)
+					lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+			if(2)
+				sight |= SEE_MOBS
+				see_in_dark = initial(see_in_dark)
+				if(!druggy)
+					lighting_alpha = initial(lighting_alpha)
+					see_invisible = SEE_INVISIBLE_LEVEL_TWO
+			if(3)
+				sight |= SEE_TURFS
+				if(!druggy)
+					lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+
+	return TRUE
+
 /mob/living/carbon/get_unarmed_attack()
 	var/retDam = 2
 	var/retDamType = BRUTE
 	var/retFlags = 0
 	var/retVerb = "attacks"
 	var/retSound = null
-	var/retMissSound = 'sound/weapons/punchmiss.ogg'
+	var/retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
 
 	var/specie = get_species()
 	var/datum/species/S = all_species[specie]
@@ -928,7 +1215,7 @@
 		if(length(attack.attack_sound))
 			retSound = pick(attack.attack_sound)
 
-		retMissSound = 'sound/weapons/punchmiss.ogg'
+		retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
 
 	if(HULK in mutations)
 		retDam += 4
@@ -943,3 +1230,77 @@
 			return FALSE
 
 	return ..()
+
+/mob/living/carbon/accent_sounds(txt, datum/language/speaking)
+	if(speaking && (speaking.flags & SIGNLANG))
+		return txt
+
+	var/datum/species/S = all_species[get_species()]
+	if(S && S.flags[IS_SYNTHETIC])
+		return txt
+
+	for(var/datum/language/L as anything in languages)
+		if(L == speaking)
+			continue
+
+		if(languages[L] != LANGUAGE_NATIVE)
+			continue
+
+		txt = L.accentuate(txt, speaking)
+	return txt
+
+
+/**
+ * Get the insulation that is appropriate to the temperature you're being exposed to.
+ * All clothing, natural insulation, and traits are combined returning a single value.
+ *
+ * required temperature The Temperature that you're being exposed to
+ *
+ * return the percentage of protection as a value from 0 - 1
+**/
+/mob/living/carbon/proc/get_insulation_protection(temperature)
+	return (temperature > bodytemperature) ? get_heat_protection(temperature) : get_cold_protection(temperature)
+
+/// This returns the percentage of protection from heat as a value from 0 - 1
+/// temperature is the temperature you're being exposed to
+/mob/living/carbon/proc/get_heat_protection(temperature)
+	return 0
+
+/// This returns the percentage of protection from cold as a value from 0 - 1
+/// temperature is the temperature you're being exposed to
+/mob/living/carbon/proc/get_cold_protection(temperature)
+	return 0
+
+
+/**
+ * Adjust the body temperature of a mob
+ * expanded for carbon mobs allowing the use of insulation and change steps
+ *
+ * vars:
+ * * amount The amount of degrees to change body temperature by
+ * * min_temp (optional) The minimum body temperature after adjustment
+ * * max_temp (optional) The maximum body temperature after adjustment
+ * * use_insulation (optional) modifies the amount based on the amount of insulation the mob has
+ * * use_steps (optional) Use the body temp divisors and max change rates
+ * * capped (optional) default True used to cap step mode
+ */
+/mob/living/carbon/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY, use_insulation=FALSE, use_steps=FALSE, capped=TRUE)
+	// apply insulation to the amount of change
+	if(use_insulation)
+		var/protection = get_insulation_protection(bodytemperature + amount)
+		if(protection >= 1)
+			return
+		amount *= (1 - protection)
+
+	// Use the bodytemp divisors to get the change step, with max step size
+	if(use_steps)
+		if(amount > 0)
+			amount /=  BODYTEMP_HEAT_DIVISOR
+			if(capped)
+				amount = min(amount, BODYTEMP_HEATING_MAX)
+		else
+			amount /=  BODYTEMP_COLD_DIVISOR
+			if(capped)
+				amount = max(amount, BODYTEMP_COOLING_MAX)
+
+	..(amount, min_temp, max_temp)

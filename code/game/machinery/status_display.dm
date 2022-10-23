@@ -15,8 +15,8 @@
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	name = "status display"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	var/mode = 5	// 0 = Blank
@@ -176,7 +176,7 @@
 
 /obj/machinery/status_display/proc/get_SSshuttle_timer()
 	if(SSshuttle.moving)
-		var/timeleft = round((SSshuttle.eta_timeofday - world.timeofday) / 10,1)
+		var/timeleft = round((SSshuttle.eta_timeofday - REALTIMEOFDAY) / 10,1)
 		if(timeleft < 0)
 			return "Late"
 		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
@@ -216,13 +216,22 @@
 
 	update()
 
+/obj/machinery/status_display/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 2)
+	new /obj/item/weapon/shard(loc)
+	new /obj/item/weapon/shard(loc)
+	// new /obj/item/wallframe/status_display(loc) // TODO add?
+	..()
+
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	name = "AI display"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 
 	var/mode = 0	// 0 = Blank
 					// 1 = AI emoticon

@@ -335,7 +335,7 @@
 /obj/item/rig_module/simple_ai/advanced/on_rigdamage(mob/living/carbon/human/H, rig_damage)
 	if(rig_damage < 7)
 		return
-	var/obj/item/rig_module/selfrepair/repair_module = holder.find_module(/obj/item/rig_module/selfrepair/)
+	var/obj/item/rig_module/selfrepair/repair_module = holder.find_module(/obj/item/rig_module/selfrepair)
 	if(repair_module && !repair_module.active)
 		repair_module.activate(forced = TRUE)
 
@@ -343,7 +343,7 @@
 	if(H.stat == DEAD)
 		return
 
-	var/obj/item/rig_module/chem_dispenser/chem_disp = holder.find_module(/obj/item/rig_module/chem_dispenser/)
+	var/obj/item/rig_module/chem_dispenser/chem_disp = holder.find_module(/obj/item/rig_module/chem_dispenser)
 	if(!chem_disp)
 		return
 

@@ -30,7 +30,7 @@
 	stat = DEAD
 	visible_message("<span class='warning'><B>[src] shudders violently and explodes!</B></span>","<span class='warning'><B>You feel your body rupture!</B></span>")
 	explosion(get_turf(loc), -1, -1, 3, 5)
-	src.gib()
+	gib()
 	return
 
 /mob/living/simple_animal/vox/armalis/attackby(obj/item/O, mob/user)
@@ -88,12 +88,12 @@
 
 	var/mob/M = targets[target]
 
-	if(istype(M, /mob/dead/observer) || M.stat == DEAD)
+	if(isobserver(M) || M.stat == DEAD)
 		to_chat(src, "Not even the armalis can speak to the dead.")
 		return
 
 	to_chat(M, "<span class='notice'>Like lead slabs crashing into the ocean, alien thoughts drop into your mind: [text]</span>")
-	if(istype(M,/mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.species.name == VOX)
 			return
@@ -107,19 +107,17 @@
 
 /mob/living/simple_animal/vox/armalis/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/vox/armalis_armour))
-		user.drop_item()
+		user.drop_from_inventory(O, src)
 		armour = O
 		speed = 1
 		maxHealth += 200
 		health += 200
-		O.loc = src
 		visible_message("<span class='notice'>[src] is quickly outfitted in [O] by [user].</span>","<span class='notice'>You quickly outfit [src] in [O].</span>")
 		regenerate_icons()
 		return
 	if(istype(O,/obj/item/vox/armalis_amp))
-		user.drop_item()
+		user.drop_from_inventory(O, src)
 		amp = O
-		O.loc = src
 		visible_message("<span class='notice'>[src] is quickly outfitted in [O] by [user].</span>","<span class='notice'>You quickly outfit [src] in [O].</span>")
 		regenerate_icons()
 		return

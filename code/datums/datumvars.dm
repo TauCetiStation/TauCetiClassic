@@ -6,10 +6,11 @@
 /client/proc/debug_variables(datum/D in world)
 	set category = "Debug"
 	set name = "View Variables"
-	//set src in world
+	debug_variables_browse(D, usr)
 
-	if(!usr.client || !usr.client.holder)
-		to_chat(usr, "<span class='warning'>You need to be an administrator to access this.</span>")
+/client/proc/debug_variables_browse(datum/D, mob/user, last_search = "")
+	if(!user.client || !user.client.holder)
+		to_chat(user, "<span class='warning'>You need to be an administrator to access this.</span>")
 		return
 
 	if(!check_rights(R_DEBUG|R_VAREDIT|R_LOG)) // Since client.holder still doesn't mean we have permissions...
@@ -19,7 +20,7 @@
 	var/body = ""
 
 	if(!D)	return
-	if(istype(D, /atom))
+	if(isatom(D))
 		var/atom/A = D
 		title = "[A.name] (\ref[A]) = [A.type]"
 
@@ -30,7 +31,7 @@
 
 	var/sprite
 
-	if(istype(D,/atom))
+	if(isatom(D))
 		var/atom/AT = D
 		if(AT.icon && AT.icon_state)
 			sprite = 1
@@ -165,13 +166,13 @@
 	body += "<div align='center'><table width='100%'><tr><td width='50%'>"
 
 	if(sprite)
-		body += "<table align='center' width='100%'><tr><td>[bicon(D, use_class = 0)]</td><td>"
+		body += "<table align='center' width='100%'><tr><td>[bicon(D, css = null)]</td><td>"
 	else
 		body += "<table align='center' width='100%'><tr><td>"
 
 	body += "<div align='center'>"
 
-	if(istype(D,/atom))
+	if(isatom(D))
 		var/atom/A = D
 		if(isliving(A))
 			body += "<a href='?_src_=vars;rename=\ref[D]'><b>[D]</b></a>"
@@ -202,14 +203,7 @@
 
 	body += "</tr></td></table>"
 
-	var/formatted_type = text("[D.type]")
-	if(length(formatted_type) > 25)
-		var/middle_point = length(formatted_type) / 2
-		var/splitpoint = findtext(formatted_type,"/",middle_point)
-		if(splitpoint)
-			formatted_type = "[copytext(formatted_type,1,splitpoint)]<br>[copytext(formatted_type,splitpoint)]"
-		else
-			formatted_type = "Type too long" //No suitable splitpoint (/) found.
+	var/formatted_type = replacetext("[D.type]", "/", "<wbr>/")
 
 	body += "<div align='center'><b><font size='1'>[formatted_type]</font></b>"
 
@@ -220,7 +214,7 @@
 
 	body += "</div></td>"
 
-	body += "<td width='50%'><div align='center'><a href='?_src_=vars;datumrefresh=\ref[D]'>Refresh</a>"
+	body += "<td width='50%'><div align='center'><a href='' onclick=\"this.href='?_src_=vars;datumrefresh=\ref[D];filter='+document.getElementById('filter').value\">Refresh</a>"
 
 	//if(ismob(D))
 	//	body += "<br><a href='?_src_=vars;mob_player_panel=\ref[D]'>Show player panel</a></div></td></tr></table></div><hr>"
@@ -253,6 +247,7 @@
 	if(ismob(D))
 		body += "<option value='?_src_=vars;give_spell=\ref[D]'>Give Spell</option>"
 		body += "<option value='?_src_=vars;give_disease2=\ref[D]'>Give Disease</option>"
+		body += "<option value='?_src_=vars;give_religion=\ref[D]'>Give Religion</option>"
 		if(isliving(D))
 			body += "<option value='?_src_=vars;give_status_effect=\ref[D]'>Give Status Effect</option>"
 		body += "<option value='?_src_=vars;give_disease=\ref[D]'>Give TG-style Disease</option>"
@@ -267,15 +262,14 @@
 		body += "<option value='?_src_=vars;regenerateicons=\ref[D]'>Regenerate Icons</option>"
 		body += "<option value='?_src_=vars;addlanguage=\ref[D]'>Add Language</option>"
 		body += "<option value='?_src_=vars;remlanguage=\ref[D]'>Remove Language</option>"
-
-		body += "<option value='?_src_=vars;fix_nano=\ref[D]'>Fix NanoUI</option>"
+		if(ishuman(D) || istype(D, /mob/dead/new_player))
+			body += "<option value='?_src_=vars;give_quality=\ref[D]'>Give Quality</option>"
 
 		body += "<option value='?_src_=vars;addverb=\ref[D]'>Add Verb</option>"
 		body += "<option value='?_src_=vars;remverb=\ref[D]'>Remove Verb</option>"
 		body += "<option value='?_src_=vars;setckey=\ref[D]'>Set Client</option>"
 		if(ishuman(D))
 			body += "<option value>---</option>"
-			body += "<option value='?_src_=vars;setmutantrace=\ref[D]'>Set Mutantrace</option>"
 			body += "<option value='?_src_=vars;setspecies=\ref[D]'>Set Species</option>"
 			body += "<option value='?_src_=vars;makeai=\ref[D]'>Make AI</option>"
 			body += "<option value='?_src_=vars;makerobot=\ref[D]'>Make cyborg</option>"
@@ -288,11 +282,18 @@
 		body += "<option value='?_src_=vars;dust=\ref[D]'>Turn to dust</option>"
 	if(isatom(D))
 		body += "<option value='?_src_=vars;delthis=\ref[D]'>Delete this object</option>"
+		body += "<option value='?_src_=vars;edit_filters=\ref[D]'>Edit Filters</option>"
+		body += "<option value='?_src_=vars;edit_particles=\ref[D]'>Edit Particles</option>"
 	if(isobj(D))
 		body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
 	if(isobj(D) || ismob(D) || isturf(D))
 		body += "<option value='?_src_=vars;explode=\ref[D]'>Trigger explosion</option>"
 		body += "<option value='?_src_=vars;emp=\ref[D]'>Trigger EM pulse</option>"
+	if(istype(D, /datum/reagents))
+		body += "<option value='?_src_=vars;action=addreag;reagents=\ref[D]'>Add reagent</option>"
+		body += "<option value='?_src_=vars;action=remreag;reagents=\ref[D]'>Remove reagent</option>"
+		body += "<option value='?_src_=vars;action=isoreag;reagents=\ref[D]'>Isolate reagent</option>"
+		body += "<option value='?_src_=vars;action=clearreags;reagents=\ref[D]'>Clear reagents</option>"
 
 	body += "</select></form>"
 
@@ -302,7 +303,7 @@
 	body += "<b>C</b> - Change, asks you for the var type first.<br>"
 	body += "<b>M</b> - Mass modify: changes this variable for all objects of this type.</font><br>"
 
-	body += "<hr><table width='100%'><tr><td width='20%'><div align='center'><b>Search:</b></div></td><td width='80%'><input type='text' id='filter' name='filter_text' value='' style='width:100%;'></td></tr></table><hr>"
+	body += "<hr><table width='100%'><tr><td width='20%'><div align='center'><b>Search:</b></div></td><td width='80%'><input type='text' id='filter' name='filter_text' value='[last_search]' style='width:100%;'></td></tr></table><hr>"
 
 	body += "<ol id='vars'>"
 
@@ -346,7 +347,7 @@ body
 
 	html += "</body></html>"
 
-	usr << browse(html, "window=variables\ref[D];size=475x650")
+	user << browse(html, "window=variables\ref[D];size=475x650")
 
 	return
 
@@ -366,14 +367,14 @@ body
 
 	else if (isicon(value))
 		#ifdef VARSICON
-		html += "[name] = /icon (<span class='value'>[value]</span>) [bicon(value, use_class = 0)]"
+		html += "[name] = /icon (<span class='value'>[value]</span>) [bicon(value, css = null)]"
 		#else
 		html += "[name] = /icon (<span class='value'>[value]</span>)"
 		#endif
 
 	else if (istype(value, /image))
 		#ifdef VARSICON
-		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>) [bicon(value, use_class = 0)]"
+		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>) [bicon(value, css = null)]"
 		#else
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = /image (<span class='value'>[value]</span>)"
 		#endif
@@ -385,7 +386,7 @@ body
 		var/datum/D = value
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [D.type]"
 
-	else if (istype(value, /client))
+	else if (isclient(value))
 		var/client/C = value
 		html += "<a href='?_src_=vars;Vars=\ref[value]'>[name] \ref[value]</a> = [C] [C.type]"
 //
@@ -426,7 +427,7 @@ body
 	if(href_list["Vars"])
 		if(!check_rights(R_DEBUG|R_VAREDIT|R_LOG))
 			return
-		debug_variables(locate(href_list["Vars"]))
+		debug_variables_browse(locate(href_list["Vars"]), usr)
 
 	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
 	else if(href_list["rename"])
@@ -451,7 +452,7 @@ body
 			return
 
 		var/D = locate(href_list["datumedit"])
-		if(!istype(D,/datum) && !istype(D,/client))
+		if(!istype(D,/datum) && !isclient(D))
 			to_chat(usr, "This can only be used on instances of types /client or /datum")
 			return
 
@@ -462,7 +463,7 @@ body
 			return
 
 		var/D = locate(href_list["datumchange"])
-		if(!istype(D,/datum) && !istype(D,/client))
+		if(!istype(D,/datum) && !isclient(D))
 			to_chat(usr, "This can only be used on instances of types /client or /datum")
 			return
 
@@ -488,7 +489,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.holder.show_player_panel(M)
+		holder.show_player_panel(M)
 		href_list["datumrefresh"] = href_list["mob_player_panel"]
 
 	else if(href_list["give_spell"])
@@ -500,20 +501,20 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.give_spell(M)
+		give_spell(M)
 		href_list["datumrefresh"] = href_list["give_spell"]
 
-	else if(href_list["give_disease"])
+	else if(href_list["give_religion"])
 		if(!check_rights(R_ADMIN|R_FUN))
 			return
 
-		var/mob/M = locate(href_list["give_disease"])
+		var/mob/M = locate(href_list["give_religion"])
 		if(!istype(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.give_disease(M)
-		href_list["datumrefresh"] = href_list["give_spell"]
+		global.chaplain_religion.add_member(M, HOLY_ROLE_HIGHPRIEST)
+		href_list["datumrefresh"] = href_list["give_religion"]
 
 	else if(href_list["give_disease2"])
 		if(!check_rights(R_ADMIN|R_FUN))
@@ -524,7 +525,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.give_disease2(M)
+		give_disease2(M)
 		href_list["datumrefresh"] = href_list["give_spell"]
 
 	else if(href_list["give_status_effect"])
@@ -551,7 +552,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.cmd_admin_ninjafy(M)
+		cmd_admin_ninjafy(M)
 		href_list["datumrefresh"] = href_list["ninja"]
 
 	else if(href_list["godmode"])
@@ -563,7 +564,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.cmd_admin_godmode(M)
+		cmd_admin_godmode(M)
 		href_list["datumrefresh"] = href_list["godmode"]
 
 	else if(href_list["gib"])
@@ -575,7 +576,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.cmd_admin_gib(M)
+		cmd_admin_gib(M)
 
 	else if(href_list["dust"])
 		if(!check_rights(R_ADMIN|R_FUN))
@@ -586,7 +587,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		src.cmd_admin_dust(M)
+		cmd_admin_dust(M)
 
 	else if(href_list["build_mode"])
 		if(!check_rights(R_BUILDMODE))
@@ -624,6 +625,18 @@ body
 		if(usr.client)
 			usr.client.cmd_assume_direct_control(M)
 
+	else if(href_list["edit_filters"])
+		if(!check_rights(R_DEBUG|R_VAREDIT))
+			return
+		var/atom/A = locate(href_list["edit_filters"])
+		open_filter_editor(A)
+
+	else if(href_list["edit_particles"])
+		if(!check_rights(R_DEBUG|R_VAREDIT))
+			return
+		var/atom/A = locate(href_list["edit_particles"])
+		open_particles_editor(A)
+
 	else if(href_list["delthis"])
 		//Rights check are in cmd_admin_delete() proc
 		var/atom/A = locate(href_list["delthis"])
@@ -638,14 +651,14 @@ body
 			to_chat(usr, "This can only be used on instances of type /obj")
 			return
 
-		var/action_type = alert("Strict type ([O.type]) or type and all subtypes?",,"Strict type","Type and subtypes","Cancel")
+		var/action_type = tgui_alert(usr, "Strict type ([O.type]) or type and all subtypes?",, list("Strict type","Type and subtypes","Cancel"))
 		if(action_type == "Cancel" || !action_type)
 			return
 
-		if(alert("Are you really sure you want to delete all objects of type [O.type]?",,"Yes","No") != "Yes")
+		if(tgui_alert(usr, "Are you really sure you want to delete all objects of type [O.type]?",, list("Yes","No")) != "Yes")
 			return
 
-		if(alert("Second confirmation required. Delete?",,"Yes","No") != "Yes")
+		if(tgui_alert(usr, "Second confirmation required. Delete?",, list("Yes","No")) != "Yes")
 			return
 
 		var/O_type = O.type
@@ -684,7 +697,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /obj, /mob and /turf")
 			return
 
-		src.cmd_admin_explosion(A)
+		cmd_admin_explosion(A)
 		href_list["datumrefresh"] = href_list["explode"]
 
 	else if(href_list["emp"])
@@ -696,7 +709,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /obj, /mob and /turf")
 			return
 
-		src.cmd_admin_emp(A)
+		cmd_admin_emp(A)
 		href_list["datumrefresh"] = href_list["emp"]
 
 	else if(href_list["mark_object"])
@@ -721,8 +734,8 @@ body
 			return
 
 		switch(href_list["rotatedir"])
-			if("right")	A.dir = turn(A.dir, -45)
-			if("left")	A.dir = turn(A.dir, 45)
+			if("right")	A.set_dir(turn(A.dir, -45))
+			if("left")	A.set_dir(turn(A.dir, 45))
 		href_list["datumrefresh"] = href_list["rotatedatum"]
 
 	else if(href_list["makemonkey"])
@@ -734,7 +747,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+		if(tgui_alert(usr, "Confirm mob type change?",, list("Transform","Cancel")) != "Transform")	return
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
 			return
@@ -749,7 +762,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+		if(tgui_alert(usr, "Confirm mob type change?",, list("Transform","Cancel")) != "Transform")	return
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
 			return
@@ -764,7 +777,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+		if(tgui_alert(usr, "Confirm mob type change?",, list("Transform","Cancel")) != "Transform")	return
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
 			return
@@ -779,7 +792,7 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+		if(tgui_alert(usr, "Confirm mob type change?",, list("Transform","Cancel")) != "Transform")	return
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
 			return
@@ -837,33 +850,11 @@ body
 			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 			return
 
-		if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")	return
+		if(tgui_alert(usr, "Confirm mob type change?",, list("Transform","Cancel")) != "Transform")	return
 		if(!H)
 			to_chat(usr, "Mob doesn't exist anymore")
 			return
 		holder.Topic(href, list("makeai"=href_list["makeai"]))
-
-	else if(href_list["setmutantrace"])
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/mob/living/carbon/human/H = locate(href_list["setmutantrace"])
-		if(!istype(H))
-			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
-			return
-
-		var/new_mutantrace = input("Please choose a new mutantrace","Mutantrace",null) as null|anything in list("NONE","adamantine","golem","shadow","shadowling","slime")
-		switch(new_mutantrace)
-			if(null)
-				return
-			if("NONE")
-				new_mutantrace = ""
-		if(!H)
-			to_chat(usr, "Mob doesn't exist anymore")
-			return
-		if(H.dna)
-			H.dna.mutantrace = new_mutantrace
-			H.update_mutantrace()
 
 	else if(href_list["setspecies"])
 		if(!check_rights(R_SPAWN))
@@ -885,6 +876,28 @@ body
 			H.regenerate_icons()
 		else
 			to_chat(usr, "Failed! Something went wrong.")
+
+	else if(href_list["give_quality"])
+		if(!check_rights(R_VAREDIT))
+			return
+
+		var/mob/M = locate(href_list["give_quality"])
+
+		var/quality_name = input("Please choose a quality.", "Choose quality", null) as null|anything in SSqualities.qualities_by_name
+		if(!quality_name)
+			return
+
+		if(QDELETED(M))
+			return
+
+		var/datum/quality/Q = SSqualities.qualities_by_name[quality_name]
+
+		if(ishuman(M))
+			SSqualities.force_give_quality(M, Q, usr)
+		else if(istype(M, /mob/dead/new_player) && M.client)
+			SSqualities.force_register_client(M.client, Q)
+		else
+			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 
 	else if(href_list["addlanguage"])
 		if(!check_rights(R_VAREDIT))
@@ -979,23 +992,6 @@ body
 		else
 			H.verbs -= verb
 
-
-	else if(href_list["fix_nano"])
-		if(!check_rights(R_DEBUG))
-			return
-
-		var/mob/H = locate(href_list["fix_nano"])
-
-		if(!istype(H) || !H.client)
-			to_chat(usr, "This can only be done on mobs with clients")
-			return
-
-		H.client.reload_nanoui_resources()
-
-		to_chat(usr, "Resource files sent")
-		log_admin("[key_name(usr)] resent the NanoUI resource files to [key_name(H)] ")
-
-
 	else if(href_list["regenerateicons"])
 		if(!check_rights(0))
 			return
@@ -1043,7 +1039,7 @@ body
 
 		var/mob/C = locate(href_list["setckey"])
 		if(C.ckey && C.ckey[1] != "@")
-			if(alert("This mob already controlled by [C.ckey]. Are you sure you want to continue?",,"Cancel","Continue") != "Continue")
+			if(tgui_alert(usr, "This mob already controlled by [C.ckey]. Are you sure you want to continue?",, list("Cancel","Continue")) != "Continue")
 				return
 
 		var/list/clients_list = clients + "Cancel"
@@ -1060,6 +1056,38 @@ body
 		var/datum/DAT = locate(href_list["datumrefresh"])
 		if(!istype(DAT, /datum))
 			return
-		src.debug_variables(DAT)
-
+		var/last_search = href_list["filter"] ? href_list["filter"] : ""
+		debug_variables_browse(DAT, usr, last_search)
+	else if(href_list["reagents"])
+		if(!check_rights(R_DEBUG|R_ADMIN|R_FUN))
+			return
+		var/datum/reagents/R = locate(href_list["reagents"])
+		var/list/current_ids = list()
+		for(var/datum/reagent/reag in R.reagent_list)
+			current_ids += reag.id
+		switch(href_list["action"])
+			if("addreag")
+				var/reagent_id = input(usr, "Reagent ID to add:", "Add Reagent") as null|anything in chemical_reagents_list
+				if(!reagent_id)
+					return
+				var/reagent_amt = input(usr, "Reagent amount to add:", "Add Reagent") as num|null
+				if(!reagent_amt)
+					return
+				R.add_reagent(reagent_id, reagent_amt)
+			if("remreag")
+				var/reagent_id = input(usr, "Reagent ID to remove:", "Remove Reagent") as null|anything in current_ids
+				if(!reagent_id)
+					return
+				var/reagent_amt = input(usr, "Reagent amount to remove:", "Remove Reagent", R.get_reagent_amount(reagent_id)) as num|null
+				if(!reagent_amt)
+					return
+				R.remove_reagent(reagent_id, reagent_amt)
+			if("isoreag")
+				var/reagent_id = input(usr, "Reagent ID to isolate:", "Isolate Reagent") as null|anything in current_ids
+				if(!reagent_id)
+					return
+				R.isolate_reagent(reagent_id)
+			if("clearreags")
+				if(tgui_alert(usr, "Are you sure you want to clear reagents?", "Clear Reagents", list("Yes", "No")) == "Yes")
+					R.clear_reagents()
 	return

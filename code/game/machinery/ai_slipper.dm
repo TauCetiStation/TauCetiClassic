@@ -4,7 +4,7 @@
 	icon_state = "motion3"
 	layer = 3
 	plane = FLOOR_PLANE
-	anchored = 1.0
+	anchored = TRUE
 	var/uses = 20
 	var/disabled = 1
 	var/lethal = 0
@@ -21,22 +21,42 @@
 		if( powered() )
 			stat &= ~NOPOWER
 		else
-			icon_state = "motion0"
 			stat |= NOPOWER
+			update_icon()
 	update_power_use()
 
-/obj/machinery/ai_slipper/proc/setState(enabled, uses)
-	src.disabled = disabled
-	src.uses = uses
-	src.power_change()
+/obj/machinery/ai_slipper/update_icon()
+	if(stat)
+		icon_state = "motion0"
+	else
+		icon_state = disabled ? "motion0" : "motion3"
+
+/obj/machinery/ai_slipper/AICtrlClick()
+	toggle_on()
+
+/obj/machinery/ai_slipper/proc/toggle_on()
+	disabled = !disabled
+	update_icon()
+
+/obj/machinery/ai_slipper/AIAltClick()
+	activate()
+
+/obj/machinery/ai_slipper/proc/activate()
+	if(cooldown_on || disabled)
+		return
+	new /obj/effect/effect/foam(loc)
+	uses--
+	cooldown_on = 1
+	cooldown_time = world.timeofday + 100
+	slip_process()
 
 /obj/machinery/ai_slipper/attackby(obj/item/weapon/W, mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (istype(user, /mob/living/silicon))
-		return src.attack_hand(user)
+	if (issilicon(user))
+		return attack_hand(user)
 	else // trying to unlock the interface
-		if (src.allowed(usr))
+		if (allowed(usr))
 			locked = !locked
 			to_chat(user, "You [ locked ? "lock" : "unlock"] the device.")
 			if (locked)
@@ -45,7 +65,7 @@
 					user << browse(null, "window=ai_slipper")
 			else
 				if (user.machine==src)
-					src.attack_hand(usr)
+					attack_hand(usr)
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 			return
@@ -77,17 +97,10 @@
 		to_chat(usr, "Control panel is locked!")
 		return FALSE
 	if (href_list["toggleOn"])
-		src.disabled = !src.disabled
-		icon_state = src.disabled? "motion0":"motion3"
+		toggle_on()
 	else if (href_list["toggleUse"])
-		if(cooldown_on || disabled)
-			return FALSE
-		else
-			new /obj/effect/effect/foam(src.loc)
-			src.uses--
-			cooldown_on = 1
-			cooldown_time = world.timeofday + 100
-			slip_process()
+		activate()
+
 	updateUsrDialog()
 
 /obj/machinery/ai_slipper/proc/slip_process()
@@ -104,5 +117,5 @@
 		return
 	if (uses >= 0)
 		cooldown_on = 0
-	src.power_change()
+	power_change()
 	return

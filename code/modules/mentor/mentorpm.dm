@@ -3,7 +3,7 @@
 		to_chat(src, "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>")
 		return
 
-	if(!istype(C,/client))
+	if(!isclient(C))
 		if(holder)
 			to_chat(src, "<font color='red'>Error: Private-Message: Client not found.</font>")
 		else
@@ -64,7 +64,7 @@
 
 	//play the recieving admin the adminhelp sound (if they have them enabled)
 	//non-admins shouldn't be able to disable this
-	C.mob.playsound_local(null, 'sound/effects/adminhelp.ogg', VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
+	C.mob.playsound_local(null, C.bwoink_sound, VOL_NOTIFICATIONS, vary = FALSE, ignore_environment = TRUE)
 
 	log_admin("PM: [key_name(src)]->[key_name(C)]: [msg]")
 	world.send2bridge(
@@ -75,7 +75,7 @@
 	)
 
 	//we don't use message_admins here because the sender/receiver might get it too
-	for(var/client/X in admins)
+	for(var/client/X as anything in admins)
 		//check client/X is an admin and isn't the sender or recipient
 		if(X == C || X == src)
 			continue

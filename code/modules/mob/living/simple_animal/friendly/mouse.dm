@@ -11,7 +11,7 @@
 	emote_hear = list("squeeks","squeaks","squiks")
 	emote_see = list("runs in a circle", "shakes", "scritches at something")
 	pass_flags = PASSTABLE | PASSMOB
-	small = TRUE
+	w_class = SIZE_MINUSCULE
 	speak_chance = 1
 	melee_damage = 0
 	turns_per_move = 8
@@ -32,6 +32,9 @@
 	universal_understand = 1
 	holder_type = /obj/item/weapon/holder/mouse
 	ventcrawler = 2
+	faction = "untouchable"
+	var/changes_color = TRUE
+	var/can_emote_snuffles = TRUE
 
 	has_head = TRUE
 	has_arm = TRUE
@@ -39,21 +42,20 @@
 
 /mob/living/simple_animal/mouse/Life()
 	..()
-	if(!stat && prob(speak_chance))
+	if(stat == CONSCIOUS && prob(speak_chance))
 		for(var/mob/M in view())
 			M.playsound_local(loc, 'sound/effects/mousesqueek.ogg', VOL_EFFECTS_MASTER)
-
-	if(!ckey && stat == CONSCIOUS && prob(0.5))
+	if(!ckey && stat == CONSCIOUS && prob(0.5) && can_emote_snuffles)
 		stat = UNCONSCIOUS
 		icon_state = "mouse_[body_color]_sleep"
-		wander = 0
+		wander = FALSE
 		speak_chance = 0
 		//snuffles
-	else if(stat == UNCONSCIOUS)
+	else if(stat == UNCONSCIOUS && can_emote_snuffles)
 		if(ckey || prob(1))
 			stat = CONSCIOUS
 			icon_state = "mouse_[body_color]"
-			wander = 1
+			wander = TRUE
 		else if(prob(5))
 			emote("snuffles")
 
@@ -61,6 +63,9 @@
 	. = ..()
 	name = "[name] ([rand(1, 1000)])"
 	real_name = name
+
+	if(!changes_color)
+		return
 
 	if(!body_color)
 		body_color = pick( list("brown","gray","white") )
@@ -77,16 +82,14 @@
 	icon_move = "mouse_[body_color]_move"
 	desc = "It's a small [body_color] rodent, often seen hiding in maintenance areas and making a nuisance of itself."
 
-
 /mob/living/simple_animal/mouse/proc/splat()
 	health = 0
 	stat = DEAD
-	icon_dead = "mouse_[body_color]_splat"
-	icon_state = "mouse_[body_color]_splat"
+	if(changes_color)
+		icon_dead = "mouse_[body_color]_splat"
+		icon_state = "mouse_[body_color]_splat"
 	layer = MOB_LAYER
 	timeofdeath = world.time
-	if(client)
-		client.time_died_as_mouse = world.time
 
 /mob/living/simple_animal/mouse/MouseDrop(atom/over_object)
 
@@ -157,7 +160,7 @@
 
 /mob/living/simple_animal/mouse/Crossed(atom/movable/AM)
 	if( ishuman(AM) )
-		if(!stat)
+		if(stat == CONSCIOUS)
 			var/mob/M = AM
 			to_chat(M, "<span class='notice'>[bicon(src)] Squeek!</span>")
 			playsound(src, 'sound/effects/mousesqueek.ogg', VOL_EFFECTS_MASTER)
@@ -165,8 +168,6 @@
 
 /mob/living/simple_animal/mouse/death()
 	layer = MOB_LAYER
-	if(client)
-		client.time_died_as_mouse = world.time
 	..()
 
 /*
@@ -189,9 +190,30 @@
 	holder_type = /obj/item/weapon/holder/mouse/brown
 
 //TOM IS ALIVE! SQUEEEEEEEE~K :)
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/mouse/brown/Tom, chief_animal_list)
 /mob/living/simple_animal/mouse/brown/Tom
 	name = "Tom"
 	desc = "Jerry the cat is not amused."
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "splats"
+
+
+/mob/living/simple_animal/mouse/rat
+	name = "Rat"
+	melee_damage = 2
+	ventcrawler = 0
+	icon_state = "rat"
+	icon_living = "rat"
+	icon_dead = "rat_dead"
+	icon_move = "rat"
+	desc = "It's a big pest mouse."
+	maxHealth = 50
+	health = 50
+	changes_color = FALSE
+	can_emote_snuffles = FALSE
+	holder_type = null
+
+/mob/living/simple_animal/mouse/rat/atom_init()
+	. = ..()
+	AddComponent(/datum/component/gnawing)

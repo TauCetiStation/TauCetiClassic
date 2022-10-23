@@ -7,7 +7,7 @@
 	icon_state = "forensic1"
 	var/amount = 20.0
 	var/list/stored = list()
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	item_state = "electronic"
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_FLAGS_BELT
@@ -64,8 +64,7 @@
 	return
 
 /obj/item/device/detective_scanner/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity) return
-	if(loc != user)
+	if(!proximity)
 		return
 	if(istype(target, /obj/machinery/computer/forensic_scanning)) //breaks shit.
 		return

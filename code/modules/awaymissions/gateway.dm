@@ -5,6 +5,7 @@
 	icon_state = "off"
 	density = TRUE
 	anchored = TRUE
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 	var/active = FALSE  // on away missions you should activate gateway from start, or place "awaystart" landmarks somewhere
 	var/hacked = FALSE
@@ -19,7 +20,7 @@
 	if(dir & SOUTH)
 		density = FALSE
 	if(!transit_loc)
-		transit_loc = locate(/obj/effect/landmark/gateway_transit) in landmarks_list
+		transit_loc = locate("landmark*Gateway transit")
 
 /obj/machinery/gateway/update_icon()
 	icon_state = active ? "on" : "off"
@@ -177,7 +178,7 @@
 				to_chat(M, "The gate has detected your exile implant and is blocking your entry.")
 				return
 
-	M.dir = SOUTH
+	M.set_dir(SOUTH)
 	enter_to_transit(M, get_step(destination.loc, SOUTH))
 	use_power(1000)
 
@@ -193,8 +194,10 @@
 	entered.forceMove(transit_loc.loc)
 	if(isliving(entered))
 		var/mob/living/M = entered
-		M.Stun(10, 1, 1, 1)
-		var/obj/screen/cinematic = new /obj/screen{icon='icons/effects/gateway_entry.dmi'; icon_state="entry"; layer=21; mouse_opacity=0; screen_loc="1,0"; } (src)
+		ADD_TRAIT(M, TRAIT_IMMOBILIZED, src)
+		ADD_TRAIT(M, TRAIT_INCAPACITATED, src)
+		M.update_canmove()
+		var/atom/movable/screen/cinematic = new /atom/movable/screen{icon='icons/effects/gateway_entry.dmi'; icon_state="entry"; layer=21; mouse_opacity = MOUSE_OPACITY_TRANSPARENT; screen_loc="1,0"; } (src)
 		if(M.client)
 			M.client.screen += cinematic
 			M.playsound_local(M.loc, 'sound/machines/gateway/gateway_transit.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -202,7 +205,7 @@
 	else
 		addtimer(CALLBACK(src, .proc/exit_from_transit, entered, target), 100)
 
-/obj/machinery/gateway/proc/exit_from_transit(atom/movable/entered, turf/target, obj/screen/cinematic)
+/obj/machinery/gateway/proc/exit_from_transit(atom/movable/entered, turf/target, atom/movable/screen/cinematic)
 	if(isliving(entered))
 		var/mob/living/M = entered
 		if(M.client)
@@ -211,12 +214,15 @@
 			sleep(12)
 			M.client.screen -= cinematic
 		qdel(cinematic)
-		M.AdjustStunned(-10, 1, 1, 0)
+		REMOVE_TRAIT(M, TRAIT_IMMOBILIZED, src)
+		REMOVE_TRAIT(M, TRAIT_INCAPACITATED, src)
+		M.update_canmove()
 	entered.freeze_movement = FALSE
 	entered.forceMove(target)
 	playsound(target, 'sound/machines/gateway/gateway_enter.ogg', VOL_EFFECTS_MASTER)
 
 /obj/effect/landmark/gateway_transit
+	name = "Gateway transit"
 
 /obj/effect/landmark/gateway_transit/Crossed(atom/movable/AM)
 	. = ..()

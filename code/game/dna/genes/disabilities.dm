@@ -25,7 +25,7 @@
 	var/deactivation_message=""
 
 /datum/dna/gene/disability/can_activate(mob/M,flags)
-	return 1 // Always set!
+	return TRUE // Always set!
 
 /datum/dna/gene/disability/activate(mob/M, connected, flags)
 	if(mutation && !(mutation in M.mutations))
@@ -118,12 +118,12 @@
 
 /datum/dna/gene/disability/blindness/OnMobLife(mob/living/carbon/human/M) //#Z2
 	if(!istype(M)) return
-	M.eye_blurry = 200
+	M.setBlurriness(200)
 	M.eye_blind = 200
 
 /datum/dna/gene/disability/blindness/deactivate(mob/living/carbon/human/M, connected, flags)
 	..(M,connected,flags)
-	M.eye_blurry = 0
+	M.setBlurriness(0)
 	M.eye_blind = 0 //##Z2
 
 /datum/dna/gene/disability/deaf

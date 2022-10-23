@@ -3,37 +3,37 @@
 /area/awaymission/jungle/temple_one
 	name = "temple"
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple1"
 
 /area/awaymission/jungle/temple_two
 	name = "temple"
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple2"
 
 /area/awaymission/jungle/temple_three
 	name = "temple"
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple3"
 
 /area/awaymission/jungle/temple_four
 	name = "temple"
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple4"
 
 /area/awaymission/jungle/temple_five
 	name = "temple"
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple5"
 
 /area/awaymission/jungle/temple_six
 	name = "temple"
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "temple6"
 
 /obj/effect/landmark/door_spawner
@@ -50,7 +50,7 @@
 /obj/effect/landmark/glowshroom_spawn/atom_init()
 	..()
 	if(prob(10))
-		new /obj/effect/glowshroom(loc)
+		new /obj/structure/glowshroom(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/loot_spawn
@@ -99,7 +99,7 @@
 				var/amount = rand(2,6)
 				var/quantity = rand(10,50)
 				var/list/possible_spawns = list()
-				for(var/bar_type in typesof(/obj/item/stack/sheet/mineral) - /obj/item/stack/sheet/mineral - /obj/item/stack/sheet/mineral/enruranium)
+				for(var/bar_type in subtypesof(/obj/item/stack/sheet/mineral) - /obj/item/stack/sheet/mineral/enruranium)
 					possible_spawns += bar_type
 
 				var/bar_type = pick(possible_spawns)
@@ -123,13 +123,13 @@
 				new /obj/effect/decal/remains/xeno(src.loc)
 		if("plants")
 			if(prob(25))
-				new /obj/effect/glowshroom(src.loc)
+				new /obj/structure/glowshroom(src.loc)
 			else if(prob(33))
 				new /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap(src.loc)
 			else if(prob(50))
 				new /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris(src.loc)
 		if("blob")
-			new /obj/effect/blob/core(src.loc)
+			new /obj/structure/blob/core(src.loc)
 		if("clothes")
 			var/obj/structure/closet/C = new(src.loc)
 			C.icon_state = "blue"
@@ -283,7 +283,7 @@
 
 /obj/effect/step_trigger/trap
 	name = "trap"
-	icon = 'code/modules/jungle/jungle.dmi'
+	icon = 'icons/misc/jungle.dmi'
 	icon_state = "trap"
 	var/trap_type
 
@@ -294,7 +294,7 @@
 /obj/effect/step_trigger/trap/atom_init_late()
 	trap_type = pick(50;"thrower","sawburst","poison_dart","flame_burst",10;"phoron_gas",5;"n2_gas")
 	if( (trap_type == "phoron_gas" || trap_type == "n2_gas") && prob(10))
-		new /obj/effect/glowshroom(src.loc)
+		new /obj/structure/glowshroom(src.loc)
 
 	//hint that this tile is dangerous
 	if(prob(90))
@@ -312,7 +312,7 @@
 			M.apply_damage(rand(5, 10), BRUTE, null, null, DAM_SHARP | DAM_EDGE)
 
 			var/atom/myloc = src.loc
-			var/image/flicker = image('code/modules/jungle/jungle.dmi',"sawblade")
+			var/image/flicker = image('icons/misc/jungle.dmi',"sawblade")
 			myloc.add_overlay(flicker)
 			spawn(8)
 				myloc.cut_overlay(flicker)
@@ -323,7 +323,7 @@
 			M.apply_damage(rand(5,10), TOX)
 
 			var/atom/myloc = src.loc
-			var/image/flicker = image('code/modules/jungle/jungle.dmi',"dart[rand(1,3)]")
+			var/image/flicker = image('icons/misc/jungle.dmi',"dart[rand(1,3)]")
 			myloc.add_overlay(flicker)
 			spawn(8)
 				myloc.cut_overlay(flicker)
@@ -334,7 +334,7 @@
 			M.apply_damage(rand(5,10), BURN)
 
 			var/atom/myloc = src.loc
-			var/image/flicker = image('code/modules/jungle/jungle.dmi',"flameburst")
+			var/image/flicker = image('icons/misc/jungle.dmi',"flameburst")
 			myloc.add_overlay(flicker)
 			spawn(8)
 				myloc.cut_overlay(flicker)
@@ -350,13 +350,13 @@
 			M.visible_message("<span class='warning'><b>The floor under [M] suddenly tips upward!</b></span>","<span class='warning'><b>The floor tips upward under you!</b></span>")
 
 			var/atom/myloc = src.loc
-			var/image/flicker = image('code/modules/jungle/jungle.dmi',"throw[throw_dir]")
+			var/image/flicker = image('icons/misc/jungle.dmi',"throw[throw_dir]")
 			myloc.add_overlay(flicker)
 			var/turf/my_turf = get_turf(loc)
 			if(!my_turf.density)
-				my_turf.density = 1
+				my_turf.density = TRUE
 				spawn(8)
-					my_turf.density = 0
+					my_turf.density = FALSE
 			spawn(8)
 				myloc.cut_overlay(flicker)
 				qdel(flicker)
@@ -374,7 +374,7 @@
 
 				var/predir = M.dir
 				step(M, throw_dir)
-				M.dir = predir
+				M.set_dir(predir)
 
 //gives turf a different description, to try and trick players
 /obj/effect/step_trigger/trap/fake
@@ -384,7 +384,7 @@
 /obj/effect/step_trigger/trap/fake/atom_init_late()
 	..()
 	if(prob(10))
-		new /obj/effect/glowshroom(src.loc)
+		new /obj/structure/glowshroom(src.loc)
 	if(prob(90))
 		var/turf/T = get_turf(src)
 		T.desc = pick("It looks a little dustier than the surrounding tiles.","It is somewhat ornate.","It looks a little darker than the surrounding tiles.")
@@ -401,5 +401,5 @@
 		..()
 	else
 		if(prob(10))
-			new /obj/effect/glowshroom(src.loc)
+			new /obj/structure/glowshroom(src.loc)
 		qdel(src)

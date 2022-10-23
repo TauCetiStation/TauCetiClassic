@@ -9,11 +9,15 @@
 	storedPlasma = 50
 	max_plasma = 50
 
-	density = 0
-	small = 1
+	speed = -1
+
+	density = FALSE
+	w_class = SIZE_SMALL
 	var/amount_grown = 0
 	var/max_grown = 200
 	var/time_of_birth
+	alien_spells = list(/obj/effect/proc_holder/spell/no_target/hide,
+						/obj/effect/proc_holder/spell/no_target/larva_evolve)
 
 	var/obj/item/clothing/suit/wear_suit = null		//TODO: necessary? Are they even used? ~Carn
 	var/obj/item/weapon/r_store = null
@@ -24,17 +28,33 @@
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
-	if(name == "alien larva")
-		name = "alien larva ([rand(1, 1000)])"
+	name = "alien larva ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
+	alien_list[ALIEN_LARVA] += src
 	. = ..()
+
+/mob/living/carbon/xenomorph/larva/Destroy()
+	alien_list[ALIEN_LARVA] -= src
+	return ..()
 
 //This needs to be fixed
 /mob/living/carbon/xenomorph/larva/Stat()
 	..()
+	stat(null)
 	if(statpanel("Status"))
-		stat(null, "Progress: [amount_grown]/[max_grown]")
+		if(istype(loc, /obj/item/alien_embryo))
+			var/obj/item/alien_embryo/E = loc
+			stat("Прогресс роста эмбриона: [E.growth_counter]/[FULL_EMBRYO_GROWTH]")
+		else
+			stat("Прогресс роста: [amount_grown]/[max_grown]")
+
+//If the player wants to become a ghost while in the embryo, then the control of the embryo must be transferred to the AI
+/mob/living/carbon/xenomorph/larva/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE)
+	if(istype(src.loc, /obj/item/alien_embryo))
+		var/obj/item/alien_embryo/E = loc
+		E.controlled_by_ai = TRUE
+	return ..()
 
 /mob/living/carbon/xenomorph/larva/toggle_throw_mode()
 	return
@@ -55,17 +75,5 @@
 /mob/living/carbon/xenomorph/larva/swap_hand()
 	return
 
-/mob/living/carbon/xenomorph/larva/movement_delay()
-	return (move_delay_add + config.alien_delay - 1)
-
 /mob/living/carbon/xenomorph/larva/can_pickup(obj/O)
-	return FALSE
-
-/mob/living/carbon/xenomorph/facehugger/is_usable_head(targetzone = null)
-	return TRUE
-
-/mob/living/carbon/xenomorph/facehugger/is_usable_arm(targetzone = null)
-	return FALSE
-
-/mob/living/carbon/xenomorph/facehugger/is_usable_leg(targetzone = null)
 	return FALSE

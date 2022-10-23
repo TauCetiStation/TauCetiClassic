@@ -34,9 +34,8 @@
 		else
 			var/obj/item/device/pda/P = usr.get_active_hand()
 			if(istype(P))
-				user.drop_item()
+				user.drop_from_inventory(P, src)
 				storedpda = P
-				P.loc = src
 				P.add_fingerprint(usr)
 				update_icon()
 	else

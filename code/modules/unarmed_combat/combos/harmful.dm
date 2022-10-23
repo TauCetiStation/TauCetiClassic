@@ -2,7 +2,7 @@
 	name = COMBO_UPPERCUT
 	desc = "A move where you lunge your fist from below into opponent's chin, knocking their helmet off."
 	combo_icon_state = "uppercut"
-	fullness_lose_on_execute = 60
+	cost = 60
 	combo_elements = list(INTENT_HARM, INTENT_HARM, INTENT_HARM, INTENT_HARM)
 
 	ignore_size = TRUE
@@ -18,6 +18,11 @@
 	require_arm_to_perform = TRUE
 
 	heavy_animation = TRUE
+
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 6,
+		BP_CHEST = 6,
+	)
 
 /datum/combat_combo/uppercut/animate_combo(mob/living/victim, mob/living/attacker)
 	var/saved_targetzone = attacker.get_targetzone()
@@ -116,7 +121,7 @@
 	name = COMBO_SUPLEX
 	desc = "A move that lifts your opponent up, only to then throw them to the ground, harshly."
 	combo_icon_state = "suplex"
-	fullness_lose_on_execute = 75
+	cost = 75
 	combo_elements = list(INTENT_HARM, INTENT_HARM, INTENT_HARM, INTENT_GRAB)
 
 	check_bodyarmor = TRUE
@@ -128,6 +133,15 @@
 	heavy_animation = TRUE
 
 	force_dam_type = BRUTE
+
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 7,
+		BP_INACTIVE_ARM = 7,
+		BP_CHEST = 7,
+		BP_GROIN = 7,
+		BP_L_LEG = 7,
+		BP_R_LEG = 7,
+	)
 
 /datum/combat_combo/suplex/animate_combo(mob/living/victim, mob/living/attacker)
 	var/saved_targetzone = attacker.get_targetzone()
@@ -191,6 +205,7 @@
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	victim.visible_message("<span class='danger'>[attacker] has thrown [victim] over their shoulder!</span>")
 
+	apply_effect(2, STUN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=1)
 	apply_effect(4, WEAKEN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=1)
 	apply_damage(23, victim, attacker, attack_obj=attack_obj)
 
@@ -204,7 +219,7 @@
 	name = COMBO_DIVING_ELBOW_DROP
 	desc = "A move in which you jump up high, and then fall onto your opponent, hitting them with your elbow."
 	combo_icon_state = "diving_elbow_drop"
-	fullness_lose_on_execute = 50
+	cost = 50
 	combo_elements = list(COMBO_SUPLEX, INTENT_HARM, INTENT_PUSH, INTENT_HARM)
 
 	// A body dropped on us! Armor ain't helping.
@@ -219,6 +234,12 @@
 	heavy_animation = TRUE
 
 	force_dam_type = BRUTE
+
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 5,
+		BP_INACTIVE_ARM = 5,
+		BP_CHEST = 5,
+	)
 
 /datum/combat_combo/diving_elbow_drop/animate_combo(mob/living/victim, mob/living/attacker)
 	var/list/attack_obj = attacker.get_unarmed_attack()
@@ -277,8 +298,9 @@
 	for(var/mob/living/L in victim.loc)
 		if(L == attacker)
 			continue
-		if(L.lying || L.resting || L.crawling)
+		if(L.lying || L.crawling)
 			apply_damage(28, L, attacker, attack_obj=attack_obj)
+		apply_effect(3, STUN, L, attacker, attack_obj=attack_obj, min_value = 1)
 		apply_effect(6, WEAKEN, L, attacker, attack_obj=attack_obj, min_value = 1)
 
 		event_log(L, attacker, "Diving Elbow Drop bypasser.")
@@ -297,7 +319,7 @@
 	name = COMBO_CHARGE
 	desc = "A move that grabs your opponent by the neck, and drives you into the closest obstacle, hitting them on it."
 	combo_icon_state = "charge"
-	fullness_lose_on_execute = 75
+	cost = 75
 	combo_elements = list(INTENT_GRAB, INTENT_HARM, INTENT_HARM, INTENT_GRAB)
 
 	check_bodyarmor = TRUE
@@ -307,6 +329,13 @@
 	heavy_animation = TRUE
 
 	force_dam_type = BRUTE
+
+	pump_bodyparts = list(
+		BP_L_LEG = 7,
+		BP_R_LEG = 7,
+		BP_GROIN = 7,
+		BP_CHEST = 7,
+	)
 
 /datum/combat_combo/charge/animate_combo(mob/living/victim, mob/living/attacker)
 	var/list/attack_obj = attacker.get_unarmed_attack()
@@ -347,6 +376,7 @@
 						playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 						victim.visible_message("<span class='danger'>[attacker] slams [victim] into an obstacle!</span>")
 
+					apply_effect(3, STUN, L, attacker, attack_obj=attack_obj, min_value=1)
 					apply_effect(6, WEAKEN, L, attacker, attack_obj=attack_obj, min_value=1)
 					apply_damage(33, L, attacker, attack_obj=attack_obj)
 				break try_steps_loop
@@ -366,7 +396,7 @@
 	name = COMBO_SPIN_THROW
 	desc = "A move in which you start to spin yourself up, and at a point you throw your opponent with immense force."
 	combo_icon_state = "spin_throw"
-	fullness_lose_on_execute = 50
+	cost = 50
 	combo_elements = list(INTENT_GRAB, INTENT_GRAB, INTENT_GRAB, INTENT_HARM)
 
 	// We threw a guy over 6 tiles distance. Armor probably ain't helping.
@@ -379,6 +409,15 @@
 	heavy_animation = TRUE
 
 	force_dam_type = BRUTE
+
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 5,
+		BP_INACTIVE_ARM = 5,
+		BP_CHEST = 5,
+		BP_GROIN = 5,
+		BP_L_LEG = 5,
+		BP_R_LEG = 5,
+	)
 
 /datum/combat_combo/spin_throw/animate_combo(mob/living/victim, mob/living/attacker)
 	var/list/attack_obj = attacker.get_unarmed_attack()
@@ -398,10 +437,13 @@
 					break grab_stages_loop
 
 				victim_G.adjust_position(adjust_time=0, force_loc = TRUE, force_dir = attacker.dir)
-				victim.Stun(max(0, 2 - victim.stunned))
+				victim.Stun(2)
 
 				if(!do_after(attacker, cur_spin_time, target = victim, progress = FALSE))
 					break grab_stages_loop
+
+			if(QDELETED(victim_G))
+				break grab_stages_loop
 
 			if(grab_stages != victim_G.state)
 				victim_G.set_state(grab_stages, adjust_time=0, force_loc = TRUE, force_dir = attacker.dir)
@@ -411,12 +453,12 @@
 				var/turf/target = get_turf(attacker)
 
 				var/turf/start_T = target
-				var/start_T_descriptor = "<font color='#6b5d00'>tile at [start_T.x], [start_T.y], [start_T.z] in area [get_area(start_T)]</font>"
+				var/start_T_descriptor = "<font color='#6b5d00'>tile at [COORD(start_T)] in area [get_area(start_T)]</font>"
 
 				target_search:
 					for(var/i in 1 to 7)
 						target = get_step(target, attacker.dir)
-						if(istype(target, /turf/simulated/wall))
+						if(iswallturf(target))
 							break target_search
 
 				if(!target || !victim_G)
@@ -432,11 +474,12 @@
 				attacker.newtonian_move(get_dir(target, attacker))
 
 				var/turf/end_T = target
-				var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
+				var/end_T_descriptor = "<font color='#6b4400'>tile at [COORD(end_T)] in area [get_area(end_T)]</font>"
 
 				M.log_combat(attacker, "throwm from [start_T_descriptor] with the target [end_T_descriptor]")
 
 				M.throw_at(target, 6, 8, attacker)
+				apply_effect(3, STUN,  M, attacker, attack_obj=attack_obj, min_value=1)
 				apply_effect(7, WEAKEN, M, attacker, attack_obj=attack_obj, min_value=1)
 
 				if(ishuman(src))

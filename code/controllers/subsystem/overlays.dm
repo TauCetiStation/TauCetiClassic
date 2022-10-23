@@ -1,9 +1,11 @@
 SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
-	flags = SS_TICKER
+
+	init_order = SS_INIT_ORDER_OVERLAY
 	wait = SS_WAIT_OVERLAYS
 	priority = SS_PRIORITY_OVERLAYS
-	init_order = SS_INIT_ORDER_OVERLAY
+
+	flags = SS_TICKER
 
 	var/list/queue = list()
 	var/list/stats = list()
@@ -35,6 +37,8 @@ SUBSYSTEM_DEF(overlays)
 		if(thing)
 			var/atom/A = thing
 			COMPILE_OVERLAYS(A)
+			UNSETEMPTY(A.add_overlays)
+			UNSETEMPTY(A.remove_overlays)
 		if(mc_check)
 			if(MC_TICK_CHECK)
 				break
@@ -99,9 +103,8 @@ SUBSYSTEM_DEF(overlays)
 #define QUEUE_FOR_COMPILE flags_2 |= OVERLAY_QUEUED_2; SSoverlays.queue += src;
 /atom/proc/cut_overlays()
 	LAZYINITLIST(remove_overlays)
-	LAZYINITLIST(add_overlays)
 	remove_overlays = overlays.Copy()
-	add_overlays.Cut()
+	add_overlays = null
 
 	//If not already queued for work and there are overlays to remove
 	if(NOT_QUEUED_ALREADY && remove_overlays.len)
@@ -111,7 +114,7 @@ SUBSYSTEM_DEF(overlays)
 	if(!overlays)
 		return
 	overlays = build_appearance_list(overlays)
-	LAZYINITLIST(add_overlays) //always initialized after this point
+	LAZYINITLIST(add_overlays)
 	LAZYINITLIST(remove_overlays)
 	var/a_len = add_overlays.len
 	var/r_len = remove_overlays.len
@@ -124,6 +127,7 @@ SUBSYSTEM_DEF(overlays)
 	//If not already queued and there is work to be done
 	if(NOT_QUEUED_ALREADY && (fa_len != a_len || fr_len != r_len))
 		QUEUE_FOR_COMPILE
+	UNSETEMPTY(add_overlays)
 
 /atom/proc/add_overlay(list/overlays)
 	if(!overlays)
@@ -148,7 +152,7 @@ SUBSYSTEM_DEF(overlays)
 	var/list/cached_other = other.overlays.Copy()
 	if(cached_other)
 		if(cut_old || !length(overlays))
-			remove_overlays = overlays
+			remove_overlays = overlays.Copy()
 		add_overlays = cached_other
 		if(NOT_QUEUED_ALREADY)
 			QUEUE_FOR_COMPILE

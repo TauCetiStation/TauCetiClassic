@@ -8,6 +8,7 @@
 	maxHealth = 300
 	health = 300
 	immune_to_ssd = 1
+	w_class = SIZE_MASSIVE
 
 	speak_emote = list("roars")
 	emote_hear = list("roars")
@@ -22,11 +23,10 @@
 
 	speed = 1
 	a_intent = INTENT_HARM
-	stop_automated_movement = 1
-	status_flags = CANPUSH
+	stop_automated_movement = TRUE
+	status_flags = NONE
 	universal_speak = 1
 	universal_understand = 1
-	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -44,6 +44,10 @@
 	has_head = TRUE
 	has_arm = TRUE
 	has_leg = TRUE
+
+/mob/living/simple_animal/hulk/atom_init()
+	attack_sound = SOUNDIN_PUNCH_HEAVY
+	. = ..()
 
 /mob/living/simple_animal/hulk/human
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/hulk_jump,
@@ -101,9 +105,8 @@
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
-	status_flags ^= CANPUSH
 	for(var/spell in hulk_powers)
-		spell_list += new spell(src)
+		AddSpell(new spell(src))
 
 /mob/living/simple_animal/hulk/unathi/Login()
 	..()
@@ -149,9 +152,8 @@
 
 		if(pressure <= 75)
 			if(prob(15))
-				emote("me",1,"gasps!")
+				emote("gasp")
 
-	weakened = 0
 	if(health > 0)
 		health = min(health + health_regen, maxHealth)
 	..()
@@ -172,7 +174,7 @@
 
 	for(var/mob/M in contents)
 		M.loc = src.loc
-		if(istype(M, /mob/living))
+		if(isliving(M))
 			var/mob/living/L = M
 			L.Paralyse(15)
 			L.update_canmove()
@@ -186,6 +188,7 @@
 /mob/living/simple_animal/hulk/MobBump(mob/M)
 	if(isliving(M) && !(istype(M, /mob/living/simple_animal/hulk) || issilicon(M)))
 		var/mob/living/L = M
+		L.Stun(1)
 		L.Weaken(3)
 		L.take_overall_damage(rand(4,12), 0)
 	return 0
@@ -199,6 +202,10 @@
 		else
 			msg += "<B>It looks severely dented!</B>\n"
 		msg += "</span>"
+
+	if(w_class)
+		msg += "It is a [get_size_flavor()] creature.\n"
+
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)
@@ -221,42 +228,37 @@
 		to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 		visible_message("<span class='warning'>[user] gently taps [src] with [O]. </span>")
 
-/mob/living/simple_animal/hulk/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/hulk/bullet_act(obj/item/projectile/P, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return
 
 	health -= P.agony / 10
 
-/mob/living/simple_animal/hulk/proc/attack_hulk(obj/machinery/door/D)
-	do_attack_animation(D)
-	SetNextMove(CLICK_CD_MELEE)
+/mob/living/simple_animal/hulk/UnarmedAttack(atom/A)
+	if(A.attack_hulk(src))
+		do_attack_animation(A)
+		SetNextMove(CLICK_CD_MELEE)
+		return
+	..()
 
-	if(istype(D,/obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/A = D
-		if(A.welded || A.locked)
-			if(hulk_scream(A, 75))
-				A.door_rupture(src)
-			return
-	if(istype(D,/obj/machinery/door/firedoor))
-		var/obj/machinery/door/firedoor/F = D
-		if(F.blocked)
-			if(hulk_scream(F))
-				qdel(F)
-				return
-	if(D.density)
-		to_chat(src, "<span class='userdanger'>You force your fingers between \
-		 the doors and begin to pry them open...</span>")
-		playsound(D, 'sound/machines/firedoor_open.ogg', VOL_EFFECTS_MASTER, 30, null, -4)
-		if (!is_busy() && do_after(src, 40, target = D) && D)
-			D.open(1)
+/mob/living/simple_animal/hulk/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
+
+	if(!. || moving_diagonally)
+		return .
+	
+	var/turf/T = loc
+
+	if(isturf(T) && !(T.flags & NOSTEPSOUND) && !lying)
+		playsound(T, 'sound/effects/hulk_step.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/proc/hulk_scream(obj/target, chance)
 	if(prob(chance))
 		visible_message("<span class='userdanger'>[src] has punched \the [target]!</span>",\
 		"<span class='userdanger'>You punch the [target]!</span>",\
 		"<span class='userdanger'>You feel some weird vibration!</span>")
-		playsound(target, 'sound/effects/hulk_hit_airlock.ogg', VOL_EFFECTS_MASTER, 75)
+		playsound(target, 'sound/effects/hulk_attack.ogg', VOL_EFFECTS_MASTER, 75)
 		return 0
 	else
 		say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))

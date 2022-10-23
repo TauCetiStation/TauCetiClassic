@@ -9,9 +9,7 @@
 	update_canmove()
 	if(eyeobj)
 		eyeobj.setLoc(get_turf(src))
-	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_LEVEL_TWO
+	update_sight()
 	client.screen.Cut()
 	remove_ai_verbs(src)
 
@@ -34,18 +32,18 @@
 	for(var/mob/living/silicon/ai/shuttlecaller in player_list)
 		if(is_centcom_level(shuttlecaller.z))
 			continue
-		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
+		if(shuttlecaller.stat == CONSCIOUS && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			break
 		callshuttle++
 
-	if(SSticker.mode.name == "revolution" || SSticker.mode.name == "AI malfunction" || sent_strike_team)
+	if(find_faction_by_type(/datum/faction/revolution) || find_faction_by_type(/datum/faction/malf_silicons) || sent_strike_team)
 		callshuttle = 0
 
 	if(callshuttle == 3) //if all three conditions are met
 		SSshuttle.incall(2)
 		log_game("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
 		message_admins("All the AIs, comm consoles and boards are destroyed. Shuttle called.")
-		captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.", sound = "emer_shut_called")
+		SSshuttle.announce_emer_called.play()
 
 	if(explosive)
 		spawn(10)

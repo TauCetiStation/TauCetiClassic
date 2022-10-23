@@ -1,7 +1,7 @@
 /obj/machinery/disease2/incubator
 	name = "Pathogenic incubator"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "incubator"
 	allowed_checks = ALLOWED_CHECK_TOPIC
@@ -21,6 +21,7 @@
 	var/datum/disease2/effectholder/selected = null
 
 	var/working = 0
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/medical = SKILL_LEVEL_PRO)
 
 /obj/machinery/disease2/incubator/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/syringe))
@@ -28,15 +29,15 @@
 		if(beaker)
 			to_chat(user, "\The [src] is already loaded.")
 			return
-
+		if(!do_skill_checks(user))
+			return
 		beaker = O
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 
 		user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
 		nanomanager.update_uis(src)
 
-		src.attack_hand(user)
+		attack_hand(user)
 		return
 
 	else if(istype(O, /obj/item/weapon/virusdish))
@@ -44,15 +45,15 @@
 		if(dish)
 			to_chat(user, "The dish tray is aleady full!")
 			return
-
+		if(!do_skill_checks(user))
+			return
 		dish = O
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 
 		user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
 		nanomanager.update_uis(src)
 
-		src.attack_hand(user)
+		attack_hand(user)
 	else
 		return ..()
 

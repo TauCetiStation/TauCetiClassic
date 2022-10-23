@@ -3,9 +3,9 @@
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = "holder"
 	item_state = "assembly"
-	flags = CONDUCT
+	flags = CONDUCT | HEAR_TALK
 	throwforce = 5
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	throw_speed = 3
 	throw_range = 10
 
@@ -65,7 +65,7 @@
 		for(var/O in a_left.attached_overlays)
 			add_overlay("[O]_l")
 	if(a_right)
-		src.add_overlay("[a_right.icon_state]_right")
+		add_overlay("[a_right.icon_state]_right")
 		for(var/O in a_right.attached_overlays)
 			add_overlay("[O]_r")
 	if(master)
@@ -78,16 +78,6 @@
 			to_chat(user, "\The [src] is ready!")
 		else
 			to_chat(user, "\The [src] can be attached!")
-
-
-/obj/item/device/assembly_holder/HasProximity(atom/movable/AM)
-	if(a_left)
-		a_left.HasProximity(AM)
-	if(a_right)
-		a_right.HasProximity(AM)
-	if(special_assembly)
-		special_assembly.HasProximity(AM)
-
 
 /obj/item/device/assembly_holder/Crossed(atom/movable/AM)
 	. = ..()
@@ -105,7 +95,7 @@
 	if(a_right)
 		a_right.on_found(finder)
 	if(special_assembly)
-		if(istype(special_assembly, /obj/item))
+		if(isitem(special_assembly))
 			var/obj/item/S = special_assembly
 			S.on_found(finder)
 
@@ -152,20 +142,20 @@
 		return ..()
 
 /obj/item/device/assembly_holder/attack_self(mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(src.secured)
 		if(!a_left || !a_right)
 			to_chat(user, "<span class='warning'>Assembly part missing!</span>")
 			return
 		if(istype(a_left,a_right.type))//If they are the same type it causes issues due to window code
-			switch(alert("Which side would you like to use?",,"Left","Right"))
+			switch(tgui_alert(usr, "Which side would you like to use?",, list("Left","Right")))
 				if("Left")	a_left.attack_self(user)
 				if("Right")	a_right.attack_self(user)
 			return
 		else
-			if(!istype(a_left,/obj/item/device/assembly/igniter))
+			if(!isigniter(a_left))
 				a_left.attack_self(user)
-			if(!istype(a_right,/obj/item/device/assembly/igniter))
+			if(!isigniter(a_right))
 				a_right.attack_self(user)
 	else
 		var/turf/T = get_turf(src)
@@ -231,9 +221,9 @@
 			var/obj/item/weapon/grenade/chem_grenade/gren = src
 			holder=gren.detonator
 		var/obj/item/device/assembly/timer/tmr = holder.a_left
-		if(!istype(tmr,/obj/item/device/assembly/timer))
+		if(!istimer(tmr))
 			tmr = holder.a_right
-		if(!istype(tmr,/obj/item/device/assembly/timer))
+		if(!istimer(tmr))
 			to_chat(usr, "<span class='notice'>This detonator has no timer.</span>")
 			return
 

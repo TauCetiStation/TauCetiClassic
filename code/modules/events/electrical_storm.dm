@@ -1,28 +1,12 @@
 /datum/event/electrical_storm
-	var/lightsoutAmount	= 1
+	announcement = new /datum/announcement/centcomm/estorm
+
 	var/lightsoutRange	= 25
 
-
-/datum/event/electrical_storm/announce()
-	command_alert("An electrical storm has been detected in your area, please repair potential electronic overloads.", "Electrical Storm Alert", "estorm")
-
-
 /datum/event/electrical_storm/start()
-	var/list/epicentreList = list()
-
-	for(var/i=1, i <= lightsoutAmount, i++)
-		var/list/possibleEpicentres = list()
-		for(var/obj/effect/landmark/newEpicentre in landmarks_list)
-			if(newEpicentre.name == "lightsout" && !(newEpicentre in epicentreList))
-				possibleEpicentres += newEpicentre
-		if(possibleEpicentres.len)
-			epicentreList += pick(possibleEpicentres)
-		else
-			break
-
-	if(!epicentreList.len)
+	var/list/possibleEpicentres = landmarks_list["lightsout"]
+	if(!length(possibleEpicentres))
 		return
-
-	for(var/obj/effect/landmark/epicentre in epicentreList)
-		for(var/obj/machinery/power/apc/apc in range(epicentre,lightsoutRange))
-			apc.overload_lighting()
+	var/obj/effect/landmark/epicentre = pick(possibleEpicentres)
+	for(var/obj/machinery/power/apc/apc in range(epicentre, lightsoutRange))
+		apc.overload_lighting()

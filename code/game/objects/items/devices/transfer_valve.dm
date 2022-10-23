@@ -4,6 +4,7 @@
 	icon_state = "valve_1"
 	item_state = "ttv"
 	desc = "Regulates the transfer of air between two tanks."
+	flags = HEAR_TALK
 	var/obj/item/weapon/tank/tank_one
 	var/obj/item/weapon/tank/tank_two
 	var/obj/item/device/attached_device
@@ -57,12 +58,6 @@
 
 	else
 		return ..()
-
-
-/obj/item/device/transfer_valve/HasProximity(atom/movable/AM)
-	if(!attached_device)	return
-	attached_device.HasProximity(AM)
-	return
 
 /obj/item/device/transfer_valve/hear_talk(mob/living/M, msg)
 	if(!attached_device)	return
@@ -122,7 +117,7 @@
 			update_icon()
 		if(href_list["device"])
 			attached_device.attack_self(usr)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	return 1 // Returning 1 sends an update to attached UIs
 
 /obj/item/device/transfer_valve/process_activation(obj/item/device/D)
@@ -200,14 +195,14 @@
 		merge_gases()
 		spawn(20) // In case one tank bursts
 			for (var/i=0,i<5,i++)
-				src.update_icon()
+				update_icon()
 				sleep(10)
-			src.update_icon()
+			update_icon()
 
 	else if(valve_open==1 && (tank_one && tank_two))
 		split_gases()
 		valve_open = 0
-		src.update_icon()
+		update_icon()
 
 // this doesn't do anything but the timer etc. expects it to be here
 // eventually maybe have it update icon to show state (timer, prox etc.) like old bombs

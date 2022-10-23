@@ -2,7 +2,7 @@
 	name = "airlock electronics"
 	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
-	w_class = ITEM_SIZE_SMALL //It should be tiny! -Agouri
+	w_class = SIZE_TINY //It should be tiny! -Agouri
 	m_amt = 50
 	g_amt = 50
 
@@ -15,7 +15,7 @@
 	var/broken = FALSE
 
 /obj/item/weapon/airlock_electronics/attack_self(mob/user)
-	if (!ishuman(user) && !istype(user,/mob/living/silicon/robot))
+	if (!ishuman(user) && !isrobot(user))
 		return ..(user)
 
 	var/mob/living/carbon/human/H = user
@@ -57,10 +57,10 @@
 
 /obj/item/weapon/airlock_electronics/Topic(href, href_list)
 	..()
-	if (usr.incapacitated() || (!ishuman(usr) && !istype(usr,/mob/living/silicon)))
+	if (usr.incapacitated() || (!ishuman(usr) && !issilicon(usr)))
 		return
 	if (href_list["login"])
-		if(istype(usr,/mob/living/silicon))
+		if(issilicon(usr))
 			src.locked = 0
 			src.last_configurator = usr.name
 		else
@@ -68,7 +68,7 @@
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
-			if (I && src.check_access(I))
+			if (I && check_access(I))
 				src.locked = 0
 				src.last_configurator = I:registered_name
 

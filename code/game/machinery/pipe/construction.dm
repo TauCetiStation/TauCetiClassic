@@ -11,7 +11,7 @@ Buildable meters
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "simple"
 	item_state = "buildpipe"
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	level = 2
 
 	var/pipe_type = 0
@@ -21,7 +21,7 @@ Buildable meters
 /obj/item/pipe/atom_init(mapload, pipe_type, dir, obj/machinery/atmospherics/make_from)
 	. = ..()
 	if (make_from)
-		src.set_dir(make_from.dir)
+		set_dir(make_from.dir)
 		src.pipename = make_from.name
 		color = make_from.pipe_color
 
@@ -134,9 +134,12 @@ Buildable meters
 			src.pipe_type = PIPE_OMNI_MIXER
 		else if(istype(make_from, /obj/machinery/atmospherics/components/omni/filter))
 			src.pipe_type = PIPE_OMNI_FILTER
+		else if(istype(make_from, /obj/machinery/atmospherics/components/binary/sampler))
+			src.pipe_type = PIPE_SAMPLER
+			connect_types = make_from.connect_types
 	else
 		src.pipe_type = pipe_type
-		src.set_dir(dir)
+		set_dir(dir)
 		if (pipe_type == PIPE_SUPPLY_STRAIGHT || pipe_type == PIPE_SUPPLY_BENT || pipe_type == PIPE_SUPPLY_MANIFOLD || pipe_type == PIPE_SUPPLY_MANIFOLD4W || pipe_type == PIPE_SUPPLY_CAP)
 			connect_types = CONNECT_TYPE_SUPPLY
 			src.color = PIPE_COLOR_BLUE
@@ -149,7 +152,7 @@ Buildable meters
 			connect_types = CONNECT_TYPE_HE
 		else if (pipe_type == PIPE_JUNCTION)
 			connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_HE
-		else if (pipe_type == PIPE_UNIVERSAL)
+		else if (pipe_type == PIPE_UNIVERSAL || pipe_type == PIPE_SAMPLER)
 			connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_SUPPLY|CONNECT_TYPE_SCRUBBER
 
 	update()
@@ -219,6 +222,8 @@ Buildable meters
 ///// Digital T-valves
 		"digital t-valve",
 		"digital t-valve m",
+///// Sampler pipe
+		"sampler",
 	)
 	name = nlist[pipe_type + 1] + " fitting"
 	var/list/islist = list(
@@ -280,7 +285,9 @@ Buildable meters
 		"cap",
 ///// Digital T-valves
 		"dtvalve",
-		"dtvalvem"
+		"dtvalvem",
+///// Sampler
+		"sampler",
 	)
 	icon_state = islist[pipe_type + 1]
 
@@ -289,7 +296,7 @@ Buildable meters
 	if(!proximity)
 		return
 
-	if(istype(target, /turf/simulated/floor))
+	if(isfloorturf(target))
 		user.drop_from_inventory(src, target)
 	else
 		return ..()
@@ -305,7 +312,7 @@ Buildable meters
 
 	set_dir(turn(dir, -90))
 
-	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_SUPPLY_STRAIGHT, PIPE_SCRUBBERS_STRAIGHT, PIPE_UNIVERSAL, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE, PIPE_SVALVE, PIPE_FUEL_STRAIGHT))
+	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_SUPPLY_STRAIGHT, PIPE_SCRUBBERS_STRAIGHT, PIPE_UNIVERSAL, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE, PIPE_SVALVE, PIPE_FUEL_STRAIGHT, PIPE_SAMPLER))
 		if(dir == SOUTH)
 			set_dir(NORTH)
 		else if(dir == WEST)
@@ -315,9 +322,13 @@ Buildable meters
 
 /obj/item/pipe/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
+
+	if(moving_diagonally)
+		return .
+
 	if ((pipe_type in list (PIPE_SIMPLE_BENT, PIPE_SUPPLY_BENT, PIPE_SCRUBBERS_BENT, PIPE_HE_BENT, PIPE_FUEL_BENT)) && (dir in cardinal))
 		set_dir(dir|turn(dir, 90))
-	else if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_SUPPLY_STRAIGHT, PIPE_SCRUBBERS_STRAIGHT, PIPE_UNIVERSAL, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE, PIPE_SVALVE, PIPE_FUEL_STRAIGHT))
+	else if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_SUPPLY_STRAIGHT, PIPE_SCRUBBERS_STRAIGHT, PIPE_UNIVERSAL, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE, PIPE_SVALVE, PIPE_FUEL_STRAIGHT, PIPE_SAMPLER))
 		if(dir == SOUTH)
 			set_dir(NORTH)
 		else if(dir == WEST)
@@ -364,6 +375,7 @@ Buildable meters
 			PIPE_SCRUBBERS_STRAIGHT,
 			PIPE_UNIVERSAL,
 			PIPE_FUEL_STRAIGHT,
+			PIPE_SAMPLER,
 		)
 			return dir|flip
 		if(PIPE_SIMPLE_BENT, PIPE_HE_BENT, PIPE_SUPPLY_BENT, PIPE_SCRUBBERS_BENT, PIPE_FUEL_BENT)
@@ -397,18 +409,6 @@ Buildable meters
 			return flip
 	return 0
 
-/obj/item/pipe/proc/get_hdir() // endpoints for h/e pipes
-
-	switch(pipe_type)
-		if(PIPE_HE_STRAIGHT)
-			return get_pipe_dir()
-		if(PIPE_HE_BENT)
-			return get_pipe_dir()
-		if(PIPE_JUNCTION)
-			return dir
-		else
-			return 0
-
 /obj/item/pipe/attack_self(mob/user)
 	return rotate()
 
@@ -420,7 +420,7 @@ Buildable meters
 		return ..()
 	if (!isturf(loc))
 		return TRUE
-	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_SUPPLY_STRAIGHT, PIPE_SCRUBBERS_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE, PIPE_SVALVE, PIPE_FUEL_STRAIGHT))
+	if (pipe_type in list (PIPE_SIMPLE_STRAIGHT, PIPE_SUPPLY_STRAIGHT, PIPE_SCRUBBERS_STRAIGHT, PIPE_HE_STRAIGHT, PIPE_MVALVE, PIPE_DVALVE, PIPE_SVALVE, PIPE_FUEL_STRAIGHT, PIPE_SAMPLER))
 		if(dir == SOUTH)
 			set_dir(NORTH)
 		else if(dir == WEST)
@@ -488,7 +488,6 @@ Buildable meters
 			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/P = new (loc)
 			P.set_dir(dir)
 			P.initialize_directions = pipe_dir //this var it's used to know if the pipe is bent or not
-			P.initialize_directions_he = pipe_dir
 
 			P.construction()
 
@@ -564,8 +563,7 @@ Buildable meters
 		if(PIPE_JUNCTION)
 			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/P = new (loc)
 			P.set_dir(src.dir)
-			P.initialize_directions = src.get_pdir()
-			P.initialize_directions_he = src.get_hdir()
+			P.initialize_directions = pipe_dir
 			P.construction()
 
 		if(PIPE_UVENT)		//unary vent
@@ -782,6 +780,12 @@ Buildable meters
 			var/obj/machinery/atmospherics/components/omni/filter/P = new(loc)
 			P.construction()
 
+		if(PIPE_SAMPLER)
+			var/obj/machinery/atmospherics/components/binary/sampler/P = new(loc)
+			P.set_dir(dir)
+			P.initialize_directions = pipe_dir
+			P.construction()
+
 	playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message(
 		"[user] fastens the [src].",
@@ -801,7 +805,7 @@ Buildable meters
 	icon = 'icons/obj/pipe-item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 
 /obj/item/pipe_meter/attackby(obj/item/I, mob/user, params)
 	if (!iswrench(I))

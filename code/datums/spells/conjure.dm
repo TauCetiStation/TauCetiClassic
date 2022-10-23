@@ -3,11 +3,10 @@
 	desc = "This spell conjures objs of the specified types in range."
 
 	var/list/summon_type = list() //determines what exactly will be summoned
-	//should be text, like list("/obj/machinery/bot/secbot/ed209")
 
 	var/summon_lifespan = 0 // 0=permanent, any other time in deciseconds
 	var/summon_amt = 1 //amount of objects summoned
-	var/summon_ignore_density = 0 //if set to 1, adds dense tiles to possible spawn places
+	var/summon_ignore_density = FALSE //if set to 1, adds dense tiles to possible spawn places
 	var/summon_ignore_prev_spawn_points = 0 //if set to 1, each new object is summoned on a new spawn point
 	var/deleting_previous = 0 //if set to 1, a new cast delete previous objects
 	var/list/previous_objects = list() // Containts object references, which was spawned last time.
@@ -82,12 +81,13 @@
 	name = "FORCEWALL"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "m_shield"
-	anchored = 1.0
+	anchored = TRUE
 	opacity = 0
-	density = 1
+	density = TRUE
 	unacidable = 1
 
 /obj/effect/forcefield/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	for(var/mob/living/M in get_turf(loc))
 		M.bullet_act(Proj, def_zone)
 
@@ -101,12 +101,29 @@
 
 /obj/effect/forcefield/magic/CanPass(atom/movable/mover, turf/target, height=0)
 	if(mover == wizard)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
+
+/obj/effect/forcefield/cult
+	name = "Blood Shield"
+	desc = "Like erythrocyte, the cells form a force barrier."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "cultshield"
+
+/obj/effect/forcefield/cult/alt_app
+	icon = null
+	icon_state = null
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/effect/forcefield/cult/alt_app/atom_init()
+	. = ..()
+	var/image/I = image('icons/effects/effects.dmi', src, "cultshield")
+	I.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/holy_role, "cult_wall", I)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/smoke
-	name = "Paralysing Smoke"
-	desc = "This spell spawns a cloud of paralysing smoke."
+	name = "Парализующий Дым"
+	desc = "Это заклинание создает парализующий дым."
 
 	school = "conjuration"
 	charge_max = 200
@@ -114,6 +131,9 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 1
+
+	action_icon_state = "rot"
+	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/smoke/cast()
 	var/datum/effect/effect/system/smoke_spread/chem/S = new
@@ -139,4 +159,22 @@
 	if(!volume)
 		volume = 1
 	if(volume > 5)
+		M.Stun(2)
 		M.Weaken(4)
+
+/obj/effect/proc_holder/spell/no_target/area_conversion
+	name = "Обращение Зоны"
+	desc = "Это заклинание моментально делает небольшую зону вокруг вас подвластной вашей Вере"
+	clothes_req = FALSE
+	charge_max = 5 SECONDS
+	action_icon_state = "areaconvert"
+	action_background_icon_state = "bg_cult"
+
+/obj/effect/proc_holder/spell/no_target/area_conversion/cast(list/targets, mob/user)
+	if(!user.my_religion)
+		return
+	. = ..()
+	for(var/turf/nearby_turf in range(3, user))
+		if(prob(100 - (get_dist(nearby_turf, user) * 25)))
+			playsound(nearby_turf, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
+			nearby_turf.atom_religify(user.my_religion)

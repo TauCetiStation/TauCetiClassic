@@ -1,19 +1,16 @@
-/obj/item/weapon/twohanded/spear
+/obj/item/weapon/spear
 	icon = 'icons/obj/makeshift.dmi'
 	icon_state = "spearglass0"
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	slot_flags = SLOT_FLAGS_BACK
-	force_unwielded = 10
-	force_wielded = 18 // Was 13, Buffed - RR
 	throwforce = 15
-	flags = NOSHIELD
 	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 
-/obj/item/weapon/twohanded/spear/atom_init()
+/obj/item/weapon/spear/atom_init()
 	. = ..()
 	var/datum/swipe_component_builder/SCB = new
 	SCB.interupt_on_sweep_hit_types = list(/turf, /obj/effect/effect/weapon_sweep)
@@ -21,21 +18,25 @@
 	SCB.can_push = TRUE
 	SCB.can_pull = TRUE
 
-	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_push)
-	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/twohanded/spear.proc/can_sweep_pull)
+	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/spear.proc/can_sweep_push)
+	SCB.can_pull_call = CALLBACK(src, /obj/item/weapon/spear.proc/can_sweep_pull)
 
 	AddComponent(/datum/component/swiping, SCB)
 
-/obj/item/weapon/twohanded/spear/proc/can_sweep_push(atom/target, mob/user)
-	return wielded
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.force_wielded = 18
+	TCB.force_unwielded = 10
+	TCB.icon_wielded = "spearglass1"
 
-/obj/item/weapon/twohanded/spear/proc/can_sweep_pull(atom/target, mob/user)
-	return wielded
+	AddComponent(/datum/component/twohanded, TCB)
 
-/obj/item/weapon/twohanded/spear/update_icon()
-	icon_state = "spearglass[wielded]"
+/obj/item/weapon/spear/proc/can_sweep_push(atom/target, mob/user)
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
 
-/obj/item/weapon/twohanded/spear/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/spear/proc/can_sweep_pull(atom/target, mob/user)
+	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
+
+/obj/item/weapon/spear/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/organ/external/head))
 		if(loc == user)
 			user.drop_from_inventory(src)
@@ -147,10 +148,10 @@
 	else
 		return ..()
 
-/obj/item/weapon/melee/cattleprod/attack(mob/M, mob/user)
+/obj/item/weapon/melee/cattleprod/attack(mob/M, mob/living/user)
 	if(status && (CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='danger'>You accidentally hit yourself with [src]!</span>")
-		user.Weaken(stunforce*3)
+		user.apply_effect(120, AGONY, 0)
 		deductcharge(hitcost)
 		return
 
@@ -175,8 +176,7 @@
 		//H.Weaken(stunforce)
 		//H.apply_effect(STUTTER, stunforce)
 		H.apply_effect(60,AGONY,0)
-		user.lastattacked = M
-		H.lastattacker = user
+		H.set_lastattacker_info(user)
 		if(isrobot(src.loc))
 			var/mob/living/silicon/robot/R = src.loc
 			if(R && R.cell)
@@ -211,9 +211,48 @@
 	flags = CONDUCT
 	force = 9
 	throwforce = 10
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	m_amt = 1875
 	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
+
+/obj/item/weapon/noose
+	name = "noose"
+	desc = "A rolled noose."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "noose_rolled"
+	w_class = SIZE_TINY
+
+/obj/item/weapon/noose/attack_self(mob/user)
+	var/turf/user_turf = get_turf(user)
+	var/obj/structure/stool/bed/chair/noose/N
+	if(user_turf.density)
+		to_chat(user, "<span class='notice'>You can't build a noose over that.</span>")
+		return
+	if(locate(N) in user_turf)
+		to_chat(user, "<span class='notice'>You can't build a noose on a tile that has a noose.</span>")
+		return
+	user.visible_message("<span class='notice'>[user] starts constructing a noose</span>")
+	to_chat(user, "<span class='notice'>You begin to construct a noose...</span>")
+	if(!do_after(user, 5 SECONDS, target = user))
+		return
+	N = new(user_turf)
+	N.layer = FLY_LAYER // because of bed/chair/atom_init
+	N.color = color
+	qdel(src)
+
+/obj/item/weapon/noose/attackby(obj/item/W, mob/user)
+	if(!iswirecutter(W))
+		return ..()
+	user.visible_message("<span class='notice'>[user] cuts the noose.</span>", "<span class='notice'>You cut the noose.</span>")
+	var/obj/item/stack/cable_coil/C = new(get_turf(src))
+	C.color = color
+	C.amount = 25
+	qdel(src)
+
+/obj/item/weapon/noose/CheckParts(list/parts_list)
+	..()
+	for(var/obj/item/stack/cable_coil/C in contents)
+		color = C.color
 
 /obj/item/weapon/transparant
 	icon_custom ='icons/mob/inhands/transparant.dmi'
@@ -226,11 +265,10 @@
 	var/delay_msg = 5 SECONDS
 	var/last_warn_msg = 0
 	force = 8
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	throwforce = 5
-//	flags = NOSHIELD
 		//var/protest_text
- 		//	var/protest_text_lenght = 100
+ 		//	var/protest_text_length = 100
  	//var/image/inhand_blood_overlay
 	attack_verb = list("bashed", "pacified", "smashed", "opressed", "flapped")
 
@@ -256,7 +294,7 @@
 		return
 
 	if(istype(I, /obj/item/toy/crayon))
-		var/paths = typesof(/obj/item/weapon/transparant) - /obj/item/weapon/transparant - /obj/item/weapon/transparant/text
+		var/paths = subtypesof(/obj/item/weapon/transparant) - /obj/item/weapon/transparant/text
 		var/targName = input(usr, "Choose transparant pattern", "Pattern list") in paths
 		if(!targName)
 			return
@@ -278,7 +316,7 @@
 
 /obj/item/weapon/transparant/attack(mob/M, mob/user)
 	..()
-	M.show_message("<span class='attack'>\The <EM>[src.blood_DNA ? "bloody " : ""][bicon(src)][src.name]</EM> says: <span class='emojify bold'>[src.desc]</span></span>", SHOWMSG_VISUAL)
+	M.show_message("<span class='red'>\The <EM>[src.blood_DNA ? "bloody " : ""][bicon(src)][src.name]</EM> says: <span class='emojify bold'>[src.desc]</span></span>", SHOWMSG_VISUAL)
 
 /obj/item/weapon/transparant/update_icon()
 	if(blood_DNA)
@@ -288,7 +326,7 @@
 		icon_state = not_bloody_state
 		item_state = not_bloody_item_state
 	..()
-	if(istype(src.loc, /mob/living))
+	if(isliving(src.loc))
 		var/mob/living/user = src.loc
 		user.update_inv_l_hand()
 		user.update_inv_r_hand()

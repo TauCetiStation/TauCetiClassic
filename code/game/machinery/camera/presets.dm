@@ -80,3 +80,5 @@
 // If you are upgrading Motion, and it isn't in the camera's New(), add it to the machines list.
 /obj/machinery/camera/proc/upgradeMotion()
 	assembly.upgrades.Add(new /obj/item/device/assembly/prox_sensor(assembly))
+	START_PROCESSING(SSmachines, src)
+	proximity_monitor = new (src, 1)

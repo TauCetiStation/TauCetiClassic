@@ -53,19 +53,21 @@
 			<A href='?src=\ref[src];setauthor=1'>Filter by Author: [author]</A><BR>
 			<A href='?src=\ref[src];search=1'>Start Search</A><BR>"}
 		if(1)
-			establish_old_db_connection()
-			if(!dbcon_old.IsConnected())
+			if(!isnum(page))
+				return
+
+			if(!establish_db_connection("erro_library"))
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
 			else
-				var/SQLquery = "SELECT author, title, category, id FROM library WHERE "
+				var/SQLquery = "SELECT author, title, category, id FROM erro_library WHERE "
 				if(category == "Any")
-					SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%' LIMIT [page], [LIBRETURNLIMIT]"
+					SQLquery += "author LIKE '%[sanitize_sql(author)]%' AND title LIKE '%[sanitize_sql(title)]%' LIMIT [page], [LIBRETURNLIMIT]"
 				else
-					SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%' AND category='[category]' LIMIT [page], [LIBRETURNLIMIT]"
+					SQLquery += "author LIKE '%[sanitize_sql(author)]%' AND title LIKE '%[sanitize_sql(title)]%' AND category='[sanitize_sql(category)]' LIMIT [page], [LIBRETURNLIMIT]"
 				dat += {"<table>
 				<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"}
 
-				var/DBQuery/query = dbcon_old.NewQuery(SQLquery)
+				var/DBQuery/query = dbcon.NewQuery(SQLquery)
 				query.Execute()
 
 				while(query.NextRow())
@@ -134,7 +136,7 @@
 	if(href_list["pagenext"] == "2")
 		page = min(page + (LIBRETURNLIMIT * 5), 10000)
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /*
  * Library Computer
@@ -181,7 +183,7 @@
 			if(src.emagged)
 				dat += "<A href='?src=\ref[src];switchscreen=7'>7. Access the Forbidden Lore Vault</A><BR>"
 			if(src.arcanecheckout)
-				new /obj/item/weapon/book/tome/old(src.loc)
+				new /obj/item/weapon/storage/bible/tome(src.loc)
 				to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a dusty old tome sitting on the desk. You don't really remember printing it.</span>")
 				user.visible_message("[user] stares at the blank screen for a few moments, his expression frozen in fear. When he finally awakens from it, he looks a lot older.", 2)
 				src.arcanecheckout = 0
@@ -222,12 +224,15 @@
 			<A href='?src=\ref[src];checkout=1'>Commit Entry</A><BR>
 			<A href='?src=\ref[src];switchscreen=0'>Main Menu</A><BR>"}
 		if(4)
+			if(!isnum(page))
+				return
+
 			dat += "<h3>External Archive</h3>"
-			establish_old_db_connection()
-			if(!dbcon_old.IsConnected())
+
+			if(!establish_db_connection("erro_library"))
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
-				var/DBQuery/query = dbcon_old.NewQuery("SELECT id, author, title, category, deletereason FROM library LIMIT [page], [LIBRETURNLIMIT]")
+				var/DBQuery/query = dbcon.NewQuery("SELECT id, author, title, category, deletereason FROM erro_library LIMIT [page], [LIBRETURNLIMIT]")
 				query.Execute()
 
 				var/first_id = null
@@ -371,11 +376,10 @@
 				var/choice = input("Are you certain you wish to upload this title to the Archive?") in list("Confirm", "Abort")
 				if(choice == "Confirm")
 					if(scanner.cache.unique)
-						alert("This book has been rejected from the database. Aborting!")
+						tgui_alert(usr, "This book has been rejected from the database. Aborting!")
 					else
-						establish_old_db_connection()
-						if(!dbcon_old.IsConnected())
-							alert("Connection to Archive has been severed. Aborting.")
+						if(!establish_db_connection("erro_library"))
+							tgui_alert(usr, "Connection to Archive has been severed. Aborting.")
 						else
 							/*
 							var/sqltitle = dbcon.Quote(scanner.cache.name)
@@ -387,27 +391,26 @@
 							var/sqlauthor = sanitize_sql(scanner.cache.author)
 							var/sqlcontent = sanitize_sql(scanner.cache.dat)
 							var/sqlcategory = sanitize_sql(upload_category)
-							var/sqlckey = sanitize_sql(usr.ckey)
-							var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO library (author, title, content, category, ckey) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[sqlckey]')")
+							var/sqlckey = ckey(usr.ckey)
+							var/DBQuery/query = dbcon.NewQuery("INSERT INTO erro_library (author, title, content, category, ckey) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[sqlckey]')")
 							if(!query.Execute())
-								to_chat(usr, query.ErrorMsg())
+								to_chat(usr, "SQL ERROR")
 							else
 								log_game("[key_name(usr)] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
-								alert("Upload Complete.")
+								tgui_alert(usr, "Upload Complete.")
 
 	if(href_list["targetid"])
-		var/sqlid = sanitize_sql(href_list["targetid"])
+		var/sqlid = text2num(href_list["targetid"])
 		if(!sqlid)
 			return
 
-		establish_old_db_connection()
-		if(!dbcon_old.IsConnected())
-			alert("Connection to Archive has been severed. Aborting.")
+		if(!establish_db_connection("erro_library"))
+			tgui_alert(usr, "Connection to Archive has been severed. Aborting.")
 		if(next_print > world.time)
 			visible_message("<b>[src]</b>'s monitor flashes, \"Printer unavailable. Please allow a short time before attempting to print.\"")
 		else
 			next_print = world.time + 6 SECONDS
-			var/DBQuery/query = dbcon_old.NewQuery("SELECT * FROM library WHERE id='[sqlid]'")
+			var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_library WHERE id='[sqlid]'")
 			query.Execute()
 
 			while(query.NextRow())
@@ -420,20 +423,19 @@
 				B.author = author
 				B.dat = content
 				B.icon_state = "book[rand(1,10)]"
-				src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
+				visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 				break
 
 	if(href_list["deleteid"])
-		var/sqlid = sanitize_sql(href_list["deleteid"])
+		var/sqlid = text2num(href_list["deleteid"])
 		if(!sqlid)
 			return
 
-		establish_old_db_connection()
-		if(!dbcon_old.IsConnected())
-			alert("Connection to Archive has been severed. Aborting.")
+		if(!establish_db_connection("erro_library"))
+			tgui_alert(usr, "Connection to Archive has been severed. Aborting.")
 			return
 
-		var/DBQuery/query = dbcon_old.NewQuery("SELECT title, deletereason FROM library WHERE id='[sqlid]'")
+		var/DBQuery/query = dbcon.NewQuery("SELECT title, deletereason FROM erro_library WHERE id='[sqlid]'")
 		if(!query.Execute())
 			return
 
@@ -446,26 +448,26 @@
 
 		var/reason = sanitize_sql(sanitize(input(usr,"Reason for removal","Enter reason (max 60 characters)") as text))
 		if(length(reason) > 60)
-			alert("The reason is more than 60 characters long")
+			tgui_alert(usr, "The reason is more than 60 characters long")
 			return
 
 		if(!reason)
 			return
 
-		query = dbcon_old.NewQuery("UPDATE library SET deletereason = '[reason]' WHERE id = '[sqlid]'")
+		query = dbcon.NewQuery("UPDATE erro_library SET deletereason = '[reason]' WHERE id = '[sqlid]'")
 		query.Execute()
 
 		message_admins("[usr.name]/[usr.ckey] requested removal of [title] from the library database")
 
-		alert("Delete request sent.")
+		tgui_alert(usr, "Delete request sent.")
 
 	if(href_list["orderbyid"])
 		var/orderid = input("Enter your order:") as num|null
 		if(orderid)
 			if(isnum(orderid))
 				var/nhref = "src=\ref[src];targetid=[orderid]"
-				spawn() src.Topic(nhref, params2list(nhref), src)
-	src.updateUsrDialog()
+				spawn() Topic(nhref, params2list(nhref), src)
+	updateUsrDialog()
 
 /*
  * Library Scanner
@@ -474,14 +476,13 @@
 	name = "scanner"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bigscanner"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	var/obj/item/weapon/book/cache		// Last scanned book
 
 /obj/machinery/libraryscanner/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/book))
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 
 /obj/machinery/libraryscanner/ui_interact(mob/user)
 	var/dat = ""
@@ -516,7 +517,7 @@
 	if(href_list["eject"])
 		for(var/obj/item/weapon/book/B in contents)
 			B.loc = src.loc
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /*
  * Book binder
@@ -525,18 +526,17 @@
 	name = "Book Binder"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "binder"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 
 /obj/machinery/bookbinder/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/paper))
-		user.drop_item()
-		O.loc = src
+		user.drop_from_inventory(O, src)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
-		src.visible_message("[src] begins to hum as it warms up its printing drums.")
+		visible_message("[src] begins to hum as it warms up its printing drums.")
 		sleep(rand(200,400))
-		src.visible_message("[src] whirs as it prints and binds a new book.")
+		visible_message("[src] whirs as it prints and binds a new book.")
 		var/obj/item/weapon/book/b = new(src.loc)
 		b.dat = O:info
 		b.name = "Print Job #" + "[rand(100, 999)]"

@@ -10,12 +10,17 @@
 	var/map_path = "boxstation"
 	var/map_file = "boxstation.dmm"
 	var/station_name = "NSS Exodus"
+	var/station_name_ru = "КСН Исход"
 	var/system_name = "Tau Ceti"
+	var/system_name_ru = "Тау Кита"
 	var/station_image = "exodus"
 
 	// Config from maps.txt
 	var/config_max_users = 0
 	var/config_min_users = 0
+
+	var/votable = FALSE
+	var/voteweight = 1
 
 	var/traits = null
 	var/space_ruin_levels = 2
@@ -122,8 +127,14 @@
 	if ("station_name" in json)
 		station_name = json["station_name"]
 
+	if ("station_name_ru" in json)
+		station_name_ru = json["station_name_ru"]
+
 	if ("system_name" in json)
 		system_name = json["system_name"]
+
+	if ("system_name_ru" in json)
+		system_name_ru = json["system_name_ru"]
 
 	if("station_image" in json)
 		station_image = json["station_image"]
@@ -138,6 +149,26 @@
 	. = list()
 	for (var/file in map_file)
 		. += "maps/[map_path]/[file]"
+
+/datum/map_config/proc/GetFullMapName()
+	var/mapname = map_name
+	if (src == config.defaultmap)
+		mapname += " (Default)"
+
+	if (config_min_users > 0 || config_max_users > 0)
+		mapname += " \["
+		if (config_min_users > 0)
+			mapname += "[config_min_users]"
+		else
+			mapname += "0"
+		mapname += "-"
+		if (config_max_users > 0)
+			mapname += "[config_max_users]"
+		else
+			mapname += "inf"
+		mapname += "\]"
+	
+	return mapname
 
 /datum/map_config/proc/MakeNextMap()
 	return config_filename == "data/next_map.json" || fcopy(config_filename, "data/next_map.json")

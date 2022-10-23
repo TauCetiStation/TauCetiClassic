@@ -6,6 +6,7 @@
 	light_color = "#e6ffff"
 	circuit = /obj/item/weapon/circuitboard/stationalert
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE, /datum/skill/command = SKILL_LEVEL_NONE)
 
 /obj/machinery/computer/station_alert/atom_init()
 	. = ..()
@@ -16,6 +17,8 @@
 	return ..()
 
 /obj/machinery/computer/station_alert/ui_interact(mob/user)
+	if(!do_skill_checks(user))
+		return
 	var/dat = ""
 	for (var/cat in src.alarms)
 		dat += text("<B>[]</B><BR>\n", cat)
@@ -49,6 +52,7 @@
 			var/list/sources = alarm[3]
 			if (!(alarmsource in sources))
 				sources += alarmsource
+				updateDialog()
 			return 1
 	var/obj/machinery/camera/C = null
 	var/list/CL = null
@@ -59,6 +63,7 @@
 	else if (O && istype(O, /obj/machinery/camera))
 		C = O
 	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
+	updateDialog()
 	return 1
 
 
@@ -76,6 +81,7 @@
 			if (srcs.len == 0)
 				cleared = 1
 				L -= I
+	updateDialog()
 	return !cleared
 
 

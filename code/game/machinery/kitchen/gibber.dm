@@ -69,15 +69,15 @@
 /obj/machinery/gibber/update_icon()
 	cut_overlays()
 	if (dirty)
-		src.add_overlay(image('icons/obj/kitchen.dmi', "grbloody"))
+		add_overlay(image('icons/obj/kitchen.dmi', "grbloody"))
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (!occupant)
-		src.add_overlay(image('icons/obj/kitchen.dmi', "grjam"))
+		add_overlay(image('icons/obj/kitchen.dmi', "grjam"))
 	else if (operating)
-		src.add_overlay(image('icons/obj/kitchen.dmi', "gruse"))
+		add_overlay(image('icons/obj/kitchen.dmi', "gruse"))
 	else
-		src.add_overlay(image('icons/obj/kitchen.dmi', "gridle"))
+		add_overlay(image('icons/obj/kitchen.dmi', "gridle"))
 
 /obj/machinery/gibber/container_resist()
 	go_out()
@@ -95,10 +95,14 @@
 
 /obj/machinery/gibber/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/grab))
-		src.add_fingerprint(user)
 		var/obj/item/weapon/grab/G = W
-		move_into_gibber(user, G.affecting)
-		qdel(G)
+		if(move_into_gibber(user, G.affecting))
+			qdel(G)
+
+	if(istype(W, /obj/item/weapon/holder))
+		for(var/mob/M in W.contents)
+			if(move_into_gibber(user, M))
+				qdel(W)
 
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", W))
 		return
@@ -142,8 +146,11 @@
 		return
 	if(user.is_busy(src)) return
 	user.visible_message("<span class='warning'>[user] starts to put [victim] into the gibber!</span>")
-	src.add_fingerprint(user)
-	if(do_after(user, 30, target = src) && victim.Adjacent(src) && user.Adjacent(src) && victim.Adjacent(user) && !occupant)
+	add_fingerprint(user)
+	var/checks_to_check = CALLBACK(src, .proc/do_after_checks, user, victim)
+	if(istype(victim.loc, /obj/item/weapon/holder))
+		checks_to_check = null
+	if(do_after(user, 30, target = src, extra_checks = checks_to_check))
 		user.visible_message("<span class='warning'>[user] stuffs [victim] into the gibber!</span>")
 		if(victim.client)
 			victim.client.perspective = EYE_PERSPECTIVE
@@ -151,6 +158,10 @@
 		victim.loc = src
 		src.occupant = victim
 		update_icon()
+		return TRUE
+
+/obj/machinery/gibber/proc/do_after_checks(mob/user, mob/living/victim)
+	return victim.Adjacent(src) && user.Adjacent(src) && victim.Adjacent(user) && !occupant
 
 /obj/machinery/gibber/verb/eject()
 	set category = "Object"
@@ -159,7 +170,7 @@
 
 	if (usr.incapacitated())
 		return
-	src.go_out()
+	go_out()
 	add_fingerprint(usr)
 	return
 

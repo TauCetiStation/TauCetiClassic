@@ -4,7 +4,7 @@
 	desc = "A shooting target."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "target_h"
-	density = 0
+	density = FALSE
 	var/hp = 1800
 
 /obj/item/target/Destroy()
@@ -12,7 +12,7 @@
 	for(var/obj/structure/target_stake/T in view(3,src))
 		if(T.pinned_target == src)
 			T.pinned_target = null
-			T.density = 1
+			T.density = TRUE
 			break
 	return ..() // delete target
 
@@ -51,8 +51,8 @@
 
 	if(stake)
 		if(stake.pinned_target)
-			stake.density = 1
-			density = 0
+			stake.density = TRUE
+			density = FALSE
 			layer = OBJ_LAYER
 
 			loc = user.loc
@@ -80,7 +80,8 @@
 	desc = "A shooting target with a threatening silhouette."
 	hp = 2350 // alium onest too kinda
 
-/obj/item/target/bullet_act(obj/item/projectile/Proj)
+/obj/item/target/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	hp -= Proj.damage
 	if(hp <= 0)
 		for(var/mob/O in oviewers())

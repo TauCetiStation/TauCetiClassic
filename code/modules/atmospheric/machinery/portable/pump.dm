@@ -18,6 +18,8 @@
 	var/on = FALSE
 	var/direction_out = 0 //0 = siphoning, 1 = releasing
 	var/target_pressure = PUMP_DEFAULT_PRESSURE
+	required_skills = list(/datum/skill/atmospherics = SKILL_LEVEL_NOVICE)
+
 
 /obj/machinery/portable_atmospherics/powered/pump/filled
 	start_pressure = 90 * ONE_ATMOSPHERE
@@ -138,6 +140,9 @@
 	else
 		data["holding"] = null
 	return data
+
+/obj/machinery/portable_atmospherics/powered/pump/tgui_state(mob/user)
+	return global.physical_state
 
 /obj/machinery/portable_atmospherics/powered/pump/tgui_act(action, params)
 	. = ..()

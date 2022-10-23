@@ -7,9 +7,10 @@
 	desc = "Used for a more detailed analysis of the patient."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scanner_0"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	light_color = "#00ff00"
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/bodyscanner/power_change()
 	..()
@@ -53,6 +54,8 @@
 	if(target.abiotic())
 		to_chat(user, "<span class='userdanger'>Subject cannot have abiotic items on.</span>")
 		return FALSE
+	if(!do_skill_checks(user))
+		return
 	return TRUE
 
 /obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, mob/user)
@@ -69,7 +72,7 @@
 	icon_state = "body_scanner_[occupant ? "1" : "0"]"
 
 /obj/machinery/bodyscanner/MouseDrop_T(mob/target, mob/user)
-	if(user.incapacitated() || !Adjacent(user) || !target.Adjacent(user))
+	if(user.incapacitated())
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
@@ -80,40 +83,42 @@
 	close_machine(target)
 	playsound(src, 'sound/machines/analysis.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
+/obj/machinery/bodyscanner/AltClick(mob/user)
+	if(user.incapacitated() || !Adjacent(user))
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		return
+	if(occupant)
+		open_machine()
+		add_fingerprint(user)
+		return
+	var/mob/living/carbon/target = locate() in loc
+	if(!target)
+		return
+	if(!move_inside_checks(target, user))
+		return
+	add_fingerprint(user)
+	close_machine(target)
+	playsound(src, 'sound/machines/analysis.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
 /obj/machinery/bodyscanner/ex_act(severity)
-	var/should_destroy = FALSE
 	switch(severity)
-		if(1.0)
-			should_destroy = TRUE
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if(prob(50))
-				should_destroy = TRUE
-		if(3.0)
-			if(prob(25))
-				should_destroy = TRUE
-	if(should_destroy)
-		for(var/atom/movable/A in src)
-			A.forceMove(loc)
-			ex_act(severity)
-		qdel(src)
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(75))
+				return
+	for(var/atom/movable/A in src)
+		A.forceMove(loc)
+		ex_act(severity)
+	qdel(src)
 
-/obj/machinery/bodyscanner/blob_act()
-	if(prob(50))
-		for(var/atom/movable/A in src)
-			A.forceMove(loc)
-		qdel(src)
-
-/obj/machinery/body_scanconsole/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-
-/obj/machinery/body_scanconsole/blob_act()
-	if(prob(50))
-		qdel(src)
+/obj/machinery/bodyscanner/deconstruct(disassembled)
+	for(var/atom/movable/A in src)
+		A.forceMove(loc)
+	..()
 
 /obj/machinery/body_scanconsole/power_change()
 	if(stat & BROKEN)
@@ -130,28 +135,29 @@
 
 /obj/machinery/body_scanconsole
 	var/obj/machinery/bodyscanner/connected
-	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mindshield/loyalty)
+	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience, /obj/item/weapon/implant/skill)
 	var/delete
 	name = "Body Scanner Console"
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "body_scannerconsole"
-	anchored = 1
+	anchored = TRUE
 	var/next_print = 0
 	var/storedinfo = null
-
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/body_scanconsole/atom_init()
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/body_scanconsole/atom_init_late()
-	connected = locate(/obj/machinery/bodyscanner, get_step(src, WEST))
+	connected = locate(/obj/machinery/bodyscanner) in orange(1, src)
 
 /obj/machinery/body_scanconsole/ui_interact(mob/user)
 	if(!ishuman(connected.occupant))
 		to_chat(user, "<span class='warning'>This device can only scan compatible lifeforms.</span>")
 		return
-
+	if(!do_skill_checks(user))
+		return
 	var/dat
 
 	if (src.connected) //Is something connected?
@@ -166,13 +172,12 @@
 					t1 = "Unconscious"
 				else
 					t1 = "*dead*"
-			if (!istype(occupant,/mob/living/carbon/human))
+			if (!ishuman(occupant))
 				dat += "<font color='red'>This device can only scan human occupants.</font>"
 			else
 				dat += text("<font color='[]'>\tHealth %: [] ([])</font><BR>", (occupant.health > 50 ? "blue" : "red"), occupant.health, t1)
 
-				//if(occupant.mind && occupant.mind.changeling && occupant.status_flags & FAKEDEATH)
-				if(occupant.mind && occupant.mind.changeling && occupant.fake_death)
+				if(ischangeling(occupant) && occupant.fake_death)
 					dat += text("<font color='red'>Abnormal bio-chemical activity detected!</font><BR>")
 
 				if(occupant.virus2.len)
@@ -186,27 +191,23 @@
 				dat += text("<font color='[]'>\tRadiation Level %: []</font><BR>", (occupant.radiation < 10 ?"blue" : "red"), occupant.radiation)
 				dat += text("<font color='[]'>\tGenetic Tissue Damage %: []</font><BR>", (occupant.getCloneLoss() < 1 ?"blue" : "red"), occupant.getCloneLoss())
 				dat += text("<font color='[]'>\tApprox. Brain Damage %: []</font><BR>", (occupant.getBrainLoss() < 1 ?"blue" : "red"), occupant.getBrainLoss())
-				dat += text("Paralysis Summary %: [] ([] seconds left!)<BR>", occupant.paralysis, round(occupant.paralysis / 4))
+				var/occupant_paralysis = occupant.AmountParalyzed()
+				dat += text("Paralysis Summary %: [] ([] seconds left!)<BR>", occupant_paralysis, round(occupant_paralysis / 4))
 				dat += text("Body Temperature: [occupant.bodytemperature-T0C]&deg;C ([occupant.bodytemperature*1.8-459.67]&deg;F)<BR><HR>")
 
 				if(occupant.has_brain_worms())
 					dat += "Large growth detected in frontal lobe, possibly cancerous. Surgical removal is recommended.<BR/>"
 
-				if(occupant.vessel)
-					var/blood_volume = round(occupant.vessel.get_reagent_amount("blood"))
-					var/blood_percent =  blood_volume / 560
-					blood_percent *= 100
-					dat += text("<font color='[]'>\tBlood Level %: [] ([] units)</font><BR>", (blood_volume > 448 ? "blue" : "red"), blood_percent, blood_volume)
+				var/blood_volume = occupant.blood_amount()
+				var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
+				dat += text("<font color='[]'>\tBlood Level %: [] ([] units)</font><BR>", (blood_volume >= BLOOD_VOLUME_SAFE ? "blue" : "red"), blood_percent, blood_volume)
+
 				if(occupant.reagents)
 					dat += text("Inaprovaline units: [] units<BR>", occupant.reagents.get_reagent_amount("inaprovaline"))
 					dat += text("Soporific (Sleep Toxin): [] units<BR>", occupant.reagents.get_reagent_amount("stoxin"))
 					dat += text("<font color='[]'>\tDermaline: [] units</font><BR>", (occupant.reagents.get_reagent_amount("dermaline") < 30 ? "black" : "red"), occupant.reagents.get_reagent_amount("dermaline"))
 					dat += text("<font color='[]'>\tBicaridine: [] units</font><BR>", (occupant.reagents.get_reagent_amount("bicaridine") < 30 ? "black" : "red"), occupant.reagents.get_reagent_amount("bicaridine"))
 					dat += text("<font color='[]'>\tDexalin: [] units</font><BR>", (occupant.reagents.get_reagent_amount("dexalin") < 30 ? "black" : "red"), occupant.reagents.get_reagent_amount("dexalin"))
-
-				for(var/datum/disease/D in occupant.viruses)
-					if(!D.hidden[SCANNER])
-						dat += text("<font color='red'><B>Warning: [D.form] Detected</B>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</FONT><BR>")
 
 				dat += "<HR><A href='?src=\ref[src];print=1'>Print body parts report</A><BR>"
 				storedinfo = null
@@ -237,12 +238,9 @@
 					var/robot = ""
 					var/splint = ""
 					var/arterial_bleeding = ""
-					var/lung_ruptured = ""
 					var/rejecting = ""
 					if(BP.status & ORGAN_ARTERY_CUT)
 						arterial_bleeding = "<br>Arterial bleeding"
-					if(istype(BP, /obj/item/organ/external/chest) && occupant.is_lung_ruptured())
-						lung_ruptured = "Lung ruptured:"
 					if(BP.status & ORGAN_SPLINTED)
 						splint = "Splinted:"
 					if(BP.status & ORGAN_BLEEDING)
@@ -280,11 +278,11 @@
 
 					if(unknown_body || BP.hidden)
 						imp += "Unknown body present:"
-					if(!AN && !open && !infected & !imp)
+					if(!AN && !open && !infected && !imp)
 						AN = "None:"
 					if(!(BP.is_stump))
-						dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][lung_ruptured][rejecting]</td>"
-						storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][lung_ruptured][rejecting]</td>"
+						dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
+						storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
 					else
 						dat += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
 						storedinfo += "<td>[parse_zone(BP.body_zone)]</td><td>-</td><td>-</td><td>Not Found</td>"
@@ -312,6 +310,10 @@
 							organ_status = "Heart Failure:"
 						else if(Heart.heart_status == HEART_FIBR)
 							organ_status = "Heart Fibrillation:"
+
+					if(istype(IO, /obj/item/organ/internal/lungs))
+						if(occupant.is_lung_ruptured())
+							organ_status = "Lung ruptured:"
 
 					switch (IO.germ_level)
 						if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)

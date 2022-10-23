@@ -1,3 +1,72 @@
+#define SOCIALIZATION_NORMAL 0
+#define SOCIALIZATION_LONELY 1
+#define SOCIALIZATION_VERY_LONELY 2
+
+/mob/living/carbon/human
+	var/conversation_timer
+	var/social_state = SOCIALIZATION_NORMAL
+
+/mob/living/carbon/human/atom_init()
+	. = ..()
+	handle_socialization()
+
+/mob/living/carbon/human/Destroy()
+	deltimer(conversation_timer)
+	return ..()
+
+/mob/living/carbon/human/proc/set_social_state(state)
+	switch(state)
+		if(SOCIALIZATION_NORMAL)
+			social_state = SOCIALIZATION_NORMAL
+			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "no_socialization")
+
+			deltimer(conversation_timer)
+			conversation_timer = addtimer(
+				CALLBACK(src, .proc/handle_no_socialization),
+				5 MINUTES,
+				TIMER_STOPPABLE
+			)
+
+		if(SOCIALIZATION_LONELY)
+			social_state = SOCIALIZATION_LONELY
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
+
+			deltimer(conversation_timer)
+			conversation_timer = addtimer(
+				CALLBACK(src, .proc/handle_prolonged_no_socialization),
+				5 MINUTES,
+				TIMER_STOPPABLE
+			)
+
+		if(SOCIALIZATION_VERY_LONELY)
+			social_state = SOCIALIZATION_VERY_LONELY
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/very_lonely)
+
+/mob/living/carbon/human/proc/handle_prolonged_no_socialization()
+	if(HAS_TRAIT(src, TRAIT_MUTE))
+		return
+	set_social_state(SOCIALIZATION_VERY_LONELY)
+
+/mob/living/carbon/human/proc/handle_no_socialization()
+	if(HAS_TRAIT(src, TRAIT_MUTE))
+		return
+	set_social_state(SOCIALIZATION_LONELY)
+
+/mob/living/carbon/human/proc/handle_socialization(mob/hearer)
+	if(!species.flags[IS_SOCIAL])
+		return
+	if(HAS_TRAIT(src, TRAIT_MUTE))
+		return
+
+	var/new_social_state = SOCIALIZATION_LONELY
+	if(ishuman(hearer))
+		new_social_state = SOCIALIZATION_NORMAL
+	else if(isnull(hearer))
+		new_social_state = SOCIALIZATION_NORMAL
+
+	if(social_state > new_social_state)
+		set_social_state(new_social_state)
+
 /mob/living/carbon/human/say(message, ignore_appearance)
 	var/verb = "says"
 	var/message_range = world.view
@@ -10,13 +79,7 @@
 			to_chat(src, "<span class='userdanger'>You cannot speak in IC (Muted).</span>")
 			return
 
-	//Meme stuff
-	if(!speech_allowed && usr == src)
-		to_chat(usr, "<span class='userdanger'>You can't speak.</span>")
-		return
-
 	message =  sanitize(message)
-
 	if(!message)
 		return
 
@@ -27,14 +90,14 @@
 
 	var/message_mode = parse_message_mode(message, "headset")
 
-	if (istype(wear_mask, /obj/item/clothing/mask/muzzle) && !(message_mode == "changeling" || message_mode == "alientalk"))  //Todo:  Add this to speech_problem_flag checks.
+	if (istype(wear_mask, /obj/item/clothing/mask/muzzle) && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))  //Todo:  Add this to speech_problem_flag checks.
 		return
 
 	if(message[1] == "*")
-		return emote(copytext(message, 2), auto = FALSE)
+		return emote(copytext(message, 2), intentional = TRUE)
 
 	//check if we are miming
-	if (miming && !(message_mode == "changeling" || message_mode == "alientalk"))
+	if (miming && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
 		to_chat(usr, "<span class='userdanger'>You are mute.</span>")
 		return
 
@@ -47,72 +110,75 @@
 			message = copytext(message,2)	//it would be really nice if the parse procs could do this for us.
 		else
 			message = copytext(message,2 + length(message[2]))
+		if(!message)
+			return
 
 	//parse the language code and consume it or use default racial language if forced.
-	var/datum/language/speaking = parse_language(message)
-	var/has_lang_prefix = !!speaking
-	if(!has_lang_prefix && HAS_TRAIT(src, TRAIT_MUTE))
-		var/datum/language/USL = all_languages["Universal Sign Language"]
-		if(can_speak(USL))
-			speaking = USL
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
 
 	//check if we're muted and not using gestures
-	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk"))
+	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
 		if (!(speaking && (speaking.flags & SIGNLANG)))
 			to_chat(usr, "<span class='userdanger'>You are mute.</span>")
 			return
 
 	if (speaking && (speaking.flags & SIGNLANG))
-		var/obj/item/organ/external/LH = src.get_bodypart(BP_L_ARM)
-		var/obj/item/organ/external/RH = src.get_bodypart(BP_R_ARM)
+		var/obj/item/organ/external/LH = get_bodypart(BP_L_ARM)
+		var/obj/item/organ/external/RH = get_bodypart(BP_R_ARM)
 		if (!(LH && LH.is_usable() && RH && RH.is_usable()))
 			to_chat(usr, "<span class='userdanger'>You tried to make a gesture, but your hands are not responding.</span>")
 			return
 
-	if (has_lang_prefix)
-		message = copytext(message,2+length_char(speaking.key))
-	else if(species.force_racial_language)
-		speaking = all_languages[species.language]
-	else
+	message = approximate_sounds(message, speaking)
+	if(!message)
+		return
+
+	message = accent_sounds(message, speaking)
+
+	if(!speaking)
 		switch(species.name)
-			if(TAJARAN)
-				message = replacetextEx_char(message, "р", pick(list("ррр" , "рр")))
-				message = replacetextEx_char(message, "Р", pick(list("Ррр" , "Рр")))
-			if(UNATHI)
-				message = replacetextEx_char(message, "с", pick(list("ссс" , "сс")))
-				//И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
-				message = replacetextEx_char(message, "С", pick(list("Ссс" , "Сс")))
+			if(PODMAN)
+				message = replacetext(message, "ж", pick(list("ш", "хш")))
+				message = replacetext(message, "з", pick(list("с", "хс")))
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
+				var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)
 				var/sm = sanitize(message)
-				for(var/mob/living/carbon/human/H in human_list)
-					if(H.species.name != ABDUCTOR)
+				for(var/mob/living/carbon/human/H as anything in human_list)
+					if(!H.mind || H.species.name != ABDUCTOR)
 						continue
-					if(user.team != H.team)
+					var/datum/role/abductor/human = H.mind.GetRoleByType(/datum/role/abductor)
+					if(!(human in A.faction.members))
 						continue
-					to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
+					to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
 					//return - technically you can add more aliens to a team
-				for(var/mob/M in observer_list)
-					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
+				for(var/mob/M as anything in observer_list)
+					var/link = FOLLOW_LINK(M, user)
+					to_chat(M, "[link]<span class='abductor_team[A.get_team_num()]'><b>[user.real_name]:</b> [sm]</span>")
 				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
 
 	message = capitalize(trim(message))
+	message = add_period(message)
+
 	if(iszombie(src))
 		message = zombie_talk(message)
 
 	var/ending = copytext(message, -1)
-	if (speaking)
+
+	if(speaking)
 		//If we've gotten this far, keep going!
 		verb = speaking.get_spoken_verb(ending)
 	else
-		if(ending=="!")
-			verb=pick("exclaims","shouts","yells")
-		if(ending=="?")
-			verb="asks"
+		if(ending == "!")
+			verb = pick("exclaims","shouts","yells")
+		if(ending == "?")
+			verb = "asks"
 
 	if(speech_problem_flag)
-		var/list/handle_r = handle_speech_problems(message, message_mode)
+		var/list/handle_r = handle_speech_problems(message, message_mode, verb)
 		//var/list/handle_r = handle_speech_problems(message)
 		message = handle_r[1]
 		verb = handle_r[2]
@@ -121,7 +187,7 @@
 			speech_sound = handle_r[4]
 			sound_vol = handle_r[5]
 
-	if(!message || stat)
+	if(!message || (stat != CONSCIOUS && (message_mode != "changeling"))) // little tweak so changeling can call for help while in sleep
 		return
 
 	var/list/obj/item/used_radios = new
@@ -176,45 +242,54 @@
 				robot_talk(message)
 			return
 		if("changeling")
-			if(mind && mind.changeling)
-				var/n_message = message
-				log_say("Changeling Mind: [mind.changeling.changelingID]/[mind.name]/[key] : [n_message]")
-				for(var/mob/Changeling in mob_list)
-					if(Changeling.mind && Changeling.mind.changeling)
-						to_chat(Changeling, "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
-						for(var/M in Changeling.mind.changeling.essences)
-							to_chat(M, "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+			if(ischangeling(src))
+				if(stat != CONSCIOUS)
+					message = stars(message, 20) // sleeping changeling has a little confused mind
+				var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+				var/n_message = "<span class='changeling'><b>[C.changelingID]:</b> [message]</span>"
+				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [message]")
+				for(var/mob/Changeling as anything in mob_list)
+					if(ischangeling(Changeling))
+						to_chat(Changeling, n_message)
+						var/datum/role/changeling/CC = Changeling.mind.GetRoleByType(/datum/role/changeling)
+						for(var/M in CC.essences)
+							to_chat(M, n_message)
 
 					else if(isobserver(Changeling))
-						to_chat(Changeling, "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+						to_chat(Changeling, n_message)
 			return
 		if("alientalk")
-			if(mind && mind.changeling)
-				var/n_message = message
-				for(var/M in mind.changeling.essences)
-					to_chat(M, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
-
-				for(var/mob/M in observer_list)
-					if(!M.client)
-						continue //skip monkeys, leavers and new players
-					if(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
-						to_chat(M, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
-
-				to_chat(src, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
-				log_say("Changeling Mind: [mind.changeling.changelingID]/[mind.name]/[key] : [n_message]")
+			if(ischangeling(src))
+				var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+				var/n_message = "<span class='shadowling'><b>[C.changelingID]:</b> [message]</span>"
+				for(var/M in C.essences)
+					to_chat(M, n_message)
+				for(var/datum/orbit/O in orbiters)
+					to_chat(O.orbiter, n_message)
+				to_chat(src, n_message)
+				log_say("Changeling Mind: [C.changelingID]/[mind.name]/[key] : [message]")
+			return
+		if("mafia")
+			if(global.mafia_game)
+				var/datum/mafia_controller/MF = global.mafia_game
+				var/datum/mafia_role/R = MF.player_role_lookup[src]
+				if(R && R.team == "mafia")
+					MF.send_message("<span class='shadowling'><b>[R.body.real_name]:</b> [message]</span>", "mafia")
 			return
 		else
 			if(message_mode)
 				if(message_mode in (radiochannels | "department"))
-					if(l_ear && istype(l_ear,/obj/item/device/radio))
-						l_ear.talk_into(src,message, message_mode, verb, speaking)
+					if(l_ear && istype(l_ear,/obj/item/device/radio) && l_ear.talk_into(src,message, message_mode, verb, speaking))
 						used_radios += l_ear
-					else if(r_ear && istype(r_ear,/obj/item/device/radio))
-						r_ear.talk_into(src,message, message_mode, verb, speaking)
+					else if(r_ear && istype(r_ear,/obj/item/device/radio) && r_ear.talk_into(src,message, message_mode, verb, speaking))
 						used_radios += r_ear
 
 	if((species.name == VOX || species.name == VOX_ARMALIS) && prob(20))
 		speech_sound = sound('sound/voice/shriek1.ogg')
+		sound_vol = 50
+
+	else if(species.name == ABOMINATION)
+		speech_sound = sound('sound/voice/abomination.ogg')
 		sound_vol = 50
 
 	..(message, speaking, verb, alt_name, italics, message_range, used_radios, speech_sound, sound_vol, sanitize = FALSE, message_mode = message_mode)	//ohgod we should really be passing a datum here.
@@ -229,6 +304,8 @@
 		if(istype(other, /mob/living/carbon/monkey/diona))
 			if(other.languages.len >= 2)			//They've sucked down some blood and can speak common now.
 				return 1
+		if(isautosay(other))
+			return 1
 		if(issilicon(other))
 			return 1
 		if(isbrain(other))
@@ -237,7 +314,7 @@
 			return 1
 		if(isgod(other))
 			var/mob/living/simple_animal/shade/god/G = other
-			if(l_hand == G.container || r_hand == G.container)
+			if(G.my_religion.is_member(src))
 				return TRUE
 
 	//This is already covered by mob/say_understands()
@@ -255,8 +332,10 @@
 			return V.voice
 		else
 			return name
-	if(mind && mind.changeling && mind.changeling.mimicing)
-		return mind.changeling.mimicing
+	if(ischangeling(src))
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+		if(C.mimicing)
+			return C.mimicing
 	if(special_voice)
 		return special_voice
 	return real_name
@@ -293,9 +372,8 @@
 
 
 //mob/living/carbon/human/proc/handle_speech_problems(message)
-/mob/living/carbon/human/proc/handle_speech_problems(message, message_mode)
+/mob/living/carbon/human/proc/handle_speech_problems(message, message_mode, verb)
 	var/list/returns[5]
-	var/verb = "says"
 	var/handled = 0
 	var/sound/speech_sound = null
 	var/sound_vol = 50
@@ -352,3 +430,7 @@
 	returns[5] = sound_vol
 
 	return returns
+
+#undef SOCIALIZATION_NORMAL
+#undef SOCIALIZATION_LONELY
+#undef SOCIALIZATION_VERY_LONELY

@@ -23,9 +23,6 @@
 
 // You need this for every user text input()
 /proc/sanitize(input, max_length = MAX_MESSAGE_LEN, encode = TRUE, trim = TRUE, extra = TRUE, ascii_only = FALSE)
-	if(!input)
-		return
-
 	if(max_length)
 		input = copytext_char(input, 1, max_length)
 
@@ -37,7 +34,7 @@
 		// You should always consider this with any text processing work
 		// More: http://www.byond.com/docs/ref/info.html#/{notes}/Unicode
 		//       http://www.byond.com/forum/post/2520672
-		input = stip_non_ascii(input)
+		input = strip_non_ascii(input)
 	else
 		// Strip Unicode control/space-like chars here exept for line endings (\n,\r) and normal space (0x20)
 		// codes from https://www.compart.com/en/unicode/category/
@@ -67,10 +64,14 @@
 /proc/sanitize_safe(input, max_length = MAX_MESSAGE_LEN, encode = TRUE, trim = TRUE, extra = TRUE, ascii_only = FALSE)
 	return sanitize(replace_characters(input, list(">"=" ","<"=" ", "\""="'")), max_length, encode, trim, extra, ascii_only)
 
+/proc/paranoid_sanitize(t)
+	var/static/regex/alphanum_only = regex("\[^a-zA-Z0-9# ,.?!:;()]", "g")
+	return alphanum_only.Replace(t, "#")
+
 //Filters out undesirable characters from character names
 //todo: rewrite this
 /proc/sanitize_name(input, max_length = MAX_NAME_LEN, allow_numbers = 0, force_first_letter_uppercase = TRUE)
-	if(!input || length_char(input) > max_length)
+	if(length_char(input) > max_length)
 		return //Rejects the input if it is null or if it is longer then the max length allowed
 
 	var/number_of_alphanumeric	= 0
@@ -182,9 +183,14 @@
  * Text modification
  */
 
-/proc/replace_characters(var/t,var/list/repl_chars)
+/proc/replace_characters(t, list/repl_chars)
 	for(var/char in repl_chars)
 		t = replacetext(t, char, repl_chars[char])
+	return t
+
+/proc/replaceEx_characters(t, list/repl_chars)
+	for(var/char in repl_chars)
+		t = replacetextEx(t, char, repl_chars[char])
 	return t
 
 /proc/random_string(length, list/characters)
@@ -213,6 +219,10 @@
 		t = "[t] "
 	return t
 
+/proc/repeat_string_times(t, u)
+	for(var/i in 1 to u)
+		. += t
+
 // Returns a string with reserved characters and spaces before the first letter removed
 // not work for unicode spaces - you should cleanup them first with sanitize()
 /proc/trim_left(text)
@@ -235,10 +245,36 @@
 /proc/trim(text)
 	return trim_left(trim_right(text))
 
-//Returns a string with the first element of the string capitalized.
+// Returns a string without a margin before the provided margin prefix.
+// Useful to do a code formatting when multiline strings are used.
+/proc/trim_margin(text, margin_prefix = "|")
+	var/result = ""
+
+	for (var/line in splittext(text, "\n"))
+		var/margin_idx = findtext_char(line, margin_prefix) + 1
+		line = copytext_char(line, margin_idx)
+		if (line != margin_prefix) // If the line is made of only a margin prefix, then make it an empty line.
+			result += line
+		result += "\n"
+
+	return trim(result)
+
+//Returns a string with the first element of the string un- or capitalized.
 /proc/capitalize(text)
-	if(text)
-		text = uppertext(text[1]) + copytext(text, 1 + length(text[1]))
+	return uppertext(text[1]) + copytext(text, 1 + length(text[1]))
+
+/proc/uncapitalize(text)
+	return lowertext(text[1]) + copytext(text, 1 + length(text[1]))
+
+//Returns a string with a period at the end.
+/proc/add_period(text)
+	var/static/list/punctuation_marks_final = list(".", "?", "!", ";")
+	var/ending = copytext(text, -1)
+	if(!(ending in punctuation_marks_final))
+		if(ending == ",")
+			text = splicetext(text, length(text), 0, ".")
+		else
+			text += "."
 	return text
 
 //Returns a string with the first element of the every word of the string capitalized.
@@ -249,15 +285,13 @@
 		M += capitalize(w)
 	return jointext(M, " ")
 
-/proc/stip_non_ascii(text)
+/proc/strip_non_ascii(text)
 	var/static/regex/non_ascii_regex = regex(@"[^\x00-\x7F]+", "g")
 	return non_ascii_regex.Replace(text, "")
 
 //This proc strips html properly, remove < > and all text between
 //for complete text sanitizing should be used sanitize()
 /proc/strip_html_properly(input)
-	if(!input)
-		return
 	var/opentag = 1 //These store the position of < and > respectively.
 	var/closetag = 1
 	while(1)
@@ -419,3 +453,18 @@
 		new_text += new_char
 
 	return new_text
+
+/proc/pluralize_russian(n, one, two, five)
+	if(!five)
+		five = two
+	n = abs(n) % 100
+	if(5 <= n && n <= 20)
+		return five
+	n %= 10
+	switch(n)
+		if(1)
+			return one
+		if(2 to 4)
+			return two
+		else
+			return five

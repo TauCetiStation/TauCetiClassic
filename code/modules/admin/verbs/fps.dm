@@ -13,7 +13,7 @@
 		to_chat(src, "<span class='danger'>Error: ticklag(): Invalid world.ticklag value. No changes made.</span>")
 		return
 	if(fps > config.fps)
-		if(alert(src, "You are setting fps to a high value:\n\t[fps] frames-per-second\n\tconfig.fps = [config.fps]","Warning!","Confirm","ABORT-ABORT-ABORT") != "Confirm")
+		if(tgui_alert(src, "You are setting fps to a high value:\n\t[fps] frames-per-second\n\tconfig.fps = [config.fps]","Warning!", list("Confirm","ABORT-ABORT-ABORT")) != "Confirm")
 			return
 
 	var/msg = "[key_name(src)] has modified world.fps to [fps]"

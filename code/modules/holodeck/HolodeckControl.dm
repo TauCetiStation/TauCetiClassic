@@ -109,7 +109,7 @@
 	else if(href_list["gravity"])
 		toggleGravity(linkedholodeck)
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/HolodeckControl/emag_act(mob/user)
 	playsound(src, 'sound/effects/sparks4.ogg', VOL_EFFECTS_MASTER)
@@ -121,7 +121,7 @@
 		to_chat(user, "<span class='notice'>You vastly increase projector power and override the safety and security protocols.</span>")
 		to_chat(user, "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator.")
 		log_game("[key_name(usr)] emagged the Holodeck Control Computer")
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return TRUE
 
 /obj/machinery/computer/HolodeckControl/proc/update_projections()
@@ -200,7 +200,7 @@
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 					s.set_up(2, 1, T)
 					s.start()
-				T.ex_act(3)
+				T.ex_act(EXPLODE_LIGHT)
 				T.hotspot_expose(1000, 500)
 
 /obj/machinery/computer/HolodeckControl/proc/derez(obj/obj , silent = 1)
@@ -222,7 +222,7 @@
 
 /obj/machinery/computer/HolodeckControl/proc/checkInteg(area/A)
 	for(var/turf/T in A)
-		if(istype(T, /turf/space))
+		if(isenvironmentturf(T))
 			return 0
 
 	return 1
@@ -253,13 +253,10 @@
 		qdel(B)
 
 	if(!spawn_point)
-		for(var/obj/effect/landmark/L in landmarks_list)
-			if(L.name=="Holodeck Base")
-				spawn_point = get_turf(L)
-				break
-
-	if(!spawn_point)
-		return
+		var/obj/effect/landmark/L = locate("landmark*Holodeck Base")
+		if(!L)
+			return
+		spawn_point = get_turf(L)
 
 	var/datum/gas_mixture/cenv = spawn_point.return_air()
 	var/datum/gas_mixture/env = new()
@@ -271,6 +268,7 @@
 	for(var/obj/holo_obj in holographic_objs)
 		holo_obj.alpha *= 0.8 //give holodeck objs a slight transparency
 		holo_obj.flags_2 |= HOLOGRAM_2
+		holo_obj.price = 0
 
 	addtimer(CALLBACK(src, .proc/initEnv), 30, TIMER_UNIQUE)
 

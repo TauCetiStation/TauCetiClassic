@@ -64,6 +64,40 @@ SUBSYSTEM_DEF(throwing)
 	var/datum/callback/callback
 	var/datum/callback/early_callback // used when you want to call something before throw_impact().
 
+/datum/thrownthing/New(thrownthing, target, target_turf, init_dir, maxrange, speed, thrower, diagonals_first, datum/callback/callback, datum/callback/early_callback)
+	src.thrownthing = thrownthing
+	src.target = target
+	src.target_turf = target_turf
+	src.init_dir = init_dir
+	src.maxrange = maxrange
+	src.speed = speed
+	src.thrower = thrower
+	src.diagonals_first = diagonals_first
+	src.callback = callback
+	src.early_callback = early_callback
+
+	RegisterSignal(thrownthing, COMSIG_PARENT_QDELETING, .proc/on_thrownthing_qdel)
+
+/datum/thrownthing/Destroy()
+	SSthrowing.processing -= thrownthing
+	SSthrowing.currentrun -= thrownthing
+	thrownthing.throwing = null
+	thrownthing = null
+	target = null
+	thrower = null
+	target_turf = null
+	if(callback)
+		QDEL_NULL(callback) //It stores a reference to the thrownthing, its source. Let's clean that.
+	if(early_callback)
+		QDEL_NULL(early_callback)
+	return ..()
+
+///Defines the datum behavior on the thrownthing's qdeletion event.
+/datum/thrownthing/proc/on_thrownthing_qdel(atom/movable/source, force)
+	SIGNAL_HANDLER
+
+	qdel(src)
+
 /datum/thrownthing/proc/tick()
 	var/atom/movable/AM = thrownthing
 	if (!isturf(AM.loc) || !AM.throwing)
@@ -111,32 +145,42 @@ SUBSYSTEM_DEF(throwing)
 
 /datum/thrownthing/proc/finialize(hit = FALSE, atom/movable/AM)
 	set waitfor = 0
-	SSthrowing.processing -= thrownthing
 	//done throwing, either because it hit something or it finished moving
-	if (!QDELETED(thrownthing) && thrownthing.throwing)
-		thrownthing.throwing = FALSE
+	if (QDELETED(thrownthing) || !thrownthing.throwing)
+		return
 
-		if(early_callback)
-			early_callback.Invoke()
+	thrownthing.throwing = FALSE
 
-		if(AM)
-			thrownthing.throw_impact(AM, src)
-		else
-			if (!hit)
-				for (var/thing in get_turf(thrownthing)) //looking for our target on the turf we land on.
-					var/atom/A = thing
-					if (A == target)
-						hit = TRUE
-						thrownthing.throw_impact(A, src)
-						break
-				if (!hit)
-					thrownthing.throw_impact(get_turf(thrownthing), src)  // we haven't hit something yet and we still must, let's hit the ground.
-					thrownthing.newtonian_move(init_dir)
-			else
-				thrownthing.newtonian_move(init_dir)
-		thrownthing.fly_speed = 0
+	if(early_callback)
+		early_callback.Invoke()
+
+	if (!hit)
+		for (var/thing in get_turf(thrownthing)) //looking for our target on the turf we land on.
+			var/atom/A = thing
+			if (A == target)
+				hit = TRUE
+				thrownthing.throw_impact(A, src)
+				if(QDELETED(thrownthing)) //throw_impact can delete things, such as glasses smashing
+					return //deletion should already be handled by on_thrownthing_qdel()
+				break
+		if (!hit)
+			thrownthing.throw_impact(get_turf(thrownthing), src)  // we haven't hit something yet and we still must, let's hit the ground.
+			if(QDELETED(thrownthing)) //throw_impact can delete things, such as glasses smashing
+				return //deletion should already be handled by on_thrownthing_qdel()
+			thrownthing.newtonian_move(init_dir)
+	else
+		thrownthing.newtonian_move(init_dir)
+
+	if(AM)
+		thrownthing.throw_impact(AM, src)
+		if(QDELETED(thrownthing)) //throw_impact can delete things, such as glasses smashing
+			return //deletion should already be handled by on_thrownthing_qdel()
+
+	thrownthing.fly_speed = 0
 	if (callback)
 		callback.Invoke()
+
+	qdel(src)
 
 /datum/thrownthing/proc/hit_check()
 	for (var/thing in get_turf(thrownthing))

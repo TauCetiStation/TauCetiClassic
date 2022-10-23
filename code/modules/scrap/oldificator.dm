@@ -1,8 +1,9 @@
-/obj/proc/make_old()
+/obj/proc/make_old(change_looks = TRUE)
 	color = pick("#996633", "#663300", "#666666")
 	light_color = color
-	name = pick("old ", "expired ", "dirty ") + initial(name)
-	desc += pick(" Warranty has expired.", " The inscriptions on this thing were erased by time.", " Looks completely wasted.")
+	if(change_looks)
+		name = pick("old ", "expired ", "dirty ") + initial(name)
+		desc += pick(" Warranty has expired.", " The inscriptions on this thing were erased by time.", " Looks completely wasted.")
 	if(prob(75))
 		origin_tech = null
 	reliability = rand(100)
@@ -51,7 +52,7 @@
 	..()
 
 /obj/item/ammo_box/make_old()
-	var/del_count = rand(0,contents.len)
+	var/del_count = rand(0,stored_ammo.len)
 	for(var/i = 1 to del_count)
 		var/removed_item = pick(stored_ammo)
 		stored_ammo -= removed_item
@@ -114,12 +115,12 @@
 	if(prob(50))
 		slowdown += pick(0.5, 0.5, 1, 1.5)
 	if(prob(75))
-		armor["melee"] = armor["melee"] / 2
-		armor["bullet"] = armor["bullet"] / 2
-		armor["laser"] = armor["laser"] / 2
-		armor["energy"] = armor["energy"] / 2
-		armor["bomb"] = armor["bomb"] / 2
-		armor["bio"] = armor["bio"] / 2
+		armor[MELEE] = armor[MELEE] / 2
+		armor[BULLET] = armor[BULLET] / 2
+		armor[LASER] = armor[LASER] / 2
+		armor[ENERGY] = armor[ENERGY] / 2
+		armor[BOMB] = armor[BOMB] / 2
+		armor[BIO] = armor[BIO] / 2
 		armor["rad"] = armor["rad"] / 2
 	if(prob(50))
 		uncleanable = 1

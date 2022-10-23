@@ -93,7 +93,7 @@
 
 	if(!var_value) return
 
-	switch(alert("Would you like to associate a var with the list entry?",,"Yes","No"))
+	switch(tgui_alert(usr, "Would you like to associate a var with the list entry?",, list("Yes","No")))
 		if("Yes")
 			L += var_value
 			L[var_value] = mod_list_add_ass() //haha
@@ -109,7 +109,7 @@
 		return
 
 
-	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "icon", "icon_state")
+	var/list/locked = list("vars", "key", "ckey", "client", "icon", "icon_state")
 	var/list/names = sortList(L)
 
 	var/variable = input("Which var?","Var") as null|anything in names + "(ADD VAR)"
@@ -148,7 +148,7 @@
 		variable = "[bicon(variable)]"
 		default = "icon"
 
-	else if(istype(variable,/atom) || istype(variable,/datum))
+	else if(isatom(variable) || istype(variable,/datum))
 		to_chat(usr, "Variable appears to be <b>TYPE</b>.")
 		default = "type"
 
@@ -156,7 +156,7 @@
 		to_chat(usr, "Variable appears to be <b>LIST</b>.")
 		default = "list"
 
-	else if(istype(variable,/client))
+	else if(isclient(variable))
 		to_chat(usr, "Variable appears to be <b>CLIENT</b>.")
 		default = "cancel"
 
@@ -207,7 +207,7 @@
 
 		if("list")
 			if(!islist(L[L.Find(variable)]))
-				if(alert("This is not a list. Would you like to create new list?",,"Yes","No") == "No")
+				if(tgui_alert(usr, "This is not a list. Would you like to create new list?",, list("Yes","No")) == "No")
 					return
 				L[L.Find(variable)] = list()
 			mod_list(L[L.Find(variable)])
@@ -307,7 +307,7 @@
 				var_value = "[bicon(var_value)]"
 				class = "icon"
 
-			else if(istype(var_value,/atom) || istype(var_value,/datum))
+			else if(isatom(var_value) || istype(var_value,/datum))
 				to_chat(usr, "Variable appears to be <b>TYPE</b>.")
 				class = "type"
 
@@ -315,7 +315,7 @@
 				to_chat(usr, "Variable appears to be <b>LIST</b>.")
 				class = "list"
 
-			else if(istype(var_value,/client))
+			else if(isclient(var_value))
 				to_chat(usr, "Variable appears to be <b>CLIENT</b>.")
 				class = "cancel"
 
@@ -366,7 +366,7 @@
 			var_value = "[bicon(var_value)]"
 			default = "icon"
 
-		else if(istype(var_value,/atom) || istype(var_value,/datum))
+		else if(isatom(var_value) || istype(var_value,/datum))
 			to_chat(usr, "Variable appears to be <b>TYPE</b>.")
 			default = "type"
 
@@ -374,7 +374,7 @@
 			to_chat(usr, "Variable appears to be <b>LIST</b>.")
 			default = "list"
 
-		else if(istype(var_value,/client))
+		else if(isclient(var_value))
 			to_chat(usr, "Variable appears to be <b>CLIENT</b>.")
 			default = "cancel"
 
@@ -418,7 +418,7 @@
 
 	var/original_name
 
-	if (!istype(O, /atom))
+	if (!isatom(O))
 		original_name = "\ref[O] ([O])"
 	else
 		original_name = O:name
@@ -432,7 +432,7 @@
 
 		if("list")
 			if(!islist(O.vars[variable]))
-				if(alert("This is not a list. Would you like to create new list?",,"Yes","No") == "No")
+				if(tgui_alert(usr, "This is not a list. Would you like to create new list?",, list("Yes","No")) == "No")
 					return
 				O.vars[variable] = list()
 			mod_list(O.vars[variable])
@@ -491,9 +491,7 @@
 					if(!isarea(O) && !isturf(O))
 						to_chat(usr, "This can only be used on instances of type /area and /turf")
 						return
-					var/var_new = alert("dynamic_lighting", ,
-						"DYNAMIC_LIGHTING_DISABLED", "DYNAMIC_LIGHTING_ENABLED", "DYNAMIC_LIGHTING_FORCED"
-						)
+					var/var_new = tgui_alert(usr, "dynamic_lighting",, list("DYNAMIC_LIGHTING_DISABLED", "DYNAMIC_LIGHTING_ENABLED", "DYNAMIC_LIGHTING_FORCED"))
 					switch(var_new)
 						if("DYNAMIC_LIGHTING_DISABLED")
 							var_new = DYNAMIC_LIGHTING_DISABLED
@@ -510,7 +508,7 @@
 					if(isnull(var_new) || var_new < 0)
 						return
 					O.vars[variable] = var_new
-					if(istype(O,/client))
+					if(isclient(O))
 						var/client/C = O
 						if(C) C.log_client_ingame_age_to_db()
 				if("stat")
@@ -537,6 +535,17 @@
 					message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.resize]")
 					log_handled = TRUE
 					O.update_transform()
+				if("height")
+					if(ishuman(O))
+						var/mob/living/carbon/human/H = O
+						var/var_new = input("Enter new height: \n(Human will gain this height from 1.6 to 2.0)", "Num", H.vars[variable]) as null|anything in heights_list
+						if(isnull(var_new))
+							return
+						H.vars[variable] = var_new
+						world.log << "### VarEdit by [src]: [H.type] [variable]=[html_encode("[H.height]")]"
+						log_admin("[key_name(src)] modified [original_name]'s [variable] to [H.height]")
+						log_handled = TRUE
+						H.regenerate_icons()
 				else
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
 					if(isnull(var_new))

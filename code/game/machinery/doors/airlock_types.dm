@@ -269,6 +269,8 @@
 
 	assembly_type = /obj/structure/door_assembly/door_assembly_vault
 
+	max_integrity = 600
+
 
 /***************
 * Hatch airlocks
@@ -319,6 +321,28 @@
 
 	assembly_type = /obj/structure/door_assembly/door_assembly_neutral
 
+/obj/machinery/door/airlock/erokez/med
+	icon          = 'icons/obj/doors/airlocks/shuttle/med.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
+
+	assembly_type = /obj/structure/door_assembly/door_assembly_neutral
+	opacity       = FALSE
+	glass         = TRUE
+
+/obj/machinery/door/airlock/erokez/sec
+	icon          = 'icons/obj/doors/airlocks/shuttle/sec.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
+
+	assembly_type = /obj/structure/door_assembly/door_assembly_neutral
+	opacity       = FALSE
+	glass         = TRUE
+
+/obj/machinery/door/airlock/erokez/eng
+	icon          = 'icons/obj/doors/airlocks/shuttle/eng.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
+
+	assembly_type = /obj/structure/door_assembly/door_assembly_neutral
+
 
 /*****************
 * Centcom airlocks
@@ -327,6 +351,8 @@
 /obj/machinery/door/airlock/centcom
 	icon          = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
+
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 
 /******************
@@ -347,6 +373,10 @@
 
 /obj/machinery/door/airlock/multi_tile/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
+
+	if(moving_diagonally)
+		return .
+
 	if(dir in list(EAST, WEST))
 		bound_width  = world.icon_size
 		bound_height = width * world.icon_size

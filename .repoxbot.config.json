@@ -18,12 +18,18 @@
         "image": "Sprites",
         "bugfix": "Fix",
         "fix": "Fix",
-        "map": "Map Edit"
+        "map": "Map Edit",
+        "localization": "Translation/Localization",
+        "ru": "Translation/Localization"
     },
     "diffPathsLabels": {
         "^diff.+/icons/.+\\.dmi$": "Sprites",
         "^diff.+/maps/.+\\.dmm$": "Map Edit",
         "^diff --git a/tools/.+$": "Tools",
-        "^diff --git a/sound/.+$": "Sound"
+        "^diff --git a/sound/.+$": "Sound",
+        "^diff --git a/tgui/.+$": "UI",
+        "^diff --git a/config/.+$": "Config Update",
+        "^diff --git a/code/controllers/configuration.dm": "Config Update",
+        "^diff --git a/code/modules/client/preferences_savefile.dm": "Preferences Update"
     }
 }

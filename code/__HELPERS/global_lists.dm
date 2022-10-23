@@ -50,13 +50,19 @@
 		surgery_steps += S
 	sort_surgeries()
 
+	// Keybindings
+	for(var/KB in subtypesof(/datum/keybinding))
+		var/datum/keybinding/keybinding = KB
+		if(!initial(keybinding.name))
+			continue
+		var/datum/keybinding/instance = new keybinding
+		global.keybindings_by_name[instance.name] = instance
+		if(length(instance.hotkey_keys))
+			for(var/bound_key in instance.hotkey_keys)
+				global.hotkey_keybinding_list_by_key[bound_key] += list(instance.name)
+
 	init_subtypes(/datum/crafting_recipe, crafting_recipes)
 	init_subtypes(/datum/dirt_cover, global.all_dirt_covers)
-
-	//Medical side effects. List all effects by their names
-	for(var/T in subtypesof(/datum/medical_effect))
-		var/datum/medical_effect/M = new T
-		side_effects[M.name] = T
 
 	//Languages and species.
 	for(var/T in subtypesof(/datum/language))
@@ -68,23 +74,23 @@
 		for(var/key in L.key)
 			language_keys[":[lowertext(key)]"] = L
 
-	var/rkey = 0
 	for(var/T in subtypesof(/datum/species))
-		rkey++
 		var/datum/species/S = new T
-		S.race_key = rkey //Used in mob icon caching.
 		all_species[S.name] = S
 
 		if(S.flags[IS_WHITELISTED])
 			whitelisted_species += S.name
-		if(S.flags[SPRITE_SHEET_RESTRICTION])
-			global.sprite_sheet_restricted += S.name
 
 	//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
 	global.chemical_reagents_list = list()
+	global.allergen_reagents_list = list()
 	for(var/path in subtypesof(/datum/reagent))
 		var/datum/reagent/D = new path()
 		global.chemical_reagents_list[D.id] = D
+
+		if(!D.allergen)
+			continue
+		global.allergen_reagents_list[D.id] = TRUE
 
 	//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
 	// It is filtered into multiple lists within a list.
@@ -144,11 +150,11 @@
 	global.spells_by_aspects = list()
 	for(var/path in subtypesof(/obj/effect/proc_holder/spell))
 		var/obj/effect/proc_holder/spell/S = new path()
-		if(!S.needed_aspect)
+		if(!S.needed_aspects)
 			continue
 
 		// Don't bother adding ourselves to other aspects, it is redundant.
-		var/aspect_type = S.needed_aspect[1]
+		var/aspect_type = S.needed_aspects[1]
 
 		if(!global.spells_by_aspects[aspect_type])
 			global.spells_by_aspects[aspect_type] = list()
@@ -201,9 +207,47 @@
 			global.faith_reactions_by_aspects[aspect_type] = list()
 		global.faith_reactions_by_aspects[aspect_type] += id
 
+	global.contraband_listings = list()
+	for(var/listing in subtypesof(/datum/contraband_listing))
+		global.contraband_listings[listing] = new listing
+
 	populate_gear_list()
 
-	init_hud_list()
+	global.bridge_commands = list()
+	for(var/command in subtypesof(/datum/bridge_command))
+		var/datum/bridge_command/C = new command
+		global.bridge_commands[C.name] = C
+
+	sortTim(bridge_commands, /proc/cmp_bridge_commands)
+
+	global.metahelps = list()
+	for(var/help in subtypesof(/datum/metahelp))
+		var/datum/metahelp/H = new help
+		global.metahelps[H.id] = H
+
+	global.special_roles = get_list_of_primary_keys(special_roles_ignore_question)
+
+	global.antag_roles = global.special_roles - ROLE_GHOSTLY
+
+	global.full_ignore_question = get_list_of_keys_from_values_as_list_from_associative_list(special_roles_ignore_question)
+
+
+	global.all_skills = list()
+	for(var/skill_type in subtypesof(/datum/skill))
+		global.all_skills[skill_type] = new skill_type
+
+	global.all_skillsets = list()
+	for(var/skillset_type in subtypesof(/datum/skillset))
+		global.all_skillsets[skillset_type] = new skillset_type
+
+	global.skillset_names_aliases = list()
+	for(var/s in all_skillsets)
+		var/datum/skillset/skillset = all_skillsets[s]
+		global.skillset_names_aliases[skillset.name] = s
+
+	global.all_emotes = list()
+	for(var/emote_type in subtypesof(/datum/emote))
+		global.all_emotes[emote_type] = new emote_type
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!

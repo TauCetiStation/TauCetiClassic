@@ -5,7 +5,7 @@
 	icon_state = "door_open"
 	req_one_access = list(access_atmospherics, access_engine_equip, access_paramedic)
 	opacity = 0
-	density = 0
+	density = FALSE
 	layer = FIREDOOR_LAYER
 	base_layer = FIREDOOR_LAYER
 	glass = 0
@@ -95,7 +95,7 @@
 	return
 
 /obj/machinery/door/firedoor/attack_paw(mob/user)
-	if(istype(user, /mob/living/carbon/xenomorph/humanoid))
+	if(isxenoadult(user))
 		if(blocked)
 			to_chat(user, "<span class='warning'>The door is sealed, it cannot be pried open.</span>")
 			return
@@ -108,13 +108,37 @@
 				open(1)
 	return
 
+/obj/machinery/door/firedoor/attack_hulk(mob/living/user)
+	. = ..()
+
+	if(.)
+		return .
+
+	user.SetNextMove(CLICK_CD_INTERACT)
+	
+	if(blocked)
+		if(user.hulk_scream(src))
+			qdel(src)
+		return
+
+	if(density)
+		to_chat(user, "<span class='userdanger'>You force your fingers between \
+		 the doors and begin to pry them open...</span>")
+		playsound(src, 'sound/machines/firedoor_open.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
+		if (!user.is_busy() && do_after(user, 4 SECONDS, target = src) && !QDELETED(src))
+			open(1)
+
 /obj/machinery/door/firedoor/attack_animal(mob/user)
-	if(istype(user, /mob/living/simple_animal/hulk))
-		var/mob/living/simple_animal/hulk/H = user
-		H.attack_hulk(src)
+	..()
+	if(density && !blocked)
+		open()
 
 /obj/machinery/door/firedoor/attack_hand(mob/user)
 	add_fingerprint(user)
+	if(user.a_intent == INTENT_GRAB && wedged_item && !user.get_active_hand())
+		take_out_wedged_item(user)
+		return
+
 	if(operating)
 		return//Already doing something.
 
@@ -134,14 +158,6 @@
 			alarmed = 1
 			break
 
-	var/answer = alert(user, "Would you like to [density ? "open" : "close"] this [src.name]?[ alarmed && density ? "\nNote that by doing so, you acknowledge any damages from opening this\n[src.name] as being your own fault, and you will be held accountable under the law." : ""]",\
-	"\The [src]", "Yes, [density ? "open" : "close"]", "No")
-	if(answer == "No")
-		return
-	if(user.incapacitated() || (get_dist(src, user) > 1  && !isAI(user)))
-		to_chat(user, "Sorry, you must remain able bodied and close to \the [src] in order to use it.")
-		return
-
 	var/needs_to_close = 0
 	if(density)
 		if(alarmed)
@@ -159,7 +175,7 @@
 				if(A.fire || A.air_doors_activated)
 					alarmed = 1
 					break
-			if(alarmed)
+			if(alarmed && !blocked)
 				nextstate = CLOSED
 				close()
 
@@ -197,21 +213,14 @@
 					user.visible_message("<span class='danger'>[user] has removed the electronics from \the [src].</span>",
 										"You have removed the electronics from [src].")
 
-					new/obj/item/weapon/airalarm_electronics(src.loc)
-
-					var/obj/structure/firedoor_assembly/FA = new/obj/structure/firedoor_assembly(src.loc)
-					FA.anchored = 1
-					FA.density = 1
-					FA.wired = 1
-					FA.update_icon()
-					qdel(src)
+					deconstruct(TRUE)
 		return
 
 	if(blocked)
 		to_chat(user, "<span class='warning'>\The [src] is welded solid!</span>")
 		return
 
-	if( iscrowbar(C) || ( istype(C,/obj/item/weapon/twohanded/fireaxe) && C:wielded == 1 ) )
+	if(iscrowbar(C) || ( istype(C,/obj/item/weapon/fireaxe) && HAS_TRAIT(C, TRAIT_DOUBLE_WIELDED)))
 		if(operating)
 			return
 
@@ -242,6 +251,18 @@
 					close()
 			return
 
+/obj/machinery/door/firedoor/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	take_out_wedged_item()
+	if(disassembled || prob(40))
+		var/obj/structure/firedoor_assembly/FA = new (loc)
+		if(disassembled)
+			FA.anchored = TRUE
+			FA.density = TRUE
+			FA.wired = TRUE
+			FA.update_icon()
+	..()
 
 /obj/machinery/door/firedoor/proc/latetoggle()
 	if(operating || stat & NOPOWER || !nextstate)
@@ -260,6 +281,11 @@
 	layer = base_layer + FIREDOOR_CLOSED_MOD
 	START_PROCESSING(SSmachines, src)
 	latetoggle()
+
+/obj/machinery/door/firedoor/do_afterclose()
+	for(var/mob/living/L in get_turf(src))
+		try_move_adjacent(L)
+	..()
 
 /obj/machinery/door/firedoor/do_open()
 	..()
@@ -299,6 +325,13 @@
 		icon_state = "door_open"
 		if(blocked)
 			add_overlay("welded_open")
+
+	if(underlays.len)
+		underlays.Cut()
+
+	if(wedged_item)
+		generate_wedge_overlay()
+
 	SSdemo.mark_dirty(src)
 
 	// CHECK PRESSURE

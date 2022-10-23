@@ -1,7 +1,7 @@
 /obj/item/weapon/grenade
 	name = "grenade"
 	desc = "A hand held grenade, with an adjustable timer."
-	w_class = ITEM_SIZE_SMALL
+	w_class = SIZE_TINY
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
 	item_state = "flashbang"
@@ -54,7 +54,7 @@
 
 	icon_state = initial(icon_state) + "_active"
 	active = 1
-	playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, null, -3)
+	playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 	addtimer(CALLBACK(src, .proc/prime), det_time)
 
 /obj/item/weapon/grenade/proc/prime()
@@ -66,8 +66,6 @@
 	if(isscrewdriver(I))
 		switch(det_time)
 			if(1)
-				det_time = 1 SECOND
-			if(1 SECONDS)
 				det_time = 3 SECONDS
 			if(3 SECONDS)
 				det_time = 5 SECONDS
@@ -77,6 +75,11 @@
 		add_fingerprint(user)
 		return
 	return ..()
+
+/obj/item/weapon/grenade/deconstruct(disassembled = TRUE)
+	if(!disassembled)
+		prime()
+	..()
 
 /obj/item/weapon/grenade/syndieminibomb
 	desc = "A syndicate manufactured explosive used to sow destruction and chaos."

@@ -5,8 +5,8 @@
 	desc = "Heats or cools gas in connected pipes."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "freezer"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 5			// 5 Watts for thermostat related circuitry
 	layer = OBJ_LAYER
@@ -165,6 +165,7 @@
 
 	max_temperature = T20C
 	min_temperature = 170
+	required_skills = list()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/atom_init()
 	. = ..()
@@ -213,6 +214,7 @@
 
 	max_temperature = T20C + 680
 	min_temperature = T20C
+	required_skills = list()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/atom_init()
 	. = ..()

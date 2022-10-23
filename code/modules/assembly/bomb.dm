@@ -3,10 +3,10 @@
 	icon = 'icons/obj/tank.dmi'
 	item_state = "assembly"
 	throwforce = 5
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	throw_speed = 2
 	throw_range = 4
-	flags = CONDUCT //Copied this from old code, so this may or may not be necessary
+	flags = CONDUCT | HEAR_TALK //Copied this from old code, so this may or may not be necessary
 	var/status = 0   //0 - not readied //1 - bomb finished with welder
 	var/obj/item/device/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/weapon/tank/bombtank = null //the second part of the bomb is a phoron tank
@@ -43,7 +43,7 @@
 
 	if((iswelder(I)))
 		var/obj/item/weapon/weldingtool/W = I
-		if(!W.welding)
+		if(!W.isOn())
 			if(!status)
 				status = 1
 				bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
@@ -71,10 +71,6 @@
 	else
 		bombtank.release()
 
-/obj/item/device/onetankbomb/HasProximity(atom/movable/AM)
-	if(bombassembly)
-		bombassembly.HasProximity(AM)
-
 /obj/item/device/onetankbomb/hear_talk(mob/living/M, msg)
 	if(bombassembly)
 		bombassembly.hear_talk(M, msg)
@@ -91,17 +87,15 @@
 
 	var/obj/item/device/onetankbomb/R = new /obj/item/device/onetankbomb(loc)
 
-	M.drop_item()			//Remove the assembly from your hands
-	M.remove_from_mob(src)	//Remove the tank from your character,in case you were holding it
+	M.drop_from_inventory(S, R)			//Remove the assembly from your hands
+	M.drop_from_inventory(src, R)	//Remove the tank from your character,in case you were holding it
 	M.put_in_hands(R)		//Equips the bomb if possible, or puts it on the floor.
 
 	R.bombassembly = S	//Tell the bomb about its assembly part
 	S.master = R		//Tell the assembly about its new owner
-	S.loc = R			//Move the assembly out of the fucking way
 
 	R.bombtank = src	//Same for tank
 	master = R
-	loc = R
 	R.update_icon()
 	return
 

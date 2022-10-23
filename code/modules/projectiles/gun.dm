@@ -7,9 +7,10 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 2000
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL
 	throwforce = 5
 	throw_speed = 4
+	hitsound = list('sound/weapons/genhit1.ogg')
 	throw_range = 5
 	force = 5.0
 	origin_tech = "combat=1"
@@ -46,7 +47,7 @@
 	return 0
 
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
-	if(M.mind && M.mind.special_role == "Wizard")
+	if(iswizard(M))
 		return FALSE
 	return TRUE
 
@@ -56,11 +57,13 @@
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
-	if(recoil)
-		shake_camera(user, recoil + 1, recoil)
+
+	var/skill_recoil = max(0, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
+	if(skill_recoil)
+		shake_camera(user, skill_recoil + 1, skill_recoil)
 
 	if(silenced)
-		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, null, -4)
+		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
 	else
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER)
 		announce_shot(user)
@@ -80,17 +83,20 @@
 /obj/item/weapon/gun/afterattack(atom/target, mob/user, proximity, params)
 	if(proximity)	return //It's adjacent, is the user, or is on the user's person
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
-	if(user && user.client && user.client.gun_mode && !(target in target))
+	if(user && user.client && user.client.gun_mode && !(target in src.target))
 		PreFire(target,user,params) //They're using the new gun system, locate what they're aiming at.
 	else
 		Fire(target,user,params) //Otherwise, fire normally.
 
 /mob/living/carbon/AltClickOn(atom/A)
+	if(next_move > world.time) // CD for clicks is checked before clicks with modifiers(shift, alt)
+		return
 	var/obj/item/I = get_active_hand()
 	if(istype(I, /obj/item/weapon/gun))
 		var/obj/item/weapon/gun/G = I
-		if(src.client.gun_mode)
-			G.Fire(A, src)
+		if(client.gun_mode)
+			if(G.can_fire())
+				G.Fire(A, src)
 		else
 			if(isliving(A))
 				var/mob/living/M = A
@@ -113,11 +119,11 @@
 			return
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.species.name == SHADOWLING)
+			if(H.species.name == SHADOWLING || H.species.name == ABOMINATION)
 				to_chat(H, "<span class='notice'>Your fingers don't fit in the trigger guard!</span>")
 				return
 
-			if(user.dna && user.dna.mutantrace == "adamantine")
+			if(user.get_species() == GOLEM)
 				to_chat(user, "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>")
 				return
 			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
@@ -134,7 +140,6 @@
 					explosion(user.loc, 0, 0, 1, 1)
 					to_chat(H, "<span class='danger'>[src] blows up in your face.</span>")
 					H.take_bodypart_damage(0, 20)
-					H.drop_item()
 					qdel(src)
 					return
 
@@ -152,7 +157,7 @@
 			if(!chambered.BB.fake)
 				user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
 			chambered.BB.damage *= 1.3
-		if(!chambered.fire(target, user, params, , silenced))
+		if(!chambered.fire(src, target, user, params, , silenced))
 			shoot_with_empty_chamber(user)
 		else
 			shoot_live_shot(user)
@@ -179,7 +184,7 @@
 		user.visible_message("*click click*", "<span class='red'><b>*click*</b></span>")
 		playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	else
-		src.visible_message("*click click*")
+		visible_message("*click click*")
 		playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)
@@ -210,6 +215,7 @@
 			if(istype(chambered.BB, /obj/item/projectile/bullet/chameleon))
 				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
 									"<span class = 'notice'>You feel weakness and the taste of gunpowder, but no more.</span>")
+				user.Stun(5)
 				user.apply_effect(5,WEAKEN,0)
 				return
 

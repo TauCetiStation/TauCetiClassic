@@ -1,10 +1,8 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
 /obj/item/weapon/tank/jetpack
 	name = "Jetpack (Empty)"
 	desc = "A tank of compressed gas for use as propulsion in zero-gravity areas. Use with caution."
 	icon_state = "jetpack"
-	w_class = ITEM_SIZE_LARGE
+	w_class = SIZE_NORMAL
 	item_state = "jetpack"
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail
@@ -100,6 +98,16 @@
 	. = ..()
 	air_contents.adjust_gas("carbon_dioxide", (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
+/obj/item/weapon/tank/jetpack/nitrogen
+	name = "Jetpack (Nitrogen)"
+	desc = "A tank of compressed nitrogen for use as propulsion in zero-gravity areas. Painted red to indicate that it should not be used as a source for internals for humans."
+	icon_state = "jetpack-nitro"
+	item_state = "jetpack-nitro"
+
+/obj/item/weapon/tank/jetpack/nitrogen/atom_init()
+	. = ..()
+	air_contents.adjust_gas("nitrogen", (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+
 /obj/item/weapon/tank/jetpack/oxygen/harness //TG-nuke jetpack
 	name = "jet harness (oxygen)"
 	desc = "A lightweight tactical harness, used by those who don't want to be weighed down by traditional jetpacks."
@@ -107,4 +115,4 @@
 	item_state = "jetpack-mini"
 	volume = 40
 	throw_range = 7
-	w_class = ITEM_SIZE_NORMAL
+	w_class = SIZE_SMALL

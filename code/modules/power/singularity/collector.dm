@@ -1,4 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector
@@ -15,6 +14,7 @@ var/global/list/rad_collectors = list()
 	var/active = FALSE
 	var/locked = FALSE
 	var/drainratio = 1
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/power/rad_collector/atom_init()
 	. = ..()
@@ -38,6 +38,9 @@ var/global/list/rad_collectors = list()
 	if(.)
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
+
+	if(!do_skill_checks(user))
+		return
 	if(anchored)
 		if(!locked || IsAdminGhost(user))
 			toggle_power()
@@ -50,6 +53,8 @@ var/global/list/rad_collectors = list()
 			return 1
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
+	if(!do_skill_checks(user))
+		return
 	if(istype(W, /obj/item/device/analyzer))
 		to_chat(user, "<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>")
 		return 1
@@ -60,9 +65,8 @@ var/global/list/rad_collectors = list()
 		if(src.P)
 			to_chat(user, "<span class='warning'>There's already a phoron tank loaded.</span>")
 			return 1
-		user.drop_item()
+		user.drop_from_inventory(W, src)
 		src.P = W
-		W.loc = src
 		update_icons()
 	else if(iscrowbar(W))
 		if(P && !src.locked)
@@ -82,7 +86,7 @@ var/global/list/rad_collectors = list()
 		else
 			disconnect_from_network()
 	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
-		if (src.allowed(user))
+		if (allowed(user))
 			if(active)
 				src.locked = !src.locked
 				to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
@@ -99,7 +103,7 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/ex_act(severity)
 	switch(severity)
-		if(2, 3)
+		if(EXPLODE_HEAVY, EXPLODE_LIGHT)
 			eject()
 	return ..()
 

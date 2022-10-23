@@ -18,6 +18,7 @@
 	g_amt = 3750
 	origin_tech = "materials=1"
 	var/created_window = /obj/structure/window/basic
+	required_skills = list(/datum/skill/construction = SKILL_LEVEL_NOVICE)
 
 /obj/item/stack/sheet/glass/cyborg
 	name = "glass"
@@ -90,6 +91,8 @@
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 0
 	var/title = "Sheet-Glass"
+	if(!handle_fumbling(user, user, SKILL_TASK_AVERAGE, required_skills, "<span class='notice'>You fumble around figuring out how to use glass to make window.</span>"))
+		return
 	title += " ([get_amount()] sheet\s left)"
 	switch(input(title, "What would you like to make?", "One Direction") in list("One Direction", "Full Window", "Glass Table Parts", "Cancel"))
 		if("One Direction")
@@ -98,7 +101,7 @@
 			if(src.loc != user)
 				return 1
 
-			var/list/directions = new/list(cardinal)
+			var/list/directions = global.cardinal.Copy()
 			var/i = 0
 			for(var/obj/structure/window/win in user.loc)
 				i++
@@ -121,15 +124,15 @@
 					dir_to_set = direction
 					break
 
-			if(!src.use(1))
+			if(!use(1))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
 			var/obj/structure/window/W
 			W = new created_window(user.loc)
-			W.dir = dir_to_set
+			W.set_dir(dir_to_set)
 			W.ini_dir = W.dir
-			W.anchored = 0
+			W.anchored = FALSE
 		if("Full Window")
 			if(QDELETED(src))
 				return 1
@@ -141,22 +144,22 @@
 				to_chat(user, "<span class='warning'>There is something in the way.</span>")
 				return 1
 
-			if(!src.use(2))
+			if(!use(2))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
 			var/obj/structure/window/W
 			W = new created_window(step)
-			W.dir = SOUTHWEST
+			W.set_dir(SOUTHWEST)
 			W.ini_dir = SOUTHWEST
-			W.anchored = 0
+			W.anchored = FALSE
 		if("Glass Table Parts")
 			if(QDELETED(src))
 				return 1
 			if(src.loc != user)
 				return 1
 
-			if(!src.use(2))
+			if(!use(2))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
@@ -186,6 +189,7 @@
 	g_amt = 3750
 	m_amt = 1875
 	origin_tech = "materials=2"
+	required_skills = list(/datum/skill/construction = SKILL_LEVEL_TRAINED)
 
 /obj/item/stack/sheet/rglass/cyborg
 	name = "reinforced glass"
@@ -208,13 +212,15 @@
 		return 0
 	var/title = "Sheet Reinf. Glass"
 	title += " ([get_amount()] sheet\s left)"
+	if(!handle_fumbling(user, user, SKILL_TASK_AVERAGE, required_skills, "<span class='notice'>You fumble around figuring out how to use reinforced glass to make window.</span>"))
+		return
 	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
 			if(QDELETED(src))
 				return 1
 			if(src.loc != user)
 				return 1
-			var/list/directions = new/list(cardinal)
+			var/list/directions = global.cardinal.Copy()
 			var/i = 0
 			for (var/obj/structure/window/win in user.loc)
 				i++
@@ -237,16 +243,16 @@
 					dir_to_set = direction
 					break
 
-			if(!src.use(1))
+			if(!use(1))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced(user.loc)
 			W.state = 0
-			W.dir = dir_to_set
+			W.set_dir(dir_to_set)
 			W.ini_dir = W.dir
-			W.anchored = 0
+			W.anchored = FALSE
 
 		if("Full Window")
 			if(QDELETED(src))
@@ -258,16 +264,16 @@
 			if(T.density || (locate(/obj/structure/window) in step))
 				to_chat(user, "<span class='warning'>There is something in the way.</span>")
 				return 1
-			if(!src.use(2))
+			if(!use(2))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced(step)
 			W.state = 0
-			W.dir = SOUTHWEST
+			W.set_dir(SOUTHWEST)
 			W.ini_dir = SOUTHWEST
 			W.state = 0
-			W.anchored = 0
+			W.anchored = FALSE
 
 		if("Windoor")
 			if(QDELETED(src) || src.loc != user)
@@ -281,26 +287,26 @@
 				to_chat(user, "<span class='warning'>There is already a windoor in that location.</span>")
 				return 1
 
-			if(!src.use(5))
+			if(!use(5))
 				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
 				return 1
 
 			var/obj/structure/windoor_assembly/WD
 			WD = new /obj/structure/windoor_assembly(user.loc)
 			WD.state = "01"
-			WD.anchored = 0
+			WD.anchored = FALSE
 			switch(user.dir)
 				if(SOUTH)
-					WD.dir = SOUTH
+					WD.set_dir(SOUTH)
 					WD.ini_dir = SOUTH
 				if(EAST)
-					WD.dir = EAST
+					WD.set_dir(EAST)
 					WD.ini_dir = EAST
 				if(WEST)
-					WD.dir = WEST
+					WD.set_dir(WEST)
 					WD.ini_dir = WEST
 				else//If the user is facing northeast. northwest, southeast, southwest or north, default to north
-					WD.dir = NORTH
+					WD.set_dir(NORTH)
 					WD.ini_dir = NORTH
 		else
 			return 1
@@ -361,7 +367,7 @@
 			if(H.species.flags[IS_SYNTHETIC])
 				return
 
-			if(H.wear_suit && (H.wear_suit.body_parts_covered & LEGS) && H.wear_suit.flags & THICKMATERIAL)
+			if(H.wear_suit && (H.wear_suit.body_parts_covered & LEGS) && H.wear_suit.pierce_protection & LEGS)
 				return
 
 			if(H.species.flags[NO_MINORCUTS])
@@ -376,6 +382,7 @@
 					return
 				BP.take_damage(5, 0)
 				if(!H.species.flags[NO_PAIN])
+					H.Stun(1)
 					H.Weaken(3)
 				H.updatehealth()
 	. = ..()
@@ -391,6 +398,7 @@
 	g_amt = 7500
 	origin_tech = "materials=3;phorontech=2"
 	created_window = /obj/structure/window/phoronbasic
+	required_skills = list(/datum/skill/construction = SKILL_LEVEL_PRO)
 
 /obj/item/stack/sheet/glass/phoronglass/attack_self(mob/user)
 	construct_window(user)
@@ -407,6 +415,7 @@
 	m_amt = 1875
 	origin_tech = "materials=4;phorontech=2"
 	created_window = /obj/structure/window/phoronreinforced
+	required_skills = list(/datum/skill/construction = SKILL_LEVEL_MASTER)
 
 /obj/item/stack/sheet/glass/phoronrglass/attack_self(mob/user)
 	construct_window(user)

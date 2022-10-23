@@ -69,21 +69,19 @@
 		var/mob/living/carbon/human/H = AM
 		if(H.getBrainLoss() >= 60)
 			playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
-			if(!istype(H.head, /obj/item/clothing/head/helmet))
-				visible_message("<span class='warning'>[H] headbutts the airlock.</span>")
-				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-				H.Stun(8)
-				H.Weaken(5)
-				BP.take_damage(10, 0)
+			var/armor_block = H.run_armor_check(BP_HEAD, "melee")
+			if(armor_block)
+				visible_message("<span class='userdanger'>[H] headbutts the airlock.</span>")
 			else
-				visible_message("<span class='warning'>[H] headbutts the airlock. Good thing they're wearing a helmet.</span>")
-				H.Stun(8)
+				visible_message("<span class='userdanger'>[H] headbutts the airlock. Good thing they're wearing a helmet.</span>")
+			if(H.apply_damage(10, BRUTE, BP_HEAD, armor_block))
+				H.Stun(2)
 				H.Weaken(5)
 			return
 	..(AM)
 	if(istype(AM, /obj/mecha))
 		var/obj/mecha/mecha = AM
-		if(density && radio_connection && mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access)))
+		if(density && radio_connection && mecha.occupant && (allowed(mecha.occupant) || check_access_list(mecha.operation_req_access)))
 			var/datum/signal/signal = new
 			signal.transmission_method = 1 //radio signal
 			signal.data["tag"] = id_tag
@@ -147,6 +145,7 @@
 		icon_state = "airlock_sensor_off"
 
 /obj/machinery/airlock_sensor/allowed_fail()
+	..()
 	flick("access_button_cycle", src)
 
 /obj/machinery/airlock_sensor/attack_hand(mob/user)
@@ -220,6 +219,7 @@
 		icon_state = "access_button_off"
 
 /obj/machinery/access_button/allowed_fail()
+	..()
 	flick("access_button_cycle", src)
 
 /obj/machinery/access_button/attack_hand(mob/user)

@@ -3,14 +3,17 @@
 	desc = "..."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
-	density = 1
-	anchored = 0
+	density = TRUE
+	anchored = FALSE
 	flags = OPENCONTAINER
 	var/modded = FALSE
 	var/transfer_from = TRUE
 	var/obj/item/device/assembly_holder/rig
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
+
+	max_integrity = 300
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/reagent_dispensers/AltClick(mob/user)
 	if(!Adjacent(user))
@@ -59,29 +62,6 @@
 	var/trans = t_from.reagents.trans_to(t_to, transfer_amount)
 	to_chat(user, "<span class = 'notice'>You fill [t_to] with [trans] units of the contents of [t_from]. </span>")
 
-/obj/structure/reagent_dispensers/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				new /obj/effect/effect/water(src.loc)
-				qdel(src)
-				return
-		if(3.0)
-			if (prob(5))
-				new /obj/effect/effect/water(src.loc)
-				qdel(src)
-				return
-		else
-	return
-
-/obj/structure/reagent_dispensers/blob_act()
-	if(prob(50))
-		new /obj/effect/effect/water(src.loc)
-		qdel(src)
-
 /obj/structure/reagent_dispensers/proc/leak(amount)
 	if(reagents.total_volume == 0)
 		return
@@ -115,17 +95,21 @@
 			rig = null
 			cut_overlays()
 
+/obj/structure/reagent_dispensers/proc/start_leaking()
+	modded = TRUE
+	START_PROCESSING(SSobj, src)
+	leak(amount_per_transfer_from_this)
+
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
 	if (iswrench(W))
 		user.SetNextMove(CLICK_CD_RAPID)
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
-		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [src.x], [src.y], [src.z] [ADMIN_JMP(src)]")
-		modded = !modded
-		if (modded)
-			START_PROCESSING(SSobj, src)
-			leak(amount_per_transfer_from_this)
-
+		message_admins("[key_name_admin(user)] set [src] faucet [modded ? "closed" : "open"] @ location [COORD(src)] [ADMIN_JMP(src)]")
+		if(modded)
+			modded = FALSE
+		else
+			start_leaking()
 		return
 	else if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
@@ -137,12 +121,12 @@
 			user.visible_message("<span class='notice'>[user] rigs [W] to \the [src].</span>", "<span class='notice'>You rig [W] to \the [src]</span>")
 
 			var/obj/item/device/assembly_holder/H = W
-			if (istype(H.a_left,/obj/item/device/assembly/igniter) || istype(H.a_right,/obj/item/device/assembly/igniter))
-				message_admins("[key_name_admin(user)] rigged [src] at ([loc.x],[loc.y],[loc.z]) for explosion. [ADMIN_JMP(user)]")
-				log_game("[key_name(user)] rigged [src] at ([loc.x],[loc.y],[loc.z]) for explosion.")
+			if (isigniter(H.a_left) || isigniter(H.a_right))
+				message_admins("[key_name_admin(user)] rigged [src] at [COORD(loc)] for explosion. [ADMIN_JMP(user)]")
+				log_game("[key_name(user)] rigged [src] at [COORD(loc)] for explosion.")
 
 			rig = W
-			user.drop_item()
+			user.drop_from_inventory(W, src)
 			W.loc = src
 
 			var/icon/test = getFlatIcon(W)
@@ -153,10 +137,28 @@
 	add_fingerprint(usr)
 	return
 
-/obj/structure/reagent_dispensers/bullet_act(obj/item/projectile/Proj)
-	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
-		if(!istype(Proj ,/obj/item/projectile/beam/lasertag) && !istype(Proj ,/obj/item/projectile/beam/practice) )
+/obj/structure/reagent_dispensers/atom_break()
+	..()
+	if(!modded)
+		start_leaking()
+	
+/obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
+	. = ..()
+	if(.)
+		if(damage_type == BURN)
 			explode()
+			return
+
+		switch(damage_flag)
+			if(BULLET, BOMB)
+				explode()
+				return
+
+/obj/structure/reagent_dispensers/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/effect/effect/water(loc)
+	..()
 
 /obj/structure/reagent_dispensers/blob_act()
 	explode()
@@ -165,22 +167,25 @@
 	explode()
 
 /obj/structure/reagent_dispensers/proc/explode(mob/user)
+	if(QDELETED(src)) // prevent double explosion
+		return
 	var/fuel_am = reagents.get_reagent_amount("fuel") + reagents.get_reagent_amount("phoron") * 5
-	if(fuel_am > 0)
-		if (fuel_am > 500)
-			explosion(loc, 1, 2, 4)
-		else if (fuel_am > 100)
+	if(fuel_am <= 0)
+		return FALSE
+	switch(fuel_am)
+		if(0 to 100)
+			explosion(loc, -1, 1, 2)
+		if(100 to 500)
 			explosion(loc, 0, 1, 3)
 		else
-			explosion(loc, -1, 1, 2)
-		if(src)
-			qdel(src)
-		return TRUE
-	return FALSE
+			explosion(loc, 1, 2, 4)
+	qdel(src)
+	return TRUE
 
 /obj/structure/reagent_dispensers/fire_act(datum/gas_mixture/air, temperature, volume)
 	if(temperature > T0C+500)
-		explode()
+		if(explode())
+			return
 	return ..()
 
 /obj/structure/reagent_dispensers/tesla_act()
@@ -189,11 +194,12 @@
 
 /obj/structure/reagent_dispensers/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if (. && modded)
+	if (. && modded && !ISDIAGONALDIR(Dir))
 		leak(amount_per_transfer_from_this * 0.1)
 
 
 // "Tanks".
+ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/watertank, watertank_list)
 /obj/structure/reagent_dispensers/watertank
 	name = "watertank"
 	desc = "A watertank."
@@ -214,6 +220,7 @@
 	reagents.add_reagent("aqueous_foam", 1000)
 
 
+ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
 	desc = "A fueltank."
@@ -229,8 +236,8 @@
 	desc = "Refill pepper spray canisters."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "peppertank"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	amount_per_transfer_from_this = 45
 
 /obj/structure/reagent_dispensers/peppertank/atom_init()
@@ -246,7 +253,7 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "water_cooler"
 	possible_transfer_amounts = null
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/reagent_dispensers/water_cooler/atom_init()
 	. = ..()
@@ -272,7 +279,7 @@
 	desc = "A dispenser of virus food."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "virusfoodtank"
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/reagent_dispensers/virusfood/atom_init()
 	. = ..()
@@ -283,7 +290,7 @@
 	desc = "A dispenser of acid for industrial processes."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "acidtank"
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/reagent_dispensers/acid/atom_init()
 	. = ..()
@@ -306,9 +313,27 @@
 	desc = "A dispenser of cleaner."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "cleanertank"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 
 /obj/structure/reagent_dispensers/cleaner/atom_init()
 	. = ..()
 	reagents.add_reagent("cleaner", 1000)
+
+/obj/structure/reagent_dispensers/hazard
+	name = "inconspicuous tank"
+	desc = "An unmarked tank, holding many mysteries."
+	icon_state = "unmarkedtank"
+
+/obj/structure/reagent_dispensers/hazard/atom_init()
+	. = ..()
+	reagents.clear_reagents()
+	reagents.add_reagent("lexorin", 200)
+	reagents.add_reagent("mindbreaker", 200)
+	reagents.add_reagent("alphaamanitin", 200)
+	reagents.add_reagent("space_drugs", 200)
+	reagents.add_reagent("pacid", 200)
+	reagents.add_reagent("fuel", 200)
+	reagents.add_reagent("condensedcapsaicin", 200)
+	reagents.add_reagent("stoxin", 200)
+

@@ -115,8 +115,8 @@
 		M.pixel_y = -1
 		update_buckle_mob(M)
 	else
-		M.pixel_x = 0
-		M.pixel_y = 0
+		M.pixel_x = M.default_pixel_x
+		M.pixel_y = M.default_pixel_y
 
 /obj/structure/closet/coffin/update_buckle_mob(mob/living/M)
 	// When mob layering will properly work:
@@ -128,7 +128,7 @@
 	else
 		coffin_side.layer = 3.95
 
-	M.dir = WEST
+	M.set_dir(WEST)
 	// why tf do I need to cut overlay to update a layer?
 	cut_overlay(coffin_side)
 	add_overlay(coffin_side)
@@ -149,6 +149,6 @@
 	if(.)
 		// so the body doesn't spin in it's grave
 		// unless required to!
-		buckled_mob.dir = saved_dir
+		buckled_mob.set_dir(saved_dir)
 
 #undef LYING_ANIM_COOLDOWN

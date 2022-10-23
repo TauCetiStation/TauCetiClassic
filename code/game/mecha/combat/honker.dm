@@ -7,7 +7,7 @@
 	health = 140
 	deflect_chance = 60
 	internal_damage_threshold = 60
-	damage_absorption = list("brute"=1.2,"fire"=1.5,"bullet"=1,"laser"=1,"energy"=1,"bomb"=1)
+	damage_absorption = list(BRUTE=1.2,BURN=1.5,BULLET=1,LASER=1,ENERGY=1,BOMB=1)
 	max_temperature = 25000
 	infra_luminosity = 5
 	operation_req_access = list(access_clown)
@@ -97,14 +97,14 @@
 						</head>
 						<body>
 						<div id='content'>
-						[src.get_stats_part()]
+						[get_stats_part()]
 						</div>
 						<div id='eq_list'>
-						[src.get_equipment_list()]
+						[get_equipment_list()]
 						</div>
 						<hr>
 						<div id='commands'>
-						[src.get_commands()]
+						[get_commands()]
 						</div>
 						</body>
 						</html>

@@ -3,7 +3,6 @@
 	desc = "A handy little spring-loaded trap for catching pesty rodents."
 	icon_state = "mousetrap"
 	m_amt = 100
-	w_amt = 10
 	origin_tech = "combat=1"
 	var/armed = 0
 
@@ -30,6 +29,7 @@
 			if("feet")
 				if(!H.shoes && !H.buckled)
 					BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
+					H.Stun(1)
 					H.Weaken(3)
 			if(BP_L_ARM, BP_R_ARM)
 				if(!H.gloves)
@@ -60,7 +60,7 @@
 		to_chat(user, "<span class='notice'>You disarm [src].</span>")
 	armed = !armed
 	update_icon()
-	playsound(user, 'sound/weapons/handcuffs.ogg', VOL_EFFECTS_MASTER, 30, null, -3)
+	playsound(user, 'sound/weapons/handcuffs.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -3)
 
 /obj/item/device/assembly/mousetrap/attack_hand(mob/living/user)
 	if(armed)

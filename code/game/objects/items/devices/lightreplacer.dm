@@ -90,7 +90,6 @@
 			if(uses < max_uses)
 				AddUses(1)
 				to_chat(user, "You insert the [L.name] into the [src.name]. You have [uses] lights remaining.")
-				user.drop_item()
 				qdel(L)
 				return
 		else
@@ -105,7 +104,7 @@
 	if(isrobot(user))
 		var/mob/living/silicon/robot/R = user
 		if(R.emagged)
-			src.Emag()
+			Emag()
 			to_chat(usr, "You shortcircuit the [src].")
 			return
 	*/
@@ -126,9 +125,9 @@
 	uses = min(max(uses + amount, 0), max_uses)
 
 /obj/item/device/lightreplacer/proc/Charge(mob/user)
-	charge += 1
+	charge += 5
 	if(charge > 7)
-		AddUses(1)
+		AddUses(5)
 		charge = 1
 
 /obj/item/device/lightreplacer/proc/ReplaceLight(obj/machinery/light/target, mob/living/U)
@@ -189,7 +188,7 @@
 //Can you use it?
 
 /obj/item/device/lightreplacer/proc/CanUse(mob/living/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	//Not sure what else to check for. Maybe if clumsy?
 	if(uses > 0)
 		return 1

@@ -3,15 +3,18 @@
 	name = "lattice"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "latticefull"
-	density = 0
-	anchored = 1.0
+	density = FALSE
+	anchored = TRUE
 	layer = 2.3 //under pipes
 	plane = FLOOR_PLANE
 	//	flags = CONDUCT
 
+	max_integrity = 50
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/lattice/atom_init()
 	. = ..()
-	if(!istype(loc, /turf/space))
+	if(!isenvironmentturf(loc))
 		return INITIALIZE_HINT_QDEL
 	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT != src)
@@ -32,22 +35,9 @@
 			L.updateOverlays(loc)
 	return ..()
 
-/obj/structure/lattice/blob_act()
-	qdel(src)
-	return
-
 /obj/structure/lattice/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			qdel(src)
-			return
-		if(3.0)
-			return
-		else
-	return
+	if(severity <= EXPLODE_HEAVY)
+		qdel(src)
 
 /obj/structure/lattice/attackby(obj/item/C, mob/user)
 
@@ -59,25 +49,24 @@
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.use(0, user))
 			to_chat(user, "<span class='notice'>Slicing lattice joints ...</span>")
-			new /obj/item/stack/rods(loc)
-			qdel(src)
+			deconstruct(TRUE)
 
 	return
 
+/obj/structure/lattice/deconstruct(disassembled)
+	new /obj/item/stack/rods(loc)
+	..()
+
 /obj/structure/lattice/proc/updateOverlays()
-	//if(!(istype(src.loc, /turf/space)))
-	//	qdel(src)
 	spawn(1)
 		cut_overlays()
 
 		var/dir_sum = 0
 
 		for (var/direction in cardinal)
-			if(locate(/obj/structure/lattice, get_step(src, direction)))
+			var/turf/T = get_step(src, direction)
+			if(locate(/obj/structure/lattice, T) || !isenvironmentturf(T))
 				dir_sum += direction
-			else
-				if(!(istype(get_step(src, direction), /turf/space)))
-					dir_sum += direction
 
 		icon_state = "lattice[dir_sum]"
 		return

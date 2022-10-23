@@ -1,4 +1,4 @@
-var/list/admin_ranks = list()								//list of all ranks with associated rights
+var/global/list/admin_ranks = list()								//list of all ranks with associated rights
 
 //load our rank - > rights associations
 /proc/load_admin_ranks()
@@ -24,7 +24,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 		switch(rank)
 			if(null,"")
 				continue
-			if("Removed")
+			if(ADMIN_RANK_REMOVED)
 				continue				//Reserved
 
 		var/rights = 0
@@ -61,7 +61,7 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 /proc/load_admins()
 	//clear the datums references
 	admin_datums.Cut()
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		C.remove_admin_verbs()
 		C.holder = null
 	admins.Cut()
@@ -102,20 +102,19 @@ var/list/admin_ranks = list()								//list of all ranks with associated rights
 	else
 		//The current admin system uses SQL
 
-		establish_db_connection()
-		if(!dbcon.IsConnected())
+		if(!establish_db_connection("erro_admin"))
 			error("Failed to connect to database in load_admins(). Reverting to legacy system.")
 			log_misc("Failed to connect to database in load_admins(). Reverting to legacy system.")
 			config.admin_legacy_system = 1
 			load_admins()
 			return
 
-		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, `rank`, level, flags FROM erro_admin;")
+		var/DBQuery/query = dbcon.NewQuery("SELECT ckey, rank, level, flags FROM erro_admin")
 		query.Execute()
 		while(query.NextRow())
 			var/ckey = query.item[1]
 			var/rank = query.item[2]
-			if(rank == "Removed")
+			if(rank == ADMIN_RANK_REMOVED)
 				continue	//This person was de-adminned. They are only in the admin list for archive purposes.
 
 			var/rights = query.item[4]
