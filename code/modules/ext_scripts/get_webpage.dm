@@ -5,4 +5,4 @@
 	if(!address)
 		return
 
-	return world.ext_python("get.py", address)
+	return world.ext_python("get.py", "\"[address]\"") // escaping url for shell
