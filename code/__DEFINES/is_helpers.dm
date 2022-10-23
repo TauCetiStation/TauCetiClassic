@@ -175,6 +175,8 @@
 
 #define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
 
+#define iseminence(A) (istype(A, /mob/camera/eminence))
+
 #define isvoxraider(H) isrole(VOXRAIDER, H)
 
 #define ischangeling(H) isrolebytype(/datum/role/changeling, H)
@@ -221,16 +223,16 @@
 
 // BLOB
 
-#define isblob(A) (istype(A, /obj/effect/blob))
+#define isblob(A) (istype(A, /obj/structure/blob))
 
-#define isblobnormal(A) (istype(A, /obj/effect/blob/normal))
+#define isblobnormal(A) (istype(A, /obj/structure/blob/normal))
 
-#define isblobcore(A) (istype(A, /obj/effect/blob/core))
+#define isblobcore(A) (istype(A, /obj/structure/blob/core))
 
-#define isblobnode(A) (istype(A, /obj/effect/blob/node))
+#define isblobnode(A) (istype(A, /obj/structure/blob/node))
 
-#define isblobfactory(A) (istype(A, /obj/effect/blob/factory))
+#define isblobfactory(A) (istype(A, /obj/structure/blob/factory))
 
-#define isblobshield(A) (istype(A, /obj/effect/blob/shield))
+#define isblobshield(A) (istype(A, /obj/structure/blob/shield))
 
-#define isblobresource(A) (istype(A, /obj/effect/blob/resource))
+#define isblobresource(A) (istype(A, /obj/structure/blob/resource))

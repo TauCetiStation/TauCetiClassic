@@ -16,6 +16,10 @@
 
 	resistance_flags = FULL_INDESTRUCTIBLE
 
+/obj/machinery/containment_field/atom_init()
+	. = ..()
+	new /datum/proximity_monitor(src, 1)
+
 /obj/machinery/containment_field/Destroy()
 	detach_from_field_generator(FG1)
 	FG1 = null

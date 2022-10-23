@@ -123,6 +123,7 @@
 
 		SetInitDirections()
 		var/obj/machinery/atmospherics/node1 = NODE1
+
 		if(node1)
 			node1.disconnect(src)
 			NODE1 = null
@@ -130,6 +131,7 @@
 			nullifyPipenet(PARENT1)
 
 		var/obj/machinery/atmospherics/node2 = NODE2
+
 		if(node2)
 			node2.disconnect(src)
 			NODE2 = null
@@ -145,11 +147,12 @@
 			if(node1)
 				node1.atmos_init()
 				node1.addMember(src)
+
 			if(node2)
 				node2.atmos_init()
 				node2.addMember(src)
 
-			build_network()
+		build_network()
 
 		if(gen)
 			gen.reconnect()
@@ -199,3 +202,6 @@
 	flipped = !flipped
 
 	update_icon()
+
+/obj/machinery/atmospherics/components/binary/circulator/can_be_node(obj/machinery/atmospherics/target)
+	return anchored && ..() && (target.initialize_directions & initialize_directions)
