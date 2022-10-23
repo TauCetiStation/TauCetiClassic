@@ -217,6 +217,7 @@
     desc = "Big chunk of exotic substance created from proto-hydrate under huge pressure and temperature. Highly explosive."
     icon = 'icons/obj/atmos.dmi'
     icon_state = "solid_phydr-na"
+    origin_tech = "materials=4;phorontech=1"
     w_class = SIZE_NORMAL
     var/reactionTimer = null
 

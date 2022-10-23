@@ -65,6 +65,8 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/list/export_types = list()	// Type of the exported object. If none, the export datum is considered base type.
 	var/include_subtypes = TRUE		// Set to FALSE to make the datum apply only to a strict type.
 	var/list/exclude_types = list()	// Types excluded from export
+	var/list/export_gases = list()  //exported gas ids, price is calculated for every mole of gas
+	//todo: add reagent exporting (cause why not)
 
 	// Used by print-out
 	var/total_cost = 0
@@ -77,6 +79,18 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 // Checks the amount of exportable in object. Credits in the bill, sheets in the stack, etc.
 // Usually acts as a multiplier for a cost, so item that has 0 amount will be skipped in export.
 /datum/export/proc/get_amount(obj/O, contr = 0, emag = 0)
+	if(istype(O, /obj/machinery/portable_atmospherics/canister) && export_gases.len)
+		var/molesToExport = 0
+		var/obj/machinery/portable_atmospherics/canister/C = O
+		for(var/gas in export_gases)
+			molesToExport += C.air_contents.gas[gas]
+		return molesToExport
+	else if(istype(O, /obj/item/weapon/tank) && export_gases.len)
+		var/molesToExport = 0
+		var/obj/item/weapon/tank/T = O
+		for(var/gas in export_gases)
+			molesToExport += T.air_contents.gas[gas]
+		return molesToExport
 	return 1
 
 // Checks if the item is fit for export datum.
