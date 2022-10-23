@@ -604,7 +604,7 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/try_react(datum/gas_mixture/G, turf/T = null)
 	for(var/datum/atmosReaction/R as anything in global.atmosReactionList)
 		var/datum/atmosReaction/O = new R()
-		if(O.react(G))
+		if(O.react(G, T))
 			recentReactions.Insert(1, list(O.id, T))
 			if(log_recent_reactions)
 				var/list/M = recentReactions

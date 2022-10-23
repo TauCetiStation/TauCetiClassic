@@ -11,8 +11,6 @@
 	var/currentGas = "phoron"
 	var/amountPerLevel = 200 //moles
 	var/temp = ""
-	var/radioEnabled = FALSE
-	var/list/radioChannels = list("Science")
 	var/lastResearch = 31
 	var/researchDrained = FALSE
 
@@ -37,7 +35,7 @@
 
 /obj/machinery/atmospherics/components/unary/gas_analyzer/update_icon()
 	var/on = !(stat & (BROKEN|NOPOWER) || !anchored)
-	icon_state = "gasanalyzer" + (on ? "-on" : "off")
+	icon_state = "gasanalyzer" + (on ? "-on" : "-off")
 
 /obj/machinery/atmospherics/components/unary/gas_analyzer/process_atmos()
 	if(stat & (BROKEN|NOPOWER) || !anchored)
@@ -52,7 +50,6 @@
 				var/P = researchGas(currentGas, L)
 				if(P < 0)
 					researchDrained = TRUE
-				researchMessage(L, P)
 				currentGasMoles -= L * amountPerLevel
 				lastResearch = 0
 			if(lastResearch > 30)
@@ -84,12 +81,14 @@
 			if(last < 10)
 				return points
 			points = ((last * (repetitionCoeff ** levels - 1)) / (repetitionCoeff - 1)) * repetitionCoeff
+			points = round(points)
 			if(add)
 				RD.files.experiments.earned_score[exType] += points
 				RD.files.research_points += points
 	return points
 
 /obj/machinery/atmospherics/components/unary/gas_analyzer/proc/reconnect()
+	SetInitDirections()
 	var/obj/machinery/atmospherics/node1 = NODE1
 	if(node1)
 		node1.disconnect(src)
@@ -108,9 +107,6 @@
 	set_power_use(NO_POWER_USE)
 
 /obj/machinery/atmospherics/components/unary/gas_analyzer/attackby(obj/item/weapon/W, mob/user)
-	if(!..())
-		return
-
 	if(iswrench(W))
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.</span>")
@@ -153,36 +149,26 @@
 		html += "Текущий изучаемый газ: [gas_data.name[currentGas]]<br>"
 		html += "Необходимый объём: [currentGasMoles]/[amountPerLevel]<br>"
 		html += "Ожидаемые очки за итерацию: [researchGas(currentGas, 1, add = FALSE)]<br>"
-		html += "Радио оповещения о завершении итерации: [radioEnabled ? "Включены" : "Выключены"]<br>"
-		html += "<A align='right' href='?src=\ref[src];changer=1'>Включить радио оповещения</A><br>"
 		html += "<A align='right' href='?src=\ref[src];changeg=1'>Сменить изучаемый газ</A><br>"
 		html += "<A align='right' href='?src=\ref[src];refresh=1'>Обновить</A><br>"
 	return html
 
 /obj/machinery/atmospherics/components/unary/gas_analyzer/Topic(href, href_list)
-	if(href_list["changer"])
-		radioEnabled = !radioEnabled
 	if(href_list["changeg"])
+		temp += "Внимание: при выборе газа другого типа текущее количество газа будет обнулено.<br>"
 		for(var/gas in gas_data.gases)
 			temp += "[gas_data.name[gas]]; <A href='?src=\ref[src];changegs=\ref[gas]'>Выбрать</A><br>"
 	if(href_list["changegs"])
-		researchDrained = FALSE
-		currentGas = locate(href_list["changegs"])
+		var/N = locate(href_list["changegs"])
+		if(!(N == currentGas))
+			currentGasMoles = 0
+			var/datum/gas_mixture/C = AIR1
+			C.gas = list()
+			AIR1 = C
+			researchDrained = FALSE
+			currentGas = locate(href_list["changegs"])
 		temp = ""
 	interact(usr)
-
-/obj/machinery/atmospherics/components/unary/gas_analyzer/proc/researchMessage(levels, points, console = TRUE)
-	if(!radioEnabled)
-		return
-	for(var/channel in radioChannels)
-		autosay("Итерация исследования завершена, газ: [gas_data.name[currentGas]], итерации: [levels]; Получено очков: [points]", "Система анализа газов", channel, radiochannels[channel])
-		if(!console)
-			autosay("Итерация исследования завершена, газ: [gas_data.name[currentGas]], итерации: [levels]; Консоль РнД отсутствует, очки не получены.", "Система анализа газов", channel, radiochannels[channel])
-
-/obj/machinery/atmospherics/components/unary/gas_analyzer/proc/autosay(message, from, channel, freq)
-	var/obj/item/device/radio/R = new /obj/item/device/radio(src)
-	R.autosay(message, from, channel, freq) //yes, we are creating new radios for each message
-	qdel(R)
 
 /obj/machinery/atmospherics/components/unary/gas_analyzer/verb/rotate()
 	set category = "Object"
@@ -193,3 +179,6 @@
 		return
 
 	set_dir(turn(src.dir, 90))
+
+/obj/machinery/atmospherics/components/unary/gas_analyzer/can_be_node(obj/machinery/atmospherics/target)
+	return anchored && ..() && (reverse_dir[initialize_directions] & target.initialize_directions)

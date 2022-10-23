@@ -5,24 +5,26 @@
     var/minPressure = 0 //kilo pascals
     var/maxPressure = 0 //kilo pascals
     var/producedHeat = 0 //joules
-    var/list/consumed = list()
-    var/list/created = list()
-    var/list/catalysts = list()
-    var/list/inhibitors = list()
+    var/list/consumed[0]
+    var/list/created[0]
+    var/list/catalysts[0]
+    var/list/inhibitors[0]
 
 /datum/atmosReaction/proc/canReact(datum/gas_mixture/G)
     var/count = 0
     var/list/toRemove[0]
-    if(!consumed.len)
+    if(!consumed.len || !created.len)
         return
     for(var/gas in consumed)
         if(consumed[gas] <= G.gas[gas])
             count ++
             toRemove[gas] = consumed[gas]
-        else if(catalysts.len)
+    if(catalysts.len)
+        for(var/gas in catalysts)
             if(catalysts[gas] <= G.gas[gas])
                 count ++
-        else if(inhibitors.len)
+    if(inhibitors.len)
+        for(var/gas in inhibitors)
             if(inhibitors[gas] <= G.gas[gas])
                 count = 0
 
@@ -31,13 +33,13 @@
             return toRemove
     return FALSE
 
-/datum/atmosReaction/proc/preReact(datum/gas_mixture/G)
+/datum/atmosReaction/proc/preReact(datum/gas_mixture/G, turf/T = null)
     return TRUE //insert your own code here
 
-/datum/atmosReaction/proc/react(datum/gas_mixture/G)
+/datum/atmosReaction/proc/react(datum/gas_mixture/G, turf/T = null)
     var/R = canReact(G)
     if(R)
-        if(preReact(G))
+        if(preReact(G, T))
             for(var/gas in R)
                 G.gas[gas] = G.gas[gas] - R[gas]
             for(var/gas in created)
@@ -46,9 +48,9 @@
                 else
                     G.gas[gas] = created[gas]
             G.add_thermal_energy(producedHeat)
-            postReact(G)
+            postReact(G, T)
             return TRUE
     return FALSE
 
-/datum/atmosReaction/proc/postReact(datum/gas_mixture/G)
+/datum/atmosReaction/proc/postReact(datum/gas_mixture/G, turf/T = null)
     return //insert your own code here

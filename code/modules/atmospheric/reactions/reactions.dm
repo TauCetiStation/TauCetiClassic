@@ -170,5 +170,78 @@
 
 /datum/atmosReaction/mstabSynthesis
     id = "mstabsynth"
+    producedHeat = -2
+    created = list("mstab" = 3)
+
+/datum/atmosReaction/mstabSynthesis/New()
+    minTemp = round(rand(0, 100) / 100) * 100
+    maxTemp = round(rand(100, 1000) / 100) * 100
+    minPressure = round(rand(0, 100) / 100) * 100
+    maxPressure = round(rand(100, 1000) / 100) * 100
+    var/list/used = list()
+    for(var/i = 0, i < 3, i++)
+        while(TRUE)
+            if(used.len == gas_data.gases.len)
+                break
+            var/N = pick(gas_data.gases)
+            if(!used.Find(N))
+                consumed[N] = 1
+                used.Add(N)
+                break
+    while(TRUE)
+        if(used.len == gas_data.gases.len)
+            break
+        var/N = pick(gas_data.gases)
+        if(!used.Find(N))
+            catalysts[N] = 5
+            break
+
+/datum/atmosReaction/solidPhydrSynthesis
+    id = "sphydrsynth"
+    minTemp = 3273.15
+    maxTemp = HVAL
+    minPressure = 8000
+    maxPressure = HVAL
+    producedHeat = -10
+    consumed = list("phydr" = 100)
+    inhibitors = list("const" = 1)
+
+/datum/atmosReaction/solidPhydrSynthesis/postReact(datum/gas_mixture/G, turf/T = null)
+    if(!T) //can't add solid proto hydrate if we don't know location of the reaction
+        G.gas["phydr"] += 100
+        return
+    new /obj/item/weapon/solid_phydr(T)
+
+/obj/item/weapon/solid_phydr
+    name = "Solid proto-hydrate"
+    desc = "Big chunk of exotic substance created from proto-hydrate under huge pressure and temperature. Highly explosive."
+    icon = 'icons/obj/atmos.dmi'
+    icon_state = "solid_phydr-na"
+    w_class = SIZE_NORMAL
+    var/reactionTimer = null
+
+/obj/item/weapon/solid_phydr/update_icon()
+    icon_state = "solid_phydr" + (reactionTimer ? "-a" : "-na")
+
+/obj/item/weapon/solid_phydr/attack_self(mob/user)
+    if(reactionTimer)
+        return
+    to_chat(user, "<span class='notice'>You apply force to [src], triggering chain reaction inside it!</span>")
+    trigger()
+
+/obj/item/weapon/solid_phydr/attackby(obj/item/weapon/W, mob/user)
+    if(reactionTimer)
+        return
+    if(W.get_current_temperature() > 300)
+        to_chat(user, "<span class='notice'>You heat [src], triggering chain reaction inside it!</span>")
+        trigger()
+
+/obj/item/weapon/solid_phydr/proc/trigger()
+    reactionTimer = addtimer(CALLBACK(src, .proc/react), rand(50, 100), TIMER_STOPPABLE)
+    update_icon()
+
+/obj/item/weapon/solid_phydr/proc/react()
+    explosion(loc, 2, 4, 6, 8)
+    qdel(src)
 
 #undef HVAL

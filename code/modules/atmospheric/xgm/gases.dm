@@ -123,7 +123,7 @@
 	knowable = FALSE
 	inhalation_proc = /datum/xgm_gas/bz/on_inhalation
 
-	initial_rnd_points = 3000
+	initial_rnd_points = 5000
 
 /datum/xgm_gas/constantium
 	id = "const"
@@ -139,7 +139,7 @@
 	knowable = FALSE
 	inhalation_proc = /datum/xgm_gas/constantium/on_inhalation
 
-	initial_rnd_points = 3000
+	initial_rnd_points = 5000
 
 /datum/xgm_gas/trioxium
 	id = "triox"
@@ -156,7 +156,7 @@
 	knowable = FALSE
 	inhalation_proc = /datum/xgm_gas/trioxium/on_inhalation
 
-	initial_rnd_points = 7000
+	initial_rnd_points = 10000
 
 /datum/xgm_gas/proto_hydrate
 	id = "phydr"
@@ -174,7 +174,7 @@
 	knowable = FALSE
 	inhalation_proc = /datum/xgm_gas/proto_hydrate/on_inhalation
 
-	initial_rnd_points = 7000
+	initial_rnd_points = 10000
 
 /datum/xgm_gas/cardotirin
 	id = "ctirin"
@@ -190,7 +190,7 @@
 	knowable = FALSE
 	inhalation_proc = /datum/xgm_gas/cardotirin/on_inhalation
 
-	initial_rnd_points = 10000
+	initial_rnd_points = 30000
 
 /datum/xgm_gas/metastabilium
 	id = "mstab"
@@ -205,4 +205,4 @@
 
 	knowable = FALSE
 
-	initial_rnd_points = 30000
+	initial_rnd_points = 100000
