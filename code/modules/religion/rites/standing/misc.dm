@@ -236,10 +236,6 @@
 		else
 			M.AdjustConfused(10 * divine_power)
 			M.make_jittery(50)
-			var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = pick("ghost", "husk_s", "zombie", "skeleton"), layer = INFRONT_MOB_LAYER, loc = M)
-			I.override = TRUE
-			M.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "spookyscary", I)
-			addtimer(CALLBACK(src, .proc/remove_spook_effect, M), 10 SECONDS)
 
 			if(prob(50))
 				M.visible_message("<span class='warning bold'>[M]'s face clearly depicts true fear.</span>")
