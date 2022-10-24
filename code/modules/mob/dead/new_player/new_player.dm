@@ -222,6 +222,7 @@
 		SSquirks.AssignQuirks(character, character.client, TRUE)
 		SSjob.EquipRank(character, rank, TRUE)
 		SSqualities.give_quality(character, TRUE)
+		SSjob.Disabilities_Label_To_Id(character)
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")

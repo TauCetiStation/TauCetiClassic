@@ -601,6 +601,14 @@ SUBSYSTEM_DEF(job)
 
 	return TRUE
 
+/datum/controller/subsystem/job/proc/Disabilities_Label_To_Id(mob/living/carbon/human/H)
+	var/obj/item/weapon/card/id/card = locate(/obj/item/weapon/card/id,H)
+	if(!card)
+		return
+	for(var/datum/quirk/Q in H.roundstart_quirks)
+		if(Q.disability)
+			card.disabilities += Q.name
+
 /datum/controller/subsystem/job/proc/LoadJobs(jobsfile)
 	if(!config.load_jobs_from_txt)
 		return FALSE
