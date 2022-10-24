@@ -199,20 +199,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	origin_tech = "materials=4"
 	desc = "This makes no metallurgic sense."
 
-/obj/item/weapon/pickaxe/plasmacutter
-	name = "plasma cutter"
-	icon_state = "plasmacutter"
-	item_state = "plasmacutter"
-	w_class = SIZE_SMALL //it is smaller than the pickaxe
-	damtype = BURN
-	toolspeed = 0.4 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
-	origin_tech = "materials=4;phorontech=3;engineering=3"
-	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
-	drill_verb = "cutting"
-
-/obj/item/weapon/pickaxe/plasmacutter/get_current_temperature()
-	return 3800
-
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"
@@ -604,6 +590,54 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "Speeds up reloading Proto-kinetic accelerator."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "accelerator_speedupgrade"
+
+/*****************************Plasma Cutter********************************/
+
+/obj/item/weapon/gun/energy/laser/cutter
+	name = "plasma cutter"
+	icon_state = "plasmacutter"
+	item_state = "plasmacutter"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/cutter)
+	fire_delay = 2
+	w_class = SIZE_SMALL //it is smaller than the pickaxe
+	origin_tech = "materials=4;phorontech=3;engineering=3"
+	desc = "The latest self-rechargeable low-power cutter using bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+	var/emagged = FALSE
+
+/obj/item/projectile/beam/plasma_cutter
+	name = "cutter"
+	damage = 5
+	damage_type = BURN
+	flag = ENERGY
+	icon_state = "plasma_scutter"
+	light_color = "#4abdff"
+	muzzle_type = /obj/effect/projectile/laser_omni/muzzle
+	tracer_type = /obj/effect/projectile/laser_omni/tracer
+	impact_type = /obj/effect/projectile/laser_omni/impact
+
+/obj/item/projectile/beam/plasma_cutter/emagged
+	damage = 90
+
+/obj/item/projectile/beam/plasma_cutter/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	. = ..()
+	var/turf/target_turf = get_turf(target)
+	if(istype(target_turf, /turf/simulated/mineral))
+		var/turf/simulated/mineral/M = target_turf
+		M.GetDrilled(firer)
+
+/obj/item/weapon/gun/energy/laser/cutter/atom_init()
+	. = ..()
+	power_supply.AddComponent(/datum/component/cell_selfrecharge, 50)
+
+/obj/item/weapon/gun/energy/laser/cutter/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	ammo_type += new /obj/item/ammo_casing/energy/laser/cutter/emagged(src)
+	fire_delay = 5
+	origin_tech += ";syndicate=1"
+	emagged = TRUE
+	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибкаошибкаошибка.</span>")
+	return TRUE
 
 /*****************************Survival Pod********************************/
 

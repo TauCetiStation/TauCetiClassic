@@ -342,7 +342,7 @@
 	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/crowbar(src)
-	modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
+	modules += new /obj/item/weapon/gun/energy/laser/cutter(src)
 
 /obj/item/weapon/robot_module/syndicate/add_languages(mob/living/silicon/robot/R)
 	//basic set+Sy-Code
@@ -364,7 +364,7 @@
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/borg/sight/night(src)
 	modules += new /obj/item/weapon/gun/energy/laser/selfcharging/cyborg(src)
-	modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
+	modules += new /obj/item/weapon/gun/energy/laser/cutter(src)
 	modules += new /obj/item/borg/combat/shield(src)
 	modules += new /obj/item/borg/combat/mobility(src)
 	modules += new /obj/item/weapon/wrench(src)
@@ -453,7 +453,7 @@
 	modules += new /obj/item/weapon/matter_decompiler(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/cleaner/cyborg/drone(src)
 
-	emag = new /obj/item/weapon/pickaxe/plasmacutter(src)
+	emag = new /obj/item/weapon/gun/energy/laser/cutter(src)
 	emag.name = "Plasma Cutter"
 
 	for(var/T in stacktypes)

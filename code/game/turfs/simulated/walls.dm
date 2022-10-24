@@ -336,7 +336,7 @@
 				thermitemelt(user, seconds_to_melt)
 				return
 
-		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+		else if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
 			thermitemelt(user, seconds_to_melt)
 			return
 
@@ -375,7 +375,7 @@
 				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
 				dismantle_wall()
 
-	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+	else if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
