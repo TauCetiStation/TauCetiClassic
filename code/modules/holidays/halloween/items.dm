@@ -10,17 +10,8 @@
 	item_state = "fakespider"
 	attack_verb = list("bitten", "hissed", "webbed")
 
-/obj/item/weapon/bikehorn/spidertoy/attack(mob/target, mob/user, def_zone)
-	playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MISC)
-	return
-	// so it doesnt make a bikehorn noise
-
-/obj/item/weapon/bikehorn/spidertoy/attack_self(mob/user)
-	if(cooldown <= world.time)
-		cooldown = world.time + 8
-		playsound(src, 'sound/weapons/bite.ogg', VOL_EFFECTS_MISC)
-		src.add_fingerprint(user)
-	return
+/obj/item/weapon/bikehorn/spidertoy/honk(mob/use)
+	playsound(loc, 'sound/weapons/bite.ogg', VOL_EFFECTS_MISC)
 
 /obj/effect/spider/stickyweb/nonstick
 	name = "fake webbing"
@@ -78,7 +69,6 @@
 	desc = "A dress inspired by the ancient era known as the victorian era"
 	icon_state = "draculass"
 	item_state = "draculass"
-	item_color = "draculass"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
 /obj/item/clothing/under/lobster
@@ -86,14 +76,12 @@
 	desc = "Who beheaded the college mascot?"
 	icon_state = "lobster"
 	item_state = "lobster"
-	item_color = "lobster"
 
 /obj/item/clothing/under/skeleton
 	name = "skeleton jumpsuit"
 	desc = "A black jumpsuit with a white bone pattern printed on it. Spooky!"
 	icon_state = "skeleton"
 	item_state = "skeleton"
-	item_color = "skeleton"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 /obj/item/clothing/under/mummy
@@ -101,7 +89,6 @@
 	desc = "Return the slab or suffer my stale references."
 	icon_state = "mummy"
 	item_state = "mummy"
-	item_color = "mummy"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 /obj/item/clothing/under/scarecrow
@@ -109,7 +96,6 @@
 	desc = "Perfect camouflage for hiding in botany."
 	icon_state = "scarecrow"
 	item_state = "scarecrow"
-	item_color = "scarecrow"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 /obj/item/clothing/head/scarecrow_hat
