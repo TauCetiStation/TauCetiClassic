@@ -339,6 +339,10 @@ This function restores the subjects blood to max.
 	blood_add(BLOOD_VOLUME_NORMAL - blood_amount(exact = TRUE))
 	fixblood()
 
+	if(istype(species, /datum/species/zombie))
+		for(var/obj/item/organ/external/BP in bodyparts)
+			BP.status &= ~ORGAN_ARTERY_CUT
+			BP.strap()
 
 /*
 This function restores all bodyparts.

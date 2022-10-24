@@ -171,8 +171,9 @@
 	if(!iszombie(H))
 		H.zombify()
 
-	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)  // restore every thing in this dumb head (brain and eyes)
-		IO.rejuvenate()
+	//del wounds and embedded implants in limbs, heal
+	for(var/obj/item/organ/external/limb in H.bad_bodyparts)
+		limb.rejuvenate()
 
 	H.setCloneLoss(0)
 	H.setBrainLoss(0)
@@ -196,6 +197,8 @@
 	H.update_canmove()
 	H.regenerate_icons()
 	H.med_hud_set_health()
+	H.handle_vision()
+	H.yank_out_object()
 
 	playsound(H, pick(list('sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')), VOL_EFFECTS_MASTER)
 	to_chat(H, "<span class='danger'>Somehow you wake up and your hunger is still outrageous!</span>")
@@ -209,10 +212,22 @@
 				return TRUE
 	return FALSE
 
+/mob/living/carbon/human/yank_out_object()
+	if(!istype(species, /datum/species/zombie))
+		return ..()
+	clear_alert("embeddedobject")
+	var/list/valid_objects = get_visible_implants()
+	if(!valid_objects.len)
+		return
+	for(var/obj/item/embedded_item in valid_objects)
+		embedded -= embedded_item
+		embedded_item.forceMove(loc)
+
 /mob/living/carbon/human/handle_vision()
 	if(!istype(species, /datum/species/zombie))
 		return ..()
 	clear_fullscreen("blind", 0)
+	clear_alert("blind")
 
 /mob/living/carbon/human/update_eye_blur()
 	if(!istype(species, /datum/species/zombie))
@@ -221,6 +236,10 @@
 		var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 		game_plane_master_controller.remove_filter("eye_blur_angular")
 		game_plane_master_controller.remove_filter("eye_blur_gauss")
+
+/mob/living/carbon/human/embed(obj/item/I)
+	if(!istype(species, /datum/species/zombie))
+		return ..()
 
 /mob/living/carbon/human/proc/infect_zombie_virus(target_zone = null, forced = FALSE, fast = FALSE)
 	if(!forced && !prob(get_bite_infection_chance(src, target_zone)))
