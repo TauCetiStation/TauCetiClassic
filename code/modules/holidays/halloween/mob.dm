@@ -125,9 +125,9 @@
 	if(timer != 0)
 		return
 	timer = rand(5, 15)
-	stalk()
+	stalk(M)
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/proc/stalk()
+/mob/living/simple_animal/hostile/retaliate/clown/insane/proc/stalk(mob/living/M)
 	set waitfor = FALSE
 	playsound(M.loc, pick('sound/spookoween/scary_horn.ogg', 'sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), VOL_EFFECTS_MASTER)
 	
