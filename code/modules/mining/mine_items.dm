@@ -609,7 +609,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	damage = 5
 	damage_type = BURN
 	flag = ENERGY
-	icon_state = "plasma_scutter"
 	light_color = "#4abdff"
 	muzzle_type = /obj/effect/projectile/laser_omni/muzzle
 	tracer_type = /obj/effect/projectile/laser_omni/tracer
