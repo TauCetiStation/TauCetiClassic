@@ -5,7 +5,7 @@
 /obj/item/weapon/bikehorn/spidertoy
 	name = "little spider"
 	desc = "An 'adorable' plastic toy that resembles a spider. Scare the medbay nurses with this."
-	icon = 'code/modules/halloween/halloween.dmi'
+	icon = 'code/modules/holidays/halloween/halloween.dmi'
 	icon_state = "fakespider"
 	item_state = "fakespider"
 	attack_verb = list("bitten", "hissed", "webbed")
@@ -23,7 +23,7 @@
 /obj/item/weapon/storage/box/trick_o_treat
 	name = "trick-o-treat bag"
 	desc = "A pumpkin shaped bag that holds all sorts of goodies!"
-	icon = 'code/modules/halloween/halloween.dmi'
+	icon = 'code/modules/holidays/halloween/halloween.dmi'
 	icon_state = "trickortreat"
 	item_state = "trickortreat"
 	foldable = null
@@ -121,7 +121,7 @@
 /obj/machinery/vending/spooky
 	name = "SpookyVend"
 	desc = "Boo! Things are about to get scarier than ever!"
-	icon = 'code/modules/halloween/halloween.dmi'
+	icon = 'code/modules/holidays/halloween/halloween.dmi'
 	icon_state = "SpookyVend"
 	product_slogans = "SpookyVend: Get Spooked Today"
 	products = list(/obj/item/weapon/bikehorn/spidertoy = 4,
