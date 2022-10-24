@@ -135,6 +135,8 @@
 	playsound(M.loc, pick('sound/spookoween/scary_horn.ogg', 'sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), VOL_EFFECTS_MASTER)
 	
 	sleep(1 SECOND)
+	if(QDELING(src)) // banished
+		return
 	direction_stalk = pick(cardinal)
 	dir = reverse_dir[direction_stalk]
 	var/turf/T = get_step(M, direction_stalk)
@@ -155,6 +157,8 @@
 			H.apply_damage(rand(5, 30), BRUTE, BP, H.run_armor_check(BP, "melee"), DAM_SHARP | DAM_EDGE)
 
 	sleep(2 SECONDS)
+	if(QDELING(src)) // banished
+		return
 	if(buckled)
 		buckled.unbuckle_mob()
 	sparks.set_up(3, 0, loc)
