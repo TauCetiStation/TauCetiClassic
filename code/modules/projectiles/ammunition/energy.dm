@@ -27,7 +27,7 @@
 
 /obj/item/ammo_casing/energy/laser/cutter
 	e_cost = 100
-	select_name = "safe mod"
+	select_name = "safe mode"
 	projectile_type = /obj/item/projectile/beam/plasma_cutter
 
 /obj/item/ammo_casing/energy/laser/cutter/emagged
