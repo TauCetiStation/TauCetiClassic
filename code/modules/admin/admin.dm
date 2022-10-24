@@ -1391,26 +1391,35 @@ var/global/ghost_mode_timer = null
 
 /proc/ghost_mode_ticker()
 	ghost_mode_timer = addtimer(CALLBACK(GLOBAL_PROC, .proc/ghost_mode_ticker, FALSE), rand(25, 35) SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
-	for(var/mob/M in player_list)
-		if(M.stat != DEAD && prob(25))
-			var/area/AffectedArea = get_area(M)
-			if(AffectedArea.name != "Space" && AffectedArea.name != "Engine Walls" && AffectedArea.name != "Chemical Lab Test Chamber" && AffectedArea.name != "Escape Shuttle" && AffectedArea.name != "Arrival Area" && AffectedArea.name != "Arrival Shuttle" && AffectedArea.name != "start area" && AffectedArea.name != "Engine Combustion Chamber")
-				AffectedArea.power_light = 0
-				AffectedArea.power_change()
-				spawn(rand(55,185))
-					AffectedArea.power_light = 1
-					AffectedArea.power_change()
-				var/Message = rand(1,4)
-				switch(Message)
-					if(1)
-						M.show_message("<span class='notice'>You shudder as if cold...</span>", SHOWMSG_FEEL)
-					if(2)
-						M.show_message("<span class='notice'>You feel something gliding across your back...</span>", SHOWMSG_FEEL)
-					if(3)
-						M.show_message("<span class='notice'>Your eyes twitch, you feel like something you can't see is here...</span>", SHOWMSG_VISUAL)
-					if(4)
-						M.show_message("<span class='notice'>You notice something moving out of the corner of your eye, but nothing is there...</span>", SHOWMSG_VISUAL)
-				for(var/obj/W in orange(5,M))
-					if(prob(25) && !W.anchored)
-						step_rand(W)
+	for(var/mob/living/M in player_list)
+		if(M.stat == DEAD || prob(75))
+			continue
+		var/area/A = get_area(M)
+		if(!A)
+			continue
+		ghost_mode_action(A, M)
 
+/proc/ghost_mode_action(area/A, mob/M)
+	set waitfor = FALSE
+
+	switch(rand(1, 4))
+		if(1)
+			M.show_message("<span class='notice'>You shudder as if cold...</span>", SHOWMSG_FEEL)
+		if(2)
+			M.show_message("<span class='notice'>You feel something gliding across your back...</span>", SHOWMSG_FEEL)
+		if(3)
+			M.show_message("<span class='notice'>Your eyes twitch, you feel like something you can't see is here...</span>", SHOWMSG_VISUAL)
+		if(4)
+			M.show_message("<span class='notice'>You notice something moving out of the corner of your eye, but nothing is there...</span>", SHOWMSG_VISUAL)
+	
+	for(var/obj/W in orange(5, M))
+		if(prob(25) && !W.anchored)
+			step_rand(W)
+
+	if(A.power_light)
+		A.power_light = FALSE
+		A.power_change()
+		sleep(rand(5 SECONDS, 20 SECONDS))
+		if(!A.power_light)
+			A.power_light = TRUE
+			A.power_change()
