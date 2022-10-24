@@ -9,20 +9,19 @@
 	maxHealth = 1e6
 	health = 1e6
 	speak_emote = list("howls")
-	emote_hear = list("wails","screeches")
+	emote_hear = list("wails", "screeches")
 	density = FALSE
 	anchored = TRUE
 	incorporeal_move = 1
-	layer = 4
 	status_flags = GODMODE
 	faction = "untouchable"
 	var/timer = 0
 
 /mob/living/simple_animal/shade/howling_ghost/atom_init()
 	. = ..()
-	icon_state = pick("ghost","ghostian","ghostian2","ghostking","ghost1","ghost2")
+	icon_state = pick("ghost", "ghostian", "ghostian2", "ghostking", "ghost1", "ghost2")
 	icon_living = icon_state
-	timer = rand(1,15)
+	timer = rand(1, 15)
 
 /mob/living/simple_animal/shade/howling_ghost/Life()
 	..()
@@ -45,39 +44,19 @@
 
 /mob/living/simple_animal/shade/howling_ghost/proc/roam()
 	if(prob(80))
-		var/direction = pick(NORTH,SOUTH,EAST,WEST,NORTHEAST,NORTHWEST,SOUTHEAST,SOUTHWEST)
-		EtherealMove(direction)
+		EtherealMove(pick(alldirs))
 
 /mob/living/simple_animal/shade/howling_ghost/proc/spooky_ghosty()
 	if(prob(20)) //haunt
-		playsound(loc, pick('sound/spookoween/ghosty_wind.ogg','sound/spookoween/ghost_whisper.ogg','sound/spookoween/chain_rattling.ogg'), VOL_EFFECTS_MASTER)
+		playsound(loc, pick('sound/spookoween/ghosty_wind.ogg', 'sound/spookoween/ghost_whisper.ogg', 'sound/spookoween/chain_rattling.ogg'), VOL_EFFECTS_MASTER)
 	if(prob(20)) //flickers
 		var/obj/machinery/light/L = locate(/obj/machinery/light) in view(5, src)
 		if(L)
 			L.flicker()
 	if(prob(15)) //poltergeist
 		var/obj/item/I = locate(/obj/item) in view(3, src)
-		if(I)
-			if(!I.anchored)
-				var/direction = pick(NORTH,SOUTH,EAST,WEST,NORTHEAST,NORTHWEST,SOUTHEAST,SOUTHWEST)
-				step(I,direction)
-		return
-
-/mob/living/simple_animal/shade/howling_ghost/attackby(obj/item/O, mob/user)  //Marker -Agouri
-	if(O.force)
-		var/damage = O.force
-		if (O.damtype == HALLOSS)
-			damage = 0
-		health -= damage
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("<span class='danger'>[src] has been attacked with the [O] by [user].</span>")
-	else
-		to_chat(usr, "<span class='danger'>This weapon is ineffective, it does no damage.</span>")
-		for(var/mob/M in viewers(src, null))
-			if ((M.client && !( M.blinded )))
-				M.show_message("<span class='danger'>[user] gently taps [src] with the [O].</span>")
-	return
+		if(I && !I.anchored)
+			step(I, pick(alldirs))
 
 /mob/living/simple_animal/shade/howling_ghost/CanPass(atom/movable/mover, turf/target)
 	return 1
@@ -95,7 +74,7 @@
 	icon_living = "scary_clown"
 	icon_dead = "scary_clown_dead"
 	icon_gib = "scary_clown_dead"
-	speak = list("HONK!","Your life is a funny joke!"," Ha-Ha! I will murder you!","Run for your life!")
+	speak = list("HONK!", "Your life is a funny joke!", " Ha-Ha! I will murder you!", "Run for your life!")
 	speak_emote = list("laughs", "mocks")
 	emote_hear = list("laughs", "mocks")
 	speak_chance = 30
@@ -103,131 +82,98 @@
 	health = 1e6
 	turns_per_move = 3
 	emote_see = list("silently stares")
+	status_flags = GODMODE
 	var/timer
 	var/direction_stalk
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/atom_init()
 	. = ..()
-	timer = rand(5,15)
-	status_flags = (status_flags | GODMODE)
-	return
+	timer = rand(5, 15)
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/Retaliate()
 	return
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/Life()
-	for(var/mob/living/carbon/human/H in range(15,src))
-		if(!target)
-			target = H
+	if(!target)
+		target = locate(/mob/living/carbon/human) in range(15, src)
 	timer--
 	if(target)
-		stalk()
+		check_stalk()
 	if(!client && speak_chance)
 		if(rand(0,200) < speak_chance)
-			if(speak && speak.len)
-				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
-					var/length = speak.len
-					if(emote_hear && emote_hear.len)
-						length += emote_hear.len
-					if(emote_see && emote_see.len)
-						length += emote_see.len
-					var/randomValue = rand(1,length)
-					if(randomValue <= speak.len)
-						say(pick(speak))
-					else
-						randomValue -= speak.len
-						if(emote_see && randomValue <= emote_see.len)
-							emote(pick(emote_see),1)
-						else
-							emote(pick(emote_hear),2)
+			var/speak_len = speak?.len
+			var/emote_hear_len = emote_hear?.len
+			var/emote_see_len = emote_see?.len
+			var/length = speak_len + emote_hear_len + emote_see_len
+			if(length > 0)
+				var/randomValue = rand(1, length)
+				if(randomValue <= speak_len)
+					say(speak[randomValue])
 				else
-					say(pick(speak))
-			else
-				if(!(emote_hear && emote_hear.len) && (emote_see && emote_see.len))
-					emote(pick(emote_see),1)
-				if((emote_hear && emote_hear.len) && !(emote_see && emote_see.len))
-					emote(pick(emote_hear),2)
-				if((emote_hear && emote_hear.len) && (emote_see && emote_see.len))
-					var/length = emote_hear.len + emote_see.len
-					var/pick = rand(1,length)
-					if(pick <= emote_see.len)
-						emote(pick(emote_see),1)
+					randomValue -= speak_len
+					if(randomValue <= emote_hear_len)
+						emote(emote_hear[randomValue], 2)
 					else
-						emote(pick(emote_hear),2)
+						emote(emote_see[randomValue - emote_hear_len], 2)
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/proc/stalk()
+/mob/living/simple_animal/hostile/retaliate/clown/insane/proc/check_stalk()
 	var/mob/living/M = target
 	if(M.stat == DEAD)
 		playsound(M.loc, 'sound/spookoween/insane_low_laugh.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
-	if(timer == 0)
-		timer = rand(5,15)
-		playsound(M.loc, pick('sound/spookoween/scary_horn.ogg','sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), VOL_EFFECTS_MASTER)
-		spawn(12)
-			var/turf/T = get_turf(src)
-			var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
-			sparks = new /datum/effect/effect/system/spark_spread()
-			sparks.set_up(3, 0, get_turf(src))
-			sparks.start()
-			forceMove(M.loc)
-			sparks = new /datum/effect/effect/system/spark_spread()
-			sparks.set_up(3, 0, get_turf(src))
-			sparks.start()
-			direction_stalk = pick(NORTH,SOUTH,EAST,WEST)
-			forceMove(get_step(src,direction_stalk))
-			if(direction_stalk == NORTH)
-				dir = SOUTH
-			if(direction_stalk == SOUTH)
-				dir = NORTH
-			if(direction_stalk == EAST)
-				dir = WEST
-			if(direction_stalk == WEST)
-				dir = EAST
-			if(prob(50))
-				if(ishuman(target))
-					var/mob/living/carbon/human/H = target
-					var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
-					var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(dam_zone)]
-					to_chat(target,"<span class='danger'>[src] claws [target] with his bloody hands.</span>")
-					H.apply_damage(rand(5,30), BRUTE, BP, H.run_armor_check(BP, "melee"), DAM_SHARP | DAM_EDGE)
-			spawn(28)
-				if(buckled)
-					buckled.unbuckle_mob()
-				sparks.set_up(3, 0, get_turf(src))
-				sparks.start()
-				var/turf/N = pick(orange(get_turf(T), 30))
-				do_teleport(src, N, 4)
-				sparks = new /datum/effect/effect/system/spark_spread()
-				sparks.set_up(3, 0, get_turf(src))
-				sparks.start()
-				target = null
+		return
+	if(timer != 0)
+		return
+	timer = rand(5, 15)
+	stalk()
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/MoveToTarget()
-	stalk(target)
+/mob/living/simple_animal/hostile/retaliate/clown/insane/proc/stalk()
+	set waitfor = FALSE
+	playsound(M.loc, pick('sound/spookoween/scary_horn.ogg', 'sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), VOL_EFFECTS_MASTER)
+	
+	sleep(1 SECOND)
+	var/turf/T = get_turf(M)
+	var/datum/effect/effect/system/spark_spread/sparks = new
+	sparks.set_up(3, 0, loc)
+	sparks.start()
+	forceMove(T)
+	sparks.set_up(3, 0, T)
+	sparks.start()
+	direction_stalk = pick(cardinal)
+	forceMove(get_step(src, direction_stalk))
+	dir = reverse_dir[direction_stalk]
+	if(prob(50))
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(dam_zone)]
+			to_chat(target,"<span class='danger'>[src] claws [target] with his bloody hands.</span>")
+			H.apply_damage(rand(5,30), BRUTE, BP, H.run_armor_check(BP, "melee"), DAM_SHARP | DAM_EDGE)
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/AttackingTarget()
-	return
+	sleep(2 SECONDS)
+	if(buckled)
+		buckled.unbuckle_mob()
+	sparks.set_up(3, 0, loc)
+	sparks.start()
+	var/turf/N = pick(orange(30, src))
+	do_teleport(src, N, 4)
+	sparks.set_up(3, 0, loc)
+	sparks.start()
+	target = null
+
+/mob/living/simple_animal/hostile/retaliate/clown/insane/death()
+	..()
+	QDEL_IN(src, 2 SECONDS)
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/weapon/nullrod))
-		if(prob(20))
-			visible_message("[src] finally found the peace it deserves. <i>You hear honks echoing off into the distance.</i>")
-			playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', VOL_EFFECTS_MASTER)
-			icon_state = null
-			var/atom/movable/overlay/clown_dead = null
-			clown_dead = new(loc)
-			clown_dead.icon_state = "blank"
-			clown_dead.icon = 'icons/holidays/halloween.dmi'
-			clown_dead.layer = 7
-			clown_dead.master = src
-			flick("scary_clown_dead", clown_dead)
-			spawn(20)
-				qdel(src)
-				qdel(clown_dead)
-		else
-			visible_message("<span class='danger'>[src] seems to be resisting the effect!</span>")
+	if(!istype(O, /obj/item/weapon/nullrod))
+		return ..()
+	if(prob(20))
+		visible_message("[src] finally found the peace it deserves. <i>You hear honks echoing off into the distance.</i>")
+		playsound(loc, 'sound/spookoween/insane_low_laugh.ogg', VOL_EFFECTS_MASTER)
+		death()
 	else
-		..()
+		visible_message("<span class='danger'>[src] seems to be resisting the effect!</span>")
 
 			/////////////////
 			//Deadly Robots//
@@ -281,18 +227,6 @@
 	maxHealth = 70
 	melee_damage = 10
 	move_speed = 8
-
-/mob/living/simple_animal/hostile/cellular/meat/xenoarchaeologist_twisted/death()
-	..()
-	if(prob(55))
-		visible_message("<b>[src]</b> blows apart!")
-		new /obj/effect/gibspawner/generic(src.loc)
-
-/mob/living/simple_animal/hostile/cellular/meat/maid_twisted/death()
-	..()
-	if(prob(55))
-		visible_message("<b>[src]</b> blows apart!")
-		new /obj/effect/gibspawner/generic(src.loc)
 
 /mob/living/simple_animal/hostile/skellington
 	name = "skellington"
