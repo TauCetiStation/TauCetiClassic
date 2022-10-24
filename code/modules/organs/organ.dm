@@ -86,7 +86,7 @@
 //Adds autopsy data for used_weapon. Use type damage: brute, burn, mixed, bruise (weak punch, e.g. fist punch)
 /obj/item/organ/proc/add_autopsy_data(used_weapon, damage, type_damage)
 	var/weapon_name
-	
+
 	if(isatom(used_weapon))
 		var/atom/weapon = used_weapon
 		weapon_name = initial(weapon.name)
@@ -115,7 +115,7 @@
 /mob/living/carbon/human/proc/handle_bodyparts()
 	number_wounds = 0
 	var/force_process = 0
-	var/damage_this_tick = getBruteLoss() + getFireLoss() + getToxLoss()
+	var/damage_this_tick = getBruteLoss() + getFireLoss() + getToxLoss() + blood_amount()
 	if(damage_this_tick > last_dam)
 		force_process = 1
 	last_dam = damage_this_tick
@@ -196,7 +196,7 @@
 	// standing is good
 	if(stance_damage < 2 || (stance_damage < 4 && prob(95)))
 		return
-	
+
 	if(!lying)
 		if(species && !species.flags[NO_PAIN])
 			emote("scream")

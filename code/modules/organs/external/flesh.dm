@@ -358,6 +358,8 @@ This function completely restores a damaged organ to perfect condition.
 		return TRUE
 	if(BP.is_rejecting)
 		return TRUE
+	if(BP.status & ORGAN_ARTERY_CUT)
+		return TRUE
 	return FALSE
 
 /datum/bodypart_controller/process()
