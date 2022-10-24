@@ -234,8 +234,9 @@
 		return ..()
 	if(client && eye_blurry)
 		var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-		game_plane_master_controller.remove_filter("eye_blur_angular")
-		game_plane_master_controller.remove_filter("eye_blur_gauss")
+		if(game_plane_master_controller)
+			game_plane_master_controller.remove_filter("eye_blur_angular")
+			game_plane_master_controller.remove_filter("eye_blur_gauss")
 
 /mob/living/carbon/human/embed(obj/item/I)
 	if(!istype(species, /datum/species/zombie))
