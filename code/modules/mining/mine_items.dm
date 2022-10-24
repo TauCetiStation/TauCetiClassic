@@ -615,7 +615,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	impact_type = /obj/effect/projectile/laser_omni/impact
 
 /obj/item/projectile/beam/plasma_cutter/emagged
-	damage = 90
+	damage = 75
 
 /obj/item/projectile/beam/plasma_cutter/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	. = ..()
