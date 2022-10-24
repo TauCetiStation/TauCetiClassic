@@ -92,8 +92,6 @@
 
 #define isgod(A) (istype(A, /mob/living/simple_animal/shade/god))
 
-#define ishowling(A) (istype(A, /mob/living/simple_animal/shade/howling_ghost))
-
 // MOB
 
 #define isobserver(A) (istype(A, /mob/dead/observer))

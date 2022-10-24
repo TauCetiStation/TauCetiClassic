@@ -14,13 +14,14 @@
 	anchored = TRUE
 	incorporeal_move = 1
 	layer = 4
+	status_flags = GODMODE
+	faction = "untouchable"
 	var/timer = 0
 
 /mob/living/simple_animal/shade/howling_ghost/atom_init()
 	. = ..()
 	icon_state = pick("ghost","ghostian","ghostian2","ghostking","ghost1","ghost2")
 	icon_living = icon_state
-	status_flags |= GODMODE
 	timer = rand(1,15)
 
 /mob/living/simple_animal/shade/howling_ghost/Life()
