@@ -11,6 +11,8 @@
 	var/burning = null
 	var/list/hitsound = list()
 	var/usesound = null
+	var/pickup_sound = null
+	var/dropped_sound = null
 	var/wet = 0
 	var/can_embed = 1
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
@@ -431,6 +433,7 @@
 
 // apparently called whenever an item is removed from a slot, container, or anything else.
 /obj/item/proc/dropped(mob/user)
+	playsound(user, dropped_sound, VOL_EFFECTS_MASTER)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	flags &= ~IN_INVENTORY
@@ -441,6 +444,7 @@
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
+	playsound(user, pickup_sound, VOL_EFFECTS_MASTER)
 	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user) & COMPONENT_ITEM_NO_PICKUP)
 		return FALSE

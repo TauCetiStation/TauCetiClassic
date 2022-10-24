@@ -4,6 +4,8 @@
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 5
 	volume = 25
+	pickup_sound = 'sound/items/glass_containers/bottle_take-empty.ogg'
+	dropped_sound = 'sound/items/glass_containers/bottle_put-empty.ogg'
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/afterattack(atom/target, mob/user, proximity, params)
 	. = ..()
@@ -17,10 +19,6 @@
 	new /obj/item/weapon/shard(loc)
 	reagents.standard_splash(loc)
 	qdel(src)
-
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/pickup(mob/living/user)
-	. = ..()
-	playsound(user, 'sound/items/glass_containers/bottle_take-empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/dropped(mob/user)
 	. = ..()
