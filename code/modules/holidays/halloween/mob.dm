@@ -66,14 +66,19 @@
 			//Insane Clown//
 			////////////////
 
+/obj/effect/temp_visual/banish
+	icon = 'icons/holidays/halloween.dmi'
+	icon_state = "scary_clown_dead"
+	duration = 2 SECONDS
+
 /mob/living/simple_animal/hostile/retaliate/clown/insane
 	name = "Insane Clown"
 	desc = "Some clowns do not manage to be accepted, and go insane. This is one of them. Run."
 	icon = 'icons/holidays/halloween.dmi'
 	icon_state = "scary_clown"
 	icon_living = "scary_clown"
-	icon_dead = "scary_clown_dead"
-	icon_gib = "scary_clown_dead"
+	icon_dead = null
+	icon_gib = null
 	speak = list("HONK!", "Your life is a funny joke!", " Ha-Ha! I will murder you!", "Run for your life!")
 	speak_emote = list("laughs", "mocks")
 	emote_hear = list("laughs", "mocks")
@@ -94,11 +99,20 @@
 	return
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/Life()
+	if(stat != CONSCIOUS)
+		return
 	if(!target)
 		target = locate(/mob/living/carbon/human) in range(15, src)
 	timer--
 	if(target)
-		check_stalk()
+		var/mob/living/M = target
+		if(M.stat == DEAD)
+			playsound(M.loc, 'sound/spookoween/insane_low_laugh.ogg', VOL_EFFECTS_MASTER)
+			qdel(src)
+			return
+		if(timer <= 0)
+			timer = rand(5, 15)
+			stalk(M)
 	if(!client && speak_chance)
 		if(rand(0,200) < speak_chance)
 			var/speak_len = speak?.len
@@ -116,39 +130,29 @@
 					else
 						emote(emote_see[randomValue - emote_hear_len], 2)
 
-/mob/living/simple_animal/hostile/retaliate/clown/insane/proc/check_stalk()
-	var/mob/living/M = target
-	if(M.stat == DEAD)
-		playsound(M.loc, 'sound/spookoween/insane_low_laugh.ogg', VOL_EFFECTS_MASTER)
-		qdel(src)
-		return
-	if(timer != 0)
-		return
-	timer = rand(5, 15)
-	stalk(M)
-
 /mob/living/simple_animal/hostile/retaliate/clown/insane/proc/stalk(mob/living/M)
 	set waitfor = FALSE
 	playsound(M.loc, pick('sound/spookoween/scary_horn.ogg', 'sound/spookoween/scary_horn2.ogg', 'sound/spookoween/scary_horn3.ogg'), VOL_EFFECTS_MASTER)
 	
 	sleep(1 SECOND)
-	var/turf/T = get_turf(M)
+	direction_stalk = pick(cardinal)
+	dir = reverse_dir[direction_stalk]
+	var/turf/T = get_step(M, direction_stalk)
+
 	var/datum/effect/effect/system/spark_spread/sparks = new
 	sparks.set_up(3, 0, loc)
 	sparks.start()
 	forceMove(T)
 	sparks.set_up(3, 0, T)
 	sparks.start()
-	direction_stalk = pick(cardinal)
-	forceMove(get_step(src, direction_stalk))
-	dir = reverse_dir[direction_stalk]
+	
 	if(prob(50))
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(dam_zone)]
-			to_chat(target,"<span class='danger'>[src] claws [target] with his bloody hands.</span>")
-			H.apply_damage(rand(5,30), BRUTE, BP, H.run_armor_check(BP, "melee"), DAM_SHARP | DAM_EDGE)
+			H.visible_message("<span class='danger'>[src] claws [target] with his bloody hands.</span>")
+			H.apply_damage(rand(5, 30), BRUTE, BP, H.run_armor_check(BP, "melee"), DAM_SHARP | DAM_EDGE)
 
 	sleep(2 SECONDS)
 	if(buckled)
@@ -163,7 +167,8 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/death()
 	..()
-	QDEL_IN(src, 2 SECONDS)
+	new /obj/effect/temp_visual/banish(loc)
+	qdel(src)
 
 /mob/living/simple_animal/hostile/retaliate/clown/insane/attackby(obj/item/O, mob/user)
 	if(!istype(O, /obj/item/weapon/nullrod))
