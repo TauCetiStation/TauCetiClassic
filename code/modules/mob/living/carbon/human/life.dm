@@ -192,9 +192,6 @@
 		handle_human_brainloss()
 
 /mob/living/carbon/human/proc/handle_human_brainloss()
-	if(istype(species, /datum/species/zombie))
-		setBrainLoss(0)
-		return
 	switch(rand(0, 200))
 		if(0 to 3)
 			if(getBrainLoss() >= 5)
