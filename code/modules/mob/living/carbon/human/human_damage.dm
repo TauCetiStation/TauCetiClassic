@@ -339,6 +339,7 @@ This function restores the subjects blood to max.
 	blood_add(BLOOD_VOLUME_NORMAL - blood_amount(exact = TRUE))
 	fixblood()
 
+
 /*
 This function restores all bodyparts.
 */
