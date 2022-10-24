@@ -22,8 +22,6 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/dropped(mob/user)
 	. = ..()
-	if(isturf(loc) && (user.loc != loc))
-		playsound(user, 'sound/items/glass_containers/bottle_put-empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
 	/*if(reagents.reagent_list.len > 1 )
