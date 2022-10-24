@@ -65,15 +65,6 @@
 		flags |= OPENCONTAINER
 	update_icon()
 
-/obj/item/weapon/reagent_containers/glass/pickup(mob/living/user)
-	. = ..()
-	playsound(user, pickup_sound, VOL_EFFECTS_MASTER)
-
-/obj/item/weapon/reagent_containers/glass/dropped(mob/user)
-	. = ..()
-	if(isturf(loc) && (user.loc != loc))
-		playsound(user, dropped_sound, VOL_EFFECTS_MASTER)
-
 /obj/item/weapon/reagent_containers/glass/afterattack(atom/target, mob/user, proximity, params)
 
 	if (!is_open_container() || !proximity)
