@@ -1387,7 +1387,7 @@ var/global/alien_ship_location = 1 // 0 = base , 1 = mine
 
 /**********************Ghost Mode**************************/
 
-var/ghost_mode_timer = null
+var/global/ghost_mode_timer = null
 
 /proc/ghost_mode_ticker()
 	ghost_mode_timer = addtimer(CALLBACK(GLOBAL_PROC, .proc/ghost_mode_ticker, FALSE), rand(25, 35) SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)

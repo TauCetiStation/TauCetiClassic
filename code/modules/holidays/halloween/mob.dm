@@ -90,7 +90,7 @@
 /mob/living/simple_animal/hostile/retaliate/clown/insane
 	name = "Insane Clown"
 	desc = "Some clowns do not manage to be accepted, and go insane. This is one of them. Run."
-	icon = 'code/modules/holidays/halloween/halloween.dmi'
+	icon = 'icons/holidays/halloween.dmi'
 	icon_state = "scary_clown"
 	icon_living = "scary_clown"
 	icon_dead = "scary_clown_dead"
@@ -217,7 +217,7 @@
 			var/atom/movable/overlay/clown_dead = null
 			clown_dead = new(loc)
 			clown_dead.icon_state = "blank"
-			clown_dead.icon = 'code/modules/holidays/halloween/halloween.dmi'
+			clown_dead.icon = 'icons/holidays/halloween.dmi'
 			clown_dead.layer = 7
 			clown_dead.master = src
 			flick("scary_clown_dead", clown_dead)
@@ -236,7 +236,7 @@
 /mob/living/simple_animal/hostile/hivebot/scavenger
 	name = "Scavenger"
 	desc = "A deadly looking robot! Strange liquid gurgles in its huge orange eyes."
-	icon = 'code/modules/holidays/halloween/halloween.dmi'
+	icon = 'icons/holidays/halloween.dmi'
 	icon_state = "scavenger"
 	health = 90
 	speed = 4
@@ -246,7 +246,7 @@
 /mob/living/simple_animal/hostile/hivebot/robotic_horror
 	name = "Twisted Robot"
 	desc = "Some terrible way flesh has grown to this robot. An ugly hand, barely moving, holds a knife."
-	icon = 'code/modules/holidays/halloween/halloween.dmi'
+	icon = 'icons/holidays/halloween.dmi'
 	icon_state = "robotic_horror"
 	health = 150
 	speed = 1
@@ -261,7 +261,7 @@
 /mob/living/simple_animal/hostile/cellular/meat/xenoarchaeologist_twisted
 	name = "Twisted Scientist"
 	desc = "Horrible looking creature, half-spider half-human. How is it even alive?!"
-	icon = 'code/modules/holidays/halloween/halloween.dmi'
+	icon = 'icons/holidays/halloween.dmi'
 	icon_state = "xenoarchaeologist_twisted"
 	icon_living = "xenoarchaeologist_twisted"
 	icon_dead = "xenoarchaeologist_twisted_dead"
@@ -273,7 +273,7 @@
 /mob/living/simple_animal/hostile/cellular/meat/maid_twisted
 	name = "Twisted Maid"
 	desc = "Horrible looking creature. Poor woman..."
-	icon = 'code/modules/holidays/halloween/halloween.dmi'
+	icon = 'icons/holidays/halloween.dmi'
 	icon_state = "maid_twisted"
 	icon_living = "maid_twisted"
 	icon_dead = "maid_twisted_dead"
@@ -297,7 +297,7 @@
 /mob/living/simple_animal/hostile/skellington
 	name = "skellington"
 	desc = "A skeleton, held together by scraps of skin and muscle. It sppears to be feral."
-	icon = 'code/modules/holidays/halloween/halloween.dmi'
+	icon = 'icons/holidays/halloween.dmi'
 	icon_state = "skellington"
 	melee_damage = 2
 	attacktext = "punches"

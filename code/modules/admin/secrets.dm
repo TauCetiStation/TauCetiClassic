@@ -338,7 +338,7 @@
 		// Ghost Mode
 		if("flicklights")
 			if(!SSticker)
-				alert("The game hasn't started yet!")
+				tgui_alert(usr, "The game hasn't started yet!")
 				return
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","FL")
