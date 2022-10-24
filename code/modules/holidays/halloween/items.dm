@@ -31,10 +31,12 @@
 /obj/item/weapon/storage/box/trick_o_treat/atom_init()
 	. = ..()
 	for(var/whatsinthebag in 1 to 7)
-		var/inbag = pick(/obj/item/weapon/reagent_containers/food/snacks/candy/caramel,
-		/obj/item/weapon/reagent_containers/food/snacks/sugarcookie,
-		/obj/item/weapon/reagent_containers/food/snacks/candy_corn,
-		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar)
+		var/inbag = pick(
+			/obj/item/weapon/reagent_containers/food/snacks/candy/caramel,
+			/obj/item/weapon/reagent_containers/food/snacks/sugarcookie,
+			/obj/item/weapon/reagent_containers/food/snacks/candy_corn,
+			/obj/item/weapon/reagent_containers/food/snacks/chocolatebar,
+		)
 		new inbag(src)
 
 		///////////////////
@@ -44,9 +46,9 @@
 /obj/item/clothing/head/helmet/skull
 	name = "skull helmet"
 	desc = "An intimidating tribal helmet, it doesn't look very comfortable."
+	icon_state = "skull"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	armor = list(melee = 25, bullet = 25, laser = 25, energy = 10, bomb = 10, bio = 5, rad = 20, fire = 40, acid = 20)
-	icon_state = "skull"
 
 /obj/item/clothing/head/lobsterhat
 	name = "foam lobster head"
