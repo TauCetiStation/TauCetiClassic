@@ -113,18 +113,7 @@
 
 /datum/action/innate/eminence/teleport2cultist/Activate()
 	. = ..()
-	var/list/cultists = list()
-	var/list/dead_cultists = list()
-	for(var/mob/M as anything in global.cult_religion.members - owner)
-		if(M.stat != DEAD)
-			cultists += M
-		else
-			dead_cultists += M
-	cultists += "------DEAD CULTISTS------"
-	cultists += dead_cultists
-	var/mob/M = input(owner, "Выберите последователя для телепорта", "Телепорт к последователю") as null|anything in cultists
-	if(M == "------DEAD CULTISTS------")
-		to_chat(owner, "<span class='warning'>К сожелению, вам надо выбрать ПОСЛЕДОВАТЕЛЯ.</span>")
+	var/mob/M = input(owner, "Выберите последователя для телепорта", "Телепорт к последователю") as null|anything in cult_religion.members
 	if(M)
 		owner.forceMove(get_turf(M))
 		flash_color(owner, flash_time = 25)
