@@ -11,7 +11,16 @@
 	var/grid_mines = 0
 	var/grid_blanks = 0
 	var/grid_pressed = 0
-	var/list/nearest_mask = list(list(-1, -1), list(0, -1), list(1, -1), list(-1, 0), list(1, 0), list(-1, 1), list(0, 1), list(1, 1))
+	var/list/nearest_mask = list(
+							  list(-1, -1),
+							  list(0, -1),
+							  list(1, -1),
+							  list(-1, 0),
+							  list(1, 0),
+							  list(-1, 1),
+							  list(0, 1),
+							  list(1, 1)
+							)
 
 /obj/structure/closet/crate/secure/loot/atom_init()
 	. = ..()
