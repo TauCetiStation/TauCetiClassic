@@ -236,7 +236,6 @@
 		else
 			M.AdjustConfused(10 * divine_power)
 			M.make_jittery(50)
-
 			if(prob(50))
 				M.visible_message("<span class='warning bold'>[M]'s face clearly depicts true fear.</span>")
 
