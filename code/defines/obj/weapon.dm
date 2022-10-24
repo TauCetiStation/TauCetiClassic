@@ -130,7 +130,7 @@
 
 /obj/item/weapon/legcuffs/beartrap/armed
 	icon_state = "beartrap1"
-	armed = 1
+	armed = TRUE
 
 /obj/item/weapon/legcuffs/bola
 	name = "bola"
