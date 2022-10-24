@@ -5,11 +5,13 @@
 
 /mob/living/carbon/human/setHalLoss()
 	if(species.flags[NO_PAIN])
+		halloss = 0
 		return
 	..()
 
 /mob/living/carbon/human/adjustHalLoss()
 	if(species.flags[NO_PAIN])
+		halloss = 0
 		return
 	..()
 
