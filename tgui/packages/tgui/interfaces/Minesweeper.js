@@ -8,19 +8,18 @@ export const Minesweeper = (props, context) => {
     width,
     height,
     grid,
+	mines,
   } = data;
   return (
-    <Window width={width} height={height} theme="ntos">
-      <Window.Content>
+    <Window width={width} height={height+34} theme="minesweeper" title={mines}>
+      <Window.Content fitted="1">
         {grid.map(line => (
           <>
             {line.map((butn, index) => (
               <Button key={index}
                 disabled={butn.state === 'empty' ? 1 : 0}
-                width="27px"
-                height="27px"
+				textColor={butn.nearest === '1' ? '#0092cc' : (butn.nearest === '2' ? '#779933' : (butn.nearest === '3' ? '#ff3333' : (butn.nearest === '4' ? "#087099" : (butn.nearest === '5' ? "#cc3333" : (butn.nearest === '6' ? "#A6B2EC" : (butn.nearest === '7' ? "#600095" : "#E5E5E5"))))))}
                 content={butn.nearest ? butn.nearest : ' '}
-                textAlign="center"
                 onClick={() => act('button_press', { choice_x: butn.x, choice_y: butn.y })}
               />
             ))}

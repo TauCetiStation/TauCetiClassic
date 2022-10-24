@@ -41,38 +41,6 @@
 				grid_blanks--
 				break
 
-/obj/structure/closet/crate/secure/loot/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
-	var/auto_update = 1
-
-	var/title = "Crate Lock. [grid_mines] mines."
-
-	var/data[0]
-
-	data["grid"] = grid
-
-	if(ui)
-		ui.load_cached_data(ManifestJSON)
-
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
-
-	if (!ui)
-		ui = new(user, src, ui_key, "minesweeper.tmpl", title, grid_x*30, grid_y*30+32)
-
-		ui.load_cached_data(ManifestJSON)
-
-		ui.set_initial_data(data)
-
-		ui.set_window_options("focus=0;can_close=1;can_minimize=1;can_maximize=0;can_resize=0;titlebar=1;")
-
-		ui.open()
-	ui.set_auto_update(auto_update)
-
-/obj/structure/closet/crate/secure/loot/Topic(href, href_list)
-	..()
-
-	if(href_list["choice_x"])
-		press_button(href_list["choice_x"], href_list["choice_y"])
-
 /obj/structure/closet/crate/secure/loot/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -84,7 +52,8 @@
 
 	data["grid"] = grid
 	data["width"] = grid_x*30
-	data["height"] = grid_y*30+30
+	data["height"] = grid_y*30
+	data["mines"] = "Crate Lock. [num2text(grid_mines)] mines."
 
 	return data
 
@@ -99,7 +68,6 @@
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(!locked)
 		return ..()
-	ui_interact(user)
 	tgui_interact(user)
 
 /obj/structure/closet/crate/secure/loot/proc/check_in_grid(x, y)
@@ -150,7 +118,6 @@
 		visible_message("<span class='notice'>Издавая звук, ящик открывается!</span>")
 		locked = FALSE
 		add_overlay(greenlight)
-		nanomanager.close_uis(src)
 		SStgui.close_uis(src)
 
 
