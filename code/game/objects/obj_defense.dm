@@ -56,7 +56,7 @@
 	)
 	return TRUE
 
-/obj/blob_act(obj/effect/blob/B) // TODO blob to structure
+/obj/blob_act(obj/structure/blob/B)
 	take_damage(400, BRUTE, MELEE, 0, get_dir(src, B))
 
 /obj/attack_alien(mob/living/carbon/xenomorph/humanoid/user)
