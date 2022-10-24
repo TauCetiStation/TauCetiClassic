@@ -351,7 +351,7 @@
 				log_admin("[key_name(usr)] turned ghost mode OFF")
 				deltimer(ghost_mode_timer)
 				ghost_mode_timer = null
-				for(var/mob/M in player_list)
+				for(var/mob/living/M in player_list)
 					if(M.stat != DEAD)
 						M.show_message("<span class='notice'>The chilling wind suddenly stops...</span>", SHOWMSG_FEEL)
 		// !Freeze the station!
