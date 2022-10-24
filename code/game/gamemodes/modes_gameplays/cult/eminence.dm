@@ -70,7 +70,6 @@
 	to_chat(src, "<span class='cult'>Вы можете взаимодействовать с внешним миром несколькими способами:<br>\
 		Со всеми структурами культа вы можете взаимодействовать как обычный культист, такими как алтарь, кузня, исследовательскими столами, пыточной, аномалиями и дверьми.<br>\
 		Средняя кнопка мыши или CTRL для отдачи команды всему культу. Это может помочь даже в бою - убирает большинство причин, по которой последователь не может драться, кроме смертельных.<br>\
-		ALT-клик для отдачи команды напрямую культисту (он увидит текст на своём экране), рядом с которым вы кликнули. Учтите, что чрезмерное использование данной способности может привести к проблемам!<br>\
 		\"Переместиться на алтарь\" телепортирует вас на алтари.<br>\
 		\"Переместиться на станцию к руне\" телепортирует вас на случайную руну, которая вне Рая.<br>\
 		\"Использовать том\" имеет такие же функции, как если бы этот том был в руках обычного культиста. ВЫ НЕ МОЖЕТЕ АКТИВИРОВАТЬ РУНЫ САМОСТОЯТЕЛЬНО.<br>\
@@ -168,9 +167,6 @@
 		return
 	if(modifiers[MIDDLE_CLICK] || modifiers[CTRL_CLICK])
 		issue_command(A)
-		return
-	if(modifiers[ALT_CLICK])
-		ammend_order(get_turf(A))
 		return
 
 	if(tome.toggle_deconstruct)
@@ -290,50 +286,3 @@
 					H.full_prosthetic = null
 					var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
 					Heart?.heart_normalize()
-
-/mob/camera/eminence/proc/ammend_order(turf/T)
-	var/text = input(src, "Введите текст, который увидит культист", "Отдать приказ напрямую") as text
-	if(length(text) < 5 || length(text) > 200)
-		to_chat(src,"<span class='danger'Не следует использовать эту способность для подобного. Приказ должен быть хотя бы в несколько слов, но и достаточно коротким.")
-		return
-	var/style = "font-family: 'Fixedsys'; -dm-text-outline: 1 black; font-size: 20px; color: #973e3b;"
-	var/obj/effect/overlay/blurb_cult/B = new()
-
-	var/list/lines[2]
-
-	lines[1] = "[src]"
-	lines[2] = text
-
-	var/list/affectees = list()
-	for(var/mob/M in range(1, T))
-		affectees += M
-		M.client?.screen += B
-
-	var/newline_flag = TRUE
-	for(var/j in 1 to lines.len)
-		var/old_line = j > 1 ? "[uppertext(lines[j - 1])]" : null
-		animate(B, alpha = 255, time = 20)
-		newline_flag = !newline_flag
-		for(var/i = 2 to length_char(uppertext(lines[j])) + 1)
-			var/cur_line = "[copytext_char(uppertext(lines[j]), 1, i)]"
-			if(newline_flag)
-				B.maptext = "<div style=\"[style]\">[old_line]<br>[cur_line]</div>"
-			else
-				B.maptext = "<div style=\"line-height: 0.9;[style]\">[cur_line]</div><br><br></br>"
-			sleep(1)
-		if(newline_flag || j == lines.len)
-			sleep(40)
-			animate(B, alpha = 0, time = 70)
-			sleep(50)
-	for(var/mob/M as anything in affectees)
-		M.client?.screen -= B
-	qdel(B)
-
-/obj/effect/overlay/blurb_cult
-	maptext_height = 128
-	maptext_width = 318
-	layer = FLOAT_LAYER
-	plane = HUD_PLANE
-	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	screen_loc = "CENTER-3,TOP-4"
