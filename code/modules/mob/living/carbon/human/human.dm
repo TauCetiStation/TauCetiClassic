@@ -2433,6 +2433,15 @@
 			if(prob(heal_prob))
 				Heart.heart_fibrillate()
 
+
+/mob/living/carbon/human/proc/PutDisabilityMarks()
+	var/obj/item/weapon/card/id/card = locate(/obj/item/weapon/card/id,src)
+	if(!card)
+		return
+	for(var/datum/quirk/Q in roundstart_quirks)
+		if(Q.disability)
+			card.disabilities += Q.name
+
 /mob/living/carbon/human/handle_drunkenness()
 	. = ..()
 	if(drunkenness >= DRUNKENNESS_PASS_OUT)
