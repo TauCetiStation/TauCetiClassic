@@ -598,7 +598,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "plasmacutter"
 	item_state = "plasmacutter"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/cutter)
-	fire_delay = 2
+	fire_delay = 3
 	w_class = SIZE_SMALL //it is smaller than the pickaxe
 	origin_tech = "materials=4;phorontech=3;engineering=3"
 	desc = "The latest self-rechargeable low-power cutter using bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
