@@ -2435,7 +2435,7 @@
 
 
 /mob/living/carbon/human/proc/PutDisabilityMarks()
-	var/obj/item/weapon/card/id/card = locate(/obj/item/weapon/card/id,src)
+	var/obj/item/weapon/card/id/card = locate(/obj/item/weapon/card/id, src)
 	if(!card)
 		return
 	for(var/datum/quirk/Q in roundstart_quirks)
