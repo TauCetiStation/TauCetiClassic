@@ -880,3 +880,58 @@
 	<h2>Стоимость производства картриджей USP</h2>
 	<p>Поскольку эти картриджи являются прототипами, которые еще не поступили в массовое производство, каждый картридж собирается вручную, и их распространение ограничено станциями, где гибель экипажа или наличие неквалифицированного персонала является обычным явлением. Используйте их с умом и не тратьте впустую. Внимательно изучите показатели IQ и MDI пациентов, чтобы определить, какой картридж необходим. Один базовый зеленый картридж стоил двадцать пять человеко-лет. Мы также не можем допустить, чтобы эти технологии попали в руки наших конкурентов.</p>
 	"}
+
+var/global/list/contributor_names
+// https://docs.github.com/en/rest/repos/repos#list-repository-contributors
+/proc/get_github_contributers(per_page = 100, anon = FALSE)
+	if(global.contributor_names && global.contributor_names?.len)
+		return global.contributor_names
+	global.contributor_names = list()
+
+	var/page = 1
+
+	var/owner = config.github_repository_owner
+	var/name = config.github_repository_name
+	while(TRUE)
+		var/list/response = get_webpage("https://api.github.com/repos/[owner]/[name]/contributors?anon=[anon]&per_page=[per_page]&page=[page]")
+		if(!response)
+			return
+		response = json_decode(response)
+		if(response.len == 0)
+			break
+		for(var/list/user in response)
+			if(user["type"] == "User" && !(user["login"] in global.contributor_names))
+				global.contributor_names += user["login"]
+			else if(anon && user["type"] == "Anonymous" && !(user["name"] in global.contributor_names))
+				global.contributor_names += user["name"]
+		page++
+
+	return global.contributor_names
+
+/obj/item/weapon/paper/github_easter_egg
+	name = "Department of Paranormal Activity"
+
+/obj/item/weapon/paper/github_easter_egg/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/paper/github_easter_egg/atom_init_late()
+	write_info()
+
+/obj/item/weapon/paper/github_easter_egg/proc/write_info()
+	set waitfor = FALSE
+
+	var/list/names = get_github_contributers()
+	info = "<h1 style='text-align: center;'>Department of Paranormal Activity</h1>"
+	info += "<h2>List of callsigns of employees:</h2>"
+	info += "<div>"
+	info += "<ul>"
+	for(var/name in names)
+		info += "<li>[name]</li>"
+	info += "</ul>"
+	info += "</div>"
+
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(src, "CentComm DPA")
+
+	update_icon()

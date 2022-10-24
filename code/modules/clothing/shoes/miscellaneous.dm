@@ -206,6 +206,8 @@
 	name = "advanced magboots"
 	desc = "A pair of advanced magboots designed specifically for ERT."
 	slowdown_off = 0
+	icon_state = "advmag0"
+	magboot_state = "advmag"
 
 /obj/item/clothing/shoes/roman
 	name = "roman sandals"

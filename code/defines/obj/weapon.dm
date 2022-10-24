@@ -523,8 +523,8 @@
 
 /obj/item/weapon/scythe/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(istype(target, /obj/effect/spacevine))
-		for(var/obj/effect/spacevine/B in orange(target, 1))
+	if(istype(target, /obj/structure/spacevine))
+		for(var/obj/structure/spacevine/B in orange(target, 1))
 			if(prob(80))
 				qdel(B)
 		qdel(target)
