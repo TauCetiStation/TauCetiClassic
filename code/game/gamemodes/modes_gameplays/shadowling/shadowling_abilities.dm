@@ -65,7 +65,7 @@
 					A.lights = 0
 					A.update_icon()
 
-		for(var/obj/effect/glowshroom/G in T.contents)
+		for(var/obj/structure/glowshroom/G in T.contents)
 			if(get_dist(center, G) <= 2) //Very small radius
 				G.visible_message("<span class='warning'>\The [G] withers away!</span>")
 				qdel(G)
