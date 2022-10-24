@@ -597,6 +597,9 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "plasma cutter"
 	icon_state = "plasmacutter"
 	item_state = "plasmacutter"
+	force = 15
+	damtype = BURN
+	hitsound = list('sound/weapons/sear.ogg')
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/cutter)
 	fire_delay = 3
 	w_class = SIZE_SMALL //it is smaller than the pickaxe
