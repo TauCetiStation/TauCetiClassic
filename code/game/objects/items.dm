@@ -434,8 +434,8 @@
 // apparently called whenever an item is removed from a slot, container, or anything else.
 /obj/item/proc/dropped(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
-	playsound(user, dropped_sound, VOL_EFFECTS_MASTER)
-	SHOULD_CALL_PARENT(TRUE)
+	if(isturf(loc) && (user.loc != loc))
+		playsound(user, dropped_sound, VOL_EFFECTS_MASTER)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	flags &= ~IN_INVENTORY
 	if(flags & DROPDEL)
@@ -446,8 +446,8 @@
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
-	playsound(user, pickup_sound, VOL_EFFECTS_MASTER)
-	SHOULD_CALL_PARENT(TRUE)
+	if(isturf(loc) && (user.loc != loc))
+		playsound(user, pickup_sound, VOL_EFFECTS_MASTER)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user) & COMPONENT_ITEM_NO_PICKUP)
 		return FALSE
 	return TRUE
