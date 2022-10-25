@@ -17096,7 +17096,6 @@
 	},
 /area/centcom/evac)
 "aME" = (
-/obj/structure/cult/statue/camera/gargoyle,
 /obj/structure/eminence_spire,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)

@@ -35,4 +35,4 @@
 	destr_cd = 10 SECONDS
 	rune_cd = 10 SECONDS
 	cost_coef = 1.5
-	build_cd = 5 SECONDS
+	build_cd = 10 SECONDS

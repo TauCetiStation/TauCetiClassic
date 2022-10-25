@@ -1,8 +1,8 @@
 //The Eminence is a unique mob that functions like the leader of the cult. It's incorporeal but can interact with the world in several ways.
 /mob/camera/eminence
-	name = "\the Emininence"
+	name = "\the Eminence"
 	real_name = "\the Eminence"
-	desc = "The leader-elect of the servants of Ratvar."
+	desc = "The leader-elect of the servants of Nar-Sie."
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "eminence"
 	mouse_opacity = MOUSE_OPACITY_ICON
@@ -11,6 +11,8 @@
 	layer = FLY_LAYER
 	faction = "cult"
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	universal_understand = TRUE
+	universal_speak = TRUE
 	var/obj/item/weapon/storage/bible/tome/eminence/tome //They have a special one
 	var/mob/living/cameraFollow = null
 	COOLDOWN_DECLARE(command_point)
@@ -19,6 +21,7 @@
 	. = ..()
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/my_religion, "eminence", image(icon, src, icon_state), src, cult_religion)
 	tome = new(src)
+	AddComponent(/datum/component/logout_spawner, /datum/spawner/living/eminence) //By hand cuz mob level
 
 /mob/camera/eminence/Destroy()
 	QDEL_NULL(tome)
@@ -65,7 +68,7 @@
 
 /mob/camera/eminence/proc/eminence_help()
 	to_chat(src, "<span class='cult'>Вы можете взаимодействовать с внешним миром несколькими способами:<br>\
-		Со всеми структурами культа вы можете взаимодействовать как обычный культист, такими как алтарь, кузня, исследовательскими столами, аномалиями и дверьми.<br>\
+		Со всеми структурами культа вы можете взаимодействовать как обычный культист, такими как алтарь, кузня, исследовательскими столами, пыточной, аномалиями и дверьми.<br>\
 		Средняя кнопка мыши или CTRL для отдачи команды всему культу. Это может помочь даже в бою - убирает большинство причин, по которой последователь не может драться, кроме смертельных.<br>\
 		\"Переместиться на алтарь\" телепортирует вас на алтари.<br>\
 		\"Переместиться на станцию к руне\" телепортирует вас на случайную руну, которая вне Рая.<br>\
@@ -73,6 +76,18 @@
 		\"Запретить/разрешить исследования\" включив это, обычные последователи культа не смогут сами изучать, а отключив, сможете как и вы, так и остальные культисты<br>\
 		\"Стереть свои руны\" стирает все ваши руны в мире.<br>\
 		\"Телепорт к последователю\" позволяет вам телепортироваться к любого последователю в культе по вашему желанию.</span>")
+
+/mob/camera/eminence/verb/ghost()
+	set category = "OOC"
+	set name = "Ghost"
+	set desc = "Relinquish your life and enter the land of the dead."
+
+	var/response = tgui_alert(src, "Are you -sure- you want to return to Nar-Sie?\n You can't change your mind so choose wisely!","Are you sure you want to ghost?", list("Stay as Eminence","Return to Nar-Sie"))
+	if(response != "Return to Nar-Sie")
+		return
+
+	SSStatistics.add_leave_stat(mind, "Ghosted")
+	ghostize(can_reenter_corpse = FALSE)
 
 /mob/camera/eminence/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	if(client)
@@ -135,7 +150,7 @@
 			to_chat(U, "Follow ended.")
 			U.cameraFollow = null
 			return
-		sleep(10)
+		sleep(7)
 		setLoc(get_turf(target))
 
 /mob/camera/eminence/ClickOn(atom/A, params)
@@ -159,21 +174,24 @@
 			if(istype(A, B.building_type))
 				tome.afterattack(A, src, TRUE, params)
 
-	if(istype(A, /obj/structure/mineral_door/cult))
-		var/obj/structure/mineral_door/cult/D = A
-		D.attack_hand(src)
-	else if(istype(A, /obj/structure/altar_of_gods/cult))
+	if(istype(A, /obj/structure/cult/anomaly) || istype(A, /turf/unsimulated/floor/cult)) //Anomaly or cult floor
+		for(var/obj/structure/cult/anomaly/F in range(1, A))
+			F.destroying(my_religion)
+	else if(istype(A, /obj/structure/altar_of_gods/cult)) //Altar
 		var/obj/structure/altar_of_gods/alt = A
 		alt.attackby(tome, src, params)
-	else if(istype(A, /obj/structure/cult/tech_table))
+	else if(istype(A, /obj/structure/cult/tech_table)) //Research table
 		var/obj/structure/cult/tech_table/T = A
 		T.attack_hand(src)
-	else if(istype(A, /obj/structure/cult/forge))
+	else if(istype(A, /obj/structure/cult/forge)) //Forge
 		var/obj/structure/cult/forge/F = A
 		F.attack_hand(src)
-	else if(istype(A, /obj/structure/cult/anomaly))
-		var/obj/structure/cult/anomaly/F = A
-		F.destroying(my_religion)
+	else if(istype(A, /obj/structure/mineral_door/cult)) //Door
+		var/obj/structure/mineral_door/cult/D = A
+		D.attack_hand(src)
+	else if(istype(A, /obj/machinery/optable/torture_table)) //Torture table
+		var/obj/machinery/optable/torture_table/tab = A
+		tab.attackby(tome, src, params)
 
 	A.add_hiddenprint(src)
 	if(world.time <= next_move)
