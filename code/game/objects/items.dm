@@ -434,7 +434,7 @@
 // apparently called whenever an item is removed from a slot, container, or anything else.
 /obj/item/proc/dropped(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
-	if(isturf(loc) && (user.loc != loc))
+	if(user?.loc != loc && isturf(loc))
 		playsound(user, dropped_sound, VOL_EFFECTS_MASTER)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	flags &= ~IN_INVENTORY
