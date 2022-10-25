@@ -115,7 +115,7 @@
 /mob/living/carbon/human/proc/handle_bodyparts()
 	number_wounds = 0
 	var/force_process = 0
-	var/damage_this_tick = getBruteLoss() + getFireLoss() + getToxLoss() + blood_amount()
+	var/damage_this_tick = getBruteLoss() + getFireLoss() + getToxLoss()
 	if(damage_this_tick > last_dam)
 		force_process = 1
 	last_dam = damage_this_tick
