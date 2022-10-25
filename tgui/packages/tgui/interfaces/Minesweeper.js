@@ -10,6 +10,17 @@ export const Minesweeper = (props, context) => {
     grid,
     mines,
   } = data;
+  const num_to_color = {
+    " ": "#ffffff",
+    "1": "#0092cc",
+    "2": "#779933",
+    "3": "#ff3333",
+    "4": "#087099",
+    "5": "#cc3333",
+    "6": "#A6B2EC",
+    "7": "#600095",
+    "8": "#E5E5E5",
+  };
   return (
     <Window width={width} height={height+34} theme="minesweeper" title={mines}>
       <Window.Content fitted="1">
@@ -18,8 +29,8 @@ export const Minesweeper = (props, context) => {
             {line.map((butn, index) => (
               <Button key={index}
                 disabled={butn.state === 'empty' ? 1 : 0}
-                textColor={butn.nearest === '1' ? '#0092cc' : (butn.nearest === '2' ? '#779933' : (butn.nearest === '3' ? '#ff3333' : (butn.nearest === '4' ? "#087099" : (butn.nearest === '5' ? "#cc3333" : (butn.nearest === '6' ? "#A6B2EC" : (butn.nearest === '7' ? "#600095" : "#E5E5E5"))))))}
-                content={butn.nearest ? butn.nearest : ' '}
+                textColor={num_to_color[butn.nearest]}
+                content={butn.nearest}
                 onClick={() => act('button_press', { choice_x: butn.x, choice_y: butn.y })}
               />
             ))}

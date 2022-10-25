@@ -93,7 +93,7 @@
 	var/mi = check_mines(x,y)
 	if(mi)
 		if(mi == 0)
-			mi = ""
+			mi = " "
 		grid[y][x]["nearest"] = num2text(mi)
 		return
 	for(var/list/mask in nearest_mask)
