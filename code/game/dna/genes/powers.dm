@@ -32,7 +32,7 @@
 
 /datum/dna/gene/basic/regenerate
 	name="Regenerate"
-	activation_messages=list("Вы чувствуете себя намного лучше.")
+	activation_messages=list("Вы чувствуете себя лучше.")
 	mutation=REGEN
 	activation_prob=50
 
@@ -104,7 +104,7 @@
 
 /datum/dna/gene/basic/morph
 	name="Morph"
-	activation_messages=list("Вы чувствуете странное ощущение под кожей.")
+	activation_messages=list("Ваша кожа покрылась странными чешуйками.")
 	mutation=MORPH
 	activation_prob=50
 
@@ -155,7 +155,7 @@
 
 /datum/dna/gene/basic/noprints
 	name="No Prints"
-	activation_messages=list("Вы чувствуете онемение в пальцах.")
+	activation_messages=list("Вы чувствуете онемевшие пальцы.")
 	mutation=FINGERPRINTS
 	activation_prob=50
 
@@ -279,7 +279,7 @@
 
 /datum/dna/gene/basic/tk
 	name="Telekenesis"
-	activation_messages=list("Вы чувствуете себя намного умнее.")
+	activation_messages=list("Вы чувствуете себя умнее.")
 	mutation=TK
 	activation_prob=15
 
