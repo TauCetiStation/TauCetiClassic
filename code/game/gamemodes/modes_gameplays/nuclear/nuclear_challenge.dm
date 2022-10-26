@@ -66,7 +66,8 @@ var/global/war_device_activation_forbidden
 	var/area/custom/syndicate_mothership/syndi_area = locate()
 	var/obj/machinery/door/poddoor/shutters/war/H = locate() in syndi_area
 	to_chat(user, "<span class='notice'>Special armory has been opened!</span>")
-	H.do_open()
+	if(H)
+		H.do_open()
 
 	var/crates = list("Riot gear crate" = 1, "Weapons crate" = 3, "Syndicate liquidator" = 2)
 	for(var/crate_name in crates)
@@ -75,7 +76,7 @@ var/global/war_device_activation_forbidden
 		for(var/i in 1 to crates[crate_name])
 			SSshuttle.shoppinglist += O
 
-	global.cargo_account.money += 10000
+	charge_to_account(global.cargo_account.account_number, "CentComm", "Support of War", "CentComm", 10000)
 
 	message_admins("[key_name_admin(usr)] is declaring war on station.")
 	log_admin("[key_name(usr)] is declaring war on station.")
