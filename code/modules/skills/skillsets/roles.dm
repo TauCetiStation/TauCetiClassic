@@ -198,9 +198,7 @@
 /datum/skillset/thrall
 	name = "Thrall"
 	initial_skills = list(
-		/datum/skill/police = SKILL_LEVEL_MASTER,
-		/datum/skill/melee = SKILL_LEVEL_MASTER,
-		/datum/skill/construction = SKILL_LEVEL_PRO,
+		/datum/skill/police = SKILL_LEVEL_MASTER
 	)
 
 /datum/skillset/cyborg
