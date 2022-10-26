@@ -170,3 +170,9 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 //dir macros
 ///Returns true if the dir is diagonal, false otherwise
 #define ISDIAGONALDIR(d) (d&(d-1))
+
+// Holomap flags
+#define HOLOMAP_DEATHSQUAD_COLOR "#800000"
+#define HOLOMAP_NUCLEAR_COLOR "#e30000"
+#define HOLOMAP_VOX_COLOR "#3bcccc"
+#define HOLOMAP_ERT_COLOR "#0b74b4"

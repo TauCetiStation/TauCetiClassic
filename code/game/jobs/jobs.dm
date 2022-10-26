@@ -1,60 +1,64 @@
 
-var/global/const/ENGSEC			=(1<<0)
+var/global/const/ENGSEC             =(1<<0)
 
-var/global/const/CAPTAIN			=(1<<0)
-var/global/const/HOS				=(1<<1)
-var/global/const/WARDEN			=(1<<2)
-var/global/const/DETECTIVE			=(1<<3)
-var/global/const/OFFICER			=(1<<4)
-var/global/const/CHIEF				=(1<<5)
-var/global/const/ENGINEER			=(1<<6)
-var/global/const/ATMOSTECH			=(1<<7)
-var/global/const/AI				=(1<<8)
-var/global/const/CYBORG			=(1<<9)
-var/global/const/FORENSIC			=(1<<10)
-var/global/const/CADET             =(1<<11)
-var/global/const/TECHNICASSISTANT	=(1<<12)
+var/global/const/CAPTAIN            =(1<<0)
+var/global/const/HOS                =(1<<1)
+var/global/const/WARDEN             =(1<<2)
+var/global/const/DETECTIVE          =(1<<3)
+var/global/const/OFFICER            =(1<<4)
+var/global/const/CHIEF              =(1<<5)
+var/global/const/ENGINEER           =(1<<6)
+var/global/const/ATMOSTECH          =(1<<7)
+var/global/const/AI                 =(1<<8)
+var/global/const/CYBORG             =(1<<9)
+var/global/const/FORENSIC           =(1<<10)
+var/global/const/CADET              =(1<<11)
+var/global/const/TECHNICASSISTANT   =(1<<12)
 
-var/global/const/MEDSCI			=(1<<1)
+var/global/const/MEDSCI             =(1<<1)
 
-var/global/const/RD				=(1<<0)
-var/global/const/SCIENTIST			=(1<<1)
-var/global/const/CHEMIST			=(1<<2)
-var/global/const/CMO				=(1<<3)
-var/global/const/DOCTOR			=(1<<4)
-var/global/const/GENETICIST		=(1<<5)
-var/global/const/VIROLOGIST		=(1<<6)
-var/global/const/PSYCHIATRIST		=(1<<7)
-var/global/const/ROBOTICIST		=(1<<8)
-var/global/const/XENOBIOLOGIST		=(1<<9)
-var/global/const/PARAMEDIC			=(1<<10)
-var/global/const/XENOARCHAEOLOGIST	=(1<<11)
-var/global/const/INTERN			=(1<<12)
-var/global/const/RESEARCHASSISTANT	=(1<<13)
+var/global/const/RD                 =(1<<0)
+var/global/const/SCIENTIST          =(1<<1)
+var/global/const/CHEMIST            =(1<<2)
+var/global/const/CMO                =(1<<3)
+var/global/const/DOCTOR             =(1<<4)
+var/global/const/GENETICIST         =(1<<5)
+var/global/const/VIROLOGIST         =(1<<6)
+var/global/const/PSYCHIATRIST       =(1<<7)
+var/global/const/ROBOTICIST         =(1<<8)
+var/global/const/XENOBIOLOGIST      =(1<<9)
+var/global/const/PARAMEDIC          =(1<<10)
+var/global/const/XENOARCHAEOLOGIST  =(1<<11)
+var/global/const/INTERN             =(1<<12)
+var/global/const/RESEARCHASSISTANT  =(1<<13)
 
+var/global/const/CIVILIAN           =(1<<2)
 
-var/global/const/CIVILIAN			=(1<<2)
-
-var/global/const/HOP				=(1<<0)
-var/global/const/BARTENDER			=(1<<1)
-var/global/const/BOTANIST			=(1<<2)
-var/global/const/CHEF				=(1<<3)
-var/global/const/JANITOR			=(1<<4)
-var/global/const/LIBRARIAN			=(1<<5)
-var/global/const/QUARTERMASTER		=(1<<6)
-var/global/const/CARGOTECH			=(1<<7)
-var/global/const/MINER				=(1<<8)
-var/global/const/LAWYER			=(1<<9)
-var/global/const/CHAPLAIN			=(1<<10)
-var/global/const/CLOWN				=(1<<11)
-var/global/const/MIME				=(1<<12)
-var/global/const/ASSISTANT			=(1<<13)
-var/global/const/RECYCLER			=(1<<14)
-var/global/const/BARBER			=(1<<15)
+var/global/const/HOP                =(1<<0)
+var/global/const/BARTENDER          =(1<<1)
+var/global/const/BOTANIST           =(1<<2)
+var/global/const/CHEF               =(1<<3)
+var/global/const/JANITOR            =(1<<4)
+var/global/const/LIBRARIAN          =(1<<5)
+var/global/const/QUARTERMASTER      =(1<<6)
+var/global/const/CARGOTECH          =(1<<7)
+var/global/const/MINER              =(1<<8)
+var/global/const/LAWYER             =(1<<9)
+var/global/const/CHAPLAIN           =(1<<10)
+var/global/const/CLOWN              =(1<<11)
+var/global/const/MIME               =(1<<12)
+var/global/const/ASSISTANT          =(1<<13)
+var/global/const/RECYCLER           =(1<<14)
+var/global/const/BARBER             =(1<<15)
 
 var/global/list/assistant_occupations = list(
 )
 
+
+/*
+Attention!
+Order of ranks in *_positions lists below is used to sort crew manifest by such ranks
+*/
 
 var/global/list/command_positions = list(
 	"Captain",
@@ -65,6 +69,14 @@ var/global/list/command_positions = list(
 	"Chief Medical Officer"
 )
 
+var/global/list/security_positions = list(
+	"Head of Security",
+	"Warden",
+	"Detective",
+	"Forensic Technician",
+	"Security Officer",
+	"Security Cadet"
+)
 
 var/global/list/engineering_positions = list(
 	"Chief Engineer",
@@ -73,58 +85,45 @@ var/global/list/engineering_positions = list(
 	"Technical Assistant"
 )
 
-
 var/global/list/medical_positions = list(
 	"Chief Medical Officer",
 	"Medical Doctor",
-	"Geneticist",
-	"Psychiatrist",
-	"Chemist",
-	"Virologist",
 	"Paramedic",
+	"Chemist",
+	"Geneticist", //Part of both medical and science
+	"Virologist",
+	"Psychiatrist",
 	"Medical Intern"
 )
-
 
 var/global/list/science_positions = list(
 	"Research Director",
 	"Scientist",
-	"Geneticist",	//Part of both medical and science
 	"Roboticist",
+	"Geneticist", //Part of both medical and science
 	"Xenobiologist",
 	"Xenoarchaeologist",
 	"Research Assistant"
 )
 
-//BS12 EDIT
 var/global/list/civilian_positions = list(
 	"Head of Personnel",
-	"Barber",
-	"Bartender",
-	"Botanist",
-	"Chef",
-	"Janitor",
-	"Librarian",
+	"Internal Affairs Agent",
 	"Quartermaster",
 	"Cargo Technician",
 	"Shaft Miner",
 	"Recycler",
-	"Internal Affairs Agent",
-	"Chaplain",
-	"Test Subject",
+	"Chef",
+	"Bartender",
+	"Botanist",
 	"Clown",
-	"Mime"
+	"Mime",
+	"Chaplain",
+	"Janitor",
+	"Barber",
+	"Librarian",
+	"Test Subject"
 )
-
-var/global/list/security_positions = list(
-	"Head of Security",
-	"Warden",
-	"Detective",
-	"Security Officer",
-	"Forensic Technician",
-	"Security Cadet"
-)
-
 
 var/global/list/nonhuman_positions = list(
 	"AI",
