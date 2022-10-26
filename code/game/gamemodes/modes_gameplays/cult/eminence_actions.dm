@@ -117,12 +117,13 @@
 	var/list/dead_cultists = list()
 	for(var/mob/M as anything in global.cult_religion.members - owner)
 		if(M.stat != DEAD)
-			cultists["[M.real_name]"] = M
+			cultists.Add(list("[M.real_name]" = M))
 		else
-			dead_cultists["[M.real_name] (DEAD)"] = M
+			dead_cultists.Add(list("[M.real_name] (DEAD)" = M))
+
 	cultists += dead_cultists
-	var/M = input(owner, "Выберите последователя для телепорта", "Телепорт к последователю") as null|anything in cultists
-	if(M)
-		owner.forceMove(get_turf(cultists[M]))
+	var/target = tgui_input_list(owner, "Выберите последователя для телепорта", "Телепорт к последователю", cultists)
+	if(target)
+		owner.forceMove(get_turf(cultists[target]))
 		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', VOL_EFFECTS_MASTER)
 		flash_color(owner, flash_time = 25)
