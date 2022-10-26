@@ -128,6 +128,10 @@
 
 		icon_state = "beartrap[armed]"
 
+/obj/item/weapon/legcuffs/beartrap/armed
+	icon_state = "beartrap1"
+	armed = TRUE
+
 /obj/item/weapon/legcuffs/bola
 	name = "bola"
 	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
@@ -523,8 +527,8 @@
 
 /obj/item/weapon/scythe/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(istype(target, /obj/effect/spacevine))
-		for(var/obj/effect/spacevine/B in orange(target, 1))
+	if(istype(target, /obj/structure/spacevine))
+		for(var/obj/structure/spacevine/B in orange(target, 1))
 			if(prob(80))
 				qdel(B)
 		qdel(target)

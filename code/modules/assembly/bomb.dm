@@ -71,10 +71,6 @@
 	else
 		bombtank.release()
 
-/obj/item/device/onetankbomb/HasProximity(atom/movable/AM)
-	if(bombassembly)
-		bombassembly.HasProximity(AM)
-
 /obj/item/device/onetankbomb/hear_talk(mob/living/M, msg)
 	if(bombassembly)
 		bombassembly.hear_talk(M, msg)

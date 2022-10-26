@@ -12,7 +12,7 @@
 	pass_flags = PASSBLOB
 	faction = "blob"
 
-	var/obj/effect/blob/core/blob_core = null // The blob overmind's core
+	var/obj/structure/blob/core/blob_core = null // The blob overmind's core
 	var/list/blob_mobs = list()
 	var/list/factory_blobs = list()
 	var/blob_points = 0
@@ -110,7 +110,7 @@
 
 /mob/camera/blob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = FALSE
-	var/obj/effect/blob/B = locate() in range(3, NewLoc)
+	var/obj/structure/blob/B = locate() in range(3, NewLoc)
 	if(NewLoc && B)
 		loc = NewLoc
 		return TRUE
@@ -125,8 +125,8 @@
 		BLO.overmind = null
 	blob_mobs = null
 
-	for(var/obj/effect/blob/factory/F in factory_blobs)
-		F.overmind = null
+	for(var/obj/structure/blob/factory/F in factory_blobs)
+		F.OV = null
 	factory_blobs = null
 
 	return ..()

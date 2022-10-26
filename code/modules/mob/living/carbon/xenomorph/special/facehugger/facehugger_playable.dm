@@ -111,9 +111,7 @@
  */
 /mob/living/carbon/xenomorph/facehugger/proc/leap_at_face(mob/living/carbon/C)
 	if(ishuman(C) || ismonkey(C)) // CP! THIS IS DELTA SIX! DO WE NEED THIS? CP!
-		var/obj/item/clothing/mask/facehugger/FH = new(loc)
-		src.loc = FH
-		FH.current_hugger = src
+		var/obj/item/clothing/mask/facehugger/FH = new(loc, src)
 		FH.Attach(C)
 
 /mob/living/carbon/xenomorph/facehugger/regenerate_icons()
