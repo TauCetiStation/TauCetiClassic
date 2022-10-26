@@ -1,3 +1,7 @@
+#define STATE_EMPTY "empty"
+#define STATE_BLANK "blank"
+#define STATE_MINE "mine"
+
 /obj/structure/closet/crate/secure/loot
 	name = "заброшенный ящик"
 	desc = "Что же может оказаться внутри?"
@@ -30,7 +34,7 @@
 	for(var/i = 1 to grid_y)
 		var/list/Line = grid[i]
 		for(var/j = 1 to grid_x)
-			Line[j] = list("state" = "blank", "x" = j, "y" = i, "nearest" = "")
+			Line[j] = list("state" = STATE_BLANK, "x" = j, "y" = i, "nearest" = "", "flag" = FALSE)
 			grid_blanks++
 
 	for(var/i = 1 to grid_mines)
@@ -38,10 +42,10 @@
 			var/y = rand(1,grid_y)
 			var/x = rand(1,grid_x)
 			var/list/L = grid[y][x]
-			if(L["state"] == "mine")
+			if(L["state"] == STATE_MINE)
 				continue
 			else
-				L["state"] = "mine"
+				L["state"] = STATE_MINE
 				grid_blanks--
 				break
 
@@ -67,6 +71,10 @@
 		return
 	if(action == "button_press")
 		press_button(params["choice_x"], params["choice_y"])
+	if(action == "button_flag")
+		var/list/L = grid[params["choice_y"]][params["choice_x"]]
+		if(L["state"] != STATE_EMPTY)
+			L["flag"] = !L["flag"]
 	update_icon()
 
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
@@ -78,16 +86,16 @@
 	return x >= 1 && x <= grid_x && y >= 1 && y <= grid_y
 
 /obj/structure/closet/crate/secure/loot/proc/press_button(x, y)
-	if(grid[text2num(y)][text2num(x)]["state"] == "mine")
+	if(grid[text2num(y)][text2num(x)]["state"] == STATE_MINE)
 		SpawnDeathLoot()
 		return
 	reveal_button(text2num(x),text2num(y))
 	nanomanager.update_uis(src)
 
 /obj/structure/closet/crate/secure/loot/proc/reveal_button(x,y)
-	if(!check_in_grid(x, y) || grid[y][x]["state"] == "empty")
+	if(!check_in_grid(x, y) || grid[y][x]["state"] == STATE_EMPTY)
 		return
-	grid[y][x]["state"] = "empty"
+	grid[y][x]["state"] = STATE_EMPTY
 	grid_pressed++
 	check_complete()
 	var/mi = check_mines(x,y)
@@ -103,7 +111,7 @@
 	var/mins = 0
 
 	for(var/list/mask in nearest_mask)
-		if(check_in_grid(x + mask[1], y + mask[2]) && grid[y + mask[2]][x + mask[1]]["state"] == "mine")
+		if(check_in_grid(x + mask[1], y + mask[2]) && grid[y + mask[2]][x + mask[1]]["state"] == STATE_MINE)
 			mins++
 
 	return mins
@@ -197,3 +205,7 @@
 	if(locked)
 		return
 	..()
+
+#undef STATE_EMPTY
+#undef STATE_BLANK
+#undef STATE_MINE

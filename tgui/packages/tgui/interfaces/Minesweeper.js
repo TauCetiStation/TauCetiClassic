@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Input, Tooltip, Section, Dropdown, Icon } from "../components";
+import { Box, Button, Icon } from "../components";
 import { Window } from '../layouts';
 
 export const Minesweeper = (props, context) => {
@@ -22,16 +22,25 @@ export const Minesweeper = (props, context) => {
     "8": "#E5E5E5",
   };
   return (
-    <Window width={width} height={height+34} theme="minesweeper" title={mines}>
-      <Window.Content fitted="1">
+    <Window width={width} height={height+32} title={mines} className="Minesweeper__Window">
+      <Window.Content fitted height={height+32}>
         {grid.map(line => (
           <>
             {line.map((butn, index) => (
               <Button key={index}
+                className="Minesweeper__Button"
                 disabled={butn.state === 'empty' ? 1 : 0}
                 textColor={num_to_color[butn.nearest]}
-                content={butn.nearest}
+                content={
+                  <Box className="Minesweeper__Button-Content">
+                    {butn.flag ? <Icon name="flag" color="#922106" /> : butn.nearest}
+                  </Box>
+                }
                 onClick={() => act('button_press', { choice_x: butn.x, choice_y: butn.y })}
+                onContextMenu={e => {
+                  e.preventDefault();
+                  act('button_flag', { choice_x: butn.x, choice_y: butn.y });
+                }}
               />
             ))}
             <br />
