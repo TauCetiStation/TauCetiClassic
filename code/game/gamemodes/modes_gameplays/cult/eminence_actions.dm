@@ -125,5 +125,5 @@
 	var/target = tgui_input_list(owner, "Выберите последователя для телепорта", "Телепорт к последователю", cultists)
 	if(target)
 		owner.forceMove(get_turf(cultists[target]))
-		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', VOL_EFFECTS_MASTER)
+		owner.playsound_local(null, 'sound/magic/magic_missile.ogg', VOL_EFFECTS_MASTER)
 		flash_color(owner, flash_time = 25)
