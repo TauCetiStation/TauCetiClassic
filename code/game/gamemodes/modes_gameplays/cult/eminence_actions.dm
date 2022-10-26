@@ -117,9 +117,9 @@
 	var/list/dead_cultists = list()
 	for(var/mob/M as anything in global.cult_religion.members - owner)
 		if(M.stat != DEAD)
-			cultists.Add(list("[M.real_name]" = M))
+			cultists[M.real_name] = M
 		else
-			dead_cultists.Add(list("[M.real_name] (DEAD)" = M))
+			dead_cultists[["M.real_name] (DEAD)"] = M
 
 	cultists += dead_cultists
 	var/target = tgui_input_list(owner, "Выберите последователя для телепорта", "Телепорт к последователю", cultists)
