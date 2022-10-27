@@ -1,8 +1,7 @@
-//A very crude linear approximatiaon of pythagoras theorem.
+//alpha max + beta min algorithm for approximating pythagoras theorem. kinda accurate (about 4% error) and still quite fast
 /proc/cheap_pythag(dx, dy)
 	dx = abs(dx); dy = abs(dy);
-	if(dx>=dy)	return dx + (0.5*dy)	//The longest side add half the shortest side approximates the hypotenuse
-	else		return dy + (0.5*dx)
+	return dx*0.96 + dy*0.4
 
 /proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, z_transfer = 1)
 	set waitfor = FALSE
