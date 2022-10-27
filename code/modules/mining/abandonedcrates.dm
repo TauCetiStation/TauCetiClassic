@@ -75,6 +75,7 @@
 		var/list/L = grid[params["choice_y"]][params["choice_x"]]
 		if(L["state"] != STATE_EMPTY)
 			L["flag"] = !L["flag"]
+			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 	update_icon()
 
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
@@ -91,12 +92,12 @@
 	if(grid[text2num(y)][text2num(x)]["state"] == STATE_MINE)
 		SpawnDeathLoot()
 		return
-	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 	reveal_button(text2num(x),text2num(y))
 	nanomanager.update_uis(src)
 
 /obj/structure/closet/crate/secure/loot/proc/reveal_button(x,y)
-	if(!check_in_grid(x, y) || grid[y][x]["state"] == STATE_EMPTY || grid[y][x]["flag"]))
+	if(!check_in_grid(x, y) || grid[y][x]["state"] == STATE_EMPTY || grid[y][x]["flag"])
 		return
 	grid[y][x]["state"] = STATE_EMPTY
 	grid[y][x]["flag"] = FALSE
