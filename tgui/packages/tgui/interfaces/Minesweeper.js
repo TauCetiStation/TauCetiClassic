@@ -33,7 +33,7 @@ export const Minesweeper = (props, context) => {
                 textColor={num_to_color[butn.nearest]}
                 content={
                   <Box className="Minesweeper__Button-Content">
-                    {butn.flag ? <Icon name="flag" color="#922106" /> : butn.nearest}
+                    {butn.flag ? <Icon name="flag" color="#e73409" /> : butn.nearest}
                   </Box>
                 }
                 onClick={() => act('button_press', { choice_x: butn.x, choice_y: butn.y })}

@@ -96,6 +96,7 @@
 	if(!check_in_grid(x, y) || grid[y][x]["state"] == STATE_EMPTY)
 		return
 	grid[y][x]["state"] = STATE_EMPTY
+	grid[y][x]["flag"] = FALSE
 	grid_pressed++
 	check_complete()
 	var/mi = check_mines(x,y)
