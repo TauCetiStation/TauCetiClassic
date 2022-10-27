@@ -114,13 +114,11 @@
 /datum/action/innate/eminence/teleport2cultist/Activate()
 	. = ..()
 	var/list/cultists = list()
-	var/list/dead_cultists = list()
 	var/count = 0
 	for(var/mob/M as anything in global.cult_religion.members - owner)
 		count++
 		cultists["[count]) [M.real_name][M.stat == DEAD ? " (DEAD)" : ""]"] = M
 
-	cultists += dead_cultists
 	var/target = tgui_input_list(owner, "Выберите последователя для телепорта", "Телепорт к последователю", cultists)
 	if(target)
 		owner.forceMove(get_turf(cultists[target]))
