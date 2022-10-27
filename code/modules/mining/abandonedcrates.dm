@@ -86,14 +86,17 @@
 	return x >= 1 && x <= grid_x && y >= 1 && y <= grid_y
 
 /obj/structure/closet/crate/secure/loot/proc/press_button(x, y)
+	if(grid[text2num(y)][text2num(x)]["flag"])
+		return
 	if(grid[text2num(y)][text2num(x)]["state"] == STATE_MINE)
 		SpawnDeathLoot()
 		return
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 	reveal_button(text2num(x),text2num(y))
 	nanomanager.update_uis(src)
 
 /obj/structure/closet/crate/secure/loot/proc/reveal_button(x,y)
-	if(!check_in_grid(x, y) || grid[y][x]["state"] == STATE_EMPTY)
+	if(!check_in_grid(x, y) || grid[y][x]["state"] == STATE_EMPTY || grid[y][x]["flag"]))
 		return
 	grid[y][x]["state"] = STATE_EMPTY
 	grid[y][x]["flag"] = FALSE
