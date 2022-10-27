@@ -118,10 +118,7 @@
 	var/count = 0
 	for(var/mob/M as anything in global.cult_religion.members - owner)
 		count++
-		if(M.stat != DEAD)
-			cultists["[count]) [M.real_name]"] = M
-		else
-			dead_cultists["[count]) [M.real_name] (DEAD)"] = M
+		cultists["[count]) [M.real_name][M.stat == DEAD ? " (DEAD)" : ""]"] = M
 
 	cultists += dead_cultists
 	var/target = tgui_input_list(owner, "Выберите последователя для телепорта", "Телепорт к последователю", cultists)
