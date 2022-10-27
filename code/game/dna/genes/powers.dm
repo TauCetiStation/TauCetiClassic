@@ -155,7 +155,7 @@
 
 /datum/dna/gene/basic/noprints
 	name="No Prints"
-	activation_messages=list("Вы чувствуете онемевшие пальцы.")
+	activation_messages=list("Ваши пальцы немеют.")
 	mutation=FINGERPRINTS
 	activation_prob=50
 
@@ -266,11 +266,11 @@
 
 	Monster.attack_log = attack_log
 	Monster.attack_log += "\[[time_stamp()]\]<font color='blue'> ======MONSTER LIFE======</font>"
-	Monster.say(pick("ГРААААААААГХ!", "ХМММММММГХ!", "ГВАААААРРРРРГХ!", "РРРРРААААА!", "ХАЛК КРУШИТЬ!" ))
+	Monster.say(pick("ГРААААААААГХ!", "ХМММММММГХ!", "ГВАААААРРРРРГХ!", "РРРРРААААА!", "КРУШИТЬ!" ))
 
 /datum/dna/gene/basic/xray
 	name="X-Ray Vision"
-	activation_messages=list("Стены внезапно исчезли.")
+	activation_messages=list("Стены внезапно исчезают.")
 	mutation=XRAY
 	activation_prob=30
 
