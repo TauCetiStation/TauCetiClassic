@@ -18,8 +18,7 @@ Contains helper procs for airflow, handled in /connection_group.
 		return FALSE
 	if(!lying)
 		to_chat(src, "<span class='warning'>The sudden rush of air knocks you over!</span>")
-	Stun(2)
-	Weaken(5)
+	Weaken(1)
 	COOLDOWN_START(src, last_airflow_stun, vsc.airflow_stun_cooldown)
 
 /mob/living/silicon/airflow_stun()
