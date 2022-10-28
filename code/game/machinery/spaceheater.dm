@@ -118,6 +118,45 @@
 	else
 		..()
 
+/obj/machinery/interact(mob/user)
+	. = ..()
+
+	tgui_interact(user)
+
+/obj/machinery/space_heater/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "SpaceHeater")
+		ui.open()
+
+/obj/machinery/space_heater/tgui_data(mob/user)
+	var/list/data = list()
+
+	data["open"] = panel_open
+	data["on"] = on
+	data["mode"] = setMode
+	data["powerLevel"] = cell ? round(cell.percent(), 1) : 0
+	data["targetTemp"] = round(targetTemperature - T0C, 1)
+	data["minTemp"] = max(settableTemperatureMedian - settableTemperatureRange - T0C, TCMB)
+	data["maxTemp"] = settableTemperatureMedian + settableTemperatureRange - T0C
+
+	var/turf/simulated/L = get_turf(loc)
+	var/curTemp
+	if(istype(L))
+		var/datum/gas_mixture/env = L.return_air()
+		curTemp = env.temperature
+	else if(isturf(L))
+		curTemp = L.temperature
+
+	data["currentTemp"] = isnull(curTemp) ? "N/A" : round(curTemp - T0C, 1)
+
+	return data
+
+/obj/machinery/space_heater/tgui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
 /obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main")
 	if(user.stat != CONSCIOUS) // this probably handled by nano itself, a check would be nice.
 		return
