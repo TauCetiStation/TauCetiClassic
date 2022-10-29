@@ -4901,6 +4901,7 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/flask/barflask,
 /obj/item/weapon/book/manual/wiki/possible_threats,
+/obj/item/weapon/storage/box/trick_o_treat,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -20477,6 +20478,10 @@
 "aKD" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/effect/landmark/animal_spawner{
+	name = "ghost_spawner";
+	spawn_type = /mob/living/simple_animal/shade/howling_ghost
+	},
 /turf/simulated/floor/exodus{
 	icon_state = "R6"
 	},
@@ -21280,6 +21285,7 @@
 	pixel_x = 2;
 	pixel_y = 6
 	},
+/obj/item/weapon/storage/box/trick_o_treat,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -22455,6 +22461,7 @@
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/obj/item/weapon/storage/box/trick_o_treat,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -22821,6 +22828,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
+/obj/effect/landmark/animal_spawner{
+	name = "ghost_spawner";
+	spawn_type = /mob/living/simple_animal/shade/howling_ghost
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
 "aOR" = (
@@ -25295,6 +25306,7 @@
 	c_tag = "Bar Backroom";
 	dir = 4
 	},
+/obj/item/weapon/storage/box/trick_o_treat,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "aTq" = (
@@ -31438,6 +31450,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/landmark/animal_spawner{
+	name = "ghost_spawner";
+	spawn_type = /mob/living/simple_animal/shade/howling_ghost
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/port)
 "bdZ" = (
@@ -33014,6 +33030,7 @@
 "bgI" = (
 /obj/item/weapon/folder/red,
 /obj/structure/table/woodentable,
+/obj/item/weapon/storage/box/trick_o_treat,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
 "bgJ" = (
@@ -34591,6 +34608,10 @@
 /obj/machinery/telescience_jammer{
 	radius = 2
 	},
+/obj/effect/landmark/animal_spawner{
+	name = "ghost_spawner";
+	spawn_type = /mob/living/simple_animal/shade/howling_ghost
+	},
 /turf/simulated/floor{
 	icon_state = "vault"
 	},
@@ -34867,6 +34888,7 @@
 	pixel_x = 24
 	},
 /obj/item/weapon/reagent_containers/food/drinks/coffee,
+/obj/item/weapon/storage/box/trick_o_treat,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bkB" = (
@@ -36050,6 +36072,18 @@
 	icon_state = "white"
 	},
 /area/station/medical/reception)
+"bmu" = (
+/obj/item/weapon/folder/white,
+/obj/structure/table/glass,
+/obj/item/weapon/stamp/cmo,
+/obj/item/clothing/accessory/stethoscope,
+/obj/item/weapon/book/manual/wiki/possible_threats,
+/obj/item/weapon/storage/box/trick_o_treat,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "barber"
+	},
+/area/station/medical/cmo)
 "bmv" = (
 /obj/machinery/camera{
 	c_tag = "Medbay Security Checkpoint";
@@ -37841,15 +37875,34 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "bpS" = (
-/obj/machinery/computer/med_data/laptop,
-/obj/structure/table/woodentable,
-/obj/machinery/door_control{
-	id = "Medical_Psychiatry";
-	name = "Privacy Shutters";
-	pixel_y = -25
+/obj/structure/table,
+/obj/item/device/eftpos{
+	eftpos_name = "HoP EFTPOS scanner"
 	},
-/turf/simulated/floor/wood,
-/area/station/medical/psych)
+/obj/machinery/door_control{
+	id = "HoP_queue";
+	name = "Queue shutters";
+	pixel_x = -5;
+	pixel_y = -5;
+	req_access = list(57)
+	},
+/obj/machinery/door_control{
+	id = "HoP_private";
+	name = "Security Shutters";
+	pixel_x = -5;
+	pixel_y = 5;
+	req_access = list(57)
+	},
+/obj/machinery/requests_console/hop{
+	pixel_y = -30
+	},
+/obj/item/weapon/book/manual/wiki/possible_threats,
+/obj/item/weapon/storage/box/trick_o_treat,
+/turf/simulated/floor{
+	dir = 0;
+	icon_state = "blue"
+	},
+/area/station/bridge/hop_office)
 "bpT" = (
 /obj/machinery/door/window{
 	dir = 1;
@@ -44574,6 +44627,21 @@
 /obj/machinery/meter,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"bBH" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/landmark/animal_spawner{
+	name = "ghost_spawner";
+	spawn_type = /mob/living/simple_animal/shade/howling_ghost
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/aft)
 "bBI" = (
 /obj/machinery/alarm{
 	dir = 1;
@@ -45152,6 +45220,7 @@
 	pixel_y = 5;
 	req_access = list(47)
 	},
+/obj/item/weapon/storage/box/trick_o_treat,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -52117,6 +52186,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/landmark/animal_spawner{
+	name = "ghost_spawner";
+	spawn_type = /mob/living/simple_animal/shade/howling_ghost
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "bPu" = (
@@ -52839,6 +52912,27 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"bQM" = (
+/obj/machinery/computer/med_data/laptop,
+/obj/structure/table/woodentable,
+/obj/machinery/door_control{
+	id = "Medical_Psychiatry";
+	name = "Privacy Shutters";
+	pixel_y = -25
+	},
+/obj/item/weapon/storage/box/trick_o_treat,
+/turf/simulated/floor/wood,
+/area/station/medical/psych)
+"bQN" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/lockbox/anti_singulo,
+/obj/item/weapon/stock_parts/cell/super,
+/obj/item/weapon/stock_parts/cell/super,
+/obj/item/weapon/storage/box/trick_o_treat,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/engineering/chiefs_office)
 "bQO" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
@@ -63608,33 +63702,15 @@
 	},
 /area/station/bridge/hop_office)
 "cvn" = (
-/obj/structure/table,
-/obj/item/device/eftpos{
-	eftpos_name = "HoP EFTPOS scanner"
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
-/obj/machinery/door_control{
-	id = "HoP_queue";
-	name = "Queue shutters";
-	pixel_x = -5;
-	pixel_y = -5;
-	req_access = list(57)
+/obj/effect/landmark/animal_spawner{
+	name = "ghost_spawner";
+	spawn_type = /mob/living/simple_animal/shade/howling_ghost
 	},
-/obj/machinery/door_control{
-	id = "HoP_private";
-	name = "Security Shutters";
-	pixel_x = -5;
-	pixel_y = 5;
-	req_access = list(57)
-	},
-/obj/machinery/requests_console/hop{
-	pixel_y = -30
-	},
-/obj/item/weapon/book/manual/wiki/possible_threats,
-/turf/simulated/floor{
-	dir = 0;
-	icon_state = "blue"
-	},
-/area/station/bridge/hop_office)
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "cvo" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -70200,19 +70276,15 @@
 	},
 /area/station/engineering/engine)
 "ebb" = (
-/obj/structure/table/woodentable,
-/obj/item/device/camera_film{
-	pixel_x = 5;
-	pixel_y = 10
-	},
-/obj/item/device/camera_film{
-	pixel_x = -3;
-	pixel_y = 5
+/obj/machinery/vending/spooky{
+	premium = list(/obj/item/weapon/storage/box/trick_o_treat, /obj/item/weapon/storage/fancy/black_candle_box,  /obj/item/device/camera/polar/spooky);
+	prices = list(/obj/item/weapon/bikehorn/spidertoy = 5, /obj/item/clothing/head/helmet/skull = 10, /obj/item/clothing/under/skeleton = 10, /obj/item/clothing/head/pharoah = 10, /obj/item/clothing/under/mummy = 10, /obj/item/clothing/head/scarecrow_hat = 10, /obj/item/clothing/under/scarecrow = 10, /obj/item/clothing/head/lobsterhat = 10, /obj/item/clothing/under/lobster = 10, /obj/item/clothing/suit/dracula = 10, /obj/item/clothing/under/draculass = 10, /obj/item/clothing/suit/gothcoat = 10, /obj/item/clothing/head/hardhat/pumpkinhead = 10, /obj/item/clothing/suit/ghost_sheet = 10);
+	products = list(/obj/item/weapon/bikehorn/spidertoy = 4, /obj/item/clothing/head/helmet/skull = 4, /obj/item/clothing/under/skeleton = 4, /obj/item/clothing/head/pharoah = 4, /obj/item/clothing/under/mummy = 4, /obj/item/clothing/head/scarecrow_hat = 4, /obj/item/clothing/under/scarecrow = 4, /obj/item/clothing/head/lobsterhat = 4, /obj/item/clothing/under/lobster = 4, /obj/item/clothing/suit/dracula = 4, /obj/item/clothing/under/draculass = 4, /obj/item/clothing/suit/gothcoat = 4, /obj/item/clothing/head/hardhat/pumpkinhead = 4, /obj/item/clothing/suit/ghost_sheet = 5)
 	},
 /turf/simulated/floor{
-	icon_state = "cult"
+	icon_state = "dark"
 	},
-/area/station/civilian/library)
+/area/station/civilian/bar)
 "ebk" = (
 /obj/structure/disposalpipe/junction{
 	icon_state = "pipe-j2"
@@ -72106,14 +72178,20 @@
 	},
 /area/station/engineering/engine)
 "gsb" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/lockbox/anti_singulo,
-/obj/item/weapon/stock_parts/cell/super,
-/obj/item/weapon/stock_parts/cell/super,
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/structure/table/woodentable,
+/obj/item/device/camera_film{
+	pixel_x = 5;
+	pixel_y = 10
 	},
-/area/station/engineering/chiefs_office)
+/obj/item/device/camera_film{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/box/trick_o_treat,
+/turf/simulated/floor{
+	icon_state = "cult"
+	},
+/area/station/civilian/library)
 "gtb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
@@ -77106,16 +77184,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "lZb" = (
-/obj/item/weapon/folder/white,
-/obj/structure/table/glass,
-/obj/item/weapon/stamp/cmo,
-/obj/item/clothing/accessory/stethoscope,
-/obj/item/weapon/book/manual/wiki/possible_threats,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "barber"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/area/station/medical/cmo)
+/obj/effect/landmark/animal_spawner{
+	name = "ghost_spawner";
+	spawn_type = /mob/living/simple_animal/shade/howling_ghost
+	},
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "lZM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor,
@@ -100823,7 +100900,7 @@ aLT
 ofm
 vBO
 sox
-pGd
+lZb
 rLZ
 bFS
 bxz
@@ -101038,7 +101115,7 @@ tRb
 aRn
 blP
 tPb
-bnL
+cvn
 uab
 aRn
 blP
@@ -109550,7 +109627,7 @@ aAF
 lLD
 aUu
 bhp
-bzi
+ebb
 bDY
 aGn
 bET
@@ -113418,7 +113495,7 @@ bvo
 bwN
 brJ
 bzL
-cvn
+bpS
 bra
 bOg
 bxX
@@ -115509,7 +115586,7 @@ guV
 crK
 gWR
 grb
-gsb
+bQN
 ixa
 ckT
 fIV
@@ -115750,7 +115827,7 @@ bLh
 bNo
 bFY
 bOW
-bFY
+bBH
 anm
 bVL
 bQG
@@ -125773,7 +125850,7 @@ bJm
 bUy
 bdh
 bzn
-bpS
+bQM
 bMF
 bBy
 cES
@@ -126280,7 +126357,7 @@ bxt
 bJm
 mbb
 bKW
-lZb
+bmu
 lXb
 aVd
 bJm
@@ -132684,7 +132761,7 @@ bhQ
 aKs
 bYM
 cvy
-ebb
+gsb
 aKs
 aKs
 bSC

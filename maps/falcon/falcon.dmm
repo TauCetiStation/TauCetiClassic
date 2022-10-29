@@ -508,14 +508,10 @@
 	},
 /area/station/tcommsat/chamber)
 "aaP" = (
-/obj/item/weapon/flora/random,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
-	},
+/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "black"
+	icon_state = "vault"
 	},
 /area/station/hallway/primary/central)
 "aaQ" = (
@@ -3165,32 +3161,12 @@
 	},
 /area/station/rnd/hallway)
 "afv" = (
-/obj/structure/table/reinforced,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "CE Office APC";
-	pixel_x = 30
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/requests_console/ce{
-	pixel_y = 28
-	},
-/obj/item/weapon/rcd,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/rcd_ammo,
-/obj/item/weapon/book/manual/wiki/possible_threats,
+/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkyellow"
+	dir = 9;
+	icon_state = "black"
 	},
-/area/station/engineering/chiefs_office)
+/area/station/hallway/primary/central)
 "afw" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -5191,6 +5167,10 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/bot/cleanbot,
+/obj/effect/landmark/animal_spawner{
+	name = "ghost_spawner";
+	spawn_type = /mob/living/simple_animal/shade/howling_ghost
+	},
 /turf/simulated/floor/goonplaque,
 /area/station/hallway/primary/central)
 "ajg" = (
@@ -5390,7 +5370,7 @@
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/chapel)
 "ajA" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -5438,7 +5418,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/weapon/flora/random,
+/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkred"
@@ -6039,6 +6019,22 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"akT" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/animal_spawner{
+	name = "ghost_spawner";
+	spawn_type = /mob/living/simple_animal/shade/howling_ghost
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "akU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -7124,7 +7120,11 @@
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "anb" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/vending/spooky{
+	premium = list(/obj/item/weapon/storage/box/trick_o_treat, /obj/item/weapon/storage/fancy/black_candle_box,  /obj/item/device/camera/polar/spooky);
+	prices = list(/obj/item/weapon/bikehorn/spidertoy = 5, /obj/item/clothing/head/helmet/skull = 10, /obj/item/clothing/under/skeleton = 10, /obj/item/clothing/head/pharoah = 10, /obj/item/clothing/under/mummy = 10, /obj/item/clothing/head/scarecrow_hat = 10, /obj/item/clothing/under/scarecrow = 10, /obj/item/clothing/head/lobsterhat = 10, /obj/item/clothing/under/lobster = 10, /obj/item/clothing/suit/dracula = 10, /obj/item/clothing/under/draculass = 10, /obj/item/clothing/suit/gothcoat = 10, /obj/item/clothing/head/hardhat/pumpkinhead = 10, /obj/item/clothing/suit/ghost_sheet = 10);
+	products = list(/obj/item/weapon/bikehorn/spidertoy = 4, /obj/item/clothing/head/helmet/skull = 4, /obj/item/clothing/under/skeleton = 4, /obj/item/clothing/head/pharoah = 4, /obj/item/clothing/under/mummy = 4, /obj/item/clothing/head/scarecrow_hat = 4, /obj/item/clothing/under/scarecrow = 4, /obj/item/clothing/head/lobsterhat = 4, /obj/item/clothing/under/lobster = 4, /obj/item/clothing/suit/dracula = 4, /obj/item/clothing/under/draculass = 4, /obj/item/clothing/suit/gothcoat = 4, /obj/item/clothing/head/hardhat/pumpkinhead = 4, /obj/item/clothing/suit/ghost_sheet = 5)
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -7439,10 +7439,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "anH" = (
-/obj/item/weapon/flora/random,
 /obj/structure/sign/departments/holy{
 	pixel_y = 32
 	},
+/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -9845,6 +9845,71 @@
 	icon_state = "wood-broken7"
 	},
 /area/station/maintenance/escape)
+"ase" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Cargo";
+	location = "RnD"
+	},
+/obj/effect/landmark/animal_spawner{
+	name = "ghost_spawner";
+	spawn_type = /mob/living/simple_animal/shade/howling_ghost
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
+"asf" = (
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
+	},
+/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "black"
+	},
+/area/station/hallway/primary/central)
+"asg" = (
+/obj/structure/table/reinforced,
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "CE Office APC";
+	pixel_x = 30
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/requests_console/ce{
+	pixel_y = 28
+	},
+/obj/item/weapon/rcd,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/book/manual/wiki/possible_threats,
+/obj/item/weapon/storage/box/trick_o_treat,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkyellow"
+	},
+/area/station/engineering/chiefs_office)
+"ash" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/circuitboard/aicore{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/weapon/circuitboard/teleporter,
+/obj/item/borg/upgrade/security,
+/obj/item/weapon/disk/research_points/rare,
+/obj/item/weapon/storage/box/trick_o_treat,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "warndark"
+	},
+/area/station/rnd/hor)
 "asi" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -12871,6 +12936,7 @@
 	},
 /obj/item/weapon/cartridge/medical,
 /obj/item/device/megaphone,
+/obj/item/weapon/storage/box/trick_o_treat,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -14398,11 +14464,11 @@
 	},
 /area/station/medical/genetics_cloning)
 "ePx" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=Cargo";
-	location = "RnD"
+/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin,
+/turf/simulated/floor{
+	dir = 10;
+	icon_state = "black"
 	},
-/turf/simulated/floor,
 /area/station/hallway/primary/central)
 "ePz" = (
 /obj/structure/grille,
@@ -15194,11 +15260,11 @@
 	},
 /area/station/hallway/primary/central)
 "fIP" = (
-/obj/item/weapon/flora/pottedplant/palm,
 /obj/structure/noticeboard{
 	dir = 8;
 	pixel_x = 32
 	},
+/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -15879,6 +15945,7 @@
 	},
 /obj/item/weapon/folder/blue,
 /obj/item/weapon/pen,
+/obj/item/weapon/storage/box/trick_o_treat,
 /turf/simulated/floor/carpet/black,
 /area/station/bridge)
 "guD" = (
@@ -22304,6 +22371,7 @@
 	pixel_x = 4;
 	pixel_y = -30
 	},
+/obj/item/weapon/storage/box/trick_o_treat,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
 "mPB" = (
@@ -24512,6 +24580,7 @@
 /obj/machinery/keycard_auth{
 	pixel_x = 28
 	},
+/obj/item/weapon/storage/box/trick_o_treat,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "oMb" = (
@@ -26638,10 +26707,10 @@
 	c_tag = "Bar West";
 	dir = 4
 	},
-/obj/item/weapon/flora/random,
 /obj/structure/sign/poster/official/random{
 	pixel_x = -32
 	},
+/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "qBM" = (
@@ -28199,6 +28268,7 @@
 	pixel_y = -28
 	},
 /obj/item/clothing/head/beret/sec/hos,
+/obj/item/weapon/storage/box/trick_o_treat,
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "sfO" = (
@@ -31101,9 +31171,12 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxstarboard)
 "uXH" = (
-/obj/machinery/hologram/holopad,
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
+/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin,
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "black"
+	},
+/area/station/hallway/primary/central)
 "uYz" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -31414,20 +31487,12 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/explored)
 "vnN" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/reagent_containers/food/drinks/flask/barflask{
-	pixel_x = -6;
-	pixel_y = 10
+/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "black"
 	},
-/obj/machinery/newscaster{
-	pixel_y = 28
-	},
-/obj/item/weapon/flora/pottedplant/smallcactus{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/turf/simulated/floor/wood,
-/area/station/civilian/bar)
+/area/station/hallway/primary/central)
 "vob" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_escape";
@@ -32233,17 +32298,13 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "wij" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/hologram/holopad,
+/obj/effect/landmark/animal_spawner{
+	name = "ghost_spawner";
+	spawn_type = /mob/living/simple_animal/shade/howling_ghost
 	},
 /turf/simulated/floor,
-/area/station/hallway/primary/central)
+/area/station/hallway/secondary/exit)
 "wik" = (
 /obj/effect/decal/cleanable/molten_item,
 /turf/simulated/floor/plating{
@@ -32786,6 +32847,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
+/obj/item/weapon/storage/box/trick_o_treat,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -34401,19 +34463,21 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "yfg" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/circuitboard/aicore{
-	pixel_x = -2;
-	pixel_y = 4
+/obj/structure/table/woodentable,
+/obj/item/weapon/reagent_containers/food/drinks/flask/barflask{
+	pixel_x = -6;
+	pixel_y = 10
 	},
-/obj/item/weapon/circuitboard/teleporter,
-/obj/item/borg/upgrade/security,
-/obj/item/weapon/disk/research_points/rare,
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "warndark"
+/obj/machinery/newscaster{
+	pixel_y = 28
 	},
-/area/station/rnd/hor)
+/obj/item/weapon/flora/pottedplant/smallcactus{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/box/trick_o_treat,
+/turf/simulated/floor/wood,
+/area/station/civilian/bar)
 "yfp" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -53936,7 +54000,7 @@ qyn
 anH
 acx
 ahN
-uXH
+wij
 epi
 epi
 pho
@@ -58833,7 +58897,7 @@ akL
 alh
 alB
 qyK
-afv
+asg
 gWA
 afc
 qyK
@@ -59085,7 +59149,7 @@ jbH
 pTN
 ajX
 ajY
-gLt
+aaP
 cDH
 hhr
 nif
@@ -59601,7 +59665,7 @@ aqh
 cQi
 nLA
 nLA
-wij
+akT
 vWd
 ekh
 kom
@@ -60098,7 +60162,7 @@ meq
 jaa
 eJe
 mXM
-vNm
+uXH
 fIW
 fIW
 fIW
@@ -61906,7 +61970,7 @@ kzx
 iwN
 gum
 dQg
-vnN
+yfg
 iyV
 abg
 ixg
@@ -62429,7 +62493,7 @@ fIW
 fIW
 lBY
 fIW
-aaP
+asf
 hRP
 mEg
 oHD
@@ -62666,7 +62730,7 @@ rTG
 fOO
 eJe
 mXM
-vNm
+uXH
 wPs
 suB
 sQD
@@ -65750,7 +65814,7 @@ nif
 jaa
 smC
 pyi
-lDE
+ePx
 fIW
 lyd
 kKJ
@@ -66030,7 +66094,7 @@ kpo
 aaX
 dxN
 btp
-vNm
+uXH
 rsV
 rzk
 doI
@@ -68093,7 +68157,7 @@ uTN
 adw
 ilH
 uVc
-yfg
+ash
 rNw
 cbd
 vTe
@@ -68337,7 +68401,7 @@ fIW
 fIW
 fIW
 fIW
-rIv
+afv
 eQw
 fPZ
 sAc
@@ -68596,7 +68660,7 @@ adk
 npo
 iHp
 nYR
-ePx
+ase
 rdJ
 fkm
 jBX
@@ -69352,7 +69416,7 @@ tnj
 kjg
 mpu
 tnj
-wDD
+vnN
 vAK
 vdX
 euJ
