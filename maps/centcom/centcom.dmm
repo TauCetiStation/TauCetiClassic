@@ -1658,12 +1658,8 @@
 	},
 /area/centcom/holding)
 "aeg" = (
-/obj/machinery/sleeper{
-	dir = 4
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -1887,7 +1883,6 @@
 /turf/simulated/floor/wood,
 /area/shuttle/escape/centcom)
 "aeO" = (
-/obj/structure/stool/bed/roller,
 /obj/machinery/iv_drip,
 /turf/simulated/floor{
 	icon_state = "grimy"
@@ -17539,6 +17534,12 @@
 /obj/item/weapon/storage/box/trick_o_treat,
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
+"aNF" = (
+/obj/structure/closet/coffin,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/shuttle/escape/centcom)
 "aNG" = (
 /obj/structure/sign/poster/official/cleanliness{
 	pixel_y = -32
@@ -17564,6 +17565,15 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"aNI" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/closet/coffin,
+/turf/simulated/floor{
+	icon_state = "grimy"
+	},
+/area/shuttle/escape/centcom)
 "aNK" = (
 /obj/machinery/door/airlock/centcom{
 	name = "General Access";
@@ -20642,7 +20652,7 @@
 /turf/environment/space,
 /area/shuttle/officer/centcom)
 "aYJ" = (
-/obj/structure/closet/emcloset,
+/obj/structure/closet/coffin,
 /turf/simulated/floor/wood,
 /area/shuttle/escape/centcom)
 "aYL" = (
@@ -23415,9 +23425,8 @@
 	},
 /area/velocity)
 "cYR" = (
-/obj/structure/stool/bed/roller,
-/obj/machinery/life_assist/artificial_ventilation,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/coffin,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -49187,11 +49196,11 @@ afz
 adW
 aGx
 aYx
-abG
-abJ
-cYR
 aeO
 aeg
+cYR
+aNF
+aNI
 skC
 pXb
 abz
