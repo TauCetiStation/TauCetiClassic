@@ -29,6 +29,10 @@
 	var/list/gases_inhalation_proc = list()
 	//initial amount of rnd points
 	var/list/gases_initial_rnd_points = list()
+	//how much energy per mole is produced when this gas comes in contact with SM
+	var/list/gases_supermatter_power_bonus = list()
+	//how much damage per mole is produced when this gas comes in contact with SM
+	var/list/gases_supermatter_damage_bonus = list()
 
 /datum/xgm_gas
 	var/id = ""
@@ -47,6 +51,8 @@
 	var/knowable = FALSE
 	var/inhalation_proc = /datum/xgm_gas/proc/on_inhalation //path to proc used to determine inhalation effects for living stuff (oxygen, phoron, n2o and co2 are processed separately)
 	var/initial_rnd_points = 0 //initial amount of research points which can be gained with the help of stationary gas analyzer
+	var/supermatter_power_bonus = 0
+	var/supermatter_damage_bonus = 0
 
 /datum/xgm_temperature_overlay
 	var/id = ""
@@ -95,6 +101,8 @@
 		gas_data.gases_knowable[gas.id] = gas.knowable
 		gas_data.gases_inhalation_proc[gas.id] = gas.inhalation_proc
 		gas_data.gases_initial_rnd_points[gas.id] = gas.initial_rnd_points
+		gas_data.gases_supermatter_damage_bonus[gas.id] = gas.supermatter_damage_bonus
+		gas_data.gases_supermatter_power_bonus[gas.id] = gas.supermatter_power_bonus
 
 	for(var/p in subtypesof(/datum/xgm_temperature_overlay))
 		var/datum/xgm_temperature_overlay/overlay = new p

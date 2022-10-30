@@ -13,25 +13,33 @@
 /datum/atmosReaction/proc/canReact(datum/gas_mixture/G)
     var/count = 0
     var/list/toRemove[0]
+
     if(!consumed.len || !created.len)
         return
-    for(var/gas in consumed)
-        if(consumed[gas] <= G.gas[gas])
-            count ++
-            toRemove[gas] = consumed[gas]
+
+    if(inhibitors.len)
+        for(var/gas in inhibitors)
+            if(inhibitors[gas] <= G.gas[gas])
+                return FALSE
+
     if(catalysts.len)
         for(var/gas in catalysts)
             if(catalysts[gas] <= G.gas[gas])
                 count ++
-    if(inhibitors.len)
-        for(var/gas in inhibitors)
-            if(inhibitors[gas] <= G.gas[gas])
-                count = 0
+    if(count != catalysts.len)
+        return FALSE
+    
+    for(var/gas in consumed)
+        if(consumed[gas] <= G.gas[gas])
+            count ++
+            toRemove[gas] = consumed[gas]
+    if(count != consumed.len)
+        return FALSE
 
-    if(count == consumed.len + catalysts.len)
-        if((G.return_pressure() > minPressure && G.return_pressure() < maxPressure) && (G.temperature > minTemp && G.temperature < maxTemp))
-            return toRemove
-    return FALSE
+    if((G.return_pressure() > minPressure && G.return_pressure() < maxPressure) && (G.temperature > minTemp && G.temperature < maxTemp))
+        return toRemove
+    else
+        return FALSE
 
 /datum/atmosReaction/proc/preReact(datum/gas_mixture/G, turf/T = null)
     return TRUE //insert your own code here

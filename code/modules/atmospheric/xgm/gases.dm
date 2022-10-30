@@ -1,7 +1,7 @@
 /datum/xgm_gas/phoron
 	id = "phoron"
 	name = "Phoron"
-	desc = "Volatile and toxic gas with exotic physical properties."
+	desc = "Volatile and toxic gas with exotic physical properties. Slightly increases SM power generation, but deals damage to it at the same time."
 
 	//Note that this has a significant impact on TTV yield.
 	//Because it is so high, any leftover phoron soaks up a lot of heat and drops the yield pressure.
@@ -15,6 +15,8 @@
 	tile_overlay = "phoron"
 	overlay_limit = 0.7
 	flags = XGM_GAS_FUEL | XGM_GAS_CONTAMINANT | XGM_GAS_FUSION_FUEL
+	supermatter_power_bonus = 0.8
+	supermatter_damage_bonus = 0.2
 	dangerous = TRUE
 	knowable = TRUE
 
@@ -23,9 +25,10 @@
 /datum/xgm_gas/oxygen
 	id = "oxygen"
 	name = "Oxygen"
-	desc = "Mild oxidizer. Essential for many lifeforms, including humans, but is highly toxic for vox race."
+	desc = "Mild oxidizer. Essential for many lifeforms, including humans, but is highly toxic for vox race. Slightly increases SM power generation"
 	specific_heat = 20	// J/(mol*K)
 	molar_mass = 0.032	// kg/mol
+	supermatter_power_bonus = 0.4
 
 	flags = XGM_GAS_OXIDIZER | XGM_GAS_FUSION_FUEL
 	knowable = TRUE
@@ -33,9 +36,10 @@
 /datum/xgm_gas/nitrogen
 	id = "nitrogen"
 	name = "Nitrogen"
-	desc = "Gas with low chemical activity. It is commonly used in air mix, for restricting pure oxygen volatility. Also essential for vox race."
+	desc = "Gas with low chemical activity. It is commonly used in air mix, for restricting pure oxygen volatility. Also essential for vox race. Slightly lowers SM power generation."
 	specific_heat = 20	// J/(mol*K)
 	molar_mass = 0.028	// kg/mol
+	supermatter_power_bonus = -0.4
 	knowable = TRUE
 
 /datum/xgm_gas/carbon_dioxide
@@ -66,6 +70,7 @@
 
 	specific_heat = 100	// J/(mol*K)
 	molar_mass = 0.002	// kg/mol
+	supermatter_power_bonus = 0.4
 
 	flags = XGM_GAS_FUEL|XGM_GAS_FUSION_FUEL
 
@@ -118,6 +123,7 @@
 
 	tile_overlay = "sleeping_agent"
 	overlay_limit = 1
+	supermatter_damage_bonus = 0.4
 
 	dangerous = TRUE
 	knowable = FALSE
@@ -135,6 +141,8 @@
 
 	tile_overlay = "meta_stabilium"
 	overlay_limit = 1
+	supermatter_power_bonus = -2
+	supermatter_damage_bonus = -0.4
 
 	knowable = FALSE
 	inhalation_proc = /datum/xgm_gas/constantium/on_inhalation
@@ -144,13 +152,15 @@
 /datum/xgm_gas/trioxium
 	id = "triox"
 	name = "Trioxium"
-	desc = "Deriative of oxygen. While being a more potent oxidizer, it's also slightly toxic and unstable. Increases SM power generation, but with a risk of delamination."
+	desc = "Deriative of oxygen. While being a more potent oxidizer than oxygen, it's also slightly toxic and unstable if heated. Increases SM power generation, but with a risk of delamination."
 
 	specific_heat = 25
 	molar_mass = 0.06
 
 	tile_overlay = "trioxium"
 	overlay_limit = 0.7
+	supermatter_power_bonus = 1
+	supermatter_damage_bonus = 0.2
 
 	flags = XGM_GAS_OXIDIZER
 	knowable = FALSE
@@ -168,6 +178,8 @@
 
 	tile_overlay = "proto_hydrate"
 	overlay_limit = 0.7
+	supermatter_power_bonus = 0.8
+	supermatter_damage_bonus = 0.8
 
 	burn_product = "watervapor"
 	flags = XGM_GAS_FUEL | XGM_GAS_FUSION_FUEL
@@ -179,7 +191,7 @@
 /datum/xgm_gas/cardotirin
 	id = "ctirin"
 	name = "Cardotirin"
-	desc = "Gas with mild chemical activity. Stimulates human immune and hormonal systems, improving mood and accelerating wound regeneration, at the cost of increasing drowsyness."
+	desc = "Gas with mild chemical activity. Stimulates human immune and hormonal systems, improving mood and accelerating wound regeneration, at the cost of increased drowsyness."
 
 	tile_overlay = "cardotirin"
 	overlay_limit = 0.7

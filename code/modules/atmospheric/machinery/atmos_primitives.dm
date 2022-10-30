@@ -66,7 +66,9 @@
 
 	var/P = SSair.get_reaction_mix_priority(sink)
 	if(P)
-		SSair.add_reaction_turf(M.loc, P)
+		var/turf/simulated/T = M.loc
+		if(SSair.has_valid_zone(T))
+			SSair.add_reaction_zone(T.zone, P)
 
 	return power_draw TAUCETI_POWER_DRAW_MOD
 
@@ -104,7 +106,9 @@
 
 	var/P = SSair.get_reaction_mix_priority(sink)
 	if(P)
-		SSair.add_reaction_turf(M.loc, P)
+		var/turf/simulated/T = M.loc
+		if(SSair.has_valid_zone(T))
+			SSair.add_reaction_zone(T.zone, P)
 
 	return 0
 

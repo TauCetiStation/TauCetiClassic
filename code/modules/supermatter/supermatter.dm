@@ -1,5 +1,4 @@
 
-#define NITROGEN_RETARDATION_FACTOR 4   //Higher == N2 slows reaction more
 #define PHORON_RELEASE_MODIFIER 1500    //Higher == less phoron released by reaction
 #define THERMAL_RELEASE_MODIFIER 750    //Higher == more heat released during reaction
 #define PLASMA_RELEASE_MODIFIER 1500    //Higher == less plasma released by reaction
@@ -46,8 +45,6 @@
 
 	var/lastwarning = 0                        // Time in 1/10th of seconds since the last sent warning
 	var/power = 0
-
-	var/oxygen = 0				  // Moving this up here for easier debugging.
 
 	//Temporary values so that we can optimize this
 	//How much the bullets damage should be multiplied by when it is added to the internal variables
@@ -144,21 +141,12 @@
 
 	damage_archived = damage
 	damage = max( damage + ( (removed.temperature - 800) / 150 ) , 0 )
-	//Ok, 100% oxygen atmosphere = best reaction
-	//Maxes out at 100% oxygen pressure
-	oxygen = max(min((removed.gas["oxygen"] - (removed.gas["nitrogen"] * NITROGEN_RETARDATION_FACTOR)) / MOLES_CELLSTANDARD, 1), 0)
 
-	var/temp_factor = 100
+	power = max((removed.temperature * temp_factor / T0C) + power, 0) //Total laser power plus an overload
 
-	if(oxygen > 0.8)
-		// with a perfect gas mix, make the power less based on heat
-		icon_state = "[base_icon_state]_glow"
-	else
-		// in normal mode, base the produced energy around the heat
-		temp_factor = 60
-		icon_state = base_icon_state
-
-	power = max( (removed.temperature * temp_factor / T0C) * oxygen + power, 0) //Total laser power plus an overload
+	for(var/gas in removed.gas) //checking gas bonuses
+		damage += gas_data.gases_supermatter_damage_bonus[gas] * removed.gas[gas]
+		power += gas_data.gases_supermatter_power_bonus[gas] * removed.gas[gas]
 
 	//We've generated power, now let's transfer it to the collectors for storing/usage
 	transfer_energy()

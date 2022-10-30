@@ -98,6 +98,8 @@
 			C.adjustFireLoss(-1)
 		if(C.losebreath >= 10)
 			C.losebreath = max(10, C.losebreath-5)
+		if(prob(30))
+			SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "drugged", /datum/mood_event/drugged)
 		C.drowsyness += 1
 		if(prob(10))
 			to_chat(C, "<span class='notice'>You feel like something in the air soothes your wounds.</span>")

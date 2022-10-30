@@ -56,8 +56,8 @@ SUBSYSTEM_DEF(air)
 	var/map_init_levels = 0 // number of z-levels initialized under this type of SS.
 	var/list/queued_for_update
 
-	var/log_recent_reactions = TRUE
 	var/process_reactions = TRUE
+	var/log_recent_reactions = TRUE
 	var/temp = ""
 
 /datum/controller/subsystem/air/stat_entry(msg)
@@ -82,9 +82,9 @@ SUBSYSTEM_DEF(air)
 	msg += "ZTU:[zones_to_update.len]|"
 	msg += "E:[edges.len]|"
 	msg += "Z:[zones.len]|"
-	var/list/p1 = possibleReactionTurfs["1"]
-	var/list/p2 = possibleReactionTurfs["2"]
-	var/list/p3 = possibleReactionTurfs["3"]
+	var/list/p1 = possibleReactionZones[1]
+	var/list/p2 = possibleReactionZones[2]
+	var/list/p3 = possibleReactionZones[3]
 	msg += "PRT:[p1.len + p2.len + p3.len]"
 	..(msg)
 
@@ -309,15 +309,13 @@ SUBSYSTEM_DEF(air)
 			return
 
 /datum/controller/subsystem/air/proc/process_reactions(resumed = 0)
-	for(var/P in list("3", "2", "1"))
-		var/list/L = possibleReactionTurfs[P]
-		if(L.len > 40)
-			var/list/NL = possibleReactionTurfs[P]
-			NL = NL.Copy(0, 39)
-			possibleReactionTurfs[P] = NL
-		for(var/turf/T in possibleReactionTurfs[P])
-			var/datum/gas_mixture/G = T.return_air()
-			try_react(G, T)
+	for(var/P = 1, P < possibleReactionZones.len, P++)
+		var/list/C = possibleReactionZones[P]
+		if(C.len > 40)
+			C.Cut(41)
+		for(var/zone/Z in possibleReactionZones[P])
+			var/datum/gas_mixture/G = Z.air
+			try_react(G, Z)
 
 /*********** Setup procs ***********/
 
@@ -573,45 +571,35 @@ SUBSYSTEM_DEF(air)
 			break
 	return P
 
-/datum/controller/subsystem/air/proc/add_reaction_turf(turf/simulated/T, P)
-	if(isspaceturf(T) || !process_reactions)
+/datum/controller/subsystem/air/proc/add_reaction_zone(zone/Z, P)
+	if(!process_reactions)
 		return
-	P = num2text(P)
-	var/OP = T.last_reaction_priority
-	if(OP == P) //turf has same priority as previous time/is space
+	var/OP = Z.last_reaction_priority
+	if(OP == P)
 		return
-	T.last_reaction_priority = P
+	Z.last_reaction_priority = P
 	var/list/L
 	if(OP)
-		L = possibleReactionTurfs[OP]; L.Remove(T); possibleReactionTurfs[OP] = L;
-	L = possibleReactionTurfs[P]; L.Insert(1, T); possibleReactionTurfs[P] = L;
-	/*
-	var/obj/effect/overlay/O = new/obj/effect/overlay(T)
-	O.name = "PRT"
-	O.desc = "Possible reaction turf"
-	O.icon = 'icons/obj/atmos.dmi'
-	O.icon_state = "prt" + P
-	O.anchored = TRUE
-	O.layer = 5
-	*/
-	var/list/N = list(get_step(T, NORTH), get_step(T, SOUTH), get_step(T, WEST), get_step(T, EAST))
-	for(var/turf/NT as anything in N)
-		if(NT)
-			var/NP = get_reaction_mix_priority(NT.return_air())
-			if(NP && !possibleReactionTurfs.Find(NT))
-				add_reaction_turf(NT, NP)
+		L = possibleReactionZones[OP]; L.Remove(Z); possibleReactionZones[OP] = L;
+	L = possibleReactionZones[P]; L.Insert(1, Z); possibleReactionZones[P] = L;
 
-/datum/controller/subsystem/air/proc/try_react(datum/gas_mixture/G, turf/T = null)
+	for(var/turf/T in Z.contents)
+		var/obj/effect/overlay/O = new/obj/effect/overlay(T)
+		O.name = "PRT"
+		O.desc = "Possible reaction turf"
+		O.icon = 'icons/obj/atmos.dmi'
+		O.icon_state = "prt" + num2text(P)
+		O.anchored = TRUE
+		O.layer = 5
+
+/datum/controller/subsystem/air/proc/try_react(datum/gas_mixture/G, zone/Z = null)
 	for(var/datum/atmosReaction/R as anything in global.atmosReactionList)
 		var/datum/atmosReaction/O = new R()
-		if(O.react(G, T))
-			recentReactions.Insert(1, list(O.id, T))
+		if(O.react(G, Z))
 			if(log_recent_reactions)
-				var/list/M = recentReactions
-				if(M.len > 10)
-					var/list/NM = recentReactions
-					NM = NM.Copy(0, 9)
-					recentReactions = NM
+				recentReactions.Insert(1, list(O.id, Z))
+				if(recentReactions.len > 10)
+					recentReactions.Cut(11)
 
 /datum/controller/subsystem/air/proc/atmos_reactions_panel()
 	var/html = ""
@@ -623,10 +611,10 @@ SUBSYSTEM_DEF(air)
 		else
 			html += "Обработка реакций: [SSair.process_reactions ? "Включена" : "Выключена"]<br>"
 			html += "Нагрузка: [SSair.cost_reactions]<br>"
-			var/list/p1 = possibleReactionTurfs["1"]
-			var/list/p2 = possibleReactionTurfs["2"]
-			var/list/p3 = possibleReactionTurfs["3"]
-			html += "Количество возможных турфов для реакций: [p1.len + p2.len + p3.len]<br>"
+			var/list/p1 = possibleReactionZones[1]
+			var/list/p2 = possibleReactionZones[2]
+			var/list/p3 = possibleReactionZones[3]
+			html += "Количество возможных зон ZAS для реакций: [p1.len + p2.len + p3.len]<br>"
 			html += "Запись недавних реакций: [SSair.log_recent_reactions ? "Включена" : "Выключена"]<br>"
 			html += "<A align='right' href='?src=\ref[src];enabler=1'>Включить обработку реакций</A><br>"
 			html += "<A align='right' href='?src=\ref[src];viewrlog=1'>Просмотреть недавние реакции</A><br>"
@@ -649,18 +637,21 @@ SUBSYSTEM_DEF(air)
 	if(href_list["enablerlog"])
 		SSair.log_recent_reactions = !SSair.log_recent_reactions
 	if(href_list["checkt"])
-		var/turf/T = usr.loc
+		var/turf/simulated/T = usr.loc
+		if(!has_valid_zone(T))
+			return
 		var/P = get_reaction_mix_priority(T.return_air())
 		if(P)
-			add_reaction_turf(T, P)
+			add_reaction_zone(T.zone, P)
 	if(href_list["checkz"])
 		if(tgui_alert(usr, "Вы хотите проверить все турфы в данной зоне, это может вызвать лаги если зона большая. Всё равно продолжить?", "Проверка зоны", list("Да","Нет")) == "Да")
 			var/area/A = get_area(usr)
 			if(A)
-				for(var/turf/T in A)
+				for(var/turf/simulated/T in A)
 					var/P = get_reaction_mix_priority(T.return_air())
 					if(P)
-						add_reaction_turf(T, P)
+						if(has_valid_zone(T))
+							add_reaction_zone(T.zone, P)
 	if(href_list["teleport"])
 		var/turf/TT = locate(href_list["teleport"])
 		if(TT)
