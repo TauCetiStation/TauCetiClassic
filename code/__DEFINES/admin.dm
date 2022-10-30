@@ -130,3 +130,9 @@
 #define BANKEY_PENDING_MATCHES      "pending_matches_this_round"
 
 #define GUARD_CHECK_AGE 60
+
+#define SW_ADMINS     1
+#define SW_MENTORS    2
+#define SW_XENOVISORS 3
+#define SW_DEVELOPERS 4
+#define SW_ALL_GROUPS 4 //update this, if add more staff groups

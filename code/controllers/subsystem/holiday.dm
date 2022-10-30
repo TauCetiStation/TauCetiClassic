@@ -2,7 +2,8 @@ SUBSYSTEM_DEF(holiday)
 	name = "Holiday"
 	init_order = SS_INIT_HOLIDAY
 	flags = SS_NO_FIRE
-	var/list/holidays = list()
+	var/list/datum/holiday/holidays = list()
+	var/list/staffwho_prefix = list()
 
 /datum/controller/subsystem/holiday/Initialize(start_timeofday)
 	if(!config.allow_holidays)
@@ -22,3 +23,29 @@ SUBSYSTEM_DEF(holiday)
 		world.update_status()
 
 	return ..()
+
+/datum/controller/subsystem/holiday/proc/get_staffwho_prefix(ckey)
+	if(staffwho_prefix[ckey])
+		return staffwho_prefix[ckey]
+	if(!length(holidays))
+		return ""
+	staffwho_prefix[ckey] = pick(holidays[holidays[1]].staffwho_prefixs)
+	return staffwho_prefix[ckey]
+
+/datum/controller/subsystem/holiday/proc/get_no_staff_text()
+	if(!length(holidays))
+		return ""
+	return holidays[holidays[1]].staffwho_no_staff
+
+/datum/controller/subsystem/holiday/proc/get_admin_name(group)
+	var/static/list/defaults = list(
+		SW_ADMINS     = "Admins",
+		SW_MENTORS    = "Mentors",
+		SW_XENOVISORS = "Xenovisors",
+		SW_DEVELOPERS = "Developers",
+	)
+	if(!length(holidays))
+		return defaults[group]
+	if(!holidays[holidays[1]].staffwho_group_name)
+		return defaults[group]
+	return holidays[holidays[1]].staffwho_group_name[group]
