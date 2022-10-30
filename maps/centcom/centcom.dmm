@@ -28849,6 +28849,7 @@
 	pixel_x = -7;
 	pixel_y = 11
 	},
+/obj/item/weapon/storage/box/trick_o_treat,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/carpets.dmi';
 	icon_state = "blackcarpet";
