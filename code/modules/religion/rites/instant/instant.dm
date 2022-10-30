@@ -451,7 +451,7 @@
 
 /datum/religion_rites/instant/cult/give_forcearmor
 	name = "Создание Силовой Ауры"
-	desc = "Окружает человека на алтаре силовой аурой, которая может блокировать урон."
+	desc = "Окружает человека на алтаре силовой аурой, которая может блокировать урон. Аспект Хаоса повышает силу щита, а аспект Салютуса - скорость восстановления."
 	ritual_length = (15 SECONDS)
 	invoke_msg = "Защитись же!!"
 	favor_cost = 300
@@ -496,10 +496,19 @@
 	H.take_overall_damage(10, 20)
 
 	var/obj/effect/effect/forcefield/rune/R = new
-	H.AddComponent(/datum/component/forcefield, "power aura", 30 * divine_power, 1 MINUTE, 2.5 MINUTE, R, FALSE, TRUE)
+	var/list/diffs = get_aspect_diffs()
+	H.AddComponent(/datum/component/forcefield, "power aura", 30 * diffs[ASPECT_CHAOS], 1 MINUTE / diffs[ASPECT_RESCUE], 2.5 MINUTE / diffs[ASPECT_RESCUE], R, FALSE, TRUE)
 	SEND_SIGNAL(H, COMSIG_FORCEFIELD_PROTECT, H)
 
 	return TRUE
+
+/datum/religion_rites/instant/cult/proc/get_aspect_diffs()
+	var/list/diffs = list()
+	for(var/need_aspect in needed_aspects)
+		var/datum/aspect/aspect = religion.aspects[need_aspect]
+		to_chat(world,"[aspect], [religion.aspects[need_aspect]], [religion.aspects[needed_aspects[need_aspect]]]")
+		diffs += list("[aspect.name]" = aspect.power - need_aspect + 1)
+	return diffs
 
 /datum/religion_rites/instant/cult/upgrade_tome
 	name = "Улучшение Тома"
