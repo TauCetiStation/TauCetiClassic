@@ -28,24 +28,17 @@
 	..()
 	timer--
 	if(prob(60))
-		roam()
+		var/turf/my_turf = get_turf(src)
+		if(prob(80))
+			my_turf = get_step(my_turf, alldirs)
 		if(prob(40))
-			roam()
-			roam()
-			roam()
-			roam()
-			roam()
-			roam()
+			for(var/i in 1 to 6)
+				if(prob(80))
+					my_turf = get_step(my_turf, alldirs)
+		forceMove(my_turf)
 	if(timer == 0)
 		spooky_ghosty()
 		timer = rand(1,15)
-
-/mob/living/simple_animal/shade/howling_ghost/proc/EtherealMove(direction)
-	forceMove(get_step(src, direction))
-
-/mob/living/simple_animal/shade/howling_ghost/proc/roam()
-	if(prob(80))
-		EtherealMove(pick(alldirs))
 
 /mob/living/simple_animal/shade/howling_ghost/proc/spooky_ghosty()
 	if(prob(20)) //haunt
