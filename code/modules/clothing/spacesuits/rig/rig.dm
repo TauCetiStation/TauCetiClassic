@@ -410,6 +410,7 @@
 		update_overlays(old_wearer)
 		remove_actions(old_wearer)
 		selected_module = null
+		magpulse = 0 //disables magboots when dropped
 		STOP_PROCESSING(SSobj, src)
 		process() // process one last time so we can disable all modules and other stuff
 
