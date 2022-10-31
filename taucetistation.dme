@@ -334,10 +334,8 @@
 #include "code\datums\emotes\human\clickable.dm"
 #include "code\datums\emotes\human\gesture.dm"
 #include "code\datums\emotes\human\visual.dm"
-<<<<<<< HEAD
 #include "code\datums\gun_modular\module.dm"
 #include "code\datums\gun_modular\process_fire.dm"
-=======
 #include "code\datums\emotes\monkey\audible.dm"
 #include "code\datums\emotes\robot\audible.dm"
 #include "code\datums\emotes\robot\gesture.dm"
@@ -348,7 +346,6 @@
 #include "code\datums\emotes\xenomorph\larva\audible.dm"
 #include "code\datums\environment\environment.dm"
 #include "code\datums\environment\environment_types.dm"
->>>>>>> c4d8abfe86f8b9eccf460b7a552b81fe8edcec63
 #include "code\datums\helper_datums\construction_datum.dm"
 #include "code\datums\helper_datums\events.dm"
 #include "code\datums\helper_datums\icon_snapshot.dm"
