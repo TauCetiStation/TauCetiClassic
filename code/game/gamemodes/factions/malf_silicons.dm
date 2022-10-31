@@ -9,6 +9,8 @@
 
 	max_roles = 1
 
+	var/custom_res = TRUE
+	var/shuttle_block = TRUE
 	var/AI_capture_timeleft = 1800 //started at 1800, in case I change this for testing round end.
 	var/malf_mode_declared = FALSE
 	var/station_captured = FALSE
@@ -29,7 +31,7 @@
 			return TRUE
 	return FALSE
 
-/datum/faction/malf_silicons/OnPostSetup(shuttle_block = TRUE)
+/datum/faction/malf_silicons/OnPostSetup()
 	if(shuttle_block && SSshuttle)
 		SSshuttle.fake_recall = TRUE
 	return ..()
@@ -123,8 +125,8 @@
 	SSticker.station_was_nuked = TRUE
 	SSticker.explosion_in_progress = FALSE
 
-/datum/faction/malf_silicons/custom_result(call_parent = FALSE)
-	if(call_parent)
+/datum/faction/malf_silicons/custom_result()
+	if(!custom_res)
 		return ..()
 	var/malf_dead = is_malf_ai_dead()
 	var/crew_evacuated = (SSshuttle.location == SHUTTLE_AT_CENTCOM)
@@ -170,8 +172,8 @@
 
 	return dat
 
-/datum/faction/malf_silicons/GetScoreboard(call_parent = FALSE)
-	if(call_parent)
+/datum/faction/malf_silicons/GetScoreboard()
+	if(!custom_res)
 		return ..()
 	var/dat = custom_result()
 	dat += "<br><b>The malfunctioning AI were:</b>"
@@ -199,11 +201,13 @@
 	return dat
 
 /datum/faction/malf_silicons/zombie
-	var/finished = FALSE
+	shuttle_block = FALSE
+	custom_res = FALSE
 	initroletype = /datum/role/malfAI/zombie //First addition should be the AI
+	var/finished = FALSE
 
 /datum/faction/malf_silicons/zombie/OnPostSetup()
-	. = ..(FALSE)
+	. = ..()
 	AppendObjective(/datum/objective/turn_into_zombie)
 
 /datum/faction/malf_silicons/zombie/process()
@@ -258,9 +262,3 @@
 		if(Z.check_completion() == OBJECTIVE_WIN)
 			return TRUE
 	return FALSE
-
-/datum/faction/malf_silicons/zombie/custom_result()
-	return ..(TRUE)
-
-/datum/faction/malf_silicons/zombie/GetScoreboard()
-	return ..(TRUE)
