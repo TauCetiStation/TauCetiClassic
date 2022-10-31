@@ -145,7 +145,7 @@
 
 /obj/item/device/soulstone/proc/capture_shade(target, mob/user)
 	var/mob/living/simple_animal/shade/S = target
-	if(S.capturable) // cant capture any unsusual shade
+	if(!S.capturable)
 		to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Эта душа не может вам подчинится!")
 		return
 	if(S.stat == DEAD)
