@@ -16,6 +16,14 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	state_broken_preset = "tcbossb"
 	state_nopower_preset = "tcboss0"
 
+/obj/machinery/computer/vox_stealth/atom_init()
+	. = ..()
+	SSholomaps.holomap_landmarks += src
+
+/obj/machinery/computer/vox_stealth/Destroy()
+	SSholomaps.holomap_landmarks -= src
+	return ..()
+
 /obj/machinery/computer/vox_stealth/attackby(obj/item/I, mob/user)
 	return attack_hand(user)
 

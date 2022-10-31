@@ -210,7 +210,7 @@
 				// Then bring it inside to explode instantly upon landing on a valid turf.
 
 
-	if(Proj.flag != "bullet")
+	if(Proj.flag != BULLET)
 		power += Proj.damage * config_bullet_energy
 	else
 		damage += Proj.damage * config_bullet_energy

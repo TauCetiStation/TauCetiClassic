@@ -115,12 +115,12 @@
 	if(prob(50))
 		slowdown += pick(0.5, 0.5, 1, 1.5)
 	if(prob(75))
-		armor["melee"] = armor["melee"] / 2
-		armor["bullet"] = armor["bullet"] / 2
-		armor["laser"] = armor["laser"] / 2
-		armor["energy"] = armor["energy"] / 2
-		armor["bomb"] = armor["bomb"] / 2
-		armor["bio"] = armor["bio"] / 2
+		armor[MELEE] = armor[MELEE] / 2
+		armor[BULLET] = armor[BULLET] / 2
+		armor[LASER] = armor[LASER] / 2
+		armor[ENERGY] = armor[ENERGY] / 2
+		armor[BOMB] = armor[BOMB] / 2
+		armor[BIO] = armor[BIO] / 2
 		armor["rad"] = armor["rad"] / 2
 	if(prob(50))
 		uncleanable = 1

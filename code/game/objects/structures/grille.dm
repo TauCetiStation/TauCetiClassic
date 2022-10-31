@@ -19,9 +19,8 @@
 /obj/structure/grille/atom_init()
 	. = ..()
 	if(destroyed)
-		update_integrity(get_integrity() * integrity_failure)
 		destroyed = FALSE // let atom_break reset destroyed
-		atom_break() // update integrity skips atom_break and atom_repair
+		update_integrity(get_integrity() * integrity_failure)
 
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user)) shock(user, 70)

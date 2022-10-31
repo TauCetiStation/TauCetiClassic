@@ -161,14 +161,14 @@ var/global/list/wedge_image_cache = list()
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
 			playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
-			if(!istype(H.head, /obj/item/clothing/head/helmet))
-				visible_message("<span class='userdanger'> [user] headbutts the [src].</span>")
-				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+			var/armor_block = H.run_armor_check(BP_HEAD, "melee")
+			if(armor_block)
+				visible_message("<span class='userdanger'> [user] headbutts the airlock.</span>")
+			else
+				visible_message("<span class='userdanger'> [user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
+			if(H.apply_damage(10, BRUTE, BP_HEAD, armor_block))
 				H.Stun(2)
 				H.Weaken(5)
-				BP.take_damage(10, 0, used_weapon = "Hematoma")
-			else
-				visible_message("<span class='userdanger'> [user] headbutts the [src]. Good thing they're wearing a helmet.</span>")
 			return
 
 	user.SetNextMove(CLICK_CD_INTERACT)
@@ -208,8 +208,6 @@ var/global/list/wedge_image_cache = list()
 			close()
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user)
-	if(user.a_intent == INTENT_HARM)
-		return ..()
 	if(istype(I, /obj/item/device/detective_scanner))
 		return
 	if(src.operating)

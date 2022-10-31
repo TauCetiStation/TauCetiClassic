@@ -272,10 +272,8 @@
 	var/turf/T_target = get_turf(target)
 
 	if(user.a_intent != INTENT_HELP)
-		var/resolved = target.attackby(parent, user, list())
-		if(!resolved && parent)
-			var/obj/item/I = parent
-			I.afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+		var/obj/item/I = parent
+		I.melee_attack_chain(target, user)
 
 	if(!has_gravity(parent) && !isspaceturf(target))
 		step_away(user, T_target)
@@ -367,10 +365,8 @@
 	var/turf/T_target = get_turf(target)
 
 	if(user.a_intent != INTENT_HELP)
-		var/resolved = target.attackby(parent, user, list())
-		if(!resolved && parent)
-			var/obj/item/I = parent
-			I.afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+		var/obj/item/I = parent
+		I.melee_attack_chain(target, user)
 
 	if(!has_gravity(parent) && !isspaceturf(target))
 		step_to(user, T_target)
@@ -464,23 +460,13 @@
 	if(on_sweep_hit)
 		return on_sweep_hit.Invoke(current_turf, sweep_image, target, user)
 
-	if(user.a_intent == INTENT_HARM && is_type_in_list(target, list(/obj/machinery/disposal, /obj/structure/table, /obj/structure/rack)))
-		/*
-		A very weird snowflakey thing but very crucial to keeping this fun.
-		If we're on I_HURT and we hit anything that should drop our item from the hands,
-		we just ignore the click to it.
-		*/
-		return FALSE
-
 	var/obj/item/weapon/W = parent
 
 	var/is_stunned = is_type_in_list(target, interupt_on_sweep_hit_types)
 	if(is_stunned)
 		to_chat(user, "<span class='warning'>Your [W] has hit [target]! There's not enough space for broad sweeps here!</span>")
 
-	var/resolved = target.attackby(W, user, list())
-	if(!resolved && W)
-		W.afterattack(target, user, TRUE, list()) // TRUE indicates adjacency
+	W.melee_attack_chain(target, user)
 
 	return is_stunned
 

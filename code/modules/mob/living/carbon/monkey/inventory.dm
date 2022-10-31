@@ -7,7 +7,7 @@
 		return
 
 	W.screen_loc = null // will get moved if inventory is visible
-	W.loc = src
+	W.forceMove(src)
 
 	switch(slot)
 		if(SLOT_HEAD)
