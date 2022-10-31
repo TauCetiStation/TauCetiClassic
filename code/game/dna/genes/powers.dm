@@ -121,7 +121,7 @@
 
 /datum/dna/gene/basic/heat_resist
 	name="Heat Resistance"
-	activation_messages=list("Вы чувствуете холодок по коже..")
+	activation_messages=list("Вы чувствуете холодок по коже.")
 	mutation=RESIST_HEAT
 	activation_prob=30
 
