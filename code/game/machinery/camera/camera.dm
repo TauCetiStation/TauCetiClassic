@@ -63,6 +63,7 @@
 	disconnect_viewers()
 	QDEL_NULL(wires)
 	QDEL_NULL(assembly)
+	QDEL_NULL(proximity_monitor)
 	if(bug)
 		bug.bugged_cameras -= c_tag
 		if(bug.current == src)
@@ -469,6 +470,7 @@
 
 /obj/machinery/camera/proc/upgradeMotion(obj/item/I)
 	camera_upgrades["motion"] = I
+	START_PROCESSING(SSmachines, src)
 	update_icon()
 
 /obj/machinery/camera/proc/upgradeExplosiveImmune()
