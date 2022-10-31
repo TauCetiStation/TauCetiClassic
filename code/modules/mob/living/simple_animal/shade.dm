@@ -31,6 +31,8 @@
 	has_head = TRUE
 	has_arm = TRUE
 
+	var/capturable = TRUE
+
 /mob/living/simple_animal/shade/Life()
 	..()
 	if(stat == DEAD)
@@ -231,6 +233,7 @@
 	icon_living = "ghost2"
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	capturable = FALSE
 
 /mob/living/simple_animal/shade/atom_init()
 	. = ..()

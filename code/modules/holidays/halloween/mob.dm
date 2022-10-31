@@ -15,6 +15,7 @@
 	incorporeal_move = 1
 	status_flags = GODMODE
 	faction = "untouchable"
+	capturable = FALSE
 	var/timer = 0
 
 /mob/living/simple_animal/shade/howling_ghost/atom_init()
