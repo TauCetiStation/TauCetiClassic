@@ -27,3 +27,12 @@
 		to_chat(H, "<span class='warning'>Наступив на книгу вы чувствуете невыносимо жгучую боль в ступнях.</span>")
 		H.take_certain_bodypart_damage(list(BP_L_LEG, BP_R_LEG), 0, 10)
 		return
+
+/obj/item/weapon/storage/bible/tome/eminence
+	name = "Tome of Eminence"
+	icon_state = "strange_book"
+	scribe_time = 1
+	destr_cd = 10 SECONDS
+	rune_cd = 10 SECONDS
+	cost_coef = 1.5
+	build_cd = 10 SECONDS

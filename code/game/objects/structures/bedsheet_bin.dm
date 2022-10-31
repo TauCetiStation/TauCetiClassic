@@ -134,7 +134,7 @@ LINEN BINS
 	. = ..()
 
 	var/obj/effect/effect/forcefield/F = new
-	AddComponent(/datum/component/forcefield, "wizard field", 20, 3 SECONDS, 5 SECONDS, F, TRUE)
+	AddComponent(/datum/component/forcefield, "wizard field", 20, 3 SECONDS, 5 SECONDS, F, TRUE, TRUE)
 
 /obj/item/weapon/bedsheet/wiz/proc/activate(mob/living/user)
 	if(iswizard(user) || iswizardapprentice(user))

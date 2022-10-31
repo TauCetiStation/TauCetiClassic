@@ -238,7 +238,7 @@
 	return TRUE
 
 /atom/movable/screen/alert
-	icon = 'icons/mob/screen_alert.dmi'
+	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "default"
 	name = "Alert"
 	desc = "Something seems to have gone wrong with this alert, so report this bug please"
@@ -355,6 +355,12 @@
 	desc = "Королева вне зоны видимости. Ваша скорость роста снижена."
 	icon_state = "alien_queen"
 	alerttooltipstyle = "alien"
+
+//BLOBS
+/atom/movable/screen/alert/nofactory
+	name = "No Factory"
+	desc = "You have no factory, and are slowly dying!"
+	icon_state = "blobbernaut"
 
 //changeling
 /atom/movable/screen/alert/regen_stasis

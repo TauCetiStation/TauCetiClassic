@@ -11,6 +11,7 @@
 	density = FALSE
 	m_amt = 1850
 	level = 2
+	resistance_flags = CAN_BE_HIT
 	var/ptype = 0
 	// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk, 6=disposal bin, 7=outlet, 8=inlet
 

@@ -194,7 +194,7 @@
 
 /obj/item/stack/use(used, transfer = FALSE)
 	if(used < 0)
-		stack_trace("[src.type]/use() called with a negative parameter [used]")
+		stack_trace("[src.type]/use() called with a negative parameter")
 		return FALSE
 	if(zero_amount())
 		return FALSE
@@ -245,7 +245,7 @@
 
 /obj/item/stack/proc/add(_amount)
 	if(_amount < 0)
-		stack_trace("[src.type]/add() called with a negative parameter [_amount]")
+		stack_trace("[src.type]/add() called with a negative parameter")
 		return
 	amount += _amount
 	update_icon()
