@@ -69,30 +69,6 @@
 /obj/machinery/computer/camera_advanced/xenobio/GrantActions(mob/living/user)
 	..()
 
-	if(slime_up_action)
-		slime_up_action.target = src
-		slime_up_action.Grant(user)
-
-	if(slime_place_action)
-		slime_place_action.target = src
-		slime_place_action.Grant(user)
-
-	if(feed_slime_action)
-		feed_slime_action.target = src
-		feed_slime_action.Grant(user)
-
-	if(monkey_recycle_action)
-		monkey_recycle_action.target = src
-		monkey_recycle_action.Grant(user)
-
-	if(scan_action)
-		scan_action.target = src
-		scan_action.Grant(user)
-
-	if(hotkey_help)
-		hotkey_help.target = src
-		hotkey_help.Grant(user)
-
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL, .proc/XenoSlimeClickCtrl)
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, .proc/XenoSlimeClickShift)
 	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, .proc/XenoTurfClickShift)
@@ -172,7 +148,7 @@
 
 /datum/action/slime_place
 	name = "Place Slimes"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "slime_down"
 	action_type = AB_INNATE
 
@@ -197,7 +173,7 @@
 
 /datum/action/slime_pick_up
 	name = "Pick up Slime"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "slime_up"
 	action_type = AB_INNATE
 
@@ -233,7 +209,7 @@
 
 /datum/action/feed_slime
 	name = "Feed Slimes"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "monkey_down"
 	action_type = AB_INNATE
 
@@ -259,7 +235,7 @@
 
 /datum/action/innate/slime_scan
 	name = "Scan Slime"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "slime_scan"
 	action_type = AB_INNATE
 
@@ -278,7 +254,7 @@
 
 /datum/action/monkey_recycle
 	name = "Recycle Monkeys"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "monkey_up"
 	action_type = AB_INNATE
 
@@ -304,7 +280,7 @@
 
 /datum/action/hotkey_help
 	name = "Hotkey Help"
-	button_icon = 'icons/mob/actions.dmi'
+	button_icon = 'icons/hud/actions.dmi'
 	button_icon_state = "hotkey_help"
 	action_type = AB_INNATE
 

@@ -9,6 +9,12 @@
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/obj/item/device/mmi/brain = null
 
+	resistance_flags = CAN_BE_HIT
+
+/obj/structure/AIcore/Destroy()
+	QDEL_NULL(circuit)
+	QDEL_NULL(brain)
+	return ..()
 
 /obj/structure/AIcore/attackby(obj/item/P, mob/user)
 	switch(state)
@@ -28,8 +34,7 @@
 				if(user.is_busy(src)) return
 				if(WT.use_tool(src, user, 20, amount = 0, volume = 50))
 					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
-					new /obj/item/stack/sheet/plasteel( loc, 4)
-					qdel(src)
+					deconstruct(TRUE)
 		if(1)
 			if(iswrench(P))
 				if(user.is_busy(src))
@@ -171,10 +176,27 @@
 						empty_playable_ai_cores += D
 				else
 					var/mob/living/silicon/ai/A = new /mob/living/silicon/ai ( loc, laws, brain )
+					brain = null
 					if(A) //if there's no brain, the mob is deleted and a structure/AIcore is created
 						A.rename_self("ai", 1)
 				feedback_inc("cyborg_ais_created",1)
 				qdel(src)
+
+/obj/structure/AIcore/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(state >= 4)
+		new /obj/item/stack/sheet/rglass(loc, 2)
+	if(state >= 3)
+		new /obj/item/stack/cable_coil(loc, 5)
+	if(circuit)
+		circuit.forceMove(loc)
+		circuit = null
+	if(brain)
+		brain.forceMove(loc)
+		brain = null
+	new /obj/item/stack/sheet/plasteel(loc, 4)
+	..()
 
 /obj/structure/AIcore/deactivated
 	name = "Inactive AI"

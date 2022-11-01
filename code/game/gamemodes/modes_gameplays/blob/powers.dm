@@ -24,10 +24,10 @@
 
 	if(blob_nodes.len)
 		var/list/nodes = list()
-		for(var/obj/effect/blob/node/N in blob_nodes)
+		for(var/obj/structure/blob/node/N in blob_nodes)
 			nodes[N.given_name] = N
 		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
-		var/obj/effect/blob/node/chosen_node = nodes[node_name]
+		var/obj/structure/blob/node/chosen_node = nodes[node_name]
 		if(chosen_node)
 			src.loc = chosen_node.loc
 
@@ -41,7 +41,7 @@
 
 /mob/camera/blob/proc/create_shield(turf/T)
 
-	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
+	var/obj/structure/blob/B = locate() in T
 
 	if(!B)//We are on a blob
 		to_chat(src, "There is no blob here!")
@@ -55,12 +55,12 @@
 		return
 
 	if(isblobshield(B))
-		if(B.health < initial(B.health) / 2)
+		if(B.get_integrity() < B.max_integrity / 2)
 			to_chat(src, "<span class='warning'>This shield blob is too damaged to be modified!</span>")
 			return
-		B.change_to(/obj/effect/blob/shield/reflective,src)
+		B.change_to(/obj/structure/blob/shield/reflective, src)
 	else
-		B.change_to(/obj/effect/blob/shield)
+		B.change_to(/obj/structure/blob/shield)
 
 /mob/camera/blob/verb/relocate_core_power()
 	set category = "Blob"
@@ -71,7 +71,7 @@
 
 /mob/camera/blob/proc/relocate_core()
 	var/turf/T = get_turf(src)
-	var/obj/effect/blob/node/B = locate(/obj/effect/blob/node) in T
+	var/obj/structure/blob/node/B = locate() in T
 	if(!B)
 		to_chat(src, "<span class='warning'>You must be on a blob node!</span>")
 		return
@@ -93,14 +93,14 @@
 
 /mob/camera/blob/proc/create_blobbernaut()
 	var/turf/T = get_turf(src)
-	var/obj/effect/blob/factory/B = locate(/obj/effect/blob/factory) in T
+	var/obj/structure/blob/factory/B = locate() in T
 	if(!B)
 		to_chat(src, "<span class='warning'>You must be on a factory blob!</span>")
 		return
 	if(B.naut) //if it already made a blobbernaut, it can't do it again
 		to_chat(src, "<span class='warning'>This factory blob is already sustaining a blobbernaut.</span>")
 		return
-	if(B.health < B.max_health * 0.5)
+	if(B.get_integrity() < B.max_integrity * 0.5)
 		to_chat(src, "<span class='warning'>This factory blob is too damaged to sustain a blobbernaut.</span>")
 		return
 	if(blob_points < 40)
@@ -111,7 +111,7 @@
 	to_chat(src, "<span class='notice'>You attempt to produce a blobbernaut.</span>")
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a blobbernaut?", ROLE_BLOB, ROLE_BLOB, 50) //players must answer rapidly
 	if(candidates.len) //if we got at least one candidate, they're a blobbernaut now.
-		B.max_health = B.max_health * 0.25 //factories that produced a blobbernaut have much lower health
+		B.max_integrity = B.max_integrity * 0.25 //factories that produced a blobbernaut have much lower health
 		B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
 		playsound(B.loc, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER, 50)
 		var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
@@ -146,7 +146,7 @@
 	if(!T)
 		return
 
-	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
+	var/obj/structure/blob/B = locate() in T
 
 	if(!B)//We are on a blob
 		to_chat(src, "There is no blob here!")
@@ -156,18 +156,14 @@
 		to_chat(src, "Unable to use this blob, find a normal one.")
 		return
 
-	for(var/obj/effect/blob/resource/blob in orange(4, T))
+	for(var/obj/structure/blob/resource/blob in orange(4, T))
 		to_chat(src, "There is a resource blob nearby, move more than 4 tiles away from it!")
 		return
 
 	if(!can_buy(40))
 		return
 
-
-	B.change_to(/obj/effect/blob/resource)
-	var/obj/effect/blob/resource/R = locate() in T
-	if(R)
-		R.overmind = src
+	B.change_to(/obj/structure/blob/resource, src)
 
 
 /mob/camera/blob/verb/create_node_power()
@@ -183,7 +179,7 @@
 	if(!T)
 		return
 
-	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
+	var/obj/structure/blob/B = locate() in T
 
 	if(!B)//We are on a blob
 		to_chat(src, "There is no blob here!")
@@ -193,7 +189,7 @@
 		to_chat(src, "Unable to use this blob, find a normal one.")
 		return
 
-	for(var/obj/effect/blob/node/blob in orange(5, T))
+	for(var/obj/structure/blob/node/blob in orange(5, T))
 		to_chat(src, "There is another node nearby, move more than 5 tiles away from it!")
 		return
 
@@ -201,7 +197,7 @@
 		return
 
 
-	B.change_to(/obj/effect/blob/node)
+	B.change_to(/obj/structure/blob/node)
 
 /mob/camera/blob/verb/create_factory_power()
 	set category = "Blob"
@@ -216,7 +212,7 @@
 	if(!T)
 		return
 
-	var/obj/effect/blob/B = locate(/obj/effect/blob) in T
+	var/obj/structure/blob/B = locate() in T
 	if(!B)
 		to_chat(src, "You must be on a blob!")
 		return
@@ -225,15 +221,16 @@
 		to_chat(src, "Unable to use this blob, find a normal one.")
 		return
 
-	for(var/obj/effect/blob/factory/blob in orange(7, T))
+	for(var/obj/structure/blob/factory/blob in orange(7, T))
 		to_chat(src, "There is a factory blob nearby, move more than 7 tiles away from it!")
 		return
 
 	if(!can_buy(60))
 		return
 
-	var/obj/effect/blob/factory/F = B.change_to(/obj/effect/blob/factory)
-	F.overmind = src
+	var/obj/structure/blob/factory/F = B.change_to(/obj/structure/blob/factory)
+	F.OV = src
+	factory_blobs += F
 
 /mob/camera/blob/verb/revert()
 	set category = "Blob"
@@ -244,7 +241,7 @@
 	remove_blob(T)
 
 /mob/camera/blob/verb/remove_blob(turf/T)
-	var/obj/effect/blob/B = locate(/obj/effect/blob) in T
+	var/obj/structure/blob/B = locate() in T
 	if(!B)
 		to_chat(src, "You must be on a blob!")
 		return
@@ -268,12 +265,12 @@
 	if(!T)
 		return
 
-	var/obj/effect/blob/B = locate() in T
+	var/obj/structure/blob/B = locate() in T
 	if(B)
 		to_chat(src, "There is a blob here!")
 		return
 
-	var/obj/effect/blob/OB = locate() in circlerange(T, 1)
+	var/obj/structure/blob/OB = locate() in circlerange(T, 1)
 	if(!OB)
 		to_chat(src, "There is no blob adjacent to you.")
 		return
@@ -309,7 +306,7 @@
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
 	return
 
-/mob/camera/blob/verb/rename_node(obj/effect/blob/node/target in view())
+/mob/camera/blob/verb/rename_node(obj/structure/blob/node/target in view())
 	set category = "Blob"
 	set name = "Rename Node"
 	set desc = "Rename blob node"
@@ -321,7 +318,7 @@
 	if(new_name)
 		target.given_name = new_name
 
-/mob/camera/blob/proc/prompt_upgrade(obj/effect/blob/B)
+/mob/camera/blob/proc/prompt_upgrade(obj/structure/blob/B)
 	var/list/datum/callback/blob_upgrade = list(
 		"Resource" = CALLBACK(src, .proc/create_resource),
 		"Node"     = CALLBACK(src, .proc/create_node),

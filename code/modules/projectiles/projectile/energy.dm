@@ -3,7 +3,7 @@
 	icon_state = "spark"
 	damage = 0
 	damage_type = BURN
-	flag = "energy"
+	flag = ENERGY
 
 /obj/item/projectile/energy/electrode
 	name = "electrode"

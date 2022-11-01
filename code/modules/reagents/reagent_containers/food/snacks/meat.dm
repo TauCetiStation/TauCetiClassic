@@ -2,7 +2,7 @@
 	name = "meat"
 	desc = "A slab of meat."
 	icon_state = "meat"
-	health = 180
+	max_integrity = 180
 	filling_color = "#ff1c1c"
 	bitesize = 3
 	list_reagents = list("protein" = 3)

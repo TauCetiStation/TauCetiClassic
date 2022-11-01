@@ -194,7 +194,7 @@
 	to_chat(host, "<span class='warning'>You feel something crawling in your skin.</span>")
 	if(uses == initial(uses))
 		host.faction = "spiders"
-	new /obj/effect/spider/spiderling(host.loc)
+	new /obj/structure/spider/spiderling(host.loc)
 
 
 //EGG

@@ -116,3 +116,9 @@
 				empty = 0
 		if(empty)
 			to_chat(user, "<span class='notice'>It is currently empty. Allow some time for the internal syntheszier to produce more.</span>")
+
+/obj/item/weapon/reagent_containers/borghypo/peace
+	name = "Peace Hypospray"
+	charge_cost = 150
+	volume = 15
+	reagent_ids = list("cryptobiolin", "ethylredoxrazine", "inaprovaline", "tramadol", "anti_toxin")

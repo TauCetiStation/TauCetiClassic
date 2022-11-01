@@ -10,7 +10,6 @@
 	brainmob = null
 	req_access = list(access_robotics)
 	locked = 0
-	mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
 	var/ping_cd = 0//attack_ghost cooldown
 

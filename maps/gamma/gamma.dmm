@@ -8374,12 +8374,12 @@
 /obj/structure/table/woodentable,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
-/obj/item/device/camera,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/device/camera/polar,
 /turf/simulated/floor/carpet,
 /area/station/security/vacantoffice)
 "bFz" = (
@@ -8936,6 +8936,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/device/lens/posterization,
+/obj/item/device/lens/sepia,
+/obj/item/device/lens/grayscale,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -10027,6 +10030,14 @@
 	icon_state = "vault"
 	},
 /area/station/security/armoury)
+"cfq" = (
+/obj/machinery/camera{
+	c_tag = "Containment Cell 3";
+	dir = 1;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "cfu" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/research_and_development,
@@ -26912,6 +26923,14 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/office)
+"hva" = (
+/obj/machinery/camera{
+	c_tag = "Containment Cell 2";
+	dir = 1;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "hvb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -35213,13 +35232,13 @@
 /obj/structure/closet{
 	name = "Evidence Closet"
 	},
-/obj/item/device/camera,
 /obj/item/device/taperecorder,
 /obj/item/weapon/storage/box/evidence,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 29
 	},
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "kdS" = (
@@ -37154,6 +37173,14 @@
 	icon_state = "whitehall"
 	},
 /area/station/medical/surgery2)
+"kKK" = (
+/obj/machinery/camera{
+	c_tag = "Containment Cell 1";
+	dir = 1;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "kKU" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -38217,7 +38244,7 @@
 	dir = 6
 	},
 /obj/structure/table/woodentable/fancy/black,
-/obj/item/device/camera,
+/obj/item/device/camera/polar,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -39071,7 +39098,7 @@
 	dir = 8;
 	pixel_x = 32
 	},
-/obj/structure/lamarr,
+/obj/structure/displaycase/labcage,
 /turf/simulated/floor{
 	icon_state = "whitebot"
 	},
@@ -49464,17 +49491,13 @@
 /obj/item/weapon/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
 /obj/item/weapon/storage/secure/safe{
 	pixel_x = 30
 	},
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor/carpet,
 /area/station/security/detectives_office)
 "oDj" = (
@@ -52723,12 +52746,8 @@
 /area/station/civilian/dormitories/security)
 "pHg" = (
 /obj/structure/table,
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
 /obj/item/device/taperecorder,
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -54594,7 +54613,7 @@
 /obj/structure/table/woodentable,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
-/obj/item/device/camera,
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/theater)
 "qjI" = (
@@ -57791,6 +57810,14 @@
 	icon_state = "red"
 	},
 /area/station/engineering/atmos)
+"rmY" = (
+/obj/machinery/camera{
+	c_tag = "Containment Cell 5";
+	dir = 1;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "rnh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
@@ -66085,11 +66112,11 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "tox_airlock_control";
 	pixel_x = -28;
+	pixel_y = -10;
 	tag_airpump = "tox_airlock_pump";
 	tag_chamber_sensor = "tox_airlock_sensor";
 	tag_exterior_door = "tox_airlock_exterior";
-	tag_interior_door = "tox_airlock_interior";
-	pixel_y = -10
+	tag_interior_door = "tox_airlock_interior"
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -71745,7 +71772,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 24
 	},
-/obj/structure/displaycase,
+/obj/structure/displaycase/captain,
 /turf/simulated/floor/carpet,
 /area/station/bridge/captain_quarters)
 "vEL" = (
@@ -75432,8 +75459,8 @@
 	id = "mixvent";
 	name = "Mixing Room Vent Control";
 	pixel_x = 25;
-	req_access = list(8);
-	pixel_y = 5
+	pixel_y = 5;
+	req_access = list(8)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/meter,
@@ -76326,6 +76353,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
+"xdv" = (
+/obj/machinery/camera{
+	c_tag = "Containment Cell 4";
+	dir = 1;
+	network = list("SS13","Research")
+	},
+/turf/simulated/floor/engine,
+/area/station/rnd/xenobiology)
 "xdB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/decal/cleanable/flour,
@@ -94538,11 +94573,11 @@ yad
 ibW
 gxq
 qGD
-wFw
-wFw
-wFw
-wFw
-wFw
+plf
+plf
+plf
+plf
+plf
 kHU
 wce
 qmE
@@ -97108,11 +97143,11 @@ uzy
 xLy
 eEp
 svz
-plf
 wFw
 wFw
 wFw
-plf
+wFw
+wFw
 czH
 twf
 exM
@@ -121330,15 +121365,15 @@ plf
 vNi
 iwE
 mTv
-pkz
+cfq
 uhI
 iwE
 mTv
-pkz
+hva
 uhI
 iwE
 pkz
-pkz
+kKK
 vNi
 plf
 plf
@@ -124414,11 +124449,11 @@ plf
 vNi
 rrv
 pkz
-pkz
+xdv
 vNi
 rrv
 pkz
-pkz
+rmY
 vNi
 hbu
 mNG

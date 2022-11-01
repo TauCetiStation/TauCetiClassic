@@ -69,7 +69,7 @@
 	name = "double-barreled shotgun"
 	desc = "A true classic."
 	icon_state = "dshotgun"
-	item_state = "shotgun"
+	item_state = "dshotgun"
 	w_class = SIZE_NORMAL
 	force = 10
 	flags =  CONDUCT
@@ -87,6 +87,9 @@
 		icon_state = "[initial(icon_state)][short ? "-short" : ""][open ? "-o" : ""]"
 	else
 		icon_state = "[initial(icon_state)][open ? "-o" : ""]"
+	cut_overlays()
+	if(open)
+		add_overlay("[initial(icon_state)]shell-[magazine.ammo_count()]")
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/melee/energy) || istype(I, /obj/item/weapon/pickaxe/plasmacutter))
@@ -120,13 +123,9 @@
 
 	else if(istype(I, /obj/item/ammo_box) || istype(I, /obj/item/ammo_casing))
 		if(open)
-			to_chat(user, "<span class='notice'>You load shell into \the [src]!</span>")
-			playsound(src, 'sound/weapons/guns/reload_shotgun.ogg', VOL_EFFECTS_MASTER)
-			chamber_round()
+			return ..()
 		else
 			to_chat(user, "<span class='notice'>You can't load shell while [src] is closed!</span>")
-
-	return ..()
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attack_self(mob/living/user)
 	add_fingerprint(user)

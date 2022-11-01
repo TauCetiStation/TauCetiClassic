@@ -17,7 +17,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 // To ensure that if output file syntax is changed, we will still be able to process
 // new and old files
 // please increment this version whenever making changes
-#define STAT_OUTPUT_VERSION 3
+#define STAT_OUTPUT_VERSION 4
 #define STAT_FILE_NAME "stat.json"
 
 // Documentation rules:
@@ -114,8 +114,28 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	test_merges = global.test_merges
 	completion_html = SSticker.mode.completition_text
 
-	for(var/datum/mind/M in SSticker.minds)
-		add_manifest_entry(M.key, M.name, M.assigned_role, M.special_role, M.antag_roles)
+	save_manifest_entries()
 
 	for(var/ckey in global.disconnected_ckey_by_stat)
 		leave_stats += global.disconnected_ckey_by_stat[ckey]
+
+/datum/stat_collector/proc/save_manifest_entries()
+	var/list/white_assigned_roles = get_all_jobs_with_silicons() + get_all_centcom_jobs() + get_all_velocity_jobs()
+	white_assigned_roles += "MODE" // non station roles
+	var/list/white_special_roles = get_roles_with_interesting_names() // roles with interesting names, like xenomorphs and blobs
+	var/regex/is_drone = regex(@"maintenance drone \(\d+\)")
+
+	for(var/datum/mind/M in SSticker.minds)
+		if(M.assigned_role == "" || M.name == "") // wtf
+			continue
+		if(M.name == "unknown") // useless data
+			continue
+		if(!(M.assigned_role in white_assigned_roles))
+			continue
+		if(M.special_role && !(M.special_role in white_special_roles))
+			continue
+		if(M.assigned_role == "default" && M.special_role == "") // admin shit
+			continue
+		if(M.assigned_role == "Cyborg" && is_drone.Find(M.name)) // useless data
+			continue
+		add_manifest_entry(M.key, M.name, M.assigned_role, M.special_role, M.antag_roles)

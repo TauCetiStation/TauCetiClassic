@@ -8,6 +8,10 @@
 	anchored = TRUE
 	var/shattered = 0
 
+	max_integrity = 200
+	integrity_failure = 0.5
+	resistance_flags = UNACIDABLE | CAN_BE_HIT
+
 
 /obj/structure/mirror/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -57,6 +61,26 @@
 		visible_message("<span class='warning'>[user] hits [src] with [I]!</span>")
 		playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
 
+/obj/structure/mirror/play_attack_sound(damage_amount, damage_type, damage_flag)
+	if(damage_type == BRUTE)
+		if(shattered)
+			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER)
+		else
+			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+	else
+		..()
+
+/obj/structure/mirror/atom_break(damage_flag, mapload)
+	. = ..()
+	if(!shattered)
+		shatter()
+
+/obj/structure/mirror/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(!disassembled)
+		new /obj/item/weapon/shard(loc)
+	..()
 
 /obj/structure/mirror/attack_alien(mob/user)
 	user.do_attack_animation(src)
@@ -128,6 +152,7 @@
 			if(new_tone)
 				H.s_tone = max(min(round(new_tone), 220), 1)
 				H.s_tone =  -H.s_tone + 35
+			H.apply_recolor()
 			H.update_hair()
 			H.update_body()
 			H.check_dna(H)

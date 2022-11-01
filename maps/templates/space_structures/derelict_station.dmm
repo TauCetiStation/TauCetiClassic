@@ -44,8 +44,7 @@
 "al" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/solar_control)
@@ -803,8 +802,7 @@
 /area/space_structures/derelict/bridge/access)
 "cm" = (
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge/access)
@@ -2999,8 +2997,7 @@
 "iE" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/arrival)
@@ -3080,8 +3077,7 @@
 "iQ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)

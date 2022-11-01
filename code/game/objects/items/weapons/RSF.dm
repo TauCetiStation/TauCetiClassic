@@ -233,3 +233,31 @@ RSF
 				to_chat(user, "The RSF now holds [matter]/30 fabrication-units.")
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
+
+/obj/item/weapon/rsf/cookiesynth
+	name = "Cookie Synthesizer"
+	desc = "A device used to rapidly deploy cookies."
+	icon = 'icons/obj/food.dmi'
+	icon_state = "COOKIE!!!"
+	matter = 30
+	var/poisoned = 0
+
+/obj/item/weapon/rsf/cookiesynth/attack_self(mob/living/silicon/robot/user)
+	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	poisoned = !poisoned
+	if(poisoned && user.emagged)
+		to_chat(user, "<span class='warning'>Cookie Synthesizer hacked.</span>")
+	else
+		to_chat(user, "<span class='notice'>Cookie Synthesizer operating normally.</span>")
+
+/obj/item/weapon/rsf/cookiesynth/afterattack(atom/target, mob/living/silicon/robot/user, proximity, params)
+	if(matter < 1 || !proximity || user.cell.charge < 100 || !user.cell || !istype(target, /obj/structure/table))
+		return
+	if(poisoned && user.emagged)
+		to_chat(user, "Dispensing Bad Cookie...")
+		new /obj/item/weapon/reagent_containers/food/snacks/cookie/toxin_cookie(target.loc)
+	else
+		to_chat(user, "Dispensing Cookie...")
+		new /obj/item/weapon/reagent_containers/food/snacks/cookie(target.loc)
+	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
+	user.cell.use(100)
