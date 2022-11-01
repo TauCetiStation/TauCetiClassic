@@ -64,7 +64,7 @@
 	var/check_dirs = get_zone_neighbours(src)
 	var/unconnected_dirs = check_dirs
 
-	if(!ISDIAGONALDIR(check_dirs)) // we're cardinal dir -> doesn't connect the zone
+	if(!ISDIAGONALDIR(check_dirs)) // cardinal dir -> doesn't connect the zone
 		return TRUE
 
 	#ifdef MULTIZAS
