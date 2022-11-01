@@ -163,6 +163,7 @@
 	name = "velocity officer's uniform"
 	desc = "A meticulously clean guard uniform belonging to Dock-42, CITS Velocity. The word \"OFFICER OF THE LAW\" is engraved tastefully and professionally in the badge below the number, 42."
 	icon_state = "velocityuniform"
+	item_state = "velocityuniform"
 
 /obj/item/clothing/suit/armor/vest/velocity
 	name = "CITS armored vest"
