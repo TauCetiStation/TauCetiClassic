@@ -64,6 +64,9 @@
 	var/check_dirs = get_zone_neighbours(src)
 	var/unconnected_dirs = check_dirs
 
+	if(!ISDIAGONALDIR(check_dirs)) // we doesn't connect zone
+		return TRUE
+
 	#ifdef MULTIZAS
 	var/to_check = cornerdirsz
 	#else
