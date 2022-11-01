@@ -93,8 +93,6 @@
 
 /obj/item/proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat)
 	var/message = ""
-	if(!output_to_chat)
-		message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[M.name]'s scan results</title></head><BODY>"
 
 	if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class = 'warning'>You try to analyze the floor's vitals!</span>")
@@ -105,9 +103,7 @@
 		message += "<span class='notice'>Body Temperature: ???</span><br>"
 		message += "<span class = 'warning bold'>Warning: Blood Level ???: --% --cl. </span><span class = 'notice bold'>Type: ???</span><br>"
 		message += "<span class = 'notice'>Subject's pulse: <font color='red'>-- bpm.</font></span><br>"
-		if(!output_to_chat)
-			message += "</BODY></HTML>"
-		else
+		if(output_to_chat)
 			message += "-------"
 		return message
 
@@ -123,7 +119,7 @@
 		OX = fake_oxy > 50          ?  "<b>[fake_oxy]</b>"          : fake_oxy
 		message += "<span class='notice'>&emsp; Overall Status: dead</span><br>"
 	else
-		message += "<span class='notice'>&emsp; Overall Status: [M.stat > 1 ? "dead" : "[M.health - M.halloss]% healthy"]</span><br>"
+		message += "<span class='notice'>&emsp; Overall Status: [(M.stat == DEAD) ? "dead" : "[M.health - M.halloss]% healthy"]</span><br>"
 	message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
 	message += "&emsp; Damage Specifics: <font color='blue'>[OX]</font> - <font color='green'>[TX]</font> - <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font><br>"
 	message += "<span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
@@ -133,7 +129,7 @@
 		if(since_death >= DEFIB_TIME_LIMIT)
 			message += "<span class='notice'>Time of Death: [M.tod] (Brain dead)</span><br>"
 		else
-			var/m = (DEFIB_TIME_LIMIT - since_death) / 600 % 60 + 1
+			var/m = (DEFIB_TIME_LIMIT - since_death) / 600 + 1
 			message += "<span class='notice'>Time of Death: [M.tod] ([m] minutes till death of the brain)</span><br>"
 
 	var/mob/living/carbon/human/H = null
@@ -221,9 +217,7 @@
 					message += "<span class='notice'>Subject's Heart status: <font color='blue'>Attention! Subject's heart fibrillating.</font></span><br>"
 			message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
 
-	if(!output_to_chat)
-		message += "</BODY></HTML>"
-	else
+	if(output_to_chat)
 		message += "-------"
 	return message
 
@@ -382,19 +376,16 @@
 		var/obj/item/weapon/storage/S = loc
 		S.remove_from_storage(src)
 
-	src.throwing = 0
-	if (src.loc == user)
+	throwing = 0
+	if (loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
-		if(istype(src, /obj/item/clothing))
-			var/obj/item/clothing/clo = src
-			if(!clo.canremove)
-				return
-			else
-				user.remove_from_mob(src)
+		var/obj/item/clothing/clo = src
+		if(istype(clo) && !clo.canremove)
+			return
 		else
 			user.remove_from_mob(src)
 	else
-		if(isliving(src.loc))
+		if(isliving(loc))
 			return
 		user.next_move = max(user.next_move + 2, world.time + 2)
 

@@ -17,13 +17,12 @@
 	var/last_scan_name = ""
 
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/user)
+	add_fingerprint(user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.species.flags[IS_SYNTHETIC] || H.species.flags[IS_PLANT])
 			user.visible_message("<span class='notice'>[user] has analyzed [H]'s vitals.</span>", "<span class='notice'>You try to analyze [H]'s vitals.</span>")
 			var/message = ""
-			if(!output_to_chat)
-				message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[M.name]'s scan results</title></head><BODY>"
 			message += "<span class = 'notice'>Analyzing Results for [H]:</span><br>"
 			message += "<span class = 'notice'>&emsp; Overall Status: ERROR</span><br>"
 			message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
@@ -33,21 +32,16 @@
 			message += "<span class = 'notice'>Subject's pulse: <font color='red'>-- bpm.</font></span><br>"
 
 			last_scan_name = M.name
+			last_scan = message
 			if(!output_to_chat)
-				message += "</BODY></HTML>"
-				last_scan = message
 				var/datum/browser/popup = new(user, "[M.name]_scan_report", "[M.name]'s scan results", 400, 400, ntheme = CSS_THEME_LIGHT)
 				popup.set_content(message)
 				popup.open()
 			else
-				last_scan = message
 				message += "-------"
 				to_chat(user, message)
 
-			add_fingerprint(user)
-			return
 		else // Not synthetic or plant:
-			add_fingerprint(user)
 			var/dat = health_analyze(M, user, mode, output_to_chat)
 			last_scan = dat
 			last_scan_name = M.name
@@ -57,8 +51,8 @@
 				popup.open()
 			else
 				to_chat(user, dat)
+
 	else // Not human:
-		add_fingerprint(user)
 		to_chat(user, "<span class = 'warning'>Analyzing Results not compiled. Unknown anatomy detected.</span>")
 
 /obj/item/device/healthanalyzer/attack_self(mob/user)
