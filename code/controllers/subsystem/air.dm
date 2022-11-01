@@ -309,7 +309,7 @@ SUBSYSTEM_DEF(air)
 			return
 
 /datum/controller/subsystem/air/proc/process_reactions(resumed = 0)
-	for(var/P = 1, P < possibleReactionZones.len, P++)
+	for(var/P = 3, P > 0, P--)
 		var/list/C = possibleReactionZones[P]
 		if(C.len > 40)
 			C.Cut(41)
@@ -594,10 +594,9 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/try_react(datum/gas_mixture/G, zone/Z = null)
 	for(var/datum/atmosReaction/R as anything in global.atmosReactionList)
-		var/datum/atmosReaction/O = new R()
-		if(O.react(G, Z))
+		if(atmosReactionList[R].react(G, Z))
 			if(log_recent_reactions)
-				recentReactions.Insert(1, list(O.id, Z))
+				recentReactions.Insert(1, list(R, Z))
 				if(recentReactions.len > 10)
 					recentReactions.Cut(11)
 

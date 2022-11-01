@@ -17,6 +17,13 @@
     if(!consumed.len || !created.len)
         return
 
+    if(!(G.temperature > minTemp && G.temperature < maxTemp))
+        return FALSE
+
+    var/P = G.return_pressure()
+    if(!(P > minPressure && P < maxPressure))
+        return FALSE
+
     if(inhibitors.len)
         for(var/gas in inhibitors)
             if(inhibitors[gas] <= G.gas[gas])
@@ -36,10 +43,7 @@
     if(count != consumed.len)
         return FALSE
 
-    if((G.return_pressure() > minPressure && G.return_pressure() < maxPressure) && (G.temperature > minTemp && G.temperature < maxTemp))
-        return toRemove
-    else
-        return FALSE
+    return toRemove
 
 /datum/atmosReaction/proc/preReact(datum/gas_mixture/G, turf/T = null)
     return TRUE //insert your own code here

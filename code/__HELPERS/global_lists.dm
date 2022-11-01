@@ -250,8 +250,9 @@
 		global.all_emotes[emote_type] = new emote_type
 
 	global.atmosReactionList = list()
-	for(var/atmosReaction in subtypesof(/datum/atmosReaction))
-		global.atmosReactionList.Add(atmosReaction)
+	for(var/atmosReactionType in subtypesof(/datum/atmosReaction))
+		var/datum/atmosReaction/O = new atmosReactionType()
+		global.atmosReactionList[O.id] = O
 
 /proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
 	//List of job. I can't believe this was calculated multiple times per tick!

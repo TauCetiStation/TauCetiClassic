@@ -37,7 +37,7 @@
     inhibitors = list("phydr" = 10)
 
 /datum/atmosReaction/bzSynthesis
-    id = "bzsynt"
+    id = "bzsynth"
     minTemp = 373.15
     maxTemp = 573.15
     minPressure = 100
@@ -97,7 +97,7 @@
     inhibitors = list("phydr" = 10)
 
 /datum/atmosReaction/phydrSynthesis
-    id = "phydrsynt"
+    id = "phydrsynth"
     minTemp = 573.15
     maxTemp = HVAL
     minPressure = 2000
@@ -174,6 +174,8 @@
     created = list("mstab" = 3)
 
 /datum/atmosReaction/mstabSynthesis/New()
+    ..()
+
     minTemp = round(rand(0, 100) / 100) * 100
     maxTemp = round(rand(100, 1000) / 100) * 100
     minPressure = round(rand(0, 100) / 100) * 100

@@ -142,7 +142,7 @@
 	damage_archived = damage
 	damage = max( damage + ( (removed.temperature - 800) / 150 ) , 0 )
 
-	power = max((removed.temperature * temp_factor / T0C) + power, 0) //Total laser power plus an overload
+	power = max((removed.temperature / T0C) + power, 0)
 
 	for(var/gas in removed.gas) //checking gas bonuses
 		damage += gas_data.gases_supermatter_damage_bonus[gas] * removed.gas[gas]
