@@ -129,8 +129,8 @@
 		if(since_death >= DEFIB_TIME_LIMIT)
 			message += "<span class='notice'>Time of Death: [M.tod] (Brain dead)</span><br>"
 		else
-			var/m = (DEFIB_TIME_LIMIT - since_death) / 600 + 1
-			message += "<span class='notice'>Time of Death: [M.tod] ([m] minutes till death of the brain)</span><br>"
+			var/m = round((DEFIB_TIME_LIMIT - since_death) / 600) + 1
+			message += "<span class='notice'>Time of Death: [M.tod] ([m] minute\s till death of the brain)</span><br>"
 
 	var/mob/living/carbon/human/H = null
 	if(ishuman(M))
