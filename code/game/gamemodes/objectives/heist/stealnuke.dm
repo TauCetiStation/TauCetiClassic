@@ -10,19 +10,6 @@
 		if(!is_centcom_level(bomb_turf.z))
 			return OBJECTIVE_LOSS
 		var/area/bomb_area = get_area(bomb_turf)
-		for(var/vox_area in arkship_areas)
-			if(!istype(bomb_area, get_area_by_type(vox_area)))
-				return OBJECTIVE_LOSS
-
-	for(var/obj/item/weapon/disk/nuclear/D in poi_list)
-		if(!D || !D.loc)
-			continue
-		var/turf/disk_turf = get_turf(D)
-		if(!is_centcom_level(disk_turf.z))
+		if(!is_type_in_list(bomb_area, arkship_areas))
 			return OBJECTIVE_LOSS
-		var/area/disk_area = get_area(disk_turf)
-		for(var/vox_area in arkship_areas)
-			if(!istype(disk_area, get_area_by_type(vox_area)))
-				return OBJECTIVE_LOSS
-
 	return OBJECTIVE_WIN
