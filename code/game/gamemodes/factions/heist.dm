@@ -16,11 +16,13 @@
 		return TRUE
 	return FALSE
 
-/datum/faction/heist/forgeObjectives(objectives_limited = FALSE)
+/datum/faction/heist/forgeObjectives()
 	if(!..())
 		return FALSE
-	if(objectives_limited)
+	if(AppendVoxObjectives() && AppendVoxInviolateObjectives())
 		return TRUE
+
+/datum/faction/heist/proc/AppendVoxObjectives()
 	var/max_objectives = pick(2,2,2,2,3,3,3,4)
 	var/list/goals = list("kidnap","loot","salvage")
 
@@ -34,7 +36,9 @@
 			AppendObjective(/datum/objective/heist/loot)
 		else
 			AppendObjective(/datum/objective/heist/salvage)
+	return TRUE
 
+/datum/faction/heist/proc/AppendVoxInviolateObjectives()
 	//-All- vox raids have these two (one) objectives. Failing them loses the game.
 	AppendObjective(/datum/objective/heist/inviolate_crew)
 	AppendObjective(/datum/objective/heist/inviolate_death)
@@ -89,7 +93,10 @@
 		return FALSE
 	return ..()
 
-/datum/faction/heist/saboteurs/forgeObjectives()
-	. = ..(objectives_limited = TRUE)
+/datum/faction/heist/saboteurs/AppendVoxObjectives()
 	AppendObjective(/datum/objective/heist/stealnuke)
+	return TRUE
+
+/datum/faction/heist/saboteurs/AppendVoxInviolateObjectives()
 	AppendObjective(/datum/objective/heist/inviolate_crew)
+	return TRUE
