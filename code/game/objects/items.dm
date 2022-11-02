@@ -447,8 +447,8 @@
 /obj/item/proc/pickup(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user) & COMPONENT_ITEM_NO_PICKUP)
-		playsound(user, pickup_sound, VOL_EFFECTS_MASTER)
 		return FALSE
+	playsound(user, pickup_sound, VOL_EFFECTS_MASTER)
 	return TRUE
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
