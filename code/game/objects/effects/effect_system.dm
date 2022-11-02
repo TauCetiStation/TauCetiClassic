@@ -236,6 +236,7 @@ steam.start() -- spawns the effect
 /////////////////////////////////////////////
 
 /obj/effect/effect/smoke/bad
+	density = TRUE
 	time_to_live = 200
 
 /obj/effect/effect/smoke/bad/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)

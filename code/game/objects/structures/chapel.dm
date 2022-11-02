@@ -319,7 +319,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 	layer = INFRONT_MOB_LAYER
 
-	density = FALSE
+	density = TRUE
 	anchored = TRUE
 
 	material = /obj/item/stack/sheet/wood

@@ -17,6 +17,7 @@
 		take_damage(5, BURN, FIRE)
 
 /obj/structure/spider/stickyweb
+	density = TRUE
 	icon_state = "stickyweb1"
 
 /obj/structure/spider/stickyweb/atom_init()

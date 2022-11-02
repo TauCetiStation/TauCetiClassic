@@ -3,6 +3,7 @@
 	desc = "Rack that holds coats."
 	icon = 'icons/obj/coatrack.dmi'
 	icon_state = "coatrack0"
+	density = TRUE
 	var/obj/item/clothing/suit/coat
 	var/obj/item/clothing/head/det_hat/hat
 	var/list/allowed = list(/obj/item/clothing/suit/storage/labcoat, /obj/item/clothing/suit/storage/det_suit, /obj/item/clothing/head/det_hat)
