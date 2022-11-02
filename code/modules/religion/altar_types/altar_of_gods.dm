@@ -412,11 +412,6 @@
 		return TRUE
 	return ..()
 
-/obj/structure/altar_of_gods/CheckExit(atom/movable/AM, target)
-	if(istype(AM) && AM.checkpass(PASSTABLE))
-		return TRUE
-	return ..()
-
 /obj/structure/altar_of_gods/proc/init_turfs_around()
 	for(var/turf/T as anything in RANGE_TURFS(3, src))
 		RegisterSignal(T, list(COMSIG_ATOM_ENTERED), .proc/turf_around_enter)

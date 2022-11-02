@@ -167,11 +167,6 @@
 		return TRUE
 	return ..()
 
-/obj/structure/pedestal/CheckExit(atom/movable/AM, target)
-	if(istype(AM) && AM.checkpass(PASSTABLE))
-		return TRUE
-	return ..()
-
 // CULT! Then move it to the religion module or make it some kind of datum
 /obj/structure/pedestal/cult
 	name = "pedestal"
