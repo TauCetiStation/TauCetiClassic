@@ -12,7 +12,7 @@
 	return (!density || !height || air_group)
 
 #define CanPassFast(source, mover, target) (!source.density || source.CanPass(mover, target))
-#define CanFlowFast(source, target, height, air_group) (!source.density || source.CanPass(null, target, height, air_group))
+#define CanFlowFast(source, target, height, air_group) (!source.can_block_air || source.CanPass(null, target, height, air_group))
 
 /turf/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
 	if(!target)
@@ -57,6 +57,7 @@
 // AIR_BLOCKED - Blocked
 // ZONE_BLOCKED - Not blocked, but zone boundaries will not cross.
 // BLOCKED - Blocked, zone boundaries will not cross even if opened.
+/atom/var/can_block_air = FALSE
 /atom/proc/c_airblock(turf/other)
 	#ifdef ZASDBG
 	ASSERT(isturf(other))
@@ -90,7 +91,8 @@
 
 	var/result = 0
 	for(var/atom/movable/M in contents)
-		result |= M.c_airblock(other)
-		if(result == BLOCKED)
-			return BLOCKED
+		if(M.can_block_air)
+			result |= M.c_airblock(other)
+			if(result == BLOCKED)
+				return BLOCKED
 	return result

@@ -16,6 +16,7 @@
 	icon_state = "l_windoor_assembly01"
 	anchored = FALSE
 	density = FALSE
+	can_block_air = TRUE
 	dir = NORTH
 
 	var/ini_dir

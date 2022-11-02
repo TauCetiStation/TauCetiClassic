@@ -5,6 +5,7 @@
 	desc = "A huge chunk of metal and electronics used to construct shuttle."
 	density = TRUE
 	anchored = TRUE
+	can_block_air = TRUE
 	opacity = 1
 	icon = 'icons/locations/shuttles/shuttle.dmi'
 

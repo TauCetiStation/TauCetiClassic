@@ -44,6 +44,7 @@
 	density = TRUE
 	opacity = TRUE
 	anchored = TRUE
+	can_block_air = TRUE
 	canSmoothWith = list(/obj/structure/alien/resin)
 	smooth = SMOOTH_TRUE
 	max_integrity = 300

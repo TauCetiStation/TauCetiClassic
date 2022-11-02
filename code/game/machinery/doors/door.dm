@@ -8,6 +8,7 @@ var/global/list/wedge_image_cache = list()
 	anchored = TRUE
 	opacity = 1
 	density = TRUE
+	can_block_air = TRUE
 	layer = DOOR_LAYER
 	power_channel = STATIC_ENVIRON
 	hud_possible = list(DIAG_AIRLOCK_HUD)

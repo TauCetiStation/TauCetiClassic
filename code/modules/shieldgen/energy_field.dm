@@ -9,6 +9,7 @@
 	anchored = TRUE
 	layer = 4.1		//just above mobs
 	density = FALSE
+	can_block_air = TRUE
 	invisibility = 101
 	var/strength = 0
 	var/ticks_recovering = 10

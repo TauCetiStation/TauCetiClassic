@@ -5,8 +5,6 @@
 	else if(retVal & COMPONENT_CANPASS)
 		return TRUE
 
-	if(air_group || (height==0))
-		return 1
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
 		return (!density || lying)
 	if(mover.checkpass(PASSMOB) || checkpass(PASSMOB))

@@ -122,8 +122,6 @@
 /obj/item/tape/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(!density)
 		return TRUE
-	if(air_group || (height == 0))
-		return TRUE
 	if(allowed(mover))
 		return TRUE
 	if (mover.pass_flags & (PASSTABLE | PASSCRAWL) || istype(mover, /obj/effect/meteor) || mover.throwing)

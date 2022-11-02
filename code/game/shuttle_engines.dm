@@ -9,6 +9,7 @@
 	density = TRUE
 	opacity = 0
 	anchored = TRUE
+	can_block_air = TRUE
 
 /obj/structure/shuttle/window/CanPass(atom/movable/mover, turf/target, height, air_group)
 	if(!height || air_group) return 0

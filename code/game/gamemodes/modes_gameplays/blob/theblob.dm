@@ -10,6 +10,7 @@
 	desc = "Some blob creature thingy."
 	density = TRUE
 	anchored = TRUE
+	can_block_air = TRUE
 	layer = BELOW_MOB_LAYER
 	max_integrity = 30
 	var/health_timestamp = 0

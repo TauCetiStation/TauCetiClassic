@@ -6,6 +6,7 @@
 		density = TRUE
 		opacity = 0
 		anchored = TRUE
+		can_block_air = TRUE
 		unacidable = 1
 		max_integrity = 200
 
@@ -21,7 +22,7 @@
 	return ..()
 
 /obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height, air_group)
-	if(!height || air_group) return 0
+	if(!height || air_group) return FALSE
 	else return ..()
 
 /obj/machinery/shield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -510,8 +511,6 @@
 				G.storedpower -= 20
 
 /obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
-
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		if(prob(20))
 			if(istype(mover, /obj/item/projectile))

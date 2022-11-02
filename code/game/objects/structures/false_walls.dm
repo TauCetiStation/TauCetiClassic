@@ -9,6 +9,7 @@
 	anchored = TRUE
 	density = TRUE
 	opacity = TRUE
+	can_block_air = TRUE
 
 	canSmoothWith = list(
 		/turf/simulated/wall,

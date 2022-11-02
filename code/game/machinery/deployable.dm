@@ -106,8 +106,6 @@ for reference:
 			take_damage(16, BRUTE, BOMB)
 
 /obj/structure/barricade/wooden/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.
-	if(air_group || (height==0))
-		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	else
@@ -120,6 +118,7 @@ for reference:
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "bubble"
 	max_integrity = 7
+	can_block_air = TRUE
 
 /obj/structure/barricade/bubble/atom_init()
 	. = ..()
@@ -235,8 +234,6 @@ for reference:
 		icon_state = "barrier[src.locked]"
 
 /obj/machinery/deployable/barrier/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.
-	if(air_group || (height==0))
-		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	else

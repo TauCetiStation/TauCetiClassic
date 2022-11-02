@@ -256,7 +256,6 @@ steam.start() -- spawns the effect
 			M.coughedtime = 0
 
 /obj/effect/effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
 	if(istype(mover, /obj/item/projectile/beam))
 		var/obj/item/projectile/beam/B = mover
 		B.damage = (B.damage/2)
@@ -610,6 +609,7 @@ steam.start() -- spawns the effect
 	density = TRUE
 	opacity = FALSE
 	anchored = TRUE
+	can_block_air = TRUE
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	var/metal = 1		// 1=aluminum, 2=iron

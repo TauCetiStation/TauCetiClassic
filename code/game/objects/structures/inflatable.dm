@@ -30,6 +30,7 @@
 	density = TRUE
 	anchored = TRUE
 	opacity = 0
+	can_block_air = TRUE
 
 	icon = 'icons/obj/inflatable.dmi'
 	icon_state = "wall"

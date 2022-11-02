@@ -3,6 +3,7 @@
 	density = TRUE
 	anchored = TRUE
 	opacity = TRUE
+	can_block_air = TRUE
 
 	icon = 'icons/obj/doors/mineral_doors.dmi'
 

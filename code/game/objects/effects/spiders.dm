@@ -26,7 +26,6 @@
 		icon_state = "stickyweb2"
 
 /obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
 	if(istype(mover, /mob/living/simple_animal/hostile/giant_spider))
 		return 1
 	else if(isliving(mover))

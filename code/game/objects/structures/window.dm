@@ -5,6 +5,7 @@
 	density = TRUE
 	layer = 3.2//Just above doors
 	anchored = TRUE
+	can_block_air = TRUE
 	flags = ON_BORDER
 	can_be_unanchored = TRUE
 

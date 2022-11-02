@@ -22,6 +22,7 @@ var/global/list/mechtoys = list(
 	icon_state = "plasticflaps"
 	density = TRUE
 	anchored = TRUE
+	can_block_air = TRUE
 	layer = 4
 	explosion_resistance = 5
 
@@ -40,7 +41,7 @@ var/global/list/mechtoys = list(
 
 /obj/structure/plasticflaps/CanPass(atom/A, turf/T)
 	if(!istype(A))
-		return
+		return FALSE
 	if(A.checkpass(PASSGLASS)) // for laser projectile
 		return prob(60)
 	if(A.checkpass(PASSTABLE))
