@@ -9,45 +9,18 @@
 	icon_opened = "securecrateopen"
 	icon_closed = "securecrate"
 	locked = TRUE
-	var/list/grid
-	var/grid_x = 0
-	var/grid_y = 0
-	var/grid_mines = 0
-	var/grid_blanks = 0
-	var/grid_pressed = 0
-	var/list/nearest_mask = list(
-							  list(-1, -1), list(0, -1), list(1, -1),
-							  list(-1, 0),               list(1, 0),
-							  list(-1, 1),  list(0, 1),  list(1, 1)
-							)
+	var/datum/minigame/minesweeper/Game
 
 /obj/structure/closet/crate/secure/loot/atom_init()
 	. = ..()
 
-	grid_x = rand(10,15)
-	grid_y = rand(7,10)
+	Game = new()
+	Game.setup_game(src, "Crate Lock")
 
-	grid_mines = rand(7,17)
-
-	grid = new/list(grid_y, grid_x)
-
-	for(var/i = 1 to grid_y)
-		var/list/Line = grid[i]
-		for(var/j = 1 to grid_x)
-			Line[j] = list("state" = STATE_BLANK, "x" = j, "y" = i, "nearest" = "", "flag" = FALSE)
-			grid_blanks++
-
-	for(var/i = 1 to grid_mines)
-		while(TRUE)
-			var/y = rand(1,grid_y)
-			var/x = rand(1,grid_x)
-			var/list/L = grid[y][x]
-			if(L["state"] == STATE_MINE)
-				continue
-			else
-				L["state"] = STATE_MINE
-				grid_blanks--
-				break
+/obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
+	if(!locked)
+		return ..()
+	tgui_interact(user)
 
 /obj/structure/closet/crate/secure/loot/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -58,10 +31,10 @@
 /obj/structure/closet/crate/secure/loot/tgui_data(mob/user)
 	var/list/data = list()
 
-	data["grid"] = grid
-	data["width"] = grid_x*30
-	data["height"] = grid_y*30
-	data["mines"] = "Crate Lock. [num2text(grid_mines)] mines."
+	data["grid"] = Game.grid
+	data["width"] = Game.grid_x*30
+	data["height"] = Game.grid_y*30
+	data["mines"] = "Crate Lock. [num2text(Game.grid_mines)] mines."
 
 	return data
 
@@ -70,73 +43,36 @@
 	if(.)
 		return
 	if(action == "button_press")
-		press_button(params["choice_x"], params["choice_y"])
+		if(Game.grid[text2num(params["choice_y"])][text2num(params["choice_x"])]["state"] == STATE_MINE)
+			SpawnDeathLoot()
+			return
+		else
+			Game.press_button(text2num(params["choice_x"]), text2num(params["choice_y"]))
+			playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 	if(action == "button_flag")
-		var/list/L = grid[params["choice_y"]][params["choice_x"]]
+		var/list/L = Game.grid[params["choice_y"]][params["choice_x"]]
 		if(L["state"] != STATE_EMPTY)
 			L["flag"] = !L["flag"]
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
-	update_icon()
 
-/obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
-	if(!locked)
-		return ..()
-	tgui_interact(user)
+	if(Game.check_complete())
+		won()
 
-/obj/structure/closet/crate/secure/loot/proc/check_in_grid(x, y)
-	return x >= 1 && x <= grid_x && y >= 1 && y <= grid_y
-
-/obj/structure/closet/crate/secure/loot/proc/press_button(x, y)
-	if(grid[text2num(y)][text2num(x)]["flag"])
-		return
-	if(grid[text2num(y)][text2num(x)]["state"] == STATE_MINE)
-		SpawnDeathLoot()
-		return
-	playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
-	reveal_button(text2num(x),text2num(y))
-	nanomanager.update_uis(src)
-
-/obj/structure/closet/crate/secure/loot/proc/reveal_button(x,y)
-	if(!check_in_grid(x, y) || grid[y][x]["state"] == STATE_EMPTY || grid[y][x]["flag"])
-		return
-	grid[y][x]["state"] = STATE_EMPTY
-	grid[y][x]["flag"] = FALSE
-	grid_pressed++
-	check_complete()
-	var/mi = check_mines(x,y)
-	if(mi)
-		if(mi == 0)
-			mi = " "
-		grid[y][x]["nearest"] = num2text(mi)
-		return
-	for(var/list/mask in nearest_mask)
-		reveal_button(x + mask[1], y + mask[2])
-
-/obj/structure/closet/crate/secure/loot/proc/check_mines(x,y)
-	var/mins = 0
-
-	for(var/list/mask in nearest_mask)
-		if(check_in_grid(x + mask[1], y + mask[2]) && grid[y + mask[2]][x + mask[1]]["state"] == STATE_MINE)
-			mins++
-
-	return mins
-
-/obj/structure/closet/crate/secure/loot/proc/check_complete()
-	if(grid_pressed == grid_blanks)
-		var/loot_quality = 2*grid_mines/grid_blanks
-		if(prob(loot_quality*100))
-			SpawnGoodLoot()
+/obj/structure/closet/crate/secure/loot/proc/won()
+	var/loot_quality = 2 * Game.grid_mines/Game.grid_blanks
+	if(prob(loot_quality * 100))
+		SpawnGoodLoot()
+	else
+		loot_quality = loot_quality / (1 - loot_quality)
+		if(prob(loot_quality * 100))
+			SpawnMediumLoot()
 		else
-			loot_quality = loot_quality/(1 - loot_quality)
-			if(prob(loot_quality*100))
-				SpawnMediumLoot()
-			else
-				SpawnBadLoot()
-		visible_message("<span class='notice'>Издавая звук, ящик открывается!</span>")
-		locked = FALSE
-		add_overlay(greenlight)
-		SStgui.close_uis(src)
+			SpawnBadLoot()
 
+	visible_message("<span class='notice'>Издавая звук, ящик открывается!</span>")
+	locked = FALSE
+	add_overlay(greenlight)
+	SStgui.close_uis(src)
 
 /obj/structure/closet/crate/secure/loot/proc/SpawnGoodLoot()
 	playsound(src, 'sound/misc/mining_reward_3.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
