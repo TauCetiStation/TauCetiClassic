@@ -62,7 +62,7 @@
 	#ifdef ZASDBG
 	ASSERT(isturf(other))
 	#endif
-	return (AIR_BLOCKED * !CanFlowFast(src, other, 0, 0)) | (ZONE_BLOCKED * !CanFlowFast(src, other, 1.5, 1))
+	return (AIR_BLOCKED * !CanPass(null, other, 0, 0)) | (ZONE_BLOCKED * !CanPass(null, other, 1.5, 1))
 
 
 /turf/c_airblock(turf/other)
