@@ -15,7 +15,7 @@
 	. = ..()
 
 	Game = new()
-	Game.setup_game(src, "Crate Lock")
+	Game.setup_game()
 
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
 	if(!locked)
