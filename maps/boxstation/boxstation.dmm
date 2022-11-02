@@ -14339,7 +14339,7 @@
 /area/station/maintenance/dormitory)
 "azc" = (
 /obj/machinery/computer/arcade,
-/obj/structure/sign/poster/contraband{
+/obj/structure/sign/poster/random{
 	pixel_y = -32
 	},
 /turf/simulated/floor{
@@ -23296,7 +23296,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/disposalpipe/segment,
-/obj/structure/sign/poster/contraband{
+/obj/structure/sign/poster/random{
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -48034,11 +48034,11 @@
 	stamp_message = "Cargo"
 	},
 /obj/item/weapon/hand_labeler,
-/obj/structure/sign/poster/contraband{
-	pixel_x = 32
-	},
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/structure/sign/poster/random{
+	pixel_x = 32
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -72026,7 +72026,7 @@
 "gdb" = (
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp/green,
-/obj/structure/sign/poster/contraband{
+/obj/structure/sign/poster/random{
 	pixel_x = -32
 	},
 /turf/simulated/floor/wood,
@@ -72110,7 +72110,7 @@
 	charge = 100;
 	maxcharge = 15000
 	},
-/obj/structure/sign/poster/contraband{
+/obj/structure/sign/poster/random{
 	pixel_x = -32
 	},
 /turf/simulated/floor{
@@ -76012,7 +76012,7 @@
 "kss" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/sign/poster/contraband{
+/obj/structure/sign/poster/random{
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -76274,7 +76274,7 @@
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 1
 	},
-/obj/structure/sign/poster/contraband{
+/obj/structure/sign/poster/random{
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -79149,7 +79149,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/sign/poster/contraband{
+/obj/structure/sign/poster/random{
 	pixel_x = 32
 	},
 /turf/simulated/floor{
@@ -82246,7 +82246,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/structure/sign/poster/contraband{
+/obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
 /turf/simulated/floor/plating,
@@ -84177,7 +84177,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/sign/poster{
+/obj/structure/sign/poster/random{
 	pixel_x = 32
 	},
 /turf/simulated/floor/wood,
