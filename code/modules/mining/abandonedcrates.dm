@@ -45,15 +45,17 @@
 	if(action == "button_press")
 		if(Game.grid[text2num(params["choice_y"])][text2num(params["choice_x"])]["state"] == STATE_MINE)
 			SpawnDeathLoot()
-			return
+			return TRUE
 		else
 			Game.press_button(text2num(params["choice_x"]), text2num(params["choice_y"]))
 			playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+			return TRUE
 	if(action == "button_flag")
 		var/list/L = Game.grid[params["choice_y"]][params["choice_x"]]
 		if(L["state"] != STATE_EMPTY)
 			L["flag"] = !L["flag"]
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+			return TRUE
 
 	if(Game.check_complete())
 		won()
