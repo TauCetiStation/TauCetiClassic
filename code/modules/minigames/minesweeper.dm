@@ -3,8 +3,6 @@
 #define STATE_MINE "mine"
 
 /datum/minigame/minesweeper
-	var/parent
-	var/title_name
 	var/list/grid
 	var/grid_x = 0
 	var/grid_y = 0
@@ -17,7 +15,7 @@
 							  list(-1, 1),  list(0, 1),  list(1, 1)
 							)
 
-/datum/minigame/minesweeper/proc/setup_game(target, name)
+/datum/minigame/minesweeper/proc/setup_game()
 	. = ..()
 
 	grid_x = rand(10,15)
