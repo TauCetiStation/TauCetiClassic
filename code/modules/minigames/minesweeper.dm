@@ -16,8 +16,6 @@
 							)
 
 /datum/minigame/minesweeper/proc/setup_game()
-	. = ..()
-
 	grid_x = rand(10,15)
 	grid_y = rand(7,10)
 
