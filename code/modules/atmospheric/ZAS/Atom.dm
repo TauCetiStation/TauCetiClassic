@@ -11,6 +11,9 @@
 		return TRUE
 	return (!density || !height || air_group)
 
+#define CanPassFast(source, mover, target) (!source.density || source.CanPass(mover, target))
+#define CanFlowFast(source, target, height, air_group) (!source.density || source.CanPass(null, target, height, air_group))
+
 /turf/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
 	if(!target)
 		return FALSE
@@ -29,11 +32,11 @@
 			return FALSE
 
 		for(var/obj/obstacle in src)
-			if(!obstacle.CanPass(mover, target, height, air_group))
+			if(!CanFlowFast(obstacle, target, height, air_group))
 				return FALSE
 		if(target != src)
 			for(var/obj/obstacle in target)
-				if(!obstacle.CanPass(mover, src, height, air_group))
+				if(!CanFlowFast(obstacle, src, height, air_group))
 					return FALSE
 
 		return TRUE
@@ -58,7 +61,7 @@
 	#ifdef ZASDBG
 	ASSERT(isturf(other))
 	#endif
-	return (AIR_BLOCKED * !CanPass(null, other, 0, 0)) | (ZONE_BLOCKED * !CanPass(null, other, 1.5, 1))
+	return (AIR_BLOCKED * !CanFlowFast(src, other, 0, 0)) | (ZONE_BLOCKED * !CanFlowFast(src, other, 1.5, 1))
 
 
 /turf/c_airblock(turf/other)

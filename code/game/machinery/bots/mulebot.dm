@@ -449,10 +449,7 @@
 	load.pixel_y = initial(load.pixel_y)
 	load.layer = initial(load.layer)
 	if(dirn)
-		var/turf/T = loc
-		var/turf/newT = get_step(T,dirn)
-		if(load.CanPass(load,newT)) //Can't get off onto anything that wouldn't let you pass normally
-			step(load, dirn)
+		step(load, dirn)
 
 	load = null
 
