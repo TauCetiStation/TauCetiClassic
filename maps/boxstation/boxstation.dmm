@@ -59239,15 +59239,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
-"cki" = (
-/obj/machinery/camera{
-	c_tag = "Port Hallway 3"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/port)
 "ckl" = (
 /obj/machinery/optable,
 /turf/simulated/floor{
@@ -105596,7 +105587,7 @@ aJk
 aVl
 aWI
 aYX
-cki
+bdv
 bdZ
 ipb
 bHe
