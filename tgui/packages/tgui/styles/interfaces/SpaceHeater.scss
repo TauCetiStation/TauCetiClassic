@@ -1,0 +1,69 @@
+.SpaceHeater__button {
+  background: #888888;
+  border:3px solid #959595;
+  border-bottom:2px solid #4A4D55;
+  border-right:2px solid #4A4D55;
+  border-radius:5px;
+  color:#25272b;
+  font-size:25px;
+  font-family: Consolas;
+  font-weight: bolder;
+  padding-left:2px;
+  .SpaceHeater__button-Content {
+    position:relative;
+    top:-13px;
+  }
+  &:hover {
+    background: #666666;
+	border:3px solid #757575;
+    border-bottom:2px solid #4A4D55;
+    border-right:2px solid #4A4D55;
+  }
+}
+
+.SpaceHeater__Knob {
+  background: #B5bcc1;
+  color: #B5bcc1;
+  width: 80px;
+  height: 80px;
+  box-shadow: -0.5px 2.5px 1px #4A4D55,5px 5px 15px #4A4D55, -0.5px -2.5px 0px #999999,-2px -0.5px 0px #999999;
+  border: 8px solid #C7d0d6;
+  border-radius: 40px;
+
+  .Knob__cursor {
+    top: -15px;
+    background:#333333;
+    width:14px;
+    height:50px;
+    border-bottom:37px solid #444444;
+    border-top:2px solid #909396;
+    border-top-right-radius:5px;
+    border-top-left-radius:5px;
+    border-bottom-right-radius:15px;
+    border-bottom-left-radius:15px;
+  }
+
+  .Knob__circle {
+    top: -5px;
+	left: -4px;
+    background: #B5bcc1;
+	background-image: none !important;
+	color: #B5bcc1;
+    width: 64px;
+    height: 64px;
+    border-top: 2px solid #909396;
+    border-bottom: 2px solid #E3e9ee;
+    border-radius: 40px;
+  }
+  
+  .Knob__ringFill {
+    stroke: transparent;
+  }
+  
+  .Knob__popupValue {
+    color: transparent;
+    background-color: transparent;
+  }
+}
+
+

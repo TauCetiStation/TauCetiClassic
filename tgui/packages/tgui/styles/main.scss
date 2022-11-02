@@ -18,6 +18,7 @@
 @include meta.load-css('./atomic/text.scss');
 
 // Components
+@include meta.load-css('./components/Battery.scss');
 @include meta.load-css('./components/BlockQuote.scss');
 @include meta.load-css('./components/Button.scss');
 @include meta.load-css('./components/ColorBox.scss');
@@ -56,6 +57,7 @@
 @include meta.load-css('./interfaces/Safe.scss');
 @include meta.load-css('./interfaces/TachyonArray.scss');
 @include meta.load-css('./interfaces/Techweb.scss');
+@include meta.load-css('./interfaces/SpaceHeater.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');

@@ -1,6 +1,6 @@
-#define HEATER_MODE_STANDBY	"standby"
-#define HEATER_MODE_HEAT	"heat"
-#define HEATER_MODE_COOL	"cool"
+#define HEATER_MODE_STANDBY	10
+#define HEATER_MODE_HEAT	20
+#define HEATER_MODE_COOL	30
 
 
 /obj/machinery/space_heater
@@ -15,7 +15,6 @@
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = HEATER_MODE_STANDBY
-	var/setMode = "auto" // Anything other than "heat" or "cool" is considered auto.
 	var/targetTemperature = T20C
 	var/heatingPower = 40000
 	var/efficiency = 20000
@@ -113,6 +112,12 @@
 		update_icon()
 		if(panel_open)
 			interact(user)
+	else if(iscrowbar(I) && panel_open && cell)
+		cell.updateicon()
+		usr.put_in_hands(cell)
+		cell.add_fingerprint(usr)
+		usr.visible_message("\The [usr] removes \the [cell] from \the [src].", "<span class='notice'>You remove \the [cell] from \the [src].</span>")
+		cell = null
 	else if(exchange_parts(user, I) || default_deconstruction_crowbar(I))
 		return
 	else
@@ -134,7 +139,7 @@
 
 	data["open"] = panel_open
 	data["on"] = on
-	data["mode"] = setMode
+	data["mode"] = mode
 	data["powerLevel"] = cell ? round(cell.percent(), 1) : 0
 	data["targetTemp"] = round(targetTemperature - T0C, 1)
 	data["minTemp"] = max(settableTemperatureMedian - settableTemperatureRange - T0C, TCMB)
@@ -157,98 +162,21 @@
 	if(.)
 		return
 
-/obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main")
-	if(user.stat != CONSCIOUS) // this probably handled by nano itself, a check would be nice.
-		return
-	var/data[0]
-	data["open"] = panel_open
-	data["on"] = on
-	data["mode"] = setMode
-	data["hasPowercell"] = !!cell
-	if(cell)
-		data["powerLevel"] = round(cell.percent(), 1)
-	data["targetTemp"] = round(targetTemperature - T0C, 1)
-	data["minTemp"] = max(settableTemperatureMedian - settableTemperatureRange - T0C, TCMB)
-	data["maxTemp"] = settableTemperatureMedian + settableTemperatureRange - T0C
+	if(action == "temp-add")
+		targetTemperature = clamp(targetTemperature + text2num(params["value"]), max(settableTemperatureMedian - settableTemperatureRange, TCMB), settableTemperatureMedian + settableTemperatureRange)
+		update_icon()
 
-	var/turf/simulated/L = get_turf(loc)
-	var/curTemp
-	if(istype(L))
-		var/datum/gas_mixture/env = L.return_air()
-		curTemp = env.temperature
-	else if(isturf(L))
-		curTemp = L.temperature
+	if(action == "mode-change")
+		mode = round((text2num(params["value"])), 10)
 
-	if(isnull(curTemp))
-		data["currentTemp"] = "N/A"
-	else
-		data["currentTemp"] = round(curTemp - T0C, 1)
-
-	var/datum/nanoui/ui = nanomanager.get_open_ui(user, src, ui_key)
-	if(!ui)
-		// the ui does not exist, so we'll create a new one
-		ui = new(user, src, ui_key, "space_heater.tmpl", name, 490, 350)
-		// When the UI is first opened this is the data it will use
-		ui.set_initial_data(data)
-		ui.open()
-		// Auto update every Master Controller tick
-		ui.set_auto_update(1)
-	else
-		// The UI is already open so push the new data to it
-		ui.push_data(data)
+		if(mode == HEATER_MODE_STANDBY)
+			on = FALSE
+		else
+			on = TRUE
+		update_icon()
 
 /obj/machinery/space_heater/is_operational()
 	return !(stat & BROKEN)
-
-/obj/machinery/space_heater/Topic(href, href_list)
-	. = ..()
-	if(!.)
-		return
-
-	if(href_list["power"])
-		on = !!text2num(href_list["power"])
-		mode = HEATER_MODE_STANDBY
-		usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
-		update_icon()
-
-	else if(href_list["mode"])
-		setMode = href_list["mode"]
-
-	else if(href_list["temp"] && panel_open)
-		var/value
-		if(href_list["temp"] == "custom")
-			value = input("Please input the target temperature", name) as num|null
-			if(isnull(value))
-				return
-			value += T0C
-		else
-			value = targetTemperature + text2num(href_list["temp"])
-
-		var/minTemp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
-		var/maxTemp = settableTemperatureMedian + settableTemperatureRange
-		targetTemperature = clamp(round(value, 1), minTemp, maxTemp)
-
-	else if(href_list["cellremove"] && panel_open)
-		if(cell)
-			if(usr.get_active_hand())
-				to_chat(usr, "<span class='warning'>You need an empty hand to remove \the [cell]!</span>")
-				return
-			cell.updateicon()
-			usr.put_in_hands(cell)
-			cell.add_fingerprint(usr)
-			usr.visible_message("\The [usr] removes \the [cell] from \the [src].", "<span class='notice'>You remove \the [cell] from \the [src].</span>")
-			cell = null
-
-	else if(href_list["cellinstall"] && panel_open)
-		if(!cell)
-			var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
-			if(istype(C))
-				if(!usr.drop_from_inventory(C, src))
-					return
-				cell = C
-				C.add_fingerprint(usr)
-
-				usr.visible_message("\The [usr] inserts \a [C] into \the [src].", "<span class='notice'>You insert \the [C] into \the [src].</span>")
 
 /obj/machinery/space_heater/process()
 	if(!on || (stat & BROKEN))
@@ -256,8 +184,9 @@
 
 	if(powered() || cell && cell.charge > 0)
 		var/datum/gas_mixture/env = loc.return_air()
-		if(env && abs(env.temperature - targetTemperature) <= 0.1)
+		if(env && abs(env.temperature - targetTemperature) <= 0.25)
 			mode = HEATER_MODE_STANDBY
+			on = FALSE
 		else
 			var/transfer_moles = 0.25 * env.total_moles
 			var/datum/gas_mixture/removed = env.remove(transfer_moles)
@@ -287,10 +216,11 @@
 
 				if(heat_transfer > 0)
 					mode = HEATER_MODE_HEAT
-				else if(heat_transfer < 0)
+				else if(heat_transfer < -0)
 					mode = HEATER_MODE_COOL
 				else
 					mode = HEATER_MODE_STANDBY
+					on = FALSE
 
 			env.merge(removed)
 	else
