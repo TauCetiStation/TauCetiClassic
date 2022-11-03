@@ -48,7 +48,7 @@
 				desc = "A freezing pint of beer."
 			if("draft_beer")
 				icon_state = "beerglass"
-				name = "Beer glass"
+				name = "Draft Beer"
 				desc = "A freezing pint of beer."
 			if("ale")
 				icon_state = "aleglass"
@@ -124,7 +124,7 @@
 				desc = "A very classy looking drink."
 			if("draft_wine")
 				icon_state = "wineglass"
-				name = "Glass of wine"
+				name = "Draft Wine"
 				desc = "A very classy looking drink."
 			if("cognac")
 				icon_state = "cognacglass"
@@ -144,7 +144,7 @@
 				desc = "Now all that's missing is the weird colored shades!"
 			if("draft_tequilla")
 				icon_state = "tequillaglass"
-				name = "Glass of Tequilla"
+				name = "Draft Tequila"
 				desc = "Now all that's missing is the weird colored shades!"
 			if("champagne")
 				icon_state = "chamglass"
@@ -573,11 +573,11 @@
 			if("adelhyde")
 				icon_state = "adelhyde"
 				name = "Adelhyde"
-				desc = "Sweet component in Vall drinks."
+				desc = "Sweet component in drinks."
 			if("flanergide")
 				icon_state = "flanergide"
 				name = "Flanergide"
-				desc = "Presumed to be the component that makes Vall drinks taste spicy."
+				desc = "Presumed to be the component that makes drinks taste spicy."
 			if("bronson_extract")
 				icon_state = "bronson_extract"
 				name = "Bronson Extract"
@@ -585,11 +585,11 @@
 			if("powdered_delta")
 				icon_state = "powdered_delta"
 				name = "Powdered Delta"
-				desc = "It is believed to be the ingredient that makes Vall drinks taste sour."
+				desc = "It is believed to be the ingredient that makes drinks taste sour."
 			if("karmotrine")
 				icon_state = "karmotrine"
 				name = "Karmotrine"
-				desc = "It is an alcoholic component and can make clients drunk if served on big amounts."
+				desc = "It is an alcoholic component, and you can get drunk if you consume it on big amounts."
 			else
 				icon_state ="glass_brown"
 				name = "Glass of ..what?"
@@ -627,6 +627,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/beepskysmash
 	list_reagents = list("beepskysmash" = 25)
 
+// for /obj/machinery/kitchen_machine/barrel
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/beer/draft
 	list_reagents = list("draft_beer" = 25)
 
