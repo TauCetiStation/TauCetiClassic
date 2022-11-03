@@ -166,6 +166,9 @@
 	if(iszombie(src))
 		message = zombie_talk(message)
 
+	if(disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
+		message = turret_talk(message)
+
 	var/ending = copytext(message, -1)
 
 	if(speaking)

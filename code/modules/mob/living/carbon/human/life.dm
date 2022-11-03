@@ -129,6 +129,8 @@
 		pressure_difference = pressure_difference * (1 - get_pressure_protection(STOPS_LOWPRESSUREDMAGE))
 		return ONE_ATMOSPHERE - pressure_difference
 
+/var/list/bad_words = list("ГОВНО", "ЖОПА", "ЕБАЛ", "БЛЯДИНА", "ХУЕСОС", "СУКА","ЗАЛУПА" ,"УРОД" ,"БЛЯ", "ХЕР", "ШЛЮХА", "ДАВАЛКА", "ПИЗДЕЦ", "УЕБИЩЕ" , "ПИЗДА" , "ЕЛДА" , "ПРАШМАНДОВКА" , "ХОС"  ,"ШМАРА", "ДЕШЕВКА","СУЧКА","ПУТАНА","ААА")
+
 /mob/living/carbon/human/proc/handle_disabilities()
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
 		if (prob(1) && !paralysis)
@@ -149,9 +151,12 @@
 					if(1)
 						emote("twitch")
 					if(2 to 3)
-						say(pick("ГОВНО", "ЖОПА", "ЕБАЛ", "P-WORD", "ХУЕСОС", "СУКА", "МАТЬ ТВОЮ" ,"N-WORD" ,"УРОД" ,"БЛЯ" ,"ТРАХАНИЕ", "ХЕР" ))
+						say(pick(bad_words))
 				var/old_x = pixel_x
 				var/old_y = pixel_y
+				if(prob(25))
+					shake_camera(src,rand(1,2),4)
+					spin(4,1)
 				pixel_x += rand(-2,2)
 				pixel_y += rand(-1,1)
 				sleep(2)
