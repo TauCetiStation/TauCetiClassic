@@ -42,4 +42,4 @@ SUBSYSTEM_DEF(holiday)
 		return default_admin_names[group]
 	if(!holidays[holidays[1]].staffwho_group_name)
 		return default_admin_names[group]
-	return default_admin_names[holidays[1]].staffwho_group_name[group]
+	return holidays[holidays[1]].staffwho_group_name[group]
