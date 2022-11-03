@@ -131,8 +131,16 @@
 
 #define GUARD_CHECK_AGE 60
 
+// Staffwho
 #define SW_ADMINS     1
 #define SW_MENTORS    2
 #define SW_XENOVISORS 3
 #define SW_DEVELOPERS 4
 #define SW_ALL_GROUPS 4 //update this, if add more staff groups
+
+var/global/list/default_admin_names = list(
+	SW_ADMINS     = "Admins",
+	SW_MENTORS    = "Mentors",
+	SW_XENOVISORS = "Xenovisors",
+	SW_DEVELOPERS = "Developers",
+)

@@ -38,14 +38,8 @@ SUBSYSTEM_DEF(holiday)
 	return holidays[holidays[1]].staffwho_no_staff
 
 /datum/controller/subsystem/holiday/proc/get_admin_name(group)
-	var/static/list/defaults = list(
-		SW_ADMINS     = "Admins",
-		SW_MENTORS    = "Mentors",
-		SW_XENOVISORS = "Xenovisors",
-		SW_DEVELOPERS = "Developers",
-	)
 	if(!length(holidays))
-		return defaults[group]
+		return default_admin_names[group]
 	if(!holidays[holidays[1]].staffwho_group_name)
-		return defaults[group]
-	return holidays[holidays[1]].staffwho_group_name[group]
+		return default_admin_names[group]
+	return default_admin_names[holidays[1]].staffwho_group_name[group]
