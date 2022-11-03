@@ -319,7 +319,7 @@
 	max_energy = 100
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead")
-	premium_reagents = list("goldschlager","patron","watermelonjuice","berryjuice")
+	premium_reagents = list("goldschlager","patron","watermelonjuice","berryjuice","adelhyde","flanergide","bronson_extract","karmotrine","powdered_delta")
 	hackable = TRUE
 	msg_hack_enable = "You disable the 'nanotrasen-are-cheap-bastards' lock, enabling hidden and very expensive boozes."
 	msg_hack_disable = "You re-enable the 'nanotrasen-are-cheap-bastards' lock, disabling hidden and very expensive boozes."
@@ -882,7 +882,7 @@
 		beaker.forceMove(loc)
 		beaker = null
 	return ..()
-	
+
 
 /obj/machinery/reagentgrinder/attack_ai(mob/user)
 	if(IsAdminGhost(user))

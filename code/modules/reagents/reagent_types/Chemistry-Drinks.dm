@@ -1586,3 +1586,67 @@
 	color = "#831d21" // rgb: 131, 29, 33
 	boozepwr = 3
 	taste_message = "sweet alcohol"
+
+/datum/reagent/consumable/drink/adelhyde
+	name = "Adelhyde"
+	id = "adelhyde"
+	description = "Sweet component in Vall drinks."
+	taste_message = "sweet"
+	color = "#E1442A"
+
+/datum/reagent/consumable/drink/flanergide
+	name = "Flanergide"
+	id = "flanergide"
+	description = "Presumed to be the component that makes Vall drinks taste spicy."
+	taste_message = "spicy"
+	color = "#66872C"
+
+/datum/reagent/consumable/drink/flanergide/on_general_digest(mob/living/M)
+	..()
+	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_HEAT_DAMAGE_LIMIT)
+
+/datum/reagent/consumable/drink/bronson_extract
+	name = "Bronson Extract"
+	id = "bronson_extract"
+	description = "Presumably made from Bronson roots."
+	taste_message = "robust and bitter"
+	color = "#d8d121"
+
+/datum/reagent/consumable/drink/bronson_extract/on_general_digest(mob/living/M)
+	..()
+	//so strong it's hard to breathe
+	if(prob(5))
+		M.emote("gasp")
+
+/datum/reagent/consumable/drink/powdered_delta
+	name = "Powdered Delta"
+	id = "powdered_delta"
+	description = "It is believed to be the ingredient that makes Vall drinks taste sour."
+	taste_message = "sour."
+	color = "#71b2e3"
+
+/datum/reagent/consumable/drink/Powdered_Delta/on_general_digest(mob/living/M)
+	..()
+	//lore: type of rat poison
+	M.adjustToxLoss(1)
+
+/datum/reagent/consumable/ethanol/karmotrine
+	name = "Karmotrine"
+	id = "karmotrine"
+	description = "It is an alcoholic component and can make clients drunk if served on big amounts."
+	color = "#B1CDCF"
+
+/datum/reagent/consumable/ethanol/beer/draft_beer
+	name = "Draft Beer"
+	id = "draft_beer"
+	nutriment_factor = 2
+
+/datum/reagent/consumable/ethanol/tequilla/draft_tequila
+	name = "Draft Tequila"
+	id = "draft_tequilla"
+	nutriment_factor = 2
+
+/datum/reagent/consumable/ethanol/wine/draft_wine
+	name = "Draft Wine"
+	id = "draft_wine"
+	nutriment_factor = 2

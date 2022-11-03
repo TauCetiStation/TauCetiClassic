@@ -46,6 +46,10 @@
 				icon_state = "beerglass"
 				name = "Beer glass"
 				desc = "A freezing pint of beer."
+			if("draft_beer")
+				icon_state = "beerglass"
+				name = "Beer glass"
+				desc = "A freezing pint of beer."
 			if("ale")
 				icon_state = "aleglass"
 				name = "Ale glass"
@@ -118,6 +122,10 @@
 				icon_state = "wineglass"
 				name = "Glass of wine"
 				desc = "A very classy looking drink."
+			if("draft_wine")
+				icon_state = "wineglass"
+				name = "Glass of wine"
+				desc = "A very classy looking drink."
 			if("cognac")
 				icon_state = "cognacglass"
 				name = "Glass of cognac"
@@ -131,6 +139,10 @@
 				name = "Glass of Vermouth"
 				desc = "You wonder why you're even drinking this straight."
 			if("tequilla")
+				icon_state = "tequillaglass"
+				name = "Glass of Tequilla"
+				desc = "Now all that's missing is the weird colored shades!"
+			if("draft_tequilla")
 				icon_state = "tequillaglass"
 				name = "Glass of Tequilla"
 				desc = "Now all that's missing is the weird colored shades!"
@@ -558,6 +570,26 @@
 				icon_state = "mojitoglass"
 				name = "Mojito"
 				desc = "Good old mojito, not an aging classic."
+			if("adelhyde")
+				icon_state = "adelhyde"
+				name = "Adelhyde"
+				desc = "Sweet component in Vall drinks."
+			if("flanergide")
+				icon_state = "flanergide"
+				name = "Flanergide"
+				desc = "Presumed to be the component that makes Vall drinks taste spicy."
+			if("bronson_extract")
+				icon_state = "bronson_extract"
+				name = "Bronson Extract"
+				desc = "Presumably made from Bronson roots."
+			if("powdered_delta")
+				icon_state = "powdered_delta"
+				name = "Powdered Delta"
+				desc = "It is believed to be the ingredient that makes Vall drinks taste sour."
+			if("karmotrine")
+				icon_state = "karmotrine"
+				name = "Karmotrine"
+				desc = "It is an alcoholic component and can make clients drunk if served on big amounts."
 			else
 				icon_state ="glass_brown"
 				name = "Glass of ..what?"
@@ -594,3 +626,15 @@
 // for emaged /obj/machinery/vending/boozeomat
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/beepskysmash
 	list_reagents = list("beepskysmash" = 25)
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/beer/draft
+	list_reagents = list("draft_beer" = 25)
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/wine/draft
+	list_reagents = list("draft_wine" = 25)
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/tequila/draft
+	list_reagents = list("draft_tequilla" = 25)
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/mash
+	list_reagents = list("ethanol" = 15)
