@@ -1,14 +1,20 @@
 /obj/machinery/kitchen_machine/barrel
 	name = "barrel"
-	desc = "The stuff of nightmares for a dentist."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "beertankTEMP"
+	desc = "A modern device for the rapid transformation of wort into an alcoholic drink."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "barrel_off"
 	recipe_type = /datum/recipe/barrel
-	off_icon = "beertankTEMP"
-	on_icon = "beertankTEMP"
-	broken_icon = "beertankTEMP"
-	dirty_icon = "beertankTEMP"
-	open_icon = "beertankTEMP"
+	off_icon = "barrel_off"
+	on_icon = "barrel_on"
+	broken_icon = "barrel_broke"
+	dirty_icon = "barrel_dirty"
+	open_icon = "barrel_generic"
+
+/obj/machinery/kitchen_machine/barrel/default_deconstruction_crowbar()
+	return FALSE
+
+/obj/machinery/kitchen_machine/barrel/default_deconstruction_screwdriver()
+	return FALSE
 
 /obj/machinery/kitchen_machine/barrel/fail()
 	if(!reagents.total_volume)
