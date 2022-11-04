@@ -410,6 +410,7 @@
 	if(old_wearer)
 		update_overlays(old_wearer)
 		remove_actions(old_wearer)
+		disable_magpulse(old_wearer)
 		selected_module = null
 
 		STOP_PROCESSING(SSobj, src)
