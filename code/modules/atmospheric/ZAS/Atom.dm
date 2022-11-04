@@ -11,7 +11,6 @@
 		return TRUE
 	return (!density || !height)
 
-#define CanPassFast(source, mover, target) (!source.density || source.CanPass(mover, target))
 #define CanFlowFast(source, target, height) (!source.can_block_air || source.CanPass(null, target, height))
 
 /turf/CanPass(atom/movable/mover, turf/target, height = 1.5)

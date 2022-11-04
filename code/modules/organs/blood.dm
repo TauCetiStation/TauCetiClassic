@@ -349,7 +349,7 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 						to_chat(H, "<span class='danger'>You are hit by a spray of blood!</span>")
 					hit_mob = TRUE
 
-			if(hit_mob || !CanPassFast(A, src, sprayloc))
+			if(hit_mob || !A.CanPass(src, sprayloc))
 				CantPass = TRUE // this is mostly for DOORS, because Adjacent() test thinks they are passable, which is actually true for click purpose... ~ZVe (I really HATE pass checks in ss13 or missing something...)
 				break
 
