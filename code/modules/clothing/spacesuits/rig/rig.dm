@@ -296,7 +296,7 @@
 					module.activate()
 
 		if(!offline)
-				slowdown = offline_slowdown
+			slowdown = offline_slowdown
 
 
 	if(!offline)
