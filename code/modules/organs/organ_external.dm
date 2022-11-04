@@ -193,7 +193,9 @@
 /obj/item/organ/external/emp_act(severity)
 	controller.emp_act(severity)
 
-/obj/item/organ/external/proc/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
+/obj/item/organ/external/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
+	if(!isnum(burn))
+		return // prevent basic take_damage usage (TODO remove workaround)
 	return controller.take_damage(brute, burn, damage_flags, used_weapon)
 
 /obj/item/organ/external/proc/heal_damage(brute, burn, internal = 0, robo_repair = 0)
@@ -1039,16 +1041,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(!disfigured)
 		if(brute_dam > 40)
 			if (prob(50))
-				disfigure("brute")
+				disfigure(BRUTE)
 		if(burn_dam > 40)
-			disfigure("burn")
+			disfigure(BURN)
 
 	return ..()
 
-/obj/item/organ/external/head/proc/disfigure(type = "brute")
+/obj/item/organ/external/head/proc/disfigure(type = BRUTE)
 	if (disfigured)
 		return
-	if(type == "brute")
+	if(type == BRUTE)
 		owner.visible_message("<span class='warning'>You hear a sickening cracking sound coming from \the [owner]'s face.</span>",	\
 		"<span class='warning'><b>Your face becomes unrecognizible mangled mess!</b></span>",	\
 		"<span class='warning'>You hear a sickening crack.</span>")

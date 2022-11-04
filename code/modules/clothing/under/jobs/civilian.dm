@@ -128,8 +128,8 @@
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/female
-	icon_state = "black_suit_fem"
-	item_state = "black_suit_fem"
+	icon_state = "black_suit_neck"
+	item_state = "black_suit_neck"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/red

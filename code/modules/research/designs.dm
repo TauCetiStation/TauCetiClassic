@@ -2217,6 +2217,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/clothing/glasses/hud/mining
 	category = list("Support")
 
+/datum/design/holochip
+	name = "Holographic chip"
+	desc = "A holographic chip for space helmet's HUD."
+	id = "holochip"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 100, MAT_GLASS = 100, MAT_GOLD = 200)
+	build_path = /obj/item/holochip
+	category = list("Support")
+
 /datum/design/hud_calibrator
 	name = "Рекалибратор дисплея"
 	desc = "Рекалибрует дисплей с помощью интерференции волн, улучшая опыт пользования визуальным интерфейсом."
@@ -2800,4 +2809,13 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_GOLD = 2000, MAT_PHORON = 4000)
 	build_path = /obj/item/rig_module/teleporter_stabilizer
+	category = list("Rig Modules")
+
+/datum/design/hardsuit_emp_shield
+	name = "Hardsuit EMP shield"
+	desc = "Device for protecting hardsuit against EMPs."
+	id = "rigempshield"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
+	build_path = /obj/item/rig_module/emp_shield
 	category = list("Rig Modules")

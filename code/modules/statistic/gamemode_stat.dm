@@ -109,6 +109,20 @@
 	// string, byond_type
 	var/item_type
 
+/datum/stat/changeling_info
+	// int, [0...]. victims
+	var/victims_number
+	// array of objects
+	var/list/datum/stat/changeling_purchase/changeling_purchase
+
+/datum/stat/changeling_purchase
+	// string, byond_type
+	var/power_type
+	// string, anything
+	var/power_name
+	// int, [0...]
+	var/cost
+
 /datum/stat/role
 	// Default stats
 	// string, pool in ./code/game/gamemodes/roles in var name
@@ -136,6 +150,8 @@
 	// Other roles stats
 	// object
 	var/datum/stat/uplink_info/uplink_info = null
+	// object
+	var/datum/stat/changeling_info/changeling_info = null
 
 /datum/stat/role/proc/set_custom_stat(datum/role/R)
 	var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
@@ -144,3 +160,20 @@
 		uplink_info.total_TC = S.total_TC
 		uplink_info.spent_TC = S.spent_TC
 		uplink_info.uplink_purchases = S.uplink_purchases
+
+/datum/stat/role/changeling/set_custom_stat(datum/role/changeling/C)
+	var/datum/stat/changeling_info/_changeling_info = new
+	_changeling_info.victims_number = C.absorbedamount
+
+	_changeling_info.changeling_purchase = list()
+	for(var/obj/effect/proc_holder/changeling/P in C.purchasedpowers)
+		if(P.genomecost <= 0)
+			continue
+		var/datum/stat/changeling_purchase/stat = new
+		stat.power_name = P.name
+		stat.power_type = P.type
+		stat.cost = P.genomecost
+
+		_changeling_info.changeling_purchase += stat
+
+	changeling_info = _changeling_info

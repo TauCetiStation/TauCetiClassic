@@ -10,8 +10,6 @@
 	if(stat != DEAD)
 		add_ingame_age()
 
-	if(pull_debuff && !pulling)	//For cases when pulling was stopped by 'pulling = null'
-		pull_debuff = 0
 	update_gravity(mob_has_gravity())
 
 	handle_combat()
@@ -114,7 +112,7 @@
 				reset_view(null)
 
 
-/mob/living/update_action_buttons()
+/mob/update_action_buttons()
 	if(!hud_used) return
 	if(!client) return
 

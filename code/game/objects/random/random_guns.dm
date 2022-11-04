@@ -25,7 +25,7 @@
 	name = "Random Energy Weapon"
 	desc = "This is a random energy weapon."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "laser"
+	icon_state = LASER
 /obj/random/guns/energy_weapon/item_to_spawn()
 		return pick(\
 						prob(25);/obj/item/weapon/gun/energy/taser/stunrevolver,\

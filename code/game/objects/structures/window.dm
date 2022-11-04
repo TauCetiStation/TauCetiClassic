@@ -8,8 +8,10 @@
 	flags = ON_BORDER
 	can_be_unanchored = TRUE
 
-	var/maxhealth = 14.0
-	var/health
+	max_integrity = 14
+	integrity_failure = 0.75
+	resistance_flags = CAN_BE_HIT
+
 	var/ini_dir = null
 	var/state = 2
 	var/reinf = 0
@@ -21,96 +23,95 @@
 //	var/silicate = 0 // number of units of silicate
 //	var/icon/silicateIcon = null // the silicated icon
 
-/obj/structure/window/proc/take_damage(damage = 0, damage_type = BRUTE, sound_effect = 1)
-	var/initialhealth = health
-	var/message = 1
-	var/fulltile = 0
+/obj/structure/window/play_attack_sound(damage_amount, damage_type, damage_flag)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(loc, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER, 90)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
-	//if(silicate)
-	//	damage = damage * (1 - silicate / 200)
-
-	if(is_fulltile())
-		message = 0
-		fulltile = 1
-
-	if(fulltile && damage_threshold)
+/obj/structure/window/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
+	if(is_fulltile() && damage_threshold)
 		switch(damage_type)
 			if(BRUTE)
-				damage = max(0, damage - damage_threshold)
+				return max(0, damage_amount - damage_threshold)
 			if(BURN)
-				damage *= 0.3
-			if("generic")
-				damage *= 0.5
+				return damage_amount * 0.3
+	return ..()
 
-	if(!damage)
-		return
+/obj/structure/window/atom_break(damage_flag)
+	. = ..()
 
-	health = max(0, health - damage)
+	var/ratio = get_integrity() / max_integrity
 
-	if(health <= 0)
-		shatter()
-	else
-		if(sound_effect)
-			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-		if(message)
-			if(health < maxhealth / 4 && initialhealth >= maxhealth / 4)
+	switch(ratio)
+		if(0 to 0.25)
+			if(!is_fulltile())
 				visible_message("[src] looks like it's about to shatter!" )
-			else if(health < maxhealth / 2 && initialhealth >= maxhealth / 2)
+			integrity_failure = 0
+		if(0.25 to 0.5)
+			if(!is_fulltile())
 				visible_message("[src] looks seriously damaged!" )
-			else if(health < maxhealth * 3/4 && initialhealth >= maxhealth * 3/4)
+			integrity_failure = 0.25
+		if(0.5 to 0.75)
+			if(!is_fulltile())
 				visible_message("Cracks begin to appear in [src]!" )
+			integrity_failure = 0.5
 	update_icon()
 
-/obj/structure/window/proc/shatter(display_message = 1)
+/obj/structure/window/deconstruct()
+	shatter()
+
+/obj/structure/window/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir)
+	. = ..()
+	if(attack_dir && !reinf && . && get_integrity() < 7)
+		if(anchored)
+			anchored = FALSE
+			update_nearby_icons()
+			fastened_change()
+		step(src, reverse_dir[attack_dir])
+
+/obj/structure/window/proc/shatter()
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	if(display_message)
-		visible_message("[src] shatters!")
-	if(dir == SOUTHWEST)
-		var/index = null
-		index = 0
-		while(index < 2)
-			new shardtype(loc) //todo pooling?
-			if(reinf)
-				new /obj/item/stack/rods(loc)
-			index++
-	else
-		new shardtype(loc) //todo pooling?
+	visible_message("[src] shatters!")
+	if(!(flags & NODECONSTRUCT))
+		var/fulltile = is_fulltile()
+		new shardtype(loc)
+		if(fulltile)
+			new shardtype
 		if(reinf)
-			new /obj/item/stack/rods(loc)
+			new /obj/item/stack/rods(loc, fulltile ? 2 : 1)
 	qdel(src)
-	return
 
 /obj/structure/window/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.pass_flags & PASSGLASS)	//Lasers mostly use this flag.. Why should they able to focus damage with direct click...
 		return PROJECTILE_FORCE_MISS
 
-	. = ..()
-	//Tasers and the like should not damage windows.
-	if(!(Proj.damage_type == BRUTE || Proj.damage_type == BURN))
-		return
-
-	take_damage(Proj.damage, Proj.damage_type)
+	return ..()
 
 /obj/structure/window/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			qdel(src)
 		if(EXPLODE_HEAVY)
-			take_damage(rand(30, 50))
+			take_damage(rand(30, 50), BRUTE, BOMB)
 		if(EXPLODE_LIGHT)
-			take_damage(rand(5, 15))
+			take_damage(rand(5, 15), BRUTE, BOMB)
 
 /obj/structure/window/airlock_crush_act()
-	take_damage(DOOR_CRUSH_DAMAGE * 2)
+	take_damage(DOOR_CRUSH_DAMAGE * 2, BRUTE, MELEE)
 	..()
 
 /obj/structure/window/blob_act()
-	take_damage(rand(30, 50))
+	take_damage(rand(30, 50), BRUTE, MELEE)
 
 /obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
-	if(dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST || dir == NORTHEAST)
+	if(is_fulltile())
 		return 0	//full tile window, you can't move into it!
 	if(get_dir(loc, target) & dir)
 		return !density
@@ -132,33 +133,13 @@
 		return 0
 	return 1
 
-
-/obj/structure/window/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	..()
-	visible_message("<span class='danger'>[src] was hit by [AM].</span>")
-	var/tforce = 0
-	if(ismob(AM))
-		tforce = 40
-	else if(isobj(AM))
-		var/obj/item/I = AM
-		tforce = I.throwforce
-	if(reinf)
-		tforce *= 0.25
-	if(health - tforce <= 7 && !reinf)
-		anchored = FALSE
-		update_nearby_icons()
-		step(src, get_dir(AM, src))
-	take_damage(tforce)
-
 /obj/structure/window/attack_hand(mob/user)	//specflags please!!
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
-		user.do_attack_animation(src)
-		take_damage(rand(15,25), "generic")
+		attack_generic(user, rand(15, 25), BRUTE, MELEE)
 	else if(user.get_species() == GOLEM || user.get_species() == ABOMINATION)
-		user.do_attack_animation(src)
-		take_damage(rand(15,25), "generic")
+		attack_generic(user, rand(15, 25), BRUTE, MELEE)
 	else if (user.a_intent == INTENT_HARM)
 		playsound(src, 'sound/effects/glassknock.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("<span class='danger'>[usr.name] bangs against the [src.name]!</span>", \
@@ -178,31 +159,15 @@
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
 
-
-/obj/structure/window/proc/attack_generic(mob/user, damage)
-	if(!damage)
+/obj/structure/window/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = TRUE)
+	if(!damage_amount)
 		return
-	if(damage >= 10)
+	if(damage_amount >= 10)
 		visible_message("<span class='danger'>[user] smashes into [src]!</span>")
-		take_damage(damage, "generic")
-	else
-		visible_message("<span class='notice'>\The [user] bonks \the [src] harmlessly.</span>")
+		return ..(user, damage_amount, damage_type, damage_flag, sound_effect)
+
+	visible_message("<span class='notice'>\The [user] bonks \the [src] harmlessly.</span>")
 	user.do_attack_animation(src)
-	return 1
-
-
-/obj/structure/window/attack_alien(mob/user)
-	user.SetNextMove(CLICK_CD_MELEE)
-	if(isxenolarva(user) || isfacehugger(user))
-		return
-	attack_generic(user, 15)
-
-/obj/structure/window/attack_animal(mob/living/simple_animal/attacker)
-	..()
-	if(attacker.melee_damage <= 0)
-		return
-	attack_generic(attacker, attacker.melee_damage)
-
 
 /obj/structure/window/attack_slime(mob/user)
 	if(!isslimeadult(user))
@@ -213,8 +178,9 @@
 
 
 /obj/structure/window/attackby(obj/item/W, mob/user)
-	if(!istype(W))
-		return//I really wish I did not need this
+	if(flags & NODECONSTRUCT)
+		if(isscrewdriver(W) | iscrowbar(W))
+			return ..()
 
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/airlock_painter))
@@ -264,7 +230,7 @@
 			switch (state)
 				if(1)
 					M.apply_damage(7)
-					take_damage(7)
+					take_damage(7, BRUTE, MELEE)
 					visible_message("<span class='danger'>[A] slams [M] against \the [src]!</span>")
 
 					M.log_combat(user, "slammed against [name]")
@@ -273,14 +239,14 @@
 						M.Stun(1)
 						M.Weaken(1)
 					M.apply_damage(8)
-					take_damage(9)
+					take_damage(9, BRUTE, MELEE)
 					visible_message("<span class='danger'>[A] bashes [M] against \the [src]!</span>")
 					M.log_combat(user, "bashed against [name]")
 				if(3)
 					M.Stun(5)
 					M.Weaken(5)
 					M.apply_damage(20)
-					take_damage(12)
+					take_damage(12, BRUTE, MELEE)
 					visible_message("<span class='danger'><big>[A] crushes [M] against \the [src]!</big></span>")
 					M.log_combat(user, "crushed against [name]")
 
@@ -290,17 +256,7 @@
 		if(C.use_charge(user))
 			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
 			shatter()
-
-	else if(user.a_intent == INTENT_HARM)
-		if(W.damtype == BRUTE || W.damtype == BURN)
-			take_damage(W.force, W.damtype)
-			if(health <= 7)
-				anchored = FALSE
-				update_nearby_icons()
-				fastened_change()
-				step(src, get_dir(user, src))
-		else
-			playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+	else
 		return ..()
 
 /obj/structure/window/proc/fastened_change()
@@ -385,9 +341,6 @@
 	. = ..()
 
 	ini_dir = dir
-
-	health = maxhealth
-
 	color = color_windows()
 
 	update_nearby_tiles(need_rebuild = 1)
@@ -414,9 +367,7 @@
 
 //checks if this window is full-tile one
 /obj/structure/window/proc/is_fulltile()
-	if(dir & (dir - 1))
-		return 1
-	return 0
+	return ISDIAGONALDIR(dir)
 
 //This proc is used to update the icons of nearby windows. It should not be confused with update_nearby_tiles(), which is an atmos proc!
 /obj/structure/window/proc/update_nearby_icons()
@@ -445,7 +396,7 @@
 						junction |= get_dir(src,W)
 		icon_state = "[basestate][junction]"
 
-		var/ratio = health / maxhealth
+		var/ratio = get_integrity() / max_integrity
 		ratio = CEIL(ratio * 4) * 25
 
 		cut_overlay(crack_overlay)
@@ -456,9 +407,7 @@
 
 /obj/structure/window/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 800)
-		take_damage(round(exposed_volume / 100), BURN, 0)
-	..()
-
+		take_damage(round(exposed_volume / 100), BURN, FIRE, FALSE)
 
 
 /obj/structure/window/basic
@@ -472,12 +421,11 @@
 	basestate = "phoronwindow"
 	icon_state = "phoronwindow"
 	shardtype = /obj/item/weapon/shard/phoron
-	maxhealth = 120.0
+	max_integrity = 120
 
 /obj/structure/window/phoronbasic/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 32000)
-		take_damage(round(exposed_volume / 1000), BURN, 0)
-	..()
+		take_damage(round(exposed_volume / 1000), BURN, FIRE, FALSE)
 
 /obj/structure/window/phoronreinforced
 	name = "reinforced phoron window"
@@ -486,7 +434,7 @@
 	icon_state = "phoronrwindow"
 	shardtype = /obj/item/weapon/shard/phoron
 	reinf = 1
-	maxhealth = 160.0
+	max_integrity = 160
 
 /obj/structure/window/phoronreinforced/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
@@ -496,9 +444,13 @@
 	desc = "It looks rather strong. Might take a few good hits to shatter it."
 	icon_state = "rwindow"
 	basestate = "rwindow"
-	maxhealth = 100.0
+	max_integrity = 100
 	reinf = 1
 	damage_threshold = 15
+
+/obj/structure/window/reinforced/indestructible
+	flags = NODECONSTRUCT | ON_BORDER
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 /obj/structure/window/reinforced/tinted
 	name = "tinted window"
@@ -512,7 +464,7 @@
 	desc = "It looks rather strong and frosted over. Looks like it might take a few less hits then a normal reinforced window."
 	icon_state = "fwindow"
 	basestate = "fwindow"
-	maxhealth = 30.0
+	max_integrity = 30
 	damage_threshold = 0
 
 /obj/structure/window/shuttle
@@ -521,7 +473,7 @@
 	icon = 'icons/obj/podwindows.dmi'
 	icon_state = "window"
 	basestate = "window"
-	maxhealth = 150.0
+	max_integrity = 150
 	reinf = 1
 	dir = 5
 	damage_threshold = 30

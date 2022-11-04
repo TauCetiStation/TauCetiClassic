@@ -75,7 +75,7 @@
 /turf/simulated/mineral,
 /area/asteroid/mine/unexplored/safe)
 "an" = (
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/unexplored/safe)
 "ao" = (
@@ -175,7 +175,7 @@
 /area/asteroid/research_outpost/hallway)
 "aA" = (
 /obj/structure/transit_tube,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},

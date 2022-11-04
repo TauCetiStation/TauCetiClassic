@@ -11,10 +11,10 @@
 
 // The default UI style is the first one in the list
 var/global/list/available_ui_styles = list(
-	"White" = 'icons/mob/screen1_White.dmi',
-	"Midnight" = 'icons/mob/screen1_Midnight.dmi',
-	"old" = 'icons/mob/screen1_old.dmi',
-	"Orange" = 'icons/mob/screen1_Orange.dmi'
+	"White" = 'icons/hud/screen1_White.dmi',
+	"Midnight" = 'icons/hud/screen1_Midnight.dmi',
+	"old" = 'icons/hud/screen1_old.dmi',
+	"Orange" = 'icons/hud/screen1_Orange.dmi'
 	)
 
 /proc/ui_style2icon(ui_style)

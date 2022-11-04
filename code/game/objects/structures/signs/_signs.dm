@@ -4,8 +4,11 @@
 	opacity = FALSE
 	density = FALSE
 	layer = SIGN_LAYER
-	var/health = 100
+	
 	var/buildable_sign = TRUE //unwrenchable and modifiable
+
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/sign/basic
 	name = "blank sign"
@@ -22,10 +25,7 @@
 			playsound(src, 'sound/items/deconstruct.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='notice'>[user] unfastens [src].</span>",
 								 "<span class='notice'>You unfasten [src].</span>")
-			var/obj/item/sign_backing/SB = new (get_turf(src))
-			SB.icon_state = icon_state
-			SB.sign_path = type
-			qdel(src)
+			deconstruct(TRUE)
 		return
 	else if(istype(W, /obj/item/weapon/airlock_painter) && buildable_sign)
 		if(user.is_busy())
@@ -80,18 +80,32 @@
 		qdel(src)
 
 	else
-		switch(W.damtype)
-			if("fire")
-				playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
-				src.health -= W.force * 1
-			if("brute")
-				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-				src.health -= W.force * 0.75
-			else
-		if (src.health <= 0)
-			visible_message("<span class='warning'>[user] smashed [src] apart!</span>")
-			qdel(src)
 		..()
+		if(QDELING(src))
+			visible_message("<span class='warning'>[user] smashed [src] apart!</span>")
+
+/obj/structure/sign/deconstruct(disassembled)
+	if(resistance_flags & NODECONSTRUCT)
+		return ..()
+	if(buildable_sign)
+		var/obj/item/sign_backing/SB = new(loc)
+		SB.icon_state = icon_state
+		SB.sign_path = type
+	..()
+
+/obj/structure/sign/play_attack_sound(damage_amount, damage_type, damage_flag)
+	switch(damage_type)
+		if(BRUTE)
+			playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
+		if(BURN)
+			playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
+
+/obj/structure/sign/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
+	switch(damage_type)
+		if(BRUTE)
+			return damage_amount * 0.75
+		if(BURN)
+			return damage_amount
 
 /obj/item/sign_backing
 	name = "sign backing"
