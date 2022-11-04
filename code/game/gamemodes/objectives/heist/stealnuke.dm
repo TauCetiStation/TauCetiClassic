@@ -19,7 +19,6 @@
 
 	if(!amount_stealed_nukes)
 		return OBJECTIVE_LOSS
-	else if(amount_stealed_nukes < amount_nukes_in_world)
+	if(amount_stealed_nukes < amount_nukes_in_world)
 		return OBJECTIVE_HALFWIN
-	else
-		return OBJECTIVE_WIN
+	return OBJECTIVE_WIN
