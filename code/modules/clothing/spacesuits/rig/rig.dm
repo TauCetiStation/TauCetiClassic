@@ -373,7 +373,7 @@
 		update_overlays(wearer)
 		give_actions(wearer)
 
-		if(!offline)// so rigs without cell are slow
+		if(!offline) // so rigs without cell are slow
 			slowdown = initial(slowdown)
 		else
 			slowdown = offline_slowdown
@@ -479,13 +479,13 @@
 
 /obj/item/clothing/suit/space/rig/proc/toggle_magpulse()
 		flags |= NOSLIP
-		src.slowdown = boots.slowdown_off
+		slowdown = boots.slowdown_off
 		magpulse = TRUE
 		to_chat(usr, "You enable the mag-pulse traction system.")
 
 /obj/item/clothing/suit/space/rig/proc/disable_magpulse()
 		flags &= ~NOSLIP
-		src.slowdown = initial(slowdown)
+		slowdown = initial(slowdown)
 		magpulse = FALSE
 		to_chat(usr, "You disable \the [src] the mag-pulse traction system.")
 
