@@ -151,7 +151,7 @@ var/global/list/tourette_bad_words = list("ГОВНО", "ЖОПА", "ЕБАЛ", 
 					if(1)
 						emote("twitch")
 					if(2 to 3)
-						say(pick(bad_words))
+						say(pick(global.tourette_bad_words))
 				var/old_x = pixel_x
 				var/old_y = pixel_y
 				if(prob(25))
