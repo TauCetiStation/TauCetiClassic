@@ -374,7 +374,7 @@
 		update_overlays(wearer)
 		give_actions(wearer)
 
-		if(!offline)// so rigs without cell are slow
+		if(!offline) // so rigs without cell are slow
 			slowdown = initial(slowdown)
 		else
 			slowdown = offline_slowdown
