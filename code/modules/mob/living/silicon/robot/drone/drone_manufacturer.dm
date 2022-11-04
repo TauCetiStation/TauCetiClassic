@@ -76,6 +76,19 @@
 	new_drone.mind.skills.maximize_active_skills()
 	drone_progress = 0
 
+/obj/machinery/drone_fabricator/atom_break(damage_flag)
+	. = ..()
+	if(!.)
+		return
+	audible_message("<span class='warning'>[src] lets out a tinny alarm before falling dark.</span>")
+	playsound(loc, 'sound/machines/warning-buzzer.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+
+/obj/machinery/drone_fabricator/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 5)
+	..()
+
 /mob/proc/dronize()
 
 	for(var/obj/machinery/drone_fabricator/DF in machines)

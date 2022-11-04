@@ -7,11 +7,12 @@
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	var/r_speed = 1.0
-	var/health = null
 	var/burn_point = null
 	var/burning = null
 	var/list/hitsound = list()
 	var/usesound = null
+	var/pickup_sound = null
+	var/dropped_sound = null
 	var/wet = 0
 	var/can_embed = 1
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
@@ -41,7 +42,7 @@
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
-	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/materials = list()
 	var/list/allowed = null //suit storage stuff.
 	var/list/can_be_placed_into = list(
@@ -433,6 +434,8 @@
 // apparently called whenever an item is removed from a slot, container, or anything else.
 /obj/item/proc/dropped(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
+	if(user && user.loc != loc && isturf(loc))
+		playsound(user, dropped_sound, VOL_EFFECTS_MASTER)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	flags &= ~IN_INVENTORY
 	if(flags & DROPDEL)
@@ -445,6 +448,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user) & COMPONENT_ITEM_NO_PICKUP)
 		return FALSE
+	playsound(user, pickup_sound, VOL_EFFECTS_MASTER)
 	return TRUE
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
@@ -1104,6 +1108,20 @@
 	item_state = initial(dye_type.item_state)
 	desc = "The colors are a bit dodgy."
 
+/obj/item/attack_hulk(mob/living/user)
+	return FALSE
+
+/obj/item/burn()
+	var/turf/T = get_turf(src)
+	var/ash_type 
+	if(w_class >= SIZE_BIG)
+		ash_type = /obj/effect/decal/cleanable/ash/large
+	else
+		ash_type = /obj/effect/decal/cleanable/ash
+	var/obj/effect/decal/cleanable/ash/A = new ash_type(T)
+	A.desc += "\nLooks like this used to be \an [name] some time ago."
+	..()
+
 // swap between world (small) and ui (big) icons when item changes location
 // feel free to override for items with complicated icon mechanics
 /obj/item/proc/update_world_icon()
@@ -1117,3 +1135,8 @@
 	else if(icon_state != item_state_world)
 		// moving to world, change icon
 		icon_state = item_state_world
+
+/obj/item/CtrlShiftClick(mob/user)
+	. = ..()
+	var/mob/living/carbon/human/H = user
+	SEND_SIGNAL(H, COMSIG_CLICK_CTRL_SHIFT, src)

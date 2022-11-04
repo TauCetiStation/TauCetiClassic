@@ -85,7 +85,7 @@
 					return PROJECTILE_ACTED
 
 		BP = bodyparts_by_name[check_zone(def_zone)]
-		var/armorblock = run_armor_check(BP, "energy")
+		var/armorblock = run_armor_check(BP, ENERGY)
 		apply_damage(P.damage, P.damage_type, BP, armorblock, P.damage_flags(), P)
 		apply_effects(P.stun,P.weaken,0,0,P.stutter,0,0,armorblock)
 		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
@@ -99,7 +99,7 @@
 		var/obj/item/projectile/bullet/B = P
 
 		var/obj/item/organ/external/BP = bodyparts_by_name[check_zone(def_zone)]
-		var/armor = getarmor_organ(BP, "bullet")
+		var/armor = getarmor_organ(BP, BULLET)
 
 		var/delta = max(0, P.damage - (P.damage * (armor/100)))
 		if(delta)
@@ -258,7 +258,7 @@
 	..()
 
 
-/mob/living/carbon/human/proc/attacked_by(obj/item/I, mob/living/user, def_zone)
+/mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(!I || !user)
 		return FALSE
 
@@ -300,7 +300,7 @@
 	else
 		visible_message("<span class='userdanger'>[src] has been attacked in the [hit_area] with [I.name] by [user]!</span>", ignored_mobs = alt_alpperances_vieawers)
 
-	var/armor = run_armor_check(BP, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
+	var/armor = run_armor_check(BP, MELEE, "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].")
 	if(armor >= 100 || !I.force)
 		return FALSE
 
@@ -345,7 +345,7 @@
 
 		switch(hit_area)
 			if(BP_HEAD)//Harder to score a stun but if you do it lasts a bit longer
-				if(prob(force_with_melee_skill))
+				if(prob(force_with_melee_skill * (100 - armor) / 100))
 					apply_effect(20, PARALYZE, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
 				if(prob(force_with_melee_skill + min(100,100 - src.health)) && src != user && I.damtype == BRUTE)
@@ -367,7 +367,7 @@
 						update_inv_glasses()
 
 			if(BP_CHEST)//Easier to score a stun but lasts less time
-				if(prob((force_with_melee_skill + 10)))
+				if(prob((10 + force_with_melee_skill) * (100 - armor) / 100))
 					apply_effect(5, WEAKEN, armor)
 					visible_message("<span class='userdanger'>[src] has been knocked down!</span>")
 
@@ -387,7 +387,7 @@
 	var/hit_area = parse_zone(zone)
 	visible_message("<span class='warning'>[src] has been hit in the [hit_area] by [O].</span>")
 
-	var/armor = run_armor_check(zone, "melee", "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].") //I guess "melee" is the best fit here
+	var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [hit_area].", "Your armor has softened hit to your [hit_area].") //I guess MELEE is the best fit here
 	..(O, throw_damage, dtype, zone, armor)
 
 /mob/living/carbon/human/embed(obj/item/I, zone, created_wound)
