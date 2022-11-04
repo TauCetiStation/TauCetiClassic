@@ -30,11 +30,11 @@
 		if(target.blocks_air||blocks_air)
 			return FALSE
 
-		for(var/obj/obstacle in src)
+		for(var/atom/obstacle as anythin in src)
 			if(!CanFlowFast(obstacle, target, height))
 				return FALSE
 		if(target != src)
-			for(var/obj/obstacle in target)
+			for(var/atom/obstacle as anything in target)
 				if(!CanFlowFast(obstacle, src, height))
 					return FALSE
 
