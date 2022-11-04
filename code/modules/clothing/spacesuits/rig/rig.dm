@@ -477,15 +477,15 @@
 		toggle_magpulse()
 	H.update_gravity(H.mob_has_gravity())
 
-/obj/item/clothing/suit/space/rig/proc/toggle_magpulse()
+/obj/item/clothing/suit/space/rig/proc/toggle_magpulse(user)
 		flags |= NOSLIP
-		slowdown = boots.slowdown_off
+		user.slowdown = boots.slowdown_off
 		magpulse = TRUE
 		to_chat(usr, "You enable the mag-pulse traction system.")
 
-/obj/item/clothing/suit/space/rig/proc/disable_magpulse()
+/obj/item/clothing/suit/space/rig/proc/disable_magpulse(mob/user)
 		flags &= ~NOSLIP
-		slowdown = initial(slowdown)
+		users.lowdown = initial(slowdown)
 		magpulse = FALSE
 		to_chat(usr, "You disable \the [src] the mag-pulse traction system.")
 
