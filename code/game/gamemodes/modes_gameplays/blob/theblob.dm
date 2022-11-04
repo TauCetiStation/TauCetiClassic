@@ -8,7 +8,7 @@
 	icon = 'icons/mob/blob.dmi'
 	light_range = 3
 	desc = "Some blob creature thingy."
-	density = TRUE
+	density = FALSE
 	anchored = TRUE
 	can_block_air = TRUE
 	layer = BELOW_MOB_LAYER

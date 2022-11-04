@@ -7,8 +7,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	icon_state = "left"
 	visible = 0.0
 	flags = ON_BORDER
-	density = TRUE
-	opacity = FALSE
+	opacity = 0
 	explosion_resistance = 5
 	air_properties_vary_with_direction = 1
 	door_open_sound  = 'sound/machines/windowdoor.ogg'
