@@ -296,10 +296,7 @@
 					module.activate()
 
 		if(!offline)
-			if(magpulse)
 				slowdown = offline_slowdown
-			else
-				slowdown = initial(slowdown)
 
 
 	if(!offline)
