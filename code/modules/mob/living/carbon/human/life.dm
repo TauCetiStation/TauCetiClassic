@@ -156,7 +156,7 @@ var/global/list/tourette_bad_words = list("ГОВНО", "ЖОПА", "ЕБАЛ", 
 				var/old_y = pixel_y
 				if(prob(25))
 					shake_camera(src, rand(1, 2), 4)
-					spin(4,1)
+					spin(4, 1)
 				pixel_x += rand(-2,2)
 				pixel_y += rand(-1,1)
 				sleep(2)
