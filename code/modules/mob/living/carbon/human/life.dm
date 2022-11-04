@@ -129,7 +129,7 @@
 		pressure_difference = pressure_difference * (1 - get_pressure_protection(STOPS_LOWPRESSUREDMAGE))
 		return ONE_ATMOSPHERE - pressure_difference
 
-var/global/list/tourette_bad_words = list("ГОВНО", "ЖОПА", "ЕБАЛ", "БЛЯДИНА", "ХУЕСОС", "СУКА","ЗАЛУПА" ,"УРОД" ,"БЛЯ", "ХЕР", "ШЛЮХА", "ДАВАЛКА", "ПИЗДЕЦ", "УЕБИЩЕ" , "ПИЗДА" , "ЕЛДА" , "ПРАШМАНДОВКА" ,"ШМАРА", "ДЕШЕВКА","СУЧКА","ПУТАНА","ААА")
+var/global/list/tourette_bad_words = list("ГОВНО", "ЖОПА", "ЕБАЛ", "БЛЯДИНА", "ХУЕСОС", "СУКА","ЗАЛУПА" ,"УРОД" ,"БЛЯ", "ХЕР", "ШЛЮХА", "ДАВАЛКА", "ПИЗДЕЦ", "УЕБИЩЕ" , "ПИЗДА" , "ЕЛДА" , "ПРАШМАНДОВКА" ,"ШМАРА", "ДЕШЕВКА","СУЧКА","ПУТАНА","ААА" , "ГЛИНОМЕС", "ГНИДА", "ГОНДОН", "ЧЕРКАШ", "ЕЛДА", "КРЕТИН", "МИНЕТЧИК", "ЕБАНЁШЬСЯ","ТАЯРОЕБ","ЖАБООЕБ","ЯЩЕРОЕБ", "ДЕНДРОФИЛ", "КСЕНОЕБ")
 
 /mob/living/carbon/human/proc/handle_disabilities()
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
