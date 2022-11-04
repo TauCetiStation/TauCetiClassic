@@ -480,7 +480,7 @@
 
 /obj/item/clothing/suit/space/rig/proc/toggle_magpulse()
 		flags |= NOSLIP
-		src.slowdown = boots.slowdown_off
+		slowdown = boots.slowdown_off
 		magpulse = TRUE
 		to_chat(usr, "You enable the mag-pulse traction system.")
 
