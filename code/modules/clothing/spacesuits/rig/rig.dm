@@ -487,7 +487,7 @@
 		flags &= ~NOSLIP
 		slowdown = initial(slowdown)
 		magpulse = FALSE
-		to_chat(usr, "You disable \the [src] the mag-pulse traction system.")
+		to_chat(user, "You disable \the [src] the mag-pulse traction system.")
 
 /obj/item/clothing/suit/space/rig/negates_gravity()
 	return flags & NOSLIP
