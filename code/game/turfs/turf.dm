@@ -20,7 +20,7 @@
 	//Properties for both
 	var/temperature = T20C
 
-	var/blocks_air = 0
+	var/blocks_air = NONE
 	var/icon_old = null
 	var/pathweight = 1
 
