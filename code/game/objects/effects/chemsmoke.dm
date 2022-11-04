@@ -240,9 +240,9 @@
 					continue
 				if(!(target in targetTurfs))
 					continue
-				if(current.c_airblock(target)) //this is needed to stop chemsmoke from passing through thin window walls
+				if(fast_c_airblock(current, target) & AIR_BLOCKED) //this is needed to stop chemsmoke from passing through thin window walls
 					continue
-				if(target.c_airblock(current))
+				if(fast_c_airblock(target, current) & AIR_BLOCKED)
 					continue
 				pending += target
 

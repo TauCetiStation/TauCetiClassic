@@ -30,7 +30,7 @@
 		if(target.blocks_air||blocks_air)
 			return FALSE
 
-		for(var/atom/obstacle as anythin in src)
+		for(var/atom/obstacle as anything in src)
 			if(!CanFlowFast(obstacle, target, height))
 				return FALSE
 		if(target != src)
@@ -56,6 +56,14 @@
 // ZONE_BLOCKED - Not blocked, but zone boundaries will not cross.
 // BLOCKED - Blocked
 /atom/var/can_block_air = FALSE
+
+/turf/proc/recalc_can_block_air()
+	for(var/atom/A as anything in src)
+		if(A.can_block_air)
+			can_block_air = TRUE
+			return
+	can_block_air = FALSE
+
 /atom/proc/c_airblock(turf/other)
 	#ifdef ZASDBG
 	ASSERT(isturf(other))
@@ -88,7 +96,10 @@
 		else
 			return BLOCKED
 
-	var/result = 0
+	if(!can_block_air)
+		return NONE
+
+	var/result = NONE
 	for(var/atom/movable/M in contents)
 		if(M.can_block_air)
 			result |= M.c_airblock(other)
