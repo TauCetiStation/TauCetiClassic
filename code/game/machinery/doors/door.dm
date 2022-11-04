@@ -139,8 +139,12 @@ var/global/list/wedge_image_cache = list()
 	else
 		underlays += global.wedge_image_cache[cache_string]
 
-/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group) return !block_air_zones
+/obj/machinery/door/c_airblock(turf/other)
+	if(block_air_zones)
+		return ..() | ZONE_BLOCKED
+	return ..()
+
+/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density

@@ -46,7 +46,7 @@
 /obj/structure/closet/alter_health()
 	return get_turf(src)
 
-/obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=0)
 	if(wall_mounted)
 		return TRUE
 	return ..()

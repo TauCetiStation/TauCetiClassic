@@ -109,7 +109,7 @@
 /obj/structure/window/blob_act()
 	take_damage(rand(30, 50), BRUTE, MELEE)
 
-/obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(is_fulltile())

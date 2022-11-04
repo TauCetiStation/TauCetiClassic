@@ -1,24 +1,24 @@
 
-/atom/proc/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
+/atom/proc/CanPass(atom/movable/mover, turf/target, height = 1.5)
 	//Purpose: Determines if the object (or airflow) can pass this atom.
 	//Called by: Movement, airflow.
 	//Inputs: The moving atom (optional), target turf, "height" and air group
 	//Outputs: Boolean if can pass.
-	var/retVal = SEND_SIGNAL(src, COMSIG_ATOM_CANPASS, mover, target, height, air_group)
+	var/retVal = SEND_SIGNAL(src, COMSIG_ATOM_CANPASS, mover, target, height)
 	if(retVal & COMPONENT_CANTPASS)
 		return FALSE
 	else if(retVal & COMPONENT_CANPASS)
 		return TRUE
-	return (!density || !height || air_group)
+	return (!density || !height)
 
 #define CanPassFast(source, mover, target) (!source.density || source.CanPass(mover, target))
-#define CanFlowFast(source, target, height, air_group) (!source.can_block_air || source.CanPass(null, target, height, air_group))
+#define CanFlowFast(source, target, height) (!source.can_block_air || source.CanPass(null, target, height))
 
-/turf/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
+/turf/CanPass(atom/movable/mover, turf/target, height = 1.5)
 	if(!target)
 		return FALSE
 
-	var/retVal = SEND_SIGNAL(src, COMSIG_ATOM_CANPASS, mover, target, height, air_group)
+	var/retVal = SEND_SIGNAL(src, COMSIG_ATOM_CANPASS, mover, target, height)
 	if(retVal & COMPONENT_CANTPASS)
 		return FALSE
 	else if(retVal & COMPONENT_CANPASS)
@@ -32,11 +32,11 @@
 			return FALSE
 
 		for(var/obj/obstacle in src)
-			if(!CanFlowFast(obstacle, target, height, air_group))
+			if(!CanFlowFast(obstacle, target, height))
 				return FALSE
 		if(target != src)
 			for(var/obj/obstacle in target)
-				if(!CanFlowFast(obstacle, src, height, air_group))
+				if(!CanFlowFast(obstacle, src, height))
 					return FALSE
 
 		return TRUE

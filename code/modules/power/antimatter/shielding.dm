@@ -75,7 +75,7 @@
 	return ..()
 
 
-/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0)
 	return FALSE
 
 

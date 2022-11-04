@@ -255,7 +255,7 @@ steam.start() -- spawns the effect
 		spawn ( 20 )
 			M.coughedtime = 0
 
-/obj/effect/effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/effect/effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/item/projectile/beam))
 		var/obj/item/projectile/beam/B = mover
 		B.damage = (B.damage/2)
@@ -683,9 +683,10 @@ steam.start() -- spawns the effect
 /obj/structure/foamedmetal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
-/obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
-	if(air_group)
-		return 0
+/obj/structure/foamedmetal/c_airblock(turf/other)
+	return ..() | ZONE_BLOCKED
+
+/obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height = 1.5)
 	return !density
 
 /datum/effect/effect/system/reagents_explosion

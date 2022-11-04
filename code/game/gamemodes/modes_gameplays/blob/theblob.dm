@@ -38,8 +38,8 @@
 	return ..()
 
 
-/obj/structure/blob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0))
+/obj/structure/blob/CanPass(atom/movable/mover, turf/target, height=0)
+	if(!height)
 		return FALSE
 	if(istype(mover) && mover.checkpass(PASSBLOB))
 		return TRUE

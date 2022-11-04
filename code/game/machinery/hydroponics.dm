@@ -91,7 +91,7 @@
 		else if(prob(1 / (myseed.yield * myseed.yield) *100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
 			adjustSYield(1 * rating)
 
-/obj/machinery/hydroponics/CanPass(atom/movable/mover, turf/target, height = 0, air_group = 0)
+/obj/machinery/hydroponics/CanPass(atom/movable/mover, turf/target, height = 0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return TRUE
 	else

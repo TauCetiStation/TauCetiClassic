@@ -43,7 +43,7 @@
 	else
 		return ..() // for fun, for braindamage and fingerprints.
 
-/obj/machinery/optable/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/optable/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	else

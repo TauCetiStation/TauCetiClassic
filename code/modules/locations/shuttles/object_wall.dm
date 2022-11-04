@@ -13,9 +13,7 @@
 	. = ..()
 	update_nearby_tiles(need_rebuild = 1)
 
-/obj/structure/object_wall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group)
-		return 0
+/obj/structure/object_wall/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
 	return !density

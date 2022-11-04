@@ -102,8 +102,7 @@
 /obj/structure/alien/resin/attack_alien(mob/user, damage)
 	..(user, rand(40, 60))
 
-/obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group) return 0
+/obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density

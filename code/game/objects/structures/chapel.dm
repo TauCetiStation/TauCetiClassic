@@ -26,7 +26,7 @@
 		buckled_mob.set_dir(dir)
 		buckled_mob.update_canmove()
 
-/obj/structure/stool/bed/chair/pew/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/stool/bed/chair/pew/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return TRUE
 	if(get_dir(target, loc) & dir)
@@ -301,7 +301,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 	return ..()
 
-/obj/structure/big_bell/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/big_bell/CanPass(atom/movable/mover, turf/target, height=0)
 	return istype(mover) && mover.checkpass(PASSCRAWL)
 
 /obj/structure/big_bell/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, atom/movable/caller)
@@ -567,7 +567,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 		M.pixel_y = M.default_pixel_y
 		cut_overlay(lectern_overlay)
 
-/obj/structure/stool/bed/chair/lectern/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/stool/bed/chair/lectern/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return TRUE
 

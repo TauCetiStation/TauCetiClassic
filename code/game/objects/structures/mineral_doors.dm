@@ -48,9 +48,10 @@
 		add_fingerprint(user)
 		SwitchState()
 
-/obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target, height = 0, air_group = 0)
-	if(air_group)
-		return FALSE
+/obj/structure/mineral_door/c_airblock(turf/other)
+	return ..() | ZONE_BLOCKED
+
+/obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target, height = 0)
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
 	return !density
@@ -271,7 +272,7 @@
 	can_unwrench = FALSE
 	var/close_delay = 100
 
-/obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target, height, air_group)
+/obj/structure/mineral_door/mineral_door/CanPass(atom/movable/mover, turf/target, height)
 	if(istype(mover))
 		return ..()
 	return FALSE

@@ -21,9 +21,10 @@
 	update_nearby_tiles()
 	return ..()
 
-/obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height, air_group)
-	if(!height || air_group) return FALSE
-	else return ..()
+/obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height)
+	if(!height)
+		return FALSE
+	return ..()
 
 /obj/machinery/shield/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -437,6 +438,7 @@
 		icon_state = "energyshield"
 		anchored = TRUE
 		density = TRUE
+		can_block_air = TRUE
 		layer = INFRONT_MOB_LAYER
 		unacidable = 1
 		light_range = 3
@@ -510,7 +512,7 @@
 			if(EXPLODE_LIGHT) //lil boom
 				G.storedpower -= 20
 
-/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		if(prob(20))
 			if(istype(mover, /obj/item/projectile))

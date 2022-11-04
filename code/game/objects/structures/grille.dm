@@ -73,7 +73,7 @@
 						"<span class='warning'>You smash against [src].</span>", \
 						"You hear twisting metal.")
 
-/obj/structure/grille/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/grille/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGRILLE))
 		return 1
 	else

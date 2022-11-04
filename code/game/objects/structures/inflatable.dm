@@ -47,7 +47,7 @@
 	update_nearby_tiles()
 	return ..()
 
-/obj/structure/inflatable/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/inflatable/CanPass(atom/movable/mover, turf/target, height=0)
 	return 0
 
 /obj/structure/inflatable/attack_paw(mob/user)
@@ -137,9 +137,12 @@
 /obj/structure/inflatable/door/attack_hand(mob/user)
 	return TryToSwitchState(user)
 
-/obj/structure/inflatable/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group)
-		return state
+/obj/structure/inflatable/door/c_airblock(turf/other)
+	if(state)
+		return ..()
+	return ..() | ZONE_BLOCKED
+
+/obj/structure/inflatable/door/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
 	return !density

@@ -105,7 +105,7 @@ for reference:
 		if(EXPLODE_LIGHT)
 			take_damage(16, BRUTE, BOMB)
 
-/obj/structure/barricade/wooden/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.
+/obj/structure/barricade/wooden/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	else
@@ -129,7 +129,7 @@ for reference:
 	for(var/mob/living/L in loc) //no need protecc abusers
 		L.bullet_act(Proj, def_zone)
 
-/obj/structure/barricade/bubble/CanPass(atom/movable/mover, turf/target, height=0, air_group=0) //make robots can pass
+/obj/structure/barricade/bubble/CanPass(atom/movable/mover, turf/target, height=0) //make robots can pass
 	if(isrobot(mover))
 		return TRUE
 	return FALSE
@@ -233,7 +233,7 @@ for reference:
 		anchored = !anchored
 		icon_state = "barrier[src.locked]"
 
-/obj/machinery/deployable/barrier/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.
+/obj/machinery/deployable/barrier/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	else
