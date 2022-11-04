@@ -485,7 +485,7 @@
 
 /obj/item/clothing/suit/space/rig/proc/disable_magpulse(mob/user)
 		flags &= ~NOSLIP
-		users.lowdown = initial(slowdown)
+		user.slowdown = initial(slowdown)
 		magpulse = FALSE
 		to_chat(usr, "You disable \the [src] the mag-pulse traction system.")
 
