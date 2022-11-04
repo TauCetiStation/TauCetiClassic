@@ -138,8 +138,6 @@
 	return TryToSwitchState(user)
 
 /obj/structure/inflatable/door/c_airblock(turf/other)
-	if(state)
-		return ..()
 	return ..() | ZONE_BLOCKED
 
 /obj/structure/inflatable/door/CanPass(atom/movable/mover, turf/target, height=0)

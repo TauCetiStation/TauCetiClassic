@@ -51,7 +51,7 @@
 
 	return TRUE
 
-//Basically another way of calling CanPass(null, other, 0, 0) and CanPass(null, other, 1.5, 1).
+//Basically another way of calling CanPass(null, other, 0, 0) and CanPass(null, other, 1.5).
 //Returns:
 // 0 - Not blocked
 // ZONE_BLOCKED - Not blocked, but zone boundaries will not cross.
@@ -61,10 +61,9 @@
 	#ifdef ZASDBG
 	ASSERT(isturf(other))
 	#endif
-	if(CanPass(null, other, 0, 0))
-		return ZONE_BLOCKED * !CanPass(null, other, 1.5, 1)
+	if(CanPass(null, other, 0))
+		return NONE
 	return BLOCKED
-
 
 /turf/c_airblock(turf/other)
 	#ifdef ZASDBG

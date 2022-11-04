@@ -120,7 +120,7 @@
 	for(var/atom/movable/border_obstacle as anything in src)
 		if(forget != border_obstacle)
 			if(border_obstacle.flags & ON_BORDER)
-				if(!border_obstacle.CanPass(mover, mover_loc, 1, 0))
+				if(!border_obstacle.CanPass(mover, mover_loc, 1))
 					mover.Bump(border_obstacle, TRUE)
 					return FALSE
 			else
@@ -133,7 +133,7 @@
 
 	//Finally, check objects/mobs to block entry that are not on the border
 	for(var/atom/movable/obstacle as anything in second_check)
-		if(!obstacle.CanPass(mover, mover_loc, 1, 0))
+		if(!obstacle.CanPass(mover, mover_loc, 1))
 			mover.Bump(obstacle, TRUE)
 			return FALSE
 	return TRUE //Nothing found to block so return success!
