@@ -795,7 +795,7 @@
 	cell_type = /obj/item/weapon/stock_parts/cell/super
 	var/combat_mode = FALSE
 	var/combat_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
-	var/space_armor = list(melee = 50, bullet = 45, laser = 40, energy = 30, bomb = 50, bio = 100, rad = 60)
+	var/space_armor = list(melee = 60, bullet = 55, laser = 45, energy = 30, bomb = 50, bio = 100, rad = 60)
 	var/combat_slowdown = 0
 
 /obj/item/clothing/suit/space/rig/syndi/atom_init()
@@ -865,7 +865,7 @@
 	slowdown = 1.2
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/chem_dispenser/combat)
 	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
-	space_armor = list(melee = 60, bullet = 50, laser = 50, energy = 45, bomb = 50, bio = 100, rad = 60)
+	space_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	combat_slowdown = 0.5
 
 /obj/item/clothing/head/helmet/space/rig/syndi/elite
@@ -913,7 +913,7 @@
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	unacidable = TRUE
 	combat_armor = list(melee = 55, bullet = 60, laser = 50, energy = 55, bomb = 100, bio = 100, rad = 100)
-	space_armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
+	space_armor = list(melee = 60, bullet = 55, laser = 45, energy = 45, bomb = 80, bio = 100, rad = 80)
 	glowtype = "terrohazmat"
 	rig_type = "hazmat"
 
