@@ -1,6 +1,7 @@
-#define HEATER_MODE_STANDBY	10
-#define HEATER_MODE_HEAT	20
-#define HEATER_MODE_COOL	30
+#define HEATER_MODE_AUTO	10
+#define HEATER_MODE_OFF		20
+#define HEATER_MODE_HEAT	30
+#define HEATER_MODE_COOL	40
 
 
 /obj/machinery/space_heater
@@ -14,7 +15,7 @@
 	interact_open = TRUE
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/on = FALSE
-	var/mode = HEATER_MODE_STANDBY
+	var/mode = HEATER_MODE_OFF
 	var/targetTemperature = T20C
 	var/heatingPower = 40000
 	var/efficiency = 20000
@@ -46,10 +47,7 @@
 	return ..()
 
 /obj/machinery/space_heater/update_icon()
-	if(on)
-		icon_state = "sheater-[mode]"
-	else
-		icon_state = "sheater-off"
+	icon_state = "sheater-[mode]"
 
 	cut_overlays()
 	if(panel_open)
@@ -162,14 +160,14 @@
 	if(.)
 		return
 
-	if(action == "temp-add")
-		targetTemperature = clamp(targetTemperature + text2num(params["value"]), max(settableTemperatureMedian - settableTemperatureRange, TCMB), settableTemperatureMedian + settableTemperatureRange)
+	if(action == "temp-change")
+		targetTemperature = clamp(text2num(params["value"]), max(settableTemperatureMedian - settableTemperatureRange - T0C, TCMB), settableTemperatureMedian + settableTemperatureRange - T0C) + T0C
 		update_icon()
 
 	if(action == "mode-change")
 		mode = round((text2num(params["value"])), 10)
 
-		if(mode == HEATER_MODE_STANDBY)
+		if(mode == HEATER_MODE_OFF)
 			on = FALSE
 		else
 			on = TRUE
@@ -184,27 +182,36 @@
 
 	if(powered() || cell && cell.charge > 0)
 		var/datum/gas_mixture/env = loc.return_air()
-		if(env && abs(env.temperature - targetTemperature) <= 0.25)
-			mode = HEATER_MODE_STANDBY
+		if(env && abs(env.temperature - targetTemperature) <= 0.25 && mode == HEATER_MODE_AUTO)
+			mode = HEATER_MODE_OFF
 			on = FALSE
 		else
 			var/transfer_moles = 0.25 * env.total_moles
 			var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
 			if(removed)
-				var/heat_transfer = removed.get_thermal_energy_change(targetTemperature)
+				var/needed_temp = 0
+				switch(mode)
+					if(HEATER_MODE_AUTO)
+						needed_temp = targetTemperature
+					if(HEATER_MODE_HEAT)
+						needed_temp = settableTemperatureMedian + settableTemperatureRange
+					if(HEATER_MODE_COOL)
+						needed_temp = max(settableTemperatureMedian - settableTemperatureRange, TCMB)
+
+				var/heat_transfer = removed.get_thermal_energy_change(needed_temp)
 				var/power_draw
-				if(heat_transfer > 0)	//heating air
-					heat_transfer = min( heat_transfer , heatingPower ) //limit by the power rating of the heater
+				if(heat_transfer > 0 && mode == HEATER_MODE_HEAT || mode == HEATER_MODE_AUTO)	//heating air
+					heat_transfer = min( heat_transfer , heatingPower * (mode == HEATER_MODE_AUTO ? 0.5 : 1) ) //limit by the power rating of the heater
 
 					removed.add_thermal_energy(heat_transfer)
 					power_draw = heat_transfer
-				else	//cooling air
+				else if(mode == HEATER_MODE_COOL || mode == HEATER_MODE_AUTO)	//cooling air
 					heat_transfer = abs(heat_transfer)
 
 					//Assume the heat is being pumped into the hull which is fixed at 20 C
 					var/cop = removed.temperature / T20C	//coefficient of performance from thermodynamics -> power used = heat_transfer/cop
-					heat_transfer = min(heat_transfer, cop * heatingPower)	//limit heat transfer by available power
+					heat_transfer = min(heat_transfer, cop * heatingPower * (mode == HEATER_MODE_AUTO ? 0.5 : 1))	//limit heat transfer by available power
 
 					heat_transfer = removed.add_thermal_energy(-heat_transfer)	//get the actual heat transfer
 
@@ -214,21 +221,14 @@
 				else
 					use_power(power_draw TAUCETI_POWER_DRAW_MOD)
 
-				if(heat_transfer > 0)
-					mode = HEATER_MODE_HEAT
-				else if(heat_transfer < -0)
-					mode = HEATER_MODE_COOL
-				else
-					mode = HEATER_MODE_STANDBY
-					on = FALSE
-
 			env.merge(removed)
 	else
 		on = FALSE
-		mode = HEATER_MODE_STANDBY
+		mode = HEATER_MODE_OFF
 		power_change()
 	update_icon()
 
-#undef HEATER_MODE_STANDBY
+#undef HEATER_MODE_AUTO
+#undef HEATER_MODE_OFF
 #undef HEATER_MODE_HEAT
 #undef HEATER_MODE_COOL

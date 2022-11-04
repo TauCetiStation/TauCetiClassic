@@ -9,146 +9,88 @@ export const SpaceHeater = (props, context) => {
   const {
     mode,
     powerLevel,
+    minTemp,
+    maxTemp,
     targetTemp,
     currentTemp,
   } = data;
   return (
-    <Window width={300} height={200} title="Обогреватель">
-      <Window.Content fitted width="300" height="200">
-        <Box backgroundColor="#696C72" width="300px" height="170px"
+    <Window width={300} height={275} title="Обогреватель">
+      <Window.Content fitted width="300" height="275">
+        <Box backgroundColor="#696C72" width="300px" height="245px" position="fixed"
           style={{
-            'position': 'fixed',
-            'border-bottom': '30px solid #4A4D55',
+            'border-bottom': '50px solid #4A4D55',
             'border-top': '5px solid #959595',
           }}>
-          <Box backgroundColor="#696C72" width="300px" height="60px"
+          <Box backgroundColor="#696C72" width="300px" height="90px" position="fixed" top="185px"
             style={{
-              'position': 'fixed',
-              'top': '140px',
               'border-bottom': '15px solid #4A4D55',
               'border-radius': '500px',
             }} />
-          
-          <Box width="80px" height="25px"
-            style={{
-              'position': 'fixed',
-              'top': '36px',
-              'left': '14px',
-              'color': '#888888',
-              'font-weight': 'bold',
-              'font-family': 'Consolas',
-              'font-size': '19px',
-              'text-shadow': '-0.5px 2.0px 1px #4A4D55,2px -0.5px 1px #4A4D55, -0.5px -2.5px 0px #999999,-2px -0.5px 0px #999999',
-            }}>
-            ТЕМПЕРАТУРА:
-          </Box>
-          <Box backgroundColor="#4A4D55" width="120px" height="60px"
-            style={{
-              'position': 'fixed',
-              'top': '57px',
-              'left': '15px',
-              'border-bottom': '5px solid #959595',
-              'border-top': '4px solid #25272b',
-            }}>
-            <Box backgroundColor="#461f16" width="45px" height="40px"
-              style={{
-                'position': 'fixed',
-                'top': '65px',
-                'left': '51px',
-                'border-top': '3px solid #25272b',
-                'border-bottom': '5px solid #696C72',
-                'color': '#D0330f',
-                'font-weight': 'bold',
-                'font-size': '25px',
-                'font-family': 'Consolas',
-                'padding-top': '1px',
-                'padding-left': '2px',
-                'font-stretch': 'ultra-condensed',
-              }}>
-              {targetTemp > 0 ? "+" : ""}{targetTemp}
-            </Box>
-            <Box backgroundColor="#461f16" width="30px" height="23px"
-              style={{
-                'position': 'fixed',
-                'top': '65px',
-                'left': '101px',
-                'border-top': '3px solid #25272b',
-                'border-bottom': '3px solid #696C72',
-                'color': '#D0330f',
-                'font-weight': 'bold',
-                'font-size': '15px',
-                'font-family': 'Consolas',
-                'padding-bottom': '6px',
-                'padding-left': '2px',
-                'font-stretch': 'ultra-condensed',
-              }}>
-              {currentTemp > 0 ? "+" : ""}{currentTemp < 100 && currentTemp > -100 ? currentTemp : currentTemp ? "!!" : ""}
-            </Box>
             
-            <Button className="SpaceHeater__button" width="23px" height="23px" top="+27px" left="+7px" color="#888888"
-              content={
-                <Box className="SpaceHeater__button-Content" style={{ 'text-shadow': '0px 0px 9px #FFFFFF' }}>
-                  -                
-                </Box>
-              }
-              onClick={() => act('temp-add', { value: "-1" })}
-            />
-            <Button className="SpaceHeater__button" width="23px" height="23px" top="+27px" left="+62px" color="#888888"
-              content={
-                <Box className="SpaceHeater__button-Content" style={{ 'text-shadow': '0px 0px 9px #FFFFFF' }}>
-                  +                
-                </Box>
-              }
-              onClick={() => act('temp-add', { value: "1" })}
-            />
-            
-          </Box>
-          
-          <Box width="80px" height="25px"
-            style={{
-              'position': 'fixed',
-              'top': '119px',
-              'left': '15px',
-              'color': '#888888',
-              'font-weight': 'bold',
-              'font-family': 'Consolas',
-              'font-size': '19px',
-              'text-shadow': '-0.5px 2.0px 1px #4A4D55,2px -0.5px 1px #4A4D55, -0.5px -2.5px 0px #999999,-2px -0.5px 0px #999999',
-            }}>
-            АККУМУЛЯТОР:
-          </Box>
-          <Battery charge={powerLevel} top="103px" left="15px" />
-        
-          <div>
+          <Box position="fixed" left="20px" top="75px">
             <Knob
-              top="0px"
-              left="70px"
+              className="SpaceHeater__Knob"
+              value={targetTemp}
+              minValue={minTemp}
+              maxValue={maxTemp}
+              step="1"
+              stepPixelSize="2"
+              onDrag={(e, value) => act('temp-change', { value: value })} />
+            <svg
+              width="120"
+              height="120">
+              <path d="M 29 0 A 64 58 25 1 1 120 0 M 30 0 A 48 48 0 1 1 90 0" stroke="#4A4D55" fill="#4A4D55" fill-rule="evenodd" stroke-width="1" />
+
+            </svg>
+            <Box backgroundColor="#461f16" width="55px" height="30px" position="absolute" left="32px" top="85px" fontSize="20px" fontFamily="Consolas" bold={1} textColor="#D0330f"
+              style={{
+                'border-top': '3px solid #25272b',
+                'border-bottom': '3px solid #666666',
+              }}>
+              {targetTemp > 0 ? "+" : "-"}{targetTemp}C°
+            </Box>
+          </Box>
+            
+          <Box position="fixed" left="175px" top="75px">
+            <Knob
               className="SpaceHeater__Knob"
               value={mode}
               minValue="10"
-              maxValue="30"
+              maxValue="40"
               step="1"
               stepPixelSize="3"
               onDrag={(e, value) => act('mode-change', { value: value })} />
-            <Icon name="power-off" color="#4A4D55" size="2.5"
+            <Icon name="cog" color="#4A4D55" size="2.5" position="absolute" left="-20px" top="70px" />
+            <Icon name="power-off" color="#4A4D55" size="2.5" position="absolute" left="-22px" top="-13px" />
+            <Icon name="sun" color="#4A4D55" size="2.5" position="absolute" left="69px" top="-13px" />
+            <Icon name="snowflake-o" color="#4A4D55" size="2.5" position="absolute" left="70px" top="70px" />
+          </Box>
+            
+          <Box width="130px" height="42px" backgroundColor="#4A4D55" position="fixed" top="195px" left="15px" textAlign="center" textColor="#666666" fontFamily="Consolas" bold={1} fontSize="19px"
+            style={{
+              'border': '5px inset #aaaaaa',
+              'border-top-color': '#25272b',
+              'border-left-color': '#25272b',
+            }}>
+            <Box backgroundColor="#461f16" width="120px" height="32px" fontSize="25px" textColor="#D0330f"
               style={{
-                'position': 'fixed',
-                'top': '146px',
-                'left': '162px',
-              }} />
-            <Icon name="fire" color="#4A4D55" size="2.5"
-              style={{
-                'position': 'fixed',
-                'top': '40px',
-                'left': '208px',
-              }} />
-            <Icon name="snowflake-o" color="#4A4D55" size="2.5"
-              style={{
-                'position': 'fixed',
-                'top': '146px',
-                'left': '252px',
-              }} />
-          </div>
+                'border-top': '3px solid #25272b',
+                'border-bottom': '3px solid #666666',
+              }}>
+              {currentTemp > 0 ? "+" : ""}{currentTemp}C°
+            </Box>
+          </Box>
+          
+          <Box width="130px" height="42px" backgroundColor="#4A4D55" position="fixed" top="195px" left="155px" textAlign="center" textColor="#666666" fontFamily="Consolas" bold={1} fontSize="19px"
+            style={{
+              'border': '5px inset #aaaaaa',
+              'border-top-color': '#25272b',
+              'border-left-color': '#25272b',
+            }}>
+            <Battery charge={powerLevel} battery_width={120} battery_height={30} border_color="#aaaaaa" />
+          </Box>
+
         </Box>
       </Window.Content>
     </Window>

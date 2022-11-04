@@ -18,7 +18,6 @@
 @include meta.load-css('./atomic/text.scss');
 
 // Components
-@include meta.load-css('./components/Battery.scss');
 @include meta.load-css('./components/BlockQuote.scss');
 @include meta.load-css('./components/Button.scss');
 @include meta.load-css('./components/ColorBox.scss');
