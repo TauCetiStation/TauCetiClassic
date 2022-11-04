@@ -93,8 +93,6 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
-/obj/structure/stool/bed/roller,
-/obj/machinery/iv_drip,
 /obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "largecell apc top";
@@ -1307,9 +1305,6 @@
 	},
 /area/station/medical/hallway)
 "jR" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whiteblue"
@@ -1649,7 +1644,6 @@
 	},
 /area/station/hallway/secondary/exit)
 "ma" = (
-/obj/structure/stool/bed/chair/office/light,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteblue"
@@ -1808,24 +1802,24 @@
 	},
 /area/station/cargo/storage)
 "mU" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/sleeper{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
 	},
 /area/station/medical/hallway)
 "nb" = (
-/obj/machinery/chem_master,
+/obj/structure/stool/bed/roller,
+/obj/machinery/iv_drip,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/station/medical/hallway)
 "nc" = (
-/obj/machinery/reagentgrinder,
-/obj/item/stack/sheet/mineral/phoron{
-	layer = 2.9
-	},
-/obj/structure/table,
+/obj/structure/stool/bed/roller,
+/obj/machinery/iv_drip,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -1838,14 +1832,14 @@
 	},
 /area/station/medical/hallway)
 "ng" = (
-/obj/machinery/vending/medical{
-	req_access = list()
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -32
 	},
 /obj/machinery/light,
+/obj/machinery/vending/medical{
+	req_access = list()
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -3568,8 +3562,6 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
-/obj/structure/stool/bed/roller,
-/obj/machinery/iv_drip,
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
