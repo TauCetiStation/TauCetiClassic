@@ -5,7 +5,7 @@
 	time = 600
 
 /datum/recipe/barrel/draft_wine
-	reagents = list("adelhyde" = 5, "grapejuice" = 20)
+	reagents = list("adelhyde" = 5, "grapejuice" = 15, "enzyme" = 5)
 	items = list()
 	result = /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/wine/draft
 	time = 600
