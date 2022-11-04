@@ -477,7 +477,7 @@
 		toggle_magpulse()
 	H.update_gravity(H.mob_has_gravity())
 
-/obj/item/clothing/suit/space/rig/proc/toggle_magpulse(user)
+/obj/item/clothing/suit/space/rig/proc/toggle_magpulse(mob/user)
 		flags |= NOSLIP
 		user.slowdown = boots.slowdown_off
 		magpulse = TRUE
