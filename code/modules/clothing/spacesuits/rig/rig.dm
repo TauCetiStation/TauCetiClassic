@@ -481,7 +481,7 @@
 		flags |= NOSLIP
 		slowdown = boots.slowdown_off
 		magpulse = TRUE
-		to_chat(usr, "You enable the mag-pulse traction system.")
+		to_chat(user, "You enable the mag-pulse traction system.")
 
 /obj/item/clothing/suit/space/rig/proc/disable_magpulse(mob/user)
 		flags &= ~NOSLIP
