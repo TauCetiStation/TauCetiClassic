@@ -472,7 +472,7 @@
 	if(H.wear_suit != src) return
 
 	if(magpulse)
-		disable_magpulse()
+		disable_magpulse(H)
 	else
 		toggle_magpulse()
 	H.update_gravity(H.mob_has_gravity())
