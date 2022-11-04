@@ -1591,14 +1591,14 @@
 	name = "Adelhyde"
 	id = "adelhyde"
 	description = "Sweet component in drinks."
-	taste_message = "sweet"
+	taste_message = "sweetness"
 	color = "#e1442a" // rgb: 225, 68, 42
 
 /datum/reagent/consumable/drink/flanergide
 	name = "Flanergide"
 	id = "flanergide"
 	description = "Presumed to be the component that makes drinks taste spicy."
-	taste_message = "spicy"
+	taste_message = "spiciness"
 	color = "#66872c" // rgb: 102, 135, 44
 
 /datum/reagent/consumable/drink/flanergide/on_general_digest(mob/living/M)
@@ -1609,7 +1609,7 @@
 	name = "Bronson Extract"
 	id = "bronson_extract"
 	description = "Presumably made from Bronson roots."
-	taste_message = "robust and bitter"
+	taste_message = "robustness and bitter"
 	color = "#d8d121" // rgb: 216, 209, 33
 
 /datum/reagent/consumable/drink/bronson_extract/on_general_digest(mob/living/M)
@@ -1622,7 +1622,7 @@
 	name = "Powdered Delta"
 	id = "powdered_delta"
 	description = "It is believed to be the ingredient that makes drinks taste sour."
-	taste_message = "sour"
+	taste_message = "sourness"
 	color = "#71b2e3" // rgb: 113, 178, 227
 	overdose = 20
 
