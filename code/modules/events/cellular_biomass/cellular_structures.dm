@@ -57,7 +57,7 @@
 /obj/structure/cellular_biomass/wall
 	anchored = TRUE
 	density = TRUE
-	can_clock_air = TRUE
+	can_block_air = TRUE
 	opacity = 1
 	layer = 4
 
