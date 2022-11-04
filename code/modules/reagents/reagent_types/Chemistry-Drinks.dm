@@ -1622,7 +1622,7 @@
 	name = "Powdered Delta"
 	id = "powdered_delta"
 	description = "It is believed to be the ingredient that makes drinks taste sour."
-	taste_message = "sour."
+	taste_message = "sour"
 	color = "#71b2e3" // rgb: 113, 178, 227
 	overdose = 20
 
