@@ -474,7 +474,7 @@
 	if(magpulse)
 		disable_magpulse(H)
 	else
-		toggle_magpulse()
+		toggle_magpulse(H)
 	H.update_gravity(H.mob_has_gravity())
 
 /obj/item/clothing/suit/space/rig/proc/toggle_magpulse(mob/user)
