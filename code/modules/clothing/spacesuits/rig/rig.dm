@@ -296,7 +296,7 @@
 					module.activate()
 
 		if(!offline)
-			if(magpulse == 1)
+			if(magpulse == TRUE)
 				slowdown = offline_slowdown
 			else
 				slowdown = initial(slowdown)
@@ -481,13 +481,13 @@
 /obj/item/clothing/suit/space/rig/proc/toggle_magpulse()
 		flags |= NOSLIP
 		src.slowdown = boots.slowdown_off
-		magpulse = 1
+		magpulse = TRUE
 		to_chat(usr, "You enable the mag-pulse traction system.")
 
 /obj/item/clothing/suit/space/rig/proc/disable_magpulse()
 		flags &= ~NOSLIP
 		src.slowdown = initial(slowdown)
-		magpulse = 0
+		magpulse = FALSE
 		to_chat(usr, "You disable \the [src] the mag-pulse traction system.")
 
 /obj/item/clothing/suit/space/rig/negates_gravity()
