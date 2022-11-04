@@ -296,12 +296,11 @@
 					module.activate()
 
 		if(!offline)
-			if(magpulse == TRUE)
+			if(magpulse)
 				slowdown = offline_slowdown
 			else
 				slowdown = initial(slowdown)
-		else
-			slowdown = offline_slowdown
+
 
 	if(!offline)
 		var/total_energy_use = passive_energy_use
