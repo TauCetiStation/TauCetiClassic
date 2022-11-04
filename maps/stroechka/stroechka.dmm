@@ -2250,39 +2250,6 @@
 	icon_state = "black"
 	},
 /area/station/hallway/secondary/arrival)
-"qw" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/engineering/equip)
-"qx" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/engineering/equip)
-"qA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/engineering/equip)
 "qC" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/engineering,
@@ -2367,7 +2334,9 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/engineering/engine)
 "rm" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 1
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engineering/engine)
 "rr" = (
@@ -2407,7 +2376,7 @@
 	},
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating{
-	icon_state = "panelscorched"
+	icon_state = "platebot"
 	},
 /area/station/engineering/engine)
 "rA" = (
@@ -2427,8 +2396,17 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
 	},
-/obj/machinery/space_heater,
-/turf/simulated/floor/plating,
+/obj/machinery/computer/general_air_control/large_tank_control{
+	dir = 1;
+	frequency = 1444;
+	input_tag = "inc_in";
+	name = "Incinerator Control";
+	output_tag = null;
+	sensors = list("inc_sensor"="Incinerator")
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebot"
+	},
 /area/station/engineering/engine)
 "rF" = (
 /obj/machinery/vending/junkfood,
@@ -2593,6 +2571,10 @@
 /area/station/engineering/equip)
 "sH" = (
 /obj/machinery/drone_fabricator,
+/obj/structure/noticeboard/bar{
+	pixel_y = 28
+	},
+/obj/item/weapon/paper/wires,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -3276,6 +3258,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 10
 	},
+/obj/machinery/meter,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "xH" = (
@@ -3339,6 +3322,7 @@
 /area/station/engineering/atmos)
 "yE" = (
 /obj/machinery/atmospherics/pipe/manifold4w/visible/cyan,
+/obj/machinery/meter,
 /turf/simulated/floor/plating{
 	dir = 4;
 	icon_state = "warnplate"
@@ -4266,6 +4250,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/machinery/meter,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "Ew" = (
@@ -4288,6 +4273,7 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/red{
 	dir = 8
 	},
+/obj/machinery/meter,
 /turf/simulated/floor/plating{
 	dir = 8;
 	icon_state = "warnplate"
@@ -4416,13 +4402,11 @@
 	},
 /area/station/cargo/storage)
 "FB" = (
-/obj/machinery/power/port_gen/pacman{
-	anchored = 1
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/machinery/power/port_gen/pacman/super,
 /turf/simulated/floor/plating{
 	icon_state = "platebot"
 	},
@@ -4615,8 +4599,10 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "GM" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 1
+	},
 /turf/environment/space,
 /area/space)
 "GR" = (
@@ -4649,6 +4635,7 @@
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow{
 	dir = 4
 	},
+/obj/machinery/meter,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "GX" = (
@@ -5835,6 +5822,9 @@
 /obj/item/stack/sheet/mineral/phoron{
 	amount = 50
 	},
+/obj/item/stack/sheet/mineral/phoron{
+	amount = 50
+	},
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -6115,7 +6105,6 @@
 "Sw" = (
 /obj/structure/table,
 /obj/item/blueprints,
-/obj/item/weapon/paper/wires,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkyellow"
@@ -24672,7 +24661,7 @@ hU
 hU
 mp
 ko
-qw
+qs
 sD
 vD
 zV
@@ -24929,7 +24918,7 @@ jb
 lB
 mr
 oj
-qx
+qs
 sH
 vI
 Ab
@@ -25186,7 +25175,7 @@ jd
 lJ
 mw
 ow
-qA
+qs
 sI
 vJ
 Ah
