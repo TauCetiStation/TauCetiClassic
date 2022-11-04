@@ -54,15 +54,16 @@
 //Basically another way of calling CanPass(null, other, 0, 0) and CanPass(null, other, 1.5, 1).
 //Returns:
 // 0 - Not blocked
-// AIR_BLOCKED - Blocked
 // ZONE_BLOCKED - Not blocked, but zone boundaries will not cross.
-// BLOCKED - Blocked, zone boundaries will not cross even if opened.
+// BLOCKED - Blocked
 /atom/var/can_block_air = FALSE
 /atom/proc/c_airblock(turf/other)
 	#ifdef ZASDBG
 	ASSERT(isturf(other))
 	#endif
-	return (AIR_BLOCKED * !CanPass(null, other, 0, 0)) | (ZONE_BLOCKED * !CanPass(null, other, 1.5, 1))
+	if(CanPass(null, other, 0, 0))
+		return ZONE_BLOCKED * !CanPass(null, other, 1.5, 1)
+	return BLOCKED
 
 
 /turf/c_airblock(turf/other)
@@ -87,7 +88,7 @@
 		if(z == other.z)
 			return ZONE_BLOCKED
 		else
-			return AIR_BLOCKED
+			return BLOCKED
 
 	var/result = 0
 	for(var/atom/movable/M in contents)
