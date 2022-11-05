@@ -17,7 +17,7 @@
 		vis_contents -= graphic_remove
 
 /turf/proc/update_air_properties()
-	var/block = fast_c_airblock(src, src)
+	var/block = FAST_C_AIRBLOCK(src, src)
 	if(block & AIR_BLOCKED)
 		//dbg(blocked)
 		return TRUE
@@ -33,13 +33,13 @@
 		if(!unsim)
 			continue
 
-		block = fast_c_airblock(unsim, src)
+		block = FAST_C_AIRBLOCK(unsim, src)
 
 		if(block & AIR_BLOCKED)
 			//unsim.dbg(air_blocked, turn(180,d))
 			continue
 
-		var/r_block = fast_c_airblock(src, unsim)
+		var/r_block = FAST_C_AIRBLOCK(src, unsim)
 
 		if(r_block & AIR_BLOCKED)
 			continue
@@ -93,7 +93,7 @@
 		#endif
 		for(var/dir in to_check)
 			var/turf/simulated/other = get_step(T, dir)
-			if(istype(other) && other.zone == T.zone && !(fast_c_airblock(src, T) & AIR_BLOCKED) && get_dist(src, other) <= 1)
+			if(istype(other) && other.zone == T.zone && !(FAST_C_AIRBLOCK(src, T) & AIR_BLOCKED) && get_dist(src, other) <= 1)
 				. |= dir
 
 /turf/simulated/update_air_properties()
@@ -101,7 +101,7 @@
 		c_copy_air() //not very efficient :(
 		zone = null //Easier than iterating through the list at the zone.
 
-	var/s_block = fast_c_airblock(src, src)
+	var/s_block = FAST_C_AIRBLOCK(src, src)
 	if(s_block & AIR_BLOCKED)
 		#ifdef ZASDBG
 		if(verbose)
@@ -134,7 +134,7 @@
 		if(!unsim) //edge of map
 			continue
 
-		var/block = fast_c_airblock(unsim, src)
+		var/block = FAST_C_AIRBLOCK(unsim, src)
 		if(block & AIR_BLOCKED)
 
 			#ifdef ZASDBG
@@ -145,7 +145,7 @@
 
 			continue
 
-		var/r_block = fast_c_airblock(src, unsim)
+		var/r_block = FAST_C_AIRBLOCK(src, unsim)
 		if(r_block & AIR_BLOCKED)
 
 			#ifdef ZASDBG

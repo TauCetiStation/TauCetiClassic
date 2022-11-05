@@ -206,7 +206,7 @@ SUBSYSTEM_DEF(air)
 		tiles_to_update.len--
 
 		// Check if the turf is self-zone-blocked
-		if(fast_c_airblock(T, T) & ZONE_BLOCKED)
+		if(FAST_C_AIRBLOCK(T, T) & ZONE_BLOCKED)
 			deferred_tiles += T
 			if (MC_TICK_CHECK)
 				return
@@ -336,10 +336,10 @@ SUBSYSTEM_DEF(air)
 	ASSERT(isturf(B))
 	#endif
 
-	var/ablock = fast_c_airblock(A, B)
+	var/ablock = FAST_C_AIRBLOCK(A, B)
 	if(ablock == BLOCKED)
 		return BLOCKED
-	return ablock | fast_c_airblock(B, A)
+	return ablock | FAST_C_AIRBLOCK(B, A)
 
 /datum/controller/subsystem/air/proc/has_valid_zone(turf/simulated/T)
 	#ifdef ZASDBG

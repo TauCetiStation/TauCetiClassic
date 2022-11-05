@@ -11,8 +11,6 @@
 		return TRUE
 	return (!density || !height)
 
-#define CanFlowFast(source, target, height) (!source.can_block_air || source.CanPass(null, target, height))
-
 /turf/CanPass(atom/movable/mover, turf/target, height = 1.5)
 	if(!target)
 		return FALSE
@@ -31,11 +29,11 @@
 			return FALSE
 
 		for(var/atom/obstacle as anything in src)
-			if(!CanFlowFast(obstacle, target, height))
+			if(!CAN_FLOW_FAST(obstacle, target, height))
 				return FALSE
 		if(target != src)
 			for(var/atom/obstacle as anything in target)
-				if(!CanFlowFast(obstacle, src, height))
+				if(!CAN_FLOW_FAST(obstacle, src, height))
 					return FALSE
 
 		return TRUE
