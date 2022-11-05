@@ -22037,8 +22037,8 @@
 /area/station/maintenance/dormitory)
 "mzg" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/pinpointer/advpinpointer{
-	pixel_y = 12
+/obj/item/weapon/pinpointer{
+	pixel_y = 13
 	},
 /obj/item/weapon/disk/nuclear,
 /turf/simulated/floor/wood,

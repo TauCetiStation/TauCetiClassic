@@ -5971,7 +5971,6 @@
 /area/station/cargo/office)
 "bhY" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/pinpointer/advpinpointer,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -5979,6 +5978,7 @@
 	pixel_y = 32
 	},
 /obj/item/weapon/skill_cartridge/usp10,
+/obj/item/weapon/pinpointer,
 /obj/item/weapon/disk/nuclear,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)

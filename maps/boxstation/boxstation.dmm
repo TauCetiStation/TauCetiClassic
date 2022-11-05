@@ -34684,8 +34684,6 @@
 	pixel_x = 39;
 	pixel_y = 1
 	},
-/obj/item/weapon/pinpointer/advpinpointer,
-/obj/item/weapon/disk/nuclear,
 /obj/structure/bobross{
 	pixel_x = 32
 	},
@@ -34693,6 +34691,8 @@
 	c_tag = "Captain's Office";
 	dir = 8
 	},
+/obj/item/weapon/pinpointer,
+/obj/item/weapon/disk/nuclear,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bki" = (
