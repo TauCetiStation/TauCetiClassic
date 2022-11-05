@@ -1,4 +1,4 @@
-#define ZASDBG
+//#define ZASDBG
 //#define MULTIZAS
 
 #define AIR_BLOCKED (1<<0)
