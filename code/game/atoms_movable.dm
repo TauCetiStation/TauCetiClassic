@@ -65,9 +65,6 @@
 		if (old_has_opaque_atom != T.has_opaque_atom)
 			T.reconsider_lights()
 
-	if (can_block_air && istype(T))
-		T.recalc_can_block_air()
-
 	vis_locs = null //clears this atom out of all viscontents
 	vis_contents.Cut()
 
