@@ -7,5 +7,5 @@
 
 #define ZONE_MIN_SIZE 14 //zones with less than this many turfs will always merge, even if the connection is not direct
 
-#define FAST_C_AIRBLOCK(this, other) ((this.blocks_air || this.can_block_air) && this.c_airblock(other))
-#define CAN_FLOW_FAST(source, target, height) (!source.can_block_air || source.CanPass(null, target, height))
+#define FAST_C_AIRBLOCK(turf, other) ((turf.blocks_air || turf.can_block_air) && turf.c_airblock(other))
+#define CAN_FLOW_FAST(movable, target, height) (!movable.can_block_air || movable.CanPass(null, target, height))
