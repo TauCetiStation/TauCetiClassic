@@ -22,7 +22,7 @@
 		for (var/mob/target as anything in motionTargets)
 			if(QDELETED(target) || target.stat == DEAD)
 				lostTarget(target)
-				return
+				continue
 			// If not detecting with motion camera...
 			if (!area_motion)
 				// See if the camera is still in range
@@ -41,8 +41,7 @@
 	return 1
 
 /obj/machinery/camera/proc/lostTarget(mob/target)
-	if (target in motionTargets)
-		motionTargets -= target
+	motionTargets -= target
 	if (motionTargets.len == 0)
 		cancelAlarm()
 
