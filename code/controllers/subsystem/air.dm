@@ -51,7 +51,7 @@ SUBSYSTEM_DEF(air)
 	var/currentpart = SSAIR_PIPENETS
 
 	var/map_loading = TRUE
-	var/map_init_levels = 0 // number of z-levels initialized under this type of SS.
+	var/map_init_levels = -1 // number of z-levels initialized under this type of SS.
 	var/list/queued_for_update
 
 /datum/controller/subsystem/air/stat_entry(msg)
@@ -432,10 +432,14 @@ SUBSYSTEM_DEF(air)
 		T.needs_air_update = TRUE
 
 /datum/controller/subsystem/air/StartLoadingMap()
+	if(map_init_levels == -1) // SSair will init turfs itself
+		return
 	LAZYINITLIST(queued_for_update)
 	map_loading = TRUE
 
 /datum/controller/subsystem/air/StopLoadingMap()
+	if(map_init_levels == -1)
+		return
 	map_loading = FALSE
 	map_init_levels = world.maxz // update z level counting, so air start to work on added levels.
 
