@@ -1,20 +1,20 @@
 /atom/movable/singularity_effect
 	plane = SINGULARITY_EFFECT_PLANE_1
-	appearance_flags = PIXEL_SCALE
+	appearance_flags = PIXEL_SCALE | RESET_TRANSFORM
 	icon = 'icons/effects/288x288.dmi'
 	icon_state = "gravitational_lens"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /atom/movable/singularity_swirl
 	plane = SINGULARITY_EFFECT_PLANE_1
-	appearance_flags = PIXEL_SCALE
+	appearance_flags = PIXEL_SCALE | RESET_TRANSFORM
 	icon = 'icons/effects/288x288.dmi'
 	icon_state = "gravitational_swirl"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /atom/movable/singularity_lens
 	plane = SINGULARITY_EFFECT_PLANE_0
-	appearance_flags = PIXEL_SCALE
+	appearance_flags = PIXEL_SCALE | RESET_TRANSFORM
 	icon = 'icons/effects/288x288.dmi'
 	icon_state = "gravitational_lens"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -63,6 +63,15 @@
 	..()
 
 	update_icon(STAGE_ONE)
+
+	add_filter("singa_ring", 1, bloom_filter(rgb(100,0,0), 2, 2, 255))
+
+	animate(src, transform = turn(matrix(), -120), time = 2, loop = -1, flags = ANIMATION_PARALLEL)
+	animate(transform = turn(matrix(), -240), time = 3, loop = -1)
+	animate(transform = turn(matrix(), 0), time = 1, loop = -1)
+
+	animate(get_filter("singa_ring"), size = 1, offset = 1, time = 5, loop = -1, easing = CIRCULAR_EASING, flags = ANIMATION_PARALLEL)
+	animate(size = 2, offset = 2, time = 10, loop = -1, easing = CIRCULAR_EASING)
 
 	START_PROCESSING(SSobj, src)
 	return INITIALIZE_HINT_LATELOAD
@@ -156,13 +165,13 @@
 			pixel_y = 0
 			singulo_swirl.plane = SINGULARITY_EFFECT_PLANE_1
 			singulo_effect.plane = SINGULARITY_EFFECT_PLANE_1
-			animate(singulo_lens, transform = matrix().Scale(0.45), time = 25)
+			animate(singulo_lens, transform = matrix().Scale(0.5), time = 25)
 			singulo_lens.pixel_x = -128
 			singulo_lens.pixel_y = -128
-			animate(singulo_swirl, transform = matrix().Scale(0.23), time = 25)
+			animate(singulo_swirl, transform = matrix().Scale(0.25), time = 25)
 			singulo_swirl.pixel_x = -128
 			singulo_swirl.pixel_y = -128
-			animate(singulo_effect, transform = matrix().Scale(0.11), time = 25)
+			animate(singulo_effect, transform = matrix().Scale(0.015), time = 25)
 			singulo_effect.pixel_x = -128
 			singulo_effect.pixel_y = -128
 		if(STAGE_TWO )
@@ -172,13 +181,13 @@
 			pixel_y = -32
 			singulo_swirl.plane = SINGULARITY_EFFECT_PLANE_1
 			singulo_effect.plane = SINGULARITY_EFFECT_PLANE_2
-			animate(singulo_lens, transform = matrix().Scale(0.72), time = 25)
+			animate(singulo_lens, transform = matrix().Scale(0.75), time = 25)
 			singulo_lens.pixel_x = -96
 			singulo_lens.pixel_y = -96
-			animate(singulo_swirl, transform = matrix().Scale(0.38), time = 25)
+			animate(singulo_swirl, transform = matrix().Scale(0.5), time = 25)
 			singulo_swirl.pixel_x = -96
 			singulo_swirl.pixel_y = -96
-			animate(singulo_effect, transform = matrix().Scale(0.19), time = 25)
+			animate(singulo_effect, transform = matrix().Scale(0.205), time = 25)
 			singulo_effect.pixel_x = -96
 			singulo_effect.pixel_y = -96
 		if(STAGE_THREE)
@@ -188,13 +197,13 @@
 			pixel_y = -64
 			singulo_swirl.plane = SINGULARITY_EFFECT_PLANE_2
 			singulo_effect.plane = SINGULARITY_EFFECT_PLANE_2
-			animate(singulo_lens, transform = matrix().Scale(1.16), time = 25)
+			animate(singulo_lens, transform = matrix().Scale(1.25), time = 25)
 			singulo_lens.pixel_x = -64
 			singulo_lens.pixel_y = -64
-			animate(singulo_swirl, transform = matrix().Scale(0.62), time = 25)
+			animate(singulo_swirl, transform = matrix().Scale(0.75), time = 25)
 			singulo_swirl.pixel_x = -64
 			singulo_swirl.pixel_y = -64
-			animate(singulo_effect, transform = matrix().Scale(0.31), time = 25)
+			animate(singulo_effect, transform = matrix().Scale(0.325), time = 25)
 			singulo_effect.pixel_x = -64
 			singulo_effect.pixel_y = -64
 		if(STAGE_FOUR)
@@ -204,13 +213,13 @@
 			pixel_y = -96
 			singulo_swirl.plane = SINGULARITY_EFFECT_PLANE_2
 			singulo_effect.plane = SINGULARITY_EFFECT_PLANE_3
-			animate(singulo_lens, transform = matrix().Scale(1.87), time = 25)
+			animate(singulo_lens, transform = matrix().Scale(1.75), time = 25)
 			singulo_lens.pixel_x = -32
 			singulo_lens.pixel_y = -32
 			animate(singulo_swirl, transform = matrix().Scale(1), time = 25)
 			singulo_swirl.pixel_x = -32
 			singulo_swirl.pixel_y = -32
-			animate(singulo_effect, transform = matrix().Scale(0.5), time = 25)
+			animate(singulo_effect, transform = matrix().Scale(0.47), time = 25)
 			singulo_effect.pixel_x = -32
 			singulo_effect.pixel_y = -32
 		if(STAGE_FIVE)
@@ -223,10 +232,10 @@
 			animate(singulo_lens, transform = matrix().Scale(3), time = 25)
 			singulo_lens.pixel_x = 0
 			singulo_lens.pixel_y = 0
-			animate(singulo_swirl, transform = matrix().Scale(1.6), time = 25)
+			animate(singulo_swirl, transform = matrix().Scale(1.5), time = 25)
 			singulo_swirl.pixel_x = 0
 			singulo_swirl.pixel_y = 0
-			animate(singulo_effect, transform = matrix().Scale(0.8), time = 25)
+			animate(singulo_effect, transform = matrix().Scale(0.55), time = 25)
 			singulo_effect.pixel_x = 0
 			singulo_effect.pixel_y = 0
 
