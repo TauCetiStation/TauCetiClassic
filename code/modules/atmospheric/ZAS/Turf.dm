@@ -93,7 +93,7 @@
 		#endif
 		for(var/dir in to_check)
 			var/turf/simulated/other = get_step(T, dir)
-			if(istype(other) && other.zone == T.zone && !(FAST_C_AIRBLOCK(src, T) & AIR_BLOCKED) && get_dist(src, other) <= 1)
+			if(istype(other) && other.zone == T.zone && !(FAST_C_AIRBLOCK(other, T) & AIR_BLOCKED) && get_dist(src, other) <= 1)
 				. |= dir
 
 /turf/simulated/update_air_properties()
