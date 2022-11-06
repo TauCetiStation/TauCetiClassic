@@ -147,11 +147,11 @@
 	var/curTemp
 	if(istype(L))
 		var/datum/gas_mixture/env = L.return_air()
-		curTemp = env.temperature
+		curTemp = round(env.temperature - T0C, 1)
 	else if(isturf(L))
-		curTemp = L.temperature
+		curTemp = round(L.temperature - T0C, 1)
 
-	data["currentTemp"] = isnull(curTemp) ? "N/A" : round(curTemp - T0C, 1)
+	data["currentTemp"] = curTemp
 
 	return data
 

@@ -2,6 +2,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Knob } from '../components';
 import { Icon } from '../components/Icon';
 import { Battery } from '../components/Battery';
+import { SegmentDisplay } from '../components/SegmentDisplay';
 import { Window } from '../layouts';
 
 export const SpaceHeater = (props, context) => {
@@ -43,13 +44,14 @@ export const SpaceHeater = (props, context) => {
               <path d="M 29 0 A 64 58 25 1 1 120 0 M 30 0 A 48 48 0 1 1 90 0" stroke="#4A4D55" fill="#4A4D55" fill-rule="evenodd" stroke-width="1" />
 
             </svg>
-            <Box backgroundColor="#461f16" width="55px" height="30px" position="absolute" left="32px" top="85px" fontSize="20px" fontFamily="Consolas" bold={1} textColor="#D0330f"
+			<Box width="75px" height="30px" backgroundColor="#461f16" position="fixed" top="160px" left="42px"
               style={{
-                'border-top': '3px solid #25272b',
-                'border-bottom': '3px solid #666666',
+                'border': '5px inset #aaaaaa',
+                'border-top-color': '#25272b',
+                'border-left-color': '#25272b',
               }}>
-              {targetTemp > 0 ? "+" : "-"}{targetTemp}C°
-            </Box>
+              <SegmentDisplay position="relative" left="-1px" top="1px" display_width={5} display_height={20} display_text={(targetTemp > 0 ? "+" : "")+targetTemp+"C°"} />
+			</Box>
           </Box>
             
           <Box position="fixed" left="175px" top="75px">
@@ -67,19 +69,14 @@ export const SpaceHeater = (props, context) => {
             <Icon name="snowflake-o" color="#4A4D55" size="2.5" position="absolute" left="70px" top="70px" />
           </Box>
             
-          <Box width="130px" height="42px" backgroundColor="#4A4D55" position="fixed" top="195px" left="15px" textAlign="center" textColor="#666666" fontFamily="Consolas" bold={1} fontSize="19px"
+          <Box width="130px" height="42px" backgroundColor="#461f16" position="fixed" top="195px" left="15px"
             style={{
               'border': '5px inset #aaaaaa',
               'border-top-color': '#25272b',
               'border-left-color': '#25272b',
             }}>
-            <Box backgroundColor="#461f16" width="120px" height="32px" fontSize="25px" textColor="#D0330f"
-              style={{
-                'border-top': '3px solid #25272b',
-                'border-bottom': '3px solid #666666',
-              }}>
-              {currentTemp > 0 ? "+" : ""}{currentTemp}C°
-            </Box>
+			
+			<SegmentDisplay position="relative" left="0px" top="1px" display_width={6} display_height={30} display_text={currentTemp < 999 && currentTemp > -999 ? ((currentTemp > 0 ? "+" : "")+currentTemp+"C°") : "ОШИБКА"} />
           </Box>
           
           <Box width="130px" height="42px" backgroundColor="#4A4D55" position="fixed" top="195px" left="155px" textAlign="center" textColor="#666666" fontFamily="Consolas" bold={1} fontSize="19px"

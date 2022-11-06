@@ -4,7 +4,6 @@ import { Box } from './Box';
 export const Battery = props => {
   const {
     charge,
-    className,
     battery_width,
     battery_height,
     border_color,

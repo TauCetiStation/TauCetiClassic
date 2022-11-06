@@ -4,6 +4,7 @@
 	assets = list(
 		"tgui.bundle.js" = 'tgui/public/tgui.bundle.js',
 		"tgui.bundle.css" = 'tgui/public/tgui.bundle.css',
+		"Gys14Segment.ttf" = 'html/browser/Gys14Segment.ttf',
 	)
 
 /datum/asset/simple/tgui_panel
