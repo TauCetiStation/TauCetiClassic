@@ -1,24 +1,7 @@
-.SpaceHeater__button {
-  background: #888888;
-  border:3px solid #959595;
-  border-bottom:2px solid #4A4D55;
-  border-right:2px solid #4A4D55;
-  border-radius:5px;
-  color:#25272b;
-  font-size:25px;
-  font-family: Consolas;
-  font-weight: bolder;
-  padding-left:2px;
-  .SpaceHeater__button-Content {
-    position:relative;
-    top:-13px;
-  }
-  &:hover {
-    background: #666666;
-	border:3px solid #757575;
-    border-bottom:2px solid #4A4D55;
-    border-right:2px solid #4A4D55;
-  }
+.SpaceHeater__Box {
+  border: 5px inset #aaaaaa;
+  border-top-color: #25272b;
+  border-left-color: #25272b;
 }
 
 .SpaceHeater__Knob {

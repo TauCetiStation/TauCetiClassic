@@ -17,13 +17,13 @@ export const SegmentDisplay = props => {
   const segments = [];
   
   for (let i = 0; i < segments_count; i++) {
-	  segments.push("#");
+    segments.push("#");
   }
 
   return (
     <Box width={segments_width+"px"} height={display_height+"px"} overflow="hidden" position="relative" {...rest}>
-		<Box width={segments_width+"px"} height={segment_height+"px"} position="absolute" top="0px" textColor="#261f16" fontSize={display_height+"px"} textAlign="right" fontFamily="Gys14Segment" bold={0}> {segments} </Box>
-		<Box width={segments_width+"px"} height={segment_height+"px"} position="absolute" top="0px" textColor="#D0330f" fontSize={display_height+"px"} textAlign="right" fontFamily="Gys14Segment" bold={0}> {display_text} </Box>
+      <Box width={segments_width+"px"} height={segment_height+"px"} position="absolute" top="0px" textColor="#261f16" fontSize={display_height+"px"} textAlign="right" fontFamily="Gys14Segment" bold={0}> {segments} </Box>
+      <Box width={segments_width+"px"} height={segment_height+"px"} position="absolute" top="0px" textColor="#D0330f" fontSize={display_height+"px"} textAlign="right" fontFamily="Gys14Segment" bold={0}> {display_text} </Box>
     </Box>
   );
 };
