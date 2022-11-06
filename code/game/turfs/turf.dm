@@ -266,6 +266,8 @@
 
 	var/list/temp_res = resources
 
+	var/old_can_block_air = can_block_air
+
 	//world << "Replacing [src.type] with [N]"
 
 	if(connections)
@@ -324,6 +326,8 @@
 
 	if(SSair)
 		SSair.mark_for_update(W)
+
+	W.can_block_air = old_can_block_air
 
 	W.levelupdate()
 
