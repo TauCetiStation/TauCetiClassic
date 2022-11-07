@@ -66,9 +66,9 @@
 
 	add_filter("singa_ring", 1, bloom_filter(rgb(100,0,0), 2, 2, 255))
 
-	animate(src, transform = turn(matrix(), -120), time = 2, loop = -1, flags = ANIMATION_PARALLEL)
-	animate(transform = turn(matrix(), -240), time = 3, loop = -1)
-	animate(transform = turn(matrix(), 0), time = 1, loop = -1)
+	animate(src, transform = turn(matrix(), -120), time = 5, loop = -1, flags = ANIMATION_PARALLEL)
+	animate(transform = turn(matrix(), -240), time = 7, loop = -1)
+	animate(transform = turn(matrix(), 0), time = 5, loop = -1)
 
 	animate(get_filter("singa_ring"), size = 1, offset = 1, time = 5, loop = -1, easing = CIRCULAR_EASING, flags = ANIMATION_PARALLEL)
 	animate(size = 2, offset = 2, time = 10, loop = -1, easing = CIRCULAR_EASING)
@@ -89,6 +89,7 @@
 	QDEL_NULL(singulo_effect)
 	vis_contents -= singulo_lens
 	QDEL_NULL(singulo_lens)
+
 	visible_message("<span class='warning'><B>[src] slows it's endless spinning down. A second passes - and reality around [src] distorts before allowing [src] to collapse into itself and disappear from existence.</B></span>")
 	STOP_PROCESSING(SSobj, src)
 	return ..()
@@ -187,7 +188,7 @@
 			animate(singulo_swirl, transform = matrix().Scale(0.5), time = 25)
 			singulo_swirl.pixel_x = -96
 			singulo_swirl.pixel_y = -96
-			animate(singulo_effect, transform = matrix().Scale(0.205), time = 25)
+			animate(singulo_effect, transform = matrix().Scale(0.19), time = 25)
 			singulo_effect.pixel_x = -96
 			singulo_effect.pixel_y = -96
 		if(STAGE_THREE)
@@ -203,7 +204,7 @@
 			animate(singulo_swirl, transform = matrix().Scale(0.75), time = 25)
 			singulo_swirl.pixel_x = -64
 			singulo_swirl.pixel_y = -64
-			animate(singulo_effect, transform = matrix().Scale(0.325), time = 25)
+			animate(singulo_effect, transform = matrix().Scale(0.3), time = 25)
 			singulo_effect.pixel_x = -64
 			singulo_effect.pixel_y = -64
 		if(STAGE_FOUR)
@@ -219,7 +220,7 @@
 			animate(singulo_swirl, transform = matrix().Scale(1), time = 25)
 			singulo_swirl.pixel_x = -32
 			singulo_swirl.pixel_y = -32
-			animate(singulo_effect, transform = matrix().Scale(0.47), time = 25)
+			animate(singulo_effect, transform = matrix().Scale(0.41), time = 25)
 			singulo_effect.pixel_x = -32
 			singulo_effect.pixel_y = -32
 		if(STAGE_FIVE)
@@ -235,7 +236,7 @@
 			animate(singulo_swirl, transform = matrix().Scale(1.5), time = 25)
 			singulo_swirl.pixel_x = 0
 			singulo_swirl.pixel_y = 0
-			animate(singulo_effect, transform = matrix().Scale(0.55), time = 25)
+			animate(singulo_effect, transform = matrix().Scale(0.5), time = 25)
 			singulo_effect.pixel_x = 0
 			singulo_effect.pixel_y = 0
 
