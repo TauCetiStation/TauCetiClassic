@@ -280,12 +280,6 @@
 	required_reagents = list("inaprovaline" = 1, "carbon" = 1)
 	result_amount = 2
 
-/datum/chemical_reaction/kyphotorin
-	name = "Kyphotorin"
-	id = "kyphotorin"
-	result = "kyphotorin"
-	required_reagents = list("lexorin" = 5, "peridaxon" = 5, "nanobots" = 1, "dexalinp" = 5, "sugar" = 5, "iron" = 5)
-	result_amount = 5
 
 /*
 /datum/chemical_reaction/hyperzine
