@@ -113,7 +113,14 @@
 
 /datum/action/innate/eminence/teleport2cultist/Activate()
 	. = ..()
-	var/mob/M = input(owner, "Выберите последователя для телепорта", "Телепорт к последователю") as null|anything in cult_religion.members
-	if(M)
-		owner.forceMove(get_turf(M))
+	var/list/cultists = list()
+	var/count = 0
+	for(var/mob/M as anything in global.cult_religion.members - owner)
+		count++
+		cultists["[count]) [M.real_name][M.stat == DEAD ? " (DEAD)" : ""]"] = M
+
+	var/target = tgui_input_list(owner, "Выберите последователя для телепорта", "Телепорт к последователю", cultists)
+	if(target)
+		owner.forceMove(get_turf(cultists[target]))
+		owner.playsound_local(null, 'sound/magic/magic_missile.ogg', VOL_EFFECTS_MASTER)
 		flash_color(owner, flash_time = 25)

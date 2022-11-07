@@ -119,9 +119,6 @@
 	blood_type = H.dna.b_type
 	dna_hash = H.dna.unique_enzymes
 	fingerprint_hash = md5(H.dna.uni_identity)
-	for(var/datum/quirk/Q in H.roundstart_quirks)
-		if(Q.disability)
-			disabilities += Q.name
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]")
