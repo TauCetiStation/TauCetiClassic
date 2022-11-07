@@ -39,6 +39,13 @@
 	icon_state = "bottle1"
 	list_reagents = list("inaprovaline" = 30)
 
+/obj/item/weapon/reagent_containers/glass/bottle/nanobots
+	name = "medical nanobots bottle"
+	desc = "A small bottle with nanobots inside. They heal all wounds in the blink of an eye."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle2"
+	list_reagents = list("mednanobots" = 30)
+
 /obj/item/weapon/reagent_containers/glass/bottle/toxin
 	name = "toxin bottle"
 	desc = "A small bottle of toxins. Do not drink, it is poisonous."
