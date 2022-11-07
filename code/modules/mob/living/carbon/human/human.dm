@@ -343,8 +343,6 @@
 
 /mob/living/carbon/human/proc/regen_bodyparts(remove_blood_amount = 0, use_cost = FALSE)
 	if(regenerating_bodypart) // start fixing broken/destroyed limb
-		if(remove_blood_amount)
-			blood_remove(remove_blood_amount)
 		var/regenerating_capacity_penalty = 0 // Used as time till organ regeneration.
 		if(regenerating_bodypart.is_stump)
 			regenerating_capacity_penalty = regenerating_bodypart.regen_bodypart_penalty
@@ -367,13 +365,11 @@
 				visible_message("<span class='notice'>You see something resembling [parse_zone(regenerating_bodypart.body_zone)] at [src]'s [regenerating_bodypart.parent.name]...</span>")
 			if(65)
 				visible_message("<span class='userdanger'>A new [parse_zone(regenerating_bodypart.body_zone)] has grown from [src]'s [regenerating_bodypart.parent.name]!</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] your [parse_zone(regenerating_bodypart.body_zone)] again!</span>")
-		if(prob(50))
+		if(prob(25))
 			emote("scream")
 		if(regenerating_organ_time >= regenerating_capacity_penalty) // recover organ
 			regenerating_bodypart.rejuvenate()
 			regenerating_organ_time = 0
-			if(use_cost)
-				nutrition -= regenerating_capacity_penalty
 			regenerating_bodypart = null
 			update_body()
 

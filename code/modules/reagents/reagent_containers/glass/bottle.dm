@@ -39,13 +39,6 @@
 	icon_state = "bottle1"
 	list_reagents = list("inaprovaline" = 30)
 
-/obj/item/weapon/reagent_containers/glass/bottle/kyphotorin
-	name = "kyphotorin bottle"
-	desc = "A small bottle. Contains kyphotorin - used to recover bones."
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle1"
-	list_reagents = list("kyphotorin" = 30)
-
 /obj/item/weapon/reagent_containers/glass/bottle/toxin
 	name = "toxin bottle"
 	desc = "A small bottle of toxins. Do not drink, it is poisonous."
