@@ -341,7 +341,7 @@
 				return BP
 	return FALSE // In case we didn't find anything.
 
-/mob/living/carbon/human/proc/regen_bodyparts(remove_blood_amount = 0, use_cost = FALSE)
+/mob/living/carbon/human/proc/regen_bodyparts()
 	if(regenerating_bodypart) // start fixing broken/destroyed limb
 		var/regenerating_capacity_penalty = 0 // Used as time till organ regeneration.
 		if(regenerating_bodypart.is_stump)
