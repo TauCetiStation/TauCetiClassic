@@ -22,6 +22,9 @@
 	var/settableTemperatureMedian = 30 + T0C
 	var/settableTemperatureRange = 30
 
+	var/prevTemp = 0
+	var/prevMode = 0
+
 /obj/machinery/space_heater/atom_init()
 	. = ..()
 	cell = new(src)
@@ -162,7 +165,12 @@
 
 	if(action == "temp-change")
 		targetTemperature = clamp(text2num(params["value"]), max(settableTemperatureMedian - settableTemperatureRange - T0C, TCMB), settableTemperatureMedian + settableTemperatureRange - T0C) + T0C
+
 		update_icon()
+
+		if(prevTemp != targetTemperature)
+			playsound(src, 'sound/machines/knob.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+			prevTemp = targetTemperature
 
 	if(action == "mode-change")
 		mode = round((text2num(params["value"])), 10)
@@ -171,7 +179,12 @@
 			on = FALSE
 		else
 			on = TRUE
+
 		update_icon()
+
+		if(prevMode != mode)
+			playsound(src, 'sound/machines/knob.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+			prevMode = mode
 
 /obj/machinery/space_heater/is_operational()
 	return !(stat & BROKEN)
