@@ -2,5 +2,5 @@
   font-family: "Gys14Segment";
   src: url(Gys14Segment.ttf);
 }
-
-* {}
+/* font-face in ie doesn't work without styles defined. Fuck you microsoft */
+:root {}
