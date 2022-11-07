@@ -4,6 +4,8 @@
 	assets = list(
 		"tgui.bundle.js" = 'tgui/public/tgui.bundle.js',
 		"tgui.bundle.css" = 'tgui/public/tgui.bundle.css',
+		"Gys14Segment.ttf"    = 'html/custom-fonts/Gys14Segment.ttf',
+		"custom-fonts.css"    = 'html/custom-fonts/custom-fonts.css'
 	)
 
 /datum/asset/simple/tgui_panel
@@ -12,21 +14,19 @@
 		"tgui-panel.bundle.css" = 'tgui/public/tgui-panel.bundle.css',
 	)
 
-
 /datum/asset/simple/jquery
 	assets = list(
 		"jquery.min.js" = 'code/modules/goonchat/browserassets/js/jquery.min.js'
 	)
 
-/datum/asset/simple/custom_fonts
+/datum/asset/simple/fontawesome
 	assets = list(
-		"Gys14Segment.ttf"    = 'html/custom-fonts/fonts/Gys14Segment.ttf',
-		"fa-regular-400.eot"  = 'html/custom-fonts/fonts/fa-regular-400.eot',
-		"fa-regular-400.woff" = 'html/custom-fonts/fonts/fa-regular-400.woff',
-		"fa-solid-900.eot"    = 'html/custom-fonts/fonts/fa-solid-900.eot',
-		"fa-solid-900.woff"   = 'html/custom-fonts/fonts/fa-solid-900.woff',
-		"v4shim.css"          = 'html/custom-fonts/css/v4-shims.min.css',
-		"custom-fonts.css"    = 'html/custom-fonts/css/all.min.css',
+		"fa-regular-400.eot"  = 'html/font-awesome/webfonts/fa-regular-400.eot',
+		"fa-regular-400.woff" = 'html/font-awesome/webfonts/fa-regular-400.woff',
+		"fa-solid-900.eot"    = 'html/font-awesome/webfonts/fa-solid-900.eot',
+		"fa-solid-900.woff"   = 'html/font-awesome/webfonts/fa-solid-900.woff',
+		"v4shim.css"          = 'html/font-awesome/css/v4-shims.min.css',
+		"font-awesome.css"    = 'html/font-awesome/css/all.min.css'
 	)
 
 /datum/asset/simple/spider_os

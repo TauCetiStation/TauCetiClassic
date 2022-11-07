@@ -45,7 +45,7 @@
 	window.initialize(inline_assets = list(
 		get_asset_datum(/datum/asset/simple/tgui_panel),
 	))
-	window.send_asset(get_asset_datum(/datum/asset/simple/custom_fonts))
+	window.send_asset(get_asset_datum(/datum/asset/simple/fontawesome))
 	// Other setup
 	request_telemetry()
 	addtimer(CALLBACK(src, .proc/on_initialize_timed_out), 5 SECONDS)

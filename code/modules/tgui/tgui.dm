@@ -99,7 +99,7 @@
 	else
 		window.send_message("ping")
 	var/flush_queue = window.send_asset(
-		get_asset_datum(/datum/asset/simple/custom_fonts)
+		get_asset_datum(/datum/asset/simple/fontawesome)
 		)
 	for(var/datum/asset/asset in src_object.tgui_assets(user))
 		flush_queue |= window.send_asset(asset)
