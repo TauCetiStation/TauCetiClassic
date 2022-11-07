@@ -497,7 +497,7 @@
 
 	var/obj/effect/effect/forcefield/rune/R = new
 	var/list/diffs = get_aspect_diffs()
-	H.AddComponent(/datum/component/forcefield, "power aura", 30 * diffs[ASPECT_CHAOS], 1 MINUTE / diffs[ASPECT_RESCUE], 2.5 MINUTE / diffs[ASPECT_RESCUE], R, FALSE, TRUE)
+	H.AddComponent(/datum/component/forcefield, "power aura", 30 * sqrt(diffs[ASPECT_CHAOS]), 1 MINUTE / sqrt(diffs[ASPECT_RESCUE]), 2.5 MINUTE / sqrt(diffs[ASPECT_RESCUE]), R, FALSE, TRUE)
 	SEND_SIGNAL(H, COMSIG_FORCEFIELD_PROTECT, H)
 
 	return TRUE
@@ -507,7 +507,7 @@
 	for(var/need_aspect in needed_aspects)
 		var/datum/aspect/aspect = religion.aspects[need_aspect]
 		to_chat(world,"[aspect], [religion.aspects[need_aspect]], [religion.aspects[needed_aspects[need_aspect]]]")
-		diffs += list("[aspect.name]" = aspect.power - need_aspect + 1)
+		diffs += list("[aspect.name]" = aspect.power - needed_aspects[need_aspect] + 1)
 	return diffs
 
 /datum/religion_rites/instant/cult/upgrade_tome
