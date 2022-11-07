@@ -4,6 +4,13 @@
 /datum/religion_rites/instant/chaplain
 	religion_type = /datum/religion/chaplain
 
+/datum/religion_rites/instant/cult/proc/get_aspect_diffs()
+	var/list/diffs = list()
+	for(var/need_aspect in needed_aspects)
+		var/datum/aspect/aspect = religion.aspects[need_aspect]
+		diffs[aspect.name] = aspect.power - needed_aspects[need_aspect] + 1
+	return diffs
+
 /datum/religion_rites/instant/cult/sacrifice
 	name = "Жертвоприношение"
 	desc = "Душа для древнего бога."
@@ -501,14 +508,6 @@
 	SEND_SIGNAL(H, COMSIG_FORCEFIELD_PROTECT, H)
 
 	return TRUE
-
-/datum/religion_rites/instant/cult/proc/get_aspect_diffs()
-	var/list/diffs = list()
-	for(var/need_aspect in needed_aspects)
-		var/datum/aspect/aspect = religion.aspects[need_aspect]
-		to_chat(world,"[aspect], [religion.aspects[need_aspect]], [religion.aspects[needed_aspects[need_aspect]]]")
-		diffs += list("[aspect.name]" = aspect.power - needed_aspects[need_aspect] + 1)
-	return diffs
 
 /datum/religion_rites/instant/cult/upgrade_tome
 	name = "Улучшение Тома"
