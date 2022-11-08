@@ -154,7 +154,7 @@
 	var/datum/callback/on_sweep_pull_success
 
 /datum/component/swiping/Initialize(datum/swipe_component_builder/SCB)
-	if(!istype(parent, /obj/item))
+	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	interupt_on_sweep_hit_types = SCB.interupt_on_sweep_hit_types
