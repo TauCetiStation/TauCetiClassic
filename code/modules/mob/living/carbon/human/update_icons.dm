@@ -118,7 +118,15 @@ Please contact me on #coderbus IRC. ~Carn x
 	else if(S.sprite_sheets[sprite_sheet_slot])
 		icon_path = S.sprite_sheets[sprite_sheet_slot]
 
-	var/image/I = image(icon = icon_path, icon_state = "[t_state][icon_state_appendix]", layer = layer)
+	var/fem = ""
+	if(H.gender == FEMALE && S.gender_limb_icons)
+		if(item_state != null) // some sprites have null item_state, so check icon_states for sure
+			if("[item_state]_fem" in icon_states(def_icon_path))
+				fem = "_fem"
+		else if("[icon_state]_fem" in icon_states(def_icon_path))
+			fem = "_fem"
+
+	var/image/I = image(icon = icon_path, icon_state = "[t_state][fem][icon_state_appendix]", layer = layer)
 	I.color = color
 
 	if(dirt_overlay && bloodied_icon_state)
@@ -740,8 +748,11 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/tail_state = species.tail
 			if(random_tail_holder)
 				tail_state = random_tail_holder
-
-			var/image/tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = tail_state)
+			var/tail_gender_appendix = null
+			if(species.gender_tail_icons && gender == FEMALE)
+				tail_gender_appendix = "_fem"
+			
+			var/image/tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = "[tail_state][tail_gender_appendix]")
 
 			var/obj/item/organ/external/chest/BP = bodyparts_by_name[BP_CHEST]
 			if(BP.status & ORGAN_DEAD)

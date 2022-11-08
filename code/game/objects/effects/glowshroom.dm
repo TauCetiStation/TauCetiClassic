@@ -1,6 +1,6 @@
 //separate dm since hydro is getting bloated already
 
-/obj/effect/glowshroom
+/obj/structure/glowshroom
 	name = "glowshroom"
 	anchored = TRUE
 	opacity = 0
@@ -24,10 +24,10 @@
 	var/lastTick = 0
 	var/spreaded = 1
 
-/obj/effect/glowshroom/single
+/obj/structure/glowshroom/single
 	spreadChance = 0
 
-/obj/effect/glowshroom/atom_init()
+/obj/structure/glowshroom/atom_init()
 
 	. = ..()
 
@@ -52,11 +52,11 @@
 	set_light(round(potency/10), light_power, light_color)
 	lastTick = world.timeofday
 
-/obj/effect/glowshroom/Destroy()
+/obj/structure/glowshroom/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/effect/glowshroom/process()
+/obj/structure/glowshroom/process()
 	if(!spreaded)
 		return
 	STOP_PROCESSING(SSobj, src)
@@ -73,7 +73,7 @@
 					spreadsIntoAdjacent = 1
 
 				for(var/turf/simulated/floor/plating/airless/asteroid/earth in view(3,src))
-					if(spreadsIntoAdjacent || !locate(/obj/effect/glowshroom) in view(1,earth))
+					if(spreadsIntoAdjacent || !locate(/obj/structure/glowshroom) in view(1,earth))
 						possibleLocs += earth
 
 				if(!possibleLocs.len)
@@ -83,7 +83,7 @@
 
 				var/shroomCount = 0 //hacky
 				var/placeCount = 1
-				for(var/obj/effect/glowshroom/shroom in newLoc)
+				for(var/obj/structure/glowshroom/shroom in newLoc)
 					shroomCount++
 				for(var/wallDir in cardinal)
 					var/turf/isWall = get_step(newLoc,wallDir)
@@ -92,18 +92,18 @@
 				if(shroomCount >= placeCount)
 					continue
 
-				var/obj/effect/glowshroom/child = new /obj/effect/glowshroom(newLoc)
+				var/obj/structure/glowshroom/child = new /obj/structure/glowshroom(newLoc)
 				child.potency = potency
 				child.yield = yield
 				child.delay = delay
-				child.update_integrity(get_integrity())
+				child.modify_max_integrity(get_integrity())
 
 				spreaded++
 
 		if(prob(evolveChance)) //very low chance to evolve on its own
 			potency += rand(4,6)
 
-/obj/effect/glowshroom/proc/CalcDir(turf/location = loc)
+/obj/structure/glowshroom/proc/CalcDir(turf/location = loc)
 	//set background = 1
 	var/direction = 16
 
@@ -112,7 +112,7 @@
 		if(newTurf.density)
 			direction |= wallDir
 
-	for(var/obj/effect/glowshroom/shroom in location)
+	for(var/obj/structure/glowshroom/shroom in location)
 		if(shroom == src)
 			continue
 		if(shroom.floor) //special
@@ -136,10 +136,10 @@
 	floor = 1
 	return 1
 
-/obj/effect/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN && damage_amount)
 		playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
-/obj/effect/glowshroom/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/glowshroom/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		take_damage(5, BURN, FIRE, FALSE)

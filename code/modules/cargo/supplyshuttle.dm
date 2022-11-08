@@ -75,6 +75,9 @@ var/global/list/mechtoys = list(
 				return
 	qdel(src)
 
+/obj/structure/plasticflaps/explosion_proof
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 /obj/structure/plasticflaps/explosion_proof/ex_act(severity)
 	return
 

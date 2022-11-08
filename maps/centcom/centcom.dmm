@@ -1321,7 +1321,7 @@
 /area/shuttle/arrival/velocity)
 "adv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/effect/landmark/heist_spawn,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
@@ -2361,7 +2361,7 @@
 "agd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/pizzabox/vegetable,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
@@ -3365,7 +3365,7 @@
 /area/shuttle/vox/arkship_hold)
 "aiF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "aiG" = (
@@ -3762,7 +3762,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/item/weapon/reagent_containers/food/snacks/bearmeat,
 /obj/structure/rack,
 /obj/item/weapon/handcuffs/cable,
@@ -5190,7 +5190,7 @@
 /area/shuttle/vox/arkship)
 "amL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "amM" = (
@@ -5235,7 +5235,7 @@
 /area/shuttle/vox/arkship)
 "amR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -5815,7 +5815,7 @@
 /area/shuttle/vox/arkship)
 "aoh" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
@@ -7049,7 +7049,7 @@
 	},
 /area/velocity)
 "arf" = (
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/structure/rack,
 /obj/item/device/radio/off{
 	pixel_x = -2;
@@ -9306,7 +9306,7 @@
 /area/shuttle/vox/arkship)
 "avR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
@@ -10793,7 +10793,7 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "azd" = (
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -12011,11 +12011,9 @@
 "aBH" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/ert/engineer,
-/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/ert/engineer,
 /obj/item/device/flash,
 /obj/item/device/multitool,
-/obj/item/clothing/gloves/yellow,
 /obj/item/clothing/accessory/storage/brown_vest,
 /obj/item/weapon/storage/belt/utility/full,
 /obj/item/clothing/glasses/meson,
@@ -12181,7 +12179,6 @@
 /obj/structure/rack,
 /obj/item/clothing/head/helmet/space/rig/ert/commander,
 /obj/item/clothing/suit/space/rig/ert/commander,
-/obj/item/clothing/shoes/magboots,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /turf/unsimulated/floor{
 	dir = 8;
@@ -17076,6 +17073,12 @@
 	icon_state = "freezerfloor"
 	},
 /area/centcom/living)
+"aMB" = (
+/obj/machinery/door/airlock/external,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
 "aMC" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -17092,6 +17095,10 @@
 	icon_state = "white"
 	},
 /area/centcom/evac)
+"aME" = (
+/obj/structure/eminence_spire,
+/turf/unsimulated/floor/cult/lava,
+/area/custom/cult)
 "aMF" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -24444,7 +24451,7 @@
 /obj/item/weapon/paper{
 	info = "Just old elite space suit. MiraCorp makes your life better"
 	},
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "podhatch"
@@ -24791,11 +24798,9 @@
 "gbb" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/ert/engineer,
-/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/ert/engineer,
 /obj/item/device/flash,
 /obj/item/device/multitool,
-/obj/item/clothing/gloves/yellow,
 /obj/item/clothing/accessory/storage/brown_vest,
 /obj/item/weapon/storage/belt/utility/full,
 /obj/item/clothing/glasses/meson,
@@ -59447,7 +59452,7 @@ azo
 aAE
 aCV
 aBQ
-aBY
+aMB
 aCa
 aAE
 aCV
@@ -59704,7 +59709,7 @@ azo
 aAE
 aCV
 aBQ
-aBY
+aMB
 aCa
 aAE
 aCV
@@ -71103,7 +71108,7 @@ aaM
 aaM
 aaM
 adx
-tqh
+aME
 wfy
 aZI
 bKC

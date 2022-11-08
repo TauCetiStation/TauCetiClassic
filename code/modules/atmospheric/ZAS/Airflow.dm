@@ -205,13 +205,13 @@ Contains helper procs for airflow, handled in /connection_group.
 			loc.add_blood(src)
 			bloody_body(src)
 
-		var/blocked = run_armor_check(BP_HEAD,"melee")
+		var/blocked = run_armor_check(BP_HEAD,MELEE)
 		apply_damage(b_loss / 3, BRUTE, BP_HEAD, blocked, 0, "Airflow")
 
-		blocked = run_armor_check(BP_CHEST,"melee")
+		blocked = run_armor_check(BP_CHEST,MELEE)
 		apply_damage(b_loss / 3, BRUTE, BP_CHEST, blocked, 0, "Airflow")
 
-		blocked = run_armor_check(BP_GROIN,"melee")
+		blocked = run_armor_check(BP_GROIN,MELEE)
 		apply_damage(b_loss / 3, BRUTE, BP_GROIN, blocked, 0, "Airflow")
 
 	if(airflow_speed > 10)

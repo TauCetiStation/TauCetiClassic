@@ -649,7 +649,7 @@
 "aba" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/three,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "abb" = (
@@ -7450,7 +7450,7 @@
 /area/station/hallway/secondary/exit)
 "anI" = (
 /obj/machinery/space_heater,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -8183,7 +8183,7 @@
 /obj/structure/rack,
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "apo" = (
@@ -9235,7 +9235,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/eva)
 "arf" = (
-/obj/structure/lamarr,
+/obj/structure/displaycase/labcage,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -22
@@ -12454,7 +12454,7 @@
 /obj/effect/spawner/lootdrop/maintenance/four,
 /obj/structure/closet/crate,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Medbay Maintenance APC";
@@ -17155,7 +17155,7 @@
 /area/station/maintenance/medbay)
 "hNg" = (
 /obj/random/scrap/safe_even,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "hNU" = (
@@ -18452,7 +18452,7 @@
 /obj/structure/rack,
 /obj/item/device/flashlight,
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "jba" = (
@@ -27617,7 +27617,7 @@
 	},
 /area/station/civilian/locker)
 "ryd" = (
-/obj/structure/displaycase,
+/obj/structure/displaycase/captain,
 /obj/machinery/newscaster/security_unit{
 	pixel_y = -28
 	},
@@ -29481,7 +29481,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "twE" = (
@@ -31844,7 +31844,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},

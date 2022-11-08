@@ -46,6 +46,13 @@
 		if(prob(20*item_multiplier) && !(fibertext in suit_fibers))
 			//world.log << "Added fibertext: [fibertext]"
 			suit_fibers += "Material from a pair of [M.gloves.name]."
+	if(M.species.flags[FUR])
+		fibertext = "Small particles of [M.species.name] fur."
+		var/bio_restriction = 100 - M.getarmor(null, "bio")
+		if(prob(bio_restriction) && !(fibertext in suit_fibers))
+			ADD_TRAIT(src, TRAIT_XENO_FUR, GENERIC_TRAIT)
+			suit_fibers += "Small particles of [M.species.name] fur."
+
 	if(!suit_fibers.len) suit_fibers = null
 
 var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent_ascii(print) proc, and means about 80% of
@@ -87,6 +94,33 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 	. = ..()
 	new /obj/item/weapon/book/manual/detective(get_turf(src))
 
+/obj/machinery/computer/forensic_scanning/attackby(obj/item/I, mob/user)
+	if(!ishuman(user))
+		return ..()
+	if(istype(I, /obj/item/weapon/card/id))
+		if(!authenticated)
+			if(!authorization(user))
+				return ..()
+		ui_interact(user)
+	else if(istype(I, /obj/item/weapon/evidencebag))
+		if(!authenticated)
+			if(!authorization(user))
+				return ..()
+		var/obj/item/weapon/evidencebag/E = I
+		evidencebag_drop(E)
+		//prevent remove interactions that were not intended
+		attack_hand(user)
+	else
+		return ..()
+
+/obj/machinery/computer/forensic_scanning/proc/authorization(mob/user)
+	if(!allowed(user))
+		to_chat(user, "<span class='warning'>Access denied</span>")
+		return FALSE
+	else
+		authenticated = TRUE
+		to_chat(user, "<span class='notice'>Access granted</span>")
+		return TRUE
 
 /obj/machinery/computer/forensic_scanning/ui_interact(mob/user)
 	var/dat = ""
@@ -128,8 +162,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 		return
 	switch(href_list["operation"])
 		if("login")
-			if(allowed(usr))
-				authenticated = 1
+			authorization(usr)
 		if("logout")
 			authenticated = 0
 		if("clear")
@@ -137,7 +170,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 				temp = null
 		if("eject")
 			if(scanning)
-				scanning.loc = loc
+				scanning.forceMove(loc)
 				scanning = null
 			else
 				temp = "Eject Failed: No Object"
@@ -146,11 +179,7 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 			var/obj/item/I = M.get_active_hand()
 			if(I && istype(I))
 				if(istype(I, /obj/item/weapon/evidencebag))
-					scanning = I.contents[1]
-					scanning.loc = src
-					I.underlays.Cut()
-					I.w_class = initial(I.w_class)
-					I.icon_state = "evidenceobj"
+					evidencebag_drop(I)
 				else
 					scanning = I
 					M.drop_from_inventory(I, src)
@@ -454,6 +483,17 @@ var/global/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringperc
 /obj/machinery/computer/forensic_scanning/ex_act()
 	return
 
+/obj/machinery/computer/forensic_scanning/proc/evidencebag_drop(obj/item/weapon/evidencebag/E)
+	if(!E.contents.len)
+		return
+	if(scanning)
+		scanning.forceMove(loc)
+		scanning = null
+	scanning = E.contents[1]
+	scanning.forceMove(src)
+	E.underlays.Cut()
+	E.w_class = initial(E.w_class)
+	E.icon_state = "evidenceobj"
 
 /obj/machinery/computer/forensic_scanning/proc/add_data_scanner(obj/item/device/W)
 	if(istype(W, /obj/item/device/detective_scanner))

@@ -95,9 +95,9 @@
 	stability -= 20
 	if(prob(100-stability))
 		if(prob(10))//Might create a node
-			new /obj/effect/blob/node(src.loc,150)
+			new /obj/structure/blob/node(loc, 150)
 		else
-			new /obj/effect/blob(src.loc,60)
+			new /obj/structure/blob(loc,60)
 		spawn(0)
 			qdel(src)
 		return
@@ -119,7 +119,7 @@
 
 /obj/machinery/am_shielding/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
-	if(Proj.flag != "bullet")
+	if(Proj.flag != BULLET)
 		stability -= Proj.force/2
 
 /obj/machinery/am_shielding/update_icon()

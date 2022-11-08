@@ -977,9 +977,10 @@ var/global/list/airlock_overlays = list()
 	safe = FALSE
 
 	if(close())
-		safe = temp
 		if(bolt_after)
 			bolt()
+	
+	safe = temp
 
 /obj/machinery/door/airlock/open_checks()
 	if(..() && !welded && !locked)

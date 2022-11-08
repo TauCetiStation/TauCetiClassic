@@ -48,7 +48,7 @@
 					addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 				return
 			..()
-			
+
 	else if (istype(O, /obj/item/weapon/fireaxe) && localopened)
 		if(!fireaxe)
 			user.drop_from_inventory(O, src)
@@ -128,6 +128,9 @@
 		fireaxe.forceMove(loc)
 		fireaxe = null
 	new /obj/item/stack/sheet/metal(loc, 2)
+	if(!smashed)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
 	return ..()
 
 /obj/structure/closet/fireaxecabinet/attack_hand(mob/living/user)

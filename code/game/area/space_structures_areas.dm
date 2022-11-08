@@ -97,6 +97,12 @@
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
+/area/space_structures/robostation2
+	name = "Robostation2"
+	icon_state = "yellow"
+	requires_power = 0
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+
 /area/space_structures/ghostship
 	name = "Ghost Ship"
 	icon_state = "yellow"
@@ -185,6 +191,24 @@
 
 /area/space_structures/export_outpost
 	name = "TO-11312 Export Outpost"
+	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = TRUE
+
+/area/space_structures/research_ship
+	name = "Research Ship"
+	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = TRUE
+
+/area/space_structures/cult_ship
+	name = "Spaceship"
+	icon_state = "yellow"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = TRUE
+
+/area/space_structures/space_villa
+	name = "SpaceVilla"
 	icon_state = "yellow"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = TRUE
