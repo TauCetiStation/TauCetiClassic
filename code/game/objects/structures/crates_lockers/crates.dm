@@ -94,20 +94,6 @@
 	else
 		return attack_hand(user)
 
-/obj/structure/closet/crate/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			for(var/obj/O in src.contents)
-				qdel(O)
-		if(EXPLODE_HEAVY)
-			for(var/obj/O in src.contents)
-				if(prob(50))
-					qdel(O)
-		if(EXPLODE_LIGHT)
-			if(prob(50))
-				return
-	qdel(src)
-
 /obj/structure/closet/crate/secure
 	desc = "A secure crate."
 	name = "Secure crate"
