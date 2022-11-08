@@ -453,7 +453,7 @@
 				if(!H.regenerating_bodypart)
 					H.regenerating_bodypart = H.find_damaged_bodypart()
 				if(H.regenerating_bodypart)
-					H.regen_bodyparts(4, FALSE)
+					H.regen_bodyparts()
 				if(H.getOxyLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.1))
 						H.adjustOxyLoss(-4)
