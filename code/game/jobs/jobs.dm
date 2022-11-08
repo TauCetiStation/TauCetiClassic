@@ -108,7 +108,6 @@ var/global/list/science_positions = list(
 
 var/global/list/civilian_positions = list(
 	"Head of Personnel",
-	"Internal Affairs Agent",
 	"Quartermaster",
 	"Cargo Technician",
 	"Shaft Miner",
@@ -187,8 +186,6 @@ var/global/list/nonhuman_positions = list(
 			if(department == "heads" && person["rank"] != "Captain")	//in "heads" we need only Captain
 				continue
 			if(department == "civ")
-				if(head_rank != "Admin" && person["rank"] == "Internal Affairs Agent")	//only CentCom can change IAA's salary
-					continue
 				if(head_rank == "Quartermaster" && !QM_staff.Find(person["rank"]))	//QM only rules his boys
 					continue
 			var/datum/money_account/account = person["acc_datum"]

@@ -22,13 +22,6 @@
 		/datum/skill/police = SKILL_LEVEL_PRO,
 	)
 
-/datum/skillset/internal_affairs
-	name = "Internal Affairs Agent"
-	initial_skills = list(
-		/datum/skill/command = SKILL_LEVEL_TRAINED,
-		/datum/skill/police = SKILL_LEVEL_NOVICE
-	)
-
 /datum/skillset/bartender
 	name = "Bartender"
 	initial_skills = list(

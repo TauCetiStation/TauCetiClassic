@@ -40,7 +40,6 @@
 
 	jobs_required = list(
 		"Captain",
-		"Internal Affairs Agent",
 		"Librarian",
 		"Clown",
 		"Mime",
