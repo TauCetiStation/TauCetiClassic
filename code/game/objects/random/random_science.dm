@@ -203,6 +203,7 @@
 					prob(2);/obj/item/weapon/reagent_containers/spray/extinguisher,\
 					prob(50);/obj/random/science/stock_part,\
 					prob(1);/obj/item/device/encryptionkey/headset_sec,\
+					prob(1);/obj/item/device/encryptionkey/headset_int,\
 					prob(1);/obj/item/device/encryptionkey/headset_eng,\
 					prob(1);/obj/item/device/encryptionkey/headset_rob,\
 					prob(1);/obj/item/device/encryptionkey/headset_med,\

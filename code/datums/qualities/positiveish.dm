@@ -117,6 +117,19 @@
 	H.equip_or_collect(new /obj/item/ammo_box/c45rubber(H), SLOT_R_STORE)
 
 
+/datum/quality/positiveish/all_affairs
+	name = "All Affairs"
+	desc = "У тебя полный доступ. Да начнётся расследование."
+	requirement = "Агент Внутренних Дел."
+
+	jobs_required = list("Internal Affairs Agent")
+
+/datum/quality/positiveish/all_affairs/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='notice'>На твоей карточке полный доступ, но необязательно показывать его перед персоналом - вдруг кто-то захочет отнять?</span>")
+	var/obj/item/weapon/card/id/id = H.get_idcard()
+	id.access = get_all_accesses()
+
+
 /datum/quality/positiveish/cultural_heritage
 	name = "Cultural Heritage"
 	desc = "Всё племя скинулось на то, чтобы заиметь тебе в космос крутой космический костюм. Лучше оправдать их надежды!"
@@ -321,7 +334,7 @@
 	name = "Self Defense"
 	desc = "На станции всё опаснее и опаснее. Руководство выдало тебе новое средство самозащиты."
 	requirement = "Безоружные главы, АВД."
-	jobs_required = list("Research Director", "Chief Engineer", "Chief Medical Officer")
+	jobs_required = list("Research Director", "Chief Engineer", "Chief Medical Officer", "Internal Affairs Agent")
 
 /datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer(H), SLOT_R_STORE)

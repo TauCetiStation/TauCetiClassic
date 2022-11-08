@@ -73,6 +73,26 @@
 	l_hand = /obj/item/weapon/barcodescanner
 	r_pocket = /obj/item/device/pda/librarian
 
+// LAWYER OUTFIT
+/datum/outfit/job/lawyer
+	name = OUTFIT_JOB_NAME("Internal Affairs Agent")
+
+	uniform = /obj/item/clothing/under/rank/internalaffairs
+	shoes = /obj/item/clothing/shoes/black
+	suit = /obj/item/clothing/suit/storage/internalaffairs
+	glasses = /obj/item/clothing/glasses/sunglasses/big
+
+	l_ear = /obj/item/device/radio/headset/headset_int
+	belt = /obj/item/device/pda/lawyer
+
+	l_hand = /obj/item/weapon/storage/briefcase/centcomm
+
+	l_pocket = /obj/item/device/flash
+
+	implants = list(
+		/obj/item/weapon/implant/mind_protect/loyalty
+		)
+
 // CLOWN OUTFIT
 /datum/outfit/job/clown
 	name = OUTFIT_JOB_NAME("Clown")

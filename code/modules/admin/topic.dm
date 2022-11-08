@@ -2265,7 +2265,7 @@
 			return
 		var/ratio_rate = text2num(replacetext(replacetext(input_rate, "+", ""), "%", ""))
 		var/new_ratio = 1 + (ratio_rate/100)
-		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police")
+		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")
 		for(var/datum/job/J in SSjob.occupations)
 			if(J.title in excluded_rank)
 				continue

@@ -4,7 +4,7 @@
 	id = UNDERCOVER_COP
 
 	required_pref = ROLE_FAMILIES
-	restricted_jobs = list("Security Cadet", "AI", "Cyborg", "Security Officer", "Head of Security", "Captain")
+	restricted_jobs = list("Security Cadet", "AI", "Cyborg", "Security Officer", "Head of Security", "Captain", "Internal Affairs Agent")
 
 	logo_state = "undercover_cop"
 

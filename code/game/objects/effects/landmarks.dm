@@ -146,6 +146,10 @@
 	name = "Chaplain"
 	icon_state = "Chaplain"
 
+/obj/effect/landmark/start/internal_affairs_agent
+	name = "Internal Affairs Agent"
+	icon_state = "Internal Affairs Agent"
+
 /obj/effect/landmark/start/clown
 	name = "Clown"
 	icon_state = "Clown"

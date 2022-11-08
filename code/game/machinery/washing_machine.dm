@@ -20,6 +20,7 @@ var/global/list/dyed_item_types = list(
 		DYE_GREENCOAT = /obj/item/clothing/under/lawyer,
 		DYE_REDCOAT = /obj/item/clothing/under/redcoat,
 		DYE_CLOWN = /obj/item/clothing/under/rank/clown,
+		DYE_IAA = /obj/item/clothing/under/rank/internalaffairs,
 		DYE_CENTCOMM = /obj/item/clothing/under/rank/centcom/representative,
 		DYE_FAKECENTCOM = list(/obj/item/clothing/under/space, /obj/item/clothing/under/psyche),
 		DYE_SYNDICATE = /obj/item/clothing/under/syndicate,
