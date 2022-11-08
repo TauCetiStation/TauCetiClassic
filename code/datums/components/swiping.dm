@@ -10,7 +10,7 @@
 	var/list/dirs_to_move
 	var/next_dir = 1
 
-/obj/effect/effect/weapon_sweep/atom_init(mapload, obj/item/weapon/sweep_item, list/dirs_to_move, sweep_delay)
+/obj/effect/effect/weapon_sweep/atom_init(mapload, obj/item/sweep_item, list/dirs_to_move, sweep_delay)
 	. = ..()
 	name = "sweeping [sweep_item]"
 	glide_size = DELAY2GLIDESIZE(sweep_delay)
@@ -154,7 +154,7 @@
 	var/datum/callback/on_sweep_pull_success
 
 /datum/component/swiping/Initialize(datum/swipe_component_builder/SCB)
-	if(!istype(parent, /obj/item/weapon))
+	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 
 	interupt_on_sweep_hit_types = SCB.interupt_on_sweep_hit_types
@@ -293,7 +293,7 @@
 		if(!can_push_call.Invoke(target, user))
 			return NONE
 
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
 	var/s_time = W.sweep_step * 2
 	user.SetNextMove(s_time)
@@ -386,7 +386,7 @@
 		if(!can_pull_call.Invoke(target, user))
 			return NONE
 
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
 	var/s_time = W.sweep_step * 2
 	user.SetNextMove(s_time)
@@ -460,7 +460,7 @@
 	if(on_sweep_hit)
 		return on_sweep_hit.Invoke(current_turf, sweep_image, target, user)
 
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
 	var/is_stunned = is_type_in_list(target, interupt_on_sweep_hit_types)
 	if(is_stunned)
@@ -536,7 +536,7 @@
 
 // The handler for all the possible sweeping images, directions, and etc. Please use the wrapper - sweep.
 /datum/component/swiping/proc/async_sweep(list/directions, mob/living/user, sweep_delay)
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 	W.swiping = TRUE
 
 	var/turf/start = get_step(W, directions[1])
@@ -612,7 +612,7 @@
 		if(!can_sweep_call.Invoke(target, user))
 			return NONE
 
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
 	var/turf/T = get_turf(target)
 	var/direction = get_dir(get_turf(W), T)
@@ -642,7 +642,7 @@
 
 	var/list/directions = list(user.dir, turn(user.dir, rot_dir * 45), turn(user.dir, rot_dir * 90), turn(user.dir, rot_dir * 135), turn(user.dir, rot_dir * 180), turn(user.dir, rot_dir * 225), turn(user.dir, rot_dir * 270), turn(user.dir, rot_dir * 315), user.dir)
 
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
 	INVOKE_ASYNC(src, .proc/sweep, directions, user, W.sweep_step * 0.5)
 	return COMPONENT_NO_INTERACT
@@ -693,7 +693,7 @@
 					return COMPONENT_NO_MOUSEDROP
 		directions += get_dir(user, T)
 
-	var/obj/item/weapon/W = parent
+	var/obj/item/W = parent
 
 	if(directions.len == 3 && can_sweep && sweep(directions, user, W.sweep_step) != NONE)
 		return COMPONENT_NO_MOUSEDROP

@@ -4,7 +4,6 @@
 
 	// Is heavily utilized by swiping component. Perhaps use to determine how "quick" the strikes with this weapon are?
 	// See swiping.dm for more details.
-	var/sweep_step = 4
 
 /obj/item/weapon/throwing_star
 	name = "throwing star"
