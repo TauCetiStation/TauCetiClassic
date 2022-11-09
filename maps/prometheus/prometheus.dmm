@@ -2914,7 +2914,6 @@
 	dir = 5;
 	network = list("SS13","Medical")
 	},
-/obj/item/weapon/storage/bag/chemistry,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteyellow"
