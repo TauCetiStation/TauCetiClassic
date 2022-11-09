@@ -26,7 +26,7 @@
 		amounts[i] = rand(1,5)
 
 /obj/machinery/abductor/gland_dispenser/interact(mob/user)
-	if(!IsAbductor(user) && !isobserver(user))
+	if(!isabductor(user) && !isobserver(user))
 		return
 	return ..()
 

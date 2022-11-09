@@ -4,15 +4,15 @@
 	w_class = SIZE_SMALL
 	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/abstract = 0
-	var/item_state = null
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	var/r_speed = 1.0
-	var/health = null
 	var/burn_point = null
 	var/burning = null
 	var/list/hitsound = list()
 	var/usesound = null
+	var/pickup_sound = null
+	var/dropped_sound = null
 	var/wet = 0
 	var/can_embed = 1
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
@@ -42,7 +42,7 @@
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
-	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/materials = list()
 	var/list/allowed = null //suit storage stuff.
 	var/list/can_be_placed_into = list(
@@ -60,7 +60,9 @@
 	var/toolspeed = 1
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
-	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
+	var/item_state = null         // has priority over icon_state for on-mob sprites
+	var/item_state_world = null   // has priority over icon_state for world (not in inventory) sprites
+	var/icon_override = null      // Used to override hardcoded clothing dmis in human clothing proc (see also icon_custom)
 
 	/* Species-specific sprite sheets for inventory sprites
 	Works similarly to worn sprite_sheets, except the alternate sprites are used when the clothing/refit_for_species() proc is called.
@@ -245,7 +247,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )
+	if(!istype(src.loc, /turf) || usr.stat != CONSCIOUS || usr.restrained() )
 		return
 
 	var/turf/T = src.loc
@@ -420,6 +422,8 @@
 /obj/item/proc/after_throw(datum/callback/callback)
 	if (callback) //call the original callback
 		. = callback.Invoke()
+	flags &= ~IN_INVENTORY // #10047
+	update_world_icon()
 
 /obj/item/proc/talk_into(mob/M, text)
 	return FALSE
@@ -430,9 +434,13 @@
 // apparently called whenever an item is removed from a slot, container, or anything else.
 /obj/item/proc/dropped(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
+	if(user && user.loc != loc && isturf(loc))
+		playsound(user, dropped_sound, VOL_EFFECTS_MASTER)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
+	flags &= ~IN_INVENTORY
 	if(flags & DROPDEL)
 		qdel(src)
+	update_world_icon()
 	set_alt_apperances_layers()
 
 // called just as an item is picked up (loc is not yet changed)
@@ -440,14 +448,19 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user) & COMPONENT_ITEM_NO_PICKUP)
 		return FALSE
+	playsound(user, pickup_sound, VOL_EFFECTS_MASTER)
 	return TRUE
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /obj/item/proc/on_exit_storage(obj/item/weapon/storage/S)
+	flags |= IN_STORAGE
+	update_world_icon()
 	return
 
 // called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /obj/item/proc/on_enter_storage(obj/item/weapon/storage/S)
+	flags &= ~IN_STORAGE
+	update_world_icon()
 	return
 
 // called when "found" in pockets and storage items. Returns 1 if the search should end.
@@ -461,8 +474,10 @@
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
 	SHOULD_CALL_PARENT(TRUE)
+	flags |= IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED, src, slot)
+	update_world_icon()
 	set_alt_apperances_layers()
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
@@ -763,16 +778,16 @@
 		return
 
 	var/skill_bonus = 1
-	
+
 	//in case item have no defined default required_skill or we need to check other skills e.g. check crowbar for surgery
 	if(required_skills_override)
 		skill_bonus = apply_skill_bonus(user, 1, required_skills_override, skills_speed_bonus)
 	else if(required_skills) //default check for item
 		skill_bonus = apply_skill_bonus(user, 1, required_skills, skills_speed_bonus)
-	
-	
+
+
 	delay *= toolspeed
-	delay *= skill_bonus
+	delay *= max(skill_bonus, 0.1)
 
 	if(!isnull(quality))
 		var/qual_mod = get_quality(quality)
@@ -1092,3 +1107,36 @@
 	icon_state = initial(dye_type.icon_state)
 	item_state = initial(dye_type.item_state)
 	desc = "The colors are a bit dodgy."
+
+/obj/item/attack_hulk(mob/living/user)
+	return FALSE
+
+/obj/item/burn()
+	var/turf/T = get_turf(src)
+	var/ash_type 
+	if(w_class >= SIZE_BIG)
+		ash_type = /obj/effect/decal/cleanable/ash/large
+	else
+		ash_type = /obj/effect/decal/cleanable/ash
+	var/obj/effect/decal/cleanable/ash/A = new ash_type(T)
+	A.desc += "\nLooks like this used to be \an [name] some time ago."
+	..()
+
+// swap between world (small) and ui (big) icons when item changes location
+// feel free to override for items with complicated icon mechanics
+/obj/item/proc/update_world_icon()
+	if(!item_state_world)
+		return
+
+	if((flags && IN_INVENTORY || flags && IN_STORAGE) && icon_state == item_state_world)
+		// moving to inventory, restore icon
+		icon_state = initial(icon_state)
+
+	else if(icon_state != item_state_world)
+		// moving to world, change icon
+		icon_state = item_state_world
+
+/obj/item/CtrlShiftClick(mob/user)
+	. = ..()
+	var/mob/living/carbon/human/H = user
+	SEND_SIGNAL(H, COMSIG_CLICK_CTRL_SHIFT, src)

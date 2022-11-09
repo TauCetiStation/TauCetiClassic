@@ -110,7 +110,8 @@
 	if(!(stat & EMPED))
 		visible_message("[bicon(src)] <span class='notice'>Paint drips from [src].</span>")
 		cancelCameraAlarm()
-		toggle_cam(FALSE)
+		if(!status)
+			toggle_cam(FALSE)
 
 /obj/machinery/camera/ex_act(severity)
 	if(src.invuln)
@@ -154,8 +155,7 @@
 
 	else if(iswelder(W) && wires.is_deconstructable())
 		if(weld(W, user))
-			drop_assembly(1)
-			qdel(src)
+			deconstruct(TRUE)
 	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
 		if(!isXRay())
 			upgradeXRay()
@@ -179,6 +179,11 @@
 		else
 			to_chat(user, "[msg2]")
 
+	else if(istype(W, /obj/item/stack/sheet/glass) && panel_open)
+		var/obj/item/stack/sheet/glass/G = W
+		remove_paint_state()
+		to_chat(user, "<span class='notice'>You fixed [src] lens.</span>")
+		G.use(1)
 	// OTHER
 	else if(istype(W, /obj/item/weapon/paper))
 		user.SetNextMove(CLICK_CD_INTERACT)
@@ -228,12 +233,36 @@
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>The camera has been sliced apart by [user] with [W]!</span>")
-			drop_assembly()
-			new /obj/item/stack/cable_coil/cut/red(loc)
-			qdel(src)
+			deconstruct()
 	else
 		..()
 	return
+
+/obj/machinery/camera/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(stat & BROKEN)
+		switch(damage_type)
+			if(BRUTE, BURN)
+				return damage_amount
+		return
+	. = ..()
+
+/obj/machinery/camera/atom_break(damage_flag)
+	if(!status)
+		return
+	. = ..()
+	if(.)
+		triggerCameraAlarm()
+		toggle_cam(FALSE)
+
+/obj/machinery/camera/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(disassembled)
+		drop_assembly(1)
+	else
+		drop_assembly()
+		new /obj/item/stack/cable_coil(loc, 2)
+	..()
 
 /obj/machinery/camera/proc/drop_assembly(state = 0)
 	if(assembly)

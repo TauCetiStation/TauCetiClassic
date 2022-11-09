@@ -443,6 +443,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "katana"
 	item_state = "katana"
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 	force = 5
@@ -957,7 +958,7 @@ Owl & Griffin toys
 	if(!..())
 		playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER)
 		for(var/mob/M in orange(10, src))
-			if(!M.stat && !isAI(M))\
+			if(M.stat == CONSCIOUS && !isAI(M))\
 				shake_camera(M, 3, 1)
 		qdel(src)
 

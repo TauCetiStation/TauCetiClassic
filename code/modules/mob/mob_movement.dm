@@ -68,7 +68,7 @@
 
 	if(!n || !direct)
 		return
-	if(!forced && mob.stat)
+	if(!forced && mob.stat != CONSCIOUS)
 		return
 
 /*	// handle possible spirit movement
@@ -94,15 +94,6 @@
 			return
 	Process_Grab()
 
-	if(istype(mob.buckled, /obj/vehicle))
-		//manually set move_delay for vehicles so we don't inherit any mob movement penalties
-		//specific vehicle move delays are set in code\modules\vehicles\vehicle.dm
-		move_delay = world.time
-		//drunk driving
-		if(mob.confused)
-			direct = mob.confuse_input(direct)
-		return mob.buckled.relaymove(mob,direct)
-
 	if(!forced && !mob.canmove)
 		return
 
@@ -127,43 +118,47 @@
 				else
 					M.stop_pulling()
 
-		//We are now going to move
-		var/add_delay
-		move_delay = world.time//set move delay
+		//Calculating delays
+		var/add_delay = 0
+
 		mob.last_move_intent = world.time + 10
+
 		switch(mob.m_intent)
 			if("run")
 				if(mob.drowsyness > 0)
 					add_delay += 6
-				add_delay += 1+config.run_speed
+				add_delay += 1 + config.run_speed
 			if("walk")
-				add_delay += 2.5+config.walk_speed
-		add_delay += mob.movement_delay()
-		move_delay += add_delay
+				add_delay += 2.5 + config.walk_speed
 
-		if(mob.pulledby || mob.buckled) // Wheelchair driving!
+		var/list/grabs = mob.GetGrabs()
+		if(grabs.len)
+			var/grab_delay
+			for(var/obj/item/weapon/grab/G in grabs)
+				grab_delay += max(0, (G.state - 1) * 4 + (grabs.len - 1) * 4) // so if we have 2 grabs or 1 in high level we will be sloow
+				grab_delay += G.affecting.stat == CONSCIOUS ? ( G.affecting.a_intent == INTENT_HELP ? 0 : 0.5 ) : 1
+			add_delay += grab_delay
+
+		add_delay += mob.movement_delay()
+
+		move_delay = world.time + add_delay //set move delay
+
+		//Relaymoves
+		if(mob.buckled) // Wheelchair driving!
 			if(isspaceturf(mob.loc))
 				return // No wheelchair driving in space
-			if(istype(mob.pulledby, /obj/structure/stool/bed/chair/wheelchair))
-				return mob.pulledby.relaymove(mob, direct)
-			else if(istype(mob.buckled, /obj/structure/stool/bed/chair/wheelchair))
-				if(ishuman(mob.buckled))
-					var/mob/living/carbon/human/driver = mob.buckled
-					var/obj/item/organ/external/l_hand = driver.bodyparts_by_name[BP_L_ARM]
-					var/obj/item/organ/external/r_hand = driver.bodyparts_by_name[BP_R_ARM]
-					if((!l_hand || (l_hand.is_stump)) && (!r_hand || (r_hand.is_stump)))
-						return // No hands to drive your chair? Tough luck!
-				move_delay += 2
-				return mob.buckled.relaymove(mob,direct)
+
+			return mob.buckled.relaymove(mob, direct)
 
 		//We are now going to move
-		moving = 1
+		moving = TRUE
+
 		if(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
 			moving = FALSE
 			return
+
 		//Something with pulling things
-		if(locate(/obj/item/weapon/grab, mob))
-			move_delay = max(move_delay, world.time + 7)
+		if(grabs.len)
 			var/list/L = mob.ret_grab()
 			if(istype(L, /list))
 				if(L.len == 2)
@@ -200,16 +195,19 @@
 				n = get_step(get_turf(mob), direct)
 			. = mob.SelfMove(n, direct)
 
-		for (var/obj/item/weapon/grab/G in mob.GetGrabs())
-			if (G.state == GRAB_NECK)
+		for(var/obj/item/weapon/grab/G in grabs)
+			if(G.state == GRAB_NECK)
 				mob.set_dir(reverse_dir[direct])
 			G.adjust_position()
-		for (var/obj/item/weapon/grab/G in mob.grabbed_by)
+
+		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
 			G.adjust_position()
 
-		if((direct & (direct - 1)) && mob.loc == n) //moved diagonally successfully
-			move_delay += add_delay
+		if((direct & (direct - 1)) && mob.loc == n)
+			move_delay += add_delay * 0.4 // in general moving diagonally will be 1.4 (sqrt(2)) times slower
+
 		moving = FALSE
+
 		if(mob && .)
 			mob.throwing = FALSE
 

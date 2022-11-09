@@ -155,7 +155,8 @@
 					to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
 					//return - technically you can add more aliens to a team
 				for(var/mob/M as anything in observer_list)
-					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
+					var/link = FOLLOW_LINK(M, user)
+					to_chat(M, "[link]<span class='abductor_team[A.get_team_num()]'><b>[user.real_name]:</b> [sm]</span>")
 				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
 
@@ -186,7 +187,7 @@
 			speech_sound = handle_r[4]
 			sound_vol = handle_r[5]
 
-	if(!message || (stat && (message_mode != "changeling"))) // little tweak so changeling can call for help while in sleep
+	if(!message || (stat != CONSCIOUS && (message_mode != "changeling"))) // little tweak so changeling can call for help while in sleep
 		return
 
 	var/list/obj/item/used_radios = new
@@ -242,7 +243,7 @@
 			return
 		if("changeling")
 			if(ischangeling(src))
-				if(stat)
+				if(stat != CONSCIOUS)
 					message = stars(message, 20) // sleeping changeling has a little confused mind
 				var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 				var/n_message = "<span class='changeling'><b>[C.changelingID]:</b> [message]</span>"

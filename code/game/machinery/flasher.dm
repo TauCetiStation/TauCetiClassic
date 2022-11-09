@@ -10,7 +10,7 @@
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/disable = FALSE
-	var/last_flash = 0 //Don't want it getting spammed like regular flashes
+	COOLDOWN_DECLARE(cd_flash) //Don't want it getting spammed like regular flashes
 	var/strength = 10 //How weakened targets are when flashed.
 	var/base_state = "mflash"
 	anchored = TRUE
@@ -23,6 +23,11 @@
 	flasher_list -= src
 	return ..()
 
+/obj/machinery/flasher/powered()
+	if(!anchored)
+		return FALSE
+	return ..()
+
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
@@ -31,13 +36,19 @@
 	anchored = FALSE
 	base_state = "pflash"
 	density = TRUE
+	///Proximity monitor associated with this atom, needed for proximity checks.
+	var/datum/proximity_monitor/proximity_monitor
+
+/obj/machinery/flasher/portable/Destroy()
+	QDEL_NULL(proximity_monitor)
+	return ..()
 
 /obj/machinery/flasher/power_change()
-	if ( powered() )
+	if (powered())
 		stat &= ~NOPOWER
 		icon_state = "[base_state]1"
 	else
-		stat |= ~NOPOWER
+		stat |= NOPOWER
 		icon_state = "[base_state]1-p"
 	update_power_use()
 
@@ -45,11 +56,11 @@
 /obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user)
 	if (iswirecutter(W))
 		add_fingerprint(user)
-		src.disable = !src.disable
+		disable = !disable
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if (src.disable)
+		if(disable)
 			user.visible_message("<span class='warning'>[user] has disconnected the [src]'s flashbulb!</span>", "<span class='warning'>You disconnect the [src]'s flashbulb!</span>")
-		if (!src.disable)
+		else
 			user.visible_message("<span class='warning'>[user] has connected the [src]'s flashbulb!</span>", "<span class='warning'>You connect the [src]'s flashbulb!</span>")
 
 //Let the AI trigger them directly.
@@ -60,22 +71,15 @@
 		return
 
 /obj/machinery/flasher/proc/flash()
-	if (!(powered()))
+	if(disable || !(powered() && COOLDOWN_FINISHED(src, cd_flash)))
 		return
-
-	if ((src.disable) || (src.last_flash && world.time < src.last_flash + 150))
-		return
-
+	COOLDOWN_START(src, cd_flash, 15 SECONDS)
 	playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
 	flick("[base_state]_flash", src)
 	flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
-	src.last_flash = world.time
 	use_power(1000)
 
-	for (var/mob/O in viewers(src, null))
-		if (get_dist(src, O) > src.range)
-			continue
-
+	for (var/mob/O in viewers(range, src))
 		if (ishuman(O))
 			var/mob/living/carbon/human/H = O
 			if(H.eyecheck() > 0)
@@ -106,28 +110,31 @@
 		flash()
 	..(severity)
 
-/obj/machinery/flasher/portable/HasProximity(atom/movable/AM)
-	if ((src.disable) || (src.last_flash && world.time < src.last_flash + 150))
-		return
+/obj/machinery/flasher/portable/atom_init()
+	. = ..()
+	proximity_monitor = new(src, anchored ? 1 : null)
 
-	if(iscarbon(AM))
+/obj/machinery/flasher/portable/HasProximity(atom/movable/AM)
+	if(iscarbon(AM) && COOLDOWN_FINISHED(src, cd_flash))
 		var/mob/living/carbon/M = AM
-		if ((M.m_intent != "walk") && (src.anchored))
+		if(M.m_intent != MOVE_INTENT_WALK)
 			flash()
 
 /obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user)
 	if (iswrench(W))
 		add_fingerprint(user)
-		src.anchored = !src.anchored
+		anchored = !anchored
 		user.SetNextMove(CLICK_CD_INTERACT)
 
-		if (!src.anchored)
-			to_chat(user, "<span class='warning'>[src] can now be moved.</span>")
-			cut_overlays()
-
-		else if (src.anchored)
+		if(anchored)
 			to_chat(user, "<span class='warning'>[src] is now secured.</span>")
 			add_overlay("[base_state]-s")
+			proximity_monitor.set_range(1)
+		else
+			to_chat(user, "<span class='warning'>[src] can now be moved.</span>")
+			cut_overlays()
+			proximity_monitor.set_range(null)
+
 
 /obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user)
 	return attack_hand(user)

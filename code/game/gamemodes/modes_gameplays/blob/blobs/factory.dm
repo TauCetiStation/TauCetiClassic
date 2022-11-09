@@ -1,27 +1,27 @@
-/obj/effect/blob/factory
+/obj/structure/blob/factory
 	name = "factory blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_factory"
-	max_health = 100
-	health = 100
+	max_integrity = 100
 	fire_resist = 2
 	var/list/spores = list()
 	var/max_spores = 3
 	var/spore_delay = 0
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
-	var/mob/camera/blob/overmind = null
 
-/obj/effect/blob/factory/update_icon()
-	if(health <= 0)
-		qdel(src)
-
-/obj/effect/blob/factory/Destroy()
+/obj/structure/blob/factory/Destroy()
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore as anything in spores)
 		if(spore.factory == src)
 			spore.factory = null
+	if(naut)
+		naut.factory = null
+		to_chat(naut, "<span class='danger'>Your factory was destroyed! You feel yourself dying!</span>")
+		naut.throw_alert("nofactory", /atom/movable/screen/alert/nofactory)
+	if(OV)
+		OV.factory_blobs -= src
 	return ..()
 
-/obj/effect/blob/factory/run_action()
+/obj/structure/blob/factory/run_action()
 	if(naut)
 		return
 	if(spores.len >= max_spores)
@@ -33,9 +33,9 @@
 	PulseAnimation()
 
 	var/mob/living/simple_animal/hostile/blob/blobspore/S = new (loc, src)
-	if(overmind) //if we don't have an overmind, we don't need to do anything but make a spore
-		S.overmind = overmind
-		overmind.blob_mobs.Add(S)
+	if(OV) //if we don't have an overmind, we don't need to do anything but make a spore
+		S.overmind = OV
+		OV.blob_mobs.Add(S)
 
 ////////////////
 // BASE TYPE //
@@ -63,7 +63,7 @@
 	minbodytemp = 0
 	maxbodytemp = 360
 	var/mob/camera/blob/overmind = null
-	var/obj/effect/blob/factory/factory = null
+	var/obj/structure/blob/factory/factory = null
 	var/independent = FALSE
 
 /mob/living/simple_animal/hostile/blob/Login()
@@ -94,10 +94,10 @@
 	if(statpanel("Status") && !independent)
 		if(overmind)
 			if(overmind.blob_core)
-				stat(null, "Core Health: [overmind.blob_core.health]")
+				stat(null, "Core Health: [overmind.blob_core.get_integrity()]")
 			stat(null, "Progress: [blobs.len]/[overmind.b_congl.blobwincount]")
 
-/mob/living/simple_animal/hostile/blob/blob_act(/obj/effect/blob/B)
+/mob/living/simple_animal/hostile/blob/blob_act(/obj/structure/blob/B)
 	if(stat != DEAD && health < maxHealth)
 		health += maxHealth*0.0125
 
@@ -109,7 +109,7 @@
 		adjustFireLoss(5)
 
 /mob/living/simple_animal/hostile/blob/Process_Spacemove(movement_dir = 0)
-	for(var/obj/effect/blob/B in range(1, src))
+	for(var/obj/structure/blob/B in range(1, src))
 		return 1
 	return ..()
 
@@ -124,7 +124,7 @@
 		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	if (stat)
+	if (stat != CONSCIOUS)
 		return
 
 	message = sanitize(message)
@@ -168,7 +168,7 @@
 		return TRUE
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/blobspore/atom_init(mapload, obj/effect/blob/factory/linked_node)
+/mob/living/simple_animal/hostile/blob/blobspore/atom_init(mapload, obj/structure/blob/factory/linked_node)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
@@ -186,8 +186,8 @@
 /mob/living/simple_animal/hostile/blob/blobspore/proc/Zombify(mob/living/carbon/human/H)
 	if(H.wear_suit)
 		var/obj/item/clothing/suit/armor/A = H.wear_suit
-		if(A.armor && A.armor["melee"])
-			maxHealth += A.armor["melee"] //That zombie's got armor, I want armor!
+		if(A.armor && A.armor[MELEE])
+			maxHealth += A.armor[MELEE] //That zombie's got armor, I want armor!
 	maxHealth += 40
 	health = maxHealth
 	name = "blob zombie"
@@ -216,6 +216,7 @@
 	S.attach(location)
 	S.set_up(reagents, 1, 1, location, 15, 1) // only 1-2 smoke cloud
 	S.start()
+	..()
 
 	qdel(src)
 
@@ -249,13 +250,13 @@
 	icon_state = "blobbernaut"
 	icon_living = "blobbernaut"
 	icon_dead = "blobbernaut_dead"
-	health = 200
-	maxHealth = 200
+	health = 300
+	maxHealth = 300
 	attacktext = "slams"
 	melee_damage = 20
 	attack_sound = 'sound/effects/blobattack.ogg'
 	environment_smash = 1
-	speed = 3 //Bots
+	speed = 2
 	sight = SEE_TURFS | SEE_MOBS
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/atom_init()
@@ -296,7 +297,7 @@
 	if(independent) //Was it with blob or not
 		return
 	if(overmind.blob_core && pwr_display) //Just in case, otherwise it is looped runtime
-		pwr_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(overmind.blob_core.health)]</font></div>"
+		pwr_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(overmind.blob_core.get_integrity())]</font></div>"
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/attack_animal(mob/user)
 	if(faction == user.faction) //To avoid blobbernaut vs blobbernaut and spore's kills
@@ -313,39 +314,46 @@
 	. = ..()
 	update_health_hud()
 
+/mob/living/simple_animal/hostile/blob/blobbernaut/blob_act()
+	if(!factory)
+		return
+	..()
+
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	. = ..()
+	if(stat == DEAD)
+		return //No funny ressurections
 	if(independent)
 		return // strong independent blobbernaut that don't need blob
 	var/list/blobs_in_area = range(2, src)
 	var/damagesources = 0
-	if(!(locate(/obj/effect/blob) in blobs_in_area))
+	if(!(locate(/obj/structure/blob) in blobs_in_area))
 		damagesources++
 
 	if(!factory)
 		damagesources++
 	else
-		if(locate(/obj/effect/blob/core) in blobs_in_area)
-			health += maxHealth*0.05
+		if(locate(/obj/structure/blob/core) in blobs_in_area)
+			health += maxHealth*0.07
 			update_health_hud()
-		if(locate(/obj/effect/blob/node) in blobs_in_area)
-			health += maxHealth*0.025
+		if(locate(/obj/structure/blob/node) in blobs_in_area)
+			health += maxHealth*0.03
 			update_health_hud()
 
 	if(damagesources)
-		health -= maxHealth * 0.0125 * damagesources *2 //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
+		health -= maxHealth * 0.04 * damagesources //take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
 		update_health_hud()
 		var/image/I = new('icons/mob/blob.dmi', src, "nautdamage", MOB_LAYER+0.01)
 		I.appearance_flags = RESET_COLOR
 		flick_overlay_view(I, src, 8)
-	if(stat != DEAD)
+
 		return 1
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/death(gibbed)
 	..(gibbed)
 	if(factory)
 		factory.naut = null //remove this naut from its factory
-		factory.max_health = initial(factory.max_health)
+		factory.max_integrity = initial(max_integrity)
 	flick("blobbernaut_death", src)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/independent

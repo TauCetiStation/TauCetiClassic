@@ -10,6 +10,9 @@
 	var/damage_mask = TRUE
 	var/eyes = "eyes"                                    // Icon for eyes.
 	var/eyes_glowing = FALSE                             // To make those eyes gloooow.
+	var/gender_tail_icons = FALSE
+	var/gender_limb_icons = FALSE
+	var/fat_limb_icons = FALSE
 
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
@@ -298,6 +301,8 @@
 
 /datum/species/human
 	name = HUMAN
+	gender_limb_icons = TRUE
+	fat_limb_icons = TRUE
 	language = LANGUAGE_SOLCOMMON
 	primitive = /mob/living/carbon/monkey
 	unarmed_type = /datum/unarmed_attack/punch
@@ -322,6 +327,9 @@
 	name = UNATHI
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
 	deform = 'icons/mob/human_races/r_def_lizard.dmi'
+	gender_tail_icons = TRUE
+	gender_limb_icons = TRUE
+	fat_limb_icons = TRUE
 	language = LANGUAGE_SINTAUNATHI
 	tail = "unathi"
 	unarmed_type = /datum/unarmed_attack/claws
@@ -381,6 +389,8 @@
 	name = TAJARAN
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
+	gender_limb_icons = TRUE
+	fat_limb_icons = TRUE
 	language = LANGUAGE_SIIKMAAS
 	additional_languages = list(LANGUAGE_SIIKTAJR = LANGUAGE_NATIVE)
 	tail = "tajaran"
@@ -414,6 +424,7 @@
 	,HAS_HAIR = TRUE
 	,FACEHUGGABLE = TRUE
 	,IS_SOCIAL = TRUE
+	,FUR = TRUE
 	)
 
 	flesh_color = "#afa59e"

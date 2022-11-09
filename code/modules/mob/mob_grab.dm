@@ -9,7 +9,7 @@
 
 /obj/item/weapon/grab
 	name = "grab"
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	icon_state = "reinforce"
 	flags = DROPDEL|NOBLUDGEON
 	var/atom/movable/screen/grab/hud = null
@@ -445,10 +445,10 @@
 						if(!H.apply_pressure(assailant, hit_zone))
 							if(hit_zone == BP_CHEST)
 								var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(hit_zone)]
-								var/armor_block = H.run_armor_check(BP, "melee")
+								var/armor_block = H.run_armor_check(BP, MELEE)
 
 								var/chance_to_force_vomit = 30
-								if(H.stat >= UNCONSCIOUS)
+								if(H.stat != CONSCIOUS)
 									chance_to_force_vomit += 20
 								if(prob(armor_block))
 									chance_to_force_vomit = 0
@@ -468,7 +468,7 @@
 					if(!BP)
 						return
 					assailant.visible_message("<span class='danger'>[assailant] [pick("bent", "twisted")] [H]'s [BP.name] into a jointlock!</span>")
-					var/armor = H.run_armor_check(H, "melee")
+					var/armor = H.run_armor_check(H, MELEE)
 					if(armor < 2)
 						to_chat(H, "<span class='danger'>You feel extreme pain!</span>")
 						H.adjustHalLoss(clamp(0, 40 - H.halloss, 40)) //up to 40 halloss
@@ -505,7 +505,7 @@
 							damage += attack.damage
 
 							var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(hit_zone)]
-							var/armor_block = H.run_armor_check(BP, "melee")
+							var/armor_block = H.run_armor_check(BP, MELEE)
 
 							if(attack.damage_flags() & (DAM_SHARP|DAM_EDGE))
 								chance_to_force_vomit = 0
@@ -531,8 +531,8 @@
 							var/obj/item/clothing/hat = assailant_C.head
 							if(istype(hat))
 								damage += hat.force * 4
-						var/armor = affecting.run_armor_check(BP_HEAD, "melee")
-						var/armor_assailant = assailant.run_armor_check(BP_HEAD, "melee")
+						var/armor = affecting.run_armor_check(BP_HEAD, MELEE)
+						var/armor_assailant = assailant.run_armor_check(BP_HEAD, MELEE)
 						affecting.apply_damage(damage*rand(60, 82)/100, BRUTE, BP_HEAD, blocked = armor)
 						assailant.apply_damage(10*rand(90, 110)/100, BRUTE, BP_HEAD, blocked = armor_assailant)
 						if(!armor && prob(damage))

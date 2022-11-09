@@ -55,8 +55,6 @@
 	var/friendly = "nuzzles" // If the mob does no damage with it's attack
 	var/environment_smash = 0 // Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
 
-	var/speed = 0 // LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
-
 	var/animalistic = TRUE // Determines whether the being here is an animal or nah.
 	var/has_head = FALSE
 	var/has_arm = FALSE
@@ -256,11 +254,7 @@
 	return ..()
 
 /mob/living/simple_animal/movement_delay()
-	var/tally = 0 // Incase I need to add stuff other than "speed" later
-
-	tally = speed
-
-	return tally+config.animal_delay
+	return speed + config.animal_delay
 
 /mob/living/simple_animal/Stat()
 	..()
@@ -306,7 +300,7 @@
 /mob/living/simple_animal/proc/SA_attackable(target_mob)
 	if (isliving(target_mob))
 		var/mob/living/L = target_mob
-		if(!L.stat && L.health >= 0)
+		if(L.stat == CONSCIOUS && L.health >= 0)
 			return FALSE
 	if (istype(target_mob, /obj/mecha))
 		var/obj/mecha/M = target_mob
@@ -314,7 +308,7 @@
 			return FALSE
 	if (isbot(target_mob))
 		var/obj/machinery/bot/B = target_mob
-		if(B.health > 0)
+		if(B.get_integrity() > 0)
 			return FALSE
 	return TRUE
 
@@ -344,7 +338,7 @@
 	return FALSE
 
 /mob/living/simple_animal/say(message)
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 
 	message = sanitize(message)
@@ -373,7 +367,7 @@
 
 /mob/living/simple_animal/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(icon_move && !stat && !ISDIAGONALDIR(Dir))
+	if(icon_move && stat == CONSCIOUS && !ISDIAGONALDIR(Dir))
 		flick(icon_move, src)
 
 /mob/living/simple_animal/update_stat()
@@ -409,4 +403,7 @@
 	..()
 
 /mob/living/simple_animal/crawl()
+	return FALSE
+
+/mob/living/simple_animal/can_pickup(obj/O)
 	return FALSE

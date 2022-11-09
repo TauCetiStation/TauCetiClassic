@@ -2,7 +2,7 @@
 	return TK_MAXRANGE
 
 /mob/proc/get_tk_level()
-	if(stat)
+	if(stat != CONSCIOUS)
 		return TK_LEVEL_ZERO
 
 	if(get_species() == SKRELL)
@@ -119,10 +119,7 @@
 	// TG calls this a "melee attack chain"
 	if(target.Adjacent(src))
 		// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-		var/resolved = target.attackby(src, user, params)
-		if(!resolved && target && src)
-			afterattack(target, user, TRUE, params)
-
+		melee_attack_chain(target, user, params)
 		return
 
 	afterattack(target, user, FALSE, params)

@@ -217,7 +217,7 @@
 
 			if(H.wear_suit)
 				var/obj/item/clothing/suit/S = H.wear_suit
-				var/meleearm = S.armor["melee"]
+				var/meleearm = S.armor[MELEE]
 				if(meleearm)
 					if(meleearm != 100)
 						H.adjustHalLoss(round(35 - (35 / 100 * meleearm)))

@@ -174,22 +174,3 @@
 	desc = "Can be attached to Drop Pod to reach exemplary accuracy and allow to return to the base."
 	item = /obj/item/device/camera_bug
 	cost = 2
-
-/datum/intruder_tools/heavy_rig
-	name = "Heavy Syndi Rig"
-	desc = "Combat rig fitted with heavy armor plates made to endure even the greatest damage, developed off existing 'Striker' space suit."
-	item = /obj/item/weapon/storage/box/syndie_kit/heavy_rig
-	cost = 15
-
-/datum/intruder_tools/armor
-	name = "Syndi Assault Armor"
-	desc = "The red syndicate heavy armor with additional armor plating and helmet to it."
-	item = /obj/item/weapon/storage/box/syndie_kit/armor
-	cost = 4
-
-/datum/intruder_tools/hazmat
-	name = "Experimental Chemical Warfare Kit"
-	desc = "Experimental kit consisting of menacing hazmat space suit designed to strike terror into Nanotrasen employees and chemical tank filled with deadly mix of poisons, drugs and combustible fuel. The tank comes with a handy meister attached. Additional chemicals can be bought via uplink to refill the tank."
-	item = /obj/item/weapon/storage/box/syndie_kit/chemical
-	cost = 20
-	delete_dat_after_buying = TRUE

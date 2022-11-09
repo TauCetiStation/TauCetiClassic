@@ -8,6 +8,7 @@
 /obj/item/weapon/storage
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
+	flags = HEAR_TALK
 	w_class = SIZE_SMALL
 	var/list/can_hold = list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = list() //List of objects which this item can't store (in effect only if can_hold isn't set)
@@ -245,26 +246,22 @@
 	if(SEND_SIGNAL(src, COMSIG_STORAGE_ENTERED, W, prevent_warning, NoUpdate) & COMSIG_STORAGE_PROHIBIT)
 		return
 
-	if(usr)
-		usr.remove_from_mob(W)
-		usr.update_icons()	//update our overlays
+	if(usr && W.loc == usr)
+		usr.remove_from_mob(W, src)
+	else
+		W.forceMove(src)
 
-	W.loc = src
 	W.on_enter_storage(src)
 	if(usr)
-		if (usr.client && usr.s_active != src)
-			usr.client.screen -= W
-		W.dropped(usr)
 		add_fingerprint(usr)
 
-		if(!prevent_warning && !istype(W, /obj/item/weapon/gun/energy/crossbow))
-			for(var/mob/M in viewers(usr, null))
-				if (M == usr)
-					to_chat(usr, "<span class='notice'>You put \the [W] into [src].</span>")
-				else if (M in range(1)) //If someone is standing close enough, they can tell what it is...
-					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>", SHOWMSG_VISUAL)
-				else if (W && W.w_class >= SIZE_SMALL) //Otherwise they can only see large or normal items from a distance...
-					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>", SHOWMSG_VISUAL)
+		if(!(prevent_warning || istype(W, /obj/item/weapon/gun/energy/crossbow)))
+			//If someone is standing close enough or item is larger than TINY, they can tell what it is...
+			usr.visible_message(
+				"<span class='notice'>[usr] puts [W] into [src].</span>",
+				"<span class='notice'>You put \the [W] into [src].</span>",
+				viewing_distance = (W.w_class > SIZE_TINY ? world.view : 1)
+				)
 		if(crit_fail && prob(25))
 			remove_from_storage(W, get_turf(src))
 		if(!NoUpdate)
@@ -446,7 +443,7 @@
 //BubbleWrap END
 
 /obj/item/weapon/storage/hear_talk(mob/M, text, verb, datum/language/speaking)
-	for (var/atom/A in src)
+	for (var/atom/A in src) // todo: we need it? say() should already catch all objects recursively
 		if(istype(A,/obj))
 			var/obj/O = A
 			O.hear_talk(M, text, verb, speaking)

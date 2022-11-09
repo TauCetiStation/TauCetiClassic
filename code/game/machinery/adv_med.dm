@@ -115,24 +115,10 @@
 		ex_act(severity)
 	qdel(src)
 
-/obj/machinery/bodyscanner/blob_act()
-	if(prob(50))
-		for(var/atom/movable/A in src)
-			A.forceMove(loc)
-		qdel(src)
-
-/obj/machinery/body_scanconsole/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_LIGHT)
-			return
-		if(EXPLODE_HEAVY)
-			if(prob(50))
-				return
-	qdel(src)
-
-/obj/machinery/body_scanconsole/blob_act()
-	if(prob(50))
-		qdel(src)
+/obj/machinery/bodyscanner/deconstruct(disassembled)
+	for(var/atom/movable/A in src)
+		A.forceMove(loc)
+	..()
 
 /obj/machinery/body_scanconsole/power_change()
 	if(stat & BROKEN)
@@ -149,7 +135,7 @@
 
 /obj/machinery/body_scanconsole
 	var/obj/machinery/bodyscanner/connected
-	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience)
+	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience, /obj/item/weapon/implant/skill)
 	var/delete
 	name = "Body Scanner Console"
 	icon = 'icons/obj/Cryogenic3.dmi'
@@ -164,7 +150,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/body_scanconsole/atom_init_late()
-	connected = locate(/obj/machinery/bodyscanner, get_step(src, WEST))
+	connected = locate(/obj/machinery/bodyscanner) in orange(1, src)
 
 /obj/machinery/body_scanconsole/ui_interact(mob/user)
 	if(!ishuman(connected.occupant))

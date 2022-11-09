@@ -3,8 +3,14 @@
 	desc = "It's a basic storage unit."
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "closed"
+	flags = HEAR_TALK
 	density = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
+
+	max_integrity = 100
+	damage_deflection = 15
+	resistance_flags = CAN_BE_HIT
+
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
 	var/opened = 0
@@ -12,7 +18,6 @@
 	var/locked = 0
 	var/broken = 0
 	var/wall_mounted = 0 //never solid (You can always pass over it)
-	var/health = 100
 	var/lastbang
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
@@ -155,26 +160,6 @@
 	dump_contents()
 	qdel(src)
 
-/obj/structure/closet/bullet_act(obj/item/projectile/Proj, def_zone)
-	. = ..()
-	health -= Proj.damage
-	if(health <= 0)
-		dump_contents()
-		qdel(src)
-
-/obj/structure/closet/attack_animal(mob/living/simple_animal/user)
-	if(user.environment_smash)
-		..()
-		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		visible_message("<span class='warning'>[user] destroys the [src]. </span>")
-		dump_contents()
-		qdel(src)
-
-/obj/structure/closet/blob_act()
-	if(prob(75))
-		dump_contents()
-		qdel(src)
-
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user)
 	if(tools_interact(W, user))
 		add_fingerprint(user)
@@ -200,7 +185,7 @@
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message("[user] cut apart [src] with [WT].",
 				                     "<span class='notice'>You cut apart [src] with [WT].</span>")
-				qdel(src)
+				deconstruct(TRUE)
 				return TRUE
 			else
 				src.welded = !src.welded
@@ -211,6 +196,15 @@
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return TRUE
+
+/obj/structure/closet/deconstruct(disassembled)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 2)
+	dump_contents()
+	return ..()
+
+/obj/structure/closet/play_attack_sound(damage_amount, damage_type, damage_flag)
+	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 
 /obj/structure/closet/attack_ai(mob/user)
 	if(isrobot(user) && Adjacent(user)) //Robots can open/close it, but not the AI
@@ -263,7 +257,7 @@
 	SSdemo.mark_dirty(src)
 
 /obj/structure/closet/hear_talk(mob/M, text, verb, datum/language/speaking)
-	for (var/atom/A in src)
+	for (var/atom/A in src) // todo: we need it? say() should already catch all objects recursively
 		if(istype(A,/obj))
 			var/obj/O = A
 			O.hear_talk(M, text, verb, speaking)

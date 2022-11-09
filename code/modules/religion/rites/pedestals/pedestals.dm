@@ -5,7 +5,7 @@
 /datum/religion_rites/pedestals/cult/narsie
 	name = "Призыв Нар-Си"
 	desc = "Призывает древнего бога, не бойтесь пожертвовать частями тела своего друга, вам всё сочтётся."
-	ritual_length = (1 MINUTE)
+	ritual_length = (2 MINUTE)
 	invoke_msg = "Venit ad nos!"
 	favor_cost = 2000
 
@@ -18,10 +18,7 @@
 
 	var/need_members = 4
 
-/datum/religion_rites/pedestals/cult/narsie/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
-	if(!..())
-		return FALSE
-
+/datum/religion_rites/pedestals/cult/narsie/proc/checks(mob/user, obj/structure/altar_of_gods/AOG)
 	if(istype(get_area(AOG), religion.area_type))
 		if(user)
 			to_chat(user, "<span class='warning'>Мне нужно пространство станции.</span>")
@@ -36,7 +33,6 @@
 	for(var/mob/M in AOG.mobs_around)
 		if(religion.is_member(M) && M.get_species() != HOMUNCULUS)
 			cultists_around++
-
 	if(cultists_around < need_members)
 		if(user)
 			to_chat(user, "<span class='warning'>Недостаточно последователей вокруг алтаря.</span>")
@@ -44,17 +40,60 @@
 
 	if(SSticker.nar_sie_has_risen)
 		if(user)
-			to_chat(user, "<font size='4'><span class='danger'>Я УЖЕ ЗДЕСЬ!</span></font>")
+			to_chat(user, "<span class='danger big'>Я УЖЕ ЗДЕСЬ!</span>")
+		return FALSE
+	return TRUE
+
+/datum/religion_rites/pedestals/cult/narsie/on_chosen(mob/user, obj/structure/altar_of_gods/AOG)
+	. = ..()
+
+	if(!checks(user, AOG))
 		return FALSE
 
+	var/datum/faction/cult/C = cult_religion.mode
+	var/datum/objective/target/sacrifice/O = C.objective_holder.FindObjective(/datum/objective/target/sacrifice)
+	if(O)
+		if(O.check_completion() != OBJECTIVE_WIN)
+			to_chat(user, "<span class='cult'>Жертвоприношение не было проведено! Порталу не хватит мощи на раскрытие, если вы попытаетесь провести ритуал!</span>")
+			return FALSE
+
+	var/datum/objective/cult/summon_narsie/S = C.objective_holder.FindObjective(/datum/objective/cult/summon_narsie)
+	if(!S)
+		to_chat(user, "<span class='cult big'>Я НЕ ЖЕЛАЮ К ВАМ ПРИХОДИТЬ!</span>")
+		return FALSE
+
+	var/confirm_final = tgui_alert(user, "Это ФИНАЛЬНЫЙ шаг к призыву Нар'Си; это очень долгий и сложный ритуал, а также экипаж определённо узнает о вашей попытке призыва", "Вы готовы к последнему бою?", list("Моя жизнь за Нар'Си!", "Нет"))
+	if(confirm_final == "Нет")
+		to_chat(user, "<span class='cult'>Вы решили подготовиться перед началом ритуала</span>")
+		return FALSE
+
+	addtimer(CALLBACK(src, .proc/announce_summon, user), 15 SECONDS)
+
 	return TRUE
 
-/datum/religion_rites/pedestals/cult/narsie/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/cult/narsie/proc/announce_summon(mob/user)
+	var/datum/announcement/centcomm/narsie_summon/A = new(user)
+	A.play()
+
+/datum/religion_rites/pedestals/cult/narsie/can_start(mob/user, obj/structure/altar_of_gods/AOG)
+	if(!..())
+		return FALSE
+	if(!checks(user, AOG))
+		return FALSE
+	return TRUE
+
+/datum/religion_rites/pedestals/cult/narsie/invoke_effect(mob/user, obj/structure/altar_of_gods/AOG)
 	..()
 	SSticker.nar_sie_has_risen = TRUE
-
-	new /obj/singularity/narsie(get_turf(AOG), religion)
+	for(var/mob/M in player_list)
+		if(!isnewplayer(M))
+			M.playsound_local(null, 'sound/effects/dimensional_rend.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+	addtimer(CALLBACK(src, .proc/summon, get_turf(AOG)), 40)
 	return TRUE
+
+/datum/religion_rites/pedestals/cult/narsie/proc/summon(turf/T)
+	new /obj/singularity/narsie(T, religion)
+	global.cult_religion.eminence.start_process()
 
 /datum/religion_rites/pedestals/cult/cult_portal
 	name = "Призыв Портала"
@@ -77,7 +116,7 @@
 		ASPECT_DEATH = 1
 	)
 
-/datum/religion_rites/pedestals/cult/cult_portal/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/cult/cult_portal/can_start(mob/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
 		return FALSE
 
@@ -89,7 +128,7 @@
 		to_chat(user, "<span class='warning'>Сначала разместите руну-маяк.</span>")
 	return FALSE
 
-/datum/religion_rites/pedestals/cult/cult_portal/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/cult/cult_portal/invoke_effect(mob/user, obj/structure/altar_of_gods/AOG)
 	..()
 	for(var/obj/effect/rune/R in religion.runes)
 		if(istype(R.power, /datum/rune/cult/portal_beacon))
@@ -117,7 +156,7 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/pedestals/cult/make_skeleton/can_start(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/cult/make_skeleton/can_start(mob/user, obj/structure/altar_of_gods/AOG)
 	if(!..())
 		return FALSE
 
@@ -139,7 +178,7 @@
 
 	return TRUE
 
-/datum/religion_rites/pedestals/cult/make_skeleton/invoke_effect(mob/living/user, obj/structure/altar_of_gods/AOG)
+/datum/religion_rites/pedestals/cult/make_skeleton/invoke_effect(mob/user, obj/structure/altar_of_gods/AOG)
 	. = ..()
 
 	var/mob/living/carbon/human/H = AOG.buckled_mob

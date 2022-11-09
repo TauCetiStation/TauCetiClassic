@@ -8,6 +8,11 @@
 	rig_variant = "ert_commander"
 	var/obj/machinery/camera/camera
 
+/obj/item/clothing/head/helmet/space/rig/ert/atom_init()
+	. = ..()
+	holochip = new /obj/item/holochip/ert(src)
+	holochip.holder = src
+
 /obj/item/clothing/head/helmet/space/rig/ert/attack_self(mob/user)
 	if(camera)
 		..(user)
@@ -37,6 +42,11 @@
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash)
+
+/obj/item/clothing/suit/space/rig/ert/atom_init()
+	. = ..()
+	var/obj/item/clothing/shoes/magboots/ert/SB = new(src)
+	boots = SB
 
 //Commander
 /obj/item/clothing/head/helmet/space/rig/ert/commander

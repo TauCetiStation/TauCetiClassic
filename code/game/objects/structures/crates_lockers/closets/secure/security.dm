@@ -145,7 +145,7 @@
 	new /obj/item/device/radio/headset/heads/hos(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/clothing/gloves/black/hos(src)
-	new /obj/item/clothing/glasses/night/hos_nights(src)
+	new /obj/item/clothing/glasses/hud/hos_aug(src)
 	new /obj/item/weapon/shield/riot/tele(src)
 	new /obj/item/weapon/storage/lockbox/loyalty(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
@@ -410,3 +410,15 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 /obj/structure/closet/secure_closet/pistols/PopulateContents()
 	for (var/i in 1 to 3)
 		new /obj/item/weapon/gun/projectile/glock(src)
+
+/obj/structure/closet/secure_closet/usp_cartridges
+	name = "USP cartridges Secure Closet"
+	req_access = list(access_keycard_auth)	
+
+/obj/structure/closet/secure_closet/usp_cartridges/PopulateContents()
+	new /obj/item/weapon/skill_cartridge/usp7(src)
+	new /obj/item/weapon/skill_cartridge/usp7(src)
+	new /obj/item/weapon/skill_cartridge/csp15(src)
+	new /obj/item/weapon/skill_cartridge/usp5(src)
+	new /obj/item/weapon/skill_cartridge/usp5(src)
+	new /obj/item/weapon/skill_cartridge/usp5(src)

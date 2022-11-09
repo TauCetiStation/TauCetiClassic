@@ -1,6 +1,6 @@
 /obj/effect/landmark
 	name = "landmark"
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	icon_state = "x2"
 	anchored = TRUE
 	layer = TURF_LAYER
@@ -10,36 +10,26 @@
 
 /obj/effect/landmark/New()
 	..()
-	tag = text("landmark*[]", name)
-	landmarks_list += src
+	if(name == "landmark") // skip landmarks without unique name
+		return
+	tag = "landmark*[name]"
+	var/list/landmarks = landmarks_list[name]
+	if(landmarks)
+		landmarks += src
+	else
+		landmarks_list[name] = landmarks = list(src)
 
 /obj/effect/landmark/Destroy()
-	landmarks_list -= src
+	if(name != "landmark")
+		landmarks_list[name]-= src
 	return ..()
 
 /obj/effect/landmark/atom_init()
 	. = ..()
 
 	switch(name)
-		if("shuttle")
-			shuttle_z = z
-			return INITIALIZE_HINT_QDEL
-
-		if("airtunnel_stop")
-			airtunnel_stop = x
-
-		if("airtunnel_start")
-			airtunnel_start = x
-
-		if("airtunnel_bottom")
-			airtunnel_bottom = y
-
 		if ("awaystart")
 			awaydestinations += src
-
-		if("monkey")
-			monkeystart += loc
-			return INITIALIZE_HINT_QDEL
 		if("Wizard")
 			wizardstart += loc
 			return INITIALIZE_HINT_QDEL
@@ -47,10 +37,6 @@
 		if("prisonwarp")
 			prisonwarp += loc
 			return INITIALIZE_HINT_QDEL
-	//	if("mazewarp")
-	//		mazewarp += loc
-		if("Holding Facility")
-			holdingfacility += loc
 		if("tdome1")
 			tdome1 += loc
 		if("tdome2")

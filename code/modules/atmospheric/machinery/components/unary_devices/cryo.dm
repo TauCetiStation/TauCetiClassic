@@ -197,7 +197,7 @@
   * @return nothing
   */
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main")
-	if(user == occupant || (user.stat && !isobserver(user)) || panel_open)
+	if(user == occupant || (user.stat != CONSCIOUS && !isobserver(user)) || panel_open)
 		return
 
 	// this is the data which will be sent to the ui

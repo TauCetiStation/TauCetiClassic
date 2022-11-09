@@ -303,19 +303,20 @@
 	else
 		to_chat(user, "It is empty.")
 
+/obj/item/toy/crayon/spraycan/verb/toggle_cap()
+	set name = "Toggle Cap"
+	set category = "Object"
+
+	to_chat(usr, "<span class='notice'>You [capped ? "Remove" : "Replace"] the cap of the [src]</span>")
+	capped = !capped
+	update_icon()
+
 /obj/item/toy/crayon/spraycan/attack_self(mob/living/user)
-	var/choice = input(user,"Spraycan options") as null|anything in list("Toggle Cap","Change Drawing","Change Color")
-	switch(choice)
-		if("Toggle Cap")
-			to_chat(user, "<span class='notice'>You [capped ? "Remove" : "Replace"] the cap of the [src]</span>")
-			capped = capped ? 0 : 1
-			icon_state = "spraycan[capped ? "_cap" : ""]"
-			update_icon()
-		if("Change Drawing")
-			..()
-		if("Change Color")
-			colour = input(user,"Choose Color") as color
-			update_icon()
+	if(capped)
+		toggle_cap()
+		return
+	colour = input(user,"Choose Color") as color
+	update_icon()
 
 /obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
@@ -347,11 +348,23 @@
 	if((istype(target, /obj/mecha) || isrobot(target)) && uses >= 10)
 		target.color = normalize_color(colour)
 		uses -= 10
+	if(istype(target, /obj/machinery/camera))
+		var/obj/machinery/camera/C = target
+		if(do_after(user, 20, target = C))		//can_move = TRUE, when reworking
+			if(C.painted)
+				to_chat(user, "<span class='notice'>[src] already spoiled!</span>")
+				return
+			user.visible_message("<span class='warning'>[user] paints the [C] lens!</span>",
+			"<span class='notice'>You paint over the [C] lens. Respect received.</span>")
+			C.painted = TRUE
+			C.toggle_cam(FALSE)
+			C.color = colour
 	playsound(user, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 5)
 	..()
 
 /obj/item/toy/crayon/spraycan/update_icon()
 	cut_overlays()
+	icon_state = "spraycan[capped ? "_cap" : ""]"
 	var/image/I = image('icons/obj/crayons.dmi',icon_state = "[capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 	I.color = colour
 	add_overlay(I)

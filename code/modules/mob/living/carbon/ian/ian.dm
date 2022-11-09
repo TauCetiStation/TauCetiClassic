@@ -264,12 +264,12 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 				if(istype(H.dna, /datum/dna))
 					var/their_smell = md5(H.dna.uni_identity)
 					if(nose_memory == their_smell)
-						I = image('icons/mob/screen_corgi.dmi', A, "smell")
+						I = image('icons/hud/screen_corgi.dmi', A, "smell")
 			else
 				if(A.fingerprints && (nose_memory in A.fingerprints))
-					I = image('icons/mob/screen_corgi.dmi', A, "smell")
+					I = image('icons/hud/screen_corgi.dmi', A, "smell")
 				else if(A.blood_DNA && islist(A.blood_DNA) && (nose_memory in A.blood_DNA))
-					I = image('icons/mob/screen_corgi.dmi', A, "smell")
+					I = image('icons/hud/screen_corgi.dmi', A, "smell")
 
 			if(I)
 				if((nose_memory in nose_database) && nose_database[nose_memory] == "Unknown")
@@ -287,12 +287,14 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 /mob/living/carbon/ian/IsAdvancedToolUser()
 	return FALSE
 
-/mob/living/carbon/ian/movement_delay(tally = 0)
-	if(crawling)
+/mob/living/carbon/ian/movement_delay()
+	var/tally = speed
+
+	if(lying)
 		tally += 5
 	else if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
 		return -1
-	else if(m_intent == "run" && a_intent == INTENT_HARM && stamina >= 10)
+	else if(m_intent == MOVE_INTENT_RUN && a_intent == INTENT_HARM && stamina >= 10)
 		stamina = max(0, stamina - 10)
 		tally -= 1
 
@@ -300,11 +302,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	if(health_deficiency >= 45)
 		tally += (health_deficiency / 25)
 
-	if(pull_debuff)
-		tally += pull_debuff
+	tally += count_pull_debuff()
 
-	if (bodytemperature < 283.222)
-		tally += (283.222 - bodytemperature) / 10 * 1.75
+	if(bodytemperature < BODYTEMP_NORMAL - 30)
+		tally += 1.75 * (BODYTEMP_NORMAL - 30 - bodytemperature) / 10
 	return tally
 
 /mob/living/carbon/ian/SelfMove(turf/n, direct)
@@ -406,7 +407,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 
 	if(chance && prob(chance) && dodged < world.time)
 		dodged = world.time + 50
-		if(Proj.flag == "bullet")
+		if(Proj.flag == BULLET)
 			visible_message("<span class='notice'>[src] catches [Proj] with his jaws.</span>")
 		else
 			visible_message("<span class='notice'>[src] dodges [Proj].</span>")
@@ -429,7 +430,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	if(back && istype(back,/obj/item/clothing/suit/armor))
 		chance += luck
 
-	if(chance && prob(chance) && !stat)
+	if(chance && prob(chance) && stat == CONSCIOUS)
 		switch(msg)
 			if("dodges")
 				msg = "<span class='notice'>[src] dodges [AM]'s attack!</span>"
@@ -459,7 +460,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	..()
 
 /mob/living/carbon/ian/say(message)
-	if(stat)
+	if(stat != CONSCIOUS)
 		return
 
 	message = sanitize(message)
