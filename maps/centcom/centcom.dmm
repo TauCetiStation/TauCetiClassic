@@ -17871,10 +17871,10 @@
 /obj/item/weapon/paper{
 	info = "Just old elite space suit. MiraCorp makes your life better"
 	},
-/obj/effect/spider/stickyweb,
 /obj/structure/window/reinforced{
 	dir = 5
 	},
+/obj/structure/spider/stickyweb,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
