@@ -338,3 +338,60 @@
 		EMOTE_STATE(is_stat, CONSCIOUS),
 		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION),
 	)
+
+/datum/emote/human/hmm_think
+	key = "hmm"
+
+	message_1p = "You mumble thoughtfully."
+	message_3p = "mumbles thoughtfully..."
+
+	message_impaired_production = "mumbles thougtfully..."
+	message_impaired_reception = "You see someone scratching their chin thougtfully..."
+
+	message_miming = "acts out a philosophical thinking..."
+	message_muzzled = "mumble silently and thoughtfully..."
+
+	message_type = SHOWMSG_AUDIO
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS)
+	)
+
+/datum/emote/human/hmm_think/get_sound(mob/living/carbon/human/user, intentional)
+	return pick(user.gender == FEMALE ? SOUNDIN_HMM_THINK_FEMALE : SOUNDIN_HMM_THINK_MALE)
+
+/datum/emote/human/hmm_think/play_sound(mob/living/carbon/human/user, intentional, emote_sound)
+	var/voice_frequency = TRANSLATE_RANGE(user.age, user.species.min_age, user.species.max_age, 0.85, 1.05)
+	var/sound_frequency = 1.05 - (voice_frequency - 0.85)
+
+	playsound(user, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
+
+/datum/emote/human/hmm_think/hmm_question
+	key = "hmm?"
+
+	message_1p = "You mumble and curle your eyebrows questioningly..?"
+	message_3p = "mumbles questioningly..?"
+
+	message_impaired_production = "mumbles questioningly..?"
+	message_impaired_reception = "You see someone curling their eyebrows questioningly..?"
+
+	message_miming = "curls their eyebrows questioningly..?"
+	message_muzzled = "mumbles silently and questioningly..?"
+
+/datum/emote/human/hmm_think/hmm_question/get_sound(mob/living/carbon/human/user, intentional)
+	return pick(user.gender == FEMALE ? SOUNDIN_HMM_QUESTION_FEMALE : SOUNDIN_HMM_QUESTION_MALE)
+
+/datum/emote/human/hmm_think/hmm_exclaim
+	key = "hmm!"
+
+	message_1p = "You mumble exclaimingly!"
+	message_3p = "mumbles exclaimingly."
+
+	message_impaired_production = "mumbles exclaimingly!"
+	message_impaired_reception = "You see someone curling their eyebrows exclaimingly!"
+
+	message_miming = "curls their eyebrows exclaimingly!"
+	message_muzzled = "mumbles silently and exclaimingly!"
+
+/datum/emote/human/hmm_think/hmm_exclaim/get_sound(mob/living/carbon/human/user, intentional)
+	return pick(user.gender == FEMALE ? SOUNDIN_HMM_EXCLAIM_FEMALE : SOUNDIN_HMM_EXCLAIM_MALE)
