@@ -1325,7 +1325,7 @@
 /area/shuttle/arrival/velocity)
 "adv" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/effect/landmark/heist_spawn,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
@@ -2365,7 +2365,7 @@
 "agd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/pizzabox/vegetable,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
@@ -3372,7 +3372,7 @@
 /area/shuttle/vox/arkship_hold)
 "aiF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "aiG" = (
@@ -3799,7 +3799,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/item/weapon/reagent_containers/food/snacks/bearmeat,
 /obj/structure/rack,
 /obj/item/weapon/handcuffs/cable,
@@ -5227,7 +5227,7 @@
 /area/shuttle/vox/arkship)
 "amL" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "amM" = (
@@ -5272,7 +5272,7 @@
 /area/shuttle/vox/arkship)
 "amR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -5852,7 +5852,7 @@
 /area/shuttle/vox/arkship)
 "aoh" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = -32
 	},
@@ -7086,7 +7086,7 @@
 	},
 /area/velocity)
 "arf" = (
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/structure/rack,
 /obj/item/device/radio/off{
 	pixel_x = -2;
@@ -9343,7 +9343,7 @@
 /area/shuttle/vox/arkship)
 "avR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
@@ -10836,7 +10836,7 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "azd" = (
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -12054,11 +12054,9 @@
 "aBH" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/ert/engineer,
-/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/ert/engineer,
 /obj/item/device/flash,
 /obj/item/device/multitool,
-/obj/item/clothing/gloves/yellow,
 /obj/item/clothing/accessory/storage/brown_vest,
 /obj/item/weapon/storage/belt/utility/full,
 /obj/item/clothing/glasses/meson,
@@ -12224,7 +12222,6 @@
 /obj/structure/rack,
 /obj/item/clothing/head/helmet/space/rig/ert/commander,
 /obj/item/clothing/suit/space/rig/ert/commander,
-/obj/item/clothing/shoes/magboots,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 /turf/unsimulated/floor{
 	dir = 8;
@@ -17142,7 +17139,6 @@
 	},
 /area/centcom/evac)
 "aME" = (
-/obj/structure/cult/statue/camera/gargoyle,
 /obj/structure/eminence_spire,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
@@ -25778,11 +25774,9 @@
 "gbb" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/rig/ert/engineer,
-/obj/item/clothing/shoes/magboots,
 /obj/item/clothing/head/helmet/space/rig/ert/engineer,
 /obj/item/device/flash,
 /obj/item/device/multitool,
-/obj/item/clothing/gloves/yellow,
 /obj/item/clothing/accessory/storage/brown_vest,
 /obj/item/weapon/storage/belt/utility/full,
 /obj/item/clothing/glasses/meson,
