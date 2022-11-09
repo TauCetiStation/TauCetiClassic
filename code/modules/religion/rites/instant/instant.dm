@@ -4,13 +4,6 @@
 /datum/religion_rites/instant/chaplain
 	religion_type = /datum/religion/chaplain
 
-/datum/religion_rites/instant/cult/proc/get_aspect_diffs()
-	var/list/diffs = list()
-	for(var/need_aspect in needed_aspects)
-		var/datum/aspect/aspect = religion.aspects[need_aspect]
-		diffs[aspect.name] = aspect.power - needed_aspects[need_aspect] + 1
-	return diffs
-
 /datum/religion_rites/instant/cult/sacrifice
 	name = "Жертвоприношение"
 	desc = "Душа для древнего бога."
@@ -504,7 +497,10 @@
 
 	var/obj/effect/effect/forcefield/rune/R = new
 	var/list/diffs = get_aspect_diffs()
-	H.AddComponent(/datum/component/forcefield, "power aura", 30 * sqrt(diffs[ASPECT_CHAOS]), 1 MINUTE / sqrt(diffs[ASPECT_RESCUE]), 2.5 MINUTE / sqrt(diffs[ASPECT_RESCUE]), R, FALSE, TRUE)
+	var/shield_health = 30 * sqrt(diffs[ASPECT_CHAOS] + 1)
+	var/reactivation_time = 1 MINUTE / sqrt(diffs[ASPECT_RESCUE] + 1)
+	var/recharge_time = 2.5 MINUTE / sqrt(diffs[ASPECT_RESCUE] + 1)
+	H.AddComponent(/datum/component/forcefield, "power aura", shield_health, reactivation_time, recharge_time, R, FALSE, TRUE)
 	SEND_SIGNAL(H, COMSIG_FORCEFIELD_PROTECT, H)
 
 	return TRUE
