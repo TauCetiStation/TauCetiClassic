@@ -34476,6 +34476,7 @@
 /obj/machinery/alarm{
 	pixel_y = 26
 	},
+/obj/item/weapon/storage/bag/chemistry,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteyellowfull"
