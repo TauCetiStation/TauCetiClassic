@@ -381,17 +381,17 @@
 /datum/emote/human/hmm_think/hmm_question/get_sound(mob/living/carbon/human/user, intentional)
 	return pick(user.gender == FEMALE ? SOUNDIN_HMM_QUESTION_FEMALE : SOUNDIN_HMM_QUESTION_MALE)
 
-/datum/emote/human/hmm_think/hmm_exclaim
+/datum/emote/human/hmm_think/hmm_excited
 	key = "hmm!"
 
-	message_1p = "You mumble exclaimingly!"
-	message_3p = "mumbles exclaimingly."
+	message_1p = "You mumble excitedly!"
+	message_3p = "mumbles excitedly."
 
-	message_impaired_production = "mumbles exclaimingly!"
-	message_impaired_reception = "You see someone curling their eyebrows exclaimingly!"
+	message_impaired_production = "mumbles excitedly!"
+	message_impaired_reception = "You see someone curling their eyebrows excitedly!"
 
-	message_miming = "curls their eyebrows exclaimingly!"
-	message_muzzled = "mumbles silently and exclaimingly!"
+	message_miming = "curls their eyebrows excitedly!"
+	message_muzzled = "mumbles silently and excitedly!"
 
 /datum/emote/human/hmm_think/hmm_exclaim/get_sound(mob/living/carbon/human/user, intentional)
 	return pick(user.gender == FEMALE ? SOUNDIN_HMM_EXCLAIM_FEMALE : SOUNDIN_HMM_EXCLAIM_MALE)
