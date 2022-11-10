@@ -287,3 +287,12 @@
 
 #undef MAX_OPS
 #undef MIN_OPS
+
+/datum/faction/nuclear/crossfire
+	name = F_SYNDIOPS_CROSSFIRE
+	ID = F_SYNDIOPS_CROSSFIRE
+	var/nuke_landed = FALSE
+
+/datum/faction/nuclear/crossfire/proc/landing_nuke()
+	if(!nuke_landed)
+		create_uniq_faction(/datum/faction/heist/saboteurs)

@@ -181,7 +181,7 @@
 	text += "Не проголосовало - [non_voters]<br>"
 
 	if(winner)
-		text += "<b>Результат голосования [winners.len > 1 ? " (Случайно)" : ""]: [winner.text]</b><br>"
+		text += "<b>Результат голосования[winners.len > 1 ? " (Случайно)" : ""]: [winner.text]</b><br>"
 
 	log_vote(text)
 	to_chat(world, "<span class='vote'>[text]</span>")
