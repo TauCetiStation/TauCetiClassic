@@ -963,7 +963,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/r_arm
 	name = "right arm"
-	desc = "Need a hand?"
+	desc = "A right hand for the job."
 	force = 7
 	artery_name = "basilic vein"
 
