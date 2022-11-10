@@ -66,6 +66,7 @@
 var/global/current_date_string
 
 var/global/datum/money_account/vendor_account
+var/global/datum/money_account/cargo_account
 var/global/datum/money_account/station_account
 var/global/list/datum/money_account/department_accounts = list()
 var/global/num_financial_terminals = 1
@@ -103,6 +104,7 @@ var/global/initial_station_money = 7500
 		create_department_account(department)
 	create_department_account("Vendor")
 	vendor_account = department_accounts["Vendor"]
+	cargo_account = department_accounts["Cargo"]
 
 	current_date_string = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year]"
 

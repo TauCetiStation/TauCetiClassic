@@ -188,9 +188,8 @@
 		if((W.flags & BLOCKHAIR) || (W.flags & BLOCKHEADHAIR))
 			update_hair()	//rebuild hair
 		if(internal)
-			if(internals)
-				internals.icon_state = "internal0"
 			internal = null
+			internals?.update_icon(src)
 		update_inv_wear_mask()
 		sec_hud_set_security_status()
 	else if (W == wear_id)
@@ -252,7 +251,7 @@
 		return
 
 	W.screen_loc = null // will get moved if inventory is visible
-	W.loc = src
+	W.forceMove(src)
 
 	switch(slot)
 		if(SLOT_BACK)

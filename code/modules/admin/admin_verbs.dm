@@ -607,22 +607,6 @@ var/global/list/admin_verbs_hideable = list(
 	log_admin("[key_name(usr)] gave [key_name(T)] the spell [S].")
 	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] the spell [S].</span>")
 
-/client/proc/give_disease(mob/T as mob in mob_list) // -- Giacom
-	set category = "Fun"
-	set name = "Give Disease (old)"
-	set desc = "Gives a (tg-style) Disease to a mob."
-	var/list/disease_names = list()
-	for(var/v in diseases)
-	//	"[/datum/disease]/" 15 symbols ~Intercross
-		disease_names.Add(copytext("[v]", 16, 0))
-	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in disease_names
-	if(!D) return
-	var/path = text2path("/datum/disease/[D]")
-	T.contract_disease(new path, 1)
-	feedback_add_details("admin_verb","GD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(usr)] gave [key_name(T)] the disease [D].")
-	message_admins("<span class='notice'>[key_name_admin(usr)] gave [key_name(T)] the disease [D].</span>")
-
 /client/proc/give_disease2(mob/T as mob in mob_list) // -- Giacom
 	set category = "Fun"
 	set name = "Give Disease"
@@ -1158,7 +1142,7 @@ var/global/list/admin_verbs_hideable = list(
 	message_admins("[key_name_admin(src)] started loading event-map [choice]")
 	log_admin("[key_name(src)] started loading event-map [choice]")
 
-	if(maploader.load_new_z_level(choice, linkage))//, load_speed = 100)
+	if(maploader.load_new_z_level(choice, list(ZTRAIT_AWAY = TRUE, ZTRAIT_LINKAGE = linkage)))//, load_speed = 100)
 		message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz], linkage [linkage ? linkage : "not set"]")
 		log_admin("[key_name(src)] loaded event-map [choice], zlevel [world.maxz], linkage [linkage ? linkage : "not set"]")
 	else
@@ -1194,9 +1178,9 @@ var/global/centcom_barriers_stat = 1
 	if(!check_rights(R_FUN))
 		return
 
-	for(var/obj/effect/landmark/trololo/L in landmarks_list)
+	for(var/obj/effect/landmark/trololo/L as anything in landmarks_list["Rickroll"])
 		L.active = centcom_barriers_stat
-	for(var/obj/structure/centcom_barrier/B in centcom_barrier_list)
+	for(var/obj/structure/centcom_barrier/B as anything in centcom_barrier_list)
 		B.density = centcom_barriers_stat
 
 	log_admin("[key_name(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
@@ -1220,7 +1204,7 @@ var/global/centcom_barriers_stat = 1
 	anchored = TRUE
 	density = TRUE
 	invisibility = 101
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	icon_state = "x3"
 
 /obj/structure/centcom_barrier/atom_init()

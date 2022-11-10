@@ -138,6 +138,12 @@
 	body_parts_covered = 0
 	hud_types = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY)
 
+/obj/item/clothing/glasses/sunglasses/hud/med
+	name = "MEDHUD sunglasses"
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
+	icon_state = "sunmedhud"
+	body_parts_covered = 0
+	hud_types = list(DATA_HUD_MEDICAL)
 
 /obj/item/device/hud_calibrator
 	name = "Рекалибратор дисплея"

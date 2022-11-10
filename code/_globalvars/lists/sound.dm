@@ -67,14 +67,18 @@ var/global/list/SOUNDIN_RIGBREATH   = list('sound/misc/rigbreath1.ogg', 'sound/m
 var/global/list/SOUNDIN_BREATHMASK  = list('sound/misc/breathmask1.ogg', 'sound/misc/breathmask2.ogg')
 var/global/list/SOUNDIN_DESCERATION = list('sound/misc/desceration-01.ogg', 'sound/misc/desceration-02.ogg', 'sound/misc/desceration-03.ogg')
 
+// ----- Punches -----
+var/global/list/SOUNDIN_PUNCH_MEDIUM    = list('sound/effects/mob/hits/medium_1.ogg', 'sound/effects/mob/hits/medium_2.ogg', 'sound/effects/mob/hits/medium_3.ogg', 'sound/effects/mob/hits/medium_4.ogg', 'sound/effects/mob/hits/medium_5.ogg')
+var/global/list/SOUNDIN_PUNCH_HEAVY     = list('sound/effects/mob/hits/heavy_1.ogg', 'sound/effects/mob/hits/heavy_2.ogg', 'sound/effects/mob/hits/heavy_3.ogg', 'sound/effects/mob/hits/heavy_4.ogg')
+var/global/list/SOUNDIN_PUNCH_VERYHEAVY = list('sound/effects/mob/hits/veryheavy_1.ogg', 'sound/effects/mob/hits/veryheavy_2.ogg', 'sound/effects/mob/hits/veryheavy_3.ogg', 'sound/effects/mob/hits/veryheavy_4.ogg')
+
 // ----- Weapons -----
 // Melee
 var/global/list/SOUNDIN_GENHIT = list('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
-var/global/list/SOUNDIN_PUNCH  = list('sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
 
 // ----- Items -----
 // Medical
-var/global/list/SOUNDIN_BANDAGE = list('sound/items/bandage.ogg', 'sound/items/bandage2.ogg', 'sound/items/bandage3.ogg')
+var/global/list/SOUNDIN_BANDAGE = list('sound/items/bandage1.ogg', 'sound/items/bandage2.ogg')
 var/global/list/SOUNDIN_KNIFE_CUTTING = list('sound/items/knife_cutting1.ogg', 'sound/items/knife_cutting2.ogg', 'sound/items/knife_cutting3.ogg')
 
 // ----- Footsteps -----
@@ -135,7 +139,16 @@ var/global/list/footstep = list(
 		'sound/effects/mob/footstep/lava3.ogg'), 100, 0),
 	FOOTSTEP_WATER_SHALLOW = list(SOUNDIN_WATER_SHALLOW, 100, -1),
 	FOOTSTEP_WATER_DEEP = list(SOUNDIN_WATER_DEEP, 100, 0),
-	FOOTSTEP_SNOWSTEP = list(list('sound/effects/snowstep.ogg'), 100, 0),
+	FOOTSTEP_SNOWSTEP = list(list(
+		'sound/effects/mob/footstep/snowstep1.ogg',
+		'sound/effects/mob/footstep/snowstep2.ogg',
+		'sound/effects/mob/footstep/snowstep3.ogg',
+		'sound/effects/mob/footstep/snowstep4.ogg',
+		'sound/effects/mob/footstep/snowstep5.ogg',
+		'sound/effects/mob/footstep/snowstep6.ogg',
+		'sound/effects/mob/footstep/snowstep7.ogg',
+		'sound/effects/mob/footstep/snowstep8.ogg',
+		'sound/effects/mob/footstep/snowstep9.ogg'), 100, 0),
 	FOOTSTEP_ICESTEP = list(list('sound/effects/icestep.ogg'), 100, 0),
 )
 
@@ -176,7 +189,16 @@ var/global/list/barefootstep = list(
 		'sound/effects/mob/footstep/lava3.ogg'), 100, 0),
 	FOOTSTEP_WATER_SHALLOW = list(SOUNDIN_WATER_SHALLOW, 100, -1),
 	FOOTSTEP_WATER_DEEP = list(SOUNDIN_WATER_DEEP, 100, 0),
-	FOOTSTEP_SNOWSTEP = list(list('sound/effects/snowstep.ogg'), 100, 0),
+	FOOTSTEP_SNOWSTEP = list(list(
+		'sound/effects/mob/footstep/snowstep1.ogg',
+		'sound/effects/mob/footstep/snowstep2.ogg',
+		'sound/effects/mob/footstep/snowstep3.ogg',
+		'sound/effects/mob/footstep/snowstep4.ogg',
+		'sound/effects/mob/footstep/snowstep5.ogg',
+		'sound/effects/mob/footstep/snowstep6.ogg',
+		'sound/effects/mob/footstep/snowstep7.ogg',
+		'sound/effects/mob/footstep/snowstep8.ogg',
+		'sound/effects/mob/footstep/snowstep9.ogg'), 100, 0),
 	FOOTSTEP_ICESTEP = list(list('sound/effects/icestep.ogg'), 100, 0),
 )
 
@@ -217,7 +239,16 @@ var/global/list/clawfootstep = list(
 		'sound/effects/mob/footstep/lava3.ogg'), 100, -2),
 	FOOTSTEP_WATER_SHALLOW = list(SOUNDIN_WATER_SHALLOW, 100, -1),
 	FOOTSTEP_WATER_DEEP = list(SOUNDIN_WATER_DEEP, 100, 0),
-	FOOTSTEP_SNOWSTEP = list(list('sound/effects/snowstep.ogg'), 100, 0),
+	FOOTSTEP_SNOWSTEP = list(list(
+		'sound/effects/mob/footstep/snowstep1.ogg',
+		'sound/effects/mob/footstep/snowstep2.ogg',
+		'sound/effects/mob/footstep/snowstep3.ogg',
+		'sound/effects/mob/footstep/snowstep4.ogg',
+		'sound/effects/mob/footstep/snowstep5.ogg',
+		'sound/effects/mob/footstep/snowstep6.ogg',
+		'sound/effects/mob/footstep/snowstep7.ogg',
+		'sound/effects/mob/footstep/snowstep8.ogg',
+		'sound/effects/mob/footstep/snowstep9.ogg'), 100, 0),
 	FOOTSTEP_ICESTEP = list(list('sound/effects/icestep.ogg'), 100, 0),
 )
 
@@ -232,7 +263,16 @@ var/global/list/heavyfootstep = list(
 		'sound/effects/mob/footstep/lava3.ogg'), 100, 0),
 	FOOTSTEP_WATER_SHALLOW = list(SOUNDIN_WATER_SHALLOW, 100, -1),
 	FOOTSTEP_WATER_DEEP = list(SOUNDIN_WATER_DEEP, 100, 0),
-	FOOTSTEP_SNOWSTEP = list(list('sound/effects/snowstep.ogg'), 100, 0),
+	FOOTSTEP_SNOWSTEP = list(list(
+		'sound/effects/mob/footstep/snowstep1.ogg',
+		'sound/effects/mob/footstep/snowstep2.ogg',
+		'sound/effects/mob/footstep/snowstep3.ogg',
+		'sound/effects/mob/footstep/snowstep4.ogg',
+		'sound/effects/mob/footstep/snowstep5.ogg',
+		'sound/effects/mob/footstep/snowstep6.ogg',
+		'sound/effects/mob/footstep/snowstep7.ogg',
+		'sound/effects/mob/footstep/snowstep8.ogg',
+		'sound/effects/mob/footstep/snowstep9.ogg'), 100, 0),
 	FOOTSTEP_ICESTEP = list(list('sound/effects/icestep.ogg'), 100, 0),
 )
 

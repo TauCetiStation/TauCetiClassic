@@ -326,7 +326,7 @@
 	var/datum/hud/hud = owner.hud_used
 	screen_obj = new
 	screen_obj.color = "#4b96c4"
-	hud.adding += screen_obj
+	screen_obj.add_to_hud(hud)
 
 	RegisterSignal(hud, COMSIG_PARENT_QDELETING, .proc/unmodify_hud)
 	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
@@ -341,8 +341,7 @@
 		return
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
-	if(hud?.adding)
-		hud.adding -= screen_obj
+	screen_obj.remove_from_hud(hud)
 	QDEL_NULL(screen_obj)
 
 /datum/component/mood/proc/hud_click(datum/source, location, control, params, mob/user)

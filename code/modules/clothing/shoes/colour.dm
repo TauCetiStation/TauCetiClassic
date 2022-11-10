@@ -3,7 +3,6 @@
 	icon_state = "black"
 	item_state = "bl_shoes"
 	desc = "A pair of black shoes."
-	clipped_status = CLIPPABLE
 
 	cold_protection = LEGS
 	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
@@ -14,60 +13,61 @@
 	name = "brown shoes"
 	desc = "A pair of brown shoes."
 	icon_state = "brown"
-	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/blue
 	name = "blue shoes"
 	icon_state = "blue"
-	clipped_status = CLIPPABLE
+	item_state = "blue_shoes"
 
 /obj/item/clothing/shoes/green
 	name = "green shoes"
 	icon_state = "green"
-	clipped_status = CLIPPABLE
+	item_state = "g_shoes"
 
 /obj/item/clothing/shoes/yellow
 	name = "yellow shoes"
 	icon_state = "yellow"
-	clipped_status = CLIPPABLE
+	item_state = "y_shoes"
 
 /obj/item/clothing/shoes/purple
 	name = "purple shoes"
 	icon_state = "purple"
-	clipped_status = CLIPPABLE
+	item_state = "p_shoes"
 
 /obj/item/clothing/shoes/red
 	name = "red shoes"
 	desc = "Stylish red shoes."
 	icon_state = "red"
 	item_state = "r_shoes"
-	clipped_status = CLIPPABLE
+
+/obj/item/clothing/shoes/red/wizard
+
+/obj/item/clothing/shoes/red/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/shoes/white
 	name = "white shoes"
 	icon_state = "white"
 	permeability_coefficient = 0.01
 	item_state = "w_shoes"
-	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/leather
 	name = "leather shoes"
 	desc = "A sturdy pair of leather shoes."
 	icon_state = "leather"
-	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/rainbow
 	name = "rainbow shoes"
 	desc = "Very gay shoes."
 	icon_state = "rain_bow"
-	clipped_status = CLIPPABLE
+	item_state = "rainbow_shoes"
 
 /obj/item/clothing/shoes/orange
 	name = "orange shoes"
 	icon_state = "orange"
 	item_state = "o_shoes"
 	var/obj/item/weapon/handcuffs/chained = null
-	clipped_status = CLIPPABLE
 
 /obj/item/clothing/shoes/orange/proc/attach_cuffs(obj/item/weapon/handcuffs/cuffs, mob/user)
 	if (src.chained)

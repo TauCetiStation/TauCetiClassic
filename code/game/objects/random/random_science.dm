@@ -97,7 +97,6 @@
 					/obj/item/weapon/circuitboard/protolathe,\
 					/obj/item/weapon/circuitboard/autolathe,\
 					/obj/item/weapon/circuitboard/chem_dispenser,\
-					/obj/item/weapon/circuitboard/pandemic,\
 					/obj/item/weapon/circuitboard/message_monitor,\
 					/obj/item/weapon/circuitboard/arcade,\
 					/obj/item/weapon/circuitboard/secure_data,\

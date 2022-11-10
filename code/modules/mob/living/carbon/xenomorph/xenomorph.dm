@@ -47,6 +47,9 @@
 	hud.remove_hud_from(src)
 	return ..()
 
+/mob/living/carbon/xenomorph/movement_delay()
+	return (move_delay_add + config.alien_delay + speed)
+
 /mob/living/carbon/xenomorph/adjustToxLoss(amount)
 	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) //upper limit of max_plasma, lower limit of 0
 	updatePlasmaDisplay()
@@ -71,6 +74,9 @@
 		health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 		med_hud_set_health()
 		med_hud_set_status()
+
+/mob/living/carbon/xenomorph/get_heat_protection()
+	return heat_protection
 
 /mob/living/carbon/xenomorph/handle_environment(datum/gas_mixture/environment)
 
@@ -100,19 +106,12 @@
 	var/loc_temp = get_temperature(environment)
 	var/pressure = environment.return_pressure()
 
-	//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Fire protection: [heat_protection] - Location: [loc] - src: [src]"
-
 	// Aliens are now weak to fire.
 
 	//After then, it reacts to the surrounding atmosphere based on your thermal protection
 	if(!on_fire) // If you're on fire, ignore local air temperature
-		if(loc_temp > bodytemperature)
-			//Place is hotter than we are
-			var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
-			if(thermal_protection < 1)
-				bodytemperature += (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
-		else
-			bodytemperature += 1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
+		var/affecting_temp = (loc_temp - bodytemperature) * environment.return_relative_density()
+		adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
 
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > 360)
@@ -194,7 +193,7 @@
 			if(count)
 				stat("[key]: [count]")
 
-/mob/living/carbon/xenomorph/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
+/mob/living/carbon/xenomorph/Stun(amount, ignore_canstun = 0)
 	if(status_flags & CANSTUN || ignore_canstun)
 		..()
 	else
@@ -284,7 +283,13 @@ Hit Procs
 	return "xltrails"
 
 /mob/living/carbon/xenomorph/update_canmove()
-	canmove = !(weakened || paralysis || stat || (status_flags & FAKEDEATH) || crawling || stunned || captured || pinned.len)
+	..()
+
+	if(lying)
+		canmove = FALSE
+	if(density)
+		density = initial(density)
+
 
 /mob/living/carbon/xenomorph/crawl()
 	SetCrawling(!crawling)
@@ -297,14 +302,9 @@ Hit Procs
 		to_chat(src, "<span class='warning'>Your other hand is too busy holding [item_in_hand].</span>")
 		return
 	src.hand = !( src.hand )
-	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
-		if(hand)	//This being 1 means the left hand is in use
-			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
-		else
-			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
-	return
+	if(hud_used && l_hand_hud_object && r_hand_hud_object)
+		l_hand_hud_object.update_icon(src)
+		r_hand_hud_object.update_icon(src)
 
 /mob/living/carbon/xenomorph/get_pixel_y_offset(lying = 0)
 	return initial(pixel_y)

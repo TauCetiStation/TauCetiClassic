@@ -76,7 +76,7 @@
 		return FALSE
 
 	var/charge_usage = (temp_adj / max_cooling) * charge_consumption
-	user.bodytemperature -= temp_adj * efficiency
+	user.adjust_bodytemperature(-temp_adj * efficiency)
 	cell.use(charge_usage)
 
 	return TRUE

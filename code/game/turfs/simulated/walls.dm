@@ -18,9 +18,11 @@
 
 	var/seconds_to_melt = 10 //It takes 10 seconds for thermite to melt this wall through
 
-	opacity = 1
+	var/list/dent_decals
+
+	opacity = TRUE
 	density = TRUE
-	blocks_air = 1
+	blocks_air = TRUE
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
@@ -128,11 +130,10 @@
 
 //Damage
 
-/turf/simulated/wall/proc/take_damage(dam, devastated)
+/turf/simulated/wall/take_damage(dam, devastated) // doesnt use atom integrity system
 	if(dam)
 		damage = max(0, damage + dam)
 		update_damage(devastated)
-	return
 
 /turf/simulated/wall/proc/update_damage(devastated)
 	var/cap = damage_cap
@@ -199,8 +200,8 @@
 			take_damage(rand(0, 55))
 
 /turf/simulated/wall/blob_act()
+	add_dent(WALL_DENT_HIT)
 	take_damage(rand(75, 125))
-	return
 
 // Wall-rot effect, a nasty fungus that destroys walls.
 /turf/simulated/wall/proc/rot()
@@ -259,29 +260,32 @@
 	to_chat(M, "<span class='notice'>You push the wall but nothing happens!</span>")
 	return */
 
+/turf/simulated/wall/attack_hulk(mob/living/simple_animal/hulk/M)
+	if(istype(M))
+		playsound(M, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+		M.health -= rand(4, 10)
+		attack_animal(M)
+		return TRUE
+
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
 	..()
 	if(M.environment_smash >= 2)
-		if(istype(M, /mob/living/simple_animal/hulk))
-			var/mob/living/simple_animal/hulk/Hulk = M
-			playsound(Hulk, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-			Hulk.health -= rand(4, 10)
 		playsound(M, 'sound/effects/hulk_hit_wall.ogg', VOL_EFFECTS_MASTER)
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash >= 3)
+				add_dent(WALL_DENT_HIT)
 				take_damage(rand(25, 75))
 				to_chat(M, "<span class='info'>Вы крушите стену.</span>")
 			else
 				to_chat(M, "<span class='info'>Стена слишком прочная, чтобы вы могли ее уничтожить.</span>")
 		else
 			if (prob(40) || rotting)
-				to_chat(M, text("<span class='notice'>Вы пробиваете стену насквозь.</span>"))
-				dismantle_wall(1)
-			else
-				take_damage(rand(25, 75))
-				to_chat(M, "<span class='info'>Вы крушите стену.</span>")
-				to_chat(M, text("<span class='notice'>Вы пробиваете стену насквозь.</span>"))
+				to_chat(M, "<span class='notice'>Вы пробиваете стену насквозь.</span>")
 				dismantle_wall(TRUE)
+			else
+				add_dent(WALL_DENT_HIT)
+				take_damage(rand(25, 75), TRUE)
+				to_chat(M, "<span class='info'>Вы крушите стену.</span>")
 
 /turf/simulated/wall/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -359,14 +363,14 @@
 			if(!damage)
 				return
 			to_chat(user, "<span class='warning'>Вы ремонтируете стену.</span>")
-			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100))
+			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
 				to_chat(user, "<span class='notice'>Вы отремонтировали стену.</span>")
 				take_damage(-damage)
 
 		else
 			to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
-			if(WT.use_tool(src, user, 100, 3, 100))
-				if(!istype(src, /turf/simulated/wall))
+			if(WT.use_tool(src, user, SKILL_TASK_DIFFICULT, 3, 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
+				if(!iswallturf(src))
 					return
 				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
 				dismantle_wall()
@@ -375,10 +379,10 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
-		if(W.use_tool(src, user, 60, volume = 100))
+		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100))
 			if(mineral == "diamond")//Oh look, it's tougher
 				sleep(60)
-			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
+			if(!iswallturf(src) || !user || !W || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
@@ -392,10 +396,10 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Вы бурите сквозь стену.</span>")
-		if(W.use_tool(src, user, 60, volume = 50))
+		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
 			if(mineral == "diamond")
 				sleep(60)
-			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
+			if(!iswallturf(src) || !user || !W || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
@@ -414,7 +418,7 @@
 		if(W.use_tool(src, user, 70))
 			if(mineral == "diamond")
 				sleep(70)
-			if(!istype(src, /turf/simulated/wall) || !user || !EB || !T)
+			if(!iswallturf(src) || !user || !EB || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
@@ -430,7 +434,7 @@
 		user.do_attack_animation(src)
 		if(C.use_charge(user))
 			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			take_damage(pick(10, 20, 30))
+			take_damage(30)
 		return
 
 	else if(istype(W,/obj/item/apc_frame))
@@ -472,6 +476,10 @@
 	else if(istype(W, /obj/item/noticeboard_frame))
 		var/obj/item/noticeboard_frame/NF = W
 		NF.try_build(user, src)
+
+	else if(istype(W,/obj/item/painting_frame))
+		var/obj/item/painting_frame/AH = W
+		AH.try_build(src)
 		return
 
 	//Poster stuff
@@ -490,3 +498,33 @@
 	if(current_size == STAGE_FOUR)
 		if(prob(30))
 			dismantle_wall()
+
+/turf/simulated/wall/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
+	if(!Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN) && prob(75))
+		add_dent(WALL_DENT_SHOT, Proj.p_x, Proj.p_y)
+
+/turf/simulated/wall/proc/add_dent(denttype, x, y)
+	if(length(dent_decals) >= MAX_DENT_DECALS)
+		return
+
+	var/mutable_appearance/decal = mutable_appearance('icons/effects/effects.dmi', "", BULLET_HOLE_LAYER, plane)
+	if(isnull(x) || isnull(y))
+		x = rand(-12, 12)
+		y = rand(-12, 12)
+	else
+		x = clamp(x - 16, -16, 16) // because sprites are centered
+		y = clamp(y - 16, -16, 16)
+
+	switch(denttype)
+		if(WALL_DENT_SHOT)
+			decal.icon_state = "bullet_hole"
+			decal.pixel_x = clamp(x, -15, 15) // because sprite size
+			decal.pixel_y = clamp(y, -15, 15)
+		if(WALL_DENT_HIT)
+			decal.icon_state = "impact[rand(1, 3)]"
+			decal.pixel_x = clamp(x, -12, 12) // because sprite size
+			decal.pixel_y = clamp(y, -12, 12)
+
+	LAZYADD(dent_decals, decal)
+	add_overlay(decal)

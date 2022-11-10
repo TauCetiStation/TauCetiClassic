@@ -92,6 +92,7 @@
 
 /datum/reagent/paracetamol/on_general_digest(mob/living/M)
 	..()
+	M.adjustHalLoss(-1)
 	if(volume > overdose)
 		M.hallucination = max(M.hallucination, 2)
 
@@ -107,6 +108,7 @@
 
 /datum/reagent/tramadol/on_general_digest(mob/living/M)
 	..()
+	M.adjustHalLoss(-4)
 	if(volume > overdose)
 		M.hallucination = max(M.hallucination, 2)
 
@@ -122,6 +124,7 @@
 
 /datum/reagent/oxycodone/on_general_digest(mob/living/M)
 	..()
+	M.adjustHalLoss(-8)
 	if(volume > overdose)
 		M.adjustDrugginess(1)
 		M.hallucination = max(M.hallucination, 3)
@@ -140,6 +143,12 @@
 
 /datum/reagent/sterilizine/reaction_obj(obj/O, volume)
 	O.germ_level -= min(volume*20, O.germ_level)
+	REMOVE_TRAIT(O, TRAIT_XENO_FUR, GENERIC_TRAIT)
+	if(istype(O, /obj/item/weapon/reagent_containers/food))
+		var/obj/item/weapon/reagent_containers/food/F = O
+		//constituent components precipitate into food as unwanted sediment. No need use sterilizine into food
+		F.reagents.add_reagent("chlorine", 1)
+		F.reagents.add_reagent("ethanol", 1)
 
 /datum/reagent/sterilizine/reaction_turf(turf/T, volume)
 	. = ..()
@@ -157,9 +166,9 @@
 /datum/reagent/leporazine/on_general_digest(mob/living/M)
 	..()
 	if(M.bodytemperature > BODYTEMP_NORMAL)
-		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
-	else if(M.bodytemperature < 311)
-		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
+		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = BODYTEMP_NORMAL)
+	else if(M.bodytemperature < BODYTEMP_NORMAL + 1)
+		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL)
 
 /datum/reagent/kelotane
 	name = "Kelotane"
@@ -364,11 +373,6 @@
 	M.SetConfused(0)
 	M.SetSleeping(0)
 	M.jitteriness = 0
-	for(var/datum/disease/D in M.viruses)
-		D.spread = DISEASE_SPREAD_REMISSIVE
-		D.stage--
-		if(D.stage < 1)
-			D.cure()
 
 /datum/reagent/synaptizine
 	name = "Synaptizine"
@@ -471,6 +475,8 @@
 	..()
 	M.ear_damage = max(M.ear_damage - 1, 0)
 	M.ear_deaf = max(M.ear_deaf - 3, 0)
+	if(M.ear_damage <= 0 && M.ear_deaf <= 0)
+		M.sdisabilities &= ~DEAF
 
 /datum/reagent/peridaxon
 	name = "Peridaxon"
@@ -523,6 +529,7 @@
 		H.regenerating_bodypart = H.find_damaged_bodypart()
 	if(H.regenerating_bodypart)
 		H.nutrition -= 3
+		H.Stun(3)
 		H.apply_effect(3, WEAKEN)
 		H.apply_damages(0,0,1,4,0,5)
 		H.regen_bodyparts(4, FALSE)
@@ -646,11 +653,20 @@
 
 /datum/reagent/ethylredoxrazine/on_general_digest(mob/living/M)
 	..()
-	M.dizziness = 0
-	M.drowsyness = 0
-	M.setStuttering(0)
-	M.SetConfused(0)
+	M.dizziness = max(0, M.dizziness - 10)
+	M.drowsyness = max(0, M.drowsyness - 10)
+	M.AdjustStuttering(-10)
+	M.AdjustConfused(-10)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 1 * REM, 0, 1)
+	if(prob(volume))
+		if(!ishuman(M))
+			return
+		var/mob/living/carbon/human/H = M
+		var/obj/item/organ/external/head/BP = H.get_bodypart(BP_HEAD)
+		if(!BP || !BP.disfigured)
+			return
+		BP.disfigured = FALSE
+		to_chat(H, "Your face is shaped normally again.")
 
 /datum/reagent/vitamin //Helps to regen blood and hunger(but doesn't really regen hunger because of the commented code below).
 	name = "Vitamin"
@@ -746,3 +762,12 @@
 						E.status &= ~ORGAN_BROKEN
 						E.perma_injury = 0
 						holder.remove_reagent("nanocalcium", 10)
+
+/datum/reagent/metatrombine
+	name = "Metatrombine"
+	id = "metatrombine"
+	description = "Metatrombine is a drug that induces high plateletes production. Can be used to temporarily coagulate blood in internal bleedings."
+	reagent_state = LIQUID
+	color = "#990000"
+	restrict_species = list(IPC, DIONA)
+	overdose = 5

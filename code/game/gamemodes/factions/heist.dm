@@ -5,7 +5,6 @@
 
 	initroletype = /datum/role/vox_raider
 
-	min_roles = 4
 	max_roles = 6
 
 	logo_state = "raider-logo"
@@ -13,14 +12,18 @@
 /datum/faction/heist/can_setup(num_players)
 	if(!..())
 		return FALSE
-	for(var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "voxstart")
-			return TRUE
+	if(global.heiststart.len)
+		return TRUE
 	return FALSE
 
 /datum/faction/heist/forgeObjectives()
 	if(!..())
 		return FALSE
+	AppendVoxObjectives()
+	AppendVoxInviolateObjectives()
+	return TRUE
+
+/datum/faction/heist/proc/AppendVoxObjectives()
 	var/max_objectives = pick(2,2,2,2,3,3,3,4)
 	var/list/goals = list("kidnap","loot","salvage")
 
@@ -35,29 +38,14 @@
 		else
 			AppendObjective(/datum/objective/heist/salvage)
 
+/datum/faction/heist/proc/AppendVoxInviolateObjectives()
 	//-All- vox raids have these two (one) objectives. Failing them loses the game.
 	AppendObjective(/datum/objective/heist/inviolate_crew)
 	AppendObjective(/datum/objective/heist/inviolate_death)
-	return TRUE
 
 /datum/faction/heist/OnPostSetup()
-	//Build a list of spawn points.
-	var/list/turf/raider_spawn = list()
-
-	for(var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "voxstart")
-			raider_spawn += get_turf(L)
-			qdel(L)
-			continue
-
-	var/index = 1
-	for(var/datum/role/R in members)
-		if(index > raider_spawn.len)
-			index = 1
-
-		R.antag.current.forceMove(raider_spawn[index])
-		index++
-	return ..()
+	. = ..()
+	create_spawners(/datum/spawner/vox, max_roles)
 
 /datum/faction/heist/GetScoreboard()
 	var/list/objectives = objective_holder.GetObjectives()
@@ -80,12 +68,6 @@
 
 	return dat
 
-/datum/faction/heist/check_win()
-	if(vox_shuttle_location && (vox_shuttle_location == "start"))
-		return TRUE
-
-	return FALSE
-
 /datum/faction/heist/proc/is_raider_crew_safe()
 	for(var/datum/role/vox_raider/V in members)
 		if(!V.antag.current)
@@ -102,3 +84,16 @@
 			return TRUE
 
 	return FALSE
+
+/datum/faction/heist/saboteurs/can_setup()
+	if(!is_type_in_list(/obj/machinery/nuclearbomb, poi_list))
+		return FALSE
+	if(!global.heiststart.len)
+		return FALSE
+	return ..()
+
+/datum/faction/heist/saboteurs/AppendVoxObjectives()
+	AppendObjective(/datum/objective/heist/stealnuke)
+
+/datum/faction/heist/saboteurs/AppendVoxInviolateObjectives()
+	AppendObjective(/datum/objective/heist/inviolate_crew)

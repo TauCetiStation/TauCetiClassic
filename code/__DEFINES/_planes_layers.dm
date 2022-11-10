@@ -81,6 +81,7 @@ What is the naming convention for planes or layers?
   #define BELOW_TURF_LAYER                1.9
   //efine TURF_LAYER                      2     // For easy recordkeeping; this is a byond define
   #define ABOVE_NORMAL_TURF_LAYER         2.08
+  #define BULLET_HOLE_LAYER               2.1
   #define GAS_PIPE_HIDDEN_SUPPLY_LAYER    2.33
   #define GAS_PIPE_HIDDEN_SCRUBBER_LAYER  2.34
   #define GAS_PIPE_HIDDEN_LAYER           2.35

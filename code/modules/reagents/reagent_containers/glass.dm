@@ -14,6 +14,8 @@
 	flags = OPENCONTAINER
 	action_button_name = "Switch Lid"
 	var/label_text = ""
+	pickup_sound = 'sound/items/glass_containers/bottle_take-empty.ogg'
+	dropped_sound = 'sound/items/glass_containers/bottle_put-empty.ogg'
 
 	//var/list/
 	can_be_placed_into = list(
@@ -29,7 +31,6 @@
 		/obj/machinery/dna_scannernew,
 		/obj/item/weapon/grenade/chem_grenade,
 		/obj/machinery/bot/medbot,
-		/obj/machinery/computer/pandemic,
 		/obj/item/weapon/storage/secure/safe,
 		/obj/machinery/iv_drip,
 		/obj/machinery/disease2/incubator,
@@ -105,7 +106,7 @@
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class = 'notice'>You transfer [trans] units of the solution to [target].</span>")
-		playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 15) // Sound taken from "Eris" build
+		playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER) // Sound taken from "Eris" build
 
 	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
 	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
@@ -301,6 +302,8 @@
 	slot_flags = SLOT_FLAGS_HEAD
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 3, bomb = 5, bio = 0, rad = 0)
 	force = 5
+	pickup_sound = null
+	dropped_sound = null
 
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/item/I, mob/user, params)
 	if(isprox(I))

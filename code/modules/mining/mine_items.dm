@@ -34,7 +34,7 @@
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
-		new /obj/item/clothing/suit/hooded/wintercoat/cargo
+		new /obj/item/clothing/suit/hooded/wintercoat/miner(src)
 		new /obj/item/clothing/head/santa(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 
@@ -204,7 +204,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "plasmacutter"
 	item_state = "plasmacutter"
 	w_class = SIZE_SMALL //it is smaller than the pickaxe
-	damtype = "fire"
+	damtype = BURN
 	toolspeed = 0.4 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
 	origin_tech = "materials=4;phorontech=3;engineering=3"
 	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
@@ -285,6 +285,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	m_amt = 50
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
+	usesound = 'sound/effects/shovel_digging.ogg'
 	// Better than a rod, worse than a crowbar.
 	qualities = list(
 		QUALITY_PRYING = 0.75
@@ -467,6 +468,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/power = 5
 
 /obj/item/weapon/mining_charge/attack_self(mob/user)
+	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL,list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around figuring out how to set timer on [src]...</span>"))
+		return
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(newtime < 5)
 		newtime = 5
@@ -481,9 +484,10 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 	if(user.is_busy(src))
 		return
-	to_chat(user, "<span class='notice'>Planting explosives...</span>")
 
-	if(do_after(user, 50, target = target))
+	to_chat(user, "<span class='notice'>Planting explosives...</span>")
+	var/planting_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/firearms = SKILL_LEVEL_MASTER, /datum/skill/engineering = SKILL_LEVEL_PRO), -0.1)
+	if(do_after(user, planting_time, target = target))
 		user.drop_item()
 		target = target
 		loc = null
@@ -553,7 +557,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = null
 	damage = 10
 	damage_type = BRUTE
-	flag = "bomb"
+	flag = BOMB
 	var/range = 3
 	var/power = 4
 
@@ -610,6 +614,11 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	has_gravity = 1
+	looped_ambience = 'sound/ambience/loop_mineoutpost.ogg'
+
+/area/custom/survivalpod/bar
+	name = "Emergency Bar"
+	looped_ambience = null
 
 /obj/item/weapon/survivalcapsule
 	name = "bluespace shelter capsule"
@@ -735,7 +744,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "surv_wall0"
 	var/basestate = "surv_wall"
 	opacity = TRUE
-	health = 100
+	max_integrity = 100
 
 /obj/structure/inflatable/survival/atom_init()
 	. = ..()

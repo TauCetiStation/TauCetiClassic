@@ -27,7 +27,7 @@
 		ASPECT_TECH = 1,
 	)
 
-/datum/religion_rites/standing/consent/synthconversion/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/consent/synthconversion/can_start(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 
@@ -51,7 +51,7 @@
 
 	return TRUE
 
-/datum/religion_rites/standing/consent/synthconversion/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/consent/synthconversion/invoke_effect(mob/user, obj/AOG)
 	..()
 
 	if(convert_god(AOG))
@@ -60,7 +60,7 @@
 	var/mob/living/carbon/human/human2borg = AOG.buckled_mob
 	if(!istype(human2borg))
 		return FALSE
-	hgibs(get_turf(AOG), human2borg.viruses, human2borg.dna, human2borg.species.flesh_color, human2borg.species.blood_datum)
+	hgibs(get_turf(AOG), human2borg.dna, human2borg.species.flesh_color, human2borg.species.blood_datum)
 	human2borg.visible_message("<span class='notice'>[human2borg] has been converted by the rite of [pick(religion.deity_names)]!</span>")
 	var/mob/living/silicon/robot/R = human2borg.Robotize(religion.bible_info.borg_name, religion.bible_info.laws_type, FALSE, religion)
 	religion.add_member(R, HOLY_ROLE_PRIEST)
@@ -75,6 +75,8 @@
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(AOG), "Son of Heaven", religion.bible_info.laws_type, FALSE, religion)
 	god.mind.transfer_to(O)
 	O.job = "Cyborg"
+	O.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+	O.mind.skills.maximize_active_skills()
 	qdel(god)
 	religion.add_deity(O, HOLY_ROLE_PRIEST)
 	return TRUE

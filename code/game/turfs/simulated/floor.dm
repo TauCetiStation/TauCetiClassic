@@ -37,7 +37,6 @@ var/global/list/wood_icons = list("wood","wood-broken")
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
 	thermal_conductivity = 0.040
-	heat_capacity = 10000
 	var/broken = 0
 	var/burnt = 0
 	var/mineral = "metal"
@@ -230,7 +229,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 				icon_state = "wood"
 				//world << "[icon_state]y's got [icon_state]"
 	/*spawn(1)
-		if(istype(src,/turf/simulated/floor)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
+		if(isfloorturf(src)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
 			if(air)
 				update_visuals(air)*/
 	..()

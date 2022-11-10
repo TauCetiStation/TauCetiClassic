@@ -385,7 +385,7 @@
 	if(!BP || !BP.is_usable())
 		return
 
-	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, "melee")/2, 1)
+	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, MELEE)/2, 1)
 	to_chat(H, "<span class='danger'>You feel, that [src] try to cut your [BP]!</span>")
 
 	if(BP.is_stump)
@@ -393,7 +393,7 @@
 
 	BP = BP.parent
 
-	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, "melee")/2, 1)
+	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, MELEE)/2, 1)
 	to_chat(H, "<span class='danger'>You feel, that [src] try to cut your [BP]!</span>")
 
 /obj/machinery/mining/drill/update_icon()

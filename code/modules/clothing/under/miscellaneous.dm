@@ -175,8 +175,8 @@
 /obj/item/clothing/under/suit_jacket/female
 	name = "executive suit"
 	desc = "A formal trouser suit for women, intended for the station's finest."
-	icon_state = "black_suit_fem"
-	item_state = "black_suit_fem"
+	icon_state = "black_suit_neck"
+	item_state = "black_suit_neck"
 
 /obj/item/clothing/under/suit_jacket/red
 	name = "red suit"
@@ -462,6 +462,7 @@
 /obj/item/clothing/under/rank/cadet/skirt
 	name = "security cadet's jumpskirt"
 	icon_state = "skirt_cadet"
+	item_state = "skirt_cadet"
 
 /obj/item/clothing/under/rank/forensic_technician
 	desc = "It has a Forensics rank stripe on it."
@@ -726,18 +727,9 @@
 	item_state = "DutchUniform"
 
 /obj/item/clothing/head/spacepolice
-	name = "NanoTrasen cap"
+	name = "police cap"
 	desc = "A blue cap for patrolling the daily beat."
-	icon_state = "policecap_families"
-
-/obj/item/clothing/head/beret/spacepolice
-	name = "NanoTrasen beret"
-	desc = "An armored blue beret belonging to some low ranking officer in space police forces."
-	icon_state = "beret_cops"
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
-	body_parts_covered = 1
-	pierce_protection = HEAD
-	flags = HEADCOVERSEYES
+	icon_state = "police_cap"
 
 /obj/item/clothing/under/henchmen
 	name = "henchmen jumpsuit"

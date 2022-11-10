@@ -93,10 +93,14 @@
 /datum/dna/gene/basic/remotetalk/activate(mob/M, connected, flags)
 	..(M,connected,flags)
 	M.verbs += /mob/living/carbon/human/proc/remotesay
+	M.verbs += /mob/proc/toggle_telepathy_hear
+	M.verbs += /mob/proc/telepathy_say
 
 /datum/dna/gene/basic/remotetalk/deactivate(mob/M, connected, flags)
 	..(M,connected,flags)
 	M.verbs -= /mob/living/carbon/human/proc/remotesay
+	M.verbs -= /mob/proc/toggle_telepathy_hear
+	M.verbs -= /mob/proc/telepathy_say
 
 /datum/dna/gene/basic/morph
 	name="Morph"
@@ -256,7 +260,7 @@
 
 	Monster.original_body = src
 	forceMove(Monster)
-	
+
 	client?.show_metahelp_greeting("hulk")
 	mind.transfer_to(Monster)
 

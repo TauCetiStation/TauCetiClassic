@@ -398,7 +398,7 @@
 					dat += "<a href='?src=\ref[src];call_shuttle=2'>Send Back</a><br>"
 				if(1)
 					dat += "ETA: <a href='?src=\ref[src];edit_shuttle_time=1'>[shuttleeta2text()]</a><BR>"
-		dat += "<a href='?src=\ref[src];delay_round_end=1'>[SSticker.delay_end ? "End Round Normally" : "Delay Round End"]</a><br>"
+		dat += "<a href='?src=\ref[src];delay_round_end=1'>[SSticker.admin_delayed ? "End Round Normally" : "Delay Round End"]</a><br>"
 
 		dat += SSticker.mode.AdminPanelEntry()
 

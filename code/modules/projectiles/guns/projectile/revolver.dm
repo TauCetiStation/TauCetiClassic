@@ -84,7 +84,7 @@
 	var/mob/M = usr
 	var/input = sanitize_safe(input(M,"What do you want to name the gun?"), MAX_NAME_LEN)
 
-	if(input && !M.stat && Adjacent(M))
+	if(input && M.stat == CONSCIOUS && Adjacent(M))
 		name = input
 		to_chat(M, "You name the gun [input]. Say hello to your new friend.")
 		return 1
@@ -125,7 +125,7 @@
 	name = "mateba"
 	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."	//>10mm hole >.357
 	icon_state = "mateba"
-	item_state = "revolver"
+	item_state = "mateba"
 	origin_tech = "combat=2;materials=2"
 
 // A gun to play Russian Roulette!
@@ -249,7 +249,8 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/dungeon
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
-	icon_state = "sawnshotgun"
+	icon_state = "dshotgun"
+	item_state = "shotgun-short"
 	w_class = SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	name = "sawn-off shotgun"

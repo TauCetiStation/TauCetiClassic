@@ -85,7 +85,6 @@
 	user.visible_message("<span class='notice'>[user] has constructed a prepared incision on and within [target]'s [BP.name] with \the [tool].</span>", \
 	"<span class='notice'>You have constructed a prepared incision on and within [target]'s [BP.name] with \the [tool].</span>",)
 	BP.open = 1
-	BP.status |= ORGAN_BLEEDING
 	BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
 	BP.strap()
 	BP.open = 2
@@ -123,7 +122,9 @@
 	user.visible_message("<span class='notice'>[user] has made an incision on [target]'s [BP.name] with \the [tool].</span>", \
 	"<span class='notice'>You have made an incision on [target]'s [BP.name] with \the [tool].</span>",)
 	BP.open = 1
-	BP.status |= ORGAN_BLEEDING
+	var/datum/reagents/R = target.reagents
+	if(!R.has_reagent("metatrombine"))
+		BP.status |= ORGAN_BLEEDING
 	BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/cut_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -303,11 +304,11 @@
 //////////////////////////////////////////////////////////////////
 //						COMMON ROBOTIC STEPS					//
 //////////////////////////////////////////////////////////////////
-/datum/surgery_step/ipcgeneric
+/datum/surgery_step/ipc/generic
 	can_infect = FALSE
 	allowed_species = list(IPC)
 
-/datum/surgery_step/ipcgeneric/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/generic/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
 		return FALSE
 	if(target_zone == O_EYES)	//there are specific steps for eye surgery
@@ -319,7 +320,7 @@
 		return FALSE
 	return TRUE
 
-/datum/surgery_step/ipcgeneric/screw_open
+/datum/surgery_step/ipc/generic/screw_open
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
 	/obj/item/weapon/scalpel = 75,
@@ -330,12 +331,12 @@
 	min_duration = 90
 	max_duration = 110
 
-/datum/surgery_step/ipcgeneric/screw_open/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/generic/screw_open/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		return BP.open == 0 && target_zone != O_MOUTH
 
-/datum/surgery_step/ipcgeneric/screw_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/generic/screw_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] starts to unscrew [target]'s [BP.name]'s maintenance hatch with \the [tool].",
 	"You start to unscrew [target]'s [BP.name]'s maintenance hatch with \the [tool].")
@@ -343,20 +344,20 @@
 		to_chat(target, "%[BP.name]'S MAINTENANCE HATCH% UNATHORISED ACCESS ATTEMPT DETECTED!")
 	..()
 
-/datum/surgery_step/ipcgeneric/screw_open/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/generic/screw_open/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='notice'>[user] has loosen bolts on [target]'s [BP.name]'s maintenance hatch with \the [tool].</span>",
 	"<span class='notice'>You have unscrewed [target]'s [BP.name]'s maintenance hatch with \the [tool].</span>",)
 	BP.open = 1
 	BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
 
-/datum/surgery_step/ipcgeneric/screw_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/generic/screw_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s [BP.name]'s maintenance hatch with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, scratching [target]'s [BP.name]'s maintenance hatch with \the [tool]!</span>")
 	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 
-/datum/surgery_step/ipcgeneric/pry_open
+/datum/surgery_step/ipc/generic/pry_open
 	allowed_tools = list(
 	/obj/item/weapon/crowbar = 100,
 	/obj/item/weapon/hatchet = 75,
@@ -366,12 +367,12 @@
 	min_duration = 30
 	max_duration = 40
 
-/datum/surgery_step/ipcgeneric/pry_open/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/generic/pry_open/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		return BP.open == 1
 
-/datum/surgery_step/ipcgeneric/pry_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/generic/pry_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] starts to pry open [target]'s [BP.name]'s maintenance hatch with \the [tool].",
 	"You start to pry open [target]'s [BP.name]'s maintenance hatch with \the [tool].")
@@ -379,19 +380,19 @@
 		to_chat(target, "%[BP.name]'s MAINTENANCE HATCH% DAMAGE DETECTED. CEASE APPLIED DAMAGE.")
 	..()
 
-/datum/surgery_step/ipcgeneric/pry_open/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/generic/pry_open/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='notice'>[user] pries open [target]'s [BP.name]'s maintenance hatch with \the [tool].</span>",
 	"<span class='notice'>You pry open [target]'s [BP.name]'s maintenace hatch with \the [tool].</span>")
 	BP.open = 2
 
-/datum/surgery_step/ipcgeneric/pry_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/generic/pry_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, damaging [target]'s [BP.name]'s maintenance hatch with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, damaging [target]'s [BP.name]'s maintenance hatch with \the [tool]!</span>")
 	BP.take_damage(12, 0, used_weapon = tool)
 
-/datum/surgery_step/ipcgeneric/close_shut
+/datum/surgery_step/ipc/generic/close_shut
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
 	/obj/item/weapon/scalpel = 75,
@@ -402,24 +403,24 @@
 	min_duration = 70
 	max_duration = 100
 
-/datum/surgery_step/ipcgeneric/close_shut/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/generic/close_shut/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		return BP.open && target_zone != O_MOUTH
 
-/datum/surgery_step/ipcgeneric/close_shut/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/generic/close_shut/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] is beginning to lock [target]'s [BP.name]'s maintenance hatch with \the [tool].",
 	"You are beginning to lock [target]'s [BP.name]'s maintenance hatch with \the [tool].")
 	..()
 
-/datum/surgery_step/ipcgeneric/close_shut/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/generic/close_shut/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='notice'>[user] locks [target]'s [BP.name]'s maintenance hatch with \the [tool].</span>",
 	"<span class='notice'>You lock [target]'s [BP.name]'s maintenance hatch with \the [tool].</span>")
 	BP.open = 0
 
-/datum/surgery_step/ipcgeneric/close_shut/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/ipc/generic/close_shut/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, denting [target]'s [BP.name]'s maintenance hatch with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, denting [target]'s [BP.name]'s maintenance hatch with \the [tool]!</span>")

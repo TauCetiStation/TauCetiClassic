@@ -86,3 +86,10 @@ var/global/cmp_field = "name"
 
 /proc/cmp_filter_data_priority(list/A, list/B)
 	return A["priority"] - B["priority"]
+
+/proc/cmp_job_titles(list/A, list/B)
+	. = A["priority"] - B["priority"]
+	if (!.)
+		. = sorttext(B["rank"], A["rank"])
+	if (!.)
+		. = sorttext(B["name"], A["name"])

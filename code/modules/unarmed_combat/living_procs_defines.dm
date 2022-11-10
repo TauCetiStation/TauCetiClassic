@@ -58,7 +58,7 @@
 	var/retFlags = 0
 	var/retVerb = "attack"
 	var/retSound = null
-	var/retMissSound = 'sound/weapons/punchmiss.ogg'
+	var/retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
 
 	if(HULK in mutations)
 		retDam += 4
@@ -76,7 +76,7 @@
 
 /mob/living/attack_animal(mob/living/simple_animal/attacker)
 	if(attacker.melee_damage <= 0)
-		attacker.emote("[attacker.friendly] [src]")
+		attacker.me_emote("[attacker.friendly] [src]")
 		return TRUE
 	return attack_unarmed(attacker)
 
@@ -275,7 +275,7 @@
 	if(ishuman(src)) // This is stupid. TODO: abstract get_armor() proc.
 		var/mob/living/carbon/human/H = src
 		BP = H.get_bodypart(ran_zone(BP))
-		armor_block = run_armor_check(BP, "melee")
+		armor_block = run_armor_check(BP, MELEE)
 
 	if(damSound)
 		playsound(src, damSound, VOL_EFFECTS_MASTER)

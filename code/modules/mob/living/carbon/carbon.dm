@@ -243,7 +243,7 @@
 	return pressure
 
 /mob/living/carbon/proc/stabilize_body_temperature()
-	bodytemperature += (BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR
+	adjust_bodytemperature((BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR)
 
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment)
 	if(stat != DEAD) // lets put this shit somewhere here
@@ -258,10 +258,7 @@
 	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 
 	if(!on_fire)
-		if(affecting_temp <= -BODYTEMP_SIGNIFICANT_CHANGE)
-			bodytemperature += max(affecting_temp / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
-		else if(affecting_temp >= BODYTEMP_SIGNIFICANT_CHANGE)
-			bodytemperature += min(affecting_temp / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
+		adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
 
 	if(flags & GODMODE)
 		return
@@ -309,7 +306,7 @@
 		if(m_intent == "run")
 			nutrition -= met_factor * 0.01
 	if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == "run" && bodytemperature <= 360)
-		bodytemperature += 2
+		adjust_bodytemperature(2)
 
 	// Moving around increases germ_level faster
 	if(germ_level < GERM_LEVEL_MOVE_CAP && prob(8))
@@ -379,7 +376,7 @@
 /mob/living/carbon/MiddleClickOn(atom/A)
 	if(mind)
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-		if(!stat && C && C.chosen_sting && (iscarbon(A)) && (A != src))
+		if(stat == CONSCIOUS && C && C.chosen_sting && (iscarbon(A)) && (A != src))
 			next_click = world.time + 5
 			C.chosen_sting.try_to_sting(src, A)
 		else
@@ -388,7 +385,7 @@
 /mob/living/carbon/AltClickOn(atom/A)
 	if(mind)
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-		if(!stat && C && C.chosen_sting && (iscarbon(A)) && (A != src))
+		if(stat == CONSCIOUS && C && C.chosen_sting && (iscarbon(A)) && (A != src))
 			next_click = world.time + 5
 			C.chosen_sting.try_to_sting(src, A)
 		else
@@ -405,13 +402,6 @@
 		if(spread)
 			attacker.spread_disease_to(src, DISEASE_SPREAD_CONTACT)
 
-			for(var/datum/disease/D in viruses)
-				if(D.spread_by_touch())
-					attacker.contract_disease(D, 0, 1, CONTACT_HANDS)
-
-			for(var/datum/disease/D in attacker.viruses)
-				if(D.spread_by_touch())
-					contract_disease(D, 0, 1, CONTACT_HANDS)
 	return ..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
@@ -471,13 +461,9 @@
 	item_in_hand = get_active_hand()
 	if(item_in_hand)
 		SEND_SIGNAL(item_in_hand, COMSIG_ITEM_BECOME_ACTIVE, src)
-	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
-		if(hand)	//This being 1 means the left hand is in use
-			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
-		else
-			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
-			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
+	if(hud_used && l_hand_hud_object && r_hand_hud_object)
+		l_hand_hud_object.update_icon(src)
+		r_hand_hud_object.update_icon(src)
 
 	/*if (!( src.hand ))
 		src.hands.dir = NORTH
@@ -551,7 +537,7 @@
 			if(roundstart_quirks.len)
 				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
 
-			if(H.species && (H.species.name == SKELETON) && !H.w_uniform && !H.wear_suit)
+			if((isskeleton(H)) && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
 			var/t_him = "it"
@@ -687,7 +673,7 @@
 		if(isitem(item))
 			var/obj/item/O = item
 			if(O.w_class >= SIZE_SMALL)
-				playsound(loc, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
+				playsound(loc, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
 
 		do_attack_animation(target, has_effect = FALSE)
 
@@ -985,7 +971,7 @@
 			return
 		if(istype(thing, /mob/living/carbon/monkey/diona))
 			return
-	status_flags &= ~PASSEMOTES
+	remove_status_flags(PASSEMOTES)
 
 /mob/living/carbon/proc/can_eat(flags = 255) //I don't know how and why does it work
 	return TRUE
@@ -1085,8 +1071,7 @@
 				if (internal)
 					internal.add_fingerprint(usr)
 					internal = null
-					if (internals)
-						internals.icon_state = "internal0"
+					internals?.update_icon(src)
 					internalsound = 'sound/misc/internaloff.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = C
@@ -1096,8 +1081,7 @@
 				else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
 					internal = ITEM
 					internal.add_fingerprint(usr)
-					if (internals)
-						internals.icon_state = "internal1"
+					internals?.update_icon(src)
 					internalsound = 'sound/misc/internalon.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = C
@@ -1216,7 +1200,7 @@
 	var/retFlags = 0
 	var/retVerb = "attacks"
 	var/retSound = null
-	var/retMissSound = 'sound/weapons/punchmiss.ogg'
+	var/retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
 
 	var/specie = get_species()
 	var/datum/species/S = all_species[specie]
@@ -1231,7 +1215,7 @@
 		if(length(attack.attack_sound))
 			retSound = pick(attack.attack_sound)
 
-		retMissSound = 'sound/weapons/punchmiss.ogg'
+		retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
 
 	if(HULK in mutations)
 		retDam += 4
@@ -1264,3 +1248,59 @@
 
 		txt = L.accentuate(txt, speaking)
 	return txt
+
+
+/**
+ * Get the insulation that is appropriate to the temperature you're being exposed to.
+ * All clothing, natural insulation, and traits are combined returning a single value.
+ *
+ * required temperature The Temperature that you're being exposed to
+ *
+ * return the percentage of protection as a value from 0 - 1
+**/
+/mob/living/carbon/proc/get_insulation_protection(temperature)
+	return (temperature > bodytemperature) ? get_heat_protection(temperature) : get_cold_protection(temperature)
+
+/// This returns the percentage of protection from heat as a value from 0 - 1
+/// temperature is the temperature you're being exposed to
+/mob/living/carbon/proc/get_heat_protection(temperature)
+	return 0
+
+/// This returns the percentage of protection from cold as a value from 0 - 1
+/// temperature is the temperature you're being exposed to
+/mob/living/carbon/proc/get_cold_protection(temperature)
+	return 0
+
+
+/**
+ * Adjust the body temperature of a mob
+ * expanded for carbon mobs allowing the use of insulation and change steps
+ *
+ * vars:
+ * * amount The amount of degrees to change body temperature by
+ * * min_temp (optional) The minimum body temperature after adjustment
+ * * max_temp (optional) The maximum body temperature after adjustment
+ * * use_insulation (optional) modifies the amount based on the amount of insulation the mob has
+ * * use_steps (optional) Use the body temp divisors and max change rates
+ * * capped (optional) default True used to cap step mode
+ */
+/mob/living/carbon/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY, use_insulation=FALSE, use_steps=FALSE, capped=TRUE)
+	// apply insulation to the amount of change
+	if(use_insulation)
+		var/protection = get_insulation_protection(bodytemperature + amount)
+		if(protection >= 1)
+			return
+		amount *= (1 - protection)
+
+	// Use the bodytemp divisors to get the change step, with max step size
+	if(use_steps)
+		if(amount > 0)
+			amount /=  BODYTEMP_HEAT_DIVISOR
+			if(capped)
+				amount = min(amount, BODYTEMP_HEATING_MAX)
+		else
+			amount /=  BODYTEMP_COLD_DIVISOR
+			if(capped)
+				amount = max(amount, BODYTEMP_COOLING_MAX)
+
+	..(amount, min_temp, max_temp)
