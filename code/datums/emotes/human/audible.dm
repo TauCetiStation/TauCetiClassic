@@ -395,3 +395,31 @@
 
 /datum/emote/human/hmm_think/hmm_exclaim/get_sound(mob/living/carbon/human/user, intentional)
 	return pick(user.gender == FEMALE ? SOUNDIN_HMM_EXCLAIM_FEMALE : SOUNDIN_HMM_EXCLAIM_MALE)
+
+/datum/emote/human/woo
+	key = "woo"
+
+	message_1p = "You woo excitely!"
+	message_3p = "woos excited!"
+
+	message_impaired_production = "woos excited!"
+	message_impaired_reception = "You see someone wooing and excited!"
+
+	message_miming = "acts out a excited gestures!"
+	message_muzzled = "looks excited."
+
+	message_type = SHOWMSG_AUDIO
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION)
+	)
+
+/datum/emote/human/woo/get_sound(mob/living/carbon/human/user, intentional)
+	return pick(user.gender == FEMALE ? SOUNDIN_WOO_FEMALE : SOUNDIN_WOO_MALE)
+
+/datum/emote/human/woo/play_sound(mob/living/carbon/human/user, intentional, emote_sound)
+	var/voice_frequency = TRANSLATE_RANGE(user.age, user.species.min_age, user.species.max_age, 0.85, 1.05)
+	var/sound_frequency = 1.05 - (voice_frequency - 0.85)
+
+	playsound(user, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
