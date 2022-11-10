@@ -1006,7 +1006,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_leg
 	name = "left leg"
-	desc = "The infamous third leg."
+	desc = "Break a leg! Somebody else's leg. With this leg."
 	force = 10
 	artery_name = "femoral artery"
 

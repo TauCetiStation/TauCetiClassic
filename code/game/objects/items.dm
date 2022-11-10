@@ -79,6 +79,8 @@
 
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
+	// Is heavily utilized by swiping component. Perhaps use to determine how "quick" the strikes with this weapon are?
+	// See swiping.dm for more details.
 	var/sweep_step = 4
 	// Is using this item requires any specific skills?
 	var/list/required_skills
