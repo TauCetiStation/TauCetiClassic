@@ -17,8 +17,8 @@
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list())	//each sublist stores alarms keyed by the area name
 	var/list/alarms_to_show = list()
 	var/list/alarms_to_clear = list()
-	var/list/alarm_types_show = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
-	var/list/alarm_types_clear = list("Motion" = 0, "Fire" = 0, "Atmosphere" = 0, "Power" = 0, "Camera" = 0)
+	var/list/alarm_types_show = list()
+	var/list/alarm_types_clear = list()
 
 /mob/living/silicon/proc/triggerAlarm(class, area/A, list/cameralist, source)
 	var/list/alarmlist = alarms[class]
@@ -55,62 +55,37 @@
 		alarm_types_clear[type] += 1
 
 	if(!in_cooldown)
-		spawn(10 * 10) // 10 seconds
+		addtimer(CALLBACK(src, .proc/showQueueAlarms), 10 SECONDS)
 
-			if(alarms_to_show.len < 5)
-				for(var/msg in alarms_to_show)
-					to_chat(src, msg)
-			else if(alarms_to_show.len)
+/mob/living/silicon/proc/showQueueAlarms()
+	var/list/messages = list()
+	var/add_link = FALSE
 
-				var/msg = "--- "
+	if(alarms_to_show.len)
+		if(alarms_to_show.len < 5)
+			messages += alarms_to_show
+		else
+			for(var/alarm_type in alarm_types_show)
+				messages += "[uppertext(alarm_type)]: [alarm_types_show[alarm_type]] alarms detected."
+			add_link = TRUE
 
-				if(alarm_types_show["Motion"])
-					msg += "MOTION: [alarm_types_show["Motion"]] alarms detected. - "
+		alarms_to_show.Cut()
+		alarm_types_show.Cut()
 
-				if(alarm_types_show["Fire"])
-					msg += "FIRE: [alarm_types_show["Fire"]] alarms detected. - "
+	if(alarms_to_clear.len)
+		if(messages.len)
+			messages += "---"
+		if(alarms_to_clear.len < 3)
+			messages += alarms_to_clear
+		else
+			for(var/alarm_type in alarm_types_clear)
+				messages += "[uppertext(alarm_type)]: [alarm_types_clear[alarm_type]] alarms cleared."
+			add_link = TRUE
 
-				if(alarm_types_show["Atmosphere"])
-					msg += "ATMOSPHERE: [alarm_types_show["Atmosphere"]] alarms detected. - "
+		alarms_to_clear.Cut()
+		alarm_types_clear.Cut()
 
-				if(alarm_types_show["Power"])
-					msg += "POWER: [alarm_types_show["Power"]] alarms detected. - "
-
-				if(alarm_types_show["Camera"])
-					msg += "CAMERA: [alarm_types_show["Power"]] alarms detected. - "
-
-				msg += "<A href=?src=\ref[src];showalerts=1'>\[Show Alerts\]</a>"
-				to_chat(src, msg)
-
-			if(alarms_to_clear.len < 3)
-				for(var/msg in alarms_to_clear)
-					to_chat(src, msg)
-
-			else if(alarms_to_clear.len)
-				var/msg = "--- "
-
-				if(alarm_types_clear["Motion"])
-					msg += "MOTION: [alarm_types_clear["Motion"]] alarms cleared. - "
-
-				if(alarm_types_clear["Fire"])
-					msg += "FIRE: [alarm_types_clear["Fire"]] alarms cleared. - "
-
-				if(alarm_types_clear["Atmosphere"])
-					msg += "ATMOSPHERE: [alarm_types_clear["Atmosphere"]] alarms cleared. - "
-
-				if(alarm_types_clear["Power"])
-					msg += "POWER: [alarm_types_clear["Power"]] alarms cleared. - "
-
-				if(alarm_types_show["Camera"])
-					msg += "CAMERA: [alarm_types_show["Power"]] alarms detected. - "
-
-				msg += "<A href=?src=\ref[src];showalerts=1'>\[Show Alerts\]</a>"
-				to_chat(src, msg)
-
-
-			alarms_to_show = list()
-			alarms_to_clear = list()
-			for(var/i = 1; i < alarm_types_show.len; i++)
-				alarm_types_show[i] = 0
-			for(var/i = 1; i < alarm_types_clear.len; i++)
-				alarm_types_clear[i] = 0
+	if(messages.len)
+		if(add_link)
+			messages += "<a href=?_src_=usr;showalerts=1'>\[Show Alerts\]</a>"
+		to_chat(src, jointext(messages, "<br>"))

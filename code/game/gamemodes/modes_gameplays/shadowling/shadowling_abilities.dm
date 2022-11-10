@@ -65,7 +65,7 @@
 					A.lights = 0
 					A.update_icon()
 
-		for(var/obj/effect/glowshroom/G in T.contents)
+		for(var/obj/structure/glowshroom/G in T.contents)
 			if(get_dist(center, G) <= 2) //Very small radius
 				G.visible_message("<span class='warning'>\The [G] withers away!</span>")
 				qdel(G)
@@ -214,8 +214,12 @@
 		log_say("Shadowling Hivemind: [key_name(usr)] : [text]")
 		var/text2speak = "<span class='shadowling [isshadowling(usr) ? "large" : ""]'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [text]</span>"
 		for(var/mob/M as anything in mob_list)
-			if(isshadowling(M) || isshadowthrall(M) || isobserver(M))
-				to_chat(M, text2speak)
+			if(isobserver(M))
+				to_chat(M, "[FOLLOW_LINK(M, user)] [text2speak]")
+			else
+				if(isshadowling(M) || isshadowthrall(M))
+					to_chat(M, text2speak)
+
 
 
 

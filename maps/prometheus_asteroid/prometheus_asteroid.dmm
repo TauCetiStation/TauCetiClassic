@@ -891,7 +891,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "eA" = (
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/explored)
 "eF" = (
@@ -2484,7 +2484,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
@@ -5975,7 +5975,7 @@
 	},
 /area/asteroid/mine/production)
 "By" = (
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/floor/airless{
 	dir = 10;
 	icon_state = "asteroidwarning"

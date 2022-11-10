@@ -24160,7 +24160,7 @@
 /turf/simulated/wall,
 /area/station/hallway/secondary/exit)
 "aRo" = (
-/obj/structure/lamarr,
+/obj/structure/displaycase/labcage,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -43879,7 +43879,7 @@
 	},
 /area/station/medical/sleeper)
 "bAs" = (
-/obj/structure/displaycase,
+/obj/structure/displaycase/captain,
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
 "bAt" = (
@@ -65286,7 +65286,7 @@
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
 	},
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cAA" = (
@@ -77066,7 +77066,7 @@
 	},
 /area/station/medical/cmo)
 "lTb" = (
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /obj/machinery/chem_dispenser/old,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -80947,7 +80947,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/effect/spider/stickyweb,
+/obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "qUx" = (
