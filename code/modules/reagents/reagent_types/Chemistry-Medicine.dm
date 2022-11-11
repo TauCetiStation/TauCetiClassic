@@ -722,7 +722,7 @@
 	reagent_state = LIQUID
 	color = "#9b3401"
 	overdose = REAGENTS_OVERDOSE
-	custom_metabolism = 0.1
+	custom_metabolism = 0
 	taste_message = "wholeness"
 	restrict_species = list(IPC, DIONA)
 	data = list()
