@@ -255,7 +255,7 @@
 	icon_state = "medical_syndie"
 	item_state = "medical_supply"
 
-	storage_slots = 8
+	storage_slots = 9
 	max_w_class = SIZE_SMALL
 
 	startswith = list(
@@ -265,6 +265,7 @@
 		/obj/item/weapon/reagent_containers/hypospray/combat/atoxin,
 		/obj/item/weapon/reagent_containers/hypospray/combat/intdam,
 		/obj/item/weapon/reagent_containers/hypospray/combat/pain,
+		/obj/item/weapon/reagent_containers/hypospray/combat/bone,
 		/obj/item/stack/medical/suture,
 		/obj/item/device/healthanalyzer,
 	)
