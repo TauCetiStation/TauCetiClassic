@@ -591,8 +591,6 @@
 	var/chance_destroy_item
 
 	switch(severity)
-		if(EXPLODE_NONE)
-			return
 		if(EXPLODE_LIGHT)
 			if(prob(95))
 				return
