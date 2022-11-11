@@ -304,3 +304,9 @@
 	desc = "This is a heavily armored police helmet. The most blockiest of them all."
 	icon_state = "police_helmet_elite"
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 60, bomb = 40, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/surplus
+	name = "surplus helmet"
+	desc = "A simple steel helmet - a steelpot, if you will."
+	icon_state = "surplus_helmet"
+	armor = list(melee = 45, bullet = 40, laser = 40,energy = 25, bomb = 35, bio = 0, rad = 0)

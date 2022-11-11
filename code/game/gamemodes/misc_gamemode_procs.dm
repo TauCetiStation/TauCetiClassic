@@ -217,3 +217,10 @@
 
 /proc/mode_has_antags()
 	return SSticker.mode.factions.len > 0 || SSticker.mode.orphaned_roles.len > 0
+
+// Ex: all xenomorph have boilerplate names (alien drone (123), alien hunter (321)),
+// but all wizards have unique names
+/proc/get_roles_with_interesting_names()
+	return list(ABDUCTED, CHANGELING, CULTIST, CULT_LEADER, DEATHSQUADIE, GANGSTER, GANGSTER_LEADER,
+				GANGSTER_DEALER, HEADREV, MALF, MALFBOT, NUKE_OP, NUKE_OP_LEADER, NINJA, REV,
+				RESPONDER, SHADOW_THRALL, TRAITOR, TRAITORCHAN, UNDERCOVER_COP, WIZARD, WIZ_APPRENTICE)
