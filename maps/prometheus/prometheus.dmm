@@ -2133,6 +2133,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -4214,7 +4217,6 @@
 /area/station/medical/virology)
 "aHp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/random/structures/common_crates,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -9025,6 +9027,9 @@
 /area/station/rnd/lab)
 "bTm" = (
 /obj/effect/landmark/start/cargo_technician,
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -11821,6 +11826,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -25665,6 +25673,10 @@
 	icon_state = "white"
 	},
 /area/station/medical/genetics)
+"fRI" = (
+/obj/random/structures/common_crates,
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "fRT" = (
 /obj/structure/dresser,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -29316,6 +29328,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -33585,6 +33600,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/cargo/office)
 "hJO" = (
@@ -36852,6 +36870,10 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "iBH" = (
@@ -37901,6 +37923,15 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/brainstorm_center)
+"iPq" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/station/cargo/storage)
 "iPr" = (
 /obj/machinery/door_control{
 	id = "Gateway_shutters_entrance";
@@ -38015,6 +38046,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/packer,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
@@ -41665,6 +41697,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor,
 /area/station/cargo/office)
 "jPY" = (
@@ -43246,6 +43282,13 @@
 	icon_state = "dark"
 	},
 /area/station/medical/sleeper)
+"knt" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/cargo/office)
 "knx" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -44126,6 +44169,7 @@
 	supply_display = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/cargo/office)
 "kyV" = (
@@ -46090,6 +46134,12 @@
 	icon_state = "darkpurple"
 	},
 /area/station/rnd/misc_lab)
+"kXH" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	icon_state = "brownold"
+	},
+/area/station/cargo/office)
 "kYo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -48454,6 +48504,15 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
+"lAJ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/station/cargo/storage)
 "lAY" = (
 /obj/machinery/hydroponics/constructable,
 /turf/simulated/floor{
@@ -49351,6 +49410,9 @@
 /area/station/engineering/engine)
 "lKP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "lKX" = (
@@ -50023,6 +50085,15 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/closet/crate/medical,
+/obj/random/meds/medical_supply,
+/obj/random/meds/medical_single_item,
+/obj/random/meds/medical_tool,
+/obj/random/meds/medical_tool,
+/obj/random/meds/medical_single_item,
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -51810,6 +51881,9 @@
 	},
 /area/station/hallway/primary/central)
 "mqz" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -53411,8 +53485,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/disposalpipe/sortjunction/flipped{
+	dir = 8;
+	name = "Post";
+	sortType = "Post"
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
@@ -53487,6 +53563,9 @@
 	},
 /area/station/maintenance/incinerator)
 "mKU" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -54938,6 +55017,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -58233,6 +58315,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/cargo/office)
 "nWr" = (
@@ -58433,13 +58516,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "nZh" = (
-/obj/structure/closet/crate/medical,
 /obj/effect/decal/cleanable/dirt,
-/obj/random/meds/medical_supply,
-/obj/random/meds/medical_single_item,
-/obj/random/meds/medical_single_item,
-/obj/random/meds/chemical_bottle,
-/obj/random/meds/medical_tool,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -59040,6 +59117,12 @@
 /obj/random/tools/tool,
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
+"ohG" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "ohH" = (
 /obj/structure/closet/emcloset,
 /obj/item/device/radio/intercom{
@@ -63504,6 +63587,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -64585,6 +64671,10 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -68035,6 +68125,9 @@
 	name = "Cargo Bay";
 	req_one_access = list(31,48,67)
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -69759,6 +69852,9 @@
 	icon_state = "1-8"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/cargo/office)
 "qVs" = (
@@ -70222,6 +70318,9 @@
 "rbv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -71725,6 +71824,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -72923,6 +73025,10 @@
 /area/station/maintenance/brig)
 "rMF" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -78072,6 +78178,7 @@
 /area/station/maintenance/medbay)
 "taf" = (
 /obj/structure/stool,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -79750,12 +79857,13 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories)
 "tzo" = (
-/obj/structure/closet/crate/scicrate,
-/obj/random/tools/technology_scanner,
-/obj/random/tools/technology_scanner,
 /obj/effect/decal/cleanable/dirt,
-/obj/random/science/science_supply_safe,
-/obj/random/science/science_supply_safe,
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -81158,6 +81266,9 @@
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -84458,6 +84569,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -87856,6 +87970,11 @@
 /area/station/medical/virology)
 "vxs" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/scicrate,
+/obj/random/tools/technology_scanner,
+/obj/random/tools/technology_scanner,
+/obj/random/science/science_supply_safe,
+/obj/random/science/science_supply_safe,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -91145,6 +91264,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/cargo_technician,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -126831,12 +126951,12 @@ lpf
 xxd
 mJq
 nWo
-aBk
-ovz
+knt
+kXH
 taf
 kyP
 wlo
-xSl
+xhB
 jPL
 lfW
 lUh
@@ -127612,11 +127732,11 @@ rMF
 rbv
 mKU
 qxU
-hxa
+iPq
 gKo
 bTm
 mqz
-pJO
+ohG
 lKP
 cJw
 iBF
@@ -128646,7 +128766,7 @@ epH
 lYa
 nZu
 qbu
-pJO
+fRI
 poO
 shM
 fYr
@@ -129676,7 +129796,7 @@ lgF
 rgz
 vxs
 pDs
-uYa
+lAJ
 rvO
 tzo
 lYa

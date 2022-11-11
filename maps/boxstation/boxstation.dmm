@@ -12332,7 +12332,7 @@
 /area/space)
 "avg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
+/obj/machinery/packer,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -22694,18 +22694,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "aOH" = (
-/obj/machinery/door_control{
-	id = "qm_warehouse";
-	name = "Warehouse Door Control";
-	req_access = list(31);
-	pixel_y = -24
-	},
-/obj/structure/disposaloutlet{
-	dir = 1
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
+/obj/structure/closet/crate/medical,
+/obj/random/meds/medical_supply,
+/obj/random/meds/medical_supply,
+/obj/random/meds/medical_single_item,
+/obj/random/meds/medical_tool,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -24174,11 +24167,8 @@
 	},
 /area/station/rnd/hor)
 "aRp" = (
-/obj/structure/rack,
-/obj/item/stack/sheet/cardboard,
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/structure/disposaloutlet,
+/obj/structure/disposalpipe/trunk,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -24599,7 +24589,6 @@
 /area/station/security/main)
 "aSc" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -27417,7 +27406,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/rack,
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/structure/table,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -27428,6 +27421,9 @@
 "aWX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -27741,8 +27737,12 @@
 	},
 /area/station/medical/cmo)
 "aXz" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
+/obj/machinery/door_control{
+	id = "qm_warehouse";
+	name = "Warehouse Door Control";
+	req_access = list(31);
+	pixel_x = -24
+	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -27837,6 +27837,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/random/misc/all,
+/obj/random/tools/tech_supply,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -28331,7 +28333,7 @@
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "aYD" = (
-/obj/structure/table,
+/obj/item/device/flashlight/lamp/fir,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -29781,7 +29783,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/closet/crate/medical,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -30427,6 +30428,8 @@
 /area/station/gateway)
 "bcf" = (
 /obj/structure/closet/crate,
+/obj/random/misc/all,
+/obj/random/misc/all,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -39322,6 +39325,8 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
+/obj/structure/rack,
+/obj/random/tools/tool,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -40855,6 +40860,10 @@
 /obj/machinery/cell_charger{
 	pixel_y = 5
 	},
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -25
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -42236,6 +42245,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -46090,16 +46103,15 @@
 	},
 /area/station/bridge)
 "bEx" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/structure/closet/crate,
+/obj/random/tools/tech_supply,
+/obj/random/tools/tech_supply,
+/obj/item/weapon/rack_parts,
+/obj/item/weapon/rack_parts,
+/obj/item/weapon/rack_parts,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
 	},
-/obj/machinery/door_control{
-	id = "qm_warehouse";
-	name = "Warehouse Door Control";
-	pixel_y = 24;
-	req_access = list(31)
-	},
-/turf/simulated/floor,
 /area/station/cargo/storage)
 "bEy" = (
 /obj/item/device/radio/intercom{
@@ -72471,9 +72483,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -75642,6 +75651,13 @@
 	icon_state = "whiteyellow"
 	},
 /area/station/medical/chemistry)
+"kkB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/cargo/storage)
 "klb" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -75874,7 +75890,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/packer,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -77281,10 +77296,7 @@
 	},
 /area/station/medical/storage)
 "mfD" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -79544,6 +79556,17 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"pal" = (
+/obj/machinery/door_control{
+	id = "qm_warehouse";
+	name = "Warehouse Door Control";
+	req_access = list(31);
+	pixel_x = 25
+	},
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/cargo/storage)
 "pcJ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -80481,11 +80504,14 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/alarm{
-	pixel_y = 28
-	},
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/machinery/door_control{
+	id = "qm_warehouse";
+	name = "Warehouse Door Control";
+	pixel_y = 24;
+	req_access = list(31)
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -80817,6 +80843,12 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/door_control{
+	id = "qm_warehouse";
+	name = "Warehouse Door Control";
+	pixel_y = 24;
+	req_access = list(31)
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -83474,6 +83506,13 @@
 	},
 /turf/environment/space,
 /area/shuttle/administration/station)
+"tQr" = (
+/obj/structure/rack,
+/obj/random/cloth/randomsuit,
+/turf/simulated/floor{
+	icon_state = "floorgrime"
+	},
+/area/station/cargo/storage)
 "tRb" = (
 /obj/structure/window/reinforced{
 	dir = 5
@@ -100167,11 +100206,11 @@ aSM
 qAF
 nLo
 aFg
-bxz
+tQr
 aWX
 baK
-bxz
-bxz
+bEx
+aXz
 ooW
 bnp
 brb
@@ -100426,8 +100465,8 @@ eXg
 aFg
 bsy
 bxv
-bBm
-bxz
+kkB
+mfD
 mfD
 ihg
 eGf
@@ -100685,9 +100724,9 @@ aSa
 kwS
 aYD
 bxz
-aOH
-aFg
-bEx
+bxz
+aLT
+ofm
 vBO
 bsC
 pGd
@@ -100942,7 +100981,7 @@ aSc
 aXJ
 gOl
 bxz
-bxz
+aOH
 aLT
 ofm
 vBO
@@ -101453,10 +101492,10 @@ qAF
 vdm
 aFg
 bcf
-aXz
+bBm
 bba
 vIi
-bxz
+pal
 ooW
 ofm
 vBO
