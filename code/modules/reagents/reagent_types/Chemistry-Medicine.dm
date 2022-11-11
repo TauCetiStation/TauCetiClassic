@@ -741,10 +741,8 @@
 			if(prob(10))
 				to_chat(M, "<span class='warning'>Your skin feels hot and your veins are on fire!</span>")
 		if(10 to 20)
-			if(M.reagents.has_reagent("tramadol") || M.reagents.has_reagent("oxycodone"))
-				M.adjustToxLoss(5)
-			else
-				M.AdjustConfused(2)
+			M.apply_effect(10, AGONY)
+			M.AdjustConfused(2)
 		if(20 to 60)
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_broken())
