@@ -198,3 +198,6 @@
 #define OBESITY_TRAIT      "obesity"
 #define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"
 #define FEAR_TRAIT         "fear"
+
+// atom traits
+#define TRAIT_XENO_FUR "xeno_fur"
