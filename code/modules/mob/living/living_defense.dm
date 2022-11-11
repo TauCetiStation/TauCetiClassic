@@ -6,7 +6,7 @@
 	if(alert_admins)
 		msg_admin_attack("[key_name(src)] has been [msg], by [key_name(attacker)]", attacker)
 
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null)
 	var/armor = getarmor(def_zone, attack_flag)
 	if(armor >= 100)
 		if(absorb_text)
@@ -123,7 +123,7 @@
 /mob/living/proc/resolve_thrown_attack(obj/O, throw_damage, dtype, zone, armor)
 
 	if(isnull(armor)) // Armor arg passed by human
-		armor = run_armor_check(null, "melee")
+		armor = run_armor_check(null, MELEE)
 		visible_message("<span class='warning'>[src] has been hit by [O].</span>")
 
 	var/damage_flags = O.damage_flags()

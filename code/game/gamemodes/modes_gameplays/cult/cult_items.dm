@@ -3,6 +3,7 @@
 	desc = "An arcane weapon wielded by the followers of Nar-Sie."
 	icon_state = "cultblade"
 	item_state = "cultblade"
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	w_class = SIZE_NORMAL
 	force = 30
 	throwforce = 10
@@ -19,7 +20,6 @@
 
 /obj/item/weapon/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(iscultist(user))
-		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 		return ..()
 	user.Paralyse(5)
 	to_chat(user, "<span class='warning'>An unexplicable force powerfully repels the sword from [target]!</span>")

@@ -23,7 +23,7 @@
 	var/button_icon_state = "default"
 	var/background_icon_state = "bg_default"
 	var/transparent_when_unavailable = TRUE
-	var/mob/living/owner
+	var/mob/owner
 
 /datum/action/New(Target)
 	target = Target
@@ -38,7 +38,7 @@
 	QDEL_NULL(button)
 	return ..()
 
-/datum/action/proc/Grant(mob/living/T)
+/datum/action/proc/Grant(mob/T)
 	if(owner)
 		if(owner == T)
 			return
@@ -48,7 +48,7 @@
 	owner.update_action_buttons()
 	return
 
-/datum/action/proc/Remove(mob/living/T)
+/datum/action/proc/Remove(mob/T)
 	if(button)
 		if(T.client)
 			T.client.screen -= button
@@ -85,7 +85,7 @@
 /datum/action/proc/Process()
 	return
 
-/datum/action/proc/CheckRemoval(mob/living/user) // TRUE if action is no longer valid for this mob and should be removed
+/datum/action/proc/CheckRemoval(mob/user) // TRUE if action is no longer valid for this mob and should be removed
 	return FALSE
 
 /datum/action/proc/IsAvailable()
@@ -229,7 +229,7 @@
 	UpdateIcon()
 	usr.update_action_buttons()
 
-/atom/movable/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(mob/living/user)
+/atom/movable/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(mob/user)
 	if(isxeno(user))
 		icon_state = "bg_alien"
 	else

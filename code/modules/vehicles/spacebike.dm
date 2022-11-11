@@ -143,10 +143,6 @@
 			L.apply_damage(0.5*damage, BRUTE, BP_R_ARM)
 	..()
 
-/obj/vehicle/space/spacebike/relaymove(mob/user, direction)
-	return Move(get_step(src, direction))
-
-
 /obj/vehicle/space/spacebike/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	//these things like space, not turf. Dragging shouldn't weigh you down.
 	if(isspaceturf(NewLoc) || pulledby)

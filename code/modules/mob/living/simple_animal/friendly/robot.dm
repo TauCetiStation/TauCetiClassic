@@ -29,9 +29,14 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 	maxbodytemp = 423	// Above 150 Degrees Celcius
 	var/emagged = 0    // Trigger EMAG used
 	var/commandtrigger = 0    // Used command
-	var/searchfortarget = 0	   //  if this is TRUE, robot will be searching for target to explode.
 	var/act_emag
 	var/obj/machinery/computer/rdconsole/rdconsole = null
+
+	var/datum/proximity_monitor/proximity_monitor
+
+/mob/living/simple_animal/det5/Destroy()
+	QDEL_NULL(proximity_monitor)
+	return ..()
 
 /mob/living/simple_animal/det5/Life()
 	..()
@@ -83,10 +88,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 	det5controll(attacker)
 
 /mob/living/simple_animal/det5/HasProximity(atom/movable/AM)	// Trigger move
-	if(searchfortarget == 1)
-		if(iscarbon(AM) && !(AM.name == act_emag))	//do not explode EMAG USER
-			searchfortarget = 0
-			explode()
+	if(iscarbon(AM) && !(AM.name == act_emag))	//do not explode EMAG USER
+		explode()
 
 /mob/living/simple_animal/det5/proc/explode()	// explode
 	visible_message("<span class='bold'>[src]</span> rang out <span class='userdanger'>The #xplosi@n is prep@red, @-a-activate</span>")
@@ -144,5 +147,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 		if("Explode (using motion sensor)")
 			if(emagged == 1)
 				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d##struct m@de with t@rget @ctiv@t#d</span>")
-				searchfortarget = 1
+				if(!proximity_monitor)
+					proximity_monitor = new(src, 1)
 				commandtrigger = 0

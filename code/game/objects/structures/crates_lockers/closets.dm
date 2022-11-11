@@ -185,7 +185,7 @@
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message("[user] cut apart [src] with [WT].",
 				                     "<span class='notice'>You cut apart [src] with [WT].</span>")
-				qdel(src)
+				deconstruct(TRUE)
 				return TRUE
 			else
 				src.welded = !src.welded

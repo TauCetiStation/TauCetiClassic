@@ -128,6 +128,10 @@
 
 		icon_state = "beartrap[armed]"
 
+/obj/item/weapon/legcuffs/beartrap/armed
+	icon_state = "beartrap1"
+	armed = TRUE
+
 /obj/item/weapon/legcuffs/bola
 	name = "bola"
 	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
@@ -470,6 +474,7 @@
 	icon_state = "hatchet"
 	flags = CONDUCT
 	force = 12.0
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	sharp = 1
 	edge = 1
 	w_class = SIZE_TINY
@@ -488,10 +493,6 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 	AddComponent(/datum/component/swiping, SCB)
-
-/obj/item/weapon/hatchet/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
-	return ..()
 
 /obj/item/weapon/hatchet/unathiknife
 	name = "duelling knife"
@@ -526,8 +527,8 @@
 
 /obj/item/weapon/scythe/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(istype(target, /obj/effect/spacevine))
-		for(var/obj/effect/spacevine/B in orange(target, 1))
+	if(istype(target, /obj/structure/spacevine))
+		for(var/obj/structure/spacevine/B in orange(target, 1))
 			if(prob(80))
 				qdel(B)
 		qdel(target)
