@@ -14,7 +14,7 @@
 /mob/living/silicon/robot/combat/pick_module()
 	var/module_sprites[0]
 	module_sprites["Combat Android"] = "droid-combat"
-	module_sprites["Acheron"] = "mechoid-Combat"
+	module_sprites["BloodHound"] = "syndie_bloodhound"
 	module_sprites["Kodiak"] = "kodiak-combat"
 	var/choose_icon = list()
 	for(var/name in module_sprites)
