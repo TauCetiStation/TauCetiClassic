@@ -163,7 +163,7 @@
 			to_chat(user, "<span class='notice'>Закройте панель техобслуживания.</span>")
 			return
 		if(locked)
-			to_chat(user, "<span class='notice'>Болты опущены, блокируя дверь.</span>")
+			to_chat(user, "<span class='notice'>Поднимите болты, чтобы открыть дверь.</span>")
 			return
 		var/turf/T = get_turf(src)
 		if(T)
