@@ -157,7 +157,8 @@
 		if(EXPLODE_LIGHT)
 			if(prob(95))
 				return
-			chance_full_damage_item = 5
+			dump_contents()
+			qdel(src)
 		if(EXPLODE_HEAVY)
 			if(prob(50))
 				return
