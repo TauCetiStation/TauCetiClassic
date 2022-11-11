@@ -172,7 +172,7 @@ Toxins: <span class='dl[phoron_dangerlevel]'>[phoron_percent]</span>%<br>
 					var/list/thresholds = list("lower bound", "low warning", "high warning", "upper bound")
 					var/newval = input("Enter [thresholds[threshold]] for [env]", "Alarm triggers", selected[threshold]) as num|null
 
-					if (isnull(newval) || ..() || (current.locked && issilicon(usr)))
+					if (isnull(newval) || !..() || (current.locked && issilicon(usr)))
 						return FALSE
 
 					if (newval < 0)
