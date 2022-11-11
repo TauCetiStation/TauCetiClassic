@@ -133,7 +133,7 @@ var/global/list/sec_closets_list = list()
 			log_game("RoundStart Event: [account1.owner_name] and [account2.owner_name] salaries has been swapped.")
 
 /datum/event/feature/airlock_joke/start()
-	var/list/possible_types = list(/obj/item/weapon/bananapeel, /obj/item/device/assembly/mousetrap, /obj/item/weapon/legcuffs/beartrap, /obj/effect/decal/cleanable/blood/oil)
+	var/list/possible_types = list(/obj/item/weapon/bananapeel, /obj/item/device/assembly/mousetrap/armed, /obj/item/weapon/legcuffs/beartrap/armed, /obj/effect/decal/cleanable/blood/oil)
 	for(var/obj/machinery/door/airlock/A as anything in airlock_list)
 		if(!is_station_level(A.z))
 			continue

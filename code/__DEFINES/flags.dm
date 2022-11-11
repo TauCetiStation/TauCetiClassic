@@ -104,6 +104,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FACEHUGGABLE       "facehuggable"
 #define NO_EMOTION         "no_emotion"
 #define NO_DNA             "no_dna"
+#define FUR                "fur"
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.
