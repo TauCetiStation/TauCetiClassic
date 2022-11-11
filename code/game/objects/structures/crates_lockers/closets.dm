@@ -152,13 +152,12 @@
 	var/reduced_severity
 
 	switch(severity)
-		if(EXPLODE_NONE)
-			return
 		if(EXPLODE_LIGHT)
 			if(prob(95))
 				return
 			dump_contents()
 			qdel(src)
+			return
 		if(EXPLODE_HEAVY)
 			if(prob(50))
 				return
