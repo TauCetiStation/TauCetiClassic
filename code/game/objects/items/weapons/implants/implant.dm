@@ -307,7 +307,7 @@ Implant Specifics:<BR>"}
 	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
 	if(ishuman(imp_in))
 		var/mob/living/carbon/human/H = imp_in
-		H.halloss = 0
+		H.SetHalLoss(0)
 		H.shock_stage = 0
 	imp_in.stat = CONSCIOUS
 	imp_in.SetParalysis(0)

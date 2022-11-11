@@ -758,7 +758,7 @@
 
 			if(hallucination <= 2)
 				hallucination = 0
-				halloss = 0
+				setHalLoss(0)
 			else
 				hallucination -= 2
 
