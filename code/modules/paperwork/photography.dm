@@ -251,7 +251,7 @@
 	name = "Photo album"
 	icon = 'icons/obj/items.dmi'
 	icon_state = "album"
-	item_state = "briefcase"
+	item_state = "book8"
 	can_hold = list(/obj/item/weapon/photo)
 	max_storage_space = DEFAULT_BOX_STORAGE
 

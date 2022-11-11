@@ -8,7 +8,7 @@
 	step_energy_drain = 3
 	health = 200
 	deflect_chance = 30
-	damage_absorption = list("brute"=0.7,"fire"=0.7,"bullet"=0.7,"laser"=0.7,"energy"=0.7,"bomb"=0.7)
+	damage_absorption = list(BRUTE=0.7,BURN=0.7,BULLET=0.7,LASER=0.7,ENERGY=0.7,BOMB=0.7)
 	max_temperature = 25000
 	infra_luminosity = 3
 	wreckage = /obj/effect/decal/mecha_wreckage/phazon
@@ -69,14 +69,14 @@
 	var/new_damtype
 	var/color_message
 	switch(damtype)
-		if("tox")
-			new_damtype = "brute"
+		if(TOX)
+			new_damtype = BRUTE
 			color_message = "red"
-		if("brute")
-			new_damtype = "fire"
+		if(BRUTE)
+			new_damtype = BURN
 			color_message = "orange"
-		if("fire")
-			new_damtype = "tox"
+		if(BURN)
+			new_damtype = TOX
 			color_message = "green"
 	damtype = new_damtype
 	occupant_message("Melee damage type switched to <font color='[color_message]'>[new_damtype].</font>")

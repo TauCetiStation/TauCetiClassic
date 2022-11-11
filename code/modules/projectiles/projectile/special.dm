@@ -7,7 +7,7 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 
 /obj/item/projectile/ion/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	empulse(target, 1, 1)
@@ -21,7 +21,7 @@
 	name ="explosive bolt"
 	icon_state= "bolter"
 	damage = 50
-	flag = "bullet"
+	flag = BULLET
 	sharp = 1
 	edge = 1
 
@@ -38,7 +38,7 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 	var/temperature = 100
 
 
@@ -62,7 +62,7 @@
 	damage = 0
 	damage_type = BRUTE
 	nodamage = 1
-	flag = "bullet"
+	flag = BULLET
 
 /obj/item/projectile/meteor/Bump(atom/A)
 	if(A == firer)
@@ -91,7 +91,7 @@
 	damage = 0
 	damage_type = TOX
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 
 /obj/item/projectile/energy/floramut/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	var/mob/living/M = target
@@ -130,7 +130,7 @@
 	damage = 0
 	damage_type = TOX
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 
 /obj/item/projectile/energy/florayield/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	var/mob/M = target
@@ -163,7 +163,7 @@
 	light_power = 2
 	light_range = 2
 	damage = 20
-	flag = "bullet"
+	flag = BULLET
 	sharp = 0
 	edge = 0
 
@@ -220,14 +220,14 @@
 	weaken = 10
 	stun = 10
 	damage_type = TOX
-	flag = "bio"
+	flag = BIO
 
 /obj/item/projectile/acid_special
 	name = "acid"
 	icon_state = "neurotoxin"
 	damage = 25
 	damage_type = TOX
-	flag = "bullet"
+	flag = BULLET
 
 /obj/item/projectile/acid_special/atom_init()
 	. = ..()
@@ -287,7 +287,7 @@
 	light_range = 2
 	damage = 18
 	damage_type = BURN
-	flag = "energy"
+	flag = ENERGY
 	eyeblur = 4
 	sharp = 0
 	edge = 0
@@ -327,7 +327,7 @@
 
 	kill_count = 13
 
-	flag = "laser"
+	flag = LASER
 	hitscan = TRUE
 	// eyeblur = 3
 
@@ -431,7 +431,7 @@
 	damage = 10
 	damage_type = BURN
 	sharp = TRUE // concentrated burns
-	flag = "laser"
+	flag = LASER
 
 /obj/item/projectile/pyrometer/emagged
 

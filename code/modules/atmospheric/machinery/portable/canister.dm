@@ -267,7 +267,7 @@ update_flag
 	qdel(src)
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user)
-	if(user.a_intent != INTENT_HARM && iswelder(W))
+	if(iswelder(W))
 		if(user.is_busy(src))
 			return
 		var/obj/item/weapon/weldingtool/WT = W
@@ -313,15 +313,19 @@ update_flag
 	var/turf/T = get_turf(src)
 	T.assume_air(air_contents)
 
-	stat |= BROKEN
 	density = FALSE
 	playsound(src, 'sound/effects/spray.ogg', VOL_EFFECTS_MASTER, 10, FALSE, null, -3)
-	update_icon()
 	log_investigate("was destroyed.", INVESTIGATE_ATMOS)
 
 	if(holding)
 		holding.forceMove(T)
 		holding = null
+
+/obj/machinery/portable_atmospherics/canister/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT || stat & BROKEN)
+		return ..()
+	atom_break()
+	..()
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user)
 	tgui_interact(user)

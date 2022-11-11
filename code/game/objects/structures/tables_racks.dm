@@ -211,17 +211,16 @@
 		return TRUE
 	return FALSE
 
+/obj/structure/table/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(istype(attacking_item, /obj/item/weapon/melee/energy) || istype(attacking_item, /obj/item/weapon/pen/edagger)  || istype(attacking_item,/obj/item/weapon/dualsaber))
+		if(attacking_item.force > 3)
+			laser_cut(attacking_item, user)
+			return TRUE
+	..()
+
 /obj/structure/table/attackby(obj/item/W, mob/user, params)
-	. = TRUE
-
 	if(attack_tools(W, user))
-		return
-
-	if(user.a_intent == INTENT_HARM)
-		if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger)  || istype(W,/obj/item/weapon/dualsaber))
-			if(W.force > 3)
-				laser_cut(W, user)
-				return
+		return TRUE
 
 	return ..()
 

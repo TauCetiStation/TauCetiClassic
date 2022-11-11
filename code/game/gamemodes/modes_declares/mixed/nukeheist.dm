@@ -2,10 +2,7 @@
 	name = "Crossfire"
 	config_name = "crossfire"
 	probability = 80
-	factions_allowed = list(
-		/datum/faction/nuclear,
-		/datum/faction/heist,
-	)
+	factions_allowed = list(/datum/faction/nuclear/crossfire)
 
 	minimum_player_count = 50
 	minimum_players_bundles = 50

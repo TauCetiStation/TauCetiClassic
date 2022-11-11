@@ -1,4 +1,14 @@
 
+/obj/item/proc/melee_attack_chain(atom/target, mob/user, params)
+	if(user.a_intent == INTENT_HARM && (target.resistance_flags & CAN_BE_HIT))
+		if(attack_atom(target, user, params))
+			return
+
+	if(target.attackby(src, user, params) || QDELING(src) || QDELING(target))
+		return
+
+	afterattack(target, user, TRUE, params)
+
 // Called when the item is in the active hand, and clicked; alternately, there is an 'Click On Held Object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_NO_INTERACT)
@@ -12,9 +22,6 @@
 	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
 		return TRUE
 	return FALSE
-
-/obj/attackby(obj/item/attacking_item, mob/user, params)
-	return ..() || ((resistance_flags & CAN_BE_HIT) && attacking_item.attack_atom(src, user, params))
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -234,7 +241,7 @@
 		return H.attacked_by(src, user, def_zone)	//make sure to return whether we have hit or miss
 	else
 		switch(damtype)
-			if("brute")
+			if(BRUTE)
 				if(isslime(src))
 					M.adjustBrainLoss(power)
 
@@ -244,7 +251,7 @@
 						if(istype(T))
 							T.add_blood_floor(M)
 					M.take_bodypart_damage(power)
-			if("fire")
+			if(BURN)
 				if (!(COLD_RESISTANCE in M.mutations))
 					to_chat(M, "Aargh it burns!")
 					M.take_bodypart_damage(0, power)
@@ -257,9 +264,6 @@
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for non mob targets.
 /obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user, params)
-	if(user.a_intent != INTENT_HARM)
-		return
-
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, attacked_atom, user) & COMPONENT_ITEM_NO_ATTACK)
 		return
 
@@ -276,6 +280,7 @@
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(attacked_atom)
 	SSdemo.mark_dirty(user)
+	return TRUE
 
 /// Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds
 /atom/proc/attacked_by(obj/item/attacking_item, mob/living/user)

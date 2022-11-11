@@ -19,7 +19,11 @@
 		var/mob/living/L = M
 		if(taste)
 			L.taste_reagents(reagents)
-
+	if(HAS_TRAIT(src, TRAIT_XENO_FUR))
+		var/mob/living/carbon/human/H = M
+		if(istype(H) && !H.species.flags[FUR])
+			if(prob(50) && SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nasty_throat_feel", /datum/mood_event/nasty_throat_feel))
+				to_chat(H, "<span class='warning'>You feel like something enveloping in your throat...</span>")
 	if(!reagents.total_volume)
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
