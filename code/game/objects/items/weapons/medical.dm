@@ -184,7 +184,7 @@
 	volume = 100
 	list_reagents = list("tramadol" = 25, "paracetamol" = 25, "oxycodone" = 25, "inaprovaline" = 25)
 	
-	/obj/item/weapon/reagent_containers/hypospray/combat/pain
+	/obj/item/weapon/reagent_containers/hypospray/combat/bone
 	name = "Bone-repair hypospray"
 	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field. This one is filled with reagents which will splices the bones."
 	icon_state = "bone_hypo"
