@@ -1,17 +1,51 @@
 /datum/objective/cult
 
+/datum/objective/cult/escape
+	var/acolytes_needed
+
+/datum/objective/cult/escape/New()
+	acolytes_needed = max(5, round(player_list.len * 0.04))
+	explanation_text = "Убедитесь, что хотя бы [acolytes_needed] [pluralize_russian(acolytes_needed, "культист", "культиста", "культистов")] улетят живыми на шаттле, чтобы продолжить исследования на других станциях."
+	..()
+
+/datum/objective/cult/escape/check_completion()
+	var/datum/faction/cult/C = faction
+	if(istype(C) && C.get_cultists_out() >= acolytes_needed)
+		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
+
 /datum/objective/cult/recruit
 	var/acolytes_needed
 
 /datum/objective/cult/recruit/New()
-	acolytes_needed = max(5, round(player_list.len * 0.18))
-	explanation_text = "Убедитесь, что хотя бы [acolytes_needed] [pluralize_russian(acolytes_needed, "культист", "культиста", "культистов")] улетят на шаттле, чтобы продолжить исследования на других станциях."
+	acolytes_needed = max(5, round(player_list.len * 0.3))
+	explanation_text = "Заполучите [acolytes_needed] [pluralize_russian(acolytes_needed, "человека", "человека", "человек")] в подчинение культа, живыми или мёртвыми."
 	..()
 
 /datum/objective/cult/recruit/check_completion()
 	var/datum/faction/cult/C = faction
-	if(istype(C) && C.get_cultists_out() >= acolytes_needed)
+	if(istype(C) && C.members.len >= acolytes_needed)
 		return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
+
+/datum/objective/cult/survive
+	var/acolytes_needed
+
+/datum/objective/cult/survive/New()
+	acolytes_needed = max(5, round(player_list.len * 0.15))
+	explanation_text = "Должно дожить не менее [acolytes_needed] [pluralize_russian(acolytes_needed, "последователя", "последователей", "последователей")] до конца этой смены."
+	..()
+
+/datum/objective/cult/survive/check_completion()
+	var/datum/faction/cult/C = faction
+	if(istype(C))
+		var/alive = 0
+		for(var/datum/role/I in C.members)
+			var/mob/M = I.antag.current
+			if(M.stat != DEAD)
+				alive++
+		if(alive >= acolytes_needed)
+			return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
 /datum/objective/cult/summon_narsie
