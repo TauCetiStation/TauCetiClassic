@@ -587,7 +587,6 @@
 		while(R.amount>0)
 			new dump_path(src.loc)
 			R.amount--
-		continue
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
@@ -621,9 +620,8 @@
 				continue
 			new dump_path(src.loc)
 			R.amount--
-		continue
 
-	Destroy()
+	qdel(src)
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item()
