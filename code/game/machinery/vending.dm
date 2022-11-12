@@ -86,6 +86,13 @@
 /obj/machinery/vending/ex_act(severity)
 	malfunction_ex_act(severity)
 
+/obj/machinery/vending/RefreshParts()
+	..()
+	// eat refills
+	for(var/obj/item/weapon/vending_refill/refill in component_parts)
+		component_parts -= refill
+		qdel(refill)
+
 /obj/machinery/vending/deconstruct(disassembled = TRUE)
 	if(refill_canister)
 		return ..()
