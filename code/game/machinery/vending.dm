@@ -591,7 +591,7 @@
 	update_power_use()
 
 //Oh no we're malfunctioning!  Dump out some product and break.
-/obj/machinery/vending/proc/malfunction(var/chance_destroy_item = 0)
+/obj/machinery/vending/proc/malfunction(chance_destroy_item = 0)
 
 	if (!chance_destroy_item) //Full drop items
 		for(var/datum/data/vending_product/R in src.product_records)
