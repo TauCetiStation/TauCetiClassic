@@ -163,7 +163,7 @@
 				return
 			chance_full_damage_item = 25
 		if(EXPLODE_DEVASTATE) // guaranteed open closets
-			chance_full_damage_item = 50
+			chance_full_damage_item = 60
 
 	reduced_severity =  severity + 1
 

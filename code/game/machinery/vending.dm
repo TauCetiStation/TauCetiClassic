@@ -84,7 +84,22 @@
 	return ..()
 
 /obj/machinery/vending/ex_act(severity)
-	malfunction_ex_act(severity)
+	var/chance_destroy_item
+
+	switch(severity)
+		if(EXPLODE_LIGHT)
+			if(prob(95))
+				return
+			chance_destroy_item = 5
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				return
+			chance_destroy_item = 25
+		if(EXPLODE_DEVASTATE)
+			chance_destroy_item = 85
+
+	malfunction(chance_destroy_item)
+	qdel(src)
 
 /obj/machinery/vending/RefreshParts()
 	..()
@@ -576,52 +591,36 @@
 	update_power_use()
 
 //Oh no we're malfunctioning!  Dump out some product and break.
-/obj/machinery/vending/proc/malfunction()
-	for(var/datum/data/vending_product/R in src.product_records)
-		if (R.amount <= 0) //Try to use a record that actually has something to dump.
-			continue
-		var/dump_path = R.product_path
-		if (!dump_path)
-			continue
+/obj/machinery/vending/proc/malfunction(var/chance_destroy_item = 0)
 
-		while(R.amount>0)
-			new dump_path(src.loc)
-			R.amount--
+	if (!chance_destroy_item) //Full drop items
+		for(var/datum/data/vending_product/R in src.product_records)
+			if (R.amount <= 0) //Try to use a record that actually has something to dump.
+				continue
+			var/dump_path = R.product_path
+			if (!dump_path)
+				continue
+			while(R.amount>0)
+				new dump_path(src.loc)
+				R.amount--
+
+	else //Destruction of some items, drop of others
+		for(var/datum/data/vending_product/R in src.product_records)
+			if (R.amount <= 0)
+				continue
+			var/dump_path = R.product_path
+			if (!dump_path)
+				continue
+			while(R.amount>0)
+				if (prob(chance_destroy_item))
+					R.amount--
+					continue
+				new dump_path(src.loc)
+				R.amount--
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
 	return
-
-// some of the items are destroyed due to impact
-/obj/machinery/vending/proc/malfunction_ex_act(severity)
-	var/chance_destroy_item
-
-	switch(severity)
-		if(EXPLODE_LIGHT)
-			if(prob(95))
-				return
-			chance_destroy_item = 5
-		if(EXPLODE_HEAVY)
-			if(prob(50))
-				return
-			chance_destroy_item = 25
-		if(EXPLODE_DEVASTATE)
-			chance_destroy_item = 85
-
-	for(var/datum/data/vending_product/R in src.product_records)
-		if (R.amount <= 0) //Try to use a record that actually has something to dump.
-			continue
-		var/dump_path = R.product_path
-		if (!dump_path)
-			continue
-		while(R.amount>0)
-			if (prob(chance_destroy_item))
-				R.amount--
-				continue
-			new dump_path(src.loc)
-			R.amount--
-
-	qdel(src)
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
 /obj/machinery/vending/proc/throw_item()
