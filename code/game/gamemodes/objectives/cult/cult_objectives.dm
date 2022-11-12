@@ -70,3 +70,31 @@
 	if(istype(C) && C.religion.captured_areas.len - C.religion.area_types.len >= need_capture)
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
+
+/datum/objective/cult/job_convert
+	var/convertees_needed
+	var/datum/job/job
+
+/datum/objective/cult/New()
+	var/list/possible_jobs = list()
+	for(var/I in get_all_jobs())
+		if(I in list("Security Officer", "Security Cadet", "Head of Security", "Captain", "Forensic Technician", "Detective", "Warden", "Head of Personnel", "AI", "Cyborg", "Internal Affairs Agent"))
+			continue
+		var/datum/job/J = SSjob.GetJob(I)
+		if(J.current_positions > 1)
+			possible_jobs += I
+	job = SSjob.GetJob(pick(possible_jobs))
+	convertees_needed = rand(CEIL(job.current_positions / 2), 1)
+	explanation_text = "Культ нуждается в [convertees_needed] [pluralize_russian(convertees_needed, "последователе", "последователях", "последователях")], являющихся [job.title]."
+	..()
+
+/datum/objective/cult/job_convert/check_completion()
+	var/datum/faction/cult/C = faction
+	if(istype(C))
+		var/convertees = 0
+		for(var/datum/role/R in C.members)
+			if(R.antag.current.mind.assigned_job == job)
+				convertees++
+		if(convertees >= convertees_needed)
+			return OBJECTIVE_WIN
+	return OBJECTIVE_LOSS
