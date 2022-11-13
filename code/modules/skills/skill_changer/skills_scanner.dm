@@ -89,7 +89,7 @@
 /obj/machinery/optable/skill_scanner/process()
 	. = ..()
 	if(!victim && panel_open)
-		icon_state = "table_open"
+		icon_state = "table_skill_open"
 
 /obj/machinery/optable/skill_scanner/deconstruction()
 	. = ..()

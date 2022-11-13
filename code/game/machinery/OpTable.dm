@@ -76,10 +76,10 @@
 		var/mob/living/carbon/human/M = locate(/mob/living/carbon/human, src.loc)
 		if(M.crawling)
 			src.victim = M
-			icon_state = M.pulse ? icon_state_active : "table_surgey_idle"
+			icon_state = M.pulse ? icon_state_active : initial(icon_state)
 			return 1
 	src.victim = null
-	icon_state = initial(icon_state)
+	icon_state = icon_state
 	return 0
 
 /obj/machinery/optable/process()
