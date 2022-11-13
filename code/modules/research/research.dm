@@ -679,7 +679,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 200
 
-	unlocks_designs = list("med_data", "operating")
+	unlocks_designs = list("med_data", "operating", "operating_table")
 
 /datum/technology/adv_med_machines
 	name = "Advanced Medical Machines"
