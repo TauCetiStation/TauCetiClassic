@@ -15,6 +15,7 @@
 #define F_PROPS              "Props"
 #define F_REVOLUTION         "Revolution"
 #define F_SYNDIOPS           "Syndicate Operatives"
+#define F_SYNDIOPS_CROSSFIRE "Syndicate Operatives (CrossFire)"
 #define F_SYNDIESQUAD        "Syndicate Elite Strike Team"
 #define F_SHADOWLINGS        "Shadowlings"
 #define F_SPIDERCLAN         "Spider Clan"
