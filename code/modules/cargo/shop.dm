@@ -334,6 +334,6 @@ var/global/list/packers = list()
 /obj/machinery/packer/proc/pack_human_being(mob/user)
 	if(Item)
 		eject_item()
-	user.loc = src
+	user.forceMove(src)
 	Item = user
 	scan_item()
