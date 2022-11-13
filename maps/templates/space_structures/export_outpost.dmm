@@ -629,8 +629,7 @@
 	frequency = 1379;
 	id_tag = "export_outpost_inner";
 	locked = 1;
-	name = "Export Outpost";
-	req_access = newlist()
+	name = "Export Outpost"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/export_outpost)
@@ -711,8 +710,7 @@
 	frequency = 1379;
 	id_tag = "export_outpost_outer";
 	locked = 1;
-	name = "Export Outpost";
-	req_access = newlist()
+	name = "Export Outpost"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/export_outpost)
