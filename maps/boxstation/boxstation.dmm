@@ -33857,7 +33857,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/medical/cryo)
+/area/station/medical/storage)
 "bix" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -45744,7 +45744,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/medical/cryo)
+/area/station/medical/hallway)
 "bEi" = (
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
@@ -47308,7 +47308,7 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/station/medical/cryo)
+/area/station/medical/hallway)
 "bGZ" = (
 /obj/structure/stool/bed/chair/wheelchair{
 	dir = 8
@@ -48136,11 +48136,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/civilian/barbershop)
-"bIw" = (
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/medical/cryo)
 "bIx" = (
 /obj/structure/table/glass,
 /obj/item/weapon/paper_bin,
@@ -50105,7 +50100,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/medical/cryo)
+/area/station/medical/hallway)
 "bMo" = (
 /mob/living/carbon/monkey{
 	name = "Butters"
@@ -83981,13 +83976,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/maintenance/incinerator)
-"sQb" = (
-/obj/structure/closet/emcloset,
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/station/medical/cryo)
 "sRb" = (
 /obj/structure/table/glass,
 /obj/machinery/computer/med_data/laptop,
@@ -124714,12 +124702,12 @@ rQb
 byn
 rQb
 sBb
-bkV
-bkV
-bkV
-bkV
+bIS
+bIS
+bIS
+bIS
 biw
-bkV
+bIS
 bJo
 bpu
 bgn
@@ -127027,12 +127015,12 @@ aPT
 mQb
 bjl
 bjl
-bkV
+bxi
 bEh
 bGY
-bIw
+mdb
 bMn
-sQb
+qNb
 bkV
 bkV
 bkV
