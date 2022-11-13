@@ -72,13 +72,18 @@
 	return ..()
 
 /obj/machinery/optable/proc/check_victim()
+	if(panel_open)
+		src.victim = null
+		icon_state = "table_surgey_open"
+		return 0
 	if(locate(/mob/living/carbon/human, src.loc))
 		var/mob/living/carbon/human/M = locate(/mob/living/carbon/human, src.loc)
-		if(M.crawling)
+		if(!panel_open && M.crawling)
 			src.victim = M
 			icon_state = M.pulse ? icon_state_active : initial(icon_state)
 			return 1
 	src.victim = null
+	icon_state = initial(icon_state)
 	return 0
 
 /obj/machinery/optable/process()
