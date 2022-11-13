@@ -75,7 +75,7 @@
 	var/convertees_needed
 	var/datum/job/job
 
-/datum/objective/cult/New()
+/datum/objective/cult/job_convert/New()
 	var/list/possible_jobs = list()
 	for(var/I in get_all_jobs())
 		if(I in list("Security Officer", "Security Cadet", "Head of Security", "Captain", "Forensic Technician", "Detective", "Warden", "Head of Personnel", "AI", "Cyborg", "Internal Affairs Agent"))
@@ -84,7 +84,7 @@
 		if(J.current_positions > 1)
 			possible_jobs += I
 	job = SSjob.GetJob(pick(possible_jobs))
-	convertees_needed = rand(CEIL(job.current_positions / 2), 1)
+	convertees_needed = rand(1, CEIL(job.current_positions / 2))
 	explanation_text = "Культ нуждается в [convertees_needed] [pluralize_russian(convertees_needed, "последователе", "последователях", "последователях")], являющихся [job.title]."
 	..()
 
