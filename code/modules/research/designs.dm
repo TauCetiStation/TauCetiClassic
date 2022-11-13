@@ -1361,7 +1361,7 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/chem_master
 	category = list("Machine")
 
-/datum/desing/operating_table
+/datum/design/operating_table
 	name = "Machine Design (Operating Table)"
 	desc = "The circuit board for a Operating Table."
 	id = "operating_table"
