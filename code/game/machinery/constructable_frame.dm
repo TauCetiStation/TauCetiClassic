@@ -877,3 +877,13 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/scanning_module = 2,
 							/obj/item/weapon/stock_parts/capacitor = 1,
 							/obj/item/stack/cable_coil/red = 2)
+
+/obj/item/weapon/circuitboard/operating_table/abductor
+	name = "circuit board (Abductor Operating Table)"
+	build_path = /obj/machinery/optable/abductor
+	board_type = "machine"
+	origin_tech = "engineering=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/scanning_module = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/stack/cable_coil/red = 2)
