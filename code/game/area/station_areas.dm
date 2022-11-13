@@ -624,6 +624,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Security Checkpoint"
 	icon_state = "security"
 
+/area/station/security/medbay_checkpoint
+	name = "Medbay Security Checkpoint"
+	icon_state = "security"
+
 /area/station/security/vacantoffice
 	name = "Coworking"
 	icon_state = "security"
