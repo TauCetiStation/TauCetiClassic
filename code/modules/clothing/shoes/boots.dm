@@ -10,16 +10,18 @@
 	QDEL_NULL(knife)
 	return ..()
 
+/obj/item/clothing/shoes/boots/update_icon()
+	if(icon_state == "wjboots" || icon_state == "wjbootsknifed")
+		icon_state = "wjboots[knife ? "knifed" : ""]"
+		update_inv_mob()
+
 /obj/item/clothing/shoes/boots/attack_hand(mob/living/user)
 	if(knife && loc == user && !user.incapacitated())
 		if(user.put_in_active_hand(knife))
 			playsound(user, 'sound/effects/throat_cutting.ogg', VOL_EFFECTS_MASTER, 25)
 			to_chat(user, "<span class='notice'>You slide [knife] out of [src].</span>")
 			remove_knife()
-			if(icon_state == "wjbootsknifed")
-				icon_state = "wjboots"
-				update_inv_mob()
-			update_icon() // changing icon_state above out of update_icon() proc, but then calling update_icon() to update icon..?
+			update_icon()
 	else
 		return ..()
 
@@ -32,9 +34,6 @@
 		playsound(user, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
 		to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")
 		add_knife(I)
-		if(icon_state == "wjboots")
-			icon_state = "wjbootsknifed"
-			update_inv_mob()
 		update_icon()
 		return
 
