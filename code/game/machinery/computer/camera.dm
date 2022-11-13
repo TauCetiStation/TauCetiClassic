@@ -58,7 +58,7 @@
 	cam_background.del_on_map_removal = FALSE
 	var/obj/item/weapon/circuitboard/security/board = circuit
 	var/list/circuitboard_network = board.network
-	if((circuitboard_network.len > 1) || ((circuitboard_network.len = 1) && (circuitboard_network[1] != "SS13")))
+	if((circuitboard_network.len > 1) || ((circuitboard_network.len == 1) && (circuitboard_network[1] != "SS13")))
 		network = circuitboard_network
 
 /obj/machinery/computer/security/Destroy()
