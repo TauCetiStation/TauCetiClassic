@@ -79,7 +79,6 @@
 			icon_state = M.pulse ? icon_state_active : initial(icon_state)
 			return 1
 	src.victim = null
-	icon_state = icon_state
 	return 0
 
 /obj/machinery/optable/process()
