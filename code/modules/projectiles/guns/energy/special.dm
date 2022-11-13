@@ -244,9 +244,6 @@
 		charge = 0
 
 	update_icon()
-
-	//update_inv_mob() with custom inhand sprites - yes, without - no.
-
 	return 0
 
 /obj/item/weapon/gun/tesla/proc/los_check(mob/A, mob/B)
