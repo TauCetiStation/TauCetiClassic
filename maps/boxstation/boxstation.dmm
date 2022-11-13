@@ -49399,7 +49399,7 @@
 /area/station/civilian/dormitories)
 "bKW" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Medbay Break Room"";
+	name = "Medbay Break Room";
 	req_access = list(5)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
