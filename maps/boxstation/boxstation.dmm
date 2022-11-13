@@ -6122,8 +6122,10 @@
 	},
 /area/station/security/brig)
 "aky" = (
-/obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -19217,7 +19219,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aIt" = (
-/obj/structure/stool/bed/roller,
 /obj/structure/sign/departments/examroom{
 	pixel_y = 32
 	},
@@ -20086,8 +20087,6 @@
 	},
 /area/station/maintenance/escape)
 "aJV" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/medical,
 /obj/machinery/iv_drip,
 /obj/machinery/light{
 	dir = 1
@@ -20100,6 +20099,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/structure/stool/bed/roller,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -24210,6 +24210,11 @@
 /obj/machinery/alarm{
 	pixel_x = 29;
 	pixel_y = -6
+	},
+/obj/machinery/door_control{
+	id = "Cloning Lab";
+	name = "Cloning Lab";
+	pixel_y = -28
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -30514,7 +30519,7 @@
 /area/station/rnd/hallway)
 "bcu" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = "Genetics";
+	id_tag = "Cloning Lab";
 	name = "Cloning Lab";
 	req_access = list(5,9)
 	},
@@ -33882,10 +33887,10 @@
 /turf/simulated/floor,
 /area/station/medical/surgeryobs)
 "biB" = (
+/obj/item/weapon/flora/random,
 /obj/machinery/newscaster{
 	pixel_y = 28
 	},
-/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitepurple"
@@ -43931,10 +43936,9 @@
 	},
 /area/station/medical/sleeper)
 "bAT" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/medical,
 /obj/machinery/iv_drip,
 /obj/machinery/light,
+/obj/structure/stool/bed/roller,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -43965,7 +43969,6 @@
 	},
 /area/station/medical/sleeper)
 "bAX" = (
-/obj/structure/stool/bed/roller,
 /obj/machinery/camera{
 	c_tag = "Medbay Treatment Center";
 	dir = 10;
@@ -46284,11 +46287,9 @@
 	},
 /area/station/medical/hallway)
 "bFi" = (
-/obj/structure/stool/bed/roller,
-/turf/simulated/floor{
-	icon_state = "whiteblue"
-	},
-/area/station/medical/sleeper)
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/simulated/floor,
+/area/station/medical/cryo)
 "bFj" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp{
@@ -48267,6 +48268,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/structure/sign/warning/smoking{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -48965,7 +48969,6 @@
 /area/station/maintenance/medbay)
 "bKg" = (
 /obj/machinery/atmospherics/pipe/simple/visible,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor,
 /area/station/medical/cryo)
 "bKh" = (
@@ -50905,12 +50908,10 @@
 	},
 /area/station/storage/tech)
 "bNE" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -50958,7 +50959,7 @@
 /area/station/hallway/primary/fore)
 "bNJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+	dir = 9
 	},
 /turf/simulated/floor{
 	icon_state = "warning"
@@ -51889,9 +51890,6 @@
 /area/station/hallway/primary/starboard)
 "bPx" = (
 /obj/machinery/atmospherics/pipe/simple/visible,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
@@ -53003,8 +53001,12 @@
 /obj/item/weapon/storage/box/donkpockets{
 	pixel_y = 4
 	},
-/obj/structure/sign/warning/smoking{
-	pixel_x = 32
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching the department.";
+	dir = 8;
+	name = "Medical Monitor";
+	network = list("Medical");
+	pixel_x = 28
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -70960,6 +70962,10 @@
 /obj/machinery/computer/scan_consolenew{
 	dir = 8
 	},
+/obj/machinery/alarm{
+	pixel_x = 29;
+	pixel_y = -6
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurple"
@@ -77043,9 +77049,6 @@
 /area/station/cargo/office)
 "kzb" = (
 /obj/structure/closet/secure_closet/medical1,
-/obj/machinery/alarm{
-	pixel_y = -32
-	},
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "apc right";
@@ -125228,7 +125231,7 @@ bAX
 bkV
 acw
 qrb
-bKQ
+bLA
 aky
 cNc
 bob
@@ -125485,7 +125488,7 @@ bdJ
 bDj
 bCW
 qrb
-bLA
+bKQ
 bNE
 bmh
 bkC
@@ -125999,7 +126002,7 @@ bdJ
 bFf
 bCW
 qrb
-bLA
+bFi
 bNJ
 boJ
 bkV
@@ -126252,7 +126255,7 @@ sAb
 bJu
 bAP
 bAS
-bFi
+bdJ
 bkV
 bIC
 aif
