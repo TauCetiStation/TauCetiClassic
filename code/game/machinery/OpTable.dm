@@ -139,6 +139,6 @@
 	if(default_deconstruction_crowbar(W))
 		message_admins("[src] has been deconstructed by [key_name_admin(user)] [ADMIN_QUE(user)] [ADMIN_FLW(user)] in [COORD(T)] - [ADMIN_JMP(T)]")
 		log_game("[src] has been deconstructed by [key_name(user)]")
-		log_investigate("SMES deconstructed by [key_name(user)]", INVESTIGATE_SINGULO)
+		log_investigate("[src] deconstructed by [key_name(user)]", INVESTIGATE_SINGULO)
 
 	return ..()
