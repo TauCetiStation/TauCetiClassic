@@ -52646,6 +52646,7 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/circuitboard/skills,
+/obj/item/weapon/circuitboard/skills,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "bQs" = (
