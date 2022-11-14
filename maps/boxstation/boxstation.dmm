@@ -70934,7 +70934,6 @@
 	dir = 8;
 	network = list("SS13","Medical")
 	},
-/obj/item/weapon/storage/belt/medical,
 /obj/item/device/radio/headset/headset_med,
 /turf/simulated/floor{
 	dir = 4;
