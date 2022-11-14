@@ -185,7 +185,7 @@
 	max_storage_space = 50
 	w_class = SIZE_SMALL
 	max_w_class = SIZE_SMALL
-	can_hold = list(/obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/pill)
+	can_hold = list(/obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/pill, /obj/item/weapon/storage/pill_bottle)
 
 // -----------------------------
 //        Sheet Snatcher
