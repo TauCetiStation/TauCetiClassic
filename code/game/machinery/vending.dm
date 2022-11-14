@@ -592,31 +592,18 @@
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction(chance_destroy_item = 0)
-
-	if (!chance_destroy_item) //Full drop items
-		for(var/datum/data/vending_product/R in src.product_records)
-			if (R.amount <= 0) //Try to use a record that actually has something to dump.
-				continue
-			var/dump_path = R.product_path
-			if (!dump_path)
-				continue
-			while(R.amount>0)
-				new dump_path(src.loc)
+	for(var/datum/data/vending_product/R in src.product_records)
+		if (R.amount <= 0)
+			continue
+		var/dump_path = R.product_path
+		if (!dump_path)
+			continue
+		while(R.amount>0)
+			if (prob(chance_destroy_item))
 				R.amount--
-
-	else //Destruction of some items, drop of others
-		for(var/datum/data/vending_product/R in src.product_records)
-			if (R.amount <= 0)
 				continue
-			var/dump_path = R.product_path
-			if (!dump_path)
-				continue
-			while(R.amount>0)
-				if (prob(chance_destroy_item))
-					R.amount--
-					continue
-				new dump_path(src.loc)
-				R.amount--
+			new dump_path(src.loc)
+			R.amount--
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
