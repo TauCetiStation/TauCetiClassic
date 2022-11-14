@@ -48362,10 +48362,6 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -60338,14 +60334,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "dCA" = (
-/obj/structure/disposalpipe/sortjunction/flipped{
-	dir = 8;
-	name = "Virology Lab";
-	sortType = "Virology Lab"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	dir = 3;
@@ -61729,14 +61724,11 @@
 	pixel_x = -7;
 	pixel_y = -3
 	},
-/obj/machinery/newscaster{
-	pixel_y = -28
+/obj/machinery/power/apc{
+	name = "Medbay Storage APC";
+	pixel_y = -26
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
+/obj/structure/cable,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitebluecorner"
@@ -63417,14 +63409,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	name = "Medbay Storage APC";
-	pixel_y = -26
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitebluecorner"
@@ -63585,11 +63569,6 @@
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -22
-	},
-/obj/machinery/camera{
-	c_tag = "Medbay Hospital";
-	network = list("SS13","Medical");
-	dir = 4
 	},
 /obj/effect/landmark/start/medical_doctor,
 /turf/simulated/floor/carpet/green,
@@ -64107,6 +64086,9 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/storage/firstaid/regular,
+/obj/machinery/newscaster{
+	pixel_y = -28
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitebluecorner"
@@ -64241,10 +64223,6 @@
 	},
 /area/station/engineering/chiefs_office)
 "gxO" = (
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -64258,6 +64236,11 @@
 	},
 /obj/structure/sign/warning/nosmoking/circle{
 	pixel_y = 28
+	},
+/obj/structure/disposalpipe/sortjunction/flipped{
+	dir = 8;
+	name = "Virology Lab";
+	sortType = "Virology Lab"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -70373,9 +70356,10 @@
 	},
 /area/station/hallway/primary/central)
 "lbF" = (
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+/obj/machinery/camera{
+	c_tag = "Virology Access";
+	dir = 1;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -71066,13 +71050,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Medbay_Quarantine";
-	name = "Quarantine Shutter";
-	opacity = 0
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -72605,13 +72582,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Medbay_Quarantine";
-	name = "Quarantine Shutter";
-	opacity = 0
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -74450,15 +74420,10 @@
 	},
 /area/station/engineering/engine)
 "ojR" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	icon_state = "freezer_1";
-	power_setting = 20;
-	set_temperature = 73;
-	use_power = 1
-	},
 /obj/structure/reagent_dispensers/cleaner{
 	pixel_y = 32
 	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -75080,10 +75045,6 @@
 	},
 /area/station/medical/reception_hall)
 "oFO" = (
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -75100,6 +75061,10 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -80955,10 +80920,10 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "tHn" = (
+/obj/machinery/atmospherics/components/unary/portables_connector,
 /obj/machinery/portable_atmospherics/canister/oxygen{
 	start_pressure = 9000
 	},
-/obj/machinery/atmospherics/components/unary/portables_connector,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -81887,6 +81852,13 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/medical/virology)
+"uvw" = (
+/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/effect/landmark/start/medical_doctor,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/medical/storage)
 "uvy" = (
 /obj/machinery/smartfridge/secure/virology,
 /obj/machinery/alarm{
@@ -83226,6 +83198,7 @@
 	pixel_y = 30
 	},
 /obj/structure/stool/bed/chair/schair/wagon/bench,
+/obj/effect/landmark/start/medical_intern,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitebluecorner"
@@ -84644,6 +84617,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "Medbay Hospital";
+	network = list("SS13","Medical")
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"
@@ -85106,6 +85083,11 @@
 	dir = 8;
 	pixel_x = 25
 	},
+/obj/machinery/camera{
+	c_tag = "Medbay Treatment Center";
+	network = list("SS13","Medical");
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -85184,6 +85166,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"xHS" = (
+/obj/structure/stool/bed/chair/schair/wagon/bench{
+	dir = 1
+	},
+/obj/effect/landmark/start/medical_intern,
+/turf/simulated/floor{
+	icon_state = "whiteblue"
+	},
+/area/station/medical/hallway)
 "xIb" = (
 /obj/item/seeds/grapeseed,
 /turf/simulated/floor/plating{
@@ -122693,7 +122684,7 @@ ibA
 hsz
 sSG
 tKL
-cme
+uvw
 wiK
 wiK
 cme
@@ -123455,7 +123446,7 @@ dMs
 kVe
 miq
 kQE
-pUo
+xHS
 sKc
 cBF
 hQw
