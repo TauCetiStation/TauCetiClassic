@@ -294,6 +294,7 @@ var/global/list/contraband_listings
 		"yellow" = list(
 			"sugar"="Sugar rushes detrimental to waiting in queues",
 			"serotrotium",
+			"kyphotorin",
 			"lube"="Workplace accidents",
 			"glycerol",
 			"nicotine",

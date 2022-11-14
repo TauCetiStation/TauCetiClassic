@@ -137,7 +137,7 @@
 #define RELIC_WATER_CHEM_LIST list(\
 	"stoxin2", "inaprovaline", "ryetalyn", "paracetamol", "tramadol", "oxycodone", "sterilizine", "leporazine",\
 	"kelotane", "dermaline", "dexalin", "dextromethorphan", "dexalinp", "tricordrazine", "anti_toxin", "thermopsis",\
-	"synaptizine", "hyronalin", "arithrazine", "alkysine", "imidazoline", "aurisine", "peridaxon",\
+	"synaptizine", "hyronalin", "arithrazine", "alkysine", "imidazoline", "aurisine", "peridaxon", "kyphotorin",\
 	"bicaridine", "cryoxadone", "clonexadone", "rezadone", "spaceacillin", "ethylredoxrazine",\
 	"vitamin", "lipozine", "stimulants", "nanocalcium", "toxin", "amatoxin", "mutagen", "phoron", "lexorin",\
 	"slimejelly", "cyanide", "minttoxin", "carpotoxin", "zombiepowder", "mindbreaker", "plantbgone", "stoxin",\
