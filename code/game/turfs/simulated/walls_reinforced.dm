@@ -73,10 +73,6 @@
 				thermitemelt(user, seconds_to_melt)
 				return
 
-		else if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
-			thermitemelt(user, seconds_to_melt)
-			return
-
 		else if(istype(W, /obj/item/weapon/melee/energy/blade))
 			var/obj/item/weapon/melee/energy/blade/EB = W
 

@@ -336,10 +336,6 @@
 				thermitemelt(user, seconds_to_melt)
 				return
 
-		else if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
-			thermitemelt(user, seconds_to_melt)
-			return
-
 		else if(istype(W, /obj/item/weapon/melee/energy/blade))
 			var/obj/item/weapon/melee/energy/blade/EB = W
 
@@ -374,16 +370,6 @@
 					return
 				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
 				dismantle_wall()
-
-	else if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
-		if(user.is_busy(src))
-			return
-		to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
-		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100))
-			if(mineral == "diamond")//Oh look, it's tougher
-				sleep(60)
-			if(!iswallturf(src) || !user || !W || !T)
-				return
 
 			if(user.loc == T && user.get_active_hand() == W)
 				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")

@@ -641,6 +641,23 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибкаошибкаошибка.</span>")
 	return TRUE
 
+/obj/item/weapon/gun/energy/laser/cutter/emagged //for robots
+	emagged = TRUE
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/cutter/emagged)
+
+/obj/item/weapon/gun/energy/laser/cutter/emagged/atom_init()
+	. = ..()
+	power_supply.AddComponent(/datum/component/cell_selfrecharge, 150)
+
+/obj/item/weapon/gun/energy/laser/cutter/emagged/newshot()
+	if(!isrobot(loc))
+		return FALSE
+	if(..())
+		var/mob/living/silicon/robot/R = loc
+		if(R && R.cell)
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+			R.cell.use(shot.e_cost)
+
 /*****************************Survival Pod********************************/
 
 
