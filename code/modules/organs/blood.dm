@@ -197,18 +197,14 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 						blood_max += W.damage / 40
 
 		if(BP.status & ORGAN_ARTERY_CUT)
-			if(species?.flags[ARTERIAL_CLOTTING])
-				BP.status &= ~ORGAN_ARTERY_CUT
-				BP.strap()
-			else
-				var/bleed_amount = blood_total / (BP.applied_pressure ? 500 : 250) * BP.arterial_bleed_severity
-				if(bleed_amount)
-					if(open_wound)
-						blood_max += bleed_amount
-						do_spray += "the [BP.artery_name] in \the [src]'s [BP.name]"
-					else
-						blood_remove(bleed_amount)
-					playsound(src, 'sound/effects/ArterialBleed.ogg', VOL_EFFECTS_MASTER)
+			var/bleed_amount = blood_total / (BP.applied_pressure ? 500 : 250) * BP.arterial_bleed_severity
+			if(bleed_amount)
+				if(open_wound)
+					blood_max += bleed_amount
+					do_spray += "the [BP.artery_name] in \the [src]'s [BP.name]"
+				else
+					blood_remove(bleed_amount)
+				playsound(src, 'sound/effects/ArterialBleed.ogg', VOL_EFFECTS_MASTER)
 
 	if(blood_max == 0) // so... there is no blood loss, lets stop right here.
 		return

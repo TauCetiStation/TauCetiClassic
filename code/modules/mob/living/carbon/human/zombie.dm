@@ -213,7 +213,7 @@
 	return FALSE
 
 /mob/living/carbon/human/yank_out_object()
-	if(!species?.flags[NO_EMBED])
+	if(!species.flags[NO_EMBED])
 		return ..()
 	clear_alert("embeddedobject")
 	var/list/valid_objects = get_visible_implants()
@@ -224,13 +224,13 @@
 		embedded_item.forceMove(loc)
 
 /mob/living/carbon/human/handle_vision()
-	if(!species?.flags[NO_BLIND])
+	if(!species.flags[NO_BLIND])
 		return ..()
 	clear_fullscreen("blind", 0)
 	clear_alert("blind")
 
 /mob/living/carbon/human/update_eye_blur()
-	if(!species?.flags[NO_BLIND])
+	if(!species.flags[NO_BLIND])
 		return ..()
 	if(client && eye_blurry)
 		var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
@@ -239,7 +239,7 @@
 			game_plane_master_controller.remove_filter("eye_blur_gauss")
 
 /mob/living/carbon/human/embed(obj/item/I)
-	if(!species?.flags[NO_EMBED])
+	if(!species.flags[NO_EMBED])
 		return ..()
 
 /mob/living/carbon/human/proc/infect_zombie_virus(target_zone = null, forced = FALSE, fast = FALSE)
