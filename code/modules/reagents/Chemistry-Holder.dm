@@ -369,7 +369,6 @@ var/global/const/INGEST = 2
 	for(var/datum/reagent/R in reagent_list)
 		if(R.volume < 0.1)
 			del_reagent(R.id)
-			continue
 		else
 			total_volume += R.volume
 			total_absorption += R.absorption
@@ -466,7 +465,7 @@ var/global/const/INGEST = 2
 
 		if(data)
 			R.data = data.Copy()
-			
+
 			if(data["virus2"]) // list of datums, need to copy manually through virus_copylist()
 				R.data["virus2"] |= virus_copylist(data["virus2"])
 
