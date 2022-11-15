@@ -484,6 +484,8 @@
 
 	is_common = TRUE
 
+	skeleton_type = SKELETON_SKRELL
+
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R, multiplier)
 	return R.on_skrell_digest(M, multiplier)
 
