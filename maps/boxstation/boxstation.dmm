@@ -61785,6 +61785,11 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka{
 	pixel_x = -8
 	},
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 6;
+	pixel_y = -7
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "eMm" = (
@@ -65621,6 +65626,11 @@
 /obj/item/weapon/beach_ball/holoball,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"hrK" = (
+/turf/simulated/floor{
+	icon_state = "Stairs2_wide"
+	},
+/area/station/maintenance/medbay)
 "hrM" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30
@@ -69409,18 +69419,13 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
 "khf" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/structure/stool/bed/chair/metal{
-	dir = 8
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/weapon/cigbutt/cigarbutt,
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "yellowcorner"
+	icon_state = "yellow"
 	},
 /area/station/maintenance/medbay)
 "khw" = (
@@ -71681,13 +71686,17 @@
 /turf/simulated/floor/bluegrid,
 /area/station/bridge/cmf_room)
 "lKg" = (
-/obj/item/weapon/cigbutt/cigarbutt,
 /obj/structure/sign/warning/nosmoking/circle{
 	pixel_y = 28
 	},
+/obj/structure/stool/bed/chair/metal{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "yellow"
+	icon_state = "yellowcorner"
 	},
 /area/station/maintenance/medbay)
 "lKl" = (
@@ -73653,11 +73662,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
@@ -74012,9 +74018,6 @@
 /area/station/maintenance/medbay)
 "nLM" = (
 /obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -74422,12 +74425,14 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/structure/disposalpipe/sortjunction{
 	dir = 4;
 	icon_state = "pipe-j2s";
 	name = "Library";
 	sortType = "Library"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
 	},
 /turf/simulated/floor/carpet/black,
 /area/station/civilian/library)
@@ -75023,6 +75028,10 @@
 	},
 /obj/item/trash/candle{
 	pixel_y = 5
+	},
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = -9;
+	pixel_y = 11
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -80043,8 +80052,8 @@
 /area/station/storage/emergency3)
 "sJf" = (
 /turf/simulated/floor{
-	icon_state = "stairs_middle";
-	dir = 4
+	dir = 8;
+	icon_state = "Stairs_wide"
 	},
 /area/station/maintenance/medbay)
 "sJr" = (
@@ -80142,14 +80151,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteyellowfull"
+	},
 /area/station/civilian/library)
 "sLy" = (
 /obj/structure/cable{
@@ -81816,6 +81822,11 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/storage)
+"ujw" = (
+/turf/simulated/floor{
+	icon_state = "Stairs_wide"
+	},
+/area/station/maintenance/medbay)
 "ujL" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -134926,7 +134937,7 @@ gHQ
 siH
 pRX
 lxg
-qad
+ujw
 xTO
 ygT
 xTO
@@ -135183,7 +135194,7 @@ kTc
 uDR
 mbq
 pfY
-qad
+hrK
 fNJ
 ozg
 xTO
