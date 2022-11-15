@@ -71,7 +71,7 @@
 	..()
 	cut_overlays()
 	if(magazine)
-		var/image/magazine_icon = image('icons/obj/gun.dmi', "mag-[CEIL(get_ammo(0) / 4) * 4]")
+		var/image/magazine_icon = image('icons/obj/gun.dmi', "mag-[CEIL(get_ammo(0) / 10) * 10]")
 		add_overlay(magazine_icon)
 	if(silenced)
 		var/image/silencer_icon = image('icons/obj/gun.dmi', "c20r-silencer")
@@ -189,6 +189,7 @@
 /obj/item/weapon/gun/projectile/automatic/tommygun/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+	item_state = icon_state
 
 /obj/item/weapon/gun/projectile/automatic/bar
 	name = "Browning M1918"
@@ -316,6 +317,15 @@
 		item_state = "[initial(icon_state)]"
 	else
 		item_state = "[initial(icon_state)]-e"
+
+/obj/item/weapon/gun/projectile/automatic/a74/krinkov
+	name = "Krinkov"
+	desc = "Small and deadly, A74U is lighter than it's older brother, but nontheless packs a serious punch."
+	mag_type = /obj/item/ammo_box/magazine/a74mm/krinkov
+	recoil = 1.5
+	icon_state = "krinkov"
+	item_state = "krinkov"
+	mag_icon = icon('icons/obj/gun.dmi',"mag-krinkov")
 
 /obj/item/weapon/gun/projectile/automatic/drozd
 	name = "OTs-114 assault rifle"

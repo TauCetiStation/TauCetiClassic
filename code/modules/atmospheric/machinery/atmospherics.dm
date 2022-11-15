@@ -20,6 +20,8 @@ Pipelines + Other Objects -> Pipe network
 	power_channel = STATIC_ENVIRON
 	layer = GAS_PIPE_HIDDEN_LAYER // under wires
 
+	resistance_flags = FIRE_PROOF | CAN_BE_HIT
+
 	var/nodealert = FALSE
 	var/can_unwrench = FALSE
 	var/initialize_directions = 0
@@ -93,7 +95,7 @@ Pipelines + Other Objects -> Pipe network
 
 	for(DEVICE_TYPE_LOOP)
 		for(var/obj/machinery/atmospherics/target in get_step(src, node_connects[I]))
-			if(can_be_node(target, I))
+			if(can_be_node(target, I) && target.can_be_node(src))
 				if(check_connect_types(target, src))
 					NODE_I = target
 					break
@@ -212,10 +214,12 @@ Pipelines + Other Objects -> Pipe network
 	user.throw_at(target, range, speed)
 
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
-		if(can_unwrench)
-			var/obj/item/pipe/stored = new(loc, null, null, src)
-			transfer_fingerprints_to(stored)
+	if(flags & NODECONSTRUCT)
+		return ..()
+
+	if(can_unwrench)
+		var/obj/item/pipe/stored = new(loc, null, null, src)
+		transfer_fingerprints_to(stored)
 	..()
 
 /obj/machinery/atmospherics/construction(pipe_type, obj_color)
@@ -225,8 +229,9 @@ Pipelines + Other Objects -> Pipe network
 	atmos_init()
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)
-		A.atmos_init()
-		A.addMember(src)
+		if(can_be_node(A) && A.can_be_node(src))
+			A.atmos_init()
+			A.addMember(src)
 	build_network()
 
 /obj/machinery/atmospherics/singularity_pull(S, current_size)

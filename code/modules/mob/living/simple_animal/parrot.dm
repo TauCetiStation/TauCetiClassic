@@ -480,7 +480,7 @@
 				var/mob/living/carbon/human/H = parrot_interest
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(pick(parrot_dam_zone))]
 
-				H.apply_damage(damage, BRUTE, BP, H.run_armor_check(BP, "melee"), DAM_SHARP)
+				H.apply_damage(damage, BRUTE, BP, H.run_armor_check(BP, MELEE), DAM_SHARP)
 				me_emote(pick("pecks [H]'s [BP.name]", "cuts [H]'s [BP.name] with its talons"))
 
 			else
@@ -683,7 +683,21 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 /mob/living/simple_animal/parrot/Poly
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
-	speak = list("Поли хочет кррекер!", ":e Прроверьте сингулярность, лоботррясы!", ":e Подключайте солнечные панели, ленивые даррмоеды!", ":e КТО ВЗЯЛ ГРРЁБАНЫЕ РРИГИ?", ":e О БОЖЕ, ОНА СБЕЖАЛА! ВЫЗЫВАЙТЕ ШАТТЛ!")
+	speak = list(
+		":e Поли хочет кррекер!",
+		":e Прроверьте сингулярность, лоботррясы!",
+		":e Подключайте солнечные панели, ленивые даррмоеды!",
+		":e КТО ВЗЯЛ ГРРЁБАНЫЕ РРИГИ?",
+		":e О БОЖЕ, ОНА СБЕЖАЛА! ВЫЗЫВАЙТЕ ШАТТЛ!",
+		":e Шеф, вы свой диплом купили или где-то нашли?",
+		":e Нет, черртежи я не прродам.",
+		":e Закажите ящик с перрчатками.",
+		":e Я ЖЕ ГОВОРРИЛ, НЕ ТРРОГАЙТЕ СУПЕРРМАТЕРИЮ РРУКАМИ!",
+		":e Да не нужны СМЕСЫ, мы напррямую подключим.",
+		":e Я много рраз так делал, все норрмально будет.",
+		":e Вы еще шалаш пострройте вокрруг бухломата.",
+		":e Мы - инженерр.",
+	)
 	speak_chance = 3
 	var/memory_saved = 0
 	var/rounds_survived = 0

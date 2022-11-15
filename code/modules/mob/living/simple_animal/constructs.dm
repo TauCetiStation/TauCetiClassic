@@ -166,10 +166,11 @@
 	harm_intent_damage = 5
 	melee_damage = 10
 	attacktext = "ramm"
-	speed = 0
+	speed = -0.2
 	environment_smash = 2
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/door,
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
@@ -217,17 +218,20 @@
 	icon_living = "harvester"
 	maxHealth = 60
 	health = 60
-	melee_damage = 15
+	melee_damage = 8
 	attacktext = "prodd"
 	speed = 0
 	environment_smash = 1
 	see_in_dark = 7
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	density = FALSE
 	attack_sound = list('sound/weapons/slash.ogg')
 	attack_push_vis_effect = ATTACK_EFFECT_SLASH
 	attack_disarm_vis_effect = ATTACK_EFFECT_SLASH
+	pass_flags = PASSTABLE
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke,
+		/obj/effect/proc_holder/spell/no_target/area_conversion,
 		)
 
 /mob/living/simple_animal/construct/harvester/Bump(atom/A)
@@ -238,7 +242,7 @@
 	if(istype(A, /turf/simulated/wall/cult))
 		its_wall = TRUE
 
-	if(its_wall || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult) || istype(A, /mob/living/simple_animal/construct) || istype(A, /mob/living/simple_animal/hostile/pylon))
+	if(its_wall || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult) || isconstruct(A) || istype(A, /mob/living/simple_animal/hostile/pylon))
 		var/atom/movable/stored_pulling = pulling
 		if(stored_pulling)
 			stored_pulling.set_dir(get_dir(stored_pulling.loc, loc))
@@ -254,6 +258,17 @@
 
 /mob/living/simple_animal/construct/harvester/Process_Spacemove(movement_dir = 0)
 	return TRUE
+
+/mob/living/simple_animal/construct/harvester/UnarmedAttack(atom/A)
+	if(ishuman(A) && prob(20))
+		if(get_targetzone() == BP_HEAD) // No
+			return ..()
+		var/mob/living/carbon/human/C = A
+		var/obj/item/organ/external/BP = C.get_bodypart(get_targetzone())
+		if(BP && !BP.droplimb(FALSE, FALSE, DROPLIMB_EDGE))
+			return ..() //Attack
+		return
+	return ..()
 
 /////////////////////////////////////Proteon from tg/////////////////////////////////
 /mob/living/simple_animal/construct/proteon
@@ -311,7 +326,7 @@
 
 /mob/living/simple_animal/hostile/pylon/proc/deactivate()
 	for(var/obj/structure/cult/pylon/P in contents)
-		P.health = health
+		P.update_integrity(health)
 		P.forceMove(loc)
 	qdel(src)
 

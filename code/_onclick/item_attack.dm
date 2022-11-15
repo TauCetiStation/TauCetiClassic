@@ -1,4 +1,14 @@
 
+/obj/item/proc/melee_attack_chain(atom/target, mob/user, params)
+	if(user.a_intent == INTENT_HARM && (target.resistance_flags & CAN_BE_HIT))
+		if(attack_atom(target, user, params))
+			return
+
+	if(target.attackby(src, user, params) || QDELING(src) || QDELING(target))
+		return
+
+	afterattack(target, user, TRUE, params)
+
 // Called when the item is in the active hand, and clicked; alternately, there is an 'Click On Held Object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_NO_INTERACT)
@@ -12,35 +22,6 @@
 	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
 		return TRUE
 	return FALSE
-
-/atom/movable/attackby(obj/item/W, mob/user, params)
-	. = ..()
-	if(.) // Clickplace, no need for attack animation.
-		return FALSE
-
-	if(user.a_intent != INTENT_HARM)
-		return FALSE
-
-	var/had_effect = FALSE
-	if(!(W.flags & NOATTACKANIMATION))
-		user.do_attack_animation(src)
-		had_effect = TRUE
-
-	if(!(W.flags & NOBLUDGEON))
-		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
-		had_effect = TRUE
-
-	if(!had_effect)
-		return FALSE
-
-	user.SetNextMove(CLICK_CD_MELEE)
-	add_fingerprint(user)
-
-	SSdemo.mark_dirty(src)
-	SSdemo.mark_dirty(W)
-	SSdemo.mark_dirty(user)
-
-	return TRUE
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -260,7 +241,7 @@
 		return H.attacked_by(src, user, def_zone)	//make sure to return whether we have hit or miss
 	else
 		switch(damtype)
-			if("brute")
+			if(BRUTE)
 				if(isslime(src))
 					M.adjustBrainLoss(power)
 
@@ -270,7 +251,7 @@
 						if(istype(T))
 							T.add_blood_floor(M)
 					M.take_bodypart_damage(power)
-			if("fire")
+			if(BURN)
 				if (!(COLD_RESISTANCE in M.mutations))
 					to_chat(M, "Aargh it burns!")
 					M.take_bodypart_damage(0, power)
@@ -280,3 +261,43 @@
 	SSdemo.mark_dirty(M)
 	SSdemo.mark_dirty(user)
 	return TRUE
+
+/// The equivalent of the standard version of [/obj/item/proc/attack] but for non mob targets.
+/obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user, params)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, attacked_atom, user) & COMPONENT_ITEM_NO_ATTACK)
+		return
+
+	if(!(flags & NOATTACKANIMATION))
+		user.do_attack_animation(attacked_atom)
+
+	if(flags & NOBLUDGEON)
+		return
+
+	user.SetNextMove(CLICK_CD_MELEE)
+	attacked_atom.attacked_by(src, user)
+	add_fingerprint(user)
+
+	SSdemo.mark_dirty(src)
+	SSdemo.mark_dirty(attacked_atom)
+	SSdemo.mark_dirty(user)
+	return TRUE
+
+/// Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds
+/atom/proc/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(!uses_integrity)
+		CRASH("attacked_by() was called on an object that doesnt use integrity!")
+
+	if(!attacking_item.force)
+		return
+
+	var/damage = take_damage(attacking_item.force, attacking_item.damtype, MELEE, 1, get_dir(src, attacking_item))
+	//only witnesses close by and the victim see a hit message.
+	user.visible_message(
+		"<span class='danger'>[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]</span>",
+		"<span class='danger'>You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]</span>",
+		viewing_distance = COMBAT_MESSAGE_RANGE
+	)
+	return damage
+
+/area/attacked_by(obj/item/attacking_item, mob/living/user)
+	CRASH("areas are NOT supposed to have attacked_by() called on them!")

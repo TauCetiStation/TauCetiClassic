@@ -130,11 +130,10 @@
 
 //Damage
 
-/turf/simulated/wall/proc/take_damage(dam, devastated)
+/turf/simulated/wall/take_damage(dam, devastated) // doesnt use atom integrity system
 	if(dam)
 		damage = max(0, damage + dam)
 		update_damage(devastated)
-	return
 
 /turf/simulated/wall/proc/update_damage(devastated)
 	var/cap = damage_cap
@@ -261,13 +260,16 @@
 	to_chat(M, "<span class='notice'>You push the wall but nothing happens!</span>")
 	return */
 
+/turf/simulated/wall/attack_hulk(mob/living/simple_animal/hulk/M)
+	if(istype(M))
+		playsound(M, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+		M.health -= rand(4, 10)
+		attack_animal(M)
+		return TRUE
+
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
 	..()
 	if(M.environment_smash >= 2)
-		if(istype(M, /mob/living/simple_animal/hulk))
-			var/mob/living/simple_animal/hulk/Hulk = M
-			playsound(Hulk, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-			Hulk.health -= rand(4, 10)
 		playsound(M, 'sound/effects/hulk_hit_wall.ogg', VOL_EFFECTS_MASTER)
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash >= 3)
@@ -432,7 +434,7 @@
 		user.do_attack_animation(src)
 		if(C.use_charge(user))
 			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			take_damage(pick(10, 20, 30))
+			take_damage(30)
 		return
 
 	else if(istype(W,/obj/item/apc_frame))

@@ -12,6 +12,9 @@ var/global/bomb_set
 	can_buckle = 1
 	use_power = NO_POWER_USE
 	unacidable = TRUE	//aliens can't destroy the bomb
+
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 	var/deployable = 0.0
 	var/extended = 0.0
 	var/lighthack = 0
