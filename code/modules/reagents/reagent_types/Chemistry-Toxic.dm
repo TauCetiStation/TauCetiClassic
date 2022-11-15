@@ -603,7 +603,7 @@
 
 	if(data["ticks"] >= 165)
 		M.adjustToxLoss(4 * multiplier * TOXINS_EFFECT_MULTIPLIER)
-		M.apply_effect(5 * multiplier * TOXINS_EFFECT_MULTIPLIER,IRRADIATE * multiplier * TOXINS_EFFECT_MULTIPLIER,0)
+		M.apply_effect(5 * multiplier * TOXINS_EFFECT_MULTIPLIER,IRRADIATE,0)
 	data["ticks"]++
 
 /datum/reagent/chefspecial	//From VG. Only for traitors
