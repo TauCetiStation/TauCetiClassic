@@ -294,9 +294,8 @@ field_generator power level display
 		var/field_dir = get_dir(T, get_step(G.loc, NSEW))
 		T = get_step(T, NSEW)
 		if(!locate(/obj/machinery/containment_field) in T)
-			var/obj/machinery/containment_field/CF = new
+			var/obj/machinery/containment_field/CF = new(T)
 			CF.set_master(src, G)
-			CF.loc = T
 			CF.set_dir(field_dir)
 
 	connected_gens |= G
