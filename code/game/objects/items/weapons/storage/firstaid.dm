@@ -278,7 +278,7 @@
 
 /obj/item/weapon/storage/pill_bottle/carbon
 	name = "pill bottle (Activated Carbon)"
-	desc = "Powdered or granular carbon used for purifying by adsorption. Taken orally it acts as an antidote for some kinds of poisons."
+	desc = "Powdered or granular carbon used for purifying by adsorption. Taken orally it acts as an antidote to some poisons."
 
 	startswith = list(/obj/item/weapon/reagent_containers/pill/carbon = 10)
 	wrapper_color = "#1c1300"
