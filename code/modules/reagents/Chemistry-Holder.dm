@@ -192,8 +192,6 @@ var/global/const/INGEST = 2
 	var/metabolism = C.get_metabolism_factor()
 
 	for(var/datum/reagent/R in reagent_list)
-		if(!R)
-			return
 		R.metabolism_coeffitient = (R.volume / total_volume) * (R.absorption / total_absorption)
 		total_metabolism += R.metabolism_coeffitient
 
