@@ -63711,6 +63711,7 @@
 	},
 /area/station/cargo/recycleroffice)
 "giJ" = (
+/obj/structure/stool/bed/chair/metal/blue,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warnwhite"
@@ -74651,12 +74652,10 @@
 	},
 /area/station/cargo/storage)
 "ofw" = (
-/obj/structure/closet/secure_closet/personal/patient,
-/turf/simulated/floor{
-	dir = 9;
-	icon_state = "warnwhite"
-	},
-/area/station/medical/surgeryobs)
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/machinery/light/small,
+/turf/simulated/floor/grass,
+/area/station/medical/genetics)
 "ofy" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/four,
@@ -77650,11 +77649,11 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/chiefs_office)
 "qwK" = (
-/obj/structure/closet/secure_closet/personal/patient,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/structure/stool/bed/chair/metal/blue,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warnwhite"
@@ -80543,11 +80542,6 @@
 /obj/structure/window/reinforced,
 /turf/environment/space,
 /area/space)
-"sXn" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/machinery/light/small,
-/turf/simulated/floor/grass,
-/area/station/medical/genetics)
 "sXz" = (
 /turf/simulated/floor/wood,
 /area/station/civilian/garden)
@@ -84952,6 +84946,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "wOv" = (
+/obj/structure/stool/bed/chair/metal/blue,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warnwhite"
@@ -125631,7 +125626,7 @@ kvg
 cUZ
 wrI
 oXf
-ofw
+wOv
 jwL
 dBa
 oau
@@ -127931,7 +127926,7 @@ mVk
 fEa
 xkG
 vyy
-sXn
+ofw
 qOs
 qOs
 qOs
