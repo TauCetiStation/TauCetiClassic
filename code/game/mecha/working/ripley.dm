@@ -40,7 +40,7 @@
 	max_temperature = 65000
 	health = 250
 	lights_power = 8
-	damage_absorption = list(BRUTE=1.0,BURN=4.0,BULLET=1.0,BOMB=1.5)
+	damage_absorption = list(BRUTE=0.7,BURN=0.4,BULLET=0.8,BOMB=0.5)
 	wreckage = /obj/effect/decal/mecha_wreckage/ripley/firefighter
 
 /obj/mecha/working/ripley/deathripley
