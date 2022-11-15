@@ -44987,6 +44987,11 @@
 	icon_state = "asteroid7"
 	},
 /area/station/civilian/garden)
+"bNU" = (
+/obj/structure/stool,
+/obj/item/trash/semki,
+/turf/simulated/floor/wood,
+/area/station/maintenance/medbay)
 "bNX" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -63534,7 +63539,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/device/camera/oldcamera,
+/obj/item/device/camera/lomo,
 /turf/simulated/floor,
 /area/station/maintenance/medbay)
 "gfm" = (
@@ -63815,6 +63820,13 @@
 	icon_state = "green"
 	},
 /area/station/civilian/hydroponics)
+"gnq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stool,
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/station/maintenance/medbay)
 "gnx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
@@ -65537,6 +65549,12 @@
 /obj/item/weapon/beach_ball/holoball,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"hrw" = (
+/obj/structure/stool,
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken4"
+	},
+/area/station/maintenance/medbay)
 "hrM" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 30
@@ -66663,6 +66681,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"ici" = (
+/obj/item/trash/candy,
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/station/maintenance/medbay)
 "icl" = (
 /obj/machinery/airlock_sensor{
 	id_tag = "atmospherics_sensor";
@@ -66690,6 +66714,12 @@
 	icon_state = "whitebluefull"
 	},
 /area/station/medical/staff_hallway)
+"idm" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/item/device/pda,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "idv" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench{
 	dir = 1
@@ -67053,6 +67083,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
+"iuz" = (
+/obj/item/device/assembly/mousetrap/armed,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "ivb" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/camera{
@@ -67263,6 +67297,11 @@
 	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
+"iBU" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/station/maintenance/medbay)
 "iCC" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -68526,6 +68565,11 @@
 	},
 /turf/simulated/floor,
 /area/station/security/lobby)
+"jDq" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/station/maintenance/medbay)
 "jEI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -68654,6 +68698,11 @@
 "jLo" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
+"jLF" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken5"
+	},
 /area/station/maintenance/medbay)
 "jLN" = (
 /turf/simulated/floor,
@@ -69891,6 +69940,12 @@
 	icon_state = "green"
 	},
 /area/station/civilian/garden)
+"kEe" = (
+/obj/structure/bonfire,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/station/maintenance/medbay)
 "kED" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -73132,6 +73187,17 @@
 	icon_state = "white"
 	},
 /area/station/medical/infectious_disease_ward)
+"njY" = (
+/obj/structure/table,
+/obj/item/candle{
+	pixel_x = 5;
+	pixel_y = 11
+	},
+/obj/item/trash/candle{
+	pixel_y = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "nkz" = (
 /obj/machinery/disease2/incubator,
 /obj/structure/reagent_dispensers/virusfood{
@@ -74409,6 +74475,16 @@
 	icon_state = "warnplate"
 	},
 /area/space)
+"oiw" = (
+/obj/structure/stool/bed,
+/obj/item/device/radio/off{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/station/maintenance/medbay)
 "oiR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
@@ -76182,6 +76258,12 @@
 	icon_state = "floorgrime"
 	},
 /area/station/maintenance/incinerator)
+"pDe" = (
+/obj/item/device/assembly/mousetrap/armed,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/station/maintenance/medbay)
 "pDh" = (
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
@@ -78868,6 +78950,11 @@
 /obj/structure/cable,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
+"rSX" = (
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/station/maintenance/medbay)
 "rSY" = (
 /obj/machinery/drone_fabricator,
 /turf/simulated/floor{
@@ -79110,6 +79197,12 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/medical/medbreak)
+"sht" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/station/maintenance/medbay)
 "shv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -79912,6 +80005,16 @@
 /obj/structure/sign/warning/moving_parts,
 /turf/simulated/wall,
 /area/station/cargo/recycler)
+"sOs" = (
+/obj/structure/stool/bed,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille{
+	destroyed = 1
+	},
+/turf/simulated/floor/wood,
+/area/station/maintenance/medbay)
 "sOX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -81229,6 +81332,9 @@
 	icon_state = "wood-broken7"
 	},
 /area/station/civilian/library)
+"tXh" = (
+/turf/simulated/floor/wood,
+/area/station/maintenance/medbay)
 "tYt" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -82558,6 +82664,15 @@
 /area/station/security/vacantoffice)
 "vhy" = (
 /turf/simulated/floor,
+/area/station/maintenance/medbay)
+"via" = (
+/obj/structure/stool/bed,
+/obj/item/device/camera/oldcamera{
+	pixel_x = 5
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken4"
+	},
 /area/station/maintenance/medbay)
 "vim" = (
 /obj/structure/curtain/open/shower,
@@ -85410,7 +85525,8 @@
 "xRK" = (
 /obj/structure/closet/crate,
 /obj/random/cloth/gloves,
-/turf/simulated/floor/plating,
+/obj/item/device/harmonica,
+/turf/simulated/floor/wood,
 /area/station/maintenance/medbay)
 "xSf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -129116,7 +129232,7 @@ xBy
 pRX
 ijP
 xTO
-xTO
+hkh
 rnH
 pRX
 xTO
@@ -129372,7 +129488,7 @@ tgc
 gGq
 pRX
 pRX
-hkh
+pRX
 pRX
 pRX
 pRX
@@ -129626,13 +129742,13 @@ dqA
 xTO
 xTO
 xTO
-xTO
-xTO
+iuz
+sOs
+iBU
+oiw
+njY
+idm
 pRX
-pRX
-pRX
-eAM
-xTO
 xTO
 nxy
 pRX
@@ -129885,11 +130001,11 @@ xTO
 uBK
 xTO
 xTO
-xTO
-ygT
-xTO
-xTO
-xTO
+hrw
+sht
+ici
+tXh
+jDq
 xTO
 nxy
 pRX
@@ -130142,11 +130258,11 @@ pRX
 pRX
 pRX
 pRX
+kEe
+gnq
 xTO
-ygT
-xTO
-xTO
-xTO
+rSX
+pDe
 xTO
 nxy
 duT
@@ -130399,11 +130515,11 @@ pRX
 eDR
 eAM
 pRX
-xTO
-xTO
+bNU
+jLF
 xRK
+via
 uur
-xBy
 xTO
 nxy
 pRX
