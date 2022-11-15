@@ -137,6 +137,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		do_animate("deny")
 	return
 
+/obj/machinery/door/window/c_airblock(turf/other)
+	if(get_dir(loc, other) == dir) //Make sure looking at appropriate border (so we wont zoneblock every direction)
+		return ..()
+	return NONE
+
 /obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
