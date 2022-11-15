@@ -3374,6 +3374,9 @@
 /obj/item/weapon/storage/firstaid/regular,
 /obj/item/weapon/storage/firstaid/toxin,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/item/weapon/storage/pill_bottle/carbon{
+	pixel_x = -8
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -8767,11 +8770,11 @@
 /obj/structure/rack,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/rig/wizard{
-	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 55, "bio" = 100, "rad" = 20);
+	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
 	desc = "Old bizarre gem-encrusted suit that radiates magical energies."
 	},
 /obj/item/clothing/head/helmet/space/rig/wizard{
-	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 55, "bio" = 100, "rad" = 20);
+	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
 	desc = "Old bizarre gem-encrusted helmet that radiates magical energies."
 	},
 /turf/simulated/floor/plating,
@@ -10053,6 +10056,9 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/item/weapon/storage/pill_bottle/carbon{
+	pixel_x = -8
 	},
 /turf/simulated/floor{
 	icon_state = "bar"

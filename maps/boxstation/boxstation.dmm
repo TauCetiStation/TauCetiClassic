@@ -2933,6 +2933,10 @@
 "afd" = (
 /obj/structure/table,
 /obj/item/weapon/storage/fancy/donut_box,
+/obj/item/weapon/storage/pill_bottle/carbon{
+	pixel_x = 9;
+	pixel_y = 9
+	},
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -3969,6 +3973,9 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/item/weapon/storage/pill_bottle/carbon{
+	pixel_x = -9
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redcorner"
@@ -4097,6 +4104,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/weapon/storage/pill_bottle/carbon,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitered"
@@ -16224,6 +16232,10 @@
 	pixel_y = 2
 	},
 /obj/item/stack/medical/bruise_pack,
+/obj/item/weapon/storage/pill_bottle/carbon{
+	pixel_x = -8;
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -16431,6 +16443,7 @@
 "aCW" = (
 /obj/structure/table,
 /obj/item/clothing/accessory/stethoscope,
+/obj/item/weapon/storage/pill_bottle/carbon,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -18068,6 +18081,9 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/box/cups{
 	pixel_y = 4
+	},
+/obj/item/weapon/storage/pill_bottle/carbon{
+	pixel_x = -9
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
@@ -25480,6 +25496,9 @@
 	pixel_x = -32
 	},
 /obj/structure/table/glass,
+/obj/item/weapon/storage/pill_bottle/carbon{
+	pixel_x = -9
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -27149,6 +27168,10 @@
 /area/station/cargo/office)
 "aWy" = (
 /obj/structure/table/reinforced,
+/obj/item/weapon/storage/pill_bottle/carbon{
+	pixel_x = -8;
+	pixel_y = 10
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -32083,6 +32106,7 @@
 /area/station/medical/reception)
 "bfb" = (
 /obj/structure/table,
+/obj/item/weapon/storage/pill_bottle/carbon,
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "bfc" = (
@@ -40000,6 +40024,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/table/glass,
+/obj/item/weapon/storage/pill_bottle/carbon,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkredcorners"
@@ -48387,6 +48412,9 @@
 	pixel_x = -27
 	},
 /obj/item/weapon/storage/box/cups,
+/obj/item/weapon/storage/pill_bottle/carbon{
+	pixel_x = -9
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -51707,6 +51735,7 @@
 "bOE" = (
 /obj/structure/table,
 /obj/item/weapon/storage/fancy/crayons,
+/obj/item/weapon/storage/pill_bottle/carbon,
 /turf/simulated/floor,
 /area/station/civilian/dormitories)
 "bOF" = (
@@ -70653,6 +70682,10 @@
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
 	},
+/obj/item/weapon/storage/pill_bottle/carbon{
+	pixel_x = -8;
+	pixel_y = 10
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -72807,6 +72840,10 @@
 	network = list("Engineering");
 	pixel_x = 28
 	},
+/obj/item/weapon/storage/pill_bottle/carbon{
+	pixel_x = 9;
+	pixel_y = 4
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -73355,6 +73392,9 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen{
 	layer = 3.1
+	},
+/obj/item/weapon/storage/pill_bottle/carbon{
+	pixel_x = -9
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -78678,6 +78718,7 @@
 	dir = 8;
 	pixel_x = 28
 	},
+/obj/item/weapon/storage/pill_bottle/carbon,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"

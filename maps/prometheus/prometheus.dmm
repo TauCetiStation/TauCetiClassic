@@ -1828,6 +1828,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/item/weapon/storage/pill_bottle/carbon,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -20004,6 +20005,7 @@
 /obj/item/stack/medical/ointment{
 	pixel_y = 4
 	},
+/obj/item/weapon/storage/pill_bottle/carbon,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -22261,6 +22263,7 @@
 	pixel_y = 4
 	},
 /obj/structure/table/woodentable,
+/obj/item/weapon/storage/pill_bottle/carbon,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -33487,6 +33490,7 @@
 	dir = 8;
 	pixel_x = -22
 	},
+/obj/item/weapon/storage/pill_bottle/carbon,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkgreen"
@@ -39521,6 +39525,7 @@
 	pixel_x = 1;
 	pixel_y = 10
 	},
+/obj/item/weapon/storage/pill_bottle/carbon,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -40915,6 +40920,7 @@
 	pixel_x = 1;
 	pixel_y = 7
 	},
+/obj/item/weapon/storage/pill_bottle/carbon,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -41494,6 +41500,7 @@
 	pixel_x = 10;
 	pixel_y = 2
 	},
+/obj/item/weapon/storage/pill_bottle/carbon,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -44682,6 +44689,7 @@
 	pixel_x = 2;
 	pixel_y = 2
 	},
+/obj/item/weapon/storage/pill_bottle/carbon,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteblue"
@@ -58439,6 +58447,7 @@
 /obj/random/meds/medical_single_item,
 /obj/random/meds/chemical_bottle,
 /obj/random/meds/medical_tool,
+/obj/item/weapon/storage/pill_bottle/carbon,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -66071,6 +66080,7 @@
 	dir = 1;
 	network = list("SS13","Security")
 	},
+/obj/item/weapon/storage/pill_bottle/carbon,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -76296,6 +76306,7 @@
 /obj/item/stack/medical/ointment{
 	pixel_y = 4
 	},
+/obj/item/weapon/storage/pill_bottle/carbon,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"

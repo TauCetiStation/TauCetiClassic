@@ -275,3 +275,10 @@
 			/obj/item/weapon/reagent_containers/pill/kelotane = 2,
 			/obj/item/weapon/reagent_containers/pill/hyronalin = 2
 		)
+
+/obj/item/weapon/storage/pill_bottle/carbon
+	name = "pill bottle (Activated Carbon)"
+	desc = "Powdered or granular carbon used for purifying by adsorption. Given orally it is an antidote for some kinds of poisons."
+
+	startswith = list(/obj/item/weapon/reagent_containers/pill/carbon = 10)
+	wrapper_color = "#1c1300"

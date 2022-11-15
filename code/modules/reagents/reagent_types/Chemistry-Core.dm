@@ -82,7 +82,8 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.metabolism_factor.AddModifier("Water", base_additive = 0.5 * multiplier * DRINK_EFFECT_MULTIPLIER)
+		if(H.metabolism_factor.Get() < 5)
+			H.metabolism_factor.AddModifier("Water", base_additive = multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/water/on_last_digest(mob/living/M, multiplier)
 	if(ishuman(M))
@@ -337,7 +338,7 @@
 	reagent_state = SOLID
 	color = "#1c1300" // rgb: 30, 20, 0
 	taste_message = "like a pencil or something"
-	absorption = REAGENTS_ABSORBTION
+	absorption = TOXINS_ABSORBTION * 5
 
 /datum/reagent/carbon/reaction_turf(turf/T, volume)
 	. = ..()
@@ -431,7 +432,7 @@
 
 /datum/reagent/sugar/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.nutrition += 4 * REAGENTS_EFFECT_MULTIPLIER * multiplier
+	M.nutrition += REAGENTS_EFFECT_MULTIPLIER * multiplier
 
 /datum/reagent/sugar/on_vox_digest(mob/living/M, multiplier)
 	..()

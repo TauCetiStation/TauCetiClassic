@@ -222,7 +222,8 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.metabolism_factor.AddModifier("Coffee", base_additive = 1 * multiplier * DRINK_EFFECT_MULTIPLIER)
+		if(H.metabolism_factor.Get() < 10)
+			H.metabolism_factor.AddModifier("Coffee", base_additive = 1 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/drink/coffe/on_last_digest(mob/living/M, multiplier)
 	if(ishuman(M))

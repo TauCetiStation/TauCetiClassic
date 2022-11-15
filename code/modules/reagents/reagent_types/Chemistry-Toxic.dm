@@ -16,6 +16,9 @@
 	..()
 	if(toxpwr)
 		M.adjustToxLoss(toxpwr * multiplier * TOXINS_EFFECT_MULTIPLIER)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.metabolism_factor.AddModifier("Lipozine", base_additive = -0.2 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 
 /datum/reagent/toxin/on_skrell_digest(mob/living/M, multiplier)
 	..()
@@ -207,7 +210,8 @@
 	M.tod = worldtime2text()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.metabolism_factor.AddModifier("Z-powder", base_additive = -0.75 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+		if(H.metabolism_factor.Get() > multiplier * TOXINS_EFFECT_MULTIPLIER)
+			H.metabolism_factor.AddModifier("Z-powder", base_additive = -0.75 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 
 /datum/reagent/toxin/zombiepowder/on_last_digest(mob/living/M, multiplier)
 	if(ishuman(M))
@@ -236,7 +240,8 @@
 	M.hallucination += 10 * multiplier * TOXINS_EFFECT_MULTIPLIER
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.metabolism_factor.AddModifier("Drugs", base_additive = 0.35 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+		if(H.metabolism_factor.Get() < 5)
+			H.metabolism_factor.AddModifier("Drugs", base_additive = 0.35 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 
 /datum/reagent/toxin/mindbreaker/on_last_digest(mob/living/M, multiplier)
 	if(ishuman(M))
@@ -791,7 +796,8 @@
 		M.emote(pick("twitch","drool","moan","giggle"))
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.metabolism_factor.AddModifier("Drugs", base_additive = 0.5 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+		if(H.metabolism_factor.Get() < 5)
+			H.metabolism_factor.AddModifier("Drugs", base_additive = 0.5 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 
 /datum/reagent/space_drugs/on_last_digest(mob/living/M, multiplier)
 	if(ishuman(M))

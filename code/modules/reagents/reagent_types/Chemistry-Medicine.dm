@@ -568,7 +568,8 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.metabolism_factor.AddModifier("Hyperzine", base_additive = 5 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+		if(H.metabolism_factor.Get() < 15)
+			H.metabolism_factor.AddModifier("Hyperzine", base_additive = 2 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 
 /datum/reagent/hyperizine/on_last_digest(mob/living/M, multiplier)
 	if(ishuman(M))
@@ -712,7 +713,8 @@
 	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.metabolism_factor.AddModifier("Lipozine", base_additive = 10 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+		if(H.metabolism_factor.Get() < 20)
+			H.metabolism_factor.AddModifier("Lipozine", base_additive = 3 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 		H.nutrition = max(H.nutrition - nutriment_factor * multiplier * REAGENTS_EFFECT_MULTIPLIER, 0)
 
 

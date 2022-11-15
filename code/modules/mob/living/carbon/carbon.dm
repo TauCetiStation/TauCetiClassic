@@ -980,11 +980,7 @@
 	return
 
 /mob/living/carbon/get_nutrition()
-	return nutrition + (reagents.get_reagent_amount("nutriment") \
-					+ reagents.get_reagent_amount("plantmatter") \
-					+ reagents.get_reagent_amount("protein") \
-					+ reagents.get_reagent_amount("dairy") \
-				) * 8 // We multiply by this "magic" number, because all of these are equal to 8 nutrition.
+	return nutrition + (reagents.get_reagent_amount("nutriment")) * 8 // We multiply by this "magic" number, because all of these are equal to 8 nutrition.
 
 /mob/living/carbon/get_metabolism_factor()
 	var/met = metabolism_factor.Get()

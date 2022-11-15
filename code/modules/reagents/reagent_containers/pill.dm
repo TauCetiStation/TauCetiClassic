@@ -111,6 +111,15 @@
 	. = ..()
 	reagents.add_reagent("anti_toxin", 25)
 
+/obj/item/weapon/reagent_containers/pill/carbon
+	name = "Activated Carbon (10u)"
+	desc = "Neutralizes many common toxins."
+	icon_state = "pill9"
+
+/obj/item/weapon/reagent_containers/pill/carbon/atom_init()
+	. = ..()
+	reagents.add_reagent("carbon", 10)
+
 /obj/item/weapon/reagent_containers/pill/tox
 	name = "Toxins pill"
 	desc = "Highly toxic."
