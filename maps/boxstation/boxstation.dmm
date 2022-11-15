@@ -74651,11 +74651,6 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/storage)
-"ofw" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/machinery/light/small,
-/turf/simulated/floor/grass,
-/area/station/medical/genetics)
 "ofy" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/four,
@@ -80542,6 +80537,11 @@
 /obj/structure/window/reinforced,
 /turf/environment/space,
 /area/space)
+"sXn" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/machinery/light/small,
+/turf/simulated/floor/grass,
+/area/station/medical/genetics)
 "sXz" = (
 /turf/simulated/floor/wood,
 /area/station/civilian/garden)
@@ -82437,7 +82437,6 @@
 /area/station/civilian/garden)
 "uDY" = (
 /obj/machinery/disposal,
-/obj/structure/window/reinforced,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
@@ -127926,7 +127925,7 @@ mVk
 fEa
 xkG
 vyy
-ofw
+sXn
 qOs
 qOs
 qOs
