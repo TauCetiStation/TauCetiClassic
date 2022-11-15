@@ -1,7 +1,3 @@
-#define STATE_EMPTY "empty"
-#define STATE_BLANK "blank"
-#define STATE_MINE "mine"
-
 /obj/structure/closet/crate/secure/loot
 	name = "заброшенный ящик"
 	desc = "Что же может оказаться внутри?"
@@ -34,7 +30,7 @@
 	data["grid"] = Game.grid
 	data["width"] = Game.grid_x*30
 	data["height"] = Game.grid_y*30
-	data["mines"] = "Crate Lock. [num2text(Game.grid_mines)] mines."
+	data["mines"] = "Замок ящика. [num2text(Game.grid_mines)] мин."
 
 	return data
 
@@ -43,17 +39,15 @@
 	if(.)
 		return
 	if(action == "button_press")
-		if(Game.grid[text2num(params["choice_y"])][text2num(params["choice_x"])]["state"] == STATE_MINE)
+		if(Game.button_press(text2num(params["choice_y"]), text2num(params["choice_x"])))
 			SpawnDeathLoot()
 			return TRUE
 		else
-			Game.press_button(text2num(params["choice_x"]), text2num(params["choice_y"]))
 			playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 			return TRUE
+
 	if(action == "button_flag")
-		var/list/L = Game.grid[params["choice_y"]][params["choice_x"]]
-		if(L["state"] != STATE_EMPTY)
-			L["flag"] = !L["flag"]
+		if(Game.button_flag(params["choice_y"], params["choice_x"]))
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 			return TRUE
 
@@ -148,7 +142,3 @@
 	if(locked)
 		return
 	..()
-
-#undef STATE_EMPTY
-#undef STATE_BLANK
-#undef STATE_MINE

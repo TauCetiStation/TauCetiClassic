@@ -15,6 +15,19 @@
 							  list(-1, 1),  list(0, 1),  list(1, 1)
 							)
 
+/datum/minigame/minesweeper/proc/button_press(y, x)
+	if(grid[y][x]["state"] == STATE_MINE)
+		return TRUE
+	else
+		press_button(x, y)
+		return FALSE
+
+/datum/minigame/minesweeper/proc/button_flag(y, x)
+	var/list/L = grid[y][x]
+	if(L["state"] != STATE_EMPTY)
+		L["flag"] = !L["flag"]
+		return TRUE
+
 /datum/minigame/minesweeper/proc/setup_game()
 	grid_x = rand(10,15)
 	grid_y = rand(7,10)
