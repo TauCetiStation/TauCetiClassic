@@ -369,7 +369,7 @@
 	desc = "Smells like grass..."
 	donut_sprite_type = "ambrosia"
 	filling_color = "#ed1169"
-	list_reagents = list("nutriment" = 3, "anti_toxin" = 3)
+	list_reagents = list("nutriment" = 1, "anti_toxin" = 3, "plantmatter" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg
 	name = "egg"
@@ -450,7 +450,7 @@
 	icon_state = "appendix"
 	filling_color = "#e00d34"
 	bitesize = 3
-	list_reagents = list("nutriment" = 3, "vitamin" = 2)
+	list_reagents = list("protein" = 3, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/appendix/inflamed
 	name = "inflamed appendix"
@@ -464,7 +464,7 @@
 	desc = "We all love tofu."
 	filling_color = "#fffee0"
 	bitesize = 3
-	list_reagents = list("nutriment" = 3)
+	list_reagents = list("plantmatter" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/tofurkey
 	name = "Tofurkey"
@@ -488,7 +488,7 @@
 	icon_state = "fishfillet"
 	filling_color = "#ffdefe"
 	bitesize = 6
-	list_reagents = list("nutriment" = 3, "carpotoxin" = 3)
+	list_reagents = list("protein" = 3, "carpotoxin" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/fishfingers
 	name = "Fish Fingers"
@@ -496,7 +496,7 @@
 	icon_state = "fishfingers"
 	filling_color = "#ffdefe"
 	bitesize = 3
-	list_reagents = list("nutriment" = 4, "carpotoxin" = 3)
+	list_reagents = list("protein" = 4, "carpotoxin" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
 	name = "huge mushroom slice"
@@ -504,7 +504,7 @@
 	icon_state = "hugemushroomslice"
 	filling_color = "#e0d7c5"
 	bitesize = 6
-	list_reagents = list("nutriment" = 3, "vitamin" = 1)
+	list_reagents = list("plantmatter" = 3, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/tomatomeat
 	name = "tomato slice"
@@ -512,7 +512,7 @@
 	icon_state = "tomatomeat"
 	filling_color = "#db0000"
 	bitesize = 6
-	list_reagents = list("nutriment" = 2)
+	list_reagents = list("protein" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/bearmeat
 	name = "bear meat"
@@ -520,7 +520,7 @@
 	icon_state = "bearmeat"
 	filling_color = "#db0000"
 	bitesize = 3
-	list_reagents = list("nutriment" = 12, "vodka" = 5, "vitamin" = 2)
+	list_reagents = list("protein" = 12, "vodka" = 5, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/xenomeat
 	name = "meat"
@@ -528,20 +528,20 @@
 	icon_state = "xenomeat"
 	filling_color = "#43de18"
 	bitesize = 6
-	list_reagents = list("nutriment" = 3, "vitamin" = 1)
+	list_reagents = list("protein" = 3, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/spidermeat
 	name = "spider meat"
 	desc = "A slab of spider meat."
 	icon_state = "spidermeat"
 	bitesize = 3
-	list_reagents = list("nutriment" = 3, "toxin" = 2, "vitamin" = 1)
+	list_reagents = list("protein" = 3, "toxin" = 2, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/spiderleg
 	name = "spider leg"
 	desc = "A still twitching leg of a giant spider... you don't really want to eat this, do you?"
 	icon_state = "spiderleg"
-	list_reagents = list("nutriment" = 2, "toxin" = 2)
+	list_reagents = list("protein" = 2, "toxin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/meatball
 	name = "meatball"
@@ -549,7 +549,7 @@
 	icon_state = "meatball"
 	filling_color = "#db0000"
 	bitesize = 2
-	list_reagents = list("nutriment" = 4, "vitamin" = 1)
+	list_reagents = list("protein" = 4, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/sausage
 	name = "Sausage"
@@ -557,7 +557,7 @@
 	icon_state = "sausage"
 	filling_color = "#db0000"
 	bitesize = 2
-	list_reagents = list("nutriment" = 6, "vitamin" = 1)
+	list_reagents = list("protein" = 6, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/donkpocket
 	name = "Donk-pocket"
@@ -573,7 +573,7 @@
 	icon_state = "brainburger"
 	filling_color = "#f2b6ea"
 	bitesize = 2
-	list_reagents = list("nutriment" = 6, "alkysine" = 6)
+	list_reagents = list("nutriment" = 2, "protein" = 4, "alkysine" = 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/ghostburger
 	name = "Ghost Burger"
@@ -593,7 +593,7 @@
 	desc = "A bloody burger."
 	icon_state = "hburger"
 	bitesize = 2
-	list_reagents = list("nutriment" = 6, "vitamin" = 2)
+	list_reagents = list("nutriment" = 2, "protein" = 4, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/cheeseburger
 	name = "cheeseburger"
@@ -607,7 +607,7 @@
 	icon_state = "hburger"
 	filling_color = "#d63c3c"
 	bitesize = 2
-	list_reagents = list("nutriment" = 6, "vitamin" = 1)
+	list_reagents = list("nutriment" = 2, "protein" = 4, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/fishburger
 	name = "Fillet -o- Carp Sandwich"
@@ -615,7 +615,7 @@
 	icon_state = "fishburger"
 	filling_color = "#ffdefe"
 	bitesize = 3
-	list_reagents = list("nutriment" = 6, "carpotoxin" = 3)
+	list_reagents = list("protein" = 6, "carpotoxin" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/tofuburger
 	name = "Tofu Burger"
@@ -623,7 +623,7 @@
 	icon_state = "tofuburger"
 	filling_color = "#fffee0"
 	bitesize = 2
-	list_reagents = list("nutriment" = 6, "vitamin" = 1)
+	list_reagents = list("plantmatter" = 6, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/roburger
 	name = "roburger"
@@ -639,7 +639,7 @@
 	icon_state = "xburger"
 	filling_color = "#43de18"
 	bitesize = 2
-	list_reagents = list("nutriment" = 6, "vitamin" = 1)
+	list_reagents = list("protein" = 6, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/clownburger
 	name = "Clown Burger"
@@ -689,7 +689,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#fbffb8"
 	bitesize = 3
-	list_reagents = list("nutriment" = 6, "banana" = 5, "vitamin" = 2)
+	list_reagents = list("plantmatter" = 6, "banana" = 5, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
@@ -703,7 +703,7 @@
 	icon_state = "berryclafoutis"
 	trash = /obj/item/trash/plate
 	bitesize = 3
-	list_reagents = list("nutriment" = 10, "berryjuice" = 5)
+	list_reagents = list("plantmatter" = 10, "berryjuice" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/waffles
 	name = "waffles"
@@ -730,7 +730,7 @@
 	trash = /obj/item/trash/waffles
 	filling_color = "#b8e6b5"
 	bitesize = 2
-	list_reagents = list("nutriment" = 10, "vitamin" = 2)
+	list_reagents = list("protein" = 10, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/soylenviridians
 	name = "Soylen Virdians"
@@ -739,7 +739,7 @@
 	trash = /obj/item/trash/waffles
 	filling_color = "#e6fa61"
 	bitesize = 2
-	list_reagents = list("nutriment" = 10, "vitamin" = 1)
+	list_reagents = list("plantmatter" = 10, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/meatpie
 	name = "Meat-pie"
@@ -748,7 +748,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#948051"
 	bitesize = 2
-	list_reagents = list("nutriment" = 10, "vitamin" = 2)
+	list_reagents = list("protein" = 10, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/tofupie
 	name = "Tofu-pie"
@@ -757,7 +757,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#fffee0"
 	bitesize = 2
-	list_reagents = list("nutriment" = 10, "vitamin" = 2)
+	list_reagents = list("plantmatter" = 10, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/amanita_pie
 	name = "amanita pie"
@@ -765,7 +765,7 @@
 	icon_state = "amanita_pie"
 	filling_color = "#ffcccc"
 	bitesize = 3
-	list_reagents = list("nutriment" = 5, "amatoxin" = 3, "psilocybin" = 1, "vitamin" = 4)
+	list_reagents = list("plantmatter" = 5, "amatoxin" = 3, "psilocybin" = 1, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/plump_pie
 	name = "plump pie"
@@ -782,7 +782,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#43de18"
 	bitesize = 2
-	list_reagents = list("nutriment" = 10, "vitamin" = 2)
+	list_reagents = list("protein" = 10, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/wingfangchu
 	name = "Wing Fang Chu"
@@ -791,7 +791,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#43de18"
 	bitesize = 2
-	list_reagents = list("nutriment" = 6, "vitamin" = 2)
+	list_reagents = list("protein" = 6, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/human/kabob
 	name = "-kabob"
@@ -800,7 +800,7 @@
 	trash = /obj/item/stack/rods
 	filling_color = "#a85340"
 	bitesize = 2
-	list_reagents = list("nutriment" = 8)
+	list_reagents = list("protein" = 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/kabob
 	name = "Meat-kabob"
@@ -809,7 +809,7 @@
 	trash = /obj/item/stack/rods
 	filling_color = "#a85340"
 	bitesize = 2
-	list_reagents = list("nutriment" = 8)
+	list_reagents = list("protein" = 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/tofukabob
 	name = "Tofu-kabob"
@@ -818,7 +818,7 @@
 	trash = /obj/item/stack/rods
 	filling_color = "#fffee0"
 	bitesize = 2
-	list_reagents = list("nutriment" = 8)
+	list_reagents = list("plantmatter" = 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/cubancarp
 	name = "Cuban Carp"
@@ -827,7 +827,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#e9adff"
 	bitesize = 3
-	list_reagents = list("nutriment" = 6, "carpotoxin" = 3, "capsaicin" = 3)
+	list_reagents = list("protein" = 6, "carpotoxin" = 3, "capsaicin" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/popcorn
 	name = "Popcorn"
@@ -856,7 +856,7 @@
 	filling_color = "#631212"
 	w_class = SIZE_MIDGET
 	bitesize = 2
-	list_reagents = list("nutriment" = 1, "sugar" = 1)
+	list_reagents = list("protein" = 1, "sugar" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/sosjerky/atom_init()
 	. = ..()
@@ -869,7 +869,7 @@
 	filling_color = "#343834"
 	w_class = SIZE_MIDGET
 	bitesize = 2
-	list_reagents = list("nutriment" = 1, "sugar" = 1)
+	list_reagents = list("plantmatter" = 1, "sugar" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/no_raisin/atom_init()
 	. = ..()
@@ -916,7 +916,7 @@
 	desc = "Tastes like chicken."
 	icon_state = "chinese2"
 	trash = /obj/item/trash/chinese2
-	list_reagents = list("nutriment" = 2, "sugar" = 4)
+	list_reagents = list("nutriment" = 1, "protein" = 1, "sugar" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles
 	name = "chinese newdles"
@@ -1010,7 +1010,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#7a3d11"
 	bitesize = 3
-	list_reagents = list("nutriment" = 6, "sodiumchloride" = 1, "blackpepper" = 1)
+	list_reagents = list("protein" = 6, "sodiumchloride" = 1, "blackpepper" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff
 	name = "Spacy Liberty Duff"
@@ -1019,7 +1019,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#42b873"
 	bitesize = 3
-	list_reagents = list("nutriment" = 6, "psilocybin" = 6)
+	list_reagents = list("plantmatter" = 6, "psilocybin" = 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/amanitajelly
 	name = "Amanita Jelly"
@@ -1028,7 +1028,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#ed0758"
 	bitesize = 3
-	list_reagents = list("nutriment" = 6, "amatoxin" = 6, "psilocybin" = 3)
+	list_reagents = list("plantmatter" = 6, "amatoxin" = 6, "psilocybin" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
 	name = "Poppy pretzel"
@@ -1084,7 +1084,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#e386bf"
 	bitesize = 3
-	list_reagents = list("nutriment" = 8, "vitamin" = 4)
+	list_reagents = list("plantmatter" = 8, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/milosoup
 	name = "Milosoup"
@@ -1101,7 +1101,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#785210"
 	bitesize = 5
-	list_reagents = list("nutriment" = 8, "water" = 5, "vitamin" = 4)
+	list_reagents = list("protein" = 8, "water" = 5, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/slimesoup
 	name = "slime soup"
@@ -1117,7 +1117,7 @@
 	icon_state = "tomatosoup"
 	filling_color = "#ff0000"
 	bitesize = 5
-	list_reagents = list("nutriment" = 2, "blood" = 10, "water" = 5, "vitamin" = 4)
+	list_reagents = list("protein" = 2, "blood" = 10, "water" = 5, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/tomatosoup
 	name = "Tomato Soup"
@@ -1126,7 +1126,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#d92929"
 	bitesize = 3
-	list_reagents = list("nutriment" = 5, "tomatojuice" = 10, "vitamin" = 3)
+	list_reagents = list("plantmatter" = 5, "tomatojuice" = 10, "vitamin" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/clownstears
 	name = "Clown's Tears"
@@ -1143,7 +1143,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#afc4b5"
 	bitesize = 5
-	list_reagents = list("nutriment" = 8, "water" = 5, "vitamin" = 4)
+	list_reagents = list("plantmatter" = 8, "water" = 5, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/nettlesoup
 	name = "Nettle soup"
@@ -1152,7 +1152,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#afc4b5"
 	bitesize = 5
-	list_reagents = list("nutriment" = 8, "water" = 5, "tricordrazine" = 5, "vitamin" = 4)
+	list_reagents = list("plantmatter" = 8, "water" = 5, "tricordrazine" = 5, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/mysterysoup
 	name = "Mystery soup"
@@ -1226,7 +1226,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#ff3c00"
 	bitesize = 5
-	list_reagents = list("nutriment" = 6, "capsaicin" = 3, "tomatojuice" = 2, "vitamin" = 2)
+	list_reagents = list("plantmatter" = 6, "capsaicin" = 3, "tomatojuice" = 2, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/coldchili
 	name = "Cold Chili"
@@ -1235,7 +1235,7 @@
 	filling_color = "#2b00ff"
 	bitesize = 5
 	trash = /obj/item/trash/snack_bowl
-	list_reagents = list("nutriment" = 6, "frostoil" = 3, "tomatojuice" = 2, "vitamin" = 2)
+	list_reagents = list("plantmatter" = 6, "frostoil" = 3, "tomatojuice" = 2, "vitamin" = 2)
 
 /* No more of this
 /obj/item/weapon/reagent_containers/food/snacks/telebacon
@@ -1377,7 +1377,7 @@
 	icon_state = "bigbiteburger"
 	filling_color = "#e3d681"
 	bitesize = 3
-	list_reagents = list("nutriment" = 14, "vitamin" = 2)
+	list_reagents = list("nutriment" = 4, "protein" = 10, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/enchiladas
 	name = "Enchiladas"
@@ -1386,7 +1386,7 @@
 	trash = /obj/item/trash/tray
 	filling_color = "#a36a1f"
 	bitesize = 4
-	list_reagents = list("nutriment" = 8, "capsaicin" = 6)
+	list_reagents = list("protein" = 8, "capsaicin" = 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeysdelight
 	name = "monkey's Delight"
@@ -1411,14 +1411,14 @@
 	icon_state = "fishandchips"
 	filling_color = "#e3d796"
 	bitesize = 3
-	list_reagents = list("nutriment" = 6, "carpotoxin" = 3, "vitamin" = 2)
+	list_reagents = list("protein" = 6, "carpotoxin" = 3, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/sashimi
 	name = "Carp sashimi"
 	desc = "Celebrate surviving attack from hostile alien lifeforms by hospitalising yourself."
 	icon_state = "sashimi"
 	bitesize = 3
-	list_reagents = list("nutriment" = 6, "capsaicin" = 3, "vitamin" = 2)
+	list_reagents = list("protein" = 6, "capsaicin" = 3, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/sandwich
 	name = "Sandwich"
@@ -1491,7 +1491,7 @@
 	icon_state = "stewedsoymeat"
 	trash = /obj/item/trash/plate
 	bitesize = 2
-	list_reagents = list("nutriment" = 8)
+	list_reagents = list("plantmatter" = 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspagetti
 	name = "Boiled Spaghetti"
@@ -1500,7 +1500,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#fcee81"
 	bitesize = 2
-	list_reagents = list("nutriment" = 2, "vitamin" = 1)
+	list_reagents = list("plantmatter" = 2, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledrice
 	name = "Boiled Rice"
@@ -1509,7 +1509,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#fffbdb"
 	bitesize = 2
-	list_reagents = list("nutriment" = 5, "vitamin" = 1)
+	list_reagents = list("plantmatter" = 5, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/sushi
 	name = "Sushi"
@@ -1526,7 +1526,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#fffbdb"
 	bitesize = 2
-	list_reagents = list("nutriment" = 4, "vitamin" = 2)
+	list_reagents = list("plantmatter" = 4, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/pastatomato
 	name = "Spaghetti"
@@ -1535,7 +1535,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#de4545"
 	bitesize = 4
-	list_reagents = list("nutriment" = 6, "tomatojuice" = 10, "vitamin" = 4)
+	list_reagents = list("plantmatter" = 6, "tomatojuice" = 10, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/meatballspagetti
 	name = "Spaghetti & Meatballs"
@@ -1544,7 +1544,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#de4545"
 	bitesize = 2
-	list_reagents = list("nutriment" = 8, "vitamin" = 4)
+	list_reagents = list("protein" = 8, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/spesslaw
 	name = "Spesslaw"
@@ -1552,7 +1552,7 @@
 	icon_state = "spesslaw"
 	filling_color = "#de4545"
 	bitesize = 2
-	list_reagents = list("nutriment" = 8, "vitamin" = 4)
+	list_reagents = list("protein" = 8, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/poppypretzel
 	name = "Poppy Pretzel"
@@ -1560,7 +1560,7 @@
 	icon_state = "poppypretzel"
 	filling_color = "#ab7d2e"
 	bitesize = 2
-	list_reagents = list("nutriment" = 5)
+	list_reagents = list("plantmatter" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/carrotfries
 	name = "Carrot Fries"
@@ -1569,7 +1569,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#faa005"
 	bitesize = 2
-	list_reagents = list("nutriment" = 3, "imidazoline" = 3, "vitamin" = 2)
+	list_reagents = list("plantmatter" = 3, "imidazoline" = 3, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/superbiteburger
 	name = "Super Bite Burger"
@@ -1577,7 +1577,7 @@
 	icon_state = "superbiteburger"
 	filling_color = "#cca26a"
 	bitesize = 10
-	list_reagents = list("nutriment" = 48, "cheese" = 4, "vitamin" = 5)
+	list_reagents = list("nutriment" = 32, "cheese" = 4, "protein" = 16, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/candiedapple
 	name = "Candied Apple"
@@ -1674,7 +1674,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#76b87f"
 	bitesize = 3
-	list_reagents = list("nutriment" = 8, "vitamin" = 1)
+	list_reagents = list("plantmatter" = 8, "vitamin" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/validsalad
 	name = "valid salad"
@@ -1683,7 +1683,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#76b87f"
 	bitesize = 3
-	list_reagents = list("nutriment" = 8, "vitamin" = 2)
+	list_reagents = list("plantmatter" = 8, "vitamin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/olivyesalad
 	name = "Olivye salad"
@@ -1692,7 +1692,7 @@
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#76b87f"
 	bitesize = 3
-	list_reagents = list("nutriment" = 14, "vitamin" = 1)
+	list_reagents = list("plantmatter" = 9, "vitamin" = 1, "protein" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/appletart
 	name = "golden apple streusel tart"
@@ -1701,7 +1701,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#ffff00"
 	bitesize = 3
-	list_reagents = list("nutriment" = 8, "gold" = 5, "vitamin" = 4)
+	list_reagents = list("plantmatter" = 8, "gold" = 5, "vitamin" = 4)
 
 /////////////////////////////////////////////////Sliceable////////////////////////////////////////
 // All the food items that can be sliced into smaller bits like Meatbread and Cheesewheels
@@ -1818,7 +1818,7 @@
 	icon_state = "meatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/meat
 	filling_color = "#ff7575"
-	list_reagents = list("nutriment" = 30, "vitamin" = 5)
+	list_reagents = list("protein" = 20, "nutriment" = 10, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/meat
 	name = "meatbread slice"
@@ -1832,7 +1832,7 @@
 	icon_state = "xenomeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/xeno
 	filling_color = "#8aff75"
-	list_reagents = list("nutriment" = 30, "vitamin" = 5)
+	list_reagents = list("protein" = 20, "nutriment" = 10, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/xeno
 	name = "xenomeatbread slice"
@@ -1845,7 +1845,7 @@
 	desc = "Reassuringly green meatloaf made from spider meat."
 	icon_state = "spidermeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/spider
-	list_reagents = list("nutriment" = 30, "vitamin" = 5, "toxin" = 15)
+	list_reagents = list("protein" = 20, "nutriment" = 10, "vitamin" = 5, "toxin" = 15)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/spider
 	name = "spider meat bread slice"
@@ -1873,7 +1873,7 @@
 	icon_state = "tofubread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/tofu
 	filling_color = "#f7ffe0"
-	list_reagents = list("nutriment" = 20, "vitamin" = 10)
+	list_reagents = list("plantmatter" = 20, "vitamin" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/tofu
 	name = "Tofubread slice"
@@ -1962,7 +1962,7 @@
 	icon_state = "braincake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/brain
 	filling_color = "#e6aedb"
-	list_reagents = list("nutriment" = 20, "alkysine" = 10, "vitamin" = 5)
+	list_reagents = list("protein" = 10, "nutriment" = 10, "alkysine" = 10, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/brain
 	name = "Brain Cake slice"
@@ -2056,7 +2056,7 @@
 	desc = "The golden standard of pizzas."
 	icon_state = "pizzamargherita"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/margherita
-	list_reagents = list("nutriment" = 30, "tomatojuice" = 6, "vitamin" = 5)
+	list_reagents = list("plantmatter" = 30, "tomatojuice" = 6, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/margherita
 	name = "Margherita slice"
@@ -2068,7 +2068,7 @@
 	desc = "A pizza with meat topping."
 	icon_state = "meatpizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/meat
-	list_reagents = list("nutriment" = 30, "tomatojuice" = 6, "vitamin" = 8)
+	list_reagents = list("protein" = 30, "tomatojuice" = 6, "vitamin" = 8)
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/meat
 	name = "Meatpizza slice"
@@ -2080,7 +2080,7 @@
 	desc = "Very special pizza"
 	icon_state = "mushroompizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/mushroom
-	list_reagents = list("nutriment" = 30, "vitamin" = 5)
+	list_reagents = list("plantmatter" = 30, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/mushroom
 	name = "Mushroompizza slice"
@@ -2092,7 +2092,7 @@
 	desc = "No one of Tomato Sapiens were harmed during making this pizza"
 	icon_state = "vegetablepizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/vegetable
-	list_reagents = list("nutriment" = 25, "tomatojuice" = 6, "imidazoline" = 12, "vitamin" = 5)
+	list_reagents = list("plantmatter" = 25, "tomatojuice" = 6, "imidazoline" = 12, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/vegetable
 	name = "Vegetable pizza slice"
@@ -2319,7 +2319,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#75754b"
 	bitesize = 2
-	list_reagents = list("nutriment" = 6, "radium" = 2, "vitamin" = 4)
+	list_reagents = list("plantmatter" = 4, "nutriment" = 2, "radium" = 2, "vitamin" = 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledspiderleg
 	name = "boiled spider leg"
@@ -2333,7 +2333,7 @@
 	name = "spider eggs"
 	desc = "A cluster of juicy spider eggs. A great side dish for when you care not for your health."
 	icon_state = "spidereggs"
-	list_reagents = list("nutriment" = 2, "toxin" = 2)
+	list_reagents = list("protein" = 2, "toxin" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/spidereggsham
 	name = "green eggs and ham"
@@ -2458,7 +2458,7 @@
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "cutlet"
 	bitesize = 2
-	list_reagents = list("nutriment" = 2)
+	list_reagents = list("protein" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/rawcutlet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/kitchenknife))
@@ -2482,14 +2482,14 @@
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "rawmeatball"
 	bitesize = 2
-	list_reagents = list("nutriment" = 2)
+	list_reagents = list("protein" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/hotdog
 	name = "hotdog"
 	desc = "Unrelated to dogs, maybe."
 	icon_state = "hotdog"
 	bitesize = 2
-	list_reagents = list("nutriment" = 6)
+	list_reagents = list("protein" = 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/flatbread
 	name = "flatbread"
@@ -2497,7 +2497,7 @@
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "flatbread"
 	bitesize = 2
-	list_reagents = list("nutriment" = 3, "vitamin" = 1)
+	list_reagents = list("plantmatter" = 3, "vitamin" = 1)
 
 // potato + knife = raw sticks
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/I, mob/user, params)
@@ -2514,7 +2514,7 @@
 	icon = 'icons/obj/food_ingredients.dmi'
 	icon_state = "rawsticks"
 	bitesize = 2
-	list_reagents = list("nutriment" = 3)
+	list_reagents = list("plantmatter" = 3)
 
 ////////////////////////////////FOOD ADDITIONS////////////////////////////////////////////
 
@@ -2544,7 +2544,7 @@
 	desc = "Has the potential to not be Dog."
 	icon_state = "meatbun"
 	bitesize = 2
-	list_reagents = list("nutriment" = 6)
+	list_reagents = list("protein" = 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/icecreamsandwich
 	name = "icecream sandwich"
@@ -2581,7 +2581,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/turkeyslice
 	slices_num = 6
 	bitesize = 3
-	list_reagents = list("nutriment" = 42, "vitamin" = 5)
+	list_reagents = list("protein" = 24, "nutriment" = 18, "vitamin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/turkeyslice
 	name = "turkey serving"
@@ -2607,28 +2607,28 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#a36a1f"
 	bitesize = 1
-	list_reagents = list("nutriment" = 5)
+	list_reagents = list("protein" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/raw_bacon
 	name = "raw bacon"
 	desc = "It's fleshy and pink!"
 	icon_state = "raw_bacon"
 	bitesize = 3
-	list_reagents = list("nutriment" = 1)
+	list_reagents = list("protein" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/bacon
 	name = "bacon"
 	desc = "It looks juicy and tastes amazing!"
 	icon_state = "bacon"
 	bitesize = 3
-	list_reagents = list("nutriment" = 7)
+	list_reagents = list("protein" = 7)
 
 /obj/item/weapon/reagent_containers/food/snacks/telebacon
 	name = "Tele Bacon"
 	desc = "It tastes a little odd but it is still delicious."
 	icon_state = "bacon_tele"
 	bitesize = 1
-	list_reagents = list("nutriment" = 6)
+	list_reagents = list("protein" = 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/salmonsteak
 	name = "Salmon steak"
@@ -2637,7 +2637,7 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#7a3d11"
 	bitesize = 4
-	list_reagents = list("nutriment" = 4, "sodiumchloride" = 1, "blackpepper" = 1, "anti_toxin" = 5)
+	list_reagents = list("protein" = 4, "sodiumchloride" = 1, "blackpepper" = 1, "anti_toxin" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/candy/fudge
 	name = "Fudge"

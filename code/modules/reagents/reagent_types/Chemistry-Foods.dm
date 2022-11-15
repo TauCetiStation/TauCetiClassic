@@ -9,8 +9,16 @@
 
 /datum/reagent/consumable/on_general_digest(mob/living/M, multiplier)
 	..()
-	var/to_add = rand(0, 10) / 10 * multiplier * nutriment_factor
-	M.reagents.add_reagent("nutriment", to_add)
+	var/to_add = rand(0, 10) / 10 * multiplier * nutriment_factor * FOOD_EFFECT_MULTIPLIER
+	M.reagents.add_reagent("nutriment", (multiplier * nutriment_factor * FOOD_EFFECT_MULTIPLIER) - to_add)
+	if(diet_flags & DIET_ALL)
+		M.reagents.add_reagent("nutriment", to_add)
+	else if(diet_flags & DIET_MEAT)
+		M.reagents.add_reagent("protein", to_add)
+	else if(diet_flags & DIET_PLANT)
+		M.reagents.add_reagent("plantmatter", to_add)
+	else if(diet_flags & DIET_DAIRY)
+		M.reagents.add_reagent("dairy", to_add)
 	return TRUE
 
 /datum/reagent/nutriment
@@ -35,6 +43,32 @@
 		else
 			M.nutrition += nutriment_factor * multiplier
 	return TRUE
+
+/datum/reagent/nutriment/protein // Meat-based protein, digestable by carnivores and omnivores, worthless to herbivores
+	name = "Protein"
+	id = "protein"
+	description = "Various essential proteins and fats commonly found in animal flesh and blood."
+	diet_flags = DIET_MEAT
+	taste_message = "meat"
+
+/datum/reagent/nutriment/protein/on_skrell_digest(mob/living/M, multiplier)
+	..()
+	M.adjustToxLoss(2 * FOOD_ABSORBTION * multiplier)
+	return FALSE
+
+/datum/reagent/nutriment/plantmatter // Plant-based biomatter, digestable by herbivores and omnivores, worthless to carnivores
+	name = "Plant-matter"
+	id = "plantmatter"
+	description = "Vitamin-rich fibers and natural sugars commonly found in fresh produce."
+	diet_flags = DIET_PLANT
+	taste_message = "plant matter"
+
+/datum/reagent/nutriment/dairy // Milk-based biomatter.
+	name = "Dairy"
+	id = "dairy"
+	description = "A tasty substance that comes out of cows who eat lotsa grass"
+	diet_flags = DIET_DAIRY
+	taste_message = "dairy"
 
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
@@ -72,6 +106,7 @@
 	nutriment_factor = 2
 	color = "#792300" // rgb: 121, 35, 0
 	taste_message = "salt"
+	diet_flags = DIET_MEAT
 
 /datum/reagent/consumable/ketchup
 	name = "Ketchup"
@@ -81,6 +116,7 @@
 	nutriment_factor = 5
 	color = "#731008" // rgb: 115, 16, 8
 	taste_message = "ketchup"
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/flour
 	name = "Flour"
@@ -90,6 +126,7 @@
 	nutriment_factor = 2
 	color = "#f5eaea" // rgb: 245, 234, 234
 	taste_message = "flour"
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/capsaicin
 	name = "Capsaicin Oil"
@@ -193,6 +230,7 @@
 	reagent_state = LIQUID
 	color = "#b31008" // rgb: 139, 166, 233
 	taste_message = "<font color='lightblue'>cold</font>"
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/frostoil/on_general_digest(mob/living/M, multiplier)
 	..()
@@ -226,6 +264,7 @@
 	reagent_state = SOLID
 	// no color (ie, black)
 	taste_message = "pepper"
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/coco
 	name = "Coco Powder"
@@ -235,6 +274,7 @@
 	nutriment_factor = 10
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "cocoa"
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/hot_coco
 	name = "Hot Chocolate"
@@ -244,6 +284,7 @@
 	nutriment_factor = 4
 	color = "#403010" // rgb: 64, 48, 16
 	taste_message = "chocolate"
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/hot_coco/on_general_digest(mob/living/M, multiplier)
 	..()
@@ -293,6 +334,7 @@
 	nutriment_factor = 40
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "oil"
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/cornoil/reaction_turf(turf/simulated/T, volume)
 	. = ..()
@@ -373,6 +415,7 @@
 	nutriment_factor = 8
 	color = "#ffffff" // rgb: 0, 0, 0
 	taste_message = "rice"
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
@@ -382,6 +425,7 @@
 	nutriment_factor = 8
 	color = "#801e28" // rgb: 128, 30, 40
 	taste_message = "cherry jelly"
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/egg
 	name = "Egg"
@@ -391,6 +435,7 @@
 	nutriment_factor = 4
 	color = "#f0c814"
 	taste_message = "eggs"
+	diet_flags = DIET_MEAT
 
 /datum/reagent/consumable/cheese
 	name = "Cheese"
@@ -400,6 +445,7 @@
 	nutriment_factor = 4
 	color = "#ffff00"
 	taste_message = "cheese"
+	diet_flags = DIET_DAIRY
 
 /datum/reagent/consumable/beans
 	name = "Refried beans"
@@ -409,6 +455,7 @@
 	nutriment_factor = 4
 	color = "#684435"
 	taste_message = "burritos"
+	diet_flags = DIET_MEAT
 
 /datum/reagent/consumable/bread
 	name = "Bread"
@@ -418,3 +465,4 @@
 	nutriment_factor = 4
 	color = "#9c5013"
 	taste_message = "bread"
+	diet_flags = DIET_PLANT
