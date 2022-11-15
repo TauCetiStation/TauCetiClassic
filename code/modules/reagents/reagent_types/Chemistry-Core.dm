@@ -78,11 +78,11 @@
 /datum/reagent/water/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(M.IsSleeping())
-		M.AdjustDrunkenness(-1 * multiplier)
+		M.AdjustDrunkenness(-1 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.metabolism_factor.AddModifier("Water", base_additive = 0.5 * multiplier)
+		H.metabolism_factor.AddModifier("Water", base_additive = 0.5 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/water/on_last_digest(mob/living/M, multiplier)
 	if(ishuman(M))
@@ -91,12 +91,12 @@
 
 /datum/reagent/water/on_diona_digest(mob/living/M, multiplier)
 	..()
-	M.nutrition += REM * multiplier
+	M.nutrition += multiplier * DRINK_EFFECT_MULTIPLIER
 	return FALSE
 
 /datum/reagent/water/on_slime_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(REM * multiplier)
+	M.adjustToxLoss(multiplier * DRINK_EFFECT_MULTIPLIER)
 	return FALSE
 
 /datum/reagent/water/holywater // May not be a "core" reagent, but I decided to keep the subtypes near  their parents.
@@ -110,7 +110,7 @@
 /datum/reagent/water/holywater/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(holder.has_reagent("unholywater"))
-		holder.remove_reagent("unholywater", 2 * REM * multiplier)
+		holder.remove_reagent("unholywater", 2 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	if(ishuman(M) && iscultist(M) && !(ASPECT_RESCUE in M.my_religion.aspects) && prob(10))
 		var/datum/role/cultist/C = M.mind.GetRole(CULTIST)
 		C.Deconvert()
@@ -176,25 +176,25 @@
 	if(iscultist(M) && prob(10))
 		switch(data["ticks"])
 			if(1 to 30)
-				M.heal_bodypart_damage(REM * multiplier, REM * multiplier)
+				M.heal_bodypart_damage(multiplier * DRINK_EFFECT_MULTIPLIER, multiplier * DRINK_EFFECT_MULTIPLIER)
 			if(30 to 60)
-				M.heal_bodypart_damage(2 * REM * multiplier, 2 * REM * multiplier)
+				M.heal_bodypart_damage(2 * multiplier * DRINK_EFFECT_MULTIPLIER, 2 * multiplier * DRINK_EFFECT_MULTIPLIER)
 			if(60 to INFINITY)
-				M.heal_bodypart_damage(3 * REM * multiplier, 3 * REM * multiplier)
+				M.heal_bodypart_damage(3 * multiplier * DRINK_EFFECT_MULTIPLIER, 3 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	else if(!iscultist(M))
 		switch(data["ticks"])
 			if(1 to 20)
-				M.make_jittery(3 * multiplier)
+				M.make_jittery(3 * multiplier * DRINK_EFFECT_MULTIPLIER)
 			if(20 to 40)
-				M.make_jittery(6 * multiplier)
+				M.make_jittery(6 * multiplier * DRINK_EFFECT_MULTIPLIER)
 				if(prob(15))
-					M.SetSleeping(20 SECONDS)
+					M.SetSleeping((20 * multiplier * DRINK_EFFECT_MULTIPLIER) SECONDS)
 			if(40 to 80)
-				M.make_jittery(12 * multiplier)
+				M.make_jittery(12 * multiplier * DRINK_EFFECT_MULTIPLIER)
 				if(prob(30))
-					M.SetSleeping(20 SECONDS)
+					M.SetSleeping((20 * multiplier * DRINK_EFFECT_MULTIPLIER) SECONDS)
 			if(80 to INFINITY)
-				M.SetSleeping(20 SECONDS)
+				M.SetSleeping((20 * multiplier * DRINK_EFFECT_MULTIPLIER) SECONDS)
 	data["ticks"]++
 
 /datum/reagent/water/unholywater/reaction_obj(obj/O, volume)
@@ -273,16 +273,16 @@
 
 /datum/reagent/nitrogen/on_diona_digest(mob/living/M, multiplier)
 	..()
-	M.adjustBruteLoss(-REM * multiplier)
-	M.adjustOxyLoss(-REM * multiplier)
-	M.adjustToxLoss(-REM * multiplier)
-	M.adjustFireLoss(-REM * multiplier)
-	M.nutrition += REM * multiplier
+	M.adjustBruteLoss(-REAGENTS_EFFECT_MULTIPLIER * multiplier)
+	M.adjustOxyLoss(-REAGENTS_EFFECT_MULTIPLIER * multiplier)
+	M.adjustToxLoss(-REAGENTS_EFFECT_MULTIPLIER * multiplier)
+	M.adjustFireLoss(-REAGENTS_EFFECT_MULTIPLIER * multiplier)
+	M.nutrition += REAGENTS_EFFECT_MULTIPLIER * multiplier
 	return FALSE
 
 /datum/reagent/nitrogen/on_vox_digest(mob/living/M, multiplier)
 	..()
-	M.adjustOxyLoss(-2 * REM * multiplier)
+	M.adjustOxyLoss(-2 * REAGENTS_EFFECT_MULTIPLIER * multiplier)
 	return FALSE
 
 /datum/reagent/hydrogen
@@ -319,7 +319,7 @@
 		step(M, pick(cardinal))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
-	M.adjustBrainLoss(2 * multiplier)
+	M.adjustBrainLoss(2 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 
 /datum/reagent/sulfur
 	name = "Sulfur"
@@ -360,7 +360,7 @@
 
 /datum/reagent/chlorine/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.take_bodypart_damage(1 * REM * multiplier, 0)
+	M.take_bodypart_damage(1 * REAGENTS_EFFECT_MULTIPLIER * multiplier, 0)
 
 /datum/reagent/fluorine
 	name = "Fluorine"
@@ -373,7 +373,7 @@
 
 /datum/reagent/fluorine/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(REM * multiplier)
+	M.adjustToxLoss(REAGENTS_EFFECT_MULTIPLIER * multiplier)
 
 /datum/reagent/sodium
 	name = "Sodium"
@@ -395,11 +395,11 @@
 
 /datum/reagent/phosphorus/on_diona_digest(mob/living/M, multiplier)
 	..()
-	M.adjustBruteLoss(-REM * multiplier)
-	M.adjustOxyLoss(-REM * multiplier)
-	M.adjustToxLoss(-REM * multiplier)
-	M.adjustFireLoss(-REM * multiplier)
-	M.nutrition += REM * multiplier
+	M.adjustBruteLoss(-REAGENTS_EFFECT_MULTIPLIER * multiplier)
+	M.adjustOxyLoss(-REAGENTS_EFFECT_MULTIPLIER * multiplier)
+	M.adjustToxLoss(-REAGENTS_EFFECT_MULTIPLIER * multiplier)
+	M.adjustFireLoss(-REAGENTS_EFFECT_MULTIPLIER * multiplier)
+	M.nutrition += REAGENTS_EFFECT_MULTIPLIER * multiplier
 	return FALSE
 
 /datum/reagent/lithium
@@ -431,11 +431,11 @@
 
 /datum/reagent/sugar/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.nutrition += 4 * REM * multiplier
+	M.nutrition += 4 * REAGENTS_EFFECT_MULTIPLIER * multiplier
 
 /datum/reagent/sugar/on_vox_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(REAGENTS_ABSORBTION * 0.5 * multiplier)
+	M.adjustToxLoss(REAGENTS_ABSORBTION * 0.5 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 	return FALSE
 
 /datum/reagent/radium
@@ -448,7 +448,7 @@
 
 /datum/reagent/radium/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.apply_effect(2 * REM,IRRADIATE * multiplier, 0)
+	M.apply_effect(2 * multiplier * REAGENTS_EFFECT_MULTIPLIER,IRRADIATE * multiplier * REAGENTS_EFFECT_MULTIPLIER, 0)
 	// radium may increase your chances to cure a disease
 	if(iscarbon(M)) // make sure to only use it on carbon mobs
 		var/mob/living/carbon/C = M
@@ -457,12 +457,12 @@
 				var/datum/disease2/disease/V = C.virus2[ID]
 				if(prob(5))
 					if(prob(50))
-						M.radiation += 50 * multiplier // curing it that way may kill you instead
+						M.radiation += 50 * multiplier * REAGENTS_EFFECT_MULTIPLIER // curing it that way may kill you instead
 						var/mob/living/carbon/human/H
 						if(ishuman(C))
 							H = C
 						if(!H || (H.species && !H.species.flags[RAD_ABSORB]))
-							M.adjustToxLoss(100 * multiplier)
+							M.adjustToxLoss(100 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 					M:antibodies |= V.antigen
 
 /datum/reagent/radium/reaction_turf(turf/T, volume)
@@ -512,7 +512,7 @@
 
 /datum/reagent/uranium/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.apply_effect(1, IRRADIATE * multiplier, 0)
+	M.apply_effect(1, IRRADIATE * multiplier * REAGENTS_EFFECT_MULTIPLIER, 0)
 
 /datum/reagent/uranium/reaction_turf(turf/T, volume)
 	. = ..()

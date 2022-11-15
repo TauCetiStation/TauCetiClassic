@@ -9,16 +9,8 @@
 
 /datum/reagent/consumable/on_general_digest(mob/living/M, multiplier)
 	..()
-	var/to_add = rand(0, 10) / 10 * multiplier * nutriment_factor * NURTRITION_MULTIPLIER
-	M.reagents.add_reagent("nutriment", (multiplier * nutriment_factor * NURTRITION_MULTIPLIER) - to_add)
-	if(diet_flags & DIET_ALL)
-		M.reagents.add_reagent("nutriment", to_add)
-	else if(diet_flags & DIET_MEAT)
-		M.reagents.add_reagent("protein", to_add)
-	else if(diet_flags & DIET_PLANT)
-		M.reagents.add_reagent("plantmatter", to_add)
-	else if(diet_flags & DIET_DAIRY)
-		M.reagents.add_reagent("dairy", to_add)
+	var/to_add = rand(0, 10) / 10 * multiplier * nutriment_factor
+	M.reagents.add_reagent("nutriment", to_add)
 	return TRUE
 
 /datum/reagent/nutriment
@@ -37,38 +29,12 @@
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			if(C.can_eat(diet_flags))
-				C.nutrition += nutriment_factor * multiplier
+				C.nutrition += nutriment_factor * multiplier * FOOD_EFFECT_MULTIPLIER
 				if(prob(50))
-					C.adjustBruteLoss(-1 * multiplier)
+					C.adjustBruteLoss(-1 * multiplier * FOOD_EFFECT_MULTIPLIER)
 		else
 			M.nutrition += nutriment_factor * multiplier
 	return TRUE
-
-/datum/reagent/nutriment/protein // Meat-based protein, digestable by carnivores and omnivores, worthless to herbivores
-	name = "Protein"
-	id = "protein"
-	description = "Various essential proteins and fats commonly found in animal flesh and blood."
-	diet_flags = DIET_MEAT
-	taste_message = "meat"
-
-/datum/reagent/nutriment/protein/on_skrell_digest(mob/living/M, multiplier)
-	..()
-	M.adjustToxLoss(2 * FOOD_ABSORBTION * multiplier)
-	return FALSE
-
-/datum/reagent/nutriment/plantmatter // Plant-based biomatter, digestable by herbivores and omnivores, worthless to carnivores
-	name = "Plant-matter"
-	id = "plantmatter"
-	description = "Vitamin-rich fibers and natural sugars commonly found in fresh produce."
-	diet_flags = DIET_PLANT
-	taste_message = "plant matter"
-
-/datum/reagent/nutriment/dairy // Milk-based biomatter.
-	name = "dairy"
-	id = "dairy"
-	description = "A tasty substance that comes out of cows who eat lotsa grass"
-	diet_flags = DIET_DAIRY
-	taste_message = "dairy"
 
 /datum/reagent/consumable/sprinkles
 	name = "Sprinkles"
@@ -80,7 +46,7 @@
 /datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(ishuman(M) && (M.job in list("Security Officer", "Head of Security", "Detective", "Warden", "Captain")))
-		M.heal_bodypart_damage(1 * multiplier, 1 * multiplier)
+		M.heal_bodypart_damage(1 * multiplier * FOOD_EFFECT_MULTIPLIER, 1 * multiplier * FOOD_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/syndicream
 	name = "Cream filling"
@@ -91,11 +57,11 @@
 /datum/reagent/consumable/syndicream/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(ishuman(M) && M.mind && M.mind.special_role)
-		M.heal_bodypart_damage(1 * multiplier, 1 * multiplier)
+		M.heal_bodypart_damage(1 * multiplier * FOOD_EFFECT_MULTIPLIER, 1 * multiplier * FOOD_EFFECT_MULTIPLIER)
 
 /datum/reagent/nutriment/dairy/on_skrell_digest(mob/living/M, multiplier) // Is not as poisonous to skrell.
 	..()
-	M.adjustToxLoss(1 * FOOD_ABSORBTION * multiplier)
+	M.adjustToxLoss(1 * FOOD_ABSORBTION * multiplier * FOOD_EFFECT_MULTIPLIER)
 	return FALSE
 
 /datum/reagent/consumable/soysauce
@@ -106,7 +72,6 @@
 	nutriment_factor = 2
 	color = "#792300" // rgb: 121, 35, 0
 	taste_message = "salt"
-	diet_flags = DIET_MEAT
 
 /datum/reagent/consumable/ketchup
 	name = "Ketchup"
@@ -116,7 +81,6 @@
 	nutriment_factor = 5
 	color = "#731008" // rgb: 115, 16, 8
 	taste_message = "ketchup"
-	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/flour
 	name = "Flour"
@@ -126,7 +90,6 @@
 	nutriment_factor = 2
 	color = "#f5eaea" // rgb: 245, 234, 234
 	taste_message = "flour"
-	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/capsaicin
 	name = "Capsaicin Oil"
@@ -142,19 +105,19 @@
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1 to 15)
-			M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT)
+			M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier * FOOD_EFFECT_MULTIPLIER)
 			if(holder.has_reagent("frostoil"))
-				holder.remove_reagent("frostoil", 5 * multiplier)
+				holder.remove_reagent("frostoil", 5 * multiplier * FOOD_EFFECT_MULTIPLIER)
 			if(isslime(M))
-				M.adjust_bodytemperature(rand(5,20))
+				M.adjust_bodytemperature(rand(5,20) * multiplier * FOOD_EFFECT_MULTIPLIER)
 		if(15 to 25)
-			M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT)
+			M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier * FOOD_EFFECT_MULTIPLIER)
 			if(isslime(M))
-				M.adjust_bodytemperature(rand(10,20))
+				M.adjust_bodytemperature(rand(10,20) * multiplier * FOOD_EFFECT_MULTIPLIER)
 		if(25 to INFINITY)
-			M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT)
+			M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier * FOOD_EFFECT_MULTIPLIER)
 			if(isslime(M))
-				M.adjust_bodytemperature(rand(15,20))
+				M.adjust_bodytemperature(rand(15,20) * multiplier * FOOD_EFFECT_MULTIPLIER)
 	data["ticks"]++
 
 /datum/reagent/consumable/condensedcapsaicin
@@ -230,18 +193,17 @@
 	reagent_state = LIQUID
 	color = "#b31008" // rgb: 139, 166, 233
 	taste_message = "<font color='lightblue'>cold</font>"
-	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/frostoil/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(prob(1))
 		M.emote("shiver")
 	if(isslime(M))
-		M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT - rand(10, 20) * multiplier)
+		M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT - rand(10, 20) * multiplier * FOOD_EFFECT_MULTIPLIER)
 	else
-		M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier)
-	holder.remove_reagent("capsaicin", 5 * multiplier)
-	holder.remove_reagent(src.id, FOOD_ABSORBTION * multiplier)
+		M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier * FOOD_EFFECT_MULTIPLIER)
+	holder.remove_reagent("capsaicin", 5 * multiplier * FOOD_EFFECT_MULTIPLIER)
+	holder.remove_reagent(src.id, FOOD_ABSORBTION * multiplier * FOOD_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/frostoil/reaction_turf(turf/simulated/T, volume)
 	. = ..()
@@ -264,7 +226,6 @@
 	reagent_state = SOLID
 	// no color (ie, black)
 	taste_message = "pepper"
-	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/coco
 	name = "Coco Powder"
@@ -274,7 +235,6 @@
 	nutriment_factor = 10
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "cocoa"
-	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/hot_coco
 	name = "Hot Chocolate"
@@ -284,11 +244,10 @@
 	nutriment_factor = 4
 	color = "#403010" // rgb: 64, 48, 16
 	taste_message = "chocolate"
-	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/hot_coco/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier, max_temp = BODYTEMP_NORMAL)
+	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier * FOOD_EFFECT_MULTIPLIER, max_temp = BODYTEMP_NORMAL)
 
 /datum/reagent/consumable/psilocybin
 	name = "Psilocybin"
@@ -301,27 +260,27 @@
 
 /datum/reagent/consumable/psilocybin/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustDrugginess(3 * multiplier)
+	M.adjustDrugginess(3 * multiplier * FOOD_EFFECT_MULTIPLIER)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1 to 5)
-			M.Stuttering(1 * multiplier)
-			M.make_dizzy(5 * multiplier)
+			M.Stuttering(1 * multiplier * FOOD_EFFECT_MULTIPLIER)
+			M.make_dizzy(5 * multiplier * FOOD_EFFECT_MULTIPLIER)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			M.Stuttering(1 * multiplier)
-			M.make_jittery(10 * multiplier)
-			M.make_dizzy(10 * multiplier)
-			M.adjustDrugginess(3 * multiplier)
+			M.Stuttering(1 * multiplier * FOOD_EFFECT_MULTIPLIER)
+			M.make_jittery(10 * multiplier * FOOD_EFFECT_MULTIPLIER)
+			M.make_dizzy(10 * multiplier * FOOD_EFFECT_MULTIPLIER)
+			M.adjustDrugginess(3 * multiplier * FOOD_EFFECT_MULTIPLIER)
 			if(prob(20))
 				M.emote(pick("twitch","giggle"))
 		if(10 to INFINITY)
-			M.Stuttering(1 * multiplier)
-			M.make_jittery(20 * multiplier)
-			M.make_dizzy(20 * multiplier)
-			M.adjustDrugginess(4 * multiplier)
+			M.Stuttering(1 * multiplier * FOOD_EFFECT_MULTIPLIER)
+			M.make_jittery(20 * multiplier * FOOD_EFFECT_MULTIPLIER)
+			M.make_dizzy(20 * multiplier * FOOD_EFFECT_MULTIPLIER)
+			M.adjustDrugginess(4 * multiplier * FOOD_EFFECT_MULTIPLIER)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
 	data["ticks"]++
@@ -334,7 +293,6 @@
 	nutriment_factor = 40
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "oil"
-	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/cornoil/reaction_turf(turf/simulated/T, volume)
 	. = ..()
@@ -364,7 +322,7 @@
 	id = "dry_ramen"
 	description = "Space age food, since August 25, 1958. Contains dried noodles, couple tiny vegetables, and chicken flavored chemicals that boil in contact with water."
 	reagent_state = SOLID
-	nutriment_factor = 2
+	nutriment_factor = 1
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "dry ramen coated with what might just be your tears"
 
@@ -373,26 +331,26 @@
 	id = "hot_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 5
+	nutriment_factor = 3
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "ramen"
 
 /datum/reagent/consumable/hot_ramen/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier, max_temp = BODYTEMP_NORMAL)
+	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier * FOOD_EFFECT_MULTIPLIER, max_temp = BODYTEMP_NORMAL)
 
 /datum/reagent/consumable/hell_ramen
 	name = "Spicy Ramen"
 	id = "hell_ramen"
 	description = "Space age food, since August 25, 1958. Contains dried noodles, couple tiny vegetables, and spicy flavored chemicals that boil in contact with water."
 	reagent_state = LIQUID
-	nutriment_factor = 5
+	nutriment_factor = 3
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "dry ramen with SPICY flavor"
 
 /datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier, max_temp = BODYTEMP_NORMAL + 40)
+	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier * FOOD_EFFECT_MULTIPLIER, max_temp = BODYTEMP_NORMAL + 40)
 
 /datum/reagent/consumable/hot_hell_ramen
 	name = "Hot Spicy Ramen"
@@ -405,7 +363,7 @@
 
 /datum/reagent/consumable/hot_hell_ramen/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier, max_temp = BODYTEMP_NORMAL + 40)
+	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier * FOOD_EFFECT_MULTIPLIER, max_temp = BODYTEMP_NORMAL + 40)
 
 /datum/reagent/consumable/rice
 	name = "Rice"
@@ -415,7 +373,6 @@
 	nutriment_factor = 8
 	color = "#ffffff" // rgb: 0, 0, 0
 	taste_message = "rice"
-	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
@@ -425,7 +382,6 @@
 	nutriment_factor = 8
 	color = "#801e28" // rgb: 128, 30, 40
 	taste_message = "cherry jelly"
-	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/egg
 	name = "Egg"
@@ -435,7 +391,6 @@
 	nutriment_factor = 4
 	color = "#f0c814"
 	taste_message = "eggs"
-	diet_flags = DIET_MEAT
 
 /datum/reagent/consumable/cheese
 	name = "Cheese"
@@ -445,7 +400,6 @@
 	nutriment_factor = 4
 	color = "#ffff00"
 	taste_message = "cheese"
-	diet_flags = DIET_DAIRY
 
 /datum/reagent/consumable/beans
 	name = "Refried beans"
@@ -455,7 +409,6 @@
 	nutriment_factor = 4
 	color = "#684435"
 	taste_message = "burritos"
-	diet_flags = DIET_MEAT
 
 /datum/reagent/consumable/bread
 	name = "Bread"
@@ -465,4 +418,3 @@
 	nutriment_factor = 4
 	color = "#9c5013"
 	taste_message = "bread"
-	diet_flags = DIET_PLANT

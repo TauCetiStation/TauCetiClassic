@@ -273,7 +273,7 @@
 	name = "Dosi Ramen"
 	desc = "Just add 10ml water, self heats! Most cheapest and popular noodle in space. Classic ramen with chicken flavor." // Now this is a reference not to original ramen.
 	icon_state = "ramen"
-	list_reagents = list("dry_ramen" = 30)
+	list_reagents = list("dry_ramen" = 10)
 	flags = 0 // Default - closed container
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen/update_icon()
@@ -308,7 +308,7 @@
 	name = "Dosi Ramen (Spicy)"
 	desc = "Just add 10ml water, self heats! Unathi's favorite noodle with spicy flavor. DANGER: VERY SPICY! NOT TAJARAN FRIENDLY!"
 	icon_state = "ramen_spicy"
-	list_reagents = list("hell_ramen" = 30)
+	list_reagents = list("hell_ramen" = 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup
 	name = "Paper Cup"

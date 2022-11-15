@@ -164,16 +164,21 @@
 #define DRUNKENNESS_BLUR 400
 #define DRUNKENNESS_PASS_OUT 600
 
+#define REAGENTS_OVERDOSE 30
+
 // How many units of reagent are consumed per tick, by default.
+#define CARBON_ABSORBTION 100
 #define TOXINS_ABSORBTION 10
 #define REAGENTS_ABSORBTION 1
 #define FOOD_ABSORBTION 0.1
 #define DRINK_ABSORBTION 0.01
-#define NURTRITION_MULTIPLIER 0.1
 
 // By defining the effect multiplier this way, it'll exactly adjust
 // all effects according to how they originally were with the 0.4 metabolism
-#define REAGENTS_EFFECT_MULTIPLIER REAGENTS_ABSORBTION / 0.4
+#define TOXINS_EFFECT_MULTIPLIER 0.5
+#define REAGENTS_EFFECT_MULTIPLIER 1
+#define FOOD_EFFECT_MULTIPLIER 1.5
+#define DRINK_EFFECT_MULTIPLIER 2
 
 // Factor of how fast mob nutrition decreases
 #define METABOLISM_FACTOR 1 // standart (for humans, other)

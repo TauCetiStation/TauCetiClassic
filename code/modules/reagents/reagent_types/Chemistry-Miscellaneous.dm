@@ -26,7 +26,7 @@
 
 /datum/reagent/blood/on_diona_digest(mob/living/M, multiplier)
 	..() // Should be put in these procs, in case a xeno of sorts has a reaction to ALL reagents.
-	M.adjustCloneLoss(-REM * multiplier)
+	M.adjustCloneLoss(-REAGENTS_EFFECT_MULTIPLIER * multiplier)
 	return FALSE // Returning false would mean that generic digestion proc won't be used.
 
 /datum/reagent/blood/reaction_turf(turf/simulated/T, volume)//splash the blood all over the place
@@ -92,7 +92,7 @@
 /datum/reagent/plasticide/on_general_digest(mob/living/M, multiplier)
 	..()
 	// Toxins are really weak, but without being treated, last very long.
-	M.adjustToxLoss(0.2 * multiplier)
+	M.adjustToxLoss(0.2 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 
 /datum/reagent/glycerol
 	name = "Glycerol"
@@ -129,7 +129,7 @@
 
 /datum/reagent/thermite/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustFireLoss(1 * multiplier)
+	M.adjustFireLoss(1 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 
 /datum/reagent/virus_food
 	name = "Virus Food"
@@ -141,11 +141,11 @@
 
 /datum/reagent/virus_food/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.nutrition += nutriment_factor * REM * multiplier
+	M.nutrition += nutriment_factor * REAGENTS_EFFECT_MULTIPLIER * multiplier
 
 /datum/reagent/virus_vood/on_skrell_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(2 * REM * multiplier)
+	M.adjustToxLoss(2 * REAGENTS_EFFECT_MULTIPLIER * multiplier)
 	return FALSE
 
 /datum/reagent/fuel
@@ -169,7 +169,7 @@
 
 /datum/reagent/fuel/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(1 * multiplier)
+	M.adjustToxLoss(1 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 
 /datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with welding fuel to make them easy to ignite!
 	if(!isliving(M))
@@ -188,7 +188,7 @@
 
 /datum/reagent/space_cleaner/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(0.2 * multiplier)
+	M.adjustToxLoss(0.2 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 
 	if(prob(10))
 		M.emote("hiccup")
@@ -339,7 +339,7 @@
 
 /datum/reagent/diethylamine/on_diona_digest(mob/living/M, multiplier)
 	..()
-	M.nutrition += 2 * REM * multiplier
+	M.nutrition += 2 * REAGENTS_EFFECT_MULTIPLIER * multiplier
 	return FALSE
 
 /datum/reagent/diethylamine/reaction_mob(mob/M, method = TOUCH, volume)
@@ -395,7 +395,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.invoke_vomit_async()
-		H.apply_effect(1 * multiplier,IRRADIATE,0)
+		H.apply_effect(1 * multiplier * REAGENTS_EFFECT_MULTIPLIER,IRRADIATE,0)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// Nanobots /////////////////////////////////////////////////
@@ -446,38 +446,38 @@
 					H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
 				if(H.getOxyLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.1))
-						H.adjustOxyLoss(-4 * multiplier)
-						holder.remove_reagent(id, 0.1 * multiplier)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
+						H.adjustOxyLoss(-4 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+						holder.remove_reagent(id, 0.1 * multiplier * REAGENTS_EFFECT_MULTIPLIER)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
 
 				if(H.getBruteLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.125))
-						H.heal_bodypart_damage(5 * multiplier, 0)
-						holder.remove_reagent(id, 0.125 * multiplier)
+						H.heal_bodypart_damage(5 * multiplier * REAGENTS_EFFECT_MULTIPLIER, 0)
+						holder.remove_reagent(id, 0.125 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 
 				if(H.getFireLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.125))
-						H.heal_bodypart_damage(0, 5 * multiplier)
-						holder.remove_reagent(id, 0.125 * multiplier)
+						H.heal_bodypart_damage(0, 5 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+						holder.remove_reagent(id, 0.125 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 
 				if(H.getToxLoss() > 0 && prob(50))
 					if(holder && holder.has_reagent(id, 0.05))
-						H.adjustToxLoss(-2 * multiplier)
-						holder.remove_reagent(id, 0.05 * multiplier)
+						H.adjustToxLoss(-2 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+						holder.remove_reagent(id, 0.05 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 
 				if(H.getCloneLoss() > 0 && prob(60))
 					if(holder && holder.has_reagent(id, 0.05))
-						H.adjustCloneLoss(-2 * multiplier)
-						holder.remove_reagent(id, 0.05 * multiplier)
+						H.adjustCloneLoss(-2 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+						holder.remove_reagent(id, 0.05 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 
 				if(percent_machine > 5)
 					if(holder && holder.has_reagent(id))
-						percent_machine -= 1 * multiplier
+						percent_machine -= 1 * multiplier * REAGENTS_EFFECT_MULTIPLIER
 						if(prob(20))
 							to_chat(M, pick("You feel more like yourself again."))
 				if(H.dizziness != 0)
-					H.dizziness = max(0, H.dizziness - 15 * multiplier)
+					H.dizziness = max(0, H.dizziness - 15 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 				if(H.confused != 0)
-					H.AdjustConfused(-5 * multiplier)
+					H.AdjustConfused(-5 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
@@ -493,48 +493,48 @@
 					H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
 				if(H.getOxyLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.1))
-						H.adjustOxyLoss(-4 * multiplier)
-						holder.remove_reagent(id, 0.1 * multiplier)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
-						percent_machine += 0.5 * multiplier
+						H.adjustOxyLoss(-4 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+						holder.remove_reagent(id, 0.1 * multiplier * REAGENTS_EFFECT_MULTIPLIER)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
+						percent_machine += 0.5 * multiplier * REAGENTS_EFFECT_MULTIPLIER
 						if(prob(20))
 							to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
 
 				if(H.getBruteLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.125))
-						H.heal_bodypart_damage(5 * multiplier, 0)
-						holder.remove_reagent(id, 0.125 * multiplier)
-						percent_machine += 0.5 * multiplier
+						H.heal_bodypart_damage(5 * multiplier * REAGENTS_EFFECT_MULTIPLIER, 0)
+						holder.remove_reagent(id, 0.125 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+						percent_machine += 0.5 * multiplier * REAGENTS_EFFECT_MULTIPLIER
 						if(prob(20))
 							to_chat(M, pick("<span class='warning'> Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
 
 				if(H.getFireLoss() > 0 && prob(90))
 					if(holder && holder.has_reagent(id, 0.125))
-						H.heal_bodypart_damage(0, 5 * multiplier)
-						holder.remove_reagent(id, 0.125 * multiplier)
-						percent_machine += 0.5 * multiplier
+						H.heal_bodypart_damage(0, 5 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+						holder.remove_reagent(id, 0.125 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+						percent_machine += 0.5 * multiplier * REAGENTS_EFFECT_MULTIPLIER
 						if(prob(20))
 							to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
 
 				if(H.getToxLoss() > 0 && prob(50))
 					if(holder && holder.has_reagent(id, 0.05))
-						H.adjustToxLoss(-2 * multiplier)
-						holder.remove_reagent(id, 0.05 * multiplier)
-						percent_machine += 0.5 * multiplier
+						H.adjustToxLoss(-2 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+						holder.remove_reagent(id, 0.05 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+						percent_machine += 0.5 * multiplier * REAGENTS_EFFECT_MULTIPLIER
 						if(prob(20))
 							to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
 
 				if(H.getCloneLoss() > 0 && prob(60))
 					if(holder && holder.has_reagent(id, 0.05))
-						H.adjustCloneLoss(-2 * multiplier)
-						holder.remove_reagent(id, 0.05 * multiplier)
-						percent_machine += 0.5 * multiplier
+						H.adjustCloneLoss(-2 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+						holder.remove_reagent(id, 0.05 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+						percent_machine += 0.5 * multiplier * REAGENTS_EFFECT_MULTIPLIER
 						if(prob(20))
 							to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
 
 				if(H.dizziness != 0)
-					H.dizziness = max(0, H.dizziness - 15 * multiplier)
+					H.dizziness = max(0, H.dizziness - 15 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 				if(H.confused != 0)
-					H.AdjustConfused(-5 * multiplier)
+					H.AdjustConfused(-5 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 				if(holder && holder.has_reagent(id))
 					for(var/ID in H.virus2)
 						var/datum/disease2/disease/D = H.virus2[ID]
@@ -543,7 +543,7 @@
 						if(D.stage < 1 && prob(data["ticks"] / 4))
 							D.cure(H)
 				if(holder && prob(percent_machine))
-					holder.add_reagent(id, 20 * multiplier)
+					holder.add_reagent(id, 20 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 					to_chat(M, pick("<b><span class='warning'>Your body lurches!</b></span>"))
 				data["ticks"] += 2
 			if(20 to INFINITY)
@@ -865,36 +865,36 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 	M.make_jittery(2 * multiplier)
 	switch(data["ticks"])
 		if(1 to 15)
-			M.make_jittery(2 * multiplier)
-			M.hallucination = max(M.hallucination, 3)
+			M.make_jittery(2 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+			M.hallucination = max(M.hallucination, 3 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 			if(prob(1))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
-				M.Sleeping(10 * multiplier) // Seeing ghosts ain't an easy thing for your mind.
+				M.Sleeping(10 * multiplier * REAGENTS_EFFECT_MULTIPLIER) // Seeing ghosts ain't an easy thing for your mind.
 		if(15 to 45)
-			M.make_jittery(4 * multiplier)
-			M.adjustDrugginess(1 * multiplier)
-			M.hallucination = max(M.hallucination, 10)
+			M.make_jittery(4 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+			M.adjustDrugginess(1 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+			M.hallucination = max(M.hallucination, 10 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 			if(prob(5))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
-				M.Sleeping(10 * multiplier)
+				M.Sleeping(10 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 		if(45 to 90)
-			M.make_jittery(8 * multiplier)
-			M.adjustDrugginess(3 * multiplier)
-			M.hallucination = max(M.hallucination, 60)
+			M.make_jittery(8 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+			M.adjustDrugginess(3 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+			M.hallucination = max(M.hallucination, 60 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 			if(prob(10))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
-				M.Sleeping(10 * multiplier)
+				M.Sleeping(10 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 		if(90 to 180)
-			M.make_jittery(8 * multiplier)
-			M.adjustDrugginess(3 * multiplier)
-			M.hallucination = max(M.hallucination, 60)
+			M.make_jittery(8 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+			M.adjustDrugginess(3 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+			M.hallucination = max(M.hallucination, 60 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 			if(prob(10))
 				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
-				M.Sleeping(10 * multiplier)
+				M.Sleeping(10 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 			if(prob(5))
-				M.adjustBrainLoss(5 * multiplier)
+				M.adjustBrainLoss(5 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 		if(180 to INFINITY)
-			M.adjustBrainLoss(100 * multiplier)
+			M.adjustBrainLoss(100 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 	data["ticks"]++
 
 /datum/reagent/aqueous_foam
@@ -915,5 +915,5 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 
 /datum/reagent/aqueous_foam/on_slime_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(REM * multiplier)
+	M.adjustToxLoss(REAGENTS_EFFECT_MULTIPLIER * multiplier)
 	return FALSE

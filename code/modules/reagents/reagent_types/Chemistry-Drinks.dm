@@ -14,13 +14,13 @@
 /datum/reagent/consumable/drink/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(adj_dizzy)
-		M.dizziness = max(0,(M.dizziness + adj_dizzy * multiplier))
+		M.dizziness = max(0,(M.dizziness + adj_dizzy * multiplier * DRINK_EFFECT_MULTIPLIER))
 	if(adj_drowsy)
-		M.drowsyness = max(0,(M.drowsyness + adj_drowsy * multiplier))
+		M.drowsyness = max(0,(M.drowsyness + adj_drowsy * multiplier * DRINK_EFFECT_MULTIPLIER))
 	if(adj_sleepy)
-		M.AdjustSleeping(adj_sleepy * multiplier)
+		M.AdjustSleeping(adj_sleepy * multiplier * DRINK_EFFECT_MULTIPLIER)
 	if(adj_temp)
-		M.adjust_bodytemperature(adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+		M.adjust_bodytemperature(adj_temp * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier * DRINK_EFFECT_MULTIPLIER, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
 
 /datum/reagent/consumable/drink/orangejuice
 	name = "Orange juice"
@@ -32,7 +32,7 @@
 /datum/reagent/consumable/drink/orangejuice/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(M.getOxyLoss() && prob(30))
-		M.adjustOxyLoss(-1 * multiplier)
+		M.adjustOxyLoss(-1 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/drink/tomatojuice
 	name = "Tomato Juice"
@@ -44,7 +44,7 @@
 /datum/reagent/consumable/drink/tomatojuice/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(M.getFireLoss() && prob(20))
-		M.heal_bodypart_damage(0, 1 * multiplier)
+		M.heal_bodypart_damage(0, 1 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/drink/limejuice
 	name = "Lime Juice"
@@ -56,7 +56,7 @@
 /datum/reagent/consumable/drink/limejuice/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(M.getToxLoss() && prob(20))
-		M.adjustToxLoss(-1 * REM * multiplier)
+		M.adjustToxLoss(-1 * REAGENTS_EFFECT_MULTIPLIER * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/drink/carrotjuice
 	name = "Carrot juice"
@@ -68,7 +68,7 @@
 /datum/reagent/consumable/drink/carrotjuice/on_general_digest(mob/living/M, multiplier)
 	..()
 	M.adjustBlurriness(-1)
-	M.eye_blind = max(M.eye_blind - 1 * multiplier, 0)
+	M.eye_blind = max(M.eye_blind - 1 * multiplier * DRINK_EFFECT_MULTIPLIER, 0)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	switch(data["ticks"])
@@ -110,7 +110,7 @@
 
 /datum/reagent/consumable/drink/poisonberryjuice/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustToxLoss(1 * multiplier)
+	M.adjustToxLoss(1 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/drink/watermelonjuice
 	name = "Watermelon Juice"
@@ -159,12 +159,12 @@
 	..()
 
 	if(M.IsSleeping())
-		M.AdjustDrunkenness(-1 * multiplier)
+		M.AdjustDrunkenness(-1 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 	if(M.getBruteLoss() && prob(20))
-		M.heal_bodypart_damage(1 * multiplier, 0)
+		M.heal_bodypart_damage(1 * multiplier * DRINK_EFFECT_MULTIPLIER, 0)
 	if(holder.has_reagent("capsaicin"))
-		holder.remove_reagent("capsaicin", 10 * REAGENTS_ABSORBTION * multiplier)
+		holder.remove_reagent("capsaicin", 10 * REAGENTS_ABSORBTION * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/drink/milk/soymilk
 	name = "Soy Milk"
@@ -212,17 +212,17 @@
 /datum/reagent/consumable/drink/coffee/on_general_digest(mob/living/M, multiplier)
 	..()
 
-	M.AdjustDrunkenness(-1 * multiplier)
+	M.AdjustDrunkenness(-1 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	if(M.IsSleeping())
-		M.AdjustDrunkenness(-2 * multiplier)
+		M.AdjustDrunkenness(-2 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
-	M.make_jittery(5 * multiplier)
+	M.make_jittery(5 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	if(adj_temp > 0 && holder.has_reagent("frostoil"))
-		holder.remove_reagent("frostoil", 10 * REAGENTS_ABSORBTION * multiplier)
+		holder.remove_reagent("frostoil", 10 * REAGENTS_ABSORBTION * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.metabolism_factor.AddModifier("Coffee", base_additive = 1 * multiplier)
+		H.metabolism_factor.AddModifier("Coffee", base_additive = 1 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/drink/coffe/on_last_digest(mob/living/M, multiplier)
 	if(ishuman(M))
@@ -249,7 +249,7 @@
 	..()
 	M.SetSleeping(0)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_bodypart_damage(1 * multiplier, 0)
+		M.heal_bodypart_damage(1 * multiplier * DRINK_EFFECT_MULTIPLIER, 0)
 
 /datum/reagent/consumable/drink/coffee/cafe_latte
 	name = "Cafe Latte"
@@ -264,7 +264,7 @@
 	..()
 	M.SetSleeping(0)
 	if(M.getBruteLoss() && prob(20))
-		M.heal_bodypart_damage(1 * multiplier, 0)
+		M.heal_bodypart_damage(1 * multiplier * DRINK_EFFECT_MULTIPLIER, 0)
 
 /datum/reagent/consumable/drink/tea
 	name = "Tea"
@@ -280,7 +280,7 @@
 /datum/reagent/consumable/drink/tea/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(M.getToxLoss() && prob(20))
-		M.adjustToxLoss(-1 * multiplier)
+		M.adjustToxLoss(-1 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/drink/tea/icetea
 	name = "Iced Tea"
@@ -337,9 +337,9 @@
 
 /datum/reagent/consumable/drink/cold/nuka_cola/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.make_jittery(20 * multiplier)
-	M.adjustDrugginess(3 * multiplier)
-	M.dizziness += 5 * multiplier
+	M.make_jittery(20 * multiplier * DRINK_EFFECT_MULTIPLIER)
+	M.adjustDrugginess(3 * multiplier * DRINK_EFFECT_MULTIPLIER)
+	M.dizziness += 5 * multiplier * DRINK_EFFECT_MULTIPLIER
 	M.drowsyness = 0
 
 /datum/reagent/consumable/drink/cold/spacemountainwind
@@ -412,17 +412,17 @@
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1 to 15)
-			M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT)
+			M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier * DRINK_EFFECT_MULTIPLIER)
 			if(holder.has_reagent("capsaicin"))
-				holder.remove_reagent("capsaicin", 5 * multiplier)
+				holder.remove_reagent("capsaicin", 5 * multiplier * DRINK_EFFECT_MULTIPLIER)
 			if(isslime(M))
 				M.adjust_bodytemperature(-rand(5,20))
 		if(15 to 25)
-			M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT)
+			M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier * DRINK_EFFECT_MULTIPLIER)
 			if(isslime(M))
 				M.adjust_bodytemperature(-rand(10,20))
 		if(25 to INFINITY)
-			M.adjust_bodytemperature(-15 * TEMPERATURE_DAMAGE_COEFFICIENT)
+			M.adjust_bodytemperature(-15 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier * DRINK_EFFECT_MULTIPLIER)
 			if(prob(1))
 				M.emote("shiver")
 			if(isslime(M))
@@ -454,7 +454,7 @@
 
 /datum/reagent/consumable/drink/cold/rewriter/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.make_jittery(5 * multiplier)
+	M.make_jittery(5 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/drink/cold/kvass
 	name = "Kvass"
@@ -478,17 +478,17 @@
 /datum/reagent/consumable/doctor_delight/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(M.getOxyLoss() && prob(50))
-		M.adjustOxyLoss(-2 * multiplier)
+		M.adjustOxyLoss(-2 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	if(M.getBruteLoss() && prob(60))
-		M.heal_bodypart_damage(2 * multiplier, 0)
+		M.heal_bodypart_damage(2 * multiplier * DRINK_EFFECT_MULTIPLIER, 0)
 	if(M.getFireLoss() && prob(50))
-		M.heal_bodypart_damage(0, 2 * multiplier)
+		M.heal_bodypart_damage(0, 2 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	if(M.getToxLoss() && prob(50))
-		M.adjustToxLoss(-2 * multiplier)
+		M.adjustToxLoss(-2 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	if(M.dizziness !=0)
-		M.dizziness = max(0, (M.dizziness - 15) * multiplier)
+		M.dizziness = max(0, (M.dizziness - 15) * multiplier * DRINK_EFFECT_MULTIPLIER)
 	if(M.confused !=0)
-		M.AdjustConfused(-5 * multiplier)
+		M.AdjustConfused(-5 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/honey
 	name = "Honey"
@@ -505,13 +505,13 @@
 		var/mob/living/carbon/human/H = M
 		if(!holder)
 			return
-		H.nutrition += 15 * multiplier
+		H.nutrition += 15 * multiplier * DRINK_EFFECT_MULTIPLIER
 		if(H.getBruteLoss() && prob(60))
-			M.heal_bodypart_damage(2 * multiplier, 0)
+			M.heal_bodypart_damage(2 * multiplier * DRINK_EFFECT_MULTIPLIER, 0)
 		if(H.getFireLoss() && prob(50))
-			M.heal_bodypart_damage(0, 2 * multiplier)
+			M.heal_bodypart_damage(0, 2 * multiplier * DRINK_EFFECT_MULTIPLIER)
 		if(H.getToxLoss() && prob(50))
-			H.adjustToxLoss(-2 * multiplier)
+			H.adjustToxLoss(-2 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 
@@ -526,20 +526,20 @@
 
 /datum/reagent/consumable/atomicbomb/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustDrugginess(5 * multiplier)
+	M.adjustDrugginess(5 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
-		M.AdjustConfused(2 * multiplier)
-		M.make_dizzy(10 * multiplier)
-	M.AdjustStuttering(4 * multiplier)
+		M.AdjustConfused(2 * multiplier * DRINK_EFFECT_MULTIPLIER)
+		M.make_dizzy(10 * multiplier * DRINK_EFFECT_MULTIPLIER)
+	M.AdjustStuttering(4 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
 	switch(data["ticks"])
 		if(51 to 200)
-			M.SetSleeping(20 SECONDS)
+			M.SetSleeping((20 SECONDS * multiplier * DRINK_EFFECT_MULTIPLIER) SECONDS)
 		if(201 to INFINITY)
-			M.SetSleeping(20 SECONDS)
-			M.adjustToxLoss(2 * multiplier)
+			M.SetSleeping((20 * multiplier * DRINK_EFFECT_MULTIPLIER) SECONDS)
+			M.adjustToxLoss(2 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/gargle_blaster
 	name = "Pan-Galactic Gargle Blaster"
@@ -555,15 +555,15 @@
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
-	M.dizziness += 6 * multiplier
+	M.dizziness += 6 * multiplier * DRINK_EFFECT_MULTIPLIER
 	if(data["ticks"] >= 15 && data["ticks"] < 45)
-		M.AdjustStuttering(4 * multiplier)
+		M.AdjustStuttering(4 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] < 55)
-		M.AdjustConfused(3 * multiplier)
+		M.AdjustConfused(3 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	else if(data["ticks"] >=55)
-		M.adjustDrugginess(5 * multiplier)
+		M.adjustDrugginess(5 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	else if(data["ticks"] >=200)
-		M.adjustToxLoss(2 * multiplier)
+		M.adjustToxLoss(2 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/neurotoxin
 	name = "Neurotoxin"
@@ -580,15 +580,15 @@
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
-	M.dizziness += 6 * multiplier
+	M.dizziness += 6 * multiplier * DRINK_EFFECT_MULTIPLIER
 	if(data["ticks"] >= 15 && data["ticks"] < 45)
-		M.AdjustStuttering(4 * multiplier)
+		M.AdjustStuttering(4 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] <55)
-		M.AdjustConfused(3 * multiplier)
+		M.AdjustConfused(3 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	else if(data["ticks"] >=55)
-		M.adjustDrugginess(5 * multiplier)
+		M.adjustDrugginess(5 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	else if(data["ticks"] >=200)
-		M.adjustToxLoss(2 * multiplier)
+		M.adjustToxLoss(2 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/hippies_delight
 	name = "Hippies' Delight"
@@ -602,39 +602,39 @@
 
 /datum/reagent/consumable/hippies_delight/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustDrugginess(5 * multiplier)
+	M.adjustDrugginess(5 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1 to 5)
-			M.Stuttering(1 * multiplier)
-			M.make_dizzy(10 * multiplier)
+			M.Stuttering(1 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.make_dizzy(10 * multiplier * DRINK_EFFECT_MULTIPLIER)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			M.Stuttering(1 * multiplier)
-			M.make_jittery(20 * multiplier)
-			M.make_dizzy(20 * multiplier)
-			M.adjustDrugginess(4 * multiplier)
+			M.Stuttering(1 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.make_jittery(20 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.make_dizzy(20 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.adjustDrugginess(4 * multiplier * DRINK_EFFECT_MULTIPLIER)
 			if(prob(20))
 				M.emote(pick("twitch","giggle"))
 		if(10 to 200)
-			M.Stuttering(1 * multiplier)
-			M.make_jittery(40 * multiplier)
-			M.make_dizzy(40 * multiplier)
-			M.adjustDrugginess(6 * multiplier)
+			M.Stuttering(1 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.make_jittery(40 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.make_dizzy(40 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.adjustDrugginess(6 * multiplier * DRINK_EFFECT_MULTIPLIER)
 			if(prob(30))
 				M.emote(pick("twitch","giggle"))
 		if(200 to INFINITY)
-			M.Stuttering(1 * multiplier)
-			M.make_jittery(60 * multiplier)
-			M.make_dizzy(60 * multiplier)
-			M.adjustDrugginess(7 * multiplier)
+			M.Stuttering(1 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.make_jittery(60 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.make_dizzy(60 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.adjustDrugginess(7 * multiplier * DRINK_EFFECT_MULTIPLIER)
 			if(prob(40))
 				M.emote(pick("twitch","giggle"))
 			if(prob(30))
-				M.adjustToxLoss(2 * multiplier)
+				M.adjustToxLoss(2 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/lean
 	name = "Lean"
@@ -649,13 +649,13 @@
 
 /datum/reagent/consumable/lean/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustDrugginess(5 * multiplier)
+	M.adjustDrugginess(5 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	if(!M.stuttering)
-		M.stuttering = 1 * multiplier
+		M.stuttering = 1 * multiplier * DRINK_EFFECT_MULTIPLIER
 	if(volume >= overdose)
 		if(M.losebreath <= 3)
-			M.losebreath = max(0, (M.losebreath + 3 * multiplier))
-			M.adjustOxyLoss(1 * multiplier)
+			M.losebreath = max(0, (M.losebreath + 3 * multiplier * DRINK_EFFECT_MULTIPLIER))
+			M.adjustOxyLoss(1 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /*boozepwr chart
 1-2 = non-toxic alcohol
@@ -690,8 +690,8 @@
 	if(!..())
 		return
 
-	M.drowsyness = max(0, M.drowsyness + adj_drowsy * multiplier)
-	M.SetSleeping(adj_sleepy)
+	M.drowsyness = max(0, M.drowsyness + adj_drowsy * multiplier * DRINK_EFFECT_MULTIPLIER)
+	M.SetSleeping(adj_sleepy * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 	var/drunkpwr = boozepwr
 
@@ -701,11 +701,11 @@
 	if(HAS_TRAIT(M, TRAIT_LIGHT_DRINKER))
 		drunkpwr *= 2
 
-	M.AdjustDrunkenness(drunkpwr * multiplier)
+	M.AdjustDrunkenness(drunkpwr * multiplier * DRINK_EFFECT_MULTIPLIER)
 
-	M.dizziness += dizzy_adj
-	M.slurring += slurr_adj
-	M.AdjustConfused(confused_adj * multiplier)
+	M.dizziness += dizzy_adj * multiplier * DRINK_EFFECT_MULTIPLIER
+	M.slurring += slurr_adj * multiplier * DRINK_EFFECT_MULTIPLIER
+	M.AdjustConfused(confused_adj * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 	return TRUE
 
@@ -748,9 +748,9 @@
 
 /datum/reagent/consumable/ethanol/beer/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.jitteriness = max(M.jitteriness - 3 * multiplier,0)
+	M.jitteriness = max(M.jitteriness - 3 * multiplier * DRINK_EFFECT_MULTIPLIER,0)
 	if(HAS_TRAIT(M, TRAIT_DWARF))
-		M.heal_bodypart_damage(1 * multiplier, 1 * multiplier)
+		M.heal_bodypart_damage(1 * multiplier, 1 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/ethanol/kahlua
 	name = "Kahlua"
@@ -764,7 +764,7 @@
 
 /datum/reagent/consumable/ethanol/kahlua/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.make_jittery(5 * multiplier)
+	M.make_jittery(5 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/ethanol/whiskey
 	name = "Whiskey"
@@ -794,10 +794,10 @@
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.drowsyness = max(0, M.drowsyness - 7 * multiplier)
-	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier, min_temp = BODYTEMP_NORMAL)
+	M.drowsyness = max(0, M.drowsyness - 7 * multiplier * DRINK_EFFECT_MULTIPLIER)
+	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier * DRINK_EFFECT_MULTIPLIER, min_temp = BODYTEMP_NORMAL)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
-		M.make_jittery(5 * multiplier)
+		M.make_jittery(5 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/ethanol/vodka
 	name = "Vodka"
@@ -808,7 +808,7 @@
 
 /datum/reagent/consumable/ethanol/vodka/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.radiation = max(M.radiation - 1 * multiplier,0)
+	M.radiation = max(M.radiation - 1 * multiplier * DRINK_EFFECT_MULTIPLIER,0)
 
 /datum/reagent/consumable/ethanol/bilk
 	name = "Bilk"
@@ -829,7 +829,7 @@
 
 /datum/reagent/consumable/ethanol/threemileisland/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustDrugginess(5 * multiplier)
+	M.adjustDrugginess(5 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/ethanol/gin
 	name = "Gin"
@@ -913,7 +913,7 @@
 /datum/reagent/consumable/ethanol/ale/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(HAS_TRAIT(M, TRAIT_DWARF))
-		M.heal_bodypart_damage(1 * multiplier, 1 * multiplier)
+		M.heal_bodypart_damage(1 * multiplier * DRINK_EFFECT_MULTIPLIER, 1 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/ethanol/absinthe
 	name = "Absinthe"
@@ -938,56 +938,56 @@
 
 /datum/reagent/consumable/ethanol/pwine/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustDrugginess(5 * multiplier)
+	M.adjustDrugginess(5 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1 to 25)
-			M.Stuttering(1 * multiplier)
-			M.make_dizzy(1 * multiplier)
-			M.hallucination = max(M.hallucination, 3)
+			M.Stuttering(1 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.make_dizzy(1 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.hallucination = max(M.hallucination, 3 * multiplier * DRINK_EFFECT_MULTIPLIER)
 			if(prob(1))
 				M.emote(pick("twitch","giggle"))
 		if(25 to 75)
-			M.Stuttering(1 * multiplier)
-			M.hallucination = max(M.hallucination, 10)
-			M.make_jittery(2 * multiplier)
-			M.make_dizzy(2 * multiplier)
-			M.adjustDrugginess(4 * multiplier)
+			M.Stuttering(1 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.hallucination = max(M.hallucination, 10 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.make_jittery(2 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.make_dizzy(2 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.adjustDrugginess(4 * multiplier * DRINK_EFFECT_MULTIPLIER)
 			if(prob(5))
 				M.emote(pick("twitch","giggle"))
 		if(75 to 150)
-			M.Stuttering(1 * multiplier)
-			M.hallucination = max(M.hallucination, 60)
-			M.make_jittery(4 * multiplier)
-			M.make_dizzy(4 * multiplier)
-			M.adjustDrugginess(6 * multiplier)
+			M.Stuttering(1 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.hallucination = max(M.hallucination, 60 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.make_jittery(4 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.make_dizzy(4 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.adjustDrugginess(6 * multiplier * DRINK_EFFECT_MULTIPLIER)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 			if(prob(30))
-				M.adjustToxLoss(2 * multiplier)
+				M.adjustToxLoss(2 * multiplier * DRINK_EFFECT_MULTIPLIER)
 		if(150 to 300)
-			M.Stuttering(1 * multiplier)
-			M.hallucination = max(M.hallucination, 60)
-			M.make_jittery(4 * multiplier)
-			M.make_dizzy(4 * multiplier)
-			M.adjustDrugginess(6 * multiplier)
+			M.Stuttering(1 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.hallucination = max(M.hallucination, 60 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.make_jittery(4 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.make_dizzy(4 * multiplier * DRINK_EFFECT_MULTIPLIER)
+			M.adjustDrugginess(6 * multiplier * DRINK_EFFECT_MULTIPLIER)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 			if(prob(30))
-				M.adjustToxLoss(2 * multiplier)
+				M.adjustToxLoss(2 * multiplier * DRINK_EFFECT_MULTIPLIER)
 			if(prob(5) && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 				if(istype(IO))
-					IO.take_damage(5 * multiplier, 0)
+					IO.take_damage(5 * multiplier * DRINK_EFFECT_MULTIPLIER, 0)
 		if(300 to INFINITY)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 				if(istype(IO))
-					IO.take_damage(100 * multiplier, 0)
+					IO.take_damage(100 * multiplier * DRINK_EFFECT_MULTIPLIER, 0)
 
 /datum/reagent/consumable/ethanol/deadrum
 	name = "Deadrum"
@@ -1000,7 +1000,7 @@
 /datum/reagent/consumable/ethanol/deadrum/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
-		M.dizziness += 5 * multiplier
+		M.dizziness += 5 * multiplier * DRINK_EFFECT_MULTIPLIER
 
 /datum/reagent/consumable/ethanol/sake
 	name = "Sake"
@@ -1129,7 +1129,7 @@
 
 /datum/reagent/consumable/ethanol/toxins_special/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 20)
+	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier * DRINK_EFFECT_MULTIPLIER, max_temp = BODYTEMP_NORMAL + 20)
 
 /datum/reagent/consumable/ethanol/beepsky_smash
 	name = "Beepsky Smash"
@@ -1143,7 +1143,7 @@
 /datum/reagent/consumable/ethanol/beepsky_smash/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
-		M.Stun(10 * multiplier)
+		M.Stun(10 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"
@@ -1164,7 +1164,7 @@
 /datum/reagent/consumable/ethanol/manly_dorf/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(HAS_TRAIT(M, TRAIT_DWARF))
-		M.heal_bodypart_damage(3 * multiplier, 3 * multiplier)
+		M.heal_bodypart_damage(3 * multiplier * DRINK_EFFECT_MULTIPLIER, 3 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/ethanol/longislandicedtea
 	name = "Long Island Iced Tea"
@@ -1232,7 +1232,7 @@
 
 /datum/reagent/consumable/ethanol/manhattan_proj/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustDrugginess(3 * multiplier)
+	M.adjustDrugginess(3 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/ethanol/whiskeysoda
 	name = "Whiskey Soda"
@@ -1252,7 +1252,7 @@
 
 /datum/reagent/consumable/ethanol/antifreeze/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 20)
+	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier * DRINK_EFFECT_MULTIPLIER, max_temp = BODYTEMP_NORMAL + 20)
 
 /datum/reagent/consumable/ethanol/barefoot
 	name = "Barefoot"
@@ -1350,7 +1350,7 @@
 
 /datum/reagent/consumable/ethanol/sbiten/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjust_bodytemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_HEAT_DAMAGE_LIMIT)
+	M.adjust_bodytemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier * DRINK_EFFECT_MULTIPLIER, max_temp = BODYTEMP_HEAT_DAMAGE_LIMIT)
 
 /datum/reagent/consumable/ethanol/devilskiss
 	name = "Devils Kiss"
@@ -1388,7 +1388,7 @@
 
 /datum/reagent/consumable/ethanol/iced_beer/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjust_bodytemperature(-20 * TEMPERATURE_DAMAGE_COEFFICIENT, min_temp = BODYTEMP_NORMAL - 40)
+	M.adjust_bodytemperature(-20 * TEMPERATURE_DAMAGE_COEFFICIENT * multiplier * DRINK_EFFECT_MULTIPLIER, min_temp = BODYTEMP_NORMAL - 40)
 
 /datum/reagent/consumable/ethanol/grog
 	name = "Grog"
@@ -1507,11 +1507,11 @@
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
-	M.dizziness += 10 * multiplier
+	M.dizziness += 10 * multiplier * DRINK_EFFECT_MULTIPLIER
 	if(data["ticks"] >= 55 && data["ticks"] < 115)
-		M.AdjustStuttering(11 * multiplier)
+		M.AdjustStuttering(11 * multiplier * DRINK_EFFECT_MULTIPLIER)
 	else if(data["ticks"] >= 115 && prob(33))
-		M.AdjustConfused(15 * multiplier)
+		M.AdjustConfused(15 * multiplier * DRINK_EFFECT_MULTIPLIER)
 
 /datum/reagent/consumable/ethanol/bacardi
 	name = "Bacardi"

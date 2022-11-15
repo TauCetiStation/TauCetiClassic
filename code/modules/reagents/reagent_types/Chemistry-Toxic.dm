@@ -15,7 +15,7 @@
 /datum/reagent/toxin/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(toxpwr)
-		M.adjustToxLoss(toxpwr * REM * multiplier)
+		M.adjustToxLoss(toxpwr * multiplier * TOXINS_EFFECT_MULTIPLIER)
 
 /datum/reagent/toxin/on_skrell_digest(mob/living/M, multiplier)
 	..()
@@ -56,7 +56,7 @@
 
 /datum/reagent/toxin/mutagen/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.apply_effect(10 * multiplier, IRRADIATE, 0)
+	M.apply_effect(10 * multiplier * TOXINS_EFFECT_MULTIPLIER, IRRADIATE, 0)
 
 /datum/reagent/toxin/phoron
 	name = "Phoron"
@@ -70,7 +70,7 @@
 /datum/reagent/toxin/phoron/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(holder.has_reagent("inaprovaline"))
-		holder.remove_reagent("inaprovaline", 2 * REM * multiplier)
+		holder.remove_reagent("inaprovaline", 2 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 
 /datum/reagent/toxin/phoron/reaction_obj(obj/O, volume)
 	src = null
@@ -117,8 +117,8 @@
 /datum/reagent/toxin/lexorin/on_general_digest(mob/living/M, multiplier)
 	..()
 	if(prob(33))
-		M.take_bodypart_damage(1 * REM * multiplier, 0)
-	M.adjustOxyLoss(3 * multiplier)
+		M.take_bodypart_damage(1 * multiplier * TOXINS_EFFECT_MULTIPLIER, 0)
+	M.adjustOxyLoss(3 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 	if(prob(20))
 		M.emote("gasp")
 
@@ -135,9 +135,9 @@
 	..()
 	if(prob(10))
 		to_chat(M, "<span class='warning'>Your insides are burning!</span>")
-		M.adjustToxLoss(rand(20,60) * REM * multiplier)
+		M.adjustToxLoss(rand(20,60) * multiplier * TOXINS_EFFECT_MULTIPLIER)
 	else if(prob(40))
-		M.heal_bodypart_damage(5 * REM * multiplier, 0)
+		M.heal_bodypart_damage(5 * multiplier * TOXINS_EFFECT_MULTIPLIER, 0)
 
 /datum/reagent/toxin/cyanide //Fast and Lethal
 	name = "Cyanide"
@@ -152,7 +152,7 @@
 
 /datum/reagent/toxin/cyanide/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustOxyLoss(4 * REM * multiplier)
+	M.adjustOxyLoss(4 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
@@ -160,7 +160,7 @@
 		if(1 to 5)
 			M.throw_alert("oxy", /atom/movable/screen/alert/oxy)
 		if(6 to INFINITY)
-			M.SetSleeping(20 SECONDS)
+			M.SetSleeping((20 * multiplier * TOXINS_EFFECT_MULTIPLIER) SECONDS)
 			M.throw_alert("oxy", /atom/movable/screen/alert/oxy)
 	if(data["ticks"] % 3 == 0)
 		M.emote("gasp")
@@ -200,13 +200,13 @@
 /datum/reagent/toxin/zombiepowder/on_general_digest(mob/living/M, multiplier)
 	..()
 	M.status_flags |= FAKEDEATH
-	M.adjustOxyLoss(0.5 * REM * multiplier)
-	M.Weaken(10 * multiplier)
-	M.silent = max(M.silent, 10 * multiplier)
+	M.adjustOxyLoss(0.5 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+	M.Weaken(10 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+	M.silent = max(M.silent, 10 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 	M.tod = worldtime2text()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.metabolism_factor.AddModifier("Z-powder", base_additive = -0.75 * multiplier)
+		H.metabolism_factor.AddModifier("Z-powder", base_additive = -0.75 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 
 /datum/reagent/toxin/zombiepowder/on_last_digest(mob/living/M, multiplier)
 	if(ishuman(M))
@@ -232,10 +232,10 @@
 
 /datum/reagent/toxin/mindbreaker/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.hallucination += 10 * multiplier
+	M.hallucination += 10 * multiplier * TOXINS_EFFECT_MULTIPLIER
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.metabolism_factor.AddModifier("Drugs", base_additive = 0.35 * multiplier)
+		H.metabolism_factor.AddModifier("Drugs", base_additive = 0.35 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 
 /datum/reagent/toxin/mindbreaker/on_last_digest(mob/living/M, multiplier)
 	if(ishuman(M))
@@ -346,14 +346,14 @@
 			if(prob(5))
 				M.emote("yawn")
 		if(12 to 15)
-			M.blurEyes(10 * multiplier)
+			M.blurEyes(10 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 		if(15 to 49)
 			if(prob(50))
-				M.Weaken(2 * multiplier)
-			M.drowsyness  = max(M.drowsyness, 20)
+				M.Weaken(2 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+			M.drowsyness  = max(M.drowsyness, 20 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 		if(50 to INFINITY)
-			M.Weaken(20 * multiplier)
-			M.drowsyness  = max(M.drowsyness, 30)
+			M.Weaken(20 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+			M.drowsyness  = max(M.drowsyness, 30 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 	data["ticks"]++
 
 /datum/reagent/toxin/chloralhydrate
@@ -376,12 +376,12 @@
 	data["ticks"]++
 	switch(data["ticks"])
 		if(1)
-			M.AdjustConfused(2 * multiplier)
-			M.drowsyness += 2 * multiplier
+			M.AdjustConfused(2 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+			M.drowsyness += 2 * multiplier * TOXINS_EFFECT_MULTIPLIER
 		if(2 to 199)
-			M.Weaken(30 * multiplier)
+			M.Weaken(30 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 		if(200 to INFINITY)
-			M.SetSleeping(20 SECONDS)
+			M.SetSleeping((20 * multiplier * TOXINS_EFFECT_MULTIPLIER) SECONDS)
 
 /datum/reagent/toxin/potassium_chloride
 	name = "Potassium Chloride"
@@ -398,12 +398,12 @@
 	if(M.stat != UNCONSCIOUS)
 		if(volume >= overdose)
 			if(M.losebreath >= 10)
-				M.losebreath = max(10, M.losebreath - 10 * multiplier)
-			M.adjustOxyLoss(2 * multiplier)
-			M.Weaken(10 * multiplier)
+				M.losebreath = max(10, M.losebreath - 10 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+			M.adjustOxyLoss(2 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+			M.Weaken(10 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				H.attack_heart(10 * multiplier, 0)
+				H.attack_heart(10 * multiplier * TOXINS_EFFECT_MULTIPLIER, 0)
 
 /datum/reagent/toxin/potassium_chlorophoride
 	name = "Potassium Chlorophoride"
@@ -421,11 +421,11 @@
 		var/mob/living/carbon/human/H = M
 		if(H.stat != UNCONSCIOUS)
 			if(H.losebreath >= 10)
-				H.losebreath = max(10, M.losebreath - 10 * multiplier)
-			H.adjustOxyLoss(2 * multiplier)
-			H.Weaken(10 * multiplier)
+				H.losebreath = max(10, M.losebreath - 10 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+			H.adjustOxyLoss(2 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+			H.Weaken(10 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 		if(volume >= overdose)
-			H.attack_heart(5 * multiplier, 0)
+			H.attack_heart(5 * multiplier * TOXINS_EFFECT_MULTIPLIER, 0)
 
 /datum/reagent/toxin/beer2	//disguised as normal beer for use by emagged brobots
 	name = "Beer"
@@ -443,13 +443,13 @@
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1)
-			M.AdjustConfused(2 * multiplier)
-			M.drowsyness += 2 * multiplier
+			M.AdjustConfused(2 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+			M.drowsyness += 2 * multiplier * TOXINS_EFFECT_MULTIPLIER
 		if(2 to 50)
-			M.SetSleeping(20 SECONDS)
+			M.SetSleeping((20 * multiplier * TOXINS_EFFECT_MULTIPLIER) SECONDS)
 		if(51 to INFINITY)
-			M.SetSleeping(20 SECONDS)
-			M.adjustToxLoss((data["ticks"] - 50) * REM * multiplier)
+			M.SetSleeping((20 * multiplier * TOXINS_EFFECT_MULTIPLIER) SECONDS)
+			M.adjustToxLoss((data["ticks"] - 50) * multiplier * TOXINS_EFFECT_MULTIPLIER)
 	data["ticks"]++
 
 /datum/reagent/toxin/mutetoxin //the new zombie powder. @ TG Port
@@ -463,7 +463,7 @@
 
 /datum/reagent/toxin/mutetoxin/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.silent = max(M.silent, 3)
+	M.silent = max(M.silent, 3 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 
 /datum/reagent/toxin/acid
 	name = "Sulphuric acid"
@@ -477,7 +477,7 @@
 
 /datum/reagent/toxin/acid/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.take_bodypart_damage(0, 1 * REM * multiplier)
+	M.take_bodypart_damage(0, 1 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/M, method=TOUCH, volume)//magic numbers everywhere
 	if(!isliving(M))
@@ -571,9 +571,9 @@
 /datum/reagent/alphaamanitin/on_general_digest(mob/living/M, multiplier)
 	..()
 
-	M.adjustToxLoss(6 * multiplier)
-	M.adjustOxyLoss(2 * multiplier)
-	M.adjustBrainLoss(2 * multiplier)
+	M.adjustToxLoss(6 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+	M.adjustOxyLoss(2 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+	M.adjustBrainLoss(2 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 
 /datum/reagent/aflatoxin
 	name = "Aflatoxin"
@@ -592,8 +592,8 @@
 		data["ticks"] = 1
 
 	if(data["ticks"] >= 165)
-		M.adjustToxLoss(4 * multiplier)
-		M.apply_effect(5*REM,IRRADIATE * multiplier,0)
+		M.adjustToxLoss(4 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+		M.apply_effect(5 * multiplier * TOXINS_EFFECT_MULTIPLIER,IRRADIATE * multiplier * TOXINS_EFFECT_MULTIPLIER,0)
 	data["ticks"]++
 
 /datum/reagent/chefspecial	//From VG. Only for traitors
@@ -635,30 +635,30 @@
 		data["ticks"] = 1
 
 	if(data["ticks"] >= 130)
-		M.make_jittery(2 * multiplier)
-		M.make_dizzy(2 * multiplier)
+		M.make_jittery(2 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+		M.make_dizzy(2 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 		switch (volume)
 			if(10 to 20)
 				if(prob(5))
 					M.emote(pick("twitch","giggle"))
 				if(data["ticks"] >=180)
-					M.adjustToxLoss(1 * multiplier)
+					M.adjustToxLoss(1 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 			if(20 to 30)
 				if(prob(10))
 					M.emote(pick("twitch","giggle"))
-				M.adjustToxLoss(3 * multiplier)
-				M.adjustBrainLoss(2 * multiplier)
+				M.adjustToxLoss(3 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+				M.adjustBrainLoss(2 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 			if(30 to INFINITY)
 				if(prob(20))
 					M.emote(pick("twitch","giggle"))
-				M.adjustToxLoss(3 * multiplier)
-				M.adjustBrainLoss(2 * multiplier)
+				M.adjustToxLoss(3 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+				M.adjustBrainLoss(2 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 				if(ishuman(M) && prob(5))
 					var/mob/living/carbon/human/H = M
 					var/obj/item/organ/internal/heart/IO = H.organs_by_name[O_HEART]
 					if(istype(IO))
-						IO.take_damage(10 * multiplier, 0)
-						H.attack_heart(20 * multiplier, 0)
+						IO.take_damage(10 * multiplier * TOXINS_EFFECT_MULTIPLIER, 0)
+						H.attack_heart(20 * multiplier * TOXINS_EFFECT_MULTIPLIER, 0)
 	data["ticks"]++
 
 /datum/reagent/mulligan
@@ -703,14 +703,14 @@
 			if(2 to 11)
 				var/obj/item/organ/external/BP = pick(H.bodyparts)
 				if(BP.is_flesh())
-					BP.take_damage(10 * multiplier)
+					BP.take_damage(10 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 					if(prob(25))
 						to_chat(H, "<span class='warning'>Your flesh is starting to melt!</span>")
 						H.emote("scream")
 						BP.sever_artery()
 			if(12 to 21)
 				var/obj/item/organ/internal/BP = H.organs_by_name[pick(H.species.has_organ)]
-				BP.take_damage(5 * multiplier)
+				BP.take_damage(5 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 				if(prob(25))
 					to_chat(H, "<span class='warning'>You feel unbearable pain inside you!</span>")
 					H.emote("scream")
@@ -722,8 +722,8 @@
 					for(var/obj/item/organ/internal/BP in H.organs)
 						BP.rejuvenate()
 			if(31 to 50)
-				M.heal_bodypart_damage(0,5 * multiplier)
-				M.adjustOxyLoss(-2 * REM * multiplier)
+				M.heal_bodypart_damage(0,5 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+				M.adjustOxyLoss(-2 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
@@ -776,7 +776,7 @@
 
 /datum/reagent/space_drugs/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.adjustDrugginess(2 * multiplier)
+	M.adjustDrugginess(2 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 	if(isturf(M.loc) && !isspaceturf(M.loc))
 		if(M.canmove && !M.incapacitated())
 			if(prob(10))
@@ -785,7 +785,7 @@
 		M.emote(pick("twitch","drool","moan","giggle"))
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.metabolism_factor.AddModifier("Drugs", base_additive = 0.25 * multiplier)
+		H.metabolism_factor.AddModifier("Drugs", base_additive = 0.5 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 
 /datum/reagent/space_drugs/on_last_digest(mob/living/M, multiplier)
 	if(ishuman(M))
@@ -821,8 +821,8 @@
 
 /datum/reagent/cryptobiolin/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.make_dizzy(1 * multiplier)
-	M.MakeConfused(20 * multiplier)
+	M.make_dizzy(1 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+	M.MakeConfused(20 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 
 /datum/reagent/impedrezene
 	name = "Impedrezene"
@@ -835,10 +835,10 @@
 
 /datum/reagent/impedrezene/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.jitteriness = max(M.jitteriness - 5 * multiplier, 0)
+	M.jitteriness = max(M.jitteriness - 5 * multiplier * TOXINS_EFFECT_MULTIPLIER, 0)
 	if(prob(80))
-		M.adjustBrainLoss(1 * REM * multiplier)
+		M.adjustBrainLoss(1 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 	if(prob(50))
-		M.drowsyness = max(M.drowsyness, 3)
+		M.drowsyness = max(M.drowsyness, 3 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 	if(prob(10))
 		M.emote("drool")
