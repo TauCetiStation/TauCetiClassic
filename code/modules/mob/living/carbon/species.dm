@@ -486,7 +486,6 @@
 
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R, multiplier)
 	return R.on_skrell_digest(M, multiplier)
-	skeleton_type = SKELETON_SKRELL
 
 /datum/species/skrell/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.skrell_equip(H)
