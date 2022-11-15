@@ -40,19 +40,20 @@
 		return
 	if(action == "button_press")
 		if(Game.button_press(text2num(params["choice_y"]), text2num(params["choice_x"])))
-			SpawnDeathLoot()
-			return TRUE
-		else
 			playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+		else
+			SpawnDeathLoot()
 			return TRUE
 
 	if(action == "button_flag")
 		if(Game.button_flag(params["choice_y"], params["choice_x"]))
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
-			return TRUE
+
 
 	if(Game.check_complete())
 		won()
+
+	return TRUE
 
 /obj/structure/closet/crate/secure/loot/proc/won()
 	var/loot_quality = 2 * Game.grid_mines/Game.grid_blanks

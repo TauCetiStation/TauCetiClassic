@@ -17,16 +17,16 @@
 
 /datum/minigame/minesweeper/proc/button_press(y, x)
 	if(grid[y][x]["state"] == STATE_MINE)
-		return TRUE
+		return FALSE //We lost
 	else
 		press_button(x, y)
-		return FALSE
+		return TRUE //We pressed a button
 
 /datum/minigame/minesweeper/proc/button_flag(y, x)
 	var/list/L = grid[y][x]
 	if(L["state"] != STATE_EMPTY)
 		L["flag"] = !L["flag"]
-		return TRUE
+		return TRUE //We put a flag
 
 /datum/minigame/minesweeper/proc/setup_game()
 	grid_x = rand(10,15)
