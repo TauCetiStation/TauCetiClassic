@@ -38,7 +38,7 @@
 	var/lock_code = "" // Lockcode to unlock uplink
 	var/honkamt = 0 //How many honks left when infected with honk.exe
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
-	var/note = "Спасибо за покупку КПК 9 от ООО Тинктроник!" //Current note in the notepad function
+	var/note = "Спасибо за покупку КПК Thinktronic 5230!" //Current note in the notepad function
 	var/notehtml = ""
 	var/cart = "" //A place to stick cartridge menu information
 	var/detonate = 1 // Can the PDA be blown up?
@@ -806,7 +806,7 @@
 //MESSENGER/NOTE FUNCTIONS===================================
 
 		if("Edit")
-			var/n = sanitize(input(U, "Введите сообщение", name, input_default(notehtml)) as message, extra = FALSE)
+			var/n = sanitize(input(U, "Введите сообщение.", name, input_default(notehtml)) as message, extra = FALSE)
 			if(Adjacent(U) && mode == 1)
 				note = n
 				notehtml = note
@@ -834,7 +834,7 @@
 				mode=2
 
 		if("Ringtone")
-			var/t = sanitize(input(U, "Установите новый рингтон", name, input_default(ttone)) as text, 20)
+			var/t = sanitize(input(U, "Установите новый рингтон.", name, input_default(ttone)) as text, 20)
 			if (t && Adjacent(U))
 				if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
 					to_chat(U, "The PDA softly beeps.")
@@ -920,11 +920,11 @@
 			mode = 41
 
 		if("target_acc_number")
-			target_account_number = text2num(input(U, "Введите номер счёта", name, target_account_number) as text)	//If "as num" I can't copy text from the buffer
+			target_account_number = text2num(input(U, "Введите номер счёта.", name, target_account_number) as text)	//If "as num" I can't copy text from the buffer
 		if("funds_amount")
-			funds_amount =  round(text2num(input(U, "Введите сумму перевода", name, funds_amount) as text), 1)
+			funds_amount =  round(text2num(input(U, "Введите сумму перевода.", name, funds_amount) as text), 1)
 		if("purpose")
-			transfer_purpose = sanitize(input(U, "Введите комментарий", name, transfer_purpose) as text, 20)
+			transfer_purpose = sanitize(input(U, "Введите комментарий.", name, transfer_purpose) as text, 20)
 
 		if("make_transfer")
 		//============check telecoms and message server=================
@@ -1230,7 +1230,7 @@
 	if(tap && iscarbon(U))
 		U.visible_message("<span class='notice'>[U] taps on \his PDA's screen.</span>")
 	U.last_target_click = world.time
-	var/t = sanitize(input(U, "Введите сообщение", name, null) as text)
+	var/t = sanitize(input(U, "Введите сообщение.", name, null) as text)
 	t = replacetext(t, "&#34;", "\"")
 
 	if (!t || !istype(P))
@@ -1593,7 +1593,7 @@
 	if(fingerprints in owner_fingerprints)
 		return TRUE
 	else
-		var/tried_pin =  text2num(input(user, "[owner], введите пароль от счёта", name) as text)
+		var/tried_pin =  text2num(input(user, "[owner], введите пароль от счёта.", name) as text)
 		if(tried_pin == owner_account.remote_access_pin)
 			owner_fingerprints += fingerprints	//add new owner's fingerprints to the list
 			to_chat(user, "[bicon(src)]<span class='info'>Password is correct</span>")
