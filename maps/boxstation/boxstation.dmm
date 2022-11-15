@@ -60469,6 +60469,9 @@
 /obj/machinery/newscaster{
 	pixel_y = 30
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurplecorner"
@@ -72750,7 +72753,6 @@
 /turf/environment/space,
 /area/station/hallway/primary/starboard)
 "mEf" = (
-/obj/machinery/light,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Genetics APC";
@@ -80542,8 +80544,8 @@
 /turf/environment/space,
 /area/space)
 "sXn" = (
+/obj/structure/flora/ausbushes/sparsegrass,
 /obj/machinery/light/small,
-/obj/structure/flora/ausbushes/leafybush,
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
 "sXz" = (
@@ -81263,6 +81265,7 @@
 	pixel_x = -5;
 	pixel_y = 11
 	},
+/obj/machinery/light,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -127671,7 +127674,7 @@ mVk
 fEa
 kiL
 kqL
-sXn
+vVq
 llo
 hRe
 wAd
@@ -127928,7 +127931,7 @@ mVk
 fEa
 xkG
 vyy
-pnI
+sXn
 qOs
 qOs
 qOs
