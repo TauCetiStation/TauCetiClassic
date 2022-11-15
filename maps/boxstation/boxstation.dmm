@@ -61346,6 +61346,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -62284,6 +62285,9 @@
 /obj/structure/sign/mark{
 	icon_state = "fup";
 	pixel_y = -20
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 24
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -66051,8 +66055,8 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
+/obj/structure/sign/poster/official/help_others{
+	pixel_x = 32
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -72448,7 +72452,7 @@
 	},
 /area/station/hallway/secondary/arrival)
 "mCS" = (
-/obj/structure/sign/departments/medbay/lifestar,
+/obj/structure/sign/departments/medbay/alt,
 /turf/simulated/wall,
 /area/station/security/medbay_checkpoint)
 "mDb" = (
@@ -76217,6 +76221,9 @@
 	pixel_y = 5;
 	pixel_x = -5
 	},
+/obj/structure/sign/poster/official/soft_cap_pop_art{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -79918,22 +79925,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/maintenance/incinerator)
-"sPC" = (
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Medbay_Quarantine";
-	name = "Quarantine Shutter";
-	opacity = 0
-	},
-/turf/simulated/floor{
-	icon_state = "whitebluefull"
-	},
-/area/station/medical/reception_hall)
 "sPM" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -122425,7 +122416,7 @@ ndx
 ndx
 utl
 lVD
-sPC
+fSG
 wta
 kfb
 deu
