@@ -59065,6 +59065,28 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"cdf" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/structure/disposalpipe/sortjunction{
+	dir = 8;
+	name = "Chemistry Lab";
+	sortType = "Chemistry Lab"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/atmos)
 "cdi" = (
 /obj/structure/sign/directions/engineering{
 	buildable_sign = 0;
@@ -84165,27 +84187,20 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "sib" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/structure/disposalpipe/sortjunction{
-	dir = 8;
-	name = "Chemistry Lab";
-	sortType = "Chemistry Lab"
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/station/maintenance/atmos)
+/turf/simulated/floor/plating,
+/area/station/medical/virology)
 "sit" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8
@@ -123317,7 +123332,7 @@ sSb
 ayH
 scb
 sfb
-sib
+cdf
 cdA
 bPE
 cce
