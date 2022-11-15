@@ -18,7 +18,8 @@
 		M.adjustToxLoss(toxpwr * multiplier * TOXINS_EFFECT_MULTIPLIER)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.metabolism_factor.AddModifier("Lipozine", base_additive = -0.2 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+			if(H.metabolism_factor.Get() > 0.3)
+				H.metabolism_factor.AddModifier("Toxin", base_additive = -toxpwr/10 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 
 /datum/reagent/toxin/on_skrell_digest(mob/living/M, multiplier)
 	..()
