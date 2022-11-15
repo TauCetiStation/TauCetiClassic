@@ -579,4 +579,17 @@
 								weight += 11.88
 			if(HAS_TRAIT(H, TRAIT_FAT))
 				weight *= 1.4
-			to_chat(user, "The [H]'s weight is [weight]kg, height is 1.8m")
+
+			var/height = 1.8
+			switch(H.height)
+				if(HUMANHEIGHT_SHORTEST)
+					height = 1.6
+				if(HUMANHEIGHT_SHORT)
+					height = 1.7
+				if(HUMANHEIGHT_TALL)
+					height = 1.9
+				if(HUMANHEIGHT_TALLEST)
+					height = 2.0
+			if(SMALLSIZE in H.mutations)
+				height -= 0.5
+			to_chat(user, "The [H]'s weight is [weight]kg, height is [height]m")
