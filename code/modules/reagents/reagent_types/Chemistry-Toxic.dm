@@ -17,9 +17,12 @@
 	if(toxpwr)
 		M.adjustToxLoss(toxpwr * multiplier * TOXINS_EFFECT_MULTIPLIER)
 		if(ishuman(M))
+			if(!data["ticks"])
+				data["ticks"] = 1
+			data["ticks"]++
 			var/mob/living/carbon/human/H = M
 			if(H.metabolism_factor.Get() > 0.3)
-				H.metabolism_factor.AddModifier("Toxin", base_additive = -toxpwr/10 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+				H.metabolism_factor.AddModifier("Toxin", base_additive = -toxpwr/50 * data["ticks"] * multiplier * TOXINS_EFFECT_MULTIPLIER)
 
 /datum/reagent/toxin/on_skrell_digest(mob/living/M, multiplier)
 	..()
