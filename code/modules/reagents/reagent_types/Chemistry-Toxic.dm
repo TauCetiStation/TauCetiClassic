@@ -245,7 +245,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.metabolism_factor.Get() < 5)
-			H.metabolism_factor.AddModifier("Drugs", base_additive = 0.35 * multiplier * TOXINS_EFFECT_MULTIPLIER)
+			H.metabolism_factor.AddModifier("Drugs", base_additive = 0.5 * multiplier * TOXINS_EFFECT_MULTIPLIER)
 
 /datum/reagent/toxin/mindbreaker/on_last_digest(mob/living/M, multiplier)
 	if(ishuman(M))
