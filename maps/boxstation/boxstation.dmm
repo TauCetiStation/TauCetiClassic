@@ -85364,9 +85364,15 @@
 /area/station/civilian/garden)
 "xPP" = (
 /obj/structure/table,
-/obj/machinery/computer/med_data/laptop,
+/obj/machinery/computer/med_data/laptop{
+	pixel_x = 4
+	},
 /obj/structure/sign/poster/official/sivtsev{
 	pixel_y = -32
+	},
+/obj/item/weapon/storage/pill_bottle/paracetamol{
+	pixel_x = -10;
+	pixel_y = 4
 	},
 /turf/simulated/floor/carpet/blue2,
 /area/station/medical/therapist)
