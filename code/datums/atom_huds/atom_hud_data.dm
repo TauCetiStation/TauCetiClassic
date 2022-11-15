@@ -204,8 +204,8 @@
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
 	var/image/holder = hud_list[WANTED_HUD]
 	var/perpname = get_visible_name(TRUE)
-	if(perpname && global.data_core)
-		var/datum/data/record/R = find_record("name", perpname, global.data_core.security)
+	if(perpname)
+		var/datum/data/record/R = find_security_record("name", perpname)
 		if(R)
 			switch(R.fields["criminal"])
 				if("*Arrest*")

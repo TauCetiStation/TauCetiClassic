@@ -407,7 +407,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 
 	if(chance && prob(chance) && dodged < world.time)
 		dodged = world.time + 50
-		if(Proj.flag == "bullet")
+		if(Proj.flag == BULLET)
 			visible_message("<span class='notice'>[src] catches [Proj] with his jaws.</span>")
 		else
 			visible_message("<span class='notice'>[src] dodges [Proj].</span>")

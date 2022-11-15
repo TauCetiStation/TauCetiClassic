@@ -729,7 +729,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/head
 	name = "head"
-	artery_name = "cartoid artery"
+	desc = "This one will be silent forever. Isn't it beautiful?"
+	force = 5
+	throwforce = 10
+	artery_name = "carotid artery"
 
 	icon = 'icons/mob/human_races/r_human.dmi'
 	icon_state = "head_m"
@@ -916,6 +919,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_arm
 	name = "left arm"
+	desc = "Need a hand?"
+	force = 7
 
 	icon = 'icons/mob/human_races/r_human.dmi'
 	icon_state = "l_arm"
@@ -934,6 +939,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = SIZE_SMALL
+	hitsound = list('sound/weapons/genhit1.ogg')
+
+/obj/item/organ/external/l_arm/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.can_push = TRUE
+	SCB.can_pull = TRUE
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/organ/external/l_arm/process()
 	..()
@@ -950,6 +963,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/r_arm
 	name = "right arm"
+	desc = "A right hand for the job."
+	force = 7
 	artery_name = "basilic vein"
 
 	icon = 'icons/mob/human_races/r_human.dmi'
@@ -967,6 +982,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = SIZE_SMALL
+	hitsound = list('sound/weapons/genhit1.ogg')
+
+/obj/item/organ/external/r_arm/atom_init()
+	. = ..()
+	var/datum/swipe_component_builder/SCB = new
+	SCB.can_push = TRUE
+	SCB.can_pull = TRUE
+	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/organ/external/r_arm/process()
 	..()
@@ -983,6 +1006,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/l_leg
 	name = "left leg"
+	desc = "Break a leg! Somebody else's leg. With this leg."
+	force = 10
 	artery_name = "femoral artery"
 
 	icon = 'icons/mob/human_races/r_human.dmi'
@@ -1000,6 +1025,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = SIZE_SMALL
+	hitsound = list('sound/weapons/genhit1.ogg')
 
 /obj/item/organ/external/l_leg/diona
 	name = "left lower tendril"
@@ -1011,6 +1037,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 /obj/item/organ/external/r_leg
 	name = "right leg"
+	desc = "The infamous third leg."
+	force = 10
+
 	artery_name = "femoral artery"
 
 	icon = 'icons/mob/human_races/r_human.dmi'
@@ -1028,6 +1057,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = SIZE_SMALL
+	hitsound = list('sound/weapons/genhit1.ogg')
 
 /obj/item/organ/external/r_leg/diona
 	name = "right lower tendril"
@@ -1041,16 +1071,16 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(!disfigured)
 		if(brute_dam > 40)
 			if (prob(50))
-				disfigure("brute")
+				disfigure(BRUTE)
 		if(burn_dam > 40)
-			disfigure("burn")
+			disfigure(BURN)
 
 	return ..()
 
-/obj/item/organ/external/head/proc/disfigure(type = "brute")
+/obj/item/organ/external/head/proc/disfigure(type = BRUTE)
 	if (disfigured)
 		return
-	if(type == "brute")
+	if(type == BRUTE)
 		owner.visible_message("<span class='warning'>You hear a sickening cracking sound coming from \the [owner]'s face.</span>",	\
 		"<span class='warning'><b>Your face becomes unrecognizible mangled mess!</b></span>",	\
 		"<span class='warning'>You hear a sickening crack.</span>")

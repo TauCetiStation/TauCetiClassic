@@ -125,7 +125,7 @@
 	name = "mateba"
 	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."	//>10mm hole >.357
 	icon_state = "mateba"
-	item_state = "revolver"
+	item_state = "mateba"
 	origin_tech = "combat=2;materials=2"
 
 // A gun to play Russian Roulette!

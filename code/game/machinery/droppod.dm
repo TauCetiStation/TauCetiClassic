@@ -38,7 +38,7 @@
 /obj/structure/droppod/atom_init()
 	. = ..()
 	if(!initial_eyeobj_location)
-		initial_eyeobj_location = locate(/obj/effect/landmark/droppod) in landmarks_list
+		initial_eyeobj_location = locate("landmark*Droppod")
 	if(!allowed_areas)
 		allowed_areas = new
 
@@ -144,6 +144,7 @@
 			obscured_turfs += i
 
 /obj/effect/landmark/droppod
+	name = "Droppod"
 
 /********Move in and out********/
 
@@ -434,7 +435,7 @@
 			repair_damage(10)
 			visible_message("<span class='notice'>[user] has repaired some dents on [src]!</span>")
 
-	else if(user.a_intent == INTENT_HARM || (O.flags & ABSTRACT))
+	else if(O.flags & ABSTRACT)
 		return ..()
 	else
 		if(istype(O, /obj/item/weapon/simple_drop_system))
@@ -725,6 +726,13 @@
 		StartDrop()
 		return
 	..()
+
+/obj/structure/droppod/Syndi/StartDrop()
+	//mix stuff
+	var/datum/faction/nuclear/crossfire/N = find_faction_by_type(/datum/faction/nuclear/crossfire)
+	if(N)
+		N.landing_nuke()
+	return ..()
 
 /obj/structure/droppod/Syndi/perform_drop()
 	..()

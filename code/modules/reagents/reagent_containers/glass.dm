@@ -14,6 +14,8 @@
 	flags = OPENCONTAINER
 	action_button_name = "Switch Lid"
 	var/label_text = ""
+	pickup_sound = 'sound/items/glass_containers/bottle_take-empty.ogg'
+	dropped_sound = 'sound/items/glass_containers/bottle_put-empty.ogg'
 
 	//var/list/
 	can_be_placed_into = list(
@@ -62,15 +64,6 @@
 		to_chat(usr, "<span class = 'notice'>You take the lid off \the [src].</span>")
 		flags |= OPENCONTAINER
 	update_icon()
-
-/obj/item/weapon/reagent_containers/glass/pickup(mob/living/user)
-	. = ..()
-	playsound(user, 'sound/items/glass_containers/bottle_take-empty.ogg', VOL_EFFECTS_MASTER)
-
-/obj/item/weapon/reagent_containers/glass/dropped(mob/user)
-	. = ..()
-	if(isturf(loc) && (user.loc != loc))
-		playsound(user, 'sound/items/glass_containers/bottle_put-empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/reagent_containers/glass/afterattack(atom/target, mob/user, proximity, params)
 
@@ -309,6 +302,8 @@
 	slot_flags = SLOT_FLAGS_HEAD
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 3, bomb = 5, bio = 0, rad = 0)
 	force = 5
+	pickup_sound = null
+	dropped_sound = null
 
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/item/I, mob/user, params)
 	if(isprox(I))

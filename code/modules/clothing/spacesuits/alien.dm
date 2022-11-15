@@ -131,6 +131,11 @@
 	flags = HEADCOVERSEYES
 	species_restricted = list(VOX , VOX_ARMALIS)
 
+/obj/item/clothing/head/helmet/space/vox/atom_init()
+	. = ..()
+	holochip = new /obj/item/holochip/vox(src)
+	holochip.holder = src
+
 /obj/item/clothing/head/helmet/space/vox/pressure
 	name = "alien helmet"
 	icon_state = "vox-pressure"
