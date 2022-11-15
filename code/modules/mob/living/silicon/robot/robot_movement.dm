@@ -14,7 +14,6 @@
 
 	if(module_active && istype(module_active, /obj/item/borg/combat/mobility))
 		tally -= 2
-		updateicon()
 
 	if(confused)
 		tally += 8

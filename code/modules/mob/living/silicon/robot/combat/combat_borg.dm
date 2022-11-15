@@ -33,3 +33,7 @@
 		icon_state = "[modtype_icon]-roll"
 	else
 		icon_state = "[modtype_icon]"
+
+/mob/living/silicon/robot/combat/movement_delay()
+	. = ..()
+	updateicon()
