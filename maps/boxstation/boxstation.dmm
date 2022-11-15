@@ -78217,13 +78217,6 @@
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
-"rjt" = (
-/obj/structure/lattice,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "warnwhite"
-	},
-/area/space)
 "rjR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -123484,7 +123477,7 @@ eRY
 omq
 pTG
 uBR
-rjt
+aah
 bVI
 bWY
 bWZ
