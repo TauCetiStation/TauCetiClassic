@@ -184,7 +184,7 @@ var/global/const/INGEST = 2
 	return amount
 
 /datum/reagents/proc/metabolize(mob/M)
-	if(!M)
+	if(!M || !total_volume)
 		return
 	total_metabolism = 0
 	//currently metabolism work only for carbon, there is no need to check mob type
