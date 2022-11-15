@@ -40492,9 +40492,6 @@
 	},
 /area/station/cargo/office)
 "buE" = (
-/obj/machinery/shower{
-	dir = 4
-	},
 /obj/structure/drain{
 	drainage = 2
 	},
@@ -40502,6 +40499,9 @@
 	icon_state = "left";
 	name = "Cloning Cell";
 	req_access = list(5)
+	},
+/obj/machinery/shower/free{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -83120,11 +83120,11 @@
 /obj/item/weapon/reagent_containers/food/snacks/soap/deluxe,
 /obj/item/weapon/bikehorn/rubberducky,
 /obj/structure/curtain/open/shower,
-/obj/machinery/shower{
-	dir = 1
-	},
 /obj/structure/drain{
 	drainage = 2
+	},
+/obj/machinery/shower/free{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"

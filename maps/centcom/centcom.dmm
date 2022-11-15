@@ -4895,9 +4895,6 @@
 	},
 /area/centcom/specops)
 "ame" = (
-/obj/machinery/shower{
-	dir = 1
-	},
 /obj/machinery/door/window{
 	dir = 1;
 	name = "Shower cabin"
@@ -4907,6 +4904,9 @@
 	},
 /obj/item/weapon/reagent_containers/food/snacks/soap/syndie,
 /obj/structure/curtain/open/shower/security,
+/obj/machinery/shower/free{
+	dir = 1
+	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -5635,9 +5635,6 @@
 	},
 /area/custom/syndicate_mothership)
 "anE" = (
-/obj/machinery/shower{
-	dir = 1
-	},
 /obj/structure/curtain/open/shower/security,
 /obj/machinery/door/window{
 	dir = 1;
@@ -5645,6 +5642,9 @@
 	},
 /obj/structure/drain{
 	drainage = 2
+	},
+/obj/machinery/shower/free{
+	dir = 1
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
