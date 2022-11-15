@@ -59309,10 +59309,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 24
-	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "blue"
@@ -63539,6 +63535,9 @@
 	dir = 4;
 	name = "CM Office APC";
 	pixel_x = 28
+	},
+/obj/machinery/requests_console/cmo{
+	pixel_y = 25
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -74248,6 +74247,9 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/reagent_dispensers/cleaner{
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitebluecorner"
@@ -74727,9 +74729,6 @@
 	},
 /area/station/engineering/engine)
 "ojR" = (
-/obj/structure/reagent_dispensers/cleaner{
-	pixel_y = 32
-	},
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/simulated/floor{
 	dir = 5;
@@ -80372,6 +80371,10 @@
 	network = list("SS13","Medical");
 	dir = 4
 	},
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_x = -26
+	},
 /turf/simulated/floor/bluegrid,
 /area/station/medical/staff_hallway)
 "sSG" = (
@@ -81899,6 +81902,15 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
+"ufU" = (
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/simulated/floor{
+	icon_state = "bluecorner"
+	},
+/area/station/hallway/primary/central)
 "ugb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -121241,7 +121253,7 @@ bbo
 bbo
 aGs
 ciW
-bbo
+ufU
 bbo
 bbo
 bbo
