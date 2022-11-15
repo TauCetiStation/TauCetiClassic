@@ -103,9 +103,9 @@
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
-		O.Stun(stunned, ignore_canstun = TRUE)
+		O.Stun(AmountStun())
 		O.Weaken(weakened)
-		O.Paralyse(paralysis - 22)
+		O.SetParalysis(AmountParalyzed())
 		O.SetSleeping(AmountSleeping())
 
 	//transfer reagents
@@ -122,14 +122,12 @@
 			O.changeling_update_languages(C.absorbed_languages)
 			for(var/mob/living/parasite/essence/M in src)
 				M.transfer(O)
-
+	SEND_SIGNAL(O, COMSIG_HUMAN_MONKEYIZE)
 	transfer_trait_datums(O)
 
 	if(tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a monkey.</B>")
-
 	. = O
-
 	qdel(src)
 
 //////////////////////////           Humanize               //////////////////////////////
@@ -233,9 +231,9 @@
 
 	//transfer stuns
 	if(tr_flags & TR_KEEPSTUNS)
-		O.Stun(stunned, ignore_canstun = TRUE)
+		O.Stun(AmountStun())
 		O.Weaken(weakened)
-		O.Paralyse(paralysis - 22)
+		O.Paralyse(AmountParalyzed())
 		O.SetSleeping(AmountSleeping())
 
 	//transfer reagents
@@ -256,10 +254,9 @@
 
 	if(tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a human.</B>")
-
 	. = O
-
 	qdel(src)
+	SEND_SIGNAL(O, COMSIG_MONKEY_HUMANIZE)
 
 /mob/dead/new_player/AIize()
 	spawning = 1
@@ -291,23 +288,19 @@
 	var/newloc = loc
 	if(move)
 		var/obj/loc_landmark
-		for(var/obj/effect/landmark/start/sloc in landmarks_list)
-			if (sloc.name != "AI")
-				continue
-			if ((locate(/mob/living) in sloc.loc) || (locate(/obj/structure/AIcore) in sloc.loc))
+		for(var/obj/effect/landmark/start/sloc as anything in landmarks_list["AI"])
+			if((locate(/mob/living) in sloc.loc) || (locate(/obj/structure/AIcore) in sloc.loc))
 				continue
 			loc_landmark = sloc
 		if (!loc_landmark)
-			for(var/obj/effect/landmark/tripai in landmarks_list)
-				if (tripai.name == "tripai")
-					if((locate(/mob/living) in tripai.loc) || (locate(/obj/structure/AIcore) in tripai.loc))
-						continue
-					loc_landmark = tripai
+			for(var/obj/effect/landmark/tripai as anything in landmarks_list["tripai"])
+				if((locate(/mob/living) in tripai.loc) || (locate(/obj/structure/AIcore) in tripai.loc))
+					continue
+				loc_landmark = tripai
 		if (!loc_landmark)
 			to_chat(src, "Oh god sorry we can't find an unoccupied AI spawn location, so we're spawning you on top of someone.")
-			for(var/obj/effect/landmark/start/sloc in landmarks_list)
-				if (sloc.name == "AI")
-					loc_landmark = sloc
+			for(var/obj/effect/landmark/start/sloc as anything in landmarks_list["AI"])
+				loc_landmark = sloc
 
 		newloc = loc_landmark.loc
 
@@ -323,6 +316,8 @@
 	if(mind)
 		mind.transfer_to(O)
 		O.mind.original = O
+		O.mind.skills.add_available_skillset(/datum/skillset/max)
+		O.mind.skills.maximize_active_skills()
 	else
 		O.key = key
 
@@ -363,6 +358,8 @@
 
 	if(mind)		//TODO
 		mind.transfer_to(O)
+		O.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+		O.mind.skills.maximize_active_skills()
 		if(O.mind.assigned_role == "Cyborg")
 			O.mind.original = O
 		else if(mind && mind.special_role)
@@ -583,7 +580,7 @@
 	if (notransform)
 		return
 	if(!client)
-		new /obj/effect/blob/core(loc)
+		new /obj/structure/blob/core(loc)
 	else
-		new /obj/effect/blob/core(loc, client)
+		new /obj/structure/blob/core(loc, client)
 	gib()

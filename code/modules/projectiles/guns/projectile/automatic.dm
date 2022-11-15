@@ -71,7 +71,7 @@
 	..()
 	cut_overlays()
 	if(magazine)
-		var/image/magazine_icon = image('icons/obj/gun.dmi', "mag-[CEIL(get_ammo(0) / 4) * 4]")
+		var/image/magazine_icon = image('icons/obj/gun.dmi', "mag-[CEIL(get_ammo(0) / 10) * 10]")
 		add_overlay(magazine_icon)
 	if(silenced)
 		var/image/silencer_icon = image('icons/obj/gun.dmi', "c20r-silencer")
@@ -144,20 +144,6 @@
 		return
 	return ..()
 
-/obj/item/weapon/gun/projectile/automatic/tommygun
-	name = "thompson SMG"
-	desc = "Based on the classic 'Chicago Typewriter'."
-	icon_state = "tommygun"
-	item_state = "shotgun"
-	w_class = SIZE_BIG
-	slot_flags = 0
-	origin_tech = "combat=5;materials=1;syndicate=2"
-	mag_type = /obj/item/ammo_box/magazine/tommygunm45
-	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
-	//can_suppress = 0
- 	//burst_size = 4
- 	//fire_delay = 1
-
 /* The thing I found with guns in ss13 is that they don't seem to simulate the rounds in the magazine in the gun.
    Afaik, since projectile.dm features a revolver, this would make sense since the magazine is part of the gun.
    However, it looks like subsequent guns that use removable magazines don't take that into account and just get
@@ -194,10 +180,16 @@
 	desc = "A genuine Chicago Typewriter."
 	icon_state = "tommygun"
 	item_state = "tommygun"
+	w_class = SIZE_BIG
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
+
+/obj/item/weapon/gun/projectile/automatic/tommygun/update_icon()
+	..()
+	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
+	item_state = icon_state
 
 /obj/item/weapon/gun/projectile/automatic/bar
 	name = "Browning M1918"
@@ -326,13 +318,22 @@
 	else
 		item_state = "[initial(icon_state)]-e"
 
+/obj/item/weapon/gun/projectile/automatic/a74/krinkov
+	name = "Krinkov"
+	desc = "Small and deadly, A74U is lighter than it's older brother, but nontheless packs a serious punch."
+	mag_type = /obj/item/ammo_box/magazine/a74mm/krinkov
+	recoil = 1.5
+	icon_state = "krinkov"
+	item_state = "krinkov"
+	mag_icon = icon('icons/obj/gun.dmi',"mag-krinkov")
+
 /obj/item/weapon/gun/projectile/automatic/drozd
 	name = "OTs-114 assault rifle"
 	desc = "Also known as Drozd, this little son a of bitch comes equipped with a bloody grenade launcher! How cool is that?"
 	icon_state = "drozd"
 	item_state = "drozd"
 	mag_type = /obj/item/ammo_box/magazine/drozd127
-	w_class = SIZE_NORMAL
+	w_class = SIZE_SMALL
 	fire_sound = 'sound/weapons/guns/gunshot_drozd.ogg'
 	action_button_name = "Toggle GL"
 	fire_delay = 7

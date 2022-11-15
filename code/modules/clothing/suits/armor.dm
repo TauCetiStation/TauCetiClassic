@@ -353,7 +353,7 @@
 	item_state = "assaultarmor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	armor = list(melee = 60, bullet = 60, laser = 50, energy = 70, bomb = 50, bio = 0, rad = 50)
+	armor = list(melee = 80, bullet = 70, laser = 55, energy = 70, bomb = 50, bio = 0, rad = 50)
 	siemens_coefficient = 0.2
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -388,3 +388,13 @@
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 25, bio = 0, rad = 10)
 	siemens_coefficient = 1.2
+
+/obj/item/clothing/suit/armor/vest/surplus
+	name = "surplus armor vest"
+	desc = "An armored vest with outdated armor plates, no longer used by galactic militaries. At least it's cheap."
+	icon_state = "armor_surplus_1"
+	armor = list(melee = 45, bullet = 40, laser = 40, energy = 25, bomb = 35, bio = 0, rad = 0)
+
+/obj/item/clothing/suit/armor/vest/surplus/atom_init()
+	. = ..()
+	icon_state = "surplus_armor_[rand(1,2)]"

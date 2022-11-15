@@ -54,7 +54,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/match/proc/burn_out()
 	lit = 0
 	burnt = 1
-	damtype = "brute"
+	damtype = BRUTE
 	icon_state = "match_burnt"
 	item_state = "cigoff"
 	name = "burnt match"
@@ -151,7 +151,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/proc/light(flavor_text = "[usr] lights the [name].")
 	if(!src.lit)
 		src.lit = 1
-		damtype = "fire"
+		damtype = BURN
 
 		if(reagents.get_reagent_amount("phoron") || reagents.get_reagent_amount("fuel")) // the phoron (fuel also) explodes when exposed to fire
 			var/datum/effect/effect/system/reagents_explosion/e = new()
@@ -343,7 +343,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/pipe/light(flavor_text = "[usr] lights the [name].")
 	if(!src.lit)
 		src.lit = 1
-		damtype = "fire"
+		damtype = BURN
 		icon_state = icon_on
 		item_state = icon_on
 		var/turf/T = get_turf(src)

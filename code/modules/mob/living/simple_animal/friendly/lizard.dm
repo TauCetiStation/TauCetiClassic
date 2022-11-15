@@ -27,13 +27,17 @@
 	has_head = TRUE
 	has_leg = TRUE
 
+/mob/living/simple_animal/lizard/atom_init()
+	. = ..()
+	AddComponent(/datum/component/gnawing)
+
 /mob/living/simple_animal/lizard/death()
 	. = ..()
 	desc = "It doesn't hiss anymore."
 
 /mob/living/simple_animal/lizard/Crossed(atom/movable/AM)
 	if(ishuman(AM))
-		if(!stat)
+		if(stat == CONSCIOUS)
 			var/mob/M = AM
 			to_chat(M, "<span class='notice'>[bicon(src)] Hiss!</span>")
 	. = ..()
@@ -53,6 +57,3 @@
 	if(stat >= DEAD)
 		return
 	..()
-
-
-

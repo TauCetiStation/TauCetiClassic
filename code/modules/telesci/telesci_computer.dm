@@ -31,6 +31,7 @@
 	var/list/crystals = list()
 	var/obj/item/device/gps/inserted_gps
 	var/obj/effect/portal/tsci_wormhole/active_wormhole = null
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_PRO)
 
 /obj/machinery/computer/telescience/atom_init()
 	. = ..()
@@ -170,6 +171,10 @@
 		var/atom/A = X
 		if(A.density)
 			return FALSE
+
+	if(SEND_SIGNAL(exit, COMSIG_ATOM_INTERCEPT_TELEPORT))
+		return FALSE
+	
 	active_wormhole = new (telepad.loc, exit)
 	active_wormhole.linked_console = src
 	return active_wormhole

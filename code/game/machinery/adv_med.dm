@@ -10,6 +10,7 @@
 	density = TRUE
 	anchored = TRUE
 	light_color = "#00ff00"
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/bodyscanner/power_change()
 	..()
@@ -53,6 +54,8 @@
 	if(target.abiotic())
 		to_chat(user, "<span class='userdanger'>Subject cannot have abiotic items on.</span>")
 		return FALSE
+	if(!do_skill_checks(user))
+		return
 	return TRUE
 
 /obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, mob/user)
@@ -112,24 +115,10 @@
 		ex_act(severity)
 	qdel(src)
 
-/obj/machinery/bodyscanner/blob_act()
-	if(prob(50))
-		for(var/atom/movable/A in src)
-			A.forceMove(loc)
-		qdel(src)
-
-/obj/machinery/body_scanconsole/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_LIGHT)
-			return
-		if(EXPLODE_HEAVY)
-			if(prob(50))
-				return
-	qdel(src)
-
-/obj/machinery/body_scanconsole/blob_act()
-	if(prob(50))
-		qdel(src)
+/obj/machinery/bodyscanner/deconstruct(disassembled)
+	for(var/atom/movable/A in src)
+		A.forceMove(loc)
+	..()
 
 /obj/machinery/body_scanconsole/power_change()
 	if(stat & BROKEN)
@@ -146,7 +135,7 @@
 
 /obj/machinery/body_scanconsole
 	var/obj/machinery/bodyscanner/connected
-	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience)
+	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience, /obj/item/weapon/implant/skill)
 	var/delete
 	name = "Body Scanner Console"
 	icon = 'icons/obj/Cryogenic3.dmi'
@@ -154,20 +143,21 @@
 	anchored = TRUE
 	var/next_print = 0
 	var/storedinfo = null
-
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/body_scanconsole/atom_init()
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/body_scanconsole/atom_init_late()
-	connected = locate(/obj/machinery/bodyscanner, get_step(src, WEST))
+	connected = locate(/obj/machinery/bodyscanner) in orange(1, src)
 
 /obj/machinery/body_scanconsole/ui_interact(mob/user)
 	if(!ishuman(connected.occupant))
 		to_chat(user, "<span class='warning'>This device can only scan compatible lifeforms.</span>")
 		return
-
+	if(!do_skill_checks(user))
+		return
 	var/dat
 
 	if (src.connected) //Is something connected?
@@ -201,7 +191,8 @@
 				dat += text("<font color='[]'>\tRadiation Level %: []</font><BR>", (occupant.radiation < 10 ?"blue" : "red"), occupant.radiation)
 				dat += text("<font color='[]'>\tGenetic Tissue Damage %: []</font><BR>", (occupant.getCloneLoss() < 1 ?"blue" : "red"), occupant.getCloneLoss())
 				dat += text("<font color='[]'>\tApprox. Brain Damage %: []</font><BR>", (occupant.getBrainLoss() < 1 ?"blue" : "red"), occupant.getBrainLoss())
-				dat += text("Paralysis Summary %: [] ([] seconds left!)<BR>", occupant.paralysis, round(occupant.paralysis / 4))
+				var/occupant_paralysis = occupant.AmountParalyzed()
+				dat += text("Paralysis Summary %: [] ([] seconds left!)<BR>", occupant_paralysis, round(occupant_paralysis / 4))
 				dat += text("Body Temperature: [occupant.bodytemperature-T0C]&deg;C ([occupant.bodytemperature*1.8-459.67]&deg;F)<BR><HR>")
 
 				if(occupant.has_brain_worms())

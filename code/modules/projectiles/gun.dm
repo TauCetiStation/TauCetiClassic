@@ -10,6 +10,7 @@
 	w_class = SIZE_SMALL
 	throwforce = 5
 	throw_speed = 4
+	hitsound = list('sound/weapons/genhit1.ogg')
 	throw_range = 5
 	force = 5.0
 	origin_tech = "combat=1"
@@ -56,8 +57,10 @@
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
-	if(recoil)
-		shake_camera(user, recoil + 1, recoil)
+
+	var/skill_recoil = max(0, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
+	if(skill_recoil)
+		shake_camera(user, skill_recoil + 1, skill_recoil)
 
 	if(silenced)
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
@@ -212,6 +215,7 @@
 			if(istype(chambered.BB, /obj/item/projectile/bullet/chameleon))
 				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
 									"<span class = 'notice'>You feel weakness and the taste of gunpowder, but no more.</span>")
+				user.Stun(5)
 				user.apply_effect(5,WEAKEN,0)
 				return
 

@@ -146,7 +146,7 @@ var/global/list/ai_verbs_default = list(
 	SetNextMove(CLICK_CD_MELEE * 3)
 	var/mob/living/L = A
 	eyeobj.visible_message("<span class='userdanger'>space carp nashes at [A]</span>")
-	L.apply_damage(15, BRUTE, BP_CHEST, L.run_armor_check(BP_CHEST, "melee"), DAM_SHARP|DAM_EDGE)
+	L.apply_damage(15, BRUTE, BP_CHEST, L.run_armor_check(BP_CHEST, MELEE), DAM_SHARP|DAM_EDGE)
 	playsound(eyeobj, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 	return TRUE
 
@@ -170,8 +170,6 @@ var/global/list/ai_verbs_default = list(
 	name = real_name
 
 	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
-
-	proc_holder_list = new()
 
 	if(L)
 		if (istype(L, /datum/ai_laws))
@@ -221,6 +219,10 @@ var/global/list/ai_verbs_default = list(
 	new /obj/machinery/ai_powersupply(src)
 
 	ai_list += src
+
+	if(mind)
+		mind.skills.add_available_skillset(/datum/skillset/max)
+		mind.skills.maximize_active_skills()
 
 /mob/living/silicon/ai/proc/announce_role()
 	to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
@@ -896,7 +898,7 @@ var/global/list/ai_verbs_default = list(
 	if(ismalf(usr) && stat != DEAD)
 		to_chat(usr, "<span class='danger'>You cannot use this verb in malfunction. If you need to leave, please adminhelp.</span>")
 		return
-	if(stat)
+	if(stat != CONSCIOUS)
 		return ..()
 
 	// Wipe Core

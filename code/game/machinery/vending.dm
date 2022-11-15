@@ -83,26 +83,25 @@
 	QDEL_NULL(coin)
 	return ..()
 
-/obj/machinery/vending/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_HEAVY)
-			if(prob(50))
-				return
-		if(EXPLODE_LIGHT)
-			if(prob(25))
-				spawn(0)
-					malfunction()
-			return
+/obj/machinery/vending/RefreshParts()
+	..()
+	// eat refills
+	for(var/obj/item/weapon/vending_refill/refill in component_parts)
+		component_parts -= refill
+		qdel(refill)
+
+/obj/machinery/vending/deconstruct(disassembled = TRUE)
+	if(refill_canister)
+		return ..()
+	//the non constructable vendors drop metal instead of a machine frame.
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 3)
 	qdel(src)
 
-/obj/machinery/vending/blob_act()
-	if (prob(50))
-		spawn(0)
-			malfunction()
-			qdel(src)
-		return
-
-	return
+/obj/machinery/vending/atom_break(damage_flag)
+	. = ..()
+	if(.)
+		malfunction()
 
 /obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0,req_emag=0)
 	for(var/typepath in productlist)
@@ -249,7 +248,10 @@
 	if(emagged)
 		return FALSE
 	src.emagged = 1
-	to_chat(user, "You short out the product lock on [src] and reveal hidden products.")
+	if(syndie.len)
+		to_chat(user, "You short out the product lock on [src] and reveal hidden products.")
+	else
+		to_chat(user, "You short out the product lock on [src].")
 	return TRUE
 
 /obj/machinery/vending/default_deconstruction_crowbar(obj/item/O)

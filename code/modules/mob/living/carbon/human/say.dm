@@ -79,11 +79,6 @@
 			to_chat(src, "<span class='userdanger'>You cannot speak in IC (Muted).</span>")
 			return
 
-	//Meme stuff
-	if(!speech_allowed && usr == src)
-		to_chat(usr, "<span class='userdanger'>You can't speak.</span>")
-		return
-
 	message =  sanitize(message)
 	if(!message)
 		return
@@ -99,7 +94,7 @@
 		return
 
 	if(message[1] == "*")
-		return emote(copytext(message, 2), auto = FALSE)
+		return emote(copytext(message, 2), intentional = TRUE)
 
 	//check if we are miming
 	if (miming && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
@@ -160,7 +155,8 @@
 					to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
 					//return - technically you can add more aliens to a team
 				for(var/mob/M as anything in observer_list)
-					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
+					var/link = FOLLOW_LINK(M, user)
+					to_chat(M, "[link]<span class='abductor_team[A.get_team_num()]'><b>[user.real_name]:</b> [sm]</span>")
 				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
 
@@ -169,7 +165,6 @@
 
 	if(iszombie(src))
 		message = zombie_talk(message)
-
 	var/ending = copytext(message, -1)
 
 	if(speaking)
@@ -191,7 +186,7 @@
 			speech_sound = handle_r[4]
 			sound_vol = handle_r[5]
 
-	if(!message || (stat && (message_mode != "changeling"))) // little tweak so changeling can call for help while in sleep
+	if(!message || (stat != CONSCIOUS && (message_mode != "changeling"))) // little tweak so changeling can call for help while in sleep
 		return
 
 	var/list/obj/item/used_radios = new
@@ -247,7 +242,7 @@
 			return
 		if("changeling")
 			if(ischangeling(src))
-				if(stat)
+				if(stat != CONSCIOUS)
 					message = stars(message, 20) // sleeping changeling has a little confused mind
 				var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 				var/n_message = "<span class='changeling'><b>[C.changelingID]:</b> [message]</span>"
@@ -408,6 +403,9 @@
 		message = "[uppertext(message)]!!!"
 		verb = pick("yells","roars","hollers")
 		handled = 1
+	if(disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
+		if(prob(50))
+			message = turret_talk(message)
 	if(slurring)
 		message = slur(message)
 		verb = pick("stammers","stutters")

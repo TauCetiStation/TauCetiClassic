@@ -6,7 +6,7 @@
 	w_class = SIZE_SMALL
 	throw_speed = 2
 	throw_range = 4
-	flags = CONDUCT //Copied this from old code, so this may or may not be necessary
+	flags = CONDUCT | HEAR_TALK //Copied this from old code, so this may or may not be necessary
 	var/status = 0   //0 - not readied //1 - bomb finished with welder
 	var/obj/item/device/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/weapon/tank/bombtank = null //the second part of the bomb is a phoron tank
@@ -70,10 +70,6 @@
 		bombtank.ignite()	//if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
 	else
 		bombtank.release()
-
-/obj/item/device/onetankbomb/HasProximity(atom/movable/AM)
-	if(bombassembly)
-		bombassembly.HasProximity(AM)
 
 /obj/item/device/onetankbomb/hear_talk(mob/living/M, msg)
 	if(bombassembly)

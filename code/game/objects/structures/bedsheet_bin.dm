@@ -33,11 +33,10 @@ LINEN BINS
 		if(!ishuman(user))
 			to_chat(user, "<span class='notice'>You try, but you can't.</span>")
 			return
-		user.visible_message("<span class='notice'>[user] starts tearing \the [src] into rags.</span>", "<span class='notice'>You start tearing \the [src] into rags.</span>")
+		user.visible_message("<span class='notice'>[user] starts cutting \the [src] into cloth.</span>", "<span class='notice'>You start cutting \the [src] into cloth.</span>")
 		if(do_after(user, 40, target = src))
-			user.visible_message("<span class='notice'>[user] tears \the [src] into rags using [I].</span>", "<span class='notice'>You finish tearing \the [src] into rags.</span>")
-			var/obj/item/stack/medical/bruise_pack/rags/R = new(get_turf(src))
-			R.amount = 3
+			user.visible_message("<span class='notice'>[user] cuts \the [src] into cloth using [I].</span>", "<span class='notice'>You finish cutting \the [src] into cloth.</span>")
+			new /obj/item/stack/sheet/cloth(get_turf(src), 3)
 			qdel(src)
 		return
 	return ..()
@@ -130,6 +129,30 @@ LINEN BINS
 	name = "wizard's bedsheet"
 	desc = "A special fabric enchanted with magic so you can have an enchanted night.  It even glows!"
 	icon_state = "sheetwiz"
+
+/obj/item/weapon/bedsheet/wiz/atom_init()
+	. = ..()
+
+	var/obj/effect/effect/forcefield/F = new
+	AddComponent(/datum/component/forcefield, "wizard field", 20, 3 SECONDS, 5 SECONDS, F, TRUE, TRUE)
+
+/obj/item/weapon/bedsheet/wiz/proc/activate(mob/living/user)
+	if(iswizard(user) || iswizardapprentice(user))
+		SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, user)
+
+/obj/item/weapon/bedsheet/wiz/proc/deactivate(mob/living/user)
+	SEND_SIGNAL(src, COMSIG_FORCEFIELD_UNPROTECT, user)
+
+/obj/item/weapon/bedsheet/wiz/equipped(mob/living/user, slot)
+	. = ..()
+
+	if(slot == SLOT_BACK)
+		activate(user)
+
+/obj/item/weapon/bedsheet/wiz/dropped(mob/living/user)
+	. = ..()
+	if(slot_equipped == SLOT_BACK)
+		deactivate(user)
 
 /obj/item/weapon/bedsheet/gar
 	name = "gar bedsheet"

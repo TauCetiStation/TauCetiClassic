@@ -23,12 +23,11 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/pinpointer(H.loc), SLOT_L_STORE)
 
 		var/obj/item/weapon/card/id/W = new(H)
-		W.name = "[H.real_name]'s ID Card"
+		W.assign(H.real_name)
 		W.icon_state = "centcom"
 		W.access = get_all_accesses()
 		W.access += get_all_centcom_access()
 		W.assignment = "Highlander"
-		W.registered_name = H.real_name
 		H.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 	message_admins("<span class='notice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>")

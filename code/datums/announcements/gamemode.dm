@@ -32,6 +32,11 @@
 		src.message = message
 	..()
 
+/datum/announcement/centcomm/nuclear/gateway
+	name = "Hacked gateway"
+	subtitle = "Активация гейтвея."
+	message = "Произведена синхронизация гейтвеев. Ожидайте гостей."
+
 /* Vox */
 /datum/announcement/centcomm/vox/arrival
 	name = "Vox: Shuttle Arrives"
@@ -196,11 +201,4 @@
 	message = "До нас дошла информация о том, что на борту [station_name_ru()] больше не осталось взрослых особей ксеноморфов. " + \
 			"Похоже вы справились! Центральное командование выражает благодарность экипажу [station_name_ru()]. " + \
 			"Всему гражданскому персоналу необходимо сдать полученное вооружение сотрудникам безопасности. Протокол изоляции экипажа станции деактивирован."
-/datum/announcement/centcomm/nuclear
-	name = "Nuclear threat"
-	subtitle = "Система Обнаружения аномальной активности"
-
-/datum/announcement/centcomm/nuclear/New()
-	message = "[station_name_ru()], Мы наблюдаем тепловой след, который ведёт к вашей станции. Пожалуйста, воздержитесь от внешних работ на  " + \
-			"обшивке станции и доложите на Центкомм детали в случае установления визуального контакта." 
 

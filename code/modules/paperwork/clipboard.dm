@@ -16,25 +16,6 @@
 	. = ..()
 	update_icon()
 
-/obj/item/weapon/clipboard/MouseDrop(obj/over_object as obj) //Quick clipboard fix. -Agouri
-	if(ishuman(usr))
-		var/mob/M = usr
-		if(!(istype(over_object, /atom/movable/screen) ))
-			return ..()
-
-		if(!M.incapacitated())
-			switch(over_object.name)
-				if("r_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_r_hand(src)
-				if("l_hand")
-					if(!M.unEquip(src))
-						return
-					M.put_in_l_hand(src)
-			add_fingerprint(usr)
-			return
-
 /obj/item/weapon/clipboard/update_icon()
 	cut_overlays()
 	if(toppaper)

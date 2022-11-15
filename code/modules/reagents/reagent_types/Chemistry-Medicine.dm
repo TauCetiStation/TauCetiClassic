@@ -92,6 +92,7 @@
 
 /datum/reagent/paracetamol/on_general_digest(mob/living/M, multiplier)
 	..()
+	M.adjustHalLoss(-1)
 	if(volume > overdose)
 		M.hallucination = max(M.hallucination, 2 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 
@@ -107,6 +108,7 @@
 
 /datum/reagent/tramadol/on_general_digest(mob/living/M, multiplier)
 	..()
+	M.adjustHalLoss(-4)
 	if(volume > overdose)
 		M.hallucination = max(M.hallucination, 2 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 
@@ -122,6 +124,7 @@
 
 /datum/reagent/oxycodone/on_general_digest(mob/living/M, multiplier)
 	..()
+	M.adjustHalLoss(-8)
 	if(volume > overdose)
 		M.adjustDrugginess(1 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 		M.hallucination = max(M.hallucination, 3 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
@@ -140,6 +143,12 @@
 
 /datum/reagent/sterilizine/reaction_obj(obj/O, volume)
 	O.germ_level -= min(volume*20, O.germ_level)
+	REMOVE_TRAIT(O, TRAIT_XENO_FUR, GENERIC_TRAIT)
+	if(istype(O, /obj/item/weapon/reagent_containers/food))
+		var/obj/item/weapon/reagent_containers/food/F = O
+		//constituent components precipitate into food as unwanted sediment. No need use sterilizine into food
+		F.reagents.add_reagent("chlorine", 1)
+		F.reagents.add_reagent("ethanol", 1)
 
 /datum/reagent/sterilizine/reaction_turf(turf/T, volume)
 	. = ..()
@@ -466,6 +475,8 @@
 	..()
 	M.ear_damage = max(M.ear_damage - 1 * multiplier * REAGENTS_EFFECT_MULTIPLIER, 0)
 	M.ear_deaf = max(M.ear_deaf - 3 * multiplier * REAGENTS_EFFECT_MULTIPLIER, 0)
+	if(M.ear_damage <= 0 && M.ear_deaf <= 0)
+		M.sdisabilities &= ~DEAF
 
 /datum/reagent/peridaxon
 	name = "Peridaxon"
@@ -518,6 +529,7 @@
 		H.regenerating_bodypart = H.find_damaged_bodypart()
 	if(H.regenerating_bodypart)
 		H.nutrition -= 3 * multiplier * REAGENTS_EFFECT_MULTIPLIER
+		H.Stun(3 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 		H.apply_effect(3 * multiplier * REAGENTS_EFFECT_MULTIPLIER, WEAKEN)
 		H.apply_damages(0,0,1 * multiplier * REAGENTS_EFFECT_MULTIPLIER,4 * multiplier * REAGENTS_EFFECT_MULTIPLIER,0,5 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 		H.regen_bodyparts(4 * multiplier * REAGENTS_EFFECT_MULTIPLIER, FALSE)
@@ -650,11 +662,21 @@
 
 /datum/reagent/ethylredoxrazine/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.dizziness = 0
-	M.drowsyness = 0
-	M.setStuttering(0)
-	M.SetConfused(0)
+	M.dizziness = max(0, M.dizziness - 10 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+	M.drowsyness = max(0, M.drowsyness - 10 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+	M.AdjustStuttering(-10 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+	M.AdjustConfused(-10 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 1 * multiplier * REAGENTS_EFFECT_MULTIPLIER, 0, 1)
+
+	if(prob(volume))
+		if(!ishuman(M))
+			return
+		var/mob/living/carbon/human/H = M
+		var/obj/item/organ/external/head/BP = H.get_bodypart(BP_HEAD)
+		if(!BP || !BP.disfigured)
+			return
+		BP.disfigured = FALSE
+		to_chat(H, "Your face is shaped normally again.")
 
 /datum/reagent/vitamin //Helps to regen blood and hunger(but doesn't really regen hunger because of the commented code below).
 	name = "Vitamin"

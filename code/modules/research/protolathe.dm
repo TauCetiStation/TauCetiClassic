@@ -91,7 +91,8 @@ Note: Must be placed west/left of and R&D console to function.
 		shock(user,50)
 	if (I.is_open_container())
 		return 1
-	if (default_deconstruction_screwdriver(user, "protolathe_t", "protolathe", I))
+	if (default_deconstruction_screwdriver(user, "protolathe", "protolathe", I))
+		update_icon()
 		if(linked_console)
 			linked_console.linked_lathe = null
 			linked_console = null
@@ -102,11 +103,6 @@ Note: Must be placed west/left of and R&D console to function.
 
 	if (panel_open)
 		if(iscrowbar(I))
-			for(var/M in loaded_materials)
-				if(loaded_materials[M].amount >= loaded_materials[M].sheet_size)
-					var/sheet_type = loaded_materials[M].sheet_type
-					var/obj/item/stack/sheet/G = new sheet_type(loc)
-					G.set_amount(round(loaded_materials[M].amount / G.perunit))
 			default_deconstruction_crowbar(I)
 			return 1
 		else if (is_wire_tool(I) && wires.interact(user))
@@ -118,7 +114,7 @@ Note: Must be placed west/left of and R&D console to function.
 	if (disabled)
 		return
 	if (!linked_console)
-		to_chat(user, "\The protolathe must be linked to an R&D console first!")
+		to_chat(user, "<span class='warning'>\The [name] must be linked to an R&D console first!</span>")
 		return 1
 	if (busy)
 		to_chat(user, "<span class='warning'>The protolathe is busy. Please wait for completion of previous operation.</span>")
@@ -167,6 +163,18 @@ Note: Must be placed west/left of and R&D console to function.
 	busy = FALSE
 	if(linked_console)
 		nanomanager.update_uis(linked_console)
+
+/obj/machinery/r_n_d/protolathe/deconstruct(disassembled)
+	log_game("Protolathe of type [type] [disassembled ? "disassembled" : "deconstructed"] by [key_name(usr)] at [get_area_name(src, TRUE)]")
+	return ..()
+
+/obj/machinery/r_n_d/protolathe/deconstruction()
+	. = ..()
+	for(var/M in loaded_materials)
+		if(loaded_materials[M].amount >= loaded_materials[M].sheet_size)
+			var/sheet_type = loaded_materials[M].sheet_type
+			var/obj/item/stack/sheet/G = new sheet_type(loc)
+			G.set_amount(round(loaded_materials[M].amount / G.perunit))
 
 /obj/machinery/r_n_d/protolathe/proc/queue_design(datum/design/D, amount)
 	var/datum/rnd_queue_design/RNDD = new /datum/rnd_queue_design(D, amount)

@@ -576,7 +576,8 @@
 
 /datum/reagent/consumable/neurotoxin/on_general_digest(mob/living/M, multiplier)
 	..()
-	M.weakened = max(M.weakened, 3)
+	M.Stun(3)
+	M.Weaken(3)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++

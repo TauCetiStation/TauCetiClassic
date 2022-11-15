@@ -25,6 +25,8 @@ var/global/list/mechtoys = list(
 	layer = 4
 	explosion_resistance = 5
 
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/plasticflaps/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	if(istype(caller, /obj/machinery/bot/mulebot))
 		return TRUE
@@ -58,6 +60,11 @@ var/global/list/mechtoys = list(
 			return FALSE
 	return ..()
 
+/obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/mineral/plastic(loc, 5)
+	..()
+
 /obj/structure/plasticflaps/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_HEAVY)
@@ -67,6 +74,9 @@ var/global/list/mechtoys = list(
 			if(prob(95))
 				return
 	qdel(src)
+
+/obj/structure/plasticflaps/explosion_proof
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 /obj/structure/plasticflaps/explosion_proof/ex_act(severity)
 	return
@@ -84,6 +94,6 @@ var/global/list/mechtoys = list(
 /obj/structure/plasticflaps/mining/Destroy() //lazy hack to set the turf to allow air to pass if it's a simulated floor
 	var/turf/T = get_turf(loc)
 	if(T)
-		if(istype(T, /turf/simulated/floor))
+		if(isfloorturf(T))
 			T.blocks_air = 0
 	return ..()

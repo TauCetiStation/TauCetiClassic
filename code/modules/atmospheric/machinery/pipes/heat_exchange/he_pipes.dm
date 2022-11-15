@@ -5,8 +5,6 @@
 	color = "#404040"
 	level = PIPE_VISIBLE_LEVEL
 	connect_types = CONNECT_TYPE_HE
-	var/initialize_directions_he
-	var/surface = 2	//surface area in m^2
 	var/icon_temperature = T20C //stop small changes in temperature causing an icon refresh
 
 	minimum_temperature_difference = 20
@@ -28,34 +26,25 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/can_be_node(obj/machinery/atmospherics/pipe/simple/heat_exchanging/target)
-	if(!istype(target))
-		return 0
-	if(target.initialize_directions_he & get_dir(target,src))
-		return 1
-
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/SetInitDirections()
-	initialize_directions_he = initialize_directions
-
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/GetInitDirections()
-	return ..() | initialize_directions_he
+	if(istype(target, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) && (target.initialize_directions & get_dir(target, src)) && (target.initialize_directions & initialize_directions))
+		return TRUE
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/process_atmos()
 	last_power_draw = 0
 	last_flow_rate = 0
 
 	var/datum/gas_mixture/pipe_air = return_air()
+	var/turf/local_turf = loc
 
-	if(istype(loc, /turf/simulated))
-		var/environment_temperature = 0
-		if(loc:blocks_air)
-			environment_temperature = loc:temperature
-		else
-			var/datum/gas_mixture/environment = loc.return_air()
-			environment_temperature = environment.temperature
-		if(abs(environment_temperature-pipe_air.temperature) > minimum_temperature_difference)
-			parent.temperature_interact(loc, volume, thermal_conductivity)
-	else if(isspaceturf(loc))
-		parent.radiate_heat_to_space(surface, 1)
+	var/environment_temperature
+	if(istype(loc, /turf/simulated) && !local_turf.blocks_air)
+		var/datum/gas_mixture/environment = loc.return_air()
+		environment_temperature = environment.temperature
+	else
+		environment_temperature = local_turf.temperature
+
+	if(abs(environment_temperature-pipe_air.temperature) > minimum_temperature_difference)
+		parent.temperature_interact(loc, volume, thermal_conductivity)
 
 	if(buckled_mob)
 		var/hc = pipe_air.heat_capacity()
@@ -68,6 +57,8 @@
 		return //machines subsystem fires before atmos is initialized so this prevents race condition runtimes
 
 	var/datum/gas_mixture/pipe_air = return_air()
+
+	set_light(0, 0, null)
 
 	//fancy radiation glowing
 	if(pipe_air.temperature && (icon_temperature > 500 || pipe_air.temperature > 500)) //start glowing at 500K
@@ -85,6 +76,8 @@
 				h_b = 64 + (h_b - 64) * scale
 
 			animate(src, color = rgb(h_r, h_g, h_b), time = 20, easing = SINE_EASING)
+
+			set_light(1, clamp(pipe_air.temperature * 0.03, 0, 30), rgb(h_r, h_g, h_b))
 
 	if(buckled_mob)
 		var/heat_limit = 1000

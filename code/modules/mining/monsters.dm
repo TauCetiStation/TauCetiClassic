@@ -32,7 +32,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/bullet_act(obj/item/projectile/P, def_zone)//Reduces damage from most projectiles to curb off-screen kills
 	. = ..()
-	if(!stat)
+	if(stat == CONSCIOUS)
 		Aggro()
 	if(P.damage < 30)
 		P.damage /= 3
@@ -41,7 +41,7 @@
 /mob/living/simple_animal/hostile/asteroid/hitby(atom/movable/AM, datum/thrownthing/throwingdatum) //No floor tiling them to death, wiseguy
 	if(isitem(AM))
 		var/obj/item/T = AM
-		if(!stat)
+		if(stat == CONSCIOUS)
 			Aggro()
 		if(T.throwforce <= 20)
 			visible_message("<span class='notice'>The [T.name] [src.throw_message] [src.name]!</span>")
@@ -88,7 +88,7 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
-	flag = "energy"
+	flag = ENERGY
 	temperature = 50
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/GiveTarget(new_target)
@@ -377,7 +377,6 @@
 	icon_aggro = "Goliath_alert"
 	icon_dead = "Goliath_dead"
 	icon_gib = "syndicate_gib"
-	attack_sound = list('sound/weapons/punch4.ogg')
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	move_to_delay = 40
 	ranged = TRUE
@@ -397,6 +396,10 @@
 	aggro_vision_range = 9
 	idle_vision_range = 5
 	var/pre_attack = 0
+
+/mob/living/simple_animal/hostile/asteroid/goliath/atom_init()
+	attack_sound = SOUNDIN_PUNCH_HEAVY
+	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	..()
@@ -486,8 +489,8 @@
 		if(istype(target, /obj/item/clothing/suit/space) || istype(target, /obj/item/clothing/head/helmet/space))
 			var/obj/item/clothing/C = target
 			var/list/current_armor = C.armor
-			if(current_armor["melee"] < 80)
-				current_armor["melee"] = min(current_armor["melee"] + 10, 80)
+			if(current_armor[MELEE] < 80)
+				current_armor[MELEE] = min(current_armor[MELEE] + 10, 80)
 				if(istype(C, /obj/item/clothing/suit/space))
 					var/obj/item/clothing/suit/space/S = C
 					S.breach_threshold = min(S.breach_threshold + 2, 24)
@@ -501,10 +504,10 @@
 			var/list/damage_absorption = D.damage_absorption
 			if(D.hides < 3)
 				D.hides++
-				damage_absorption["brute"] = max(damage_absorption["brute"] - 0.1, 0.3)
-				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.05
-				damage_absorption["fire"] = damage_absorption["fire"] - 0.05
-				damage_absorption["laser"] = damage_absorption["laser"] - 0.025
+				damage_absorption[BRUTE] = max(damage_absorption[BRUTE] - 0.1, 0.3)
+				damage_absorption[BULLET] = damage_absorption[BULLET] - 0.05
+				damage_absorption[BURN] = damage_absorption[BURN] - 0.05
+				damage_absorption[LASER] = damage_absorption[LASER] - 0.025
 				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				D.update_icon()
 				if(D.hides == 3)

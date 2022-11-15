@@ -248,3 +248,23 @@
 	cut_overlays()
 	if(contents.len)
 		add_overlay(image('icons/obj/pouches.dmi', "baton_layer"))
+
+/obj/item/weapon/storage/pouch/medical_supply/syndicate
+	name = "combat medical supply pouch"
+	desc = "Can hold combat medical equipment. Issued to syndicate medics."
+	icon_state = "medical_syndie"
+	item_state = "medical_supply"
+
+	storage_slots = 8
+	max_w_class = SIZE_SMALL
+
+	startswith = list(
+		/obj/item/weapon/reagent_containers/hypospray/combat/bleed,
+		/obj/item/weapon/reagent_containers/hypospray/combat/bruteburn,
+		/obj/item/weapon/reagent_containers/hypospray/combat/dexalin,
+		/obj/item/weapon/reagent_containers/hypospray/combat/atoxin,
+		/obj/item/weapon/reagent_containers/hypospray/combat/intdam,
+		/obj/item/weapon/reagent_containers/hypospray/combat/pain,
+		/obj/item/stack/medical/suture,
+		/obj/item/device/healthanalyzer,
+	)

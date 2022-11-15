@@ -35,7 +35,7 @@
 
 /obj/effect/biomass_controller/atom_init()
 	. = ..()
-	if(!istype(loc, /turf/simulated/floor))
+	if(!isfloorturf(loc))
 		return INITIALIZE_HINT_QDEL
 
 	spawn_biomass_piece(loc)
@@ -111,7 +111,7 @@
 /obj/effect/biomass/proc/spread()
 	var/direction = pick(cardinal)
 	var/step = get_step(src,direction)
-	if(istype(step,/turf/simulated/floor))
+	if(isfloorturf(step))
 		var/turf/simulated/floor/F = step
 		if(!locate(/obj/effect/biomass,F))
 			if(F.Enter(src))

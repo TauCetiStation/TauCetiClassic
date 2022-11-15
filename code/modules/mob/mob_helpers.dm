@@ -312,6 +312,14 @@
 
 	return jointext(message_list, " ")
 
+/proc/turret_talk(message)
+	var/list/message_list = splittext(message, " ")
+	var/maxchanges = max(round(message_list.len / 1.5), 2)
+	for(var/i in 1 to rand(maxchanges / 2, maxchanges))
+		var/insertpos = rand(1, message_list.len)
+		message_list[insertpos] = pick(tourette_bad_words)
+	return jointext(message_list, " ")
+
 #define TILES_PER_SECOND 0.7
 ///Shake the camera of the person viewing the mob SO REAL!
 ///Takes the mob to shake, the time span to shake for, and the amount of tiles we're allowed to shake by in tiles
@@ -400,6 +408,8 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 /mob/proc/set_a_intent(new_intent)
 	SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, new_intent)
 	a_intent = new_intent
+	if(hud_used)
+		action_intent?.update_icon(src)
 
 //change a mob's act-intent. Use the defines of style INTENT_%thingy%
 /mob/verb/a_intent_change(input as text)
@@ -414,8 +424,6 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 				set_a_intent(intent_numeric((intent_numeric(a_intent)+1) % 4))
 			if(INTENT_HOTKEY_LEFT)
 				set_a_intent(intent_numeric((intent_numeric(a_intent)+3) % 4))
-		if(hud_used && hud_used.action_intent)
-			hud_used.action_intent.icon_state = "intent_[a_intent]"
 
 /proc/broadcast_security_hud_message(message, broadcast_source)
 	var/datum/atom_hud/hud = huds[DATA_HUD_SECURITY]

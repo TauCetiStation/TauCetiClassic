@@ -102,10 +102,13 @@
 	sleep(20)
 	if(!H || !istype(H))
 		return
-	H.Weaken(rand(0, S.duration / 50))
+	var/waek_amt = rand(0, S.duration / 50)
+	H.Stun(waek_amt)
+	H.Weaken(waek_amt)
 
 	sleep(S.duration)
 	if(!H || !istype(H))
 		return
+	H.SetStunned(0)
 	H.SetWeakened(0)
 	S.finish(H)

@@ -3,7 +3,7 @@
 	desc = "A portable anti-armour rifle. Originally designed to used against armoured exosuits, it is capable of punching through windows with ease. Fires armor piercing 14.5mm shells."
 	icon_state = "heavyrifle"
 	item_state = "l6closednomag"
-	w_class = SIZE_BIG
+	w_class = SIZE_NORMAL
 	force = 10
 	slot_flags = SLOT_FLAGS_BACK
 	origin_tech = "combat=8;materials=2;syndicate=8"
@@ -64,3 +64,7 @@
 		to_chat(user, "<span class='warning'>You can't fire [src] while the bolt is open!</span>")
 		return 0
 	return ..()
+
+/obj/item/weapon/gun/projectile/heavyrifle/atom_init()
+	. = ..()
+	AddComponent(/datum/component/zoom, 9, TRUE)
