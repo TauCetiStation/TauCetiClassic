@@ -74651,6 +74651,13 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/storage)
+"ofw" = (
+/obj/structure/stool/bed/chair/metal/blue,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "warnwhite"
+	},
+/area/station/medical/surgeryobs)
 "ofy" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/four,
@@ -80537,11 +80544,6 @@
 /obj/structure/window/reinforced,
 /turf/environment/space,
 /area/space)
-"sXn" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/machinery/light/small,
-/turf/simulated/floor/grass,
-/area/station/medical/genetics)
 "sXz" = (
 /turf/simulated/floor/wood,
 /area/station/civilian/garden)
@@ -84945,12 +84947,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "wOv" = (
-/obj/structure/stool/bed/chair/metal/blue,
-/turf/simulated/floor{
-	dir = 9;
-	icon_state = "warnwhite"
-	},
-/area/station/medical/surgeryobs)
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/machinery/light/small,
+/turf/simulated/floor/grass,
+/area/station/medical/genetics)
 "wOM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -125625,7 +125625,7 @@ kvg
 cUZ
 wrI
 oXf
-wOv
+ofw
 jwL
 dBa
 oau
@@ -126910,7 +126910,7 @@ deu
 cUZ
 bMA
 kSq
-wOv
+ofw
 uLm
 jEI
 wTU
@@ -127925,7 +127925,7 @@ mVk
 fEa
 xkG
 vyy
-sXn
+wOv
 qOs
 qOs
 qOs
