@@ -68828,7 +68828,7 @@
 /obj/structure/table/glass,
 /obj/item/weapon/gun/syringe{
 	pixel_y = 6;
-	pixel_x = -3
+	pixel_x = 9
 	},
 /obj/item/weapon/medical/teleporter{
 	pixel_y = -3;
@@ -68844,6 +68844,17 @@
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
+	},
+/obj/item/weapon/hand_labeler{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/obj/item/weapon/packageWrap{
+	pixel_x = -5
+	},
+/obj/item/weapon/pen{
+	pixel_y = 1;
+	pixel_x = -10
 	},
 /turf/simulated/floor{
 	icon_state = "white"
