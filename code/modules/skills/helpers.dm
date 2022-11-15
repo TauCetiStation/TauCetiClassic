@@ -34,7 +34,7 @@
 		to_chat(user, display_message_self)
 
 	if(prob(80))
-		user.emote("hmm?")
+		user.emote("hmm")
 	return do_after(user, required_time, target = target, can_move = can_move)
 
 /proc/get_skill_with_assistance(mob/living/user, datum/skill/skill)
