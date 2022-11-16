@@ -155,14 +155,3 @@
 	pre_start(user, AOG)
 	start(user, AOG)
 	return TRUE
-
-/**
- * Returns a list with the difference between the needed aspects for rite and those in religion.
- * Return format: "Aspect name" = difference
- */
-/datum/religion_rites/proc/get_aspect_diffs()
-	var/list/diffs = list()
-	for(var/need_aspect in needed_aspects)
-		var/datum/aspect/aspect = religion.aspects[need_aspect]
-		diffs[aspect.name] = aspect.power - needed_aspects[need_aspect]
-	return diffs

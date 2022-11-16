@@ -496,7 +496,7 @@
 	H.take_overall_damage(10, 20)
 
 	var/obj/effect/effect/forcefield/rune/R = new
-	var/list/diffs = get_aspect_diffs()
+	var/list/diffs = religion.get_aspect_diffs(needed_aspects)
 	var/shield_health = 30 * sqrt(diffs[ASPECT_CHAOS] + 1)
 	var/reactivation_time = 1 MINUTE / sqrt(diffs[ASPECT_RESCUE] + 1)
 	var/recharge_time = 2.5 MINUTE / sqrt(diffs[ASPECT_RESCUE] + 1)
