@@ -75,8 +75,6 @@
 			bp_tally += 1.6
 		else if(BP.status & ORGAN_BROKEN)
 			bp_tally += 6
-		else if(BP.pumped)
-			bp_weight_negation += BP.pumped * 0.02
 
 	tally += bp_tally / moving_bodyparts.len
 	weight_negation += bp_weight_negation / moving_bodyparts.len
