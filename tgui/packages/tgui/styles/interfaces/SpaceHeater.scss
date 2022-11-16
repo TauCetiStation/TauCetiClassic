@@ -1,4 +1,14 @@
-.SpaceHeater__Box {
+.SpaceHeater__Background_1 {
+  border-bottom: 50px solid #4A4D55;
+  border-top: 5px solid #959595;
+}
+
+.SpaceHeater__Background_2 {
+  border-bottom: 15px solid #4A4D55;
+  border-radius: 500px;
+}
+
+.SpaceHeater__Concave_Box {
   border: 5px inset #aaaaaa;
   border-top-color: #25272b;
   border-left-color: #25272b;
@@ -15,23 +25,23 @@
 
   .Knob__cursor {
     top: -15px;
-    background:#333333;
-    width:14px;
-    height:50px;
-    border-bottom:37px solid #444444;
-    border-top:2px solid #909396;
-    border-top-right-radius:5px;
-    border-top-left-radius:5px;
-    border-bottom-right-radius:15px;
-    border-bottom-left-radius:15px;
+    background: #333333;
+    width: 14px;
+    height: 50px;
+    border-bottom: 37px solid #444444;
+    border-top: 2px solid #909396;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
   }
 
   .Knob__circle {
     top: -5px;
-	left: -4px;
+    left: -4px;
     background: #B5bcc1;
-	background-image: none !important;
-	color: #B5bcc1;
+    background-image: none !important;
+    color: #B5bcc1;
     width: 64px;
     height: 64px;
     border-top: 2px solid #909396;
@@ -40,7 +50,7 @@
   }
   
   .Knob__ringFill {
-	stroke: transparent;
+    stroke: transparent;
   }
   
   .Knob__popupValue {
