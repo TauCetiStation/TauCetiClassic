@@ -46,7 +46,7 @@
 			return TRUE
 
 	if(action == "button_flag")
-		if(Game.button_flag(params["choice_y"], params["choice_x"]))
+		if(Game.button_flag(text2num(params["choice_y"]), text2num(params["choice_x"])))
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 

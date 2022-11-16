@@ -16,7 +16,9 @@
 							)
 
 /datum/minigame/minesweeper/proc/button_press(y, x)
-	if(grid[y][x]["state"] == STATE_MINE)
+	if(grid[y][x]["flag"])
+		return TRUE //We fake pressed a button with a flag
+	else if(grid[y][x]["state"] == STATE_MINE)
 		return FALSE //We lost
 	else
 		press_button(x, y)

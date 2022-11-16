@@ -16,16 +16,16 @@
     border: 5px solid #707070;
     border-left-color: #3C3C3C;
     border-top-color: #3C3C3C;
-	.Minesweeper__Button-Content {
+    .Minesweeper__Button-Content {
       zoom: 90%;
-	    top: -7px !important;
-	    left: 1px;
+        top: -7px !important;
+        left: 1px;
     }
   }
   .Minesweeper__Button-Content {
     position: relative;
     top: -8px;
-	  transform: scale(0.75, 0.75);
+      transform: scale(0.75, 0.75);
   }
 }
 
@@ -36,12 +36,12 @@
   &:hover {
     .Minesweeper__Button-Content {
       zoom: 100%;
-	    top: -6px !important;
-	    left: 0px !important;
+        top: -6px !important;
+        left: 0px !important;
     }
   }
   .Minesweeper__Button-Content {
     top: -6px;
-	  transform: scale(1, 1);
+      transform: scale(1, 1);
   }
 }
