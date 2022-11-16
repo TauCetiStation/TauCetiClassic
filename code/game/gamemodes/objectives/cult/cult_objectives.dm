@@ -76,16 +76,15 @@
 	var/datum/job/job
 
 /datum/objective/cult/job_convert/New()
+	var/list/all_jobs = list() + engineering_positions + medical_positions + science_positions + civilian_positions - command_positions
 	var/list/possible_jobs = list()
-	for(var/I in get_all_jobs())
-		if(I in list("Security Officer", "Security Cadet", "Head of Security", "Captain", "Forensic Technician", "Detective", "Warden", "Head of Personnel", "AI", "Cyborg", "Internal Affairs Agent"))
-			continue
+	for(var/I in all_jobs)
 		var/datum/job/J = SSjob.GetJob(I)
 		if(J.current_positions > 1)
 			possible_jobs += I
 	job = SSjob.GetJob(pick(possible_jobs))
 	convertees_needed = rand(1, CEIL(job.current_positions / 2))
-	explanation_text = "Культ нуждается в [convertees_needed] [pluralize_russian(convertees_needed, "последователе", "последователях", "последователях")], являющихся [job.title]."
+	explanation_text = "Культ нуждается в [convertees_needed] [pluralize_russian(convertees_needed, "последователе, являющемся", "последователях, являющихся", "последователях, являющихся")] [job.title]."
 	..()
 
 /datum/objective/cult/job_convert/check_completion()
