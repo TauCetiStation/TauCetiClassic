@@ -64,6 +64,10 @@
 	var/datum/announcement/centcomm/nuclear/gateway/announce = new
 	announce.play()
 	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+	//mix stuff
+	var/datum/faction/nuclear/crossfire/N = find_faction_by_type(/datum/faction/nuclear/crossfire)
+	if(N)
+		N.landing_nuke()
 
 /obj/effect/landmark/syndie_gateway
 	name = "Syndie gateway"

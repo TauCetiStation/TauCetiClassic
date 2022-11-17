@@ -56,6 +56,10 @@
 	cam_background = new
 	cam_background.assigned_map = map_name
 	cam_background.del_on_map_removal = FALSE
+	var/obj/item/weapon/circuitboard/security/board = circuit
+	var/list/circuitboard_network = board.network
+	if(circuitboard_network.len)
+		network = circuitboard_network
 
 /obj/machinery/computer/security/Destroy()
 	qdel(cam_screen)
