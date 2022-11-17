@@ -3374,7 +3374,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "afO" = (
-/obj/item/weapon/hand_labeler,
 /obj/structure/table,
 /obj/item/weapon/folder/red,
 /obj/item/weapon/packageWrap,
@@ -5868,13 +5867,12 @@
 	pixel_y = -30
 	},
 /obj/structure/table,
-/obj/item/weapon/hand_labeler,
 /obj/machinery/light,
 /obj/item/weapon/packageWrap,
 /obj/structure/sign/warning/electricshock{
 	pixel_x = 32
 	},
-/obj/item/device/destTagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
@@ -10898,7 +10896,6 @@
 	},
 /area/station/hallway/primary/fore)
 "ast" = (
-/obj/item/weapon/hand_labeler,
 /obj/item/device/flash,
 /obj/item/clothing/glasses/sunglasses,
 /obj/structure/table/glass,
@@ -14211,7 +14208,6 @@
 /area/station/maintenance/chapel)
 "ayO" = (
 /obj/structure/rack,
-/obj/item/weapon/hand_labeler,
 /obj/item/weapon/packageWrap,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
@@ -15828,7 +15824,7 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/packageWrap,
-/obj/item/device/destTagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -20391,7 +20387,6 @@
 /area/station/civilian/chapel/office)
 "aKw" = (
 /obj/structure/rack,
-/obj/item/weapon/hand_labeler,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "aKx" = (
@@ -25294,7 +25289,7 @@
 	c_tag = "Bar Backroom";
 	dir = 4
 	},
-/obj/item/device/destTagger,
+/obj/item/device/tagger,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "aTq" = (
@@ -26050,7 +26045,6 @@
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/obj/item/device/destTagger,
 /obj/item/weapon/packageWrap,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -27261,7 +27255,7 @@
 /obj/structure/table,
 /obj/item/weapon/weldingtool,
 /obj/item/weapon/packageWrap,
-/obj/item/device/destTagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
@@ -30920,7 +30914,7 @@
 /area/station/rnd/xenobiology)
 "bda" = (
 /obj/structure/table,
-/obj/item/device/destTagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -33009,12 +33003,12 @@
 	},
 /area/station/cargo/office)
 "bgG" = (
-/obj/item/weapon/hand_labeler,
 /obj/item/device/assembly/timer,
 /obj/item/device/eftpos{
 	eftpos_name = "Bridge EFTPOS scanner"
 	},
 /obj/structure/table/woodentable,
+/obj/item/device/tagger,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "bgH" = (
@@ -35074,7 +35068,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/junction{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "browncorner"
@@ -37363,6 +37359,7 @@
 	},
 /obj/item/clothing/glasses/welding,
 /obj/item/clothing/glasses/welding,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -38263,11 +38260,10 @@
 	},
 /obj/item/taperoll/science,
 /obj/item/taperoll/science,
-/obj/item/weapon/hand_labeler,
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/packageWrap,
 /obj/structure/table,
-/obj/item/device/destTagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
@@ -39433,8 +39429,8 @@
 /area/station/cargo/office)
 "bsH" = (
 /obj/structure/table,
-/obj/item/device/destTagger,
-/obj/item/device/destTagger,
+/obj/item/device/tagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -39468,14 +39464,12 @@
 /area/station/cargo/office)
 "bsL" = (
 /obj/structure/table,
-/obj/item/weapon/hand_labeler,
 /obj/item/weapon/stamp{
 	name = "cargo rubber stamp";
 	pixel_x = -3;
 	pixel_y = 3;
 	stamp_message = "Cargo"
 	},
-/obj/item/weapon/hand_labeler,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -43415,9 +43409,6 @@
 /obj/machinery/faxmachine{
 	department = "Internal Affairs"
 	},
-/obj/item/weapon/hand_labeler{
-	pixel_y = -8
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -45488,7 +45479,7 @@
 /area/station/medical/medbreak)
 "bDm" = (
 /obj/structure/table,
-/obj/item/device/destTagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -46934,7 +46925,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "bFZ" = (
-/obj/item/weapon/hand_labeler,
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/pen,
 /obj/structure/table/glass,
@@ -56895,7 +56885,7 @@
 	},
 /obj/item/weapon/airlock_painter,
 /obj/item/weapon/packageWrap,
-/obj/item/device/destTagger,
+/obj/item/device/tagger,
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "cdv" = (
@@ -59887,6 +59877,7 @@
 "cmn" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/device/tagger,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cmp" = (
@@ -62037,7 +62028,6 @@
 "crh" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
-/obj/item/weapon/hand_labeler,
 /obj/item/weapon/pen,
 /turf/simulated/floor{
 	dir = 8;
@@ -66240,8 +66230,8 @@
 /obj/item/weapon/cane,
 /obj/item/weapon/cane,
 /obj/item/clothing/mask/muzzle,
-/obj/item/device/destTagger,
 /obj/item/weapon/packageWrap,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -71088,7 +71078,6 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "fkD" = (
-/obj/item/weapon/hand_labeler,
 /obj/item/weapon/packageWrap,
 /obj/structure/table/glass,
 /obj/item/weapon/book/manual/wiki/hydroponics,
@@ -71101,6 +71090,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 24
 	},
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "green"
@@ -72376,7 +72366,6 @@
 /obj/item/weapon/storage/belt/utility,
 /obj/item/weapon/reagent_containers/glass/beaker/large,
 /obj/item/weapon/book/manual/wiki/guide_to_exosuits,
-/obj/item/device/destTagger,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -74094,7 +74083,6 @@
 /obj/structure/table/glass,
 /obj/item/weapon/book/manual/hydroponics_beekeeping,
 /obj/item/weapon/packageWrap,
-/obj/item/device/destTagger,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "green"
@@ -74296,7 +74284,6 @@
 /obj/item/weapon/airlock_painter,
 /obj/item/weapon/storage/belt/utility,
 /obj/item/weapon/storage/belt/utility,
-/obj/item/device/destTagger,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "yellow"
@@ -74588,6 +74575,10 @@
 "jaX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -75520,7 +75511,6 @@
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "keb" = (
-/obj/item/weapon/hand_labeler,
 /obj/structure/table/glass,
 /obj/machinery/power/apc{
 	dir = 8;
@@ -75538,7 +75528,7 @@
 	},
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/airlock_painter,
-/obj/item/device/destTagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteyellow"
@@ -83077,7 +83067,6 @@
 	pixel_y = 2
 	},
 /obj/item/weapon/storage/box/syringes,
-/obj/item/weapon/hand_labeler,
 /obj/structure/table/glass,
 /turf/simulated/floor{
 	dir = 3;
@@ -83765,7 +83754,7 @@
 /obj/item/device/paicard{
 	pixel_x = 4
 	},
-/obj/item/device/destTagger,
+/obj/item/device/tagger,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "uns" = (
@@ -83926,6 +83915,17 @@
 	icon_state = "barber"
 	},
 /area/station/civilian/locker)
+"uDj" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/sortjunction{
+	dir = 8;
+	name = "Post";
+	sortType = "Post"
+	},
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "uEB" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -84444,7 +84444,7 @@
 /area/station/engineering/engine)
 "wfg" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/hand_labeler,
+/obj/item/device/tagger,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "wfm" = (
@@ -102535,7 +102535,7 @@ brd
 brd
 brd
 jaX
-shv
+uDj
 ofm
 lab
 aFg

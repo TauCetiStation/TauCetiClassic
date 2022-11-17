@@ -34,8 +34,8 @@
 	qdel(src)
 
 /obj/structure/bigDelivery/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/destTagger))
-		var/obj/item/device/destTagger/O = W
+	if(istype(W, /obj/item/device/tagger))
+		var/obj/item/device/tagger/O = W
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
 			src.sortTag = O.currTag
@@ -84,8 +84,8 @@
 	qdel(src)
 
 /obj/item/smallDelivery/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/destTagger))
-		var/obj/item/device/destTagger/O = I
+	if(istype(I, /obj/item/device/tagger))
+		var/obj/item/device/tagger/O = I
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
 			sortTag = O.currTag
@@ -211,7 +211,7 @@
 	Parent.underlays -= src
 	qdel(src)
 
-/obj/item/device/destTagger
+/obj/item/device/tagger
 	name = "tagger"
 	desc = "Используется для наклейки меток, Ценников и Бирок."
 	icon_state = "dest_tagger"
@@ -235,7 +235,7 @@
 
 	var/label = ""
 
-/obj/item/device/destTagger/proc/openwindow(mob/user)
+/obj/item/device/tagger/proc/openwindow(mob/user)
 	var/dat = "<tt>"
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
@@ -263,7 +263,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/item/device/destTagger/Topic(href, href_list)
+/obj/item/device/tagger/Topic(href, href_list)
 	add_fingerprint(usr)
 	if(href_list["nextTag"] && (href_list["nextTag"] in tagger_locations))
 		src.currTag = href_list["nextTag"]
@@ -289,15 +289,16 @@
 		mode++
 		if(mode > modes.len)
 			mode = 1
+		currTag = 0
 	updateUsrDialog()
 	openwindow(usr)
 
 
-/obj/item/device/destTagger/attack_self(mob/user)
+/obj/item/device/tagger/attack_self(mob/user)
 	openwindow(user)
 	return
 
-/obj/item/device/destTagger/afterattack(obj/target, mob/user, proximity, params)
+/obj/item/device/tagger/afterattack(obj/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
@@ -317,7 +318,7 @@
 		if(3)
 			label(target, user)
 
-/obj/item/device/destTagger/proc/price(obj/target, mob/user)
+/obj/item/device/tagger/proc/price(obj/target, mob/user)
 	if(locate(/obj/price_tag) in target.contents)
 		return
 	if(!(isitem(target) || istype (target, /obj/structure/closet) || istype(target, /obj/structure/closet/crate)))
@@ -330,7 +331,7 @@
 	Tag.loc = target
 	target.underlays += Tag
 
-/obj/item/device/destTagger/proc/label(obj/target, mob/user)
+/obj/item/device/tagger/proc/label(obj/target, mob/user)
 	if(!label || !length(label))
 		to_chat(user, "<span class='notice'>Нет текста на бирке.</span>")
 		return

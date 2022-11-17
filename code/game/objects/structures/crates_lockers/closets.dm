@@ -174,7 +174,7 @@
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
-	else if(istype(W, /obj/item/device/destTagger))
+	else if(istype(W, /obj/item/device/tagger))
 		return
 
 	else

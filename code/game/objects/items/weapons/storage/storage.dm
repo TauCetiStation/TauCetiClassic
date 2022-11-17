@@ -198,7 +198,7 @@
 				break
 		if(!ok)
 			if(!stop_messages)
-				if (istype(W, /obj/item/weapon/hand_labeler))
+				if (istype(W, /obj/item/device/tagger))
 					return FALSE
 				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
 			return FALSE

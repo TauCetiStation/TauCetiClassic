@@ -7771,7 +7771,7 @@
 /area/velocity)
 "asw" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/hand_labeler,
+/obj/item/device/tagger,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -16171,7 +16171,7 @@
 /area/centcom/evac)
 "aKH" = (
 /obj/structure/table,
-/obj/item/weapon/hand_labeler,
+/obj/item/device/tagger,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aKI" = (

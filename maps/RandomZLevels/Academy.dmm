@@ -320,7 +320,7 @@
 /area/awaymission/academy/headmaster)
 "ba" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/hand_labeler,
+/obj/item/device/tagger,
 /turf/simulated/floor/wood,
 /area/awaymission/academy/headmaster)
 "bb" = (

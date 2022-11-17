@@ -75,7 +75,7 @@
 
 	else if(istype(W, /obj/item/weapon/packageWrap))	//OOP? Doesn't heard.
 		return
-	else if(istype(W, /obj/item/device/destTagger))
+	else if(istype(W, /obj/item/device/tagger))
 		return
 	else if(iscoil(W))
 		if(rigged)
