@@ -59,7 +59,9 @@ var/global/list/SOUNDIN_XENOMORPH_CHESTBURST = list('sound/voice/xenomorph/chest
 var/global/list/SOUNDIN_XENOMORPH_SPLITACID = list('sound/voice/xenomorph/spitacid_1.ogg', 'sound/voice/xenomorph/spitacid_2.ogg')
 // Beepsky
 var/global/list/SOUNDIN_BEEPSKY = list('sound/voice/beepsky/god.ogg', 'sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/secureday.ogg', 'sound/voice/beepsky/radio.ogg', 'sound/voice/beepsky/insult.ogg', 'sound/voice/beepsky/creep.ogg')
-
+//Compli-o-nator
+var/global/list/SOUNDIN_COMPLIONATOR_SHITCURITY = list('sound/voice/complionator/davai_poprobui_pobejat.ogg', 'sound/voice/complionator/neudachnik_vybral.ogg', 'sound/voice/complionator/seychas_uznaesh.ogg', 'sound/voice/complionator/stoy_prestupnoe.ogg', 'sound/voice/complionator/tolko_dvineshsya.ogg', 'sound/voice/complionator/ukrytsya_ot_pravosudia.ogg', 'sound/voice/complionator/upal_mordoy_v.ogg', 'sound/voice/complionator/u_vas_est_tolko.ogg', 'sound/voice/complionator/vinoven_ili_nevinoven.ogg', 'sound/voice/complionator/ya_zakon_ty.ogg', 'sound/voice/complionator/zhivym_ili_mertvym.ogg')
+var/global/list/SOUNDIN_COMPLIONATOR_LAWFUL = list('sound/voice/complionator/lawful_ne_dvigatsya.ogg', 'sound/voice/complionator/lawful_ni_s_mesta.ogg', 'sound/voice/complionator/lawful_stoyat.ogg', 'sound/voice/complionator/lawful_stoyat_na_meste.ogg')
 // ----- Misc -----
 var/global/list/SOUNDIN_SCARYSOUNDS = list('sound/weapons/thudswoosh.ogg', 'sound/weapons/guns/gunpulse_Taser.ogg', 'sound/weapons/armbomb.ogg', 'sound/voice/xenomorph/hiss_1.ogg', 'sound/voice/xenomorph/hiss_2.ogg', 'sound/voice/xenomorph/hiss_3.ogg', 'sound/voice/xenomorph/growl_1.ogg', 'sound/voice/xenomorph/growl_2.ogg', 'sound/effects/Glassbr1.ogg', 'sound/effects/Glassbr2.ogg', 'sound/effects/Glassbr3.ogg', 'sound/items/Welder.ogg', 'sound/items/Welder2.ogg','sound/machines/airlock/toggle.ogg', 'sound/effects/clownstep1.ogg', 'sound/effects/clownstep2.ogg')
 // Breath
