@@ -1125,7 +1125,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 				<tr><td><B>Описание: </B><SMALL><I>{{:value.description}}</I></SMALL><br></td></tr>
 				<tr><td><B>Продавец: </B><SMALL><I>{{:value.account}}</I></SMALL></td>
 				<td><B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
-				<td>{{:helper.link('Заказ', 'tag', {'choice' : "Shop_Order", 'order_item' : value.number})}}</td></tr>
+				<td>{{:helper.link('Заказ', 'tag', {'choice' : "Shop_Order", 'order_item' : value.id})}}</td></tr>
 		{{empty}}
 			<tr><td><center><H4>Нет предметов в наличии</H4></center></td></tr>
         {{/for}}

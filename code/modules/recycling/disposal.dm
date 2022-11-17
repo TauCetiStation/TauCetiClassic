@@ -1023,6 +1023,79 @@
 	icon_state = "pipe-tagger-partial"
 	partial = 1
 
+
+/obj/structure/disposalpipe/shop_scanner
+	name = "shop scanner"
+	icon_state = "pipe-shop"
+
+/obj/structure/disposalpipe/shop_scanner/atom_init()
+	. = ..()
+	dpdir = dir | turn(dir, 180)
+	update()
+
+/obj/structure/disposalpipe/shop_scanner/nextdir(fromdir)
+	return dir
+
+/obj/structure/disposalpipe/shop_scanner/transfer(obj/structure/disposalholder/H)
+	for(var/atom/movable/AM in H)
+		if(locate(/obj/price_tag) in AM.contents)
+			scan_item(H, AM)
+	return ..()
+
+/obj/structure/disposalpipe/shop_scanner/proc/scan_item(obj/structure/disposalholder/H, atom/movable/Item)
+	global.online_shop_lots.len++
+
+	var/obj/price_tag/Tag = locate(/obj/price_tag) in Item.contents
+	var/lot_name = Item.name
+	var/lot_desc = Tag.desc
+	var/lot_price = Tag.price
+	var/lot_account = Tag.account_number
+	var/lot_category = Tag.category
+
+	if (isitem(Item))
+		var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(src)
+		P.w_class = Item.w_class
+		var/i = round(Item.w_class)
+		if(i >= SIZE_MINUSCULE && i <= SIZE_NORMAL)
+			P.icon_state = "deliverycrate[i]"
+		Item.loc = P
+		Item = P
+	else if (istype(Item, /obj/structure/closet/crate))
+		var/obj/structure/closet/crate/C = Item
+		if (!C.opened)
+			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
+			P.icon_state = "deliverycrate"
+			C.loc = P
+			Item = P
+	else if (istype (Item, /obj/structure/closet))
+		var/obj/structure/closet/C = Item
+		if (!C.opened)
+			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
+			C.welded = 1
+			C.loc = P
+			Item = P
+	else if(istype (Item, /mob))
+		var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(src)
+		P.w_class = SIZE_NORMAL
+		P.icon_state = "deliverycrate[SIZE_NORMAL]"
+		Item.loc = P
+		Item = P
+		lot_desc = Item.desc
+		lot_name = Item.name
+		lot_price = 200
+		lot_category = "Разное"
+
+	Item.name = "Посылка номер: [global.online_shop_lots.len]"
+	Item.desc = "Наименование: [lot_name], Описание: [lot_desc], Цена: [lot_price]"
+
+	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, global.online_shop_lots.len, lot_account)
+
+	var/obj/lot_lock/Lock = new /obj/lot_lock(Lot)
+	Lock.loc = Item
+	Item.add_overlay(Lock)
+
+	Item.forceMove(H)
+
 //a three-way junction that sorts objects
 /obj/structure/disposalpipe/sortjunction
 	name = "sorting junction"

@@ -8194,6 +8194,9 @@
 "app" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/shop_scanner{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "apq" = (
@@ -8959,7 +8962,12 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/packer,
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "aqG" = (
@@ -17934,11 +17942,13 @@
 /area/station/civilian/bar)
 "ixH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/conveyor_switch/oneway{
 	id = "packageSort2"
+	},
+/obj/structure/disposalpipe/sortjunction/flipped{
+	dir = 8;
+	name = "Post";
+	sortType = "Post"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -30508,6 +30518,11 @@
 "upS" = (
 /obj/random/tools/tech_supply,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c";
+	layer = 1.9
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "uqq" = (

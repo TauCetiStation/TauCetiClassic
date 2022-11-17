@@ -33,6 +33,11 @@
 	var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
 	contraband = board.contraband_enabled
 	hacked = board.hacked
+	global.cargo_consoles += src
+
+/obj/machinery/computer/cargo/Destroy()
+	global.cargo_consoles -= src
+	..()
 
 /obj/machinery/computer/cargo/ui_interact(mob/user)
 	var/dat

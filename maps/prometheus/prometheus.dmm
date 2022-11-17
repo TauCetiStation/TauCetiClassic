@@ -38046,7 +38046,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/packer,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
@@ -48505,8 +48504,8 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "lAJ" = (
-/obj/structure/disposalpipe/segment{
-	dir = 1
+/obj/structure/disposalpipe/shop_scanner{
+	dir = 2
 	},
 /turf/simulated/floor{
 	dir = 4;

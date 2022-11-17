@@ -997,8 +997,8 @@
 			for(var/datum/shop_lot/Lot in global.online_shop_lots)
 				if(Lot.category == category && !Lot.sold)
 					var/datum/money_account/Acc = get_account(Lot.account)
-					shop_lots.len+=1
-					shop_lots[shop_lots.len] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "account" = Acc ? Acc.owner_name : "Unknown")
+					shop_lots.len++
+					shop_lots[shop_lots.len] = list("id" = shop_lots.len, "name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "account" = Acc ? Acc.owner_name : "Unknown")
 		if("Shop_Add_Order_or_Offer")
 			if(!check_pda_server())
 				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
@@ -1710,8 +1710,8 @@
 	charge_to_account(owner_account.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -prepayment)
 	charge_to_account(global.cargo_account.account_number, owner_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, prepayment)
 
-	for(var/obj/machinery/packer/Packer in global.packers)
-		var/obj/item/weapon/paper/P = new(get_turf(Packer.loc))
+	for(var/obj/machinery/computer/cargo/Console in global.cargo_consoles)
+		var/obj/item/weapon/paper/P = new(get_turf(Console.loc))
 
 		P.name = "Заказ предмета из магазина"
 		P.info += "Посылка номер #[Lot.number]<br>"

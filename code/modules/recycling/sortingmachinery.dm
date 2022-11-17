@@ -21,9 +21,11 @@
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
 	if(locate(/obj/lot_lock) in contents)
-		to_chat(user, "<span class='notice'>Mark as delivered to unlock the parcel</span>")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
-		return
+		var/obj/lot_lock/Lock = locate(/obj/lot_lock) in contents
+		if(!Lock.remove_lot_lock())
+			to_chat(user, "<span class='notice'>Mark as delivered to unlock the parcel</span>")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
+			return
 	if(contents.len > 0)
 		dump()
 	else
@@ -68,9 +70,11 @@
 
 /obj/item/smallDelivery/attack_self(mob/user)
 	if(locate(/obj/lot_lock) in contents)
-		to_chat(user, "<span class='notice'>Mark as delivered to unlock the parcel</span>")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
-		return
+		var/obj/lot_lock/Lock = locate(/obj/lot_lock) in contents
+		if(!Lock.remove_lot_lock())
+			to_chat(user, "<span class='notice'>Mark as delivered to unlock the parcel</span>")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
+			return
 	if(contents.len > 0)
 		user.drop_from_inventory(src)
 		dump(user)
@@ -190,12 +194,14 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "tag"
 	var/account_number = 111111
+	var/category = "Разное"
 	w_class = SIZE_MINUSCULE
 	price = 0
 
-/obj/price_tag/New(des, num, pri)
+/obj/price_tag/New(des, num, pri, cat)
 	desc = des
 	account_number = num
+	category = cat
 	price = pri
 	return ..()
 
@@ -221,6 +227,7 @@
 	origin_tech = "materials=1;engineering=1"
 	var/lot_description = "Это что-то"
 	var/lot_account_number = 111111
+	var/lot_category = "Разное"
 	var/lot_price = 0
 	var/Tagger = FALSE
 
@@ -240,6 +247,7 @@
 		dat += "Описание: <A href='?src=\ref[src];description=1'>[lot_description]</A><BR>\n"
 		dat += "Номер аккаунта: <A href='?src=\ref[src];number=1'>[lot_account_number]</A><BR>\n"
 		dat += "Цена: <A href='?src=\ref[src];price=1'>[lot_price]$</A><BR>\n"
+		dat += "Категория: <A href='?src=\ref[src];category=1'>[lot_category]</A><BR>\n"
 
 	dat += "<br>Режим: <A href='?src=\ref[src];tagger=1'>[Tagger ? "Доставка" : "Продажа"]</A><BR>\n"
 
@@ -253,7 +261,8 @@
 	return
 
 /obj/item/device/destTagger/afterattack(obj/target, mob/user, proximity, params)
-	if(!proximity) return
+	if(!proximity)
+		return
 	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
 		return
 
@@ -263,10 +272,13 @@
 		return
 	if(locate(/obj/price_tag) in target.contents)
 		return
-	if(!isitem(target))
+	if(!(isitem(target) || istype (target, /obj/structure/closet) || istype(target, /obj/structure/closet/crate)))
 		return
 
-	var/obj/price_tag/Tag = new /obj/price_tag(lot_description, lot_account_number, lot_price)
+	if(Tagger)
+		return
+
+	var/obj/price_tag/Tag = new /obj/price_tag(lot_description, lot_account_number, lot_price, lot_category)
 	Tag.loc = target
 	target.add_overlay(Tag)
 	target.verbs += /obj/verb/remove_price_tag
@@ -287,6 +299,10 @@
 		var/T = input("Вваедите цену:", "Маркировщик", input_default(lot_price), null)  as num
 		if(T && isnum(T) && T >= 0)
 			lot_price = T
+	else if(href_list["category"])
+		var/T = input("Выберите каталог", "Маркировщик", lot_category) in global.shop_categories
+		if(T && (T in global.shop_categories))
+			lot_category = T
 	else if(href_list["tagger"])
 		Tagger = !Tagger
 	updateUsrDialog()
