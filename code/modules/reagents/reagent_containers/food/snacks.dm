@@ -174,7 +174,6 @@
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
-	..()
 	if(iscorgi(M) || isIAN(M))
 		if(bitecount == 0 || prob(50))
 			M.visible_message("<b>[M]</b> nibbles away at the [src]")
@@ -183,6 +182,8 @@
 			var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
 			M.visible_message("<b>[M]</b> [sattisfaction_text]")
 			qdel(src)
+	else
+		..()
 	if(ismouse(M))
 		var/mob/living/simple_animal/mouse/N = M
 		if(M.layer == MOB_LAYER)
