@@ -110,6 +110,10 @@
 	if(!can_open())
 		return 0
 
+	if(locate(/obj/price_tag) in contents)
+		var/obj/price_tag/Tag = locate(/obj/price_tag) in contents
+		Tag.remove_tag()
+
 	src.icon_state = src.icon_opened
 	src.opened = 1
 
@@ -169,6 +173,8 @@
 		return ..()
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
+		return
+	else if(istype(W, /obj/item/device/destTagger))
 		return
 
 	else

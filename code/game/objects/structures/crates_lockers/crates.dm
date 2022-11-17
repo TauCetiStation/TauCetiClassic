@@ -21,6 +21,10 @@
 	if(!can_open())
 		return 0
 
+	if(locate(/obj/price_tag) in contents)
+		var/obj/price_tag/Tag = locate(/obj/price_tag) in contents
+		Tag.remove_tag()
+
 	if(rigged && locate(/obj/item/device/radio/electropack) in src)
 		if(isliving(usr))
 			var/mob/living/L = usr
@@ -70,6 +74,8 @@
 		return ..()
 
 	else if(istype(W, /obj/item/weapon/packageWrap))	//OOP? Doesn't heard.
+		return
+	else if(istype(W, /obj/item/device/destTagger))
 		return
 	else if(iscoil(W))
 		if(rigged)

@@ -271,6 +271,12 @@
 
 		to_chat(user, stat_flavor)
 
+	if(locate(/obj/price_tag) in contents)
+		var/obj/price_tag/Tag = locate(/obj/price_tag) in contents
+
+		var/price_tag_stat = "It has a price tag attached. Description: [Tag.desc], Price: [Tag.price]$"
+		to_chat(user, price_tag_stat)
+
 /obj/item/proc/mob_pickup(mob/user, hand_index=null)
 	if (!user || anchored)
 		return
@@ -416,6 +422,13 @@
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
 			return FALSE
+	return ..()
+
+/obj/item/attack_self(mob/user)
+	if(locate(/obj/price_tag) in contents)
+		var/obj/price_tag/Tag = locate(/obj/price_tag) in contents
+		Tag.remove_tag()
+
 	return ..()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
