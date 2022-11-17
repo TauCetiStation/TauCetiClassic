@@ -565,8 +565,10 @@
 			src.destinationTag = drone.mail_destination
 		if(istype(AM, /obj/structure/closet/body_bag))
 			has_bodybag = 1
-		if(locate(/obj/price_tag) in AM.contents)
-			src.destinationTag = "Post"
+		if(isobj(AM))
+			var/obj/Object = AM
+			if(Object.price_tag)
+				src.destinationTag = "Post"
 
 
 // start the movement process
@@ -1037,20 +1039,19 @@
 	return dir
 
 /obj/structure/disposalpipe/shop_scanner/transfer(obj/structure/disposalholder/H)
-	for(var/atom/movable/AM in H)
-		if(locate(/obj/price_tag) in AM.contents)
-			scan_item(H, AM)
+	for(var/obj/Object in H)
+		if(Object.price_tag)
+			scan_item(H, Object)
 	return ..()
 
-/obj/structure/disposalpipe/shop_scanner/proc/scan_item(obj/structure/disposalholder/H, atom/movable/Item)
+/obj/structure/disposalpipe/shop_scanner/proc/scan_item(obj/structure/disposalholder/H, obj/Item)
 	global.online_shop_lots.len++
 
-	var/obj/price_tag/Tag = locate(/obj/price_tag) in Item.contents
 	var/lot_name = Item.name
-	var/lot_desc = Tag.desc
-	var/lot_price = Tag.price
-	var/lot_account = Tag.account_number
-	var/lot_category = Tag.category
+	var/lot_desc = Item.price_tag["description"]
+	var/lot_price = Item.price_tag["price"]
+	var/lot_category = Item.price_tag["category"]
+	var/lot_account = Item.price_tag["account"]
 
 	if (isitem(Item))
 		var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(src)
@@ -1090,9 +1091,14 @@
 
 	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, global.online_shop_lots.len, lot_account)
 
-	var/obj/lot_lock/Lock = new /obj/lot_lock(Lot)
-	Lock.loc = Item
-	Item.add_overlay(Lock)
+	if(istype(Item, /obj/structure/bigDelivery))
+		var/obj/structure/bigDelivery/Package = Item
+		Package.Lot = Lot
+		Package.overlays += icon(icon = 'icons/obj/storage.dmi', icon_state = "package_lock")
+	else
+		var/obj/item/smallDelivery/Package = Item
+		Package.Lot = Lot
+		Package.overlays += icon(icon = 'icons/obj/storage.dmi', icon_state = "package_lock")
 
 	Item.forceMove(H)
 

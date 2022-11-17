@@ -5,6 +5,7 @@
 	icon_state = "deliverycloset"
 	density = TRUE
 	var/sortTag = ""
+	var/datum/shop_lot/Lot = null
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
@@ -17,15 +18,14 @@
 
 /obj/structure/bigDelivery/Destroy()
 	dump()
+	Lot = null
 	return ..()
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
-	if(locate(/obj/lot_lock) in contents)
-		var/obj/lot_lock/Lock = locate(/obj/lot_lock) in contents
-		if(!Lock.remove_lot_lock())
-			to_chat(user, "<span class='notice'>Отметьте посылку доставленной в приложении чтобы открыть замок</span>")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
-			return
+	if(Lot && !Lot.delivered)
+		to_chat(user, "<span class='notice'>Отметьте посылку доставленной в корзине чтобы открыть замок</span>")
+		playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
+		return
 	if(contents.len > 0)
 		dump()
 	else
@@ -56,6 +56,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycrateSmall"
 	var/sortTag = ""
+	var/datum/shop_lot/Lot = null
 
 /obj/item/smallDelivery/proc/dump(mob/user)
 	for(var/atom/movable/AM in contents)
@@ -66,15 +67,14 @@
 
 /obj/item/smallDelivery/Destroy()
 	dump()
+	Lot = null
 	return ..()
 
 /obj/item/smallDelivery/attack_self(mob/user)
-	if(locate(/obj/lot_lock) in contents)
-		var/obj/lot_lock/Lock = locate(/obj/lot_lock) in contents
-		if(!Lock.remove_lot_lock())
-			to_chat(user, "<span class='notice'>Отметьте посылку доставленной в приложении чтобы открыть замок</span>")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
-			return
+	if(Lot && !Lot.delivered)
+		to_chat(user, "<span class='notice'>Отметьте посылку доставленной в корзине чтобы открыть замок</span>")
+		playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
+		return
 	if(contents.len > 0)
 		user.drop_from_inventory(src)
 		dump(user)
@@ -190,27 +190,6 @@
 	if(src in user)
 		to_chat(user, "<span class='notice'>There are [amount] units of package wrap left!</span>")
 
-/obj/price_tag
-	icon = 'icons/obj/device.dmi'
-	icon_state = "tag"
-	var/account_number = 111111
-	var/category = "Разное"
-	w_class = SIZE_MINUSCULE
-	price = 0
-
-/obj/price_tag/New(des, num, pri, cat)
-	desc = des
-	account_number = num
-	category = cat
-	price = pri
-	return ..()
-
-/obj/price_tag/proc/remove_tag()
-	var/obj/Parent = src.loc
-	Parent.contents -= src
-	Parent.underlays -= src
-	qdel(src)
-
 /obj/item/device/tagger
 	name = "tagger"
 	desc = "Используется для наклейки меток, Ценников и Бирок."
@@ -240,7 +219,7 @@
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
 
-	dat += "<center>Режим: <A href='?src=\ref[src];change_mode=1'>[modes[mode]]</A></center><BR><BR>\n"
+	dat += "<center><HR>Режим: <A href='?src=\ref[src];change_mode=1'>[modes[mode]]</A></center><BR>\n"
 
 	switch(mode)
 		if(1)
@@ -319,17 +298,20 @@
 			label(target, user)
 
 /obj/item/device/tagger/proc/price(obj/target, mob/user)
-	if(locate(/obj/price_tag) in target.contents)
+	if(target.price_tag)
+		to_chat(user, "<span class='notice'>[target] already has a price tag.</span>")
 		return
-	if(!(isitem(target) || istype (target, /obj/structure/closet) || istype(target, /obj/structure/closet/crate)))
+	if(!((isitem(target) && !istype(target, /obj/item/smallDelivery)) || istype (target, /obj/structure/closet) || istype(target, /obj/structure/closet/crate)))
+		to_chat(user, "<span class='notice'>Нельзя повесить ценник на [target].</span>")
 		return
 
 	user.visible_message("<span class='notice'>[user] adds a price tag to [target].</span>", \
 						 "<span class='notice'>You added a price tag to [target].</span>")
 
-	var/obj/price_tag/Tag = new /obj/price_tag(lot_description, lot_account_number, lot_price, lot_category)
-	Tag.loc = target
-	target.underlays += Tag
+	target.price_tag = list("description" = lot_description, "price" = lot_price, "category" = lot_category, "account" = lot_account_number)
+	target.verbs += /obj/verb/remove_price_tag
+
+	target.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
 
 /obj/item/device/tagger/proc/label(obj/target, mob/user)
 	if(!label || !length(label))
