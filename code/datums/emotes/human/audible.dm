@@ -359,6 +359,7 @@
 /datum/emote/human/hmm_think/get_sound(mob/living/carbon/human/user, intentional)
 	return pick(user.gender == FEMALE ? SOUNDIN_HMM_THINK_FEMALE : SOUNDIN_HMM_THINK_MALE)
 
+
 /datum/emote/human/hmm_question
 	key = "hmm?"
 
@@ -381,6 +382,7 @@
 
 /datum/emote/human/hmm_question/get_sound(mob/living/carbon/human/user, intentional)
 	return pick(user.gender == FEMALE ? SOUNDIN_HMM_QUESTION_FEMALE : SOUNDIN_HMM_QUESTION_MALE)
+
 
 /datum/emote/human/hmm_excited
 	key = "hmm!"
@@ -422,8 +424,7 @@
 	age_variations = TRUE
 
 	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION)
+		EMOTE_STATE(is_stat, CONSCIOUS)
 	)
 
 /datum/emote/human/woo/get_sound(mob/living/carbon/human/user, intentional)
