@@ -40,8 +40,8 @@
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
-	damage = 15
-	dispersion = 4.0
+	damage = 14
+	dispersion = 2.5
 
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
