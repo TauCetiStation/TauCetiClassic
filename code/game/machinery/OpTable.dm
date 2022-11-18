@@ -104,7 +104,7 @@
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		src.victim = H
-		icon_state = H.pulse ? icon_state_active : "table_surgey_idle"
+		icon_state = H.pulse ? icon_state_active : initial(icon_state)
 	else
 		icon_state = initial(icon_state)
 
