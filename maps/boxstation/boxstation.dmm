@@ -66340,9 +66340,8 @@
 "hRe" = (
 /obj/structure/table/woodentable,
 /obj/machinery/computer/med_data/laptop,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
+/obj/machinery/newscaster{
+	pixel_x = 30
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
@@ -70968,6 +70967,10 @@
 	dir = 8;
 	network = list("SS13","Medical");
 	pixel_y = -22
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 18
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
@@ -77916,10 +77919,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "qGL" = (
-/obj/machinery/newscaster{
-	pixel_x = -28;
-	pixel_y = 1
-	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "qHn" = (
@@ -82647,11 +82646,11 @@
 	},
 /area/station/civilian/garden)
 "uNN" = (
+/obj/machinery/dna_scannernew,
 /obj/machinery/alarm{
 	dir = 8;
-	pixel_x = 25
+	pixel_x = 22
 	},
-/obj/machinery/dna_scannernew,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -84300,7 +84299,7 @@
 	},
 /obj/machinery/alarm{
 	dir = 4;
-	pixel_x = -25
+	pixel_x = -22
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -85219,9 +85218,6 @@
 /turf/simulated/floor,
 /area/station/medical/chemistry)
 "xhr" = (
-/obj/machinery/newscaster{
-	pixel_x = 32
-	},
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	name = "Morgue APC";
