@@ -428,15 +428,3 @@
 
 /datum/emote/human/woo/get_sound(mob/living/carbon/human/user, intentional)
 	return pick(user.gender == FEMALE ? SOUNDIN_WOO_FEMALE : SOUNDIN_WOO_MALE)
-
-/datum/emote/human/woo/play_sound(mob/living/carbon/human/user, intentional, emote_sound)
-	var/voice_frequency = TRANSLATE_RANGE(user.age, user.species.min_age, user.species.max_age, 0.85, 1.05)
-	var/sound_frequency = 1.05 - (voice_frequency - 0.85)
-
-	playsound(user, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
-	message_type = SHOWMSG_AUDIO
-	age_variations = TRUE
-
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS)
-	)
