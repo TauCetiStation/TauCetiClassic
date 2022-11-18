@@ -355,9 +355,6 @@
 
 	var/mob/living/carbon/human/H = L
 	var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
-	if(BP.status == 0)
-		to_chat(user, "<span class='danger'>[H]'s [BP.name] does not need a splint!</span>")
-		return FALSE
 	if(BP.status & ORGAN_SPLINTED)
 		to_chat(user, "<span class='danger'>[H]'s [BP.name] is already splinted!</span>")
 		return FALSE
