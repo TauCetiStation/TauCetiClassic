@@ -763,3 +763,4 @@
 	qdel(tool)
 	target.ear_damage = 0
 	target.ear_deaf = 0
+	target.sdisabilities &= ~DEAF

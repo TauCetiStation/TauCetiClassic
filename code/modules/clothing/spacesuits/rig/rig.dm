@@ -10,7 +10,6 @@
 	allowed = list(/obj/item/device/flashlight)
 	var/brightness_on = 4 //luminosity when on
 	var/on = 0
-
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	var/obj/item/clothing/suit/space/rig/rig_connect
@@ -62,6 +61,7 @@
 	icon_state = "rig-engineering"
 	item_state = "eng_hardsuit"
 	slowdown = 0.5
+	var/magpulse = FALSE
 	var/offline_slowdown = 2
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 20)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
@@ -81,7 +81,6 @@
 		SKRELL = 'icons/obj/clothing/species/skrell/suits.dmi',
 		VOX = 'icons/obj/clothing/species/vox/suits.dmi',
 		)
-	var/magpulse = 0
 	//Breach thresholds, should ideally be inherited by most (if not all) hardsuits.
 	breach_threshold = 18
 	can_breach = 1
@@ -297,9 +296,8 @@
 					module.activate()
 
 		if(!offline)
-			slowdown = initial(slowdown)
-		else
 			slowdown = offline_slowdown
+
 
 	if(!offline)
 		var/total_energy_use = passive_energy_use
@@ -409,7 +407,9 @@
 	if(old_wearer)
 		update_overlays(old_wearer)
 		remove_actions(old_wearer)
+		disable_magpulse(old_wearer)
 		selected_module = null
+
 		STOP_PROCESSING(SSobj, src)
 		process() // process one last time so we can disable all modules and other stuff
 
@@ -470,16 +470,22 @@
 	if(H.wear_suit != src) return
 
 	if(magpulse)
-		flags &= ~NOSLIP
-		src.slowdown = initial(slowdown)
-		magpulse = 0
-		to_chat(H, "You disable \the [src] the mag-pulse traction system.")
+		disable_magpulse(H)
 	else
-		flags |= NOSLIP
-		src.slowdown += boots.slowdown_off
-		magpulse = 1
-		to_chat(H, "You enable the mag-pulse traction system.")
+		enable_magpulse(H)
 	H.update_gravity(H.mob_has_gravity())
+
+/obj/item/clothing/suit/space/rig/proc/enable_magpulse(mob/user)
+		flags |= NOSLIP
+		slowdown = boots.slowdown_off
+		magpulse = TRUE
+		to_chat(user, "You enable \the [src] the mag-pulse traction system.")
+
+/obj/item/clothing/suit/space/rig/proc/disable_magpulse(mob/user)
+		flags &= ~NOSLIP
+		slowdown = initial(slowdown)
+		magpulse = FALSE
+		to_chat(user, "You disable \the [src] the mag-pulse traction system.")
 
 /obj/item/clothing/suit/space/rig/negates_gravity()
 	return flags & NOSLIP

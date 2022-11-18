@@ -284,6 +284,7 @@
 /obj/item/weapon/bedsheet/purple,
 /obj/structure/alien/weeds,
 /obj/machinery/alarm{
+	hidden_from_console = 1;
 	pixel_y = 22
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -333,6 +334,7 @@
 /obj/item/weapon/tank/oxygen,
 /obj/item/weapon/pickaxe,
 /obj/machinery/alarm{
+	hidden_from_console = 1;
 	pixel_y = -32
 	},
 /turf/simulated/shuttle/floor/vox,
@@ -501,6 +503,7 @@
 /obj/machinery/computer/reconstitutor/animal,
 /obj/structure/alien/weeds,
 /obj/machinery/alarm{
+	hidden_from_console = 1;
 	pixel_x = -28;
 	pixel_y = -6
 	},

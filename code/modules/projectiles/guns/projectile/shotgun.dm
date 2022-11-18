@@ -123,14 +123,9 @@
 
 	else if(istype(I, /obj/item/ammo_box) || istype(I, /obj/item/ammo_casing))
 		if(open)
-			to_chat(user, "<span class='notice'>You load shell into \the [src]!</span>")
-			playsound(src, 'sound/weapons/guns/reload_shotgun.ogg', VOL_EFFECTS_MASTER)
-			chamber_round()
-			update_icon()
+			return ..()
 		else
 			to_chat(user, "<span class='notice'>You can't load shell while [src] is closed!</span>")
-
-	return ..()
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attack_self(mob/living/user)
 	add_fingerprint(user)
@@ -206,14 +201,14 @@
 	return 1
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action
-	name = "bolt-action rifle"
-	desc = "Springfield M1903."
+	name = "Mosin-Nagant"
+	desc = "Produced by the same group of shady space-soviet people that scrapped together A74 for Gorlex Marauders, this ancient bolt-action rifle uses same 7.74 ammo in clips and is perfectly fit to arm human waves in the name of Revolution."
 	icon_state = "bolt-action"
 	item_state = "bolt-action"
 	origin_tech = "combat=5;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/a3006_clip
+	mag_type = /obj/item/ammo_box/magazine/a774clip
 	w_class = SIZE_BIG
-	slot_flags = 0
+	slot_flags = SLOT_FLAGS_BACK
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action/pump(mob/M)
 	playsound(M, 'sound/weapons/guns/reload_bolt.ogg', VOL_EFFECTS_MASTER, null, FALSE)

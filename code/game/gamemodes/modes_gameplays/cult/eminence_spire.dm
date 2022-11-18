@@ -8,12 +8,13 @@
 	max_integrity = 1500
 	pixel_x = -16
 	pixel_y = -2
+	anchored = TRUE
 	var/mob/eminence_nominee //Exactly for mob that wants to be an eminence
 	var/ghost_nomination = FALSE
 	var/selection_timer //Timer ID; this is canceled if the vote is canceled
 	var/kingmaking
 
-//Returns a list of all servants of Ratvar and observers.
+//Returns a list of all servants of Nar-Sie and observers.
 /proc/servants_and_ghosts()
 	. = list()
 	for(var/V in player_list)
@@ -129,6 +130,7 @@
 		var/mob/camera/eminence/eminence = new(get_turf(src))
 		cult_religion.send_message_to_members("<span class='large'>Призрак стал Возвышенным!</span>", , 4, eminence) //Before key transfer
 		eminence_nominee = pick(candidates)
+		eminence.mind_initialize()
 		eminence.key = eminence_nominee.key
 		eminence.eminence_help()
 	for(var/mob/M as anything in servants_and_ghosts())

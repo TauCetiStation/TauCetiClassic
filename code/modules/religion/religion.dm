@@ -398,6 +398,17 @@
 /datum/religion/proc/affect_divine_power_rite(datum/religion_rites/R)
 	R.divine_power = calc_divine_power(R.needed_aspects, initial(R.divine_power))
 
+/**
+ * Returns a list with the difference between the needed aspects for rite and those in religion.
+ * Return format: "Aspect name" = difference
+ */
+/datum/religion/proc/get_aspect_diffs(list/rite_aspects)
+	var/list/diffs = list()
+	for(var/need_aspect in rite_aspects)
+		var/datum/aspect/aspect = aspects[need_aspect]
+		diffs[aspect.name] = aspect.power - rite_aspects[need_aspect]
+	return diffs
+
 // Give our gods all needed spells which in /list/spells
 /datum/religion/proc/give_god_spells(mob/G)
 	for(var/spell in god_spells)
