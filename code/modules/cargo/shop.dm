@@ -1,6 +1,5 @@
 var/global/list/online_shop_lots = list()
 var/global/list/shop_categories = list("Еда", "Одежда", "Устройства", "Инструменты", "Ресурсы", "Наборы", "Разное")
-var/global/list/cargo_consoles = list()
 
 /datum/shop_lot
 	var/name = "Лот"

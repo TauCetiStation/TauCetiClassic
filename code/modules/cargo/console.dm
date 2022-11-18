@@ -1,3 +1,6 @@
+var/global/list/cargo_consoles = list()
+
+ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 /obj/machinery/computer/cargo
 	name = "Supply console"
 	desc = "Used to order supplies, approve requests, and control the shuttle."
@@ -33,10 +36,8 @@
 	var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
 	contraband = board.contraband_enabled
 	hacked = board.hacked
-	global.cargo_consoles += src
 
 /obj/machinery/computer/cargo/Destroy()
-	global.cargo_consoles -= src
 	..()
 
 /obj/machinery/computer/cargo/ui_interact(mob/user)

@@ -1068,23 +1068,13 @@
 			P.icon_state = "deliverycrate"
 			C.loc = P
 			Item = P
-	else if (istype (Item, /obj/structure/closet))
+	else
 		var/obj/structure/closet/C = Item
 		if (!C.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
 			C.welded = 1
 			C.loc = P
 			Item = P
-	else if(istype (Item, /mob))
-		var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(src)
-		P.w_class = SIZE_NORMAL
-		P.icon_state = "deliverycrate[SIZE_NORMAL]"
-		Item.loc = P
-		Item = P
-		lot_desc = Item.desc
-		lot_name = Item.name
-		lot_price = 200
-		lot_category = "Разное"
 
 	Item.name = "Посылка номер: [global.online_shop_lots.len]"
 	Item.desc = "Наименование: [lot_name], Описание: [lot_desc], Цена: [lot_price]"
