@@ -7,14 +7,55 @@ var/global/list/obj/machinery/paperwork/papermachines = list()
 	icon = 'icons/obj/machines/printers.dmi'
 
 	var/id = ""
-	var/list/income_queue = list()
-	var/list/outcome_queue = list()
+	var/list/queue = list()
 
 /obj/machinery/paperwork/atom_init()
 	. = ..()
 
 	global.papermachines += src
 
+	STOP_PROCESSING(SSmachines, src)
+
+/obj/machinery/paperwork/proc/earn_document(type, name, content)//Types are "photo", "document"
+	queue += list("type" = type, "name" = name, "content" = content)
+	START_PROCESSING(SSmachines, src)
+
+/obj/machinery/paperwork/proc/print_photo(name, content)
+	var/icon/small_img = icon(content)
+	var/icon/tiny_img = icon(content)
+	var/icon/ic = icon('icons/obj/items.dmi',"photo")
+	var/icon/pc = icon('icons/obj/bureaucracy.dmi', "photo")
+	small_img.Scale(8, 8)
+	tiny_img.Scale(4, 4)
+	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
+	pc.Blend(tiny_img,ICON_OVERLAY, 12, 19)
+
+	var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo(src.loc)
+	Photo.icon = ic
+	Photo.tiny = pc
+	img = content
+	desc = P.fields["desc"]
+	photographed_names = P.fields["mob_names"]
+	pixel_x = P.fields["pixel_x"]
+	pixel_y = P.fields["pixel_y"]
+
+/obj/machinery/paperwork/printer/process()
+	if(!papers || !queue.len)
+		STOP_PROCESSING(SSmachines, src)
+		return
+	var/processing_state = "printer-paper-process"
+	if(papers > 1)
+		processing_state = "printer-papers-process"
+
+	var/list/Item = queue[1]
+	switch(Item["type"])
+		if("photo")
+			print_photo(name, content)
+		if("document")
+			print_document(name, content)
+	queue -= Item
+
+	flick(processing_state, src)
 
 /obj/machinery/faxmachine
 	name = "fax machine"
