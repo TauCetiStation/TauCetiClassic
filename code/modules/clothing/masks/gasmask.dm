@@ -61,20 +61,20 @@
 // **** Security gas mask (TG-stuff) ****
 /obj/item/clothing/mask/gas/sechailer
 	name = "security gas mask"
-	desc = "Стандартный противогаз охраны с модицикацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока охранник забивает преступника насмерть."
+	desc = "Стандартный противогаз охраны с модицикацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока офицер забивает преступника насмерть."
 	action_button_name = "Toggle Mask"
 	icon_state = "secmask"
 	var/cooldown = 0
 	var/shitcurity_mode = FALSE
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
-	var/list/phrases_lawful = list(
+	var/static/list/phrases_lawful = list(
 		"Не двигаться!",
 		"Ни с места!",
 		"Стоять!",
 		"Стоять на месте!")
 	
-	var/list/pharses_shitcurity = list(
+	var/static/list/pharses_shitcurity = list(
 		"Давай, попробуй побежать. Безмозглый идиот.",
 		"Неудачник выбрал не тот день для нарушения закона.",
 		"Сейчас узнаешь что такое настоящее правосудие, мудак.",
