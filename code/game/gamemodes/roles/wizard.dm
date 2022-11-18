@@ -11,6 +11,9 @@
 	logo_state = "wizard-logo"
 	skillset_type = /datum/skillset/wizard
 
+	var/list/list_of_spellbooks = list()
+	stat_type = /datum/stat/role/wizard
+
 /datum/role/wizard/Greet(greeting, custom)
 	. = ..()
 	to_chat(antag.current, "<B>The Space Wizards Federation has given you the following tasks:</B>")

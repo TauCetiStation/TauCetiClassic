@@ -28,6 +28,11 @@
 	if(!S || QDELETED(S))
 		S = new spell_type()
 	feedback_add_details("wizard_spell_learned",log_name)
+	var/datum/stat/book_purchase/stat = new
+	stat.power_type = spell_type
+	stat.power_name = name
+	stat.cost = cost
+	book.book_purchases += stat
 	user.AddSpell(S)
 	to_chat(user, "<span class='notice'>Вы выучили [S.name].</span>")
 	return TRUE
@@ -52,6 +57,11 @@
 		if(initial(S.name) == initial(aspell.name))
 			user.RemoveSpell(aspell)
 			qdel(S)
+			var/datum/stat/book_purchase/stat = new
+			stat.power_type = spell_type
+			stat.power_name = name
+			stat.cost = cost
+			book.book_purchases -= stat
 			return cost
 	return -1
 /datum/spellbook_entry/proc/GetInfo()
@@ -268,6 +278,11 @@
 		surplus = max(surplus - 1, 0)
 	new item_path (get_turf(user))
 	feedback_add_details("wizard_spell_learned", log_name)
+	var/datum/stat/book_purchase/stat = new
+	stat.power_type = item_path
+	stat.power_name = name
+	stat.cost = cost
+	book.book_purchases += stat
 	return TRUE
 
 /datum/spellbook_entry/item/GetInfo()
@@ -432,6 +447,7 @@
 	var/datum/mind/owner
 	var/list/datum/spellbook_entry/entries = list()
 	var/list/categories = list()
+	var/list/book_purchases = list()
 
 /obj/item/weapon/spellbook/examine(mob/user)
 	..()
@@ -517,7 +533,11 @@
 /obj/item/weapon/spellbook/attack_self(mob/user)
 	if(!owner)
 		to_chat(user, "<span class='notice'>Вы привязали книгу к себе.</span>")
-		owner = user.mind
+		var/datum/mind/M = user.mind
+		owner = M
+		var/datum/role/wizard/wiz_role = M.GetRole(WIZARD)
+		if(wiz_role)
+			wiz_role.list_of_spellbooks += src
 		return
 	if(user.mind != owner)
 		to_chat(user, "<span class='warning'>[name] не распознала вас как владельца и отказывается открываться!</span>")
