@@ -199,11 +199,6 @@
 	_wizard_info.book_purchases = list()
 	for(var/obj/item/weapon/spellbook/book in W.list_of_spellbooks)
 		for(var/datum/stat/book_purchase/book_stat in book.book_purchases)
-			/*var/datum/stat/book_purchase/wiz_stat
-			wiz_stat.power_name = book_stat.name
-			wiz_stat.power_type = book_stat.type
-			wiz_stat.cost = book_stat.genomecost
-			*/
 			_wizard_info.book_purchases += book_stat
 
 	wizard_info = _wizard_info
