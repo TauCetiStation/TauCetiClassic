@@ -407,6 +407,7 @@
 /datum/emote/human/hmm_excited/get_sound(mob/living/carbon/human/user, intentional)
 	return pick(user.gender == FEMALE ? SOUNDIN_HMM_EXCLAIM_FEMALE : SOUNDIN_HMM_EXCLAIM_MALE)
 
+
 /datum/emote/human/woo
 	key = "woo"
 
