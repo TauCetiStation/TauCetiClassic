@@ -17,25 +17,19 @@
 
 /mob/living/carbon/human/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	. = ..()
-	var/size_diff_calculate = SIZE_DIFFERENCE(AM, src)
 	//should be non-negative
+	var/size_diff_calculate = AM.w_class - w_class
 	if(size_diff_calculate < 0)
 		return
 	var/weight_diff_coef = 1 + sqrt(size_diff_calculate)
 	if(weight_diff_coef)
-		if(isSlipImmune())
+		if(istype(shoes, /obj/item/clothing/shoes) && shoes.flags & NOSLIP || (istype(wear_suit, /obj/item/clothing/suit/space/rig) && wear_suit.flags & NOSLIP))
 			adjustHalLoss(15 * weight_diff_coef)	//thicc landing
 		else
-			AdjustWeakened(3 * weight_diff_coef)	//3 seconds is default slip
+			AdjustWeakened(2 * weight_diff_coef)	//4 seconds is default slip
 		visible_message("<span class='warning'>[AM] falls at [src].</span>",
 						"<span class='warning'>[AM] falls at you!</span>",
 						"<span class='notice'>You hear something heavy fall.</span>")
-
-/mob/living/carbon/human/proc/isSlipImmune()
-	if(istype(shoes, /obj/item/clothing/shoes) && shoes.flags & NOSLIP)
-		return TRUE
-	if(istype(wear_suit, /obj/item/clothing/suit/space/rig) && wear_suit.flags & NOSLIP)
-		return TRUE
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
 	def_zone = check_zone(def_zone)
