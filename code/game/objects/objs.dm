@@ -46,8 +46,9 @@
 		to_chat(user, "It has a price tag attached. Description: [price_tag["description"]], Price: [price_tag["price"]]$")
 
 /obj/verb/remove_price_tag()
-	set src in oview(1)
 	set name = "Снять ценник"
+	set src in view(1)
+	set category = "Object"
 
 	price_tag = null
 	underlays -= icon(icon = 'icons/obj/device.dmi', icon_state = "tag")

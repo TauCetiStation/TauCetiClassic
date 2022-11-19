@@ -1057,7 +1057,8 @@
 		var/i = round(Item.w_class)
 		if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
 			P.icon_state = "deliverycrate[i]-shop"
-		P.max_integrity = 100
+		P.modify_max_integrity(75)
+		P.atom_fix()
 		P.damage_deflection = 25
 		Item.loc = P
 		Item = P
@@ -1066,7 +1067,8 @@
 		if (!C.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
 			P.icon_state = "deliverycrate-shop"
-			P.max_integrity = 100
+			P.modify_max_integrity(75)
+			P.atom_fix()
 			P.damage_deflection = 25
 			C.loc = P
 			Item = P
@@ -1075,7 +1077,8 @@
 		if (!C.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
 			P.icon_state = "deliverycloset-shop"
-			P.max_integrity = 100
+			P.modify_max_integrity(75)
+			P.atom_fix()
 			P.damage_deflection = 25
 			C.welded = 1
 			C.loc = P
