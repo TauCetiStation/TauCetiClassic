@@ -1045,8 +1045,6 @@
 	return ..()
 
 /obj/structure/disposalpipe/shop_scanner/proc/scan_item(obj/structure/disposalholder/H, obj/Item)
-	global.online_shop_lots.len++
-
 	var/lot_name = Item.name
 	var/lot_desc = Item.price_tag["description"]
 	var/lot_price = Item.price_tag["price"]
@@ -1057,38 +1055,47 @@
 		var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(src)
 		P.w_class = Item.w_class
 		var/i = round(Item.w_class)
-		if(i >= SIZE_MINUSCULE && i <= SIZE_NORMAL)
-			P.icon_state = "deliverycrate[i]"
+		if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
+			P.icon_state = "deliverycrate[i]-shop"
+		P.max_integrity = 100
+		P.damage_deflection = 25
 		Item.loc = P
 		Item = P
 	else if (istype(Item, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/C = Item
 		if (!C.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
-			P.icon_state = "deliverycrate"
+			P.icon_state = "deliverycrate-shop"
+			P.max_integrity = 100
+			P.damage_deflection = 25
 			C.loc = P
 			Item = P
-	else
+	else if (istype(Item, /obj/structure/closet))
 		var/obj/structure/closet/C = Item
 		if (!C.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
+			P.icon_state = "deliverycloset-shop"
+			P.max_integrity = 100
+			P.damage_deflection = 25
 			C.welded = 1
 			C.loc = P
 			Item = P
+	else
+		return
 
 	Item.name = "Посылка номер: [global.online_shop_lots.len]"
 	Item.desc = "Наименование: [lot_name], Описание: [lot_desc], Цена: [lot_price]"
+
+	global.online_shop_lots.len++
 
 	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, global.online_shop_lots.len, lot_account)
 
 	if(istype(Item, /obj/structure/bigDelivery))
 		var/obj/structure/bigDelivery/Package = Item
 		Package.Lot = Lot
-		Package.overlays += icon(icon = 'icons/obj/storage.dmi', icon_state = "package_lock")
 	else
 		var/obj/item/smallDelivery/Package = Item
 		Package.Lot = Lot
-		Package.overlays += icon(icon = 'icons/obj/storage.dmi', icon_state = "package_lock")
 
 	Item.forceMove(H)
 

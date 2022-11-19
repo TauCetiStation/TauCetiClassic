@@ -29,6 +29,10 @@
 	STOP_PROCESSING(SSobj, src)
 	return 0
 
+/obj/atom_init()
+	. = ..()
+	verbs -= /obj/verb/remove_price_tag
+
 /obj/Destroy()
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists

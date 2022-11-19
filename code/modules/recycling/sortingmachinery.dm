@@ -9,6 +9,10 @@
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
+	max_integrity = 5
+	damage_deflection = 0
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/bigDelivery/proc/dump()
 	for(var/atom/movable/AM in contents)
 		if(istype(AM, /obj/structure/closet))
@@ -57,6 +61,10 @@
 	icon_state = "deliverycrateSmall"
 	var/sortTag = ""
 	var/datum/shop_lot/Lot = null
+
+	max_integrity = 5
+	damage_deflection = 0
+	resistance_flags = CAN_BE_HIT
 
 /obj/item/smallDelivery/proc/dump(mob/user)
 	for(var/atom/movable/AM in contents)
@@ -256,7 +264,7 @@
 	else if(href_list["price"])
 		var/T = input("Вваедите цену:", "Маркировщик", input_default(lot_price), null)  as num
 		if(T && isnum(T) && T >= 0)
-			lot_price = T
+			lot_price = min(T, 5000)
 	else if(href_list["category"])
 		var/T = input("Выберите каталог", "Маркировщик", lot_category) in global.shop_categories
 		if(T && (T in global.shop_categories))
