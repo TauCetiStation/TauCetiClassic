@@ -3695,6 +3695,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door_control{
+	id = "hos_blast";
+	name = "Privacy Shutters";
+	pixel_x = -5;
+	pixel_y = -4
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "agx" = (
@@ -50245,12 +50251,6 @@
 	pixel_x = -26;
 	pixel_y = 39;
 	req_access = list(2)
-	},
-/obj/machinery/door_control{
-	id = "hos_blast";
-	name = "Privacy Shutters";
-	pixel_x = -38;
-	pixel_y = 28
 	},
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
