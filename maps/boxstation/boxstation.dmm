@@ -79199,14 +79199,13 @@
 	},
 /area/station/civilian/hydroponics)
 "lGb" = (
-/obj/structure/closet/emcloset,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteblue"
 	},
 /area/station/medical/reception)
 "lHb" = (
-/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
