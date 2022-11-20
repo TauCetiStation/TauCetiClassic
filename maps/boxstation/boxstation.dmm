@@ -3699,7 +3699,22 @@
 	id = "hos_blast";
 	name = "Privacy Shutters";
 	pixel_x = -6;
+	pixel_y = -4;
+	req_access = list(2)
+	},
+/obj/machinery/door_control{
+	id = "Secure Gate";
+	name = "Brig Lockdown";
+	req_access = list(2);
+	pixel_x = 6;
 	pixel_y = -4
+	},
+/obj/machinery/door_control{
+	id = "Prison Gate";
+	name = "Prison Wing Lockdown";
+	req_access = list(2);
+	pixel_y = 7;
+	pixel_x = 6
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
@@ -50238,20 +50253,6 @@
 /turf/simulated/wall/r_wall,
 /area/station/storage/tech)
 "bLX" = (
-/obj/machinery/door_control{
-	id = "Secure Gate";
-	name = "Brig Lockdown";
-	pixel_x = -26;
-	pixel_y = 28;
-	req_access = list(2)
-	},
-/obj/machinery/door_control{
-	id = "Prison Gate";
-	name = "Prison Wing Lockdown";
-	pixel_x = -26;
-	pixel_y = 39;
-	req_access = list(2)
-	},
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
 	},
