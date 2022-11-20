@@ -37,9 +37,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 	contraband = board.contraband_enabled
 	hacked = board.hacked
 
-/obj/machinery/computer/cargo/Destroy()
-	..()
-
 /obj/machinery/computer/cargo/ui_interact(mob/user)
 	var/dat
 	if(!requestonly)
