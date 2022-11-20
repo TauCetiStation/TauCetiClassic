@@ -16,6 +16,15 @@
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
 	return TRUE
 
+/datum/spellbook_entry/proc/RecordPurchase(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	var/datum/stat/book_purchase/stat = new
+	stat.power_type = spell_type
+	stat.power_name = name
+	stat.cost = cost
+	var/datum/role/wizard/wiz_role = book.getUsersWizardRole(user)
+	if(wiz_role)
+		wiz_role.list_of_purchases += stat
+
 /datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) // Specific circumstances
 	if(book.uses < cost)
 		return FALSE
@@ -28,11 +37,7 @@
 	if(!S || QDELETED(S))
 		S = new spell_type()
 	feedback_add_details("wizard_spell_learned",log_name)
-	var/datum/stat/book_purchase/stat = new
-	stat.power_type = spell_type
-	stat.power_name = name
-	stat.cost = cost
-	book.book_purchases += stat
+	RecordPurchase(user, book)
 	user.AddSpell(S)
 	to_chat(user, "<span class='notice'>Вы выучили [S.name].</span>")
 	return TRUE
@@ -57,11 +62,6 @@
 		if(initial(S.name) == initial(aspell.name))
 			user.RemoveSpell(aspell)
 			qdel(S)
-			var/datum/stat/book_purchase/stat = new
-			stat.power_type = spell_type
-			stat.power_name = name
-			stat.cost = cost
-			book.book_purchases -= stat
 			return cost
 	return -1
 /datum/spellbook_entry/proc/GetInfo()
@@ -268,6 +268,15 @@
 	buy_word = "Призвать"
 	var/item_path= null
 
+/datum/spellbook_entry/item/RecordPurchase(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	var/datum/stat/book_purchase/stat = new
+	stat.power_type = item_path
+	stat.power_name = name
+	stat.cost = cost
+	var/datum/role/wizard/wiz_role = book.getUsersWizardRole(user)
+	if(wiz_role)
+		wiz_role.list_of_purchases += stat
+
 /datum/spellbook_entry/item/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) // Specific circumstances
 	. = ..()
 	if(.)
@@ -278,11 +287,7 @@
 		surplus = max(surplus - 1, 0)
 	new item_path (get_turf(user))
 	feedback_add_details("wizard_spell_learned", log_name)
-	var/datum/stat/book_purchase/stat = new
-	stat.power_type = item_path
-	stat.power_name = name
-	stat.cost = cost
-	book.book_purchases += stat
+	RecordPurchase(user, book)
 	return TRUE
 
 /datum/spellbook_entry/item/GetInfo()
@@ -447,7 +452,6 @@
 	var/datum/mind/owner
 	var/list/datum/spellbook_entry/entries = list()
 	var/list/categories = list()
-	var/list/book_purchases = list()
 
 /obj/item/weapon/spellbook/examine(mob/user)
 	..()
@@ -471,7 +475,11 @@
 			qdel(E)
 	tab = categories[1]
 
-
+/obj/item/weapon/spellbook/proc/getUsersWizardRole(mob/user)
+	var/datum/mind/user_mind = user.mind
+	var/datum/role/wizard/wiz_role = user_mind.GetRole(WIZARD)
+	if(wiz_role)
+		return wiz_role
 
 /obj/item/weapon/spellbook/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/contract))
@@ -533,11 +541,7 @@
 /obj/item/weapon/spellbook/attack_self(mob/user)
 	if(!owner)
 		to_chat(user, "<span class='notice'>Вы привязали книгу к себе.</span>")
-		var/datum/mind/M = user.mind
-		owner = M
-		var/datum/role/wizard/wiz_role = M.GetRole(WIZARD)
-		if(wiz_role)
-			wiz_role.list_of_spellbooks += src
+		owner = user.mind
 		return
 	if(user.mind != owner)
 		to_chat(user, "<span class='warning'>[name] не распознала вас как владельца и отказывается открываться!</span>")

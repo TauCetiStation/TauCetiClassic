@@ -197,8 +197,7 @@
 	var/datum/stat/wizard_info/_wizard_info = new
 
 	_wizard_info.book_purchases = list()
-	for(var/obj/item/weapon/spellbook/book in W.list_of_spellbooks)
-		for(var/datum/stat/book_purchase/book_stat in book.book_purchases)
-			_wizard_info.book_purchases += book_stat
+	for(var/datum/stat/book_purchase/book_stat in W.list_of_purchases)
+		_wizard_info.book_purchases += book_stat
 
 	wizard_info = _wizard_info

@@ -11,8 +11,9 @@
 	logo_state = "wizard-logo"
 	skillset_type = /datum/skillset/wizard
 
-	var/list/list_of_spellbooks = list()
 	stat_type = /datum/stat/role/wizard
+
+	var/list/list_of_purchases = list()
 
 /datum/role/wizard/Greet(greeting, custom)
 	. = ..()
