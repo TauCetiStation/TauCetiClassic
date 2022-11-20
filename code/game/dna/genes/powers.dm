@@ -193,7 +193,7 @@
 		var/mob/living/carbon/human/H = M
 		H.ventcrawler = 1
 		H.update_size_class()
-		to_chat(H, "<span class='notice'><b>Вы можете лазать по вентиляции</b></span>")
+		to_chat(H, "<span class='notice'><b>Вы можете лазать по вентиляции.</b></span>")
 		H.regenerate_icons()
 
 /datum/dna/gene/basic/midget/deactivate(mob/living/M, connected, flags)

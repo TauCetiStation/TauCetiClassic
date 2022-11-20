@@ -426,7 +426,7 @@
 			// auto update every Master Controller tick
 			ui.set_auto_update(1)
 	else
-		to_chat(user, "<span class='warning'>Ошибка: Сканер не обнаружен</span>")
+		to_chat(user, "<span class='warning'>Ошибка: Сканер не обнаружен.</span>")
 
 /obj/machinery/computer/scan_consolenew/Topic(href, href_list)
 	. = ..()
