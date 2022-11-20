@@ -533,3 +533,63 @@
 /obj/structure/stool/bed/chair/office/dark
 	icon_state = "officechair_dark"
 	behind = "officechair_dark_behind"
+
+/obj/structure/stool/bed/chair/weigher/floor
+	name = "Floor Weighter"
+	desc = "A device to measure weight."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "weigher"
+	name = "chair"
+	buckle_lying = FALSE // force people to sit up in chairs when buckled
+
+/obj/structure/stool/bed/chair/weigher/floor/examine(mob/user)
+	if(buckled_mob)
+		if(ishuman(buckled_mob))
+			var/mob/living/carbon/human/H = buckled_mob
+			var/weight = 26.1
+			if(H.gender == MALE)
+				weight = 34.8
+			for(var/obj/item/organ/external/BP in H.bodyparts) // find a broken/destroyed limb
+				if(!BP.is_stump)
+					switch(BP.name)
+						if("head")
+							if(H.gender == MALE)
+								weight += 5.6
+							else
+								weight += 4.2
+						if("left arm")
+							if(H.gender == MALE)
+								weight += 3.92
+							else
+								weight += 2.94
+						if("right arm")
+							if(H.gender == MALE)
+								weight += 3.92
+							else
+								weight += 2.94
+						if("left leg")
+							if(H.gender == MALE)
+								weight += 15.84
+							else
+								weight += 11.88
+						if("right leg")
+							if(H.gender == MALE)
+								weight += 15.84
+							else
+								weight += 11.88
+			if(HAS_TRAIT(H, TRAIT_FAT))
+				weight *= 1.4
+
+			var/height = 1.8
+			switch(H.height)
+				if(HUMANHEIGHT_SHORTEST)
+					height = 1.6
+				if(HUMANHEIGHT_SHORT)
+					height = 1.7
+				if(HUMANHEIGHT_TALL)
+					height = 1.9
+				if(HUMANHEIGHT_TALLEST)
+					height = 2.0
+			if(SMALLSIZE in H.mutations)
+				height -= 0.5
+			to_chat(user, "The [H]'s weight is [weight]kg, height is [height]m")
