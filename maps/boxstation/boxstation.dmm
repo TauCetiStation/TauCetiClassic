@@ -18114,15 +18114,6 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/bar)
-"aGl" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "whiteblue"
-	},
-/area/station/medical/hallway)
 "aGm" = (
 /obj/structure/holohoop{
 	dir = 8
@@ -82735,19 +82726,6 @@
 	icon_state = "platebot"
 	},
 /area/station/maintenance/incinerator)
-"qib" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/door/airlock/maintenance{
-	req_access = list(12)
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
 "qix" = (
 /obj/item/weapon/screwdriver,
 /turf/simulated/floor/plating/airless{
@@ -123060,7 +123038,7 @@ jCb
 bpB
 bMF
 qNb
-aGl
+gYb
 aNe
 sWb
 bkE
@@ -124602,7 +124580,7 @@ bMF
 bMF
 bMF
 qVb
-aGl
+gYb
 qob
 rUb
 aRS
@@ -136954,7 +136932,7 @@ aNa
 aGu
 cLg
 bXR
-qib
+bFo
 bFo
 bge
 bFo
