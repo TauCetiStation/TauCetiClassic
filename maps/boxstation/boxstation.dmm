@@ -59837,6 +59837,30 @@
 	icon_state = "warnwhite"
 	},
 /area/station/medical/virology)
+"ceM" = (
+/obj/structure/bookcase{
+	name = "bookcase (Non-Fiction)"
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
+	},
+/turf/simulated/floor/wood,
+/area/station/civilian/library)
+"ceN" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/turf/simulated/floor,
+/area/station/medical/reception)
 "ceO" = (
 /turf/simulated/floor/plating/airless,
 /area/station/rnd/test_area)
@@ -75038,14 +75062,14 @@
 /turf/simulated/floor,
 /area/station/civilian/locker)
 "gYb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
 	},
-/turf/simulated/floor,
-/area/station/medical/reception)
+/area/station/medical/hallway)
 "gYf" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -82712,20 +82736,18 @@
 	},
 /area/station/maintenance/incinerator)
 "qib" = (
-/obj/structure/bookcase{
-	name = "bookcase (Non-Fiction)"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/machinery/light/small{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/airlock/maintenance{
+	req_access = list(12)
 	},
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
-	},
-/turf/simulated/floor/wood,
-/area/station/civilian/library)
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
 "qix" = (
 /obj/item/weapon/screwdriver,
 /turf/simulated/floor/plating/airless{
@@ -128173,7 +128195,7 @@ cuD
 cvh
 cyS
 dmb
-gYb
+ceN
 kHb
 kkb
 bIR
@@ -133831,7 +133853,7 @@ wER
 mGb
 fPM
 mIb
-qib
+ceM
 bCm
 aKs
 bLA
@@ -136932,7 +136954,7 @@ aNa
 aGu
 cLg
 bXR
-bFo
+qib
 bFo
 bge
 bFo
