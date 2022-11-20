@@ -1,5 +1,3 @@
-#define SIZE_DIFFERENCE(A, B) (A.w_class - B.w_class)
-
 /mob/living/carbon/human/getHalLoss()
 	if(species.flags[NO_PAIN])
 		return 0
