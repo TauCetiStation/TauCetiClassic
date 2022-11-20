@@ -2341,25 +2341,28 @@
 	},
 /area/station/security/armoury)
 "aeb" = (
-/obj/structure/table/glass,
-/obj/item/weapon/storage/box/masks{
-	pixel_x = 5;
-	pixel_y = 3
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/obj/item/weapon/storage/box/rxglasses{
-	pixel_x = -11;
-	pixel_y = 6
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/obj/item/device/radio/intercom{
-	frequency = 1485;
-	name = "Station Intercom (Medbay)";
-	pixel_y = 22
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Chem";
+	name = "Chemistry Shutters";
+	opacity = 0
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitebluecorner"
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/area/station/medical/hallway)
+/obj/structure/sign/departments/pharmacy,
+/turf/simulated/floor/plating,
+/area/station/medical/chemistry)
 "aec" = (
 /obj/machinery/door/poddoor{
 	id = "Armoury";
@@ -3145,11 +3148,28 @@
 	},
 /area/station/security/armoury)
 "afx" = (
-/turf/simulated/floor{
-	dir = 9;
-	icon_state = "whitehall"
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/area/station/medical/hallway)
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Chem";
+	name = "Chemistry Shutters";
+	opacity = 0
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/sign/departments/chemistry,
+/turf/simulated/floor/plating,
+/area/station/medical/chemistry)
 "afy" = (
 /obj/structure/table,
 /obj/machinery/recharger,
@@ -18114,6 +18134,19 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/bar)
+"aGl" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc down";
+	pixel_y = -28
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/item/weapon/flora/random,
+/turf/simulated/floor/wood,
+/area/station/medical/patients_rooms)
 "aGm" = (
 /obj/structure/holohoop{
 	dir = 8
@@ -31706,6 +31739,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
+/obj/structure/stool/bed/chair/comfy/black,
 /turf/simulated/floor/carpet/green,
 /area/station/medical/patients_rooms)
 "bex" = (
@@ -32037,13 +32071,13 @@
 	},
 /area/station/hallway/secondary/exit)
 "bfa" = (
-/obj/structure/closet/l3closet/general,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
 	pixel_x = 28;
 	pixel_y = -5
 	},
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	icon_state = "whitebluecorner"
 	},
@@ -33335,12 +33369,11 @@
 /turf/simulated/floor/carpet/black,
 /area/station/security/vacantoffice)
 "bhs" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/game_kit/random{
-	pixel_y = 2
-	},
 /obj/machinery/light_switch{
 	pixel_x = -28
+	},
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/patients_rooms)
@@ -33351,16 +33384,11 @@
 	},
 /area/station/hallway/primary/central)
 "bhu" = (
-/obj/item/weapon/flora/random,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "apc down";
-	pixel_y = -28
+/obj/structure/sign/poster/official/sivtsev{
+	pixel_y = -32
 	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/medical,
 /turf/simulated/floor/wood,
 /area/station/medical/patients_rooms)
 "bhv" = (
@@ -34079,12 +34107,13 @@
 	},
 /area/station/rnd/server)
 "biS" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/medical,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
 	pixel_y = -32
+	},
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 8
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/patients_rooms)
@@ -46351,12 +46380,17 @@
 	},
 /area/station/medical/storage)
 "bFn" = (
-/obj/structure/stool/bed/roller,
-/obj/machinery/alarm{
-	pixel_y = 22
+/obj/structure/table/glass,
+/obj/item/weapon/storage/box/masks{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/box/rxglasses{
+	pixel_x = -11;
+	pixel_y = 6
 	},
 /turf/simulated/floor{
-	dir = 1;
+	dir = 4;
 	icon_state = "whitebluecorner"
 	},
 /area/station/medical/hallway)
@@ -47623,27 +47657,17 @@
 /turf/simulated/floor/carpet/black,
 /area/station/security/iaa_office)
 "bHE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/stool/bed/roller,
+/obj/item/device/radio/intercom{
+	frequency = 1485;
+	name = "Station Intercom (Medbay)";
+	pixel_y = 22
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whitebluecorner"
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "Chem";
-	name = "Chemistry Shutters";
-	opacity = 0
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/medical/chemistry)
+/area/station/medical/hallway)
 "bHF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -54590,18 +54614,23 @@
 /turf/simulated/wall/r_wall,
 /area/station/engineering/atmos)
 "bUy" = (
-/obj/structure/stool/bed,
-/obj/item/weapon/bedsheet/medical,
-/turf/simulated/floor/wood,
-/area/station/medical/patients_rooms)
-"bUz" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/storage/fancy/donut_box,
 /obj/machinery/camera{
 	c_tag = "Medbay Patient's Room";
 	network = list("SS13","Medical")
 	},
+/obj/structure/table/woodentable,
+/obj/item/weapon/storage/fancy/donut_box,
 /turf/simulated/floor/wood,
+/area/station/medical/patients_rooms)
+"bUz" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/medical,
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken7"
+	},
 /area/station/medical/patients_rooms)
 "bUA" = (
 /obj/structure/lattice,
@@ -68724,11 +68753,8 @@
 	},
 /area/station/engineering/engine)
 "cDf" = (
-/obj/structure/closet/secure_closet/personal/patient,
-/obj/item/clothing/under/patient_gown,
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken5"
-	},
+/obj/structure/stool/bed/chair/comfy/brown,
+/turf/simulated/floor/wood,
 /area/station/medical/patients_rooms)
 "cDh" = (
 /turf/simulated/floor{
@@ -69630,15 +69656,11 @@
 	},
 /area/station/aisat)
 "cGc" = (
-/obj/structure/closet/secure_closet/personal/patient,
-/obj/item/clothing/under/patient_gown,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/alarm{
 	pixel_x = 29;
 	pixel_y = -6
 	},
+/obj/structure/stool/bed/chair/weigher/floor,
 /turf/simulated/floor/wood,
 /area/station/medical/patients_rooms)
 "cGd" = (
@@ -69909,8 +69931,14 @@
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
 "cGY" = (
-/obj/structure/stool/bed/chair/comfy/black,
-/turf/simulated/floor/wood,
+/obj/structure/closet/secure_closet/personal/patient,
+/obj/item/clothing/under/patient_gown,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken5"
+	},
 /area/station/medical/patients_rooms)
 "cGZ" = (
 /obj/structure/rack,
@@ -70680,10 +70708,11 @@
 	},
 /area/station/medical/patients_rooms)
 "cJT" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 8
-	},
 /obj/machinery/light/small,
+/obj/structure/table/woodentable,
+/obj/item/weapon/game_kit/random{
+	pixel_y = 2
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken3"
 	},
@@ -77590,11 +77619,9 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "jQb" = (
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "blue"
-	},
-/area/station/medical/reception)
+/obj/structure/sign/departments/morgue,
+/turf/simulated/wall,
+/area/station/medical/morgue)
 "jQu" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/simulated/floor{
@@ -79551,28 +79578,12 @@
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
 "meb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/effect/landmark/start/paramedic,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "blue"
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "Chem";
-	name = "Chemistry Shutters";
-	opacity = 0
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/sign/departments/chemistry,
-/turf/simulated/floor/plating,
-/area/station/medical/chemistry)
+/area/station/medical/reception)
 "meU" = (
 /obj/structure/grille,
 /obj/structure/cable{
@@ -83335,11 +83346,11 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "qVb" = (
-/obj/structure/stool/bed/chair/metal/blue,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 29
 	},
 /obj/effect/landmark/start/medical_intern,
+/obj/structure/stool/bed/chair/schair/wagon/bench,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitebluecorner"
@@ -83361,8 +83372,10 @@
 	},
 /area/space)
 "qWb" = (
-/obj/structure/stool/bed/chair/metal/blue,
 /obj/effect/landmark/start/medical_intern,
+/obj/structure/stool/bed/chair/schair/wagon/bench{
+	icon_state = "bench_2"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -83786,14 +83799,15 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "rvb" = (
-/obj/structure/stool/bed/chair/comfy/black,
-/obj/machinery/light/small{
-	dir = 1
+/obj/machinery/alarm{
+	pixel_x = 29;
+	pixel_y = -6
 	},
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken7"
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "whitehall"
 	},
-/area/station/medical/patients_rooms)
+/area/station/medical/hallway)
 "rwb" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/light/small{
@@ -83848,7 +83862,6 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "rAb" = (
-/obj/structure/closet/l3closet/general,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitebluecorner"
@@ -123812,7 +123825,7 @@ aQL
 bnZ
 aOL
 aSo
-meb
+aeb
 aUQ
 bDT
 bHy
@@ -124329,7 +124342,7 @@ bxi
 bkE
 bkE
 bkE
-bHE
+afx
 bAG
 bBy
 bDl
@@ -125860,7 +125873,7 @@ cpX
 bVg
 cxn
 eJb
-jQb
+meb
 jdb
 keb
 bjk
@@ -129481,7 +129494,7 @@ rsb
 bVN
 baG
 cCh
-cGY
+cCh
 bhs
 bDV
 boa
@@ -129735,7 +129748,7 @@ bJg
 aut
 bdk
 rsb
-rvb
+bUz
 bLg
 sdb
 bew
@@ -129992,7 +130005,7 @@ bKH
 bXO
 bdw
 rsb
-bUz
+bUy
 bLg
 cCp
 bFt
@@ -130249,11 +130262,11 @@ fSb
 bXe
 cEy
 rsb
-bUy
+cDf
 bLg
 bLg
 bFt
-bUy
+bhu
 bDV
 bFo
 bFo
@@ -130765,9 +130778,9 @@ bfW
 rsb
 aun
 cAf
-cDf
+cGY
 cGc
-bhu
+aGl
 bDV
 bFP
 aGu
@@ -131266,8 +131279,8 @@ bgq
 lPb
 bgq
 rNb
-bJi
-aeb
+jQb
+bFn
 bHX
 bNR
 bPY
@@ -131769,7 +131782,7 @@ bNd
 cqi
 csA
 cwO
-bJi
+jQb
 dub
 hKb
 bnb
@@ -131781,7 +131794,7 @@ bNS
 bgq
 rOb
 bJi
-bFn
+bHE
 bNW
 bFh
 bPZ
@@ -132039,7 +132052,7 @@ bJj
 cBy
 bJi
 bGY
-afx
+rvb
 sOb
 bPd
 bFe
