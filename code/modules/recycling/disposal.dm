@@ -1086,12 +1086,10 @@
 	else
 		return
 
-	Item.name = "Посылка номер: [global.online_shop_lots.len]"
+	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account)
+
+	Item.name = "Посылка номер: [global.online_shop_number]"
 	Item.desc = "Наименование: [lot_name], Описание: [lot_desc], Цена: [lot_price]"
-
-	global.online_shop_lots.len++
-
-	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, global.online_shop_lots.len, lot_account)
 
 	if(istype(Item, /obj/structure/bigDelivery))
 		var/obj/structure/bigDelivery/Package = Item

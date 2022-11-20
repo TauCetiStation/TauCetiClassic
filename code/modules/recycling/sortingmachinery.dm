@@ -22,7 +22,7 @@
 
 /obj/structure/bigDelivery/Destroy()
 	dump()
-	Lot = null
+	qdel(Lot)
 	return ..()
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
@@ -75,7 +75,7 @@
 
 /obj/item/smallDelivery/Destroy()
 	dump()
-	Lot = null
+	qdel(Lot)
 	return ..()
 
 /obj/item/smallDelivery/attack_self(mob/user)

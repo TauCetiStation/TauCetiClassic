@@ -70,7 +70,6 @@
 
 	var/category
 	var/list/shop_lots = list()
-	var/list/orders_and_offers = list()
 	var/list/shopping_cart = list()
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
@@ -646,7 +645,7 @@
 		data["categories"] = global.shop_categories
 		data["category"] = category
 		data["shop_lots"] = shop_lots
-		data["orders_and_offers"] = orders_and_offers
+		data["orders_and_offers"] = global.orders_and_offers
 		data["shopping_cart"] = shopping_cart
 
 	nanoUI = data
@@ -997,8 +996,7 @@
 			for(var/datum/shop_lot/Lot in global.online_shop_lots)
 				if(Lot.category == category && !Lot.sold)
 					var/datum/money_account/Acc = get_account(Lot.account)
-					shop_lots.len++
-					shop_lots[shop_lots.len] = list("id" = shop_lots.len, "name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "account" = Acc ? Acc.owner_name : "Unknown")
+					shop_lots[num2text(Lot.number)] = list("id" = shop_lots.len, "name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "account" = Acc ? Acc.owner_name : "Unknown")
 		if("Shop_Add_Order_or_Offer")
 			if(!check_pda_server())
 				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
@@ -1026,20 +1024,17 @@
 				mode = 0
 				return
 			var/i = text2num(href_list["delivered_item"])
-			var/datum/shop_lot/Lot = global.online_shop_lots[i]
+			shopping_cart -= num2text(i)
+			var/datum/shop_lot/Lot = global.online_shop_lots[num2text(i)]
+			if(!Lot || !owner_account)
+				return
 			var/payment = Lot.price - (Lot.price * 0.25)
-			if(!owner_account || payment > owner_account.money)
+			if(payment > owner_account.money)
 				return
 			Lot.delivered = TRUE
-			for(var/list/L in shopping_cart)
-				if(L["number"] == i)
-					L["delivered"] = TRUE
 
 			charge_to_account(owner_account.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -payment)
-			if(Lot.account == global.cargo_account.account_number)
-				charge_to_account(global.cargo_account.account_number, owner_account.account_number, "Покупка [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, payment)
-			else
-				charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -payment)
+			charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, payment)
 			mode = 82
 
 //SYNDICATE FUNCTIONS===================================
@@ -1698,13 +1693,14 @@
 
 /obj/item/device/pda/proc/order_item(num, destination)
 	var/datum/shop_lot/Lot = global.online_shop_lots[num]
+	if(!owner_account || !Lot)
+		return
 	var/prepayment = Lot.price * 0.25
-	if(!owner_account || prepayment > owner_account.money)
+	if(prepayment > owner_account.money)
 		return
 	Lot.sold = TRUE
 	var/datum/money_account/Acc = get_account(Lot.account)
-	shopping_cart.len+=1
-	shopping_cart[shopping_cart.len] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "account" = Acc ? Acc.owner_name : "Unknown", "delivered" = Lot.delivered)
+	shopping_cart[num2text(Lot.number)] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "account" = Acc ? Acc.owner_name : "Unknown", "delivered" = Lot.delivered)
 	mode = 82
 
 	charge_to_account(owner_account.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -prepayment)
@@ -1725,13 +1721,13 @@
 		P.update_icon()
 
 /obj/item/device/pda/proc/add_order_or_offer(name, desc)
-	orders_and_offers.len++
-	orders_and_offers[orders_and_offers.len] = list("name" = name, "description" = desc)
+	global.orders_and_offers_number++
+	orders_and_offers[num2text(global.orders_and_offers_number)] = list("name" = name, "description" = desc)
 	mode = 8
-	addtimer(CALLBACK(src, .proc/delete_order_or_offer, orders_and_offers.len), 15 MINUTES)
+	addtimer(CALLBACK(src, .proc/delete_order_or_offer, global.orders_and_offers_number), 15 MINUTES)
 
 /obj/item/device/pda/proc/delete_order_or_offer(num)
-	orders_and_offers[num] = null
+	orders_and_offers -= num2text(num)
 
 /obj/item/device/pda/proc/check_pda_server()
 	if(global.message_servers)
