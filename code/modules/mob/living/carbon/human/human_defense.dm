@@ -20,14 +20,13 @@
 	if(size_diff_calculate < 0)
 		return
 	var/weight_diff_coef = 1 + sqrt(size_diff_calculate)
-	if(weight_diff_coef)
-		if(shoes?.flags & NOSLIP || wear_suit?.flags & NOSLIP)
-			adjustHalLoss(15 * weight_diff_coef)	//thicc landing
-		else
-			AdjustWeakened(2 * weight_diff_coef)	//4 seconds is default slip
-		visible_message("<span class='warning'>[AM] falls at [src].</span>",
-						"<span class='warning'>[AM] falls at you!</span>",
-						"<span class='notice'>You hear something heavy fall.</span>")
+	if(shoes?.flags & NOSLIP || wear_suit?.flags & NOSLIP)
+		adjustHalLoss(15 * weight_diff_coef)	//thicc landing
+	else
+		AdjustWeakened(2 * weight_diff_coef)	//4 seconds is default slip
+	visible_message("<span class='warning'>[AM] falls on [src].</span>",
+					"<span class='warning'>[AM] falls on you!</span>",
+					"<span class='notice'>You hear something heavy fall.</span>")
 
 /mob/living/carbon/human/bullet_act(obj/item/projectile/P, def_zone)
 	def_zone = check_zone(def_zone)
