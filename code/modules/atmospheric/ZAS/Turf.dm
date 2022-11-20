@@ -104,7 +104,7 @@
 		#endif
 		for(var/dir in to_check)
 			var/turf/simulated/other = get_step(T, dir)
-			if(istype(other) && other.zone == T.zone && !(other.c_airblock(T) & AIR_BLOCKED))
+			if(istype(other) && other.zone == T.zone && !(FAST_C_AIRBLOCK(other, T) & AIR_BLOCKED))
 				. |= dir
 
 /proc/check_zone_neighbours_corner(turf/simulated/T, dir)
@@ -112,9 +112,9 @@
 		var/v = dir & NORTH_SOUTH
 		var/h = dir & EAST_WEST
 		var/turf/simulated/other = get_step(T, v)
-		if(istype(other) && other.zone == T.zone && !(other.c_airblock(T) & AIR_BLOCKED))
+		if(istype(other) && other.zone == T.zone && !(FAST_C_AIRBLOCK(other, T) & AIR_BLOCKED))
 			other = get_step(T, h)
-			if(istype(other) && other.zone == T.zone && !(other.c_airblock(T) & AIR_BLOCKED))
+			if(istype(other) && other.zone == T.zone && !(FAST_C_AIRBLOCK(other, T) & AIR_BLOCKED))
 				return TRUE
 	return FALSE
 
