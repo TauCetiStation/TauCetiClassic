@@ -406,3 +406,39 @@
 
 /datum/emote/human/hmm_excited/get_sound(mob/living/carbon/human/user, intentional)
 	return pick(user.gender == FEMALE ? SOUNDIN_HMM_EXCLAIM_FEMALE : SOUNDIN_HMM_EXCLAIM_MALE)
+
+/datum/emote/human/morgenshtern
+	key = "morgen"
+
+	message_1p = "You sing some hit songs!"
+	message_3p = "sings some hit songs."
+
+	message_impaired_production = "mumbles excitedly!"
+	message_impaired_reception = "You see someone speaking excitedly."
+
+	message_miming = "pretends to sing"
+	message_muzzled = "mumbles excitedly!"
+
+	message_type = SHOWMSG_AUDIO
+
+	age_variations = TRUE
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS)
+	)
+
+/datum/emote/human/morgenshtern/do_emote(mob/user, emote_key, intentional)
+	. = ..()
+	switch(pick(1, 4))
+		if(1)
+			user.say("Пососи! У, у, у, у, у Да, я богатый у*бок, а (money) У меня денег так много, а (cash) Моё е**ло — коробка У, у, у, у, у! Х*ли, б*я, ты такой робкий, а? Ты же базарил так громко, а (пи**ел) Так-так и быть делай фотку Ву-у-у-у! Пока я добрый, сучка Да, я пи**ец о**евший (да) Сука твоя без одежды Эй (у, у, у, у) Я подарю ей нежность (с*кс) Иди сюда! Прыг-прыгай прямо меж ног (вууу!) Доедаю промежность, э (ам-м-м) Это, сука, любовь")
+			playsound(user, 'sound/voice/morgen1.ogg', VOL_EFFECTS_MASTER)
+		if(2)
+			user.say("Эй, цепь на мне, сыпь лавэ Сотка тыщ на Bag LV Сотни сук хотят ко мне Сотни сук хотят камней Как дела? Как дела? Это новый Cadillac Делать деньги, делать деньги Делать деньги, бл**ь, вот так (Okey, фиу) Hey, bitch, we got some пушки (прр, пау) Пау-пау, попал по тушке (ха) На мне щя две подружки (оу, да) Bitch, я вишу, как молодой Пушкин (у) Цепи висят на папе (йе) Копаем cash лопатой (йе) Богатый будто каппер (йе) Как там твоя зарплата?")
+			playsound(user, 'sound/voice/morgen2.ogg', VOL_EFFECTS_MASTER)
+		if(3)
+			user.say("Pull up in the tank и я еду в бой (Йей)Тут я капитан, боевой ковбой (Йей) Купил новый ТУ — это самолёт (Йей)«Вру-ту-ту-ту-ту-ту-туф» — это вертолёт (Йей) Pull up in the tank и я еду в бой (Йей) Тут я капитан, боевой ковбой (Йей) Купил новый ТУ — это самолёт (Йей) «Бэ-э» — а это ты подох А, закрутил на поле боя, будто вертель (А) С*ка ловит пулевое на моей торпеде (На) А, тупое мясо посажу на вертель (Шаверма) А, я впереди, а ты вп*рде")
+			playsound(user, 'sound/voice/morgen3.ogg', VOL_EFFECTS_MASTER)
+		if(4)
+			user.say("Bitch, я — молодой аристократ (Аристократ) Сука, на мне камни сто карат (Дорого, пиздец) Столько money, будто Эмират (Эмират) Я — легенда, можно умирать (Эй, давай ещё)   Bitch, я — молодой аристократ (Я молодой) Сука, на мне камни сто карат (А ты тупой) Столько money, будто Эмират (Я как Дубай) Я — легенда, можно умирать (Кхм-кхм-кхм)   Bitch, я — аристократичный папочка Видишь, мне к лицу ночная бабочка (Ха-ха) Мне нужен только топ, ты как русалочка (Соси)")
+			playsound(user, 'sound/voice/morgen4.ogg', VOL_EFFECTS_MASTER)
