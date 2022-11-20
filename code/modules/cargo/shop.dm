@@ -18,14 +18,14 @@ var/global/orders_and_offers_number = 0
 
 /datum/shop_lot/New(name, description, price, category, account)
 	global.online_shop_number++
-	global.online_shop_lots[num2text(global.online_shop_number)] = src
+	global.online_shop_lots["[global.online_shop_number]"] = src
 	src.name = name
 	src.description = description
 	src.price = price
 	src.category = category
-	src.number = global.online_shop_number
+	src.number = "[global.online_shop_number]"
 	src.account = account
 
 /datum/shop_lot/Destroy()
-	global.online_shop_lots -= number
+	global.online_shop_lots -= "[number]"
 	return ..()

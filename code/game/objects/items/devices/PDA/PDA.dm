@@ -71,6 +71,7 @@
 	var/category
 	var/list/shop_lots = list()
 	var/list/shopping_cart = list()
+	var/list/orders_offers = list()
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
@@ -645,7 +646,7 @@
 		data["categories"] = global.shop_categories
 		data["category"] = category
 		data["shop_lots"] = shop_lots
-		data["orders_and_offers"] = global.orders_and_offers
+		data["orders_and_offers"] = orders_offers
 		data["shopping_cart"] = shopping_cart
 
 	nanoUI = data
@@ -989,14 +990,21 @@
 		if("Shop")
 			mode = 8
 			shop_lots = list()
+			orders_offers = list()
+			for(var/id in global.orders_and_offers)
+				var/list/List = global.orders_and_offers[id]
+				orders_offers.len++
+				orders_offers[orders_offers.len] = List
 		if("Shop_Category")
 			mode = 81
 			shop_lots = list()
 			category = href_list["categ"]
-			for(var/datum/shop_lot/Lot in global.online_shop_lots)
-				if(Lot.category == category && !Lot.sold)
+			for(var/index in global.online_shop_lots)
+				var/datum/shop_lot/Lot = global.online_shop_lots[index]
+				if(Lot && Lot.category == category && !Lot.sold)
 					var/datum/money_account/Acc = get_account(Lot.account)
-					shop_lots[num2text(Lot.number)] = list("id" = shop_lots.len, "name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "account" = Acc ? Acc.owner_name : "Unknown")
+					shop_lots.len++
+					shop_lots[shop_lots.len] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "account" = Acc ? Acc.owner_name : "Unknown")
 		if("Shop_Add_Order_or_Offer")
 			if(!check_pda_server())
 				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
@@ -1010,12 +1018,12 @@
 				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
 				mode = 0
 				return
-			var/i = text2num(href_list["order_item"])
-			var/list/Lot = shop_lots[i]
-			if(owner_account)
+			var/id = href_list["order_item"]
+			var/datum/shop_lot/Lot = global.online_shop_lots[id]
+			if(Lot && owner_account)
 				var/T = sanitize(input(U, "Введите адрес доставки или комментарий", "Комментарий", null) as text)
 				if(T && istext(T))
-					order_item(Lot["number"], T)
+					order_item(Lot.number, T)
 		if("Shop_Shopping_Cart")
 			mode = 82
 		if("Shop_Mark_As_Delivered")
@@ -1023,12 +1031,12 @@
 				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
 				mode = 0
 				return
-			var/i = text2num(href_list["delivered_item"])
-			shopping_cart -= num2text(i)
-			var/datum/shop_lot/Lot = global.online_shop_lots[num2text(i)]
+			var/id = href_list["delivered_item"]
+			shopping_cart -= id
+			var/datum/shop_lot/Lot = global.online_shop_lots[id]
 			if(!Lot || !owner_account)
 				return
-			var/payment = Lot.price - (Lot.price * 0.25)
+			var/payment = round(Lot.price - (Lot.price * 0.25))
 			if(payment > owner_account.money)
 				return
 			Lot.delivered = TRUE
@@ -1695,12 +1703,12 @@
 	var/datum/shop_lot/Lot = global.online_shop_lots[num]
 	if(!owner_account || !Lot)
 		return
-	var/prepayment = Lot.price * 0.25
+	var/prepayment = round(Lot.price * 0.25)
 	if(prepayment > owner_account.money)
 		return
 	Lot.sold = TRUE
 	var/datum/money_account/Acc = get_account(Lot.account)
-	shopping_cart[num2text(Lot.number)] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "account" = Acc ? Acc.owner_name : "Unknown", "delivered" = Lot.delivered)
+	shopping_cart[Lot.number] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "account" = Acc ? Acc.owner_name : "Unknown", "delivered" = Lot.delivered)
 	mode = 82
 
 	charge_to_account(owner_account.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -prepayment)
@@ -1722,12 +1730,12 @@
 
 /obj/item/device/pda/proc/add_order_or_offer(name, desc)
 	global.orders_and_offers_number++
-	orders_and_offers[num2text(global.orders_and_offers_number)] = list("name" = name, "description" = desc)
+	global.orders_and_offers["[global.orders_and_offers_number]"] = list("name" = name, "description" = desc)
 	mode = 8
 	addtimer(CALLBACK(src, .proc/delete_order_or_offer, global.orders_and_offers_number), 15 MINUTES)
 
 /obj/item/device/pda/proc/delete_order_or_offer(num)
-	orders_and_offers -= num2text(num)
+	orders_and_offers -= "[num]"
 
 /obj/item/device/pda/proc/check_pda_server()
 	if(global.message_servers)
