@@ -25,6 +25,13 @@
 	if(wiz_role)
 		wiz_role.list_of_purchases += stat
 
+/datum/spellbook_entry/proc/EraseEntry(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	var/datum/role/wizard/wiz_role = book.getUsersWizardRole(user)
+	if(wiz_role)
+		for(var/datum/stat/book_purchase/stat in wiz_role.list_of_purchases)
+			if(stat.power_type == spell_type)
+				wiz_role.list_of_purchases -= stat
+
 /datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) // Specific circumstances
 	if(book.uses < cost)
 		return FALSE
@@ -61,6 +68,7 @@
 	for(var/obj/effect/proc_holder/spell/aspell in user.spell_list)
 		if(initial(S.name) == initial(aspell.name))
 			user.RemoveSpell(aspell)
+			EraseEntry(user, book)
 			qdel(S)
 			return cost
 	return -1
@@ -276,6 +284,13 @@
 	var/datum/role/wizard/wiz_role = book.getUsersWizardRole(user)
 	if(wiz_role)
 		wiz_role.list_of_purchases += stat
+
+/datum/spellbook_entry/item/EraseEntry(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	var/datum/role/wizard/wiz_role = book.getUsersWizardRole(user)
+	if(wiz_role)
+		for(var/datum/stat/book_purchase/stat in wiz_role.list_of_purchases)
+			if(stat.power_type == item_path)
+				wiz_role.list_of_purchases -= stat
 
 /datum/spellbook_entry/item/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) // Specific circumstances
 	. = ..()
