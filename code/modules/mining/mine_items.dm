@@ -616,9 +616,11 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	muzzle_type = /obj/effect/projectile/laser_omni/muzzle
 	tracer_type = /obj/effect/projectile/laser_omni/tracer
 	impact_type = /obj/effect/projectile/laser_omni/impact
+	var/destruction_chance = 20
 
 /obj/item/projectile/beam/plasma_cutter/emagged
 	damage = 75
+	destruction_chance = 100
 
 /obj/item/projectile/beam/plasma_cutter/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	. = ..()
@@ -626,6 +628,10 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if(istype(target_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = target_turf
 		M.GetDrilled(firer)
+	if((istype(target_turf, /turf/simulated/wall)) && (prob(destruction_chance)))
+		var/turf/simulated/mineral/M = target_turf
+		M.ex_act(EXPLODE_HEAVY)
+
 
 /obj/item/weapon/gun/energy/laser/cutter/atom_init()
 	. = ..()

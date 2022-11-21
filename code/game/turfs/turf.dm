@@ -86,9 +86,7 @@
 
 /turf/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
-	if(istype(Proj ,/obj/item/projectile/beam/pulse) || istype(Proj ,/obj/item/projectile/beam/plasma_cutter/emagged))
-		ex_act(EXPLODE_HEAVY)
-	if((prob(20)) && istype(Proj ,/obj/item/projectile/beam/plasma_cutter))
+	if(istype(Proj ,/obj/item/projectile/beam/pulse))
 		ex_act(EXPLODE_HEAVY)
 	else if(istype(Proj ,/obj/item/projectile/bullet/gyro))
 		explosion(src, -1, 0, 2)
