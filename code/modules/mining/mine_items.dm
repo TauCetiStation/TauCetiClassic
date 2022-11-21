@@ -629,8 +629,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		var/turf/simulated/mineral/M = target_turf
 		M.GetDrilled(firer)
 	if((istype(target_turf, /turf/simulated/wall)) && (prob(destruction_chance)))
-		var/turf/simulated/mineral/M = target_turf
-		M.ex_act(EXPLODE_HEAVY)
+		var/turf/simulated/wall/W = target_turf
+		W.ex_act(EXPLODE_HEAVY)
 
 
 /obj/item/weapon/gun/energy/laser/cutter/atom_init()
