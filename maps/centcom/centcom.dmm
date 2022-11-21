@@ -19515,6 +19515,32 @@
 	icon_state = "floor6"
 	},
 /area/space)
+"aRp" = (
+/turf/environment/space,
+/area/shuttle/lone_op/transit)
+"aRq" = (
+/obj/effect/step_trigger/teleporter/random{
+	affect_ghosts = 1;
+	name = "escapeshuttle_leave";
+	teleport_x = 25;
+	teleport_x_offset = 245;
+	teleport_y = 25;
+	teleport_y_offset = 245;
+	teleport_z = 6;
+	teleport_z_offset = 6
+	},
+/obj/effect/step_trigger/teleporter/random{
+	affect_ghosts = 1;
+	name = "escapeshuttle_leave";
+	teleport_x = 25;
+	teleport_x_offset = 245;
+	teleport_y = 25;
+	teleport_y_offset = 245;
+	teleport_z = 6;
+	teleport_z_offset = 6
+	},
+/turf/environment/space,
+/area/space)
 "aRs" = (
 /obj/structure/window/reinforced/shuttle/evac{
 	icon_state = "3,20"
@@ -50369,7 +50395,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -50626,7 +50652,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -50883,7 +50909,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -51140,7 +51166,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -51397,7 +51423,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -51645,16 +51671,16 @@ aaM
 aaM
 aaM
 aaM
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -51899,19 +51925,19 @@ aaM
 aaM
 aaM
 aaM
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -52155,20 +52181,20 @@ aaM
 aaM
 aaM
 aaM
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -52413,19 +52439,19 @@ aaM
 aaM
 aaM
 aaM
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -52670,19 +52696,19 @@ aaM
 aaM
 aaM
 aaM
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -52927,19 +52953,19 @@ aaM
 aaM
 aaM
 aaM
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -53183,20 +53209,20 @@ aaM
 aaM
 aaM
 aaM
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -53441,19 +53467,19 @@ aaM
 aaM
 aaM
 aaM
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -53701,16 +53727,16 @@ aaM
 aaM
 aaM
 aaM
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
+aRp
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -53967,7 +53993,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -54224,7 +54250,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -54481,7 +54507,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -54738,7 +54764,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -54995,7 +55021,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -55252,7 +55278,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -55509,7 +55535,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -55748,25 +55774,25 @@ aaM
 aaM
 aaM
 ahG
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+aRq
 aaM
 aaM
 aaM

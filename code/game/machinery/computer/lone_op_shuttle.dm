@@ -25,8 +25,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/lop_shuttle/atom_init_late()
-	var/obj/O = locate(/obj/effect/landmark/lop_shuttle) in landmarks_list
-	curr_location = get_area(O)
+	curr_location = get_area(locate("landmark*lone oper shuttle landmark"))
 
 /obj/machinery/computer/lop_shuttle/process()
 	if(..())
@@ -65,8 +64,8 @@
 	var/dat = {"Location: [curr_location]<br>
 	Ready to move[max(lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br>
 	<a href='?src=\ref[src];syndicate=1'>Syndicate Space</a><br>
-	<a href='?src=\ref[src];station_n=1'>North of SS13</a> |
-	<a href='?src=\ref[src];station_s=1'>South of SS13</a>|"}
+	<a href='?src=\ref[src];station_north=1'>North of SS13</a> |
+	<a href='?src=\ref[src];station_south=1'>South of SS13</a>|"}
 
 	var/datum/browser/popup = new(user, "computer", "[src.name]", 575, 450, ntheme = CSS_THEME_SYNDICATE)
 	popup.set_content(dat)
@@ -80,16 +79,16 @@
 
 	if(href_list["syndicate"])
 		syndicate_move_to(/area/shuttle/lone_op/start)
-	else if(href_list["station_n"])
+	else if(href_list["station_north"])
 		syndicate_move_to(/area/shuttle/lone_op/north)
-	else if(href_list["station_s"])
+	else if(href_list["station_south"])
 		syndicate_move_to(/area/shuttle/lone_op/south)
 
 	updateUsrDialog()
 
 /obj/item/weapon/circuitboard/computer/lop_shuttle
 	name = "Syndicate Shuttle (Computer Board)"
-	build_path = /obj/machinery/computer/syndicate_station
+	build_path = /obj/machinery/computer/lop_shuttle
 
 #undef SYNDICATE_SHUTTLE_MOVE_TIME
 #undef SYNDICATE_SHUTTLE_COOLDOWN
