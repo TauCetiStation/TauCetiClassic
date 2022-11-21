@@ -1703,7 +1703,7 @@
 	if((rank in command_positions) || (rank == "Quartermaster"))
 		boss_PDA = 1
 
-/obj/item/device/pda/proc/order_item(var/datum/shop_lot/Lot, destination)
+/obj/item/device/pda/proc/order_item(datum/shop_lot/Lot, destination)
 	if(!owner_account || !Lot)
 		return
 	var/prepayment = round(Lot.price * 0.25)
