@@ -19185,6 +19185,7 @@
 /obj/item/weapon/storage/food/normal/syndi_cakes{
 	pixel_y = 4
 	},
+/obj/item/device/hud_calibrator,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -19501,6 +19502,19 @@
 	icon_state = "freezerfloor"
 	},
 /area/centcom/holding)
+"aRn" = (
+/obj/effect/landmark/lop_shuttle,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/shuttle/lone_op/start)
+"aRo" = (
+/obj/effect/landmark/blockway,
+/obj/machinery/door/poddoor/shutters,
+/turf/simulated/shuttle/floor{
+	icon_state = "floor6"
+	},
+/area/space)
 "aRs" = (
 /obj/structure/window/reinforced/shuttle/evac{
 	icon_state = "3,20"
@@ -80148,7 +80162,7 @@ aRd
 aRc
 aRc
 aRc
-aRc
+aRn
 aRc
 aPZ
 aQj
@@ -81689,9 +81703,9 @@ aaM
 aaM
 aaM
 aaM
-aaM
-abu
-aaM
+aeD
+aRo
+aeD
 aaM
 aaM
 aaM
