@@ -765,10 +765,13 @@
 		data["ticks"] = 1
 	data["ticks"]++
 	switch(data["ticks"])
-		if(1 to 10)
+		if(1 to 5)
 			M.make_dizzy(1 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
 			if(prob(10))
 				to_chat(M, "<span class='warning'>Your skin feels hot and your veins are on fire!</span>")
+		if(5 to 10)
+			M.apply_effect(10, AGONY)
+			M.AdjustConfused(2)
 		if(10 to 20)
 			if(M.reagents.has_reagent("tramadol") || M.reagents.has_reagent("oxycodone"))
 				M.adjustToxLoss(5 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
@@ -777,12 +780,12 @@
 		if(20 to 60)
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_broken())
-					if(prob(50))
+					if(prob(15))
 						to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
 						E.brute_dam = 0
 						E.status &= ~ORGAN_BROKEN
 						E.perma_injury = 0
-						holder.remove_reagent("nanocalcium", 10 * multiplier * REAGENTS_EFFECT_MULTIPLIER)
+						holder.del_reagent("nanocalcium")
 
 /datum/reagent/metatrombine
 	name = "Metatrombine"
