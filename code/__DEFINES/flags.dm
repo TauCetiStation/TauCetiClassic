@@ -105,8 +105,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_EMOTION         "no_emotion"
 #define NO_DNA             "no_dna"
 #define FUR                "fur"
-#define NO_BLIND           "no_blind"
-#define ARTERIAL_CLOTTING  "arterial_clotting"
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.

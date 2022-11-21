@@ -204,6 +204,13 @@
 	to_chat(H, "<span class='danger'>Somehow you wake up and your hunger is still outrageous!</span>")
 	H.visible_message("<span class='danger'>[H] suddenly wakes up!</span>")
 
+/mob/living/carbon/human/proc/check_zombie_species()
+	var/my_species = get_species()
+	for(var/zombie_name in global.all_zombie_species_names)
+		if(my_species == zombie_name)
+			return TRUE
+	return FALSE
+
 /mob/living/carbon/proc/is_infected_with_zombie_virus()
 	for(var/ID in virus2)
 		var/datum/disease2/disease/V = virus2[ID]
@@ -224,19 +231,21 @@
 		embedded_item.forceMove(loc)
 
 /mob/living/carbon/human/handle_vision()
-	if(!species.flags[NO_BLIND])
+	if(check_zombie_species())
+		clear_fullscreen("blind", 0)
+		clear_alert("blind")
+	else
 		return ..()
-	clear_fullscreen("blind", 0)
-	clear_alert("blind")
 
 /mob/living/carbon/human/update_eye_blur()
-	if(!species.flags[NO_BLIND])
+	if(check_zombie_species())
+		if(client && eye_blurry)
+			var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+			if(game_plane_master_controller)
+				game_plane_master_controller.remove_filter("eye_blur_angular")
+				game_plane_master_controller.remove_filter("eye_blur_gauss")
+	else
 		return ..()
-	if(client && eye_blurry)
-		var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-		if(game_plane_master_controller)
-			game_plane_master_controller.remove_filter("eye_blur_angular")
-			game_plane_master_controller.remove_filter("eye_blur_gauss")
 
 /mob/living/carbon/human/embed(obj/item/I)
 	if(!species.flags[NO_EMBED])
