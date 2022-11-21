@@ -4,7 +4,7 @@
 	var/acolytes_needed
 
 /datum/objective/cult/escape/New()
-	acolytes_needed = max(5, round(player_list.len * 0.04))
+	acolytes_needed = round(player_list.len * 0.04)
 	explanation_text = "Убедитесь, что хотя бы [acolytes_needed] [pluralize_russian(acolytes_needed, "культист", "культиста", "культистов")] улетят живыми на шаттле, чтобы продолжить исследования на других станциях."
 	..()
 
