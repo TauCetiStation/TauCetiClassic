@@ -149,7 +149,6 @@
 // this should probably use dump_contents()
 /obj/structure/closet/ex_act(severity)
 	var/chance_full_damage_item
-	var/reduced_severity
 
 	switch(severity)
 		if(EXPLODE_LIGHT)
@@ -165,13 +164,11 @@
 		if(EXPLODE_DEVASTATE) // guaranteed open closets
 			chance_full_damage_item = 60
 
-	reduced_severity =  severity + 1
-
 	for(var/atom/movable/A as mob|obj in src)//pulls everything out of the locker and hits it with an explosion
 		if (prob(chance_full_damage_item))
 			A.ex_act(severity)
 		else
-			A.ex_act(reduced_severity)
+			A.ex_act(severity + 1)
 	dump_contents()
 	qdel(src)
 
