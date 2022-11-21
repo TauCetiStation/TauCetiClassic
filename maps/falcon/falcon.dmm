@@ -17319,6 +17319,7 @@
 	dir = 5;
 	network = list("SS13","Medical")
 	},
+/obj/item/weapon/storage/bag/chemistry,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
