@@ -24,6 +24,9 @@
 			if(locked)
 				icon_state = icon_locked
 				to_chat(user, "<span class='warning'>You lock the [src]!</span>")
+				for(var/mob/M in range(1)) // close the content window for all mobs, when lock lockbox
+					if (M.s_active == src)
+						close(M)
 				return
 			else
 				icon_state = icon_closed
