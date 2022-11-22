@@ -51,6 +51,18 @@
 	else
 		to_chat(user, "<span class='warning'>Its locked!</span>")
 
+/obj/item/weapon/storage/lockbox/attack_hand(mob/user)
+	if ((src.loc == user) && (src.locked == 1))
+		to_chat(user, "<span class='warning'>[src] is locked and cannot be opened!</span>")
+	else if ((src.loc == user) && (!src.locked))
+		open(user)
+	else
+		..()
+		for(var/mob/M in range(1))
+			if (M.s_active == src)
+				close(M)
+	add_fingerprint(user)
+
 /obj/item/weapon/storage/lockbox/emag_act(mob/user)
 	if(broken)
 		return FALSE
@@ -64,7 +76,7 @@
 /obj/item/weapon/storage/lockbox/try_open(mob/user)
 	if(locked && !broken)
 		if(user.in_interaction_vicinity(src))
-			to_chat(user, "<span class='warning'>Its locked!</span>")
+			to_chat(user, "<span class='warning'>[src] is locked and cannot be opened!</span>")
 		return FALSE
 	else
 		return ..()
