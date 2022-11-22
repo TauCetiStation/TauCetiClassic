@@ -52,9 +52,9 @@
 		to_chat(user, "<span class='warning'>Its locked!</span>")
 
 /obj/item/weapon/storage/lockbox/attack_hand(mob/user)
-	if ((src.loc == user) && (src.locked == 1))
+	if ((loc == user) && locked)
 		to_chat(user, "<span class='warning'>[src] is locked and cannot be opened!</span>")
-	else if ((src.loc == user) && (!src.locked))
+	else if ((loc == user) && !locked)
 		open(user)
 	else
 		..()
