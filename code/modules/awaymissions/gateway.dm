@@ -186,6 +186,7 @@
 		if(ismob(M))
 			to_chat(M, "<span class='danger'>Gateway Matter reacts strangely to your Touching</span>")
 			return
+		return
 
 	M.set_dir(SOUTH)
 	enter_to_transit(M, get_step(destination.loc, SOUTH))
