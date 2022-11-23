@@ -375,3 +375,5 @@
 		log_admin("Quality loaded event-map [chosen_map], zlevel [world.maxz]")
 	else
 		message_admins("Quality failed to load event-map [chosen_map].")
+
+	H.equip_or_collect(new /obj/item/device/expedition(H), SLOT_R_STORE)
