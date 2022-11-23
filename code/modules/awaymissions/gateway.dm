@@ -164,7 +164,7 @@
 
 // okay, here's a good teleporting stuff
 /obj/machinery/gateway/center/Bumped(atom/movable/M)
-	if(!ready || !active || !expedition)
+	if(!ready || !active)
 		return
 
 	if(hacked && blocked)

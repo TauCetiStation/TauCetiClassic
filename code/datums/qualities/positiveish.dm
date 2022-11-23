@@ -346,6 +346,8 @@
 	jobs_required = list("Captain")
 
 /datum/quality/positiveish/expedition/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/device/expedition(H), SLOT_R_STORE)
+
 	var/list/AllowedMaps = list()
 
 	var/list/Lines = file2list("maps/expedition_map_list.txt")
@@ -375,5 +377,3 @@
 		log_admin("Quality loaded event-map [chosen_map], zlevel [world.maxz]")
 	else
 		message_admins("Quality failed to load event-map [chosen_map].")
-
-	H.equip_or_collect(new /obj/item/device/expedition(H), SLOT_R_STORE)
