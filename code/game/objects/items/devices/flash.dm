@@ -36,6 +36,9 @@
 	last_used = world.time
 	times_used = max(0,round(times_used)) //sanity
 
+/obj/item/device/flash/proc/AdjustFlashEffect(mob/living/M)
+	M.MakeConfused(rand(6, 10))
+	M.flash_eyes()
 
 /obj/item/device/flash/attack(mob/living/M, mob/user)
 	if(!user || !M)	return	//sanity
@@ -73,8 +76,7 @@
 	if(iscarbon(M))
 		var/safety = M:eyecheck()
 		if(safety <= 0)
-			M.MakeConfused(rand(6, 10))
-			M.flash_eyes()
+			AdjustFlashEffect(M)
 		else
 			flashfail = 1
 

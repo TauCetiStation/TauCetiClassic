@@ -237,3 +237,13 @@
 	<B>All Revolution Heads Arrested:</B> [SSStatistics.score.allarrested ? "Yes" : "No"] (Score tripled)<BR>"}
 
 	return dat
+
+/datum/faction/revolution/flash_revolution
+	name = "Syndicate Revolutionaries"
+	initroletype = /datum/role/rev_leader/flash_rev_leader
+	roletype = /datum/role/rev
+	min_roles = 1
+	max_roles = 1
+
+/datum/faction/revolution/flash_revolution/check_win()
+	return FALSE

@@ -60,6 +60,11 @@
 			to_chat(rev_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
 			rev_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 
+/datum/role/rev_leader/flash_rev_leader/OnPostSetup(laterole)
+	. = ..()
+	var/mob/living/carbon/human/H = antag.current
+	H.equip_to_slot_or_del(new /obj/item/device/flash/rev_flash, SLOT_IN_BACKPACK)
+
 /mob/living/carbon/human/proc/RevConvert()
 	set name = "Rev-Convert"
 	set category = "IC"
@@ -116,3 +121,80 @@
 			to_chat(M, "<span class='warning'>You reject this traitorous cause!</span>")
 			to_chat(src, "<span class='warning'><b>[M] does not support the revolution!</b></span>")
 		lead.rev_cooldown = world.time + 50
+
+/obj/item/device/flash/rev_flash
+
+/obj/item/device/flash/rev_flash/AdjustFlashEffect(mob/living/M)
+	M.AdjustWeakened(rand(6, 10))
+	M.flash_eyes()
+
+/obj/item/device/flash/rev_flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
+	if(!user)
+		return
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		return
+	if(broken)
+		to_chat(user, "<span class='warning'>The [name] is broken</span>")
+		return
+
+	flash_recharge()
+	//find user's roles, early return if have nothing
+	var/datum/role/user_role = null
+	for(var/role in user.mind.antag_roles)
+		var/datum/role/R = user.mind.GetRole(role)
+		if(R)
+			user_role = R
+			break
+	if(!user_role)
+		to_chat(user, "<span class='warning'>*click* *click*</span>")
+		return
+	//select target [choice] for convert
+	var/list/victim_list = list()
+	for(var/mob/living/carbon/human/H in view(1, user))
+		if(H == user)
+			continue
+		var/image/I = image(H.icon, H.icon_state)
+		I.appearance = H
+		victim_list[H] = I
+	var/mob/living/carbon/human/choice = show_radial_menu(user, src, victim_list, tooltips = TRUE)
+	if(!choice)
+		return
+	//check target implants, mind
+	if(choice.ismindshielded())
+		to_chat(user, "<span class='warning'>[choice] mind seems to be protected!</span>")
+		return
+	if(choice.isloyal())
+		to_chat(user, "<span class='warning'>[choice] mind is already washed by Nanotrasen!</span>")
+		return
+	if(!choice.client || !choice.mind)
+		to_chat(user, "<span class='warning'>The target must be conscious and have mind!</span>")
+		return
+	//if you break the distance, there should be no effect
+	if(get_dist(user, choice) > 1)
+		to_chat(user, "<span class='warning'>You need to be closer to [choice]!</span>")
+		return
+	/*	Concept requires: target must be incapacitating.
+		There is no meta on revolution and that device.
+		We dont need lol-convert					*/
+	var/have_incapacitating = FALSE
+	for(var/effect in choice.status_effects)
+		var/datum/status_effect/incapacitating/S = effect
+		if(S)
+			have_incapacitating = TRUE
+	if(!have_incapacitating)
+		to_chat(user, "<span class='warning'>Make [choice] helpless against you!</span>")
+		return
+	//find all user's factions and add target as recruit.
+	var/list/factions = find_factions_by_member(user_role, user.mind)
+	for(var/datum/faction/faction in factions)
+		add_faction_member(faction, choice)
+	//red color flash for attract attention
+	flash_lighting_fx(_color = LIGHT_COLOR_FIREPLACE)
+	playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
+	flick("flash2", src)
+	//give them time to think about the situation
+	choice.AdjustSleeping(2)
+
+/obj/item/device/flash/rev_flash/emp_act(severity)
+	return
