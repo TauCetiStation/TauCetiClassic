@@ -195,8 +195,12 @@
 	if(ismultitool(W))
 		calibrate(user)
 	if(istype(W, /obj/item/device/expedition))
+		if(world.time < 18000) // Ten minute grace period to let the game get going without lolmetagaming. -- TLE
+			to_chat(user, "Gateway is calibrating. Please wait another [round((18000-world.time)/600)] minutes and prepare while you're at it.")
+			return
 		expedition = TRUE
 		destination = pick(awaydestinations)
+		to_chat(user, "Gateway has been calibrated. Marked personnel may now enter.")
 		var/obj/item/device/expedition/E = W
 		allowed_adventurers += E.adventurers
 
