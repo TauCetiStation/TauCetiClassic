@@ -23,7 +23,7 @@
 
 /obj/item/device/expedition/examine(mob/user)
 	. = ..()
-	if(!length)
+	if(!length(adventurers))
 		return
 	else
 		to_chat(user, "Adventurers: [get_english_list(adventurers)]")
