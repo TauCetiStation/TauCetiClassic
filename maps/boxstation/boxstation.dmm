@@ -58676,6 +58676,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cJb" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/structure/stool/bed/chair/metal{
+	dir = 8
+	},
+/obj/item/weapon/pen,
+/obj/item/weapon/haircomb{
+	pixel_y = -6
+	},
+/obj/item/clothing/glasses/regular,
 /turf/simulated/floor/plating,
 /area/station/civilian/library)
 "cJl" = (
@@ -61009,6 +61018,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/civilian/library)
 "efb" = (
@@ -74594,7 +74604,28 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "odz" = (
-/obj/structure/grille,
+/obj/item/weapon/paper_bin{
+	pixel_x = 7;
+	pixel_y = -6
+	},
+/obj/structure/table/woodentable,
+/obj/item/weapon/paper,
+/obj/item/weapon/paper{
+	pixel_x = -7;
+	pixel_y = -5
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood{
+	pixel_y = 10;
+	pixel_x = -11
+	},
+/obj/item/trash/candle/ghost{
+	pixel_x = 8;
+	pixel_y = 16
+	},
+/obj/structure/grille{
+	destroyed = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/library)
 "odC" = (
@@ -81049,6 +81080,13 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/monitoring)
+"toK" = (
+/obj/structure/bookcase{
+	name = "bookcase (Adult)"
+	},
+/obj/random/misc/book,
+/turf/simulated/floor/plating,
+/area/station/civilian/library)
 "tpb" = (
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
@@ -132046,7 +132084,7 @@ bHE
 bPu
 bSs
 lGO
-cJb
+toK
 lGO
 lGO
 dhO
