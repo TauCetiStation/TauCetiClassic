@@ -1,8 +1,32 @@
-/datum/export/gas/solid_proto_hydrate
+/datum/export/solid_proto_hydrate
 	cost = 1000
 	include_subtypes = FALSE
 	unit_name = "solid proto-hydrate"
 	export_types = list(/obj/item/weapon/solid_phydr)
+
+/datum/export/gas/applies_to(obj/O, contr = 0, emag = 0)
+	if(contraband && !contr)
+		return FALSE
+	if(hacked && !emag)
+		return FALSE
+	if(!get_amount(O))
+		return FALSE
+	return TRUE
+
+/datum/export/gas/get_amount(obj/O, contr = 0, emag = 0)
+	if(istype(O, /obj/machinery/portable_atmospherics/canister) && export_gases.len)
+		var/molesToExport = 0
+		var/obj/machinery/portable_atmospherics/canister/C = O
+		for(var/gas in export_gases)
+			molesToExport += C.air_contents.gas[gas]
+		return molesToExport
+	else if(istype(O, /obj/item/weapon/tank) && export_gases.len)
+		var/molesToExport = 0
+		var/obj/item/weapon/tank/T = O
+		for(var/gas in export_gases)
+			molesToExport += T.air_contents.gas[gas]
+		return molesToExport
+	return FALSE
 
 /datum/export/gas/phoron
 	cost = 1

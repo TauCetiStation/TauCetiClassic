@@ -79,18 +79,6 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 // Checks the amount of exportable in object. Credits in the bill, sheets in the stack, etc.
 // Usually acts as a multiplier for a cost, so item that has 0 amount will be skipped in export.
 /datum/export/proc/get_amount(obj/O, contr = 0, emag = 0)
-	if(istype(O, /obj/machinery/portable_atmospherics/canister) && export_gases.len)
-		var/molesToExport = 0
-		var/obj/machinery/portable_atmospherics/canister/C = O
-		for(var/gas in export_gases)
-			molesToExport += C.air_contents.gas[gas]
-		return molesToExport
-	else if(istype(O, /obj/item/weapon/tank) && export_gases.len)
-		var/molesToExport = 0
-		var/obj/item/weapon/tank/T = O
-		for(var/gas in export_gases)
-			molesToExport += T.air_contents.gas[gas]
-		return molesToExport
 	return 1
 
 // Checks if the item is fit for export datum.
@@ -151,5 +139,5 @@ var/global/list/exports_list = list()
 /proc/setupExports()
 	for(var/subtype in subtypesof(/datum/export))
 		var/datum/export/E = new subtype
-		if(E.export_types && E.export_types.len) // Exports without a type are invalid/base types
+		if((E.export_types && E.export_types.len) || E.export_gases.len) // Exports without a type are invalid/base types
 			exports_list += E

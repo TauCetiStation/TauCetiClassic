@@ -84,7 +84,7 @@
 		C.AdjustWeakened(-1)
 		C.adjustToxLoss(1)
 		if(prob(10))
-			to_chat(C, "<span class='warning'>You feel energy overflowing you! And also chemical poisoning.</span>")
+			to_chat(C, "<span class='warning'>You feel energy overflowing you! And also a chemical poisoning.</span>")
 
 /datum/xgm_gas/cardotirin/on_inhalation(mob/living/carbon/C, datum/gas_mixture/B)
 	var/I = "ctirin"
