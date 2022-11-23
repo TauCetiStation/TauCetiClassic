@@ -361,7 +361,7 @@
 
 
 
-/obj/singularity/singa
+/obj/singularity/gravitational
 	name = "gravitational singularity"
 	desc = "A gravitational singularity."
 	icon = 'icons/obj/singularity.dmi'
@@ -369,12 +369,12 @@
 
 	var/atom/movable/singularity_effect/singulo_effect
 
-/obj/singularity/singa/Destroy()
+/obj/singularity/gravitational/Destroy()
 	vis_contents -= singulo_effect
 	QDEL_NULL(singulo_effect)
 	return ..()
 
-/obj/singularity/singa/update_icon(stage)
+/obj/singularity/gravitational/update_icon(stage)
 	switch(stage)
 		if(STAGE_ONE)
 			icon = 'icons/obj/singularity.dmi'

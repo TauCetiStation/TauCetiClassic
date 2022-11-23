@@ -86,7 +86,7 @@
 /turf/unsimulated/floor/abductor,
 /area/space_structures/planetarium)
 "q" = (
-/obj/singularity/singa/academy,
+/obj/singularity/gravitational/academy,
 /turf/environment/space,
 /area/space_structures/planetarium)
 "r" = (
