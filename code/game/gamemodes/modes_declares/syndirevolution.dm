@@ -9,5 +9,5 @@
 	minimum_players_bundles = 25
 
 /datum/game_mode/syndireva/announce()
-	to_chat(world, "<B>Aboba The current game mode is - Syndicate Revolution!</B>")
+	to_chat(world, "<B>The current game mode is - Syndicate Revolution!</B>")
 	to_chat(world, "<B>Someone on the station is a Syndicate agent with a tool to brainwash the crew! They are going to start a revolution!</B>")
