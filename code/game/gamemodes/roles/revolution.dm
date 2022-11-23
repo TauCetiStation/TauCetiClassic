@@ -140,7 +140,7 @@
 		return
 	flash_recharge()
 	var/datum/role/user_role = null
-	//if we don't need conversion by other revolutionaries/antags
+	//if we don't need converting by other revolutionaries/antags
 	if(headrev_only)
 		if(isrole(HEADREV, user))
 			user_role = user.mind.GetRole(HEADREV)
