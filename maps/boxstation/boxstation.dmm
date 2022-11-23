@@ -61596,6 +61596,7 @@
 	pixel_x = 5;
 	pixel_y = 1
 	},
+/obj/item/weapon/storage/pill_bottle/dexalin,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteyellow"
@@ -62258,6 +62259,9 @@
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
+	},
+/obj/machinery/light/small{
+	dir = 8
 	},
 /turf/simulated/floor/mech_bay_recharge_floor,
 /area/station/medical/staff_hallway)
@@ -65935,6 +65939,18 @@
 	},
 /area/station/medical/patient_c)
 "hCM" = (
+/obj/item/toy/figure/ninja{
+	pixel_y = 7
+	},
+/obj/item/weapon/reagent_containers/food/snacks/chinese/rice,
+/obj/item/weapon/reagent_containers/food/snacks/chinese/newdles{
+	pixel_x = 5;
+	pixel_y = -6
+	},
+/obj/item/toy/crossbow{
+	pixel_x = -4;
+	pixel_y = -6
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "hFo" = (
@@ -66398,8 +66414,7 @@
 	},
 /obj/machinery/status_display{
 	layer = 3.3;
-	pixel_y = -32;
-	supply_display = 1
+	pixel_y = -32
 	},
 /turf/simulated/floor{
 	icon_state = "whiteblue"
@@ -67881,10 +67896,10 @@
 	},
 /area/station/engineering/break_room)
 "iVe" = (
-/obj/structure/stool/bed/chair/weigher/floor,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/structure/stool/bed/chair/weigher,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -71397,8 +71412,7 @@
 "lzU" = (
 /obj/machinery/status_display{
 	layer = 3.3;
-	pixel_y = -32;
-	supply_display = 1
+	pixel_y = -32
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -80723,12 +80737,12 @@
 /turf/simulated/floor,
 /area/station/engineering/monitoring)
 "tej" = (
-/obj/machinery/smartfridge,
 /obj/machinery/camera{
 	c_tag = "Medbay Pharmacy";
 	network = list("SS13","Medical");
 	dir = 4
 	},
+/obj/machinery/smartfridge/chemistry,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "tfb" = (
@@ -85016,6 +85030,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/mob/living/simple_animal/cat/dusty,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"

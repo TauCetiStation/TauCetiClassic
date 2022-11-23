@@ -534,15 +534,19 @@
 	icon_state = "officechair_dark"
 	behind = "officechair_dark_behind"
 
-/obj/structure/stool/bed/chair/weigher/floor
+/obj/structure/stool/bed/chair/weigher
 	name = "Floor Weighter"
 	desc = "A device to measure weight."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weigher"
-	name = "chair"
+	name = "Floor Weighter"
 	buckle_lying = FALSE // force people to sit up in chairs when buckled
 
-/obj/structure/stool/bed/chair/weigher/floor/examine(mob/user)
+/obj/structure/stool/bed/chair/weigher/atom_init()
+	. = ..()
+	verbs -= /obj/structure/stool/bed/chair/verb/rotate
+
+/obj/structure/stool/bed/chair/weigher/examine(mob/user)
 	if(buckled_mob)
 		if(ishuman(buckled_mob))
 			var/mob/living/carbon/human/H = buckled_mob
