@@ -243,7 +243,4 @@
 	initroletype = /datum/role/rev_leader/flash_rev_leader
 	roletype = /datum/role/rev
 	min_roles = 1
-	max_roles = 1
-
-/datum/faction/revolution/flash_revolution/check_win()
-	return FALSE
+	max_roles = 2
