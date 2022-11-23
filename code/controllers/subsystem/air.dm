@@ -82,10 +82,10 @@ SUBSYSTEM_DEF(air)
 	msg += "ZTU:[zones_to_update.len]|"
 	msg += "E:[edges.len]|"
 	msg += "Z:[zones.len]|"
-	var/list/p1 = possibleReactionZones[1]
-	var/list/p2 = possibleReactionZones[2]
-	var/list/p3 = possibleReactionZones[3]
-	msg += "PRT:[p1.len + p2.len + p3.len]"
+	var/list/p1 = possibleReactionMixes[1]
+	var/list/p2 = possibleReactionMixes[2]
+	var/list/p3 = possibleReactionMixes[3]
+	msg += "PRM:[p1.len + p2.len + p3.len]"
 	..(msg)
 
 
@@ -310,12 +310,11 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/process_reactions(resumed = 0)
 	for(var/P = 3, P > 0, P--)
-		var/list/C = possibleReactionZones[P]
-		if(C.len > 40)
-			C.Cut(41)
-		for(var/zone/Z in possibleReactionZones[P])
-			var/datum/gas_mixture/G = Z.air
-			try_react(G, Z)
+		var/list/C = possibleReactionMixes[P]
+		if(C.len > 	MAX_MIXES_PER_PRIORITY)
+			C.Cut(MAX_MIXES_PER_PRIORITY + 1)
+		for(var/datum/gas_mixture/G in possibleReactionMixes[P])
+			try_react(G)
 
 /*********** Setup procs ***********/
 
@@ -561,9 +560,9 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/get_reaction_mix_priority(datum/gas_mixture/G)
 	var/P = 0
-	if(G.temperature >= 303.15 || G.temperature <= 273.15)
+	if(G.temperature >= ABNORMAL_TEMP_MAX || G.temperature <= ABNORMAL_TEMP_MIN)
 		P++
-	if(G.return_pressure() >= ONE_ATMOSPHERE * 2)
+	if(G.return_pressure() >= ABNORMAL_PRESSURE_MIN)
 		P++
 	for(var/gas in G.gas)
 		if(!gas_data.gases_knowable[gas] || gas_data.gases_dangerous[gas])
@@ -571,18 +570,23 @@ SUBSYSTEM_DEF(air)
 			break
 	return P
 
+/datum/controller/subsystem/air/proc/add_reaction_mix(datum/gas_mixture/G, P)
+	if(!process_reactions)
+		return
+	var/OP = G.last_reaction_priority
+	if(OP == P)
+		return
+	G.last_reaction_priority = P
+	var/list/L
+	if(OP)
+		L = possibleReactionMixes[OP]; L.Remove(G); possibleReactionMixes[OP] = L;
+	L = possibleReactionMixes[P]; L.Insert(1, G); possibleReactionMixes[P] = L;
+
 /datum/controller/subsystem/air/proc/add_reaction_zone(zone/Z, P)
 	if(!process_reactions)
 		return
-	var/OP = Z.last_reaction_priority
-	if(OP == P)
-		return
-	Z.last_reaction_priority = P
-	var/list/L
-	if(OP)
-		L = possibleReactionZones[OP]; L.Remove(Z); possibleReactionZones[OP] = L;
-	L = possibleReactionZones[P]; L.Insert(1, Z); possibleReactionZones[P] = L;
-
+	add_reaction_mix(Z.air, P)
+	#ifdef ZASDBG
 	for(var/turf/T in Z.contents)
 		var/obj/effect/overlay/O = new/obj/effect/overlay(T)
 		O.name = "PRT"
@@ -591,14 +595,16 @@ SUBSYSTEM_DEF(air)
 		O.icon_state = "prt" + num2text(P)
 		O.anchored = TRUE
 		O.layer = 5
+	#endif
 
-/datum/controller/subsystem/air/proc/try_react(datum/gas_mixture/G, zone/Z = null)
-	for(var/datum/atmosReaction/R as anything in global.atmosReactionList)
-		if(atmosReactionList[R].react(G, Z))
+/datum/controller/subsystem/air/proc/try_react(datum/gas_mixture/G)
+	for(var/I as anything in global.atmosReactionList)
+		var/datum/atmosReaction/R = atmosReactionList[I]
+		if(R.react(G))
 			if(log_recent_reactions)
-				recentReactions.Insert(1, list(R, Z))
-				if(recentReactions.len > 10)
-					recentReactions.Cut(11)
+				recentReactions.Insert(1, list(I, G))
+				if(recentReactions.len > MAX_RECENT_REACTIONS)
+					recentReactions.Cut(MAX_RECENT_REACTIONS + 1)
 
 /datum/controller/subsystem/air/proc/atmos_reactions_panel()
 	var/html = ""
@@ -610,10 +616,10 @@ SUBSYSTEM_DEF(air)
 		else
 			html += "Обработка реакций: [SSair.process_reactions ? "Включена" : "Выключена"]<br>"
 			html += "Нагрузка: [SSair.cost_reactions]<br>"
-			var/list/p1 = possibleReactionZones[1]
-			var/list/p2 = possibleReactionZones[2]
-			var/list/p3 = possibleReactionZones[3]
-			html += "Количество возможных зон ZAS для реакций: [p1.len + p2.len + p3.len]<br>"
+			var/list/p1 = possibleReactionMixes[1]
+			var/list/p2 = possibleReactionMixes[2]
+			var/list/p3 = possibleReactionMixes[3]
+			html += "Количество возможных газовых смесей для реакций: [p1.len + p2.len + p3.len]<br>"
 			html += "Запись недавних реакций: [SSair.log_recent_reactions ? "Включена" : "Выключена"]<br>"
 			html += "<A align='right' href='?src=\ref[src];enabler=1'>Включить обработку реакций</A><br>"
 			html += "<A align='right' href='?src=\ref[src];viewrlog=1'>Просмотреть недавние реакции</A><br>"

@@ -55,8 +55,6 @@ Class Procs:
 /zone/var/list/graphic_add = list()
 /zone/var/list/graphic_remove = list()
 
-/zone/var/last_reaction_priority = 0
-
 /zone/New()
 	SSair.add_zone(src)
 	air.temperature = TCMB

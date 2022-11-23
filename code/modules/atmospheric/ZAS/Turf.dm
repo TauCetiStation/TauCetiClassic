@@ -277,10 +277,6 @@
 	return GM
 
 /turf/simulated/assume_air(datum/gas_mixture/giver)
-	if(SSair.process_reactions)
-		var/P = SSair.get_reaction_mix_priority(return_air())
-		if(P)
-			SSair.add_reaction_zone(zone, P)
 	var/datum/gas_mixture/my_air = return_air()
 	my_air.merge(giver)
 

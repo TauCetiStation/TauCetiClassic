@@ -15,6 +15,9 @@
 	//List of active tile overlays for this gas_mixture.  Updated by check_tile_graphic()
 	var/list/graphic = list()
 
+	//last reaction priority
+	var/list/last_reaction_priority = 0
+
 /datum/gas_mixture/New(_volume = CELL_VOLUME, _temperature = 0, _group_multiplier = 1)
 	volume = _volume
 	temperature = _temperature
@@ -89,7 +92,7 @@
 	if(!giver)
 		return
 
-	if(abs(temperature-giver.temperature)>MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+	if(abs(temperature-giver.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = heat_capacity()
 		var/giver_heat_capacity = giver.heat_capacity()
 		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
@@ -207,7 +210,13 @@
 			gas -= g
 		else
 			total_moles += gas[g]
+	is_possible_reaction_mix()
 
+//quick rough check, for determining if we should check this mix for reactions
+/datum/gas_mixture/proc/is_possible_reaction_mix()
+	var/P = SSair.get_reaction_mix_priority(src)
+	if(P)
+		SSair.add_reaction_mix(src, P)
 
 //Returns relative (to the standard) density of the gas mix with max of 1.
 /datum/gas_mixture/proc/return_relative_density()
@@ -349,8 +358,6 @@
 
 
 /datum/gas_mixture/proc/react()
-	if(SSair.process_reactions && SSair.get_reaction_mix_priority(src))
-		SSair.try_react(src)
 	zburn(null, force_burn = FALSE, no_check = FALSE) //could probably just call zburn() here with no args but I like being explicit.
 
 

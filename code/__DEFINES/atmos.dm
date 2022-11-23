@@ -131,3 +131,10 @@
 #define PARENT2    parents[2]
 #define PARENT3    parents[3]
 #define PARENT_I   parents[I]
+
+//atmos reaction defines
+#define ABNORMAL_TEMP_MIN 273.15 //kelvins
+#define ABNORMAL_TEMP_MAX 303.15 //kelvins
+#define ABNORMAL_PRESSURE_MIN 500 //kilo pascals
+#define MAX_MIXES_PER_PRIORITY 50
+#define MAX_RECENT_REACTIONS 10

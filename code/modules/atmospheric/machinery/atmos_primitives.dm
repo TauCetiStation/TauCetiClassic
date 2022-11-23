@@ -64,12 +64,6 @@
 
 	sink.merge(removed)
 
-	var/P = SSair.get_reaction_mix_priority(sink)
-	if(P)
-		var/turf/simulated/T = M.loc
-		if(SSair.has_valid_zone(T))
-			SSair.add_reaction_zone(T.zone, P)
-
 	return power_draw TAUCETI_POWER_DRAW_MOD
 
 //Gas 'pumping' proc for the case where the gas flow is passive and driven entirely by pressure differences (but still one-way).
@@ -103,12 +97,6 @@
 	if(!removed) //Just in case
 		return -1
 	sink.merge(removed)
-
-	var/P = SSair.get_reaction_mix_priority(sink)
-	if(P)
-		var/turf/simulated/T = M.loc
-		if(SSair.has_valid_zone(T))
-			SSair.add_reaction_zone(T.zone, P)
 
 	return 0
 
