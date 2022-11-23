@@ -24,9 +24,7 @@
 			if(locked)
 				icon_state = icon_locked
 				to_chat(user, "<span class='warning'>You lock the [src]!</span>")
-				for(var/mob/M in range(1)) // close the content window for all mobs, when lock lockbox
-					if (M.s_active == src)
-						close(M)
+				close_all() // close the content window for all mobs, when lock lockbox
 				return
 			else
 				icon_state = icon_closed
@@ -61,9 +59,6 @@
 		open(user)
 	else
 		..()
-		for(var/mob/M in range(1))
-			if (M.s_active == src)
-				close(M)
 	add_fingerprint(user)
 
 /obj/item/weapon/storage/lockbox/emag_act(mob/user)
