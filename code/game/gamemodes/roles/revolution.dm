@@ -123,6 +123,7 @@
 		lead.rev_cooldown = world.time + 50
 
 /obj/item/device/flash/rev_flash
+	var/headrev_only = TRUE
 
 /obj/item/device/flash/rev_flash/AdjustFlashEffect(mob/living/M)
 	M.AdjustWeakened(rand(6, 10))
@@ -137,15 +138,19 @@
 	if(broken)
 		to_chat(user, "<span class='warning'>The [name] is broken</span>")
 		return
-
 	flash_recharge()
-	//find user's roles, early return if have nothing
 	var/datum/role/user_role = null
-	for(var/role in user.mind.antag_roles)
-		var/datum/role/R = user.mind.GetRole(role)
-		if(R)
-			user_role = R
-			break
+	//if we don't need conversion by other revolutionaries/antags
+	if(headrev_only)
+		if(isrole(HEADREV, user))
+			user_role = user.mind.GetRole(HEADREV)
+	//find user's roles, early return if have nothing
+	else
+		for(var/role in user.mind.antag_roles)
+			var/datum/role/R = user.mind.GetRole(role)
+			if(R)
+				user_role = R
+				break
 	if(!user_role)
 		to_chat(user, "<span class='warning'>*click* *click*</span>")
 		return
