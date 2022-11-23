@@ -1,5 +1,6 @@
 /obj/item/device/expedition
 	name = "Exped-I-Marker"
+	desc = "There are some instructions on the back: \"1. Mark your expeditionary team. 2. Activate Gateway via this marker. 3. It is advised that the captain does not participate in expedition\"."
 	icon_state = "gangtool-a"
 	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
