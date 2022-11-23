@@ -9,6 +9,10 @@
 
 	var/active = FALSE  // on away missions you should activate gateway from start, or place "awaystart" landmarks somewhere
 	var/hacked = FALSE
+
+	var/expedition = FALSE
+	var/list/allowed_adventurers = list()
+
 	var/static/obj/transit_loc = null
 
 /obj/machinery/gateway/atom_init()
@@ -122,7 +126,7 @@
 
 /obj/machinery/gateway/center/proc/calibrate(user)
 	if(hacked)
-		to_chat(user, "<span class='bold warning'>Error: Recalibration is not possible.</span>.")
+		to_chat(user, "<span class='bold warning'>Error: Recalibration is not possible.</span>")
 		return
 	var/list/destinations_choice = list()
 	for(var/obj/machinery/gateway/center/G in gateways_list)
@@ -160,7 +164,7 @@
 
 // okay, here's a good teleporting stuff
 /obj/machinery/gateway/center/Bumped(atom/movable/M)
-	if(!ready || !active)
+	if(!ready || !active || !expedition)
 		return
 
 	if(hacked && blocked)
@@ -178,6 +182,11 @@
 				to_chat(M, "The gate has detected your exile implant and is blocking your entry.")
 				return
 
+	if(expedition && !(M in allowed_adventurers))
+		if(ismob(M))
+			to_chat(M, "<span class='danger'>Gateway Matter reacts strangely to your Touching</span>")
+			return
+
 	M.set_dir(SOUTH)
 	enter_to_transit(M, get_step(destination.loc, SOUTH))
 	use_power(1000)
@@ -185,6 +194,12 @@
 /obj/machinery/gateway/center/attackby(obj/item/device/W, mob/user)
 	if(ismultitool(W))
 		calibrate(user)
+	if(istype(W, /obj/item/device/expedition))
+		expedition = TRUE
+		destination = pick(awaydestinations)
+		var/obj/item/device/expedition/E = W
+		allowed_adventurers += E.adventurers
+
 	else
 		..()
 
@@ -240,6 +255,9 @@
 
 /obj/machinery/gateway/center/station/process()
 	..()
+	if(expedition)
+		return
+
 	if(active && !hacked && !config.gateway_enabled)
 		toggleoff()
 
@@ -250,6 +268,9 @@
 	..()
 
 /obj/machinery/gateway/center/station/toggleon(mob/user)
+	if(expedition)
+		..()
+
 	if(!hacked && !config.gateway_enabled)
 		to_chat(user, "<span class='warning'>Error: Remote activation required, make a request to the CentComm for this.</span>")
 		return

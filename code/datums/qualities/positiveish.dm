@@ -338,3 +338,40 @@
 
 /datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer(H), SLOT_R_STORE)
+
+/datum/quality/positiveish/expedition
+	name = "Expedition"
+	desc = "ЦК позволило тебе отправить нескольких человек в экспедицию через гейтвей. Остаётся только надеяться, что они вернутся..."
+	requirement = "Капитан."
+	jobs_required = list("Captain")
+
+/datum/quality/positiveish/expedition/add_effect(mob/living/carbon/human/H, latespawn)
+	var/list/AllowedMaps = list()
+
+	var/list/Lines = file2list("maps/expedition_map_list.txt")
+	if(!Lines.len)	return
+	for (var/t in Lines)
+		if (!t)
+			continue
+		t = trim(t)
+		if (length(t) == 0)
+			continue
+		else if (t[1] == "#")
+			continue
+		var/pos = findtext(t, " ")
+		var/name = null
+		if (pos)
+			name = copytext(t, 1, pos)
+		else
+			name = t
+		if (!name)
+			continue
+
+		AllowedMaps.Add(name)
+
+	var/chosen_map = pick(AllowedMaps)
+	if(maploader.load_new_z_level(chosen_map, list(ZTRAIT_AWAY = TRUE, ZTRAIT_LINKAGE = SELFLOOPING)))//, load_speed = 100)
+		message_admins("Quality loaded event-map [chosen_map], zlevel [world.maxz]")
+		log_admin("Quality loaded event-map [chosen_map], zlevel [world.maxz]")
+	else
+		message_admins("Quality failed to load event-map [chosen_map].")
