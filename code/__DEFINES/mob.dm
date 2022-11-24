@@ -181,7 +181,7 @@
 // all effects according to how they originally were with the 0.4 metabolism
 #define TOXINS_EFFECT_MULTIPLIER 2
 #define REAGENTS_EFFECT_MULTIPLIER 1.5
-#define FOOD_EFFECT_MULTIPLIER 1
+#define FOOD_EFFECT_MULTIPLIER 0.5
 #define DRINK_EFFECT_MULTIPLIER 0.5
 
 // Factor of how fast mob nutrition decreases
