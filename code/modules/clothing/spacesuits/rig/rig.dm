@@ -492,8 +492,8 @@
 	for(var/obj/item/rig_module/installed_mod in installed_modules)
 		if(installed_mod.type == /obj/item/rig_module/emp_shield)
 			var/obj/item/rig_module/emp_shield/shield = installed_mod
-			shield.uses--
 			if(shield.uses > 0)
+				shield.uses--
 				to_chat(wearer, "<span class='warning'>[installed_mod.name] absorbs EMP. [shield.uses] uses left!</span>")
 				return
 
