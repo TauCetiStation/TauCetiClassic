@@ -580,6 +580,7 @@ th.cargo {
 	background: #90642c;
 	font-weight: bold;
 	color: #ffffff;
+}
 
 /* Damage colors and fonts for crew monitoring computer */
 .burn, .brute, .toxin, .oxyloss {
