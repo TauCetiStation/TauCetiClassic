@@ -63882,7 +63882,7 @@
 /area/station/engineering/chiefs_office)
 "gme" = (
 /obj/effect/decal/cleanable/generic,
-/obj/random/scrap/sparse_even,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating{
 	dir = 1;
 	icon_state = "warnplate"
@@ -67043,11 +67043,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"ikX" = (
-/obj/effect/decal/cleanable/generic,
-/obj/random/scrap/moderate_weighted,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
 "imV" = (
 /obj/structure/flora/junglebush/large,
 /turf/simulated/floor/grass,
@@ -67533,10 +67528,7 @@
 	name = "Chemistry Storage";
 	req_access = list(5)
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
+/turf/simulated/wall/r_wall,
 /area/station/medical/storage)
 "iFh" = (
 /obj/structure/stool/bed/chair/metal,
@@ -67731,7 +67723,7 @@
 /obj/item/roller,
 /obj/item/device/healthanalyzer,
 /obj/effect/decal/cleanable/dirt,
-/obj/random/meds,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "iPF" = (
@@ -71866,7 +71858,7 @@
 /area/station/cargo/qm)
 "lNE" = (
 /obj/effect/decal/cleanable/generic,
-/obj/random/scrap/sparse_even,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "lOr" = (
@@ -72233,10 +72225,6 @@
 	icon_state = "green"
 	},
 /area/station/medical/infectious_disease_ward)
-"mfd" = (
-/obj/random/scrap/sparse_even,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
 "mfF" = (
 /obj/machinery/shieldwallgen,
 /turf/simulated/floor/plating,
@@ -72303,7 +72291,7 @@
 /area/station/civilian/fitness)
 "mjS" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/random/scrap/sparse_even,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "mjX" = (
@@ -73333,13 +73321,6 @@
 /obj/structure/bookcase/manuals/medical,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
-"ndU" = (
-/obj/random/scrap/sparse_weighted,
-/turf/simulated/floor/plating{
-	dir = 1;
-	icon_state = "warnplate"
-	},
-/area/station/maintenance/medbay)
 "nef" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -82882,9 +82863,9 @@
 	},
 /area/station/maintenance/atmos)
 "uTe" = (
-/obj/random/scrap/dense_even,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken5"
 	},
@@ -83811,6 +83792,7 @@
 	name = "Medbay Storage";
 	sortType = "Medbay Storage"
 	},
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "vOI" = (
@@ -83891,7 +83873,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/random/scrap/sparse_weighted,
+/obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "vSc" = (
@@ -84842,10 +84824,6 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/hydroponics)
-"wGh" = (
-/obj/random/scrap/moderate_weighted,
-/turf/simulated/floor/plating,
-/area/station/maintenance/medbay)
 "wGk" = (
 /obj/structure/sign/departments/medbay/alt,
 /turf/simulated/wall,
@@ -127490,7 +127468,7 @@ utw
 oBa
 nxy
 ygT
-ikX
+lNE
 pRX
 aaa
 aaa
@@ -127995,7 +127973,7 @@ pcW
 pRX
 sBM
 sJf
-ndU
+oUh
 cvw
 cvw
 oBa
@@ -128763,10 +128741,10 @@ wkt
 bSo
 pRX
 pRX
-xBy
+urT
 xTO
 tqM
-fTX
+urT
 wSS
 xTO
 xTO
@@ -129028,7 +129006,7 @@ pRX
 ueo
 pRX
 pRX
-dqA
+urT
 ygT
 nxy
 hwp
@@ -129793,7 +129771,7 @@ hoP
 xTO
 xTO
 xTO
-xBy
+urT
 pRX
 ijP
 xTO
@@ -131589,7 +131567,7 @@ jRC
 rHF
 xTO
 xTO
-dqA
+urT
 pRX
 pRX
 pRX
@@ -131598,7 +131576,7 @@ xTO
 vmg
 kOY
 cZo
-mfd
+urT
 xTO
 dhW
 pRX
@@ -134939,8 +134917,8 @@ knV
 pRX
 fgf
 fdi
-mfd
-dqA
+urT
+urT
 pRX
 aaa
 aaa
@@ -135197,7 +135175,7 @@ pRX
 vkJ
 fdi
 wSS
-wGh
+urT
 rzN
 aaa
 aaa
@@ -135711,7 +135689,7 @@ xTO
 xTO
 vRN
 fNJ
-fTX
+urT
 pRX
 aaa
 aaa
@@ -135968,7 +135946,7 @@ kAQ
 jkS
 vDz
 qBb
-dqA
+urT
 pRX
 aaa
 aaa
