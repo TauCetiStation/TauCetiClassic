@@ -1361,6 +1361,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/chem_master
 	category = list("Machine")
 
+/datum/design/operating_table
+	name = "Machine Design (Operating Table)"
+	desc = "The circuit board for a Operating Table."
+	id = "operating_table"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 3000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/operating_table
+	category = list("Machine")
+
 /datum/design/destructive_analyzer
 	name = "Destructive Analyzer Board"
 	desc = "The circuit board for a destructive analyzer."
