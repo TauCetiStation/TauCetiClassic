@@ -1,28 +1,28 @@
 /datum/objective/cult
 
-/datum/objective/cult/escape
+/datum/objective/cult/recruit
 	var/acolytes_needed
 
-/datum/objective/cult/escape/New()
-	acolytes_needed = round(player_list.len * 0.04)
+/datum/objective/cult/recruit/New()
+	acolytes_needed = round(player_list.len * 0.08)
 	explanation_text = "Убедитесь, что хотя бы [acolytes_needed] [pluralize_russian(acolytes_needed, "культист", "культиста", "культистов")] улетят живыми на шаттле, чтобы продолжить исследования на других станциях."
 	..()
 
-/datum/objective/cult/escape/check_completion()
+/datum/objective/cult/recruit/check_completion()
 	var/datum/faction/cult/C = faction
 	if(istype(C) && C.get_cultists_out() >= acolytes_needed)
 		return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
 
-/datum/objective/cult/recruit
+/datum/objective/cult/convert
 	var/acolytes_needed
 
-/datum/objective/cult/recruit/New()
+/datum/objective/cult/convert/New()
 	acolytes_needed = max(5, round(player_list.len * 0.3))
 	explanation_text = "Заполучите [acolytes_needed] [pluralize_russian(acolytes_needed, "человека", "человека", "человек")] в подчинение культа, живыми или мёртвыми."
 	..()
 
-/datum/objective/cult/recruit/check_completion()
+/datum/objective/cult/convert/check_completion()
 	var/datum/faction/cult/C = faction
 	if(istype(C) && C.members.len >= acolytes_needed)
 		return OBJECTIVE_WIN
