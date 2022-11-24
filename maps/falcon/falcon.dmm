@@ -17308,6 +17308,7 @@
 	dir = 5;
 	network = list("SS13","Medical")
 	},
+/obj/item/weapon/storage/bag/chemistry,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -19176,11 +19177,11 @@
 /area/station/civilian/bar)
 "jMj" = (
 /obj/machinery/clonepod,
-/obj/machinery/shower{
-	dir = 8
-	},
 /obj/structure/drain{
 	drainage = 2
+	},
+/obj/machinery/shower/free{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 5;

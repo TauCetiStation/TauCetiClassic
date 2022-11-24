@@ -100,7 +100,7 @@
 				qdel(src)
 	else
 		to_chat(user, "<span class='notice'>Вы не можете этого сделать пока стена открыта.</span>")
-	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+	if( istype(W, /obj/item/weapon/gun/energy/laser/cutter) )
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(walltype)
 		if(walltype != /turf/simulated/wall/mineral/phoron)
