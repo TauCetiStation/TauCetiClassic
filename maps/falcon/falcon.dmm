@@ -19177,11 +19177,11 @@
 /area/station/civilian/bar)
 "jMj" = (
 /obj/machinery/clonepod,
-/obj/machinery/shower{
-	dir = 8
-	},
 /obj/structure/drain{
 	drainage = 2
+	},
+/obj/machinery/shower/free{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 5;

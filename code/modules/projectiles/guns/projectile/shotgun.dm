@@ -92,7 +92,7 @@
 		add_overlay("[initial(icon_state)]shell-[magazine.ammo_count()]")
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/melee/energy) || istype(I, /obj/item/weapon/pickaxe/plasmacutter))
+	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/melee/energy))
 		if(short || !can_be_shortened)
 			return
 		if(get_ammo())
