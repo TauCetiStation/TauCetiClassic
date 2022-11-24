@@ -406,3 +406,27 @@
 
 /datum/emote/human/hmm_excited/get_sound(mob/living/carbon/human/user, intentional)
 	return pick(user.gender == FEMALE ? SOUNDIN_HMM_EXCLAIM_FEMALE : SOUNDIN_HMM_EXCLAIM_MALE)
+
+
+/datum/emote/human/woo
+	key = "woo"
+
+	message_1p = "You woo excitedly!"
+	message_3p = "woos excitedly!"
+
+	message_impaired_production = "woos excitedly!"
+	message_impaired_reception = "You see someone excitedly wooing!"
+
+	message_miming = "acts out gestures, excitedly!"
+	message_muzzled = "looks excited."
+
+	message_type = SHOWMSG_AUDIO
+
+	age_variations = TRUE
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS)
+	)
+
+/datum/emote/human/woo/get_sound(mob/living/carbon/human/user, intentional)
+	return pick(user.gender == FEMALE ? SOUNDIN_WOO_FEMALE : SOUNDIN_WOO_MALE)
