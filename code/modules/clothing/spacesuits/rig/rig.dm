@@ -491,8 +491,12 @@
 /obj/item/clothing/suit/space/rig/emp_act(severity)
 	for(var/obj/item/rig_module/installed_mod in installed_modules)
 		if(installed_mod.type == /obj/item/rig_module/emp_shield)
-			to_chat(wearer, "<span class='warning'>[installed_mod.name] absorbs EMP.</span>")
-			return
+			var/obj/item/rig_module/emp_shield/shield = installed_mod
+			shield.uses--
+			if(shield.uses > 0)
+				to_chat(wearer, "<span class='warning'>[installed_mod.name] absorbs EMP. [shield.uses] uses left!</span>")
+				return
+
 	//drain some charge
 	if(cell)
 		cell.emplode(severity + 1)
@@ -961,7 +965,7 @@
 	unacidable = 1
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 25, bomb = 33, bio = 100, rad = 66)
 	max_mounted_devices = 4
-	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/emp_shield)
+	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/emp_shield/adv)
 
 /obj/item/clothing/suit/space/rig/wizard/atom_init(mapload, ...)
 	. = ..()
