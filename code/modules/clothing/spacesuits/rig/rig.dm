@@ -313,11 +313,6 @@
 		else if(total_energy_use < 0)
 			cell.give(-total_energy_use)
 
-	for(var/obj/item/rig_module/R in installed_modules)
-		if(R.type == /obj/item/rig_module/emp_shield)
-			var/obj/item/rig_module/emp_shield/shield = R
-			shield.interface_desc = "Device for protecting the hardsuit from EMP. Can withstand [shield.uses] EMPs."
-
 /obj/item/clothing/suit/space/rig/proc/give_actions(mob/living/carbon/human/H)
 	for(var/obj/item/rig_module/module in installed_modules)
 		if(module.selectable)
@@ -499,6 +494,7 @@
 			var/obj/item/rig_module/emp_shield/shield = installed_mod
 			if(shield.uses > 0)
 				shield.uses--
+				shield.interface_desc = "Device for protecting the hardsuit from EMP. Can withstand [shield.uses] EMPs."
 				to_chat(wearer, "<span class='warning'>[installed_mod.name] absorbs EMP. [shield.uses] uses left!</span>")
 				return
 
