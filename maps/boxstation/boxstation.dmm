@@ -74261,6 +74261,11 @@
 /obj/structure/reagent_dispensers/cleaner{
 	pixel_x = 32
 	},
+/obj/item/device/camera,
+/obj/item/device/lens/rentgene,
+/obj/item/device/radio/headset/headset_med,
+/obj/item/device/radio/headset/headset_med,
+/obj/item/device/radio/headset/headset_med,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitebluecorner"
@@ -75194,6 +75199,7 @@
 	pixel_x = 5;
 	pixel_y = 6
 	},
+/obj/item/device/radio/headset/headset_medsci,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
