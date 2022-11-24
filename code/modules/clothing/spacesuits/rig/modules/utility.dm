@@ -362,12 +362,14 @@
 /obj/item/rig_module/emp_shield
 	name = "hardsuit EMP shield"
 	icon_state = "powersink"
+	interface_desc = "Device for protecting the hardsuit from EMP. Can withstand 5 EMPs."
 	origin_tech = "engineering=2;magnets=2"
 	interface_name = "EMP shield"
 	var/uses = 5
 
 /obj/item/rig_module/emp_shield/adv
 	name = "hardsuit advanced EMP shield"
+	interface_desc = "Device for protecting the hardsuit from EMP. Can withstand 20 EMPs."
 	origin_tech = "engineering=2;magnets=2;bluespace=3;"
 	uses = 20
 
