@@ -364,13 +364,11 @@
 	icon_state = "powersink"
 	origin_tech = "engineering=2;magnets=2"
 	interface_name = "EMP shield"
-	interface_desc = "Device for protecting hardsuit against EMPs."
 	var/uses = 5
 
 /obj/item/rig_module/emp_shield/adv
 	name = "hardsuit advanced EMP shield"
 	origin_tech = "engineering=2;magnets=2;bluespace=3;"
-	interface_desc = "Device for protecting hardsuit against EMPs. It has been upgraded and can withstand more EMP."
 	uses = 20
 
 /obj/item/rig_module/teleporter_stabilizer
