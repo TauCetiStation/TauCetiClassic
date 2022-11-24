@@ -575,7 +575,14 @@
 /obj/machinery/optable/abductor/atom_init()
 	belt = image("icons/obj/abductor.dmi", "belt", layer = FLY_LAYER)
 	. = ..()
-
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/operating_table/abductor(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module/triphasic(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module/triphasic(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor/quadratic(null)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
+	RefreshParts()
 /obj/machinery/optable/abductor/attack_hand(mob/living/carbon/C)
 	if(!victim && !fastened)
 		return
