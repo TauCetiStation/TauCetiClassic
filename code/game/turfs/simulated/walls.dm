@@ -371,12 +371,6 @@
 				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
 				dismantle_wall()
 
-			if(user.loc == T && user.get_active_hand() == W)
-				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
-				dismantle_wall()
-				visible_message("<span class='warning'>[user] завершает разборку стены!</span>", blind_message = "<span class='warning'>Вы слышите, как металл разрезается на части.</span>", viewing_distance = 5)
-		return
-
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		if(user.is_busy(src))
