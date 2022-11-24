@@ -15171,7 +15171,7 @@
 	},
 /area/station/security/lobby)
 "aAx" = (
-/obj/machinery/shower{
+/obj/machinery/shower/free{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -15751,7 +15751,7 @@
 	},
 /area/station/rnd/xenobiology)
 "aBG" = (
-/obj/machinery/shower{
+/obj/machinery/shower/free{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -40527,9 +40527,6 @@
 	},
 /area/station/cargo/office)
 "buE" = (
-/obj/machinery/shower{
-	dir = 4
-	},
 /obj/structure/drain{
 	drainage = 2
 	},
@@ -40537,6 +40534,9 @@
 	icon_state = "left";
 	name = "Cloning Cell";
 	req_access = list(5)
+	},
+/obj/machinery/shower/free{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;

@@ -22934,7 +22934,7 @@
 	},
 /area/station/medical/reception)
 "fnH" = (
-/obj/machinery/shower{
+/obj/machinery/shower/free{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -44095,13 +44095,13 @@
 /obj/structure/drain{
 	drainage = 2
 	},
-/obj/machinery/shower{
-	dir = 8
-	},
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
 	pixel_y = -32
+	},
+/obj/machinery/shower/free{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 5;
