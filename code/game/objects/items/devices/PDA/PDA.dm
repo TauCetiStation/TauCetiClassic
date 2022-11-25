@@ -1028,7 +1028,7 @@
 				if(Lot && Lot.category == category && !Lot.sold)
 					var/datum/money_account/Acc = get_account(Lot.account)
 					shop_lots.len++
-					shop_lots[shop_lots.len] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "account" = Acc ? Acc.owner_name : "Unknown", "icon" = Lot.item_icon)
+					shop_lots[shop_lots.len] = Lot.to_list(Acc ? Acc.owner_name : "Unknown")
 		if("Shop_Change_Page")
 			var/page = href_list["shop_change_page"]
 			if(page && category_shop_page < shop_lots_frontend.len)
@@ -1735,7 +1735,7 @@
 		return
 	Lot.sold = TRUE
 	var/datum/money_account/Acc = get_account(Lot.account)
-	shopping_cart[Lot.number] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "account" = Acc ? Acc.owner_name : "Unknown", "delivered" = Lot.delivered, "postpayment" = Lot.price - prepayment, "icon" = Lot.item_icon)
+	shopping_cart[Lot.number] = Lot.to_list(Acc ? Acc.owner_name : "Unknown", Lot.price - prepayment)
 	mode = 82
 
 	charge_to_account(owner_account.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -prepayment)
