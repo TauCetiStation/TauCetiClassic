@@ -204,3 +204,49 @@
 		LAZYREMOVE(H.mind.skills.available_skillsets, s)
 	H.mind.skills.add_available_skillset(/datum/skillset/jack_of_all_trades)
 	H.mind.skills.maximize_active_skills()
+
+
+/datum/quality/quirkieish/doppleganger
+	name = "Doppleganger"
+	desc = "Ты - незарегестрированный клон кого-то из экипажа."
+	requirement = "Подопытный."
+
+/datum/quality/quirkieish/doppleganger/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject"
+
+/datum/quality/quirkieish/doppleganger/add_effect(mob/living/carbon/human/H, latespawn)
+	var/list/pos_players = list() + player_list
+
+	var/mob/living/carbon/human/target = null
+
+	while(target == null && length(pos_players) > 0)
+		var/mob/living/carbon/human/potential_target = pick(pos_players)
+		pos_players -= potential_target
+
+		// AI and borgs.
+		if(!istype(potential_target))
+			continue
+		// This shouldn't be able to happen, but to prevent runtimes...
+		if(!potential_target.mind)
+			continue
+		// While funny, please no.
+		if(length(potential_target.mind.antag_roles))
+			continue
+		// Commented out because changeling stings change appearance and name but not species...
+		// so apperantly in this universe it works like this.
+		//if(get_species(potential_target) != get_species(H))
+		//	continue
+
+		target = potential_target
+
+	if(!target)
+		to_chat(H, "<span class='warning'>Проклятие! По какой-то причине клонировал сам себя!</span>")
+		return
+
+	H.dna = target.dna.Clone()
+	H.real_name = target.dna.real_name
+
+	domutcheck(H, null)
+	H.UpdateAppearance()
+
+	H.fixblood(FALSE) // need to change blood DNA too
