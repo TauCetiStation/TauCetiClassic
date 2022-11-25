@@ -494,7 +494,7 @@
 			var/obj/item/rig_module/emp_shield/shield = installed_mod
 			if(shield.uses > 0)
 				shield.uses--
-				shield.interface_desc = "Device for protecting the hardsuit from EMP. Can withstand [shield.uses] EMPs."
+				shield.interface_desc = "Device for protecting the hardsuit from EMP. Can withstand [shield.uses] more EMPs."
 				to_chat(wearer, "<span class='warning'>[installed_mod.name] absorbs EMP. [shield.uses] uses left!</span>")
 				return
 
