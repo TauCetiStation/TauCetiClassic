@@ -208,13 +208,16 @@
 
 /datum/quality/quirkieish/loyal_golem
 	name = "Loyal Golem"
-	desc = "Ты очень умный тупой голем, а твой хозяин - НТ."
+	desc = "Ты очень умный тупой голем, а твой хозяин - НТ... или..."
 	requirement = "Подопытный, но не злодей."
 
 /datum/quality/quirkieish/loyal_golem/satisfies_requirements(mob/living/carbon/human/H, latespawn)
-	return H.mind.role_alt_title == "Test Subject" && length(H.mind.antag_roles) == 0
+	return H.mind.role_alt_title == "Test Subject"
 
 /datum/quality/quirkieish/loyal_golem/add_effect(mob/living/carbon/human/H, latespawn)
 	H.set_species(GOLEM)
+	// In case the golem is evil don't make him a loyal dog of NT.
+	if(isanyantag(H))
+		return
 	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(H)
 	L.stealth_inject(H)
