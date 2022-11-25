@@ -204,3 +204,17 @@
 		LAZYREMOVE(H.mind.skills.available_skillsets, s)
 	H.mind.skills.add_available_skillset(/datum/skillset/jack_of_all_trades)
 	H.mind.skills.maximize_active_skills()
+
+
+/datum/quality/quirkieish/loyal_golem
+	name = "Loyal Golem"
+	desc = "Ты очень умный тупой голем, а твой хозяин - НТ."
+	requirement = "Подопытный."
+
+/datum/quality/quirkieish/loyal_golem/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject"
+
+/datum/quality/quirkieish/loyal_golem/add_effect(mob/living/carbon/human/H, latespawn)
+	H.set_species(GOLEM)
+	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(H)
+	L.stealth_inject(H)
