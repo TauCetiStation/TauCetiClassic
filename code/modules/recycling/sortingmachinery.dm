@@ -229,6 +229,12 @@
 
 	var/label = ""
 
+/obj/item/device/tagger/shop
+	name = "shop tagger"
+	desc = "Используется для наклейки Ценников и Бирок."
+	icon_state = "shop_tagger"
+	modes = list(1 = "Ценник", 2 = "Бирка")
+
 /obj/item/device/tagger/proc/openwindow(mob/user)
 	var/dat = "<tt>"
 
@@ -236,8 +242,8 @@
 
 	dat += "<center><HR>Режим: <A href='?src=\ref[src];change_mode=1'>[modes[mode]]</A></center><BR>\n"
 
-	switch(mode)
-		if(1)
+	switch(modes[mode])
+		if("Метка")
 			for(var/i = 1, i <= tagger_locations.len, i++)
 				dat += "<td><a href='?src=\ref[src];nextTag=[tagger_locations[i]]'>[tagger_locations[i]]</a></td>"
 
@@ -245,7 +251,7 @@
 					dat += "</tr><tr>"
 
 			dat += "</tr></table><br>Выбрано: [currTag ? currTag : "None"]</tt>"
-		if(2)
+		if("Ценник")
 			if(autodescription)
 				dat += "Описание: [lot_description]"
 			else
@@ -258,7 +264,7 @@
 			else
 				dat += "Категория: <A href='?src=\ref[src];category=1'>[lot_category]</A>"
 			dat += " <A href='?src=\ref[src];autocateg=1'>авто</A><BR><BR>\n"
-		if(3)
+		if("Бирка")
 			dat += "Текст бирки: <A href='?src=\ref[src];label_text=1'>[label ? label : "Написать"]</A><BR>\n"
 
 	var/datum/browser/popup = new(user, "destTagScreen", "Маркировщик 2.3", 450, 400)
@@ -322,12 +328,12 @@
 	if(target == loc)
 		return
 
-	switch(mode)
-		if(1)
+	switch(modes[mode])
+		if("Метка")
 			return
-		if(2)
+		if("Ценник")
 			price(target, user)
-		if(3)
+		if("Бирка")
 			label(target, user)
 
 /obj/item/device/tagger/proc/price(obj/target, mob/user)
