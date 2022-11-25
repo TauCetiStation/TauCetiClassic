@@ -1050,6 +1050,7 @@
 	var/lot_price = Item.price_tag["price"]
 	var/lot_category = Item.price_tag["category"]
 	var/lot_account = Item.price_tag["account"]
+	var/item_icon = bicon(Item)
 
 	if (isitem(Item))
 		var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(src)
@@ -1083,10 +1084,16 @@
 			C.welded = 1
 			C.loc = P
 			Item = P
+	else if (istype(Item, /obj/structure))
+		var/obj/structure/S = Item
+		var/obj/structure/giantDelivery/P = new /obj/structure/giantDelivery(get_turf(S.loc))
+		P.icon_state = "deliverystructure-shop"
+		S.loc = P
+		Item = P
 	else
 		return
 
-	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account)
+	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
 
 	Item.name = "Посылка номер: [global.online_shop_number]"
 	Item.desc = "Наименование: [lot_name], Описание: [lot_desc], Цена: [lot_price]"

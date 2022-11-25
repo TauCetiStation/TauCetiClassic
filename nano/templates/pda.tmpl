@@ -1090,11 +1090,9 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
         </div>
 		<H3><span class="cargo">Выбор каталога</span></H3>
 		<div class="item">
-            <div class="itemContent">
-				{{for data.categories}}
-					{{:helper.link(value, 'triangle-1-e', {'choice' : "Shop_Category", 'categ' : value}, null, 'fixedLeftWide')}}
-				{{/for}}
-			</div>
+		    {{for data.categories}}
+				{{:helper.link(value, 'triangle-1-e', {'choice' : "Shop_Category", 'categ' : value}, null, 'fixedLeft')}}
+			{{/for}}
 		</div>
 		<div class="item">
 			<center><H3><span class="cargo">Заказы и Предложения</span></H3></center>
@@ -1122,10 +1120,11 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 		<center><table class="shop"><tbody>
 		{{for data.shop_lots}}
 				<tr><th colspan="4" class="cargo"><B>Наименование: </B><SMALL><I>{{:value.name}}</I></SMALL></th></tr>
-				<tr><td><B>Описание: </B><SMALL><I>{{:value.description}}</I></SMALL><br></td></tr>
-				<tr><td><B>Продавец: </B><SMALL><I>{{:value.account}}</I></SMALL></td>
+				<tr><td>{{:value.icon}}<br></td>
 				<td><B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
 				<td>{{:helper.link('Заказ', 'tag', {'choice' : "Shop_Order", 'order_item' : value.number})}}</td></tr>
+				<tr><td colspan="3"><B>Описание: </B><SMALL><I>{{:value.description}}</I></SMALL><br></td></tr>
+				<tr><td colspan="3"><B>Продавец: </B><SMALL><I>{{:value.account}}</I></SMALL></td></tr>
 		{{empty}}
 			<tr><td><center><H4>Нет предметов в наличии</H4></center></td></tr>
         {{/for}}
@@ -1145,10 +1144,11 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 		{{for data.shopping_cart}}
 			{{if !value.delivered}}
 				<tr><th colspan="4" class="cargo"><B>Наименование: </B><SMALL><I>{{:value.name}}</I></SMALL></th></tr>
-				<tr><td><B>Описание: </B><SMALL><I>{{:value.description}}</I></SMALL><br></td></tr>
-				<tr><td><B>Продавец: </B><SMALL><I>{{:value.account}}</I></SMALL></td>
+				<tr><td>{{:value.icon}}<br></td>
 				<td><B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
 				<td>{{:helper.link('Доставлено', 'check', {'choice' : "Shop_Mark_As_Delivered", 'delivered_item' : value.number})}}</td></tr>
+				<tr><td colspan="3"><B>Описание: </B><SMALL><I>{{:value.description}}</I></SMALL><br></td></tr>
+				<tr><td colspan="3"><B>Продавец: </B><SMALL><I>{{:value.account}}</I></SMALL></td></tr>
 			{{/if}}
 		{{empty}}
 			<tr><td><center><H4>Нет предметов в корзине</H4></center></td></tr>

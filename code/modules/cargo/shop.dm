@@ -14,9 +14,10 @@ var/global/orders_and_offers_number = 0
 	var/sold = FALSE
 	var/delivered = FALSE
 	var/account = 111111
+	var/item_icon = ""
 
 
-/datum/shop_lot/New(name, description, price, category, account)
+/datum/shop_lot/New(name, description, price, category, account, icon)
 	global.online_shop_number++
 	global.online_shop_lots["[global.online_shop_number]"] = src
 	src.name = name
@@ -25,6 +26,7 @@ var/global/orders_and_offers_number = 0
 	src.category = category
 	src.number = "[global.online_shop_number]"
 	src.account = account
+	src.item_icon = icon
 
 /datum/shop_lot/Destroy()
 	global.online_shop_lots -= "[number]"
