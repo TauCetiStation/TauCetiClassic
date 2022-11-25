@@ -12354,6 +12354,7 @@
 "avg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
+/obj/item/weapon/storage/fancy/crayons,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -24593,7 +24594,7 @@
 	dir = 0
 	},
 /obj/structure/rack,
-/obj/random/misc,
+/obj/random/science/circuit,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
@@ -84383,9 +84384,9 @@
 /area/station/civilian/hydroponics)
 "vIi" = (
 /obj/structure/closet/crate/freezer,
-/obj/random/foods,
-/obj/random/foods,
 /obj/random/foods/drink_can,
+/obj/random/foods/food_without_garbage,
+/obj/random/foods/food_without_garbage,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},

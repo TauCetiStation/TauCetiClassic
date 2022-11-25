@@ -332,7 +332,7 @@
 	if(istype(I, /obj/item/weapon/implanter/compressed))
 		return FALSE
 
-	if(istype(I, /obj/item/weapon/packageWrap) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
+	if((istype(I, /obj/item/weapon/packageWrap) || istype(I, /obj/item/device/tagger)) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
 		return FALSE
 
 	I.add_fingerprint(user)

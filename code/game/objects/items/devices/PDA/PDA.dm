@@ -71,6 +71,8 @@
 	var/category
 	var/list/shop_lots = list()
 	var/list/shopping_cart = list()
+	var/list/shop_lots_frontend = list()
+	var/category_shop_page = 1
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
@@ -644,7 +646,23 @@
 	if(mode == 8 || mode == 81 || mode == 82)
 		data["categories"] = global.shop_categories
 		data["category"] = category
-		data["shop_lots"] = shop_lots
+		var/lot_id = 1
+		shop_lots_frontend = list()
+		shop_lots_frontend.len++
+		shop_lots_frontend[shop_lots_frontend.len] = list()
+		for(var/list/Lot in shop_lots)
+			var/list/part_list = shop_lots_frontend[shop_lots_frontend.len]
+			part_list.len = lot_id
+			part_list[lot_id] = Lot
+			lot_id++
+			if(lot_id > 5)
+				lot_id = 1
+				shop_lots_frontend.len++
+				shop_lots_frontend[shop_lots_frontend.len] = list()
+
+		data["shop_lots"] = shop_lots_frontend[category_shop_page]
+
+		data["category_shop_page"] = category_shop_page
 
 		var/list/orders_and_offers_frontend = list()
 		for(var/index in global.orders_and_offers)
@@ -1011,6 +1029,12 @@
 					var/datum/money_account/Acc = get_account(Lot.account)
 					shop_lots.len++
 					shop_lots[shop_lots.len] = list("name" = Lot.name, "description" = Lot.description, "price" = Lot.price, "number" = Lot.number, "account" = Acc ? Acc.owner_name : "Unknown")
+		if("Shop_Change_Page")
+			var/page = href_list["shop_change_page"]
+			if(page && category_shop_page < shop_lots_frontend.len)
+				category_shop_page++
+			else if(category_shop_page > 1)
+				category_shop_page--
 		if("Shop_Add_Order_or_Offer")
 			if(!check_pda_server())
 				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")

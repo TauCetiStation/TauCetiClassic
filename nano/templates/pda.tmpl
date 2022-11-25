@@ -1130,6 +1130,10 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 			<tr><td><center><H4>Нет предметов в наличии</H4></center></td></tr>
         {{/for}}
 		</tbody></table></center>
+		<br>
+		<div class="cargo">
+			{{:helper.link('пред.', 'arrow-1-w', {'choice' : "Shop_Change_Page", 'shop_change_page' : 0}, null, 'arrow')}}<span class="arrow"><center>{{:data.category_shop_page}}</center></span>{{:helper.link('след.', 'arrow-1-e', {'choice' : "Shop_Change_Page", 'shop_change_page' : 1}, null, 'arrow')}}
+		</div>
 	{{else data.mode == 82}} <!-- Online Shop Cart -->
 		<div class="item">
             <center><H2><span class="cargo">ГрузТорг</span></H2></center>

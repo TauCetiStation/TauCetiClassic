@@ -108,6 +108,10 @@
 			to_chat(M, "<span class='notice'>[user] labels [src] as [str].</span>")
 		name = "[name] ([str])"
 
+	else if(istype(I, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/Crayon = I
+		color = Crayon.colour
+
 	else
 		return ..()
 
@@ -220,6 +224,9 @@
 	var/lot_category = "Разное"
 	var/lot_price = 0
 
+	var/autodescription = TRUE
+	var/autocategory = TRUE
+
 	var/label = ""
 
 /obj/item/device/tagger/proc/openwindow(mob/user)
@@ -239,10 +246,18 @@
 
 			dat += "</tr></table><br>Выбрано: [currTag ? currTag : "None"]</tt>"
 		if(2)
-			dat += "Описание: <A href='?src=\ref[src];description=1'>[lot_description]</A><BR>\n"
-			dat += "Номер аккаунта: <A href='?src=\ref[src];number=1'>[lot_account_number]</A><BR>\n"
+			if(autodescription)
+				dat += "Описание: [lot_description]"
+			else
+				dat += "Описание: <A href='?src=\ref[src];description=1'>[lot_description]</A>"
+			dat += " <A href='?src=\ref[src];autodesc=1'>авто</A><BR>\n"
+			dat += "Номер аккаунта: <A href='?src=\ref[src];number=1'>[lot_account_number]</A> <A href='?src=\ref[src];takeid=1'>id</A><BR>\n"
 			dat += "Цена: <A href='?src=\ref[src];price=1'>[lot_price]$</A><BR>\n"
-			dat += "Категория: <A href='?src=\ref[src];category=1'>[lot_category]</A><BR>\n"
+			if(autocategory)
+				dat += "Категория: [lot_category]"
+			else
+				dat += "Категория: <A href='?src=\ref[src];category=1'>[lot_category]</A>"
+			dat += " <A href='?src=\ref[src];autocateg=1'>авто</A><BR><BR>\n"
 		if(3)
 			dat += "Текст бирки: <A href='?src=\ref[src];label_text=1'>[label ? label : "Написать"]</A><BR>\n"
 
@@ -257,18 +272,27 @@
 	else if(href_list["description"])
 		var/T = sanitize(input("Введите описание:", "Маркировщик", input_default(lot_description), null)  as text)
 		lot_description = T && istext(T) ? T : "Это что-то"
+	else if(href_list["autodesc"])
+		autodescription = !autodescription
 	else if(href_list["number"])
 		var/T = input("Введите номер аккаунта:", "Маркировщик", input_default(lot_account_number), null)  as num
 		if(T && isnum(T) && T >= 111111 && T <= 999999)
 			lot_account_number = T
+	else if(href_list["takeid"])
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			var/obj/item/weapon/card/id/ID = H.get_idcard()
+			lot_account_number = ID.associated_account_number
 	else if(href_list["price"])
 		var/T = input("Вваедите цену:", "Маркировщик", input_default(lot_price), null)  as num
 		if(T && isnum(T) && T >= 0)
 			lot_price = min(T, 5000)
 	else if(href_list["category"])
 		var/T = input("Выберите каталог", "Маркировщик", lot_category) in global.shop_categories
-		if(T && (T in global.shop_categories))
+		if(T && T in global.shop_categories)
 			lot_category = T
+	else if(href_list["autocateg"])
+		autocategory = !autocategory
 	else if(href_list["label_text"])
 		var/T = sanitize(input("Введите текст бирки:", "Маркировщик", label, null)  as text)
 		label = T && istext(T) ? T : ""
@@ -316,6 +340,12 @@
 	user.visible_message("<span class='notice'>[user] adds a price tag to [target].</span>", \
 						 "<span class='notice'>You added a price tag to [target].</span>")
 
+	if(autodescription)
+		lot_description = target.desc
+
+	if(autocategory)
+		lot_category = get_category(target)
+
 	target.price_tag = list("description" = lot_description, "price" = lot_price, "category" = lot_category, "account" = lot_account_number)
 	target.verbs += /obj/verb/remove_price_tag
 
@@ -341,6 +371,24 @@
 	user.visible_message("<span class='notice'>[user] labels [target] as [label].</span>", \
 						 "<span class='notice'>You label [target] as [label].</span>")
 	target.name = "[target.name] ([label])"
+
+/obj/item/device/tagger/proc/get_category(obj/target)
+	if(istype(target, /obj/item/weapon/reagent_containers/food))
+		return "Еда"
+	else if(istype(target, /obj/item/weapon/storage/food))
+		return "Еда"
+	else if(istype(target, /obj/item/weapon/storage))
+		return "Наборы"
+	else if(istype(target, /obj/item/weapon))
+		return "Инструменты"
+	else if(istype(target, /obj/item/clothing))
+		return "Одежда"
+	else if(istype(target, /obj/item/device))
+		return "Устройства"
+	else if(istype(target, /obj/item/stack))
+		return "Ресурсы"
+	else
+		return "Разное"
 
 
 /obj/machinery/disposal/deliveryChute
