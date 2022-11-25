@@ -230,7 +230,7 @@
 		if(!potential_target.mind)
 			continue
 		// While funny, please no.
-		if(length(potential_target.mind.antag_roles))
+		if(isanyantag(potential_target))
 			continue
 		// Commented out because changeling stings change appearance and name but not species...
 		// so apperantly in this universe it works like this.
@@ -240,7 +240,7 @@
 		target = potential_target
 
 	if(!target)
-		to_chat(H, "<span class='warning'>Проклятие! По какой-то причине клонировал сам себя!</span>")
+		to_chat(H, "<span class='warning'>Проклятие! По какой-то причине ты клонировал сам себя!</span>")
 		return
 
 	H.dna = target.dna.Clone()
