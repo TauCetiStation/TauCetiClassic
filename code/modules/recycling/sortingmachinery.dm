@@ -282,7 +282,8 @@
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
 			var/obj/item/weapon/card/id/ID = H.get_idcard()
-			lot_account_number = ID.associated_account_number
+			if(ID)
+				lot_account_number = ID.associated_account_number
 	else if(href_list["price"])
 		var/T = input("Вваедите цену:", "Маркировщик", input_default(lot_price), null)  as num
 		if(T && isnum(T) && T >= 0)
