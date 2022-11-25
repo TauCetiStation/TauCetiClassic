@@ -209,10 +209,10 @@
 /datum/quality/quirkieish/loyal_golem
 	name = "Loyal Golem"
 	desc = "Ты очень умный тупой голем, а твой хозяин - НТ."
-	requirement = "Подопытный."
+	requirement = "Подопытный, но не злодей."
 
 /datum/quality/quirkieish/loyal_golem/satisfies_requirements(mob/living/carbon/human/H, latespawn)
-	return H.mind.role_alt_title == "Test Subject"
+	return H.mind.role_alt_title == "Test Subject" && length(H.mind.antag_roles) == 0
 
 /datum/quality/quirkieish/loyal_golem/add_effect(mob/living/carbon/human/H, latespawn)
 	H.set_species(GOLEM)
