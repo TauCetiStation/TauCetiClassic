@@ -289,7 +289,7 @@
 			lot_price = min(T, 5000)
 	else if(href_list["category"])
 		var/T = input("Выберите каталог", "Маркировщик", lot_category) in global.shop_categories
-		if(T && T in global.shop_categories)
+		if(T && (T in global.shop_categories))
 			lot_category = T
 	else if(href_list["autocateg"])
 		autocategory = !autocategory
