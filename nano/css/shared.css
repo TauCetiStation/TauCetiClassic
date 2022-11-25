@@ -533,7 +533,7 @@ table.shop {
     border: 2px solid #90642c;
 }
 
-table.shop td, table.shop th {
+table.shop td{
     border-bottom: 1px dotted #90642c;
     padding: 0px 5px 0px 5px;
 }

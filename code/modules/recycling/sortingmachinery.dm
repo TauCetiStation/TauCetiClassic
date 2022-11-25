@@ -1,63 +1,3 @@
-/obj/structure/giantDelivery
-	desc = "A giant wrapped package."
-	name = "giant parcel"
-	icon = 'icons/obj/storage.dmi'
-	icon_state = "deliverystructure"
-	density = TRUE
-	var/sortTag = ""
-	var/lot_number = null
-	flags = NOBLUDGEON
-	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-
-	max_integrity = 75
-	damage_deflection = 25
-	resistance_flags = CAN_BE_HIT
-
-/obj/structure/giantDelivery/proc/dump()
-	for(var/atom/movable/AM in contents)
-		if(istype(AM, /obj/structure/closet))
-			var/obj/structure/closet/O = AM
-			O.welded = 0
-		AM.forceMove(get_turf(src))
-
-/obj/structure/giantDelivery/Destroy()
-	dump()
-	if(lot_number)
-		var/datum/shop_lot/Lot = global.online_shop_lots["[lot_number]"]
-		qdel(Lot)
-	return ..()
-
-/obj/structure/giantDelivery/attack_hand(mob/user)
-	if(lot_number)
-		var/datum/shop_lot/Lot = global.online_shop_lots["[lot_number]"]
-		if(Lot && !Lot.delivered)
-			to_chat(user, "<span class='notice'>Отметьте посылку доставленной в корзине чтобы открыть замок</span>")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
-			return
-	if(contents.len > 0)
-		dump()
-	else
-		to_chat(user, "<span class='notice'>The parcel was empty!</span>")
-	playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
-	qdel(src)
-
-/obj/structure/giantDelivery/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/tagger))
-		var/obj/item/device/tagger/O = W
-		if(src.sortTag != O.currTag)
-			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
-			src.sortTag = O.currTag
-			playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
-
-	else if(istype(W, /obj/item/weapon/pen))
-		var/str = sanitize_safe(input(usr,"Label text?","Set label",""), MAX_NAME_LEN)
-		if(!str || !length(str))
-			to_chat(usr, "<span class='warning'>Invalid text.</span>")
-			return
-		for(var/mob/M in viewers())
-			to_chat(M, "<span class='notice'>[user] labels [src] as [str].</span>")
-		src.name = "[src.name] ([str])"
-
 /obj/structure/bigDelivery
 	desc = "A big wrapped package."
 	name = "large parcel"
@@ -117,6 +57,10 @@
 		for(var/mob/M in viewers())
 			to_chat(M, "<span class='notice'>[user] labels [src] as [str].</span>")
 		src.name = "[src.name] ([str])"
+
+	else if(istype(W, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/Crayon = W
+		color = Crayon.colour
 
 /obj/item/smallDelivery
 	desc = "A small wrapped package."
@@ -410,7 +354,7 @@
 	if(target.price_tag)
 		to_chat(user, "<span class='notice'>[target] already has a price tag.</span>")
 		return
-	if(!((isitem(target) && !istype(target, /obj/item/smallDelivery)) || (istype(target, /obj/structure) && (!istype(target, /obj/structure/bigDelivery) || !!istype(target, /obj/structure/giantDelivery)))))
+	if(!((isitem(target) && !istype(target, /obj/item/smallDelivery)) || (istype(target, /obj/structure) && !istype(target, /obj/structure/bigDelivery))))
 		to_chat(user, "<span class='notice'>Нельзя повесить ценник на [target].</span>")
 		return
 

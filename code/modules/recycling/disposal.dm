@@ -1057,7 +1057,10 @@
 		P.w_class = Item.w_class
 		var/i = round(Item.w_class)
 		if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
-			P.icon_state = "deliverycrate[i]-shop"
+			P.icon_state = "deliverycrate[i]"
+			var/image/Img = image('icons/obj/storage.dmi', "deliverycrate[i]-shop")
+			Img.appearance_flags = RESET_COLOR
+			P.add_overlay(Img)
 		P.modify_max_integrity(75)
 		P.atom_fix()
 		P.damage_deflection = 25
@@ -1067,7 +1070,10 @@
 		var/obj/structure/closet/crate/C = Item
 		if (!C.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
-			P.icon_state = "deliverycrate-shop"
+			P.icon_state = "deliverycrate"
+			var/image/Img = image('icons/obj/storage.dmi', "deliverycrate-shop")
+			Img.appearance_flags = RESET_COLOR
+			P.add_overlay(Img)
 			P.modify_max_integrity(75)
 			P.atom_fix()
 			P.damage_deflection = 25
@@ -1077,7 +1083,10 @@
 		var/obj/structure/closet/C = Item
 		if (!C.opened)
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
-			P.icon_state = "deliverycloset-shop"
+			P.icon_state = "deliverycloset"
+			var/image/Img = image('icons/obj/storage.dmi', "deliverycloset-shop")
+			Img.appearance_flags = RESET_COLOR
+			P.add_overlay(Img)
 			P.modify_max_integrity(75)
 			P.atom_fix()
 			P.damage_deflection = 25
@@ -1086,8 +1095,14 @@
 			Item = P
 	else if (istype(Item, /obj/structure))
 		var/obj/structure/S = Item
-		var/obj/structure/giantDelivery/P = new /obj/structure/giantDelivery(get_turf(S.loc))
-		P.icon_state = "deliverystructure-shop"
+		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(S.loc))
+		P.icon_state = "deliverystructure"
+		var/image/Img = image('icons/obj/storage.dmi', "deliverystructure-shop")
+		Img.appearance_flags = RESET_COLOR
+		P.add_overlay(Img)
+		P.modify_max_integrity(75)
+		P.atom_fix()
+		P.damage_deflection = 25
 		S.loc = P
 		Item = P
 	else

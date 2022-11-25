@@ -70,8 +70,9 @@
 
 	var/category
 	var/list/shop_lots = list()
-	var/list/shopping_cart = list()
+	var/list/shop_lots_paged = list()
 	var/list/shop_lots_frontend = list()
+	var/list/shopping_cart = list()
 	var/category_shop_page = 1
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
@@ -646,36 +647,42 @@
 	if(mode == 8 || mode == 81 || mode == 82)
 		data["categories"] = global.shop_categories
 		data["category"] = category
-		var/lot_id = 1
-		shop_lots_frontend = list()
-		shop_lots_frontend.len++
-		shop_lots_frontend[shop_lots_frontend.len] = list()
-		for(var/list/Lot in shop_lots)
-			var/list/part_list = shop_lots_frontend[shop_lots_frontend.len]
-			part_list.len = lot_id
-			part_list[lot_id] = Lot
-			lot_id++
-			if(lot_id > 5)
-				lot_id = 1
-				shop_lots_frontend.len++
-				shop_lots_frontend[shop_lots_frontend.len] = list()
 
-		data["shop_lots"] = shop_lots_frontend[category_shop_page]
+		shop_lots_frontend = list()
+		if(shop_lots.len)
+			var/lot_id = 1
+			shop_lots_paged = list()
+			shop_lots_paged.len++
+			shop_lots_paged[shop_lots_paged.len] = list()
+			for(var/list/Lot in shop_lots)
+				var/list/part_list = shop_lots_paged[shop_lots_paged.len]
+				part_list.len = lot_id
+				part_list[lot_id] = Lot
+				lot_id++
+				if(lot_id > 5)
+					lot_id = 1
+					shop_lots_paged.len++
+					shop_lots_paged[shop_lots_paged.len] = list()
+			shop_lots_frontend = shop_lots_paged[category_shop_page]
+
+		data["shop_lots"] = shop_lots_frontend
 
 		data["category_shop_page"] = category_shop_page
 
 		var/list/orders_and_offers_frontend = list()
-		for(var/index in global.orders_and_offers)
-			var/list/OrOf = global.orders_and_offers[index]
-			orders_and_offers_frontend.len++
-			orders_and_offers_frontend[orders_and_offers_frontend.len] = OrOf
+		if(global.orders_and_offers.len)
+			for(var/index in global.orders_and_offers)
+				var/list/OrOf = global.orders_and_offers[index]
+				orders_and_offers_frontend.len++
+				orders_and_offers_frontend[orders_and_offers_frontend.len] = OrOf
 		data["orders_and_offers"] = orders_and_offers_frontend
 
 		var/list/shopping_cart_frontend = list()
-		for(var/index in shopping_cart)
-			var/list/Item = shopping_cart[index]
-			shopping_cart_frontend.len++
-			shopping_cart_frontend[shopping_cart_frontend.len] = Item
+		if(shopping_cart.len)
+			for(var/index in shopping_cart)
+				var/list/Item = shopping_cart[index]
+				shopping_cart_frontend.len++
+				shopping_cart_frontend[shopping_cart_frontend.len] = Item
 		data["shopping_cart"] = shopping_cart_frontend
 
 	nanoUI = data
@@ -1017,9 +1024,11 @@
 					account.change_salary(U, owner, name, ownrank)
 					break
 		if("Shop")
+			category_shop_page = 1
 			mode = 8
 			shop_lots = list()
 		if("Shop_Category")
+			category_shop_page = 1
 			mode = 81
 			shop_lots = list()
 			category = href_list["categ"]
@@ -1031,10 +1040,12 @@
 					shop_lots[shop_lots.len] = Lot.to_list(Acc ? Acc.owner_name : "Unknown")
 		if("Shop_Change_Page")
 			var/page = href_list["shop_change_page"]
-			if(page && category_shop_page < shop_lots_frontend.len)
-				category_shop_page++
-			else if(category_shop_page > 1)
-				category_shop_page--
+			switch(page)
+				if("next")
+					category_shop_page++
+				if("previous")
+					category_shop_page--
+			category_shop_page = clamp(category_shop_page, 1, shop_lots_paged.len)
 		if("Shop_Add_Order_or_Offer")
 			if(!check_pda_server())
 				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
@@ -1765,7 +1776,7 @@
 		P.update_icon()
 
 /obj/item/device/pda/proc/add_order_or_offer(name, desc)
-	global.orders_and_offers["[orders_and_offers_number]"] = list("name" = name, "description" = desc)
+	global.orders_and_offers["[orders_and_offers_number]"] = list("name" = name, "description" = desc, "time" = worldtime2text())
 	global.orders_and_offers_number++
 	mode = 8
 	addtimer(CALLBACK(src, .proc/delete_order_or_offer, global.orders_and_offers_number), 15 MINUTES)

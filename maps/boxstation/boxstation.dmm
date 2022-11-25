@@ -46131,6 +46131,8 @@
 /obj/item/weapon/rack_parts,
 /obj/item/weapon/rack_parts,
 /obj/item/weapon/rack_parts,
+/obj/item/weapon/rack_parts,
+/obj/item/weapon/rack_parts,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
