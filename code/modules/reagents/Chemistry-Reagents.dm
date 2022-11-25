@@ -13,6 +13,7 @@
 	var/description = ""
 	var/datum/reagents/holder = null
 	var/reagent_state = SOLID
+	var/associated_gas = null //gas which is created when spilling this reagent onto floor (if it's state is gas)
 	var/list/data = null
 	var/volume = 0
 	var/nutriment_factor = 0
@@ -99,13 +100,33 @@
 
 	return TRUE
 
-/datum/reagent/proc/reaction_obj(obj/O, volume) //By default we transfer a small part of the reagent to the object
-	src = null //if it can hold reagents. nope!
-	//if(O.reagents)
-	//	O.reagents.add_reagent(id,volume/3)
-	return
+/datum/reagent/proc/reaction_obj(obj/O, volume)
+	..()
+	if(reagent_state == GAS && associated_gas)
+		if((!O) || (!volume))
+			return FALSE
+		if(volume < 0)
+			return FALSE
+		if(volume > 300)
+			return FALSE
+
+		var/turf/simulated/T = get_turf(O)
+		if(!istype(T))
+			return
+		T.assume_gas(associated_gas, volume, T20C)
 
 /datum/reagent/proc/reaction_turf(turf/T, volume)
+	if((reagent_state == GAS || (reagent_state == LIQUID && (LOW_BOILING_POINT in flags))) && associated_gas)
+		if((!T) || (!volume))
+			return FALSE
+		if(volume < 0)
+			return FALSE
+		if(volume > 300)
+			return FALSE
+
+		if(!istype(T))
+			return
+		T.assume_gas(associated_gas, volume, T20C)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_REAGENT_REACTION_TURF, T, volume)
 	return

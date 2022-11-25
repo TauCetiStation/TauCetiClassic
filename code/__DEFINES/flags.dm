@@ -114,6 +114,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 //Reagent Flags
 #define IS_ORGANIC         "is_organic"
+#define LOW_BOILING_POINT  "low_boiling_point" //used for stuff like phoron, which while being a liquid, still creates a lot of vapors when spilled onto floor
 
 //bitflags for door switches.
 #define OPEN     1

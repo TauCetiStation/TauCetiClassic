@@ -158,6 +158,7 @@
 	taste_message = "motor oil"
 
 /datum/reagent/fuel/reaction_obj(obj/O, volume)
+	..()
 	var/turf/the_turf = get_turf(O)
 	if(!the_turf)
 		return //No sense trying to start a fire if you don't have a turf to set on fire. --NEO
@@ -198,6 +199,7 @@
 		flick_overlay_view(I, M, 30)
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, volume)
+	..()
 	if(istype(O,/obj/effect/decal/cleanable))
 		qdel(O)
 	else
@@ -324,6 +326,7 @@
 	taste_message = "floor cleaner"
 
 /datum/reagent/ammonia/reaction_obj(obj/O, volume)
+	..()
 	if(istype(O, /obj/machinery/camera))
 		var/obj/machinery/camera/C = O
 		C.color = null
@@ -699,6 +702,7 @@
 			H.update_body()
 
 /datum/reagent/paint/reaction_obj(obj/O, volume)
+	..()
 	if(istype(O, /obj/machinery/camera))
 		var/obj/machinery/camera/C = O
 		C.color = color
@@ -740,6 +744,7 @@
 		T.icon = initial(T.icon)
 
 /datum/reagent/paint_remover/reaction_obj(obj/O, volume)
+	..()
 	if(istype(O, /obj/machinery/camera))
 		var/obj/machinery/camera/C = O
 		C.remove_paint_state()

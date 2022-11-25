@@ -606,6 +606,12 @@ SUBSYSTEM_DEF(air)
 				if(recentReactions.len > MAX_RECENT_REACTIONS)
 					recentReactions.Cut(MAX_RECENT_REACTIONS + 1)
 
+/datum/controller/subsystem/air/proc/look_for_zone(datum/gas_mixture/G)
+	for(var/zone/Z in zones)
+		if(Z.air == G)
+			return Z
+	return null
+
 /datum/controller/subsystem/air/proc/atmos_reactions_panel()
 	var/html = ""
 	if(temp)

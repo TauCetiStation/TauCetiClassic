@@ -1,11 +1,9 @@
-#define HVAL 999999 //infinity is kind of overkill anyway
-
 /datum/atmosReaction/n2oSynthesis
     id = "n2osynth"
     minTemp = 373.15
     maxTemp = 773.15
     minPressure = 100
-    maxPressure = HVAL
+    maxPressure = INFINITY
     producedHeat = -4
     consumed = list("nitrogen" = 2, "oxygen" = 1)
     created = list("sleeping_agent" = 3)
@@ -17,7 +15,7 @@
     minTemp = 273.15
     maxTemp = 773.15
     minPressure = 50
-    maxPressure = HVAL
+    maxPressure = INFINITY
     producedHeat = -4
     consumed = list("nitrogen" = 2, "oxygen" = 1)
     created = list("sleeping_agent" = 3)
@@ -27,9 +25,9 @@
 /datum/atmosReaction/n2oDecomposition
     id = "n2odec"
     minTemp = 773.15
-    maxTemp = HVAL
-    minPressure = -HVAL
-    maxPressure = HVAL
+    maxTemp = INFINITY
+    minPressure = -INFINITY
+    maxPressure = INFINITY
     producedHeat = 4
     consumed = list("sleeping_agent" = 3)
     created = list("nitrogen" = 2, "oxygen" = 1)
@@ -41,7 +39,7 @@
     minTemp = 373.15
     maxTemp = 573.15
     minPressure = 100
-    maxPressure = HVAL
+    maxPressure = INFINITY
     producedHeat = -2
     consumed = list("sleeping_agent" = 2, "phoron" = 1)
     created = list("bz" = 3)
@@ -51,9 +49,9 @@
 /datum/atmosReaction/bzDecomposition
     id = "bzdec"
     minTemp = 573.15
-    maxTemp = HVAL
+    maxTemp = INFINITY
     minPressure = 0
-    maxPressure = HVAL
+    maxPressure = INFINITY
     producedHeat = 2
     consumed = list("bz" = 3)
     created = list("sleeping_agent" = 2, "phoron" = 1)
@@ -63,9 +61,9 @@
 /datum/atmosReaction/constSynthesis
     id = "constsynth"
     minTemp = 773.15
-    maxTemp = HVAL
+    maxTemp = INFINITY
     minPressure = 2000
-    maxPressure = HVAL
+    maxPressure = INFINITY
     producedHeat = 1
     consumed = list("carbon_dioxide" = 3, "tritium" = 1)
     created = list("const" = 4)
@@ -74,10 +72,10 @@
 
 /datum/atmosReaction/trioxSynthesis
     id = "trioxsynth"
-    minTemp = -HVAL
+    minTemp = -INFINITY
     maxTemp = 273.15
     minPressure = 4000
-    maxPressure = HVAL
+    maxPressure = INFINITY
     producedHeat = 4
     consumed = list("oxygen" = 3)
     created = list("triox" = 3)
@@ -87,9 +85,9 @@
 /datum/atmosReaction/trioxDecomposition
     id = "trioxdec"
     minTemp = 573.15
-    maxTemp = HVAL
+    maxTemp = INFINITY
     minPressure = 0
-    maxPressure = HVAL
+    maxPressure = INFINITY
     producedHeat = -4
     consumed = list("triox" = 3)
     created = list("ox" = 3)
@@ -99,9 +97,9 @@
 /datum/atmosReaction/phydrSynthesis
     id = "phydrsynth"
     minTemp = 573.15
-    maxTemp = HVAL
+    maxTemp = INFINITY
     minPressure = 2000
-    maxPressure = HVAL
+    maxPressure = INFINITY
     producedHeat = -4
     consumed = list("hydrogen" = 2, "triox" = 1)
     created = list("phydr" = 3)
@@ -110,10 +108,10 @@
 
 /datum/atmosReaction/phydrDecomposition
     id = "phydrdec"
-    minTemp = -HVAL
+    minTemp = -INFINITY
     maxTemp = 273.15
     minPressure = 0
-    maxPressure = HVAL
+    maxPressure = INFINITY
     producedHeat = 4
     consumed = list("phydr" = 3)
     created = list("hydrogen" = 2, "triox" = 1)
@@ -122,10 +120,10 @@
 
 /datum/atmosReaction/phydrDecompositionConst
     id = "phydrdecconst"
-    minTemp = -HVAL
-    maxTemp = HVAL
-    minPressure = -HVAL
-    maxPressure = HVAL
+    minTemp = -INFINITY
+    maxTemp = INFINITY
+    minPressure = -INFINITY
+    maxPressure = INFINITY
     producedHeat = 4
     consumed = list("phydr" = 1)
     created = list("hydrogen" = 2, "triox" = 1)
@@ -135,9 +133,9 @@
 /datum/atmosReaction/ctirinSynthesis
     id = "ctirinsynth"
     minTemp = 373.15
-    maxTemp = HVAL
+    maxTemp = INFINITY
     minPressure = 6000
-    maxPressure = HVAL
+    maxPressure = INFINITY
     producedHeat = 4
     consumed = list("triox" = 3, "helium" = 1)
     created = list("ctirin" = 1, "oxygen" = 3)
@@ -147,9 +145,9 @@
 /datum/atmosReaction/ctirinSynthesisBZ
     id = "ctirinsynthbz"
     minTemp = 373.15
-    maxTemp = HVAL
+    maxTemp = INFINITY
     minPressure = 4000
-    maxPressure = HVAL
+    maxPressure = INFINITY
     producedHeat = -1
     consumed = list("triox" = 1, "helium" = 1)
     created = list("ctirin" = 2)
@@ -159,9 +157,9 @@
 /datum/atmosReaction/ctirinDecomposition
     id = "ctirindec"
     minTemp = 773.15
-    maxTemp = HVAL
+    maxTemp = INFINITY
     minPressure = 0
-    maxPressure = HVAL
+    maxPressure = INFINITY
     producedHeat = 1
     consumed = list("ctirin" = 3)
     created = list("triox" = 2, "helium" = 1)
@@ -201,17 +199,25 @@
 /datum/atmosReaction/solidPhydrSynthesis
     id = "sphydrsynth"
     minTemp = 3273.15
-    maxTemp = HVAL
+    maxTemp = INFINITY
     minPressure = 8000
-    maxPressure = HVAL
+    maxPressure = INFINITY
     producedHeat = -10
     consumed = list("phydr" = 100)
     inhibitors = list("const" = 1)
 
-/datum/atmosReaction/solidPhydrSynthesis/postReact(datum/gas_mixture/G, turf/T = null)
-    if(!T) //can't add solid proto hydrate if we don't know location of the reaction
+/datum/atmosReaction/solidPhydrSynthesis/postReact(datum/gas_mixture/G)
+    var/zone/Z = SSair.look_for_zone(G)
+    if(!Z)
         G.gas["phydr"] += 100
         return
+    var/turf/simulated/T
+    var/failsafe = 0 //to avoid endless loop if our zone somehow only contains dense tiles
+    while(TRUE)
+        failsafe++
+        T = pick(Z.contents)
+        if(!T.density || failsafe > 100)
+            break
     new /obj/item/weapon/solid_phydr(T)
 
 /obj/item/weapon/solid_phydr
@@ -246,5 +252,3 @@
 /obj/item/weapon/solid_phydr/proc/react()
     explosion(loc, 2, 4, 6, 8)
     qdel(src)
-
-#undef HVAL

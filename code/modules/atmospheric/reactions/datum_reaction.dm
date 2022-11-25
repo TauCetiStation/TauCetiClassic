@@ -14,9 +14,6 @@
     var/count = 0
     var/list/toRemove[0]
 
-    if(!consumed.len || !created.len)
-        return
-
     if(!(G.temperature > minTemp && G.temperature < maxTemp))
         return FALSE
 

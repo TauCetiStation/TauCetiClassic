@@ -65,37 +65,13 @@
 	reagent_state = LIQUID
 	color = "#ef0097" // rgb: 231, 27, 0
 	toxpwr = 3
-	flags = list()
+	flags = list(LOW_BOILING_POINT)
+	associated_gas = "phoron"
 
 /datum/reagent/toxin/phoron/on_general_digest(mob/living/M)
 	..()
 	if(holder.has_reagent("inaprovaline"))
 		holder.remove_reagent("inaprovaline", 2 * REM)
-
-/datum/reagent/toxin/phoron/reaction_obj(obj/O, volume)
-	src = null
-	if((!O) || (!volume))
-		return FALSE
-	if(volume < 0)
-		return FALSE
-	if(volume > 300)
-		return FALSE
-
-	var/turf/simulated/T = get_turf(O)
-	if(!istype(T))
-		return
-	T.assume_gas("phoron", volume, T20C)
-
-/datum/reagent/toxin/phoron/reaction_turf(turf/simulated/T, volume)
-	. = ..()
-	if(volume < 0)
-		return
-	if(volume > 300)
-		return
-
-	if(!istype(T))
-		return
-	T.assume_gas("phoron", volume, T20C)
 
 /datum/reagent/toxin/phoron/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with plasma is stronger than fuel!
 	if(!isliving(M))
@@ -250,6 +226,7 @@
 			W.visible_message("<span class='notice'>The fungi are completely dissolved by the solution!</span>")
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, volume)
+	..()
 	if(istype(O,/obj/structure/alien/weeds))
 		var/obj/structure/alien/weeds/alien_weeds = O
 		alien_weeds.take_damage(rand(15, 35), BURN, ACID, FALSE)
@@ -528,6 +505,7 @@
 			M.take_bodypart_damage(min(6 * toxpwr, volume * toxpwr))
 
 /datum/reagent/toxin/acid/reaction_obj(obj/O, volume)
+	..()
 	if((isitem(O) || istype(O,/obj/structure/glowshroom)) && prob(meltprob * 3))
 		if(!O.unacidable)
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)

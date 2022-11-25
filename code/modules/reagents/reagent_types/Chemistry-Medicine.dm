@@ -142,6 +142,7 @@
 		M.germ_level -= min(volume*20, M.germ_level)
 
 /datum/reagent/sterilizine/reaction_obj(obj/O, volume)
+	..()
 	O.germ_level -= min(volume*20, O.germ_level)
 
 /datum/reagent/sterilizine/reaction_turf(turf/T, volume)
