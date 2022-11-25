@@ -204,3 +204,20 @@
 		LAZYREMOVE(H.mind.skills.available_skillsets, s)
 	H.mind.skills.add_available_skillset(/datum/skillset/jack_of_all_trades)
 	H.mind.skills.maximize_active_skills()
+
+
+/datum/quality/quirkieish/mmi_ipc
+	name = "MMI IPC"
+	desc = "Ты мозг. Запертый. В оболочке. СПУ."
+	requirement = "Подопытный."
+
+/datum/quality/quirkieish/ipc/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject" && H.get_species() != IPC
+
+/datum/quality/quirkieish/ipc/add_effect(mob/living/carbon/human/H, latespawn)
+	var/prev_species = H.get_species()
+	H.set_species(IPC)
+
+	var/obj/item/organ/external/chest/robot/ipc/I = H.get_bodypart(BP_CHEST)
+	I.posibrain_type = /obj/item/device/mmi
+	I.posibrain_species = prev_species
