@@ -1751,9 +1751,16 @@
 		P.info += "Наименование: [Lot.name]<br>"
 		P.info += "Цена: [Lot.price]$<br>"
 		P.info += "Заказал: [owner ? owner : "Unknown"]<br>"
+		P.info += "Подпись заказчика: <span class=\"sign_field\"></span><br>"
 		P.info += "Комментарий: [destination]<br>"
 		P.info += "<hr>"
 		P.info += "МЕСТО ДЛЯ ШТАМПОВ:<br>"
+
+		var/obj/item/weapon/pen/Pen = new(src)
+
+		P.parsepencode(P.info, Pen)
+		P.updateinfolinks()
+		qdel(Pen)
 
 		P.update_icon()
 
