@@ -216,6 +216,7 @@
 
 /datum/quality/quirkieish/doppleganger/add_effect(mob/living/carbon/human/H, latespawn)
 	var/list/pos_players = list() + player_list
+	pos_players -= H
 
 	var/mob/living/carbon/human/target = null
 
