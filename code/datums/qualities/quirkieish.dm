@@ -204,3 +204,20 @@
 		LAZYREMOVE(H.mind.skills.available_skillsets, s)
 	H.mind.skills.add_available_skillset(/datum/skillset/jack_of_all_trades)
 	H.mind.skills.maximize_active_skills()
+
+
+/datum/quality/quirkieish/podman
+	name = "Podman"
+	desc = "Тебе подменили. Ты не ты."
+	requirement = "Подопытный."
+
+/datum/quality/quirkieish/podman/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject"
+
+/datum/quality/quirkieish/podman/add_effect(mob/living/carbon/human/H, latespawn)
+	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	msg += "<B>You are now in possession of Podmen's body. It's previous owner found it no longer appealing, by rejecting it - they brought you here. You are now, again, an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
+	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+
+	H.set_species(PODMAN)
+	to_chat(H, msg)
