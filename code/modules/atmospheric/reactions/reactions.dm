@@ -252,3 +252,4 @@
 /obj/item/weapon/solid_phydr/proc/react()
     explosion(loc, 2, 4, 6, 8)
     qdel(src)
+

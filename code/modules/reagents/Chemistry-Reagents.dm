@@ -101,7 +101,6 @@
 	return TRUE
 
 /datum/reagent/proc/reaction_obj(obj/O, volume)
-	..()
 	if(reagent_state == GAS && associated_gas)
 		if((!O) || (!volume))
 			return FALSE
