@@ -17948,8 +17948,8 @@
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 8;
-	name = "Post";
-	sortType = "Post"
+	name = "OnlineShop";
+	sortType = "OnlineShop"
 	},
 /turf/simulated/floor{
 	dir = 1;

@@ -5,7 +5,7 @@
 	icon_state = "deliverycloset"
 	density = TRUE
 	var/sortTag = ""
-	var/datum/shop_lot/Lot = null
+	var/lot_number = null
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
@@ -22,14 +22,18 @@
 
 /obj/structure/bigDelivery/Destroy()
 	dump()
-	qdel(Lot)
+	if(lot_number)
+		var/datum/shop_lot/Lot = global.online_shop_lots["[lot_number]"]
+		qdel(Lot)
 	return ..()
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
-	if(Lot && !Lot.delivered)
-		to_chat(user, "<span class='notice'>Отметьте посылку доставленной в корзине чтобы открыть замок</span>")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
-		return
+	if(lot_number)
+		var/datum/shop_lot/Lot = global.online_shop_lots["[lot_number]"]
+		if(Lot && !Lot.delivered)
+			to_chat(user, "<span class='notice'>Отметьте посылку доставленной в корзине чтобы открыть замок</span>")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
+			return
 	if(contents.len > 0)
 		dump()
 	else
@@ -60,7 +64,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycrateSmall"
 	var/sortTag = ""
-	var/datum/shop_lot/Lot = null
+	var/lot_number = null
 
 	max_integrity = 5
 	damage_deflection = 0
@@ -75,14 +79,18 @@
 
 /obj/item/smallDelivery/Destroy()
 	dump()
-	qdel(Lot)
+	if(lot_number)
+		var/datum/shop_lot/Lot = global.online_shop_lots["[lot_number]"]
+		qdel(Lot)
 	return ..()
 
 /obj/item/smallDelivery/attack_self(mob/user)
-	if(Lot && !Lot.delivered)
-		to_chat(user, "<span class='notice'>Отметьте посылку доставленной в корзине чтобы открыть замок</span>")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
-		return
+	if(lot_number)
+		var/datum/shop_lot/Lot = global.online_shop_lots["[lot_number]"]
+		if(Lot && !Lot.delivered)
+			to_chat(user, "<span class='notice'>Отметьте посылку доставленной в корзине чтобы открыть замок</span>")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
+			return
 	if(contents.len > 0)
 		user.drop_from_inventory(src)
 		dump(user)
@@ -204,7 +212,7 @@
 
 /obj/item/device/tagger
 	name = "tagger"
-	desc = "Используется для наклейки меток, Ценников и Бирок."
+	desc = "Используется для наклейки Меток, Ценников и Бирок."
 	icon_state = "dest_tagger"
 	var/currTag = 0
 
@@ -277,7 +285,7 @@
 		src.currTag = href_list["nextTag"]
 	else if(href_list["description"])
 		var/T = sanitize(input("Введите описание:", "Маркировщик", input_default(lot_description), null)  as text)
-		lot_description = T && istext(T) ? T : "Это что-то"
+		lot_description = T ? T : "Это что-то"
 	else if(href_list["autodesc"])
 		autodescription = !autodescription
 	else if(href_list["number"])
@@ -291,7 +299,7 @@
 			if(ID)
 				lot_account_number = ID.associated_account_number
 	else if(href_list["price"])
-		var/T = input("Вваедите цену:", "Маркировщик", input_default(lot_price), null)  as num
+		var/T = input("Введите цену:", "Маркировщик", input_default(lot_price), null)  as num
 		if(T && isnum(T) && T >= 0)
 			lot_price = min(T, 5000)
 	else if(href_list["category"])
@@ -302,7 +310,7 @@
 		autocategory = !autocategory
 	else if(href_list["label_text"])
 		var/T = sanitize(input("Введите текст бирки:", "Маркировщик", label, null)  as text)
-		label = T && istext(T) ? T : ""
+		label = T ? T : ""
 	else if(href_list["change_mode"])
 		mode++
 		if(mode > modes.len)

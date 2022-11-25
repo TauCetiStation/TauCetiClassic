@@ -568,7 +568,7 @@
 		if(isobj(AM))
 			var/obj/Object = AM
 			if(Object.price_tag)
-				src.destinationTag = "Post"
+				src.destinationTag = "OnlineShop"
 
 
 // start the movement process
@@ -1093,10 +1093,10 @@
 
 	if(istype(Item, /obj/structure/bigDelivery))
 		var/obj/structure/bigDelivery/Package = Item
-		Package.Lot = Lot
+		Package.lot_number = Lot.number
 	else
 		var/obj/item/smallDelivery/Package = Item
-		Package.Lot = Lot
+		Package.lot_number = Lot.number
 
 	Item.forceMove(H)
 

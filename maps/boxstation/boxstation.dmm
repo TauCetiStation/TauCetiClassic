@@ -70695,8 +70695,8 @@
 "eGf" = (
 /obj/structure/disposalpipe/sortjunction{
 	dir = 8;
-	name = "Post";
-	sortType = "Post"
+	name = "OnlineShop";
+	sortType = "OnlineShop"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -79824,8 +79824,8 @@
 "prF" = (
 /obj/structure/disposalpipe/sortjunction{
 	dir = 1;
-	name = "Post";
-	sortType = "Post"
+	name = "OnlineShop";
+	sortType = "OnlineShop"
 	},
 /turf/simulated/floor{
 	icon_state = "browncorner"
@@ -84025,8 +84025,8 @@
 	},
 /obj/structure/disposalpipe/sortjunction{
 	dir = 8;
-	name = "Post";
-	sortType = "Post"
+	name = "OnlineShop";
+	sortType = "OnlineShop"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)

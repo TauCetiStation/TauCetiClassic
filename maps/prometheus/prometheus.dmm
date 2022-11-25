@@ -53474,8 +53474,8 @@
 	},
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 8;
-	name = "Post";
-	sortType = "Post"
+	name = "OnlineShop";
+	sortType = "OnlineShop"
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
@@ -66791,8 +66791,8 @@
 "qfj" = (
 /obj/structure/disposalpipe/sortjunction/flipped{
 	dir = 4;
-	name = "Post";
-	sortType = "Post"
+	name = "OnlineShop";
+	sortType = "OnlineShop"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
