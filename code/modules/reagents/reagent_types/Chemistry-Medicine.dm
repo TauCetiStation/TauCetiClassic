@@ -144,6 +144,12 @@
 /datum/reagent/sterilizine/reaction_obj(obj/O, volume)
 	..()
 	O.germ_level -= min(volume*20, O.germ_level)
+	REMOVE_TRAIT(O, TRAIT_XENO_FUR, GENERIC_TRAIT)
+	if(istype(O, /obj/item/weapon/reagent_containers/food))
+		var/obj/item/weapon/reagent_containers/food/F = O
+		//constituent components precipitate into food as unwanted sediment. No need use sterilizine into food
+		F.reagents.add_reagent("chlorine", 1)
+		F.reagents.add_reagent("ethanol", 1)
 
 /datum/reagent/sterilizine/reaction_turf(turf/T, volume)
 	. = ..()
@@ -470,6 +476,8 @@
 	..()
 	M.ear_damage = max(M.ear_damage - 1, 0)
 	M.ear_deaf = max(M.ear_deaf - 3, 0)
+	if(M.ear_damage <= 0 && M.ear_deaf <= 0)
+		M.sdisabilities &= ~DEAF
 
 /datum/reagent/peridaxon
 	name = "Peridaxon"
@@ -723,7 +731,7 @@
 	reagent_state = LIQUID
 	color = "#9b3401"
 	overdose = REAGENTS_OVERDOSE
-	custom_metabolism = 0.1
+	custom_metabolism = 0
 	taste_message = "wholeness"
 	restrict_species = list(IPC, DIONA)
 	data = list()
@@ -737,19 +745,17 @@
 		data["ticks"] = 1
 	data["ticks"]++
 	switch(data["ticks"])
-		if(1 to 10)
+		if(1 to 5)
 			M.make_dizzy(1)
 			if(prob(10))
 				to_chat(M, "<span class='warning'>Your skin feels hot and your veins are on fire!</span>")
+		if(5 to 10)
+			M.apply_effect(10, AGONY)
+			M.AdjustConfused(2)
 		if(10 to 20)
-			if(M.reagents.has_reagent("tramadol") || M.reagents.has_reagent("oxycodone"))
-				M.adjustToxLoss(5)
-			else
-				M.AdjustConfused(2)
-		if(20 to 60)
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_broken())
-					if(prob(50))
+					if(prob(15))
 						to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
 						E.brute_dam = 0
 						E.status &= ~ORGAN_BROKEN

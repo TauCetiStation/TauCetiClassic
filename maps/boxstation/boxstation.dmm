@@ -3695,6 +3695,27 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door_control{
+	id = "hos_blast";
+	name = "Privacy Shutters";
+	pixel_x = -6;
+	pixel_y = -4;
+	req_access = list(2)
+	},
+/obj/machinery/door_control{
+	id = "Secure Gate";
+	name = "Brig Lockdown";
+	req_access = list(2);
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/obj/machinery/door_control{
+	id = "Prison Gate";
+	name = "Prison Wing Lockdown";
+	req_access = list(2);
+	pixel_y = 7;
+	pixel_x = 6
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "agx" = (
@@ -15167,7 +15188,7 @@
 	},
 /area/station/security/lobby)
 "aAx" = (
-/obj/machinery/shower{
+/obj/machinery/shower/free{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -15747,7 +15768,7 @@
 	},
 /area/station/rnd/xenobiology)
 "aBG" = (
-/obj/machinery/shower{
+/obj/machinery/shower/free{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -40492,9 +40513,6 @@
 	},
 /area/station/cargo/office)
 "buE" = (
-/obj/machinery/shower{
-	dir = 4
-	},
 /obj/structure/drain{
 	drainage = 2
 	},
@@ -40502,6 +40520,9 @@
 	icon_state = "left";
 	name = "Cloning Cell";
 	req_access = list(5)
+	},
+/obj/machinery/shower/free{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -50232,26 +50253,6 @@
 /turf/simulated/wall/r_wall,
 /area/station/storage/tech)
 "bLX" = (
-/obj/machinery/door_control{
-	id = "Secure Gate";
-	name = "Brig Lockdown";
-	pixel_x = -26;
-	pixel_y = 28;
-	req_access = list(2)
-	},
-/obj/machinery/door_control{
-	id = "Prison Gate";
-	name = "Prison Wing Lockdown";
-	pixel_x = -26;
-	pixel_y = 39;
-	req_access = list(2)
-	},
-/obj/machinery/door_control{
-	id = "hos_blast";
-	name = "Privacy Shutters";
-	pixel_x = -38;
-	pixel_y = 28
-	},
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
 	},
@@ -52635,6 +52636,9 @@
 	},
 /obj/item/weapon/circuitboard/clonepod,
 /obj/item/weapon/circuitboard/scan_consolenew,
+/obj/item/weapon/circuitboard/operating_table{
+	pixel_y = -4
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "bQr" = (
@@ -52645,6 +52649,7 @@
 /obj/item/weapon/circuitboard/security{
 	pixel_y = 4
 	},
+/obj/item/weapon/circuitboard/skills,
 /obj/item/weapon/circuitboard/skills,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -70934,7 +70939,6 @@
 	dir = 8;
 	network = list("SS13","Medical")
 	},
-/obj/item/weapon/storage/belt/medical,
 /obj/item/device/radio/headset/headset_med,
 /turf/simulated/floor{
 	dir = 4;
@@ -80271,6 +80275,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "qix" = (

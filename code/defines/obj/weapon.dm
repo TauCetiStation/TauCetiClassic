@@ -128,6 +128,10 @@
 
 		icon_state = "beartrap[armed]"
 
+/obj/item/weapon/legcuffs/beartrap/armed
+	icon_state = "beartrap1"
+	armed = TRUE
+
 /obj/item/weapon/legcuffs/bola
 	name = "bola"
 	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
