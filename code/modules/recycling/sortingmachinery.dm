@@ -212,7 +212,7 @@
 
 /obj/item/device/tagger
 	name = "tagger"
-	desc = "Используется для наклейки Меток, Ценников и Бирок."
+	desc = "Используется для наклейки меток, ценников и бирок."
 	icon_state = "dest_tagger"
 	var/currTag = 0
 
@@ -239,7 +239,7 @@
 
 /obj/item/device/tagger/shop
 	name = "shop tagger"
-	desc = "Используется для наклейки Ценников и Бирок."
+	desc = "Используется для наклейки ценников и бирок."
 	icon_state = "shop_tagger"
 	modes = list(1 = "Ценник", 2 = "Бирка")
 
@@ -285,7 +285,8 @@
 		src.currTag = href_list["nextTag"]
 	else if(href_list["description"])
 		var/T = sanitize(input("Введите описание:", "Маркировщик", input_default(lot_description), null)  as text)
-		lot_description = T ? T : "Это что-то"
+		if(T)
+			lot_description = T
 	else if(href_list["autodesc"])
 		autodescription = !autodescription
 	else if(href_list["number"])
@@ -310,7 +311,8 @@
 		autocategory = !autocategory
 	else if(href_list["label_text"])
 		var/T = sanitize(input("Введите текст бирки:", "Маркировщик", label, null)  as text)
-		label = T ? T : ""
+		if(T)
+			label = T
 	else if(href_list["change_mode"])
 		mode++
 		if(mode > modes.len)
