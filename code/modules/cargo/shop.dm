@@ -33,5 +33,4 @@ var/global/orders_and_offers_number = 0
 	return ..()
 
 /datum/shop_lot/proc/to_list(account = "Unknown", postpayment = 0)
-	var/list/Lot_list = list("name" = src.name, "description" = src.description, "price" = src.price, "number" = src.number, "account" = account, "delivered" = src.delivered, "postpayment" = postpayment, "icon" = src.item_icon)
-	return Lot_list
+	return list("name" = src.name, "description" = src.description, "price" = src.price, "number" = src.number, "account" = account, "delivered" = src.delivered, "postpayment" = postpayment, "icon" = src.item_icon)
