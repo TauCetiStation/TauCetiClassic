@@ -219,5 +219,7 @@
 	// In case the golem is evil don't make him a loyal dog of NT.
 	if(isanyantag(H))
 		return
+	if(prob(10))
+		return
 	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(H)
 	L.stealth_inject(H)
