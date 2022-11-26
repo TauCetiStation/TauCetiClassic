@@ -311,6 +311,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		var/acc_number = H.mind.get_key_memory(MEM_ACCOUNT_NUMBER)
 		if(!acc_number)
 			acc_number = 0
+		G.fields["acc_number"] = acc_number
 
 		general += G
 

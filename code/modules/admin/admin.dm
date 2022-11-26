@@ -714,7 +714,7 @@ var/global/BSACooldown = 0
 				color = "red"
 			dat += "<tr><td><span class='highlight'>[person["name"]]</span></td><td><span class='average'>[person["rank"]]</span></td>"
 			dat += "<td><font color='[color]'><b>[person["salary"]]$</b></font></td>"
-			dat += "<td><A href='byond://?src=\ref[src];salary=\ref[person["acc_datum"]]'>Change</A></td></tr>"
+			dat += "<td><A href='byond://?src=\ref[src];salary=[person["account"]]'>Change</A></td></tr>"
 		dat += "</table>"
 	else
 		dat += "<span class='bad'>Crew not found!</span>"
@@ -1159,7 +1159,7 @@ var/global/BSACooldown = 0
 		return
 
 	M.mind.edit_skills()
-	feedback_add_details("admin_verb","SKP") 
+	feedback_add_details("admin_verb","SKP")
 
 /datum/admins/proc/toggletintedweldhelmets()
 	set category = "Debug"
