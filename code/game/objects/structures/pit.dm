@@ -153,7 +153,6 @@
 
 	if(prob(30))
 		var/list/misc = list(
-			/obj/item/clothing/accessory/fluff/altair_locket,
 			/obj/item/clothing/accessory/holobadge,
 			/obj/item/clothing/accessory/tie/horrible,
 			/obj/item/clothing/accessory/medal,
@@ -244,7 +243,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 7 //lucky shot
 	damage_type = BURN
-	flag = "laser"
+	flag = LASER
 	eyeblur = 2
 
 /obj/item/clothing/under/jetsons

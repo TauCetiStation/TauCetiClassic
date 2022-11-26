@@ -49,6 +49,7 @@
 #define RTECH_BUILD_EVERYWHERE      "Build Everywhere"
 #define RTECH_MORE_RUNES            "More Runes"
 #define RTECH_MIRROR_SHIELD         "Mirror Shield"
+#define RTECH_IMPROVED_PYLONS       "Improved Pylons"
 
 /*
  * ENCYCLOPEDIA

@@ -34,6 +34,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/d2 = 1   // cable direction 2 (see above)
 	layer = 2.44 //Just below unary stuff, which is at 2.45 and above pipes, which are at 2.4
 	color = COLOR_RED
+	max_integrity = 5
 
 /obj/structure/cable/yellow
 	color = COLOR_YELLOW
@@ -101,7 +102,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 //Telekinesis has no effect on a cable
 /obj/structure/cable/attack_tk(mob/user)
-	return
+	return FALSE
 
 /obj/structure/cable/proc/remove_cable(turf/T, mob/user)
 	// 0-X cables are 1 unit, X-X cables are 2 units long
@@ -136,7 +137,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		if (shock(user, 50))
 			return
 
-		remove_cable(T, user)
+		deconstruct(TRUE, user)
 
 		return	// not needed, but for clarity
 
@@ -154,6 +155,11 @@ By design, d1 is the smallest direction and d2 is the highest
 			shock(user, 50, 0.7)
 
 	add_fingerprint(user)
+
+/obj/structure/cable/deconstruct(disassembled, user)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	remove_cable(loc, user)
 
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1.0)

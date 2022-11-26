@@ -29,4 +29,4 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	return !IsAdminGhost(src)
 
 /mob/dead/me_emote(message, message_type = SHOWMSG_VISUAL, intentional=FALSE)
-	return emote("me", message=message, auto=!intentional)
+	to_chat(src, "<span class='notice'>You can not emote.</span>")

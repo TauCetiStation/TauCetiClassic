@@ -34,7 +34,7 @@
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
-		new /obj/item/clothing/suit/hooded/wintercoat/cargo
+		new /obj/item/clothing/suit/hooded/wintercoat/miner(src)
 		new /obj/item/clothing/head/santa(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 
@@ -199,20 +199,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	origin_tech = "materials=4"
 	desc = "This makes no metallurgic sense."
 
-/obj/item/weapon/pickaxe/plasmacutter
-	name = "plasma cutter"
-	icon_state = "plasmacutter"
-	item_state = "plasmacutter"
-	w_class = SIZE_SMALL //it is smaller than the pickaxe
-	damtype = "fire"
-	toolspeed = 0.4 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
-	origin_tech = "materials=4;phorontech=3;engineering=3"
-	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
-	drill_verb = "cutting"
-
-/obj/item/weapon/pickaxe/plasmacutter/get_current_temperature()
-	return 3800
-
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"
@@ -285,6 +271,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	m_amt = 50
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
+	usesound = 'sound/effects/shovel_digging.ogg'
 	// Better than a rod, worse than a crowbar.
 	qualities = list(
 		QUALITY_PRYING = 0.75
@@ -467,6 +454,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/power = 5
 
 /obj/item/weapon/mining_charge/attack_self(mob/user)
+	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL,list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around figuring out how to set timer on [src]...</span>"))
+		return
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(newtime < 5)
 		newtime = 5
@@ -481,9 +470,10 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 	if(user.is_busy(src))
 		return
-	to_chat(user, "<span class='notice'>Planting explosives...</span>")
 
-	if(do_after(user, 50, target = target))
+	to_chat(user, "<span class='notice'>Planting explosives...</span>")
+	var/planting_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/firearms = SKILL_LEVEL_MASTER, /datum/skill/engineering = SKILL_LEVEL_PRO), -0.1)
+	if(do_after(user, planting_time, target = target))
 		user.drop_item()
 		target = target
 		loc = null
@@ -553,7 +543,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = null
 	damage = 10
 	damage_type = BRUTE
-	flag = "bomb"
+	flag = BOMB
 	var/range = 3
 	var/power = 4
 
@@ -601,6 +591,78 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon = 'icons/obj/module.dmi'
 	icon_state = "accelerator_speedupgrade"
 
+/*****************************Plasma Cutter********************************/
+
+/obj/item/weapon/gun/energy/laser/cutter
+	name = "plasma cutter"
+	icon_state = "plasmacutter"
+	item_state = "plasmacutter"
+	force = 15
+	damtype = BURN
+	hitsound = list('sound/weapons/sear.ogg')
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/cutter)
+	fire_delay = 3
+	w_class = SIZE_SMALL //it is smaller than the pickaxe
+	origin_tech = "materials=4;phorontech=3;engineering=3"
+	desc = "The latest self-rechargeable low-power cutter using bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+	var/emagged = FALSE
+
+/obj/item/projectile/beam/plasma_cutter
+	name = "cutter"
+	damage = 5
+	damage_type = BURN
+	flag = ENERGY
+	light_color = "#4abdff"
+	muzzle_type = /obj/effect/projectile/laser_omni/muzzle
+	tracer_type = /obj/effect/projectile/laser_omni/tracer
+	impact_type = /obj/effect/projectile/laser_omni/impact
+	var/destruction_chance = 20
+
+/obj/item/projectile/beam/plasma_cutter/emagged
+	damage = 75
+	destruction_chance = 100
+
+/obj/item/projectile/beam/plasma_cutter/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	. = ..()
+	var/turf/target_turf = get_turf(target)
+	if(istype(target_turf, /turf/simulated/mineral))
+		var/turf/simulated/mineral/M = target_turf
+		M.GetDrilled(firer)
+	if((iswallturf(target)) && (prob(destruction_chance)))
+		target.ex_act(EXPLODE_HEAVY)
+
+
+/obj/item/weapon/gun/energy/laser/cutter/atom_init()
+	. = ..()
+	power_supply.AddComponent(/datum/component/cell_selfrecharge, 50)
+
+/obj/item/weapon/gun/energy/laser/cutter/emag_act(mob/user)
+	if(emagged)
+		return FALSE
+	ammo_type += new /obj/item/ammo_casing/energy/laser/cutter/emagged(src)
+	fire_delay = 5
+	origin_tech += ";syndicate=1"
+	emagged = TRUE
+	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибкаошибкаошибка.</span>")
+	return TRUE
+
+/obj/item/weapon/gun/energy/laser/cutter/emagged //for robots
+	emagged = TRUE
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/cutter/emagged)
+
+/obj/item/weapon/gun/energy/laser/cutter/emagged/atom_init()
+	. = ..()
+	power_supply.AddComponent(/datum/component/cell_selfrecharge, 150)
+
+/obj/item/weapon/gun/energy/laser/cutter/emagged/newshot()
+	if(!isrobot(loc))
+		return FALSE
+	if(..())
+		var/mob/living/silicon/robot/R = loc
+		if(R && R.cell)
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+			R.cell.use(shot.e_cost)
+
 /*****************************Survival Pod********************************/
 
 
@@ -610,6 +672,11 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	has_gravity = 1
+	looped_ambience = 'sound/ambience/loop_mineoutpost.ogg'
+
+/area/custom/survivalpod/bar
+	name = "Emergency Bar"
+	looped_ambience = null
 
 /obj/item/weapon/survivalcapsule
 	name = "bluespace shelter capsule"
@@ -735,7 +802,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "surv_wall0"
 	var/basestate = "surv_wall"
 	opacity = TRUE
-	health = 100
+	max_integrity = 100
 
 /obj/structure/inflatable/survival/atom_init()
 	. = ..()

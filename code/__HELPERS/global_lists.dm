@@ -64,11 +64,6 @@
 	init_subtypes(/datum/crafting_recipe, crafting_recipes)
 	init_subtypes(/datum/dirt_cover, global.all_dirt_covers)
 
-	//Medical side effects. List all effects by their names
-	for(var/T in subtypesof(/datum/medical_effect))
-		var/datum/medical_effect/M = new T
-		side_effects[M.name] = T
-
 	//Languages and species.
 	for(var/T in subtypesof(/datum/language))
 		var/datum/language/L = new T
@@ -235,6 +230,20 @@
 	global.antag_roles = global.special_roles - ROLE_GHOSTLY
 
 	global.full_ignore_question = get_list_of_keys_from_values_as_list_from_associative_list(special_roles_ignore_question)
+
+
+	global.all_skills = list()
+	for(var/skill_type in subtypesof(/datum/skill))
+		global.all_skills[skill_type] = new skill_type
+
+	global.all_skillsets = list()
+	for(var/skillset_type in subtypesof(/datum/skillset))
+		global.all_skillsets[skillset_type] = new skillset_type
+
+	global.skillset_names_aliases = list()
+	for(var/s in all_skillsets)
+		var/datum/skillset/skillset = all_skillsets[s]
+		global.skillset_names_aliases[skillset.name] = s
 
 	global.all_emotes = list()
 	for(var/emote_type in subtypesof(/datum/emote))

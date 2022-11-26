@@ -14,6 +14,7 @@
 	var/efficiency
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/list/cryo_medicine = list("cryoxadone", "clonexadone")
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_PRO)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/atom_init()
 	. = ..()
@@ -111,8 +112,9 @@
 		return
 
 	if(occupant)
-		occupant.bodytemperature += 2 * (air1.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air1.heat_capacity())
-		occupant.bodytemperature = max(occupant.bodytemperature, air1.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
+		var/affecting_temp = air1.temperature - occupant.bodytemperature
+		affecting_temp *= min(1, 2 * current_heat_capacity / (current_heat_capacity + air1.heat_capacity()))
+		occupant.adjust_bodytemperature(affecting_temp)
 
 		/* heat_gas_contents */
 		if(air1.total_moles < 1)
@@ -129,6 +131,8 @@
 		return
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
+		return
+	if(!do_skill_checks(user))
 		return
 	close_machine(target)
 
@@ -160,10 +164,14 @@
 		sleep(600)
 		if(!src || !usr || (!occupant && !contents.Find(usr)))	//Check if someone's released/replaced/bombed him already
 			return
+		if(!do_skill_checks(usr))
+			return
 		open_machine()
 		add_fingerprint(usr)
 	else
 		if(isobserver(usr) && !IsAdminGhost(usr))
+			return
+		if(!do_skill_checks(usr))
 			return
 		open_machine()
 
@@ -189,7 +197,7 @@
   * @return nothing
   */
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main")
-	if(user == occupant || (user.stat && !isobserver(user)) || panel_open)
+	if(user == occupant || (user.stat != CONSCIOUS && !isobserver(user)) || panel_open)
 		return
 
 	// this is the data which will be sent to the ui
@@ -255,6 +263,8 @@
 
 	if(!user.incapacitated() && Adjacent(user))
 		if(!state_open)
+			if(!do_skill_checks(user))
+				return
 			on = !on
 			update_icon()
 
@@ -268,8 +278,12 @@
 
 	if(!user.incapacitated() && Adjacent(user))
 		if(state_open)
+			if(!do_skill_checks(user))
+				return
 			close_machine()
 		else
+			if(!do_skill_checks(user))
+				return
 			open_machine()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Topic(href, href_list)
@@ -309,8 +323,8 @@
 			return
 		beaker = I
 		user.visible_message(
-			"[user] помещает [I] в криокамеру.",
-			"<span class='notice'>Вы помещаете [I] в криокамеру.</span>")
+			"[user] inserts [I] into cryocell.",
+			"<span class='notice'>You insert [I] into cryocell.</span>")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
 		return

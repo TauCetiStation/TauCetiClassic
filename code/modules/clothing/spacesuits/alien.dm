@@ -131,6 +131,11 @@
 	flags = HEADCOVERSEYES
 	species_restricted = list(VOX , VOX_ARMALIS)
 
+/obj/item/clothing/head/helmet/space/vox/atom_init()
+	. = ..()
+	holochip = new /obj/item/holochip/vox(src)
+	holochip.holder = src
+
 /obj/item/clothing/head/helmet/space/vox/pressure
 	name = "alien helmet"
 	icon_state = "vox-pressure"
@@ -309,6 +314,7 @@
 	else if(!deactive)
 		if(!istype(wearer.head, /obj/item/clothing/head/helmet/space/vox/stealth))
 			to_chat(wearer, "<span class='warning'>The cloaking system cannot function without a helmet.</span>")
+			return
 		if(last_try > world.time)
 			return
 		if(wearer.is_busy())

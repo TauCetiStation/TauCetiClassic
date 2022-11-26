@@ -29,7 +29,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "miljacket_ranger"
 /obj/random/cloth/storagesuit/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/suit/storage) - list(/obj/item/clothing/suit/storage/lawyer, /obj/item/clothing/suit/storage/labcoat/fluff/pink ))
+	return pick(subtypesof(/obj/item/clothing/suit/storage) - list(/obj/item/clothing/suit/storage/lawyer))
 
 /obj/random/cloth/hazmatsuit
 	name = "random hazmatsuit"
@@ -71,7 +71,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "tourist"
 /obj/random/cloth/under/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/under) - list(/obj/item/clothing/under/stripper/stripper_green, /obj/item/clothing/under/lawyer, /obj/item/clothing/under/color, /obj/item/clothing/under/shorts, /obj/item/clothing/under/swimsuit, /obj/item/clothing/under/shadowling, /obj/item/clothing/under/fluff, /obj/item/clothing/under/rank, /obj/item/clothing/under/pj, /obj/item/clothing/under/wedding, /obj/item/clothing/under/gimmick/rank, /obj/item/clothing/under/bluepyjamas, /obj/item/clothing/under/acj, /obj/item/clothing/under/redpyjamas, /obj/item/clothing/under/gimmick/rank/head_of_personnel, /obj/item/clothing/under/dress, /obj/item/clothing/under/vox))
+	return pick(subtypesof(/obj/item/clothing/under) - list(/obj/item/clothing/under/stripper/stripper_green, /obj/item/clothing/under/lawyer, /obj/item/clothing/under/color, /obj/item/clothing/under/shorts, /obj/item/clothing/under/swimsuit, /obj/item/clothing/under/shadowling, /obj/item/clothing/under/rank, /obj/item/clothing/under/pj, /obj/item/clothing/under/wedding, /obj/item/clothing/under/gimmick/rank, /obj/item/clothing/under/bluepyjamas, /obj/item/clothing/under/acj, /obj/item/clothing/under/redpyjamas, /obj/item/clothing/under/gimmick/rank/head_of_personnel, /obj/item/clothing/under/dress, /obj/item/clothing/under/vox))
 
 /obj/random/cloth/spacehelmet
 	name = "random spacehelmet"
@@ -103,7 +103,7 @@
 	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "orange"
 /obj/random/cloth/gloves/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/gloves) - list(/obj/item/clothing/gloves/golem, /obj/item/clothing/gloves/shadowling, /obj/item/clothing/gloves/fluff, /obj/item/clothing/gloves/black/silence/furioso))
+	return pick(subtypesof(/obj/item/clothing/gloves) - list(/obj/item/clothing/gloves/golem, /obj/item/clothing/gloves/shadowling, /obj/item/clothing/gloves/black/silence/furioso))
 
 /obj/random/cloth/gloves_safe
 	name = "random gloves"
@@ -111,7 +111,7 @@
 	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "orange"
 /obj/random/cloth/gloves_safe/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/gloves) - list(/obj/item/clothing/gloves/golem, /obj/item/clothing/gloves/shadowling, /obj/item/clothing/gloves/fluff, /obj/item/clothing/gloves/yellow, /obj/item/clothing/gloves/black/strip, /obj/item/clothing/gloves/combat, /obj/item/clothing/gloves/space_ninja,) - typesof(/obj/item/clothing/gloves/black/silence) - typesof(/obj/item/clothing/gloves/security))
+	return pick(subtypesof(/obj/item/clothing/gloves) - list(/obj/item/clothing/gloves/golem, /obj/item/clothing/gloves/shadowling, /obj/item/clothing/gloves/yellow, /obj/item/clothing/gloves/black/strip, /obj/item/clothing/gloves/combat, /obj/item/clothing/gloves/space_ninja,) - typesof(/obj/item/clothing/gloves/black/silence) - typesof(/obj/item/clothing/gloves/security))
 
 /obj/random/cloth/glasses
 	name = "random glasses"

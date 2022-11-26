@@ -1,5 +1,7 @@
 // Machinery serving as a media source.
 /obj/machinery/media
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 	var/playing=0
 	var/media_url=""
 	var/media_start_time=0

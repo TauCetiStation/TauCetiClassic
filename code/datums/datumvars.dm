@@ -504,18 +504,6 @@ body
 		give_spell(M)
 		href_list["datumrefresh"] = href_list["give_spell"]
 
-	else if(href_list["give_disease"])
-		if(!check_rights(R_ADMIN|R_FUN))
-			return
-
-		var/mob/M = locate(href_list["give_disease"])
-		if(!istype(M))
-			to_chat(usr, "This can only be used on instances of type /mob")
-			return
-
-		give_disease(M)
-		href_list["datumrefresh"] = href_list["give_spell"]
-
 	else if(href_list["give_religion"])
 		if(!check_rights(R_ADMIN|R_FUN))
 			return

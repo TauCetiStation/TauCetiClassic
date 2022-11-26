@@ -81,13 +81,7 @@
 		return pick(\
 						prob(100);/obj/item/weapon/storage/box/matches,\
 						prob(30);/obj/item/weapon/lighter/random,\
-						prob(10);/obj/item/weapon/lighter/zippo,\
-						prob(1);/obj/item/weapon/lighter/zippo/fluff/li_matsuda_1,\
-						prob(1);/obj/item/weapon/lighter/zippo/fluff/michael_guess_1,\
-						prob(1);/obj/item/weapon/lighter/zippo/fluff/riley_rohtin_1,\
-						prob(1);/obj/item/weapon/lighter/zippo/fluff/fay_sullivan_1,\
-						prob(1);/obj/item/weapon/lighter/zippo/fluff/executivekill_1,\
-						prob(1);/obj/item/weapon/lighter/zippo/fluff/naples_1\
+						prob(16);/obj/item/weapon/lighter/zippo,\
 					)
 
 

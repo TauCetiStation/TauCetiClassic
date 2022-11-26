@@ -61,7 +61,7 @@
 	H.me_emote("has drool running down from his mouth and hair starts to cover whole body.")
 
 /datum/genetics/side_effect/monkey/finish(mob/living/carbon/human/H)
-	H.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
+	H.monkeyize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPDAMAGE | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_KEEPSE)
 
 /datum/genetics/side_effect/confuse
 	name = "Confuse"
@@ -102,10 +102,13 @@
 	sleep(20)
 	if(!H || !istype(H))
 		return
-	H.Weaken(rand(0, S.duration / 50))
+	var/waek_amt = rand(0, S.duration / 50)
+	H.Stun(waek_amt)
+	H.Weaken(waek_amt)
 
 	sleep(S.duration)
 	if(!H || !istype(H))
 		return
+	H.SetStunned(0)
 	H.SetWeakened(0)
 	S.finish(H)

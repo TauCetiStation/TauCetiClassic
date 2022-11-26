@@ -11,11 +11,22 @@
 	action_button_name = "Flip Cap"
 
 	var/flipped = FALSE
-	var/cap_color
+	var/cap_color = "cargo"
 
 /obj/item/clothing/head/soft/atom_init()
 	. = ..()
 	icon_state = "[cap_color]soft"
+
+/obj/item/clothing/head/soft/wash_act(w_color)
+	. = ..()
+	var/obj/item/clothing/dye_type = get_dye_type(w_color)
+	if(!dye_type)
+		return
+
+	var/obj/item/clothing/head/soft/S = dye_type
+
+	cap_color = initial(S.cap_color)
+	icon_state = "[cap_color][flipped ? "soft_flipped" : "soft"]"
 
 /obj/item/clothing/head/soft/attack_self(mob/living/carbon/human/user)
 	flipped = !flipped

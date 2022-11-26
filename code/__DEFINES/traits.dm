@@ -119,7 +119,15 @@
 		: FALSE)
 #define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (length(target.status_traits[trait] - source) > 0) : FALSE) : FALSE)
 
+
 //mob traits
+/// Forces user to be unmovable
+#define TRAIT_ANCHORED "anchored"
+/// Prevents voluntary movement.
+#define TRAIT_IMMOBILIZED "immobilized"
+/// Prevents hands and legs usage
+#define TRAIT_INCAPACITATED "incapacitated"
+
 #define TRAIT_ALCOHOL_TOLERANCE   "alcohol_tolerance"
 #define TRAIT_BLIND               "blind"
 #define TRAIT_COUGH               "cough"
@@ -155,6 +163,10 @@
 #define TRAIT_WET_HANDS           "wet_hands"
 #define TRAIT_GREASY_FINGERS      "greasy_fingers"
 #define TRAIT_ANATOMIST           "anatomist"
+#define TRAIT_SOULSTONE_IMMUNE    "soulstone_immune"
+#define TRAIT_CULT_EYES           "cult_eyes"
+#define TRAIT_CULT_HALO           "cult_halo"
+#define TRAIT_HEALS_FROM_PYLONS   "heals_from_pylons"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -167,12 +179,16 @@
  */
 #define TRAIT_DOUBLE_WIELDED "double_wielded"
 
+// item trait
+#define TRAIT_NO_SACRIFICE "religion_no_sacrifice"
+
 // idk why this exists on TG
 #define GENERIC_TRAIT "generic"
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
 #define QUALITY_TRAIT      "quality"
 #define TWOHANDED_TRAIT    "twohanded"
+#define RELIGION_TRAIT     "religion"
 
 // self explanatory
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
@@ -182,3 +198,6 @@
 #define OBESITY_TRAIT      "obesity"
 #define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"
 #define FEAR_TRAIT         "fear"
+
+// atom traits
+#define TRAIT_XENO_FUR "xeno_fur"

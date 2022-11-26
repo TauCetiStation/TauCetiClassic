@@ -12,7 +12,7 @@
 	animation.master = src
 
 	flick("gibbed-r", animation)
-	robogibs(loc, viruses)
+	robogibs(loc)
 
 	alive_mob_list -= src
 	dead_mob_list -= src

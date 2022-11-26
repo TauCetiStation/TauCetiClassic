@@ -104,7 +104,7 @@
 /obj/effect/portal/tsci_wormhole/Crossed(atom/movable/AM)
 	set waitfor = 0
 
-	. = .()
+	. = ..()
 	if(teleport(AM, TELE_CHECK_ALL, TRUE, FALSE))
 		handle_special_effects(AM)
 

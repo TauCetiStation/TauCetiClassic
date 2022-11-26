@@ -406,3 +406,14 @@
 	desc = "A nazi officer's cap."
 	icon_state = "officer_cap"
 	item_state = "that"
+
+/obj/item/clothing/head/orange_bandana
+	name = "orange bandana"
+	desc = "Hey, I think we're missing a hazard vest..."
+	icon_state = "orange_bandana"
+
+/obj/item/clothing/head/kung
+	name = "Kung headband"
+	desc = "Stripe of red cloth.You can wear it on your head."
+	icon_state = "kung_headband"
+	item_state = "kung_headband"

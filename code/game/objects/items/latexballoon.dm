@@ -35,7 +35,8 @@
 			if (prob(50))
 				qdel(src)
 
-/obj/item/latexballon/bullet_act()
+/obj/item/latexballon/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	burst()
 
 /obj/item/latexballon/fire_act(datum/gas_mixture/air, temperature, volume)

@@ -44,7 +44,7 @@
 
 /datum/quirk/alcohol_tolerance
 	name = QUIRK_ALCOHOL_TOLERANCE
-	desc = "Вы сложнее напиваетесь и легче переносите похмелье."
+	desc = "Вам сложнее опьянеть и легче перенести похмелье."
 	value = 1
 	mob_trait = TRAIT_ALCOHOL_TOLERANCE
 	gain_text = "<span class='notice'>Вы чувствуете, что вам и бочка пива будет по силе!</span>"
@@ -86,5 +86,5 @@
 	desc = "Вы можете одеваться быстрее."
 	value = 2
 	mob_trait = TRAIT_FAST_EQUIP
-	gain_text = "<span class='notice'Годы жизни на станции научили вас чему-то.</span>"
+	gain_text = "<span class='notice'Годы жизни на станции научили вас кое-чему.</span>"
 	lose_text = "<span class='danger'>Ваша координация стремительно деградировала.</span>"

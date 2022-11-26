@@ -14,7 +14,6 @@
 	stop_automated_movement = TRUE
 	status_flags = CANPUSH
 	universal_speak = 1
-	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -32,6 +31,7 @@
 	has_arm = TRUE
 
 /mob/living/simple_animal/construct/atom_init()
+	attack_sound = SOUNDIN_PUNCH_MEDIUM
 	. = ..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
@@ -42,7 +42,7 @@
 	AddComponent(/datum/component/forcefield, "blood aura", 20, 5 SECONDS, 3 SECONDS, R, TRUE, TRUE)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
-	var/image/glow = image(icon, src, "glow_[icon_state]")
+	var/image/glow = image(icon, src, "glow_[icon_state]", ABOVE_LIGHTING_LAYER)
 	glow.plane = ABOVE_LIGHTING_PLANE
 	add_overlay(glow)
 
@@ -98,23 +98,19 @@
 	speed = 3
 	w_class = SIZE_MASSIVE
 	environment_smash = 2
-	attack_sound = list('sound/weapons/punch3.ogg')
 	status_flags = 0
 	construct_spells = list(
 			/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall,
 			)
 
 /mob/living/simple_animal/construct/armoured/atom_init()
+	attack_sound = SOUNDIN_PUNCH_VERYHEAVY
 	. = ..()
 	var/obj/effect/effect/forcefield/rune/R = new
 	AddComponent(/datum/component/forcefield, "strong blood aura", 80, 5 SECONDS, 6 SECONDS, R, TRUE, TRUE)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
-/mob/living/simple_animal/construct/armoured/Life()
-	weakened = 0
-	..()
-
-/mob/living/simple_animal/construct/armoured/bullet_act(obj/item/projectile/P)
+/mob/living/simple_animal/construct/armoured/bullet_act(obj/item/projectile/P, def_zone)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
 		if(prob(reflectchance))
@@ -170,17 +166,18 @@
 	harm_intent_damage = 5
 	melee_damage = 10
 	attacktext = "ramm"
-	speed = 0
+	speed = -0.2
 	environment_smash = 2
-	attack_sound = list('sound/weapons/punch2.ogg')
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
+		/obj/effect/proc_holder/spell/aoe_turf/conjure/door,
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
 		)
 
 /mob/living/simple_animal/construct/builder/atom_init()
+	attack_sound = SOUNDIN_PUNCH_MEDIUM
 	. = ..()
 	var/datum/atom_hud/data/medical/adv/hud = global.huds[DATA_HUD_MEDICAL_ADV]
 	hud.add_hud_to(src)
@@ -202,10 +199,10 @@
 	speed = 5
 	environment_smash = 2
 	w_class = SIZE_MASSIVE
-	attack_sound = list('sound/weapons/punch4.ogg')
 	resize = 1.2
 
 /mob/living/simple_animal/construct/behemoth/atom_init()
+	attack_sound = SOUNDIN_PUNCH_HEAVY
 	. = ..()
 	var/obj/effect/effect/forcefield/rune/R = new
 	AddComponent(/datum/component/forcefield, "strong blood aura", 500, 30 SECONDS, 10 SECONDS, R, TRUE, TRUE)
@@ -221,17 +218,20 @@
 	icon_living = "harvester"
 	maxHealth = 60
 	health = 60
-	melee_damage = 15
+	melee_damage = 8
 	attacktext = "prodd"
 	speed = 0
 	environment_smash = 1
 	see_in_dark = 7
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	density = FALSE
 	attack_sound = list('sound/weapons/slash.ogg')
 	attack_push_vis_effect = ATTACK_EFFECT_SLASH
 	attack_disarm_vis_effect = ATTACK_EFFECT_SLASH
+	pass_flags = PASSTABLE
 	construct_spells = list(
 		/obj/effect/proc_holder/spell/aoe_turf/conjure/smoke,
+		/obj/effect/proc_holder/spell/no_target/area_conversion,
 		)
 
 /mob/living/simple_animal/construct/harvester/Bump(atom/A)
@@ -242,7 +242,7 @@
 	if(istype(A, /turf/simulated/wall/cult))
 		its_wall = TRUE
 
-	if(its_wall || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult) || istype(A, /mob/living/simple_animal/construct) || istype(A, /mob/living/simple_animal/hostile/pylon))
+	if(its_wall || istype(A, /obj/structure/mineral_door/cult) || istype(A, /obj/structure/cult) || isconstruct(A) || istype(A, /mob/living/simple_animal/hostile/pylon))
 		var/atom/movable/stored_pulling = pulling
 		if(stored_pulling)
 			stored_pulling.set_dir(get_dir(stored_pulling.loc, loc))
@@ -259,6 +259,17 @@
 /mob/living/simple_animal/construct/harvester/Process_Spacemove(movement_dir = 0)
 	return TRUE
 
+/mob/living/simple_animal/construct/harvester/UnarmedAttack(atom/A)
+	if(ishuman(A) && prob(20))
+		if(get_targetzone() == BP_HEAD) // No
+			return ..()
+		var/mob/living/carbon/human/C = A
+		var/obj/item/organ/external/BP = C.get_bodypart(get_targetzone())
+		if(BP && !BP.droplimb(FALSE, FALSE, DROPLIMB_EDGE))
+			return ..() //Attack
+		return
+	return ..()
+
 /////////////////////////////////////Proteon from tg/////////////////////////////////
 /mob/living/simple_animal/construct/proteon
 	name = "Proteon"
@@ -271,9 +282,13 @@
 	melee_damage = 35
 	speed = -2
 	response_harm = "pinch"
-	attack_sound = 'sound/weapons/punch2.ogg'
 
 	sight = SEE_MOBS
+
+/mob/living/simple_animal/construct/proteon/atom_init()
+	attack_sound = SOUNDIN_PUNCH_HEAVY
+	. = ..()
+
 
 /////////////////////////////////////Charged Pylon not construct/////////////////////////////////
 /mob/living/simple_animal/hostile/pylon
@@ -311,7 +326,7 @@
 
 /mob/living/simple_animal/hostile/pylon/proc/deactivate()
 	for(var/obj/structure/cult/pylon/P in contents)
-		P.health = health
+		P.update_integrity(health)
 		P.forceMove(loc)
 	qdel(src)
 
@@ -327,4 +342,4 @@
 		return ..()
 
 /mob/living/simple_animal/hostile/pylon/update_canmove()
-	return FALSE
+	return

@@ -57,16 +57,7 @@
 	max_roles = clamp((num_players/5), MIN_OPS, MAX_OPS)
 
 	// Looking for map to nuclear spawn points
-	var/spwn_synd = FALSE
-	var/spwn_comm = FALSE
-	for(var/obj/effect/landmark/A in landmarks_list)
-		if(A.name == "Syndicate-Commander")
-			spwn_comm = TRUE
-		else if (A.name == "Syndicate-Spawn")
-			spwn_synd = TRUE
-		if (spwn_synd && spwn_comm)
-			return TRUE
-	return FALSE
+	return length(landmarks_list["Syndicate-Commander"]) > 0 && length(landmarks_list["Syndicate-Spawn"]) > 0
 
 /datum/faction/nuclear/HandleNewMind(datum/mind/M)
 	. = ..()
@@ -82,19 +73,15 @@
 	return TRUE
 
 /datum/faction/nuclear/OnPostSetup()
+	//Add commander spawn places first, really should only be one though.
+	var/obj/effect/landmark/A = locate("landmark*Syndicate-Commander")
+	var/turf/synd_comm_spawn = get_turf(A)
+	qdel(A)
+
 	var/list/turf/synd_spawn = list()
-	var/turf/synd_comm_spawn
-
-	for(var/obj/effect/landmark/A in landmarks_list) //Add commander spawn places first, really should only be one though.
-		if(A.name == "Syndicate-Commander")
-			synd_comm_spawn = get_turf(A)
-			qdel(A)
-			break
-
-	for(var/obj/effect/landmark/A in landmarks_list)
-		if(A.name == "Syndicate-Spawn")
-			synd_spawn += get_turf(A)
-			qdel(A)
+	for(A as anything in landmarks_list["Syndicate-Spawn"])
+		synd_spawn += get_turf(A)
+		qdel(A)
 
 	var/obj/effect/landmark/uplinklocker = locate("landmark*Syndicate-Uplink")	//i will be rewriting this shortly
 	var/obj/effect/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
@@ -300,3 +287,12 @@
 
 #undef MAX_OPS
 #undef MIN_OPS
+
+/datum/faction/nuclear/crossfire
+	name = F_SYNDIOPS_CROSSFIRE
+	ID = F_SYNDIOPS_CROSSFIRE
+	var/nuke_landed = FALSE
+
+/datum/faction/nuclear/crossfire/proc/landing_nuke()
+	if(!nuke_landed)
+		create_uniq_faction(/datum/faction/heist/saboteurs)

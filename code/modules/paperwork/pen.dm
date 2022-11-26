@@ -21,7 +21,7 @@
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 10
-	var/colour = "black"	//what colour the ink is!
+	var/colour = "black"	// can we make it HEX?
 	var/click_cooldown = 0
 
 /obj/item/weapon/pen/proc/get_signature(mob/user)
@@ -36,7 +36,6 @@
 /obj/item/weapon/pen/ghost
 	desc = "An expensive looking pen. You wonder, what is it's cost?"
 	colour = "purple"
-	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "fountainpen" //paththegreat: Eli Stevens
 	var/entity = ""
 

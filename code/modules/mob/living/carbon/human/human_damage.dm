@@ -179,23 +179,20 @@
 
 // =============================================
 
-/mob/living/carbon/human/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
-	if(HULK in mutations)
-		stunned = 0
-	else
-		..()
+/mob/living/carbon/human/Stun(amount, ignore_canstun = FALSE)
+	if(HULK in mutations && !ignore_canstun)
+		return SetStunned(0)
+	..()
 
-/mob/living/carbon/human/Weaken(amount)
-	if(HULK in mutations)
-		weakened = 0
-	else
-		..()
+/mob/living/carbon/human/Weaken(amount, ignore_canstun = FALSE)
+	if(HULK in mutations && !ignore_canstun)
+		return SetWeakened(0)
+	..()
 
-/mob/living/carbon/human/Paralyse(amount)
-	if(HULK in mutations)
-		paralysis = 0
-	else
-		..()
+/mob/living/carbon/human/Paralyse(amount, ignore_canstun = FALSE)
+	if(HULK in mutations && !ignore_canstun)
+		return SetParalysis(0)
+	..()
 
 // =============================================
 
@@ -377,7 +374,6 @@ This function restores all bodyparts.
 	return bodyparts_by_name[zone]
 
 /mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null)
-
 	if(damagetype == HALLOSS && species && species.flags[NO_PAIN])
 		return FALSE
 
@@ -412,7 +408,10 @@ This function restores all bodyparts.
 			created_wound = BP.take_damage(damage, 0, damage_flags, used_weapon)
 		if(BURN)
 			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon)
-
+	if(damage > 8 && (BP.status & ORGAN_SPLINTED))
+		BP.status &= ~ORGAN_SPLINTED
+		playsound('sound/effects/splint_broke.ogg', VOL_EFFECTS_MASTER)
+		visible_message("<span class='bold warning'>You see how the splint falls off from [src]'s [BP.name]!</span>")
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
 	updatehealth()
 
