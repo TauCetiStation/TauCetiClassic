@@ -1,5 +1,6 @@
 /datum/atmosReaction
     var/id = ""
+    var/rarestGas = "" //to reduce amount of react() calls
     var/minTemp = 0 //kelvins
     var/maxTemp = 0 //kelvins
     var/minPressure = 0 //kilo pascals
@@ -63,3 +64,23 @@
 
 /datum/atmosReaction/proc/postReact(datum/gas_mixture/G)
     return //insert your own code here
+
+/datum/atmosReaction/proc/rarestGas()
+    var/rarest = ""
+    var/maxRarity = 0
+    var/list/combined = consumed + catalysts
+    for(var/gas in combined)
+        var/rarity = gas_data.gases_initial_rnd_points[gas]
+        if(!gas_data.gases_knowable[gas] || gas_data.gases_dangerous[gas])
+            if(!rarity)
+                rarity = 200
+            else
+                rarity = rarity * 2
+        if(rarity > maxRarity)
+            maxRarity = rarity
+            rarest = gas
+    return rarest
+
+/datum/atmosReaction/New()
+    ..()
+    rarestGas = rarestGas()
