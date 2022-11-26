@@ -148,6 +148,8 @@
 		damage += gas_data.gases_supermatter_damage_bonus[gas] * removed.gas[gas]
 		power += gas_data.gases_supermatter_power_bonus[gas] * removed.gas[gas]
 
+	power = clamp(power, 0, 999999)
+
 	//We've generated power, now let's transfer it to the collectors for storing/usage
 	transfer_energy()
 
