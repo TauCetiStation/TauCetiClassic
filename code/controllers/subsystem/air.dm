@@ -598,8 +598,6 @@ SUBSYSTEM_DEF(air)
     #endif
 
 /datum/controller/subsystem/air/proc/try_react(datum/gas_mixture/G)
-    if(G.gas.len == 2 && ("phoron" in G.gas) && ("sleeping_agent" in G.gas))
-        G = G
     for(var/gas in G.gas)
         var/list/L = global.atmosReactionListRarest[gas]
         for(var/datum/atmosReaction/R as anything in L)
