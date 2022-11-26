@@ -1,8 +1,8 @@
 /datum/atmosReaction/n2oSynthesis
     id = "n2osynth"
-    minTemp = 373.15
-    maxTemp = 773.15
-    minPressure = 100
+    minTemp = 773.15
+    maxTemp = 1773.15
+    minPressure = 1000
     maxPressure = INFINITY
     producedHeat = -4
     consumed = list("nitrogen" = 2, "oxygen" = 1)
@@ -12,9 +12,9 @@
 
 /datum/atmosReaction/n2oSynthesisPhydr
     id = "n2osynthphydr"
-    minTemp = 273.15
-    maxTemp = 773.15
-    minPressure = 50
+    minTemp = 773.15
+    maxTemp = 1773.15
+    minPressure = 500
     maxPressure = INFINITY
     producedHeat = -4
     consumed = list("nitrogen" = 2, "oxygen" = 1)
@@ -24,7 +24,7 @@
 
 /datum/atmosReaction/n2oDecomposition
     id = "n2odec"
-    minTemp = 773.15
+    minTemp = 1773.15
     maxTemp = INFINITY
     minPressure = -INFINITY
     maxPressure = INFINITY
@@ -38,7 +38,7 @@
     id = "bzsynth"
     minTemp = 373.15
     maxTemp = 573.15
-    minPressure = 100
+    minPressure = 500
     maxPressure = INFINITY
     producedHeat = -2
     consumed = list("sleeping_agent" = 2, "phoron" = 1)

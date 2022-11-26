@@ -5,6 +5,7 @@
 /obj/item/weapon/tank
 	name = "tank"
 	icon = 'icons/obj/tank.dmi'
+	icon_state = "oxygen"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
 	w_class = SIZE_SMALL

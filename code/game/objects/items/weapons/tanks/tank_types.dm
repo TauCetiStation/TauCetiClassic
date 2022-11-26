@@ -161,3 +161,22 @@
 /obj/item/weapon/tank/nitrogen/atom_init()
 	. = ..()
 	air_contents.adjust_gas("nitrogen", (3 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+
+/*
+ * Extended & bluespace tank
+ */
+/obj/item/weapon/tank/extended
+	name = "extended tank"
+	desc = "Gas tank with significantly increased capacity, for all your atmos needs."
+	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
+	icon_state = "extended"
+	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
+	volume = 170
+
+/obj/item/weapon/tank/extended
+	name = "bluespace tank"
+	desc = "Gas tank with significantly increased capacity, for all your atmos needs. Now powered by unstable bluespace tech."
+	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
+	icon_state = "bluespace"
+	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
+	volume = 470

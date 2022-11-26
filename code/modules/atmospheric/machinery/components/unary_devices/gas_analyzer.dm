@@ -1,7 +1,7 @@
-/obj/machinery/atmospherics/components/unary/gas_analyzer
+/obj/machinery/atmospherics/gas_analyzer
 	name = "gas analyzer"
 	icon = 'icons/obj/atmos.dmi'
-	icon_state = "gasanalyzer-off"
+	icon_state = "analyzer"
 	idle_power_usage = 50
 	active_power_usage = 1000
 	density = TRUE
@@ -9,12 +9,13 @@
 	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/atmospherics = SKILL_LEVEL_TRAINED)
 	var/currentGasMoles = 0
 	var/currentGas = "phoron"
-	var/amountPerLevel = 200 //moles
+	var/amountPerLevel = 100 //moles
 	var/temp = ""
 	var/lastResearch = 31
 	var/researchDrained = FALSE
+	var/obj/item/weapon/tank/insertedTank = null
 
-/obj/machinery/atmospherics/components/unary/gas_analyzer/atom_init()
+/obj/machinery/atmospherics/gas_analyzer/atom_init()
 	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/gas_analyzer(null)
@@ -27,24 +28,34 @@
 	RefreshParts()
 	update_icon()
 
-/obj/machinery/atmospherics/components/unary/gas_analyzer/RefreshParts()
+/obj/machinery/atmospherics/gas_analyzer/RefreshParts()
 	var/RM = 0
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		RM += M.rating
 	amountPerLevel = amountPerLevel / (RM / 2)
 
-/obj/machinery/atmospherics/components/unary/gas_analyzer/update_icon()
+/obj/machinery/atmospherics/gas_analyzer/update_icon()
+	cut_overlays()
 	var/on = !(stat & (BROKEN|NOPOWER) || !anchored)
-	icon_state = "gasanalyzer" + (on ? "-on" : "-off")
+	add_overlay(image("icons/obj/atmos.dmi", "analyzer_over-p[on]"))
+	if(panel_open)
+		add_overlay(image("icons/obj/atmos.dmi", "analyzer_over-p"))
+	if(insertedTank)
+		add_overlay(image("icons/obj/atmos.dmi", "analyzer_over-t"))
+	var/indicatorLevel = 0
+	if(on)
+		indicatorLevel = round((currentGasMoles / amountPerLevel) / 0.25)
+	add_overlay(image("icons/obj/atmos.dmi", "analyzer_over-i[indicatorLevel]"))
 
-/obj/machinery/atmospherics/components/unary/gas_analyzer/process_atmos()
-	if(stat & (BROKEN|NOPOWER) || !anchored)
+/obj/machinery/atmospherics/gas_analyzer/process_atmos()
+	if(stat & (BROKEN|NOPOWER) || !anchored || !insertedTank)
 		return
-	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air1 = insertedTank.air_contents
 	for(var/gas in air1.gas)
 		if(gas == currentGas)
 			currentGasMoles += air1.gas[gas]
 			air1.gas[gas] = 0
+			air1.update_values()
 			var/L = round(currentGasMoles / amountPerLevel)
 			if(L && !researchDrained)
 				var/P = researchGas(currentGas, L)
@@ -57,8 +68,8 @@
 			else
 				lastResearch ++
 				set_power_use(active_power_usage)
-			
-/obj/machinery/atmospherics/components/unary/gas_analyzer/proc/researchGas(gas, levels, repetitionCoeff = 0.5, add = TRUE)
+
+/obj/machinery/atmospherics/gas_analyzer/proc/researchGas(gas, levels, repetitionCoeff = 0.5, add = TRUE)
 	var/exType = "Gas research ([gas])"
 	var/points = -1
 	if(!levels)
@@ -87,31 +98,19 @@
 				RD.files.research_points += points
 	return points
 
-/obj/machinery/atmospherics/components/unary/gas_analyzer/proc/reconnect()
-	SetInitDirections()
-	var/obj/machinery/atmospherics/node1 = NODE1
-	if(node1)
-		node1.disconnect(src)
-		NODE1 = null
-	if(PARENT1)
-		nullifyPipenet(PARENT1)
-	if(anchored)
-		atmos_init()
-		node1 = NODE1
-		if(node1)
-			node1.atmos_init()
-			node1.addMember(src)
-		build_network()
-		set_power_use(idle_power_usage)
-		return
-	set_power_use(NO_POWER_USE)
+/obj/machinery/atmospherics/gas_analyzer/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/tank) && !insertedTank)
+		if(user.drop_from_inventory(W, src))
+			var/obj/item/weapon/tank/T = W
+			insertedTank = T
+			update_icon()
 
-/obj/machinery/atmospherics/components/unary/gas_analyzer/attackby(obj/item/weapon/W, mob/user)
 	if(iswrench(W))
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.</span>")
+		if(!anchored)
+			set_power_use(NO_POWER_USE)
 		update_icon()
-		reconnect()
 	else
 		..()
 
@@ -122,7 +121,7 @@
 	if(default_deconstruction_crowbar(W))
 		return
 
-/obj/machinery/atmospherics/components/unary/gas_analyzer/interact(mob/living/user)
+/obj/machinery/atmospherics/gas_analyzer/interact(mob/living/user)
 	..()
 	if(stat & (BROKEN|NOPOWER) || !anchored)
 		return
@@ -131,13 +130,13 @@
 	popup.set_content(html)
 	popup.open()
 
-/obj/machinery/atmospherics/components/unary/gas_analyzer/proc/checkRdConsole()
+/obj/machinery/atmospherics/gas_analyzer/proc/checkRdConsole()
 	for(var/obj/machinery/computer/rdconsole/RD in RDcomputer_list)
 		if(RD.id == 1)
 			return TRUE
 	return FALSE
 
-/obj/machinery/atmospherics/components/unary/gas_analyzer/proc/generateInteractionPage()
+/obj/machinery/atmospherics/gas_analyzer/proc/generateInteractionPage()
 	var/html = ""
 	if(temp)
 		html = temp
@@ -146,39 +145,35 @@
 			html += "<span class='red'>Рабочих консолей РнД не обнаружено - очки не будут генерироватся.</span><br>"
 		if(researchDrained)
 			html += "<span class='red'>Газ полностью изучен и более не представляет научной ценности.</span><br>"
+		html += "Давление в баллоне: [insertedTank ? insertedTank.air_contents.return_pressure() : "Н/Д"]<br>"
+		html += "Молей в баллоне: [insertedTank ? insertedTank.air_contents.total_moles : "Н/Д"]<br>"
 		html += "Текущий изучаемый газ: [gas_data.name[currentGas]]<br>"
 		html += "Необходимый объём: [currentGasMoles]/[amountPerLevel]<br>"
 		html += "Ожидаемые очки за итерацию: [researchGas(currentGas, 1, add = FALSE)]<br>"
 		html += "<A align='right' href='?src=\ref[src];changeg=1'>Сменить изучаемый газ</A><br>"
+		html += "<A align='right' href='?src=\ref[src];changet=1'>Извлечь баллон</A><br>"
 		html += "<A align='right' href='?src=\ref[src];refresh=1'>Обновить</A><br>"
 	return html
 
-/obj/machinery/atmospherics/components/unary/gas_analyzer/Topic(href, href_list)
+/obj/machinery/atmospherics/gas_analyzer/Topic(href, href_list)
 	if(href_list["changeg"])
 		temp += "Внимание: при выборе газа другого типа текущее количество газа будет обнулено.<br>"
 		for(var/gas in gas_data.gases)
 			temp += "[gas_data.name[gas]]; <A href='?src=\ref[src];changegs=\ref[gas]'>Выбрать</A><br>"
 	if(href_list["changegs"])
 		var/N = locate(href_list["changegs"])
-		if(!(N == currentGas))
+		if(N != currentGas)
 			currentGasMoles = 0
-			var/datum/gas_mixture/C = AIR1
-			C.gas = list()
-			AIR1 = C
 			researchDrained = FALSE
 			currentGas = locate(href_list["changegs"])
 		temp = ""
+		update_icon()
+	if(href_list["changet"])
+		if(insertedTank)
+			insertedTank.forceMove(get_turf(src))
+			insertedTank = null
+			update_icon()
 	interact(usr)
 
-/obj/machinery/atmospherics/components/unary/gas_analyzer/verb/rotate()
-	set category = "Object"
-	set name = "Rotate Analyzer"
-	set src in view(1)
-
-	if (usr.incapacitated() || anchored)
-		return
-
-	set_dir(turn(src.dir, 90))
-
-/obj/machinery/atmospherics/components/unary/gas_analyzer/can_be_node(obj/machinery/atmospherics/target)
-	return anchored && ..() && (reverse_dir[initialize_directions] & target.initialize_directions)
+/obj/machinery/atmospherics/gas_analyzer/can_be_node(obj/machinery/atmospherics/target)
+	return FALSE

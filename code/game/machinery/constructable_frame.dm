@@ -390,7 +390,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/gas_analyzer
 	name = "circuit board (stationary gas analyzer)"
-	build_path = /obj/machinery/atmospherics/components/unary/gas_analyzer
+	build_path = /obj/machinery/atmospherics/gas_analyzer
 	board_type = "machine"
 	origin_tech = "engineering=1;magnets=1;programming=2"
 	req_components = list(
