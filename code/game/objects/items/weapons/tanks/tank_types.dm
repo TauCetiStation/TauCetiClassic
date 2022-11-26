@@ -173,7 +173,7 @@
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 	volume = 170
 
-/obj/item/weapon/tank/extended
+/obj/item/weapon/tank/bluespace
 	name = "bluespace tank"
 	desc = "Gas tank with significantly increased capacity, for all your atmos needs. Now powered by unstable bluespace tech."
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')

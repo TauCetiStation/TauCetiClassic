@@ -67,7 +67,7 @@
 
 /datum/atmosReaction/proc/rarestGas()
     var/rarest = ""
-    var/maxRarity = 0
+    var/maxRarity = -1
     var/list/combined = consumed + catalysts
     for(var/gas in combined)
         var/rarity = gas_data.gases_initial_rnd_points[gas]

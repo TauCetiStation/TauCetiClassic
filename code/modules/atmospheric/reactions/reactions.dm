@@ -172,8 +172,6 @@
     created = list("mstab" = 3)
 
 /datum/atmosReaction/mstabSynthesis/New()
-    ..()
-
     minTemp = round(rand(0, 100) / 100) * 100
     maxTemp = round(rand(100, 1000) / 100) * 100
     minPressure = round(rand(0, 100) / 100) * 100
@@ -195,6 +193,8 @@
         if(!used.Find(N))
             catalysts[N] = 5
             break
+
+    ..() //parent is called after filling consumed gases and catalysts, to generate rarest gas, otherwise it will be null
 
 /datum/atmosReaction/solidPhydrSynthesis
     id = "sphydrsynth"
