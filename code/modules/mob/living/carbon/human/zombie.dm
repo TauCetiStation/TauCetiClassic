@@ -114,11 +114,6 @@
 
 			H.infect_zombie_virus(target_zone)
 
-/proc/iszombie(mob/living/carbon/human/H)
-	if(istype(H.species, /datum/species/zombie))
-		return TRUE
-	return FALSE
-
 /datum/species/zombie/on_life(mob/living/carbon/human/H)
 	if(!H.life_tick % 3)
 		return
@@ -168,6 +163,15 @@
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 	if(!H.organs_by_name[O_BRAIN] || !BP || BP.is_stump)
 		return
+	//zombie have NO_PAIN and can't adjust/sets halloss
+	H.setHalLoss(0)
+	//remove all blind-blur effects
+	H.disabilities &= ~NEARSIGHTED
+	H.sdisabilities &= ~BLIND
+	H.blinded = FALSE
+	H.setBlurriness(0)
+	H.handle_vision(TRUE)
+
 	if(!iszombie(H))
 		H.zombify()
 
@@ -177,7 +181,6 @@
 
 	H.setCloneLoss(0)
 	H.setBrainLoss(0)
-	H.setHalLoss(0)
 	H.SetParalysis(0)
 	H.SetStunned(0)
 	H.SetWeakened(0)
@@ -197,19 +200,11 @@
 	H.update_canmove()
 	H.regenerate_icons()
 	H.med_hud_set_health()
-	H.handle_vision()
-	H.yank_out_object()
+	H.clear_alert("embeddedobject")
 
 	playsound(H, pick(list('sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')), VOL_EFFECTS_MASTER)
 	to_chat(H, "<span class='danger'>Somehow you wake up and your hunger is still outrageous!</span>")
 	H.visible_message("<span class='danger'>[H] suddenly wakes up!</span>")
-
-/mob/living/carbon/human/proc/check_zombie_species()
-	var/my_species = get_species()
-	for(var/zombie_name in global.all_zombie_species_names)
-		if(my_species == zombie_name)
-			return TRUE
-	return FALSE
 
 /mob/living/carbon/proc/is_infected_with_zombie_virus()
 	for(var/ID in virus2)
@@ -219,37 +214,20 @@
 				return TRUE
 	return FALSE
 
-/mob/living/carbon/human/yank_out_object()
-	if(!species.flags[NO_EMBED])
-		return ..()
-	clear_alert("embeddedobject")
-	var/list/valid_objects = get_visible_implants()
-	if(!valid_objects.len)
-		return
-	for(var/obj/item/embedded_item in valid_objects)
-		embedded -= embedded_item
-		embedded_item.forceMove(loc)
-
 /mob/living/carbon/human/handle_vision()
-	if(check_zombie_species())
-		clear_fullscreen("blind", 0)
-		clear_alert("blind")
-	else
-		return ..()
+	if(iszombie(src))
+		return
+	return ..()
 
 /mob/living/carbon/human/update_eye_blur()
-	if(check_zombie_species())
-		if(client && eye_blurry)
-			var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-			if(game_plane_master_controller)
-				game_plane_master_controller.remove_filter("eye_blur_angular")
-				game_plane_master_controller.remove_filter("eye_blur_gauss")
-	else
-		return ..()
+	if(iszombie(src))
+		return
+	return ..()
 
 /mob/living/carbon/human/embed(obj/item/I)
-	if(!species.flags[NO_EMBED])
-		return ..()
+	if(species.flags[NO_EMBED])
+		return
+	return ..()
 
 /mob/living/carbon/human/proc/infect_zombie_virus(target_zone = null, forced = FALSE, fast = FALSE)
 	if(!forced && !prob(get_bite_infection_chance(src, target_zone)))
