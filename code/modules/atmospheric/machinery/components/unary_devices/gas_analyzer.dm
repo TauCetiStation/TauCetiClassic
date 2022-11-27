@@ -164,7 +164,7 @@
 		temp += "Внимание: при выборе газа другого типа текущее количество газа будет обнулено.<br>"
 		for(var/gas in gas_data.gases)
 			temp += "[gas_data.name[gas]]; <A href='?src=\ref[src];changegs=\ref[gas]'>Выбрать</A><br>"
-	if(href_list["change_gas_select"])
+	else if(href_list["change_gas_select"])
 		var/N = locate(href_list["change_gas_select"])
 		if(N != currentGas)
 			currentGasMoles = 0
@@ -172,7 +172,7 @@
 			currentGas = locate(href_list["change_gas_select"])
 		temp = ""
 		update_icon()
-	if(href_list["eject_tank"])
+	else if(href_list["eject_tank"])
 		if(insertedTank)
 			insertedTank.forceMove(get_turf(src))
 			insertedTank = null
