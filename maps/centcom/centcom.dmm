@@ -2075,24 +2075,6 @@
 	},
 /turf/environment/space,
 /area/shuttle/specops/centcom)
-"aft" = (
-/obj/structure/object_wall/standart{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/shuttle/administration/centcom)
-"afu" = (
-/obj/structure/object_wall/standart{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/shuttle/administration/centcom)
 "afv" = (
 /obj/structure/stool/bed/chair/schair/wagon,
 /turf/simulated/shuttle/floor/evac/eng2,
@@ -2185,22 +2167,12 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
-"afG" = (
+"afH" = (
 /obj/structure/object_wall/standart{
 	dir = 4;
 	icon_state = "diagonalWall3"
 	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/shuttle/administration/centcom)
-"afH" = (
-/obj/structure/object_wall/standart{
-	icon_state = "diagonalWall3"
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
+/turf/environment/space,
 /area/shuttle/administration/centcom)
 "afI" = (
 /obj/structure/table/reinforced,
@@ -13613,34 +13585,19 @@
 	},
 /area/custom/wizard_station)
 "aEW" = (
-/turf/unsimulated/floor{
-	name = "plating"
+/obj/structure/object_wall/standart{
+	dir = 8;
+	icon_state = "diagonalWall3"
 	},
-/area/centcom)
-"aEX" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom)
+/turf/environment/space,
+/area/shuttle/administration/centcom)
 "aEY" = (
-/obj/machinery/light{
-	dir = 8
+/obj/structure/object_wall/standart{
+	dir = 1;
+	icon_state = "diagonalWall3"
 	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom)
-"aEZ" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/centcom)
+/turf/environment/space,
+/area/shuttle/administration/centcom)
 "aFa" = (
 /obj/item/device/radio/intercom{
 	desc = "Talk through this. Evilly";
@@ -26395,12 +26352,6 @@
 	icon_state = "vault"
 	},
 /area/centcom/specops)
-"gXb" = (
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "warnplate"
-	},
-/area/centcom)
 "gYb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -26821,11 +26772,11 @@
 	},
 /area/centcom/evac)
 "hTb" = (
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "warnplate"
+/obj/structure/object_wall/standart{
+	icon_state = "diagonalWall3"
 	},
-/area/centcom)
+/turf/environment/space,
+/area/shuttle/administration/centcom)
 "hUb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall_f6"
@@ -66284,10 +66235,10 @@ aBp
 aBp
 aBp
 aBp
-aAm
-aAm
-aAm
-aAm
+aaM
+aaM
+aaM
+aaM
 aJu
 aJu
 aJu
@@ -66532,23 +66483,23 @@ aBp
 aCV
 aCV
 aBp
-gXb
-gXb
-gXb
-gXb
-gXb
-gXb
-gXb
-gXb
-gXb
-gXb
-gXb
-gXb
-gXb
-gXb
-gXb
-gXb
-gXb
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aJu
 iyb
 iyb
@@ -66789,23 +66740,23 @@ aBp
 aCV
 aCV
 aBp
+aaM
+aaM
+aaM
 aEW
-aEW
-aEW
-aEW
-aft
 aGR
 aGR
-afH
+hTb
+aaM
 aEW
-aft
 aGR
 aGR
-afH
-aEW
-aEW
-aEW
-aEW
+hTb
+aaM
+aaM
+aaM
+aaM
+aaM
 aJu
 aKX
 aKX
@@ -67046,10 +66997,9 @@ aaR
 aCV
 aCV
 aBp
+aaM
+aaM
 aEW
-aEW
-aEW
-aft
 hvb
 ayS
 ayS
@@ -67059,10 +67009,11 @@ hvb
 ayS
 ayS
 hvb
-afH
-aEW
-aEW
-aEW
+hTb
+aaM
+aaM
+aaM
+aaM
 aJu
 aJu
 aLj
@@ -67303,9 +67254,8 @@ aaR
 aDQ
 aCV
 aBp
+aaM
 aEW
-aEW
-aft
 hvb
 hvb
 aGT
@@ -67317,9 +67267,10 @@ aIG
 aIV
 hvb
 hvb
-afH
-aEW
-aEW
+hTb
+aaM
+aaM
+aaM
 aJu
 aJP
 aJP
@@ -67561,7 +67512,6 @@ aCV
 aCV
 aBp
 aEW
-aft
 aFD
 aFX
 aGA
@@ -67575,8 +67525,9 @@ aIG
 aJh
 aIG
 aFj
-afH
-aEW
+hTb
+aaM
+aaM
 aJu
 aKY
 aJP
@@ -67817,7 +67768,6 @@ aBp
 aCV
 aCV
 aBp
-aEW
 hvb
 aFE
 aFX
@@ -67833,7 +67783,8 @@ aJi
 aIG
 aJU
 hvb
-aEW
+aaM
+aaM
 aJu
 aJP
 aJP
@@ -68074,7 +68025,6 @@ aBp
 aCV
 aCV
 aBp
-aEW
 hvb
 aFF
 aFX
@@ -68090,7 +68040,8 @@ aJi
 aIG
 aJV
 hvb
-aEW
+aaM
+aaM
 aJu
 aJP
 aJP
@@ -68331,7 +68282,6 @@ aaR
 aCV
 aCV
 aBp
-aEW
 hvb
 aFG
 aFX
@@ -68347,7 +68297,8 @@ aJj
 aIG
 aJW
 hvb
-aEW
+aaM
+aaM
 aJu
 aJP
 aJP
@@ -68588,7 +68539,6 @@ aaR
 aDQ
 aCV
 gub
-aEX
 hvb
 hvb
 hvb
@@ -68604,7 +68554,8 @@ hvb
 hvb
 hvb
 hvb
-aEW
+aaM
+aaM
 aJu
 aKY
 aJP
@@ -68845,7 +68796,6 @@ aaR
 aCV
 aCV
 bxb
-aEY
 aFk
 aFH
 aFY
@@ -68861,7 +68811,8 @@ aFZ
 aFX
 aFX
 hvb
-aEW
+aaM
+aaM
 aJu
 aJP
 aJP
@@ -69102,7 +69053,6 @@ aBp
 aCV
 aCV
 bxb
-aEW
 aFk
 aFI
 aFY
@@ -69118,7 +69068,8 @@ aGa
 aGa
 aFX
 hvb
-aEW
+aaM
+aaM
 aJu
 aJP
 aJP
@@ -69359,7 +69310,6 @@ aBp
 aCV
 aCV
 gub
-aEZ
 hvb
 hvb
 hvb
@@ -69375,7 +69325,8 @@ aGa
 aGa
 aFX
 hvb
-aEW
+aaM
+aaM
 aJu
 aJP
 aJP
@@ -69616,7 +69567,6 @@ aBp
 aBp
 aBp
 aBp
-aEW
 hvb
 aFJ
 aFZ
@@ -69632,7 +69582,8 @@ aGa
 aGa
 aFX
 hvb
-aEW
+aaM
+aaM
 aJu
 aJP
 aJP
@@ -69872,8 +69823,7 @@ aaM
 aaM
 aaM
 aaM
-aEz
-aEW
+aaM
 hvb
 aFK
 aFX
@@ -69889,7 +69839,8 @@ aFX
 aHS
 aFX
 hvb
-aEW
+aaM
+aaM
 aJu
 aKY
 aJP
@@ -70129,24 +70080,24 @@ aaM
 aaM
 aaM
 aaM
-aEz
-aEW
+aaM
 hvb
 hvb
 aGa
 aFX
 aGX
 hvb
-aEW
-aEW
-aEW
+aaM
+aaM
+aaM
 hvb
 hvb
 aGE
 hvb
 hvb
 hvb
-aEW
+aaM
+aaM
 aJu
 ixb
 ixb
@@ -70386,24 +70337,24 @@ aaM
 aaM
 aaM
 aaM
-aEz
-aEW
-afu
+aaM
+aEY
 hvb
 aGb
 aFX
 aGY
 hvb
-aEW
-aEW
-aEW
+aaM
+aaM
+aaM
 hvb
 aFX
 aFX
 aGy
 hvb
-afG
-aEW
+afH
+aaM
+aaM
 aJu
 aJu
 aJu
@@ -70643,25 +70594,25 @@ aaM
 aaM
 aaM
 aaM
-aEz
-aEW
-aEW
+aaM
+aaM
 hvb
 hvb
 aGF
 aGZ
 hvb
-aEW
-aEW
-aEW
+aaM
+aaM
+aaM
 hvb
 aIW
 aJk
 hvb
 hvb
-aEW
-aEW
-aJu
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -70900,25 +70851,25 @@ aaM
 aaM
 aaM
 aaM
-aEz
-aEW
-aEW
-afu
+aaM
+aaM
+aEY
 hvb
 aGG
 aHa
 hvb
-aEW
-aEW
-aEW
+aaM
+aaM
+aaM
 hvb
 aIX
 aJl
 hvb
-afG
-aEW
-aEW
-aJu
+afH
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -71157,25 +71108,25 @@ aaM
 aaM
 aaM
 aaM
-aEz
-aEW
-aEW
-aEW
-afu
+aaM
+aaM
+aaM
+aEY
 hvb
 hvb
-afG
-aEW
-aEW
-aEW
-afu
+afH
+aaM
+aaM
+aaM
+aEY
 hvb
 hvb
-afG
-aEW
-aEW
-aEW
-aJu
+afH
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -71414,25 +71365,25 @@ aaM
 aaM
 aaM
 aaM
-aEz
-aEW
-aEW
-aEW
-aEW
-aEW
-aEW
-aEW
-hTb
-hTb
-hTb
-aEW
-aEW
-aEW
-aEW
-aEW
-aEW
-aEW
-aJu
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
@@ -71671,25 +71622,25 @@ aaM
 aaM
 aaM
 aaM
-aEz
-aEz
-aEz
-aEz
-aEz
-aEz
-aEz
-aEz
-aEz
-aEz
-aEz
-aEz
-aEz
-aEz
-aEz
-aEz
-aEz
-aEz
-aJu
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 aaM
 aaM
 aaM
