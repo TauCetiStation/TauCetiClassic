@@ -1,6 +1,7 @@
 var/global/list/online_shop_lots = list()
+var/global/list/online_shop_lots_latest[3]
 var/global/online_shop_number = 0
-var/global/list/shop_categories = list("Еда", "Одежда", "Устройства", "Инструменты", "Ресурсы", "Наборы", "Разное")
+var/global/list/shop_categories = list("Еда" = 0, "Одежда" = 0, "Устройства" = 0, "Инструменты" = 0, "Ресурсы" = 0, "Наборы" = 0, "Разное" = 0)
 
 var/global/list/orders_and_offers = list()
 var/global/orders_and_offers_number = 0
@@ -28,8 +29,16 @@ var/global/orders_and_offers_number = 0
 	src.account = account
 	src.item_icon = icon
 
+	global.online_shop_lots_latest.Swap(2, 3)
+	global.online_shop_lots_latest.Swap(1, 2)
+	global.online_shop_lots_latest[1] = src
+
 /datum/shop_lot/Destroy()
 	global.online_shop_lots -= "[number]"
+	for(var/i=1, i<=3, i++)
+		if(global.online_shop_lots_latest[i] == src)
+			global.online_shop_lots_latest[i] = null
+			break
 	return ..()
 
 /datum/shop_lot/proc/to_list(account = "Unknown", postpayment = 0)

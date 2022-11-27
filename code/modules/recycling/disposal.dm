@@ -1068,31 +1068,33 @@
 		Item = P
 	else if (istype(Item, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/C = Item
-		if (!C.opened)
-			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
-			P.icon_state = "deliverycrate"
-			var/image/Img = image('icons/obj/storage.dmi', "deliverycrate-shop")
-			Img.appearance_flags = RESET_COLOR
-			P.add_overlay(Img)
-			P.modify_max_integrity(75)
-			P.atom_fix()
-			P.damage_deflection = 25
-			C.loc = P
-			Item = P
+		if(C.opened)
+			C.close()
+		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
+		P.icon_state = "deliverycrate"
+		var/image/Img = image('icons/obj/storage.dmi', "deliverycrate-shop")
+		Img.appearance_flags = RESET_COLOR
+		P.add_overlay(Img)
+		P.modify_max_integrity(75)
+		P.atom_fix()
+		P.damage_deflection = 25
+		C.loc = P
+		Item = P
 	else if (istype(Item, /obj/structure/closet))
 		var/obj/structure/closet/C = Item
-		if (!C.opened)
-			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
-			P.icon_state = "deliverycloset"
-			var/image/Img = image('icons/obj/storage.dmi', "deliverycloset-shop")
-			Img.appearance_flags = RESET_COLOR
-			P.add_overlay(Img)
-			P.modify_max_integrity(75)
-			P.atom_fix()
-			P.damage_deflection = 25
-			C.welded = 1
-			C.loc = P
-			Item = P
+		if(C.opened)
+			C.close()
+		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
+		P.icon_state = "deliverycloset"
+		var/image/Img = image('icons/obj/storage.dmi', "deliverycloset-shop")
+		Img.appearance_flags = RESET_COLOR
+		P.add_overlay(Img)
+		P.modify_max_integrity(75)
+		P.atom_fix()
+		P.damage_deflection = 25
+		C.welded = 1
+		C.loc = P
+		Item = P
 	else if (istype(Item, /obj/structure))
 		var/obj/structure/S = Item
 		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(S.loc))
@@ -1109,6 +1111,8 @@
 		return
 
 	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
+
+	global.shop_categories[lot_category]++
 
 	Item.name = "Посылка номер: [global.online_shop_number]"
 	Item.desc = "Наименование: [lot_name], Описание: [lot_desc], Цена: [lot_price]"
