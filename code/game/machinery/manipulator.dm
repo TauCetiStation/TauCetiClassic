@@ -356,11 +356,11 @@
 	set src in oview(1)
 
 	if(state != MANIPULATOR_STATE_IDLE)
-		to_chat(usr, "<span class='warning'>You cannot rotate [src] while it's working.")
+		to_chat(usr, "<span class='warning'>You cannot rotate [src] while it's working.</span>")
 		return
 
 	if(busy_moving)
-		to_chat(usr, "<span class='warning'>You cannot rotate [src] while it's working.")
+		to_chat(usr, "<span class='warning'>You cannot rotate [src] while it's working.</span>")
 		return
 
 	playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
@@ -374,11 +374,11 @@
 	set src in oview(1)
 
 	if(state != MANIPULATOR_STATE_IDLE)
-		to_chat(usr, "<span class='warning'>You cannot mirror [src] while it's working.")
+		to_chat(usr, "<span class='warning'>You cannot mirror [src] while it's working.</span>")
 		return
 
 	if(busy_moving)
-		to_chat(usr, "<span class='warning'>You cannot mirror [src] while it's working.")
+		to_chat(usr, "<span class='warning'>You cannot mirror [src] while it's working.</span>")
 		return
 
 	playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
