@@ -124,6 +124,7 @@
 
 /obj/item/device/flash/rev_flash
 	var/headrev_only = TRUE
+	var/mob/living/carbon/human/convert_target = null
 
 /obj/item/device/flash/rev_flash/AdjustFlashEffect(mob/living/M)
 	M.AdjustWeakened(rand(6, 10))
@@ -139,6 +140,15 @@
 		to_chat(user, "<span class='warning'>The [name] is broken</span>")
 		return
 	flash_recharge()
+	if(flash_convert(user))
+		//red color flash for attract attention
+		flash_lighting_fx(_color = LIGHT_COLOR_FIREPLACE)
+		playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
+		flick("flash2", src)
+		//give them time to think about the situation
+		convert_target.AdjustSleeping(2)
+
+/obj/item/device/flash/rev_flash/proc/flash_convert(mob/living/carbon/user)
 	var/datum/role/user_role = null
 	//if we don't need converting by other revolutionaries/antags
 	if(headrev_only)
@@ -153,8 +163,8 @@
 				break
 	if(!user_role)
 		to_chat(user, "<span class='warning'>*click* *click*</span>")
-		return
-	//select target [choice] for convert
+		return FALSE
+	//select target [convert_target] for convert
 	var/list/victim_list = list()
 	for(var/mob/living/carbon/human/H in view(1, user))
 		if(H == user)
@@ -162,44 +172,39 @@
 		var/image/I = image(H.icon, H.icon_state)
 		I.appearance = H
 		victim_list[H] = I
-	var/mob/living/carbon/human/choice = show_radial_menu(user, src, victim_list, tooltips = TRUE)
-	if(!choice)
-		return
+	convert_target = show_radial_menu(user, src, victim_list, tooltips = TRUE)
+	if(!convert_target)
+		return FALSE
 	//check target implants, mind
-	if(choice.ismindshielded())
-		to_chat(user, "<span class='warning'>[choice] mind seems to be protected!</span>")
-		return
-	if(choice.isloyal())
-		to_chat(user, "<span class='warning'>[choice] mind is already washed by Nanotrasen!</span>")
-		return
-	if(!choice.client || !choice.mind)
+	if(convert_target.ismindshielded())
+		to_chat(user, "<span class='warning'>[convert_target] mind seems to be protected!</span>")
+		return FALSE
+	if(convert_target.isloyal())
+		to_chat(user, "<span class='warning'>[convert_target] mind is already washed by Nanotrasen!</span>")
+		return FALSE
+	if(!convert_target.client || !convert_target.mind)
 		to_chat(user, "<span class='warning'>The target must be conscious and have mind!</span>")
-		return
+		return FALSE
 	//if you break the distance, there should be no effect
-	if(get_dist(user, choice) > 1)
-		to_chat(user, "<span class='warning'>You need to be closer to [choice]!</span>")
-		return
+	if(get_dist(user, convert_target) > 1)
+		to_chat(user, "<span class='warning'>You need to be closer to [convert_target]!</span>")
+		return FALSE
 	/*	Concept requires: target must be incapacitating.
 		There is no meta on revolution and that device.
 		We dont need lol-convert					*/
 	var/have_incapacitating = FALSE
-	for(var/effect in choice.status_effects)
+	for(var/effect in convert_target.status_effects)
 		var/datum/status_effect/incapacitating/S = effect
 		if(S)
 			have_incapacitating = TRUE
 	if(!have_incapacitating)
-		to_chat(user, "<span class='warning'>Make [choice] helpless against you!</span>")
-		return
+		to_chat(user, "<span class='warning'>Make [convert_target] helpless against you!</span>")
+		return FALSE
 	//find all user's factions and add target as recruit.
 	var/list/factions = find_factions_by_member(user_role, user.mind)
 	for(var/datum/faction/faction in factions)
-		add_faction_member(faction, choice)
-	//red color flash for attract attention
-	flash_lighting_fx(_color = LIGHT_COLOR_FIREPLACE)
-	playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
-	flick("flash2", src)
-	//give them time to think about the situation
-	choice.AdjustSleeping(2)
+		add_faction_member(faction, convert_target)
+	return TRUE
 
 /obj/item/device/flash/rev_flash/emp_act(severity)
 	return
