@@ -411,7 +411,7 @@
 		wires.interact(user)
 		return
 
-	else if(istype(I, /obj/item/device/assembly/signaler))
+	else if(issignaler(I))
 		wires.interact(user)
 		return
 
