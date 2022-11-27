@@ -21,12 +21,12 @@
 	stat.power_type = spell_type
 	stat.power_name = name
 	stat.cost = cost
-	var/datum/role/wizard/wiz_role = book.getUsersWizardRole(user)
+	var/datum/role/wizard/wiz_role = user.mind.GetRole(WIZARD)
 	if(wiz_role)
 		wiz_role.list_of_purchases += stat
 
 /datum/spellbook_entry/proc/EraseEntry(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
-	var/datum/role/wizard/wiz_role = book.getUsersWizardRole(user)
+	var/datum/role/wizard/wiz_role = user.mind.GetRole(WIZARD)
 	if(wiz_role)
 		for(var/datum/stat/book_purchase/stat in wiz_role.list_of_purchases)
 			if(stat.power_type == spell_type)
@@ -281,12 +281,12 @@
 	stat.power_type = item_path
 	stat.power_name = name
 	stat.cost = cost
-	var/datum/role/wizard/wiz_role = book.getUsersWizardRole(user)
+	var/datum/role/wizard/wiz_role = user.mind.GetRole(WIZARD)
 	if(wiz_role)
 		wiz_role.list_of_purchases += stat
 
 /datum/spellbook_entry/item/EraseEntry(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
-	var/datum/role/wizard/wiz_role = book.getUsersWizardRole(user)
+	var/datum/role/wizard/wiz_role = user.mind.GetRole(WIZARD)
 	if(wiz_role)
 		for(var/datum/stat/book_purchase/stat in wiz_role.list_of_purchases)
 			if(stat.power_type == item_path)
@@ -489,12 +489,6 @@
 		else
 			qdel(E)
 	tab = categories[1]
-
-/obj/item/weapon/spellbook/proc/getUsersWizardRole(mob/user)
-	var/datum/mind/user_mind = user.mind
-	var/datum/role/wizard/wiz_role = user_mind.GetRole(WIZARD)
-	if(wiz_role)
-		return wiz_role
 
 /obj/item/weapon/spellbook/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/contract))
