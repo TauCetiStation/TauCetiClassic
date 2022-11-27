@@ -1,5 +1,5 @@
-var/const/MANIPULATOR_WIRE_ACTIVATE = 1
-var/const/MANIPULATOR_WIRE_AFTER_ACTIVATE = 2
+var/global/const/MANIPULATOR_WIRE_ACTIVATE = 1
+var/global/const/MANIPULATOR_WIRE_AFTER_ACTIVATE = 2
 
 /datum/wires/manipulator
 	holder_type = /obj/machinery/manipulator
