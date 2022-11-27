@@ -49,13 +49,22 @@ other types of metals and chemistry for reagents).
 	category = list("Computer")
 
 /datum/design/telepad_concole
-	name = " Circuit Design (Telescience Console) "
+	name = " Circuit Design (Telescience Console)"
 	desc = "Allows for the construction of circuit boards used to build telescience computers."
 	id = "telepad_concole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/telesci_console
 	category = list("Computer")
+
+/datum/design/manipulator
+	name = " Circuit Design (Manipulator)"
+	desc = "Allows for the construction of circuit boards used to build manipulators."
+	id = "manipulator"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/manipulator
+	category = list("Machine")
 
 /datum/design/aicore
 	name = "Circuit Design (AI Core)"

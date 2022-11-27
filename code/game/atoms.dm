@@ -340,6 +340,8 @@
 
 //called to set the atom's dir and used to add behaviour to dir-changes
 /atom/proc/set_dir(new_dir)
+	SHOULD_CALL_PARENT(TRUE)
+
 	. = new_dir != dir
 	dir = new_dir
 	if(.)

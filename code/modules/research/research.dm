@@ -1327,7 +1327,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 0
 
-	unlocks_designs = list("mechrecharger", "cyborgrecharger", "cyborg_analyzer", "mmi", "borg_upgrade_hud")
+	unlocks_designs = list("mechrecharger", "cyborgrecharger", "cyborg_analyzer", "mmi", "borg_upgrade_hud", "manipulator")
 
 /datum/technology/mech_ripley
 	name = "Ripley"

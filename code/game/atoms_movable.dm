@@ -441,6 +441,8 @@
 
 /client/var/list/image/outlined_item = list()
 /atom/movable/proc/apply_outline(color)
+	if(!usr || !usr.client)
+		return
 	if(anchored || !usr.client.prefs.outline_enabled)
 		return
 	if(!color)
@@ -461,6 +463,8 @@
 
 
 /atom/movable/proc/remove_outline()
+	if(!usr || !usr.client)
+		return
 	usr.client.images -= usr.client.outlined_item[src]
 	usr.client.outlined_item -= src
 

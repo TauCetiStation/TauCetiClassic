@@ -60,13 +60,13 @@
 	if(notransform)
 		return
 
-	if(client.click_intercept)
+	if(client && client.click_intercept)
 		client.click_intercept.InterceptClickOn(src, params, A)
 		return
 
 	var/list/modifiers = params2list(params)
 
-	if(client.cob && client.cob.in_building_mode)
+	if(client && client.cob && client.cob.in_building_mode)
 		cob_click(client, modifiers)
 		return
 
@@ -310,7 +310,8 @@
 			user.listed_turf = null
 		else
 			user.listed_turf = T
-			user.client.statpanel = T.name
+			if(user.client)
+				user.client.statpanel = T.name
 
 /mob/living/AltClick(mob/living/user)
 	/*
@@ -372,11 +373,11 @@
 	if(!dx && !dy) return
 
 	if(abs(dx) < abs(dy))
-		if(dy > 0)	usr.set_dir(NORTH)
-		else		usr.set_dir(SOUTH)
+		if(dy > 0)	set_dir(NORTH)
+		else		set_dir(SOUTH)
 	else
-		if(dx > 0)	usr.set_dir(EAST)
-		else		usr.set_dir(WEST)
+		if(dx > 0)	set_dir(EAST)
+		else		set_dir(WEST)
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 // This proc is currently only used in multi_carry.dm (/datum/component/multi_carry)

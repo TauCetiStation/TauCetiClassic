@@ -116,7 +116,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/MouseDrop(atom/over)
 	if(!usr || !over) return
-	if (isobserver(usr) && usr.client.holder && isliving(over))
+	if (isobserver(usr) && usr.client && usr.client.holder && isliving(over))
 		if (usr.client.holder.cmd_ghost_drag(src,over))
 			return
 

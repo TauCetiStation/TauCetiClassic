@@ -1393,7 +1393,7 @@
 
 	for(var/x in list(H.w_uniform, H.head, H.wear_suit, H.shoes, H.wear_mask, H.gloves))
 		if(x)
-			var/list/golem_items = list(
+			var/static/list/golem_items = list(
 				/obj/item/clothing/under/golem,
 				/obj/item/clothing/head/helmet/space/golem,
 				/obj/item/clothing/suit/space/golem,
@@ -1730,3 +1730,93 @@
 		O.adjust_pumped(rand(0, 60))
 		if(prob(80) && (part_species.name in list(UNATHI, SKRELL, TAJARAN)))
 			O.original_color = pick(list(COLOR_GREEN, COLOR_LIGHT_PINK, COLOR_ROSE_PINK, COLOR_VIOLET, COLOR_DEEP_SKY_BLUE, COLOR_RED, COLOR_LIME, COLOR_PINK))
+
+
+/datum/species/bluespace
+	name = BLUESPACE
+
+	icobase = 'icons/mob/human_races/r_golem.dmi'
+	deform = 'icons/mob/human_races/r_golem.dmi'
+	dietflags = 0
+
+	brute_mod = 0.0
+	burn_mod = 0.0
+	oxy_mod = 0.0
+	tox_mod = 0.0
+	clone_mod = 0.0
+	brain_mod = 0.0
+
+	blood_datum_path = /datum/dirt_cover/oil
+	flesh_color = "#575757"
+
+	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
+
+	flags = list(
+		NO_BLOOD = TRUE,
+		NO_DNA = TRUE,
+		NO_BREATHE = TRUE,
+		NO_SCAN = TRUE,
+		NO_PAIN = TRUE,
+		NO_EMBED = TRUE,
+		RAD_IMMUNE = TRUE,
+		VIRUS_IMMUNE = TRUE,
+		BIOHAZZARD_IMMUNE = TRUE,
+		NO_VOMIT = TRUE,
+		NO_FINGERPRINT = TRUE,
+		NO_MINORCUTS = TRUE,
+		NO_EMOTION = TRUE,
+		NO_MUTATION = TRUE,
+		NO_FAT = TRUE,
+	)
+
+	has_organ = list(
+	)
+
+	has_gendered_icons = FALSE
+
+	min_age = 1
+	max_age = 1000
+
+	// Only left and right hand are present.
+	restricted_inventory_slots = list(
+		SLOT_BACK,
+		SLOT_WEAR_MASK,
+		SLOT_HANDCUFFED,
+		SLOT_BELT,
+		SLOT_WEAR_ID,
+		SLOT_L_EAR,
+		SLOT_R_EAR,
+		SLOT_GLASSES,
+		SLOT_GLOVES,
+		SLOT_HEAD,
+		SLOT_SHOES,
+		SLOT_WEAR_SUIT,
+		SLOT_W_UNIFORM,
+		SLOT_L_STORE,
+		SLOT_R_STORE,
+		SLOT_S_STORE,
+		SLOT_IN_BACKPACK,
+		SLOT_LEGCUFFED,
+		SLOT_TIE,
+		SLOT_EARS,
+	)
+
+	default_mood_event = /datum/mood_event/machine
+
+/datum/species/bluespace/on_gain(mob/living/carbon/human/H)
+	..()
+	// Clothing on the Bluepsace Debug Creature is created before the hud_list is generated in the atom
+	H.prepare_huds()
+
+	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
+
+	qdel(H.GetComponent(/datum/component/mood))
+
+/datum/species/bluespace/on_loose(mob/living/carbon/human/H)
+	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
+	H.AddComponent(/datum/component/mood)
+
+	..()
+
+/datum/species/bluespace/call_digest_proc(mob/living/M, datum/reagent/R)
+	return FALSE

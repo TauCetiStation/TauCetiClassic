@@ -87,6 +87,7 @@
 #define SKELETON_VOX	 "Skeleton Vox"
 #define SHADOWLING     	 "Shadowling"
 #define GOLEM          	 "Adamantine Golem"
+#define BLUESPACE        "Bluespace Being"
 #define HOMUNCULUS     	 "Homunculus"
 #define ZOMBIE         	 "Zombie"
 #define ZOMBIE_TAJARAN 	 "Zombie Tajaran"
