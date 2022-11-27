@@ -25,14 +25,14 @@
 	var/list/gases_dangerous = list()
 	//Knowable Gases
 	var/list/gases_knowable = list()
-	//inhalation proc
-	var/list/gases_inhalation_proc = list()
 	//initial amount of rnd points
 	var/list/gases_initial_rnd_points = list()
 	//how much energy per mole is produced when this gas comes in contact with SM
 	var/list/gases_supermatter_power_bonus = list()
 	//how much damage per mole is produced when this gas comes in contact with SM
 	var/list/gases_supermatter_damage_bonus = list()
+	//gas datum by id
+	var/list/gases_datums = list()
 
 /datum/xgm_gas
 	var/id = ""
@@ -99,10 +99,10 @@
 		gas_data.burn_product[gas.id] = gas.burn_product
 		gas_data.gases_dangerous[gas.id] = gas.dangerous
 		gas_data.gases_knowable[gas.id] = gas.knowable
-		gas_data.gases_inhalation_proc[gas.id] = gas.inhalation_proc
 		gas_data.gases_initial_rnd_points[gas.id] = gas.initial_rnd_points
 		gas_data.gases_supermatter_damage_bonus[gas.id] = gas.supermatter_damage_bonus
 		gas_data.gases_supermatter_power_bonus[gas.id] = gas.supermatter_power_bonus
+		gas_data.gases_datums[gas.id] = gas
 
 	for(var/p in subtypesof(/datum/xgm_temperature_overlay))
 		var/datum/xgm_temperature_overlay/overlay = new p

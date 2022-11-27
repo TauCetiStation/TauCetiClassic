@@ -177,10 +177,8 @@
 		breath.adjust_gas("sleeping_agent", -sleeping_agent * BREATH_USED_PART, update = FALSE) //update after
 
 	for(var/gas as anything in breath.gas) //todo: move all the inhalation logic for each gas into inhalation procs, instead of exhale_type/poison_type and other shit
-		var/P = gas_data.gases_inhalation_proc[gas]
-		if(P)
-			call(P)(src, breath)
-
+		var/datum/xgm_gas/D = gas_data.gases_datums[gas]
+		D.on_inhalation(src, breath)
 	handle_breath_temperature(breath)
 
 	breath.update_values()

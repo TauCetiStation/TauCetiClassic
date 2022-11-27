@@ -1,13 +1,12 @@
 //procs called when some gas is inhaled. procs get living thing which inhaled the gas and breath air mix.
 
-/datum/xgm_gas/proc/on_inhalation(mob/living/carbon/C, datum/gas_mixture/B)
+/datum/xgm_gas/proc/on_inhalation(mob/living/carbon/human/C, datum/gas_mixture/B)
 	return
 
-/datum/xgm_gas/bz/on_inhalation(mob/living/carbon/C, datum/gas_mixture/B)
-	var/I = "bz" //since we don't have actual gas datum to get id from
-	if(!B.gas[I])
+/datum/xgm_gas/bz/on_inhalation(mob/living/carbon/human/C, datum/gas_mixture/B)
+	if(!B.gas[id])
 		return
-	var/P = (B.gas[I] / B.total_moles) * B.return_pressure()
+	var/P = (B.gas[id] / B.total_moles) * B.return_pressure()
 	if(P > 3)
 		C.hallucination += 3
 		if(prob(10))
@@ -23,11 +22,10 @@
 		if(prob(10))
 			to_chat(C, "<span class='warning'>Your mind is tearing itself apart!</span>")
 
-/datum/xgm_gas/constantium/on_inhalation(mob/living/carbon/C, datum/gas_mixture/B)
-	var/I = "const"
-	if(!B.gas[I])
+/datum/xgm_gas/constantium/on_inhalation(mob/living/carbon/human/C, datum/gas_mixture/B)
+	if(!B.gas[id])
 		return
-	var/P = (B.gas[I] / B.total_moles) * B.return_pressure()
+	var/P = (B.gas[id] / B.total_moles) * B.return_pressure()
 	if(P > 5)
 		C.adjustOxyLoss(1)
 		if(prob(10))
@@ -40,14 +38,14 @@
 			to_chat(C, "<span class='warning'>You can't get enough oxygen!</span>")
 			C.emote("cough")
 
-/datum/xgm_gas/trioxium/on_inhalation(mob/living/carbon/C, datum/gas_mixture/B)
-	var/I = "triox"
-	if(!B.gas[I])
+/datum/xgm_gas/trioxium/on_inhalation(mob/living/carbon/human/C, datum/gas_mixture/B)
+	if(!B.gas[id])
 		return
-	var/P = (B.gas[I] / B.total_moles) * B.return_pressure()
+	var/P = (B.gas[id] / B.total_moles) * B.return_pressure()
 	if(P > 3)
-		if(istype(C, /mob/living/carbon/human/vox))
+		if(C.species.name == VOX)
 			C.adjustToxLoss(3)
+			C.adjustOxyLoss(3)
 		else
 			if(C.losebreath >= 10)
 				C.losebreath = max(10, C.losebreath - 5)
@@ -55,8 +53,9 @@
 			if(prob(10))
 				to_chat(C, "<span class='notice'>You feel extra oxygen seeping into your lungs.</span>")
 	if(P > 5)
-		if(istype(C, /mob/living/carbon/human/vox))
+		if(C.species.name == VOX)
 			C.adjustToxLoss(10)
+			C.adjustOxyLoss(10)
 			C.poison_alert = TRUE
 			if(prob(10))
 				to_chat(C, "<span class='warning'>You feel oxygen rushing into your lungs! Find some fresh nitrogen!</span>")
@@ -67,11 +66,10 @@
 			if(prob(10))
 				to_chat(C, "<span class='warning'>You feel oxygen rushing into your lungs. Maybe even TOO much oxygen.</span>")
 
-/datum/xgm_gas/proto_hydrate/on_inhalation(mob/living/carbon/C, datum/gas_mixture/B)
-	var/I = "phydr"
-	if(!B.gas[I])
+/datum/xgm_gas/proto_hydrate/on_inhalation(mob/living/carbon/human/C, datum/gas_mixture/B)
+	if(!B.gas[id])
 		return
-	var/P = (B.gas[I] / B.total_moles) * B.return_pressure()
+	var/P = (B.gas[id] / B.total_moles) * B.return_pressure()
 	if(P > 3)
 		C.adjustHalLoss(-2)
 		if(prob(10))
@@ -86,11 +84,10 @@
 		if(prob(10))
 			to_chat(C, "<span class='warning'>You feel energy overflowing you! And also a chemical poisoning.</span>")
 
-/datum/xgm_gas/cardotirin/on_inhalation(mob/living/carbon/C, datum/gas_mixture/B)
-	var/I = "ctirin"
-	if(!B.gas[I])
+/datum/xgm_gas/cardotirin/on_inhalation(mob/living/carbon/human/C, datum/gas_mixture/B)
+	if(!B.gas[id])
 		return
-	var/P = (B.gas[I] / B.total_moles) * B.return_pressure()
+	var/P = (B.gas[id] / B.total_moles) * B.return_pressure()
 	if(P > 3)
 		if(prob(50))
 			C.adjustBruteLoss(-1)

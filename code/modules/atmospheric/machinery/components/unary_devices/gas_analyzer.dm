@@ -37,37 +37,38 @@
 /obj/machinery/atmospherics/gas_analyzer/update_icon()
 	cut_overlays()
 	var/on = !(stat & (BROKEN|NOPOWER) || !anchored)
-	add_overlay(image("icons/obj/atmos.dmi", "analyzer_over-p[on]"))
+	add_overlay(image('icons/obj/atmos.dmi', "analyzer_over-p[on]"))
 	if(panel_open)
-		add_overlay(image("icons/obj/atmos.dmi", "analyzer_over-p"))
+		add_overlay(image('icons/obj/atmos.dmi', "analyzer_over-p"))
 	if(insertedTank)
-		add_overlay(image("icons/obj/atmos.dmi", "analyzer_over-t"))
+		add_overlay(image('icons/obj/atmos.dmi', "analyzer_over-t"))
 	var/indicatorLevel = 0
 	if(on)
 		indicatorLevel = round((currentGasMoles / amountPerLevel) / 0.25)
-	add_overlay(image("icons/obj/atmos.dmi", "analyzer_over-i[indicatorLevel]"))
+	add_overlay(image('icons/obj/atmos.dmi', "analyzer_over-i[indicatorLevel]"))
 
 /obj/machinery/atmospherics/gas_analyzer/process_atmos()
 	if(stat & (BROKEN|NOPOWER) || !anchored || !insertedTank)
 		return
 	var/datum/gas_mixture/air1 = insertedTank.air_contents
 	for(var/gas in air1.gas)
-		if(gas == currentGas)
-			currentGasMoles += air1.gas[gas]
-			air1.gas[gas] = 0
-			air1.update_values()
-			var/L = round(currentGasMoles / amountPerLevel)
-			if(L && !researchDrained)
-				var/P = researchGas(currentGas, L)
-				if(P < 0)
-					researchDrained = TRUE
-				currentGasMoles -= L * amountPerLevel
-				lastResearch = 0
-			if(lastResearch > 30)
-				set_power_use(idle_power_usage)
-			else
-				lastResearch ++
-				set_power_use(active_power_usage)
+		if(gas != currentGas)
+			continue
+		currentGasMoles += air1.gas[gas]
+		air1.gas[gas] = 0
+		air1.update_values()
+		var/L = round(currentGasMoles / amountPerLevel)
+		if(L && !researchDrained)
+			var/P = researchGas(currentGas, L)
+			if(P < 0)
+				researchDrained = TRUE
+			currentGasMoles -= L * amountPerLevel
+			lastResearch = 0
+		if(lastResearch > 30)
+			set_power_use(idle_power_usage)
+		else
+			lastResearch ++
+			set_power_use(active_power_usage)
 
 /obj/machinery/atmospherics/gas_analyzer/proc/researchGas(gas, levels, repetitionCoeff = 0.5, add = TRUE)
 	var/exType = "Gas research ([gas])"
@@ -75,27 +76,28 @@
 	if(!levels)
 		return
 	for(var/obj/machinery/computer/rdconsole/RD in RDcomputer_list)
-		if(RD.id == 1)
-			var/earned = RD.files.experiments.earned_score[exType]
-			var/best = RD.files.experiments.saved_best_score[exType]
-			if(!earned)
-				points = gas_data.gases_initial_rnd_points[gas]
-				if(!add)
-					return points
-				RD.files.experiments.saved_best_score[exType] = points //amount on other research iterations will always be lower
-				RD.files.experiments.earned_score[exType] += points
-				RD.files.research_points += points
+		if(RD.id != 1)
+			continue
+		var/earned = RD.files.experiments.earned_score[exType]
+		var/best = RD.files.experiments.saved_best_score[exType]
+		if(!earned)
+			points = gas_data.gases_initial_rnd_points[gas]
+			if(!add)
 				return points
-			//formulas below are for geometric progressions if someone needs to know that
-			//points for every iterations are equal to points from previous one, multiplied by repetitionCoeff
-			var/last = (earned * (repetitionCoeff - 1) + best) / repetitionCoeff
-			if(last < 10)
-				return points
-			points = ((last * (repetitionCoeff ** levels - 1)) / (repetitionCoeff - 1)) * repetitionCoeff
-			points = round(points)
-			if(add)
-				RD.files.experiments.earned_score[exType] += points
-				RD.files.research_points += points
+			RD.files.experiments.saved_best_score[exType] = points //amount on other research iterations will always be lower
+			RD.files.experiments.earned_score[exType] += points
+			RD.files.research_points += points
+			return points
+		//formulas below are for geometric progressions if someone needs to know that
+		//points for every iterations are equal to points from previous one, multiplied by repetitionCoeff
+		var/last = (earned * (repetitionCoeff - 1) + best) / repetitionCoeff
+		if(last < 10)
+			return points
+		points = ((last * (repetitionCoeff ** levels - 1)) / (repetitionCoeff - 1)) * repetitionCoeff
+		points = round(points)
+		if(add)
+			RD.files.experiments.earned_score[exType] += points
+			RD.files.research_points += points
 	return points
 
 /obj/machinery/atmospherics/gas_analyzer/attackby(obj/item/weapon/W, mob/user)
@@ -104,6 +106,7 @@
 			var/obj/item/weapon/tank/T = W
 			insertedTank = T
 			update_icon()
+			return
 
 	if(iswrench(W))
 		anchored = !anchored
@@ -111,6 +114,7 @@
 		if(!anchored)
 			set_power_use(NO_POWER_USE)
 		update_icon()
+		return
 	else
 		..()
 
@@ -140,35 +144,35 @@
 	var/html = ""
 	if(temp)
 		html = temp
-	else
-		if(!checkRdConsole())
-			html += "<span class='red'>Рабочих консолей РнД не обнаружено - очки не будут генерироватся.</span><br>"
-		if(researchDrained)
-			html += "<span class='red'>Газ полностью изучен и более не представляет научной ценности.</span><br>"
-		html += "Давление в баллоне: [insertedTank ? insertedTank.air_contents.return_pressure() : "Н/Д"]<br>"
-		html += "Молей в баллоне: [insertedTank ? insertedTank.air_contents.total_moles : "Н/Д"]<br>"
-		html += "Текущий изучаемый газ: [gas_data.name[currentGas]]<br>"
-		html += "Необходимый объём: [currentGasMoles]/[amountPerLevel]<br>"
-		html += "Ожидаемые очки за итерацию: [researchGas(currentGas, 1, add = FALSE)]<br>"
-		html += "<A align='right' href='?src=\ref[src];changeg=1'>Сменить изучаемый газ</A><br>"
-		html += "<A align='right' href='?src=\ref[src];changet=1'>Извлечь баллон</A><br>"
-		html += "<A align='right' href='?src=\ref[src];refresh=1'>Обновить</A><br>"
+		return html
+	if(!checkRdConsole())
+		html += "<span class='red'>Рабочих консолей РнД не обнаружено - очки не будут генерироватся.</span><br>"
+	if(researchDrained)
+		html += "<span class='red'>Газ полностью изучен и более не представляет научной ценности.</span><br>"
+	html += "Давление в баллоне: [insertedTank ? insertedTank.air_contents.return_pressure() : "Н/Д"]<br>"
+	html += "Молей в баллоне: [insertedTank ? insertedTank.air_contents.total_moles : "Н/Д"]<br>"
+	html += "Текущий изучаемый газ: [gas_data.name[currentGas]]<br>"
+	html += "Необходимый объём: [currentGasMoles]/[amountPerLevel]<br>"
+	html += "Ожидаемые очки за итерацию: [researchGas(currentGas, 1, add = FALSE)]<br>"
+	html += "<A align='right' href='?src=\ref[src];change_gas=1'>Сменить изучаемый газ</A><br>"
+	html += "<A align='right' href='?src=\ref[src];eject_tank=1'>Извлечь баллон</A><br>"
+	html += "<A align='right' href='?src=\ref[src];refresh=1'>Обновить</A><br>"
 	return html
 
 /obj/machinery/atmospherics/gas_analyzer/Topic(href, href_list)
-	if(href_list["changeg"])
+	if(href_list["change_gas"])
 		temp += "Внимание: при выборе газа другого типа текущее количество газа будет обнулено.<br>"
 		for(var/gas in gas_data.gases)
 			temp += "[gas_data.name[gas]]; <A href='?src=\ref[src];changegs=\ref[gas]'>Выбрать</A><br>"
-	if(href_list["changegs"])
-		var/N = locate(href_list["changegs"])
+	if(href_list["change_gas_select"])
+		var/N = locate(href_list["change_gas_select"])
 		if(N != currentGas)
 			currentGasMoles = 0
 			researchDrained = FALSE
-			currentGas = locate(href_list["changegs"])
+			currentGas = locate(href_list["change_gas_select"])
 		temp = ""
 		update_icon()
-	if(href_list["changet"])
+	if(href_list["eject_tank"])
 		if(insertedTank)
 			insertedTank.forceMove(get_turf(src))
 			insertedTank = null

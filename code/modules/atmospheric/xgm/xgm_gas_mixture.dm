@@ -214,13 +214,16 @@
 
 //quick rough check, for determining if we should check this mix for reactions
 /datum/gas_mixture/proc/is_possible_reaction_mix()
-	if(SSair)
-		if(SSair.process_reactions)
-			var/P = SSair.get_reaction_mix_priority(src)
-			if(P)
-				SSair.add_reaction_mix(src, P)
-				return TRUE
-	return FALSE
+	. = FALSE
+	if(!SSair)
+		return
+	if(!SSair.process_reactions)
+		return
+	var/P = SSair.get_reaction_mix_priority(src)
+	if(P)
+		SSair.add_reaction_mix(src, P)
+		return TRUE
+	return
 
 //Returns relative (to the standard) density of the gas mix with max of 1.
 /datum/gas_mixture/proc/return_relative_density()
