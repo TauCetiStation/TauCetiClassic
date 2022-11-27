@@ -74,7 +74,7 @@
 	var/list/shop_lots_frontend = list()
 	var/list/shopping_cart = list()
 	var/category_shop_page = 1
-	var/category_shop_pageing = 5
+	var/category_shop_per_page = 5
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
@@ -684,7 +684,7 @@
 				part_list.len = lot_id
 				part_list[lot_id] = Lot
 				lot_id++
-				if(lot_id > category_shop_pageing)
+				if(lot_id > category_shop_per_page)
 					lot_id = 1
 					shop_lots_paged.len++
 					shop_lots_paged[shop_lots_paged.len] = list()
@@ -1073,7 +1073,7 @@
 		if("Shop_Change_Pageing")
 			var/number = text2num(href_list["shop_pageing"])
 			if(number)
-				category_shop_pageing = number
+				category_shop_per_page = number
 
 		//Maintain Orders and Offers
 		if("Shop_Add_Order_or_Offer")
