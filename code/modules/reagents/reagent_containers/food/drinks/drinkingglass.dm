@@ -3,6 +3,8 @@
 	desc = "Your standard drinking glass."
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 5
+	m_amt = 0
+	g_amt = 250
 	volume = 25
 	pickup_sound = 'sound/items/glass_containers/bottle_take-empty.ogg'
 	dropped_sound = 'sound/items/glass_containers/bottle_put-empty.ogg'

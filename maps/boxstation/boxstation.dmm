@@ -76371,7 +76371,6 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/structure/table/woodentable,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -76418,9 +76417,8 @@
 /area/station/hallway/primary/central)
 "lcb" = (
 /obj/machinery/light,
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 8
-	},
+/obj/structure/table/woodentable,
+/obj/item/weapon/flora/deskleaf,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -80701,6 +80699,9 @@
 /area/station/medical/chemistry)
 "qsv" = (
 /obj/structure/table/woodentable,
+/obj/item/device/flashlight/lamp/green{
+	pixel_y = 15
+	},
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -83451,6 +83452,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"tDf" = (
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "brown"
+	},
+/area/station/cargo/storage)
 "tEw" = (
 /obj/effect/decal/remains/robot,
 /turf/simulated/floor/plating,
@@ -103174,7 +103183,7 @@ bHB
 sbs
 lDy
 ofm
-auO
+tDf
 bcM
 bWt
 bWt
@@ -103431,7 +103440,7 @@ lhs
 bsD
 shv
 ofm
-aDw
+auO
 bcM
 aaa
 aaa
@@ -103688,7 +103697,7 @@ brd
 bsO
 shv
 ofm
-qsv
+aDw
 bcM
 aaa
 aaa
