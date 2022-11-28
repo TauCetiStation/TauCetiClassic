@@ -211,10 +211,10 @@
 	desc = "Ты мозг. Запертый. В оболочке. СПУ."
 	requirement = "Подопытный."
 
-/datum/quality/quirkieish/ipc/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+/datum/quality/quirkieish/mmi_ipc/satisfies_requirements(mob/living/carbon/human/H, latespawn)
 	return H.mind.role_alt_title == "Test Subject" && H.get_species() != IPC
 
-/datum/quality/quirkieish/ipc/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/quirkieish/mmi_ipc/add_effect(mob/living/carbon/human/H, latespawn)
 	var/prev_species = H.get_species()
 	H.set_species(IPC)
 
