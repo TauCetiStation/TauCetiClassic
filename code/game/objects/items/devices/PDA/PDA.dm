@@ -1070,8 +1070,8 @@
 				if("previous")
 					category_shop_page--
 			category_shop_page = clamp(category_shop_page, 1, shop_lots_paged.len)
-		if("Shop_Change_Pageing")
-			var/number = text2num(href_list["shop_pageing"])
+		if("Shop_Change_Per_page")
+			var/number = text2num(href_list["shop_per_page"])
 			if(number)
 				category_shop_per_page = number
 
