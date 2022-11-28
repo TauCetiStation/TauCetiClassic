@@ -215,7 +215,7 @@
 	return H.mind.role_alt_title == "Test Subject"
 
 /datum/quality/quirkieish/doppleganger/add_effect(mob/living/carbon/human/H, latespawn)
-	var/list/pos_players = list() + player_list
+	var/list/pos_players = player_list.Copy()
 	pos_players -= H
 
 	var/mob/living/carbon/human/target = null
@@ -246,8 +246,18 @@
 
 	H.dna = target.dna.Clone()
 	H.real_name = target.dna.real_name
+	H.flavor_text = target.flavor_text
 
 	domutcheck(H, null)
 	H.UpdateAppearance()
 
 	H.fixblood(FALSE) // need to change blood DNA too
+
+	if(istype(H.wear_id, /obj/item/weapon/card/id)) // check id card
+		var/obj/item/weapon/card/id/wear_id = H.wear_id
+		wear_id.assign(H.real_name)
+
+		var/obj/item/device/pda/pda = locate() in H // find closest pda
+		if(pda)
+			pda.ownjob = wear_id.assignment
+			pda.assign(H.real_name)
