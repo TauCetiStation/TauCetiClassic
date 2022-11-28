@@ -218,6 +218,13 @@
 	var/prev_species = H.get_species()
 	H.set_species(IPC)
 
+	// TO-DO: use human-like hairstyles for this type of IPC
+	// as well as set their head to a human-like one.
+	H.f_style = "Shaved"
+	H.h_style = "Bald"
+	H.flavor_text = ""
+	H.regenerate_icons()
+
 	var/obj/item/organ/external/chest/robot/ipc/I = H.get_bodypart(BP_CHEST)
 	I.posibrain_type = /obj/item/device/mmi
 	I.posibrain_species = prev_species
