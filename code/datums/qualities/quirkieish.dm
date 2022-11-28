@@ -216,6 +216,11 @@
 
 /datum/quality/quirkieish/loyal_golem/add_effect(mob/living/carbon/human/H, latespawn)
 	H.set_species(GOLEM)
+	H.f_style = "Shaved"
+	H.h_style = "Bald"
+	H.flavor_text = ""
+	H.regenerate_icons()
+
 	// In case the golem is evil don't make him a loyal dog of NT.
 	if(isanyantag(H))
 		return
