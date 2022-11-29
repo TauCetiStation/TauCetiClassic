@@ -6,7 +6,7 @@
 
 /datum/dna/gene/basic/nobreath
 	name="No Breathing"
-	activation_messages=list("Вы заметили как перестали дышать.")
+	activation_messages=list("Вам больше не нужно дышать.")
 	mutation=NO_BREATH
 	activation_prob=50
 
@@ -32,7 +32,7 @@
 
 /datum/dna/gene/basic/regenerate
 	name="Regenerate"
-	activation_messages=list("Вы чувствуете себя лучше.")
+	activation_messages=list("Вы чувствуете как ваша тело обновляется ")
 	mutation=REGEN
 	activation_prob=50
 
@@ -121,7 +121,7 @@
 
 /datum/dna/gene/basic/heat_resist
 	name="Heat Resistance"
-	activation_messages=list("Вы чувствуете холодок по коже.")
+	activation_messages=list("Ваша кожа холодная на ощуп.")
 	mutation=RESIST_HEAT
 	activation_prob=30
 
@@ -138,7 +138,7 @@
 
 /datum/dna/gene/basic/cold_resist
 	name="Cold Resistance"
-	activation_messages=list("Ваше тело наполняется теплом.")
+	activation_messages=list("Вы чувствуете приятное тепло по всему телу.")
 	mutation=COLD_RESISTANCE
 	activation_prob=30
 
@@ -232,10 +232,10 @@
 	if(!mind)
 		return
 	if(species.flags[NO_PAIN]) // hulk mechanic is revolving around pain, and also all the species that don't have hulk form have this flag.
-		to_chat(src, "<span class='warning'>Ваш ген халка рецессивный!</span>")
+		to_chat(src, "<span class='warning'>Вы не можете стать халком!</span>")
 		return
 	if(mind.hulkizing)
-		to_chat(src, "<span class='warning'>Вы больше не чувствуете способности к трансформации!</span>") // Hulk transformation at most 1 time.
+		to_chat(src, "<span class='warning'>Ваших сил хватило только на одну трансформацию!</span>") // Hulk transformation at most 1 time.
 		return
 
 	mind.hulkizing = TRUE
@@ -270,7 +270,7 @@
 
 /datum/dna/gene/basic/xray
 	name="X-Ray Vision"
-	activation_messages=list("Стены внезапно исчезают.")
+	activation_messages=list("Теперь вы видите сквозь стены.")
 	mutation=XRAY
 	activation_prob=30
 
