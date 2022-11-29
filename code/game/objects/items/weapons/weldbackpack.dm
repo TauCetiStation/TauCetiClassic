@@ -32,7 +32,12 @@
 			to_chat(user, "<span class='notice'>Welder refilled!</span>")
 			playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 			return
-
+	if(istype(I, /obj/item/weapon/makeshift_flamethrower))
+		var/obj/item/weapon/makeshift_flamethrower/F = I
+		reagents.trans_to(F, F.max_fuel)
+		to_chat(user, "<span class='notice'>[F] refilled!</span>")
+		playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
+		return
 	to_chat(user, "<span class='notice'>The tank scoffs at your insolence.  It only provides services to welders.</span>")
 
 /obj/item/weapon/weldpack/afterattack(atom/target, mob/user, proximity, params)
