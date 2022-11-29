@@ -299,4 +299,4 @@
 	H.set_species(SLIME)
 	H.f_style = "Shaved"
 	H.h_style = "Bald"
-  H.regenerate_icons()
+		H.regenerate_icons()
