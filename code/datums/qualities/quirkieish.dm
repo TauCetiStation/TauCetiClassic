@@ -204,3 +204,15 @@
 		LAZYREMOVE(H.mind.skills.available_skillsets, s)
 	H.mind.skills.add_available_skillset(/datum/skillset/jack_of_all_trades)
 	H.mind.skills.maximize_active_skills()
+
+
+/datum/quality/quirkieish/slime_person
+	name = "Slimeperson"
+	desc = "Ты един со слизнями."
+	requirement = "Подопытный."
+
+/datum/quality/quirkieish/slime_person/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject"
+
+/datum/quality/quirkieish/slime_person/add_effect(mob/living/carbon/human/H, latespawn)
+	H.set_species(SLIME)
