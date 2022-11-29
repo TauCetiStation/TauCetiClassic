@@ -221,3 +221,99 @@
 
 	H.set_species(PODMAN)
 	to_chat(H, msg)
+
+
+/datum/quality/quirkieish/doppleganger
+	name = "Doppleganger"
+	desc = "Ты - незарегестрированный клон кого-то из экипажа."
+	requirement = "Подопытный."
+
+/datum/quality/quirkieish/doppleganger/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject"
+
+/datum/quality/quirkieish/doppleganger/add_effect(mob/living/carbon/human/H, latespawn)
+	var/list/pos_players = player_list.Copy()
+	pos_players -= H
+
+	var/mob/living/carbon/human/target = null
+
+	while(target == null && length(pos_players) > 0)
+		var/mob/living/carbon/human/potential_target = pick(pos_players)
+		pos_players -= potential_target
+
+		// AI and borgs.
+		if(!istype(potential_target))
+			continue
+		// This shouldn't be able to happen, but to prevent runtimes...
+		if(!potential_target.mind)
+			continue
+		// While funny, please no.
+		if(isanyantag(potential_target))
+			continue
+		// Commented out because changeling stings change appearance and name but not species...
+		// so apperantly in this universe it works like this.
+		//if(get_species(potential_target) != get_species(H))
+		//	continue
+
+		target = potential_target
+
+	if(!target)
+		to_chat(H, "<span class='warning'>Проклятие! По какой-то причине ты клонировал сам себя!</span>")
+		return
+
+	H.dna = target.dna.Clone()
+	H.real_name = target.dna.real_name
+	H.flavor_text = target.flavor_text
+
+	domutcheck(H, null)
+	H.UpdateAppearance()
+
+	H.fixblood(FALSE) // need to change blood DNA too
+
+	if(istype(H.wear_id, /obj/item/weapon/card/id)) // check id card
+		var/obj/item/weapon/card/id/wear_id = H.wear_id
+		wear_id.assign(H.real_name)
+
+		var/obj/item/device/pda/pda = locate() in H // find closest pda
+		if(pda)
+			pda.ownjob = wear_id.assignment
+			pda.assign(H.real_name)
+
+
+/datum/quality/quirkieish/loyal_golem
+	name = "Loyal Golem"
+	desc = "Ты очень умный тупой голем, а твой хозяин - НТ... или..."
+	requirement = "Подопытный, но не злодей."
+
+/datum/quality/quirkieish/loyal_golem/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject"
+
+/datum/quality/quirkieish/loyal_golem/add_effect(mob/living/carbon/human/H, latespawn)
+	H.set_species(GOLEM)
+	H.f_style = "Shaved"
+	H.h_style = "Bald"
+	H.flavor_text = ""
+	H.regenerate_icons()
+
+	// In case the golem is evil don't make him a loyal dog of NT.
+	if(isanyantag(H))
+		return
+	if(prob(10))
+		return
+	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(H)
+	L.stealth_inject(H)
+
+
+/datum/quality/quirkieish/slime_person
+	name = "Slimeperson"
+	desc = "Ты един со слизнями."
+	requirement = "Подопытный."
+
+/datum/quality/quirkieish/slime_person/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject"
+
+/datum/quality/quirkieish/slime_person/add_effect(mob/living/carbon/human/H, latespawn)
+	H.set_species(SLIME)
+	H.f_style = "Shaved"
+	H.h_style = "Bald"
+	H.regenerate_icons()
