@@ -334,3 +334,191 @@
 /obj/item/weapon/flamethrower_M2/proc/ignite_turf(turf/target)
 	new/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel(target,throw_amount/50,get_dir(loc,target))
 	return
+
+
+/obj/item/weapon/makeshift_flamethrower
+	name = "makeshift flamethrower"
+	desc = "I love the smell of napalm in the morning"
+	icon = 'icons/obj/flamethrower.dmi'
+	icon_state = "flamethrowerbase"
+	item_state = "flamethrower_0"
+	flags = CONDUCT
+	force = 3.0
+	throwforce = 10.0
+	throw_speed = 1
+	throw_range = 5
+	w_class = SIZE_NORMAL
+	m_amt = 500
+	origin_tech = "engineering=3"
+	var/status = 0		//ready to fire or not
+	var/lit = 0			//on or off
+	var/operating = 0	//cooldown
+	var/max_fuel = 300
+	var/obj/item/weapon/weldingtool/weldtool = null
+	var/obj/item/device/assembly/igniter/igniter = null
+
+/obj/item/weapon/makeshift_flamethrower/atom_init(mapload, WeldMaxFuel = 0, WeldCurFuel = -1)
+	. = ..()
+	if(WeldMaxFuel)
+		max_fuel = WeldMaxFuel
+	var/datum/reagents/R = new/datum/reagents(max_fuel)
+	reagents = R
+	R.my_atom = src
+	if(WeldCurFuel >= 0)
+		if(!WeldCurFuel)
+			return
+		reagents.add_reagent("fuel",WeldCurFuel)
+	else
+		reagents.add_reagent("fuel",max_fuel)
+
+/obj/item/weapon/makeshift_flamethrower/examine(mob/user)
+	. = ..()
+	to_chat(user, "devise is [status ? "secured" : "unsecured"]. <br>contains [reagents.get_reagent_amount("fuel")]/[max_fuel] units of fuel!")
+
+/obj/item/weapon/makeshift_flamethrower/Destroy()
+	if(weldtool)
+		QDEL_NULL(weldtool)
+	if(igniter)
+		QDEL_NULL(igniter)
+	return ..()
+
+/obj/item/weapon/makeshift_flamethrower/get_current_temperature()
+	if(lit)
+		return 1500
+	return 0
+
+/obj/item/weapon/makeshift_flamethrower/process()
+	if(!lit)
+		STOP_PROCESSING(SSobj, src)
+		update_icon()
+		return
+	var/turf/T = get_turf(src)
+	T.hotspot_expose(700, 2)
+
+/obj/item/weapon/makeshift_flamethrower/update_icon()
+	cut_overlays()
+	if(igniter)
+		add_overlay("+igniter[status]")
+	if(lit)
+		add_overlay("+lit")
+		item_state = "flamethrower_1"
+	else
+		item_state = "flamethrower_0"
+
+/obj/item/weapon/makeshift_flamethrower/proc/suck_fuel_from_weldpack(mob/user, amount = 0)
+	if(!iscarbon(user) || !amount)
+		return
+	var/mob/living/carbon/C = user
+	var/obj/item/weapon/weldpack/my_weldpack = C.get_slot_ref(SLOT_BACK)
+	if(istype(my_weldpack))
+		my_weldpack.reagents.trans_to(src, amount)
+
+/obj/item/weapon/makeshift_flamethrower/afterattack(atom/target, mob/user, proximity, params)
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(operating || !can_see(user, target))
+		return
+	if(!status)
+		to_chat(user, "<span class='notice'>Secure all components first.</span>")
+		return
+	if(reagents.total_volume == 0)
+		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+		return
+	var/turf/target_turf = get_turf(target)
+	var/turf/self_turf = get_turf(user)
+	if(!target_turf)
+		return
+	var/list/turflist = getline(self_turf, target_turf)
+	//how much needed refill from fuelweldpack
+	var/fuel_spent = 0
+	operating = TRUE
+	for(var/turf/turf_in_line in turflist)
+		if(turf_in_line == self_turf || isspaceturf(turf_in_line))
+			continue
+		//stop fuelthrowing when distance is big
+		if(get_dist(turf_in_line, self_turf) > 7)
+			break
+		//check every turf in line for walls/glass/etc
+		var/no_density = TRUE
+		for(var/atom/A in turf_in_line)
+			if(A.density)
+				no_density = FALSE
+				break
+		if(!no_density)
+			break
+		//don't accidentally set yourself on fire
+		if(get_dist(turf_in_line, user) < 3)
+			flame_turf(turf_in_line, 0.5)
+		else
+			flame_turf(turf_in_line, 1)
+		fuel_spent++
+	operating = FALSE
+	user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] fired by flamethrower on [target] at [COORD(target)]</font>"
+	suck_fuel_from_weldpack(user, fuel_spent)
+
+/obj/item/weapon/makeshift_flamethrower/attackby(obj/item/I, mob/user, params)
+	if(!status)
+		if(iswrench(I))
+			var/turf/T = get_turf(src)
+			if(weldtool)
+				weldtool.forceMove(T)
+				weldtool = null
+			if(igniter)
+				igniter.forceMove(T)
+				igniter = null
+			new /obj/item/stack/rods(T)
+			qdel(src)
+			return
+		if(isscrewdriver(I))
+			if(!igniter)
+				to_chat(user, "<span class='notice'>Attach igniter first.</span>")
+			else
+				status = TRUE
+				to_chat(user, "<span class='notice'>Components of [src] secured.</span>")
+				update_icon()
+			return
+	else
+		if(isscrewdriver(I))
+			status = FALSE
+			lit = FALSE
+			to_chat(user, "<span class='notice'>[src] is now unsecured.</span>")
+			update_icon()
+			return
+	if(isigniter(I))
+		if(igniter)
+			to_chat(user, "<span class='notice'>[src] already have [I]!</span>")
+			return
+		if(status)
+			to_chat(user, "<span class='warning'>[src] is secured!</span>")
+			return
+		var/obj/item/device/assembly/igniter/IGN = I
+		if(IGN.secured)
+			to_chat(user, "<span class='notice'>[IGN] is secured.</span>")
+			return
+		user.drop_from_inventory(IGN, src)
+		igniter = IGN
+		to_chat(user, "<span class='notice'>[IGN] added to [src]. Secure it by screwdriver.</span>")
+		update_icon()
+		return
+	return ..()
+
+/obj/item/weapon/makeshift_flamethrower/attack_self(mob/user)
+	if(!status)
+		lit = FALSE
+		to_chat(user, "<span class='warning'>Components needs securing by screwdriver.</span>")
+	else
+		lit = !lit
+	if(lit)
+		START_PROCESSING(SSobj, src)
+	update_icon()
+
+/obj/item/weapon/makeshift_flamethrower/proc/flame_turf(turf/T, amount = 5)
+	if(reagents.total_volume == 0)
+		return
+	var/obj/effect/decal/chempuff/D = reagents.create_chempuff(amount)
+	walk_towards(D, T)
+	D.reagents.reaction(T)
+	for(var/atom/A in T)
+		D.reagents.reaction(A)
+	if(lit)
+		T.hotspot_expose(700, 5)
+	QDEL_IN(D, 1 SECOND)
