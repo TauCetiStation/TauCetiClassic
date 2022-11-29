@@ -256,7 +256,8 @@
 		var/obj/item/stack/rods/R = I
 		if(!R.use(1))
 			return
-		var/obj/item/weapon/flamethrower/F = new/obj/item/weapon/flamethrower(user.loc)
+		var/current_fuel = get_fuel()
+		var/obj/item/weapon/makeshift_flamethrower/F = new(user.loc, max_fuel, current_fuel)
 		forceMove(F)
 		F.weldtool = src
 		if (user.client)
