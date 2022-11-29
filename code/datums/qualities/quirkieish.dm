@@ -228,3 +228,15 @@
 		return
 	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(H)
 	L.stealth_inject(H)
+
+
+/datum/quality/quirkieish/slime_person
+	name = "Slimeperson"
+	desc = "Ты един со слизнями."
+	requirement = "Подопытный."
+
+/datum/quality/quirkieish/slime_person/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject"
+
+/datum/quality/quirkieish/slime_person/add_effect(mob/living/carbon/human/H, latespawn)
+	H.set_species(SLIME)
