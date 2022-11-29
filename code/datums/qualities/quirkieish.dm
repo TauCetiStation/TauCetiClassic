@@ -261,3 +261,42 @@
 		if(pda)
 			pda.ownjob = wear_id.assignment
 			pda.assign(H.real_name)
+
+
+/datum/quality/quirkieish/loyal_golem
+	name = "Loyal Golem"
+	desc = "Ты очень умный тупой голем, а твой хозяин - НТ... или..."
+	requirement = "Подопытный, но не злодей."
+
+/datum/quality/quirkieish/loyal_golem/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject"
+
+/datum/quality/quirkieish/loyal_golem/add_effect(mob/living/carbon/human/H, latespawn)
+	H.set_species(GOLEM)
+	H.f_style = "Shaved"
+	H.h_style = "Bald"
+	H.flavor_text = ""
+	H.regenerate_icons()
+
+	// In case the golem is evil don't make him a loyal dog of NT.
+	if(isanyantag(H))
+		return
+	if(prob(10))
+		return
+	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(H)
+	L.stealth_inject(H)
+
+
+/datum/quality/quirkieish/slime_person
+	name = "Slimeperson"
+	desc = "Ты един со слизнями."
+	requirement = "Подопытный."
+
+/datum/quality/quirkieish/slime_person/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject"
+
+/datum/quality/quirkieish/slime_person/add_effect(mob/living/carbon/human/H, latespawn)
+	H.set_species(SLIME)
+	H.f_style = "Shaved"
+	H.h_style = "Bald"
+  H.regenerate_icons()
