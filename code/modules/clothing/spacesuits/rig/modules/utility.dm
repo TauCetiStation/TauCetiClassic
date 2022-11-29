@@ -329,6 +329,18 @@
 	charges["kelotane"]      = new /datum/rig_charge("kelotane",      "kelotane",      30)
 	charges["bicaridine"]    = new /datum/rig_charge("bicaridine",    "bicaridine",    30)
 
+/obj/item/rig_module/chem_dispenser/medical/vox // variant for the vox medical rigs
+	name = "hardsuit mounted chemical injector"
+
+/obj/item/rig_module/chem_dispenser/medical/vox/init_charges()
+	charges = list()
+	charges["tricordrazine"] = new /datum/rig_charge("tricordrazine", "tricordrazine", 30)
+	charges["inaprovaline"]  = new /datum/rig_charge("inaprovaline",  "inaprovaline",  30)
+	charges["tramadol"]      = new /datum/rig_charge("tramadol",      "tramadol",      30)
+	charges["dylovene"]      = new /datum/rig_charge("dylovene",      "anti_toxin",    30)
+	charges["kelotane"]      = new /datum/rig_charge("kelotane",      "kelotane",      30)
+	charges["bicaridine"]    = new /datum/rig_charge("bicaridine",    "bicaridine",    30)
+
 /obj/item/rig_module/cooling_unit
 	name = "hardsuit mounted cooling unit"
 	icon_state = "cloak"
@@ -749,7 +761,7 @@
 	interface_name = "Turn invisibility"
 	interface_desc = "System that makes hardsuit invisible."
 	origin_tech = "engineering=6;programming=6;bluespace=6;combat=6;phorontech=6"
-	active_power_cost = 55
+	active_power_cost = 500
 	permanent = TRUE
 	show_toggle_button = TRUE
 	toggleable = TRUE

@@ -1806,13 +1806,6 @@
 	var/prev_intent = a_intent
 	a_intent_change(INTENT_HARM)
 
-	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/space/vox/stealth))
-		for(var/obj/item/clothing/suit/space/vox/stealth/V in list(wear_suit))
-			if(V.on)
-				V.overload()
-
-	toggle_leap()
-
 	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .proc/leap_end, prev_intent))
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)
