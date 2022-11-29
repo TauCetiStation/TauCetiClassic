@@ -424,6 +424,7 @@
 	,HAS_HAIR = TRUE
 	,FACEHUGGABLE = TRUE
 	,IS_SOCIAL = TRUE
+	,FUR = TRUE
 	)
 
 	flesh_color = "#afa59e"
@@ -1375,7 +1376,9 @@
 	H.remove_status_flags(CANSTUN|CANWEAKEN|CANPARALYSE)
 	H.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 
-	for(var/x in list(H.w_uniform, H.head, H.wear_suit, H.shoes, H.wear_mask, H.gloves))
+	var/list/items_to_remove = H.get_all_slots()
+
+	for(var/x in items_to_remove)
 		if(x)
 			H.remove_from_mob(x)
 
@@ -1385,6 +1388,10 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem, SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem, SLOT_WEAR_MASK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, SLOT_GLOVES)
+
+	for(var/x in items_to_remove)
+		if(x)
+			H.equip_to_appropriate_slot(x, TRUE)
 
 /datum/species/golem/on_loose(mob/living/carbon/human/H, new_species)
 	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)

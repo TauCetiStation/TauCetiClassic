@@ -48,7 +48,7 @@
 					addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 				return
 			..()
-			
+
 	else if (istype(O, /obj/item/weapon/fireaxe) && localopened)
 		if(!fireaxe)
 			user.drop_from_inventory(O, src)

@@ -3,10 +3,21 @@
 /turf/environment/space,
 /area/space)
 "ab" = (
-/obj/machinery/chem_dispenser,
-/turf/simulated/floor{
-	icon_state = "white"
+/obj/structure/table/glass,
+/obj/machinery/light{
+	dir = 8
 	},
+/obj/item/device/paicard{
+	pixel_x = -6;
+	pixel_y = 11
+	},
+/obj/item/weapon/reagent_containers/syringe/antitoxin{
+	pixel_y = 1
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
+	},
+/turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
 "ac" = (
 /turf/simulated/floor{
@@ -14,78 +25,354 @@
 	},
 /area/space_structures/agrospheregarden)
 "ad" = (
-/turf/simulated/wall,
+/obj/effect/decal/cleanable/vomit{
+	icon_state = "vomittox_2"
+	},
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/item/device/lens/nude,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
 /area/space_structures/agrospheregarden)
 "ae" = (
-/obj/structure/table/glass,
-/obj/item/weapon/storage/pill_bottle/zoom{
-	pixel_x = -4
-	},
-/obj/item/weapon/storage/pill_bottle/paroxetine{
-	pixel_x = 3;
-	pixel_y = 8
-	},
-/obj/item/weapon/storage/pill_bottle/citalopram{
-	pixel_x = 8;
-	pixel_y = -3
-	},
-/obj/item/weapon/reagent_containers/pill/LSD{
-	pixel_x = -7;
-	pixel_y = 10
-	},
-/obj/item/weapon/reagent_containers/pill/methylphenidate,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/item/clothing/suit/storage/labcoat/mad,
+/turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
 "af" = (
-/obj/machinery/chem_master,
+/obj/item/weapon/pestspray,
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
-	icon_state = "white"
+	dir = 4;
+	icon_state = "whitegreen"
 	},
 /area/space_structures/agrospheregarden)
 "ag" = (
-/obj/item/toy/figure/chemist,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/spacecash/c1000,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"ah" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/obj/machinery/hydroponics/soil,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"ai" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkyellow"
+	},
+/area/space_structures/agrospheregarden)
+"aj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/ore/diamond,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/agrospheregarden)
+"ak" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/agrospheregarden)
+"al" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 28
+	},
+/obj/effect/decal/remains/human,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/agrospheregarden)
+"am" = (
+/obj/machinery/hydroponics/constructable,
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
 /area/space_structures/agrospheregarden)
-"ah" = (
-/obj/item/weapon/reagent_containers/pill/paracetamol{
-	pixel_x = 12;
-	pixel_y = 6
-	},
-/obj/item/weapon/spacecash/c500{
-	pixel_x = -2;
-	pixel_y = -7
-	},
-/obj/item/weapon/spacecash/c1000{
-	pixel_x = 11;
-	pixel_y = 5
-	},
-/obj/item/weapon/spacecash/c1000,
-/obj/item/weapon/spacecash/c200{
-	pixel_y = 9
-	},
+"an" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/item/clothing/mask/gas/poltergeist,
 /obj/item/weapon/spacecash/c500{
 	pixel_x = -12;
 	pixel_y = 6
 	},
-/obj/effect/decal/cleanable/vomit{
-	icon_state = "vomittox_2"
-	},
-/obj/effect/decal/remains/human,
-/obj/item/clothing/suit/storage/labcoat/mad,
-/obj/item/clothing/head/cakehat,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
 /area/space_structures/agrospheregarden)
-"ai" = (
-/obj/item/weapon/reagent_containers/pill/LSD{
-	pixel_x = 7;
-	pixel_y = 9
+"ao" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/simulated/floor{
+	icon_state = "white"
 	},
+/area/space_structures/agrospheregarden)
+"ap" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/obj/item/weapon/spacecash/c1000{
+	pixel_x = 11;
+	pixel_y = 5
+	},
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"aq" = (
+/obj/machinery/vending/hydronutrients,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitegreen"
+	},
+/area/space_structures/agrospheregarden)
+"ar" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/flora/junglebush,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"as" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"at" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/vending/snack{
+	name = "hacked Getmore Chocolate Corp";
+	prices = list()
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"au" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/sheet/glass{
+	amount = 50;
+	pixel_x = 7
+	},
+/obj/item/stack/rods{
+	amount = 50;
+	pixel_x = -4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "darkyellow"
+	},
+/area/space_structures/agrospheregarden)
+"av" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/device/guitar,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/agrospheregarden)
+"aw" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/agrospheregarden)
+"ax" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle,
+/obj/machinery/hydroponics/soil,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"ay" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/space_structures/agrospheregarden)
+"az" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"aA" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor{
+	id = "agro blast";
+	name = "Blast Doors"
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/agrospheregarden)
+"aB" = (
+/obj/machinery/hydroponics/constructable,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"aC" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "diagonalWall3"
+	},
+/area/space_structures/agrospheregarden)
+"aD" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/space_structures/agrospheregarden)
+"aE" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/space_structures/agrospheregarden)
+"aF" = (
+/obj/machinery/biogenerator,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"aG" = (
+/obj/machinery/vending/hydroseeds,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"aH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/seed_extractor,
+/obj/effect/decal/cleanable/cobweb,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"aI" = (
+/obj/machinery/hydroponics/constructable,
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"aJ" = (
+/obj/machinery/hydroponics/constructable,
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitegreen"
+	},
+/area/space_structures/agrospheregarden)
+"aK" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/item/device/camera_film,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/reagent_containers/pill/happy,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"aM" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"aN" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/weapon/storage/belt/utility,
+/obj/item/device/radio/off,
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	name = "apc top";
+	pixel_y = 28;
+	start_charge = 0
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkyellow"
+	},
+/area/space_structures/agrospheregarden)
+"aO" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/device/t_scanner,
+/obj/item/clothing/gloves/fyellow,
+/obj/item/device/multitool,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "darkyellow"
+	},
+/area/space_structures/agrospheregarden)
+"aP" = (
+/obj/structure/table/glass,
+/obj/item/weapon/disk/research_points{
+	pixel_x = 14;
+	pixel_y = 11
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/book/manual/wiki/hydroponics{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/device/camera{
+	pixel_x = 12;
+	pixel_y = -5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"aQ" = (
 /obj/item/weapon/reagent_containers/pill/LSD{
 	pixel_y = 5
 	},
@@ -93,112 +380,102 @@
 	pixel_x = 4;
 	pixel_y = -3
 	},
+/obj/item/weapon/spacecash/c200{
+	pixel_y = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/generic,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
 /area/space_structures/agrospheregarden)
-"aj" = (
-/obj/structure/table/glass,
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/item/weapon/reagent_containers/hypospray,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
+"aR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/junglebush/b,
+/turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
-"ak" = (
-/obj/item/weapon/reagent_containers/pill/methylphenidate,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/space_structures/agrospheregarden)
-"al" = (
-/obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/food/snacks/dionaroast,
-/obj/item/weapon/kitchenknife/plastic,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/space_structures/agrospheregarden)
-"am" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/agrospheregarden)
-"an" = (
-/obj/machinery/hydroponics/constructable,
+"aS" = (
+/obj/structure/flora/ausbushes/lavendergrass,
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aT" = (
+/obj/item/weapon/hatchet,
+/obj/effect/decal/cleanable/vomit,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aU" = (
+/obj/structure/sink/puddle,
+/obj/structure/flora/ausbushes/reedbush{
+	pixel_y = 6
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aV" = (
+/obj/structure/flora/junglebush/large,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aW" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"aX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/clown,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/agrospheregarden)
-"ao" = (
-/obj/machinery/light{
-	dir = 8
+"aY" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/hydroponics/constructable,
-/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/constructable_frame,
+/obj/item/weapon/circuitboard/smes,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/agrospheregarden)
-"ap" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 1
+"aZ" = (
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/turf/environment/space,
-/area/space_structures/agrospheregarden)
-"aq" = (
-/obj/structure/table/glass,
-/obj/machinery/kitchen_machine/microwave,
+/obj/machinery/constructable_frame,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/agrospheregarden)
-"ar" = (
-/obj/machinery/light{
-	dir = 4
+"ba" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/phoron{
+	amount = 13
 	},
-/obj/machinery/hydroponics/constructable,
-/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "dark"
 	},
 /area/space_structures/agrospheregarden)
-"as" = (
-/obj/structure/shuttle/engine/heater{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
-/area/space_structures/agrospheregarden)
-"at" = (
-/obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/pill/happy{
-	pixel_x = 7;
-	pixel_y = 5
-	},
-/obj/item/weapon/reagent_containers/pill/happy,
-/obj/item/weapon/storage/pill_bottle/happy{
-	pixel_x = -6;
-	pixel_y = 8
-	},
-/obj/item/weapon/storage/pill_bottle/citalopram,
-/obj/item/weapon/reagent_containers/syringe/antitoxin,
-/obj/item/weapon/disk/research_points,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/space_structures/agrospheregarden)
-"au" = (
+"bb" = (
 /obj/item/seeds/ambrosiadeusseed,
 /obj/item/seeds/ambrosiadeusseed,
 /obj/item/seeds/ambrosiadeusseed,
@@ -208,221 +485,985 @@
 /obj/structure/closet/crate,
 /obj/item/seeds/vale,
 /obj/item/seeds/surik,
+/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/machinery/newscaster{
+	pixel_x = -28
+	},
 /turf/simulated/floor{
-	icon_state = "white"
+	dir = 3;
+	icon_state = "whitegreen"
 	},
 /area/space_structures/agrospheregarden)
-"av" = (
-/obj/item/weapon/hatchet,
-/obj/item/weapon/pestspray,
+"bc" = (
+/obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/reagent_containers/spray/plantbgone,
 /turf/simulated/floor{
-	icon_state = "white"
+	dir = 3;
+	icon_state = "whitegreen"
 	},
 /area/space_structures/agrospheregarden)
-"aw" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/agrospheregarden)
-"ay" = (
-/obj/structure/shuttle/engine/propulsion,
-/turf/simulated/floor/plating,
-/area/space_structures/agrospheregarden)
-"aA" = (
-/obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom,
+"bd" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/weapon/reagent_containers/pill/methylphenidate,
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
-"aB" = (
-/obj/machinery/hydroponics/constructable,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/space_structures/agrospheregarden)
-"aC" = (
-/obj/machinery/hydroponics/constructable,
-/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/space_structures/agrospheregarden)
-"aD" = (
-/obj/machinery/hydroponics/constructable,
-/obj/item/weapon/grown/deathnettle,
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/space_structures/agrospheregarden)
-"aE" = (
-/turf/simulated/floor/grass,
-/area/space_structures/agrospheregarden)
-"aF" = (
-/obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom{
-	pixel_x = 6;
-	pixel_y = -5
+"be" = (
+/obj/structure/flora/ausbushes/brflowers,
+/obj/machinery/bot/farmbot{
+	on = 0
 	},
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
-"aG" = (
+"bf" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/box/lights/mixed,
+/obj/item/weapon/storage/briefcase/inflatable,
+/turf/simulated/floor{
+	icon_state = "darkyellow"
+	},
+/area/space_structures/agrospheregarden)
+"bg" = (
 /obj/structure/flora/ausbushes/lavendergrass,
-/turf/simulated/floor/grass,
-/area/space_structures/agrospheregarden)
-"aH" = (
-/turf/simulated/floor/plating,
-/area/space_structures/agrospheregarden)
-"aI" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
-/turf/simulated/floor/plating,
-/area/space_structures/agrospheregarden)
-"aJ" = (
-/obj/machinery/light{
-	dir = 8
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
-"aK" = (
-/obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
-/turf/simulated/floor/grass,
+"bh" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/device/camera_film,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	icon_state = "darkyellow"
+	},
 /area/space_structures/agrospheregarden)
-"aL" = (
+"bi" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/simulated/floor{
+	icon_state = "darkyellow"
+	},
+/area/space_structures/agrospheregarden)
+"bj" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/syndicate/civilian,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"bk" = (
 /obj/structure/flora/ausbushes/lavendergrass,
-/obj/machinery/light{
-	dir = 4
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bl" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/item/weapon/spacecash/c500{
+	pixel_x = -2;
+	pixel_y = -7
 	},
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
-"aM" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
+"bm" = (
+/obj/structure/flora/junglebush/b,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
-"aN" = (
-/obj/machinery/door/airlock/external,
-/turf/simulated/floor/plating,
-/area/space_structures/agrospheregarden)
-"aO" = (
-/obj/structure/shuttle/engine/heater{
-	dir = 8
-	},
+"bn" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/item/weapon/flora/random,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bo" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/junglebush,
+/obj/item/weapon/reagent_containers/pill/happy,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bp" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/obj/item/device/plant_analyzer,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bq" = (
+/mob/living/simple_animal/pug{
+	faction = "tomato";
+	name = "El Muchacho"
+	},
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"br" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/obj/structure/stool/bed/chair/pedalgen{
+	anchored = 1;
+	dir = 8
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/alarm{
+	hidden_from_console = 1;
+	pixel_y = 22
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bs" = (
 /obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/effect/overlay/palmtree_l,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bt" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bu" = (
+/obj/structure/flora/ausbushes/sunnybush,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bv" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bw" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/cobweb2,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"bx" = (
+/obj/item/weapon/newspaper,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"by" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/suit/storage/labcoat/chemist,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"bz" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"bA" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bB" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/vomit{
+	icon_state = "vomit_4"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"bC" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"bD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"bE" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"bF" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/spiderling_remains,
+/obj/effect/decal/cleanable/generic,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"bG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"bH" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"bI" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
+/obj/item/weapon/mop,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bJ" = (
+/obj/machinery/atmospherics/pipe/manifold4w/visible,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/junglebush,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"bK" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bL" = (
+/obj/structure/dispenser/oxygen,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"bM" = (
 /obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/reagent_containers/pill/LSD{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/obj/effect/decal/remains/human,
+/turf/simulated/floor,
 /area/space_structures/agrospheregarden)
-"aP" = (
-/obj/item/weapon/reagent_containers/food/snacks/grown/mtear,
+"bN" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/item/weapon/minihoe{
+	pixel_x = 3
+	},
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
-"aQ" = (
+"bO" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/effect/decal/cleanable/greenglow,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bP" = (
+/obj/structure/window/reinforced,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/clothing{
+	name = "hacked ClothesMate";
+	prices = list()
+	},
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bQ" = (
+/obj/structure/table/woodentable,
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bR" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/effect/overlay/palmtree_r,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bS" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/clothing/suit/poncho/rainbow,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"bT" = (
 /obj/structure/flora/junglebush/c,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
-"aR" = (
-/obj/structure/flora/tree/jungle,
+"bU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita,
+/obj/machinery/hydroponics/soil,
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
-"aS" = (
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle,
+"bV" = (
+/obj/structure/window/reinforced,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/weapon/bikehorn/dogtoy,
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
-"aT" = (
-/obj/structure/shuttle/engine/heater{
-	dir = 4
+"bW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/mob/living/simple_animal/hostile/tomato{
+	faction = "tomato"
 	},
-/obj/structure/window/reinforced{
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bX" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"bY" = (
+/obj/structure/window/reinforced,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 5
+	},
+/obj/item/weapon/flora/random,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"bZ" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"ca" = (
+/obj/machinery/chem_dispenser,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteyellow"
+	},
+/area/space_structures/agrospheregarden)
+"cb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/generic,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "whiteyellow"
+	},
+/area/space_structures/agrospheregarden)
+"cc" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/item/clothing/mask/gas/poltergeist,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"cd" = (
+/obj/structure/closet/crate/freezer{
+	opened = 1
+	},
+/obj/item/weapon/reagent_containers/food/snacks/meatsteak,
+/obj/random/foods/food_without_garbage,
+/obj/random/foods/food_without_garbage,
+/obj/item/weapon/reagent_containers/food/snacks/kabob,
+/obj/item/pizzabox/margherita,
+/obj/item/pizzabox/mushroom,
+/obj/item/weapon/reagent_containers/food/snacks/toastedsandwich,
+/obj/item/weapon/reagent_containers/food/snacks/syndicake,
+/obj/item/weapon/reagent_containers/food/snacks/syndicake,
+/obj/item/weapon/reagent_containers/food/snacks/soup/meatballsoup,
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/chocolate,
+/obj/item/weapon/reagent_containers/food/snacks/muffin,
+/obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato,
+/obj/random/foods/food_without_garbage,
+/obj/random/foods/food_without_garbage,
+/obj/random/foods/food_without_garbage,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "whiteyellow"
+	},
+/area/space_structures/agrospheregarden)
+"ce" = (
 /obj/structure/window/reinforced{
-	dir = 8;
-	req_access = list(72)
+	dir = 8
 	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
-/area/space_structures/agrospheregarden)
-"aU" = (
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/agrospheregarden)
-"aV" = (
 /obj/structure/flora/junglebush/large,
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
-"aW" = (
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle{
-	pixel_x = -15;
-	pixel_y = 15
+"cf" = (
+/obj/structure/flora/junglebush,
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/gar,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"cg" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
+"ch" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/simulated/floor/beach/water/waterpool,
+/area/space_structures/agrospheregarden)
+"ci" = (
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/turf/simulated/floor/grass,
-/area/space_structures/agrospheregarden)
-"aX" = (
-/obj/structure/flora/tree/jungle/small,
-/turf/simulated/floor/grass,
-/area/space_structures/agrospheregarden)
-"aY" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/machinery/light{
-	dir = 8
+/obj/machinery/door_control{
+	id = "agro blast";
+	name = "Bridge Blast Door Control";
+	pixel_y = -28
 	},
+/obj/structure/flora/ausbushes/grassybush,
+/turf/simulated/floor/beach/water/waterpool,
+/area/space_structures/agrospheregarden)
+"cj" = (
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/reagent_containers/blood/OMinus{
+	pixel_x = -8;
+	pixel_y = -1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/space_structures/agrospheregarden)
+"ck" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"cl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/ausbushes/stalkybush,
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
-"aZ" = (
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap,
-/turf/simulated/floor/grass,
-/area/space_structures/agrospheregarden)
-"ba" = (
+"cm" = (
+/obj/machinery/life_assist/artificial_ventilation,
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom,
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
 /area/space_structures/agrospheregarden)
-"bb" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap,
-/turf/simulated/floor/grass,
+"cn" = (
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
 /area/space_structures/agrospheregarden)
-"bc" = (
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap{
-	pixel_x = -20;
-	pixel_y = 10
+"co" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/space_structures/agrospheregarden)
+"cp" = (
+/obj/machinery/chem_master,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"cq" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/stool{
+	pixel_y = 8
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"cr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/tomato{
+	faction = "tomato"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"cs" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/disposal,
+/obj/structure/sign/warning/deathsposal{
+	pixel_x = 32
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteyellow"
+	},
+/area/space_structures/agrospheregarden)
+"ct" = (
+/obj/machinery/vending/sovietsoda,
+/obj/machinery/access_button{
+	command = "cycle_interior";
+	frequency = 1380;
+	master_tag = "agrosphere_airlock";
+	name = "interior access button";
+	pixel_y = -28
 	},
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
-"bd" = (
+"cu" = (
 /obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/tree/jungle/small,
+/obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
+"cv" = (
+/obj/structure/flora/junglebush/c,
+/turf/simulated/floor/beach/water/waterpool,
+/area/space_structures/agrospheregarden)
+"cw" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/space_structures/agrospheregarden)
+"cx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"cy" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/vomit{
+	icon_state = "vomit_4"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"cz" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/bot/medbot,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whiteblue"
+	},
+/area/space_structures/agrospheregarden)
+"cA" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/universal{
+	dir = 4
+	},
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/space_structures/agrospheregarden)
+"cB" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
+	dir = 8;
+	external_pressure_bound = 140;
+	external_pressure_bound_default = 140;
+	name = "(OUT) Space Large Air Vent"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
+/area/space_structures/agrospheregarden)
+"cC" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "diagonalWall3"
+	},
+/area/space_structures/agrospheregarden)
+"cD" = (
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/glass/beaker/large{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/clothing/glasses/science{
+	pixel_y = 1
+	},
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	desc = "Someone has crossed out the 'Space' from Space Cleaner and written in Chemistry. Scrawled on the back is, 'Okay, whoever filled this with polytrinic acid, it was only funny the first time. It was hard enough replacing the CMO's first cat!'";
+	name = "Chemistry Cleaner"
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"cE" = (
+/obj/effect/decal/cleanable/flour,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"cF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet,
+/turf/simulated/floor/grass,
+/area/space_structures/agrospheregarden)
+"cG" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1380;
+	id_tag = "agrosphere_inner";
+	name = "Agrosphere External Access"
+	},
+/obj/machinery/atmospherics/components/binary/pump/on,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating{
+	dir = 1;
+	icon_state = "warnplate"
+	},
+/area/space_structures/agrospheregarden)
+"cH" = (
+/obj/structure/stool/bed/roller,
+/obj/machinery/iv_drip,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/space_structures/agrospheregarden)
+"cI" = (
+/obj/structure/table/glass,
+/obj/item/weapon/storage/box/syringes{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/weapon/storage/firstaid/adv{
+	pixel_x = -11;
+	pixel_y = 4
+	},
+/obj/machinery/vending/wallmed1{
+	name = "Emergency NanoMed";
+	pixel_y = -30
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 28
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"cJ" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/space_structures/agrospheregarden)
+"cK" = (
+/obj/structure/table/glass,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/reagent_containers/food/snacks/dionaroast{
+	pixel_y = 13
+	},
+/obj/item/weapon/kitchenknife/plastic{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/cakehat{
+	pixel_x = 14
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"cL" = (
+/obj/structure/table/glass,
+/obj/machinery/reagentgrinder,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"cM" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1380;
+	id_tag = "agrosphere_pump";
+	name = "Agrosphere Large Air Vent"
+	},
+/obj/structure/closet/emcloset/legacy,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/space_structures/agrospheregarden)
+"cN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/manifold4w/visible,
+/turf/simulated/floor/plating,
+/area/space_structures/agrospheregarden)
+"cO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/space_structures/agrospheregarden)
+"cP" = (
+/obj/structure/table/glass,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 13;
+	pixel_y = 9
+	},
+/obj/item/weapon/reagent_containers/hypospray{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whiteblue"
+	},
+/area/space_structures/agrospheregarden)
+"cQ" = (
+/obj/structure/table/glass,
+/obj/item/weapon/storage/firstaid/toxin{
+	pixel_x = 9;
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/box/beakers{
+	pixel_x = -6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/space_structures/agrospheregarden)
+"cR" = (
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater1"
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/agrospheregarden)
+"cS" = (
+/obj/structure/sign/warning/vacuum/external{
+	pixel_y = -32
+	},
+/obj/machinery/airlock_sensor{
+	frequency = 1380;
+	id_tag = "agrosphere_sensor";
+	pixel_x = -28
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 4;
+	frequency = 1380;
+	id_tag = "agrosphere_pump";
+	name = "Agrosphere Large Air Vent"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/space_structures/agrospheregarden)
+"cT" = (
+/obj/machinery/atmospherics/pipe/manifold/visible,
+/turf/simulated/floor/plating,
+/area/space_structures/agrospheregarden)
+"cU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/embedded_controller/radio/airlock_controller{
+	frequency = 1380;
+	id_tag = "agrosphere_airlock";
+	pixel_x = 28;
+	tag_airpump = "agrosphere_pump";
+	tag_chamber_sensor = "agrosphere_sensor";
+	tag_exterior_door = "agrosphere_outer";
+	tag_interior_door = "agrosphere_inner"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
+	dir = 8;
+	frequency = 1380;
+	id_tag = "agrosphere_pump";
+	name = "Agrosphere Large Air Vent"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platebotc"
+	},
+/area/space_structures/agrospheregarden)
+"cV" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "burst_l"
+	},
+/turf/environment/space,
+/area/space_structures/agrospheregarden)
+"cW" = (
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "agro blast";
+	name = "Blast Doors";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/external{
+	frequency = 1380;
+	id_tag = "agrosphere_outer"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
+	},
+/area/space_structures/agrospheregarden)
+"cX" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "burst_r"
+	},
+/turf/environment/space,
+/area/space_structures/agrospheregarden)
+"cY" = (
+/turf/simulated/floor/plating/airless,
+/area/space_structures/agrospheregarden)
+"cZ" = (
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1380;
+	master_tag = "agrosphere_airlock";
+	name = "exterior access button";
+	pixel_y = 28
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/agrospheregarden)
+"da" = (
+/obj/structure/rack,
+/obj/item/clothing/head/helmet/space/syndicate/civilian,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/space_structures/agrospheregarden)
 "fK" = (
-/obj/item/weapon/reagent_containers/food/snacks/grown/harebell{
-	pixel_x = 6;
-	pixel_y = 7
+/obj/structure/flora/ausbushes/grassybush,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/reagent_containers/pill/methylphenidate,
+/mob/living/simple_animal/hostile/tomato{
+	faction = "tomato"
 	},
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
 "OZ" = (
-/obj/machinery/light{
-	dir = 4
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 12
 	},
-/turf/simulated/floor/grass,
+/obj/structure/mirror{
+	pixel_x = 28
+	},
+/turf/simulated/floor{
+	dir = 3;
+	icon_state = "whitegreen"
+	},
 /area/space_structures/agrospheregarden)
 
 (1,1,1) = {"
@@ -445,21 +1486,6 @@ aa
 aa
 aa
 aa
-aM
-aa
-aa
-aa
-aa
-aa
-aM
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 "}
 (2,1,1) = {"
 aa
@@ -469,27 +1495,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aO
-am
-am
-am
-am
-am
-aO
-aa
-aa
+aE
+aA
+aA
+aA
+aD
+cn
 aa
 aa
 aa
@@ -503,30 +1514,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ad
-am
 aE
-aY
-aK
-am
-ad
-aa
-aa
-aa
+aA
+aD
+bj
+da
+bL
+aD
+co
+cC
 aa
 aa
 aa
@@ -537,34 +1533,19 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-am
-am
 aE
-aV
-aE
-aQ
-aE
+aD
+aD
 am
-am
-aa
-aa
-aa
-aa
+bb
+bk
+bx
+bM
+ca
+cp
+aD
+aD
+cC
 aa
 aa
 aa
@@ -573,359 +1554,209 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-am
-am
+aA
 aP
-aE
-aV
-aE
-aE
-aE
-aV
-am
-am
-aa
-aa
-aa
-aa
+ab
+an
+bc
+bl
+by
+bN
+cb
+cq
+cD
+aD
+cR
+cV
 aa
 aa
 "}
 (6,1,1) = {"
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-am
-am
-aJ
 aE
-aE
-aE
-aE
-aE
-aR
-aE
-aJ
-am
-am
-aa
-aa
-aa
+aD
+aB
+ad
+ao
+bd
+bm
+bz
+bO
+cc
+cr
+cE
+cK
+aD
+aD
 aa
 aa
 "}
 (7,1,1) = {"
-ap
-as
-ad
-ad
-am
-ad
-ad
-ad
-am
-ad
-ad
-aw
-ay
+aa
+aa
+aD
 aI
-as
-am
-am
-aE
-aE
 aQ
-aR
-aE
-aE
-aE
-aE
-aE
-aV
-aA
-am
-aw
-ay
-aa
-aa
+ae
+ap
+OZ
+bn
+bA
+bP
+cd
+cs
+cF
+cL
+aD
+cR
+cV
 aa
 "}
 (8,1,1) = {"
 aa
-ad
-ad
+aE
+aD
+aJ
+aR
 af
-aj
-aC
-ao
-an
-aC
-au
-ad
-ad
-ad
-ad
-ad
-ad
-aE
-aE
-aE
-aE
-aS
-aW
-aP
-aE
-aE
-bd
-aE
-aE
-aG
-ad
-ad
-ad
-ad
-ad
+aq
+aD
+bo
+bB
+bQ
+ce
+aD
+aD
+aD
+aD
+aD
+cC
+aa
 "}
 (9,1,1) = {"
 aa
-ad
-ab
-ag
-ak
-ac
-ac
-ac
-ac
-ac
-ac
-ad
-aH
-aH
-ad
-aE
 aA
 aG
-aE
-aE
-aE
-aG
-aE
-aE
-aE
-aE
+aK
+aS
 fK
-aQ
-aE
-aE
-ad
-aH
-aH
-ad
+ar
+ax
+bp
+bC
+bR
+cf
+ct
+aD
+cM
+cS
+aD
+cY
+aa
 "}
 (10,1,1) = {"
 aa
-ad
-ae
-ah
-aB
-aB
-aC
-aB
-aD
-ac
-ac
-aN
-aH
-aH
-aN
-aE
-aE
-aE
-aK
-aE
-aE
-aE
+aA
 aF
-aG
-aE
-aE
-aE
-aE
-aE
-aE
-aN
-aH
-aH
-aN
+aL
+aT
+ag
+as
+az
+bq
+bD
+bS
+cg
+cu
+cG
+cN
+cT
+cW
+cY
+aa
 "}
 (11,1,1) = {"
 aa
-ad
-at
-ai
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ad
-aH
-aH
-ad
-aE
-aE
-aE
-aE
-aE
-aE
-aX
-aE
-aE
-aE
-aE
-aE
-aE
 aA
-aE
-ad
 aH
-aH
-ad
+aM
+aU
+ah
+at
+be
+aV
+bE
+bT
+ch
+cv
+aD
+cO
+cU
+aD
+cZ
+aa
 "}
 (12,1,1) = {"
 aa
-ad
-ad
-aq
-al
-an
-ar
 aC
-an
-av
-ad
-ad
-ad
-ad
-ad
-ad
-aE
-aE
-aE
-aR
-aE
-aE
-aG
-aE
-aE
-aE
-aR
-aV
-aE
-ad
-ad
-ad
-ad
-ad
+aD
+aN
+aW
+ai
+au
+aD
+br
+bF
+bU
+ci
+aD
+aD
+aD
+aD
+aD
+cJ
+aa
 "}
 (13,1,1) = {"
-ap
-as
-ad
-ad
-am
-ad
-ad
-ad
-am
-ad
-ad
-aw
-ay
-aI
-as
-am
-am
-aE
-aE
-aQ
-aE
-aG
-aK
-aE
-aV
-aE
-aG
-aE
-am
-aw
-ay
 aa
 aa
+aD
+aO
+aX
+aj
+av
+bf
+bs
+bG
+bV
+cj
+cw
+cH
+cP
+aD
+cR
+cX
 aa
 "}
 (14,1,1) = {"
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-am
-am
-aL
-aE
-aE
-aE
-aZ
-aQ
-aE
-aE
-OZ
-am
-am
-aa
-aa
-aa
+aC
+aD
+aY
+ak
+aw
+bg
+bt
+bH
+bW
+ck
+cx
+ac
+cQ
+aD
+aD
 aa
 aa
 "}
@@ -933,35 +1764,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-am
-am
-aE
-aE
-aE
-aR
-bb
-aE
-aP
-am
-am
-aa
-aa
-aa
-aa
+aA
+aZ
+al
+ay
+bh
+bu
+bI
+bX
+cl
+cy
+cI
+aD
+cR
+cX
 aa
 aa
 "}
@@ -969,34 +1785,19 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-am
-am
-aE
-aG
-aG
-bc
-aG
-am
-am
-aa
-aa
-aa
-aa
+aC
+aD
+aD
+ba
+bi
+bv
+bJ
+bY
+cm
+cz
+aD
+aD
+cJ
 aa
 aa
 aa
@@ -1007,30 +1808,15 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ad
-am
-aE
-ba
-aV
-am
-ad
-aa
-aa
-aa
+aC
+aA
+aD
+bw
+bK
+bZ
+aD
+cA
+cJ
 aa
 aa
 aa
@@ -1045,27 +1831,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aT
-am
-am
-am
-am
-am
-aT
-aa
-aa
+aC
+aA
+aA
+aA
+aD
+cB
 aa
 aa
 aa
@@ -1085,21 +1856,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aU
-aa
-aa
-aa
-aa
-aa
-aU
 aa
 aa
 aa
