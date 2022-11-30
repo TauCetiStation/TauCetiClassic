@@ -654,8 +654,11 @@
 /area/station/engineering/atmos)
 "bu" = (
 /obj/machinery/disposal,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -28
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/structure/sign/warning/deathsposal{
+	pixel_x = -32
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -721,8 +724,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor{
-	dir = 10;
+	dir = 8;
 	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
@@ -886,10 +893,6 @@
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "bT" = (
-/obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Bay";
-	req_access = list(71)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
@@ -897,11 +900,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 10;
+	icon_state = "black"
 	},
-/area/station/cargo/storage)
+/area/station/hallway/primary/central)
 "bU" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Bay";
@@ -1015,6 +1019,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
@@ -1086,6 +1091,10 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/plating{
 	icon_state = "platebotc"
 	},
@@ -1106,6 +1115,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "co" = (
@@ -1125,6 +1137,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "cp" = (
@@ -1135,6 +1150,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1148,6 +1166,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -1163,6 +1184,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -1176,6 +1200,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1203,6 +1230,10 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -1320,19 +1351,22 @@
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cE" = (
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	id_tag = "recycler_outer";
-	locked = 1;
-	name = "Recycler External Access";
-	req_access = list(67)
+/obj/machinery/door/airlock/mining/glass{
+	name = "Cargo Bay";
+	req_access = list(71)
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/cargo/storage)
 "cF" = (
 /obj/structure/closet/secure_closet/recycler,
@@ -1490,38 +1524,37 @@
 	},
 /area/station/cargo/recycler)
 "cO" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "stationscrap"
+/obj/structure/disposaloutlet{
+	dir = 4
 	},
-/turf/simulated/floor/plating/airless{
-	dir = 1;
-	icon_state = "warnplate"
-	},
+/obj/structure/disposalpipe/trunk,
+/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cP" = (
-/obj/machinery/access_button{
-	command = "cycle_exterior";
+/obj/machinery/door/airlock/external{
 	frequency = 1379;
-	master_tag = "recycler_airlock";
-	name = "exterior access button";
-	pixel_y = 28;
+	id_tag = "recycler_outer";
+	locked = 1;
+	name = "Recycler External Access";
 	req_access = list(67)
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/floor/plating/airless{
-	dir = 1;
-	icon_state = "warnplatecorner"
-	},
-/area/station/cargo/recycler)
-"cQ" = (
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/airless,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
+"cQ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating/airless{
+	dir = 1;
+	icon_state = "warnplate"
+	},
 /area/station/cargo/recycler)
 "cR" = (
 /obj/structure/cable/yellow{
@@ -2257,6 +2290,27 @@
 /obj/structure/closet/crate,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
+"ei" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless{
+	dir = 1;
+	icon_state = "warnplate"
+	},
+/area/station/cargo/recycler)
+"ej" = (
+/obj/machinery/conveyor_switch/oneway{
+	id = "stationscrap"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless{
+	dir = 1;
+	icon_state = "warnplate"
+	},
+/area/station/cargo/recycler)
 "ek" = (
 /obj/machinery/light{
 	dir = 8
@@ -2272,6 +2326,38 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"em" = (
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "recycler_airlock";
+	name = "exterior access button";
+	pixel_y = 28;
+	req_access = list(67)
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless{
+	dir = 1;
+	icon_state = "warnplatecorner"
+	},
+/area/station/cargo/recycler)
+"en" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "eq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -6495,6 +6581,9 @@
 /area/station/engineering/engine)
 "Pi" = (
 /obj/structure/bookcase/manuals/engineering,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -29344,8 +29433,8 @@ bi
 bi
 bw
 bF
-bw
-cN
+cO
+cQ
 cY
 cY
 cY
@@ -29601,8 +29690,8 @@ bw
 bF
 bV
 bI
-cA
-cN
+bw
+ei
 dc
 dm
 dm
@@ -29859,7 +29948,7 @@ bI
 bw
 bI
 bw
-cO
+ei
 dd
 dn
 dp
@@ -30115,8 +30204,8 @@ bz
 bJ
 bw
 cl
-bw
-cN
+cA
+ej
 dd
 do
 dn
@@ -30373,7 +30462,7 @@ bM
 bX
 bI
 cC
-cN
+ei
 dd
 dp
 dn
@@ -30630,7 +30719,7 @@ bI
 bF
 bI
 cD
-cN
+ei
 dd
 dp
 dp
@@ -30887,7 +30976,7 @@ bN
 bN
 bN
 SY
-cP
+em
 dd
 dn
 dC
@@ -31143,8 +31232,8 @@ gN
 bO
 ca
 cm
-cE
-cQ
+cP
+en
 de
 dq
 dD
@@ -33194,9 +33283,9 @@ zw
 in
 lU
 bf
-lU
 bB
 bT
+cE
 ch
 cu
 cJ
