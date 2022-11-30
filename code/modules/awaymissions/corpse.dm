@@ -137,8 +137,8 @@
 	corpseshoes = /obj/item/clothing/shoes/boots/combat
 	corpseradio = /obj/item/device/radio/headset
 	corpsemask = /obj/item/clothing/mask/gas/coloured
-	corpsehelmet = /obj/item/clothing/head/helmet/space/unathi/breacher
-	corpsesuit = /obj/item/clothing/suit/space/unathi/breacher
+	corpsehelmet = /obj/item/clothing/head/helmet/space/rig/unathi/breacher
+	corpsesuit = /obj/item/clothing/suit/space/rig/unathi/breacher
 	corpseid = 1
 	corpseidjob = "Unathi Commander"
 	specie = UNATHI

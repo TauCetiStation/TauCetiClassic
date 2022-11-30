@@ -1013,7 +1013,7 @@ var/global/list/tourette_bad_words = list("ГОВНО","ЖОПА","ЕБАЛ","Б
 		if(G.prescription)
 			nearsighted = 0
 
-	if(istype(head, /obj/item/clothing/head/welding) || istype(head, /obj/item/clothing/head/helmet/space/unathi))
+	if(istype(head, /obj/item/clothing/head/welding) || istype(head, /obj/item/clothing/head/helmet/space/rig/unathi))
 		var/obj/item/clothing/head/welding/O = head
 		if(!O.up && tinted_weldhelh)
 			impaired = 2

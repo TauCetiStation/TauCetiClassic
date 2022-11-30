@@ -3705,16 +3705,16 @@
 /obj/machinery/door_control{
 	id = "Secure Gate";
 	name = "Brig Lockdown";
-	req_access = list(2);
 	pixel_x = 6;
-	pixel_y = -4
+	pixel_y = -4;
+	req_access = list(2)
 	},
 /obj/machinery/door_control{
 	id = "Prison Gate";
 	name = "Prison Wing Lockdown";
-	req_access = list(2);
+	pixel_x = 6;
 	pixel_y = 7;
-	pixel_x = 6
+	req_access = list(2)
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
@@ -19957,9 +19957,9 @@
 /area/station/security/range)
 "aJD" = (
 /obj/structure/rack,
-/obj/item/clothing/head/helmet/space/unathi/helmet_cheap,
+/obj/item/clothing/head/helmet/space/rig/unathi/helmet_cheap,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/unathi/rig_cheap,
+/obj/item/clothing/suit/space/rig/unathi/rig_cheap,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -19967,12 +19967,12 @@
 /area/station/ai_monitored/eva)
 "aJE" = (
 /obj/structure/rack,
-/obj/item/clothing/head/helmet/space/skrell/black,
+/obj/item/clothing/head/helmet/space/rig/skrell/black,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/skrell/black,
-/obj/item/clothing/head/helmet/space/skrell/white,
+/obj/item/clothing/suit/space/rig/skrell/black,
+/obj/item/clothing/head/helmet/space/rig/skrell,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/skrell/white,
+/obj/item/clothing/suit/space/rig/skrell,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"

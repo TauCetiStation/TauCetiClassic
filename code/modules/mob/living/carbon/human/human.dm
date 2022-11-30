@@ -1806,8 +1806,8 @@
 	var/prev_intent = a_intent
 	a_intent_change(INTENT_HARM)
 
-	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/space/vox/stealth))
-		for(var/obj/item/clothing/suit/space/vox/stealth/V in list(wear_suit))
+	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/space/rig/vox/stealth))
+		for(var/obj/item/clothing/suit/space/rig/vox/stealth/V in list(wear_suit))
 			if(V.on)
 				V.overload()
 

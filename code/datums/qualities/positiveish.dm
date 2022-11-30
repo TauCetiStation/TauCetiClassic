@@ -138,8 +138,8 @@
 	species_required = list(UNATHI)
 
 /datum/quality/positiveish/cultural_heritage/add_effect(mob/living/carbon/human/H, latespawn)
-	H.equip_or_collect(new /obj/item/clothing/suit/space/unathi/breacher(H), SLOT_WEAR_SUIT)
-	H.equip_or_collect(new /obj/item/clothing/head/helmet/space/unathi/breacher(H), SLOT_HEAD)
+	H.equip_or_collect(new /obj/item/clothing/suit/space/rig/unathi/breacher(H), SLOT_WEAR_SUIT)
+	H.equip_or_collect(new /obj/item/clothing/head/helmet/space/rig/unathi/breacher(H), SLOT_HEAD)
 
 
 /datum/quality/positiveish/sunglasses

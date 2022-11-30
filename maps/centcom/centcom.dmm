@@ -5403,11 +5403,11 @@
 /area/shuttle/vox/arkship_hold)
 "ang" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/space/vox/stealth,
+/obj/item/clothing/suit/space/rig/vox/stealth,
 /obj/item/weapon/tank/nitrogen,
 /obj/item/clothing/accessory/storage/black_vest,
 /obj/item/clothing/mask/gas/vox,
-/obj/item/clothing/head/helmet/space/vox/stealth,
+/obj/item/clothing/head/helmet/space/rig/vox/stealth,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -5603,12 +5603,12 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "anB" = (
-/obj/item/clothing/suit/space/vox/pressure,
+/obj/item/clothing/suit/space/rig/vox/pressure,
 /obj/structure/rack,
 /obj/item/weapon/tank/nitrogen,
 /obj/item/clothing/accessory/storage/black_vest,
 /obj/item/clothing/mask/gas/vox,
-/obj/item/clothing/head/helmet/space/vox/pressure,
+/obj/item/clothing/head/helmet/space/rig/vox/pressure,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -6287,11 +6287,11 @@
 /area/shuttle/vox/arkship_hold)
 "apf" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/space/vox/carapace,
+/obj/item/clothing/suit/space/rig/vox/carapace,
 /obj/item/weapon/tank/nitrogen,
 /obj/item/clothing/accessory/storage/black_vest,
 /obj/item/clothing/mask/gas/vox,
-/obj/item/clothing/head/helmet/space/vox/carapace,
+//obj/item/clothing/head/helmet/space/rig/vox/carapace,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -7554,11 +7554,11 @@
 /area/shuttle/vox/arkship)
 "arW" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/space/vox/medic,
+/obj/item/clothing/suit/space/rig/vox/medic,
 /obj/item/weapon/tank/nitrogen,
 /obj/item/clothing/accessory/storage/black_vest,
 /obj/item/clothing/mask/gas/vox,
-/obj/item/clothing/head/helmet/space/vox/medic,
+/obj/item/clothing/head/helmet/space/rig/vox/medic,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
