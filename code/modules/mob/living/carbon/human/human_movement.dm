@@ -45,14 +45,14 @@
 			tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and (starts at ~1.83)
 
 		if(bodytemperature < species.cold_level_1)
-			tally += 1.75 * (species.cold_level_1 - bodytemperature) / 10 
+			tally += 1.75 * (species.cold_level_1 - bodytemperature) / 10
 
 	var/list/moving_bodyparts
 	if(buckled) // so, if we buckled we have large debuff
 		tally += 5.5
 		if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
 			moving_bodyparts = list(BP_L_ARM , BP_R_ARM)
-	
+
 	if(!moving_bodyparts)
 		if(lying)
 			moving_bodyparts = list(BP_L_LEG , BP_R_LEG, BP_L_ARM , BP_R_ARM)
@@ -114,8 +114,7 @@
 	if(weight_tally > weight_negation)
 		tally += weight_tally - weight_negation
 
-	if(pull_debuff)
-		tally += pull_debuff
+	tally += count_pull_debuff()
 
 	var/turf/T = get_turf(src)
 	if(T)

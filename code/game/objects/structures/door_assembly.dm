@@ -19,6 +19,8 @@
 	var/glass_only       = FALSE   // For something like multitile airlock, where there is only one type.
 	var/created_name     = null
 
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/door_assembly/atom_init()
 	. = ..()
 	update_state()
@@ -62,8 +64,7 @@
 			user.visible_message("[user] dissassembles the airlock assembly.", "You start to dissassemble the airlock assembly.")
 			if(WT.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
 				to_chat(user, "<span class='notice'>You dissasembled the airlock assembly!</span>")
-				new /obj/item/stack/sheet/metal(loc, 4)
-				qdel (src)
+				deconstruct(TRUE)
 
 	else if(iswrench(W) && state == ASSEMBLY_SECURED)
 		if(user.is_busy()) return
@@ -179,6 +180,21 @@
 	else
 		..()
 	update_state()
+
+/obj/structure/door_assembly/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	var/material_amt = disassembled ? 4 : rand(2, 4)
+	new /obj/item/stack/sheet/metal(loc, material_amt)
+	if(glass_material)
+		if(disassembled)
+			new /obj/item/stack/sheet/rglass(loc)
+		else
+			new /obj/item/weapon/shard(loc)
+	if(mineral)
+		var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
+		new mineral_path(loc, 2)
+	..()
 
 /obj/structure/door_assembly/proc/set_glass(has_glass, glass_material = "glass")
 	if(has_glass)

@@ -1,5 +1,5 @@
 /mob/living/silicon/robot/add_to_hud(datum/hud/hud)
-	hud.ui_style = 'icons/mob/screen1_robot.dmi'
+	hud.ui_style = 'icons/hud/screen1_robot.dmi'
 	
 	var/list/types = list(
 		/atom/movable/screen/complex/act_intent,

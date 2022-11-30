@@ -111,9 +111,7 @@
  */
 /mob/living/carbon/xenomorph/facehugger/proc/leap_at_face(mob/living/carbon/C)
 	if(ishuman(C) || ismonkey(C)) // CP! THIS IS DELTA SIX! DO WE NEED THIS? CP!
-		var/obj/item/clothing/mask/facehugger/FH = new(loc)
-		src.loc = FH
-		FH.current_hugger = src
+		var/obj/item/clothing/mask/facehugger/FH = new(loc, src)
 		FH.Attach(C)
 
 /mob/living/carbon/xenomorph/facehugger/regenerate_icons()
@@ -191,7 +189,7 @@ This is chestburster mechanic for damaging
 	affecting = victim
 
 	hud = new /atom/movable/screen/larva_bite(src)
-	hud.icon = 'icons/mob/screen1_xeno.dmi'
+	hud.icon = 'icons/hud/screen1_xeno.dmi'
 	hud.icon_state = "chest_burst"
 	hud.name = "Burst thru chest"
 	hud.master = src
@@ -348,7 +346,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 	affecting = victim
 
 	hud = new /atom/movable/screen/fh_grab(src)
-	hud.icon = 'icons/mob/screen1_xeno.dmi'
+	hud.icon = 'icons/hud/screen1_xeno.dmi'
 	hud.icon_state = "leap"
 	hud.name = "Leap at face"
 	hud.master = src

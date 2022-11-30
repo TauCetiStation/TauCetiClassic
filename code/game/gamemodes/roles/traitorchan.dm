@@ -7,4 +7,4 @@
 
 /datum/role/changeling/traitor/New()
 	..()
-	AddComponent(/datum/component/gamemode/syndicate, 20)
+	AddComponent(/datum/component/gamemode/syndicate, 20, "traitor")

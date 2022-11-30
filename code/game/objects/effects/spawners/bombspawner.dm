@@ -1,6 +1,6 @@
 /obj/effect/spawner/newbomb
 	name = "bomb"
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/hud/screen1.dmi'
 	icon_state = "x"
 	var/btype = 0 // 0=radio, 1=prox, 2=time
 

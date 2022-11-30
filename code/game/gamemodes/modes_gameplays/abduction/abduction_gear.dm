@@ -180,6 +180,8 @@
 	if(!isabductorsci(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
+	if(!ismob(target))
+		return
 	switch(mode)
 		if(GIZMO_SCAN)
 			scan(target, user)
@@ -192,17 +194,21 @@
 			console.AddSnapshot(target)
 			to_chat(user, "<span class='notice'>You scan [target] and add them to the database.</span>")
 
-/obj/item/device/abductor/gizmo/proc/mark(atom/target, mob/living/user)
+/obj/item/device/abductor/gizmo/proc/mark(mob/target, mob/living/user)
 	if(marked == target)
 		to_chat(user, "<span class='notice'>This specimen is already marked.</span>")
 		return
-	if(ishuman(target))
+	if(isabductor(target) || istype(target, /mob/living/simple_animal/cow))
 		var/mob/M = target
-		if(isabductor(M))
-			marked = target
-			to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
-		else
-			prepare(target, user)
+		var/datum/role/R = M.mind.GetRoleByType(/datum/role/abductor)
+		if(R) // Now, we shouldn't let two teams to steal one another
+			var/datum/role/R2 = user.mind.GetRoleByType(/datum/role/abductor)
+			if(R.faction != R2.faction)
+				to_chat(user, "<span class='notice'>One team shouldn't interfere with another by these means!</span>")
+				user.burn_skin(40) //You dont wanna to repeat, yea?
+				return
+		marked = target
+		to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
 	else
 		prepare(target, user)
 
@@ -267,28 +273,31 @@
 	icon_state = "implant"
 //	activated = 1
 	var/obj/machinery/abductor/pad/home
-	var/cooldown = 30
+	var/cooldown = 30 SECONDS
 
 	action_button_name = "Activate Implant"
 	action_button_is_hands_free = 1
 
 /obj/item/weapon/implant/abductor/attack_self()
-	if(cooldown == initial(cooldown))
+	if(cooldown >= initial(cooldown))
 		if(imp_in.buckled)
 			imp_in.buckled.unbuckle_mob()
 		home.Retrieve(imp_in)
 		cooldown = 0
-		START_PROCESSING(SSobj, src)
+		INVOKE_ASYNC(src, .proc/start_recharge, imp_in)
 	else
-		to_chat(imp_in, "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>")
+		to_chat(imp_in, "<span class='warning'>You must wait [300 - cooldown] seconds to use [src] again!</span>")
 	return
 
-/obj/item/weapon/implant/abductor/process()
-	if(cooldown < initial(cooldown))
+/obj/item/weapon/implant/abductor/proc/start_recharge(mob/user = usr)
+	var/atom/movable/screen/cooldown_overlay/cooldowne = start_cooldown(action.button, initial(cooldown))
+	while(cooldown < initial(cooldown))
+		sleep(1)
 		cooldown++
-		if(cooldown == initial(cooldown))
-			STOP_PROCESSING(SSobj, src)
-
+		if(cooldowne)
+			cooldowne.tick()
+	to_chat(imp_in, "<span class='warning'>Your [name] recharged!</span>")
+	qdel(cooldowne)
 
 //ALIEN DECLONER
 /obj/item/weapon/gun/energy/decloner/alien
@@ -365,12 +374,16 @@
 	force = 7
 	w_class = SIZE_SMALL
 	action_button_name = "Toggle Mode"
+	var/obj/machinery/abductor/console/console
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
 	if(!isabductor(user))
 		return
 	if(!isabductoragent(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
+		return
+	if(!console || !console.baton_modules_bought)
+		to_chat(user, "<span class='notice'>You need additional permissions from Mothership to use other modes of [name]!</span>")
 		return
 	mode = (mode + 1) % BATON_MODES
 	var/txt
@@ -474,17 +487,22 @@
 	return
 
 /obj/item/weapon/abductor_baton/proc/ProbeAttack(mob/living/L,mob/living/user)
-	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
-						"<span class='userdanger'>[user] probes you!</span>")
-
 	var/species = "<span class='warning'>Unknown species</span>"
+	var/gland = "<span class='warning'>Experimental gland <span class='danger'>wasn't</span> detected!</span>"
+
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if(H.dna && H.dna.species)
-			species = "<span clas=='notice'>[H.species.name]</span>"
+		species = "<span class='notice'>[H.species.name]</span>"
 		if(ischangeling(L))
-			species = "<span class='warning'>Changeling lifeform</span>"
-	to_chat(user, "<span class='notice'>Probing result: </span>[species]")
+			species = "<span class='warning'> Changeling lifeform</span>"
+		var/obj/item/gland/temp = locate() in H
+		if(temp)
+			gland = "<span class='warning'>Experimental gland detected!</span>"
+
+	to_chat(user, "<span class='notice'>Probing result:[species]</span>")
+	to_chat(user, "[gland]")
+	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
+						"<span class='userdanger'>[user] probes you!</span>")
 
 /obj/item/weapon/abductor_baton/examine(mob/user)
 	..()
@@ -557,7 +575,14 @@
 /obj/machinery/optable/abductor/atom_init()
 	belt = image("icons/obj/abductor.dmi", "belt", layer = FLY_LAYER)
 	. = ..()
-
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/operating_table/abductor(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module/triphasic(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module/triphasic(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor/quadratic(null)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
+	RefreshParts()
 /obj/machinery/optable/abductor/attack_hand(mob/living/carbon/C)
 	if(!victim && !fastened)
 		return
@@ -650,10 +675,10 @@
  4.Сделайте надрез скальпелем в области груди особи.<br>
  5.Остановите кровотечение с помощью щипцов.<br>
  6.Раскройте надрез хирургическим зажимом.<br>
- 7.Вскройте грудную клетку пилой и зафиксируйте с помощью зажима.<br>
+ 7.Вскройте грудную клетку пилой и раскройте с помощью щипцов.<br>
  8.Сделайте небольшое углубление во внутренностях особи дрелью. Это не так плохо для субъекта, как звучит.<br>
  9.Поместите внутрь разреза гланду. (Их можно получить в раздатчике гланд.)<br>
- 10.<b>ОПЦИОНАЛЬНО.</b> Закройте вскрытую грудную клетку субъекта, замажьте гелем или эктоплазмой и прижгите рану.<br>
+ 10.Закройте вскрытую грудную клетку субъекта, замажьте гелем или эктоплазмой и прижгите рану.<br>
  11.Оденьте особь, чтобы не потревожить среду обитания.<br>
  12.Поместите субъект в устройство для экспериментов.<br>
  13.Выберите одну из настроек устройства и следуйте показанным там инструкциям.<br>

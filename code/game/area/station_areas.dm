@@ -125,6 +125,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	valid_territory = 0
 	looped_ambience = 'sound/ambience/loop_space.ogg'
 	sound_environment = SOUND_AREA_SMALL_METALLIC
+	outdoors = TRUE
 
 /area/station/solar/auxport
 	name = "Fore Port Solar Array"

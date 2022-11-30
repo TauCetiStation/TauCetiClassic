@@ -224,6 +224,7 @@
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
 		SSqualities.give_quality(character, TRUE)
+		character.PutDisabilityMarks()
 
 	// AIs don't need a spawnpoint, they must spawn at an empty core
 	if(character.mind.assigned_role == "AI")

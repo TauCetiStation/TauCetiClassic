@@ -130,11 +130,10 @@
 
 //Damage
 
-/turf/simulated/wall/proc/take_damage(dam, devastated)
+/turf/simulated/wall/take_damage(dam, devastated) // doesnt use atom integrity system
 	if(dam)
 		damage = max(0, damage + dam)
 		update_damage(devastated)
-	return
 
 /turf/simulated/wall/proc/update_damage(devastated)
 	var/cap = damage_cap
@@ -261,13 +260,16 @@
 	to_chat(M, "<span class='notice'>You push the wall but nothing happens!</span>")
 	return */
 
+/turf/simulated/wall/attack_hulk(mob/living/simple_animal/hulk/M)
+	if(istype(M))
+		playsound(M, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+		M.health -= rand(4, 10)
+		attack_animal(M)
+		return TRUE
+
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
 	..()
 	if(M.environment_smash >= 2)
-		if(istype(M, /mob/living/simple_animal/hulk))
-			var/mob/living/simple_animal/hulk/Hulk = M
-			playsound(Hulk, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-			Hulk.health -= rand(4, 10)
 		playsound(M, 'sound/effects/hulk_hit_wall.ogg', VOL_EFFECTS_MASTER)
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash >= 3)
@@ -334,10 +336,6 @@
 				thermitemelt(user, seconds_to_melt)
 				return
 
-		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-			thermitemelt(user, seconds_to_melt)
-			return
-
 		else if(istype(W, /obj/item/weapon/melee/energy/blade))
 			var/obj/item/weapon/melee/energy/blade/EB = W
 
@@ -372,22 +370,6 @@
 					return
 				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
 				dismantle_wall()
-
-	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-		if(user.is_busy(src))
-			return
-		to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
-		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100))
-			if(mineral == "diamond")//Oh look, it's tougher
-				sleep(60)
-			if(!iswallturf(src) || !user || !W || !T)
-				return
-
-			if(user.loc == T && user.get_active_hand() == W)
-				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
-				dismantle_wall()
-				visible_message("<span class='warning'>[user] завершает разборку стены!</span>", blind_message = "<span class='warning'>Вы слышите, как металл разрезается на части.</span>", viewing_distance = 5)
-		return
 
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))

@@ -79,16 +79,6 @@
 		else
 			to_chat(user, "\The [src] can be attached!")
 
-
-/obj/item/device/assembly_holder/HasProximity(atom/movable/AM)
-	if(a_left)
-		a_left.HasProximity(AM)
-	if(a_right)
-		a_right.HasProximity(AM)
-	if(special_assembly)
-		special_assembly.HasProximity(AM)
-
-
 /obj/item/device/assembly_holder/Crossed(atom/movable/AM)
 	. = ..()
 	if(a_left)

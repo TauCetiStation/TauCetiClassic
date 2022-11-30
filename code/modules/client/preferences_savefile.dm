@@ -240,11 +240,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			be_role -= "Raider"
 
 		S["be_role"] << be_role
-	
+
 	if(current_version < 39)
 		S["ghost_orbit"] << null
 
-// 
+//
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 
 	if(current_version < SAVEFILE_VERSION_SPECIES_JOBS)
@@ -540,7 +540,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["use_skirt"]         >> use_skirt
 
 	//Load prefs
-	S["job_preferences"] >> job_preferences
+	S["alternate_option"] >> alternate_option
+	S["job_preferences"]  >> job_preferences
 
 	//Traits
 	S["all_quirks"]       >> all_quirks
