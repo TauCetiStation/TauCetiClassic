@@ -87,7 +87,8 @@
 	end_duration = 300
 	end_sound = 'sound/ambience/specific/ash_storm_end.ogg'
 	end_overlay = "light_ash"
-	area_type = /area/awaymission/junkyard
+	area_type = /area
+	protect_indoors = TRUE
 	target_ztrait = ZTRAIT_JUNKYARD
 
 	immunity_type = "ash"
@@ -104,20 +105,23 @@
 
 /datum/weather/scrap_storm/start()
 	..()
-	if(spawn_tornadoes)
-		var/area/A = locate(area_type)
+	if(!spawn_tornadoes)
+		return
+	var/list/turfs = list()
+	for(var/area/A as anything in impacted_areas)
 		for(var/obj/item/weapon/scrap_lump/C in A)
 			qdel(C)
-		var/list/turfs = get_area_turfs(area_type)
-		for(var/i = 1 to 4)
-			var/turf/wheretospawn = pick(turfs)
-			if(!wheretospawn.density)
-				var/obj/singularity/scrap_ball/new_tornado = new /obj/singularity/scrap_ball(wheretospawn)
-				tornados += new_tornado
+		turfs += get_area_turfs(A, FALSE)
+	for(var/i = 1 to 4)
+		var/turf/wheretospawn = pick(turfs)
+		if(!wheretospawn.density)
+			var/obj/singularity/scrap_ball/new_tornado = new (wheretospawn)
+			tornados += new_tornado
 
 /datum/weather/scrap_storm/end()
 	for(var/obj/singularity/scrap_ball/del_tornado in tornados)
 		qdel(del_tornado)
+	tornados.Cut()
 	..()
 
 /datum/weather/scrap_storm/impact(mob/living/L)
@@ -237,7 +241,8 @@
 	end_message = "<span class='notice'>The rain starts to dissipate.</span>"
 	end_sound = 'sound/ambience/specific/acidrain_end.ogg'
 	additional_action = TRUE
-	area_type = /area/awaymission/junkyard
+	area_type = /area
+	protect_indoors = TRUE
 	target_ztrait = ZTRAIT_JUNKYARD
 
 	immunity_type = "acid" // temp
@@ -246,15 +251,17 @@
 
 
 /datum/weather/acid_rain/impact(mob/living/L)
-	if(!istype(/turf, L.loc))
+	if(!isturf(L.loc))
 		return
 	L.water_act(5)
-	if(!prob(L.getarmor(null, "bio")))
-		L.take_overall_damage(0, 1)
+	if(!prob(L.getarmor(null, BIO)))
+		L.adjustFireLoss(1)
 
 /datum/weather/acid_rain/additional_action() //Proc for other actions?
-	if(prob(15))
-		var/list/turfs = get_area_turfs(area_type)
+	if(!prob(15))
+		return
+	for(var/area/impact_area as anything in impacted_areas)
+		var/list/turfs = get_area_turfs(impact_area, FALSE)
 		for(var/i = 1 to turfs.len / 400)
 			var/turf/wheretospawn = pick(turfs)
 			if(wheretospawn.density)
@@ -264,3 +271,30 @@
 				F = new(wheretospawn)
 				F.set_depth(5)
 
+/datum/weather/snow_storm
+	name = "snow storm"
+	desc = "Harsh snowstorms roam the topside of this arctic planet, burying any area unfortunate enough to be in its path."
+	probability = 90
+
+	telegraph_message = "<span class='warning'>Drifting particles of snow begin to dust the surrounding area..</span>"
+	telegraph_duration = 300
+	telegraph_overlay = "light_snow"
+
+	weather_message = "<span class='userdanger'><i>Harsh winds pick up as dense snow begins to fall from the sky! Seek shelter!</i></span>"
+	weather_overlay = "snow_storm"
+	weather_duration_lower = 600
+	weather_duration_upper = 1500
+
+	end_duration = 100
+	end_message = "<span class='boldannounce'>The snowfall dies down, it should be safe to go outside again.</span>"
+
+	area_type = /area
+	protect_indoors = TRUE
+	target_ztrait = ZTRAIT_SNOWSTORM
+
+/datum/weather/snow_storm/impact(mob/living/L)
+	if(iscarbon(L))
+		var/mob/living/carbon/C = L
+		C.adjust_bodytemperature(-rand(5, 15), use_insulation = TRUE)
+	else
+		L.adjust_bodytemperature(-rand(5, 15))

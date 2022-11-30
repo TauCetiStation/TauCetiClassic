@@ -3,10 +3,10 @@
 	appearance_flags = PIXEL_SCALE
 
 /obj/singularity
-	name = "gravitational singularity"
-	desc = "A gravitational singularity."
-	icon = 'icons/obj/singularity.dmi'
-	icon_state = "singularity_s1"
+	name = "singularity placeholder"
+	desc = "singularity placeholder"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "emfield_s3"
 	anchored = TRUE
 	density = TRUE
 	plane = SINGULARITY_PLANE
@@ -31,8 +31,6 @@
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
 
-	var/atom/movable/singularity_effect/singulo_effect
-
 /obj/singularity/atom_init(mapload, starting_energy = 50, temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
 	admin_investigate_setup()
@@ -54,8 +52,6 @@
 			break
 
 /obj/singularity/Destroy()
-	vis_contents -= singulo_effect
-	QDEL_NULL(singulo_effect)
 	visible_message("<span class='warning'><B>[src] slows it's endless spinning down. A second passes - and reality around [src] distorts before allowing [src] to collapse into itself and disappear from existence.</B></span>")
 	STOP_PROCESSING(SSobj, src)
 	return ..()
@@ -63,6 +59,9 @@
 /obj/singularity/attack_hand(mob/user)
 	consume(user)
 	return 1
+
+/obj/singularity/attack_tk(mob/user)
+	return FALSE
 
 /obj/singularity/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if(current_size >= STAGE_FIVE || check_turfs_in(Dir))
@@ -109,40 +108,7 @@
 	return
 
 /obj/singularity/update_icon(stage)
-	switch(stage)
-		if(STAGE_ONE)
-			icon = 'icons/obj/singularity.dmi'
-			icon_state = "singularity_s1"
-			pixel_x = 0
-			pixel_y = 0
-		if(STAGE_TWO)
-			icon = 'icons/effects/96x96.dmi'
-			icon_state = "singularity_s3"
-			pixel_x = -32
-			pixel_y = -32
-		if(STAGE_THREE)
-			icon = 'icons/effects/160x160.dmi'
-			icon_state = "singularity_s5"
-			pixel_x = -64
-			pixel_y = -64
-		if(STAGE_FOUR)
-			icon = 'icons/effects/224x224.dmi'
-			icon_state = "singularity_s7"
-			pixel_x = -96
-			pixel_y = -96
-		if(STAGE_FIVE)
-			icon = 'icons/effects/288x288.dmi'
-			icon_state = "singularity_s9"
-			pixel_x = -128
-			pixel_y = -128
-
-	if(!singulo_effect)
-		singulo_effect = new(src)
-		singulo_effect.transform = matrix().Scale(2.4)
-		vis_contents += singulo_effect
-
-	singulo_effect.icon = icon
-	singulo_effect.icon_state = icon_state
+	return
 
 /obj/singularity/proc/admin_investigate_setup()
 	last_warning = world.time
@@ -391,3 +357,55 @@
 	explosion(src.loc,(dist),(dist*2),(dist*4))
 	qdel(src)
 	return(gain)
+
+
+
+
+/obj/singularity/gravitational
+	name = "gravitational singularity"
+	desc = "A gravitational singularity."
+	icon = 'icons/obj/singularity.dmi'
+	icon_state = "singularity_s1"
+
+	var/atom/movable/singularity_effect/singulo_effect
+
+/obj/singularity/gravitational/Destroy()
+	vis_contents -= singulo_effect
+	QDEL_NULL(singulo_effect)
+	return ..()
+
+/obj/singularity/gravitational/update_icon(stage)
+	switch(stage)
+		if(STAGE_ONE)
+			icon = 'icons/obj/singularity.dmi'
+			icon_state = "singularity_s1"
+			pixel_x = 0
+			pixel_y = 0
+		if(STAGE_TWO)
+			icon = 'icons/effects/96x96.dmi'
+			icon_state = "singularity_s3"
+			pixel_x = -32
+			pixel_y = -32
+		if(STAGE_THREE)
+			icon = 'icons/effects/160x160.dmi'
+			icon_state = "singularity_s5"
+			pixel_x = -64
+			pixel_y = -64
+		if(STAGE_FOUR)
+			icon = 'icons/effects/224x224.dmi'
+			icon_state = "singularity_s7"
+			pixel_x = -96
+			pixel_y = -96
+		if(STAGE_FIVE)
+			icon = 'icons/effects/288x288.dmi'
+			icon_state = "singularity_s9"
+			pixel_x = -128
+			pixel_y = -128
+
+	if(!singulo_effect)
+		singulo_effect = new(src)
+		singulo_effect.transform = matrix().Scale(2.4)
+		vis_contents += singulo_effect
+
+	singulo_effect.icon = icon
+	singulo_effect.icon_state = icon_state

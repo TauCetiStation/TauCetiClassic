@@ -9,15 +9,6 @@
 /datum/reagent/blood/reaction_mob(mob/M, method=TOUCH, volume)
 	var/datum/reagent/blood/self = src
 	src = null
-	if(self.data && self.data["viruses"])
-		for(var/datum/disease/D in self.data["viruses"])
-			// We don't spread.
-			if(D.spread_type == SPECIAL || D.spread_type == NON_CONTAGIOUS)
-				continue
-			if(method == TOUCH)
-				M.contract_disease(D)
-			else //injected
-				M.contract_disease(D, 1, 0)
 
 	if(self.data && self.data["virus2"] && iscarbon(M))//infecting...
 		var/list/vlist = self.data["virus2"]
@@ -56,11 +47,6 @@
 				else
 					blood_prop.blood_DNA[self.data["blood_DNA"]] = "O+"
 
-		for(var/datum/disease/D in self.data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
-
 		if(self.data["virus2"])
 			blood_prop.virus2 = virus_copylist(self.data["virus2"])
 
@@ -69,43 +55,12 @@
 		if(!blood_prop)
 			blood_prop = new(T)
 			blood_prop.blood_DNA["Non-Human DNA"] = "A+"
-		for(var/datum/disease/D in self.data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
 
 	else if(istype(self.data["donor"], /mob/living/carbon/xenomorph))
 		var/obj/effect/decal/cleanable/blood/xeno/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)
 			blood_prop.blood_DNA["UNKNOWN DNA STRUCTURE"] = "X*"
-		for(var/datum/disease/D in self.data["viruses"])
-			var/datum/disease/newVirus = D.Copy(1)
-			blood_prop.viruses += newVirus
-			newVirus.holder = blood_prop
-
-/datum/reagent/vaccine
-	//data must contain virus type
-	name = "Vaccine"
-	id = "vaccine"
-	reagent_state = LIQUID
-	color = "#c81040" // rgb: 200, 16, 64
-	taste_message = "health"
-
-/datum/reagent/vaccine/reaction_mob(mob/M, method=TOUCH, volume)
-	var/datum/reagent/vaccine/self = src
-	src = null
-	if(self.data&&method == INGEST)
-		for(var/datum/disease/D in M.viruses)
-			if(istype(D, /datum/disease/advance))
-				var/datum/disease/advance/A = D
-				if(A.GetDiseaseID() == self.data)
-					D.cure()
-			else
-				if(D.type == self.data)
-					D.cure()
-
-			M.resistances += self.data
 
 /datum/reagent/lube
 	name = "Space Lube"
@@ -167,7 +122,7 @@
 /datum/reagent/thermite/reaction_turf(turf/T, volume)
 	. = ..()
 	if(volume >= 30)
-		if(istype(T, /turf/simulated/wall))
+		if(iswallturf(T))
 			var/turf/simulated/wall/W = T
 			W.thermite = 1
 			W.add_overlay(image('icons/effects/effects.dmi',icon_state = "#673910"))
@@ -306,19 +261,6 @@
 					H.update_inv_shoes()
 		M.clean_blood()
 
-/datum/reagent/xenomicrobes
-	name = "Xenomicrobes"
-	id = "xenomicrobes"
-	description = "Microbes with an entirely alien cellular structure."
-	reagent_state = LIQUID
-	color = "#535e66" // rgb: 83, 94, 102
-	taste_message = "something alien"
-
-/datum/reagent/xenomicrobes/reaction_mob(mob/M, method=TOUCH, volume)
-	src = null
-	if((prob(10) && method==TOUCH) || method==INGEST)
-		M.contract_disease(new /datum/disease/xeno_transformation(0),1)
-
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
 	id = "fluorosurfactant"
@@ -380,6 +322,12 @@
 	reagent_state = GAS
 	color = "#404030" // rgb: 64, 64, 48
 	taste_message = "floor cleaner"
+
+/datum/reagent/ammonia/reaction_obj(obj/O, volume)
+	if(istype(O, /obj/machinery/camera))
+		var/obj/machinery/camera/C = O
+		C.color = null
+		C.remove_paint_state()
 
 /datum/reagent/ultraglue
 	name = "Ultra Glue"
@@ -458,19 +406,6 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// Nanobots /////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-/datum/reagent/nanites
-	name = "Nanomachines"
-	id = "nanites"
-	description = "Microscopic construction robots."
-	reagent_state = LIQUID
-	color = "#535e66" // rgb: 83, 94, 102
-	taste_message = "nanomachines, son"
-
-/datum/reagent/nanites/reaction_mob(mob/M, method=TOUCH, volume)
-	src = null
-	if((prob(10) && method==TOUCH) || method==INGEST)
-		M.contract_disease(new /datum/disease/robotic_transformation(0), 1)
-
 /datum/reagent/nanites2
 	name = "Friendly Nanites"
 	id = "nanites2"
@@ -766,15 +701,11 @@
 /datum/reagent/paint/reaction_obj(obj/O, volume)
 	if(istype(O, /obj/machinery/camera))
 		var/obj/machinery/camera/C = O
-		if(!C.painted)
-			if(!C.isXRay())
-				var/paint_time = min(volume * 1 SECOND, 10 SECONDS)
-				addtimer(CALLBACK(C, /obj/machinery/camera/proc/remove_paint_state, C.network), paint_time) // EMP turns it off for 90 SECONDS, 10 seems fair.
-				C.disconnect_viewers()
-				C.painted = TRUE
-				C.toggle_cam(FALSE) // Do not show deactivation message, it's just paint.
-				C.triggerCameraAlarm()
-			C.color = color
+		C.color = color
+	if(istype(O, /obj/item/canvas))
+		var/obj/item/canvas/C = O
+		C.canvas_color = color
+		C.reset_grid()
 
 /datum/reagent/paint_remover
 	name = "Paint Remover"
@@ -811,9 +742,8 @@
 /datum/reagent/paint_remover/reaction_obj(obj/O, volume)
 	if(istype(O, /obj/machinery/camera))
 		var/obj/machinery/camera/C = O
-		if(C.painted)
-			C.remove_paint_state()
-			C.color = null
+		C.remove_paint_state()
+		C.color = null
 
 ////////////////////////////////////
 ///// All the barber's bullshit/////

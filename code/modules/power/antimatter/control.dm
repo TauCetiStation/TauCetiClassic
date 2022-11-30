@@ -9,6 +9,8 @@
 	idle_power_usage = 100
 	active_power_usage = 1000
 
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 	var/list/obj/machinery/am_shielding/linked_shielding
 	var/list/obj/machinery/am_shielding/linked_cores
 	var/obj/item/weapon/am_containment/fueljar
@@ -27,6 +29,7 @@
 	var/stored_core_stability_delay = 0
 
 	var/stored_power = 0//Power to deploy per tick
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
 
 
 /obj/machinery/power/am_control_unit/atom_init()
@@ -126,11 +129,10 @@
 	return
 
 
-/obj/machinery/power/am_control_unit/bullet_act(obj/item/projectile/Proj)
-	if(Proj.flag != "bullet")
+/obj/machinery/power/am_control_unit/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
+	if(Proj.flag != BULLET)
 		stability -= Proj.force
-	return 0
-
 
 /obj/machinery/power/am_control_unit/power_change()
 	..()

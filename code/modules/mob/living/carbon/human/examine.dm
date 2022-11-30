@@ -58,10 +58,22 @@
 				t_his = "her"
 				t_him = "her"
 
-	msg += "<EM>[src.name]"
-	if(!(skipface && skipjumpsuit))
-		var/species_name = "[get_species()]"
-		msg += ", <span style='color: [species.flesh_color]'>\a [species_name]</span>"
+	msg += "<EM>[name]"
+
+	if(HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT) && !(skipface && skipjumpsuit))
+		var/species_color = species.flesh_color
+		var/species_name = get_species()
+		if(!species.is_common)
+			species_color = COLOR_GRAY
+			species_name = "unknown species"
+		msg += ", <span style='color: [species_color]'>\a [species_name]</span>"
+		if(species.is_common)
+			var/name_hash = md5("[real_name][global.round_id][global.base_commit_sha]")
+			var/accuracy = round(species.max_age / 10)
+			var/min_bound = (text2ascii(name_hash[1]) + text2ascii(name_hash[2]) + text2ascii(name_hash[3])) % accuracy
+			var/max_bound = (text2ascii(name_hash[length(name_hash)-3]) + text2ascii(name_hash[length(name_hash)-1]) + text2ascii(name_hash[length(name_hash)])) % accuracy
+			msg += ", age between [max(age - min_bound, species.min_age)] and [min(age + max_bound, species.max_age)]"
+
 	msg += "</EM>!\n"
 
 	//uniform
@@ -182,13 +194,16 @@
 			msg += "[t_He] [t_has] [bicon(wear_mask)] \a [wear_mask] on [t_his] face.\n"
 
 	//eyes
-	if(glasses && !skipeyes)
-		if(glasses.dirt_overlay)
-			msg += "<span class='warning'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] [glasses.dirt_description()] covering [t_his] eyes!</span>\n"
-		else if(glasses.wet)
-			msg += "<span class='wet'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] wet [glasses] covering [t_his] eyes!</span>\n"
-		else
-			msg += "[t_He] [t_has] [bicon(glasses)] \a [glasses] covering [t_his] eyes.\n"
+	if(!skipeyes)
+		if(glasses)
+			if(glasses.dirt_overlay)
+				msg += "<span class='warning'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] [glasses.dirt_description()] covering [t_his] eyes!</span>\n"
+			else if(glasses.wet)
+				msg += "<span class='wet'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] wet [glasses] covering [t_his] eyes!</span>\n"
+			else
+				msg += "[t_He] [t_has] [bicon(glasses)] \a [glasses] covering [t_his] eyes.\n"
+		else if(HAS_TRAIT(src, TRAIT_CULT_EYES))
+			msg += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>\n"
 
 	//left ear
 	if(l_ear && !skipears)
@@ -233,11 +248,11 @@
 	var/distance = get_dist(user,src)
 	if(isobserver(user) || user.stat == DEAD) // ghosts can see anything
 		distance = 1
-	if (src.stat || (iszombie(src) && (crawling || lying || resting)))
+	if (stat != CONSCIOUS || (iszombie(src) && (crawling || lying)))
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
 		if((stat == DEAD || src.losebreath || iszombie(src)) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
-		if(ishuman(user) && !user.stat && distance <= 1)
+		if(ishuman(user) && user.stat == CONSCIOUS && distance <= 1)
 			user.visible_message("[user] checks [src]'s pulse.")
 		spawn(15)
 			if(distance <= 1 && user && user.stat != UNCONSCIOUS)
@@ -556,9 +571,12 @@
 					to_chat(H, "<span class='notice'>You can't focus your eyes on [src].</span>")
 					return
 
-	if(roundstart_quirks.len && isobserver(user))
-		var/mob/dead/observer/O = user
-		if(O.started_as_observer)
+	if(roundstart_quirks.len)
+		var/should_see_quirks = HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT)
+		if(isobserver(user))
+			var/mob/dead/observer/O = user
+			should_see_quirks = O.started_as_observer
+		if(should_see_quirks)
 			msg += "<span class='notice'>[t_He] has these traits: [get_trait_string()].</span>"
 
 	if(!isobserver(user) && user.IsAdvancedToolUser() && !HAS_TRAIT(src, TRAIT_NATURECHILD) && user != src && !check_covered_bodypart(src, LOWER_TORSO))

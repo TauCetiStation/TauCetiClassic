@@ -1,6 +1,6 @@
 /turf/simulated/wall
 	name = "wall"
-	desc = "A huge chunk of metal used to seperate rooms."
+	desc = "Огромный кусок металла для разделения комнат."
 	icon = 'icons/turf/walls/has_false_walls/wall.dmi'
 	icon_state = "box"
 	plane = GAME_PLANE
@@ -18,9 +18,11 @@
 
 	var/seconds_to_melt = 10 //It takes 10 seconds for thermite to melt this wall through
 
-	opacity = 1
+	var/list/dent_decals
+
+	opacity = TRUE
 	density = TRUE
-	blocks_air = 1
+	blocks_air = TRUE
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
@@ -83,18 +85,18 @@
 	..()
 
 	if(!damage)
-		to_chat(user, "<span class='info'>It looks fully intact.</span>")
+		to_chat(user, "<span class='info'>Выглядит неповрежденной.</span>")
 	else
 		var/dam = damage / damage_cap
 		if(dam <= 0.3)
-			to_chat(user, "<span class='warning'>It looks slightly damaged.</span>")
+			to_chat(user, "<span class='warning'>Выглядит слегка поврежденной.</span>")
 		else if(dam <= 0.6)
-			to_chat(user, "<span class='warning'>It looks moderately damaged.</span>")
+			to_chat(user, "<span class='warning'>Выглядит довольно поврежденной.</span>")
 		else
-			to_chat(user, "<span class='danger'>It looks heavily damaged.</span>")
+			to_chat(user, "<span class='danger'>Выглядит сильно поврежденной.</span>")
 
 	if(rotting)
-		to_chat(user, "<span class='warning'>There is fungus growing on [src].</span>")
+		to_chat(user, "<span class='warning'>На стене растет грибок.</span>")
 
 /turf/simulated/wall/update_icon()
 	if(!damage_overlays[1]) //list hasn't been populated
@@ -128,11 +130,10 @@
 
 //Damage
 
-/turf/simulated/wall/proc/take_damage(dam, devastated)
+/turf/simulated/wall/take_damage(dam, devastated) // doesnt use atom integrity system
 	if(dam)
 		damage = max(0, damage + dam)
 		update_damage(devastated)
-	return
 
 /turf/simulated/wall/proc/update_damage(devastated)
 	var/cap = damage_cap
@@ -199,8 +200,8 @@
 			take_damage(rand(0, 55))
 
 /turf/simulated/wall/blob_act()
+	add_dent(WALL_DENT_HIT)
 	take_damage(rand(75, 125))
-	return
 
 // Wall-rot effect, a nasty fungus that destroys walls.
 /turf/simulated/wall/proc/rot()
@@ -228,7 +229,7 @@
 	var/turf/simulated/floor/F = src
 	F.burn_tile()
 	F.icon_state = "wall_thermite"
-	to_chat(user, "<span class='warning'>The thermite starts melting through the wall.</span>")
+	to_chat(user, "<span class='warning'>Термит начинает плавить стену.</span>")
 
 	spawn(seconds_to_melt * 10)
 		if(O)	qdel(O)
@@ -259,44 +260,49 @@
 	to_chat(M, "<span class='notice'>You push the wall but nothing happens!</span>")
 	return */
 
+/turf/simulated/wall/attack_hulk(mob/living/simple_animal/hulk/M)
+	if(istype(M))
+		playsound(M, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+		M.health -= rand(4, 10)
+		attack_animal(M)
+		return TRUE
+
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
 	..()
 	if(M.environment_smash >= 2)
-		if(istype(M, /mob/living/simple_animal/hulk))
-			var/mob/living/simple_animal/hulk/Hulk = M
-			playsound(Hulk, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-			Hulk.health -= rand(4, 10)
 		playsound(M, 'sound/effects/hulk_hit_wall.ogg', VOL_EFFECTS_MASTER)
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash >= 3)
+				add_dent(WALL_DENT_HIT)
 				take_damage(rand(25, 75))
-				to_chat(M, "<span class='info'>You smash against the wall.</span>")
+				to_chat(M, "<span class='info'>Вы крушите стену.</span>")
 			else
-				to_chat(M, "<span class='info'>This wall is far too strong for you to destroy.</span>")
+				to_chat(M, "<span class='info'>Стена слишком прочная, чтобы вы могли ее уничтожить.</span>")
 		else
 			if (prob(40) || rotting)
-				to_chat(M, text("<span class='notice'>You smash through the wall.</span>"))
+				to_chat(M, "<span class='notice'>Вы пробиваете стену насквозь.</span>")
 				dismantle_wall(TRUE)
 			else
+				add_dent(WALL_DENT_HIT)
 				take_damage(rand(25, 75), TRUE)
-				to_chat(M, "<span class='info'>You smash against the wall.</span>")
+				to_chat(M, "<span class='info'>Вы крушите стену.</span>")
 
 /turf/simulated/wall/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations && user.a_intent == INTENT_HARM) //#Z2 No more chances, just randomized damage and hurt intent
 		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, text("<span class='notice'>You punch the wall.</span>"))
+		to_chat(user, text("<span class='notice'>Вы бьете стену.</span>"))
 		take_damage(rand(15, 50))
 		if(prob(25))
 			user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		return //##Z2
 
 	if(rotting)
-		to_chat(user, "<span class='notice'>The wall crumbles under your touch.</span>")
+		to_chat(user, "<span class='notice'>Стена крошится от вашего касания.</span>")
 		dismantle_wall()
 		return
 
-	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
+	to_chat(user, "<span class='notice'>Вы толкаете стену, но ничего не происходит!</span>")
 	playsound(src, 'sound/weapons/Genhit.ogg', VOL_EFFECTS_MASTER, 25)
 	add_fingerprint(user)
 	return
@@ -311,14 +317,14 @@
 		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
-				to_chat(user, "<span class='notice'>You burn away the fungi with \the [WT].</span>")
+				to_chat(user, "<span class='notice'>Вы сжигаете грибок сваркой.</span>")
 				playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER, 10)
 				for(var/obj/effect/E in src) if(E.name == "Wallrot")
 					qdel(E)
 				rotting = 0
 				return
 		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
-			to_chat(user, "<span class='notice'>\The [src] crumbles away under the force of your [W.name].</span>")
+			to_chat(user, "<span class='notice'>Стена рассыпается от удара [W.name].</span>")
 			dismantle_wall(1)
 			return
 
@@ -330,15 +336,11 @@
 				thermitemelt(user, seconds_to_melt)
 				return
 
-		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-			thermitemelt(user, seconds_to_melt)
-			return
-
 		else if(istype(W, /obj/item/weapon/melee/energy/blade))
 			var/obj/item/weapon/melee/energy/blade/EB = W
 
 			EB.spark_system.start()
-			to_chat(user, "<span class='notice'>You slash \the [src] with \the [EB]; the thermite ignites!</span>")
+			to_chat(user, "<span class='notice'>Вы бьете стену энергетическим мечом; термит вспыхивает!</span>")
 			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 
@@ -351,55 +353,39 @@
 	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.use(0, user))
-			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
+			to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 			return
 		if(user.a_intent == INTENT_HELP)
 			if(!damage)
 				return
-			to_chat(user, "<span class='warning'>You start repairing the damage to [src].</span>")
-			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100))
-				to_chat(user, "<span class='notice'>You finish repairing the damage to [src].</span>")
+			to_chat(user, "<span class='warning'>Вы ремонтируете стену.</span>")
+			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
+				to_chat(user, "<span class='notice'>Вы отремонтировали стену.</span>")
 				take_damage(-damage)
 
 		else
-			to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
-			if(WT.use_tool(src, user, 100, 3, 100))
-				if(!istype(src, /turf/simulated/wall))
+			to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
+			if(WT.use_tool(src, user, SKILL_TASK_DIFFICULT, 3, 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
+				if(!iswallturf(src))
 					return
-				to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
+				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
 				dismantle_wall()
-
-	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-		if(user.is_busy(src))
-			return
-		to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
-		if(W.use_tool(src, user, 60, volume = 100))
-			if(mineral == "diamond")//Oh look, it's tougher
-				sleep(60)
-			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
-				return
-
-			if(user.loc == T && user.get_active_hand() == W)
-				to_chat(user, "<span class='notice'>You remove the outer plating.</span>")
-				dismantle_wall()
-				visible_message("<span class='warning'>The wall was sliced apart by [user]!</span>", blind_message = "<span class='warning'>You hear metal being sliced apart.</span>", viewing_distance = 5)
-		return
 
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		if(user.is_busy(src))
 			return
-		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
-		if(W.use_tool(src, user, 60, volume = 50))
+		to_chat(user, "<span class='notice'>Вы бурите сквозь стену.</span>")
+		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
 			if(mineral == "diamond")
 				sleep(60)
-			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
+			if(!iswallturf(src) || !user || !W || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
-				to_chat(user, "<span class='notice'>Your drill tears though the last of the reinforced plating.</span>")
+				to_chat(user, "<span class='notice'>Вы пробурили последний лист обшивки.</span>")
 				dismantle_wall()
-				visible_message("<span class='warning'>The wall was drilled through by [user]!</span>", blind_message = "<span class='warning'>You hear the grinding of metal.</span>", viewing_distance = 5)
+				visible_message("<span class='warning'>[user] пробурил стену!</span>", blind_message = "<span class='warning'>Вы слышите скрежет металла.</span>", viewing_distance = 5)
 		return
 
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -407,12 +393,12 @@
 		var/obj/item/weapon/melee/energy/blade/EB = W
 
 		EB.spark_system.start()
-		to_chat(user, "<span class='notice'>You stab \the [EB] into the wall and begin to slice it apart.</span>")
+		to_chat(user, "<span class='notice'>Вы вонзаете энергетический меч в стену, начиная разрезать преграду.</span>")
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		if(W.use_tool(src, user, 70))
 			if(mineral == "diamond")
 				sleep(70)
-			if(!istype(src, /turf/simulated/wall) || !user || !EB || !T)
+			if(!iswallturf(src) || !user || !EB || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
@@ -420,15 +406,15 @@
 				playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 				playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 				dismantle_wall(1)
-				visible_message("<span class='warning'>The wall was sliced apart by [user]!</span>", blind_message = "<span class='warning'>You hear metal being sliced apart and sparks flying.</span>", viewing_distance = 5)
+				visible_message("<span class='warning'>[user] прорезает стену!</span>", blind_message = "<span class='warning'>Вы слышите треск искр и скрежет металла.</span>", viewing_distance = 5)
 		return
 	else if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
 		var/obj/item/weapon/changeling_hammer/C = W
-		visible_message("<span class='danger'>[user] has punched the[src]!</span>")
+		visible_message("<span class='danger'><B>[user]</B> бьет стену!</span>")
 		user.do_attack_animation(src)
 		if(C.use_charge(user))
 			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			take_damage(pick(10, 20, 30))
+			take_damage(30)
 		return
 
 	else if(istype(W,/obj/item/apc_frame))
@@ -470,6 +456,10 @@
 	else if(istype(W, /obj/item/noticeboard_frame))
 		var/obj/item/noticeboard_frame/NF = W
 		NF.try_build(user, src)
+
+	else if(istype(W,/obj/item/painting_frame))
+		var/obj/item/painting_frame/AH = W
+		AH.try_build(src)
 		return
 
 	//Poster stuff
@@ -488,3 +478,33 @@
 	if(current_size == STAGE_FOUR)
 		if(prob(30))
 			dismantle_wall()
+
+/turf/simulated/wall/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
+	if(!Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN) && prob(75))
+		add_dent(WALL_DENT_SHOT, Proj.p_x, Proj.p_y)
+
+/turf/simulated/wall/proc/add_dent(denttype, x, y)
+	if(length(dent_decals) >= MAX_DENT_DECALS)
+		return
+
+	var/mutable_appearance/decal = mutable_appearance('icons/effects/effects.dmi', "", BULLET_HOLE_LAYER, plane)
+	if(isnull(x) || isnull(y))
+		x = rand(-12, 12)
+		y = rand(-12, 12)
+	else
+		x = clamp(x - 16, -16, 16) // because sprites are centered
+		y = clamp(y - 16, -16, 16)
+
+	switch(denttype)
+		if(WALL_DENT_SHOT)
+			decal.icon_state = "bullet_hole"
+			decal.pixel_x = clamp(x, -15, 15) // because sprite size
+			decal.pixel_y = clamp(y, -15, 15)
+		if(WALL_DENT_HIT)
+			decal.icon_state = "impact[rand(1, 3)]"
+			decal.pixel_x = clamp(x, -12, 12) // because sprite size
+			decal.pixel_y = clamp(y, -12, 12)
+
+	LAZYADD(dent_decals, decal)
+	add_overlay(decal)

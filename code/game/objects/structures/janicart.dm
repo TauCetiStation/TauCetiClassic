@@ -16,6 +16,8 @@
 
 	material = /obj/item/stack/sheet/mineral/plastic
 
+	max_integrity = 400
+
 	//copypaste sorry
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 	var/obj/item/weapon/storage/bag/trash/mybag	= null
@@ -325,5 +327,6 @@
 	spill(100 / severity)
 	..()
 
-/obj/structure/stool/bed/chair/janitorialcart/bullet_act(obj/item/projectile/Proj)
+/obj/structure/stool/bed/chair/janitorialcart/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	spill(Proj.damage * 10)

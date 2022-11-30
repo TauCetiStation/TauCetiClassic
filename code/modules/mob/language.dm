@@ -326,8 +326,8 @@
 /datum/language/shkiondioniovioion/scramble(input)
 	return replace_characters(input, replacements)
 
-/datum/language/salarian
-	name = LANGUAGE_SALARIAN
+/datum/language/salackyi
+	name = LANGUAGE_SALACKYI
 	desc = "One of the most prominent space-slavic languages out there. Consists of many funny sounds, as well as deep, melodic structure."
 	speech_verb = "says"
 	ask_verb = "asks"
@@ -342,7 +342,7 @@
 
 	var/list/replacements
 
-/datum/language/salarian/New()
+/datum/language/salackyi/New()
 	var/list/lowercase_letters = list(
 		"и" = "і",
 		"ы" = "и",
@@ -358,7 +358,7 @@
 		var/replacement = lowercase_letters[letter]
 		replacements[letter] = replacement
 
-/datum/language/salarian/scramble(input)
+/datum/language/salackyi/scramble(input)
 	return replace_characters(input, replacements)
 
 // Language handling.

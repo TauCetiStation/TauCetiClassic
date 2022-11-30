@@ -87,6 +87,7 @@
 	unacidable = 1
 
 /obj/effect/forcefield/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	for(var/mob/living/M in get_turf(loc))
 		M.bullet_act(Proj, def_zone)
 
@@ -158,4 +159,22 @@
 	if(!volume)
 		volume = 1
 	if(volume > 5)
+		M.Stun(2)
 		M.Weaken(4)
+
+/obj/effect/proc_holder/spell/no_target/area_conversion
+	name = "Обращение Зоны"
+	desc = "Это заклинание моментально делает небольшую зону вокруг вас подвластной вашей Вере"
+	clothes_req = FALSE
+	charge_max = 5 SECONDS
+	action_icon_state = "areaconvert"
+	action_background_icon_state = "bg_cult"
+
+/obj/effect/proc_holder/spell/no_target/area_conversion/cast(list/targets, mob/user)
+	if(!user.my_religion)
+		return
+	. = ..()
+	for(var/turf/nearby_turf in range(3, user))
+		if(prob(100 - (get_dist(nearby_turf, user) * 25)))
+			playsound(nearby_turf, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
+			nearby_turf.atom_religify(user.my_religion)

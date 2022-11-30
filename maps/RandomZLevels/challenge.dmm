@@ -92,7 +92,7 @@
 /turf/simulated/floor/airless,
 /area/awaymission/challenge/start)
 "aq" = (
-/obj/item/weapon/gun/energy/laser/retro,
+/obj/item/weapon/gun/energy/retro,
 /turf/simulated/floor/airless,
 /area/awaymission/challenge/start)
 "ar" = (

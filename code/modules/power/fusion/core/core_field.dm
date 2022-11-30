@@ -493,10 +493,10 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/effect/fusion_em_field/bullet_act(obj/item/projectile/Proj)
+/obj/effect/fusion_em_field/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	AddEnergy(Proj.damage)
 	update_icon()
-	return 0
 
 #undef FUSION_ENERGY_PER_K
 #undef FUSION_INSTABILITY_DIVISOR

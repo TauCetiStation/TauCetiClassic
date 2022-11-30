@@ -999,7 +999,7 @@
 /obj/item/device/flashlight/lamp/green{
 	pixel_x = -6
 	},
-/obj/item/weapon/lighter/zippo/fluff/michael_guess_1{
+/obj/item/weapon/lighter/zippo{
 	pixel_x = 8;
 	pixel_y = 6
 	},

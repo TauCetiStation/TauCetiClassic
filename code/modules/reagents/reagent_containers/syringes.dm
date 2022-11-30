@@ -203,7 +203,7 @@
 
 			var/hit_area = BP.name
 
-			if (target != user && target.getarmor(target_zone, "melee") > 5 && prob(50))
+			if (target != user && target.getarmor(target_zone, MELEE) > 5 && prob(50))
 				visible_message("<span class='warning'><B>[user] tries to stab [target] in \the [hit_area] with [name], but the attack is deflected by armor!</B></span>")
 				qdel(src)
 				return

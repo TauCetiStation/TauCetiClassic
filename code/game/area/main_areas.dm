@@ -23,6 +23,7 @@
 		'sound/ambience/space_7.ogg',
 		'sound/ambience/space_8.ogg'
 	)
+	outdoors = TRUE
 
 /area/start            // will be unused once kurper gets his login interface patch done
 	name = "start area"
@@ -30,3 +31,7 @@
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	has_gravity = 1
+
+// other environment areas
+/area/space/snow
+	name = "Snow field"

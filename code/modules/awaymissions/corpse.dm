@@ -60,7 +60,7 @@
 		M.equip_to_slot_or_del(new corpseback(M), SLOT_BACK)
 	if(src.corpseid == 1)
 		var/obj/item/weapon/card/id/W = new(M)
-		W.name = "[M.real_name]'s ID Card"
+		W.assign(M.real_name)
 		var/datum/job/jobdatum
 		for(var/jobtype in typesof(/datum/job))
 			var/datum/job/J = new jobtype
@@ -76,7 +76,6 @@
 				W.access = list()
 		if(corpseidjob)
 			W.assignment = corpseidjob
-		W.registered_name = M.real_name
 		M.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 	qdel(src)
 
@@ -123,7 +122,7 @@
 	name = "Unathi Soldier"
 	corpseback = /obj/item/weapon/storage/backpack
 	corpseuniform = /obj/item/clothing/under/tactical
-	corpseshoes = /obj/item/clothing/shoes/boots/combat/cut
+	corpseshoes = /obj/item/clothing/shoes/boots/combat
 	corpseradio = /obj/item/device/radio/headset
 	corpsemask = /obj/item/clothing/mask/gas/coloured
 	corpsehelmet = /obj/item/clothing/head/helmet/swat
@@ -135,14 +134,13 @@
 	name = "Unathi Commander"
 	corpseback = /obj/item/weapon/tank/jetpack/oxygen
 	corpseuniform = /obj/item/clothing/under/syndicate/tacticool
-	corpseshoes = /obj/item/clothing/shoes/boots/combat/cut
+	corpseshoes = /obj/item/clothing/shoes/boots/combat
 	corpseradio = /obj/item/device/radio/headset
 	corpsemask = /obj/item/clothing/mask/gas/coloured
 	corpsehelmet = /obj/item/clothing/head/helmet/space/unathi/breacher
 	corpsesuit = /obj/item/clothing/suit/space/unathi/breacher
 	corpseid = 1
 	corpseidjob = "Unathi Commander"
-	corpseidaccess = "Captain"
 	specie = UNATHI
 
 ///////////Civilians//////////////////////
@@ -239,7 +237,6 @@
 	corpseglasses = /obj/item/clothing/glasses/sunglasses
 	corpseid = 1
 	corpseidjob = "Bridge Officer"
-	corpseidaccess = "Captain"
 
 /obj/effect/landmark/corpse/commander
 	name = "Commander"
@@ -254,7 +251,6 @@
 	corpsepocket1 = /obj/item/weapon/lighter/zippo
 	corpseid = 1
 	corpseidjob = "Commander"
-	corpseidaccess = "Captain"
 
 /obj/effect/landmark/corpse/securityofficer
 	name = "Security Officer"

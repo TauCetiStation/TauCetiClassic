@@ -15,12 +15,6 @@
 /obj/item/ammo_casing/energy/laser/cyborg
 	e_cost = 250
 
-/obj/item/ammo_casing/energy/laser_pulse
-	projectile_type = /obj/item/projectile/energy/laser
-	select_name = "kill"
-	e_cost = 50
-	fire_sound = 'sound/weapons/guns/gunpulse_laser3.ogg'
-
 /obj/item/ammo_casing/energy/laser/practice
 	projectile_type = /obj/item/projectile/beam/practice
 	select_name = "practice"
@@ -30,6 +24,16 @@
 	pellets = 5
 	variance = 0.8
 	select_name = "scatter"
+
+/obj/item/ammo_casing/energy/laser/cutter
+	e_cost = 100
+	select_name = "safe mode"
+	projectile_type = /obj/item/projectile/beam/plasma_cutter
+
+/obj/item/ammo_casing/energy/laser/cutter/emagged
+	projectile_type = /obj/item/projectile/beam/plasma_cutter/emagged
+	select_name = "combat mode"
+	e_cost = 1000
 
 /obj/item/ammo_casing/energy/laser/heavy
 	projectile_type = /obj/item/projectile/beam/heavylaser
@@ -186,3 +190,9 @@
 /obj/item/ammo_casing/energy/pyrometer/medical
 	projectile_type = /obj/item/projectile/pyrometer/medical
 	select_name = "non-contact thermometer (medical)"
+
+/obj/item/ammo_casing/energy/phaser
+	projectile_type = /obj/item/projectile/energy/phaser
+	select_name = "phase"
+	e_cost = 100
+	fire_sound = 'sound/weapons/guns/phaser.ogg'

@@ -104,6 +104,10 @@ var/global/list/department_radio_keys = list(
 		message = sanitize(message)
 		if(!message)
 			return
+
+		if(message[1] == "*")
+			return emote(copytext(message, 2))
+
 		message = capitalize(trim(message))
 		message = add_period(message)
 
@@ -116,8 +120,8 @@ var/global/list/department_radio_keys = list(
 	//handle nonverbal and sign languages here
 	if (speaking)
 		if (speaking.flags & NONVERBAL)
-			if (prob(30))
-				custom_emote(1, "[pick(speaking.signlang_verb)].")
+			if(prob(30))
+				me_emote("[pick(speaking.signlang_verb)].", SHOWMSG_AUDIO)
 
 		if (speaking.flags & SIGNLANG)
 			say_signlang(message, pick(speaking.signlang_verb), speaking)
@@ -154,8 +158,9 @@ var/global/list/department_radio_keys = list(
 
 	var/list/listening = list()
 	var/list/listening_obj = list()
+	var/list/listening_talking_atoms = list()
 
-	if(T)
+	if(T) // todo: get_hearers_in_view
 		var/list/hear = hear(message_range, T)
 		var/list/hearturfs = list()
 
@@ -163,6 +168,17 @@ var/global/list/department_radio_keys = list(
 			listening |= AM.get_listeners()
 			listening_obj |= AM.get_listening_objs()
 			hearturfs += AM.locs[1]
+
+		// need to do second pass because of mobs who can hold objects who can hold mobs
+		// also because of half baked talking_atom
+		// future refactoring needed
+		for(var/atom/movable/AM in listening_obj)
+			if(AM.flags & HEAR_PASS_SAY)
+				listening |= AM.get_listeners()
+			if(AM.flags & HEAR_TA_SAY)
+				listening_talking_atoms += AM
+			if(!(AM.flags & HEAR_TALK)) // if we don't need it anymore
+				listening_obj -= AM
 
 		for(var/mob/M in player_list)
 			if(QDELETED(M)) // avoid not hard-deleted mobs with client
@@ -189,6 +205,9 @@ var/global/list/department_radio_keys = list(
 		spawn(0)
 			if(O) //It's possible that it could be deleted in the meantime.
 				O.hear_talk(src, message, verb, speaking)
+
+	for(var/atom/TA in listening_talking_atoms)
+		SEND_SIGNAL(TA, COMSIG_MOVABLE_HEAR, message, src)
 
 	return 1
 

@@ -532,8 +532,8 @@ var/global/list/slot_equipment_priority = list(
 
 //Create delay for unequipping
 /mob/proc/delay_clothing_unequip(obj/item/clothing/C)
-	if(!istype(C))
-		return FALSE
+	if(!istype(C) || !C.equip_time || C.slot_equipped == SLOT_R_HAND || C.slot_equipped == SLOT_L_HAND)
+		return TRUE // clothing have no eqip delay or currently in hands
 	if(usr.is_busy())
 		return FALSE
 	if(C.equipping) // Item is already being (un)equipped
@@ -547,7 +547,6 @@ var/global/list/slot_equipment_priority = list(
 		to_chat(src, "<span class='red'>\The [C] is too fiddly to unequip whilst moving.</span>")
 		return FALSE
 	C.equipping = FALSE
-	remove_from_mob(C)
 	to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
 	return TRUE
 

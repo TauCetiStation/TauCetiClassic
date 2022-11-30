@@ -41,8 +41,8 @@
 	var/spacecash_l_type = pick(money_types)
 	var/spacecash_r_type = pick(money_types)
 
-	H.equip_to_slot_or_del(new spacecash_l_type(H), SLOT_L_STORE)
-	H.equip_to_slot_or_del(new spacecash_r_type(H), SLOT_R_STORE)
+	H.equip_or_collect(new spacecash_l_type(H), SLOT_L_STORE)
+	H.equip_or_collect(new spacecash_r_type(H), SLOT_R_STORE)
 
 
 /datum/quality/positiveish/wonder_doctor
@@ -109,7 +109,7 @@
 		H.equip_or_collect(new /obj/item/clothing/suit/serifcoat(H), SLOT_WEAR_SUIT)
 	else
 		H.equip_or_collect(new /obj/item/clothing/suit/poncho(H), SLOT_WEAR_SUIT)
-	H.equip_or_collect(new /obj/item/clothing/under/fluff/cowboy/brown(H), SLOT_W_UNIFORM)
+	H.equip_or_collect(new /obj/item/clothing/under/cowboy/brown(H), SLOT_W_UNIFORM)
 	H.equip_or_collect(new /obj/item/clothing/head/western/cowboy(H), SLOT_HEAD)
 	H.equip_or_collect(new /obj/item/clothing/shoes/western(H), SLOT_SHOES)
 	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/peacemaker/detective(H), SLOT_L_HAND)
@@ -321,3 +321,20 @@
 /datum/quality/positiveish/deathalarm/add_effect(mob/living/carbon/human/H, latespawn)
 	var/obj/item/weapon/implant/death_alarm/DA = new(H)
 	DA.stealth_inject(H)
+
+/datum/quality/positiveish/anatomist
+	name = "Anatomist"
+	desc = "Ты с первого взгляда можешь по походке и телосложению узнать расу гуманоида перед тобой."
+	requirement = "Нет."
+
+/datum/quality/positiveish/anatomist/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_ANATOMIST, QUALITY_TRAIT)
+
+/datum/quality/positiveish/selfdefense
+	name = "Self Defense"
+	desc = "На станции всё опаснее и опаснее. Руководство выдало тебе новое средство самозащиты."
+	requirement = "Безоружные главы, АВД."
+	jobs_required = list("Research Director", "Chief Engineer", "Chief Medical Officer", "Internal Affairs Agent")
+
+/datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H, latespawn)
+	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer(H), SLOT_R_STORE)

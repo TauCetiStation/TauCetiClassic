@@ -28,7 +28,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/golem_rune = null //Used to check, if we already queued as a golem.
 
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
-	var/ghost_orbit = GHOST_ORBIT_CIRCLE
+
+	var/next_point_to = 0
 
 	var/datum/orbit_menu/orbit_menu
 	var/datum/spawners_menu/spawners_menu
@@ -155,6 +156,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	if(!key)
 		return
 
+	logout_reason = logout_reason || (can_reenter_corpse ? LOGOUT_REENTER : LOGOUT_GHOST)
+
 	if(!(ckey in admin_datums) && bancheck == TRUE && jobban_isbanned(src, "Observer"))
 		var/mob/M = mousize()
 		if((config.allow_drone_spawn) || !jobban_isbanned(src, ROLE_DRONE))
@@ -197,10 +200,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
 			if(response != "Ghost")
 				return	//didn't want to ghost after-all
-			SEND_SIGNAL(src, COMSIG_MOB_GHOST, FALSE)
 			ghostize(can_reenter_corpse = FALSE)
 		else
-			SEND_SIGNAL(src, COMSIG_MOB_GHOST, TRUE)
 			ghostize(can_reenter_corpse = TRUE)
 	else
 		var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
@@ -209,16 +210,15 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 		if(isrobot(usr))
 			var/mob/living/silicon/robot/robot = usr
-			robot.toggle_all_components()
+			robot.set_all_components(FALSE)
 		else
-			resting = TRUE
+			SetCrawling(TRUE)
 			Sleeping(2 SECONDS)
 
 		var/leave_type = "Ghosted"
 		if(istype(loc, /obj/machinery/cryopod))
 			leave_type = "Ghosted in Cryopod"
 		SSStatistics.add_leave_stat(mind, leave_type)
-		SEND_SIGNAL(src, COMSIG_MOB_GHOST, FALSE)
 		ghostize(can_reenter_corpse = FALSE)
 
 /mob/dead/observer/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
@@ -377,22 +377,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(orbiting && orbiting.orbiting != target)
 		to_chat(src, "<span class='notice'>Now orbiting [target].</span>")
 
-	var/rot_seg
-
-	switch(ghost_orbit)
-		if(GHOST_ORBIT_TRIANGLE)
-			rot_seg = 3
-		if(GHOST_ORBIT_SQUARE)
-			rot_seg = 4
-		if(GHOST_ORBIT_PENTAGON)
-			rot_seg = 5
-		if(GHOST_ORBIT_HEXAGON)
-			rot_seg = 6
-		else //Circular
-			rot_seg = 36 //360/10 bby, smooth enough aproximation of a circle
-
 	forceMove(target)
-	orbit(target, orbitsize, FALSE, 20, rot_seg)
+	orbit(target, orbitsize, FALSE, 20, 36)
 
 /mob/dead/observer/orbit()
 	set_dir(SOUTH) // Reset dir so the right directional sprites show up
@@ -515,6 +501,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(src, "<span class='notice'><B>Living and available Ian not found.</B></span>")
 
+/mob/dead/observer/pointed(atom/A)
+	if(next_point_to > world.time)
+		return FALSE
+	if(!..())
+		return FALSE
+	emote_dead("points to [A]")
+	next_point_to = world.time + 2 SECONDS
+	return TRUE
+
+/mob/dead/observer/point_at(atom/pointed_atom)
+	..(pointed_atom, /obj/effect/decal/point/ghost)
+
 /mob/dead/observer/verb/view_manfiest()
 	set name = "View Crew Manifest"
 	set category = "Ghost"
@@ -535,7 +533,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='red'>That verb is not currently permitted.</span>")
 		return
 
-	if (!src.stat)
+	if (stat == CONSCIOUS)
 		return
 
 	if (usr != src)

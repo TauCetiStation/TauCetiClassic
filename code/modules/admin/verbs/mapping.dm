@@ -145,6 +145,7 @@ var/global/list/debug_verbs = list (
         ,/client/proc/Zone_Info
         ,/client/proc/Test_ZAS_Connection
         ,/client/proc/debug_z_levels
+        ,/client/proc/create_mapping_job_icons
         ,/client/proc/hide_debug_verbs
 	,/client/proc/testZAScolors
 	,/client/proc/testZAScolors_remove
@@ -415,3 +416,31 @@ var/global/movement_disabled_exception //This is the client that calls the proc,
 	log_admin("[key_name(usr)] is changing the map to [VM.map_name]")
 	if (SSmapping.changemap(VM))
 		message_admins("[key_name_admin(usr)] has changed the map to [VM.map_name]")
+
+//This generates the icon states for job starting location landmarks.
+/client/proc/create_mapping_job_icons()
+	set name = "Generate job landmarks icons"
+	set category = "Mapping"
+	var/icon/final = icon()
+	var/mob/living/carbon/human/dummy/D = new(locate(1,1,1)) //spawn on 1,1,1 so we don't have runtimes when items are deleted
+	D.set_dir(SOUTH)
+	for(var/job in subtypesof(/datum/job))
+		var/datum/job/JB = new job
+		switch(JB.title)
+			if("AI")
+				final.Insert(icon('icons/mob/ai.dmi', "ai", SOUTH, 1), "AI")
+			if("Cyborg")
+				final.Insert(icon('icons/mob/robots.dmi', "robot", SOUTH, 1), "Cyborg")
+			else
+				for(var/obj/item/I in D)
+					qdel(I)
+				randomize_human(D)
+				JB.equip(D, TRUE, FALSE)
+				COMPILE_OVERLAYS(D)
+				var/icon/I = icon(getFlatIcon(D), frame = 1)
+				final.Insert(I, JB.title)
+	qdel(D)
+	//Also add the x
+	for(var/x_number in 1 to 4)
+		final.Insert(icon('icons/hud/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
+	fcopy(final, "icons/mob/landmarks.dmi")

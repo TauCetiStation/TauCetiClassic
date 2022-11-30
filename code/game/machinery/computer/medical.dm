@@ -19,6 +19,7 @@
 	var/static/icon/mugshot = icon('icons/obj/mugshot.dmi', "background") //records photo background
 	var/next_print = 0
 	var/docname
+	required_skills = list(/datum/skill/medical = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/computer/med_data/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -102,15 +103,6 @@
 					dat += "\n<A href='?src=\ref[src];print_p=1'>Print Record</A><BR>\n<A href='?src=\ref[src];print_photos=1'>Print Photos</A><BR>\n<A href='?src=\ref[src];screen=2'>Back</A><BR>"
 				if(5.0)
 					dat += "<CENTER><B>Virus Database</B></CENTER>"
-					/*	Advanced diseases is weak! Feeble! Glory to virus2!
-					for(var/Dt in typesof(/datum/disease))
-						var/datum/disease/Dis = new Dt(0)
-						if(istype(Dis, /datum/disease/advance))
-							continue // TODO (tm): Add advance diseases to the virus database which no one uses.
-						if(!Dis.desc)
-							continue
-						dat += "<br><a href='?src=\ref[src];vir=[Dt]'>[Dis.name]</a>"
-					*/
 					for (var/ID in virusDB)
 						var/datum/data/record/v = virusDB[ID]
 						dat += "<br><a href='?src=\ref[src];vir=\ref[v]'>[v.fields["name"]]</a>"
@@ -148,7 +140,6 @@
 	. = ..()
 	if(!.)
 		return
-
 	if (!( data_core.general.Find(src.active1) ))
 		src.active1 = null
 
@@ -368,8 +359,7 @@
 						src.active1.fields["p_stat"] = "Physically Unfit"
 					if("disabled")
 						src.active1.fields["p_stat"] = "Disabled"
-				if(PDA_Manifest.len)
-					PDA_Manifest.Cut()
+				PDA_Manifest.Cut()
 
 		if (href_list["m_stat"])
 			if (src.active1)

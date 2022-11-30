@@ -25,7 +25,6 @@
 
 	var/overdose = 0
 	var/overdose_dam = 1
-	//var/list/viruses = list()
 	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
 	var/color_weight = 1
 

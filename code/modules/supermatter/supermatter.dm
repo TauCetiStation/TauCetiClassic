@@ -23,6 +23,8 @@
 	anchored = FALSE
 	light_range = 4
 
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 	var/gasefficency = 0.25
 
 	var/base_icon_state = "darkmatter"
@@ -200,18 +202,18 @@
 	return 1
 
 
-/obj/machinery/power/supermatter/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/power/supermatter/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	var/turf/L = loc
 	if(!istype(L))		// We don't run process() when we are in space
-		return 0	// This stops people from being able to really power up the supermatter
+		return	// This stops people from being able to really power up the supermatter
 				// Then bring it inside to explode instantly upon landing on a valid turf.
 
 
-	if(Proj.flag != "bullet")
+	if(Proj.flag != BULLET)
 		power += Proj.damage * config_bullet_energy
 	else
 		damage += Proj.damage * config_bullet_energy
-	return 0
 
 /obj/machinery/power/supermatter/attack_robot(mob/user)
 	if(Adjacent(user))

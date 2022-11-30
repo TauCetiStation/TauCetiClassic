@@ -29,22 +29,9 @@
 
 	hud_used = new hud_type(src)
 	SEND_SIGNAL(src, COMSIG_MOB_HUD_CREATED)
+	hud_used.show_hud(istype(loc, /obj/mecha) ? HUD_STYLE_REDUCED : HUD_STYLE_STANDARD)
 	update_sight()
 	return TRUE
-
-// TOTAL SHITCODE
-// PLEASE REMOVE WHEN HUD SYSTEM IS REDONE
-// IS REQUIRED BECAUSE THE ONLY THING THAT USES HUD SIGNALS IS
-// THE MOOD SYSTEM WHICH ONLY HUMANS HAVE (WHICH REQUIRES HUD UPDATE AFTERWARDS)
-// AND USING SHOW_HUD ON ANY MOB THAT ISN'T HUMAN CAUSES RUNTIMES
-// ~Luduk
-/mob/living/carbon/human/create_mob_hud()
-	. = ..()
-	if(!.)
-		return
-
-	if(hud_used.mymob)
-		hud_used.show_hud(hud_used.hud_version)
 
 /mob/Login()
 	player_list |= src
@@ -63,6 +50,9 @@
 	next_move = 1
 
 	..()
+
+	SEND_SIGNAL(src, COMSIG_LOGIN)
+	logout_reason = LOGOUT_UNKNOWN
 
 	if(loc && !isturf(loc))
 		client.eye = loc
@@ -92,15 +82,10 @@
 
 	client.screen += blocker
 
-	if(abilities)
-		client.verbs |= abilities
-
 	if(isAI(src))
 		client.show_popup_menus = 0
 	else
 		client.show_popup_menus = 1
 
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.species && H.species.abilities)
-			client.verbs |= H.species.abilities
+	if(client.click_intercept)
+		client.click_intercept.post_login()

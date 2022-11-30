@@ -104,7 +104,7 @@
 	return
 
 /obj/effect/anomaly/grav/proc/gravShock(mob/A)
-	if(boing && isliving(A) && !A.stat)
+	if(boing && isliving(A) && A.stat == CONSCIOUS)
 		A.Weaken(2)
 		var/atom/target = get_edge_target_turf(A, get_dir(src, get_step_away(A, src)))
 		A.throw_at(target, 5, 1)
@@ -275,7 +275,7 @@
 	for(var/i in 1 to 4)
 		var/list/L = locate(x + coord_of_pylons[1], y + coord_of_pylons[2], z)
 		var/turf/F = get_turf(pick(L))
-		if(F && istype(F, /turf/simulated/floor))
+		if(F && isfloorturf(F))
 			for(var/obj in L)
 				if(istype(obj, /turf))
 					continue
@@ -324,11 +324,11 @@
 		to_chat(user, "<span class='warning'>Нар-Си создаст нового раба через [round((next_spawn - world.time) * 0.1)] секунд.</span>")
 		return
 
-	var/type = pick(200; /mob/living/simple_animal/construct/harvester,\
+	var/type = pick(70; /mob/living/simple_animal/construct/harvester,\
 					50; /mob/living/simple_animal/construct/wraith,\
 					30; /mob/living/simple_animal/construct/armoured,\
 					40; /mob/living/simple_animal/construct/proteon,\
-					70; /mob/living/simple_animal/construct/builder,\
+					50; /mob/living/simple_animal/construct/builder,\
 					1;  /mob/living/simple_animal/construct/behemoth)
 	create_shell(user, type)
 	next_spawn = world.time + spawn_cd
@@ -347,11 +347,11 @@
 		if(!slave) // I dont know why or how it can be null, but it can be null
 			continue
 		var/type = pick(
-				200;/mob/living/simple_animal/construct/harvester,\
 				50; /mob/living/simple_animal/construct/wraith,\
 				50; /mob/living/simple_animal/construct/armoured,\
 				40; /mob/living/simple_animal/construct/proteon,\
 				30; /mob/living/simple_animal/construct/builder,\
+				10;/mob/living/simple_animal/construct/harvester,\
 				1;  /mob/living/simple_animal/construct/behemoth)
 		INVOKE_ASYNC(src, .proc/create_shell, slave, type)
 		spawns--
@@ -370,7 +370,7 @@
 	if(global.cult_religion)
 		global.cult_religion.add_member(C, CULT_ROLE_HIGHPRIEST)
 	else
-		SSticker.mode.CreateFaction(/datum/faction/cult)
+		create_faction(/datum/faction/cult, FALSE, FALSE)
 		global.cult_religion.add_member(C, CULT_ROLE_HIGHPRIEST)// religion was created in faction
 
 	var/rand_num = rand(1, 3)

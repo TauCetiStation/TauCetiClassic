@@ -237,7 +237,7 @@
 	icon_state = "mecha_exting"
 	equip_cooldown = 5
 	energy_drain = 0
-	range = MELEE|RANGED
+	range = RANGE_MELEE|RANGED
 
 	var/obj/item/weapon/reagent_containers/spray/extinguisher/ext
 
@@ -287,7 +287,7 @@
 	origin_tech = "materials=4;bluespace=3;magnets=4;powerstorage=4"
 	equip_cooldown = 10
 	energy_drain = 250
-	range = MELEE|RANGED
+	range = RANGE_MELEE|RANGED
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
 	var/disabled = 0 //malf
 
@@ -311,7 +311,7 @@
 	//meh
 	switch(mode)
 		if(0)
-			if (istype(target, /turf/simulated/wall))
+			if (iswallturf(target))
 				occupant_message("Deconstructing [target]...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
@@ -320,7 +320,7 @@
 					target:ChangeTurf(/turf/simulated/floor/plating)
 					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.use_power(energy_drain)
-			else if (istype(target, /turf/simulated/floor))
+			else if (isfloorturf(target))
 				occupant_message("Deconstructing [target]...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
@@ -348,7 +348,7 @@
 					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					chassis.spark_system.start()
 					chassis.use_power(energy_drain*2)
-			else if(istype(target, /turf/simulated/floor))
+			else if(isfloorturf(target))
 				occupant_message("Building Wall...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
@@ -358,7 +358,7 @@
 					chassis.spark_system.start()
 					chassis.use_power(energy_drain*2)
 		if(2)
-			if(istype(target, /turf/simulated/floor))
+			if(isfloorturf(target))
 				occupant_message("Building Airlock...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
@@ -471,7 +471,7 @@
 	origin_tech = "bluespace=2;magnets=3"
 	equip_cooldown = 10
 	energy_drain = 100
-	range = MELEE|RANGED
+	range = RANGE_MELEE|RANGED
 	var/atom/movable/locked
 	var/mode = 1 //1 - gravsling 2 - gravpush
 
@@ -857,7 +857,7 @@
 	origin_tech = "phorontech=2;powerstorage=2;engineering=1"
 	equip_cooldown = 10
 	energy_drain = 0
-	range = MELEE
+	range = RANGE_MELEE
 	var/coeff = 100
 	var/obj/item/stack/sheet/fuel
 	var/max_fuel = 150000
@@ -1084,21 +1084,6 @@
 		chassis.use_power(energy_drain)
 		do_after_cooldown()
 	return 1
-
-
-/********Mecha customisation kit********/
-/obj/item/weapon/paintkit //Please don't use this for anything, it's a base type for custom mech paintjobs.
-	name = "mecha customisation kit"
-	desc = "A generic kit containing all the needed tools and parts to turn a mech into another mech."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "royce_kit"
-
-	var/new_name = "mech"    //What is the variant called?
-	var/new_desc = "A mech." //How is the new mech described?
-	var/new_icon = "ripley"  //What base icon will the new mech use?
-	var/removable = null     //Can the kit be removed?
-	var/list/allowed_types = list() //Types of mech that the kit will work on.
-
 
 /********Mecha Drop System********/
 /obj/item/mecha_parts/mecha_equipment/Drop_system

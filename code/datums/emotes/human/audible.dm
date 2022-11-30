@@ -1,4 +1,4 @@
-/datum/emote/laugh
+/datum/emote/human/laugh
 	key = "laugh"
 
 	message_1p = "You laugh."
@@ -12,11 +12,13 @@
 
 	message_type = SHOWMSG_AUDIO
 
+	age_variations = TRUE
+
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS)
 	)
 
-/datum/emote/laugh/get_sound(mob/living/carbon/human/user, intentional)
+/datum/emote/human/laugh/get_sound(mob/living/carbon/human/user, intentional)
 	var/static/list/laugh_by_gender_species = list(
 		"[SKRELL][FEMALE]" = SOUNDIN_LAUGH_SKRELL_FEMALE,
 		"[SKRELL][MALE]" = SOUNDIN_LAUGH_SKRELL_MALE,
@@ -33,14 +35,8 @@
 
 	return pick(SOUNDIN_LAUGH_MALE)
 
-/datum/emote/laugh/play_sound(mob/living/carbon/human/user, intentional, emote_sound)
-	var/voice_frequency = TRANSLATE_RANGE(user.age, user.species.min_age, user.species.max_age, 0.85, 1.05)
-	var/sound_frequency = 1.05 - (voice_frequency - 0.85)
 
-	playsound(user, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
-
-
-/datum/emote/giggle
+/datum/emote/human/giggle
 	key = "giggle"
 
 	message_1p = "You giggle."
@@ -59,7 +55,7 @@
 	)
 
 
-/datum/emote/grunt
+/datum/emote/human/grunt
 	key = "grunt"
 
 	message_1p = "You grunt."
@@ -80,15 +76,15 @@
 		EMOTE_STATE(is_intentional_or_species_no_flag, NO_PAIN),
 	)
 
-/datum/emote/grunt/get_sound(mob/living/carbon/human/user, intentional)
+/datum/emote/human/grunt/get_sound(mob/living/carbon/human/user, intentional)
 	return pick(user.gender == FEMALE ? SOUNDIN_FEMALE_LIGHT_PAIN : SOUNDIN_MALE_LIGHT_PAIN)
 
-/datum/emote/grunt/do_emote(mob/living/carbon/human/user, emote_key, intentional)
+/datum/emote/human/grunt/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
 	user.add_combo_value_all(10)
 
 
-/datum/emote/groan
+/datum/emote/human/groan
 	key = "groan"
 
 	message_1p = "You groan."
@@ -109,18 +105,18 @@
 		EMOTE_STATE(is_intentional_or_species_no_flag, NO_PAIN),
 	)
 
-/datum/emote/groan/get_sound(mob/living/carbon/human/user, intentional)
+/datum/emote/human/groan/get_sound(mob/living/carbon/human/user, intentional)
 	if(user.get_species() != SKRELL && HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD) && prob(66))
 		return pick(user.gender == FEMALE ? SOUNDIN_FEMALE_WHINER_PAIN : SOUNDIN_MALE_WHINER_PAIN)
 
 	return pick(user.gender == FEMALE ? SOUNDIN_FEMALE_PASSIVE_PAIN : SOUNDIN_MALE_PASSIVE_PAIN)
 
-/datum/emote/groan/do_emote(mob/living/carbon/human/user, emote_key, intentional)
+/datum/emote/human/groan/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
 	user.add_combo_value_all(10)
 
 
-/datum/emote/scream
+/datum/emote/human/scream
 	key = "scream"
 
 	message_1p = "You scream!"
@@ -130,7 +126,7 @@
 	message_impaired_reception = "You see someone opening their mouth like a fish gasping for air!"
 
 	message_miming = "acts out a scream!"
-	message_muzzled = "makes a louad noise!"
+	message_muzzled = "makes a loud noise!"
 
 	message_type = SHOWMSG_AUDIO
 
@@ -141,15 +137,15 @@
 		EMOTE_STATE(is_intentional_or_species_no_flag, NO_PAIN),
 	)
 
-/datum/emote/scream/get_sound(mob/living/carbon/human/user, intentional)
+/datum/emote/human/scream/get_sound(mob/living/carbon/human/user, intentional)
 	return pick(user.gender == FEMALE ? SOUNDIN_FEMALE_HEAVY_PAIN : SOUNDIN_MALE_HEAVY_PAIN)
 
-/datum/emote/scream/do_emote(mob/living/carbon/human/user, emote_key, intentional)
+/datum/emote/human/scream/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
 	user.add_combo_value_all(10)
 
 
-/datum/emote/cough
+/datum/emote/human/cough
 	key = "cough"
 
 	message_1p = "You cough."
@@ -168,11 +164,11 @@
 		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
 	)
 
-/datum/emote/cough/get_sound(mob/living/carbon/human/user, intentional)
+/datum/emote/human/cough/get_sound(mob/living/carbon/human/user, intentional)
 	return pick(user.gender == FEMALE ? SOUNDIN_FBCOUGH : SOUNDIN_MBCOUGH)
 
 
-/datum/emote/hiccup
+/datum/emote/human/hiccup
 	key = "hiccup"
 
 	message_1p = "You hiccup."
@@ -194,70 +190,7 @@
 	)
 
 
-/datum/emote/beep
-	key = "beep"
-
-	message_1p = "You beep."
-	message_3p = "beeps."
-
-	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "You see someone open their mouth quickly."
-
-	message_miming = "makes robot noises."
-	message_muzzled = "makes a weak noise."
-
-	message_type = SHOWMSG_AUDIO
-
-	sound = 'sound/machines/twobeep.ogg'
-
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
-
-
-/datum/emote/ping
-	key = "ping"
-
-	message_1p = "You ping."
-	message_3p = "pings."
-
-	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "You see someone opening and closing their mouth."
-
-	message_miming = "makes robot noises."
-	message_muzzled = "makes a weak noise."
-
-	message_type = SHOWMSG_AUDIO
-
-	sound = 'sound/machines/ping.ogg'
-
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
-
-
-/datum/emote/buzz
-	key = "buzz"
-
-	message_1p = "You buzz."
-	message_3p = "buzzes."
-
-	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "You see someone clenching their teeth."
-
-	message_miming = "makes robot noises."
-	message_muzzled = "makes a weak noise."
-
-	message_type = SHOWMSG_AUDIO
-
-	sound = 'sound/machines/buzz-sigh.ogg'
-
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
-
-
-/datum/emote/choke
+/datum/emote/human/choke
 	key = "choke"
 
 	message_1p = "You choke."
@@ -273,11 +206,14 @@
 
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
+		EMOTE_STATE(is_present_bodypart, BP_HEAD),
 		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
 	)
 
+	cloud = "cloud-gasp"
 
-/datum/emote/snore
+
+/datum/emote/human/snore
 	key = "snore"
 
 	message_1p = "You snore."
@@ -297,28 +233,8 @@
 	)
 
 
-/datum/emote/whimper
-	key = "whimper"
-
-	message_1p = "You whimper."
-	message_3p = "whimpers."
-
-	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "You see someone making a sad face."
-
-	message_miming = "whimpers."
-	message_muzzled = "makes a weak noise."
-
-	message_type = SHOWMSG_AUDIO
-
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION),
-	)
-
-
 // TO-DO: make so intentional sniffing reveals how a reagent solution held in hand smells?
-/datum/emote/sniff
+/datum/emote/human/sniff
 	key = "sniff"
 
 	message_1p = "You sniff."
@@ -337,7 +253,7 @@
 	)
 
 
-/datum/emote/sneeze
+/datum/emote/human/sneeze
 	key = "sneeze"
 
 	message_1p = "You sneeze."
@@ -357,7 +273,7 @@
 	)
 
 
-/datum/emote/gasp
+/datum/emote/human/gasp
 	key = "gasp"
 
 	message_1p = "You gasp!"
@@ -374,32 +290,13 @@
 	state_checks = list(
 		EMOTE_STATE(is_stat, CONSCIOUS),
 		EMOTE_STATE(is_present_bodypart, BP_HEAD),
+		EMOTE_STATE(is_intentional_or_species_no_flag, NO_BREATHE),
 	)
 
 	cloud = "cloud-gasp"
 
 
-/datum/emote/moan
-	key = "moan"
-
-	message_1p = "You moan!"
-	message_3p = "moans!"
-
-	message_impaired_production = "moans silently."
-	message_impaired_reception = "You see someone opening their mouth wide."
-
-	message_miming = "appears to moan!"
-	message_muzzled = "moans silently!"
-
-	message_type = SHOWMSG_AUDIO
-
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION),
-	)
-
-
-/datum/emote/sigh
+/datum/emote/human/sigh
 	key = "sigh"
 
 	message_1p = "You sigh."
@@ -419,7 +316,7 @@
 	)
 
 
-/datum/emote/mumble
+/datum/emote/human/mumble
 	key = "mumble"
 
 	message_1p = "You mumble."
@@ -437,3 +334,99 @@
 		EMOTE_STATE(is_stat, CONSCIOUS),
 		EMOTE_STATE(is_intentional_or_species_no_flag, NO_EMOTION),
 	)
+
+
+/datum/emote/human/hmm_think
+	key = "hmm"
+
+	message_1p = "You mumble thoughtfully."
+	message_3p = "mumbles thoughtfully..."
+
+	message_impaired_production = "mumbles thougtfully..."
+	message_impaired_reception = "You see someone scratching their chin thougtfully..."
+
+	message_miming = "acts out a philosophical thinking..."
+	message_muzzled = "mumble silently and thoughtfully..."
+
+	message_type = SHOWMSG_AUDIO
+
+	age_variations = TRUE
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS)
+	)
+
+/datum/emote/human/hmm_think/get_sound(mob/living/carbon/human/user, intentional)
+	return pick(user.gender == FEMALE ? SOUNDIN_HMM_THINK_FEMALE : SOUNDIN_HMM_THINK_MALE)
+
+
+/datum/emote/human/hmm_question
+	key = "hmm?"
+
+	message_1p = "You mumble and curle your eyebrows questioningly..?"
+	message_3p = "mumbles questioningly..?"
+
+	message_impaired_production = "mumbles questioningly..?"
+	message_impaired_reception = "You see someone curling their eyebrows questioningly..?"
+
+	message_miming = "curls their eyebrows questioningly..?"
+	message_muzzled = "mumbles silently and questioningly..?"
+
+	message_type = SHOWMSG_AUDIO
+
+	age_variations = TRUE
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS)
+	)
+
+/datum/emote/human/hmm_question/get_sound(mob/living/carbon/human/user, intentional)
+	return pick(user.gender == FEMALE ? SOUNDIN_HMM_QUESTION_FEMALE : SOUNDIN_HMM_QUESTION_MALE)
+
+
+/datum/emote/human/hmm_excited
+	key = "hmm!"
+
+	message_1p = "You mumble excitedly!"
+	message_3p = "mumbles excitedly."
+
+	message_impaired_production = "mumbles excitedly!"
+	message_impaired_reception = "You see someone curling their eyebrows excitedly!"
+
+	message_miming = "curls their eyebrows excitedly!"
+	message_muzzled = "mumbles silently and excitedly!"
+
+	message_type = SHOWMSG_AUDIO
+
+	age_variations = TRUE
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS)
+	)
+
+/datum/emote/human/hmm_excited/get_sound(mob/living/carbon/human/user, intentional)
+	return pick(user.gender == FEMALE ? SOUNDIN_HMM_EXCLAIM_FEMALE : SOUNDIN_HMM_EXCLAIM_MALE)
+
+
+/datum/emote/human/woo
+	key = "woo"
+
+	message_1p = "You woo excitedly!"
+	message_3p = "woos excitedly!"
+
+	message_impaired_production = "woos excitedly!"
+	message_impaired_reception = "You see someone excitedly wooing!"
+
+	message_miming = "acts out gestures, excitedly!"
+	message_muzzled = "looks excited."
+
+	message_type = SHOWMSG_AUDIO
+
+	age_variations = TRUE
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS)
+	)
+
+/datum/emote/human/woo/get_sound(mob/living/carbon/human/user, intentional)
+	return pick(user.gender == FEMALE ? SOUNDIN_WOO_FEMALE : SOUNDIN_WOO_MALE)
