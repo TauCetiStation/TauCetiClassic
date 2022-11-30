@@ -37,6 +37,7 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 	var/energy_to_lower = -20
 
 	var/atom/movable/singularity_effect/singulo_effect
+	var/atom/movable/singularity_lens/singulo_lens
 
 /obj/singularity/energy_ball/Destroy()
 	if(orbiting && istype(orbiting.orbiting, /obj/singularity/energy_ball))

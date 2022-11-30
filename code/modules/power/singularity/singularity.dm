@@ -60,15 +60,6 @@
 
 	update_icon(STAGE_ONE)
 
-	add_filter("singa_ring", 1, bloom_filter(rgb(100,0,0), 2, 2, 255))
-
-	animate(src, transform = turn(matrix(), -120), time = 5, loop = -1, flags = ANIMATION_PARALLEL)
-	animate(transform = turn(matrix(), -240), time = 7, loop = -1)
-	animate(transform = turn(matrix(), 0), time = 5, loop = -1)
-
-	animate(get_filter("singa_ring"), size = 1, offset = 1, time = 5, loop = -1, easing = CIRCULAR_EASING, flags = ANIMATION_PARALLEL)
-	animate(size = 2, offset = 2, time = 10, loop = -1, easing = CIRCULAR_EASING)
-
 	START_PROCESSING(SSobj, src)
 	return INITIALIZE_HINT_LATELOAD
 
@@ -397,6 +388,18 @@
 	var/atom/movable/singularity_effect/singulo_effect
 	var/atom/movable/singularity_swirl/singulo_swirl
 	var/atom/movable/singularity_lens/singulo_lens
+
+/obj/singularity/gravitational/atom_init()
+	..()
+
+	add_filter("singa_ring", 1, bloom_filter(rgb(100,0,0), 2, 2, 255))
+
+	animate(src, transform = turn(matrix(), -120), time = 5, loop = -1, flags = ANIMATION_PARALLEL)
+	animate(transform = turn(matrix(), -240), time = 7, loop = -1)
+	animate(transform = turn(matrix(), 0), time = 5, loop = -1)
+
+	animate(get_filter("singa_ring"), size = 1, offset = 1, time = 5, loop = -1, easing = CIRCULAR_EASING, flags = ANIMATION_PARALLEL)
+	animate(size = 2, offset = 2, time = 10, loop = -1, easing = CIRCULAR_EASING)
 
 /obj/singularity/gravitational/Destroy()
 	vis_contents -= singulo_swirl
