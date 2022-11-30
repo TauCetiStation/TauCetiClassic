@@ -45,6 +45,7 @@
 
 /mob/camera/eminence/Login()
 	..()
+	sync_mind()
 	var/datum/religion/cult/R = global.cult_religion
 	if(R.eminence && R.eminence != src)
 		R.remove_member(src)
