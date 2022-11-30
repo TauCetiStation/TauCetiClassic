@@ -338,7 +338,7 @@
 
 /obj/item/weapon/makeshift_flamethrower
 	name = "makeshift flamethrower"
-	desc = "I love the smell of napalm in the morning"
+	desc = "I love the smell of napalm in the morning."
 	icon = 'icons/obj/flamethrower.dmi'
 	icon_state = "flamethrowerbase"
 	item_state = "flamethrower_0"
@@ -352,7 +352,6 @@
 	origin_tech = "engineering=3"
 	var/status = 0		//ready to fire or not
 	var/lit = 0			//on or off
-	var/operating = 0	//cooldown
 	var/max_fuel = 300
 	var/obj/item/weapon/weldingtool/weldtool = null
 	var/obj/item/device/assembly/igniter/igniter = null
@@ -415,7 +414,7 @@
 
 /obj/item/weapon/makeshift_flamethrower/afterattack(atom/target, mob/user, proximity, params)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(operating || !can_see(user, target))
+	if(!can_see(user, target))
 		return
 	if(!status)
 		to_chat(user, "<span class='notice'>Secure all components first.</span>")
@@ -430,7 +429,6 @@
 	var/list/turflist = getline(self_turf, target_turf)
 	//how much needed refill from fuelweldpack
 	var/fuel_spent = 0
-	operating = TRUE
 	for(var/turf/turf_in_line in turflist)
 		if(turf_in_line == self_turf || isspaceturf(turf_in_line))
 			continue
@@ -451,7 +449,6 @@
 		else
 			flame_turf(turf_in_line, 1)
 		fuel_spent++
-	operating = FALSE
 	user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] fired by flamethrower on [target] at [COORD(target)]</font>"
 	suck_fuel_from_weldpack(user, fuel_spent)
 
