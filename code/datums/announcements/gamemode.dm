@@ -91,14 +91,26 @@
 /datum/announcement/centcomm/gang/announce_gamemode/New()
 	message = "Нам поступила информация из достоверного источника, что на [station_name_ru()] зафиксирована деятельность банд." + \
 	"Управлению станции поручается обеспечить безопасность экипажа.\n" + \
+	" Из-за халатного отношения к вопросу безопасности, офицерам и главам будет снижен оклад.\n" + \
 	" В течение часа должны прибыть сотрудники Отдела по Борьбе с Организованной Преступностью.\n\n" + \
 	" Шаттл Транспортировки Экипажа сейчас находится на техобслуживании, поэтому вам придётся подождать час с лишним.\n"
 /datum/announcement/centcomm/gang/announce_gamemode/play(gang_names)
-	message = "Нам поступила информация из достоверного источника, что на [station_name_ru()] зафиксирована деятельность банд:" + \
-	" [gang_names]. Управлению станции поручается обеспечить безопасность экипажа.\n" + \
+	message = "Нам поступила информация из достоверного источника, что на [station_name_ru()] зафиксирована деятельность банд: [gang_names]. " + \
+	" Офицерам и главам будет снижен оклад за преступную халатность в вопросе безопасности.\n" + \
 	" В течение часа должны прибыть сотрудники Отдела по Борьбе с Организованной Преступностью.\n\n" + \
 	" Шаттл Транспортировки Экипажа сейчас находится на техобслуживании, поэтому вам придётся подождать час с лишним.\n"
 	..()
+
+	var/list/ranks = command_positions + security_positions
+	for(var/datum/job/J in SSjob.occupations)
+		if(J.title in ranks)
+			J.salary_ratio = 0.7
+
+	var/list/crew = my_subordinate_staff("Admin")
+	for(var/person in crew)
+		if(person["rank"] in ranks)
+			var/datum/money_account/account = person["acc_datum"]
+			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -30)
 
 /datum/announcement/centcomm/gang/cops_closely
 	name = "Gang: Cops Closely"
@@ -123,8 +135,28 @@
 	name = "Gang: Wanted Level 2"
 /datum/announcement/centcomm/gang/cops_2/New()
 	message = "Экипаж [station_name_ru()]. Мы получили подтверждённые сообщения о насильственной деятельности банд" + \
-	" с вашего участка. Мы направили несколько вооружённых офицеров, чтобы помочь поддержать порядок и расследовать дела." + \
+	" с вашего участка. Мы направили несколько вооружённых офицеров, чтобы помочь поддержать порядок и расследовать дела. Капитан будет задержан." + \
 	" Не пытайтесь им помешать и выполняйте любые их требования. Мы попросили в течение десяти минут не отсылать вам шаттл.\n\nБезопасного дня!"
+/datum/announcement/centcomm/gang/cops_2/play()
+	..()
+	var/list/ranks = command_positions
+	for(var/datum/job/J in SSjob.occupations)
+		if(J.title == "Captain")
+			J.salary_ratio = 0.1
+		else if(J.title in ranks)
+			J.salary_ratio = 0.4
+
+	var/list/crew = my_subordinate_staff("Admin")
+	for(var/person in crew)
+		if(person["rank"] in ranks)
+			var/datum/money_account/account = person["acc_datum"]
+			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -60)
+			if(person["rank"] == "Captain")
+				sleep(30)
+				if(account.owner_PDA)
+					to_chat(account.owner_PDA.loc, "[bicon(account.owner_PDA)]<span class='red'>Oh, wait a second</span>")
+				sleep(30)
+				account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -100)
 
 /datum/announcement/centcomm/gang/cops_3
 	subtitle = "Отдел по Борьбе с Организованной Преступностью"
@@ -132,9 +164,25 @@
 	name = "Gang: Wanted Level 3"
 /datum/announcement/centcomm/gang/cops_3/New()
 	message = "Экипаж [station_name_ru()]. Мы получили подтверждённые сообщения об экстремальной деятельности банд" + \
-	" с вашей станции, что привело к жертвам среди гражданского персонала. НТ не потерпит такой халатности," + \
+	" с вашей станции, что привело к жертвам среди гражданского персонала. НТ не потерпит такой халатности, главы будут арестованы," + \
 	" высланный отряд будет дейстовать в полную силу, чтобы сохранить мир и сократить количество жертв.\nСтанция окружена!" + \
 	" Все бандиты должны бросить оружие и мирно сдаться!\n\nБезопасного дня!"
+/datum/announcement/centcomm/gang/cops_3/play()
+	..()
+	for(var/datum/job/J in SSjob.occupations)
+		if(J.title in command_positions)
+			J.salary_ratio = 0.1
+		else if(J.title in security_positions)
+			J.salary_ratio = 0.4
+
+	var/list/crew = my_subordinate_staff("Admin")
+	for(var/person in crew)
+		if(person["rank"] in command_positions)
+			var/datum/money_account/account = person["acc_datum"]
+			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -100)
+		else if(person["rank"] in security_positions)
+			var/datum/money_account/account = person["acc_datum"]
+			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -60) //On the verge
 
 /datum/announcement/centcomm/gang/cops_4
 	subtitle = "Отдел по Борьбе с Организованной Преступностью"
@@ -143,17 +191,47 @@
 /datum/announcement/centcomm/gang/cops_4/New()
 	message = "Мы отправили наших лучших агентов на [station_name_ru()]" + \
 	" в связи с угрозой террористического характера, направленной против нашей станции." + \
+	" Главы будут арестованы, а сотрудники СБ лишены зарплаты." + \
 	" Все террористы должны НЕМЕДЛЕННО сдаться! Несоблюдение этого требования может привести и ПРИВЕДЁТ к смерти." + \
 	" Мы надеемся, что успеем все решить в течение десяти минут, иначе же ждите шаттл и корпорация НаноТрейзен сама всё решит своим обычным методом.\n\nСдавайтесь сейчас или пожалеете!"
+/datum/announcement/centcomm/gang/cops_4/play()
+	..()
+	var/list/ranks = command_positions + security_positions
+	for(var/datum/job/J in SSjob.occupations)
+		if(J.title in ranks)
+			J.salary_ratio = 0
+
+	var/list/crew = my_subordinate_staff("Admin")
+	for(var/person in crew)
+		if(person["rank"] in ranks)
+			var/datum/money_account/account = person["acc_datum"]
+			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -100) //Objective failed
 
 /datum/announcement/centcomm/gang/cops_5
 	subtitle = "Отдел по Борьбе с Организованной Преступностью"
 	announcer = "Дежурный офицер"
 	name = "Gang: Wanted Level 5"
 /datum/announcement/centcomm/gang/cops_5/New()
-	message = "Из-за безумного количества жертв среди гражданского персонажа на борту [station_name_ru()]" + \
-	" мы направили бойцов Вооружённых Сил НаноТрейзен, чтобы присечь любую деятельность банд на станции." + \
+	message = "Из-за безумного количества жертв среди гражданского персонажа на борту [station_name_ru()]." + \
+	" Все главы, а также отдел СБ будет арестован." + \
+	" Мы направили бойцов Вооружённых Сил НаноТрейзен, чтобы присечь любую деятельность банд на станции." + \
 	" Наша блюспейс артиллерия направлена на станцию и спасательный шаттл.\n\nЗря вы убили столько людей."
+/datum/announcement/centcomm/gang/cops_5/play()
+	..()
+	var/list/ranks = command_positions + security_positions
+	for(var/datum/job/J in SSjob.occupations)
+		if(J.title in ranks)
+			J.salary_ratio = 0
+		else
+			salary_ratio = 0.3
+
+	var/list/crew = my_subordinate_staff("Admin")
+	for(var/person in crew)
+		var/datum/money_account/account = person["acc_datum"]
+		if(person["rank"] in ranks)
+			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -110) //Yea, you need to pay now
+		else
+			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -70) //It's a mess
 
 /datum/announcement/centcomm/gang/change_wanted_level
 	title = "Система Обнаружения Кораблей Станции"
