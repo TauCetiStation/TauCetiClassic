@@ -56808,9 +56808,9 @@
 /area/station/medical/virology)
 "qSd" = (
 /obj/structure/rack,
-/obj/item/clothing/head/helmet/space/unathi/helmet_cheap,
+/obj/item/clothing/head/helmet/space/rig/unathi/helmet_cheap,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/unathi/rig_cheap,
+/obj/item/clothing/suit/space/rig/unathi/rig_cheap,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -65295,12 +65295,12 @@
 /area/station/civilian/locker)
 "tFR" = (
 /obj/structure/rack,
-/obj/item/clothing/head/helmet/space/skrell/black,
+/obj/item/clothing/head/helmet/space/rig/skrell/black,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/skrell/black,
-/obj/item/clothing/head/helmet/space/skrell/white,
+/obj/item/clothing/suit/space/rig/skrell/black,
+/obj/item/clothing/head/helmet/space/rig/skrell,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/skrell/white,
+/obj/item/clothing/suit/space/rig/skrell,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"

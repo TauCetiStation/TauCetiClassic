@@ -33184,8 +33184,8 @@
 /area/station/rnd/mixing)
 "hEx" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/space/unathi/rig_cheap,
-/obj/item/clothing/head/helmet/space/unathi/helmet_cheap,
+/obj/item/clothing/suit/space/rig/unathi/rig_cheap,
+/obj/item/clothing/head/helmet/space/rig/unathi/helmet_cheap,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor{
 	dir = 8;
@@ -97765,11 +97765,11 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/clothing/suit/space/skrell/white,
-/obj/item/clothing/head/helmet/space/skrell/white,
+/obj/item/clothing/suit/space/rig/skrell,
+/obj/item/clothing/head/helmet/space/rig/skrell,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/skrell/black,
-/obj/item/clothing/head/helmet/space/skrell/black,
+/obj/item/clothing/suit/space/rig/skrell/black,
+/obj/item/clothing/head/helmet/space/rig/skrell/black,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor{
 	icon_state = "dark"
