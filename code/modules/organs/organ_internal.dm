@@ -403,13 +403,6 @@
 	name = "core"
 	parent_bodypart = BP_CHEST
 
-/*
-/obj/item/organ/internal/brain/tycheon/process()
-	if(owner.life_tick % 10 == 0) // Update once per 10 ticks.
-		if(is_bruised())
-			owner.falling = min(30, owner.falling + 3)
-*/
-
 /obj/item/organ/internal/brain/abomination
 	name = "deformed brain"
 	parent_bodypart = BP_CHEST
