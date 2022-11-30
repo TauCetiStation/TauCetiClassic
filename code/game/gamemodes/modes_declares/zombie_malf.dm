@@ -4,7 +4,7 @@
 	probability = 100
 
 	factions_allowed = list(/datum/faction/malf_silicons/zombie)
-	//TODO delete this, if minimum_player_count = 30
+
 	minimum_player_count = 30
 	minimum_players_bundles = 30
 
