@@ -258,7 +258,6 @@ SUBSYSTEM_DEF(ticker)
 	create_religion(/datum/religion/chaplain)
 	setup_hud_objects()
 
-	//start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
@@ -306,8 +305,9 @@ SUBSYSTEM_DEF(ticker)
 				N.show_titlescreen()
 		//Cleanup some stuff
 		SSjob.fallback_landmark = null
-		for(var/obj/effect/landmark/start/S in landmarks_list)
-			S.after_round_start()
+		for(var/obj/effect/landmark/start/type as anything in subtypesof(/obj/effect/landmark/start))
+			for(var/obj/effect/landmark/start/S as anything in landmarks_list[initial(type.name)])
+				S.after_round_start()
 
 		//Print a list of antagonists to the server log
 		antagonist_announce()
@@ -419,6 +419,7 @@ SUBSYSTEM_DEF(ticker)
 			SSquirks.AssignQuirks(player, player.client, TRUE)
 			if(player.mind.assigned_role != "MODE")
 				SSjob.EquipRank(player, player.mind.assigned_role, FALSE)
+				player.PutDisabilityMarks()
 	if(captainless)
 		for(var/mob/M as anything in player_list)
 			if(!isnewplayer(M))

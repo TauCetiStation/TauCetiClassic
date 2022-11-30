@@ -359,6 +359,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "katana"
 	item_state = "katana"
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_BACK
 	force = 5

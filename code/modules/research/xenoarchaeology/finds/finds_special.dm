@@ -92,7 +92,7 @@ var/global/list/bad_messages = list("Never take me off, please!",
 	// use up stored charges
 	if(charges >= 10)
 		charges -= 10
-		new /obj/effect/spider/eggcluster(pick(view(1,src)))
+		new /obj/structure/spider/eggcluster(pick(view(1,src)))
 
 	if(charges >= 3)
 		if(prob(5))

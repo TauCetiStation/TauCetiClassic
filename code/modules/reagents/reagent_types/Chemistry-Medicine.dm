@@ -143,6 +143,12 @@
 
 /datum/reagent/sterilizine/reaction_obj(obj/O, volume)
 	O.germ_level -= min(volume*20, O.germ_level)
+	REMOVE_TRAIT(O, TRAIT_XENO_FUR, GENERIC_TRAIT)
+	if(istype(O, /obj/item/weapon/reagent_containers/food))
+		var/obj/item/weapon/reagent_containers/food/F = O
+		//constituent components precipitate into food as unwanted sediment. No need use sterilizine into food
+		F.reagents.add_reagent("chlorine", 1)
+		F.reagents.add_reagent("ethanol", 1)
 
 /datum/reagent/sterilizine/reaction_turf(turf/T, volume)
 	. = ..()
@@ -469,6 +475,8 @@
 	..()
 	M.ear_damage = max(M.ear_damage - 1, 0)
 	M.ear_deaf = max(M.ear_deaf - 3, 0)
+	if(M.ear_damage <= 0 && M.ear_deaf <= 0)
+		M.sdisabilities &= ~DEAF
 
 /datum/reagent/peridaxon
 	name = "Peridaxon"
@@ -645,11 +653,20 @@
 
 /datum/reagent/ethylredoxrazine/on_general_digest(mob/living/M)
 	..()
-	M.dizziness = 0
-	M.drowsyness = 0
-	M.setStuttering(0)
-	M.SetConfused(0)
+	M.dizziness = max(0, M.dizziness - 10)
+	M.drowsyness = max(0, M.drowsyness - 10)
+	M.AdjustStuttering(-10)
+	M.AdjustConfused(-10)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 1 * REM, 0, 1)
+	if(prob(volume))
+		if(!ishuman(M))
+			return
+		var/mob/living/carbon/human/H = M
+		var/obj/item/organ/external/head/BP = H.get_bodypart(BP_HEAD)
+		if(!BP || !BP.disfigured)
+			return
+		BP.disfigured = FALSE
+		to_chat(H, "Your face is shaped normally again.")
 
 /datum/reagent/vitamin //Helps to regen blood and hunger(but doesn't really regen hunger because of the commented code below).
 	name = "Vitamin"
@@ -713,7 +730,7 @@
 	reagent_state = LIQUID
 	color = "#9b3401"
 	overdose = REAGENTS_OVERDOSE
-	custom_metabolism = 0.1
+	custom_metabolism = 0
 	taste_message = "wholeness"
 	restrict_species = list(IPC, DIONA)
 	data = list()
@@ -727,19 +744,17 @@
 		data["ticks"] = 1
 	data["ticks"]++
 	switch(data["ticks"])
-		if(1 to 10)
+		if(1 to 5)
 			M.make_dizzy(1)
 			if(prob(10))
 				to_chat(M, "<span class='warning'>Your skin feels hot and your veins are on fire!</span>")
+		if(5 to 10)
+			M.apply_effect(10, AGONY)
+			M.AdjustConfused(2)
 		if(10 to 20)
-			if(M.reagents.has_reagent("tramadol") || M.reagents.has_reagent("oxycodone"))
-				M.adjustToxLoss(5)
-			else
-				M.AdjustConfused(2)
-		if(20 to 60)
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_broken())
-					if(prob(50))
+					if(prob(15))
 						to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
 						E.brute_dam = 0
 						E.status &= ~ORGAN_BROKEN

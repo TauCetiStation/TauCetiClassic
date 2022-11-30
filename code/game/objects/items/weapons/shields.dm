@@ -24,9 +24,7 @@
 	if(is_stunned)
 		to_chat(user, "<span class='warning'>Your [src] has hit [target]! There's not enough space for broad sweeps here!</span>")
 
-	var/resolved = target.attackby(src, user, list())
-	if(!resolved && src)
-		afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+	melee_attack_chain(target, user)
 
 	if(isliving(target) && prob(Get_shield_chance())) // Better shields have more chance to stun.
 		var/mob/living/M = target
@@ -43,9 +41,7 @@
 	var/turf/T_target = get_turf(target)
 
 	if(user.a_intent != INTENT_HELP)
-		var/resolved = target.attackby(src, user, list())
-		if(!resolved && src)
-			afterattack(target, user, TRUE, list()) // 1 indicates adjacency
+		melee_attack_chain(target, user)
 
 	if(!has_gravity(src) && !isspaceturf(target))
 		step_away(user, T_target)

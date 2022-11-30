@@ -13,6 +13,8 @@ var/global/list/alldepartments = list("Central Command")
 	active_power_usage = 200
 	interact_offline = TRUE
 	allowed_checks = ALLOWED_CHECK_NONE
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 	var/obj/item/weapon/card/id/scan = null // identification
 	var/authenticated = 0
 

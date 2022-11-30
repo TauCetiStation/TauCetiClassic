@@ -243,11 +243,10 @@
 		A.ex_act(severity)
 	qdel(src)
 
-/obj/machinery/dna_scannernew/blob_act()
-	if(prob(75))
-		for(var/atom/movable/A in contents)
-			A.loc = loc
-		qdel(src)
+/obj/machinery/dna_scannernew/deconstruct(disassembled)
+	for(var/atom/movable/A as anything in src)
+		A.forceMove(loc)
+	..()
 
 //DNA COMPUTER
 /obj/machinery/computer/scan_consolenew

@@ -55,7 +55,10 @@
 		wet = severity
 		UpdateSlip()
 		if(!wet_overlay)
-			wet_overlay = image('icons/effects/water.dmi', "wet_floor", src)
+			var/current_type = "wet_floor"
+			if(severity == LUBE_FLOOR)
+				current_type = "wet_floor_static"
+			wet_overlay = image('icons/effects/water.dmi', current_type, src)
 			add_overlay(wet_overlay)
 
 /turf/simulated/proc/make_dry_floor()
@@ -71,6 +74,6 @@
 		if(WATER_FLOOR)
 			AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
 		if(LUBE_FLOOR)
-			AddComponent(/datum/component/slippery, 5, SLIDE)
+			AddComponent(/datum/component/slippery, 5, SLIDE | GALOSHES_DONT_HELP)
 		else
 			qdel(GetComponent(/datum/component/slippery))

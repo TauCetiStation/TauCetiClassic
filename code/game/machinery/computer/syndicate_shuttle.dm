@@ -15,14 +15,19 @@
 	var/lastMove = 0
 
 /obj/effect/landmark/syndi_shuttle
+	name = "Syndi shuttle"
 
 /obj/machinery/computer/syndicate_station/atom_init()
 	..()
+	SSholomaps.holomap_landmarks += src
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/syndicate_station/atom_init_late()
-	var/obj/O = locate(/obj/effect/landmark/syndi_shuttle) in landmarks_list
-	curr_location = get_area(O)
+	curr_location = get_area(locate("landmark*Syndi shuttle"))
+
+/obj/machinery/computer/syndicate_station/Destroy()
+	SSholomaps.holomap_landmarks -= src
+	return ..()
 
 /obj/machinery/computer/syndicate_station/process()
 	if(..())
@@ -40,6 +45,10 @@
 
 	moving = TRUE
 	lastMove = world.time
+	//mix stuff
+	var/datum/faction/nuclear/crossfire/N = find_faction_by_type(/datum/faction/nuclear/crossfire)
+	if(N)
+		N.landing_nuke()
 
 	if(curr_location.z != dest_location.z)
 		var/area/transit_location = locate(/area/shuttle/syndicate/transit)

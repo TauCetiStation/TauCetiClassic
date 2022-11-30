@@ -27,7 +27,7 @@
 		ASPECT_TECH = 1,
 	)
 
-/datum/religion_rites/standing/consent/synthconversion/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/consent/synthconversion/can_start(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 
@@ -51,7 +51,7 @@
 
 	return TRUE
 
-/datum/religion_rites/standing/consent/synthconversion/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/consent/synthconversion/invoke_effect(mob/user, obj/AOG)
 	..()
 
 	if(convert_god(AOG))

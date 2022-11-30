@@ -115,7 +115,7 @@
 	if(ishuman(target))
 
 		var/mob/living/carbon/human/H = target
-		armor_block = H.run_armor_check(def_zone, "melee") // For normal attack damage
+		armor_block = H.run_armor_check(def_zone, MELEE) // For normal attack damage
 
 		//Calculating the weakening duration for the target.
 		if(def_zone == BP_HEAD)
@@ -123,7 +123,7 @@
 
 	else
 		//Only humans can have armour, right?
-		armor_block = target.run_armor_check(def_zone, "melee")
+		armor_block = target.run_armor_check(def_zone, MELEE)
 		if(def_zone == BP_HEAD)
 			armor_duration = duration + force
 	armor_duration /= 10

@@ -8,6 +8,9 @@
 	density = TRUE
 	anchored = FALSE
 
+	max_integrity = 200
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/kitchenspike_frame/attackby(obj/item/I, mob/user)
 	add_fingerprint(user)
 	if(default_unfasten_wrench(user, I))
@@ -22,6 +25,10 @@
 	else
 		..()
 
+/obj/structure/kitchenspike_frame/deconstruct(disassembled)
+	new /obj/item/stack/sheet/metal(loc, 4)
+	..()
+
 /obj/structure/kitchenspike
 	name = "meatspike"
 	icon = 'icons/obj/kitchen.dmi'
@@ -31,6 +38,9 @@
 	anchored = TRUE
 	can_buckle = TRUE
 	buckle_lying = FALSE
+
+	max_integrity = 250
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/kitchenspike/attack_paw(mob/user)
 	return attack_hand(user)
@@ -43,10 +53,7 @@
 		if(user.is_busy() || !I.use_tool(src, user, 2 SECONDS, volume = 100))
 			return
 		to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")
-		new /obj/item/stack/rods(loc, 4)
-		var/obj/F = new /obj/structure/kitchenspike_frame(loc)
-		transfer_fingerprints_to(F)
-		qdel(src)
+		deconstruct(TRUE)
 		return
 
 	else if(istype(I, /obj/item/weapon/grab))
@@ -72,6 +79,15 @@
 
 		return
 
+	..()
+
+/obj/structure/kitchenspike/deconstruct(disassembled)
+	if(disassembled)
+		var/obj/structure/meatspike_frame = new /obj/structure/kitchenspike_frame(loc)
+		transfer_fingerprints_to(meatspike_frame)
+	else
+		new /obj/item/stack/sheet/metal(loc, 4)
+	new /obj/item/stack/rods(loc, 4)
 	..()
 
 /obj/structure/kitchenspike/buckle_mob(mob/living/M)

@@ -670,10 +670,12 @@
 	body_parts_covered = FACE | EYES
 	var/next_leap = 0
 
+/obj/item/clothing/mask/facehugger_toy/atom_init(mapload, ...)
+	. = ..()
+	new /datum/proximity_monitor(src, 1)
+
 /obj/item/clothing/mask/facehugger_toy/HasProximity(mob/living/carbon/human/H)
 	if(!ishuman(H))
-		return
-	if(loc == H)
 		return
 	if(next_leap > world.time)
 		return

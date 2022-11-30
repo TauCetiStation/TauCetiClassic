@@ -51,6 +51,20 @@
 	else
 		desc += "."
 
+/obj/machinery/constructable_frame/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 5)
+	if(circuit)
+		circuit.forceMove(loc)
+		circuit = null
+	if(state >= 2)
+		new /obj/item/stack/cable_coil(loc , 5)
+	for(var/obj/item/I in components)
+		I.forceMove(loc)
+	LAZYCLEARLIST(components)
+	..()
+
 /obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P, mob/user)
 	if(P.crit_fail)
 		to_chat(user, "<span class='danger'>This part is faulty, you cannot add this to the machine!</span>")
@@ -86,9 +100,7 @@
 				if(P.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
-						var/obj/item/stack/sheet/metal/M = new (loc, 5)
-						M.add_fingerprint(user)
-						qdel(src)
+						deconstruct(TRUE)
 
 			else if(iswrench(P))
 				if(user.is_busy())
@@ -855,3 +867,23 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/capacitor = 3,
 							/obj/item/stack/cable_coil = 5)
+
+/obj/item/weapon/circuitboard/operating_table
+	name = "circuit board (Operating Table)"
+	build_path = /obj/machinery/optable
+	board_type = "machine"
+	origin_tech = "engineering=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/scanning_module = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/stack/cable_coil/red = 2)
+
+/obj/item/weapon/circuitboard/operating_table/abductor
+	name = "circuit board (Abductor Operating Table)"
+	build_path = /obj/machinery/optable/abductor
+	board_type = "machine"
+	origin_tech = "engineering=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/scanning_module = 2,
+							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/stack/cable_coil/red = 2)

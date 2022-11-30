@@ -20,6 +20,8 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 	var/obj/machinery/power/am_control_unit/control_unit = null
 	var/processing = 0//To track if we are in the update list or not, we need to be when we are damaged and if we ever
 	var/stability = 100//If this gets low bad things tend to happen
@@ -93,9 +95,9 @@
 	stability -= 20
 	if(prob(100-stability))
 		if(prob(10))//Might create a node
-			new /obj/effect/blob/node(src.loc,150)
+			new /obj/structure/blob/node(loc, 150)
 		else
-			new /obj/effect/blob(src.loc,60)
+			new /obj/structure/blob(loc,60)
 		spawn(0)
 			qdel(src)
 		return
@@ -117,7 +119,7 @@
 
 /obj/machinery/am_shielding/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
-	if(Proj.flag != "bullet")
+	if(Proj.flag != BULLET)
 		stability -= Proj.force/2
 
 /obj/machinery/am_shielding/update_icon()

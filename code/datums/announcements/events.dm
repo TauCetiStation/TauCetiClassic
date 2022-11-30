@@ -63,7 +63,7 @@
 	sound = "bluspaceanom"
 /datum/announcement/centcomm/anomaly/bluespace/play(area/A)
 	if(A)
-		message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое местоположение: [A.name]."
+		message = "На сканерах дальнего действия обнаружена нестабильная блюспейс аномалия. Ожидаемое местоположение: [initial(A.name)]."
 	..()
 
 /datum/announcement/centcomm/anomaly/massive_portals
@@ -82,7 +82,7 @@
 	sound = "fluxanom"
 /datum/announcement/centcomm/anomaly/flux/play(area/A)
 	if(A)
-		message = "На сканерах дальнего действия зафиксирован гиперэнерегетический волновой поток. Ожидаемое местоположение: [A.name]."
+		message = "На сканерах дальнего действия зафиксирован гиперэнерегетический волновой поток. Ожидаемое местоположение: [initial(A.name)]."
 	..()
 
 /datum/announcement/centcomm/anomaly/gravity
@@ -91,7 +91,7 @@
 	sound = "gravanom"
 /datum/announcement/centcomm/anomaly/gravity/play(area/A)
 	if(A)
-		message = "На сканерах дальнего действия обнаружена гравитационная аномалия. Ожидаемое местоположение: [A.name]."
+		message = "На сканерах дальнего действия обнаружена гравитационная аномалия. Ожидаемое местоположение: [initial(A.name)]."
 	..()
 
 /datum/announcement/centcomm/anomaly/pyro
@@ -100,7 +100,7 @@
 	sound = "pyroanom"
 /datum/announcement/centcomm/anomaly/pyro/play(area/A)
 	if(A)
-		message = "На сканерах дальнего действия обнаружена пирокластическая аномалия. Ожидаемое местоположение: [A.name]."
+		message = "На сканерах дальнего действия обнаружена пирокластическая аномалия. Ожидаемое местоположение: [initial(A.name)]."
 	..()
 
 /datum/announcement/centcomm/anomaly/vortex
@@ -109,7 +109,7 @@
 	sound = "vortexanom"
 /datum/announcement/centcomm/anomaly/vortex/play(area/A)
 	if(A)
-		message = "На сканерах дальнего действия зафиксирована вихревая аномалия. Ожидаемое местоположение: [A.name]."
+		message = "На сканерах дальнего действия зафиксирована вихревая аномалия. Ожидаемое местоположение: [initial(A.name)]."
 	..()
 
 /datum/announcement/centcomm/brand

@@ -59,14 +59,29 @@
 	if(iscrowbar(W))
 		if(user.is_busy()) return
 		if(W.use_tool(src, user, 50, volume = 50))
-			var/obj/item/solar_assembly/S = locate() in src
-			if(S)
-				S.loc = src.loc
-				S.give_glass()
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='notice'>[user] takes the glass off the tracker.</span>")
-			qdel(src)
+			deconstruct(TRUE)
 		return
+	..()
+
+/obj/machinery/power/tracker/atom_break(damage_flag)
+	. = ..()
+	if(.)
+		playsound(loc, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/obj/machinery/power/tracker/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(disassembled)
+		var/obj/item/solar_assembly/S = locate() in src
+		if(S)
+			S.forceMove(loc)
+			S.give_glass(stat & BROKEN)
+	else
+		playsound(loc, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER, 70, TRUE)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
 	..()
 
 // timed process

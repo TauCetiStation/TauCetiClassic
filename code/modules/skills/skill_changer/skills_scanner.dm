@@ -2,9 +2,8 @@
 	name = "CMF manipulation table"
 	desc = "Used to scan and change the cognitive and motor functions of living beings. Also a very comfortable table to lie on."
 	icon = 'icons/obj/skills/skills_machinery.dmi'
-	icon_state = "table_idle"
-	icon_state_active = "table_active"
-	icon_state_idle = "table_idle"
+	icon_state = "table_skill_idle"
+	icon_state_active = "table_skill_active"
 	density = TRUE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
@@ -47,7 +46,8 @@
 		return FALSE
 	if(victim)
 		return
-	if(default_deconstruction_screwdriver(user, "table_open", icon_state_idle, W))
+	if(default_deconstruction_screwdriver(user, "table_skill_open", initial(icon_state), W))
+		update_icon()
 		return
 	if(exchange_parts(user, W))
 		return
@@ -89,7 +89,7 @@
 /obj/machinery/optable/skill_scanner/process()
 	. = ..()
 	if(!victim && panel_open)
-		icon_state = "table_open"
+		icon_state = "table_skill_open"
 
 /obj/machinery/optable/skill_scanner/deconstruction()
 	. = ..()

@@ -66,9 +66,7 @@
 		to_give.attack_self(victim)
 	else
 		event_log(victim, C, "Forced self-attack by [to_give]")
-		var/resolved = victim.attackby(to_give, victim)
-		if(!resolved && victim && to_give)
-			to_give.afterattack(victim, victim, TRUE)
+		to_give.melee_attack_chain(victim, victim)
 
 /datum/combat_combo/disarm/execute(mob/living/victim, mob/living/attacker)
 	var/list/to_drop = list(victim.get_active_hand(), victim.get_inactive_hand())
@@ -268,7 +266,7 @@
 		return
 
 	var/target_zone = attacker.get_targetzone()
-	var/armor_check = victim.run_armor_check(target_zone, "melee")
+	var/armor_check = victim.run_armor_check(target_zone, MELEE)
 
 	if(ishuman(victim))
 		var/mob/living/carbon/human/H = victim
