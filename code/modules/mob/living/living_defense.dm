@@ -323,22 +323,3 @@
 			return has_bodypart(targetzone)
 		else
 			return TRUE
-
-/mob/living/proc/try_dodge(atom/movable/AM = null)
-	var/datum/species/S = all_species[get_species()]
-	if(!S)
-		return FALSE
-
-	if(!S.flags[IS_FLYING])
-		return FALSE
-
-	if(falling)
-		return FALSE
-
-	// Tycheon's default dodge - 45%
-	if(prob((10 - movement_delay()) * 5))
-		if(AM)
-			visible_message("<span class='notice'>\The [AM] misses [src] narrowly!</span>")
-		return TRUE
-
-	return FALSE
