@@ -297,7 +297,7 @@
 	name = "The Gaping Maw"
 	desc = "A series of thoughts that reverberate through the minds of the Tycheon, and all other Tycheons around."
 	allowed_speak = list(TYCHEON)
-	colour = "void"
+	colour = "rough"
 	key = list("d", "â")
 	signlang_verb = list("pulses his core")
 	flags = SIGNLANG // For all intents and purposes, this is basically a sign language.
