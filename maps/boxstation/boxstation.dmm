@@ -15188,7 +15188,7 @@
 	},
 /area/station/security/lobby)
 "aAx" = (
-/obj/machinery/shower{
+/obj/machinery/shower/free{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -15768,7 +15768,7 @@
 	},
 /area/station/rnd/xenobiology)
 "aBG" = (
-/obj/machinery/shower{
+/obj/machinery/shower/free{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -40513,9 +40513,6 @@
 	},
 /area/station/cargo/office)
 "buE" = (
-/obj/machinery/shower{
-	dir = 4
-	},
 /obj/structure/drain{
 	drainage = 2
 	},
@@ -40523,6 +40520,9 @@
 	icon_state = "left";
 	name = "Cloning Cell";
 	req_access = list(5)
+	},
+/obj/machinery/shower/free{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -52636,6 +52636,9 @@
 	},
 /obj/item/weapon/circuitboard/clonepod,
 /obj/item/weapon/circuitboard/scan_consolenew,
+/obj/item/weapon/circuitboard/operating_table{
+	pixel_y = -4
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "bQr" = (
@@ -52646,6 +52649,7 @@
 /obj/item/weapon/circuitboard/security{
 	pixel_y = 4
 	},
+/obj/item/weapon/circuitboard/skills,
 /obj/item/weapon/circuitboard/skills,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
