@@ -1098,8 +1098,8 @@
 
 	// ignore_gene_icons = list("All")
 	blood_datum_path = /datum/dirt_cover/tycheon_blood
-	flesh_color = "#1F1F1F"
-	base_color = "#BB1111"
+	flesh_color = "#1f1f1f"
+	base_color = "#bb1111"
 
 	body_temperature = 300 // Which is slightly lower than the normal human being. Slight deviations from Tycheon's bodytemperature may result in... Bleh.
 	cold_level_1 = 273

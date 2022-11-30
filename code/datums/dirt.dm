@@ -61,7 +61,7 @@
 
 /datum/dirt_cover/tycheon_blood
 	name = "strange liquid"
-	color = "#1F1F1F"
+	color = "#1f1f1f"
 
 /datum/dirt_cover/proc/add_dirt(datum/dirt_cover/A)
 	var/red = (hex2num(copytext(color,2,4)) + hex2num(copytext(A.color,2,4))) / 2

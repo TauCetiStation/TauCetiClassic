@@ -112,7 +112,7 @@
 			. += "<b>Facial</b>"
 			. += "<br><a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> [color_square(r_facial, g_facial, b_facial)]"
 			. += " Style: <a class='white' href='?_src_=prefs;preference=f_style_left;task=input'><</a> <a class='white' href='?_src_=prefs;preference=f_style_right;task=input'>></a> <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
-			. += "<b>Eye model:<b> <a href='?_src_=prefs;preference=eye_model;task=input'>[eye_name]</a><br>"
+			. += "<b>Eye model:</b> <a href='?_src_=prefs;preference=eye_model;task=input'>[eye_name]</a><br>"
 			. += "<b>Eye color</b>"
 			. += "<br><a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> [color_square(r_eyes, g_eyes, b_eyes)]<br>"
 
