@@ -367,7 +367,6 @@
 		reagents.add_reagent("fuel",WeldCurFuel)
 	else
 		reagents.add_reagent("fuel",max_fuel)
-	igniter = new(src)
 
 /obj/item/weapon/makeshift_flamethrower/examine(mob/user)
 	. = ..()
