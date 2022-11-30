@@ -385,10 +385,6 @@
 	return 0
 
 /obj/item/weapon/makeshift_flamethrower/process()
-	if(!lit)
-		STOP_PROCESSING(SSobj, src)
-		update_icon()
-		return
 	var/turf/T = get_turf(src)
 	T.hotspot_expose(700, 2)
 
@@ -477,6 +473,7 @@
 		if(isscrewdriver(I))
 			status = FALSE
 			lit = FALSE
+			STOP_PROCESSING(SSobj, src)
 			to_chat(user, "<span class='notice'>[src] is now unsecured.</span>")
 			update_icon()
 			return
