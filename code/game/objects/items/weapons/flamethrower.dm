@@ -350,8 +350,8 @@
 	w_class = SIZE_NORMAL
 	m_amt = 500
 	origin_tech = "engineering=3"
-	var/status = 0		//ready to fire or not
-	var/lit = 0			//on or off
+	var/status = FALSE		//ready to fire or not
+	var/lit = FALSE
 	var/max_fuel = 300
 	var/obj/item/weapon/weldingtool/weldtool = null
 	var/obj/item/device/assembly/igniter/igniter = null
@@ -360,15 +360,14 @@
 	. = ..()
 	if(WeldMaxFuel)
 		max_fuel = WeldMaxFuel
-	var/datum/reagents/R = new/datum/reagents(max_fuel)
-	reagents = R
-	R.my_atom = src
+	create_reagents(max_fuel)
 	if(WeldCurFuel >= 0)
 		if(!WeldCurFuel)
 			return
 		reagents.add_reagent("fuel",WeldCurFuel)
 	else
 		reagents.add_reagent("fuel",max_fuel)
+	igniter = new(src)
 
 /obj/item/weapon/makeshift_flamethrower/examine(mob/user)
 	. = ..()
@@ -424,6 +423,7 @@
 		return
 	var/turf/target_turf = get_turf(target)
 	var/turf/self_turf = get_turf(user)
+	var/distance_reached = 0
 	if(!target_turf)
 		return
 	var/list/turflist = getline(self_turf, target_turf)
@@ -433,22 +433,23 @@
 		if(turf_in_line == self_turf || isspaceturf(turf_in_line))
 			continue
 		//stop fuelthrowing when distance is big
-		if(get_dist(turf_in_line, self_turf) > 7)
+		if(distance_reached > 7)
 			break
 		//check every turf in line for walls/glass/etc
-		var/no_density = TRUE
-		for(var/atom/A in turf_in_line)
-			if(A.density)
-				no_density = FALSE
-				break
-		if(!no_density)
+		if(!self_turf.CanPass(null, turf_in_line, 0, 0)) //!turf_in_line.CanPass(null, self_turf, 0, 0)
 			break
 		//don't accidentally set yourself on fire
+		var/amount_fuel = 0
 		if(get_dist(turf_in_line, user) < 3)
-			flame_turf(turf_in_line, 0.5)
+			amount_fuel = 0.5
+			flame_turf(turf_in_line, self_turf, amount_fuel)
+			fuel_spent += amount_fuel
 		else
-			flame_turf(turf_in_line, 1)
-		fuel_spent++
+			amount_fuel = 1
+			flame_turf(turf_in_line, self_turf, amount_fuel)
+		self_turf = turf_in_line
+		distance_reached++
+		fuel_spent += amount_fuel
 	user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] fired by flamethrower on [target] at [COORD(target)]</font>"
 	suck_fuel_from_weldpack(user, fuel_spent)
 
@@ -508,14 +509,15 @@
 		START_PROCESSING(SSobj, src)
 	update_icon()
 
-/obj/item/weapon/makeshift_flamethrower/proc/flame_turf(turf/T, amount = 5)
+/obj/item/weapon/makeshift_flamethrower/proc/flame_turf(turf/target, turf/prev_turf, amount = 5)
 	if(reagents.total_volume == 0)
 		return
 	var/obj/effect/decal/chempuff/D = reagents.create_chempuff(amount)
-	walk_towards(D, T)
-	D.reagents.reaction(T)
-	for(var/atom/A in T)
+	D.forceMove(prev_turf)
+	step_towards(D, target)
+	D.reagents.reaction(target)
+	for(var/atom/A in target)
 		D.reagents.reaction(A)
 	if(lit)
-		T.hotspot_expose(700, 5)
+		target.hotspot_expose(700, 5)
 	QDEL_IN(D, 1 SECOND)
