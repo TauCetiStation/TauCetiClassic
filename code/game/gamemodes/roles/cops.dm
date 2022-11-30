@@ -87,6 +87,15 @@
 	missiondesc += "<BR> <B>3.</B> Соблюдайте закон."
 	missiondesc += "<BR> <B>4.</B> Найдите внедрённых офицеров."
 	missiondesc += "<BR> <B>5.</B> Задержите сотрудников Службы Безопасности, если они будут причинять вред персоналу."
+	var/datum/faction/cops/cops = find_faction_by_type(/datum/faction/cops)
+	var/wanted_level = cops.check_wanted_level()
+	if(wanted_level > 4)
+		missiondesc += "<BR> <span class=`red`><B>ВАЖНО.</B> Станция погрязла в хаосе, <B>глав и весь отдел СБ следует арестовать</B></span>"
+	else if(wanted_level > 2)
+		missiondesc += "<BR> <span class=`red`><B>ВАЖНО.</B> В следствии преступной халатности и последующим за этим распростронением организованной преступности, <B>глав следует арестовать</B></span>"
+	else if(wanted_level > 1)
+		missiondesc += "<BR> <span class=`red`><B>ВАЖНО.</B> На станции обнаружена организованная преступность. Что бы разобраться, как это было допущено следует <B>арестовать капитана для допроса</B></span>"
+
 	to_chat(antag.current, missiondesc)
 
 	antag.current.playsound_local(null, 'sound/antag/families_police.ogg', VOL_EFFECTS_MASTER, null, FALSE)
