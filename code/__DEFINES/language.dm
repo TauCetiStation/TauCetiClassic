@@ -20,6 +20,7 @@
 #define LANGUAGE_SYCODE "Sy-Code"
 #define LANGUAGE_USL "Universal Sign Language"
 #define LANGUAGE_XENOMORPH "Xenomorph language"
+#define LANGUAGE_GAPING_MAW "The Gaping Maw"
 // ё priovioiols!
 #define LANGUAGE_SHKIONDIONIOVIOION "Shkёndёnёvёёёn"
 #define LANGUAGE_SALACKYI "Salackyi"

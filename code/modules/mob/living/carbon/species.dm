@@ -1073,7 +1073,8 @@
 
 	//language = "The Perfect Control"
 	//additional_languages = list("The Gaping Maw")
-	//force_racial_language = TRUE
+	language = "The Gaping Maw"
+	species_common_language = TRUE
 
 	butcher_drops = list()
 	taste_sensitivity = 0

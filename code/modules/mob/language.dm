@@ -293,6 +293,15 @@
 	syllables = list("сс", "хсс", "ссс", "щсс", "щсхх", "ссс", "сс")
 	flags = RESTRICTED
 
+/datum/language/void
+	name = "The Gaping Maw"
+	desc = "A series of thoughts that reverberate through the minds of the Tycheon, and all other Tycheons around."
+	allowed_speak = list(TYCHEON)
+	colour = "void"
+	key = list("d", "â")
+	signlang_verb = list("pulses his core")
+	flags = SIGNLANG // For all intents and purposes, this is basically a sign language.
+
 /datum/language/shkiondioniovioion
 	name = LANGUAGE_SHKIONDIONIOVIOION
 	desc = "Ёn ёncёёnt, fёrgёttёn lёngёёgё, ёt's rёёts stёm frёm tёmё ёmmёmёrёёl."
