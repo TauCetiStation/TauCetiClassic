@@ -223,7 +223,7 @@
 		if(J.title in ranks)
 			J.salary_ratio = 0
 		else
-			salary_ratio = 0.3
+			J.salary_ratio = 0.3
 
 	var/list/crew = my_subordinate_staff("Admin")
 	for(var/person in crew)
