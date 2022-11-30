@@ -24,7 +24,7 @@
 	else if(total_zombie < total_non_infected)
 		/*
 		preventing greenscreen if all zombies were killed
-		or initially zombification was not desired by the AI
+		or initially zombification was not desired by the AI in Zombie-Malf mode
 		*/
 		. = OBJECTIVE_HALFWIN
 	else
