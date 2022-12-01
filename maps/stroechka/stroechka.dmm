@@ -694,7 +694,10 @@
 /obj/machinery/disposal/deliveryChute{
 	dir = 8
 	},
-/turf/simulated/floor/plating/airless,
+/obj/structure/disposalpipe/trunk,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
 /area/station/cargo/recycler)
 "bA" = (
 /turf/simulated/wall/r_wall,
@@ -783,7 +786,10 @@
 	id = "stationscrap"
 	},
 /obj/machinery/scrap/stacking_machine,
-/turf/simulated/floor/plating/airless,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
 /area/station/cargo/recycler)
 "bK" = (
 /obj/structure/cable/yellow{
@@ -905,7 +911,9 @@
 	id = "stationscrap"
 	},
 /obj/machinery/recycler,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
 /area/station/cargo/recycler)
 "bW" = (
 /obj/structure/cable/yellow,
@@ -1060,6 +1068,7 @@
 	id = "stationscrap"
 	},
 /obj/item/weapon/scrap_lump,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cm" = (
@@ -1283,7 +1292,7 @@
 	dir = 4;
 	id = "stationscrap"
 	},
-/obj/structure/scrap_cube,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cB" = (
@@ -1293,12 +1302,11 @@
 	},
 /area/station/hallway/secondary/arrival)
 "cC" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "stationscrap"
+/obj/structure/disposaloutlet{
+	dir = 4
 	},
-/obj/machinery/pile_ripper,
-/turf/simulated/floor/plating/airless,
+/obj/structure/disposalpipe/trunk,
+/turf/simulated/wall,
 /area/station/cargo/recycler)
 "cD" = (
 /obj/machinery/conveyor{
@@ -1488,11 +1496,13 @@
 	},
 /area/station/cargo/recycler)
 "cO" = (
-/obj/structure/disposaloutlet{
-	dir = 4
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "stationscrap"
 	},
-/obj/structure/disposalpipe/trunk,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
 /area/station/cargo/recycler)
 "cP" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow{
@@ -1504,14 +1514,13 @@
 	},
 /area/station/engineering/engine)
 "cQ" = (
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "stationscrap"
 	},
-/turf/simulated/floor/plating/airless{
-	dir = 1;
-	icon_state = "warnplate"
-	},
+/obj/structure/scrap_cube,
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cR" = (
 /obj/structure/cable/yellow{
@@ -1525,8 +1534,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "cS" = (
-/obj/machinery/power/port_gen/pacman/scrap,
-/turf/simulated/floor/plating/airless,
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "stationscrap"
+	},
+/obj/machinery/pile_ripper,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
 /area/station/cargo/recycler)
 "cT" = (
 /obj/machinery/light,
@@ -1602,8 +1617,15 @@
 	},
 /area/station/cargo/storage)
 "cX" = (
-/obj/structure/closet/crate/engi,
-/turf/simulated/floor/plating/airless,
+/obj/structure/closet/crate,
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating/airless{
+	dir = 1;
+	icon_state = "warnplate"
+	},
 /area/station/cargo/recycler)
 "cY" = (
 /turf/simulated/floor/plating/airless,
@@ -1768,7 +1790,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
 /area/station/cargo/recycler)
 "dm" = (
 /turf/simulated/floor/plating/airless{
@@ -1782,6 +1806,7 @@
 "do" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/random/foods/food_trash,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/airless/ceiling,
 /area/station/cargo/recycler)
 "dp" = (
@@ -1810,7 +1835,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
 /area/station/cargo/recycler)
 "ds" = (
 /obj/machinery/alarm{
@@ -1921,10 +1948,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "dB" = (
-/obj/structure/closet/crate/scicrate,
+/obj/machinery/power/port_gen/pacman/scrap,
 /turf/simulated/floor/plating/airless{
-	dir = 8;
-	icon_state = "warnplatecorner"
+	icon_state = "platebot"
 	},
 /area/station/cargo/recycler)
 "dC" = (
@@ -1939,8 +1965,10 @@
 	},
 /area/station/cargo/recycler)
 "dE" = (
-/obj/machinery/computer/mech_bay_power_console,
-/turf/simulated/floor/plating/airless,
+/obj/structure/closet/crate/engi,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
 /area/station/cargo/recycler)
 "dF" = (
 /obj/structure/closet/crate/engi,
@@ -2081,11 +2109,10 @@
 	},
 /area/station/engineering/chiefs_office)
 "dO" = (
-/obj/mecha/working/ripley,
-/obj/machinery/light/small{
-	dir = 4
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/plating/airless{
+	icon_state = "warnplate"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "dP" = (
 /obj/machinery/door/airlock/mining/glass{
@@ -2100,10 +2127,10 @@
 	},
 /area/station/cargo/storage)
 "dQ" = (
-/obj/machinery/mech_bay_recharge_port{
-	dir = 1
+/obj/structure/closet/crate/scicrate,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
 	},
-/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "dR" = (
 /obj/machinery/portable_atmospherics/canister/air,
@@ -2268,6 +2295,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating/airless{
 	dir = 1;
 	icon_state = "warnplate"
@@ -2400,6 +2428,54 @@
 	oxygen = 400000
 	},
 /area/station/engineering/atmos)
+"ey" = (
+/obj/structure/disposalpipe/segment,
+/turf/simulated/floor/airless/ceiling,
+/area/station/cargo/recycler)
+"ez" = (
+/obj/machinery/computer/mech_bay_power_console,
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
+/area/station/cargo/recycler)
+"eA" = (
+/obj/mecha/working/ripley,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
+/area/station/cargo/recycler)
+"eB" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/airless/ceiling,
+/area/station/cargo/recycler)
+"eC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/airless/ceiling,
+/area/station/cargo/recycler)
+"eD" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/airless/ceiling,
+/area/station/cargo/recycler)
+"eE" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/station/cargo/recycler)
 "eF" = (
 /obj/structure/closet/crate{
 	name = "solar crate"
@@ -2425,6 +2501,12 @@
 	icon_state = "platebot"
 	},
 /area/station/maintenance/auxsolarport)
+"eG" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "eH" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2436,6 +2518,35 @@
 	icon_state = "dark"
 	},
 /area/station/hallway/secondary/exit)
+"eI" = (
+/obj/machinery/mech_bay_recharge_port{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "platebot"
+	},
+/area/station/cargo/recycler)
+"eJ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/wall,
+/area/station/cargo/storage)
+"eK" = (
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "vault"
+	},
+/area/station/cargo/storage)
 "eS" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -4707,12 +4818,10 @@
 	},
 /area/station/engineering/equip)
 "Bd" = (
-/obj/structure/closet/emcloset,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
 	},
-/area/station/cargo/storage)
+/area/station/cargo/recycler)
 "Bg" = (
 /obj/random/vending/snack,
 /obj/machinery/alarm{
@@ -28999,7 +29108,7 @@ ap
 ap
 ap
 ap
-ap
+hz
 bi
 bi
 bi
@@ -29256,11 +29365,11 @@ ap
 bi
 bi
 bi
-bi
-bi
+cC
 cX
+dE
 dl
-dB
+dQ
 dD
 dD
 dV
@@ -29514,11 +29623,11 @@ bi
 bw
 bF
 cO
-cQ
+ei
+Bd
 cY
-cY
-cY
-cY
+Bd
+Bd
 cY
 dW
 dD
@@ -30282,18 +30391,18 @@ gN
 gN
 bz
 bJ
-bw
-cl
 cA
+cl
+cQ
 ej
-dd
+dO
 do
-dn
-dn
-dn
+ey
+ey
+eB
 dn
 cN
-cY
+Bd
 dd
 ap
 MC
@@ -30541,16 +30650,16 @@ gN
 bM
 bX
 bI
-cC
+cS
 ei
 dd
 dp
 dn
 dM
-dn
+eC
 dn
 cN
-cY
+Bd
 dd
 ap
 ap
@@ -30804,10 +30913,10 @@ dd
 dp
 dp
 dp
-dp
+eD
 dX
 cN
-cY
+Bd
 eg
 bi
 ap
@@ -31061,7 +31170,7 @@ dd
 dn
 dC
 dn
-dn
+eC
 dY
 cN
 cY
@@ -31318,10 +31427,10 @@ de
 dq
 dD
 dD
-dD
+eE
 dD
 ec
-cY
+Bd
 bi
 bi
 ap
@@ -31570,15 +31679,15 @@ bP
 cc
 mq
 SY
-cS
-cS
+dB
+dB
 dr
 cY
+Bd
+eG
 cY
-cY
-cY
-cY
-cY
+Bd
+Bd
 bi
 ap
 MC
@@ -31830,9 +31939,9 @@ SY
 si
 si
 bi
-dE
-dO
-dQ
+ez
+eA
+eI
 dZ
 ef
 ef
@@ -32089,7 +32198,7 @@ Za
 SY
 SY
 SY
-SY
+eJ
 bi
 bi
 bi
@@ -32346,7 +32455,7 @@ ou
 ds
 mT
 SY
-Bd
+eK
 XK
 eo
 SY

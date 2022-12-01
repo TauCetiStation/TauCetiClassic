@@ -38,6 +38,10 @@
 	access += list(access_engine_equip, access_external_airlocks)
 	skillsets = list("Technical Assistant" = /datum/skillset/stroechka/engineer)
 
+MAP_REMOVE_JOB(clown)
+
+MAP_REMOVE_JOB(bartender)
+
 MAP_REMOVE_JOB(assistant)
 
 MAP_REMOVE_JOB(ai)

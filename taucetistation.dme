@@ -2283,6 +2283,7 @@
 #include "code\modules\skills\helpers.dm"
 #include "code\modules\skills\skill.dm"
 #include "code\modules\skills\skillset.dm"
+#include "code\modules\skills\skillset_stroechka.dm"
 #include "code\modules\skills\skillsets_falcon.dm"
 #include "code\modules\skills\skill_changer\cartridges.dm"
 #include "code\modules\skills\skill_changer\circuits.dm"
@@ -2395,5 +2396,6 @@
 #include "interface\skin.dmf"
 #include "maps\centcom\centcom.dmm"
 #include "maps\falcon\job_changes.dm"
+#include "maps\stroechka\job_changes.dm"
 #include "maps\testmap\job_changes.dm"
 // END_INCLUDE
