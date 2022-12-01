@@ -18,7 +18,7 @@
 	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
 	icon_state = "s-ninja"
 	permeability_coefficient = 0.01
-	flags = NOSLIP | AIR_FLOW_PROTECT
+	flags = AIR_FLOW_PROTECT
 	siemens_coefficient = 0.2
 
 	cold_protection = LEGS
