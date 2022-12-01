@@ -18,7 +18,7 @@
 		return	//it shouldn't be null, okay?
 
 	var/obj/item/clothing/I = target
-	if (I.can_mod == FALSE)
+	if (I.can_be_modded == FALSE)
 		to_chat(user, "<span class='notice'>[src] is unable to modify that.</span>")
 		return
 

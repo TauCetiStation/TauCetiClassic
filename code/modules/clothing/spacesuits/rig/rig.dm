@@ -13,7 +13,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	var/obj/item/clothing/suit/space/rig/rig_connect
-	can_mod = TRUE
+	can_be_modded = TRUE
 
 	//Species-specific stuff.
 	species_restricted = list("exclude", UNATHI, TAJARAN, SKRELL, DIONA, VOX)
@@ -64,7 +64,7 @@
 	slowdown = 0.5
 	var/magpulse = FALSE
 	var/offline_slowdown = 2
-	can_mod = TRUE
+	can_be_modded = TRUE
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 20)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -893,7 +893,7 @@
 	combat_armor = list(melee = 85, bullet = 80, laser = 70,energy = 70, bomb = 75, bio = 75, rad = 70)
 	glowtype = "terrorelit"
 	light_color = "#e51a1a"
-	can_mod = FALSE
+	can_be_modded = FALSE
 
 /obj/item/clothing/head/helmet/space/rig/syndi/elite/comander
 	name = "Syndicate elite hybrid helmet"
@@ -913,7 +913,7 @@
 	space_armor = list(melee = 65, bullet = 60, laser = 50, energy = 35, bomb = 50, bio = 100, rad = 70)
 	combat_slowdown = 0.2
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/syndiemmessage, /obj/item/rig_module/emp_shield)
-	can_mod = FALSE
+	can_be_modded = FALSE
 
 /obj/item/clothing/suit/space/rig/syndi/elite/comander
 	name = "Syndicate elite hybrid suit"

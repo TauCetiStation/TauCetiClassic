@@ -23,7 +23,7 @@
 	var/list/valid_accessory_slots
 	var/list/restricted_accessory_slots
 
-	var/can_mod = FALSE //modding hardsuits with modkits
+	var/can_be_modded = FALSE //modding hardsuits with modkits
 
 	var/flashbang_protection = FALSE
 
