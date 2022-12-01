@@ -4,6 +4,7 @@
 	icon_state = "wjboots"
 	item_state = "wjboots"
 	siemens_coefficient = 0.7
+	can_get_wet = FALSE
 	var/obj/item/knife
 
 /obj/item/clothing/shoes/boots/Destroy()
