@@ -128,7 +128,6 @@
 	var/atom/movable/singularity_lens/fake_singulo_lens
 
 /obj/item/toy/spinningtoy/atom_init()
-	..()
 
 	add_filter("singa_ring", 1, bloom_filter(rgb(100,0,0), 2, 2, 255))
 
@@ -138,6 +137,8 @@
 
 	animate(get_filter("singa_ring"), size = 1, offset = 1, time = 5, loop = -1, easing = CIRCULAR_EASING, flags = ANIMATION_PARALLEL)
 	animate(size = 2, offset = 2, time = 10, loop = -1, easing = CIRCULAR_EASING)
+
+	. = ..()
 
 /obj/item/toy/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	return
