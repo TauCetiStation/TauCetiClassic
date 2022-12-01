@@ -1,17 +1,17 @@
-#define JOB_MODIFICATION_MAP_NAME "Falcon Station"
+#define JOB_MODIFICATION_MAP_NAME "Stroecka Station"
 
 /datum/job/cyborg/New()
 	..()
 	MAP_JOB_CHECK
 	total_positions = 0
 	spawn_positions = 1
-	minimal_player_ingame_minutes = 2400
+	minimal_player_ingame_minutes = 2000
 
 /datum/job/chief_engineer/New()
 	..()
 	MAP_JOB_CHECK
 	minimal_player_ingame_minutes = 3600
-	skillsets = list("Chief Engineer" = /datum/skillset/falcon/ce)
+	skillsets = list("Chief Engineer" = /datum/skillset/stroechka/engineer)
 
 /datum/job/engineer/New()
 	..()
@@ -19,7 +19,7 @@
 	total_positions = 6
 	spawn_positions = 6
 	minimal_player_ingame_minutes = 600
-	skillsets = list("Station Engineer" = /datum/skillset/falcon/engineer)
+	skillsets = list("Station Engineer" = /datum/skillset/stroechka/engineer)
 
 /datum/job/atmos/New()
 	..()
@@ -27,14 +27,16 @@
 	total_positions = 3
 	spawn_positions = 3
 	minimal_player_ingame_minutes = 600
-	skillsets = list("Station Engineer" = /datum/skillset/falcon/engineer)
+	access += list(access_engine_equip)
+	skillsets = list("Station Engineer" = /datum/skillset/stroechka/engineer)
 
 /datum/job/technical_assistant/New()
 	..()
 	MAP_JOB_CHECK
 	total_positions = -1
 	spawn_positions = -1
-	skillsets = list("Technical Assistant" = /datum/skillset/falcon/engineer)
+	access += list(access_engine_equip, access_external_airlocks)
+	skillsets = list("Technical Assistant" = /datum/skillset/stroechka/engineer)
 
 MAP_REMOVE_JOB(assistant)
 
