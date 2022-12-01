@@ -940,6 +940,7 @@ Owl & Griffin toys
 		playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		sleep(120)
 		icon_state = "nuketoycool"
+		user.visible_message("<span class='warning'>[pick("GOT DAT FUKKEN DISK" , "KA-BEEEM" , "WHAT MAKE'S ME A GOOD NUKER?")]</span>")
 		user.visible_message("[src] violently explodes!")
 		var/turf/T = get_turf(loc)
 		if(T)
