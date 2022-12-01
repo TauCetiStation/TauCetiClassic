@@ -893,6 +893,7 @@
 	combat_armor = list(melee = 85, bullet = 80, laser = 70,energy = 70, bomb = 75, bio = 75, rad = 70)
 	glowtype = "terrorelit"
 	light_color = "#e51a1a"
+	can_mod = FALSE
 
 /obj/item/clothing/head/helmet/space/rig/syndi/elite/comander
 	name = "Syndicate elite hybrid helmet"
@@ -912,7 +913,7 @@
 	space_armor = list(melee = 65, bullet = 60, laser = 50, energy = 35, bomb = 50, bio = 100, rad = 70)
 	combat_slowdown = 0.2
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/syndiemmessage, /obj/item/rig_module/emp_shield)
-
+	can_mod = FALSE
 
 /obj/item/clothing/suit/space/rig/syndi/elite/comander
 	name = "Syndicate elite hybrid suit"
