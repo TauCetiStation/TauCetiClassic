@@ -7,6 +7,7 @@
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	rig_variant = "ert_commander"
 	var/obj/machinery/camera/camera
+	can_mod = FALSE
 
 /obj/item/clothing/head/helmet/space/rig/ert/atom_init()
 	. = ..()
@@ -34,6 +35,7 @@
 	icon_state = "ert_commander"
 	item_state = "ert_commander"
 	w_class = SIZE_SMALL
+	can_mod = FALSE
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,
 	/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,
 	/obj/item/weapon/tank,/obj/item/weapon/rcd)
