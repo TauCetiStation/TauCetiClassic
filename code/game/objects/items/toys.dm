@@ -139,7 +139,7 @@
 	animate(get_filter("singa_ring"), size = 1, offset = 1, time = 5, loop = -1, easing = CIRCULAR_EASING, flags = ANIMATION_PARALLEL)
 	animate(size = 2, offset = 2, time = 10, loop = -1, easing = CIRCULAR_EASING)
 
-/obj/item/toy/throw_at()
+/obj/item/toy/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	return
 
 /obj/item/toy/spinningtoy/attack_hand(mob/user)
