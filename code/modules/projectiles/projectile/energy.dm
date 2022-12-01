@@ -20,6 +20,12 @@
 	damage_type = HALLOSS
 	//Damage will be handled on the MOB side, to prevent window shattering.
 
+/obj/item/projectile/energy/electrode/Bump()
+	var/dist_crossed = get_dist(get_turf(src), starting)
+	if(dist_crossed > 1)
+		agony -= dist_crossed * 20
+	return ..()
+
 /obj/item/projectile/energy/declone
 	name = "declone"
 	icon_state = "declone"
