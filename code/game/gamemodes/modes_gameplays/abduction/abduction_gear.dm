@@ -279,6 +279,10 @@
 	action_button_is_hands_free = 1
 
 /obj/item/weapon/implant/abductor/attack_self()
+	var/turf/T = get_turf(src)
+	if(SEND_SIGNAL(T, COMSIG_ATOM_INTERCEPT_TELEPORT))
+		to_chat(imp_in, "<span class='warning'>WARNING! Bluespace interference has been detected in the location, preventing teleportation! Teleportation is canceled!</span>")
+		return FALSE
 	if(cooldown >= initial(cooldown))
 		if(imp_in.buckled)
 			imp_in.buckled.unbuckle_mob()
