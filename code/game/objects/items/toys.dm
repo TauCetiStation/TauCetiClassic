@@ -120,10 +120,145 @@
 	plane = SINGULARITY_PLANE
 	layer = SINGULARITY_LAYER
 
+	var/on = FALSE
+
+	var/stage_of_effect = 1 //1 - clown card, 2 - emag
+	var/atom/movable/singularity_effect/fake_singulo_effect
+	var/atom/movable/singularity_swirl/fake_singulo_swirl
+	var/atom/movable/singularity_lens/fake_singulo_lens
+
+/obj/item/toy/spinningtoy/atom_init()
+	..()
+
+	add_filter("singa_ring", 1, bloom_filter(rgb(100,0,0), 2, 2, 255))
+
+	animate(src, transform = turn(matrix(), -120), time = 5, loop = -1, flags = ANIMATION_PARALLEL)
+	animate(transform = turn(matrix(), -240), time = 7, loop = -1)
+	animate(transform = turn(matrix(), 0), time = 5, loop = -1)
+
+	animate(get_filter("singa_ring"), size = 1, offset = 1, time = 5, loop = -1, easing = CIRCULAR_EASING, flags = ANIMATION_PARALLEL)
+	animate(size = 2, offset = 2, time = 10, loop = -1, easing = CIRCULAR_EASING)
+
+/obj/item/toy/throw_at()
+	return
+
+/obj/item/toy/spinningtoy/attack_hand(mob/user)
+	turn_off()
+	return ..()
+
+/obj/item/toy/spinningtoy/verb/toggle()
+	set src in oview(1)
+	set category = "Object"
+	set name = "Toggle"
+
+	try_toggle(usr)
+
+/obj/item/toy/spinningtoy/AltClick(mob/user)
+	try_toggle(user)
+
+/obj/item/toy/spinningtoy/proc/try_toggle(mob/user)
+	if(!user)
+		return
+	if(user.incapacitated() || !Adjacent(user))
+		return
+	if(!isturf(loc)) // we dont want to allow user toggling it while it is in someone's inventory
+		return
+	if(!iscarbon(user) || isbrain(user))
+		return
+
+	if(on)
+		turn_off()
+		return
+	else
+		add_fingerprint(user)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.job == "Clown")
+				to_chat(user, "<span class = 'notice'>You concentrate your power into a one big bad joke and make the [src] much stronger.</span>")
+				on = TRUE
+
+	update_icon()
+
+/obj/item/toy/spinningtoy/emag_act()
+	if(stage_of_effect == 2)
+		return FALSE
+	to_chat(usr, "<span class = 'notice'>You upgrade the [src] in the faith of Lord Sindicatulo.</span>")
+	stage_of_effect = 2
+	update_icon()
+	return TRUE
+
 /obj/item/toy/spinningtoy/apply_outline(color)
 	return
 
+/obj/item/toy/spinningtoy/update_icon()
+
+	if(!on)
+		icon = 'icons/obj/singularity.dmi'
+		icon_state = "singularity_s11"
+		pixel_x = 0
+		pixel_y = 0
+		return
+
+	if(!fake_singulo_lens)
+		fake_singulo_lens = new(src)
+		vis_contents += fake_singulo_lens
+
+	if(!fake_singulo_swirl)
+		fake_singulo_swirl = new(src)
+		vis_contents += fake_singulo_swirl
+
+	if(!fake_singulo_effect)
+		fake_singulo_effect = new(src)
+		vis_contents += fake_singulo_effect
+
+	switch(stage_of_effect)
+		if(1)
+			icon = 'icons/effects/96x96.dmi'
+			icon_state = "singularity_s3"
+			pixel_x = -32
+			pixel_y = -32
+			fake_singulo_swirl.plane = SINGULARITY_EFFECT_PLANE_1
+			fake_singulo_effect.plane = SINGULARITY_EFFECT_PLANE_2
+			animate(fake_singulo_lens, transform = matrix().Scale(0.75), time = 25)
+			fake_singulo_lens.pixel_x = -96
+			fake_singulo_lens.pixel_y = -96
+			animate(fake_singulo_swirl, transform = matrix().Scale(0.5), time = 25)
+			fake_singulo_swirl.pixel_x = -96
+			fake_singulo_swirl.pixel_y = -96
+			animate(fake_singulo_effect, transform = matrix().Scale(0.19), time = 25)
+			fake_singulo_effect.pixel_x = -96
+			fake_singulo_effect.pixel_y = -96
+		if(2)
+			icon = 'icons/effects/160x160.dmi'
+			icon_state = "singularity_s5"
+			pixel_x = -64
+			pixel_y = -64
+			fake_singulo_swirl.plane = SINGULARITY_EFFECT_PLANE_2
+			fake_singulo_effect.plane = SINGULARITY_EFFECT_PLANE_2
+			animate(fake_singulo_lens, transform = matrix().Scale(1.25), time = 25)
+			fake_singulo_lens.pixel_x = -64
+			fake_singulo_lens.pixel_y = -64
+			animate(fake_singulo_swirl, transform = matrix().Scale(0.75), time = 25)
+			fake_singulo_swirl.pixel_x = -64
+			fake_singulo_swirl.pixel_y = -64
+			animate(fake_singulo_effect, transform = matrix().Scale(0.3), time = 25)
+			fake_singulo_effect.pixel_x = -64
+			fake_singulo_effect.pixel_y = -64
+
+/obj/item/toy/spinningtoy/proc/turn_off()
+	on = FALSE
+
+	vis_contents -= fake_singulo_swirl
+	QDEL_NULL(fake_singulo_swirl)
+	vis_contents -= fake_singulo_effect
+	QDEL_NULL(fake_singulo_effect)
+	vis_contents -= fake_singulo_lens
+	QDEL_NULL(fake_singulo_lens)
+
+	update_icon()
+
 /obj/item/toy/spinningtoy/Destroy()
+	turn_off()
 	return ..()
 
 /*
