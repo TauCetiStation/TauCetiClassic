@@ -17,9 +17,9 @@
 		if(C.m_intent == "run" && !C.buckled)
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
-				if(istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags & NOSLIP ||  AIR_FLOW_PROTECT)
+				if(istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags & NOSLIP)
 					return
-				if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP ||  AIR_FLOW_PROTECT)
+				if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && H.wear_suit.flags & NOSLIP)
 					return
 				var/list/inv_contents = list()
 				for(var/obj/item/I in H.contents)
@@ -123,11 +123,11 @@
 		var/power_calculated = power
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
-			if(istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags & NOSLIP ||  AIR_FLOW_PROTECT)
+			if(istype(H.shoes, /obj/item/clothing/shoes) && H.shoes.flags & NOSLIP)
 				power_calculated = 0
 				continue
 
-			if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && (H.wear_suit.flags & NOSLIP ||  AIR_FLOW_PROTECT))
+			if(istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && (H.wear_suit.flags & NOSLIP))
 				power_calculated = 0
 				continue
 
