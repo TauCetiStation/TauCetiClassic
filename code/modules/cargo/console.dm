@@ -46,11 +46,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 	else
 		dat += "<HR><B>Supply shuttle Location:</B> [SSshuttle.moving ? "Moving to station ([SSshuttle.eta] Mins.)":SSshuttle.at_station ? "Station":"Dock"]<BR>"
 		if(!requestonly)
-			dat += "<HR>Cargo Dep credits: [global.cargo_account.money]<BR>"
+			dat += "<HR>Cargo Dep credits: [global.cargo_account.money]$<BR>"
 			dat += "Cargo Dep Number: [global.cargo_account.account_number]<BR>\n<BR>"
 			dat += "Export tax: [SSeconomy.tax_cargo_export]%<BR>"
 			dat += "<HR>'[CARGOSHOPNAME]' delivery cost: <A href='?src=\ref[src];online_shop_delivery_cost=1'>[global.online_shop_delivery_cost*100]</A>%<BR>"
 			dat += "'[CARGOSHOPNAME]' discount: <A href='?src=\ref[src];online_shop_discount=1'>[global.online_shop_discount*100]</A>%<BR>\n<BR>"
+			dat += "'[CARGOSHOPNAME]' profits: [global.online_shop_profits]$<BR>\n<BR>"
 		else
 			dat += "<HR>'[CARGOSHOPNAME]' delivery cost: [global.online_shop_delivery_cost*100]%<BR>\n<BR>"
 		if(requestonly)
