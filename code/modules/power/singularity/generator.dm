@@ -8,7 +8,7 @@
 	density = TRUE
 	use_power = NO_POWER_USE
 	var/energy = 0
-	var/creation_type = /obj/singularity
+	var/creation_type = /obj/singularity/gravitational
 	var/is_activated = FALSE
 
 /obj/machinery/the_singularitygen/process()

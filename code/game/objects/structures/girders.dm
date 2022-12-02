@@ -44,7 +44,7 @@
 				new/obj/structure/girder( src.loc )
 				qdel(src)
 
-	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+	else if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
 		to_chat(user, "<span class='notice'>Вы режете каркас.</span>")
 		if(W.use_tool(src, user, 30, volume = 100))
 			if(!src) return
