@@ -932,7 +932,11 @@ Owl & Griffin toys
 	var/emagged = FALSE
 
 /obj/item/toy/nuke/attack_self(mob/user)
-	if (emagged && cooldown < world.time)
+	if (cooldown > world.time)
+		var/timeleft = (cooldown - world.time)
+		to_chat(user, "<span class='alert'>Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on a small display.</span>")
+		return
+	if (emagged)
 		cooldown = world.time + 600
 		user.visible_message("<span class='warning'>You hear the click of a button.</span>", "<span class='warning'>You activate [src], it plays a loud noise!</span>")
 		icon_state = "nuketoy"
@@ -947,19 +951,16 @@ Owl & Griffin toys
 			T.hotspot_expose(700,125)
 			explosion(T, 0, 0, 2, rand(1,2))
 		qdel(src)
-	else if (cooldown < world.time)
-		cooldown = world.time + 1800 //3 minutes
-		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
-		spawn(5) //gia said so
-			icon_state = "nuketoy"
-			playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-			sleep(135)
-			icon_state = "nuketoycool"
-			sleep(cooldown - world.time)
-			icon_state = "nuketoyidle"
-	else
-		var/timeleft = (cooldown - world.time)
-		to_chat(user, "<span class='alert'>Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on a small display.</span>")
+		return
+	cooldown = world.time + 1800 //3 minutes
+	user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
+	spawn(5) //gia said so
+		icon_state = "nuketoy"
+		playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		sleep(135)
+		icon_state = "nuketoycool"
+		sleep(cooldown - world.time)
+		icon_state = "nuketoyidle"
 
 /obj/item/toy/nuke/emag_act(mob/user)
 	if(emagged)
