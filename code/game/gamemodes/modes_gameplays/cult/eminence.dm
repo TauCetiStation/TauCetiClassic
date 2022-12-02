@@ -45,6 +45,7 @@
 
 /mob/camera/eminence/Login()
 	..()
+	sync_mind()
 	var/datum/religion/cult/R = global.cult_religion
 	if(R.eminence && R.eminence != src)
 		R.remove_member(src)
@@ -52,7 +53,7 @@
 		return
 	R.eminence = src
 	tome.religion = R
-	R.add_member(src)
+	R.add_member(src, CULT_ROLE_HIGHPRIEST)
 	to_chat(src, "<span class='cult large'>Вы стали Возвышенным!</span>")
 	to_chat(src, "<span class='cult'>Будучи Возвышенным, вы ведёте весь культ за собой. Весь культ услышит то, что вы скажите.</span>")
 	to_chat(src, "<span class='cult'>Вы можете двигаться невзирая на стены, вы бестелесны, и в большинстве случаев не сможете напрямую влиять на мир, за исключением нескольких особых способов.</span>")

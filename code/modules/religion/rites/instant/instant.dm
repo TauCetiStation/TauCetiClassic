@@ -397,12 +397,12 @@
 	if(!..())
 		return FALSE
 
-	if(AOG.buckled_mob.get_species() == HOMUNCULUS)
-		to_chat(user, "<span class='warning'>Тело гомункула слишком слабо.</span>")
+	if(!isliving(AOG.buckled_mob))
+		to_chat(user, "<span class='warning'>На алтаре должно лежать живое существо.</span>")
 		return FALSE
 
-	if(!isliving(AOG.buckled_mob))
-		to_chat(user, "<span class='warning'>На алтаре должно лежать существо.</span>")
+	if(AOG.buckled_mob.get_species() == HOMUNCULUS)
+		to_chat(user, "<span class='warning'>Тело гомункула слишком слабо.</span>")
 		return FALSE
 
 	return TRUE
@@ -451,7 +451,7 @@
 
 /datum/religion_rites/instant/cult/give_forcearmor
 	name = "Создание Силовой Ауры"
-	desc = "Окружает человека на алтаре силовой аурой, которая может блокировать урон."
+	desc = "Окружает человека на алтаре силовой аурой, которая может блокировать урон. Аспект Хаоса повышает силу щита, а аспект Салютуса - скорость восстановления."
 	ritual_length = (15 SECONDS)
 	invoke_msg = "Защитись же!!"
 	favor_cost = 300
@@ -496,7 +496,11 @@
 	H.take_overall_damage(10, 20)
 
 	var/obj/effect/effect/forcefield/rune/R = new
-	H.AddComponent(/datum/component/forcefield, "power aura", 30 * divine_power, 1 MINUTE, 2.5 MINUTE, R, FALSE, TRUE)
+	var/list/diffs = religion.get_aspect_diffs(needed_aspects)
+	var/shield_health = 30 * sqrt(diffs[ASPECT_CHAOS] + 1)
+	var/reactivation_time = 1 MINUTE / sqrt(diffs[ASPECT_RESCUE] + 1)
+	var/recharge_time = 2.5 MINUTE / sqrt(diffs[ASPECT_RESCUE] + 1)
+	H.AddComponent(/datum/component/forcefield, "power aura", shield_health, reactivation_time, recharge_time, R, FALSE, TRUE)
 	SEND_SIGNAL(H, COMSIG_FORCEFIELD_PROTECT, H)
 
 	return TRUE

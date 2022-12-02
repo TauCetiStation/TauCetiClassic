@@ -609,9 +609,6 @@
 /turf/unsimulated/wall/fakeglass,
 /area/centcom/evac)
 "abo" = (
-/obj/machinery/shower{
-	dir = 8
-	},
 /obj/structure/drain{
 	drainage = 2
 	},
@@ -619,6 +616,9 @@
 /obj/machinery/door/window{
 	dir = 8;
 	name = "Shower cabin"
+	},
+/obj/machinery/shower/free{
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -4895,9 +4895,6 @@
 	},
 /area/centcom/specops)
 "ame" = (
-/obj/machinery/shower{
-	dir = 1
-	},
 /obj/machinery/door/window{
 	dir = 1;
 	name = "Shower cabin"
@@ -4907,6 +4904,9 @@
 	},
 /obj/item/weapon/reagent_containers/food/snacks/soap/syndie,
 /obj/structure/curtain/open/shower/security,
+/obj/machinery/shower/free{
+	dir = 1
+	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -5635,9 +5635,6 @@
 	},
 /area/custom/syndicate_mothership)
 "anE" = (
-/obj/machinery/shower{
-	dir = 1
-	},
 /obj/structure/curtain/open/shower/security,
 /obj/machinery/door/window{
 	dir = 1;
@@ -5645,6 +5642,9 @@
 	},
 /obj/structure/drain{
 	drainage = 2
+	},
+/obj/machinery/shower/free{
+	dir = 1
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -6587,28 +6587,28 @@
 	},
 /area/velocity)
 "apU" = (
-/obj/machinery/shower{
-	pixel_y = 20
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
+	},
+/obj/machinery/shower/free{
+	pixel_y = 20
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
 /area/velocity)
 "apV" = (
-/obj/machinery/shower{
-	pixel_y = 20
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 4
+	},
+/obj/machinery/shower/free{
+	pixel_y = 20
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -7771,7 +7771,7 @@
 /area/velocity)
 "asw" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/hand_labeler,
+/obj/item/device/tagger,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -16171,7 +16171,7 @@
 /area/centcom/evac)
 "aKH" = (
 /obj/structure/table,
-/obj/item/weapon/hand_labeler,
+/obj/item/device/tagger,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aKI" = (
@@ -17106,11 +17106,11 @@
 /turf/unsimulated/floor,
 /area/centcom/living)
 "aMA" = (
-/obj/machinery/shower{
-	dir = 8
-	},
 /obj/machinery/porta_turret/stationary{
 	lethal = 0
+	},
+/obj/machinery/shower/free{
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -24444,7 +24444,7 @@
 /obj/structure/sign/warning/securearea{
 	pixel_x = -32
 	},
-/obj/machinery/shower{
+/obj/machinery/shower/free{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -26892,7 +26892,7 @@
 /area/custom/syndicate_mothership/elite_squad)
 "iab" = (
 /obj/structure/window/reinforced,
-/obj/machinery/shower{
+/obj/machinery/shower/free{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -26901,7 +26901,7 @@
 /area/centcom/living)
 "ibb" = (
 /obj/structure/window/reinforced,
-/obj/machinery/shower{
+/obj/machinery/shower/free{
 	dir = 8
 	},
 /turf/unsimulated/floor{

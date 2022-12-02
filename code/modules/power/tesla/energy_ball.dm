@@ -36,6 +36,8 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
 
+	var/atom/movable/singularity_effect/singulo_effect
+
 /obj/singularity/energy_ball/Destroy()
 	if(orbiting && istype(orbiting.orbiting, /obj/singularity/energy_ball))
 		var/obj/singularity/energy_ball/EB = orbiting.orbiting
@@ -44,6 +46,9 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 	for(var/ball in orbiting_balls)
 		var/obj/singularity/energy_ball/EB = ball
 		qdel(EB)
+
+	vis_contents -= singulo_effect
+	QDEL_NULL(singulo_effect)
 
 	return ..()
 
