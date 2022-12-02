@@ -3156,7 +3156,7 @@
 /area/awaymission/labs/researchdivision)
 "hN" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/hand_labeler,
+/obj/item/device/tagger,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
