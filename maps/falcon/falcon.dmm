@@ -707,6 +707,7 @@
 /obj/machinery/light_switch{
 	pixel_x = 28
 	},
+/obj/item/device/tagger,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "abh" = (
@@ -8194,6 +8195,9 @@
 "app" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/shop_scanner{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "apq" = (
@@ -8457,6 +8461,8 @@
 	pixel_x = 13
 	},
 /obj/structure/table,
+/obj/item/weapon/packageWrap,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkpurplefull"
@@ -8949,7 +8955,6 @@
 /area/station/rnd/hallway)
 "aqF" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
 /obj/machinery/power/apc/largecell{
 	dir = 8;
 	pixel_x = -32
@@ -8957,6 +8962,12 @@
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
+	},
+/obj/structure/disposaloutlet{
+	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -10455,13 +10466,13 @@
 /obj/item/weapon/pen,
 /obj/item/taperoll/science,
 /obj/item/taperoll/science,
-/obj/item/weapon/hand_labeler,
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/packageWrap,
 /obj/structure/table,
 /obj/item/device/radio/beacon/interaction_watcher{
 	pixel_x = 17
 	},
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	icon_state = "darkpurple"
 	},
@@ -17932,11 +17943,13 @@
 /area/station/civilian/bar)
 "ixH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/conveyor_switch/oneway{
 	id = "packageSort2"
+	},
+/obj/structure/disposalpipe/sortjunction/flipped{
+	dir = 8;
+	name = "OnlineShop";
+	sortType = "OnlineShop"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -18144,8 +18157,8 @@
 /area/station/hallway/primary/central)
 "iHK" = (
 /obj/structure/table/glass,
-/obj/item/weapon/hand_labeler,
 /obj/item/weapon/packageWrap,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -23984,13 +23997,11 @@
 /obj/item/weapon/packageWrap{
 	pixel_y = 4
 	},
-/obj/item/weapon/hand_labeler{
-	pixel_y = 3
-	},
 /obj/machinery/newscaster/security_unit{
 	pixel_y = -28
 	},
 /obj/machinery/light,
+/obj/item/device/tagger,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
 "oou" = (
@@ -24829,6 +24840,8 @@
 	pixel_y = -4
 	},
 /obj/item/device/camera/polar/detective,
+/obj/item/weapon/packageWrap,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -26805,6 +26818,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/item/weapon/packageWrap,
+/obj/item/device/tagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -30140,6 +30156,8 @@
 	pixel_y = -12
 	},
 /obj/structure/table,
+/obj/item/weapon/packageWrap,
+/obj/item/device/tagger,
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "tXr" = (
@@ -30499,6 +30517,11 @@
 "upS" = (
 /obj/random/tools/tech_supply,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c";
+	layer = 1.9
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "uqq" = (
@@ -30676,6 +30699,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -31665,7 +31689,6 @@
 	},
 /area/station/hallway/primary/central)
 "vBk" = (
-/obj/item/weapon/hand_labeler,
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/spray/cleaner{
 	desc = "Someone has crossed out the 'Space' from Space Cleaner and written in Chemistry. Scrawled on the back is, 'Okay, whoever filled this with polytrinic acid, it was only funny the first time. It was hard enough replacing the CMO's first cat!'";
@@ -31673,6 +31696,7 @@
 	},
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/airlock_painter,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warndark"
