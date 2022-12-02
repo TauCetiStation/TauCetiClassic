@@ -936,33 +936,28 @@ Owl & Griffin toys
 		var/timeleft = (cooldown - world.time)
 		to_chat(user, "<span class='alert'>Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on a small display.</span>")
 		return
+	cooldown = world.time + 3 MINUTES
+	user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
+	icon_state = "nuketoy"
+	addtimer(CALLBACK(src, .proc/alarm), 5, TIMER_STOPPABLE)
 
+/obj/item/toy/nuke/proc/alarm() //first timer
+	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	addtimer(CALLBACK(src, .proc/boom), 120, TIMER_STOPPABLE)
+
+/obj/item/toy/nuke/proc/boom() //second timer
+	icon_state = "nuketoycool"
 	if(emagged)
-		cooldown = world.time + 600
-		user.visible_message("<span class='warning'>You hear the click of a button.</span>", "<span class='warning'>You activate [src], it plays a loud noise!</span>")
-		icon_state = "nuketoy"
-		sleep(5)
-		playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		sleep(120)
-		icon_state = "nuketoycool"
-		user.visible_message("<span class='warning'>[pick("GOT DAT FUKKEN DISK" , "KA-BEEEM" , "WHAT MAKE'S ME A GOOD NUKER?")]</span>")
-		user.visible_message("[src] violently explodes!")
+		visible_message("<span class='warning'>[pick("GOT DAT FUKKEN DISK" , "KA-BEEEM" , "WHAT MAKE'S ME A GOOD NUKER?")]</span>")
+		visible_message("[src] violently explodes!")
 		var/turf/T = get_turf(loc)
 		if(T)
 			T.hotspot_expose(700,125)
 			explosion(T, 0, 0, 2, rand(1,2))
 		qdel(src)
 		return
-
-	cooldown = world.time + 1800 //3 minutes
-	user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
-	spawn(5) //gia said so
-		icon_state = "nuketoy"
-		playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		sleep(135)
-		icon_state = "nuketoycool"
-		sleep(cooldown - world.time)
-		icon_state = "nuketoyidle"
+	icon_state = "nuketoycool"
+	VARSET_IN(src, icon_state, "nuketoyidle", cooldown - world.time)
 
 /obj/item/toy/nuke/emag_act(mob/user)
 	if(emagged)
