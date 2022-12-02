@@ -129,6 +129,8 @@
 		pressure_difference = pressure_difference * (1 - get_pressure_protection(STOPS_LOWPRESSUREDMAGE))
 		return ONE_ATMOSPHERE - pressure_difference
 
+var/global/list/tourette_bad_words = list("ГОВНО","ЖОПА","ЕБАЛ","БЛЯДИНА","ХУЕСОС","СУКА","ЗАЛУПА","УРОД","БЛЯ","ХЕР","ШЛЮХА","ДАВАЛКА","ПИЗДЕЦ","УЕБИЩЕ","ПИЗДА","ЕЛДА","ШМАРА","СУЧКА","ПУТАНА","ААА","ГНИДА","ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО")
+
 /mob/living/carbon/human/proc/handle_disabilities()
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
 		if (prob(1) && !paralysis)
@@ -143,16 +145,18 @@
 				return
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		speech_problem_flag = 1
-		if (prob(10) && !paralysis)
-			Stun(10)
+		if (prob(10))
 			spawn( 0 )
 				switch(rand(1, 3))
 					if(1)
 						emote("twitch")
 					if(2 to 3)
-						say(pick("ГОВНО", "ЖОПА", "ЕБАЛ", "ПИДАРА-АС", "ХУЕСОС", "СУКА", "МАТЬ ТВОЮ","А НУ ИДИ СЮДА","УРОД"))
+						say(pick(global.tourette_bad_words))
 				var/old_x = pixel_x
 				var/old_y = pixel_y
+				if(prob(25))
+					shake_camera(src, rand(1, 2), 4)
+					spin(4, 1)
 				pixel_x += rand(-2,2)
 				pixel_y += rand(-1,1)
 				sleep(2)
