@@ -932,11 +932,12 @@ Owl & Griffin toys
 	var/emagged = FALSE
 
 /obj/item/toy/nuke/attack_self(mob/user)
-	if (cooldown > world.time)
+	if(cooldown > world.time)
 		var/timeleft = (cooldown - world.time)
 		to_chat(user, "<span class='alert'>Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on a small display.</span>")
 		return
-	if (emagged)
+
+	if(emagged)
 		cooldown = world.time + 600
 		user.visible_message("<span class='warning'>You hear the click of a button.</span>", "<span class='warning'>You activate [src], it plays a loud noise!</span>")
 		icon_state = "nuketoy"
@@ -952,6 +953,7 @@ Owl & Griffin toys
 			explosion(T, 0, 0, 2, rand(1,2))
 		qdel(src)
 		return
+
 	cooldown = world.time + 1800 //3 minutes
 	user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
 	spawn(5) //gia said so
