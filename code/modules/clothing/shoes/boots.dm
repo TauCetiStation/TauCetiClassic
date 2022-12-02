@@ -4,7 +4,6 @@
 	icon_state = "wjboots"
 	item_state = "wjboots"
 	siemens_coefficient = 0.7
-	can_get_wet = FALSE
 	var/obj/item/knife
 
 /obj/item/clothing/shoes/boots/Destroy()
@@ -61,6 +60,7 @@
 	icon_state = "galoshes"
 	permeability_coefficient = 0.05
 	flags = NOSLIP
+	can_get_wet = FALSE
 	slowdown = SHOES_SLOWDOWN + 0.5
 	species_restricted = null
 
