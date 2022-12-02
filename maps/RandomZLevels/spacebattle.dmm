@@ -2405,7 +2405,7 @@
 /area/awaymission/spacebattle/syndicate4)
 "hj" = (
 /obj/item/weapon/pickaxe,
-/obj/item/weapon/pickaxe/plasmacutter,
+/obj/item/weapon/gun/energy/laser/cutter,
 /obj/structure/closet/crate,
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)

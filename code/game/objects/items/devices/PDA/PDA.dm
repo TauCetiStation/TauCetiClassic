@@ -1780,6 +1780,7 @@
 /obj/item/device/pda/proc/order_item(datum/shop_lot/Lot, destination)
 	if(!owner_account || !Lot)
 		return
+
 	var/discount_price = round((1 - global.online_shop_discount) * Lot.price)
 	var/prepayment = round(discount_price * global.online_shop_delivery_cost)
 

@@ -1,6 +1,5 @@
 var/global/list/online_shop_lots = list()
 var/global/list/online_shop_lots_latest[3]
-
 var/global/list/online_shop_lots_hashed = list()
 
 var/global/online_shop_number = 0
@@ -23,7 +22,6 @@ var/global/online_shop_profits = 0
 	var/delivered = FALSE
 	var/account = 111111
 	var/item_icon = ""
-
 	var/hash = ""
 
 

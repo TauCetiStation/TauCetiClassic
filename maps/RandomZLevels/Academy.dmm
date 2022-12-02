@@ -1468,7 +1468,7 @@
 	},
 /area/awaymission/academy/classrooms)
 "eq" = (
-/obj/singularity/academy,
+/obj/singularity/gravitational/academy,
 /turf/environment/space,
 /area)
 "er" = (
