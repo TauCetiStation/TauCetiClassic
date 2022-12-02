@@ -666,12 +666,17 @@
 
 		shop_lots = list()
 		if(mode == 81)
-			for(var/index in global.online_shop_lots)
-				var/datum/shop_lot/Lot = global.online_shop_lots[index]
-				if(Lot && Lot.category == category && !Lot.sold)
-					var/datum/money_account/Acc = get_account(Lot.account)
-					shop_lots.len++
-					shop_lots[shop_lots.len] = Lot.to_list(Acc ? Acc.owner_name : "Unknown")
+			/*for(var/index in global.online_shop_lots)
+				var/datum/shop_lot/Lot = global.online_shop_lots[index] */
+
+			for(var/index in global.online_shop_lots_hashed)
+				var/list/Lots = global.online_shop_lots_hashed[index]
+				for(var/datum/shop_lot/Lot in Lots)
+					if(Lot && Lot.category == category && !Lot.sold)
+						var/datum/money_account/Acc = get_account(Lot.account)
+						shop_lots.len++
+						shop_lots[shop_lots.len] = Lot.to_list(Acc ? Acc.owner_name : "Unknown")
+						break
 
 		shop_lots_frontend = list()
 		if(shop_lots.len)
