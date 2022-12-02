@@ -946,7 +946,6 @@ Owl & Griffin toys
 	addtimer(CALLBACK(src, .proc/boom), 115, TIMER_STOPPABLE)
 
 /obj/item/toy/nuke/proc/boom() //second timer
-	icon_state = "nuketoycool"
 	if(emagged)
 		visible_message("<span class='warning'>[pick("GOT DAT FUKKEN DISK" , "KA-BEEEM" , "WHAT MAKE'S ME A GOOD NUKER?")]</span>")
 		visible_message("[src] violently explodes!")
