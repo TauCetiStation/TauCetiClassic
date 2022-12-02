@@ -286,7 +286,6 @@
 
 /mob/living/simple_animal/blob_act()
 	adjustBruteLoss(20)
-	return
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	var/perc_block = (10 - harm_intent_damage) / 10 // #define MAX_HARM_INTENT_DAMAGE 10. Turn harm_intent_damage into armor or something. ~Luduk
