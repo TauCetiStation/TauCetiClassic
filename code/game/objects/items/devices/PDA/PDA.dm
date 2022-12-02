@@ -1126,7 +1126,7 @@
 			var/postpayment = shopping_cart[id]["postpayment"]
 			var/datum/shop_lot/Lot = global.online_shop_lots[id]
 			var/datum/money_account/MA = get_account(owner_account)
-			if(!Lot || !MA| postpayment > MA.money)
+			if(!Lot || !MA || postpayment > MA.money)
 				return
 			shopping_cart -= id
 			Lot.delivered = TRUE
