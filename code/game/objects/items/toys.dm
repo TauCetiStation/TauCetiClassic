@@ -943,7 +943,7 @@ Owl & Griffin toys
 
 /obj/item/toy/nuke/proc/alarm() //first timer
 	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	addtimer(CALLBACK(src, .proc/boom), 120, TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, .proc/boom), 115, TIMER_STOPPABLE)
 
 /obj/item/toy/nuke/proc/boom() //second timer
 	icon_state = "nuketoycool"
