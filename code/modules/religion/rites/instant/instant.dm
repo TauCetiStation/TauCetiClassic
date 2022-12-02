@@ -397,12 +397,12 @@
 	if(!..())
 		return FALSE
 
-	if(AOG.buckled_mob.get_species() == HOMUNCULUS)
-		to_chat(user, "<span class='warning'>Тело гомункула слишком слабо.</span>")
+	if(!isliving(AOG.buckled_mob))
+		to_chat(user, "<span class='warning'>На алтаре должно лежать живое существо.</span>")
 		return FALSE
 
-	if(!isliving(AOG.buckled_mob))
-		to_chat(user, "<span class='warning'>На алтаре должно лежать существо.</span>")
+	if(AOG.buckled_mob.get_species() == HOMUNCULUS)
+		to_chat(user, "<span class='warning'>Тело гомункула слишком слабо.</span>")
 		return FALSE
 
 	return TRUE
