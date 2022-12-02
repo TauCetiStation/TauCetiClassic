@@ -290,7 +290,7 @@
 		cooldown = 0
 		INVOKE_ASYNC(src, .proc/start_recharge, imp_in)
 	else
-		to_chat(imp_in, "<span class='warning'>You must wait [300 - cooldown] seconds to use [src] again!</span>")
+		to_chat(imp_in, "<span class='warning'>You must wait [(300 - cooldown) / 10] seconds to use [src] again!</span>")
 	return
 
 /obj/item/weapon/implant/abductor/proc/start_recharge(mob/user = usr)
