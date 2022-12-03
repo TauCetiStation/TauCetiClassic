@@ -317,7 +317,7 @@ var/global/list/active_alternate_appearances = list()
 	add_ghost_version = TRUE
 	var/datum/religion/religion
 
-/datum/atom_hud/alternate_appearance/basic/my_religion/New(key, image/I, alternate_type, loc, datum/religion/R)
+/datum/atom_hud/alternate_appearance/basic/my_religion/New(key, image/I, loc, datum/religion/R, alternate_type)
 	..(key, I, alternate_type, loc)
 	religion = R
 	for(var/mob/living/carbon/human/H in global.player_list)

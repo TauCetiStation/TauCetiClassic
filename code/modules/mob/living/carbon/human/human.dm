@@ -222,7 +222,7 @@
 	switch (severity)
 		if(EXPLODE_DEVASTATE)
 			b_loss += 500
-			if (!prob(getarmor(null, "bomb")))
+			if (!prob(getarmor(null, BOMB)))
 				gib()
 				return
 			else
@@ -238,7 +238,7 @@
 
 			f_loss += 60
 
-			if (prob(getarmor(null, "bomb")))
+			if (prob(getarmor(null, BOMB)))
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 
@@ -250,7 +250,7 @@
 
 		if(EXPLODE_LIGHT)
 			b_loss += 30
-			if (prob(getarmor(null, "bomb")))
+			if (prob(getarmor(null, BOMB)))
 				b_loss = b_loss/2
 			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 15
@@ -302,7 +302,7 @@
 	to_chat(src, "<span class='danger'>The blob attacks you!</span>")
 	var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG, BP_HEAD)
 	var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
-	apply_damage(rand(30, 40), BRUTE, BP, run_armor_check(BP, "melee"))
+	apply_damage(rand(30, 40), BRUTE, BP, run_armor_check(BP, MELEE))
 	return
 
 /mob/living/carbon/human/proc/can_use_two_hands(broken = TRUE) // Replace arms with hands in case of reverting Kurshan's PR.
@@ -814,8 +814,7 @@
 								if(setmedical != "Cancel")
 									R.fields["p_stat"] = setmedical
 									modified = 1
-									if(PDA_Manifest.len)
-										PDA_Manifest.Cut()
+									PDA_Manifest.Cut()
 
 									spawn()
 										if(ishuman(usr))
@@ -2433,6 +2432,15 @@
 		if(HEART_FAILURE)
 			if(prob(heal_prob))
 				Heart.heart_fibrillate()
+
+
+/mob/living/carbon/human/proc/PutDisabilityMarks()
+	var/obj/item/weapon/card/id/card = locate(/obj/item/weapon/card/id, src)
+	if(!card)
+		return
+	for(var/datum/quirk/Q in roundstart_quirks)
+		if(Q.disability)
+			card.disabilities += Q.name
 
 /mob/living/carbon/human/handle_drunkenness()
 	. = ..()

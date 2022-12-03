@@ -155,7 +155,8 @@
 					to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
 					//return - technically you can add more aliens to a team
 				for(var/mob/M as anything in observer_list)
-					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
+					var/link = FOLLOW_LINK(M, user)
+					to_chat(M, "[link]<span class='abductor_team[A.get_team_num()]'><b>[user.real_name]:</b> [sm]</span>")
 				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
 
@@ -164,7 +165,6 @@
 
 	if(iszombie(src))
 		message = zombie_talk(message)
-
 	var/ending = copytext(message, -1)
 
 	if(speaking)
@@ -403,6 +403,9 @@
 		message = "[uppertext(message)]!!!"
 		verb = pick("yells","roars","hollers")
 		handled = 1
+	if(disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
+		if(prob(50))
+			message = turret_talk(message)
 	if(slurring)
 		message = slur(message)
 		verb = pick("stammers","stutters")

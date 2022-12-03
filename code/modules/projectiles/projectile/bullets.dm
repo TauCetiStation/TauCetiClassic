@@ -4,7 +4,7 @@
 	damage = 60
 	damage_type = BRUTE
 	nodamage = 0
-	flag = "bullet"
+	flag = BULLET
 	embed = 1
 	sharp = 1
 	var/stoping_power = 0
@@ -40,8 +40,8 @@
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
-	damage = 15
-	dispersion = 4.0
+	damage = 14
+	dispersion = 2.5
 
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
@@ -207,7 +207,7 @@
 /obj/item/projectile/bullet/stunshot
 	name = "stunshot"
 	icon_state = "spark"
-	flag = "energy"
+	flag = ENERGY
 	damage = 5
 	stun = 0
 	weaken = 0

@@ -49,7 +49,7 @@
 			var/mob/living/carbon/human/H = target
 			var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 			for(var/obj/item/organ/external/BP_CHILD in BP.children)
-				H.apply_damage(force / 2, BRUTE, BP_CHILD.body_zone, H.getarmor(BP_CHILD.body_zone, "melee"))
+				H.apply_damage(force / 2, BRUTE, BP_CHILD.body_zone, H.getarmor(BP_CHILD.body_zone, MELEE))
 			if(BP.parent)
-				H.apply_damage(force / 2, BRUTE, BP.parent.body_zone, H.getarmor(BP.parent.body_zone, "melee"))
+				H.apply_damage(force / 2, BRUTE, BP.parent.body_zone, H.getarmor(BP.parent.body_zone, MELEE))
 		return..()
