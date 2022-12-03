@@ -527,6 +527,9 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/list/installed_upgrades = list()
 	var/max_upgrades = 3
 
+#define MAX_IDENTICAL_UPGRADES 2
+#define MAX_UPGRADES_LIMIT 5
+
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/reload), recharge_time)
@@ -544,7 +547,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		to_chat(user, "<span class='warning'>Достигнут общий лимит количества улучшений!</span>")
 		return FALSE
 	
-	if(count_by_type(installed_upgrades, UPG.type) >= 2)
+	if(count_by_type(installed_upgrades, UPG.type) >= MAX_IDENTICAL_UPGRADES)
 		to_chat(user, "<span class='warning'>Достигнут лимит улучшений данного типа!</span>")
 		return FALSE
 	return TRUE
@@ -562,27 +565,24 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		if(!user.unEquip(UPG))
 			return
 
-		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
-		UPG.upgrade_kinetic(user, src)
 		UPG.install(src)
 
-	if(istype(I, /obj/item/kinetic_expander))
-		if(max_upgrades >= 4)
-			to_chat(user, "<span class='warning'>Расширение уже было вставлено ранее!</span>")
+	else if(istype(I, /obj/item/kinetic_expander))
+		if(max_upgrades >= MAX_UPGRADES_LIMIT)
+			to_chat(user, "<span class='warning'>Закончилось место для расширителей!</span>")
 			return
 		max_upgrades++
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
+		qdel(I)
 
-	if(isscrewdriver(I))
+	else if(isscrewdriver(I))
 		if(!length(installed_upgrades))
 			to_chat(user, "<span class='warning'>Нет улучшений для извлечения!</span>")
 			return
 
 		var/list/possible_removals = list()
-		var/list/choices = list()
 		for(var/obj/item/kinetic_upgrade/upg in installed_upgrades)
 			possible_removals[upg] = image(icon = upg.icon, icon_state = upg.icon_state)
-			choices[upg] = upg
 
 		var/obj/item/kinetic_upgrade/removal_choice = show_radial_menu(user, src, possible_removals, require_near = TRUE, tooltips = TRUE)
 
@@ -592,13 +592,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		if(!Adjacent(user))
 			return
 
-		var/obj/item/kinetic_upgrade/to_remove = choices[removal_choice]
-		to_chat(user, "You detach \the [to_remove] from \the [src].")
-		to_remove.downgrade_kinetic(user, src)
-		to_remove.remove()
-		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-
-
+		removal_choice.remove(src)
 
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/item/projectile/kinetic
@@ -664,11 +658,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/effect/kinetic_blast/atom_init_late()
 	QDEL_IN(src, 0.35 SECOND)
 
-/obj/item/kinetic_expander
-	name = "accelerator upgrade"
-	icon = 'icons/obj/module.dmi'
-	icon_state = "card_mod"
-	desc = "Расширение для кинетического ускорителя. Даёт место для дополнительного улучшения."
+#undef MAX_IDENTICAL_UPGRADES
+#undef MAX_UPGRADES_LIMIT
 
 ///////////////*UPGRADES*///////////////
 /obj/item/kinetic_upgrade
@@ -677,12 +668,16 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "Улучшение для кинетического ускорителя. "
 	var/obj/item/weapon/gun/energy/kinetic_accelerator/holder
 
-/obj/item/kinetic_upgrade/proc/install(obj/item/weapon/gun/energy/kinetic_accelerator/new_holder)
-	holder = new_holder
+/obj/item/kinetic_upgrade/proc/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	upgrade_kinetic(KA)
+	playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
+	holder = KA
 	holder.installed_upgrades += src
 	forceMove(holder)
 
-/obj/item/kinetic_upgrade/proc/remove()
+/obj/item/kinetic_upgrade/proc/remove(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+	downgrade_kinetic(KA)
+	playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 	forceMove(get_turf(holder))
 	holder.installed_upgrades -= src
 	holder = null
@@ -692,6 +687,12 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/kinetic_upgrade/proc/downgrade_kinetic()
 	return
+
+/obj/item/kinetic_expander
+	name = "accelerator upgrade"
+	icon = 'icons/obj/module.dmi'
+	icon_state = "card_mod"
+	desc = "Расширение для кинетического ускорителя. Даёт место для дополнительного улучшения."
 
 ///////////////////////////////////////////
 
@@ -704,11 +705,10 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc += "Повышает <span class='notice'><B>эффективность добычи ресурсов</B></span> на <span class='notice'><B>[additional_coefficient * 100]%</B></span>. "
 	return ..()
 
-/obj/item/kinetic_upgrade/resources/upgrade_kinetic(mob/user, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+/obj/item/kinetic_upgrade/resources/upgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	KA.mineral_multiply_coefficient += additional_coefficient
-	to_chat(user, "<span class='notice'>Вы улучшили эффективность добычи ресурсов кинетического ускорителя.</span>")
 
-/obj/item/kinetic_upgrade/resources/downgrade_kinetic(mob/user, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+/obj/item/kinetic_upgrade/resources/downgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	KA.mineral_multiply_coefficient -= additional_coefficient
 
 ///////////////////////////////////////////
@@ -722,11 +722,10 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc += "Повышает <span class='notice'><B>дальность стрельбы</B></span> на <span class='notice'><B>[range_increase]</B></span>."
 	return ..()
 
-/obj/item/kinetic_upgrade/range/upgrade_kinetic(mob/user, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+/obj/item/kinetic_upgrade/range/upgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	KA.range += range_increase
-	to_chat(user, "<span class='notice'>Вы улучшили дальность стрельбы кинетического ускорителя.</span>")
 
-/obj/item/kinetic_upgrade/range/downgrade_kinetic(mob/user, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+/obj/item/kinetic_upgrade/range/downgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	KA.range -= range_increase
 
 ///////////////////////////////////////////
@@ -740,11 +739,10 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc += "Повышает <span class='notice'><B>урон</B></span> на <span class='notice'><B>[damage_increase]</B></span>."
 	return ..()
 
-/obj/item/kinetic_upgrade/damage/upgrade_kinetic(mob/user, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+/obj/item/kinetic_upgrade/damage/upgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	KA.damage += damage_increase
-	to_chat(user, "<span class='notice'>Вы улучшили урон кинетического ускорителя.</span>")
 
-/obj/item/kinetic_upgrade/damage/downgrade_kinetic(mob/user, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+/obj/item/kinetic_upgrade/damage/downgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	KA.damage -= damage_increase
 
 ///////////////////////////////////////////
@@ -758,11 +756,10 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc += "Ускоряет <span class='notice'><B>перезарядку</B></span> на <span class='notice'><B>[cooldown_reduction / 10]</B></span> секунд."
 	return ..()
 
-/obj/item/kinetic_upgrade/speed/upgrade_kinetic(mob/user, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+/obj/item/kinetic_upgrade/speed/upgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	KA.recharge_time -= cooldown_reduction
-	to_chat(user, "<span class='notice'>Вы улучшили скорострельность кинетического ускорителя.</span>")
 
-/obj/item/kinetic_upgrade/speed/downgrade_kinetic(mob/user, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
+/obj/item/kinetic_upgrade/speed/downgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	KA.recharge_time += cooldown_reduction
 
 /*****************************Survival Pod********************************/

@@ -10,11 +10,11 @@ var/global/list/name_to_mineral
 	return 1
 
 /mineral
-	var/name			// Tag for use in overlay generation/list population
-	var/display_name	// What am I called?
-	var/spread = TRUE	// Does this type of deposit spread?
-	var/spread_chance	// Chance of spreading in any direction
-	var/ore				// Path to the ore produced when tile is mined
+	var/name             // Tag for use in overlay generation/list population
+	var/display_name     // What am I called?
+	var/spread = TRUE    // Does this type of deposit spread?
+	var/spread_chance    // Chance of spreading in any direction
+	var/ore              // Path to the ore produced when tile is mined
 	var/ore_type
 
 /mineral/New()
