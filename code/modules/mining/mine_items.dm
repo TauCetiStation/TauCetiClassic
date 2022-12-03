@@ -590,7 +590,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = null
 	damage = 10
 	damage_type = BRUTE
-	flag = "bomb"
+	flag = BOMB
 	hitscan = TRUE
 	var/range = 3 // in tiles
 	var/mineral_multiply_coefficient = 1.0 // default
@@ -810,7 +810,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/cooldown_reduction = 0.35 SECOND
 
 /obj/item/kinetic_upgrade/speed/atom_init()
-	desc += "Ускоряет <span class='notice'><B>перезарядку</B></span> на <span class='notice'><B>[cooldown_reduction / 10]</B></span> секунд."
+	desc += "Ускоряет <span class='notice'><B>перезарядку</B></span> на <span class='notice'><B>[cooldown_reduction / 10]</B></span> секунды."
 	return ..()
 
 /obj/item/kinetic_upgrade/speed/upgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
