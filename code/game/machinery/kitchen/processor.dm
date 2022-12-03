@@ -152,7 +152,7 @@
 		return 1
 	user.visible_message("[user] put [what] into [src].", \
 		"You put the [what] into [src].")
-	user.drop_from_inventory(what, src)
+	what.forceMove(src)
 
 /obj/machinery/processor/attack_hand(mob/user)
 	. = ..()
