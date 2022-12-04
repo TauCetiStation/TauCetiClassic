@@ -1437,12 +1437,14 @@
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_EMOTION = TRUE
+	,NO_EMBED = TRUE
 	)
 
 	brute_mod = 2
 	burn_mod = 1
 	oxy_mod = 0
 	tox_mod = 0
+	brain_mod = 0
 	speed_mod = -0.2
 
 	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
@@ -1502,6 +1504,7 @@
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
 	,NO_EMOTION = TRUE
+	,NO_EMBED = TRUE
 	)
 
 	min_age = 25
@@ -1545,6 +1548,7 @@
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
 	,NO_EMOTION = TRUE
+	,NO_EMBED = TRUE
 	)
 
 	min_age = 25
