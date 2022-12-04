@@ -14249,6 +14249,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "Stairs2_wide";
 	dir = 1
@@ -35067,6 +35068,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bkR" = (
@@ -37386,11 +37390,20 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "boX" = (
-/obj/machinery/light/small{
-	dir = 8
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/light/small,
 /turf/simulated/floor/plating,
-/area/station/hallway/secondary/entry)
+/area/station/maintenance/engineering)
 "boY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 9
@@ -52077,6 +52090,9 @@
 "bPn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
 "bPo" = (
@@ -52401,7 +52417,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bPP" = (
@@ -53427,7 +53442,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bSj" = (
@@ -68314,6 +68328,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "Stairs_wide"
@@ -74092,6 +74107,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "hZE" = (
@@ -77070,6 +77088,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "Stairs_alone";
 	dir = 8
@@ -77476,6 +77495,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "Stairs2_wide"
@@ -79909,6 +79929,9 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "ofi" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellowcorner"
@@ -82229,7 +82252,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "qUJ" = (
@@ -82664,6 +82686,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"rqH" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/entry)
 "rrb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -84237,6 +84263,7 @@
 	},
 /area/station/medical/virology)
 "sVF" = (
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "Stairs_wide";
 	dir = 1
@@ -94981,7 +95008,7 @@ bgj
 bgj
 bgj
 aEb
-boX
+aro
 aro
 fab
 btD
@@ -95496,7 +95523,7 @@ bgj
 bgj
 hmR
 aro
-aro
+rqH
 hmR
 btD
 btD
@@ -110415,7 +110442,7 @@ bQl
 bQl
 bQl
 uEX
-bDq
+boX
 bIZ
 eoi
 bTT
@@ -112747,7 +112774,7 @@ aPA
 mnb
 aJz
 bIZ
-bvg
+cJX
 bPO
 bIZ
 bSi
@@ -114030,7 +114057,7 @@ bPN
 odC
 bQl
 bQl
-bIz
+bQl
 sVF
 yjj
 nQw
