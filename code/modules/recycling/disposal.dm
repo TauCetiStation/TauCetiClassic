@@ -565,6 +565,10 @@
 			src.destinationTag = drone.mail_destination
 		if(istype(AM, /obj/structure/closet/body_bag))
 			has_bodybag = 1
+		if(isobj(AM))
+			var/obj/Object = AM
+			if(Object.price_tag)
+				src.destinationTag = "OnlineShop"
 
 
 // start the movement process
@@ -998,8 +1002,8 @@
 	if(..())
 		return
 
-	if(istype(I, /obj/item/device/destTagger))
-		var/obj/item/device/destTagger/O = I
+	if(istype(I, /obj/item/device/tagger))
+		var/obj/item/device/tagger/O = I
 
 		if(O.currTag)// Tag set
 			sort_tag = O.currTag
@@ -1020,6 +1024,107 @@
 	name = "partial package tagger"
 	icon_state = "pipe-tagger-partial"
 	partial = 1
+
+
+/obj/structure/disposalpipe/shop_scanner
+	name = "shop scanner"
+	icon_state = "pipe-shop"
+
+/obj/structure/disposalpipe/shop_scanner/atom_init()
+	. = ..()
+	dpdir = dir | turn(dir, 180)
+	update()
+
+/obj/structure/disposalpipe/shop_scanner/nextdir(fromdir)
+	return dir
+
+/obj/structure/disposalpipe/shop_scanner/transfer(obj/structure/disposalholder/H)
+	for(var/obj/Object in H)
+		if(Object.price_tag)
+			scan_item(H, Object)
+	return ..()
+
+/obj/structure/disposalpipe/shop_scanner/proc/scan_item(obj/structure/disposalholder/H, obj/Item)
+	var/lot_name = Item.name
+	var/lot_desc = Item.price_tag["description"]
+	var/lot_price = Item.price_tag["price"]
+	var/lot_category = Item.price_tag["category"]
+	var/lot_account = Item.price_tag["account"]
+	var/item_icon = bicon(Item)
+
+	if (isitem(Item))
+		var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(src)
+		P.w_class = Item.w_class
+		var/i = round(Item.w_class)
+		if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
+			P.icon_state = "deliverycrate[i]"
+			var/image/Img = image('icons/obj/storage.dmi', "deliverycrate[i]-shop")
+			Img.appearance_flags = RESET_COLOR
+			P.add_overlay(Img)
+		P.modify_max_integrity(75)
+		P.atom_fix()
+		P.damage_deflection = 25
+		Item.loc = P
+		Item = P
+	else if (istype(Item, /obj/structure/closet/crate))
+		var/obj/structure/closet/crate/C = Item
+		if(C.opened)
+			C.close()
+		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
+		P.icon_state = "deliverycrate"
+		var/image/Img = image('icons/obj/storage.dmi', "deliverycrate-shop")
+		Img.appearance_flags = RESET_COLOR
+		P.add_overlay(Img)
+		P.modify_max_integrity(75)
+		P.atom_fix()
+		P.damage_deflection = 25
+		C.loc = P
+		Item = P
+	else if (istype(Item, /obj/structure/closet))
+		var/obj/structure/closet/C = Item
+		if(C.opened)
+			C.close()
+		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
+		P.icon_state = "deliverycloset"
+		var/image/Img = image('icons/obj/storage.dmi', "deliverycloset-shop")
+		Img.appearance_flags = RESET_COLOR
+		P.add_overlay(Img)
+		P.modify_max_integrity(75)
+		P.atom_fix()
+		P.damage_deflection = 25
+		C.welded = 1
+		C.loc = P
+		Item = P
+	else if (istype(Item, /obj/structure))
+		var/obj/structure/S = Item
+		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(S.loc))
+		P.icon_state = "deliverystructure"
+		var/image/Img = image('icons/obj/storage.dmi', "deliverystructure-shop")
+		Img.appearance_flags = RESET_COLOR
+		P.add_overlay(Img)
+		P.modify_max_integrity(75)
+		P.atom_fix()
+		P.damage_deflection = 25
+		S.loc = P
+		Item = P
+	else
+		return
+
+	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
+
+	global.shop_categories[lot_category]++
+
+	Item.name = "Посылка номер: [global.online_shop_number]"
+	Item.desc = "Наименование: [lot_name], Описание: [lot_desc], Цена: [lot_price]"
+
+	if(istype(Item, /obj/structure/bigDelivery))
+		var/obj/structure/bigDelivery/Package = Item
+		Package.lot_number = Lot.number
+	else
+		var/obj/item/smallDelivery/Package = Item
+		Package.lot_number = Lot.number
+
+	Item.forceMove(H)
 
 //a three-way junction that sorts objects
 /obj/structure/disposalpipe/sortjunction
@@ -1068,8 +1173,8 @@
 	if(..())
 		return
 
-	if(istype(I, /obj/item/device/destTagger))
-		var/obj/item/device/destTagger/O = I
+	if(istype(I, /obj/item/device/tagger))
+		var/obj/item/device/tagger/O = I
 
 		if(O.currTag)// Tag set
 			sortType = O.currTag
