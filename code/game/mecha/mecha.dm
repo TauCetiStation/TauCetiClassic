@@ -574,7 +574,7 @@
 	destroy()
 
 /obj/mecha/blob_act()
-	take_damage(10, BRUTE)
+	take_damage(30, BRUTE)
 	return
 
 

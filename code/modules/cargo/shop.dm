@@ -36,6 +36,9 @@ var/global/online_shop_profits = 0
 	src.number = "[global.online_shop_number]"
 	src.account = account
 	src.item_icon = icon
+	src.hash = "[src.category]-[src.name]-[src.description]-[src.price]-[src.account]"
+
+	LAZYADDASSOCLIST(global.online_shop_lots_hashed, src.hash, src)
 
 	src.hash = "[src.category]-[src.name]-[src.description]-[src.price]-[src.account]"
 

@@ -15,6 +15,9 @@
 
 /mob/living/carbon/human/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	. = ..()
+	if(!ismob(AM))
+		return
+
 	//should be non-negative
 	var/size_diff_calculate = AM.w_class - w_class
 	if(size_diff_calculate < 0)
