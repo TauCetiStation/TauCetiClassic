@@ -33235,6 +33235,7 @@
 /obj/structure/disposalpipe/sortjunction/wildcard/flipped{
 	dir = 4
 	},
+/obj/effect/landmark/start/cargo_technician,
 /turf/simulated/floor,
 /area/station/cargo/office)
 "bhe" = (
@@ -76996,7 +76997,6 @@
 	},
 /area/station/cargo/recycleroffice)
 "lac" = (
-/obj/effect/landmark/start/cargo_technician,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
