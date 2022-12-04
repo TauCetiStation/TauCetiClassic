@@ -452,6 +452,11 @@ div.notice {
     float: right;
 }
 
+.fxdRght {
+	width: 25px;
+    float: right;
+}
+
 /* Used in PDA */
 
 .wholeScreen {

@@ -28,7 +28,7 @@
 	return ..()
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
-	if(lot_number)
+	if(lot_number && !(user in contents))
 		var/datum/shop_lot/Lot = global.online_shop_lots["[lot_number]"]
 		if(Lot && !Lot.delivered)
 			to_chat(user, "<span class='notice'>Отметьте посылку доставленной в корзине чтобы открыть замок</span>")

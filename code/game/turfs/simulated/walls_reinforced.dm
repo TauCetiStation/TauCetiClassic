@@ -73,10 +73,6 @@
 				thermitemelt(user, seconds_to_melt)
 				return
 
-		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-			thermitemelt(user, seconds_to_melt)
-			return
-
 		else if(istype(W, /obj/item/weapon/melee/energy/blade))
 			var/obj/item/weapon/melee/energy/blade/EB = W
 
@@ -163,7 +159,7 @@
 					to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 				return
 
-			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+			if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
 				to_chat(user, "<span class='notice'>Вы начинаете разрезать металлическое покрытие.</span>")
 				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
@@ -221,7 +217,7 @@
 					to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 				return
 
-			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+			if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
 
 				to_chat(user, "<span class='notice'>Вы разрезаете поддерживающие балки.</span>")
 				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))

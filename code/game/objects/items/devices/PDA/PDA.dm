@@ -74,6 +74,7 @@
 	var/list/shop_lots_frontend = list()
 	var/list/shopping_cart = list()
 	var/category_shop_page = 1
+	var/category_shop_per_page = 5
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
@@ -645,8 +646,32 @@
 			data["aircontents"] = list("reading" = 0)
 
 	if(mode == 8 || mode == 81 || mode == 82)
-		data["categories"] = global.shop_categories
+		var/list/categories_frontend = list()
+		for(var/index in global.shop_categories)
+			categories_frontend.len++
+			categories_frontend[categories_frontend.len] = list("name" = index, "amount" = global.shop_categories[index])
+		data["categories"] = categories_frontend
+
 		data["category"] = category
+
+		var/list/online_shop_lots_latest_frontend[3]
+		for(var/i=1, i<=3, i++)
+			var/datum/shop_lot/Lot = global.online_shop_lots_latest[i]
+			if(!Lot)
+				online_shop_lots_latest_frontend[i] = null
+			else
+				var/datum/money_account/Acc = get_account(Lot.account)
+				online_shop_lots_latest_frontend[i] = Lot.to_list(Acc ? Acc.owner_name : "Unknown")
+		data["latest_lots"] = online_shop_lots_latest_frontend
+
+		shop_lots = list()
+		if(mode == 81)
+			for(var/index in global.online_shop_lots)
+				var/datum/shop_lot/Lot = global.online_shop_lots[index]
+				if(Lot && Lot.category == category && !Lot.sold)
+					var/datum/money_account/Acc = get_account(Lot.account)
+					shop_lots.len++
+					shop_lots[shop_lots.len] = Lot.to_list(Acc ? Acc.owner_name : "Unknown")
 
 		shop_lots_frontend = list()
 		if(shop_lots.len)
@@ -659,7 +684,7 @@
 				part_list.len = lot_id
 				part_list[lot_id] = Lot
 				lot_id++
-				if(lot_id > 5)
+				if(lot_id > category_shop_per_page)
 					lot_id = 1
 					shop_lots_paged.len++
 					shop_lots_paged[shop_lots_paged.len] = list()
@@ -684,6 +709,8 @@
 				shopping_cart_frontend.len++
 				shopping_cart_frontend[shopping_cart_frontend.len] = Item
 		data["shopping_cart"] = shopping_cart_frontend
+
+		data["shopping_cart_amount"] = shopping_cart_frontend.len
 
 	nanoUI = data
 	// update the ui if it exists, returns null if no ui is passed/found
@@ -1023,21 +1050,18 @@
 					var/datum/money_account/account = person["acc_datum"]
 					account.change_salary(U, owner, name, ownrank)
 					break
+
+//Cargo Shop=================================================================
+
 		if("Shop")
 			category_shop_page = 1
 			mode = 8
-			shop_lots = list()
+
+		//Maintain Category
 		if("Shop_Category")
 			category_shop_page = 1
 			mode = 81
-			shop_lots = list()
 			category = href_list["categ"]
-			for(var/index in global.online_shop_lots)
-				var/datum/shop_lot/Lot = global.online_shop_lots[index]
-				if(Lot && Lot.category == category && !Lot.sold)
-					var/datum/money_account/Acc = get_account(Lot.account)
-					shop_lots.len++
-					shop_lots[shop_lots.len] = Lot.to_list(Acc ? Acc.owner_name : "Unknown")
 		if("Shop_Change_Page")
 			var/page = href_list["shop_change_page"]
 			switch(page)
@@ -1046,6 +1070,12 @@
 				if("previous")
 					category_shop_page--
 			category_shop_page = clamp(category_shop_page, 1, shop_lots_paged.len)
+		if("Shop_Change_Per_page")
+			var/number = text2num(href_list["shop_per_page"])
+			if(number)
+				category_shop_per_page = number
+
+		//Maintain Orders and Offers
 		if("Shop_Add_Order_or_Offer")
 			if(!check_pda_server())
 				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
@@ -1054,6 +1084,8 @@
 			var/T = sanitize(input(U, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
 			if(T && istext(T) && owner)
 				add_order_or_offer(owner, T)
+
+		//Buy Item
 		if("Shop_Order")
 			if(!check_pda_server())
 				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
@@ -1065,6 +1097,8 @@
 				var/T = sanitize(input(U, "Введите адрес доставки или комментарий", "Комментарий", null) as text)
 				if(T && istext(T))
 					order_item(Lot, T)
+
+		//Shopping Cart
 		if("Shop_Shopping_Cart")
 			mode = 82
 		if("Shop_Mark_As_Delivered")
@@ -1745,9 +1779,14 @@
 	if(prepayment > owner_account.money)
 		return
 	Lot.sold = TRUE
+	for(var/i=1, i<=3, i++)
+		if(global.online_shop_lots_latest[i] == Lot)
+			global.online_shop_lots_latest[i] = null
+			break
 	var/datum/money_account/Acc = get_account(Lot.account)
 	shopping_cart[Lot.number] = Lot.to_list(Acc ? Acc.owner_name : "Unknown", Lot.price - prepayment)
-	mode = 82
+
+	global.shop_categories[Lot.category]--
 
 	charge_to_account(owner_account.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -prepayment)
 	charge_to_account(global.cargo_account.account_number, owner_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, prepayment)

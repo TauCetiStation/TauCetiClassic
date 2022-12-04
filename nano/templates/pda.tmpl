@@ -1085,20 +1085,35 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
         <div class="item">
             <center><H2><span class="cargo">ГрузТорг</span></H2></center>
 			<span class="fxdLft"><b>Баланс кошелька:</b> <span class="good">{{:data.money}}$</span></span>
-			<span class="floatRight">{{:helper.link('Корзина заказов', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'good')}}</span>
+			{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
         </div>
 		<div class="item">
 			<table class="shop" style="width: 100%;"><tbody>
 			<tr><th colspan="7" class="cargo" style="padding: 5px; font-size: medium;">Каталог</th></tr>
 		    {{for data.categories}}
-				<td>{{:helper.link(value, null, {'choice' : "Shop_Category", 'categ' : value}, null, 'fxdLft')}}</td>
+				<td style="padding: 0px;">{{:helper.link('<span class="good">'+value.name+'</span> (<span class="bad">'+value.amount+'</span>)', null, {'choice' : "Shop_Category", 'categ' : value.name}, null, 'fxdLft')}}</td>
 			{{/for}}
 			</tbody></table>
 		</div>
+		<center><table class="shop" style="width: 100%;"><tbody>
+		<tr><th colspan="4" class="cargo" style="padding: 5px; font-size: medium;">Новинки</th></tr>
+		{{for data.latest_lots}}
+			{{if value}}
+				<tr><th colspan="4" class="cargo">{{:value.name}}</th></tr>
+				<tr><td rowspan="2">{{:value.icon}}<br></td>
+				<td><B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
+				<td><B>Продавец: </B><SMALL><I>{{:value.account}}</I></SMALL></td>
+				<td>{{:helper.link('Заказ', 'tag', {'choice' : "Shop_Order", 'order_item' : value.number}, null, 'floatRight')}}</td></tr>
+				<tr><td colspan="3"><SMALL><I>{{:value.description}}</I></SMALL><br></td></tr>
+			{{/if}}
+		{{empty}}
+			<tr><td><center><H4>Нет новинок</H4></center></td></tr>
+        {{/for}}
+		</tbody></table></center>
 		<div class="item">
 			<center><H3><span class="cargo">Заказы и Предложения</span></H3></center>
 			{{:helper.link('Добавить новый запрос', 'plusthick', {'choice' : "Shop_Add_Order_or_Offer"}, null, 'fixedLeftWider')}}<br>
-			<div class="itemContent">
+			<div class="item">
 				{{for data.orders_and_offers}}
 					{{if value}}
 						<div class="fxdLft">
@@ -1115,11 +1130,25 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
         <div class="item">
             <center><H2><span class="cargo">ГрузТорг</span></H2></center>
 			<span class="fxdLft"><b>Баланс кошелька:</b> <span class="good">{{:data.money}}$</span></span>
-			<span class="floatRight">{{:helper.link('Корзина заказов', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'good')}}</span>
+			{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
         </div>
-		
+		<div class="item">
+			<table class="shop" style="width: 100%;"><tbody>
+			<tr><th colspan="7" class="cargo" style="padding: 5px; font-size: medium;">Каталог</th></tr>
+		    {{for data.categories}}
+				<td style="padding: 0px;">{{:helper.link('<span class="good">'+value.name+'</span> (<span class="bad">'+value.amount+'</span>)', null, {'choice' : "Shop_Category", 'categ' : value.name}, null, 'fxdLft')}}</td>
+			{{/for}}
+			</tbody></table>
+		</div>
 		<center><table class="shop" style="width: 100%;"><tbody>
-		<tr><th colspan="4" class="cargo" style="padding: 5px; font-size: medium;">{{:data.category}}</th></tr>
+		<tr><th colspan="4" class="cargo" style="padding: 5px; font-size: medium;">
+			<span class="fixedLeftWidest">{{:data.category}}</span>
+			<span style="font-size:small;">{{:helper.link('20', null, {'choice' : "Shop_Change_Per_page", 'shop_per_page' : "20"}, null, 'fxdRght')}}
+			{{:helper.link('15', null, {'choice' : "Shop_Change_Per_page", 'shop_per_page' : "15"}, null, 'fxdRght')}}
+			{{:helper.link('10', null, {'choice' : "Shop_Change_Per_page", 'shop_per_page' : "10"}, null, 'fxdRght')}}
+			{{:helper.link('5', null, {'choice' : "Shop_Change_Per_page", 'shop_per_page' : "5"}, null, 'fxdRght')}}
+			<span class="floatRight">Показывать по:   </span></span>
+		</th></tr>
 		{{for data.shop_lots}}
 				<tr><th colspan="4" class="cargo">{{:value.name}}</th></tr>
 				<tr><td rowspan="2">{{:value.icon}}<br></td>
@@ -1139,13 +1168,13 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 		<div class="item">
             <center><H2><span class="cargo">ГрузТорг</span></H2></center>
 			<span class="fxdLft"><b>Баланс кошелька:</b> <span class="good">{{:data.money}}$</span></span>
-			<span class="floatRight">{{:helper.link('Корзина заказов', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'good')}}</span>
+			{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
         </div>
 		<center><table class="shop" style="width: 100%;"><tbody>
 		<tr><th colspan="4" class="cargo" style="padding: 5px; font-size: medium;">Корзина заказов:</th></tr>
 		{{for data.shopping_cart}}
 			{{if !value.delivered}}
-				<tr><th colspan="4" class="cargo">{{:value.name}}</th></tr>
+				<tr><th colspan="4" class="cargo">{{:value.name}}  №{{:value.number}}</th></tr>
 				<tr><td rowspan="2">{{:value.icon}}<br></td>
 				<td><B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
 				<td><B>Продавец: </B><SMALL><I>{{:value.account}}</I></SMALL></td>
