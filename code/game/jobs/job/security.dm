@@ -26,7 +26,7 @@
 		AND BUMPING UP THE SAVEFILE_VERSION_MAX, AND SAVEFILE_VERSION_SPECIES_JOBS
 		~Luduk
 	*/
-	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC, TYCHEON)
 
 
 /datum/job/warden
