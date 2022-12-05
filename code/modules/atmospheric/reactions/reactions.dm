@@ -172,10 +172,10 @@
 	created = list("mstab" = 3)
 
 /datum/atmosReaction/mstabSynthesis/New()
-	minTemp = round(rand(0, 100) / 100) * 100
-	maxTemp = round(rand(100, 1000) / 100) * 100
-	minPressure = round(rand(0, 100) / 100) * 100
-	maxPressure = round(rand(100, 1000) / 100) * 100
+	minTemp = CEIL(rand(0, 100) / 100) * 100
+	maxTemp = CEIL(rand(100, 1000) / 100) * 100
+	minPressure = CEIL(rand(0, 100) / 100) * 100
+	maxPressure = CEIL(rand(100, 1000) / 100) * 100
 	var/list/used = list()
 	for(var/i = 0, i < 3, i++)
 		while(TRUE)
