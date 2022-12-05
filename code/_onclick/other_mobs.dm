@@ -18,8 +18,10 @@
 	if(istype(G) && G.Touch(src, A, TRUE))
 		return
 
-	if(ismob(A) && species.flags[IS_IMMATERIAL])
-		return
+	if(ismob(A))
+		var/mob/M = A
+		if(M.get_species() == TYCHEON)
+			return
 
 	A.attack_hand(src)
 
