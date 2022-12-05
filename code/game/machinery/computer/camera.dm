@@ -56,13 +56,12 @@
 	cam_background = new
 	cam_background.assigned_map = map_name
 	cam_background.del_on_map_removal = FALSE
-	var/obj/item/weapon/circuitboard/security/board = C
+	var/obj/item/weapon/circuitboard/security/board = circuit
 	if(C && istype(C))
 		var/list/circuitboard_network = board.network
 		if(circuitboard_network.len > 0)
 			network = circuitboard_network
 	else
-		board = circuit
 		board.network = network
 
 /obj/machinery/computer/security/Destroy()
