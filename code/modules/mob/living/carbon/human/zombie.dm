@@ -114,11 +114,6 @@
 
 			H.infect_zombie_virus(target_zone)
 
-/proc/iszombie(mob/living/carbon/human/H)
-	if(istype(H.species, /datum/species/zombie))
-		return TRUE
-	return FALSE
-
 /datum/species/zombie/on_life(mob/living/carbon/human/H)
 	if(!H.life_tick % 3)
 		return
@@ -168,15 +163,24 @@
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 	if(!H.organs_by_name[O_BRAIN] || !BP || BP.is_stump)
 		return
+	//zombie have NO_PAIN and can't adjust/sets halloss
+	H.setHalLoss(0)
+	//remove all blind-blur effects
+	H.disabilities &= ~NEARSIGHTED
+	H.sdisabilities &= ~BLIND
+	H.blinded = FALSE
+	H.setBlurriness(0)
+	H.handle_vision(TRUE)
+
 	if(!iszombie(H))
 		H.zombify()
 
-	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)  // restore every thing in this dumb head (brain and eyes)
-		IO.rejuvenate()
+	//del wounds and embedded implants in limbs, heal
+	for(var/obj/item/organ/external/limb in H.bad_bodyparts)
+		limb.rejuvenate()
 
 	H.setCloneLoss(0)
 	H.setBrainLoss(0)
-	H.setHalLoss(0)
 	H.SetParalysis(0)
 	H.SetStunned(0)
 	H.SetWeakened(0)
@@ -196,6 +200,7 @@
 	H.update_canmove()
 	H.regenerate_icons()
 	H.med_hud_set_health()
+	H.clear_alert("embeddedobject")
 
 	playsound(H, pick(list('sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')), VOL_EFFECTS_MASTER)
 	to_chat(H, "<span class='danger'>Somehow you wake up and your hunger is still outrageous!</span>")
@@ -208,6 +213,21 @@
 			if(istype(e.effect, /datum/disease2/effect/zombie))
 				return TRUE
 	return FALSE
+
+/mob/living/carbon/human/handle_vision()
+	if(iszombie(src))
+		return
+	return ..()
+
+/mob/living/carbon/human/update_eye_blur()
+	if(iszombie(src))
+		return
+	return ..()
+
+/mob/living/carbon/human/embed(obj/item/I)
+	if(species.flags[NO_EMBED])
+		return
+	return ..()
 
 /mob/living/carbon/human/proc/infect_zombie_virus(target_zone = null, forced = FALSE, fast = FALSE)
 	if(!forced && !prob(get_bite_infection_chance(src, target_zone)))
