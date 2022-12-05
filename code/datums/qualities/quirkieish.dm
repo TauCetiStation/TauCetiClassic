@@ -250,16 +250,23 @@
 		// While funny, please no.
 		if(isanyantag(potential_target))
 			continue
-		// Commented out because changeling stings change appearance and name but not species...
-		// so apperantly in this universe it works like this.
-		//if(get_species(potential_target) != get_species(H))
-		//	continue
+		// Hm.
+		var/datum/species/S = all_species[target.get_species()]
+		if(S.flags[NO_DNA])
+			continue
+		// Okay the idea with changeling stings didn't work so now we actually change the race.
+		// We change the race because if we don't some exotic species like Vox would not have
+		// anyone they can be a doppleganger of.
+		if(!config.usealienwhitelist && !is_alien_whitelisted(H, target.get_species()))
+			continue
 
 		target = potential_target
 
 	if(!target)
 		to_chat(H, "<span class='warning'>Проклятие! По какой-то причине ты клонировал сам себя!</span>")
 		return
+
+	H.set_species(target.get_species())
 
 	H.dna = target.dna.Clone()
 	H.real_name = target.dna.real_name
