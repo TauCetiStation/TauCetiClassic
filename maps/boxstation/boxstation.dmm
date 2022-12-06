@@ -11584,7 +11584,9 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "yellow"
+	},
 /area/station/civilian/cold_room)
 "atL" = (
 /obj/machinery/door/firedoor,
@@ -32896,7 +32898,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "brown"
+	icon_state = "yellow"
 	},
 /area/station/cargo/miningoffice)
 "bgv" = (
@@ -34936,6 +34938,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "brownfull"
 	},
@@ -42800,6 +42803,10 @@
 /turf/simulated/floor{
 	icon_state = "loadingareadirty2"
 	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "warninglinecorners"
+	},
 /area/station/cargo/storage)
 "byp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -46710,6 +46717,7 @@
 	name = "Delivery Office";
 	req_access = list(50)
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	icon_state = "brownfull"
 	},
@@ -64347,8 +64355,8 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -70837,6 +70845,13 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel)
+"eCE" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	icon_state = "yellow"
+	},
+/area/station/cargo/storage)
 "eDb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -72562,6 +72577,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "brownfull"
 	},
@@ -73982,6 +74000,15 @@
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
+/area/station/cargo/storage)
+"hTl" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/turf/simulated/floor,
 /area/station/cargo/storage)
 "hTt" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -80712,7 +80739,7 @@
 	},
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "brown"
+	icon_state = "yellow"
 	},
 /area/station/cargo/storage)
 "oUI" = (
@@ -81556,6 +81583,15 @@
 	icon_state = "vault"
 	},
 /area/station/civilian/chapel)
+"pYM" = (
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "warningline"
+	},
+/area/station/cargo/storage)
 "pZm" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -82128,6 +82164,14 @@
 /obj/structure/table,
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
+"qCZ" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/station/cargo/storage)
 "qDo" = (
 /obj/structure/lattice,
 /obj/structure/sign/warning{
@@ -84091,6 +84135,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"sEB" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "sFb" = (
 /obj/structure/closet/secure_closet/personal/patient,
 /turf/simulated/floor{
@@ -85621,6 +85671,18 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/civilian/toilet)
+"uHs" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/station/cargo/storage)
 "uIm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -99599,7 +99661,7 @@ csh
 bpU
 pUQ
 buY
-mfD
+qCZ
 mfD
 bJz
 wwg
@@ -99856,11 +99918,11 @@ cri
 cri
 slP
 buY
-mfD
+qCZ
 mfD
 gwc
 mfD
-mfD
+eCE
 mNb
 owi
 nsr
@@ -103452,9 +103514,9 @@ brd
 jOo
 hSt
 lwQ
-gdb
+pYM
 ebk
-gdb
+pYM
 bGl
 byo
 cXf
@@ -104477,7 +104539,7 @@ aSM
 aSM
 aFg
 bls
-bkr
+uHs
 klI
 nGb
 bNk
@@ -104734,8 +104796,8 @@ eXg
 nLo
 aFg
 bDX
-pGd
-bFS
+hTl
+sEB
 auO
 bNk
 bfH
