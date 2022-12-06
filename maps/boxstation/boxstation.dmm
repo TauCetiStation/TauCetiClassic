@@ -2880,7 +2880,7 @@
 "bdt" = (/obj/structure/closet,/obj/item/clothing/shoes/boxing/gray,/obj/effect/decal/cleanable/cobweb2,/obj/item/clothing/head/soft/grey{pixel_x = -2; pixel_y = 3},/obj/effect/spawner/lootdrop/maintenance/two,/turf/simulated/floor/plating,/area/station/maintenance/escape)
 "bdu" = (/obj/structure/girder,/turf/simulated/floor/plating,/area/station/maintenance/cargo)
 "bdv" = (/turf/simulated/floor{dir = 4; icon_state = "neutralcorner"},/area/station/hallway/primary/port)
-"bdw" = (/obj/effect/decal/cleanable/dirt,/obj/structure/easel,/obj/effect/decal/cleanable/cobweb2,/obj/structure/sign/painting{pixel_y = 30},/obj/item/weapon/palette,/turf/simulated/floor/wood,/area/station/civilian/library)
+"bdw" = (/obj/effect/decal/cleanable/dirt,/obj/structure/easel,/obj/effect/decal/cleanable/cobweb2,/obj/structure/sign/painting{pixel_y = 30},/obj/item/weapon/palette,/obj/item/weapon/brush,/turf/simulated/floor/wood,/area/station/civilian/library)
 "bdx" = (/obj/structure/table/woodentable,/obj/item/device/camera_film{pixel_x = -11; pixel_y = 7},/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/item/weapon/folder{pixel_x = 10; pixel_y = 2},/turf/simulated/floor/wood,/area/station/civilian/library)
 "bdy" = (/obj/machinery/firealarm{dir = 8; pixel_x = -24},/turf/simulated/floor{dir = 8; icon_state = "chapel"},/area/station/civilian/chapel/mass_driver)
 "bdz" = (/obj/structure/sign/warning/securearea{desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'."; name = "KEEP CLEAR: DOCKING AREA"},/turf/simulated/wall,/area/station/hallway/secondary/entry)
