@@ -205,6 +205,9 @@
 	if(istype(I, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/crayon = I
 		return crayon.colour
+	if(istype(I, /obj/item/weapon/brush))
+		var/obj/item/weapon/brush/B = I
+		return B.paint_color
 	else if(istype(I, /obj/item/weapon/pen))
 		var/obj/item/weapon/pen/P = I
 		switch(P.colour) // maybe pens can always hold this color as hex to not care about this?
@@ -417,3 +420,32 @@
 	else
 		name = initial(name)
 		desc = initial(desc)
+
+/obj/item/weapon/palette
+	name = "art palette"
+	desc = "The only thing you're missing is some fruity beret."
+	icon = 'icons/obj/artstuff.dmi'
+	icon_state = "palette"
+
+/obj/item/weapon/palette/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/brush))
+		var/obj/item/weapon/brush/B = I
+		B.paint_color = input(user,"Choose Color") as color
+		B.update_icon()
+
+/obj/item/weapon/brush
+	name = "paint brush"
+	desc = "You shouldn't stick it in your ears or other orifices. Please."
+	icon = 'icons/obj/artstuff.dmi'
+	icon_state = "brush"
+	var/paint_color = "#3D4341"
+
+/obj/item/weapon/brush/atom_init()
+	. = ..()
+	update_icon()
+
+/obj/item/weapon/brush/update_icon()
+	cut_overlays()
+	var/image/I = image('icons/obj/artstuff.dmi',icon_state = "brush_overlay")
+	I.color = paint_color
+	add_overlay(I)
