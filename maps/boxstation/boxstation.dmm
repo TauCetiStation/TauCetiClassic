@@ -72213,6 +72213,16 @@
 	icon_state = "white"
 	},
 /area/station/medical/reception)
+"gbe" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "gcb" = (
 /obj/structure/stool/bed/roller,
 /obj/structure/window/reinforced{
@@ -81982,6 +81992,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellowcorner"
@@ -82400,6 +82411,12 @@
 /obj/structure/spider/stickyweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"qUh" = (
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/station/maintenance/cargo)
 "qUx" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -107029,7 +107046,7 @@ bXq
 gYf
 wAe
 wAe
-wAe
+gbe
 wAe
 gYQ
 bBw
@@ -107286,7 +107303,7 @@ aSM
 aSM
 aSM
 wZc
-moP
+qUh
 wuI
 bDk
 gIB
