@@ -374,6 +374,12 @@
 	icon_state = "platebot"
 	},
 /area/station/engineering/engine)
+"aQ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/station/cargo/recycler)
 "aR" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/alarm{
@@ -932,13 +938,11 @@
 	},
 /area/station/solar/auxport)
 "bX" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "stationscrap"
+/obj/effect/landmark{
+	name = "carpspawn"
 	},
-/obj/item/stack/sheet/refined_scrap,
-/turf/simulated/floor/plating/airless,
-/area/station/cargo/recycler)
+/turf/environment/space,
+/area/space)
 "bY" = (
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -1069,14 +1073,15 @@
 	},
 /area/station/engineering/equip)
 "cl" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "stationscrap"
+/obj/item/weapon/storage/firstaid/fire{
+	pixel_y = 4
 	},
-/obj/item/weapon/scrap_lump,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor/plating/airless,
-/area/station/cargo/recycler)
+/obj/structure/rack,
+/obj/item/weapon/storage/firstaid/o2,
+/turf/simulated/floor{
+	icon_state = "black"
+	},
+/area/station/hallway/primary/central)
 "cm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
 	dir = 4;
@@ -1663,9 +1668,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarport)
 "dc" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "warnplatecorner"
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "stationscrap"
 	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "dd" = (
 /turf/simulated/floor/plating/airless{
@@ -1673,15 +1681,13 @@
 	},
 /area/station/cargo/recycler)
 "de" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "stationscrap"
 	},
-/turf/simulated/floor/plating/airless{
-	dir = 8;
-	icon_state = "warnplatecorner"
-	},
+/obj/item/stack/sheet/refined_scrap,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "df" = (
 /obj/machinery/door/airlock/engineering{
@@ -2198,8 +2204,12 @@
 /turf/simulated/floor/airless/ceiling,
 /area/station/cargo/recycler)
 "dY" = (
-/obj/effect/decal/cleanable/spiderling_remains,
-/turf/simulated/floor/airless/ceiling,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "stationscrap"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "dZ" = (
 /obj/structure/table,
@@ -2217,15 +2227,23 @@
 	},
 /area/station/engineering/engine)
 "eb" = (
-/turf/simulated/floor/plating/airless{
-	dir = 4;
-	icon_state = "warnplatecorner"
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "stationscrap"
 	},
+/obj/item/weapon/scrap_lump,
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "ec" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating/airless{
 	dir = 1;
-	icon_state = "warnplatecorner"
+	icon_state = "warnplate"
 	},
 /area/station/cargo/recycler)
 "ed" = (
@@ -2508,9 +2526,11 @@
 	},
 /area/station/maintenance/auxsolarport)
 "eG" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "stationscrap"
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "eH" = (
@@ -2553,6 +2573,54 @@
 	icon_state = "vault"
 	},
 /area/station/cargo/storage)
+"eL" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless{
+	icon_state = "warnplatecorner"
+	},
+/area/station/cargo/recycler)
+"eM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/scrap_lump,
+/turf/simulated/floor/plating/airless{
+	icon_state = "warnplate"
+	},
+/area/station/cargo/recycler)
+"eN" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless{
+	icon_state = "warnplate"
+	},
+/area/station/cargo/recycler)
+"eO" = (
+/obj/random/misc/all,
+/turf/simulated/floor/plating/airless{
+	icon_state = "warnplate"
+	},
+/area/station/cargo/recycler)
+"eP" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless{
+	dir = 8;
+	icon_state = "warnplatecorner"
+	},
+/area/station/cargo/recycler)
+"eQ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless{
+	dir = 4;
+	icon_state = "warnplate"
+	},
+/area/station/cargo/recycler)
+"eR" = (
+/obj/item/weapon/scrap_lump,
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "eS" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -2562,6 +2630,33 @@
 	icon_state = "warnplate"
 	},
 /area/station/hallway/secondary/exit)
+"eT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/scrap_lump,
+/turf/simulated/floor/plating/airless{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/station/cargo/recycler)
+"eU" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
+"eV" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
+"eW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/random/foods/food_trash,
+/turf/simulated/floor/plating/airless{
+	dir = 8;
+	icon_state = "warnplatecorner"
+	},
+/area/station/cargo/recycler)
 "eX" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
 /obj/machinery/computer/general_air_control/large_tank_control{
@@ -2574,12 +2669,26 @@
 	icon_state = "caution"
 	},
 /area/station/engineering/atmos)
+"eY" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless{
+	dir = 8;
+	icon_state = "warnplate"
+	},
+/area/station/cargo/recycler)
 "eZ" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/station/hallway/secondary/arrival)
+"fa" = (
+/obj/random/misc/all,
+/turf/simulated/floor/plating/airless{
+	dir = 4;
+	icon_state = "warnplatecorner"
+	},
+/area/station/cargo/recycler)
 "fb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
@@ -2601,6 +2710,26 @@
 	icon_state = "vault"
 	},
 /area/station/hallway/secondary/arrival)
+"fd" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless{
+	dir = 1;
+	icon_state = "warnplate"
+	},
+/area/station/cargo/recycler)
+"fe" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless{
+	dir = 1;
+	icon_state = "warnplatecorner"
+	},
+/area/station/cargo/recycler)
+"ff" = (
+/obj/random/foods/food_trash,
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/station/cargo/recycler)
 "fh" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -27750,7 +27879,7 @@ MC
 MC
 MC
 MC
-MC
+bX
 MC
 MC
 MC
@@ -27786,7 +27915,7 @@ aD
 as
 MC
 MC
-MC
+bX
 MC
 MC
 MC
@@ -29336,7 +29465,7 @@ cX
 dE
 dl
 dQ
-dD
+eT
 dD
 dV
 MC
@@ -29586,16 +29715,16 @@ MC
 bi
 bi
 bi
-bw
-bF
+dc
+eG
 cO
 ei
-Bd
+aQ
 cY
 Bd
-Bd
-cY
-dW
+aQ
+eU
+eW
 dD
 dV
 MC
@@ -29847,13 +29976,13 @@ bV
 bI
 bw
 ei
-dc
+eL
+eQ
 dm
 dm
 dm
 dm
-dm
-eb
+fa
 dd
 MC
 MC
@@ -30101,16 +30230,16 @@ bi
 by
 bI
 bw
-bI
-bw
-ei
-dd
+dY
+dc
+ec
+eM
 dn
 dp
 dL
 dn
 dn
-cN
+fd
 dW
 dV
 MC
@@ -30358,7 +30487,7 @@ gN
 bz
 bJ
 cA
-cl
+eb
 cQ
 ej
 dO
@@ -30366,10 +30495,10 @@ do
 ey
 ey
 eB
-dn
-cN
+dp
+fd
 Bd
-dd
+eN
 MC
 MC
 MC
@@ -30614,19 +30743,19 @@ aY
 gN
 gN
 bM
-bX
-bI
+de
+dY
 cS
 ei
-dd
+eN
 dp
 dn
 dM
 eC
 dn
-cN
-Bd
-dd
+fd
+ff
+eN
 MC
 MC
 MC
@@ -30870,12 +30999,12 @@ cP
 aZ
 bk
 gN
-bI
+dY
 bF
 bI
 cD
 ei
-dd
+eO
 dp
 dp
 dp
@@ -31132,12 +31261,12 @@ bN
 bN
 SY
 UJ
-dd
+eN
 dn
 dC
 dn
 eC
-dY
+dL
 cN
 cY
 eh
@@ -31150,7 +31279,7 @@ MC
 MC
 MC
 MC
-MC
+bX
 MC
 MC
 MC
@@ -31389,14 +31518,14 @@ ca
 cm
 So
 en
-de
+eP
 dq
 dD
 dD
 eE
-dD
-ec
-Bd
+eY
+fe
+aQ
 bi
 bi
 MC
@@ -31648,10 +31777,10 @@ SY
 dB
 dB
 dr
-cY
+eR
 Bd
-eG
-cY
+eV
+eU
 Bd
 Bd
 bi
@@ -33146,7 +33275,7 @@ MC
 MC
 MC
 MC
-MC
+bX
 MC
 MC
 MC
@@ -34201,7 +34330,7 @@ iA
 tY
 tY
 tY
-oi
+cl
 sH
 vb
 XL
@@ -36749,7 +36878,7 @@ MC
 MC
 MC
 MC
-MC
+bX
 MC
 MC
 MC
@@ -36801,7 +36930,7 @@ MC
 MC
 MC
 MC
-MC
+bX
 MC
 MC
 MC
@@ -38302,7 +38431,7 @@ MC
 MC
 MC
 MC
-MC
+bX
 MC
 MC
 MC
@@ -39875,7 +40004,7 @@ MC
 MC
 MC
 MC
-MC
+bX
 MC
 MC
 MC
