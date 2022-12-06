@@ -60,6 +60,7 @@
 	icon_state = "galoshes"
 	permeability_coefficient = 0.05
 	flags = NOSLIP
+	can_get_wet = FALSE
 	slowdown = SHOES_SLOWDOWN + 0.5
 	species_restricted = null
 
