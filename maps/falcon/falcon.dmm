@@ -14,6 +14,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
 	},
@@ -218,20 +219,14 @@
 	},
 /area/station/hallway/primary/central)
 "aas" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 1
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/effect/landmark/start/assistant/test_subject,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
-	},
-/area/station/civilian/bar)
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/engineering/break_room)
 "aat" = (
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -495,6 +490,7 @@
 /obj/structure/window/reinforced/polarized{
 	id = "op1"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/medical/surgery)
 "aaO" = (
@@ -642,6 +638,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -882,13 +879,17 @@
 	},
 /area/station/maintenance/medbay)
 "abz" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "stationscrap"
+/obj/machinery/door/airlock/research{
+	name = "Telescience Research Room";
+	req_access = list(7)
 	},
-/obj/structure/scrap_cube,
-/turf/simulated/floor/plating/airless,
-/area/station/cargo/recycler)
+/obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkpurplefull"
+	},
+/area/station/rnd/telesci)
 "abA" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
@@ -1005,6 +1006,7 @@
 	pixel_y = 7
 	},
 /obj/item/clothing/head/cakehat,
+/obj/item/weapon/a_gift,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "abM" = (
@@ -1079,6 +1081,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -1323,29 +1326,21 @@
 	},
 /area/station/cargo/recycler)
 "acs" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Drone Fabrication";
-	req_access = list(32)
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/engineering/drone_fabrication)
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/rnd/telesci)
 "act" = (
 /obj/effect/decal/cleanable/cobweb2,
 /obj/effect/decal/cleanable/dirt,
@@ -1719,22 +1714,11 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "add" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/door/airlock/hatch{
-	name = "MiniSat Antechamber";
-	req_one_access = list(66)
+/obj/machinery/atmospherics/pipe/simple/visible/green{
+	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/tcommsat/computer)
+/turf/environment/space,
+/area/space)
 "ade" = (
 /obj/machinery/flasher{
 	id = "misclab"
@@ -1981,26 +1965,28 @@
 	},
 /area/station/aisat/ai_chamber)
 "ady" = (
-/obj/machinery/door/window{
-	dir = 1;
-	name = "AI Core Door";
-	req_access = list(16)
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "AI Blast Door";
-	name = "AI Blast Door";
-	opacity = 0
-	},
-/obj/structure/window/reinforced{
+/obj/machinery/atmospherics/pipe/simple/visible/universal{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/machinery/door/firedoor,
+/obj/structure/sign/warning/securearea{
+	pixel_y = -32
 	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Engineering";
+	req_access = list(10)
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "yellowfull"
+	},
+/area/station/engineering/break_room)
 "adz" = (
 /obj/machinery/ai_status_display{
 	pixel_x = -32
@@ -2250,30 +2236,22 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "adQ" = (
-/obj/machinery/door/window{
-	name = "AI Core Door";
-	req_access = list(16)
+/obj/machinery/door/airlock/mining/glass{
+	name = "Cargo Office";
+	req_access = list(50)
 	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "AI Blast Door";
-	name = "AI Blast Door";
-	opacity = 0
-	},
+/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/whitegreed,
-/area/station/aisat/ai_chamber)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel,
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "adR" = (
 /obj/machinery/ai_status_display{
 	pixel_x = -32
@@ -2383,34 +2361,21 @@
 	},
 /area/station/aisat/ai_chamber)
 "adZ" = (
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
-	id = "AI Blast Door";
-	name = "AI Blast Door";
+	id = "teles_blast1";
+	name = "Test Chamber Blast Doors";
 	opacity = 0
 	},
-/obj/machinery/door/airlock/highsecurity{
-	locked = 1;
-	name = "AI Chamber";
-	req_access = list(16)
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/aisat/ai_chamber)
+/obj/item/decoration/garland,
+/turf/simulated/floor/engine,
+/area/station/rnd/telesci)
 "aea" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -2606,12 +2571,21 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "aep" = (
-/obj/structure/lattice,
-/obj/structure/sign/warning/securearea{
-	pixel_y = 32
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/turf/environment/space,
-/area/space)
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Engineering";
+	name = "Engineering Security Doors";
+	opacity = 0
+	},
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/engineering/atmos)
 "aeq" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -2739,9 +2713,9 @@
 	},
 /area/station/tcommsat/computer)
 "aeA" = (
-/obj/structure/lattice,
 /obj/machinery/camera{
-	c_tag = "MiniSat West North";
+	c_tag = "MiniSat North";
+	dir = 1;
 	network = list("MiniSat")
 	},
 /turf/environment/space,
@@ -2924,12 +2898,24 @@
 	},
 /area/station/cargo/recycler)
 "aeY" = (
-/obj/structure/lattice,
-/obj/structure/sign/warning/docking{
-	pixel_x = 32
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/turf/environment/space,
-/area/space)
+/obj/machinery/atmospherics/pipe/simple/visible/green{
+	dir = 4
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Engineering";
+	name = "Engineering Security Doors";
+	opacity = 0
+	},
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/engineering/atmos)
 "aeZ" = (
 /turf/simulated/wall,
 /area/asteroid/mine/unexplored/safe)
@@ -3540,7 +3526,6 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "agh" = (
-/obj/structure/lattice,
 /obj/effect/decal/remains/human{
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
 	name = "Syndicate agent remains"
@@ -3666,8 +3651,8 @@
 	},
 /area/space)
 "agz" = (
-/obj/structure/lattice,
 /obj/random/foods/food_without_garbage,
+/obj/structure/lattice,
 /turf/environment/space,
 /area/space)
 "agA" = (
@@ -3764,6 +3749,7 @@
 	id = "Security_private";
 	opacity = 0
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint)
 "agJ" = (
@@ -3774,8 +3760,8 @@
 /turf/simulated/shuttle/plating,
 /area/space)
 "agK" = (
-/obj/structure/lattice,
 /obj/item/weapon/storage/fancy/donut_box/traitor,
+/obj/structure/lattice,
 /turf/environment/space,
 /area/space)
 "agL" = (
@@ -3815,18 +3801,24 @@
 	opened = 1
 	},
 /obj/item/weapon/reagent_containers/food/snacks/meatsteak,
-/obj/structure/lattice,
 /turf/environment/space,
 /area/space)
 "agS" = (
-/obj/structure/lattice,
 /obj/item/pizzabox/meat,
 /turf/environment/space,
 /area/space)
 "agT" = (
-/obj/random/foods/food_without_garbage,
-/turf/environment/space,
-/area/space)
+/obj/structure/table,
+/obj/item/device/guitar{
+	pixel_y = 8
+	},
+/obj/item/weapon/book/manual/wiki/supply_crates{
+	pixel_x = 6;
+	pixel_y = -13
+	},
+/obj/item/weapon/a_gift,
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "agU" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -4058,11 +4050,9 @@
 	},
 /area/station/hallway/secondary/exit)
 "ahu" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/tree/jungle/small,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
+/obj/structure/flora/tree/pine,
+/obj/structure/flora/grass/brown,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "ahv" = (
 /obj/structure/rack,
@@ -4084,18 +4074,31 @@
 	},
 /area/station/rnd/telesci)
 "ahw" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/flora/ausbushes/grassybush,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
+/obj/structure/flora/grass/both,
+/obj/machinery/light,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "ahx" = (
-/obj/structure/flora/junglebush/c,
-/turf/simulated/floor{
-	icon_state = "grass1"
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/area/station/hallway/secondary/arrival)
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "RD-shutters";
+	name = "Privacy Shutters";
+	opacity = 0
+	},
+/obj/structure/cable,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/rnd/hor)
 "ahy" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -4105,9 +4108,10 @@
 /obj/machinery/atm{
 	pixel_x = 28
 	},
-/turf/simulated/floor{
-	icon_state = "asteroid2"
+/obj/machinery/light/small{
+	dir = 4
 	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "ahz" = (
 /turf/simulated/wall,
@@ -4219,10 +4223,10 @@
 	},
 /area/station/hallway/primary/central)
 "ahH" = (
-/obj/item/weapon/flora/random,
 /obj/machinery/ai_status_display{
 	pixel_y = 32
 	},
+/obj/item/decoration/snowman,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -4584,6 +4588,7 @@
 /obj/machinery/light/small,
 /obj/item/clothing/gloves/rainbow,
 /obj/random/randomtoy,
+/obj/item/weapon/a_gift,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "aid" = (
@@ -4636,6 +4641,7 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/locker)
 "aih" = (
@@ -4659,6 +4665,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -4673,6 +4680,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/gym)
 "aik" = (
@@ -4685,6 +4693,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/gym)
 "aim" = (
@@ -4733,6 +4742,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -4817,6 +4827,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/gym)
 "aiA" = (
@@ -4876,13 +4887,12 @@
 /turf/simulated/wall,
 /area/station/civilian/cold_room)
 "aiE" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 8
-	},
 /obj/structure/sign/double/barsign{
 	pixel_y = 32
 	},
-/obj/effect/landmark/start/assistant/test_subject,
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/bar)
 "aiF" = (
@@ -5032,6 +5042,7 @@
 	name = "Escape Hall"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -5091,6 +5102,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -5439,7 +5451,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/weapon/flora/random,
+/obj/item/decoration/snowman,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkred"
@@ -5567,6 +5579,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/gym)
 "ajQ" = (
@@ -6040,6 +6053,29 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"akT" = (
+/obj/machinery/door/airlock/research{
+	name = "Anomalous Materials";
+	req_access = list(7)
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "darkpurplefull"
+	},
+/area/asteroid/research_outpost/spectro)
 "akU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -6371,9 +6407,7 @@
 /obj/item/weapon/pen{
 	pixel_y = 1
 	},
-/turf/simulated/floor{
-	icon_state = "asteroid7"
-	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "alF" = (
 /obj/machinery/computer/libraryconsole/bookmanagement/old,
@@ -6394,7 +6428,6 @@
 /turf/simulated/floor/wood,
 /area/station/maintenance/escape)
 "alI" = (
-/obj/structure/flora/ausbushes/fullgrass,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
@@ -6404,9 +6437,7 @@
 /obj/structure/sign/painting{
 	pixel_x = 30
 	},
-/turf/simulated/floor{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "alJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7125,7 +7156,7 @@
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "anb" = (
-/obj/machinery/vending/cigarette,
+/obj/machinery/vending/newyearmate,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -7364,6 +7395,7 @@
 	name = "Chapel"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -7440,10 +7472,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "anH" = (
-/obj/item/weapon/flora/random,
 /obj/structure/sign/departments/holy{
 	pixel_y = 32
 	},
+/obj/item/decoration/snowman,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -7837,7 +7869,7 @@
 	},
 /area/station/rnd/telesci)
 "aoD" = (
-/obj/structure/closet/emcloset,
+/obj/item/decoration/snowman,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkpurple"
@@ -8738,6 +8770,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/science_tool,
+/obj/item/weapon/a_gift,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -8857,6 +8890,7 @@
 	name = "Escape Airlock"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "aqx" = (
@@ -9365,9 +9399,8 @@
 	},
 /area/station/engineering/atmos)
 "arn" = (
-/obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
-	dir = 9
+	dir = 4
 	},
 /turf/environment/space,
 /area/space)
@@ -9716,9 +9749,9 @@
 	},
 /area/station/rnd/hallway)
 "arN" = (
-/obj/structure/lattice,
-/turf/environment/space,
-/area/asteroid/mine/eva)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/station/engineering/drone_fabrication)
 "arO" = (
 /turf/simulated/floor/airless{
 	dir = 10;
@@ -9759,17 +9792,23 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/port)
 "arU" = (
-/obj/structure/lattice,
-/obj/machinery/access_button{
-	command = "cycle_exterior";
-	frequency = 1379;
-	master_tag = "robotics_solar_airlock";
-	name = "exterior access button";
-	pixel_y = 28;
-	req_access = list(13)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/turf/environment/space,
-/area/space)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/device/flashlight/lamp/fir/special,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/station/cargo/storage)
 "arV" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating{
@@ -9856,6 +9895,60 @@
 	icon_state = "wood-broken7"
 	},
 /area/station/maintenance/escape)
+"ase" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Drone Fabrication";
+	req_access = list(32)
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/engineering/drone_fabrication)
+"asf" = (
+/obj/machinery/light,
+/obj/machinery/door_control{
+	id = "QMLoaddoor2";
+	layer = 4;
+	name = "Loading Doors";
+	pixel_x = -6;
+	pixel_y = -32
+	},
+/obj/machinery/door_control{
+	id = "QMLoaddoor1";
+	layer = 4;
+	name = "Loading Doors";
+	pixel_x = 6;
+	pixel_y = -32
+	},
+/obj/item/decoration/snowman,
+/turf/simulated/floor{
+	icon_state = "warning"
+	},
+/area/station/cargo/storage)
+"asg" = (
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/cargo/storage)
+"ash" = (
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/station/rnd/server)
 "asi" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -9865,6 +9958,191 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
+"asj" = (
+/obj/machinery/door/window{
+	dir = 1;
+	name = "AI Core Door";
+	req_access = list(16)
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "AI Blast Door";
+	name = "AI Blast Door";
+	opacity = 0
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"ask" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "stationscrap"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
+"asl" = (
+/obj/machinery/camera{
+	c_tag = "MiniSat West";
+	dir = 8;
+	network = list("MiniSat")
+	},
+/turf/environment/space,
+/area/space)
+"asm" = (
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "AI Blast Door";
+	name = "AI Blast Door";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/highsecurity{
+	locked = 1;
+	name = "AI Chamber";
+	req_access = list(16)
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
+"asn" = (
+/obj/machinery/camera{
+	c_tag = "MiniSat East";
+	dir = 4;
+	network = list("MiniSat")
+	},
+/turf/environment/space,
+/area/space)
+"aso" = (
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/asteroid/research_outpost/spectro)
+"asp" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/asteroid/research_outpost/outpost_misc_lab)
+"asq" = (
+/obj/machinery/door/window{
+	name = "AI Core Door";
+	req_access = list(16)
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "AI Blast Door";
+	name = "AI Blast Door";
+	opacity = 0
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor/whitegreed,
+/area/station/aisat/ai_chamber)
+"asr" = (
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
+	dir = 9
+	},
+/turf/environment/space,
+/area/space)
+"ass" = (
+/obj/structure/scrap_cube,
+/turf/simulated/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/station/cargo/recycler)
+"ast" = (
+/obj/machinery/door/airlock/research{
+	name = "Anomalous Materials Loading";
+	req_access = list(7)
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/asteroid/research_outpost/outpost_misc_lab)
+"asu" = (
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/asteroid/research_outpost/outpost_misc_lab)
+"asv" = (
+/obj/machinery/camera{
+	c_tag = "MiniSat East South";
+	dir = 6;
+	network = list("MiniSat")
+	},
+/turf/environment/space,
+/area/space)
+"asw" = (
+/obj/machinery/camera{
+	c_tag = "MiniSat West North";
+	network = list("MiniSat")
+	},
+/turf/environment/space,
+/area/space)
+"asx" = (
+/obj/machinery/access_button{
+	command = "cycle_exterior";
+	frequency = 1379;
+	master_tag = "robotics_solar_airlock";
+	name = "exterior access button";
+	pixel_y = 28;
+	req_access = list(13)
+	},
+/turf/environment/space,
+/area/space)
 "asy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -9877,6 +10155,21 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"asz" = (
+/obj/structure/sign/warning/securearea{
+	pixel_y = 32
+	},
+/turf/environment/space,
+/area/space)
+"asA" = (
+/obj/structure/sign/warning/docking{
+	pixel_x = 32
+	},
+/turf/environment/space,
+/area/space)
+"asB" = (
+/turf/environment/space,
+/area/asteroid/mine/eva)
 "asK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -9999,6 +10292,7 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "azn" = (
@@ -10558,12 +10852,11 @@
 	},
 /area/station/medical/sleeper)
 "aYW" = (
-/obj/structure/stool/bed/chair/comfy/black{
-	dir = 4
-	},
-/obj/effect/landmark/start/assistant/test_subject,
 /obj/machinery/newscaster{
 	pixel_y = 28
+	},
+/obj/structure/stool/bed/chair/comfy/brown{
+	dir = 4
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/bar)
@@ -10621,9 +10914,7 @@
 	dir = 4;
 	pixel_x = 27
 	},
-/turf/simulated/floor{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "bcR" = (
 /obj/machinery/space_heater,
@@ -10674,11 +10965,11 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/turf/simulated/floor{
-	icon_state = "grass1"
+/obj/item/decoration/garland,
+/obj/structure/flora/grass/green{
+	layer = 2.7
 	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "bfq" = (
 /turf/simulated/floor{
@@ -10889,6 +11180,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowfull"
@@ -11036,10 +11328,8 @@
 	},
 /area/station/civilian/kitchen)
 "bwm" = (
-/obj/structure/closet/emcloset,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
+/obj/structure/flora/mine_rocks,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "bwK" = (
 /turf/simulated/floor{
@@ -11097,12 +11387,23 @@
 /turf/simulated/wall,
 /area/station/civilian/toilet)
 "bzC" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/turf/simulated/floor{
-	icon_state = "grass1"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/airlock/hatch{
+	name = "MiniSat Antechamber";
+	req_one_access = list(66)
 	},
-/area/station/hallway/secondary/arrival)
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/tcommsat/computer)
 "bzJ" = (
 /obj/machinery/computer/secure_data,
 /obj/item/device/radio/intercom{
@@ -11236,6 +11537,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -11598,6 +11900,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/gym)
 "bYz" = (
@@ -11630,6 +11933,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "bZK" = (
@@ -11663,24 +11967,18 @@
 	},
 /area/station/hallway/primary/central)
 "ccc" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
-/turf/simulated/floor{
-	icon_state = "asteroid"
-	},
-/area/station/hallway/secondary/arrival)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/medical/genetics_cloning)
 "cck" = (
-/obj/structure/table,
-/obj/item/weapon/kitchen/rollingpin,
-/obj/item/weapon/reagent_containers/glass/beaker{
-	pixel_x = 5
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
-	},
-/area/station/civilian/kitchen)
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/arrival)
 "ccw" = (
 /obj/machinery/vending/snack{
 	name = "hacked Getmore Chocolate Corp";
@@ -11689,15 +11987,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cdj" = (
-/obj/structure/lattice,
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
-	pixel_y = -32
-	},
-/turf/environment/space,
-/area/space)
+/obj/item/decoration,
+/turf/simulated/wall,
+/area/station/hallway/secondary/arrival)
 "cdr" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -11802,6 +12094,7 @@
 	name = "Arrival Airlock"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "ciI" = (
@@ -11883,28 +12176,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "clY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "bridge blast";
-	name = "Bridge Blast Doors";
-	opacity = 0
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating,
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
 /area/station/bridge/server)
 "cmp" = (
 /obj/structure/grille,
@@ -11964,6 +12237,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -12016,16 +12290,9 @@
 /turf/environment/space,
 /area/space)
 "csF" = (
-/obj/structure/kitchenspike,
-/obj/item/device/radio/intercom{
-	dir = 1;
-	name = "Station Intercom (General)";
-	pixel_y = -22
-	},
-/turf/simulated/floor{
-	icon_state = "showroomfloor"
-	},
-/area/station/civilian/cold_room)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/medical/storage)
 "ctB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -12087,9 +12354,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cxV" = (
-/turf/simulated/floor{
-	icon_state = "asteroid"
-	},
+/obj/structure/flora/grass/green,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "cyF" = (
 /obj/machinery/newscaster{
@@ -12507,8 +12773,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/asteroid/research_outpost/outpost_misc_lab)
+/area/asteroid/research_outpost/spectro)
 "cXm" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/explored)
@@ -12729,14 +12996,12 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/flora/ausbushes/brflowers,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
+/obj/item/decoration/garland,
+/obj/structure/flora/grass/brown,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "dlI" = (
 /turf/simulated/floor/plating{
@@ -12849,6 +13114,7 @@
 	locked = 1;
 	name = "Escape Airlock"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "dqs" = (
@@ -12893,6 +13159,7 @@
 	dir = 5
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel)
 "dtk" = (
@@ -12966,6 +13233,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -13007,11 +13275,9 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/lavendergrass,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
+/obj/item/decoration/garland,
+/obj/structure/flora/grass/both,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "dvp" = (
 /obj/structure/closet/emcloset,
@@ -13083,6 +13349,7 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "dyn" = (
@@ -13305,7 +13572,6 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "dHO" = (
-/obj/structure/lattice,
 /obj/structure/sign/warning/securearea{
 	pixel_y = -32
 	},
@@ -13344,23 +13610,9 @@
 	},
 /area/station/maintenance/dormitory)
 "dII" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "prisonentry";
-	name = "Brig Entry";
-	req_access = list(2)
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "darkredfull"
-	},
-/area/station/security/prison)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/hallway/secondary/arrival)
 "dIJ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -13448,11 +13700,8 @@
 	},
 /area/asteroid/research_outpost/spectro)
 "dNp" = (
-/obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
-/turf/simulated/floor{
-	icon_state = "asteroid"
-	},
+/obj/item/weapon/a_gift,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "dNR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -13466,11 +13715,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "dOV" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
+/obj/structure/flora/grass/brown,
+/obj/item/weapon/a_gift,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "dPt" = (
 /obj/machinery/computer/crew{
@@ -13498,24 +13745,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "dRK" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "hos_blast";
-	name = "Privacy Shutters";
-	opacity = 0
-	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/security/hos)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/maintenance/medbay)
 "dRY" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/heater{
 	dir = 8
@@ -13642,9 +13874,8 @@
 	},
 /area/station/tcommsat/chamber)
 "dYd" = (
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
+/obj/structure/flora/grass/brown,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "dYA" = (
 /turf/simulated/floor{
@@ -13752,6 +13983,7 @@
 	name = "Cloning Lab";
 	req_access = list(5)
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -13889,6 +14121,7 @@
 	name = "Security Blast Door";
 	opacity = 0
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "emi" = (
@@ -13937,6 +14170,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/bridge/hop_office)
 "epi" = (
@@ -14043,28 +14277,20 @@
 	name = "Security Office";
 	req_one_access = list(1,4)
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkredfull"
 	},
 /area/station/security/main)
 "evt" = (
-/obj/item/weapon/kitchen/utensil/spoon,
-/obj/item/weapon/kitchen/utensil/fork{
-	pixel_x = 4
-	},
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -7
-	},
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
-	pixel_x = 9;
-	pixel_y = 4
-	},
-/obj/structure/table/woodentable/fancy/black,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/item/device/flashlight/lamp/fir/special{
+	pixel_x = -16
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -14072,12 +14298,14 @@
 	},
 /area/station/civilian/bar)
 "evV" = (
-/obj/machinery/atmospherics/pipe/simple/visible/yellow{
-	dir = 4
+/obj/machinery/door/firedoor,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/obj/structure/lattice,
-/turf/environment/space,
-/area/space)
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint)
 "ewk" = (
 /obj/item/weapon/storage/secure/safe{
 	pixel_x = -25;
@@ -14100,19 +14328,13 @@
 /area/station/medical/cmo)
 "ews" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced{
-	dir = 4
+	dir = 5
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/station/civilian/hydroponics)
+/area/station/security/checkpoint)
 "exJ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -14150,22 +14372,18 @@
 	},
 /area/station/medical/sleeper)
 "ezO" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/machinery/ai_status_display{
 	layer = 4;
 	pixel_y = 32
 	},
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor{
-	icon_state = "asteroid"
-	},
+/obj/structure/flora/ausbushes/pointybush,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "eAC" = (
-/turf/simulated/floor{
-	icon_state = "asteroid7"
+/obj/structure/flora/grass/brown{
+	layer = 2.7
 	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "eAZ" = (
 /turf/simulated/floor/plating/airless/catwalk,
@@ -14197,6 +14415,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
 	},
@@ -14231,27 +14450,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "eEz" = (
-/obj/machinery/door/airlock/research{
-	name = "Anomalous Materials";
-	req_access = list(7)
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkpurplefull"
-	},
-/area/asteroid/research_outpost/spectro)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/civilian/dormitories)
 "eEO" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
@@ -14273,12 +14474,9 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "eEZ" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/tree/jungle,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
+/obj/structure/flora/grass/both,
+/obj/structure/flora/ausbushes/pointybush,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "eFq" = (
 /obj/structure/morgue,
@@ -14800,20 +14998,21 @@
 	},
 /area/station/civilian/chapel/office)
 "fgW" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "teles_blast1";
-	name = "Test Chamber Blast Doors";
-	opacity = 0
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 5
+	dir = 4
 	},
-/turf/simulated/floor/engine,
-/area/station/rnd/telesci)
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/civilian/hydroponics)
 "fis" = (
 /obj/structure/object_wall/pod{
 	icon_state = "1,0"
@@ -15060,13 +15259,12 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "fCc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "fCH" = (
 /obj/machinery/power/solar{
@@ -15205,11 +15403,11 @@
 	},
 /area/station/hallway/primary/central)
 "fIP" = (
-/obj/item/weapon/flora/pottedplant/palm,
 /obj/structure/noticeboard{
 	dir = 8;
 	pixel_x = 32
 	},
+/obj/item/decoration/snowman,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -15549,26 +15747,12 @@
 	},
 /area/station/hallway/primary/central)
 "gfQ" = (
-/obj/machinery/light,
-/obj/machinery/door_control{
-	id = "QMLoaddoor2";
-	layer = 4;
-	name = "Loading Doors";
-	pixel_x = -6;
-	pixel_y = -32
-	},
-/obj/machinery/door_control{
-	id = "QMLoaddoor1";
-	layer = 4;
-	name = "Loading Doors";
-	pixel_x = 6;
-	pixel_y = -32
-	},
-/obj/item/weapon/flora/random,
+/obj/item/decoration/snowman,
 /turf/simulated/floor{
-	icon_state = "warning"
+	dir = 5;
+	icon_state = "black"
 	},
-/area/station/cargo/storage)
+/area/station/hallway/primary/central)
 "gfT" = (
 /turf/simulated/floor{
 	icon_state = "whitebot"
@@ -15701,6 +15885,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -15890,6 +16075,7 @@
 	},
 /obj/item/weapon/folder/blue,
 /obj/item/weapon/pen,
+/obj/item/weapon/a_gift,
 /turf/simulated/floor/carpet/black,
 /area/station/bridge)
 "guD" = (
@@ -16140,14 +16326,12 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
+/obj/item/decoration/garland,
+/obj/structure/flora/grass/both,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "gHp" = (
 /obj/structure/stool/bed/chair/office/dark,
@@ -16648,11 +16832,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "hbt" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/game_kit/random,
-/turf/simulated/floor{
-	icon_state = "asteroid"
+/obj/item/device/flashlight/lamp/fir/special/alternative{
+	pixel_x = -16
 	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "hbS" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -16763,11 +16946,9 @@
 	},
 /area/station/rnd/lab)
 "hgN" = (
-/obj/structure/flora/rock/jungle,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
-/area/station/hallway/secondary/arrival)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/station/rnd/chargebay)
 "hgW" = (
 /turf/simulated/wall/r_wall,
 /area/station/security/prison)
@@ -16794,6 +16975,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -16821,10 +17003,8 @@
 	codes_txt = "patrol;next_patrol=Med";
 	location = "Arrival2"
 	},
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor{
-	icon_state = "asteroid"
-	},
+/obj/structure/flora/grass/brown,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "hnM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -17104,6 +17284,7 @@
 /obj/structure/closet/theatrecloset,
 /obj/item/device/guitar/electric,
 /obj/random/randomtoy,
+/obj/item/weapon/a_gift,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken7"
 	},
@@ -17349,6 +17530,7 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -17379,20 +17561,9 @@
 	},
 /area/station/bridge/nuke_storage)
 "hYy" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/rnd/telesci)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/station/engineering/break_room)
 "hYL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -17445,24 +17616,13 @@
 /area/station/hallway/primary/central)
 "iao" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "RD-shutters";
-	name = "Privacy Shutters";
-	opacity = 0
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/obj/structure/cable,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/station/rnd/hor)
+/area/station/hallway/primary/central)
 "ibz" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access = list(12)
@@ -17651,17 +17811,13 @@
 	},
 /area/station/rnd/telesci)
 "ikn" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/structure/flora/junglebush/c,
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_y = 32
 	},
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
+/obj/structure/flora/grass/both,
+/obj/item/weapon/a_gift,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "ikw" = (
 /obj/machinery/door/firedoor,
@@ -17763,6 +17919,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -17852,6 +18009,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "ivd" = (
@@ -17884,6 +18042,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "ivY" = (
@@ -18038,20 +18197,30 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/drone_fabrication)
 "iDh" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/research_outpost/spectro)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Biohazard";
+	name = "Biohazard Shutter";
+	opacity = 0
+	},
+/obj/machinery/door/airlock/research{
+	name = "Research Division Access";
+	req_access = list(47)
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/rnd/hallway)
 "iDT" = (
 /obj/machinery/atmospherics/components/trinary/filter/on{
 	filter_type = "oxygen";
@@ -18301,11 +18470,9 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/brflowers,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
+/obj/item/decoration/garland,
+/obj/structure/flora/grass/brown,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "iSt" = (
 /turf/simulated/wall,
@@ -18697,11 +18864,8 @@
 /turf/simulated/wall,
 /area/station/civilian/kitchen)
 "jqk" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/fernybush,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
+/obj/structure/flora/grass/both,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "jrG" = (
 /obj/machinery/atmospherics/components/binary/valve/digital/open,
@@ -18737,6 +18901,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -18765,12 +18930,24 @@
 	},
 /area/station/maintenance/science)
 "jwL" = (
-/obj/structure/lattice,
-/obj/structure/grille{
-	destroyed = 1
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/turf/environment/space,
-/area/space)
+/obj/machinery/atmospherics/pipe/simple/visible/yellow{
+	dir = 4
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Engineering";
+	name = "Engineering Security Doors";
+	opacity = 0
+	},
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/engineering/atmos)
 "jwX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -18796,9 +18973,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 1
-	},
-/obj/structure/stool/bed/chair/comfy/black{
 	dir = 1
 	},
 /obj/structure/cable{
@@ -18873,6 +19047,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "jzK" = (
@@ -19000,15 +19175,7 @@
 	},
 /area/station/engineering/break_room)
 "jCj" = (
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = 32
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/item/toy/cards,
-/obj/structure/table/woodentable/poker,
-/obj/item/weapon/dice/d20,
+/obj/structure/fireplace,
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/bar)
 "jCm" = (
@@ -19108,14 +19275,30 @@
 	},
 /area/station/bridge)
 "jGN" = (
-/obj/structure/lattice,
-/obj/machinery/camera{
-	c_tag = "MiniSat East South";
-	dir = 6;
-	network = list("MiniSat")
+/obj/machinery/door/airlock/research/glass{
+	name = "Research and Development";
+	req_access = list(7)
 	},
-/turf/environment/space,
-/area/space)
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/rnd/lab)
 "jHm" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp{
@@ -19156,6 +19339,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -19453,6 +19637,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics)
 "jUf" = (
@@ -19504,26 +19689,13 @@
 	},
 /area/station/hallway/primary/central)
 "jVo" = (
-/obj/machinery/door/airlock/research{
-	name = "Anomalous Materials Loading";
-	req_access = list(7)
+/obj/machinery/camera{
+	c_tag = "MiniSat West North";
+	dir = 1;
+	network = list("MiniSat")
 	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/asteroid/research_outpost/outpost_misc_lab)
+/turf/environment/space,
+/area/space)
 "jWm" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/scrap_lump,
@@ -19562,6 +19734,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/medical/cmo)
 "jYA" = (
@@ -19700,6 +19873,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -19749,6 +19923,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/bridge/captain_quarters)
 "kjh" = (
@@ -19846,6 +20021,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -19925,6 +20101,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowfull"
@@ -20579,6 +20756,7 @@
 	name = "Medbay"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -20620,10 +20798,12 @@
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "kZg" = (
+/obj/effect/landmark/start/recycler,
 /turf/simulated/floor{
-	icon_state = "asteroid2"
+	dir = 8;
+	icon_state = "brown"
 	},
-/area/station/hallway/secondary/arrival)
+/area/station/cargo/storage)
 "kZA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -20672,23 +20852,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "lef" = (
-/obj/structure/table/woodentable,
-/obj/random/randomfigure{
-	pixel_x = -4;
-	pixel_y = -7
-	},
-/obj/random/randomfigure{
-	pixel_x = -7;
-	pixel_y = 7
-	},
-/obj/random/randomfigure{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/turf/simulated/floor{
-	icon_state = "asteroid"
-	},
-/area/station/hallway/secondary/arrival)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/station/bridge/captain_quarters)
 "lem" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -20820,30 +20986,12 @@
 	},
 /area/station/civilian/kitchen)
 "lnc" = (
-/obj/machinery/door/airlock/glass{
-	name = "Kitchen";
-	req_access = list(28)
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
+/obj/item/decoration/snowman,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
+	dir = 10;
+	icon_state = "black"
 	},
-/area/station/civilian/kitchen)
+/area/station/hallway/primary/central)
 "lot" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -20893,21 +21041,9 @@
 	},
 /area/station/medical/reception)
 "lqE" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "hos_blast";
-	name = "Privacy Shutters";
-	opacity = 0
-	},
-/obj/structure/cable,
-/turf/simulated/floor/plating,
-/area/station/security/hos)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/maintenance/dormitory)
 "lre" = (
 /obj/machinery/hydroponics/constructable,
 /obj/structure/extinguisher_cabinet{
@@ -20932,11 +21068,25 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "lss" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor{
-	icon_state = "asteroid3"
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/area/station/hallway/secondary/arrival)
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "hos_blast";
+	name = "Privacy Shutters";
+	opacity = 0
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/security/hos)
 "lsB" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -20982,12 +21132,9 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/auxport)
 "lvS" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/rock/jungle,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
-/area/station/hallway/secondary/arrival)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/civilian/cold_room)
 "lwq" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
@@ -21176,6 +21323,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -21270,6 +21418,7 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics)
 "lJb" = (
@@ -21283,9 +21432,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "lKy" = (
 /obj/structure/closet/secure_closet/personal,
@@ -21578,11 +21725,9 @@
 	},
 /area/station/engineering/break_room)
 "mbf" = (
-/obj/structure/flora/ausbushes/ywflowers,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
-/area/station/hallway/secondary/arrival)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/station/security/main)
 "mbj" = (
 /obj/machinery/computer/cryopod{
 	pixel_y = 32
@@ -21609,10 +21754,11 @@
 	},
 /area/station/tcommsat/chamber)
 "mdk" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor{
-	icon_state = "grass1"
+/obj/structure/flora/grass/brown,
+/obj/machinery/light/small{
+	dir = 8
 	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "mdD" = (
 /obj/item/stack/nanopaste,
@@ -21717,6 +21863,7 @@
 	dir = 5
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/office)
 "mhv" = (
@@ -21822,6 +21969,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/bridge/captain_quarters)
 "mpB" = (
@@ -22071,8 +22219,11 @@
 	},
 /area/station/maintenance/medbay)
 "mBg" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -22080,26 +22231,18 @@
 	name = "Bridge Blast Doors";
 	opacity = 0
 	},
-/obj/machinery/door/airlock/command/glass{
-	name = "Bridge";
-	req_access = list(19)
-	},
-/obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	icon_state = "darkbluefull"
-	},
-/area/station/bridge)
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/bridge/server)
 "mBI" = (
 /obj/structure/closet/secure_closet/xenoarchaeologist_tools{
 	req_access = list(7)
@@ -22264,7 +22407,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "mNu" = (
-/obj/structure/lattice,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -22321,19 +22463,28 @@
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
 "mPB" = (
-/obj/structure/flora/junglebush/b,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
+/obj/structure/flora/tree/pine,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "mQs" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	name = "Escape Airlock";
-	req_access = list(1)
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "chapel";
+	name = "Privacy Shutters";
+	opacity = 0
+	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/area/station/civilian/chapel/office)
 "mRd" = (
 /obj/structure/stool/bed/chair/wheelchair,
 /turf/simulated/floor{
@@ -22453,12 +22604,9 @@
 	},
 /area/station/cargo/storage)
 "mUO" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/leafybush,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
-/area/station/hallway/secondary/arrival)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/hallway/secondary/exit)
 "mUR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/cable{
@@ -22466,9 +22614,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor{
-	icon_state = "asteroid"
-	},
+/obj/structure/flora/grass/green,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "mVa" = (
 /obj/structure/disposalpipe/segment{
@@ -22621,13 +22768,31 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/eva)
 "ncI" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/machinery/door/airlock/glass{
+	name = "Kitchen";
+	req_access = list(28)
 	},
-/turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/station/civilian/kitchen)
 "ncM" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -22837,6 +23002,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor,
 /area/station/medical/surgeryobs)
 "nkO" = (
@@ -22889,6 +23055,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -23028,29 +23195,14 @@
 	},
 /area/station/maintenance/medbay)
 "nrh" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Biohazard";
-	name = "Biohazard Shutter";
-	opacity = 0
+/obj/machinery/door/airlock/external{
+	name = "Escape Airlock";
+	req_access = list(1)
 	},
-/obj/machinery/door/airlock/research{
-	name = "Research Division Access";
-	req_access = list(47)
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/rnd/hallway)
+/obj/item/decoration/tinsel,
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint)
 "nrm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -23157,6 +23309,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -23275,16 +23428,9 @@
 	},
 /area/station/civilian/kitchen)
 "nBe" = (
-/obj/structure/table/woodentable,
-/obj/machinery/chem_dispenser/soda{
-	pixel_y = 4
-	},
-/obj/machinery/light,
-/obj/structure/sign/poster/official/high_class_martini{
-	pixel_y = -32
-	},
-/turf/simulated/floor/wood,
-/area/station/civilian/bar)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/civilian/locker)
 "nDE" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
@@ -23537,6 +23683,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/medical/cmo)
 "nMM" = (
@@ -23639,6 +23786,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -23677,21 +23825,21 @@
 	dir = 8;
 	pixel_x = -22
 	},
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/junglebush/b,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
+/obj/structure/flora/grass/both,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "nVq" = (
-/obj/structure/lattice,
-/obj/machinery/camera{
-	c_tag = "MiniSat North";
-	dir = 1;
-	network = list("MiniSat")
+/obj/structure/table,
+/obj/item/weapon/kitchen/rollingpin,
+/obj/item/weapon/reagent_containers/glass/beaker{
+	pixel_x = 5
 	},
-/turf/environment/space,
-/area/space)
+/obj/item/weapon/a_gift,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/station/civilian/kitchen)
 "nVz" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -23826,10 +23974,9 @@
 	},
 /area/station/bridge/hop_office)
 "odS" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/environment/space,
-/area/space)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/civilian/gym)
 "oeD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -24322,29 +24469,9 @@
 	},
 /area/station/bridge/teleporter)
 "oDH" = (
-/obj/machinery/door/airlock/research/glass{
-	name = "Research and Development";
-	req_access = list(7)
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/rnd/lab)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/security/checkpoint)
 "oDX" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
@@ -24650,27 +24777,23 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "oSq" = (
 /obj/machinery/gibber,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -21
-	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
 /area/station/civilian/cold_room)
 "oSw" = (
-/obj/structure/lattice,
-/obj/machinery/camera{
-	c_tag = "MiniSat West";
-	dir = 8;
-	network = list("MiniSat")
+/obj/structure/table/woodentable,
+/obj/machinery/chem_dispenser/soda{
+	pixel_y = 4
 	},
-/turf/environment/space,
-/area/space)
+/obj/machinery/light,
+/turf/simulated/floor/wood,
+/area/station/civilian/bar)
 "oSW" = (
 /obj/structure/stool/bed/chair/comfy/teal{
 	dir = 1
@@ -24690,6 +24813,7 @@
 	name = "Security Checkpoint";
 	req_access = list(1)
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -25013,17 +25137,19 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "piu" = (
-/obj/structure/lattice,
-/obj/machinery/camera{
-	c_tag = "MiniSat East";
-	dir = 4;
-	network = list("MiniSat")
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/turf/environment/space,
-/area/space)
+/obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/civilian/hydroponics)
 "piy" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "pod1"
@@ -25080,9 +25206,10 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 30
 	},
-/turf/simulated/floor{
-	icon_state = "asteroid3"
+/obj/structure/flora/grass/brown{
+	layer = 2.7
 	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "pmv" = (
 /obj/structure/grille,
@@ -25282,12 +25409,9 @@
 	},
 /area/station/maintenance/medbay)
 "pvV" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/reedbush,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
-/area/station/hallway/secondary/arrival)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/maintenance/cargo)
 "pwn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/shard,
@@ -25412,20 +25536,9 @@
 	},
 /area/station/tcommsat/chamber)
 "pAp" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/door/airlock{
-	name = "Unisex Restrooms"
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	icon_state = "freezerfloor"
-	},
-/area/station/civilian/toilet)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/civilian/bar)
 "pAE" = (
 /obj/structure/stool/bed/roller,
 /turf/simulated/floor{
@@ -25511,27 +25624,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "pCF" = (
-/obj/machinery/atmospherics/pipe/simple/visible/universal{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/sign/warning/securearea{
-	pixel_y = -32
-	},
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Engineering";
-	req_access = list(10)
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "yellowfull"
-	},
-/area/station/engineering/break_room)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/maintenance/escape)
 "pDR" = (
 /turf/simulated/floor/airless{
 	dir = 9;
@@ -25888,13 +25983,21 @@
 	},
 /area/station/hallway/primary/central)
 "pTS" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/central)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/door/airlock{
+	name = "Unisex Restrooms"
+	},
+/obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/civilian/toilet)
 "pUb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/visible/cyan{
@@ -25993,14 +26096,9 @@
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "pXS" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/civilian/hydroponics)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/civilian/toilet)
 "pYv" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
@@ -26040,18 +26138,17 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
 	},
 /area/station/hallway/secondary/arrival)
 "qct" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ppflowers,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
-/area/station/hallway/secondary/arrival)
+/obj/item/stack/rods,
+/obj/structure/lattice,
+/turf/environment/space,
+/area/space)
 "qcu" = (
 /turf/simulated/wall,
 /area/station/hallway/secondary/exit)
@@ -26340,10 +26437,7 @@
 	},
 /area/station/civilian/kitchen)
 "qqb" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "qri" = (
 /obj/structure/table,
@@ -26523,10 +26617,28 @@
 	},
 /area/station/rnd/telesci)
 "qws" = (
-/obj/structure/grille,
-/obj/structure/lattice,
-/turf/environment/space,
-/area/space)
+/obj/machinery/door/airlock/command/glass{
+	name = "Chief Engineer";
+	req_access = list(56)
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	icon_state = "darkyellowfull"
+	},
+/area/station/engineering/chiefs_office)
 "qwC" = (
 /obj/machinery/portable_atmospherics/powered/pump,
 /turf/simulated/floor{
@@ -26617,6 +26729,7 @@
 	name = "Head of Security";
 	req_access = list(58)
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkredfull"
@@ -26635,6 +26748,7 @@
 	pixel_x = 6;
 	pixel_y = 2
 	},
+/obj/item/weapon/a_gift,
 /turf/simulated/floor{
 	icon_state = "bluefull"
 	},
@@ -26652,10 +26766,10 @@
 	c_tag = "Bar West";
 	dir = 4
 	},
-/obj/item/weapon/flora/random,
 /obj/structure/sign/poster/official/random{
 	pixel_x = -32
 	},
+/obj/item/decoration/snowman,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "qBM" = (
@@ -26690,6 +26804,7 @@
 	name = "Privacy Shutters";
 	opacity = 0
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/office)
 "qCa" = (
@@ -27022,6 +27137,7 @@
 	name = "Brig";
 	req_access = list(63)
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkredfull"
@@ -27222,12 +27338,9 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "qYG" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/junglebush/large,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
-/area/station/hallway/secondary/arrival)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/station/rnd/lab)
 "qZl" = (
 /obj/structure/object_wall/pod{
 	icon_state = "0,2"
@@ -27263,6 +27376,7 @@
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
+/obj/item/weapon/a_gift,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -27288,10 +27402,21 @@
 /turf/simulated/floor/engine/oxygen,
 /area/station/engineering/atmos)
 "rct" = (
-/obj/machinery/atmospherics/pipe/simple/visible/cyan,
-/obj/structure/lattice,
-/turf/environment/space,
-/area/space)
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/rnd/lab)
 "rdJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -27589,6 +27714,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
 "rxa" = (
@@ -27819,30 +27945,15 @@
 	},
 /area/station/bridge)
 "rGb" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/yellow{
-	dir = 4
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Engineering";
-	name = "Engineering Security Doors";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/engineering/atmos)
+/obj/item/stack/sheet/metal,
+/obj/structure/lattice,
+/turf/environment/space,
+/area/space)
 "rGx" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 1
 	},
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "rHg" = (
 /turf/simulated/wall/r_wall,
@@ -28022,6 +28133,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -28167,6 +28279,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
 "scw" = (
@@ -28179,6 +28292,7 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics)
 "scZ" = (
@@ -28345,6 +28459,7 @@
 	},
 /obj/structure/cable,
 /obj/random/randomtoy,
+/obj/item/weapon/a_gift,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "skg" = (
@@ -28372,11 +28487,11 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/ausbushes/ywflowers,
-/turf/simulated/floor{
-	icon_state = "grass1"
+/obj/item/decoration/garland,
+/obj/structure/flora/grass/green{
+	layer = 2.7
 	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "smt" = (
 /obj/machinery/light/small{
@@ -28452,6 +28567,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkpurplefull"
@@ -29141,6 +29257,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkpurplefull"
@@ -29379,14 +29496,15 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/station/civilian/kitchen)
+/area/station/medical/surgeryobs)
 "tqc" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -29449,23 +29567,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "trp" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	icon_state = "shutter0";
-	id = "chapel";
-	name = "Privacy Shutters";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/civilian/chapel/office)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/maintenance/bridge)
 "tsN" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -29502,12 +29606,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "twE" = (
-/obj/structure/stool,
-/obj/effect/landmark/start/assistant/test_subject,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
-/area/station/hallway/secondary/arrival)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/hallway/primary/central)
 "txi" = (
 /turf/simulated/floor{
 	icon_state = "whitebluecorner"
@@ -29546,12 +29647,36 @@
 	},
 /area/station/maintenance/medbay)
 "txG" = (
-/obj/machinery/atmospherics/pipe/simple/visible/green{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "bridge blast";
+	name = "Bridge Blast Doors";
+	opacity = 0
 	},
-/obj/structure/lattice,
-/turf/environment/space,
-/area/space)
+/obj/machinery/door/airlock/command/glass{
+	name = "Bridge";
+	req_access = list(19)
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	icon_state = "darkbluefull"
+	},
+/area/station/bridge)
 "tyQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -29658,11 +29783,9 @@
 	},
 /area/station/aisat/teleport)
 "tEV" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/flora/tree/jungle,
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
+/obj/structure/flora/grass/both,
+/obj/item/weapon/a_gift,
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "tFy" = (
 /obj/structure/closet/toolcloset,
@@ -29678,6 +29801,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "bluefull"
 	},
@@ -29699,6 +29823,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "tFK" = (
@@ -29718,6 +29843,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "tFS" = (
@@ -29931,18 +30057,14 @@
 	},
 /area/station/engineering/atmos)
 "tQc" = (
-/obj/structure/flora/ausbushes/grassybush,
-/obj/structure/flora/ausbushes/brflowers,
 /obj/machinery/camera{
 	c_tag = "Arrival Hallway Center";
 	pixel_x = -4
 	},
-/obj/structure/sign/painting{
-	pixel_y = 30
+/obj/machinery/light/small{
+	dir = 1
 	},
-/turf/simulated/floor{
-	icon_state = "grass1"
-	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "tQr" = (
 /obj/structure/cable{
@@ -30265,6 +30387,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "uah" = (
@@ -30418,21 +30541,22 @@
 	},
 /area/station/bridge)
 "ulA" = (
-/obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Office";
-	req_access = list(50)
-	},
+/obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor,
-/area/station/cargo/storage)
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "hos_blast";
+	name = "Privacy Shutters";
+	opacity = 0
+	},
+/obj/structure/cable,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/security/hos)
 "umx" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
@@ -30466,9 +30590,7 @@
 /obj/item/device/camera{
 	pixel_y = -12
 	},
-/turf/simulated/floor{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "unh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -31146,6 +31268,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/bridge/server)
 "uYJ" = (
@@ -31454,14 +31577,9 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "vob" = (
-/obj/machinery/door/airlock/external{
-	dock_tag = "arrival_escape";
-	locked = 1;
-	name = "Escape Airlock";
-	req_access = list(1)
-	},
-/turf/simulated/floor/plating,
-/area/station/security/checkpoint)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/station/security/prison)
 "voe" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -31476,6 +31594,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/kitchen)
 "voT" = (
@@ -31511,6 +31630,7 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/kitchen)
 "vrl" = (
@@ -31631,6 +31751,7 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel/office)
 "vzv" = (
@@ -31703,16 +31824,12 @@
 	},
 /area/station/medical/storage)
 "vCz" = (
-/obj/machinery/door/airlock/research{
-	name = "Telescience Research Room";
-	req_access = list(7)
-	},
-/obj/machinery/door/firedoor,
+/obj/item/decoration/snowman,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkpurplefull"
+	dir = 6;
+	icon_state = "black"
 	},
-/area/station/rnd/telesci)
+/area/station/hallway/primary/central)
 "vCH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -31723,14 +31840,12 @@
 /area/station/civilian/hydroponics)
 "vEl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/simulated/floor{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "vES" = (
-/obj/structure/scrap_cube,
-/turf/environment/space,
-/area/space)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/station/security/hos)
 "vFc" = (
 /obj/machinery/atmospherics/components/trinary/tvalve/mirrored/digital{
 	dir = 8
@@ -31738,11 +31853,14 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "vFD" = (
+/obj/machinery/door/firedoor,
 /obj/structure/grille,
-/obj/structure/grille,
-/obj/structure/lattice,
-/turf/environment/space,
-/area/space)
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/exit)
 "vFF" = (
 /obj/machinery/door/firedoor,
 /obj/structure/grille,
@@ -31797,9 +31915,7 @@
 /area/station/hallway/primary/central)
 "vJa" = (
 /obj/structure/easel,
-/turf/simulated/floor{
-	icon_state = "asteroid7"
-	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "vJt" = (
 /obj/structure/stool/bed/chair/comfy/brown{
@@ -31842,11 +31958,20 @@
 	},
 /area/station/engineering/atmos)
 "vKN" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor{
-	icon_state = "asteroid3"
+/obj/structure/kitchenspike,
+/obj/item/device/radio/intercom{
+	dir = 1;
+	name = "Station Intercom (General)";
+	pixel_y = -22
 	},
-/area/station/hallway/secondary/arrival)
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 21
+	},
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/station/civilian/cold_room)
 "vLo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -32202,6 +32327,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "wgw" = (
@@ -32373,6 +32499,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/bridge/hop_office)
 "wlc" = (
@@ -32543,6 +32670,7 @@
 	name = "Security Blast Door";
 	opacity = 0
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "wrO" = (
@@ -32631,24 +32759,12 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "wxP" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/effect/landmark/start/recycler,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/item/device/flashlight/lamp/fir,
+/obj/item/decoration/snowman,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "brown"
+	dir = 9;
+	icon_state = "black"
 	},
-/area/station/cargo/storage)
+/area/station/hallway/primary/central)
 "wyg" = (
 /turf/simulated/wall/r_wall,
 /area/station/rnd/telesci)
@@ -32755,14 +32871,21 @@
 	},
 /area/station/security/main)
 "wHk" = (
-/obj/structure/lattice,
-/obj/machinery/camera{
-	c_tag = "MiniSat West North";
-	dir = 1;
-	network = list("MiniSat")
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/turf/environment/space,
-/area/space)
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/station/civilian/kitchen)
 "wHw" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=1";
@@ -32935,20 +33058,24 @@
 /turf/environment/space/shuttle,
 /area/shuttle/escape_pod4/station)
 "wMu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/rnd/lab)
+/obj/machinery/door/airlock/security/glass{
+	id_tag = "prisonentry";
+	name = "Brig Entry";
+	req_access = list(2)
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "darkredfull"
+	},
+/area/station/security/prison)
 "wMX" = (
 /obj/machinery/computer/cargo/request{
 	dir = 4
@@ -33011,6 +33138,7 @@
 	name = "Security Office";
 	req_one_access = list(1,4)
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkredfull"
@@ -33026,6 +33154,7 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "wQx" = (
@@ -33536,6 +33665,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/bridge/hop_office)
 "xrG" = (
@@ -33590,7 +33720,6 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "xuJ" = (
-/obj/structure/stool/bed/chair/comfy/black,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -33656,6 +33785,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "xwG" = (
@@ -33819,27 +33949,15 @@
 /turf/simulated/floor,
 /area/station/security/lobby)
 "xDn" = (
-/obj/machinery/door/airlock/command/glass{
-	name = "Chief Engineer";
-	req_access = list(56)
+/obj/machinery/door/airlock/external{
+	dock_tag = "arrival_escape";
+	locked = 1;
+	name = "Escape Airlock";
+	req_access = list(1)
 	},
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/turf/simulated/floor{
-	icon_state = "darkyellowfull"
-	},
-/area/station/engineering/chiefs_office)
+/obj/item/decoration/tinsel,
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint)
 "xDq" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
@@ -34102,16 +34220,9 @@
 	},
 /area/station/hallway/primary/central)
 "xQe" = (
-/obj/structure/table,
-/obj/item/device/guitar{
-	pixel_y = 8
-	},
-/obj/item/weapon/book/manual/wiki/supply_crates{
-	pixel_x = 6;
-	pixel_y = -13
-	},
-/turf/simulated/floor,
-/area/station/cargo/storage)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/station/civilian/hydroponics)
 "xQL" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/directions/medical{
@@ -34301,6 +34412,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
 	},
@@ -34462,10 +34574,7 @@
 	codes_txt = "patrol;next_patrol=HoP";
 	location = "Arrival1"
 	},
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "ygZ" = (
 /obj/structure/stool/bed/chair/metal/yellow{
@@ -34557,9 +34666,7 @@
 /obj/machinery/hologram/holopad{
 	pixel_y = -16
 	},
-/turf/simulated/floor{
-	icon_state = "asteroid"
-	},
+/turf/simulated/floor/plating/snow,
 /area/station/hallway/secondary/arrival)
 "ykW" = (
 /turf/simulated/floor,
@@ -46064,12 +46171,12 @@ otM
 otM
 otM
 gay
-vES
+gay
 gay
 gay
 gEx
 gay
-vES
+gay
 gay
 gay
 gay
@@ -46603,7 +46710,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -46776,12 +46883,12 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -47020,39 +47127,39 @@ gay
 gay
 gay
 nmW
-crv
-crv
 gay
 gay
 gay
 gay
 gay
-crv
-crv
-crv
-crv
-crv
-crv
-crv
 gay
 gay
 gay
 gay
-crv
-crv
-crv
-crv
-gay
-gay
-gay
-crv
-crv
 gay
 gay
 gay
 gay
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -47273,43 +47380,43 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-gay
-crv
-crv
-crv
-crv
-crv
-gay
-crv
-gay
-crv
-crv
 gay
 gay
 gay
 gay
-crv
 gay
 gay
-crv
-crv
-crv
-crv
-crv
-crv
-crv
 gay
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 nmW
@@ -47367,7 +47474,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gEx
 gay
@@ -47529,48 +47636,48 @@ gay
 gay
 gay
 gay
-crv
-crv
 gay
 gay
 gay
 gay
 gay
-crv
-crv
-crv
-gay
-gay
-crv
-gay
-gay
-crv
-gay
-crv
-crv
-crv
 gay
 gay
 gay
-crv
 gay
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 nmW
-crv
-crv
 gay
-crv
-crv
-crv
-crv
 gay
-crv
-crv
-crv
 gay
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -47614,7 +47721,7 @@ gay
 gay
 gay
 gEx
-vES
+gay
 gay
 gEx
 gEx
@@ -47629,7 +47736,6 @@ gay
 gEx
 aPn
 gay
-vES
 gay
 gay
 gay
@@ -47637,7 +47743,8 @@ gay
 gay
 gay
 gay
-vES
+gay
+gay
 gay
 gay
 gay
@@ -47782,54 +47889,54 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
 gay
 gay
 gay
-crv
 gay
 gay
-qws
-qws
-qws
-qws
-qws
-qws
-qws
-crv
-crv
-crv
 gay
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+rxt
+rxt
+rxt
+rxt
+rxt
+rxt
+rxt
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -47876,7 +47983,7 @@ gay
 gEx
 aPn
 gEx
-vES
+gay
 gay
 gay
 gay
@@ -48039,14 +48146,14 @@ gay
 gay
 gay
 gay
-crv
 gay
 gay
 gay
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
 azF
 azF
 azF
@@ -48063,30 +48170,30 @@ azF
 azF
 gay
 gay
-crv
-gay
-crv
 gay
 gay
-crv
-crv
-crv
-crv
-crv
-qws
-qws
-qws
-crv
-crv
-crv
 gay
-crv
-qws
-qws
-qws
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+rxt
+rxt
+rxt
+gay
+gay
+gay
+gay
+gay
+rxt
+rxt
+rxt
+gay
+gay
+gay
 gay
 gay
 gay
@@ -48295,55 +48402,53 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
-crv
-crv
-crv
-azF
-azF
-azF
-azF
-crv
 gay
-crv
-crv
-crv
-crv
-crv
 gay
-crv
-crv
+gay
+gay
+gay
+gay
+azF
+azF
+azF
+azF
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 vrL
 vrL
 azF
 azF
 azF
 azF
-crv
-crv
-crv
-crv
-crv
 gay
-crv
 gay
-qws
-qws
-crv
-crv
-crv
 gay
-oSw
-crv
 gay
-crv
 gay
-qws
-qws
 gay
-crv
+gay
+gay
+rxt
+rxt
+gay
+gay
+gay
+gay
+asl
+gay
+gay
+gay
+gay
+rxt
+rxt
 gay
 gay
 gay
@@ -48360,7 +48465,9 @@ gay
 gay
 gay
 gay
-vES
+gay
+gay
+gay
 gay
 gay
 gay
@@ -48551,57 +48658,57 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
 gay
-crv
-azF
-azF
-azF
-crv
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-crv
-azF
+gay
+gay
+gay
+gay
 azF
 azF
 azF
 gay
-crv
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
 gay
-crv
+azF
+azF
+azF
+azF
 gay
-qws
-crv
 gay
-crv
+gay
+gay
+gay
+rxt
+gay
+gay
+gay
 wWW
 wWW
 wWW
 wWW
 wWW
 gay
-crv
-crv
-qws
-crv
-crv
-crv
+gay
+gay
+rxt
+gay
+gay
+gay
 gay
 gay
 gay
@@ -48646,7 +48753,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -48808,43 +48915,43 @@ gay
 gay
 gay
 gay
-crv
 gay
-crv
+gay
+gay
 gay
 azF
 azF
 gay
-crv
-crv
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-crv
-crv
-azF
-crv
-crv
 gay
-crv
-qws
-qws
-crv
+gay
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+gay
+gay
+azF
+gay
+gay
+gay
+gay
+rxt
+rxt
+gay
 gay
 wWW
 wWW
@@ -48854,11 +48961,11 @@ adP
 wWW
 wWW
 gay
-crv
-odS
-qws
 gay
-crv
+rxt
+rxt
+gay
+gay
 gay
 gay
 gay
@@ -48883,7 +48990,6 @@ gay
 gay
 gay
 gay
-vES
 gay
 gay
 gay
@@ -48918,7 +49024,8 @@ gay
 gay
 gay
 gay
-vES
+gay
+gay
 gEx
 aPn
 gEx
@@ -49065,14 +49172,14 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
+gay
+gay
+gay
 gay
 azF
-crv
-crv
-crv
+gay
+gay
+gay
 gay
 vrL
 vrL
@@ -49093,15 +49200,15 @@ vrL
 vrL
 vrL
 gay
-crv
+gay
 azF
 gay
-crv
 gay
 gay
-qws
-crv
-crv
+gay
+rxt
+gay
+gay
 wWW
 wWW
 aat
@@ -49111,11 +49218,11 @@ adx
 aat
 wWW
 wWW
-crv
 gay
-qws
 gay
-crv
+rxt
+gay
+gay
 gay
 gay
 gay
@@ -49323,14 +49430,14 @@ gay
 gay
 gay
 gay
-crv
-crv
+gay
+gay
 azF
 azF
 gay
-crv
 gay
 gay
+gay
 vrL
 vrL
 vrL
@@ -49350,13 +49457,13 @@ vrL
 vrL
 vrL
 gay
-crv
+gay
 azF
 azF
-crv
 gay
-crv
-qws
+gay
+gay
+rxt
 gay
 gay
 wWW
@@ -49368,12 +49475,12 @@ wWW
 adX
 acX
 wWW
-crv
-crv
-qws
-crv
-crv
-crv
+gay
+gay
+rxt
+gay
+gay
+gay
 gay
 gay
 gay
@@ -49578,44 +49685,44 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
-crv
-azF
-crv
-crv
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-azF
-crv
 gay
-crv
-qws
-crv
-crv
+gay
+gay
+gay
+azF
+gay
+gay
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+azF
+gay
+gay
+gay
+rxt
+gay
+gay
 wWW
 acY
 ado
@@ -49625,13 +49732,13 @@ wWW
 adY
 aeg
 wWW
-crv
-crv
-qws
 gay
-crv
-crv
-crv
+gay
+rxt
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -49835,10 +49942,10 @@ gay
 gay
 gay
 gay
-crv
-crv
 gay
-crv
+gay
+gay
+gay
 azF
 gay
 vrL
@@ -49867,27 +49974,27 @@ vrL
 vrL
 vrL
 azF
-crv
-crv
-qws
-qws
-crv
+gay
+gay
+rxt
+rxt
+gay
 gay
 wWW
 acZ
 aaL
-ady
+asj
 adI
-adQ
+asq
 aea
 aeh
 wWW
-crv
 gay
-qws
-qws
-crv
-crv
+gay
+rxt
+rxt
+gay
+gay
 gay
 gay
 gay
@@ -50093,9 +50200,9 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
+gay
+gay
+gay
 azF
 vrL
 vrL
@@ -50124,11 +50231,11 @@ vrL
 vrL
 vrL
 azF
-crv
-crv
-qws
-crv
-wHk
+gay
+gay
+rxt
+gay
+jVo
 wWW
 wWW
 ada
@@ -50140,11 +50247,11 @@ aef
 aei
 wWW
 wWW
-aeA
-crv
-qws
+asw
 gay
-crv
+rxt
+gay
+gay
 gay
 gay
 gay
@@ -50153,7 +50260,6 @@ gay
 gay
 gEx
 gEx
-vES
 gay
 gay
 gay
@@ -50180,7 +50286,8 @@ gay
 gay
 gay
 gay
-vES
+gay
+gay
 gay
 gEx
 gEx
@@ -50350,9 +50457,9 @@ gay
 gay
 gay
 gay
-crv
 gay
-crv
+gay
+gay
 azF
 vrL
 vrL
@@ -50383,8 +50490,8 @@ vrL
 azF
 azF
 gay
-qws
-crv
+rxt
+gay
 gay
 wWW
 bsy
@@ -50398,11 +50505,11 @@ aat
 aem
 wWW
 gay
-crv
-qws
-crv
-crv
-crv
+gay
+rxt
+gay
+gay
+gay
 gay
 gay
 gay
@@ -50467,7 +50574,7 @@ aqL
 aqL
 aqL
 gay
-vES
+gay
 gay
 gay
 gay
@@ -50607,7 +50714,7 @@ gay
 gay
 gay
 gay
-crv
+gay
 gay
 azF
 azF
@@ -50639,10 +50746,10 @@ vrL
 vrL
 gay
 azF
-qws
-qws
-crv
-crv
+rxt
+rxt
+gay
+gay
 wWW
 cXY
 adb
@@ -50654,12 +50761,12 @@ aec
 adb
 apS
 wWW
-crv
-crv
-qws
 gay
 gay
-crv
+rxt
+gay
+gay
+gay
 gay
 gay
 gay
@@ -50864,42 +50971,42 @@ gay
 gay
 gay
 gay
-crv
-crv
-azF
-crv
 gay
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
 gay
 azF
-qws
-crv
 gay
-crv
+gay
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+gay
+azF
+rxt
+gay
+gay
+gay
 wWW
 pWD
 adc
@@ -50911,12 +51018,12 @@ apH
 aej
 aeo
 wWW
-crv
 gay
-qws
-qws
 gay
-crv
+rxt
+rxt
+gay
+gay
 gay
 gay
 gay
@@ -50966,7 +51073,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -51120,12 +51227,12 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
+gay
+gay
+gay
 azF
-crv
-crv
+gay
+gay
 gay
 vrL
 vrL
@@ -51153,8 +51260,8 @@ vrL
 vrL
 gay
 azF
-qws
-crv
+rxt
+gay
 abl
 wWW
 wWW
@@ -51162,7 +51269,7 @@ wWW
 wWW
 wWW
 wWW
-adZ
+asm
 wWW
 wWW
 vlu
@@ -51170,10 +51277,10 @@ vlu
 vlu
 vlu
 vlu
-crv
-qws
 gay
-crv
+rxt
+gay
+gay
 gay
 gay
 gay
@@ -51203,7 +51310,7 @@ gay
 gay
 gEx
 gay
-vES
+gay
 gay
 gay
 gay
@@ -51377,16 +51484,16 @@ gay
 gay
 gay
 gay
-crv
 gay
-crv
+gay
+gay
 azF
 gay
-crv
-crv
 gay
 gay
 gay
+gay
+gay
 vrL
 vrL
 vrL
@@ -51408,9 +51515,9 @@ vrL
 gay
 gay
 gay
-crv
+gay
 azF
-qws
+rxt
 gay
 afH
 hXh
@@ -51427,11 +51534,8 @@ aes
 aez
 aif
 vlu
-aep
-qws
-crv
-crv
-crv
+asz
+rxt
 gay
 gay
 gay
@@ -51452,13 +51556,8 @@ gay
 gay
 gay
 gay
-vES
 gay
 gay
-gay
-gay
-gEx
-gEx
 gay
 gay
 gay
@@ -51473,6 +51572,14 @@ gay
 gay
 gay
 gay
+gEx
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gEx
@@ -51484,11 +51591,11 @@ gay
 gay
 gay
 gay
-vES
 gay
 gay
 gay
-vES
+gay
+gay
 gay
 gay
 gay
@@ -51634,16 +51741,16 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
+gay
+gay
+gay
 azF
-crv
-crv
 gay
 gay
 gay
 gay
+gay
+gay
 vrL
 vrL
 vrL
@@ -51665,15 +51772,15 @@ vrL
 gay
 gay
 gay
-crv
+gay
 azF
-qws
-crv
+rxt
+gay
 abn
 tEk
 gNY
 aaj
-add
+bzC
 aaz
 adB
 adM
@@ -51686,7 +51793,7 @@ aex
 aqI
 aeD
 azF
-crv
+gay
 gay
 gay
 gay
@@ -51726,7 +51833,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -51891,15 +51998,15 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
+gay
+gay
+gay
 azF
 gay
-crv
 gay
 gay
-crv
+gay
+gay
 gay
 vrL
 vrL
@@ -51921,11 +52028,11 @@ vrL
 vrL
 gay
 gay
-crv
+gay
 azF
 azF
-qws
-nVq
+rxt
+aeA
 hXh
 aKv
 kcz
@@ -51943,8 +52050,8 @@ apv
 vlu
 arW
 azF
-crv
-crv
+gay
+gay
 gay
 gay
 gay
@@ -52147,42 +52254,42 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
-crv
-azF
-crv
-crv
-crv
-crv
-crv
-crv
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
-vrL
 gay
 gay
-crv
-crv
-crv
+gay
+gay
 azF
 gay
-qws
-crv
+gay
+gay
+gay
+gay
+gay
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+vrL
+gay
+gay
+gay
+gay
+gay
+azF
+gay
+rxt
+gay
 hXh
 abu
 aoN
@@ -52201,10 +52308,10 @@ vlu
 gay
 azF
 gay
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -52403,18 +52510,18 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
 gay
-crv
+gay
+gay
+gay
+gay
 ahz
 mhl
 mhl
 mhl
 ahz
 ahz
-crv
+gay
 gay
 sUp
 dpV
@@ -52425,21 +52532,21 @@ dpV
 xbS
 gay
 nsB
-vob
+xDn
 jju
 vrL
 vrL
 gay
 gay
-crv
-crv
-crv
+gay
+gay
+gay
 gay
 azF
 azF
 gay
-qws
-crv
+rxt
+gay
 hXh
 hXh
 sCX
@@ -52458,12 +52565,12 @@ vlu
 gay
 azF
 azF
-crv
 gay
 gay
-crv
-crv
-crv
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -52660,33 +52767,33 @@ gay
 gay
 gay
 gay
-crv
 gay
-crv
 gay
-crv
+gay
+gay
+gay
 ahz
 vce
 fSG
 nwI
 pEA
 ahz
-crv
-crv
-xbS
+gay
+gay
+vFD
 djq
 uJN
 qcu
 uJN
 pmJ
-xbS
+vFD
 gay
-nsB
+evV
 kzW
-nsB
-crv
+evV
 gay
-crv
+gay
+gay
 gay
 akb
 alC
@@ -52695,10 +52802,10 @@ alC
 akb
 gay
 gay
-qws
+rxt
 gay
-crv
-crv
+gay
+gay
 sCX
 dtz
 adf
@@ -52711,16 +52818,16 @@ apK
 dXi
 sCX
 gay
-crv
 gay
-odS
+gay
+rxt
 azF
-crv
-crv
 gay
-crv
 gay
-crv
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -52917,11 +53024,11 @@ gay
 gay
 gay
 nmW
-crv
 gay
-crv
-crv
-crv
+gay
+gay
+gay
+gay
 ahz
 wHM
 nga
@@ -52936,10 +53043,10 @@ aqw
 qcu
 aqw
 aqw
-xbS
+vFD
 pNu
-ncI
-mQs
+ews
+nrh
 rTQ
 pNu
 akb
@@ -52951,10 +53058,10 @@ ama
 amp
 akb
 gay
-crv
-qws
-qws
-qws
+gay
+rxt
+rxt
+rxt
 gay
 sCX
 njt
@@ -52967,38 +53074,11 @@ uFO
 adf
 apT
 sCX
-crv
-qws
-qws
-qws
+gay
+rxt
+rxt
+rxt
 azF
-crv
-crv
-gay
-crv
-gay
-crv
-gay
-gEx
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-aPn
-gEx
-gEx
-gay
-gay
-gay
-gay
 gay
 gay
 gay
@@ -53008,7 +53088,6 @@ gay
 gay
 gEx
 gEx
-gEx
 gay
 gay
 gay
@@ -53019,21 +53098,49 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-vES
-gEx
-gEx
 gEx
 aPn
 gEx
 gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
 gEx
 gay
 gay
-vES
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
+gEx
+aPn
+gEx
+gEx
+gEx
+gay
+gay
+gay
 gay
 gay
 gay
@@ -53173,12 +53280,12 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
-crv
 gay
-crv
+gay
+gay
+gay
+gay
+gay
 ahz
 fGY
 exJ
@@ -53207,12 +53314,12 @@ alF
 amb
 amq
 akb
-crv
-crv
 gay
 gay
-qws
-crv
+gay
+gay
+rxt
+gay
 sCX
 sCX
 xgl
@@ -53224,17 +53331,17 @@ aqR
 cfI
 sCX
 sCX
-crv
-qws
 gay
-crv
+rxt
+gay
+gay
 azF
-crv
-qws
-qws
-qws
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
 gEx
 gEx
 gEx
@@ -53277,7 +53384,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -53425,23 +53532,23 @@ gay
 gay
 gay
 gay
-crv
-crv
 gay
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 ahz
 ahz
 vyl
 ahz
 qBV
-trp
+mQs
 ajR
 ahz
 ilV
@@ -53465,12 +53572,12 @@ amc
 alS
 akb
 gay
-crv
-crv
 gay
-qws
-crv
-crv
+gay
+gay
+rxt
+gay
+gay
 sCX
 apa
 gtx
@@ -53481,38 +53588,11 @@ gtx
 apL
 sCX
 gay
-crv
+gay
 rxt
 gay
-crv
+gay
 azF
-crv
-gay
-crv
-gay
-vES
-crv
-gEx
-gEx
-gay
-gay
-crv
-gay
-gay
-gEx
-gEx
-gEx
-gEx
-gay
-vES
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
 gay
 gay
 gay
@@ -53521,7 +53601,16 @@ gay
 gay
 gEx
 gEx
-vES
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
+gEx
+gEx
+gay
 gay
 gay
 gay
@@ -53538,6 +53627,24 @@ gay
 gay
 gay
 gEx
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
 gay
 gay
 gay
@@ -53553,7 +53660,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -53675,21 +53782,21 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
 gay
 gay
-crv
-crv
-qws
-qws
-qws
-qws
 gay
-vFD
-qws
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 aiI
@@ -53708,10 +53815,10 @@ jAT
 jAT
 epi
 ffn
-pNu
-ncI
+oDH
+ews
 lDV
-ncI
+ews
 pNu
 pNu
 aks
@@ -53722,11 +53829,11 @@ amd
 amr
 akb
 akb
-crv
-crv
 gay
-qws
-qws
+gay
+gay
+rxt
+rxt
 nfa
 sCX
 mcS
@@ -53737,23 +53844,23 @@ iBA
 vWz
 wju
 sCX
-jGN
-qws
-qws
-crv
-crv
+asv
+rxt
+rxt
+gay
+gay
 azF
-crv
-crv
-crv
+gay
+gay
+gay
 ugK
 gay
-crv
-crv
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gEx
@@ -53929,24 +54036,24 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
-crv
-crv
-crv
-qws
-qws
-qws
-qws
-crv
 gay
 gay
-crv
-crv
-crv
-jwL
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 dsM
@@ -53980,11 +54087,11 @@ ams
 amD
 akb
 gay
-crv
-crv
-crv
-qws
-crv
+gay
+gay
+gay
+rxt
+gay
 sCX
 sCX
 sCX
@@ -53994,50 +54101,13 @@ dFS
 sCX
 sCX
 sCX
-crv
-qws
+gay
+rxt
 gay
 gay
-crv
+gay
 azF
 oAN
-crv
-crv
-crv
-qws
-qws
-qws
-qws
-gay
-gay
-crv
-gay
-gay
-gEx
-aPn
-gEx
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
 gay
 gay
 gay
@@ -54053,11 +54123,48 @@ gay
 gEx
 aPn
 gEx
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+aPn
+gEx
 gay
 gEx
 gEx
 gay
-vES
+gay
 gEx
 aPn
 gEx
@@ -54185,27 +54292,27 @@ gay
 gay
 gay
 gay
-crv
-qws
-qws
 gay
 gay
 gay
-crv
-crv
-crv
-crv
-crv
 gay
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 fCH
 hXt
 cjX
 gay
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
 dsM
 aiq
 miS
@@ -54237,43 +54344,43 @@ amt
 amE
 akb
 gay
-crv
 gay
 gay
-qws
 gay
-crv
+rxt
+gay
+gay
 gay
 sCX
 sCX
 sCX
 sCX
 sCX
-crv
-crv
-crv
-qws
 gay
 gay
-crv
+gay
+rxt
+gay
+gay
+gay
 azF
 vin
 gay
 gay
-crv
 gay
-crv
-crv
-crv
-crv
-crv
-qws
-qws
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 aPn
 gEx
 gEx
-vES
+gay
 gay
 gay
 gay
@@ -54441,25 +54548,25 @@ gay
 gay
 gay
 gay
-odS
-crv
 gay
-crv
-crv
-crv
-qws
-qws
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 fCH
 hXt
 cjX
-crv
+gay
 fCH
 vHw
 cjX
-crv
-crv
+gay
+gay
 gay
 gay
 gay
@@ -54493,39 +54600,39 @@ amg
 amu
 amF
 akb
-crv
 gay
 gay
-crv
-qws
-qws
-qws
-gay
-crv
-crv
-piu
 gay
 gay
-crv
-qws
-qws
-qws
-crv
+rxt
+rxt
+rxt
+gay
+gay
+gay
+asn
+gay
+gay
+gay
+rxt
+rxt
+rxt
+gay
 gay
 gay
 gay
 vin
-crv
-crv
-crv
-crv
-crv
 gay
-crv
 gay
-crv
 gay
-qws
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gEx
 gEx
@@ -54699,15 +54806,15 @@ gay
 gay
 gay
 gay
-crv
+gay
 fCH
 hXt
 cjX
-crv
+gay
 fCH
 hXt
 cjX
-crv
+gay
 fCH
 vHw
 cjX
@@ -54715,7 +54822,7 @@ gay
 fCH
 vHw
 cjX
-crv
+gay
 uao
 bOJ
 sWc
@@ -54750,24 +54857,24 @@ amh
 amv
 amG
 akb
-crv
 gay
-crv
 gay
-crv
 gay
-qws
-odS
-odS
-odS
-odS
-qws
-odS
-qws
-qws
-crv
-crv
-crv
+gay
+gay
+gay
+rxt
+rxt
+rxt
+rxt
+rxt
+rxt
+rxt
+rxt
+rxt
+gay
+gay
+gay
 gay
 gay
 gay
@@ -54782,7 +54889,7 @@ oYH
 oYH
 gay
 gay
-qws
+gay
 gay
 gay
 gay
@@ -54824,7 +54931,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -54954,25 +55061,25 @@ gay
 gay
 gay
 gay
-crv
-qws
-crv
+gay
+gay
+gay
 fCH
 vHw
 cjX
-crv
+gay
 fCH
 vHw
 cjX
-crv
+gay
 fCH
 vHw
 cjX
-crv
+gay
 fCH
 vHw
 cjX
-crv
+gay
 uao
 cJm
 fTo
@@ -54986,7 +55093,7 @@ eBO
 rTG
 aiI
 aiI
-qcu
+mUO
 qcu
 aip
 aiQ
@@ -55008,26 +55115,26 @@ amw
 akb
 akb
 akb
-crv
-crv
-crv
-crv
-crv
-crv
 gay
 gay
 gay
-crv
-crv
-crv
-crv
 gay
 gay
-crv
-crv
-crv
 gay
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 rIo
 vAA
 uqq
@@ -55037,10 +55144,10 @@ uqq
 uqq
 uqq
 qGH
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -55081,7 +55188,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -55212,15 +55319,7 @@ gay
 gay
 gay
 gay
-qws
 gay
-fCH
-vHw
-cjX
-crv
-fCH
-vHw
-cjX
 gay
 fCH
 vHw
@@ -55229,7 +55328,15 @@ gay
 fCH
 vHw
 cjX
-crv
+gay
+fCH
+vHw
+cjX
+gay
+fCH
+vHw
+cjX
+gay
 uao
 wLU
 jba
@@ -55255,7 +55362,7 @@ ajt
 ake
 sqi
 alj
-akb
+pCF
 akw
 akh
 alp
@@ -55266,27 +55373,27 @@ akb
 aho
 akb
 agg
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 agg
 gay
 gay
-crv
 gay
-crv
+gay
+gay
 rIo
-crv
+gay
 gJf
 gJf
 gJf
@@ -55294,10 +55401,10 @@ gJf
 gJf
 gJf
 gJf
-crv
-crv
-crv
-qws
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -55469,12 +55576,12 @@ gay
 gay
 gay
 gay
-crv
+gay
 gay
 fCH
 vHw
 cjX
-crv
+gay
 fCH
 vHw
 cjX
@@ -55485,8 +55592,8 @@ cjX
 dZx
 dZx
 cES
-crv
-crv
+gay
+gay
 uao
 qPO
 snx
@@ -55534,27 +55641,27 @@ ojo
 ojo
 ojo
 gay
-crv
+gay
 agg
 ahp
 agg
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
 rIo
 gay
 gay
-crv
-gay
-gay
-crv
-crv
 gay
 gay
 gay
-crv
-qws
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -55567,7 +55674,7 @@ gEx
 gEx
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -55723,15 +55830,15 @@ gay
 gay
 gay
 gay
-crv
-qws
-odS
-odS
-crv
+gay
+gay
+gay
+gay
+gay
 fCH
 vHw
 cjX
-crv
+gay
 fCH
 vHw
 cjX
@@ -55791,17 +55898,17 @@ rau
 kNe
 aXH
 gay
-crv
-crv
+gay
+gay
 ahq
 agg
-crv
-crv
-crv
+gay
+gay
+gay
 gay
 rIo
 rIo
-crv
+gay
 oYH
 oYH
 oYH
@@ -55810,8 +55917,6 @@ oYH
 oYH
 oYH
 gay
-crv
-qws
 gay
 gay
 gay
@@ -55829,7 +55934,9 @@ gay
 gay
 gay
 gay
-vES
+gay
+gay
+gay
 gay
 gay
 gay
@@ -55980,12 +56087,12 @@ gay
 gay
 gay
 gay
-crv
-qws
-crv
 gay
-crv
-crv
+gay
+gay
+gay
+gay
+gay
 cES
 gay
 gay
@@ -56036,7 +56143,7 @@ aqx
 akb
 akb
 akb
-crv
+gay
 anS
 oFi
 qJu
@@ -56047,16 +56154,16 @@ rau
 vmy
 rau
 anT
-crv
-crv
-crv
+gay
+gay
+gay
 ahr
 agg
 agg
-crv
 gay
-crv
-crv
+gay
+gay
+gay
 rIo
 vAA
 uqq
@@ -56066,9 +56173,9 @@ uqq
 uqq
 uqq
 qGH
-crv
-crv
-qws
+gay
+gay
+gay
 gay
 gay
 gay
@@ -56091,19 +56198,11 @@ gay
 gay
 gay
 gEx
-gEx
-aPn
-gEx
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
 gEx
 aPn
 gEx
+gEx
+gay
 gay
 gay
 gay
@@ -56112,9 +56211,17 @@ gay
 gEx
 aPn
 gEx
+gay
+gay
+gay
+gay
+gay
+gEx
+aPn
+gEx
 gEx
 gay
-vES
+gay
 gEx
 gEx
 gEx
@@ -56238,8 +56345,8 @@ gay
 gay
 gay
 gay
-qws
-crv
+gay
+gay
 gmT
 uIb
 gay
@@ -56248,8 +56355,8 @@ dZx
 dZx
 dZx
 dZx
-crv
-crv
+gay
+gay
 cly
 fSx
 osN
@@ -56275,7 +56382,7 @@ rTG
 rTG
 ahX
 doQ
-iSt
+nBe
 iSt
 iSt
 iSt
@@ -56291,9 +56398,9 @@ alR
 aml
 akb
 akb
-crv
-crv
-crv
+gay
+gay
+gay
 diX
 fFG
 wnf
@@ -56304,18 +56411,18 @@ qIZ
 jOg
 kNe
 usA
-crv
-crv
-crv
+gay
+gay
+gay
 agg
-crv
 gay
-crv
-crv
 gay
-crv
+gay
+gay
+gay
+gay
 rIo
-crv
+gay
 gJf
 gJf
 gJf
@@ -56324,8 +56431,8 @@ gJf
 gJf
 gJf
 gay
-crv
-qws
+gay
+gay
 gay
 gay
 gay
@@ -56495,18 +56602,18 @@ gay
 gay
 gay
 gay
-qws
-crv
-crv
+gay
+gay
+gay
 dZx
 dZx
 dZx
 gay
-crv
 gay
-crv
 gay
-crv
+gay
+gay
+gay
 luB
 uVE
 cFi
@@ -56547,10 +56654,10 @@ akx
 alS
 alS
 akb
-crv
 gay
 gay
-crv
+gay
+gay
 daw
 ojo
 aab
@@ -56561,32 +56668,32 @@ ojo
 aab
 ojo
 mOC
-crv
-crv
 gay
-crv
-crv
-crv
-crv
 gay
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 rIo
 rIo
 gay
 gay
-crv
-gay
-gay
-gay
-crv
-crv
-gay
-crv
 gay
 gay
 gay
 gay
-vES
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -56756,15 +56863,15 @@ gay
 gay
 xol
 dZx
-crv
 gay
-crv
-crv
-crv
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 dDY
 dDY
 dDY
@@ -56804,31 +56911,31 @@ akC
 aqr
 akC
 akb
-crv
 gay
-crv
+gay
+gay
 edD
-txG
-crv
-crv
-crv
-evV
-txG
+add
+gay
+gay
+gay
+arn
+add
 edD
-crv
-crv
-evV
-gay
-crv
-crv
 gay
 gay
-crv
-crv
-crv
-crv
+arn
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 rIo
-crv
+gay
 oYH
 oYH
 oYH
@@ -56837,8 +56944,8 @@ oYH
 oYH
 oYH
 gay
-crv
-crv
+gay
+gay
 gay
 gay
 gay
@@ -57007,16 +57114,16 @@ gay
 gay
 gay
 gay
-qws
-odS
-crv
+gay
+gay
+gay
 fCH
 yfp
 cjX
-crv
-crv
 gay
-crv
+gay
+gay
+gay
 gay
 rTG
 rTG
@@ -57061,28 +57168,28 @@ aqp
 aqs
 aqu
 akb
-crv
-crv
+gay
+gay
 uRQ
 lfk
-wmc
+aeY
 rsx
+aep
 rsx
-rsx
-rGb
+jwL
 wmc
-wmc
+aeY
 npp
 gwx
-arn
-crv
-crv
-crv
+asr
 gay
 gay
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 rIo
 vAA
@@ -57093,9 +57200,9 @@ uqq
 uqq
 uqq
 qGH
-crv
-crv
-qws
+gay
+gay
+gay
 gay
 gay
 xXF
@@ -57149,7 +57256,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -57264,17 +57371,17 @@ gay
 gay
 gay
 gay
-crv
 gay
-crv
+gay
+gay
 fCH
 yfp
 cjX
-crv
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
 rTG
 xrG
 tvX
@@ -57330,19 +57437,19 @@ wUm
 isE
 icP
 pEy
-rsx
-crv
+aep
 gay
-crv
-crv
-crv
-crv
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 rIo
-crv
+gay
 gJf
 gJf
 gJf
@@ -57352,7 +57459,7 @@ gJf
 gJf
 gay
 gay
-qws
+gay
 gay
 gay
 xXF
@@ -57521,16 +57628,16 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
+gay
+gay
+gay
 fCH
 yfp
 cjX
-crv
-crv
 gay
-crv
+gay
+gay
+gay
 rTG
 rTG
 qJb
@@ -57590,27 +57697,27 @@ jyS
 buE
 mkA
 aRB
-rct
+aRB
 eXO
 qTf
 anU
 bbK
 ojo
-crv
-crv
+gay
+gay
 rIo
-crv
 gay
 gay
-crv
 gay
 gay
-crv
-crv
-crv
 gay
-qws
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 xXF
 xXF
 xXF
@@ -57778,16 +57885,16 @@ gay
 gay
 gay
 gay
-odS
 gay
-crv
+gay
+gay
 fCH
 yfp
 cjX
-crv
+gay
 pbx
 agg
-crv
+gay
 rTG
 cUq
 pNR
@@ -57845,19 +57952,19 @@ pEW
 nAq
 tPg
 arm
+aep
 rsx
-rsx
-crv
+gay
 ojo
 lzD
 hPs
 lzD
 ojo
-crv
-crv
+gay
+gay
 rIo
-crv
-crv
+gay
+gay
 oYH
 oYH
 oYH
@@ -57865,8 +57972,8 @@ oYH
 oYH
 oYH
 oYH
-crv
-qws
+gay
+gay
 gay
 xXF
 xXF
@@ -57893,7 +58000,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -58035,9 +58142,9 @@ gay
 gay
 gay
 gay
-odS
 gay
-crv
+gay
+gay
 fCH
 nQc
 cjX
@@ -58071,7 +58178,7 @@ rTG
 sFk
 anG
 anM
-qcu
+mUO
 aiA
 doQ
 ajB
@@ -58104,13 +58211,13 @@ bHg
 kSa
 qwC
 rsx
-crv
+gay
 aab
 qof
 cIt
 hPs
 ojo
-crv
+gay
 gay
 rIo
 rIo
@@ -58122,7 +58229,7 @@ uqq
 uqq
 uqq
 qGH
-crv
+gay
 gay
 gay
 xXF
@@ -58166,8 +58273,8 @@ gay
 gay
 gay
 gay
-vES
-vES
+gay
+gay
 gay
 gay
 gay
@@ -58291,14 +58398,14 @@ gay
 gay
 nmW
 gay
-crv
-qws
-crv
-crv
+gay
+gay
+gay
+gay
 xol
 dZx
-crv
-crv
+gay
+gay
 rTG
 hSR
 ckR
@@ -58347,7 +58454,7 @@ qyK
 abN
 aLB
 iHf
-xDn
+qws
 quF
 alD
 dHK
@@ -58360,8 +58467,8 @@ mtM
 jOl
 bop
 muB
-rsx
-crv
+aep
+gay
 ojo
 dMO
 hPs
@@ -58371,7 +58478,7 @@ gay
 gay
 rIo
 gay
-crv
+gay
 gJf
 gJf
 gJf
@@ -58379,10 +58486,10 @@ gJf
 gJf
 gJf
 gJf
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
 xXF
 xXF
 xXF
@@ -58549,13 +58656,13 @@ gay
 gay
 gay
 gay
-crv
+gay
 gay
 fCH
 yfp
 cjX
 gay
-crv
+gay
 rTG
 xxm
 hZb
@@ -58618,7 +58725,7 @@ uJu
 lOv
 jrG
 mkA
-rct
+aRB
 eXO
 iOZ
 anU
@@ -58627,15 +58734,15 @@ ojo
 gay
 rIo
 rIo
-crv
-crv
 gay
 gay
-crv
-crv
 gay
 gay
-crv
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -58651,7 +58758,7 @@ xXF
 xXF
 xXF
 gay
-vES
+gay
 gay
 gay
 gay
@@ -58670,7 +58777,7 @@ gay
 gay
 gEx
 gEx
-vES
+gay
 gay
 gay
 gay
@@ -58806,12 +58913,12 @@ gay
 gay
 gay
 gay
-crv
+gay
 gay
 fCH
 yfp
 cjX
-crv
+gay
 rTG
 rTG
 rTG
@@ -58840,7 +58947,7 @@ xlY
 xKi
 xKi
 ffx
-rTG
+dRK
 rTG
 qcu
 aiC
@@ -58853,7 +58960,7 @@ aik
 knb
 aiz
 bWF
-aik
+odS
 akL
 alh
 alB
@@ -58873,17 +58980,17 @@ afj
 sxa
 uOp
 amN
+aep
 rsx
-rsx
-crv
-crv
-crv
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 rIo
-crv
+gay
 oYH
 oYH
 oYH
@@ -58892,8 +58999,8 @@ oYH
 oYH
 oYH
 gay
-crv
-qws
+gay
+gay
 gay
 gay
 gay
@@ -59063,12 +59170,12 @@ gay
 gay
 gay
 gay
-odS
+gay
 gay
 fCH
 yfp
 cjX
-crv
+gay
 rTG
 tfF
 hQW
@@ -59121,7 +59228,7 @@ faC
 qyK
 sCU
 boC
-pCF
+ady
 rsc
 ngy
 acT
@@ -59133,12 +59240,12 @@ afm
 uRQ
 gay
 gay
-crv
-gay
-crv
 gay
 gay
-crv
+gay
+gay
+gay
+gay
 rIo
 vAA
 uqq
@@ -59148,9 +59255,9 @@ uqq
 uqq
 uqq
 qGH
-crv
-crv
-qws
+gay
+gay
+gay
 gay
 gay
 gay
@@ -59200,7 +59307,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -59319,9 +59426,9 @@ gay
 gay
 gay
 gay
-crv
-qws
-crv
+gay
+gay
+gay
 fCH
 yfp
 cjX
@@ -59384,7 +59491,7 @@ ngy
 wuN
 wuN
 wuN
-acs
+ase
 wuN
 wuN
 nku
@@ -59392,12 +59499,12 @@ nku
 nku
 cXT
 gay
-crv
 gay
-crv
-crv
+gay
+gay
+gay
 rIo
-crv
+gay
 gJf
 gJf
 gJf
@@ -59406,14 +59513,14 @@ gJf
 gJf
 gJf
 gay
-crv
-qws
 gay
 gay
 gay
 gay
 gay
-vES
+gay
+gay
+gay
 gay
 gay
 gay
@@ -59577,12 +59684,12 @@ gay
 gay
 gay
 gay
-crv
-crv
+gay
+gay
 fCH
 nQc
 cjX
-crv
+gay
 iBv
 ccw
 qCa
@@ -59599,7 +59706,7 @@ fRN
 nfC
 lDB
 abI
-abM
+tpZ
 vmd
 frG
 gBX
@@ -59638,7 +59745,7 @@ adg
 ydN
 peN
 pQB
-wuN
+arN
 iCb
 apf
 acI
@@ -59651,19 +59758,9 @@ cXT
 cXT
 cXT
 gay
-crv
+gay
 rIo
 rIo
-crv
-gay
-gay
-crv
-crv
-gay
-gay
-crv
-gay
-crv
 gay
 gay
 gay
@@ -59672,23 +59769,6 @@ gay
 gay
 gay
 gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gEx
-gEx
-gEx
-gEx
 gay
 gay
 gay
@@ -59713,12 +59793,39 @@ gay
 gay
 gEx
 gEx
+gEx
+gEx
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gEx
 gEx
 gay
-vES
+gay
+gEx
+gEx
+gay
+gay
 gay
 gay
 gay
@@ -59833,12 +59940,12 @@ gay
 gay
 gay
 gay
-crv
-odS
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 iBv
 xpS
@@ -59873,7 +59980,7 @@ vNm
 fIW
 fIW
 fIW
-fIW
+lqE
 cPE
 fIW
 fIW
@@ -59910,17 +60017,17 @@ aeS
 arT
 rIo
 rIo
-crv
-crv
-crv
-crv
-crv
-crv
 gay
-crv
-crv
-qws
-qws
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 nmW
 gay
@@ -59967,7 +60074,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gEx
 aPn
 gEx
@@ -59983,7 +60090,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -60091,12 +60198,12 @@ gay
 gay
 gay
 gay
-qws
-odS
-crv
 gay
-crv
-crv
+gay
+gay
+gay
+gay
+gay
 rTG
 rTG
 rTG
@@ -60123,7 +60230,7 @@ meq
 jaa
 eJe
 mXM
-vNm
+vCz
 fIW
 fIW
 fIW
@@ -60164,19 +60271,19 @@ vzI
 cXT
 cXT
 cXT
-arU
-crv
-crv
-crv
+asx
 gay
 gay
 gay
-qws
-qws
-qws
-qws
 gay
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -60219,7 +60326,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -60350,11 +60457,11 @@ gay
 gay
 gay
 gay
-crv
-qws
-qws
-crv
-crv
+gay
+gay
+gay
+gay
+gay
 rTG
 rXq
 uKs
@@ -60380,7 +60487,7 @@ xCy
 xQL
 tyQ
 qxr
-fIW
+lqE
 fIW
 oip
 ibW
@@ -60400,7 +60507,7 @@ fIW
 hNU
 tyQ
 tTE
-mGO
+hYy
 mGO
 lZZ
 gMz
@@ -60423,17 +60530,17 @@ acf
 acf
 gay
 gay
-crv
-qws
-qws
-crv
-crv
-crv
-crv
 gay
 gay
 gay
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 goP
@@ -60460,7 +60567,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -60491,7 +60598,7 @@ gEx
 gEx
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -60608,10 +60715,10 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
 rTG
 tAK
 hTI
@@ -60622,7 +60729,7 @@ cfW
 eVc
 rTG
 mJj
-mJj
+ccc
 gzn
 hjE
 ozJ
@@ -60680,16 +60787,16 @@ acN
 aeF
 ace
 aeW
-crv
 gay
 gay
-crv
 gay
 gay
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
 goP
 goP
 goP
@@ -60866,7 +60973,7 @@ gay
 gay
 gay
 gay
-crv
+gay
 gay
 dDY
 dDY
@@ -60910,8 +61017,8 @@ ixg
 rLx
 trh
 ptc
-fIW
-wDD
+lqE
+gfQ
 xBh
 tKl
 qhr
@@ -60940,10 +61047,10 @@ abx
 gay
 gay
 gay
-crv
 gay
 gay
-crv
+gay
+gay
 gay
 gay
 goP
@@ -61123,8 +61230,8 @@ gay
 gay
 gay
 gay
-crv
-crv
+gay
+gay
 dDY
 xjz
 gRj
@@ -61174,9 +61281,9 @@ clJ
 tBU
 lZW
 mGO
+aas
 uND
-uND
-uND
+aas
 mGO
 gay
 agW
@@ -61196,11 +61303,11 @@ aeJ
 ace
 ace
 gay
-crv
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
 goP
 goP
 goP
@@ -61379,8 +61486,8 @@ gay
 gay
 gay
 gay
-crv
-crv
+gay
+gay
 gay
 dDY
 hyT
@@ -61430,10 +61537,10 @@ aqi
 xKC
 ifz
 agA
-pTS
-crv
+iao
 gay
-crv
+gay
+gay
 gay
 gay
 sFn
@@ -61443,7 +61550,7 @@ sFn
 adt
 agZ
 acN
-ace
+ass
 acf
 aeL
 aeJ
@@ -61452,11 +61559,11 @@ aeJ
 aeJ
 ace
 ace
-crv
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
 gay
 goP
 goP
@@ -61484,7 +61591,7 @@ yjd
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -61493,7 +61600,6 @@ gay
 gay
 gEx
 gEx
-vES
 gay
 gay
 gay
@@ -61506,7 +61612,8 @@ gay
 gay
 gay
 gay
-vES
+gay
+gay
 gay
 gay
 gay
@@ -61636,9 +61743,9 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
+gay
+gay
+gay
 dDY
 dDY
 piy
@@ -61657,7 +61764,7 @@ oHF
 qrH
 xjS
 xsf
-rjM
+csF
 rjM
 rjM
 rjM
@@ -61692,7 +61799,7 @@ hqn
 hqn
 hqn
 hqn
-crv
+gay
 aiy
 apP
 acS
@@ -61710,9 +61817,9 @@ aeU
 acN
 aeX
 gay
-crv
 gay
-crv
+gay
+gay
 goP
 goP
 yjd
@@ -61766,7 +61873,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gEx
 gay
@@ -61894,8 +62001,8 @@ gay
 gay
 gay
 gay
-crv
-crv
+gay
+gay
 dDY
 qZl
 iLX
@@ -61921,7 +62028,7 @@ bAg
 xvy
 nYR
 ifz
-fIW
+lqE
 iIA
 amy
 nGv
@@ -61966,8 +62073,8 @@ aeJ
 aeV
 acN
 ace
-crv
-crv
+gay
+gay
 goP
 goP
 goP
@@ -62015,7 +62122,6 @@ gay
 gEx
 gEx
 gEx
-vES
 gay
 gay
 gay
@@ -62026,13 +62132,14 @@ gay
 gay
 gay
 gay
-vES
 gay
 gay
 gay
 gay
 gay
-vES
+gay
+gay
+gay
 gay
 gay
 gay
@@ -62152,7 +62259,7 @@ gay
 gay
 gay
 gay
-crv
+gay
 dDY
 tOb
 bko
@@ -62206,13 +62313,13 @@ aax
 abd
 acD
 hqn
-crv
+gay
 aiy
 pNm
 adi
 sFn
 acK
-abz
+ask
 acf
 amR
 afq
@@ -62223,8 +62330,8 @@ afs
 afq
 afq
 afq
-crv
-crv
+gay
+gay
 goP
 goP
 goP
@@ -62297,7 +62404,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -62409,7 +62516,7 @@ gay
 gay
 gay
 gay
-crv
+gay
 dDY
 kwI
 lbu
@@ -62440,7 +62547,7 @@ xvp
 uDr
 yeS
 xvp
-uUx
+eEz
 wWy
 qCA
 qBf
@@ -62481,7 +62588,7 @@ aeG
 aeG
 aeG
 azF
-aeY
+asA
 goP
 goP
 goP
@@ -62666,13 +62773,13 @@ gay
 gay
 gay
 gay
-crv
+gay
 dDY
 nEf
 iEZ
 oga
 dDY
-crv
+gay
 rzB
 rzB
 rzB
@@ -62684,7 +62791,7 @@ rTG
 rTG
 cYF
 rTG
-rTG
+dRK
 rTG
 rTG
 rTG
@@ -62720,7 +62827,7 @@ hqn
 hqn
 hqn
 hqn
-crv
+gay
 sFn
 kOm
 acW
@@ -62798,7 +62905,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -62922,14 +63029,14 @@ gay
 gay
 gay
 gay
-crv
-crv
-odS
-crv
+gay
+gay
+gay
+gay
 gay
 gay
 xtc
-crv
+gay
 rzB
 rzB
 rzB
@@ -62937,11 +63044,11 @@ rzB
 rzB
 hvW
 hvW
-hvW
+dII
 bwm
 dYd
 mdk
-mbf
+mPB
 eEZ
 nUm
 hvW
@@ -62962,8 +63069,8 @@ nQM
 abL
 vJt
 kzz
-nBe
-ixg
+oSw
+pAp
 bzg
 bzg
 dal
@@ -62972,10 +63079,10 @@ nif
 dIJ
 eJe
 ifz
-pTS
-crv
+iao
 gay
-crv
+gay
+gay
 gay
 gay
 sFn
@@ -63059,7 +63166,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gEx
 gEx
@@ -63179,12 +63286,12 @@ gay
 gay
 gay
 gay
-crv
-crv
-odS
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
 azF
 gay
 rzB
@@ -63196,11 +63303,11 @@ ayN
 rqP
 ciD
 qqb
-kZg
-mdk
+dYd
+qqb
 vEl
 fCc
-vKN
+fCc
 khf
 vMc
 unh
@@ -63251,7 +63358,7 @@ idm
 idm
 idm
 idm
-crv
+gay
 acC
 yjd
 yjd
@@ -63437,11 +63544,11 @@ gay
 gay
 gay
 nmW
-crv
 gay
-crv
-crv
-crv
+gay
+gay
+gay
+gay
 azF
 gay
 rzB
@@ -63454,10 +63561,10 @@ lOj
 xGz
 ikn
 yfA
-cxV
-cxV
-mdk
+dYd
+jqk
 qqb
+dYd
 slH
 jaa
 eJe
@@ -63508,7 +63615,7 @@ idm
 idm
 idm
 idm
-crv
+gay
 acC
 yjd
 yjd
@@ -63694,26 +63801,26 @@ gay
 gay
 gay
 gay
-crv
-crv
-qws
-crv
+gay
+gay
+gay
+gay
 gay
 azF
-crv
+gay
 rzB
 rzB
 rzB
 rzB
 rzB
 gay
-xGz
+cck
 mPB
-bzC
-hgN
-cxV
 qqb
-mdk
+jqk
+dNp
+dYd
+dYd
 ahu
 iRC
 hnM
@@ -63737,8 +63844,8 @@ whq
 ixg
 bzg
 bzg
-pAp
-bzg
+pTS
+pXS
 gLt
 lXu
 bjl
@@ -63753,7 +63860,7 @@ app
 tWv
 arq
 mvQ
-gfQ
+asf
 aiy
 aiy
 aiy
@@ -63765,7 +63872,7 @@ idm
 idm
 idm
 idm
-crv
+gay
 acC
 yjd
 yjd
@@ -63812,13 +63919,13 @@ gay
 gay
 gay
 gay
-vES
 gay
 gay
 gay
 gay
 gay
-vES
+gay
+gay
 gay
 gay
 gay
@@ -63952,26 +64059,26 @@ gay
 gay
 gay
 gay
-crv
-qws
-crv
-crv
+gay
+gay
+gay
+gay
 azF
-crv
+gay
 rzB
 rzB
 rzB
 rzB
 rzB
 gay
-xGz
+cck
 jqk
-ccc
+jqk
 dNp
 eAC
-lss
-mdk
-qct
+qqb
+qqb
+jqk
 gGT
 jaa
 eJe
@@ -64022,7 +64129,7 @@ idm
 idm
 idm
 idm
-crv
+gay
 acC
 yjd
 yjd
@@ -64210,20 +64317,20 @@ gay
 gay
 gay
 gay
-qws
-crv
+gay
+gay
 gay
 azF
-crv
+gay
 rzB
 rzB
 rzB
 rzB
 rzB
 gay
-hvW
+cdj
 tQc
-lef
+jqk
 hbt
 yjV
 vJa
@@ -64244,7 +64351,7 @@ thZ
 wUZ
 xuJ
 evt
-aas
+xuJ
 feB
 vkl
 gIV
@@ -64279,7 +64386,7 @@ idm
 idm
 idm
 idm
-crv
+gay
 azF
 yjd
 yjd
@@ -64467,9 +64574,9 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
+gay
+gay
+gay
 azF
 azF
 rzB
@@ -64478,14 +64585,14 @@ rzB
 rzB
 rzB
 gay
-xGz
+cck
 tEV
-twE
-dNp
-cxV
+qqb
+qqb
+dYd
 umY
 alE
-dOV
+qqb
 djK
 jaa
 smC
@@ -64521,8 +64628,8 @@ sFn
 xHu
 bac
 lVK
-wxP
-lVK
+arU
+kZg
 uYJ
 sFn
 aiy
@@ -64724,9 +64831,9 @@ gay
 gay
 gay
 gay
-odS
-crv
-crv
+gay
+gay
+gay
 gay
 azF
 rzB
@@ -64735,21 +64842,21 @@ rzB
 rzB
 rzB
 gay
-xGz
-qYG
+cck
+mPB
 dOV
-pvV
+dYd
+qqb
+qqb
+mPB
 cxV
-mUO
-lvS
-ahx
 beJ
 hBk
 qtH
 ifz
 ivd
 fIW
-fIW
+lqE
 ibz
 fIW
 jpf
@@ -64758,8 +64865,8 @@ wyB
 qTs
 aIm
 jpf
-tpZ
-lnc
+wHk
+ncI
 jpf
 kpo
 kpo
@@ -64781,10 +64888,10 @@ abh
 xTy
 ykW
 nqt
-sFn
+asg
 acb
 acb
-crv
+gay
 idm
 idm
 idm
@@ -64794,7 +64901,7 @@ idm
 idm
 idm
 azF
-crv
+gay
 yjd
 yjd
 yjd
@@ -64980,11 +65087,11 @@ gay
 gay
 gay
 gay
-crv
-odS
 gay
-crv
-crv
+gay
+gay
+gay
+gay
 azF
 rzB
 rzB
@@ -64996,10 +65103,10 @@ lOj
 xGz
 ezO
 hnH
+dNp
 cxV
 cxV
-mdk
-kZg
+cxV
 duB
 jaa
 ohv
@@ -65034,14 +65141,14 @@ mGI
 scr
 xFt
 ggc
-xQe
+agT
 pYv
 oeD
 fJZ
 sFn
 acb
 acb
-crv
+gay
 idm
 idm
 idm
@@ -65051,7 +65158,7 @@ idm
 idm
 idm
 azF
-crv
+gay
 skE
 yjd
 yjd
@@ -65237,11 +65344,11 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
 azF
 rzB
 rzB
@@ -65280,7 +65387,7 @@ ggs
 jRl
 xED
 aVI
-pXS
+piu
 afW
 chI
 nDE
@@ -65288,7 +65395,7 @@ rHj
 nib
 pUC
 pUC
-ulA
+adQ
 uNP
 iUs
 kbk
@@ -65308,7 +65415,7 @@ aeM
 faK
 aeM
 aeM
-arN
+asB
 skE
 skE
 skE
@@ -65348,7 +65455,6 @@ goP
 goP
 goP
 yjd
-vES
 gay
 gay
 gay
@@ -65357,7 +65463,6 @@ gay
 gay
 gay
 gay
-vES
 gay
 gay
 gay
@@ -65365,7 +65470,9 @@ gay
 gay
 gay
 gay
-vES
+gay
+gay
+gay
 gay
 gay
 gay
@@ -65496,9 +65603,9 @@ gay
 gay
 gay
 gay
-odS
-crv
-crv
+gay
+gay
+gay
 azF
 rzB
 rzB
@@ -65511,7 +65618,7 @@ hvW
 hvW
 ifx
 ifx
-ifx
+trp
 ifx
 ifx
 hvW
@@ -65528,7 +65635,7 @@ lHK
 eiU
 uCS
 qpE
-cck
+nVq
 iwn
 lQy
 eJE
@@ -65633,7 +65740,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -65752,10 +65859,10 @@ gay
 gay
 gay
 gay
-crv
-odS
 gay
-crv
+gay
+gay
+gay
 azF
 rzB
 rzB
@@ -65775,7 +65882,7 @@ nif
 jaa
 smC
 pyi
-lDE
+lnc
 fIW
 lyd
 kKJ
@@ -65789,7 +65896,7 @@ kTw
 vPA
 mOp
 eiY
-ews
+fgW
 oZx
 rYR
 fRB
@@ -66009,17 +66116,17 @@ gay
 gay
 gay
 gay
-crv
-odS
 gay
-crv
+gay
+gay
+gay
 azF
 azF
 gay
-crv
-crv
 gay
-crv
+gay
+gay
+gay
 mTV
 agg
 aFE
@@ -66266,18 +66373,18 @@ gay
 gay
 gay
 gay
-crv
-odS
-crv
-crv
+gay
+gay
+gay
+gay
 gay
 azF
 azF
 azF
-crv
-crv
+gay
+gay
 mNu
-crv
+gay
 luf
 iqS
 iqS
@@ -66285,7 +66392,7 @@ tcD
 iqS
 iqS
 iqS
-xCy
+twE
 xCy
 pyP
 nYR
@@ -66297,7 +66404,7 @@ rlx
 rlx
 rlx
 juY
-rlx
+lvS
 rlx
 vrd
 voD
@@ -66312,7 +66419,7 @@ lIK
 jaa
 thP
 kEh
-rsV
+pvV
 rsV
 xKU
 dnr
@@ -66523,13 +66630,13 @@ gay
 gay
 gay
 gay
-crv
-crv
 gay
-odS
 gay
-crv
-crv
+gay
+gay
+gay
+gay
+gay
 azF
 azF
 azF
@@ -66781,17 +66888,17 @@ gay
 gay
 gay
 gay
-crv
-crv
-odS
-odS
-odS
-crv
 gay
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 iqS
 oxf
@@ -66920,7 +67027,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -67040,14 +67147,14 @@ gay
 gay
 gay
 gay
-crv
 gay
-crv
-odS
 gay
-odS
-qws
-crv
+gay
+gay
+gay
+gay
+gay
+gay
 tfs
 iqS
 iqS
@@ -67061,7 +67168,7 @@ yeV
 jaa
 nYR
 lWZ
-fIW
+lqE
 amy
 tOZ
 eDN
@@ -67074,7 +67181,7 @@ jiz
 rxv
 abK
 kYb
-kpo
+xQe
 kpo
 ror
 kpo
@@ -67297,15 +67404,15 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
-crv
 gay
 gay
-jwL
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 xrB
 jkG
 hlq
@@ -67325,7 +67432,7 @@ rlx
 rlx
 rlx
 pCn
-csF
+vKN
 rlx
 atK
 qLd
@@ -67440,7 +67547,7 @@ gEx
 gEx
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -67555,14 +67662,14 @@ gay
 gay
 nmW
 gay
-crv
-gay
-crv
 gay
 gay
-qws
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
 oZa
 aXk
 bDe
@@ -67610,7 +67717,7 @@ jbE
 tgk
 dMZ
 apC
-rNw
+aso
 arw
 aoy
 rsV
@@ -67664,7 +67771,7 @@ goP
 goP
 goP
 goP
-vES
+gay
 gay
 gay
 gay
@@ -67812,13 +67919,13 @@ gay
 gay
 gay
 gay
-crv
 gay
-crv
 gay
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
 gay
 eoN
 nLT
@@ -67849,7 +67956,7 @@ ssM
 abe
 qUh
 aAE
-fIW
+lqE
 hNU
 jKM
 jUL
@@ -67940,7 +68047,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -68069,12 +68176,12 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
-qws
-qws
-crv
+gay
+gay
+gay
+gay
+gay
+gay
 wxl
 wxl
 iqS
@@ -68090,7 +68197,7 @@ wxl
 iGg
 tyQ
 qxr
-fIW
+lqE
 fIW
 xeu
 dQA
@@ -68110,7 +68217,7 @@ fIW
 cyF
 xwG
 vYu
-xCy
+twE
 aay
 xxI
 cgP
@@ -68202,7 +68309,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gEx
 gEx
@@ -68325,13 +68432,13 @@ gay
 gay
 gay
 gay
-crv
 gay
 gay
-crv
 gay
 gay
-crv
+gay
+gay
+gay
 wxl
 sqQ
 dPt
@@ -68355,31 +68462,31 @@ fIW
 fIW
 fIW
 ibz
+lqE
 fIW
 fIW
 fIW
 fIW
 fIW
 fIW
-fIW
-rIv
+wxP
 eQw
 fPZ
 sAc
 xQc
 kvc
-uTN
+hgN
 uTN
 uTN
 uTN
 ckF
 sov
 uPO
-iao
+ahx
 rNw
-iDh
-eEz
-iDh
+cWy
+akT
+cWy
 pON
 rNw
 noD
@@ -68436,7 +68543,6 @@ goP
 goP
 goP
 gay
-vES
 gay
 gay
 gay
@@ -68448,7 +68554,8 @@ gay
 gay
 gay
 gay
-vES
+gay
+gay
 gay
 gay
 gay
@@ -68578,14 +68685,14 @@ gay
 gay
 gay
 gay
-crv
-crv
 gay
 gay
-odS
-odS
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 dHO
 wxl
@@ -68600,7 +68707,7 @@ eBW
 ufo
 onz
 vGv
-mBg
+txG
 mdY
 bgQ
 wNy
@@ -68717,14 +68824,14 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gEx
 aPn
 gEx
 gEx
 gay
-vES
+gay
 gay
 gay
 gay
@@ -68835,16 +68942,16 @@ gay
 gay
 gay
 gay
-crv
-qws
-qws
-crv
-crv
-crv
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 fCa
 gqx
 ych
@@ -68881,7 +68988,7 @@ mIA
 xMU
 wLt
 wnb
-nrh
+iDh
 nJt
 tQr
 nEO
@@ -69093,13 +69200,13 @@ gay
 gay
 gay
 gay
-qws
 gay
-crv
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 iux
@@ -69212,7 +69319,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -69350,15 +69457,15 @@ gay
 gay
 gay
 gay
-crv
-crv
+gay
+gay
 kGN
 gOy
 hPk
 gay
-crv
-crv
-crv
+gay
+gay
+gay
 bYQ
 wsg
 jAY
@@ -69397,21 +69504,21 @@ cra
 alX
 woA
 woA
-oDH
-wMu
+jGN
+rct
 wyg
-hYy
+acs
 tav
-hYy
+acs
 noD
 ahd
 tYi
 mBI
 adm
 dTm
-cWy
-jVo
-cWy
+asp
+ast
+asp
 isF
 isF
 apb
@@ -69608,14 +69715,14 @@ gay
 gay
 gay
 gay
-crv
+gay
 kGN
 xlx
 hPk
-crv
-crv
 gay
-cdj
+gay
+gay
+tfs
 wxl
 wxl
 uEH
@@ -69664,7 +69771,7 @@ rHg
 rHg
 uMa
 rHg
-rHg
+ash
 dTm
 amO
 amS
@@ -69740,7 +69847,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -69863,17 +69970,17 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
+gay
+gay
+gay
 kGN
 xlx
 hPk
-crv
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
 wxl
 rFF
 uZo
@@ -69913,7 +70020,7 @@ hzr
 hzr
 yds
 scZ
-vCz
+abz
 abC
 abE
 amZ
@@ -70121,16 +70228,16 @@ gay
 gay
 gay
 gay
-qws
-crv
+gay
+gay
 kGN
 xlx
 hPk
-crv
-crv
 gay
 gay
-crv
+gay
+gay
+gay
 wxl
 wxl
 wxl
@@ -70378,19 +70485,19 @@ gay
 gay
 gay
 gay
-qws
+gay
 gay
 kGN
 xlx
 hPk
 gay
-crv
-crv
-crv
-crv
-crv
-crv
-xnX
+gay
+gay
+gay
+gay
+gay
+gay
+clY
 mFZ
 pLS
 uMc
@@ -70441,7 +70548,7 @@ afn
 amV
 anc
 anR
-isF
+asu
 aqd
 apq
 lUt
@@ -70493,7 +70600,7 @@ esQ
 esQ
 esQ
 gay
-vES
+gay
 gay
 gay
 gay
@@ -70634,30 +70741,30 @@ gay
 gay
 gay
 gay
-crv
-qws
-crv
+gay
+gay
+gay
 kGN
 xlx
 hPk
 lfc
-crv
 gay
 gay
-crv
 gay
-crv
+gay
+gay
+gay
 xnX
 qQB
 rox
 bTB
 dns
-tnj
+lef
 jzF
 tnj
 tnj
 tnj
-tnj
+lef
 tnj
 dxg
 tnj
@@ -70685,9 +70792,9 @@ eFW
 abi
 wyg
 wyg
-fgW
+adZ
 aoF
-fgW
+adZ
 rHg
 wbD
 oyB
@@ -70769,7 +70876,7 @@ gEx
 gEx
 aPn
 gEx
-vES
+gay
 gay
 gay
 gay
@@ -70891,19 +70998,19 @@ gay
 gay
 gay
 gay
-crv
-odS
-crv
+gay
+gay
+gay
 gay
 tqc
 gay
 cvX
-crv
-crv
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
 xnX
 qQJ
 ubz
@@ -70924,12 +71031,12 @@ dws
 edC
 nkz
 oZc
-sLc
+mbf
 tFK
-dII
+wMu
 xze
 xwr
-hgW
+vob
 hgW
 fdT
 yiI
@@ -71009,7 +71116,7 @@ esQ
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -71150,17 +71257,17 @@ gay
 gay
 gay
 gay
-crv
-crv
+gay
+gay
 gQc
 uWY
 eAZ
 gay
 gay
-crv
 gay
-crv
-crv
+gay
+gay
+gay
 xnX
 dpG
 noX
@@ -71195,7 +71302,7 @@ stx
 uyq
 woA
 woA
-woA
+qYG
 woA
 wyg
 afD
@@ -71407,21 +71514,21 @@ gay
 gay
 gay
 gay
-crv
+gay
 kGN
 kqT
 hPk
 eAZ
 eAZ
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
 gay
 xnX
 uYz
 mtg
-clY
+mBg
 cFV
 oDr
 hYL
@@ -71433,11 +71540,11 @@ gxV
 esR
 lBC
 nRk
-oeZ
-dRK
+vES
+lss
 qyt
 nkO
-lqE
+ulA
 oeZ
 afe
 wHx
@@ -71531,7 +71638,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -71663,22 +71770,22 @@ gay
 gay
 gay
 gay
-qws
-crv
+gay
+gay
 kGN
 kqT
 hPk
 gay
 eAZ
 gay
-crv
 gay
-crv
-crv
-crv
+gay
+gay
+gay
+gay
 gay
 qEL
-crv
+gay
 cFV
 cFV
 cFV
@@ -71784,7 +71891,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -71919,9 +72026,9 @@ gay
 gay
 gay
 gay
-crv
-qws
-crv
+gay
+gay
+gay
 kGN
 kqT
 hPk
@@ -71930,13 +72037,13 @@ eAZ
 eAZ
 eAZ
 eAZ
-crv
 gay
-crv
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 cFV
 cFV
@@ -72176,8 +72283,8 @@ gay
 gay
 gay
 gay
-crv
-qws
+gay
+gay
 gay
 kGN
 kqT
@@ -72185,19 +72292,19 @@ hPk
 gay
 ehS
 gay
-crv
+gay
 eAZ
 eAZ
 eAZ
 eAZ
 eAZ
 gay
-crv
 gay
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
 cXm
 cXm
 cXm
@@ -72304,7 +72411,7 @@ gEx
 gEx
 gEx
 gay
-vES
+gay
 gay
 gay
 gay
@@ -72433,8 +72540,8 @@ gay
 gay
 gay
 gay
-crv
-qws
+gay
+gay
 gay
 kGN
 kqT
@@ -72442,8 +72549,8 @@ hPk
 kGN
 kqT
 hPk
-crv
-crv
+gay
+gay
 ehS
 gay
 gay
@@ -72549,7 +72656,7 @@ amz
 esQ
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -72690,9 +72797,9 @@ gay
 gay
 gay
 gay
-crv
-qws
-crv
+gay
+gay
+gay
 kGN
 mUe
 hPk
@@ -72704,12 +72811,12 @@ kGN
 kqT
 hPk
 gay
-crv
+gay
 ehS
 gay
-crv
-crv
-crv
+gay
+gay
+gay
 gay
 cXm
 cXm
@@ -72725,7 +72832,7 @@ oeZ
 oeZ
 oeZ
 hgW
-hgW
+vob
 hgW
 hgW
 hgW
@@ -72949,8 +73056,8 @@ gay
 gay
 gay
 gay
-crv
-crv
+gay
+gay
 gay
 gay
 kGN
@@ -72960,14 +73067,14 @@ gay
 kGN
 kqT
 hPk
-crv
+gay
 kGN
 kqT
 hPk
 gay
 gay
-crv
-crv
+gay
+gay
 cXm
 cXm
 cXm
@@ -73075,7 +73182,7 @@ gEx
 gEx
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -73206,25 +73313,25 @@ gay
 gay
 gay
 gay
-qws
-crv
-crv
-crv
+gay
+gay
+gay
+gay
 kGN
 kqT
 hPk
-crv
+gay
 kGN
 kqT
 hPk
-crv
+gay
 kGN
 kqT
 hPk
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
 skE
 skE
 cXm
@@ -73323,7 +73430,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gEx
@@ -73336,7 +73443,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -73462,10 +73569,10 @@ gay
 gay
 gay
 gay
-crv
-odS
-crv
-crv
+gay
+gay
+gay
+gay
 gay
 kGN
 kqT
@@ -73479,9 +73586,9 @@ kGN
 kqT
 hPk
 gay
-crv
 gay
-crv
+gay
+gay
 skE
 skE
 skE
@@ -73719,10 +73826,10 @@ gay
 gay
 gay
 gay
-crv
-crv
 gay
-qws
+gay
+gay
+gay
 gay
 kGN
 mUe
@@ -73731,12 +73838,12 @@ gay
 kGN
 kqT
 hPk
-crv
+gay
 kGN
 kqT
 hPk
 gay
-crv
+gay
 skE
 skE
 skE
@@ -73835,7 +73942,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -73979,21 +74086,21 @@ gay
 gay
 gay
 gay
-qws
-crv
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
 kGN
 mUe
 hPk
-crv
+gay
 kGN
 kqT
 hPk
-crv
-crv
+gay
+gay
 pwU
 pwU
 pwU
@@ -74099,7 +74206,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gEx
 gEx
@@ -74235,17 +74342,17 @@ gay
 gay
 gay
 gay
-crv
-crv
 gay
 gay
-crv
 gay
-crv
-crv
-crv
 gay
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 kGN
 mUe
 hPk
@@ -74492,20 +74599,20 @@ gay
 gay
 gay
 gay
-crv
-qws
-crv
 gay
-crv
-crv
-crv
 gay
-crv
-crv
-crv
 gay
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -74609,7 +74716,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -74749,21 +74856,21 @@ gay
 gay
 gay
 gay
-crv
-qws
-odS
-crv
-qws
-qws
-qws
-qws
-qws
-qws
 gay
-crv
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 esQ
 esQ
@@ -75006,21 +75113,21 @@ gay
 gay
 gay
 gay
-crv
-crv
 gay
 gay
 gay
 gay
-crv
-crv
-crv
 gay
-crv
-qws
-qws
-qws
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 esQ
 esQ
@@ -75270,14 +75377,14 @@ gay
 gay
 gay
 gay
-crv
-crv
-crv
-crv
 gay
-crv
-crv
-crv
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 esQ
 esQ
 kDp
@@ -75390,7 +75497,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -75501,7 +75608,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -75530,9 +75637,9 @@ gay
 gay
 gay
 gay
-crv
 gay
-crv
+gay
+gay
 esQ
 esQ
 esQ
@@ -75642,7 +75749,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -75787,7 +75894,7 @@ gay
 gay
 gay
 gay
-crv
+gay
 esQ
 esQ
 esQ
@@ -76280,7 +76387,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -76406,7 +76513,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -76542,7 +76649,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gEx
 gEx
@@ -76914,7 +77021,7 @@ pwU
 pwU
 gay
 gay
-vES
+gay
 gay
 gay
 gEx
@@ -77297,7 +77404,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -77836,7 +77943,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gEx
 gEx
 gay
@@ -78458,7 +78565,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -78867,7 +78974,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -79106,7 +79213,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gEx
 gEx
@@ -79477,7 +79584,7 @@ esQ
 esQ
 gay
 gay
-vES
+gay
 gay
 gay
 gEx
@@ -79749,7 +79856,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gEx
 gEx
 gay
@@ -80151,7 +80258,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gEx
 gEx
@@ -80508,7 +80615,7 @@ aPn
 gEx
 gEx
 gay
-vES
+gay
 gay
 gay
 gay
@@ -80524,7 +80631,7 @@ gay
 gEx
 gEx
 gay
-vES
+gay
 gay
 gay
 gay
@@ -80696,7 +80803,7 @@ esQ
 esQ
 gay
 gay
-vES
+gay
 gay
 gay
 gEx
@@ -80705,7 +80812,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -80727,7 +80834,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -80930,7 +81037,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -80970,7 +81077,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -81464,7 +81571,7 @@ gay
 gEx
 gEx
 gay
-vES
+gay
 gay
 gay
 gay
@@ -81729,7 +81836,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -81796,7 +81903,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gEx
 aPn
@@ -82203,7 +82310,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -82315,7 +82422,7 @@ gay
 gay
 gEx
 gay
-vES
+gay
 gay
 gay
 gay
@@ -82470,9 +82577,18 @@ gay
 gay
 gay
 gay
-vES
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
 gay
 gay
 gay
@@ -82484,15 +82600,6 @@ gEx
 gEx
 gay
 gay
-gay
-gay
-gay
-vES
-gay
-gEx
-gEx
-gay
-vES
 gay
 gay
 gay
@@ -82657,7 +82764,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -82753,7 +82860,6 @@ gay
 gay
 gay
 gay
-vES
 gay
 gay
 gay
@@ -82764,6 +82870,7 @@ gay
 gay
 gay
 gay
+gay
 anV
 anV
 anV
@@ -82790,11 +82897,11 @@ gay
 gay
 gay
 gay
-vES
 gay
 gay
 gay
-vES
+gay
+gay
 gay
 gay
 gay
@@ -83316,7 +83423,7 @@ gay
 gay
 aPn
 aPn
-vES
+gay
 gay
 gay
 gay
@@ -83433,7 +83540,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -83618,7 +83725,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -83783,7 +83890,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gEx
 gay
@@ -84024,23 +84131,9 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gEx
-gEx
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
 gEx
 gEx
 gay
@@ -84049,6 +84142,20 @@ gay
 gay
 gay
 gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
 anV
 anV
 anV
@@ -84077,7 +84184,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -84207,7 +84314,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -84300,7 +84407,7 @@ gay
 gEx
 aPn
 gay
-vES
+gay
 gay
 gay
 gay
@@ -84368,7 +84475,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -84607,7 +84714,6 @@ gay
 gay
 gay
 gay
-vES
 gay
 gay
 gay
@@ -84618,7 +84724,8 @@ gay
 gay
 gay
 gay
-vES
+gay
+gay
 gay
 gay
 gay
@@ -84812,7 +84919,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gEx
 gEx
 gay
@@ -85039,7 +85146,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -85073,7 +85180,7 @@ gEx
 aPn
 gEx
 gay
-vES
+gay
 gay
 gay
 gay
@@ -85145,7 +85252,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -85236,7 +85343,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -85497,7 +85604,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -85757,7 +85864,7 @@ gay
 gay
 gEx
 gEx
-vES
+gay
 gay
 gay
 gEx
@@ -85873,7 +85980,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gEx
 gay
 gay
@@ -86145,35 +86252,35 @@ gay
 gay
 gay
 gay
-vES
-gay
-gay
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
 gay
 gay
 gay
 gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
 gEx
 gEx
 gEx
 gay
-vES
+gay
 gay
 gay
 gay
@@ -86314,7 +86421,7 @@ gEx
 gay
 gay
 gEx
-vES
+gay
 gay
 gEx
 gEx
@@ -86358,7 +86465,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -86532,7 +86639,22 @@ gay
 gEx
 gEx
 gay
-vES
+gay
+gay
+gay
+gay
+gay
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -86551,18 +86673,9 @@ gay
 gay
 gay
 gay
-gay
 gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
+aPn
+gEx
 gay
 gay
 gay
@@ -86572,12 +86685,6 @@ gEx
 gay
 gay
 gay
-gEx
-aPn
-gEx
-gay
-gay
-gay
 gay
 gay
 gay
@@ -86595,7 +86702,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -86642,7 +86749,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gEx
 gEx
 gEx
@@ -86801,80 +86908,6 @@ gay
 gay
 gay
 gay
-vES
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-aPn
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gay
-gay
-gay
-gay
-gEx
-vES
-gay
-gay
-gay
-gEx
-gEx
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gEx
-aPn
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gEx
-gEx
-gay
-gay
-gay
 gay
 gay
 gay
@@ -86893,6 +86926,80 @@ gay
 gay
 gay
 gay
+gEx
+gay
+gay
+gay
+gay
+gEx
+gay
+gay
+gay
+gay
+gEx
+gEx
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
+aPn
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+aPn
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
 gay
 gay
 gay
@@ -86939,7 +87046,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gEx
@@ -87049,21 +87156,21 @@ gay
 gay
 gay
 gEx
-vES
-gay
-gay
-gEx
-gay
-gay
-gay
-gay
 gay
 gay
 gay
 gEx
 gay
 gay
-vES
+gay
+gay
+gay
+gay
+gay
+gEx
+gay
+gay
+gay
 gay
 gEx
 gEx
@@ -87309,11 +87416,11 @@ aPn
 gEx
 gay
 gay
-vES
 gay
 gay
 gay
-vES
+gay
+gay
 gay
 gEx
 gEx
@@ -87357,7 +87464,7 @@ gay
 gEx
 gEx
 gay
-vES
+gay
 gay
 gay
 gay
@@ -87368,56 +87475,56 @@ gay
 gay
 gay
 gEx
-gEx
-gEx
-aPn
-gEx
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gay
-gay
-gay
-gEx
-gay
-gEx
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
 gEx
 gEx
 aPn
 gEx
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gay
+gay
+gay
+gEx
+gay
+gEx
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
+aPn
+gEx
 gay
 gay
 gay
@@ -87454,7 +87561,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gEx
 gEx
@@ -87580,67 +87687,67 @@ gay
 gay
 gay
 gay
-vES
-gay
-gEx
-aPn
-aPn
-gEx
-gay
-gay
-gay
-vES
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gEx
-gEx
-aPn
-aPn
-gEx
-gEx
-gay
-gay
-gay
-gay
-gay
-gay
-gay
-gay
 gay
 gay
 gEx
 aPn
+aPn
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+gEx
+aPn
+aPn
+gEx
+gEx
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gay
+gEx
+aPn
 gay
 gay
 gay
@@ -87675,7 +87782,7 @@ gay
 gEx
 gEx
 gay
-vES
+gay
 gay
 gay
 gay
@@ -87849,7 +87956,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -87947,7 +88054,7 @@ gay
 gay
 gEx
 gay
-vES
+gay
 gay
 gay
 gay
@@ -88097,20 +88204,20 @@ gEx
 gEx
 gay
 gay
-vES
-gEx
-gay
-vES
 gay
 gEx
+gay
+gay
+gay
 gEx
 gEx
+gEx
 gay
 gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -88232,7 +88339,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -88626,13 +88733,12 @@ gEx
 aPn
 gEx
 gay
-vES
+gay
 gay
 gEx
 aPn
 gEx
 gay
-vES
 gay
 gay
 gay
@@ -88644,7 +88750,8 @@ gay
 gay
 gay
 gay
-vES
+gay
+gay
 gEx
 gEx
 gay
@@ -88885,7 +88992,7 @@ gEx
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -88922,7 +89029,6 @@ gEx
 aPn
 gEx
 gay
-vES
 gay
 gay
 gay
@@ -88941,7 +89047,8 @@ gay
 gay
 gay
 gay
-vES
+gay
+gay
 gEx
 gEx
 gay
@@ -88971,7 +89078,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -89185,7 +89292,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -89668,7 +89775,7 @@ gay
 gEx
 gEx
 gEx
-vES
+gay
 gay
 gay
 gay
@@ -90487,7 +90594,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -91481,7 +91588,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -91499,14 +91606,14 @@ age
 gEx
 crv
 crv
-gay
+crv
 agJ
 agO
 gay
 agL
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -91755,8 +91862,8 @@ afS
 agf
 gEx
 agx
-agH
-crv
+qct
+gay
 afR
 svM
 gay
@@ -91987,7 +92094,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gay
 gay
@@ -92015,8 +92122,8 @@ crv
 crv
 crv
 agR
-gay
-agT
+crv
+agz
 gEx
 gay
 agH
@@ -92271,7 +92378,7 @@ agg
 agf
 agJ
 agO
-gay
+crv
 gay
 gEx
 gEx
@@ -92527,9 +92634,9 @@ crv
 agq
 agy
 agK
+gay
 crv
-crv
-crv
+gay
 gEx
 aPn
 gEx
@@ -92780,10 +92887,10 @@ gEx
 gEx
 gEx
 crv
-crv
+gay
 agr
 crv
-gay
+crv
 agP
 gay
 agS
@@ -93040,8 +93147,8 @@ afV
 gEx
 gEx
 agz
-agL
-gay
+rGb
+crv
 crv
 gay
 gEx
@@ -93288,7 +93395,7 @@ gay
 gay
 gay
 gay
-vES
+gay
 gay
 gEx
 gEx
@@ -93298,7 +93405,7 @@ gEx
 gEx
 gEx
 afR
-gay
+crv
 agq
 gay
 gay
@@ -93556,7 +93663,7 @@ gEx
 gEx
 gay
 gay
-crv
+gay
 agJ
 agO
 agM
@@ -94068,7 +94175,7 @@ gEx
 gEx
 gay
 gay
-vES
+gay
 agL
 gay
 gay

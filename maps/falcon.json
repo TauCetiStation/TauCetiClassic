@@ -5,7 +5,12 @@
     "station_name": "NSS Falcon",
     "system_name" : "Tau Ceti",
     "station_image": "falcon",
-    "traits": [{"Mining": true, "Linkage": "Cross"}],
+    "traits": [{
+	    "Mining": true,
+        "Linkage": null,
+        "Environment Type": "Snow",
+        "Snowstorm": true
+    }],
     "space_ruin_levels": 2,
     "space_empty_levels": 1,
     "load_junkyard": 1,
