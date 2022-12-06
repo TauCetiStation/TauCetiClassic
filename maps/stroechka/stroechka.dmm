@@ -3276,9 +3276,6 @@
 	pixel_y = 2
 	},
 /obj/structure/table,
-/obj/item/weapon/hand_labeler{
-	pixel_y = -4
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitepurple"
