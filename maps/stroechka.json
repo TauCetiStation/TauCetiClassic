@@ -8,5 +8,11 @@
     "space_ruin_levels": 2,
     "space_empty_levels": 1,
     "load_junkyard": 0,
-    "minetype": null
+    "minetype": null,
+    "traits":[{
+        "Linkage": null,
+        "Environment Type": "Snow",
+        "Station": true,
+        "Snowstorm": true
+    }]
 }
