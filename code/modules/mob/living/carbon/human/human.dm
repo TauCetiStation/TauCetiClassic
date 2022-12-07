@@ -341,7 +341,7 @@
 				return BP
 	return FALSE // In case we didn't find anything.
 
-/mob/living/carbon/human/proc/regen_bodyparts()
+/mob/living/carbon/human/proc/regen_bodyparts(use_cost = FALSE)
 	if(regenerating_bodypart) // start fixing broken/destroyed limb
 		var/regenerating_capacity_penalty = 0 // Used as time till organ regeneration.
 		if(regenerating_bodypart.is_stump)
@@ -370,6 +370,8 @@
 		if(regenerating_organ_time >= regenerating_capacity_penalty) // recover organ
 			regenerating_bodypart.rejuvenate()
 			regenerating_organ_time = 0
+			if(use_cost && species == DIONA)
+				nutrition -= regenerating_capacity_penalty
 			regenerating_bodypart = null
 			update_body()
 
