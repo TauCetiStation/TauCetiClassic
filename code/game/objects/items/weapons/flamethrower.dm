@@ -411,10 +411,10 @@
 	if(!can_see(user, target))
 		return
 	if(!status)
-		to_chat(user, "<span class='notice'>Secure all components first.</span>")
+		to_chat(user, "<span class='warning'>Secure all components first.</span>")
 		return
 	if(reagents.total_volume == 0)
-		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+		to_chat(user, "<span class='warning'>[src] is empty. It can be filled with fuelweldpack.</span>")
 		return
 	var/turf/target_turf = get_turf(target)
 	var/turf/self_turf = get_turf(user)
@@ -431,7 +431,7 @@
 		if(distance_reached > 7)
 			break
 		//check every turf in line for walls/glass/etc
-		if(!self_turf.CanPass(null, turf_in_line, 0, 0)) //!turf_in_line.CanPass(null, self_turf, 0, 0)
+		if(!self_turf.CanPass(null, turf_in_line, 0, 0))
 			break
 		//don't accidentally set yourself on fire
 		var/amount_fuel = 0
@@ -449,8 +449,8 @@
 	suck_fuel_from_weldpack(user, fuel_spent)
 
 /obj/item/weapon/makeshift_flamethrower/attackby(obj/item/I, mob/user, params)
-	if(!status)
-		if(iswrench(I))
+	if(iswrench(I))
+		if(!status)
 			var/turf/T = get_turf(src)
 			if(weldtool)
 				weldtool.forceMove(T)
@@ -459,27 +459,30 @@
 				igniter.forceMove(T)
 				igniter = null
 			new /obj/item/stack/rods(T)
+			to_chat(user, "<span class='notice'>You have successfully dismantled [src].</span>")
 			qdel(src)
-			return
-		if(isscrewdriver(I))
+		else
+			to_chat(user, "<span class='warning'>Unsecure [src] first.</span>")
+		return
+	if(isscrewdriver(I))
+		if(!status)
 			if(!igniter)
-				to_chat(user, "<span class='notice'>Attach igniter first.</span>")
+				to_chat(user, "<span class='warning'>Attach igniter first.</span>")
 			else
 				status = TRUE
 				to_chat(user, "<span class='notice'>Components of [src] secured.</span>")
 				update_icon()
-			return
-	else
-		if(isscrewdriver(I))
+
+		else
 			status = FALSE
 			lit = FALSE
 			STOP_PROCESSING(SSobj, src)
 			to_chat(user, "<span class='notice'>[src] is now unsecured.</span>")
 			update_icon()
-			return
+		return
 	if(isigniter(I))
 		if(igniter)
-			to_chat(user, "<span class='notice'>[src] already have [I]!</span>")
+			to_chat(user, "<span class='warning'>[src] already have [I]!</span>")
 			return
 		if(status)
 			to_chat(user, "<span class='warning'>[src] is secured!</span>")
@@ -503,6 +506,8 @@
 		lit = !lit
 	if(lit)
 		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj, src)
 	update_icon()
 
 /obj/item/weapon/makeshift_flamethrower/proc/flame_turf(turf/target, turf/prev_turf, amount = 5)
