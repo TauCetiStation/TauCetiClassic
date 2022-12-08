@@ -292,6 +292,12 @@ Hit Procs
 
 
 /mob/living/carbon/xenomorph/crawl()
+	if(crawl_getup)
+		return
+	if(crawling)
+		crawl_getup = TRUE
+		if(do_after(src, 10, target = src))
+			crawl_getup = FALSE
 	SetCrawling(!crawling)
 	update_canmove()
 	to_chat(src, "<span class='notice'>You are now [crawling ? "resting" : "getting up"].</span>")
