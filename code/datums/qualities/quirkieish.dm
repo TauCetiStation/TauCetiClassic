@@ -257,7 +257,7 @@
 		// Okay the idea with changeling stings didn't work so now we actually change the race.
 		// We change the race because if we don't some exotic species like Vox would not have
 		// anyone they can be a doppleganger of.
-		if(!config.usealienwhitelist && !is_alien_whitelisted(H, target.get_species()))
+		if(config.usealienwhitelist && !is_alien_whitelisted(H, target.get_species()))
 			continue
 
 		target = potential_target
