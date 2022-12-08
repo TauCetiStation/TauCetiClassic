@@ -1165,7 +1165,7 @@
 	desc = "Smoothly contoured and polished to a shine. Still looks like a fishbowl."
 	armor = list(melee = 20, bullet = 20, laser = 25,energy = 50, bomb = 50, bio = 100, rad = 100)
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = list(SKRELL , HUMAN, PODMAN)
+	species_restricted = list(SKRELL)
 
 
 	action_button_name = "Toggle Helmet Light" //this copypaste everywhere!
