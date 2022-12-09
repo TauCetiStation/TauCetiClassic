@@ -6099,11 +6099,6 @@
 /area/asteroid/mine/dwarf)
 "zn" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/power/apc/largecell{
-	dir = 4;
-	name = "largecell apc right";
-	pixel_x = 28
-	},
 /obj/machinery/camera{
 	c_tag = "RnD Outpost Hall South";
 	dir = 8;

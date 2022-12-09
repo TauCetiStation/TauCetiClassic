@@ -299,7 +299,9 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "aav" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -955,7 +957,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "abu" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -2424,7 +2428,9 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "agG" = (
 /obj/machinery/message_server,
 /turf/simulated/floor{
@@ -5951,7 +5957,9 @@
 	dir = 9;
 	icon_state = "whitepurple"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "aYG" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -6151,7 +6159,9 @@
 	dir = 1;
 	icon_state = "whitepurple"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "bca" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/scrap_lump,
@@ -6356,7 +6366,9 @@
 	dir = 1;
 	icon_state = "whitepurple"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "bfO" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -6454,7 +6466,9 @@
 	dir = 1;
 	icon_state = "whitepurple"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "bhB" = (
 /obj/machinery/door/airlock/medical{
 	name = "Surgery";
@@ -7008,7 +7022,9 @@
 	dir = 5;
 	icon_state = "whitepurple"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "bop" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
@@ -8314,7 +8330,9 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "bDH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -8830,7 +8848,9 @@
 /turf/simulated/floor{
 	icon_state = "whitepurple"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "bLf" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -9836,7 +9856,9 @@
 	dir = 10;
 	icon_state = "whitepurple"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "bZl" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -9862,7 +9884,9 @@
 /turf/simulated/floor{
 	icon_state = "whitepurple"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "bZA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor,
@@ -11876,7 +11900,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "cCO" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -11938,7 +11964,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "cEg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -12838,7 +12866,9 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "cQQ" = (
 /obj/machinery/gateway,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -25626,7 +25656,9 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "fMC" = (
 /turf/simulated/floor{
 	icon_state = "yellow"
@@ -26780,7 +26812,9 @@
 	dir = 8;
 	icon_state = "whitepurple"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "fYV" = (
 /obj/structure/disposaloutlet{
 	dir = 4
@@ -37062,7 +37096,9 @@
 	dir = 4;
 	icon_state = "whitepurple"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "ixU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -38397,7 +38433,9 @@
 	dir = 1;
 	icon_state = "whitepurple"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "iOP" = (
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
@@ -38693,20 +38731,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "iTz" = (
-/obj/machinery/power/apc{
-	name = "apc down";
-	pixel_y = -28
-	},
 /obj/machinery/camera{
 	c_tag = "RnD Xenoarchaeologist Office";
 	dir = 1;
 	network = list("Research","SS13")
 	},
-/obj/structure/cable,
 /turf/simulated/floor{
 	icon_state = "whitepurple"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "iTE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -39876,7 +39911,9 @@
 	dir = 1;
 	icon_state = "whitepurple"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "jjN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -41919,7 +41956,9 @@
 	dir = 5;
 	icon_state = "vault"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "jLB" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
@@ -53782,7 +53821,9 @@
 	dir = 6;
 	icon_state = "whitepurple"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "mGS" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -54671,11 +54712,6 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
@@ -54683,7 +54719,9 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "mTL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -61738,7 +61776,9 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "oHh" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -62426,7 +62466,9 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "oQB" = (
 /obj/item/weapon/shard{
 	icon_state = "medium"
@@ -67797,7 +67839,9 @@
 "qky" = (
 /obj/structure/sign/departments/science,
 /turf/simulated/wall/r_wall,
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "qkA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
@@ -73042,7 +73086,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "rDf" = (
 /obj/machinery/flasher{
 	id = "permflash"
@@ -73973,7 +74019,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "rQr" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
@@ -76627,7 +76675,9 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "sxX" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 4
@@ -77829,7 +77879,9 @@
 /turf/simulated/floor{
 	icon_state = "whitepurple"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "sOq" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance/three,
@@ -80147,7 +80199,9 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "tuu" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -85794,8 +85848,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "uNS" = (
-/turf/simulated/wall,
-/area/station/rnd/scibreak)
+/turf/simulated/wall/r_wall,
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "uOe" = (
 /obj/structure/window/reinforced{
 	dir = 5
@@ -86341,7 +86397,9 @@
 /turf/simulated/floor{
 	icon_state = "white"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "uVh" = (
 /obj/structure/closet/firecloset,
 /turf/simulated/floor/plating,
@@ -98720,7 +98778,9 @@
 	dir = 1;
 	icon_state = "whitepurple"
 	},
-/area/station/rnd/scibreak)
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
 "xZj" = (
 /obj/machinery/portable_atmospherics/powered/pump,
 /turf/simulated/floor{
@@ -126487,12 +126547,12 @@ cJy
 cJy
 fkk
 bsP
-fOD
 uNS
+dKq
 rQn
 fMx
 tuc
-uNS
+dKq
 gus
 kdY
 yke
@@ -126743,13 +126803,13 @@ cJy
 cJy
 iRy
 fkk
-fOD
-fOD
+uNS
+uNS
 aYl
 fYG
 bYT
 cCK
-uNS
+dKq
 fDw
 eTC
 uCb
@@ -127006,7 +127066,7 @@ xZe
 uUy
 bZz
 jLo
-uNS
+dKq
 aDF
 wdj
 rEU
@@ -127263,7 +127323,7 @@ jjz
 oGZ
 bZz
 cDS
-uNS
+dKq
 fyW
 eTC
 uCb
@@ -127520,7 +127580,7 @@ iOH
 bDC
 bZz
 cQJ
-uNS
+dKq
 kXE
 aTL
 qfZ
@@ -127771,13 +127831,13 @@ cJy
 iRy
 cJy
 cJy
-fOD
-fOD
+uNS
+uNS
 bbX
 mTK
 iTz
-uNS
-uNS
+dKq
+dKq
 gtD
 uye
 uZM
@@ -128031,9 +128091,9 @@ hGN
 hGN
 sxR
 bfF
-nqB
+mTK
 bKJ
-uNS
+dKq
 jAB
 iSn
 dZd
@@ -128290,7 +128350,7 @@ sxR
 bhy
 oQu
 sOb
-uNS
+dKq
 byb
 twf
 aTL
@@ -128547,7 +128607,7 @@ sxR
 boj
 ixO
 mGQ
-uNS
+dKq
 fCY
 jcz
 pyt
@@ -128800,12 +128860,12 @@ cdw
 cdw
 cdw
 cdw
-fOD
+uNS
 qky
 rCV
-fOD
-fOD
-dOk
+uNS
+uNS
+uNS
 dOk
 dOk
 seL
