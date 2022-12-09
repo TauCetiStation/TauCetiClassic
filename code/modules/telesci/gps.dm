@@ -78,8 +78,9 @@ var/global/list/GPS_list = list()
 	return FALSE
 
 /obj/item/device/gps/proc/stop_tracking()
-	if(track[selected_track].len)
-		track[selected_track][track[selected_track].len]["end"] = TRUE
+	var/list/Track = track[selected_track]
+	if(Track.len)
+		Track[Track.len]["end"] = TRUE
 	track_saving = FALSE
 	STOP_PROCESSING(SSobj, src)
 
