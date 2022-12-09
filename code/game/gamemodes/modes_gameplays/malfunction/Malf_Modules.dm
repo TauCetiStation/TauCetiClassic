@@ -230,8 +230,8 @@ robot_fabricator
 
 /datum/AI_Module/large/upgrade_turrets/BuyedNewHandle()
 	for(var/obj/machinery/porta_turret/turret in machines)
-		turret.health += 30
-		turret.maxhealth += 30
+		turret.max_integrity += 30
+		turret.repair_damage(30)
 		turret.auto_repair = 1
 		turret.shot_delay = 15
 	to_chat(owner, "<span class='notice'>Turrets upgraded.</span>")

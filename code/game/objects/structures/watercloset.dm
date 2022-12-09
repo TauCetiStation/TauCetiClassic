@@ -96,7 +96,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		to_chat(user, "You carefully place \the [I] into the cistern.")
 		return
 
-
+/obj/structure/toilet/deconstruct()
+	for(var/obj/toilet_item as anything in contents)
+		toilet_item.forceMove(loc)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 1)
+	..()
 
 /obj/structure/urinal
 	name = "urinal"
@@ -398,6 +404,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 		else
 			to_chat(usr, "[bicon(src)]<span class='notice'>Is payed, you may turn it on now.</span>")
+
+/obj/machinery/shower/deconstruct(disassembled)
+	new /obj/item/stack/sheet/metal(loc, 2)
+	..()
 
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
 	cut_overlays()					//once it's been on for a while, in addition to handling the water overlay.
@@ -704,6 +714,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			"<span class='notice'>You wash \a [I] using \the [src].</span>")
 	else
 		busy = FALSE
+
+/obj/structure/sink/deconstruct()
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 1)
+	..()
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"

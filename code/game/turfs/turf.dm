@@ -94,44 +94,49 @@
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		to_chat(usr, "<span class='warning'>Передвижение отключено администрацией.</span>")//This is to identify lag problems
-		return
-	if (!mover || !isturf(mover.loc))
-		return 1
+		return FALSE
+	if (!(mover && isturf(mover.loc)))
+		return TRUE
 
-
+	var/list/second_check = list()
+	var/turf/mover_loc = mover.loc
 	//First, check objects to block exit that are not on the border
-	for(var/obj/obstacle in mover.loc)
-		if(!(obstacle.flags & ON_BORDER) && (mover != obstacle) && (forget != obstacle))
-			if(!obstacle.CheckExit(mover, src))
-				mover.Bump(obstacle, 1)
-				return 0
+	for(var/obj/obstacle in mover_loc)
+		if(mover != obstacle && forget != obstacle)
+			if(obstacle.flags & ON_BORDER)
+				second_check += obstacle
+			else if(!obstacle.CheckExit(mover, src))
+				mover.Bump(obstacle, TRUE)
+				return FALSE
 
 	//Now, check objects to block exit that are on the border
-	for(var/obj/border_obstacle in mover.loc)
-		if((border_obstacle.flags & ON_BORDER) && (mover != border_obstacle) && (forget != border_obstacle))
-			if(!border_obstacle.CheckExit(mover, src))
-				mover.Bump(border_obstacle, 1)
-				return 0
+	for(var/obj/border_obstacle as anything in second_check)
+		if(!border_obstacle.CheckExit(mover, src))
+			mover.Bump(border_obstacle, TRUE)
+			return FALSE
 
+	second_check.Cut()
 	//Next, check objects to block entry that are on the border
-	for(var/obj/border_obstacle in src)
-		if(border_obstacle.flags & ON_BORDER)
-			if(!border_obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != border_obstacle))
-				mover.Bump(border_obstacle, 1)
-				return 0
+	for(var/atom/movable/border_obstacle as anything in src)
+		if(forget != border_obstacle)
+			if(border_obstacle.flags & ON_BORDER)
+				if(!border_obstacle.CanPass(mover, mover_loc, 1, 0))
+					mover.Bump(border_obstacle, TRUE)
+					return FALSE
+			else
+				second_check += border_obstacle
 
 	//Then, check the turf itself
 	if (!CanPass(mover, src))
-		mover.Bump(src, 1)
-		return 0
+		mover.Bump(src, TRUE)
+		return FALSE
 
 	//Finally, check objects/mobs to block entry that are not on the border
-	for(var/atom/movable/obstacle in src)
-		if(!(obstacle.flags & ON_BORDER))
-			if(!obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != obstacle))
-				mover.Bump(obstacle, 1)
-				return 0
-	return 1 //Nothing found to block so return success!
+	for(var/atom/movable/obstacle as anything in second_check)
+		if(!obstacle.CanPass(mover, mover_loc, 1, 0))
+			mover.Bump(obstacle, TRUE)
+			return FALSE
+	return TRUE //Nothing found to block so return success!
 
 /turf/proc/is_mob_placeable(mob/M) // todo: maybe rewrite as COMSIG_ATOM_INTERCEPT_TELEPORT
 	if(density)
@@ -154,7 +159,6 @@
 	if(!istype(AM, /atom/movable))
 		return
 
-	var/loopsanity = 100
 	if(ismob(AM))
 		var/mob/M = AM
 		if(!M.lastarea)
@@ -166,16 +170,6 @@
 	if (AM && AM.opacity)
 		recalc_atom_opacity() // Make sure to do this before reconsider_lights(), incase we're on instant updates.
 		reconsider_lights()
-
-	var/objects = 0
-	for(var/atom/O as mob|obj|turf|area in range(1))
-		if(objects > loopsanity)	break
-		objects++
-		spawn( 0 )
-			if ((O && AM))
-				O.HasProximity(AM, 1)
-			return
-	return
 
 /turf/Exited(atom/movable/Obj, atom/newloc)
 	. = ..()
@@ -386,7 +380,7 @@
 			M.gib()
 	for(var/obj/mecha/M in src)//Mecha are not gibbed but are damaged.
 		spawn(0)
-			M.take_damage(100, "brute")
+			M.take_damage(100, BRUTE)
 
 ////////////////
 //Distance procs

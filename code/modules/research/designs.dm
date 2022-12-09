@@ -1361,6 +1361,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/chem_master
 	category = list("Machine")
 
+/datum/design/operating_table
+	name = "Machine Design (Operating Table)"
+	desc = "The circuit board for a Operating Table."
+	id = "operating_table"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 3000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/operating_table
+	category = list("Machine")
+
 /datum/design/destructive_analyzer
 	name = "Destructive Analyzer Board"
 	desc = "The circuit board for a destructive analyzer."
@@ -2083,7 +2092,7 @@ other types of metals and chemistry for reagents).
 	id = "plasmacutter"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 500, MAT_GOLD = 500, MAT_PHORON = 500)
-	build_path = /obj/item/weapon/pickaxe/plasmacutter
+	build_path = /obj/item/weapon/gun/energy/laser/cutter
 	construction_time=300
 	category = list("Tools")
 
@@ -2215,6 +2224,15 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/hud/mining
+	category = list("Support")
+
+/datum/design/holochip
+	name = "Holographic chip"
+	desc = "A holographic chip for space helmet's HUD."
+	id = "holochip"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 100, MAT_GLASS = 100, MAT_GOLD = 200)
+	build_path = /obj/item/holochip
 	category = list("Support")
 
 /datum/design/hud_calibrator

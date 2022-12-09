@@ -6,7 +6,7 @@ var/global/list/closet_list = list()        //guess what? closets! /obj/structur
 var/global/list/crematorium_list = list()   //list if all /obj/structure/crematorium
 var/global/list/implant_list = list()       //list of all /obj/item/weapon/implant
 var/global/list/ladder_list = list()        //|====| <- /obj/structure/ladder
-var/global/list/landmarks_list = list()     //list of all landmarks created
+var/global/list/list/landmarks_list = list()//assoc list of all landmarks created (name -> list of landmarks)
 var/global/list/mecha_tracking_list = list()//list of all /obj/item/mecha_parts/mecha_tracking
 var/global/list/surgery_steps = list()      //list of all surgery steps  |BS12
 var/global/list/crafting_recipes = list()   //list of all personal craft recipes

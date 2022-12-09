@@ -104,15 +104,12 @@
 					for(var/datum/reagent/x in src.occupant.reagents.reagent_list)
 						H.reagents.trans_to(beaker, 3)
 						H.blood_trans_to(beaker, 1)
-		updateUsrDialog()
 	return
 
-/obj/machinery/sleeper/blob_act()
-	if(prob(75))
-		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.loc
-			A.blob_act()
-		qdel(src)
+/obj/machinery/sleeper/deconstruct(disassembled)
+	for(var/atom/movable/A as anything in src)
+		A.forceMove(loc)
+	..()
 
 /obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
 	..()

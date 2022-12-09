@@ -328,31 +328,19 @@
 		return
 	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
-/mob/verb/pointed(atom/A as mob|obj|turf in oview())
+/mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
 	set category = "Object"
 
-	if (next_point_to > world.time)
-		return
-
-	if (incapacitated() || (status_flags & FAKEDEATH))
-		return
-
-	if (istype(A, /obj/effect/decal/point))
-		return
+	if(istype(A, /obj/effect/decal/point))
+		return FALSE
 
 	// Removes an ability to point to the object which is out of our sight.
 	// Mostly for cases when we have mesons, thermals etc. equipped.
-	if (!(A in oview(usr.loc)))
-		return
-
-	var/tile = get_turf(A)
-	if (!tile)
-		return
+	if(client && !(A in view(client.view, src)))
+		return FALSE
 
 	point_at(A)
-
-	usr.visible_message("<span class='notice'><b>[usr]</b> points to [A].</span>")
 
 	// TODO: replace with a "COMSIG_MOB_POINTED" signal
 	if (isliving(A))
@@ -360,7 +348,7 @@
 			if (usr in S.Friends)
 				S.last_pointed = A
 
-	next_point_to = world.time + 1.5 SECONDS
+	return TRUE
 
 /mob/verb/abandon_mob()
 	set name = "Respawn"
