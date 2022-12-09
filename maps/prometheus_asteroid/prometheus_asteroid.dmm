@@ -1514,9 +1514,8 @@
 	dir = 4
 	},
 /obj/machinery/disposal,
-/obj/machinery/alarm{
-	pixel_x = -28;
-	pixel_y = -6
+/obj/structure/sign/warning/deathsposal{
+	pixel_x = -32
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -1900,10 +1899,7 @@
 	},
 /area/asteroid/research_outpost/gearstore)
 "gS" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 8
-	},
+/obj/machinery/vending/cigarette,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken4"
 	},
@@ -3051,6 +3047,9 @@
 /area/asteroid/mine/unexplored/safe)
 "ll" = (
 /obj/machinery/vending/coffee,
+/obj/machinery/atm{
+	pixel_x = -28
+	},
 /turf/simulated/floor/wood,
 /area/asteroid/research_outpost/hallway)
 "lm" = (
@@ -3779,6 +3778,10 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "oi" = (
+/obj/machinery/alarm{
+	pixel_x = -28;
+	pixel_y = -6
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warndark"
@@ -4925,12 +4928,15 @@
 	},
 /area/asteroid/mine/production)
 "tN" = (
-/obj/machinery/vending/cigarette,
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/atm{
-	pixel_y = 28
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/structure/sign/warning/deathsposal{
+	pixel_y = 32
 	},
 /turf/simulated/floor/wood,
 /area/asteroid/research_outpost/hallway)
@@ -37791,7 +37797,7 @@ FA
 FA
 Be
 Be
-dj
+Be
 dj
 dj
 dj
@@ -38307,7 +38313,7 @@ dj
 dj
 dj
 dj
-dj
+Be
 dj
 dj
 dj
@@ -39851,7 +39857,7 @@ dj
 dj
 dj
 dj
-dj
+Be
 dj
 dj
 dj
@@ -40880,7 +40886,7 @@ dj
 Be
 dj
 dj
-dj
+Be
 dj
 dj
 dj
@@ -41653,7 +41659,7 @@ dj
 dj
 dj
 dj
-dj
+Be
 dj
 dj
 dj
@@ -41914,7 +41920,7 @@ dj
 dj
 dj
 dj
-dj
+Be
 dj
 dj
 dj
@@ -42425,7 +42431,7 @@ dj
 dj
 Be
 dj
-dj
+Be
 dj
 dj
 dj
@@ -42678,6 +42684,7 @@ vM
 dj
 dj
 dj
+Be
 dj
 dj
 dj
@@ -42687,9 +42694,8 @@ dj
 dj
 dj
 dj
-dj
-dj
-dj
+Be
+Be
 dj
 dj
 dj
@@ -42946,7 +42952,7 @@ dj
 dj
 dj
 dj
-dj
+Be
 dj
 dj
 dj
@@ -43190,7 +43196,7 @@ Th
 vM
 dj
 dj
-dj
+Be
 dj
 dj
 dj
@@ -45253,9 +45259,9 @@ vM
 vM
 vM
 dj
-dj
-dj
-dj
+Be
+Be
+Be
 dj
 Bs
 zQ
@@ -45507,10 +45513,10 @@ Th
 VL
 VL
 VL
+Be
 dj
 dj
-dj
-dj
+Be
 dj
 dj
 dj
@@ -45763,13 +45769,13 @@ Th
 Th
 VL
 dj
+Be
+dj
+Be
 dj
 dj
 dj
-dj
-dj
-dj
-dj
+Be
 dj
 dj
 vM
@@ -46276,9 +46282,9 @@ Th
 Th
 Th
 VL
+Be
 dj
-dj
-dj
+Be
 dj
 dj
 dj
@@ -46534,7 +46540,7 @@ Th
 vM
 vM
 Be
-dj
+Be
 dj
 dj
 dj
@@ -46760,8 +46766,8 @@ ao
 VN
 VN
 VN
-VN
 gI
+YH
 YH
 YH
 vG
@@ -47017,8 +47023,8 @@ ZM
 db
 db
 vU
-nP
 Ic
+nP
 nP
 vU
 vG
@@ -47055,7 +47061,7 @@ Be
 dj
 dj
 dj
-dj
+Be
 dj
 dj
 dj
@@ -47304,7 +47310,7 @@ Th
 Th
 vM
 vM
-dj
+Be
 dj
 dj
 dj
@@ -47560,7 +47566,7 @@ Uf
 Th
 Th
 Th
-vM
+tx
 dj
 dj
 dj
@@ -47570,7 +47576,7 @@ dj
 dj
 dj
 dj
-dj
+Be
 dj
 dj
 dj
@@ -47818,6 +47824,7 @@ Uf
 Th
 Th
 vM
+Be
 dj
 dj
 dj
@@ -47829,8 +47836,7 @@ dj
 dj
 dj
 dj
-dj
-dj
+Be
 dj
 dj
 dj
@@ -48089,7 +48095,7 @@ dj
 dj
 dj
 dj
-dj
+Be
 dj
 dj
 dj
@@ -48334,7 +48340,7 @@ Th
 Th
 vM
 dj
-dj
+Be
 dj
 dj
 dj
@@ -48850,7 +48856,7 @@ Th
 vM
 vM
 dj
-dj
+Be
 dj
 dj
 dj
@@ -49117,7 +49123,7 @@ dj
 dj
 dj
 dj
-dj
+Be
 dj
 dj
 FA
@@ -49622,7 +49628,7 @@ Th
 Th
 vM
 dj
-dj
+Be
 dj
 dj
 dj
@@ -50392,7 +50398,7 @@ Th
 Th
 Th
 vM
-dj
+Be
 dj
 dj
 dj
@@ -51675,7 +51681,7 @@ Th
 vM
 dj
 dj
-dj
+Be
 dj
 dj
 dj
@@ -52185,8 +52191,8 @@ Vj
 vM
 IR
 Th
-dj
-dj
+vM
+vM
 dj
 dj
 dj
@@ -52442,9 +52448,9 @@ Vj
 Oz
 yV
 Th
-dj
+vM
 Be
-dj
+Be
 dj
 dj
 dj
@@ -52699,7 +52705,7 @@ Oz
 qV
 Gg
 Th
-dj
+vM
 dj
 dj
 dj
@@ -52956,7 +52962,7 @@ qV
 Gg
 Th
 Th
-dj
+vM
 dj
 dj
 dj
@@ -53213,8 +53219,8 @@ Gg
 Th
 Th
 Th
-dj
-dj
+vM
+Be
 dj
 dj
 dj
@@ -53470,7 +53476,7 @@ Th
 Th
 Th
 vM
-dj
+vM
 dj
 dj
 dj
