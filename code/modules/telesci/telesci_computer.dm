@@ -174,7 +174,7 @@
 
 	if(SEND_SIGNAL(exit, COMSIG_ATOM_INTERCEPT_TELEPORT))
 		return FALSE
-	
+
 	active_wormhole = new (telepad.loc, exit)
 	active_wormhole.linked_console = src
 	return active_wormhole
@@ -350,7 +350,7 @@
 
 	if(href_list["setMemory"])
 		if(last_target)
-			inserted_gps.locked_location = last_target
+			inserted_gps.saved_locations[inserted_gps.selected_track] = last_target
 			temp_msg = "Location saved."
 		else
 			temp_msg = "ERROR!<BR>No data stored."

@@ -134,8 +134,9 @@ var/global/list/GPS_list = list()
 		data["area"] = null
 
 	// Saved location
-	if(saved_locations[selected_track] && (saved_locations[selected_track].z == selected_z))
-		data["saved"] = POS_VECTOR(saved_locations[selected_track])
+	var/turf/Saved = saved_locations[selected_track]
+	if(Saved && (Saved.z == selected_z))
+		data["saved"] = POS_VECTOR(Saved)
 	else
 		data["saved"] = null
 
