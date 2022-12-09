@@ -19,14 +19,20 @@ var/global/list/GPS_list = list()
 	origin_tech = "programming=2;engineering=2"
 	/// Whether the GPS is on.
 	var/tracking = FALSE
+	var/on = FALSE
 	/// The tag that is visible to other GPSes.
 	var/gpstag = "COM0"
-	/// Whether to only list signals that are on the same Z-level.
-	var/same_z = FALSE
 	/// Whether the GPS should only show up to GPSes on the same Z-level.
 	var/local = FALSE
 	var/emped = FALSE
-	var/turf/locked_location
+	var/list/saved_locations[3]
+	var/selected_z = 2
+	var/track_max_length = 150
+	var/list/track = list(list(), list(), list())
+	var/selected_track = 1
+	var/track_saving = FALSE
+
+	var/color_style = "COM"
 
 /obj/item/device/gps/atom_init()
 	. = ..()
@@ -36,7 +42,46 @@ var/global/list/GPS_list = list()
 
 /obj/item/device/gps/Destroy()
 	GPS_list.Remove(src)
+	stop_tracking()
 	return ..()
+
+/obj/item/device/gps/process()
+	var/list/Track = track[selected_track]
+	if(Track.len > track_max_length || !on || !tracking)
+		stop_tracking()
+		return
+
+	var/turf/T = get_turf(src)
+
+	var/i = Track.len
+	var/list/Pre_Prev_Dot = i > 1 ? Track[i-1] : null
+	var/list/Prev_Dot = i > 0 ? Track[i] : null
+	var/list/Dot = list("x" = T.x, "y" = T.y, "z" = T.z, "end" = FALSE)
+	if(Prev_Dot)
+		if(!(Prev_Dot["z"] == Dot["z"]))
+			Prev_Dot["end"] = TRUE
+		else if(Prev_Dot["x"] == Dot["x"] && Prev_Dot["y"] == Dot["y"])
+			return
+		else if(Pre_Prev_Dot && !Pre_Prev_Dot["end"] && !Prev_Dot["end"])
+			if(OnVector(Pre_Prev_Dot, Prev_Dot, Dot))
+				Track[i] = Dot
+				return
+
+	Track.len++
+	i++
+	Track[i] = Dot
+
+
+/obj/item/device/gps/proc/OnVector(list/First, list/Second, list/Third)
+	if( ((Second["x"]-First["x"]) * (Third["y"] - First["y"])) - ((Second["y"]-First["y"]) * (Third["x"]-First["x"])) == 0)
+		return TRUE
+	return FALSE
+
+/obj/item/device/gps/proc/stop_tracking()
+	if(track[selected_track].len)
+		track[selected_track][track[selected_track].len]["end"] = TRUE
+	track_saving = FALSE
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/gps/update_icon()
 	cut_overlays()
@@ -74,36 +119,48 @@ var/global/list/GPS_list = list()
 
 	// General
 	data["active"] = tracking
+	data["on"] = on
 	data["tag"] = gpstag
-	data["same_z"] = same_z
-	if(!tracking)
+	data["style"] = color_style
+	if(!on)
 		return data
 	var/turf/T = get_turf(src)
-	data["area"] = get_area(src)
-	data["position"] = POS_VECTOR(T)
+	if(tracking && (T.z == selected_z))
+		data["area"] = get_area(src)
+		data["position"] = POS_VECTOR(T)
+	else
+		data["position"] = null
+		data["area"] = null
 
 	// Saved location
-	if(locked_location)
-		data["saved"] = POS_VECTOR(locked_location)
+	if(saved_locations[selected_track] && (saved_locations[selected_track].z == selected_z))
+		data["saved"] = POS_VECTOR(saved_locations[selected_track])
 	else
 		data["saved"] = null
 
 	// GPS signals
-	var/signals = list()
-	for(var/g in global.GPS_list)
-		var/obj/item/device/gps/G = g
-		var/turf/GT = get_turf(G)
-		if(!G.tracking || G == src)
-			continue
-		if((G.local || same_z) && (GT.z != T.z))
-			continue
+	if(tracking)
+		var/signals = list()
+		for(var/g in global.GPS_list)
+			var/obj/item/device/gps/G = g
+			var/turf/GT = get_turf(G)
+			if(!G.tracking || G == src)
+				continue
+			if((G.local) && (GT.z != T.z))
+				continue
+			if(G.z != selected_z)
+				continue
 
-		var/list/signal = list("tag" = G.gpstag, "area" = null, "position" = null)
-		if(!G.emped)
-			signal["area"] = get_area(G)
-			signal["position"] = POS_VECTOR(GT)
-		signals += list(signal)
-	data["signals"] = signals
+			var/list/signal = list("tag" = G.gpstag, "area" = null, "position" = null)
+			if(!G.emped)
+				signal["area"] = get_area(G)
+				signal["position"] = POS_VECTOR(GT)
+			signals += list(signal)
+		data["signals"] = signals
+
+	data["track"] = track[selected_track]
+	data["track_saving"] = track_saving
+	data["selected_z"] = selected_z
 
 	return data
 
@@ -113,7 +170,7 @@ var/global/list/GPS_list = list()
 /obj/item/device/gps/tgui_interact(mob/user, datum/tgui/ui = null)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "GPS", "GPS", 450, 700)
+		ui = new(user, src, "GPS", "GPS", 400, 650)
 		ui.open()
 
 /obj/item/device/gps/tgui_act(action, list/params, datum/tgui/ui)
@@ -124,17 +181,39 @@ var/global/list/GPS_list = list()
 	. = TRUE
 	switch(action)
 		if("tag")
-			var/newtag = params["newtag"] || ""
+			var/newtag = input("Имя:", "", gpstag) as text
 			newtag = uppertext(paranoid_sanitize(copytext(newtag, 1, 5)))
 			if(!length(newtag) || gpstag == newtag)
 				return
 			gpstag = newtag
 			name = "global positioning system ([gpstag])"
 		if("toggle")
-			AltClick(usr)
+			on = !on
+			stop_tracking()
 			return FALSE
-		if("same_z")
-			same_z = !same_z
+		if("tracking")
+			AltClick(usr)
+		if("z_level")
+			selected_z = clamp(params["chosen_level"], 1, 10)
+			return FALSE
+		if("track_saving")
+			if(track_saving)
+				STOP_PROCESSING(SSobj, src)
+				stop_tracking()
+			else
+				START_PROCESSING(SSobj, src)
+				track_saving = TRUE
+		if("choose_track")
+			selected_track++
+			if(selected_track > 3)
+				selected_track = 1
+		if("erase_data")
+			stop_tracking()
+			track[selected_track] = list()
+			saved_locations[selected_track] = null
+		if("save_location")
+			if(tracking)
+				saved_locations[selected_track] = get_turf(src)
 		else
 			return FALSE
 
@@ -149,18 +228,22 @@ var/global/list/GPS_list = list()
 /obj/item/device/gps/science
 	icon_state = "gps-sci"
 	gpstag = "SCI0"
+	color_style = "SCI"
 
 /obj/item/device/gps/engineering
 	icon_state = "gps-eng"
 	gpstag = "ENG0"
+	color_style = "ENG"
 
 /obj/item/device/gps/mining
 	icon_state = "gps-mine"
 	gpstag = "MIN0"
+	color_style = "MIN"
 
 /obj/item/device/gps/medical
 	icon_state = "gps-med"
 	gpstag = "MED0"
+	color_style = "MED"
 
 /obj/item/device/gps/cyborg
 	gpstag = "BORG0"

@@ -1,0 +1,327 @@
+.GPS_SCI_Main {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: #B8BEC6;
+	margin: 0px;
+	border-top: 50px solid #F8F8F8;
+	border-radius: 5px;
+}
+.GPS_SCI_Line {
+	position: absolute;
+	left: 30%;
+	width: 40%;
+	height: 100%;
+	background: #7B48A6;
+	border-top: 50px solid #AD66BE;
+}
+
+.GPS_ENG_Main {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: #EFB514;
+	margin: 0px;
+	border-top: 50px solid #FFE269;
+	border-radius: 5px;
+}
+.GPS_ENG_Line {
+	position: absolute;
+	left: 30%;
+	width: 40%;
+	height: 100%;
+	background: #EB5E00;
+	border-top: 50px solid #E67C34;
+}
+
+.GPS_MIN_Main {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: #B3863C;
+	margin: 0px;
+	border-top: 50px solid #BF934B;
+	border-radius: 5px;
+}
+.GPS_MIN_Line {
+	position: absolute;
+	left: 30%;
+	width: 40%;
+	height: 100%;
+	background: #967032;
+	border-top: 50px solid #B3863C;
+}
+
+.GPS_MED_Main {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: #B8BEC6;
+	margin: 0px;
+	border-top: 50px solid #F8F8F8;
+	border-radius: 5px;
+}
+.GPS_MED_Line {
+	position: absolute;
+	left: 30%;
+	width: 40%;
+	height: 100%;
+	background: #5EABEB;
+	border-top: 50px solid #B0EAF6;
+}
+
+.GPS_COM_Main {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: #5EABEB;
+	margin: 0px;
+	border-top: 50px solid #B0EAF6;
+	border-radius: 5px;
+}
+.GPS_COM_Line {
+	position: absolute;
+	left: 30%;
+	width: 40%;
+	height: 100%;
+	background: #3B4872;
+	border-top: 50px solid #5EABEB;
+}
+
+.GPS_Monitor {
+	position: absolute;
+	background: #111111;
+	border-radius: 25px;
+	overflow: hidden;
+}
+.GPS_Monitor2 {
+	position: relative;
+	left: 0px;
+	top: 0px;
+	width: 357px;
+	height: 177px;
+	background: #353738;
+	border-radius: 25px;
+}
+.GPS_Monitor3 {
+	position: relative;
+	top: 17px;
+	width: 357px;
+	height: 320px;
+	background: #111111;
+	border-radius: 50px;
+	padding: 0px;
+}
+.GPS_Monitor4 {
+	position: relative;
+	width: 357px;
+	height: 320px;
+	background: rgba(255,255,255,.07);
+	border-radius: 50px;
+	padding: 0px;
+}
+.GPS_Monitor5 {
+	top: 0px;
+	position: absolute;
+	width: 357px;
+	height: 357px;
+	background: url("~tgui/assets/dot_background.png") repeat;
+}
+
+.GPS_Buttons_Holder {
+	position: absolute;
+	background: #353738;
+	border-radius: 15px;
+	border-bottom: 25px solid #626464;
+}
+
+.GPS_Buttons_Holder2 {
+	position: relative;
+	background: #4c4d4e;
+	border-radius: 15px;
+}
+
+.GPS_Button {
+  border: 5px solid #2f2f32;
+  border-left-color: #5D5D64;
+  border-top-color: #5D5D64;
+  position: absolute;
+  vertical-align: top !important;
+  margin: 3px;
+  border-radius: 10px;
+  background-color: #35373E !important;
+  color: #cccccc;
+  font-weight: bold;
+  font-size: 22px;
+  text-align: center;
+  
+  &:hover {
+    border: 5px solid #414146;
+	border-left-color: #111111;
+	border-top-color: #111111;
+	background-color: #202125 !important;
+	.GPS_Button-Content {
+		transform: scale(0.95, 0.95);
+	}
+  }
+}
+
+.GPS_Button.Button--selected {
+  border: 5px solid #414146;
+  border-left-color: #111111;
+  border-top-color: #111111;
+  background-color: #202125 !important;
+  .GPS_Button-Content {
+    transform: scale(0.95, 0.95);
+  }
+}
+
+.GPS_Top_Button {
+	position: absolute;
+	width: 100px;
+	height: 40px;
+	border-top: 20px solid #C73636;
+	background-color: #922c2c !important;
+	vertical-align: bottom;
+}
+
+.GPS_Top_Button.Button--selected {
+	width: 100px;
+	height: 25px;
+	top:15px !important;
+	border-top: 20px solid #C73636;
+	background-color: #822727 !important;
+	vertical-align: bottom;
+}
+
+.GPS_Antenna {
+	position: absolute;
+	height: 25px;
+	width: 100px;
+	background-color: #4272AE;
+	border-left: 20px solid #323353;
+	border-right: 20px solid #323353;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	vertical-align: bottom;
+}
+
+.GPS_MyCords {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	text-shadow: 0 0 2px rgba(70, 255, 90, .75); 
+}
+.GPS_MyDot {
+	position: absolute;
+	width: 7px;
+	height: 7px;
+	border: 2px solid rgba(70, 255, 90, .5);
+	box-shadow: 0 0 2px rgba(70, 255, 90, .75);
+}
+.GPS_MyCordsText {
+	font-size: 10px;
+	text-align: center;
+	position: absolute;
+	width: 70px;
+	height: 15px;
+	color: rgba(70, 255, 90, .5);
+
+}
+.GPS_MyCordsHeader {
+	font-size: 16px;
+	text-align: center;
+	position: absolute;
+	width: 50px;
+	height: 15px;
+	color: rgba(70, 255, 90, .5);
+}
+
+.GPS_ForeignCords {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	text-shadow: 0 0 2px rgba(255, 84, 73, .75);   
+}
+.GPS_ForeignDot {
+	position: absolute;
+	width: 5px;
+	height: 5px;
+	border: 2.5px solid rgba(255, 84, 73, .6);
+	box-shadow: 0 0 2px rgba(255, 84, 73, .75);
+}
+.GPS_ForeignCordsText {
+	font-size: 10px;
+	text-align: center;
+	position: absolute;
+	width: 70px;
+	height: 15px;
+	color: rgba(255, 84, 73, .6);
+}
+.GPS_ForeignCordsHeader {
+	font-size: 16px;
+	text-align: center;
+	position: absolute;
+	width: 50px;
+	height: 15px;
+	color: rgba(255, 84, 73, .6);
+}
+
+.GPS_SavedCords {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	text-shadow: 0 0 2px rgba(91, 160, 255, .75);
+}
+.GPS_SavedDot {
+	position: absolute;
+	width: 5px;
+	height: 5px;
+	border: 2.5px solid rgba(91, 160, 255, .65);
+	box-shadow: 0 0 2px rgba(91, 160, 255, .75);
+}
+.GPS_SavedCordsText {
+	font-size: 10px;
+	text-align: center;
+	position: absolute;
+	width: 70px;
+	height: 15px;
+	color: rgba(91, 160, 255, .65);
+}
+.GPS_SavedCordsHeader {
+	font-size: 16px;
+	text-align: center;
+	position: absolute;
+	width: 50px;
+	height: 15px;
+	color: rgba(91, 160, 255, .65);
+}
+
+.GPS_MouseCordsText {
+	font-size: 10px;
+	text-align: center;
+	position: absolute;
+	width: 70px;
+	height: 15px;
+	color: rgba(255, 255, 30, .65);
+	text-shadow: 0 0 2px rgba(255, 255, 30, .75);
+}
+
+.GPS_Header {
+	font-size: 20px;
+	text-align: center;
+	position: absolute;
+	color: rgba(255, 255, 255, .5);
+	text-shadow: 0 0 3px rgba(255, 255, 255, .75); 
+}
+
+.GPS_TrackDot {
+	position: absolute;
+	width: 3px;
+	height: 3px;
+	border: 1.5px solid rgba(255, 255, 255, .35);
+}
+.GPS_TrackLine {
+	position: absolute;
+	transform: scaleY(-1);
+}
