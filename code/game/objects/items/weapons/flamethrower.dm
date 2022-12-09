@@ -358,7 +358,7 @@
 
 /obj/item/weapon/makeshift_flamethrower/atom_init(mapload, WeldMaxFuel = 0, WeldCurFuel = -1)
 	. = ..()
-	if(WeldMaxFuel)
+	if(WeldMaxFuel > 0)
 		max_fuel = WeldMaxFuel
 	create_reagents(max_fuel)
 	// check if created by craft or not
