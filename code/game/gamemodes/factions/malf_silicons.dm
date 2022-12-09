@@ -201,6 +201,8 @@
 	return dat
 
 /datum/faction/malf_silicons/zombie
+	name = ZOMBIE_MALF
+	ID = ZOMBIE_MALF
 	shuttle_block = FALSE
 	custom_res = FALSE
 	initroletype = /datum/role/malfAI/zombie //First addition should be the AI

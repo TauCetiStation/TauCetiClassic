@@ -40,6 +40,7 @@
 #define GANGSTER_DEALER "Gangster Dealer"
 #define HEADREV "Head Revolutionary"
 #define MALF "Malf AI"
+#define ZOMBIE_MALF "Zombie Malfunction"
 #define MALFBOT "Malf-Slaved Cyborg"
 #define NUKE_OP "Nuclear Operative"
 #define NUKE_OP_LEADER "Nuclear Operative Leader"
