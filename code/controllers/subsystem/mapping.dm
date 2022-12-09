@@ -223,6 +223,8 @@ SUBSYSTEM_DEF(mapping)
 	if(global.config.load_mine)
 		if(config.minetype == "asteroid")
 			LoadGroup(FailedZs, "Asteroid", "asteroid", "asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
+		if(config.minetype == "prometheus_asteroid")
+			LoadGroup(FailedZs, "Asteroid", "prometheus_asteroid", "prometheus_asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
 		else if (!isnull(config.minetype))
 			INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
 
@@ -265,7 +267,7 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/proc/autovote_next_map()
 	var/datum/map_config/current_next_map
 	var/should_revote = FALSE
-	
+
 	 // todo: for some reason maps in SSmapping don't have config/maps.txt params?
 	if(next_map_config)	// maybe we shouldn't if it's admin choice
 		current_next_map = global.config.maplist[next_map_config.map_name]
