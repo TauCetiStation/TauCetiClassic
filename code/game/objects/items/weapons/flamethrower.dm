@@ -361,22 +361,22 @@
 	if(WeldMaxFuel)
 		max_fuel = WeldMaxFuel
 	create_reagents(max_fuel)
+	// check if created by craft or not
 	if(WeldCurFuel >= 0)
+		//if the weldtool is not filled with fuel - dont give src fuel
 		if(!WeldCurFuel)
 			return
-		reagents.add_reagent("fuel",WeldCurFuel)
+		reagents.add_reagent("fuel", WeldCurFuel)
 	else
-		reagents.add_reagent("fuel",max_fuel)
+		reagents.add_reagent("fuel", max_fuel)
 
 /obj/item/weapon/makeshift_flamethrower/examine(mob/user)
 	. = ..()
-	to_chat(user, "devise is [status ? "secured" : "unsecured"]. <br>contains [reagents.get_reagent_amount("fuel")]/[max_fuel] units of fuel!")
+	to_chat(user, "<span class='info'>Devise is [status ? "secured" : "unsecured"]. <br>Contains [reagents.get_reagent_amount("fuel")]/[max_fuel] units of fuel!</span>")
 
 /obj/item/weapon/makeshift_flamethrower/Destroy()
-	if(weldtool)
-		QDEL_NULL(weldtool)
-	if(igniter)
-		QDEL_NULL(igniter)
+	QDEL_NULL(weldtool)
+	QDEL_NULL(igniter)
 	return ..()
 
 /obj/item/weapon/makeshift_flamethrower/get_current_temperature()
@@ -408,8 +408,6 @@
 
 /obj/item/weapon/makeshift_flamethrower/afterattack(atom/target, mob/user, proximity, params)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(!can_see(user, target))
-		return
 	if(!status)
 		to_chat(user, "<span class='warning'>Secure all components first.</span>")
 		return
@@ -427,7 +425,7 @@
 	for(var/turf/turf_in_line in turflist)
 		if(turf_in_line == self_turf || isspaceturf(turf_in_line))
 			continue
-		//stop fuelthrowing when distance is big
+		//stop fuelthrowing when distance is big. No need fueltrowing with zoom or camera use
 		if(distance_reached > 7)
 			break
 		//check every turf in line for walls/glass/etc
@@ -479,6 +477,7 @@
 			STOP_PROCESSING(SSobj, src)
 			to_chat(user, "<span class='notice'>[src] is now unsecured.</span>")
 			update_icon()
+			user.update_inv_item(src)
 		return
 	if(isigniter(I))
 		if(igniter)
