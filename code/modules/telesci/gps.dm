@@ -34,6 +34,8 @@ var/global/list/GPS_list = list()
 	var/list/tracks
 	var/list/saved_locations
 
+	var/list/maps
+
 	var/selected_z = 2
 
 	var/color_style = "COM"
@@ -45,6 +47,8 @@ var/global/list/GPS_list = list()
 	update_icon()
 
 	setup_slots()
+
+	maps = list("nanomapBackground.png", "nanomapBackground.png", "nanomap_[SSmapping.station_image]_1.png", "nanomapBackground.png", "nanomapBackground.png", "nanomapBackground.png", "nanomapBackground.png", "nanomapBackground.png", "nanomapBackground.png", "nanomapBackground.png", "nanomapBackground.png")
 
 /obj/item/device/gps/Destroy()
 	GPS_list.Remove(src)
@@ -173,6 +177,8 @@ var/global/list/GPS_list = list()
 	data["track"] = tracks[selected_slot]
 	data["track_saving"] = track_saving
 	data["selected_z"] = selected_z
+
+	data["maps"] = maps
 
 	return data
 

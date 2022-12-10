@@ -51,6 +51,7 @@ export const GPS = (properties, context) => {
     track_saving,
     track,
     style,
+    maps,
   } = data;
   return (
     <Window>
@@ -69,14 +70,17 @@ export const GPS = (properties, context) => {
         <Box className="GPS_Antenna" right="25px" top="0px" />
         
         <Box className="GPS_Monitor" left="22px" top="65px" width="357px" height="357px" onMouseMove={handleMouseMove} onMouseout={handleMouseOut} onMouseover={handleMouseOver}>
+          {!!maps && !!maps[selected_z] && !!on && (
+            <img src={maps[selected_z]} className="GPS_Map" />
+          )}
           <Box className="GPS_Monitor2">
             <Box className="GPS_Monitor3">
-              {on && (
+              {!!on && (
                 <div>
                   <Box left="0px" top="-15px" className="GPS_Header" width="350px" height="25px">
                     -{selected_z}-
                   </Box>
-                  {track && (
+                  {!!track && (
                     track.map((dot, index) => (
                       dot.z === selected_z && (
                         <>
@@ -90,7 +94,7 @@ export const GPS = (properties, context) => {
                       )
                     ))
                   )}
-                  {saved && (
+                  {!!saved && (
                     <Box left={1.4*saved[0]-24+"px"} bottom={1.4*saved[1]-44+"px"} className="GPS_SavedCords">
                       <Box left="0px" top="0px" className="GPS_SavedCordsHeader">
                         СОХР.
@@ -101,7 +105,7 @@ export const GPS = (properties, context) => {
                       </Box>
                     </Box>
                   )}
-                  {active && (
+                  {!!active && (
                     <>
                       {signals.map(signal => ({ ...signal })).map((signal, i) => (
                         <Box key={i} left={1.4*signal.position[0]-24+"px"} bottom={1.4*signal.position[1]-44+"px"} className="GPS_ForeignCords">
@@ -114,7 +118,7 @@ export const GPS = (properties, context) => {
                           </Box>
                         </Box>
                       ))}                  
-                      {position && (
+                      {!!position && (
                         <Box left={1.4*position[0]-24+"px"} bottom={1.4*position[1]-44+"px"} className="GPS_MyCords">
                           <Box left="0px" top="0px" className="GPS_MyCordsHeader">
                             {tag}
@@ -130,7 +134,7 @@ export const GPS = (properties, context) => {
                       </Box>
                     </>
                   )}
-                  {mouseovered && (
+                  {!!mouseovered && (
                     <Box left={1.4*mouseX-36+"px"} bottom={1.4*mouseY-22+"px"} className="GPS_MouseCordsText">
                       ({mouseX}, {mouseY})
                     </Box>
@@ -139,7 +143,7 @@ export const GPS = (properties, context) => {
               )}
               <Box className="GPS_Monitor4" />
             </Box>
-          </Box>{on && (<Box className="GPS_Monitor5" />)}
+          </Box>{!!on && (<Box className="GPS_Monitor5" />)}
         </Box>
         
         <Box className="GPS_Buttons_Holder" left="70px" bottom="10px" width="260px" height="175px">
