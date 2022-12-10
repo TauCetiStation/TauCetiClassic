@@ -19,6 +19,8 @@
 
 	var/being_shocked = 0
 
+	var/list/price_tag = null
+
 	uses_integrity = TRUE
 
 /obj/item/proc/is_used_on(obj/O, mob/user)
@@ -27,11 +29,30 @@
 	STOP_PROCESSING(SSobj, src)
 	return 0
 
+/obj/atom_init()
+	. = ..()
+	verbs -= /obj/verb/remove_price_tag
+
 /obj/Destroy()
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	nanomanager.close_uis(src)
 	return ..()
+
+/obj/examine(mob/user)
+	. = ..()
+
+	if(price_tag)
+		to_chat(user, "It has a price tag attached. Description: [price_tag["description"]], Price: [price_tag["price"]]$")
+
+/obj/verb/remove_price_tag()
+	set name = "Снять ценник"
+	set src in view(1)
+	set category = "Object"
+
+	price_tag = null
+	underlays -= icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
+	verbs -= /obj/verb/remove_price_tag
 
 /obj/proc/get_current_temperature()
 	/*
@@ -191,7 +212,7 @@
 		. |= M.get_listeners()
 
 /atom/movable/proc/get_listening_objs()
-	. = list() 
+	. = list()
 	if(flags & (HEAR_TALK | HEAR_PASS_SAY | HEAR_TA_SAY))
 		. = list(src)
 

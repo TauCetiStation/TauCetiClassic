@@ -170,6 +170,8 @@
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
+	else if(istype(W, /obj/item/device/tagger))
+		return
 
 	else
 		attack_hand(user)
@@ -274,10 +276,10 @@
 	//okay, so the closet is either welded or locked... resist!!!
 	user.SetNextMove(100)
 	user.last_special = world.time + 100
-	user.visible_message(
-		"<span class='warning'>[src] begins to shake violently!</span>",
-		"<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>"
+	visible_message(
+		"<span class='warning'>[src] begins to shake violently!</span>"
 	)
+	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>")
 
 	if(do_after(user, (breakout_time MINUTES), target=src))
 		if(!user || user.loc != src || opened || (!locked && !welded))
