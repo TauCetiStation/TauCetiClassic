@@ -206,7 +206,7 @@ SUBSYSTEM_DEF(air)
 		tiles_to_update.len--
 
 		// Check if the turf is self-zone-blocked
-		if(FAST_C_AIRBLOCK(T, T) & ZONE_BLOCKED)
+		if(FAST_C_AIRBLOCK(T, T) == ZONE_BLOCKED)
 			deferred_tiles += T
 			if (MC_TICK_CHECK)
 				return
