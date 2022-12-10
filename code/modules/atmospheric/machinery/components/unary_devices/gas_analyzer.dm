@@ -10,7 +10,7 @@
 	var/currentGasMoles = 0
 	var/currentGas = "phoron"
 	var/amountPerLevel = 100 //moles
-	var/temp = ""
+	var/temporaryHtmlData = ""
 	var/lastResearch = 31
 	var/researchDrained = FALSE
 	var/obj/item/weapon/tank/insertedTank = null
@@ -142,8 +142,8 @@
 
 /obj/machinery/atmospherics/gas_analyzer/proc/generateInteractionPage()
 	var/html = ""
-	if(temp)
-		html = temp
+	if(temporaryHtmlData)
+		html = temporaryHtmlData
 		return html
 	if(!checkRdConsole())
 		html += "<span class='red'>Рабочих консолей РнД не обнаружено - очки не будут генерироватся.</span><br>"
@@ -161,16 +161,16 @@
 
 /obj/machinery/atmospherics/gas_analyzer/Topic(href, href_list)
 	if(href_list["change_gas"])
-		temp += "Внимание: при выборе газа другого типа текущее количество газа будет обнулено.<br>"
+		temporaryHtmlData += "Внимание: при выборе газа другого типа текущее количество газа будет обнулено.<br>"
 		for(var/gas in gas_data.gases)
-			temp += "[gas_data.name[gas]]; <A href='?src=\ref[src];changegs=\ref[gas]'>Выбрать</A><br>"
+			temporaryHtmlData += "[gas_data.name[gas]]; <A href='?src=\ref[src];changegs=\ref[gas]'>Выбрать</A><br>"
 	else if(href_list["change_gas_select"])
 		var/N = locate(href_list["change_gas_select"])
 		if(N != currentGas)
 			currentGasMoles = 0
 			researchDrained = FALSE
 			currentGas = locate(href_list["change_gas_select"])
-		temp = ""
+		temporaryHtmlData = ""
 		update_icon()
 	else if(href_list["eject_tank"])
 		if(insertedTank)

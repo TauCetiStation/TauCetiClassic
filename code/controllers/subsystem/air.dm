@@ -606,16 +606,6 @@ SUBSYSTEM_DEF(air)
 					recentReactions.Insert(1, list(R.id, G))
 					if(recentReactions.len > MAX_RECENT_REACTIONS)
 						recentReactions.Cut(MAX_RECENT_REACTIONS + 1)
-	/*
-	for(var/I as anything in global.atmosReactionList)
-		var/datum/atmosReaction/R = atmosReactionList[I]
-		if(G.gas[R.rarestGas])
-			if(R.react(G))
-				if(log_recent_reactions)
-					recentReactions.Insert(1, list(I, G))
-					if(recentReactions.len > MAX_RECENT_REACTIONS)
-						recentReactions.Cut(MAX_RECENT_REACTIONS + 1)
-	*/
 
 /datum/controller/subsystem/air/proc/look_for_zone(datum/gas_mixture/G)
 	for(var/zone/Z in zones)
