@@ -322,7 +322,7 @@
 	return O
 
 
-/turf/simulated/mineral/proc/GetDrilled(artifact_fail = 0, mineral_drop_coefficient = 1)
+/turf/simulated/mineral/proc/GetDrilled(artifact_fail = 0, mineral_drop_coefficient = 1.0)
 	playsound(src, 'sound/effects/rockfall.ogg', VOL_EFFECTS_MASTER)
 	// var/destroyed = 0 //used for breaking strange rocks
 	if (mineral && ore_amount)
