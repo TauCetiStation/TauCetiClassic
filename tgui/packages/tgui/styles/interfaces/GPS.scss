@@ -1,89 +1,54 @@
-.GPS_SCI_Main {
+.GPS_SCI_Main, .GPS_ENG_Main, .GPS_MIN_Main, .GPS_MED_Main, .GPS_COM_Main {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	background: #B8BEC6;
-	margin: 0px;
-	border-top: 50px solid #F8F8F8;
 	border-radius: 5px;
+	margin: 0px;
 }
-.GPS_SCI_Line {
+.GPS_SCI_Main {
+	background: #B8BEC6;
+	border-top: 50px solid #F8F8F8;
+}
+.GPS_ENG_Main {
+	background: #EFB514;
+	border-top: 50px solid #FFE269;
+}
+.GPS_MIN_Main {
+	background: #B3863C;
+	border-top: 50px solid #BF934B;
+}
+.GPS_MED_Main {
+	background: #B8BEC6;
+	border-top: 50px solid #F8F8F8;
+}
+.GPS_COM_Main {
+	background: #5EABEB;
+	border-top: 50px solid #B0EAF6;
+}
+
+.GPS_SCI_Line, .GPS_ENG_Line, .GPS_MIN_Line, .GPS_MED_Line, .GPS_COM_Line {
 	position: absolute;
 	left: 30%;
 	width: 40%;
 	height: 100%;
+}
+.GPS_SCI_Line {
 	background: #7B48A6;
 	border-top: 50px solid #AD66BE;
 }
-
-.GPS_ENG_Main {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background: #EFB514;
-	margin: 0px;
-	border-top: 50px solid #FFE269;
-	border-radius: 5px;
-}
 .GPS_ENG_Line {
-	position: absolute;
-	left: 30%;
-	width: 40%;
-	height: 100%;
 	background: #EB5E00;
 	border-top: 50px solid #E67C34;
 }
-
-.GPS_MIN_Main {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background: #B3863C;
-	margin: 0px;
-	border-top: 50px solid #BF934B;
-	border-radius: 5px;
-}
 .GPS_MIN_Line {
-	position: absolute;
-	left: 30%;
-	width: 40%;
-	height: 100%;
 	background: #967032;
 	border-top: 50px solid #B3863C;
 }
-
-.GPS_MED_Main {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background: #B8BEC6;
-	margin: 0px;
-	border-top: 50px solid #F8F8F8;
-	border-radius: 5px;
-}
 .GPS_MED_Line {
-	position: absolute;
-	left: 30%;
-	width: 40%;
-	height: 100%;
 	background: #5EABEB;
 	border-top: 50px solid #B0EAF6;
-}
-
-.GPS_COM_Main {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	background: #5EABEB;
-	margin: 0px;
-	border-top: 50px solid #B0EAF6;
-	border-radius: 5px;
 }
 .GPS_COM_Line {
-	position: absolute;
-	left: 30%;
-	width: 40%;
-	height: 100%;
 	background: #3B4872;
 	border-top: 50px solid #5EABEB;
 }
@@ -98,24 +63,24 @@
 	position: relative;
 	left: 0px;
 	top: 0px;
-	width: 357px;
-	height: 177px;
+	width: 100%;
+	height: 50%;
 	background: #353738;
 	border-radius: 25px;
 }
 .GPS_Monitor3 {
 	position: relative;
 	top: 17px;
-	width: 357px;
-	height: 320px;
+	width: 100%;
+	height: 180%;
 	background: #111111;
 	border-radius: 50px;
 	padding: 0px;
 }
 .GPS_Monitor4 {
 	position: relative;
-	width: 357px;
-	height: 320px;
+	width: 100%;
+	height: 100%;
 	background: rgba(255,255,255,.07);
 	border-radius: 50px;
 	padding: 0px;
@@ -123,8 +88,8 @@
 .GPS_Monitor5 {
 	top: 0px;
 	position: absolute;
-	width: 357px;
-	height: 357px;
+	width: 100%;
+	height: 100%;
 	background: url("~tgui/assets/dot_background.png") repeat;
 }
 
@@ -206,103 +171,76 @@
 	vertical-align: bottom;
 }
 
-.GPS_MyCords {
+.GPS_MyCords, .GPS_ForeignCords, .GPS_SavedCords {
 	position: absolute;
 	width: 50px;
 	height: 50px;
+}
+.GPS_MyDot, .GPS_ForeignDot, .GPS_SavedDot {
+	position: absolute;
+	width: 5px;
+	height: 5px;
+}
+.GPS_MyCordsText, .GPS_ForeignCordsText, .GPS_SavedCordsText, .GPS_MouseCordsText {
+	font-size: 10px;
+	text-align: center;
+	position: absolute;
+	width: 70px;
+	height: 15px;
+}
+.GPS_MyCordsHeader, .GPS_ForeignCordsHeader, .GPS_SavedCordsHeader {
+	font-size: 16px;
+	text-align: center;
+	position: absolute;
+	width: 50px;
+	height: 15px;
+}
+
+.GPS_MyCords {
 	text-shadow: 0 0 2px rgba(70, 255, 90, .75); 
 }
 .GPS_MyDot {
-	position: absolute;
 	width: 7px;
 	height: 7px;
 	border: 2px solid rgba(70, 255, 90, .5);
 	box-shadow: 0 0 2px rgba(70, 255, 90, .75);
 }
 .GPS_MyCordsText {
-	font-size: 10px;
-	text-align: center;
-	position: absolute;
-	width: 70px;
-	height: 15px;
 	color: rgba(70, 255, 90, .5);
-
 }
 .GPS_MyCordsHeader {
-	font-size: 16px;
-	text-align: center;
-	position: absolute;
-	width: 50px;
-	height: 15px;
 	color: rgba(70, 255, 90, .5);
 }
 
 .GPS_ForeignCords {
-	position: absolute;
-	width: 50px;
-	height: 50px;
 	text-shadow: 0 0 2px rgba(255, 84, 73, .75);   
 }
 .GPS_ForeignDot {
-	position: absolute;
-	width: 5px;
-	height: 5px;
 	border: 2.5px solid rgba(255, 84, 73, .6);
 	box-shadow: 0 0 2px rgba(255, 84, 73, .75);
 }
 .GPS_ForeignCordsText {
-	font-size: 10px;
-	text-align: center;
-	position: absolute;
-	width: 70px;
-	height: 15px;
 	color: rgba(255, 84, 73, .6);
 }
 .GPS_ForeignCordsHeader {
-	font-size: 16px;
-	text-align: center;
-	position: absolute;
-	width: 50px;
-	height: 15px;
 	color: rgba(255, 84, 73, .6);
 }
 
 .GPS_SavedCords {
-	position: absolute;
-	width: 50px;
-	height: 50px;
 	text-shadow: 0 0 2px rgba(91, 160, 255, .75);
 }
 .GPS_SavedDot {
-	position: absolute;
-	width: 5px;
-	height: 5px;
 	border: 2.5px solid rgba(91, 160, 255, .65);
 	box-shadow: 0 0 2px rgba(91, 160, 255, .75);
 }
 .GPS_SavedCordsText {
-	font-size: 10px;
-	text-align: center;
-	position: absolute;
-	width: 70px;
-	height: 15px;
 	color: rgba(91, 160, 255, .65);
 }
 .GPS_SavedCordsHeader {
-	font-size: 16px;
-	text-align: center;
-	position: absolute;
-	width: 50px;
-	height: 15px;
 	color: rgba(91, 160, 255, .65);
 }
 
 .GPS_MouseCordsText {
-	font-size: 10px;
-	text-align: center;
-	position: absolute;
-	width: 70px;
-	height: 15px;
 	color: rgba(255, 255, 30, .65);
 	text-shadow: 0 0 2px rgba(255, 255, 30, .75);
 }

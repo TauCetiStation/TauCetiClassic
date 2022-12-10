@@ -39,7 +39,7 @@
 /obj/machinery/computer/teleporter/attackby(I, mob/living/user)
 	if(istype(I, /obj/item/device/gps))
 		var/obj/item/device/gps/L = I
-		if(L.saved_locations[L.selected_track] && !(stat & (NOPOWER|BROKEN)))
+		if(L.saved_locations[L.selected_slot] && !(stat & (NOPOWER|BROKEN)))
 			user.drop_from_inventory(L)
 			L.loc = src
 			locked = L
@@ -110,7 +110,7 @@
 		power_station.engaged = 0
 		power_station.teleporter_hub.update_icon()
 		power_station.teleporter_hub.calibrated = 0
-		target = get_turf(locked.saved_locations[locked.selected_track])
+		target = get_turf(locked.saved_locations[locked.selected_slot])
 	if(href_list["calibrate"])
 		if(!target)
 			to_chat(usr, "<span class='danger'>Error: No target set to calibrate to.</span>")

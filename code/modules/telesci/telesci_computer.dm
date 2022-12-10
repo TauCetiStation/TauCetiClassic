@@ -350,7 +350,7 @@
 
 	if(href_list["setMemory"])
 		if(last_target)
-			inserted_gps.saved_locations[inserted_gps.selected_track] = last_target
+			inserted_gps.saved_locations[inserted_gps.selected_slot] = last_target
 			temp_msg = "Location saved."
 		else
 			temp_msg = "ERROR!<BR>No data stored."

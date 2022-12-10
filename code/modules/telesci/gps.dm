@@ -20,17 +20,21 @@ var/global/list/GPS_list = list()
 	/// Whether the GPS is on.
 	var/tracking = FALSE
 	var/on = FALSE
+	var/track_saving = FALSE
 	/// The tag that is visible to other GPSes.
 	var/gpstag = "COM0"
 	/// Whether the GPS should only show up to GPSes on the same Z-level.
 	var/local = FALSE
 	var/emped = FALSE
-	var/list/saved_locations[3]
-	var/selected_z = 2
+
+	var/save_slots_number = 3
+	var/selected_slot = 1
+
 	var/track_max_length = 150
-	var/list/track = list(list(), list(), list())
-	var/selected_track = 1
-	var/track_saving = FALSE
+	var/list/tracks
+	var/list/saved_locations
+
+	var/selected_z = 2
 
 	var/color_style = "COM"
 
@@ -40,13 +44,15 @@ var/global/list/GPS_list = list()
 	name = "global positioning system ([gpstag])"
 	update_icon()
 
+	setup_slots()
+
 /obj/item/device/gps/Destroy()
 	GPS_list.Remove(src)
 	stop_tracking()
 	return ..()
 
 /obj/item/device/gps/process()
-	var/list/Track = track[selected_track]
+	var/list/Track = tracks[selected_slot]
 	if(Track.len > track_max_length || !on || !tracking)
 		stop_tracking()
 		return
@@ -78,11 +84,15 @@ var/global/list/GPS_list = list()
 	return FALSE
 
 /obj/item/device/gps/proc/stop_tracking()
-	var/list/Track = track[selected_track]
+	var/list/Track = tracks[selected_slot]
 	if(Track.len)
 		Track[Track.len]["end"] = TRUE
 	track_saving = FALSE
 	STOP_PROCESSING(SSobj, src)
+
+/obj/item/device/gps/proc/setup_slots()
+	tracks = new/list(save_slots_number, 0)
+	saved_locations = new/list(save_slots_number)
 
 /obj/item/device/gps/update_icon()
 	cut_overlays()
@@ -134,7 +144,7 @@ var/global/list/GPS_list = list()
 		data["area"] = null
 
 	// Saved location
-	var/turf/Saved = saved_locations[selected_track]
+	var/turf/Saved = saved_locations[selected_slot]
 	if(Saved && (Saved.z == selected_z))
 		data["saved"] = POS_VECTOR(Saved)
 	else
@@ -160,7 +170,7 @@ var/global/list/GPS_list = list()
 			signals += list(signal)
 		data["signals"] = signals
 
-	data["track"] = track[selected_track]
+	data["track"] = tracks[selected_slot]
 	data["track_saving"] = track_saving
 	data["selected_z"] = selected_z
 
@@ -206,16 +216,16 @@ var/global/list/GPS_list = list()
 				START_PROCESSING(SSobj, src)
 				track_saving = TRUE
 		if("choose_track")
-			selected_track++
-			if(selected_track > 3)
-				selected_track = 1
+			selected_slot++
+			if(selected_slot > save_slots_number)
+				selected_slot = 1
 		if("erase_data")
 			stop_tracking()
-			track[selected_track] = list()
-			saved_locations[selected_track] = null
+			tracks[selected_slot] = list()
+			saved_locations[selected_slot] = null
 		if("save_location")
 			if(tracking)
-				saved_locations[selected_track] = get_turf(src)
+				saved_locations[selected_slot] = get_turf(src)
 		else
 			return FALSE
 
