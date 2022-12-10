@@ -3,7 +3,7 @@
 	desc = "Поможет вам не заблудиться на станции."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "station_map"
-	w_class = SIZE_SMALL
+	w_class = SIZE_TINY
 	var/icon/img = 'nano/images/nanomap_exodus_1.png'
 
 /obj/item/station_map/attack_self(mob/user)
