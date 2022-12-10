@@ -69,103 +69,103 @@ export const GPS = (properties, context) => {
         
         <Box className="GPS_Antenna" right="25px" top="0px" />
         
-        <Box className="GPS_Monitor" left="22px" top="65px" width="357px" height="357px" onMouseMove={handleMouseMove} onMouseout={handleMouseOut} onMouseover={handleMouseOver}>
+        <Box className="GPS_MonitorBase" left="22px" top="65px" width="357px" height="357px" onMouseMove={handleMouseMove} onMouseout={handleMouseOut} onMouseover={handleMouseOver}>
           {!!maps && !!maps[selected_z] && !!on && (
             <img src={maps[selected_z]} className="GPS_Map" />
           )}
-          <Box className="GPS_Monitor2">
-            <Box className="GPS_Monitor3">
-              {!!on && (
-                <div>
-                  <Box left="0px" top="-15px" className="GPS_Header" width="350px" height="25px">
-                    -{selected_z}-
+          <Box className="GPS_MonitorTopHighlight" />
+          <Box className="GPS_MonitorCenterBlank">
+            {!!on && (
+              <div>
+                <Box left="0px" top="-15px" className="GPS_Header" width="350px" height="25px">
+                  -{selected_z}-
+                </Box>
+                {!!track && (
+                  track.map((dot, index) => (
+                    dot.z === selected_z && (
+                      <>
+                        <Box key={index} left={1.4*dot.x-1+"px"} bottom={1.4*dot.y-21+"px"} className="GPS_TrackDot" />
+                        <svg className="GPS_TrackLine">
+                          {track[index-1] && track[index-1].end !== 1 && (
+                            <line x1={1.4*track[index-1].x+1} x2={1.4*dot.x+1} y1={1.4*track[index-1].y-19} y2={1.4*dot.y-19} stroke="rgba(255, 255, 255, .5)" />
+                          )}
+                        </svg>
+                      </>
+                    )
+                  ))
+                )}
+                {!!saved && (
+                  <Box left={1.4*saved[0]-24+"px"} bottom={1.4*saved[1]-44+"px"} className="GPS_SavedCords">
+                    <Box left="0px" top="0px" className="GPS_SavedCordsHeader">
+                      СОХР.
+                    </Box>
+                    <Box left="22px" bottom="22px" className="GPS_SavedDot" />
+                    <Box left="-10px" bottom="3px" className="GPS_SavedCordsText">
+                      {vectorText(saved)}
+                    </Box>
                   </Box>
-                  {!!track && (
-                    track.map((dot, index) => (
-                      dot.z === selected_z && (
-                        <>
-                          <Box key={index} left={1.4*dot.x-1+"px"} bottom={1.4*dot.y-21+"px"} className="GPS_TrackDot" />
-                          <svg className="GPS_TrackLine">
-                            {track[index-1] && track[index-1].end !== 1 && (
-                              <line x1={1.4*track[index-1].x+1} x2={1.4*dot.x+1} y1={1.4*track[index-1].y-19} y2={1.4*dot.y-19} stroke="rgba(255, 255, 255, .5)" />
-                            )}
-                          </svg>
-                        </>
-                      )
-                    ))
-                  )}
-                  {!!saved && (
-                    <Box left={1.4*saved[0]-24+"px"} bottom={1.4*saved[1]-44+"px"} className="GPS_SavedCords">
-                      <Box left="0px" top="0px" className="GPS_SavedCordsHeader">
-                        СОХР.
-                      </Box>
-                      <Box left="22px" bottom="22px" className="GPS_SavedDot" />
-                      <Box left="-10px" bottom="3px" className="GPS_SavedCordsText">
-                        {vectorText(saved)}
-                      </Box>
-                    </Box>
-                  )}
-                  {!!active && (
-                    <>
-                      {signals.map(signal => ({ ...signal })).map((signal, i) => (
-                        <Box key={i} left={1.4*signal.position[0]-24+"px"} bottom={1.4*signal.position[1]-44+"px"} className="GPS_ForeignCords">
-                          <Box left="0px" top="0px" className="GPS_ForeignCordsHeader">
-                            {signal.tag}
-                          </Box>
-                          <Box left="22px" bottom="22px" className="GPS_ForeignDot" />
-                          <Box left="-10px" bottom="3px" className="GPS_ForeignCordsText">
-                            {vectorText(signal.position)}
-                          </Box>
+                )}
+                {!!active && (
+                  <>
+                    {signals.map(signal => ({ ...signal })).map((signal, i) => (
+                      <Box key={i} left={1.4*signal.position[0]-24+"px"} bottom={1.4*signal.position[1]-44+"px"} className="GPS_ForeignCords">
+                        <Box left="0px" top="0px" className="GPS_ForeignCordsHeader">
+                          {signal.tag}
                         </Box>
-                      ))}                  
-                      {!!position && (
-                        <Box left={1.4*position[0]-24+"px"} bottom={1.4*position[1]-44+"px"} className="GPS_MyCords">
-                          <Box left="0px" top="0px" className="GPS_MyCordsHeader">
-                            {tag}
-                          </Box>
-                          <Box left="21px" bottom="21px" className="GPS_MyDot" />
-                          <Box left="-10px" bottom="3px" className="GPS_MyCordsText">
-                            {vectorText(position)}
-                          </Box>
+                        <Box left="22px" bottom="22px" className="GPS_ForeignDot" />
+                        <Box left="-10px" bottom="3px" className="GPS_ForeignCordsText">
+                          {vectorText(signal.position)}
                         </Box>
-                      )}
-                      <Box left="0px" bottom="-15px" className="GPS_Header" width="350px" height="25px">
-                        {area}
                       </Box>
-                    </>
-                  )}
-                  {!!mouseovered && (
-                    <Box left={1.4*mouseX-36+"px"} bottom={1.4*mouseY-22+"px"} className="GPS_MouseCordsText">
-                      ({mouseX}, {mouseY})
+                    ))}                  
+                    {!!position && (
+                      <Box left={1.4*position[0]-24+"px"} bottom={1.4*position[1]-44+"px"} className="GPS_MyCords">
+                        <Box left="0px" top="0px" className="GPS_MyCordsHeader">
+                          {tag}
+                        </Box>
+                        <Box left="21px" bottom="21px" className="GPS_MyDot" />
+                        <Box left="-10px" bottom="3px" className="GPS_MyCordsText">
+                          {vectorText(position)}
+                        </Box>
+                      </Box>
+                    )}
+                    <Box left="0px" bottom="-15px" className="GPS_Header" width="350px" height="25px">
+                      {area}
                     </Box>
-                  )}
-                </div>
-              )}
-              <Box className="GPS_Monitor4" />
-            </Box>
-          </Box>{!!on && (<Box className="GPS_Monitor5" />)}
+                  </>
+                )}
+                {!!mouseovered && (
+                  <Box left={1.4*mouseX-36+"px"} bottom={1.4*mouseY-22+"px"} className="GPS_MouseCordsText">
+                    ({mouseX}, {mouseY})
+                  </Box>
+                )}
+              </div>
+            )}
+            <Box className="GPS_MonitorCenterBrightBlank" />
+          </Box>
+          {!!on && (<Box className="GPS_MonitorDots" />)}
         </Box>
         
         <Box className="GPS_Buttons_Holder" left="70px" bottom="10px" width="260px" height="175px">
-          <Box className="GPS_Buttons_Holder2" top="10px" width="100%" height="155px">
+          <Box className="GPS_Buttons_HolderInside" top="10px" width="100%" height="155px">
             <Button className="GPS_Button" left="5px" top="0px" width="50px" height="50px"
               selected={track_saving}
               onClick={() => act('track_saving')}
-              content={<Box className="GPS_Button-Content"><Icon name="map" color="#cccccc" size="1" /></Box>} />
+              icon="map" />
             <Button className="GPS_Button" left="5px" top="50px" width="50px" height="50px"
               onClick={() => act('erase_data')}
-              content={<Box className="GPS_Button-Content"><Icon name="trash" color="#cccccc" size="1" /></Box>} />
+              icon="trash" />
                     
             <Button className="GPS_Button" left="5px" top="100px" width="50px" height="50px"
               onClick={() => act('save_location')}
-              content={<Box className="GPS_Button-Content"><Icon name="map-marker" color="#cccccc" size="1" /></Box>} />
+              icon="map-marker" />
                     
             <Button className="GPS_Button" right="5px" top="0px" width="50px" height="50px"
               onClick={() => act('z_level', { chosen_level: selected_z+1 })}
-              content={<Box className="GPS_Button-Content"><Icon name="arrow-up" color="#cccccc" size="1" /></Box>} />
+              icon="arrow-up" />
             <Button className="GPS_Button" right="5px" top="50px" width="50px" height="50px"
               onClick={() => act('z_level', { chosen_level: selected_z-1 })}
-              content={<Box className="GPS_Button-Content"><Icon name="arrow-down" color="#cccccc" size="1" /></Box>} />
+              icon="arrow-down" />
                 
             <Box position="absolute" left="60px" top="0px" width="140px" height="165px">
               <Button className="GPS_Button" left="0px" top="0px" width="45px" height="35px" onClick={() => act('tag')} content={<Box className="GPS_Button-Content">1</Box>} />
