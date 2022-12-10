@@ -205,12 +205,17 @@
 	ID = ZOMBIE_MALF
 	shuttle_block = FALSE
 	custom_res = FALSE
-	initroletype = /datum/role/malfAI/zombie //First addition should be the AI
+	//initroletype = /datum/role/malfAI/zombie //First addition should be the AI
 	var/finished = FALSE
 
 /datum/faction/malf_silicons/zombie/OnPostSetup()
 	. = ..()
 	AppendObjective(/datum/objective/turn_into_zombie)
+	for(var/mob/living/silicon/ai/AI_member in members)
+		add_zombie_module(AI_member)
+
+/datum/faction/malf_silicons/zombie/proc/add_zombie_module(mob/living/silicon/ai/AI_current)
+	new /datum/AI_Module/infest(AI_current)
 
 /datum/faction/malf_silicons/zombie/process()
 	if(station_captured)
@@ -223,7 +228,7 @@
 /datum/faction/malf_silicons/zombie/capture_the_station()
 	station_captured = TRUE
 	to_chat(world, "<B>AI has fully taken control of all of [station_name()]'s systems.</B>")
-	for(var/datum/role/malfAI/zombie/role in members)
+	for(var/datum/role/malfAI/role in members)
 		var/mob/living/silicon/ai/AI = role.antag.current
 		to_chat(AI, "You have taken control of the station.")
 		to_chat(AI, "Now you can create your own children.")

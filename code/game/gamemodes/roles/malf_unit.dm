@@ -112,7 +112,7 @@
 				R.module_state_3 = null
 				R.contents -= R.module.emag
 			log_admin("[key_name(usr)] has unemag'ed [R].")
-
+/*
 /datum/role/malfAI/zombie
 	name = MALF
 	id = ZOMBIE_MALF
@@ -120,4 +120,4 @@
 /datum/role/malfAI/zombie/OnPostSetup(laterole)
 	. = ..()
 	var/mob/living/silicon/ai/AI_mind_current = antag.current
-	new /datum/AI_Module/infest(AI_mind_current)
+	new /datum/AI_Module/infest(AI_mind_current)*/
