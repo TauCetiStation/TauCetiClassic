@@ -413,6 +413,28 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			else
 				to_chat(A, "This mob is not located in the game world.")
 
+/mob/dead/observer/verb/custom_icon()
+	set category = "Ghost"
+	set name = "Custom Icon"
+	set desc = "Choise ghost icon."
+
+	var/list/custom_sprites = get_accepted_custom_items_by_type(ckey, FLUFF_TYPE_GHOST)
+
+	if(!length(custom_sprites))
+		if(config.customitems_info_url)
+			to_chat(src, "<span class='notice'>You don't have any ghost sprites. <a href='[config.customitems_info_url]'>Read more about Fluff</a> and how to get them.</span>")
+		else
+			to_chat(src, "<span class='notice'>You don't have any ghost sprites.</span>")
+
+		return
+
+	var/datum/custom_item/select = input("Select icon.", "Select") as null|anything in custom_sprites
+	
+	if(select)
+		icon = select.icon
+		icon_state = select.icon_state
+
+
 /*
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
