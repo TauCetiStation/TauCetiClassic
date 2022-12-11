@@ -146,9 +146,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	name = "torture table"
 	desc = "For tortures"
 	icon = 'icons/obj/cult.dmi'
-	icon_state = "table2-idle"
+	icon_state = "table_surgey_idle"
 	can_buckle = TRUE
 	buckle_lying = TRUE
+	flags = NODECONSTRUCT
 
 	var/datum/religion/cult/religion
 	var/charged = FALSE
@@ -164,6 +165,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 /obj/machinery/optable/torture_table/Destroy()
 	religion?.torture_tables -= src
 	return ..()
+	
+/obj/machinery/optable/torture_table/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
 
 /obj/machinery/optable/torture_table/attackby(obj/item/W, mob/user, params)
 	if(!charged && istype(W, /obj/item/weapon/storage/bible/tome))
@@ -177,6 +182,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 			charged = TRUE
 			new /obj/effect/temp_visual/cult/sparks(loc)
 			return FALSE
+	if(default_deconstruction_screwdriver(user, "table_surgey_open", initial(icon_state), W))
+		return FALSE
 
 	if(iswrench(W))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
