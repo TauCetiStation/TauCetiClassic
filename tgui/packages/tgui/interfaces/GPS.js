@@ -37,6 +37,19 @@ const handleMouseMove = (e) => {
   mouseY = 255-(Math.round(255/e.target.offsetWidth * (e.clientY - e.target.offsetTop))-69);
 };
 
+const keyboardbuttons_list = [
+  { id: 1, x: 0, y: 0 },
+  { id: 2, x: 45, y: 0 },
+  { id: 3, x: 90, y: 0 },
+  { id: 4, x: 0, y: 35 },
+  { id: 5, x: 45, y: 35 },
+  { id: 6, x: 90, y: 35 },
+  { id: 7, x: 0, y: 70 },
+  { id: 8, x: 45, y: 70 },
+  { id: 9, x: 90, y: 70 },
+  { id: 0, x: 45, y: 105 },
+];
+
 export const GPS = (properties, context) => {
   const { act, data } = useBackend(context);
   const {
@@ -168,16 +181,9 @@ export const GPS = (properties, context) => {
               icon="arrow-down" />
                 
             <Box position="absolute" left="60px" top="0px" width="140px" height="165px">
-              <Button className="GPS_Button" left="0px" top="0px" width="45px" height="35px" onClick={() => act('tag')} content={<Box className="GPS_Button-Content">1</Box>} />
-              <Button className="GPS_Button" left="45px" top="0px" width="45px" height="35px" onClick={() => act('tag')} content={<Box className="GPS_Button-Content">2</Box>} />
-              <Button className="GPS_Button" left="90px" top="0px" width="45px" height="35px" onClick={() => act('tag')} content={<Box className="GPS_Button-Content">3</Box>} />
-              <Button className="GPS_Button" left="0px" top="35px" width="45px" height="35px" onClick={() => act('tag')} content={<Box className="GPS_Button-Content">4</Box>} />
-              <Button className="GPS_Button" left="45px" top="35px" width="45px" height="35px" onClick={() => act('tag')} content={<Box className="GPS_Button-Content">5</Box>} />
-              <Button className="GPS_Button" left="90px" top="35px" width="45px" height="35px" onClick={() => act('tag')} content={<Box className="GPS_Button-Content">6</Box>} />
-              <Button className="GPS_Button" left="0px" top="70px" width="45px" height="35px" onClick={() => act('tag')} content={<Box className="GPS_Button-Content">7</Box>} />
-              <Button className="GPS_Button" left="45px" top="70px" width="45px" height="35px" onClick={() => act('tag')} content={<Box className="GPS_Button-Content">8</Box>} />
-              <Button className="GPS_Button" left="90px" top="70px" width="45px" height="35px" onClick={() => act('tag')} content={<Box className="GPS_Button-Content">9</Box>} />
-              <Button className="GPS_Button" left="45px" top="105px" width="45px" height="35px" onClick={() => act('tag')} content={<Box className="GPS_Button-Content">0</Box>} />
+              {keyboardbuttons_list.map((button) => (
+                <Button key={button.id} className="GPS_Button" left={button.x+"px"} top={button.y+"px"} width="45px" height="35px" onClick={() => act('tag')} content={<Box className="GPS_Button-Content">{button.id}</Box>} />
+              ))}
             </Box>
                 
             <Button className="GPS_Button" right="5px" top="105px" width="100px" height="45px"
