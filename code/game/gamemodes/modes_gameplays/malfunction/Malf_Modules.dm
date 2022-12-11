@@ -12,7 +12,6 @@ robot_fabricator
 	var/description = null
 	var/verb_caller = null
 	var/need_only_once = FALSE
-	var/only_for_malf_gamemode = FALSE
 	var/mob/living/silicon/ai/owner = null
 	var/list/valid_targets = list(/obj/machinery)
 
@@ -61,8 +60,6 @@ robot_fabricator
 		dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
 		for(var/module in available_modules)
 			var/datum/AI_Module/module_type = module
-			if(initial(module_type.only_for_malf_gamemode) && !ismalf(user))
-				continue
 			dat += "<A href='byond://?src=\ref[src];module_type=[module]'>[initial(module_type.module_name)]</A> ([initial(module_type.price)])<BR>"
 		dat += "<HR>"
 
@@ -357,7 +354,6 @@ robot_fabricator
 	module_name = "Hack intercept"
 	description = "Hacks the status update from Cent. Com, removing any information about malfunctioning electrical systems."
 	need_only_once = TRUE
-	only_for_malf_gamemode = TRUE
 
 /datum/AI_Module/small/interhack/BuyedNewHandle()
 	var/datum/faction/malf_silicons/cur_malf = find_faction_by_type(/datum/faction/malf_silicons)
