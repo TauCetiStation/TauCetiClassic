@@ -4052,7 +4052,8 @@
 "ahu" = (
 /obj/structure/flora/tree/pine,
 /obj/structure/flora/grass/brown,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "ahv" = (
 /obj/structure/rack,
@@ -4076,7 +4077,8 @@
 "ahw" = (
 /obj/structure/flora/grass/both,
 /obj/machinery/light,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "ahx" = (
 /obj/structure/grille,
@@ -4111,7 +4113,8 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "ahz" = (
 /turf/simulated/wall,
@@ -6407,7 +6410,8 @@
 /obj/item/weapon/pen{
 	pixel_y = 1
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "alF" = (
 /obj/machinery/computer/libraryconsole/bookmanagement/old,
@@ -6437,7 +6441,8 @@
 /obj/structure/sign/painting{
 	pixel_x = 30
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "alJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -10170,6 +10175,20 @@
 "asB" = (
 /turf/environment/space,
 /area/asteroid/mine/eva)
+"asC" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/obj/structure/flora/grass/both,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/arrival)
 "asK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -10914,7 +10933,8 @@
 	dir = 4;
 	pixel_x = 27
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "bcR" = (
 /obj/machinery/space_heater,
@@ -10969,7 +10989,8 @@
 /obj/structure/flora/grass/green{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "bfq" = (
 /turf/simulated/floor{
@@ -11329,7 +11350,8 @@
 /area/station/civilian/kitchen)
 "bwm" = (
 /obj/structure/flora/mine_rocks,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "bwK" = (
 /turf/simulated/floor{
@@ -12354,8 +12376,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cxV" = (
-/obj/structure/flora/grass/green,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snowman,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "cyF" = (
 /obj/machinery/newscaster{
@@ -12991,17 +13014,10 @@
 	},
 /area/station/hallway/secondary/exit)
 "djK" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/item/decoration/garland,
-/obj/structure/flora/grass/brown,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/grass/both,
+/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "dlI" = (
 /turf/simulated/floor/plating{
@@ -13269,15 +13285,16 @@
 "duB" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/item/decoration/garland,
-/obj/structure/flora/grass/both,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/grass/brown,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "dvp" = (
 /obj/structure/closet/emcloset,
@@ -13701,7 +13718,8 @@
 /area/asteroid/research_outpost/spectro)
 "dNp" = (
 /obj/item/weapon/a_gift,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "dNR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -13717,7 +13735,8 @@
 "dOV" = (
 /obj/structure/flora/grass/brown,
 /obj/item/weapon/a_gift,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "dPt" = (
 /obj/machinery/computer/crew{
@@ -13875,7 +13894,8 @@
 /area/station/tcommsat/chamber)
 "dYd" = (
 /obj/structure/flora/grass/brown,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "dYA" = (
 /turf/simulated/floor{
@@ -14377,13 +14397,15 @@
 	pixel_y = 32
 	},
 /obj/structure/flora/ausbushes/pointybush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "eAC" = (
 /obj/structure/flora/grass/brown{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "eAZ" = (
 /turf/simulated/floor/plating/airless/catwalk,
@@ -14474,9 +14496,15 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "eEZ" = (
-/obj/structure/flora/grass/both,
-/obj/structure/flora/ausbushes/pointybush,
-/turf/simulated/floor/plating/snow,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/flora/grass/green,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "eFq" = (
 /obj/structure/morgue,
@@ -15264,7 +15292,8 @@
 /area/station/bridge)
 "fCc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "fCH" = (
 /obj/machinery/power/solar{
@@ -16331,7 +16360,8 @@
 	},
 /obj/item/decoration/garland,
 /obj/structure/flora/grass/both,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "gHp" = (
 /obj/structure/stool/bed/chair/office/dark,
@@ -16835,7 +16865,8 @@
 /obj/item/device/flashlight/lamp/fir/special/alternative{
 	pixel_x = -16
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "hbS" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -17004,7 +17035,8 @@
 	location = "Arrival2"
 	},
 /obj/structure/flora/grass/brown,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "hnM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -17817,7 +17849,8 @@
 	},
 /obj/structure/flora/grass/both,
 /obj/item/weapon/a_gift,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "ikw" = (
 /obj/machinery/door/firedoor,
@@ -18472,7 +18505,8 @@
 /obj/machinery/door/firedoor,
 /obj/item/decoration/garland,
 /obj/structure/flora/grass/brown,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "iSt" = (
 /turf/simulated/wall,
@@ -18865,7 +18899,8 @@
 /area/station/civilian/kitchen)
 "jqk" = (
 /obj/structure/flora/grass/both,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "jrG" = (
 /obj/machinery/atmospherics/components/binary/valve/digital/open,
@@ -21432,7 +21467,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "lKy" = (
 /obj/structure/closet/secure_closet/personal,
@@ -21758,7 +21794,8 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "mdD" = (
 /obj/item/stack/nanopaste,
@@ -22464,7 +22501,8 @@
 /area/station/bridge/hop_office)
 "mPB" = (
 /obj/structure/flora/tree/pine,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "mQs" = (
 /obj/structure/grille,
@@ -22608,14 +22646,9 @@
 /turf/simulated/wall,
 /area/station/hallway/secondary/exit)
 "mUR" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/structure/flora/grass/green,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "mVa" = (
 /obj/structure/disposalpipe/segment{
@@ -23826,7 +23859,8 @@
 	pixel_x = -22
 	},
 /obj/structure/flora/grass/both,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "nVq" = (
 /obj/structure/table,
@@ -25209,7 +25243,8 @@
 /obj/structure/flora/grass/brown{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "pmv" = (
 /obj/structure/grille,
@@ -26437,7 +26472,8 @@
 	},
 /area/station/civilian/kitchen)
 "qqb" = (
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "qri" = (
 /obj/structure/table,
@@ -27953,7 +27989,8 @@
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 1
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "rHg" = (
 /turf/simulated/wall/r_wall,
@@ -28491,7 +28528,8 @@
 /obj/structure/flora/grass/green{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "smt" = (
 /obj/machinery/light/small{
@@ -29785,7 +29823,8 @@
 "tEV" = (
 /obj/structure/flora/grass/both,
 /obj/item/weapon/a_gift,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "tFy" = (
 /obj/structure/closet/toolcloset,
@@ -30064,7 +30103,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "tQr" = (
 /obj/structure/cable{
@@ -30590,7 +30630,8 @@
 /obj/item/device/camera{
 	pixel_y = -12
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "unh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -31840,7 +31881,8 @@
 /area/station/civilian/hydroponics)
 "vEl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "vES" = (
 /obj/item/decoration/snowflake,
@@ -31915,7 +31957,8 @@
 /area/station/hallway/primary/central)
 "vJa" = (
 /obj/structure/easel,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "vJt" = (
 /obj/structure/stool/bed/chair/comfy/brown{
@@ -34574,7 +34617,8 @@
 	codes_txt = "patrol;next_patrol=HoP";
 	location = "Arrival1"
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "ygZ" = (
 /obj/structure/stool/bed/chair/metal/yellow{
@@ -34666,7 +34710,8 @@
 /obj/machinery/hologram/holopad{
 	pixel_y = -16
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
 "ykW" = (
 /turf/simulated/floor,
@@ -63049,7 +63094,7 @@ bwm
 dYd
 mdk
 mPB
-eEZ
+djK
 nUm
 hvW
 rzZ
@@ -63818,7 +63863,7 @@ cck
 mPB
 qqb
 jqk
-dNp
+cxV
 dYd
 dYd
 ahu
@@ -64593,7 +64638,7 @@ dYd
 umY
 alE
 qqb
-djK
+duB
 jaa
 smC
 mXM
@@ -64849,7 +64894,7 @@ dYd
 qqb
 qqb
 mPB
-cxV
+mUR
 beJ
 hBk
 qtH
@@ -65104,10 +65149,10 @@ xGz
 ezO
 hnH
 dNp
-cxV
-cxV
-cxV
-duB
+mUR
+mUR
+mUR
+asC
 jaa
 ohv
 ifz
@@ -65361,7 +65406,7 @@ ciD
 pln
 bcG
 ahy
-mUR
+eEZ
 alI
 lJb
 qce

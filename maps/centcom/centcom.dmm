@@ -261,6 +261,7 @@
 	name = "Kitchen";
 	req_access = list(150)
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -813,6 +814,7 @@
 /turf/unsimulated/wall/fakeglass,
 /area/centcom/tdome)
 "abR" = (
+/obj/item/decoration/garland,
 /turf/unsimulated/wall/fakeglass,
 /area/custom/syndicate_mothership/elite_squad)
 "abS" = (
@@ -1358,7 +1360,8 @@
 /turf/unsimulated/wall/cult/runed/anim,
 /area/space)
 "ady" = (
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/unsimulated/floor/snow,
 /area/centcom/evac)
 "adz" = (
 /obj/structure/curtain/black,
@@ -1763,8 +1766,13 @@
 /turf/unsimulated/wall,
 /area/space)
 "aeE" = (
-/turf/unsimulated/wall/fakeglass,
-/area/custom/ninjaspawn)
+/obj/machinery/door/airlock/centcom{
+	name = "Waiting Room"
+	},
+/turf/unsimulated/floor{
+	icon_state = "warning"
+	},
+/area/centcom/evac)
 "aeF" = (
 /obj/structure/table/woodentable,
 /obj/machinery/chem_dispenser/soda{
@@ -2017,9 +2025,17 @@
 	},
 /area/centcom/evac)
 "afl" = (
-/mob/living/simple_animal/hostile/carp/dog/polkan,
-/turf/unsimulated/floor,
-/area/centcom/control)
+/obj/item/device/flashlight/lamp/fir/special/alternative{
+	pixel_x = -16
+	},
+/obj/machinery/light{
+	dir = 8;
+	invisibility = 101;
+	name = "invisible light fixture"
+	},
+/obj/structure/snow,
+/turf/unsimulated/floor/snow,
+/area/centcom/evac)
 "afm" = (
 /obj/random/guns/projectile_assault,
 /turf/unsimulated/floor/snow,
@@ -2097,7 +2113,8 @@
 /obj/structure/flora/grass/both{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/unsimulated/floor/snow,
 /area/centcom/evac)
 "afx" = (
 /obj/item/weapon/flora/random,
@@ -2119,7 +2136,8 @@
 /obj/structure/flora/grass/both{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/unsimulated/floor/snow,
 /area/centcom/evac)
 "afA" = (
 /obj/structure/object_wall/standart{
@@ -2146,7 +2164,8 @@
 	layer = 2.7
 	},
 /obj/item/weapon/present,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/unsimulated/floor/snow,
 /area/centcom/evac)
 "afE" = (
 /obj/structure/table/woodentable,
@@ -2162,7 +2181,8 @@
 /obj/structure/flora/grass/brown{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/unsimulated/floor/snow,
 /area/centcom/evac)
 "afG" = (
 /obj/structure/object_wall/standart{
@@ -2911,6 +2931,7 @@
 	name = "Barracks";
 	req_access = list(150)
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -4809,6 +4830,7 @@
 /obj/item/weapon/folder/red,
 /obj/structure/table/woodentable,
 /obj/item/weapon/pen,
+/obj/item/weapon/present,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/carpets.dmi';
 	icon_state = "redcarpet";
@@ -6319,7 +6341,8 @@
 /obj/structure/flora/grass/green{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/unsimulated/floor/snow,
 /area/centcom/evac)
 "apl" = (
 /obj/structure/object_wall/vox/internal{
@@ -6933,12 +6956,13 @@
 	layer = 2.7
 	},
 /obj/item/weapon/present,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/unsimulated/floor/snow,
 /area/centcom/evac)
 "aqK" = (
 /obj/structure/sign/warning/securearea{
-	desc = "ОСТОРОЖНО!!! ОЧЕНЬ ЗЛЫЕ СОБАК�?!!!";
-	name = "ОСТОРОЖНО!!! ОЧЕНЬ ЗЛЫЕ СОБАК�?!!!";
+	desc = "ОСТОРОЖНО!!! ОЧЕНЬ ЗЛЫЕ СОБАК�?!!!";
+	name = "ОСТОРОЖНО!!! ОЧЕНЬ ЗЛЫЕ СОБАК�?!!!";
 	pixel_y = 32
 	},
 /obj/machinery/light{
@@ -8539,6 +8563,7 @@
 /obj/machinery/door/airlock{
 	name = "Unisex Restrooms"
 	},
+/obj/item/decoration/tinsel,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -8556,6 +8581,7 @@
 	req_access = list(101)
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/tinsel,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -9299,7 +9325,8 @@
 /area/shuttle/vox/arkship_hold)
 "avG" = (
 /obj/item/weapon/present,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/unsimulated/floor/snow,
 /area/centcom/evac)
 "avH" = (
 /obj/structure/rack,
@@ -9316,7 +9343,8 @@
 /obj/structure/flora/grass/green{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/unsimulated/floor/snow,
 /area/centcom/evac)
 "avK" = (
 /obj/effect/decal/cleanable/dirt,
@@ -9729,34 +9757,39 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/ywflowers,
-/turf/simulated/floor/grass,
+/obj/structure/flora/grass/green{
+	layer = 2.7
+	},
+/turf/unsimulated/floor/snow,
 /area/velocity)
 "awJ" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/ppflowers,
 /mob/living/carbon/monkey{
 	desc = "";
 	icon_state = "robust1";
 	name = "Officer Robust"
 	},
-/turf/simulated/floor/grass,
+/turf/unsimulated/floor/snow,
 /area/velocity)
 "awK" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/lavendergrass,
-/turf/simulated/floor/grass,
+/obj/structure/flora/grass/both{
+	layer = 2.7
+	},
+/turf/unsimulated/floor/snow,
 /area/velocity)
 "awL" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/brflowers,
-/turf/simulated/floor/grass,
+/obj/structure/flora/grass/brown{
+	layer = 2.7
+	},
+/turf/unsimulated/floor/snow,
 /area/velocity)
 "awM" = (
 /obj/structure/object_wall/vox/internal{
@@ -9962,23 +9995,29 @@
 /area/velocity)
 "axg" = (
 /obj/structure/window/reinforced,
-/obj/structure/flora/ausbushes/brflowers,
-/turf/simulated/floor/grass,
+/obj/structure/flora/grass/both{
+	layer = 2.7
+	},
+/turf/unsimulated/floor/snow,
 /area/velocity)
 "axh" = (
 /obj/structure/window/reinforced,
-/obj/structure/flora/ausbushes/lavendergrass,
-/turf/simulated/floor/grass,
+/obj/structure/flora/grass/brown{
+	layer = 2.7
+	},
+/turf/unsimulated/floor/snow,
 /area/velocity)
 "axi" = (
 /obj/structure/window/reinforced,
-/obj/structure/flora/ausbushes/ywflowers,
-/turf/simulated/floor/grass,
+/obj/structure/flora/tree/pine,
+/turf/unsimulated/floor/snow,
 /area/velocity)
 "axj" = (
 /obj/structure/window/reinforced,
-/obj/structure/flora/ausbushes/ppflowers,
-/turf/simulated/floor/grass,
+/obj/structure/flora/grass/green{
+	layer = 2.7
+	},
+/turf/unsimulated/floor/snow,
 /area/velocity)
 "axk" = (
 /obj/machinery/information_display{
@@ -17221,6 +17260,7 @@
 	name = "Hall";
 	req_access = list(150)
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -17352,6 +17392,7 @@
 /obj/machinery/door/airlock/external{
 	req_access = list(150)
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -17374,6 +17415,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/decoration/garland,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplating"
 	},
@@ -17543,6 +17585,7 @@
 	name = "Equipment Room";
 	req_access = list(150)
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -17693,6 +17736,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/decoration/garland,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplating"
 	},
@@ -17751,6 +17795,8 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/decoration/garland,
+/obj/item/decoration/snowflake,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplating"
 	},
@@ -18482,6 +18528,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/decoration/garland,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -19128,16 +19175,20 @@
 	},
 /area/centcom/holding)
 "aQA" = (
-/obj/item/device/flashlight/lamp/fir/special/alternative{
-	pixel_x = -16
+/obj/machinery/door/airlock/glass,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "CentComPort03";
+	layer = 2.6;
+	name = "Security Doors";
+	opacity = 0
 	},
-/obj/machinery/light{
-	dir = 8;
-	invisibility = 101;
-	name = "invisible light fixture"
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "green"
 	},
-/turf/simulated/floor/plating/snow,
-/area/centcom/evac)
+/area/centcom/holding)
 "aQB" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Holding Facility"
@@ -19171,9 +19222,20 @@
 	},
 /area/centcom/evac)
 "aQG" = (
-/obj/item/decoration/snowman,
-/turf/simulated/floor/plating/snow,
-/area/centcom/evac)
+/obj/machinery/door/airlock/glass,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "CentComPort03";
+	layer = 2.6;
+	name = "Security Doors";
+	opacity = 0
+	},
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "green"
+	},
+/area/centcom/holding)
 "aQH" = (
 /obj/machinery/newscaster{
 	pixel_y = 32
@@ -19291,12 +19353,17 @@
 	},
 /area/centcom/living)
 "aQT" = (
-/obj/structure/flora/tree/pine,
-/obj/structure/flora/grass/brown{
-	layer = 2.7
+/obj/machinery/door/airlock/centcom{
+	name = "General Access";
+	req_access = list(108)
 	},
-/turf/simulated/floor/plating/snow,
-/area/centcom/evac)
+/obj/structure/sign/mark{
+	icon_state = "9";
+	layer = 3.5
+	},
+/obj/structure/centcom_barrier,
+/turf/unsimulated/floor,
+/area/centcom/control)
 "aQU" = (
 /obj/structure/object_wall/evac{
 	icon_state = "1,13"
@@ -19567,12 +19634,21 @@
 	},
 /area/centcom/evac)
 "aRC" = (
-/obj/structure/flora/grass/green{
-	layer = 2.7
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "CentComConv01"
 	},
-/obj/item/weapon/present,
-/turf/simulated/floor/plating/snow,
-/area/centcom/evac)
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "CentComPort03";
+	layer = 4.1;
+	name = "Security Doors";
+	opacity = 0
+	},
+/obj/structure/plasticflaps/explosion_proof,
+/turf/unsimulated/floor,
+/area/centcom/control)
 "aRD" = (
 /obj/structure/object_wall/evac{
 	icon_state = "1,12"
@@ -23932,20 +24008,26 @@
 	},
 /area/custom/abductor_ship)
 "bbM" = (
-/turf/unsimulated/wall/abductor{
-	icon_state = "alien21"
-	},
-/area/custom/abductor_ship)
+/obj/item/decoration/snowman,
+/obj/structure/snow,
+/turf/unsimulated/floor/snow,
+/area/centcom/evac)
 "bbN" = (
-/turf/unsimulated/wall/abductor{
-	icon_state = "alien22"
+/obj/structure/flora/grass/green{
+	layer = 2.7
 	},
-/area/custom/abductor_ship)
+/obj/item/weapon/present,
+/obj/structure/snow,
+/turf/unsimulated/floor/snow,
+/area/centcom/evac)
 "bbO" = (
-/turf/unsimulated/wall/abductor{
-	icon_state = "alien23"
+/obj/structure/flora/tree/pine,
+/obj/structure/flora/grass/brown{
+	layer = 2.7
 	},
-/area/custom/abductor_ship)
+/obj/structure/snow,
+/turf/unsimulated/floor/snow,
+/area/centcom/evac)
 "bbP" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien24"
@@ -24043,8 +24125,9 @@
 	},
 /area/custom/abductor_ship)
 "bcc" = (
+/obj/item/decoration/garland,
 /turf/unsimulated/wall/abductor{
-	icon_state = "alien17"
+	icon_state = "alien23"
 	},
 /area/custom/abductor_ship)
 "bcd" = (
@@ -24068,8 +24151,9 @@
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
 "bcg" = (
+/obj/item/decoration/garland,
 /turf/unsimulated/wall/abductor{
-	icon_state = "alien18"
+	icon_state = "alien17"
 	},
 /area/custom/abductor_ship)
 "bch" = (
@@ -24169,8 +24253,9 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "bct" = (
+/obj/item/decoration/garland,
 /turf/unsimulated/wall/abductor{
-	icon_state = "alien14"
+	icon_state = "alien18"
 	},
 /area/custom/abductor_ship)
 "bcu" = (
@@ -24187,6 +24272,7 @@
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
 "bcx" = (
+/obj/item/decoration/garland,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien15"
 	},
@@ -24204,6 +24290,34 @@
 /obj/item/decoration/tinsel,
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
+"bcA" = (
+/obj/item/decoration/garland,
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien8"
+	},
+/area/custom/abductor_ship)
+"bcB" = (
+/obj/item/decoration/garland,
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien2"
+	},
+/area/custom/abductor_ship)
+"bcC" = (
+/obj/item/decoration/garland,
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien3"
+	},
+/area/custom/abductor_ship)
+"bcD" = (
+/obj/item/decoration/garland,
+/turf/unsimulated/wall/abductor{
+	icon_state = "alien4"
+	},
+/area/custom/abductor_ship)
+"bcE" = (
+/obj/item/decoration/garland,
+/turf/unsimulated/wall/fakeglass,
+/area/custom/ninjaspawn)
 "bcI" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien12"
@@ -24234,8 +24348,9 @@
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
 "bcO" = (
+/obj/item/decoration/garland,
 /turf/unsimulated/wall/abductor{
-	icon_state = "alien13"
+	icon_state = "alien21"
 	},
 /area/custom/abductor_ship)
 "bcP" = (
@@ -24260,6 +24375,7 @@
 	},
 /area/centcom/specops)
 "bde" = (
+/obj/item/decoration/garland,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien10"
 	},
@@ -24269,6 +24385,7 @@
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
 "bdh" = (
+/obj/item/decoration/garland,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien11"
 	},
@@ -24322,6 +24439,7 @@
 	},
 /area/custom/abductor_ship)
 "bdy" = (
+/obj/item/decoration/garland,
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien7"
 	},
@@ -24333,8 +24451,9 @@
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
 "bdC" = (
+/obj/item/decoration/garland,
 /turf/unsimulated/wall/abductor{
-	icon_state = "alien8"
+	icon_state = "alien22"
 	},
 /area/custom/abductor_ship)
 "bdD" = (
@@ -24381,18 +24500,19 @@
 /turf/unsimulated/wall/abductor,
 /area/custom/abductor_ship)
 "bdT" = (
-/turf/unsimulated/wall/abductor{
-	icon_state = "alien2"
-	},
-/area/custom/abductor_ship)
+/obj/item/decoration/snowflake,
+/turf/unsimulated/wall,
+/area/custom/ninjaspawn)
 "bdU" = (
+/obj/item/decoration/garland,
 /turf/unsimulated/wall/abductor{
-	icon_state = "alien3"
+	icon_state = "alien14"
 	},
 /area/custom/abductor_ship)
 "bdV" = (
+/obj/item/decoration/garland,
 /turf/unsimulated/wall/abductor{
-	icon_state = "alien4"
+	icon_state = "alien13"
 	},
 /area/custom/abductor_ship)
 "bdW" = (
@@ -26294,6 +26414,7 @@
 "dAb" = (
 /obj/machinery/door/airlock/centcom,
 /obj/effect/landmark/trololo,
+/obj/item/decoration/tinsel,
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
@@ -26396,18 +26517,13 @@
 /turf/environment/space,
 /area/velocity)
 "dLb" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/airlock/security{
-	name = "Security Checkpoint";
-	req_access = list(101)
+/obj/item/device/flashlight/lamp/fir/special{
+	pixel_x = -16
 	},
 /turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "delivery"
+	icon_state = "floor"
 	},
-/area/velocity)
+/area/custom/syndicate_mothership)
 "dMb" = (
 /obj/structure/disposalpipe/junction{
 	dir = 1;
@@ -26895,15 +27011,14 @@
 	},
 /area/velocity)
 "eJb" = (
-/obj/machinery/door/airlock/security{
-	name = "Security Checkpoint";
-	req_access = list(101)
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
 	},
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "delivery"
+/obj/item/decoration/snowflake,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplating"
 	},
-/area/velocity)
+/area/custom/syndicate_mothership/armory)
 "eKb" = (
 /obj/machinery/light{
 	dir = 8
@@ -30372,12 +30487,14 @@
 	},
 /area/centcom/control)
 "lWb" = (
-/mob/living/simple_animal/hostile/carp/dog,
-/turf/unsimulated/floor{
-	dir = 4;
-	icon_state = "warnplate"
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
 	},
-/area/centcom/control)
+/obj/item/decoration/snowflake,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorplating"
+	},
+/area/custom/syndicate_mothership/elite_squad)
 "lWr" = (
 /obj/structure/object_wall/standart{
 	dir = 8;
@@ -31298,21 +31415,19 @@
 	},
 /area/centcom/living)
 "obb" = (
-/obj/machinery/door/airlock/glass,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "CentComPort03";
-	layer = 2.6;
-	name = "Security Doors";
-	opacity = 0
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/security{
+	name = "Security Checkpoint";
+	req_access = list(101)
 	},
 /obj/item/decoration/tinsel,
 /turf/unsimulated/floor{
 	dir = 9;
-	icon_state = "green"
+	icon_state = "delivery"
 	},
-/area/centcom/holding)
+/area/velocity)
 "obR" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -31375,24 +31490,16 @@
 /turf/environment/space,
 /area/shuttle/arrival/transit)
 "ojb" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Waiting Room"
-	},
-/obj/item/decoration/tinsel,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "warning"
-	},
-/area/centcom/evac)
+/obj/item/decoration/garland,
+/turf/unsimulated/wall/log,
+/area/custom/arena)
 "okb" = (
-/obj/machinery/door/airlock/centcom{
-	name = "Waiting Room"
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
 	},
-/obj/item/decoration/tinsel,
-/turf/unsimulated/floor{
-	icon_state = "warning"
-	},
-/area/centcom/evac)
+/obj/item/decoration/snowflake,
+/turf/simulated/shuttle/floor/vox,
+/area/shuttle/specops/centcom)
 "olb" = (
 /obj/structure/object_wall/evac{
 	density = 0;
@@ -31526,8 +31633,12 @@
 /turf/unsimulated/floor/snow,
 /area/space)
 "oCb" = (
-/turf/unsimulated/wall/log,
-/area/custom/arena)
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/obj/item/decoration/snowflake,
+/turf/simulated/shuttle/floor/vox,
+/area/custom/syndicate_mothership/armory)
 "oDb" = (
 /obj/effect/landmark/blockway,
 /obj/structure/flora/tree/pine/unbreakable{
@@ -31877,21 +31988,9 @@
 /turf/unsimulated/floor/snow,
 /area/space)
 "pCb" = (
-/obj/machinery/door/airlock/glass,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "CentComPort03";
-	layer = 2.6;
-	name = "Security Doors";
-	opacity = 0
-	},
-/obj/item/decoration/tinsel,
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "green"
-	},
-/area/centcom/holding)
+/obj/structure/snowman,
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
 "pDb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "1,9"
@@ -31899,18 +31998,16 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "pFb" = (
-/obj/machinery/door/airlock/centcom{
-	name = "General Access";
-	req_access = list(108)
+/obj/machinery/door/airlock/security{
+	name = "Security Checkpoint";
+	req_access = list(101)
 	},
-/obj/structure/sign/mark{
-	icon_state = "9";
-	layer = 3.5
-	},
-/obj/structure/centcom_barrier,
 /obj/item/decoration/tinsel,
-/turf/unsimulated/floor,
-/area/centcom/control)
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "delivery"
+	},
+/area/velocity)
 "pGb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "General Access";
@@ -31922,22 +32019,15 @@
 	},
 /area/centcom/tdome)
 "pHb" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "CentComConv01"
+/obj/effect/landmark/trololo,
+/obj/machinery/door/airlock/centcom{
+	req_access = list(101)
 	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "CentComPort03";
-	layer = 4.1;
-	name = "Security Doors";
-	opacity = 0
-	},
-/obj/structure/plasticflaps/explosion_proof,
 /obj/item/decoration/tinsel,
-/turf/unsimulated/floor,
-/area/centcom/control)
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/velocity)
 "pJb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "14,4";
@@ -32155,6 +32245,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/decoration/garland,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplating"
 	},
@@ -32382,6 +32473,7 @@
 	name = "Restroom";
 	req_access = list(150)
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -50372,14 +50464,14 @@ aaM
 aaM
 aaM
 bcb
-bct
+bdU
 bcI
 bde
 bdx
 aaM
 aaM
 bcb
-bct
+bdU
 bcI
 bde
 bdx
@@ -50628,14 +50720,14 @@ aaM
 aaM
 aaM
 bbL
-bcc
+bcg
 bcu
 bcJ
 bdf
 bdy
 bdS
 bbL
-bcc
+bcg
 bet
 bcJ
 bdf
@@ -50884,20 +50976,20 @@ aaM
 aaM
 aaM
 aaM
-bbM
+bcO
 bcd
 bcv
 bcK
 bcv
 bdz
-bdT
-bbM
+bcB
+bcO
 bej
 bcv
 beJ
 bcv
 aaO
-bdT
+bcB
 aaM
 aaM
 aaM
@@ -51141,20 +51233,20 @@ aaM
 aaM
 aaM
 aaM
-bbN
+bdC
 bce
 bcv
 bcL
 bcv
 awE
-bdU
-bbN
+bcC
+bdC
 bek
 bcv
 bcL
 bcv
 awX
-bdU
+bcC
 aaM
 aaM
 aaM
@@ -51398,20 +51490,20 @@ aaM
 aaM
 aaM
 aaM
-bbO
+bcc
 bcf
 bcv
 bcM
 bcv
 awW
-bdV
-bbO
+bcD
+bcc
 bel
 bcv
 beI
 bcv
 awW
-bdV
+bcD
 aaM
 aaM
 aaM
@@ -51656,18 +51748,18 @@ aaM
 aaM
 aaM
 bbP
-bcg
+bct
 bcw
 bcN
 awD
-bdC
+bcA
 bdW
 bbP
-bcg
+bct
 bcw
 bcN
 awD
-bdC
+bcA
 bdW
 aaM
 aaM
@@ -51915,14 +52007,14 @@ aaM
 aaM
 bch
 bcx
-bcO
+bdV
 bdh
 bdD
 aaM
 aaM
 bch
 bcx
-bcO
+bdV
 bdh
 bdD
 aaM
@@ -52171,14 +52263,14 @@ aaM
 aaM
 aaM
 bcb
-bct
+bdU
 bcI
 bde
 bdx
 aaM
 aaM
 bcb
-bct
+bdU
 bcI
 bde
 bdx
@@ -52427,14 +52519,14 @@ aaM
 aaM
 aaM
 bbL
-bcc
+bcg
 bcy
 bcJ
 bdf
 bdy
 bdS
 bbL
-bcc
+bcg
 beu
 bcJ
 bdf
@@ -52683,20 +52775,20 @@ aaM
 aaM
 aaM
 aaM
-bbM
+bcO
 bci
 bcv
 bcP
 bcv
 bdE
-bdT
-bbM
+bcB
+bcO
 bem
 bcv
 beT
 bcv
 aba
-bdT
+bcB
 aaM
 aaM
 aaM
@@ -52940,20 +53032,20 @@ aaM
 aaM
 aaM
 aaM
-bbN
+bdC
 bcj
 bcv
 bcL
 bcv
 awX
-bdU
-bbN
+bcC
+bdC
 ben
 bcv
 bcL
 bcv
 awX
-bdU
+bcC
 aaM
 aaM
 aaM
@@ -53197,20 +53289,20 @@ aaM
 aaM
 aaM
 aaM
-bbO
+bcc
 bck
 bcv
 bcQ
 bcv
 awW
-bdV
-bbO
+bcD
+bcc
 beo
 bcv
 beU
 bcv
 awW
-bdV
+bcD
 aaM
 aaM
 aaM
@@ -53455,18 +53547,18 @@ aaM
 aaM
 aaM
 bbP
-bcg
+bct
 bcw
 bcN
 awD
-bdC
+bcA
 bdW
 bbP
-bcg
+bct
 bcw
 bcN
 awD
-bdC
+bcA
 bdW
 aaM
 aaM
@@ -53714,14 +53806,14 @@ aaM
 aaM
 bch
 bcx
-bcO
+bdV
 bdh
 bdD
 aaM
 aaM
 bch
 bcx
-bcO
+bdV
 bdh
 bdD
 aaM
@@ -54976,7 +55068,7 @@ afw
 avG
 ady
 ady
-aQT
+bbO
 afD
 ady
 abw
@@ -55466,8 +55558,8 @@ aHv
 aHv
 aHv
 aHv
-ojb
-okb
+mcb
+aeE
 aHv
 aHv
 aaM
@@ -55488,7 +55580,7 @@ afD
 ady
 ady
 ady
-aQA
+afl
 ady
 avG
 ady
@@ -55746,10 +55838,10 @@ afD
 ady
 avG
 ady
-aQG
+bbM
 ady
 ady
-aQT
+bbO
 abw
 adW
 aVU
@@ -55965,7 +56057,7 @@ aPS
 aOF
 aOF
 aOF
-obb
+aQA
 lGb
 aJP
 lPb
@@ -56222,7 +56314,7 @@ aOF
 aOF
 aOF
 aOF
-pCb
+aQG
 lGb
 aJP
 lQb
@@ -56262,7 +56354,7 @@ avJ
 avG
 afF
 ady
-aRC
+bbN
 abH
 anc
 ada
@@ -56994,14 +57086,14 @@ aOG
 aOF
 aRx
 aNs
-pFb
+aQT
 aJu
 aJu
 aJu
 aJu
 aJu
 aJu
-pHb
+aRC
 aJu
 aaM
 aaM
@@ -57254,7 +57346,7 @@ aNs
 aSd
 adK
 aSd
-afl
+aSd
 aSd
 aSd
 aJu
@@ -57511,7 +57603,7 @@ aNs
 aei
 aSd
 aSd
-lWb
+mbb
 mbb
 mbb
 agB
@@ -61309,7 +61401,7 @@ lpG
 fCb
 fUb
 ayL
-lpG
+okb
 aaM
 aaM
 aaM
@@ -62333,7 +62425,7 @@ aaM
 aaM
 aaM
 aaM
-lpG
+okb
 fHb
 fUb
 fqb
@@ -62850,7 +62942,7 @@ aaM
 lpG
 lpG
 fVb
-lpG
+okb
 lpG
 aBp
 aAJ
@@ -64769,7 +64861,7 @@ aaM
 aer
 aer
 aer
-aer
+bdT
 aer
 aaM
 aaM
@@ -65023,9 +65115,9 @@ aaM
 aaM
 aaM
 aer
-aer
+bdT
 aex
-aeE
+bcE
 aeH
 aer
 aer
@@ -65282,7 +65374,7 @@ aer
 aer
 aev
 aew
-aeE
+bcE
 aew
 aeJ
 aer
@@ -65535,11 +65627,11 @@ aaM
 aaM
 aaM
 aaM
-aer
+bdT
 aes
 aew
 aex
-aeE
+bcE
 aeI
 aeH
 dHm
@@ -65796,11 +65888,11 @@ aer
 aet
 aex
 aez
-aeE
+bcE
 aez
 aew
 aet
-aer
+bdT
 aaM
 aaM
 aaM
@@ -66053,7 +66145,7 @@ aer
 aeu
 aex
 aeA
-aeE
+bcE
 aew
 aeH
 jZp
@@ -66307,10 +66399,10 @@ aaM
 aaM
 aaM
 aer
-aer
+bdT
 aey
 aex
-aeE
+bcE
 aew
 aeK
 aer
@@ -66567,9 +66659,9 @@ aaM
 aer
 aer
 aex
-aeE
+bcE
 aeH
-aer
+bdT
 aer
 aaM
 aaM
@@ -68943,7 +69035,7 @@ aju
 dMd
 mAb
 aPH
-aPH
+eJb
 aPH
 aPH
 aOl
@@ -69179,7 +69271,7 @@ aaM
 lWr
 mAb
 mAb
-mAb
+lWb
 aiH
 fqy
 hsR
@@ -69443,7 +69535,7 @@ iTh
 aMO
 fqy
 sAN
-mAb
+lWb
 ahP
 ais
 ajn
@@ -69947,7 +70039,7 @@ aaM
 aaM
 aaM
 lWr
-mAb
+lWb
 vSL
 pWh
 mAb
@@ -70211,6 +70303,7 @@ lZv
 aPf
 aaw
 qTT
+lWb
 mAb
 mAb
 mAb
@@ -70218,15 +70311,14 @@ mAb
 mAb
 mAb
 mAb
-mAb
-mAb
+lWb
 mAb
 aMY
 aMY
 mAb
 mAb
 aPH
-aPH
+eJb
 aNQ
 aNR
 aNR
@@ -71002,7 +71094,7 @@ aNR
 aNR
 aNR
 aNN
-aNu
+oCb
 aNu
 aaM
 aaM
@@ -71496,7 +71588,7 @@ hhr
 xsM
 xsM
 aiK
-mAb
+lWb
 aia
 xsM
 xsM
@@ -72262,7 +72354,7 @@ aaM
 aaM
 dMd
 mAb
-mAb
+lWb
 mAb
 wSn
 wSn
@@ -72274,7 +72366,7 @@ ajg
 ajg
 fqy
 aNk
-mAb
+lWb
 mAb
 mAb
 uDv
@@ -72283,7 +72375,7 @@ aPv
 mAb
 mAb
 aPH
-aPH
+eJb
 aPO
 aOg
 aOk
@@ -72783,7 +72875,7 @@ aaM
 dMd
 mAb
 mAb
-mAb
+lWb
 mAb
 aPQ
 aMK
@@ -80565,7 +80657,7 @@ atU
 aoo
 arZ
 arZ
-dLb
+obb
 dTb
 arZ
 ecb
@@ -80576,7 +80668,7 @@ exb
 eDb
 arZ
 axS
-eJb
+pFb
 arZ
 arZ
 aoo
@@ -80836,7 +80928,7 @@ axS
 axY
 aaq
 arZ
-aty
+pHb
 ayw
 ayA
 ayA
@@ -88797,7 +88889,7 @@ mRb
 aHB
 aHB
 aHB
-aHB
+pCb
 aHB
 hJb
 aHB
@@ -89837,7 +89929,7 @@ aHB
 aHB
 aeY
 aHB
-aHB
+pCb
 aHB
 aXY
 aHB
@@ -90088,9 +90180,9 @@ afq
 aHB
 ltb
 aWF
-oCb
-oCb
-oCb
+ojb
+ojb
+ojb
 aHB
 ltb
 aHB
@@ -90345,9 +90437,9 @@ aWF
 aHB
 aHB
 aHB
-oCb
+ojb
 aeQ
-oCb
+ojb
 aHB
 aWF
 aHB
@@ -90859,9 +90951,9 @@ aHB
 aHB
 aHB
 aHB
-oCb
+ojb
 afO
-oCb
+ojb
 aHB
 mpb
 aHB
@@ -91116,9 +91208,9 @@ afq
 aWF
 ltb
 aHB
-oCb
-oCb
-oCb
+ojb
+ojb
+ojb
 aHB
 ltb
 aHB
@@ -91621,7 +91713,7 @@ aaM
 aaM
 mRb
 aHB
-aHB
+pCb
 aHB
 afq
 aHB
@@ -91886,7 +91978,7 @@ aeS
 aHB
 aHB
 aWF
-aHB
+pCb
 aHB
 aXY
 aHB
@@ -93096,7 +93188,7 @@ mHb
 aHE
 ajd
 aIb
-aIb
+dLb
 aIb
 all
 aly

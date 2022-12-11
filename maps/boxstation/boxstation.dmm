@@ -10477,27 +10477,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
-"arE" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Prison Gate";
-	name = "Security Blast Door";
-	opacity = 0
-	},
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable,
-/turf/simulated/floor/plating,
-/area/station/security/prison)
 "arF" = (
 /obj/structure/table,
 /obj/machinery/kitchen_machine/microwave{
@@ -12473,7 +12452,8 @@
 /area/station/civilian/chapel)
 "avn" = (
 /obj/machinery/hologram/holopad,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "avo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -15454,6 +15434,7 @@
 	name = "Security Blast Door";
 	opacity = 0
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/security/lobby)
 "aAX" = (
@@ -15932,6 +15913,7 @@
 	opacity = 0
 	},
 /obj/structure/cable,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/security/iaa_office)
 "aBP" = (
@@ -17333,7 +17315,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "aEG" = (
 /turf/simulated/floor{
@@ -18763,7 +18746,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "aHq" = (
 /obj/item/weapon/reagent_containers/spray/plantbgone{
@@ -22889,7 +22873,8 @@
 /area/station/civilian/chapel/office)
 "aOO" = (
 /obj/item/weapon/present,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "aOP" = (
 /obj/effect/decal/cleanable/blood/oil,
@@ -23549,8 +23534,9 @@
 /area/station/civilian/chapel/altar)
 "aQb" = (
 /obj/structure/flora/bush,
-/turf/simulated/floor/plating/snow,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "aQc" = (
 /obj/structure/grille,
@@ -23648,8 +23634,9 @@
 /obj/structure/flora/grass/brown{
 	layer = 2.7
 	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /turf/environment/space,
-/turf/simulated/floor/plating/snow,
 /area/station/civilian/garden)
 "aQm" = (
 /obj/structure/disposalpipe/segment{
@@ -24369,7 +24356,8 @@
 /area/station/maintenance/chapel)
 "aRA" = (
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "aRB" = (
 /obj/structure/disposalpipe/segment{
@@ -24493,8 +24481,9 @@
 /area/station/maintenance/science)
 "aRK" = (
 /obj/structure/flora/tree/pine,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /turf/environment/space,
-/turf/simulated/floor/plating/snow,
 /area/station/civilian/garden)
 "aRL" = (
 /obj/machinery/atmospherics/components/trinary/mixer/m_mixer{
@@ -24523,8 +24512,9 @@
 /area/station/maintenance/chapel)
 "aRO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /turf/environment/space,
-/turf/simulated/floor/plating/snow,
 /area/station/civilian/garden)
 "aRP" = (
 /obj/machinery/alarm{
@@ -25244,8 +25234,9 @@
 /area/station/bridge)
 "aTf" = (
 /obj/structure/flora/ausbushes/pointybush,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /turf/environment/space,
-/turf/simulated/floor/plating/snow,
 /area/station/civilian/garden)
 "aTg" = (
 /obj/machinery/door/poddoor{
@@ -25369,7 +25360,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "aTr" = (
 /obj/machinery/light{
@@ -25401,7 +25393,8 @@
 	dir = 4
 	},
 /obj/item/weapon/present,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "aTu" = (
 /obj/machinery/constructable_frame/machine_frame,
@@ -25771,8 +25764,9 @@
 	},
 /area/station/medical/sleeper)
 "aUb" = (
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /turf/environment/space,
-/turf/simulated/floor/plating/snow,
 /area/station/civilian/garden)
 "aUc" = (
 /obj/structure/cable{
@@ -26227,7 +26221,8 @@
 /obj/structure/flora/grass/both{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "aUT" = (
 /obj/structure/cable{
@@ -26255,7 +26250,8 @@
 /obj/structure/flora/grass/brown{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "aUV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -27943,8 +27939,9 @@
 	layer = 2.7
 	},
 /obj/structure/flora/ausbushes/pointybush,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /turf/environment/space,
-/turf/simulated/floor/plating/snow,
 /area/station/civilian/garden)
 "aXN" = (
 /obj/item/weapon/flora/random,
@@ -29515,8 +29512,9 @@
 "bas" = (
 /obj/structure/flora/bush,
 /obj/item/weapon/present,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /turf/environment/space,
-/turf/simulated/floor/plating/snow,
 /area/station/civilian/garden)
 "bat" = (
 /obj/structure/cable{
@@ -29747,8 +29745,9 @@
 	pixel_y = -22
 	},
 /obj/structure/flora/mine_rocks,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /turf/environment/space,
-/turf/simulated/floor/plating/snow,
 /area/station/civilian/garden)
 "baO" = (
 /obj/structure/extinguisher_cabinet{
@@ -31190,8 +31189,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /turf/environment/space,
-/turf/simulated/floor/plating/snow,
 /area/station/civilian/garden)
 "bdr" = (
 /turf/simulated/floor/wood{
@@ -44091,12 +44091,14 @@
 	dir = 4
 	},
 /obj/structure/flora/tree/pine,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /turf/environment/space,
-/turf/simulated/floor/plating/snow,
 /area/station/civilian/garden)
 "bAx" = (
 /obj/item/device/flashlight/lamp/fir/special/alternative,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "bAy" = (
 /turf/simulated/floor{
@@ -44610,20 +44612,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bBv" = (
-/obj/machinery/door/firedoor,
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/snowman,
+/obj/structure/snow,
 /turf/simulated/floor/plating,
-/area/station/cargo/office)
+/area/station/civilian/garden)
 "bBw" = (
 /obj/random/scrap/safe_even,
 /turf/simulated/floor/plating,
@@ -46700,7 +46692,8 @@
 /area/station/medical/cryo)
 "bFn" = (
 /obj/structure/flora/ausbushes/pointybush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "bFo" = (
 /turf/simulated/wall,
@@ -52193,7 +52186,8 @@
 /obj/structure/flora/grass/brown{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "bPq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -57285,17 +57279,20 @@
 /area/station/civilian/garden)
 "bZb" = (
 /obj/structure/flora/mine_rocks,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "bZc" = (
 /obj/structure/flora/tree/pine,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "bZd" = (
 /obj/structure/flora/grass/both{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "bZe" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -57313,7 +57310,8 @@
 /obj/structure/flora/grass/both{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "bZm" = (
 /obj/item/stack/sheet/metal,
@@ -57332,7 +57330,8 @@
 /obj/structure/flora/grass/brown{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "bZq" = (
 /obj/structure/grille,
@@ -58217,7 +58216,8 @@
 /obj/structure/flora/grass/green{
 	layer = 2.7
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "ccR" = (
 /obj/structure/rack,
@@ -58261,7 +58261,8 @@
 /area/station/engineering/engine)
 "ccX" = (
 /obj/structure/flora/bush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "cdb" = (
 /obj/item/decoration/snowflake,
@@ -67156,7 +67157,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "cCu" = (
 /turf/simulated/floor{
@@ -67284,13 +67286,15 @@
 	dir = 4
 	},
 /obj/item/weapon/present,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "cCK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "cCL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -68799,6 +68803,7 @@
 	dir = 5
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cHG" = (
@@ -69935,7 +69940,8 @@
 	dir = 1;
 	icon_state = "bench_2"
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "cLS" = (
 /obj/structure/cable/yellow{
@@ -70066,7 +70072,8 @@
 /obj/structure/stool/bed/chair/schair/wagon/bench{
 	dir = 1
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "cMo" = (
 /obj/item/clothing/suit/justice,
@@ -70113,6 +70120,7 @@
 	},
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "cMu" = (
@@ -74992,7 +75000,8 @@
 	},
 /area/station/hallway/primary/port)
 "itb" = (
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "itt" = (
 /obj/item/weapon/table_parts/wood/fancy,
@@ -75933,8 +75942,9 @@
 /obj/structure/flora/grass/brown{
 	layer = 2.7
 	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /turf/environment/space,
-/turf/simulated/floor/plating/snow,
 /area/station/civilian/garden)
 "jsb" = (
 /obj/structure/grille,
@@ -77483,8 +77493,9 @@
 /obj/structure/flora/grass/green{
 	layer = 2.7
 	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /turf/environment/space,
-/turf/simulated/floor/plating/snow,
 /area/station/civilian/garden)
 "lhP" = (
 /obj/structure/cable/yellow{
@@ -78515,7 +78526,8 @@
 "mqb" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "mrb" = (
 /obj/structure/stool/bed/chair/comfy/brown{
@@ -79477,8 +79489,9 @@
 /obj/structure/flora/grass/both{
 	layer = 2.7
 	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /turf/environment/space,
-/turf/simulated/floor/plating/snow,
 /area/station/civilian/garden)
 "nDb" = (
 /obj/structure/window/reinforced,
@@ -79556,7 +79569,8 @@
 /area/station/civilian/hydroponics)
 "nIb" = (
 /obj/structure/stool/bed/chair/schair/wagon/bench,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "nJb" = (
 /obj/structure/disposalpipe/segment,
@@ -79615,7 +79629,8 @@
 /obj/structure/stool/bed/chair/schair/wagon/bench{
 	icon_state = "bench_2"
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "nNV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -99126,7 +99141,7 @@ blD
 jMR
 oaE
 nZG
-bBv
+dqn
 puN
 krG
 wQY
@@ -116304,7 +116319,7 @@ adJ
 adJ
 adJ
 aqI
-arE
+cjF
 cjF
 aAq
 ckd
@@ -121036,7 +121051,7 @@ crH
 kSi
 clA
 ltA
-cpp
+bVz
 aah
 aaa
 aaa
@@ -121293,7 +121308,7 @@ crH
 tIk
 rLC
 ltA
-cpp
+bVz
 aaa
 aaa
 aaa
@@ -121550,7 +121565,7 @@ crH
 ckN
 vAn
 tso
-cpp
+bVz
 aaa
 aah
 aaa
@@ -136658,7 +136673,7 @@ aUS
 nCQ
 aUb
 nCQ
-itb
+bBv
 cCK
 bdq
 bZd

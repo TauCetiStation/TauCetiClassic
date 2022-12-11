@@ -246,11 +246,11 @@
 	pixel_y = -28
 	},
 /obj/machinery/hydroponics/soil,
-/turf/simulated/floor/plating/snow,
+/turf/environment/space,
 /area/station/security/prison)
 "aat" = (
 /obj/machinery/hydroponics/soil,
-/turf/simulated/floor/plating/snow,
+/turf/environment/space,
 /area/station/security/prison)
 "aau" = (
 /obj/machinery/camera{
@@ -260,7 +260,7 @@
 	pixel_x = 22
 	},
 /obj/machinery/hydroponics/soil,
-/turf/simulated/floor/plating/snow,
+/turf/environment/space,
 /area/station/security/prison)
 "aav" = (
 /obj/structure/stool/bed/roller,
@@ -702,10 +702,8 @@
 	pixel_y = 32
 	},
 /obj/item/weapon/present,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "aaZ" = (
 /obj/structure/stool,
@@ -716,10 +714,8 @@
 /obj/machinery/camera{
 	c_tag = "Park North-West"
 	},
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "aba" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -797,10 +793,8 @@
 /obj/structure/flora/mine_rocks{
 	pixel_x = 17
 	},
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "abg" = (
 /turf/simulated/floor{
@@ -829,27 +823,21 @@
 /area/station/civilian/bar)
 "abj" = (
 /obj/structure/flora/grass/brown,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "abk" = (
 /obj/structure/stool,
 /obj/effect/landmark/start/assistant/test_subject,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "abl" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/dice/d20,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "abm" = (
 /obj/structure/table/reinforced,
@@ -909,10 +897,8 @@
 /area/station/cargo/office)
 "abp" = (
 /obj/structure/flora/mine_rocks,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "abq" = (
 /obj/item/weapon/paper_bin,
@@ -1004,17 +990,13 @@
 "abw" = (
 /obj/structure/flora/grass/brown,
 /obj/structure/flora/ausbushes/pointybush,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "abx" = (
 /obj/structure/flora/grass/green,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "aby" = (
 /turf/simulated/wall/r_wall,
@@ -1608,10 +1590,8 @@
 	layer = 2.7
 	},
 /obj/item/weapon/present,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "aco" = (
 /obj/structure/stool,
@@ -1619,10 +1599,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "acp" = (
 /obj/structure/closet/secure_closet/personal/patient,
@@ -1642,10 +1620,8 @@
 	dir = 8
 	},
 /obj/item/weapon/present,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "acr" = (
 /obj/structure/window/reinforced{
@@ -1657,8 +1633,9 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/flora/ausbushes/pointybush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/grass/both,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "acs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -1762,10 +1739,8 @@
 	dir = 4
 	},
 /obj/structure/flora/grass/both,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "acA" = (
 /obj/structure/stool,
@@ -1776,10 +1751,8 @@
 	c_tag = "Park South-East";
 	dir = 1
 	},
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "acB" = (
 /obj/machinery/vending/cigarette{
@@ -1882,10 +1855,8 @@
 	pixel_x = 25
 	},
 /obj/structure/flora/ausbushes/lavendergrass,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "acJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2032,10 +2003,8 @@
 "acW" = (
 /obj/machinery/light/small,
 /obj/structure/flora/grass/green,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "acX" = (
 /obj/structure/grille,
@@ -2515,13 +2484,11 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/flora/grass/both,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/grass/brown,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "adM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -3884,17 +3851,18 @@
 /area/station/rnd/test_area)
 "afY" = (
 /obj/structure/window/reinforced{
-	dir = 1
+	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 8
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/flora/mine_rocks,
-/turf/simulated/floor/plating/snow,
-/area/station/civilian/chapel/altar)
+/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
+/area/station/civilian/dormitories)
 "afZ" = (
 /obj/item/decoration/snowflake,
 /turf/simulated/wall,
@@ -4019,7 +3987,8 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/flora/grass/both,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/chapel/altar)
 "agj" = (
 /obj/structure/window/reinforced,
@@ -4027,7 +3996,8 @@
 	dir = 1
 	},
 /obj/structure/flora/ausbushes/pointybush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/chapel/altar)
 "agk" = (
 /obj/structure/sign/warning/fire{
@@ -4044,7 +4014,8 @@
 	dir = 4
 	},
 /obj/structure/flora/ausbushes/lavendergrass,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/chapel/altar)
 "agm" = (
 /obj/structure/window/reinforced{
@@ -4055,7 +4026,8 @@
 	dir = 1
 	},
 /obj/structure/flora/bush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/chapel/altar)
 "agn" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4069,7 +4041,8 @@
 	dir = 1
 	},
 /obj/structure/flora/grass/brown,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/chapel/altar)
 "agp" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal,
@@ -4089,7 +4062,8 @@
 	dir = 4
 	},
 /obj/structure/flora/ausbushes/pointybush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/chapel/altar)
 "agr" = (
 /obj/machinery/door/airlock/medical/glass{
@@ -4599,9 +4573,10 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/flora/grass/green,
-/turf/simulated/floor/plating/snow,
-/area/station/civilian/dormitories)
+/obj/structure/flora/mine_rocks,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
+/area/station/civilian/chapel/altar)
 "agZ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -4697,7 +4672,8 @@
 	dir = 4
 	},
 /obj/structure/flora/ausbushes/pointybush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "ahh" = (
 /obj/structure/stool/bed/chair/metal/red{
@@ -5795,41 +5771,44 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/flora/grass/both,
-/turf/simulated/floor/plating/snow,
+/turf/environment/space,
 /area/station/medical/virology)
 "aiG" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/structure/flora/grass/green,
-/turf/simulated/floor/plating/snow,
-/area/station/medical/virology)
+/obj/structure/snow,
+/turf/simulated/floor/plating,
+/area/station/civilian/dormitories)
 "aiH" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/flora/bush,
-/turf/simulated/floor/plating/snow,
+/turf/environment/space,
 /area/station/medical/virology)
 "aiI" = (
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
-/obj/structure/flora/ausbushes/pointybush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/grass/green,
+/turf/environment/space,
 /area/station/medical/virology)
 "aiJ" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
-/obj/structure/flora/grass/brown,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/ausbushes/pointybush,
+/turf/environment/space,
 /area/station/medical/virology)
 "aiK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -5857,11 +5836,11 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced{
-	dir = 8
+	dir = 1
 	},
-/obj/structure/flora/grass/both,
-/obj/structure/flora/grass/green,
-/turf/simulated/floor/plating/snow,
+/obj/structure/window/reinforced,
+/obj/structure/flora/grass/brown,
+/turf/environment/space,
 /area/station/medical/virology)
 "aiN" = (
 /obj/structure/grille,
@@ -5896,10 +5875,21 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/flora/mine_rocks,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/green,
+/turf/environment/space,
 /area/station/medical/virology)
 "aiP" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/flora/mine_rocks,
+/turf/environment/space,
+/area/station/medical/virology)
+"aiQ" = (
 /obj/structure/flora/ausbushes/pointybush,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -5908,7 +5898,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor/plating/snow,
+/turf/environment/space,
 /area/station/medical/virology)
 "aiW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -8930,10 +8920,8 @@
 /area/station/hallway/secondary/entry)
 "bgK" = (
 /obj/structure/flora/grass/both,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "bgM" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal{
@@ -10387,10 +10375,8 @@
 /area/station/hallway/primary/central)
 "bBX" = (
 /obj/structure/flora/bush,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "bBZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -12908,7 +12894,7 @@
 /obj/structure/window/reinforced{
 	dir = 5
 	},
-/turf/simulated/floor/plating/snow,
+/turf/environment/space,
 /area/station/hallway/secondary/exit)
 "csq" = (
 /obj/machinery/atmospherics/components/binary/valve/digital,
@@ -13513,10 +13499,8 @@
 	pixel_x = -25
 	},
 /obj/structure/flora/mine_rocks,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "cCv" = (
 /obj/machinery/vending/eva,
@@ -14019,7 +14003,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/flora/grass/both,
-/turf/simulated/floor/plating/snow,
+/turf/environment/space,
 /area/station/hallway/secondary/entry)
 "cLx" = (
 /obj/machinery/firealarm{
@@ -16454,11 +16438,8 @@
 /obj/structure/window/reinforced,
 /obj/structure/disposalpipe/segment,
 /obj/structure/flora/grass/green,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow";
-	name = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "dxU" = (
 /obj/structure/disposalpipe/segment{
@@ -16482,12 +16463,9 @@
 /turf/simulated/floor/carpet,
 /area/station/civilian/library)
 "dyh" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/flora/bush,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snowman,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "dyp" = (
 /turf/simulated/floor{
@@ -16611,7 +16589,8 @@
 	dir = 4
 	},
 /obj/structure/flora/grass/brown,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "dAZ" = (
 /obj/structure/disposalpipe/segment{
@@ -18270,7 +18249,7 @@
 /obj/structure/window/reinforced{
 	dir = 5
 	},
-/turf/simulated/floor/plating/snow,
+/turf/environment/space,
 /area/station/hallway/secondary/exit)
 "eeQ" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green,
@@ -19282,10 +19261,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "euV" = (
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "euW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -20478,10 +20455,8 @@
 	pixel_y = 24
 	},
 /obj/item/weapon/present,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "eQg" = (
 /obj/structure/closet/emcloset,
@@ -20731,17 +20706,13 @@
 	pixel_y = 23
 	},
 /obj/item/decoration/snowman,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "eTL" = (
 /obj/structure/flora/ausbushes/pointybush,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "eUi" = (
 /obj/machinery/door/poddoor{
@@ -21411,23 +21382,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "fcP" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment,
-/obj/structure/flora/grass/green,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow";
-	name = "snow"
-	},
-/area/station/civilian/bar)
+/obj/structure/snow,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/central)
 "fcS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -21527,7 +21487,7 @@
 /obj/structure/window/reinforced{
 	dir = 5
 	},
-/turf/simulated/floor/plating/snow,
+/turf/environment/space,
 /area/station/hallway/secondary/exit)
 "ffS" = (
 /obj/structure/object_wall/pod{
@@ -24089,10 +24049,8 @@
 	dir = 8
 	},
 /obj/structure/flora/grass/both,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "fUR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -25175,10 +25133,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "goz" = (
 /obj/machinery/power/solar{
@@ -25595,10 +25551,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "gws" = (
 /obj/structure/flora/ausbushes/fullgrass,
@@ -25956,14 +25910,14 @@
 	},
 /area/station/aisat/teleport)
 "gBv" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
-/area/station/hallway/primary/central)
+/obj/structure/flora/bush,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
+/area/station/civilian/bar)
 "gBH" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -26280,17 +26234,12 @@
 	},
 /area/station/medical/sleeper)
 "gHy" = (
-/obj/structure/table/woodentable,
-/obj/machinery/light/small,
-/obj/item/toy/cards,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/obj/item/weapon/present,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/flora/bush,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "gHD" = (
 /obj/item/weapon/reagent_containers/syringe/inaprovaline{
@@ -26699,21 +26648,16 @@
 /turf/simulated/wall,
 /area/station/security/prison)
 "gOn" = (
-/obj/structure/window/reinforced{
+/obj/structure/table/woodentable,
+/obj/machinery/light/small,
+/obj/item/toy/cards,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/disposalpipe/segment,
-/obj/structure/flora/bush,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow";
-	name = "snow"
-	},
-/area/station/civilian/bar)
+/obj/item/weapon/present,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/central)
 "gOL" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -27099,12 +27043,18 @@
 	},
 /area/station/security/lobby)
 "gVc" = (
-/obj/item/device/flashlight/lamp/fir/special/alternative,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/area/station/hallway/primary/central)
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/disposalpipe/segment,
+/obj/structure/flora/bush,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
+/area/station/civilian/bar)
 "gVv" = (
 /obj/structure/closet/secure_closet/miner,
 /turf/simulated/floor{
@@ -27407,7 +27357,8 @@
 	dir = 1
 	},
 /obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "haZ" = (
 /obj/effect/landmark/start/cyborg,
@@ -29069,10 +29020,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "hCo" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -32137,18 +32086,10 @@
 	},
 /area/station/maintenance/brig)
 "iFJ" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/flora/bush,
-/turf/simulated/floor/plating/snow,
-/area/station/civilian/dormitories)
+/obj/item/device/flashlight/lamp/fir/special/alternative,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/central)
 "iFS" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
 	dir = 5
@@ -32526,10 +32467,8 @@
 	name = "Station Intercom (General)";
 	pixel_y = 29
 	},
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "iMu" = (
 /obj/item/device/radio/off,
@@ -32657,10 +32596,14 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/flora/ausbushes/pointybush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/bush,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "iPi" = (
 /obj/structure/grille,
@@ -33209,13 +33152,15 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/flora/mine_rocks,
-/turf/simulated/floor/plating/snow,
-/area/station/civilian/dormitories)
+/turf/environment/space,
+/area/station/hallway/secondary/entry)
 "jcK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -34449,10 +34394,8 @@
 	pixel_y = 28
 	},
 /obj/structure/flora/grass/both,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "jvU" = (
 /turf/simulated/floor/carpet,
@@ -34468,9 +34411,9 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
-/obj/structure/flora/bush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/grass/both,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "jvZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -34911,10 +34854,8 @@
 /obj/machinery/camera{
 	c_tag = "Park North-East"
 	},
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "jDm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -37257,10 +37198,8 @@
 	dir = 5
 	},
 /obj/item/decoration/snowman,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "kms" = (
 /obj/machinery/door/firedoor,
@@ -38152,14 +38091,12 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/flora/mine_rocks,
-/turf/simulated/floor/plating/snow,
-/area/station/hallway/secondary/entry)
+/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
+/area/station/civilian/dormitories)
 "kBf" = (
 /obj/structure/dryer{
 	dir = 4;
@@ -38549,10 +38486,8 @@
 /area/station/civilian/dormitories/dormthree)
 "kHN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "kHP" = (
 /obj/structure/stool/bed/chair/metal/red{
@@ -39439,11 +39374,13 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/flora/grass/both,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/mine_rocks,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "kVy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -39453,10 +39390,8 @@
 /area/station/aisat)
 "kVA" = (
 /obj/item/weapon/present,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "kVD" = (
 /obj/machinery/status_display{
@@ -41163,13 +41098,14 @@
 "lxc" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4
+	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/grass/both,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/grass/green,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "lxd" = (
 /obj/structure/window/reinforced{
@@ -41726,10 +41662,8 @@
 	dir = 4
 	},
 /obj/item/weapon/present,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "lHo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -42234,7 +42168,8 @@
 	dir = 4
 	},
 /obj/structure/flora/bush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "lOK" = (
 /obj/structure/disposalpipe/segment{
@@ -43119,15 +43054,16 @@
 	},
 /area/station/medical/hallway)
 "mbr" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/bush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/grass/both,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "mbx" = (
 /obj/structure/table/woodentable,
@@ -43303,12 +43239,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "mdt" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/genericbush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/bush,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "mdA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -43554,7 +43494,8 @@
 	dir = 1
 	},
 /obj/structure/flora/bush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "mih" = (
 /obj/item/weapon/storage/toolbox/electrical,
@@ -43571,10 +43512,11 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced{
-	dir = 8
+	dir = 4
 	},
-/obj/structure/flora/grass/green,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "miq" = (
 /obj/structure/table,
@@ -43706,11 +43648,9 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/flora/ausbushes/lavendergrass,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/ausbushes/genericbush,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "mkf" = (
 /obj/structure/rack,
@@ -44430,7 +44370,8 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "mva" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -45077,7 +45018,7 @@
 /obj/structure/window/reinforced{
 	dir = 5
 	},
-/turf/simulated/floor/plating/snow,
+/turf/environment/space,
 /area/station/hallway/secondary/exit)
 "mIN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -46107,11 +46048,8 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/flora/grass/brown,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow";
-	name = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "mYD" = (
 /mob/living/simple_animal/mouse,
@@ -46178,15 +46116,16 @@
 /turf/simulated/floor/carpet,
 /area/station/civilian/dormitories/dormone)
 "mZB" = (
-/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 1
+	dir = 4
 	},
-/obj/structure/flora/grass/green,
-/turf/simulated/floor/plating/snow,
+/obj/structure/window/reinforced,
+/obj/structure/flora/bush,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "mZL" = (
 /obj/machinery/door/airlock/glass{
@@ -46959,7 +46898,8 @@
 	dir = 4
 	},
 /obj/structure/flora/ausbushes/pointybush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "nms" = (
 /obj/structure/closet/cabinet,
@@ -47087,10 +47027,8 @@
 "noA" = (
 /obj/structure/flora/grass/brown,
 /obj/item/weapon/present,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "noH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -47262,10 +47200,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "nrI" = (
 /obj/machinery/door/airlock/glass{
@@ -48568,18 +48504,16 @@
 	},
 /area/station/bridge/server)
 "nLl" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/window/reinforced{
-	dir = 4
+	dir = 8
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/grass/green,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "nLm" = (
 /obj/structure/window/reinforced{
@@ -48590,7 +48524,8 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/flora/mine_rocks,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "nLs" = (
 /turf/simulated/floor{
@@ -48815,10 +48750,8 @@
 /area/station/engineering/atmos)
 "nQs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "nQx" = (
 /obj/structure/table,
@@ -49296,7 +49229,8 @@
 	dir = 1
 	},
 /obj/structure/flora/grass/both,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "nXs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -50664,18 +50598,16 @@
 	},
 /area/station/security/checkpoint)
 "owh" = (
+/obj/structure/window/reinforced,
+/obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/flora/bush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "owF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -50751,7 +50683,8 @@
 	dir = 4
 	},
 /obj/structure/flora/mine_rocks,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "oxL" = (
 /obj/structure/disposalpipe/segment,
@@ -50822,10 +50755,8 @@
 	pixel_x = 22
 	},
 /obj/structure/flora/grass/both,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "ozi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -51035,10 +50966,8 @@
 /area/station/rnd/mixing)
 "oCP" = (
 /obj/structure/stool,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "oCW" = (
 /obj/effect/decal/cleanable/dirt,
@@ -51795,7 +51724,8 @@
 	dir = 1
 	},
 /obj/structure/flora/ausbushes/sparsegrass,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "oPj" = (
 /obj/structure/stool/bed,
@@ -52773,13 +52703,18 @@
 /area/station/rnd/hallway)
 "pev" = (
 /obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/flora/grass/brown,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/bush,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "pfd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/atmos{
@@ -53163,10 +53098,8 @@
 "por" = (
 /obj/structure/flora/tree/pine,
 /obj/item/weapon/present,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "poz" = (
 /obj/machinery/door_control{
@@ -54677,14 +54610,18 @@
 /area/station/bridge)
 "pMr" = (
 /obj/structure/window/reinforced{
-	dir = 1
+	dir = 8
 	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 8
+	dir = 1
 	},
-/obj/structure/flora/grass/both,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "pMv" = (
 /obj/machinery/door/airlock/external{
@@ -54869,8 +54806,12 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced,
-/obj/structure/flora/bush,
-/turf/simulated/floor/plating/snow,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/flora/grass/both,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "pPK" = (
 /obj/structure/stool/bed/chair/metal/green{
@@ -55106,13 +55047,12 @@
 /area/station/security/brig)
 "pTM" = (
 /obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/grass/brown,
-/turf/simulated/floor/plating/snow,
+/obj/structure/window/reinforced,
+/obj/structure/flora/bush,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "pTV" = (
 /obj/structure/cable{
@@ -55122,12 +55062,15 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/station/solar/starboard)
 "pTY" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/lavendergrass,
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/grass/brown,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "pUg" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -55366,14 +55309,12 @@
 /area/station/rnd/test_area)
 "pWR" = (
 /obj/structure/window/reinforced,
-/obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "pXa" = (
 /obj/machinery/door/airlock/maintenance{
@@ -57582,7 +57523,8 @@
 	dir = 4
 	},
 /obj/structure/flora/grass/green,
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "qFb" = (
 /obj/structure/sign/departments/medbay/alt,
@@ -58424,11 +58366,8 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/flora/bush,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow";
-	name = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "qTv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -58563,10 +58502,8 @@
 /obj/structure/flora/mine_rocks{
 	pixel_x = -17
 	},
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "qVF" = (
 /obj/structure/stool/bed/chair/office/dark,
@@ -61260,10 +61197,8 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "rRh" = (
 /obj/machinery/requests_console/ce{
@@ -62075,7 +62010,7 @@
 	dir = 8
 	},
 /obj/structure/flora/ausbushes/pointybush,
-/turf/simulated/floor/plating/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/locker)
 "seU" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
@@ -63430,7 +63365,8 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/plating/snow,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "syb" = (
 /turf/simulated/wall/r_wall,
@@ -64739,10 +64675,8 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "sXl" = (
 /obj/machinery/door/airlock/maintenance{
@@ -67472,7 +67406,7 @@
 	dir = 8
 	},
 /obj/structure/flora/bush,
-/turf/simulated/floor/plating/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/locker)
 "tOD" = (
 /obj/structure/closet/jcloset,
@@ -68165,10 +68099,8 @@
 "tZc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "tZd" = (
 /obj/machinery/washing_machine,
@@ -70055,10 +69987,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "uEi" = (
 /obj/structure/cable{
@@ -74997,12 +74927,20 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/theater)
 "weJ" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/area/station/hallway/primary/central)
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/flora/grass/green,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
+/area/station/civilian/bar)
 "wfc" = (
 /obj/machinery/light{
 	dir = 4
@@ -75107,11 +75045,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/flora/bush,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/item/weapon/present,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "whz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -75155,14 +75091,11 @@
 	},
 /area/station/security/brig)
 "whV" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/structure/flora/grass/green{
+	layer = 2.7
 	},
-/obj/item/weapon/present,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "whY" = (
 /obj/structure/cable/yellow{
@@ -77079,13 +77012,11 @@
 	},
 /area/station/cargo/office)
 "wVj" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/flora/bush,
-/turf/simulated/floor/plating/snow,
-/area/station/civilian/bar)
+/obj/structure/snow,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/central)
 "wVH" = (
 /obj/item/weapon/scrap_lump,
 /obj/structure/grille{
@@ -78461,10 +78392,8 @@
 	pixel_x = 1;
 	pixel_y = 9
 	},
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "xrE" = (
 /obj/structure/cable{
@@ -78710,10 +78639,8 @@
 /area/station/maintenance/eva)
 "xwu" = (
 /obj/structure/flora/tree/pine,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "xwG" = (
 /turf/simulated/floor{
@@ -78892,10 +78819,8 @@
 	dir = 4
 	},
 /obj/structure/flora/ausbushes/sparsegrass,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "xAi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -79437,13 +79362,9 @@
 	},
 /area/station/security/brig)
 "xIR" = (
-/obj/structure/flora/grass/green{
-	layer = 2.7
-	},
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow"
-	},
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "xJb" = (
 /obj/machinery/space_heater,
@@ -80570,11 +80491,8 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	icon = 'icons/turf/snow.dmi';
-	icon_state = "snow";
-	name = "snow"
-	},
+/obj/structure/snow,
+/turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "ycP" = (
 /obj/structure/closet/crate/medical,
@@ -99152,7 +99070,7 @@ wce
 tmU
 tVx
 czd
-kAY
+jcI
 cLp
 aSg
 mcz
@@ -105840,11 +105758,11 @@ sYv
 adf
 dKd
 qlD
-mZB
+lxc
 jSS
 toJ
 gQM
-pMr
+pPn
 ats
 kuo
 ozx
@@ -106101,7 +106019,7 @@ mic
 fpd
 seU
 rIJ
-pPn
+pTM
 ats
 ozx
 ats
@@ -106350,34 +106268,34 @@ oxH
 lOz
 muX
 qlD
-iFJ
-kVv
+iPd
+jvY
 nLm
 xzK
-lxc
+mbr
 jSS
 toJ
 gQM
 sxS
-pev
+adL
 muX
 pqA
 baG
 jAS
-adL
+acr
 muX
 fmb
 sgc
 cPB
 tcJ
 fmb
-adL
-jvY
+acr
+mZB
 wWt
 cMb
 gQM
-iFJ
-jcI
+iPd
+kVv
 adF
 aeb
 aeg
@@ -106848,10 +106766,10 @@ voY
 fGJ
 qPx
 cZZ
-fcP
+weJ
 ycJ
 mYx
-gOn
+gVc
 kor
 hrA
 aeV
@@ -107374,37 +107292,37 @@ gYo
 bwK
 dEZ
 xzK
-iFJ
 iPd
-jcI
+kAY
+kVv
 qlD
 oxH
-kVv
 jvY
+mZB
 xzK
-mbr
+mdt
 jSS
 lvg
 gQM
-pTM
-kVv
+pTY
+jvY
 muX
 adg
 adh
 adi
-acr
+afY
 nLm
 bGi
 tJr
 boQ
 adO
 bGi
-afY
+agY
 agi
 aoI
 baG
 gQM
-agY
+aiG
 ahg
 adF
 uwW
@@ -107639,11 +107557,11 @@ fBx
 fBx
 fBx
 fBx
-mdt
+mjL
 fpd
 mwd
 rIJ
-pTY
+pWR
 qHh
 axb
 axb
@@ -107896,7 +107814,7 @@ owT
 jAZ
 huE
 fBx
-mjL
+mio
 jSS
 lvg
 gQM
@@ -108900,7 +108818,7 @@ oCg
 oCg
 abU
 efm
-wVj
+gBv
 rcy
 abt
 gYQ
@@ -109695,11 +109613,11 @@ qko
 kHJ
 mDu
 srY
-mio
+nLl
 jSS
 lvg
 gQM
-pWR
+owh
 aMb
 aWq
 sVM
@@ -109956,7 +109874,7 @@ nmc
 fpd
 mwd
 rIJ
-lxc
+mbr
 aMb
 rwv
 uHE
@@ -110980,11 +110898,11 @@ srY
 ylJ
 gRi
 klE
-nLl
+pMr
 uQr
 lvg
 gQM
-owh
+pev
 qZu
 eiq
 tCx
@@ -111732,7 +111650,7 @@ gfi
 tOY
 noA
 bgK
-xIR
+whV
 abj
 cCr
 bgK
@@ -112503,7 +112421,7 @@ lUC
 vVw
 acn
 euV
-weJ
+xIR
 euV
 euV
 noA
@@ -113015,12 +112933,12 @@ xeF
 amF
 mgZ
 goh
-gBv
+fcP
 euV
 uEd
 euV
 euV
-gVc
+iFJ
 gmg
 bOy
 dpt
@@ -113273,7 +113191,7 @@ uWJ
 mgZ
 vVw
 aco
-weJ
+xIR
 uEd
 acI
 rRd
@@ -113531,7 +113449,7 @@ mgZ
 vVw
 acq
 euV
-whV
+whi
 qoI
 qoI
 xPK
@@ -113778,7 +113696,7 @@ dKv
 euV
 xwu
 euV
-euV
+dyh
 uEd
 abx
 vVw
@@ -113788,7 +113706,7 @@ rKL
 rPp
 oCP
 euV
-whi
+gHy
 xPK
 sBm
 qOG
@@ -114549,7 +114467,7 @@ dKv
 eQc
 abl
 kHN
-dyh
+wVj
 hCc
 euV
 qKd
@@ -114816,7 +114734,7 @@ joP
 vVw
 abj
 oCP
-gHy
+gOn
 qoI
 kLS
 rIs
@@ -117963,7 +117881,7 @@ aix
 ihX
 psf
 pPK
-aiG
+aiI
 qRV
 nMY
 htg
@@ -118221,9 +118139,9 @@ pvG
 psf
 pPK
 aiH
-aiM
 aiO
 aiP
+aiQ
 uYo
 plf
 plf
@@ -118477,7 +118395,7 @@ aix
 cNY
 psf
 pPK
-aiI
+aiJ
 qRV
 nMY
 htg
@@ -118734,7 +118652,7 @@ aiv
 uVu
 psf
 wXM
-aiJ
+aiM
 nMY
 pob
 hHQ
