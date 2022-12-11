@@ -96,14 +96,14 @@ export const GPS = (properties, context) => {
                 {!!track && (
                   track.map((dot, index) => (
                     dot.z === selected_z && (
-                      <>
+                      <div>
                         <Box key={index} left={1.4*dot.x-1+"px"} bottom={1.4*dot.y-21+"px"} className="GPS_TrackDot" />
                         <svg className="GPS_TrackLine">
                           {track[index-1] && track[index-1].end !== 1 && (
                             <line x1={1.4*track[index-1].x+1} x2={1.4*dot.x+1} y1={1.4*track[index-1].y-19} y2={1.4*dot.y-19} stroke="rgba(255, 255, 255, .5)" />
                           )}
                         </svg>
-                      </>
+                      </div>
                     )
                   ))
                 )}
@@ -119,7 +119,7 @@ export const GPS = (properties, context) => {
                   </Box>
                 )}
                 {!!active && (
-                  <>
+                  <div>
                     {signals.map(signal => ({ ...signal })).map((signal, i) => (
                       <Box key={i} left={1.4*signal.position[0]-24+"px"} bottom={1.4*signal.position[1]-44+"px"} className="GPS_ForeignCords">
                         <Box left="0px" top="0px" className="GPS_ForeignCordsHeader">
@@ -145,7 +145,7 @@ export const GPS = (properties, context) => {
                     <Box left="0px" bottom="-15px" className="GPS_Header" width="350px" height="25px">
                       {area}
                     </Box>
-                  </>
+                  </div>
                 )}
                 {!!mouseovered && (
                   <Box left={1.4*mouseX-36+"px"} bottom={1.4*mouseY-22+"px"} className="GPS_MouseCordsText">
