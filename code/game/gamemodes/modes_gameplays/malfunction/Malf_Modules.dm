@@ -174,10 +174,10 @@ robot_fabricator
 		var/chance = 100 - armor
 		if(chance <= 0 || !prob(chance))
 			to_chat(src, "<span class='warning'>[H] equipment reflects the impact. Module recharges faster.</span>")
-			COOLDOWN_START(src, malf_infest_cooldown, 300)
+			COOLDOWN_START(src, malf_infest_cooldown, 5 MINUTES)
 			return
 		H.infect_zombie_virus(target_zone = null, forced = TRUE, fast = TRUE)
-		COOLDOWN_START(src, malf_infest_cooldown, 900)
+		COOLDOWN_START(src, malf_infest_cooldown, 15 MINUTES)
 		to_chat(src, "<span class='notice'>[H] infected.</span>")
 
 //no need infest in space
