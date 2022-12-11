@@ -249,6 +249,8 @@ var/global/list/blacklisted_builds = list(
 	if(ckey in mentor_ckeys)
 		mentors += src
 
+	update_supporter_status()
+
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
 	if(prefs)
@@ -273,8 +275,6 @@ var/global/list/blacklisted_builds = list(
 	prefs.save_preferences()
 
 	prefs_ready = TRUE // if moved below parent call, Login feature with lobby music will be broken and maybe anything else.
-
-	update_supporter_status()
 
 	. = ..()	//calls mob.Login()
 
