@@ -542,7 +542,7 @@ var/global/list/datum/spawners_cooldown = list()
 	cyborg.crisis = TRUE
 	if(!cyborg.connected_ai)
 		return
-	to_chat(cyborg.connected_ai, "<a href=?src=\ref[cyborg.connected_ai];track=\ref[cyborg]>Cyborg created.</span>")
+	to_chat(cyborg.connected_ai, "<a href=?src=\ref[cyborg.connected_ai];track=\ref[cyborg]>Cyborg created.")
 
 /datum/spawner/malf_borg/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(global.creating_cyborg_places)
