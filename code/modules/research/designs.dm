@@ -2092,7 +2092,7 @@ other types of metals and chemistry for reagents).
 	id = "plasmacutter"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 500, MAT_GOLD = 500, MAT_PHORON = 500)
-	build_path = /obj/item/weapon/pickaxe/plasmacutter
+	build_path = /obj/item/weapon/gun/energy/laser/cutter
 	construction_time=300
 	category = list("Tools")
 
