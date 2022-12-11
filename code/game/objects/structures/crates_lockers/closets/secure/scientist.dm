@@ -17,6 +17,19 @@
 	new /obj/item/device/radio/headset/headset_sci(src)
 	new /obj/item/weapon/tank/air(src)
 	new /obj/item/clothing/mask/gas/coloured(src)
+	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
+		new /obj/item/clothing/suit/hooded/wintercoat/science(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/science(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/science(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/science(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/science(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/science(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/shoes/winterboots(src)
 
 /obj/structure/closet/secure_closet/RD
 	name = "Research Director's Locker"
@@ -47,3 +60,6 @@
 	new /obj/item/device/remote_device/research_director(src)
 	new /obj/item/airbag(src)
 	new /obj/item/weapon/storage/lockbox/medal/rd(src)
+	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
+		new /obj/item/clothing/suit/hooded/wintercoat/science(src)
+		new /obj/item/clothing/shoes/winterboots(src)

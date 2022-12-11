@@ -22,18 +22,8 @@
 /turf/environment/space,
 /area/space)
 "ag" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
 /area/asteroid/research_outpost/entry)
 "ah" = (
 /obj/structure/lattice,
@@ -112,19 +102,15 @@
 /area/space)
 "as" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced,
+/obj/item/decoration/garland,
+/obj/item/decoration/snowflake,
 /turf/simulated/floor/plating,
-/area/asteroid/research_outpost/med)
+/area/asteroid/research_outpost/hallway)
 "at" = (
 /obj/structure/transit_tube{
 	icon_state = "D-NW"
@@ -363,6 +349,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maintstore1)
 "bb" = (
+/obj/item/decoration/snowflake,
 /turf/simulated/wall,
 /area/asteroid/research_outpost/maintstore1)
 "bc" = (
@@ -577,6 +564,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "carpet"
 	},
@@ -658,6 +646,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "carpet"
 	},
@@ -765,6 +754,7 @@
 	req_access = list(65)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -1142,6 +1132,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -1315,6 +1306,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "greenfull"
@@ -1639,6 +1631,7 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/hallway)
 "dD" = (
@@ -1736,6 +1729,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "whiteblue_ex"
@@ -1747,6 +1741,7 @@
 	req_access = list(65)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -2402,6 +2397,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -2489,6 +2485,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whitepurplefull"
@@ -2694,13 +2691,18 @@
 /area/asteroid/research_outpost/outpost_misc_lab)
 "fx" = (
 /obj/structure/grille,
+/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 5
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/transit_tube{
-	icon_state = "NW-SE"
+/obj/structure/window/reinforced{
+	dir = 1
 	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/entry)
 "fy" = (
@@ -3109,6 +3111,18 @@
 	icon_state = "white"
 	},
 /area/asteroid/research_outpost/hallway)
+"gq" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "mining_west_outpost_outer";
+	locked = 1;
+	name = "Mining External Access";
+	req_access = list(10,13)
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost)
 "gr" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -3211,6 +3225,19 @@
 	icon_state = "floorscorched1"
 	},
 /area/asteroid/mine/abandoned)
+"gF" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/living_quarters)
 "gG" = (
 /obj/structure/alien/weeds,
 /turf/simulated/floor/plating,
@@ -3228,6 +3255,19 @@
 /obj/structure/lattice,
 /turf/environment/space,
 /area/space)
+"gJ" = (
+/obj/machinery/door/airlock/mining/glass{
+	name = "Break Room";
+	req_access = list(54)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	icon_state = "bar"
+	},
+/area/asteroid/mine/west_outpost)
 "gK" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin{
@@ -3333,14 +3373,15 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4
+	dir = 1
 	},
 /obj/structure/window/reinforced{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/asteroid/research_outpost/entry)
+/area/asteroid/research_outpost/hallway)
 "gX" = (
 /obj/machinery/door/window/westleft{
 	dir = 4;
@@ -3510,6 +3551,7 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/med)
 "hr" = (
@@ -3559,25 +3601,58 @@
 	name = "Research Outpost Dock Airlock";
 	req_access = list(65)
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/entry)
 "hw" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/research/glass{
+	name = "Research Shuttle Dock";
+	req_access = list(65)
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor,
+/area/asteroid/research_outpost/entry)
+"hx" = (
+/obj/machinery/door/airlock{
+	id_tag = "miningdorm3";
+	name = "Room 3"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	icon_state = "carpet"
+	},
+/area/asteroid/mine/living_quarters)
+"hy" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 5
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/transit_tube{
-	icon_state = "N-SW"
-	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/asteroid/research_outpost/entry)
+/area/asteroid/mine/production)
 "hz" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Outpost Primary Access";
 	req_access = list(65)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/entry)
 "hA" = (
@@ -3696,23 +3771,16 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/entry)
 "hL" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/research/glass{
-	name = "Research Shuttle Dock";
-	req_access = list(65)
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/structure/transit_tube{
+	icon_state = "NW-SE"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
 /area/asteroid/research_outpost/entry)
 "hM" = (
 /obj/machinery/driver_button{
@@ -3726,6 +3794,22 @@
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
+"hN" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/living_quarters)
 "hO" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
@@ -3884,6 +3968,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -3899,6 +3984,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/entry)
 "ih" = (
@@ -4237,6 +4323,20 @@
 	icon_state = "delivery"
 	},
 /area/asteroid/research_outpost/hallway)
+"iG" = (
+/obj/machinery/door/airlock/glass{
+	name = "Crew Area";
+	req_access = list(48)
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel,
+/turf/simulated/floor,
+/area/asteroid/mine/living_quarters)
 "iH" = (
 /obj/structure/transit_tube{
 	icon_state = "W-NE"
@@ -4247,6 +4347,7 @@
 /obj/structure/transit_tube{
 	icon_state = "D-NW"
 	},
+/obj/item/decoration/snowflake,
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "iJ" = (
@@ -4401,6 +4502,7 @@
 	dir = 5
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "iY" = (
@@ -4587,6 +4689,18 @@
 	icon_state = "warnwhite"
 	},
 /area/asteroid/research_outpost/med)
+"jk" = (
+/obj/machinery/door/airlock/mining{
+	name = "Mining Storage";
+	req_access = list(48)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/asteroid/mine/living_quarters)
 "jl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -4639,6 +4753,23 @@
 	icon_state = "whitehall"
 	},
 /area/asteroid/research_outpost/hallway)
+"jq" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/eva)
 "jr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -4670,6 +4801,32 @@
 	icon_state = "whitepurple"
 	},
 /area/asteroid/research_outpost/hallway)
+"ju" = (
+/obj/machinery/door/airlock{
+	name = "Toilet"
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
+	},
+/area/asteroid/mine/living_quarters)
+"jv" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/mining/glass{
+	name = "Mining Station EVA";
+	req_access = list(54)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor,
+/area/asteroid/mine/eva)
 "jw" = (
 /obj/machinery/door/window/southleft{
 	dir = 8;
@@ -4687,6 +4844,20 @@
 /turf/environment/space,
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
+"jx" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "mining_east_inner";
+	locked = 1;
+	name = "Mining External Access"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/eva)
 "jy" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
@@ -4703,6 +4874,18 @@
 	icon_state = "white"
 	},
 /area/asteroid/research_outpost/hallway)
+"jz" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "mining_east_outer";
+	locked = 1;
+	name = "Mining External Access";
+	req_access = list(10,13)
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/eva)
 "jA" = (
 /obj/machinery/light/small,
 /turf/simulated/floor{
@@ -4710,6 +4893,44 @@
 	icon_state = "vault"
 	},
 /area/asteroid/research_outpost/tempstorage)
+"jB" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/mining/glass{
+	name = "Mining Station Bridge";
+	req_access = list(48)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/asteroid/mine/living_quarters)
+"jC" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/mining/glass{
+	name = "Mining Station Bridge";
+	req_access = list(48)
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "vault"
+	},
+/area/asteroid/mine/production)
 "jD" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin,
@@ -5110,20 +5331,24 @@
 	icon_state = "vault"
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
+"ks" = (
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/asteroid/mine/production)
 "kt" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/door/airlock/research/glass{
-	name = "Expedition Prep";
-	req_access = list(65)
-	},
-/turf/simulated/floor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
 /area/asteroid/research_outpost/entry)
 "ku" = (
 /obj/machinery/door/airlock/research{
@@ -5342,6 +5567,23 @@
 /obj/structure/table,
 /turf/simulated/floor/airless,
 /area/asteroid/mine/abandoned)
+"kN" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "mining_west_inner";
+	locked = 1;
+	name = "Mining External Access"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden,
+/obj/item/decoration/tinsel,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/living_quarters)
 "kO" = (
 /turf/simulated/mineral,
 /area/asteroid/mine/explored)
@@ -5405,6 +5647,14 @@
 	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
+"kW" = (
+/obj/structure/disposalpipe/junction{
+	dir = 4;
+	icon_state = "pipe-j2"
+	},
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/asteroid/mine/production)
 "kX" = (
 /obj/machinery/alarm{
 	pixel_y = 24
@@ -5720,12 +5970,43 @@
 "lA" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/explored)
+"lB" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "mining_west_outer";
+	locked = 1;
+	name = "Mining External Access"
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/living_quarters)
 "lC" = (
 /obj/structure/transit_tube{
 	icon_state = "D-NW"
 	},
 /turf/simulated/mineral,
 /area/asteroid/mine/explored)
+"lD" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/production)
 "lE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -5794,6 +6075,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maint)
+"lL" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/production)
 "lM" = (
 /obj/machinery/disposal/deliveryChute{
 	dir = 8
@@ -6033,6 +6326,17 @@
 	},
 /turf/simulated/floor,
 /area/asteroid/mine/abandoned)
+"mm" = (
+/obj/machinery/door/airlock/external{
+	dock_tag = "mine_dock";
+	locked = 1;
+	name = "Mining Shuttle Airlock";
+	req_access = list(48)
+	},
+/obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
+/turf/simulated/floor,
+/area/asteroid/mine/production)
 "mn" = (
 /obj/machinery/power/grounding_rod,
 /turf/simulated/wall/r_wall,
@@ -6069,18 +6373,21 @@
 	},
 /area/asteroid/research_outpost/gearstore)
 "mu" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/structure/grille,
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/obj/machinery/door/airlock/research/glass{
-	name = "Equipment storage";
-	req_access = list(65)
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/turf/simulated/floor,
-/area/asteroid/research_outpost/gearstore)
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/asteroid/research_outpost/med)
 "mv" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/box/monkeycubes,
@@ -6116,6 +6423,19 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/universal,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
+"mA" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/production)
 "mB" = (
 /obj/structure/disposaloutlet{
 	dir = 4
@@ -6134,6 +6454,15 @@
 	icon_state = "warnplate"
 	},
 /area/asteroid/research_outpost/maint)
+"mD" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	name = "Mining Shuttle Airlock";
+	req_access = list(48)
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor,
+/area/asteroid/mine/production)
 "mE" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -6358,6 +6687,19 @@
 /obj/effect/decal/remains/xeno,
 /turf/simulated/floor,
 /area/asteroid/mine/abandoned)
+"nc" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/production)
 "nd" = (
 /obj/structure/ore_box,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -6548,18 +6890,18 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maint)
 "ny" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	id_tag = "research_inner";
-	locked = 1;
-	name = "Research Outpost External Access"
-	},
-/obj/machinery/atmospherics/pipe/simple/visible,
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/asteroid/research_outpost/gearstore)
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/asteroid/research_outpost/entry)
 "nz" = (
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "research_airlock";
@@ -6612,12 +6954,35 @@
 	},
 /turf/simulated/floor,
 /area/asteroid/mine/abandoned)
+"nF" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/production)
 "nG" = (
 /obj/machinery/light_construct/small{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/explored)
+"nH" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/production)
 "nI" = (
 /obj/structure/transit_tube{
 	icon_state = "N-S"
@@ -7286,17 +7651,14 @@
 	},
 /area/asteroid/mine/living_quarters)
 "pf" = (
-/obj/machinery/door/airlock{
-	id_tag = "miningdorm1";
-	name = "Room 1"
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
-/area/asteroid/mine/living_quarters)
+/obj/machinery/door/firedoor,
+/obj/item/decoration/snowflake,
+/turf/simulated/floor/plating,
+/area/asteroid/research_outpost/entry)
 "pg" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -7501,31 +7863,13 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/unexplored)
 "pD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/research_outpost/gearstore)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/asteroid/research_outpost/maint)
 "pE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/research_outpost/gearstore)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/asteroid/research_outpost/iso2)
 "pF" = (
 /obj/structure/lattice,
 /turf/environment/space,
@@ -7699,31 +8043,18 @@
 /turf/simulated/floor/carpet,
 /area/asteroid/mine/living_quarters)
 "qc" = (
-/obj/machinery/door/airlock{
-	id_tag = "miningdorm3";
-	name = "Room 3"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
-/area/asteroid/mine/living_quarters)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/asteroid/research_outpost/outpost_misc_lab)
 "qd" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/asteroid/mine/living_quarters)
+/area/asteroid/research_outpost/gearstore)
 "qe" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor{
@@ -7928,16 +8259,17 @@
 /turf/simulated/floor/airless,
 /area/asteroid/mine/explored)
 "qF" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	id_tag = "research_outer";
-	locked = 1;
-	name = "Research Outpost External Access";
-	req_access = list(10,13)
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
+/obj/machinery/door/firedoor,
+/obj/structure/transit_tube{
+	icon_state = "N-SW"
+	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/asteroid/research_outpost/gearstore)
+/area/asteroid/research_outpost/entry)
 "qG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -8058,17 +8390,21 @@
 /turf/environment/space,
 /area/asteroid/mine/explored)
 "qW" = (
-/obj/machinery/door/airlock{
-	id_tag = "miningdorm2";
-	name = "Room 2"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/airlock/research/glass{
+	name = "Expedition Prep";
+	req_access = list(65)
 	},
-/turf/simulated/floor{
-	icon_state = "carpet"
-	},
-/area/asteroid/mine/living_quarters)
+/obj/item/decoration/tinsel,
+/turf/simulated/floor,
+/area/asteroid/research_outpost/entry)
 "qX" = (
 /turf/simulated/floor/airless{
 	dir = 10;
@@ -8789,16 +9125,20 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "sY" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/asteroid/mine/living_quarters)
+/area/asteroid/research_outpost/gearstore)
 "sZ" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
@@ -9031,18 +9371,18 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "tC" = (
-/obj/machinery/door/airlock/glass{
-	name = "Crew Area";
-	req_access = list(48)
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor,
-/area/asteroid/mine/living_quarters)
+/obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/asteroid/research_outpost/gearstore)
 "tD" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -9303,18 +9643,9 @@
 	},
 /area/asteroid/mine/maintenance)
 "uk" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	id_tag = "mining_west_outpost_inner";
-	locked = 1;
-	name = "Mining External Access"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/west_outpost)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/asteroid/research_outpost/tempstorage)
 "ul" = (
 /obj/machinery/camera{
 	c_tag = "Communications Relay";
@@ -9656,21 +9987,17 @@
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
 "vd" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "research_outer";
+	locked = 1;
+	name = "Research Outpost External Access";
+	req_access = list(10,13)
 	},
-/obj/machinery/door/airlock/mining/glass{
-	name = "Mining Station EVA";
-	req_access = list(54)
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/asteroid/mine/eva)
+/obj/item/decoration/tinsel,
+/turf/simulated/floor/plating,
+/area/asteroid/research_outpost/gearstore)
 "ve" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -9731,17 +10058,12 @@
 "vl" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
+	dir = 5
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/asteroid/mine/west_outpost)
+/area/asteroid/mine/living_quarters)
 "vm" = (
 /obj/machinery/recharge_station,
 /obj/machinery/status_display{
@@ -9879,14 +10201,16 @@
 	},
 /area/asteroid/mine/living_quarters)
 "vy" = (
-/obj/machinery/door/airlock/mining{
-	name = "Mining Storage";
-	req_access = list(48)
+/obj/machinery/door/airlock{
+	id_tag = "miningdorm1";
+	name = "Room 1"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+	icon_state = "carpet"
 	},
 /area/asteroid/mine/living_quarters)
 "vz" = (
@@ -9983,17 +10307,19 @@
 	},
 /area/asteroid/mine/west_outpost)
 "vK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/west_outpost)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/airlock/research/glass{
+	name = "Equipment storage";
+	req_access = list(65)
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor,
+/area/asteroid/research_outpost/gearstore)
 "vL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
@@ -10023,16 +10349,9 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/west_outpost)
 "vQ" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	id_tag = "mining_west_outpost_outer";
-	locked = 1;
-	name = "Mining External Access";
-	req_access = list(10,13)
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/west_outpost)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/asteroid/research_outpost/gearstore)
 "vR" = (
 /obj/machinery/access_button{
 	command = "cycle_exterior";
@@ -10094,17 +10413,19 @@
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "vY" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/living_quarters)
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "research_inner";
+	locked = 1;
+	name = "Research Outpost External Access"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/asteroid/research_outpost/gearstore)
 "vZ" = (
 /obj/structure/table,
 /obj/random/tools/tech_supply,
@@ -10386,17 +10707,9 @@
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "wH" = (
-/obj/machinery/door/airlock/mining/glass{
-	name = "Break Room";
-	req_access = list(54)
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "bar"
-	},
-/area/asteroid/mine/west_outpost)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/asteroid/mine/living_quarters)
 "wI" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -10676,10 +10989,15 @@
 /area/asteroid/mine/living_quarters)
 "xl" = (
 /obj/machinery/door/airlock{
-	name = "Toilet"
+	id_tag = "miningdorm2";
+	name = "Room 2"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
-	icon_state = "showroomfloor"
+	icon_state = "carpet"
 	},
 /area/asteroid/mine/living_quarters)
 "xm" = (
@@ -10797,18 +11115,18 @@
 /turf/environment/space,
 /area/asteroid/mine/production)
 "xx" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/structure/window/reinforced{
+	dir = 8
 	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	id_tag = "mining_west_outer";
-	locked = 1;
-	name = "Mining External Access"
-	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "xy" = (
@@ -10908,21 +11226,9 @@
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "xZ" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	id_tag = "mining_west_inner";
-	locked = 1;
-	name = "Mining External Access"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/living_quarters)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/asteroid/mine/west_outpost)
 "yb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -10978,15 +11284,8 @@
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "yg" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	id_tag = "mining_east_outer";
-	locked = 1;
-	name = "Mining External Access";
-	req_access = list(10,13)
-	},
-/turf/simulated/floor/plating,
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
 /area/asteroid/mine/eva)
 "yh" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
@@ -11070,20 +11369,13 @@
 /area/asteroid/mine/living_quarters)
 "yC" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4
+	dir = 5
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/asteroid/mine/eva)
+/area/asteroid/mine/west_outpost)
 "yM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -11135,18 +11427,15 @@
 /turf/simulated/wall,
 /area/asteroid/mine/living_quarters)
 "zb" = (
-/obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 1
+	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
+/obj/structure/grille,
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "zc" = (
@@ -11195,12 +11484,18 @@
 /turf/simulated/floor/wood,
 /area/asteroid/research_outpost/hallway)
 "zh" = (
-/obj/structure/disposalpipe/junction{
-	dir = 4;
-	icon_state = "pipe-j2"
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/turf/simulated/wall,
-/area/asteroid/mine/production)
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost)
 "zi" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -11241,23 +11536,19 @@
 	},
 /area/asteroid/mine/production)
 "zk" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/mining/glass{
-	name = "Mining Station Bridge";
-	req_access = list(48)
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	id_tag = "mining_west_outpost_inner";
+	locked = 1;
+	name = "Mining External Access"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/asteroid/mine/production)
+/obj/item/decoration/tinsel,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost)
 "zl" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -11381,16 +11672,12 @@
 /turf/environment/space,
 /area/shuttle/mining/outpost)
 "zB" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	id_tag = "mining_east_inner";
-	locked = 1;
-	name = "Mining External Access"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden{
-	dir = 4
-	},
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/eva)
 "zC" = (
@@ -11496,23 +11783,20 @@
 /turf/simulated/floor,
 /area/asteroid/mine/production)
 "zT" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
-/obj/machinery/door/airlock/mining/glass{
-	name = "Mining Station Bridge";
-	req_access = list(48)
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
-	},
-/area/asteroid/mine/living_quarters)
+/obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/asteroid/mine/west_outpost)
 "zU" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -11662,30 +11946,18 @@
 	},
 /area/asteroid/mine/explored)
 "Ak" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/production)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/asteroid/research_outpost/atmos)
 "Al" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/asteroid/mine/production)
+/area/asteroid/research_outpost/atmos)
 "Am" = (
 /obj/structure/transit_tube{
 	icon_state = "W-SE"
@@ -11704,20 +11976,9 @@
 	},
 /area/asteroid/research_outpost/entry)
 "Ao" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/research_outpost/entry)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/asteroid/research_outpost/anomaly)
 "Ap" = (
 /turf/simulated/floor{
 	icon_state = "Stairs2_wide"
@@ -11735,15 +11996,9 @@
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "At" = (
-/obj/machinery/door/airlock/external{
-	dock_tag = "mine_dock";
-	locked = 1;
-	name = "Mining Shuttle Airlock";
-	req_access = list(48)
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor,
-/area/asteroid/mine/production)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/asteroid/research_outpost/sample)
 "Au" = (
 /obj/structure/table,
 /obj/random/tools/tech_supply,
@@ -11876,33 +12131,21 @@
 /area/asteroid/research_outpost/hallway)
 "AR" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 1
+	dir = 5
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/hallway)
 "AT" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/production)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/asteroid/research_outpost/hallway)
 "AU" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	name = "Mining Shuttle Airlock";
-	req_access = list(48)
-	},
-/turf/simulated/floor,
-/area/asteroid/mine/production)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall,
+/area/asteroid/research_outpost/hallway)
 "AV" = (
 /obj/machinery/mineral/stacking_unit_console,
 /turf/simulated/wall/r_wall,
@@ -11914,17 +12157,9 @@
 	},
 /area/asteroid/mine/production)
 "AX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/research_outpost/hallway)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/asteroid/research_outpost/spectro)
 "AY" = (
 /turf/simulated/floor{
 	icon_state = "warning"
@@ -12038,26 +12273,19 @@
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "Bs" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
+/obj/item/decoration/snowflake,
 /turf/simulated/floor/plating,
-/area/asteroid/mine/production)
+/area/asteroid/research_outpost/hallway)
 "Bt" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/production)
+/obj/item/decoration/snowflake,
+/turf/simulated/wall/r_wall,
+/area/asteroid/research_outpost/power)
 "Bu" = (
 /obj/machinery/camera{
 	c_tag = "Shuttle Dock";
@@ -12067,17 +12295,14 @@
 /turf/simulated/floor,
 /area/asteroid/mine/production)
 "Bv" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/garland,
 /turf/simulated/floor/plating,
-/area/asteroid/mine/production)
+/area/asteroid/research_outpost/entry)
 "Bw" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/globose/science,
@@ -27485,7 +27710,7 @@ uU
 uU
 uU
 uU
-uU
+xZ
 uU
 uU
 lA
@@ -28252,7 +28477,7 @@ qA
 qA
 lA
 lA
-uU
+xZ
 vk
 vJ
 wF
@@ -28510,12 +28735,12 @@ lA
 lA
 lA
 uU
-vl
-vK
-wH
-vl
-vK
-uU
+zT
+zh
+gJ
+zT
+zh
+xZ
 uU
 uU
 uU
@@ -29023,7 +29248,7 @@ tN
 tO
 lA
 lA
-ik
+yC
 sC
 tt
 qw
@@ -29537,7 +29762,7 @@ tN
 tO
 lA
 lA
-ik
+yC
 sL
 tw
 vj
@@ -29798,7 +30023,7 @@ uU
 sM
 vF
 wK
-uU
+xZ
 xd
 uU
 uU
@@ -30053,8 +30278,8 @@ lA
 lA
 uU
 ik
-uk
-ik
+zk
+yC
 uU
 xe
 xO
@@ -30823,8 +31048,8 @@ lA
 uF
 uM
 uU
-ik
-vQ
+yC
+gq
 ik
 uU
 xh
@@ -45216,7 +45441,7 @@ ac
 ac
 uo
 uo
-uo
+wH
 uo
 uo
 uo
@@ -45990,7 +46215,7 @@ vT
 ut
 vn
 uo
-xl
+ju
 uo
 uo
 uo
@@ -46246,7 +46471,7 @@ vw
 sR
 vU
 tc
-zb
+hN
 wl
 pX
 Nc
@@ -46497,13 +46722,13 @@ ur
 jS
 ac
 ac
-uo
+wH
 va
 vw
 vV
 vw
 wO
-tC
+iG
 wm
 yf
 Oc
@@ -46760,7 +46985,7 @@ pv
 vW
 ux
 vw
-zb
+hN
 wn
 yv
 Pc
@@ -47016,12 +47241,12 @@ uo
 uo
 uo
 uo
-uo
+wH
 uo
 wv
 yh
 Pc
-uo
+wH
 uo
 uo
 uo
@@ -47781,13 +48006,13 @@ tX
 uo
 uo
 uo
-pf
+vy
 uo
 uo
-qW
+xl
+wH
 uo
-uo
-qc
+hx
 uo
 wn
 vr
@@ -48549,21 +48774,21 @@ tX
 oN
 oP
 tX
-uo
+wH
+vl
 ia
-ia
-ia
+vl
 uo
 uo
-qd
-sY
-vY
+xx
+zb
+gF
 uo
 uo
 ww
 vN
 Pc
-uo
+wH
 uo
 uo
 uo
@@ -48823,7 +49048,7 @@ Pc
 ia
 wQ
 xc
-ia
+vl
 vG
 qX
 lA
@@ -49067,20 +49292,20 @@ kO
 kO
 lA
 lA
-ia
+vl
 xr
 qe
 tD
 tD
 vp
-zb
+hN
 rd
 wG
 xn
-xZ
+kN
 wS
 xi
-xx
+lB
 Jc
 tL
 lA
@@ -49330,11 +49555,11 @@ qv
 Au
 Au
 vq
-uo
+wH
 wn
 tp
 Pc
-ia
+vl
 zL
 VK
 ia
@@ -49581,13 +49806,13 @@ ad
 ac
 kO
 lA
-uo
+wH
 wr
 qv
 Au
 Au
 vq
-zb
+hN
 wn
 ym
 Tc
@@ -49981,11 +50206,11 @@ mo
 mo
 mo
 mo
-bL
+Bv
 gr
-fx
+hL
 Kc
-bL
+Bv
 iU
 nB
 aa
@@ -50095,13 +50320,13 @@ ac
 ac
 kO
 lA
-ia
+vl
 wJ
 xs
 uA
 uy
 wT
-vy
+jk
 wm
 vO
 yr
@@ -50243,7 +50468,7 @@ Af
 jU
 kT
 mU
-hw
+qF
 at
 aa
 aa
@@ -50362,7 +50587,7 @@ uo
 wn
 vN
 Pc
-zb
+hN
 Pd
 Ce
 uo
@@ -50495,12 +50720,12 @@ mo
 mo
 mo
 mo
-bL
+Bv
 Ah
 Ba
 Vb
 gV
-bL
+pf
 aa
 aa
 aa
@@ -50615,7 +50840,7 @@ xr
 uC
 vZ
 wV
-uo
+wH
 xp
 zN
 Vc
@@ -50757,7 +50982,7 @@ Ah
 Bb
 aW
 gV
-bL
+Bv
 aa
 aa
 aa
@@ -50867,15 +51092,15 @@ aa
 aa
 lA
 uo
-ia
-ia
+vl
+vl
 uo
-ia
-ia
+vl
+vl
 uo
-ia
-zT
-ia
+vl
+jB
+vl
 uo
 uo
 uo
@@ -51009,17 +51234,17 @@ mo
 mo
 mo
 mo
-bL
+Bv
 Ah
 Bc
 aW
 kS
 hp
+qd
 hP
+qd
 hP
-hP
-hP
-hP
+qd
 mp
 pV
 qr
@@ -51277,7 +51502,7 @@ mt
 mt
 pI
 mX
-mp
+vQ
 pW
 pG
 Aj
@@ -51387,9 +51612,9 @@ lA
 lA
 lA
 lA
-ia
-zT
-ia
+vl
+jB
+vl
 lA
 lA
 lA
@@ -51780,7 +52005,7 @@ mo
 mo
 mo
 mo
-hp
+ag
 gT
 hJ
 jh
@@ -51791,7 +52016,7 @@ lE
 ms
 nK
 pc
-hP
+qd
 pY
 qt
 lA
@@ -52038,17 +52263,17 @@ ar
 ar
 ar
 hp
-Ao
-hL
+fx
+hw
+kt
+ny
 ag
-gW
-hp
 mc
 mr
 mw
 Dh
 pc
-hP
+qd
 pZ
 qu
 lA
@@ -52290,9 +52515,9 @@ YV
 YV
 aX
 bh
-ap
-ap
-ap
+Bs
+AR
+AR
 bh
 Rb
 ht
@@ -52300,11 +52525,11 @@ hK
 Ba
 kj
 hp
-pD
-pE
-mu
-pD
-pE
+sY
+tC
+vK
+sY
+tC
 mp
 ew
 ey
@@ -52556,7 +52781,7 @@ gZ
 hZ
 ji
 kk
-kt
+qW
 kY
 lH
 my
@@ -52822,7 +53047,7 @@ nt
 hP
 nz
 nL
-hP
+qd
 oC
 tL
 lA
@@ -53068,7 +53293,7 @@ da
 dC
 hq
 if
-as
+mu
 hF
 bh
 la
@@ -53076,10 +53301,10 @@ lI
 mz
 ne
 nv
-ny
+vY
 oR
 nM
-qF
+vd
 qY
 tL
 lA
@@ -53316,13 +53541,13 @@ cd
 cp
 cp
 cp
-aX
+AX
 eo
 eR
 fh
 AJ
 gK
-AR
+as
 ha
 ie
 jj
@@ -53333,7 +53558,7 @@ nl
 oQ
 ol
 oQ
-hP
+qd
 ns
 qx
 hP
@@ -53579,7 +53804,7 @@ eR
 fh
 AL
 gL
-AX
+gW
 hb
 ih
 ke
@@ -53589,7 +53814,7 @@ li
 nl
 nl
 nl
-nl
+uk
 mp
 mp
 mp
@@ -54082,7 +54307,7 @@ au
 au
 aX
 aX
-aX
+AX
 bR
 aX
 aX
@@ -54479,11 +54704,11 @@ zA
 zA
 zA
 zA
+hy
 kc
+hy
 kc
-kc
-kc
-kc
+hy
 Be
 aa
 ar
@@ -54736,7 +54961,7 @@ zA
 zA
 zA
 zA
-At
+mm
 We
 Gf
 Nf
@@ -54858,12 +55083,12 @@ bO
 bS
 bS
 dp
-bB
+At
 et
 eU
 aR
 aR
-aR
+AT
 aR
 in
 il
@@ -54997,7 +55222,7 @@ Lc
 Xe
 wN
 Nf
-kc
+hy
 Be
 aa
 ar
@@ -55250,7 +55475,7 @@ zA
 zA
 zA
 zA
-kc
+hy
 wN
 wN
 Nf
@@ -55499,9 +55724,9 @@ lA
 lA
 lA
 lA
-kc
-zk
-kc
+hy
+jC
+hy
 zA
 zA
 zA
@@ -55511,7 +55736,7 @@ kc
 Ye
 Ye
 kc
-kc
+hy
 Be
 aa
 ar
@@ -55639,7 +55864,7 @@ hE
 iu
 is
 jp
-le
+pD
 lM
 mG
 no
@@ -55764,10 +55989,10 @@ zA
 zA
 zA
 zA
-kc
+hy
 wN
 Bu
-kc
+hy
 aa
 Be
 aa
@@ -56013,17 +56238,17 @@ lA
 lA
 lA
 kc
-kc
-zk
-kc
+hy
+jC
+hy
 kc
 aa
 aa
 aa
 kc
 Mc
-AU
-AU
+mD
+mD
 kc
 aa
 Be
@@ -56269,20 +56494,20 @@ lA
 lA
 lA
 ws
-kc
+hy
 xz
 zm
 Wc
-kc
+hy
 ws
 ws
 ws
-kc
+hy
 Qe
 Ze
 Hf
-kc
-ws
+hy
+ks
 BA
 Bh
 oE
@@ -56404,7 +56629,7 @@ dS
 eA
 eZ
 fK
-cV
+Ao
 gm
 gU
 ix
@@ -56650,7 +56875,7 @@ YV
 YV
 aj
 aQ
-bh
+AU
 bh
 bh
 bh
@@ -56664,7 +56889,7 @@ fp
 cV
 aR
 aR
-aR
+AT
 iB
 jt
 kl
@@ -56782,7 +57007,7 @@ lA
 lA
 lA
 lA
-kc
+hy
 xA
 uW
 ye
@@ -57039,7 +57264,7 @@ vG
 ra
 vG
 vG
-kc
+hy
 wb
 xu
 zn
@@ -57166,7 +57391,7 @@ aA
 aR
 be
 bx
-bh
+AU
 ci
 cF
 cV
@@ -57297,11 +57522,11 @@ vC
 uD
 uD
 vC
-yC
-vd
-yC
+jq
+jv
+jq
 yP
-zh
+kW
 ws
 Ac
 ws
@@ -57418,7 +57643,7 @@ aa
 aa
 aa
 aa
-ap
+AR
 aB
 aR
 bh
@@ -57427,7 +57652,7 @@ bh
 bh
 cE
 cV
-cV
+Ao
 cV
 cV
 fd
@@ -57807,14 +58032,14 @@ lA
 lA
 lA
 lA
-jT
+zB
 ti
 Cr
 xE
 xC
 vf
 zp
-ws
+ks
 Dd
 ws
 Fe
@@ -57823,9 +58048,9 @@ Ne
 Se
 Cf
 Jf
-Bt
+nc
 AW
-ws
+ks
 lA
 lA
 lA
@@ -58064,7 +58289,7 @@ lA
 lA
 lA
 lA
-jT
+zB
 wR
 vc
 Ri
@@ -58080,7 +58305,7 @@ Py
 Te
 Df
 Lf
-Bs
+nF
 Rf
 ws
 lA
@@ -58189,19 +58414,19 @@ aa
 aa
 aa
 aa
-ap
+AR
 aB
 aR
 bh
 bF
-bI
+Ak
 cw
 bI
 bI
 bI
 dZ
 eF
-eF
+Bt
 fQ
 eF
 eF
@@ -58209,7 +58434,7 @@ eF
 eF
 eT
 js
-lj
+pE
 lj
 lj
 lj
@@ -58321,7 +58546,7 @@ lA
 lA
 lA
 lA
-vD
+yg
 uJ
 wa
 wW
@@ -58337,7 +58562,7 @@ Pe
 Te
 Df
 Lf
-Bv
+nH
 Sf
 ws
 lA
@@ -58583,13 +58808,13 @@ vD
 vD
 vD
 jT
+jx
 zB
-jT
 ws
 ws
 ws
 Ge
-ws
+ks
 Oe
 Ue
 Ef
@@ -58705,7 +58930,7 @@ aa
 aa
 aa
 aF
-aR
+AT
 bk
 bG
 bI
@@ -58846,12 +59071,12 @@ ws
 Fd
 Td
 Dd
-Ak
-Al
-AT
+lD
+lL
+mA
 AK
-Ak
-AT
+lD
+mA
 Uf
 ws
 lA
@@ -59353,8 +59578,8 @@ lA
 lA
 lA
 vD
-jT
-yg
+zB
+jz
 jT
 ws
 Hd
@@ -59479,7 +59704,7 @@ aH
 aV
 bm
 ar
-aE
+Al
 ch
 cT
 dc
@@ -59491,7 +59716,7 @@ fU
 gv
 gv
 hO
-eF
+Bt
 ja
 jy
 ko
@@ -59993,11 +60218,11 @@ aa
 aa
 aa
 aa
+Al
 aE
+Al
 aE
-aE
-aE
-aE
+Al
 ee
 eI
 ee
@@ -61551,7 +61776,7 @@ jg
 jX
 MA
 yc
-Ar
+qc
 fB
 om
 fF

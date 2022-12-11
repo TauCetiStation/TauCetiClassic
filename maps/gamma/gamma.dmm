@@ -703,7 +703,9 @@
 	},
 /obj/item/weapon/present,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "aaZ" = (
 /obj/structure/stool,
@@ -715,7 +717,9 @@
 	c_tag = "Park North-West"
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "aba" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -794,7 +798,9 @@
 	pixel_x = 17
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "abg" = (
 /turf/simulated/floor{
@@ -824,20 +830,26 @@
 "abj" = (
 /obj/structure/flora/grass/brown,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "abk" = (
 /obj/structure/stool,
 /obj/effect/landmark/start/assistant/test_subject,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "abl" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/dice/d20,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "abm" = (
 /obj/structure/table/reinforced,
@@ -898,7 +910,9 @@
 "abp" = (
 /obj/structure/flora/mine_rocks,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "abq" = (
 /obj/item/weapon/paper_bin,
@@ -991,12 +1005,16 @@
 /obj/structure/flora/grass/brown,
 /obj/structure/flora/ausbushes/pointybush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "abx" = (
 /obj/structure/flora/grass/green,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "aby" = (
 /turf/simulated/wall/r_wall,
@@ -1591,7 +1609,9 @@
 	},
 /obj/item/weapon/present,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "aco" = (
 /obj/structure/stool,
@@ -1600,7 +1620,9 @@
 	dir = 4
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "acp" = (
 /obj/structure/closet/secure_closet/personal/patient,
@@ -1621,21 +1643,23 @@
 	},
 /obj/item/weapon/present,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "acr" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/flora/grass/both,
+/obj/structure/flora/grass/green,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "acs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -1740,7 +1764,9 @@
 	},
 /obj/structure/flora/grass/both,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "acA" = (
 /obj/structure/stool,
@@ -1752,7 +1778,9 @@
 	dir = 1
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "acB" = (
 /obj/machinery/vending/cigarette{
@@ -1856,7 +1884,9 @@
 	},
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "acJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -2004,7 +2034,9 @@
 /obj/machinery/light/small,
 /obj/structure/flora/grass/green,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "acX" = (
 /obj/structure/grille,
@@ -2483,12 +2515,15 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
+/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
-	dir = 4
+	dir = 1
 	},
-/obj/structure/flora/grass/brown,
+/obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "adM" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -3854,14 +3889,13 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/grass/brown,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "afZ" = (
 /obj/item/decoration/snowflake,
@@ -3985,19 +4019,33 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
-/obj/structure/flora/grass/both,
-/obj/structure/snow,
-/turf/simulated/floor/plating,
-/area/station/civilian/chapel/altar)
-"agj" = (
-/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/structure/flora/ausbushes/pointybush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/dormitories)
+"agj" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/flora/mine_rocks,
+/obj/structure/snow,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/chapel/altar)
 "agk" = (
 /obj/structure/sign/warning/fire{
@@ -4010,24 +4058,22 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/ausbushes/pointybush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/chapel/altar)
 "agm" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/flora/bush,
+/obj/structure/flora/grass/both,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/chapel/altar)
 "agn" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4040,9 +4086,14 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/grass/brown,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/chapel/altar)
 "agp" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal,
@@ -4054,16 +4105,18 @@
 /turf/simulated/wall/r_wall,
 /area/station/engineering/atmos)
 "agq" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/flora/bush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/chapel/altar)
 "agr" = (
 /obj/machinery/door/airlock/medical/glass{
@@ -4565,18 +4618,20 @@
 /area/shuttle/mining/station)
 "agY" = (
 /obj/structure/window/reinforced{
-	dir = 1
+	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 8
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/flora/mine_rocks,
+/obj/structure/flora/grass/both,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
-/area/station/civilian/chapel/altar)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/dormitories)
 "agZ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -4664,17 +4719,19 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/gym)
 "ahg" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/flora/ausbushes/pointybush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
-/area/station/civilian/dormitories)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/chapel/altar)
 "ahh" = (
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 8
@@ -5774,19 +5831,16 @@
 /turf/environment/space,
 /area/station/medical/virology)
 "aiG" = (
+/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/flora/grass/green,
+/obj/structure/flora/grass/brown,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
-/area/station/civilian/dormitories)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/chapel/altar)
 "aiH" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -5900,6 +5954,36 @@
 	},
 /turf/environment/space,
 /area/station/medical/virology)
+"aiR" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/flora/grass/green,
+/obj/structure/snow,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/dormitories)
+"aiS" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/snow,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/dormitories)
 "aiW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
@@ -8921,7 +9005,9 @@
 "bgK" = (
 /obj/structure/flora/grass/both,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "bgM" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal{
@@ -10376,7 +10462,9 @@
 "bBX" = (
 /obj/structure/flora/bush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "bBZ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -13500,7 +13588,9 @@
 	},
 /obj/structure/flora/mine_rocks,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "cCv" = (
 /obj/machinery/vending/eva,
@@ -16439,7 +16529,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/flora/grass/green,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/bar)
 "dxU" = (
 /obj/structure/disposalpipe/segment{
@@ -16465,7 +16557,9 @@
 "dyh" = (
 /obj/structure/snowman,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "dyp" = (
 /turf/simulated/floor{
@@ -17082,9 +17176,19 @@
 	},
 /area/station/civilian/chapel)
 "dKx" = (
-/obj/item/decoration/snowflake,
-/turf/simulated/wall,
-/area/station/security/warden)
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/flora/grass/both,
+/obj/structure/snow,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/dormitories)
 "dKQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -19262,7 +19366,9 @@
 /area/station/maintenance/bridge)
 "euV" = (
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "euW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -20456,7 +20562,9 @@
 	},
 /obj/item/weapon/present,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "eQg" = (
 /obj/structure/closet/emcloset,
@@ -20707,12 +20815,16 @@
 	},
 /obj/item/decoration/snowman,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "eTL" = (
 /obj/structure/flora/ausbushes/pointybush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "eUi" = (
 /obj/machinery/door/poddoor{
@@ -21386,7 +21498,9 @@
 	dir = 4
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "fcS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -24050,7 +24164,9 @@
 	},
 /obj/structure/flora/grass/both,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "fUR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -25134,7 +25250,9 @@
 	dir = 6
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "goz" = (
 /obj/machinery/power/solar{
@@ -25552,7 +25670,9 @@
 	dir = 10
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "gws" = (
 /obj/structure/flora/ausbushes/fullgrass,
@@ -25916,7 +26036,9 @@
 	},
 /obj/structure/flora/bush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/bar)
 "gBH" = (
 /obj/structure/cable{
@@ -26239,7 +26361,9 @@
 	},
 /obj/structure/flora/bush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "gHD" = (
 /obj/item/weapon/reagent_containers/syringe/inaprovaline{
@@ -26656,7 +26780,9 @@
 	},
 /obj/item/weapon/present,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "gOL" = (
 /obj/effect/decal/cleanable/dirt,
@@ -27053,7 +27179,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/flora/bush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/bar)
 "gVv" = (
 /obj/structure/closet/secure_closet/miner,
@@ -27358,7 +27486,9 @@
 	},
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/bar)
 "haZ" = (
 /obj/effect/landmark/start/cyborg,
@@ -29021,7 +29151,9 @@
 	dir = 9
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "hCo" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -32088,7 +32220,9 @@
 "iFJ" = (
 /obj/item/device/flashlight/lamp/fir/special/alternative,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "iFS" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow{
@@ -32468,7 +32602,9 @@
 	pixel_y = 29
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "iMu" = (
 /obj/item/device/radio/off,
@@ -32603,7 +32739,9 @@
 	},
 /obj/structure/flora/bush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "iPi" = (
 /obj/structure/grille,
@@ -34395,7 +34533,9 @@
 	},
 /obj/structure/flora/grass/both,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "jvU" = (
 /turf/simulated/floor/carpet,
@@ -34413,7 +34553,9 @@
 	},
 /obj/structure/flora/grass/both,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "jvZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -34855,7 +34997,9 @@
 	c_tag = "Park North-East"
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "jDm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -37199,7 +37343,9 @@
 	},
 /obj/item/decoration/snowman,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "kms" = (
 /obj/machinery/door/firedoor,
@@ -38095,7 +38241,9 @@
 	},
 /obj/structure/flora/ausbushes/pointybush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "kBf" = (
 /obj/structure/dryer{
@@ -38487,7 +38635,9 @@
 "kHN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "kHP" = (
 /obj/structure/stool/bed/chair/metal/red{
@@ -39380,7 +39530,9 @@
 	},
 /obj/structure/flora/mine_rocks,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "kVy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -39391,7 +39543,9 @@
 "kVA" = (
 /obj/item/weapon/present,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "kVD" = (
 /obj/machinery/status_display{
@@ -41105,7 +41259,9 @@
 	},
 /obj/structure/flora/grass/green,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "lxd" = (
 /obj/structure/window/reinforced{
@@ -41130,7 +41286,6 @@
 /obj/machinery/computer/security{
 	dir = 8
 	},
-/obj/item/decoration/garland,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -41663,7 +41818,9 @@
 	},
 /obj/item/weapon/present,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "lHo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -42169,7 +42326,9 @@
 	},
 /obj/structure/flora/bush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "lOK" = (
 /obj/structure/disposalpipe/segment{
@@ -43248,7 +43407,9 @@
 	},
 /obj/structure/flora/bush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "mdA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -43495,7 +43656,9 @@
 	},
 /obj/structure/flora/bush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "mih" = (
 /obj/item/weapon/storage/toolbox/electrical,
@@ -43516,7 +43679,9 @@
 	},
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "miq" = (
 /obj/structure/table,
@@ -43650,7 +43815,9 @@
 	},
 /obj/structure/flora/ausbushes/genericbush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "mkf" = (
 /obj/structure/rack,
@@ -44371,7 +44538,9 @@
 	dir = 4
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "mva" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -46049,7 +46218,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/flora/grass/brown,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/bar)
 "mYD" = (
 /mob/living/simple_animal/mouse,
@@ -46125,7 +46296,9 @@
 /obj/structure/window/reinforced,
 /obj/structure/flora/bush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "mZL" = (
 /obj/machinery/door/airlock/glass{
@@ -47028,7 +47201,9 @@
 /obj/structure/flora/grass/brown,
 /obj/item/weapon/present,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "noH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -47201,7 +47376,9 @@
 	dir = 4
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "nrI" = (
 /obj/machinery/door/airlock/glass{
@@ -48525,7 +48702,9 @@
 /obj/structure/window/reinforced,
 /obj/structure/flora/mine_rocks,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "nLs" = (
 /turf/simulated/floor{
@@ -48751,7 +48930,9 @@
 "nQs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "nQx" = (
 /obj/structure/table,
@@ -49230,7 +49411,9 @@
 	},
 /obj/structure/flora/grass/both,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/bar)
 "nXs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -50684,7 +50867,9 @@
 	},
 /obj/structure/flora/mine_rocks,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "oxL" = (
 /obj/structure/disposalpipe/segment,
@@ -50756,7 +50941,9 @@
 	},
 /obj/structure/flora/grass/both,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "ozi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -50967,7 +51154,9 @@
 "oCP" = (
 /obj/structure/stool,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "oCW" = (
 /obj/effect/decal/cleanable/dirt,
@@ -53099,7 +53288,9 @@
 /obj/structure/flora/tree/pine,
 /obj/item/weapon/present,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "poz" = (
 /obj/machinery/door_control{
@@ -54811,7 +55002,9 @@
 	},
 /obj/structure/flora/grass/both,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "pPK" = (
 /obj/structure/stool/bed/chair/metal/green{
@@ -55052,7 +55245,9 @@
 /obj/structure/window/reinforced,
 /obj/structure/flora/bush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "pTV" = (
 /obj/structure/cable{
@@ -55070,7 +55265,9 @@
 	},
 /obj/structure/flora/grass/brown,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "pUg" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -55314,7 +55511,9 @@
 	},
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "pXa" = (
 /obj/machinery/door/airlock/maintenance{
@@ -57522,9 +57721,11 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/flora/grass/green,
+/obj/structure/flora/ausbushes/pointybush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "qFb" = (
 /obj/structure/sign/departments/medbay/alt,
@@ -58367,7 +58568,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/flora/bush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/bar)
 "qTv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -58503,7 +58706,9 @@
 	pixel_x = -17
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "qVF" = (
 /obj/structure/stool/bed/chair/office/dark,
@@ -61198,7 +61403,9 @@
 	pixel_x = 24
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "rRh" = (
 /obj/machinery/requests_console/ce{
@@ -63366,7 +63573,9 @@
 	dir = 1
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/dormitories)
 "syb" = (
 /turf/simulated/wall/r_wall,
@@ -64676,7 +64885,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "sXl" = (
 /obj/machinery/door/airlock/maintenance{
@@ -68100,7 +68311,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "tZd" = (
 /obj/machinery/washing_machine,
@@ -69988,7 +70201,9 @@
 	dir = 4
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "uEi" = (
 /obj/structure/cable{
@@ -74939,7 +75154,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/flora/grass/green,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/bar)
 "wfc" = (
 /obj/machinery/light{
@@ -75047,7 +75264,9 @@
 	},
 /obj/item/weapon/present,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "whz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -75095,7 +75314,9 @@
 	layer = 2.7
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "whY" = (
 /obj/structure/cable/yellow{
@@ -77015,7 +77236,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/flora/bush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "wVH" = (
 /obj/item/weapon/scrap_lump,
@@ -78393,7 +78616,9 @@
 	pixel_y = 9
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "xrE" = (
 /obj/structure/cable{
@@ -78640,7 +78865,9 @@
 "xwu" = (
 /obj/structure/flora/tree/pine,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "xwG" = (
 /turf/simulated/floor{
@@ -78820,7 +79047,9 @@
 	},
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "xAi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -79364,7 +79593,9 @@
 "xIR" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/primary/central)
 "xJb" = (
 /obj/machinery/space_heater,
@@ -80492,7 +80723,9 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/bar)
 "ycP" = (
 /obj/structure/closet/crate/medical,
@@ -105698,7 +105931,7 @@ nnY
 nnY
 tYe
 oCq
-dKx
+cBA
 cBA
 wUj
 nFV
@@ -106272,24 +106505,24 @@ iPd
 jvY
 nLm
 xzK
-mbr
+dKx
 jSS
 toJ
 gQM
 sxS
-adL
+afY
 muX
 pqA
 baG
 jAS
-acr
+agY
 muX
 fmb
 sgc
 cPB
 tcJ
 fmb
-acr
+agY
 mZB
 wWt
 cMb
@@ -107310,20 +107543,20 @@ muX
 adg
 adh
 adi
-afY
+agi
 nLm
 bGi
 tJr
 boQ
 adO
 bGi
-agY
-agi
+agj
+agm
 aoI
 baG
 gQM
-aiG
-ahg
+aiR
+aiS
 adF
 uwW
 uwW
@@ -107575,7 +107808,7 @@ isy
 laJ
 eRo
 vts
-agj
+agl
 aoI
 baG
 gQM
@@ -107818,7 +108051,7 @@ mio
 jSS
 lvg
 gQM
-nmc
+qES
 axb
 fbo
 moL
@@ -107832,7 +108065,7 @@ stP
 cOq
 qGb
 vts
-agl
+ago
 aoI
 baG
 gQM
@@ -108346,7 +108579,7 @@ tuv
 lSt
 woK
 vts
-agm
+agq
 bwn
 pVj
 ehQ
@@ -108603,7 +108836,7 @@ jgq
 nic
 wDO
 vts
-ago
+aiG
 iKd
 baG
 gQM
@@ -108846,7 +109079,7 @@ oPc
 jSS
 lvg
 bxt
-oPc
+adL
 axb
 dte
 ogG
@@ -108860,7 +109093,7 @@ jlm
 nsw
 wEj
 vts
-agq
+ahg
 vnv
 fLy
 gQM
@@ -109103,7 +109336,7 @@ dAS
 jSS
 lvg
 gQM
-qES
+acr
 axb
 oKu
 kCB

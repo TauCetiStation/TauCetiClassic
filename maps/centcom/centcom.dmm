@@ -2967,6 +2967,7 @@
 	pixel_x = -3;
 	pixel_y = 9
 	},
+/obj/machinery/light/small,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -3050,6 +3051,7 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
+/obj/machinery/light/small,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -3749,6 +3751,9 @@
 "ajA" = (
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
+	},
+/obj/machinery/light/small{
+	dir = 1
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
@@ -17458,15 +17463,9 @@
 	},
 /area/custom/syndicate_mothership/elite_squad)
 "aNg" = (
-/obj/item/toy/sound_button/syndi{
-	pixel_x = -4;
-	pixel_y = 5
+/obj/machinery/light/small{
+	dir = 4
 	},
-/obj/item/toy/crayon/spraycan{
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/obj/structure/table,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -17497,10 +17496,9 @@
 	},
 /area/custom/syndicate_mothership/elite_squad)
 "aNk" = (
-/obj/item/device/megaphone{
-	pixel_y = 2
+/obj/machinery/light/small{
+	dir = 1
 	},
-/obj/structure/table,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -24318,6 +24316,37 @@
 /obj/item/decoration/garland,
 /turf/unsimulated/wall/fakeglass,
 /area/custom/ninjaspawn)
+"bcF" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/shuttle/floor/vox,
+/area/custom/syndicate_mothership/elite_squad)
+"bcG" = (
+/obj/item/toy/sound_button/syndi{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/toy/crayon/spraycan{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/structure/table,
+/obj/machinery/light/small,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
+	},
+/area/custom/syndicate_mothership/elite_squad)
+"bcH" = (
+/obj/item/device/megaphone{
+	pixel_y = 2
+	},
+/obj/structure/table,
+/obj/machinery/light/small,
+/turf/simulated/shuttle/floor/vox{
+	icon_state = "floorcatwalk"
+	},
+/area/custom/syndicate_mothership/elite_squad)
 "bcI" = (
 /turf/unsimulated/wall/abductor{
 	icon_state = "alien12"
@@ -24365,6 +24394,16 @@
 	},
 /turf/unsimulated/floor/abductor,
 /area/custom/abductor_ship)
+"bcR" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/item/decoration/garland,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
 "bcT" = (
 /obj/machinery/cryopod/right{
 	storage = 0
@@ -31439,6 +31478,9 @@
 	syndie = 1
 	},
 /obj/item/weapon/flora/random,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -57633,13 +57675,13 @@ aaM
 aaM
 aaM
 aaM
-acw
+bcR
 apr
 ave
 acv
 aQI
 apr
-acw
+bcR
 aaM
 aaM
 aaM
@@ -57890,13 +57932,13 @@ aaM
 aaM
 aaM
 aaM
-acw
+bcR
 abG
 adh
 aIy
 aQF
 abG
-acw
+bcR
 aaM
 aaM
 aaM
@@ -58147,13 +58189,13 @@ aaM
 aYp
 aaM
 aaM
-acw
+bcR
 abH
 acY
 add
 aeX
 abH
-adO
+bcR
 aaM
 aYp
 aaM
@@ -58404,13 +58446,13 @@ aaM
 aaM
 aaM
 aaM
-adO
-acw
+bcR
+bcR
 abH
 abG
 abH
-acw
-acw
+bcR
+bcR
 aaM
 aaM
 aaM
@@ -58662,11 +58704,11 @@ aaM
 aaM
 aaM
 aaM
-acw
-acw
-acw
-acw
-acw
+bcR
+bcR
+bcR
+bcR
+bcR
 aaM
 aaM
 aaM
@@ -70046,7 +70088,7 @@ mAb
 iXl
 xsM
 xsM
-xsM
+aNg
 xsM
 aMZ
 mAb
@@ -71851,7 +71893,7 @@ aja
 aja
 aja
 fqy
-aNg
+bcG
 mAb
 aiI
 aiP
@@ -72360,12 +72402,12 @@ wSn
 wSn
 mAb
 mAb
-xsM
+aNk
 ajg
 ajg
 ajg
 fqy
-aNk
+bcH
 lWb
 mAb
 mAb
@@ -72619,7 +72661,7 @@ mAb
 mAb
 aia
 fqy
-fqy
+bcF
 fqy
 fqy
 aNp

@@ -4053,7 +4053,9 @@
 /obj/structure/flora/tree/pine,
 /obj/structure/flora/grass/brown,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "ahv" = (
 /obj/structure/rack,
@@ -4078,7 +4080,9 @@
 /obj/structure/flora/grass/both,
 /obj/machinery/light,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "ahx" = (
 /obj/structure/grille,
@@ -4114,7 +4118,9 @@
 	dir = 4
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "ahz" = (
 /turf/simulated/wall,
@@ -6411,7 +6417,9 @@
 	pixel_y = 1
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "alF" = (
 /obj/machinery/computer/libraryconsole/bookmanagement/old,
@@ -6442,7 +6450,9 @@
 	pixel_x = 30
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "alJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -10187,7 +10197,9 @@
 /obj/item/decoration/garland,
 /obj/structure/flora/grass/both,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "asK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -10934,7 +10946,9 @@
 	pixel_x = 27
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "bcR" = (
 /obj/machinery/space_heater,
@@ -10990,7 +11004,9 @@
 	layer = 2.7
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "bfq" = (
 /turf/simulated/floor{
@@ -11351,7 +11367,9 @@
 "bwm" = (
 /obj/structure/flora/mine_rocks,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "bwK" = (
 /turf/simulated/floor{
@@ -12378,7 +12396,9 @@
 "cxV" = (
 /obj/structure/snowman,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "cyF" = (
 /obj/machinery/newscaster{
@@ -13017,7 +13037,9 @@
 /obj/structure/flora/grass/both,
 /obj/structure/flora/ausbushes/pointybush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "dlI" = (
 /turf/simulated/floor/plating{
@@ -13294,7 +13316,9 @@
 /obj/item/decoration/garland,
 /obj/structure/flora/grass/brown,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "dvp" = (
 /obj/structure/closet/emcloset,
@@ -13719,7 +13743,9 @@
 "dNp" = (
 /obj/item/weapon/a_gift,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "dNR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -13736,7 +13762,9 @@
 /obj/structure/flora/grass/brown,
 /obj/item/weapon/a_gift,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "dPt" = (
 /obj/machinery/computer/crew{
@@ -13895,7 +13923,9 @@
 "dYd" = (
 /obj/structure/flora/grass/brown,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "dYA" = (
 /turf/simulated/floor{
@@ -14398,14 +14428,18 @@
 	},
 /obj/structure/flora/ausbushes/pointybush,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "eAC" = (
 /obj/structure/flora/grass/brown{
 	layer = 2.7
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "eAZ" = (
 /turf/simulated/floor/plating/airless/catwalk,
@@ -14504,7 +14538,9 @@
 	},
 /obj/structure/flora/grass/green,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "eFq" = (
 /obj/structure/morgue,
@@ -15293,7 +15329,9 @@
 "fCc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "fCH" = (
 /obj/machinery/power/solar{
@@ -16361,7 +16399,9 @@
 /obj/item/decoration/garland,
 /obj/structure/flora/grass/both,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "gHp" = (
 /obj/structure/stool/bed/chair/office/dark,
@@ -16866,7 +16906,9 @@
 	pixel_x = -16
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "hbS" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
@@ -17036,7 +17078,9 @@
 	},
 /obj/structure/flora/grass/brown,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "hnM" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -17850,7 +17894,9 @@
 /obj/structure/flora/grass/both,
 /obj/item/weapon/a_gift,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "ikw" = (
 /obj/machinery/door/firedoor,
@@ -18506,7 +18552,9 @@
 /obj/item/decoration/garland,
 /obj/structure/flora/grass/brown,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "iSt" = (
 /turf/simulated/wall,
@@ -18900,7 +18948,9 @@
 "jqk" = (
 /obj/structure/flora/grass/both,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "jrG" = (
 /obj/machinery/atmospherics/components/binary/valve/digital/open,
@@ -21468,7 +21518,9 @@
 	icon_state = "1-2"
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "lKy" = (
 /obj/structure/closet/secure_closet/personal,
@@ -21795,7 +21847,9 @@
 	dir = 8
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "mdD" = (
 /obj/item/stack/nanopaste,
@@ -22502,7 +22556,9 @@
 "mPB" = (
 /obj/structure/flora/tree/pine,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "mQs" = (
 /obj/structure/grille,
@@ -22648,7 +22704,9 @@
 "mUR" = (
 /obj/structure/flora/grass/green,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "mVa" = (
 /obj/structure/disposalpipe/segment{
@@ -23860,7 +23918,9 @@
 	},
 /obj/structure/flora/grass/both,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "nVq" = (
 /obj/structure/table,
@@ -25244,7 +25304,9 @@
 	layer = 2.7
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "pmv" = (
 /obj/structure/grille,
@@ -26473,7 +26535,9 @@
 /area/station/civilian/kitchen)
 "qqb" = (
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "qri" = (
 /obj/structure/table,
@@ -27990,7 +28054,9 @@
 	dir = 1
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "rHg" = (
 /turf/simulated/wall/r_wall,
@@ -28529,7 +28595,9 @@
 	layer = 2.7
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "smt" = (
 /obj/machinery/light/small{
@@ -29824,7 +29892,9 @@
 /obj/structure/flora/grass/both,
 /obj/item/weapon/a_gift,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "tFy" = (
 /obj/structure/closet/toolcloset,
@@ -30104,7 +30174,9 @@
 	dir = 1
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "tQr" = (
 /obj/structure/cable{
@@ -30631,7 +30703,9 @@
 	pixel_y = -12
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "unh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -31882,7 +31956,9 @@
 "vEl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "vES" = (
 /obj/item/decoration/snowflake,
@@ -31958,7 +32034,9 @@
 "vJa" = (
 /obj/structure/easel,
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "vJt" = (
 /obj/structure/stool/bed/chair/comfy/brown{
@@ -34618,7 +34696,9 @@
 	location = "Arrival1"
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "ygZ" = (
 /obj/structure/stool/bed/chair/metal/yellow{
@@ -34711,7 +34791,9 @@
 	pixel_y = -16
 	},
 /obj/structure/snow,
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/arrival)
 "ykW" = (
 /turf/simulated/floor,
