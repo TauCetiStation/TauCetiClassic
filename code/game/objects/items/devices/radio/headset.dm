@@ -245,6 +245,11 @@
 	ks2type = /obj/item/device/encryptionkey/ert
 	grid = TRUE
 
+/obj/item/device/radio/headset/ert/cc_helper
+	name = "CentCom headset"
+	ks1type = /obj/item/device/encryptionkey/binary
+	ks2type = /obj/item/device/encryptionkey/ert
+
 /obj/item/device/radio/headset/deathsquad
 	grid = TRUE
 

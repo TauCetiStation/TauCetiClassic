@@ -286,6 +286,86 @@ var/global/list/datum/spawners_cooldown = list()
 		add_faction_member(ERT_team, new_commando, FALSE)
 
 /*
+/	LateParty
+*/
+/datum/spawner/helper
+	name = "Офицер Охраны"
+	desc = "Вы появляетесь на ЦК с целью помочь станции в решении их проблем."
+	id = "cc_security_officer"
+	time_to_del = 5 MINUTES
+	ranks = list(ROLE_ERT, "Security Officer")
+	var/rank = "Security Officer"
+	//var/spawner_job = /datum/job/officer
+	var/overrided_outfit = /datum/outfit/job/officer/centcomm_helper
+
+/datum/spawner/helper/jump(mob/dead/observer/ghost)
+	var/jump_to = pick(landmarks_list["Centcomm_helpers"])
+	ghost.forceMove(get_turf(jump_to))
+
+/datum/spawner/helper/spawn_ghost(mob/dead/observer/ghost)
+	var/obj/spawnloc = pick(global.centcomm_helpers_start)
+	global.centcomm_helpers_start -= spawnloc
+
+	var/mob/living/carbon/human/M = new(spawnloc)
+	randomize_human(M)
+	M.create_mind()
+	M.mind.key = ghost.key
+	M.key = ghost.key
+	//M.mind.assigned_role = spawner_job
+	var/datum/job/current_job = SSjob.GetJob(rank)
+	M.mind.assigned_job = current_job
+	M.mind.assigned_role = rank
+	if(overrided_outfit)
+		current_job.outfit = overrided_outfit
+	//M.job = current_job
+	current_job.equip(M)
+	current_job.current_positions++
+
+	add_more_access(M)
+
+	create_random_account_and_store_in_mind(M)
+
+	//M.prepare_data_huds()
+	//M.update_hud()
+	M.sec_hud_set_ID()
+
+	M.mind.skills.add_available_skillset(/datum/skillset/cadet)
+	M.mind.skills.maximize_active_skills()
+
+	to_chat(M, "<span class='info'>You are a member of a rescue team sent to [station_name()] to assist the crew.</span>")
+	to_chat(M, "<span class='info'>According to preliminary data, synthetic units have malfunctioned on the station. Find out what happened.</span>")
+	to_chat(M, "<span class='info'>You answer to CentCom officials with higher priority and the commander of the ship with lower.</span>")
+	to_chat(M, "<span class='info'>You are implanted with loyalty. You are allowed to carry and use weapons in self-defense.</span>")
+
+/datum/spawner/helper/proc/add_more_access(mob/living/carbon/human/H)
+	var/obj/item/weapon/card/id/my_card = H.get_idcard()
+	my_card.access += list(access_captain)
+	my_card.rank = rank
+	my_card.assignment = rank
+
+/datum/spawner/helper/int_agent
+	name = "Агент Внутренних Дел"
+	id = "cc_int_agent"
+	ranks = list(ROLE_ERT, "Internal Affairs Agent")
+	rank = "Internal Affairs Agent"
+	//spawner_job = /datum/job/lawyer
+	overrided_outfit = /datum/outfit/job/lawyer/centcomm_helper
+
+/datum/spawner/helper/int_agent/add_more_access(mob/living/carbon/human/H)
+	var/obj/item/weapon/card/id/my_card = H.get_idcard()
+	my_card.access += get_all_accesses()
+	my_card.rank = rank
+	my_card.assignment = rank
+
+/datum/spawner/helper/engineer
+	name = "Инженер"
+	id = "cc_engineer"
+	ranks = list(ROLE_ERT, "Station Engineer")
+	rank = "Station Engineer"
+	//spawner_job = /datum/job/engineer
+	overrided_outfit = /datum/outfit/job/engineer/centcomm_helper
+
+/*
  * Blob
 */
 /datum/spawner/blob_event

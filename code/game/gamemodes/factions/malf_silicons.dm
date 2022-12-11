@@ -206,6 +206,7 @@
 	shuttle_block = FALSE
 	custom_res = FALSE
 	//initroletype = /datum/role/malfAI/zombie //First addition should be the AI
+	AI_capture_timeleft = 900
 	var/finished = FALSE
 
 /datum/faction/malf_silicons/zombie/OnPostSetup()
@@ -269,3 +270,12 @@
 		if(Z.check_completion() == OBJECTIVE_WIN)
 			return TRUE
 	return FALSE
+
+/datum/faction/malf_silicons/zombie/takeover()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/send_centcomm_help), rand(600, 3000))
+
+/datum/faction/malf_silicons/zombie/proc/send_centcomm_help()
+	create_spawner(/datum/spawner/helper/int_agent)
+	create_spawner(/datum/spawner/helper/engineer)
+	create_spawners(/datum/spawner/helper, 2)

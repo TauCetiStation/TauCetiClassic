@@ -35,7 +35,8 @@ var/global/list/reverse_dir = list(2, 1, 3, 8, 10, 9, 11, 4, 6, 5, 7, 12, 14, 13
 var/global/list/espionageagent_start = list()
 	//away missions
 var/global/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
-
+	//lateparty
+var/global/list/centcomm_helpers_start = list()
 //List of preloaded templates
 var/global/list/datum/map_template/map_templates = list()
 

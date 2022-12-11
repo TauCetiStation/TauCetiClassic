@@ -287,6 +287,14 @@
 	name = "Cyborg"
 	icon_state = "Cyborg"
 
+//Lateparty
+/obj/effect/landmark/cc_helpers
+	name = "Centcomm Helpers"
+
+/obj/effect/landmark/cc_helpers/atom_init(mapload)
+	..()
+	global.centcomm_helpers_start += loc
+	return INITIALIZE_HINT_QDEL
 
 // Roles
 /obj/effect/landmark/start/wizard
