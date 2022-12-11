@@ -166,10 +166,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	religion?.torture_tables -= src
 	return ..()
 	
-/obj/machinery/optable/torture_table/deconstruct(disassembled)
-	if(flags & NODECONSTRUCT)
-		return ..()
-
 /obj/machinery/optable/torture_table/attackby(obj/item/W, mob/user, params)
 	if(!charged && istype(W, /obj/item/weapon/storage/bible/tome))
 		var/obj/item/weapon/storage/bible/tome/T = W
@@ -182,8 +178,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 			charged = TRUE
 			new /obj/effect/temp_visual/cult/sparks(loc)
 			return FALSE
-	if(default_deconstruction_screwdriver(user, "table_surgey_open", initial(icon_state), W))
-		return FALSE
 
 	if(iswrench(W))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
