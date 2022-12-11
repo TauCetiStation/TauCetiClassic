@@ -107,7 +107,7 @@
 		human_owner.SetConfused(human_owner.confused * 0.997)
 		human_owner.SetDrunkenness(human_owner.drunkenness * 0.997)
 
-	if(prob(20))
+	if(prob(50))
 		if(carbon_owner)
 			carbon_owner.handle_dreams()
 		if(prob(10) && owner.health)
