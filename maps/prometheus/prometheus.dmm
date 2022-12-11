@@ -2121,9 +2121,56 @@
 /obj/structure/sign/directions/dock_tablo/tablo5,
 /turf/simulated/wall,
 /area/station/maintenance/disposal)
+"adw" = (
+/obj/structure/closet/emcloset,
+/obj/machinery/camera{
+	c_tag = "Mining Shuttle";
+	dir = 6
+	},
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/hallway/secondary/mine_sci_shuttle)
 "adx" = (
 /turf/simulated/wall/r_wall,
 /area/station/rnd/mixing)
+"ady" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/door/airlock/mining/glass{
+	name = "Mining Shuttle Dock";
+	req_one_access = list(48,65)
+	},
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/station/hallway/secondary/mine_sci_shuttle)
+"adz" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/structure/sign/directions/dock_tablo/tablo2,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/entry)
+"adA" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/sign/directions/dock_tablo/tablo3,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/entry)
+"adB" = (
+/obj/structure/sign/directions/dock_tablo/tablo4,
+/turf/simulated/wall,
+/area/station/hallway/secondary/entry)
 "adE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/random/foods/food_trash,
@@ -37211,7 +37258,7 @@
 "izl" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/camera{
-	c_tag = "Arrival Dock's South";
+	c_tag = "Arrival Dock's Enter";
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -60645,19 +60692,16 @@
 	},
 /area/station/civilian/fitness)
 "osQ" = (
-/obj/machinery/door/airlock/mining{
-	req_one_access = list(65,48)
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/door/firedoor,
+/obj/machinery/camera{
+	c_tag = "Arrival Dock's North";
+	dir = 8
 	},
 /turf/simulated/floor{
-	icon_state = "delivery"
+	dir = 4;
+	icon_state = "brown"
 	},
-/area/station/hallway/secondary/mine_sci_shuttle)
+/area/station/hallway/secondary/entry)
 "osV" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/polarized{
@@ -117159,7 +117203,7 @@ rKO
 hGN
 cJy
 vlL
-mfJ
+adA
 krE
 mfJ
 vlL
@@ -117933,7 +117977,7 @@ vlL
 acR
 cOE
 kCc
-vlL
+adB
 vlL
 vlL
 vlL
@@ -118431,7 +118475,7 @@ tTD
 owy
 sQA
 apD
-ezA
+adw
 ezA
 apD
 apD
@@ -118957,7 +119001,7 @@ rKO
 rKO
 hGN
 cJy
-lqA
+adz
 riZ
 acZ
 izf
@@ -119717,7 +119761,7 @@ iHf
 vTK
 apD
 nCx
-osQ
+ady
 apD
 apD
 iRy
@@ -119979,7 +120023,7 @@ mjv
 vlL
 lqA
 vlL
-lqA
+adz
 krE
 lqA
 vlL
@@ -120486,7 +120530,7 @@ cOv
 jgd
 qlP
 jgd
-eoZ
+osQ
 cOv
 jgd
 qlP

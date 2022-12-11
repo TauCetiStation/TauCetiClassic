@@ -1065,7 +1065,10 @@
 /turf/simulated/floor,
 /area/asteroid/mine/abandoned)
 "cv" = (
-/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maintstore2)
 "cw" = (
@@ -1978,9 +1981,6 @@
 /area/asteroid/research_outpost/harvesting)
 "ho" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/firstaid{
-	pixel_y = 5
-	},
 /obj/machinery/alarm{
 	pixel_x = 29;
 	pixel_y = -6
@@ -1990,6 +1990,7 @@
 	dir = 8;
 	network = list("SS13","MINE")
 	},
+/obj/item/weapon/storage/firstaid/regular,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -2676,7 +2677,7 @@
 	dock_tag = "mine_dock";
 	locked = 1;
 	name = "Mining Shuttle Airlock";
-	req_access = list(48)
+	req_one_access = list(48,65)
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
@@ -4852,6 +4853,9 @@
 /obj/item/weapon/storage/box/solution_trays{
 	pixel_y = 4
 	},
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitepurple"
@@ -6204,6 +6208,9 @@
 	name = "Station Intercom (General)";
 	pixel_x = 28;
 	pixel_y = -5
+	},
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -7855,14 +7862,15 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "HN" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
 /obj/structure/sign/warning/deathsposal{
 	icon_state = "deathsposal_purple";
 	pixel_x = 32
 	},
+/obj/machinery/driver_button{
+	id = "research";
+	pixel_y = 28
+	},
+/obj/structure/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maintstore2)
 "HP" = (
@@ -9405,7 +9413,7 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
-/area/space)
+/area/asteroid/research_outpost/maintstore2)
 "Pg" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -50875,8 +50883,8 @@ JI
 ZM
 oQ
 db
-Zr
-bE
+IM
+bK
 cv
 yu
 jV
@@ -51132,8 +51140,8 @@ VT
 ZM
 ZM
 db
-IM
-bK
+db
+ZQ
 HN
 GZ
 LG
