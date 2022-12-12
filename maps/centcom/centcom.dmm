@@ -1582,7 +1582,7 @@
 	},
 /area/centcom/holding)
 "aed" = (
-/obj/structure/stool/bed/chair/comfy/brown,
+/obj/structure/stool/bed/chair/comfy/black,
 /turf/simulated/floor/carpet/black,
 /area/shuttle/escape/centcom)
 "aee" = (
@@ -2999,12 +2999,12 @@
 /turf/environment/space,
 /area/shuttle/syndicate_elite/mothership)
 "ahS" = (
-/obj/structure/table/woodentable/fancy,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /obj/random/foods/food_without_garbage,
 /obj/random/foods/food_without_garbage,
 /obj/random/foods/drink_bottle,
+/obj/structure/table/woodentable,
 /turf/simulated/floor/carpet/black,
 /area/shuttle/escape/centcom)
 "ahT" = (
@@ -4240,10 +4240,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/table/woodentable/fancy,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
 /obj/random/foods/food_without_garbage,
+/obj/structure/table/woodentable,
 /turf/simulated/floor/carpet/black,
 /area/shuttle/escape/centcom)
 "akC" = (
@@ -6418,7 +6418,7 @@
 	},
 /area/centcom/evac)
 "aps" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/structure/stool/bed/chair/comfy/black{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/black,
@@ -18979,15 +18979,8 @@
 /turf/simulated/floor/carpet/green,
 /area/shuttle/escape/centcom)
 "aPZ" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 1
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wood-broken"
-	},
+/obj/structure/stool/bed/chair/comfy/black,
+/turf/simulated/floor/wood,
 /area/shuttle/escape/centcom)
 "aQa" = (
 /obj/machinery/vending/cigarette,
@@ -23082,10 +23075,15 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "aZF" = (
-/obj/structure/stool/bed/chair/comfy/brown{
+/obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/black,
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 8
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wood-broken"
+	},
 /area/shuttle/escape/centcom)
 "aZG" = (
 /obj/structure/table/woodentable,
@@ -23096,8 +23094,8 @@
 /turf/simulated/floor/carpet/black,
 /area/shuttle/escape/centcom)
 "aZH" = (
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 8
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 4
 	},
 /turf/simulated/floor/carpet/black,
 /area/shuttle/escape/centcom)
@@ -23223,9 +23221,8 @@
 /turf/simulated/floor/wood,
 /area/shuttle/escape/centcom)
 "aZZ" = (
-/obj/machinery/light,
-/obj/structure/stool/bed/chair/comfy/brown{
-	dir = 4
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 8
 	},
 /turf/simulated/floor/carpet/black,
 /area/shuttle/escape/centcom)
@@ -24420,6 +24417,13 @@
 	icon_state = "dark"
 	},
 /area/centcom/evac)
+"bcS" = (
+/obj/machinery/light,
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/black,
+/area/shuttle/escape/centcom)
 "bcT" = (
 /obj/machinery/cryopod/right{
 	storage = 0
@@ -48454,8 +48458,8 @@ aRd
 aRd
 aYj
 apK
-aZF
-aZZ
+aZH
+bcS
 bal
 aek
 aeh
@@ -48698,7 +48702,7 @@ adI
 aeU
 afU
 anY
-arE
+aPZ
 apK
 apK
 apK
@@ -48956,7 +48960,7 @@ aeT
 afa
 anl
 aqi
-aPZ
+aZF
 apK
 apK
 aRf
@@ -48968,8 +48972,8 @@ aWn
 aWT
 aYq
 aQc
-aZH
-aZH
+aZZ
+aZZ
 baG
 aen
 adF
