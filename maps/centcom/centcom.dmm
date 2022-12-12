@@ -1850,6 +1850,7 @@
 /obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden,
+/obj/item/decoration/tinsel,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -2063,6 +2064,7 @@
 	dir = 1;
 	id = "CentComConv01"
 	},
+/obj/item/decoration/tinsel,
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "afq" = (
@@ -2107,6 +2109,7 @@
 	req_access = list(108)
 	},
 /obj/structure/centcom_barrier,
+/obj/item/decoration/tinsel,
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "afw" = (
@@ -9230,7 +9233,7 @@
 	name = "DED MOROZ hat"
 	},
 /obj/item/clothing/head/santahat{
-	armor = list("melee" = 70, "bullet" = 70, "laser" = 70, "energy" = 70, "bomb" = 70, "bio" = 70, "rad" = 70);
+	armor = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 40, "bomb" = 40, "bio" = 40, "rad" = 40);
 	name = "DED MOROZ hat"
 	},
 /turf/unsimulated/floor/snow,
@@ -19736,7 +19739,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/pizzabox,
 /obj/item/weapon/reagent_containers/food/snacks/kabob{
 	pixel_y = 10
 	},
@@ -19744,6 +19746,7 @@
 /obj/random/foods/food_without_garbage,
 /obj/random/foods/drink_bottle,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/pizzabox/margherita,
 /turf/simulated/floor/wood,
 /area/shuttle/escape/centcom)
 "aRN" = (
@@ -19754,6 +19757,7 @@
 /obj/structure/table/woodentable/fancy,
 /obj/random/foods/food_without_garbage,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/food/snacks/olivyesalad,
 /turf/simulated/floor/wood,
 /area/shuttle/escape/centcom)
 "aRO" = (
@@ -20370,6 +20374,7 @@
 /obj/structure/table/woodentable/fancy,
 /obj/random/foods/food_without_garbage,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/food/snacks/olivyesalad,
 /turf/simulated/floor/wood,
 /area/shuttle/escape/centcom)
 "aTb" = (
@@ -20655,6 +20660,7 @@
 	name = "General Access";
 	req_access = list(108)
 	},
+/obj/item/decoration/tinsel,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -21163,13 +21169,13 @@
 	},
 /area/centcom/evac)
 "aUU" = (
-/obj/item/pizzabox,
 /obj/item/weapon/reagent_containers/food/snacks/waffles{
 	pixel_y = 12
 	},
 /obj/structure/table/woodentable/fancy,
 /obj/random/foods/food_without_garbage,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/pizzabox/mushroom,
 /turf/simulated/floor/wood,
 /area/shuttle/escape/centcom)
 "aUV" = (
@@ -21190,6 +21196,7 @@
 /obj/random/foods/food_without_garbage,
 /obj/random/foods/drink_bottle,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/food/snacks/olivyesalad,
 /turf/simulated/floor/wood,
 /area/shuttle/escape/centcom)
 "aUY" = (
@@ -21701,6 +21708,7 @@
 /obj/random/foods/food_without_garbage,
 /obj/random/foods/drink_bottle,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/weapon/reagent_containers/food/snacks/olivyesalad,
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken6"
 	},
@@ -21709,7 +21717,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/pizzabox,
 /obj/item/weapon/reagent_containers/food/snacks/herbsalad{
 	pixel_y = 12
 	},
@@ -21717,6 +21724,7 @@
 /obj/random/foods/food_without_garbage,
 /obj/random/foods/drink_bottle,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/pizzabox/meat,
 /turf/simulated/floor/wood,
 /area/shuttle/escape/centcom)
 "aWo" = (
@@ -22450,7 +22458,7 @@
 	name = "DED MOROZ suit"
 	},
 /obj/item/clothing/suit/santa{
-	armor = list("melee" = 70, "bullet" = 70, "laser" = 70, "energy" = 70, "bomb" = 70, "bio" = 70, "rad" = 70);
+	armor = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 40, "bomb" = 40, "bio" = 40, "rad" = 40);
 	name = "DED MOROZ suit"
 	},
 /turf/unsimulated/floor/snow,
@@ -23971,6 +23979,14 @@
 	name = "Ded Moroz hat"
 	},
 /obj/item/clothing/shoes/winterboots/wizard,
+/obj/item/weapon/present,
+/obj/item/weapon/present,
+/obj/item/weapon/present,
+/obj/item/weapon/present,
+/obj/item/weapon/present,
+/obj/item/weapon/present,
+/obj/item/weapon/present,
+/obj/item/weapon/present,
 /obj/item/weapon/present,
 /obj/item/weapon/present,
 /turf/unsimulated/floor{
@@ -87906,15 +87922,15 @@ aaM
 mRb
 mVb
 aHB
-aHB
+ltb
 aHB
 lsb
 aHB
-aHB
+aWH
 aHB
 lsb
 aWF
-aHB
+ltb
 aHB
 oNb
 oPb
@@ -88167,7 +88183,7 @@ aHB
 aHB
 aWF
 aHB
-aHB
+ltb
 aHB
 afd
 aHB
@@ -88930,11 +88946,11 @@ aaM
 mRb
 aHB
 aHB
-aHB
+ltb
 pCb
 aHB
 hJb
-aHB
+lsb
 afq
 afd
 aWF
@@ -88942,11 +88958,11 @@ aeN
 aHB
 aHB
 afq
-aHB
+lsb
 afg
 aHB
 aHB
-aHB
+ltb
 aHB
 lsb
 oZb
@@ -89192,13 +89208,13 @@ aHB
 aHB
 aHB
 aXY
-aHB
+ltb
 aHB
 aeS
 aHB
 aeS
 mpb
-aHB
+ltb
 aXY
 aHB
 aHB
@@ -89960,19 +89976,19 @@ aeM
 aXI
 aHB
 aXY
-aHB
+ltb
 aHB
 aHB
 aXI
-aHB
+lsb
 aHB
 aeS
 aHB
-aHB
+lsb
 aeY
 aHB
 pCb
-aHB
+ltb
 aXY
 aHB
 afn
@@ -90476,7 +90492,7 @@ aHB
 aHB
 aHB
 aWF
-aHB
+aWH
 aHB
 aHB
 ojb
@@ -90484,7 +90500,7 @@ aeQ
 ojb
 aHB
 aWF
-aHB
+aWH
 aHB
 aHB
 aHB
@@ -90726,7 +90742,7 @@ aaM
 aaM
 aaM
 mRb
-aHB
+lsb
 afm
 avv
 ltb
@@ -90748,7 +90764,7 @@ aHB
 ltb
 avv
 afm
-aHB
+lsb
 pAb
 aaM
 aaM
@@ -90990,7 +91006,7 @@ aHB
 afd
 aWF
 aHB
-aHB
+aWH
 aHB
 aHB
 ojb
@@ -90998,7 +91014,7 @@ afO
 ojb
 aHB
 mpb
-aHB
+aWH
 aWF
 aHB
 aHB
@@ -91502,19 +91518,19 @@ aHB
 afo
 aWF
 aXY
-aHB
+ltb
 aHB
 aHB
 aXI
-aHB
+lsb
 aWF
 aeS
 aHB
-aHB
+lsb
 afc
 aHB
 aHB
-aWF
+ltb
 aXY
 aHB
 afc
@@ -91772,7 +91788,7 @@ aWF
 aeS
 aHB
 aHB
-aHB
+aWF
 afq
 aHB
 aHB
@@ -92276,17 +92292,17 @@ mpb
 aWF
 aHB
 aXY
-aHB
+ltb
 aHB
 aeS
 aHB
 aeS
 aWF
-aHB
+ltb
 aXY
 afd
 aHB
-aWF
+aHB
 avv
 aHB
 aHB
@@ -92528,11 +92544,11 @@ aaM
 mRb
 aHB
 aHB
-aHB
+ltb
 aHB
 aHB
 hJb
-aHB
+lsb
 afq
 aWF
 aHB
@@ -92540,11 +92556,11 @@ aeR
 aHB
 aHB
 afq
-aHB
+lsb
 afg
 aHB
 aHB
-aHB
+ltb
 aHB
 lsb
 oZb
@@ -93307,7 +93323,7 @@ aHB
 aHB
 aWF
 aHB
-aHB
+ltb
 aWF
 afd
 aHB
@@ -93560,15 +93576,15 @@ aaM
 mRb
 mVb
 aHB
-aHB
-aHB
-lsb
-aHB
-aHB
+ltb
 aHB
 lsb
 aHB
+aWH
 aHB
+lsb
+aHB
+ltb
 aHB
 oNb
 oPb
