@@ -3,7 +3,7 @@
 	desc = "We reform one of our arms into whip."
 	helptext = "Can snatch, knock down, and damage in range depending on your intent, requires a lot of chemical for each use. Cannot be used while in lesser form."
 	chemical_cost = 20
-	genomecost = 4
+	genomecost = 2
 	genetic_damage = 12
 	req_human = 1
 	max_genetic_damage = 10
@@ -18,7 +18,6 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_whip"
 	item_state = "arm_whip"
-	var/next_click
 
 /obj/item/weapon/changeling_whip/atom_init()
 	. = ..()
@@ -34,23 +33,17 @@
 		return
 	if(user.incapacitated() || user.lying)
 		return
-	if(next_click > world.time)
-		return
-	if(!use_charge(user, 2))
-		return
-	next_click = world.time + 10
+	user.SetNextMove(CLICK_CD_MELEE)
 	var/obj/item/projectile/changeling_whip/LE = new (get_turf(src))
 	switch(user.a_intent)
 		if(INTENT_GRAB)
 			LE.grabber = TRUE
 		if(INTENT_PUSH)
-			if(prob(65))
-				LE.weaken = 3
-				LE.stun = 2
+			LE.weaken = 1
 		if(INTENT_HARM)
-			LE.damage = 30
+			LE.damage = 15
 		else
-			LE.agony = 15
+			LE.help_act = TRUE
 	LE.host = user
 	LE.Fire(target, user)
 
@@ -63,6 +56,7 @@
 	damage_type = BRUTE
 	flag = BULLET
 	var/grabber = FALSE
+	var/help_act = FALSE
 	var/mob/living/carbon/human/host
 	tracer_list = list()
 	muzzle_type = /obj/effect/projectile/changeling/muzzle
@@ -72,11 +66,41 @@
 /obj/item/projectile/changeling_whip/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(isturf(target))
 		return
-	var/atom/movable/T = target
+	if(help_act && iscarbon(target))
+		var/mob/living/carbon/C = target
+		var/t_him = "it"
+		if(C.gender == MALE)
+			t_him = "him"
+		else if (C.gender == FEMALE)
+			t_him = "her"
+		var/bodyzone = host.get_targetzone()
+		var/obj/item/organ/external/BP = null
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			BP = H.get_bodypart(bodyzone)
+		switch(bodyzone)
+			if(BP_L_LEG, BP_R_LEG)
+				host.visible_message("<span class='warning'>[host] gently touches [C]'s [BP ? BP : bodyzone] by mass of tissue, in the form of an elastic tentacle!</span>", \
+								"<span class='notice'>You gently touch [C]'s [BP ? BP : bodyzone] by [src]!</span>")
+			if(BP_R_ARM, BP_L_ARM)
+				host.visible_message("<span class='warning'>[host] cuddles with [C]'s [BP ? BP : bodyzone] by mass of tissue, in the form of an elastic tentacle!</span>", \
+								"<span class='notice'>You cuddle [C]'s [BP ? BP : bodyzone] by [src]!</span>")
+			if(BP_HEAD)
+				host.visible_message("<span class='warning'>[host] pats [C]'s [BP ? BP : bodyzone] by mass of tissue, in the form of an elastic tentacle!</span>", \
+								"<span class='notice'>You pat [C] on the head by [src]!</span>", )
+			if(BP_GROIN)
+				host.visible_message("<span class='warning'>[host] does something to [C]'s [BP ? BP : bodyzone] by mass of tissue, in the form of an elastic tentacle to make [t_him] feel better!</span>", \
+								"<span class='notice'>You do something to [C] by [src] to make [t_him] feel better!</span>", )
+			else
+				host.visible_message("<span class='warning'>[host] hugs [C] by mass of tissue, in the form of an elastic tentacle to make [t_him] feel better!</span>", \
+								"<span class='notice'>You hug [C] by [src] to make [t_him] feel better!</span>")
+		playsound(src, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
+		return
 	if(grabber)
+		var/atom/movable/T = target
 		var/grab_chance = 100
-		if(iscarbon(T))
-			var/mob/living/carbon/C = T
+		if(iscarbon(target))
+			var/mob/living/carbon/C = target
 			grab_chance -= C.run_armor_check(def_zone, absorb_text = TRUE)
 			if(def_zone == BP_CHEST || def_zone == BP_GROIN)	//limbs are easier to catch with a tentacle
 				grab_chance -= 20
