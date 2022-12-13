@@ -131,15 +131,7 @@
 /obj/item/weapon/melee/arm_blade/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	/*if(istype(target, /obj/structure/table))
-		var/obj/structure/table/T = target
-		T.deconstruct(TRUE)
-	*/
-	/*
-	else if(istype(target, /obj/machinery/computer))
-		var/obj/machinery/computer/C = target
-		C.attack_alien(user) //muh copypasta
-	*/
+
 	if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = target
 

@@ -25,6 +25,7 @@
 
 	var/mob/living/carbon/target = G.affecting
 	return changeling.can_absorb_dna(user,target)
+
 /obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/living/user)
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	var/obj/item/weapon/grab/G = user.get_active_hand()

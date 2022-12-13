@@ -99,8 +99,8 @@
 	if(grabber)
 		var/atom/movable/T = target
 		var/grab_chance = 100
-		if(iscarbon(target))
-			var/mob/living/carbon/C = target
+		if(iscarbon(T))
+			var/mob/living/carbon/C = T
 			grab_chance -= C.run_armor_check(def_zone, absorb_text = TRUE)
 			if(def_zone == BP_CHEST || def_zone == BP_GROIN)	//limbs are easier to catch with a tentacle
 				grab_chance -= 20

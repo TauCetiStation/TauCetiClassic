@@ -262,7 +262,7 @@
 		take_damage(hammer.get_object_damage())
 		return
 
-	if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
+	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 
 		to_chat(user, "<span class='notice'>Вы бурите сквозь укрепленную стену.</span>")
 

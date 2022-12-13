@@ -14,7 +14,6 @@
 	name = "oganic hammer"
 	desc = "A mass of tough, boney tissue,reminiscent of hammer."
 	canremove = 0
-	//can_embed = 0
 	force = 15
 	flags = ABSTRACT | DROPDEL
 	icon = 'icons/obj/weapons.dmi'
@@ -40,10 +39,10 @@
 		var/mob/living/carbon/human/H = target
 		var/armor_coef = H.getarmor(def_zone, MELEE) / 100
 		if(armor_coef > 0 && armor_coef < 100)
-			//~23 damage to armored bodypart
+			//25 damage to armored bodypart
 			var/net_damage = 25 - (force - (force * armor_coef))
+			//if force or armor_coef was really big - no net damage
 			if(net_damage > 0)
-				//if force or armor_coef was really big
 				H.apply_damage(net_damage, BRUTE, def_zone, blocked = 0)	//damage through armor
 
 /obj/item/weapon/melee/changeling_hammer/melee_attack_chain(atom/target, mob/user, params)

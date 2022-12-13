@@ -726,7 +726,7 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		playsound(src, pick(hammer.hitsound), VOL_EFFECTS_MASTER)
 		dynattackby(hammer, user)
-	//15-17 ham, 25-32 whip, vs 52-52 armb
+
 	else
 		user.SetNextMove(CLICK_CD_MELEE)
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
