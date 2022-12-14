@@ -91,7 +91,7 @@
 	if(isliving(hit_atom))
 		var/mob/living/L = hit_atom
 		var/obj/item/weapon/shield/shield = L.is_in_hands(/obj/item/weapon/shield)
-		if(shield && check_shield_dir(hit_atom) && prob(shield.Get_shield_chance() + 20))
+		if(shield && check_shield_dir(hit_atom))
 			L.visible_message("<span class='danger'>[src] smashed into [L]'s [shield]!</span>", "<span class='userdanger'>[src] pounces on your [shield]!</span>")
 			Stun(2)
 			Weaken(2)
@@ -106,14 +106,14 @@
 			sleep(2)  // Runtime prevention (infinite bump() calls on hulks)
 			step_towards(src, L)
 			toggle_leap(FALSE)
-			pounce_cooldown = TRUE
-			VARSET_IN(src, pounce_cooldown, FALSE, pounce_cooldown_time)
 			playsound(src, pick(SOUNDIN_HUNTER_LEAP), VOL_EFFECTS_MASTER, vary = FALSE)
 	else if(hit_atom.density)
 		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='alertalien'>You smashes into [hit_atom]!</span>")
 		Stun(2)
 		Weaken(2)
 
+	pounce_cooldown = TRUE
+	VARSET_IN(src, pounce_cooldown, FALSE, pounce_cooldown_time)
 	update_canmove()
 
 #undef MAX_ALIEN_LEAP_DIST
@@ -138,8 +138,7 @@
 			return TRUE
 		else if(M.dir == WEST && (dir in list(EAST, NORTH)))
 			return TRUE
-		return FALSE
-	else if(istype(M.r_hand, /obj/item/weapon/shield))
+	if(istype(M.r_hand, /obj/item/weapon/shield))
 		if(M.dir == NORTH && (dir in list(SOUTH, WEST)))
 			return TRUE
 		else if(M.dir == SOUTH && (dir in list(NORTH, EAST)))
@@ -148,7 +147,6 @@
 			return TRUE
 		else if(M.dir == WEST && (dir in list(EAST, SOUTH)))
 			return TRUE
-		return FALSE
 	return FALSE
 
 /mob/living/carbon/xenomorph/humanoid/hunter/proc/toggle_invisible()
