@@ -16,7 +16,7 @@
 	var/pounce_cooldown_time = 10 SECONDS
 
 	var/neurotoxin_on_click = 0
-	var/neurotoxin_delay = 60
+	var/neurotoxin_delay = 40
 	var/neurotoxin_next_shot = 0
 	var/last_neurotoxin = 0
 
