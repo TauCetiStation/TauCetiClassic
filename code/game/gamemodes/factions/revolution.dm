@@ -239,8 +239,69 @@
 	return dat
 
 /datum/faction/revolution/flash_revolution
-	name = "Syndicate Revolutionaries"
+	name = F_FLASH_REVOLUTION
+	ID = F_FLASH_REVOLUTION
 	initroletype = /datum/role/rev_leader/flash_rev_leader
-	roletype = /datum/role/rev
 	min_roles = 1
-	max_roles = 2
+	var/victory_is_near = FALSE
+	var/shuttle_timer_started = FALSE
+
+/datum/faction/revolution/flash_revolution/proc/send_evac_to_centcom()
+	if(SSshuttle.online || SSshuttle.departed)
+		return
+	SSshuttle.incall(1)
+	SSshuttle.announce_emer_called.play()
+	new /datum/announcement/centcomm/revolution_succesfull
+
+/datum/faction/revolution/flash_revolution/process()
+	var/datum/faction/enemies_of_the_revolution/enemies = create_uniq_faction(/datum/faction/enemies_of_the_revolution)
+	if(!enemies)
+		to_chat(world, "ENEMY NOT FOUND")
+		return
+	for(var/mob/living/carbon/M in world)
+		if(considered_alive(M.mind) || M.suiciding)
+			continue
+		if(!M.mind)
+			continue
+		if(M.mind.assigned_role in security_positions || M.mind.assigned_role in command_positions)
+			add_faction_member(enemies, M, FALSE)
+	return ..()
+
+/datum/faction/revolution/flash_revolution/check_win()
+	//check half-win revolution
+	if(IsSuccessful())
+		//create enemies of revolution
+		if(!victory_is_near)
+			//to_chat(world, "ENEMIES!!!")
+			victory_is_near = TRUE
+			var/datum/faction/enemies_of_the_revolution/enemies = create_uniq_faction(/datum/faction/enemies_of_the_revolution)
+			if(!enemies)
+				return FALSE
+			for(var/mob/M in global.player_list)
+				if(considered_alive(M.mind) || M.suiciding)
+					continue
+				if(!M.mind)
+					continue
+				if(M.mind.assigned_role in security_positions || M.mind.assigned_role in command_positions)
+					add_faction_member(enemies, M, FALSE)
+					return FALSE
+		//enemies created, now try finish round
+		else
+			//call shuttle after 1-7 minutes. Give enemies of revs time to die
+			if(!shuttle_timer_started)
+				shuttle_timer_started = TRUE
+				SSshuttle.fake_recall = FALSE
+				//addtimer(CALLBACK(src, .proc/send_evac_to_centcom), rand(60, 100), TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+				//to_chat(world, "SHUTTLECALLED!!!")
+				return FALSE										//rand(600, 4200)
+			//try to end if revolution already killed all headstuff
+			else
+				for(var/datum/objective/obj in objective_holder.GetObjectives())
+					if(obj.calculate_completion() != OBJECTIVE_WIN)
+						//to_chat(world, "REDTEXT!!!")
+						return FALSE
+					//full-victory of the revolution
+					to_chat(world, "GREEEEENTEXT!!!")
+					return FALSE
+	//to_chat(world, "NO!!!")
+	return FALSE

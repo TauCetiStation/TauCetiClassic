@@ -19,7 +19,7 @@
 			permitted = TRUE
 
 	if(!permitted)
-		var/static/list/allowed = list(NUKE_OP, TRAITOR, WIZARD, HEADREV, CULTIST, CHANGELING)
+		var/static/list/allowed = list(NUKE_OP, TRAITOR, WIZARD, HEADREV, HEADREV_FLASH, CULTIST, CHANGELING)
 		for(var/T in allowed)
 			if(isrole(T, src))
 				permitted = TRUE

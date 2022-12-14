@@ -185,7 +185,7 @@
 
 #define isrev(H) isrole(REV, H)
 
-#define isrevhead(H) isrole(HEADREV, H)
+#define isrevhead(H) isrole(HEADREV, H) || isrole(HEADREV_FLASH, H)
 
 #define istraitor(H) isrole(TRAITOR, H)
 
