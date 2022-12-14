@@ -23671,7 +23671,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/turf/environment/space,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/garden)
 "aQm" = (
 /obj/structure/disposalpipe/segment{
@@ -24534,7 +24536,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/turf/environment/space,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/garden)
 "aRL" = (
 /obj/machinery/atmospherics/components/trinary/mixer/m_mixer{
@@ -24567,7 +24571,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/turf/environment/space,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/garden)
 "aRP" = (
 /obj/machinery/alarm{
@@ -25280,7 +25286,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/turf/environment/space,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/garden)
 "aTg" = (
 /obj/machinery/door/poddoor{
@@ -25827,7 +25835,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/turf/environment/space,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/garden)
 "aUc" = (
 /obj/machinery/door/airlock/security{
@@ -29579,7 +29589,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/turf/environment/space,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/garden)
 "bat" = (
 /obj/structure/cable{
@@ -29820,7 +29832,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/turf/environment/space,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/garden)
 "baO" = (
 /obj/structure/extinguisher_cabinet{
@@ -31270,7 +31284,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/turf/environment/space,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/garden)
 "bdr" = (
 /turf/simulated/floor/wood{
@@ -56755,6 +56771,14 @@
 	icon_state = "dark"
 	},
 /area/station/tcommsat/computer)
+"bXf" = (
+/obj/structure/flora/ausbushes/pointybush,
+/obj/structure/snow,
+/turf/environment/space,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/garden)
 "bXl" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -75749,7 +75773,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/turf/environment/space,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/garden)
 "jaX" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -77051,7 +77077,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/turf/environment/space,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/garden)
 "kwS" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -78901,7 +78929,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/turf/environment/space,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/garden)
 "mKa" = (
 /obj/machinery/door/airlock/external{
@@ -81848,7 +81878,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/turf/environment/space,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/garden)
 "qyj" = (
 /obj/item/stack/rods,
@@ -83752,7 +83784,9 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/turf/environment/space,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/civilian/garden)
 "sCd" = (
 /obj/effect/decal/cleanable/dirt,
@@ -136530,7 +136564,7 @@ mJL
 iJB
 cCt
 cMn
-aTf
+bXf
 bZp
 bFo
 aCK
