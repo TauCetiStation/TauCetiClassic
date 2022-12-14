@@ -165,6 +165,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 /obj/machinery/optable/torture_table/Destroy()
 	religion?.torture_tables -= src
 	return ..()
+
 /obj/machinery/optable/torture_table/attackby(obj/item/W, mob/user, params)
 	if(!charged && istype(W, /obj/item/weapon/storage/bible/tome))
 		var/obj/item/weapon/storage/bible/tome/T = W
