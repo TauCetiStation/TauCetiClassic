@@ -65,7 +65,7 @@
 	action_button_name = "Toggle Mask"
 	icon_state = "secmask"
 	var/cooldown = 0
-	var/last_phrase_number = 0
+	var/last_phrase_text = ""
 	var/shitcurity_mode = FALSE
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
@@ -111,23 +111,20 @@
 	if(cooldown < world.time)
 		var/phrase_sound
 		var/phrase_text
-		var/phrase_number
 
 		if(shitcurity_mode)
 			do
-				phrase_number = rand(1, pharses_shitcurity.len)
-			while(last_phrase_number == phrase_number)
-			phrase_text = pharses_shitcurity[phrase_number]
+				phrase_text = pick(pharses_shitcurity)
+			while(last_phrase_text == phrase_text)
 			phrase_sound = pharses_shitcurity[phrase_text]
 			cooldown = world.time + 4 SECOND
 		else
 			do
-				phrase_number = rand(1, phrases_lawful.len)
-			while(last_phrase_number == phrase_number)
-			phrase_text = phrases_lawful[phrase_number]
+				phrase_text = pick(phrases_lawful)
+			while(last_phrase_text == phrase_text)
 			phrase_sound = phrases_lawful[phrase_text]
 			cooldown = world.time + 2 SECOND
-		last_phrase_number = phrase_number
+		last_phrase_text = phrase_text
 
 		playsound(src, phrase_sound, VOL_EFFECTS_MASTER, 100, FALSE)
 		usr.visible_message("[usr] compli-o-nator, <font color='red' size='4'><b>\"[phrase_text]\"</b></font>")
