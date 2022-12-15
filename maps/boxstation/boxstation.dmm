@@ -71739,6 +71739,9 @@
 /area/station/medical/cmo)
 "fSs" = (
 /obj/machinery/door/firedoor,
+/obj/structure/sign/warning/securearea{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -76404,8 +76407,12 @@
 	},
 /area/station/cargo/storage)
 "lcB" = (
-/obj/structure/sign/warning/securearea{
-	pixel_y = 32
+/obj/machinery/door_control{
+	desc = "A remote control-switch for secure storage.";
+	id = "Secure Storage";
+	name = "Engineering Secure Storage";
+	pixel_y = 28;
+	req_access = list(10)
 	},
 /turf/simulated/floor{
 	dir = 4;
