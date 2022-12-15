@@ -65,27 +65,28 @@
 	action_button_name = "Toggle Mask"
 	icon_state = "secmask"
 	var/cooldown = 0
+	var/last_phrase_number = 0
 	var/shitcurity_mode = FALSE
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
 	var/static/list/phrases_lawful = list(
-		"Не двигаться!",
-		"Ни с места!",
-		"Стоять!",
-		"Стоять на месте!")
+		"Не двигаться!" = 'sound/voice/complionator/lawful_ne_dvigatsya.ogg',
+		"Ни с места!" = 'sound/voice/complionator/lawful_ni_s_mesta.ogg',
+		"Стоять!" = 'sound/voice/complionator/lawful_stoyat.ogg',
+		"Стоять на месте!" = 'sound/voice/complionator/lawful_stoyat_na_meste.ogg')
 	
 	var/static/list/pharses_shitcurity = list(
-		"Давай, попробуй побежать. Безмозглый идиот.",
-		"Неудачник выбрал не тот день для нарушения закона.",
-		"Сейчас узнаешь что такое настоящее правосудие, мудак.",
-		"Стой! Преступное отродье.",
-		"Только двинешься и я оторву тебе бошку.",
-		"Укрыться от правосудия у тебя удастся только крышкой гроба.",
-		"Упал мордой в пол, тварь.",
-		"У вас есть только право закрыть свой пиздак нахуй.",
-		"Виновен или невиновен - это лишь вопрос времени.",
-		"Я - закон. Ты - убогое ничтожество.",
-		"Живым или мертвым - ты пиздуешь со мной.")
+		"Давай, попробуй побежать. Безмозглый идиот." = 'sound/voice/complionator/davai_poprobui_pobejat.ogg',
+		"Неудачник выбрал не тот день для нарушения закона." = 'sound/voice/complionator/neudachnik_vybral.ogg',
+		"Сейчас узнаешь что такое настоящее правосудие, мудак." = 'sound/voice/complionator/seychas_uznaesh.ogg',
+		"Стой! Преступное отродье." = 'sound/voice/complionator/stoy_prestupnoe.ogg',
+		"Только двинешься и я оторву тебе бошку." = 'sound/voice/complionator/tolko_dvineshsya.ogg',
+		"Укрыться от правосудия у тебя удастся только крышкой гроба." = 'sound/voice/complionator/ukrytsya_ot_pravosudia.ogg',
+		"Упал мордой в пол, тварь." = 'sound/voice/complionator/upal_mordoy_v.ogg',
+		"У вас есть только право закрыть свой пиздак нахуй." = 'sound/voice/complionator/u_vas_est_tolko.ogg',
+		"Виновен или невиновен - это лишь вопрос времени." = 'sound/voice/complionator/vinoven_ili_nevinoven.ogg',
+		"Я - закон. Ты - убогое ничтожество." = 'sound/voice/complionator/ya_zakon_ty.ogg',
+		"Живым или мертвым - ты пиздуешь со мной." = 'sound/voice/complionator/zhivym_ili_mertvym.ogg')
 
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/I, mob/user, params)
 	if(isscrewdriver(I))
@@ -110,19 +111,26 @@
 	if(cooldown < world.time)
 		var/phrase_sound
 		var/phrase_text
+		var/phrase_number
+
 		if(shitcurity_mode)
-			var/phrase_number = rand(1, SOUNDIN_COMPLIONATOR_SHITCURITY.len)
-			phrase_sound = SOUNDIN_COMPLIONATOR_SHITCURITY[phrase_number]
+			do
+				phrase_number = rand(1, pharses_shitcurity.len)
+			while(last_phrase_number == phrase_number)
 			phrase_text = pharses_shitcurity[phrase_number]
+			phrase_sound = pharses_shitcurity[phrase_text]
 			cooldown = world.time + 4 SECOND
 		else
-			var/phrase_number = rand(1, SOUNDIN_COMPLIONATOR_LAWFUL.len)
-			phrase_sound = SOUNDIN_COMPLIONATOR_LAWFUL[phrase_number]
+			do
+				phrase_number = rand(1, phrases_lawful.len)
+			while(last_phrase_number == phrase_number)
 			phrase_text = phrases_lawful[phrase_number]
+			phrase_sound = phrases_lawful[phrase_text]
 			cooldown = world.time + 2 SECOND
-			
+		last_phrase_number = phrase_number
+
 		playsound(src, phrase_sound, VOL_EFFECTS_MASTER, 100, FALSE)
-		usr.visible_message("[usr] compli-o-nator: <font color='red' size='4'><b>\"[phrase_text]\"</b></font>")
+		usr.visible_message("[usr] compli-o-nator, <font color='red' size='4'><b>\"[phrase_text]\"</b></font>")
 
 /obj/item/clothing/mask/gas/sechailer/police
 	name = "police respirator"
