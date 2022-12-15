@@ -130,6 +130,8 @@
 		return ONE_ATMOSPHERE - pressure_difference
 
 var/global/list/tourette_bad_words = list("ГОВНО","ЖОПА","ЕБАЛ","БЛЯДИНА","ХУЕСОС","СУКА","ЗАЛУПА","УРОД","БЛЯ","ХЕР","ШЛЮХА","ДАВАЛКА","ПИЗДЕЦ","УЕБИЩЕ","ПИЗДА","ЕЛДА","ШМАРА","СУЧКА","ПУТАНА","ААА","ГНИДА","ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО")
+var/globa/list/tourette_vox_bad_word = list("")
+var/globa/list/tourette_skrell_bad_word = list("")
 
 /mob/living/carbon/human/proc/handle_disabilities()
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
@@ -151,7 +153,12 @@ var/global/list/tourette_bad_words = list("ГОВНО","ЖОПА","ЕБАЛ","Б
 					if(1)
 						emote("twitch")
 					if(2 to 3)
-						say(pick(global.tourette_bad_words))
+						if(get_species() == SKRELL)
+							say(pick(global.tourette_skrell_bad_word))
+						if(get_species() == VOX)
+							say(pick(global.tourette_vox_bad_word))
+						else
+							say(pick(global.tourette_bad_words))
 				var/old_x = pixel_x
 				var/old_y = pixel_y
 				if(prob(25))
