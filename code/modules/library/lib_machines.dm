@@ -102,7 +102,7 @@
 			title = null
 		title = sanitize_sql(title)
 	if(href_list["setcategory"])
-		var/newcategory = input("Choose a category to search for:") in list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
+		var/newcategory = input("Choose a category to search for:") in list("Any", "Fiction", "Non-Fiction", "Reference", "Religion")
 		if(newcategory)
 			category = newcategory
 		else
@@ -367,7 +367,7 @@
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
-		var/newcategory = input("Choose a category: ") in list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
+		var/newcategory = input("Choose a category: ") in list("Fiction", "Non-Fiction", "Reference", "Religion")
 		if(newcategory)
 			upload_category = newcategory
 	if(href_list["upload"])
