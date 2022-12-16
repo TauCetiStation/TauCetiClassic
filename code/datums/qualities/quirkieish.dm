@@ -206,6 +206,25 @@
 	H.mind.skills.maximize_active_skills()
 
 
+/datum/quality/quirkieish/mmi_ipc
+	name = "MMI IPC"
+	desc = "Ты мозг. Запертый. В оболочке. СПУ."
+	requirement = "Подопытный."
+
+/datum/quality/quirkieish/mmi_ipc/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject" && H.get_species() != IPC
+
+/datum/quality/quirkieish/mmi_ipc/add_effect(mob/living/carbon/human/H, latespawn)
+	var/prev_species = H.get_species()
+	H.set_species(IPC)
+
+	// TO-DO: use human-like hairstyles for this type of IPC
+	// as well as set their head to a human-like one.
+	var/obj/item/organ/external/chest/robot/ipc/I = H.get_bodypart(BP_CHEST)
+	I.posibrain_type = /obj/item/device/mmi
+	I.posibrain_species = prev_species
+
+
 /datum/quality/quirkieish/podman
 	name = "Podman"
 	desc = "Тебе подменили. Ты не ты."
