@@ -61,7 +61,7 @@
 // **** Security gas mask (TG-stuff) ****
 /obj/item/clothing/mask/gas/sechailer
 	name = "security gas mask"
-	desc = "Стандартный противогаз охраны с модицикацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока офицер забивает преступника насмерть."
+	desc = "Стандартный противогаз охраны с модификацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока офицер забивает преступника насмерть."
 	action_button_name = "Toggle Mask"
 	icon_state = "secmask"
 	var/cooldown = 0
@@ -131,7 +131,7 @@
 
 /obj/item/clothing/mask/gas/sechailer/police
 	name = "police respirator"
-	desc = "Стандартный распиратор полиции с модицикацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока полицейский забивает преступника насмерть."
+	desc = "Стандартный распиратор полиции с модификацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока полицейский забивает преступника насмерть."
 	icon_state = "police_mask"
 	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
