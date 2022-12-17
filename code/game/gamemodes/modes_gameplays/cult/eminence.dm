@@ -230,7 +230,7 @@
 			to_chat(src, "<span class='cult'>Слишком рано для новой команды!</span>")
 			return
 		var/obj/effect/temp_visual/command_point/P = new (get_turf(A))
-		P.icon_state = marker_icon
+		P.make_altapp(marker_icon)
 		command_buff(get_turf(A))
 		COOLDOWN_START(src, command_point, 2 MINUTES)
 		for(var/mob/M in servants_and_ghosts())
@@ -251,10 +251,8 @@
 	resistance_flags = INDESTRUCTIBLE
 	duration = 300
 
-/obj/effect/temp_visual/command_point/atom_init(marker_icon)
-	. = ..()
-	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/my_religion, "command_point", image(icon, src, icon_state), src, cult_religion)
-	icon_state = "" //We have AA now, so we don't need it anymore
+/obj/effect/temp_visual/command_point/proc/make_altapp(marker_icon)
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/my_religion, "command_point", image('icons/hud/actions.dmi', src, marker_icon), src, cult_religion)
 
 /mob/camera/eminence/proc/command_buff(turf/T)
 	for(var/mob/M as anything in global.cult_religion.members)
