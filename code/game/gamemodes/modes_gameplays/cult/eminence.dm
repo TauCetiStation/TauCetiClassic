@@ -208,7 +208,6 @@
 		return
 	var/list/commands = list("Rally Here", "Regroup Here", "Avoid This Area", "Reinforce This Area")
 	var/roma_invicta = tgui_input_list(src, "Какой приказ отдать культу?", "Отдать Приказ", commands)
-	//var/roma_invicta = input(src, "Какой приказ отдать культу?", "Отдать Приказ") as null|anything in commands
 	if(!roma_invicta)
 		return
 	var/command_text = ""
