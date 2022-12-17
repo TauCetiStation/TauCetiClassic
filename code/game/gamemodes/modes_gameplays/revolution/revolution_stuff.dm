@@ -30,8 +30,8 @@
 	var/datum/role/user_role = null
 	//if we don't need converting by other revolutionaries/antags
 	if(headrev_only)
-		if(isrole(HEADREV_FLASH, user))
-			user_role = user.mind.GetRole(HEADREV_FLASH)
+		if(isrole(HEADREV, user))
+			user_role = user.mind.GetRole(HEADREV)
 	//find user's roles, early return if have nothing
 	else
 		for(var/role in user.mind.antag_roles)

@@ -65,8 +65,7 @@
 			rev_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
 
 /datum/role/rev_leader/flash_rev_leader
-	name = HEADREV_FLASH
-	id = HEADREV_FLASH
+	name = "Head of Syndicate Revolution"
 	give_uplink = FALSE
 	give_rp_rev_verb = FALSE
 

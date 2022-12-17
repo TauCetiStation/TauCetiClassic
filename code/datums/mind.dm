@@ -482,8 +482,8 @@
 			H.sec_hud_set_implants()
 			to_chat(H, "<span class='warning'><Font size =3><B>You somehow have become the recepient of a [is_mind_shield ? "mind shield" : "loyalty"] transplant,\
 			 and it just activated!</B></FONT></span>")
-			for(var/type in list(TRAITOR, CULTIST, HEADREV, REV, HEADREV_FLASH))
-				if(is_mind_shield && (type == HEADREV || type == HEADREV_FLASH || type == TRAITOR))
+			for(var/type in list(TRAITOR, CULTIST, HEADREV, REV))
+				if(is_mind_shield && (type == HEADREV || type == TRAITOR))
 					continue
 				var/datum/role/R = GetRole(type)
 				if(R)

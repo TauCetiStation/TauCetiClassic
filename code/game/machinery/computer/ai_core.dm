@@ -137,7 +137,7 @@
 					return
 
 				if(M.brainmob.mind)
-					for(var/role in list(CULTIST, REV, HEADREV, HEADREV_FLASH))
+					for(var/role in list(CULTIST, REV, HEADREV))
 						var/datum/role/R = M.brainmob.mind.GetRole(role)
 						if(R)
 							R.Deconvert()
