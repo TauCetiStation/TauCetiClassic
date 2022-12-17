@@ -31,9 +31,9 @@
 
 /mob/camera/eminence/Move(NewLoc, direct)
 	if(NewLoc && !isspaceturf(NewLoc) && !istype(NewLoc, /turf/unsimulated/wall))
-		forceMove(NewLoc)
+		abstract_move(NewLoc)
 		cameraFollow = null
-		client.move_delay = world.time + 1 //What could possibly go wrong?
+		client.move_delay = world.time + 0.7 //What could possibly go wrong?
 
 /mob/camera/eminence/proc/start_process()
 	START_PROCESSING(SSreligion, src)
@@ -70,7 +70,8 @@
 /mob/camera/eminence/proc/eminence_help()
 	to_chat(src, "<span class='cult'>Вы можете взаимодействовать с внешним миром несколькими способами:<br>\
 		Со всеми структурами культа вы можете взаимодействовать как обычный культист, такими как алтарь, кузня, исследовательскими столами, пыточной, аномалиями и дверьми.<br>\
-		Средняя кнопка мыши или CTRL для отдачи команды всему культу. Это может помочь даже в бою - убирает большинство причин, по которой последователь не может драться, кроме смертельных.<br>\
+		Средняя кнопка мыши или CTRL для отдачи команды всему культу. Это может помочь даже в бою - убирает большинство причин, по которой последователь не может драться, кроме смертельных. \
+		Живой последователь, попавший под действие приказа более не будет оглушён, ослеплён и сможет продолжить свой бой.<br>\
 		\"Переместиться на алтарь\" телепортирует вас на алтари.<br>\
 		\"Переместиться на станцию к руне\" телепортирует вас на случайную руну, которая вне Рая.<br>\
 		\"Использовать том\" имеет такие же функции, как если бы этот том был в руках обычного культиста. ВЫ НЕ МОЖЕТЕ АКТИВИРОВАТЬ РУНЫ САМОСТОЯТЕЛЬНО.<br>\
@@ -102,7 +103,7 @@
 		return
 	log_say(message)
 	if(SSticker.nar_sie_has_risen)
-		visible_message("<span class='cult large'><b>Ты чувствуешь, как хаос врывается в твой мозг, формируя слова:</b> \"[capitalize(message)]\"</span>")
+		visible_message("<span class='cult large'><b>Ты слышишь голос из ниоткуда:</b> \"[capitalize(message)]\"</span>")
 		playsound(src, 'sound/antag/eminence_hit.ogg', VOL_EFFECTS_MASTER)
 	cult_religion.send_message_to_members("[message]", SSticker.nar_sie_has_risen ? "Преосвященство" : "Возвышенный", 4, src)
 
@@ -131,27 +132,21 @@
 		return
 	SetNextMove(CLICK_CD_AI)
 
-	if(ismob(A))
+	if(ismob(A) && (A != src))
 		eminence_track(A)
 
-/mob/camera/eminence/proc/eminence_track(mob/living/target)
+/mob/camera/eminence/proc/eminence_track(mob/target)
 	set waitfor = FALSE
-	if(!istype(target))	return
+	if(!istype(target))
+		return
 	var/mob/camera/eminence/U = usr
-
 	U.cameraFollow = target
 	to_chat(U, "Now tracking [target.name].")
-	target.tracking_initiated()
 
-	while (U.cameraFollow == target)
-		if (U.cameraFollow == null)
+	while(U.cameraFollow == target)
+		if(U.cameraFollow == null)
 			return
-
-		if(istype(target.loc,/obj/effect/dummy))
-			to_chat(U, "Follow ended.")
-			U.cameraFollow = null
-			return
-		sleep(7)
+		sleep(5)
 		setLoc(get_turf(target))
 
 /mob/camera/eminence/ClickOn(atom/A, params)
@@ -198,6 +193,14 @@
 	if(world.time <= next_move)
 		return
 	SetNextMove(CLICK_CD_AI)
+
+/mob/camera/eminence/Topic(href, href_list)
+	if(usr != src)
+		return
+	if(href_list["track"])
+		var/mob/target = locate(href_list["track"]) in mob_list
+		if(istype(target))
+			eminence_track(target)
 
 /mob/camera/eminence/proc/issue_command(atom/movable/A)
 	if(!COOLDOWN_FINISHED(src, command_point))
@@ -251,6 +254,7 @@
 /obj/effect/temp_visual/command_point/atom_init(marker_icon)
 	. = ..()
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/my_religion, "command_point", image(icon, src, icon_state), src, cult_religion)
+	icon_state = "" //We have AA now, so we don't need it anymore
 
 /mob/camera/eminence/proc/command_buff(turf/T)
 	for(var/mob/M as anything in global.cult_religion.members)
