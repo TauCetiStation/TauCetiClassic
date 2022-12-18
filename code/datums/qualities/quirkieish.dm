@@ -270,13 +270,13 @@
 		if(isanyantag(potential_target))
 			continue
 		// Hm.
-		var/datum/species/S = all_species[target.get_species()]
+		var/datum/species/S = all_species[potential_target.get_species()]
 		if(S.flags[NO_DNA])
 			continue
 		// Okay the idea with changeling stings didn't work so now we actually change the race.
 		// We change the race because if we don't some exotic species like Vox would not have
 		// anyone they can be a doppleganger of.
-		if(config.usealienwhitelist && !is_alien_whitelisted(H, target.get_species()))
+		if(config.usealienwhitelist && !is_alien_whitelisted(H, potential_target.get_species()))
 			continue
 
 		target = potential_target
