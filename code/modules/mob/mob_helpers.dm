@@ -312,12 +312,15 @@
 
 	return jointext(message_list, " ")
 
-/proc/turret_talk(message)
+/proc/turret_talk(message, mob/living/carbon/human/M)
 	var/list/message_list = splittext(message, " ")
 	var/maxchanges = max(round(message_list.len / 1.5), 2)
 	for(var/i in 1 to rand(maxchanges / 2, maxchanges))
 		var/insertpos = rand(1, message_list.len)
-		message_list[insertpos] = pick(tourette_bad_words)
+		if(M.get_species() == VOX)
+			message_list[insertpos] = pick(tourette_vox_bad_word)
+		else
+			message_list[insertpos] = pick(tourette_bad_words)
 	return jointext(message_list, " ")
 
 #define TILES_PER_SECOND 0.7

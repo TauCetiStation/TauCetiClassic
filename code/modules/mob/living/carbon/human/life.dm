@@ -133,10 +133,11 @@ var/global/list/tourette_bad_words = list("ГОВНО","ЖОПА","ЕБАЛ","Б
 										  "УРОД","БЛЯ","ХЕР","ШЛЮХА","ДАВАЛКА","ПИЗДЕЦ","УЕБИЩЕ",
 										  "ПИЗДА","ЕЛДА","ШМАРА","СУЧКА","ПУТАНА","ААА","ГНИДА",
 										  "ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО")
-var/globa/list/tourette_vox_bad_word = list("")
-var/globa/list/tourette_skrell_bad_word = list("")
+var/global/list/tourette_vox_bad_word = list("ГОВНО", "СЕДАЛИЩЕ", "ЧКАЛ", "СПАРИВАЛ", "ТВАРЬ",
+											"ГНИЛОЙ", "МРАЗЬ", "ХВОСТ", "НАХВОСТ", "ХВОСТОЛИЗ",
+											"КЛОАКА", "СКРЯТЬ", "СКАРАПУШ", "САМКА", "СКРЯПЫШ")
 
-/mob/living/carbon/human/proc/handle_disabilities()
+/mob/living/carbon/human/proc/handle_disabilities(mob/living/carbon/human/M)
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
 		if (prob(1) && !paralysis)
 			visible_message("<span class='danger'>[src] starts having a seizure!</span>", self_message = "<span class='warning'>You have a seizure!</span>")
@@ -156,9 +157,7 @@ var/globa/list/tourette_skrell_bad_word = list("")
 					if(1)
 						emote("twitch")
 					if(2 to 3)
-						if(get_species() == SKRELL)
-							say(pick(global.tourette_skrell_bad_word))
-						if(get_species() == VOX)
+						if(M.get_species() == VOX)
 							say(pick(global.tourette_vox_bad_word))
 						else
 							say(pick(global.tourette_bad_words))
