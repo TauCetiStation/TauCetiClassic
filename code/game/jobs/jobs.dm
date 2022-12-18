@@ -131,6 +131,20 @@ var/global/list/nonhuman_positions = list(
 	"pAI"
 )
 
+//Security + Command jobs
+var/global/list/nt_representative = list(
+	"Captain",
+	"Head of Personnel",
+	"Chief Engineer",
+	"Research Director",
+	"Chief Medical Officer",
+	"Head of Security",
+	"Warden",
+	"Detective",
+	"Forensic Technician",
+	"Security Officer",
+	"Security Cadet"
+)
 
 /proc/get_job_datums()
 	var/list/occupations = list()

@@ -29,6 +29,7 @@ var/global/list/huds = list(
 	ANTAG_HUD_ZOMB = new/datum/atom_hud/antag,
 	ANTAG_HUD_GANGSTER = new/datum/atom_hud/antag/hidden,
 	ANTAG_HUD_SPACECOP = new/datum/atom_hud/antag,
+	ANTAG_HUD_ENEMY_REV = new/datum/atom_hud/antag/hidden,
 )
 
 /datum/atom_hud

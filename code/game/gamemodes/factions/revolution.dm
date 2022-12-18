@@ -1,3 +1,5 @@
+#define PERCENT_FOR_OVERTHROW 40
+
 /proc/get_living_heads()
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player as anything in human_list)
@@ -21,6 +23,8 @@
 	var/last_command_report = 0
 	var/tried_to_add_revheads = 0
 
+	var/type_of_objective = /datum/objective/target/rp_rev
+
 /datum/faction/revolution/proc/get_all_heads()
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player as anything in human_list)
@@ -40,7 +44,7 @@
 	var/list/heads = get_living_heads()
 
 	for(var/datum/mind/head_mind in heads)
-		var/datum/objective/target/rp_rev/rev_obj = AppendObjective(/datum/objective/target/rp_rev, TRUE)
+		var/datum/objective/target/rev_obj = AppendObjective(type_of_objective, TRUE)
 		if(rev_obj)
 			rev_obj.target = head_mind
 			rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
@@ -90,17 +94,20 @@
 		feedback_add_details("[ID]_success","FAIL")
 	return dat
 
+/datum/faction/revolution/proc/add_new_objective(mob/M)
+	log_debug("Adding head kill/capture/convert objective for [M.mind.name]")
+	//ApendObjective or handleNewObjective ???
+	var/datum/objective/target/rev_obj = AppendObjective(type_of_objective, TRUE)
+	if(rev_obj)
+		rev_obj.target = M.mind
+		rev_obj.explanation_text = "Capture, convert or exile from station [M.mind.name], the [M.mind.assigned_role]. Assassinate if you have no choice."
+		AnnounceObjectives()
+
 /datum/faction/revolution/latespawn(mob/M)
 	if(M.mind.assigned_role in command_positions)
-		log_debug("Adding head kill/capture/convert objective for [M.mind.name]")
+		add_new_objective()
 
-		var/datum/objective/target/rp_rev/rev_obj = AppendObjective(/datum/objective/target/rp_rev, TRUE)
-		if(rev_obj)
-			rev_obj.target = M.mind
-			rev_obj.explanation_text = "Capture, convert or exile from station [M.mind.name], the [M.mind.assigned_role]. Assassinate if you have no choice."
-			AnnounceObjectives()
-
-/datum/faction/revolution/process()
+/datum/faction/revolution/proc/add_revhead()
 	// only perform rev checks once in a while
 	if(tried_to_add_revheads < world.time)
 		tried_to_add_revheads = world.time + 5 SECONDS
@@ -129,6 +136,8 @@
 				message_admins("Unable to add new heads of revolution.")
 				tried_to_add_revheads = world.time + 10 MINUTES
 
+/datum/faction/revolution/process()
+	add_revhead()
 	if(last_command_report == 0 && world.time >= 10 MINUTES)
 		command_report("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff, has been halved.")
 		last_command_report = 1
@@ -243,15 +252,51 @@
 	ID = F_FLASH_REVOLUTION
 	initroletype = /datum/role/rev_leader/flash_rev_leader
 	min_roles = 1
+	type_of_objective = /datum/objective/target/syndicate_rev
 	var/victory_is_near = FALSE
 	var/shuttle_timer_started = FALSE
+	var/timer
+
+/*datum/faction/revolution/flash_revolution/add_new_objective(mob/M)
+	//located not on station - you are not a headstuff, goodbye
+	var/turf/T = get_turf(M)
+	if(T && is_station_level(T.z))
+		return ..()
+	*/
+
+/*datum/faction/revolution/flash_revolution/latespawn(mob/M)
+	/
+	if(M.mind.assigned_role in command_positions)
+		//shuttle delay
+		addtimer(CALLBACK(src, .proc/add_new_objective), 6000)
+	*/
+
+/datum/faction/revolution/flash_revolution/OnPostSetup()
+	. = ..()
+	timer = world.time
 
 /datum/faction/revolution/flash_revolution/proc/send_evac_to_centcom()
 	if(SSshuttle.online || SSshuttle.departed)
 		return
 	SSshuttle.incall(1)
 	SSshuttle.announce_emer_called.play()
+	//lore: CentCom does not expect to save the remaining heads with this shuttle. That one is for civilians workers.
 	new /datum/announcement/centcomm/revolution_succesfull
+
+/datum/faction/revolution/flash_revolution/IsSuccessful()
+	if(world.time - timer < 600)
+		return FALSE
+	var/all_heads = objective_holder.objectives.len
+	if(all_heads <= 0)
+		//no heads stuff. Victory?
+		return TRUE
+	var/heads_overrun = 0
+	for(var/datum/objective/objective in objective_holder.GetObjectives())
+		if(objective.calculate_completion() != OBJECTIVE_LOSS)
+			heads_overrun++
+	if(((heads_overrun / all_heads) * 100) > PERCENT_FOR_OVERTHROW)
+		return TRUE
+	return FALSE
 
 /datum/faction/revolution/flash_revolution/check_win()
 	//check half-win revolution
@@ -262,26 +307,28 @@
 			var/datum/faction/enemy_revs/enemies = create_uniq_faction(/datum/faction/enemy_revs)
 			if(!enemies)
 				return FALSE
-			for(var/mob/living/carbon/human/M in human_list)
-				if(considered_alive(M.mind) || M.suiciding)
+			for(var/mob/living/carbon/human/M in global.player_list)
+				if(!considered_alive(M.mind) || M.suiciding)
 					continue
 				if(!M.mind)
 					continue
-				if(M.mind.assigned_role in security_positions || M.mind.assigned_role in command_positions)
-					add_faction_member(enemies, M, TRUE)
+				if(M.mind.assigned_role in global.nt_representative)
+					add_faction_member(enemies, M)
+			enemies.check_populated()
+			return FALSE
 		//enemies created, now try finish round
-		else
-			//call shuttle after 1-7 minutes. Give enemies of revs time to die
-			if(!shuttle_timer_started)
-				shuttle_timer_started = TRUE
-				SSshuttle.fake_recall = FALSE
-				addtimer(CALLBACK(src, .proc/send_evac_to_centcom), rand(600, 4200), TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+		//call shuttle after 1-7 minutes. Give enemies of revs time to die
+		if(!shuttle_timer_started)
+			shuttle_timer_started = TRUE
+			SSshuttle.fake_recall = FALSE
+			addtimer(CALLBACK(src, .proc/send_evac_to_centcom), rand(600, 4200), TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+			return FALSE
+		//try to end if revolution already killed all headstuff
+		for(var/datum/objective/obj in objective_holder.GetObjectives())
+			if(obj.calculate_completion() != OBJECTIVE_WIN)
 				return FALSE
-			//try to end if revolution already killed all headstuff
-			else
-				for(var/datum/objective/obj in objective_holder.GetObjectives())
-					if(obj.calculate_completion() != OBJECTIVE_WIN)
-						return FALSE
-					//full-victory of the revolution
-					return TRUE
+			//full-victory of the revolution
+			return FALSE
 	return FALSE
+
+#undef PERCENT_FOR_OVERTHROW
