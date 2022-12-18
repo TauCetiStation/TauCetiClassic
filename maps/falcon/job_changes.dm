@@ -1,4 +1,4 @@
-#define JOB_MODIFICATION_MAP_NAME "Falcon Station"
+#define JOB_MODIFICATION_MAP_NAME "Falcon Station (Snowy)"
 
 /datum/job/assistant/New()
 	..()
