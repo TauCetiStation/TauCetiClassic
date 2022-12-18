@@ -25,7 +25,8 @@
 		/obj/item/weapon/tank,
 		/obj/item/weapon/circuitboard,
 		/obj/item/weapon/light/tube,
-		/obj/item/weapon/light/bulb
+		/obj/item/weapon/light/bulb,
+		/obj/item/stack/sheet/plasteel
 		)
 
 	//Item currently being held.
