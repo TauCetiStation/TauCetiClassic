@@ -255,7 +255,6 @@
 	type_of_objective = /datum/objective/target/syndicate_rev
 	var/victory_is_near = FALSE
 	var/shuttle_timer_started = FALSE
-	var/timer
 
 /datum/faction/revolution/flash_revolution/add_new_objective(mob/M)
 	//located not on station - you are not a headstuff, goodbye
@@ -268,10 +267,6 @@
 		//shuttle delay
 		addtimer(CALLBACK(src, .proc/add_new_objective, M), 6000)
 
-/datum/faction/revolution/flash_revolution/OnPostSetup()
-	. = ..()
-	timer = world.time
-
 /datum/faction/revolution/flash_revolution/proc/send_evac_to_centcom()
 	if(SSshuttle.online || SSshuttle.departed)
 		return
@@ -282,8 +277,6 @@
 	announcement.play()
 
 /datum/faction/revolution/flash_revolution/IsSuccessful()
-	if(world.time - timer < 600)
-		return FALSE
 	var/all_heads = objective_holder.objectives.len
 	if(all_heads <= 0)
 		//no heads stuff. Victory?
