@@ -36,11 +36,15 @@
 			if(1)
 				to_chat(user, "<span class='notice'>This creature is compatible. We must hold still...</span>")
 			if(2)
-				user.visible_message("<span class='warning'>[user] extends a proboscis and stabs [target] with the it!</span>",
-									"<span class='notice'>We extend a proboscis and stabs [target].</span>")
-				to_chat(target, "<span class='userdanger'>You feel a sharp stabbing pain, like you're being eaten alive!</span>")
+				to_chat(user, "<span class='notice'>We extend a proboscis.</span>")
+				user.visible_message("<span class='warning'>[user] extends a proboscis!</span>")
 			if(3)
-				continue
+				to_chat(user, "<span class='notice'>We stab [target] with the proboscis.</span>")
+				user.visible_message("<span class='danger'>[user] stabs [target] with the proboscis!</span>")
+				to_chat(target, "<span class='danger'>You feel a sharp stabbing pain!</span>")
+				var/obj/item/organ/external/BP = target.get_bodypart(user.get_targetzone())
+				if(BP.take_damage(39, null, DAM_SHARP, "large organic needle"))
+					continue
 
 		feedback_add_details("changeling_powers","A[stage]")
 		if(!do_mob(user, target, 150))
@@ -48,11 +52,10 @@
 			changeling.isabsorbing = 0
 			return FALSE
 
-	user.visible_message("<span class='danger'>[user] absorbs [target]!</span>",
-						"<span class='notice'>We have absorbed [target]!</span>")
+	to_chat(user, "<span class='notice'>We have absorbed [target]!</span>")
+	user.visible_message("<span class='danger'>[user] sucks the fluids from [target]!</span>")
 	to_chat(target, "<span class='danger'>You have been absorbed by the changeling!</span>")
-	for(var/obj/item/I in target)
-		target.drop_from_inventory(I)
+
 	changeling.absorb_dna(target)
 
 	var/nutr = user.get_nutrition()
@@ -105,8 +108,9 @@
 
 	changeling.absorbedamount++
 	changeling.isabsorbing = 0
-	target.death(FALSE)
-	qdel(target)
+	target.blood_remove(BLOOD_VOLUME_MAXIMUM) // We are vamplings, so we drink blood!
+	target.death(0)
+	target.Drain()
 
 	changeling.handle_absorbing()
 	return TRUE
