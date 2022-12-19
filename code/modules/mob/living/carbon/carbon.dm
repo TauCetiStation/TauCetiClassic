@@ -588,6 +588,16 @@
 					M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
 									"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
 
+			if(HAS_TRAIT(M, TRAIT_FRIENDLY))
+				var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
+				if(mood)
+					if(mood.mood_level >= MOOD_LEVEL_HAPPY2)
+						new /obj/effect/temp_visual/heart(loc)
+						SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
+					else if(mood.mood_level >= MOOD_LEVEL_NEUTRAL)
+						SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/hug)
+
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
 			AdjustWeakened(-3)
