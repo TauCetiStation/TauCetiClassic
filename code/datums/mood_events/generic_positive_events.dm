@@ -52,9 +52,6 @@
 	mood_change = 1
 	timeout = 1 MINUTE
 
-/datum/mood_event/hug/add_effects(mob/friend)
-	description = "<span class='nicegreen'>I hugged [friend.name]. I love hugging!</span>"
-
 /datum/mood_event/betterhug
 	description = "<span class='nicegreen'>Someone was very nice to me.</span>"
 	mood_change = 2
