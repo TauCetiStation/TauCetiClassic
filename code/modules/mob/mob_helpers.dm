@@ -552,7 +552,6 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 /proc/announce_to_ghosts(event, atom/atom_of_interest)
 	if(atom_of_interest)
 		notify_ghosts("[event ? event : "Event"] has an object of interest: [atom_of_interest]!", source=atom_of_interest, action=NOTIFY_ORBIT, header="Something's Interesting!")
-	return
 
 /**
  * Fancy notifications for ghosts
