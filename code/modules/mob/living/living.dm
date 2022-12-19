@@ -126,8 +126,8 @@
 			//TODO: Make this use Move(). we're pretty much recreating it here.
 			//it could be done by setting one of the locs to null to make Move() work, then setting it back and Move() the other mob
 			var/oldloc = loc
-			forceMove(M.loc)
-			M.forceMove(oldloc)
+			forceMove(M.loc, pulling == M) // so if we pulling this mob we will continue so
+			M.forceMove(oldloc, TRUE)
 			M.LAssailant = src
 
 			for(var/mob/living/carbon/slime/slime in view(1,M))
@@ -163,7 +163,7 @@
 	if(!AM.anchored)
 		now_pushing = 1
 		var/t = get_dir(src, AM)
-		if(istype(AM, /obj/structure/window))
+		if(istype(AM, /obj/structure/window)) // Why is it here?
 			var/obj/structure/window/W = AM
 			if(W.ini_dir == NORTHWEST || W.ini_dir == NORTHEAST || W.ini_dir == SOUTHWEST || W.ini_dir == SOUTHEAST)
 				for(var/obj/structure/window/win in get_step(AM,t))
@@ -176,6 +176,7 @@
 		if(pulling == AM)
 			stop_pulling()
 		step(AM, t)
+		step(src, t)
 		now_pushing = 0
 
 //mob verbs are a lot faster than object verbs
@@ -188,32 +189,26 @@
 		start_pulling(AM)
 
 /mob/living/count_pull_debuff()
-	pull_debuff = 0
-	if(pulling)
-		var/tally = 0
+	if(!pulling)
+		return 0
 
-		//General pull debuff for playable mobs (playable without shitspawn, yeah)
-		if(ismonkey(src))
-			tally += 1
-		else if(isslime(src))
-			tally += 1.5
-		else
-			tally += 0.3
+	var/tally = 0
+	var/atom/movable/AM = pulling
+	//Mob pulling
+	if(ismob(AM))
+		var/mob/M = AM
+		tally += M.stat == CONSCIOUS ? ( M.a_intent == INTENT_HELP ? 0 : 0.5 ) : 1
+	//Structure pulling
+	else if(istype(AM, /obj/structure))
+		tally += 0.3
+		var/obj/structure/S = AM
+		if(istype(S, /obj/structure/stool/bed/roller))//should be without debuff
+			tally -= 0.3
+	//Machinery pulling
+	else if(ismachinery(AM))
+		tally += 0.3
 
-		var/atom/movable/AM = pulling
-		//Mob pulling
-		if(ismob(AM))
-			tally += 1
-		//Structure pulling
-		if(istype(AM, /obj/structure))
-			tally += 0.5
-			var/obj/structure/S = AM
-			if(istype(S, /obj/structure/stool/bed/roller))//should be without debuff
-				tally -= 0.5
-		//Machinery pulling
-		if(ismachinery(AM))
-			tally += 0.5
-		pull_debuff += tally
+	return tally
 
 /mob/living/proc/add_ingame_age()
 	if(client && isnum(client.player_ingame_age) && !client.is_afk(5 MINUTES)) // 5 minutes of inactive time will disable this, until player come back.
@@ -678,6 +673,14 @@
 		to_chat(usr, "[src] does not have any stored infomation!")
 
 	return
+
+/mob/living/pointed(atom/A)
+	if(incapacitated() || (status_flags & FAKEDEATH))
+		return FALSE
+
+	. = ..()
+	if(.)
+		usr.visible_message("<span class='notice'><b>[usr]</b> points to [A].</span>")
 
 /mob/living/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if (buckled && buckled.loc != NewLoc)

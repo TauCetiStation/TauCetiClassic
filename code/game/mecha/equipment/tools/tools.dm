@@ -237,7 +237,7 @@
 	icon_state = "mecha_exting"
 	equip_cooldown = 5
 	energy_drain = 0
-	range = MELEE|RANGED
+	range = RANGE_MELEE|RANGED
 
 	var/obj/item/weapon/reagent_containers/spray/extinguisher/ext
 
@@ -287,7 +287,7 @@
 	origin_tech = "materials=4;bluespace=3;magnets=4;powerstorage=4"
 	equip_cooldown = 10
 	energy_drain = 250
-	range = MELEE|RANGED
+	range = RANGE_MELEE|RANGED
 	var/mode = 0 //0 - deconstruct, 1 - wall or floor, 2 - airlock.
 	var/disabled = 0 //malf
 
@@ -471,7 +471,7 @@
 	origin_tech = "bluespace=2;magnets=3"
 	equip_cooldown = 10
 	energy_drain = 100
-	range = MELEE|RANGED
+	range = RANGE_MELEE|RANGED
 	var/atom/movable/locked
 	var/mode = 1 //1 - gravsling 2 - gravpush
 
@@ -857,7 +857,7 @@
 	origin_tech = "phorontech=2;powerstorage=2;engineering=1"
 	equip_cooldown = 10
 	energy_drain = 0
-	range = MELEE
+	range = RANGE_MELEE
 	var/coeff = 100
 	var/obj/item/stack/sheet/fuel
 	var/max_fuel = 150000

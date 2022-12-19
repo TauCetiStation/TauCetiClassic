@@ -23,6 +23,8 @@
 	var/list/valid_accessory_slots
 	var/list/restricted_accessory_slots
 
+	var/can_be_modded = FALSE //modding hardsuits with modkits
+
 	var/flashbang_protection = FALSE
 
 //BS12: Species-restricted clothing check.
@@ -197,6 +199,20 @@
 	if(displayed_accessories.len)
 		. += " with [get_english_list(displayed_accessories)] attached"
 
+/obj/item/clothing/proc/_spawn_shreds()
+	set waitfor = FALSE
+	var/turf/T = get_turf(src)
+	sleep(1)
+	new /obj/effect/decal/cleanable/shreds(T, name)
+
+/obj/item/clothing/atom_destruction(damage_flag)
+	switch(damage_flag)
+		if(FIRE, ACID)
+			return ..()
+		else
+			_spawn_shreds()
+			..()
+
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
 	name = "ears"
@@ -245,7 +261,7 @@
 /obj/item/clothing/ears/offear
 	name = "Other ear"
 	w_class = SIZE_BIG
-	icon = 'icons/mob/screen1_Midnight.dmi'
+	icon = 'icons/hud/screen1_Midnight.dmi'
 	icon_state = "block"
 	slot_flags = SLOT_FLAGS_EARS | SLOT_FLAGS_TWOEARS
 

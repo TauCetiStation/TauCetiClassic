@@ -68,6 +68,14 @@
 	var/list/subordinate_staff = list()
 	var/last_trans_tick = 0
 
+	var/category
+	var/list/shop_lots = list()
+	var/list/shop_lots_paged = list()
+	var/list/shop_lots_frontend = list()
+	var/list/shopping_cart = list()
+	var/category_shop_page = 1
+	var/category_shop_per_page = 5
+
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
 	action_button_name = "Toggle light"
@@ -637,6 +645,78 @@
 		if(isnull(data["aircontents"]))
 			data["aircontents"] = list("reading" = 0)
 
+	if(mode == 8 || mode == 81 || mode == 82)
+		var/list/categories_frontend = list()
+		for(var/index in global.shop_categories)
+			categories_frontend.len++
+			categories_frontend[categories_frontend.len] = list("name" = index, "amount" = global.shop_categories[index])
+		data["categories"] = categories_frontend
+
+		data["category"] = category
+
+		var/list/online_shop_lots_latest_frontend[3]
+		for(var/i=1, i<=3, i++)
+			var/datum/shop_lot/Lot = global.online_shop_lots_latest[i]
+			if(!Lot)
+				online_shop_lots_latest_frontend[i] = null
+			else
+				var/datum/money_account/Acc = get_account(Lot.account)
+				online_shop_lots_latest_frontend[i] = Lot.to_list(Acc ? Acc.owner_name : "Unknown")
+		data["latest_lots"] = online_shop_lots_latest_frontend
+
+		shop_lots = list()
+		if(mode == 81)
+			/*for(var/index in global.online_shop_lots)
+				var/datum/shop_lot/Lot = global.online_shop_lots[index] */
+
+			for(var/index in global.online_shop_lots_hashed)
+				var/list/Lots = global.online_shop_lots_hashed[index]
+				for(var/datum/shop_lot/Lot in Lots)
+					if(Lot && Lot.category == category && !Lot.sold)
+						var/datum/money_account/Acc = get_account(Lot.account)
+						shop_lots.len++
+						shop_lots[shop_lots.len] = Lot.to_list(Acc ? Acc.owner_name : "Unknown")
+						break
+
+		shop_lots_frontend = list()
+		if(shop_lots.len)
+			var/lot_id = 1
+			shop_lots_paged = list()
+			shop_lots_paged.len++
+			shop_lots_paged[shop_lots_paged.len] = list()
+			for(var/list/Lot in shop_lots)
+				var/list/part_list = shop_lots_paged[shop_lots_paged.len]
+				part_list.len = lot_id
+				part_list[lot_id] = Lot
+				lot_id++
+				if(lot_id > category_shop_per_page)
+					lot_id = 1
+					shop_lots_paged.len++
+					shop_lots_paged[shop_lots_paged.len] = list()
+			shop_lots_frontend = shop_lots_paged[category_shop_page]
+
+		data["shop_lots"] = shop_lots_frontend
+
+		data["category_shop_page"] = category_shop_page
+
+		var/list/orders_and_offers_frontend = list()
+		if(global.orders_and_offers.len)
+			for(var/index in global.orders_and_offers)
+				var/list/OrOf = global.orders_and_offers[index]
+				orders_and_offers_frontend.len++
+				orders_and_offers_frontend[orders_and_offers_frontend.len] = OrOf
+		data["orders_and_offers"] = orders_and_offers_frontend
+
+		var/list/shopping_cart_frontend = list()
+		if(shopping_cart.len)
+			for(var/index in shopping_cart)
+				var/list/Item = shopping_cart[index]
+				shopping_cart_frontend.len++
+				shopping_cart_frontend[shopping_cart_frontend.len] = Item
+		data["shopping_cart"] = shopping_cart_frontend
+
+		data["shopping_cart_amount"] = shopping_cart_frontend.len
+
 	nanoUI = data
 	// update the ui if it exists, returns null if no ui is passed/found
 	if(ui)
@@ -975,6 +1055,73 @@
 					var/datum/money_account/account = person["acc_datum"]
 					account.change_salary(U, owner, name, ownrank)
 					break
+
+//Cargo Shop=================================================================
+
+		if("Shop")
+			category_shop_page = 1
+			mode = 8
+
+		//Maintain Category
+		if("Shop_Category")
+			category_shop_page = 1
+			mode = 81
+			category = href_list["categ"]
+		if("Shop_Change_Page")
+			var/page = href_list["shop_change_page"]
+			switch(page)
+				if("next")
+					category_shop_page++
+				if("previous")
+					category_shop_page--
+			category_shop_page = clamp(category_shop_page, 1, shop_lots_paged.len)
+		if("Shop_Change_Per_page")
+			var/number = text2num(href_list["shop_per_page"])
+			if(number)
+				category_shop_per_page = number
+
+		//Maintain Orders and Offers
+		if("Shop_Add_Order_or_Offer")
+			if(!check_pda_server())
+				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
+				mode = 0
+				return
+			var/T = sanitize(input(U, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
+			if(T && istext(T) && owner)
+				add_order_or_offer(owner, T)
+
+		//Buy Item
+		if("Shop_Order")
+			if(!check_pda_server())
+				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
+				mode = 0
+				return
+			var/id = href_list["order_item"]
+			var/datum/shop_lot/Lot = global.online_shop_lots[id]
+			if(Lot && owner_account)
+				var/T = sanitize(input(U, "Введите адрес доставки или комментарий", "Комментарий", null) as text)
+				if(T && istext(T))
+					order_item(Lot, T)
+
+		//Shopping Cart
+		if("Shop_Shopping_Cart")
+			mode = 82
+		if("Shop_Mark_As_Delivered")
+			if(!check_pda_server())
+				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
+				mode = 0
+				return
+			var/id = href_list["delivered_item"]
+			var/postpayment = shopping_cart[id]["postpayment"]
+			var/datum/shop_lot/Lot = global.online_shop_lots[id]
+			if(!Lot || !owner_account || postpayment > owner_account.money)
+				return
+			shopping_cart -= id
+			Lot.delivered = TRUE
+
+			charge_to_account(owner_account.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -postpayment)
+			charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, postpayment)
+			mode = 82
 
 //SYNDICATE FUNCTIONS===================================
 
@@ -1322,9 +1469,8 @@
 		nanomanager.update_user_uis(U, P) // Update the sending user's PDA UI so that they can see the new message
 
 		log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
-		P.cut_overlays()
-		P.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 		P.newmessage = 1
+		P.update_icon()
 	else
 		to_chat(U, "<span class='notice'>ERROR: Messaging server is not responding.</span>")
 
@@ -1630,5 +1776,64 @@
 /obj/item/device/pda/proc/check_rank(rank)
 	if((rank in command_positions) || (rank == "Quartermaster"))
 		boss_PDA = 1
+
+/obj/item/device/pda/proc/order_item(datum/shop_lot/Lot, destination)
+	if(!owner_account || !Lot)
+		return
+	var/prepayment = round(Lot.price * 0.25)
+	if(prepayment > owner_account.money)
+		return
+	Lot.sold = TRUE
+	for(var/i=1, i<=3, i++)
+		if(global.online_shop_lots_latest[i] == Lot)
+			global.online_shop_lots_latest[i] = null
+			break
+	var/datum/money_account/Acc = get_account(Lot.account)
+	shopping_cart[Lot.number] = Lot.to_list(Acc ? Acc.owner_name : "Unknown", Lot.price - prepayment)
+
+	global.shop_categories[Lot.category]--
+
+	charge_to_account(owner_account.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -prepayment)
+	charge_to_account(global.cargo_account.account_number, owner_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, prepayment)
+
+	for(var/obj/machinery/computer/cargo/Console in global.cargo_consoles)
+		if(istype(Console, /obj/machinery/computer/cargo/request))
+			continue
+		var/obj/item/weapon/paper/P = new(get_turf(Console.loc))
+
+		P.name = "Заказ предмета из магазина"
+		P.info += "Посылка номер #[Lot.number]<br>"
+		P.info += "Наименование: [Lot.name]<br>"
+		P.info += "Цена: [Lot.price]$<br>"
+		P.info += "Заказал: [owner ? owner : "Unknown"]<br>"
+		P.info += "Подпись заказчика: <span class=\"sign_field\"></span><br>"
+		P.info += "Комментарий: [destination]<br>"
+		P.info += "<hr>"
+		P.info += "МЕСТО ДЛЯ ШТАМПОВ:<br>"
+
+		var/obj/item/weapon/pen/Pen = new(src)
+
+		P.parsepencode(P.info, Pen)
+		P.updateinfolinks()
+		qdel(Pen)
+
+		P.update_icon()
+
+/obj/item/device/pda/proc/add_order_or_offer(name, desc)
+	global.orders_and_offers["[orders_and_offers_number]"] = list("name" = name, "description" = desc, "time" = worldtime2text())
+	global.orders_and_offers_number++
+	mode = 8
+	addtimer(CALLBACK(src, .proc/delete_order_or_offer, global.orders_and_offers_number), 15 MINUTES)
+
+/obj/item/device/pda/proc/delete_order_or_offer(num)
+	orders_and_offers -= "[num]"
+
+/obj/item/device/pda/proc/check_pda_server()
+	if(!global.message_servers)
+		return
+	for (var/obj/machinery/message_server/MS in global.message_servers)
+		if(MS.active)
+			var/turf/pos = get_turf(src)
+			return is_station_level(pos.z)
 
 #undef TRANSCATION_COOLDOWN

@@ -280,7 +280,7 @@
 		hitsound = SOUNDIN_LASERACT
 		if(icon_state != "welder1") // Check that the sprite is correct, if it isnt, it means toggle() was not called
 			force = 15
-			damtype = "fire"
+			damtype = BURN
 			icon_state = initial(icon_state) + "1"
 		if(prob(5)) // passive fuel burning
 			use(1)
@@ -290,7 +290,7 @@
 		hitsound = initial(hitsound)
 		if(icon_state != "welder") // Check that the sprite is correct, if it isnt, it means toggle() was not called
 			force = 3
-			damtype = "brute"
+			damtype = BRUTE
 			icon_state = initial(icon_state)
 			active = FALSE
 		set_light(0)
@@ -384,7 +384,7 @@
 // Removes fuel from the welding tool. If a mob is passed, it will perform an eyecheck on the mob. This should probably be renamed to use()
 /obj/item/weapon/weldingtool/use(used = 1, mob/M = null)
 	if(used < 0)
-		stack_trace("[src.type]/use() called with a negative parameter [used]")
+		stack_trace("[src.type]/use() called with a negative parameter")
 		return 0
 	if(!active || !check_fuel())
 		return 0
@@ -428,7 +428,7 @@
 			to_chat(usr, "<span class='notice'>You switch the [src] on.</span>")
 			hitsound = SOUNDIN_LASERACT
 			src.force = 15
-			src.damtype = "fire"
+			src.damtype = BURN
 			src.icon_state = initial(src.icon_state) + "1"
 			START_PROCESSING(SSobj, src)
 		else
@@ -443,7 +443,7 @@
 			to_chat(usr, "<span class='info'>The [src] shuts off!</span>")
 		hitsound = initial(hitsound)
 		src.force = 3
-		src.damtype = "brute"
+		src.damtype = BRUTE
 		src.icon_state = initial(src.icon_state)
 		src.active = FALSE
 

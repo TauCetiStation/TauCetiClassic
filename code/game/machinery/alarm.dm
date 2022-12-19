@@ -813,8 +813,6 @@
 				wires.interact(user)
 				return
 
-			return
-
 		if(1)
 			if(iscoil(W))
 				var/obj/item/stack/cable_coil/coil = W
@@ -851,12 +849,23 @@
 
 			else if(iswrench(W))
 				to_chat(user, "You remove the fire alarm assembly from the wall!")
-				var/obj/item/alarm_frame/frame = new /obj/item/alarm_frame()
-				frame.loc = user.loc
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-				qdel(src)
+				deconstruct(TRUE)
 
 	return ..()
+
+/obj/machinery/alarm/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(disassembled)
+		new /obj/item/alarm_frame(loc)
+	else
+		new /obj/item/stack/sheet/metal(loc, 2)
+	if(buildstage >= 1)
+		new /obj/item/weapon/airalarm_electronics(loc)
+		if(buildstage >= 2)
+			new /obj/item/stack/cable_coil(loc, 3)
+	..()
 
 /obj/machinery/alarm/power_change()
 	if(powered(power_channel))
@@ -1161,6 +1170,22 @@ FIRE ALARM
 		FA.detecting = FALSE
 		FA.update_icon()
 		playsound(src, 'sound/machines/alarm_fire.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
+/obj/machinery/firealarm/atom_break(damage_flag)
+	if(buildstage == 0) //can't break the electronics if there isn't any inside.
+		return
+	return ..()
+
+/obj/machinery/firealarm/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 1)
+	if(buildstage >= 1)
+		var/obj/item/item = new /obj/item/weapon/firealarm_electronics(loc)
+		if(!disassembled)
+			item.update_integrity(item.max_integrity * 0.5)
+	new /obj/item/stack/cable_coil(loc, 3)
+	..()
 
 /obj/machinery/firealarm/examine(mob/user)
 	. = ..()

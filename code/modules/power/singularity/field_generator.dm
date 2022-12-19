@@ -166,10 +166,12 @@ field_generator power level display
 		..()
 
 /obj/machinery/field_generator/bullet_act(obj/item/projectile/Proj, def_zone)
+	switch(Proj.flag)
+		if(LASER, ENERGY)
+			power += Proj.damage
+			update_icon()
+			return
 	. = ..()
-	if(Proj.flag != "bullet")
-		power += Proj.damage
-		update_icon()
 
 /obj/machinery/field_generator/proc/turn_off()
 	active = FG_OFFLINE
@@ -292,9 +294,8 @@ field_generator power level display
 		var/field_dir = get_dir(T, get_step(G.loc, NSEW))
 		T = get_step(T, NSEW)
 		if(!locate(/obj/machinery/containment_field) in T)
-			var/obj/machinery/containment_field/CF = new
+			var/obj/machinery/containment_field/CF = new(T)
 			CF.set_master(src, G)
-			CF.loc = T
 			CF.set_dir(field_dir)
 
 	connected_gens |= G

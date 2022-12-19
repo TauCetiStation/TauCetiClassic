@@ -103,3 +103,13 @@
 				cell = W
 				to_chat(user, "You insert the power cell.")
 	update_icon()
+
+/obj/machinery/floodlight/deconstruct(disassembled)
+	playsound(loc, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+	//var/obj/structure/floodlight_frame/F = new(loc) // TODO floodligh construction
+	//F.state = FLOODLIGHT_NEEDS_LIGHTS
+	//new /obj/item/light/tube/broken(loc)
+	..()
+
+/obj/machinery/floodlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	playsound(loc, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER, 75, TRUE)

@@ -240,11 +240,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			be_role -= "Raider"
 
 		S["be_role"] << be_role
-	
+
 	if(current_version < 39)
 		S["ghost_orbit"] << null
 
-// 
+//
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 
 	if(current_version < SAVEFILE_VERSION_SPECIES_JOBS)
@@ -382,7 +382,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, global.available_ui_styles, global.available_ui_styles[1])
 	clientfps		= sanitize_integer(clientfps, -1, 1000, -1)
-	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
+	default_slot	= sanitize_integer(default_slot, 1, GET_MAX_SAVE_SLOTS(parent), initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
 	chat_ghostsight	= sanitize_integer(chat_ghostsight, CHAT_GHOSTSIGHT_ALL, CHAT_GHOSTSIGHT_NEARBYMOBS, CHAT_GHOSTSIGHT_ALL)
@@ -540,7 +540,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["use_skirt"]         >> use_skirt
 
 	//Load prefs
-	S["job_preferences"] >> job_preferences
+	S["alternate_option"] >> alternate_option
+	S["job_preferences"]  >> job_preferences
 
 	//Traits
 	S["all_quirks"]       >> all_quirks
@@ -648,7 +649,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 	var/list/saves = list()
 	var/name
-	for(var/i = 1 to MAX_SAVE_SLOTS)
+	for(var/i = 1 to GET_MAX_SAVE_SLOTS(parent))
 		S.cd = "/character[i]"
 		S["real_name"] >> name
 		if(!name)
@@ -673,7 +674,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S.cd = "/"
 	if(!slot)
 		slot = default_slot
-	slot = sanitize_integer(slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
+	slot = sanitize_integer(slot, 1, GET_MAX_SAVE_SLOTS(parent), initial(default_slot))
 	if(slot != default_slot)
 		default_slot = slot
 		S["default_slot"] << slot

@@ -4,6 +4,10 @@
 	name = "ipc chest"
 	controller_type = /datum/bodypart_controller/robot/ipc
 
+	// Only used for a quirk because our surgery code is stupid. Or dumb.
+	var/posibrain_type = /obj/item/device/mmi/posibrain
+	var/posibrain_species = IPC
+
 /obj/item/organ/external/chest/robot/ipc/update_sprite()
 	icon = species.icobase
 	icon_state = "[body_zone]"

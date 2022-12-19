@@ -173,13 +173,9 @@
 				if(D.state)
 					to_chat(user, "<span class='danger'>[D] is not ready!</span>")
 					return
-				if(!D.power_supply || !D.power_supply.use(D.drill_cost))
+				if(!D.power_supply?.use(D.drill_cost))
 					to_chat(user, "<span class='danger'>No power!</span>")
 					return
-				if(D.mode)
-					if(mineral)
-						mined_ore_loss = mineral.ore_loss
-				D.power_supply.use(D.drill_cost)
 
 		playsound(user, P.usesound, VOL_EFFECTS_INSTRUMENT)
 		to_chat(user, "<span class='warning'>You start [P.drill_verb].</span>")

@@ -13,11 +13,15 @@
 	var/edge = 0		// whether this object is more likely to dismember
 	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
 
-	var/damtype = "brute"
+	var/damtype = BRUTE
 	var/force = 0
 	var/icon_custom = null //Default Bay12 sprite or not
 
 	var/being_shocked = 0
+
+	var/list/price_tag = null
+
+	uses_integrity = TRUE
 
 /obj/item/proc/is_used_on(obj/O, mob/user)
 
@@ -25,11 +29,30 @@
 	STOP_PROCESSING(SSobj, src)
 	return 0
 
+/obj/atom_init()
+	. = ..()
+	verbs -= /obj/verb/remove_price_tag
+
 /obj/Destroy()
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	nanomanager.close_uis(src)
 	return ..()
+
+/obj/examine(mob/user)
+	. = ..()
+
+	if(price_tag)
+		to_chat(user, "It has a price tag attached. Description: [price_tag["description"]], Price: [price_tag["price"]]$")
+
+/obj/verb/remove_price_tag()
+	set name = "Снять ценник"
+	set src in view(1)
+	set category = "Object"
+
+	price_tag = null
+	underlays -= icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
+	verbs -= /obj/verb/remove_price_tag
 
 /obj/proc/get_current_temperature()
 	/*
@@ -58,12 +81,6 @@
 	else
 		return null
 
-/obj/singularity_act()
-	ex_act(EXPLODE_DEVASTATE)
-	if(src && !QDELETED(src))
-		qdel(src)
-	return 2
-
 /obj/singularity_pull(S, current_size)
 	if(anchored)
 		if(current_size >= STAGE_FIVE)
@@ -71,10 +88,6 @@
 			step_towards(src,S)
 	else
 		step_towards(src,S)
-
-// the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
-/obj/proc/deconstruct(disassembled = TRUE)
-	qdel(src)
 
 /obj/proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 	//Return: (NONSTANDARD)
@@ -199,7 +212,7 @@
 		. |= M.get_listeners()
 
 /atom/movable/proc/get_listening_objs()
-	. = list() 
+	. = list()
 	if(flags & (HEAR_TALK | HEAR_PASS_SAY | HEAR_TA_SAY))
 		. = list(src)
 
@@ -211,12 +224,6 @@
 // currently you need HEAR_TALK object flag if you want to catch hear_talk on atom
 /obj/proc/hear_talk(mob/M, text, verb, datum/language/speaking)
 	return
-
-/obj/proc/tesla_act(power)
-	being_shocked = 1
-	var/power_bounced = power / 2
-	tesla_zap(src, 3, power_bounced)
-	VARSET_IN(src, being_shocked, FALSE, 10)
 
 //mob - who is being feed
 //user - who is feeding

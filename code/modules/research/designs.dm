@@ -1361,6 +1361,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/chem_master
 	category = list("Machine")
 
+/datum/design/operating_table
+	name = "Machine Design (Operating Table)"
+	desc = "The circuit board for a Operating Table."
+	id = "operating_table"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 3000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/operating_table
+	category = list("Machine")
+
 /datum/design/destructive_analyzer
 	name = "Destructive Analyzer Board"
 	desc = "The circuit board for a destructive analyzer."
@@ -1554,6 +1563,23 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/pacman/mrs
 	category = list("Power")
 
+/datum/design/circulator
+	name = "Circulator Board"
+	desc = "The circuit board for a TEG circulator."
+	id = "circ"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/circulator
+	category = list("Power")
+
+/datum/design/teg
+	name = "TEG Board"
+	desc = "The circuit board for a TEG generator."
+	id = "teg"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/teg
+	category = list("Power")
 
 /////////////////////////////////////////
 ////////////Medical Tools////////////////
@@ -2066,7 +2092,7 @@ other types of metals and chemistry for reagents).
 	id = "plasmacutter"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 500, MAT_GOLD = 500, MAT_PHORON = 500)
-	build_path = /obj/item/weapon/pickaxe/plasmacutter
+	build_path = /obj/item/weapon/gun/energy/laser/cutter
 	construction_time=300
 	category = list("Tools")
 
@@ -2198,6 +2224,15 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/hud/mining
+	category = list("Support")
+
+/datum/design/holochip
+	name = "Holographic chip"
+	desc = "A holographic chip for space helmet's HUD."
+	id = "holochip"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 100, MAT_GLASS = 100, MAT_GOLD = 200)
+	build_path = /obj/item/holochip
 	category = list("Support")
 
 /datum/design/hud_calibrator
@@ -2783,4 +2818,13 @@ other types of metals and chemistry for reagents).
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_GOLD = 2000, MAT_PHORON = 4000)
 	build_path = /obj/item/rig_module/teleporter_stabilizer
+	category = list("Rig Modules")
+
+/datum/design/hardsuit_emp_shield
+	name = "Hardsuit EMP shield"
+	desc = "Device for protecting hardsuit against EMPs."
+	id = "rigempshield"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
+	build_path = /obj/item/rig_module/emp_shield
 	category = list("Rig Modules")

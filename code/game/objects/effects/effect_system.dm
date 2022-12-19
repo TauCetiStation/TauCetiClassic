@@ -679,6 +679,9 @@ steam.start() -- spawns the effect
 	else
 		to_chat(user, "<span class='notice'>You hit the metal foam to no effect.</span>")
 
+/obj/structure/foamedmetal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
 	if(air_group)
 		return 0

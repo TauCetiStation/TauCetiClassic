@@ -6,6 +6,7 @@
 	var/icon_half  	= ""
 	var/icon_full  	= ""
 	var/icon_broken	= ""
+	integrity_failure = 0.5
 
 /obj/item/ashtray/atom_init()
 	. = ..()
@@ -13,7 +14,7 @@
 	pixel_x = rand(-6, 6)
 
 /obj/item/ashtray/attackby(obj/item/I, mob/user, params)
-	if (health < 1)
+	if (get_integrity() < max_integrity * integrity_failure)
 		return
 	if (istype(I, /obj/item/weapon/cigbutt) || istype(I, /obj/item/clothing/mask/cigarette) || istype(I, /obj/item/weapon/match))
 		if (contents.len >= max_butts)
@@ -45,28 +46,22 @@
 			desc = empty_desc + " It's half-filled."
 	else
 		. = ..()
-		health = max(0,health - I.force)
-		if (health < 1)
-			die()
 
 /obj/item/ashtray/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if (health > 0)
-		health = max(0,health - 3)
-		if (health < 1)
-			die()
-			return
-		if (contents.len)
-			visible_message("<span class='warning'>[src] slams into [hit_atom] spilling its contents!</span>")
+	take_damage(3, BRUTE, MELEE)
+	if(contents.len)
+		visible_message("<span class='warning'>[src] slams into [hit_atom] spilling its contents!</span>")
 		for (var/obj/item/I in contents)
 			I.forceMove(loc)
 		icon_state = icon_empty
 	return ..()
 
-/obj/item/ashtray/proc/die()
+/obj/item/ashtray/atom_break(damage_flag)
 	visible_message("<span class='warning'>[src] shatters spilling its contents!</span>")
 	for (var/obj/item/I in contents)
 		I.forceMove(loc)
 	icon_state = icon_broken
+	..()
 
 /obj/item/ashtray/plastic
 	name = "plastic ashtray"
@@ -77,18 +72,16 @@
 	icon_full  = "ashtray_full_bl"
 	icon_broken  = "ashtray_bork_bl"
 	max_butts = 14
-	health = 24.0
+	max_integrity = 48
 	g_amt = 30
 	m_amt = 30
 	empty_desc = "Cheap plastic ashtray."
 	throwforce = 3.0
 
-/obj/item/ashtray/plastic/die()
+/obj/item/ashtray/plastic/atom_break(damage_flag)
 	..()
 	name = "pieces of plastic"
 	desc = "Pieces of plastic with ash on them."
-	return
-
 
 /obj/item/ashtray/bronze
 	name = "bronze ashtray"
@@ -99,17 +92,15 @@
 	icon_full  = "ashtray_full_br"
 	icon_broken  = "ashtray_bork_br"
 	max_butts = 10
-	health = 72.0
+	max_integrity = 144
 	m_amt = 80
 	empty_desc = "Massive bronze ashtray."
 	throwforce = 10.0
 
-/obj/item/ashtray/bronze/die()
+/obj/item/ashtray/bronze/atom_break(damage_flag)
 	..()
 	name = "pieces of bronze"
 	desc = "Pieces of bronze with ash on them."
-	return
-
 
 /obj/item/ashtray/glass
 	name = "glass ashtray"
@@ -120,14 +111,13 @@
 	icon_full  = "ashtray_full_gl"
 	icon_broken  = "ashtray_bork_gl"
 	max_butts = 12
-	health = 12.0
+	max_integrity = 24
 	g_amt = 60
 	empty_desc = "Glass ashtray. Looks fragile."
 	throwforce = 6.0
 
-/obj/item/ashtray/glass/die()
+/obj/item/ashtray/glass/atom_break()
 	..()
 	name = "shards of glass"
 	desc = "Shards of glass with ash on them."
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER, 30)
-	return

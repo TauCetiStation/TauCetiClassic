@@ -13,6 +13,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	var/obj/item/clothing/suit/space/rig/rig_connect
+	can_be_modded = TRUE
 
 	//Species-specific stuff.
 	species_restricted = list("exclude", UNATHI, TAJARAN, SKRELL, DIONA, VOX)
@@ -61,7 +62,9 @@
 	icon_state = "rig-engineering"
 	item_state = "eng_hardsuit"
 	slowdown = 0.5
+	var/magpulse = FALSE
 	var/offline_slowdown = 2
+	can_be_modded = TRUE
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 20)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -80,7 +83,6 @@
 		SKRELL = 'icons/obj/clothing/species/skrell/suits.dmi',
 		VOX = 'icons/obj/clothing/species/vox/suits.dmi',
 		)
-	var/magpulse = 0
 	//Breach thresholds, should ideally be inherited by most (if not all) hardsuits.
 	breach_threshold = 18
 	can_breach = 1
@@ -300,6 +302,7 @@
 		else
 			slowdown = offline_slowdown
 
+
 	if(!offline)
 		var/total_energy_use = passive_energy_use
 
@@ -408,7 +411,9 @@
 	if(old_wearer)
 		update_overlays(old_wearer)
 		remove_actions(old_wearer)
+		disable_magpulse(old_wearer)
 		selected_module = null
+
 		STOP_PROCESSING(SSobj, src)
 		process() // process one last time so we can disable all modules and other stuff
 
@@ -469,16 +474,22 @@
 	if(H.wear_suit != src) return
 
 	if(magpulse)
-		flags &= ~NOSLIP
-		src.slowdown = initial(slowdown)
-		magpulse = 0
-		to_chat(H, "You disable \the [src] the mag-pulse traction system.")
+		disable_magpulse(H)
 	else
-		flags |= NOSLIP
-		src.slowdown += boots.slowdown_off
-		magpulse = 1
-		to_chat(H, "You enable the mag-pulse traction system.")
+		enable_magpulse(H)
 	H.update_gravity(H.mob_has_gravity())
+
+/obj/item/clothing/suit/space/rig/proc/enable_magpulse(mob/user)
+		flags |= NOSLIP
+		slowdown += boots.slowdown_off
+		magpulse = TRUE
+		to_chat(user, "You enable \the [src] the mag-pulse traction system.")
+
+/obj/item/clothing/suit/space/rig/proc/disable_magpulse(mob/user)
+		flags &= ~NOSLIP
+		slowdown = initial(slowdown)
+		magpulse = FALSE
+		to_chat(user, "You disable \the [src] the mag-pulse traction system.")
 
 /obj/item/clothing/suit/space/rig/negates_gravity()
 	return flags & NOSLIP
@@ -488,6 +499,15 @@
 	to_chat(user, "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"].")
 
 /obj/item/clothing/suit/space/rig/emp_act(severity)
+	for(var/obj/item/rig_module/installed_mod in installed_modules)
+		if(installed_mod.type == /obj/item/rig_module/emp_shield)
+			var/obj/item/rig_module/emp_shield/shield = installed_mod
+			if(shield.uses > 0)
+				shield.uses--
+				shield.interface_desc = "Device for protecting the hardsuit from EMP. Can withstand [shield.uses] more EMPs."
+				to_chat(wearer, "<span class='warning'>[installed_mod.name] absorbs EMP. [shield.uses] uses left!</span>")
+				return
+
 	//drain some charge
 	if(cell)
 		cell.emplode(severity + 1)
@@ -609,8 +629,8 @@
 	slowdown = 0.5
 	armor = list(melee = 55, bullet = 5, laser = 15,energy = 10, bomb = 65, bio = 100, rad = 90)
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	max_mounted_devices = 6
-	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/rcd, /obj/item/rig_module/nuclear_generator, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit)
+	max_mounted_devices = 7
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/rcd, /obj/item/rig_module/nuclear_generator, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/emp_shield)
 
 //Mining rig
 /obj/item/clothing/head/helmet/space/rig/mining
@@ -671,6 +691,9 @@
 /obj/item/clothing/head/helmet/space/rig/syndi/atom_init()
 	. = ..()
 	armor = combat_mode ? combat_armor : space_armor // in case some child spawns with combat mode on
+
+	holochip = new /obj/item/holochip/nuclear(src)
+	holochip.holder = src
 
 /obj/item/clothing/head/helmet/space/rig/syndi/AltClick(mob/user)
 	var/mob/living/carbon/wearer = loc
@@ -783,7 +806,7 @@
 	species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA, VOX)
 	action_button_name = "Toggle space suit mode"
 	max_mounted_devices = 4
-	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair)
+	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/emp_shield)
 	cell_type = /obj/item/weapon/stock_parts/cell/super
 	var/combat_mode = FALSE
 	var/combat_armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
@@ -855,7 +878,7 @@
 	item_state = "syndie_hardsuit"
 	rig_variant = "rig-heavy"
 	slowdown = 1.2
-	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/chem_dispenser/combat)
+	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/chem_dispenser/combat, /obj/item/rig_module/emp_shield)
 	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
 	space_armor = list(melee = 45, bullet = 30, laser = 30, energy = 45, bomb = 50, bio = 100, rad = 60)
 	combat_slowdown = 0.5
@@ -870,6 +893,7 @@
 	combat_armor = list(melee = 85, bullet = 80, laser = 70,energy = 70, bomb = 75, bio = 75, rad = 70)
 	glowtype = "terrorelit"
 	light_color = "#e51a1a"
+	can_be_modded = FALSE
 
 /obj/item/clothing/head/helmet/space/rig/syndi/elite/comander
 	name = "Syndicate elite hybrid helmet"
@@ -888,8 +912,8 @@
 	combat_armor = list(melee = 80, bullet = 75, laser = 65, energy = 65, bomb = 70, bio = 70, rad = 70)
 	space_armor = list(melee = 65, bullet = 60, laser = 50, energy = 35, bomb = 50, bio = 100, rad = 70)
 	combat_slowdown = 0.2
-	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/syndiemmessage)
-
+	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/syndiemmessage, /obj/item/rig_module/emp_shield)
+	can_be_modded = FALSE
 
 /obj/item/clothing/suit/space/rig/syndi/elite/comander
 	name = "Syndicate elite hybrid suit"
@@ -953,7 +977,7 @@
 	unacidable = 1
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 25, bomb = 33, bio = 100, rad = 66)
 	max_mounted_devices = 4
-	initial_modules = list(/obj/item/rig_module/simple_ai)
+	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/emp_shield/adv)
 
 /obj/item/clothing/suit/space/rig/wizard/atom_init(mapload, ...)
 	. = ..()
