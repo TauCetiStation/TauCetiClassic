@@ -185,6 +185,7 @@
 
 	l_ear = /obj/item/device/radio/headset/deathsquad
 	uniform = /obj/item/clothing/under/color/green
+	suit_store = /obj/item/weapon/tank/oxygen
 	shoes = /obj/item/clothing/shoes/boots/swat
 	suit = /obj/item/clothing/suit/armor/swat
 	gloves = /obj/item/clothing/gloves/combat
@@ -194,16 +195,18 @@
 	back = /obj/item/weapon/storage/backpack/security
 
 	backpack_contents = list(
-		/obj/item/weapon/storage/box,
 		/obj/item/ammo_box/a357,
-		/obj/item/weapon/storage/firstaid/regular,
+		/obj/item/ammo_box/a357,
+		/obj/item/weapon/storage/firstaid/tactical,
 		/obj/item/weapon/storage/box/flashbangs,
-		/obj/item/device/flashlight,
+		/obj/item/device/flashlight/seclite,
 		/obj/item/weapon/plastique,
+		/obj/item/clothing/accessory/storage/black_vest,
+		/obj/item/weapon/tank/oxygen,
 	)
 
 	l_pocket = /obj/item/weapon/melee/energy/sword
-	r_pocket = /obj/item/weapon/grenade/flashbang
+	r_pocket = /obj/item/weapon/shield/energy
 	suit_store = /obj/item/weapon/tank/emergency_oxygen
 	belt = /obj/item/weapon/gun/projectile/revolver/mateba
 
@@ -213,17 +216,21 @@
 
 /datum/outfit/death_squad/leader
 	name = "NanoTrasen: death squad leader"
-	
+
 	uniform = /obj/item/clothing/under/rank/centcom_officer
 
 	backpack_contents = list(
-		/obj/item/weapon/storage/box,
+		/obj/item/ammo_box/a357,
 		/obj/item/ammo_box/a357,
 		/obj/item/weapon/storage/firstaid/regular,
 		/obj/item/weapon/storage/box/flashbangs,
 		/obj/item/device/flashlight,
 		/obj/item/weapon/pinpointer,
 		/obj/item/weapon/disk/nuclear,
+		/obj/item/weapon/plastique,
+		/obj/item/clothing/accessory/storage/black_vest,
+		/obj/item/weapon/tank/oxygen,
+		/obj/item/weapon/melee/energy/sword,
 	)
 
 /datum/outfit/syndicate_commando
