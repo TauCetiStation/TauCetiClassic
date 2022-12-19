@@ -159,6 +159,7 @@
 			message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has primed a [name] for detonation at ([COORD(bombturf)] - [A.name]) [ADMIN_JMP(bombturf)].")
 			log_game("[key_name(user)] has primed a [name] for detonation at [A.name][COORD(bombturf)]")
 			START_PROCESSING(SSobj, src) //Ticking down
+			notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, header = "Bomb Planted")
 
 /obj/machinery/syndicatebomb/proc/isWireCut(index)
 	return wires.is_index_cut(index)

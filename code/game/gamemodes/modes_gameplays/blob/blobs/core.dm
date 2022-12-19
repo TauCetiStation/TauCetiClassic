@@ -113,6 +113,8 @@ var/global/list/blob_nodes = list()
 
 	B.b_congl = conglomerate
 
+	announce_to_ghosts("Blob", B)
+
 	if(icon_state == "cerebrate")
 		icon_state = "core"
 		flick("morph_cerebrate",src)

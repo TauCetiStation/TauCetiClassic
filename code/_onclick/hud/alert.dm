@@ -451,9 +451,7 @@
 	var/action = NOTIFY_JUMP
 
 /atom/movable/screen/alert/notify_action/Click()
-	/*. = ..()
-	if(!.)
-		return*/
+	. = ..()
 	if(!target)
 		return
 	var/mob/dead/observer/ghost_owner = mob_viewer
@@ -481,7 +479,8 @@
 	for(var/i = 1, i <= alerts.len, i++)
 		var/atom/movable/screen/alert/alert = alerts[alerts[i]]
 		if(alert.icon_state == "template")
-			alert.icon = ui_style
+			if(ui_style)
+				alert.icon = ui_style
 		switch(i)
 			if(1)
 				. = ui_alert1
@@ -506,7 +505,7 @@
 	if(!usr || !usr.client)
 		return
 	var/paramslist = params2list(params)
-	if(paramslist["shift"]) // screen objects don't do the normal Click() stuff so we'll cheat
+	if(paramslist[SHIFT_CLICK]) // screen objects don't do the normal Click() stuff so we'll cheat
 		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
 		return
 	if(master)
