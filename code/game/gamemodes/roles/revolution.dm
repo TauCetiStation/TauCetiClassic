@@ -13,6 +13,10 @@
 		return FALSE
 	if(M.current.ismindprotect())
 		return FALSE
+	//Enemy of revolution can be converted to Revolution
+	var/datum/role/R = M.GetRole(ENEMY_REV)
+	if(R)
+		R.Deconvert()
 	return TRUE
 
 /datum/role/rev/OnPreSetup(greeting, custom)
