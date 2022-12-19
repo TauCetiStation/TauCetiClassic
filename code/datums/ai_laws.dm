@@ -240,24 +240,24 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 /datum/ai_laws/proc/write_laws()
 	var/text = ""
 	if (src.zeroth)
-		text += "<br><span class='red bold'>0. [zeroth]</span>"
+		text += "<span class='red bold'>0. [zeroth]</span><br>"
 
 	for (var/index = 1, index <= src.ion.len, index++)
 		var/law = src.ion[index]
 		var/num = ionnum()
-		text += "<br><span class='notice'>[num]. [law]</span>"
+		text += "<span class='notice'>[num]. [law]</span><br>"
 
 	var/number = 1
 	for (var/index = 1, index <= src.inherent.len, index++)
 		var/law = src.inherent[index]
 
 		if (length(law) > 0)
-			text += "<br>[number]. [law]"
+			text += "[number]. [law]<br>"
 			number++
 
 	for (var/index = 1, index <= src.supplied.len, index++)
 		var/law = src.supplied[index]
 		if (length(law) > 0)
-			text += "<br><span class='abductor_team2'>[number]. [law]</span>"
+			text += "<span class='abductor_team2'>[number]. [law]</span><br>"
 			number++
 	return text
