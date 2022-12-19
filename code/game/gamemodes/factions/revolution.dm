@@ -1,4 +1,4 @@
-#define PERCENT_FOR_OVERTHROW 40
+#define PERCENT_FOR_OVERTHROW 70
 
 /proc/get_living_heads()
 	var/list/heads = list()
