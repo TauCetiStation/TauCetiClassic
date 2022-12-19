@@ -381,7 +381,7 @@
 	if(pestlevel > 5)
 		visible_message("The pests seem to behave oddly...")
 		for(var/i in 1 to 3)
-			new /obj/effect/spider/spiderling(loc)
+			new /obj/structure/spider/spiderling(loc)
 	else
 		to_chat(usr, "The pests seem to behave oddly, but quickly settle down...")
 

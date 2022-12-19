@@ -398,6 +398,17 @@
 /datum/religion/proc/affect_divine_power_rite(datum/religion_rites/R)
 	R.divine_power = calc_divine_power(R.needed_aspects, initial(R.divine_power))
 
+/**
+ * Returns a list with the difference between the needed aspects for rite and those in religion.
+ * Return format: "Aspect name" = difference
+ */
+/datum/religion/proc/get_aspect_diffs(list/rite_aspects)
+	var/list/diffs = list()
+	for(var/need_aspect in rite_aspects)
+		var/datum/aspect/aspect = aspects[need_aspect]
+		diffs[aspect.name] = aspect.power - rite_aspects[need_aspect]
+	return diffs
+
 // Give our gods all needed spells which in /list/spells
 /datum/religion/proc/give_god_spells(mob/G)
 	for(var/spell in god_spells)
@@ -441,7 +452,7 @@
 
 	return name_entry
 
-// Generate new rite_list
+// Generate new rite_list and updating existing rites' divine power
 /datum/religion/proc/update_rites()
 	if(rites_by_name.len > 0)
 		rites_info = list()
@@ -449,6 +460,7 @@
 		for(var/i in rites_by_name)
 			var/datum/religion_rites/RI = rites_by_name[i]
 			rites_info[RI.name] = get_rite_info(RI)
+			affect_divine_power_rite(RI)
 
 // Adds all binding rites once
 /datum/religion/proc/give_binding_rites()
@@ -650,11 +662,14 @@
 				C.say(message)
 	return acolytes
 
-/datum/religion/proc/send_message_to_members(message, name, font_size = 6)
+/datum/religion/proc/send_message_to_members(message, name, font_size = 6, mob/source)
 	var/format_name = name ? "[name]: " : ""
-	for(var/mob/M in global.mob_list)
+	for(var/mob/M in global.player_list)
 		if(is_member(M) || isobserver(M))
-			to_chat(M, "<span class='[style_text]'><font size='[font_size]'>[format_name][message]</font></span>")
+			var/link = ""
+			if(source && (iseminence(M) || isobserver(M)))
+				link = FOLLOW_LINK(M, source)
+			to_chat(M, "<font size='[font_size]'><span class='[style_text]'>[link][format_name][message]</span></font>")
 
 /datum/religion/proc/add_tech(tech_type)
 	var/datum/religion_tech/T = new tech_type

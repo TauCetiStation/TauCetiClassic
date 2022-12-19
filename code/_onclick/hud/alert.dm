@@ -256,6 +256,18 @@
 	mob_viewer = null
 	screen_loc = ""
 
+/mob
+	var/list/alerts = list() // contains /atom/movable/screen/alert only // On /mob so clientless mobs will throw alerts properly
+
+/atom/movable/screen/alert/Click(location, control, params)
+	if(!usr || !usr.client)
+		return
+	var/paramslist = params2list(params)
+	if(paramslist[SHIFT_CLICK]) // screen objects don't do the normal Click() stuff so we'll cheat
+		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
+		return
+	if(master)
+		return usr.client.Click(master, location, control, params)
 
 /atom/movable/screen/alert/MouseEntered(location, control, params)
 	if(!QDELETED(src))
@@ -356,6 +368,12 @@
 	icon_state = "alien_queen"
 	alerttooltipstyle = "alien"
 
+//BLOBS
+/atom/movable/screen/alert/nofactory
+	name = "No Factory"
+	desc = "You have no factory, and are slowly dying!"
+	icon_state = "blobbernaut"
+
 //changeling
 /atom/movable/screen/alert/regen_stasis
 	name = "Regenerative Stasis"
@@ -432,6 +450,16 @@
 	desc = "You've been buckled to something and can't move. Click the alert to unbuckle unless you're handcuffed."
 	icon_state = "buckled"
 
+/atom/movable/screen/alert/buckled/Click()
+	if(!mob_viewer)
+		return
+	if(mob_viewer.restrained())
+		to_chat(mob_viewer, "You are restrained! You need to remove handcuffs first!")
+		return
+	if(mob_viewer.incapacitated() || mob_viewer.crawling || mob_viewer.is_busy())
+		return
+	master.user_unbuckle_mob(mob_viewer)
+
 /atom/movable/screen/alert/brake
 	name = "Brake is on"
 	desc = "Wheelchair's brake is on right now, so you can't move."
@@ -497,16 +525,3 @@
 		alert.screen_loc = .
 		mymob.client.screen |= alert
 	return TRUE
-
-/mob
-	var/list/alerts = list() // contains /atom/movable/screen/alert only // On /mob so clientless mobs will throw alerts properly
-
-/atom/movable/screen/alert/Click(location, control, params)
-	if(!usr || !usr.client)
-		return
-	var/paramslist = params2list(params)
-	if(paramslist[SHIFT_CLICK]) // screen objects don't do the normal Click() stuff so we'll cheat
-		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
-		return
-	if(master)
-		return usr.client.Click(master, location, control, params)

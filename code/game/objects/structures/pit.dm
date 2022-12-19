@@ -243,7 +243,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 7 //lucky shot
 	damage_type = BURN
-	flag = "laser"
+	flag = LASER
 	eyeblur = 2
 
 /obj/item/clothing/under/jetsons

@@ -513,6 +513,19 @@
 
 	roll_sound = 'sound/effects/roll.ogg'
 
+/obj/structure/stool/bed/chair/office/relaymove(mob/M, direction)
+	if(M?.buckled != src)
+		return
+
+	M.buckled = null
+	step(M, direction)
+	M.client?.move_delay += 2
+	M.buckled = src
+	if(!M)
+		step(src, direction)
+	else
+		Move(M.loc)
+
 /obj/structure/stool/bed/chair/office/light
 	icon_state = "officechair_white"
 	behind = "officechair_white_behind"

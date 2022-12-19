@@ -284,6 +284,9 @@
 		if(EXPLODE_LIGHT)
 			adjustBruteLoss(30)
 
+/mob/living/simple_animal/blob_act()
+	adjustBruteLoss(20)
+
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	var/perc_block = (10 - harm_intent_damage) / 10 // #define MAX_HARM_INTENT_DAMAGE 10. Turn harm_intent_damage into armor or something. ~Luduk
 	damage *= perc_block
@@ -308,7 +311,7 @@
 			return FALSE
 	if (isbot(target_mob))
 		var/obj/machinery/bot/B = target_mob
-		if(B.health > 0)
+		if(B.get_integrity() > 0)
 			return FALSE
 	return TRUE
 
@@ -403,4 +406,7 @@
 	..()
 
 /mob/living/simple_animal/crawl()
+	return FALSE
+
+/mob/living/simple_animal/can_pickup(obj/O)
 	return FALSE

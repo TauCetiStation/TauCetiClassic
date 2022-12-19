@@ -4,82 +4,73 @@ var/global/list/blobs = list()
 var/global/list/blob_cores = list()
 var/global/list/blob_nodes = list()
 
-/obj/effect/blob/core
+/obj/structure/blob/core
 	name = "blob core"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_core"
-	max_health = 200
-	health = 200
+	max_integrity = 200
 	fire_resist = 2
-	var/mob/camera/blob/overmind = null // the blob core's overmind
 	var/overmind_get_delay = 0 // we don't want to constantly try to find an overmind, do it every 30 seconds
 	var/resource_delay = 0
 	var/point_rate = 2
 	var/last_resource_collection
 
-/obj/effect/blob/core/atom_init(mapload, client/new_overmind, h = 200, new_rate = 2)
+/obj/structure/blob/core/atom_init(mapload, client/new_overmind, h = 200, new_rate = 2)
 	blob_cores += src
 	START_PROCESSING(SSobj, src)
-	if(!overmind)
+	if(!OV)
 		INVOKE_ASYNC(src, .proc/create_overmind, new_overmind)
 	point_rate = new_rate
 	last_resource_collection = world.time
-	health = h
+	update_integrity(h)
 	. = ..()
 
 
-/obj/effect/blob/core/Destroy()
+/obj/structure/blob/core/Destroy()
 	blob_cores -= src
-	if(overmind)
-		QDEL_NULL(overmind)
+	QDEL_NULL(OV)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 //	return
 
-/obj/effect/blob/core/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/blob/core/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
 
-/obj/effect/blob/core/update_icon()
-	if(health <= 0)
-		qdel(src)
-		return
-	// update_icon is called when health changes so... call update_health in the overmind
-	return
-
-/obj/effect/blob/core/RegenHealth()
+/obj/structure/blob/core/RegenHealth()
 	return // Don't regen, we handle it in Life()
 
-/obj/effect/blob/core/Life()
-	if(!overmind)
+/obj/structure/blob/core/Life()
+	if(!OV)
 		create_overmind()
 	else
 		var/points_to_collect = point_rate*round((world.time-last_resource_collection)/10)
-		overmind.add_points(points_to_collect)
+		OV.add_points(points_to_collect)
 		last_resource_collection = world.time
 
-	health = min(max_health, health + 1)
-	if(overmind)
-		overmind.update_health_hud()
+	if(get_integrity() < max_integrity)
+		repair_damage(1)
+	if(OV)
+		OV.update_health_hud()
 	for(var/dir in cardinal)
 		Pulse(BLOB_CORE_MAX_PATH, dir)
 	for(var/b_dir in alldirs)
 		if(!prob(5))
 			continue
-		var/obj/effect/blob/normal/B = locate() in get_step(src, b_dir)
+		var/obj/structure/blob/normal/B = locate() in get_step(src, b_dir)
 		if(B)
-			B.change_to(/obj/effect/blob/shield)
+			B.change_to(/obj/structure/blob/shield)
 	..()
 
 
-/obj/effect/blob/core/proc/create_overmind(client/new_overmind, override_delay)
+/obj/structure/blob/core/proc/create_overmind(client/new_overmind, override_delay)
 
 	if(overmind_get_delay > world.time && !override_delay)
 		return
 
 	overmind_get_delay = world.time + 300 // 30 seconds
 
-	if(overmind)
-		qdel(overmind)
+	if(OV)
+		qdel(OV)
 
 	var/client/C = null
 	var/list/candidates = list()
@@ -97,7 +88,7 @@ var/global/list/blob_nodes = list()
 	var/mob/camera/blob/B = new(src.loc)
 	B.key = C.key
 	B.blob_core = src
-	src.overmind = B
+	src.OV = B
 
 	var/datum/faction/blob_conglomerate/conglomerate = create_uniq_faction(/datum/faction/blob_conglomerate)
 	if(!conglomerate.get_member_by_mind(B.mind)) //We are not a member yet

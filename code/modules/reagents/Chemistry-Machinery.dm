@@ -73,10 +73,6 @@
 			return
 	qdel(src)
 
-/obj/machinery/chem_dispenser/blob_act()
-	if (prob(50))
-		qdel(src)
-
 /obj/machinery/chem_dispenser/ui_interact(mob/user)
 	tgui_interact(user)
 
@@ -235,7 +231,7 @@
 				"ethanol",
 				"chlorine",
 				"potassium",
-				"aluminium",
+				"aluminum",
 				"radium",
 				"fluorine",
 				"iron",
@@ -312,6 +308,7 @@
 	msg_hack_enable = "You change the mode from 'McNano' to 'Pizza King'."
 	msg_hack_disable = "You change the mode from 'Pizza King' to 'McNano'."
 	required_skills = list()
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 /obj/machinery/chem_dispenser/beer
 	icon_state = "booze_dispenser"
@@ -327,6 +324,7 @@
 	msg_hack_enable = "You disable the 'nanotrasen-are-cheap-bastards' lock, enabling hidden and very expensive boozes."
 	msg_hack_disable = "You re-enable the 'nanotrasen-are-cheap-bastards' lock, disabling hidden and very expensive boozes."
 	required_skills = list()
+	resistance_flags = FULL_INDESTRUCTIBLE
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -365,10 +363,6 @@
 		if(EXPLODE_LIGHT)
 			return
 	qdel(src)
-
-/obj/machinery/chem_master/blob_act()
-	if (prob(50))
-		qdel(src)
 
 /obj/machinery/chem_master/power_change()
 	if(anchored && powered())
@@ -882,6 +876,14 @@
 	updateUsrDialog()
 	return 0
 
+/obj/machinery/reagentgrinder/deconstruct(disassembled)
+	drop_all_items()
+	if(beaker)
+		beaker.forceMove(loc)
+		beaker = null
+	return ..()
+	
+
 /obj/machinery/reagentgrinder/attack_ai(mob/user)
 	if(IsAdminGhost(user))
 		return ..()
@@ -960,17 +962,18 @@
 	beaker = null
 	update_icon()
 
+/obj/machinery/reagentgrinder/proc/drop_all_items()
+	if(holdingitems.len == 0)
+		return
+	for(var/obj/item/O as anything in holdingitems)
+		O.forceMove(loc)
+	holdingitems.Cut()
+
 /obj/machinery/reagentgrinder/proc/eject()
 
 	if(usr.incapacitated())
 		return
-	if (holdingitems && holdingitems.len == 0)
-		return
-
-	for(var/obj/item/O in holdingitems)
-		O.loc = src.loc
-		holdingitems -= O
-	holdingitems = list()
+	drop_all_items()
 
 /obj/machinery/reagentgrinder/proc/is_allowed(obj/item/weapon/reagent_containers/O)
 	for (var/i in blend_items)

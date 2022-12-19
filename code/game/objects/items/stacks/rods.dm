@@ -65,7 +65,7 @@
 			if(!use(1))
 				continue
 
-			G.health = 10
+			G.update_integrity(G.max_integrity)
 			G.density = TRUE
 			G.destroyed = FALSE
 			G.icon_state = "grille"
