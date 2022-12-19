@@ -68,8 +68,8 @@ var/global/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-u
 	playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 	for(var/obj/structure/alien/resin/wall/shadowling/W in orange(usr, 1))
 		qdel(W)
-	for(var/obj/structure/alien/weeds/weed in orange(usr, 1))
-		qdel(weed)
+	for(var/obj/structure/alien/weeds/node/N in shadowturf)
+		qdel(N)
 	usr.visible_message("<span class='warning'>The chrysalis explodes in a shower of purple flesh and fluid!</span>")
 
 	var/mob/living/carbon/human/shadowling/H = new /mob/living/carbon/human/shadowling(usr.loc)
