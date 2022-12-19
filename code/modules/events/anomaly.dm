@@ -23,7 +23,7 @@
 	var/turf/T = pick(turfs)
 	newAnomaly = new anomaly_type(T)
 	if (newAnomaly)
-		announce_to_ghosts(src, newAnomaly)
+		notify_ghosts("[newAnomaly] in [get_area(newAnomaly)]!", source=newAnomaly, action=NOTIFY_ORBIT, header="[newAnomaly]")
 
 /datum/event/anomaly/tick()
 	if(QDELETED(newAnomaly))
