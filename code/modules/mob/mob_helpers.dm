@@ -599,5 +599,5 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 					scale = world.icon_size / height
 			alert_overlay.transform = alert_overlay.transform.Scale(scale)
 			alert_overlay.appearance_flags |= TILE_BOUND
-		alert_overlay.plane = FLOAT_PLANE
+		alert_overlay.plane = ABOVE_HUD_PLANE
 		alert.add_overlay(alert_overlay)
