@@ -240,12 +240,12 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 /datum/ai_laws/proc/write_laws()
 	var/text = ""
 	if (src.zeroth)
-		text += "0. [src.zeroth]"
+		text += "<br><span class='red bold'>0. [zeroth]</span>"
 
 	for (var/index = 1, index <= src.ion.len, index++)
 		var/law = src.ion[index]
 		var/num = ionnum()
-		text += "<br>[num]. [law]"
+		text += "<br><span class='notice'>[num]. [law]</span>"
 
 	var/number = 1
 	for (var/index = 1, index <= src.inherent.len, index++)
@@ -258,37 +258,6 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 	for (var/index = 1, index <= src.supplied.len, index++)
 		var/law = src.supplied[index]
 		if (length(law) > 0)
-			text += "<br>[number]. [law]"
+			text += "<br><span class='abductor_team2'>[number]. [law]</span>"
 			number++
 	return text
-
-
-/**
- * Generates a list of all laws on this datum, including rendered HTML tags if required
- *
- * Arguments:
- * * include_zeroth - Operator that controls if law 0 or law 666 is returned in the set
- * * show_numbers - Operator that controls if law numbers are prepended to the returned laws
- * * render_html - Operator controlling if HTML tags are rendered on the returned laws
- */
-/datum/ai_laws/proc/get_law_list(include_zeroth = FALSE, show_numbers = TRUE, render_html = TRUE)
-	var/list/data = list()
-
-	if (include_zeroth && zeroth)
-		data += "[show_numbers ? "0:" : ""] [render_html ? "<font color='#ff0000'><b>[zeroth]</b></font>" : zeroth]"
-
-	for(var/law in ion)
-		if (length(law) > 0)
-			data += "[show_numbers ? "[ionnum()]:" : ""] [render_html ? "<font color='#547DFE'>[law]</font>" : law]"
-
-	var/number = 1
-	for(var/law in inherent)
-		if (length(law) > 0)
-			data += "[show_numbers ? "[number]:" : ""] [law]"
-			number++
-
-	for(var/law in supplied)
-		if (length(law) > 0)
-			data += "[show_numbers ? "[number]:" : ""] [render_html ? "<font color='#990099'>[law]</font>" : law]"
-			number++
-	return data

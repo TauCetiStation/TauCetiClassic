@@ -205,6 +205,6 @@
 
 /mob/living/silicon/examine(mob/user) //Displays a silicon's laws to ghosts
 	if(laws && isobserver(user))
-		to_chat(user, "<b>[src] has the following laws:</b><br>")
-		for(var/law in laws.get_law_list(include_zeroth = TRUE))
-			to_chat(user, "[law]<br>")
+		to_chat(user, "<b>[src] has the following laws:</b> \
+		[write_laws()]<br>")
+
