@@ -47,7 +47,7 @@
 		var/datum/objective/target/rev_obj = AppendObjective(type_of_objective, TRUE)
 		if(rev_obj)
 			rev_obj.target = head_mind
-			rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
+			rev_obj.explanation_text = rev_obj.format_explanation()
 	return TRUE
 
 /datum/faction/revolution/proc/check_heads_victory()
@@ -95,17 +95,17 @@
 	return dat
 
 /datum/faction/revolution/proc/add_new_objective(mob/M)
-	log_debug("Adding head kill/capture/convert objective for [M.mind.name]")
 	//ApendObjective or handleNewObjective ???
 	var/datum/objective/target/rev_obj = AppendObjective(type_of_objective, TRUE)
 	if(rev_obj)
 		rev_obj.target = M.mind
-		rev_obj.explanation_text = "Capture, convert or exile from station [M.mind.name], the [M.mind.assigned_role]. Assassinate if you have no choice."
+		rev_obj.explanation_text = rev_obj.format_explanation()
 		AnnounceObjectives()
 
 /datum/faction/revolution/latespawn(mob/M)
 	if(M.mind.assigned_role in command_positions)
-		add_new_objective()
+		log_debug("Adding head kill/capture/convert objective for [M.mind.name]")
+		add_new_objective(M)
 
 /datum/faction/revolution/proc/add_revhead()
 	// only perform rev checks once in a while
@@ -257,19 +257,16 @@
 	var/shuttle_timer_started = FALSE
 	var/timer
 
-/*datum/faction/revolution/flash_revolution/add_new_objective(mob/M)
+/datum/faction/revolution/flash_revolution/add_new_objective(mob/M)
 	//located not on station - you are not a headstuff, goodbye
 	var/turf/T = get_turf(M)
 	if(T && is_station_level(T.z))
 		return ..()
-	*/
 
-/*datum/faction/revolution/flash_revolution/latespawn(mob/M)
-	/
+/datum/faction/revolution/flash_revolution/latespawn(mob/M)
 	if(M.mind.assigned_role in command_positions)
 		//shuttle delay
-		addtimer(CALLBACK(src, .proc/add_new_objective), 6000)
-	*/
+		addtimer(CALLBACK(src, .proc/add_new_objective, M), 6000)
 
 /datum/faction/revolution/flash_revolution/OnPostSetup()
 	. = ..()
@@ -281,7 +278,8 @@
 	SSshuttle.incall(1)
 	SSshuttle.announce_emer_called.play()
 	//lore: CentCom does not expect to save the remaining heads with this shuttle. That one is for civilians workers.
-	new /datum/announcement/centcomm/revolution_succesfull
+	var/datum/announcement/centcomm/revolution_succesfull/announcement = new
+	announcement.play()
 
 /datum/faction/revolution/flash_revolution/IsSuccessful()
 	if(world.time - timer < 600)
@@ -291,7 +289,7 @@
 		//no heads stuff. Victory?
 		return TRUE
 	var/heads_overrun = 0
-	for(var/datum/objective/objective in objective_holder.GetObjectives())
+	for(var/datum/objective/objective in GetObjectives())
 		if(objective.calculate_completion() != OBJECTIVE_LOSS)
 			heads_overrun++
 	if(((heads_overrun / all_heads) * 100) > PERCENT_FOR_OVERTHROW)
@@ -314,21 +312,50 @@
 					continue
 				if(M.mind.assigned_role in global.nt_representative)
 					add_faction_member(enemies, M)
+			//empty faction will be destroyed
 			enemies.check_populated()
 			return FALSE
 		//enemies created, now try finish round
-		//call shuttle after 1-7 minutes. Give enemies of revs time to die
+		//call shuttle after few minutes.
 		if(!shuttle_timer_started)
 			shuttle_timer_started = TRUE
 			SSshuttle.fake_recall = FALSE
-			addtimer(CALLBACK(src, .proc/send_evac_to_centcom), rand(600, 4200), TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+			addtimer(CALLBACK(src, .proc/send_evac_to_centcom), rand(300, 1200), TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 			return FALSE
 		//try to end if revolution already killed all headstuff
-		for(var/datum/objective/obj in objective_holder.GetObjectives())
+		for(var/datum/objective/obj in GetObjectives())
 			if(obj.calculate_completion() != OBJECTIVE_WIN)
 				return FALSE
 			//full-victory of the revolution
-			return FALSE
+			return TRUE
 	return FALSE
+
+//I couldn't think of anything better than leaving the current heads count and colorize custom text output
+/datum/faction/revolution/flash_revolution/custom_result()
+	var/dat = ""
+	if(IsSuccessful())
+		var/dead_heads = 0
+		var/alive_heads = 0
+		for(var/datum/mind/head_mind in get_all_heads())
+			if(!considered_alive(head_mind))
+				dead_heads++
+			else
+				alive_heads++
+
+		if(alive_heads >= dead_heads)
+			dat += "<span class='green'>The heads of staff were overthrown!</span><br>"
+			dat += "<span class='green'>The Syndicate extends its influence to the system.</span>"
+			feedback_add_details("[ID]_success","SUCCESS")
+			SSStatistics.score.roleswon++
+		else
+			dat += "<span class='orange'>The heads of staff were overthrown, but many heads died.</span><br>"
+			dat += "<span class='orange'>The revolutionaries were victorious, but they did not win overt support from the Syndicate.</span>"
+			dat += "<span class='orange'>Nanotrasen's battle groups will be sent to the station.</span><br>"
+			feedback_add_details("[ID]_success","HALF")
+
+	else
+		dat += "<span class='red'>The heads of staff managed to stop the revolution!</span>"
+		feedback_add_details("[ID]_success","FAIL")
+	return dat
 
 #undef PERCENT_FOR_OVERTHROW

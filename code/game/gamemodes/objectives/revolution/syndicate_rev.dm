@@ -1,6 +1,6 @@
 /datum/objective/target/syndicate_rev/format_explanation()
 	//lore: Syndicate want to capture the station without ERT-DeathSquad intervention before the station will be completely filled with subjects loyal to the Syndicate
-	return "Capture, convert or exile from station [target.current.real_name], the [target.assigned_role]. Don't let them escape to Central Command. Assassinate if you have no choice."
+	return "Capture, convert or exile from station [target.current.real_name], the [target.assigned_role]. Don't let them escape to Central Command free. Assassinate if you have no choice."
 
 /datum/objective/target/syndicate_rev/check_completion()
 	if(target && target.current)
