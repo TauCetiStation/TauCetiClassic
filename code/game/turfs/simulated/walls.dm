@@ -408,13 +408,17 @@
 				dismantle_wall(1)
 				visible_message("<span class='warning'>[user] прорезает стену!</span>", blind_message = "<span class='warning'>Вы слышите треск искр и скрежет металла.</span>", viewing_distance = 5)
 		return
-	else if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
-		var/obj/item/weapon/changeling_hammer/C = W
-		visible_message("<span class='danger'><B>[user]</B> бьет стену!</span>")
+	//fulldestruct to walls when
+	else if(istype(W,/obj/item/weapon/melee/changeling_hammer) && !rotting)
+		var/obj/item/weapon/melee/changeling_hammer/hammer = W
+		//slowdown, user. No need destruct all walls without debuff
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			C.shock_stage += 5
+		user.visible_message("<span class='danger'><B>[user]</B> бьет стену!</span>")
 		user.do_attack_animation(src)
-		if(C.use_charge(user))
-			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			take_damage(30)
+		playsound(user, pick(hammer.hitsound), VOL_EFFECTS_MASTER)
+		take_damage(hammer.get_object_damage())
 		return
 
 	else if(istype(W,/obj/item/apc_frame))
