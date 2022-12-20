@@ -229,7 +229,7 @@
 		if(!COOLDOWN_FINISHED(src, command_point)) //Player can double click to issue two commands
 			to_chat(src, "<span class='cult'>Слишком рано для новой команды!</span>")
 			return
-		var/obj/effect/temp_visual/command_point/P = new (get_turf(A))
+		var/obj/effect/temp_visual/command_point/P = new (get_turf(A), marker_icon)
 		P.make_altapp(marker_icon)
 		command_buff(get_turf(A))
 		COOLDOWN_START(src, command_point, 2 MINUTES)
