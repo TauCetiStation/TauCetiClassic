@@ -143,9 +143,7 @@
 	U.cameraFollow = target
 	to_chat(U, "Now tracking [target.name].")
 
-	while(U.cameraFollow == target)
-		if(U.cameraFollow == null)
-			return
+	while(U.cameraFollow && U.cameraFollow == target)
 		sleep(5)
 		setLoc(get_turf(target))
 
