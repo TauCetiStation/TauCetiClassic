@@ -24,6 +24,9 @@
 	if(wear_mask)
 		skipface |= wear_mask.flags_inv & HIDEFACE
 
+	if(get_species() == SKRELL && h_style != "Bald")
+		skipears = TRUE
+
 	var/obj/item/organ/external/head/MyHead = bodyparts_by_name[BP_HEAD]
 	if(!istype(MyHead) || MyHead.is_stump)
 		skipface = TRUE
