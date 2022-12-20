@@ -149,7 +149,7 @@
 	icon_state = "wall1"
 	opacity = 1
 	density = TRUE
-	blocks_air = 1
+	blocks_air = AIR_BLOCKED
 
 /turf/simulated/shuttle/floor
 	name = "floor"

@@ -206,6 +206,25 @@
 	H.mind.skills.maximize_active_skills()
 
 
+/datum/quality/quirkieish/mmi_ipc
+	name = "MMI IPC"
+	desc = "Ты мозг. Запертый. В оболочке. СПУ."
+	requirement = "Подопытный."
+
+/datum/quality/quirkieish/mmi_ipc/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject" && H.get_species() != IPC
+
+/datum/quality/quirkieish/mmi_ipc/add_effect(mob/living/carbon/human/H, latespawn)
+	var/prev_species = H.get_species()
+	H.set_species(IPC)
+
+	// TO-DO: use human-like hairstyles for this type of IPC
+	// as well as set their head to a human-like one.
+	var/obj/item/organ/external/chest/robot/ipc/I = H.get_bodypart(BP_CHEST)
+	I.posibrain_type = /obj/item/device/mmi
+	I.posibrain_species = prev_species
+
+
 /datum/quality/quirkieish/podman
 	name = "Podman"
 	desc = "Тебе подменили. Ты не ты."
@@ -250,16 +269,23 @@
 		// While funny, please no.
 		if(isanyantag(potential_target))
 			continue
-		// Commented out because changeling stings change appearance and name but not species...
-		// so apperantly in this universe it works like this.
-		//if(get_species(potential_target) != get_species(H))
-		//	continue
+		// Hm.
+		var/datum/species/S = all_species[potential_target.get_species()]
+		if(S.flags[NO_DNA])
+			continue
+		// Okay the idea with changeling stings didn't work so now we actually change the race.
+		// We change the race because if we don't some exotic species like Vox would not have
+		// anyone they can be a doppleganger of.
+		if(config.usealienwhitelist && !is_alien_whitelisted(H, potential_target.get_species()))
+			continue
 
 		target = potential_target
 
 	if(!target)
 		to_chat(H, "<span class='warning'>Проклятие! По какой-то причине ты клонировал сам себя!</span>")
 		return
+
+	H.set_species(target.get_species())
 
 	H.dna = target.dna.Clone()
 	H.real_name = target.dna.real_name

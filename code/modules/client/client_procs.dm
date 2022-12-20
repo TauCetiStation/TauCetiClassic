@@ -300,10 +300,16 @@ var/global/list/blacklisted_builds = list(
 		add_admin_verbs()
 		admin_memo_show()
 		if(holder.rights & R_PERMISSIONS)
+			// fluff needs rewiew
 			var/list/fluff_list = custom_item_premoderation_list()
 			var/fluff_count = fluff_list.len
 			if(fluff_count)
 				to_chat(src, "<span class='alert bold'>В рассмотрении [pluralize_russian(fluff_count, "нуждается [fluff_count] флафф-предмет", "нуждаются [fluff_count] флафф-предмета", "нуждаются [fluff_count] флафф-предметов")]. Вы можете просмотреть [pluralize_russian(fluff_count, "его", "их")] в панели 'Whitelist Custom Items'.</span>")
+
+			// library needs rewiew
+			var/library_count = library_needs_rewiew()
+			if(library_count)
+				to_chat(src, "<span class='alert bold'>На [library_count] [pluralize_russian(library_count, "книгу", "книги", "книг")] библиотеки поступили жалобы. Проверьте в панели 'Library: Recycle bin'</span>")
 
 	if (supporter)
 		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")

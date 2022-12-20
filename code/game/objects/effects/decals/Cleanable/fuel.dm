@@ -36,7 +36,7 @@
 		if(rand(25))
 			var/turf/simulated/target = get_step(src,d)
 			var/turf/simulated/origin = get_turf(src)
-			if(origin.CanPass(null, target, 0, 0) && target.CanPass(null, origin, 0, 0))
+			if(origin.CanPass(null, target, 0))
 				if(!locate(/obj/effect/decal/cleanable/liquid_fuel) in target)
 					new/obj/effect/decal/cleanable/liquid_fuel(target, amount * 0.25)
 					amount *= 0.75
@@ -73,7 +73,7 @@
 		var/turf/simulated/O = get_step(S,d)
 		if(locate(/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel) in O)
 			continue
-		if(O.CanPass(null, S, 0, 0) && S.CanPass(null, O, 0, 0))
+		if(O.CanPass(null, S, 0))
 			new/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel(O, amount * 0.25, d)
 			for(var/mob/living/L in O.loc)
 				L.adjust_fire_stacks(10)

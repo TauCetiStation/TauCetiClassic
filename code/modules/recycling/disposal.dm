@@ -497,7 +497,7 @@
 		H.vent_gas(loc)
 		qdel(H)
 
-/obj/machinery/disposal/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/disposal/CanPass(atom/movable/mover, turf/target, height=0)
 	if (isitem(mover) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
@@ -509,7 +509,7 @@
 			visible_message("\the [I] bounces off of \the [src]'s rim!")
 		return 0
 	else
-		return ..(mover, target, height, air_group)
+		return ..()
 
 // virtual disposal object
 // travels through pipes in lieu of actual items

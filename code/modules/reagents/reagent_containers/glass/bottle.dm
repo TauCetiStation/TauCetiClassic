@@ -41,7 +41,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/kyphotorin
 	name = "kyphotorin bottle"
-	desc = "A small bottle. Contains kyphotorin - used to recover bones."
+	desc = "A small bottle. Contains kyphotorin - used for treatment. Only works at high temperature."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle1"
 	list_reagents = list("kyphotorin" = 30)

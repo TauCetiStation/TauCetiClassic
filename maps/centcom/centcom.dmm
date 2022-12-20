@@ -1767,12 +1767,14 @@
 /area/space)
 "aeE" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Waiting Room"
+	name = "Living Quarters";
+	req_access = list(105)
 	},
+/obj/item/decoration/tinsel,
 /turf/unsimulated/floor{
-	icon_state = "warning"
+	icon_state = "floor"
 	},
-/area/centcom/evac)
+/area/centcom/living)
 "aeF" = (
 /obj/structure/table/woodentable,
 /obj/machinery/chem_dispenser/soda{
@@ -18975,13 +18977,22 @@
 	},
 /area/centcom/holding)
 "aPY" = (
-/obj/item/weapon/present,
-/turf/simulated/floor/carpet/green,
-/area/shuttle/escape/centcom)
+/obj/effect/step_trigger/teleporter/random{
+	affect_ghosts = 1;
+	name = "escapeshuttle_leave";
+	pixel_y = -1;
+	teleport_x = 25;
+	teleport_x_offset = 245;
+	teleport_y = 25;
+	teleport_y_offset = 245;
+	teleport_z = 6;
+	teleport_z_offset = 6
+	},
+/turf/environment/space,
+/area/space)
 "aPZ" = (
-/obj/structure/stool/bed/chair/comfy/black,
-/turf/simulated/floor/wood,
-/area/shuttle/escape/centcom)
+/turf/environment/space,
+/area/shuttle/mining/transit)
 "aQa" = (
 /obj/machinery/vending/cigarette,
 /turf/unsimulated/floor{
@@ -19169,20 +19180,19 @@
 	},
 /area/centcom/holding)
 "aQA" = (
-/obj/machinery/door/airlock/glass,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "CentComPort03";
-	layer = 2.6;
-	name = "Security Doors";
-	opacity = 0
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
+/obj/machinery/door/airlock/security{
+	name = "Security Checkpoint";
+	req_access = list(101)
+	},
+/obj/item/decoration/tinsel,
 /turf/unsimulated/floor{
 	dir = 9;
-	icon_state = "green"
+	icon_state = "delivery"
 	},
-/area/centcom/holding)
+/area/velocity)
 "aQB" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Holding Facility"
@@ -19216,20 +19226,9 @@
 	},
 /area/centcom/evac)
 "aQG" = (
-/obj/machinery/door/airlock/glass,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "CentComPort03";
-	layer = 2.6;
-	name = "Security Doors";
-	opacity = 0
-	},
-/turf/unsimulated/floor{
-	dir = 5;
-	icon_state = "green"
-	},
-/area/centcom/holding)
+/obj/structure/stool/bed/chair/comfy/black,
+/turf/simulated/floor/wood,
+/area/shuttle/escape/centcom)
 "aQH" = (
 /obj/machinery/newscaster{
 	pixel_y = 32
@@ -19347,17 +19346,13 @@
 	},
 /area/centcom/living)
 "aQT" = (
-/obj/machinery/door/airlock/centcom{
-	name = "General Access";
-	req_access = list(108)
+/obj/effect/landmark/blockway,
+/obj/structure/flora/tree/pine/unbreakable{
+	layer = 9.2;
+	opacity = 1
 	},
-/obj/structure/sign/mark{
-	icon_state = "9";
-	layer = 3.5
-	},
-/obj/structure/centcom_barrier,
-/turf/unsimulated/floor,
-/area/centcom/control)
+/turf/unsimulated/floor/snow,
+/area/space)
 "aQU" = (
 /obj/structure/object_wall/evac{
 	icon_state = "1,13"
@@ -19628,21 +19623,9 @@
 	},
 /area/centcom/evac)
 "aRC" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "CentComConv01"
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "CentComPort03";
-	layer = 4.1;
-	name = "Security Doors";
-	opacity = 0
-	},
-/obj/structure/plasticflaps/explosion_proof,
-/turf/unsimulated/floor,
-/area/centcom/control)
+/obj/random/melee,
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
 "aRD" = (
 /obj/structure/object_wall/evac{
 	icon_state = "1,12"
@@ -24433,6 +24416,14 @@
 	icon_state = "vault"
 	},
 /area/centcom/specops)
+"bcU" = (
+/obj/random/guns/weapon_item,
+/turf/unsimulated/floor/snow,
+/area/custom/arena)
+"bcV" = (
+/obj/item/weapon/present,
+/turf/simulated/floor/carpet/green,
+/area/shuttle/escape/centcom)
 "bde" = (
 /obj/item/decoration/garland,
 /turf/unsimulated/wall/abductor{
@@ -30277,13 +30268,35 @@
 	},
 /area/custom/syndicate_mothership/control)
 "lsb" = (
-/obj/random/guns/weapon_item,
-/turf/unsimulated/floor/snow,
-/area/custom/arena)
+/obj/machinery/door/airlock/glass,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "CentComPort03";
+	layer = 2.6;
+	name = "Security Doors";
+	opacity = 0
+	},
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "green"
+	},
+/area/centcom/holding)
 "ltb" = (
-/obj/random/melee,
-/turf/unsimulated/floor/snow,
-/area/custom/arena)
+/obj/machinery/door/airlock/glass,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "CentComPort03";
+	layer = 2.6;
+	name = "Security Doors";
+	opacity = 0
+	},
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "green"
+	},
+/area/centcom/holding)
 "lub" = (
 /turf/unsimulated/floor{
 	dir = 10;
@@ -30622,13 +30635,13 @@
 	},
 /area/centcom/evac)
 "mdb" = (
-/obj/effect/landmark/blockway,
-/obj/structure/flora/tree/pine/unbreakable{
-	layer = 9.2;
-	opacity = 1
+/obj/machinery/door/airlock/centcom{
+	name = "Waiting Room"
 	},
-/turf/unsimulated/floor/snow,
-/area/space)
+/turf/unsimulated/floor{
+	icon_state = "warning"
+	},
+/area/centcom/evac)
 "meb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -31465,28 +31478,32 @@
 /area/centcom/holding)
 "oab" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Living Quarters";
-	req_access = list(105)
+	name = "General Access";
+	req_access = list(108)
 	},
-/obj/item/decoration/tinsel,
-/turf/unsimulated/floor{
-	icon_state = "floor"
+/obj/structure/sign/mark{
+	icon_state = "9";
+	layer = 3.5
 	},
-/area/centcom/living)
+/obj/structure/centcom_barrier,
+/turf/unsimulated/floor,
+/area/centcom/control)
 "obb" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "CentComConv01"
 	},
-/obj/machinery/door/airlock/security{
-	name = "Security Checkpoint";
-	req_access = list(101)
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "CentComPort03";
+	layer = 4.1;
+	name = "Security Doors";
+	opacity = 0
 	},
-/obj/item/decoration/tinsel,
-/turf/unsimulated/floor{
-	dir = 9;
-	icon_state = "delivery"
-	},
-/area/velocity)
+/obj/structure/plasticflaps/explosion_proof,
+/turf/unsimulated/floor,
+/area/centcom/control)
 "obR" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 1;
@@ -38539,26 +38556,26 @@ ahG
 ahG
 ahG
 ahG
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 aaM
 aaM
 aaM
@@ -38815,7 +38832,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -39072,7 +39089,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -39329,7 +39346,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -39586,7 +39603,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -39843,7 +39860,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -40100,7 +40117,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -40357,7 +40374,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -40614,7 +40631,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -40858,20 +40875,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aVb
+aVb
+aVb
+aVb
+aVb
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -41115,20 +41132,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -41372,20 +41389,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -41629,20 +41646,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -41886,20 +41903,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -42143,20 +42160,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -42400,20 +42417,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -42657,20 +42674,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -42914,20 +42931,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -43171,20 +43188,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -43428,20 +43445,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aVb
+aVb
+aVb
+aVb
+aVb
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -43698,7 +43715,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -43955,7 +43972,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -44212,7 +44229,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -44469,7 +44486,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -44726,7 +44743,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -44983,7 +45000,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -45240,7 +45257,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -45452,6 +45469,7 @@ ahG
 ahG
 ahG
 ahG
+aPY
 ahG
 ahG
 ahG
@@ -45478,26 +45496,25 @@ ahG
 ahG
 ahG
 ahG
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 aaM
 aaM
 aaM
@@ -47933,7 +47950,7 @@ aeq
 amO
 apy
 cNr
-aPY
+bcV
 apK
 aRb
 aRM
@@ -48446,7 +48463,7 @@ aeU
 aeU
 anC
 arD
-aPY
+bcV
 arD
 apK
 aRd
@@ -48702,7 +48719,7 @@ adI
 aeU
 afU
 anY
-aPZ
+aQG
 apK
 apK
 apK
@@ -49843,7 +49860,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aVb
 aaM
 aaM
 aaM
@@ -55621,7 +55638,7 @@ aHv
 aHv
 aHv
 mcb
-aeE
+mdb
 aHv
 aHv
 aaM
@@ -56119,7 +56136,7 @@ aPS
 aOF
 aOF
 aOF
-aQA
+lsb
 lGb
 aJP
 lPb
@@ -56376,7 +56393,7 @@ aOF
 aOF
 aOF
 aOF
-aQG
+ltb
 lGb
 aJP
 lQb
@@ -57148,14 +57165,14 @@ aOG
 aOF
 aRx
 aNs
-aQT
+oab
 aJu
 aJu
 aJu
 aJu
 aJu
 aJu
-aRC
+obb
 aJu
 aaM
 aaM
@@ -68965,8 +68982,8 @@ aNx
 aOa
 aOU
 aAm
-oab
-oab
+aeE
+aeE
 aAm
 aAm
 aaM
@@ -80719,7 +80736,7 @@ atU
 aoo
 arZ
 arZ
-obb
+aQA
 dTb
 arZ
 ecb
@@ -87668,7 +87685,7 @@ aaM
 aaM
 aaM
 aaM
-mdb
+aQT
 nRb
 ehN
 oAb
@@ -87926,15 +87943,15 @@ aaM
 mRb
 mVb
 aHB
-ltb
+aRC
 aHB
-lsb
+bcU
 aHB
 aWH
 aHB
-lsb
+bcU
 aWF
-ltb
+aRC
 aHB
 oNb
 oPb
@@ -88187,7 +88204,7 @@ aHB
 aHB
 aWF
 aHB
-ltb
+aRC
 aHB
 afd
 aHB
@@ -88436,10 +88453,10 @@ aaM
 aaM
 aaM
 aaM
-mdb
+aQT
 aHB
 aHB
-ltb
+aRC
 aHB
 aeS
 aHB
@@ -88449,7 +88466,7 @@ aWF
 aHB
 aeS
 aHB
-ltb
+aRC
 aHB
 aHB
 oTb
@@ -88693,7 +88710,7 @@ aaM
 aaM
 mRb
 mVb
-lsb
+bcU
 aHB
 mpb
 aWF
@@ -88701,7 +88718,7 @@ aHB
 aHB
 aHB
 avv
-ltb
+aRC
 avv
 aHB
 aHB
@@ -88709,7 +88726,7 @@ aHB
 aWF
 aHB
 aHB
-lsb
+bcU
 oUb
 oVb
 aaM
@@ -88950,11 +88967,11 @@ aaM
 mRb
 aHB
 aHB
-ltb
+aRC
 pCb
 aHB
 hJb
-lsb
+bcU
 afq
 afd
 aWF
@@ -88962,13 +88979,13 @@ aeN
 aHB
 aHB
 afq
-lsb
+bcU
 afg
 aHB
 aHB
-ltb
+aRC
 aHB
-lsb
+bcU
 oZb
 aaM
 aaM
@@ -89212,13 +89229,13 @@ aHB
 aHB
 aHB
 aXY
-ltb
+aRC
 aHB
 aeS
 aHB
 aeS
 mpb
-ltb
+aRC
 aXY
 aHB
 aHB
@@ -89461,9 +89478,9 @@ aaM
 aaM
 aaM
 mRb
-lsb
+bcU
 aHB
-ltb
+aRC
 afd
 aWF
 aeS
@@ -89481,7 +89498,7 @@ aHB
 aeS
 aHB
 aHB
-ltb
+aRC
 aHB
 aHB
 pAb
@@ -89980,19 +89997,19 @@ aeM
 aXI
 aHB
 aXY
-ltb
+aRC
 aHB
 aHB
 aXI
-lsb
+bcU
 aHB
 aeS
 aHB
-lsb
+bcU
 aeY
 aHB
 pCb
-ltb
+aRC
 aXY
 aHB
 afn
@@ -90232,7 +90249,7 @@ aaM
 aaM
 aaM
 mRb
-ltb
+aRC
 aHB
 aeS
 aHB
@@ -90240,13 +90257,13 @@ aWF
 mpb
 afq
 aHB
-ltb
+aRC
 aWF
 ojb
 ojb
 ojb
 aHB
-ltb
+aRC
 aHB
 afq
 aHB
@@ -90254,7 +90271,7 @@ aWF
 aHB
 aeS
 aHB
-ltb
+aRC
 pAb
 aaM
 aaM
@@ -90746,10 +90763,10 @@ aaM
 aaM
 aaM
 mRb
-lsb
+bcU
 afm
 avv
-ltb
+aRC
 aHB
 aeS
 aHB
@@ -90765,10 +90782,10 @@ afm
 aHB
 aeS
 aHB
-ltb
+aRC
 avv
 afm
-lsb
+bcU
 pAb
 aaM
 aaM
@@ -91260,7 +91277,7 @@ aaM
 aaM
 aaM
 mRb
-ltb
+aRC
 aHB
 aeS
 aHB
@@ -91268,13 +91285,13 @@ aHB
 aHB
 afq
 aWF
-ltb
+aRC
 aHB
 ojb
 ojb
 ojb
 aHB
-ltb
+aRC
 aHB
 afq
 aHB
@@ -91282,7 +91299,7 @@ aHB
 aHB
 aeS
 aHB
-ltb
+aRC
 pAb
 aaM
 aaM
@@ -91522,19 +91539,19 @@ aHB
 afo
 aWF
 aXY
-ltb
+aRC
 aHB
 aHB
 aXI
-lsb
+bcU
 aWF
 aeS
 aHB
-lsb
+bcU
 afc
 aHB
 aHB
-ltb
+aRC
 aXY
 aHB
 afc
@@ -92031,9 +92048,9 @@ aaM
 aaM
 aaM
 mRb
-lsb
+bcU
 aHB
-ltb
+aRC
 aHB
 aHB
 aeS
@@ -92296,13 +92313,13 @@ mpb
 aWF
 aHB
 aXY
-ltb
+aRC
 aHB
 aeS
 aHB
 aeS
 aWF
-ltb
+aRC
 aXY
 afd
 aHB
@@ -92548,11 +92565,11 @@ aaM
 mRb
 aHB
 aHB
-ltb
+aRC
 aHB
 aHB
 hJb
-lsb
+bcU
 afq
 aWF
 aHB
@@ -92560,13 +92577,13 @@ aeR
 aHB
 aHB
 afq
-lsb
+bcU
 afg
 aHB
 aHB
-ltb
+aRC
 aHB
-lsb
+bcU
 oZb
 aaM
 aaM
@@ -92805,7 +92822,7 @@ aaM
 aaM
 mRb
 mVb
-lsb
+bcU
 aHB
 afd
 aHB
@@ -92813,7 +92830,7 @@ aHB
 aHB
 aHB
 avv
-ltb
+aRC
 avv
 aWF
 aHB
@@ -92821,7 +92838,7 @@ aHB
 aHB
 oOb
 aHB
-lsb
+bcU
 oUb
 oVb
 aaM
@@ -93062,10 +93079,10 @@ aaM
 aaM
 aaM
 aaM
-mdb
+aQT
 aHB
 mUb
-ltb
+aRC
 aHB
 aeS
 aHB
@@ -93075,7 +93092,7 @@ aHB
 aHB
 aeS
 aHB
-ltb
+aRC
 aHB
 aHB
 oTb
@@ -93327,7 +93344,7 @@ aHB
 aHB
 aWF
 aHB
-ltb
+aRC
 aWF
 afd
 aHB
@@ -93580,15 +93597,15 @@ aaM
 mRb
 mVb
 aHB
-ltb
+aRC
 aHB
-lsb
+bcU
 aHB
 aWH
 aHB
-lsb
+bcU
 aHB
-ltb
+aRC
 aHB
 oNb
 oPb
@@ -93836,7 +93853,7 @@ aaM
 aaM
 aaM
 aaM
-mdb
+aQT
 nRb
 ehN
 oAb

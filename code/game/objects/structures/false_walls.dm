@@ -9,6 +9,7 @@
 	anchored = TRUE
 	density = TRUE
 	opacity = TRUE
+	can_block_air = TRUE
 
 	canSmoothWith = list(
 		/turf/simulated/wall,
@@ -28,8 +29,12 @@
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
 
-/obj/structure/falsewall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group) return !block_air_zones
+/obj/structure/falsewall/c_airblock(turf/other)
+	if(block_air_zones)
+		return ..() | ZONE_BLOCKED
+	return ..()
+
+/obj/structure/falsewall/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
 	return !density

@@ -119,10 +119,8 @@
 		P.layer = 3.2
 		to_chat(user, "<span class='notice'>You finish placing the [src].</span>")
 
-/obj/item/tape/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/item/tape/CanPass(atom/movable/mover, turf/target, height=0)
 	if(!density)
-		return TRUE
-	if(air_group || (height == 0))
 		return TRUE
 	if(allowed(mover))
 		return TRUE
