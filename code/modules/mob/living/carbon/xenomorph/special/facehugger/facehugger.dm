@@ -353,7 +353,7 @@
 	playsound(src, 'sound/voice/xenomorph/facehugger_dies.ogg', VOL_EFFECTS_MASTER)
 	visible_message("<span class='warning'>[src] curls up into a ball and exudes a strange substance!</span>")
 	for(var/mob/living/carbon/human/H in view(1, src))
-		if(prob(25))
+		if(!mouth_is_protected())
 			H.invoke_vomit_async()
 
 /obj/item/clothing/mask/facehugger/verb/hide_fh()
