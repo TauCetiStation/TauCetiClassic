@@ -143,9 +143,15 @@
 	U.cameraFollow = target
 	to_chat(U, "Now tracking [target.name].")
 
-	while(U.cameraFollow && U.cameraFollow == target)
-		sleep(5)
-		setLoc(get_turf(target))
+	new/datum/orbit(src, target, FALSE)
+	if (!orbiting) //something failed, and our orbit datum deleted itself
+		return
+	var/matrix/initial_transform = matrix(transform)
+	cached_transform = initial_transform
+
+/mob/camera/eminence/stop_orbit()
+	qdel(orbiting)
+	transform = cached_transform
 
 /mob/camera/eminence/ClickOn(atom/A, params)
 	if(world.time <= next_click)
@@ -227,8 +233,7 @@
 		if(!COOLDOWN_FINISHED(src, command_point)) //Player can double click to issue two commands
 			to_chat(src, "<span class='cult'>Слишком рано для новой команды!</span>")
 			return
-		var/obj/effect/temp_visual/command_point/P = new (get_turf(A), marker_icon)
-		P.make_altapp(marker_icon)
+		new /obj/effect/temp_visual/command_point (get_turf(A), marker_icon)
 		command_buff(get_turf(A))
 		COOLDOWN_START(src, command_point, 2 MINUTES)
 		for(var/mob/M in servants_and_ghosts())
@@ -249,7 +254,8 @@
 	resistance_flags = INDESTRUCTIBLE
 	duration = 300
 
-/obj/effect/temp_visual/command_point/proc/make_altapp(marker_icon)
+/obj/effect/temp_visual/command_point/atom_init(mapload, marker_icon)
+	. = ..()
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/my_religion, "command_point", image('icons/hud/actions.dmi', src, marker_icon), src, cult_religion)
 
 /mob/camera/eminence/proc/command_buff(turf/T)
