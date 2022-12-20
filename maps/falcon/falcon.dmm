@@ -3252,6 +3252,7 @@
 /obj/machinery/alarm{
 	pixel_y = 21
 	},
+/obj/item/weapon/paper/space_structures,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "warndark"
@@ -29564,7 +29565,6 @@
 /area/station/hallway/primary/central)
 "tAD" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper/space_structures,
 /obj/machinery/keycard_auth{
 	pixel_x = -28
 	},

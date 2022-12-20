@@ -33687,7 +33687,6 @@
 "hDM" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/item/weapon/paper/monitorkey,
-/obj/item/weapon/paper/space_structures,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkpurple"
@@ -70335,6 +70334,7 @@
 /area/station/maintenance/engineering)
 "qSO" = (
 /obj/machinery/computer/telescience,
+/obj/item/weapon/paper/space_structures,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkpurple"
