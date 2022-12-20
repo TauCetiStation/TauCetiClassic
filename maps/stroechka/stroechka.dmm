@@ -7435,6 +7435,12 @@
 /obj/machinery/bot/medbot{
 	req_access = list(71)
 	},
+/obj/effect/landmark{
+	name = "Observer-Start"
+	},
+/obj/effect/landmark{
+	name = "lightsout"
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "RU" = (
