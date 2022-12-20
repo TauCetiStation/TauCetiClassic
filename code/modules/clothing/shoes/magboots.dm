@@ -29,7 +29,7 @@
 /obj/item/clothing/shoes/magboots/examine(mob/user)
 	..()
 	var/state = "disabled"
-	if(src.flags & NOSLIP | AIR_FLOW_PROTECT)
+	if(src.flags & (NOSLIP | AIR_FLOW_PROTECT))
 		state = "enabled"
 	to_chat(user, "Its mag-pulse traction system appears to be [state].")
 
