@@ -5837,7 +5837,10 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/flora/grass/both,
-/turf/environment/space,
+/obj/structure/snow,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/medical/virology)
 "aiG" = (
 /obj/structure/window/reinforced,
@@ -5855,7 +5858,10 @@
 	dir = 1
 	},
 /obj/structure/flora/bush,
-/turf/environment/space,
+/obj/structure/snow,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/medical/virology)
 "aiI" = (
 /obj/structure/window/reinforced{
@@ -5863,7 +5869,10 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/flora/grass/green,
-/turf/environment/space,
+/obj/structure/snow,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/medical/virology)
 "aiJ" = (
 /obj/structure/window/reinforced{
@@ -5871,7 +5880,10 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/flora/ausbushes/pointybush,
-/turf/environment/space,
+/obj/structure/snow,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/medical/virology)
 "aiK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -5903,7 +5915,10 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/flora/grass/brown,
-/turf/environment/space,
+/obj/structure/snow,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/medical/virology)
 "aiN" = (
 /obj/structure/grille,
@@ -5940,7 +5955,10 @@
 	},
 /obj/structure/flora/grass/both,
 /obj/structure/flora/grass/green,
-/turf/environment/space,
+/obj/structure/snow,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/medical/virology)
 "aiP" = (
 /obj/structure/window/reinforced{
@@ -5950,7 +5968,10 @@
 	dir = 8
 	},
 /obj/structure/flora/mine_rocks,
-/turf/environment/space,
+/obj/structure/snow,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/medical/virology)
 "aiQ" = (
 /obj/structure/flora/ausbushes/pointybush,
@@ -5961,7 +5982,10 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/environment/space,
+/obj/structure/snow,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/medical/virology)
 "aiR" = (
 /obj/structure/window/reinforced{
@@ -14177,7 +14201,10 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/flora/grass/both,
-/turf/environment/space,
+/obj/structure/snow,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/entry)
 "cLx" = (
 /obj/machinery/firealarm{
@@ -33385,7 +33412,10 @@
 	dir = 4
 	},
 /obj/structure/flora/mine_rocks,
-/turf/environment/space,
+/obj/structure/snow,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/hallway/secondary/entry)
 "jcK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
