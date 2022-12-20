@@ -1806,6 +1806,14 @@
 	var/prev_intent = a_intent
 	a_intent_change(INTENT_HARM)
 
+	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/space/rig/vox/stealth))
+		for(var/obj/item/clothing/suit/space/rig/vox/stealth/V in list(wear_suit))
+			for(var/obj/item/rig_module/mod in V.installed_modules)
+				if(mod.type == /obj/item/rig_module/stealth)
+					mod.deactivate()
+
+	toggle_leap()
+
 	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .proc/leap_end, prev_intent))
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)

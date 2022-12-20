@@ -76,7 +76,7 @@
 	desc = "An almost organic looking nonhuman pressure suit."
 	slowdown = 0.5
 	armor = list(melee = 50, bullet = 40, laser = 45, energy = 15, bomb = 25, bio = 30, rad = 30)
-	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/chem_dispenser/medical/vox, /obj/item/rig_module/device/healthscanner)
+	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/emp_shield, /obj/item/rig_module/selfrepair, /obj/item/rig_module/chem_dispenser/medical/vox, /obj/item/rig_module/device/healthscanner)
 
 /obj/item/clothing/head/helmet/space/rig/vox/stealth
 	name = "alien stealth helmet"
