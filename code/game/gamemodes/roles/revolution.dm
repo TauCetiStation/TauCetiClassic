@@ -43,7 +43,7 @@
 
 /datum/role/rev_leader/New()
 	..()
-	AddComponent(/datum/component/gamemode/syndicate, 20)
+	AddComponent(/datum/component/gamemode/syndicate, 1, "rev")
 
 /datum/role/rev_leader/OnPostSetup(laterole)
 	. = ..()
@@ -101,6 +101,15 @@
 			if(add_faction_member(rev, M, TRUE))
 				to_chat(M, "<span class='notice'>You join the revolution!</span>")
 				to_chat(src, "<span class='notice'><b>[M] joins the revolution!</b></span>")
+				var/obj/item/device/uplink/hidden/U = find_syndicate_uplink(src)
+				if(!U)
+					return
+				U.uses += 3
+				var/datum/component/gamemode/syndicate/S = lead.GetComponent(/datum/component/gamemode/syndicate)
+				if(!S)
+					return
+				S.total_TC += 3
+
 			else
 				to_chat(src, "<span class='warning'><b>[M] cannot be converted.</b></span>")
 		else if(choice == "No!")

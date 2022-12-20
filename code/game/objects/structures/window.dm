@@ -5,6 +5,7 @@
 	density = TRUE
 	layer = 3.2//Just above doors
 	anchored = TRUE
+	can_block_air = TRUE
 	flags = ON_BORDER
 	can_be_unanchored = TRUE
 
@@ -108,7 +109,7 @@
 /obj/structure/window/blob_act()
 	take_damage(rand(30, 50), BRUTE, MELEE)
 
-/obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(is_fulltile())
@@ -249,13 +250,6 @@
 					take_damage(12, BRUTE, MELEE)
 					visible_message("<span class='danger'><big>[A] crushes [M] against \the [src]!</big></span>")
 					M.log_combat(user, "crushed against [name]")
-
-	else if(istype(W,/obj/item/weapon/changeling_hammer))
-		var/obj/item/weapon/changeling_hammer/C = W
-		user.SetNextMove(CLICK_CD_MELEE)
-		if(C.use_charge(user))
-			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			shatter()
 	else
 		return ..()
 

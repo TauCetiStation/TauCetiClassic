@@ -141,7 +141,7 @@
 /mob/living/simple_animal/shade/god/RangedAttack(atom/A, params)
 	god_attack(A)
 
-/mob/living/simple_animal/shade/god/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/living/simple_animal/shade/god/CanPass(atom/movable/mover, turf/target, height=0)
 	return TRUE
 
 /mob/living/simple_animal/shade/god/Move(atom/NewLoc, direct)

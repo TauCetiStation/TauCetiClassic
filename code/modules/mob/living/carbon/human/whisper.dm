@@ -32,6 +32,10 @@
 	if(iszombie(src))
 		message = zombie_talk(message)
 
+	if(disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
+		if(prob(50))
+			message = turret_talk(message)
+
 	if(name != GetVoice())
 		alt_name = "(as [get_id_name("Unknown")])"
 

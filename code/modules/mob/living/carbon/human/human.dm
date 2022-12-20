@@ -1437,6 +1437,10 @@
 
 	species.on_gain(src)
 
+	for(var/datum/quirk/Q in roundstart_quirks)
+		if(SSquirks.quirk_blacklist_species[Q.name] && (species.name in SSquirks.quirk_blacklist_species[Q.name]))
+			qdel(Q)
+
 	regenerate_icons()
 	full_prosthetic = null
 
