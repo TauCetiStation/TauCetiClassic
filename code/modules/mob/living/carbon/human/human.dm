@@ -1807,10 +1807,10 @@
 	a_intent_change(INTENT_HARM)
 
 	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/space/rig/vox/stealth))
-		for(var/obj/item/clothing/suit/space/rig/vox/stealth/V in list(wear_suit))
-			for(var/obj/item/rig_module/mod in V.installed_modules)
-				if(mod.type == /obj/item/rig_module/stealth)
-					mod.deactivate()
+		var/obj/item/clothing/suit/space/rig/vox/stealth/V = wear_suit
+		var/obj/item/rig_module/stealth/mod = locate() in V.installed_modules
+		if(mod.active)
+			mod.deactivate()
 
 	toggle_leap()
 
