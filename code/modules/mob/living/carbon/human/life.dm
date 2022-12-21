@@ -137,7 +137,7 @@ var/global/list/tourette_vox_bad_word = list("ГОВНО", "СЕДАЛИЩЕ", "
 											"ГНИЛОЙ", "МРАЗЬ", "ХВОСТ", "НАХВОСТ", "ХВОСТОЛИЗ",
 											"КЛОАКА", "СКРЯТЬ", "СКАРАПУШ", "САМКА", "СКРЯПЫШ")
 
-/mob/living/carbon/human/proc/handle_disabilities(mob/living/carbon/human/M)
+/mob/living/carbon/human/proc/handle_disabilities()
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
 		if (prob(1) && !paralysis)
 			visible_message("<span class='danger'>[src] starts having a seizure!</span>", self_message = "<span class='warning'>You have a seizure!</span>")
@@ -157,7 +157,7 @@ var/global/list/tourette_vox_bad_word = list("ГОВНО", "СЕДАЛИЩЕ", "
 					if(1)
 						emote("twitch")
 					if(2 to 3)
-						if(M.get_species() == VOX)
+						if(VOX)
 							say(pick(global.tourette_vox_bad_word))
 						else
 							say(pick(global.tourette_bad_words))
