@@ -950,13 +950,22 @@
 		var/datum/faction/malf_silicons/GM = find_faction_by_type(/datum/faction/malf_silicons)
 		if(GM && is_station_level(z))
 			SSticker.hacked_apcs++
+			malfunction_area()
 		if(ai.parent)
 			malfai = ai.parent
 		else
 			malfai = ai
-		to_chat(ai, "Hack complete. The APC is now under your exclusive control.")
+		to_chat(ai, "Hack complete. Area is now under your exclusive control.")
 		announce_hacker()
 		update_icon()
+
+/obj/machinery/power/apc/proc/malfunction_area()
+	//safe check, if proc calls when apc anywhere, but not on station
+	var/area/current_apc_area = get_area(src)
+	if(!current_apc_area)
+		return
+	for(var/obj/machinery/machine in current_apc_area)
+		machine.malf_hack_act()
 
 /obj/machinery/power/apc/proc/announce_hacker()
 	var/hacked_amount = SSticker.hacked_apcs
@@ -1323,6 +1332,8 @@
 /obj/machinery/power/apc/largecell
 	cell_type = 20000
 
+/obj/machinery/power/apc/malf_hack_act()
+	return FALSE
 
 #undef APC_WAIT_FOR_CHARGE
 
