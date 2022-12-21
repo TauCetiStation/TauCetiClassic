@@ -19,13 +19,13 @@
 		else
 			total_zombie++
 
+	/*
+	preventing greenscreen if all zombies were killed
+	or initially zombification was not desired by the AI in Zombie-Malf mode
+	*/
+	if(total_zombie < total_non_infected)
+		return OBJECTIVE_HALFWIN
+	//1:3 for objective win
 	if(total_zombie < total_alive * 3)
-		. = OBJECTIVE_LOSS
-	else if(total_zombie < total_non_infected)
-		/*
-		preventing greenscreen if all zombies were killed
-		or initially zombification was not desired by the AI in Zombie-Malf mode
-		*/
-		. = OBJECTIVE_HALFWIN
-	else
-		. = OBJECTIVE_WIN
+		return OBJECTIVE_LOSS
+	return OBJECTIVE_WIN
