@@ -349,7 +349,7 @@
 /mob/living/silicon/robot/proc/build_combat_borg()
 	var/mob/living/silicon/robot/combat/C = new(get_turf(src))
 	module = new /obj/item/weapon/robot_module/combat(src)
-	C.key = key
+	mind.transfer_to(C)
 	qdel(src)
 
 /mob/living/silicon/robot/proc/updatename(prefix)
