@@ -148,6 +148,8 @@ Class Procs:
 
 	var/list/required_skills //e.g. medical, engineering
 	var/fumbling_time = 5 SECONDS
+	//var for checks in machinery user interact
+	var/hacked_by_malf = FALSE
 
 /obj/machinery/atom_init()
 	. = ..()
@@ -583,3 +585,12 @@ Class Procs:
 	if (!required_skills || !user || issilicon(user) || isobserver(user))
 		return TRUE
 	return handle_fumbling(user, src, fumbling_time, required_skills, check_busy = FALSE)
+
+//activate uniquie interaction
+/obj/machinery/proc/malf_hack_act()
+	activate_hack()
+	return TRUE
+
+//if machinery should not change that variable
+/obj/machinery/proc/activate_hack()
+	hacked_by_malf = TRUE
