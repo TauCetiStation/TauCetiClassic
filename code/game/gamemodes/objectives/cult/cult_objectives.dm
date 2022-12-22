@@ -41,8 +41,7 @@
 	if(istype(C))
 		var/alive = 0
 		for(var/datum/role/I in C.members)
-			var/mob/M = I.antag.current
-			if(M.stat != DEAD)
+			if(I.antag.current?.stat != DEAD)
 				alive++
 		if(alive >= acolytes_needed)
 			return OBJECTIVE_WIN
@@ -92,7 +91,7 @@
 	if(istype(C))
 		var/convertees = 0
 		for(var/datum/role/R in C.members)
-			if(R.antag.current.mind.assigned_job == job)
+			if(R.antag.current?.mind.assigned_job == job)
 				convertees++
 		if(convertees >= convertees_needed)
 			return OBJECTIVE_WIN

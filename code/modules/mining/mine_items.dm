@@ -1158,23 +1158,18 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "A tiny fan, releasing a thin gust of air."
 	layer = ABOVE_NORMAL_TURF_LAYER
 	density = FALSE
+	can_block_air = TRUE
 	icon_state = "fan_tiny"
 
-/obj/structure/fans/tiny/atom_init()
-	var/turf/T = get_turf(loc)
-	if(T)
-		T.blocks_air = 1
-	. = ..()
+/obj/structure/fans/tiny/CanPass(atom/movable/mover, turf/target, height)
+	if(istype(mover))
+		return ..()
+	return FALSE
 
 /obj/structure/fans/tiny/Destroy()
 	var/turf/T = get_turf(loc)
 	if(T)
-		T.blocks_air = 0
-		if(SSair)
-			SSair.mark_for_update(get_turf(loc))
-	return ..()
-
-/obj/structure/fans/Destroy()
+		SSair?.mark_for_update(T)
 	return ..()
 
 //Signs
