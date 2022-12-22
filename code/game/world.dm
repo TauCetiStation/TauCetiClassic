@@ -348,12 +348,41 @@ var/global/shutdown_processed = FALSE
 /world/proc/load_supporters()
 	if(config.allow_donators && fexists("config/donators.txt"))
 		var/L = file2list("config/donators.txt")
+
+		var/current_DD = text2num(time2text(world.timeofday, "DD"))
+		var/current_MM = text2num(time2text(world.timeofday, "MM"))
+		var/current_YY = text2num(time2text(world.timeofday, "YY"))
+
 		for(var/line in L)
+
+			line = trim(line)
+
 			if(!length(line))
 				continue
+
 			if(line[1] == "#")
 				continue
-			donators.Add(ckey(line))
+
+			var/list/params = splittext(line, " ")
+			var/ckey = ckey(params[1])
+			var/list/until_date = length(params) > 1 ? splittext(params[2], ".") : 0  // DD.MM.YY
+
+			if(until_date)
+
+				var/DD = text2num(until_date[1])
+				var/MM = text2num(until_date[2])
+				var/YY = text2num(until_date[3])
+
+				if(YY < current_YY)
+					continue
+				else if (YY == current_YY)
+					if(MM < current_MM)
+						continue
+					else if (MM == current_MM)
+						if(DD < current_DD)
+							continue
+
+			donators.Add(ckey)
 
 	// just some tau ceti specific stuff
 	if(config.allow_tauceti_patrons)

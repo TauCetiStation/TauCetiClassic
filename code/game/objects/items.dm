@@ -79,10 +79,15 @@
 
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
+	// Is heavily utilized by swiping component. Perhaps use to determine how "quick" the strikes with this weapon are?
+	// See swiping.dm for more details.
+	var/sweep_step = 4
 	// Is using this item requires any specific skills?
 	var/list/required_skills
 
 	var/dyed_type
+
+	var/can_get_wet = TRUE
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -1113,7 +1118,7 @@
 
 /obj/item/burn()
 	var/turf/T = get_turf(src)
-	var/ash_type 
+	var/ash_type
 	if(w_class >= SIZE_BIG)
 		ash_type = /obj/effect/decal/cleanable/ash/large
 	else
