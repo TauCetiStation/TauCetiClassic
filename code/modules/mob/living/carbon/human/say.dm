@@ -160,13 +160,14 @@
 				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
 
+	if(get_species() == HOMUNCULUS)
+		message = cursed_talk(message)
+
 	message = capitalize(trim(message))
 	message = add_period(message)
 
 	if(iszombie(src))
 		message = zombie_talk(message)
-	if(get_species() == HOMUNCULUS)
-		message = cursed_talk(message)
 	var/ending = copytext(message, -1)
 
 	if(speaking)
