@@ -41603,7 +41603,7 @@
 /area/station/cargo/office)
 "mbx" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/pinpointer,
+/obj/item/weapon/pinpointer/advpinpointer,
 /obj/item/weapon/disk/nuclear,
 /obj/machinery/keycard_auth{
 	pixel_x = -28
