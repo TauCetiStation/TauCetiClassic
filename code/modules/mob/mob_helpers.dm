@@ -322,13 +322,14 @@
 
 var/global/list/cursed_words = list("МРАЧНЫЕ ВРЕМЕНА", "ТЬМА", "БУРЯ", "ВОЙНА", "ПУТЬ НА КОТОРОМ НЕ СНОСИТЬ ГОЛОВЫ", "КОПЬЕ", "УБИТЬ", "КРОВЬ",  "ЧИСТИЛИЩЕ", "МУЧИТЕЛЬНАЯ БОЛЬ", "МЯСО", "БОЙНЯ", "ПЫТКИ", "КРОВАВЫЙ ДОЖДЬ", "РАЗРЫВАЮЩИЕСЯ ГЛАЗНЫЕ ЯБЛОКИ", "ХАОС", "ВЗРЫВНОЕ УСТРОЙСТВО", "ДЕМОНИЧЕСКИЕ ВРАТА", "ЛАВА", "СМЕРТЬ", "РАЗОРВАННОЕ СЕРДЦЕ", "МУЧЕНИЯ", "СЖЕЧЬ", "РВОТА", "ВЫРВАННЫЙ ЯЗЫК", "ЗАБВЕНИЕ", "БЕЗЫСХОДНОСТЬ", "СУИЦИД", "БЕЗДНА", "ОБЕЗГЛАВЛИВАНИЕ", "РАЗРЫВ", "ДЫХАНИЕ СМЕРТИ", "УЖАСНАЯ УЧАСТЬ", "РАЗРУШЕНИЯ", "ГЛАЗНИЦА")
 /proc/cursed_talk(message)
-	var/list/text = list()
-	var/message_size = length_char(message)
-	text += pick(cursed_words)
-	for(var/i in 1 to round(message_size/5))
+	var/text = pick(cursed_words)
+	var/words = round(length_char(message)/6)
+	for(var/i in 1 to words)
 		text += pick(cursed_words)
+		if(i != words)
+			text += " "
 
-	return "[jointext(text, " ")]."
+	return text
 
 
 #define TILES_PER_SECOND 0.7
