@@ -23,6 +23,8 @@
 	var/list/valid_accessory_slots
 	var/list/restricted_accessory_slots
 
+	var/can_be_modded = FALSE //modding hardsuits with modkits
+
 	var/flashbang_protection = FALSE
 
 //BS12: Species-restricted clothing check.

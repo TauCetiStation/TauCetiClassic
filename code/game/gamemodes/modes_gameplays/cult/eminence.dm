@@ -16,6 +16,7 @@
 	var/obj/item/weapon/storage/bible/tome/eminence/tome //They have a special one
 	var/mob/living/cameraFollow = null
 	COOLDOWN_DECLARE(command_point)
+	COOLDOWN_DECLARE(point_to)
 
 /mob/camera/eminence/atom_init()
 	. = ..()
@@ -45,6 +46,7 @@
 
 /mob/camera/eminence/Login()
 	..()
+	sync_mind()
 	var/datum/religion/cult/R = global.cult_religion
 	if(R.eminence && R.eminence != src)
 		R.remove_member(src)
@@ -52,7 +54,7 @@
 		return
 	R.eminence = src
 	tome.religion = R
-	R.add_member(src)
+	R.add_member(src, CULT_ROLE_HIGHPRIEST)
 	to_chat(src, "<span class='cult large'>Вы стали Возвышенным!</span>")
 	to_chat(src, "<span class='cult'>Будучи Возвышенным, вы ведёте весь культ за собой. Весь культ услышит то, что вы скажите.</span>")
 	to_chat(src, "<span class='cult'>Вы можете двигаться невзирая на стены, вы бестелесны, и в большинстве случаев не сможете напрямую влиять на мир, за исключением нескольких особых способов.</span>")
@@ -162,7 +164,13 @@
 		return
 
 	var/list/modifiers = params2list(params)
-	if(modifiers[SHIFT_CLICK])
+	if(modifiers[SHIFT_CLICK]) //No need to check it twice
+		if(modifiers[MIDDLE_CLICK])
+			if(!COOLDOWN_FINISHED(src, point_to))
+				return
+			point_at(A)
+			COOLDOWN_START(src, point_to, 3 SECONDS)
+			return
 		A.examine(src)
 		return
 	if(modifiers[MIDDLE_CLICK] || modifiers[CTRL_CLICK])
@@ -236,6 +244,9 @@
 		cult_religion.send_message_to_members("<span class='large'>[command_text]</span>")
 		for(var/mob/M in servants_and_ghosts())
 			M.playsound_local(M, 'sound/antag/eminence_command.ogg', VOL_EFFECTS_MASTER)
+
+/mob/camera/eminence/point_at(atom/pointed_atom)
+	..(pointed_atom, /obj/effect/decal/point/eminence)
 
 //Used by the Eminence to coordinate the cult
 /obj/effect/temp_visual/command_point
