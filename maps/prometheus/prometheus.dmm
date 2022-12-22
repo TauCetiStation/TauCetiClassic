@@ -2246,6 +2246,33 @@
 /obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
+"adI" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/external{
+	dock_tag = "sci_dock";
+	locked = 1;
+	name = "Research Outpost Dock Airlock";
+	req_access = list(65)
+	},
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/asteroid/research_outpost/entry{
+	name = "Research Shuttle Dock"
+	})
+"adJ" = (
+/obj/machinery/camera{
+	c_tag = "Arrival Hallway North";
+	pixel_x = 20
+	},
+/obj/structure/sign/map/prometheus{
+	pixel_y = 32
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/station/hallway/secondary/arrival)
 "adO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/random/scrap/safe_even,
@@ -21950,12 +21977,6 @@
 	icon_state = "dark"
 	},
 /area/station/security/secconfhall)
-"eFU" = (
-/obj/item/weapon/shard{
-	icon_state = "medium"
-	},
-/turf/environment/space,
-/area/space)
 "eFY" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
@@ -47793,16 +47814,7 @@
 	},
 /area/station/aisat/antechamber_interior)
 "kXc" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/external{
-	dock_tag = "sci_dock";
-	locked = 1;
-	name = "Research Outpost Dock Airlock"
-	},
-/obj/item/decoration/tinsel,
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
+/turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/entry{
 	name = "Research Shuttle Dock"
 	})
@@ -81327,12 +81339,6 @@
 	icon_state = "warnplate"
 	},
 /area/station/rnd/test_area)
-"trh" = (
-/obj/item/weapon/shard{
-	icon_state = "small"
-	},
-/turf/environment/space,
-/area/space)
 "trq" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -127570,7 +127576,7 @@ iRy
 iRy
 fkk
 bsP
-uNS
+kXc
 dKq
 rQn
 fMx
@@ -127826,8 +127832,8 @@ iRy
 iRy
 iRy
 fkk
-uNS
-uNS
+kXc
+kXc
 aYl
 fYG
 bYT
@@ -128854,8 +128860,8 @@ iRy
 iRy
 iRy
 iRy
-uNS
-uNS
+kXc
+kXc
 bbX
 mTK
 iTz
@@ -129883,11 +129889,11 @@ cdw
 cdw
 cdw
 cdw
-uNS
+kXc
 qky
 rCV
-uNS
-uNS
+kXc
+kXc
 uKk
 dOk
 dOk
@@ -130397,7 +130403,7 @@ cdw
 cdw
 cdw
 cdw
-kXc
+adI
 age
 eWK
 acp
@@ -133482,7 +133488,7 @@ lUa
 iRy
 icY
 icY
-clc
+adJ
 lMD
 wox
 daG
