@@ -2960,7 +2960,9 @@
 /turf/environment/space,
 /area/space)
 "afb" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 1
+	},
 /turf/environment/space,
 /area/space)
 "afc" = (
@@ -130010,8 +130012,8 @@ iWu
 iWu
 iWu
 hGN
-hBE
 iRy
+hBE
 iRy
 iRy
 iRy
