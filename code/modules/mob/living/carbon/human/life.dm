@@ -157,7 +157,7 @@ var/global/list/tourette_vox_bad_word = list("ГОВНО", "СЕДАЛИЩЕ", "
 					if(1)
 						emote("twitch")
 					if(2 to 3)
-						if(src.get_species() == VOX)
+						if(get_species() == VOX)
 							say(pick(global.tourette_vox_bad_word))
 						else
 							say(pick(global.tourette_bad_words))
