@@ -33687,7 +33687,6 @@
 "hDM" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/item/weapon/paper/monitorkey,
-/obj/item/weapon/paper/space_structures,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkpurple"
@@ -67492,7 +67491,7 @@
 	id = "Secure Storage";
 	name = "Engineering Secure Storage";
 	pixel_y = 28;
-	req_access = list(56)
+	req_access = list(10)
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -70335,6 +70334,7 @@
 /area/station/maintenance/engineering)
 "qSO" = (
 /obj/machinery/computer/telescience,
+/obj/item/weapon/paper/space_structures,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkpurple"

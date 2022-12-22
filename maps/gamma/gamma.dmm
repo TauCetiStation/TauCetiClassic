@@ -46112,6 +46112,7 @@
 /area/station/security/hos)
 "nxW" = (
 /obj/machinery/computer/telescience,
+/obj/item/weapon/paper/space_structures,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -66936,7 +66937,6 @@
 /area/station/maintenance/science)
 "ugH" = (
 /obj/structure/table,
-/obj/item/weapon/paper/space_structures,
 /obj/machinery/computer/skills,
 /turf/simulated/floor{
 	dir = 5;

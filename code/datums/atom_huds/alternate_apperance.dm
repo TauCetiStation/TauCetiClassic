@@ -320,16 +320,16 @@ var/global/list/active_alternate_appearances = list()
 /datum/atom_hud/alternate_appearance/basic/my_religion/New(key, image/I, loc, datum/religion/R, alternate_type)
 	..(key, I, alternate_type, loc)
 	religion = R
-	for(var/mob/living/carbon/human/H in global.player_list)
-		if(mobShouldSee(H))
-			add_hud_to(H)
+	for(var/mob/M in global.player_list)
+		if(mobShouldSee(M))
+			add_hud_to(M)
 
 /datum/atom_hud/alternate_appearance/basic/my_religion/Destroy()
 	religion = null
 	return ..()
 
-/datum/atom_hud/alternate_appearance/basic/my_religion/mobShouldSee(mob/living/carbon/human/H)
-	if(religion.is_member(H))
+/datum/atom_hud/alternate_appearance/basic/my_religion/mobShouldSee(mob/M)
+	if(religion.is_member(M))
 		return TRUE
 	return FALSE
 
