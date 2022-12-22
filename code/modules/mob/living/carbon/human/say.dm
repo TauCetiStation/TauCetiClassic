@@ -405,7 +405,7 @@
 		handled = 1
 	if(disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		if(prob(50))
-			message = turret_talk(message)
+			message = turret_talk(message, get_species())
 	if(slurring)
 		message = slur(message)
 		verb = pick("stammers","stutters")

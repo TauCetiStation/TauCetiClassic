@@ -312,12 +312,12 @@
 
 	return jointext(message_list, " ")
 
-/proc/turret_talk(message)
+/proc/turret_talk(message, species)
 	var/list/message_list = splittext(message, " ")
 	var/maxchanges = max(round(message_list.len / 1.5), 2)
 	for(var/i in 1 to rand(maxchanges / 2, maxchanges))
 		var/insertpos = rand(1, message_list.len)
-		if(VOX)
+		if(species == VOX)
 			message_list[insertpos] = pick(tourette_vox_bad_word)
 		else
 			message_list[insertpos] = pick(tourette_bad_words)
