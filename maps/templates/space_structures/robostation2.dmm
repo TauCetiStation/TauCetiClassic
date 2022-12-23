@@ -455,6 +455,7 @@
 "tK" = (
 /obj/structure/closet/critter/pig,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/circuitboard/mecha/honker/main,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
