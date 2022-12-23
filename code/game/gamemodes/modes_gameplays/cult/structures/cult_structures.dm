@@ -146,9 +146,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	name = "torture table"
 	desc = "For tortures"
 	icon = 'icons/obj/cult.dmi'
-	icon_state = "table2-idle"
+	icon_state = "table_surgey_idle"
 	can_buckle = TRUE
 	buckle_lying = TRUE
+	flags = NODECONSTRUCT
 
 	var/datum/religion/cult/religion
 	var/charged = FALSE
