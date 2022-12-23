@@ -2254,6 +2254,7 @@
 	name = "Research Outpost Dock Airlock";
 	req_access = list(65)
 	},
+/obj/item/decoration/tinsel,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -14890,9 +14891,6 @@
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cYQ" = (
-/obj/structure/reagent_dispensers/acid{
-	pixel_y = 32
-	},
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warndark"
@@ -64783,6 +64781,10 @@
 /area/station/storage/primary)
 "pdW" = (
 /obj/machinery/computer/rdconsole/robotics,
+/obj/structure/reagent_dispensers/acid{
+	density = 0;
+	pixel_x = -32
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
