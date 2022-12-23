@@ -371,7 +371,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	update_transform()
 	//Hud Stuff
 	update_hud()
-	src.sec_hud_set_implants()
+	sec_hud_set_implants()
 
 
 /* --------------------------------------- */
