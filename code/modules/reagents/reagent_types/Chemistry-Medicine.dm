@@ -754,12 +754,11 @@
 		if(10 to 20)
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_broken())
-					if(prob(15))
-						to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
-						E.brute_dam = 0
-						E.status &= ~ORGAN_BROKEN
-						E.perma_injury = 0
-						holder.remove_reagent("nanocalcium", 10)
+					to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
+					E.brute_dam = 0
+					E.status &= ~ORGAN_BROKEN
+					E.perma_injury = 0
+					holder.remove_reagent("nanocalcium", 10)
 
 /datum/reagent/metatrombine
 	name = "Metatrombine"
