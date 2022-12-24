@@ -26,13 +26,13 @@
 	//veiled_threat just used for hide information about the brokenness of the item
 	if(veiled_threat)
 		/*
-		/have opinion this will not give any special effect
-		/on the current casual R&D system and prototypes,
-		/but the idea seems to be correct and good.
-		/Look at the almost complete absence of rigged batteries
-		/and crit_fail check in examine (stock_parts/cell)
-		/and weapon overlay in nuclear gun (energy/gun/nuclear)
-		/and probably more feedbacks for user which he would be better not showing
+		have opinion this will not give any special effect
+		on the current casual R&D system and prototypes,
+		but the idea seems to be correct and good.
+		Look at the almost complete absence of rigged batteries
+		and crit_fail check in examine (stock_parts/cell)
+		and weapon overlay in nuclear gun (energy/gun/nuclear)
+		and probably more feedbacks for user which he would be better not showing
 		*/
 		crit_fail = TRUE
 		name += " " + PROTOTYPE_MARK(max(mark, 1))
