@@ -42,7 +42,12 @@
 	if (temp)
 		dat = "<TT>[temp]</TT><BR><BR><A href='?src=\ref[src];choice=Clear Screen'>Clear Screen</A>"
 	else
-		dat = "Confirm Identity: <A href='?src=\ref[src];choice=Confirm Identity'>[scan ? "[scan.name]" : "----------"]</A><HR>"
+		dat = "Confirm Identity: <A href='?src=\ref[src];choice=Confirm Identity'>[scan ? "[scan.name]" : "----------"]</A>"
+		if(hacked_by_malf)
+			//probably only non-humans allowed (except drones), make me think otherwise
+			if(issilicon(user))
+				dat += "<A href='?src=\ref[src];choice=Malfunction'>Compromise Data System</A><BR>"
+		dat += "<HR>"
 		if (authenticated)
 			switch(screen)
 				if(1.0)
@@ -443,6 +448,18 @@ What a mess.*/
 		if("New Record (General)")
 			active1 = CreateGeneralRecord() // todo: datacore.manifest_inject or scaner (Identity Analyser)
 			active2 = null
+
+		if("Malfunction")
+			//set every records to arrest
+			for(var/datum/data/record/security_record in global.data_core.security)
+				security_record.fields["criminal"] = "*Arrest*"
+			//update hud for visual feedback
+			for(var/mob/living/carbon/human/H in global.human_list)
+				//looks too highcost
+				//should find existed proc or write by myself
+				H.sec_hud_set_security_status()
+			//Repeating should be not provided, probably
+			hacked_by_malf = FALSE
 
 //FIELD FUNCTIONS
 		if("Edit Field")

@@ -434,3 +434,6 @@
 	cam["z"] = z
 	cam["isonstation"] = is_station_level(z)
 	return cam
+
+/obj/machinery/camera/malf_hack_act()
+	return FALSE

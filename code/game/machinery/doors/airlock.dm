@@ -696,7 +696,7 @@ var/global/list/airlock_overlays = list()
 					else if(aiDisabledIdScanner)
 						to_chat(usr, "You've already disabled the IdScan feature.")
 					else
-						aiDisabledIdScanner = 1
+						ai_disable_access()
 
 				if(2)
 					// Disrupt main power
@@ -1190,6 +1190,9 @@ var/global/list/airlock_overlays = list()
 		ae.broken = TRUE
 		operating = 0
 	..()
+
+/obj/machinery/door/airlock/proc/ai_disable_access()
+	aiDisabledIdScanner = TRUE
 
 /obj/structure/door_scrap
 	name = "Door Scrap"

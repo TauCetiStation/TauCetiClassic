@@ -150,6 +150,24 @@
 		locked.loc = loc
 		locked = null
 
+/obj/machinery/computer/teleporter/proc/malf_change_target()
+	//hub hacked, console not. Why? Denied
+	if(!hacked_by_malf)
+		return
+	var/list/possible_random_targets = list()
+	for(var/obj/item/device/radio/beacon/R in radio_beacon_list)
+		var/turf/T = get_turf(R)
+		if(!T)
+			continue
+		if(is_centcom_level(T.z))
+			continue
+		if(!SSmapping.has_level(T.z))
+			continue
+		possible_random_targets += R
+	if(!possible_random_targets.len)
+		return
+	return pick(possible_random_targets)
+
 /obj/machinery/computer/teleporter/proc/set_target(mob/user)
 	if(regime_set == "Teleporter")
 		var/list/L = list()
@@ -292,6 +310,11 @@
 
 	default_deconstruction_crowbar(W)
 
+/obj/machinery/teleport/hub/proc/get_misstake_chance()
+	if(hacked_by_malf)
+		return 100
+	return (30 - ((accurate) * 10))
+
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M, turf/T)
 	var/obj/machinery/computer/teleporter/com = power_station.teleporter_console
 	if (!com)
@@ -302,9 +325,13 @@
 	if(is_centcom_level(com.target.z))
 		visible_message("<span class='notice'>Unknown coordinates. Please reinstate coordinate matrix.</span>")
 		return
+	if(hacked_by_malf)
+		var/obj/item/device/radio/beacon/possible_redirect = com.malf_change_target()
+		if(possible_redirect)
+			com.target = possible_redirect
 	if (istype(M, /atom/movable))
 		if(do_teleport(M, com.target))
-			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
+			if(!calibrated && prob(get_misstake_chance())) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
 					var/list/stabilizer = M.search_contents_for(/obj/item/rig_module/teleporter_stabilizer)
@@ -470,3 +497,7 @@
 		icon_state = "controller-p"
 	else
 		icon_state = "controller"
+
+//maybe electrify user? but then who will inattentively jump into the teleport?
+/obj/machinery/teleport/station/malf_hack_act()
+	return FALSE

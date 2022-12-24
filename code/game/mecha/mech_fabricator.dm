@@ -171,7 +171,8 @@
 	var/I = new D.build_path(location)
 	if(isobj(I))
 		var/obj/O = I
-		O.prototipify(min_reliability=files.design_reliabilities[D.id] + efficiency_coeff * 25.0,  max_reliability=70 + efficiency_coeff * 25.0)
+		//last argument FALSE because mecha parts probably can be used with unreliability
+		O.prototipify(min_reliability=files.design_reliabilities[D.id] + efficiency_coeff * 25.0,  max_reliability=70 + efficiency_coeff * 25.0, veiled_threat = FALSE)
 
 		files.design_reliabilities[D.id] += files.design_reliabilities[D.id] * (RND_RELIABILITY_EXPONENT ** files.design_created_prototypes[D.id])
 		files.design_reliabilities[D.id] = max(round(files.design_reliabilities[D.id], 5), 1)

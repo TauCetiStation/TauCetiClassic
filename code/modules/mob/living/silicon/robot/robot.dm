@@ -124,7 +124,7 @@
 	//setup malfbot
 	if(!mind || !key || !connected_ai || !istype(connected_ai))
 		return
-	if(isrolebytype(/datum/role/malfAI, connected_ai))
+	if(ismalf(connected_ai))
 		var/datum/faction/malf_silicons/find_faction = find_faction_by_type(/datum/faction/malf_silicons)
 		if(find_faction)
 			add_faction_member(find_faction, src, TRUE)
@@ -477,16 +477,15 @@
 // this function shows information about the malf_ai gameplay type in the status screen
 /mob/living/silicon/robot/show_malf_ai()
 	..()
+	var/datum/faction/malf_silicons/malf_faction = find_faction_by_type(/datum/faction/malf_silicons)
+	if(!malf_faction)
+		return 0
 	if(ismalf(connected_ai))
-		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
 		if(SSticker.hacked_apcs >= 3)
-			stat(null, "Time until station control secured: [max(malf.AI_capture_timeleft/(SSticker.hacked_apcs/3), 0)] seconds")
+			stat(null, "Time until station control secured: [max(malf_faction.AI_capture_timeleft/(SSticker.hacked_apcs/3), 0)] seconds")
 	else
-		var/datum/faction/malf_silicons/malf = find_faction_by_type(/datum/faction/malf_silicons)
-		if(malf?.malf_mode_declared)
-			stat(null, "Time left: [max(malf.AI_capture_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
-	return 0
-
+		if(malf_faction.malf_mode_declared)
+			stat(null, "Time left: [max(malf_faction.AI_capture_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
 
 // update the status screen display
 /mob/living/silicon/robot/Stat()

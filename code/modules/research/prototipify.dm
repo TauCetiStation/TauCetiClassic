@@ -9,7 +9,7 @@
 // This is very important. Almost all items constructed via protolathe are unreliable
 // And are deconstructions of items made by deconstructing other items
 // So consider them tests of "new" construction techniques for an item already known
-/obj/proc/prototipify(min_reliability=0, max_reliability=100)
+/obj/proc/prototipify(min_reliability=0, max_reliability=100, veiled_threat = FALSE)
 	origin_tech = null
 
 	var/rel_val = rand(min_reliability, max_reliability)
@@ -18,25 +18,38 @@
 	while(rel_val >= 100)
 		rel_val -= 100
 		mark += 1
-
 	if(rel_val < 0)
 		rel_val = 0
 
 	reliability = mark > 0 ? 100 : rel_val
 
-	if(reliability < 100)
-		if(!prob(reliability))
-			crit_fail = TRUE
-			name = pick(CRIT_FAIL_ADJECTIVES) + " " + name
-			desc += " " + pick(CRIT_FAIL_REMARKS)
-		else
-			name = pick(PROTOTYPE_ADJECTIVES) + " " + name
-			desc += " " + pick(PROTOTYPE_DESC_REMARKS)
+	//veiled_threat just used for hide information about the brokenness of the item
+	if(veiled_threat)
+		/*
+		/have opinion this will not give any special effect
+		/on the current casual R&D system and prototypes,
+		/but the idea seems to be correct and good.
+		/Look at the almost complete absence of rigged batteries
+		/and crit_fail check in examine (stock_parts/cell)
+		/and weapon overlay in nuclear gun (energy/gun/nuclear)
+		/and probably more feedbacks for user which he would be better not showing
+		*/
+		crit_fail = TRUE
+		name += " " + PROTOTYPE_MARK(max(mark, 1))
 	else
-		name += " " + PROTOTYPE_MARK(mark)
+		if(reliability < 100)
+			if(!prob(reliability))
+				crit_fail = TRUE
+				name = pick(CRIT_FAIL_ADJECTIVES) + " " + name
+				desc += " " + pick(CRIT_FAIL_REMARKS)
+			else
+				name = pick(PROTOTYPE_ADJECTIVES) + " " + name
+				desc += " " + pick(PROTOTYPE_DESC_REMARKS)
+		else
+			name += " " + PROTOTYPE_MARK(mark)
 
 	for(var/obj/sub_obj in contents)
-		sub_obj.prototipify(min_reliability, max_reliability)
+		sub_obj.prototipify(min_reliability, max_reliability, veiled_threat)
 
 	set_prototype_qualities(rel_val=saved_rel_val, mark=mark)
 

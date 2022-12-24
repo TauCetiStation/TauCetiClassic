@@ -408,6 +408,8 @@ Class Procs:
 		return TRUE
 
 	interact(user)
+
+	try_malf_overload(user)
 	return FALSE
 
 /obj/machinery/tgui_close(mob/user)
@@ -588,9 +590,29 @@ Class Procs:
 
 //activate uniquie interaction
 /obj/machinery/proc/malf_hack_act()
-	activate_hack()
-	return TRUE
+	if(activate_hack())
+		return TRUE
+	return FALSE
 
 //if machinery should not change that variable
 /obj/machinery/proc/activate_hack()
 	hacked_by_malf = TRUE
+	return TRUE
+
+//copypast from /datum/AI_Module/small/overload_machine
+/obj/machinery/proc/try_malf_overload(mob/user)
+	if(!hacked_by_malf)
+		return FALSE
+	if(!is_operational())
+		return FALSE
+	//The AI would like to use machinery instead of their directed explosion.
+	//For directional there is AI overload module.
+	if(issilicon(user))
+		return FALSE
+	audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
+	addtimer(CALLBACK(src, .proc/machinery_overload_act), 50)
+	return TRUE
+
+/obj/machinery/proc/machinery_overload_act()
+	explosion(get_turf(src), 0,1,2,3)
+	qdel(src)

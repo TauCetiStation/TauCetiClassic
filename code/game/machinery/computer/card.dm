@@ -94,6 +94,7 @@
 	data["station_name"] = station_name()
 	data["mode"] = mode
 	data["printing"] = printing
+	data["hacked"] = hacked_by_malf
 	data["manifest"] = data_core ? data_core.html_manifest(monochrome=0) : null
 	data["target_name"] = modify ? modify.name : "-----"
 	data["target_owner"] = modify && modify.registered_name ? modify.registered_name : "-----"
@@ -314,6 +315,14 @@
 
 						for(var/A in modify.access)
 							P.info += "  [get_access_desc(A)]"
+
+		if("Compromise Access System")
+			//drop every airlock access requires
+			for(var/obj/machinery/door/airlock/station_airlock as anything in global.airlock_list)
+				if(is_station_level(station_airlock.z))
+					station_airlock.ai_disable_access()
+			//Repeating should be not provided, probably
+			hacked_by_malf = FALSE
 
 		if ("terminate")
 			if (is_authenticated())
