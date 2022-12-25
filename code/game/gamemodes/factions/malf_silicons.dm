@@ -208,6 +208,7 @@
 	initroletype = /datum/role/malfAI/zombie //First addition should be the AI
 	AI_capture_timeleft = 900
 	var/finished = FALSE
+	var/aboba = TRUE
 
 /datum/faction/malf_silicons/zombie/OnPostSetup()
 	. = ..()
@@ -233,7 +234,8 @@
 
 /datum/faction/malf_silicons/zombie/check_win()
 	//delete this if PR is ready
-	return FALSE
+	if(aboba)
+		return FALSE
 
 	if(finished)
 		return FALSE
