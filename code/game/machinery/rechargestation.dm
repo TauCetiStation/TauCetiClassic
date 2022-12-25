@@ -211,7 +211,7 @@
 				return
 
 //TODO: replace rech.stations to robot station when malf hacks APC
-ADD_TO_GLOBAL_LIST(/obj/machinery/recharge_station/robot_station, global.cyborg_recharging_station)
+ADD_TO_GLOBAL_LIST(/obj/machinery/recharge_station/robot_station, cyborg_recharging_station)
 /obj/machinery/recharge_station/robot_station
 	icon_state = "borgdecon3"
 
