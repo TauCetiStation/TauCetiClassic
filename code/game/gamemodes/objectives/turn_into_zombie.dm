@@ -8,16 +8,16 @@
 	for(var/mob/living/carbon/human/H as anything in human_list)
 		if(!H || !H.mind || !is_station_level(H.z))
 			continue
-		if(!isrolebytype(/datum/role/zombie, H))
-			//dead without zombie-virus
-			if(H.stat == DEAD)
-				total_non_infected++
-			else
-				//CONSCIOUS || UNCONSCIOUS without client => afk
-				if(H.client)
-					total_alive++
-		else
+		if(isrolebytype(/datum/role/zombie, H))
 			total_zombie++
+			continue
+		//dead without zombie-virus
+		if(H.stat == DEAD)
+			total_non_infected++
+		else
+			//CONSCIOUS || UNCONSCIOUS without client => afk
+			if(H.client)
+				total_alive++
 
 	/*
 	preventing greenscreen if all zombies were killed
