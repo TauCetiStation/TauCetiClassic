@@ -17,6 +17,7 @@
 	var/can_change_id = 0
 	var/list/Perp
 	var/tempname = null
+	var/hack_performed = FALSE
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
@@ -451,6 +452,7 @@ What a mess.*/
 
 		if("Malfunction")
 			//set every records to arrest
+			//maybe use invoke_async ???
 			for(var/datum/data/record/security_record in global.data_core.security)
 				security_record.fields["criminal"] = "*Arrest*"
 			//update hud for visual feedback
@@ -459,7 +461,8 @@ What a mess.*/
 				//should find existed proc or write by myself
 				H.sec_hud_set_security_status()
 			//Repeating should be not provided, probably
-			hacked_by_malf = FALSE
+			for(var/obj/machinery/computer/secure_data/computer as anything in global.security_data_computers_list)
+				hack_performed = TRUE
 
 //FIELD FUNCTIONS
 		if("Edit Field")
@@ -647,6 +650,11 @@ What a mess.*/
 			continue
 
 	..(severity)
+
+/obj/machinery/computer/secure_data/is_hack_avaible()
+	if(hack_performed)
+		return FALSE
+	return ..()
 
 /obj/machinery/computer/secure_data/detective_computer
 	icon = 'icons/obj/computer.dmi'

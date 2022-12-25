@@ -64,6 +64,7 @@ var/global/list/all_areas = list()
 var/global/list/area/areas_by_type = list()
 var/global/list/machines = list()
 var/global/list/identification_computer_list = list()
+var/global/list/security_data_computers_list = list()
 var/global/list/vending_products = list() //this list is used to create product images in the vending machine window
 var/global/list/intercom_list = list()
 var/global/list/cyborg_recharging_station = list()	//Zombie-Malf content
