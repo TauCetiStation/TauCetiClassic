@@ -531,6 +531,8 @@ var/global/list/datum/spawners_cooldown = list()
 	var/turf/spawning_place
 
 /datum/spawner/malf_borg/New(obj/machinery/recharge_station/robot_station/S)
+	//TODO: test this!
+	. = ..()
 	spawning_place = get_turf(S)
 
 /datum/spawner/malf_borg/spawn_ghost(mob/dead/observer/ghost)
