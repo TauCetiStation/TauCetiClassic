@@ -1,6 +1,8 @@
 var/global/list/preferences_datums = list()
 
-var/global/const/MAX_SAVE_SLOTS = 10
+#define MAX_SAVE_SLOTS 10
+#define MAX_SAVE_SLOTS_SUPPORTER MAX_SAVE_SLOTS+10
+#define GET_MAX_SAVE_SLOTS(Client) ((Client && Client.supporter) ? MAX_SAVE_SLOTS_SUPPORTER : MAX_SAVE_SLOTS)
 
 #define MAX_GEAR_COST 5
 #define MAX_GEAR_COST_SUPPORTER MAX_GEAR_COST+3

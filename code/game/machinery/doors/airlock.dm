@@ -548,7 +548,7 @@ var/global/list/airlock_overlays = list()
 		return FALSE
 	return TRUE
 
-/obj/machinery/door/airlock/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/door/airlock/CanPass(atom/movable/mover, turf/target, height=0)
 	if (isElectrified())
 		if (isitem(mover))
 			var/obj/item/i = mover
@@ -884,17 +884,6 @@ var/global/list/airlock_overlays = list()
 	..()
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
-	if(istype(C,/obj/item/weapon/changeling_hammer) && !operating && density) // yeah, hammer ignore electrify
-		var/obj/item/weapon/changeling_hammer/W = C
-		user.do_attack_animation(src)
-		user.SetNextMove(CLICK_CD_MELEE)
-		visible_message("<span class='userdanger'>[user] has punched the [src]!</span>")
-		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		if(W.use_charge(user) && prob(20))
-			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			door_rupture(user)
-		return
-
 	if(istype(C, /obj/item/device/detective_scanner) || istype(C, /obj/item/taperoll))
 		return
 

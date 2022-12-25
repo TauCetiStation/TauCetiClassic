@@ -721,14 +721,12 @@
 		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
 		return
 
-	else if(istype(W, /obj/item/weapon/changeling_hammer))
-		var/obj/item/weapon/changeling_hammer/Ham = W
-		user.do_attack_animation(src)
+	else if(istype(W, /obj/item/weapon/melee/changeling_hammer))
+		var/obj/item/weapon/melee/changeling_hammer/hammer = W
 		user.SetNextMove(CLICK_CD_MELEE)
-		visible_message("<span class='warning'><B>[user]</B> has punched \the <B>[src]!</B></span>")
-		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		if(Ham.use_charge(user,6))
-			take_damage(Ham.force * 2)
+		playsound(src, pick(hammer.hitsound), VOL_EFFECTS_MASTER)
+		dynattackby(hammer, user)
+
 	else
 		user.SetNextMove(CLICK_CD_MELEE)
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
