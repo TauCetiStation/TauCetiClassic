@@ -487,9 +487,8 @@
 				to_chat(user, "<span class='danger'>You go blind!</span>")
 				user.eye_blind = 5
 				user.adjustBlurriness(5)
-				user.disabilities |= NEARSIGHTED
-				spawn(100)
-					user.disabilities &= ~NEARSIGHTED
+				user.become_nearsighted(EYE_DAMAGE_TEMPORARY)
+				addtimer(CALLBACK(user, /mob.proc/cure_nearsighted, EYE_DAMAGE_TEMPORARY), 20 SECONDS, TIMER_STOPPABLE)
 	return
 
 

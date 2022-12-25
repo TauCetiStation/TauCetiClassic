@@ -281,9 +281,8 @@
 		if(M.glasses == src)
 			M.eye_blind = 3
 			M.blurEyes(15)
-			M.disabilities |= NEARSIGHTED
-			spawn(100)
-				M.disabilities &= ~NEARSIGHTED
+			M.become_nearsighted(EYE_DAMAGE_TEMPORARY)
+			addtimer(CALLBACK(M, /mob.proc/cure_nearsighted, EYE_DAMAGE_TEMPORARY), 5 SECONDS, TIMER_STOPPABLE)
 	..()
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
@@ -385,7 +384,7 @@
 /obj/item/clothing/glasses/sunglasses/noir/verb/toggle_noir()
 	set name = "Toggle Noir"
 	set category = "Object"
-	
+
 	if(usr.incapacitated())
 		return
 	active = !active

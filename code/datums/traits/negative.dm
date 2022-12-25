@@ -103,6 +103,7 @@
 
 /datum/quirk/nearsighted/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
+	H.become_nearsighted(QUIRK)
 	var/obj/item/clothing/glasses/regular/G = new
 	if(!H.equip_to_slot_if_possible(G, SLOT_GLASSES, null, TRUE))
 		H.put_in_hands(G)

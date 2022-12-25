@@ -21,6 +21,15 @@
 /mob/living/proc/has_quirk(quirktype)
 	return roundstart_quirks[quirktype]
 
+/mob/proc/cure_nearsighted(source)
+	REMOVE_TRAIT(src, TRAIT_NEARSIGHT, source)
+	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
+		clear_fullscreen("nearsighted")
+
+/mob/proc/become_nearsighted(source)
+	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT))
+		overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
+	ADD_TRAIT(src, TRAIT_NEARSIGHT, source)
 
 /* STUN */
 // placeholders

@@ -166,7 +166,7 @@
 	//zombie have NO_PAIN and can't adjust/sets halloss
 	H.setHalLoss(0)
 	//remove all blind-blur effects
-	H.disabilities &= ~NEARSIGHTED
+	H.cure_nearsighted(list(EYE_DAMAGE, GENETIC_MUTATION, EYE_DAMAGE_TEMPORARY))
 	H.sdisabilities &= ~BLIND
 	H.blinded = FALSE
 	H.setBlurriness(0)
