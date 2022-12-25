@@ -38,6 +38,7 @@
 	/datum/game_mode/mix/nukeheist,
 	/datum/game_mode/mix/wizabduct,
 	/datum/game_mode/mix/wiztraitor,
+	/datum/game_mode/mix/zombie_malf,
 */
 
 /datum/modesbundle/teambased
@@ -86,7 +87,7 @@
 	votable = TRUE
 
 /datum/modesbundle/all/secret/New()
-	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended, /datum/game_mode/malfunction, /datum/game_mode/zombie_malf)
+	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended, /datum/game_mode/malfunction)
 	..()
 
 /datum/modesbundle/run_anyway
