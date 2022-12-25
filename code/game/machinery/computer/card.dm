@@ -1,3 +1,4 @@
+ADD_TO_GLOBAL_LIST(/obj/machinery/computer/card, global.cyborg_recharging_station)
 /obj/machinery/computer/card
 	name = "Identification Computer"
 	desc = "Terminal for programming NanoTrasen employee ID cards to access parts of the station."
@@ -10,6 +11,8 @@
 	var/obj/item/weapon/card/id/modify = null	//the card we will change
 	var/mode = 0.0
 	var/printing = null
+	//var for cancel double malf hack because it have affect to all station
+	var/hack_performed = FALSE
 	var/datum/money_account/datum_account = null	//if money account is tied to the card and the card is inserted into the console, the account is stored here
 	required_skills = list(/datum/skill/command = SKILL_LEVEL_PRO)
 	fumbling_time = SKILL_TASK_TOUGH
@@ -94,7 +97,7 @@
 	data["station_name"] = station_name()
 	data["mode"] = mode
 	data["printing"] = printing
-	data["hacked"] = hacked_by_malf
+	data["hacked"] = is_hack_avaible()
 	data["manifest"] = data_core ? data_core.html_manifest(monochrome=0) : null
 	data["target_name"] = modify ? modify.name : "-----"
 	data["target_owner"] = modify && modify.registered_name ? modify.registered_name : "-----"
@@ -318,11 +321,13 @@
 
 		if("Compromise Access System")
 			//drop every airlock access requires
+			//maybe use invoke_async ???
 			for(var/obj/machinery/door/airlock/station_airlock as anything in global.airlock_list)
 				if(is_station_level(station_airlock.z))
 					station_airlock.ai_disable_access()
 			//Repeating should be not provided, probably
-			hacked_by_malf = FALSE
+			for(var/obj/machinery/computer/card/computer as anything in global.identification_computer_list)
+				computer.hack_performed = TRUE
 
 		if ("terminate")
 			if (is_authenticated())
@@ -335,6 +340,11 @@
 		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 
 	return 1
+
+/obj/machinery/computer/card/is_hack_avaible()
+	if(hack_performed)
+		return FALSE
+	return ..()
 
 /obj/machinery/computer/card/centcom
 	name = "CentCom Identification Computer"
