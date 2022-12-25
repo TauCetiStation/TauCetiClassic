@@ -10,6 +10,10 @@
 
 	logo_state = "malf-logo"
 
+	//legacy vars from ai.dm
+	var/malfhack_performing = FALSE
+	var/obj/machinery/power/apc/malfhack_target_apc = null
+
 /datum/role/malfAI/OnPostSetup(laterole)
 	. = ..()
 	var/mob/living/silicon/ai/AI_mind_current = antag.current
@@ -75,6 +79,48 @@
 						R.contents -= R.module.emag
 			log_admin("[key_name(usr)] has unemag'ed [ai]'s Cyborgs.")
 
+/datum/role/malfAI/proc/malf_hack_done()
+	var/obj/machinery/power/apc/apc = malfhack_target_apc
+	//check qdeling apc
+	if(!apc)
+		return
+	//check wires
+	if(apc.aidisabled)
+		return
+	var/datum/faction/malf_silicons/malf_faction = faction
+	if(malf_faction)
+		if(is_station_level(apc.z))
+			global.hacked_apcs += apc
+			apc.malfunction_area()
+		//lowest treshold in hacked apcs for an announcement to start
+		announce_hacker(global.hacked_apcs.len, malf_faction.get_lower_treshold())
+	var/mob/querida = antag.current
+	//check qdeling ai
+	if(querida)
+		apc.malfai = querida
+		to_chat(querida, "<span class='info'>Hack complete. Area is now under your exclusive control.</span>")
+	malfhack_target_apc = null
+	malfhack_performing = FALSE
+
+/datum/role/malfAI/proc/apc_hack(obj/machinery/power/apc/A)
+	var/mob/querida = antag.current
+	if(malfhack_performing)
+		to_chat(querida, "<span class='warning'>You are already hacking an APC.</span>")
+		return FALSE
+	to_chat(querida, "<span class='info'>Beginning override of APC systems. This takes some time.</span>")
+	malfhack_target_apc = A
+	malfhack_performing = TRUE
+	addtimer(CALLBACK(src, .proc/malf_hack_done), 600)
+
+/datum/role/malfAI/zombie
+	name = MALF
+	id = ZOMBIE_MALF
+
+/datum/role/malfAI/zombie/OnPostSetup(laterole)
+	. = ..()
+	var/mob/living/silicon/ai/AI_mind_current = antag.current
+	new /datum/AI_Module/infest(AI_mind_current)
+
 /datum/role/malfbot
 	name = MALFBOT
 	id = MALFBOT
@@ -112,12 +158,3 @@
 				R.module_state_3 = null
 				R.contents -= R.module.emag
 			log_admin("[key_name(usr)] has unemag'ed [R].")
-
-/datum/role/malfAI/zombie
-	name = MALF
-	id = ZOMBIE_MALF
-
-/datum/role/malfAI/zombie/OnPostSetup(laterole)
-	. = ..()
-	var/mob/living/silicon/ai/AI_mind_current = antag.current
-	new /datum/AI_Module/infest(AI_mind_current)

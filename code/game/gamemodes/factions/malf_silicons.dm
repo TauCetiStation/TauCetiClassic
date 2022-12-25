@@ -1,3 +1,28 @@
+#define LOWEST_TRESHOLD_HACKED_APC 3
+#define UPGRADED_TRESHOLD_HACKED_APC 7
+
+//global proc for emag mimicking
+/proc/announce_hacker(hacked_amount = 0, lowest_treshold = 0)
+	if(hacked_amount < lowest_treshold)
+		return
+	switch(SSticker.Malf_announce_stage)
+		if(0)
+			SSticker.Malf_announce_stage = 1
+			var/datum/announcement/centcomm/malf/first/announce_first = new
+			announce_first.play()
+		if(1)
+			SSticker.Malf_announce_stage = 2
+			var/datum/announcement/centcomm/malf/second/announce_second = new
+			announce_second.play()
+		if(2)
+			SSticker.Malf_announce_stage = 3
+			var/datum/announcement/centcomm/malf/third/announce_third = new
+			announce_third.play()
+		if(3)
+			SSticker.Malf_announce_stage = 4
+			var/datum/announcement/centcomm/malf/fourth/announce_forth = new
+			announce_forth.play()
+
 /datum/faction/malf_silicons
 	name = MALF
 	ID = MALF
@@ -16,7 +41,6 @@
 	var/station_captured = FALSE
 	var/to_nuke_or_not_to_nuke = 0
 	var/intercept_hacked = FALSE
-	var/intercept_apcs = 4 //Bonus for the interception upgrade
 
 /datum/faction/malf_silicons/can_join_faction(mob/P)
 	if (!..())
@@ -49,8 +73,8 @@
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/set_security_level, "delta"), 50)
 
 /datum/faction/malf_silicons/process()
-	if(SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
-		AI_capture_timeleft -= (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE) //Victory timer now de-increments almost normally
+	if(global.hacked_apcs.len >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
+		AI_capture_timeleft -= (global.hacked_apcs.len / APC_MIN_TO_MALF_DECLARE) //Victory timer now de-increments almost normally
 
 	..()
 
@@ -200,6 +224,9 @@
 		dat += ")"
 	return dat
 
+/datum/faction/malf_silicons/proc/get_lower_treshold()
+	return intercept_hacked ? UPGRADED_TRESHOLD_HACKED_APC : LOWEST_TRESHOLD_HACKED_APC
+
 /datum/faction/malf_silicons/zombie
 	name = ZOMBIE_MALF
 	ID = ZOMBIE_MALF
@@ -217,8 +244,8 @@
 /datum/faction/malf_silicons/zombie/process()
 	if(station_captured)
 		return
-	if(SSticker.hacked_apcs >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
-		AI_capture_timeleft -= (SSticker.hacked_apcs / APC_MIN_TO_MALF_DECLARE)
+	if(global.hacked_apcs.len >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
+		AI_capture_timeleft -= (global.hacked_apcs.len / APC_MIN_TO_MALF_DECLARE)
 	if(AI_capture_timeleft <= 0)
 		capture_the_station()
 

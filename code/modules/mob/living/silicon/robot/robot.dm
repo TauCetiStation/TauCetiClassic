@@ -481,11 +481,11 @@
 	if(!malf_faction)
 		return 0
 	if(ismalf(connected_ai))
-		if(SSticker.hacked_apcs >= 3)
-			stat(null, "Time until station control secured: [max(malf_faction.AI_capture_timeleft/(SSticker.hacked_apcs/3), 0)] seconds")
+		if(global.hacked_apcs.len >= 3)
+			stat(null, "Time until station control secured: [max(malf_faction.AI_capture_timeleft/(global.hacked_apcs.len/3), 0)] seconds")
 	else
 		if(malf_faction.malf_mode_declared)
-			stat(null, "Time left: [max(malf_faction.AI_capture_timeleft/(SSticker.hacked_apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
+			stat(null, "Time left: [max(malf_faction.AI_capture_timeleft/(global.hacked_apcs.len/APC_MIN_TO_MALF_DECLARE), 0)]")
 
 // update the status screen display
 /mob/living/silicon/robot/Stat()

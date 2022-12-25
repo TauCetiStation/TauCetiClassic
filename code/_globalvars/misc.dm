@@ -55,6 +55,7 @@ var/global/list/pylons = list()
 var/global/wizard_shades_count = 0
 var/global/peacekeeper_shields_count = 0
 var/global/list/creating_cyborg_places = list()	//Zombie-Malf content
+var/global/list/hacked_apcs = list() //check the amount of hacked apcs either by a malf ai, or a traitor
 
 var/global/timezoneOffset = 0       // The difference betwen midnight (of the host computer) and 0 world.ticks.
 var/global/gametime_offset = 12 HOURS //Deciseconds to add to world.time for station time.
