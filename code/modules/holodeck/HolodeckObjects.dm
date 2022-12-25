@@ -202,7 +202,7 @@
 		visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
 		return
 
-/obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/holohoop/CanPass(atom/movable/mover, turf/target, height=0)
 	if (isitem(mover) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
@@ -214,7 +214,7 @@
 			visible_message("<span class='warning'>\The [I] bounces off of \the [src]'s rim!</span>", 3)
 		return 0
 	else
-		return ..(mover, target, height, air_group)
+		return ..()
 
 
 /obj/machinery/readybutton

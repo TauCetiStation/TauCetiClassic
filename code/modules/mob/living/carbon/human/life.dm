@@ -762,7 +762,7 @@ var/global/list/tourette_bad_words = list("ГОВНО","ЖОПА","ЕБАЛ","Б
 
 			if(hallucination <= 2)
 				hallucination = 0
-				halloss = 0
+				setHalLoss(0)
 			else
 				hallucination -= 2
 
