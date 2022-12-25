@@ -134,6 +134,10 @@
 	var/list/air_mix = StandardAirMix()
 	air_contents.adjust_multi("oxygen", air_mix["oxygen"], "nitrogen", air_mix["nitrogen"])
 
+//hack canisters?
+/obj/machinery/portable_atmospherics/malf_hack_act()
+	return FALSE
+
 #define HOLDING     1
 #define CONNECTED   2
 #define EMPTY       4

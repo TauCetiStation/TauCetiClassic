@@ -293,3 +293,7 @@ Pipelines + Other Objects -> Pipe network
 		return null
 
 	return node.pipe_color
+
+//hack vents? hack pipes?
+/obj/machinery/atmospherics/malf_hack_act()
+	return FALSE
