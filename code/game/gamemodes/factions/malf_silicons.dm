@@ -232,7 +232,9 @@
 		new /datum/AI_Module/create_borg(AI)
 
 /datum/faction/malf_silicons/zombie/check_win()
+	//delete this if PR is ready
 	return FALSE
+
 	if(finished)
 		return FALSE
 	if(is_malf_ai_dead())
