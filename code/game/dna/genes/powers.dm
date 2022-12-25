@@ -32,7 +32,7 @@
 
 /datum/dna/gene/basic/regenerate
 	name="Regenerate"
-	activation_messages=list("Вы чувствуете как ваша тело обновляется ")
+	activation_messages=list("Ваша регенрация усиливается ")
 	mutation=REGEN
 	activation_prob=50
 
@@ -83,7 +83,7 @@
 
 /datum/dna/gene/basic/remotetalk
 	name="Telepathy"
-	activation_messages=list("Ваш голос может проникать в другие умы.")
+	activation_messages=list("Ваш голос проникает в чужие умы.")
 	mutation=REMOTE_TALK
 	activation_prob=50
 
@@ -121,7 +121,7 @@
 
 /datum/dna/gene/basic/heat_resist
 	name="Heat Resistance"
-	activation_messages=list("Ваша кожа холодная на ощуп.")
+	activation_messages=list("Ваша кожа холодная на ощупь.")
 	mutation=RESIST_HEAT
 	activation_prob=30
 
@@ -138,7 +138,7 @@
 
 /datum/dna/gene/basic/cold_resist
 	name="Cold Resistance"
-	activation_messages=list("Вы чувствуете приятное тепло по всему телу.")
+	activation_messages=list("Ваше тело полно тепла.")
 	mutation=COLD_RESISTANCE
 	activation_prob=30
 
@@ -164,7 +164,7 @@
 
 /datum/dna/gene/basic/noshock
 	name="Shock Immunity"
-	activation_messages=list("Ваша кожа словно наэлектризована.")
+	activation_messages=list("Ваша кожа наэлектризована.")
 	mutation=NO_SHOCK
 	activation_prob=50
 
@@ -173,7 +173,7 @@
 
 /datum/dna/gene/basic/midget
 	name="Midget"
-	activation_messages=list("Вы чувствуете, что стали меньше.")
+	activation_messages=list("Вы стали ниже.")
 	mutation=SMALLSIZE
 	activation_prob=50
 
@@ -207,7 +207,7 @@
 
 /datum/dna/gene/basic/hulk
 	name                = "Hulk"
-	activation_messages = list("Вы чувствуете странную боль в мышцах.")
+	activation_messages = list("Ваши мышцы ноют от боли.")
 	mutation            = HULK
 	activation_prob     = 20
 
@@ -235,7 +235,7 @@
 		to_chat(src, "<span class='warning'>Вы не можете стать халком!</span>")
 		return
 	if(mind.hulkizing)
-		to_chat(src, "<span class='warning'>Ваших сил хватило только на одну трансформацию!</span>") // Hulk transformation at most 1 time.
+		to_chat(src, "<span class='warning'>Вы больше не можете  превращаться!</span>") // Hulk transformation at most 1 time.
 		return
 
 	mind.hulkizing = TRUE
