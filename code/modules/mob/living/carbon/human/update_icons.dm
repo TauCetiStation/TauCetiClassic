@@ -373,7 +373,6 @@ Please contact me on #coderbus IRC. ~Carn x
 	update_hud()
 
 
-
 /* --------------------------------------- */
 //vvvvvv UPDATE_INV PROCS vvvvvv
 
