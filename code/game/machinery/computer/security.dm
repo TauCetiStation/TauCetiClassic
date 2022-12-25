@@ -43,7 +43,7 @@
 		dat = "<TT>[temp]</TT><BR><BR><A href='?src=\ref[src];choice=Clear Screen'>Clear Screen</A>"
 	else
 		dat = "Confirm Identity: <A href='?src=\ref[src];choice=Confirm Identity'>[scan ? "[scan.name]" : "----------"]</A>"
-		if(hacked_by_malf)
+		if(is_hack_avaible())
 			//probably only non-humans allowed (except drones), make me think otherwise
 			if(issilicon(user))
 				dat += "<A href='?src=\ref[src];choice=Malfunction'>Compromise Data System</A><BR>"

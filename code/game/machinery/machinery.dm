@@ -616,3 +616,9 @@ Class Procs:
 /obj/machinery/proc/machinery_overload_act()
 	explosion(get_turf(src), 0,1,2,3)
 	qdel(src)
+
+//used for undo a hack if it has already been used in other machinery
+/obj/machinery/proc/is_hack_avaible()
+	if(hacked_by_malf)
+		return TRUE
+	return FALSE

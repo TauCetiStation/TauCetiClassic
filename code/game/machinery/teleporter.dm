@@ -152,7 +152,7 @@
 
 /obj/machinery/computer/teleporter/proc/malf_change_target()
 	//hub hacked, console not. Why? Denied
-	if(!hacked_by_malf)
+	if(!is_hack_avaible())
 		return
 	var/list/possible_random_targets = list()
 	for(var/obj/item/device/radio/beacon/R in radio_beacon_list)
@@ -311,7 +311,7 @@
 	default_deconstruction_crowbar(W)
 
 /obj/machinery/teleport/hub/proc/get_misstake_chance()
-	if(hacked_by_malf)
+	if(is_hack_avaible())
 		return 100
 	return (30 - ((accurate) * 10))
 
@@ -325,7 +325,7 @@
 	if(is_centcom_level(com.target.z))
 		visible_message("<span class='notice'>Unknown coordinates. Please reinstate coordinate matrix.</span>")
 		return
-	if(hacked_by_malf)
+	if(is_hack_avaible())
 		var/obj/item/device/radio/beacon/possible_redirect = com.malf_change_target()
 		if(possible_redirect)
 			com.target = possible_redirect
