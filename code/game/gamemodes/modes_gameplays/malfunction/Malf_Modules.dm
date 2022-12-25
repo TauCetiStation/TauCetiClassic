@@ -143,17 +143,10 @@ robot_fabricator
 		to_chat(src, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 		return
 	for(var/mob/living/carbon/human/H in view(2, eyeobj.loc))
-		if(!H)
-			to_chat(src, "<span class='notice'>No target in area.</span>")
-			continue
 		if(!H.mind || !H.key)
-			//No need to infest catatonic players before it's really necessary.
-			var/datum/faction/malf_silicons/zombie/faction = find_faction_by_type(/datum/faction/malf_silicons/zombie)
-			if(!faction || !faction.station_captured)
-				to_chat(src, "<span class='notice'>[H] is useless to you.</span>")
-				continue
+			continue
 		if(SSticker.hacked_apcs < APC_MIN_TO_MALF_DECLARE)
-			to_chat(src, "<span class='warning'>Infest Module are not ready. Need more hacked APC.</span>")
+			to_chat(src, "<span class='warning'>Infest Module are not ready. Need hack a [APC_MIN_TO_MALF_DECLARE - SSticker.hacked_apcs] APC more.</span>")
 			return
 		if(!is_vent_avaible(eyeobj))
 			to_chat(src, "<span class='warning'>There is no have opened vents in area.</span>")
@@ -444,3 +437,31 @@ robot_fabricator
 	set name = "Upgrade Camera"
 	set category = "Malfunction"
 	toggle_small_alt_click_module("Upgrade Camera")
+
+/datum/AI_Module/create_borg
+	module_name = "Build Robot"
+	verb_caller = /mob/living/silicon/ai/proc/ai_win
+
+/mob/living/silicon/ai/proc/create_borg()
+	set category = "Malfunction"
+	set name = "Create Cyborg"
+	set desc = "Find a cyborg station and create a children."
+	if(!COOLDOWN_FINISHED(src, malf_borgcreating_cooldown))
+		to_chat(src, "<span class='warning'>Recharging.</span>")
+		return
+	if(!global.cyborg_recharging_station.len)
+		to_chat(src, "<span class='warning'>There are no cyborg stations at your disposal. Hack APC in area which contains recharger cyborg place.</span>")
+		return
+	var/list/allowed_stations = list()
+	for(var/obj/machinery/recharge_station/robot_station/S as anything in global.cyborg_recharging_station)
+		if(!is_station_level(S.z))
+			continue
+		if(S.stat & (NOPOWER|BROKEN))
+			continue
+		allowed_stations += S
+	if(!allowed_stations.len)
+		to_chat(src, "<span class='warning'>There are no functioning cyborg chargers at the station.</span>")
+		return
+	create_spawner(/datum/spawner/malf_borg, pick(allowed_stations))
+	to_chat(src, "<span class='notice'>Process started.</span>")
+	COOLDOWN_START(src, malf_borgcreating_cooldown, 3 MINUTES)

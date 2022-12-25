@@ -226,34 +226,13 @@
 	to_chat(world, "<B>AI has fully taken control of all of [station_name()]'s systems.</B>")
 	for(var/datum/role/malfAI/zombie/role in members)
 		var/mob/living/silicon/ai/AI = role.antag.current
+		//TODO INFO SPAN CLASS OR SMTH ELSE
 		to_chat(AI, "You have taken control of the station.")
 		to_chat(AI, "Now you can create your own children.")
-		AI.verbs += /mob/living/silicon/ai/proc/create_borg
-
-/mob/living/silicon/ai/proc/create_borg()
-	set category = "Malfunction"
-	set name = "Create Cyborg"
-	set desc = "Find a cyborg station and create a children."
-	if(!COOLDOWN_FINISHED(src, malf_borgcreating_cooldown))
-		to_chat(src, "<span class='warning'>Recharging.</span>")
-		return
-	for(var/obj/machinery/recharge_station/S in global.cyborg_recharging_station)
-		if(!S)
-			to_chat(src, "<span class='warning'>There are no cyborg stations at your disposal.</span>")
-			return
-		if(!is_station_level(S.z))
-			continue
-		global.creating_cyborg_places += S
-		if(S.stat & (NOPOWER|BROKEN))
-			global.creating_cyborg_places -= S
-	if(!global.creating_cyborg_places.len)
-		to_chat(src, "<span class='warning'>There are no functioning cyborg chargers at the station.</span>")
-		return
-	create_spawner(/datum/spawner/malf_borg)
-	to_chat(src, "<span class='notice'>Process started.</span>")
-	COOLDOWN_START(src, malf_borgcreating_cooldown, 3 MINUTES)
+		new /datum/AI_Module/create_borg(AI)
 
 /datum/faction/malf_silicons/zombie/check_win()
+	return FALSE
 	if(finished)
 		return FALSE
 	if(is_malf_ai_dead())

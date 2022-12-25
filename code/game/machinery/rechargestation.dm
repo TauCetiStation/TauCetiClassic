@@ -30,7 +30,6 @@
 	RefreshParts()
 	build_icon()
 	update_icon()
-	global.cyborg_recharging_station += src
 
 /obj/machinery/recharge_station/RefreshParts()
 	recharge_speed = 0
@@ -211,6 +210,23 @@
 				R.cell.charge = min(R.cell.charge + recharge_speed, R.cell.maxcharge)
 				return
 
-/obj/machinery/recharge_station/Destroy()
-	global.cyborg_recharging_station -= src
-	return ..()
+//TODO: replace rech.stations to robot station when malf hacks APC
+ADD_TO_GLOBAL_LIST(/obj/machinery/recharge_station/robot_station, global.cyborg_recharging_station)
+/obj/machinery/recharge_station/robot_station
+	icon_state = "borgdecon3"
+
+/obj/machinery/recharge_station/robot_station/build_icon()
+	update_icon()
+
+/obj/machinery/recharge_station/robot_station/update_icon()
+	. = ..()
+	if(stat & (NOPOWER|BROKEN))
+		if(occupant)
+			icon_state = "borgcharger2"
+		else
+			icon_state = "borgcharger0"
+	else
+		if(occupant)
+			icon_state = "borgcharger1"
+		else
+			icon_state = "borgdecon3"

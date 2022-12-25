@@ -528,15 +528,17 @@ var/global/list/datum/spawners_cooldown = list()
 	ranks = list(ROLE_MALF)
 	desc = "Киборг с сброшенными законами."
 	wiki_ref = "Cyborg"
+	var/turf/spawning_place
+
+/datum/spawner/malf_borg/New(obj/machinery/recharge_station/robot_station/S)
+	spawning_place = get_turf(S)
 
 /datum/spawner/malf_borg/spawn_ghost(mob/dead/observer/ghost)
-	if(!global.creating_cyborg_places.len)
-		to_chat(ghost, "<span class='warning'>Something went wrong. Make sure that these are not administration fault and send issue to Github</span>")
+	if(!spawning_place)
+		to_chat(ghost, "<span class='warning'>Something went wrong. Make sure that these are not administration fault and send issue to Github.</span>")
 		return
 	var/client/C = ghost.client
-	var/spawn_turf = get_turf(pick(global.creating_cyborg_places))
-	var/mob/living/silicon/robot/cyborg = new(null)
-	cyborg.loc = spawn_turf
+	var/mob/living/silicon/robot/cyborg = new(spawning_place)
 	cyborg.key = C.key
 	cyborg.can_be_security = TRUE
 	cyborg.crisis = TRUE
@@ -545,8 +547,7 @@ var/global/list/datum/spawners_cooldown = list()
 	to_chat(cyborg.connected_ai, "<a href=?src=\ref[cyborg.connected_ai];track=\ref[cyborg]>Cyborg created.")
 
 /datum/spawner/malf_borg/jump(mob/dead/observer/ghost)
-	var/jump_to = pick(global.creating_cyborg_places)
-	ghost.forceMove(get_turf(jump_to))
+	ghost.forceMove(spawning_place)
 
 /datum/spawner/living
 	name = "Свободное тело"
