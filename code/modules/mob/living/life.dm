@@ -96,12 +96,6 @@
 		else
 			clear_alert("blind")
 			clear_fullscreen("blind", 0)
-/*			if(!ishuman(src))
-				if(HAS_TRAIT(occupant, TRAIT_NEARSIGHT))
-					overlay_fullscreen("impaired", /atom/movable/screen/fullscreen/impaired, 1)
-				else
-					clear_fullscreen("impaired")
-*/
 		if(machine)
 			if (!(machine.check_eye(src)))
 				reset_view(null)

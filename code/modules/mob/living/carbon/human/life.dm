@@ -1003,18 +1003,6 @@ var/global/list/tourette_bad_words = list("ГОВНО","ЖОПА","ЕБАЛ","Б
 
 	//OH cmon...
 	var/impaired    = 0
-/*
-	var/nearsighted = 0
-	if(disabilities & NEARSIGHTED || HAS_TRAIT(src, TRAIT_NEARSIGHT))
-		if(glasses)
-			var/obj/item/clothing/glasses/G = glasses
-			if(G.prescription)
-				clear_fullscreen("nearsighted")
-	if(nearsighted)
-		overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("nearsighted")
-*/
 	if(istype(head, /obj/item/clothing/head/welding) || istype(head, /obj/item/clothing/head/helmet/space/unathi))
 		var/obj/item/clothing/head/welding/O = head
 		if(!O.up && tinted_weldhelh)
@@ -1027,12 +1015,7 @@ var/global/list/tourette_bad_words = list("ГОВНО","ЖОПА","ЕБАЛ","Б
 		var/obj/item/clothing/glasses/welding/O = glasses
 		if(!O.up && tinted_weldhelh)
 			impaired = max(impaired, 2)
-/*
-	if(nearsighted)
-		overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
-	else
-		clear_fullscreen("nearsighted")
-*/
+
 	if(impaired)
 		overlay_fullscreen("impaired", /atom/movable/screen/fullscreen/impaired, impaired)
 	else
