@@ -1015,11 +1015,12 @@ var/global/list/tourette_bad_words = list("ГОВНО","ЖОПА","ЕБАЛ","Б
 		var/obj/item/clothing/glasses/welding/O = glasses
 		if(!O.up && tinted_weldhelh)
 			impaired = max(impaired, 2)
-
 	if(impaired)
 		overlay_fullscreen("impaired", /atom/movable/screen/fullscreen/impaired, impaired)
 	else
 		clear_fullscreen("impaired")
+
+	update_eye_blur()
 
 	if(!machine)
 		var/isRemoteObserve = 0
