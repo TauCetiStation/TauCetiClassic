@@ -3704,16 +3704,16 @@
 /obj/machinery/door_control{
 	id = "Secure Gate";
 	name = "Brig Lockdown";
-	req_access = list(2);
 	pixel_x = 6;
-	pixel_y = -4
+	pixel_y = -4;
+	req_access = list(2)
 	},
 /obj/machinery/door_control{
 	id = "Prison Gate";
 	name = "Prison Wing Lockdown";
-	req_access = list(2);
+	pixel_x = 6;
 	pixel_y = 7;
-	pixel_x = 6
+	req_access = list(2)
 	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
@@ -27655,7 +27655,6 @@
 	network = list("SS13","Research")
 	},
 /obj/machinery/computer/skills,
-/obj/item/weapon/paper/space_structures,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -27758,8 +27757,8 @@
 /obj/machinery/door_control{
 	id = "qm_warehouse";
 	name = "Warehouse Door Control";
-	req_access = list(31);
-	pixel_x = -24
+	pixel_x = -24;
+	req_access = list(31)
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -40588,6 +40587,7 @@
 /obj/machinery/computer/telescience{
 	dir = 8
 	},
+/obj/item/weapon/paper/space_structures,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warning"
@@ -42444,8 +42444,8 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/supply_crates{
-	pixel_y = 7;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 7
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -71739,6 +71739,9 @@
 /area/station/medical/cmo)
 "fSs" = (
 /obj/machinery/door/firedoor,
+/obj/structure/sign/warning/securearea{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -75832,8 +75835,8 @@
 /area/station/engineering/engine)
 "krW" = (
 /obj/structure/disposalpipe/junction{
-	icon_state = "pipe-j2";
-	dir = 8
+	dir = 8;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -76404,8 +76407,12 @@
 	},
 /area/station/cargo/storage)
 "lcB" = (
-/obj/structure/sign/warning/securearea{
-	pixel_y = 32
+/obj/machinery/door_control{
+	desc = "A remote control-switch for secure storage.";
+	id = "Secure Storage";
+	name = "Engineering Secure Storage";
+	pixel_y = 28;
+	req_access = list(10)
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -79633,8 +79640,8 @@
 /obj/machinery/door_control{
 	id = "qm_warehouse";
 	name = "Warehouse Door Control";
-	req_access = list(31);
-	pixel_x = 25
+	pixel_x = 25;
+	req_access = list(31)
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -97316,7 +97323,7 @@ aaa
 aaa
 aaa
 aaa
-cpa
+aaa
 cpa
 cpa
 cpa
@@ -97434,7 +97441,7 @@ aaa
 aaa
 aaa
 aaa
-aad
+aaa
 aad
 aad
 aad
@@ -99372,7 +99379,7 @@ aaa
 aaa
 aaa
 aaa
-cpa
+aaa
 cpa
 cpa
 cpa
@@ -99490,7 +99497,7 @@ aaa
 aaa
 aaa
 aaa
-aad
+aaa
 aad
 aad
 aad
@@ -114880,7 +114887,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aaa
 aab
 aab
 aab
@@ -116936,7 +116943,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aaa
 aab
 aab
 aab
@@ -119439,7 +119446,7 @@ aaa
 aaa
 aaa
 aaa
-cFX
+aaa
 cFX
 cFX
 cFX
@@ -132539,7 +132546,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCX
 cCX
 cCX
 cCX
@@ -132794,7 +132801,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCX
 cCX
 cCX
 cCX
@@ -133302,7 +133309,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCX
 cCX
 cCX
 cCX
@@ -133556,7 +133563,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCX
 cCX
 cCX
 cCX
@@ -133818,7 +133825,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCX
 cCX
 cCX
 cCX
@@ -134075,7 +134082,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCX
 cCX
 cCX
 cCX
@@ -134332,7 +134339,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCX
 cCX
 cCX
 cCX
@@ -134584,7 +134591,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCX
 cCX
 cCX
 cCX
@@ -134844,7 +134851,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCX
 cCX
 cCX
 cCX
@@ -135364,7 +135371,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCX
 cCX
 cCX
 cCX
@@ -135623,7 +135630,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cCX
 cCX
 cCX
 cCX
@@ -136236,7 +136243,7 @@ aaa
 aaa
 aaa
 aaa
-aac
+aaa
 aac
 aac
 aac
@@ -138292,7 +138299,7 @@ aaa
 aaa
 aaa
 aaa
-aac
+aaa
 aac
 aac
 aac

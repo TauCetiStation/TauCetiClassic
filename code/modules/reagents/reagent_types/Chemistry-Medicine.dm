@@ -508,34 +508,36 @@
 /datum/reagent/kyphotorin
 	name = "Kyphotorin"
 	id = "kyphotorin"
-	description = "Used nanites to encourage recovery of body parts and bones. Medicate cautiously."
+	description = "Prototype military nanites, can heal a person of almost any damage in the blink of an eye, however, they only start working at very high temperatures."
 	reagent_state = LIQUID
 	color = "#551a8b" // rgb: 85, 26, 139
 	overdose = 5.1
-	custom_metabolism = 0.07
+	custom_metabolism = 0.01
 	taste_message = "machines"
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/kyphotorin/on_general_digest(mob/living/M)
 	..()
-	if(!ishuman(M) || volume > overdose)
-		return
-	var/mob/living/carbon/human/H = M
-	if(H.nutrition < 200) // if nanites don't have enough resources, they stop working and still spend
-		H.make_jittery(100)
-		volume += 0.07
-		return
-	H.jitteriness = max(0,H.jitteriness - 100)
-	if(!H.regenerating_bodypart)
-		H.regenerating_bodypart = H.find_damaged_bodypart()
-	if(H.regenerating_bodypart)
-		H.nutrition -= 3
-		H.Stun(3)
-		H.apply_effect(3, WEAKEN)
-		H.apply_damages(0,0,1,4,0,5)
-		H.regen_bodyparts(4, FALSE)
-	else
-		volume += 0.07
+	if(M.bodytemperature > 400)
+		M.adjustCloneLoss(-1)
+		M.adjustOxyLoss(-15)
+		M.adjustBruteLoss(-5)
+		M.adjustFireLoss(-20)
+		M.adjustToxLoss(-3)
+		M.AdjustParalysis(-3)
+		M.AdjustStunned(-3)
+		M.AdjustWeakened(-3)
+		var/mob/living/carbon/human/H = M
+		H.adjustHalLoss(-30)
+		H.shock_stage -= 20
+
+	if(M.bodytemperature < 310) //standard body temperature
+		M.adjustHalLoss(15)
+		M.adjustOxyLoss(5)
+		M.adjustBruteLoss(5)
+		M.adjustToxLoss(3)
+		if(prob(25))
+			to_chat(M, "You feel just terrible, as if something is tearing you apart inside, it’s very hard for you to breathe!")
 
 /datum/reagent/bicaridine
 	name = "Bicaridine"
