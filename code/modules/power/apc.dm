@@ -621,6 +621,7 @@
 			qdel(W)
 			stat &= ~BROKEN
 			malfai = null
+			hack_detected = FALSE
 			malfhack = 0
 			if(opened == APC_COVER_REMOVED)
 				opened = APC_COVER_OPENED
@@ -941,7 +942,7 @@
 	if(!user.mind)
 		return
 	for(var/role in list(MALF, ZOMBIE_MALF))
-		var/datum/role/malfAI/my_beloved = user.mind.GetRole(role)
+		var/datum/role/malfAI/my_beloved = isrole(role, user)
 		if(my_beloved)
 			my_beloved.apc_hack(src)
 
