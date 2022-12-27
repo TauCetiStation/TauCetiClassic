@@ -15,9 +15,7 @@
 				M.ear_deaf += 30
 				M.AdjustConfused(20)
 				M.make_jittery(500)
-
-
-
+				
 		if(issilicon(M))
 			M.playsound_local(null, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			M.Stun(rand(5,10))
