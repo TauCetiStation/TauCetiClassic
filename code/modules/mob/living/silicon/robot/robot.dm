@@ -121,22 +121,23 @@
 		cell_component.installed = 1
 
 	diag_hud_set_borgcell()
-	//setup malfbot
-	if(!mind || !key || !connected_ai || !istype(connected_ai))
+	setup_malfbot()
+
+/mob/living/silicon/robot/proc/setup_malfbot()
+	if(!mind || !key || !connected_ai || !istype(connected_ai) || !connected_ai.mind || ismalfbot(src))
 		return
-	if(ismalf(connected_ai))
-		var/datum/faction/malf_silicons/find_faction = find_faction_by_type(/datum/faction/malf_silicons)
-		if(find_faction)
-			add_faction_member(find_faction, src, TRUE)
+	var/datum/role/malfAI/role_malf = ismalf(connected_ai)
+	if(role_malf)
+		var/list/factions = find_factions_by_member(role_malf, connected_ai.mind)
+		if(!factions.len)
+			return
+		for(var/datum/faction/F in factions)
+			add_faction_member(F, src, TRUE)
 
 /mob/living/silicon/robot/Login()
 	..()
 	set_all_components(TRUE)
-	//combat-malf-unit staff
-	var/datum/role/malfbot/M = mind.GetRole(MALFBOT)
-	var/datum/faction/malf_silicons/find_faction = find_faction_by_type(/datum/faction/malf_silicons)
-	if(!M && connected_ai && find_faction)
-		add_faction_member(find_faction, src, TRUE)
+	setup_malfbot()
 
 /mob/living/silicon/robot/proc/set_ai_link(link)
 	if (connected_ai != link)

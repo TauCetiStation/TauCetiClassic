@@ -193,6 +193,8 @@
 
 #define ismalf(H) isrole(MALF, H) || isrole(ZOMBIE_MALF, H)
 
+#define ismalfbot(H) isrole(MALFBOT, H)
+
 #define isnukeop(H) isrole(NUKE_OP, H)
 
 #define iswizard(H) isrole(WIZARD, H)
