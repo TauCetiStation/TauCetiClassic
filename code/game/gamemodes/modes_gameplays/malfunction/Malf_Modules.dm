@@ -12,6 +12,7 @@ robot_fabricator
 	var/description = null
 	var/verb_caller = null
 	var/need_only_once = FALSE
+	var/not_for_zombie_malf = FALSE
 	var/mob/living/silicon/ai/owner = null
 	var/list/valid_targets = list(/obj/machinery)
 
@@ -47,6 +48,13 @@ robot_fabricator
 	..()
 	available_modules = subtypesof(/datum/AI_Module/large)
 	available_modules += subtypesof(/datum/AI_Module/small)
+	if(isrole(ZOMBIE_MALF, module_owner))
+		cut_modules_for_zombie_malf()
+
+/datum/AI_Module/module_picker/proc/cut_modules_for_zombie_malf()
+	for(var/datum/AI_Module/module in available_modules)
+		if(module.not_for_zombie_malf)
+			available_modules -= module
 
 /datum/AI_Module/module_picker/proc/use(mob/living/silicon/ai/user)
 	var/dat
@@ -206,6 +214,8 @@ robot_fabricator
 	module_name = "Core upgrade: Fireproof Core"
 	description = "An upgrade to improve core resistance, making it immune to fire and heat. This effect is permanent."
 	need_only_once = TRUE
+	//is it for phoron igniting? Zombie Malf should keep out from that
+	not_for_zombie_malf = TRUE
 
 /datum/AI_Module/large/fireproof_core/BuyedNewHandle()
 	for(var/mob/living/silicon/ai/ai as anything in ai_list)
@@ -267,6 +277,8 @@ robot_fabricator
 	module_name = "Machine overload"
 	description = "Overloads an electrical machine, causing a small explosion. 2 uses."
 	uses = 2
+	//Zombie Malf have enough without that directial explodes
+	not_for_zombie_malf = TRUE
 	verb_caller = /mob/living/silicon/ai/proc/overload_machine
 	valid_targets = list(
 			/obj/machinery/computer,
@@ -344,12 +356,13 @@ robot_fabricator
 			apc.overload++
 	to_chat(src, "<span class='notice'>APCs overloaded. Uses left: [blackout.uses]</span>")
 
-/datum/AI_Module/small/interhack
+//should be LARGE module with HIGH COST because doing BAD things for players without debuffs
+/datum/AI_Module/large/interhack
 	module_name = "Hack intercept"
 	description = "Hacks the status update from Cent. Com, removing any information about malfunctioning electrical systems."
 	need_only_once = TRUE
 
-/datum/AI_Module/small/interhack/BuyedNewHandle()
+/datum/AI_Module/large/interhack/BuyedNewHandle()
 	var/datum/faction/malf_silicons/cur_malf = find_faction_by_type(/datum/faction/malf_silicons)
 	if(!istype(cur_malf)) //Is it possible? Probably not
 		qdel(src)
@@ -375,6 +388,8 @@ robot_fabricator
 	module_name = "Reactivate camera"
 	description = "Reactivates a currently disabled camera. 10 uses."
 	uses = 10
+	//cameras in Zombie Malf are very dangerous. Reactivating is imbalanced for that.
+	not_for_zombie_malf = TRUE
 	verb_caller = /mob/living/silicon/ai/proc/reactivate_camera
 
 /mob/living/silicon/ai/proc/reactivate_camera()
