@@ -14,13 +14,6 @@
 		update_gravity(mob_has_gravity())
 		update_action_buttons()
 
-		if (src.malfhack)
-			if (src.malfhack.aidisabled)
-				to_chat(src, "<span class='warning'>ERROR: APC access disabled, hack attempt canceled.</span>")
-				src.malfhacking = 0
-				src.malfhack = null
-
-
 		if (src.health <= config.health_threshold_dead)
 			death()
 			return

@@ -117,6 +117,7 @@
 	var/wiresexposed = FALSE
 	powernet = 0 //HACK: set so that APCs aren't found as powernet nodes //Hackish, Horrible, was like this before I changed it :(
 	var/malfhack = 0 // New var for my changes to AI malf. --NeoFite
+	var/hack_detected = FALSE
 	var/mob/living/silicon/ai/malfai = null // See above --NeoFite
 	var/debug = 0
 	var/autoflag = 0 // For optimization. 0 = off, 1 = eqp and lights off, 2 = eqp off, 3 = all on, other = re-autoset
@@ -340,7 +341,7 @@
 	if(opened != APC_COVER_CLOSED)
 		if(opened == APC_COVER_OPENED)
 			update_state |= UPSTATE_OPENED1
-	else if(emagged || malfai)
+	else if(emagged || hack_detected)
 		update_state |= UPSTATE_BLUESCREEN
 	else if(wiresexposed)
 		update_state |= UPSTATE_WIREEXP
@@ -849,14 +850,15 @@
 	if(issilicon(user))
 		var/mob/living/silicon/ai/AI = user
 		var/mob/living/silicon/robot/robot = user
-		if(                                                                \
-		    aidisabled ||                                                  \
-		    malfhack && istype(malfai) &&                                  \
-		    (                                                              \
-		        (istype(AI) && (malfai != AI && malfai != AI.parent)) ||   \
-		        (istype(robot) && (robot in malfai.connected_robots))      \
-		    )                                                              \
-		) // No AI control or hacked by other MalfAI
+		// No AI control or hacked by other MalfAI
+		if(aidisabled)
+			if(malfhack)
+				if(!istype(malfai))
+					return FALSE
+				if(AI && malfai == AI)
+					return TRUE
+				if(robot && (robot in malfai.connected_robots))
+					return TRUE
 			if(!loud)
 				to_chat(user, "<span class='warning'>\The [src] have AI control disabled!</span>")
 			return FALSE

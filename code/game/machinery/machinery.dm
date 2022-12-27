@@ -609,6 +609,10 @@ Class Procs:
 	//For directional there is AI overload module.
 	if(issilicon(user))
 		return FALSE
+	//maybe we can find area's apc by else method?
+	for(var/obj/machinery/power/apc/apc in get_area(src))
+		//give humans feedback why theirs computer will be exploded
+		apc.hack_detected = TRUE
 	audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
 	addtimer(CALLBACK(src, .proc/machinery_overload_act), 50)
 	return TRUE
