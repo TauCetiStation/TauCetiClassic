@@ -252,10 +252,7 @@
 /datum/faction/malf_silicons/zombie/capture_the_station()
 	station_captured = TRUE
 	for(var/datum/role/malfAI/zombie/role in members)
-		var/mob/living/silicon/ai/AI = role.antag.current
-		to_chat(AI, "<span class='info'>You have taken control of the station.</span>")
-		to_chat(AI, "<span class='info'>Now you can create your own children.</span>")
-		new /datum/AI_Module/create_borg(AI)
+		role.to_fuse_steel()
 
 /datum/faction/malf_silicons/zombie/check_win()
 	//delete this if PR is ready
@@ -276,6 +273,10 @@
 
 /datum/faction/malf_silicons/zombie/takeover()
 	. = ..()
+	for(var/obj/machinery/power/apc/apc in global.hacked_apcs)
+		//give station visual feedback about hack apc
+		apc.hack_detected = TRUE
+		apc.update_icon()
 	addtimer(CALLBACK(src, .proc/send_centcomm_help), rand(600, 3000))
 
 /datum/faction/malf_silicons/zombie/proc/send_centcomm_help()

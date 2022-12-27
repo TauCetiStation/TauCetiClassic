@@ -121,6 +121,37 @@
 	var/mob/living/silicon/ai/AI_mind_current = antag.current
 	new /datum/AI_Module/infest(AI_mind_current)
 
+/datum/role/malfAI/zombie/proc/to_fuse_steel()
+	var/mob/living/silicon/ai/AI_mind_current = antag.current
+	AI_mind_current.verbs += /mob/living/silicon/ai/proc/create_borg
+	AI_mind_current.view_core()
+	to_chat(AI_mind_current, "<span class='info'>You have taken control of the station.</span>")
+	to_chat(AI_mind_current, "<span class='info'>Now you can create your own children.</span>")
+
+/mob/living/silicon/ai/proc/create_borg()
+	set category = "Malfunction"
+	set name = "Create Cyborg"
+	set desc = "Find a cyborg station and create a children."
+	if(!COOLDOWN_FINISHED(src, malf_borgcreating_cooldown))
+		to_chat(src, "<span class='warning'>Recharging.</span>")
+		return
+	if(!global.cyborg_recharging_station.len)
+		to_chat(src, "<span class='warning'>There are no cyborg stations at your disposal. Hack APC in area which contains recharger cyborg place.</span>")
+		return
+	var/list/allowed_stations = list()
+	for(var/obj/machinery/recharge_station/robot_station/S as anything in global.cyborg_recharging_station)
+		if(!is_station_level(S.z))
+			continue
+		if(S.stat & (NOPOWER|BROKEN))
+			continue
+		allowed_stations += S
+	if(!allowed_stations.len)
+		to_chat(src, "<span class='warning'>There are no functioning cyborg chargers at the station.</span>")
+		return
+	create_spawner(/datum/spawner/malf_borg, pick(allowed_stations))
+	to_chat(src, "<span class='notice'>Process started.</span>")
+	COOLDOWN_START(src, malf_borgcreating_cooldown, 3 MINUTES)
+
 /datum/role/malfbot
 	name = MALFBOT
 	id = MALFBOT
