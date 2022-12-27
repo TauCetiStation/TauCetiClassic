@@ -43,19 +43,11 @@ robot_fabricator
 	var/temp = null
 	var/processing_time = 100
 	var/list/available_modules = null
-	var/list/black_listed_modules = list()
 
 /datum/AI_Module/module_picker/New(mob/living/silicon/ai/module_owner)
 	..()
 	available_modules = subtypesof(/datum/AI_Module/large)
 	available_modules += subtypesof(/datum/AI_Module/small)
-	if(isrole(ZOMBIE_MALF, module_owner))
-		cut_modules_for_zombie_malf()
-
-/datum/AI_Module/module_picker/proc/cut_modules_for_zombie_malf()
-	for(var/datum/AI_Module/module in available_modules)
-		if(module.not_for_zombie_malf)
-			black_listed_modules += module
 
 /datum/AI_Module/module_picker/proc/use(mob/living/silicon/ai/user)
 	var/dat
@@ -68,9 +60,10 @@ robot_fabricator
 		dat += "<HR>"
 		dat += "<B>Install Module:</B><BR>"
 		dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
-		var/displayed_modules = list(available_modules - black_listed_modules)
-		for(var/module in displayed_modules)
+		for(var/module in available_modules)
 			var/datum/AI_Module/module_type = module
+			if(initial(module_type.not_for_zombie_malf) && isrole(ZOMBIE_MALF, user))
+				continue
 			dat += "<A href='byond://?src=\ref[src];module_type=[module]'>[initial(module_type.module_name)]</A> ([initial(module_type.price)])<BR>"
 		dat += "<HR>"
 
