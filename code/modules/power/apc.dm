@@ -853,17 +853,19 @@
 		var/mob/living/silicon/robot/robot = user
 		// No AI control or hacked by other MalfAI
 		if(aidisabled)
-			if(malfhack)
-				if(!istype(malfai))
-					return FALSE
-				if(AI && malfai == AI)
-					return TRUE
-				if(robot && (robot in malfai.connected_robots))
-					return TRUE
-				//give silicons feedback if they dont have control
-				hack_detected = TRUE
 			if(!loud)
 				to_chat(user, "<span class='warning'>\The [src] have AI control disabled!</span>")
+			return FALSE
+		if(malfhack)
+			if(!istype(malfai))
+				return FALSE
+			if(AI && malfai == AI)
+				return TRUE
+			if(robot && (robot in malfai.connected_robots))
+				return TRUE
+			//give silicons feedback if they dont have control
+			hack_detected = TRUE
+			to_chat(user, "<span class='warning'>\The [src] have AI control disabled!</span>")
 			return FALSE
 
 	else // Human
