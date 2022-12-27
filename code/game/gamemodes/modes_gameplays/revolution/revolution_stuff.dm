@@ -27,6 +27,7 @@
 	playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/device/flash/rev_flash/proc/flash_convert(mob/living/carbon/user)
+	//maybe add some do_after(3 SECONDS)?
 	var/datum/role/user_role = null
 	//if we don't need converting by other revolutionaries/antags
 	if(headrev_only)
