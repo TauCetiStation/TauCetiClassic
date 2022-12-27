@@ -865,6 +865,7 @@
 				return TRUE
 			//give silicons feedback if they dont have control
 			hack_detected = TRUE
+			update_icon()
 			to_chat(user, "<span class='warning'>\The [src] have AI control disabled!</span>")
 			return FALSE
 
