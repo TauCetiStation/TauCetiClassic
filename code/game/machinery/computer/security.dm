@@ -47,6 +47,7 @@
 		if(is_hack_avaible())
 			//probably only non-humans allowed. And for hacker? We don't have hacker.
 			if(issilicon(user))
+				dat += "<BR>"
 				dat += "<A href='?src=\ref[src];choice=Malfunction'>Compromise Data System</A><BR>"
 		dat += "<HR>"
 		if (authenticated)
