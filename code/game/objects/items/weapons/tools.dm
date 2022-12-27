@@ -220,7 +220,6 @@
 
 	var/active = FALSE          // Welding tool is off or on
 	var/welding = FALSE         // While welding something - TRUE
-	var/secured = TRUE          // Welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20           // The max amount of fuel the welder can hold
 	var/image/welding_sparks    // Welding overlay for targets
 
@@ -239,42 +238,6 @@
 	..()
 	if(src in user)
 		to_chat(user, "[src] contains [get_fuel()]/[max_fuel] units of fuel!")
-
-/obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
-		if(active)
-			to_chat(user, "<span class='rose'>Off [src], first!</span>")
-			return
-		secured = !secured
-		if(secured)
-			to_chat(user, "<span class='notice'>You secure [src].</span>")
-		else
-			to_chat(user, "<span class='info'>[src] can now be attached and modified.</span>")
-		add_fingerprint(user)
-		return
-	if(!secured && istype(I, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = I
-		if(!R.use(1))
-			return
-		var/current_fuel = get_fuel()
-		var/obj/item/weapon/makeshift_flamethrower/F = new(user.loc, max_fuel, current_fuel)
-		forceMove(F)
-		F.weldtool = src
-		if (user.client)
-			user.client.screen -= src
-		if (user.r_hand == src)
-			user.remove_from_mob(src)
-		else
-			user.remove_from_mob(src)
-		src.master = F
-		src.layer = initial(src.layer)
-		user.remove_from_mob(src)
-		if (user.client)
-			user.client.screen -= src
-		src.loc = F
-		add_fingerprint(user)
-		return
-	return ..()
 
 /obj/item/weapon/weldingtool/process()
 	if(active)
@@ -420,7 +383,6 @@
 
 // Toggles the welder off and on
 /obj/item/weapon/weldingtool/proc/toggle(message = 0)
-	if(!secured) return
 	if(!usr) return
 	active = !active
 	if (isOn())

@@ -236,3 +236,13 @@
 	result = /obj/item/weapon/storage/pneumatic
 	time = 45
 	required_proficiency = list(/datum/skill/construction = SKILL_LEVEL_PRO)
+
+/datum/crafting_recipe/makeshift_flamethrower
+	name = "Flamethrower"
+	reqs = list(/obj/item/weapon/weldingtool/weldtool = 1,
+				/obj/item/device/assembly/igniter/igniter = 1,
+				/obj/item/stack/rods = 1)
+	result = /obj/item/weapon/makeshift_flamethrower
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 40
+	required_proficiency = list(/datum/skill/construction = SKILL_LEVEL_PRO)
