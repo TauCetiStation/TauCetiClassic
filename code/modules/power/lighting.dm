@@ -187,6 +187,10 @@
 	new /obj/item/stack/sheet/metal(loc, sheets_refunded)
 	..()
 
+//AI have blackout module, no needed explode light
+/obj/machinery/light_construct/malf_hack_act()
+	return FALSE
+
 /obj/machinery/light_construct/small
 	name = "small light fixture frame"
 	desc = "A small light fixture under construction."

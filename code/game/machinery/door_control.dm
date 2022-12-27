@@ -415,6 +415,9 @@
 	..()
 	update_icon()
 
+//It is usefull for AI. Do undestructible
+/obj/machinery/door_control/malf_hack_act()
+	return FALSE
 
 /obj/item/door_control_frame
 	name = "door control frame"

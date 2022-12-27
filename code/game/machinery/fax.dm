@@ -230,3 +230,7 @@ var/global/list/alldepartments = list("Central Command")
 
 	P.loc = loc
 	audible_message("Received message.")
+
+//Should have features without exploding
+/obj/machinery/faxmachine/malf_hack_act()
+	return FALSE

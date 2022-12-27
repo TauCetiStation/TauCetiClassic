@@ -87,3 +87,7 @@
 		return
 	power_change()
 	..(severity)
+
+//Too small and useless explode
+/obj/machinery/light_switch/malf_hack_act()
+	return FALSE

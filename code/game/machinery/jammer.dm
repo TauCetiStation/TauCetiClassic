@@ -120,3 +120,7 @@
 	for(var/datum/component/teleblock/jammer/COMP as anything in teleblocks)
 		qdel(COMP)
 	return ..()
+
+//Useless explode, nobody want to touch that
+/obj/machinery/telescience_jammer/malf_hack_act()
+	return FALSE

@@ -168,6 +168,10 @@
 			feedback_set_details("ERT", "Keycard dispatch")
 			feedback_inc("alert_keycard_auth_ert",1)
 
+//No need explode keycard device. It is too small and useful for crew
+/obj/machinery/keycard_auth/malf_hack_act()
+	return FALSE
+
 var/global/maint_all_access_priority = FALSE    // Set only by keycard auth. If true, maint
                                                 // access  can be revoked only by calling revoke_maint_all_access(TRUE) (this doing keycard auth)
 var/global/timer_maint_revoke_id = 0
