@@ -45,7 +45,7 @@
 	else
 		dat = "Confirm Identity: <A href='?src=\ref[src];choice=Confirm Identity'>[scan ? "[scan.name]" : "----------"]</A>"
 		if(is_hack_avaible())
-			//probably only non-humans allowed (except drones), make me think otherwise
+			//probably only non-humans allowed. And for hacker? We don't have hacker.
 			if(issilicon(user))
 				dat += "<A href='?src=\ref[src];choice=Malfunction'>Compromise Data System</A><BR>"
 		dat += "<HR>"
@@ -461,7 +461,7 @@ What a mess.*/
 				var/perpname = H.get_visible_name(TRUE)
 				if(perpname)
 					//hardcode but purpose of the proc is to issue an arrest to everyone
-					H.holder.icon_state = "hudwanted"
+					holder.icon_state = "hudwanted"
 			//Repeating should be not provided, probably
 			for(var/obj/machinery/computer/secure_data/computer as anything in global.security_data_computers_list)
 				hack_performed = TRUE
