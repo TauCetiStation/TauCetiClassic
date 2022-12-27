@@ -452,14 +452,16 @@ What a mess.*/
 
 		if("Malfunction")
 			//set every records to arrest
-			//maybe use invoke_async ???
 			for(var/datum/data/record/security_record in global.data_core.security)
 				security_record.fields["criminal"] = "*Arrest*"
 			//update hud for visual feedback
 			for(var/mob/living/carbon/human/H in global.human_list)
-				//looks too highcost
-				//should find existed proc or write by myself
-				H.sec_hud_set_security_status()
+				//copypast from sec_hud_set_security_status() without finding record in all records to each human
+				var/image/holder = H.hud_list[WANTED_HUD]
+				var/perpname = H.get_visible_name(TRUE)
+				if(perpname)
+					//hardcode but purpose of the proc is to issue an arrest to everyone
+					H.holder.icon_state = "hudwanted"
 			//Repeating should be not provided, probably
 			for(var/obj/machinery/computer/secure_data/computer as anything in global.security_data_computers_list)
 				hack_performed = TRUE
