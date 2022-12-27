@@ -234,4 +234,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/recharge_station/robot_station, cyborg_recharg
 		if(occupant)
 			icon_state = "borgcharger1"
 		else
-			icon_state = "borgdecon3"
+			if(open)
+				icon_state = "borgdecon3"
+			else
+				icon_state = "borgcharger2"
