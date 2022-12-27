@@ -351,7 +351,7 @@
 	origin_tech = "engineering=3"
 	var/status = TRUE	//ready to fire or not. Used to deconstruct
 	var/lit = FALSE
-	var/max_fuel = 10
+	var/max_fuel = 20
 
 /obj/item/weapon/makeshift_flamethrower/atom_init()
 	. = ..()
