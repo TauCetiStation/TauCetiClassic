@@ -210,7 +210,12 @@
 				R.cell.charge = min(R.cell.charge + recharge_speed, R.cell.maxcharge)
 				return
 
-//TODO: replace rech.stations to robot station when malf hacks APC
+//replace rech.stations to robot station when malf hacks APC
+/obj/machinery/recharge_station/malf_hack_act()
+	if(..())
+		new /obj/machinery/recharge_station/robot_station(get_turf(src))
+		qdel(src)
+
 ADD_TO_GLOBAL_LIST(/obj/machinery/recharge_station/robot_station, cyborg_recharging_station)
 /obj/machinery/recharge_station/robot_station
 	icon_state = "borgdecon3"
