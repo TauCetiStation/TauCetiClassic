@@ -279,6 +279,6 @@
 	addtimer(CALLBACK(src, .proc/send_centcomm_help), rand(600, 3000))
 
 /datum/faction/malf_silicons/zombie/proc/send_centcomm_help()
-	create_spawner(/datum/spawner/helper/int_agent)
-	create_spawner(/datum/spawner/helper/engineer)
-	create_spawners(/datum/spawner/helper, 2)
+	create_spawner(/datum/spawner/helper/int_agent, make_immune = TRUE)
+	create_spawner(/datum/spawner/helper/engineer, make_immune = TRUE)
+	create_spawners(/datum/spawner/helper, 2, make_immune = TRUE)

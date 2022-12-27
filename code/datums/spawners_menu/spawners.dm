@@ -297,6 +297,12 @@ var/global/list/datum/spawners_cooldown = list()
 	var/rank = "Security Officer"
 	//var/spawner_job = /datum/job/officer
 	var/overrided_outfit = /datum/outfit/job/officer/centcomm_helper
+	//Zombie Malf content
+	var/is_immune_to_zombie_virus = FALSE
+
+/datum/spawner/helper/New(make_immune = FALSE)
+	. = ..()
+	is_immune_to_zombie_virus = make_immune
 
 /datum/spawner/helper/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(landmarks_list["Centcomm_helpers"])
@@ -332,6 +338,8 @@ var/global/list/datum/spawners_cooldown = list()
 	M.mind.skills.add_available_skillset(/datum/skillset/cadet)
 	M.mind.skills.maximize_active_skills()
 
+	add_more_features(M)
+
 	to_chat(M, "<span class='info'>You are a member of a rescue team sent to [station_name()] to assist the crew.</span>")
 	to_chat(M, "<span class='info'>According to preliminary data, synthetic units have malfunctioned on the station. Find out what happened.</span>")
 	to_chat(M, "<span class='info'>You answer to CentCom officials with higher priority and the commander of the ship with lower.</span>")
@@ -342,6 +350,11 @@ var/global/list/datum/spawners_cooldown = list()
 	my_card.access += list(access_captain)
 	my_card.rank = rank
 	my_card.assignment = rank
+
+//proc for accept features from arguments in New()
+/datum/spawner/helper/proc/add_more_features(mob/living/carbon/human/H)
+	if(is_immune_to_zombie_virus)
+		H.antibodies |= ANTIGEN_Z
 
 /datum/spawner/helper/int_agent
 	name = "Агент Внутренних Дел"
