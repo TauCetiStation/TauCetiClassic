@@ -350,34 +350,18 @@
 	w_class = SIZE_NORMAL
 	m_amt = 500
 	origin_tech = "engineering=3"
-	var/status = FALSE		//ready to fire or not
+	var/status = TRUE	//ready to fire or not. Used to deconstruct
 	var/lit = FALSE
-	var/max_fuel = 300
-	var/obj/item/weapon/weldingtool/weldtool = null
-	var/obj/item/device/assembly/igniter/igniter = null
+	var/max_fuel = 10
 
-/obj/item/weapon/makeshift_flamethrower/atom_init(mapload, WeldMaxFuel = 0, WeldCurFuel = -1)
+/obj/item/weapon/makeshift_flamethrower/atom_init()
 	. = ..()
-	if(WeldMaxFuel > 0)
-		max_fuel = WeldMaxFuel
 	create_reagents(max_fuel)
-	// check if created by craft or not
-	if(WeldCurFuel >= 0)
-		//if the weldtool is not filled with fuel - dont give src fuel
-		if(!WeldCurFuel)
-			return
-		reagents.add_reagent("fuel", WeldCurFuel)
-	else
-		reagents.add_reagent("fuel", max_fuel)
+	reagents.add_reagent("fuel", max_fuel)
 
 /obj/item/weapon/makeshift_flamethrower/examine(mob/user)
 	. = ..()
 	to_chat(user, "<span class='info'>Devise is [status ? "secured" : "unsecured"]. <br>Contains [reagents.get_reagent_amount("fuel")]/[max_fuel] units of fuel!</span>")
-
-/obj/item/weapon/makeshift_flamethrower/Destroy()
-	QDEL_NULL(weldtool)
-	QDEL_NULL(igniter)
-	return ..()
 
 /obj/item/weapon/makeshift_flamethrower/get_current_temperature()
 	if(lit)
@@ -390,8 +374,7 @@
 
 /obj/item/weapon/makeshift_flamethrower/update_icon()
 	cut_overlays()
-	if(igniter)
-		add_overlay("+igniter[status]")
+	add_overlay("+igniter[status]")
 	if(lit)
 		add_overlay("+lit")
 		item_state = "flamethrower_1"
@@ -450,12 +433,8 @@
 	if(iswrench(I))
 		if(!status)
 			var/turf/T = get_turf(src)
-			if(weldtool)
-				weldtool.forceMove(T)
-				weldtool = null
-			if(igniter)
-				igniter.forceMove(T)
-				igniter = null
+			new /obj/item/weapon/weldingtool(T)
+			new /obj/item/device/assembly/igniter(T)
 			new /obj/item/stack/rods(T)
 			to_chat(user, "<span class='notice'>You have successfully dismantled [src].</span>")
 			qdel(src)
@@ -464,13 +443,9 @@
 		return
 	if(isscrewdriver(I))
 		if(!status)
-			if(!igniter)
-				to_chat(user, "<span class='warning'>Attach igniter first.</span>")
-			else
-				status = TRUE
-				to_chat(user, "<span class='notice'>Components of [src] secured.</span>")
-				update_icon()
-
+			status = TRUE
+			to_chat(user, "<span class='notice'>Components of [src] secured.</span>")
+			update_icon()
 		else
 			status = FALSE
 			lit = FALSE
@@ -478,22 +453,6 @@
 			to_chat(user, "<span class='notice'>[src] is now unsecured.</span>")
 			update_icon()
 			user.update_inv_item(src)
-		return
-	if(isigniter(I))
-		if(igniter)
-			to_chat(user, "<span class='warning'>[src] already have [I]!</span>")
-			return
-		if(status)
-			to_chat(user, "<span class='warning'>[src] is secured!</span>")
-			return
-		var/obj/item/device/assembly/igniter/IGN = I
-		if(IGN.secured)
-			to_chat(user, "<span class='notice'>[IGN] is secured.</span>")
-			return
-		user.drop_from_inventory(IGN, src)
-		igniter = IGN
-		to_chat(user, "<span class='notice'>[IGN] added to [src]. Secure it by screwdriver.</span>")
-		update_icon()
 		return
 	return ..()
 

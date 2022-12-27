@@ -239,8 +239,8 @@
 
 /datum/crafting_recipe/makeshift_flamethrower
 	name = "Flamethrower"
-	reqs = list(/obj/item/weapon/weldingtool/weldtool = 1,
-				/obj/item/device/assembly/igniter/igniter = 1,
+	reqs = list(/obj/item/weapon/weldingtool = 1,
+				/obj/item/device/assembly/igniter = 1,
 				/obj/item/stack/rods = 1)
 	result = /obj/item/weapon/makeshift_flamethrower
 	tools = list(/obj/item/weapon/screwdriver)
