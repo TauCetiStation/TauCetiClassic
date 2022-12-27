@@ -251,12 +251,10 @@
 
 /datum/faction/malf_silicons/zombie/capture_the_station()
 	station_captured = TRUE
-	to_chat(world, "<B>AI has fully taken control of all of [station_name()]'s systems.</B>")
 	for(var/datum/role/malfAI/zombie/role in members)
 		var/mob/living/silicon/ai/AI = role.antag.current
-		//TODO INFO SPAN CLASS OR SMTH ELSE
-		to_chat(AI, "You have taken control of the station.")
-		to_chat(AI, "Now you can create your own children.")
+		to_chat(AI, "<span class='info'>You have taken control of the station.</span>")
+		to_chat(AI, "<span class='info'>Now you can create your own children.</span>")
 		new /datum/AI_Module/create_borg(AI)
 
 /datum/faction/malf_silicons/zombie/check_win()
