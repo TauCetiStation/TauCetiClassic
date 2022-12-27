@@ -321,7 +321,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/card, cyborg_recharging_station)
 
 		if("Compromise Access System")
 			//drop every airlock access requires
-			//maybe use invoke_async ???
 			for(var/obj/machinery/door/airlock/station_airlock as anything in global.airlock_list)
 				if(is_station_level(station_airlock.z))
 					station_airlock.ai_disable_access()
