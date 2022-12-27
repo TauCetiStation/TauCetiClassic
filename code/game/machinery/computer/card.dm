@@ -1,4 +1,4 @@
-ADD_TO_GLOBAL_LIST(/obj/machinery/computer/card, cyborg_recharging_station)
+ADD_TO_GLOBAL_LIST(/obj/machinery/computer/card, identification_computer_list)
 /obj/machinery/computer/card
 	name = "Identification Computer"
 	desc = "Terminal for programming NanoTrasen employee ID cards to access parts of the station."

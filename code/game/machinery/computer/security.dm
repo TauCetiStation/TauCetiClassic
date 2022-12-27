@@ -1,3 +1,4 @@
+ADD_TO_GLOBAL_LIST(/obj/machinery/computer/card, security_data_computers_list)
 /obj/machinery/computer/secure_data//TODO:SANITY
 	name = "Security Records"
 	desc = "Used to view and edit personnel's security records."
