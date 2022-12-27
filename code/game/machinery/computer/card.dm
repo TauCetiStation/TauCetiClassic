@@ -97,7 +97,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/card, cyborg_recharging_station)
 	data["station_name"] = station_name()
 	data["mode"] = mode
 	data["printing"] = printing
-	data["hacked"] = is_hack_avaible()
+	data["hacked"] = is_hack_avaible(user)
 	data["manifest"] = data_core ? data_core.html_manifest(monochrome=0) : null
 	data["target_name"] = modify ? modify.name : "-----"
 	data["target_owner"] = modify && modify.registered_name ? modify.registered_name : "-----"
@@ -340,8 +340,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/card, cyborg_recharging_station)
 
 	return 1
 
-/obj/machinery/computer/card/is_hack_avaible()
+/obj/machinery/computer/card/is_hack_avaible(mob/user)
 	if(hack_performed)
+		return FALSE
+	//abstract button. Not a human interfacing
+	if(!issilicon(user))
 		return FALSE
 	return ..()
 
