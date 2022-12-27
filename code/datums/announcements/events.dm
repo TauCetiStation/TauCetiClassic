@@ -194,10 +194,10 @@
 	name = "Event: Vermin infestation"
 	subtitle = "Заражение Паразитами"
 	sound = "infestation"
-	message = "Биосканеры зафиксировали, что на станции разможаются паразиты. Избавьтесь от них, пока они не начали влиять на производительность."
+	message = "Биосканеры зафиксировали размножение паразитов. Рекомендуется остановить это, пока их не стало слишком много."
 /datum/announcement/centcomm/infestation/play(vermstring, locstring)
 	if(vermstring && locstring)
-		message = "Биосканеры зафиксировали размножение [vermstring], местоположение: [locstring]. Избавьтесь от них, пока они не начали влиять на производительность."
+		message = "Биосканеры зафиксировали размножение [vermstring], местоположение: [locstring]. Рекомендуется остановить это, пока их не стало слишком много."
 	..()
 
 /datum/announcement/centcomm/meteor_wave

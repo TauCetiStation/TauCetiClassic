@@ -70,13 +70,7 @@ var/global/list/announcement_sounds = list(
 	"vox_arrival" = 'sound/AI/vox_arrival.ogg',
 	"vox_returns" = 'sound/AI/vox_returns.ogg',
 
-	"gang_announce_gamemode" = 'sound/AI/gang_announce_gamemode.ogg',
-	"gang_cops_closely" = 'sound/AI/gang_cops_closely.ogg',
-	"gang_cops_1" = 'sound/AI/gang_cops_1.ogg',
-	"gang_cops_2" = 'sound/AI/gang_cops_2.ogg',
-	"gang_cops_3" = 'sound/AI/gang_cops_3.ogg',
-	"gang_cops_4" = 'sound/AI/gang_cops_4.ogg',
-	"gang_cops_5" = 'sound/AI/gang_cops_5.ogg',
+	"gang_announce" = 'sound/AI/gang_announce.ogg',
 
 	"emer_shut_called" = 'sound/AI/emergency_s_called.ogg',
 	"emer_shut_recalled" = 'sound/AI/emergency_s_recalled.ogg',
