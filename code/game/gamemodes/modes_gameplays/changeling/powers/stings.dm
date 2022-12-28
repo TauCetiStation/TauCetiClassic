@@ -245,8 +245,8 @@
 	if(sting_fail(user,target))
 		return FALSE
 	to_chat(target, "<span class='danger'>Your eyes burn horrifically!</span>")
-	target.become_nearsighted(EYE_DAMAGE_TEMPORARY)
-	addtimer(CALLBACK(target, /mob.proc/cure_nearsighted, EYE_DAMAGE_TEMPORARY), 30 SECONDS, TIMER_STOPPABLE)
+	target.become_nearsighted(EYE_DAMAGE_TEMPORARY_TRAIT)
+	addtimer(CALLBACK(target, /mob.proc/cure_nearsighted, EYE_DAMAGE_TEMPORARY_TRAIT), 30 SECONDS, TIMER_STOPPABLE)
 	target.eye_blind = 20
 	target.blurEyes(40)
 	feedback_add_details("changeling_powers","BS")

@@ -154,10 +154,6 @@
 		update_inv_gloves()
 	else if (W == glasses)
 		glasses = null
-		var/obj/item/clothing/glasses/G = W
-		if(G.prescription)
-			if(HAS_TRAIT(src, TRAIT_NEARSIGHT))
-				overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
 		update_inv_glasses()
 	else if (W == head)
 		head = null
@@ -317,9 +313,6 @@
 			update_inv_ears()
 		if(SLOT_GLASSES)
 			src.glasses = W
-			var/obj/item/clothing/glasses/G = W
-			if(G.prescription)
-				clear_fullscreen("nearsighted")
 			W.equipped(src, slot)
 			update_inv_glasses()
 		if(SLOT_GLOVES)

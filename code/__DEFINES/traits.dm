@@ -204,6 +204,6 @@
 
 // trait sources
 #define EYE_DAMAGE "eye_damage"
-#define EYE_DAMAGE_TEMPORARY "eye_damage_temporary"
-#define GENETIC_MUTATION "genetic"
-#define QUIRK "quirk"
+#define EYE_DAMAGE_TEMPORARY_TRAIT "eye_damage_temporary"
+#define GENETIC_MUTATION_TRAIT "genetic"
+#define QUIRK_TRAIT "quirk"

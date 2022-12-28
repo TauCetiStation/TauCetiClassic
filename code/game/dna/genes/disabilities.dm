@@ -152,8 +152,8 @@
 
 /datum/dna/gene/disability/nearsighted/activate(mob/M, connected, flags)
 	. = ..()
-	M.become_nearsighted(GENETIC_MUTATION)
+	M.become_nearsighted(GENETIC_MUTATION_TRAIT)
 
 /datum/dna/gene/disability/nearsighted/deactivate(mob/M, connected, flags)
 	. = ..()
-	M.cure_nearsighted(GENETIC_MUTATION)
+	M.cure_nearsighted(GENETIC_MUTATION_TRAIT)

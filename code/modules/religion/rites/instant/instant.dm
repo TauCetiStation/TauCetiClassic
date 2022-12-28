@@ -576,7 +576,7 @@
 		C.blurEyes(blindless_modifier)
 		C.eye_blind += blindless_modifier / 2
 		if(prob(5))
-			C.become_nearsighted(GENETIC_MUTATION)
+			C.become_nearsighted(GENETIC_MUTATION_TRAIT)
 			if(prob(10))
 				C.sdisabilities |= BLIND
 		C.show_message("<span class='userdanger'>Внезапно вы видите красную вспышку, которая ослепила вас.</span>", SHOWMSG_VISUAL)
