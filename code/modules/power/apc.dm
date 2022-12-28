@@ -947,6 +947,7 @@
 		return
 	if(src in global.hacked_apcs)
 		to_chat(user, "<span class='warning'>[src] already hacked.</span>")
+		return
 	for(var/role in list(MALF, ZOMBIE_MALF))
 		var/datum/role/malfAI/my_beloved = isrole(role, user)
 		if(my_beloved)
