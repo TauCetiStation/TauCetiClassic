@@ -5,9 +5,8 @@
 
 	factions_allowed = list(/datum/faction/malf_silicons/zombie)
 
-	//TODO: Delete this if count == 30
-	minimum_player_count = 1
-	minimum_players_bundles = 1
+	minimum_player_count = 30
+	minimum_players_bundles = 30
 
 /datum/game_mode/mix/zombie_malf/announce()
 	to_chat(world, "<B>The current game mode is - Zombie Malfunction!</B>")
