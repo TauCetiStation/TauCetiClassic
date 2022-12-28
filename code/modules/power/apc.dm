@@ -541,7 +541,9 @@
 					emagged = 1
 					locked = 0
 					to_chat(user, "You emag the APC interface.")
-					update_icon()
+					global.hacked_apcs += src
+					//give visual feedback to traitor
+					detect_hack()
 					announce_hacker()
 				else
 					to_chat(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
@@ -864,8 +866,7 @@
 			if(robot && (robot in malfai.connected_robots))
 				return TRUE
 			//give silicons feedback if they dont have control
-			hack_detected = TRUE
-			update_icon()
+			detect_hack()
 			to_chat(user, "<span class='warning'>\The [src] have AI control disabled!</span>")
 			return FALSE
 
@@ -944,6 +945,8 @@
 /obj/machinery/power/apc/proc/malf_hack(mob/user)
 	if(!user.mind)
 		return
+	if(src in global.hacked_apcs)
+		to_chat(user, "<span class='warning'>[src] already hacked.</span>")
 	for(var/role in list(MALF, ZOMBIE_MALF))
 		var/datum/role/malfAI/my_beloved = isrole(role, user)
 		if(my_beloved)
@@ -1294,6 +1297,10 @@
 
 /obj/machinery/power/apc/malf_hack_act()
 	return FALSE
+
+/obj/machinery/power/apc/proc/detect_hack()
+	hack_detected = TRUE
+	update_icon()
 
 #undef APC_WAIT_FOR_CHARGE
 

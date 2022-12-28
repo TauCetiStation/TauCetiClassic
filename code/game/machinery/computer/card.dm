@@ -327,6 +327,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/card, identification_computer_list)
 			//Repeating should be not provided, probably
 			for(var/obj/machinery/computer/card/computer as anything in global.identification_computer_list)
 				computer.hack_performed = TRUE
+			//give visual feedback about hack source
+			var/area/A = get_area(src)
+			if(A && A.apc)
+				A.apc.detect_hack()
 
 		if ("terminate")
 			if (is_authenticated())

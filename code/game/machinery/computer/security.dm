@@ -467,6 +467,10 @@ What a mess.*/
 			//Repeating should be not provided, probably
 			for(var/obj/machinery/computer/secure_data/computer as anything in global.security_data_computers_list)
 				hack_performed = TRUE
+			//give visual feedback about hack source
+			var/area/A = get_area(src)
+			if(A && A.apc)
+				A.apc.detect_hack()
 
 //FIELD FUNCTIONS
 		if("Edit Field")
