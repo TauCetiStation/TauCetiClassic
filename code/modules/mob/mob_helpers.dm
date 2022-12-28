@@ -320,6 +320,18 @@
 		message_list[insertpos] = pick(tourette_bad_words)
 	return jointext(message_list, " ")
 
+var/global/list/cursed_words = list("МРАЧНЫЕ ВРЕМЕНА", "ТЬМА", "БУРЯ", "ВОЙНА", "ПУТЬ НА КОТОРОМ НЕ СНОСИТЬ ГОЛОВЫ", "КОПЬЕ", "УБИТЬ", "КРОВЬ",  "ЧИСТИЛИЩЕ", "МУЧИТЕЛЬНАЯ БОЛЬ", "МЯСО", "БОЙНЯ", "ПЫТКИ", "КРОВАВЫЙ ДОЖДЬ", "РАЗРЫВАЮЩИЕСЯ ГЛАЗНЫЕ ЯБЛОКИ", "ХАОС", "ВЗРЫВНОЕ УСТРОЙСТВО", "ДЕМОНИЧЕСКИЕ ВРАТА", "ЛАВА", "СМЕРТЬ", "РАЗОРВАННОЕ СЕРДЦЕ", "МУЧЕНИЯ", "СЖЕЧЬ", "РВОТА", "ВЫРВАННЫЙ ЯЗЫК", "ЗАБВЕНИЕ", "БЕЗЫСХОДНОСТЬ", "СУИЦИД", "БЕЗДНА", "ОБЕЗГЛАВЛИВАНИЕ", "РАЗРЫВ", "ДЫХАНИЕ СМЕРТИ", "УЖАСНАЯ УЧАСТЬ", "РАЗРУШЕНИЯ", "ГЛАЗНИЦА")
+/proc/cursed_talk(message)
+	var/text = ""
+	var/words = round(length_char(message)/6)
+	for(var/i in 1 to max(1, words))
+		text += pick(cursed_words)
+		if(i != words)
+			text += " "
+
+	return text
+
+
 #define TILES_PER_SECOND 0.7
 ///Shake the camera of the person viewing the mob SO REAL!
 ///Takes the mob to shake, the time span to shake for, and the amount of tiles we're allowed to shake by in tiles
