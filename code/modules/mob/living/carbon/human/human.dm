@@ -143,6 +143,8 @@
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/collective_mind)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor)
 
+	notify_ghosts("\A [src], new hatched shadowling, at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, header = "Shadowling")
+
 /mob/living/carbon/human/slime/atom_init(mapload)
 	. = ..(mapload, SLIME)
 
