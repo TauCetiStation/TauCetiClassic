@@ -282,7 +282,7 @@
 			M.eye_blind = 3
 			M.blurEyes(15)
 			M.become_nearsighted(EYE_DAMAGE_TEMPORARY)
-			addtimer(CALLBACK(M, /mob.proc/cure_nearsighted, EYE_DAMAGE_TEMPORARY), 5 SECONDS, TIMER_STOPPABLE)
+			addtimer(CALLBACK(M, /mob.proc/cure_nearsighted, EYE_DAMAGE_TEMPORARY), 10 SECONDS, TIMER_STOPPABLE)
 	..()
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
