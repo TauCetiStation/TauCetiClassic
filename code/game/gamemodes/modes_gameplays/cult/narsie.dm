@@ -42,7 +42,7 @@
 
 	var/area/A = get_area(src)
 	if(A)
-		notify_ghosts("Нар-Cи восстал в [A.name]. По всей станции скоро появятся его порталы, нажав на которые, вы сможете стать конструктом.")
+		notify_ghosts("Нар-Cи восстал в [A.name]. По всей станции скоро появятся его порталы, нажав на которые, вы сможете стать конструктом.", source = src, action = NOTIFY_ORBIT, header = "Nar'Sie")
 
 	playsound_frequency_admin = -1
 

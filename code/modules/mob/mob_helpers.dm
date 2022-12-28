@@ -546,13 +546,6 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 /mob/proc/become_not_busy(_hand = 0)
 	busy_with_action = FALSE
 
-//Called after something followable has been spawned by an event
-//Provides ghosts a follow link to an atom if possible
-//Only called once.
-/proc/announce_to_ghosts(event, atom/atom_of_interest)
-	if(atom_of_interest)
-		notify_ghosts("[event ? event : "Event"] has an object of interest: [atom_of_interest]!", source=atom_of_interest, action=NOTIFY_ORBIT, header="Something's Interesting!")
-
 /**
  * Fancy notifications for ghosts
  *
