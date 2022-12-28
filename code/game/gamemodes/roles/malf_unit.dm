@@ -90,7 +90,10 @@
 	var/datum/faction/malf_silicons/malf_faction = faction
 	if(malf_faction)
 		if(is_station_level(apc.z))
-			global.hacked_apcs += apc
+			var/area/A = get_area(apc)
+			//hardcode removing aisat's areas from goals of malf
+			if(!istype(A, /area/station/ai_monitored) && !istype(A, /area/station/aisat))
+				global.hacked_apcs += apc
 			apc.malfunction_area()
 		//lowest treshold in hacked apcs for an announcement to start
 		announce_hacker(global.hacked_apcs.len, malf_faction.get_lower_treshold())
