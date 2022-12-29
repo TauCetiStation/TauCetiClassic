@@ -20,6 +20,31 @@
 /datum/announcement/station/command/department
 	name = "Heads: Department"
 	sound = "department"
+
+/datum/announcement/station/command/department/captain
+    name = "Heads: Captain"
+    sound = "kep"
+
+/datum/announcement/station/command/department/hop
+    name = "Heads: Head of Personnel"
+    sound = "hop"
+
+/datum/announcement/station/command/department/hos
+    name = "Heads: Head of Security"
+    sound = "hos"
+
+/datum/announcement/station/command/department/rd
+    name = "Heads: Research Director"
+    sound = "rd"
+
+/datum/announcement/station/command/department/cmo
+    name = "Heads: Chief Medical Officer"
+    sound = "cmo"
+
+/datum/announcement/station/command/department/ce
+    name = "Heads: Chief Engineer"
+    sound = "se"
+
 /datum/announcement/station/command/department/play(department, message)
 	if(department && message)
 		title = "Оповещение из [department]"

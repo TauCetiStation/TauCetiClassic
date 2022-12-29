@@ -99,6 +99,13 @@ var/global/list/announcement_sounds = list(
 	"xeno_second_help" = 'sound/AI/xeno_second_help.ogg',
 	"xeno_second_help_fail" = 'sound/AI/xeno_second_help_fail.ogg',
 	"xeno_crew_win" = 'sound/AI/xeno_crew_win.ogg',
+
+	"hos" = 'sound/AI/hos.ogg',
+	"cmo" = 'sound/AI/cmo.ogg',
+	"hop" = 'sound/AI/hop.ogg',
+	"rd" = 'sound/AI/rd.ogg',
+	"se" = 'sound/AI/se.ogg',
+	"kep" = 'sound/AI/kep.ogg',
 )
 
 /* General announcement */
