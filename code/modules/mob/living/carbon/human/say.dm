@@ -160,6 +160,9 @@
 				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
 
+	if(get_species() == HOMUNCULUS)
+		message = cursed_talk(message)
+
 	message = capitalize(trim(message))
 	message = add_period(message)
 

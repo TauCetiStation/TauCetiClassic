@@ -87,7 +87,7 @@
 	description = "Most probably know this as Tylenol, but this chemical is a mild, simple painkiller."
 	reagent_state = LIQUID
 	color = "#c8a5dc"
-	overdose = 60
+	overdose = REAGENTS_OVERDOSE * 2
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/paracetamol/on_general_digest(mob/living/M)
@@ -102,7 +102,7 @@
 	description = "A simple, yet effective painkiller."
 	reagent_state = LIQUID
 	color = "#cb68fc"
-	overdose = 30
+	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = 0.025
 	restrict_species = list(IPC, DIONA)
 
@@ -230,7 +230,7 @@
 	description = "Analgesic chemical that heals lung damage and coughing."
 	reagent_state = LIQUID
 	color = "#ffc0cb" // rgb: 255, 192, 203
-	overdose = 10
+	overdose = REAGENTS_OVERDOSE / 3
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	taste_message = "sickening bitterness"
 	restrict_species = list(IPC, DIONA)
@@ -484,7 +484,7 @@
 	description = "Used to encourage recovery of organs and nervous systems. Medicate cautiously."
 	reagent_state = LIQUID
 	color = "#561ec3" // rgb: 200, 165, 220
-	overdose = 10
+	overdose = REAGENTS_OVERDOSE / 3
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
@@ -769,4 +769,5 @@
 	reagent_state = LIQUID
 	color = "#990000"
 	restrict_species = list(IPC, DIONA)
-	overdose = 5
+	custom_metabolism = REAGENTS_METABOLISM * 0.5
+	overdose = REAGENTS_OVERDOSE / 6
