@@ -129,7 +129,8 @@
 
 	var/list/survival_kit_items = list(/obj/item/clothing/mask/breath,
 	                                   /obj/item/weapon/tank/emergency_oxygen,
-	                                   /obj/item/weapon/reagent_containers/hypospray/autoinjector
+	                                   /obj/item/weapon/reagent_containers/hypospray/autoinjector,
+									   /obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine
 	                                   )
 
 	var/list/prevent_survival_kit_items = list()
