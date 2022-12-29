@@ -778,7 +778,8 @@
 	var/obj/item/organ/internal/heart/IO = M.organs_by_name[O_HEART]
 	if(!ishuman(M))
 		return
-
+	if(volume < overdose)
+		return
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
