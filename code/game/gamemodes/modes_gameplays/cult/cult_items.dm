@@ -63,7 +63,7 @@
 	return FALSE
 
 /obj/item/weapon/shield/riot/mirror/toogle_wallshield(mob/living/user)
-	to_chat(user, "<span class='warning'>You are fucking INVINCBLE!</span>")
+	to_chat(user, "<span class='warning'>You are fucking INVINCIBLE!</span>")
 	return
 
 /obj/item/clothing/glasses/cult_blindfold

@@ -74,15 +74,23 @@
 		disable_wallshield(user)
 		user.visible_message("<span class='notice'>[user] stopped holding the protective stance.</span>")
 	else
-		enable_wallshield(user)
-		user.visible_message("<span class='warning'>[user] got into a defensive stance with [src].</span>",
-							"<span class='notice'>You got into a defensive stance with [src].</span>")
+		if(enable_wallshield(user))
+			user.visible_message("<span class='warning'>[user] got into a defensive stance with [src].</span>",
+								"<span class='notice'>You got into a defensive stance with [src].</span>")
 
 
 /obj/item/weapon/shield/proc/enable_wallshield(mob/living/user)
+	/*
+	It won't break something, but it is not expected interact.
+	Activate when equipped on back causes confusion to player.
+	If you have idea how realize that - do it.
+	*/
+	if(!user.is_in_hands(src))
+		return FALSE
 	user.SetNextMove(CLICK_CD_MELEE)
 	saved_dir = user.dir
 	wall_of_shield_on = TRUE
+	return TRUE
 
 /obj/item/weapon/shield/proc/disable_wallshield(mob/living/user = null)
 	saved_dir = 0
