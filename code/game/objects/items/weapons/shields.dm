@@ -80,6 +80,7 @@
 
 
 /obj/item/weapon/shield/proc/enable_wallshield(mob/living/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	saved_dir = user.dir
 	wall_of_shield_on = TRUE
 
@@ -120,15 +121,12 @@
 			continue
 		//should be in hand
 		if(!shield.wall_of_shield_on)
-			to_chat(world, "not ON")
 			continue
 		//thats not a wall of shields
 		if(shield.saved_dir != saved_dir)
-			to_chat(world, "get back")
 			continue
 		//should be more unbalanced because of promotion teamplay
 		add_block += 15
-	to_chat(world, "add_block is [add_block]")
 	return block_chance + add_block
 
 /obj/item/weapon/shield/riot
