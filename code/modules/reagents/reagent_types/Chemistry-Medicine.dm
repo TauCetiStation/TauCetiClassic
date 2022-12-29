@@ -783,12 +783,12 @@
 		data["ticks"] = 1
 	data["ticks"]++
 	switch(data["ticks"])
-		if(1 to 15)
+		if(1 to 150)
 			if(prob(25))
 				to_chat(M, "<span class='notice'>You feel dizzy...</span>")
 			M.make_dizzy(5)
 			M.make_jittery(5)
-		if(15 to 200)
+		if(150 to 200)
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_artery_cut())
 					E.status &= ~ORGAN_ARTERY_CUT
