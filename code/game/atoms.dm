@@ -343,7 +343,7 @@
 	. = new_dir != dir
 	dir = new_dir
 	if(.)
-		SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
+		SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir, src)
 
 /atom/proc/relaymove()
 	return

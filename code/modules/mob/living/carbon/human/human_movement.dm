@@ -111,6 +111,13 @@
 	else
 		tally += species.speed_mod_no_shoes
 
+	//small optimization, early check items in hand
+	if(l_hand || r_hand)
+		var/obj/item/weapon/shield/shield = is_in_hands(/obj/item/weapon/shield)
+		//give them debuff to speed for better combat stance control
+		if(shield && shield.wall_of_shield_on)
+			tally += 3
+
 	if(weight_tally > weight_negation)
 		tally += weight_tally - weight_negation
 
@@ -151,3 +158,7 @@
 
 /mob/living/carbon/human/mob_negates_gravity()
 	return ((shoes && shoes.negates_gravity()) || (wear_suit && wear_suit.negates_gravity()))
+
+/mob/living/carbon/human/proc/inform_items_about_changing_dir(dir)
+	for(var/obj/item/I in src)
+		SEND_SIGNAL(I, COMSIG_ATOM_CHANGE_DIR, dir, src)

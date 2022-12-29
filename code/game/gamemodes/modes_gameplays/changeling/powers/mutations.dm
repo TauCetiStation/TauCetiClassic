@@ -202,6 +202,10 @@
 		remaining_uses--
 		return block_chance
 
+/obj/item/weapon/shield/changeling/toogle_wallshield(mob/living/user)
+	to_chat(user, "<span class='warning'>You are fucking INVINCBLE!</span>")
+	return
+
 /obj/effect/proc_holder/changeling/suit/organic_space_suit
 	name = "Organic Space Suit"
 	desc = "We grow an organic suit to protect ourselves from space exposure."
