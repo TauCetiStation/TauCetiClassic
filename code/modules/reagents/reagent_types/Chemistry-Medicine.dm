@@ -753,7 +753,7 @@
 		if(5 to 10)
 			M.apply_effect(10, AGONY)
 			M.AdjustConfused(2)
-		if(10 to 20)
+		if(10 to INFINITY)
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_broken())
 					to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
