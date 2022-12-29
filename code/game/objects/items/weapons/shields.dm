@@ -120,7 +120,6 @@
 	var/add_block = 0
 	//find comrads
 	for(var/mob/living/carbon/human/H in range(1, get_turf(src)))
-		//there only 2 possible buffs
 		if(H == user)
 			continue
 		var/obj/item/weapon/shield/shield = H.is_in_hands(/obj/item/weapon/shield)
