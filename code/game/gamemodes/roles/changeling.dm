@@ -199,6 +199,7 @@
 	changeling.real_name = changeling.name
 	geneticpoints += 6
 
+	notify_ghosts("\A [changelingID], changeling as a new abomination, at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, header = "Abomination")
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
 			to_chat(M, "<font size='7' color='red'><b>A terrible roar is coming from somewhere around the station.</b></font>")
