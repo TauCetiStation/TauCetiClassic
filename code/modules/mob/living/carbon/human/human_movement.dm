@@ -119,7 +119,7 @@
 	if(!chem_nullify_debuff)
 		for(var/x in list(l_hand, r_hand))
 			var/obj/item/I = x
-			if(I && !(I.flags & ABSTRACT) && I.w_class >= SIZE_SMALL)
+			if(I && !(I.flags & ABSTRACT) && I.w_class >= SIZE_NORMAL)
 				tally += 0.25 * (I.w_class - 2) // (3 = 0.25) || (4 = 0.5) || (5 = 0.75)
 
 	var/turf/T = get_turf(src)
