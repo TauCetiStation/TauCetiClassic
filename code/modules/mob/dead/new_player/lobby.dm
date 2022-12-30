@@ -3,7 +3,7 @@ var/global/custom_lobby_image // admins custom screens, have priority
 var/global/lobby_screens = list("lobby-ny" = list("mp4" = 'html/media/lobby-ny.mp4', "png" = 'html/media/lobby-ny.png'))
 var/global/lobby_screen = "lobby-ny"
 
-var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
+//var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 
 #define CROSS_BOX "<span style='color:red'>☒</span>"
 #define CHECK_BOX "<span style='color:lime'>☑</span>"
@@ -11,8 +11,8 @@ var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
 #define MARK_READY     "READY&nbsp;[CHECK_BOX]"
 #define MARK_NOT_READY "READY&nbsp;[CROSS_BOX]"
 
-#define QUALITY_READY     "QUALITY [CHECK_BOX]"
-#define QUALITY_NOT_READY "QUALITY [CROSS_BOX]"
+#define QUALITY_READY     "QUALITY&nbsp;[CHECK_BOX]"
+#define QUALITY_NOT_READY "QUALITY&nbsp;[CROSS_BOX]"
 
 /mob/dead/new_player/proc/get_lobby_html()
 	var/dat = {"
