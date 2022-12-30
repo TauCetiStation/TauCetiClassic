@@ -80,11 +80,7 @@
 
 
 /obj/item/weapon/shield/proc/enable_wallshield(mob/living/user)
-	/*
-	It won't break something, but it is not expected interact.
-	Activate when equipped on back causes confusion to player.
-	If you have idea how realize that - do it.
-	*/
+	//Using when shield on back, when
 	if(!user.is_in_hands(src))
 		return FALSE
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -92,7 +88,7 @@
 	wall_of_shield_on = TRUE
 	return TRUE
 
-/obj/item/weapon/shield/proc/disable_wallshield(mob/living/user = null)
+/obj/item/weapon/shield/proc/disable_wallshield(mob/living/user)
 	saved_dir = 0
 	wall_of_shield_on = FALSE
 	if(user)
@@ -112,15 +108,20 @@
 	if(wall_of_shield_on)
 		disable_wallshield(user)
 
-/obj/item/weapon/shield/Get_shield_chance(mob/user = null)
+/obj/item/weapon/shield/Get_shield_chance(mob/user)
 	if(!user || !ishuman(user))
 		return block_chance
 	if(!wall_of_shield_on)
 		return block_chance
 	var/add_block = 0
+	var/turf/user_turf = get_turf(user)
 	//find comrads
-	for(var/mob/living/carbon/human/H in range(1, get_turf(src)))
-		if(H == user)
+	for(var/mob/living/carbon/human/H in range(1, user_turf))
+		var/turf/no_perpendicular = get_step(user_turf, saved_dir)
+		var/turf/no_perpendicular_back = get_step(user_turf, turn(saved_dir, 180))
+		var/turf/human_turf = get_turf(H)
+		//remove that line from counted buffs, because of beaty
+		if(human_turf == no_perpendicular || human_turf == user_turf || human_turf == no_perpendicular_back)
 			continue
 		var/obj/item/weapon/shield/shield = H.is_in_hands(/obj/item/weapon/shield)
 		//no_shields
@@ -261,7 +262,7 @@
 /obj/item/weapon/shield/riot/tele/proc/can_sweep_push(mob/user)
 	return active
 
-/obj/item/weapon/shield/riot/tele/Get_shield_chance(mob/user = null)
+/obj/item/weapon/shield/riot/tele/Get_shield_chance(mob/user)
 	if(active)
 		return ..(user)
 	return 0

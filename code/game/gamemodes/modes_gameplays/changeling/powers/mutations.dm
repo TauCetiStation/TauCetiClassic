@@ -204,7 +204,6 @@
 
 /obj/item/weapon/shield/changeling/toogle_wallshield(mob/living/user)
 	to_chat(user, "<span class='warning'>You are fucking INVINCIBLE!</span>")
-	return
 
 /obj/effect/proc_holder/changeling/suit/organic_space_suit
 	name = "Organic Space Suit"

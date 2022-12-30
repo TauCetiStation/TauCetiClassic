@@ -122,7 +122,7 @@
 		. = 0
 
 	if(dir != old_dir)
-		SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir, src)
+		SEND_SIGNAL(src, COMSIG_ATOM_CHANGE_DIR, dir)
 
 	if(.)
 		Moved(oldloc, Dir)
