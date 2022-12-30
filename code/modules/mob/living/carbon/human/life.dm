@@ -160,6 +160,8 @@ var/global/list/tourette_bad_words= list(
 				emote("cough")
 				return
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
+		if(!(get_species() in tourette_bad_words))
+			return 
 		speech_problem_flag = 1
 		if (prob(10))
 			spawn( 0 )
