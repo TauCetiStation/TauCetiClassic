@@ -46,8 +46,8 @@
 
 /obj/item/clothing/glasses/dropped(mob/user)
 	. = ..()
-	if(!prescription)
-		if(HAS_TRAIT(src, TRAIT_NEARSIGHT))
+	if(prescription)
+		if(HAS_TRAIT(user, TRAIT_NEARSIGHT))
 			user.overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
 
 /obj/item/clothing/glasses/meson
