@@ -341,10 +341,10 @@
 /obj/machinery/teleport/hub/proc/is_ready()
 	. = !panel_open && !(stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.stat & (BROKEN|NOPOWER))
 
-//obj/machinery/teleport/hub/syndicate/atom_init()
-//	. = ..()
-//	component_parts += new /obj/item/weapon/stock_parts/matter_bin/super(null)
-//	RefreshParts()
+/obj/machinery/teleport/hub/attack_ghost(mob/user)
+	..()
+	if(power_station?.teleporter_console?.target)
+		user.abstract_move(power_station.teleporter_console.target)
 
 /obj/machinery/teleport/station
 	name = "station"
