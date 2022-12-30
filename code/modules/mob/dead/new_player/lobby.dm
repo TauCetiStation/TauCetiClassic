@@ -3,8 +3,16 @@ var/global/custom_lobby_image // admins custom screens, have priority
 var/global/lobby_screens = list("lobby-ny" = list("mp4" = 'html/media/lobby-ny.mp4', "png" = 'html/media/lobby-ny.png'))
 var/global/lobby_screen = "lobby-ny"
 
-#define MARK_READY     "READY&nbsp;☑"
-#define MARK_NOT_READY "READY&nbsp;☒"
+var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
+
+#define CROSS_BOX "<span style='color:red'>☒</span>"
+#define CHECK_BOX "<span style='color:lime'>☑</span>"
+
+#define MARK_READY     "READY&nbsp;[CHECK_BOX]"
+#define MARK_NOT_READY "READY&nbsp;[CROSS_BOX]"
+
+#define QUALITY_READY     "QUALITY [CHECK_BOX]"
+#define QUALITY_NOT_READY "QUALITY [CROSS_BOX]"
 
 /mob/dead/new_player/proc/get_lobby_html()
 	var/dat = {"
@@ -104,6 +112,9 @@ var/global/lobby_screen = "lobby-ny"
 		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_crew=1'>CREW</a>"}
 		dat += {"<a class="menu_a" href='?src=\ref[src];lobby_join=1'>JOIN</a>"}
 
+	var/has_quality = client.prefs.selected_quality_name
+	dat += {"<a id="quality" class="menu_a" href='?src=\ref[src];lobby_be_special=1'>[has_quality ? QUALITY_READY : QUALITY_NOT_READY]</a>"}
+
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_observe=1'>OBSERVE</a>"}
 	dat += "<br><br>"
 	dat += {"<a class="menu_a" href='?src=\ref[src];lobby_changelog=1'>CHANGELOG</a>"}
@@ -124,15 +135,26 @@ var/global/lobby_screen = "lobby-ny"
 		dat += {"<img class="background" src="[global.lobby_screen].png">"}
 
 	dat += {"
+
 	<script>
-		var mark = document.getElementById("ready");
+		var ready_mark = document.getElementById("ready");
 		function setReadyStatus(isReady) {
-			mark.innerHTML = Boolean(Number(isReady)) ? "[MARK_READY]" : "[MARK_NOT_READY]";
+			ready_mark.innerHTML = Boolean(Number(isReady)) ? "[MARK_READY]" : "[MARK_NOT_READY]";
+		}
+
+		var quality_mark=document.getElementById("quality");
+		function set_quality(setQuality) {
+			quality_mark.innerHTML = Boolean(Number(setQuality)) ? "[QUALITY_READY]" : "[QUALITY_NOT_READY]";
 		}
 	</script>
 	"}
 	dat += "</body></html>"
 	return dat
 
+#undef CROSS_BOX
+#undef CHECK_BOX
+
 #undef MARK_READY
 #undef MARK_NOT_READY
+#undef QUALITY_READY
+#undef QUALITY_NOT_READY

@@ -96,7 +96,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		to_chat(user, "You carefully place \the [I] into the cistern.")
 		return
 
-
+/obj/structure/toilet/deconstruct()
+	for(var/obj/toilet_item as anything in contents)
+		toilet_item.forceMove(loc)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 1)
+	..()
 
 /obj/structure/urinal
 	name = "urinal"
@@ -165,6 +171,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 					H.adjustFireLoss(20)
 		busy = FALSE
 		user.visible_message("<span class='notice'>[user] dried their hands using \the [src].</span>")
+		if(HAS_TRAIT_FROM(user, TRAIT_WET_HANDS, QUALITY_TRAIT))
+			var/mob/living/carbon/human/H = user
+			var/time_amount = rand(3000, 6000)
+			H.apply_status_effect(STATUS_EFFECT_REMOVE_WET, time_amount)
 	else
 		busy = FALSE
 
@@ -200,7 +210,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		return
 
 	var/obj/item/I = O
-	if(!I || !istype(I,/obj/item))
+	if(!I || !isitem(I))
 		return
 
 	add_fingerprint(user)
@@ -288,12 +298,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	anchored = TRUE
 	use_power = NO_POWER_USE
 	layer = MOB_LAYER + 1.1
-	var/on = 0
+	var/on = FALSE
 	var/obj/effect/mist/mymist = null
-	var/ismist = 0				//needs a var so we can make it linger~
+	var/ismist = FALSE				//needs a var so we can make it linger~
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
-	var/is_payed = 0
+	var/payed_time = 0
 	var/cost_per_activation = 10
 
 //add heat controls? when emagged, you can freeze to death in it?
@@ -311,19 +321,24 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	if(.)
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
-	if(is_payed)
+	if(is_paid())
 		on = !on
 		update_icon()
 		if(on)
-			if (user.loc == loc)
+			if(user.loc == loc)
 				wash(user)
 				check_heat(user)
-			for (var/atom/movable/G in src.loc)
+			for(var/atom/movable/G in loc)
 				G.clean_blood()
 		else
-			is_payed = 0 // If the player closes ahead of time - force cancel the fee
+			payed_time = 0 // If the player closes ahead of time - force cancel the fee
 	else
 		to_chat(user, "You didn't pay for that. Swipe a card against [src].")
+
+/obj/machinery/shower/proc/is_paid()
+	if(payed_time)
+		return TRUE
+	return FALSE
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user)
 	if(I.type == /obj/item/device/analyzer) // istype?
@@ -343,7 +358,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			add_fingerprint(user)
 	else if(istype(I, /obj/item/weapon/card))
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(!is_payed && cost_per_activation)
+		if(!payed_time && cost_per_activation)
 			if(!on)
 				var/obj/item/weapon/card/C = I
 				visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
@@ -383,37 +398,44 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 							T.time = worldtime2text()
 							station_account.transaction_log.Add(T)
 
-							is_payed = 60
+							payed_time = 60
 							to_chat(usr, "[bicon(src)]<span class='notice'>Thank you, happy washing time and don't turn me off accidently or i will take your precious credits again! Teehee.</span>")
 						else
 							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 		else
 			to_chat(usr, "[bicon(src)]<span class='notice'>Is payed, you may turn it on now.</span>")
 
+/obj/machinery/shower/deconstruct(disassembled)
+	new /obj/item/stack/sheet/metal(loc, 2)
+	..()
+
 /obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
 	cut_overlays()					//once it's been on for a while, in addition to handling the water overlay.
 	if(mymist)
 		qdel(mymist)
-
 	if(on)
 		add_overlay(image('icons/obj/watercloset.dmi', src, "water", MOB_LAYER + 1, dir))
 		if(watertemp == "freezing")
 			return
 		if(!ismist)
-			spawn(50)
-				if(src && on)
-					ismist = 1
-					mymist = new /obj/effect/mist(loc)
+			if(on)
+				addtimer(CALLBACK(src, .proc/create_mist), 50)
 		else
-			ismist = 1
-			mymist = new /obj/effect/mist(loc)
+			create_mist()
 	else if(ismist)
-		ismist = 1
-		mymist = new /obj/effect/mist(loc)
-		spawn(250)
-			if(src && !on)
-				qdel(mymist)
-				ismist = 0
+		create_mist()
+		addtimer(CALLBACK(src, .proc/del_mist), 250)
+		if(!on)
+			del_mist()
+
+/obj/machinery/shower/proc/create_mist()
+	ismist = TRUE
+	mymist = new /obj/effect/mist(loc)
+
+/obj/machinery/shower/proc/del_mist()
+	ismist = FALSE
+	if(mymist)
+		qdel(mymist)
 
 /obj/machinery/shower/Crossed(atom/movable/AM)
 	. = ..()
@@ -540,12 +562,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 
 /obj/machinery/shower/process()
 	if(!on) return
-	if(is_payed < 1)
+	if(payed_time < 1)
 		on = 0
 		update_icon()
 		return
 	else
-		is_payed--
+		payed_time--
 
 	spawn_fluid(loc, 15)
 
@@ -555,21 +577,36 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		check_heat(C)
 
 /obj/machinery/shower/proc/check_heat(mob/M)
-	if(!on || watertemp == "normal") return
+	if(!on) return
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
+		switch(watertemp)
+			if("normal")
+				C.adjustHalLoss(-1)
+				C.AdjustStunned(-1)
+				C.AdjustWeakened(-1)
+				SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "shower-time", /datum/mood_event/shower)
+				return
+			if("freezing")
+				C.adjust_bodytemperature(-80, min_temp = 80)
+				C.adjustHalLoss(1)
+				C.AdjustStunned(-1)
+				C.AdjustWeakened(1)
+				to_chat(C, "<span class='warning'>The water is freezing!</span>")
+				return
+			if("boiling")
+				C.adjust_bodytemperature(35, max_temp = 500)
+				C.adjustFireLoss(5)
+				C.adjustHalLoss(1)
+				C.AdjustStunned(-1)
+				C.AdjustWeakened(1)
+				to_chat(C, "<span class='danger'>The water is searing!</span>")
+				return
 
-		if(watertemp == "freezing")
-			C.bodytemperature = max(80, C.bodytemperature - 80)
-			to_chat(C, "<span class='warning'>The water is freezing!</span>")
-			return
-		if(watertemp == "boiling")
-			C.bodytemperature = min(500, C.bodytemperature + 35)
-			C.adjustFireLoss(5)
-			to_chat(C, "<span class='danger'>The water is searing!</span>")
-			return
-
-
+/obj/machinery/shower/free/is_paid()
+	if(!payed_time)
+		payed_time = 60
+	return TRUE
 
 /obj/item/weapon/bikehorn/rubberducky
 	name = "rubber ducky"
@@ -610,6 +647,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		if(ishuman(user))
 			user:update_inv_gloves()
 		user.visible_message("<span class='notice'>[user] washes their hands using \the [src].</span>")
+		if(HAS_TRAIT_FROM(user, TRAIT_GREASY_FINGERS, QUALITY_TRAIT))
+			var/mob/living/carbon/human/H = user
+			var/time_amount = rand(3000, 6000)
+			H.apply_status_effect(STATUS_EFFECT_REMOVE_GREASY, time_amount)
 	else
 		busy = FALSE
 
@@ -649,7 +690,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		return
 
 	var/obj/item/I = O
-	if(!I || !istype(I,/obj/item))
+	if(!I || !isitem(I))
 		return
 
 	to_chat(usr, "<span class='notice'>You start washing \the [I].</span>")
@@ -674,6 +715,11 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	else
 		busy = FALSE
 
+/obj/structure/sink/deconstruct()
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 1)
+	..()
 
 /obj/structure/sink/kitchen
 	name = "kitchen sink"

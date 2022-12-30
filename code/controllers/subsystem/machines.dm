@@ -1,13 +1,13 @@
 SUBSYSTEM_DEF(machines)
-/datum/controller/subsystem/machines
 	name = "Machines"
-
-	init_order    = SS_INIT_MACHINES
-
-	flags = SS_KEEP_TIMING
 	msg_lobby = "Чиним машинерию..."
 
+	init_order = SS_INIT_MACHINES
+
+	flags = SS_KEEP_TIMING
+
 	var/list/processing = list()
+	var/list/processing_second = list()
 	var/list/currentrun = list()
 	var/list/powernets  = list()
 
@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(machines)
 	if (!resumed)
 		for(var/datum/powernet/Powernet in powernets)
 			Powernet.reset() //reset the power state.
-		src.currentrun = processing.Copy()
+		src.currentrun = processing_second + processing
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
@@ -47,6 +47,7 @@ SUBSYSTEM_DEF(machines)
 		currentrun.len--
 		if (QDELETED(thing) || thing.process(seconds) == PROCESS_KILL)
 			processing -= thing
+			processing_second -= thing
 			thing.isprocessing = FALSE
 		if (MC_TICK_CHECK)
 			return
@@ -62,5 +63,7 @@ SUBSYSTEM_DEF(machines)
 /datum/controller/subsystem/machines/Recover()
 	if (istype(SSmachines.processing))
 		processing = SSmachines.processing
+	if (istype(SSmachines.processing_second))
+		processing_second = SSmachines.processing_second
 	if (istype(SSmachines.powernets))
 		powernets = SSmachines.powernets

@@ -12,7 +12,7 @@
 	var/equip_ready = 1
 	var/energy_drain = 0
 	var/obj/mecha/chassis = null
-	var/range = MELEE //bitflags
+	var/range = RANGE_MELEE //bitflags
 	reliability = 1000
 	var/selectable = TRUE// Set to FALSE for passive equipment such as mining scanner or armor plates
 	var/salvageable = 1
@@ -69,7 +69,7 @@
 	return range&RANGED
 
 /obj/item/mecha_parts/mecha_equipment/proc/is_melee()
-	return range&MELEE
+	return range&RANGE_MELEE
 
 
 /obj/item/mecha_parts/mecha_equipment/proc/action_checks(atom/target)

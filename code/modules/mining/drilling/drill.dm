@@ -97,7 +97,7 @@
 				T.gets_dug()
 		else if(istype(get_turf(src), /turf/simulated/floor))
 			var/turf/simulated/floor/T = get_turf(src)
-			T.ex_act(2.0)
+			T.ex_act(EXPLODE_HEAVY)
 
 	dig_ore()
 
@@ -168,6 +168,8 @@
 		harvesting.has_resources = 0
 		harvesting.resources = null
 		resource_field -= harvesting
+		if(resource_field.len <= 0)
+			break
 		harvesting = pick(resource_field)
 
 	if(!harvesting)
@@ -355,7 +357,7 @@
 /obj/machinery/mining/drill/proc/shock(mob/user)
 	if(!cell || wires_power_disable )
 		return 0
-	if(!istype(user, /mob/living/carbon))
+	if(!iscarbon(user))
 		return 0
 
 	var/mob/living/carbon/C = user
@@ -383,7 +385,7 @@
 	if(!BP || !BP.is_usable())
 		return
 
-	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, "melee")/2, 1)
+	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, MELEE)/2, 1)
 	to_chat(H, "<span class='danger'>You feel, that [src] try to cut your [BP]!</span>")
 
 	if(BP.is_stump)
@@ -391,7 +393,7 @@
 
 	BP = BP.parent
 
-	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, "melee")/2, 1)
+	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, MELEE)/2, 1)
 	to_chat(H, "<span class='danger'>You feel, that [src] try to cut your [BP]!</span>")
 
 /obj/machinery/mining/drill/update_icon()

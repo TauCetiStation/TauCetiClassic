@@ -118,23 +118,27 @@
 			var/turf/T = get_step(destination, entrydir)
 			if(!density_checks(T))
 				return FALSE
-			if(dest_checkspace && istype(T, /turf/space))
+			if(dest_checkspace && isenvironmentturf(T))
 				return FALSE
 			posturfs += T
 		else
 			for(var/turf/T in RANGE_TURFS(precision,center))
 				if(!density_checks(T))
 					continue
-				if(dest_checkspace && istype(T, /turf/space))
+				if(dest_checkspace && isenvironmentturf(T))
 					continue
 				posturfs += T
 		destturf = safepick(posturfs - center)
 	else
+		// why this chain skips density_checks()
 		destturf = get_turf(destination)
-		if(istype(destturf, /turf/space) && (destturf.x <= TRANSITIONEDGE || destturf.x >= (world.maxx - TRANSITIONEDGE - 1) || destturf.y <= TRANSITIONEDGE || destturf.y >= (world.maxy - TRANSITIONEDGE - 1)))
+		if(isenvironmentturf(destturf) && (destturf.x <= TRANSITIONEDGE || destturf.x >= (world.maxx - TRANSITIONEDGE - 1) || destturf.y <= TRANSITIONEDGE || destturf.y >= (world.maxy - TRANSITIONEDGE - 1)))
 			return FALSE
 
 	if(!destturf || !curturf)
+		return FALSE
+
+	if(SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORT))
 		return FALSE
 
 	playSpecials(curturf,effectin,soundin)
@@ -165,7 +169,7 @@
 	var/turf/center = get_turf(destination)
 	if(T == center)
 		return FALSE
-	if(istype(T, /turf/space) && (T.x <= TRANSITIONEDGE || T.x >= (world.maxx - TRANSITIONEDGE - 1) || T.y <= TRANSITIONEDGE || T.y >= (world.maxy - TRANSITIONEDGE - 1)))
+	if(isenvironmentturf(T) && (T.x <= TRANSITIONEDGE || T.x >= (world.maxx - TRANSITIONEDGE - 1) || T.y <= TRANSITIONEDGE || T.y >= (world.maxy - TRANSITIONEDGE - 1)))
 		return FALSE //No teleports into the void, dunno how to fix that with another method.
 	if(locate(/obj/effect/portal) in T)
 		return FALSE
@@ -212,7 +216,7 @@
 			if (s.stabilize_teleportation())
 				return 1
 		precision = max(rand(1,100)*bagholding.len,100)
-		if(istype(teleatom, /mob/living))
+		if(isliving(teleatom))
 			var/mob/living/MM = teleatom
 			to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
 	return TRUE

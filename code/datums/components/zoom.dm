@@ -1,7 +1,7 @@
 /datum/action/zoom
 	name = "Toggle Zoom"
 	action_type = AB_INNATE
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_LYING | AB_CHECK_ALIVE | AB_CHECK_INSIDE | AB_CHECK_ACTIVE
+	check_flags = AB_CHECK_INCAPACITATED | AB_CHECK_LYING | AB_CHECK_INSIDE | AB_CHECK_ACTIVE
 	button_icon_state = "zoom"
 
 /datum/action/zoom/Activate()
@@ -14,7 +14,7 @@
 	var/datum/action/zoom/button
 
 /datum/component/zoom/Initialize(_zoom_view_range, _can_move = FALSE)
-	if(!istype(parent, /obj/item))
+	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	
 	zoom_view_range = _zoom_view_range

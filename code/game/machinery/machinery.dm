@@ -106,6 +106,13 @@ Class Procs:
 	icon = 'icons/obj/stationobjs.dmi'
 	layer = DEFAULT_MACHINERY_LAYER
 	w_class = SIZE_MASSIVE
+
+	max_integrity = 200
+	integrity_failure = 0.3
+	damage_deflection = 15
+	resistance_flags = CAN_BE_HIT
+
+	var/icon_state_active = 0
 	var/stat = 0
 	var/emagged = 0 // Can be 0, 1 or 2
 	var/use_power = IDLE_POWER_USE
@@ -134,9 +141,13 @@ Class Procs:
 	var/radio_filter_out
 	var/radio_filter_in
 	var/speed_process = FALSE  // Process as fast as possible?
+	var/process_last = FALSE   // Process after others
 
 	var/min_operational_temperature = 5
 	var/max_operational_temperature = 10
+
+	var/list/required_skills //e.g. medical, engineering
+	var/fumbling_time = 5 SECONDS
 
 /obj/machinery/atom_init()
 	. = ..()
@@ -144,6 +155,8 @@ Class Procs:
 
 	if (speed_process)
 		START_PROCESSING(SSfastprocess, src)
+	else if (process_last)
+		START_PROCESSING_NAMED(SSmachines, src, processing_second)
 	else
 		START_PROCESSING(SSmachines, src)
 
@@ -159,6 +172,8 @@ Class Procs:
 
 	if (speed_process)
 		STOP_PROCESSING(SSfastprocess, src)
+	else if (process_last)
+		STOP_PROCESSING_NAMED(SSmachines, src, processing_second)
 	else
 		STOP_PROCESSING(SSmachines, src)
 
@@ -184,14 +199,7 @@ Class Procs:
 	if(use_power && stat == 0)
 		use_power(7500/severity)
 
-		var/obj/effect/overlay/pulse2 = new /obj/effect/overlay(loc)
-		pulse2.icon = 'icons/effects/effects.dmi'
-		pulse2.icon_state = "empdisable"
-		pulse2.name = "emp sparks"
-		pulse2.anchored = TRUE
-		pulse2.set_dir(pick(cardinal))
-
-		QDEL_IN(pulse2, 10)
+		new /obj/effect/overlay/pulse2(loc, 1)
 	..()
 
 /obj/machinery/proc/open_machine()
@@ -235,23 +243,13 @@ Class Procs:
 
 /obj/machinery/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if (prob(50))
-				qdel(src)
 				return
-		if(3.0)
-			if (prob(25))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if (prob(75))
 				return
-		else
-	return
-
-/obj/machinery/blob_act()
-	if(prob(50))
-		qdel(src)
+	qdel(src)
 
 // The main proc that controls power usage of a machine, change use_power only with this proc
 /obj/machinery/proc/set_power_use(new_use_power)
@@ -328,6 +326,9 @@ Class Procs:
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
+	if(!do_skill_checks(usr))
+		return FALSE
+
 	return TRUE
 
 /obj/machinery/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
@@ -336,6 +337,8 @@ Class Procs:
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
+	if(!do_skill_checks(usr))
+		return TRUE
 	return FALSE
 
 /obj/machinery/proc/issilicon_allowed(mob/living/silicon/S)
@@ -380,13 +383,17 @@ Class Procs:
 
 // set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user)
-	if((user.lying || user.stat) && !IsAdminGhost(user))
+	if((user.lying || user.stat != CONSCIOUS) && !IsAdminGhost(user))
 		return TRUE
 	if(!(ishuman(user) || issilicon(user) || ismonkey(user) || isxenoqueen(user) || IsAdminGhost(user)))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return TRUE
 	if(!can_interact_with(user))
 		return TRUE
+	if(HAS_TRAIT_FROM(user, TRAIT_GREASY_FINGERS, QUALITY_TRAIT))
+		if(prob(75))
+			to_chat(user, "<span class='notice'>Your fingers are slipping.</span>")
+			return TRUE
 
 	if(hasvar(src, "wires"))              // Lets close wires window if panel is closed.
 		var/datum/wires/DW = vars["wires"] // Wires and machinery that uses this feature actually should be refactored.
@@ -426,26 +433,23 @@ Class Procs:
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 0)
 	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
 	if(.)
-		deconstruction()
+		if(!handle_fumbling(usr, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around, figuring out how to deconstruct [src].</span>"))
+			return
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
-		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)
-		transfer_fingerprints_to(M)
-		M.state = 2
-		M.icon_state = "box_1"
-		for(var/obj/item/I in component_parts)
-			if(I.reliability != 100 && crit_fail)
-				I.crit_fail = 1
-			I.loc = loc
-		qdel(src)
+		deconstruct(TRUE)
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(!panel_open)
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around, figuring out how to open the maintenance hatch of [src].</span>"))
+				return 0
 			panel_open = 1
 			icon_state = icon_state_open
 			to_chat(user, "<span class='notice'>You open the maintenance hatch of [src].</span>")
 		else
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around, figuring out how to close the maintenance hatch of [src].</span>"))
+				return 1
 			panel_open = 0
 			icon_state = icon_state_closed
 			to_chat(user, "<span class='notice'>You close the maintenance hatch of [src].</span>")
@@ -460,11 +464,11 @@ Class Procs:
 		return 1
 	return 0
 
-/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = SKILL_TASK_VERY_EASY)
 	if(istype(W) &&  !(flags & NODECONSTRUCT))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>")
-		if(W.use_tool(src, user, time, volume = 50))
+		if(W.use_tool(src, user, time, volume = 50, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 			anchored = !anchored
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
@@ -517,6 +521,39 @@ Class Procs:
 /obj/machinery/proc/construction()
 	return
 
+/obj/machinery/proc/spawn_frame(disassembled)
+	var/obj/machinery/constructable_frame/machine_frame/new_frame = new /obj/machinery/constructable_frame/machine_frame(loc)
+
+	new_frame.state = 2
+	new_frame.icon_state = "box_1"
+	. = new_frame
+	if(!disassembled)
+		new_frame.update_integrity(new_frame.max_integrity * 0.5) //the frame is already half broken
+	transfer_fingerprints_to(new_frame)
+
+/obj/machinery/atom_break(damage_flag)
+	. = ..()
+	if(stat & BROKEN || flags & NODECONSTRUCT)
+		return
+	stat |= BROKEN
+	update_icon()
+	return TRUE
+
+/obj/machinery/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..() //Just delete us, no need to call anything else.
+
+	deconstruction()
+	if(!length(component_parts))
+		return ..() //we don't have any parts.
+	spawn_frame(disassembled)
+	for(var/obj/item/part in component_parts)
+		part.forceMove(loc)
+		if(part.reliability != 100 && crit_fail)
+			part.crit_fail = 1
+	LAZYCLEARLIST(component_parts)
+	..()
+
 //called on deconstruction before the final deletion
 /obj/machinery/proc/deconstruction()
 	return
@@ -536,8 +573,13 @@ Class Procs:
 	if(prob(85))
 		emp_act(2)
 	else if(prob(50))
-		ex_act(3)
+		ex_act(EXPLODE_LIGHT)
 	else if(prob(90))
-		ex_act(2)
+		ex_act(EXPLODE_HEAVY)
 	else
-		ex_act(1)
+		ex_act(EXPLODE_DEVASTATE)
+
+/obj/machinery/proc/do_skill_checks(mob/user)
+	if (!required_skills || !user || issilicon(user) || isobserver(user))
+		return TRUE
+	return handle_fumbling(user, src, fumbling_time, required_skills, check_busy = FALSE)

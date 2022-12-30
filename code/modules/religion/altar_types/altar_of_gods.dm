@@ -51,10 +51,8 @@
 	var/msg = ""
 	if(isobserver(user))
 		can_i_see = TRUE
-	else if(isliving(user))
-		var/mob/living/L = user
-		if(L.mind && L.mind.holy_role)
-			can_i_see = TRUE
+	else if(user.my_religion == religion)
+		can_i_see = TRUE
 
 	if(!can_i_see)
 		return
@@ -111,7 +109,7 @@
 
 	var/sacrificed = FALSE
 	for(var/obj/item/I in loc)
-		if(I.flags & ABSTRACT)
+		if(I.flags & ABSTRACT || HAS_TRAIT(I, TRAIT_NO_SACRIFICE))
 			continue
 
 		var/max_points = 0
@@ -138,7 +136,7 @@
 		return TRUE
 	return FALSE
 
-/obj/structure/altar_of_gods/attack_hand(mob/living/carbon/human/user)
+/obj/structure/altar_of_gods/attack_hand(mob/user)
 	if(can_buckle && buckled_mob && istype(user))
 		user_unbuckle_mob(user)
 		return
@@ -221,7 +219,7 @@
 
 	// Assume, that if we've gotten this far, it's a succesful tool use.
 	. = TRUE
-	if(!religion && user?.my_religion.religious_tool_type && istype(I, user.my_religion.religious_tool_type))
+	if(!religion && user?.my_religion?.religious_tool_type && istype(I, user.my_religion.religious_tool_type))
 		religion = user.my_religion
 		religion.altars |= src
 		interact_religious_tool(I, user)
@@ -289,7 +287,7 @@
 
 	tgui_interact(user)
 
-/obj/structure/altar_of_gods/proc/sect_select(mob/user, sect_type)
+/obj/structure/altar_of_gods/proc/sect_select(mob/living/user, sect_type)
 	if(!istype(user.get_active_hand(), religion.religious_tool_type))
 		return
 
@@ -409,13 +407,8 @@
 
 	return ..()
 
-/obj/structure/altar_of_gods/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/altar_of_gods/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
-		return TRUE
-	return ..()
-
-/obj/structure/altar_of_gods/CheckExit(atom/movable/AM, target)
-	if(istype(AM) && AM.checkpass(PASSTABLE))
 		return TRUE
 	return ..()
 

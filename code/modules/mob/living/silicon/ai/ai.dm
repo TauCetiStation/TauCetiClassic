@@ -146,7 +146,7 @@ var/global/list/ai_verbs_default = list(
 	SetNextMove(CLICK_CD_MELEE * 3)
 	var/mob/living/L = A
 	eyeobj.visible_message("<span class='userdanger'>space carp nashes at [A]</span>")
-	L.apply_damage(15, BRUTE, BP_CHEST, L.run_armor_check(BP_CHEST, "melee"), DAM_SHARP|DAM_EDGE)
+	L.apply_damage(15, BRUTE, BP_CHEST, L.run_armor_check(BP_CHEST, MELEE), DAM_SHARP|DAM_EDGE)
 	playsound(eyeobj, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 	return TRUE
 
@@ -171,8 +171,6 @@ var/global/list/ai_verbs_default = list(
 
 	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
 
-	proc_holder_list = new()
-
 	if(L)
 		if (istype(L, /datum/ai_laws))
 			laws = L
@@ -194,15 +192,15 @@ var/global/list/ai_verbs_default = list(
 		add_ai_verbs(src)
 
 	//Languages
-	add_language("Sol Common", 0)
-	add_language("Sinta'unathi", 0)
-	add_language("Siik'maas", 0)
-	add_language("Siik'tajr", 0)
-	add_language("Skrellian", 0)
-	add_language("Rootspeak", 0)
-	add_language("Tradeband", 1)
-	add_language("Trinary", 1)
-	add_language("Gutter", 0)
+	add_language(LANGUAGE_SOLCOMMON, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_SINTAUNATHI, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_SIIKMAAS, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_SIIKTAJR, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_SKRELLIAN, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_ROOTSPEAK, LANGUAGE_CAN_UNDERSTAND)
+	add_language(LANGUAGE_TRADEBAND)
+	add_language(LANGUAGE_TRINARY)
+	add_language(LANGUAGE_GUTTER, LANGUAGE_CAN_UNDERSTAND)
 
 	if(!safety) // Only used by AIize() to successfully spawn an AI.
 		if(!B)  // If there is no player/brain inside.
@@ -221,6 +219,10 @@ var/global/list/ai_verbs_default = list(
 	new /obj/machinery/ai_powersupply(src)
 
 	ai_list += src
+
+	if(mind)
+		mind.skills.add_available_skillset(/datum/skillset/max)
+		mind.skills.maximize_active_skills()
 
 /mob/living/silicon/ai/proc/announce_role()
 	to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
@@ -465,24 +467,20 @@ var/global/list/ai_verbs_default = list(
 	..()
 
 /mob/living/silicon/ai/ex_act(severity)
+	if(stat == DEAD)
+		return
 	if(!blinded)
 		flash_eyes()
-
 	switch(severity)
-		if(1.0)
-			if (stat != DEAD)
-				adjustBruteLoss(100)
-				adjustFireLoss(100)
-		if(2.0)
-			if (stat != DEAD)
-				adjustBruteLoss(60)
-				adjustFireLoss(60)
-		if(3.0)
-			if (stat != DEAD)
-				adjustBruteLoss(30)
-
+		if(EXPLODE_DEVASTATE)
+			adjustBruteLoss(100)
+			adjustFireLoss(100)
+		if(EXPLODE_HEAVY)
+			adjustBruteLoss(60)
+			adjustFireLoss(60)
+		if(EXPLODE_LIGHT)
+			adjustBruteLoss(30)
 	updatehealth()
-
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	if(usr != src)
@@ -574,7 +572,7 @@ var/global/list/ai_verbs_default = list(
 
 	return
 
-/mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj)
+/mob/living/silicon/ai/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return
@@ -900,7 +898,7 @@ var/global/list/ai_verbs_default = list(
 	if(ismalf(usr) && stat != DEAD)
 		to_chat(usr, "<span class='danger'>You cannot use this verb in malfunction. If you need to leave, please adminhelp.</span>")
 		return
-	if(stat)
+	if(stat != CONSCIOUS)
 		return ..()
 
 	// Wipe Core

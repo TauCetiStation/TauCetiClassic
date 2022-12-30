@@ -57,7 +57,6 @@
 		if( (getOxyLoss() > 50) || (config.health_threshold_crit > health) )
 			Paralyse(3)
 		if(paralysis)
-			AdjustParalysis(-1)
 			blinded = 1
 			stat = UNCONSCIOUS
 		else if(IsSleeping())
@@ -88,14 +87,6 @@
 			ear_damage = 0
 
 		//Other
-		if(stunned)
-			AdjustStunned(-1)
-			if(!stunned)
-				update_icons()
-
-		if(weakened)
-			weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
-
 		if(stuttering > 0)
 			setStuttering(0)
 
@@ -106,31 +97,7 @@
 			setDrugginess(0)
 
 		if(confused)
-			confused = 0
-	return 1
-
-
-/mob/living/carbon/xenomorph/handle_regular_hud_updates()
-	if(!client)
-		return 0
-
-	handle_hud_icons()
-
-	if(pullin)
-		if(pulling)
-			pullin.icon_state = "pull1"
-		else
-			pullin.icon_state = "pull0"
-
-	..()
-
-	return 1
-
-
-/mob/living/carbon/xenomorph/proc/handle_hud_icons()
-
-	handle_hud_icons_health()
-
+			SetConfused(0)
 	return 1
 
 /mob/living/carbon/xenomorph/update_sight()
@@ -147,29 +114,6 @@
 		lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 	return TRUE
-
-/mob/living/carbon/xenomorph/proc/handle_hud_icons_health()
-	if(!healths)
-		return
-	if(stat != DEAD)
-		var/resulthealth = (health / maxHealth) * 100
-		switch(resulthealth)
-			if(90 to 100)
-				healths.icon_state = "health0"
-			if(72 to 90)
-				healths.icon_state = "health1"
-			if(54 to 72)
-				healths.icon_state = "health2"
-			if(36 to 54)
-				healths.icon_state = "health3"
-			if(18 to 36)
-				healths.icon_state = "health4"
-			if(0 to 18)
-				healths.icon_state = "health5"
-			else
-				healths.icon_state = "health6"
-	else
-		healths.icon_state = "health7"
 
 ///FIRE CODE
 /mob/living/carbon/xenomorph/handle_fire()

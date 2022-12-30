@@ -12,11 +12,11 @@
 	var/ab_team = team
 	for(var/obj/machinery/abductor/experiment/E in abductor_machinery_list)
 		if(E.team == ab_team)
-			if(E.points >= target_amount)
+			if(E.all_points >= target_amount)
 				return OBJECTIVE_WIN
 
 /datum/objective/abductee
-	completed = 1
+	completed = OBJECTIVE_WIN
 
 /datum/objective/abductee/steal
 	explanation_text = "Steal all"

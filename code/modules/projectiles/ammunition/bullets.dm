@@ -1,4 +1,5 @@
 /obj/item/ammo_casing/a357
+	name = "357. bullet"
 	desc = "A .357 bullet casing."
 	caliber = "357"
 	projectile_type = /obj/item/projectile/bullet/revbullet
@@ -49,24 +50,24 @@
 
 /obj/item/ammo_casing/c45hp
 	desc = "A .45 HP bullet casing."
-	caliber = ".45S"
+	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/smg_hp
 
 /obj/item/ammo_casing/c45hv
 	desc = "A .45 HV bullet casing."
-	caliber = ".45S"
+	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/smg_hv
 
 /obj/item/ammo_casing/c45imp
 	desc = "A .45 IMP bullet casing."
-	caliber = ".45S"
+	caliber = ".45"
 	projectile_type = /obj/item/projectile/bullet/smg_imp
 
 /obj/item/ammo_casing/c45r
 	desc = "A .45 rubber bullet casing."
 	icon_state = "st-casing"
 	caliber = ".45"
-	projectile_type = /obj/item/projectile/bullet/weakbullet/rubber45
+	projectile_type = /obj/item/projectile/bullet/weakbullet/rubber
 	m_amt = 200
 
 /obj/item/ammo_casing/a12mm
@@ -79,15 +80,15 @@
 	desc = "A 12 gauge slug."
 	icon_state = "blshell"
 	caliber = "shotgun"
-	projectile_type = /obj/item/projectile/bullet
+	projectile_type = /obj/item/projectile/bullet/slug
 	m_amt = 3750
 
 /obj/item/ammo_casing/shotgun/buckshot
 	name = "shotgun shell"
 	desc = "A 12 gauge shell."
 	icon_state = "gshell"
-	projectile_type = /obj/item/projectile/bullet/buckpellet
 	pellets = 7
+	projectile_type = /obj/item/projectile/bullet/pellet
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag shell"
@@ -96,19 +97,20 @@
 	projectile_type = /obj/item/projectile/bullet/weakbullet/beanbag
 	m_amt = 300
 
-/obj/item/ammo_casing/shotgun/stunslug
+/obj/item/ammo_casing/shotgun/stunshot
 	name = "stun shell"
-	desc = "An electrified, stunning taser slug for shotguns."
+	desc = "An electrified, stunning taser shell for shotguns."
 	icon_state = "stunshell"
-	projectile_type = /obj/item/projectile/bullet/stunslug
-	pellets = 3
+	projectile_type = /obj/item/projectile/bullet/stunshot
+	pellets = 5
 	m_amt = 2500
 
 /obj/item/ammo_casing/shotgun/incendiary
 	name = "incendiary shell"
-	desc = "An incendiary slug."
+	desc = "An incendiary shell."
 	icon_state = "ishell"
-	projectile_type = /obj/item/projectile/bullet/incendiary
+	projectile_type = /obj/item/projectile/bullet/incendiary/buckshot
+	pellets = 12
 
 /obj/item/ammo_casing/shotgun/dart
 	name = "shotgun darts"

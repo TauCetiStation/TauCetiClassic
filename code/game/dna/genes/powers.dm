@@ -93,10 +93,14 @@
 /datum/dna/gene/basic/remotetalk/activate(mob/M, connected, flags)
 	..(M,connected,flags)
 	M.verbs += /mob/living/carbon/human/proc/remotesay
+	M.verbs += /mob/proc/toggle_telepathy_hear
+	M.verbs += /mob/proc/telepathy_say
 
 /datum/dna/gene/basic/remotetalk/deactivate(mob/M, connected, flags)
 	..(M,connected,flags)
 	M.verbs -= /mob/living/carbon/human/proc/remotesay
+	M.verbs -= /mob/proc/toggle_telepathy_hear
+	M.verbs -= /mob/proc/telepathy_say
 
 /datum/dna/gene/basic/morph
 	name="Morph"
@@ -190,12 +194,7 @@
 		H.ventcrawler = 1
 		H.update_size_class()
 		to_chat(H, "<span class='notice'><b>Ventcrawling allowed</b></span>")
-
-	var/matrix/Mx = matrix()
-	Mx.Scale(0.8) //Makes our hulk to be bigger than any normal human.
-	Mx.Translate(0,-2)
-	M.transform = Mx
-	M.default_transform = Mx
+		H.regenerate_icons()
 
 /datum/dna/gene/basic/midget/deactivate(mob/living/M, connected, flags)
 	..(M,connected,flags)
@@ -204,10 +203,7 @@
 		var/mob/living/carbon/human/H = M
 		H.ventcrawler = 0
 		H.update_size_class()
-
-	var/matrix/Mx = matrix()
-	M.transform = Mx
-	M.default_transform = Mx
+		H.regenerate_icons()
 
 /datum/dna/gene/basic/hulk
 	name                = "Hulk"
@@ -264,7 +260,7 @@
 
 	Monster.original_body = src
 	forceMove(Monster)
-	
+
 	client?.show_metahelp_greeting("hulk")
 	mind.transfer_to(Monster)
 

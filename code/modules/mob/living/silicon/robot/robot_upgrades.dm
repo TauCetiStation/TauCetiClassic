@@ -34,7 +34,8 @@
 	R.icon_state = "robot"
 	R.sensor_huds = R.def_sensor_huds
 	R.updateicon()
-	R.languages = list()
+	for(var/language in R.languages)
+		R.remove_language(language)
 	R.speech_synthesizer_langs = list()
 
 	return TRUE

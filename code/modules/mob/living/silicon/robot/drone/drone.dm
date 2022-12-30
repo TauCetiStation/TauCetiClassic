@@ -21,6 +21,8 @@
 	var/mail_destination = "" //Used for self-mailing.
 	var/eyes_overlay = "eyes-repairbot"
 
+	spawner_args = list(/datum/spawner/living/robot/drone, 2 MINUTES)
+
 /mob/living/silicon/robot/drone/atom_init()
 	. = ..()
 
@@ -202,7 +204,7 @@
 /mob/living/silicon/robot/drone/start_pulling(atom/movable/AM)
 	if(istype(AM,/obj/item/pipe) || istype(AM,/obj/structure/disposalconstruct))
 		..()
-	else if(istype(AM,/obj/item))
+	else if(isitem(AM))
 		var/obj/item/O = AM
 		if(O.w_class > SIZE_TINY)
 			to_chat(src, "<span class='warning'>You are too small to pull that.</span>")

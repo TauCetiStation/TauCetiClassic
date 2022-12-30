@@ -13,10 +13,10 @@
 	var/leap_on_click = 0
 	heal_rate = 3
 	var/pounce_cooldown = 0
-	var/pounce_cooldown_time = 15 SECONDS
+	var/pounce_cooldown_time = 10 SECONDS
 
 	var/neurotoxin_on_click = 0
-	var/neurotoxin_delay = 15
+	var/neurotoxin_delay = 60
 	var/neurotoxin_next_shot = 0
 	var/last_neurotoxin = 0
 
@@ -25,6 +25,7 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/xenomeat = 5)
 	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds,
 						/obj/effect/proc_holder/spell/targeted/xeno_whisp,
+						/obj/effect/proc_holder/spell/no_target/xenowinds,
 						/obj/effect/proc_holder/spell/targeted/transfer_plasma)
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
@@ -38,14 +39,8 @@
 	real_name = name
 	. = ..()
 
-/mob/living/carbon/xenomorph/humanoid/movement_delay()
-	return (move_delay_add + config.alien_delay)
-
 /mob/living/carbon/xenomorph/humanoid/can_pickup(obj/O)
-	if(..() && istype(O, /obj/item/clothing/mask/facehugger))
-		return TRUE
-	else
-		return FALSE
+	return FALSE
 
 /mob/living/carbon/xenomorph/humanoid/set_m_intent(intent)
 	. = ..()

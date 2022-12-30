@@ -30,6 +30,7 @@
 #define BORGTHERM 2
 #define BORGXRAY  4
 #define BORGNIGHT 8
+#define BORGIGNORESIGHT 16
 
 //Disabling certain features
 #define APPEARANCE_IGNORE_TRANSFORM			RESET_TRANSFORM

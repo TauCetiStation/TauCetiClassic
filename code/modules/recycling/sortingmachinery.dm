@@ -5,8 +5,13 @@
 	icon_state = "deliverycloset"
 	density = TRUE
 	var/sortTag = ""
+	var/lot_number = null
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+
+	max_integrity = 5
+	damage_deflection = 0
+	resistance_flags = CAN_BE_HIT
 
 /obj/structure/bigDelivery/proc/dump()
 	for(var/atom/movable/AM in contents)
@@ -17,9 +22,18 @@
 
 /obj/structure/bigDelivery/Destroy()
 	dump()
+	if(lot_number)
+		var/datum/shop_lot/Lot = global.online_shop_lots["[lot_number]"]
+		qdel(Lot)
 	return ..()
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
+	if(lot_number && !(user in contents))
+		var/datum/shop_lot/Lot = global.online_shop_lots["[lot_number]"]
+		if(Lot && !Lot.delivered)
+			to_chat(user, "<span class='notice'>Отметьте посылку доставленной в корзине чтобы открыть замок</span>")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
+			return
 	if(contents.len > 0)
 		dump()
 	else
@@ -28,8 +42,8 @@
 	qdel(src)
 
 /obj/structure/bigDelivery/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/destTagger))
-		var/obj/item/device/destTagger/O = W
+	if(istype(W, /obj/item/device/tagger))
+		var/obj/item/device/tagger/O = W
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
 			src.sortTag = O.currTag
@@ -44,12 +58,21 @@
 			to_chat(M, "<span class='notice'>[user] labels [src] as [str].</span>")
 		src.name = "[src.name] ([str])"
 
+	else if(istype(W, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/Crayon = W
+		color = Crayon.colour
+
 /obj/item/smallDelivery
 	desc = "A small wrapped package."
 	name = "small parcel"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycrateSmall"
 	var/sortTag = ""
+	var/lot_number = null
+
+	max_integrity = 5
+	damage_deflection = 0
+	resistance_flags = CAN_BE_HIT
 
 /obj/item/smallDelivery/proc/dump(mob/user)
 	for(var/atom/movable/AM in contents)
@@ -60,9 +83,18 @@
 
 /obj/item/smallDelivery/Destroy()
 	dump()
+	if(lot_number)
+		var/datum/shop_lot/Lot = global.online_shop_lots["[lot_number]"]
+		qdel(Lot)
 	return ..()
 
 /obj/item/smallDelivery/attack_self(mob/user)
+	if(lot_number)
+		var/datum/shop_lot/Lot = global.online_shop_lots["[lot_number]"]
+		if(Lot && !Lot.delivered)
+			to_chat(user, "<span class='notice'>Отметьте посылку доставленной в корзине чтобы открыть замок</span>")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
+			return
 	if(contents.len > 0)
 		user.drop_from_inventory(src)
 		dump(user)
@@ -72,8 +104,8 @@
 	qdel(src)
 
 /obj/item/smallDelivery/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/destTagger))
-		var/obj/item/device/destTagger/O = I
+	if(istype(I, /obj/item/device/tagger))
+		var/obj/item/device/tagger/O = I
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
 			sortTag = O.currTag
@@ -87,6 +119,10 @@
 		for(var/mob/M in viewers())
 			to_chat(M, "<span class='notice'>[user] labels [src] as [str].</span>")
 		name = "[name] ([str])"
+
+	else if(istype(I, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/Crayon = I
+		color = Crayon.colour
 
 	else
 		return ..()
@@ -119,7 +155,7 @@
 	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[O]</font>")
 
 
-	if (istype(O, /obj/item))
+	if (isitem(O))
 		var/obj/item/I = target
 		if (src.amount > 1)
 			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(I.loc))	//Aaannd wrap it up!
@@ -178,10 +214,9 @@
 	if(src in user)
 		to_chat(user, "<span class='notice'>There are [amount] units of package wrap left!</span>")
 
-
-/obj/item/device/destTagger
-	name = "destination tagger"
-	desc = "Used to set the destination of properly wrapped packages."
+/obj/item/device/tagger
+	name = "tagger"
+	desc = "Используется для наклейки меток, ценников и бирок."
 	icon_state = "dest_tagger"
 	var/currTag = 0
 
@@ -193,32 +228,189 @@
 	g_amt = 1300
 	origin_tech = "materials=1;engineering=1"
 
-/obj/item/device/destTagger/proc/openwindow(mob/user)
+	var/mode = 1
+	var/list/modes = list(1 = "Метка", 2 = "Ценник", 3 = "Бирка")
+
+	var/lot_description = "Это что-то"
+	var/lot_account_number = 111111
+	var/lot_category = "Разное"
+	var/lot_price = 0
+
+	var/autodescription = TRUE
+	var/autocategory = TRUE
+
+	var/label = ""
+
+/obj/item/device/tagger/shop
+	name = "shop tagger"
+	desc = "Используется для наклейки ценников и бирок."
+	icon_state = "shop_tagger"
+	modes = list(1 = "Ценник", 2 = "Бирка")
+
+/obj/item/device/tagger/proc/openwindow(mob/user)
 	var/dat = "<tt>"
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
-	for(var/i = 1, i <= tagger_locations.len, i++)
-		dat += "<td><a href='?src=\ref[src];nextTag=[tagger_locations[i]]'>[tagger_locations[i]]</a></td>"
 
-		if (i%4==0)
-			dat += "</tr><tr>"
+	dat += "<center><HR>Режим: <A href='?src=\ref[src];change_mode=1'>[modes[mode]]</A></center><BR>\n"
 
-	dat += "</tr></table><br>Current Selection: [currTag ? currTag : "None"]</tt>"
+	switch(modes[mode])
+		if("Метка")
+			for(var/i = 1, i <= tagger_locations.len, i++)
+				dat += "<td><a href='?src=\ref[src];nextTag=[tagger_locations[i]]'>[tagger_locations[i]]</a></td>"
 
-	var/datum/browser/popup = new(user, "destTagScreen", "TagMaster 2.3", 450, 350)
+				if (i%4==0)
+					dat += "</tr><tr>"
+
+			dat += "</tr></table><br>Выбрано: [currTag ? currTag : "None"]</tt>"
+		if("Ценник")
+			if(autodescription)
+				dat += "Описание: [lot_description]"
+			else
+				dat += "Описание: <A href='?src=\ref[src];description=1'>[lot_description]</A>"
+			dat += " <A href='?src=\ref[src];autodesc=1'>авто</A><BR>\n"
+			dat += "Номер аккаунта: <A href='?src=\ref[src];number=1'>[lot_account_number]</A> <A href='?src=\ref[src];takeid=1'>id</A><BR>\n"
+			dat += "Цена: <A href='?src=\ref[src];price=1'>[lot_price]$</A><BR>\n"
+			if(autocategory)
+				dat += "Категория: [lot_category]"
+			else
+				dat += "Категория: <A href='?src=\ref[src];category=1'>[lot_category]</A>"
+			dat += " <A href='?src=\ref[src];autocateg=1'>авто</A><BR><BR>\n"
+		if("Бирка")
+			dat += "Текст бирки: <A href='?src=\ref[src];label_text=1'>[label ? label : "Написать"]</A><BR>\n"
+
+	var/datum/browser/popup = new(user, "destTagScreen", "Маркировщик 2.3", 450, 400)
 	popup.set_content(dat)
 	popup.open()
 
-
-/obj/item/device/destTagger/attack_self(mob/user)
-	openwindow(user)
-	return
-
-/obj/item/device/destTagger/Topic(href, href_list)
+/obj/item/device/tagger/Topic(href, href_list)
 	add_fingerprint(usr)
 	if(href_list["nextTag"] && (href_list["nextTag"] in tagger_locations))
 		src.currTag = href_list["nextTag"]
+	else if(href_list["description"])
+		var/T = sanitize(input("Введите описание:", "Маркировщик", input_default(lot_description), null)  as text)
+		if(T)
+			lot_description = T
+	else if(href_list["autodesc"])
+		autodescription = !autodescription
+	else if(href_list["number"])
+		var/T = input("Введите номер аккаунта:", "Маркировщик", input_default(lot_account_number), null)  as num
+		if(T && isnum(T) && T >= 111111 && T <= 999999)
+			lot_account_number = T
+	else if(href_list["takeid"])
+		if(ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			var/obj/item/weapon/card/id/ID = H.get_idcard()
+			if(ID)
+				lot_account_number = ID.associated_account_number
+	else if(href_list["price"])
+		var/T = input("Введите цену:", "Маркировщик", input_default(lot_price), null)  as num
+		if(T && isnum(T) && T >= 0)
+			lot_price = min(T, 5000)
+	else if(href_list["category"])
+		var/T = input("Выберите каталог", "Маркировщик", lot_category) in global.shop_categories
+		if(T && (T in global.shop_categories))
+			lot_category = T
+	else if(href_list["autocateg"])
+		autocategory = !autocategory
+	else if(href_list["label_text"])
+		var/T = sanitize(input("Введите текст бирки:", "Маркировщик", label, null)  as text)
+		if(T)
+			label = T
+	else if(href_list["change_mode"])
+		mode++
+		if(mode > modes.len)
+			mode = 1
+		currTag = 0
+	updateUsrDialog()
 	openwindow(usr)
+
+
+/obj/item/device/tagger/attack_self(mob/user)
+	openwindow(user)
+	return
+
+/obj/item/device/tagger/afterattack(obj/target, mob/user, proximity, params)
+	if(!proximity)
+		return
+	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
+		return
+	if(target.anchored)
+		return
+	if(user in target)
+		return
+	if(target == loc)
+		return
+
+	switch(modes[mode])
+		if("Метка")
+			return
+		if("Ценник")
+			price(target, user)
+		if("Бирка")
+			label(target, user)
+
+/obj/item/device/tagger/proc/price(obj/target, mob/user)
+	if(target.price_tag)
+		to_chat(user, "<span class='notice'>[target] already has a price tag.</span>")
+		return
+	if(!((isitem(target) && !istype(target, /obj/item/smallDelivery)) || (istype(target, /obj/structure) && !istype(target, /obj/structure/bigDelivery))))
+		to_chat(user, "<span class='notice'>Нельзя повесить ценник на [target].</span>")
+		return
+
+	user.visible_message("<span class='notice'>[user] adds a price tag to [target].</span>", \
+						 "<span class='notice'>You added a price tag to [target].</span>")
+
+	if(autodescription)
+		lot_description = target.desc
+
+	if(autocategory)
+		lot_category = get_category(target)
+
+	target.price_tag = list("description" = lot_description, "price" = lot_price, "category" = lot_category, "account" = lot_account_number)
+	target.verbs += /obj/verb/remove_price_tag
+
+	target.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
+
+/obj/item/device/tagger/proc/label(obj/target, mob/user)
+	if(!label || !length(label))
+		to_chat(user, "<span class='notice'>Нет текста на бирке.</span>")
+		return
+	if(length(target.name) + length(label) > 64)
+		to_chat(user, "<span class='notice'>Текст бирки слишком большой.</span>")
+		return
+	if(ishuman(target))
+		to_chat(user, "<span class='notice'>Вы не можете повесить бирку на человека.</span>")
+		return
+	if(issilicon(target))
+		to_chat(user, "<span class='notice'>Вы не можете повесить бирку на киборга.</span>")
+		return
+	if(istype(target, /obj/item/weapon/reagent_containers/glass))
+		to_chat(user, "<span class='notice'>The label can't stick to the [target.name].  (Try using a pen)</span>")
+		return
+
+	user.visible_message("<span class='notice'>[user] labels [target] as [label].</span>", \
+						 "<span class='notice'>You label [target] as [label].</span>")
+	target.name = "[target.name] ([label])"
+
+/obj/item/device/tagger/proc/get_category(obj/target)
+	if(istype(target, /obj/item/weapon/reagent_containers/food))
+		return "Еда"
+	else if(istype(target, /obj/item/weapon/storage/food))
+		return "Еда"
+	else if(istype(target, /obj/item/weapon/storage))
+		return "Наборы"
+	else if(istype(target, /obj/item/weapon))
+		return "Инструменты"
+	else if(istype(target, /obj/item/clothing))
+		return "Одежда"
+	else if(istype(target, /obj/item/device))
+		return "Устройства"
+	else if(istype(target, /obj/item/stack))
+		return "Ресурсы"
+	else
+		return "Разное"
+
 
 /obj/machinery/disposal/deliveryChute
 	name = "Delivery chute"
@@ -309,7 +501,7 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the delivery chute.")
-			if(W.use_tool(src, user, 20, volume = 100))
+			if(W.use_tool(src, user, 20, volume = 100, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 				to_chat(user, "You sliced the floorweld off the delivery chute.")
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				C.ptype = 8 // 8 =  Delivery chute

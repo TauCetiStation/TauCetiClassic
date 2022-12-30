@@ -2,7 +2,7 @@
 	if (!user)
 		user = usr
 	if (!istype(user))
-		if (istype(user, /client))
+		if (isclient(user))
 			var/client/client = user
 			user = client.mob
 		else
@@ -30,7 +30,7 @@
 	if (!user)
 		user = usr
 	if (!istype(user))
-		if (!istype(user, /client))
+		if (!isclient(user))
 			return
 		var/client/client = user
 		user = client.mob
@@ -238,7 +238,7 @@
 	return TRUE
 
 /atom/movable/screen/alert
-	icon = 'icons/mob/screen_alert.dmi'
+	icon = 'icons/hud/screen_alert.dmi'
 	icon_state = "default"
 	name = "Alert"
 	desc = "Something seems to have gone wrong with this alert, so report this bug please"
@@ -256,6 +256,18 @@
 	mob_viewer = null
 	screen_loc = ""
 
+/mob
+	var/list/alerts = list() // contains /atom/movable/screen/alert only // On /mob so clientless mobs will throw alerts properly
+
+/atom/movable/screen/alert/Click(location, control, params)
+	if(!usr || !usr.client)
+		return
+	var/paramslist = params2list(params)
+	if(paramslist[SHIFT_CLICK]) // screen objects don't do the normal Click() stuff so we'll cheat
+		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
+		return
+	if(master)
+		return usr.client.Click(master, location, control, params)
 
 /atom/movable/screen/alert/MouseEntered(location, control, params)
 	if(!QDELETED(src))
@@ -356,6 +368,12 @@
 	icon_state = "alien_queen"
 	alerttooltipstyle = "alien"
 
+//BLOBS
+/atom/movable/screen/alert/nofactory
+	name = "No Factory"
+	desc = "You have no factory, and are slowly dying!"
+	icon_state = "blobbernaut"
+
 //changeling
 /atom/movable/screen/alert/regen_stasis
 	name = "Regenerative Stasis"
@@ -407,6 +425,11 @@
 	desc = "Hazardous non-standard equipment detected. Please ensure any usage of this equipment is in line with unit's laws, if any."
 	icon_state = "hacked"
 
+/atom/movable/screen/alert/not_locked
+	name = "Interface Unlocked"
+	desc = "Unit's interface has been unlocked. Somebody accidentally or intentionally left it open. Robotics may provide assistance."
+	icon_state = "not_locked"
+
 /atom/movable/screen/alert/locked
 	name = "Locked Down"
 	desc = "Unit has remotely locked down. Usage of a Robotics Control Computer like the one in the Research Director's \
@@ -427,6 +450,16 @@
 	desc = "You've been buckled to something and can't move. Click the alert to unbuckle unless you're handcuffed."
 	icon_state = "buckled"
 
+/atom/movable/screen/alert/buckled/Click()
+	if(!mob_viewer)
+		return
+	if(mob_viewer.restrained())
+		to_chat(mob_viewer, "You are restrained! You need to remove handcuffs first!")
+		return
+	if(mob_viewer.incapacitated() || mob_viewer.crawling || mob_viewer.is_busy())
+		return
+	master.user_unbuckle_mob(mob_viewer)
+
 /atom/movable/screen/alert/brake
 	name = "Brake is on"
 	desc = "Wheelchair's brake is on right now, so you can't move."
@@ -435,6 +468,32 @@
 /atom/movable/screen/alert/handcuffed // Not used right now.
 	name = "Handcuffed"
 	desc = "You're handcuffed and can't act. If anyone drags you, you won't be able to move. Click the alert to free yourself."
+
+
+/atom/movable/screen/alert/notify_action
+	name = "Body created"
+	desc = "A body was created. You can enter it."
+	icon_state = "template"
+	timeout = 300
+	var/atom/target = null
+	var/action = NOTIFY_JUMP
+
+/atom/movable/screen/alert/notify_action/Click()
+	. = ..()
+	if(!target)
+		return
+	var/mob/dead/observer/ghost_owner = mob_viewer
+	if(!istype(ghost_owner))
+		return
+	switch(action)
+		if(NOTIFY_ATTACK)
+			target.attack_ghost(ghost_owner)
+		if(NOTIFY_JUMP)
+			var/turf/target_turf = get_turf(target)
+			if(target_turf && isturf(target_turf))
+				ghost_owner.abstract_move(target_turf)
+		if(NOTIFY_ORBIT)
+			ghost_owner.ManualFollow(target)
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 
@@ -448,7 +507,8 @@
 	for(var/i = 1, i <= alerts.len, i++)
 		var/atom/movable/screen/alert/alert = alerts[alerts[i]]
 		if(alert.icon_state == "template")
-			alert.icon = ui_style
+			if(ui_style)
+				alert.icon = ui_style
 		switch(i)
 			if(1)
 				. = ui_alert1
@@ -465,16 +525,3 @@
 		alert.screen_loc = .
 		mymob.client.screen |= alert
 	return TRUE
-
-/mob
-	var/list/alerts = list() // contains /atom/movable/screen/alert only // On /mob so clientless mobs will throw alerts properly
-
-/atom/movable/screen/alert/Click(location, control, params)
-	if(!usr || !usr.client)
-		return
-	var/paramslist = params2list(params)
-	if(paramslist["shift"]) // screen objects don't do the normal Click() stuff so we'll cheat
-		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
-		return
-	if(master)
-		return usr.client.Click(master, location, control, params)

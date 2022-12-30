@@ -10,10 +10,13 @@
 	controlled_planes = list(
 		FLOOR_PLANE,
 		GAME_PLANE,
+		ABOVE_GAME_PLANE,
 		SINGULARITY_PLANE,
+		GHOST_ILLUSION_PLANE,
 		GHOST_PLANE,
 		POINT_PLANE,
 		LIGHTING_PLANE,
+		ABOVE_LIGHTING_PLANE,
 		)
 
 INITIALIZE_IMMEDIATE(/atom/movable/plane_master_controller)

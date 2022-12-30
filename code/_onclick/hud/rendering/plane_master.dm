@@ -43,12 +43,30 @@
 	if(istype(mymob) && mymob?.client?.prefs?.ambientocclusion)
 		add_filter("AO", 1, drop_shadow_filter(x = 0, y = -2, size = 4, color = "#04080FAA"))
 
+/atom/movable/screen/plane_master/game_world_above
+	name = "above game world plane master"
+	plane = ABOVE_GAME_PLANE
+	render_relay_plane = GAME_PLANE
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode = BLEND_OVERLAY
+
 /atom/movable/screen/plane_master/ghost
 	name = "ghost plane master"
 	plane = GHOST_PLANE
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 	render_relay_plane = RENDER_PLANE_NON_GAME
+
+/atom/movable/screen/plane_master/ghost_illusion
+	name = "ghost illusion plane master"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	plane = GHOST_ILLUSION_PLANE
+	render_relay_plane = RENDER_PLANE_ABOVE_GAME
+
+/atom/movable/screen/plane_master/ghost_illusion/backdrop(mob/mymob)
+	. = ..()
+	remove_filter("ghost_illusion")
+	add_filter("ghost_illusion", 1, motion_blur_filter(x = 3, y = 3))
 
 /atom/movable/screen/plane_master/point
 	name = "point plane master"
@@ -66,7 +84,6 @@
 	name = "darkness plane master"
 	plane = BLACKNESS_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	color = list(null, null, null, "#0000", "#000f")
 	blend_mode = BLEND_MULTIPLY
 	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR | PIXEL_SCALE
 	//byond internal end
@@ -99,11 +116,39 @@
 	plane = PLANE_SPACE
 	render_relay_plane = RENDER_PLANE_GAME
 
-/atom/movable/screen/plane_master/gravpulse
-	name = "gravpulse plane"
+/atom/movable/screen/plane_master/singularity_0
+	name = "singularity_0 plane"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	plane = GRAVITY_PULSE_PLANE
-	render_target = GRAVITY_PULSE_RENDER_TARGET
+	plane = SINGULARITY_EFFECT_PLANE_0
+	render_target = SINGULO_RENDER_TARGET_0
+	render_relay_plane = null
+
+/atom/movable/screen/plane_master/singularity_1
+	name = "singularity_1 plane"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	plane = SINGULARITY_EFFECT_PLANE_1
+	render_target = SINGULO_RENDER_TARGET_1
+	render_relay_plane = null
+
+/atom/movable/screen/plane_master/singularity_2
+	name = "singularity_2 plane"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	plane = SINGULARITY_EFFECT_PLANE_2
+	render_target = SINGULO_RENDER_TARGET_2
+	render_relay_plane = null
+
+/atom/movable/screen/plane_master/singularity_3
+	name = "singularity_3 plane"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	plane = SINGULARITY_EFFECT_PLANE_3
+	render_target = SINGULO_RENDER_TARGET_3
+	render_relay_plane = null
+
+/atom/movable/screen/plane_master/anomaly
+	name = "anomaly plane"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	plane = ANOMALY_PLANE
+	render_target = ANOMALY_RENDER_TARGET
 	render_relay_plane = null
 
 /atom/movable/screen/plane_master/area
@@ -120,3 +165,10 @@
 	name = "singularity plane"
 	plane = SINGULARITY_PLANE
 	render_relay_plane = RENDER_PLANE_ABOVE_GAME
+
+/atom/movable/screen/plane_master/camera_static
+	name = "camera static plane master"
+	plane = CAMERA_STATIC_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+	render_relay_plane = RENDER_PLANE_GAME

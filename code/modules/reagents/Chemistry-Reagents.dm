@@ -25,9 +25,14 @@
 
 	var/overdose = 0
 	var/overdose_dam = 1
-	//var/list/viruses = list()
 	var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
 	var/color_weight = 1
+
+	// Whether this reagent can produce an allergy.
+	var/list/allergen = list(
+		ALLERGY_SKIN = TRUE,
+		ALLERGY_INGESTION = TRUE,
+	)
 
 	// Is used to determine which religion could find this reagent "holy".
 	// "holy" means that this reagent will convert turfs into holy turfs,
@@ -36,36 +41,62 @@
 	var/datum/religion/religion
 
 /datum/reagent/proc/reaction_mob(mob/M, method=TOUCH, volume) //By default we have a chance to transfer some
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return FALSE
+
 	var/datum/reagent/self = src
 	src = null //of the reagent to the mob on TOUCHING it.
 
-	if(self.holder && self.holder.my_atom) //for catching rare runtimes
-		if(!istype(self.holder.my_atom, /obj/effect/effect/smoke/chem) && !istype(self.holder.my_atom.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-			// If the chemicals are in a smoke cloud or a cryo cell, do not try to let the chemicals "penetrate" into the mob's system (balance station 13) -- Doohl
-			if(method == TOUCH)
-				var/chance = 1
-				var/block  = FALSE
+	//for catching rare runtimes // hello, why is this here? ~Luduk
+	if(!self.holder)
+		return
+	if(!self.holder.my_atom)
+		return
 
-				for(var/obj/item/clothing/C in M.get_equipped_items())
-					if(C.permeability_coefficient < chance)
-						chance = C.permeability_coefficient
-					if(istype(C, /obj/item/clothing/suit/bio_suit))
-						// bio suits are just about completely fool-proof - Doohl
-						// kind of a hacky way of making bio suits more resistant to chemicals but w/e
-						if(prob(75))
-							block = TRUE
+	// If the chemicals are in a smoke cloud or a cryo cell, do not try to let the chemicals "penetrate" into the mob's system (balance station 13) -- Doohl
+	// hey, so how was it? did it help? ~Luduk
+	if(istype(self.holder.my_atom, /obj/effect/effect/smoke/chem))
+		return
+	if(istype(self.holder.my_atom.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		return
 
-					if(istype(C, /obj/item/clothing/head/bio_hood))
-						if(prob(75))
-							block = TRUE
+	if(method != TOUCH)
+		return
 
-				chance = chance * 100
+	if(!M.reagents)
+		return
 
-				if(prob(chance) && !block)
-					if(M.reagents)
-						M.reagents.add_reagent(self.id,self.volume/2)
+	var/chance = 1
+	var/block  = FALSE
+
+	for(var/obj/item/clothing/C in M.get_equipped_items())
+		if(C.permeability_coefficient < chance)
+			chance = C.permeability_coefficient
+		if(istype(C, /obj/item/clothing/suit/bio_suit))
+			// bio suits are just about completely fool-proof - Doohl
+			// kind of a hacky way of making bio suits more resistant to chemicals but w/e
+			if(prob(75))
+				block = TRUE
+
+		if(istype(C, /obj/item/clothing/head/bio_hood))
+			if(prob(75))
+				block = TRUE
+
+	if(block)
+		return
+
+	chance = chance * 100
+
+	if(!prob(chance))
+		return
+
+	if(self.allergen && self.allergen[ALLERGY_SKIN] && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.trigger_allergy(self.id, self.volume)
+		return
+
+	M.reagents.add_reagent(self.id, self.volume * 0.5)
+
 	return TRUE
 
 /datum/reagent/proc/reaction_obj(obj/O, volume) //By default we transfer a small part of the reagent to the object
@@ -82,12 +113,21 @@
 /datum/reagent/proc/on_mob_life(mob/living/M)
 	if(!M || !holder)
 		return
+	//Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
+	// hey, so, how is your ghost runtime doing? ~Luduk
 	if(!isliving(M))
-		return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
-	if(!check_digesting(M)) // You can't overdose on what you can't digest
 		return
+	if(!check_digesting(M)) // You can't overdose on what you can't digest
+		return FALSE
+
 	if((overdose > 0) && (volume >= overdose))//Overdosing, wooo
 		M.adjustToxLoss(overdose_dam)
+
+	if(allergen && allergen[ALLERGY_INGESTION] && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.trigger_allergy(id, custom_metabolism * H.get_metabolism_factor())
+		return FALSE
+
 	return TRUE
 
 /datum/reagent/proc/on_move(mob/M)
@@ -166,8 +206,8 @@
 	religion.on_holy_reagent_created(src)
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
-	. = ..()
-	holder = null
+	data = null
+	return ..()
 
 /proc/pretty_string_from_reagent_list(list/reagent_list)
 	//Convert reagent list to a printable string for logging etc

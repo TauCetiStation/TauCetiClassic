@@ -19,6 +19,9 @@
 	density = TRUE
 	opacity = 1
 
+	max_integrity = 200
+	resistance_flags = CAN_BE_HIT
+
 /obj/structure/bookcase/atom_init()
 	. = ..()
 	for(var/obj/item/I in loc)
@@ -39,6 +42,14 @@
 	else
 		..()
 
+/obj/structure/bookcase/deconstruct(disassembled)
+	for(var/obj/item/I as anything in contents)
+		I.forceMove(loc)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/wood(loc, 4)
+	..()
+
 /obj/structure/bookcase/attack_hand(mob/user)
 	if(contents.len)
 		var/obj/item/weapon/book/choice = input("Which book would you like to remove from the shelf?") in contents
@@ -54,25 +65,21 @@
 
 /obj/structure/bookcase/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			for(var/obj/item/weapon/book/b in contents)
 				qdel(b)
-			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			for(var/obj/item/weapon/book/b in contents)
-				if (prob(50)) b.loc = (get_turf(src))
-				else qdel(b)
-			qdel(src)
-			return
-		if(3.0)
-			if (prob(50))
-				for(var/obj/item/weapon/book/b in contents)
+				if(prob(50))
 					b.loc = (get_turf(src))
-				qdel(src)
-			return
-		else
-	return
+				else
+					qdel(b)
+		if(EXPLODE_LIGHT)
+			if(prob(50))
+				return
+			for(var/obj/item/weapon/book/b in contents)
+				b.loc = (get_turf(src))
+	qdel(src)
 
 /obj/structure/bookcase/update_icon()
 	if(contents.len < 5)
@@ -159,6 +166,8 @@
 	var/window_height
 	var/obj/item/store	//What's in the book?
 
+	var/free_space = MAX_BOOK_MESSAGE_LEN
+
 /obj/item/weapon/book/attack_self(mob/user)
 	if(carved)
 		if(store)
@@ -216,12 +225,13 @@
 					src.name = newtitle
 					src.title = newtitle
 			if("Contents")
-				var/content = sanitize(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null, MAX_BOOK_MESSAGE_LEN)
+				var/content = sanitize(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null, free_space)
 				if(!content)
 					to_chat(usr, "The content is invalid.")
 					return
 				else
-					src.dat += content//infiniti books?
+					free_space -= length(content)
+					src.dat += content
 			if("Author")
 				var/newauthor = sanitize(input(usr, "Write the author's name:"), MAX_NAME_LEN)
 				if(!newauthor)
@@ -313,9 +323,9 @@
 			modedesc = "Scan book to local buffer, attempt to add book to general inventory."
 		else
 			modedesc = "ERROR!"
-	to_chat(user, " - Mode [mode] : [modedesc]")
+	var/msg = " - Mode [mode] : [modedesc]"
 	if(src.computer)
-		to_chat(user, "<font color=green>Computer has been associated with this unit.</font>")
+		msg += "<br><font color=green>Computer has been associated with this unit.</font>"
 	else
-		to_chat(user, "<font color=red>No associated computer found. Only local scans will function properly.</font>")
-	to_chat(user, "\n")
+		msg += "<br><font color=red>No associated computer found. Only local scans will function properly.</font>"
+	to_chat(user, "[msg]<br>")

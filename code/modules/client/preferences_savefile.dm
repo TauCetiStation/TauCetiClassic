@@ -2,7 +2,14 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 35
+#define SAVEFILE_VERSION_MAX 39
+
+//For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
+//set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
+#define SAVEFILE_VERSION_SPECIES_JOBS 30 // job preferences after breaking changes to any /datum/job/
+#define SAVEFILE_VERSION_QUIRKS 30 // quirks preferences after breaking changes to any /datum/quirk/
+//breaking changes is when you remove any existing quirk/job or change their restrictions
+//Don't forget to bump SAVEFILE_VERSION_MAX too
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -82,7 +89,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				language = A.name
 
 			var/datum/language/lang = all_languages[language]
-			if(!(species in lang.allowed_species))
+			if(!(species in lang.allowed_speak))
 				language = "None"
 				S["language"] << language
 
@@ -180,23 +187,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		S["be_role"] << be_role
 
-	if(current_version < 30)
-		if(species != HUMAN)
-			for(var/datum/job/job in SSjob.occupations)
-				if(!job.is_species_permitted(species))
-					SetJobPreferenceLevel(job, 0)
-			S["job_preferences"] << job_preferences
-
-	if(current_version < 30)
-		for(var/quirk_name in all_quirks)
-			// If the quirk isn't even hypothetically allowed, pref can't have it.
-			// If IsAllowedQuirk() for some reason ever becomes more computationally
-			// difficult than (quirk_name in allowed_quirks), please change to the latter. ~Luduk
-			if(!IsAllowedQuirk(quirk_name))
-				popup(parent, "Your character([real_name]) had incompatible quirks on them. This character's quirks have been reset.", "Preferences")
-				ResetQuirks()
-				break
-
 	if(current_version < 31)
 		flavor_text = fix_cyrillic(flavor_text)
 		med_record  = fix_cyrillic(med_record)
@@ -227,13 +217,52 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 33)
 		S["parallax_theme"] << null
 
-	// I missed the runtime and the code didnt work and the version of savefile has changed
+	if(current_version < 36)
+		var/datum/job/assistant/J = new
+
+		if(player_alt_titles && (player_alt_titles[J.title] in list("Mecha Operator")))
+			player_alt_titles -= J.title
+
+	if(current_version < 37)
+		var/list/deleted_hairstyles = list("Skrell Long Female Tentacles", "Skrell Zeke Female Tentacles", "Gold plated Skrell Male Tentacles", "Gold chained Skrell Female Tentacles", "Cloth draped Skrell Male Tentacles", "Cloth draped Skrell Female Tentacles")
+		if(h_style in deleted_hairstyles)
+			h_style = "Skrell Long Tentacles"
+
 	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
-	if(current_version < 35)
+	if(current_version < 38)
 		if(ignore_question && ignore_question.len)
 			var/list/diff = ignore_question - global.full_ignore_question
 			if(diff.len)
 				S["ignore_question"] << ignore_question - diff
+
+	if(current_version < 38)
+		if("Raider" in be_role)
+			be_role -= "Raider"
+
+		S["be_role"] << be_role
+
+	if(current_version < 39)
+		S["ghost_orbit"] << null
+
+//
+/datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
+
+	if(current_version < SAVEFILE_VERSION_SPECIES_JOBS)
+		if(species != HUMAN)
+			for(var/datum/job/job in SSjob.occupations)
+				if(!job.is_species_permitted(species))
+					SetJobPreferenceLevel(job, 0)
+			S["job_preferences"] << job_preferences
+
+	if(current_version < SAVEFILE_VERSION_QUIRKS)
+		for(var/quirk_name in all_quirks)
+			// If the quirk isn't even hypothetically allowed, pref can't have it.
+			// If IsAllowedQuirk() for some reason ever becomes more computationally
+			// difficult than (quirk_name in allowed_quirks), please change to the latter. ~Luduk
+			if(!IsAllowedQuirk(quirk_name))
+				popup(parent, "Your character([real_name]) had incompatible quirks on them. This character's quirks have been reset.", "Preferences")
+				ResetQuirks()
+				break
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
@@ -307,7 +336,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["default_slot"]      >> default_slot
 	S["chat_toggles"]      >> chat_toggles
 	S["toggles"]           >> toggles
-	S["ghost_orbit"]       >> ghost_orbit
 	S["chat_ghostsight"]   >> chat_ghostsight
 	S["randomslot"]        >> randomslot
 	S["permamuted"]        >> permamuted
@@ -322,6 +350,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["outline_enabled"]   >> outline_enabled
 	S["outline_color"]     >> outline_color
 	S["eorg_enabled"]      >> eorg_enabled
+	S["show_runechat"]     >> show_runechat
 
 	// Custom hotkeys
 	S["key_bindings"] >> key_bindings
@@ -354,10 +383,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, global.available_ui_styles, global.available_ui_styles[1])
 	clientfps		= sanitize_integer(clientfps, -1, 1000, -1)
-	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
+	default_slot	= sanitize_integer(default_slot, 1, GET_MAX_SAVE_SLOTS(parent), initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	chat_toggles	= sanitize_integer(chat_toggles, 0, 65535, initial(chat_toggles))
-	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
 	chat_ghostsight	= sanitize_integer(chat_ghostsight, CHAT_GHOSTSIGHT_ALL, CHAT_GHOSTSIGHT_NEARBYMOBS, CHAT_GHOSTSIGHT_ALL)
 	randomslot		= sanitize_integer(randomslot, 0, 1, initial(randomslot))
 	UI_style_color	= sanitize_hexcolor(UI_style_color, initial(UI_style_color))
@@ -375,6 +403,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	outline_enabled = sanitize_integer(outline_enabled, 0, 1, initial(outline_enabled))
 	outline_color 	= normalize_color(sanitize_hexcolor(outline_color, initial(outline_color)))
 	eorg_enabled 	= sanitize_integer(eorg_enabled, 0, 1, initial(eorg_enabled))
+	show_runechat	= sanitize_integer(show_runechat, 0, 1, initial(show_runechat))
 	if(!cid_list)
 		cid_list = list()
 	ignore_cid_warning	= sanitize_integer(ignore_cid_warning, 0, 1, initial(ignore_cid_warning))
@@ -430,7 +459,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["default_slot"]      << default_slot
 	S["toggles"]           << toggles
 	S["chat_toggles"]      << chat_toggles
-	S["ghost_orbit"]       << ghost_orbit
 	S["chat_ghostsight"]   << chat_ghostsight
 	S["randomslot"]        << randomslot
 	S["permamuted"]        << permamuted
@@ -450,6 +478,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["outline_enabled"] << outline_enabled
 	S["outline_color"]   << outline_color
 	S["eorg_enabled"]    << eorg_enabled
+	S["show_runechat"]   << show_runechat
 	//TGUI
 	S["tgui_fancy"]		<< tgui_fancy
 	S["tgui_lock"]		<< tgui_lock
@@ -482,6 +511,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["name_is_always_random"] >> be_random_name
 	S["gender"]                >> gender
 	S["age"]                   >> age
+	S["height"]                >> height
 	S["species"]               >> species
 	S["language"]              >> language
 
@@ -513,7 +543,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["use_skirt"]         >> use_skirt
 
 	//Load prefs
-	S["job_preferences"] >> job_preferences
+	S["alternate_option"] >> alternate_option
+	S["job_preferences"]  >> job_preferences
 
 	//Traits
 	S["all_quirks"]       >> all_quirks
@@ -539,6 +570,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["citizenship"]         >> citizenship
 	S["faction"]             >> faction
 	S["religion"]            >> religion
+	S["vox_rank"]            >> vox_rank
 
 	S["uplinklocation"]      >> uplinklocation
 
@@ -548,6 +580,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_character(needs_update, S) // needs_update == savefile_version if we need an update (positive integer)
+		repetitive_updates_character(needs_update, S)
 
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
@@ -565,6 +598,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
 	age				= sanitize_integer(age, species_obj.min_age, species_obj.max_age, initial(age))
+	height			= sanitize_inlist(height, heights_list, initial(height))
 	r_hair			= sanitize_integer(r_hair, 0, 255, initial(r_hair))
 	g_hair			= sanitize_integer(g_hair, 0, 255, initial(g_hair))
 	b_hair			= sanitize_integer(b_hair, 0, 255, initial(b_hair))
@@ -606,6 +640,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!citizenship) citizenship = "None"
 	if(!faction)     faction =     "None"
 	if(!religion)    religion =    "None"
+	if(!vox_rank)    vox_rank =    "Larva"
 
 /datum/preferences/proc/random_character()
 	if(!path)
@@ -617,7 +652,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 	var/list/saves = list()
 	var/name
-	for(var/i = 1 to MAX_SAVE_SLOTS)
+	for(var/i = 1 to GET_MAX_SAVE_SLOTS(parent))
 		S.cd = "/character[i]"
 		S["real_name"] >> name
 		if(!name)
@@ -642,7 +677,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S.cd = "/"
 	if(!slot)
 		slot = default_slot
-	slot = sanitize_integer(slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
+	slot = sanitize_integer(slot, 1, GET_MAX_SAVE_SLOTS(parent), initial(default_slot))
 	if(slot != default_slot)
 		default_slot = slot
 		S["default_slot"] << slot
@@ -667,6 +702,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["name_is_always_random"] << be_random_name
 	S["gender"]                << gender
 	S["age"]                   << age
+	S["height"]                << height
 	S["species"]               << species
 	S["language"]              << language
 	S["hair_red"]              << r_hair
@@ -722,6 +758,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["citizenship"]         << citizenship
 	S["faction"]             << faction
 	S["religion"]            << religion
+	S["vox_rank"]            << vox_rank
 	S["uplinklocation"]      << uplinklocation
 
 	return 1

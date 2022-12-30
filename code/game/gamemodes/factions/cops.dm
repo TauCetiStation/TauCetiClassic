@@ -36,7 +36,7 @@
 	AppendObjective(/datum/objective/gang/destroy_gangs)
 
 /datum/faction/cops/proc/send_syndicate()
-	create_spawners(/datum/spawner/dealer, "dealer", 2)
+	create_spawners(/datum/spawner/dealer, 2)
 
 /datum/faction/cops/proc/announce_gang_locations()
 	var/list/readable_gang_names = list()
@@ -98,7 +98,7 @@
 			if(!ishuman(gangbanger.antag.current))
 				continue
 			var/mob/living/carbon/human/H = gangbanger.antag.current
-			if(H.stat || H.handcuffed)
+			if(H.stat != CONSCIOUS || H.handcuffed)
 				continue
 			alive_gangsters++
 	for(var/M in members)
@@ -107,7 +107,7 @@
 			if(!ishuman(bacon.antag.current)) // always returns false
 				continue
 			var/mob/living/carbon/human/H = bacon.antag.current
-			if(H.stat)
+			if(H.stat != CONSCIOUS)
 				continue
 			alive_cops++
 

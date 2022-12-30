@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/random_players = 0					// if set to nonzero, ALL players who latejoin or declare-ready join will have random appearances/genders
 
-	var/delay_end = 0						//if set to nonzero, the round will not restart on it's own
+	var/admin_delayed = 0						//if set to nonzero, the round will not restart on it's own
 
 	var/triai = 0							//Global holder for Triumvirate
 
@@ -42,6 +42,8 @@ SUBSYSTEM_DEF(ticker)
 	var/ert_call_in_progress = FALSE //when true players can join ERT
 	var/hacked_apcs = 0 //check the amount of hacked apcs either by a malf ai, or a traitor
 	var/Malf_announce_stage = 0//Used for announcement
+
+	var/end_timer_id
 
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
@@ -130,35 +132,48 @@ SUBSYSTEM_DEF(ticker)
 						attachment_color = BRIDGE_COLOR_ANNOUNCE,
 					)
 
-					drop_round_stats()
+					SSStatistics.drop_round_stats()
+
+					SSmapping.autovote_next_map()
 
 					if (station_was_nuked)
 						feedback_set_details("end_proper","nuke")
-						if(!delay_end)
-							to_chat(world, "<span class='notice'><B>Rebooting due to destruction of station in [restart_timeout/10] seconds</B></span>")
+						if(!admin_delayed)
+							to_chat(world, "<span class='notice'><B>Restarting due to destruction of station in [restart_timeout/10] seconds</B></span>")
 					else
 						feedback_set_details("end_proper","proper completion")
-						if(!delay_end)
+						if(!admin_delayed)
 							to_chat(world, "<span class='notice'><B>Restarting in [restart_timeout/10] seconds</B></span>")
 
-					if(!delay_end)
-						sleep(restart_timeout)
-						if(!delay_end)
-							world.Reboot(end_state = station_was_nuked ? "nuke" : "proper completion") //Can be upgraded to remove unneded sleep here.
-						else
-							to_chat(world, "<span class='info bold'>An admin has delayed the round end</span>")
-							world.send2bridge(
-								type = list(BRIDGE_ROUNDSTAT),
-								attachment_msg = "An admin has delayed the round end",
-								attachment_color = BRIDGE_COLOR_ROUNDSTAT,
-							)
-					else
-						to_chat(world, "<span class='info bold'>An admin has delayed the round end</span>")
-						world.send2bridge(
-							type = list(BRIDGE_ROUNDSTAT),
-							attachment_msg = "An admin has delayed the round end",
-							attachment_color = BRIDGE_COLOR_ROUNDSTAT,
-						)
+					end_timer_id = addtimer(CALLBACK(src, .proc/try_to_end), restart_timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+
+/datum/controller/subsystem/ticker/proc/try_to_end()
+	var/delayed = FALSE
+
+	var/static/admin_delay_announced = FALSE //announce reason only first time
+	if(admin_delayed)
+		if(!admin_delay_announced)
+			to_chat(world, "<span class='info bold'>Restart delayed due to admin</span>")
+			world.send2bridge(
+				type = list(BRIDGE_ROUNDSTAT),
+				attachment_msg = "An admin has delayed the round end",
+				attachment_color = BRIDGE_COLOR_ROUNDSTAT,
+			)
+			admin_delay_announced = TRUE
+		delayed = TRUE
+
+	var/static/vote_delay_announced = FALSE
+	if(SSvote.active_vote)
+		if(!vote_delay_announced)
+			to_chat(world, "<span class='info bold'>Restart delayed due to vote</span>")
+			vote_delay_announced = TRUE
+		delayed = TRUE
+
+	if(delayed)
+		end_timer_id = addtimer(CALLBACK(src, .proc/try_to_end), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+	else
+		world.Reboot(end_state = station_was_nuked ? "nuke" : "proper completion")
 
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
@@ -241,8 +256,8 @@ SUBSYSTEM_DEF(ticker)
 
 	setup_economy()
 	create_religion(/datum/religion/chaplain)
+	setup_hud_objects()
 
-	//start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
 	collect_minds()
 	equip_characters()
@@ -283,15 +298,16 @@ SUBSYSTEM_DEF(ticker)
 		show_blurbs()
 
 		SSevents.start_roundstart_event()
+		SSqualities.give_all_qualities()
 
 		for(var/mob/dead/new_player/N as anything in new_player_list)
 			if(N.client)
 				N.show_titlescreen()
 		//Cleanup some stuff
-		for(var/obj/effect/landmark/start/S in landmarks_list)
-			//Deleting Startpoints but we need the ai point to AI-ize people later
-			if (S.name != "AI")
-				qdel(S)
+		SSjob.fallback_landmark = null
+		for(var/obj/effect/landmark/start/type as anything in subtypesof(/obj/effect/landmark/start))
+			for(var/obj/effect/landmark/start/S as anything in landmarks_list[initial(type.name)])
+				S.after_round_start()
 
 		//Print a list of antagonists to the server log
 		antagonist_announce()
@@ -315,7 +331,7 @@ SUBSYSTEM_DEF(ticker)
 	var/summary = "summary_selfdes"
 	if(mode && !override)
 		override = mode.name
-	cinematic = new /atom/movable/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity = MOUSE_OPACITY_TRANSPARENT;screen_loc="1,0";}(src)
+	cinematic = new /atom/movable/screen/nuke(src)
 	for(var/mob/M as anything in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
 		if(M.client)
 			M.client.screen += cinematic	//show every client the cinematic
@@ -377,7 +393,6 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in player_list)
-		//sleep(1)//Maybe remove??
 		if(player && player.ready && player.mind)
 			joined_player_list += player.ckey
 			if(player.mind.assigned_role=="AI")
@@ -387,7 +402,7 @@ SUBSYSTEM_DEF(ticker)
 			//	continue
 			else
 				player.create_character()
-		CHECK_TICK // comment/remove this and uncomment sleep, if crashes at round start will come back.
+		CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/collect_minds()
 	for(var/mob/living/player in player_list)
@@ -401,10 +416,10 @@ SUBSYSTEM_DEF(ticker)
 		if(player && player.mind && player.mind.assigned_role && player.mind.assigned_role != "default")
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
-			if(ishuman(player))
-				SSquirks.AssignQuirks(player, player.client, TRUE)
+			SSquirks.AssignQuirks(player, player.client, TRUE)
 			if(player.mind.assigned_role != "MODE")
-				SSjob.EquipRank(player, player.mind.assigned_role, 0)
+				SSjob.EquipRank(player, player.mind.assigned_role, FALSE)
+				player.PutDisabilityMarks()
 	if(captainless)
 		for(var/mob/M as anything in player_list)
 			if(!isnewplayer(M))
@@ -446,7 +461,7 @@ SUBSYSTEM_DEF(ticker)
 		for (var/mob/living/silicon/robot/robo in silicon_list)
 			if(!robo)
 				continue
-			if(istype(robo,/mob/living/silicon/robot/drone))
+			if(isdrone(robo))
 				dronecount++
 				continue
 			var/icon/flat = getFlatIcon(robo,exact=1)
@@ -542,8 +557,8 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/create_default_spawners()
 	// infinity spawners
-	create_spawner(/datum/spawner/mouse, "mouse")
-	create_spawner(/datum/spawner/drone, "drone")
+	create_spawner(/datum/spawner/mouse)
+	create_spawner(/datum/spawner/drone)
 
 /datum/controller/subsystem/ticker/proc/teleport_players_to_eorg_area()
 	if(!config.deathmatch_arena)
@@ -563,6 +578,8 @@ SUBSYSTEM_DEF(ticker)
 	L.equipOutfit(/datum/outfit/arena)
 	L.name = L.key
 	L.real_name = L.name
+	L.mind.skills.add_available_skillset(/datum/skillset/max)
+	L.mind.skills.maximize_active_skills()
 	to_chat(L, "<span class='warning'>Welcome to End of Round Deathmatch Arena! Go hog wild and let out some steam!.</span>")
 
 /datum/controller/subsystem/ticker/proc/achievement_declare_completion()
@@ -570,8 +587,8 @@ SUBSYSTEM_DEF(ticker)
 	var/icon/cup = icon('icons/obj/drinks.dmi', "golden_cup")
 	end_icons += cup
 	var/tempstate = end_icons.len
-	for(var/winner in achievements)
-		var/winner_text = "<b>[winner["key"]]</b> as <b>[winner["name"]]</b> won \"<b>[winner["title"]]</b>\"! \"[winner["desc"]]\""
+	for(var/datum/stat/achievement/winner as anything in SSStatistics.achievements)
+		var/winner_text = "<b>[winner.key]</b> as <b>[winner.name]</b> won \"<b>[winner.title]</b>\"! \"[winner.desc]\""
 		text += {"<br><img src="logo_[tempstate].png"> [winner_text]"}
 
 	return text

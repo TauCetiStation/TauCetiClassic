@@ -4,15 +4,15 @@
 	w_class = SIZE_SMALL
 	var/image/blood_overlay = null //this saves our blood splatter overlay, which will be processed not to go over the edges of the sprite
 	var/abstract = 0
-	var/item_state = null
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	var/r_speed = 1.0
-	var/health = null
 	var/burn_point = null
 	var/burning = null
 	var/list/hitsound = list()
 	var/usesound = null
+	var/pickup_sound = null
+	var/dropped_sound = null
 	var/wet = 0
 	var/can_embed = 1
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
@@ -34,7 +34,6 @@
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
-	var/item_color = null
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	var/pierce_protection = 0
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
@@ -43,7 +42,7 @@
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	var/slowdown = 0 // How much clothing is slowing you down. Negative values speeds you up
 	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
-	var/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/list/materials = list()
 	var/list/allowed = null //suit storage stuff.
 	var/list/can_be_placed_into = list(
@@ -61,7 +60,9 @@
 	var/toolspeed = 1
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
-	var/icon_override = null  //Used to override hardcoded clothing dmis in human clothing proc.
+	var/item_state = null         // has priority over icon_state for on-mob sprites
+	var/item_state_world = null   // has priority over icon_state for world (not in inventory) sprites
+	var/icon_override = null      // Used to override hardcoded clothing dmis in human clothing proc (see also icon_custom)
 
 	/* Species-specific sprite sheets for inventory sprites
 	Works similarly to worn sprite_sheets, except the alternate sprites are used when the clothing/refit_for_species() proc is called.
@@ -69,7 +70,7 @@
 	var/list/sprite_sheets_obj = null
 
     /// A list of all tool qualities that src exhibits. To-Do: Convert all our tools to such a system.
-	var/list/tools = list()
+	var/list/qualities
 	// This thing can be used to stab eyes out.
 	var/stab_eyes = FALSE
 
@@ -78,10 +79,15 @@
 
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
+	// Is heavily utilized by swiping component. Perhaps use to determine how "quick" the strikes with this weapon are?
+	// See swiping.dm for more details.
+	var/sweep_step = 4
+	// Is using this item requires any specific skills?
+	var/list/required_skills
 
-/obj/item/atom_init()
-	. = ..()
-	AddElement(/datum/element/beauty, -w_class)
+	var/dyed_type
+
+	var/can_get_wet = TRUE
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -123,7 +129,7 @@
 	message += "<span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
 	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
 		message += "<span class='notice'>Time of Death: [M.tod]</span><br>"
-	if(istype(M, /mob/living/carbon/human) && mode)
+	if(ishuman(M) && mode)
 		var/mob/living/carbon/human/H = M
 		var/list/damaged = H.get_damaged_bodyparts(1, 1)
 		message += "<span class='notice'>Localized Damage, Brute/Burn:</span><br>"
@@ -140,7 +146,7 @@
 	if(M.status_flags & FAKEDEATH)
 		OX = fake_oxy > 50 ? 		"<span class='warning'>Severe oxygen deprivation detected</span>" : "Subject bloodstream oxygen level normal"
 	message += "[OX]<br>[TX]<br>[BU]<br>[BR]<br>"
-	if(istype(M, /mob/living/carbon))
+	if(iscarbon(M))
 		var/mob/living/carbon/C = M
 		if(C.reagents.total_volume || C.is_infected_with_zombie_virus())
 			message += "<span class='warning'>Warning: Unknown substance detected in subject's blood.</span><br>"
@@ -154,14 +160,11 @@
 			message += "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span><br>"
 	if(M.getCloneLoss())
 		to_chat(user, "<span class='warning'>Subject appears to have been imperfectly cloned.</span>")
-	for(var/datum/disease/D in M.viruses)
-		if(!D.hidden[SCANNER])
-			message += "<span class = 'warning bold'>Warning: [D.form] Detected</span>\n<span class = 'warning'>Name: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span><br>"
 	if(M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
 		message += "<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span><br>"
 	if(M.has_brain_worms())
 		message += "<span class='warning'>Subject suffering from aberrant brain activity. Recommend further scanning.</span><br>"
-	else if(M.getBrainLoss() >= 100 || (istype(M, /mob/living/carbon/human) && !M:has_brain() && M:should_have_organ(O_BRAIN)))
+	else if(M.getBrainLoss() >= 100 || (ishuman(M) && !M:has_brain() && M:should_have_organ(O_BRAIN)))
 		message += "<span class='warning'>Subject is brain dead.</span>"
 	else if(M.getBrainLoss() >= 60)
 		message += "<span class='warning'>Severe brain damage detected. Subject likely to have mental retardation.</span><br>"
@@ -223,19 +226,13 @@
 
 /obj/item/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(5))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(95))
 				return
-		else
-	return
+	qdel(src)
 
 /obj/item/blob_act()
 	return
@@ -255,7 +252,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() )
+	if(!istype(src.loc, /turf) || usr.stat != CONSCIOUS || usr.restrained() )
 		return
 
 	var/turf/T = src.loc
@@ -276,21 +273,16 @@
 
 		to_chat(user, stat_flavor)
 
-/obj/item/attack_hand(mob/user)
+/obj/item/proc/mob_pickup(mob/user, hand_index=null)
 	if (!user || anchored)
 		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
-		if(istype(src, /obj/item/weapon/melee))
-			if(src.w_class < SIZE_NORMAL)
-				to_chat(user, "<span class='warning'>\The [src] is far too small for you to pick up.</span>")
-				return
-		else if(istype(src, /obj/item/weapon/gun))
+		if(istype(src, /obj/item/weapon/gun))
 			if(prob(20))
 				user.say(pick(";RAAAAAAAARGH! WEAPON!", ";HNNNNNNNNNGGGGGGH! I HATE WEAPONS!!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGUUUUUNNNNHH!", ";AAAAAAARRRGH!" ))
 			user.visible_message("<span class='notice'>[user] crushes \a [src] with hands.</span>", "<span class='notice'>You crush the [src].</span>")
 			qdel(src)
-			//user << "<span class='warning'>\The [src] is far too small for you to pick up.</span>"
 			return
 		else if(istype(src, /obj/item/clothing))
 			if(prob(20))
@@ -307,11 +299,22 @@
 			to_chat(user, "<span class='warning'>\The [src] is far too small for you to pick up.</span>")
 			return
 
-	src.throwing = 0
+	throwing = FALSE
 
-	if(src.loc == user)
+	if(freeze_movement || !user.can_pickup(src))
+		return
+
+	remove_outline()
+	add_fingerprint(user)
+
+	if(!pickup(user))
+		return
+
+	user.SetNextMove(CLICK_CD_RAPID)
+
+	if(loc == user)
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
-		if(!src.canremove)
+		if(!canremove)
 			return
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
@@ -320,45 +323,45 @@
 				return
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+				if(istype(H.wear_suit, /obj/item/clothing/suit))
 					var/obj/item/clothing/suit/V = H.wear_suit
 					V.attack_reaction(H, REACTION_ITEM_TAKEOFF)
-				if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
-					if(user.get_item_by_slot(SLOT_L_HAND) != src && user.get_item_by_slot(SLOT_R_HAND) != src) //swap item in hands have no delay
-						if(!user.delay_clothing_unequip(src))
-							return
-
+				if(!user.delay_clothing_unequip(src))
+					return
+		. = user.remove_from_mob(src, user)
 	else
-		if(isliving(src.loc))
+		if(isliving(loc))
 			return
-		user.SetNextMove(CLICK_CD_RAPID)
-
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+			if(istype(H.wear_suit, /obj/item/clothing/suit))
 				var/obj/item/clothing/suit/V = H.wear_suit
 				V.attack_reaction(H, REACTION_ITEM_TAKE)
 
-	if(QDELETED(src) || freeze_movement) // remove_from_mob() may remove DROPDEL items, so...
+		if(istype(loc, /obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = src.loc
+			. = S.remove_from_storage(src, user)
+		else
+			. = TRUE
+
+	if(QDELETED(src)) // remove_from_mob() may remove DROPDEL items, so...
 		return
 
-	if(!user.can_pickup(src))
-		return
+	if(.)
+		if(isnull(hand_index))
+			. = user.put_in_active_hand(src)
+		else
+			switch(hand_index)
+				if(0)
+					. = user.put_in_r_hand(src)
+				if(1)
+					. = user.put_in_l_hand(src)
 
-	remove_outline()
-	if(!pickup(user))
-		return
-	add_fingerprint(user)
+		if(!(. || isturf(loc)))
+			forceMove(get_turf(user))
 
-	if(istype(src.loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = src.loc
-		if(!S.remove_from_storage(src, user) || !user.put_in_active_hand(src))
-			forceMove(get_turf(src))
-	else if(loc == user)
-		if(!user.remove_from_mob(src, user) || !user.put_in_active_hand(src))
-			forceMove(get_turf(src))
-	else
-		user.put_in_active_hand(src)
+/obj/item/attack_hand(mob/user)
+	mob_pickup(user)
 
 /obj/item/attack_paw(mob/user)
 	if (!user || anchored)
@@ -376,7 +379,7 @@
 		else
 			user.remove_from_mob(src)
 	else
-		if(istype(src.loc, /mob/living))
+		if(isliving(src.loc))
 			return
 
 		user.next_move = max(user.next_move+2,world.time + 2)
@@ -424,6 +427,8 @@
 /obj/item/proc/after_throw(datum/callback/callback)
 	if (callback) //call the original callback
 		. = callback.Invoke()
+	flags &= ~IN_INVENTORY // #10047
+	update_world_icon()
 
 /obj/item/proc/talk_into(mob/M, text)
 	return FALSE
@@ -434,9 +439,13 @@
 // apparently called whenever an item is removed from a slot, container, or anything else.
 /obj/item/proc/dropped(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
+	if(user && user.loc != loc && isturf(loc))
+		playsound(user, dropped_sound, VOL_EFFECTS_MASTER)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
+	flags &= ~IN_INVENTORY
 	if(flags & DROPDEL)
 		qdel(src)
+	update_world_icon()
 	set_alt_apperances_layers()
 
 // called just as an item is picked up (loc is not yet changed)
@@ -444,14 +453,19 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user) & COMPONENT_ITEM_NO_PICKUP)
 		return FALSE
+	playsound(user, pickup_sound, VOL_EFFECTS_MASTER)
 	return TRUE
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /obj/item/proc/on_exit_storage(obj/item/weapon/storage/S)
+	flags |= IN_STORAGE
+	update_world_icon()
 	return
 
 // called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /obj/item/proc/on_enter_storage(obj/item/weapon/storage/S)
+	flags &= ~IN_STORAGE
+	update_world_icon()
 	return
 
 // called when "found" in pockets and storage items. Returns 1 if the search should end.
@@ -465,8 +479,10 @@
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
 	SHOULD_CALL_PARENT(TRUE)
+	flags |= IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED, src, slot)
+	update_world_icon()
 	set_alt_apperances_layers()
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
@@ -653,7 +669,7 @@
 						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
 					return FALSE
 				var/obj/item/clothing/under/uniform = H.w_uniform
-				if(uniform.accessories.len && !uniform.can_attach_accessory(src))
+				if(!uniform.can_attach_accessory(src))
 					if (!disable_warning)
 						to_chat(H, "<span class='warning'>You already have an accessory of this type attached to your [uniform].</span>")
 					return FALSE
@@ -738,7 +754,7 @@
 		return
 	if(usr.incapacitated() || !Adjacent(usr))
 		return
-	if((!istype(usr, /mob/living/carbon)) || (istype(usr, /mob/living/carbon/brain)))//Is humanoid, and is not a brain
+	if((!iscarbon(usr)) || (isbrain(usr)))//Is humanoid, and is not a brain
 		to_chat(usr, "<span class='warning'>You can't pick things up!</span>")
 		return
 	if(src.anchored) //Object isn't anchored
@@ -757,7 +773,7 @@
 	usr.UnarmedAttack(src)
 	return
 
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, datum/callback/extra_checks)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null, required_skills_override = null, skills_speed_bonus = -0.4)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(user.is_busy())
@@ -766,7 +782,24 @@
 	if(!delay && !tool_start_check(user, amount))
 		return
 
+	var/skill_bonus = 1
+
+	//in case item have no defined default required_skill or we need to check other skills e.g. check crowbar for surgery
+	if(required_skills_override)
+		skill_bonus = apply_skill_bonus(user, 1, required_skills_override, skills_speed_bonus)
+	else if(required_skills) //default check for item
+		skill_bonus = apply_skill_bonus(user, 1, required_skills, skills_speed_bonus)
+
+
 	delay *= toolspeed
+	delay *= max(skill_bonus, 0.1)
+
+	if(!isnull(quality))
+		var/qual_mod = get_quality(quality)
+		if(qual_mod <= 0)
+			return
+
+		delay *= 1 / qual_mod
 
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)
@@ -861,7 +894,7 @@
 		to_chat(user, "<span class='warning'>You're going to need to remove the eye covering first.</span>")
 		return
 
-	if(istype(M, /mob/living/carbon/xenomorph) || istype(M, /mob/living/carbon/slime))//Aliens don't have eyes./N     slimes also don't have eyes!
+	if(isxeno(M) || isslime(M))//Aliens don't have eyes./N     slimes also don't have eyes!
 		to_chat(user, "<span class='warning'>You cannot locate any eyes on this creature!</span>")
 		return
 
@@ -871,14 +904,6 @@
 	M.log_combat(user, "eyestabbed with [name]")
 
 	add_fingerprint(user)
-	//if((CLUMSY in user.mutations) && prob(50))
-	//	M = user
-		/*
-		to_chat(M, "<span class='warning'>You stab yourself in the eye.</span>")
-		M.sdisabilities |= BLIND
-		M.weakened += 4
-		M.adjustBruteLoss(10)
-		*/
 	if(M != user)
 		visible_message("<span class='warning'>[M] has been stabbed in the eye with [src] by [user].</span>", ignored_mobs = list(user, M))
 		to_chat(M, "<span class='warning'>[user] stabs you in the eye with [src]!</span>")
@@ -1028,3 +1053,95 @@
 	. = ..()
 	if(src != over)
 		remove_outline()
+
+/obj/item/be_thrown(mob/living/thrower, atom/target)
+	if(!canremove || flags & NODROP)
+		return null
+	return src
+
+/obj/item/airlock_crush_act()
+	var/qual_prying = get_quality(QUALITY_PRYING)
+	if(qual_prying <= 0)
+		return
+
+	var/chance = w_class / (qual_prying * (m_amt + 1))
+
+	if(prob(chance * 100))
+		qdel(src)
+
+/obj/item/proc/display_accessories()
+	return
+
+/obj/item/taken(mob/living/user, atom/fallback)
+	if(user.Adjacent(src) && user.put_in_hands(src))
+		return TRUE
+
+	return ..()
+
+/obj/item/proc/get_quality(quality)
+	if(!qualities)
+		return 0
+	return qualities[quality]
+
+/obj/item/proc/get_dye_type(w_color)
+	if(!dyed_type)
+		return
+
+	var/list/dye_colors = global.dyed_item_types[dyed_type]
+	if(!dye_colors)
+		return
+
+	var/obj/item/clothing/dye_type = dye_colors[w_color]
+	if(!dye_type)
+		return
+
+	if(islist(dye_type))
+		dye_type = pick(dye_type)
+
+	return dye_type
+
+/obj/item/proc/wash_act(w_color)
+	decontaminate()
+	wet = 0
+
+	var/obj/item/clothing/dye_type = get_dye_type(w_color)
+	if(!dye_type)
+		return
+
+	name = initial(dye_type.name)
+	icon_state = initial(dye_type.icon_state)
+	item_state = initial(dye_type.item_state)
+	desc = "The colors are a bit dodgy."
+
+/obj/item/attack_hulk(mob/living/user)
+	return FALSE
+
+/obj/item/burn()
+	var/turf/T = get_turf(src)
+	var/ash_type
+	if(w_class >= SIZE_BIG)
+		ash_type = /obj/effect/decal/cleanable/ash/large
+	else
+		ash_type = /obj/effect/decal/cleanable/ash
+	var/obj/effect/decal/cleanable/ash/A = new ash_type(T)
+	A.desc += "\nLooks like this used to be \an [name] some time ago."
+	..()
+
+// swap between world (small) and ui (big) icons when item changes location
+// feel free to override for items with complicated icon mechanics
+/obj/item/proc/update_world_icon()
+	if(!item_state_world)
+		return
+
+	if((flags && IN_INVENTORY || flags && IN_STORAGE) && icon_state == item_state_world)
+		// moving to inventory, restore icon
+		icon_state = initial(icon_state)
+
+	else if(icon_state != item_state_world)
+		// moving to world, change icon
+		icon_state = item_state_world
+
+/obj/item/CtrlShiftClick(mob/user)
+	. = ..()
+	var/mob/living/carbon/human/H = user
+	SEND_SIGNAL(H, COMSIG_CLICK_CTRL_SHIFT, src)

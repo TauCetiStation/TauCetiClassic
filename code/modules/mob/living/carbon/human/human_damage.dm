@@ -179,23 +179,20 @@
 
 // =============================================
 
-/mob/living/carbon/human/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
-	if(HULK in mutations)
-		stunned = 0
-	else
-		..()
+/mob/living/carbon/human/Stun(amount, ignore_canstun = FALSE)
+	if(HULK in mutations && !ignore_canstun)
+		return SetStunned(0)
+	..()
 
-/mob/living/carbon/human/Weaken(amount)
-	if(HULK in mutations)
-		weakened = 0
-	else
-		..()
+/mob/living/carbon/human/Weaken(amount, ignore_canstun = FALSE)
+	if(HULK in mutations && !ignore_canstun)
+		return SetWeakened(0)
+	..()
 
-/mob/living/carbon/human/Paralyse(amount)
-	if(HULK in mutations)
-		paralysis = 0
-	else
-		..()
+/mob/living/carbon/human/Paralyse(amount, ignore_canstun = FALSE)
+	if(HULK in mutations && !ignore_canstun)
+		return SetParalysis(0)
+	..()
 
 // =============================================
 
@@ -279,6 +276,9 @@
 /mob/living/carbon/human/proc/take_certain_bodypart_damage(list/parts_name, brute, burn, sharp = 0, edge = 0)
 	for(var/name in parts_name)
 		var/obj/item/organ/external/BP = get_bodypart(name)
+		if(!BP)
+			continue
+
 		var/damage_flags = (sharp ? DAM_SHARP : FALSE) | (edge ? DAM_EDGE : FALSE)
 
 		if(BP.take_damage(brute, burn, damage_flags))
@@ -314,8 +314,8 @@
 	while(parts.len && (brute > 0 || burn > 0) )
 		var/obj/item/organ/external/BP = pick(parts)
 
-		var/brute_per_part = round(brute / parts.len)
-		var/burn_per_part = round(burn / parts.len)
+		var/brute_per_part = round(brute / parts.len, 0.1)
+		var/burn_per_part = round(burn / parts.len, 0.1)
 
 		var/brute_was = BP.brute_dam
 		var/burn_was = BP.burn_dam
@@ -354,7 +354,7 @@ This function restores all bodyparts.
 
 /mob/living/carbon/human/proc/HealDamage(zone, brute, burn)
 	var/obj/item/organ/external/BP = get_bodypart(zone)
-	if(istype(BP, /obj/item/organ/external))
+	if(isbodypart(BP))
 		if(BP.heal_damage(brute, burn))
 			med_hud_set_health()
 	else
@@ -363,12 +363,17 @@ This function restores all bodyparts.
 /mob/living/carbon/human/proc/get_bodypart(zone)
 	if(!zone)
 		zone = BP_CHEST
-	if(zone in list(O_EYES , O_MOUTH))
+
+	else if(zone in list(O_EYES , O_MOUTH))
 		zone = BP_HEAD
+	else if(zone == BP_ACTIVE_ARM)
+		zone = hand ? BP_L_ARM : BP_R_ARM
+	else if(zone == BP_INACTIVE_ARM)
+		zone = hand ? BP_R_ARM : BP_L_ARM
+
 	return bodyparts_by_name[zone]
 
 /mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null)
-
 	if(damagetype == HALLOSS && species && species.flags[NO_PAIN])
 		return FALSE
 
@@ -403,7 +408,10 @@ This function restores all bodyparts.
 			created_wound = BP.take_damage(damage, 0, damage_flags, used_weapon)
 		if(BURN)
 			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon)
-
+	if(damage > 8 && (BP.status & ORGAN_SPLINTED))
+		BP.status &= ~ORGAN_SPLINTED
+		playsound('sound/effects/splint_broke.ogg', VOL_EFFECTS_MASTER)
+		visible_message("<span class='bold warning'>You see how the splint falls off from [src]'s [BP.name]!</span>")
 	// Will set our damageoverlay icon to the next level, which will then be set back to the normal level the next mob.Life().
 	updatehealth()
 

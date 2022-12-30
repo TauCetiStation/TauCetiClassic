@@ -103,17 +103,7 @@
 	//set reagent data
 	B.data["donor"] = O
 
-	if(O.viruses && O.viruses.len > 0)
-		if(!B.data["viruses"])
-			B.data["viruses"] = list()
-
-		for(var/datum/disease/D in O.viruses)
-			if(D.spread_type != SPECIAL)
-				B.data["viruses"] += D.Copy()
-
 	B.data["blood_DNA"] = copytext(O.dna.unique_enzymes,1,0)
-	if(O.resistances&&O.resistances.len)
-		B.data["resistances"] = O.resistances.Copy()
 	bucket_of_blood.reagents.reagent_list += B
 	bucket_of_blood.reagents.update_total()
 	bucket_of_blood.on_reagent_change()
@@ -162,7 +152,10 @@
 		return 1
 	user.visible_message("[user] put [what] into [src].", \
 		"You put the [what] into [src].")
-	user.drop_from_inventory(what, src)
+	if(isitem(what))
+		user.drop_from_inventory(what, src)
+	else
+		what.forceMove(src)
 
 /obj/machinery/processor/attack_hand(mob/user)
 	. = ..()

@@ -182,7 +182,7 @@
 		else
 			to_chat(U, "<span class='warning'>The exosuit's battery has run dry. You must find another source of power.</span>")
 
-	else if (istype(target, /mob/living/silicon/robot))
+	else if (isrobot(target))
 		var/mob/living/silicon/robot/A = target
 		to_chat(A, "<span class='warning'>Warning: Unauthorized access through sub-route 12, block C, detected.</span>")
 
@@ -212,7 +212,7 @@
 		else
 			to_chat(U, "<span class='warning'>Their battery has run dry of power. You must find another source.</span>")
 
-	else if (istype(target, /obj/machinery)) //Can be applied to generically to all powered machinery. I'm leaving this alone for now.
+	else if (ismachinery(target)) //Can be applied to generically to all powered machinery. I'm leaving this alone for now.
 		var/obj/machinery/A = target
 
 		if (!A.powered())

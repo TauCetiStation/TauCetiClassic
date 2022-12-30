@@ -15,6 +15,8 @@
 	use_power = NO_POWER_USE
 	allowed_checks = ALLOWED_CHECK_NONE
 
+	process_last = TRUE
+
 	var/capacity = 0 // Maximum charge
 	var/charge = 0 // Actual charge
 
@@ -33,6 +35,7 @@
 
 	var/obj/machinery/power/terminal/terminal = null
 	var/power_failure = FALSE
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/power/smes/atom_init()
 	. = ..()
@@ -50,9 +53,9 @@
 	var/map_charge = charge
 	var/map_max_input = input_level_max
 	var/map_max_output = output_level_max
-	
+
 	RefreshParts()
-	
+
 	if(map_capacity)
 		capacity = map_capacity
 	if(map_charge)
@@ -389,7 +392,6 @@
 	. = ..()
 	if(.)
 		return
-
 	switch(action)
 		if("tryinput")
 			input_attempt = !input_attempt

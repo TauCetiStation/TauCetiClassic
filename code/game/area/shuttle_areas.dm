@@ -55,6 +55,7 @@
 /area/shuttle/arrival/velocity
 	name = "NTS Velocity"
 	icon_state = "shuttle2"
+	looped_ambience = 'sound/ambience/loop_velocity.ogg'
 
 /area/shuttle/arrival/velocity/Entered(mob/M)
 	..()
@@ -219,6 +220,10 @@
 //Vox shuttle
 /area/shuttle/vox/arkship
 	name = "Vox Skipjack"
+	icon_state = "yellow"
+
+/area/shuttle/vox/arkship_hold
+	name = "Vox Skipjack Hold"
 	icon_state = "yellow"
 
 /area/shuttle/vox/transit

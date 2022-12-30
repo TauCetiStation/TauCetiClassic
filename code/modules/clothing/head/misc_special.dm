@@ -90,12 +90,12 @@
 	src.onfire = !( src.onfire )
 	if (src.onfire)
 		src.force = 3
-		src.damtype = "fire"
+		src.damtype = BURN
 		src.icon_state = "cake1"
 		START_PROCESSING(SSobj, src)
 	else
 		src.force = null
-		src.damtype = "brute"
+		src.damtype = BRUTE
 		src.icon_state = "cake0"
 	return
 
@@ -147,7 +147,6 @@
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
 	icon_state = "hardhat_pumpkin"//Could stand to be renamed
 	item_state = "hardhat_pumpkin"
-	item_color = "pumpkin"
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = HEAD|EYES

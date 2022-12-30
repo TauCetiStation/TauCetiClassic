@@ -92,7 +92,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if (src.anchored || usr:stat != CONSCIOUS)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	set_dir(turn(src.dir, 270))
@@ -103,7 +103,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if (src.anchored || usr:stat != CONSCIOUS)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	set_dir(turn(src.dir, 90))
@@ -140,20 +140,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 
 /obj/structure/particle_accelerator/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
 				return
-		if(3.0)
-			if (prob(25))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(75))
 				return
-		else
-	return
-
+	qdel(src)
 
 /obj/structure/particle_accelerator/blob_act()
 	if(prob(50))
@@ -211,14 +204,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
 			if(iswrench(O))
-				if(O.use_tool(src, user, 20, volume = 75))
+				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					src.anchored = TRUE
 					user.visible_message("[user.name] secures the [src.name] to the floor.", \
 						"You secure the external bolts.")
 					temp_state++
 		if(1)
 			if(iswrench(O))
-				if(O.use_tool(src, user, 20, volume = 75))
+				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					src.anchored = FALSE
 					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
 						"You remove the external bolts.")
@@ -277,7 +270,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if (src.anchored || usr:stat != CONSCIOUS)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	set_dir(turn(src.dir, 270))
@@ -288,7 +281,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 	set category = "Object"
 	set src in oview(1)
 
-	if (src.anchored || usr:stat)
+	if (src.anchored || usr:stat != CONSCIOUS)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
 	set_dir(turn(src.dir, 90))
@@ -321,19 +314,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 
 /obj/machinery/particle_accelerator/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
+		if(EXPLODE_HEAVY)
 			if (prob(50))
-				qdel(src)
 				return
-		if(3.0)
-			if (prob(25))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(75))
 				return
-		else
-	return
+	qdel(src)
 
 
 /obj/machinery/particle_accelerator/blob_act()
@@ -355,14 +342,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
 			if(iswrench(O))
-				if(O.use_tool(src, user, 20, volume = 75))
+				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					src.anchored = TRUE
 					user.visible_message("[user.name] secures the [src.name] to the floor.", \
 						"You secure the external bolts.")
 					temp_state++
 		if(1)
 			if(iswrench(O))
-				if(O.use_tool(src, user, 20, volume = 75))
+				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					src.anchored = FALSE
 					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
 						"You remove the external bolts.")

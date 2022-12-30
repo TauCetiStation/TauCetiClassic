@@ -11,8 +11,8 @@
 		return
 	next_click = world.time + 1
 
-	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
-		build_click(src, client.buildmode, params, A)
+	if(client.click_intercept) // comes after object.Click to allow buildmode gui objects to be clicked
+		client.click_intercept.InterceptClickOn(src, params, A)
 		return
 
 	var/list/modifiers = params2list(params)
@@ -21,6 +21,9 @@
 		cob_click(client, modifiers)
 		return
 
+	if(modifiers[SHIFT_CLICK] && modifiers[MIDDLE_CLICK])
+		MiddleShiftClickOn(A)
+		return
 	if(modifiers[SHIFT_CLICK] && modifiers[CTRL_CLICK])
 		CtrlShiftClickOn(A)
 		return
@@ -37,7 +40,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(stat || lockcharge || weakened || stunned || paralysis)
+	if(incapacitated(NONE) || lockcharge)
 		return
 
 	if(next_move >= world.time)
@@ -82,9 +85,7 @@
 	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
 	if(A == loc || (A.loc == loc) || (A.loc == src))
 		// No adjacency checks
-		var/resolved = A.attackby(W, src, params)
-		if(!resolved && A && W)
-			W.afterattack(A, src, 1, params)
+		W.melee_attack_chain(A, src, params)
 		return
 
 	if(!isturf(loc))
@@ -93,11 +94,13 @@
 	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc && isturf(A.loc.loc))
 	if(isturf(A) || isturf(A.loc))
 		if(A.Adjacent(src)) // see adjacent.dm
-			var/resolved = A.attackby(W, src, params)
-			if(!resolved && A && W)
-				W.afterattack(A, src, 1, params)
+			W.melee_attack_chain(A, src, params)
 			return
 		W.afterattack(A, src, 0, params)
+
+//Middle Shift click for point to
+/mob/living/silicon/robot/MiddleShiftClickOn(atom/A)
+	A.BorgMiddleShiftClick(src)
 
 //Middle click cycles through selected modules.
 /mob/living/silicon/robot/MiddleClickOn(atom/A)
@@ -117,6 +120,9 @@
 
 /mob/living/silicon/robot/AltClickOn(atom/A)
 	A.BorgAltClick(src)
+
+/atom/proc/BorgMiddleShiftClick(mob/living/silicon/robot/user)
+	user.pointed(src)
 
 /atom/proc/BorgCtrlShiftClick(mob/living/silicon/robot/user) //forward to human click if not overriden
 	CtrlShiftClick(user)

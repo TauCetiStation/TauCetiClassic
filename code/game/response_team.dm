@@ -7,30 +7,31 @@ var/global/can_call_ert
 /client/proc/response_team()
 	set name = "Dispatch Emergency Response Team"
 	set category = "Special Verbs"
-	set desc = "Send an emergency response team to the station."
+	set desc = "Отправляет отряд быстрого реагирования на станцию."
 
 	if(!holder)
-		to_chat(usr, "<span class='warning'>Only administrators may use this command.</span>")
+		to_chat(usr, "<span class='warning'>Только администрация может использовать это.</span>")
 		return
 	if(!SSticker)
-		to_chat(usr, "<span class='warning'>The game hasn't started yet!</span>")
+		to_chat(usr, "<span class='warning'>Игра еще не загрузилась!</span>")
 		return
 	if(SSticker.current_state == 1)
-		to_chat(usr, "<span class='warning'>The round hasn't started yet!</span>")
+		to_chat(usr, "<span class='warning'>Раунд еще не начался!</span>")
 		return
 	if(SSticker.ert_call_in_progress)
-		to_chat(usr, "<span class='warning'>Central Command has already dispatched an emergency response team!</span>")
+		to_chat(usr, "<span class='warning'>Центральное Командование уже отправило отряд быстрого реагирования!</span>")
 		return
-	if(tgui_alert(usr, "Do you want to dispatch an Emergency Response Team?",, list("Yes","No")) != "Yes")
+	if(tgui_alert(usr, "Вы хотите отправить отряд быстрого реагирования?",, list("Да","Нет")) != "Да")
 		return
 	if(get_security_level() != "red") // Allow admins to reconsider if the alert level isn't Red
-		if(tgui_alert(usr, "The station is not in red alert. Do you still want to dispatch a response team?",, list("Yes","No")) != "Yes")
+
+		if(tgui_alert(usr, "На станции не введён красный код. Вы всё ещё хотите отправить отряд быстрого реагирования?",, list("Да","Нет")) != "Да")
 			return
 
 	var/objective = sanitize(input(usr, "Custom ERT objective", "Setup objective", "Help the station crew"))
 
 	if(SSticker.ert_call_in_progress)
-		to_chat(usr, "<span class='warning'>Looks like somebody beat you to it!</span>")
+		to_chat(usr, "<span class='warning'>Похоже, кто-то уже опередил вас!</span>")
 		return
 
 	message_admins("[key_name_admin(usr)] is dispatching an Emergency Response Team with objective: [objective].")
@@ -107,7 +108,7 @@ var/global/can_call_ert
 	var/datum/faction/strike_team/ert/ERT = SSticker.mode.CreateFaction(/datum/faction/strike_team/ert)
 	ERT.forgeObjectives(objective_text)
 
-	create_spawners(/datum/spawner/ert, objective_text, 5, objective_text)
+	create_spawners(/datum/spawner/ert, 5, objective_text)
 
 	VARSET_IN(SSticker, ert_call_in_progress, FALSE, 5 MINUTES) // Can no longer join the ERT.
 	return 1
@@ -115,25 +116,25 @@ var/global/can_call_ert
 /client/proc/create_human_apperance(mob/living/carbon/human/H, _name)
 	//todo: god damn this.
 	//make it a panel, like in character creation
-	var/new_facial = input(src, "Please select facial hair color.", "Character Generation") as color
+	var/new_facial = input(src, "Выберите цвет растительности на лице.", "Создание персонажа") as color
 	if(new_facial)
 		H.r_facial = hex2num(copytext(new_facial, 2, 4))
 		H.g_facial = hex2num(copytext(new_facial, 4, 6))
 		H.b_facial = hex2num(copytext(new_facial, 6, 8))
 
-	var/new_hair = input(src, "Please select hair color.", "Character Generation") as color
+	var/new_hair = input(src, "Выберите цвет прически.", "Создание персонажа") as color
 	if(new_facial)
 		H.r_hair = hex2num(copytext(new_hair, 2, 4))
 		H.g_hair = hex2num(copytext(new_hair, 4, 6))
 		H.b_hair = hex2num(copytext(new_hair, 6, 8))
 
-	var/new_eyes = input(src, "Please select eye color.", "Character Generation") as color
+	var/new_eyes = input(src, "Выберите цвет глаз.", "Создание персонажа") as color
 	if(new_eyes)
 		H.r_eyes = hex2num(copytext(new_eyes, 2, 4))
 		H.g_eyes = hex2num(copytext(new_eyes, 4, 6))
 		H.b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
-	var/new_tone = input(src, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
+	var/new_tone = input(src, "Выберите тон кожи: 1-220 (1=альбинос, 35=белый, 150=чёрный, 220='очень' чёрный)", "Создание персонажа")  as text
 
 	if (!new_tone)
 		new_tone = 35
@@ -150,20 +151,20 @@ var/global/can_call_ert
 		hairs.Add(hair.name) // add hair name to hairs
 		qdel(hair) // delete the hair after it's all done
 
-	var/new_gender = tgui_alert(src, "Please select gender.", "Character Generation", list("Male", "Female"))
+	var/new_gender = tgui_alert(src, "Выберите пол.", "Создание персонажа", list("Мужской", "Женский"))
 	if (new_gender)
-		if(new_gender == "Male")
+		if(new_gender == "Мужской")
 			H.gender = MALE
 		else
 			H.gender = FEMALE
 
 	//hair
-	var/new_hstyle = input(src, "Select a hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(hairs_cache, H.get_species(), H.gender)
+	var/new_hstyle = input(src, "Выберите прическу", "Внешность")  as null|anything in get_valid_styles_from_cache(hairs_cache, H.get_species(), H.gender)
 	if(new_hstyle)
 		H.h_style = new_hstyle
 
 	// facial hair
-	var/new_fstyle = input(src, "Select a facial hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, H.get_species(), H.gender)
+	var/new_fstyle = input(src, "Выберите стиль растительности на лице", "Внешность")  as null|anything in get_valid_styles_from_cache(facial_hairs_cache, H.get_species(), H.gender)
 	if(new_fstyle)
 		H.f_style = new_fstyle
 
@@ -192,7 +193,7 @@ var/global/can_call_ert
 
 	//Creates mind stuff.
 	M.mind = new
-	M.mind.current = M
+	M.mind.set_current(M)
 	M.mind.original = M
 	M.mind.assigned_role = "MODE"
 	M.mind.special_role = "Response Team"
@@ -210,21 +211,21 @@ var/global/can_call_ert
 	//Replaced with new ERT uniform
 	equip_to_slot_or_del(new /obj/item/clothing/under/ert(src), SLOT_W_UNIFORM)
 	equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/swat(src), SLOT_SHOES)
-	equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(src), SLOT_GLOVES)
+	equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(src), SLOT_GLOVES)
 	equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(src), SLOT_GLASSES)
 
 	if(leader_selected)
 		var/obj/item/weapon/card/id/centcom/ert/W = new(src)
 		W.assignment = "Emergency Response Team Leader"
 		W.rank = "Emergency Response Team Leader"
-		W.registered_name = real_name
-		W.name = "[real_name]'s ID Card ([W.assignment])"
+		W.assign(real_name)
 		W.icon_state = "ert-leader"
+		mind.skills.add_available_skillset(/datum/skillset/ERT_leader)
+		mind.skills.maximize_active_skills()
 		equip_to_slot_or_del(W, SLOT_WEAR_ID)
 	else
 		var/obj/item/weapon/card/id/centcom/ert/W = new(src)
-		W.registered_name = real_name
-		W.name = "[real_name]'s ID Card ([W.assignment])"
+		W.assign(real_name)
 		equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(src)

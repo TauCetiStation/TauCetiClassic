@@ -10,8 +10,7 @@
 	icon_state = "medibot0"
 	density = FALSE
 	anchored = FALSE
-	health = 20
-	maxhealth = 20
+	max_integrity = 20
 	req_access =list(access_medical)
 	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
 //var/emagged = 0
@@ -70,6 +69,7 @@
 	else
 		botcard.access = botcard_access
 	icon_state = "medibot[on]"
+	add_overlay(image('icons/obj/aibots.dmi', "kit_skin_[skin]"))
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/bot/medbot/turn_on()
@@ -200,8 +200,11 @@
 
 	else
 		..()
-		if(health < maxhealth && !isscrewdriver(W) && W.force)
-			step_to(src, (get_step_away(src,user)))
+
+/obj/machinery/bot/medbot/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
+	. = ..()
+	if(. && !QDELING(src))
+		step(src, reverse_dir[attack_dir])
 
 /obj/machinery/bot/medbot/emag_act(mob/user)
 	..()
@@ -357,13 +360,6 @@
 	if((C.getToxLoss() >= heal_threshold) && (!C.reagents.has_reagent(treatment_tox)))
 		return 1
 
-
-	for(var/datum/disease/D in C.viruses)
-		if((D.stage > 1) || (D.spread_type == AIRBORNE))
-
-			if(!C.reagents.has_reagent(treatment_virus))
-				return 1 //STOP DISEASE FOREVER
-
 	return 0
 
 /obj/machinery/bot/medbot/proc/medicate_patient(mob/living/carbon/C)
@@ -399,14 +395,6 @@
 
 	if(emagged == 2) //Emagged! Time to poison everybody.
 		reagent_id = "toxin"
-
-	var/virus = 0
-	for(var/datum/disease/D in C.viruses)
-		virus = 1
-
-	if(!reagent_id && (virus))
-		if(!C.reagents.has_reagent(treatment_virus))
-			reagent_id = treatment_virus
 
 	if(!reagent_id && (C.getBruteLoss() >= heal_threshold))
 		if(!C.reagents.has_reagent(treatment_brute))
@@ -461,10 +449,10 @@
 	visible_message("[src] beeps, \"[message]\"")
 	return
 
-/obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(is_type_in_list(Proj, taser_projectiles)) //taser_projectiles defined in projectile.dm
 		stunned = min(stunned+10,20)
-	..()
 
 /obj/machinery/bot/medbot/explode()
 	on = 0
@@ -499,7 +487,7 @@
 		if(!istype(D, /obj/machinery/door/firedoor) && D.check_access(botcard) && !istype(D,/obj/machinery/door/poddoor))
 			D.open()
 			frustration = 0
-	else if((istype(M, /mob/living)) && (!anchored))
+	else if((isliving(M)) && (!anchored))
 		loc = M.loc
 		frustration = 0
 	return

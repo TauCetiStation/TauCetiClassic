@@ -19,6 +19,7 @@
 	desc = "Can hold various tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"
+	max_w_class = SIZE_SMALL
 	can_hold = list(
 		/obj/item/weapon/crowbar,
 		/obj/item/weapon/screwdriver,
@@ -162,7 +163,6 @@
 	desc = "A belt from military soldier set."
 	icon_state = "Leather_Belt_Officer"
 	icon_state = "Leather_Belt_Officer"
-	item_color = "Leather_Belt_Officer"
 
 /obj/item/weapon/storage/belt/soulstone
 	name = "soul stone belt"
@@ -216,8 +216,15 @@
 		/obj/item/taperoll/police,
 		/obj/item/device/radio/headset,
 		/obj/item/weapon/melee,
+		/obj/item/weapon/kitchenknife,
 		/obj/item/device/flashlight/seclite
 		)
+
+/obj/item/weapon/storage/belt/security/tactical/throwing
+	storage_slots = 7
+	startswith = list(
+		/obj/item/weapon/kitchenknife/throwing = 7,
+	)
 
 /obj/item/weapon/storage/belt/military
 	name = "military belt"

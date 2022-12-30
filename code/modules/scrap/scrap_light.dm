@@ -36,7 +36,7 @@
 	playsound(user, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
 	user.visible_message("<span class='notice'>[user] lits the [src] on.</span>", "<span class='notice'>You had lt on the [src]!</span>")
 	src.force = on_damage
-	src.damtype = "fire"
+	src.damtype = BURN
 	on = !on
 	update_brightness(user)
 	item_state = icon_state
@@ -48,28 +48,40 @@
 	return
 
 /obj/item/stack/sheet/wood/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/medical/bruise_pack/rags) && use(1))
-		new /obj/item/device/flashlight/flare/torch(get_turf(user))
-		qdel(I)
-		return
+	if(istype(I, /obj/item/stack/medical/bruise_pack/rags))
+		var/turf/current_location = get_turf(src)
+		if(use(1))
+			new /obj/item/device/flashlight/flare/torch(current_location)
+			qdel(I)
+			return
 	return ..()
 
 /obj/item/stack/medical/bruise_pack/rags
 	name = "rags"
 	singular_name = "rag"
-	desc = "Some rags. May infect your wounds."
+	desc = "Some rags."
 	amount = 1
 	max_amount = 1
 	icon = 'icons/obj/items.dmi'
 	icon_state = "gauze"
 
-/obj/item/stack/medical/bruise_pack/rags/atom_init(mapload, new_amount = null, merge = FALSE, old = 0)
+/obj/item/stack/medical/bruise_pack/rags/atom_init(mapload, new_amount = null, merge = FALSE, force_old = FALSE, old_chance = 33)
 	. = ..()
-	if(prob(33) || old)
+	if(force_old || prob(old_chance))
 		make_old()
+
+/obj/item/stack/medical/bruise_pack/rags/old/atom_init(mapload, new_amount, merge, force_old, old_chance)
+	. = ..(mapload, new_amount, merge, TRUE, null)
+
+/obj/item/stack/medical/bruise_pack/rags/not_old/atom_init(mapload, new_amount, merge, force_old, old_chance)
+	. = ..(mapload, new_amount, merge, FALSE, 0)
 
 /obj/item/stack/medical/bruise_pack/rags/update_icon()
 	return
+
+/obj/item/stack/medical/bruise_pack/rags/make_old()
+	. = ..()
+	desc += " May infect your wounds."
 
 //////SHITTY BONFIRE PORT///////
 
@@ -206,7 +218,7 @@
 			var/mob/living/L = A
 			L.adjust_fire_stacks(fire_stack_strength)
 			L.IgniteMob()
-		else if(istype(A, /obj/item) && prob(20))
+		else if(isitem(A) && prob(20))
 			var/obj/item/O = A
 			O.microwave_act()
 */
@@ -230,10 +242,6 @@
 		set_light(0)
 		STOP_PROCESSING(SSobj, src)
 
-//obj/structure/bonfire/buckle_mob(mob/living/M)
-//	if(..())
-//		M.pixel_y += 13
-
 
 /obj/structure/bonfire/post_buckle_mob(mob/living/M)
 	if(buckled_mob == M)
@@ -241,8 +249,8 @@
 		M.layer = 5.1
 	else
 		if(M.pixel_y == 13)
-			M.pixel_y = 0
-		M.layer = initial(M.layer)
+			M.pixel_y = M.default_pixel_y
+		M.layer = M.default_layer
 
 /obj/structure/bonfire/dynamic
 	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things."
@@ -271,14 +279,15 @@
 
 /obj/structure/bonfire/dynamic/Burn()
 	var/turf/current_location = get_turf(src)
+	var/datum/gas_mixture/GM = current_location.return_air()
 	current_location.assume_gas("oxygen", -0.5)
-	if (current_location.air.temperature >= 393)
+	if (GM.temperature >= 393)
 		current_location.assume_gas("carbon_dioxide", 0.5)
 	else
-		current_location.assume_gas("carbon_dioxide", 0.5, (current_location.air.temperature + 200))
+		current_location.assume_gas("carbon_dioxide", 0.5, (GM.temperature + 200))
 	current_location.hotspot_expose(1000, 500)
-	if ((world.time > last_time_smoke) && current_location.air.gas["carbon_dioxide"]) //It's time to make some smoke
-		if (current_location.air.gas["carbon_dioxide"] > 5)
+	if ((world.time > last_time_smoke) && GM.gas["carbon_dioxide"]) //It's time to make some smoke
+		if (GM.gas["carbon_dioxide"] > 5)
 			MakeSmoke()
 	return ..()
 

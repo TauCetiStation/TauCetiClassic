@@ -254,8 +254,7 @@ steam.start() -- spawns the effect
 		spawn ( 20 )
 			M.coughedtime = 0
 
-/obj/effect/effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+/obj/effect/effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/item/projectile/beam))
 		var/obj/item/projectile/beam/B = mover
 		B.damage = (B.damage/2)
@@ -609,6 +608,7 @@ steam.start() -- spawns the effect
 	density = TRUE
 	opacity = FALSE
 	anchored = TRUE
+	can_block_air = TRUE
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	var/metal = 1		// 1=aluminum, 2=iron
@@ -638,7 +638,8 @@ steam.start() -- spawns the effect
 /obj/structure/foamedmetal/blob_act()
 	qdel(src)
 
-/obj/structure/foamedmetal/bullet_act()
+/obj/structure/foamedmetal/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(metal == 1 || prob(50))
 		qdel(src)
 
@@ -678,9 +679,13 @@ steam.start() -- spawns the effect
 	else
 		to_chat(user, "<span class='notice'>You hit the metal foam to no effect.</span>")
 
-/obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
-	if(air_group)
-		return 0
+/obj/structure/foamedmetal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/obj/structure/foamedmetal/c_airblock(turf/other)
+	return ..() | ZONE_BLOCKED
+
+/obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height = 1.5)
 	return !density
 
 /datum/effect/effect/system/reagents_explosion

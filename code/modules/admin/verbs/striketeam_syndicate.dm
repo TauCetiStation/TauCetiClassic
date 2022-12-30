@@ -70,15 +70,10 @@ var/global/sent_syndicate_strike_team = FALSE
 		return
 
 	syndicate_commando_leader = TRUE
-	var/list/landmarkpos = list()
-	var/obj/effect/landmark/SCP = null
-	for(var/obj/effect/landmark/L in landmarks_list)
-		if (L.name == "Syndicate-Commando")
-			landmarkpos += L
-		if(L.name == "Syndicate-Commando-Paper")
-			SCP = L
+	var/list/landmarkpos = landmarks_list["Syndicate-Commando"]
+	var/obj/effect/landmark/SCP = locate("landmark*Syndicate-Commando-Paper")
 
-	var/datum/faction/strike_team/syndiesquad/S = SSticker.mode.CreateFaction(/datum/faction/strike_team/syndiesquad)
+	var/datum/faction/strike_team/syndiesquad/S = create_faction(/datum/faction/strike_team/syndiesquad, FALSE, FALSE)
 	S.forgeObjectives(mission)
 	for(var/i = 1; i <= commandos.len; i++)
 		var/mob/living/carbon/human/new_syndicate_commando = new(get_turf(landmarkpos[i]))
@@ -102,7 +97,7 @@ var/global/sent_syndicate_strike_team = FALSE
 		if(syndicate_commando_leader)
 			syndicate_commando_leader = FALSE
 
-	for(var/obj/effect/landmark/L in landmarkpos)
+	for(var/obj/effect/landmark/L as anything in landmarkpos)
 		qdel(L)
 
 	if(paper_text)
@@ -150,75 +145,10 @@ var/global/sent_syndicate_strike_team = FALSE
 	new_syndicate_commando.equip_syndicate_commando(syndicate_leader_selected)
 	new_syndicate_commando.playsound_local(null, 'sound/antag/ops.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
-	var/datum/faction/strike_team/syndiesquad/S = find_faction_by_type(/datum/faction/strike_team/syndiesquad)
-	if(S)
-		add_faction_member(S, new_syndicate_commando, FALSE)
+	var/datum/faction/strike_team/syndiesquad/S = create_uniq_faction(/datum/faction/strike_team/syndiesquad)
+	add_faction_member(S, new_syndicate_commando, FALSE)
 
 /mob/living/carbon/human/proc/equip_syndicate_commando(syndicate_leader = FALSE)
-
-	var/obj/item/device/radio/headset/syndicate/R = new (src)
-	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
-	equip_to_slot_or_del(R, SLOT_L_EAR)
-	var/obj/item/weapon/implant/dexplosive/DE = new(src)
-	DE.imp_in = src
-	DE.implanted = TRUE
-	var/obj/item/clothing/under/syndicate/US = new (src)
-	var/obj/item/clothing/accessory/storage/syndi_vest/SV = new (US)
-	US.accessories += SV
-	SV.on_attached(US, src, TRUE)
-	new /obj/item/weapon/screwdriver/power(SV.hold)
-	new /obj/item/weapon/wirecutters/power(SV.hold)
-	new /obj/item/weapon/weldingtool/largetank(SV.hold)
-	new /obj/item/device/multitool(SV.hold)
-	equip_to_slot_or_del(US, SLOT_W_UNIFORM)
-	equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat(src), SLOT_SHOES)
-	equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(src), SLOT_GLOVES)
-	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/syndicate(src), SLOT_WEAR_MASK)
-	equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal(src), SLOT_GLASSES)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(src), SLOT_BACK)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/box(src), SLOT_IN_BACKPACK)
-	equip_to_slot_or_del(new /obj/item/ammo_box/magazine/sm45(src), SLOT_IN_BACKPACK)
-	equip_to_slot_or_del(new /obj/item/ammo_box/magazine/sm45(src), SLOT_IN_BACKPACK)
-	var/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/SFKE = new (src)
-	var/obj/item/stack/medical/suture/ST = new (src)
-	SFKE.contents += ST
-	SFKE.name = "Emergency Small first-aid kit"
-	equip_to_slot_or_del(SFKE, SLOT_IN_BACKPACK)
-	equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment(src), SLOT_IN_BACKPACK)
-	var/obj/item/device/radio/uplink/SDCU = new (src)
-	equip_to_slot_or_del(SDCU, SLOT_IN_BACKPACK)
-	equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword(src), SLOT_L_STORE)
-	equip_to_slot_or_del(new /obj/item/weapon/grenade/empgrenade(src), SLOT_R_STORE)
-	equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/silenced(src), SLOT_BELT)
-	var/obj/item/clothing/suit/space/rig/syndi/elite/SER = null
-	if(syndicate_leader)
-		SDCU.hidden_uplink.uses = 15
-		SER = new /obj/item/clothing/suit/space/rig/syndi/elite/comander(src)
-		equip_to_slot_or_del(SER, SLOT_WEAR_SUIT)
-		equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/syndi/elite/comander(src), SLOT_HEAD)
-		equip_to_slot_or_del(new /obj/item/weapon/pinpointer/advpinpointer(src), SLOT_IN_BACKPACK)
-	else
-		SDCU.hidden_uplink.uses = 10
-		SER = new(src)
-		equip_to_slot_or_del(SER, SLOT_WEAR_SUIT)
-		equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/syndi/elite(src), SLOT_HEAD)
-
-	var/obj/item/clothing/shoes/magboots/syndie/SB = new(SER)
-	SB.name = "The syndicate magboots"
-	SER.boots = SB
-
-	equip_to_slot_or_del(new /obj/item/weapon/tank/oxygen/red(src), SLOT_S_STORE)
-
-	var/obj/item/weapon/card/id/syndicate/W = new(src) //Untrackable by AI
-	W.name = "[real_name]'s ID Card"
-	if(syndicate_leader)
-		W.icon_state = "syndicate-command"
-		W.assignment = "Syndicate Commando Leader"
-	else
-		W.icon_state = "syndicate"
-		W.assignment = "Syndicate Commando"
-	W.registered_name = real_name
-
-	equip_to_slot_or_del(W, SLOT_WEAR_ID)
-
-	return 1
+	var/outfit_type = syndicate_leader ? /datum/outfit/syndicate_commando/leader : /datum/outfit/syndicate_commando
+	var/datum/outfit/outfit = new outfit_type
+	outfit.equip(src)

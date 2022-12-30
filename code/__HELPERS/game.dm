@@ -22,24 +22,25 @@
 	block( \
 		locate(max(CENTER.x-(RADIUS),1), min(CENTER.y+(RADIUS),world.maxy),CENTER.z), \
 		locate(max(CENTER.x-(RADIUS),1), max(CENTER.y-(RADIUS),1),CENTER.z), \
-	) \
+	)
 
-/proc/dopage(src,target)
-	var/href_list
-	var/href
-	href_list = params2list("src=\ref[src]&[target]=1")
-	href = "src=\ref[src];[target]=1"
-	src:temphtml = null
-	src:Topic(href, href_list)
-	return null
+///Returns the name of the area the atom is in
+/proc/get_area_name(atom/checked_atom)
+	var/area/checked_area = isarea(checked_atom) ? checked_atom : get_area(checked_atom)
+	if(!checked_area)
+		return null
+	return checked_area.name
 
-/proc/get_area_name(N) //get area by its name
+/proc/get_area_by_name(N) //get area by its name
 	for(var/area/A in all_areas)
 		if(A.name == N)
 			return A
 	return null
 
 /proc/get_area_by_type(type) //get area by its type
+	var/area/area = areas_by_type[type]
+	if(area)
+		return area
 	return locate(type) in all_areas
 
 /proc/in_range(source, user)
@@ -207,7 +208,7 @@
 
 	return hear
 
-// todo: tg
+// todo: https://github.com/tgstation/tgstation/pull/61422
 /proc/get_hearers_in_view(R, atom/source)
 	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
@@ -254,7 +255,7 @@
 			var/turf/ear = get_turf(M)
 			if(ear)
 				// Ghostship is magic: Ghosts can hear radio chatter from anywhere
-				if(speaker_coverage[ear] || (istype(M, /mob/dead/observer) && (M.client) && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO)))
+				if(speaker_coverage[ear] || (isobserver(M) && (M.client) && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO)))
 					. |= M		// Since we're already looping through mobs, why bother using |= ? This only slows things down.
 	return .
 
@@ -262,7 +263,7 @@
 	return
 
 /obj/machinery/bot/mulebot/get_mob()
-	if(load && istype(load, /mob/living))
+	if(load && isliving(load))
 		return load
 
 /obj/mecha/get_mob()
@@ -654,7 +655,7 @@
 /proc/requestCandidate(mob/M, time_passed, candidates, Question, Ignore_Role, poll_time)
 	M.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)//Alerting them to their consideration
 	window_flash(M.client)
-	var/ans = tgui_alert(M, Question, "Please answer in [poll_time * 0.1] seconds!", list("Yes", "No", "Not This Round"))
+	var/ans = tgui_alert(M, Question, "Please answer in [poll_time * 0.1] seconds!", list("Yes", "No", "Not This Round"), poll_time)
 	switch(ans)
 		if("Yes")
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
@@ -732,3 +733,16 @@
 	if(icon_state in icon_states(icon))
 		return TRUE
 	return FALSE
+
+/**
+ * Returns the atom sitting on the turf.
+ * For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
+ * Optional arg 'type' to stop once it reaches a specific type instead of a turf.
+**/
+/proc/get_atom_on_turf(atom/movable/atom_on_turf, stop_type)
+	var/atom/turf_to_check = atom_on_turf
+	while(turf_to_check?.loc && !isturf(turf_to_check.loc))
+		turf_to_check = turf_to_check.loc
+		if(stop_type && istype(turf_to_check, stop_type))
+			break
+	return turf_to_check

@@ -53,6 +53,7 @@
 	interface_name = "mounted drill"
 	interface_desc = "A diamond-tipped industrial drill."
 	use_power_cost = 100 // normal drills use 15 energy, we mine 3 turfs at a time
+	usable = TRUE // Allow mode switching
 	origin_tech = "materials=5;powerstorage=3;engineering=3;programming=2"
 	device_type = /obj/item/weapon/pickaxe/drill/jackhammer // this one doesn't use energy
 
@@ -142,14 +143,12 @@
 		return TRUE
 
 	var/turf/T = get_turf(target)
-	if(need_adjacent && istype(T) && !T.Adjacent(get_turf(src)))
-		return FALSE
-
-	var/resolved
 	if(need_adjacent) // so we don't telepathically bash the target
-		resolved = target.attackby(device,holder.wearer)
-	if(!resolved && device && target)
-		device.afterattack(target,holder.wearer,1)
+		if(istype(T) && !T.Adjacent(get_turf(src)))
+			return FALSE
+		device.melee_attack_chain(target, holder.wearer)
+	else
+		device.afterattack(target, holder.wearer, FALSE)
 	return TRUE
 
 /obj/item/rig_module/chem_dispenser
@@ -263,7 +262,7 @@
 
 	var/mob/living/carbon/target_mob
 	if(target)
-		if(istype(target,/mob/living/carbon))
+		if(iscarbon(target))
 			target_mob = target
 		else
 			return FALSE
@@ -356,9 +355,23 @@
 	if (temp_adj < 0.5)
 		return passive_power_cost
 
-	H.bodytemperature -= temp_adj
+	H.adjust_bodytemperature(-temp_adj)
 	active_power_cost = round((temp_adj/max_cooling)*charge_consumption)
 	return active_power_cost
+
+/obj/item/rig_module/emp_shield
+	name = "hardsuit EMP shield"
+	icon_state = "powersink"
+	interface_desc = "Device for protecting the hardsuit from EMP. Can withstand 5 EMPs."
+	origin_tech = "engineering=2;magnets=2"
+	interface_name = "EMP shield"
+	var/uses = 5
+
+/obj/item/rig_module/emp_shield/adv
+	name = "hardsuit advanced EMP shield"
+	interface_desc = "Device for protecting the hardsuit from EMP. Can withstand 20 EMPs."
+	origin_tech = "engineering=2;magnets=2;bluespace=3;"
+	uses = 20
 
 /obj/item/rig_module/teleporter_stabilizer
 	name = "hardsuit teleporter stabilizer"
@@ -599,6 +612,13 @@
 /obj/item/rig_module/mounted_relay/atom_init()
 	. = ..()
 	relay = new relay_type(src)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/rig_module/mounted_relay/atom_init_late()
+	for(var/obj/machinery/telecomms/T in telecomms_list)
+		if(istype(T, /obj/machinery/telecomms/hub))
+			T.links |= relay
+			relay.links |= T
 
 /obj/item/rig_module/mounted_relay/process_module()
 	if(!active)

@@ -30,16 +30,32 @@
 	var/defused = FALSE		//is the bomb capable of exploding?
 	var/degutted = FALSE	//is the bomb even a bomb anymore?
 
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
+
+/obj/machinery/syndicatebomb/proc/try_detonate(ignore_active = FALSE)
+	. = !degutted && (active || ignore_active)
+	if(.)
+		explosion(loc, 2, 5, 11)
+		degutted = TRUE // prevent double caboom
+		qdel(src)
+
+/obj/machinery/syndicatebomb/atom_break()
+	if(!try_detonate())
+		..()
+
+/obj/machinery/syndicatebomb/atom_destruction()
+	if(!try_detonate())
+		..()
+
 /obj/machinery/syndicatebomb/process()
 	if(active && !defused && (timer > 0)) 	//Tick Tock
 		playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 5, FALSE)
 		timer--
 	if(active && !defused && (timer <= 0))	//Boom
-		active = 0
-		timer = 60
+		active = FALSE
+		timer = initial(timer)
 		STOP_PROCESSING(SSobj, src)
-		explosion(src.loc,2,5,11)
-		qdel(src)
+		try_detonate(TRUE)
 		return
 	if(!active || defused)					//Counter terrorists win
 		STOP_PROCESSING(SSobj, src)
@@ -56,15 +72,19 @@
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user)
 	if(iswrench(I))
 		if(!anchored)
-			if(!isturf(src.loc) || istype(src.loc, /turf/space))
+			if(!isturf(src.loc) || isspaceturf(src.loc))
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it</span>")
 			else
+				if(!do_skill_checks(user))
+					return
 				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor</span>")
 				anchored = TRUE
 				if(active)
 					to_chat(user, "<span class='notice'>The bolts lock in place</span>")
 		else
 			if(!active)
+				if(!do_skill_checks(user))
+					return
 				to_chat(user, "<span class='notice'>You wrench the bomb from the floor</span>")
 				anchored = FALSE
 			else
@@ -86,6 +106,8 @@
 
 	else if(iscrowbar(I))
 		if(open_panel && !degutted && isWireCut(SYNDIEBOMB_WIRE_BOOM) && isWireCut(SYNDIEBOMB_WIRE_UNBOLT) && isWireCut(SYNDIEBOMB_WIRE_DELAY) && isWireCut(SYNDIEBOMB_WIRE_PROCEED) && isWireCut(SYNDIEBOMB_WIRE_ACTIVATE))
+			if(!do_skill_checks(user))
+				return
 			to_chat(user, "<span class='notice'>You carefully pry out the bomb's payload.</span>")
 			degutted = 1
 			new /obj/item/weapon/syndicatebombcore(user.loc)
@@ -97,6 +119,8 @@
 			to_chat(user, "<span class='notice'>The cover is screwed on, it won't pry off!</span>")
 	else if(istype(I, /obj/item/weapon/syndicatebombcore))
 		if(degutted)
+			if(!do_skill_checks(user))
+				return
 			to_chat(user, "<span class='notice'>You place the payload into the shell.</span>")
 			degutted = 0
 			qdel(I)
@@ -149,6 +173,7 @@
 			message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has primed a [name] for detonation at ([COORD(bombturf)] - [A.name]) [ADMIN_JMP(bombturf)].")
 			log_game("[key_name(user)] has primed a [name] for detonation at [A.name][COORD(bombturf)]")
 			START_PROCESSING(SSobj, src) //Ticking down
+			notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, header = "Bomb Planted")
 
 /obj/machinery/syndicatebomb/proc/isWireCut(index)
 	return wires.is_index_cut(index)
@@ -163,7 +188,12 @@
 	origin_tech = "syndicate=6;combat=5"
 
 /obj/item/weapon/syndicatebombcore/ex_act(severity) //Little boom can chain a big boom
-	explosion(src.loc,2,5,11)
+	detonate()
+
+/obj/item/weapon/syndicatebombcore/proc/detonate()
+	explosion(get_turf(loc), 2, 5, 11)
+	if(loc && istype(loc, /obj/machinery/syndicatebomb))
+		qdel(loc) // delete machinery just in case
 	qdel(src)
 
 /obj/item/device/syndicatedetonator

@@ -121,7 +121,7 @@
 			if(special_weapons[weapon])
 				points += special_weapons[weapon]
 			else
-				points += rand(5,10) * 200 // 1000-2000 points for random weapon
+				points += rand(1,5) * 100 // 100-500 points for random weapon
 
 	for(var/list/scanning_artifact in I.scanned_artifacts)
 		var/already_scanned = FALSE
@@ -365,7 +365,7 @@
 	if(scanneddata > 0)
 		datablocks += scanneddata
 		to_chat(user, "<span class='notice'>[src] received [scanneddata] data block[scanneddata>1?"s":""] from scanning [target]</span>")
-	else if(istype(target, /obj/item))
+	else if(isitem(target))
 		var/science_value = experiments.get_object_research_value(target)
 		if(science_value > 0)
 			to_chat(user, "<span class='notice'>Estimated research value of [target.name] is [science_value]</span>")

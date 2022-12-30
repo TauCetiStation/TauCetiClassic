@@ -65,7 +65,7 @@
 		H.update_hair()
 
 		if(blood_on_castoff)
-			var/turf/simulated/T = get_turf(H)
+			var/turf/T = get_turf(H)
 			if(istype(T))
 				T.add_blood(H) //So real blood decals
 				playsound(H, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER) //So real sounds
@@ -131,22 +131,11 @@
 /obj/item/weapon/melee/arm_blade/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(istype(target, /obj/structure/table))
-		var/obj/structure/table/T = target
-		T.destroy()
 
-	else if(istype(target, /obj/machinery/computer))
-		var/obj/machinery/computer/C = target
-		C.attack_alien(user) //muh copypasta
-
-	else if(istype(target, /obj/machinery/door/airlock))
+	if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = target
 
-		if(!A.requiresID() || A.allowed(user)) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.
-			return
-
-		if(A.hasPower())
-			to_chat(user, "<span class='notice'>The airlock's motors resist our efforts to force it.</span>")
+		if(A.hasPower() && (!A.requiresID() || A.allowed(user))) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.
 			return
 
 		else if(A.locked)
@@ -154,10 +143,16 @@
 			return
 
 		else
+			if(user.is_busy())
+				return
+			if(!A.hasPower())
+				A.open(1)
+				return FALSE
 			if(prob(10))
 				user.say("Heeeeeeeeeerrre's Johnny!") // ^^
-			user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>", "<span class='warning'>We force the door to open.</span>", "<span class='warning'>You hear a metal screeching sound.</span>")
-			A.open(1)
+			user.visible_message("<span class='warning'>[user] start forces the door to open with \his [src]!</span>", "<span class='warning'>We attempt to force the door to open.</span>", "<span class='warning'>You hear a metal screeching sound.</span>")
+			if(do_after(user, 70, target = A))
+				A.open(1)
 
 /obj/effect/proc_holder/changeling/weapon/shield
 	name = "Organic Shield"
@@ -284,7 +279,6 @@
 	flags = DROPDEL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
-	slowdown = 1
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 35, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0

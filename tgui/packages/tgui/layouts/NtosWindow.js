@@ -7,7 +7,6 @@
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Box, Button } from '../components';
-import { refocusLayout } from './Layout';
 import { Window } from './Window';
 
 export const NtosWindow = (props, context) => {
@@ -37,11 +36,7 @@ export const NtosWindow = (props, context) => {
       height={height}
       theme={theme}>
       <div className="NtosWindow">
-        <div
-          className="NtosWindow__header NtosHeader"
-          onMouseDown={() => {
-            refocusLayout();
-          }}>
+        <div className="NtosWindow__header NtosHeader">
           <div className="NtosHeader__left">
             <Box inline bold mr={2}>
               {PC_stationtime}
@@ -66,13 +61,11 @@ export const NtosWindow = (props, context) => {
                   src={resolveAsset(PC_ntneticon)} />
               )}
             </Box>
-            {!!PC_showbatteryicon && PC_batteryicon && (
+            {!!(PC_showbatteryicon && PC_batteryicon) && (
               <Box inline mr={1}>
-                {PC_batteryicon && (
-                  <img
-                    className="NtosHeader__icon"
-                    src={resolveAsset(PC_batteryicon)} />
-                )}
+                <img
+                  className="NtosHeader__icon"
+                  src={resolveAsset(PC_batteryicon)} />
                 {PC_batterypercent && (
                   PC_batterypercent
                 )}
@@ -105,7 +98,7 @@ export const NtosWindow = (props, context) => {
                 color="transparent"
                 icon="window-close-o"
                 tooltip="Close"
-                tooltipPosition="bottom-left"
+                tooltipPosition="bottom-start"
                 onClick={() => act('PC_exit')} />
             )}
             {!PC_showexitprogram && (
@@ -117,7 +110,7 @@ export const NtosWindow = (props, context) => {
                 color="transparent"
                 icon="power-off"
                 tooltip="Power off"
-                tooltipPosition="bottom-left"
+                tooltipPosition="bottom-start"
                 onClick={() => act('PC_shutdown')} />
             )}
           </div>

@@ -39,6 +39,7 @@
 		stacks++
 		if(stacks >= 30)
 			to_chat(owner,"<span class='danger'>We collapse in exhaustion.</span>")
+			owner.Stun(3)
 			owner.Weaken(3)
 			owner.emote("gasp")
 			var/datum/role/changeling/C = owner.mind.GetRoleByType(/datum/role/changeling)
@@ -48,6 +49,7 @@
 		if(owner.stat != CONSCIOUS || owner.halloss >= 90)
 			active = !active
 			to_chat(owner,"<span class='notice'>Our muscles relax without the energy to strengthen them.</span>")
+			owner.Stun(2)
 			owner.Weaken(2)
 			var/datum/role/changeling/C = owner.mind.GetRoleByType(/datum/role/changeling)
 			C.strained_muscles = 0

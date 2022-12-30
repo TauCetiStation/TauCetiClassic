@@ -10,6 +10,7 @@
 	var/in_camera_mode = 0
 	var/photos_taken = 0
 	var/list/aipictures = list()
+	can_put_lens = FALSE
 
 /obj/item/device/camera/siliconcam/ai_camera //camera AI can take pictures with
 	name = "AI photo camera"
@@ -63,7 +64,8 @@
 	var/obj/item/weapon/photo/P = new/obj/item/weapon/photo()
 	P.construct(selection)
 	P.show(usr)
-	to_chat(usr, P.desc)
+	if(P.desc)
+		to_chat(usr, P.desc)
 
 	// TG uses a special garbage collector.. qdel(P)
 	qdel(P) //so 10 thousand pictures items are not left in memory should an AI take them and then view them all.
@@ -112,7 +114,7 @@
 	deletepicture(src)
 
 /obj/item/device/camera/siliconcam/proc/getsource()
-	if(istype(src.loc, /mob/living/silicon/ai))
+	if(isAI(src.loc))
 		return src
 
 	var/mob/living/silicon/robot/C = src.loc

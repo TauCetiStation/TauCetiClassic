@@ -9,6 +9,8 @@
 	min_roles = 3
 	max_roles = 3
 
+	stat_type = /datum/stat/faction/cult
+
 	// For objectives
 	var/datum/mind/sacrifice_target = null
 	var/list/sacrificed = list()
@@ -39,7 +41,7 @@
 		return FALSE
 
 	var/list/possibles_objectives = subtypesof(/datum/objective/cult) + /datum/objective/target/sacrifice
-	for(var/i in 1 to rand(2, 3))
+	for(var/i in 1 to rand(3, 4))
 		AppendObjective(pick_n_take(possibles_objectives))
 	return TRUE
 
@@ -114,7 +116,7 @@
 	<B>Захвачено зон:</B> [religion.captured_areas.len - religion.area_types.len]<BR>
 	<B>Накоплено Favor/Piety:</B> [religion.favor]/[religion.piety]<BR>
 	<B>Рун на станции:</B> [religion.runes.len]<BR>
-	<B>Аномалий уничтожено:</B> [score["destranomaly"]]<BR>
+	<B>Аномалий уничтожено:</B> [SSStatistics.score.destranomaly]<BR>
 	<HR>"}
 
 	return dat

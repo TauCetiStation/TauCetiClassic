@@ -55,6 +55,8 @@
 	idle_power_usage = 10
 	active_power_usage = 100
 
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
 	var/active = TRUE
@@ -211,6 +213,9 @@ var/global/obj/machinery/blackbox_recorder/blackbox
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
+
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 	var/list/messages = list()		//Stores messages of non-standard frequencies
 	var/list/messages_admin = list()
 
@@ -232,11 +237,12 @@ var/global/obj/machinery/blackbox_recorder/blackbox
 /obj/machinery/blackbox_recorder/atom_init()
 	. = ..()
 	if(blackbox)
-		if(istype(blackbox,/obj/machinery/blackbox_recorder))
-			qdel(src)
+		return INITIALIZE_HINT_QDEL
 	blackbox = src
 
 /obj/machinery/blackbox_recorder/Destroy()
+	if(blackbox != src)
+		return ..() 
 	var/centcom_z = SSmapping.level_by_trait(ZTRAIT_CENTCOM)
 	var/turf/T = locate(1,1, centcom_z)
 	if(T)

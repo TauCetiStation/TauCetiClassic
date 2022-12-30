@@ -235,6 +235,8 @@
 	if(href_list["select_equip"])
 		if(usr != src.occupant)
 			return
+		if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to switch selected equipment.</span>"))
+			return
 		playsound(src, 'sound/mecha/mech_switch_equip.ogg', VOL_EFFECTS_MASTER, 70, FALSE, null, -3)
 		var/obj/item/mecha_parts/mecha_equipment/equip = F.getObj("select_equip")
 		if(equip)
@@ -403,7 +405,7 @@
 	if(href_list["dna_lock"])
 		if(usr != src.occupant)
 			return
-		if(istype(occupant, /mob/living/carbon/brain))
+		if(isbrain(occupant))
 			occupant_message("You are a brain. No.")
 			occupant.playsound_local(null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_15_error.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			return

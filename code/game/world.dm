@@ -1,10 +1,14 @@
 var/global/round_id = 0
 var/global/base_commit_sha = 0
 
+var/global/it_is_a_snow_day = FALSE
+
 /world/New()
 #ifdef DEBUG
 	enable_debugger()
 #endif
+
+	it_is_a_snow_day = prob(50)
 
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
@@ -151,7 +155,7 @@ var/global/world_topic_spam_protect_time = world.timeofday
 		s["players"] = list()
 		s["stationtime"] = worldtime2text()
 		s["gamestate"] = SSticker.current_state
-		s["roundduration"] = roundduration2text()
+		s["roundduration"] = global.roundduration2text()
 		s["map_name"] = SSmapping.config?.map_name || "Loading..."
 		s["popcap"] = config.client_limit_panic_bunker_count ? config.client_limit_panic_bunker_count : 0
 		s["round_id"] = global.round_id
@@ -233,6 +237,7 @@ var/global/shutdown_processed = FALSE
 
 	for(var/client/C in clients)
 		//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
+		C.tgui_panel?.send_roundrestart()
 		C << link(BYOND_JOIN_LINK)
 
 	round_log("Reboot [end_state ? ", [end_state]" : ""]")
@@ -343,12 +348,41 @@ var/global/shutdown_processed = FALSE
 /world/proc/load_supporters()
 	if(config.allow_donators && fexists("config/donators.txt"))
 		var/L = file2list("config/donators.txt")
+
+		var/current_DD = text2num(time2text(world.timeofday, "DD"))
+		var/current_MM = text2num(time2text(world.timeofday, "MM"))
+		var/current_YY = text2num(time2text(world.timeofday, "YY"))
+
 		for(var/line in L)
+
+			line = trim(line)
+
 			if(!length(line))
 				continue
+
 			if(line[1] == "#")
 				continue
-			donators.Add(ckey(line))
+
+			var/list/params = splittext(line, " ")
+			var/ckey = ckey(params[1])
+			var/list/until_date = length(params) > 1 ? splittext(params[2], ".") : 0  // DD.MM.YY
+
+			if(until_date)
+
+				var/DD = text2num(until_date[1])
+				var/MM = text2num(until_date[2])
+				var/YY = text2num(until_date[3])
+
+				if(YY < current_YY)
+					continue
+				else if (YY == current_YY)
+					if(MM < current_MM)
+						continue
+					else if (MM == current_MM)
+						if(DD < current_DD)
+							continue
+
+			donators.Add(ckey)
 
 	// just some tau ceti specific stuff
 	if(config.allow_tauceti_patrons)

@@ -42,7 +42,6 @@
 /obj/item/clothing/shoes/custom
 	name = "Custom shoes"
 	body_parts_covered = 0
-	species_restricted = null
 
 /obj/item/clothing/accessory/custom
 	name = "Custom accessory"
@@ -265,7 +264,6 @@
 		item.icon_custom = custom_item_info.icon
 		item.icon_state = custom_item_info.icon_state
 		item.item_state = custom_item_info.icon_state
-		item.item_color = custom_item_info.icon_state
 
 		switch(custom_item_info.hair_flags)
 			if(FLUFF_HAIR_HIDE_HEAD)

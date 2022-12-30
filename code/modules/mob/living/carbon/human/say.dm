@@ -1,75 +1,71 @@
+#define SOCIALIZATION_NORMAL 0
+#define SOCIALIZATION_LONELY 1
+#define SOCIALIZATION_VERY_LONELY 2
+
 /mob/living/carbon/human
-	var/list/conversations
-	var/conversation_expiration = 45 SECONDS
+	var/conversation_timer
+	var/social_state = SOCIALIZATION_NORMAL
 
-/mob/living/carbon/human/proc/handle_conversation(speaker, speak_tags, hear_tags)
-	var/speech_amount = speak_tags + hear_tags
-
-	if(speech_amount < 30)
-		return
-
-	var/speech_imbalance = 1.0
-	if(speak_tags > hear_tags)
-		speech_imbalance = (speak_tags + 1) / (hear_tags + 1)
-	else
-		speech_imbalance = (hear_tags + 1) / (speak_tags + 1)
-
-	if(speech_amount < 150)
-		if(speech_imbalance < 20.0)
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "conversation_[speaker]", /datum/mood_event/chit_chat, speaker)
-		return
-
-	if(speech_imbalance < 2.0 && speech_amount > 500)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "conversation_[speaker]", /datum/mood_event/deep_conversation, speaker)
-		return
-
-	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "conversation_[speaker]", /datum/mood_event/conversation, speaker)
-
-/mob/living/carbon/human/proc/clear_conversation(speaker)
-	if(!conversations || !conversations[speaker])
-		return
-
-	handle_conversation(speaker, conversations[speaker]["say"], conversations[speaker]["hear"])
-
-	conversations -= speaker
-	if(conversations.len == 0)
-		conversations = null
-
-/mob/living/carbon/human/proc/add_conversation(speaker, tag, message)
-	if(!conversations)
-		conversations = list()
-	// Can't pay attention to all these people around.
-	if(conversations.len > 3)
-		return
-	if(!conversations[speaker])
-		conversations[speaker] = list("say" = 0, "hear" = 0)
-
-	conversations[speaker][tag] += length(message)
-	addtimer(
-		CALLBACK(
-			src, .proc/clear_conversation, speaker
-		),
-		conversation_expiration,
-		TIMER_OVERRIDE|TIMER_UNIQUE
-	)
-
-/mob/living/carbon/human/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
+/mob/living/carbon/human/atom_init()
 	. = ..()
-	if(!.)
+	handle_socialization()
+
+/mob/living/carbon/human/Destroy()
+	deltimer(conversation_timer)
+	return ..()
+
+/mob/living/carbon/human/proc/set_social_state(state)
+	switch(state)
+		if(SOCIALIZATION_NORMAL)
+			social_state = SOCIALIZATION_NORMAL
+			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "no_socialization")
+
+			deltimer(conversation_timer)
+			conversation_timer = addtimer(
+				CALLBACK(src, .proc/handle_no_socialization),
+				5 MINUTES,
+				TIMER_STOPPABLE
+			)
+
+		if(SOCIALIZATION_LONELY)
+			social_state = SOCIALIZATION_LONELY
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/lonely)
+
+			deltimer(conversation_timer)
+			conversation_timer = addtimer(
+				CALLBACK(src, .proc/handle_prolonged_no_socialization),
+				5 MINUTES,
+				TIMER_STOPPABLE
+			)
+
+		if(SOCIALIZATION_VERY_LONELY)
+			social_state = SOCIALIZATION_VERY_LONELY
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "no_socialization", /datum/mood_event/very_lonely)
+
+/mob/living/carbon/human/proc/handle_prolonged_no_socialization()
+	if(HAS_TRAIT(src, TRAIT_MUTE))
+		return
+	set_social_state(SOCIALIZATION_VERY_LONELY)
+
+/mob/living/carbon/human/proc/handle_no_socialization()
+	if(HAS_TRAIT(src, TRAIT_MUTE))
+		return
+	set_social_state(SOCIALIZATION_LONELY)
+
+/mob/living/carbon/human/proc/handle_socialization(mob/hearer)
+	if(!species.flags[IS_SOCIAL])
+		return
+	if(HAS_TRAIT(src, TRAIT_MUTE))
 		return
 
-	if(speaker == src)
-		return
+	var/new_social_state = SOCIALIZATION_LONELY
+	if(ishuman(hearer))
+		new_social_state = SOCIALIZATION_NORMAL
+	else if(isnull(hearer))
+		new_social_state = SOCIALIZATION_NORMAL
 
-	if(!ishuman(speaker))
-		return
-
-	var/mob/living/carbon/human/H = speaker
-
-	add_conversation(speaker.GetVoice(), "hear", message)
-	H.add_conversation(GetVoice(), "say", message)
-
-var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
+	if(social_state > new_social_state)
+		set_social_state(new_social_state)
 
 /mob/living/carbon/human/say(message, ignore_appearance)
 	var/verb = "says"
@@ -83,13 +79,7 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 			to_chat(src, "<span class='userdanger'>You cannot speak in IC (Muted).</span>")
 			return
 
-	//Meme stuff
-	if(!speech_allowed && usr == src)
-		to_chat(usr, "<span class='userdanger'>You can't speak.</span>")
-		return
-
 	message =  sanitize(message)
-
 	if(!message)
 		return
 
@@ -104,7 +94,7 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 		return
 
 	if(message[1] == "*")
-		return emote(copytext(message, 2), auto = FALSE)
+		return emote(copytext(message, 2), intentional = TRUE)
 
 	//check if we are miming
 	if (miming && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
@@ -120,14 +110,13 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 			message = copytext(message,2)	//it would be really nice if the parse procs could do this for us.
 		else
 			message = copytext(message,2 + length(message[2]))
+		if(!message)
+			return
 
 	//parse the language code and consume it or use default racial language if forced.
-	var/datum/language/speaking = parse_language(message)
-	var/has_lang_prefix = !!speaking
-	if(!has_lang_prefix && HAS_TRAIT(src, TRAIT_MUTE))
-		var/datum/language/USL = all_languages["Universal Sign Language"]
-		if(can_speak(USL))
-			speaking = USL
+	var/list/parsed = parse_language(message)
+	message = parsed[1]
+	var/datum/language/speaking = parsed[2]
 
 	//check if we're muted and not using gestures
 	if (HAS_TRAIT(src, TRAIT_MUTE) && !(message_mode == "changeling" || message_mode == "alientalk" || message_mode == "mafia"))
@@ -142,19 +131,17 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 			to_chat(usr, "<span class='userdanger'>You tried to make a gesture, but your hands are not responding.</span>")
 			return
 
-	if (has_lang_prefix)
-		message = copytext(message,2+length_char(speaking.key))
-	else if(species.force_racial_language)
-		speaking = all_languages[species.language]
-	else
+	message = approximate_sounds(message, speaking)
+	if(!message)
+		return
+
+	message = accent_sounds(message, speaking)
+
+	if(!speaking)
 		switch(species.name)
-			if(TAJARAN)
-				message = replacetextEx_char(message, "р", pick(list("ррр" , "рр")))
-				message = replacetextEx_char(message, "Р", pick(list("Ррр" , "Рр")))
-			if(UNATHI)
-				message = replacetextEx_char(message, "с", pick(list("ссс" , "сс")))
-				//И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
-				message = replacetextEx_char(message, "С", pick(list("Ссс" , "Сс")))
+			if(PODMAN)
+				message = replacetext(message, "ж", pick(list("ш", "хш")))
+				message = replacetext(message, "з", pick(list("с", "хс")))
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
 				var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)
@@ -168,22 +155,20 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 					to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
 					//return - technically you can add more aliens to a team
 				for(var/mob/M as anything in observer_list)
-					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", A.get_team_num()))
+					var/link = FOLLOW_LINK(M, user)
+					to_chat(M, "[link]<span class='abductor_team[A.get_team_num()]'><b>[user.real_name]:</b> [sm]</span>")
 				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
 
+	if(get_species() == HOMUNCULUS)
+		message = cursed_talk(message)
+
 	message = capitalize(trim(message))
+	message = add_period(message)
 
 	if(iszombie(src))
 		message = zombie_talk(message)
-
 	var/ending = copytext(message, -1)
-
-	if(!(ending in punctuation_marks_final))
-		if(ending == ",")
-			message = splicetext(message, length(message), , ".")
-		else
-			message += "."
 
 	if(speaking)
 		//If we've gotten this far, keep going!
@@ -195,7 +180,7 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 			verb = "asks"
 
 	if(speech_problem_flag)
-		var/list/handle_r = handle_speech_problems(message, message_mode)
+		var/list/handle_r = handle_speech_problems(message, message_mode, verb)
 		//var/list/handle_r = handle_speech_problems(message)
 		message = handle_r[1]
 		verb = handle_r[2]
@@ -204,7 +189,7 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 			speech_sound = handle_r[4]
 			sound_vol = handle_r[5]
 
-	if(!message || (stat && (message_mode != "changeling"))) // little tweak so changeling can call for help while in sleep
+	if(!message || (stat != CONSCIOUS && (message_mode != "changeling"))) // little tweak so changeling can call for help while in sleep
 		return
 
 	var/list/obj/item/used_radios = new
@@ -260,7 +245,7 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 			return
 		if("changeling")
 			if(ischangeling(src))
-				if(stat)
+				if(stat != CONSCIOUS)
 					message = stars(message, 20) // sleeping changeling has a little confused mind
 				var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
 				var/n_message = "<span class='changeling'><b>[C.changelingID]:</b> [message]</span>"
@@ -389,9 +374,8 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 
 
 //mob/living/carbon/human/proc/handle_speech_problems(message)
-/mob/living/carbon/human/proc/handle_speech_problems(message, message_mode)
+/mob/living/carbon/human/proc/handle_speech_problems(message, message_mode, verb)
 	var/list/returns[5]
-	var/verb = "says"
 	var/handled = 0
 	var/sound/speech_sound = null
 	var/sound_vol = 50
@@ -422,6 +406,9 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 		message = "[uppertext(message)]!!!"
 		verb = pick("yells","roars","hollers")
 		handled = 1
+	if(disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
+		if(prob(50))
+			message = turret_talk(message)
 	if(slurring)
 		message = slur(message)
 		verb = pick("stammers","stutters")
@@ -448,3 +435,7 @@ var/global/list/punctuation_marks_final = list(".", "?", "!", ";")
 	returns[5] = sound_vol
 
 	return returns
+
+#undef SOCIALIZATION_NORMAL
+#undef SOCIALIZATION_LONELY
+#undef SOCIALIZATION_VERY_LONELY

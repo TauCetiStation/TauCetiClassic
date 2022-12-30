@@ -168,13 +168,14 @@
 /obj/effect/dummy/chameleon/emp_act()
 	master.disrupt()
 
-/obj/effect/dummy/chameleon/bullet_act()
+/obj/effect/dummy/chameleon/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/relaymove(mob/user, direction)
 
 	// We can't move when we are in space or inside of an object.
-	if(istype(loc, /turf/space) || !isturf(loc))
+	if(isspaceturf(loc) || !isturf(loc))
 		return
 
 	if(can_move)

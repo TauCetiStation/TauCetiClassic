@@ -169,11 +169,10 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket
 
 /datum/recipe/microwave/donkpocket/proc/warm_up(obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked)
-	being_cooked.warm = 1
+	being_cooked.warm = TRUE
 	being_cooked.reagents.add_reagent("tricordrazine", 5)
 	being_cooked.bitesize = 6
-	being_cooked.name = "Warm " + being_cooked.name
-	being_cooked.cooltime()
+	being_cooked.name = "warm " + being_cooked.name
 
 /datum/recipe/microwave/donkpocket/make_food(obj/container)
 	var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = ..(container)

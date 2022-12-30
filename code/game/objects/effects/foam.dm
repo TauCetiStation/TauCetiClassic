@@ -8,7 +8,7 @@
 	density = FALSE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 
-	layer = TURF_LAYER + 0.9
+	layer = BELOW_OBJ_LAYER
 
 	animate_movement = FALSE
 
@@ -46,7 +46,7 @@
 	fore_image += image(icon, icon_state="afff_foam_fore", layer=MOB_LAYER + 0.9)
 	add_overlay(fore_image)
 
-	if(loc.density || !has_gravity(loc) || istype(get_turf(src), /turf/space))
+	if(loc.density || !has_gravity(loc))
 		addtimer(CALLBACK(src, .proc/disolve), 5 SECONDS)
 
 	INVOKE_ASYNC(src, .proc/performAction)
@@ -112,7 +112,7 @@
 	if(istype(AM, /obj/effect/decal/chempuff))
 		return
 
-	if(istype(AM, /obj/item))
+	if(isitem(AM))
 		var/obj/item/I = AM
 		if(I.w_class <= SIZE_MINUSCULE)
 			return
@@ -163,8 +163,11 @@
 		else if(istype(A, /obj/structure/bonfire)) // Currently very snowflakey please fix later ~Luduk.
 			var/obj/structure/bonfire/B = A
 			B.extinguish()
-		if(istype(A, /obj/item))
+		else if(istype(A, /obj/structure/fireplace))
+			var/obj/structure/fireplace/F = A
+			F.extinguish()
+		else if(isitem(A))
 			var/obj/item/I = A
 			I.extinguish()
-		if(istype(A, /obj/effect/decal/cleanable/liquid_fuel))
+		else if(istype(A, /obj/effect/decal/cleanable/liquid_fuel))
 			qdel(A)

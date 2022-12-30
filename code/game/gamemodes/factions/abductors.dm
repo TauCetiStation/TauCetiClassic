@@ -12,7 +12,9 @@
 	qdel(src)
 
 /obj/effect/landmark/abductor/agent
+	name = "Abductor agent"
 /obj/effect/landmark/abductor/scientist
+	name = "Abductor scientist"
 
 var/global/list/obj/effect/landmark/abductor/agent_landmarks[MAX_ABDUCTOR_TEAMS]
 var/global/list/obj/effect/landmark/abductor/scientist_landmarks[MAX_ABDUCTOR_TEAMS]
@@ -25,6 +27,7 @@ var/global/abductor_landmarks_setuped = FALSE
 	required_pref = ROLE_ABDUCTOR
 
 	initroletype = /datum/role/abductor/agent
+	roletype = /datum/role/abducted
 
 	logo_state = "abductor-logo"
 
@@ -43,11 +46,10 @@ var/global/abductor_landmarks_setuped = FALSE
 		setup_landmarks()
 
 /datum/faction/abductors/proc/setup_landmarks()
-	for(var/obj/effect/landmark/abductor/A in landmarks_list)
-		if(istype(A,/obj/effect/landmark/abductor/agent))
-			agent_landmarks[text2num(A.team)] = A
-		else if(istype(A,/obj/effect/landmark/abductor/scientist))
-			scientist_landmarks[text2num(A.team)] = A
+	for(var/obj/effect/landmark/abductor/A as anything in landmarks_list["Abductor agent"])
+		agent_landmarks[A.team] = A
+	for(var/obj/effect/landmark/abductor/A as anything in landmarks_list["Abductor scientist"])
+		scientist_landmarks[A.team] = A
 
 /datum/faction/abductors/get_initrole_type()
 	if(members.len == 0)
@@ -93,17 +95,6 @@ var/global/abductor_landmarks_setuped = FALSE
 			return FALSE
 
 	return FALSE
-
-/datum/faction/abductors/GetScoreboard()
-	var/dat = ..()
-
-	if(abductees.len)
-		dat += "<br><b>The abductees:</b><br>"
-		for(var/datum/role/abducted/A in abductees)
-			dat += A.GetScoreboard()
-			dat += "<br>"
-
-	return dat
 
 /datum/faction/abductors/proc/get_team_console(team)
 	for(var/obj/machinery/abductor/console/c in abductor_machinery_list)

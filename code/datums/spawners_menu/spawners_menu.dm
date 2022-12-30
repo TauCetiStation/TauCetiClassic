@@ -1,7 +1,7 @@
 /datum/spawners_menu
 	var/mob/dead/observer/owner
 
-	var/role_choosed = FALSE
+	var/role_selected = FALSE
 
 /datum/spawners_menu/New(mob/dead/observer/new_owner)
 	if(!istype(new_owner))
@@ -35,6 +35,7 @@
 		this["wiki_ref"] = config.wikiurl && spawner.wiki_ref ? "[config.wikiurl]/[spawner.wiki_ref]" : null
 		this["important_warning"] = spawner.important_info
 		this["amount_left"] = spawners_list.len
+		this["is_infinite"] = spawner.infinity
 
 		var/min_time = INFINITY
 		for(var/datum/spawner/S as anything in spawners_list)
@@ -54,7 +55,7 @@
 	if(.)
 		return
 
-	if(role_choosed)
+	if(role_selected)
 		to_chat(owner, "<span class='notice'>Вы уже выбрали роль!</span>")
 		return
 
@@ -75,7 +76,7 @@
 			spawner.jump(owner)
 			return TRUE
 		if("spawn")
-			role_choosed = TRUE
+			role_selected = TRUE
 			spawner.do_spawn(owner)
-			role_choosed = FALSE
+			role_selected = FALSE
 			return TRUE

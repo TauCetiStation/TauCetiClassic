@@ -188,59 +188,37 @@
 	var/total_heat_capacity = air.heat_capacity()
 	var/partial_heat_capacity = total_heat_capacity * (share_volume / air.volume)
 
-	if(istype(target, /turf/simulated))
-		var/turf/simulated/modeled_location = target
+	if(partial_heat_capacity <= 0)
+		return
 
-		if(modeled_location.blocks_air)
+	if(!istype(target, /turf/simulated) || target.blocks_air)
+		if(target.heat_capacity <= 0)
+			return
 
-			if((modeled_location.heat_capacity > 0) && (partial_heat_capacity > 0))
-				var/delta_temperature = air.temperature - modeled_location.temperature
+		var/delta_temperature = air.temperature - target.temperature
 
-				var/heat = thermal_conductivity * delta_temperature * \
-					(partial_heat_capacity * modeled_location.heat_capacity / (partial_heat_capacity + modeled_location.heat_capacity))
+		var/heat = thermal_conductivity * delta_temperature * \
+			(partial_heat_capacity * target.heat_capacity / (partial_heat_capacity+target.heat_capacity))
 
-				air.temperature -= heat / total_heat_capacity
-				modeled_location.temperature += heat / modeled_location.heat_capacity
-
-		else
-			var/delta_temperature = 0
-			var/sharer_heat_capacity = 0
-
-			if(modeled_location.zone)
-				delta_temperature = (air.temperature - modeled_location.zone.air.temperature)
-				sharer_heat_capacity = modeled_location.zone.air.heat_capacity()
-			else
-				delta_temperature = (air.temperature - modeled_location.air.temperature)
-				sharer_heat_capacity = modeled_location.air.heat_capacity()
-
-			var/self_temperature_delta = 0
-			var/sharer_temperature_delta = 0
-
-			if((sharer_heat_capacity > 0) && (partial_heat_capacity > 0))
-				var/heat = thermal_conductivity*delta_temperature* \
-					(partial_heat_capacity * sharer_heat_capacity / (partial_heat_capacity + sharer_heat_capacity))
-
-				self_temperature_delta = -heat / total_heat_capacity
-				sharer_temperature_delta = heat / sharer_heat_capacity
-			else
-				return TRUE
-
-			air.temperature += self_temperature_delta
-
-			if(modeled_location.zone)
-				modeled_location.zone.air.temperature += sharer_temperature_delta / modeled_location.zone.air.group_multiplier
-			else
-				modeled_location.air.temperature += sharer_temperature_delta
-
-
+		air.temperature -= heat / total_heat_capacity
+		if(istype(target, /turf/simulated))
+			target.temperature += heat / target.heat_capacity
 	else
-		if((target.heat_capacity > 0) && (partial_heat_capacity > 0))
-			var/delta_temperature = air.temperature - target.temperature
+		var/turf/simulated/modeled_location = target
+		var/datum/gas_mixture/turf_air = modeled_location.return_air()
 
-			var/heat = thermal_conductivity * delta_temperature * \
-				(partial_heat_capacity * target.heat_capacity / (partial_heat_capacity+target.heat_capacity))
+		var/delta_temperature = air.temperature - turf_air.temperature
+		var/sharer_heat_capacity = turf_air.heat_capacity()
 
-			air.temperature -= heat/total_heat_capacity
+		if(sharer_heat_capacity <= 0)
+			return
+
+		var/heat = thermal_conductivity*delta_temperature* \
+			(partial_heat_capacity * sharer_heat_capacity / (partial_heat_capacity + sharer_heat_capacity))
+
+		air.temperature -= heat / total_heat_capacity
+		turf_air.temperature += heat / (sharer_heat_capacity * turf_air.group_multiplier)
+
 	update = TRUE
 
 /datum/pipeline/proc/return_air()
@@ -249,6 +227,7 @@
 		stack_trace("[src] has one or more null gas mixtures, which may cause bugs. Null mixtures will not be considered in reconcile_air().")
 		return removeNullsFromList(.)
 
+// This violates principle of polymorphism and should be rewritten ~Getup1
 /datum/pipeline/proc/reconcile_air()
 //	equalize_gases(other_airs)
 
@@ -277,18 +256,11 @@
 		for(var/obj/machinery/atmospherics/components/unary/portables_connector/C in P.other_atmosmch)
 			if(C.connected_device)
 				GL += C.portableConnectorReturnAir()
+		for(var/obj/machinery/atmospherics/components/binary/sampler/S in P.other_atmosmch)
+			PL |= S.PARENT1
+			PL |= S.PARENT2
 
 	equalize_gases(GL)
-
-// surface must be the surface area in m^2
-/datum/pipeline/proc/radiate_heat_to_space(surface, thermal_conductivity)
-	var/gas_density = air.total_moles/air.volume
-	thermal_conductivity *= min(gas_density / ( RADIATOR_OPTIMUM_PRESSURE / (R_IDEAL_GAS_EQUATION * GAS_CRITICAL_TEMPERATURE) ), 1) //mult by density ratio
-
-	var/heat_gain = get_thermal_radiation(air.temperature, surface, RADIATOR_EXPOSED_SURFACE_AREA_RATIO, thermal_conductivity)
-
-	air.add_thermal_energy(heat_gain)
-	update = TRUE
 
 //Returns the amount of heat gained while in space due to thermal radiation (usually a negative value)
 //surface - the surface area in m^2
