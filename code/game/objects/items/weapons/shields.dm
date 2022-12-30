@@ -78,7 +78,6 @@
 			user.visible_message("<span class='warning'>[user] got into a defensive stance with [src].</span>",
 								"<span class='notice'>You got into a defensive stance with [src].</span>")
 
-
 /obj/item/weapon/shield/proc/enable_wallshield(mob/living/user)
 	//Using when shield on back, when
 	if(!user.is_in_hands(src))
@@ -94,7 +93,7 @@
 	if(user)
 		to_chat(user, "<span class='info'>You interrupted the Wall of Shields technique.</span>")
 
-/obj/item/weapon/shield/proc/user_moved(dir, user)
+/obj/item/weapon/shield/proc/user_moved(datum/source, mob/user, dir)
 	if(!wall_of_shield_on)
 		return
 	if(!saved_dir)

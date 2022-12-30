@@ -159,6 +159,6 @@
 /mob/living/carbon/human/mob_negates_gravity()
 	return ((shoes && shoes.negates_gravity()) || (wear_suit && wear_suit.negates_gravity()))
 
-/mob/living/carbon/human/proc/inform_items_about_changing_dir(dir)
+/mob/living/carbon/human/proc/inform_items_about_changing_dir(datum/source, dir)
 	for(var/obj/item/I in src)
-		SEND_SIGNAL(I, COMSIG_ATOM_CHANGE_DIR, dir, src)
+		SEND_SIGNAL(I, COMSIG_ATOM_CHANGE_DIR, src, dir)
