@@ -235,3 +235,6 @@
 
 	// Used for statistics of death
 	var/last_phrase
+
+	var/can_point = TRUE
+	var/show_examine_log = TRUE

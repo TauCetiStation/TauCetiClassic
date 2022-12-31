@@ -316,7 +316,7 @@
 	A.examine(src)
 	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
 	SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
-	if(isobserver(src))
+	if(!show_examine_log)
 		return
 	var/mob/living/carbon/human/H = src
 	if(ishuman(src))
@@ -335,6 +335,8 @@
 	if(istype(A, /obj/effect/decal/point))
 		return FALSE
 
+	if(!can_point)
+		return
 	// Removes an ability to point to the object which is out of our sight.
 	// Mostly for cases when we have mesons, thermals etc. equipped.
 	if(client && !(A in view(client.view, src)))
