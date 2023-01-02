@@ -951,11 +951,6 @@
 	cost = 20
 	uplink_types = list("traitor")
 
-/datum/uplink_item/implants/uplink/dealer
-	cost = 40
-	uplink_types = list("dealer")
-	need_wanted_level = 3
-
 /datum/uplink_item/implants/storage
 	name = "Compressed Implant"
 	desc = "An implant, that can compress items and later activated at the user's will."
