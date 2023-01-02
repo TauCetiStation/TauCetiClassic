@@ -209,6 +209,11 @@
 				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
 			return FALSE
 
+	if (W.flags & CANT_BE_INSERTED)
+		if(!stop_messages)
+			to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
+		return FALSE
+
 	if (max_w_class != null && W.w_class > max_w_class)
 		if(!stop_messages)
 			to_chat(usr, "<span class='notice'>[W] is too big for this [src].</span>")

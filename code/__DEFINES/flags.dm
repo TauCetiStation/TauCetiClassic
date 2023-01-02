@@ -55,11 +55,13 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define NOATTACKANIMATION      (1<<19)   // Removes attack animation
 
+#define CANT_BE_INSERTED       (1<<20)   // Prohibits putting an item in a containers
+
 // objects hear flags
 // HEAR_PASS_SAY, HEAR_TA_SAY is temporary solution for optimisations reasons before we do hear() code refactoring
-#define HEAR_TALK              (1<<20)   // like old tg HEAR_1, marks objects with hear_talk()
-#define HEAR_PASS_SAY          (1<<21)   // temp for say code, for objects that need to pass SAY to inner mobs through get_listeners()
-#define HEAR_TA_SAY            (1<<22)   // temp for talking_atoms
+#define HEAR_TALK              (1<<21)   // like old tg HEAR_1, marks objects with hear_talk()
+#define HEAR_PASS_SAY          (1<<22)   // temp for say code, for objects that need to pass SAY to inner mobs through get_listeners()
+#define HEAR_TA_SAY            (1<<23)   // temp for talking_atoms
 
 #define IN_INVENTORY           (1<<23)
 #define IN_STORAGE             (1<<23) // reuse of last bit we have

@@ -41,13 +41,14 @@
 			QUALITY_KNIFE = 1
 		)
 		sharp = TRUE
+		flags = NOBLOODY | CANT_BE_INSERTED
 		force = 30
 		hitsound = list('sound/weapons/blade1.ogg')
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass1"
 		else
 			icon_state = "sword[blade_color]"
-		w_class = SIZE_NORMAL
+		w_class = SIZE_SMALL
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 
@@ -55,6 +56,7 @@
 		qualities = null
 		sharp = FALSE
 		force = 3
+		flags = NOBLOODY
 		hitsound = initial(hitsound)
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass0"
@@ -322,7 +324,8 @@
 /obj/item/weapon/shield/energy/proc/turn_on(mob/living/user)
 	force = 10
 	icon_state = "eshield[active]"
-	w_class = SIZE_NORMAL
+	w_class = SIZE_SMALL
+	flags = NOBLOODY | CANT_BE_INSERTED
 	playsound(src, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='notice'> [src] is now active.</span>")
 	update_icon()
@@ -331,6 +334,7 @@
 	force = 3
 	icon_state = "eshield[active]"
 	w_class = SIZE_MINUSCULE
+	flags = NOBLOODY
 	playsound(src, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 	update_icon()
 	if(user)
