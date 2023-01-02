@@ -939,6 +939,10 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	cost = 5
 
+/datum/uplink_item/implants/freedom/dealer
+	cost = 10
+	uplink_types = list("dealer")
+
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
 	desc = "An implant injected into the body, and later activated using a bodily gesture to open an uplink with 5 telecrystals. \
@@ -946,6 +950,11 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_uplink
 	cost = 20
 	uplink_types = list("traitor")
+
+/datum/uplink_item/implants/uplink/dealer
+	cost = 40
+	uplink_types = list("dealer")
+	need_wanted_level = 3
 
 /datum/uplink_item/implants/storage
 	name = "Compressed Implant"
@@ -959,11 +968,20 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenaline
 	cost = 6
 
+/datum/uplink_item/implants/adrenaline/dealer
+	cost = 20
+	uplink_types = list("dealer")
+
 /datum/uplink_item/implants/emp
 	name = "EMP Implant"
 	desc = "An implant, that contains power of three emp grenades, can be activated at the user's will."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
 	cost = 3
+
+/datum/uplink_item/implants/emp/dealer
+	cost = 14
+	uplink_types = list("dealer")
+	need_wanted_level = 2
 
 /datum/uplink_item/implants/explosive
 	name = "Explosive Implant"
