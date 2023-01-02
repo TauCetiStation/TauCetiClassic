@@ -400,7 +400,7 @@
 
 /obj/structure/alien/egg/HasProximity(atom/movable/AM)
 	for (AM in viewers(range, src))
-		if (ishuman(AM) && status == GROWN)
+		if ((ishuman(AM) || ismonkey(AM)) && status == GROWN)
 			icon_state = "egg_hatched"
 			flick("egg_opening", src)
 			status = BURSTING
