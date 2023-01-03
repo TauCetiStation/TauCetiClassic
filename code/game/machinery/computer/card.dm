@@ -324,6 +324,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/card, identification_computer_list)
 			for(var/obj/machinery/door/airlock/station_airlock as anything in global.airlock_list)
 				if(is_station_level(station_airlock.z))
 					station_airlock.ai_disable_access()
+				//optimization
+				stoplag()
 			//Repeating should be not provided, probably
 			for(var/obj/machinery/computer/card/computer as anything in global.identification_computer_list)
 				computer.hack_performed = TRUE

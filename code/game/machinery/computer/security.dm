@@ -464,6 +464,8 @@ What a mess.*/
 				if(perpname)
 					//hardcode but purpose of the proc is to issue an arrest to everyone
 					holder.icon_state = "hudwanted"
+				//hardcode should be easier than sec_hud_set_security_status, but why not?
+				stoplag()
 			//Repeating should be not provided, probably
 			for(var/obj/machinery/computer/secure_data/computer as anything in global.security_data_computers_list)
 				hack_performed = TRUE
