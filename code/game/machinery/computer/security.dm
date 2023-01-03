@@ -453,6 +453,9 @@ What a mess.*/
 			active2 = null
 
 		if("Malfunction")
+			//Repeating should be not provided, probably
+			for(var/obj/machinery/computer/secure_data/computer as anything in global.security_data_computers_list)
+				hack_performed = TRUE
 			//set every records to arrest
 			for(var/datum/data/record/security_record in global.data_core.security)
 				security_record.fields["criminal"] = "*Arrest*"
@@ -464,11 +467,8 @@ What a mess.*/
 				if(perpname)
 					//hardcode but purpose of the proc is to issue an arrest to everyone
 					holder.icon_state = "hudwanted"
-				//hardcode should be easier than sec_hud_set_security_status, but why not?
-				stoplag()
-			//Repeating should be not provided, probably
-			for(var/obj/machinery/computer/secure_data/computer as anything in global.security_data_computers_list)
-				hack_performed = TRUE
+				//hardcode should be easier than sec_hud_set_security_status, but why no use stoplag()?
+				stoplag(1)
 			//give visual feedback about hack source
 			var/area/A = get_area(src)
 			if(A && A.apc)
