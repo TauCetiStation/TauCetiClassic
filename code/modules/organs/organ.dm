@@ -15,9 +15,6 @@
 
 	// Status tracking.
 	var/status = 0                     // Various status flags (such as robotic)
-	// 0 - normal
-	// 1 - assisted
-	// 2 - mechanical
 	var/vital                          // Lose a vital organ, die immediately.
 
 	// Reference data.

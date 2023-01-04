@@ -772,8 +772,6 @@
 	restrict_species = list(IPC, DIONA)
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	overdose = REAGENTS_OVERDOSE / 6
-	data = list()
-
 
 /datum/reagent/metatrombine/on_general_digest(mob/living/carbon/human/M)
 	..()
@@ -800,4 +798,3 @@
 					data["ticks"]--
 		if(200 to INFINITY && IO.robotic != 2)
 			IO.heart_stop()
-
