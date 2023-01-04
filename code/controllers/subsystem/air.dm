@@ -309,11 +309,11 @@ SUBSYSTEM_DEF(air)
 			return
 
 /datum/controller/subsystem/air/proc/process_reactions(resumed = 0)
-	for(var/P = 3, P > 0, P--)
-		var/list/C = possibleReactionMixes[P]
-		if(C.len > 	MAX_MIXES_PER_PRIORITY)
+	for(var/priority = 3, priority > 0, priority--)
+		var/list/C = possibleReactionMixes[priority]
+		if(C.len > MAX_MIXES_PER_PRIORITY)
 			C.Cut(MAX_MIXES_PER_PRIORITY + 1)
-		for(var/datum/gas_mixture/G in possibleReactionMixes[P])
+		for(var/datum/gas_mixture/G in possibleReactionMixes[priority])
 			try_react(G)
 
 /*********** Setup procs ***********/
@@ -563,40 +563,40 @@ SUBSYSTEM_DEF(air)
 	return TRUE
 
 /datum/controller/subsystem/air/proc/get_reaction_mix_priority(datum/gas_mixture/G)
-	var/P = 0
+	var/priority = 0
 	if(G.temperature >= ABNORMAL_TEMP_MAX || G.temperature <= ABNORMAL_TEMP_MIN)
-		P++
+		priority++
 	if(G.return_pressure() >= ABNORMAL_PRESSURE_MIN)
-		P++
+		priority++
 	for(var/gas in G.gas)
 		if(!gas_data.gases_knowable[gas] || gas_data.gases_dangerous[gas])
-			P++
+			priority++
 			break
-	return P
+	return priority
 
-/datum/controller/subsystem/air/proc/add_reaction_mix(datum/gas_mixture/G, P)
+/datum/controller/subsystem/air/proc/add_reaction_mix(datum/gas_mixture/G, priority)
 	if(!process_reactions)
 		return
-	var/OP = G.last_reaction_priority
-	if(OP == P)
+	var/oldPriority = G.last_reaction_priority
+	if(oldPriority == priority)
 		return
-	G.last_reaction_priority = P
+	G.last_reaction_priority = priority
 	var/list/L
-	if(OP)
-		L = possibleReactionMixes[OP]; L.Remove(G); possibleReactionMixes[OP] = L;
-	L = possibleReactionMixes[P]; L.Insert(1, G); possibleReactionMixes[P] = L;
+	if(oldPriority)
+		possibleReactionMixes[oldPriority] -= G
+	possibleReactionMixes[priority].Insert(1, G)
 
-/datum/controller/subsystem/air/proc/add_reaction_zone(zone/Z, P)
+/datum/controller/subsystem/air/proc/add_reaction_zone(zone/Z, priority)
 	if(!process_reactions)
 		return
-	add_reaction_mix(Z.air, P)
+	add_reaction_mix(Z.air, priority)
 	#ifdef ZASDBG
 	for(var/turf/T in Z.contents)
 		var/obj/effect/overlay/O = new/obj/effect/overlay(T)
 		O.name = "PRT"
 		O.desc = "Possible reaction turf"
 		O.icon = 'icons/obj/atmos.dmi'
-		O.icon_state = "prt" + num2text(P)
+		O.icon_state = "prt" + num2text(priority)
 		O.anchored = TRUE
 		O.layer = 5
 	#endif
@@ -611,7 +611,7 @@ SUBSYSTEM_DEF(air)
 					if(recentReactions.len > MAX_RECENT_REACTIONS)
 						recentReactions.Cut(MAX_RECENT_REACTIONS + 1)
 
-/datum/controller/subsystem/air/proc/look_for_zone(datum/gas_mixture/G)
+/datum/controller/subsystem/air/proc/find_zone(datum/gas_mixture/G)
 	for(var/zone/Z in zones)
 		if(Z.air == G)
 			return Z
@@ -656,18 +656,18 @@ SUBSYSTEM_DEF(air)
 		var/turf/simulated/T = usr.loc
 		if(!has_valid_zone(T))
 			return
-		var/P = get_reaction_mix_priority(T.return_air())
-		if(P)
-			add_reaction_zone(T.zone, P)
+		var/priority = get_reaction_mix_priority(T.return_air())
+		if(priority)
+			add_reaction_zone(T.zone, priority)
 	if(href_list["checkz"])
 		if(tgui_alert(usr, "Вы хотите проверить все турфы в данной зоне, это может вызвать лаги если зона большая. Всё равно продолжить?", "Проверка зоны", list("Да","Нет")) == "Да")
 			var/area/A = get_area(usr)
 			if(A)
 				for(var/turf/simulated/T in A)
-					var/P = get_reaction_mix_priority(T.return_air())
-					if(P)
+					var/priority = get_reaction_mix_priority(T.return_air())
+					if(priority)
 						if(has_valid_zone(T))
-							add_reaction_zone(T.zone, P)
+							add_reaction_zone(T.zone, priority)
 	if(href_list["teleport"])
 		var/turf/TT = locate(href_list["teleport"])
 		if(TT)

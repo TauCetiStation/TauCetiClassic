@@ -127,7 +127,6 @@
 
 	dangerous = TRUE
 	knowable = FALSE
-	inhalation_proc = /datum/xgm_gas/bz/on_inhalation
 
 	initial_rnd_points = 5000
 
@@ -145,7 +144,6 @@
 	supermatter_damage_bonus = -0.4
 
 	knowable = FALSE
-	inhalation_proc = /datum/xgm_gas/constantium/on_inhalation
 
 	initial_rnd_points = 5000
 
@@ -164,7 +162,6 @@
 
 	flags = XGM_GAS_OXIDIZER
 	knowable = FALSE
-	inhalation_proc = /datum/xgm_gas/trioxium/on_inhalation
 
 	initial_rnd_points = 10000
 
@@ -184,7 +181,6 @@
 	burn_product = "watervapor"
 	flags = XGM_GAS_FUEL | XGM_GAS_FUSION_FUEL
 	knowable = FALSE
-	inhalation_proc = /datum/xgm_gas/proto_hydrate/on_inhalation
 
 	initial_rnd_points = 10000
 
@@ -200,7 +196,6 @@
 	molar_mass = 0.06
 
 	knowable = FALSE
-	inhalation_proc = /datum/xgm_gas/cardotirin/on_inhalation
 
 	initial_rnd_points = 30000
 

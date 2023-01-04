@@ -49,7 +49,6 @@
 	var/dangerous = FALSE // currently used by canisters
 	/// This variable determines whether the crew knows about this gas from the round start.
 	var/knowable = FALSE
-	var/inhalation_proc = /datum/xgm_gas/proc/on_inhalation //path to proc used to determine inhalation effects for living stuff (oxygen, phoron, n2o and co2 are processed separately)
 	var/initial_rnd_points = 0 //initial amount of research points which can be gained with the help of stationary gas analyzer
 	var/supermatter_power_bonus = 0
 	var/supermatter_damage_bonus = 0

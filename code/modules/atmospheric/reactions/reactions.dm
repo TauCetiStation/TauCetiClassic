@@ -176,23 +176,13 @@
 	maxTemp = CEIL(rand(100, 1000) / 100) * 100
 	minPressure = CEIL(rand(0, 100) / 100) * 100
 	maxPressure = CEIL(rand(100, 1000) / 100) * 100
-	var/list/used = list()
+	var/list/canPick = gas_data.gases
 	for(var/i = 0, i < 3, i++)
-		while(TRUE)
-			if(used.len == gas_data.gases.len)
-				break
-			var/N = pick(gas_data.gases)
-			if(!used.Find(N))
-				consumed[N] = 1
-				used.Add(N)
-				break
-	while(TRUE)
-		if(used.len == gas_data.gases.len)
-			break
-		var/N = pick(gas_data.gases)
-		if(!used.Find(N))
-			catalysts[N] = 5
-			break
+		var/N = pick(canPick)
+		canPick -= N
+		consumed[N] = 1
+	var/N = pick(canPick)
+	catalysts[N] = 5
 
 	..() //parent is called after filling consumed gases and catalysts, to generate rarest gas, otherwise it will be null
 
@@ -207,18 +197,15 @@
 	inhibitors = list("const" = 1)
 
 /datum/atmosReaction/solidPhydrSynthesis/postReact(datum/gas_mixture/G)
-	var/zone/Z = SSair.look_for_zone(G)
+	var/zone/Z = SSair.find_zone(G)
 	if(!Z)
 		G.gas["phydr"] += 100
 		return
-	var/turf/simulated/T
-	var/failsafe = 0 //to avoid endless loop if our zone somehow only contains dense tiles
-	while(TRUE)
-		failsafe++
-		T = pick(Z.contents)
-		if(!T.density || failsafe > 100)
-			break
-	new /obj/item/weapon/solid_phydr(T)
+	var/list/L
+	for(var/turf/simulated/T in Z.contents)
+		if(!T.density)
+			L += T
+	new /obj/item/weapon/solid_phydr(pick(L))
 
 /obj/item/weapon/solid_phydr
 	name = "Solid proto-hydrate"
