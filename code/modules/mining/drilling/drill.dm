@@ -260,7 +260,7 @@
 	damage_to_user = 30
 	harvest_speed = 0
 	capacity = 0
-	charge_use = 50
+	charge_use = 100
 	radius = 0
 
 	for(var/obj/item/weapon/stock_parts/P in component_parts)
