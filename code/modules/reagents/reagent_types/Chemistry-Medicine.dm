@@ -772,6 +772,7 @@
 	restrict_species = list(IPC, DIONA)
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	overdose = REAGENTS_OVERDOSE / 6
+
 /datum/reagent/metatrombine/on_general_digest(mob/living/carbon/human/M)
 	..()
 	var/obj/item/organ/internal/heart/IO = M.organs_by_name[O_HEART]
