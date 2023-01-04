@@ -40,7 +40,6 @@
 	has_arm = TRUE
 	has_leg = TRUE
 
-	can_point = FALSE
 	show_examine_log = FALSE
 
 /mob/living/simple_animal/mouse/Life()
