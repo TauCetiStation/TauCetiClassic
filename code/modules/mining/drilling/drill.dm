@@ -260,7 +260,7 @@
 	damage_to_user = 30
 	harvest_speed = 0
 	capacity = 0
-	charge_use = 100
+	charge_use = 50
 	radius = 0
 
 	for(var/obj/item/weapon/stock_parts/P in component_parts)
@@ -269,7 +269,7 @@
 		if(istype(P, /obj/item/weapon/stock_parts/matter_bin))
 			capacity = 200 * P.rating
 		if(istype(P, /obj/item/weapon/stock_parts/capacitor))
-			charge_use -= 10 * P.rating
+			charge_use -= 5 * P.rating
 		if(istype(P, /obj/item/weapon/stock_parts/scanning_module))
 			radius = 1 + P.rating
 	cell = locate(/obj/item/weapon/stock_parts/cell) in component_parts
