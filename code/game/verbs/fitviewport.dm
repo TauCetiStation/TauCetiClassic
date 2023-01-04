@@ -2,7 +2,7 @@
 	set hidden = TRUE
 
 	if(prefs.auto_fit_viewport && !isnewplayer(mob))
-		fit_viewport(silent = TRUE)
+		fit_viewport()
 
 /client/verb/fit_viewport()
 	set name = "Fit viewport"
