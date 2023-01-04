@@ -398,15 +398,15 @@
 	if(exposed_temperature > 290)
 		take_damage(25, BURN, FIRE, FALSE)
 
+/obj/structure/alien/egg/proc/spawn_hagger()
+	new /obj/item/clothing/mask/facehugger(get_turf(src))
+
 /obj/structure/alien/egg/HasProximity(atom/movable/AM)
-	for (AM in viewers(range, src))
-		if ((ishuman(AM) || ismonkey(AM)) && status == GROWN)
-			icon_state = "egg_hatched"
-			flick("egg_opening", src)
-			status = BURSTING
-			spawn(15)
-				status = BURST
-				new /obj/item/clothing/mask/facehugger(get_turf(src))
+	if ((ishuman(AM) || ismonkey(AM)) && status == GROWN)
+		icon_state = "egg_hatched"
+		flick("egg_opening", src)
+		status = BURSTING
+		addtimer(CALLBACK(src, .proc/spawn_hagger, status, BURST,), 15)
 
 #undef BURST
 #undef BURSTING
