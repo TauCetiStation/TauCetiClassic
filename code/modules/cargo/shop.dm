@@ -40,10 +40,6 @@ var/global/online_shop_profits = 0
 
 	LAZYADDASSOCLIST(global.online_shop_lots_hashed, src.hash, src)
 
-	src.hash = "[src.category]-[src.name]-[src.description]-[src.price]-[src.account]"
-
-	LAZYADDASSOCLIST(global.online_shop_lots_hashed, src.hash, src)
-
 	global.online_shop_lots_latest.Swap(2, 3)
 	global.online_shop_lots_latest.Swap(1, 2)
 	global.online_shop_lots_latest[1] = src
