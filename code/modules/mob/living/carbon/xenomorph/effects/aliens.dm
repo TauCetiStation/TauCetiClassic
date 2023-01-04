@@ -308,7 +308,7 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	timer = addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME), TIMER_STOPPABLE)
-	proximity_monitor = new(src, GROWN ? 3 : null)
+	proximity_monitor = new(src, status ? 3 : null)
 
 /obj/structure/alien/egg/attack_paw(mob/user)
 	if(isxeno(user))
