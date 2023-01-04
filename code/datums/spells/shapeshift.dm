@@ -20,11 +20,11 @@
 	var/mob/living/shapeshift_type
 	var/list/possible_shapes = list(/mob/living/simple_animal/mouse,\
 		/mob/living/simple_animal/corgi,\
-		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
+
 		/obj/machinery/bot/secbot/ed209,\
 		/mob/living/simple_animal/hostile/giant_spider/hunter,\
-		/mob/living/simple_animal/hostile/construct/juggernaut/mystic)
-
+		/mob/living/simple_animal/construct/armoured,)
+///mob/living/simple_animal/hostile/carp/ranged/chaos,
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/living/user = usr)
 	if(src in user.mind.spell_list)
 		LAZYREMOVE(user.mind.spell_list, src)
@@ -55,7 +55,7 @@
 		else
 			M = Shapeshift(M)
 		// Are we currently ventcrawling?
-		if(is_ventcrawling)
+		if(user.is_ventcrawling)
 			return
 
 		// Can our new form support ventcrawling?
@@ -230,7 +230,7 @@
 		QDEL_NULL(shape)
 
 	qdel(src)
-
+/*
 /mob/living/simple_animal/hostile/carp/ranged
 	name = "magicarp"
 	desc = "50% magic, 50% carp, 100% horrible."
@@ -242,11 +242,11 @@
 	retreat_distance = 2
 	minimum_distance = 0 //Between shots they can and will close in to nash
 	projectiletype = /obj/item/projectile/magic
-	projectilesound = 'sound/weapons/emitter.ogg'
+	projectilesound = 'sound/weapons/guns/gunpulse_emitter.ogg'
 	maxHealth = 50
 	health = 50
-	gold_core_spawnable = NO_SPAWN
-	random_color = FALSE
+	//gold_core_spawnable = NO_SPAWN
+	//random_color = FALSE
 
 	var/allowed_projectile_types = list(/obj/projectile/magic/change, /obj/projectile/magic/animate, /obj/item/projectile/magic/healing_ball,
 	/obj/projectile/magic/death, /obj/projectile/magic/teleport, /obj/projectile/magic/door, /obj/item/projectile/magic/fireball,
@@ -262,18 +262,19 @@
 	color = "#00FFFF"
 	maxHealth = 75
 	health = 75
-	gold_core_spawnable = NO_SPAWN
+	//gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/carp/ranged/chaos/Shoot()
 	projectiletype = pick(allowed_projectile_types)
 	..()
 
 /mob/living/simple_animal/hostile/carp/ranged/xenobiology // these are for the xenobio gold slime pool
-	gold_core_spawnable = HOSTILE_SPAWN
+	//gold_core_spawnable = HOSTILE_SPAWN
 	allowed_projectile_types = list(/obj/projectile/magic/animate, /obj/projectile/magic/teleport,
 	/obj/projectile/magic/door, /obj/projectile/magic/aoe/fireball, /obj/projectile/magic/spellblade, /obj/projectile/magic/arcane_barrage) //thanks Lett1
 
 /mob/living/simple_animal/hostile/carp/ranged/chaos/xenobiology
-	gold_core_spawnable = HOSTILE_SPAWN
+	//gold_core_spawnable = HOSTILE_SPAWN
 	allowed_projectile_types = list(/obj/projectile/magic/animate, /obj/projectile/magic/teleport,
 	/obj/projectile/magic/door, /obj/projectile/magic/aoe/fireball, /obj/projectile/magic/spellblade, /obj/projectile/magic/arcane_barrage)
+*/

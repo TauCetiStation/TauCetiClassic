@@ -153,6 +153,12 @@
 	log_name = "TP"
 	category = "Мобильность"
 
+/datum/spellbook_entry/shapeshift
+	name = "Перевёртыш"
+	spell_type = /obj/effect/proc_holder/spell/targeted/shapeshift
+	log_name = "FH"
+	category = "Мобильность"
+
 /datum/spellbook_entry/mutate
 	name = "Мутация"
 	spell_type = /obj/effect/proc_holder/spell/targeted/genetic/mutate
