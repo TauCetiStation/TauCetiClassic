@@ -387,13 +387,13 @@
 /datum/reagent/synaptizine/on_general_digest(mob/living/M)
 	..()
 	M.drowsyness = max(M.drowsyness - 5, 0)
-	M.AdjustParalysis(-1)
-	M.AdjustStunned(-1)
-	M.AdjustWeakened(-1)
+	M.AdjustParalysis(-1.5)
+	M.AdjustStunned(-1.5)
+	M.AdjustWeakened(-1.5)
 	if(holder.has_reagent("mindbreaker"))
 		holder.remove_reagent("mindbreaker", 5)
 	M.hallucination = max(0, M.hallucination - 10)
-	if(prob(60))
+	if(prob(40))
 		M.adjustToxLoss(1)
 
 /datum/reagent/hyronalin
