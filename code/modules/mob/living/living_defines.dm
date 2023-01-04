@@ -30,12 +30,11 @@
 	var/now_pushing = null
 
 	var/mob/living/cameraFollow = null
-	var/list/datum/action/actions = list()
 
 	var/tod = null // Time of death
 	var/update_slimes = 1
 	var/silent = null 		//Can't talk. Value goes down every life proc.
-	var/pull_debuff = 0		//Movement debuff when pulling
+	var/speed = 0			//Movement addditive modifier
 
 	var/on_fire = 0 //The "Are we on fire?" var
 	var/fire_stacks = 0 //Tracks how many stacks of fire we have on, max is usually 20

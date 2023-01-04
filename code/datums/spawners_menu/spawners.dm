@@ -180,6 +180,7 @@ var/global/list/datum/spawners_cooldown = list()
 	ranks = list(ROLE_FAMILIES)
 
 	var/roletype
+	var/list/prefixes = list("Officer")
 
 /datum/spawner/cop/spawn_ghost(mob/dead/observer/ghost)
 	var/spawnloc = pick(copsstart)
@@ -189,7 +190,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 	var/mob/living/carbon/human/cop = new(null)
 
-	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
+	var/new_name = "[pick(prefixes)] [pick(last_names)]"
 	C.create_human_apperance(cop, new_name)
 
 	cop.loc = spawnloc
@@ -222,16 +223,20 @@ var/global/list/datum/spawners_cooldown = list()
 	name = "Боец Тактической Группы ОБОП"
 	id = "c_swat"
 	roletype = /datum/role/cop/beatcop/swat
+	prefixes = list("Sergeant", "Captain")
 
 /datum/spawner/cop/fbi
 	name = "Инспектор ОБОП"
 	id = "c_fbi"
 	roletype = /datum/role/cop/beatcop/fbi
+	prefixes = list("Inspector")
 
 /datum/spawner/cop/military
 	name = "Боец ВСНТ ОБОП"
 	id = "c_military"
 	roletype = /datum/role/cop/beatcop/military
+	prefixes = list("Pvt.", "PFC", "Cpl.", "LCpl.", "SGT")
+
 
 /*
  * ERT
@@ -251,21 +256,11 @@ var/global/list/datum/spawners_cooldown = list()
 	important_info += mission
 
 /datum/spawner/ert/jump(mob/dead/observer/ghost)
-	var/list/correct_landmarks = list()
-	for (var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "Commando")
-			correct_landmarks += L
-
-	var/jump_to = pick(correct_landmarks)
+	var/jump_to = pick(landmarks_list["Commando"])
 	ghost.forceMove(get_turf(jump_to))
 
 /datum/spawner/ert/spawn_ghost(mob/dead/observer/ghost)
-	var/list/correct_landmarks = list()
-	for (var/obj/effect/landmark/L in landmarks_list)
-		if(L.name == "Commando")
-			correct_landmarks += L
-
-	var/obj/spawnloc = pick(correct_landmarks)
+	var/obj/spawnloc = pick(landmarks_list["Commando"])
 	var/new_name = sanitize_safe(input(ghost, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
 
 	var/datum/faction/strike_team/ert/ERT_team = find_faction_by_type(/datum/faction/strike_team/ert)
@@ -308,7 +303,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/blob_event/spawn_ghost(mob/dead/observer/ghost)
 	var/turf/spawn_turf = pick(blobstart)
-	new /obj/effect/blob/core(spawn_turf, ghost.client, 120)
+	new /obj/structure/blob/core(spawn_turf, ghost.client, 120)
 
 /*
  * Ninja
@@ -601,6 +596,13 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/living/religion_familiar/spawn_ghost(mob/dead/observer/ghost)
 	..()
 	religion.add_member(mob, HOLY_ROLE_PRIEST)
+
+
+/datum/spawner/living/eminence
+	name = "Возвышенный культа"
+	id = "eminence"
+	desc = "Вы станете Возвышенным - ментором и неформальным лидером всего культа."
+	ranks = list(ROLE_CULTIST, ROLE_GHOSTLY)
 
 /datum/spawner/living/mimic
 	name = "Оживлённый предмет"

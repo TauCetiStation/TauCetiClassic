@@ -19,7 +19,11 @@
 		var/mob/living/L = M
 		if(taste)
 			L.taste_reagents(reagents)
-
+	if(HAS_TRAIT(src, TRAIT_XENO_FUR))
+		var/mob/living/carbon/human/H = M
+		if(istype(H) && !H.species.flags[FUR])
+			if(prob(50) && SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nasty_throat_feel", /datum/mood_event/nasty_throat_feel))
+				to_chat(H, "<span class='warning'>You feel like something enveloping in your throat...</span>")
 	if(!reagents.total_volume)
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
@@ -289,6 +293,9 @@
 	filling_color = "#dbc94f"
 	bitesize = 1
 	list_reagents = list("nutriment" = 3)
+//Peacekeeper stuff
+/obj/item/weapon/reagent_containers/food/snacks/cookie/toxin_cookie
+	list_reagents = list("pacid" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar
 	name = "Chocolate Bar"
@@ -1716,13 +1723,13 @@
 		..()
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/try_slice(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_ACTION)
 	if((slices_num <= 0 || !slices_num) || !slice_path)
 		return FALSE
-	var/inaccurate = 0
-	if(W.get_quality(QUALITY_CUTTING) > 0 || W.sharp)
-		inaccurate = 1
-	else
-		return FALSE
+	var/inaccurate = FALSE
+	if(!W.get_quality(QUALITY_CUTTING))
+		inaccurate = TRUE
+
 	if ( \
 			!isturf(src.loc) || \
 			!(locate(/obj/structure/table) in src.loc) && \
@@ -1732,24 +1739,25 @@
 		to_chat(user, "<span class='rose'>You cannot slice [src] here! You need a table or at least a tray to do it.</span>")
 		return FALSE
 	var/slices_lost = 0
-	if (inaccurate)
-		slices_lost = rand(1, min(1, round(slices_num * 0.5)))
-		if (istype(W, /obj/item/weapon/melee/energy/sword))
-			playsound(user, 'sound/items/esword_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	if(W.sharp)
+		if(inaccurate)
+			slices_lost = rand(1, min(1, round(slices_num * 0.5)))
+			if(istype(W, /obj/item/weapon/melee/energy/sword))
+				playsound(user, 'sound/items/esword_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+			else
+				playsound(user, 'sound/items/shard_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else
-			playsound(user, 'sound/items/shard_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	else
-		playsound(src, pick(SOUNDIN_KNIFE_CUTTING), VOL_EFFECTS_MASTER, null, FALSE)
-	if (do_after(user, 35, target = src, can_move = FALSE))
-		if (!inaccurate)
-			user.visible_message("<span class='info'>[user] slices \the [src]!</span>", "<span class='notice'>You slice \the [src]!</span>")
-		else
-			user.visible_message("<span class='info'>[user] inaccurately slices \the [src] with [W]!</span>", "<span class='notice'>You inaccurately slice \the [src] with your [W]!</span>")
-		var/reagents_per_slice = reagents.total_volume/slices_num
-		for(var/i=1 to (slices_num-slices_lost))
-			var/obj/slice = new slice_path (src.loc)
-			reagents.trans_to(slice,reagents_per_slice)
-		qdel(src)
+			playsound(src, pick(SOUNDIN_KNIFE_CUTTING), VOL_EFFECTS_MASTER, null, FALSE)
+		if(do_after(user, 35, target = src, can_move = FALSE))
+			if(!inaccurate)
+				user.visible_message("<span class='info'>[user] slices \the [src]!</span>", "<span class='notice'>You slice \the [src]!</span>")
+			else
+				user.visible_message("<span class='info'>[user] inaccurately slices \the [src] with [W]!</span>", "<span class='notice'>You inaccurately slice \the [src] with your [W]!</span>")
+			var/reagents_per_slice = reagents.total_volume/slices_num
+			for(var/i=1 to (slices_num-slices_lost))
+				var/obj/slice = new slice_path (src.loc)
+				reagents.trans_to(slice,reagents_per_slice)
+			qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/attackby(obj/item/I, mob/user, params)
 	if(user.a_intent == INTENT_HARM)

@@ -9,6 +9,7 @@
 	anchored = TRUE
 	density = TRUE
 	opacity = TRUE
+	can_block_air = TRUE
 
 	canSmoothWith = list(
 		/turf/simulated/wall,
@@ -25,8 +26,15 @@
 	var/opening = FALSE
 	var/block_air_zones = TRUE
 
-/obj/structure/falsewall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group) return !block_air_zones
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
+
+/obj/structure/falsewall/c_airblock(turf/other)
+	if(block_air_zones)
+		return ..() | ZONE_BLOCKED
+	return ..()
+
+/obj/structure/falsewall/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
 	return !density
@@ -97,7 +105,7 @@
 				qdel(src)
 	else
 		to_chat(user, "<span class='notice'>Вы не можете этого сделать пока стена открыта.</span>")
-	if( istype(W, /obj/item/weapon/pickaxe/plasmacutter) )
+	if( istype(W, /obj/item/weapon/gun/energy/laser/cutter) )
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(walltype)
 		if(walltype != /turf/simulated/wall/mineral/phoron)
@@ -120,6 +128,15 @@
 			T = get_turf(src)
 			T.attackby(W, user)
 		qdel(src)
+
+/obj/structure/falsewall/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	var/turf/T = loc
+	T.ChangeTurf(walltype)
+	var/turf/simulated/wall/wall = loc
+	wall.dismantle_wall(!disassembled)
+	..()
 
 /*
  * False R-Walls

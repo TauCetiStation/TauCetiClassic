@@ -47,11 +47,10 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 	var/smoke_spread = 0 //1 - harmless, 2 - harmful
 	var/smoke_amt = 0 //cropped at 10
 
-	var/critfailchance = 0
 	var/centcomm_cancast = TRUE //Whether or not the spell should be allowed on z2
 
 	var/datum/action/spell_action/action = null
-	var/action_icon = 'icons/mob/actions.dmi'
+	var/action_icon = 'icons/hud/actions.dmi'
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
 	var/static/list/casting_clothes
@@ -89,7 +88,7 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 					to_chat(user, "<span class ='warning'>You need [favor_cost - user.my_religion.favor] more favors.</span>")
 				return FALSE
 
-	if(user.stat && !stat_allowed)
+	if(user.stat != CONSCIOUS && !stat_allowed)
 		if(try_start)
 			to_chat(user, "Not when you're incapacitated.")
 		return FALSE
@@ -181,15 +180,14 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 		if(cooldown)
 			cooldown.tick()
 
+	qdel(cooldown)
+
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = 1, mob/user = usr) //if recharge is started is important for the trigger spells
 	before_cast(targets, user)
 	invocation(user)
 	if(charge_type == "recharge" && recharge)
 		INVOKE_ASYNC(src, .proc/start_recharge, user)
-	if(prob(critfailchance))
-		critfail(targets, user)
-	else
-		cast(targets, user)
+	cast(targets, user)
 	after_cast(targets, user)
 
 /obj/effect/proc_holder/spell/proc/before_cast(list/targets, mob/user = usr)
@@ -232,9 +230,6 @@ var/global/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the
 				smoke.start()
 
 /obj/effect/proc_holder/spell/proc/cast(list/targets, mob/user = usr)
-	return
-
-/obj/effect/proc_holder/spell/proc/critfail(list/targets, mob/user = usr)
 	return
 
 /obj/effect/proc_holder/spell/proc/revert_cast(mob/user = usr) //resets recharge or readds a charge

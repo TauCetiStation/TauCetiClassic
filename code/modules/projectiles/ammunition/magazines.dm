@@ -202,11 +202,16 @@
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
-	max_ammo = 20
+	max_ammo = 30
 
 /obj/item/ammo_box/magazine/m12mm/update_icon()
 	..()
-	icon_state = "[initial(icon_state)]-[round(ammo_count(),2)]"
+	cut_overlays()
+	if(ammo_count() == 0)
+		return
+	var/ammo_perc = (ammo_count() * 100) / max_ammo 
+	var/image/ammo_icon = image('icons/obj/ammo.dmi', "12mmsh-[round(ammo_perc, 25)]")
+	add_overlay(ammo_icon)
 
 /obj/item/ammo_box/magazine/m12mm/hp
 	name = "magazine (.45 HP)"
@@ -215,14 +220,7 @@
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45hp
 	caliber = ".45"
-	max_ammo = 15
-
-/obj/item/ammo_box/magazine/m12mm/hp/update_icon()
-	..()
-	if(ammo_count() == 1)
-		icon_state = "[initial(icon_state)]-1"
-	else
-		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
+	max_ammo = 20
 
 /obj/item/ammo_box/magazine/m12mm/hv
 	name = "magazine (.45 HV)"
@@ -231,15 +229,7 @@
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45hv
 	caliber = ".45"
-	max_ammo = 15
-
-/obj/item/ammo_box/magazine/m12mm/hv/update_icon()
-	..()
-	if(ammo_count() == 1)
-		icon_state = "[initial(icon_state)]-1"
-	else
-		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
-
+	max_ammo = 20
 
 /obj/item/ammo_box/magazine/m12mm/imp
 	name = "magazine (.45 IMP)"
@@ -248,15 +238,7 @@
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/c45imp
 	caliber = ".45"
-	max_ammo = 15
-
-/obj/item/ammo_box/magazine/m12mm/imp/update_icon()
-	..()
-	if(ammo_count() == 1)
-		icon_state = "[initial(icon_state)]-1"
-	else
-		icon_state = "[initial(icon_state)]-[round(ammo_count(),3)]"
-
+	max_ammo = 20
 
 /obj/item/ammo_box/magazine/sm45
 	name = "magazine (.45)"
@@ -393,15 +375,15 @@
 	max_ammo = 8
 	multiload = 0
 
-/obj/item/ammo_box/magazine/a3006_clip
-	name = ".30-06 ammo clip"
+/obj/item/ammo_box/magazine/a774clip
+	name = "7.74 ammo clip"
 	icon_state = "clip"
 	origin_tech = "combat=2"
-	caliber = "a3006"
-	ammo_type = /obj/item/ammo_casing/a3006
+	caliber = "7.74mm"
+	ammo_type = /obj/item/ammo_casing/a74
 	max_ammo = 5
 
-/obj/item/ammo_box/magazine/a3006_clip/update_icon()
+/obj/item/ammo_box/magazine/a774clip/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[ammo_count()]"
 
@@ -506,6 +488,11 @@
 /obj/item/ammo_box/magazine/a74mm/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[CEIL(ammo_count(0) / 30) * 30]"
+
+/obj/item/ammo_box/magazine/a74mm/krinkov
+	name = "small A74 magazine (7.74)"
+	icon_state = "krinkov"
+	max_ammo = 15
 
 /obj/item/ammo_box/magazine/plasma
 	name = "plasma weapon battery pack"

@@ -32,6 +32,6 @@
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."
 	name = "medical mask"
-	icon_state = "medical"
-	item_state = "medical"
+	icon_state = "m_mask"
+	item_state = "m_mask"
 	permeability_coefficient = 0.01

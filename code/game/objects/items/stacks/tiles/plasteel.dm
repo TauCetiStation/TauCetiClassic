@@ -20,7 +20,7 @@
 
 /*
 /obj/item/stack/tile/plasteel/attack_self(mob/user)
-	if (usr.stat)
+	if (usr.stat != CONSCIOUS)
 		return
 	var/T = user.loc
 	if (!( istype(T, /turf) ))

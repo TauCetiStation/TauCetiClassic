@@ -837,3 +837,101 @@
 
 	update_icon()
 	updateinfolinks()
+
+/obj/item/weapon/paper/cmf_manual
+	name = "CMF manipulation manual"
+	info = {"<h1 style="text-align: center;">Руководство пользователя</h1>
+	<h2>Введение</h2>
+	<p>Благодаря разработкам наших ученых мы смогли изготовить около стабильные прототипы картриджей USP. Эти картриджи позволяют изменять когнитивно-моторные способности существ.&nbsp;</p>
+	<p>Эта технология состоит из четырех частей</p>
+	<div>
+	<ul>
+	<li>CMF Modifier Access Console - используется для настройки картриджей. Показывает информацию о IQ (коэффициент интеллекта) и MDI (индекс моторного развития).</li>
+	</ul>
+	</div>
+	<ul>
+	<li>CMF manipulation table - получает данные с консоли и устанавливает имплант CMF с нужными параметрами. Он также может служить хирургическим операционным столом для лечения черепно-мозговых травм.</li>
+	<li>USP cartridge - <span style="text-decoration: line-through;"><strong>\[секретно\]</strong></span></li>
+	<li>Имплант CMF - изменяет навыки существа, позволяя ему быть более полезным работником.</li>
+	</ul>
+	<h2>Процедура</h2>
+	<ol>
+	<li>Place patient on CMF manipulation table</li>
+	<li>Спросите пациента о его знаниях и навыках. Проверьте показатели IQ и MDI</li>
+	<li>Вставьте картридж в стол</li>
+	<li>Распакуйте картридж (процедура не является обратимой)</li>
+	<li>Используйте консоль для установки желаемых параметров импланта</li>
+	<li>Имплантируйте пациента с помощью консоли</li>
+	<li>В случае повреждения головного мозга направьте пациента на лечение к квалифицированному специалисту</li>
+	<li>Окончание процедуры. Теперь работник готов к выполнению своих обязанностей.</li>
+	</ol>
+	<h2>Опасности и противопоказания</h2>
+	<ul>
+	<li>Из-за особенностей работы имплантов защиты разума и лояльности их нельзя использовать вместе с имплантами CMF.</li>
+	<li>Консоль не позволит вам ввести этот имплантат существу неподходящей расы. Если такое произойдет, существо получит серьезные повреждения мозга, а имплант будет уничтожен.</li>
+	<li>Импланты CMF все еще находятся на стадии прототипа, сильный ЭМИ может разрушить его.</li>
+	<li>Поскольку эта технология является совершенно секретной, любое удаление импланта приведет к его уничтожению.</li>
+	</ul>
+	<h1 style="text-align: center;">Техническая информация</h1>
+	<h2>Подключение оборудования</h2>
+	<p>Чтобы подключить манипуляционный стол CMF к консоли, откройте панель обслуживания стола с помощью отвертки, затем с помощью мультиинструмента подсоедините стол к консоли и закройте панель обслуживания после этого.</p>
+	<h2>Потребляемая мощность</h2>
+	<p>После распаковки картриджа оборудование потребляет гораздо больше энергии, поэтому в консоли был установлен датчик заряда APC. Следите за зарядом во время манипуляций CMF.</p>
+	<h2>Стоимость производства картриджей USP</h2>
+	<p>Поскольку эти картриджи являются прототипами, которые еще не поступили в массовое производство, каждый картридж собирается вручную, и их распространение ограничено станциями, где гибель экипажа или наличие неквалифицированного персонала является обычным явлением. Используйте их с умом и не тратьте впустую. Внимательно изучите показатели IQ и MDI пациентов, чтобы определить, какой картридж необходим. Один базовый зеленый картридж стоил двадцать пять человеко-лет. Мы также не можем допустить, чтобы эти технологии попали в руки наших конкурентов.</p>
+	"}
+
+var/global/list/contributor_names
+// https://docs.github.com/en/rest/repos/repos#list-repository-contributors
+/proc/get_github_contributers(per_page = 100, anon = FALSE)
+	if(global.contributor_names && global.contributor_names?.len)
+		return global.contributor_names
+	global.contributor_names = list()
+
+	var/page = 1
+
+	var/owner = config.github_repository_owner
+	var/name = config.github_repository_name
+	while(TRUE)
+		var/list/response = get_webpage("https://api.github.com/repos/[owner]/[name]/contributors?anon=[anon]&per_page=[per_page]&page=[page]")
+		if(!response)
+			return
+		response = json_decode(response)
+		if(response.len == 0)
+			break
+		for(var/list/user in response)
+			if(user["type"] == "User" && !(user["login"] in global.contributor_names))
+				global.contributor_names += user["login"]
+			else if(anon && user["type"] == "Anonymous" && !(user["name"] in global.contributor_names))
+				global.contributor_names += user["name"]
+		page++
+
+	return global.contributor_names
+
+/obj/item/weapon/paper/github_easter_egg
+	name = "Department of Paranormal Activity"
+
+/obj/item/weapon/paper/github_easter_egg/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/paper/github_easter_egg/atom_init_late()
+	write_info()
+
+/obj/item/weapon/paper/github_easter_egg/proc/write_info()
+	set waitfor = FALSE
+
+	var/list/names = get_github_contributers()
+	info = "<h1 style='text-align: center;'>Department of Paranormal Activity</h1>"
+	info += "<h2>List of callsigns of employees:</h2>"
+	info += "<div>"
+	info += "<ul>"
+	for(var/name in names)
+		info += "<li>[name]</li>"
+	info += "</ul>"
+	info += "</div>"
+
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(src, "CentComm DPA")
+
+	update_icon()

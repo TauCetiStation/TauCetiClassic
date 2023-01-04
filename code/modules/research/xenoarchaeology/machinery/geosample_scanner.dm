@@ -116,7 +116,7 @@
 
 /obj/machinery/radiocarbon_spectrometer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 
-	if(user.stat && !isobserver(user))
+	if(user.stat != CONSCIOUS && !isobserver(user))
 		return
 	// this is the data which will be sent to the ui
 	var/data[0]
@@ -287,7 +287,7 @@
 				data = " - Mundane object (archaic xenos origins)<br>"
 
 				var/obj/item/weapon/archaeological_find/A = scanned_item
-				if(A.talking_atom)
+				if(A.GetComponent(/datum/component/talking_atom))
 					data = " - Exhibits properties consistent with sonic reproduction and audio capture technologies.<br>"
 
 		var/anom_found = 0

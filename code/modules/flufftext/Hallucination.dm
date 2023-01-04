@@ -121,7 +121,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							playsound_local(null, DEMON_SOUNDS, VOL_EFFECTS_MASTER, null, FALSE)
 							if(ishuman(src))
 								var/mob/living/carbon/human/H = src
-								if(!H.stat)
+								if(H.stat == CONSCIOUS)
 									H.emote(pick("scream", "laugh"))
 						if(client)
 							client.images += halimage
@@ -166,7 +166,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							playsound_local(null, DEMON_SOUNDS, VOL_EFFECTS_MASTER, null, FALSE)
 						if(ishuman(src))
 							var/mob/living/carbon/human/H = src
-							if(!H.stat)
+							if(H.stat == CONSCIOUS)
 								H.emote(pick("scream", "laugh"))
 					if(7) // GUNSHOTS
 						var/list/gunsound_list = list('sound/weapons/guns/gunshot_heavy.ogg',
@@ -376,7 +376,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				if(weapon_name)
 					my_target.playsound_local(null, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 					my_target.show_message("<span class='warning'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", SHOWMSG_VISUAL)
-					my_target.halloss += 8
+					my_target.adjustHalLoss(8)
 					if(prob(20)) my_target.blurEyes(10)
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)
@@ -384,7 +384,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				else
 					my_target.playsound_local(null, pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER, 35)
 					my_target.show_message("<span class='warning'><B>[src.name] has punched [my_target]!</B></span>", SHOWMSG_VISUAL)
-					my_target.halloss += 4
+					my_target.adjustHalLoss(4)
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)

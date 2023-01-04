@@ -130,6 +130,30 @@ LINEN BINS
 	desc = "A special fabric enchanted with magic so you can have an enchanted night.  It even glows!"
 	icon_state = "sheetwiz"
 
+/obj/item/weapon/bedsheet/wiz/atom_init()
+	. = ..()
+
+	var/obj/effect/effect/forcefield/F = new
+	AddComponent(/datum/component/forcefield, "wizard field", 20, 3 SECONDS, 5 SECONDS, F, TRUE, TRUE)
+
+/obj/item/weapon/bedsheet/wiz/proc/activate(mob/living/user)
+	if(iswizard(user) || iswizardapprentice(user))
+		SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, user)
+
+/obj/item/weapon/bedsheet/wiz/proc/deactivate(mob/living/user)
+	SEND_SIGNAL(src, COMSIG_FORCEFIELD_UNPROTECT, user)
+
+/obj/item/weapon/bedsheet/wiz/equipped(mob/living/user, slot)
+	. = ..()
+
+	if(slot == SLOT_BACK)
+		activate(user)
+
+/obj/item/weapon/bedsheet/wiz/dropped(mob/living/user)
+	. = ..()
+	if(slot_equipped == SLOT_BACK)
+		deactivate(user)
+
 /obj/item/weapon/bedsheet/gar
 	name = "gar bedsheet"
 	desc = "A surprisingly soft gar bedsheet."

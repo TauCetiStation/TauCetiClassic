@@ -91,8 +91,6 @@
 	if(modifiers[CTRL_CLICK])
 		CtrlClickOn(A)
 		return
-	if(HardsuitClickOn(A))
-		return
 	if(RegularClickOn(A))
 		return
 
@@ -137,9 +135,7 @@
 
 		// No adjacency needed
 		if(W)
-			var/resolved = A.attackby(W, src, params)
-			if(!resolved && A && W)
-				W.afterattack(A, src, 1, params) // 1 indicates adjacency
+			W.melee_attack_chain(A, src, params)
 		else
 			UnarmedAttack(A)
 		return
@@ -155,15 +151,12 @@
 
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
-				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				var/resolved = A.attackby(W, src, params)
-				if(!resolved && A && W)
-					W.afterattack(A, src, 1, params) // 1: clicking something Adjacent
+				W.melee_attack_chain(A, src, params)
 			else
 				UnarmedAttack(A)
 		else // non-adjacent click
 			if(W)
-				W.afterattack(A, src, 0, params) // 0: not Adjacent
+				W.afterattack(A, src, FALSE, params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
 
@@ -294,7 +287,9 @@
 	return
 
 /atom/movable/CtrlClick(mob/user)
-	if(Adjacent(user))
+	if(user.pulling == src)
+		user.stop_pulling()
+	else if(Adjacent(user))
 		user.start_pulling(src)
 
 /*
@@ -371,7 +366,7 @@
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(atom/A)
-	if( stat || buckled || !A || !x || !y || !A.x || !A.y ) return
+	if( stat != CONSCIOUS || buckled || !A || !x || !y || !A.x || !A.y ) return
 	var/dx = A.x - x
 	var/dy = A.y - y
 	if(!dx && !dy) return
@@ -386,7 +381,7 @@
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 // This proc is currently only used in multi_carry.dm (/datum/component/multi_carry)
 /mob/proc/face_pixeldiff(pixel_x, pixel_y, pixel_x_new, pixel_y_new)
-	if( stat || buckled)
+	if( stat != CONSCIOUS || buckled)
 		return
 
 	var/dx = pixel_x_new - pixel_x
@@ -419,7 +414,7 @@
 		C.cob.remove_build_overlay(C)
 
 /atom/movable/screen/click_catcher
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "click_catcher"
 	plane = CLICKCATCHER_PLANE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE

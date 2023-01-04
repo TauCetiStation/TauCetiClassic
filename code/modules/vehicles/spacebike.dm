@@ -6,8 +6,9 @@
 
 	load_item_visible = 1
 	mob_offset_y = 5
-	health = 300
-	maxhealth = 300
+
+	max_integrity = 300
+	resistance_flags = CAN_BE_HIT
 
 	fire_dam_coeff = 0.6
 	brute_dam_coeff = 0.5
@@ -142,10 +143,6 @@
 			L.apply_damage(0.5*damage, BRUTE, BP_R_ARM)
 	..()
 
-/obj/vehicle/space/spacebike/relaymove(mob/user, direction)
-	return Move(get_step(src, direction))
-
-
 /obj/vehicle/space/spacebike/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	//these things like space, not turf. Dragging shouldn't weigh you down.
 	if(isspaceturf(NewLoc) || pulledby)
@@ -162,7 +159,7 @@
 	. = ..()
 	if(kickstand)
 		return 0
-	if(buckled_mob && (buckled_mob.stat || buckled_mob.lying))
+	if(buckled_mob && (buckled_mob.stat != CONSCIOUS || buckled_mob.lying))
 		return 0
 
 /obj/vehicle/space/spacebike/turn_on()

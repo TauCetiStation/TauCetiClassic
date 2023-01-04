@@ -8,6 +8,7 @@ var/global/list/wedge_image_cache = list()
 	anchored = TRUE
 	opacity = 1
 	density = TRUE
+	can_block_air = TRUE
 	layer = DOOR_LAYER
 	power_channel = STATIC_ENVIRON
 	hud_possible = list(DIAG_AIRLOCK_HUD)
@@ -138,8 +139,12 @@ var/global/list/wedge_image_cache = list()
 	else
 		underlays += global.wedge_image_cache[cache_string]
 
-/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group) return !block_air_zones
+/obj/machinery/door/c_airblock(turf/other)
+	if(block_air_zones)
+		return ..() | ZONE_BLOCKED
+	return ..()
+
+/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density
@@ -161,14 +166,14 @@ var/global/list/wedge_image_cache = list()
 		var/mob/living/carbon/human/H = user
 		if(H.getBrainLoss() >= 60)
 			playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER, 25)
-			if(!istype(H.head, /obj/item/clothing/head/helmet))
-				visible_message("<span class='userdanger'> [user] headbutts the [src].</span>")
-				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+			var/armor_block = H.run_armor_check(BP_HEAD, "melee")
+			if(armor_block)
+				visible_message("<span class='userdanger'> [user] headbutts the airlock.</span>")
+			else
+				visible_message("<span class='userdanger'> [user] headbutts the airlock. Good thing they're wearing a helmet.</span>")
+			if(H.apply_damage(10, BRUTE, BP_HEAD, armor_block))
 				H.Stun(2)
 				H.Weaken(5)
-				BP.take_damage(10, 0, used_weapon = "Hematoma")
-			else
-				visible_message("<span class='userdanger'> [user] headbutts the [src]. Good thing they're wearing a helmet.</span>")
 			return
 
 	user.SetNextMove(CLICK_CD_INTERACT)
@@ -224,6 +229,19 @@ var/global/list/wedge_image_cache = list()
 	add_fingerprint(user)
 	try_open(user, I)
 
+/obj/machinery/door/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(glass)
+				playsound(loc, 'sound/effects/glasshit.ogg', VOL_EFFECTS_MASTER, 90, TRUE)
+			else if(damage_amount)
+				playsound(loc, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+
 /obj/machinery/door/emag_act(mob/user)
 	if(density && hasPower() && !wedged_item)
 		update_icon(AIRLOCK_EMAG)
@@ -237,11 +255,6 @@ var/global/list/wedge_image_cache = list()
 	else if(wedged_item)
 		to_chat(user, "<span class='warning'>Why would you waste your time hacking a non-blocking airlock?</span>")
 	return FALSE
-
-/obj/machinery/door/blob_act()
-	if(prob(40))
-		qdel(src)
-	return
 
 /obj/machinery/door/ex_act(severity)
 	switch(severity)

@@ -200,7 +200,14 @@
 	name = "gorlex magboots"
 	icon_state = "syndiemag0"
 	magboot_state = "syndiemag"
-	slowdown_off = 1
+	slowdown_off = 0
+
+/obj/item/clothing/shoes/magboots/ert
+	name = "advanced magboots"
+	desc = "A pair of advanced magboots designed specifically for ERT."
+	slowdown_off = 0
+	icon_state = "advmag0"
+	magboot_state = "advmag"
 
 /obj/item/clothing/shoes/roman
 	name = "roman sandals"

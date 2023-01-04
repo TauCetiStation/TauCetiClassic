@@ -73,10 +73,6 @@
 				thermitemelt(user, seconds_to_melt)
 				return
 
-		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-			thermitemelt(user, seconds_to_melt)
-			return
-
 		else if(istype(W, /obj/item/weapon/melee/energy/blade))
 			var/obj/item/weapon/melee/energy/blade/EB = W
 
@@ -163,7 +159,7 @@
 					to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 				return
 
-			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+			if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
 				to_chat(user, "<span class='notice'>Вы начинаете разрезать металлическое покрытие.</span>")
 				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
@@ -221,7 +217,7 @@
 					to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 				return
 
-			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+			if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
 
 				to_chat(user, "<span class='notice'>Вы разрезаете поддерживающие балки.</span>")
 				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
@@ -251,14 +247,21 @@
 //vv OK, we weren't performing a valid deconstruction step or igniting thermite,let's check the other possibilities vv
 
 	//DRILLING
-	if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
-		var/obj/item/weapon/changeling_hammer/C = W
+	//fulldestruct to walls when
+	if(istype(W,/obj/item/weapon/melee/changeling_hammer) && !rotting)
+		var/obj/item/weapon/melee/changeling_hammer/hammer = W
+		//slowdown, user. No need destruct all walls without debuff
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			C.shock_stage += 5
 		user.do_attack_animation(src)
-		visible_message("<span class='warning'><B>[user]</B> бьет укрепленную стену!</span>")
-		if(C.use_charge(user, 4))
-			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			take_damage(pick(10, 20, 30))
+		user.visible_message("<span class='warning'><B>[user]</B> бьет укрепленную стену!</span>",
+						"<span class='warning'>Вы пытаетесь снести укрепленную стену!</span>",
+						"<span class='userdanger'>Вы слышите ужасающий грохот!</span>")
+		playsound(user, pick(hammer.hitsound), VOL_EFFECTS_MASTER)
+		take_damage(hammer.get_object_damage())
 		return
+
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 
 		to_chat(user, "<span class='notice'>Вы бурите сквозь укрепленную стену.</span>")

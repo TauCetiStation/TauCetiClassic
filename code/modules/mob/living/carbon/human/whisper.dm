@@ -22,7 +22,7 @@
 			return FALSE
 		return say_dead(message)
 
-	if(src.stat)
+	if(stat != CONSCIOUS)
 		return FALSE
 	message = sanitize(message)	//made consistent with say
 
@@ -31,6 +31,10 @@
 
 	if(iszombie(src))
 		message = zombie_talk(message)
+
+	if(disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
+		if(prob(50))
+			message = turret_talk(message)
 
 	if(name != GetVoice())
 		alt_name = "(as [get_id_name("Unknown")])"

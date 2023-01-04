@@ -219,7 +219,7 @@
 	. = ..()
 	if(client)
 		return
-	if(!stat)
+	if(stat == CONSCIOUS)
 		icon_state = "parrot_fly" //It is going to be flying regardless of whether it flees or attacks
 
 		if(parrot_state == PARROT_PERCH)
@@ -237,7 +237,7 @@
 //Mobs with objects
 /mob/living/simple_animal/parrot/attackby(obj/item/O, mob/user)
 	..()
-	if(!stat && !client && !istype(O, /obj/item/stack/medical))
+	if(stat == CONSCIOUS && !client && !istype(O, /obj/item/stack/medical))
 		if(O.force)
 			if(parrot_state == PARROT_PERCH)
 				parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
@@ -253,7 +253,7 @@
 	. = ..()
 	if(. == PROJECTILE_ABSORBED || . == PROJECTILE_FORCE_MISS)
 		return
-	if(!stat && !client)
+	if(stat == CONSCIOUS && !client)
 		if(parrot_state == PARROT_PERCH)
 			parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
 
@@ -276,7 +276,7 @@
 			parrot_state = PARROT_WANDER
 		return
 
-	if(client || stat)
+	if(client || stat != CONSCIOUS)
 		return //Lets not force players or dead/incap parrots to move
 
 	if(!isturf(src.loc) || !canmove)
@@ -461,7 +461,7 @@
 		if(in_range(src, parrot_interest))	// ! changing this to Adjacent() will probably break it
 											// ! and i'm not going to invent new alg for this
 			//If the mob we've been chasing/attacking dies or falls into crit, check for loot!
-			if(L.stat)
+			if(L.stat != CONSCIOUS)
 				parrot_interest = null
 				if(!held_item)
 					held_item = steal_from_ground()
@@ -480,7 +480,7 @@
 				var/mob/living/carbon/human/H = parrot_interest
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(pick(parrot_dam_zone))]
 
-				H.apply_damage(damage, BRUTE, BP, H.run_armor_check(BP, "melee"), DAM_SHARP)
+				H.apply_damage(damage, BRUTE, BP, H.run_armor_check(BP, MELEE), DAM_SHARP)
 				me_emote(pick("pecks [H]'s [BP.name]", "cuts [H]'s [BP.name] with its talons"))
 
 			else
@@ -683,7 +683,21 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 /mob/living/simple_animal/parrot/Poly
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
-	speak = list("Поли хочет кррекер!", ":e Прроверьте сингулярность, лоботррясы!", ":e Подключайте солнечные панели, ленивые даррмоеды!", ":e КТО ВЗЯЛ ГРРЁБАНЫЕ РРИГИ?", ":e О БОЖЕ, ОНА СБЕЖАЛА! ВЫЗЫВАЙТЕ ШАТТЛ!")
+	speak = list(
+		":e Поли хочет кррекер!",
+		":e Прроверьте сингулярность, лоботррясы!",
+		":e Подключайте солнечные панели, ленивые даррмоеды!",
+		":e КТО ВЗЯЛ ГРРЁБАНЫЕ РРИГИ?",
+		":e О БОЖЕ, ОНА СБЕЖАЛА! ВЫЗЫВАЙТЕ ШАТТЛ!",
+		":e Шеф, вы свой диплом купили или где-то нашли?",
+		":e Нет, черртежи я не прродам.",
+		":e Закажите ящик с перрчатками.",
+		":e Я ЖЕ ГОВОРРИЛ, НЕ ТРРОГАЙТЕ СУПЕРРМАТЕРИЮ РРУКАМИ!",
+		":e Да не нужны СМЕСЫ, мы напррямую подключим.",
+		":e Я много рраз так делал, все норрмально будет.",
+		":e Вы еще шалаш пострройте вокрруг бухломата.",
+		":e Мы - инженерр.",
+	)
 	speak_chance = 3
 	var/memory_saved = 0
 	var/rounds_survived = 0
@@ -711,7 +725,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 	. = ..()
 
 /mob/living/simple_animal/parrot/Poly/Life()
-	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(stat == CONSCIOUS && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		rounds_survived = max(++rounds_survived,1)
 		if(rounds_survived > longest_survival)
 			longest_survival = rounds_survived
@@ -825,6 +839,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 
 
 /mob/living/simple_animal/parrot/proc/parrot_hear(message="")
-	if(!message || stat)
+	if(!message || stat != CONSCIOUS)
 		return
 	speech_buffer.Add(message)

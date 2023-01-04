@@ -146,7 +146,7 @@ var/global/list/ai_verbs_default = list(
 	SetNextMove(CLICK_CD_MELEE * 3)
 	var/mob/living/L = A
 	eyeobj.visible_message("<span class='userdanger'>space carp nashes at [A]</span>")
-	L.apply_damage(15, BRUTE, BP_CHEST, L.run_armor_check(BP_CHEST, "melee"), DAM_SHARP|DAM_EDGE)
+	L.apply_damage(15, BRUTE, BP_CHEST, L.run_armor_check(BP_CHEST, MELEE), DAM_SHARP|DAM_EDGE)
 	playsound(eyeobj, 'sound/weapons/bite.ogg', VOL_EFFECTS_MASTER)
 	return TRUE
 
@@ -898,7 +898,7 @@ var/global/list/ai_verbs_default = list(
 	if(ismalf(usr) && stat != DEAD)
 		to_chat(usr, "<span class='danger'>You cannot use this verb in malfunction. If you need to leave, please adminhelp.</span>")
 		return
-	if(stat)
+	if(stat != CONSCIOUS)
 		return ..()
 
 	// Wipe Core

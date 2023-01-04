@@ -9,6 +9,12 @@
 	var/obj/item/weapon/circuitboard/circuit = null
 	var/obj/item/device/mmi/brain = null
 
+	resistance_flags = CAN_BE_HIT
+
+/obj/structure/AIcore/Destroy()
+	QDEL_NULL(circuit)
+	QDEL_NULL(brain)
+	return ..()
 
 /obj/structure/AIcore/attackby(obj/item/P, mob/user)
 	switch(state)
@@ -28,8 +34,7 @@
 				if(user.is_busy(src)) return
 				if(WT.use_tool(src, user, 20, amount = 0, volume = 50))
 					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
-					new /obj/item/stack/sheet/plasteel( loc, 4)
-					qdel(src)
+					deconstruct(TRUE)
 		if(1)
 			if(iswrench(P))
 				if(user.is_busy(src))
@@ -171,10 +176,27 @@
 						empty_playable_ai_cores += D
 				else
 					var/mob/living/silicon/ai/A = new /mob/living/silicon/ai ( loc, laws, brain )
+					brain = null
 					if(A) //if there's no brain, the mob is deleted and a structure/AIcore is created
 						A.rename_self("ai", 1)
 				feedback_inc("cyborg_ais_created",1)
 				qdel(src)
+
+/obj/structure/AIcore/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(state >= 4)
+		new /obj/item/stack/sheet/rglass(loc, 2)
+	if(state >= 3)
+		new /obj/item/stack/cable_coil(loc, 5)
+	if(circuit)
+		circuit.forceMove(loc)
+		circuit = null
+	if(brain)
+		brain.forceMove(loc)
+		brain = null
+	new /obj/item/stack/sheet/plasteel(loc, 4)
+	..()
 
 /obj/structure/AIcore/deactivated
 	name = "Inactive AI"
@@ -246,7 +268,7 @@ That prevents a few funky behaviors.
 									if (T.mind == malfai.antag)
 										to_chat(U, "<span class='warning'><b>ERROR</b>:</span> Remote transfer interface disabled.")
 										return
-							if(T.stat)//If the ai is dead/dying.
+							if(T.stat != CONSCIOUS)//If the ai is dead/dying.
 								to_chat(U, "<span class='warning'><b>ERROR</b>:</span> [T.name] data core is corrupted. Unable to install.")
 							else
 								new /obj/structure/AIcore/deactivated(T.loc)
@@ -349,7 +371,7 @@ That prevents a few funky behaviors.
 								to_chat(U, "<span class='notice'><b>Transfer successful</b>:</span> [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 						else
 							if(!C.AI && T.occupant && !T.active)
-								if (T.occupant.stat)
+								if (T.occupant.stat != CONSCIOUS)
 									to_chat(U, "<span class='warning'><b>ERROR</b>:</span> [T.occupant.name] data core is corrupted. Unable to install.")
 								else
 									T.add_overlay(image('icons/obj/computer.dmi', "ai-fixer-empty"))
@@ -390,7 +412,7 @@ That prevents a few funky behaviors.
 								if(C.flush)//If the other card is flushing.
 									to_chat(U, "<span class='warning'><b>ERROR</b>:</span> AI flush is in progress, cannot execute transfer protocol.")
 								else
-									if(A_T&&!A_T.stat)//If there is an AI on the target card and it's not inactive.
+									if(A_T&&A_T.stat == CONSCIOUS)//If there is an AI on the target card and it's not inactive.
 										A_T.loc = T//Throw them into suit.
 										C.icon_state = "aicard"
 										C.name = "inteliCard"

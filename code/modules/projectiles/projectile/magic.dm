@@ -1,7 +1,7 @@
 /obj/item/projectile/magic
 	name = "bolt of nothing"
 	icon_state = "energy"
-	light_color = "#00ff00"
+	light_color = "#ffffff"
 	light_power = 2
 	light_range = 2
 	nodamage = 1
@@ -81,7 +81,7 @@
 		var/mob/living/simple_animal/hostile/mimic/copy/C = change
 		C.ChangeOwner(firer)
 		create_spawner(/datum/spawner/living/mimic, C)
-	else if(istype(change, /mob/living/simple_animal/shade) || isxeno(change))
+	else if(isshade(change) || isxeno(change))
 		var/mob/living/M = wabbajack(change)
 		if(firer && iswizard(firer))
 			var/datum/role/wizard/mage = firer.mind.GetRole(WIZARD)

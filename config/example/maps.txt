@@ -35,3 +35,12 @@ map falcon
 	maxplayers 25
 	voteweight 2
 endmap
+
+map prometheus
+	votable
+endmap
+
+map stroechka
+	votable
+	maxplayers 10
+endmap

@@ -13,7 +13,12 @@
 
 	var/holy_rank = CULT_ROLE_HIGHPRIEST
 	skillset_type = /datum/skillset/cultist
-	change_to_maximum_skills = FALSE
+	change_to_maximum_skills = TRUE
+
+/datum/role/cultist/Greet(greeting, custom)
+	if(!..())
+		return FALSE
+	antag.current.playsound_local(null, 'sound/antag/cultist_alert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /datum/role/cultist/CanBeAssigned(datum/mind/M, laterole)
 	if(laterole == FALSE) // can be null
@@ -95,4 +100,3 @@
 
 	holy_rank = CULT_ROLE_MASTER
 	skillset_type = /datum/skillset/cultist/leader
-	change_to_maximum_skills = FALSE
