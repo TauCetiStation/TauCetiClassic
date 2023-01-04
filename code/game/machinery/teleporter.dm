@@ -342,7 +342,6 @@
 	. = !panel_open && !(stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.stat & (BROKEN|NOPOWER))
 
 /obj/machinery/teleport/hub/attack_ghost(mob/user)
-	..()
 	if(power_station?.teleporter_console?.target)
 		user.abstract_move(power_station.teleporter_console.target)
 
