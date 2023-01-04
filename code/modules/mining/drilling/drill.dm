@@ -114,12 +114,12 @@
 
 /obj/machinery/mining/drill/proc/use_cell_power()
 	if(wires_power_disable)
-		return 0
+		return FALSE
 	if(!cell)
-		return 0
+		return FALSE
 	if(cell.use(charge_use))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/mining/drill/proc/check_supports()
 	if(!supports || supports.len < braces_needed)
