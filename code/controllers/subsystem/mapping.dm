@@ -209,9 +209,6 @@ SUBSYSTEM_DEF(mapping)
 	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, default_traits = ZTRAITS_STATION)
 	station_loaded = TRUE
 	change_lobbyscreen() // todo: move to better place from map controller
-	while (space_levels_so_far < config.space_ruin_levels)
-		++space_levels_so_far
-		add_new_zlevel("Empty Area [space_levels_so_far]", ZTRAITS_SPACE)
 
 	if(global.config.load_space_levels)
 		while (space_levels_so_far < config.space_ruin_levels)
