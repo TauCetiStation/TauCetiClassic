@@ -57,8 +57,7 @@ SUBSYSTEM_DEF(air)
 	var/list/queued_for_update
 
 	var/process_reactions = TRUE
-	var/log_recent_reactions = TRUE
-	var/temp = ""
+	var/temporaryHtmlData = ""
 
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "\nC:{"
@@ -581,10 +580,11 @@ SUBSYSTEM_DEF(air)
 	if(oldPriority == priority)
 		return
 	G.last_reaction_priority = priority
-	var/list/L
+
 	if(oldPriority)
 		possibleReactionMixes[oldPriority] -= G
-	possibleReactionMixes[priority].Insert(1, G)
+	var/list/L
+	L = possibleReactionMixes[priority]; L.Insert(1, G); possibleReactionMixes[priority] = L;
 
 /datum/controller/subsystem/air/proc/add_reaction_zone(zone/Z, priority)
 	if(!process_reactions)
@@ -605,11 +605,7 @@ SUBSYSTEM_DEF(air)
 	for(var/gas in G.gas)
 		var/list/L = global.atmosReactionListRarest[gas]
 		for(var/datum/atmosReaction/R as anything in L)
-			if(R.react(G))
-				if(log_recent_reactions)
-					recentReactions.Insert(1, list(R.id, G))
-					if(recentReactions.len > MAX_RECENT_REACTIONS)
-						recentReactions.Cut(MAX_RECENT_REACTIONS + 1)
+			R.react(G)
 
 /datum/controller/subsystem/air/proc/find_zone(datum/gas_mixture/G)
 	for(var/zone/Z in zones)
@@ -619,8 +615,8 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/proc/atmos_reactions_panel()
 	var/html = ""
-	if(temp)
-		html = temp
+	if(temporaryHtmlData)
+		html = temporaryHtmlData
 	else
 		if(!SSair)
 			html += "<span class='red'>Подсистема воздуха в данный момент не активна.</span><br>"
@@ -631,9 +627,7 @@ SUBSYSTEM_DEF(air)
 			var/list/p2 = possibleReactionMixes[2]
 			var/list/p3 = possibleReactionMixes[3]
 			html += "Количество возможных газовых смесей для реакций: [p1.len + p2.len + p3.len]<br>"
-			html += "Запись недавних реакций: [SSair.log_recent_reactions ? "Включена" : "Выключена"]<br>"
 			html += "<A align='right' href='?src=\ref[src];enabler=1'>Включить обработку реакций</A><br>"
-			html += "<A align='right' href='?src=\ref[src];viewrlog=1'>Просмотреть недавние реакции</A><br>"
 			html += "<A align='right' href='?src=\ref[src];enablerlog=1'>Включить запись реакций</A><br>"
 			html += "<A align='right' href='?src=\ref[src];checkt=1'>Проверить текущий турф</A><br>"
 			html += "<A align='right' href='?src=\ref[src];checkz=1'>Проверить текущую зону</A><br>"
@@ -642,16 +636,9 @@ SUBSYSTEM_DEF(air)
 
 /datum/controller/subsystem/air/Topic(href, href_list)
 	if(href_list["back"])
-		temp = ""
+		temporaryHtmlData = ""
 	if(href_list["enabler"])
 		SSair.process_reactions = !SSair.process_reactions
-	if(href_list["viewrlog"])
-		temp += "<A align='right' href='?src=\ref[src];back=1'>Назад</A><br>"
-		for(var/list/L in recentReactions)
-			var/turf/T = L[1]
-			temp += "Имя: [L[0]]; Турф: [initial(T.name)]; <href='?src=\ref[src];teleport=\ref[L[1]];teleport=1'>Телепортироваться</A>";
-	if(href_list["enablerlog"])
-		SSair.log_recent_reactions = !SSair.log_recent_reactions
 	if(href_list["checkt"])
 		var/turf/simulated/T = usr.loc
 		if(!has_valid_zone(T))
@@ -668,10 +655,6 @@ SUBSYSTEM_DEF(air)
 					if(priority)
 						if(has_valid_zone(T))
 							add_reaction_zone(T.zone, priority)
-	if(href_list["teleport"])
-		var/turf/TT = locate(href_list["teleport"])
-		if(TT)
-			usr.Move(TT)
 	atmos_reactions_panel_interact(usr)
 
 /datum/controller/subsystem/air/proc/atmos_reactions_panel_interact(mob/living/user)

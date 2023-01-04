@@ -11,7 +11,10 @@
 	var/list/catalysts[0]
 	var/list/inhibitors[0]
 
-/datum/atmosReaction/proc/canReact(datum/gas_mixture/G)
+/datum/atmosReaction/proc/preReact(datum/gas_mixture/G)
+	return TRUE //insert your own code here
+
+/datum/atmosReaction/proc/react(datum/gas_mixture/G)
 	var/count = 0
 	var/list/toRemove[0]
 
@@ -41,26 +44,17 @@
 	if(count != consumed.len)
 		return FALSE
 
-	return toRemove
-
-/datum/atmosReaction/proc/preReact(datum/gas_mixture/G)
-	return TRUE //insert your own code here
-
-/datum/atmosReaction/proc/react(datum/gas_mixture/G)
-	var/R = canReact(G)
-	if(R)
-		if(preReact(G))
-			for(var/gas in R)
-				G.gas[gas] = G.gas[gas] - R[gas]
-			for(var/gas in created)
-				if(G.gas[gas])
-					G.gas[gas] = G.gas[gas] + created[gas]
-				else
-					G.gas[gas] = created[gas]
-			G.add_thermal_energy(producedHeat)
-			postReact(G)
-			return TRUE
-	return FALSE
+	if(preReact(G))
+		for(var/gas in toRemove)
+			G.gas[gas] = G.gas[gas] - toRemove[gas]
+		for(var/gas in created)
+			if(G.gas[gas])
+				G.gas[gas] = G.gas[gas] + created[gas]
+			else
+				G.gas[gas] = created[gas]
+		G.add_thermal_energy(producedHeat)
+		postReact(G)
+	return TRUE
 
 /datum/atmosReaction/proc/postReact(datum/gas_mixture/G)
 	return //insert your own code here
