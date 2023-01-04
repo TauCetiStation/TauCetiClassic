@@ -26,9 +26,6 @@
 	if(amount < 0)
 		stack_trace("[src.type]/use() called with a negative parameter")
 		return 0
-	if(amount == 0)
-		stack_trace("[src.type]/use() called with a zero parameter")
-		return 0
 	if(rigged && amount > 0)
 		explode()
 		return 0
