@@ -20,7 +20,8 @@
 			thrownatoms += AM
 
 	for(var/atom/movable/AM in thrownatoms)
-		if(AM == user || AM.anchored || HAS_TRAIT(AM, TRAIT_FAT))
+		var/mob/living/carbon/human/H = AM
+		if(AM == user || AM.anchored || (ishuman(H) && (istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP))) || HAS_TRAIT(AM, TRAIT_FAT))
 			continue
 
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
