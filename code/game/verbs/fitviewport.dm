@@ -1,7 +1,7 @@
 /client/verb/onresize()
 	set hidden = TRUE
 
-	if(prefs.auto_fit_viewport)
+	if(prefs.auto_fit_viewport) // lobby
 		fit_viewport()
 
 /client/verb/fit_viewport()

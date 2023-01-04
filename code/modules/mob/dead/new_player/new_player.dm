@@ -43,8 +43,8 @@
 	if(global.custom_lobby_image)
 		client << browse(global.custom_lobby_image, "file=titlescreen.gif;display=0") // png? jpg?
 	else
-		//if(client.prefs.lobbyanimation)
-		client << browse(global.lobby_screens[global.lobby_screen]["mp4"], "file=[global.lobby_screen].mp4;display=0") //todo: how byond cache same files with dif names?
+		if(client.prefs.lobbyanimation)
+			client << browse(global.lobby_screens[global.lobby_screen]["mp4"], "file=[global.lobby_screen].mp4;display=0")
 		client << browse(global.lobby_screens[global.lobby_screen]["png"], "file=[global.lobby_screen].png;display=0")
 
 	client << browse(get_lobby_html(), "window=lobbybrowser")

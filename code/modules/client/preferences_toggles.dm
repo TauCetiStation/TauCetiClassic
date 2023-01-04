@@ -169,8 +169,10 @@
 	if(isnewplayer(mob))
 		var/mob/dead/new_player/M = mob
 		M.show_titlescreen()
-	to_chat(src, "You will [(prefs.toggles & SHOW_ANIMATIONS) ? "can" : "no longer"] see animated lobby screen. You can toggle in off case of any problems.")
-	feedback_add_details("admin_verb","TLA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	if(prefs.lobbyanimation)
+		to_chat(src, "You have enabled lobby animation.")
+	else
+		to_chat(src, "You have disabled lobby animation.")
 
 /client/verb/toggle_anim_attacks()
 	set name = "Show/Hide Melee Animations"

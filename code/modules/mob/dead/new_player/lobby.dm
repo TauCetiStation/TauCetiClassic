@@ -1,18 +1,20 @@
 // Possibles title screens
-var/global/custom_lobby_image // admins custom screens, have priority
-var/global/lobby_screens = list("lobby-ny" = list("mp4" = 'html/media/lobby-ny.mp4', "png" = 'html/media/lobby-ny.png'))
-var/global/lobby_screen = "lobby-ny"
+var/global/custom_lobby_image // admins custom screens
+var/global/lobby_screens = list(
+	"lobby" = list("mp4" = 'html/media/lobby.mp4', "png" = 'html/media/lobby.png'),
+	"lobby-ny" = list("mp4" = 'html/media/lobby-ny.mp4', "png" = 'html/media/lobby-ny.png'),
+	)
 
-//var/global/current_lobby_screen = 'icons/lobby/nss_exodus_loading.gif'
+var/global/lobby_screen = "lobby"
 
-#define CROSS_BOX "<span style='color:red'>☒</span>"
-#define CHECK_BOX "<span style='color:lime'>☑</span>"
+#define CHECK_BOX "<span class='menu_box menu_box__check'>☑</span>"
+#define CROSS_BOX "<span class='menu_box menu_box__cross'>☒</span>"
 
-#define MARK_READY     "READY&nbsp;[CHECK_BOX]"
-#define MARK_NOT_READY "READY&nbsp;[CROSS_BOX]"
+#define MARK_READY     "READY&#8239;[CHECK_BOX]"
+#define MARK_NOT_READY "READY&#8239;[CROSS_BOX]"
 
-#define QUALITY_READY     "QUALITY&nbsp;[CHECK_BOX]"
-#define QUALITY_NOT_READY "QUALITY&nbsp;[CROSS_BOX]"
+#define QUALITY_READY     "BE&#8239;SPECIAL&#8239;[CHECK_BOX]"
+#define QUALITY_NOT_READY "BE&#8239;SPECIAL&#8239;[CROSS_BOX]"
 
 /mob/dead/new_player/proc/get_lobby_html()
 	var/dat = {"
@@ -65,7 +67,7 @@ var/global/lobby_screen = "lobby-ny"
 					z-index: 1;
 				}
 
-				.container_nav_rot {
+				body.lobby-default .container_nav_rot {
 					transform: rotate3d(3, 5, 0, 25deg);
 					transform-origin: top center;
 				}
@@ -75,30 +77,45 @@ var/global/lobby_screen = "lobby-ny"
 					font-family: "Fixedsys";
 					font-weight: lighter;
 					text-decoration: none;
-					/*width: 25%;*/
 					text-align: left;
 					color:white;
 					margin-right: 100%;
 					margin-top: 5px;
-					/*padding-left: 6px;*/
-					font-size: 4vmin;
-					line-height: 4vmin;
-					height: 4vmin;
+					font-size: 3.6vmin; /* 4vmin if we can make logo small */
+					line-height: 3.6vmin;
+					height: 3.6vmin;
 					letter-spacing: 1px;
-					opacity: 0.5;
 					color: #2baaff;
 					text-shadow: 1px 1px 3px #098fd9, -1px -1px 3px #098fd9;
 				}
 
+				body.lobby-default .menu_a {
+					opacity: 0.5;
+				}
+
 				.menu_a:hover {
 					font-weight: bolder;
-					opacity: 0.85;
-					/*border-left: 3px solid white;
-					padding-left: 3px;*/
 				}
+
+				body.lobby-default .menu_a:hover {
+					opacity: 0.85;
+				}
+
+				.menu_box {
+					text-shadow: 1px 1px 3px, -1px -1px 3px;
+				}
+
+				.menu_box__check {
+					color: lime;
+				}
+
+				.menu_box__cross {
+					color: red;
+				}
+
 			</style>
 		</head>
-		<body>
+		<body class="[custom_lobby_image ? "lobby-custom" : "lobby-default"]">
 	"}
 
 	dat += {"
@@ -127,7 +144,6 @@ var/global/lobby_screen = "lobby-ny"
 		dat += {"
 		<video class="background" width="400" height="400" loop mute autoplay>
 			<source src="[global.lobby_screen].mp4" type="video/mp4">
-			<!-- Magic worlds for IE: https://stackoverflow.com/a/24697998 -->
 		</video>
 		<img class="background background__fallback" src="[global.lobby_screen].png">
 		"}
@@ -146,6 +162,13 @@ var/global/lobby_screen = "lobby-ny"
 		function set_quality(setQuality) {
 			quality_mark.innerHTML = Boolean(Number(setQuality)) ? "[QUALITY_READY]" : "[QUALITY_NOT_READY]";
 		}
+
+		/* pass any keys to byond, somehow this will work */
+		document.body.addEventListener('keydown', function (event) {
+			window.location = 'byond://?__keydown='+event.which;
+			return false;
+		})
+
 	</script>
 	"}
 	dat += "</body></html>"

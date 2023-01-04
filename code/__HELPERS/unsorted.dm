@@ -1593,11 +1593,11 @@ var/global/list/WALLITEMS = typecacheof(list(
 		global.custom_lobby_image = new_screen
 	else
 		custom_lobby_image = null
-		lobby_screen = "lobby-ny"
-/*		if(SSholiday.holidays[NEW_YEAR])
-			global.lobby_screen = pick(global.new_year_screens)
+		
+		if(SSholiday.holidays[NEW_YEAR])
+			lobby_screen = "lobby-ny"
 		else
-			global.lobby_screen = pick(global.lobby_screens)*/
+			lobby_screen = "lobby"
 
 	for(var/mob/dead/new_player/N as anything in new_player_list)
 		INVOKE_ASYNC(N, /mob/dead/new_player.proc/show_titlescreen)
