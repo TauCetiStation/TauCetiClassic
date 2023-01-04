@@ -407,7 +407,7 @@
 		flick("egg_opening", src)
 		status = BURSTING
 		addtimer(CALLBACK(src, .proc/spawn_hagger, status), 15)
-		qdel(proximity_monitor)
+		QDEL_NULL(proximity_monitor)
 
 #undef BURST
 #undef BURSTING
