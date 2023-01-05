@@ -232,3 +232,6 @@
 
 	/// List of action hud items the user has
 	var/list/datum/action/actions = list()
+
+	// Used for statistics of death
+	var/last_phrase
