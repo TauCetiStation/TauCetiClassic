@@ -163,7 +163,7 @@
 	if(href_list["change_gas"])
 		temporaryHtmlData += "Внимание: при выборе газа другого типа текущее количество газа будет обнулено.<br>"
 		for(var/gas in gas_data.gases)
-			temporaryHtmlData += "[gas_data.name[gas]]; <A href='?src=\ref[src];changegs=\ref[gas]'>Выбрать</A><br>"
+			temporaryHtmlData += "[gas_data.name[gas]]; <A href='?src=\ref[src];change_gas_select=\ref[gas]'>Выбрать</A><br>"
 	else if(href_list["change_gas_select"])
 		var/N = locate(href_list["change_gas_select"])
 		if(N != currentGas)

@@ -583,8 +583,7 @@ SUBSYSTEM_DEF(air)
 
 	if(oldPriority)
 		possibleReactionMixes[oldPriority] -= G
-	var/list/L
-	L = possibleReactionMixes[priority]; L.Insert(1, G); possibleReactionMixes[priority] = L;
+	possibleReactionMixes[priority].Insert(1, G)
 
 /datum/controller/subsystem/air/proc/add_reaction_zone(zone/Z, priority)
 	if(!process_reactions)

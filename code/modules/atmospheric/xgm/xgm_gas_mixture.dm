@@ -16,7 +16,7 @@
 	var/list/graphic = list()
 
 	//last reaction priority
-	var/list/last_reaction_priority = 0
+	var/last_reaction_priority = 0
 
 /datum/gas_mixture/New(_volume = CELL_VOLUME, _temperature = 0, _group_multiplier = 1)
 	volume = _volume

@@ -4,14 +4,12 @@
 	return
 
 /datum/xgm_gas/bz/on_inhalation(mob/living/carbon/human/C, datum/gas_mixture/B)
-	if(!B.gas[id])
-		return
-	var/P = (B.gas[id] / B.total_moles) * B.return_pressure()
-	if(P > 3)
+	var/inhaledPressure = (B.gas[id] / B.total_moles) * B.return_pressure()
+	if(inhaledPressure > 3)
 		C.hallucination += 3
 		if(prob(10))
 			to_chat(C, "<span class='warning'>You feel like there is something strange in the air.</span>")
-	if(P > 5)
+	if(inhaledPressure > 5)
 		var/datum/role/changeling/R = ischangeling(C)
 		if(R)
 			R.chem_storage -= 20
@@ -25,12 +23,12 @@
 /datum/xgm_gas/constantium/on_inhalation(mob/living/carbon/human/C, datum/gas_mixture/B)
 	if(!B.gas[id])
 		return
-	var/P = (B.gas[id] / B.total_moles) * B.return_pressure()
-	if(P > 5)
+	var/inhaledPressure = (B.gas[id] / B.total_moles) * B.return_pressure()
+	if(inhaledPressure > 5)
 		C.adjustOxyLoss(1)
 		if(prob(10))
 			to_chat(C, "<span class='warning'>You feel like something in the air makes it harder to breathe.</span>")
-	if(P > 10)
+	if(inhaledPressure > 10)
 		C.adjustOxyLoss(10)
 		C.Paralyse(3)
 		C.inhale_alert = TRUE
@@ -41,8 +39,8 @@
 /datum/xgm_gas/trioxium/on_inhalation(mob/living/carbon/human/C, datum/gas_mixture/B)
 	if(!B.gas[id])
 		return
-	var/P = (B.gas[id] / B.total_moles) * B.return_pressure()
-	if(P > 3)
+	var/inhaledPressure = (B.gas[id] / B.total_moles) * B.return_pressure()
+	if(inhaledPressure > 3)
 		if(C.species.name == VOX)
 			C.adjustToxLoss(3)
 			C.adjustOxyLoss(3)
@@ -52,7 +50,7 @@
 			C.adjustOxyLoss(-3)
 			if(prob(10))
 				to_chat(C, "<span class='notice'>You feel extra oxygen seeping into your lungs.</span>")
-	if(P > 5)
+	if(inhaledPressure > 5)
 		if(C.species.name == VOX)
 			C.adjustToxLoss(10)
 			C.adjustOxyLoss(10)
@@ -69,12 +67,12 @@
 /datum/xgm_gas/proto_hydrate/on_inhalation(mob/living/carbon/human/C, datum/gas_mixture/B)
 	if(!B.gas[id])
 		return
-	var/P = (B.gas[id] / B.total_moles) * B.return_pressure()
-	if(P > 3)
+	var/inhaledPressure = (B.gas[id] / B.total_moles) * B.return_pressure()
+	if(inhaledPressure > 3)
 		C.adjustHalLoss(-2)
 		if(prob(10))
 			to_chat(C, "<span class='notice'>You feel energy filling up your body, washing away pain and tiredness.</span>")
-	if(P > 5)
+	if(inhaledPressure > 5)
 		C.adjustHalLoss(-1)
 		C.drowsyness = max(C.drowsyness - 5, 0)
 		C.AdjustParalysis(-1)
@@ -87,8 +85,8 @@
 /datum/xgm_gas/cardotirin/on_inhalation(mob/living/carbon/human/C, datum/gas_mixture/B)
 	if(!B.gas[id])
 		return
-	var/P = (B.gas[id] / B.total_moles) * B.return_pressure()
-	if(P > 3)
+	var/inhaledPressure = (B.gas[id] / B.total_moles) * B.return_pressure()
+	if(inhaledPressure > 3)
 		if(prob(50))
 			C.adjustBruteLoss(-1)
 		else
@@ -100,7 +98,7 @@
 		C.drowsyness += 1
 		if(prob(10))
 			to_chat(C, "<span class='notice'>You feel like something in the air soothes your wounds.</span>")
-	if(P > 5)
+	if(inhaledPressure > 5)
 		C.drowsyness += 10
 		C.adjustBruteLoss(-1)
 		if(prob(10))

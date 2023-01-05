@@ -1532,6 +1532,15 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/minefab
 	category = list("Machine")
 
+/datum/design/gas_analyzer
+	name = "Machine Design (Gas analyzer)"
+	desc = "Machine for researching various exotic gases."
+	id = "gas_analyzer"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/gas_analyzer
+	category = list("Machine")
+
 /////////////////////////////////////////
 ////////////Power Stuff//////////////////
 /////////////////////////////////////////

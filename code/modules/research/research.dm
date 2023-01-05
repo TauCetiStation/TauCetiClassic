@@ -453,7 +453,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("rdconsole", "rdservercontrol", "rdserver", "destructive_analyzer", "protolathe", "circuit_imprinter", "idcardconsole")
+	unlocks_designs = list("rdconsole", "rdservercontrol", "rdserver", "destructive_analyzer", "protolathe", "circuit_imprinter", "idcardconsole", "gas_analyzer")
 
 /datum/technology/tesla
 	name = "Tesla"
