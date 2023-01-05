@@ -36,6 +36,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
 
+	var/image/body_icon
+
 /mob/dead/observer/atom_init()
 	invisibility = INVISIBILITY_OBSERVER
 
@@ -57,6 +59,10 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 			copy_overlays(body)
 
 		cut_overlay(list(body.typing_indicator, body.stat_indicator))
+
+		// copy for future use
+		body_icon = image(icon, icon_state)
+		body_icon.copy_overlays(body)
 
 		alpha = 127
 
@@ -91,7 +97,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	observer_list += src
 
-	var/image/I = image(icon, src, "ghost")
+	var/image/I = image(initial(icon), src, "ghost")
 	I.plane = GHOST_ILLUSION_PLANE
 	I.alpha = 200
 	// s = short buffer
@@ -413,9 +419,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			else
 				to_chat(A, "This mob is not located in the game world.")
 
-/mob/dead/observer/verb/custom_icon()
+/mob/dead/observer/verb/toggle_icon()
 	set category = "Ghost"
-	set name = "Custom Icon"
+	set name = "Toggle Ghost Icon"
 	set desc = "Choise ghost icon."
 
 	var/list/custom_sprites = get_accepted_custom_items_by_type(ckey, FLUFF_TYPE_GHOST)
@@ -428,11 +434,29 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 		return
 
-	var/datum/custom_item/select = input("Select icon.", "Select") as null|anything in custom_sprites
-	
-	if(select)
-		icon = select.icon
-		icon_state = select.icon_state
+	if(body_icon)
+		custom_sprites += "--body--"
+
+	custom_sprites += "--ghost--"
+
+	var/select = input("Select icon.", "Select") as null|anything in custom_sprites
+
+	if(!select)
+		return
+
+	cut_overlays()
+
+	if(select == "--body--")
+		icon = body_icon.icon
+		icon_state = body_icon.icon_state
+		copy_overlays(body_icon)
+	else if (select == "--ghost--")
+		icon = initial(icon)
+		icon_state = "ghost"
+	else
+		var/datum/custom_item/custom = select
+		icon = custom.icon
+		icon_state = custom.icon_state
 
 
 /*
