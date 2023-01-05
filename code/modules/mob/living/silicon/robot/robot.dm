@@ -326,22 +326,11 @@
 	for(var/name in module_sprites)
 		choose_icon[name] = image(icon = 'icons/mob/robots.dmi', icon_state = module_sprites[name])
 
-	// custom icons for any modtype
-	var/list/custom_sprites = get_accepted_custom_items_by_type(ckey, FLUFF_TYPE_ROBOT)
-	if(length(custom_sprites))
-		for(var/datum/custom_item/item in custom_sprites)
-			choose_icon["custom_[ckey(item.name)]"] += image(icon = item.icon, icon_state = item.icon_state)
-
 	// Default skin of module
 	icon_state = module_sprites[pick(module_sprites)]
-	var/new_icon = show_radial_menu(usr, usr, choose_icon, radius = 50, tooltips = TRUE)
-	world.log << new_icon
-	if(new_icon)
-		if(dd_hasprefix(new_icon, "custom_"))
-			icon = choose_icon[new_icon].icon // wip
-			icon_state = choose_icon[new_icon].icon_state
-		else
-			icon_state = module_sprites[new_icon]
+	var/new_icon_state = show_radial_menu(usr, usr, choose_icon, radius = 50, tooltips = TRUE)
+	if(new_icon_state)
+		icon_state = module_sprites[new_icon_state]
 
 	radio.config(module.channels)
 

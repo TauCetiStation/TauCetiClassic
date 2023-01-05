@@ -348,7 +348,7 @@ var/global/list/editing_item_oldname_list = list()
 	var/list/all_custom_items = get_custom_items(user.client.ckey)
 	for(var/item_name in all_custom_items)
 		var/datum/custom_item/item = all_custom_items[item_name]
-		if(item.item_type == "ghost" || item.item_type == "robot") // not loadout items
+		if(item.item_type == FLUFF_TYPE_GHOST) // not loadout items
 			continue
 		var/ticked = (item_name in custom_items)
 		var/accepted = (item.status == "accepted")

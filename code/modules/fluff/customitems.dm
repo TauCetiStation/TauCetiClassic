@@ -22,10 +22,10 @@
 #define FLUFF_TYPE_ACCESSORY "accessory"
 #define FLUFF_TYPE_LABCOAT "labcoat"
 // other
-#define FLUFF_TYPE_ROBOT "robot"
+//#define FLUFF_TYPE_ROBOT "robot"
 #define FLUFF_TYPE_GHOST "ghost"
 
-#define FLUFF_TYPES_LIST list(FLUFF_TYPE_NORMAL, FLUFF_TYPE_SMALL, FLUFF_TYPE_LIGHTER, FLUFF_TYPE_HAT, FLUFF_TYPE_UNIFORM, FLUFF_TYPE_SUIT, FLUFF_TYPE_MASK, FLUFF_TYPE_GLASSES, FLUFF_TYPE_GLOVES, FLUFF_TYPE_SHOES, FLUFF_TYPE_ACCESSORY, FLUFF_TYPE_LABCOAT, FLUFF_TYPE_ROBOT, FLUFF_TYPE_GHOST)
+#define FLUFF_TYPES_LIST list(FLUFF_TYPE_NORMAL, FLUFF_TYPE_SMALL, FLUFF_TYPE_LIGHTER, FLUFF_TYPE_HAT, FLUFF_TYPE_UNIFORM, FLUFF_TYPE_SUIT, FLUFF_TYPE_MASK, FLUFF_TYPE_GLASSES, FLUFF_TYPE_GLOVES, FLUFF_TYPE_SHOES, FLUFF_TYPE_ACCESSORY, FLUFF_TYPE_LABCOAT, FLUFF_TYPE_GHOST)
 
 
 /obj/item/customitem
@@ -229,7 +229,7 @@
 	if(!item)
 		return
 
-	if(item.item_type == FLUFF_TYPE_ROBOT || item.item_type == FLUFF_TYPE_GHOST)
+	if(item.item_type == FLUFF_TYPE_GHOST)
 		return
 
 	if(item_name in custom_items)
@@ -249,7 +249,7 @@
 			continue
 		if(custom_item_info.status != "accepted")
 			continue
-		if(custom_item_info.item_type == FLUFF_TYPE_ROBOT || custom_item_info.item_type == FLUFF_TYPE_GHOST)
+		if(custom_item_info.item_type == FLUFF_TYPE_GHOST)
 			continue
 
 		//item spawning
