@@ -101,6 +101,9 @@
 	return TRUE
 
 /datum/reagent/proc/reaction_obj(obj/O, volume)
+	SHOULD_CALL_PARENT(TRUE)
+	src = null
+
 	if(reagent_state == GAS && associated_gas)
 		if((!O) || (!volume))
 			return FALSE
@@ -115,6 +118,9 @@
 		T.assume_gas(associated_gas, volume, T20C)
 
 /datum/reagent/proc/reaction_turf(turf/T, volume)
+	SHOULD_CALL_PARENT(TRUE)
+	src = null
+
 	if((reagent_state == GAS || (reagent_state == LIQUID && (LOW_BOILING_POINT in flags))) && associated_gas)
 		if((!T) || (!volume))
 			return FALSE
@@ -126,7 +132,6 @@
 		if(!istype(T))
 			return
 		T.assume_gas(associated_gas, volume, T20C)
-	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_REAGENT_REACTION_TURF, T, volume)
 	return
 
