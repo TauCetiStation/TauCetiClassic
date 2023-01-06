@@ -109,13 +109,13 @@
 /obj/item/weapon/dualsaber/proc/on_wield()
 	set_light(2)
 	w_class = SIZE_NORMAL
-	flags = NOBLOODY | CANT_BE_INSERTED
+	flags |= CANT_BE_INSERTED
 	return FALSE
 
 /obj/item/weapon/dualsaber/proc/on_unwield()
 	slicing = FALSE
 	set_light(0)
-	flags = NOBLOODY
+	flags &= ~CANT_BE_INSERTED
 	w_class = initial(w_class)
 	return FALSE
 
