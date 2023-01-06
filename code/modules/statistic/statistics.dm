@@ -17,7 +17,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 // To ensure that if output file syntax is changed, we will still be able to process
 // new and old files
 // please increment this version whenever making changes
-#define STAT_OUTPUT_VERSION 5
+#define STAT_OUTPUT_VERSION 6
 #define STAT_FILE_NAME "stat.json"
 
 // Documentation rules:
@@ -138,4 +138,5 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 			continue
 		if(M.assigned_role == "Cyborg" && is_drone.Find(M.name)) // useless data
 			continue
-		add_manifest_entry(M.key, M.name, M.assigned_role, M.special_role, M.antag_roles)
+		var/my_mob = M.original ? M.original : M.current
+		add_manifest_entry(M.key, M.name, M.assigned_role, M.special_role, M.antag_roles, my_mob)
