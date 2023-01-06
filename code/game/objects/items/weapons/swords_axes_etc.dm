@@ -41,7 +41,6 @@
 			QUALITY_KNIFE = 1
 		)
 		sharp = TRUE
-		flags = NOBLOODY | CANT_BE_INSERTED
 		force = 30
 		hitsound = list('sound/weapons/blade1.ogg')
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
@@ -74,6 +73,9 @@
 	add_fingerprint(user)
 	return
 
+/obj/item/weapon/melee/energy/sword/on_enter_storage(obj/item/weapon/storage/S)
+    if(active)
+        attack_self(usr)
 
 /*
  * Classic Baton
@@ -325,7 +327,6 @@
 	force = 10
 	icon_state = "eshield[active]"
 	w_class = SIZE_SMALL
-	flags = NOBLOODY | CANT_BE_INSERTED
 	playsound(src, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='notice'> [src] is now active.</span>")
 	update_icon()
@@ -334,7 +335,6 @@
 	force = 3
 	icon_state = "eshield[active]"
 	w_class = SIZE_MINUSCULE
-	flags = NOBLOODY
 	playsound(src, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 	update_icon()
 	if(user)
