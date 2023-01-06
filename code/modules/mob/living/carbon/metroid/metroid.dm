@@ -746,7 +746,7 @@
 	qdel(src)
 
 /obj/effect/golemrune/proc/announce_to_ghosts()
-	for(var/mob/dead/observer/O in player_list)
+	for(var/mob/dead/observer/O in observer_list)
 		if(O.client)
 			var/area/A = get_area(src)
 			if(A)

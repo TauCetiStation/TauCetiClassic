@@ -950,6 +950,7 @@
 #include "code\game\objects\items\latexballoon.dm"
 #include "code\game\objects\items\mines.dm"
 #include "code\game\objects\items\shooting_range.dm"
+#include "code\game\objects\items\station_map.dm"
 #include "code\game\objects\items\toys.dm"
 #include "code\game\objects\items\trash.dm"
 #include "code\game\objects\items\devices\ai_detector.dm"
@@ -2283,6 +2284,7 @@
 #include "code\modules\skills\helpers.dm"
 #include "code\modules\skills\skill.dm"
 #include "code\modules\skills\skillset.dm"
+#include "code\modules\skills\skillset_stroechka.dm"
 #include "code\modules\skills\skillsets_falcon.dm"
 #include "code\modules\skills\skill_changer\cartridges.dm"
 #include "code\modules\skills\skill_changer\circuits.dm"
@@ -2395,5 +2397,6 @@
 #include "interface\skin.dmf"
 #include "maps\centcom\centcom.dmm"
 #include "maps\falcon\job_changes.dm"
+#include "maps\stroechka\job_changes.dm"
 #include "maps\testmap\job_changes.dm"
 // END_INCLUDE

@@ -129,7 +129,23 @@
 		pressure_difference = pressure_difference * (1 - get_pressure_protection(STOPS_LOWPRESSUREDMAGE))
 		return ONE_ATMOSPHERE - pressure_difference
 
-var/global/list/tourette_bad_words = list("ГОВНО","ЖОПА","ЕБАЛ","БЛЯДИНА","ХУЕСОС","СУКА","ЗАЛУПА","УРОД","БЛЯ","ХЕР","ШЛЮХА","ДАВАЛКА","ПИЗДЕЦ","УЕБИЩЕ","ПИЗДА","ЕЛДА","ШМАРА","СУЧКА","ПУТАНА","ААА","ГНИДА","ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО")
+var/global/list/tourette_bad_words= list(
+	HUMAN = list("ГОВНО","ЖОПА","ЕБАЛ","БЛЯДИНА","ХУЕСОС","СУКА","ЗАЛУПА",
+ 				 "УРОД","БЛЯ","ХЕР","ШЛЮХА","ДАВАЛКА","ПИЗДЕЦ","УЕБИЩЕ",
+				 "ПИЗДА","ЕЛДА","ШМАРА","СУЧКА","ПУТАНА","ААА","ГНИДА",
+				 "ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО"),
+	TAJARAN = list("ГОВНО","ЖОПА","ЕБАЛ","БЛЯДИНА","ХУЕСОС","СУКА","ЗАЛУПА",
+ 				   "УРОД","БЛЯ","ХЕР","ШЛЮХА","ДАВАЛКА","ПИЗДЕЦ","УЕБИЩЕ",
+	 			   "ПИЗДА","ЕЛДА","ШМАРА","СУЧКА","ПУТАНА","ААА","ГНИДА",
+	 			   "ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО"),
+	UNATHI = list("ГОВНО","ЖОПА","ЕБАЛ","БЛЯДИНА","ХУЕСОС","СУКА","ЗАЛУПА",
+				  "УРОД","БЛЯ","ХЕР","ШЛЮХА","ДАВАЛКА","ПИЗДЕЦ","УЕБИЩЕ",
+				  "ПИЗДА","ЕЛДА","ШМАРА","СУЧКА","ПУТАНА","ААА","ГНИДА",
+	 			  "ГОНДОН","ЕЛДА","КРЕТИН","НАХУЙ","ХУЙ","ЕБАТЬ","ЕБЛО"),
+	VOX = list("ГОВНО", "СЕДАЛИЩЕ", "ЧКАЛ", "СПАРИВАЛ", "ТВАРЬ",
+	 		   "ГНИЛОЙ", "МРАЗЬ", "ХВОСТ", "НАХВОСТ", "ХВОСТОЛИЗ",
+			   "КЛОАКА", "СКРЯТЬ", "СКАРАПУШ", "САМКА", "СКРЯПЫШ")
+			   )
 
 /mob/living/carbon/human/proc/handle_disabilities()
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
@@ -144,6 +160,8 @@ var/global/list/tourette_bad_words = list("ГОВНО","ЖОПА","ЕБАЛ","Б
 				emote("cough")
 				return
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
+		if(!(get_species() in tourette_bad_words))
+			return 
 		speech_problem_flag = 1
 		if (prob(10))
 			spawn( 0 )
@@ -151,7 +169,7 @@ var/global/list/tourette_bad_words = list("ГОВНО","ЖОПА","ЕБАЛ","Б
 					if(1)
 						emote("twitch")
 					if(2 to 3)
-						say(pick(global.tourette_bad_words))
+						say(pick(tourette_bad_words[get_species()]))
 				var/old_x = pixel_x
 				var/old_y = pixel_y
 				if(prob(25))
@@ -762,7 +780,7 @@ var/global/list/tourette_bad_words = list("ГОВНО","ЖОПА","ЕБАЛ","Б
 
 			if(hallucination <= 2)
 				hallucination = 0
-				halloss = 0
+				setHalLoss(0)
 			else
 				hallucination -= 2
 

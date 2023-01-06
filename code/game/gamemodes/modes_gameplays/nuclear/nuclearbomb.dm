@@ -296,6 +296,7 @@ var/global/bomb_set
 						var/area/nuclearbombloc = get_area(loc)
 						announce_nuke.play(nuclearbombloc)
 						set_security_level("delta")
+						notify_ghosts("[src] has been activated!", source = src, action = NOTIFY_ORBIT, header = "Nuclear bomb")
 						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 					else
 						bomb_set = 0
