@@ -377,7 +377,34 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/console_screen = 2)
-
+/obj/item/weapon/circuitboard/sleep_console
+	name = "circuit board (Sleeper)"
+	build_path = /obj/machinery/sleep_console
+	board_type = "machine"
+	origin_tech = "programming=3;biotech=2;engineering=3;materials=3"
+	req_components = list(
+							/obj/item/stack/cable_coil = 3,
+							/obj/item/weapon/stock_parts/console_screen = 2)
+/obj/item/weapon/circuitboard/body_scanconsole
+	name = "circuit board (Body Scanner Console)"
+	build_path = /obj/machinery/body_scanconsole
+	board_type = "machine"
+	origin_tech = "programming=3;biotech=2;engineering=3;materials=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/stack/cable_coil = 3,
+							/obj/item/weapon/stock_parts/console_screen = 2)
+/obj/item/weapon/circuitboard/bodyscanner
+	name = "circuit board (Body Scanner)"
+	build_path = /obj/machinery/bodyscanner
+	board_type = "machine"
+	origin_tech = "programming=3;biotech=2;engineering=3;materials=3"
+	req_components = list(
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/weapon/stock_parts/scanning_module = 2,
+							/obj/item/stack/cable_coil = 2)
 /obj/item/weapon/circuitboard/cryo_tube
 	name = "circuit board (Cryotube)"
 	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
@@ -731,6 +758,13 @@ to destroy them and players will be able to make replacements.
 	build_path = /obj/machinery/recharger
 	board_type = "machine"
 	origin_tech = "powerstorage=3;engineering=3;materials=4"
+	req_components = list(
+							/obj/item/weapon/stock_parts/capacitor = 1,)
+/obj/item/weapon/circuitboard/cell_recharger
+	name = "circuit board (Cell Recharger)"
+	build_path = /obj/machinery/cell_charger
+	board_type = "machine"
+	origin_tech = "powerstorage=1;engineering=2;materials=1"
 	req_components = list(
 							/obj/item/weapon/stock_parts/capacitor = 1,)
 

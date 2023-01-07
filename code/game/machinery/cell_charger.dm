@@ -12,6 +12,12 @@
 	var/chargelevel = -1
 	var/efficiency = 0.875	//<1.0 means some power is lost in the charging process, >1.0 means free energy.
 
+/obj/machinery/cell_charger/atom_init()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/cell_recharger(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+
 /obj/machinery/cell_charger/proc/updateicon()
 	icon_state = "ccharger[charging ? 1 : 0]"
 
@@ -60,10 +66,15 @@
 		if(charging)
 			to_chat(user, "<span class='warning'>Remove the cell first!</span>")
 			return
-
 		anchored = !anchored
 		to_chat(user, "You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground")
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), W))
+		update_icon()
+		return
+	if(default_deconstruction_crowbar(W))
+		return
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
 	. = ..()
