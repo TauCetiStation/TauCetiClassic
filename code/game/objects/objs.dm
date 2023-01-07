@@ -29,7 +29,7 @@
 	STOP_PROCESSING(SSobj, src)
 	return 0
 
-/obj/atom_init()
+/obj/atom_init() // remove me
 	. = ..()
 	verbs -= /obj/verb/remove_price_tag
 
