@@ -79,7 +79,7 @@
 	for(var/obj/machinery/atmospherics/components/unary/possiblevent in range(10, get_turf(user))) //Funny thing
 		if(possiblevent.parents.len && possiblevent.parents[1] == ourpipeline)
 			new gibtype(get_turf(possiblevent))
-			playsound(possiblevent, 'sound/effects/reee.ogg', 75, TRUE)
+			playsound(possiblevent, 'sound/effects/reee.ogg', VOL_EFFECTS_MASTER)
 	user.death() //One will try, the other one will get a warning
 	qdel(user)
 
