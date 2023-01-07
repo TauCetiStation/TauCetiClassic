@@ -6,6 +6,7 @@
 	range = -1
 	include_user = TRUE
 	invocation = "RAC'WA NO!"
+	invocation_type = "shout"
 	action_icon_state = "shapeshift"
 
 	/// Whether we revert to our human form on death.
