@@ -118,6 +118,25 @@
 
 	clothes_req = initial(clothes_req)
 
+/obj/effect/proc_holder/spell/targeted/shapeshift/abductor
+	name = "True form"
+	desc = "Reveal your true form!"
+	convert_damage = FALSE
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/abductor/atom_init()
+	. = ..()
+	var/form = pick("slime", "corgi", "mouse")
+	switch(form)
+		if("slime")
+			invocation = "BLORP-BLORP. BLOOORP"
+			shapeshift_type = /mob/living/carbon/slime/adult
+		if("corgi")
+			invocation = "WOOF. WAF! BARK!"
+			shapeshift_type = /mob/living/simple_animal/corgi
+		if("mouse")
+			invocation = "Squeeeeeek!"
+			shapeshift_type = /mob/living/simple_animal/mouse
+
 /obj/shapeshift_holder
 	name = "Shapeshift holder"
 	resistance_flags = INDESTRUCTIBLE
