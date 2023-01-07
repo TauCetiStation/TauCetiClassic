@@ -10,6 +10,7 @@
 	interact_offline = TRUE
 	var/obj/item/weapon/stock_parts/cell/charging = null
 	var/chargelevel = -1
+	var/recharge_coeff = 1
 	var/efficiency = 0.875	//<1.0 means some power is lost in the charging process, >1.0 means free energy.
 
 /obj/machinery/cell_charger/atom_init()
@@ -115,7 +116,7 @@
 
 	var/power_used = 100000	//for 200 units of charge. Yes, thats right, 100 kW. Is something wrong with CELLRATE?
 
-	power_used = charging.give(power_used*CELLRATE*efficiency)
+	power_used = charging.give(recharge_coeff*power_used*CELLRATE*efficiency)
 	use_power(power_used)
 
 	updateicon()
