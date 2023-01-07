@@ -140,6 +140,7 @@
 /obj/shapeshift_holder
 	name = "Shapeshift holder"
 	resistance_flags = INDESTRUCTIBLE
+	flags = ABSTRACT
 	var/mob/living/stored
 	var/mob/living/shape
 	var/restoring = FALSE
