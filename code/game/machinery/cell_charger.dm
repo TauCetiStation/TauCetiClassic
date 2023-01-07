@@ -17,6 +17,11 @@
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/cell_recharger(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+	RefreshParts()
+
+/obj/machinery/cell_charger/RefreshParts()
+	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+		recharge_coeff = C.rating
 
 /obj/machinery/cell_charger/proc/updateicon()
 	icon_state = "ccharger[charging ? 1 : 0]"
