@@ -368,7 +368,7 @@
 		lot_category = get_category(target)
 
 	target.price_tag = list("description" = lot_description, "price" = lot_price, "category" = lot_category, "account" = lot_account_number)
-	target.verbs += /obj/verb/remove_price_tag
+	target.verbs += /obj/proc/remove_price_tag
 
 	target.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
 

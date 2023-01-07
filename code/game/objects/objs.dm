@@ -29,10 +29,6 @@
 	STOP_PROCESSING(SSobj, src)
 	return 0
 
-/obj/atom_init() // remove me
-	. = ..()
-	verbs -= /obj/verb/remove_price_tag
-
 /obj/Destroy()
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
@@ -45,14 +41,14 @@
 	if(price_tag)
 		to_chat(user, "It has a price tag attached. Description: [price_tag["description"]], Price: [price_tag["price"]]$")
 
-/obj/verb/remove_price_tag()
+/obj/proc/remove_price_tag()
 	set name = "Снять ценник"
 	set src in view(1)
 	set category = "Object"
 
 	price_tag = null
 	underlays -= icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
-	verbs -= /obj/verb/remove_price_tag
+	verbs -= /obj/proc/remove_price_tag
 
 /obj/proc/get_current_temperature()
 	/*
