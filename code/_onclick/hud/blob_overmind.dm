@@ -74,7 +74,6 @@
 /atom/movable/screen/blob/jump_to_node/Click()
 	if(isovermind(usr))
 		var/mob/camera/blob/B = usr
-		flash_color(B, "#187914", 20)
 		B.jump_to_node()
 
 /atom/movable/screen/blob/jump_to_core
