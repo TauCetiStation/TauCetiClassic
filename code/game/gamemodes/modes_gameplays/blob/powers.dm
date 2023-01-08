@@ -15,7 +15,7 @@
 	set desc = "Transport back to your core."
 
 	if(blob_core)
-		flash_color(B, "#187914", 20)
+		flash_color(src, "#187914", 20)
 		src.loc = blob_core.loc
 
 /mob/camera/blob/verb/jump_to_node()
@@ -30,7 +30,7 @@
 		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
 		var/obj/structure/blob/node/chosen_node = nodes[node_name]
 		if(chosen_node)
-			flash_color(B, "#187914", 20)
+			flash_color(src, "#187914", 20)
 			src.loc = chosen_node.loc
 
 /mob/camera/blob/verb/create_shield_power()
