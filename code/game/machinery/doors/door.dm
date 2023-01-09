@@ -8,6 +8,7 @@ var/global/list/wedge_image_cache = list()
 	anchored = TRUE
 	opacity = 1
 	density = TRUE
+	can_block_air = TRUE
 	layer = DOOR_LAYER
 	power_channel = STATIC_ENVIRON
 	hud_possible = list(DIAG_AIRLOCK_HUD)
@@ -138,8 +139,12 @@ var/global/list/wedge_image_cache = list()
 	else
 		underlays += global.wedge_image_cache[cache_string]
 
-/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group) return !block_air_zones
+/obj/machinery/door/c_airblock(turf/other)
+	if(block_air_zones)
+		return ..() | ZONE_BLOCKED
+	return ..()
+
+/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return !opacity
 	return !density
@@ -208,8 +213,6 @@ var/global/list/wedge_image_cache = list()
 			close()
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user)
-	if(user.a_intent == INTENT_HARM)
-		return ..()
 	if(istype(I, /obj/item/device/detective_scanner))
 		return
 	if(src.operating)

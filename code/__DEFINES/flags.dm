@@ -53,16 +53,18 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define NOSLIP                 (1<<18)   // Prevents from slipping on wet floors, in space etc.
 
-#define NOATTACKANIMATION      (1<<19)   // Removes attack animation
+#define AIR_FLOW_PROTECT       (1<<19)   //  Protects against air flow.
+
+#define NOATTACKANIMATION      (1<<20)   // Removes attack animation
 
 // objects hear flags
 // HEAR_PASS_SAY, HEAR_TA_SAY is temporary solution for optimisations reasons before we do hear() code refactoring
-#define HEAR_TALK              (1<<20)   // like old tg HEAR_1, marks objects with hear_talk()
-#define HEAR_PASS_SAY          (1<<21)   // temp for say code, for objects that need to pass SAY to inner mobs through get_listeners()
-#define HEAR_TA_SAY            (1<<22)   // temp for talking_atoms
+#define HEAR_TALK              (1<<21)   // like old tg HEAR_1, marks objects with hear_talk()
+#define HEAR_PASS_SAY          (1<<22)   // temp for say code, for objects that need to pass SAY to inner mobs through get_listeners()
+#define HEAR_TA_SAY            (1<<23)   // temp for talking_atoms
 
-#define IN_INVENTORY           (1<<23)
-#define IN_STORAGE             (1<<23) // reuse of last bit we have
+#define IN_INVENTORY           (1<<24)
+#define IN_STORAGE             (1<<24) // reuse of last bit we have
 
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
 #define HOLOGRAM_2         (1<<0)
@@ -104,6 +106,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FACEHUGGABLE       "facehuggable"
 #define NO_EMOTION         "no_emotion"
 #define NO_DNA             "no_dna"
+#define FUR                "fur"
 
 //Species Diet Flags
 #define DIET_MEAT		1 // Meat.
@@ -170,3 +173,9 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 //dir macros
 ///Returns true if the dir is diagonal, false otherwise
 #define ISDIAGONALDIR(d) (d&(d-1))
+
+// Holomap flags
+#define HOLOMAP_DEATHSQUAD_COLOR "#800000"
+#define HOLOMAP_NUCLEAR_COLOR "#e30000"
+#define HOLOMAP_VOX_COLOR "#3bcccc"
+#define HOLOMAP_ERT_COLOR "#0b74b4"

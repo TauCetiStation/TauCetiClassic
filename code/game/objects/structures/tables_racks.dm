@@ -123,8 +123,7 @@
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return FALSE
 
-/obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+/obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover,/obj/item/projectile))
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
@@ -211,17 +210,16 @@
 		return TRUE
 	return FALSE
 
+/obj/structure/table/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(istype(attacking_item, /obj/item/weapon/melee/energy) || istype(attacking_item, /obj/item/weapon/pen/edagger)  || istype(attacking_item,/obj/item/weapon/dualsaber))
+		if(attacking_item.force > 3)
+			laser_cut(attacking_item, user)
+			return TRUE
+	..()
+
 /obj/structure/table/attackby(obj/item/W, mob/user, params)
-	. = TRUE
-
 	if(attack_tools(W, user))
-		return
-
-	if(user.a_intent == INTENT_HARM)
-		if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger)  || istype(W,/obj/item/weapon/dualsaber))
-			if(W.force > 3)
-				laser_cut(W, user)
-				return
+		return TRUE
 
 	return ..()
 
@@ -500,8 +498,7 @@
 
 	var/status = 2
 
-/obj/structure/table/reinforced/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+/obj/structure/table/reinforced/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover,/obj/item/projectile))
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
@@ -583,8 +580,7 @@
 /obj/structure/rack/airlock_crush_act()
 	deconstruct(TRUE)
 
-/obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+/obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))

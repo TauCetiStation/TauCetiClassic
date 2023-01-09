@@ -160,12 +160,14 @@
 				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
 
+	if(get_species() == HOMUNCULUS)
+		message = cursed_talk(message)
+
 	message = capitalize(trim(message))
 	message = add_period(message)
 
 	if(iszombie(src))
 		message = zombie_talk(message)
-
 	var/ending = copytext(message, -1)
 
 	if(speaking)
@@ -404,6 +406,9 @@
 		message = "[uppertext(message)]!!!"
 		verb = pick("yells","roars","hollers")
 		handled = 1
+	if(disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
+		if(prob(50))
+			message = turret_talk(message, get_species())
 	if(slurring)
 		message = slur(message)
 		verb = pick("stammers","stutters")

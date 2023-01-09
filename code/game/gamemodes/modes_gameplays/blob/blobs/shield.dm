@@ -1,4 +1,4 @@
-/obj/effect/blob/shield
+/obj/structure/blob/shield
 	name = "strong blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_idle"
@@ -7,13 +7,13 @@
 	max_integrity = 75
 	fire_resist = 2
 
-/obj/effect/blob/shield/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/blob/shield/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
 
-/obj/effect/blob/shield/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/blob/shield/CanPass(atom/movable/mover, turf/target, height=0)
 	return istype(mover) && mover.checkpass(PASSBLOB)
 
-/obj/effect/blob/shield/reflective
+/obj/structure/blob/shield/reflective
 	name = "reflective blob"
 	icon_state = "blob_reflect"
 	desc = "A solid wall of slightly twitching tendrils with a reflective glow."
@@ -23,7 +23,7 @@
 	var/static/list/reflects = list(/obj/item/projectile/energy, /obj/item/projectile/beam, /obj/item/projectile/pyrometer,
 		/obj/item/projectile/plasma, /obj/item/projectile/bullet/stunshot)
 
-/obj/effect/blob/shield/reflective/bullet_act(obj/item/projectile/P, def_zone)
+/obj/structure/blob/shield/reflective/bullet_act(obj/item/projectile/P, def_zone)
 	if(is_type_in_list(P,reflects))
 		if(istype(P, /obj/item/projectile/beam/emitter))
 			return ..()

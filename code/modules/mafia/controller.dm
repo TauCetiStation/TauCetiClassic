@@ -94,7 +94,7 @@
 /datum/mafia_controller/proc/prepare_game(setup_list,ready_players)
 
 	var/list/possible_maps = subtypesof(/datum/map_template/mafia)
-	var/turf/spawn_area = get_turf(locate("landmark*Mafia Area Spawn]"))
+	var/turf/spawn_area = get_turf(locate("landmark*Mafia Area Spawn"))
 
 	current_map = pick(possible_maps)
 	current_map = new current_map

@@ -13,7 +13,7 @@ Must right click on a mob to activate.*/
 		var/mob/living/carbon/human/U = affecting
 		if(M.client)//Monkeys without a client can still step_to() and bypass the net. Also, netting inactive people is lame.
 		//if(M)//DEBUG
-			if(!locate(/obj/effect/energy_net) in M.loc)//Check if they are already being affected by an energy net.
+			if(!locate(/obj/structure/energy_net) in M.loc)//Check if they are already being affected by an energy net.
 				for(var/turf/T in getline(U.loc, M.loc))
 					if(T.density)//Don't want them shooting nets through walls. It's kind of cheesy.
 						to_chat(U, "You may not use an energy net through solid obstacles!")
@@ -21,7 +21,7 @@ Must right click on a mob to activate.*/
 				spawn(0)
 					U.Beam(M,"n_beam",,15)
 				U.say("Get over here!")
-				var/obj/effect/energy_net/E = new /obj/effect/energy_net(M.loc)
+				var/obj/structure/energy_net/E = new /obj/structure/energy_net(M.loc)
 				U.visible_message("<span class='warning'>[U] caught [M] with an energy net!</span>")
 				E.start_cooldown(M)
 				cell.use(C*10) // Nets now cost what should be most of a standard battery, since your taking someone out of the round

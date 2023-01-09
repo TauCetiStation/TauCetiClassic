@@ -5928,7 +5928,6 @@
 /obj/item/weapon/medical/teleporter,
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/rxglasses,
-/obj/item/weapon/hand_labeler,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -11973,7 +11972,6 @@
 /obj/machinery/requests_console/cargo_bay{
 	pixel_x = -30
 	},
-/obj/item/device/destTagger,
 /turf/simulated/floor,
 /area/station/cargo/office)
 "cMF" = (
@@ -12680,7 +12678,6 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/pen,
-/obj/item/weapon/hand_labeler,
 /obj/item/weapon/storage/secure/safe{
 	pixel_x = 5;
 	pixel_y = 27
@@ -15540,7 +15537,6 @@
 	},
 /area/station/gateway)
 "dSQ" = (
-/obj/item/weapon/hand_labeler,
 /obj/item/device/flash,
 /obj/item/clothing/glasses/sunglasses,
 /obj/structure/table/glass,
@@ -15666,8 +15662,6 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/item/device/destTagger,
-/obj/item/device/destTagger,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -18984,7 +18978,6 @@
 	pixel_y = 2
 	},
 /obj/item/weapon/storage/box/syringes,
-/obj/item/weapon/hand_labeler,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitegreen"
@@ -34868,7 +34861,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "jXG" = (
-/obj/item/weapon/hand_labeler,
 /obj/item/device/assembly/timer,
 /obj/item/device/eftpos{
 	eftpos_name = "Bridge EFTPOS scanner"
@@ -35644,7 +35636,6 @@
 /area/station/storage/tech/north)
 "klT" = (
 /obj/structure/table,
-/obj/item/weapon/hand_labeler,
 /obj/item/weapon/packageWrap,
 /obj/machinery/light{
 	dir = 1
@@ -39098,7 +39089,7 @@
 	dir = 8;
 	pixel_x = 32
 	},
-/obj/structure/lamarr,
+/obj/structure/displaycase/labcage,
 /turf/simulated/floor{
 	icon_state = "whitebot"
 	},
@@ -46094,7 +46085,6 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engineering)
 "nxs" = (
-/obj/item/weapon/hand_labeler,
 /obj/item/weapon/pen,
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/packageWrap,
@@ -46122,6 +46112,7 @@
 /area/station/security/hos)
 "nxW" = (
 /obj/machinery/computer/telescience,
+/obj/item/weapon/paper/space_structures,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -66946,7 +66937,6 @@
 /area/station/maintenance/science)
 "ugH" = (
 /obj/structure/table,
-/obj/item/weapon/paper/space_structures,
 /obj/machinery/computer/skills,
 /turf/simulated/floor{
 	dir = 5;
@@ -71772,7 +71762,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 24
 	},
-/obj/structure/displaycase,
+/obj/structure/displaycase/captain,
 /turf/simulated/floor/carpet,
 /area/station/bridge/captain_quarters)
 "vEL" = (
@@ -73387,7 +73377,6 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/weapon/hand_labeler,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -79658,7 +79647,6 @@
 	},
 /area/station/cargo/storage)
 "yiK" = (
-/obj/item/weapon/hand_labeler,
 /obj/structure/table,
 /obj/item/weapon/folder/blue,
 /obj/machinery/camera{

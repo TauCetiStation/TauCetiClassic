@@ -87,6 +87,8 @@
 	gain_text = "<span class='danger'>Вас начинает трясти!</span>"
 	lose_text = "<span class='notice'>Вас перестаёт трясти.</span>"
 
+	incompatible_species = list(SKRELL, DIONA, IPC, ABDUCTOR)
+
 	req_species_flags = list(
 		NO_EMOTION = FALSE,
 	)

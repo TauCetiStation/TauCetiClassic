@@ -105,6 +105,7 @@
 
 /datum/role/traitor/dealer/OnPostSetup(laterole)
 	var/mob/living/carbon/human/H = antag.current
+	notify_ghosts("New gun dealer!", source = H, action = NOTIFY_ORBIT, header = "Gun Dealer")
 	H.equipOutfit(/datum/outfit/families_traitor)
 	. = ..()
 
