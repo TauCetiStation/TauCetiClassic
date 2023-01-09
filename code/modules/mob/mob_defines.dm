@@ -43,6 +43,8 @@
 	var/atom/movable/screen/pwr_display = null
 	var/atom/movable/screen/nightvisionicon = null
 
+	var/atom/movable/screen/holomap/holomap_obj
+
 	var/me_verb_allowed = TRUE //Allows all mobs to use the me verb by default, will have to manually specify they cannot
 	var/damageoverlaytemp = 0
 	var/computer_id = null
@@ -227,3 +229,9 @@
 
 	// Reason of logout
 	var/logout_reason
+
+	/// List of action hud items the user has
+	var/list/datum/action/actions = list()
+
+	// Used for statistics of death
+	var/last_phrase

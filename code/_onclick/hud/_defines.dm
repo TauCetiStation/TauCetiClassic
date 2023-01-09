@@ -154,6 +154,8 @@
 //Families
 #define ui_wanted_lvl "NORTH,11"
 
+//Holomaps
+#define ui_holomap "WEST:120, SOUTH:30"
 // Leap
 #define ui_human_leap "CENTER+3:20,SOUTH:5"
 

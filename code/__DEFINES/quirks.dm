@@ -7,6 +7,7 @@
 #define QUIRK_FREERUNNING "Фриран"
 #define QUIRK_LIGHT_STEP "Лёгкий Шаг"
 #define QUIRK_FAST_EQUIP "Улучшенная Координация"
+#define QUIRK_FRIENDLY "Дружелюбный"
 
 // neutral quirks.
 #define QUIRK_HIGH_PAIN_THRESHOLD "Высокий Болевой Порог"

@@ -143,6 +143,8 @@
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/collective_mind)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor)
 
+	notify_ghosts("\A [src], new hatched shadowling, at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, header = "Shadowling")
+
 /mob/living/carbon/human/slime/atom_init(mapload)
 	. = ..(mapload, SLIME)
 
@@ -814,8 +816,7 @@
 								if(setmedical != "Cancel")
 									R.fields["p_stat"] = setmedical
 									modified = 1
-									if(PDA_Manifest.len)
-										PDA_Manifest.Cut()
+									PDA_Manifest.Cut()
 
 									spawn()
 										if(ishuman(usr))
@@ -1439,6 +1440,10 @@
 	typing_indicator_type = species.typing_indicator_type
 
 	species.on_gain(src)
+
+	for(var/datum/quirk/Q in roundstart_quirks)
+		if(SSquirks.quirk_blacklist_species[Q.name] && (species.name in SSquirks.quirk_blacklist_species[Q.name]))
+			qdel(Q)
 
 	regenerate_icons()
 	full_prosthetic = null
@@ -2433,6 +2438,15 @@
 		if(HEART_FAILURE)
 			if(prob(heal_prob))
 				Heart.heart_fibrillate()
+
+
+/mob/living/carbon/human/proc/PutDisabilityMarks()
+	var/obj/item/weapon/card/id/card = locate(/obj/item/weapon/card/id, src)
+	if(!card)
+		return
+	for(var/datum/quirk/Q in roundstart_quirks)
+		if(Q.disability)
+			card.disabilities += Q.name
 
 /mob/living/carbon/human/handle_drunkenness()
 	. = ..()

@@ -11,6 +11,8 @@
 	var/burning = null
 	var/list/hitsound = list()
 	var/usesound = null
+	var/pickup_sound = null
+	var/dropped_sound = null
 	var/wet = 0
 	var/can_embed = 1
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
@@ -77,10 +79,15 @@
 
 	// Whether this item is currently being swiped.
 	var/swiping = FALSE
+	// Is heavily utilized by swiping component. Perhaps use to determine how "quick" the strikes with this weapon are?
+	// See swiping.dm for more details.
+	var/sweep_step = 4
 	// Is using this item requires any specific skills?
 	var/list/required_skills
 
 	var/dyed_type
+
+	var/can_get_wet = TRUE
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
@@ -432,6 +439,8 @@
 // apparently called whenever an item is removed from a slot, container, or anything else.
 /obj/item/proc/dropped(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
+	if(user && user.loc != loc && isturf(loc))
+		playsound(user, dropped_sound, VOL_EFFECTS_MASTER)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
 	flags &= ~IN_INVENTORY
 	if(flags & DROPDEL)
@@ -444,6 +453,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user) & COMPONENT_ITEM_NO_PICKUP)
 		return FALSE
+	playsound(user, pickup_sound, VOL_EFFECTS_MASTER)
 	return TRUE
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
@@ -1108,7 +1118,7 @@
 
 /obj/item/burn()
 	var/turf/T = get_turf(src)
-	var/ash_type 
+	var/ash_type
 	if(w_class >= SIZE_BIG)
 		ash_type = /obj/effect/decal/cleanable/ash/large
 	else
