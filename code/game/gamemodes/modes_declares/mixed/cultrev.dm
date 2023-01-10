@@ -4,7 +4,7 @@
 	probability = 80
 	factions_allowed = list(
 		/datum/faction/cult,
-		/datum/faction/revolution/flash_revolution,
+		/datum/faction/revolution,
 	)
 
 	minimum_player_count = 55
