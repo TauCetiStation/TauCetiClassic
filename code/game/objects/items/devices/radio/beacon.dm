@@ -144,7 +144,7 @@
 			s.start()
 			s2.start()
 			H.forceMove(get_turf(beacon))
-			radio.autosay(teleport, "Medical teleporter system")
+			radio.autosay(teleport, "Medical teleporter system", "Medical", 1355)
 		if (src)
 			qdel(src)
 		H.cut_overlay(I)
