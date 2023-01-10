@@ -495,8 +495,23 @@
 
 	needed_aspects = list(ASPECT_GREED = 1)
 
+/datum/reagent/silver/reaction_obj(obj/O, volume)
+	src = null
+	if(volume >= 30)
+		if(istype(O, /obj/item/ammo_casing))
+			var/obj/item/ammo_casing/A = O
+			if(!A.BB)
+				return
+			var/old_damage = A.BB.damage
+			qdel(A.BB)
+			A.BB = new /obj/item/projectile/bullet/silver(A)
+			A.BB.damage = old_damage
+			A.icon_state = "sil-casing-live"
+			if(istype(A, /obj/item/ammo_casing/shotgun))
+				A.icon_state = "sshell-live"
+
 /datum/reagent/uranium
-	name ="Uranium"
+	name = "Uranium"
 	id = "uranium"
 	description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
 	reagent_state = SOLID

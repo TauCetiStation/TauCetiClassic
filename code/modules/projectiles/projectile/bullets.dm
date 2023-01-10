@@ -263,3 +263,15 @@
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(1)
 		M.IgniteMob()
+
+/obj/item/projectile/bullet/silver
+	name = "silver bullet"
+	damage = 20 //changes when you cover other bullets in silver
+
+/obj/item/projectile/bullet/silver/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	if(ismob(target))
+		var/mob/living/M = target
+		if(iscultist(M))
+			M.AdjustStunned(2)
+			M.adjust_fire_stacks(3)
+			M.IgniteMob()
