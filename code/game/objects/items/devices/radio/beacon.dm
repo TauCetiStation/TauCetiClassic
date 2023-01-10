@@ -84,6 +84,8 @@
 	origin_tech = "bluespace=1"
 	var/timer = 10
 	var/atom/target = null
+	var/obj/item/device/radio/radio
+	var/teleport = "Тело телепортировано на маячок."
 
 /obj/item/weapon/medical/teleporter/afterattack(atom/target, mob/user, proximity, params)
 	if (!proximity)
@@ -134,6 +136,7 @@
 /obj/item/weapon/medical/teleporter/proc/teleport(mob/H, obj/beacon, I)
 	if(H)
 		if(beacon)
+			radio = new (src)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			var/datum/effect/effect/system/spark_spread/s2 = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, H)
@@ -141,6 +144,7 @@
 			s.start()
 			s2.start()
 			H.forceMove(get_turf(beacon))
+			radio.autosay(teleport, "Medical teleporter system")
 		if (src)
 			qdel(src)
 		H.cut_overlay(I)
