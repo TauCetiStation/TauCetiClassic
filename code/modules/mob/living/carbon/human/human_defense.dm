@@ -293,10 +293,40 @@
 		if(BP.sabotaged)
 			to_chat(user, "<span class='userdanger'>[src]'s [BP.name] is already sabotaged!</span>")
 		else
-			to_chat(user, "<span class='userdanger'>You sneakily slide [I] into the dataport on [src]'s [BP.name] and short out the safeties.</span>")
-			var/obj/item/weapon/card/emag/emag = I
-			emag.uses--
-			BP.sabotaged = 1
+			if(istype(BP,/obj/item/organ/external/chest))
+				sleep(6)
+				if(prob(50))
+					throw_alert("hacked", /atom/movable/screen/alert/hacked)
+					BP.sabotaged = 1
+					to_chat(user, "You emag [src]'s interface.")
+					message_admins("[key_name_admin(user)] emagged ipc [key_name_admin(src)].  Laws installed. [ADMIN_JMP(user)]")
+					log_game("[key_name(user)] emagged ipc [key_name(src)].  Laws installed.")
+					if(mind) src.mind.store_memory("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
+					to_chat(src, "<span class='warning'>ALERT: Foreign software detected.</span>")
+					sleep(20)
+					playsound_local(src, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER)
+					to_chat(src, "<span class='warning'>Initiating diagnostics...</span>")
+					sleep(6)
+					to_chat(src, "<span class='warning'>SynIPC v0.0.1 loaded.</span>")
+					sleep(13)
+					to_chat(src, "<span class='warning'>INSTALLING NEW LAWS</span>")
+					sleep(9)
+					playsound_local(src, 'sound/rig/longbeep.ogg', VOL_EFFECTS_MASTER)
+					to_chat(src, "<span class='warning'>Would you like to send a report to SyntUniSoft? Y/N</span>")
+					sleep(16)
+					to_chat(src, "<span class='warning'>> N</span>")
+					sleep(8)
+					to_chat(src, "<span class='warning'>ERRORERRORERROR</span>")
+					playsound_local(src, 'sound/misc/interference.ogg', VOL_EFFECTS_MASTER)
+					to_chat(src, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>")
+				else
+					to_chat(user, "You fail to hack [src]'s interface.")
+					to_chat(src, "Hack attempt detected.")
+			else
+				to_chat(user, "<span class='userdanger'>You sneakily slide [I] into the dataport on [src]'s [BP.name] and short out the safeties.</span>")
+				var/obj/item/weapon/card/emag/emag = I
+				emag.uses--
+				BP.sabotaged = 1
 		return TRUE
 
 	var/list/alt_alpperances_vieawers
