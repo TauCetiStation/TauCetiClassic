@@ -84,6 +84,8 @@
 	origin_tech = "bluespace=1"
 	var/timer = 10
 	var/atom/target = null
+	var/obj/item/device/radio/radio
+
 
 /obj/item/weapon/medical/teleporter/afterattack(atom/target, mob/user, proximity, params)
 	if (!proximity)
