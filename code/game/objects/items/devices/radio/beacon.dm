@@ -84,7 +84,6 @@
 	origin_tech = "bluespace=1"
 	var/timer = 10
 	var/atom/target = null
-	var/obj/item/device/radio/radio
 
 
 /obj/item/weapon/medical/teleporter/afterattack(atom/target, mob/user, proximity, params)
@@ -136,7 +135,7 @@
 /obj/item/weapon/medical/teleporter/proc/teleport(mob/H, obj/beacon, I)
 	if(H)
 		if(beacon)
-			radio = new (src)
+			var/obj/item/device/radio/radio = new (src)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			var/datum/effect/effect/system/spark_spread/s2 = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, H)
