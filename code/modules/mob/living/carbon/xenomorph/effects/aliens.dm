@@ -396,7 +396,7 @@
 	if(exposed_temperature > 290)
 		take_damage(25, BURN, FIRE, FALSE)
 
-/obj/structure/alien/egg/proc/spawn_hagger(status)
+/obj/structure/alien/egg/proc/spawn_hugger(status)
 	if(status == BURSTING)
 		new /obj/item/clothing/mask/facehugger(get_turf(src))
 		status = BURST
