@@ -275,12 +275,6 @@
 			IO.emplode(severity)
 	..()
 
-/mob/living/carbon/human/proc/asynkchat(MSG)
-	to_chat(src, MSG)
-	
-/mob/living/carbon/human/proc/asynkplaysound(SOUND)
-	playsound_local(src, SOUND, VOL_EFFECTS_MASTER)
-
 
 /mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(!I || !user)
@@ -299,33 +293,10 @@
 		if(BP.sabotaged)
 			to_chat(user, "<span class='userdanger'>[src]'s [BP.name] is already sabotaged!</span>")
 		else
-			if(istype(BP,/obj/item/organ/external/chest))
-				if(prob(50))
-					throw_alert("hacked", /atom/movable/screen/alert/hacked)
-					BP.sabotaged = 1
-					to_chat(user, "You emag [src]'s interface.")
-					message_admins("[key_name_admin(user)] emagged ipc [key_name_admin(src)].  Laws installed. [ADMIN_JMP(user)]")
-					log_game("[key_name(user)] emagged ipc [key_name(src)].  Laws installed.")
-					if(mind) mind.store_memory("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
-					to_chat(src, "<span class='warning'>ALERT: Foreign software detected.</span>")
-					addtimer(CALLBACK(src, .proc/asynkplaysound, 'sound/rig/shortbeep.ogg'), 20)
-					addtimer(CALLBACK(src, .proc/asynkchat, "<span class='warning'>Initiating diagnostics...</span>"), 21)
-					addtimer(CALLBACK(src, .proc/asynkchat, "<span class='warning'>SynIPC v0.0.1 loaded.</span>"), 26)
-					addtimer(CALLBACK(src, .proc/asynkchat, "<span class='warning'>INSTALLING NEW LAWS</span>"), 39)
-					addtimer(CALLBACK(src, .proc/asynkplaysound, 'sound/rig/longbeep.ogg'), 48)
-					addtimer(CALLBACK(src, .proc/asynkchat, "<span class='warning'>Would you like to send a report to SyntUniSoft? Y/N</span>"), 48)
-					addtimer(CALLBACK(src, .proc/asynkchat, "<span class='warning'>> N</span>"), 64)
-					addtimer(CALLBACK(src, .proc/asynkchat, "<span class='warning'>ERRORERRORERROR</span>"), 72)
-					addtimer(CALLBACK(src, .proc/asynkplaysound, 'sound/misc/interference.ogg'), 73)
-					addtimer(CALLBACK(src, .proc/asynkchat, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>"), 74)
-				else
-					to_chat(user, "<span class='userdanger'>You fail to hack [src]'s interface.</span>")
-					to_chat(src, "<span class='userdanger'>Hack attempt detected.</span>")
-			else
-				to_chat(user, "<span class='userdanger'>You sneakily slide [I] into the dataport on [src]'s [BP.name] and short out the safeties.</span>")
-				var/obj/item/weapon/card/emag/emag = I
-				emag.uses--
-				BP.sabotaged = 1
+			to_chat(user, "<span class='userdanger'>You sneakily slide [I] into the dataport on [src]'s [BP.name] and short out the safeties.</span>")
+			var/obj/item/weapon/card/emag/emag = I
+			emag.uses--
+			BP.sabotaged = 1
 		return TRUE
 
 	var/list/alt_alpperances_vieawers
