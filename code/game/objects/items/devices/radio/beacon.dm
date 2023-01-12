@@ -85,7 +85,6 @@
 	var/timer = 10
 	var/atom/target = null
 
-
 /obj/item/weapon/medical/teleporter/afterattack(atom/target, mob/user, proximity, params)
 	if (!proximity)
 		return
@@ -135,7 +134,6 @@
 /obj/item/weapon/medical/teleporter/proc/teleport(mob/H, obj/beacon, I)
 	if(H)
 		if(beacon)
-			var/obj/item/device/radio/radio = new (src)
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			var/datum/effect/effect/system/spark_spread/s2 = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, H)
@@ -143,6 +141,7 @@
 			s.start()
 			s2.start()
 			H.forceMove(get_turf(beacon))
+			var/obj/item/device/radio/radio = new (src)
 			radio.autosay("Тело телепортировано на маячок.", "Medical teleporter system", "Medical", 1355)
 			qdel(radio)
 		if (src)
