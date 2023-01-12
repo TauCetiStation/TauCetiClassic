@@ -345,4 +345,4 @@
 	requirement = "Нет."
 
 /datum/quality/positiveish/cqc/add_effect(mob/living/carbon/human/H)
-	H.add_moveset(/datum/combat_moveset/cqc, MOVESET_ROLES)
+	H.add_moveset(/datum/combat_moveset/cqc, MOVESET_QUALITY)
