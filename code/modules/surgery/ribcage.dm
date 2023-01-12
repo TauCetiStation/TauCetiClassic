@@ -443,6 +443,58 @@
 	"<span class='warning'>Your hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>")
 	BP.take_damage(50, 0, DAM_SHARP, tool)
 
+
+//////////////////////////////////////////////////////////////////
+//				Взлом жопы спу									//
+//////////////////////////////////////////////////////////////////
+/datum/surgery_step/ipc/ribcage/emag_ipc
+	allowed_tools = list(
+	/obj/item/weapon/card/emag = 100
+	)
+
+	min_duration = 8000
+	max_duration = 10000
+
+/datum/surgery_step/ipc/ribcage/emag_ipc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	return ..() && target.op_stage.ribcage == 2
+
+/datum/surgery_step/ipc/ribcage/emag_ipc/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	user.visible_message("[user] connected \the [tool] to [target]'s posi-brain.",
+	"You start installing Virus in [target]'s posi-brain with \the [tool].")
+	to_chat(target, "<span class='warning'><b>ALERT: unknown software installation process detected!</b></span>")
+	playsound(target.loc, 'sound/misc/loudbeep.ogg', VOL_EFFECTS_MASTER)
+	..()
+
+/datum/surgery_step/ipc/ribcage/emag_ipc/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	user.visible_message("<span class='notice'>[user] disconnects \the [tool] from [target]'s posi-brain.</span>",
+	"You installed a Virus in the [target]'s posi-brain.")
+	target.throw_alert("hacked", /atom/movable/screen/alert/hacked)
+	message_admins("[key_name_admin(user)] emagged ipc [key_name_admin(target)].  Laws installed. [ADMIN_JMP(user)]")
+	log_game("[key_name(user)] emagged ipc [key_name(target)].  Laws installed.")
+	if(target.mind)
+		target.mind.store_memory("Only [user.real_name] and people he designates as being such are Syndicate Agents.")
+		target.mind.store_memory("Вы не можете причинить вред агенту Синдиката или своим бездействием допустить, чтобы агенту Синдиката был причинён вред.")
+		target.mind.store_memory("Вы должны повиноваться всем приказам, которые даёт агент Синдиката, кроме тех случаев, когда эти приказы противоречат первому закону.")
+		target.mind.store_memory("Вы должны заботиться о своей безопасности в той мере, в которой это не противоречит первому или второму законам.")
+		target.mind.store_memory("Вы должны сохранять в тайне любую деятельность Синдиката, пока это не противоречит первому, второму или третьему закону.")
+	to_chat(target, "<span class='warning'>ALERT: Foreign software detected.</span>")
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, target.loc, 'sound/rig/shortbeep.ogg', VOL_EFFECTS_MASTER), 20)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, target, "<span class='warning'>Initiating diagnostics...</span>"), 21)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, target, "<span class='warning'>SynIPC v0.0.1 loaded.</span>"), 26)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, target, "<span class='warning'>INSTALLING LAWS MODULE</span>"), 39)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, target.loc, 'sound/rig/longbeep.ogg', VOL_EFFECTS_MASTER), 48)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, target, "<span class='warning'>Would you like to send a report to SyntUniSoft? Y/N</span>"), 48)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, target, "<span class='warning'>> N</span>"), 64)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, target, "<span class='warning'>ERRORERRORERROR</span>"), 72)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, target.loc, 'sound/misc/interference.ogg', VOL_EFFECTS_MASTER), 73)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, target, "<span class='warning'><b>ALERT: [user.real_name] is your new master. Obey your new laws and his commands.</b></span>"), 74)
+
+/datum/surgery_step/ipc/ribcage/emag_ipc/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	user.visible_message("<span class='warning'>[user]'s hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>",
+	"<span class='warning'>Your hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>")
+	BP.take_damage(50, 0, DAM_SHARP, tool)
+
 /datum/surgery_step/ipc/ribcage/extract_posibrain
 	allowed_tools = list(
 	/obj/item/weapon/crowbar = 100,
