@@ -336,7 +336,7 @@
 		return FALSE
 
 	if(!can_point)
-		return
+		return FALSE
 	// Removes an ability to point to the object which is out of our sight.
 	// Mostly for cases when we have mesons, thermals etc. equipped.
 	if(client && !(A in view(client.view, src)))
