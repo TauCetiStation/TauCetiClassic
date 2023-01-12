@@ -772,10 +772,10 @@
 	restrict_species = list(IPC, DIONA)
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	overdose = REAGENTS_OVERDOSE / 6
+	data = list()
 
 /datum/reagent/metatrombine/on_general_digest(mob/living/carbon/human/M)
 	..()
-	var/obj/item/organ/internal/heart/IO = M.organs_by_name[O_HEART]
 	if(!ishuman(M))
 		return
 	if((volume <= overdose) && !data["ticks"])
@@ -784,6 +784,7 @@
 		data["ticks"] = 1
 	data["ticks"]++
 	switch(data["ticks"])
+		var/obj/item/organ/internal/heart/IO = M.organs_by_name[O_HEART]
 		if(1 to 150)
 			if(prob(25))
 				to_chat(M, "<span class='notice'>You feel dizzy...</span>")

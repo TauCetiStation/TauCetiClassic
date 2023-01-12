@@ -13,10 +13,11 @@
 
 	// Will be moved, removed or refactored.
 	var/process_accuracy = 0    // Damage multiplier for organs, that have damage values.
-	var/robotic = 0             // For being a robot
 	// 0 - normal
 	// 1 - assisted
 	// 2 - mechanical
+	var/robotic = 0             // For being a robot
+
 /obj/item/organ/internal/Destroy()
 	if(parent)
 		parent.children -= src
