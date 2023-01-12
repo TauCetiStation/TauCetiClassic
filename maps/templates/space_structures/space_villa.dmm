@@ -1268,6 +1268,12 @@
 	dir = 8
 	},
 /obj/structure/cable/yellow,
+/obj/machinery/power/apc/largecell{
+	dir = 8;
+	name = "largecell apc left";
+	pixel_x = -28;
+	start_charge = 0
+	},
 /turf/simulated/floor/grass,
 /area/space_structures/space_villa)
 "SP" = (

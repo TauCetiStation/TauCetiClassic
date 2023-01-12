@@ -146,7 +146,8 @@
 /obj/machinery/power/apc/largecell{
 	dir = 8;
 	name = "largecell apc left";
-	pixel_x = -28
+	pixel_x = -28;
+	start_charge = 0
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)

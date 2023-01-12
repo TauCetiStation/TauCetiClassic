@@ -24915,10 +24915,6 @@
 	dir = 1;
 	pixel_y = 32
 	},
-/obj/machinery/recharger/wallcharger{
-	pixel_x = -24;
-	pixel_y = -6
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -27655,7 +27651,6 @@
 	network = list("SS13","Research")
 	},
 /obj/machinery/computer/skills,
-/obj/item/weapon/paper/space_structures,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -40588,6 +40583,7 @@
 /obj/machinery/computer/telescience{
 	dir = 8
 	},
+/obj/item/weapon/paper/space_structures,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warning"
@@ -71739,6 +71735,9 @@
 /area/station/medical/cmo)
 "fSs" = (
 /obj/machinery/door/firedoor,
+/obj/structure/sign/warning/securearea{
+	pixel_y = 32
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -76404,8 +76403,12 @@
 	},
 /area/station/cargo/storage)
 "lcB" = (
-/obj/structure/sign/warning/securearea{
-	pixel_y = 32
+/obj/machinery/door_control{
+	desc = "A remote control-switch for secure storage.";
+	id = "Secure Storage";
+	name = "Engineering Secure Storage";
+	pixel_y = 28;
+	req_access = list(10)
 	},
 /turf/simulated/floor{
 	dir = 4;

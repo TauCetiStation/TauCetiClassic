@@ -15,6 +15,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	see_in_dark = 100
 	hud_type = /datum/hud/ghost
 	invisibility = INVISIBILITY_OBSERVER
+  show_examine_log = FALSE
 	var/can_reenter_corpse
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
@@ -155,8 +156,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		var/turf/T = get_turf(target)
 		forceMove(T)
 
-/mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	return 1
+/mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
+	return TRUE
 
 /mob/proc/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE, timeofdeath = world.time)
 	if(!key)

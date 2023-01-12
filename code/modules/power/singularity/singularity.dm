@@ -390,7 +390,7 @@
 	var/atom/movable/singularity_lens/singulo_lens
 
 /obj/singularity/gravitational/atom_init()
-	..()
+	. = ..()
 
 	add_filter("singa_ring", 1, bloom_filter(rgb(100,0,0), 2, 2, 255))
 

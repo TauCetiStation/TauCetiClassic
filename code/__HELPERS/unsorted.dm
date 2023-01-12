@@ -846,11 +846,11 @@ Turf and target are seperate in case you want to teleport some distance from a t
 							continue
 						if(!O.simulated)
 							continue
-						O.loc = X
+						O.forceMove(X)
 						O.update_parallax_contents()
 					for(var/mob/M in T)
 						if(!istype(M,/mob) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
-						M.loc = X
+						M.forceMove(X, TRUE, TRUE)
 						M.update_parallax_contents()
 
 //					var/area/AR = X.loc
