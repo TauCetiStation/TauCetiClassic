@@ -406,7 +406,7 @@
 		icon_state = "egg_hatched"
 		flick("egg_opening", src)
 		status = BURSTING
-		addtimer(CALLBACK(src, .proc/spawn_hagger, status), 15)
+		addtimer(CALLBACK(src, .proc/spawn_hugger, status), 15)
 		QDEL_NULL(proximity_monitor)
 
 #undef BURST
