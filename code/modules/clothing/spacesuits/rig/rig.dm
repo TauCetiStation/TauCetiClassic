@@ -480,13 +480,13 @@
 	H.update_gravity(H.mob_has_gravity())
 
 /obj/item/clothing/suit/space/rig/proc/enable_magpulse(mob/user)
-		flags |= NOSLIP
+		flags |= NOSLIP | AIR_FLOW_PROTECT
 		slowdown += boots.slowdown_off
 		magpulse = TRUE
 		to_chat(user, "You enable \the [src] the mag-pulse traction system.")
 
 /obj/item/clothing/suit/space/rig/proc/disable_magpulse(mob/user)
-		flags &= ~NOSLIP
+		flags &= ~NOSLIP | AIR_FLOW_PROTECT
 		slowdown = initial(slowdown)
 		magpulse = FALSE
 		to_chat(user, "You disable \the [src] the mag-pulse traction system.")
