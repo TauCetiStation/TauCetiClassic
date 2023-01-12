@@ -556,6 +556,7 @@
 							new_mover.pass_flags |= PASSMOB|PASSCRAWL
 
 							event_log(new_mover, attacker, "Forced CQC kick Stun")
+			attacker.waddle(pick(-14, 0, 14), 4)
 			apply_effect(3, STUN, victim, attacker, attack_obj=attack_obj, min_value=1)
 			apply_effect(3, WEAKEN, victim, attacker, attack_obj=attack_obj, min_value=1)
 
