@@ -604,7 +604,6 @@
 		else
 			victim.visible_message("<span class='danger'>[attacker] kick [victim] in the head, knocking him out!!</span>")
 			victim.SetSleeping(5 SECONDS)
-		continue
 	apply_damage(20, victim, attacker, zone=BP_HEAD, attack_obj=attack_obj)
 	playsound(victim, 'sound/weapons/genhit1.ogg', VOL_EFFECTS_MASTER)
 
