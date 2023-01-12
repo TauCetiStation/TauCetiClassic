@@ -396,7 +396,7 @@
 	if(exposed_temperature > 290)
 		take_damage(25, BURN, FIRE, FALSE)
 
-/obj/structure/alien/egg/proc/spawn_hugger(status)
+/obj/structure/alien/egg/proc/spawn_hugger()
 	new /obj/item/clothing/mask/facehugger(get_turf(src))
 	status = BURST
 
@@ -405,7 +405,7 @@
 		icon_state = "egg_hatched"
 		flick("egg_opening", src)
 		status = BURSTING
-		addtimer(CALLBACK(src, .proc/spawn_hugger, status), 15)
+		addtimer(CALLBACK(src, .proc/spawn_hugger), 15)
 		QDEL_NULL(proximity_monitor)
 
 #undef BURST
