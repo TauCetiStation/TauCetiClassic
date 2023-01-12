@@ -445,7 +445,7 @@
 
 
 //////////////////////////////////////////////////////////////////
-//				Взлом жопы спу									//
+//				Hack IPC										//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ipc/ribcage/emag_ipc
 	allowed_tools = list(
@@ -462,7 +462,7 @@
 	user.visible_message("[user] connected \the [tool] to [target]'s posi-brain.",
 	"You start installing Virus in [target]'s posi-brain with \the [tool].")
 	to_chat(target, "<span class='warning'><b>ALERT: unknown software installation process detected!</b></span>")
-	playsound(target.loc, 'sound/misc/loudbeep.ogg', VOL_EFFECTS_MASTER)
+	playsound(target.loc, 'sound/rig/loudbeep.ogg', VOL_EFFECTS_MASTER)
 	..()
 
 /datum/surgery_step/ipc/ribcage/emag_ipc/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
