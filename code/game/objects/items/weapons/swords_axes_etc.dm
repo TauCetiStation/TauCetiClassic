@@ -74,8 +74,8 @@
 	return
 
 /obj/item/weapon/melee/energy/sword/on_enter_storage(obj/item/weapon/storage/S)
-    if(active)
-        attack_self(usr)
+	if(active)
+		attack_self(usr)
 
 /*
  * Classic Baton
