@@ -40,6 +40,7 @@
 
 	var/rev_cooldown = 0
 	skillset_type = /datum/skillset/max
+	moveset = /datum/combat_moveset/cqc
 
 /datum/role/rev_leader/New()
 	..()

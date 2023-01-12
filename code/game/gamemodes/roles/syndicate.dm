@@ -14,6 +14,7 @@
 	skillset_type = /datum/skillset/nuclear_operative
 
 	var/TC_num = 0 // using for statistics
+	moveset = /datum/combat_moveset/cqc
 
 /datum/role/operative/New()
 	..()

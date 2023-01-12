@@ -494,3 +494,201 @@
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/spin_throw/execute(mob/living/victim, mob/living/attacker)
 	return
+
+/datum/combat_combo/kick_cqc
+	name = COMBO_KICK_CQC
+	desc = "A sharp kick that deals a fairly large amount of damage and stuns an unarmored enemy."
+	combo_icon_state = "kick_cqc"
+	cost = 25
+	combo_elements = list(INTENT_HARM, INTENT_HARM, INTENT_HARM, INTENT_GRAB)
+	scale_size_exponent = 1.0
+
+	allowed_target_zones = list(BP_CHEST)
+
+	require_leg = TRUE
+	require_arm_to_perform = TRUE
+
+
+	pump_bodyparts = list(
+		BP_L_LEG = 7,
+		BP_R_LEG = 7
+	)
+
+/datum/combat_combo/kick_cqc/execute(mob/living/victim, mob/living/attacker)
+	var/list/attack_obj = attacker.get_unarmed_attack()
+	var/kick_dir = get_dir(attacker, victim)
+	var/target_zone = attacker.get_targetzone()
+	var/prev_anchored = attacker.anchored
+	var/prev_transform = attacker.transform
+	var/try_steps = 2
+	var/armor_check = victim.run_armor_check(target_zone, MELEE)
+	if(armor_check < 45)
+		var/list/collected = list(victim)
+		var/list/movers = list("1" = victim)
+		var/list/prev_info = list("1" = list("pix_x" = victim.pixel_x, "pix_y" = victim.pixel_y, "pass_flags" = victim.pass_flags))
+
+		var/i = 1
+		try_steps_loop:
+			for(var/try_step in 1 to try_steps)
+
+			var/atom/old_V_loc = victim.loc
+			var/turf/target_turf = get_step(get_turf(victim), kick_dir)
+			step(victim, kick_dir)
+
+			if(old_V_loc == victim.loc)
+				var/list/candidates = target_turf.contents - list(victim)
+				new_movers:
+					for(var/mob/living/new_mover in candidates)
+						if(new_mover == attacker)
+							continue new_movers
+						if(new_mover in collected)
+							continue new_movers
+						if(new_mover.is_bigger_than(victim))
+							break try_steps_loop
+						if(!new_mover.anchored)
+							collected += new_mover
+							new_mover.Stun(1)
+							i++
+							movers["[i]"] = new_mover
+							prev_info["[i]"] = list("pix_x" = new_mover.pixel_x, "pix_y" = new_mover.pixel_y, "pass_flags" = new_mover.pass_flags)
+							new_mover.pixel_x += rand(-8, 8)
+							new_mover.pixel_y += rand(-8, 8)
+							new_mover.pass_flags |= PASSMOB|PASSCRAWL
+
+							event_log(new_mover, attacker, "Forced CQC kick Stun")
+			apply_effect(3, STUN, victim, attacker, attack_obj=attack_obj, min_value=1)
+			apply_effect(3, WEAKEN, victim, attacker, attack_obj=attack_obj, min_value=1)
+
+
+	attacker.anchored = prev_anchored
+	attacker.transform = prev_transform
+	playsound(victim, 'sound/weapons/genhit1.ogg', VOL_EFFECTS_MASTER)
+	apply_damage(25, victim, attacker, zone=BP_CHEST, attack_obj=attack_obj)
+	victim.visible_message("<span class='danger'>[attacker] kicks [victim]!</span>")
+
+
+
+/datum/combat_combo/highkick_cqc
+	name = COMBO_HIGHKICK_CQC
+	desc = "a kick to the neck-head area, allows with some chance to either stun the target, or make it choke."
+	combo_icon_state = "highkick_cqc"
+	cost = 50
+	combo_elements = list(COMBO_KICK_CQC, INTENT_HARM, INTENT_HARM, INTENT_PUSH)
+
+	allowed_target_zones = list(BP_HEAD)
+
+	require_leg = TRUE
+	require_arm_to_perform = TRUE
+
+
+	pump_bodyparts = list(
+		BP_L_LEG = 7,
+		BP_R_LEG = 7
+	)
+
+/datum/combat_combo/highkick_cqc/execute(mob/living/victim, mob/living/attacker)
+	var/list/attack_obj = attacker.get_unarmed_attack()
+	switch(rand(1,100))
+		if(1 to 40)
+			victim.visible_message("<span class='danger'>[attacker]'s kick knocks [victim] off his feet, stunning and confusing!</span>")
+			apply_effect(5, STUN, victim, attacker, attack_obj=attack_obj, min_value=1)
+			apply_effect(5, WEAKEN, victim, attacker, attack_obj=attack_obj, min_value=1)
+			victim.AdjustConfused(20)
+		if(41 to 80)
+			victim.visible_message("<span class='danger'>[attacker] kick [victim] right in the neck!</span>")
+			if(NO_BREATH in victim.mutations)
+				return
+			apply_damage(30, damagetype = OXY, victim, attacker, zone=BP_HEAD, attack_obj=attack_obj)
+			victim.losebreath += 20
+			victim.silent += 10
+		else
+			victim.visible_message("<span class='danger'>[attacker] kick [victim] in the head, knocking him out!!</span>")
+			victim.SetSleeping(5 SECONDS)
+		continue
+	apply_damage(20, victim, attacker, zone=BP_HEAD, attack_obj=attack_obj)
+	playsound(victim, 'sound/weapons/genhit1.ogg', VOL_EFFECTS_MASTER)
+
+
+
+
+/datum/combat_combo/blood_boil
+	name = COMBO_BLOOD_BOIL_CULT
+	desc = "You touch the body of the enemy, your touch makes the blood boil in the veins of the enemy."
+	combo_icon_state = "blood_boil_cult"
+	cost = 75
+	combo_elements = list(INTENT_PUSH, INTENT_HARM,  INTENT_GRAB, INTENT_GRAB)
+	allowed_target_zones = TARGET_ZONE_ALL
+	armor_pierce = TRUE
+	heavy_animation = TRUE
+	require_arm_to_perform = TRUE
+	ignore_size = TRUE
+
+/datum/combat_combo/blood_boil/animate_combo(mob/living/victim, mob/living/attacker) //copypaste from resurrection spell animation
+	set waitfor = FALSE // this proc has some sleeps, and we dont want them to lock anything.
+	var/old_loc = victim.loc
+	victim.AdjustStunned(1)
+	attacker.AdjustStunned(1)
+
+	var/atom/movable/overlay/animation = new( victim.loc )
+	animation.icon = 'icons/hud/unarmed_combat_combos.dmi'
+	animation.icon_state = "blood_boil"
+	animation.pixel_y = 32
+	animation.alpha = 0
+	animation.plane = ABOVE_LIGHTING_PLANE
+	animation.layer = ABOVE_LIGHTING_LAYER
+
+
+	animate(animation, alpha = 255, time = 2)
+	sleep(2)
+
+	playsound(animation, 'sound/magic/resurrection_cast.ogg', VOL_EFFECTS_MASTER)
+	animate(animation, pixel_y = -5, time = 2, easing = SINE_EASING)
+	sleep(2)
+
+	playsound(animation, 'sound/magic/resurrection_end.ogg', VOL_EFFECTS_MASTER)
+	var/matrix/Mx = matrix()
+	Mx.Scale(0)
+	animate(animation, transform = Mx, time = 1)
+	sleep(1)
+
+	qdel(animation)
+
+	var/saved_targetzone = attacker.get_targetzone()
+	var/list/attack_obj = attacker.get_unarmed_attack()
+	victim.visible_message("<span class='danger'>[attacker] touches [victim] unusual way, apparently, something is not right here.</span>")
+	apply_damage(20, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj)
+	to_chat(victim, "<span class='warning'>Your veins are on fire!</span>")
+	victim.adjustFireLoss(50)
+
+	if(old_loc != victim.loc) // a good fail effect would be a nice idea.
+		return
+
+/datum/combat_combo/blood_boil/execute(mob/living/victim, mob/living/attacker)
+	return
+
+
+
+
+/datum/combat_combo/swipe
+	name = COMBO_SWIPE_CHANGELING
+	desc = "A very powerful blow that can damage internal organs."
+	combo_icon_state = "swipe_ling"
+	cost = 90
+	combo_elements = list(INTENT_HARM, INTENT_HARM,  INTENT_PUSH, INTENT_GRAB)
+	allowed_target_zones = list(BP_CHEST)
+	scale_size_exponent = 1.0
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 10
+	)
+
+/datum/combat_combo/swipe/execute(mob/living/victim, mob/living/attacker)
+	var/list/attack_obj = attacker.get_unarmed_attack()
+	var/armor_check = victim.run_armor_check(BP_CHEST, MELEE)
+	if((ishuman(victim)) && (armor_check < 45))
+		var/mob/living/carbon/human/H = victim
+		for(var/obj/item/organ/internal/IO in H.organs)
+			IO.damage += rand(1, 5)
+	apply_damage(40, victim, attacker, zone=BP_CHEST, attack_obj=attack_obj)
+	victim.adjustHalLoss(50)
+	playsound(victim, 'sound/effects/mob/hits/veryheavy_4.ogg', VOL_EFFECTS_MASTER)
+	victim.visible_message("<span class='danger'>[attacker] hits [victim] with underhuman strength!</span>")

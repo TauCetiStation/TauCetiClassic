@@ -14,6 +14,7 @@
 					/obj/item/clothing/head/spacepolice,
 					)
 	skillset_type = /datum/skillset/undercover
+	moveset = /datum/combat_moveset/cqc
 
 /datum/role/cop/undercover/OnPostSetup(laterole)
 	. = ..()

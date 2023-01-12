@@ -11,6 +11,7 @@
 	logo_state = "change-logoa"
 
 	stat_type = /datum/stat/role/changeling
+	moveset = /datum/combat_moveset/changeling
 
 	var/list/absorbed_dna = list()
 	var/list/absorbed_species = list()

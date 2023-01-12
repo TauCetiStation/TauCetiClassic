@@ -338,3 +338,11 @@
 
 /datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer(H), SLOT_R_STORE)
+
+/datum/quality/positiveish/cqc
+	name = "CQC"
+	desc = "Вы прошли курсы единоборств и теперь знаете на несколько приёмов больше."
+	requirement = "Нет."
+
+/datum/quality/positiveish/cqc/add_effect(mob/living/carbon/human/H)
+	H.add_moveset(/datum/combat_moveset/cqc, MOVESET_ROLES)
