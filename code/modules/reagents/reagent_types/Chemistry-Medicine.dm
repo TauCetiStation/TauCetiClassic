@@ -783,8 +783,8 @@
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++
+	var/obj/item/organ/internal/heart/IO = M.organs_by_name[O_HEART]
 	switch(data["ticks"])
-		var/obj/item/organ/internal/heart/IO = M.organs_by_name[O_HEART]
 		if(1 to 150)
 			if(prob(25))
 				to_chat(M, "<span class='notice'>You feel dizzy...</span>")
