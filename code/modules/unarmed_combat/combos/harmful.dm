@@ -598,7 +598,6 @@
 			victim.visible_message("<span class='danger'>[attacker] kick [victim] right in the neck!</span>")
 			if(NO_BREATH in victim.mutations)
 				return
-			apply_damage(30, damagetype = OXY, victim, attacker, zone=BP_HEAD, attack_obj=attack_obj)
 			victim.losebreath += 20
 			victim.silent += 10
 		else
