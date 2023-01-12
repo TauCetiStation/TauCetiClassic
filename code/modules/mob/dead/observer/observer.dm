@@ -15,7 +15,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	see_in_dark = 100
 	hud_type = /datum/hud/ghost
 	invisibility = INVISIBILITY_OBSERVER
-  show_examine_log = FALSE
+	show_examine_log = FALSE
 	var/can_reenter_corpse
 	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
