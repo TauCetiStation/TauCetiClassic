@@ -687,7 +687,7 @@
 	if((ishuman(victim)) && (armor_check < 45))
 		var/mob/living/carbon/human/H = victim
 		for(var/obj/item/organ/internal/IO in H.organs)
-			IO.damage += rand(0, 5)
+			IO.damage += rand(1, 5)
 	apply_damage(40, victim, attacker, zone=BP_CHEST, attack_obj=attack_obj)
 	victim.adjustHalLoss(50)
 	playsound(victim, 'sound/effects/mob/hits/veryheavy_4.ogg', VOL_EFFECTS_MASTER)
