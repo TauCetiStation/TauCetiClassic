@@ -301,11 +301,13 @@
 	integrity_failure = 0.5
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 	var/timer
+	var/datum/proximity_monitor/proximity_monitor
 
 /obj/structure/alien/egg/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	timer = addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME), TIMER_STOPPABLE)
+	proximity_monitor = new(src, status == GROWN ? 1 : null)
 
 /obj/structure/alien/egg/attack_paw(mob/user)
 	if(isxeno(user))
@@ -393,6 +395,18 @@
 /obj/structure/alien/egg/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 290)
 		take_damage(25, BURN, FIRE, FALSE)
+
+/obj/structure/alien/egg/proc/spawn_hugger()
+	new /obj/item/clothing/mask/facehugger(get_turf(src))
+	status = BURST
+
+/obj/structure/alien/egg/HasProximity(atom/movable/AM)
+	if ((ishuman(AM) || ismonkey(AM)) && status == GROWN)
+		icon_state = "egg_hatched"
+		flick("egg_opening", src)
+		status = BURSTING
+		addtimer(CALLBACK(src, .proc/spawn_hugger), 15)
+		QDEL_NULL(proximity_monitor)
 
 #undef BURST
 #undef BURSTING
