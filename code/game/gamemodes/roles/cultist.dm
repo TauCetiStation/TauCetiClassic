@@ -12,7 +12,7 @@
 	logo_state = "cult-logo"
 
 	var/holy_rank = CULT_ROLE_HIGHPRIEST
-	moveset = /datum/combat_moveset/cult
+	moveset_type = /datum/combat_moveset/cult
 	skillset_type = /datum/skillset/cultist
 	change_to_maximum_skills = TRUE
 

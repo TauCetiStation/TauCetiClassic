@@ -12,7 +12,7 @@
 
 	var/telecrystals = 20
 	skillset_type = /datum/skillset/max
-	moveset = /datum/combat_moveset/cqc
+	moveset_type = /datum/combat_moveset/cqc
 	change_to_maximum_skills = FALSE
 
 /datum/role/traitor/New()
