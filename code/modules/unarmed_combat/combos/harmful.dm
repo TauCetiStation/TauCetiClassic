@@ -666,8 +666,7 @@
 	require_arm_to_perform = TRUE
 	ignore_size = TRUE
 
-/datum/combat_combo/blood_boil/animate_combo(mob/living/victim, mob/living/attacker) //copypaste from resurrection spell animation
-	set waitfor = FALSE // this proc has some sleeps, and we dont want them to lock anything.
+/datum/combat_combo/blood_boil/animate_combo(mob/living/victim, mob/living/attacker)
 	var/old_loc = victim.loc
 	victim.AdjustStunned(1)
 	attacker.AdjustStunned(1)
@@ -682,17 +681,20 @@
 
 
 	animate(animation, alpha = 255, time = 2)
-	sleep(2)
+	if(!do_combo(victim, attacker, 2))
+		return
 
 	playsound(animation, 'sound/magic/resurrection_cast.ogg', VOL_EFFECTS_MASTER)
 	animate(animation, pixel_y = -5, time = 2, easing = SINE_EASING)
-	sleep(2)
+	if(!do_combo(victim, attacker, 2))
+		return
 
 	playsound(animation, 'sound/magic/resurrection_end.ogg', VOL_EFFECTS_MASTER)
 	var/matrix/Mx = matrix()
 	Mx.Scale(0)
 	animate(animation, transform = Mx, time = 1)
-	sleep(1)
+	if(!do_combo(victim, attacker, 1))
+		return
 
 	qdel(animation)
 
