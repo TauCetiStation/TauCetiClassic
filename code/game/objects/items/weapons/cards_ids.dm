@@ -11,7 +11,7 @@
  */
 /obj/item/weapon/card
 	name = "card"
-	desc = "Используется в дискетных штуках."
+	desc = "Does card things."
 	icon = 'icons/obj/card.dmi'
 	w_class = SIZE_MINUSCULE
 	var/associated_account_number = 0
@@ -20,7 +20,7 @@
 
 /obj/item/weapon/card/data
 	name = "data disk"
-	desc = "Дискета для данных."
+	desc = "A disk of data."
 	icon_state = "data"
 	var/function = "storage"
 	var/data = "null"
@@ -45,7 +45,7 @@
 	item_state = "card-id"
 	layer = 3
 	level = 2
-	desc = "Эта дискета содержит координаты легендарной планеты Клоунов. Обращайтесь с ней осторожно."
+	desc = "This card contains coordinates to the fabled Clown Planet. Handle with care."
 	function = "teleporter"
 	data = "Clown Land"
 
@@ -54,14 +54,14 @@
  */
 
 /obj/item/weapon/card/emag_broken
-	desc = "Это карта с магнитной полосой, прикрепленной к какой-то схеме. Выглядит слишком разбитой, чтобы её можно было использовать для чего-либо, кроме утилизации."
+	desc = "It's a card with a magnetic strip attached to some circuitry. It looks too busted to be used for anything but salvage."
 	name = "broken cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
 
 /obj/item/weapon/card/emag
-	desc = "Это карта с магнитной полосой, прикрепленной к какой-то схеме."
+	desc = "It's a card with a magnetic strip attached to some circuitry."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"
@@ -91,7 +91,11 @@
 
 /obj/item/weapon/card/id
 	name = "identification card"
+<<<<<<< HEAD
 	desc = "Карта, используемая для идентификации личности, должности и станционого доступа."
+=======
+	desc = "A card used to provide ID and determine access across the station."
+>>>>>>> parent of 40d471868c (Перевод описания Емага, ИД карт и дисков.)
 	icon_state = "id"
 	item_state = "card-id"
 	var/mining_points = 0 //For redeeming at mining equipment lockers
@@ -166,115 +170,115 @@
 
 /obj/item/weapon/card/id/silver
 	name = "identification card"
-	desc = "Серебряная карта, свидетельствующая о чести и преданности владельца."
+	desc = "A silver card which shows honour and dedication."
 	icon_state = "silver"
 	item_state = "silver_id"
 
 /obj/item/weapon/card/id/gold
 	name = "identification card"
-	desc = "Золотая карта, которая показывает силу и могущество владельца."
+	desc = "A golden card which shows power and might."
 	icon_state = "gold"
 	item_state = "gold_id"
 
 /obj/item/weapon/card/id/civ
 	name = "identification card"
-	desc = "Карта, пренадлежащая сотруднику гражданского персонала."
+	desc = "A card issued to civilian staff."
 	icon_state = "civ"
 	item_state = "civ_id"
 
 /obj/item/weapon/card/id/civGold //This is not the HoP. There's no position that uses this right now.
 	name = "identification card"
-	desc = "Карта начальника, олицетворяющая здравый смысл и ответственность владельца."
+	desc = "A card which represents common sense and responsibility."
 	icon_state = "civGold"
 	item_state = "civGold_id"
 
 /obj/item/weapon/card/id/sec
 	name = "identification card"
-	desc = "Карта, пренадлежащая сотруднику службы безопасности."
+	desc = "A card issued to security staff."
 	icon_state = "sec"
 	item_state = "sec_id"
 
 /obj/item/weapon/card/id/int
 	name = "identification card"
-	desc = "Карта, пренадлежащая агенту внутренних дел."
+	desc = "A card issued to internal affairs agent."
 	icon_state = "int"
 	item_state = "int_id"
 
 /obj/item/weapon/card/id/secGold
 	name = "identification card"
-	desc = "Карта начальника, которая олицетворяет доблесть владельца и его покровительство беззащитных."
+	desc = "A card which represents honor and protection."
 	icon_state = "secGold"
 	item_state = "secGold_id"
 
 /obj/item/weapon/card/id/eng
 	name = "identification card"
-	desc = "Карта, пренадлежащая сотруднику инженерного отдела."
+	desc = "A card issued to engineering staff."
 	icon_state = "eng"
 	item_state = "eng_id"
 
 /obj/item/weapon/card/id/engGold
 	name = "identification card"
-	desc = "Карта начальника, олицетворяющая креативность и изобретательность владельца."
+	desc = "A card which represents creativity and ingenuity."
 	icon_state = "engGold"
 	item_state = "engGold_id"
 
 /obj/item/weapon/card/id/med
 	name = "identification card"
-	desc = "Карта, пренадлежащая сотруднику медицинского отдела."
+	desc = "A card issued to medical staff."
 	icon_state = "med"
 	item_state = "med_id"
 
 /obj/item/weapon/card/id/medGold
 	name = "identification card"
-	desc = "Карта начальника, олицетворяющая заботу и сострадание владельца."
+	desc = "A card which represents care and compassion."
 	icon_state = "medGold"
 	item_state = "medGold_id"
 
 /obj/item/weapon/card/id/sci
 	name = "identification card"
-	desc = "Карта, пренадлежащая сотруднику научного отдела."
+	desc = "A card issued to science staff."
 	icon_state = "sci"
 	item_state = "sci_id"
 
 /obj/item/weapon/card/id/sciGold
 	name = "identification card"
-	desc = "Карта начальника, представляющая мудрость и рассудительность владельца."
+	desc = "A card which represents knowledge and reasoning."
 	icon_state = "sciGold"
 	item_state = "sciGold_id"
 
 /obj/item/weapon/card/id/clown
 	name = "identification card"
-	desc = "Радужная карта, которая олицетворяет смех и несгибаемость владельца."
+	desc = "A card which represents laugh and robust."
 	icon_state = "clown"
 	item_state = "clown_id"
 
 /obj/item/weapon/card/id/clownGold //not in use
 	name = "identification card"
-	desc = "Радужная золотая карта, которая символизирует смех и несгибаемость владельца."
+	desc = "A golden card which represents laugh and robust."
 	icon_state = "clownGold"
 	item_state = "clownGold_id"
 
 /obj/item/weapon/card/id/mime
 	name = "identification card"
-	desc = "Белоснежная карта, которая символизирует слезы и молчаливость владельца."
+	desc = "A card which represents tears and silence."
 	icon_state = "mime"
 	item_state = "mime_id"
 
 /obj/item/weapon/card/id/mimeGold //not in use
 	name = "identification card"
-	desc = "Белоснежная золотая карта, символизирующая слезы и молчаливость владельца."
+	desc = "A golden card which represents tears and silence."
 	icon_state = "mimeGold"
 	item_state = "mimeGold_id"
 
 /obj/item/weapon/card/id/cargo
 	name = "identification card"
-	desc = "Карта, пренадлежащая сотруднику отдела снабжения."
+	desc = "A card issued to cargo staff."
 	icon_state = "cargo"
 	item_state = "cargo_id"
 
 /obj/item/weapon/card/id/cargoGold
 	name = "identification card"
-	desc = "Карта начальника, представляющая возможность планирования и материальную обеспеченость владельца."
+	desc = "A card which represents service and planning."
 	icon_state = "cargoGold"
 	item_state = "cargoGold_id"
 
@@ -359,7 +363,7 @@
 
 /obj/item/weapon/card/id/syndicate_command
 	name = "syndicate ID card"
-	desc = "Карта личности прямиком от Синдиката."
+	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
 	access = list(access_syndicate, access_external_airlocks)
@@ -377,7 +381,7 @@
 
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"
-	desc = "Запасное удостоверение личности самого Верховного лорда."
+	desc = "The spare ID of the High Lord himself."
 	icon_state = "gold"
 	item_state = "gold_id"
 	registered_name = "Captain"
@@ -390,7 +394,7 @@
 
 /obj/item/weapon/card/id/centcom
 	name = "CentCom. ID"
-	desc = "Карта личности прямиком от Центрального Командования."
+	desc = "An ID straight from Cent. Com."
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
@@ -420,7 +424,7 @@
 
 /obj/item/weapon/card/id/velocity
 	name = "Cargo Industries. ID"
-	desc = "Карта личности сотрудников Велосити."
+	desc = "An ID designed for Velocity crew workers."
 	icon_state = "velocity"
 	item_state = "velcard_id"
 	registered_name = "Cargo Industries"
