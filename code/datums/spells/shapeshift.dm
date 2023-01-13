@@ -157,13 +157,6 @@
 	stored = caster
 	if(stored.mind)
 		stored.mind.transfer_to(shape)
-		shape.spell_list = stored.spell_list
-
-	source.action.Grant(shape)
-	for(var/datum/action/bodybound_action as anything in stored.actions)
-		if(bodybound_action.target != stored)
-			continue
-		bodybound_action.Grant(stored)
 
 	stored.forceMove(src)
 	stored.notransform = TRUE
