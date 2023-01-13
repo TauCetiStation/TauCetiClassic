@@ -65,7 +65,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 // !!!!     THERE IS NO MORE BITS, 23 IS LAST     !!!!!
 // You can use flags_2, or check this task https://github.com/TauCetiStation/TauCetiClassic/issues/10023
 
-
+/* Secondary atom flags, for the flags_2 var, denoted with a _2 */
 #define HOLOGRAM_2         (1<<0)
 #define CANT_BE_INSERTED   (1<<1)   // Prohibits putting an item in a containers
 /// atom queued to SSoverlay
