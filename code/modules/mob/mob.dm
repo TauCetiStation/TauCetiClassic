@@ -1016,7 +1016,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		spell.action.background_icon_state = spell.action_background_icon_state
 	if(isliving(src))
 		spell.action.Grant(src)
-	return spell
+	return
 
 /mob/proc/RemoveSpell(obj/effect/proc_holder/spell/S)
 	spell_list -= S

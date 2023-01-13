@@ -89,7 +89,9 @@
 	new /mob/living/carbon/slime(pos)
 	new /mob/living/simple_animal/corgi(pos)
 	new /mob/living/simple_animal/mouse(pos)
-	var/obj/effect/proc_holder/spell/S = host.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/abductor)
+	var/obj/effect/proc_holder/spell/S = new /obj/effect/proc_holder/spell/no_target/shapeshift/abductor()
+	host.AddSpell(S)
+	S.cast(null, host)
 	S.cast(null, host)
 
 //MINDSHOCK

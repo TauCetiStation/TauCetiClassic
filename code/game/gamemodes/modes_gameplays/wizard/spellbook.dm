@@ -191,7 +191,7 @@
 
 /datum/spellbook_entry/shapeshift
 	name = "Перевёртыш"
-	spell_type = /obj/effect/proc_holder/spell/targeted/shapeshift
+	spell_type = /obj/effect/proc_holder/spell/no_target/shapeshift
 	log_name = "FH"
 	category = "Мобильность"
 

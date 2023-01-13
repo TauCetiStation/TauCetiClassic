@@ -1,10 +1,9 @@
-/obj/effect/proc_holder/spell/targeted/shapeshift
+/obj/effect/proc_holder/spell/no_target/shapeshift
 	name = "Перевёртыш"
 	desc = "Примите облик какого-либо существа на время, чтобы использовать его силы. Как только вы выбрали существо, его уже нельзя будет изменить."
 	clothes_req = FALSE
 	charge_max = 200
 	range = -1
-	include_user = TRUE
 	invocation = "RAC'WA NO!"
 	invocation_type = "shout"
 	action_icon_state = "shapeshift"
@@ -27,9 +26,9 @@
 		/mob/living/simple_animal/corgi,\
 		/mob/living/simple_animal/hostile/carp,\
 		/mob/living/simple_animal/hostile/giant_spider/hunter,\
-		/mob/living/simple_animal/construct/armoured,)
+		/mob/living/simple_animal/hostile/blob/blobbernaut/independent,)
 
-/obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets, mob/living/user = usr)
+/obj/effect/proc_holder/spell/no_target/shapeshift/cast(list/targets, mob/living/user = usr)
 	if(user.buckled)
 		user.buckled.unbuckle_mob()
 	if(!shapeshift_type)
@@ -87,14 +86,14 @@
  * Arguments:
  * * user The mob interacting with a menu
  */
-/obj/effect/proc_holder/spell/targeted/shapeshift/proc/check_menu(mob/user)
+/obj/effect/proc_holder/spell/no_target/shapeshift/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
 	if(user.incapacitated())
 		return FALSE
 	return TRUE
 
-/obj/effect/proc_holder/spell/targeted/shapeshift/proc/Shapeshift(mob/living/caster)
+/obj/effect/proc_holder/spell/no_target/shapeshift/proc/Shapeshift(mob/living/caster)
 	var/obj/shapeshift_holder/H = locate() in caster
 	if(H)
 		to_chat(caster, "<span class='userdanger'>Вы уже приняли форму существа!</span>")
@@ -106,7 +105,7 @@
 	clothes_req = FALSE
 	return shape
 
-/obj/effect/proc_holder/spell/targeted/shapeshift/proc/Restore(mob/living/shape)
+/obj/effect/proc_holder/spell/no_target/shapeshift/proc/Restore(mob/living/shape)
 	var/obj/shapeshift_holder/H = locate() in shape
 	if(!H)
 		return
@@ -116,12 +115,12 @@
 
 	clothes_req = initial(clothes_req)
 
-/obj/effect/proc_holder/spell/targeted/shapeshift/abductor
+/obj/effect/proc_holder/spell/no_target/shapeshift/abductor
 	name = "True form"
 	desc = "Reveal your true form!"
 	convert_damage = FALSE
 
-/obj/effect/proc_holder/spell/targeted/shapeshift/abductor/atom_init()
+/obj/effect/proc_holder/spell/no_target/shapeshift/abductor/atom_init()
 	. = ..()
 	var/form = pick("slime", "corgi", "mouse")
 	switch(form)
@@ -142,9 +141,9 @@
 	var/mob/living/stored
 	var/mob/living/shape
 	var/restoring = FALSE
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/source
+	var/obj/effect/proc_holder/spell/no_target/shapeshift/source
 
-/obj/shapeshift_holder/atom_init(mapload, obj/effect/proc_holder/spell/targeted/shapeshift/_source, mob/living/caster)
+/obj/shapeshift_holder/atom_init(mapload, obj/effect/proc_holder/spell/no_target/shapeshift/_source, mob/living/caster)
 	. = ..()
 	source = _source
 	shape = loc
@@ -154,7 +153,7 @@
 	stored = caster
 	if(stored.mind)
 		stored.mind.transfer_to(shape)
-
+		shape.spell_list = stored.spell_list
 	stored.forceMove(src)
 	stored.notransform = TRUE
 	if(source.convert_damage)
@@ -214,13 +213,6 @@
 	stored.notransform = FALSE
 	if(shape.mind)
 		shape.mind.transfer_to(stored)
-
-	if(!QDELETED(source)) // Power of shitspawn, or let's say, swap mind
-		source.action.Grant(stored)
-	for(var/datum/action/bodybound_action as anything in stored.actions)
-		if(bodybound_action.target != stored)
-			continue
-		bodybound_action.Grant(stored)
 
 	if(death)
 		stored.death()
