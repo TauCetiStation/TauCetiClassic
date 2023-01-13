@@ -580,6 +580,7 @@
 
 	require_leg = TRUE
 	require_arm_to_perform = TRUE
+	heavy_animation = TRUE
 
 
 	pump_bodyparts = list(
@@ -587,8 +588,36 @@
 		BP_R_LEG = 7
 	)
 
-/datum/combat_combo/highkick_cqc/execute(mob/living/victim, mob/living/attacker)
+/datum/combat_combo/highkick_cqc/animate_combo(mob/living/victim, mob/living/attacker)
 	var/list/attack_obj = attacker.get_unarmed_attack()
+
+	var/DTM = get_dir(attacker, victim)
+	var/shift_x = 0
+	var/shift_y = 0
+
+	var/matrix/M = matrix()
+	var/matrix/prev_attacker_M = attacker.transform
+	var/matrix/prev_victim_M = victim.transform
+
+	if(DTM & NORTH)
+		shift_y = 16
+	else if(DTM & SOUTH)
+		shift_y = -16
+
+	var/prev_pix_y = attacker.pixel_y
+
+	var/prev_victim_layer = victim.layer
+
+	victim.layer = attacker.layer - 0.1
+
+	animate(attacker, pixel_x = attacker.pixel_x + shift_x, pixel_y = attacker.pixel_y + shift_y, time = 2)
+	if(!do_after(attacker, 2, target = victim, progress = FALSE))
+		return
+
+	animate(attacker, transform = M, pixel_y = attacker.pixel_y + 8, time = 2)
+	if(!do_combo(victim, attacker, 2))
+		return
+	attacker.emote("woo")
 	switch(rand(1,100))
 		if(1 to 40)
 			victim.visible_message("<span class='danger'>[attacker]'s kick knocks [victim] off his feet, stunning and confusing!</span>")
@@ -606,9 +635,24 @@
 			victim.SetSleeping(5 SECONDS)
 	apply_damage(20, victim, attacker, zone=BP_HEAD, attack_obj=attack_obj)
 	playsound(victim, 'sound/weapons/genhit1.ogg', VOL_EFFECTS_MASTER)
+	animate(attacker, transform = prev_attacker_M, pixel_y = attacker.pixel_y + 8, time = 2)
+	if(!do_combo(victim, attacker, 2))
+		return
+
+	attacker.pixel_y = prev_pix_y + 16
+
+	animate(attacker, pixel_y = attacker.pixel_y - 16, time = 2)
+	if(!do_combo(victim, attacker, 2))
+		return
 
 
+	attacker.transform = prev_attacker_M
+	victim.transform = prev_victim_M
+	victim.layer = prev_victim_layer
 
+
+/datum/combat_combo/highkick_cqc/execute(mob/living/victim, mob/living/attacker)
+	return
 
 /datum/combat_combo/blood_boil
 	name = COMBO_BLOOD_BOIL_CULT
