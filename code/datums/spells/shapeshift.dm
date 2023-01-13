@@ -42,7 +42,7 @@
 			display_animals += list(initial(animal.name) = animal_image)
 		sortList(display_animals)
 		var/new_shapeshift_type = show_radial_menu(user, user, display_animals, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 38, require_near = TRUE)
-		if(shapeshift_type)
+		if(!new_shapeshift_type)
 			return
 		shapeshift_type = animal_list[new_shapeshift_type]
 
