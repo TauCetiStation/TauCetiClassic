@@ -170,7 +170,7 @@
 	if(source.convert_damage)
 		var/damage_percent = (stored.maxHealth - stored.health)/stored.maxHealth;
 		var/damapply = damage_percent * shape.maxHealth;
-		shape.apply_damage(damapply, source.convert_damage_type)//, forced = TRUE, wound_bonus=CANT_WOUND);
+		shape.apply_damage(damapply, source.convert_damage_type)
 
 	RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DIED), .proc/shape_death)
 	RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_DIED), .proc/caster_death)
