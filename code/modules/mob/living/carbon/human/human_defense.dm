@@ -23,7 +23,7 @@
 	if(size_diff_calculate < 0)
 		return
 	var/weight_diff_coef = 1 + sqrt(size_diff_calculate)
-	if(shoes?.flags & NOSLIP || wear_suit?.flags & NOSLIP)
+	if(shoes?.flags & AIR_FLOW_PROTECT || wear_suit?.flags & AIR_FLOW_PROTECT)
 		adjustHalLoss(15 * weight_diff_coef)	//thicc landing
 	else
 		AdjustWeakened(2 * weight_diff_coef)	//4 seconds is default slip
