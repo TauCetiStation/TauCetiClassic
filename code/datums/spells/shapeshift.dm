@@ -44,10 +44,7 @@
 		var/new_shapeshift_type = show_radial_menu(user, user, display_animals, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 38, require_near = TRUE)
 		if(shapeshift_type)
 			return
-		shapeshift_type = new_shapeshift_type
-		if(!shapeshift_type) //If you aren't gonna decide I am!
-			shapeshift_type = pick(animal_list)
-		shapeshift_type = animal_list[shapeshift_type]
+		shapeshift_type = animal_list[new_shapeshift_type]
 
 	var/obj/shapeshift_holder/S = locate() in user
 	if(S)
