@@ -91,11 +91,8 @@
 
 /obj/item/weapon/card/id
 	name = "identification card"
-<<<<<<< HEAD
 	desc = "Карта, используемая для идентификации личности, должности и станционого доступа."
-=======
 	desc = "A card used to provide ID and determine access across the station."
->>>>>>> parent of 40d471868c (Перевод описания Емага, ИД карт и дисков.)
 	icon_state = "id"
 	item_state = "card-id"
 	var/mining_points = 0 //For redeeming at mining equipment lockers
