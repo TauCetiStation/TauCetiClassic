@@ -274,7 +274,7 @@
 
 /obj/item/weapon/card/id/cargoGold
 	name = "identification card"
-	desc = "Карта начальника, представляющая возможность планирования и материальную обеспеченость владельца."
+	desc = "Карта начальника, представляющая способность планирования и материальную обеспеченность владельца."
 	icon_state = "cargoGold"
 	item_state = "cargoGold_id"
 
