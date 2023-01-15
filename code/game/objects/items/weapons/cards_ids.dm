@@ -490,4 +490,3 @@
 /obj/item/weapon/card/id/syndicate/unknown/atom_init()
 	. = ..()
 	access = get_all_accesses()
-	
