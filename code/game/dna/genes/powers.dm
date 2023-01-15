@@ -32,7 +32,7 @@
 
 /datum/dna/gene/basic/regenerate
 	name="Regenerate"
-	activation_messages=list("Ваша регенрация усиливается ")
+	activation_messages=list("Ваша регенерация усиливается ")
 	mutation=REGEN
 	activation_prob=50
 
@@ -74,7 +74,7 @@
 
 /datum/dna/gene/basic/increaserun
 	name="Super Speed"
-	activation_messages=list("Мышцы ваших ног пульсируют.")
+	activation_messages=list("Ваши ноги пульсируют.")
 	mutation=RUN
 	activation_prob=50
 
