@@ -202,3 +202,9 @@
 
 // atom traits
 #define TRAIT_XENO_FUR "xeno_fur"
+
+// trait sources
+#define EYE_DAMAGE_TRAIT "eye_damage"
+#define EYE_DAMAGE_TEMPORARY_TRAIT "eye_damage_temporary"
+#define GENETIC_MUTATION_TRAIT "genetic"
+#define QUIRK_TRAIT "quirk"
