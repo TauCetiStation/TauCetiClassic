@@ -15,6 +15,8 @@
 	var/mob/living/L = buckled_mob
 	add_fingerprint(user)
 	if(L != user)
+		if(user.lying)
+			return
 		L.visible_message(
 			"<span class='notice'>[user.name] pulls [L.name] free from the sticky nest!</span>",
 			"<span class='notice'>[user.name] pulls you free from the gelatinous resin.</span>",
