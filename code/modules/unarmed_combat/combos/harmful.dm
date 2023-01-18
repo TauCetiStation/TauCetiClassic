@@ -668,8 +668,10 @@
 
 /datum/combat_combo/blood_boil/animate_combo(mob/living/victim, mob/living/attacker)
 	var/old_loc = victim.loc
-	victim.AdjustStunned(1)
-	attacker.AdjustStunned(1)
+	var/prev_victim_anchored = victim.anchored
+	var/prev_attacker_anchored = attacker.anchored
+	victim.anchored = TRUE
+	attacker.anchored = TRUE
 
 	var/atom/movable/overlay/animation = new( victim.loc )
 	animation.icon = 'icons/hud/unarmed_combat_combos.dmi'
@@ -696,6 +698,8 @@
 	if(!do_combo(victim, attacker, 1))
 		return
 
+	victim.anchored = prev_victim_anchored
+	attacker.anchored = prev_attacker_anchored
 	qdel(animation)
 
 	var/saved_targetzone = attacker.get_targetzone()
