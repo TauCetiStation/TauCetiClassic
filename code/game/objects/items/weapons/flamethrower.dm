@@ -411,14 +411,13 @@
 		if(distance_reached > 7)
 			break
 		//check every turf in line for walls/glass/etc
-		if(!self_turf.CanPass(null, turf_in_line, 0, 0))
+		if(!self_turf.CanPass(null, turf_in_line, 0))
 			break
 		//don't accidentally set yourself on fire
 		var/amount_fuel = 0
 		if(get_dist(turf_in_line, user) < 3)
 			amount_fuel = 0.5
 			flame_turf(turf_in_line, self_turf, amount_fuel)
-			fuel_spent += amount_fuel
 		else
 			amount_fuel = 1
 			flame_turf(turf_in_line, self_turf, amount_fuel)
