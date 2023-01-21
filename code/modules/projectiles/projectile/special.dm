@@ -202,9 +202,6 @@
 	if(istype(target, /obj/singularity))
 		empulse(target, 4, 10)
 		qdel(target)
-		return
-	else
-		return
 
 	return ..()
 
