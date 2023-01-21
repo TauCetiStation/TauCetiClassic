@@ -191,13 +191,7 @@
 
 /obj/item/projectile/anti_singulo/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	if(istype(target, /obj/singularity/narsie))
-		for(var/mob/M in player_list)
-			if(!isnewplayer(M))
-				to_chat(M, "<font size='15' color='red'><b>FOOLISH MORTALS! I AM A GOD. HOW CAN YOU KILL A GOD?</b></font>")
-				M.playsound_local(null, 'sound/hallucinations/demons_3.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, ignore_environment = TRUE)
-				for(M in range(20))
-					M.gib()
-					return
+		return
 
 	if(istype(target, /obj/singularity))
 		empulse(target, 4, 10)
