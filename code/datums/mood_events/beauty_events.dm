@@ -17,3 +17,8 @@
 /datum/mood_event/greatroom
 	description = "<span class='nicegreen'>This room is beautiful!</span>"
 	mood_change = 5
+
+/datum/mood_event/gourd
+	description = "<span class='nicegreen'>Gourds look great.</span>"
+	mood_change = 3
+	timeout = 1 MINUTE

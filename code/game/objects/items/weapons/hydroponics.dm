@@ -102,3 +102,205 @@
 		return
 	else
 		return ..()
+
+/*
+ * Gourd
+ */
+var/global/list/gourd_names = list(
+	"gourd",
+	"pumpkin",
+	"pumpkling",
+	"bottle gourd",
+	"calabash",
+	"long melon",
+	"opo squash",
+	"cabaza",
+	"kabocha",
+	"pepo",
+	"lagenaria",
+	"kabak",
+)
+var/global/gourd_name = null
+
+/proc/get_gourd_name()
+	if(global.gourd_name)
+		return global.gourd_name
+	global.gourd_name = pick(global.gourd_names)
+	return global.gourd_name
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/gourd
+	seed_type = /obj/item/seeds/gourdseed
+	name = "gourd"
+	desc = "Тыквяк. Твёрдый, и малосъедобный. Не кушай."
+	icon_state = "gourd"
+	item_state = "gourd"
+	potency = 10
+	filling_color = "#95ba43"
+
+	var/restore_reagent = "gourd"
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/gourd/atom_init()
+	. = ..()
+	name = "[get_gourd_name()]"
+
+	reagents.maximum_volume = 30 * potency * 0.1
+
+	reagents.add_reagent("gourd", 1 + round(potency * 0.1, 1))
+	// Tough fruit, lotsa bites.
+	bitesize = 1 + round(reagents.total_volume * 0.1, 1)
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/gourd/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/gourd/process()
+	if(reagents.total_volume >= reagents.maximum_volume)
+		return
+
+	reagents.add_reagent(restore_reagent, potency * 0.005)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/gourd/attackby(obj/item/I, mob/user)
+	if(I.qualities[QUALITY_CUTTING])
+		var/turf/T = I.loc
+		if(!isturf(T))
+			T = T.loc
+		if(!isturf(T))
+			return ..()
+
+		user.drop_from_inventory(I)
+		var/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/G = new /obj/item/weapon/reagent_containers/food/drinks/bottle/gourd(T)
+		G.volume = reagents.maximum_volume * 3
+		G.reagents.maximum_volume = reagents.maximum_volume * 3
+
+		if(user.in_interaction_vicinity(G))
+			user.put_in_hands(G)
+		qdel(src)
+		return
+
+	return ..()
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/gourd/examine(mob/user)
+	. = ..()
+	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", /datum/mood_event/gourd)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/gourd/attack_self(mob/user)
+	. = ..()
+	// if(маракас_кд)
+	// 	playsound(маракас)
+
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd
+	name = "bottle gourd bottle"
+	desc = "Бутылка из тыквяка. Бьёт дважды."
+	icon_state = "gourd_flask"
+	item_state = "gourd_flask"
+
+	amount_per_transfer_from_this = 10
+	volume = 100
+	is_glass = FALSE
+	is_transparent = FALSE
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/atom_init()
+	. = ..()
+	name = "[get_gourd_name()] bottle"
+	verbs += /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/can_smash()
+	return TRUE
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/smash(mob/living/target, mob/living/user)
+	//Creates a shattering noise and replaces the bottle with a broken_bottle
+	user.drop_from_inventory(src)
+
+	var/obj/item/weapon/broken_bottle/gourd/B = new /obj/item/weapon/broken_bottle/gourd(loc)
+	if(isturf(loc))
+		new /obj/effect/decal/cleanable/gourd(loc)
+
+	B.icon_state = src.icon_state
+
+	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
+	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
+	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
+	B.icon = I
+
+	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+
+	user.put_in_active_hand(B)
+	transfer_fingerprints_to(B)
+
+	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/after_throw(datum/callback/callback)
+	..()
+	reagents.standard_splash(loc)
+	if(isturf(loc))
+		new /obj/effect/decal/cleanable/gourd(loc)
+	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/examine(mob/user)
+	. = ..()
+	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", /datum/mood_event/gourd)
+
+/obj/item/weapon/broken_bottle/gourd
+	name = "shatttered gourd bottle"
+	desc = "Сломан, но не сломлен, тыквяк может нанести ещё один удар."
+	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
+
+/obj/item/weapon/broken_bottle/gourd/atom_init()
+	. = ..()
+	name = "shattered [get_gourd_name()] bottle"
+
+/obj/item/weapon/broken_bottle/gourd/attack(mob/living/target, mob/living/user, def_zone)
+	if(user.a_intent != INTENT_HARM)
+		return ..()
+
+	if(!target)
+		return
+
+	force = 15 //Smashing bottles over someoen's head hurts.
+
+	var/armor_block = 0 //Get the target's armour values for normal attack damage.
+	var/armor_duration = 0 //The more force the bottle has, the longer the duration.
+
+	//Calculating duration and calculating damage.
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		armor_block = H.run_armor_check(def_zone, MELEE) // For normal attack damage
+
+		//Calculating the weakening duration for the target.
+		if(def_zone == BP_HEAD)
+			armor_duration = (duration - armor_block) + force
+
+	else
+		//Only humans can have armour, right?
+		armor_block = target.run_armor_check(def_zone, MELEE)
+		if(def_zone == BP_HEAD)
+			armor_duration = duration + force
+	armor_duration /= 10
+
+	//Apply the damage!
+	target.apply_damage(force, BRUTE, def_zone, armor_block)
+
+	// You are going to knock someone out for longer if they are not wearing a helmet.
+	if(def_zone == BP_HEAD && iscarbon(target))
+		//Display an attack message.
+		if(target != user)
+			user.visible_message("<span class='bold warning'>[target] has been hit over the head with \a [name], by [user]!</span>")
+		else
+			user.visible_message("<span class='bold warning'>[target] hit himself with \a [name] on the head!</span>")
+		//Weaken the target for the duration that we calculated and divide it by 5.
+		if(armor_duration)
+			target.apply_effect(min(armor_duration, 10) , WEAKEN) // Never weaken more than a flash!
+
+	else
+		//Default attack message and don't weaken the target.
+		if(target != user)
+			user.visible_message("<span class='bold warning'>[target] has been attacked with \a [name], by [user]!</span>")
+		else
+			user.visible_message("<span class='bold warning'>[target] has attacked himself with \a [name]!</span>")
+
+	//Attack logs
+	target.log_combat(user, "smashed with a [name] (INTENT: [uppertext(user.a_intent)])")
+
+	qdel(src)

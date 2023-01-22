@@ -314,6 +314,8 @@
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
+	toxin_absorption = 3.0
+
 /datum/reagent/anti_toxin/on_general_digest(mob/living/M)
 	..()
 	M.reagents.remove_all_type(/datum/reagent/toxin, REM, 0, 1)
@@ -331,6 +333,8 @@
 	restrict_species = list(IPC, DIONA)
 
 	data = list()
+
+	toxin_absorption = 5.0
 
 /datum/reagent/thermopsis/on_general_digest(mob/living/M)
 	..()
