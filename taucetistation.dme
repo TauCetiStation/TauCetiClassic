@@ -831,6 +831,7 @@
 #include "code\game\machinery\computer\syndicate_shuttle.dm"
 #include "code\game\machinery\computer\syndicate_specops_shuttle.dm"
 #include "code\game\machinery\computer\tc_station.dm"
+#include "code\game\machinery\computer\vendomat.dm"
 #include "code\game\machinery\computer\vox_shuttle.dm"
 #include "code\game\machinery\doors\airlock.dm"
 #include "code\game\machinery\doors\airlock_electronics.dm"
