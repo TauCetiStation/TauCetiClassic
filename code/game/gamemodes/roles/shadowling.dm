@@ -51,5 +51,8 @@
 	SEND_SIGNAL(antag.current, COMSIG_ADD_MOOD_EVENT, "thralled", /datum/mood_event/thrall)
 
 /datum/role/thrall/RemoveFromRole(datum/mind/M, msg_admins)
+	var/obj/effect/proc_holder/spell/targeted/shadowling_hivemind/spell = locate(/obj/effect/proc_holder/spell/targeted/shadowling_hivemind) in antag.current.spell_list
+	if(spell)
+		antag.current.RemoveSpell(spell)
 	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "thralled")
 	..()

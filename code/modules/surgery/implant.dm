@@ -259,6 +259,13 @@
 			BP.hidden.blood_DNA = list()
 		BP.hidden.blood_DNA[target.dna.unique_enzymes] = target.dna.b_type
 		BP.hidden.update_icon()
+		if(istype(BP.hidden, /obj/item/shadow_tumor))
+			if(isshadowthrall(target))
+				var/datum/role/R = target.mind.GetRole(SHADOW_THRALL)
+				if(R)
+					R.Deconvert()
+					target.visible_message("<span class='notice'>[target] seizes up and falls limp, before quickly relaxing.</span>",
+				   "<span class='notice'>Constant pressure on your brain is suddenly released. <b>You are no longer enthralled!</b></span>")
 		BP.hidden = null
 	else
 		user.visible_message("<span class='notice'>[user] could not find anything inside [target]'s [BP.name], and pulls \the [tool] out.</span>", \

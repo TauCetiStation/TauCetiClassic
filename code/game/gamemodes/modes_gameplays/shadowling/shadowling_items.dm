@@ -147,3 +147,10 @@
 		M.ghostize()
 	playsound(src, 'sound/effects/EMPulse.ogg', VOL_EFFECTS_MASTER, 25)
 	qdel(AM)
+
+/obj/item/shadow_tumor
+	name = "weird tumor"
+	desc = "It feels oily...."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "shadow"
+	origin_tech = "biotech=4"
