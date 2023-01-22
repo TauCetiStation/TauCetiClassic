@@ -22,7 +22,7 @@
 		//give them time to think about the situation
 		convert_target.AdjustSleeping(2)
 	else
-		to_chat(user, "<span class='warning'>*click* *click*</span>")
+		playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	flick("flash2", src)
 	playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
 
@@ -41,6 +41,7 @@
 				user_role = R
 				break
 	if(!user_role)
+		to_chat(user, "<span class='warning'>*click* *click*</span>")
 		return FALSE
 	//select target [convert_target] for convert
 	var/list/victim_list = list()
@@ -52,6 +53,7 @@
 		victim_list[H] = I
 	convert_target = show_radial_menu(user, src, victim_list, tooltips = TRUE)
 	if(!convert_target)
+		to_chat(user, "<span class='warning'>*click* *click*</span>")
 		return FALSE
 	//check target implants, mind
 	if(convert_target.ismindshielded())
@@ -78,9 +80,16 @@
 	if(!have_incapacitating)
 		to_chat(user, "<span class='warning'>Make [convert_target] helpless against you!</span>")
 		return FALSE
+	if(convert_target.eyecheck() > 0)
+		user.visible_message("<span class='warning'>[user] fails to blind [convert_target] with the flash!</span>",
+							"<span class='warning'>You fails to blind [convert_target] with the [src].</span>")
+		return FALSE
 	//find all user's factions and add target as recruit.
 	var/list/factions = find_factions_by_member(user_role, user.mind)
 	for(var/datum/faction/faction in factions)
+		//No double convert (should work in CanBeAssigned() but doesnt works)
+		if(faction.get_member_by_mind(convert_target.mind))
+			continue
 		add_faction_member(faction, convert_target)
 	return TRUE
 
