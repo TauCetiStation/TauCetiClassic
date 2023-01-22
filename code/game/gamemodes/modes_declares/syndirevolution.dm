@@ -5,9 +5,8 @@
 
 	factions_allowed = list(/datum/faction/revolution/flash_revolution)
 
-	//~like a nukies
-	minimum_player_count = 1
-	minimum_players_bundles = 1
+	minimum_player_count = 20
+	minimum_players_bundles = 25
 
 /datum/game_mode/syndireva/announce()
 	to_chat(world, "<B>The current game mode is - Syndicate Revolution!</B>")
