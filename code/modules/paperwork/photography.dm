@@ -300,8 +300,8 @@
 	slot_flags = SLOT_FLAGS_BELT
 	m_amt = 2000
 	var/flash_enabled = TRUE
-	var/pictures_max = 10
-	var/pictures_left = 10
+	var/pictures_max = 0
+	var/pictures_left = 0
 	var/on = 1
 	var/icon_on = "camera"
 	var/icon_off = "camera_off"
@@ -311,6 +311,8 @@
 	var/obj/item/device/lens/lens
 	var/base_lens
 	var/reloaded = TRUE
+	var/drive[10]
+	var/drive_current = 1
 
 /obj/item/device/camera/polar
 	name = "polaroid"
@@ -321,6 +323,9 @@
 	icon_off = "polaroid_off"
 	can_put_lens = FALSE
 	base_lens = /obj/item/device/lens/polar
+	pictures_max = 10
+	pictures_left = 10
+	drive = null
 
 /obj/item/device/camera/polar/spooky
 	name = "camera obscura"
@@ -341,7 +346,6 @@
 	icon_state = "lomo"
 	icon_on = "lomo"
 	icon_off = "lomo_off"
-	pictures_left = 30
 	can_put_lens = FALSE
 	base_lens = /obj/item/device/lens/lomo
 
@@ -351,7 +355,6 @@
 	icon_state = "fed"
 	icon_on = "fed"
 	icon_off = "fed_off"
-	pictures_left = 30
 	can_put_lens = FALSE
 	base_lens = /obj/item/device/lens/old
 
@@ -411,7 +414,7 @@
 	return
 
 /obj/item/device/camera/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/camera_film))
+	if(istype(I, /obj/item/device/camera_film) && !drive.len)
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(pictures_left)
 			to_chat(user, "<span class='notice'>[src] still has some film in it!</span>")
@@ -540,16 +543,19 @@
 /obj/item/device/camera/afterattack(atom/target, mob/user, proximity, params)
 	if(!on || !reloaded || ismob(target.loc))
 		return
-	if(!pictures_left)
+	if(!pictures_left && !drive.len)
 		to_chat(user, "<span class='warning'>There is no photos left. Insert more camera film.</span>")
 		return
-	captureimage(target, user, proximity)
+	var/datum/picture/Pict = captureimage(target, user, proximity)
 
 	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
-	pictures_left--
+	if(drive.len)
+		drive.Insert(1, Pict)
+	else
+		printpicture(user, Pict)
+		to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	update_desc()
-	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	icon_state = icon_off
 	reloaded = FALSE
 	addtimer(CALLBACK(src, .proc/reload), 64)
@@ -613,7 +619,7 @@
 				temp.MapColors(arglist(lens.effect["effect2"]))
 
 	var/datum/picture/P = createpicture(user, temp, mobs, mob_names, flag)
-	printpicture(user, P)
+	return P
 
 /obj/item/device/camera/proc/createpicture(mob/user, icon/temp, mobs, mob_names, flag)
 	var/icon/small_img = icon(temp)
@@ -644,6 +650,7 @@
 	if(!user.get_inactive_hand())
 		user.put_in_inactive_hand(Photo)
 	Photo.construct(P)
+	pictures_left--
 
 /obj/item/device/camera/proc/get_base_photo_icon()
 	var/icon/res
@@ -670,7 +677,7 @@
 	pixel_x = P.fields["pixel_x"]
 	pixel_y = P.fields["pixel_y"]
 
-/obj/item/weapon/photo/proc/deconstruct()
+/obj/item/weapon/photo/proc/scan()
 	var/datum/picture/P = new()
 
 	P.fields["author"] = "unknown"

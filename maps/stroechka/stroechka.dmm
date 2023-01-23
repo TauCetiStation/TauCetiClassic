@@ -200,7 +200,7 @@
 	},
 /obj/machinery/alarm{
 	locked = 0;
-	mode =  2;
+	mode = 2;
 	pixel_x = -28;
 	pixel_y = -6
 	},
@@ -1786,11 +1786,11 @@
 /area/station/hallway/secondary/exit)
 "dk" = (
 /obj/structure/table,
-/obj/machinery/faxmachine{
-	department = "Chief Engineer Office"
-	},
 /obj/item/weapon/storage/secure/safe{
 	pixel_x = -24
+	},
+/obj/machinery/paperwork/printer/faxmachine{
+	id_name = "Chief Engineer's Office"
 	},
 /turf/simulated/floor{
 	dir = 8;

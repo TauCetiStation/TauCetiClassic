@@ -159,11 +159,6 @@
 	req_access = list(101)
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/photocopier{
-	density = 0;
-	layer = 2;
-	pixel_x = 5
-	},
 /obj/item/weapon/paper_bin{
 	pixel_x = -3;
 	pixel_y = 7
@@ -194,11 +189,6 @@
 	req_access = list(101)
 	},
 /obj/structure/table/reinforced,
-/obj/machinery/photocopier{
-	density = 0;
-	layer = 2;
-	pixel_x = 5
-	},
 /obj/item/weapon/paper_bin{
 	pixel_x = -3;
 	pixel_y = 7
@@ -236,11 +226,9 @@
 /area/velocity)
 "aau" = (
 /obj/structure/table/woodentable,
-/obj/machinery/faxmachine{
-	department = "Velocity";
-	dptdest = "Captain's Office";
-	req_access = list(101);
-	req_one_access = list()
+/obj/machinery/paperwork/printer/faxmachine{
+	id_name = "Velocity";
+	destination_name = "Captain's Office"
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -7313,6 +7301,9 @@
 /area/velocity)
 "arx" = (
 /obj/structure/table/woodentable,
+/obj/machinery/photocopier{
+	destination_name = "Velocity"
+	},
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -13540,9 +13531,9 @@
 /area/centcom/specops)
 "aEP" = (
 /obj/structure/table/reinforced,
-/obj/machinery/faxmachine{
-	department = "Central Command";
-	dptdest = "Captain's Office"
+/obj/machinery/paperwork/printer/faxmachine{
+	destination_name = "Captain's Office";
+	id_name = "Central Command"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -14238,7 +14229,6 @@
 	},
 /area/custom/wizard_station)
 "aGl" = (
-/obj/machinery/photocopier,
 /obj/item/device/radio/intercom{
 	desc = "Talk through this. Evilly";
 	freerange = 1;
@@ -16552,9 +16542,9 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_y = -32
 	},
-/obj/machinery/faxmachine{
-	department = "Central Command";
-	dptdest = "Captain's Office"
+/obj/machinery/paperwork/printer/faxmachine{
+	destination_name = "Captain's Office";
+	id_name = "Central Command"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -17880,7 +17870,10 @@
 	},
 /area/custom/syndicate_mothership/armory)
 "aOc" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier{
+	destination_name = "Central Command"
+	},
+/obj/structure/table,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -18685,9 +18678,9 @@
 /obj/structure/table/woodentable{
 	dir = 10
 	},
-/obj/machinery/faxmachine{
-	department = "Central Command";
-	dptdest = "Captain's Office"
+/obj/machinery/paperwork/printer/faxmachine{
+	destination_name = "Captain's Office";
+	id_name = "Central Command"
 	},
 /turf/unsimulated/floor{
 	icon_state = "carpet"
@@ -20417,9 +20410,9 @@
 /obj/structure/table/woodentable{
 	dir = 10
 	},
-/obj/machinery/faxmachine{
-	department = "Central Command";
-	dptdest = "Captain's Office"
+/obj/machinery/paperwork/printer/faxmachine{
+	destination_name = "Captain's Office";
+	id_name = "Central Command"
 	},
 /turf/unsimulated/floor{
 	dir = 8;

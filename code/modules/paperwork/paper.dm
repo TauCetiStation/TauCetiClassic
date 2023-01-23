@@ -3,6 +3,10 @@
  * also scraps of paper
  */
 
+/datum/document
+ 	var/name = "document"
+ 	var/list/fields = list()
+
 /obj/item/weapon/paper
 	name = "paper"
 	gender = PLURAL
@@ -281,6 +285,8 @@
 	return P
 
 /obj/item/weapon/paper/proc/construct(datum/document/Doc)
+	name = Doc.fields["name"]
+
 	info = Doc.fields["info"]
 	info_links = Doc.fields["info_links"]
 	stamp_text = Doc.fields["stamp_text"]
@@ -292,8 +298,12 @@
 	offset_x = Doc.fields["offset_x"]
 	offset_y = Doc.fields["offset_y"]
 
-/obj/item/weapon/paper/proc/deconstruct()
+	update_icon()
+
+/obj/item/weapon/paper/proc/scan()
 	var/datum/document/Doc = new()
+
+	Doc.fields["name"] = name
 
 	Doc.fields["info"] = info
 	Doc.fields["info_links"] = info_links

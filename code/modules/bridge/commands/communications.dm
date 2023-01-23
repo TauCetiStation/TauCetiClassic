@@ -7,7 +7,7 @@
 
 /datum/bridge_command/announce/execute(list/params)
 	var/message = sanitize(params["bridge_arg_1"], MAX_PAPER_MESSAGE_LEN, extra = 0)
-	
+
 	if(!message)
 		return
 
@@ -46,7 +46,8 @@
 	var/obj/item/weapon/stamp/S = new /obj/item/weapon/stamp/centcomm
 	S.stamp_paper(P)
 
-	send_fax(BRIDGE_FROM_SNIPPET_TEXT, P, department)
+	if(send_document("document", P.scan(), department))
+		log_fax("[BRIDGE_FROM_SNIPPET_TEXT] sending [P.name] to [department]: [P.info]")
 
 	SSStatistics.add_communication_log(type = "fax-centcomm", title = P.name, author = "Centcomm Officer", content = P.info + "\n" + P.stamp_text)
 	message_admins("Fax message was created by [BRIDGE_FROM_SNIPPET_HTML] and sent to [department]")

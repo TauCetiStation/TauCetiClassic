@@ -19577,10 +19577,10 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/faxmachine{
-	department = "Captain's Office"
-	},
 /obj/structure/table/woodentable,
+/obj/machinery/paperwork/printer/faxmachine{
+	id_name = "Bridge"
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "ffs" = (
@@ -45487,11 +45487,11 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "nnH" = (
-/obj/machinery/faxmachine{
-	department = "Bridge"
-	},
 /obj/structure/table/woodentable,
 /obj/machinery/light,
+/obj/machinery/paperwork/printer/faxmachine{
+	id_name = "Captain's Office"
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "nnI" = (
@@ -58208,11 +58208,11 @@
 /area/station/security/brig)
 "rsT" = (
 /obj/structure/table/reinforced,
-/obj/machinery/faxmachine{
-	department = "Internal Affairs"
-	},
 /obj/machinery/firealarm{
 	pixel_y = 24
+	},
+/obj/machinery/paperwork/printer/faxmachine{
+	id_name = "Internal Affairs"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"

@@ -76,6 +76,8 @@
 	var/category_shop_page = 1
 	var/category_shop_per_page = 5
 
+	var/printer_id = ""
+
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
 	action_button_name = "Toggle light"
@@ -520,7 +522,8 @@
 	data["scanmode"] = scanmode				// Scanners
 	data["fon"] = fon					// Flashlight on?
 	data["pai"] = (isnull(pai) ? 0 : 1)			// pAI inserted?
-	data["note"] = note					// current pda notes
+	data["note"] = note				// current pda notes
+	data["printer_id"] = printer_id
 	data["message_silent"] = message_silent					// does the pda make noise when it receives a message?
 	data["toff"] = toff					// is the messenger function turned off?
 	data["active_conversation"] = active_conversation	// Which conversation are we following right now?
@@ -893,6 +896,16 @@
 				note = replacetext(note, "\n", "<br>")
 			else
 				ui.close()
+		if("Send Note")
+			if(printer_id && check_pda_server())
+				var/datum/document/Doc = new()
+
+				Doc.fields["name"] = "Заметка"
+				Doc.fields["info"] = note
+				Doc.fields["info_links"] = notehtml
+
+				send_document("document", Doc, printer_id)
+
 		if("Toggle Messenger")
 			toff = !toff
 		if("Toggle Ringer")//If viewing texts then erase them, if not then toggle silent status
@@ -1803,28 +1816,19 @@
 	charge_to_account(owner_account.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -prepayment)
 	charge_to_account(global.cargo_account.account_number, owner_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, prepayment)
 
-	for(var/obj/machinery/computer/cargo/Console in global.cargo_consoles)
-		if(istype(Console, /obj/machinery/computer/cargo/request))
-			continue
-		var/obj/item/weapon/paper/P = new(get_turf(Console.loc))
+	var/datum/document/Doc = new()
 
-		P.name = "Заказ предмета из магазина"
-		P.info += "Посылка номер #[Lot.number]<br>"
-		P.info += "Наименование: [Lot.name]<br>"
-		P.info += "Цена: [Lot.price]$<br>"
-		P.info += "Заказал: [owner ? owner : "Unknown"]<br>"
-		P.info += "Подпись заказчика: <span class=\"sign_field\"></span><br>"
-		P.info += "Комментарий: [destination]<br>"
-		P.info += "<hr>"
-		P.info += "МЕСТО ДЛЯ ШТАМПОВ:<br>"
+	Doc.fields["name"] = "Заказ предмета из магазина"
+	Doc.fields["info"] += "Посылка номер #[Lot.number]<br>"
+	Doc.fields["info"] += "Наименование: [Lot.name]<br>"
+	Doc.fields["info"] += "Цена: [Lot.price]$<br>"
+	Doc.fields["info"] += "Заказал: [owner ? owner : "Unknown"]<br>"
+	Doc.fields["info"] += "Подпись заказчика: <span class=\"sign_field\"></span><br>"
+	Doc.fields["info"] += "Комментарий: [destination]<br>"
+	Doc.fields["info"] += "<hr>"
+	Doc.fields["info"] += "МЕСТО ДЛЯ ШТАМПОВ:<br>"
 
-		var/obj/item/weapon/pen/Pen = new(src)
-
-		P.parsepencode(P.info, Pen)
-		P.updateinfolinks()
-		qdel(Pen)
-
-		P.update_icon()
+	send_document("document", Doc, "Cargo")
 
 /obj/item/device/pda/proc/add_order_or_offer(name, desc)
 	global.orders_and_offers["[orders_and_offers_number]"] = list("name" = name, "description" = desc, "time" = worldtime2text())

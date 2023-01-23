@@ -1062,7 +1062,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		else
 			S.stamp_paper(P)
 
-	send_fax(usr, P, department)
+	if(send_document("document", P.scan(), department))
+		log_fax("[usr] sending [P.name] to [department]: [P.info]")
 
 	SSStatistics.add_communication_log(type = "fax-centcomm", title = sent_name, author = "Centcomm Officer", content = P.info + "\n" + P.stamp_text)
 

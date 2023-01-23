@@ -6853,12 +6853,19 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "amE" = (
-/obj/machinery/photocopier,
+/obj/structure/table/woodentable,
+/obj/machinery/photocopier{
+	destination_name = "Library"
+	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/escape)
 "amF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/poster/contraband,
+/obj/structure/table/woodentable,
+/obj/machinery/paperwork/printer{
+	id_name = "Library"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "amG" = (
@@ -15452,8 +15459,8 @@
 /area/station/cargo/storage)
 "fXS" = (
 /obj/structure/table/woodentable,
-/obj/machinery/faxmachine{
-	department = "Captain's Office"
+/obj/machinery/paperwork/printer/faxmachine{
+	id_name = "Captain's Office"
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood-broken3"
@@ -15491,7 +15498,6 @@
 /obj/machinery/light_switch{
 	pixel_y = -26
 	},
-/obj/machinery/photocopier,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkred"
@@ -21380,7 +21386,10 @@
 /obj/machinery/requests_console/hop{
 	pixel_y = 30
 	},
-/obj/machinery/photocopier,
+/obj/machinery/photocopier{
+	destination_name = "Bridge"
+	},
+/obj/structure/table/woodentable,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -28886,9 +28895,6 @@
 /area/station/rnd/telesci)
 "sHH" = (
 /obj/structure/table/woodentable,
-/obj/machinery/faxmachine{
-	department = "Bridge"
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -28903,6 +28909,9 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
+	},
+/obj/machinery/paperwork/printer/faxmachine{
+	id_name = "Bridge"
 	},
 /turf/simulated/floor/carpet/black,
 /area/station/bridge)
