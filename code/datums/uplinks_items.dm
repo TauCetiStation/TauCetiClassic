@@ -142,14 +142,14 @@
 	name = "Stechkin Pistol"
 	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 7-round or 16-round magazines and is compatible \
 			with suppressors."
-	item = /obj/item/weapon/gun/projectile/automatic/pistol
+	item = /obj/item/weapon/gun/projectile/pistol
 	cost = 6
 	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/dangerous/deagle
 	name = "Desert Eagle"
 	desc = "A robust handgun that uses .50 AE ammo."
-	item = /obj/item/weapon/gun/projectile/automatic/deagle/weakened
+	item = /obj/item/weapon/gun/projectile/deagle/weakened
 	cost = 8
 	uplink_types = list("dealer")
 
@@ -158,7 +158,7 @@
 /datum/uplink_item/dangerous/deagle_gold
 	name = "Desert Eagle Gold"
 	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
-	item = /obj/item/weapon/gun/projectile/automatic/deagle/weakened/gold
+	item = /obj/item/weapon/gun/projectile/deagle/weakened/gold
 	cost = 9
 	uplink_types = list("dealer")
 
@@ -1139,7 +1139,7 @@
 /datum/uplink_item/revolution/stechkin
 	name = "Stechkin Pistol"
 	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 7-round magazines."
-	item = /obj/item/weapon/gun/projectile/automatic/pistol
+	item = /obj/item/weapon/gun/projectile/pistol
 	cost = 5
 
 /datum/uplink_item/revolution/stechkin_ammo

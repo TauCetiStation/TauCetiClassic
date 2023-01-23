@@ -6,7 +6,7 @@
 	mag_type = /obj/item/ammo_box/magazine/m556/nonlethal
 	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
 
-/obj/item/weapon/gun/projectile/automatic/silenced/nonlethal
+/obj/item/weapon/gun/projectile/silenced/nonlethal
 	name = "Silenced pistol NL"
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "silenced_pistol_nl"

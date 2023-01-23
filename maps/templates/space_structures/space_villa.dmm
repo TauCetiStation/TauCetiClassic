@@ -891,7 +891,7 @@
 /turf/simulated/floor/grass,
 /area/space_structures/space_villa)
 "Gy" = (
-/obj/item/weapon/gun/projectile/automatic/silenced,
+/obj/item/weapon/gun/projectile/silenced,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg1"
 	},

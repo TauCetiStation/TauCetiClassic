@@ -2103,7 +2103,7 @@
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
 "gw" = (
-/obj/item/weapon/gun/projectile/automatic/silenced,
+/obj/item/weapon/gun/projectile/silenced,
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
 "gx" = (

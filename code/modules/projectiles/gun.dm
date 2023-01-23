@@ -25,6 +25,8 @@
 	var/can_suicide_with = TRUE
 	var/tmp/list/mob/living/target //List of who yer targeting.
 	var/tmp/lock_time = -100
+	var/burst_mode = FALSE
+	var/burst_size = 1 //how large a burst is
 	var/automatic = 0 //Used to determine if you can target multiple people.
 	var/tmp/mob/living/last_moved_mob //Used to fire faster at more than one person.
 	var/tmp/told_cant_shoot = 0 //So that it doesn't spam them with the fact they cannot hit them.
@@ -56,11 +58,15 @@
 	playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	return
 
-/obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
+/obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user, ignore_skills = FALSE)
 
 	var/skill_recoil = max(0, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
-	if(skill_recoil)
+
+	if(skill_recoil || !ignore_skills)
 		shake_camera(user, skill_recoil + 1, skill_recoil)
+
+	if(ignore_skills)
+		shake_camera(user, recoil + 1, recoil)
 
 	if(silenced)
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
@@ -151,6 +157,9 @@
 	if (!ready_to_fire())
 		if (world.time % 3) //to prevent spam
 			to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
+		return
+	if(burst_mode)
+		burst_fire(target, user)
 		return
 	if(chambered)
 		if(point_blank)
@@ -245,3 +254,27 @@
 			return
 	else
 		return ..()
+
+/obj/item/weapon/gun/proc/burst_fire(atom/target, mob/living/user, params, reflex = 0, point_blank = FALSE)//TODO: go over this
+	for(var/i = 1 to burst_size)
+		if(fire_delay)
+			sleep(fire_delay)
+		if(chambered)
+			if(point_blank)
+				if(!chambered.BB.fake)
+					user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
+				chambered.BB.damage *= 1.3
+			if(!chambered.fire(src, target, user, params, , silenced))
+				shoot_with_empty_chamber(user)
+			else
+				shoot_live_shot(user, ignore_skills = TRUE)
+				user.newtonian_move(get_dir(target, user))
+		else
+			shoot_with_empty_chamber(user)
+		process_chamber()
+		update_icon()
+
+		if(user.hand)
+			user.update_inv_l_hand()
+		else
+			user.update_inv_r_hand()

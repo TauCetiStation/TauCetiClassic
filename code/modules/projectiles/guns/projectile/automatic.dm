@@ -6,7 +6,12 @@
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/msmg9mm
 	can_be_holstered = FALSE
+	burst_size = 3
+	action_button_name = "Toggle Firemode"
+	burst_mode = TRUE
+	fire_delay = 3
 	var/alarmed = FALSE
+	var/select = 1
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
@@ -15,6 +20,25 @@
 /obj/item/weapon/gun/projectile/automatic/attackby(obj/item/I, mob/user, params)
 	if(..() && chambered)
 		alarmed = FALSE
+
+/obj/item/weapon/gun/projectile/automatic/ui_action_click(mob/user)
+	burst_select()
+
+/obj/item/weapon/gun/projectile/automatic/proc/burst_select()
+	var/mob/living/carbon/human/user
+	select = !select
+	if(!select)
+		burst_mode = FALSE
+		burst_size = 1
+		fire_delay = 0
+		to_chat(user, "<span class='warning'>You switch to semi-automatic.</span>")
+	else
+		burst_mode = TRUE
+		burst_size = initial(burst_size)
+		fire_delay = initial(fire_delay)
+		to_chat(user, "<span class='warning'>You switch to [burst_size]-round burst.</span>")
+
+	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Mac-10"
@@ -25,6 +49,7 @@
 	can_be_holstered = TRUE
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
+	fire_delay = 2
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
@@ -41,7 +66,7 @@
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/m12mm
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
-
+	fire_delay = 2
 
 /obj/item/weapon/gun/projectile/automatic/c20r/atom_init()
 	. = ..()
@@ -91,6 +116,8 @@
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
 	has_cover = TRUE
 	istwohanded = TRUE
+	burst_size = 3
+	fire_delay = 4
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/atom_init()
 	. = ..()
@@ -164,6 +191,7 @@
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/l13_38
 	fire_sound = 'sound/weapons/guns/gunshot_l13.ogg'
+	fire_delay = 2
 
 /obj/item/weapon/gun/projectile/automatic/l13/update_icon(mob/M)
 	icon_state = "l13[magazine ? "" : "-e"]"
@@ -185,6 +213,7 @@
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
+	fire_delay = 2
 
 /obj/item/weapon/gun/projectile/automatic/tommygun/update_icon()
 	..()
@@ -214,7 +243,7 @@
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
 
-/obj/item/weapon/gun/projectile/automatic/colt1911/dungeon
+/obj/item/weapon/gun/projectile/colt1911/dungeon
 	desc = "A single-action, semi-automatic, magazine-fed, recoil-operated pistol chambered for the .45 ACP cartridge."
 	name = "Colt M1911"
 	mag_type = /obj/item/ammo_box/magazine/c45m
@@ -225,6 +254,7 @@
 	icon_state = "borg_smg"
 	mag_type = /obj/item/ammo_box/magazine/borg45
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
+	fire_delay = 2
 
 /obj/item/weapon/gun/projectile/automatic/borg/update_icon()
 	return
@@ -249,6 +279,9 @@
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
+	action_button_name = null //shooting bursts with a shotgun is funny, but no
+	burst_mode = FALSE
+	fire_delay = 0
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/atom_init()
 	. = ..()
@@ -337,6 +370,7 @@
 	fire_sound = 'sound/weapons/guns/gunshot_drozd.ogg'
 	action_button_name = "Toggle GL"
 	fire_delay = 7
+	burst_mode = FALSE
 	var/using_gl = FALSE
 	var/obj/item/weapon/gun/projectile/grenade_launcher/underslung/gl
 	var/icon/mag_icon = icon('icons/obj/gun.dmi',"drozd-mag")

@@ -55,19 +55,19 @@
 /obj/random/guns/projectile_handgun/item_to_spawn()
 		return pick(\
 						prob(15);/obj/item/weapon/gun/projectile/glock,\
-						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol,\
-						prob(15);/obj/item/weapon/gun/projectile/automatic/colt1911,\
+						prob(15);/obj/item/weapon/gun/projectile/pistol,\
+						prob(15);/obj/item/weapon/gun/projectile/colt1911,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/luger,\
-						prob(15);/obj/item/weapon/gun/projectile/automatic/silenced,\
+						prob(15);/obj/item/weapon/gun/projectile/silenced,\
 						prob(15);/obj/item/weapon/gun/projectile/revolver/peacemaker,\
 						prob(15);/obj/item/weapon/gun/projectile/revolver/detective,\
-						prob(5);/obj/item/weapon/gun/projectile/automatic/silenced/nonlethal,\
+						prob(5);/obj/item/weapon/gun/projectile/silenced/nonlethal,\
 						prob(5);/obj/item/weapon/gun/projectile/revolver/syndie,\
 						prob(5);/obj/item/weapon/gun/projectile/revolver,\
-						prob(5);/obj/item/weapon/gun/projectile/automatic/deagle,\
-						prob(2);/obj/item/weapon/gun/projectile/automatic/gyropistol,\
+						prob(5);/obj/item/weapon/gun/projectile/deagle,\
+						prob(2);/obj/item/weapon/gun/projectile/gyropistol,\
 						prob(2);/obj/item/weapon/gun/projectile/glock/spec,\
-						prob(2);/obj/item/weapon/gun/projectile/automatic/deagle/gold,\
+						prob(2);/obj/item/weapon/gun/projectile/deagle/gold,\
 						prob(2);/obj/item/weapon/gun/projectile/revolver/mateba\
 					)
 
@@ -142,8 +142,7 @@
 						prob(25);/obj/item/ammo_casing/c9mmr,\
 						prob(5);/obj/item/ammo_box/c9mm,\
 						prob(2);/obj/item/weapon/gun/projectile/automatic/luger,\
-						prob(2);/obj/item/weapon/gun/projectile/glock,\
-						prob(2);/obj/item/weapon/gun/projectile/automatic/pistol,\
+						prob(2);/obj/item/weapon/gun/projectile/pistol,\
 						prob(1);/obj/item/weapon/gun/projectile/automatic/mini_uzi\
 					)
 

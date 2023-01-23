@@ -1,4 +1,4 @@
-/obj/item/weapon/gun/projectile/automatic/silenced
+/obj/item/weapon/gun/projectile/silenced
 	name = "silenced pistol"
 	desc = "A small, quiet,  easily concealable gun. Uses .45 rounds."
 	icon_state = "silenced_pistol"
@@ -50,12 +50,12 @@
 			add_overlay(mag)
 	return ..()
 
-/obj/item/weapon/gun/projectile/automatic/silenced/update_icon()
+/obj/item/weapon/gun/projectile/silenced/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/deagle
+/obj/item/weapon/gun/projectile/deagle
 	name = "desert eagle"
 	desc = "A robust handgun that uses .50 AE ammo."
 	icon_state = "deagle"
@@ -65,12 +65,12 @@
 	can_be_holstered = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
 
-/obj/item/weapon/gun/projectile/automatic/deagle/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/weapon/gun/projectile/deagle/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/automatic/deagle/update_icon(load = 0)
+/obj/item/weapon/gun/projectile/deagle/update_icon(load = 0)
 	..()
 	if(load)
 		icon_state = "[initial(icon_state)]"
@@ -78,20 +78,20 @@
 	icon_state = "[initial(icon_state)][(!chambered && !get_ammo()) ? "-e" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/deagle/gold
+/obj/item/weapon/gun/projectile/deagle/gold
 	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
 	icon_state = "deagleg"
 	item_state = "deagleg"
 
-/obj/item/weapon/gun/projectile/automatic/deagle/weakened
+/obj/item/weapon/gun/projectile/deagle/weakened
 	mag_type = /obj/item/ammo_box/magazine/m50/weakened
 
-/obj/item/weapon/gun/projectile/automatic/deagle/weakened/gold
+/obj/item/weapon/gun/projectile/deagle/weakened/gold
 	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
 	icon_state = "deagleg"
 	item_state = "deagleg"
 
-/obj/item/weapon/gun/projectile/automatic/gyropistol
+/obj/item/weapon/gun/projectile/gyropistol
 	name = "gyrojet pistol"
 	desc = "A bulky pistol designed to fire self propelled rounds."
 	icon_state = "gyropistol"
@@ -99,20 +99,13 @@
 	origin_tech = "combat=3"
 	mag_type = /obj/item/ammo_box/magazine/m75
 
-/obj/item/weapon/gun/projectile/automatic/gyropistol/afterattack(atom/target, mob/user, proximity, params)
-	..()
-	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)
-		update_icon()
-		alarmed = 1
-	return
-
-/obj/item/weapon/gun/projectile/automatic/gyropistol/update_icon()
+/obj/item/weapon/gun/projectile/gyropistol/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "loaded" : ""]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/pistol
+
+/obj/item/weapon/gun/projectile/pistol
 	name = "Stechkin pistol"
 	desc = "A small, easily concealable gun. Uses 9mm rounds."
 	icon_state = "stechkin"
@@ -123,25 +116,26 @@
 	can_be_holstered = TRUE
 	mag_type = /obj/item/ammo_box/magazine/m9mm
 
-/obj/item/weapon/gun/projectile/automatic/pistol/attack_hand(mob/user)
+
+/obj/item/weapon/gun/projectile/pistol/attack_hand(mob/user)
 	if(loc == user)
 		if(silenced)
 			if(silencer_attack_hand(user))
 				return
 	..()
 
-/obj/item/weapon/gun/projectile/automatic/pistol/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/gun/projectile/pistol/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/silencer))
 		silencer_attackby(I, user)
 		return
 	return ..()
 
-/obj/item/weapon/gun/projectile/automatic/pistol/update_icon()
+/obj/item/weapon/gun/projectile/pistol/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][silenced ? "-silencer" : ""][chambered ? "" : "-e"]"
 	return
 
-/obj/item/weapon/gun/projectile/automatic/colt1911
+/obj/item/weapon/gun/projectile/colt1911
 	desc = "A cheap Martian knock-off of a Colt M1911. Uses less-than-lethal .45 rounds."
 	name = "Colt M1911"
 	icon_state = "colt"
@@ -152,12 +146,12 @@
 	can_be_holstered = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_colt1911.ogg'
 
-/obj/item/weapon/gun/projectile/automatic/colt1911/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/weapon/gun/projectile/colt1911/afterattack(atom/target, mob/user, proximity, params)
 	..()
 	update_icon()
 	return
 
-/obj/item/weapon/gun/projectile/automatic/colt1911/update_icon(load = 0)
+/obj/item/weapon/gun/projectile/colt1911/update_icon(load = 0)
 	..()
 	if(load)
 		icon_state = "[initial(icon_state)]"
