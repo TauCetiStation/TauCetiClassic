@@ -670,6 +670,21 @@
 	pixel_x = P.fields["pixel_x"]
 	pixel_y = P.fields["pixel_y"]
 
+/obj/item/weapon/photo/proc/deconstruct()
+	var/datum/picture/P = new()
+
+	P.fields["author"] = "unknown"
+	P.fields["icon"] = icon
+	P.fields["tiny"] = tiny
+	P.fields["img"] = img
+	P.fields["desc"] = desc
+	P.fields["mob_names"] = photographed_names // A list inside a list.
+	P.fields["pixel_x"] = rand(-10, 10)
+	P.fields["pixel_y"] = rand(-10, 10)
+
+	return P
+
+
 #undef MASK_NOTHING
 #undef MASK_VIGNETTE
 #undef MASK_OLDVIGNETTE

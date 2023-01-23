@@ -280,6 +280,34 @@
 
 	return P
 
+/obj/item/weapon/paper/proc/construct(datum/document/Doc)
+	info = Doc.fields["info"]
+	info_links = Doc.fields["info_links"]
+	stamp_text = Doc.fields["stamp_text"]
+	fields = Doc.fields["fields"]
+	sfields = Doc.fields["sfields"]
+	free_space = Doc.fields["free_space"]
+	stamped = Doc.fields["stamped"]
+	ico = Doc.fields["ico"]
+	offset_x = Doc.fields["offset_x"]
+	offset_y = Doc.fields["offset_y"]
+
+/obj/item/weapon/paper/proc/deconstruct()
+	var/datum/document/Doc = new()
+
+	Doc.fields["info"] = info
+	Doc.fields["info_links"] = info_links
+	Doc.fields["stamp_text"] = stamp_text
+	Doc.fields["fields"] = fields
+	Doc.fields["sfields"] = sfields
+	Doc.fields["free_space"] = free_space
+	Doc.fields["stamped"] = stamped
+	Doc.fields["ico"] = ico
+	Doc.fields["offset_x"] = rand(-10, 10)
+	Doc.fields["offset_y"] = rand(-10, 10)
+
+	return Doc
+
 /obj/item/weapon/paper/proc/get_signature(obj/item/weapon/pen/P, mob/user)
 	if(P && istype(P, /obj/item/weapon/pen))
 		return P.get_signature(user)

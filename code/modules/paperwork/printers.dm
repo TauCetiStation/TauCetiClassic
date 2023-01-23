@@ -16,28 +16,17 @@ var/global/list/obj/machinery/paperwork/papermachines = list()
 
 	STOP_PROCESSING(SSmachines, src)
 
-/obj/machinery/paperwork/proc/earn_document(type, name, content)//Types are "photo", "document"
+/proc/send_document(type, name, content)//Types are "photo", "document"
 	queue += list("type" = type, "name" = name, "content" = content)
 	START_PROCESSING(SSmachines, src)
 
-/obj/machinery/paperwork/proc/print_photo(name, content)
-	var/icon/small_img = icon(content)
-	var/icon/tiny_img = icon(content)
-	var/icon/ic = icon('icons/obj/items.dmi',"photo")
-	var/icon/pc = icon('icons/obj/bureaucracy.dmi', "photo")
-	small_img.Scale(8, 8)
-	tiny_img.Scale(4, 4)
-	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
-	pc.Blend(tiny_img,ICON_OVERLAY, 12, 19)
-
+/obj/machinery/paperwork/proc/print_photo(datum/picture/P)
 	var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo(src.loc)
-	Photo.icon = ic
-	Photo.tiny = pc
-	img = content
-	desc = P.fields["desc"]
-	photographed_names = P.fields["mob_names"]
-	pixel_x = P.fields["pixel_x"]
-	pixel_y = P.fields["pixel_y"]
+	Photo.construct(P)
+
+/obj/machinery/paperwork/proc/print_document(datum/document/Doc)
+	var/obj/item/weapon/paper/Paper = new/obj/item/weapon/paper(src.loc)
+	Paper.construct(Doc)
 
 /obj/machinery/paperwork/printer/process()
 	if(!papers || !queue.len)
@@ -50,7 +39,7 @@ var/global/list/obj/machinery/paperwork/papermachines = list()
 	var/list/Item = queue[1]
 	switch(Item["type"])
 		if("photo")
-			print_photo(name, content)
+			print_photo(content)
 		if("document")
 			print_document(name, content)
 	queue -= Item
