@@ -21,7 +21,7 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 	desc = "An energy ball."
 	icon = 'icons/obj/tesla_engine/energy_ball.dmi'
 	icon_state = "energy_ball"
-	plane = ABOVE_LIGHTING_PLANE
+	plane = SINGULARITY_PLANE
 	pixel_x = -32
 	pixel_y = -32
 	current_size = STAGE_TWO
@@ -36,6 +36,9 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
 
+	var/atom/movable/singularity_effect/singulo_effect
+	var/atom/movable/singularity_lens/singulo_lens
+
 /obj/singularity/energy_ball/Destroy()
 	if(orbiting && istype(orbiting.orbiting, /obj/singularity/energy_ball))
 		var/obj/singularity/energy_ball/EB = orbiting.orbiting
@@ -44,6 +47,9 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 	for(var/ball in orbiting_balls)
 		var/obj/singularity/energy_ball/EB = ball
 		qdel(EB)
+
+	vis_contents -= singulo_effect
+	QDEL_NULL(singulo_effect)
 
 	return ..()
 
@@ -157,11 +163,20 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 /obj/singularity/energy_ball/update_icon(stage)
 	if(!singulo_effect)
 		singulo_effect = new(src)
-		singulo_effect.transform = matrix().Scale(2)
+		singulo_effect.transform = matrix().Scale(1.25)
 		vis_contents += singulo_effect
+
+	if(!singulo_lens)
+		singulo_lens = new(src)
+		singulo_lens.transform = matrix().Scale(0.2)
+		singulo_lens.pixel_x = -96
+		singulo_lens.pixel_y = -96
+		vis_contents += singulo_lens
 
 	singulo_effect.icon = icon
 	singulo_effect.icon_state = icon_state
+
+	singulo_lens.icon_state = "gravitational_anti_lens"
 
 /proc/tesla_zap(atom/source, zap_range = 3, power)
 	. = source.dir

@@ -36,6 +36,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
 
+	show_examine_log = FALSE
+
 /mob/dead/observer/atom_init()
 	invisibility = INVISIBILITY_OBSERVER
 
@@ -149,8 +151,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		var/turf/T = get_turf(target)
 		forceMove(T)
 
-/mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	return 1
+/mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
+	return TRUE
 
 /mob/proc/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE, timeofdeath = world.time)
 	if(!key)

@@ -87,6 +87,31 @@
 
 	var/dyed_type
 
+	var/can_get_wet = TRUE
+
+/obj/item/atom_init()
+	SHOULD_CALL_PARENT(FALSE)
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
+
+	if(light_power && light_range)
+		update_light()
+
+	if(opacity && isturf(src.loc))
+		var/turf/T = src.loc
+		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+
+	if(uses_integrity)
+		if (!armor)
+			armor = list()
+		atom_integrity = max_integrity
+
+	if(item_state_world)
+		update_world_icon()
+
+	return INITIALIZE_HINT_NORMAL
+
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || ((!istype(target.loc, /turf)) && (!istype(target, /turf)) && (not_inside)) || is_type_in_list(target, can_be_placed_into))
 		return 0
@@ -425,7 +450,7 @@
 /obj/item/proc/after_throw(datum/callback/callback)
 	if (callback) //call the original callback
 		. = callback.Invoke()
-	flags &= ~IN_INVENTORY // #10047
+	flags_2 &= ~IN_INVENTORY // #10047
 	update_world_icon()
 
 /obj/item/proc/talk_into(mob/M, text)
@@ -440,7 +465,7 @@
 	if(user && user.loc != loc && isturf(loc))
 		playsound(user, dropped_sound, VOL_EFFECTS_MASTER)
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
-	flags &= ~IN_INVENTORY
+	flags_2 &= ~IN_INVENTORY
 	if(flags & DROPDEL)
 		qdel(src)
 	update_world_icon()
@@ -456,13 +481,13 @@
 
 // called when this item is removed from a storage item, which is passed on as S. The loc variable is already set to the new destination before this is called.
 /obj/item/proc/on_exit_storage(obj/item/weapon/storage/S)
-	flags |= IN_STORAGE
+	flags_2 &= ~IN_STORAGE
 	update_world_icon()
 	return
 
 // called when this item is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /obj/item/proc/on_enter_storage(obj/item/weapon/storage/S)
-	flags &= ~IN_STORAGE
+	flags_2 |= IN_STORAGE
 	update_world_icon()
 	return
 
@@ -477,7 +502,7 @@
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
 	SHOULD_CALL_PARENT(TRUE)
-	flags |= IN_INVENTORY
+	flags_2 |= IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED, src, slot)
 	update_world_icon()
@@ -1131,12 +1156,12 @@
 	if(!item_state_world)
 		return
 
-	if((flags && IN_INVENTORY || flags && IN_STORAGE) && icon_state == item_state_world)
-		// moving to inventory, restore icon
+	if((flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE) && icon_state == item_state_world)
+		// moving to inventory, restore icon (big inventory icon)
 		icon_state = initial(icon_state)
 
 	else if(icon_state != item_state_world)
-		// moving to world, change icon
+		// moving to world, change icon (small world icon)
 		icon_state = item_state_world
 
 /obj/item/CtrlShiftClick(mob/user)

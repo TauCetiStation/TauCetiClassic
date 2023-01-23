@@ -3,6 +3,7 @@
 	density = TRUE
 	anchored = TRUE
 	opacity = TRUE
+	can_block_air = TRUE
 
 	icon = 'icons/obj/doors/mineral_doors.dmi'
 
@@ -47,9 +48,10 @@
 		add_fingerprint(user)
 		SwitchState()
 
-/obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target, height = 0, air_group = 0)
-	if(air_group)
-		return FALSE
+/obj/structure/mineral_door/c_airblock(turf/other)
+	return ..() | ZONE_BLOCKED
+
+/obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target, height = 0)
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
 	return !density
@@ -270,17 +272,10 @@
 	can_unwrench = FALSE
 	var/close_delay = 100
 
-/obj/structure/mineral_door/resin/atom_init()
-	var/turf/T = get_turf(loc)
-	if(T)
-		T.blocks_air = TRUE
-	. = ..()
-
-/obj/structure/mineral_door/resin/Destroy()
-	var/turf/T = get_turf(loc)
-	if(T)
-		T.blocks_air = FALSE
-	return ..()
+/obj/structure/mineral_door/mineral_door/CanPass(atom/movable/mover, turf/target, height)
+	if(istype(mover))
+		return ..()
+	return FALSE
 
 /obj/structure/mineral_door/resin/Bumped(atom/M)
 	if(isxeno(M) && !isSwitchingStates)

@@ -82,7 +82,7 @@
 	return 1
 
 /obj/vehicle/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/hand_labeler))
+	if(istype(W, /obj/item/device/tagger))
 		return
 	else if(isscrewdriver(W))
 		open = !open

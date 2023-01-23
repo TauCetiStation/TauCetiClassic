@@ -143,6 +143,8 @@
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/collective_mind)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor)
 
+	notify_ghosts("\A [src], new hatched shadowling, at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, header = "Shadowling")
+
 /mob/living/carbon/human/slime/atom_init(mapload)
 	. = ..(mapload, SLIME)
 
@@ -1438,6 +1440,10 @@
 	typing_indicator_type = species.typing_indicator_type
 
 	species.on_gain(src)
+
+	for(var/datum/quirk/Q in roundstart_quirks)
+		if(SSquirks.quirk_blacklist_species[Q.name] && (species.name in SSquirks.quirk_blacklist_species[Q.name]))
+			qdel(Q)
 
 	regenerate_icons()
 	full_prosthetic = null

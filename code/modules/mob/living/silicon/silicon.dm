@@ -202,3 +202,8 @@
 
 /mob/living/silicon/proc/update_manifest()
 	Silicon_Manifest.Cut()
+
+/mob/living/silicon/examine(mob/user) //Displays a silicon's laws to ghosts
+	if(laws && isobserver(user))
+		to_chat(user, "<b>[src] has the following laws:</b><br>[write_laws()]")
+

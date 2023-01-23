@@ -137,7 +137,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		do_animate("deny")
 	return
 
-/obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/door/window/c_airblock(turf/other)
+	if(get_dir(loc, other) == dir) //Make sure looking at appropriate border (so we wont zoneblock every direction)
+		return ..()
+	return NONE
+
+/obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
@@ -235,15 +240,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 
 	if(istype(I, /obj/item/weapon/airlock_painter))
 		change_paintjob(I, user)
-		return
-
-	if( istype(I,/obj/item/weapon/changeling_hammer))
-		var/obj/item/weapon/changeling_hammer/W = I
-		user.SetNextMove(CLICK_CD_MELEE)
-		if(W.use_charge(user, 6))
-			visible_message("<span class='red'><B>[user]</B> has punched [src]!</span>")
-			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			shatter()
 		return
 
 	//Emags and ninja swords? You may pass.
