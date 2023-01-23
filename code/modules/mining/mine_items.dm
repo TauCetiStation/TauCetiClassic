@@ -515,7 +515,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 #define MAX_IDENTICAL_UPGRADES 2
 #define MAX_UPGRADES_LIMIT 5
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
+/obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot(user, ignore_skills = FALSE)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/reload), recharge_time)
 
@@ -531,7 +531,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if(length(installed_upgrades) >= max_upgrades)
 		to_chat(user, "<span class='warning'>Достигнут общий лимит количества улучшений!</span>")
 		return FALSE
-	
+
 	if(count_by_type(installed_upgrades, UPG.type) >= MAX_IDENTICAL_UPGRADES)
 		to_chat(user, "<span class='warning'>Достигнут лимит улучшений данного типа!</span>")
 		return FALSE
