@@ -163,7 +163,7 @@
 			200; /obj/item/weapon/hatchet, \
 
 /obj/item/weapon/gun/projectile/pistol, \
-			/obj/item/weapon/gun/projectile/deagle
+			/obj/item/weapon/gun/projectile/deagle,
 			/obj/item/weapon/gun/projectile/revolver/russian, \
 			)
 			new new_type(C)
