@@ -255,7 +255,7 @@
 	else
 		return ..()
 
-/obj/item/weapon/gun/proc/burst_fire(atom/target, mob/living/user, params, reflex = 0, point_blank = FALSE)//TODO: go over this
+/obj/item/weapon/gun/proc/burst_fire(atom/target, mob/living/user, params, reflex = 0, point_blank = FALSE)
 	for(var/i = 1 to burst_size)
 		if(fire_delay)
 			sleep(fire_delay)
