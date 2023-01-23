@@ -143,6 +143,7 @@
 						prob(5);/obj/item/ammo_box/c9mm,\
 						prob(2);/obj/item/weapon/gun/projectile/automatic/luger,\
 						prob(2);/obj/item/weapon/gun/projectile/pistol,\
+						prob(2);/obj/item/weapon/gun/projectile/glock,\
 						prob(1);/obj/item/weapon/gun/projectile/automatic/mini_uzi\
 					)
 
