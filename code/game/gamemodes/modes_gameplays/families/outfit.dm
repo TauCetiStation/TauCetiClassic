@@ -25,7 +25,7 @@
 	backpack_contents = list(
 		/obj/item/ammo_box/magazine/c45r = 3,
 		/obj/item/ammo_box/c45 = 2,
-		/obj/item/weapon/gun/projectile/colt1911
+		/obj/item/weapon/gun/projectile/colt1911 = 1,
 	)
 
 	implants = list(
