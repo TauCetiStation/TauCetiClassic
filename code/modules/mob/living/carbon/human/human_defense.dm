@@ -362,11 +362,7 @@
 					H.bloody_hands(src)
 
 		switch(hit_area)
-			if(BP_HEAD)//Harder to score a stun but if you do it lasts a bit longer
-				if(prob(force_with_melee_skill * (100 - armor) / 100))
-					apply_effect(20, PARALYZE, armor)
-					visible_message("<span class='userdanger'>[src] has been knocked unconscious!</span>")
-
+			if(BP_HEAD)
 				if(bloody)//Apply blood
 					if(wear_mask)
 						wear_mask.add_blood(src)
@@ -378,11 +374,7 @@
 						glasses.add_blood(src)
 						update_inv_glasses()
 
-			if(BP_CHEST)//Easier to score a stun but lasts less time
-				if(prob((10 + force_with_melee_skill) * (100 - armor) / 100))
-					apply_effect(5, WEAKEN, armor)
-					visible_message("<span class='userdanger'>[src] has been knocked down!</span>")
-
+			if(BP_CHEST)
 				if(!(damage_flags & (DAM_SHARP|DAM_EDGE)) && prob(I.force + 10)) // A chance to force puke with a blunt hit.
 					for(var/obj/item/weapon/grab/G in grabbed_by)
 						if(G.state >= GRAB_AGGRESSIVE && G.assailant == user)
