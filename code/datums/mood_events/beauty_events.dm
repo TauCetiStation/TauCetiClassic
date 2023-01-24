@@ -21,3 +21,4 @@
 /datum/mood_event/horridroom_cultist
 	description = "<span class='nicegreen'>This room is terrible, our Lord would be pleased!</span>"
 	mood_change = 3
+
