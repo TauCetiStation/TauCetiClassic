@@ -193,8 +193,8 @@
 	if(istype(target, /obj/singularity))
 
 		switch(target.type)
-			if(/obj/singularity)
-				var/obj/singularity/S = target
+			if(/obj/singularity/gravitational)
+				var/obj/singularity/gravitational/S = target
 				empulse(S, 4, 10)
 				for(var/mob/living/carbon/H in viewers(S))
 					H.apply_effect(20, IRRADIATE, 0)
