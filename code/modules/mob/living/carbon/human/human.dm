@@ -2337,7 +2337,7 @@
 
 /mob/living/carbon/human/proc/AdjustDirtyClothes(amount)
 	dirty_clothes += amount
-	if(dirty_clothes <= 0)
+	if(dirty_clothes <= 0 || iscultist(src))
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "dirty_clothes")
 		return
 

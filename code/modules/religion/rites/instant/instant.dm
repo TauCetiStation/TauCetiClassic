@@ -177,6 +177,7 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
+		H.AdjustDirtyClothes(0)
 		for(var/obj/item/organ/external/BP in H.bodyparts)
 			if(prob(drain * 1.5))
 				if(BP.is_stump || BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED | ORGAN_DEAD | ORGAN_ARTERY_CUT))
