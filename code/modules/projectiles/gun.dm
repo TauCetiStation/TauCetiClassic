@@ -37,7 +37,8 @@
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 
 /obj/item/weapon/gun/proc/ready_to_fire()
-	if(world.time >= last_fired + fire_delay)
+	var/skills_delay = max(0, apply_skill_bonus(usr, fire_delay, list(/datum/skill/firearms = SKILL_LEVEL_NONE), multiplier = -0.2)) + fire_delay
+	if(world.time >= last_fired + skills_delay)
 		last_fired = world.time
 		return 1
 	else
