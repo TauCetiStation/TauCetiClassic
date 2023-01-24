@@ -150,8 +150,6 @@
 		return
 
 	if (!ready_to_fire())
-		if (world.time % 3) //to prevent spam
-			to_chat(user, "<span class='warning'>[src] is not ready to fire again!</span>")
 		return
 	if(chambered)
 		if(point_blank)
