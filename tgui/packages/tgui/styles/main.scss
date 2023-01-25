@@ -18,6 +18,7 @@
 @include meta.load-css('./atomic/text.scss');
 
 // Components
+@include meta.load-css('./components/App.scss');
 @include meta.load-css('./components/BlockQuote.scss');
 @include meta.load-css('./components/Button.scss');
 @include meta.load-css('./components/ColorBox.scss');
@@ -42,12 +43,17 @@
 @include meta.load-css('./components/TextArea.scss');
 @include meta.load-css('./components/Tooltip.scss');
 
+// Programs
+@include meta.load-css('./components/progs/Filesystem.scss');
+@include meta.load-css('./components/progs/NTDocs.scss');
+
 // Interfaces
 @include meta.load-css('./interfaces/ListInput.scss');
 @include meta.load-css('./interfaces/IntegratedCircuit.scss');
 @include meta.load-css('./interfaces/AlertModal.scss');
 @include meta.load-css('./interfaces/CameraConsole.scss');
 @include meta.load-css('./interfaces/Changelog.scss');
+@include meta.load-css('./interfaces/Computer.scss');
 @include meta.load-css('./interfaces/CrewManifest.scss');
 @include meta.load-css('./interfaces/ExperimentConfigure.scss');
 @include meta.load-css('./interfaces/NuclearBomb.scss');

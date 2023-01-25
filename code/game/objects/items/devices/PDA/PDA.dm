@@ -77,6 +77,8 @@
 	var/category_shop_per_page = 5
 
 	var/printer_id = ""
+	var/file_drive[20]
+	var/current_file = null
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
@@ -528,7 +530,6 @@
 	data["toff"] = toff					// is the messenger function turned off?
 	data["active_conversation"] = active_conversation	// Which conversation are we following right now?
 
-
 	data["idInserted"] = (id ? 1 : 0)
 	data["idLink"] = (id ? text("[id.registered_name], [id.assignment]") : "--------")
 
@@ -904,7 +905,7 @@
 				Doc.fields["info"] = note
 				Doc.fields["info_links"] = notehtml
 
-				send_document("document", Doc, printer_id)
+				send_document(Doc, printer_id)
 
 		if("Toggle Messenger")
 			toff = !toff
@@ -1828,7 +1829,7 @@
 	Doc.fields["info"] += "<hr>"
 	Doc.fields["info"] += "МЕСТО ДЛЯ ШТАМПОВ:<br>"
 
-	send_document("document", Doc, "Cargo")
+	send_document(Doc, "Cargo")
 
 /obj/item/device/pda/proc/add_order_or_offer(name, desc)
 	global.orders_and_offers["[orders_and_offers_number]"] = list("name" = name, "description" = desc, "time" = worldtime2text())

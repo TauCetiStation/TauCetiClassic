@@ -1,9 +1,6 @@
 /**************
 * AI-specific *
 **************/
-/datum/picture
-	var/name = "image"
-	var/list/fields = list()
 
 /obj/item/device/camera/siliconcam
 	flash_enabled = FALSE

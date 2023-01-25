@@ -1,0 +1,58 @@
+.NTDocs__Paper {
+  width: 50vw;
+  height: 80vw;
+  left: 9vw;
+  background: #ffffff;
+  position: relative;
+  color: #111111;
+  padding: 10px;
+}
+
+.NTDocs__PaperHeader {
+  width: 51vw;
+  height: 4vw;
+  background: #ffffff;
+  position: static;
+  color: #111111;
+  padding: 5px;
+  border-radius: 10px 10px 0px 0px;
+  font-weight: bold;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  text-align: center;
+  overflow: hidden;
+  border: 3px solid #313131;
+  border-bottom: 1px dashed #313131;
+  z-index: 1;
+}
+
+.NTDocs__PaperView {
+  width: 70%;
+  height: 80%;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  overflow: scroll;
+}
+
+.NTDocs__UpperMenu {
+  width: 100%;
+  height: 12.3%;
+  position: absolute;
+  top: 5vw;
+  background: #eeeeee;
+  color: #111111;
+  border-bottom: 5px solid #313131;
+}
+
+.NTDocs__LeftMenu {
+  width: 30%;
+  height: 80%;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  background: #eeeeee;
+  color: #111111;
+  border-right: 2px solid #313131;
+  border-left: 15px solid #313131;
+}

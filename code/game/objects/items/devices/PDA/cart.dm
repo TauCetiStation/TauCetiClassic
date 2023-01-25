@@ -34,6 +34,19 @@
 	var/message2
 	var/list/stored_data = list()
 
+	var/list/forms = list()
+	var/list/file_drive = list()
+
+/obj/item/weapon/cartridge/atom_init()
+	. = ..()
+	for(var/formnames in forms)
+		for(var/list/formlist in global.predefined_forms_list[formnames])
+			for(var/datum/form/Form in formlist["content"])
+				var/obj/item/weapon/paper/Paper = new(src)
+				Paper.update_space(sanitize(Form.content, MAX_PAPER_MESSAGE_LEN, extra = FALSE))
+				file_drive += Paper.scan()
+				qdel(Paper)
+
 /obj/item/weapon/cartridge/Destroy()
 	QDEL_NULL(radio)
 	return ..()
@@ -43,25 +56,35 @@
 	icon_state = "cart-e"
 	access_engine = 1
 
+	forms = list("Engineering", "Misc")
+
 /obj/item/weapon/cartridge/atmos
 	name = "BreatheDeep Cartridge"
 	icon_state = "cart-a"
 	access_atmos = 1
+
+	forms = list("Engineering", "Misc")
 
 /obj/item/weapon/cartridge/medical
 	name = "Med-U Cartridge"
 	icon_state = "cart-m"
 	access_medical = 1
 
+	forms = list("Medical", "Misc")
+
 /obj/item/weapon/cartridge/chemistry
 	name = "ChemWhiz Cartridge"
 	icon_state = "cart-chem"
 	access_reagent_scanner = 1
 
+	forms = list("Medical", "Misc")
+
 /obj/item/weapon/cartridge/security
 	name = "R.O.B.U.S.T. Cartridge"
 	icon_state = "cart-s"
 	access_security = 1
+
+	forms = list("Security", "Misc")
 
 /obj/item/weapon/cartridge/security/atom_init()
 	. = ..()
@@ -73,6 +96,8 @@
 	access_security = 1
 	access_medical = 1
 
+	forms = list("Security", "Misc")
+
 
 /obj/item/weapon/cartridge/janitor
 	name = "CustodiPRO Cartridge"
@@ -80,10 +105,14 @@
 	icon_state = "cart-j"
 	access_janitor = 1
 
+	forms = list("Misc")
+
 /obj/item/weapon/cartridge/lawyer
 	name = "P.R.O.V.E. Cartridge"
 	icon_state = "cart-s"
 	access_security = 1
+
+	forms = list("Misc")
 
 /obj/item/weapon/cartridge/clown
 	name = "Honkworks 5.0"
@@ -91,11 +120,15 @@
 	access_clown = 1
 	charges = 5
 
+	forms = list("Misc")
+
 /obj/item/weapon/cartridge/mime
 	name = "Gestur-O 1000"
 	icon_state = "cart-mi"
 	access_mime = 1
 	charges = 5
+
+	forms = list("Misc")
 /*
 /obj/item/weapon/cartridge/botanist
 	name = "Green Thumb v4.20"
@@ -114,6 +147,8 @@
 	access_reagent_scanner = 1
 	access_atmos = 1
 
+	forms = list("RnD", "Misc")
+
 /obj/item/weapon/cartridge/signal/atom_init()
 	. = ..()
 	radio = new /obj/item/radio/integrated/signal(src)
@@ -124,6 +159,8 @@
 	icon_state = "cart-q"
 	access_quartermaster = 1
 
+	forms = list("Cargo", "Misc")
+
 /obj/item/weapon/cartridge/quartermaster/atom_init()
 	. = ..()
 	radio = new /obj/item/radio/integrated/mule(src)
@@ -133,6 +170,8 @@
 	icon_state = "cart-h"
 	access_status_display = 1
 
+	forms = list("Important", "Misc")
+
 /obj/item/weapon/cartridge/hop
 	name = "HumanResources9001"
 	icon_state = "cart-h"
@@ -140,6 +179,8 @@
 	access_quartermaster = 1
 	access_janitor = 1
 	access_security = 1
+
+	forms = list("HR", "Misc")
 
 /obj/item/weapon/cartridge/hop/atom_init()
 	. = ..()
@@ -150,6 +191,8 @@
 	icon_state = "cart-hos"
 	access_status_display = 1
 	access_security = 1
+
+	forms = list("Security", "Misc")
 
 /obj/item/weapon/cartridge/hos/atom_init()
 	. = ..()
@@ -162,6 +205,8 @@
 	access_engine = 1
 	access_atmos = 1
 
+	forms = list("Engineering", "Misc")
+
 /obj/item/weapon/cartridge/cmo
 	name = "Med-U DELUXE"
 	icon_state = "cart-cmo"
@@ -169,12 +214,16 @@
 	access_reagent_scanner = 1
 	access_medical = 1
 
+	forms = list("Medical", "Misc")
+
 /obj/item/weapon/cartridge/rd
 	name = "Signal Ace DELUXE"
 	icon_state = "cart-rd"
 	access_status_display = 1
 	access_reagent_scanner = 1
 	access_atmos = 1
+
+	forms = list("RnD", "Misc")
 
 /obj/item/weapon/cartridge/rd/atom_init()
 	. = ..()
@@ -192,6 +241,8 @@
 	access_reagent_scanner = 1
 	access_status_display = 1
 	access_atmos = 1
+
+	forms = list("Important", "Misc")
 
 /obj/item/weapon/cartridge/syndicate
 	name = "Detomatix Cartridge"

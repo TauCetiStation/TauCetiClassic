@@ -284,7 +284,7 @@ What a mess.*/
 				info += "<b>General Record Lost!</b><br>"
 			info += "</tt>"
 			docname = "Employment Record ([active1.fields["name"]])"
-			print_document(info, docname)
+			//print_document(info, docname)
 			updateUsrDialog()
 			next_print = world.time + 50
 
@@ -298,11 +298,11 @@ What a mess.*/
 				photo.fields["author"] = usr
 				photo.fields["icon"] = icon('icons/obj/mugshot.dmi',"photo")
 				photo.fields["small_icon"] = icon('icons/obj/mugshot.dmi',"small_photo")
-				if(istype(active1.fields["photo_f"], /icon))
-					print_photo(photo, docname)
+				//if(istype(active1.fields["photo_f"], /icon))
+					//print_photo(photo, docname)
 				if(istype(active1.fields["photo_s"], /icon))
 					photo.fields["image"] = active1.fields["photo_s"]
-					print_photo(photo, docname)
+					//print_photo(photo, docname)
 				next_print = world.time + 50
 
 		// RECORD DELETE

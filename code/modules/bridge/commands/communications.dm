@@ -46,7 +46,7 @@
 	var/obj/item/weapon/stamp/S = new /obj/item/weapon/stamp/centcomm
 	S.stamp_paper(P)
 
-	if(send_document("document", P.scan(), department))
+	if(send_document(P.scan(), department))
 		log_fax("[BRIDGE_FROM_SNIPPET_TEXT] sending [P.name] to [department]: [P.info]")
 
 	SSStatistics.add_communication_log(type = "fax-centcomm", title = P.name, author = "Centcomm Officer", content = P.info + "\n" + P.stamp_text)

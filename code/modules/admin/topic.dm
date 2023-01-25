@@ -1683,10 +1683,10 @@
 		switch(tgui_alert(usr, "Should this be sended to all fax machines?",, list("Yes","No")))
 			if("Yes")
 				for(var/dep in global.papermachines)
-					if(send_document("document", P.scan(), dep))
+					if(send_document(P.scan(), dep))
 						log_fax("[usr] sending [P.name] to [dep]: [P.info]")
 			if("No")
-				if(send_document("document", P.scan(), department))
+				if(send_document(P.scan(), department))
 					log_fax("[usr] sending [P.name] to [department]: [P.info]")
 
 		SSStatistics.add_communication_log(type = "fax-centcomm", title = customname ? customname : 0, author = "Centcomm Officer", content = input)

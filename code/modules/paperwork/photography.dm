@@ -26,6 +26,11 @@
 /********
 * photo *
 ********/
+
+/datum/picture
+	var/name = "image"
+	var/list/fields = list()
+
 /obj/item/weapon/photo
 	name = "photo"
 	icon = 'icons/obj/items.dmi'

@@ -6810,7 +6810,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -7803,6 +7803,9 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
+	},
+/obj/machinery/computer/security{
+	icon_state = "computer"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -14027,14 +14030,6 @@
 "ayr" = (
 /turf/simulated/wall/r_wall,
 /area/station/security/prison)
-"ays" = (
-/obj/machinery/computer/security{
-	dir = 4
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/security/brig)
 "ayt" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -116873,7 +116868,7 @@ alh
 alu
 amh
 anY
-ays
+afU
 anp
 aom
 ati

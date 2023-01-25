@@ -26,10 +26,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/paperwork, papermachines)
 /obj/machinery/paperwork/is_operational()
 	return TRUE
 
-/proc/send_document(type, content, id_name)//Types are "photo", "document"
+/proc/send_document(content, id_name)//Types are "photo", "document"
 	for(var/obj/machinery/paperwork/Machine in global.papermachines)
 		if(Machine.id_name == id_name)
-			Machine.queue+= list(list("type" = type, "content" = content))
+			Machine.queue += content
 			START_PROCESSING(SSmachines, Machine)
 			return TRUE
 
@@ -51,73 +51,34 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/paperwork, papermachines)
 /obj/machinery/paperwork/printer
 	name = "printer"
 	icon = 'icons/obj/machines/printers.dmi'
-	icon_state = "printer-paper-idle"
+	icon_state = "printer-papers-idle"
 	anchored = TRUE
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30
 	active_power_usage = 100
 
-	var/papers = 15
+	var/processing_state = "printer-papers-process"
 
 /obj/machinery/paperwork/printer/process()
-	if(!papers)
-		icon_state = "printer-idle"
-		STOP_PROCESSING(SSmachines, src)
-		return
 	if(!queue.len)
 		STOP_PROCESSING(SSmachines, src)
 		return
 
-	var/processing_state = "printer-paper-process"
-	if(papers > 1)
-		processing_state = "printer-papers-process"
+	var/datum/Item = queue[1]
+	switch(Item.type)
+		if(/datum/picture)
+			print_photo(Item)
+		if(/datum/document)
+			print_document(Item)
 
-	var/list/Item = queue[1]
-	switch(Item["type"])
-		if("photo")
-			print_photo(Item["content"])
-		if("document")
-			print_document(Item["content"])
-
-	queue -= list(Item)
-	papers--
+	queue -= Item
 
 	flick(processing_state, src)
 
-/obj/machinery/paperwork/printer/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-
-	to_chat(user, "<span class='notice'>You turn a printer on.</span>")
-	START_PROCESSING(SSmachines, src)
-
 /obj/machinery/paperwork/printer/attackby(obj/item/O, mob/user)
 
-	if(istype(O, /obj/item/weapon/paper))
-		var/obj/item/weapon/paper/Paper = O
-		if(!Paper.info)
-			papers++
-			qdel(Paper)
-			to_chat(user, "<span class='notice'>You load paper into a printer.</span>")
-
-	else if(istype(O, /obj/item/weapon/paper_bundle))
-		var/obj/item/weapon/paper_bundle/Bundle = O
-		for(var/obj/item/weapon/paper/Paper in Bundle.pages)
-			if(!Paper.info)
-				papers++
-				Bundle.pages.Remove(Paper)
-				qdel(Paper)
-				to_chat(user, "<span class='notice'>You load paper into a printer.</span>")
-
-				if(Bundle.pages.len <= 1)
-					var/obj/item/weapon/paper/P = src[1]
-					user.drop_from_inventory(Bundle)
-					user.put_in_hands(P)
-					qdel(Bundle)
-
-	else if(istype(O, /obj/item/device/pda))
+	if(istype(O, /obj/item/device/pda))
 		var/obj/item/device/pda/PDA = O
 		PDA.printer_id = id_name
 		to_chat(user, "<span class='notice'>You succesfully connected your PDA to a printer.</span>")
@@ -125,7 +86,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/paperwork, papermachines)
 	else if(istype(O, /obj/item/device/camera))
 		var/obj/item/device/camera/Camera = O
 		if(Camera.drive.len && istype(Camera.drive[Camera.drive_current], /datum/picture))
-			send_document("photo", Camera.drive[Camera.drive_current], id_name)
+			send_document(Camera.drive[Camera.drive_current], id_name)
 
 	else if(iswrench(O))
 		default_unfasten_wrench(user, O)
@@ -148,12 +109,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/paperwork, papermachines)
 	var/obj/item/weapon/card/id/scan = null // identification
 	var/authenticated = 0
 
-	var/obj/item/weapon/paper/tofax = null // what we're sending
+	var/obj/item/weapon/tofax = null // what we're sending
 	var/sendcooldown = 0 // to avoid spamming fax messages
 
 	var/destination_name = "Central Command" // the department we're sending to
 	var/can_send_to_CC = TRUE
 	required_skills = list(/datum/skill/command = SKILL_LEVEL_TRAINED)
+	processing_state = "fax-receive"
 
 /obj/machinery/paperwork/printer/faxmachine/Destroy()
 	QDEL_NULL(scan)
@@ -220,12 +182,25 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/paperwork, papermachines)
 
 		if(tofax)
 			if(destination_name == "Central Command")
-				sendcooldown = 180
-				centcomm_fax(usr, tofax, src)
+				if(istype(tofax, /obj/item/weapon/paper))
+					sendcooldown = 180
+					centcomm_fax(usr, tofax, src)
+				else
+					to_chat(usr, "<span class='warning'>You send this to CentComm.</span>")
 			else
-				sendcooldown = 60
-				if(send_document("document", tofax.scan(), destination_name))
-					log_fax("[usr] sending [tofax.name] to [destination_name]: [tofax.info]")
+				if(istype(tofax, /obj/item/weapon/paper_bundle))
+					var/obj/item/weapon/paper_bundle/bundle = tofax
+					for(var/obj/item/weapon/W in bundle.pages)
+						if(istype(W, /obj/item/weapon/paper))
+							var/obj/item/weapon/paper/P = W
+							send_document(P.scan(), destination_name)
+						else if(istype(W, /obj/item/weapon/photo))
+							var/obj/item/weapon/photo/P = W
+							send_document(P.scan(), destination_name)
+				else
+					sendcooldown = 60
+					//if(send_document(tofax.scan(), destination_name))
+						//log_fax("[usr] sending [tofax.name] to [destination_name]: [tofax.info]")
 
 			audible_message("Message transmitted successfully.")
 
@@ -279,22 +254,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/paperwork, papermachines)
 /obj/machinery/paperwork/printer/faxmachine/proc/restore_sendcooldown()
 	sendcooldown = 0
 
-/obj/machinery/paperwork/printer/faxmachine/process()
-	if(!queue.len)
-		STOP_PROCESSING(SSmachines, src)
-		return
-
-	var/list/Item = queue[1]
-	switch(Item["type"])
-		if("photo")
-			print_photo(Item["content"])
-		if("document")
-			print_document(Item["content"])
-
-	queue -= list(Item)
-
-	flick("fax-receive", src)
-
 /obj/machinery/paperwork/printer/faxmachine/attackby(obj/item/O, mob/user)
 
 	if(istype(O, /obj/item/weapon/paper))
@@ -340,7 +299,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/paperwork, papermachines)
 	for(var/client/C as anything in admins)
 		to_chat(C, msg)
 
-	if(send_document("document", P.scan(), "Central Command"))
+	if(send_document(P.scan(), "Central Command"))
 		log_fax("[sender] sending [P.name] to ["Central Command"]: [P.info]")
 
 	SSStatistics.add_communication_log(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
@@ -428,7 +387,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/paperwork, papermachines)
 			var/datum/picture/selection = camera.selectpicture()
 			if (!selection)
 				return
-			send_document("photo", selection, destination_name)
+			send_document(selection, destination_name)
 			. = TRUE
 
 /obj/machinery/photocopier/proc/get_copy_delay(obj/item/I)
@@ -447,13 +406,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/paperwork, papermachines)
 /obj/machinery/photocopier/proc/copy_item(obj/item/I)
 	if(istype(I, /obj/item/weapon/paper))
 		var/obj/item/weapon/paper/P = I
-		send_document("document", P.scan(), destination_name)
+		send_document(P.scan(), destination_name)
 		change_overlays()
 		return 0
 
 	if(istype(I, /obj/item/weapon/photo))
 		var/obj/item/weapon/photo/P = I
-		send_document("photo", P.scan(), destination_name)
+		send_document(P.scan(), destination_name)
 		change_overlays()
 		return 0
 
@@ -467,10 +426,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/paperwork, papermachines)
 	for(var/obj/item/weapon/W in bundle.pages)
 		if(istype(W, /obj/item/weapon/paper))
 			var/obj/item/weapon/paper/P = W
-			send_document("document", P.scan(), destination_name)
+			send_document(P.scan(), destination_name)
 		else if(istype(W, /obj/item/weapon/photo))
 			var/obj/item/weapon/photo/P = W
-			send_document("photo", P.scan(), destination_name)
+			send_document(P.scan(), destination_name)
 
 		change_overlays()
 
