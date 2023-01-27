@@ -12773,7 +12773,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/hallway/primary/fore)
+/area/station/security/blueshield)
 "avG" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/brown,
@@ -117589,10 +117589,10 @@ aqi
 aqi
 aAw
 asY
-aCr
+cea
 avF
-aCr
-afl
+cea
+cea
 aBe
 awT
 awM
