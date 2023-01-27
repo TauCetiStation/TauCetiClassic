@@ -573,6 +573,12 @@
 				if(V.stealth_active)
 					to_chat(H, "<span class='notice'>You can't focus your eyes on [src].</span>")
 					return
+		if(H.mind.assigned_role == "Blueshield Officer" && mind && mind.assigned_role in heads_positions)
+			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
+			var/datum/component/mood/mood2 = H.GetComponent(/datum/component/mood)
+			if(mood2)
+				addtimer(CALLBACK(mood2, /datum/component/mood.proc/add_event, null, "blueshield", /datum/mood_event/blueshield), 10 MINUTES)
+
 
 	if(roundstart_quirks.len)
 		var/should_see_quirks = HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT)

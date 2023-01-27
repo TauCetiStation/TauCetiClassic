@@ -104,3 +104,24 @@
 	implants = list(/obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/obedience)
 
 	back_style = BACKPACK_STYLE_SECURITY
+
+
+
+/datum/outfit/job/blueshield
+	name = OUTFIT_JOB_NAME("Blueshield Officer")
+
+	uniform = /obj/item/clothing/under/rank/blueshield
+	gloves = /obj/item/clothing/gloves/black
+	shoes = /obj/item/clothing/shoes/boots
+	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
+
+	l_ear = /obj/item/device/radio/headset/headset_int/blueshield
+	belt = /obj/item/device/pda/blueshield
+
+	r_pocket = /obj/item/device/flash
+	r_pocket_back = /obj/item/weapon/handcuffs
+	l_pocket = /obj/item/weapon/pinpointer/heads
+
+	implants = list(
+		/obj/item/weapon/implant/mind_protect/loyalty
+		)

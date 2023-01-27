@@ -1,7 +1,7 @@
 /proc/get_living_heads()
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player as anything in human_list)
-		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in command_positions))
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in heads_positions))
 			heads += player.mind
 	return heads
 
@@ -24,7 +24,7 @@
 /datum/faction/revolution/proc/get_all_heads()
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player as anything in human_list)
-		if(player.mind && (player.mind.assigned_role in command_positions))
+		if(player.mind && (player.mind.assigned_role in heads_positions))
 			heads += player.mind
 	return heads
 

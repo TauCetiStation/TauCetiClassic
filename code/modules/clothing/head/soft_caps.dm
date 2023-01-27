@@ -130,3 +130,9 @@
 	desc = "It's first responder hat. Shows who's saving lives here."
 	icon_state = "frsoft"
 	cap_color = "fr"
+
+/obj/item/clothing/head/soft/blueshield
+	name = "blueshield cap"
+	desc = "It's baseball hat in tasteful black color with blueshield insignia."
+	icon_state = "blueshieldsoft"
+	cap_color = "blueshield"

@@ -47,3 +47,8 @@
 /datum/mood_event/very_lonely
 	description = "<span class='boldwarning'>Am I the loneliest being in the universe?... I need to be heard!</span>"
 	mood_change = -12
+
+//well it's bascially their need to see heads of staff i guess
+/datum/mood_event/blueshield
+	description = "<span class='boldwarning'>Я уже долго не видел своих подопечных! Вдруг случилось страшное?!</span>"
+	mood_change = -6

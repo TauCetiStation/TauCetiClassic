@@ -310,3 +310,34 @@
 	desc = "A simple steel helmet - a steelpot, if you will."
 	icon_state = "surplus_helmet"
 	armor = list(melee = 45, bullet = 40, laser = 40,energy = 25, bomb = 35, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/blueshield
+	name = "blueshield helmet"
+	desc = "An advanced helmet issued to blueshield officers."
+	icon_state = "blueshield_helmet"
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	armor = list(melee = 60, bullet = 55, laser = 50,energy = 35, bomb = 35, bio = 0, rad = 0)
+	action_button_name = "Adjust helmet visor"
+	var/tint = TRUE
+
+/obj/item/clothing/head/helmet/blueshield/attack_self()
+	toggle()
+
+/obj/item/clothing/head/helmet/blueshield/verb/toggle()
+	set category = "Object"
+	set name = "Adjust helmet visor"
+	set src in usr
+
+	if(!usr.incapacitated())
+		if(!tint)
+			tint = !tint
+			flags_inv |= (HIDEEYES | HIDEMASK)
+			icon_state = initial(icon_state)
+			to_chat(usr, "You toggle helmet's tint on.")
+		else
+			tint = !tint
+			flags_inv &= ~(HIDEEYES | HIDEMASK)
+			icon_state = "[initial(icon_state)]_off"
+			to_chat(usr, "You toggle helmet's tint off")
+		usr.update_inv_head()	//so our mob-overlays update
