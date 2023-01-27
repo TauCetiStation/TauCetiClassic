@@ -279,7 +279,7 @@
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
 	action_button_name = null //shooting bursts with a shotgun is funny, but no
 	burst_mode = FALSE
-	fire_delay = 0
+	fire_delay = FALSE
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/atom_init()
 	. = ..()
