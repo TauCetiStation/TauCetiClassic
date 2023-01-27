@@ -573,7 +573,8 @@
 				if(V.stealth_active)
 					to_chat(H, "<span class='notice'>You can't focus your eyes on [src].</span>")
 					return
-		if(H.mind.assigned_role == "Blueshield Officer" && mind && (mind.assigned_role in heads_positions || mind.assigned_role = "Internal Affairs Agent"))
+		var/list/to_look_at = list(	"Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
+		if(H.mind.assigned_role == "Blueshield Officer" && mind && mind.assigned_role in to_look_at)
 			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
 			var/datum/component/mood/mood2 = H.GetComponent(/datum/component/mood)
 			if(mood2)
