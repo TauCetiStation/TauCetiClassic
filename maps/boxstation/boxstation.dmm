@@ -11999,7 +11999,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 2;
+	dir = 8;
 	icon_state = "darkblue"
 	},
 /area/station/security/blueshield)
@@ -18408,7 +18408,7 @@
 	},
 /obj/item/weapon/flora/random,
 /turf/simulated/floor{
-	dir = 2;
+	dir = 8;
 	icon_state = "darkblue"
 	},
 /area/station/security/blueshield)
@@ -36252,7 +36252,7 @@
 	},
 /obj/item/device/camera,
 /turf/simulated/floor{
-	dir = 2;
+	dir = 8;
 	icon_state = "darkblue"
 	},
 /area/station/security/iaa_office)
@@ -38383,7 +38383,7 @@
 /area/station/bridge)
 "bqw" = (
 /turf/simulated/floor{
-	dir = 2;
+	dir = 8;
 	icon_state = "darkblue"
 	},
 /area/station/security/blueshield)
@@ -53091,7 +53091,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor{
-	dir = 2;
+	dir = 8;
 	icon_state = "darkblue"
 	},
 /area/station/security/iaa_office)
@@ -53126,7 +53126,7 @@
 	department = "Internal Affairs"
 	},
 /turf/simulated/floor{
-	dir = 2;
+	dir = 8;
 	icon_state = "darkblue"
 	},
 /area/station/security/iaa_office)
@@ -53157,7 +53157,7 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor{
-	dir = 2;
+	dir = 8;
 	icon_state = "darkblue"
 	},
 /area/station/security/iaa_office)
@@ -53351,7 +53351,7 @@
 "bRl" = (
 /obj/machinery/photocopier,
 /turf/simulated/floor{
-	dir = 2;
+	dir = 8;
 	icon_state = "darkblue"
 	},
 /area/station/security/iaa_office)
