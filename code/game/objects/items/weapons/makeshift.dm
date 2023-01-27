@@ -4,8 +4,9 @@
 	name = "spear"
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	force = 10
-	w_class = SIZE_NORMAL
+	w_class = SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BACK
+	flags = CANT_BE_INSERTED
 	throwforce = 15
 	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
@@ -27,6 +28,8 @@
 	TCB.force_wielded = 18
 	TCB.force_unwielded = 10
 	TCB.icon_wielded = "spearglass1"
+	TCB.on_wield = CALLBACK(src, .proc/on_wield)
+	TCB.on_unwield = CALLBACK(src, .proc/on_unwield)
 
 	AddComponent(/datum/component/twohanded, TCB)
 
@@ -45,6 +48,14 @@
 
 	else
 		return ..()
+
+/obj/item/weapon/spear/proc/on_wield()
+	w_class = SIZE_NORMAL
+	return FALSE
+
+/obj/item/weapon/spear/proc/on_unwield()
+	w_class = initial(w_class)
+	return FALSE
 
 /obj/item/clothing/head/helmet/battlebucket
 	icon = 'icons/obj/makeshift.dmi'

@@ -7,7 +7,8 @@
 	force = 10
 	sharp = 1
 	edge = 1
-	w_class = SIZE_NORMAL
+	w_class = SIZE_SMALL
+	flags = CANT_BE_INSERTED
 	slot_flags = SLOT_FLAGS_BACK
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	sweep_step = 5
@@ -29,6 +30,8 @@
 	TCB.force_wielded = 40
 	TCB.force_unwielded = 10
 	TCB.icon_wielded = "fireaxe1"
+	TCB.on_wield = CALLBACK(src, .proc/on_wield)
+	TCB.on_unwield = CALLBACK(src, .proc/on_unwield)
 	AddComponent(/datum/component/twohanded, TCB)
 
 	hitsound = SOUNDIN_DESCERATION
@@ -38,6 +41,16 @@
 
 /obj/item/weapon/fireaxe/proc/can_spin(mob/user)
 	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
+
+/obj/item/weapon/fireaxe/proc/on_wield()
+	w_class = SIZE_NORMAL
+	return FALSE
+
+/obj/item/weapon/fireaxe/proc/on_unwield()
+	w_class = initial(w_class)
+	return FALSE
+
+
 
 /obj/item/weapon/dualsaber
 	var/reflect_chance = 0
