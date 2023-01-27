@@ -3243,8 +3243,8 @@
 /area/station/rnd/xenobiology)
 "afj" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/fancy/donut_box,
-/obj/item/clothing/mask/cigarette/cigar/havana,
+/obj/item/weapon/storage/firstaid/adv,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

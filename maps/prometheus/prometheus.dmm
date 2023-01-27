@@ -2162,19 +2162,11 @@
 /area/station/security/blueshield/shuttle)
 "adD" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin{
-	pixel_y = 4
-	},
-/obj/item/weapon/pen{
-	pixel_x = -1;
-	pixel_y = 7
-	},
-/obj/item/weapon/folder/blue{
-	pixel_x = 5
-	},
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/weapon/storage/firstaid/adv,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

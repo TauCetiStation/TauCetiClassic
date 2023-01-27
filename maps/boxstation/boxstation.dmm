@@ -10688,6 +10688,8 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/item/weapon/storage/firstaid/adv,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
