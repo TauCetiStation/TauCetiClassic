@@ -64323,9 +64323,6 @@
 	icon_state = "dark"
 	},
 /area/station/aisat/antechamber)
-"tns" = (
-/turf/simulated/wall,
-/area/station/security/blueshield)
 "tnt" = (
 /obj/item/device/flashlight/lamp,
 /obj/structure/table,
@@ -121483,7 +121480,7 @@ rRo
 jIl
 sXl
 jIl
-tns
+cuX
 cuX
 cuX
 cuX
