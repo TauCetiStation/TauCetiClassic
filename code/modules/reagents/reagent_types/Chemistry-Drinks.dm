@@ -76,7 +76,7 @@
 			//nothing
 		if(21 to INFINITY)
 			if(prob(data["ticks"] - 10))
-				M.disabilities &= ~NEARSIGHTED
+				M.cure_nearsighted(EYE_DAMAGE_TRAIT)
 	data["ticks"]++
 
 /datum/reagent/consumable/drink/berryjuice

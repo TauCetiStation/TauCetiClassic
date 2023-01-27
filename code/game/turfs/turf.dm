@@ -95,8 +95,6 @@
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		to_chat(usr, "<span class='warning'>Передвижение отключено администрацией.</span>")//This is to identify lag problems
 		return FALSE
-	if (!(mover && isturf(mover.loc)))
-		return TRUE
 
 	var/list/second_check = list()
 	var/turf/mover_loc = mover.loc

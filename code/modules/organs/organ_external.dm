@@ -622,6 +622,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/proc/is_broken()
 	return ((status & ORGAN_BROKEN) && !(status & ORGAN_SPLINTED))
 
+/obj/item/organ/external/proc/is_artery_cut()
+	return (status & ORGAN_ARTERY_CUT)
+
 /obj/item/organ/external/proc/is_malfunctioning()
 	return (is_robotic() && prob(brute_dam + burn_dam))
 
