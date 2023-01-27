@@ -606,6 +606,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Blueshield Office"
 	icon_state = "law"
 
+/area/station/security/blueshield/shuttle
+	name = "Blueshield Shuttle"
+
 /area/station/security/lawyer_office
 	name = "Lawyer Office"
 	icon_state = "law"
