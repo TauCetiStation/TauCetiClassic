@@ -11,7 +11,6 @@
 	burst_mode = TRUE
 	fire_delay = 3
 	var/alarmed = FALSE
-	var/select = 1
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
@@ -26,8 +25,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/proc/burst_select()
 	var/mob/living/carbon/human/user
-	select = !select
-	if(!select)
+	if(burst_mode)
 		burst_mode = FALSE
 		burst_size = 1
 		fire_delay = 0
