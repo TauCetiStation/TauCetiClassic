@@ -71,11 +71,11 @@
 
 	filesystem.len = filesystem_storage
 
-	add_file(2, "Стандартные", filetype = "Folder")
+	add_file(folder_id = 2, filename = "Стандартные", filecontent = null, path = null, filetype = "Folder")
 
-	add_file(0, path = /datum/digital/file/program/filesystem)
-	add_file(2, path = /datum/digital/file/program/ntdocs)
-	add_file(2, path = /datum/digital/file/program/ntpict)
+	add_file(folder_id = 0, filename = null, filecontent = null, path = /datum/digital/file/program/filesystem)
+	add_file(folder_id = 2, filename = null, filecontent = null, path = /datum/digital/file/program/ntdocs)
+	add_file(folder_id = 2, filename = null, filecontent = null, path = /datum/digital/file/program/ntpict)
 
 /obj/item/weapon/drive/proc/add_file(folder_id, filename, filecontent, path, filetype)
 	if(!path)
@@ -109,8 +109,8 @@
 						File.fileicon = "file-word"
 					if("Image")
 						File.fileicon = "file-image"
-			return TRUE
-	return FALSE
+			return File
+	return null
 
 /obj/item/weapon/drive/proc/open_file(file_id)
 	var/datum/digital/file/File = filesystem[file_id]

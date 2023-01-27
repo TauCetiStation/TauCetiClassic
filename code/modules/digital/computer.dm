@@ -21,9 +21,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer, computer_list)
 
 	var/obj/item/weapon/drive/hard/hard_drive
 	var/datum/digital/file/program/active_program = null
+	var/active_id = 0
+	var/list/minimized_programs = list()
 
-	var/list/standart_files = list(list("folder" = 1, "name" = "Руководство пользователя", "content" = list("info" = "Добро пожаловать в НТОС!"), "path" = null, "type" = "Document"))
-	var/list/preinstalled_programs = list()
+	var/list/standart_files = list(
+		list("folder" = 1, "name" = "Руководство пользователя", "content" = list("info" = "Добро пожаловать в НТОС!"), "path" = null, "type" = "Document")
+	)
+	var/list/preinstalled_programs = list(
+		list("folder" = 1, "name" = null, "content" = null, "path" = /datum/digital/file/program/secrecords, "type" = null)
+	)
 
 /obj/machinery/computer/atom_init(mapload, obj/item/weapon/circuitboard/C)
 	. = ..()
@@ -32,7 +38,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer, computer_list)
 
 	standart_files += preinstalled_programs
 	for(var/list/file in standart_files)
-		hard_drive.add_file(file["folder"], filename = file["name"], filecontent = file["content"], path = file["path"], filetype = file["type"])
+		hard_drive.add_file(folder_id = file["folder"], filename = file["name"], filecontent = file["content"], path = file["path"], filetype = file["type"])
 
 	if(C && istype(C))
 		circuit = C
@@ -69,6 +75,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer, computer_list)
 			folder_to_front += list(list("name" = File.name, "filetype" = File.filetype, "file_id" = i, "file_icon" = File.fileicon))
 		data["folder_files"] = folder_to_front
 
+	var/list/minimized_to_front = list()
+	for(var/id in minimized_programs)
+		var/datum/digital/file/File = hard_drive.filesystem[id]
+		minimized_to_front += list(list("file_name" = File.name, "file_id" = id, "file_icon" = File.fileicon))
+	data["minimized_programs"] = minimized_to_front
+
 	return data
 
 /obj/machinery/computer/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
@@ -88,7 +100,22 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer, computer_list)
 
 			if("close_file")
 				active_program.close()
+				if(active_id in minimized_programs)
+					minimized_programs -= active_id
+					active_id = 0
 				active_program = null
+				return TRUE
+			if("minimize_file")
+				if(!(active_id in minimized_programs))
+					minimized_programs += active_id
+					active_id = 0
+				active_program = null
+				return TRUE
+			if("maximize_file")
+				var/program_id = params["maximize_program_id"]
+				active_id = program_id
+				active_program = hard_drive.filesystem[program_id]
+				minimized_programs -= program_id
 				return TRUE
 
 			if("create_file")
@@ -96,13 +123,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer, computer_list)
 				return TRUE
 
 			if("delete_file")
-				hard_drive.delete_file(text2num(sanitize(params["file_id"])))
+				hard_drive.delete_file(params["file_id"])
 				return TRUE
 
 			if("move_file")
 				var/list/folder = hard_drive.folders[1]
-				folder -= text2num(sanitize(params["file_id"]))
-				hard_drive.folders[text2num(sanitize(params["newfolder_id"]))] += text2num(sanitize(params["file_id"]))
+				folder -= params["file_id"]
+				hard_drive.folders[params["newfolder_id"]] += params["file_id"]
 				return TRUE
 
 			if("program")
@@ -114,6 +141,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer, computer_list)
 		return
 
 	active_program = hard_drive.open_file(file_id)
+	active_id = hard_drive.filesystem.Find(active_program)
 
 /obj/machinery/computer/Destroy()
 	return ..()

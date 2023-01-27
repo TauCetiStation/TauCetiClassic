@@ -4,7 +4,7 @@ export const NTPict = (props) => {
   const { act, data } = useBackend(props.context);
   const {
     file_name,
-    file_content
+    file_content,
   } = data;
   return (
     <div>

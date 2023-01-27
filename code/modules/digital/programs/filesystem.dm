@@ -1,6 +1,7 @@
 /datum/digital/file/program/filesystem
 	name = "Filesystem"
 	can_open_type = "Folder"
+	fileicon = "folder-open"
 
 	var/show_folder = 0
 	var/datum/digital/file/Folder

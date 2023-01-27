@@ -1,58 +1,149 @@
 .NTDocs__Paper {
   width: 50vw;
   height: 80vw;
-  left: 9vw;
+  left: 2.25vw;
   background: #ffffff;
   position: relative;
   color: #111111;
   padding: 10px;
-}
-
-.NTDocs__PaperHeader {
-  width: 51vw;
-  height: 4vw;
-  background: #ffffff;
-  position: static;
-  color: #111111;
-  padding: 5px;
-  border-radius: 10px 10px 0px 0px;
-  font-weight: bold;
-  font-size: 15px;
-  text-overflow: ellipsis;
-  text-align: center;
-  overflow: hidden;
-  border: 3px solid #313131;
-  border-bottom: 1px dashed #313131;
-  z-index: 1;
+  font-size: 2vh;
 }
 
 .NTDocs__PaperView {
-  width: 70%;
-  height: 80%;
+  width: 65%;
+  height: 85%;
   position: absolute;
   bottom: 0px;
   right: 0px;
   overflow: scroll;
+  scrollbar-track-color: #313131 !important;
+  scrollbar-face-color: #777777 !important;
 }
 
 .NTDocs__UpperMenu {
   width: 100%;
-  height: 12.3%;
+  height: 15%;
   position: absolute;
-  top: 5vw;
+  top: 0%;
   background: #eeeeee;
   color: #111111;
   border-bottom: 5px solid #313131;
+  z-index: 0;
+}
+
+.NTDocs__PaperHeader {
+  width: 51vw;
+  height: 50%;
+  background: #ffffff;
+  position: absolute;
+  left: 36.9vw;
+  bottom: -5px;
+  color: #111111;
+  padding: 0.25vh;
+  border-radius: 10px 10px 0px 0px;
+  font-weight: bold;
+  font-size: 3vh;
+  text-overflow: ellipsis;
+  text-align: center;
+  overflow: hidden;
+  border: 4px solid #313131;
+  border-bottom: 1px dashed #313131;
+  z-index: 1;
+  vertical-align: top;
 }
 
 .NTDocs__LeftMenu {
-  width: 30%;
-  height: 80%;
+  width: 35%;
+  height: 85%;
   position: absolute;
   left: 0px;
   bottom: 0px;
   background: #eeeeee;
   color: #111111;
-  border-right: 2px solid #313131;
   border-left: 15px solid #313131;
+  overflow: scroll;
+  scrollbar-track-color: #313131 !important;
+  scrollbar-face-color: #777777 !important;
+}
+
+.NTDocs__Button {
+  float: left;
+  position: relative;
+  top: 0%;
+  width: 12.5vw;
+  height: 100%;
+  background: #eeeeee !important;
+  color: #777777 !important;
+  font-size: 6vh;
+  padding-left: 4%;
+  margin: 0px;
+  vertical-align: top;
+  text-align: center;
+  border-radius: 0px;
+  border-right: 5px ridge #ffffff;
+
+  .NTDocs__Button-Content {
+    height: 50%;
+    width: 100%;
+    bottom: 10%;
+    left: 0px;
+    position: absolute;
+    color: #777777;
+    font-size: 2vh;
+    font-weight: bold;
+  }
+  
+  &:hover {
+    background: #777777 !important;
+    color: #eeeeee !important;
+    border-right-style: groove;
+    .NTDocs__Button-Content {
+      color: #eeeeee;
+    }
+  }
+}
+
+.NTDocs__Buttons_Placeholder {
+  float: left;
+  width: 50vw;
+  height: 100%;
+  position: relative;
+  top: 0%;
+  background: #eeeeee;
+  color: #111111;
+  margin: 0px;
+  vertical-align: top;
+  padding: 1vh;
+  text-align: center;
+  border-right: 5px ridge #ffffff;
+}
+
+.NTDocs__FileList {
+  width: 100%;
+  height: 7%;
+  background: #fefefe !important;
+  color: #333333 !important;
+  border-bottom: 5px ridge #ffffff;
+  margin: 0px;
+
+  .NTDocs__FileList-Name {
+    float: right;
+    height: 100%;
+    width: 80%;
+    bottom: 0px;
+    right: 0px;
+    position: absolute;
+    color: #333333;
+    font-size: 2vh;
+    font-weight: bold;
+  }
+  
+  &:hover {
+    background: #777777 !important;
+    color: #eeeeee !important;
+    border-bottom-style: groove;
+    .NTDocs__FileList-Name {
+      color: #eeeeee;
+    }
+  }
 }

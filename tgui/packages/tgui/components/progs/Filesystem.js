@@ -5,7 +5,7 @@ export const Filesystem = (props) => {
   const { act, data } = useBackend(props.context);
   const {
     folder_files,
-    folder_name
+    folder_name,
   } = data;
   return (
     <div>
@@ -23,13 +23,13 @@ export const Filesystem = (props) => {
             className="Filesystem__File"
             content={
               <>
-              <Icon name={file.file_icon} className="Filesystem__File-Icon"/>
-              <Box className="Filesystem__File-Name">
-                 {file.name}
-              </Box>
-              <Box className="Filesystem__File-Type">
-                {file.filetype}
-              </Box>
+                <Icon name={file.file_icon} className="Filesystem__File-Icon" />
+                <Box className="Filesystem__File-Name">
+                  {file.name}
+                </Box>
+                <Box className="Filesystem__File-Type">
+                  {file.filetype}
+                </Box>
               </>
             }
             onClick={() => act('open_file', { file_id: file.file_id })}

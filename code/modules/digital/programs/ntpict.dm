@@ -21,6 +21,7 @@
 		user << browse_rsc(show_file.content["img"], "tmp_photo.png")
 		data["file_content"] = show_file.content
 	else
+		data["file_name"] = null
 		data["file_content"] = null
 
 	return data
