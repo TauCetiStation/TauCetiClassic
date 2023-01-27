@@ -224,6 +224,8 @@
 	icon_state = "blueshield"
 	item_state = "armor"
 	armor = list(melee = 60, bullet = 55, laser = 50, energy = 35, bomb = 35, bio = 0, rad = 0)
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 //Reactive armor
 //When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
