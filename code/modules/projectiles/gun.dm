@@ -62,11 +62,10 @@
 
 	var/skill_recoil = max(0, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
 
-	if(skill_recoil || !ignore_skills)
-		shake_camera(user, skill_recoil + 1, skill_recoil)
-
 	if(ignore_skills)
 		shake_camera(user, recoil + 1, recoil)
+	else if(skill_recoil)
+		shake_camera(user, skill_recoil + 1, skill_recoil)
 
 	if(silenced)
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
