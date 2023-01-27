@@ -98,6 +98,17 @@
 	fire_sound = 'sound/effects/Explosion1.ogg'
 	origin_tech = "combat=3"
 	mag_type = /obj/item/ammo_box/magazine/m75
+	var/alarmed = FALSE
+
+/obj/item/weapon/gun/projectile/gyropistol/afterattack(atom/target, mob/user, proximity, params)
+	..()
+	if(!chambered && !get_ammo() && !alarmed)
+		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)
+		update_icon()
+		alarmed = TRUE
+	return
+
+
 
 /obj/item/weapon/gun/projectile/gyropistol/update_icon()
 	..()
