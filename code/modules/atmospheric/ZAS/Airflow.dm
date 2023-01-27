@@ -38,9 +38,9 @@ Contains helper procs for airflow, handled in /connection_group.
 	return
 
 /mob/living/carbon/human/airflow_stun()
-	if(shoes?.flags & NOSLIP)
+	if(shoes?.flags & AIR_FLOW_PROTECT)
 		return FALSE
-	if(wear_suit?.flags & NOSLIP)
+	if(wear_suit?.flags & AIR_FLOW_PROTECT)
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_FAT))
 		to_chat(src, "<span class='notice'>Air suddenly rushes past you!</span>")
@@ -64,9 +64,9 @@ Contains helper procs for airflow, handled in /connection_group.
 	return FALSE
 
 /mob/living/carbon/human/check_airflow_movable(n)
-	if(shoes && (shoes.flags & NOSLIP))
+	if(shoes && (shoes.flags & AIR_FLOW_PROTECT))
 		return FALSE
-	if(wear_suit && (wear_suit.flags & NOSLIP))
+	if(wear_suit && (wear_suit.flags & AIR_FLOW_PROTECT))
 		return FALSE
 	return ..()
 
