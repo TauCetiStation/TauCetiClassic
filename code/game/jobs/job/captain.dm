@@ -87,6 +87,4 @@
 	skillsets = list("Blueshield Officer" = /datum/skillset/blueshield)
 
 /datum/job/blueshield/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	var/datum/component/mood/mood = H.GetComponent(/datum/component/mood)
-	if(mood)
-		addtimer(CALLBACK(mood, /datum/component/mood.proc/add_event, null, "blueshield", /datum/mood_event/blueshield), 10 MINUTES)
+	addtimer(CALLBACK(null, .proc/add_mood_event, H, "blueshield", /datum/mood_event/blueshield), 10 MINUTE)
