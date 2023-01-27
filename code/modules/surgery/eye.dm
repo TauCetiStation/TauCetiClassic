@@ -131,7 +131,7 @@
 	user.visible_message("<span class='notice'>[user] cauterizes the incision around [target]'s eyes with \the [tool].</span>", \
 	"<span class='notice'>You cauterize the incision around [target]'s eyes with \the [tool].</span>")
 	if (target.op_stage.eyes == 3)
-		target.disabilities &= ~NEARSIGHTED
+		target.cure_nearsighted(list(EYE_DAMAGE_TRAIT, EYE_DAMAGE_TEMPORARY_TRAIT))
 		target.sdisabilities &= ~BLIND
 		eyes.damage = 0
 	target.op_stage.eyes = 0
@@ -259,7 +259,7 @@
 	user.visible_message("<span class='notice'>[user] locks [target]'s camera panels with \the [tool].</span>",
 	"<span class='notice'>You lock [target]'s camera panels with \the [tool].</span>")
 	if (target.op_stage.eyes == 2)
-		target.disabilities &= ~NEARSIGHTED
+		target.cure_nearsighted(EYE_DAMAGE_TRAIT)
 		target.sdisabilities &= ~BLIND
 		eyes.damage = 0
 	target.op_stage.eyes = 0
