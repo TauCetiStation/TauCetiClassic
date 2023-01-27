@@ -316,7 +316,7 @@
 	desc = "An advanced helmet issued to blueshield officers."
 	icon_state = "blueshield_helmet"
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	armor = list(melee = 60, bullet = 55, laser = 50,energy = 35, bomb = 35, bio = 0, rad = 0)
 	action_button_name = "Adjust helmet visor"
 	var/tint = TRUE
@@ -337,7 +337,7 @@
 			to_chat(usr, "You toggle helmet's tint on.")
 		else
 			tint = !tint
-			flags_inv &= ~(HIDEEYES | HIDEMASK)
+			flags_inv &= ~(HIDEEYES | HIDEMASK | HIDEFACE)
 			icon_state = "[initial(icon_state)]_off"
 			to_chat(usr, "You toggle helmet's tint off")
 		usr.update_inv_head()	//so our mob-overlays update

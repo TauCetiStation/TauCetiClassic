@@ -134,7 +134,7 @@ var/global/list/nonhuman_positions = list(
 	"pAI"
 )
 
-var/list/heads_positions = list(
+var/global/list/heads_positions = list(
 	"Captain",
 	"Head of Personnel",
 	"Head of Security",
