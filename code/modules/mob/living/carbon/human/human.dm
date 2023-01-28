@@ -2496,3 +2496,13 @@
 		return 0
 
 	return BP.pumped
+
+/atom/movable/proc/can_be_trow(human)
+	if(ishuman(human))
+		var/mob/living/carbon/human/H = human
+		if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP)) \
+			|| \
+		(istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && (H.wear_suit.flags & NOSLIP)) \
+		)
+			return TRUE
+	return FALSE
