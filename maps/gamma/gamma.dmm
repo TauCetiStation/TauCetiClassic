@@ -2403,15 +2403,13 @@
 /area/station/security/blueshield)
 "adR" = (
 /obj/structure/closet/secure_closet/blueshield,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/security/blueshield)
 "adS" = (
@@ -2436,16 +2434,15 @@
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 8
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
+	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
 	},
 /turf/simulated/floor{
 	dir = 2;
@@ -2453,23 +2450,16 @@
 	},
 /area/station/security/blueshield)
 "adV" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "blue"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "adW" = (
 /obj/structure/stool/bed/chair/office/light{
@@ -2608,9 +2598,17 @@
 	},
 /area/station/hallway/secondary/exit)
 "aei" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "darkblue"
@@ -3246,7 +3244,8 @@
 /obj/item/weapon/storage/firstaid/adv,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/security/blueshield)
 "afk" = (
@@ -4410,21 +4409,14 @@
 /area/station/ai_monitored/eva)
 "ary" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door_control{
-	id = "bsentry";
-	name = "Entry Shutter Control";
-	pixel_y = 0
+/obj/item/weapon/paper_bin{
+	pixel_y = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
+/obj/item/weapon/folder/blue{
+	pixel_y = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+/obj/item/weapon/pen{
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -13544,10 +13536,9 @@
 	},
 /area/station/rnd/storage)
 "diH" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/cdeathalarm_kit,
-/obj/machinery/light{
-	dir = 1
+/obj/structure/filingcabinet/chestdrawer,
+/obj/machinery/alarm{
+	pixel_y = 24
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -13963,6 +13954,26 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "dpi" = (
+/obj/structure/table/reinforced,
+/obj/item/ashtray/plastic{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/item/weapon/lighter/zippo{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/machinery/camera{
+	c_tag = "Blueshield Office";
+	dir = 5
+	},
+/obj/machinery/newscaster{
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -15987,7 +15998,14 @@
 	},
 /area/station/maintenance/cargo)
 "dZf" = (
-/obj/structure/filingcabinet/chestdrawer,
+/obj/structure/table/reinforced,
+/obj/item/weapon/storage/box/cdeathalarm_kit{
+	pixel_y = 4
+	},
+/obj/machinery/recharger/wallcharger{
+	pixel_x = 4;
+	pixel_y = 22
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -18677,10 +18695,10 @@
 /area/station/engineering/atmos)
 "eQz" = (
 /obj/structure/stool/bed/chair/office/dark,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
 /obj/effect/landmark/start/blueshield_officer,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -20243,18 +20261,10 @@
 	},
 /area/station/civilian/gym)
 "fqr" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Blueshield APC";
 	pixel_x = -24
-	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
 	},
 /obj/machinery/light/small{
 	dir = 1
@@ -20265,6 +20275,11 @@
 	pixel_y = 28;
 	req_access = list(42)
 	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -34973,11 +34988,9 @@
 /area/station/maintenance/brig)
 "jXD" = (
 /obj/structure/closet/blueshield,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/security/blueshield)
 "jXG" = (
@@ -35866,16 +35879,19 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/rnd/test_area)
 "knA" = (
+/obj/machinery/light{
+	dir = 8
+	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin{
-	pixel_y = 4
+/obj/machinery/door_control{
+	id = "bsentry";
+	name = "Entry Shutter Control";
+	pixel_y = 3
 	},
-/obj/item/weapon/pen{
-	pixel_x = -1;
-	pixel_y = 7
-	},
-/obj/item/weapon/folder/blue{
-	pixel_x = 5
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -28;
+	pixel_y = -5
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -37443,19 +37459,28 @@
 	},
 /area/station/medical/chemistry)
 "kNo" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "bsentry";
+	name = "Blueshield Office Shutters";
+	opacity = 0
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/disposalpipe/segment,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
-/turf/simulated/floor,
-/area/station/hallway/primary/bridgehall)
+/obj/machinery/door/airlock/command{
+	name = "Blueshield Office";
+	req_access = list(42)
+	},
+/turf/simulated/floor{
+	icon_state = "darkbluefull"
+	},
+/area/station/security/blueshield)
 "kNI" = (
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 8
@@ -38901,16 +38926,17 @@
 	},
 /area/station/hallway/primary/bridgehall)
 "lhA" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+	dir = 6
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/machinery/hologram/holopad,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -48359,16 +48385,10 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "oex" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "oeF" = (
 /obj/machinery/door/window/westright{
@@ -55558,10 +55578,6 @@
 	},
 /area/station/medical/surgeryobs)
 "quV" = (
-/obj/machinery/door/airlock/vault{
-	name = "Blueshield Storage";
-	req_access = list(42)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -55581,10 +55597,9 @@
 	name = "Blueshield Office Shutters";
 	opacity = 0
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/door/airlock/vault{
+	name = "Blueshield Storage";
+	req_access = list(42)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -55830,16 +55845,16 @@
 /turf/simulated/wall/r_wall,
 /area/station/engineering)
 "qzI" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -62016,16 +62031,18 @@
 	},
 /area/station/security/forensic_office)
 "szI" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /obj/structure/cable{
-	icon_state = "1-2"
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "arrivalcorner"
-	},
+/turf/simulated/floor,
 /area/station/hallway/primary/bridgehall)
 "szN" = (
 /obj/effect/decal/cleanable/dirt,
@@ -65264,28 +65281,12 @@
 /turf/simulated/floor/engine/airmix,
 /area/station/engineering/atmos)
 "tCs" = (
-/obj/machinery/door/airlock/command{
-	name = "Blueshield Office";
-	req_access = list(42)
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "bsentry";
-	name = "Blueshield Office Shutters";
-	opacity = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/disposalpipe/segment,
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "bluecorner"
 	},
-/area/station/security/blueshield)
+/area/station/hallway/primary/bridgehall)
 "tCt" = (
 /obj/machinery/door/window/southright{
 	dir = 8;
@@ -72484,17 +72485,13 @@
 	},
 /area/station/rnd/telesci)
 "vKF" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutralcorner"
+	icon_state = "dark"
 	},
-/area/station/hallway/primary/bridgehall)
+/area/station/security/blueshield)
 "vKI" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -73326,8 +73323,11 @@
 	},
 /area/station/engineering/engine)
 "vXB" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -121743,7 +121743,7 @@ dpi
 knA
 adQ
 cuX
-fjy
+oex
 adP
 nZZ
 bOw
@@ -121999,9 +121999,9 @@ diH
 eQz
 ary
 adU
-tCs
-szI
-adV
+cuX
+ugv
+adO
 kCI
 hSR
 hfV
@@ -122256,9 +122256,9 @@ cuX
 vXB
 lhA
 aei
-cuX
-fjy
 kNo
+adV
+szI
 kCI
 nGu
 tBe
@@ -122514,8 +122514,8 @@ cuX
 quV
 cuX
 cuX
-vKF
-oex
+tCs
+lgU
 fMY
 hSR
 lhs
@@ -122769,7 +122769,7 @@ acZ
 cuX
 fqr
 qzI
-dpi
+vKF
 cuX
 fHu
 lJe

@@ -9696,10 +9696,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/machinery/alarm{
-	dir = 1;
-	pixel_y = -22
-	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -10286,39 +10282,31 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/hydroponics)
 "arj" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Blueshield APC";
-	pixel_x = -24
-	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2";
-	pixel_y = 1
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/door_control{
-	id = "bsstorage";
-	name = "Storage Shutter";
-	pixel_y = 28;
-	req_access = list(42)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "darkblue"
 	},
 /area/station/security/blueshield)
 "ark" = (
 /obj/structure/closet/blueshield,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/machinery/door_control{
+	id = "bsstorage";
+	name = "Storage Shutter";
+	pixel_y = 26;
+	req_access = list(42)
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/security/blueshield)
 "arl" = (
@@ -10436,12 +10424,15 @@
 /obj/item/weapon/paper_bin{
 	pixel_y = 4
 	},
-/obj/item/weapon/pen{
-	pixel_x = -1;
-	pixel_y = 7
-	},
 /obj/item/weapon/folder/blue{
-	pixel_x = 5
+	pixel_y = 4
+	},
+/obj/item/weapon/pen{
+	pixel_y = 4
+	},
+/obj/machinery/recharger/wallcharger{
+	pixel_x = 4;
+	pixel_y = 22
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -10573,6 +10564,10 @@
 	network = list("SS13","Security")
 	},
 /obj/item/device/camera/polar/detective,
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -10660,38 +10655,35 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "arS" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
 /obj/machinery/alarm{
 	dir = 1;
-	pixel_y = -25
+	pixel_y = -22
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "darkblue"
 	},
 /area/station/security/blueshield)
 "arT" = (
 /obj/structure/closet/secure_closet/blueshield,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
 /obj/machinery/firealarm{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 22
 	},
 /obj/item/weapon/storage/firstaid/adv,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 8;
+	icon_state = "vault"
 	},
 /area/station/security/blueshield)
 "arU" = (
@@ -11017,12 +11009,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "asw" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/stool/bed/chair/metal/black{
 	dir = 4
@@ -11312,6 +11298,9 @@
 /area/station/security/lobby)
 "asZ" = (
 /obj/structure/filingcabinet,
+/obj/machinery/newscaster{
+	pixel_x = 28
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -11904,8 +11893,8 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 2;
-	icon_state = "bluecorner"
+	dir = 4;
+	icon_state = "blue"
 	},
 /area/station/hallway/primary/fore)
 "auc" = (
@@ -11986,19 +11975,19 @@
 	},
 /area/station/security/prison)
 "aui" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 4;
+	d1 = 1;
 	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-8"
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -12540,20 +12529,15 @@
 /turf/simulated/wall,
 /area/station/civilian/fitness)
 "avq" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -12746,10 +12730,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "avF" = (
-/obj/machinery/door/airlock/command{
-	name = "Blueshield Office";
-	req_access = list(42)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -12772,8 +12752,12 @@
 	name = "Blueshield Office Shutters";
 	opacity = 0
 	},
+/obj/machinery/door/airlock/command{
+	name = "Blueshield Office";
+	req_access = list(42)
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkbluefull"
 	},
 /area/station/security/blueshield)
 "avG" = (
@@ -13575,17 +13559,24 @@
 /area/station/maintenance/eva)
 "axo" = (
 /obj/structure/table/reinforced,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/item/ashtray/plastic{
 	pixel_x = 5;
 	pixel_y = -1
 	},
-/obj/item/weapon/lighter/zippo,
-/obj/item/clothing/mask/cigarette/cigar,
+/obj/item/weapon/lighter/zippo{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -14489,10 +14480,16 @@
 	},
 /area/station/civilian/gym)
 "aza" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 9
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = 28;
+	pixel_y = -5
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -15243,7 +15240,7 @@
 	dir = 1;
 	network = list("SS13","Security")
 	},
-/obj/structure/table,
+/obj/random/vending/cola,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -15302,7 +15299,7 @@
 	dir = 1;
 	pixel_y = -23
 	},
-/obj/random/vending/cola,
+/obj/structure/bookcase/manuals/security,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
@@ -18405,10 +18402,19 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aGx" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
 /obj/item/weapon/flora/random,
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Blueshield APC";
+	pixel_x = -24
+	},
+/obj/structure/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/alarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -24002,18 +24008,14 @@
 /area/station/hallway/secondary/exit)
 "aQK" = (
 /obj/structure/table/reinforced,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
-	},
 /obj/machinery/door_control{
 	id = "bsentry";
 	name = "Entry Shutter Control";
 	pixel_y = 6
 	},
-/obj/item/weapon/storage/box/cdeathalarm_kit,
+/obj/item/weapon/storage/box/cdeathalarm_kit{
+	pixel_y = -8
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -24346,21 +24348,16 @@
 	},
 /area/station/rnd/hor)
 "aRs" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 8
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 8
 	},
 /obj/effect/landmark/start/blueshield_officer,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkblue"
@@ -28757,10 +28754,6 @@
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
 "aZb" = (
-/obj/machinery/door/airlock/vault{
-	name = "Blueshield Storage";
-	req_access = list(42)
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -28768,11 +28761,6 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
@@ -28780,8 +28768,12 @@
 	name = "Blueshield Office Shutters";
 	opacity = 0
 	},
+/obj/machinery/door/airlock/vault{
+	name = "Blueshield Storage";
+	req_access = list(42)
+	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "darkbluefull"
 	},
 /area/station/security/blueshield)
 "aZc" = (
@@ -38357,7 +38349,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	dir = 2;
+	dir = 4;
 	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/fore)
@@ -38384,6 +38376,12 @@
 	},
 /area/station/bridge)
 "bqw" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/obj/machinery/light_switch{
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -40024,8 +40022,12 @@
 	},
 /area/station/bridge)
 "btp" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
+/obj/machinery/camera{
+	c_tag = "Blueshield Office";
+	dir = 10
+	},
+/obj/structure/sign/nanotrasen{
+	pixel_y = -32
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -41660,14 +41662,12 @@
 	},
 /area/station/medical/hallway)
 "bwh" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
 	},
 /obj/machinery/light,
+/obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -43617,8 +43617,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "bzC" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -53073,9 +53073,9 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	d1 = 2;
+	d1 = 4;
 	d2 = 8;
-	icon_state = "2-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
@@ -53379,7 +53379,7 @@
 	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 2;
+	dir = 8;
 	icon_state = "darkblue"
 	},
 /area/station/bridge)
@@ -53391,13 +53391,13 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor{
-	dir = 2;
+	dir = 8;
 	icon_state = "darkblue"
 	},
 /area/station/bridge)
 "bRr" = (
 /turf/simulated/floor{
-	dir = 2;
+	dir = 8;
 	icon_state = "darkblue"
 	},
 /area/station/bridge)
@@ -53445,7 +53445,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 2;
+	dir = 8;
 	icon_state = "darkblue"
 	},
 /area/station/bridge)
@@ -53482,7 +53482,7 @@
 	dir = 6
 	},
 /turf/simulated/floor{
-	dir = 2;
+	dir = 8;
 	icon_state = "darkblue"
 	},
 /area/station/bridge)
@@ -80512,8 +80512,14 @@
 	},
 /area/station/hallway/primary/central)
 "pPF" = (
-/turf/simulated/wall/r_wall,
-/area/station/security/detectives_office)
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "red"
+	},
+/area/station/security/lobby)
 "pQb" = (
 /obj/machinery/door_control{
 	id = "HoP_queue";
@@ -117588,9 +117594,9 @@ aoC
 fDS
 apF
 aqi
-aqi
+pPF
 aAw
-asY
+cea
 cea
 avF
 cea
@@ -117846,7 +117852,7 @@ afV
 aod
 aoz
 arJ
-pPF
+cea
 cea
 aGx
 aui
@@ -118103,7 +118109,7 @@ aoP
 aog
 ajo
 arI
-pPF
+cea
 aDZ
 asw
 avq
@@ -118360,7 +118366,7 @@ anr
 apH
 aqA
 aqk
-pPF
+cea
 arz
 aQK
 axo
@@ -118617,7 +118623,7 @@ anw
 aof
 apb
 arL
-pPF
+cea
 asZ
 aRs
 aza
@@ -118874,7 +118880,7 @@ anu
 apG
 aqC
 arK
-pPF
+cea
 cea
 aZb
 cea
@@ -119131,7 +119137,7 @@ ajo
 ajo
 apb
 arN
-pPF
+cea
 arj
 arS
 cea
@@ -119388,7 +119394,7 @@ ajo
 ajo
 apb
 aql
-pPF
+cea
 ark
 arT
 cea
@@ -119645,7 +119651,7 @@ anz
 apJ
 aqB
 arM
-uUU
+cea
 cea
 cea
 cea
