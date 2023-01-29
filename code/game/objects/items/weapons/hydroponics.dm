@@ -182,7 +182,10 @@ var/global/gourd_name = null
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/examine(mob/user)
 	. = ..()
-	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", /datum/mood_event/gourd)
+	if(user.get_species() == UNATHI)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", /datum/mood_event/unathi_gourd)
+	else
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", /datum/mood_event/gourd)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/attack_self(mob/user)
 	. = ..()
@@ -240,7 +243,10 @@ var/global/gourd_name = null
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/examine(mob/user)
 	. = ..()
-	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", /datum/mood_event/gourd)
+	if(user.get_species() == UNATHI)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", /datum/mood_event/unathi_gourd)
+	else
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", /datum/mood_event/gourd)
 
 /obj/item/weapon/broken_bottle/gourd
 	name = "shatttered gourd bottle"

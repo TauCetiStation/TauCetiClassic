@@ -20,5 +20,11 @@
 
 /datum/mood_event/gourd
 	description = "<span class='nicegreen'>Gourds look great.</span>"
-	mood_change = 3
+	mood_change = 1
 	timeout = 1 MINUTE
+
+// A staple of Unathi agriculture and style.
+/datum/mood_event/unathi_gourd
+	description = "<span class='nicegreen'>GOURDS!!!</span>"
+	mood_change = 2
+	timeout = 2 MINUTES

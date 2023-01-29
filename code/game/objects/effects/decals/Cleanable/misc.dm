@@ -238,6 +238,8 @@ var/global/list/toilet_overlay_cache = list()
 	if(!isliving(AM))
 		return
 	var/mob/living/L = AM
+	if(L.get_species() == UNATHI)
+		return
 	if(L.crawling)
 		L.vomit()
 
@@ -245,5 +247,7 @@ var/global/list/toilet_overlay_cache = list()
 	if(!isliving(AM))
 		return
 	var/mob/living/L = AM
+	if(L.get_species() == UNATHI)
+		return
 	if(L.crawling)
 		L.vomit()

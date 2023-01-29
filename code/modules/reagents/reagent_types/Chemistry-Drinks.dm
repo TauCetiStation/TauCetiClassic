@@ -174,6 +174,11 @@
 	if(H.reagents.total_volume >= 3)
 		H.invoke_vomit_async()
 
+/datum/reagent/consumable/drink/gourd_juice/on_unathi_digest(mob/living/M)
+	..()
+	M.adjust_bodytemperature(-2 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+	return FALSE
+
 /datum/reagent/consumable/drink/gourd_juice/reaction_turf(turf/simulated/T, volume)
 	. = ..()
 	new /obj/effect/decal/cleanable/gourd(T)
@@ -805,6 +810,12 @@
 
 	if(H.reagents.total_volume >= 3)
 		H.invoke_vomit_async()
+
+/datum/reagent/consumable/ethanol/gourd_beer/on_unathi_digest(mob/living/M)
+	..()
+	M.adjust_bodytemperature(-2 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+	M.heal_bodypart_damage(1, 1)
+	return FALSE
 
 /datum/reagent/consumable/ethanol/gourd_beer/reaction_turf(turf/simulated/T, volume)
 	. = ..()
