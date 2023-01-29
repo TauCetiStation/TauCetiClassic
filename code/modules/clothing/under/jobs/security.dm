@@ -181,8 +181,3 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
-
-/obj/item/clothing/under/rank/blueshield/alt
-	name = "blueshield officer's uniform"
-	icon_state = "blueshield-alt"
-	item_state = "blueshield-alt"

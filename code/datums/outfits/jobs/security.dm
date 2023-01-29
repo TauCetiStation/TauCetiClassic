@@ -111,7 +111,6 @@
 	name = OUTFIT_JOB_NAME("Blueshield Officer")
 
 	uniform = /obj/item/clothing/under/rank/blueshield
-	gloves = /obj/item/clothing/gloves/black
 	shoes = /obj/item/clothing/shoes/boots
 	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
 

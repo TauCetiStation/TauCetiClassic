@@ -434,7 +434,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/clothing/head/beret/blueshield(src)
 	new /obj/item/clothing/head/soft/blueshield(src)
 	new /obj/item/clothing/under/rank/blueshield(src)
-	new /obj/item/clothing/under/rank/blueshield/alt(src)
 	new /obj/item/clothing/head/helmet(src)
 	new /obj/item/clothing/suit/storage/flak(src)
 	if(prob(50))
