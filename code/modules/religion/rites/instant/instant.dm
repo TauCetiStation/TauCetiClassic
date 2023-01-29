@@ -36,13 +36,13 @@
 	if(S)
 		R.mode.sacrificed += S.mind
 		if(sacrifice_target && sacrifice_target == S.mind)
-			to_chat(user, "<span class='[religion.style_text]'>Я͒̐͐ п͆̚͝р̒͘и̐̀͊н͋͠͝и͒́̾м͐͒а̒̕͝ю̀͒̾ э̾͑̓т͊̓͝у̾͊̾ ж̿͛͝е͝͠͠р̓͑̾т͋͌͐в̓͆͘у͋͌͠,͐̽̒ т͒̾̀в́̿̓о̒͋͝я́̽ ц͛̓͝е͆̒̚л͋̓ь͛͑̚ т̔̐̚е̽̐͘п͘͝͝е̒̕͠р͐̓̚ь͑͠ м͛̈́̚о̀͘̕ж͌̽͋е̓̾͊т́͐͝ с́͛͝ч̀̿͠и̔͊͝т͑́͌а͌̀͝т̓͋̈́ь̈́͆͘с̓̀͝я̈́̒͝ в͋̔̀ы̿͌͛п̓͑о͛̀̈́л͌͛͘н͆͛͝е͋̈́н̐͆̈́н͐̔͝о͆͋̾й̈́̈́̚.</span>")
+			R.send_message_to_members("<span class='[religion.style_text]'>Я͒̐͐ п͆̚͝р̒͘и̐̀͊н͋͠͝и͒́̾м͐͒а̒̕͝ю̀͒̾ ж̿͛͝е͝͠͠р̓͑̾т͋͌͐в̓͆͘у͋͌͠,͐̽̒ ц͛̓͝е͆̒̚л͋̓ь͛͑̚ м͛̈́̚о̀͘̕ж͌̽͋е̓̾͊т́͐͝ с́͛͝ч̀̿͠и̔͊͝т͑́͌а͌̀͝т̓͋̈́ь̈́͆͘с̓̀͝я̈́̒͝ в͋̔̀ы̿͌͛п̓͑о͛̀̈́л͌͛͘н͆͛͝е͋̈́н̐͆̈́н͐̔͝о͆͋̾й̈́̈́̚.</span>", , 4, user)
 			R.adjust_favor(300 * divine_power)
 		S.dust()
 	else if(ishuman(AOG.buckled_mob))
 		R.mode.sacrificed += AOG.buckled_mob.mind
 		if(sacrifice_target && sacrifice_target == AOG.buckled_mob.mind)
-			to_chat(user, "<span class='[religion.style_text]'>Я͒̐͐ п͆̚͝р̒͘и̐̀͊н͋͠͝и͒́̾м͐͒а̒̕͝ю̀͒̾ э̾͑̓т͊̓͝у̾͊̾ ж̿͛͝е͝͠͠р̓͑̾т͋͌͐в̓͆͘у͋͌͠,͐̽̒ т͒̾̀в́̿̓о̒͋͝я́̽ ц͛̓͝е͆̒̚л͋̓ь͛͑̚ т̔̐̚е̽̐͘п͘͝͝е̒̕͠р͐̓̚ь͑͠ м͛̈́̚о̀͘̕ж͌̽͋е̓̾͊т́͐͝ с́͛͝ч̀̿͠и̔͊͝т͑́͌а͌̀͝т̓͋̈́ь̈́͆͘с̓̀͝я̈́̒͝ в͋̔̀ы̿͌͛п̓͑о͛̀̈́л͌͛͘н͆͛͝е͋̈́н̐͆̈́н͐̔͝о͆͋̾й̈́̈́̚.</span>")
+			R.send_message_to_members("<span class='[religion.style_text]'>Я͒̐͐ п͆̚͝р̒͘и̐̀͊н͋͠͝и͒́̾м͐͒а̒̕͝ю̀͒̾ ж̿͛͝е͝͠͠р̓͑̾т͋͌͐в̓͆͘у͋͌͠,͐̽̒ ц͛̓͝е͆̒̚л͋̓ь͛͑̚ м͛̈́̚о̀͘̕ж͌̽͋е̓̾͊т́͐͝ с́͛͝ч̀̿͠и̔͊͝т͑́͌а͌̀͝т̓͋̈́ь̈́͆͘с̓̀͝я̈́̒͝ в͋̔̀ы̿͌͛п̓͑о͛̀̈́л͌͛͘н͆͛͝е͋̈́н̐͆̈́н͐̔͝о͆͋̾й̈́̈́̚.</span>", , 4, user)
 			R.adjust_favor(300 * divine_power)
 		AOG.buckled_mob.gib()
 
