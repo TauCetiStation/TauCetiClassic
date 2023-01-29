@@ -709,9 +709,6 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "abductor_hypo"
 
-/obj/item/weapon/lazarus_injector/alien/attack(mob/living/M, mob/living/user, def_zone)
-	..()
-
 /obj/item/weapon/lazarus_injector/alien/revive(mob/living/target, mob/living/user)
 	target.revive()
 	loaded = FALSE
