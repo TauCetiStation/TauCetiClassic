@@ -97,6 +97,7 @@
 // /turf/atom_init
 // /turf/environment/space/atom_init
 // /mob/dead/atom_init
+// /obj/item
 
 //Do also note that this proc always runs in New for /mob/dead
 /atom/proc/atom_init(mapload, ...)

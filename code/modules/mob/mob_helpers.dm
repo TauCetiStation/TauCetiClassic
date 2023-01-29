@@ -312,12 +312,14 @@
 
 	return jointext(message_list, " ")
 
-/proc/turret_talk(message)
+/proc/turret_talk(message, species)
+	if(!(species in tourette_bad_words))
+		return message
 	var/list/message_list = splittext(message, " ")
 	var/maxchanges = max(round(message_list.len / 1.5), 2)
 	for(var/i in 1 to rand(maxchanges / 2, maxchanges))
 		var/insertpos = rand(1, message_list.len)
-		message_list[insertpos] = pick(tourette_bad_words)
+		message_list[insertpos] = pick(tourette_bad_words[species])
 	return jointext(message_list, " ")
 
 var/global/list/cursed_words = list("МРАЧНЫЕ ВРЕМЕНА", "ТЬМА", "БУРЯ", "ВОЙНА", "ПУТЬ НА КОТОРОМ НЕ СНОСИТЬ ГОЛОВЫ", "КОПЬЕ", "УБИТЬ", "КРОВЬ",  "ЧИСТИЛИЩЕ", "МУЧИТЕЛЬНАЯ БОЛЬ", "МЯСО", "БОЙНЯ", "ПЫТКИ", "КРОВАВЫЙ ДОЖДЬ", "РАЗРЫВАЮЩИЕСЯ ГЛАЗНЫЕ ЯБЛОКИ", "ХАОС", "ВЗРЫВНОЕ УСТРОЙСТВО", "ДЕМОНИЧЕСКИЕ ВРАТА", "ЛАВА", "СМЕРТЬ", "РАЗОРВАННОЕ СЕРДЦЕ", "МУЧЕНИЯ", "СЖЕЧЬ", "РВОТА", "ВЫРВАННЫЙ ЯЗЫК", "ЗАБВЕНИЕ", "БЕЗЫСХОДНОСТЬ", "СУИЦИД", "БЕЗДНА", "ОБЕЗГЛАВЛИВАНИЕ", "РАЗРЫВ", "ДЫХАНИЕ СМЕРТИ", "УЖАСНАЯ УЧАСТЬ", "РАЗРУШЕНИЯ", "ГЛАЗНИЦА")

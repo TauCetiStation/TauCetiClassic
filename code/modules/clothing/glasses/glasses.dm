@@ -38,6 +38,18 @@
 			H.update_inv_glasses()
 			H.update_sight()
 
+/obj/item/clothing/glasses/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_GLASSES)
+		if(prescription)
+			user.clear_fullscreen("nearsighted")
+
+/obj/item/clothing/glasses/dropped(mob/user)
+	. = ..()
+	if(prescription)
+		if(HAS_TRAIT(user, TRAIT_NEARSIGHT))
+			user.overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/impaired, 1)
+
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"
 	desc = "Used for seeing walls, floors, and stuff through anything."
@@ -281,9 +293,8 @@
 		if(M.glasses == src)
 			M.eye_blind = 3
 			M.blurEyes(15)
-			M.disabilities |= NEARSIGHTED
-			spawn(100)
-				M.disabilities &= ~NEARSIGHTED
+			M.become_nearsighted(EYE_DAMAGE_TEMPORARY_TRAIT)
+			addtimer(CALLBACK(M, /mob.proc/cure_nearsighted, EYE_DAMAGE_TEMPORARY_TRAIT), 10 SECONDS, TIMER_STOPPABLE)
 	..()
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
@@ -385,7 +396,7 @@
 /obj/item/clothing/glasses/sunglasses/noir/verb/toggle_noir()
 	set name = "Toggle Noir"
 	set category = "Object"
-	
+
 	if(usr.incapacitated())
 		return
 	active = !active
