@@ -60,6 +60,13 @@
 		return TRUE
 	return FALSE
 
+/mob/living/carbon/xenomorph/humanoid/queen/proc/startup_loss()
+	maxHealth = initial(maxHealth)
+	health = min(health, initial(health))
+	heal_rate = initial(heal_rate)
+	plasma_rate = initial(plasma_rate)
+	to_chat(src, "<span class='alien large'>Другие королевы перестали активно поддерживать улей. Улей теперь должен заботиться о себе сам.</span>")
+
 /mob/living/carbon/xenomorph/humanoid/queen/large
 	icon = 'icons/mob/alienqueen.dmi'
 	icon_state = "queen_s-old"
