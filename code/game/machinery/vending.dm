@@ -20,7 +20,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	anchored = TRUE
 	density = TRUE
 	allowed_checks = ALLOWED_CHECK_NONE
-	damage_deflection = 16
 	var/vend_ready = 1 //Are we ready to vend?? Is it time??
 	var/vend_delay = 10 //How long does it take to vend?
 	var/datum/data/vending_product/currently_vending = null // A /datum/data/vending_product instance of what we're paying for right now.
@@ -581,7 +580,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 /obj/machinery/vending/proc/malfunction()
 	var/refilling = 0
 	for(var/datum/data/vending_product/R in src.product_records)
-		var/max_drop = rand(2, 4)
+		var/max_drop = rand(1, 3)
 		var/dump_path = R.product_path
 		if (!dump_path)
 			continue
