@@ -586,7 +586,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		if (!dump_path)
 			continue
 		while(R.amount > 0)
-			if(i <= max_drop)
+			if(R.amount <= max_drop)
 				new dump_path(src.loc)
 			else
 				refilling++
