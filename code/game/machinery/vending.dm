@@ -579,20 +579,22 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
-	var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
-	Refill.charges = 0
+	var/refilling = 0
 	for(var/datum/data/vending_product/R in src.product_records)
 		var/max_drop = rand(2, 4)
 		var/dump_path = R.product_path
 		if (!dump_path)
 			continue
-		for(var/i=1, i < R.amount, i++)
+		while(R.amount > 0)
 			if(i <= max_drop)
 				new dump_path(src.loc)
 			else
-				Refill.charges++
+				refilling++
 			R.amount--
 			load--
+
+	var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
+	Refill.charges = refilling
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
