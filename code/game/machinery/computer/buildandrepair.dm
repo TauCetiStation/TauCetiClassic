@@ -218,6 +218,10 @@
 	origin_tech = "programming=3"
 	var/contraband_enabled = FALSE
 	var/hacked = FALSE
+/obj/item/weapon/circuitboard/computer/vendomat
+	name = "Circuit board (Vendomat console)"
+	build_path = /obj/machinery/computer/vendomat
+	origin_tech = "programming=1"
 /obj/item/weapon/circuitboard/computer/stockexchange
 	name = "Circuit board (Stock exchange computer)"
 	build_path = /obj/machinery/computer/stockexchange

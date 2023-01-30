@@ -62,6 +62,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	var/load = 0
 	var/max_load = 0
 
+	var/obj/item/device/camera/vending/cam
+
 
 /obj/machinery/vending/atom_init()
 	. = ..()
@@ -86,9 +88,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	power_change()
 	update_wires_check()
 
+	cam = new(src)
+
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(coin)
+	QDEL_NULL(cam)
 	return ..()
 
 /obj/machinery/vending/RefreshParts()
@@ -109,12 +114,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 /obj/machinery/vending/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		send_photo()
+		for(var/obj/machinery/computer/vendomat/Comp in global.vendomat_consoles)
+			cam.captureimage(src, null, null, Comp)
 		malfunction()
 
 /obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0,req_emag=0)
 	for(var/typepath in productlist)
-		if(productlist = products)
+		if(productlist == products)
 			load += productlist[typepath]
 		var/amount = productlist[typepath]
 		var/price = prices[typepath]
@@ -308,29 +314,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 							//transfer the money
 							D.adjust_money(-transaction_amount)
-							vendor_account.adjust_money(transaction_amount)
+							var/tax = round(transaction_amount * SSeconomy.tax_vendomat_sales * 0.01)
+							charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на продажу в вендомате", src.name, tax)
 
 							//create entries in the two account transaction logs
-							var/datum/transaction/T = new()
-							T.target_name = "[vendor_account.owner_name] (via [src.name])"
-							T.purpose = "Purchase of [currently_vending.product_name]"
-							if(transaction_amount > 0)
-								T.amount = "([transaction_amount])"
-							else
-								T.amount = "[transaction_amount]"
-							T.source_terminal = src.name
-							T.date = current_date_string
-							T.time = worldtime2text()
-							D.transaction_log.Add(T)
+							charge_to_account(D.account_number, "[global.cargo_account.owner_name] (via [src.name])", "Покупка: [currently_vending.product_name]", src.name, -transaction_amount)
 							//
-							T = new()
-							T.target_name = D.owner_name
-							T.purpose = "Purchase of [currently_vending.product_name]"
-							T.amount = "[transaction_amount]"
-							T.source_terminal = src.name
-							T.date = current_date_string
-							T.time = worldtime2text()
-							vendor_account.transaction_log.Add(T)
+							charge_to_account(global.cargo_account.account_number, global.cargo_account.owner_name, "Продажа: [currently_vending.product_name]", src.name, transaction_amount - tax)
 
 							// Vend the item
 							vend(src.currently_vending, usr)
