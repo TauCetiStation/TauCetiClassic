@@ -358,11 +358,12 @@
 		return
 	STOP_PROCESSING(SSobj, src)
 	deltimer(timer)
+	timer = null
 	QDEL_NULL(proximity_monitor)
 	icon_state = "egg_hatched"
 	flick("egg_opening", src)
 	status = BURSTING
-	timer = addtimer(CALLBACK(src, .proc/spawn_hugger, kill_fh), 15, TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, .proc/spawn_hugger, kill_fh), 15)
 
 /obj/structure/alien/egg/attack_ghost(mob/dead/observer/user)
 	if(facehuggers_control_type != FACEHUGGERS_PLAYABLE)
