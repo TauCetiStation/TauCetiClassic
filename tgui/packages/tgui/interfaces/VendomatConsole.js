@@ -27,12 +27,7 @@ export const VendomatConsole = (properties, context) => {
                   <Box className="VendomatsConsole__VendomatBox-SubBox">
                     Load:
                     <br />
-                    <ProgressBar value={vendomat.load/vendomat.max_load} className="VendomatsConsole__VendomatBox-ProgressBar"/>
-                  </Box>
-                  <Box className="VendomatsConsole__VendomatBox-SubBox">
-                    Integrity:
-                    <br />
-                    <ProgressBar value={vendomat.integrity/vendomat.max_integrity} className="VendomatsConsole__VendomatBox-ProgressBar"/>
+                    <ProgressBar value={vendomat.load/vendomat.max_load} className="VendomatsConsole__VendomatBox-ProgressBar" />
                   </Box>
                 </Box>
               ))}

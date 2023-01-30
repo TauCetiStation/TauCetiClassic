@@ -115,8 +115,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 /obj/machinery/vending/atom_break(damage_flag)
 	. = ..()
 	if(.)
-		for(var/obj/machinery/computer/vendomat/Comp in global.vendomat_consoles)
-			cam.captureimage(src, null, null, Comp)
 		malfunction()
 
 /obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0,req_emag=0)
@@ -588,13 +586,21 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		if (!dump_path)
 			continue
 
-		while(R.amount>0)
-			new dump_path(src.loc)
-			R.amount--
+		for(var/i, i<rand(2,4), i++)
+			if(R.amount>0)
+				new dump_path(src.loc)
+				R.amount--
+				load--
 		continue
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
+
+	var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
+	Refill.charges = load
+
+	for(var/obj/machinery/computer/vendomat/Comp in global.vendomat_consoles)
+		cam.captureimage(src, null, null, Comp)
 	return
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
