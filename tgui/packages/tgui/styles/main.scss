@@ -57,6 +57,7 @@
 @include meta.load-css('./interfaces/TachyonArray.scss');
 @include meta.load-css('./interfaces/Techweb.scss');
 @include meta.load-css('./interfaces/Minesweeper.scss');
+@include meta.load-css('./interfaces/VendomatsConsole.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');

@@ -20,6 +20,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	anchored = TRUE
 	density = TRUE
 	allowed_checks = ALLOWED_CHECK_NONE
+	damage_deflection = 16
 	var/vend_ready = 1 //Are we ready to vend?? Is it time??
 	var/vend_delay = 10 //How long does it take to vend?
 	var/datum/data/vending_product/currently_vending = null // A /datum/data/vending_product instance of what we're paying for right now.
