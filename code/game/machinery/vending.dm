@@ -579,25 +579,27 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
+	var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
+	Refill.charges = 0
 	for(var/datum/data/vending_product/R in src.product_records)
-		if (R.amount <= 0) //Try to use a record that actually has something to dump.
-			continue
-		var/dump_path = R.product_path
-		if (!dump_path)
-			continue
-
-		for(var/i, i<rand(2,4), i++)
-			if(R.amount>0)
+		var/max_drop = rand(2, 4)
+		for(var/i, i < R.amount, i++)
+			if(i > max_drop)
+				Refill.charges++
+				R.amount--
+				load--
+				continue
+			else
+				var/dump_path = R.product_path
+				if (!dump_path)
+					continue
 				new dump_path(src.loc)
 				R.amount--
 				load--
-		continue
+				continue
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
-
-	var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
-	Refill.charges = load
 
 	for(var/obj/machinery/computer/vendomat/Comp in global.vendomat_consoles)
 		cam.captureimage(src, null, null, Comp)
