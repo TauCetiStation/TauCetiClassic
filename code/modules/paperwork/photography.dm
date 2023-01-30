@@ -361,7 +361,7 @@
 	pictures_left = 30
 	can_put_lens = FALSE
 	base_lens = /obj/item/device/lens/grayscale
-	photo_size = 5
+	photo_size = 3
 
 /obj/item/device/camera/atom_init()
 	. = ..()

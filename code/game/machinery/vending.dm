@@ -583,20 +583,16 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	Refill.charges = 0
 	for(var/datum/data/vending_product/R in src.product_records)
 		var/max_drop = rand(2, 4)
-		for(var/i, i < R.amount, i++)
-			if(i > max_drop)
-				Refill.charges++
-				R.amount--
-				load--
-				continue
-			else
-				var/dump_path = R.product_path
-				if (!dump_path)
-					continue
+		var/dump_path = R.product_path
+		if (!dump_path)
+			continue
+		for(var/i=1, i < R.amount, i++)
+			if(i <= max_drop)
 				new dump_path(src.loc)
-				R.amount--
-				load--
-				continue
+			else
+				Refill.charges++
+			R.amount--
+			load--
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
