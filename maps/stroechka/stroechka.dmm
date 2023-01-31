@@ -200,7 +200,7 @@
 	},
 /obj/machinery/alarm{
 	locked = 0;
-	mode =  2;
+	mode = 2;
 	pixel_x = -28;
 	pixel_y = -6
 	},
@@ -3440,6 +3440,10 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/lab)
+"lw" = (
+/obj/effect/landmark/start/new_player,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "lx" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "QMLoad2"
@@ -33809,7 +33813,7 @@ gz
 Fg
 Fe
 GV
-Mp
+lw
 io
 Mp
 Mp
