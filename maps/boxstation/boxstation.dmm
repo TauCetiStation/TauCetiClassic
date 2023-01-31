@@ -12220,7 +12220,7 @@
 /obj/machinery/door_control{
 	pixel_x = 24;
 	name = "Kitchen Shutters";
-	id = "kitchen";
+	id = "kitchen2";
 	pixel_y = -5
 	},
 /turf/simulated/floor{
@@ -12370,7 +12370,7 @@
 /obj/machinery/door_control{
 	pixel_x = -24;
 	name = "Kitchen Serving Shutters";
-	id = "kitchen"
+	id = "kitchen1"
 	},
 /obj/machinery/chem_dispenser/soda{
 	pixel_y = 4
@@ -14084,7 +14084,7 @@
 	icon_state = "shutter0";
 	opacity = 0;
 	name = "Kitchen Shutters";
-	id = "kitchen"
+	id = "kitchen1"
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
@@ -22007,7 +22007,7 @@
 	icon_state = "shutter0";
 	opacity = 0;
 	name = "Kitchen Shutters";
-	id = "kitchen"
+	id = "kitchen1"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -79995,7 +79995,7 @@
 	icon_state = "shutter0";
 	opacity = 0;
 	name = "Kitchen Shutters";
-	id = "kitchen"
+	id = "kitchen1"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -83888,7 +83888,7 @@
 	icon_state = "shutter0";
 	opacity = 0;
 	name = "Kitchen Shutters";
-	id = "kitchen"
+	id = "kitchen1"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -84374,7 +84374,7 @@
 	icon_state = "shutter0";
 	opacity = 0;
 	name = "Kitchen Shutters";
-	id = "kitchen"
+	id = "kitchen1"
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
@@ -84577,7 +84577,7 @@
 	icon_state = "shutter0";
 	opacity = 0;
 	name = "Kitchen Shutters";
-	id = "kitchen"
+	id = "kitchen1"
 	},
 /turf/simulated/floor{
 	dir = 5;
