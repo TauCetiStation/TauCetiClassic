@@ -226,7 +226,7 @@
 
 /obj/item/weapon/card/id/medGold
 	name = "identification card"
-	desc = "Карта начальника, олицетворяющая заботу и сострадание владельца."
+	desc = "Карта начальника, олицетворяющая заботу и сострадание к раненым и больным у владельца."
 	icon_state = "medGold"
 	item_state = "medGold_id"
 
