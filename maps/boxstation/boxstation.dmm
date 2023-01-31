@@ -9005,6 +9005,13 @@
 /obj/structure/window/reinforced/polarized{
 	id = "kitchen"
 	},
+/obj/machinery/door/poddoor/shutters{
+	dir = 1;
+	icon_state = "shutter0";
+	opacity = 0;
+	name = "Kitchen Shutters";
+	id = "kitchen2"
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/kitchen)
 "aoT" = (
@@ -12170,10 +12177,10 @@
 	},
 /area/station/maintenance/eva)
 "auN" = (
+/obj/machinery/kitchen_machine/grill,
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/kitchen_machine/oven,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -12191,7 +12198,8 @@
 	},
 /obj/machinery/windowtint{
 	id = "kitchen";
-	pixel_x = 24
+	pixel_x = 24;
+	pixel_y = 5
 	},
 /obj/structure/condiment_shelf{
 	pixel_y = 32
@@ -12201,7 +12209,17 @@
 /obj/item/weapon/reagent_containers/food/condiment/peppermill,
 /obj/item/weapon/reagent_containers/food/condiment/rice,
 /obj/item/weapon/reagent_containers/food/condiment/ketchup,
-/obj/machinery/vending/dinnerware,
+/obj/structure/table,
+/obj/machinery/kitchen_machine/microwave{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/machinery/door_control{
+	pixel_x = 24;
+	name = "Kitchen Shutters";
+	id = "kitchen";
+	pixel_y = -5
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -12346,13 +12364,16 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/snacks/pie,
 /obj/machinery/door_control{
-	pixel_x = -25;
-	name = "Kitchen Shutters";
+	pixel_x = -24;
+	name = "Kitchen Serving Shutters";
 	id = "kitchen"
 	},
+/obj/machinery/chem_dispenser/soda{
+	pixel_y = 4
+	},
 /turf/simulated/floor{
+	dir = 5;
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/bar)
@@ -13054,6 +13075,13 @@
 /obj/structure/window/reinforced/polarized{
 	dir = 1;
 	id = "kitchen"
+	},
+/obj/machinery/door/poddoor/shutters{
+	dir = 1;
+	icon_state = "shutter0";
+	opacity = 0;
+	name = "Kitchen Shutters";
+	id = "kitchen2"
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/kitchen)
@@ -14644,10 +14672,14 @@
 	},
 /area/station/civilian/dormitories)
 "azA" = (
+/obj/machinery/camera{
+	c_tag = "Kitchen";
+	dir = 1
+	},
+/obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/machinery/light_switch{
 	pixel_y = -28
 	},
-/obj/structure/closet/secure_closet/freezer/fridge,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -15371,17 +15403,6 @@
 	icon_state = "floorgrime"
 	},
 /area/station/storage/tech/north)
-"aAR" = (
-/obj/structure/table,
-/obj/item/weapon/kitchen/rollingpin,
-/obj/item/weapon/reagent_containers/glass/beaker{
-	pixel_x = 5
-	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
-	},
-/area/station/civilian/kitchen)
 "aAS" = (
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg1"
@@ -15431,16 +15452,17 @@
 /turf/simulated/floor/plating,
 /area/station/security/lobby)
 "aAX" = (
+/obj/structure/table,
+/obj/item/weapon/kitchen/rollingpin,
+/obj/item/weapon/reagent_containers/glass/beaker{
+	pixel_x = 5
+	},
 /obj/machinery/alarm{
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/machinery/camera{
-	c_tag = "Kitchen";
-	dir = 1
-	},
-/obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/simulated/floor{
+	dir = 5;
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
@@ -15870,18 +15892,15 @@
 	},
 /area/station/civilian/dormitories)
 "aBN" = (
-/obj/structure/table,
+/obj/machinery/light_switch{
+	pixel_y = -28
+	},
+/obj/structure/closet/secure_closet/freezer/fridge,
 /obj/machinery/power/apc{
 	name = "Kitchen APC";
 	pixel_y = -26
 	},
 /obj/structure/cable,
-/obj/item/weapon/storage/box/donkpockets{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/weapon/packageWrap,
-/obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -16023,9 +16042,13 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "aBY" = (
-/obj/machinery/light,
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/snacks/mint,
+/obj/item/weapon/storage/box/donkpockets{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/weapon/packageWrap,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -16877,7 +16900,7 @@
 /obj/machinery/newscaster{
 	pixel_x = -30
 	},
-/obj/machinery/deepfryer,
+/obj/machinery/vending/dinnerware,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -17477,18 +17500,18 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "aET" = (
-/obj/machinery/light{
-	dir = 8
+/obj/machinery/light,
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/food/snacks/mint,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -28
 	},
-/obj/machinery/light_switch{
-	pixel_x = -30
-	},
-/obj/machinery/vending/boozeomat,
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
-/area/station/civilian/bar)
+/area/station/civilian/kitchen)
 "aEU" = (
 /obj/machinery/optable,
 /obj/effect/decal/cleanable/vomit,
@@ -23645,10 +23668,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "aQn" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -28
-	},
 /obj/structure/sink{
 	dir = 4;
 	pixel_x = 12
@@ -27203,7 +27222,13 @@
 	},
 /area/station/cargo/office)
 "aWy" = (
-/obj/structure/table/reinforced,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/media/jukebox/bar,
+/obj/machinery/light_switch{
+	pixel_x = -30
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -40231,7 +40256,7 @@
 /area/station/maintenance/escape)
 "btW" = (
 /obj/structure/window/reinforced,
-/obj/machinery/media/jukebox/bar,
+/obj/machinery/vending/boozeomat,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -60785,6 +60810,13 @@
 	dir = 1;
 	id = "kitchen"
 	},
+/obj/machinery/door/poddoor/shutters{
+	dir = 1;
+	icon_state = "shutter0";
+	opacity = 0;
+	name = "Kitchen Shutters";
+	id = "kitchen2"
+	},
 /turf/simulated/floor/plating,
 /area/station/civilian/kitchen)
 "coz" = (
@@ -69675,21 +69707,12 @@
 	},
 /area/station/engineering/drone_fabrication)
 "dra" = (
-/obj/structure/closet/wardrobe/white,
-/obj/item/weapon/storage/box/mousetraps,
-/obj/item/weapon/storage/box/mousetraps,
-/obj/item/device/eftpos{
-	eftpos_name = "Kitchen EFTPOS scanner"
-	},
-/obj/item/clothing/under/waiter,
-/obj/item/clothing/under/waiter,
-/obj/item/clothing/under/rank/chef,
-/obj/item/clothing/head/chefhat,
+/obj/machinery/deepfryer,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
 	},
-/area/station/civilian/bar)
+/area/station/civilian/kitchen)
 "drb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -69848,6 +69871,7 @@
 /area/station/civilian/garden)
 "dyy" = (
 /obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/food/snacks/pie,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -76717,10 +76741,16 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/table,
-/obj/machinery/chem_dispenser/soda{
-	pixel_y = 4
+/obj/structure/closet/wardrobe/white,
+/obj/item/device/eftpos{
+	eftpos_name = "Kitchen EFTPOS scanner"
 	},
+/obj/item/weapon/storage/box/mousetraps,
+/obj/item/weapon/storage/box/mousetraps,
+/obj/item/clothing/under/waiter,
+/obj/item/clothing/under/waiter,
+/obj/item/clothing/under/rank/chef,
+/obj/item/clothing/head/chefhat,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -106807,10 +106837,10 @@ akt
 cpL
 bns
 cox
-auL
+dra
 bbq
 aBi
-bwQ
+aWw
 aWw
 aWw
 aAf
@@ -107064,10 +107094,10 @@ bKb
 bdZ
 cjM
 awu
-auK
+auL
 xiQ
 hho
-aAR
+bwQ
 lup
 atZ
 oGL
@@ -107321,7 +107351,7 @@ bdK
 bdZ
 cjM
 awu
-auq
+auK
 aWw
 nAY
 aAX
@@ -108092,7 +108122,7 @@ bdv
 bdZ
 cjM
 aoS
-auL
+auK
 aWw
 aWw
 aBY
@@ -108352,7 +108382,7 @@ aMZ
 auP
 aWw
 aQn
-aMZ
+aET
 aMZ
 beo
 aGn
@@ -108610,7 +108640,7 @@ aMZ
 awO
 gWo
 aMZ
-aET
+aMZ
 bmx
 aTH
 bmd
@@ -108865,7 +108895,7 @@ bgr
 aGn
 ave
 awS
-dra
+awS
 vsv
 aWy
 bmx
