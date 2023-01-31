@@ -12031,14 +12031,17 @@
 "auw" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/westleft{
-	name = "Hydroponics";
-	req_access = list(35)
-	},
 /obj/machinery/door/window/westright{
 	name = "Kitchen";
-	req_access = list(28);
-	dir = 4
+	req_access = list(28)
+	},
+/obj/machinery/door/window/westleft{
+	dir = 4;
+	name = "Kitchen";
+	req_access = list(28)
+	},
+/obj/machinery/reagentgrinder{
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -48644,10 +48647,7 @@
 	},
 /area/station/rnd/robotics)
 "bIM" = (
-/obj/machinery/chem_master/condimaster{
-	name = "CondiMaster Neo";
-	pixel_x = -5
-	},
+/obj/structure/closet/secure_closet/freezer/meat,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -73943,18 +73943,10 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "ipb" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/westright{
-	name = "Kitchen";
-	req_access = list(28)
+/obj/machinery/chem_master/condimaster{
+	name = "CondiMaster Neo";
+	pixel_x = -5
 	},
-/obj/machinery/door/window/westleft{
-	dir = 4;
-	name = "Kitchen";
-	req_access = list(28)
-	},
-/obj/machinery/reagentgrinder,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -84461,7 +84453,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "vGq" = (
-/obj/structure/closet/secure_closet/freezer/meat,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
@@ -106068,7 +106059,7 @@ bmY
 aMZ
 aMZ
 aMZ
-ipb
+haq
 auw
 oMQ
 haq
@@ -106325,7 +106316,7 @@ cjM
 aMZ
 uwT
 aDI
-aWw
+ipb
 aWw
 aWw
 aDT
