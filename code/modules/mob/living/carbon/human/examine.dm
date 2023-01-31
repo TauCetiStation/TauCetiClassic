@@ -573,11 +573,9 @@
 				if(V.stealth_active)
 					to_chat(H, "<span class='notice'>You can't focus your eyes on [src].</span>")
 					return
-		var/static/list/to_look_at = list(heads_positions += "Internal Affairs Agent")
-		if(H.mind.assigned_role == "Blueshield Officer" && mind && (mind.assigned_role in to_look_at))
+		if(H.mind.assigned_role == "Blueshield Officer" && mind && (mind.assigned_role in protected_by_blueshield_list))
 			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
-			addtimer(CALLBACK(null, .proc/add_mood_event, H, "blueshield", /datum/mood_event/blueshield), 10 MINUTE)
-
+			addtimer(CALLBACK(null, .proc/add_mood_event, H, "blueshield", /datum/mood_event/blueshield), 10 MINUTES)
 
 	if(roundstart_quirks.len)
 		var/should_see_quirks = HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT)

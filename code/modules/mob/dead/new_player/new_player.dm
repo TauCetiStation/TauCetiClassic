@@ -221,6 +221,15 @@
 
 	SSjob.EquipRank(character, rank, TRUE)					//equips the human
 
+	var/mob/blueshield = null
+	if(rank in protected_by_blueshield_list)
+		for(var/mob/living/carbon/human/player in player_list)
+			if(player && player.mind && player.mind.assigned_role && player.mind.assigned_role == "Blueshield Officer")
+				blueshield = player
+		if(blueshield)
+			SEND_SIGNAL(blueshield, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
+			addtimer(CALLBACK(null, .proc/add_mood_event, blueshield, "blueshield", /datum/mood_event/blueshield), 10 MINUTES)
+
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
 		SSqualities.give_quality(character, TRUE)

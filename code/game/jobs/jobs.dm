@@ -143,6 +143,17 @@ var/global/list/heads_positions = list(
 	"Chief Medical Officer",
 )
 
+var/global/list/protected_by_blueshield_list = list(
+	"Captain",
+	"Head of Personnel",
+	"Head of Security",
+	"Chief Engineer",
+	"Research Director",
+	"Chief Medical Officer",
+	"Internal Affairs Agent"
+)
+
+
 
 /proc/get_job_datums()
 	var/list/occupations = list()

@@ -87,4 +87,4 @@
 	skillsets = list("Blueshield Officer" = /datum/skillset/blueshield)
 
 /datum/job/blueshield/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	addtimer(CALLBACK(null, .proc/add_mood_event, H, "blueshield", /datum/mood_event/blueshield), 10 MINUTE)
+	addtimer(CALLBACK(null, .proc/add_mood_event, H, "blueshield", /datum/mood_event/blueshield), 10 MINUTES)
