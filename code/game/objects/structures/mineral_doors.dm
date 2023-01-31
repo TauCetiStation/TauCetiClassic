@@ -272,15 +272,14 @@
 	can_unwrench = FALSE
 	var/close_delay = 100
 
-/obj/structure/mineral_door/mineral_door/CanPass(atom/movable/mover, turf/target, height)
-	if(istype(mover))
-		return ..()
-	return FALSE
+/obj/structure/mineral_door/resin/c_airblock(turf/other)
+	return BLOCKED
 
-/obj/structure/mineral_door/resin/Bumped(atom/M)
-	if(isxeno(M) && !isSwitchingStates)
-		add_fingerprint(M)
-		Open()
+/obj/structure/mineral_door/resin/MobChecks(mob/user)
+	return isxeno(user)
+
+/obj/structure/mineral_door/resin/MechChecks(obj/mecha/user)
+	return FALSE
 
 /obj/structure/mineral_door/resin/Open()
 	..()
