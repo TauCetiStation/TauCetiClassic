@@ -132,7 +132,7 @@
 
 			if(clumsy_check) //it should be AFTER hulk or monkey check.
 				var/going_to_explode = 0
-				if ((CLUMSY in H.mutations) && prob(50))
+				if(H.ClumsyCheckWithProbability(50))
 					going_to_explode = 1
 				if(chambered && chambered.crit_fail && prob(10))
 					going_to_explode = 1

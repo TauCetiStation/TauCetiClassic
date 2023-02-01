@@ -239,3 +239,14 @@
 	if(!mind || !mind.assigned_job)
 		return
 	return mind.assigned_job.head_position
+
+/mob/proc/IsClumsy()
+	if(HAS_TRAIT(src, TRAIT_CLUMSY))
+		return TRUE
+	return FALSE
+
+/mob/proc/ClumsyCheckWithProbability(probability)
+	if(HAS_TRAIT(src, TRAIT_CLUMSY))
+		if(prob(probability))
+			return TRUE
+	return FALSE

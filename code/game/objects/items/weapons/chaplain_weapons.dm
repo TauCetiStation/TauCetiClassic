@@ -125,7 +125,7 @@
 	next_turf_deconvert = world.time + deconvert_turf_cd
 
 /obj/item/weapon/nullrod/attack(mob/living/M, mob/living/user) //Paste from old-code to decult with a null rod.
-	if((CLUMSY in user.mutations) && prob(50))
+	if(user.ClumsyCheckWithProbability(50))
 		to_chat(user, "<span class='danger'>Жезл выскальзывает из руки и ударяет вас об голову.</span>")
 		user.adjustBruteLoss(10)
 		user.Paralyse(20)
