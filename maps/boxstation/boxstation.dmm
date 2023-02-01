@@ -24822,11 +24822,6 @@
 "aVw" = (
 /turf/simulated/floor,
 /area/station/civilian/playroom)
-"aVx" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/turf/environment/space,
-/area/space)
 "aVy" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Science Maintenance";
@@ -75151,6 +75146,9 @@
 /obj/item/weapon/storage/box/lights/mixed,
 /obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/maintenance/cargo)
 "mCb" = (
@@ -94290,7 +94288,7 @@ atE
 bhj
 aEb
 aah
-aVx
+aah
 aaa
 aXZ
 aXZ
