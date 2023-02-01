@@ -92,7 +92,7 @@
 		else
 			discharge()
 		H.visible_message("<span class='danger'>[M] has been attacked with the [src] by [user]!</span>")
-
+		SEND_SIGNAL(H, COMSIG_MOB_MINOR_SHOCK)
 		if(!(user.a_intent == INTENT_HARM))
 			H.log_combat(user, "stunned (attempt) with [name]")
 
