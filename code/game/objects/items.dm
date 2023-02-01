@@ -126,7 +126,7 @@
 	if(!output_to_chat)
 		message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[M.name]'s scan results</title></head><BODY>"
 
-	if((M.IsClumsy() || user.getBrainLoss() >= 60) && prob(50))
+	if(user.ClumsyCheckWithProbability(50) || (user.getBrainLoss() >= 60 && prob(50)))
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class = 'warning'>You try to analyze the floor's vitals!</span>")
 		message += "<span class='notice'>Analyzing Results for The floor:\n&emsp; Overall Status: Healthy</span><br>"
 		message += "<span class='notice'>&emsp; Damage Specifics: [0]-[0]-[0]-[0]</span><br>"
