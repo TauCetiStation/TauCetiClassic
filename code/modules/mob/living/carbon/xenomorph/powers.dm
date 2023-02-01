@@ -387,12 +387,7 @@
 	user.mind.transfer_to(new_xeno)
 	new_xeno.mind.name = new_xeno.real_name
 
-	new_xeno.maxHealth = new_xeno.maxHealth * 2
-	new_xeno.health = new_xeno.health * 2
-	new_xeno.heal_rate = new_xeno.heal_rate * 2.5
-	new_xeno.plasma_rate = new_xeno.plasma_rate * 1.5
-	to_chat(new_xeno, "<span class='alien large'>Пока ваш улей слаб, вам будут помогать другие королевы. Некоторое время...</span>")
-	addtimer(CALLBACK(new_xeno, /mob/living/carbon/xenomorph/humanoid/queen/proc/startup_loss), 7 MINUTES, TIMER_STOPPABLE)
+	new_xeno.startup_gain()
 
 	qdel(alien)
 

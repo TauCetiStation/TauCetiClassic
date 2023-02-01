@@ -368,6 +368,12 @@
 	icon_state = "alien_queen"
 	alerttooltipstyle = "alien"
 
+/atom/movable/screen/alert/alien_help
+	name = "Помощь королев"
+	desc = "Некоторое время вы гораздо быстрее залечиваете свои раны, более живучи и у вас куда больше плазмы."
+	icon_state = "alien_help"
+	alerttooltipstyle = "alien"
+
 //BLOBS
 /atom/movable/screen/alert/nofactory
 	name = "No Factory"

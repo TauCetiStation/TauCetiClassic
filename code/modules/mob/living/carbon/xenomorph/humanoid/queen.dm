@@ -60,12 +60,22 @@
 		return TRUE
 	return FALSE
 
+/mob/living/carbon/xenomorph/humanoid/queen/proc/startup_gain()
+	maxHealth = maxHealth * 2
+	health = health * 2
+	heal_rate = heal_rate * 2.5
+	plasma_rate = plasma_rate * 1.5
+	to_chat(src, "<span class='alien large'>Пока ваш улей слаб, вам будут помогать другие королевы. Некоторое время...</span>")
+	throw_alert("start_help", /atom/movable/screen/alert/alien_help)
+	addtimer(CALLBACK(src, .proc/startup_loss), 7 MINUTES, TIMER_STOPPABLE)
+
 /mob/living/carbon/xenomorph/humanoid/queen/proc/startup_loss()
 	maxHealth = initial(maxHealth)
 	health = min(health, initial(health))
 	heal_rate = initial(heal_rate)
 	plasma_rate = initial(plasma_rate)
 	to_chat(src, "<span class='alien large'>Другие королевы перестали активно поддерживать улей. Улей теперь должен заботиться о себе сам.</span>")
+	clear_alert("start_help")
 
 /mob/living/carbon/xenomorph/humanoid/queen/large
 	icon = 'icons/mob/alienqueen.dmi'
