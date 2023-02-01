@@ -91,7 +91,7 @@
 /obj/nano_module/crew_monitor/proc/scan()
 	for(var/mob/living/carbon/human/H as anything in human_list)
 		var/obj/item/clothing/under/C
-		if(istype(H.w_uniform, /obj/item/clothing/under))
+		if(isunder(H.w_uniform))
 			C = H.w_uniform
 			if(C.has_sensor)
 				tracked |= C
