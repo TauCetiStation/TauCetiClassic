@@ -239,3 +239,9 @@
 	if(!mind || !mind.assigned_job)
 		return
 	return mind.assigned_job.head_position
+
+
+/mob/proc/IsShockproof()
+	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
+		return TRUE
+	return FALSE

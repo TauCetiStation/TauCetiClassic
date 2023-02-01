@@ -165,7 +165,7 @@
 /datum/dna/gene/basic/noshock
 	name="Shock Immunity"
 	activation_messages=list("Your skin feels electric.")
-	mutation=NO_SHOCK
+	trait_mutation = TRAIT_SHOCKIMMUNE
 	activation_prob=50
 
 /datum/dna/gene/basic/noshock/New()
