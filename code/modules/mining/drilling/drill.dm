@@ -114,12 +114,12 @@
 
 /obj/machinery/mining/drill/proc/use_cell_power()
 	if(wires_power_disable)
-		return 0
+		return FALSE
 	if(!cell)
-		return 0
+		return FALSE
 	if(cell.use(charge_use))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/mining/drill/proc/check_supports()
 	if(!supports || supports.len < braces_needed)
@@ -269,7 +269,7 @@
 		if(istype(P, /obj/item/weapon/stock_parts/matter_bin))
 			capacity = 200 * P.rating
 		if(istype(P, /obj/item/weapon/stock_parts/capacitor))
-			charge_use -= 10 * P.rating
+			charge_use /= P.rating
 		if(istype(P, /obj/item/weapon/stock_parts/scanning_module))
 			radius = 1 + P.rating
 	cell = locate(/obj/item/weapon/stock_parts/cell) in component_parts
