@@ -241,12 +241,9 @@
 	return mind.assigned_job.head_position
 
 /mob/proc/IsClumsy()
-	if(HAS_TRAIT(src, TRAIT_CLUMSY))
-		return TRUE
-	return FALSE
+	return HAS_TRAIT(src, TRAIT_CLUMSY)
 
-/mob/proc/ClumsyCheckWithProbability(probability)
-	if(HAS_TRAIT(src, TRAIT_CLUMSY))
-		if(prob(probability))
-			return TRUE
+/mob/proc/ClumsyProbabilityCheck(probability)
+	if(HAS_TRAIT(src, TRAIT_CLUMSY) && prob(probability))
+		return TRUE
 	return FALSE

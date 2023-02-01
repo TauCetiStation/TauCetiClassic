@@ -22,7 +22,7 @@
 		return
 	if(!istype(C))
 		return
-	if (user.ClumsyCheckWithProbability(50))
+	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>Uh ... how do those things work?!</span>")
 		place_handcuffs(user, user)
 		return

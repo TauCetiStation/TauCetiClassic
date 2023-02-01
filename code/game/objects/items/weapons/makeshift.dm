@@ -149,7 +149,7 @@
 		return ..()
 
 /obj/item/weapon/melee/cattleprod/attack(mob/M, mob/living/user)
-	if(status && user.ClumsyCheckWithProbability(50))
+	if(status && user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='danger'>You accidentally hit yourself with [src]!</span>")
 		user.apply_effect(120, AGONY, 0)
 		deductcharge(hitcost)

@@ -60,7 +60,7 @@
 		return
 
 	if (user.a_intent == INTENT_HARM && ismob(target))
-		if(user.ClumsyCheckWithProbability(50))
+		if(user.ClumsyProbabilityCheck(50))
 			target = user
 		syringestab(target, user)
 		return

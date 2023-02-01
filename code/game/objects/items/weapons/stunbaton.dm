@@ -36,7 +36,7 @@
 		icon_state = "[initial(icon_state)]"
 
 /obj/item/weapon/melee/baton/attack_self(mob/living/user)
-	if(status && user.ClumsyCheckWithProbability(50))
+	if(status && user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>You grab the [src] on the wrong side.</span>")
 		user.apply_effect(agony * 2, AGONY, 0)
 		discharge()
@@ -54,7 +54,7 @@
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/baton/attack(mob/M, mob/living/user)
-	if(status && user.ClumsyCheckWithProbability(50))
+	if(status && user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='danger'>You accidentally hit yourself with the [src]!</span>")
 		user.apply_effect(agony * 2, AGONY, 0)
 		discharge()
