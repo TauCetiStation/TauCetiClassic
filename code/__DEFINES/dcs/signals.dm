@@ -316,6 +316,14 @@
 #define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
 	#define COMPONENT_BLOCK_SWAP 1
 
+
+///sent by stuff like stunbatons and tasers: ()
+#define COMSIG_MOB_MINOR_SHOCK "mob_minor_shock"
+///sent by adbuctor baton: ()
+#define COMSIG_MOB_ABDUCTION_SHOCK "mob_abduction_shock"
+///sent by defib act: ()
+#define COMSIG_MOB_DEFIB_SHOCK "mob_defib_shock"
+
 /// from /datum/action/changeling/transform/sting_action(): (mob/living/carbon/human/user)
 #define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
 /// from /mob/living/carbon/proc/finish_monkeyize()
