@@ -242,6 +242,4 @@
 
 
 /mob/proc/IsShockproof()
-	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
-		return TRUE
-	return FALSE
+	return HAS_TRAIT(src, TRAIT_SHOCKIMMUNE)
