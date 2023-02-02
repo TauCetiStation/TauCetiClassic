@@ -181,7 +181,9 @@
 			else
 				user.visible_message("<span class='notice'>\the [user] cleans \the [target]'s [body_part_name] out with soap.</span>")
 			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER)
-			return
+			var/image/clean_animation = image('icons/effects/effects.dmi', H, "cleaning")
+			clean_animation.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
+			flick_overlay_view(clean_animation, H, 1 SECONDS)
 		else
 			user.visible_message("<span class='red'>\the [user] fails to clean \the [target]'s [body_part_name] out with soap.</span>")
 			return
