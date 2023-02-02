@@ -613,7 +613,7 @@ Class Procs:
 	if(A && A.apc)
 		//give humans feedback why theirs computer will be exploded
 		A.apc.detect_hack()
-	audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
+	audible_message("<span class='notice'>You hear a loud electrical buzzing!</span>")
 	addtimer(CALLBACK(src, .proc/machinery_overload_act), 50)
 	return TRUE
 
