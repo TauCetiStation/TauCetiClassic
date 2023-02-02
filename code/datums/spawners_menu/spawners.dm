@@ -288,94 +288,108 @@ var/global/list/datum/spawners_cooldown = list()
 /*
 /	LateParty
 */
-/datum/spawner/helper
+/datum/spawner/lateparty
+	name = "Поздняя вечеринка"
+	desc = "Присоеденяйтесь к приключениям на станции."
+	id = "lateparty"
+	time_to_del = 5 MINUTES
+	var/mob_type_string
+	var/turf/spawn_loc
+
+/datum/spawner/lateparty/New(turf/spawnTurf, mob_type)
+	. = ..()
+	mob_type_string = mob_type
+	spawn_loc = spawnTurf
+
+/datum/spawner/lateparty/proc/select_appearance(mob/living/L)
+	return
+
+/datum/spawner/lateparty/proc/add_more_access(mob/living/L)
+	return
+
+/datum/spawner/lateparty/proc/add_more_skills(mob/living/L)
+	return
+
+/datum/spawner/lateparty/proc/add_more_features(mob/living/L)
+	return
+
+/datum/spawner/lateparty/jump(mob/dead/observer/ghost)
+	ghost.forceMove(spawn_loc)
+
+/datum/spawner/lateparty/spawn_ghost(mob/dead/observer/ghost)
+	var/mob/living/L = new mob_type_string(spawn_loc)
+	L.create_mind()
+	L.mind.key = ghost.key
+	L.key = ghost.key
+	select_appearance(L)
+	add_more_access(L)
+	add_more_skills(L)
+	add_more_features(L)
+
+//Zombie Malf content
+/datum/spawner/lateparty/helper
 	name = "Офицер Охраны"
 	desc = "Вы появляетесь на ЦК с целью помочь станции в решении их проблем."
 	id = "cc_security_officer"
-	time_to_del = 5 MINUTES
 	ranks = list(ROLE_ERT, "Security Officer")
 	var/rank = "Security Officer"
-	//var/spawner_job = /datum/job/officer
 	var/overrided_outfit = /datum/outfit/job/officer/centcomm_helper
-	//Zombie Malf content
-	var/is_immune_to_zombie_virus = FALSE
 
-/datum/spawner/helper/New(make_immune = FALSE)
-	. = ..()
-	is_immune_to_zombie_virus = make_immune
+/datum/spawner/lateparty/helper/New()
+	var/turf/spawnLoc = pick(global.centcomm_helpers_start)
+	global.centcomm_helpers_start -= spawnLoc
+	. = ..(spawnLoc, "mob/living/carbon/human")
 
-/datum/spawner/helper/jump(mob/dead/observer/ghost)
-	var/jump_to = pick(landmarks_list["Centcomm_helpers"])
-	ghost.forceMove(get_turf(jump_to))
-
-/datum/spawner/helper/spawn_ghost(mob/dead/observer/ghost)
-	var/obj/spawnloc = pick(global.centcomm_helpers_start)
-	global.centcomm_helpers_start -= spawnloc
-
-	var/mob/living/carbon/human/M = new(spawnloc)
-	randomize_human(M)
-	M.create_mind()
-	M.mind.key = ghost.key
-	M.key = ghost.key
-	//M.mind.assigned_role = spawner_job
+/datum/spawner/lateparty/helper/select_appearance(mob/living/carbon/human/H)
+	randomize_human(H)
 	var/datum/job/current_job = SSjob.GetJob(rank)
-	M.mind.assigned_job = current_job
-	M.mind.assigned_role = rank
+	H.mind.assigned_job = current_job
+	H.mind.assigned_role = rank
 	if(overrided_outfit)
 		current_job.outfit = overrided_outfit
-	//M.job = current_job
-	current_job.equip(M)
+	current_job.equip(H)
 	current_job.current_positions++
+	create_random_account_and_store_in_mind(H)
+	H.sec_hud_set_ID()
 
-	add_more_access(M)
-
-	create_random_account_and_store_in_mind(M)
-
-	//M.prepare_data_huds()
-	//M.update_hud()
-	M.sec_hud_set_ID()
-
-	M.mind.skills.add_available_skillset(/datum/skillset/cadet)
-	M.mind.skills.maximize_active_skills()
-
-	add_more_features(M)
-
-	to_chat(M, "<span class='info'>You are a member of a rescue team sent to [station_name()] to assist the crew.</span>")
-	to_chat(M, "<span class='info'>According to preliminary data, synthetic units have malfunctioned on the station. Find out what happened.</span>")
-	to_chat(M, "<span class='info'>You answer to CentCom officials with higher priority and the commander of the ship with lower.</span>")
-	to_chat(M, "<span class='info'>You are implanted with loyalty. You are allowed to carry and use weapons in self-defense.</span>")
-
-/datum/spawner/helper/proc/add_more_access(mob/living/carbon/human/H)
+/datum/spawner/lateparty/helper/add_more_access(mob/living/carbon/human/H)
 	var/obj/item/weapon/card/id/my_card = H.get_idcard()
 	my_card.access += list(access_captain)
 	my_card.rank = rank
 	my_card.assignment = rank
 
-//proc for accept features from arguments in New()
-/datum/spawner/helper/proc/add_more_features(mob/living/carbon/human/H)
-	if(is_immune_to_zombie_virus)
-		H.antibodies |= ANTIGEN_Z
+/datum/spawner/lateparty/helper/add_more_skills(mob/living/carbon/human/H)
+	H.mind.skills.add_available_skillset(/datum/skillset/cadet)
+	H.mind.skills.maximize_active_skills()
 
-/datum/spawner/helper/int_agent
+/datum/spawner/lateparty/helper/add_more_features(mob/living/carbon/human/H)
+	H.antibodies |= ANTIGEN_Z
+
+/datum/spawner/lateparty/helper/spawn_ghost(mob/dead/observer/ghost)
+	. = ..()
+	to_chat(ghost, "<span class='info'>You are a member of a rescue team sent to [station_name()] to assist the crew.</span>")
+	to_chat(ghost, "<span class='info'>According to preliminary data, synthetic units have malfunctioned on the station. Find out what happened.</span>")
+	to_chat(ghost, "<span class='info'>You answer to CentCom officials with higher priority and the commander of the ship with lower.</span>")
+	to_chat(ghost, "<span class='info'>You are implanted with loyalty. You are allowed to carry and use weapons in self-defense.</span>")
+
+/datum/spawner/lateparty/helper/int_agent
 	name = "Агент Внутренних Дел"
 	id = "cc_int_agent"
 	ranks = list(ROLE_ERT, "Internal Affairs Agent")
 	rank = "Internal Affairs Agent"
-	//spawner_job = /datum/job/lawyer
 	overrided_outfit = /datum/outfit/job/lawyer/centcomm_helper
 
-/datum/spawner/helper/int_agent/add_more_access(mob/living/carbon/human/H)
+/datum/spawner/lateparty/helper/int_agent/add_more_access(mob/living/carbon/human/H)
 	var/obj/item/weapon/card/id/my_card = H.get_idcard()
 	my_card.access += get_all_accesses()
 	my_card.rank = rank
 	my_card.assignment = rank
 
-/datum/spawner/helper/engineer
+/datum/spawner/lateparty/helper/engineer
 	name = "Инженер"
 	id = "cc_engineer"
 	ranks = list(ROLE_ERT, "Station Engineer")
 	rank = "Station Engineer"
-	//spawner_job = /datum/job/engineer
 	overrided_outfit = /datum/outfit/job/engineer/centcomm_helper
 
 /*
