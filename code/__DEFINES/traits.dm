@@ -154,6 +154,7 @@
 #define TRAIT_COOLED              "external_cooling_device"
 #define TRAIT_NO_RUN              "no_run"
 #define TRAIT_FAST_EQUIP          "fast_equip"
+#define TRAIT_FRIENDLY            "friendly"
 #define TRAIT_NO_CLONE            "no_clone"
 #define TRAIT_VACCINATED          "vaccinated"
 #define TRAIT_DWARF               "dwarf"
@@ -201,3 +202,9 @@
 
 // atom traits
 #define TRAIT_XENO_FUR "xeno_fur"
+
+// trait sources
+#define EYE_DAMAGE_TRAIT "eye_damage"
+#define EYE_DAMAGE_TEMPORARY_TRAIT "eye_damage_temporary"
+#define GENETIC_MUTATION_TRAIT "genetic"
+#define QUIRK_TRAIT "quirk"

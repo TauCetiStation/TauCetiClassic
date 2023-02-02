@@ -143,6 +143,8 @@
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/collective_mind)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor)
 
+	notify_ghosts("\A [src], new hatched shadowling, at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, header = "Shadowling")
+
 /mob/living/carbon/human/slime/atom_init(mapload)
 	. = ..(mapload, SLIME)
 
@@ -912,7 +914,7 @@
 		var/obj/item/clothing/head/welding/W = head
 		if(!W.up)
 			number += 2
-	if(!istype(head, /obj/item/clothing/head/helmet/space/sk) && istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault))
+	if(!istype(head, /obj/item/clothing/head/helmet/space/sk) && istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault) || istype(head, /obj/item/clothing/head/helmet/swat))
 		number += 2
 	if(istype(glasses, /obj/item/clothing/glasses/thermal))
 		var/obj/item/clothing/glasses/thermal/G = glasses

@@ -87,7 +87,7 @@
 	description = "Most probably know this as Tylenol, but this chemical is a mild, simple painkiller."
 	reagent_state = LIQUID
 	color = "#c8a5dc"
-	overdose = 60
+	overdose = REAGENTS_OVERDOSE * 2
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/paracetamol/on_general_digest(mob/living/M)
@@ -102,7 +102,7 @@
 	description = "A simple, yet effective painkiller."
 	reagent_state = LIQUID
 	color = "#cb68fc"
-	overdose = 30
+	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = 0.025
 	restrict_species = list(IPC, DIONA)
 
@@ -230,7 +230,7 @@
 	description = "Analgesic chemical that heals lung damage and coughing."
 	reagent_state = LIQUID
 	color = "#ffc0cb" // rgb: 255, 192, 203
-	overdose = 10
+	overdose = REAGENTS_OVERDOSE / 3
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	taste_message = "sickening bitterness"
 	restrict_species = list(IPC, DIONA)
@@ -484,7 +484,7 @@
 	description = "Used to encourage recovery of organs and nervous systems. Medicate cautiously."
 	reagent_state = LIQUID
 	color = "#561ec3" // rgb: 200, 165, 220
-	overdose = 10
+	overdose = REAGENTS_OVERDOSE / 3
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
@@ -753,15 +753,14 @@
 		if(5 to 10)
 			M.apply_effect(10, AGONY)
 			M.AdjustConfused(2)
-		if(10 to 20)
+		if(10 to INFINITY)
 			for(var/obj/item/organ/external/E in M.bodyparts)
 				if(E.is_broken())
-					if(prob(15))
-						to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
-						E.brute_dam = 0
-						E.status &= ~ORGAN_BROKEN
-						E.perma_injury = 0
-						holder.remove_reagent("nanocalcium", 10)
+					to_chat(M, "<span class='notice'>You feel a burning sensation in your [E.name] as it straightens involuntarily!</span>")
+					E.brute_dam = 0
+					E.status &= ~ORGAN_BROKEN
+					E.perma_injury = 0
+					holder.remove_reagent("nanocalcium", 10)
 
 /datum/reagent/metatrombine
 	name = "Metatrombine"
@@ -770,4 +769,32 @@
 	reagent_state = LIQUID
 	color = "#990000"
 	restrict_species = list(IPC, DIONA)
-	overdose = 5
+	custom_metabolism = REAGENTS_METABOLISM * 0.5
+	overdose = REAGENTS_OVERDOSE / 6
+	data = list()
+
+/datum/reagent/metatrombine/on_general_digest(mob/living/carbon/human/M)
+	..()
+	if(!ishuman(M))
+		return
+	if((volume <= overdose) && !data["ticks"])
+		return
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	var/obj/item/organ/internal/heart/IO = M.organs_by_name[O_HEART]
+	switch(data["ticks"])
+		if(1 to 150)
+			if(prob(25))
+				to_chat(M, "<span class='notice'>You feel dizzy...</span>")
+			M.make_dizzy(5)
+			M.make_jittery(5)
+		if(150 to 200)
+			for(var/obj/item/organ/external/E in M.bodyparts)
+				if(E.is_artery_cut())
+					E.status &= ~ORGAN_ARTERY_CUT
+			if(IO.robotic == 1)
+				if(prob(75))
+					data["ticks"]--
+		if(200 to INFINITY && IO.robotic != 2)
+			IO.heart_stop()

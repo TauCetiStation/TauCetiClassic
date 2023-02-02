@@ -45,6 +45,8 @@
 	has_arm = TRUE
 	has_leg = TRUE
 
+	can_point = TRUE
+
 /mob/living/simple_animal/hulk/atom_init()
 	attack_sound = SOUNDIN_PUNCH_HEAVY
 	. = ..()
@@ -247,7 +249,7 @@
 
 	if(!. || moving_diagonally)
 		return .
-	
+
 	var/turf/T = loc
 
 	if(isturf(T) && !(T.flags & NOSTEPSOUND) && !lying)
