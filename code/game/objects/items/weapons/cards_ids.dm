@@ -11,7 +11,7 @@
  */
 /obj/item/weapon/card
 	name = "card"
-	desc = "Используется в дискетных штуках."
+	desc = "Используется в дискетных делах."
 	icon = 'icons/obj/card.dmi'
 	w_class = SIZE_MINUSCULE
 	var/associated_account_number = 0
