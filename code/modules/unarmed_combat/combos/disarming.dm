@@ -496,8 +496,8 @@
 	name = COMBO_NECK_CULT
 	desc = "A blow to the neck allows you to silence the target, as well as stop their breath."
 	combo_icon_state = "neckblow_cult"
-	cost = 25
-	combo_elements = list(INTENT_HARM, INTENT_PUSH, INTENT_PUSH, INTENT_HARM)
+	cost = 15
+	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_HARM)
 	allowed_target_zones = list(BP_HEAD)
 	require_arm_to_perform = TRUE
 
