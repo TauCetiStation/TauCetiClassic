@@ -387,7 +387,10 @@
 	user.mind.transfer_to(new_xeno)
 	new_xeno.mind.name = new_xeno.real_name
 
-	new_xeno.startup_gain()
+	var/datum/faction/infestation/F = find_faction_by_type(/datum/faction/infestation)//Buff only for the first queen
+	if(F.start_help)
+		new_xeno.apply_status_effect(/datum/status_effect/xeno_help)
+		F.start_help = FALSE
 
 	qdel(alien)
 
