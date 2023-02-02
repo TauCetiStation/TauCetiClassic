@@ -1325,7 +1325,7 @@
 /mob/living/proc/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, blood = FALSE, stun = TRUE, force = FALSE)
 	if(stat == DEAD && !punched && !force)
 		return FALSE
-	SEND_SIGNAL(src, COMSIG_CARBON_VOMITED)
+	SEND_SIGNAL(src, COMSIG_LIVING_VOMITED)
 	if(stun)
 		Stun(3)
 	if(nutrition < 50 && !blood)
