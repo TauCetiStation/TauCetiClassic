@@ -72,9 +72,10 @@
 	announce_declared.play()
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/set_security_level, "delta"), 50)
 
+//Faction process tick is 2, so multiply AI_capture_timeleft subtract to that delta time
 /datum/faction/malf_silicons/process()
 	if(global.hacked_apcs.len >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
-		AI_capture_timeleft -= (global.hacked_apcs.len / APC_MIN_TO_MALF_DECLARE) //Victory timer now de-increments almost normally
+		AI_capture_timeleft -= 2 * (global.hacked_apcs.len / APC_MIN_TO_MALF_DECLARE) //Victory timer now de-increments almost normally
 
 	..()
 
