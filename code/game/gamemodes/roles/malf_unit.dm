@@ -13,11 +13,12 @@
 	//legacy vars from ai.dm
 	var/malfhack_performing = FALSE
 	var/obj/machinery/power/apc/malfhack_target_apc = null
+	var/module_picker_type = /datum/AI_Module/module_picker
 
 /datum/role/malfAI/OnPostSetup(laterole)
 	. = ..()
 	var/mob/living/silicon/ai/AI_mind_current = antag.current
-	new /datum/AI_Module/module_picker(AI_mind_current)
+	new module_picker_type(AI_mind_current)
 	new /datum/AI_Module/takeover(AI_mind_current)
 	AI_mind_current.laws = new /datum/ai_laws/malfunction
 	AI_mind_current.show_laws()
@@ -118,6 +119,7 @@
 /datum/role/malfAI/zombie
 	name = MALF
 	id = ZOMBIE_MALF
+	module_picker_type = /datum/AI_Module/module_picker/zombie_malf_picker
 
 /datum/role/malfAI/zombie/OnPostSetup(laterole)
 	. = ..()
