@@ -303,7 +303,7 @@
 					continue
 				if(!M.mind)
 					continue
-				if(M.mind.assigned_role in global.nt_representative)
+				if(M.mind.assigned_role in (global.command_positions + global.security_positions))
 					add_faction_member(enemies, M)
 			//empty faction will be destroyed
 			enemies.check_populated()
