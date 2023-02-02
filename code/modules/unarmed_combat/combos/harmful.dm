@@ -497,7 +497,7 @@
 
 /datum/combat_combo/kick_cqc
 	name = COMBO_KICK_CQC
-	desc = "A sharp kick that deals a fairly large amount of damage and stuns an unarmored enemy."
+	desc = "A sharp kick that deals a heavy blow, which stuns an unarmored enemy."
 	combo_icon_state = "kick_cqc"
 	cost = 25
 	combo_elements = list(INTENT_HARM, INTENT_HARM, INTENT_HARM, INTENT_GRAB)
