@@ -494,7 +494,7 @@
 
 /datum/combat_combo/neck_blow
 	name = COMBO_NECK_CULT
-	desc = "A blow to the neck allows you to silence the target, as well as stop breathing."
+	desc = "A blow to the neck allows you to silence the target, as well as stop their breath."
 	combo_icon_state = "neckblow_cult"
 	cost = 25
 	combo_elements = list(INTENT_HARM, INTENT_PUSH, INTENT_PUSH, INTENT_HARM)
