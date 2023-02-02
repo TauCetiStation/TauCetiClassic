@@ -571,7 +571,7 @@
 
 /datum/combat_combo/highkick_cqc
 	name = COMBO_HIGHKICK_CQC
-	desc = "a kick to the neck-head area, allows with some chance to either stun the target, or make it choke."
+	desc = "A kick to the neck-head area, allows with some chance to either stun the target, or make them choke."
 	combo_icon_state = "highkick_cqc"
 	cost = 50
 	combo_elements = list(COMBO_KICK_CQC, INTENT_HARM, INTENT_HARM, INTENT_PUSH)
