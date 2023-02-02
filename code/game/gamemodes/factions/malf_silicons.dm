@@ -224,9 +224,6 @@
 		dat += ")"
 	return dat
 
-/datum/faction/malf_silicons/proc/get_lower_treshold()
-	return intercept_hacked ? UPGRADED_TRESHOLD_HACKED_APC : LOWEST_TRESHOLD_HACKED_APC
-
 /datum/faction/malf_silicons/zombie
 	name = ZOMBIE_MALF
 	ID = ZOMBIE_MALF
@@ -251,7 +248,7 @@
 /datum/faction/malf_silicons/zombie/capture_the_station()
 	station_captured = TRUE
 	for(var/datum/role/malfAI/zombie/role in members)
-		role.to_fuse_steel()
+		role.create_malfborg()
 
 /datum/faction/malf_silicons/zombie/check_win()
 	if(finished)

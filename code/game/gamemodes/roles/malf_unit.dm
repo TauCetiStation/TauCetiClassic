@@ -96,7 +96,7 @@
 				global.hacked_apcs += apc
 			apc.malfunction_area()
 		//lowest treshold in hacked apcs for an announcement to start
-		announce_hacker(global.hacked_apcs.len, malf_faction.get_lower_treshold())
+		announce_hacker(global.hacked_apcs.len, intercept_hacked ? UPGRADED_TRESHOLD_HACKED_APC : LOWEST_TRESHOLD_HACKED_APC)
 	var/mob/malfunctioned_ai = antag.current
 	//check qdeling ai
 	if(malfunctioned_ai)
@@ -124,7 +124,7 @@
 	var/mob/living/silicon/ai/AI_mind_current = antag.current
 	new /datum/AI_Module/infest(AI_mind_current)
 
-/datum/role/malfAI/zombie/proc/to_fuse_steel()
+/datum/role/malfAI/zombie/proc/create_malfborg()
 	var/mob/living/silicon/ai/AI_mind_current = antag.current
 	AI_mind_current.verbs += /mob/living/silicon/ai/proc/create_borg
 	AI_mind_current.view_core()
