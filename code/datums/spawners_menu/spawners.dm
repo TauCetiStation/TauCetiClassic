@@ -562,9 +562,6 @@ var/global/list/datum/spawners_cooldown = list()
 	spawning_place = get_turf(S)
 
 /datum/spawner/malf_borg/spawn_ghost(mob/dead/observer/ghost)
-	if(!spawning_place)
-		to_chat(ghost, "<span class='warning'>Something went wrong. Make sure that these are not administration fault and send issue to Github.</span>")
-		return
 	var/client/C = ghost.client
 	var/mob/living/silicon/robot/cyborg = new(spawning_place)
 	cyborg.key = C.key
