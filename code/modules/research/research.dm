@@ -65,17 +65,12 @@ The tech datums are the actual "tech trees" that you improve through researching
 			design_reliabilities[d.id] = 10
 			design_created_prototypes[d.id] = 0
 
-	for(var/T in subtypesof(/datum/tech))
-		var/datum/tech/Tech_Tree = new T
-		tech_trees[Tech_Tree.id] = Tech_Tree
-		all_technologies[Tech_Tree.id] = list()
+	generate_trees()
 
 	for(var/T in subtypesof(/datum/technology))
 		var/datum/technology/Tech = new T
 		if(all_technologies[Tech.tech_type])
 			all_technologies[Tech.tech_type][Tech.id] = Tech
-		else
-			WARNING("Unknown tech_type '[Tech.tech_type]' in technology '[Tech.name]'")
 
 	for(var/tech_tree_id in tech_trees)
 		var/datum/tech/Tech_Tree = tech_trees[tech_tree_id]
@@ -89,6 +84,12 @@ The tech datums are the actual "tech trees" that you improve through researching
 	experiments = new /datum/experiment_data()
 	// This is a science station. Most tech is already at least somewhat known.
 	experiments.init_known_tech()
+
+/datum/research/proc/generate_trees()
+	for(var/T in subtypesof(/datum/tech))
+		var/datum/tech/Tech_Tree = new T
+		tech_trees[Tech_Tree.id] = Tech_Tree
+		all_technologies[Tech_Tree.id] = list()
 
 /datum/research/proc/IsResearched(datum/technology/T)
 	return !!researched_tech[T.id]
@@ -185,16 +186,23 @@ The tech datums are the actual "tech trees" that you improve through researching
 	T.avg_reliability = GetAverageDesignReliability(T)
 
 /datum/research/proc/download_from(datum/research/O)
+	var/list/our_tech_trees = list()
 
 	for(var/tech_tree_id in O.tech_trees)
 		var/datum/tech/Tech_Tree = O.tech_trees[tech_tree_id]
 		var/datum/tech/Our_Tech_Tree = tech_trees[tech_tree_id]
 
-		if(Tech_Tree.shown)
-			Our_Tech_Tree.shown = Tech_Tree.shown
+		if(Our_Tech_Tree)
+			our_tech_trees[Our_Tech_Tree.id] = Our_Tech_Tree
+			if(Tech_Tree.shown)
+				Our_Tech_Tree.shown = Tech_Tree.shown
 
 	for(var/tech_id in O.researched_tech)
 		var/datum/technology/T = O.researched_tech[tech_id]
+		if(T)
+			//is my files have that tech tree?
+			if(isnull(our_tech_trees[T.tech_type]))
+				continue
 		UnlockTechology(T, force = TRUE)
 
 		for(var/D in T.unlocks_designs)
