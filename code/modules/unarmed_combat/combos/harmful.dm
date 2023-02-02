@@ -656,7 +656,7 @@
 
 /datum/combat_combo/blood_boil
 	name = COMBO_BLOOD_BOIL_CULT
-	desc = "You touch the body of the enemy, your touch makes the blood boil in the veins of the enemy."
+	desc = "You touch the body of the enemy, and your touch makes their blood boil."
 	combo_icon_state = "blood_boil_cult"
 	cost = 75
 	combo_elements = list(INTENT_PUSH, INTENT_HARM,  INTENT_GRAB, INTENT_GRAB)
