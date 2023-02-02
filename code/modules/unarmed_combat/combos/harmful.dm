@@ -571,7 +571,7 @@
 
 /datum/combat_combo/highkick_cqc
 	name = COMBO_HIGHKICK_CQC
-	desc = "A kick to the neck-head area, allows with some chance to either stun the target, or make them choke."
+	desc = "A kick to the head that stuns and confuses the target for a fairly long period of time."
 	combo_icon_state = "highkick_cqc"
 	cost = 50
 	combo_elements = list(COMBO_KICK_CQC, INTENT_HARM, INTENT_HARM, INTENT_PUSH)
@@ -618,22 +618,12 @@
 	if(!do_combo(victim, attacker, 2))
 		return
 	attacker.emote("woo")
-	switch(rand(1,100))
-		if(1 to 40)
-			victim.visible_message("<span class='danger'>[attacker]'s kick knocks [victim] off his feet, stunning and confusing!</span>")
-			apply_effect(5, STUN, victim, attacker, attack_obj=attack_obj, min_value=1)
-			apply_effect(5, WEAKEN, victim, attacker, attack_obj=attack_obj, min_value=1)
-			victim.AdjustConfused(20)
-		if(41 to 80)
-			victim.visible_message("<span class='danger'>[attacker] kick [victim] right in the neck!</span>")
-			if(NO_BREATH in victim.mutations)
-				return
-			victim.losebreath += 20
-			victim.silent += 10
-		else
-			victim.visible_message("<span class='danger'>[attacker] kick [victim] in the head, knocking him out!!</span>")
-			victim.SetSleeping(5 SECONDS)
 	apply_damage(20, victim, attacker, zone=BP_HEAD, attack_obj=attack_obj)
+	apply_effect(5, STUN, victim, attacker, attack_obj=attack_obj, min_value=1)
+	apply_effect(5, WEAKEN, victim, attacker, attack_obj=attack_obj, min_value=1)
+	victim.AdjustConfused(20)
+	victim.SetSleeping(1 SECONDS)
+	victim.visible_message("<span class='danger'>[attacker] kick [victim] in the head!</span>")
 	playsound(victim, 'sound/weapons/genhit1.ogg', VOL_EFFECTS_MASTER)
 	animate(attacker, transform = prev_attacker_M, pixel_y = attacker.pixel_y + 8, time = 2)
 	if(!do_combo(victim, attacker, 2))
