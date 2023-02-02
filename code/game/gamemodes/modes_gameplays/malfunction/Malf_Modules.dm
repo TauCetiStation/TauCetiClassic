@@ -3,7 +3,7 @@
 nanjector
 robot_fabricator
 */
-
+#define NO_ZOMBIE_MALF (1<<1)
 
 /datum/AI_Module
 	var/uses = 0
@@ -12,7 +12,7 @@ robot_fabricator
 	var/description = null
 	var/verb_caller = null
 	var/need_only_once = FALSE
-	var/not_for_zombie_malf = FALSE
+	var/flags = 0
 	var/mob/living/silicon/ai/owner = null
 	var/list/valid_targets = list(/obj/machinery)
 
@@ -49,6 +49,13 @@ robot_fabricator
 	available_modules = subtypesof(/datum/AI_Module/large)
 	available_modules += subtypesof(/datum/AI_Module/small)
 
+/datum/AI_Module/module_picker/zombie_malf_picker/New(mob/living/silicon/ai/module_owner)
+	..()
+	for(var/module in available_modules)
+		var/datum/AI_Module/module_type = module
+		if(!(module_type.flags & NO_ZOMBIE_MALF))
+			available_modules -= module_type
+
 /datum/AI_Module/module_picker/proc/use(mob/living/silicon/ai/user)
 	var/dat
 	if(temp)
@@ -62,8 +69,6 @@ robot_fabricator
 		dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
 		for(var/module in available_modules)
 			var/datum/AI_Module/module_type = module
-			if(initial(module_type.not_for_zombie_malf) && isrole(ZOMBIE_MALF, user))
-				continue
 			dat += "<A href='byond://?src=\ref[src];module_type=[module]'>[initial(module_type.module_name)]</A> ([initial(module_type.price)])<BR>"
 		dat += "<HR>"
 
@@ -210,7 +215,7 @@ robot_fabricator
 	description = "An upgrade to improve core resistance, making it immune to fire and heat. This effect is permanent."
 	need_only_once = TRUE
 	//is it for phoron igniting? Zombie Malf should keep out from that
-	not_for_zombie_malf = TRUE
+	flags = NO_ZOMBIE_MALF
 
 /datum/AI_Module/large/fireproof_core/BuyedNewHandle()
 	for(var/mob/living/silicon/ai/ai as anything in ai_list)
@@ -273,7 +278,7 @@ robot_fabricator
 	description = "Overloads an electrical machine, causing a small explosion. 2 uses."
 	uses = 2
 	//Zombie Malf have enough without that directial explodes
-	not_for_zombie_malf = TRUE
+	flags = NO_ZOMBIE_MALF
 	verb_caller = /mob/living/silicon/ai/proc/overload_machine
 	valid_targets = list(
 			/obj/machinery/computer,
@@ -384,7 +389,7 @@ robot_fabricator
 	description = "Reactivates a currently disabled camera. 10 uses."
 	uses = 10
 	//cameras in Zombie Malf are very dangerous. Reactivating is imbalanced for that.
-	not_for_zombie_malf = TRUE
+	flags = NO_ZOMBIE_MALF
 	verb_caller = /mob/living/silicon/ai/proc/reactivate_camera
 
 /mob/living/silicon/ai/proc/reactivate_camera()
