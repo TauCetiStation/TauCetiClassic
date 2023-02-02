@@ -33,6 +33,7 @@ cause a ton of data to be lost, an admin can go send it back.
 	var/datum/research/files							//Stores all the collected research data.
 	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
 	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
+	var/research_datum_type = /datum/research
 
 	var/obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
 	var/obj/machinery/r_n_d/protolathe/linked_lathe = null				//Linked Protolathe
@@ -115,8 +116,12 @@ cause a ton of data to be lost, an admin can go send it back.
 /obj/machinery/computer/rdconsole/atom_init()
 	. = ..()
 	RDcomputer_list += src
-	files = new /datum/research(src) //Setup the research data holder.
+	//Setup the research data holder.
+	create_research_files()
 	SyncRDevices()
+
+/obj/machinery/computer/rdconsole/proc/create_research_files()
+	files = new research_datum_type(src)
 
 /obj/machinery/computer/rdconsole/Destroy()
 	RDcomputer_list -= src
@@ -298,7 +303,7 @@ cause a ton of data to be lost, an admin can go send it back.
 		if(choice == "Continue")
 			screen = "working"
 			qdel(files)
-			files = new /datum/research(src)
+			create_research_files()
 			spawn(20)
 				screen = "main"
 				nanomanager.update_uis(src)
