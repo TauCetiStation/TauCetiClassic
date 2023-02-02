@@ -516,7 +516,7 @@
 
 /datum/combat_combo/eyes
 	name = COMBO_EYES_CULT
-	desc = "You masterfully poke your opponent in the eyes, this allows you to disorient him, as well as damage the eyeball. Does not work if the target has glasses or a mask."
+	desc = "You masterfully poke your opponent in the eyes, which allows you to disorient them, as well as damage their eyeballs. Does not work if the target is wearing glasses or a mask."
 	combo_icon_state = "eyes_cult"
 	cost = 10
 	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_HARM)
