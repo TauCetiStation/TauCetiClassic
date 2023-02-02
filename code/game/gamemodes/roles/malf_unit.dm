@@ -96,7 +96,7 @@
 				global.hacked_apcs += apc
 			apc.malfunction_area()
 		//lowest treshold in hacked apcs for an announcement to start
-		announce_hacker(global.hacked_apcs.len, intercept_hacked ? UPGRADED_TRESHOLD_HACKED_APC : LOWEST_TRESHOLD_HACKED_APC)
+		announce_hacker(global.hacked_apcs.len, malf_faction.intercept_hacked ? UPGRADED_TRESHOLD_HACKED_APC : LOWEST_TRESHOLD_HACKED_APC)
 	var/mob/malfunctioned_ai = antag.current
 	//check qdeling ai
 	if(malfunctioned_ai)
