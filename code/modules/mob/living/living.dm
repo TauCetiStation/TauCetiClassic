@@ -1322,13 +1322,13 @@
 /mob/living/proc/CanObtainCentcommMessage()
 	return FALSE
 
-/mob/living/proc/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, blood = FALSE, stun = TRUE, force = FALSE)
+/mob/living/proc/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, stun = TRUE, force = FALSE)
 	if(stat == DEAD && !punched && !force)
 		return FALSE
 	SEND_SIGNAL(src, COMSIG_LIVING_VOMITED)
 	if(stun)
 		Stun(3)
-	if(nutrition < 50 && !blood)
+	if(nutrition < 50 && (vomit_type != VOMIT_BLOOD))
 		visible_message("<span class='warning'>[src] convulses in place, gagging!</span>",
 						"<span class='warning'>You try to throw up, but there is nothing!</span>")
 		adjustOxyLoss(3)
@@ -1376,13 +1376,12 @@
 	if(locate(/obj/structure/sink) in T)
 		return TRUE
 	if(istype(T))
-		if(blood)
-			T.add_blood_floor(src)
-		else if(getToxLoss() > 0)
-			T.add_vomit_floor(src, VOMIT_TOXIC)
-		else
-			T.add_vomit_floor(src, vomit_type)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "puke", /datum/mood_event/puke)
+		switch(vomit_type)
+			if(VOMIT_BLOOD)
+				T.add_blood_floor(src)
+			else
+				T.add_vomit_floor(src, getToxLoss() > 0 ? VOMIT_TOXIC : vomit_type)
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "puke", /datum/mood_event/puke)
 
 	return TRUE
 
