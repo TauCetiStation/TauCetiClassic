@@ -323,6 +323,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/obj/item/weapon/pen/edagger/E = I
 		if(E.on)
 			light("<span class='warning'>[user] swings their [I], barely missing their nose. They light their [name] in the process.</span>")
+
 	else if(istype(I, /obj/item/weapon/spacecash))
 		var/obj/item/weapon/spacecash/S = I
 		if(S.is_burning)
