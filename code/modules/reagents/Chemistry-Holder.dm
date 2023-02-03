@@ -628,7 +628,7 @@ var/global/const/INGEST = 2
 
 			L.log_combat(user, "splashed with [my_atom.name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
 
-			var/image/splash_animation = image('icons/effects/splash.dmi', L, "splash")
+			var/image/splash_animation = image('icons/effects/effects.dmi', L, "splash")
 			splash_animation.color = mix_color_from_reagents(splash.reagent_list)
 			splash_animation.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
 			flick_overlay_view(splash_animation, target, 1 SECONDS)
