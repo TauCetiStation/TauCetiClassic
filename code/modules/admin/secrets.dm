@@ -118,6 +118,7 @@
 					<A href='?src=\ref[src];secretsfun=sec_classic1'>Remove firesuits, grilles, and pods</A><BR>
 					<A href='?src=\ref[src];secretsfun=drop_asteroid'>Drop asteroid</A><BR>
 					<A href='?src=\ref[src];secretsfun=global_sound_speed'>Set global sound speed modifier</A><BR>
+					<A href='?src=\ref[src];secretsfun=death_explosion'>Toggle Death Explosion Mode</A><BR>
 					"}
 
 	var/datum/browser/popup = new(usr, "secrets", "<div align='center'>Admin Secrets</div>", 500, 812)
@@ -529,6 +530,15 @@
 			message_admins("[key_name_admin(usr)] has modified global sound speed to [playsound_frequency_admin]")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","Global Sound Frequency")
+
+		if("death_explosion")
+			global.DEATH_EXPLOSION = !global.DEATH_EXPLOSION
+			if(global.DEATH_EXPLOSION)
+				to_chat(world, "<span class='warning'>Peaceful mode activated!</span>")
+			else
+				to_chat(usr, "<span class='notice'>Violence mode activated.</span>")
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","DeathEx")
 		else
 			to_chat(world, "oof, this is ["secretsfun"] not worked")
 	if(usr)
