@@ -49,7 +49,7 @@
 		var/image/clean_animation = image('icons/effects/effects.dmi', T, "cleaning")
 		clean_animation.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
 		flick_overlay_view(clean_animation, T, 1 SECONDS)
-		if(W.volume == amount)
+		if(W.volume >= amount)
 			T.clean_blood()
 			T.dirt = max(0, T.dirt - amount * 20) // #define MAGICAL_CLEANING_CONSTANT 20
 			for(var/obj/effect/O in T)
