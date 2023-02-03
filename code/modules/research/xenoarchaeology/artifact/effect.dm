@@ -256,7 +256,7 @@
 	// latex gloves and science goggles also give a bit of bonus protection
 	if(istype(H.gloves,/obj/item/clothing/gloves/latex))
 		protection += 0.1
-	if(istype(H.glasses,/obj/item/clothing/glasses/science))
+	if(isscienceglasses(H.glasses))
 		protection += 0.1
 
 	return clamp(NO_ANOMALY_PROTECTION - protection, FULL_ANOMALY_PROTECTION, NO_ANOMALY_PROTECTION)
