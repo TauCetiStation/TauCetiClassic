@@ -22,12 +22,20 @@
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/begin_scan)
 
 /datum/component/examine_research/proc/begin_scan(datum/source, mob/user)
-	SIGNAL_HANDLER
 	if(user.is_busy())
 		return
 	if(!success_check(extra_check, user))
 		return
-	do_diagnostic(user)
+	to_chat(user, "<span class='notice'>You concentrate on scanning [parent].</span>")
+	if(!do_after(user, 50, FALSE, parent))
+		to_chat(user, "<span class='warning'>You stop scanning [parent].</span>")
+		return
+	if(calculate_research_value() <= 0)
+		to_chat(user, "<span class='warning'>[parent] have no research value.</span>")
+		return
+	to_chat(user, "<span class='notice'>[parent] scan earned you [points_value] research points.</span>")
+	linked_techweb.research_points += points_value
+	global.spented_examined_objects += parent
 
 /datum/component/examine_research/proc/calculate_research_value()
 	for(var/obj/object as anything in global.spented_examined_objects)
@@ -56,15 +64,3 @@
 	if(diffs.len)
 		return FALSE
 	return TRUE
-
-/datum/component/examine_research/proc/do_diagnostic(user)
-	to_chat(user, "<span class='notice'>You concentrate on scanning [parent].</span>")
-	if(!do_after(user, 50, FALSE, parent))
-		to_chat(user, "<span class='warning'>You stop scanning [parent].</span>")
-		return
-	if(calculate_research_value() <= 0)
-		to_chat(user, "<span class='warning'>[parent] have no research value.</span>")
-		return
-	to_chat(user, "<span class='notice'>[parent] scan earned you [points_value] research points.</span>")
-	linked_techweb.research_points += points_value
-	global.spented_examined_objects += parent
