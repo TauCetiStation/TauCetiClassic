@@ -699,8 +699,6 @@
 	to_chat(victim, "<span class='warning'>Your veins are on fire!</span>")
 	victim.adjustFireLoss(50)
 
-	if(old_loc != victim.loc) // a good fail effect would be a nice idea.
-		return
 
 /datum/combat_combo/blood_boil/execute(mob/living/victim, mob/living/attacker)
 	return
