@@ -657,7 +657,6 @@
 	ignore_size = TRUE
 
 /datum/combat_combo/blood_boil/animate_combo(mob/living/victim, mob/living/attacker)
-	var/old_loc = victim.loc
 	var/prev_victim_anchored = victim.anchored
 	var/prev_attacker_anchored = attacker.anchored
 	victim.anchored = TRUE
