@@ -439,11 +439,11 @@
 
 /datum/species/tajaran/on_gain(mob/living/M)
 	..()
-	ADD_TRAIT(M, NATURAL_AGILITY, GENERIC_TRAIT)
+	ADD_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
 
 /datum/species/tajaran/on_loose(mob/living/M)
 	..()
-	REMOVE_TRAIT(M, NATURAL_AGILITY, GENERIC_TRAIT)
+	REMOVE_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
 
 /datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_tajaran_digest(M)

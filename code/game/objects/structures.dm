@@ -132,7 +132,7 @@
 	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
 		. *= 0.5
 	//tajaran can jump on/over the table faster than else species
-	if(HAS_TRAIT(user, NATURAL_AGILITY))
+	if(HAS_TRAIT(user, TRAIT_NATURAL_AGILITY))
 		. *= 0.25
 
 /obj/structure/proc/do_climb(mob/living/climber, mob/living/user)
