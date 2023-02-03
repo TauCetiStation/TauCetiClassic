@@ -42,6 +42,7 @@
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/gravcatapult
 	ME.attach(src)
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 12000, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/combat/phazon/Bump(atom/obstacle)
 	if(phasing && get_charge()>=phasing_energy_drain)
