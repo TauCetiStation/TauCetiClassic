@@ -168,8 +168,8 @@
 #define TRAIT_CULT_EYES           "cult_eyes"
 #define TRAIT_CULT_HALO           "cult_halo"
 #define TRAIT_HEALS_FROM_PYLONS   "heals_from_pylons"
+#define TRAIT_HEMOCOAGULATION     "hemocoagulation"
 #define TRAIT_CLUMSY              "clumsy"
-
 #define TRAIT_SHOCKIMMUNE         "shockimmune"
 
 /*
