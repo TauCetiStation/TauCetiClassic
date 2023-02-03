@@ -327,7 +327,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	else if(istype(I, /obj/item/weapon/spacecash))
 		var/obj/item/weapon/spacecash/S = I
 		if(S.is_burning)
-			light("<span class='[S.worth >= 50 ? "warning" : "notice"]'>With a flick of their wrist, [user] lights their [name] with their burning [I].</span>")
+			var/span = S.worth >= 50 ? "warning" : "notice"
+			light("<span class='[span]'>With a flick of their wrist, [user] lights their [name] with their burning [I].</span>")
 	else
 		return ..()
 

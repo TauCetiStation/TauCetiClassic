@@ -28,7 +28,8 @@
 		var/obj/item/weapon/lighter/P = I
 		if(P.lit && can_burn && !is_burning)
 			is_burning = TRUE
-			user.visible_message("<span class='[worth >= 50 ? "warning" : "notice"]'>[user] holds \the [P] up to \the [src] it looks like \he's trying to burn it.</span>", \
+			var/span = worth >= 50 ? "warning" : "notice"
+			user.visible_message("<span class='[span]'>[user] holds \the [P] up to \the [src] it looks like \he's trying to burn it.</span>", \
 								"<span class='notice'>You hold \the [P] up to \the [src], burning it slowly.</span>")
 			START_PROCESSING(SSobj, src)
 			QDEL_IN(src, 10 SECONDS)
