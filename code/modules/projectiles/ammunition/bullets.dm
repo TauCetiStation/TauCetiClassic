@@ -205,12 +205,6 @@
 	caliber = "a3006"
 	projectile_type = /obj/item/projectile/bullet/midbullet3
 
-/obj/item/ammo_casing/flare
-	desc = "A flare for flare gun."
-	caliber = "flare"
-	icon_state = "flare"
-	projectile_type = /obj/item/projectile/bullet/flare
-
 /obj/item/ammo_casing/c38m
 	desc = "A .38 bullet casing."
 	caliber = "38"

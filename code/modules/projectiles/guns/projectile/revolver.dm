@@ -235,12 +235,6 @@
 /obj/item/weapon/gun/projectile/revolver/peacemaker/detective
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rev45/rubber
 
-/obj/item/weapon/gun/projectile/revolver/flare
-	name = "flare gun"
-	desc = "Fires flares."
-	icon_state = "flaregun"
-	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/flaregun
-
 /obj/item/weapon/gun/projectile/revolver/detective/dungeon
 	desc = "A six-shot double-action revolver."
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rev38/dungeon
