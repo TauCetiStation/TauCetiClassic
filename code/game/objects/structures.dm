@@ -136,7 +136,7 @@
 		var/mob/living/carbon/human/H = user
 		if(H.species)
 			if(H.species.flags[NATURAL_AGILITY])
-				. *= 0.10
+				. *= 0.1
 
 /obj/structure/proc/do_climb(mob/living/climber, mob/living/user)
 	add_fingerprint(climber)
