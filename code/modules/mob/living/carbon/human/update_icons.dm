@@ -381,7 +381,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	var/default_path = 'icons/mob/uniform.dmi'
 	var/uniform_sheet = SPRITE_SHEET_UNIFORM
-	if(istype(w_uniform, /obj/item/clothing/under))
+	if(isunder(w_uniform))
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open ...
 				w_uniform.screen_loc = ui_iclothing //...draw the item in the inventory screen
@@ -749,7 +749,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/tail_gender_appendix = null
 			if(species.gender_tail_icons && gender == FEMALE)
 				tail_gender_appendix = "_fem"
-			
+
 			var/image/tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = "[tail_state][tail_gender_appendix]")
 
 			var/obj/item/organ/external/chest/BP = bodyparts_by_name[BP_CHEST]
