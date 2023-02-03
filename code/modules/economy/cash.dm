@@ -17,7 +17,6 @@
 	var/worth = 0
 	var/is_burning = FALSE
 	var/can_burn = TRUE
-	var/list/managed_overlays
 
 /obj/item/weapon/spacecash/atom_init()
 	. = ..()
@@ -33,19 +32,10 @@
 								"<span class='notice'>You hold \the [P] up to \the [src], burning it slowly.</span>")
 			START_PROCESSING(SSobj, src)
 			QDEL_IN(src, 10 SECONDS)
-			update_icon()
+			var/image/fire = image(icon, icon_state = "on_fire_cash")
+			add_overlay(fire)
 			return
 	return ..()
-
-/obj/item/weapon/spacecash/update_icon()
-	. = ..()
-	if(managed_overlays)
-		cut_overlay(managed_overlays)
-		managed_overlays = null
-	else
-		var/mutable_appearance/I = mutable_appearance(icon, "on_fire_cash")
-		add_overlay(I)
-		managed_overlays = I
 
 /obj/item/weapon/spacecash/process()
 	var/turf/location = get_turf(src)
