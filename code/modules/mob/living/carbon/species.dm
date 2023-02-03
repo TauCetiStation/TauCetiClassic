@@ -425,7 +425,6 @@
 	,FACEHUGGABLE = TRUE
 	,IS_SOCIAL = TRUE
 	,FUR = TRUE
-	,NATURAL_AGILITY = TRUE
 	)
 
 	flesh_color = "#afa59e"
@@ -437,6 +436,14 @@
 	is_common = TRUE
 
 	skeleton_type = SKELETON_TAJARAN
+
+/datum/species/tajaran/on_gain(mob/living/M)
+	..()
+	ADD_TRAIT(M, NATURAL_AGILITY, GENERIC_TRAIT)
+
+/datum/species/tajaran/on_loose(mob/living/M)
+	..()
+	REMOVE_TRAIT(M, NATURAL_AGILITY, GENERIC_TRAIT)
 
 /datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_tajaran_digest(M)
@@ -527,7 +534,6 @@
 		,HAS_HAIR_COLOR = TRUE
 		,NO_FAT = TRUE
 		,IS_SOCIAL = TRUE
-		,NATURAL_AGILITY = TRUE
 	)
 	has_organ = list(
 		O_HEART   = /obj/item/organ/internal/heart/vox,
@@ -601,7 +607,7 @@
 
 	else
 		H.verbs += /mob/living/carbon/human/proc/gut
-
+	ADD_TRAIT(H, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
 	..()
 
 /datum/species/vox/on_loose(mob/living/carbon/human/H, new_species)
@@ -613,7 +619,7 @@
 
 	else
 		H.verbs -= /mob/living/carbon/human/proc/gut
-
+	REMOVE_TRAIT(H, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
 	..()
 
 // At 25 damage - no protection at all.
@@ -1511,11 +1517,18 @@
 	,HAS_TAIL = TRUE
 	,NO_EMOTION = TRUE
 	,NO_EMBED = TRUE
-	,NATURAL_AGILITY = TRUE
 	)
 
 	min_age = 25
 	max_age = 85
+
+/datum/species/zombie/tajaran/on_gain(mob/living/M)
+	..()
+	ADD_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
+
+/datum/species/zombie/tajaran/on_loose(mob/living/M)
+	..()
+	REMOVE_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
 
 /datum/species/zombie/skrell
 	name = ZOMBIE_SKRELL

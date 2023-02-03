@@ -172,10 +172,8 @@
 		if(user.incapacitated(LEGS))
 			return
 		user.visible_message("<span class='red'>[usr] starts climbing into the disposal.</span>")
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(H.species?.flags[NATURAL_AGILITY])
-				time_climbing *= 0.10
+		if(HAS_TRAIT(user, TRAIT_NATURAL_AGILITY))
+			time_climbing *= 0.25
 	else
 		if(user.incapacitated(ARMS))
 			return

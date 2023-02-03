@@ -132,11 +132,8 @@
 	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
 		. *= 0.5
 	//tajaran and voxes can jump on/over the table instantly
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.species)
-			if(H.species.flags[NATURAL_AGILITY])
-				. *= 0.1
+	if(HAS_TRAIT(user, NATURAL_AGILITY))
+		. *= 0.25
 
 /obj/structure/proc/do_climb(mob/living/climber, mob/living/user)
 	add_fingerprint(climber)
