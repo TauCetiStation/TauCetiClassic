@@ -136,16 +136,9 @@
 		var/obj/item/weapon/gun/projectile/W = I
 
 		var/cost = 0
-		var/obj/item/ammo_box/A = initial(W.mag_type)
-		var/obj/item/ammo_casing/C = initial(A.ammo_type)
-		var/obj/item/projectile/P = initial(C.projectile_type)
-		cost += initial(P.damage) * 20
-
-		if(W.mag_type2)
-			var/obj/item/ammo_box/A2 = initial(W.mag_type2)
-			var/obj/item/ammo_casing/C2 = initial(A2.ammo_type)
-			var/obj/item/projectile/P2 = initial(C2.projectile_type)
-			cost += initial(P2.damage) * 20
+		var/obj/item/ammo_box/magazine/M = initial(W.initial_mag)
+		var/obj/item/ammo_casing/C = initial(M.ammo_type)
+		cost = W.magazine.stored_ammo.len*C.BB.damage
 		return cost
 
 	if(istype(I, /obj/item/weapon) && !istype(I,/obj/item/weapon/melee/cultblade))

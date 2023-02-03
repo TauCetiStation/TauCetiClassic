@@ -8,7 +8,7 @@
 	flags =  CONDUCT
 	origin_tech = "combat=8;materials=5"
 	slot_flags = 0
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rocket
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rocket
 	can_be_holstered = FALSE
 	istwohanded = TRUE
 	fire_sound = 'sound/effects/bang.ogg'
@@ -52,6 +52,6 @@
 	icon_state = "anti-singulo"
 	item_state = "anti-singulo"
 	slot_flags = SLOT_FLAGS_BACK
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rocket/anti_singulo
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rocket/anti_singulo
 	fire_sound = 'sound/weapons/guns/gunpulse_emitter2.ogg'
 	origin_tech = "combat=3;bluespace=6"

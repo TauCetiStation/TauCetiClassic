@@ -3,7 +3,7 @@
 	name = "revolver"
 	icon_state = "revolver"
 	item_state = "revolver"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
@@ -62,7 +62,7 @@
 	name = "S&W Model 10"
 	icon_state = "detective"
 	origin_tech = "combat=2;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	w_class = SIZE_TINY
 
 /obj/item/weapon/gun/projectile/revolver/detective/special_check(mob/living/carbon/human/M)
@@ -135,7 +135,7 @@
 	name = "Russian Revolver"
 	desc = "A Russian made revolver. Uses .357 ammo. It has a single slot in its chamber for a bullet."
 	origin_tech = "combat=2;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = 0
 
 /obj/item/weapon/gun/projectile/revolver/russian/atom_init()
@@ -216,7 +216,7 @@
 	name = "Colt SAA"
 	desc = "A legend of Wild West."
 	icon_state = "peacemaker"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rev45
 
 /obj/item/weapon/gun/projectile/revolver/peacemaker/attack_self(mob/living/user)
 	var/num_unloaded = 0
@@ -233,20 +233,20 @@
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
 /obj/item/weapon/gun/projectile/revolver/peacemaker/detective
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45/rubber
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rev45/rubber
 
 /obj/item/weapon/gun/projectile/revolver/flare
 	name = "flare gun"
 	desc = "Fires flares."
 	icon_state = "flaregun"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/flaregun
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/flaregun
 
 /obj/item/weapon/gun/projectile/revolver/detective/dungeon
 	desc = "A six-shot double-action revolver."
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38/dungeon
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rev38/dungeon
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/dungeon
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/dungeon
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
 	icon_state = "dshotgun"
@@ -262,4 +262,4 @@
 	name = "revolver"
 	desc = "A powerful revolver, very popular among mercenaries and pirates. Uses .357 ammo."
 	icon_state = "synd_revolver"
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder

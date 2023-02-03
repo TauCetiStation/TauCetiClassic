@@ -311,7 +311,7 @@
 	},
 /area/centcom)
 "aQ" = (
-/mob/living/carbon/monkey/skrell,
+/obj/item/weapon/gun/projectile/automatic/a28,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -322,9 +322,27 @@
 	icon_state = "warning"
 	},
 /area/centcom)
+"aS" = (
+/obj/item/weapon/gun/projectile/automatic/a74,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
 "aT" = (
 /turf/unsimulated/floor{
 	icon_state = "warning"
+	},
+/area/centcom)
+"aU" = (
+/obj/item/weapon/gun/projectile/automatic/a74/krinkov,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"aV" = (
+/obj/item/weapon/gun/projectile/automatic/bar,
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
 /area/centcom)
 "aW" = (
@@ -350,10 +368,45 @@
 	icon_state = "floor"
 	},
 /area/centcom)
-"bf" = (
-/obj/machinery/light{
-	dir = 8
+"aZ" = (
+/obj/item/weapon/gun/projectile/automatic/bulldog,
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
+/area/centcom)
+"ba" = (
+/obj/item/weapon/gun/projectile/automatic/c20r,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bb" = (
+/obj/item/weapon/gun/projectile/automatic/borg,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bc" = (
+/obj/item/weapon/gun/projectile/automatic/colt1911,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bd" = (
+/obj/item/weapon/gun/projectile/automatic/deagle,
+/obj/item/weapon/gun/projectile/automatic/deagle/gold,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"be" = (
+/obj/item/weapon/gun/projectile/automatic/drozd,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bf" = (
+/obj/item/weapon/gun/projectile/automatic/a28/nonlethal,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -366,14 +419,188 @@
 	icon_state = "floor"
 	},
 /area/centcom)
+"bh" = (
+/obj/item/weapon/gun/projectile/automatic/glock,
+/obj/item/weapon/gun/projectile/automatic/glock/spec,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bi" = (
+/obj/item/weapon/gun/projectile/automatic/l13,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bj" = (
+/obj/item/weapon/gun/projectile/automatic/l6_saw,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bk" = (
+/obj/item/weapon/gun/projectile/automatic/mini_uzi,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
 "bl" = (
 /turf/unsimulated/wall{
 	icon_state = "iron8"
 	},
 /area/centcom)
+"bm" = (
+/obj/item/weapon/gun/projectile/automatic/pistol,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
 "bn" = (
 /turf/unsimulated/wall{
 	icon_state = "iron4"
+	},
+/area/centcom)
+"bo" = (
+/obj/item/weapon/gun/projectile/automatic/silenced,
+/obj/item/weapon/gun/projectile/automatic/silenced/nonlethal,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/centcom)
+"bp" = (
+/obj/item/weapon/gun/projectile/automatic/tommygun,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/centcom)
+"bq" = (
+/obj/item/weapon/gun/projectile/grenade_launcher/m79,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"br" = (
+/obj/item/weapon/gun/projectile/heavyrifle,
+/mob/living/carbon/monkey/skrell,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bs" = (
+/obj/item/weapon/gun/projectile/revolver,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bt" = (
+/obj/item/weapon/gun/projectile/revolver/detective,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bu" = (
+/obj/machinery/light,
+/obj/item/weapon/gun/projectile/revolver/doublebarrel,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bv" = (
+/obj/item/weapon/gun/projectile/revolver/mateba,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bw" = (
+/obj/item/weapon/gun/projectile/revolver/peacemaker,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bx" = (
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"by" = (
+/obj/item/weapon/gun/projectile/revolver/syndie,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bz" = (
+/obj/item/weapon/gun/projectile/revolver/traitor,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bA" = (
+/obj/machinery/light,
+/obj/item/weapon/gun/projectile/shotgun,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bB" = (
+/obj/item/weapon/gun/projectile/shotgun/bolt_action,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bC" = (
+/obj/item/weapon/gun/projectile/shotgun/combat,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bD" = (
+/obj/item/weapon/gun/projectile/shotgun/repeater,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bE" = (
+/obj/item/weapon/gun/energy/ionrifle,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "warning"
+	},
+/area/centcom)
+"bF" = (
+/obj/item/weapon/gun/energy/laser,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "warning"
+	},
+/area/centcom)
+"bG" = (
+/obj/item/weapon/gun/energy/laser/selfcharging,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "warning"
+	},
+/area/centcom)
+"bH" = (
+/obj/item/weapon/gun/energy/laser/selfcharging/alien,
+/obj/item/weapon/gun/energy/laser/selfcharging/captain,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "warning"
+	},
+/area/centcom)
+"bI" = (
+/obj/structure/closet/lasertag/blue,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bJ" = (
+/obj/structure/closet/lasertag/red,
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
 /area/centcom)
 
@@ -3474,8 +3701,8 @@ ay
 ay
 ay
 ay
-ay
-ay
+aQ
+bt
 ac
 aa
 aa
@@ -3626,8 +3853,8 @@ ay
 aE
 aI
 ay
-ay
-aY
+bf
+bu
 ac
 aa
 aa
@@ -3778,8 +4005,8 @@ ay
 aF
 aJ
 ay
-ay
-ay
+aS
+bv
 ac
 aa
 aa
@@ -3930,8 +4157,8 @@ ay
 ay
 aK
 ay
-ay
-ay
+aU
+bw
 ac
 aa
 aa
@@ -4082,8 +4309,8 @@ ay
 ay
 ay
 ay
-ay
-ay
+aV
+bx
 ac
 aa
 aa
@@ -4234,8 +4461,8 @@ ay
 ay
 aL
 ay
-ay
-ay
+aZ
+by
 ac
 aa
 aa
@@ -4386,8 +4613,8 @@ ay
 ay
 ay
 ay
-ay
-ay
+ba
+bz
 ac
 aa
 aa
@@ -4538,8 +4765,8 @@ aC
 az
 ay
 ay
-ay
-aY
+bb
+bA
 ac
 aa
 aa
@@ -4690,8 +4917,8 @@ az
 az
 ay
 ay
-ay
-ay
+bc
+bB
 ad
 af
 af
@@ -4842,10 +5069,10 @@ ay
 ay
 ay
 ay
-ay
-ay
-aR
-bf
+bd
+bC
+bE
+bI
 ay
 aT
 bl
@@ -4994,10 +5221,10 @@ ay
 ay
 aM
 ay
-ay
-ay
-aR
-ay
+be
+bD
+bF
+bJ
 ay
 aT
 aR
@@ -5146,9 +5373,9 @@ ay
 ay
 aM
 ay
+bh
 ay
-ay
-aR
+bG
 ay
 ay
 aT
@@ -5298,9 +5525,9 @@ ay
 ay
 aN
 ay
+bi
 ay
-ay
-aR
+bH
 ay
 ay
 aT
@@ -5450,7 +5677,7 @@ ay
 ay
 ay
 ay
-ay
+bj
 ay
 aR
 bg
@@ -5602,7 +5829,7 @@ ay
 ay
 ay
 ay
-ay
+bk
 ay
 ab
 af
@@ -5754,7 +5981,7 @@ ay
 ay
 ay
 ay
-ay
+bm
 aY
 ac
 aa
@@ -5906,7 +6133,7 @@ aA
 aA
 aA
 aA
-aA
+bo
 aA
 ac
 aa
@@ -6058,7 +6285,7 @@ aB
 aB
 aB
 aB
-aB
+bp
 aB
 ac
 aa
@@ -6210,7 +6437,7 @@ ay
 ay
 aO
 aP
-ay
+bq
 ay
 ac
 aa
@@ -6362,7 +6589,7 @@ aD
 ay
 ay
 ay
-aQ
+br
 ay
 ac
 aa
@@ -6514,7 +6741,7 @@ ay
 aG
 ay
 ay
-ay
+bs
 aY
 ac
 aa

@@ -8,19 +8,7 @@
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
-
-/obj/item/weapon/gun/energy/ionrifle/update_icon()
-	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = CEIL(ratio * 4) * 25
-	switch(modifystate)
-		if (0)
-			if(ratio > 100)
-				icon_state = "[initial(icon_state)]100"
-				item_state = "[initial(item_state)]100"
-			else
-				icon_state = "[initial(icon_state)][ratio]"
-				item_state = "[initial(item_state)][ratio]"
-	return
+	modifystate = 2
 
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
 	if(severity <= 2)
