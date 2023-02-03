@@ -425,6 +425,7 @@
 	,FACEHUGGABLE = TRUE
 	,IS_SOCIAL = TRUE
 	,FUR = TRUE
+	,NATURAL_AGILITY = TRUE
 	)
 
 	flesh_color = "#afa59e"
@@ -526,6 +527,7 @@
 		,HAS_HAIR_COLOR = TRUE
 		,NO_FAT = TRUE
 		,IS_SOCIAL = TRUE
+		,NATURAL_AGILITY = TRUE
 	)
 	has_organ = list(
 		O_HEART   = /obj/item/organ/internal/heart/vox,
@@ -1505,6 +1507,7 @@
 	,HAS_TAIL = TRUE
 	,NO_EMOTION = TRUE
 	,NO_EMBED = TRUE
+	,NATURAL_AGILITY = TRUE
 	)
 
 	min_age = 25
