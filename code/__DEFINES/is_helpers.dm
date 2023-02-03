@@ -153,6 +153,8 @@
 
 #define isitem(A) (istype(A, /obj/item))
 
+#define isunder(A) (istype(A, /obj/item/clothing/under))
+
 // ROLES / ANTAG
 
 #define isfaction(A) (istype(A, /datum/faction))

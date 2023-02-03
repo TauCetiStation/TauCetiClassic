@@ -240,12 +240,23 @@
 		return
 	return mind.assigned_job.head_position
 
+/mob/proc/IsShockproof()
+	return HAS_TRAIT(src, TRAIT_SHOCKIMMUNE)
+
+/mob/proc/IsClumsy()
+	return HAS_TRAIT(src, TRAIT_CLUMSY)
+
+/mob/proc/ClumsyProbabilityCheck(probability)
+	if(HAS_TRAIT(src, TRAIT_CLUMSY) && prob(probability))
+		return TRUE
+	return FALSE
+
 /proc/health_analyze(mob/living/M, mob/living/user, mode, output_to_chat)
 	var/message = ""
 	if(!output_to_chat)
 		message += "<HTML><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[M.name]'s scan results</title></head><BODY>"
 
-	if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
+	if(user.ClumsyProbabilityCheck(50) || (user.getBrainLoss() >= 60 && prob(50)))
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class = 'warning'>You try to analyze the floor's vitals!</span>")
 		message += "<span class='notice'>Analyzing Results for The floor:\n&emsp; Overall Status: Healthy</span><br>"
 		message += "<span class='notice'>&emsp; Damage Specifics: [0]-[0]-[0]-[0]</span><br>"
