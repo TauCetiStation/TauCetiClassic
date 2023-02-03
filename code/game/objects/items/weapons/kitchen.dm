@@ -38,7 +38,7 @@
 
 	if(user.a_intent != INTENT_HELP)
 		if(user.get_targetzone() == "head" || user.get_targetzone() == "eyes")
-			if((CLUMSY in user.mutations) && prob(50))
+			if(user.ClumsyProbabilityCheck(50))
 				M = user
 			return eyestab(M,user)
 		else
@@ -225,7 +225,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M, mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>The [src] slips out of your hand and hits your head.</span>")
 		user.take_bodypart_damage(10)
 		user.Paralyse(2)
