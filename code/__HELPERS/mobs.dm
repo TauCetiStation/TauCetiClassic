@@ -240,6 +240,13 @@
 		return
 	return mind.assigned_job.head_position
 
-
 /mob/proc/IsShockproof()
 	return HAS_TRAIT(src, TRAIT_SHOCKIMMUNE)
+
+/mob/proc/IsClumsy()
+	return HAS_TRAIT(src, TRAIT_CLUMSY)
+
+/mob/proc/ClumsyProbabilityCheck(probability)
+	if(HAS_TRAIT(src, TRAIT_CLUMSY) && prob(probability))
+		return TRUE
+	return FALSE
