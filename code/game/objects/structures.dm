@@ -131,7 +131,7 @@
 		. *= 0.25
 	if(HAS_TRAIT(user, TRAIT_FREERUNNING)) //do you have any idea how fast I am???
 		. *= 0.5
-	//tajaran and voxes can jump on/over the table instantly
+	//tajaran can jump on/over the table faster than else species
 	if(HAS_TRAIT(user, NATURAL_AGILITY))
 		. *= 0.25
 

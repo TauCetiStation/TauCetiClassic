@@ -607,7 +607,6 @@
 
 	else
 		H.verbs += /mob/living/carbon/human/proc/gut
-	ADD_TRAIT(H, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
 	..()
 
 /datum/species/vox/on_loose(mob/living/carbon/human/H, new_species)
@@ -619,7 +618,6 @@
 
 	else
 		H.verbs -= /mob/living/carbon/human/proc/gut
-	REMOVE_TRAIT(H, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
 	..()
 
 // At 25 damage - no protection at all.
