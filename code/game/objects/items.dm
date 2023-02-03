@@ -526,7 +526,7 @@
 				to_chat(H, "<span class='warning'>Your species can not wear clothing of this type.</span>")
 			return FALSE
 		//fat mutation
-		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
+		if(isunder(src) || istype(src, /obj/item/clothing/suit))
 			if(HAS_TRAIT(H, TRAIT_FAT))
 				//testing("[M] TOO FAT TO WEAR [src]!")
 				if(!(flags & ONESIZEFITSALL))
