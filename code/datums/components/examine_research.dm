@@ -34,7 +34,7 @@
 	if(calculate_research_value() <= 0)
 		to_chat(user, "<span class='warning'>[parent] have no research value.</span>")
 		return
-	to_chat(user, "<span class='notice'>[parent] scan earned you [points_value] points.</span>")
+	to_chat(user, "<span class='notice'>[parent] scan earned you [points_value] research points.</span>")
 	linked_techweb.research_points += points_value
 	global.spented_examined_objects += parent
 
@@ -45,20 +45,23 @@
 	return points_value
 
 /datum/component/examine_research/proc/success_check(list/checks_defines, mob/user)
+	var/list/succes_checks = list()
 	for(var/check in checks_defines)
 		switch(check)
 			if(DIAGNOSTIC_EXTRA_CHECK)
 				var/mob/living/carbon/human/H = user
 				if(H?.glasses)
 					if(isdiagnostichud(H.glasses))
-						return TRUE
+						succes_checks += check
 			if(SCIENCE_EXTRA_CHECK)
 				var/mob/living/carbon/human/H = user
 				if(H?.glasses)
 					if(isscienceglasses(H.glasses))
-						return TRUE
+						succes_checks += check
 			if(VIEW_EXTRA_CHECK)
-				if(parent in viewers(user))
-					return TRUE
-			else
-				return FALSE
+				if(user in viewers(parent))
+					succes_checks += check
+	var/list/diffs = difflist(checks_defines, succes_checks)
+	if(diffs.len)
+		return FALSE
+	return TRUE
