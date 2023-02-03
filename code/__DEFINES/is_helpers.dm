@@ -112,6 +112,10 @@
 
 #define ismachinery(A) (istype(A, /obj/machinery))
 
+#define isdiagnostichud(A) (istype(A, /obj/item/clothing/glasses/hud/diagnostic))
+
+#define isscienceglasses(A) (istype(A, /obj/item/clothing/glasses/science))
+
 // GOONCHAT PORT
 
 #define isatom(A) (istype(A, /atom))
