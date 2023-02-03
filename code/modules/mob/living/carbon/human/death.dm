@@ -85,6 +85,8 @@
 	..(gibbed)
 
 	SSStatistics.add_death_stat(src)
+	if(global.DEATH_EXPLOSION)
+		explosion(get_turf(src), 1, 2, 4, 7, FALSE)
 
 // Called right after we will lost our head
 /mob/living/carbon/human/proc/handle_decapitation(obj/item/organ/external/head/BP)
