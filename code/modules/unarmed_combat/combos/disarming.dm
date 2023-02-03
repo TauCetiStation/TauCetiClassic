@@ -472,6 +472,7 @@
 		return
 
 	var/target_zone = attacker.get_targetzone()
+	var/armor_check = victim.run_armor_check(target_zone, MELEE)
 
 	if(ishuman(victim))
 		var/mob/living/carbon/human/H = victim
@@ -479,11 +480,12 @@
 		victim.visible_message("<span class='danger'>[attacker] [pick("bent", "twisted")] [victim]'s [BP.name] into a jointlock!</span>")
 		to_chat(victim, "<span class='danger'>You feel extreme pain!</span>")
 		victim.adjustHalLoss(clamp(0, 40 - victim.halloss, 40)) // up to 40 halloss
+		if(armor_check < 30)
+			BP.fracture()
 
 	victim_G.force_down = TRUE
 	apply_effect(3, WEAKEN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=2)
 	apply_effect(3, STUN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=2)
-	apply_damage(31, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj)
 	victim.visible_message("<span class='danger'>[attacker] bends [victim] arm sharply!</span>")
 
 	step_to(attacker, victim)
