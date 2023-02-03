@@ -246,7 +246,7 @@
 		DSN.occupant = null
 		DSN.icon_state = "scanner_0"
 	var/mob/living/simple_animal/hulk/Monster
-	if(CLUMSY in mutations)
+	if(IsClumsy())
 		Monster = new /mob/living/simple_animal/hulk/Clowan(get_turf(src))
 	else if(get_species() == UNATHI || prob(23))
 		Monster = new /mob/living/simple_animal/hulk/unathi(get_turf(src))
