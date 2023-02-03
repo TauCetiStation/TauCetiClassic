@@ -51,6 +51,10 @@
 	idcheck = 0
 	auto_patrol = 1
 
+/obj/machinery/bot/secbot/beepsky/atom_init()
+	. = ..()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 100, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+
 /obj/item/weapon/secbot_assembly
 	name = "helmet/signaler assembly"
 	desc = "Some sort of bizarre assembly."
@@ -69,7 +73,7 @@
 	if(radio_controller)
 		radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
-
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 500, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 	update_icon()
 
 /obj/machinery/bot/secbot/turn_on()
