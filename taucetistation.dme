@@ -304,6 +304,7 @@
 #include "code\datums\components\connect_range.dm"
 #include "code\datums\components\cult_eyes.dm"
 #include "code\datums\components\cult_halo.dm"
+#include "code\datums\components\examine_research.dm"
 #include "code\datums\components\footstep.dm"
 #include "code\datums\components\forcefield.dm"
 #include "code\datums\components\gnawing.dm"
