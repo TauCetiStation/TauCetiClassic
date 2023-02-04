@@ -178,8 +178,9 @@
 /obj/structure/holohoop
 	name = "basketball hoop"
 	desc = "Boom, Shakalaka!"
-	icon = 'icons/obj/basketball.dmi'
+	icon = 'icons/obj/basketball_hoop.dmi'
 	icon_state = "hoop"
+	layer = ABOVE_WINDOW_LAYER
 	anchored = TRUE
 	density = TRUE
 	throwpass = 1
