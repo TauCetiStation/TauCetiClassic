@@ -192,13 +192,13 @@
 	trait_source = QUALITY_TRAIT
 
 //Roundstart help for xeno
-/datum/status_effect/xeno_help
+/datum/status_effect/young_queen_buff
 	id = "queen_help"
 	duration = 7 MINUTES
-	alert_type = /atom/movable/screen/alert/status_effect/alien_help
+	alert_type = /atom/movable/screen/alert/status_effect/young_queen_buff
 	examine_text = "Looks quite young"
 
-/datum/status_effect/xeno_help/on_apply()
+/datum/status_effect/young_queen_buff/on_apply()
 	. = ..()
 	if(!isxeno(owner))
 		return
@@ -207,20 +207,20 @@
 	Q.health = Q.health * 2
 	Q.heal_rate = Q.heal_rate * 2.5
 	Q.plasma_rate = Q.plasma_rate * 1.5
-	to_chat(Q, "<span class='alien large'>Пока ваш улей слаб, вам будут помогать другие королевы. Некоторое время...</span>")
+	to_chat(Q, "<span class='alien large'>Пока ваш улей слаб, вам будет помогать Императрица. Некоторое время...</span>")
 
-/datum/status_effect/xeno_help/on_remove()
+/datum/status_effect/young_queen_buff/on_remove()
 	if(!isxeno(owner))
 		return
 	var/mob/living/carbon/xenomorph/Q = owner
-	Q.maxHealth = initial(Q.maxHealth)
-	Q.health = min(Q.health, initial(Q.health))
-	Q.heal_rate = initial(Q.heal_rate)
-	Q.plasma_rate = initial(Q.plasma_rate)
-	to_chat(Q, "<span class='alien large'>Другие королевы перестали активно поддерживать улей. Улей теперь должен заботиться о себе сам.</span>")
+	Q.maxHealth = Q.maxHealth / 2
+	Q.update_health_hud()
+	Q.heal_rate = Q.heal_rate / 2.5
+	Q.plasma_rate = Q.plasma_rate / 1.5
+	to_chat(Q, "<span class='alien large'>Императрица перестала активно поддерживать улей. Улей теперь должен заботиться о себе сам.</span>")
 
-/atom/movable/screen/alert/status_effect/alien_help
-	name = "Помощь королев"
+/atom/movable/screen/alert/status_effect/young_queen_buff
+	name = "Помощь Императрицы"
 	desc = "Некоторое время вы гораздо быстрее залечиваете свои раны, более живучи и у вас куда больше плазмы."
 	icon_state = "alien_help"
 	alerttooltipstyle = "alien"

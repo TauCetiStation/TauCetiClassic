@@ -389,7 +389,7 @@
 
 	var/datum/faction/infestation/F = find_faction_by_type(/datum/faction/infestation)//Buff only for the first queen
 	if(F.start_help)
-		new_xeno.apply_status_effect(/datum/status_effect/xeno_help)
+		new_xeno.apply_status_effect(/datum/status_effect/young_queen_buff)
 		F.start_help = FALSE
 
 	qdel(alien)
