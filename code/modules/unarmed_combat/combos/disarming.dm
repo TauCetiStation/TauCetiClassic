@@ -81,7 +81,7 @@
 		victim.drop_from_inventory(I)
 	victim.visible_message("<span class='warning'><B>[attacker] has disarmed [victim]!</B></span>")
 
-	if(!(CLUMSY in attacker.mutations))
+	if(!(attacker.IsClumsy()))
 		return
 
 	// Clowns disarming put the last thing from their backpack into their opponent's hands
@@ -209,7 +209,7 @@
 
 				// Clowns take off the uniform while slidekicking.
 				// A little funny.
-				if(CLUMSY in attacker.mutations)
+				if(attacker.IsClumsy())
 					var/temp_end_string = take_pants_off(L, attacker)
 					if(temp_end_string != "")
 						end_string = temp_end_string

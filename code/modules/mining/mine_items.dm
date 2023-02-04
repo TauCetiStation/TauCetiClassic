@@ -243,7 +243,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if(target_zone == BP_HEAD)
 		shake_camera(target, 2, 2)
 
-	if((CLUMSY in user.mutations) && asshole_counter >= 5)
+	if((user.IsClumsy()) && asshole_counter >= 5)
 		target.emote("scream")
 		playsound(user, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		user.say(pick("Spa-a-ace assho-o-o-o-ole!", "Spaaace asshoooole!", "Space assho-o-ole!"))

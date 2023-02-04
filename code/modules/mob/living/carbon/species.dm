@@ -1457,6 +1457,8 @@
 /datum/species/zombie/on_gain(mob/living/carbon/human/H)
 	..()
 
+	ADD_TRAIT(H, TRAIT_HEMOCOAGULATION, GENERIC_TRAIT)
+
 	H.remove_status_flags(CANSTUN|CANPARALYSE) //CANWEAKEN
 
 	H.drop_l_hand()
@@ -1468,6 +1470,8 @@
 	add_zombie(H)
 
 /datum/species/zombie/on_loose(mob/living/carbon/human/H, new_species)
+	REMOVE_TRAIT(H, TRAIT_HEMOCOAGULATION, GENERIC_TRAIT)
+
 	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
 
 	if(istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))

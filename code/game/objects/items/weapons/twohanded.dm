@@ -143,7 +143,7 @@
 
 /obj/item/weapon/dualsaber/attack(target, mob/living/user)
 	..()
-	if((CLUMSY in user.mutations) && HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && prob(40))
+	if(user.ClumsyProbabilityCheck(40) && HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
 		to_chat(user, "<span class='userdanger'> You twirl around a bit before losing your balance and impaling yourself on the [src].</span>")
 		user.take_bodypart_damage(20, 25)
 		return
