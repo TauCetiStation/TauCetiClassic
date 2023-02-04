@@ -54,14 +54,14 @@
  */
 
 /obj/item/weapon/card/emag_broken
-	desc = "Это карта с магнитной полосой, прикрепленной к какой-то схеме. Выглядит слишком разбитой, чтобы её можно было использовать для чего-либо, кроме утилизации."
+	desc = "Это карта с магнитной полосой, прикрепленной к какой-то микросхеме. Выглядит слишком разбитой, чтобы её можно было использовать для чего-либо, кроме утилизации."
 	name = "broken cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"
 	origin_tech = "magnets=2;syndicate=2"
 
 /obj/item/weapon/card/emag
-	desc = "Это карта с магнитной полосой, прикрепленной к какой-то схеме."
+	desc = "Это карта с магнитной полосой, прикрепленной к какой-то микросхеме."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"
@@ -91,7 +91,7 @@
 
 /obj/item/weapon/card/id
 	name = "identification card"
-	desc = "ID карта, используемая для определения личности, должности и станционого доступа."
+	desc = "ID карта, используемая для определения личности, должности и станционного доступа."
 	icon_state = "id"
 	item_state = "card-id"
 	var/mining_points = 0 //For redeeming at mining equipment lockers
@@ -178,7 +178,7 @@
 
 /obj/item/weapon/card/id/civ
 	name = "identification card"
-	desc = "ID карта, выдаваемая гражданским сотрудникам."
+	desc = "ID карта, выдаваемая сотрудникам обслуживающего персонала."
 	icon_state = "civ"
 	item_state = "civ_id"
 
@@ -250,19 +250,19 @@
 
 /obj/item/weapon/card/id/clownGold //not in use
 	name = "identification card"
-	desc = "Радужная золотая ID карта, которая символизирует смех и несгибаемость владельца."
+	desc = "Радужная ID карта начальника, которая символизирует смех и несгибаемость владельца."
 	icon_state = "clownGold"
 	item_state = "clownGold_id"
 
 /obj/item/weapon/card/id/mime
 	name = "identification card"
-	desc = "Белоснежная ID карта, которая символизирует слезы и молчаливость владельца."
+	desc = "Чёрно-белая ID карта, которая символизирует слезы и молчаливость владельца."
 	icon_state = "mime"
 	item_state = "mime_id"
 
 /obj/item/weapon/card/id/mimeGold //not in use
 	name = "identification card"
-	desc = "Белоснежная золотая ID карта, символизирующая слезы и молчаливость владельца."
+	desc = "Чёрно-белая ID карта начальника, символизирующая слезы и молчаливость владельца."
 	icon_state = "mimeGold"
 	item_state = "mimeGold_id"
 
@@ -359,7 +359,7 @@
 
 /obj/item/weapon/card/id/syndicate_command
 	name = "syndicate ID card"
-	desc = "ID карта личности прямиком от Синдиката."
+	desc = "ID карта прямиком от Синдиката."
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
 	access = list(access_syndicate, access_external_airlocks)
@@ -377,7 +377,7 @@
 
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"
-	desc = "Запасная ID карта самого Верховного лорда."
+	desc = "Запасная ID карта самого Верховного властелина."
 	icon_state = "gold"
 	item_state = "gold_id"
 	registered_name = "Captain"
@@ -390,7 +390,7 @@
 
 /obj/item/weapon/card/id/centcom
 	name = "CentCom. ID"
-	desc = "ID карта прямиком от Центрального Командования."
+	desc = "ID карта прямиком с Центрального Командования."
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
