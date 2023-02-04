@@ -207,7 +207,7 @@
 	Q.health = Q.health * 2
 	Q.heal_rate = Q.heal_rate * 2.5
 	Q.plasma_rate = Q.plasma_rate * 1.5
-	to_chat(Q, "<span class='alien large'>Пока ваш улей слаб, вам будут помогать другие королевы. Некоторое время...</span>")
+	to_chat(Q, "<span class='alien large'>Пока ваш улей слаб, вам будут помогать феромоны императрицы. Некоторое время...</span>")
 
 /datum/status_effect/xeno_help/on_remove()
 	if(!isxeno(owner))
