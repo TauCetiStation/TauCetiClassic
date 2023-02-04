@@ -28,6 +28,11 @@
 	*/
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, VOX, IPC)
 
+/datum/job/hos/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		if(BP.max_pumped > 0)
+			BP.adjust_pumped(BP.max_pumped)
+			BP.update_sprite()
 
 /datum/job/warden
 	title = "Warden"
@@ -53,6 +58,11 @@
 	*/
 	restricted_species = list(TAJARAN, DIONA, VOX, IPC)
 
+/datum/job/warden/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		if(BP.max_pumped > 0)
+			BP.adjust_pumped(BP.max_pumped)
+			BP.update_sprite()
 
 /datum/job/detective
 	title = "Detective"
@@ -103,6 +113,11 @@
 	*/
 	restricted_species = list(DIONA, TAJARAN, VOX, IPC)
 
+/datum/job/officer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		if(BP.max_pumped > 0)
+			BP.adjust_pumped(BP.max_pumped)
+			BP.update_sprite()
 
 /datum/job/forensic
 	title = "Forensic Technician"
@@ -152,3 +167,9 @@
 		~Luduk
 	*/
 	restricted_species = list(DIONA, TAJARAN, VOX, IPC)
+
+/datum/job/cadet/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		if(BP.max_pumped > 0)
+			BP.adjust_pumped(BP.max_pumped)
+			BP.update_sprite()
