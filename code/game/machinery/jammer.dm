@@ -87,7 +87,7 @@
 		return
 
 	if(!locked)
-		if (I.get_quality(QUALITY_PULSE))
+		if (ispulsing(I))
 			var/new_radius = clamp(input(user, "Set new radius in range 1-5", "Radius", radius) as num, 1, 5)
 
 			if(Adjacent(usr))

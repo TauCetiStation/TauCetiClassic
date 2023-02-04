@@ -33,7 +33,7 @@
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 	qualities = list(
-		QUALITY_WRENCH = 1
+		QUALITY_WRENCHING = 1
 	)
 
 /obj/item/weapon/wrench/atom_init(mapload, param_color)
@@ -189,7 +189,7 @@
 		to_chat(user, "[src] contains [get_fuel()]/[max_fuel] units of fuel!")
 
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)
-	if(I.get_quality(QUALITY_SCREWING))
+	if(isscrewing(I))
 		if(active)
 			to_chat(user, "<span class='rose'>Off [src], first!</span>")
 			return
@@ -571,7 +571,7 @@
 	attack_verb = list("drilled", "screwed", "jabbed")
 	action_button_name = "Change mode"
 	qualities = list(
-		QUALITY_WRENCH = 1
+		QUALITY_WRENCHING = 1
 	)
 /obj/item/weapon/multi/hand_drill/attack_self(mob/user)
 	mode = !mode
@@ -584,7 +584,7 @@
 		to_chat(user, "<span class='notice'>You attach the screw driver bit to [src].</span>")
 	else
 		qualities = list(
-			QUALITY_WRENCH = 1
+			QUALITY_WRENCHING = 1
 		)
 		icon_state = "drill_bolt"
 		to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")

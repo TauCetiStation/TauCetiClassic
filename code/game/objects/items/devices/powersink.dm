@@ -28,7 +28,7 @@
 	var/obj/structure/cable/attached // the attached cable
 
 /obj/item/device/powersink/attackby(obj/item/I, mob/user, params)
-	if(I.get_quality(QUALITY_SCREWING))
+	if(isscrewing(I))
 		if(mode == 0)
 			var/turf/T = loc
 			if(isturf(T) && !T.intact)

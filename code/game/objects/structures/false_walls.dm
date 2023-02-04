@@ -90,12 +90,12 @@
 		if(T.density)
 			to_chat(user, "<span class='warning'>Стена заблокирована!</span>")
 			return
-		if(W.get_quality(QUALITY_SCREWING))
+		if(isscrewing(W))
 			user.visible_message("[user] tightens some screws on the wall.", "Вы затягиваете винты на стене.")
 			T.ChangeTurf(walltype)
 			qdel(src)
 
-		if( W.get_quality(QUALITY_WELDING) )
+		if( iswelding(W) )
 			var/obj/item/weapon/weldingtool/WT = W
 			if( WT.isOn() )
 				T.ChangeTurf(walltype)

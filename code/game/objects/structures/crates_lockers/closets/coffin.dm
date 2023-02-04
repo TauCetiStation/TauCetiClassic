@@ -93,13 +93,13 @@
 		cut_overlay(coffin_side)
 
 /obj/structure/closet/coffin/tools_interact(obj/item/I, mob/user)
-	if(opened && I.get_quality(QUALITY_PRYING))
+	if(opened && isprying(I))
 		new /obj/item/stack/sheet/wood(loc, 5)
 		visible_message("<span class='notice'>\The [src] has been disassembled apart by [user] with \the [I].</span>",
 						"<span class='notice'>You hear splitting wood.</span>")
 		qdel(src)
 		return TRUE
-	else if(!opened && I.get_quality(QUALITY_SCREWING))
+	else if(!opened && isscrewing(I))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		welded = !welded
 		visible_message("<span class='warning'>[src] has been [welded?"screwed":"unscrewed"] by [user].</span>",

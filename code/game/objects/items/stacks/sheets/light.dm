@@ -12,7 +12,7 @@
 	max_amount = 60
 
 /obj/item/stack/light_w/attackby(obj/item/I, mob/user, params)
-	if(I.get_quality(QUALITY_CUTTING))
+	if(iscutter(I))
 		if(!use(1))
 			return
 		new/obj/item/stack/cable_coil/random(user.loc, 5)

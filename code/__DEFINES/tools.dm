@@ -4,12 +4,12 @@
 
 //Tool types defines
 
-#define QUALITY_CUTTING  "cutting"	// for wirecutters/knifes/jaws of life
-#define QUALITY_PRYING   "prying"	// for crowbar/jaws of life
-#define QUALITY_WRENCH	 "wrench"	// for wrench/hand drill
-#define QUALITY_SCREWING "screwing"	// for screwdriver/hand drill
-#define QUALITY_WELDING  "welding"	// for welding tools
+#define QUALITY_CUTTING    "cutting"	// for wirecutters/knifes/jaws of life
+#define QUALITY_PRYING     "prying"		// for crowbar/jaws of life
+#define QUALITY_WRENCHING  "wrenching"	// for wrench/hand drill
+#define QUALITY_SCREWING   "screwing"	// for screwdriver/hand drill
+#define QUALITY_WELDING    "welding"	// for welding tools
 
-#define QUALITY_PULSE	 "pulse"	// for multitools
+#define QUALITY_PULSING	   "pulsing"	// for multitools
 
-#define QUALITY_SIGNAL	 "signal"	// for signaller
+#define QUALITY_SIGNALLING "signaling"	// for signaller

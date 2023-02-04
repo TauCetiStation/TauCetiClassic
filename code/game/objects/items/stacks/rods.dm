@@ -25,7 +25,7 @@
 		icon_state = "rods"
 
 /obj/item/stack/rods/attackby(obj/item/I, mob/user, params)
-	if(I.get_quality(QUALITY_WELDING))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/WT = I
 
 		if(get_amount() < 2)

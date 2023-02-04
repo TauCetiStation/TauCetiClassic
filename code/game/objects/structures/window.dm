@@ -180,14 +180,14 @@
 
 /obj/structure/window/attackby(obj/item/W, mob/user)
 	if(flags & NODECONSTRUCT)
-		if(W.get_quality(QUALITY_SCREWING) | W.get_quality(QUALITY_PRYING))
+		if(isscrewing(W) | isprying(W))
 			return ..()
 
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/airlock_painter))
 		change_paintjob(W, user)
 
-	else if(W.get_quality(QUALITY_SCREWING))
+	else if(isscrewing(W))
 		if(reinf && state >= 1)
 			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [state == 1 ? "fasten the window to the frame." : "unfasten the window from the frame."]</span>" ))
 				return
@@ -213,7 +213,7 @@
 			to_chat(user, (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>"))
 			fastened_change()
 
-	else if(W.get_quality(QUALITY_PRYING) && reinf && state <= 1)
+	else if(isprying(W) && reinf && state <= 1)
 		if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [state ? "pry the window out of the frame." : "pry the window into the frame."]</span>" ))
 			return
 		state = 1 - state
@@ -521,7 +521,7 @@
 	icon_state = "light[active]"
 
 /obj/machinery/windowtint/attackby(obj/item/W as obj, mob/user as mob)
-	if(W.get_quality(QUALITY_PULSE))
+	if(ispulsing(W))
 		var/t = sanitize(input(user, "Enter an ID for \the [src].", src.name, null), MAX_NAME_LEN)
 		src.id = t
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
@@ -529,7 +529,7 @@
 	. = ..()
 
 /obj/structure/window/reinforced/polarized/attackby(obj/item/W as obj, mob/user as mob)
-	if(W.get_quality(QUALITY_PULSE) && !anchored) // Only allow programming if unanchored!
+	if(ispulsing(W) && !anchored) // Only allow programming if unanchored!
 		var/t = sanitize(input(user, "Enter the ID for the window.", src.name, null), MAX_NAME_LEN)
 		src.id = t
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")

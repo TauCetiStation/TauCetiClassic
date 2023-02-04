@@ -96,11 +96,11 @@
 		visible_message("<span class='warning'><B>[user] has slashed [src]!</B></span>")
 
 /obj/machinery/bot/attackby(obj/item/weapon/W, mob/user)
-	if(W.get_quality(QUALITY_SCREWING))
+	if(isscrewing(W))
 		if(!locked)
 			open = !open
 			to_chat(user, "<span class='notice'>Maintenance panel is now [src.open ? "opened" : "closed"].</span>")
-	else if(W.get_quality(QUALITY_WELDING))
+	else if(iswelding(W))
 		if(W.use(0, user))
 			if(get_integrity() < max_integrity)
 				if(open)

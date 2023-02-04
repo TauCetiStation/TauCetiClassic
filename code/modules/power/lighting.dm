@@ -23,7 +23,7 @@
 	var/sheets_refunded = 2
 
 /obj/item/light_fixture_frame/attackby(obj/item/I, mob/user, params)
-	if(I.get_quality(QUALITY_WRENCH))
+	if(iswrenching(I))
 		deconstruct(TRUE)
 		user.SetNextMove(CLICK_CD_RAPID)
 		return
@@ -105,7 +105,7 @@
 /obj/machinery/light_construct/attackby(obj/item/weapon/W, mob/user)
 	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
-	if (W.get_quality(QUALITY_WRENCH))
+	if (iswrenching(W))
 		if (src.stage == 1)
 			if(user.is_busy(src))
 				return
@@ -125,7 +125,7 @@
 			to_chat(usr, "You have to unscrew the case first.")
 			return
 
-	if(W.get_quality(QUALITY_CUTTING))
+	if(iscutter(W))
 		if (src.stage != 2)
 			return
 		src.stage = 1
@@ -156,7 +156,7 @@
 			"You add wires to [src].")
 		return
 
-	if(W.get_quality(QUALITY_SCREWING))
+	if(isscrewing(W))
 		if (src.stage == 2)
 			switch(fixture_type)
 				if ("tube")
@@ -460,7 +460,7 @@
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
-		if(W.get_quality(QUALITY_SCREWING)) //If it's a screwdriver open it.
+		if(isscrewing(W)) //If it's a screwdriver open it.
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("[user.name] opens [src]'s casing.", \
 				"You open [src]'s casing.", "You hear a noise.")

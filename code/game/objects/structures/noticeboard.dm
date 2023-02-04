@@ -15,7 +15,7 @@
 	resistance_flags = CAN_BE_HIT
 
 /obj/item/noticeboard_frame/attackby(obj/item/I, mob/user, params)
-	if(I.get_quality(QUALITY_WRENCH))
+	if(iswrenching(I))
 		user.SetNextMove(CLICK_CD_RAPID)
 		deconstruct(TRUE)
 		return
@@ -258,7 +258,7 @@
 
 //attaching papers!!
 /obj/structure/noticeboard/attackby(obj/item/I, mob/user)
-	if(I.get_quality(QUALITY_WRENCH) && !user.is_busy() && do_after(user, 40, TRUE, src, FALSE, TRUE))
+	if(iswrenching(I) && !user.is_busy() && do_after(user, 40, TRUE, src, FALSE, TRUE))
 		deconstruct(TRUE)
 		return
 

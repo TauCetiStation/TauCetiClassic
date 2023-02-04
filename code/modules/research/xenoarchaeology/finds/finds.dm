@@ -53,7 +53,7 @@
 			qdel(src)
 			return
 
-	if(I.get_quality(QUALITY_WELDING))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(WT.use_tool(src, user, 20, volume = 50))

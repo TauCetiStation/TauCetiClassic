@@ -25,7 +25,7 @@
 	var/list/obj/machinery/door/doors_buffer = list()
 
 	qualities = list(
-		QUALITY_PULSE = 1
+		QUALITY_PULSING = 1
 	)
 
 /obj/item/device/multitool/verb/clear_buffer()

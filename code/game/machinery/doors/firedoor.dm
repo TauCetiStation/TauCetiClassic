@@ -183,7 +183,7 @@
 	add_fingerprint(user)
 	if(operating)
 		return//Already doing something.
-	if(C.get_quality(QUALITY_WELDING))
+	if(iswelding(C))
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.use(0, user))
 			blocked = !blocked
@@ -194,7 +194,7 @@
 			update_icon()
 			return
 
-	if(density && C.get_quality(QUALITY_SCREWING))
+	if(density && isscrewing(C))
 		hatch_open = !hatch_open
 		user.visible_message("<span class='danger'>[user] has [hatch_open ? "opened" : "closed"] \the [src] maintenance hatch.</span>",
 									"You have [hatch_open ? "opened" : "closed"] the [src] maintenance hatch.")
@@ -202,7 +202,7 @@
 		update_icon()
 		return
 
-	if(blocked && C.get_quality(QUALITY_PRYING))
+	if(blocked && isprying(C))
 		if(!hatch_open)
 			to_chat(user, "<span class='danger'>You must open the maintenance hatch first!</span>")
 		else if(!user.is_busy(src))
@@ -220,11 +220,11 @@
 		to_chat(user, "<span class='warning'>\The [src] is welded solid!</span>")
 		return
 
-	if(C.get_quality(QUALITY_PRYING) || ( istype(C,/obj/item/weapon/fireaxe) && HAS_TRAIT(C, TRAIT_DOUBLE_WIELDED)))
+	if(isprying(C) || ( istype(C,/obj/item/weapon/fireaxe) && HAS_TRAIT(C, TRAIT_DOUBLE_WIELDED)))
 		if(operating)
 			return
 
-		if( blocked && C.get_quality(QUALITY_PRYING) )
+		if( blocked && isprying(C) )
 			user.visible_message("<span class='warning'>\The [user] pries at \the [src] with \a [C], but \the [src] is welded in place!</span>",\
 			"You try to pry \the [src] [density ? "open" : "closed"], but it is welded in place!",\
 			"You hear someone struggle and metal straining.")
@@ -234,7 +234,7 @@
 				"You start forcing \the [src] [density ? "open" : "closed"] with \the [C]!",\
 				"You hear metal strain.")
 		if(C.use_tool(src, user, 30, volume = 50))
-			if( C.get_quality(QUALITY_PRYING) )
+			if( isprying(C) )
 				if( stat & (BROKEN|NOPOWER) || !density)
 					user.visible_message("<span class='warning'>\The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!</span>",\
 					"You force \the [src] [density ? "open" : "closed"] with \the [C]!",\

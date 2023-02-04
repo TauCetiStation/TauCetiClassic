@@ -83,7 +83,7 @@
 		cell = I
 		return
 
-	else if(I.get_quality(QUALITY_SCREWING))
+	else if(isscrewing(I))
 		if(is_wearing)
 			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
 			return

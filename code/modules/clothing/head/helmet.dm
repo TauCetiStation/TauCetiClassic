@@ -52,7 +52,7 @@
 			holochip.add_action(user)
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You modify the [src] with the [holochip]</span>")
-	else if(I.get_quality(QUALITY_SCREWING))
+	else if(isscrewing(I))
 		if(!holochip)
 			to_chat(user, "<span class='notice'>There's no holochip to remove from the [src]</span>")
 			return

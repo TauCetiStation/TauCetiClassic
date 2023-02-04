@@ -37,7 +37,7 @@
 			to_chat(user, "<span class='notice'>A [cell] is already attached to the [src].</span>")
 		return
 
-	else if(I.get_quality(QUALITY_CUTTING) || istype(I, /obj/item/weapon/scalpel))
+	else if(iscutter(I) || istype(I, /obj/item/weapon/scalpel))
 		//stunglove stuff
 		if(cell)
 			cell.updateicon()

@@ -58,7 +58,7 @@
 
 	add_fingerprint(user)
 	if(mode<=0) // It's off
-		if(I.get_quality(QUALITY_SCREWING))
+		if(isscrewing(I))
 			if(contents.len > 0)
 				to_chat(user, "Eject the items first!")
 				return
@@ -72,7 +72,7 @@
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "You attach the screws around the power connection.")
 				return
-		else if(I.get_quality(QUALITY_WELDING) && mode==-1)
+		else if(iswelding(I) && mode==-1)
 			if(contents.len > 0)
 				to_chat(user, "<span class='warning'>Eject the items first!</span>")
 				return
@@ -862,7 +862,7 @@
 		return		// prevent interaction with T-scanner revealed pipes
 	add_fingerprint(user)
 	if(user.is_busy()) return
-	if(I.get_quality(QUALITY_WELDING))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/W = I
 
 		if(W.use(0,user))
@@ -1299,7 +1299,7 @@
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
 	add_fingerprint(user)
-	if(I.get_quality(QUALITY_WELDING))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/W = I
 		if(user.is_busy()) return
 		if(W.use(0,user))
@@ -1415,7 +1415,7 @@
 	if(!I || !user)
 		return
 	add_fingerprint(user)
-	if(I.get_quality(QUALITY_SCREWING))
+	if(isscrewing(I))
 		if(mode==0)
 			mode=1
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
@@ -1426,7 +1426,7 @@
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You attach the screws around the power connection.")
 			return
-	else if(I.get_quality(QUALITY_WELDING) && mode==1 && !user.is_busy())
+	else if(iswelding(I) && mode==1 && !user.is_busy())
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the disposal outlet.")

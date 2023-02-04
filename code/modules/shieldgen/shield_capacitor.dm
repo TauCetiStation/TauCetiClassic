@@ -43,7 +43,7 @@
 			updateDialog()
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
-	else if(W.get_quality(QUALITY_WRENCH))
+	else if(iswrenching(W))
 		src.anchored = !src.anchored
 		visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].</span>")
 

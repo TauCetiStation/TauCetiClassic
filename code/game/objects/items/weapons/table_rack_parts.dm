@@ -16,7 +16,7 @@
  */
 // Return TRUE if reacted to a tool.
 /obj/item/weapon/table_parts/proc/attack_tools(obj/item/W, mob/user)
-	if(W.get_quality(QUALITY_WRENCH))
+	if(iswrenching(W))
 		deconstruct(TRUE, user)
 		return TRUE
 
@@ -60,7 +60,7 @@
  * Reinforced Table Parts
  */
 /obj/item/weapon/table_parts/reinforced/attack_tools(obj/item/W, mob/user)
-	if(W.get_quality(QUALITY_WRENCH))
+	if(iswrenching(W))
 		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
@@ -69,7 +69,7 @@
  * Glass Table Parts
  */
 /obj/item/weapon/table_parts/glass/attack_tools(obj/item/W, mob/user)
-	if(W.get_quality(QUALITY_WRENCH))
+	if(iswrenching(W))
 		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
@@ -79,7 +79,7 @@
  * Wooden Table Parts
  */
 /obj/item/weapon/table_parts/wood/attack_tools(obj/item/W, mob/user)
-	if(W.get_quality(QUALITY_WRENCH))
+	if(iswrenching(W))
 		deconstruct(TRUE, user)
 		return TRUE
 
@@ -97,7 +97,7 @@
  * Fancy Wooden Table Parts
  */
 /obj/item/weapon/table_parts/wood/fancy/attack_tools(obj/item/W, mob/user)
-	if(W.get_quality(QUALITY_WRENCH))
+	if(iswrenching(W))
 		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
@@ -107,7 +107,7 @@
  */
 
 /obj/item/weapon/table_parts/wood/poker/attack_tools(obj/item/W, mob/user)
-	if(W.get_quality(QUALITY_WRENCH))
+	if(iswrenching(W))
 		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
@@ -116,7 +116,7 @@
  * Rack Parts
  */
 /obj/item/weapon/rack_parts/attackby(obj/item/I, mob/user, params)
-	if(I.get_quality(QUALITY_WRENCH))
+	if(iswrenching(I))
 		deconstruct(TRUE, user)
 		return
 	return ..()

@@ -179,7 +179,7 @@
 
 	default_deconstruction_crowbar(O)
 
-	if(O.get_quality(QUALITY_SCREWING))
+	if(isscrewing(O))
 		panel_open = !panel_open
 		to_chat(user, "You [panel_open ? "open" : "close"] the maintenance panel.")
 		cut_overlays()

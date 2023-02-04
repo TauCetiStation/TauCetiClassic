@@ -99,7 +99,7 @@
 
 
 /obj/machinery/bot/secbot/ed209/beingAttacked(obj/item/weapon/W, mob/user)
-	if(!W.get_quality(QUALITY_SCREWING) && W.force && !target)
+	if(!isscrewing(W) && W.force && !target)
 		target = user
 		mode = SECBOT_HUNT
 		if(lasertag_color)//To make up for the fact that lasertag bots don't hunt
@@ -396,7 +396,7 @@
 				did_something = TRUE
 
 		if(3)
-			if(I.get_quality(QUALITY_WELDING))
+			if(iswelding(I))
 				var/obj/item/weapon/weldingtool/WT = I
 				if(WT.use(0,user))
 					build_step++
@@ -459,7 +459,7 @@
 			did_something = TRUE
 
 		if(8)
-			if(I.get_quality(QUALITY_SCREWING))
+			if(isscrewing(I))
 				if(user.is_busy(src))
 					return
 				to_chat(user, "<span class='notice'>Now attaching the gun to the frame...</span>")

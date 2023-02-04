@@ -135,7 +135,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
 
-	else if(I.get_quality(QUALITY_SCREWING))
+	else if(isscrewing(I))
 		if(bcell)
 			to_chat(user, "<span class='notice'>You remove \the [bcell] from the [src].</span>")
 			bcell.updateicon()
@@ -241,7 +241,7 @@
 	qdel(src)
 
 /obj/item/weapon/noose/attackby(obj/item/W, mob/user)
-	if(!W.get_quality(QUALITY_CUTTING))
+	if(!iscutter(W))
 		return ..()
 	user.visible_message("<span class='notice'>[user] cuts the noose.</span>", "<span class='notice'>You cut the noose.</span>")
 	var/obj/item/stack/cable_coil/C = new(get_turf(src))

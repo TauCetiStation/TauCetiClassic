@@ -111,7 +111,7 @@
 	return ..()
 
 /obj/machinery/meter/attackby(obj/item/weapon/W, mob/user)
-	if (!W.get_quality(QUALITY_WRENCH))
+	if (!iswrenching(W))
 		return ..()
 	if(user.is_busy(src))
 		return

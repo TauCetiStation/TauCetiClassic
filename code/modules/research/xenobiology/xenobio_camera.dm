@@ -86,7 +86,7 @@
 
 /obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
 	. = ..()
-	if(O.get_quality(QUALITY_PULSE))
+	if(ispulsing(O))
 		var/obj/item/device/multitool/M = O
 		if(M.buffer && istype(M.buffer,/obj/machinery/monkey_recycler))
 			if(!connected_recycler)

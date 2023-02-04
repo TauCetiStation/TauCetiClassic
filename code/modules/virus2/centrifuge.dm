@@ -11,7 +11,7 @@
 	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/medical = SKILL_LEVEL_PRO)
 
 /obj/machinery/computer/centrifuge/attackby(obj/item/weapon/O, mob/user)
-	if(O.get_quality(QUALITY_SCREWING))
+	if(isscrewing(O))
 		return ..()
 
 	else if(istype(O,/obj/item/weapon/reagent_containers/glass/beaker/vial))

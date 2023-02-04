@@ -19,7 +19,7 @@
 	var/deadman = 0
 
 	qualities = list(
-		QUALITY_SIGNAL = 1
+		QUALITY_SIGNALLING = 1
 	)
 
 /obj/item/device/assembly/signaler/atom_init()

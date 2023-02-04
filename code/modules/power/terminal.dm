@@ -74,7 +74,7 @@
 
 
 /obj/machinery/power/terminal/attackby(obj/item/W, mob/living/user)
-	if(W.get_quality(QUALITY_CUTTING))
+	if(iscutter(W))
 		dismantle(user)
 		return
 

@@ -887,7 +887,7 @@ var/global/list/airlock_overlays = list()
 	if(istype(C, /obj/item/device/detective_scanner) || istype(C, /obj/item/taperoll))
 		return
 
-	if(C.get_quality(QUALITY_WELDING) && !(operating > 0))
+	if(iswelding(C) && !(operating > 0))
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.use(0, user))
 			if(!handle_fumbling(user, src, SKILL_TASK_EASY , list(/datum/skill/engineering = SKILL_LEVEL_NOVICE), message_self = "<span class='notice'>You fumble around, figuring out how to [welded? "remove welding from":"welding"] [src]'s shutters with [W]... </span>"))
@@ -903,21 +903,21 @@ var/global/list/airlock_overlays = list()
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
-	else if(C.get_quality(QUALITY_SCREWING))
+	else if(isscrewing(C))
 		p_open = !p_open
 		update_icon()
-	else if(C.get_quality(QUALITY_CUTTING) && p_open)
+	else if(iscutter(C) && p_open)
 		return attack_hand(user)
-	else if(C.get_quality(QUALITY_PULSE))
+	else if(ispulsing(C))
 		return attack_hand(user)
-	else if(C.get_quality(QUALITY_SIGNAL))
+	else if(issignaling(C))
 		return attack_hand(user)
 	else if(istype(C, /obj/item/weapon/pai_cable))	// -- TLE
 		var/obj/item/weapon/pai_cable/cable = C
 		cable.afterattack(src, user)
-	else if(C.get_quality(QUALITY_PRYING))
+	else if(isprying(C))
 		var/beingcrowbarred = null
-		if(C.get_quality(QUALITY_PRYING))
+		if(isprying(C))
 			beingcrowbarred = 1 //derp, Agouri
 		else
 			beingcrowbarred = 0
@@ -1190,7 +1190,7 @@ var/global/list/airlock_overlays = list()
 
 
 /obj/structure/door_scrap/attackby(obj/item/O, mob/user)
-	if(O.get_quality(QUALITY_WRENCH))
+	if(iswrenching(O))
 		if(ticker >= 300)
 			user.visible_message("[user] has disassemble these scrap...")
 			new /obj/item/stack/sheet/metal(loc)

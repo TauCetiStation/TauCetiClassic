@@ -32,7 +32,7 @@
 		return
 
 	if (isrobot(usr) || locked)
-		if(O.get_quality(QUALITY_PULSE))
+		if(ispulsing(O))
 			to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
 			playsound(user, 'sound/machines/lockreset.ogg', VOL_EFFECTS_MASTER)
 			if (do_after(user, 50, target = src))
@@ -69,7 +69,7 @@
 	else
 		if(smashed)
 			return
-		if(O.get_quality(QUALITY_PULSE))
+		if(ispulsing(O))
 			if(localopened)
 				localopened = FALSE
 				icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)

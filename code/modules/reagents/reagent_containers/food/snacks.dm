@@ -1727,7 +1727,7 @@
 	if((slices_num <= 0 || !slices_num) || !slice_path)
 		return FALSE
 	var/inaccurate = FALSE
-	if(!W.get_quality(QUALITY_CUTTING))
+	if(!iscutter(W))
 		inaccurate = TRUE
 
 	if ( \

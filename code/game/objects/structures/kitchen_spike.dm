@@ -46,7 +46,7 @@
 	return attack_hand(user)
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user)
-	if(I.get_quality(QUALITY_PRYING))
+	if(isprying(I))
 		if(buckled_mob)
 			to_chat(user, "<span class='notice'>You can't do that while something's on the spike!</span>")
 			return

@@ -672,7 +672,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/obj/item/device/radio_grid/new_grid = I
 		new_grid.attach(src)
 
-	else if(I.get_quality(QUALITY_CUTTING))
+	else if(iscutter(I))
 		if(!grid)
 			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
 			return
@@ -681,7 +681,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
 		new_grid.dettach(src)
 
-	else if (I.get_quality(QUALITY_SCREWING))
+	else if (isscrewing(I))
 		b_stat = !b_stat
 		add_fingerprint(user)
 		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
@@ -716,7 +716,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/borg/attackby(obj/item/I, mob/user, params)
 	user.set_machine(src)
 
-	if(I.get_quality(QUALITY_SCREWING))
+	if(isscrewing(I))
 		if(keyslot)
 			for(var/ch_name in channels)
 				radio_controller.remove_object(src, radiochannels[ch_name])

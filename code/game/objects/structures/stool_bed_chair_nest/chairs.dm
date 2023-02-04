@@ -249,7 +249,7 @@
 	desc = "Old is never too old to not be in fashion."
 
 /obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W, mob/user)
-	if(W.get_quality(QUALITY_WRENCH))
+	if(iswrenching(W))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/wood(loc)
@@ -451,7 +451,7 @@
 	qdel(src)
 
 /obj/structure/stool/bed/chair/noose/attackby(obj/item/W, mob/user)
-	if(W.get_quality(QUALITY_CUTTING))
+	if(iscutter(W))
 		rip(user)
 		return ..()
 	if(!istype(W, /obj/item/weapon/grab))

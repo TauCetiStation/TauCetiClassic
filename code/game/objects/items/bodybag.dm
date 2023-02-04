@@ -39,7 +39,7 @@
 	//..() //Doesn't need to run the parent. Since when can fucking bodybags be welded shut? -Agouri
 		return
 
-	else if(W.get_quality(QUALITY_CUTTING))
+	else if(iscutter(W))
 		to_chat(user, "You cut the tag off the bodybag")
 		src.name = "body bag"
 		cut_overlays()

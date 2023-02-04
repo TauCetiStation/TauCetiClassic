@@ -154,7 +154,7 @@
 		return
 
 	if(panel_open)
-		if(W.get_quality(QUALITY_PRYING))
+		if(isprying(W))
 			default_deconstruction_crowbar(W)
 			return 1
 		else

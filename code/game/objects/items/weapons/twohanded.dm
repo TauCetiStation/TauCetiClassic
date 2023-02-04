@@ -163,7 +163,7 @@
 	return !slicing && HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir)
 
 /obj/item/weapon/dualsaber/attackby(obj/item/I, mob/user, params)
-	if(I.get_quality(QUALITY_PULSE))
+	if(ispulsing(I))
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user,"<span class='warning'>2XRNBW_ENGAGE</span>")

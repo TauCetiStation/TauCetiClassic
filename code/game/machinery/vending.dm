@@ -163,10 +163,10 @@
 		if(default_unfasten_wrench(user, W, time = 60))
 			return
 
-		if(W.get_quality(QUALITY_PRYING))
+		if(isprying(W))
 			default_deconstruction_crowbar(W)
 
-	if(W.get_quality(QUALITY_SCREWING) && anchored)
+	if(isscrewing(W) && anchored)
 		src.panel_open = !src.panel_open
 		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
 		cut_overlays()
@@ -184,7 +184,7 @@
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 		return
 
-	else if(W.get_quality(QUALITY_WRENCH))	//unwrenching vendomats
+	else if(iswrenching(W))	//unwrenching vendomats
 		var/turf/T = user.loc
 		if(user.is_busy(src))
 			return

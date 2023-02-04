@@ -109,7 +109,7 @@ field_generator power level display
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
 	if(active != FG_OFFLINE)
 		to_chat(user, "<span class='red'>The [src] needs to be off.</span>")
-	else if(W.get_quality(QUALITY_WRENCH))
+	else if(iswrenching(W))
 		switch(state)
 			if(FG_UNSECURED)
 				state = FG_SECURED
@@ -129,7 +129,7 @@ field_generator power level display
 				anchored = FALSE
 			if(FG_WELDED)
 				to_chat(user, "<span class='red'>The [src] needs to be unwelded from the floor.</span>")
-	else if(W.get_quality(QUALITY_WELDING))
+	else if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		switch(state)
 			if(FG_UNSECURED)

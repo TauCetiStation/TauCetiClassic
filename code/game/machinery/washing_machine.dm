@@ -219,7 +219,7 @@ var/global/list/dyed_item_types = list(
 	icon_state = "wm_[state][panel]"
 
 /obj/machinery/washing_machine/attackby(obj/item/weapon/W, mob/user)
-	/*if(W.get_quality(QUALITY_SCREWING))
+	/*if(isscrewing(W))
 		panel = !panel
 		to_chat(user, "<span class='notice'>you [panel ? </span>"open" : "close"] the [src]'s maintenance panel")*/
 	if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/weapon/stamp))

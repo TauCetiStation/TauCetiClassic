@@ -71,7 +71,7 @@
 			flame_turf(turflist)
 
 /obj/item/weapon/flamethrower/attackby(obj/item/I, mob/user, params)
-	if(I.get_quality(QUALITY_WRENCH) && !status)//Taking this apart
+	if(iswrenching(I) && !status)//Taking this apart
 		var/turf/T = get_turf(src)
 		if(weldtool)
 			weldtool.forceMove(T)
@@ -86,7 +86,7 @@
 		qdel(src)
 		return
 
-	if(I.get_quality(QUALITY_SCREWING) && igniter && !lit)
+	if(isscrewing(I) && igniter && !lit)
 		status = !status
 		to_chat(user, "<span class='notice'>[igniter] is now [status ? "secured" : "unsecured"]!</span>")
 		update_icon()

@@ -113,7 +113,7 @@
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/circulator/attackby(obj/item/weapon/W, mob/user)
-	if(W.get_quality(QUALITY_WRENCH))
+	if(iswrenching(W))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
 		user.visible_message(

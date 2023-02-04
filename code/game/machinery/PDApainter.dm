@@ -39,7 +39,7 @@
 				P.add_fingerprint(usr)
 				update_icon()
 	else
-		if(O.get_quality(QUALITY_WRENCH))
+		if(iswrenching(O))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")

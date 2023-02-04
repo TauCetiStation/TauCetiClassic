@@ -210,7 +210,7 @@
 		if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
 			BP.take_damage(0, 6, used_weapon = tool)
 
-		else if(tool.get_quality(QUALITY_WRENCH))
+		else if(iswrenching(tool))
 			BP.take_damage(12, 0, used_weapon = tool)
 			BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
 

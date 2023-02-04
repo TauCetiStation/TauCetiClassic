@@ -8,7 +8,7 @@
 	resistance_flags = CAN_BE_HIT
 
 /obj/structure/cult/attackby(obj/item/weapon/W, mob/user)
-	if(W.get_quality(QUALITY_WRENCH) && can_unwrench)
+	if(iswrenching(W) && can_unwrench)
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
@@ -179,7 +179,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 			new /obj/effect/temp_visual/cult/sparks(loc)
 			return FALSE
 
-	if(W.get_quality(QUALITY_WRENCH))
+	if(iswrenching(W))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored

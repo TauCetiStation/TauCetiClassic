@@ -285,7 +285,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		return
 
 	if(panel_open)
-		if(I.get_quality(QUALITY_PRYING))
+		if(isprying(I))
 			default_deconstruction_crowbar(I)
 			return 1
 		else if(is_wire_tool(I))

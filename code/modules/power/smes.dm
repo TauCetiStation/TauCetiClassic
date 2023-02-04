@@ -193,7 +193,7 @@
 		return
 
 	// disassembling the terminal
-	if(I.get_quality(QUALITY_CUTTING) && terminal && panel_open)
+	if(iscutter(I) && terminal && panel_open)
 		terminal.dismantle(user)
 
 	// crowbarring it!

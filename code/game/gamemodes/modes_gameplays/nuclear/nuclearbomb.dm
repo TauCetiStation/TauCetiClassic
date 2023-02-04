@@ -56,7 +56,7 @@ var/global/bomb_set
 		updateUsrDialog()
 
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/O, mob/user)
-	if (O.get_quality(QUALITY_SCREWING))
+	if (isscrewing(O))
 		add_fingerprint(user)
 		if (removal_stage == 5)
 			if (src.opened == 0)
@@ -99,7 +99,7 @@ var/global/bomb_set
 	if (src.anchored)
 		switch(removal_stage)
 			if(0)
-				if(O.get_quality(QUALITY_WELDING))
+				if(iswelding(O))
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn())
 						return FALSE
@@ -115,7 +115,7 @@ var/global/bomb_set
 						removal_stage = 1
 				return FALSE
 			if(1)
-				if(O.get_quality(QUALITY_PRYING))
+				if(isprying(O))
 					user.visible_message("[user] starts smashing [src].", "You start forcing open the covers with [O]...")
 					if(user.is_busy())
 						return FALSE
@@ -124,7 +124,7 @@ var/global/bomb_set
 						removal_stage = 2
 				return FALSE
 			if(2)
-				if(O.get_quality(QUALITY_WELDING))
+				if(iswelding(O))
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn())
 						return FALSE
@@ -140,7 +140,7 @@ var/global/bomb_set
 						removal_stage = 3
 				return FALSE
 			if(3)
-				if(O.get_quality(QUALITY_WRENCH))
+				if(iswrenching(O))
 					if(user.is_busy())
 						return FALSE
 					user.visible_message("[user] begins poking inside [src].", "You begin unwrenching bolts...")
@@ -149,7 +149,7 @@ var/global/bomb_set
 						removal_stage = 4
 				return FALSE
 			if(4)
-				if(O.get_quality(QUALITY_PRYING))
+				if(isprying(O))
 					if(user.is_busy())
 						return FALSE
 					user.visible_message("[user] begings hitting [src].", "You begin forcing open last safety layer...")

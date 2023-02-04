@@ -75,7 +75,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 	return
 
 /mob/living/simple_animal/det5/attackby(obj/item/W, mob/user)
-	if(W.get_quality(QUALITY_PULSE))
+	if(ispulsing(W))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/computer/rdconsole))
 			rdconsole = M.buffer

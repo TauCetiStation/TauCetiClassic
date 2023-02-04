@@ -30,7 +30,7 @@
 		unbuckle_mob()
 
 /obj/structure/stool/attackby(obj/item/weapon/W, mob/user)
-	if(W.get_quality(QUALITY_WRENCH) && !(flags & NODECONSTRUCT))
+	if(iswrenching(W) && !(flags & NODECONSTRUCT))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		deconstruct(TRUE)
 		return
