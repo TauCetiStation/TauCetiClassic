@@ -213,6 +213,8 @@
 	if(!isxeno(owner))
 		return
 	var/mob/living/carbon/xenomorph/Q = owner
+	Q.bruteloss = Q.bruteloss / 2
+	Q.fireloss = Q.fireloss / 2
 	Q.maxHealth = Q.maxHealth / 2
 	Q.update_health_hud()
 	Q.heal_rate = Q.heal_rate / 2.5
