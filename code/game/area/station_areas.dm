@@ -452,8 +452,19 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "medbay2"
 	sound_environment = SOUND_AREA_STATION_HALLWAY
 
+/area/station/medical/staff_hallway
+	icon_state = "medbay2"
+
 /area/station/medical/reception
 	name = "Medbay Reception"
+	icon_state = "medbay"
+
+/area/station/medical/paramedic
+	name = "Paramedic Reception"
+	icon_state = "medbay"
+
+/area/station/medical/reception_hall
+	name = "Medbay Reception hall"
 	icon_state = "medbay"
 
 /area/station/medical/storage
@@ -472,12 +483,28 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Patient's Rooms"
 	icon_state = "patients"
 
+/area/station/medical/hospital
+	name = "Hospital"
+	icon_state = "medbay2"
+
+/area/station/medical/infectious_disease_ward
+	name = "Infectious disease ward"
+	icon_state = "virology"
+
 /area/station/medical/patient_a
 	name = "Patient Room One"
 	icon_state = "patients"
 
 /area/station/medical/patient_b
 	name = "Patient Room Two"
+	icon_state = "patients"
+
+/area/station/medical/patient_c
+	name = "Patient Room Three"
+	icon_state = "patients"
+
+/area/station/medical/patient_d
+	name = "Patient Room Four"
 	icon_state = "patients"
 
 /area/station/medical/cmo
@@ -515,6 +542,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/station/medical/cryo
 	name = "Cryogenics"
 	icon_state = "cryo"
+
+/area/station/medical/therapist
+	name = "Therapist Cabinet"
+	icon_state = "medbay3"
 
 /area/station/medical/genetics
 	name = "Genetics Lab"
@@ -591,6 +622,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/station/security/checkpoint
 	name = "Security Checkpoint"
+	icon_state = "security"
+
+/area/station/security/medbay_checkpoint
+	name = "Medbay Security Checkpoint"
 	icon_state = "security"
 
 /area/station/security/vacantoffice

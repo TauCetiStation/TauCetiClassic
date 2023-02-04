@@ -65,6 +65,11 @@
 	desc = "A sign labelling a restroom."
 	icon_state = "restroom"
 
+/obj/structure/sign/departments/showers
+	name = "SHOWERS"
+	desc = "A sign labelling a showers room."
+	icon_state = "showers"
+
 /obj/structure/sign/departments/medbay
 	name = "MEDBAY"
 	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here."
@@ -80,3 +85,13 @@
 	name = "LIFESTAR"
 	desc = "The Star of Life is a blue, six-pointed star, outlined with a white border which features the rod of Asclepius in the center"
 	icon_state = "lifestar"
+
+/obj/structure/sign/departments/pharmacy
+	name = "PHARMACY"
+	desc = "A sign labelling a pharmacy."
+	icon_state = "pharmacy"
+
+/obj/structure/sign/departments/morgue
+	name = "MORGUE"
+	desc = "A sign labelling a morgue."
+	icon_state = "morgue"

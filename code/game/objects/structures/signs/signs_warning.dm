@@ -56,7 +56,7 @@
 /obj/structure/sign/warning/fire
 	name = "DANGER: FIRE"
 	desc = "A warning sign which reads 'DANGER: FIRE'."
-	icon_state = "fire"
+	icon_state = "flammable"
 
 /obj/structure/sign/warning/nosmoking
 	name = "NO SMOKING"
@@ -83,7 +83,7 @@
 /obj/structure/sign/warning/xeno_mining
 	name = "DANGEROUS ALIEN LIFE"
 	desc = "A sign that warns would-be travellers of hostile alien life in the vicinity."
-	icon_state = "xeno_warning"
+	icon_state = "xeno"
 
 /obj/structure/sign/warning/enginesafety
 	name = "ENGINEERING SAFETY"
@@ -92,16 +92,20 @@
 
 /obj/structure/sign/warning/server_room
 	name = "SERVER ROOM"
-	icon_state = "server"
+	icon_state = "radio"
 
 /obj/structure/sign/warning/lethal_turrets
 	name = "LETHAL TURRETS"
-	icon_state = "turrets"
+	icon_state = "laser"
 	desc = "Enter at own risk!"
 
 /obj/structure/sign/warning/moving_parts
 	name = "MOVING PARTS"
 	icon_state = "movingparts"
+
+/obj/structure/sign/warning/cutting
+	name = "CUTTING TOOLS"
+	icon_state = "cutting"
 
 /obj/structure/sign/warning/bomb_range
 	name = "BOMB RANGE"
@@ -114,3 +118,66 @@
 /obj/structure/sign/warning/mail_delivery
 	name = "MAIL DELIVERY"
 	icon_state = "mail"
+
+/obj/structure/sign/warning/cold
+	name = "COLD"
+	icon_state = "cold"
+
+/obj/structure/sign/warning/hot
+	name = "HOT"
+	icon_state = "hot"
+
+/obj/structure/sign/warning/poison
+	name = "POISON"
+	icon_state = "poison"
+
+/obj/structure/sign/warning/edge
+	name = "EDGE"
+	icon_state = "fall"
+
+
+/obj/structure/sign/warning/headphones
+	name = "WEAR HEADPHONES"
+	icon_state = "wearheadphones"
+
+/obj/structure/sign/warning/mask
+	name = "WEAR MASK"
+	icon_state = "wearmask"
+
+/obj/structure/sign/warning/boots
+	name = "WEAR BOOTS"
+	icon_state = "wearboots"
+
+/obj/structure/sign/warning/suit
+	name = "WEAR SUIT"
+	icon_state = "wearsuit"
+
+/obj/structure/sign/warning/glasses
+	name = "WEAR GLASSES"
+	icon_state = "wearglasses"
+
+/obj/structure/sign/warning/helmet
+	name = "WEAR HELMET"
+	icon_state = "wearhelm"
+
+/obj/structure/sign/warning/gloves
+	name = "WEAR GLOVES"
+	icon_state = "weargloves"
+
+
+/obj/structure/sign/warning/nowalkin
+	name = "ENTRANCE RESTRICTED"
+	icon_state = "nowalkin"
+
+/obj/structure/sign/warning/nometal
+	name = "METAL RESTRICTED"
+	icon_state = "nometal"
+
+/obj/structure/sign/warning/noanimal
+	name = "ANIMALS RESTRICTED"
+	icon_state = "noanimals"
+
+
+/obj/structure/sign/warning/exit
+	name = "EXIT SIGN"
+	icon_state = "exit1"

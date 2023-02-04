@@ -13,17 +13,18 @@
 
 	integrity_failure = 0.5
 
-	var/obj/item/weapon/fireaxe/fireaxe
+	var/obj/item/weapon/axe
+	var/axe_type = /obj/item/weapon/fireaxe
 	var/localopened = FALSE // Setting this to keep it from behaviouring like a normal closet and obstructing movement in the map. -Agouri
 	var/hitstaken = 0
 	var/smashed = FALSE
 
 /obj/structure/closet/fireaxecabinet/Destroy()
-	QDEL_NULL(fireaxe)
+	QDEL_NULL(axe)
 	return ..()
 
 /obj/structure/closet/fireaxecabinet/PopulateContents()
-	fireaxe = new /obj/item/weapon/fireaxe(src)
+	axe = new axe_type(src)
 
 /obj/structure/closet/fireaxecabinet/attackby(obj/item/O, mob/living/user)  //Marker -Agouri
 	//..() //That's very useful, Erro
@@ -44,15 +45,15 @@
 			if(smashed || localopened)
 				if(localopened)
 					localopened = FALSE
-					icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
+					icon_state = text("fireaxe[][][][]closing", !!axe, localopened, hitstaken, smashed)
 					addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 				return
 			..()
 
-	else if (istype(O, /obj/item/weapon/fireaxe) && localopened)
-		if(!fireaxe)
+	else if (istype(O, axe_type) && localopened)
+		if(!axe)
 			user.drop_from_inventory(O, src)
-			fireaxe = O
+			axe = O
 			to_chat(user, "<span class='notice'>You place the fire axe back in the [src.name].</span>")
 			update_icon()
 		else
@@ -61,10 +62,10 @@
 			else
 				localopened = !localopened
 				if(localopened)
-					icon_state = text("fireaxe[][][][]opening", !!fireaxe, localopened, hitstaken, smashed)
+					icon_state = text("fireaxe[][][][]opening", !!axe, localopened, hitstaken, smashed)
 					addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 				else
-					icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
+					icon_state = text("fireaxe[][][][]closing", !!axe, localopened, hitstaken, smashed)
 					addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 	else
 		if(smashed)
@@ -72,7 +73,7 @@
 		if(ismultitool(O))
 			if(localopened)
 				localopened = FALSE
-				icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
+				icon_state = text("fireaxe[][][][]closing", !!axe, localopened, hitstaken, smashed)
 				addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 			else
 				to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
@@ -83,10 +84,10 @@
 		else
 			localopened = !localopened
 			if(localopened)
-				icon_state = text("fireaxe[][][][]opening", !!fireaxe, localopened, hitstaken, smashed)
+				icon_state = text("fireaxe[][][][]opening", !!axe, localopened, hitstaken, smashed)
 				addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 			else
-				icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
+				icon_state = text("fireaxe[][][][]closing", !!axe, localopened, hitstaken, smashed)
 				addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 
 /obj/structure/closet/fireaxecabinet/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -124,9 +125,9 @@
 	if(flags & NODECONSTRUCT)
 		return ..()
 
-	if(fireaxe)
-		fireaxe.forceMove(loc)
-		fireaxe = null
+	if(axe)
+		axe.forceMove(loc)
+		axe = null
 	new /obj/item/stack/sheet/metal(loc, 2)
 	if(!smashed)
 		new /obj/item/weapon/shard(loc)
@@ -143,9 +144,9 @@
 		return
 
 	if(localopened)
-		if(fireaxe)
-			user.try_take(fireaxe, loc)
-			fireaxe = null
+		if(axe)
+			user.try_take(axe, loc)
+			axe = null
 			to_chat(user, "<span class='notice'>You take the fire axe from the [name].</span>")
 			add_fingerprint(user)
 			update_icon()
@@ -155,19 +156,19 @@
 			else
 				localopened = !localopened
 				if(localopened)
-					icon_state = text("fireaxe[][][][]opening", !!fireaxe, localopened, hitstaken, smashed)
+					icon_state = text("fireaxe[][][][]opening", !!axe, localopened, hitstaken, smashed)
 					addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 				else
-					icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
+					icon_state = text("fireaxe[][][][]closing", !!axe, localopened, hitstaken, smashed)
 					addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 
 	else
 		localopened = !localopened //I'm pretty sure we don't need an if(src.smashed) in here. In case I'm wrong and it fucks up teh cabinet, **MARKER**. -Agouri
 		if(localopened)
-			icon_state = text("fireaxe[][][][]opening", !!fireaxe, localopened, hitstaken, smashed)
+			icon_state = text("fireaxe[][][][]opening", !!axe, localopened, hitstaken, smashed)
 			addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 		else
-			src.icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
+			src.icon_state = text("fireaxe[][][][]closing", !!axe, localopened, hitstaken, smashed)
 			addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 
 /obj/structure/closet/fireaxecabinet/attack_paw(mob/user)
@@ -184,10 +185,14 @@
 			to_chat(user, "<span class='notice'>Cabinet unlocked.</span>")
 
 /obj/structure/closet/fireaxecabinet/update_icon() // Template: fireaxe[has fireaxe][is opened][hits taken][is smashed]. If you want the opening or closing animations, add "opening" or "closing" right after the numbers
-	icon_state = text("fireaxe[][][][]", !!fireaxe, localopened, hitstaken, smashed)
+	icon_state = text("fireaxe[][][][]", !!axe, localopened, hitstaken, smashed)
 
 /obj/structure/closet/fireaxecabinet/open()
 	return
 
 /obj/structure/closet/fireaxecabinet/close()
 	return
+
+
+/obj/structure/closet/fireaxecabinet/hatchet
+	axe_type = /obj/item/weapon/hatchet
