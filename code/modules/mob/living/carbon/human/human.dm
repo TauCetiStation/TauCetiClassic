@@ -1850,6 +1850,9 @@
 			visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smash into [hit_atom]!</span>")
 			Stun(2)
 			Weaken(2)
+		else if(istype(hit_atom, /obj/machinery/disposal))
+			INVOKE_ASYNC(src, /atom/movable.proc/do_simple_move_animation, hit_atom)
+			forceMove(hit_atom)
 
 	update_canmove()
 
