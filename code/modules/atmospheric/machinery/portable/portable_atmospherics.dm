@@ -100,7 +100,7 @@
 			var/obj/item/weapon/tank/T = W
 			holding = T
 			update_icon()
-	else if (iswrench(W))
+	else if (W.get_quality(QUALITY_WRENCH))
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()
@@ -162,7 +162,7 @@
 		cell = C
 		user.visible_message("<span class='notice'>[user] opens the panel on [src] and inserts [C].</span>", "<span class='notice'>You open the panel on [src] and insert [C].</span>")
 		power_change()
-	else if(isscrewdriver(I))
+	else if(I.get_quality(QUALITY_SCREWING))
 		if(!cell)
 			to_chat(user, "<span class='warning'>There is no power cell installed.</span>")
 			return

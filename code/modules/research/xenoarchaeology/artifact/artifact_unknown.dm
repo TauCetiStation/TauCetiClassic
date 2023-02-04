@@ -258,7 +258,7 @@
 		else if(istype(W, /obj/item/weapon/melee/energy) ||\
 			istype(W, /obj/item/weapon/melee/cultblade) ||\
 			istype(W, /obj/item/weapon/card/emag) ||\
-			ismultitool(W))
+			W.get_quality(QUALITY_PULSE))
 			try_toggle_effects(TRIGGER_ENERGY)
 	if(first_effect?.trigger == TRIGGER_HEAT || secondary_effect?.trigger == TRIGGER_HEAT)
 		if(W.get_current_temperature() > 700)

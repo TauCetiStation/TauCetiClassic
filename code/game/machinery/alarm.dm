@@ -783,13 +783,13 @@
 
 	switch(buildstage)
 		if(2)
-			if(isscrewdriver(W))  // Opening that Air Alarm up.
+			if(W.get_quality(QUALITY_SCREWING))  // Opening that Air Alarm up.
 				wiresexposed = !wiresexposed
 				to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 				update_icon()
 				return
 
-			if (iswirecutter(W) && wiresexposed && wires.is_all_cut())
+			if (W.get_quality(QUALITY_CUTTING) && wiresexposed && wires.is_all_cut())
 				user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				new /obj/item/stack/cable_coil/random(loc, 5)
@@ -828,7 +828,7 @@
 				wires.repair()
 				return
 
-			else if(iscrowbar(W))
+			else if(W.get_quality(QUALITY_PRYING))
 				if(user.is_busy())
 					return
 				to_chat(user, "You start prying out the circuit.")
@@ -847,7 +847,7 @@
 				update_icon()
 				return
 
-			else if(iswrench(W))
+			else if(W.get_quality(QUALITY_WRENCH))
 				to_chat(user, "You remove the fire alarm assembly from the wall!")
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				deconstruct(TRUE)
@@ -909,7 +909,7 @@ Code shamelessly copied from apc_frame
 	flags = CONDUCT
 
 /obj/item/alarm_frame/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I))
+	if(I.get_quality(QUALITY_WRENCH))
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
@@ -996,7 +996,7 @@ FIRE ALARM
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user)
 	add_fingerprint(user)
 
-	if (isscrewdriver(W) && buildstage == 2)
+	if (W.get_quality(QUALITY_SCREWING) && buildstage == 2)
 		wiresexposed = !wiresexposed
 		update_icon()
 		return
@@ -1004,13 +1004,13 @@ FIRE ALARM
 	if(wiresexposed)
 		switch(buildstage)
 			if(2)
-				if (ismultitool(W))
+				if (W.get_quality(QUALITY_PULSE))
 					detecting = !detecting
 					if (detecting)
 						user.visible_message("<span class='warning'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
 					else
 						user.visible_message("<span class='warning'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
-				else if (iswirecutter(W))
+				else if (W.get_quality(QUALITY_CUTTING))
 					user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 					new /obj/item/stack/cable_coil/random(loc, 5)
 					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
@@ -1027,7 +1027,7 @@ FIRE ALARM
 					to_chat(user, "You wire \the [src]!")
 					update_icon()
 
-				else if(iscrowbar(W))
+				else if(W.get_quality(QUALITY_PRYING))
 					to_chat(user, "You start prying out the circuit.")
 					if(W.use_tool(src, user, 20, volume = 50))
 						to_chat(user, "You pry out the circuit!")
@@ -1043,7 +1043,7 @@ FIRE ALARM
 					buildstage = 1
 					update_icon()
 
-				else if(iswrench(W))
+				else if(W.get_quality(QUALITY_WRENCH))
 					if(user.is_busy())
 						return
 					to_chat(user, "You remove the fire alarm assembly from the wall!")
@@ -1257,7 +1257,7 @@ Code shamelessly copied from apc_frame
 	flags = CONDUCT
 
 /obj/item/firealarm_frame/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I))
+	if(I.get_quality(QUALITY_WRENCH))
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)

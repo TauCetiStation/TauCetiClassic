@@ -99,7 +99,7 @@
 		user.drop_from_inventory(C, src)
 		cell = C
 		updateDialog()
-	else if(isscrewdriver(I))
+	else if(I.get_quality(QUALITY_SCREWING))
 		if(locked)
 			to_chat(user, "<span class='notice'>The maintenance hatch cannot be opened or closed while the controls are locked.</span>")
 			return
@@ -116,7 +116,7 @@
 		updateDialog()
 	else if(is_wire_tool(I))
 		wires.interact(user)
-	else if (iswrench(I))
+	else if (I.get_quality(QUALITY_WRENCH))
 		if (get_integrity() < max_integrity)
 			repair_damage(25)
 			user.visible_message(

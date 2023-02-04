@@ -147,7 +147,7 @@ var/global/loopModeNames=list(
 
 /obj/machinery/media/jukebox/attackby(obj/item/W, mob/user, params)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(iswrench(W))
+	if(W.get_quality(QUALITY_WRENCH))
 		if(user.is_busy(src))
 			return
 		var/un = !anchored ? "" : "un"
@@ -378,7 +378,7 @@ var/global/loopModeNames=list(
 	update_music()
 
 /obj/machinery/media/jukebox/syndi/attackby(obj/item/W, mob/user, params)
-	if(iswrench(W))
+	if(W.get_quality(QUALITY_WRENCH))
 		return
 	else
 		..()

@@ -15,7 +15,7 @@
 	if(T.intact)
 		return
 
-	if(iswirecutter(W))
+	if(W.get_quality(QUALITY_CUTTING))
 		to_chat(user, "<span class='notice'>These cables are too tough to be cut with those [W.name].</span>")
 		return
 	else if(iscoil(W))

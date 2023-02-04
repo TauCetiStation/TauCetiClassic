@@ -89,7 +89,7 @@
 		qdel(src)
 		user.put_in_hands(newSaber)
 
-	else if(ismultitool(I))
+	else if(I.get_quality(QUALITY_PULSE))
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")

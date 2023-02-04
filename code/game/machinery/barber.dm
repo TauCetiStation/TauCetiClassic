@@ -301,19 +301,19 @@ A proc that does all the animations before mix()-ing.
 			updateUsrDialog()
 			update_icon()
 			return
-		else if(isscrewdriver(O))
+		else if(O.get_quality(QUALITY_SCREWING))
 			panel_open = !panel_open
 			update_icon(beaker_update = FALSE)
 			updateUsrDialog()
 			return
-	else if(isscrewdriver(O))
+	else if(O.get_quality(QUALITY_SCREWING))
 		to_chat(user, "<span class='notice'>You try to open up the panel, but [beakers["output"]] is in the way.</span>")
 		return
 
 	if(panel_open)
-		if(iswirecutter(O))
+		if(O.get_quality(QUALITY_CUTTING))
 			return attack_hand(user)
-		else if(ismultitool(O))
+		else if(O.get_quality(QUALITY_PULSE))
 			return attack_hand(user)
 		else if(issignaler(O))
 			return attack_hand(user)

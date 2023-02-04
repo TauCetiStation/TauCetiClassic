@@ -10,7 +10,7 @@
 /obj/machinery/telecomms/attackby(obj/item/P, mob/user)
 
 	// Using a multitool lets you access the receiver's interface
-	if(ismultitool(P))
+	if(P.get_quality(QUALITY_PULSE))
 		attack_hand(user)
 
 	if(default_deconstruction_screwdriver(user, on ? "[initial(icon_state)]_o" : "[initial(icon_state)]_o_off",  on ? initial(icon_state) : "[initial(icon_state)]_off" , P))
@@ -22,7 +22,7 @@
 	// You need a multitool to use this, or be silicon/ghost
 	if(!issilicon(user) && !isobserver(user))
 		// istype returns false if the value is null
-		if(!ismultitool(user.get_active_hand()))
+		if(!user.get_active_hand().get_quality(QUALITY_PULSE))
 			return
 
 	var/obj/item/device/multitool/P = get_multitool(user)
@@ -89,13 +89,13 @@
 
 	var/obj/item/device/multitool/P = null
 	// Let's double check
-	if(!issilicon(user) && !isobserver(user) && ismultitool(user.get_active_hand()))
+	if(!issilicon(user) && !isobserver(user) && user.get_active_hand().get_quality(QUALITY_PULSE))
 		P = user.get_active_hand()
 	else if(isAI(user))
 		var/mob/living/silicon/ai/U = user
 		P = U.aiMulti
 	else if(isrobot(user) && Adjacent(user))
-		if(ismultitool(user.get_active_hand()))
+		if(user.get_active_hand().get_quality(QUALITY_PULSE))
 			P = user.get_active_hand()
 	else if(isobserver(user))
 		var/mob/dead/observer/O = user
@@ -169,7 +169,7 @@
 
 /obj/machinery/telecomms/Topic(href, href_list)
 	if(!issilicon(usr) && !isobserver(usr))
-		if(!ismultitool(usr.get_active_hand()))
+		if(!usr.get_active_hand().get_quality(QUALITY_PULSE))
 			return FALSE
 
 	. = ..()

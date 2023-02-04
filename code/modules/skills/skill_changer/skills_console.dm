@@ -30,7 +30,7 @@
 	return scanner && scanner.cartridge != null
 
 /obj/machinery/computer/skills_console/attackby(obj/item/I, mob/user)
-	if(ismultitool(I))
+	if(I.get_quality(QUALITY_PULSE))
 		var/obj/item/device/multitool/M = I
 		if(M.buffer && istype(M.buffer, /obj/machinery/optable/skill_scanner))
 			scanner = M.buffer

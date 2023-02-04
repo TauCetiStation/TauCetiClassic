@@ -209,7 +209,7 @@
 	cut_overlays()
 	if(ammo_count() == 0)
 		return
-	var/ammo_perc = (ammo_count() * 100) / max_ammo 
+	var/ammo_perc = (ammo_count() * 100) / max_ammo
 	var/image/ammo_icon = image('icons/obj/ammo.dmi', "12mmsh-[round(ammo_perc, 25)]")
 	add_overlay(ammo_icon)
 
@@ -519,7 +519,7 @@
 	return ..()
 
 /obj/item/ammo_box/magazine/plasma/attackby(obj/item/I, mob/user, params)
-	if(power_supply && isscrewdriver(I))
+	if(power_supply && I.get_quality(QUALITY_SCREWING))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		user.put_in_hands(power_supply)
 		power_supply = null

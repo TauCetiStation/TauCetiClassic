@@ -181,7 +181,7 @@ var/global/list/alldepartments = list("Central Command")
 				var/mob/living/carbon/human/H = usr
 				H.sec_hud_set_ID()
 
-	else if(iswrench(O))
+	else if(O.get_quality(QUALITY_WRENCH))
 		default_unfasten_wrench(user, O)
 
 /proc/centcomm_fax(mob/sender, obj/item/weapon/paper/P, obj/machinery/faxmachine/fax)

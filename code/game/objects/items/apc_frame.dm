@@ -8,7 +8,7 @@
 	flags = CONDUCT
 
 /obj/item/apc_frame/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I))
+	if(I.get_quality(QUALITY_WRENCH))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
 		qdel(src)
 	else

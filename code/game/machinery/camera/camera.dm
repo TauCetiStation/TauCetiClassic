@@ -137,12 +137,12 @@
 		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 		toggle_cam(FALSE, user)
 
-/obj/machinery/camera/attackby(W, mob/living/user)
+/obj/machinery/camera/attackby(obj/item/weapon/W, mob/living/user)
 	var/msg = "<span class='notice'>You attach [W] into the assembly inner circuits.</span>"
 	var/msg2 = "<span class='notice'>The camera already has that upgrade!</span>"
 
 	// DECONSTRUCTION
-	if(isscrewdriver(W))
+	if(W.get_quality(QUALITY_SCREWING))
 		//user << "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>"
 		//if(toggle_panel(user)) // No delay because no one likes screwdrivers trying to be hip and have a duration cooldown
 		panel_open = !panel_open
@@ -153,7 +153,7 @@
 	else if(is_wire_tool(W) && panel_open)
 		wires.interact(user)
 
-	else if(iswelder(W) && wires.is_deconstructable())
+	else if(W.get_quality(QUALITY_WELDING) && wires.is_deconstructable())
 		if(weld(W, user))
 			deconstruct(TRUE)
 	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay

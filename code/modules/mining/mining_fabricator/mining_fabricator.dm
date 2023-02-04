@@ -144,7 +144,7 @@
 	return result
 
 
-/obj/machinery/mecha_part_fabricator/mining_fabricator/attackby(obj/W, mob/user, params)
+/obj/machinery/mecha_part_fabricator/mining_fabricator/attackby(obj/item/weapon/W, mob/user, params)
 
 	if(default_deconstruction_screwdriver(user, "fab", "fab", W))
 		update_icon()
@@ -154,7 +154,7 @@
 		return
 
 	if(panel_open)
-		if(iscrowbar(W))
+		if(W.get_quality(QUALITY_PRYING))
 			default_deconstruction_crowbar(W)
 			return 1
 		else

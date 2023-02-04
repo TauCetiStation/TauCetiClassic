@@ -106,7 +106,7 @@
 			to_chat(user, "<span class='warning'>The machine only accepts monkeys and slimes!</span>")
 
 	if(panel_open)
-		if(ismultitool(O))
+		if(O.get_quality(QUALITY_PULSE))
 			var/obj/item/device/multitool/M = O
 			M.buffer = src
 			to_chat(user, "<span class='notice'>You save the data in the [O.name]'s buffer.</span>")

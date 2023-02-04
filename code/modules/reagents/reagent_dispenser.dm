@@ -101,7 +101,7 @@
 	leak(amount_per_transfer_from_this)
 
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if (W.get_quality(QUALITY_WRENCH))
 		user.SetNextMove(CLICK_CD_RAPID)
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
@@ -141,7 +141,7 @@
 	..()
 	if(!modded)
 		start_leaking()
-	
+
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
 	. = ..()
 	if(.)

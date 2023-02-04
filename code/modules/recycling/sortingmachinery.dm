@@ -486,7 +486,7 @@
 	if(!I || !user)
 		return
 
-	if(isscrewdriver(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		if(c_mode==0)
 			c_mode=1
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
@@ -497,7 +497,7 @@
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You attach the screws around the power connection.")
 			return
-	else if(iswelder(I) && c_mode==1 && !user.is_busy())
+	else if(I.get_quality(QUALITY_WELDING) && c_mode==1 && !user.is_busy())
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the delivery chute.")

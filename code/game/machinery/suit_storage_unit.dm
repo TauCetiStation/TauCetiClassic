@@ -451,7 +451,7 @@
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user)
 	if(!src.ispowered)
 		return
-	if(isscrewdriver(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		src.panelopen = !src.panelopen
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, text("<font color='blue'>You [] the unit's maintenance panel.</font>",(src.panelopen ? "open up" : "close") ))
@@ -537,7 +537,7 @@
 /obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
 	if(flags & NODECONSTRUCT)
 		return ..()
-	
+
 	if(HELMET)
 		HELMET.forceMove(loc)
 		HELMET = null

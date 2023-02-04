@@ -132,7 +132,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(T.intact)
 		return
 
-	if(iswirecutter(W))
+	if(W.get_quality(QUALITY_CUTTING))
 
 		if (shock(user, 50))
 			return
@@ -146,7 +146,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		var/obj/item/stack/cable_coil/coil = W
 		coil.cable_join(src, user)
 
-	else if(ismultitool(W))
+	else if(W.get_quality(QUALITY_PULSE))
 		to_chat(user, get_power_info())
 		shock(user, 5, 0.2)
 

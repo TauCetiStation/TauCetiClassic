@@ -2537,7 +2537,7 @@ other types of metals and chemistry for reagents).
 	name = "Jaws of Life"
 	desc = "A small, compact Jaws of Life with an interchangable pry jaws and cutting jaws"
 	id = "jawsoflife"
-	build_path = /obj/item/weapon/crowbar/power
+	build_path = /obj/item/weapon/multi/jaws_of_life
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_SILVER = 2000, MAT_GOLD = 1000)
 	category = list("Tools")
@@ -2548,7 +2548,7 @@ other types of metals and chemistry for reagents).
 	id = "handdrill"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_SILVER = 2000, MAT_GOLD = 1000)
-	build_path = /obj/item/weapon/screwdriver/power
+	build_path = /obj/item/weapon/multi/hand_drill
 	category = list("Tools")
 
 /datum/design/magboots

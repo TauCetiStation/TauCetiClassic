@@ -416,7 +416,7 @@
 		to_chat(user, "<span class ='userdanger'>[src] is lock down!</span>")
 		return
 
-	if(isscrewdriver(O))
+	if(O.get_quality(QUALITY_SCREWING))
 		if(flags & ADVANCED_AIMING_INSTALLED)
 			if(flags & STATE_AIMING)
 				CancelAdvancedAiming()
@@ -427,7 +427,7 @@
 		else
 			to_chat(user, "<span class ='notice'>Advanced aiming system does not installed in [src]!</span>")
 
-	else if(iswelder(O))
+	else if(O.get_quality(QUALITY_WELDING))
 		var/obj/item/weapon/weldingtool/WT = O
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(get_integrity() < max_integrity && WT.use(0, user))

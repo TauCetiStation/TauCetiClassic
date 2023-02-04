@@ -42,13 +42,13 @@
 		else
 			removeTank(user)
 
-	else if(iswrench(I))
+	else if(I.get_quality(QUALITY_WRENCH))
 		fisto_setting = 1 + (fisto_setting % 3)
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user,"<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>")
 		update_icon()
 
-	else if(isscrewdriver(I))
+	else if(I.get_quality(QUALITY_SCREWING))
 		removeTank(user)
 
 	else

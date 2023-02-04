@@ -43,7 +43,7 @@
 
 	if(!hasPower())
 		var/can_wedge = FALSE
-		if(iscrowbar(C))
+		if(C.get_quality(QUALITY_PRYING))
 			can_wedge = TRUE
 		else if(istype(C, /obj/item/weapon/fireaxe))
 			var/obj/item/weapon/fireaxe/F = C
@@ -52,7 +52,7 @@
 		if(can_wedge)
 			open(TRUE)
 
-	else if(ismultitool(C) && !density)
+	else if(C.get_quality(QUALITY_PULSE) && !density)
 		var/obj/item/device/multitool/M = C
 		var/turf/turf = get_turf(src)
 		if(!is_station_level(turf.z) && !is_mining_level(turf.z))

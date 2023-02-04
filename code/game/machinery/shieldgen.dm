@@ -131,7 +131,7 @@
 			to_chat(user, "The device must first be secured to the floor.")
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewdriver(W))
+	if(W.get_quality(QUALITY_SCREWING))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(is_open)
 			to_chat(user, "<span class='notice'>You close the panel.</span>")
@@ -152,7 +152,7 @@
 			to_chat(user, "<span class='notice'>You repair the [src]!</span>")
 			update_icon()
 
-	else if(iswrench(W))
+	else if(W.get_quality(QUALITY_WRENCH))
 		if(locked)
 			to_chat(user, "The bolts are covered, unlocking this would retract the covers.")
 			return
@@ -366,7 +366,7 @@
 
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
-	if(iswrench(W))
+	if(W.get_quality(QUALITY_WRENCH))
 		if(active)
 			to_chat(user, "Turn off the field generator first.")
 			return

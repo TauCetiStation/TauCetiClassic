@@ -109,7 +109,7 @@
 			to_chat(user, "<span class='warning'>You need one length of cable to attach a string to the coin!</span>")
 			return
 
-	else if(iswirecutter(I))
+	else if(I.get_quality(QUALITY_CUTTING))
 		if(!string_attached)
 			return ..()
 

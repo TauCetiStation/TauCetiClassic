@@ -27,7 +27,7 @@
 		state = 0 //fine
 
 /obj/item/stack/tile/light/attackby(obj/item/I, mob/user, params)
-	if(iscrowbar(I))
+	if(I.get_quality(QUALITY_PRYING))
 		if(!use(1))
 			return
 		new/obj/item/stack/sheet/metal(user.loc)

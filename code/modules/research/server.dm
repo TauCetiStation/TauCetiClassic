@@ -119,7 +119,7 @@
 	if(exchange_parts(user, I))
 		return
 	if (panel_open)
-		if(iscrowbar(I))
+		if(I.get_quality(QUALITY_PRYING))
 			griefProtection()
 			default_deconstruction_crowbar(I)
 			return 1

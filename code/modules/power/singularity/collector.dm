@@ -68,11 +68,11 @@ var/global/list/rad_collectors = list()
 		user.drop_from_inventory(W, src)
 		src.P = W
 		update_icons()
-	else if(iscrowbar(W))
+	else if(W.get_quality(QUALITY_PRYING))
 		if(P && !src.locked)
 			eject()
 			return 1
-	else if(iswrench(W))
+	else if(W.get_quality(QUALITY_WRENCH))
 		if(P)
 			to_chat(user, "<span class='notice'>Remove the phoron tank first.</span>")
 			return 1

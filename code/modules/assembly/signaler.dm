@@ -18,6 +18,10 @@
 	var/datum/radio_frequency/radio_connection
 	var/deadman = 0
 
+	qualities = list(
+		QUALITY_SIGNAL = 1
+	)
+
 /obj/item/device/assembly/signaler/atom_init()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/set_frequency, frequency), 40)

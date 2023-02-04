@@ -518,7 +518,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 			else
 				to_chat(user, "<span class='notice'>Похоже, лампочка в порядке, менять её не нужно.</span>")
 
-	if(iscrowbar(C) && (!(is_plating())))
+	if(C.get_quality(QUALITY_PRYING) && (!(is_plating())))
 		if(broken || burnt)
 			to_chat(user, "<span class='warning'>Вы сняли поврежденное покрытие.</span>")
 		else
@@ -538,7 +538,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 
 		return
 
-	if(isscrewdriver(C))
+	if(C.get_quality(QUALITY_SCREWING))
 		if(is_wood_floor())
 			if(broken || burnt)
 				return
@@ -628,7 +628,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 		else
 			to_chat(user, "<span class='warning'>Это нельзя вскопать.</span>")
 
-	if(iswelder(C))
+	if(C.get_quality(QUALITY_WELDING))
 		var/obj/item/weapon/weldingtool/W = C
 		if(!is_plating())
 			return

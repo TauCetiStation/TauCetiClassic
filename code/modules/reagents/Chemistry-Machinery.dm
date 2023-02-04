@@ -160,7 +160,7 @@
 /obj/machinery/chem_dispenser/attackby(obj/item/weapon/B, mob/user)
 //	if(isrobot(user))
 //		return
-	if(ismultitool(B) && hackable)
+	if(B.get_quality(QUALITY_PULSE) && hackable)
 		hackedcheck = !hackedcheck
 		if(hackedcheck)
 			to_chat(user, msg_hack_enable)
@@ -284,7 +284,7 @@
 		return
 
 	if(panel_open)
-		if(iscrowbar(I))
+		if(I.get_quality(QUALITY_PRYING))
 			if(beaker)
 				var/obj/item/weapon/reagent_containers/glass/B = beaker
 				B.loc = loc
@@ -720,7 +720,7 @@
 		return
 
 	if(panel_open)
-		if(iscrowbar(B))
+		if(B.get_quality(QUALITY_PRYING))
 			default_deconstruction_crowbar(B)
 			return 1
 		else
@@ -829,7 +829,7 @@
 
 /obj/machinery/reagentgrinder/attackby(obj/item/O, mob/user)
 
-	if(iswrench(O))
+	if(O.get_quality(QUALITY_WRENCH))
 		default_unfasten_wrench(user, O)
 		return
 
@@ -882,7 +882,7 @@
 		beaker.forceMove(loc)
 		beaker = null
 	return ..()
-	
+
 
 /obj/machinery/reagentgrinder/attack_ai(mob/user)
 	if(IsAdminGhost(user))

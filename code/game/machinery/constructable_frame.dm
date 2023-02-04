@@ -92,7 +92,7 @@
 						state = 2
 						icon_state = "box_1"
 
-			else if(isscrewdriver(P) && !anchored)
+			else if(P.get_quality(QUALITY_SCREWING) && !anchored)
 				if(user.is_busy(src))
 					return
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
@@ -102,7 +102,7 @@
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
 						deconstruct(TRUE)
 
-			else if(iswrench(P))
+			else if(P.get_quality(QUALITY_WRENCH))
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
@@ -111,7 +111,7 @@
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 						anchored = !anchored
 		if(2)
-			if(iswrench(P))
+			if(P.get_quality(QUALITY_WRENCH))
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
@@ -138,7 +138,7 @@
 					update_req_desc()
 				else
 					to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
-			if(iswirecutter(P))
+			if(P.get_quality(QUALITY_CUTTING))
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
@@ -146,7 +146,7 @@
 				new /obj/item/stack/cable_coil/red(loc, 5)
 
 		if(3)
-			if(iscrowbar(P))
+			if(P.get_quality(QUALITY_PRYING))
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				state = 2
 				circuit.loc = src.loc
@@ -163,7 +163,7 @@
 				components = null
 				icon_state = "box_1"
 
-			if(isscrewdriver(P))
+			if(P.get_quality(QUALITY_SCREWING))
 				var/component_check = 1
 				for(var/R in req_components)
 					if(req_components[R] > 0)
@@ -253,7 +253,7 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/vending_refill/boozeomat = 3)
 
 /obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		var/list/names = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
 							/obj/machinery/vending/snack = "Getmore Chocolate Corp (Red)",
 							/obj/machinery/vending/snack/blue = "Getmore Chocolate Corp (Blue)",

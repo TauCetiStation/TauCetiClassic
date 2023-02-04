@@ -616,7 +616,7 @@
 
 				return
 
-	if (iswelder(W))
+	if (W.get_quality(QUALITY_WELDING))
 		if (src == user)
 			to_chat(user, "<span class='warning'>You lack the reach to be able to repair yourself.</span>")
 			return
@@ -647,7 +647,7 @@
 		updatehealth()
 		user.visible_message("<span class='warning'>[user] has fixed some of the burnt wires on [src]!</span>")
 
-	else if (iscrowbar(W))	// crowbar means open or close the cover
+	else if (W.get_quality(QUALITY_PRYING))	// crowbar means open or close the cover
 		if(opened)
 			if(cell)
 				to_chat(user, "You close the cover.")
@@ -727,17 +727,17 @@
 			C.electronics_damage = 0
 			diag_hud_set_borgcell()
 
-	else if (iswirecutter(W) || ismultitool(W))
+	else if (W.get_quality(QUALITY_CUTTING) || W.get_quality(QUALITY_PULSE))
 		if (!wires.interact(user))
 			to_chat(user, "You can't reach the wiring.")
 
-	else if(isscrewdriver(W) && opened && !cell)	// haxing
+	else if(W.get_quality(QUALITY_SCREWING) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
 		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		updateicon()
 
-	else if(isscrewdriver(W) && opened && cell)	// radio
+	else if(W.get_quality(QUALITY_SCREWING) && opened && cell)	// radio
 		if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
 		else

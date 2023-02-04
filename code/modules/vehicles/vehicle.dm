@@ -84,14 +84,14 @@
 /obj/vehicle/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/tagger))
 		return
-	else if(isscrewdriver(W))
+	else if(W.get_quality(QUALITY_SCREWING))
 		open = !open
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(on && open)
 			turn_off()
 		update_icon()
 		to_chat(user, "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>")
-	else if(iswelder(W))
+	else if(W.get_quality(QUALITY_WELDING))
 		var/obj/item/weapon/weldingtool/T = W
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(T.isOn())

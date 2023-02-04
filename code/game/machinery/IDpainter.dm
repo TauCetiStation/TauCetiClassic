@@ -44,7 +44,7 @@
 					var/mob/living/carbon/human/H = usr
 					H.sec_hud_set_ID()
 	else
-		if(iswrench(O))
+		if(O.get_quality(QUALITY_WRENCH))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")

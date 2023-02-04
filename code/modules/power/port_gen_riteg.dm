@@ -11,7 +11,7 @@
 /obj/machinery/power/port_gen/riteg/attackby(obj/item/O, mob/user, params)
 	if(!active)
 
-		if(iswrench(O))
+		if(O.get_quality(QUALITY_WRENCH))
 
 			if(!anchored && !isinspace())
 				connect_to_network()

@@ -99,7 +99,7 @@
 	. = ..()
 	if(broken || flags & NODECONSTRUCT)
 		return
-	
+
 	density = FALSE
 	broken = TRUE
 	open = TRUE
@@ -112,7 +112,7 @@
 /obj/structure/displaycase/proc/trigger_alarm()
 	if(!alert)
 		return
-	
+
 	var/area/alarmed = get_area(src)
 	alarmed.airlocks_close(TRUE)
 
@@ -159,7 +159,7 @@
 				update_integrity(max_integrity)
 				update_icon()
 			return
-		else if(iscrowbar(W))
+		else if(W.get_quality(QUALITY_PRYING))
 			if(showpiece)
 				to_chat(user, "<span class='warning'>Remove the displayed object first!</span>")
 			else
@@ -173,7 +173,7 @@
 			else
 				to_chat(user, "<span class='alert'>Access denied.</span>")
 			return
-		else if(iswelder(W))
+		else if(W.get_quality(QUALITY_WELDING))
 			if(atom_integrity < max_integrity)
 				if(!W.tool_start_check(user, amount=5))
 					return
@@ -233,13 +233,13 @@
 	return ..()
 
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I))
+	if(I.get_quality(QUALITY_WRENCH))
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		if(I.use_tool(src, user, SKILL_TASK_EASY, volume = 50))
 			playsound(loc, 'sound/items/deconstruct.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 			deconstruct(TRUE)
 
-	else if(iscrowbar(I) && electronics)
+	else if(I.get_quality(QUALITY_PRYING) && electronics)
 		to_chat(user, "<span class='notice'>You start to remove the electronics from [src]...</span>")
 		if(I.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 100))
 			to_chat(user, "<span class='notice'>You have removed the electronics from [src]!</span>")
@@ -283,7 +283,7 @@
 		electronics = null
 	new /obj/item/stack/sheet/wood(loc, 5)
 	..()
-	
+
 
 //The lab cage and captain's display case do not spawn with electronics, which is why req_access is needed.
 /obj/structure/displaycase/captain

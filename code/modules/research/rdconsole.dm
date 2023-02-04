@@ -138,7 +138,7 @@ cause a ton of data to be lost, an admin can go send it back.
 		files.research_points += disk.stored_points
 		user.remove_from_mob(disk)
 		qdel(disk)
-	else if(ismultitool(D))
+	else if(D.get_quality(QUALITY_PULSE))
 		var/obj/item/device/multitool/M = D
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You save the data in the [D.name]'s buffer.</span>")

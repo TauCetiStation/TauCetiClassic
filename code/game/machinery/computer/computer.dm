@@ -164,11 +164,11 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>It's too complicated for you.</span>")
 		return
-	if(isscrewdriver(I) && circuit && !(flags&NODECONSTRUCT))
+	if(I.get_quality(QUALITY_SCREWING) && circuit && !(flags&NODECONSTRUCT))
 		if(user.is_busy(src)) return
 		if(I.use_tool(src, user, 20, volume = 50))
 			deconstruct(TRUE)
-	if(iswrench(I))
+	if(I.get_quality(QUALITY_WRENCH))
 		if(user.is_busy(src))
 			return
 
@@ -203,7 +203,7 @@
 
 	var/obj/item/I = usr.get_active_hand()
 
-	if (!I || !iswrench(I))
+	if (!I || !I.get_quality(QUALITY_WRENCH))
 		to_chat(usr, "<span class='warning'>You need to hold a wrench in your active hand to do this.</span>")
 		return
 
@@ -245,7 +245,7 @@
 				return 1
 			else if(emp_luck == 10)
 				emp_act(3)
-				to_chat(H, "<span class='warning'>You poured water on the device.</span>") 
+				to_chat(H, "<span class='warning'>You poured water on the device.</span>")
 				return 1
 	. = ..()
 

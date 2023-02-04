@@ -72,7 +72,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(iscrowbar(I))
+	if(I.get_quality(QUALITY_PRYING))
 		if(anchored == 2)
 			to_chat(user, "Unscrew the hoses first!")
 			return
@@ -678,7 +678,7 @@
 			S.handle_item_insertion(G, 1)
 			SSStatistics.score.stuffharvested++
 
-	else if(iswrench(O) && unwrenchable)
+	else if(O.get_quality(QUALITY_WRENCH) && unwrenchable)
 		if(anchored == 2)
 			to_chat(user, "Unscrew the hoses first!")
 			return
@@ -694,7 +694,7 @@
 
 		wrenched_change()
 
-	else if(iswirecutter(O) && unwrenchable)
+	else if(O.get_quality(QUALITY_CUTTING) && unwrenchable)
 
 		if(anchored)
 			if(anchored == 2)

@@ -86,9 +86,9 @@
 	flags = NODECONSTRUCT | ON_BORDER
 
 /obj/structure/window/reinforced/holowindow/attackby(obj/item/W, mob/user)
-	if(isscrewdriver(W))
+	if(W.get_quality(QUALITY_SCREWING))
 		to_chat(user, ("<span class='notice'>It's a holowindow, you can't unfasten it!</span>"))
-	else if(iscrowbar(W))
+	else if(W.get_quality(QUALITY_PRYING))
 		to_chat(user, ("<span class='notice'>It's a holowindow, you can't pry it!</span>"))
 	else
 		return ..()
@@ -102,7 +102,7 @@
 	icon_state = "chair_gray"
 
 /obj/structure/stool/bed/chair/holochair/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W))
+	if(W.get_quality(QUALITY_WRENCH))
 		to_chat(user, ("<span class='notice'>It's a holochair, you can't dismantle it!</span>"))
 	return
 
@@ -299,7 +299,7 @@
 	return
 
 /obj/structure/rack/holorack/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if (W.get_quality(QUALITY_WRENCH))
 		to_chat(user, "It's a holorack!  You can't unwrench it!")
 		return
 

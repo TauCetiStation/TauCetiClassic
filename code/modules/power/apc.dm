@@ -408,7 +408,7 @@
 	if(issilicon(user) && get_dist(src,user) > 1)
 		return attack_hand(user)
 	add_fingerprint(user)
-	if(iscrowbar(W) && opened != APC_COVER_CLOSED)
+	if(W.get_quality(QUALITY_PRYING) && opened != APC_COVER_CLOSED)
 		if(has_electronics == 1)
 			if(terminal)
 				to_chat(user, "<span class='warning'>Disconnect wires first.</span>")
@@ -434,7 +434,7 @@
 			opened = APC_COVER_CLOSED
 			update_icon()
 
-	else if(iscrowbar(W) && opened == APC_COVER_CLOSED)
+	else if(W.get_quality(QUALITY_PRYING) && opened == APC_COVER_CLOSED)
 		if(stat & BROKEN)
 			user.visible_message("<span class='warning'>[user.name] try open [src.name] cover.</span>", "<span class='notice'>You try open [src.name] cover.</span>")
 			if(W.use_tool(src, user, 25, volume = 25))
@@ -454,7 +454,7 @@
 				opened = APC_COVER_OPENED
 				update_icon()
 
-	else if(iswrench(W) && opened != APC_COVER_CLOSED && (stat & BROKEN))
+	else if(W.get_quality(QUALITY_WRENCH) && opened != APC_COVER_CLOSED && (stat & BROKEN))
 		if(coverlocked)
 			to_chat(user, "<span class='notice'>Remove security APC bolts.</span>")
 			if(W.use_tool(src, user, 5, volume = 5))
@@ -479,7 +479,7 @@
 			chargecount = 0
 			update_icon()
 
-	else if	(isscrewdriver(W)) // haxing
+	else if	(W.get_quality(QUALITY_SCREWING)) // haxing
 		if(opened != APC_COVER_CLOSED)
 			if(cell)
 				to_chat(user, "<span class='warning'>Close the APC first.</span>") // Less hints more mystery!
@@ -572,7 +572,7 @@
 			make_terminal()
 			terminal.connect_to_network()
 
-	else if(iswirecutter(W) && terminal && opened != APC_COVER_CLOSED && has_electronics!=2)
+	else if(W.get_quality(QUALITY_CUTTING) && terminal && opened != APC_COVER_CLOSED && has_electronics!=2)
 		terminal.dismantle(user)
 
 	else if(istype(W, /obj/item/weapon/module/power_control) && opened != APC_COVER_CLOSED && has_electronics == 0 && !((stat & BROKEN) || malfhack))
@@ -587,7 +587,7 @@
 		to_chat(user, "<span class='warning'>You cannot put the board inside, the frame is damaged.</span>")
 		return
 
-	else if(iswelder(W) && opened != APC_COVER_CLOSED && has_electronics == 0 && !terminal)
+	else if(W.get_quality(QUALITY_WELDING) && opened != APC_COVER_CLOSED && has_electronics == 0 && !terminal)
 		if(user.is_busy()) return
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.get_fuel() < 3)

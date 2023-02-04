@@ -102,7 +102,7 @@ Note: Must be placed west/left of and R&D console to function.
 		return
 
 	if (panel_open)
-		if(iscrowbar(I))
+		if(I.get_quality(QUALITY_PRYING))
 			default_deconstruction_crowbar(I)
 			return 1
 		else if (is_wire_tool(I) && wires.interact(user))
