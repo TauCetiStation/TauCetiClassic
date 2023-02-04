@@ -288,7 +288,7 @@ var/global/list/wire_daltonism_colors = list()
 					L.put_in_hands(O)
 					. = TRUE
 			else
-				if(I.get_quality(QUALITY_SIGNAL))
+				if(I && I.get_quality(QUALITY_SIGNAL))
 					L.drop_from_inventory(I, holder)
 					attach_signaler(target_wire, I)
 				else

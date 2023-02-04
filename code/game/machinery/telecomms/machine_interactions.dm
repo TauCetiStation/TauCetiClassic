@@ -21,8 +21,9 @@
 /obj/machinery/telecomms/ui_interact(mob/user)
 	// You need a multitool to use this, or be silicon/ghost
 	if(!issilicon(user) && !isobserver(user))
-		// istype returns false if the value is null
-		if(!user.get_active_hand().get_quality(QUALITY_PULSE))
+		// get_quality returns false if the value is null
+		var/obj/item/I = user.get_active_hand()
+		if(I && !I.get_quality(QUALITY_PULSE))
 			return
 
 	var/obj/item/device/multitool/P = get_multitool(user)
@@ -88,14 +89,15 @@
 /obj/machinery/telecomms/proc/get_multitool(mob/user)
 
 	var/obj/item/device/multitool/P = null
+	var/obj/item/I = user.get_active_hand()
 	// Let's double check
-	if(!issilicon(user) && !isobserver(user) && user.get_active_hand().get_quality(QUALITY_PULSE))
+	if(!issilicon(user) && !isobserver(user) && (I && I.get_quality(QUALITY_PULSE)))
 		P = user.get_active_hand()
 	else if(isAI(user))
 		var/mob/living/silicon/ai/U = user
 		P = U.aiMulti
 	else if(isrobot(user) && Adjacent(user))
-		if(user.get_active_hand().get_quality(QUALITY_PULSE))
+		if(I.get_quality(QUALITY_PULSE))
 			P = user.get_active_hand()
 	else if(isobserver(user))
 		var/mob/dead/observer/O = user
@@ -169,7 +171,8 @@
 
 /obj/machinery/telecomms/Topic(href, href_list)
 	if(!issilicon(usr) && !isobserver(usr))
-		if(!usr.get_active_hand().get_quality(QUALITY_PULSE))
+		var/obj/item/I = usr.get_active_hand()
+		if(I && !I.get_quality(QUALITY_PULSE))
 			return FALSE
 
 	. = ..()

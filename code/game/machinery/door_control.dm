@@ -269,7 +269,9 @@
 	. = ..()
 	if(!.)
 		return
-	if(!usr.get_active_hand().get_quality(QUALITY_PULSE))
+	var/obj/item/I = usr.get_active_hand()
+
+	if(I && !I.get_quality(QUALITY_PULSE))
 		to_chat(usr, "<span class='warning'>You need a multitool!</span>")
 		return
 	if(href_list["show_accesses"])
