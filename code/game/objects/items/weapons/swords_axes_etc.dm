@@ -200,8 +200,11 @@
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/telebaton/attack(mob/target, mob/living/user)
+	if(!isliving(target))
+		return ..()
+	var/mob/living/L = target
 	if(on)
-		if (user.ClumsyProbabilityCheck(50))
+		if(user.ClumsyProbabilityCheck(50))
 			to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
 			user.adjustHalLoss(70)
 			if(ishuman(user))
@@ -210,26 +213,17 @@
 			else
 				user.take_bodypart_damage(2 * force)
 			return
+		var/target_armor = L.run_armor_check(user.get_targetzone(), MELEE)
 		if(user.a_intent == INTENT_HELP && ishuman(target))
 			var/mob/living/carbon/human/H = target
+			H.apply_effect(35, AGONY, target_armor)
 			playsound(src, 'sound/weapons/hit_metalic.ogg', VOL_EFFECTS_MASTER)
 			user.do_attack_animation(H)
-
-			if(H.wear_suit)
-				var/obj/item/clothing/suit/S = H.wear_suit
-				var/meleearm = S.armor[MELEE]
-				if(meleearm)
-					if(meleearm != 100)
-						H.adjustHalLoss(round(35 - (35 / 100 * meleearm)))
-				else
-					H.adjustHalLoss(35)
-			else
-				H.adjustHalLoss(35)
-
 			H.visible_message("<span class='warning'>[user] hit [H] harmlessly with a telebaton.</span>")
 			H.log_combat(user, "hit harmlessly with [name]")
 			return
 		if(..())
+			L.apply_effect(35, AGONY, target_armor)
 			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 			return
 	else
