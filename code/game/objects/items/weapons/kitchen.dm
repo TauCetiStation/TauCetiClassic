@@ -59,7 +59,7 @@
  */
 /obj/item/weapon/kitchen/utensil/spoon
 	name = "spoon"
-	desc = "SPOON!"
+	desc = "SPOON!1"
 	icon_state = "spoon"
 	attack_verb = list("attacked", "poked")
 
