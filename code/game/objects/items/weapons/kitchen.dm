@@ -26,11 +26,18 @@
 	origin_tech = "materials=1"
 	attack_verb = list("attacked", "stabbed", "poked")
 	var/max_contents = 1
+	var/overlay_food_string = "loaded_food"
 
 /obj/item/weapon/kitchen/utensil/atom_init()
 	. = ..()
 	if (prob(60))
 		pixel_y = rand(0, 4)
+
+/obj/item/weapon/kitchen/utensil/proc/create_food_overlay(filling_color)
+	cut_overlays()
+	var/image/IM = new(icon, overlay_food_string)
+	IM.color = filling_color
+	add_overlay(IM)
 
 /obj/item/weapon/kitchen/utensil/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
@@ -59,9 +66,10 @@
  */
 /obj/item/weapon/kitchen/utensil/spoon
 	name = "spoon"
-	desc = "SPOON!1"
+	desc = "SPOON!"
 	icon_state = "spoon"
 	attack_verb = list("attacked", "poked")
+	overlay_food_string = "food_spoon"
 
 /obj/item/weapon/kitchen/utensil/pspoon
 	name = "plastic spoon"
@@ -78,6 +86,7 @@
 	force = 3
 	hitsound = list('sound/items/tools/screwdriver-stab.ogg')
 	icon_state = "fork"
+	overlay_food_string = "food_fork"
 
 /obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
@@ -95,6 +104,7 @@
 	desc = "How do people even hold this?"
 	force = 2
 	icon_state = "sticks"
+	overlay_food_string = "loaded_food"
 
 /obj/item/weapon/kitchen/utensil/pfork
 	name = "plastic fork"
@@ -205,8 +215,14 @@
 	m_amt = 12000
 	sweep_step = 2
 
-
-
+/obj/item/weapon/kitchenknife/butch/cleaver
+	name = "cleaver"
+	desc = "GET OVER HERE! FRESH MEAT!"
+	icon_state = "cleaver"
+	item_state = "butch"
+	force = 20
+	w_class = SIZE_NORMAL
+	can_embed = FALSE
 
 /*
  * Rolling Pins
