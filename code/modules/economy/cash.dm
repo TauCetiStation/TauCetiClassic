@@ -17,6 +17,7 @@
 	var/worth = 0
 	var/is_burning = FALSE
 	var/can_burn = TRUE
+	var/burning_timer
 
 /obj/item/weapon/spacecash/atom_init()
 	. = ..()
@@ -31,7 +32,7 @@
 			user.visible_message("<span class='[span]'>[user] holds \the [P] up to \the [src] it looks like \he's trying to burn it.</span>", \
 								"<span class='notice'>You hold \the [P] up to \the [src], burning it slowly.</span>")
 			START_PROCESSING(SSobj, src)
-			QDEL_IN(src, 10 SECONDS)
+			burning_timer = QDEL_IN(src, 10 SECONDS)
 			var/image/fire = image(icon, icon_state = "on_fire_cash")
 			add_overlay(fire)
 			return
@@ -41,6 +42,14 @@
 	var/turf/location = get_turf(src)
 	if(location)
 		location.hotspot_expose(700, 5, src)
+
+/obj/item/weapon/spacecash/extinguish()
+	cut_overlays()
+	is_burning = FALSE
+	STOP_PROCESSING(SSobj, src)
+	var/datum/timedevent/timer = SStimer.timer_id_dict["timerid[burning_timer]"]
+	if(!timer?.spent)
+		deltimer(burning_timer)
 
 /obj/item/weapon/spacecash/Destroy()
 	if(is_burning)
