@@ -409,7 +409,7 @@
 	var/has_breathable_mask = istype(wear_mask, /obj/item/clothing/mask)
 	var/list/obscured = check_obscured_slots()
 	var/list/dat = list()
-	var/obj/item/clothing/under/suit = istype(w_uniform, /obj/item/clothing/under) ? w_uniform : null
+	var/obj/item/clothing/under/suit = isunder(w_uniform) ? w_uniform : null
 
 	dat += "<table>"
 	dat += "<tr><td><B>Left Hand:</B></td><td><A href='?src=\ref[src];item=[SLOT_L_HAND]'>[(l_hand && !(l_hand.flags & ABSTRACT)) ? l_hand : "<font color=grey>Empty</font>"]</a></td></tr>"
@@ -608,7 +608,7 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, def_zone, tesla_shock)
 	if(status_flags & GODMODE)
 		return 0	//godmode
-	if(NO_SHOCK in src.mutations)
+	if(IsShockproof())
 		return 0 //#Z2 no shock with that mutation.
 
 	if((HULK in mutations) && hulk_activator == ACTIVATOR_ELECTRIC_SHOCK) //for check to transformation Hulk.
@@ -718,7 +718,7 @@
 				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) splints.</font>"
 
 	if (href_list["sensor"] && usr.CanUseTopicInventory(src))
-		if(istype(w_uniform, /obj/item/clothing/under))
+		if(isunder(w_uniform))
 			var/obj/item/clothing/under/S = w_uniform
 			visible_message("<span class='danger'>[usr] is trying to set [src]'s suit sensors!</span>")
 			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
@@ -914,7 +914,7 @@
 		var/obj/item/clothing/head/welding/W = head
 		if(!W.up)
 			number += 2
-	if(!istype(head, /obj/item/clothing/head/helmet/space/sk) && istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault))
+	if(!istype(head, /obj/item/clothing/head/helmet/space/sk) && istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault) || istype(head, /obj/item/clothing/head/helmet/swat))
 		number += 2
 	if(istype(glasses, /obj/item/clothing/glasses/thermal))
 		var/obj/item/clothing/glasses/thermal/G = glasses
