@@ -972,7 +972,7 @@
 			xylophone=0
 	return
 
-/mob/living/carbon/human/vomit(punched = FALSE, masked = FALSE)
+/mob/living/carbon/human/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, stun = TRUE, force = FALSE)
 	var/mask_ = masked
 	if(species.flags[NO_VOMIT])
 		return FALSE
@@ -980,7 +980,7 @@
 	if(wear_mask && (wear_mask.flags & MASKCOVERSMOUTH))
 		mask_ = TRUE
 
-	return ..(punched, mask_)
+	return ..(punched, mask_, vomit_type, stun, force)
 
 
 /mob/living/carbon/human/proc/force_vomit(mob/living/carbon/human/H)
