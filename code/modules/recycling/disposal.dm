@@ -167,17 +167,19 @@
 	var/target_loc = target.loc
 	var/msg
 	var/self_msg
-
+	var/time_climbing = 20
 	if(target == user)
 		if(user.incapacitated(LEGS))
 			return
 		user.visible_message("<span class='red'>[usr] starts climbing into the disposal.</span>")
+		if(HAS_TRAIT(user, TRAIT_NATURAL_AGILITY))
+			time_climbing *= 0.25
 	else
 		if(user.incapacitated(ARMS))
 			return
 		user.visible_message("<span class='red'>[usr] starts stuffing [target.name] into the disposal.</span>")
 
-	if(user.is_busy() || !do_after(usr, 20, target = src))
+	if(user.is_busy() || !do_after(usr, time_climbing, target = src))
 		return
 	if(target_loc != target.loc || target.anchored)
 		return
