@@ -58,7 +58,7 @@
 	if(istype(W, /obj/item/weapon/storage/bible/tome)) // So that you can destroy the pedestal and not put a tome on it
 		return FALSE
 
-	if(iswrench(W))
+	if(iswrenching(W))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored

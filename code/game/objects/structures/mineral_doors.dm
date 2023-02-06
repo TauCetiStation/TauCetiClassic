@@ -129,7 +129,7 @@
 			to_chat(user, "<span class='notice'>You finished digging!</span>")
 			deconstruct(TRUE)
 
-	else if(iswrench(W) && can_unwrench)
+	else if(iswrenching(W) && can_unwrench)
 		if(user.is_busy(src))
 			return
 		if(anchored)
@@ -172,7 +172,7 @@
 	sheetType = /obj/item/stack/sheet/metal
 
 /obj/structure/mineral_door/metal/attackby(obj/item/weapon/W, mob/user)
-	if(iswelder(W))
+	if(iswelding(W))
 		if(user.is_busy())
 			return
 		var/obj/item/weapon/weldingtool/WT = W
@@ -222,7 +222,7 @@
 	sheetType = /obj/item/stack/sheet/mineral/phoron
 
 /obj/structure/mineral_door/transparent/phoron/attackby(obj/item/weapon/W, mob/user)
-	if(iswelder(W))
+	if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0, user))
 			TemperatureAct(100)

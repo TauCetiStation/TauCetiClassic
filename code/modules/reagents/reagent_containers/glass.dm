@@ -313,7 +313,7 @@
 		qdel(src)
 		return
 
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0,user))
 			var/obj/item/clothing/head/helmet/battlebucket/BBucket = new(usr.loc)

@@ -54,7 +54,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 	reagents.add_reagent(reagent_inside, rand(volume * 0.5, volume))
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I))
+	if(iswrenching(I))
 		if(is_open_container())
 			flags &= ~OPENCONTAINER
 		else
