@@ -19,6 +19,8 @@
 	var/second_help_sent = FALSE
 	var/win_declared = FALSE
 
+	var/list/vents4spawn
+
 /datum/faction/infestation/AdminPanelEntry(datum/admins/A)
 	var/dat = ..()
 	var/data = count_alien_percent()
@@ -35,29 +37,31 @@
 /datum/faction/infestation/can_setup(num_players)
 	if(!..())
 		return FALSE
-	if(xeno_spawn.len > 0)
+	vents4spawn += get_vents()
+	if(xeno_spawn.len > 0 || vents4spawn.len > 0)
 		return TRUE
 	return FALSE
 
 /datum/faction/infestation/OnPostSetup()
-	for(var/check_spawn in xeno_spawn)
-		var/turf/T = get_turf(check_spawn)
-		if(T.loc.name == "Construction Area")
-			xeno_spawn -= check_spawn
-		if(T.loc.name == "Technical Storage")
-			xeno_spawn -= check_spawn
-
 	for(var/datum/role/role in members)
-		var/start_point = pick(xeno_spawn)
-		xeno_spawn -= start_point
-		var/area/A = get_area(start_point)
+		if(length(vents4spawn) > 0)
+			var/V = pick_n_take(vents4spawn)
+			var/mob/living/carbon/xenomorph/larva/L = new(V) // spawn them inside vents
+			role.antag.transfer_to(L)
+			QDEL_NULL(role.antag.original)
+			L.add_ventcrawl(V)
+		else
+			var/start_point = pick(xeno_spawn)
+			xeno_spawn -= start_point
+			var/area/A = get_area(start_point)
 
-		for(var/obj/machinery/power/apc/apc in A.apc)
-			apc.overload_lighting()
+			for(var/obj/machinery/power/apc/apc in A.apc)
+				apc.overload_lighting()
 
-		var/mob/living/carbon/xenomorph/larva/L = new /mob/living/carbon/xenomorph/larva(get_turf(start_point))
-		role.antag.transfer_to(L)
-		QDEL_NULL(role.antag.original)
+			var/mob/living/carbon/xenomorph/larva/L = new /mob/living/carbon/xenomorph/larva(get_turf(start_point))
+			role.antag.transfer_to(L)
+			QDEL_NULL(role.antag.original)
+
 
 	return ..()
 
