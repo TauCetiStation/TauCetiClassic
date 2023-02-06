@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 39
+#define SAVEFILE_VERSION_MAX 40
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -243,6 +243,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(current_version < 39)
 		S["ghost_orbit"] << null
+
+	if(current_version < 40)
+		if(ignore_question && ignore_question.len)
+			if("Lavra" in ignore_question)
+				ignore_question -= "Lavra"
+				ignore_question |= IGNORE_LARVA
+				S["ignore_question"] << ignore_question
 
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
