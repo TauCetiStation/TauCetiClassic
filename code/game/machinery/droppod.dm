@@ -337,7 +337,7 @@
 /obj/structure/droppod/verb/Start_Verb()
 	set category = "Drop Pod"
 	set name = "Start Drop"
-	set src = orange(1)
+	set src in orange(1)
 	if(!(ishuman(usr) || isrobot(usr)) || usr.incapacitated() || !isturf(loc))
 		return FALSE
 	if(intruder)
