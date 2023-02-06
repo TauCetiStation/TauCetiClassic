@@ -573,6 +573,7 @@
 	qualities = list(
 		QUALITY_WRENCHING = 1
 	)
+
 /obj/item/weapon/multi/hand_drill/attack_self(mob/user)
 	mode = !mode
 	playsound(user, 'sound/items/change_drill.ogg', VOL_EFFECTS_MASTER)
@@ -603,6 +604,7 @@
 	qualities = list(
 		QUALITY_CUTTING = 1
 	)
+
 /obj/item/weapon/multi/jaws_of_life/attack_self(mob/user)
 	mode = !mode
 	playsound(user, 'sound/items/change_jaws.ogg', VOL_EFFECTS_MASTER)
