@@ -29,6 +29,8 @@
 	var/spray_cloud_move_delay = 3
 	var/spray_cloud_react_delay = 2
 
+	var/obj/item/attached_igniter
+
 /obj/item/weapon/reagent_containers/spray/atom_init()
 	. = ..()
 	verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
@@ -102,6 +104,10 @@
 	INVOKE_ASYNC(src, .proc/on_spray, T, user) // A proc where we do all the dirty chair riding stuff.
 	return TRUE
 
+/obj/item/weapon/reagent_containers/spray/proc/add_container_effect(turf/T)
+	if(istype(attached_igniter))
+		T.hotspot_expose(1000, 1000, attached_igniter)
+
 /obj/item/weapon/reagent_containers/spray/proc/on_spray(turf/T, mob/user)
 	if(!triple_shot) // Currently only the big baddies have this mechanic.
 		return
@@ -160,6 +166,7 @@
 		step_towards(D, target)
 		var/turf/T = get_turf(D)
 		D.reagents.reaction(T)
+		add_container_effect(T)
 		var/turf/next_T = get_step(T, get_dir(T, target))
 		// When spraying against the wall, also react with the wall, but
 		// not its contents. BS12
@@ -194,6 +201,16 @@
 		reagents.reaction(usr.loc)
 		sleep(5)
 		reagents.clear_reagents()
+
+/obj/item/weapon/reagent_containers/spray/Destroy()
+	QDEL_NULL(attached_igniter)
+	return ..()
+
+/obj/item/weapon/reagent_containers/spray/examine(mob/user)
+	..()
+	if(!isnull(attached_igniter))
+		to_chat(user, "<span class='warning'>[src] have [attached_igniter] near the nozzle!</span>")
+
 //hair dyes!
 /obj/item/weapon/reagent_containers/spray/hair_color_spray
 	name = "hair color spray"

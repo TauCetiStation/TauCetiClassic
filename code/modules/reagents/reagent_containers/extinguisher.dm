@@ -60,6 +60,26 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 		else
 			flags |= OPENCONTAINER
 		to_chat(user, "<span class='notice'>You [is_open_container() ? "open" : "close"] the fill cap.</span>")
+	else if(isscrewdriver(I))
+		if(is_open_container())
+			if(attached_igniter)
+				attached_igniter.forceMove(get_turf(src))
+				attached_igniter = null
+				to_chat(user, "<span class='notice'>You detached [attached_igniter]</span>")
+			else
+				to_chat(user, "<span class='warning'>There is nothing to detach.</span>")
+		else
+			to_chat(user, "<span class='warning'>The fill cap is closed.</span>")
+	else if(isigniter(I))
+		if(is_open_container())
+			if(isnull(attached_igniter))
+				user.drop_from_inventory(I, src)
+				attached_igniter = I
+				to_chat(user, "<span class='notice'>You attached [attached_igniter].</span>")
+			else
+				to_chat(user, "<span class='warning'>There is [attached_igniter] in place!</span>")
+		else
+			to_chat(user, "<span class='warning'>The fill cap is closed.</span>")
 	else
 		return ..()
 
