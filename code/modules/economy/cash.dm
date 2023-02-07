@@ -47,9 +47,8 @@
 	cut_overlays()
 	is_burning = FALSE
 	STOP_PROCESSING(SSobj, src)
-	var/datum/timedevent/timer = SStimer.timer_id_dict["timerid[burning_timer]"]
-	if(!timer?.spent)
-		deltimer(burning_timer)
+	deltimer(burning_timer)
+	burning_timer = null
 
 /obj/item/weapon/spacecash/Destroy()
 	if(is_burning)
