@@ -209,7 +209,7 @@
 /obj/item/weapon/reagent_containers/spray/examine(mob/user)
 	..()
 	if(!isnull(attached_igniter))
-		to_chat(user, "<span class='warning'>[src] have [attached_igniter] near the nozzle!</span>")
+		to_chat(user, "<span class='warning'>[src] has [attached_igniter] near the nozzle!</span>")
 
 //hair dyes!
 /obj/item/weapon/reagent_containers/spray/hair_color_spray
