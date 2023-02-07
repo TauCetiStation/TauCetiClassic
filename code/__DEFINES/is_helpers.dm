@@ -17,6 +17,8 @@
 
 #define iswallturf(A) (istype(A, /turf/simulated/wall))
 
+#define isshieldwall(A) (istype(A, /obj/machinery/shieldwall))
+
 // HUMAN
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))

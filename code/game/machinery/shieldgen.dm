@@ -217,6 +217,7 @@
 	req_access = list(access_research)
 	flags = CONDUCT
 	use_power = NO_POWER_USE
+	unacidable  = 1
 	var/active = FALSE
 	var/power = 0
 	var/state = 0
