@@ -884,6 +884,6 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "engineering=3"
 	req_components = list(
-							/obj/item/weapon/stock_parts/scanning_module/triphasic = 2,
-							/obj/item/weapon/stock_parts/capacitor/quadratic = 1,
+							/obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic = 2,
+							/obj/item/weapon/stock_parts/capacitor/adv/super/quadratic = 1,
 							/obj/item/stack/cable_coil = 2)

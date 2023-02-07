@@ -411,7 +411,7 @@
 		/obj/item/ammo_casing/energy/pyrometer/atmospherics,
 	)
 
-	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/quadultra
+	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra
 
 /obj/item/weapon/gun/energy/pyrometer/ce/atom_init()
 	. = ..()
@@ -458,7 +458,7 @@
 
 	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/medical)
 
-	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/ultra
+	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/high/ultra
 
 /obj/item/weapon/gun/energy/gun/portal
 	name = "bluespace wormhole projector"

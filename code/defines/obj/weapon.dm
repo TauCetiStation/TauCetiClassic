@@ -715,7 +715,7 @@
 
 //Rating 3
 
-/obj/item/weapon/stock_parts/capacitor/super
+/obj/item/weapon/stock_parts/capacitor/adv/super
 	name = "super capacitor"
 	desc = "A super-high capacity capacitor used in the construction of a variety of devices."
 	icon_state = "super_capacitor"
@@ -724,7 +724,7 @@
 	m_amt = 50
 	g_amt = 50
 
-/obj/item/weapon/stock_parts/scanning_module/phasic
+/obj/item/weapon/stock_parts/scanning_module/adv/phasic
 	name = "phasic scanning module"
 	desc = "A compact, high resolution phasic scanning module used in the construction of certain devices."
 	icon_state = "super_scan_module"
@@ -733,7 +733,7 @@
 	m_amt = 50
 	g_amt = 20
 
-/obj/item/weapon/stock_parts/manipulator/pico
+/obj/item/weapon/stock_parts/manipulator/nano/pico
 	name = "pico-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "pico_mani"
@@ -741,7 +741,7 @@
 	rating = 3
 	m_amt = 30
 
-/obj/item/weapon/stock_parts/micro_laser/ultra
+/obj/item/weapon/stock_parts/micro_laser/high/ultra
 	name = "ultra-high-power micro-laser"
 	icon_state = "ultra_high_micro_laser"
 	desc = "A tiny laser used in certain devices."
@@ -750,7 +750,7 @@
 	m_amt = 10
 	g_amt = 20
 
-/obj/item/weapon/stock_parts/matter_bin/super
+/obj/item/weapon/stock_parts/matter_bin/adv/super
 	name = "super matter bin"
 	desc = "A container for hold compressed matter awaiting re-construction."
 	icon_state = "super_matter_bin"
@@ -760,7 +760,7 @@
 
 //Rating 4
 
-/obj/item/weapon/stock_parts/capacitor/quadratic
+/obj/item/weapon/stock_parts/capacitor/adv/super/quadratic
 	name = "quadratic capacitor"
 	desc = "An capacity capacitor used in the construction of a variety of devices."
 	icon_state = "quadratic_capacitor"
@@ -769,7 +769,7 @@
 	m_amt = 50
 	g_amt = 50
 
-/obj/item/weapon/stock_parts/scanning_module/triphasic
+/obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic
 	name = "triphasic scanning module"
 	desc = "A compact, ultra resolution triphasic scanning module used in the construction of certain devices."
 	icon_state = "triphasic_scan_module"
@@ -778,7 +778,7 @@
 	m_amt = 50
 	g_amt = 20
 
-/obj/item/weapon/stock_parts/manipulator/femto
+/obj/item/weapon/stock_parts/manipulator/nano/pico/femto
 	name = "femto-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "femto_mani"
@@ -786,7 +786,7 @@
 	rating = 4
 	m_amt = 30
 
-/obj/item/weapon/stock_parts/micro_laser/quadultra
+/obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra
 	name = "quad-ultra micro-laser"
 	icon_state = "quadultra_micro_laser"
 	desc = "A tiny laser used in certain devices."
@@ -795,7 +795,7 @@
 	m_amt = 10
 	g_amt = 20
 
-/obj/item/weapon/stock_parts/matter_bin/bluespace
+/obj/item/weapon/stock_parts/matter_bin/adv/super/bluespace
 	name = "bluespace matter bin"
 	desc = "A container for hold compressed matter awaiting re-construction."
 	icon_state = "bluespace_matter_bin"
