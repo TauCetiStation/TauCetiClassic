@@ -223,7 +223,7 @@
 			H.log_combat(user, "hit harmlessly with [name]")
 			return
 		if(..())
-			L.apply_effect(35, AGONY, target_armor)
+			L.apply_effect(30, AGONY, target_armor)
 			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 			return
 	else
