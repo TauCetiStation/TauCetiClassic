@@ -64,3 +64,6 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/geyger, geyger_items_list)
 // if rad > 75 consume 1 dose, 3 toxloss
 	// prob(1) mutate
 
+
+// https://freesound.org/people/Benboncan/sounds/66922/
+//
