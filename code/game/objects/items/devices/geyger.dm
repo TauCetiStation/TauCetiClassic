@@ -1,3 +1,9 @@
+#define SOUND_LIGHT "sound/items/radioactive_machine_light.ogg"
+#define SOUND_MEDIUM "sound/items/radioactive_machine_medium.ogg"
+#define SOUND_LOUD "sound/items/radioactive_machine_huge.ogg"
+#define SOUND_ALERT 1
+
+
 ADD_TO_GLOBAL_LIST(/obj/item/device/geyger, geyger_items_list)
 /obj/item/device/geyger
 	name = "radiation dosimeter"
@@ -10,15 +16,16 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/geyger, geyger_items_list)
 		return
 	if(distance_to_rad < 0)
 		return
-	var/distance_factor = signal_power * distance_to_rad
-	if(distance_factor < signal_power)
-		SOUND_ALERT
-	if(distance_factor >= signal_power)
-		SOUND_LOUD
-	if(distance_factor > 1)
-		SOUND_MEDIUM
-	if(distance_factor > 1)
-		SOUND_LIGHT
+	var/distance_volume = abs(clamp(distance_to_rad, 0, 70)-100)
+	var/dose_sound = SOUND_LIGHT
+	switch(amount_rad)
+	if()
+		dose_sound = SOUND_ALERT
+	if()
+		dose_sound = SOUND_LOUD
+	if()
+		dose_sound = SOUND_MEDIUM
+	playsound(src, dose_sound, VOL_EFFECTS_MASTER, distance_volume)
 
 // Singularity pull (size * 3) [9 is 3 size]
 // Suppermatter when consumed 500 * (sqrt(1/distance+1)) [176 in 7 distance]
