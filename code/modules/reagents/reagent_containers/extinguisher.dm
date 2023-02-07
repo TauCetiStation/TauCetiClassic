@@ -60,7 +60,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 		else
 			flags |= OPENCONTAINER
 		to_chat(user, "<span class='notice'>You [is_open_container() ? "open" : "close"] the fill cap.</span>")
-	else if(isscrewdriver(I))
+	else if(isscrewing(I))
 		if(is_open_container())
 			if(attached_igniter)
 				attached_igniter.forceMove(get_turf(src))
