@@ -652,9 +652,11 @@
 	if(throw_icon)
 		throw_icon.icon_state = "act_throw_on"
 	if(COOLDOWN_FINISHED(src, toggle_throw_message))
-		visible_message("<span class='notice'>[src] swings to throw!</span>",
-						"<span class='notice'>Вы замахиваетесь.</span>")
-		COOLDOWN_START(src, toggle_throw_message, 5 SECONDS)
+		var/obj/item/I = get_active_hand()
+		if(I && !(I.flags & (ABSTRACT|NODROP|DROPDEL)))
+			visible_message("<span class='notice'>[src] swings to throw [I]!</span>",
+							"<span class='notice'>Вы замахиваетесь.</span>")
+			COOLDOWN_START(src, toggle_throw_message, 5 SECONDS)
 
 /mob/proc/throw_item(atom/target)
 	return
