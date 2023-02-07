@@ -105,7 +105,7 @@
 	return TRUE
 
 /obj/item/weapon/reagent_containers/spray/proc/add_container_effect(turf/T)
-	if(istype(attached_igniter))
+	if(attached_igniter)
 		T.hotspot_expose(1000, 1000, attached_igniter)
 
 /obj/item/weapon/reagent_containers/spray/proc/on_spray(turf/T, mob/user)
@@ -208,7 +208,7 @@
 
 /obj/item/weapon/reagent_containers/spray/examine(mob/user)
 	..()
-	if(!isnull(attached_igniter))
+	if(attached_igniter)
 		to_chat(user, "<span class='warning'>[src] has [attached_igniter] near the nozzle!</span>")
 
 //hair dyes!
