@@ -1,17 +1,38 @@
 #define SOUND_LIGHT "sound/items/radioactive_machine_light.ogg"
 #define SOUND_MEDIUM "sound/items/radioactive_machine_medium.ogg"
 #define SOUND_LOUD "sound/items/radioactive_machine_huge.ogg"
-#define SOUND_ALERT 1
+#define SOUND_ALERT "sound/items/radioactive_machine_alert.ogg"
 
+// dose per second
+#define SAFE_DOSE 5
+#define HEALTH_EFFECT_DOSE 7.5
+#define DANGEROUS_DOSE 10
 
-ADD_TO_GLOBAL_LIST(/obj/item/device/geyger, geyger_items_list)
-/obj/item/device/geyger
+ADD_TO_GLOBAL_LIST(/obj/item/device/geiger, geiger_items_list)
+/obj/item/device/geiger
 	name = "radiation dosimeter"
 	desc = "count rad"
-	icon_state = "geyger"
+	icon_state = "geiger_v2"
 	item_state = "multitool"
+	var/status
+	var/last_rad_signal = 0
+	var/last_distance = 0
+	COOLDOWN_DECLARE(sound_play_cd)
 
-/obj/item/device/geyger/proc/recieve_rad_signal(amount_rad, distance_to_rad)
+/obj/item/device/geiger/attack_self(mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
+	status = !status
+	icon_state = status ? "geiger_v2_on" : "geiger_v2"
+	playsound(user, 'sound/items/flashlight.ogg', VOL_EFFECTS_MASTER, 20)
+	to_chat(user, "<span class='notice'>You turn [status ? "on" : "off"] [src].</span>")
+
+/obj/item/device/geiger/examine(mob/user)
+	. = ..()
+	to_chat(user, "<span class='notice'>Last recieved radiation signal: [last_rad_signal] mSv.<br>Approximate distance: [last_rad_signal] m.</span>")
+
+/obj/item/device/geiger/proc/recieve_rad_signal(amount_rad, distance_to_rad)
+	if(!status)
+		return
 	if(!amount_rad)
 		return
 	if(distance_to_rad < 0)
@@ -19,13 +40,18 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/geyger, geyger_items_list)
 	var/distance_volume = abs(clamp(distance_to_rad, 0, 70)-100)
 	var/dose_sound = SOUND_LIGHT
 	switch(amount_rad)
-	if()
-		dose_sound = SOUND_ALERT
-	if()
-		dose_sound = SOUND_LOUD
-	if()
-		dose_sound = SOUND_MEDIUM
-	playsound(src, dose_sound, VOL_EFFECTS_MASTER, distance_volume)
+		if(SAFE_DOSE to HEALTH_EFFECT_DOSE)
+			dose_sound = SOUND_MEDIUM
+		if(HEALTH_EFFECT_DOSE to DANGEROUS_DOSE)
+			dose_sound = SOUND_LOUD
+		if(DANGEROUS_DOSE to INFINITY)
+			dose_sound = SOUND_ALERT
+	if(COOLDOWN_FINISHED(src, sound_play_cd))
+		playsound(src, dose_sound, VOL_EFFECTS_MASTER, distance_volume)
+		var/sound/S = sound(dose_sound)
+		COOLDOWN_START(src, sound_play_cd, S.len)
+	last_rad_signal = round(amount_rad)
+	last_distance = distance_to_rad
 
 // Singularity pull (size * 3) [9 is 3 size]
 // Suppermatter when consumed 500 * (sqrt(1/distance+1)) [176 in 7 distance]
@@ -73,4 +99,4 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/geyger, geyger_items_list)
 
 
 // https://freesound.org/people/Benboncan/sounds/66922/
-//
+// https://freesound.org/people/leonelmail/sounds/328381/

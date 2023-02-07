@@ -16,7 +16,7 @@
 
 #define LIGHT_RANGE 8
 #define NORMAL_RANGE 10
-#define GEYGER_RANGE 15
+#define GEIGER_RANGE 15
 
 /obj/machinery/power/supermatter
 	name = "Supermatter"
@@ -130,7 +130,7 @@
 					mob:hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
 				rads *=  sqrt(1 / (get_dist(mob, src) + 1))
 				mob.apply_effect(rads, IRRADIATE)
-			for(var/obj/item/device/geyger/counter as anything in geyger_items_list)
+			for(var/obj/item/device/geiger/counter as anything in geiger_items_list)
 				var/distance_rad_signal = get_dist(counter, src)
 				rads *= sqrt(1 / (distance_rad_signal + 1))
 				counter.recieve_rad_signal(rads, distance_rad_signal)
@@ -205,9 +205,9 @@
 	for(var/mob/living/l in range(src, LIGHT_RANGE))
 		rads *= sqrt(1 / get_dist(l, src))
 		l.apply_effect(rads, IRRADIATE)
-	for(var/obj/item/device/geyger/counter as anything in geyger_items_list)
+	for(var/obj/item/device/geiger/counter as anything in geiger_items_list)
 		var/distance_rad_signal = get_dist(counter, src)
-		if(distance_rad_signal <= GEYGER_RANGE)
+		if(distance_rad_signal <= geiger_RANGE)
 			rads *= sqrt(1 / distance_rad_signal)
 			counter.recieve_rad_signal(rads, distance_rad_signal)
 
@@ -265,9 +265,9 @@
 	Consume(W)
 	var/rads = 150
 	user.apply_effect(rads, IRRADIATE)
-	for(var/obj/item/device/geyger/counter as anything in geyger_items_list)
+	for(var/obj/item/device/geiger/counter as anything in geiger_items_list)
 		var/distance_rad_signal = get_dist(counter, src)
-		if(distance_rad_signal <= GEYGER_RANGE)
+		if(distance_rad_signal <= geiger_RANGE)
 			rads *= sqrt(1 / (distance_rad_signal + 1))
 			counter.recieve_rad_signal(rads, distance_rad_signal)
 
@@ -303,12 +303,12 @@
 			l.show_message("<span class=\"warning\">You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", SHOWMSG_AUDIO)
 		rads *= sqrt(1 / (get_dist(l, src) + 1))
 		l.apply_effect(rads, IRRADIATE)
-	for(var/obj/item/device/geyger/counter as anything in geyger_items_list)
+	for(var/obj/item/device/geiger/counter as anything in geiger_items_list)
 		var/distance_rad_signal = get_dist(src, counter)
-		if(distance_rad_signal <= GEYGER_RANGE)
+		if(distance_rad_signal <= geiger_RANGE)
 			rads *= sqrt(1 / (distance_rad_signal + 1))
 			counter.recieve_rad_signal(rads, distance_rad_signal)
 
 #undef LIGHT_RANGE
 #undef NORMAL_RANGE
-#undef GEYGER_RANGE
+#undef geiger_RANGE
