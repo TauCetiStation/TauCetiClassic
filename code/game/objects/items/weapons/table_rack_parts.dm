@@ -47,13 +47,14 @@
 
 /obj/item/weapon/table_parts/attack_self(mob/user)
 	var/turf/simulated/T = get_turf(user)
-	if (T.CanPass(null, T))
-		var/obj/structure/table/R = new table_type( T )
-		to_chat(user, "<span class='notice'>You assemble [src].</span>")
-		R.add_fingerprint(user)
-		qdel(src)
-	else
-		to_chat(user, "<span class='warning'>You can't put it here!</span>")
+	if(handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
+		if(T && T.CanPass(null, T))
+			var/obj/structure/table/R = new table_type( T )
+			to_chat(user, "<span class='notice'>You assemble [src].</span>")
+			R.add_fingerprint(user)
+			qdel(src)
+		else
+			to_chat(user, "<span class='warning'>You can't put it here!</span>")
 
 
 /*
@@ -128,10 +129,11 @@
 
 /obj/item/weapon/rack_parts/attack_self(mob/user)
 	var/turf/simulated/T = get_turf(user)
-	if(T.CanPass(null, T))
-		var/obj/structure/rack/R = new /obj/structure/rack( T )
-		to_chat(user, "<span class='notice'>You assemble [src].</span>")
-		R.add_fingerprint(user)
-		qdel(src)
-	else
-		to_chat(user, "<span class='warning'>You can't put it here!</span>")
+	if(handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
+		if(T.CanPass(null, T))
+			var/obj/structure/rack/R = new /obj/structure/rack( T )
+			to_chat(user, "<span class='notice'>You assemble [src].</span>")
+			R.add_fingerprint(user)
+			qdel(src)
+		else
+			to_chat(user, "<span class='warning'>You can't put it here!</span>")
