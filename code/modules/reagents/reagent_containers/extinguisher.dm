@@ -73,7 +73,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 	else if(isigniter(I))
 		if(is_open_container())
 			if(isnull(attached_igniter))
-				if(do_skilled(user, src,  SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), 0))
+				if(handle_fumbling(user, src,  SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_TRAINED)))
 					user.drop_from_inventory(I, src)
 					attached_igniter = I
 					to_chat(user, "<span class='notice'>You have attached [attached_igniter].</span>")
