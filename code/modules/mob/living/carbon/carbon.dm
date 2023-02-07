@@ -576,15 +576,14 @@
 					if(BP_R_ARM, BP_L_ARM)
 						M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
 										"<span class='notice'>You shake [src]'s hand.</span>", )
-						if(HAS_TRAIT(M, TRAIT_WET_HANDS))
-							if(ishuman(src))
-								var/mob/living/carbon/human/H = src
-								var/obj/item/organ/external/BP = H.get_bodypart(M.get_targetzone())
-								if(BP && BP.is_robotic())
-									var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
-									sparks.set_up(3, 0, get_turf(H))
-									sparks.start()
-									to_chat(src, "<span class='userdanger'>[M]'s hand is wet!</span>")
+						if(HAS_TRAIT(M, TRAIT_WET_HANDS) && ishuman(src))
+							var/mob/living/carbon/human/H = src
+							var/obj/item/organ/external/BP = H.get_bodypart(M.get_targetzone())
+							if(BP && BP.is_robotic())
+								var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
+								sparks.set_up(3, 0, get_turf(H))
+								sparks.start()
+								to_chat(src, "<span class='userdanger'>[M]'s hand is wet!</span>")
 					if(BP_HEAD)
 						M.visible_message("<span class='notice'>[M] pats [src] on the head.</span>", \
 										"<span class='notice'>You pat [src] on the head.</span>", )
