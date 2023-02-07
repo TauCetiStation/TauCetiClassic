@@ -98,7 +98,7 @@
 			add_overlay(image("icons/obj/machines/power/thermoelectric.dmi", "circ-excold", dir = fd))
 			set_light(3, 5, "#0044ff")
 		else
-			set_light(1, 3, "#0044ff")			
+			set_light(1, 3, "#0044ff")
 
 
 	else if(air.temperature >= 1773) //1500C
@@ -109,11 +109,11 @@
 			set_light(3, 5, "#ff0000")
 		else
 			set_light(1, 3, "#ff0000")
-	
+
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/circulator/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
 		user.visible_message(

@@ -88,7 +88,7 @@
 		if(rigged)
 			to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
 			user.drop_from_inventory(W, src)
-	else if(iswirecutter(W))
+	else if(iscutter(W))
 		if(rigged)
 			to_chat(user, "<span class='notice'>You cut away the wiring.</span>")
 			playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)

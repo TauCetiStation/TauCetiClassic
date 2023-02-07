@@ -79,7 +79,7 @@
 		update_icon()
 		return 1
 
-	if (iswelder(O))
+	if (iswelding(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if (WT.use(0))

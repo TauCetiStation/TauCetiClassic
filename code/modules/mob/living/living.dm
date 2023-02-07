@@ -246,7 +246,7 @@
 /mob/living/proc/burn_skin(burn_amount)
 	if(ishuman(src))
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
-		if(NO_SHOCK in src.mutations) //shockproof
+		if(IsShockproof()) //shockproof
 			return 0
 		if (COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
@@ -1322,13 +1322,15 @@
 /mob/living/proc/CanObtainCentcommMessage()
 	return FALSE
 
-/mob/living/proc/vomit(punched = FALSE, masked = FALSE)
-	if(stat == DEAD && !punched)
+/mob/living/proc/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, stun = TRUE, force = FALSE)
+	if(stat == DEAD && !punched && !force)
 		return FALSE
-
-	Stun(3)
-	if(nutrition < 50)
-		visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but there is nothing!</span>")
+	SEND_SIGNAL(src, COMSIG_LIVING_VOMITED)
+	if(stun)
+		Stun(3)
+	if(nutrition < 50 && (vomit_type != VOMIT_BLOOD))
+		visible_message("<span class='warning'>[src] convulses in place, gagging!</span>",
+						"<span class='warning'>You try to throw up, but there is nothing!</span>")
 		adjustOxyLoss(3)
 		adjustHalLoss(5)
 		return FALSE
@@ -1345,7 +1347,8 @@
 
 		// The main reason why this is here, and not made into a polymorphized proc, is because we need to know from the subclasses that could cover their face, that they do.
 		if(masked)
-			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>","<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
+			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>",
+							"<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
 			if(gender == FEMALE)
 				vomitsound = SOUNDIN_FRIGVOMIT
 			else
@@ -1353,7 +1356,8 @@
 			eye_blurry = max(10, eye_blurry)
 			losebreath += 20
 		else
-			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")
+			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>",
+							"<span class='warning'>You throw up!</span>")
 			if(gender == FEMALE)
 				vomitsound = SOUNDIN_FEMALEVOMIT
 			else
@@ -1361,7 +1365,8 @@
 		make_jittery(max(35 - jitteriness, 0))
 		playsound(src, pick(vomitsound), VOL_EFFECTS_MASTER, null, FALSE)
 	else
-		visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")
+		visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>",
+						"<span class='warning'>You throw up!</span>")
 		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 
 	var/turf/simulated/T = loc
@@ -1370,11 +1375,13 @@
 		return TRUE
 	if(locate(/obj/structure/sink) in T)
 		return TRUE
-
 	if(istype(T))
-		T.add_vomit_floor(src, getToxLoss() > 0 ? TRUE : FALSE)
+		switch(vomit_type)
+			if(VOMIT_BLOOD)
+				T.add_blood_floor(src)
+			else
+				T.add_vomit_floor(src, getToxLoss() > 0 ? VOMIT_TOXIC : vomit_type)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "puke", /datum/mood_event/puke)
-
 	return TRUE
 
 /mob/living/get_targetzone()

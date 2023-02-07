@@ -272,6 +272,9 @@
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 ///from base of item/equipped(): (obj/item/I, slot)
 #define COMSIG_MOB_EQUIPPED "mob_equipped"
+///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
+#define COMSIG_MOB_TRIED_ACCESS "tried_access"
+	#define COMSIG_ACCESS_ALLOWED 1
 
 // living signals
 ///from base of mob/living/rejuvenate(): ()
@@ -315,6 +318,8 @@
 ///from base of mob/living/carbon/swap_hand(): (obj/item)
 #define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
 	#define COMPONENT_BLOCK_SWAP 1
+///from mob/living/vomit(): (/mob)
+#define COMSIG_LIVING_VOMITED "living_vomited"
 
 /// from /datum/action/changeling/transform/sting_action(): (mob/living/carbon/human/user)
 #define COMSIG_CHANGELING_TRANSFORM "changeling_transform"

@@ -1114,12 +1114,12 @@
 				attack_log += text("\[[time_stamp()]\] <font color='orange'>Had their internals [internal ? "open" : "close"] by [usr.name] ([usr.ckey])[gas_log_string]</font>")
 				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name][gas_log_string]</font>")
 
-/mob/living/carbon/vomit(punched = FALSE, masked = FALSE)
+/mob/living/carbon/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, stun = TRUE, force = FALSE)
 	var/mask_ = masked
 	if(head && (head.flags & HEADCOVERSMOUTH))
 		mask_ = TRUE
 
-	. = ..(punched, mask_)
+	. = ..(punched, mask_, vomit_type, stun, force)
 	if(. && !mask_)
 		if(reagents.total_volume > 0)
 			var/toxins_puked = 0
