@@ -3440,10 +3440,6 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/lab)
-"lw" = (
-/obj/effect/landmark/start/new_player,
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "lx" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "QMLoad2"
@@ -33813,7 +33809,7 @@ gz
 Fg
 Fe
 GV
-lw
+Mp
 io
 Mp
 Mp
