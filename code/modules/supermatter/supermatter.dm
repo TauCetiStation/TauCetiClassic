@@ -14,6 +14,10 @@
 
 #define WARNING_DELAY 30 		//seconds between warnings.
 
+#define LIGHT_RANGE 8
+#define NORMAL_RANGE 10
+#define GEYGER_RANGE 15
+
 /obj/machinery/power/supermatter
 	name = "Supermatter"
 	desc = "A strangely translucent and iridescent crystal. <span class='warning'>You get headaches just from looking at it.</span>"
@@ -119,13 +123,17 @@
 				lastwarning = world.timeofday
 
 		if(damage > explosion_point)
+			var/rads = DETONATION_RADS
 			for(var/mob/living/mob in alive_mob_list)
 				if(ishuman(mob))
 					//Hilariously enough, running into a closet should make you get hit the hardest.
 					mob:hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
-				var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(mob, src) + 1) )
+				rads *=  sqrt(1 / (get_dist(mob, src) + 1))
 				mob.apply_effect(rads, IRRADIATE)
-
+			for(var/obj/item/device/geyger/counter as anything in geyger_items_list)
+				var/distance_rad_signal = get_dist(counter, src)
+				rads *= sqrt(1 / (distance_rad_signal + 1))
+				counter.recieve_rad_signal(rads, distance_rad_signal)
 			explode()
 
 	//Ok, get the air from the turf
@@ -193,9 +201,15 @@
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			l.hallucination = max(0, min(200, l.hallucination + power * config_hallucination_power * sqrt( 1 / max(1,get_dist(l, src)) ) ) )
 
-	for(var/mob/living/l in range(src, 8))
-		var/rads = (power / 10) * sqrt( 1 / get_dist(l, src) )
+	var/rads = (power / 10)
+	for(var/mob/living/l in range(src, LIGHT_RANGE))
+		rads *= sqrt(1 / get_dist(l, src))
 		l.apply_effect(rads, IRRADIATE)
+	for(var/obj/item/device/geyger/counter as anything in geyger_items_list)
+		var/distance_rad_signal = get_dist(counter, src)
+		if(distance_rad_signal <= GEYGER_RANGE)
+			rads *= sqrt(1 / distance_rad_signal)
+			counter.recieve_rad_signal(rads, distance_rad_signal)
 
 	power -= (power/500)**3
 
@@ -249,8 +263,13 @@
 	user.drop_from_inventory(W)
 	user.SetNextMove(CLICK_CD_MELEE)
 	Consume(W)
-
-	user.apply_effect(150, IRRADIATE)
+	var/rads = 150
+	user.apply_effect(rads, IRRADIATE)
+	for(var/obj/item/device/geyger/counter as anything in geyger_items_list)
+		var/distance_rad_signal = get_dist(counter, src)
+		if(distance_rad_signal <= GEYGER_RANGE)
+			rads *= sqrt(1 / (distance_rad_signal + 1))
+			counter.recieve_rad_signal(rads, distance_rad_signal)
 
 
 /obj/machinery/power/supermatter/Bumped(atom/AM)
@@ -275,12 +294,21 @@
 	power += 200
 
 		//Some poor sod got eaten, go ahead and irradiate people nearby.
-	for(var/mob/living/l in range(10))
+	var/rads = 500
+	for(var/mob/living/l in range(NORMAL_RANGE))
 		if(l in view())
 			l.show_message("<span class=\"warning\">As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", SHOWMSG_VISUAL,\
 				"<span class=\"warning\">The unearthly ringing subsides and you notice you have new radiation burns.</span>", SHOWMSG_AUDIO)
 		else
 			l.show_message("<span class=\"warning\">You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", SHOWMSG_AUDIO)
-		var/rads = 500 * sqrt( 1 / (get_dist(l, src) + 1) )
+		rads *= sqrt(1 / (get_dist(l, src) + 1))
 		l.apply_effect(rads, IRRADIATE)
+	for(var/obj/item/device/geyger/counter as anything in geyger_items_list)
+		var/distance_rad_signal = get_dist(src, counter)
+		if(distance_rad_signal <= GEYGER_RANGE)
+			rads *= sqrt(1 / (distance_rad_signal + 1))
+			counter.recieve_rad_signal(rads, distance_rad_signal)
 
+#undef LIGHT_RANGE
+#undef NORMAL_RANGE
+#undef GEYGER_RANGE
