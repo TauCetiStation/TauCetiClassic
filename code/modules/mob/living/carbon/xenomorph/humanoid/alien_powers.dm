@@ -13,14 +13,14 @@
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid(O in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
+/mob/living/carbon/xenomorph/humanoid/proc/corrosive_acid(atom/O as obj | turf in oview(1)) //If they right click to corrode, an error will flash if its an invalid target./N
 	set name = "Corrossive Acid (100)"
 	set desc = "Drench an object in acid, destroying it over time."
 	set category = "Alien"
 
 	if(powerc(100))
 		if(O in oview(1))
-			if(!usr.Adjacent(O))
+			if(!O.Adjacent(usr))
 				return
 			else
 				// OBJ CHECK
