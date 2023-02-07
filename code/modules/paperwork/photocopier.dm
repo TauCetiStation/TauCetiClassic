@@ -176,7 +176,7 @@
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
-	else if(iswrench(O))
+	else if(iswrenching(O))
 		default_unfasten_wrench(user, O)
 
 /obj/machinery/photocopier/atom_break(damage_flag)
