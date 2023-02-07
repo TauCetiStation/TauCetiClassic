@@ -20,25 +20,28 @@
 
 	if(powerc(100))
 		if(O in oview(1))
-			// OBJ CHECK
-			if(isobj(O))
-				var/obj/I = O
-				if(I.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
-					to_chat(src, "<span class='warning'>You cannot dissolve this object.</span>")
-					return
-			// TURF CHECK
-			else if(istype(O, /turf/simulated))
-				var/turf/T = O
-				// R WALL
-				if(istype(T, /turf/simulated/wall/r_wall))
-					to_chat(src, "<span class='warning'>You cannot dissolve this object.</span>")
-					return
-				// R FLOOR
-				if(istype(T, /turf/simulated/floor/engine))
-					to_chat(src, "<span class='warning'>You cannot dissolve this object.</span>")
-					return
-			else// Not a type we can acid.
+			if(!usr.Adjacent(O))
 				return
+			else
+				// OBJ CHECK
+				if(isobj(O))
+					var/obj/I = O
+					if(I.unacidable)	//So the aliens don't destroy energy fields/singularies/other aliens/etc with their acid.
+						to_chat(src, "<span class='warning'>You cannot dissolve this object.</span>")
+						return
+				// TURF CHECK
+				else if(istype(O, /turf/simulated))
+					var/turf/T = O
+					// R WALL
+					if(istype(T, /turf/simulated/wall/r_wall))
+						to_chat(src, "<span class='warning'>You cannot dissolve this object.</span>")
+						return
+					// R FLOOR
+					if(istype(T, /turf/simulated/floor/engine))
+						to_chat(src, "<span class='warning'>You cannot dissolve this object.</span>")
+						return
+				else// Not a type we can acid.
+					return
 
 			adjustToxLoss(-100)
 			new /obj/effect/alien/acid(get_turf(O), O)
