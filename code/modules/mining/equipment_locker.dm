@@ -109,7 +109,7 @@
 		updateUsrDialog()
 		return
 	if(panel_open)
-		if(iscrowbar(W))
+		if(isprying(W))
 			empty_content()
 			default_deconstruction_crowbar(W)
 		return 1
@@ -418,7 +418,7 @@
 		tgui_interact(user)
 		return
 	if(panel_open)
-		if(iscrowbar(I))
+		if(isprying(I))
 			default_deconstruction_crowbar(I)
 		return
 	return ..()
@@ -740,7 +740,7 @@
 	projectilesound = 'sound/weapons/guns/kenetic_accel.ogg'
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user)
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/W = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(W.use(0, user) && stat == CONSCIOUS)

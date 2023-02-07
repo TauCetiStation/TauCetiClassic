@@ -244,6 +244,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 39)
 		S["ghost_orbit"] << null
 
+	if(current_version < 40)
+		if(ignore_question && ignore_question.len)
+			if("Lavra" in ignore_question)
+				ignore_question -= "Lavra"
+				ignore_question |= IGNORE_LARVA
+				S["ignore_question"] << ignore_question
+
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 

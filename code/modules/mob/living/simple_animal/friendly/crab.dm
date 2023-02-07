@@ -50,7 +50,7 @@
 
 //LOOK AT THIS - ..()??
 /*/mob/living/simple_animal/crab/attackby(obj/item/O, mob/user)
-	if(iswirecutter(O))
+	if(iscutter(O))
 		if(prob(50))
 			to_chat(user, "<span class='warning'><b>This kills the crab.</b></span>")
 			health -= 20

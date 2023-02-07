@@ -281,7 +281,7 @@
 		var/obj/item/device/radio_grid/new_grid = I
 		new_grid.attach(src)
 
-	else if(iswirecutter(I))
+	else if(iscutter(I))
 		if(!grid)
 			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
 			return
@@ -290,7 +290,7 @@
 		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
 		new_grid.dettach(src)
 
-	else if(isscrewdriver(I))
+	else if(isscrewing(I))
 		if(!keyslot1 && !keyslot2)
 			to_chat(user, "<span class='notice'>This headset doesn't have any encryption keys!  How useless...</span>")
 			return
