@@ -656,7 +656,7 @@
 	var/obj/item/I = get_active_hand()
 	if(!I || I.flags & (ABSTRACT|NODROP|DROPDEL))
 		return
-	visible_message("<span class='notice'>[src] swings to throw [I]!</span>",
+	visible_message("<span class='notice'>[src] prepares to throw [I]!</span>",
 					"<span class='notice'>Вы замахиваетесь.</span>")
 	COOLDOWN_START(src, toggle_throw_message, 5 SECONDS)
 
