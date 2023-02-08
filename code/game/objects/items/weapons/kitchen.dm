@@ -215,15 +215,6 @@
 	m_amt = 12000
 	sweep_step = 2
 
-/obj/item/weapon/kitchenknife/butch/cleaver
-	name = "cleaver"
-	desc = "GET OVER HERE! FRESH MEAT!"
-	icon_state = "cleaver"
-	item_state = "butch"
-	force = 20
-	w_class = SIZE_NORMAL
-	can_embed = FALSE
-
 /*
  * Rolling Pins
  */
