@@ -100,11 +100,11 @@
 		set_desc(index)
 	return
 
-/datum/construction/reversible/is_right_key(atom/used_atom) // returns index step
+/datum/construction/reversible/is_right_key(obj/item/I) // returns index step
 	var/list/L = steps[index]
-	if(istype(used_atom, L["key"]))
+	if(ishavequality(I, L["key"]) || istype(I, L["key"]))
 		return FORWARD //to the first step -> forward
-	else if(L["backkey"] && istype(used_atom, L["backkey"]))
+	else if(L["backkey"] && (ishavequality(I, L["backkey"])))
 		return BACKWARD //to the last step -> backwards
 	return 0
 

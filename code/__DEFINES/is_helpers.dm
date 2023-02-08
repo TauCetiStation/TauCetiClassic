@@ -135,6 +135,8 @@
 
 // TOOLS HELPERS
 
+#define ishavequality(I, Q) I.get_quality(Q)
+
 #define iswrenching(I) 	I.get_quality(QUALITY_WRENCHING)
 
 #define iswelding(I) 	I.get_quality(QUALITY_WELDING)
