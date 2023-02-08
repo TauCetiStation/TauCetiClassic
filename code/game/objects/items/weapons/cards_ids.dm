@@ -203,7 +203,7 @@
 
 /obj/item/weapon/card/id/secGold
 	name = "identification card"
-	desc = "ID карта начальника, которая олицетворяет доблесть владельца и его покровительство беззащитных."
+	desc = "ID карта начальника, которая олицетворяет доблесть владельца и его покровительство над беззащитными."
 	icon_state = "secGold"
 	item_state = "secGold_id"
 
@@ -275,7 +275,7 @@
 
 /obj/item/weapon/card/id/cargoGold
 	name = "identification card"
-	desc = "ID карта начальника, представляющая способность планирования и материальную обеспеченность владельца."
+	desc = "ID карта начальника, олицетворяющая умения владельца обеспечивать и планировать."
 	icon_state = "cargoGold"
 	item_state = "cargoGold_id"
 
