@@ -112,7 +112,7 @@
 		//They must return in the body
 		else if(isobserver(M))
 			var/mob/dead/observer/O = M
-			if(!O.can_reenter_corpse)
+			if(!O.can_reenter_corpse || O.client?.no_resurrect)
 				continue
 
 		if(M.ckey == find_key)
