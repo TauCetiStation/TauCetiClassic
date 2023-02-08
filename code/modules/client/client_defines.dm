@@ -123,3 +123,5 @@
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
+
+	var/no_resurrect = FALSE
