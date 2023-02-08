@@ -21,6 +21,10 @@
 
 	var/list/vents4spawn
 
+/datum/faction/infestation/New()
+	..()
+	vents4spawn = get_vents()
+
 /datum/faction/infestation/AdminPanelEntry(datum/admins/A)
 	var/dat = ..()
 	var/data = count_alien_percent()
@@ -37,19 +41,17 @@
 /datum/faction/infestation/can_setup(num_players)
 	if(!..())
 		return FALSE
-	vents4spawn += get_vents()
 	if(xeno_spawn.len > 0 || vents4spawn.len > 0)
 		return TRUE
 	return FALSE
 
 /datum/faction/infestation/OnPostSetup()
 	for(var/datum/role/role in members)
+		var/mob/living/carbon/xenomorph/larva/L
+		var/V
 		if(length(vents4spawn) > 0)
-			var/V = pick_n_take(vents4spawn)
-			var/mob/living/carbon/xenomorph/larva/L = new(V) // spawn them inside vents
-			role.antag.transfer_to(L)
-			QDEL_NULL(role.antag.original)
-			L.add_ventcrawl(V)
+			V = pick_n_take(vents4spawn)
+			L = new(V) // spawn them inside vents
 		else
 			var/start_point = pick(xeno_spawn)
 			xeno_spawn -= start_point
@@ -58,9 +60,11 @@
 			for(var/obj/machinery/power/apc/apc in A.apc)
 				apc.overload_lighting()
 
-			var/mob/living/carbon/xenomorph/larva/L = new /mob/living/carbon/xenomorph/larva(get_turf(start_point))
-			role.antag.transfer_to(L)
-			QDEL_NULL(role.antag.original)
+			L = new (get_turf(start_point))
+		role.antag.transfer_to(L)
+		QDEL_NULL(role.antag.original)
+		if(length(vents4spawn) > 0)
+			L.add_ventcrawl(V)
 
 
 	return ..()
