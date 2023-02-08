@@ -13611,7 +13611,9 @@
 /obj/item/weapon/kitchen/utensil/fork{
 	pixel_x = 4
 	},
-/obj/item/weapon/kitchen/utensil/spoon,
+/obj/item/weapon/kitchen/utensil/spoon{
+	pixel_x = -5
+	},
 /obj/structure/table/woodentable/fancy/black,
 /turf/simulated/floor{
 	dir = 5;
