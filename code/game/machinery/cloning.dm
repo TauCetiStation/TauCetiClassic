@@ -171,7 +171,7 @@
 	var/datum/mind/clonemind = locate(R.mind)
 	if(!istype(clonemind, /datum/mind)) //not a mind
 		return FALSE
-	if(clonemind.current && clonemind.current.stat != DEAD) //mind is associated with a non-dead body
+	if(clonemind.current && (clonemind.current.stat != DEAD || clonemind.current.client?.no_resurrect)) //mind is associated with a non-dead body
 		return FALSE
 	if(clonemind.active) //somebody is using that mind
 		if(ckey(clonemind.key) != R.ckey )
