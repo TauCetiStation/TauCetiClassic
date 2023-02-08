@@ -5,53 +5,15 @@
  *		FINGERPRINT CARD HOLDER
  *		FINGERPRINT CARD
  */
-
-/*
- * DATA CARDS - Used for the teleporter
- */
+ 
 /obj/item/weapon/card
 	name = "card"
-	desc = "Используется в дискетных делах."
+	desc = "Используется в карточных делах."
 	icon = 'icons/obj/card.dmi'
 	w_class = SIZE_MINUSCULE
 	var/associated_account_number = 0
 
 	var/list/files = list(  )
-
-/obj/item/weapon/card/data
-	name = "data disk"
-	desc = "Дискета для данных."
-	icon_state = "data"
-	var/function = "storage"
-	var/data = "null"
-	var/special = null
-	item_state = "card-id"
-
-/obj/item/weapon/card/data/verb/label(t as text)
-	set name = "Label Disk"
-	set category = "Object"
-	set src in usr
-
-	if (t)
-		src.name = text("data disk- '[]'", t)
-	else
-		src.name = "data disk"
-	add_fingerprint(usr)
-	return
-
-/obj/item/weapon/card/data/clown
-	name = "the coordinates to clown planet"
-	icon_state = "data"
-	item_state = "card-id"
-	layer = 3
-	level = 2
-	desc = "Эта дискета содержит координаты легендарной планеты Клоунов. Обращайтесь с ней осторожно."
-	function = "teleporter"
-	data = "Clown Land"
-
-/*
- * ID CARDS
- */
 
 /obj/item/weapon/card/emag_broken
 	desc = "Это карта с магнитной полосой, прикрепленной к какой-то микросхеме. Выглядит слишком разбитой, чтобы её можно было использовать для чего-либо, кроме утилизации."
@@ -88,6 +50,45 @@
 	junk.add_fingerprint(user)
 	user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
 	qdel(src)
+
+/*
+ * DATA CARDS - Used for the teleporter
+ */
+
+/obj/item/weapon/card/data
+	name = "data disk"
+	desc = "Дискета для данных."
+	icon_state = "data"
+	var/function = "storage"
+	var/data = "null"
+	var/special = null
+	item_state = "card-id"
+
+/obj/item/weapon/card/data/verb/label(t as text)
+	set name = "Label Disk"
+	set category = "Object"
+	set src in usr
+
+	if (t)
+		src.name = text("data disk- '[]'", t)
+	else
+		src.name = "data disk"
+	add_fingerprint(usr)
+	return
+
+/obj/item/weapon/card/data/clown
+	name = "the coordinates to clown planet"
+	icon_state = "data"
+	item_state = "card-id"
+	layer = 3
+	level = 2
+	desc = "Эта дискета содержит координаты легендарной планеты Клоунов. Обращайтесь с ней осторожно."
+	function = "teleporter"
+	data = "Clown Land"
+
+/*
+ * ID CARDS
+ */
 
 /obj/item/weapon/card/id
 	name = "identification card"
