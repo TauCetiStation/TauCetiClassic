@@ -654,7 +654,7 @@
 	if(!COOLDOWN_FINISHED(src, toggle_throw_message))
 		return
 	var/obj/item/I = get_active_hand()
-	if(!I || I.flags & (ABSTRACT|NODROP|DROPDEL))
+	if(!I || (I.flags & (ABSTRACT|NODROP|DROPDEL)))
 		return
 	visible_message("<span class='notice'>[src] prepares to throw [I]!</span>",
 					"<span class='notice'>Вы замахиваетесь.</span>")
