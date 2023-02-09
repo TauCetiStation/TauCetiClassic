@@ -15,6 +15,7 @@
 "aL" = (/turf/simulated/floor/whitegreed,/area/space_structures/old_station/satellite)
 "aN" = (/obj/structure/table,/obj/item/clothing/glasses/sunglasses,/turf/simulated/floor/plating,/area/space_structures/old_station/central)
 "aO" = (/obj/machinery/space_heater,/obj/effect/decal/cleanable/cobweb2,/turf/simulated/floor/plating,/area/space_structures/old_station/central)
+"aQ" = (/obj/effect/decal/cleanable/dirt,/obj/structure/rack,/obj/item/clothing/suit/armor/riot,/turf/simulated/floor{dir = 8; icon_state = "red"},/area/space_structures/old_station/central/brig)
 "aR" = (/turf/simulated/floor{dir = 4; icon_state = "yellow"},/area/space_structures/old_station/left)
 "aT" = (/obj/structure/alien/weeds,/turf/simulated/floor{dir = 8; icon_state = "vault"},/area/space_structures/old_station/satellite)
 "aU" = (/turf/simulated/floor/plating,/area/space_structures/old_station/central/kitchen)
@@ -97,7 +98,7 @@
 "eZ" = (/turf/simulated/floor{dir = 9; icon_state = "whitepurple"},/area/space_structures/old_station/right)
 "fa" = (/obj/item/ammo_casing/c45,/turf/simulated/floor/airless{icon_state = "damaged2"},/area/space_structures/old_station/left)
 "fd" = (/obj/machinery/door/airlock/maintenance{req_access = list(42)},/turf/simulated/floor,/area/space_structures/old_station/central)
-"fh" = (/obj/structure/closet/emcloset,/turf/simulated/floor,/area/space_structures/old_station/left)
+"fh" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/power/apc/largecell{dir = 1; name = "R Station APC"; pixel_y = 27; pixel_x = 1},/obj/structure/cable{d2 = 2; icon_state = "0-2"; pixel_y = 1},/turf/simulated/floor{dir = 5; icon_state = "whitepurple"},/area/space_structures/old_station/right)
 "fn" = (/obj/structure/disposalpipe/broken{dir = 1},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor/plating,/area/space_structures/old_station/central)
 "fp" = (/obj/effect/decal/cleanable/blood/gibs/body,/turf/simulated/floor{icon_state = "whitepurple"},/area/space_structures/old_station/right)
 "fr" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/floor{dir = 6; icon_state = "whitepurple"},/area/space_structures/old_station/right)
@@ -108,7 +109,7 @@
 "fB" = (/obj/effect/decal/cleanable/blood,/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/central/bridge)
 "fI" = (/obj/structure/mineral_door/resin,/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/satellite)
 "fN" = (/obj/machinery/light{dir = 4},/obj/structure/closet/emcloset,/turf/simulated/floor{dir = 5; icon_state = "darkblue"},/area/space_structures/old_station/central/bridge)
-"fV" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/power/apc/largecell{dir = 1; name = "R Station APC"; pixel_y = 27; pixel_x = 1},/obj/structure/cable{d2 = 2; icon_state = "0-2"; pixel_y = 1},/turf/simulated/floor{dir = 5; icon_state = "whitepurple"},/area/space_structures/old_station/right)
+"fZ" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/floor/plating,/area/space_structures/old_station/right)
 "ga" = (/obj/structure/sign/poster/official/nanotrasen_logo,/turf/simulated/wall,/area/space_structures/old_station/central/bridge)
 "ge" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/turf/simulated/floor{icon_state = "whitepurple"},/area/space_structures/old_station/right)
 "gf" = (/obj/structure/alien/weeds,/mob/living/simple_animal/hostile/xenomorph/sentinel,/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/satellite)
@@ -163,7 +164,7 @@
 "iW" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{dir = 1; icon_state = "whitepurple"},/area/space_structures/old_station/central)
 "iY" = (/obj/structure/alien/weeds,/obj/structure/stool/bed/nest,/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/satellite)
 "jb" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{dir = 1; icon_state = "whitepurple"},/area/space_structures/old_station/right)
-"jc" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plating,/area/space_structures/old_station/right)
+"jc" = (/obj/structure/table,/obj/item/clothing/glasses/meson,/turf/simulated/floor{dir = 8; icon_state = "red"},/area/space_structures/old_station/central/brig)
 "jd" = (/obj/structure/extinguisher_cabinet{pixel_y = -30},/obj/machinery/disposal,/obj/structure/disposalpipe/trunk{dir = 1},/turf/simulated/floor{dir = 10; icon_state = "blue"},/area/space_structures/old_station/left)
 "jf" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor,/area/space_structures/old_station/central)
 "jg" = (/turf/simulated/floor{dir = 4; icon_state = "whitepurple"},/area/space_structures/old_station/right)
@@ -178,9 +179,7 @@
 "jE" = (/obj/machinery/door/airlock/security/glass{id_tag = "InnerBrig"; layer = 2.8; name = "Brig"; req_access = list(42)},/obj/item/weapon/reagent_containers/food/snacks/donut/banana,/turf/simulated/floor,/area/space_structures/old_station/central/brig)
 "jJ" = (/obj/machinery/computer,/turf/simulated/floor{dir = 4; icon_state = "darkblue"},/area/space_structures/old_station/central/bridge)
 "jN" = (/turf/simulated/floor{icon_state = "white"},/area/space_structures/old_station/right/rnd)
-"jO" = (/obj/machinery/washing_machine,/obj/machinery/light/small/emergency{dir = 8},/turf/simulated/floor/plating,/area/space_structures/old_station/central)
 "jP" = (/obj/structure/grille{destroyed = 1},/turf/environment/space,/area/space_structures/old_station/left)
-"jR" = (/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/floor/plating,/area/space_structures/old_station/right)
 "jS" = (/obj/item/trash/chips,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{icon_state = "white"},/area/space_structures/old_station/right)
 "jT" = (/obj/machinery/light,/turf/simulated/floor,/area/space_structures/old_station/central)
 "jV" = (/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 8},/turf/simulated/floor{dir = 10; icon_state = "warndark"},/area/space_structures/old_station/warehouse)
@@ -198,7 +197,7 @@
 "kG" = (/obj/structure/reagent_dispensers/watertank,/turf/simulated/floor,/area/space_structures/old_station/central/hydro)
 "kH" = (/obj/structure/window/reinforced{dir = 5},/obj/structure/grille,/turf/simulated/wall/r_wall,/area/space_structures/old_station/left)
 "kI" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/blood/writing,/turf/simulated/floor,/area/space_structures/old_station/central)
-"kK" = (/obj/structure/alien/weeds,/obj/effect/decal/cleanable/blood/gibs/xeno/limb,/obj/item/weapon/storage/belt/security/tactical,/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/satellite)
+"kK" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor/plating,/area/space_structures/old_station/right)
 "kM" = (/obj/structure/alien/weeds,/obj/structure/extinguisher_cabinet{pixel_x = 27},/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/satellite)
 "la" = (/obj/structure/stool/bed/chair/office/dark{dir = 1},/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/central/bridge)
 "ld" = (/obj/structure/window/reinforced{dir = 5},/obj/structure/grille,/turf/simulated/floor/plating,/area/space_structures/old_station/right)
@@ -227,7 +226,6 @@
 "ml" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{dir = 9; icon_state = "whitepurple"},/area/space_structures/old_station/right)
 "mo" = (/obj/effect/decal/cleanable/blood/writing{dir = 4},/obj/machinery/door/airlock/research/glass{name = "Research and Development"; req_access = list(42)},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor{dir = 10; icon_state = "whitepurplefull"},/area/space_structures/old_station/right)
 "mt" = (/obj/structure/table,/obj/item/trash/tray,/obj/item/weapon/reagent_containers/food/condiment/enzyme{pixel_x = 8; pixel_y = 6},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space_structures/old_station/central/kitchen)
-"mx" = (/obj/item/weapon/tank/emergency_oxygen/engi,/turf/simulated/floor,/area/space_structures/old_station/central)
 "my" = (/obj/structure/alien/weeds,/obj/machinery/telescience_jammer,/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/satellite)
 "mB" = (/obj/effect/decal/cleanable/dirt,/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor,/area/space_structures/old_station/central)
 "mG" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor{dir = 1; icon_state = "whitepurple"},/area/space_structures/old_station/right)
@@ -272,7 +270,7 @@
 "ov" = (/obj/structure/girder,/turf/simulated/floor/plating,/area/space_structures/old_station/right/rnd)
 "oA" = (/obj/machinery/door/airlock/vault{name = "Warehouse"; req_access = list(42)},/obj/machinery/door/poddoor/shutters{id = "Old_station"},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space_structures/old_station/warehouse)
 "oC" = (/obj/structure/stool/bed/chair/office/dark{dir = 1},/turf/simulated/floor{dir = 8; icon_state = "darkblue"},/area/space_structures/old_station/central/bridge)
-"oD" = (/turf/simulated/floor/plating,/area/space_structures/old_station/central/bridge)
+"oD" = (/obj/structure/closet/emcloset,/turf/simulated/floor/plating,/area/space_structures/old_station/central/brig)
 "oG" = (/obj/structure/closet/crate/solar,/turf/simulated/floor/plating,/area/space_structures/old_station/central)
 "oI" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/space_structures/old_station/left/med)
 "oJ" = (/mob/living/simple_animal/hostile/carp,/obj/structure/lattice,/turf/environment/space,/area/space)
@@ -375,6 +373,7 @@
 "uz" = (/obj/machinery/door/window{dir = 8},/turf/simulated/floor{icon_state = "whitepurple"},/area/space_structures/old_station/right/rnd)
 "uA" = (/obj/structure/alien/weeds,/obj/structure/alien{desc = "It looks like a weird egg"; icon_state = "egg"; name = "egg"},/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/satellite)
 "uC" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/machinery/light/small/emergency{dir = 1},/turf/simulated/floor,/area/space_structures/old_station/central)
+"uH" = (/obj/structure/alien/weeds,/obj/effect/decal/cleanable/blood/gibs/xeno/limb,/obj/item/weapon/storage/belt/security/tactical,/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/satellite)
 "uI" = (/obj/structure/reagent_dispensers/water_cooler,/turf/simulated/floor{dir = 10; icon_state = "whitepurple"},/area/space_structures/old_station/right/rnd)
 "uN" = (/obj/machinery/atmospherics/pipe/manifold4w/visible/cyan,/obj/effect/decal/cleanable/blood/gibs,/obj/item/weapon/shard,/turf/simulated/floor/plating,/area/space_structures/old_station/left)
 "uP" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/machinery/atmospherics/pipe/simple/visible/cyan,/turf/simulated/floor,/area/space_structures/old_station/left)
@@ -421,13 +420,13 @@
 "xa" = (/obj/structure/lattice,/turf/environment/space,/area/space)
 "xb" = (/obj/machinery/light{dir = 8},/obj/item/weapon/shard{icon_state = "small"},/turf/simulated/floor{icon_state = "whitepurple"},/area/space_structures/old_station/central)
 "xf" = (/obj/effect/decal/cleanable/blood,/obj/structure/cable{icon_state = "1-2"},/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/central/bridge)
+"xq" = (/obj/machinery/washing_machine,/obj/machinery/light/small/emergency{dir = 8},/turf/simulated/floor/plating,/area/space_structures/old_station/central)
 "xr" = (/turf/simulated/floor{dir = 4; icon_state = "blue"},/area/space_structures/old_station/left)
 "xz" = (/obj/structure/door_assembly,/turf/simulated/floor,/area/space_structures/old_station/left)
 "xD" = (/obj/machinery/disposal,/obj/structure/disposalpipe/trunk{dir = 1},/turf/simulated/floor,/area/space_structures/old_station/central)
 "xE" = (/obj/structure/disposalpipe/trunk{dir = 8},/turf/simulated/floor/plating,/area/space_structures/old_station/central/brig)
 "xJ" = (/obj/machinery/hydroponics/constructable,/turf/simulated/floor{dir = 1; icon_state = "green"},/area/space_structures/old_station/central/hydro)
 "xL" = (/obj/effect/decal/cleanable/blood/drip,/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor,/area/space_structures/old_station/central/brig)
-"xN" = (/obj/structure/closet/emcloset,/turf/simulated/floor{dir = 4; icon_state = "white"},/area/space_structures/old_station/central)
 "xP" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{icon_state = "warning"},/area/space_structures/old_station/armory)
 "xS" = (/obj/item/weapon/rcd_ammo,/obj/structure/disposalpipe/segment,/obj/machinery/light/small/emergency{dir = 4},/turf/simulated/floor{icon_state = "floorgrime"},/area/space_structures/old_station/central)
 "xU" = (/obj/item/ammo_casing/c45,/turf/simulated/floor,/area/space_structures/old_station/left)
@@ -455,7 +454,6 @@
 "yU" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor{icon_state = "whitepurple"},/area/space_structures/old_station/right)
 "yW" = (/obj/effect/decal/cleanable/blood/gibs,/turf/simulated/floor,/area/space_structures/old_station/central/hydro)
 "yZ" = (/obj/machinery/reagentgrinder,/obj/structure/table,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space_structures/old_station/central/kitchen)
-"zj" = (/obj/item/weapon/tank/emergency_oxygen/engi,/turf/simulated/floor{dir = 4; icon_state = "white"},/area/space_structures/old_station/central)
 "zk" = (/turf/simulated/floor{dir = 1; icon_state = "whitepurple"},/area/space_structures/old_station/right)
 "zo" = (/obj/structure/window/reinforced,/obj/machinery/door/window{dir = 8},/turf/simulated/floor{dir = 10; icon_state = "warndark"},/area/space_structures/old_station/warehouse)
 "zp" = (/obj/structure/rack,/obj/item/weapon/gun/energy/gun{pixel_y = -4},/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{dir = 10; icon_state = "red"},/area/space_structures/old_station/central/brig)
@@ -475,6 +473,7 @@
 "Ad" = (/obj/structure/closet/crate/hydroponics,/obj/item/weapon/reagent_containers/glass/bucket,/obj/item/weapon/screwdriver,/obj/item/weapon/shovel/spade,/obj/item/weapon/wrench,/obj/item/weapon/minihoe{pixel_x = 3},/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/central/hydro)
 "Ae" = (/obj/machinery/door_control{id = "Old_station"; name = "Shutters Control"; req_access = list(42)},/turf/simulated/wall/r_wall,/area/space_structures/old_station/warehouse)
 "Af" = (/obj/machinery/light{dir = 8},/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space_structures/old_station/warehouse)
+"Aj" = (/obj/structure/sign/poster/official/safety_internals,/turf/simulated/wall/r_wall,/area/space_structures/old_station/central)
 "Am" = (/obj/machinery/porta_turret/stationary{check_n_synth = 1; shot_synth = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/simulated/floor/whitegreed,/area/space_structures/old_station/satellite)
 "Ap" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{icon_state = "floorgrime"},/area/space_structures/old_station/right)
 "At" = (/obj/machinery/door/airlock/research/glass{name = "Research and Development"; req_access = list(42)},/turf/simulated/floor{icon_state = "white"},/area/space_structures/old_station/central)
@@ -491,13 +490,12 @@
 "AW" = (/obj/machinery/power/terminal{dir = 4},/obj/structure/cable/yellow{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/plating,/area/space_structures/old_station/central)
 "AY" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/snacks/donut/banana,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{icon_state = "red"},/area/space_structures/old_station/central/brig)
 "Ba" = (/obj/effect/decal/cleanable/blood,/turf/simulated/floor/airless{icon_state = "damaged4"},/area/space_structures/old_station/left)
-"Bb" = (/obj/machinery/light/small/emergency{dir = 1},/turf/simulated/floor,/area/space_structures/old_station/central)
 "Bc" = (/obj/effect/decal/cleanable/blood/gibs/core,/turf/simulated/floor{dir = 8; icon_state = "whitepurple"},/area/space_structures/old_station/right)
 "Bf" = (/obj/structure/lattice,/obj/item/fish_carp,/turf/environment/space,/area/space)
 "Bg" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{dir = 4; icon_state = "white"},/area/space_structures/old_station/central)
 "Bi" = (/obj/structure/table,/obj/item/weapon/kitchen/utensil/pfork,/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space_structures/old_station/central/kitchen)
 "Bj" = (/obj/effect/decal/cleanable/dirt,/obj/structure/disposalpipe/segment,/turf/simulated/floor{dir = 8; icon_state = "blue"},/area/space_structures/old_station/left)
-"Bn" = (/obj/structure/table,/obj/item/clothing/glasses/meson,/turf/simulated/floor{dir = 8; icon_state = "red"},/area/space_structures/old_station/central/brig)
+"Bn" = (/obj/effect/overlay/wall_rot,/turf/simulated/wall,/area/space_structures/old_station/right/rnd)
 "Bt" = (/turf/simulated/floor{icon_state = "whitepurple"},/area/space_structures/old_station/central)
 "Bw" = (/obj/machinery/door/airlock{name = "Unisex Restrooms"},/turf/simulated/floor{icon_state = "freezerfloor"},/area/space_structures/old_station/central)
 "Bx" = (/obj/machinery/seed_extractor,/turf/simulated/floor,/area/space_structures/old_station/central/hydro)
@@ -508,7 +506,7 @@
 "BQ" = (/obj/item/weapon/mop,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{icon_state = "floorgrime"},/area/space_structures/old_station/right)
 "BU" = (/obj/structure/grille{destroyed = 1},/turf/simulated/floor/plating{icon_state = "panelscorched"},/area/space_structures/old_station/left)
 "BW" = (/obj/structure/sign/departments/medbay/lifestar,/turf/simulated/wall/r_wall,/area/space_structures/old_station/left/med)
-"BX" = (/obj/effect/decal/cleanable/dirt,/obj/structure/rack,/obj/item/clothing/suit/armor/riot,/turf/simulated/floor{dir = 8; icon_state = "red"},/area/space_structures/old_station/central/brig)
+"BX" = (/obj/structure/closet/emcloset,/turf/simulated/floor,/area/space_structures/old_station/left)
 "BY" = (/obj/structure/sign/poster/official/fruit_bowl,/turf/simulated/wall,/area/space_structures/old_station/central/kitchen)
 "Cf" = (/obj/machinery/door/airlock/vault{name = "Warehouse"; req_access = list(42)},/obj/machinery/door/poddoor/shutters{id = "Old_station"},/turf/simulated/floor{dir = 5; icon_state = "vault"},/area/space_structures/old_station/warehouse)
 "Cg" = (/obj/item/trash/candle,/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,/turf/simulated/floor{icon_state = "white"},/area/space_structures/old_station/left/med)
@@ -523,6 +521,7 @@
 "CS" = (/obj/structure/table/glass,/obj/item/weapon/paper{layer = 3},/turf/simulated/floor{icon_state = "white"},/area/space_structures/old_station/right/rnd)
 "CT" = (/obj/effect/decal/cleanable/generic,/turf/simulated/floor,/area/space_structures/old_station/central)
 "CX" = (/obj/machinery/telecomms/server/presets/science,/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/satellite)
+"Da" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plating,/area/space_structures/old_station/right)
 "Dc" = (/obj/structure/closet/fireaxecabinet{pixel_x = 31},/obj/machinery/portable_atmospherics/powered/pump,/obj/machinery/atmospherics/components/unary/portables_connector{dir = 8},/turf/simulated/floor{icon_state = "bot"},/area/space_structures/old_station/left)
 "Dd" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor/plating,/area/space_structures/old_station/left)
 "Dh" = (/obj/structure/sign/poster/official/science,/turf/simulated/wall/r_wall,/area/space_structures/old_station/right/rnd)
@@ -578,18 +577,17 @@
 "Gh" = (/obj/machinery/door/airlock/highsecurity{locked = 1; name = "AI Chamber"; req_access = list(16)},/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/satellite)
 "Gl" = (/obj/machinery/chem_master,/turf/simulated/floor{dir = 6; icon_state = "whitepurple"},/area/space_structures/old_station/right/rnd)
 "Go" = (/obj/structure/window/reinforced{dir = 8},/obj/effect/decal/cleanable/ash,/turf/simulated/floor{dir = 9; icon_state = "warndark"},/area/space_structures/old_station/warehouse)
-"Gp" = (/obj/structure/closet/emcloset,/turf/simulated/floor/plating,/area/space_structures/old_station/central/brig)
 "Gq" = (/obj/structure/alien/weeds,/obj/item/weapon/gun/projectile/revolver/detective/dungeon,/obj/structure/stool/bed/nest,/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/satellite)
 "Gs" = (/obj/structure/alien/weeds,/turf/simulated/floor{dir = 8; icon_state = "whitepurple"},/area/space_structures/old_station/right)
 "GD" = (/obj/item/weapon/flora/pottedplant/dead,/turf/simulated/floor{dir = 9; icon_state = "darkblue"},/area/space_structures/old_station/central/bridge)
 "GF" = (/obj/item/clothing/mask/facehugger{icon_state = "facehugger_dead"; stat = 2},/obj/structure/alien/weeds,/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/satellite)
-"GH" = (/obj/effect/overlay/wall_rot,/turf/simulated/wall,/area/space_structures/old_station/right/rnd)
+"GH" = (/turf/simulated/floor/plating,/area/space_structures/old_station/central/bridge)
 "GI" = (/obj/structure/rack,/obj/item/clothing/suit/armor/vest/fullbody,/turf/simulated/floor{dir = 1; icon_state = "bot"},/area/space_structures/old_station/armory)
 "GJ" = (/obj/structure/rack,/obj/item/clothing/gloves/yellow,/turf/simulated/floor,/area/space_structures/old_station/central)
 "GL" = (/obj/machinery/computer,/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor{dir = 8; icon_state = "darkblue"},/area/space_structures/old_station/central/bridge)
 "GN" = (/obj/item/weapon/storage/briefcase/inflatable,/turf/simulated/floor/plating{icon_state = "platingdmg1"},/area/space_structures/old_station/central)
 "GO" = (/obj/effect/spawner/lootdrop/maintenance/two,/obj/structure/rack,/turf/simulated/floor/plating,/area/space_structures/old_station/central)
-"GQ" = (/obj/structure/sign/poster/official/safety_internals,/turf/simulated/wall/r_wall,/area/space_structures/old_station/central)
+"GQ" = (/obj/structure/closet/emcloset,/turf/simulated/floor{dir = 4; icon_state = "white"},/area/space_structures/old_station/central)
 "GT" = (/obj/structure/table/reinforced,/obj/item/weapon/aiModule/freeform,/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/satellite)
 "GV" = (/obj/machinery/door/airlock{name = "Dorm"},/obj/effect/decal/cleanable/blood/writing{dir = 4},/turf/simulated/floor,/area/space_structures/old_station/central)
 "Hd" = (/obj/machinery/light/small/emergency{dir = 8},/turf/simulated/floor{dir = 4; icon_state = "white"},/area/space_structures/old_station/central)
@@ -607,7 +605,6 @@
 "HR" = (/obj/structure/table,/obj/item/weapon/disk/research_points,/obj/machinery/recharger/wallcharger{pixel_x = -24},/turf/simulated/floor{dir = 10; icon_state = "whitepurple"},/area/space_structures/old_station/right/rnd)
 "HT" = (/obj/structure/sign/poster/contraband/lusty_xenomorph,/turf/simulated/wall,/area/space_structures/old_station/right/rnd)
 "HW" = (/obj/structure/stool/bed/chair/metal/white{dir = 8},/obj/machinery/power/apc/largecell{dir = 1; name = "Kitchen APC"; pixel_x = 22},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space_structures/old_station/central/kitchen)
-"HZ" = (/obj/structure/cable/yellow{d2 = 4; icon_state = "0-4"},/turf/simulated/floor/plating,/area/space_structures/old_station/central)
 "Id" = (/obj/structure/rack,/obj/item/weapon/gun/syringe/rapidsyringe,/turf/simulated/floor{dir = 4; icon_state = "whitepurple"},/area/space_structures/old_station/right/rnd)
 "Ie" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/blood/writing{dir = 4},/turf/simulated/floor,/area/space_structures/old_station/left)
 "Ii" = (/obj/item/clothing/head/helmet/tactical/marinad,/obj/structure/alien/weeds,/mob/living/simple_animal/hostile/xenomorph/sentinel,/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/satellite)
@@ -644,6 +641,7 @@
 "JC" = (/obj/structure/table,/obj/item/weapon/coin/gold,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/central/bridge)
 "JE" = (/obj/structure/disposalpipe/segment{dir = 2; icon_state = "pipe-c"},/turf/simulated/wall,/area/space_structures/old_station/left)
 "JG" = (/obj/item/trash/chips,/turf/simulated/floor/airless{icon_state = "damaged2"},/area/space_structures/old_station/left)
+"JI" = (/obj/machinery/light/small/emergency{dir = 8},/turf/simulated/floor/plating,/area/space_structures/old_station/central)
 "JK" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/central/bridge)
 "JQ" = (/obj/machinery/door/airlock/glass{name = "Hydroponics"; req_access = list(42)},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor,/area/space_structures/old_station/central/hydro)
 "JS" = (/obj/structure/window/reinforced,/obj/structure/table/reinforced,/obj/item/weapon/lighter/zippo{pixel_x = 8; pixel_y = 4},/turf/simulated/floor{dir = 6; icon_state = "warndark"},/area/space_structures/old_station/warehouse)
@@ -678,7 +676,6 @@
 "Lf" = (/obj/machinery/processor,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space_structures/old_station/central/kitchen)
 "Lh" = (/obj/structure/closet/secure_closet/personal/cabinet,/obj/item/clothing/suit/plaid,/turf/simulated/floor/plating,/area/space_structures/old_station/central)
 "Li" = (/obj/structure/disposalpipe/broken{dir = 4},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/turf/simulated/floor/plating,/area/space_structures/old_station/central)
-"Ll" = (/obj/machinery/light/small/emergency{dir = 8},/turf/simulated/floor/plating,/area/space_structures/old_station/central)
 "Ls" = (/obj/structure/alien/weeds,/mob/living/simple_animal/hostile/xenomorph/sentinel,/obj/structure/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/turf/simulated/floor{icon_state = "white"},/area/space_structures/old_station/right/rnd)
 "Lv" = (/obj/structure/extinguisher_cabinet{pixel_x = 5; pixel_y = -32},/turf/simulated/floor{icon_state = "whitepurple"},/area/space_structures/old_station/right)
 "Ly" = (/obj/machinery/light{dir = 4},/obj/effect/decal/cleanable/dirt,/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor{dir = 1; icon_state = "whitepurple"},/area/space_structures/old_station/right)
@@ -750,7 +747,6 @@
 "Pc" = (/turf/simulated/floor{dir = 8; icon_state = "whitepurple"},/area/space_structures/old_station/right/rnd)
 "Pj" = (/turf/simulated/floor/plating{icon_state = "platingdmg1"},/area/space_structures/old_station/left)
 "Pk" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/item/weapon/storage/briefcase/inflatable{pixel_y = 4},/turf/simulated/floor,/area/space_structures/old_station/central)
-"Pn" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor/plating,/area/space_structures/old_station/right)
 "Po" = (/obj/machinery/door/airlock/highsecurity,/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/satellite)
 "Pp" = (/obj/machinery/atmospherics/pipe/simple/visible/cyan,/obj/effect/decal/cleanable/blood,/turf/simulated/floor,/area/space_structures/old_station/left)
 "Ps" = (/obj/structure/cable{icon_state = "1-2"},/turf/simulated/floor{dir = 4; icon_state = "green"},/area/space_structures/old_station/central/hydro)
@@ -808,6 +804,7 @@
 "RU" = (/obj/structure/dispenser,/obj/effect/decal/cleanable/cobweb,/turf/simulated/floor,/area/space_structures/old_station/central)
 "RW" = (/obj/item/weapon/kitchenknife/butch,/obj/structure/table,/turf/simulated/floor{dir = 5; icon_state = "cafeteria"},/area/space_structures/old_station/central/kitchen)
 "RX" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor,/area/space_structures/old_station/central)
+"RY" = (/obj/item/weapon/tank/emergency_oxygen/engi,/turf/simulated/floor,/area/space_structures/old_station/central)
 "Sh" = (/obj/machinery/chem_master,/turf/simulated/floor{dir = 5; icon_state = "whitepurple"},/area/space_structures/old_station/right/rnd)
 "Sp" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor/plating,/area/space_structures/old_station/left)
 "St" = (/obj/structure/cable{icon_state = "1-2"},/obj/effect/decal/cleanable/blood/writing,/turf/simulated/floor,/area/space_structures/old_station/left)
@@ -848,6 +845,7 @@
 "Ui" = (/obj/effect/decal/cleanable/dirt,/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/central/bridge)
 "Uj" = (/obj/machinery/biogenerator,/turf/simulated/floor,/area/space_structures/old_station/central/hydro)
 "Uk" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/rack,/obj/item/clothing/shoes/magboots,/turf/simulated/floor{icon_state = "bot"},/area/space_structures/old_station/left)
+"Un" = (/obj/item/weapon/tank/emergency_oxygen/engi,/turf/simulated/floor{dir = 4; icon_state = "white"},/area/space_structures/old_station/central)
 "Ur" = (/obj/machinery/door/window{dir = 4},/turf/simulated/floor{dir = 5; icon_state = "warndark"},/area/space_structures/old_station/warehouse)
 "UE" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/blood/gibs,/turf/simulated/floor{icon_state = "white"},/area/space_structures/old_station/right/rnd)
 "UF" = (/obj/item/trash/semki,/obj/item/trash/sosjerky,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{icon_state = "white"},/area/space_structures/old_station/right)
@@ -926,9 +924,11 @@
 "YN" = (/obj/structure/alien/weeds,/obj/machinery/disposal,/obj/structure/disposalpipe/trunk{dir = 8},/turf/simulated/floor{icon_state = "whitepurple"},/area/space_structures/old_station/right/rnd)
 "YQ" = (/obj/structure/sign/warning/biohazard,/turf/simulated/wall/r_wall,/area/space_structures/old_station/right)
 "YR" = (/obj/item/weapon/table_parts,/turf/simulated/floor/plating{icon_state = "platingdmg3"},/area/space_structures/old_station/central/brig)
+"YT" = (/obj/structure/cable/yellow{d2 = 4; icon_state = "0-4"},/turf/simulated/floor/plating,/area/space_structures/old_station/central)
 "YV" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{dir = 4; icon_state = "whitepurple"},/area/space_structures/old_station/right)
 "Zb" = (/obj/machinery/r_n_d/destructive_analyzer,/turf/simulated/floor{icon_state = "white"},/area/space_structures/old_station/right/rnd)
 "Zh" = (/obj/effect/decal/cleanable/cobweb2,/turf/simulated/floor/plating,/area/space_structures/old_station/central/brig)
+"Zi" = (/obj/machinery/light/small/emergency{dir = 1},/turf/simulated/floor,/area/space_structures/old_station/central)
 "Zj" = (/obj/effect/decal/cleanable/blood/gibs,/turf/simulated/floor,/area/space_structures/old_station/left)
 "Zk" = (/obj/structure/reagent_dispensers/water_cooler,/turf/simulated/floor,/area/space_structures/old_station/left)
 "Zr" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/space_structures/old_station/central)
@@ -959,46 +959,46 @@ OOOOOOOOOOOOOOOOOOxaxaauGevUOOxaxaOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOhUOOhUOOhUOOOO
 OOOOUhOOOOOOOOvUOOxaOJpZaRxavUgZxaOOOOOOOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOOOhUOOOOOOOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOOOOOxaxaOOOOxaOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 OOOOUhOOUhOOeIcVcVNnxaauKlxaGaxaxaOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOOOOOOOOOOOOOOOOOhUOOhUOOOOOOOOOOOOOOOOOOOOhUOOOOOOOOOOOOOOOOOOxalMlMlMlMlMlMlMlMlMlMlMlMlMlMlMlMlMlMlMOOOOOOOOOOOOOOOOOOOOOO
 OOOOOOOONnNnNnNnNnNnNnNnaRgZvUPDxaOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOhUOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOOOqbxaxaxaxalMSZSZjiSZlMPNPNPNPNlMPNPNPNVJPNPNkdlMlMlMlMOOOOOOOOOOOOOOOO
-OOOONnNnNnNnNnNnNnNnNnNnaRxaOOJUxaOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOOOOOOOOOOOOOOOOOlMrrDjkKmylMPNlplpPNlMPNPNqHqHqHPNqHPNPNPNlMlMlMlMlMlMOOOOOO
+OOOONnNnNnNnNnNnNnNnNnNnaRxaOOJUxaOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOOOOOOOOOOOOOOOOOlMrrDjuHmylMPNlplpPNlMPNPNqHqHqHPNqHPNPNPNlMlMlMlMlMlMOOOOOO
 OOOOUhNnNnNnNnNnNnNnNnNnaRxaPDPDxaOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOxaxaxaqbkjnPnPnPnPnPnPnPkjqbOOOOOOOOOOOOOOOOOOhUOOhUOOOOOOOOOOqbxaxaxaxaxalMiUpENtKulMPNgfPNPNPoPNNCqHGqqHNCqHaxqHNClMFLGTIyhxlMOOOOOO
 OOOOOONnNnNnNnNnNnNnNnNnaRPDvUxagZOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOxaxaxaxakjkjGDXCFJFJFJXCISkjkjOOOOqbOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOlMvpMrbmdUfIPNtGGFPNlMqHqHqHMSqHPNqHPNqHPNlMltaLaLltlMOOOOOO
 OOOOOOOONnNnNnNnNnNnNnNnaRxavUgZxaOOOOKYKYKYKYKYKYKYKYKYOOOOOOOOxaxaqbxakjdXzFzFarlaUczFzFfNkjOuOuOuOuOOOOOOOOOOOOOOOOOOOOOOOOOOOOqbxaxaxaxalMvpKCIivtlMPNlplpgflMPNPNPNPNmyPNqHPNqHPNlMVcjDaLIGlMlMlMOO
 OOOOOOOOOONnNnNnNnNnNnPjPjxarTxaxaOOOOKYOOOOOOOOOOOOOOKYOOOOOOOOxaOuOuOukjGLJCHfUisIJKzFXwjJkjPaOuQcOuOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOlMCXHgepLJlMdUPNPNkMlMuRPNqHqHqHMpqHaxqHPNlMltlMaLaLXLaLlMOO
 OOOOOOOOvscVcVcVhSFhKMdlPjkfOOxaxaxaxaKYOOOOOOOOOOOOOOKYxaxaxaxaxaOuONOukjoCzFJKzFxfzFzFzFOjkjDIOukwOuOOOOOOOOOOOOOOOOOOOOOOOOOOqbxaxaxaxaxalMCXijrhgflMPNbhvhlplMiYNCqHiYiYiYiYfAqHPNGhltNvHEaLRBvWKeOO
-OOOOjuOOOOcVEReIcVVHLdyvLdkfOOxaxaOOxaKYOOOOOOOOOOOOOOKYxaxaxaxaxaOuDXaOkjpKWyzFoDisJKzFzDjJkjbMCLlyOuOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOxaxalMlMrIIyltlMOQPNPNlplMiYPNqHbNHIJqaBOKqHtGlMltlMaLaLXLaLlMOO
-OOOOOONnNnNnNnNncVkirqVfaRkfOOxaxaOOOOKYKYOOkfYgkfOOKYKYOOOOOOOOxawxLlLKkjCBzFfBzFvTJKzFzFNrvAbMWgpqOuOOOOOOxaxaNnNnNnOOOOOOOOOOOOxaxaxaxaOOqblMlMlMlMlMLbuwuwLblMdMPNqHuAuAuAuAuAqHPNlMVcAmaLltlMlMlMOO
+OOOOjuOOOOcVEReIcVVHLdyvLdkfOOxaxaOOxaKYOOOOOOOOOOOOOOKYxaxaxaxaxaOuDXaOkjpKWyzFGHisJKzFzDjJkjbMCLlyOuOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOxaxalMlMrIIyltlMOQPNPNlplMiYPNqHbNHIJqaBOKqHtGlMltlMaLaLXLaLlMOO
+OOOOOONnNnNnNnNncVkirqVfaRkfOOxaxaOOOOKYKYOOkfYgkfOOKYKYOOOOOOOOxawxJILKkjCBzFfBzFvTJKzFzFNrvAbMWgpqOuOOOOOOxaxaNnNnNnOOOOOOOOOOOOxaxaxaxaOOqblMlMlMlMlMLbuwuwLblMdMPNqHuAuAuAuAuAqHPNlMVcAmaLltlMlMlMOO
 OOOONnNnNnNnNnNnacrPIWYiIWXBXBXBXBOOOOOOKYOOkfLdkfOOKYOOOOOOOOOOOOOuyIDXkjkjlkEMzFZvzFgVJkkjkjbMlysLOuUhUhNnNncVNnNnNnOOGaOOxaxaxaxaxaOOOOOOOOOOOOOOOOlMaTaTaTaTlMPNbmqHqHqHqHqHqHqHNClMltaLaLltlMOOOOOO
-UhOONnNnNnNnNnimfhOoayWjyklvzznjXBkfkfkfkfkfkfYgkfkfkfkfkfkfkfkfkHOuOufdDJDJganPnPOFnPnPEZDJDJBwOuQNOuNnNnNnNncVcVNnNnOOxaxagZxaxaOOqbOOOOOOOOOOOOOOOOlMaTWwwoaTlMuRPNNCPNPNaxPNPNPNPNlMNBmSIycplMOOOOOO
-OOOONnNnNnNnNnNnLdJGXpAyykfscqcqMwcqdScqcqcqcqcqTPcqcqTPIecqcqdScqvaEOgzgzgzbAgzgzcngzRXBbJVbARXtWCPDXNnNnNnNncVeINnGaxaxaOOOOOOOOOOBJZLZLZLZLZLZLZLZLlMlMqTqTlMlMlMlMlMlMlMlMlMlMlMlMlMlMlMlMlMlMOOOOOO
+UhOONnNnNnNnNnimBXOoayWjyklvzznjXBkfkfkfkfkfkfYgkfkfkfkfkfkfkfkfkHOuOufdDJDJganPnPOFnPnPEZDJDJBwOuQNOuNnNnNnNncVcVNnNnOOxaxagZxaxaOOqbOOOOOOOOOOOOOOOOlMaTWwwoaTlMuRPNNCPNPNaxPNPNPNPNlMNBmSIycplMOOOOOO
+OOOONnNnNnNnNnNnLdJGXpAyykfscqcqMwcqdScqcqcqcqcqTPcqcqTPIecqcqdScqvaEOgzgzgzbAgzgzcngzRXZiJVbARXtWCPDXNnNnNnNncVeINnGaxaxaOOOOOOOOOOBJZLZLZLZLZLZLZLZLlMlMqTqTlMlMlMlMlMlMlMlMlMlMlMlMlMlMlMlMlMlMOOOOOO
 OOOONnNnNnNnNnNnMIwgZPqZOsUSaoaozPaoaoveDdaoaoaoSpaoveveSpaoprayLdsjMXMjVljjjfJTXktjgzbAbAbAgzgzbAcfcSNnNnNnNnNncVxaxaxaSAdOTYppppppftUZFAZLeZnrwIeZzkTtzkzkpUououououououotwIeZnrZLOOOOxaxaOOOOOOOOOOOO
 OOOOOOUhNnNnNndInigPJdStZkMTKmnuXBkfkfkfkfkfkfkfkfkfkfkfkfkfkfkfkfOukIcnMZJfUWUWUWUWUWUWUWJfJfRXgzhEhENnNnNnhEhEOOGaOOOOxaOOOOOOOOOOldBzjStlcFjgwIiMLvsVWFfpUQwReVetDMetetzwmowGCFZLOOOOxaxaOOOOOOOOOOOO
 OOOOUhOOOOOOOOXBkfXBkfTbkfXBkfXBXBxaOOOOxaxaxaxaxaxaxaOOOOOOOOOOOOOunQlGFfXxxJxJxJxJxJxJxJzWFfgzgzhExEtxQyYRZhhExaxaxaxaxaxaOOOOOOOOldUFFKZLKcjgntntntEoovHTntmZwNntntntntntntHuRiZLOOOOxaxaOOOOOOOOOOOO
-OOOOOOOOOOxaxaxaOOkfdQStxrkfOOOOxaxaOOOOxaxaxaxaxaxaxaOOOOOOOOOOOOOuEAVCUWlzivhzivivivRHivPsUWbAbAhEGpQgnVROtxhExaxaBAxaxaxaOOOOOOOOldnRgsZLSyYVntbfKTKTKTKTKTKTmWVQeeKTKTkFntcFdPZLOOOOOOxaNnNnNnNnNnOO
+OOOOOOOOOOxaxaxaOOkfdQStxrkfOOOOxaxaOOOOxaxaxaxaxaxaxaOOOOOOOOOOOOOuEAVCUWlzivhzivivivRHivPsUWbAbAhEoDQgnVROtxhExaxaBAxaxaxaOOOOOOOOldnRgsZLSyYVntbfKTKTKTKTKTKTmWVQeeKTKTkFntcFdPZLOOOOOOxaNnNnNnNnNnOO
 OOOOOOUhOOxaxaxaOOkfZMStxrkfOOOOxaxaOOOOxaxaxaOOOOwYxaypOuOuOuOuOuOugzSKNTlzyjUTQaBxUjivivFoJQTGbAhEpDVeKZtxcbhEOOOOqbOOxaxaOOOOOOOOZLZLZLZLcFYVntQzQjZbJvyMQXAvljLsAvAvXqfvntSyggZLOOOOOONnNnNnNnNnNnOO
 OOOOOOOOOOxaxaxaOOkfdQStxrkfOOxaxaxaxaxaxaxaOOYdcVcVOuDXOuRUItIthIQNbAaKMZcKhzmIyWivSPRHkGjAJfatbAvYViAbDmQYOkhEhEhEhEOOxaxaOOOOOOOOldlAApAGHujgntPcjNTLnFtrAvAvAvAvAvAvIUWzntBcRiZLOOOONnNnNnNnNnNnNnOO
 OOOOOOOOOOxaxakEbgJEkfTbkfXBxaxaxaxaxaxaxaOOgTYdcVcVOuMNDXgzRXeYqCynmBThPIAdbrbrMMMMnGbrbrsKsflGgzqyAwyDqaQYYuQVQVWKSXxaxaxaxaxaxaxaldEWRbTkSyWdntPcjNnOjNsbAviaAUAvAvjNVUqPntSydPZLNFxaNnNnNnNnNnNnNnOO
 OOZCZCZCZCvBZCZCZChgaydpZkXBOOxaOOOOOOOOOOOOcVNnNnNnNnNnNnDXdZCTxSQNgzTTJfJfJfJfUWNTUWMZJfJfJfdfjfhdqoVIjWxLVqNOhFJcdrxaxaxaxaxaxaxaldMEBQZLcFHuntHREGNJRoEpTyTyTyTywDEpuzndntKrwaYQHuHuNnNnNnNnNnNnNnOO
 OOoIsPKwDUnDSLOPBWhXJBPPsqXBOOxaOOOOOOAVOOOOcVNnNnNnNnNnNnDXGNDXfnoiJTrBJTJTuCjfjfLiXPedededvfRLgzjEAwyDgMEUvEdaOdEJSXxaxaxaxaxaOOOOZLZLZLZLcFhhntwbwbwbwbdiEoYqmcmcntntntntntGswaoOHuMiNnNnNnNnNnNnNnOO
-OOAHTwYcyurKTvKaVNYwaDqMukXBOOxaxaOOOOOOOOOOgTNnNnNnNnNnNnHZoWAWoLQNVZLAgzRXRXbAbAlGbAPSbAbAbArRgzYlBnhpyDiyQqhEhEhEhEOOOOOOOOOOOOOOyHHuHubjSyjgntsmYJKTiuKTKTaiEougntKjVTShntGswaZLHucRHuNnNnNnNnNnOOOO
-OOoIXDrUCgVoUPCRNfBjimCCqnXBOOxaxaAVOOOOOOOONnNnNnNnNnNnNnNnNnDXcrdYzQMXdRdRvNdRdRyydRdRdRdRdRVjRXhEiEogyDcdYENlOOOOtxOOOOOOOOOOOOOOZLHuHuZLHuYVGHPcjNhNjNjNlTUaUaSvwbPcjNNyntGswaZLZLZLZLNFNnNnNnNnOOOO
-OOoIiNaeQmOeHOIuZCjdayOtqnXBOOxaxaOOOOOOAVOONnNnNnNnNnNnNnNnNnNnNnIZVdFSBYgHKXdhLfsOyZQdnIUYvNrRofhEiVQYQYeHrwhEOOOOOOOOOOOOOOOOOOOOZLZLZLZLKcjgntPcPFCpIMVGAvAvYvbwdiYbHoquntGsbVZLPnPQjcZLxaxaOOOOOOOO
-OOZCZCZCZCZCZCZCZCXBkfxzkfXBOOxaxaOOOOAVOONnNnNnNnNnNnNnNnNnNnNnNnOupfbAqGQPMsQPQPsxmtQPhjmaqjWubAhEBXQIlnAYbvhEOOOOOOxaxaxaxaxaxaxaZLQUNUZLcFjgntRvMkNuIMCSAvvPAvbwnKDVjNIdGHDlmdVPjRwymeZLxaxaOOOOOOOO
+OOAHTwYcyurKTvKaVNYwaDqMukXBOOxaxaOOOOOOOOOOgTNnNnNnNnNnNnYToWAWoLQNVZLAgzRXRXbAbAlGbAPSbAbAbArRgzYljchpyDiyQqhEhEhEhEOOOOOOOOOOOOOOyHHuHubjSyjgntsmYJKTiuKTKTaiEougntKjVTShntGswaZLHucRHuNnNnNnNnNnOOOO
+OOoIXDrUCgVoUPCRNfBjimCCqnXBOOxaxaAVOOOOOOOONnNnNnNnNnNnNnNnNnDXcrdYzQMXdRdRvNdRdRyydRdRdRdRdRVjRXhEiEogyDcdYENlOOOOtxOOOOOOOOOOOOOOZLHuHuZLHuYVBnPcjNhNjNjNlTUaUaSvwbPcjNNyntGswaZLZLZLZLNFNnNnNnNnOOOO
+OOoIiNaeQmOeHOIuZCjdayOtqnXBOOxaxaOOOOOOAVOONnNnNnNnNnNnNnNnNnNnNnIZVdFSBYgHKXdhLfsOyZQdnIUYvNrRofhEiVQYQYeHrwhEOOOOOOOOOOOOOOOOOOOOZLZLZLZLKcjgntPcPFCpIMVGAvAvYvbwdiYbHoquntGsbVZLkKPQDaZLxaxaOOOOOOOO
+OOZCZCZCZCZCZCZCZCXBkfxzkfXBOOxaxaOOOOAVOONnNnNnNnNnNnNnNnNnNnNnNnOupfbAqGQPMsQPQPsxmtQPhjmaqjWubAhEaQQIlnAYbvhEOOOOOOxaxaxaxaxaxaxaZLQUNUZLcFjgntRvMkNuIMCSAvvPAvbwnKDVjNIdBnDlmdVPfZwymeZLxaxaOOOOOOOO
 OOOOOOOOOOxaxaOOOOvqecaykDvqOOxaxaOOOOAVOOOONnNnNnNnNnNnOOOOOOOOOOOurRgzwXQPQPQPQADHKOQPhjQPwXRXbAhEKPIqhEhEhEhExaxaxaxaxaxaxaxaOOOOZLAuDBySSyjgntwFTLhNOTOTAvAvAUbwwbPcrVICntGsnBZLHuHuHuZLxaxaOOOOOOOO
 OOvsOOOOvsxaxaOOOOvqlQimaRvqOOxaxaOOOOOOOOOOOOOOAVOOOONqOuOuOuOuOuOupfyxqGQPpgQPQPTMJeQPTZQPqGbAgzhEzpIKhEOOOOOOxaxaxaxaxaxaOOOOOOOOZLNUtnZLcFjgntPcjNgxEoUEYvXdAvbwnKPcjNVnntGswaRCRCRCRCRCRCxaxaxaqbOO
 OOOOvsOOOOxaxaOOOOvqrqeUaRvqOOxaxaOOOOOOOOAVOOOOhUOOAVOOqtameXSWGJqtrRgzdRHeRWVOgDQPGbRfBiHWdRgzWohEhEhEhEOOOOOJOOOOOOOOxaxaOOOOOOOOZLZLZLZLcFYVntuIEpTDpOXvYNlWTyIOwbyQQRGlntGswabKPCtqLGMYRCOOOOOOOOOO
-OOOOOOOOjuxaxaoJOObskfaykfbsxaxaxaOOOOOOOOOOOOOOUhxaxaxaqtsrxVRXgzllpfgzdRdRqGqGcaaUJmqGqGvNdRbAgzPZiWcIOuhbhbhbOOOOhbhbdCdCTSFZFZFZiPmGLyDydmjgntntntntntrMGHDhgQgQntntntntntSyaXQFNGoULLiGRCxaxaxaskOO
-OOOOOOvsOOOOxaxaxaVHOluNDcbsOOxaxaOOOOAVOOUhOOxaxaxaxaxaqtBGbAcHOaqtpfbAgzDXgzgzmxgzyxkcHDPSbAbAgzAtblUfmOppppoSppoSoSppoSppppoSObppHJnRehNxwAjgwImljbDRzkdDzkDRzkuoDRjvzkfVwISyJnbKaWxPnoGIRCxaxaxaOOOO
+OOOOOOOOjuxaxaoJOObskfaykfbsxaxaxaOOOOOOOOOOOOOOUhxaxaxaqtsrxVRXgzllpfgzdRdRqGqGcaaUJmqGqGvNdRbAgzPZiWcIOuhbhbhbOOOOhbhbdCdCTSFZFZFZiPmGLyDydmjgntntntntntrMBnDhgQgQntntntntntSyaXQFNGoULLiGRCxaxaxaskOO
+OOOOOOvsOOOOxaxaxaVHOluNDcbsOOxaxaOOOOAVOOUhOOxaxaxaxaxaqtBGbAcHOaqtpfbAgzDXgzgzRYgzyxkcHDPSbAbAgzAtblUfmOppppoSppoSoSppoSppppoSObppHJnRehNxwAjgwImljbDRzkdDzkDRzkuoDRjvzkfhwISyJnbKaWxPnoGIRCxaxaxaOOOO
 OOOOvsOOOOOOOOxaxavqPTodtPbsOOxaxaxaxaOOxaxaxarQxaxaOOqbOuOuOuOuOuOuxDgzbAgzPkgzDXQWjTEvgzbAbADXgzCPxbBtOuFFOOGaOOFFZHZHOOFFFFFFFFZHBJcAcZZLwOzVMlWYDADAbegecZjqFOPMIloPyUirIApbfrRCyisGyJKnRCOOOOOOOOOO
 OOOOOOOOOOOOOOxaxavqPTPpohbsOOxaxaxaxaxaxaxaxaOOBfxarQxaOOOOxaxaOOOuQNfdQNQNQNQNQNewQNQNhVQNQNQNlFOuOuOuOuOOOOrTOOOOxaDTxaxaxaxaxaxaZLZLZLZLZLZLZLZLZLZLZLZLEgAePUCfoAPUweweZLZLZLRCRCRCRCRCRCxaxaxaqbOO
-OOOOOOOObsbsbsbsbsbsgnhtgnbsbsbsOOOOOOOOOOOOOOOOOOxaxaxaxaOOxaxaqbOujOsRQNpkLTLTLPiTGVtzZTFzQNVssyOuOOqbOOrTOOOOOOxaxaOOxaxaxaOOxaOOOOOOOOOOxaOOOOOOOOOOOOqbweNVCGNPKNGorzweOOOOOOOOxaxavjOOOOOOOOOOOOOO
+OOOOOOOObsbsbsbsbsbsgnhtgnbsbsbsOOOOOOOOOOOOOOOOOOxaxaxaxaOOxaxaqbOuxqsRQNpkLTLTLPiTGVtzZTFzQNVssyOuOOqbOOrTOOOOOOxaxaOOxaxaxaOOxaOOOOOOOOOOxaOOOOOOOOOOOOqbweNVCGNPKNGorzweOOOOOOOOxaxavjOOOOOOOOOOOOOO
 OOOOOOOObsyTHhXYUkRpKWuPKLWqFasgOOOOOOOOOOOOOOOOOOOOxaxaxaxaxaxaOOOuJrDXQNorLhpLhVgznXoTWOsDQNZsoGOuOOOOOOOOOOxaxaxaOOOOOOOOOOOOOOOOOOOOOOOOxaOOOOOOOOOOOOOOwehHdVnMKNzoJSweOOxaxaxaxaOOqbOOOOOOOOOOOOOO
 OOcVcVcVbsyTzRzRVSLdLdSTIvLdayRAOOUhOOOOUhOOOOOOOOOOOOxaxaxaxaxaOOOuGOolQNQNQNQNQNgmQNQNQNQNQNZroGOuOOOOOOxaxaxaOOOOOOOOOOOOOOOOOOOOOOOOOOOODDOOOOOOOOqbxaxaweyOUrnMytJgSYwexaxaqbOOOOOOOOOOOOOOOOOOOOOO
 OOcVNnNnWILdINLSWkLdINdlrCNnaysgOOUhOOOOOOOOOOOOOOOOOOOOxaxaxaxaxaOuOuaNOusvDXlgLPbALPsvACoMQNDCoGOuxaxaxaxaxaOOOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOOOOOOOOOOOOOOOwecXtfnMwHjVoeweOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 OOcVNnNnNnNnrmNnNnNnNnNnNnNnINBUcVcVOOOOAVOOOOOOOOOOOOOOOOOOOOOOOOqbOuOuOubEwZlBQNgzQNGdWpzuQNQiOuOuxaxaxaOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOqbxaweweAfrOsUFuwewexaqbOOOOOOhUOOOOOOOOOOOOOOOO
 OOcVNnNnNnNnNnNnNnNnNnNnNnNnNnNnNncVcVUhOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOqbOuOuOuOuOuuvOuOuOuOuOuOuwLqbOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOqbwejnPuAaKxweqbOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 OONnNnNnNnNnNnNnNnNnNnNnNnNnNnNnNnNngTOOOOOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOOOOOOOOOqtpVqtOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOhUOOOOOOOOOOOOOOOOOOweweokRwweweOOOOOOOOOOhUOOOOOOhUOOOOOOOOOO
-OONnNnNnNnNnNnNnNnNnNnNnNnNnNnNnNnNncVOOOOAVOOOOhUOOOOOOOOOOOOOOOOOOOOOOqbOuOuGQOuvMOuOuOuOuqbOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOOOOOhUOOOOOOqbweweweweqbOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-OONnNnNnNnNnNnNnNnNnNnNnNnNnNnNnNnNnNnAVOOOOOOOOOOOOhUOOhUOOOOOOhUOOOOhUOOOudurxzjpFZSZuxNOuOOOOOOOOOOhUOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOOOhUOOOOOOOOOOOOOOxaxaxaxaOOOOOOOOhUOOOOOOhUOOOOOOOOOOOOOO
+OONnNnNnNnNnNnNnNnNnNnNnNnNnNnNnNnNncVOOOOAVOOOOhUOOOOOOOOOOOOOOOOOOOOOOqbOuOuAjOuvMOuOuOuOuqbOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOOOOOhUOOOOOOqbweweweweqbOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+OONnNnNnNnNnNnNnNnNnNnNnNnNnNnNnNnNnNnAVOOOOOOOOOOOOhUOOhUOOOOOOhUOOOOhUOOOudurxUnpFZSZuGQOuOOOOOOOOOOhUOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOOOhUOOOOOOOOOOOOOOxaxaxaxaOOOOOOOOhUOOOOOOhUOOOOOOOOOOOOOO
 OONnNnNnNnNnNnNnNnNnNnNnNnNnNnNnNnNnOOOOOOOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOOOvqHdKIPwbGBgpFpFvqOOOOOOhUOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOqbxaxaxaxaxaxaqbOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 OOOOOOOOOOOONnNnNnNnNnNnNnNnNnNnNnOOAVOOOOOOOOOOOOOOOOOOhUOOOOOOOOOOhUOOOOOuFPqkTBqkTBqkyPOuOOOOOOOOOOOOhUOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOOOOOOOOOOOqbxaxaqbOOOOOOOOhUOOOOOOOOOOhUOOOOOOOOOO
 OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOhUOOOOOOOOOOOOhUOOOOOOqbOuOuOuOuOuOuOuOuOuqbOOOOOOhUOOOOOOhUOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
