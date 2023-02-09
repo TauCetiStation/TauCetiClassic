@@ -29,7 +29,7 @@
 
 /obj/item/weapon/gun/energy/gun/adv
 	name = "Energy Gun Mark II"
-	desc = "The latest model of energy weapons. In addition to the new design, the pistol has a new cooling system that allows you to shoot much faster, as well as a new internal battery."
+	desc = "The latest model of energy weapons. In addition to the new, cutting edge design features improved cooling system and internal battery."
 	icon_state = "advgun"
 	origin_tech = "combat=6;magnets=5;powerstorage=2;syndicate=1"
 	fire_delay = 4

@@ -25,7 +25,7 @@
 	name = "Survival: Medic"
 
 	uniform = /obj/item/clothing/under/rank/medical
-	uniform_f =/obj/item/clothing/under/rank/medical/skirt
+	uniform_f = /obj/item/clothing/under/rank/medical/skirt
 	shoes = /obj/item/clothing/shoes/white
 	gloves = /obj/item/clothing/gloves/latex/nitrile
 	head = /obj/item/clothing/head/beret/paramed
