@@ -11,6 +11,10 @@
 	slot_flags = SLOT_FLAGS_BACK
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	sweep_step = 5
+	qualities = list(
+		QUALITY_PRYING = 1,
+		QUALITY_CUTTING = 1
+	)
 
 /obj/item/weapon/fireaxe/atom_init()
 	. = ..()
@@ -159,7 +163,7 @@
 	return !slicing && HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED) && prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir)
 
 /obj/item/weapon/dualsaber/attackby(obj/item/I, mob/user, params)
-	if(ismultitool(I))
+	if(ispulsing(I))
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user,"<span class='warning'>2XRNBW_ENGAGE</span>")
