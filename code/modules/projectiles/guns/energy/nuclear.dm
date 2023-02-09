@@ -27,6 +27,19 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/ion/small)
 	origin_tech = "combat=4;magnets=3"
 
+/obj/item/weapon/gun/energy/gun/adv
+	name = "Energy Gun Mark II"
+	desc = "The latest model of energy weapons. In addition to the new design, the pistol has a new cooling system that allows you to shoot much faster, as well as a new internal battery."
+	icon_state = "advgun"
+	origin_tech = "combat=6;magnets=5;powerstorage=2;syndicate=1"
+	fire_delay = 4
+
+/obj/item/weapon/gun/energy/gun/adv/atom_init()
+	. = ..()
+	if(power_supply)
+		power_supply.maxcharge = 1500
+		power_supply.charge = 1500
+
 /obj/item/weapon/gun/energy/gun/nuclear
 	name = "Advanced Energy Gun"
 	desc = "An energy gun with an experimental miniaturized reactor."

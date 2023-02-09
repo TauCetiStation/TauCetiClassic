@@ -717,3 +717,46 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/vox/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(global.heiststart)
 	ghost.forceMove(jump_to)
+
+/datum/spawner/survival
+	name = "Выживший"
+	id = "survival"
+	desc = "Вы просыпаетесь на заброшенной станции. Адаптируйтесь, выживайте и всё такое."
+	var/outfit = /datum/outfit/survival/engineer
+	var/skillset = /datum/skillset/survivalist_engi
+
+	ranks = list(ROLE_GHOSTLY)
+
+/datum/spawner/survival/can_spawn(mob/dead/observer/ghost)
+	if(SSticker.current_state != GAME_STATE_PLAYING)
+		to_chat(ghost, "<span class='notice'>Please wait till round start!</span>")
+		return FALSE
+	return ..()
+
+/datum/spawner/survival/spawn_ghost(mob/dead/observer/ghost)
+	var/spawnloc = pick(survivalist_start)
+	survivalist_start -= spawnloc
+
+	var/client/C = ghost.client
+
+	var/mob/living/carbon/human/H = new(null)
+	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
+	C.create_human_apperance(H, new_name)
+
+	H.loc = spawnloc
+	H.key = C.key
+	H.equipOutfit(outfit)
+	H.mind.skills.add_available_skillset(skillset)
+	H.mind.skills.maximize_active_skills()
+
+	to_chat(H, "<B>Ваша голова раскалывается...Вы просыпаетесь в старом криоподе.</B>")
+	to_chat(H, "<B>Вы - <span class='boldwarning'>были работником передовой Космической Научной Станции Нанотразен LCR</span>, что уже как год считается уничтоженной.</B>")
+	to_chat(H, "<B>Станция заброшена, никто, кроме вас и вашего товарища в соседней криокамере, не выжил. Вы вольны делать здесь что угодно. Можете попытаться всё починить, а можете просто улететь в поисках лучшей жизни. Выбор за вами.</B>")
+
+/datum/spawner/survival/jump(mob/dead/observer/ghost)
+	var/jump_to = pick(survivalist_start)
+	ghost.forceMove(get_turf(jump_to))
+
+/datum/spawner/survival/med
+	outfit = /datum/outfit/survival/medic
+	skillset = /datum/skillset/survivalist_medic

@@ -490,3 +490,26 @@
 /obj/item/weapon/card/id/syndicate/unknown/atom_init()
 	. = ..()
 	access = get_all_accesses()
+
+/obj/item/weapon/card/id/old_station
+	name = "captain's ID"
+	desc = "The old ID card, belongs to the captain of a very unlucky station named 'LCR'."
+	icon_state = "gold"
+	item_state = "gold_id"
+	access = list(access_oldstation, access_RC_announce, access_keycard_auth, access_engine_equip, access_medical, access_captain, access_engine)
+
+/obj/item/weapon/card/id/old_station/eng
+	name = "engineer ID"
+	desc = "A card issued to 'LCR' station engineering staff."
+	icon_state = "eng"
+	item_state = "eng_id"
+	rank = "Senior Engineer"
+	access = list(access_oldstation, access_engine, access_engine_equip, access_medical)
+
+/obj/item/weapon/card/id/old_station/med
+	name = "medic ID"
+	desc = "A card issued to 'LCR' station medical staff."
+	icon_state = "med"
+	item_state = "med_id"
+	rank = "Senior Medic"
+	access = list(access_oldstation, access_engine, access_engine_equip, access_medical)

@@ -508,3 +508,16 @@
 	global.espionageagent_start += loc
 	create_spawner(/datum/spawner/spy)
 	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/survival_start
+	name = "Survivalist Start"
+	var/spawnertype = /datum/spawner/survival
+
+/obj/effect/landmark/survival_start/atom_init(mapload)
+	..()
+	global.survivalist_start += loc
+	create_spawner(spawnertype)
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/survival_start/medic
+	spawnertype = /datum/spawner/survival/med

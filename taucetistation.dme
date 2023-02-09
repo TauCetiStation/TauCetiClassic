@@ -392,6 +392,7 @@
 #include "code\datums\outfits\misc\arena.dm"
 #include "code\datums\outfits\misc\shitspawn.dm"
 #include "code\datums\outfits\misc\spy.dm"
+#include "code\datums\outfits\misc\survivalists.dm"
 #include "code\datums\qualities\negativeish.dm"
 #include "code\datums\qualities\positiveish.dm"
 #include "code\datums\qualities\quality.dm"
