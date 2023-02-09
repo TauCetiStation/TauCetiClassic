@@ -127,10 +127,9 @@
 		if(user.is_busy())
 			return
 		if(anchored)
-			if(!allowed(user))
-				if(!do_after(user, SKILL_TASK_CHALLENGING, target = src))
-					to_chat(user, "<span class='warning'>You don't have access and failed to lift the bolts up.</span>")
-					return
+			if(!allowed(user) && !do_after(user, SKILL_TASK_CHALLENGING, target = src))
+				to_chat(user, "<span class='warning'>You don't have access and failed to lift the bolts up.</span>")
+				return
 			to_chat(user, "<span class='notice'>[src] can now be moved.</span>")
 			cut_overlays()
 			proximity_monitor.set_range(null)
