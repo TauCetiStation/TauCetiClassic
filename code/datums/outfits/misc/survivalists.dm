@@ -15,8 +15,8 @@
 
 /obj/item/weapon/storage/belt/utility/cool
 	startswith = list(
-	/obj/item/weapon/wrench/power,
-	/obj/item/weapon/wirecutters/power,
+	/obj/item/weapon/multi/hand_drill,
+	/obj/item/weapon/multi/jaws_of_life,
 	/obj/item/weapon/weldingtool/experimental,
 	/obj/item/device/multitool
 	)
