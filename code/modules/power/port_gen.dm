@@ -12,7 +12,7 @@
 	anchored = FALSE
 	use_power = NO_POWER_USE
 
-	var/active = 0
+	var/active = FALSE
 	var/power_gen = 5000
 	var/recent_fault = 0
 	var/power_output = 1
@@ -37,7 +37,7 @@
 		updateDialog()
 
 	else
-		active = 0
+		active = FALSE
 		icon_state = initial(icon_state)
 		handleInactive()
 
@@ -165,6 +165,7 @@
 	to_chat(user, "<span class='notice'>You add [amount] sheets to the [name].</span>")
 	sheets += amount
 	addstack.use(amount)
+	playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 
 /obj/machinery/power/port_gen/pacman/attackby(obj/item/O, mob/user, params)
 	if(istype(O, sheet_path))
@@ -175,7 +176,7 @@
 		if(exchange_parts(user, O))
 			return
 
-		if(iswrench(O))
+		if(iswrenching(O))
 
 			if(!anchored && !isinspace())
 				connect_to_network()
@@ -188,14 +189,14 @@
 
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 
-		else if(isscrewdriver(O))
+		else if(isscrewing(O))
 			panel_open = !panel_open
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			if(panel_open)
 				to_chat(user, "<span class='notice'>You open the access panel.</span>")
 			else
 				to_chat(user, "<span class='notice'>You close the access panel.</span>")
-		else if(iscrowbar(O) && panel_open)
+		else if(isprying(O) && panel_open)
 			default_deconstruction_crowbar(O)
 
 /obj/machinery/power/port_gen/pacman/emag_act(mob/user)
@@ -239,12 +240,14 @@
 	if(href_list["action"])
 		if(href_list["action"] == "enable")
 			if(!active && HasFuel() && !crit_fail)
-				active = 1
+				active = TRUE
 				icon_state = icon_state_on
+				playsound(src, 'sound/machines/pacman_on.ogg', VOL_EFFECTS_MASTER)
 		if(href_list["action"] == "disable")
 			if (active)
-				active = 0
+				active = FALSE
 				icon_state = initial(icon_state)
+				playsound(src, 'sound/machines/pacman_off.ogg', VOL_EFFECTS_MASTER)
 		if(href_list["action"] == "eject")
 			if(!active)
 				DropFuel()

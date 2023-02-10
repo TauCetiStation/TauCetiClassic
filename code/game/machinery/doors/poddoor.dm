@@ -11,6 +11,8 @@
 	door_open_sound  = 'sound/machines/blast_door.ogg'
 	door_close_sound = 'sound/machines/blast_door.ogg'
 
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 /obj/machinery/door/poddoor/cargo
 	icon = 'icons/locations/shuttles/cargo.dmi'
 
@@ -41,7 +43,7 @@
 
 	if(!hasPower())
 		var/can_wedge = FALSE
-		if(iscrowbar(C))
+		if(isprying(C))
 			can_wedge = TRUE
 		else if(istype(C, /obj/item/weapon/fireaxe))
 			var/obj/item/weapon/fireaxe/F = C
@@ -50,7 +52,7 @@
 		if(can_wedge)
 			open(TRUE)
 
-	else if(ismultitool(C) && !density)
+	else if(ispulsing(C) && !density)
 		var/obj/item/device/multitool/M = C
 		var/turf/turf = get_turf(src)
 		if(!is_station_level(turf.z) && !is_mining_level(turf.z))

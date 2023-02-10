@@ -119,7 +119,15 @@
 		: FALSE)
 #define HAS_TRAIT_NOT_FROM(target, trait, source) (target.status_traits ? (target.status_traits[trait] ? (length(target.status_traits[trait] - source) > 0) : FALSE) : FALSE)
 
+
 //mob traits
+/// Forces user to be unmovable
+#define TRAIT_ANCHORED "anchored"
+/// Prevents voluntary movement.
+#define TRAIT_IMMOBILIZED "immobilized"
+/// Prevents hands and legs usage
+#define TRAIT_INCAPACITATED "incapacitated"
+
 #define TRAIT_ALCOHOL_TOLERANCE   "alcohol_tolerance"
 #define TRAIT_BLIND               "blind"
 #define TRAIT_COUGH               "cough"
@@ -146,6 +154,7 @@
 #define TRAIT_COOLED              "external_cooling_device"
 #define TRAIT_NO_RUN              "no_run"
 #define TRAIT_FAST_EQUIP          "fast_equip"
+#define TRAIT_FRIENDLY            "friendly"
 #define TRAIT_NO_CLONE            "no_clone"
 #define TRAIT_VACCINATED          "vaccinated"
 #define TRAIT_DWARF               "dwarf"
@@ -156,6 +165,13 @@
 #define TRAIT_GREASY_FINGERS      "greasy_fingers"
 #define TRAIT_ANATOMIST           "anatomist"
 #define TRAIT_SOULSTONE_IMMUNE    "soulstone_immune"
+#define TRAIT_CULT_EYES           "cult_eyes"
+#define TRAIT_CULT_HALO           "cult_halo"
+#define TRAIT_HEALS_FROM_PYLONS   "heals_from_pylons"
+#define TRAIT_HEMOCOAGULATION     "hemocoagulation"
+#define TRAIT_CLUMSY              "clumsy"
+#define TRAIT_SHOCKIMMUNE         "shockimmune"
+#define TRAIT_NATURAL_AGILITY     "natural_agility"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -187,3 +203,12 @@
 #define OBESITY_TRAIT      "obesity"
 #define LIFE_ASSIST_MACHINES_TRAIT            "life_assist_machines"
 #define FEAR_TRAIT         "fear"
+
+// atom traits
+#define TRAIT_XENO_FUR "xeno_fur"
+
+// trait sources
+#define EYE_DAMAGE_TRAIT "eye_damage"
+#define EYE_DAMAGE_TEMPORARY_TRAIT "eye_damage_temporary"
+#define GENETIC_MUTATION_TRAIT "genetic"
+#define QUIRK_TRAIT "quirk"

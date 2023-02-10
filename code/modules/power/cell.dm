@@ -24,7 +24,7 @@
 // use power from a cell, returns the amount actually used
 /obj/item/weapon/stock_parts/cell/use(amount)
 	if(amount < 0)
-		stack_trace("[src.type]/use() called with a negative parameter [amount]")
+		stack_trace("[src.type]/use() called with a negative parameter")
 		return 0
 	if(rigged && amount > 0)
 		explode()
@@ -32,17 +32,17 @@
 
 	var/used = min(charge, amount)
 	charge -= used
+	SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED, charge, maxcharge)
 	return used
 
 // recharge the cell
 /obj/item/weapon/stock_parts/cell/proc/give(amount)
 	if(amount < 0)
-		stack_trace("[src.type]/give() called with a negative parameter [amount]")
+		stack_trace("[src.type]/give() called with a negative parameter")
 		return 0
 	if(rigged && amount > 0)
 		explode()
 		return 0
-
 	if(maxcharge < amount)	return 0
 	var/power_used = min(maxcharge-charge,amount)
 	if(crit_fail)	return 0
@@ -52,8 +52,8 @@
 			crit_fail = 1
 			return 0
 	charge += power_used
+	SEND_SIGNAL(src, COMSIG_CELL_CHARGE_CHANGED, charge, maxcharge)
 	return power_used
-
 
 /obj/item/weapon/stock_parts/cell/examine(mob/user)
 	..()

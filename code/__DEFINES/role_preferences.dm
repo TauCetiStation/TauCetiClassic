@@ -30,8 +30,9 @@
 #define IGNORE_DRONE        "Drone"
 #define IGNORE_NARSIE_SLAVE "Nar-sie slave"
 #define IGNORE_SYNDI_BORG   "Syndicate robot"
-#define IGNORE_LAVRA        "Lavra"
+#define IGNORE_LARVA        "Larva"
 #define IGNORE_EVENT_BLOB   "Event blob"
+#define IGNORE_EMINENCE     "Eminence"
 
 var/global/list/special_roles_ignore_question = list(
 	ROLE_TRAITOR    = null,
@@ -40,8 +41,8 @@ var/global/list/special_roles_ignore_question = list(
 	ROLE_WIZARD     = null,
 	ROLE_MALF       = null,
 	ROLE_REV        = null,
-	ROLE_ALIEN      = list(IGNORE_LAVRA),
-	ROLE_CULTIST    = list(IGNORE_NARSIE_SLAVE),
+	ROLE_ALIEN      = list(IGNORE_LARVA),
+	ROLE_CULTIST    = list(IGNORE_NARSIE_SLAVE, IGNORE_EMINENCE),
 	ROLE_BLOB       = list(IGNORE_EVENT_BLOB),
 	ROLE_NINJA      = null,
 	ROLE_SHADOWLING = null,

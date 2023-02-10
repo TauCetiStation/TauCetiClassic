@@ -161,6 +161,7 @@ Implant Specifics:<BR>"}
 	var/elevel = "Localized Limb"
 	var/phrase = "supercalifragilisticexpialidocious"
 	icon_state = "implant_evil"
+	flags = HEAR_TALK
 
 /obj/item/weapon/implant/explosive/get_data()
 	var/dat = {"
@@ -306,15 +307,15 @@ Implant Specifics:<BR>"}
 	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
 	if(ishuman(imp_in))
 		var/mob/living/carbon/human/H = imp_in
-		H.halloss = 0
+		H.setHalLoss(0)
 		H.shock_stage = 0
 	imp_in.stat = CONSCIOUS
 	imp_in.SetParalysis(0)
 	imp_in.SetStunned(0)
 	imp_in.SetWeakened(0)
-	imp_in.lying = 0
-	imp_in.update_canmove()
-	imp_in.reagents.add_reagent("hyperzine", 1)
+	imp_in.reagents.add_reagent("tricordrazine", 20)
+	imp_in.reagents.add_reagent("doctorsdelight", 25)
+	imp_in.reagents.add_reagent("oxycodone", 5)
 	imp_in.reagents.add_reagent("stimulants", 4)
 	if (!uses)
 		qdel(src)

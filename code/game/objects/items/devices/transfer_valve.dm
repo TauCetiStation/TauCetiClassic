@@ -4,6 +4,7 @@
 	icon_state = "valve_1"
 	item_state = "ttv"
 	desc = "Regulates the transfer of air between two tanks."
+	flags = HEAR_TALK
 	var/obj/item/weapon/tank/tank_one
 	var/obj/item/weapon/tank/tank_two
 	var/obj/item/device/attached_device
@@ -57,12 +58,6 @@
 
 	else
 		return ..()
-
-
-/obj/item/device/transfer_valve/HasProximity(atom/movable/AM)
-	if(!attached_device)	return
-	attached_device.HasProximity(AM)
-	return
 
 /obj/item/device/transfer_valve/hear_talk(mob/living/M, msg)
 	if(!attached_device)	return

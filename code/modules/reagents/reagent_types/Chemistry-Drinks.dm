@@ -76,7 +76,7 @@
 			//nothing
 		if(21 to INFINITY)
 			if(prob(data["ticks"] - 10))
-				M.disabilities &= ~NEARSIGHTED
+				M.cure_nearsighted(EYE_DAMAGE_TRAIT)
 	data["ticks"]++
 
 /datum/reagent/consumable/drink/berryjuice
@@ -567,7 +567,8 @@
 
 /datum/reagent/consumable/neurotoxin/on_general_digest(mob/living/M)
 	..()
-	M.weakened = max(M.weakened, 3)
+	M.Stun(3)
+	M.Weaken(3)
 	if(!data["ticks"])
 		data["ticks"] = 1
 	data["ticks"]++

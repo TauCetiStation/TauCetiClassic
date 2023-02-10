@@ -51,7 +51,7 @@
 	if(user.is_busy()) return
 
 	if(rotting)
-		if(iswelder(W))
+		if(iswelding(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
 				to_chat(user, "<span class='notice'>Вы сжигаете грибок сваркой.</span>")
@@ -67,15 +67,11 @@
 
 	//THERMITE related stuff. Calls thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
-		if(iswelder(W))
+		if(iswelding(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
 				thermitemelt(user, seconds_to_melt)
 				return
-
-		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-			thermitemelt(user, seconds_to_melt)
-			return
 
 		else if(istype(W, /obj/item/weapon/melee/energy/blade))
 			var/obj/item/weapon/melee/energy/blade/EB = W
@@ -92,7 +88,7 @@
 		to_chat(user, "<span class='notice'>Эта стена слишком толстая. Лучше найти другой способ.</span>")
 		return
 
-	if(damage && iswelder(W))
+	if(damage && iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.use(0,user))
 			to_chat(user, "<span class='notice'>Вы начинаете ремонтировать укрепленную стену.</span>")
@@ -105,11 +101,12 @@
 			return
 
 	var/turf/T = user.loc	//get user's location for delay checks
-
 	//DECONSTRUCTION
 	switch(d_state)
 		if(INTACT)
-			if (iswirecutter(W))
+			if (iscutter(W))
+				if(!handle_fumbling(user, src, SKILL_TASK_TOUGH, list(/datum/skill/engineering = SKILL_LEVEL_PRO),"<span class='notice'>You fumble around figuring out how to cut the outer grille.</span>"))
+					return
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				d_state = SUPPORT_LINES
 				update_icon()
@@ -118,11 +115,11 @@
 				return
 
 		if(SUPPORT_LINES)
-			if (isscrewdriver(W))
+			if (isscrewing(W))
 				to_chat(user, "<span class='notice'>Вы начинаете удалять поддерживающие ряды.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
-				if(W.use_tool(src, user, 40, volume = 100))
+				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -137,18 +134,20 @@
 				var/obj/item/stack/O = W
 				if(!O.use(1))
 					return
+				if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_PRO),"<span class='notice'>You fumble around figuring out how to replace the outer grille.</span>"))
+					return
 				d_state = INTACT
 				update_icon()
 				to_chat(user, "<span class='notice'>Вы заменяете внешнюю решетку.</span>")
 				return
 
 		if(COVER)
-			if(iswelder(W))
+			if(iswelding(W))
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.use(0,user))
 
 					to_chat(user, "<span class='notice'>Вы начинаете разрезать металлическое покрытие.</span>")
-					if(WT.use_tool(src, user, 60, volume = 100))
+					if(WT.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
 
@@ -160,9 +159,9 @@
 					to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 				return
 
-			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+			if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
 				to_chat(user, "<span class='notice'>Вы начинаете разрезать металлическое покрытие.</span>")
-				if(W.use_tool(src, user, 60, volume = 100))
+				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -173,9 +172,9 @@
 				return
 
 		if(CUT_COVER)
-			if (iscrowbar(W))
+			if (isprying(W))
 				to_chat(user, "<span class='notice'>Вы пытаетесь отделить покрытие.</span>")
-				if(W.use_tool(src, user, 100, volume = 100))
+				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -186,10 +185,10 @@
 				return
 
 		if(ANCHOR_BOLTS)
-			if (iswrench(W))
+			if (iswrenching(W))
 
 				to_chat(user, "<span class='notice'>Вы ослабляете болты, закрепляющие поддерживающие балки.</span>")
-				if(W.use_tool(src, user, 40, volume = 100))
+				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -200,12 +199,12 @@
 				return
 
 		if(SUPPORT_RODS)
-			if(iswelder(W))
+			if(iswelding(W))
 				var/obj/item/weapon/weldingtool/WT = W
 				if(WT.use(0,user))
 
 					to_chat(user, "<span class='notice'>Вы разрезаете поддерживающие балки.</span>")
-					if(W.use_tool(src, user, 100, volume = 100))
+					if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
 
@@ -218,10 +217,10 @@
 					to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 				return
 
-			if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+			if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
 
 				to_chat(user, "<span class='notice'>Вы разрезаете поддерживающие балки.</span>")
-				if(W.use_tool(src, user, 70, volume = 100))
+				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -233,10 +232,10 @@
 				return
 
 		if(SHEATH)
-			if(iscrowbar(W))
+			if(isprying(W))
 
 				to_chat(user, "<span class='notice'>Вы отделяете внешнюю обшивку.</span>")
-				if(W.use_tool(src, user, 100, volume  = 100))
+				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume  = 100,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
@@ -248,19 +247,26 @@
 //vv OK, we weren't performing a valid deconstruction step or igniting thermite,let's check the other possibilities vv
 
 	//DRILLING
-	if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
-		var/obj/item/weapon/changeling_hammer/C = W
+	//fulldestruct to walls when
+	if(istype(W,/obj/item/weapon/melee/changeling_hammer) && !rotting)
+		var/obj/item/weapon/melee/changeling_hammer/hammer = W
+		//slowdown, user. No need destruct all walls without debuff
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			C.shock_stage += 5
 		user.do_attack_animation(src)
-		visible_message("<span class='warning'><B>[user]</B> бьет укрепленную стену!</span>")
-		if(C.use_charge(user, 4))
-			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			take_damage(pick(10, 20, 30))
+		user.visible_message("<span class='warning'><B>[user]</B> бьет укрепленную стену!</span>",
+						"<span class='warning'>Вы пытаетесь снести укрепленную стену!</span>",
+						"<span class='userdanger'>Вы слышите ужасающий грохот!</span>")
+		playsound(user, pick(hammer.hitsound), VOL_EFFECTS_MASTER)
+		take_damage(hammer.get_object_damage())
 		return
+
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 
 		to_chat(user, "<span class='notice'>Вы бурите сквозь укрепленную стену.</span>")
 
-		if(W.use_tool(src, user, 200, volume = 50))
+		if(W.use_tool(src, user, SKILL_TASK_FORMIDABLE, volume = 50))
 			if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 				return
 
@@ -324,6 +330,10 @@
 	else if(istype(W, /obj/item/noticeboard_frame))
 		var/obj/item/noticeboard_frame/NF = W
 		NF.try_build(user, src)
+
+	else if(istype(W,/obj/item/painting_frame))
+		var/obj/item/painting_frame/AH = W
+		AH.try_build(src)
 		return
 
 	//Poster stuff

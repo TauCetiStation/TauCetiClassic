@@ -25,7 +25,7 @@
 		icon_state = "rods"
 
 /obj/item/stack/rods/attackby(obj/item/I, mob/user, params)
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/WT = I
 
 		if(get_amount() < 2)
@@ -65,7 +65,7 @@
 			if(!use(1))
 				continue
 
-			G.health = 10
+			G.update_integrity(G.max_integrity)
 			G.density = TRUE
 			G.destroyed = FALSE
 			G.icon_state = "grille"

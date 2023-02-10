@@ -35,6 +35,7 @@
 
 	var/obj/machinery/power/terminal/terminal = null
 	var/power_failure = FALSE
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/power/smes/atom_init()
 	. = ..()
@@ -52,9 +53,9 @@
 	var/map_charge = charge
 	var/map_max_input = input_level_max
 	var/map_max_output = output_level_max
-	
+
 	RefreshParts()
-	
+
 	if(map_capacity)
 		capacity = map_capacity
 	if(map_charge)
@@ -192,7 +193,7 @@
 		return
 
 	// disassembling the terminal
-	if(iswirecutter(I) && terminal && panel_open)
+	if(iscutter(I) && terminal && panel_open)
 		terminal.dismantle(user)
 
 	// crowbarring it!
@@ -391,7 +392,6 @@
 	. = ..()
 	if(.)
 		return
-
 	switch(action)
 		if("tryinput")
 			input_attempt = !input_attempt

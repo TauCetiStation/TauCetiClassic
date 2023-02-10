@@ -24,10 +24,10 @@
 
 /mob/living/simple_animal/kobold/Life()
 	..()
-	if(prob(15) && turns_since_move && !stat)
+	if(prob(15) && turns_since_move && stat == CONSCIOUS)
 		flick("kobold_act",src)
 
 /mob/living/simple_animal/kobold/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(!stat)
+	if(stat == CONSCIOUS)
 		flick("kobold_walk",src)

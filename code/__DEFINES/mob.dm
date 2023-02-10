@@ -55,6 +55,11 @@
 #define PULSE_2FAST		4	//>120 bpm
 #define PULSE_THREADY	5	//occurs during hypovolemic shock
 
+//Vomit
+#define DEFAULT_VOMIT 0
+#define VOMIT_TOXIC 1
+#define VOMIT_BLOOD 2
+
 //intent defines
 #define INTENT_HELP   "help"
 #define INTENT_GRAB   "grab"
@@ -70,28 +75,32 @@
 #define GETPULSE_TOOL	1	//more accurate (med scanner, sleeper, etc)
 
 // Species Names (keep in mind, that whitelist and preferences DB depends on this names too, and if anything is renamed, update MYSQL tables or is_alien_whitelisted() proc and preferences).
-#define HUMAN          "Human"
-#define UNATHI         "Unathi"
-#define TAJARAN        "Tajaran"
-#define SKRELL         "Skrell"
-#define DIONA          "Diona"
-#define PODMAN         "Podman"
-#define IPC            "Machine"
-#define VOX            "Vox"
-#define VOX_ARMALIS    "Vox Armalis"
-#define ABDUCTOR       "Abductor"
-#define SKELETON       "Skeleton"
-#define SHADOWLING     "Shadowling"
-#define GOLEM          "Adamantine Golem"
-#define HOMUNCULUS     "Homunculus"
-#define ZOMBIE         "Zombie"
-#define ZOMBIE_TAJARAN "Zombie Tajaran"
-#define ZOMBIE_SKRELL  "Zombie Skrell"
-#define ZOMBIE_UNATHI  "Zombie Unathi"
-#define SLIME          "Slime"
-#define ABOMINATION    "disgusting abomination"
+#define HUMAN          	 "Human"
+#define UNATHI         	 "Unathi"
+#define TAJARAN        	 "Tajaran"
+#define SKRELL         	 "Skrell"
+#define DIONA          	 "Diona"
+#define PODMAN         	 "Podman"
+#define IPC            	 "Machine"
+#define VOX            	 "Vox"
+#define VOX_ARMALIS    	 "Vox Armalis"
+#define ABDUCTOR       	 "Abductor"
+#define SKELETON       	 "Skeleton"
+#define SKELETON_UNATHI	 "Skeleton Unathi"
+#define SKELETON_TAJARAN "Skeleton Tajaran"
+#define SKELETON_SKRELL	 "Skeleton Skrell"
+#define SKELETON_VOX	 "Skeleton Vox"
+#define SHADOWLING     	 "Shadowling"
+#define GOLEM          	 "Adamantine Golem"
+#define HOMUNCULUS     	 "Homunculus"
+#define ZOMBIE         	 "Zombie"
+#define ZOMBIE_TAJARAN 	 "Zombie Tajaran"
+#define ZOMBIE_SKRELL  	 "Zombie Skrell"
+#define ZOMBIE_UNATHI  	 "Zombie Unathi"
+#define SLIME          	 "Slime"
+#define ABOMINATION    	 "disgusting abomination"
 
-#define MONKEY         "Monkey"
+#define MONKEY         	 "Monkey"
 
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
 
@@ -143,7 +152,7 @@
 #define TK_BONUS_UPSET 1
 
 // How much resource should be wasted per tile of distance to target.
-#define TK_MANA_PER_TILE 10
+#define TK_MANA_PER_TILE 1
 // How much resource should be wasted per upping of a size class of target.
 #define TK_MANA_PER_W_CLASS(cl) (2**cl)
 
@@ -151,6 +160,7 @@
 #define NUTRITION_LEVEL_FAT 600
 #define NUTRITION_LEVEL_FULL 550
 #define NUTRITION_LEVEL_WELL_FED 450
+#define NUTRITION_LEVEL_NORMAL 400
 #define NUTRITION_LEVEL_FED 350
 #define NUTRITION_LEVEL_HUNGRY 250
 #define NUTRITION_LEVEL_STARVING 150

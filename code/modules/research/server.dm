@@ -119,7 +119,7 @@
 	if(exchange_parts(user, I))
 		return
 	if (panel_open)
-		if(iscrowbar(I))
+		if(isprying(I))
 			griefProtection()
 			default_deconstruction_crowbar(I)
 			return 1
@@ -128,7 +128,7 @@
 
 /obj/machinery/r_n_d/server/centcom
 	name = "Centcom Central R&D Database"
-	server_id = -1
+	server_id = DEFAULT_CENTCOM_SERVER_ID
 
 /obj/machinery/r_n_d/server/centcom/atom_init()
 	. = ..()
@@ -136,7 +136,7 @@
 	var/list/server_ids = list()
 	for(var/obj/machinery/r_n_d/server/S in rnd_server_list)
 		switch(S.server_id)
-			if(-1)
+			if(DEFAULT_CENTCOM_SERVER_ID)
 				continue
 			if(0)
 				no_id_servers += S
@@ -166,6 +166,7 @@
 	var/list/servers = list()
 	var/list/consoles = list()
 	var/badmin = 0
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_PRO)
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
 	. = ..()
@@ -189,7 +190,7 @@
 				break
 		if(href_list["access"])
 			screen = 1
-			for(var/obj/machinery/computer/rdconsole/C in computer_list)
+			for(var/obj/machinery/computer/rdconsole/C as anything in global.RDcomputer_list)
 				if(C.sync)
 					consoles += C
 		else if(href_list["data"])
@@ -249,7 +250,7 @@
 		if(1) //Access rights menu
 			dat += "[temp_server.name] Access Rights<BR><BR>"
 			dat += "Consoles with Upload Access<BR>"
-			for(var/obj/machinery/computer/rdconsole/C in consoles)
+			for(var/obj/machinery/computer/rdconsole/C as anything in global.RDcomputer_list)
 				var/turf/console_turf = get_turf(C)
 				dat += "* <A href='?src=\ref[src];upload_toggle=[C.id]'>[console_turf.loc]" //FYI, these are all numeric ids, eventually.
 				if(C.id in temp_server.id_with_upload)
@@ -257,7 +258,7 @@
 				else
 					dat += "Add</A><BR>"
 			dat += "Consoles with Download Access<BR>"
-			for(var/obj/machinery/computer/rdconsole/C in consoles)
+			for(var/obj/machinery/computer/rdconsole/C as anything in global.RDcomputer_list)
 				var/turf/console_turf = get_turf(C)
 				dat += "* <A href='?src=\ref[src];download_toggle=[C.id]'>[console_turf.loc]"
 				if(C.id in temp_server.id_with_download)
@@ -309,17 +310,17 @@
 	name = "Robotics R&D Server"
 	id_with_upload_string = "1;2"
 	id_with_download_string = "1;2"
-	server_id = 2
+	server_id = DEFAULT_ROBOTICS_SERVER_ID
 
 
 /obj/machinery/r_n_d/server/core
 	name = "Core R&D Server"
 	id_with_upload_string = "1"
 	id_with_download_string = "1"
-	server_id = 1
+	server_id = DEFAULT_SCIENCE_SERVER_ID
 
 /obj/machinery/r_n_d/server/mining
 	name = "Mining R&D Server"
 	id_with_upload_string = "1;3"
 	id_with_download_string = "1;3"
-	server_id = 3
+	server_id = DEFAULT_MINING_SERVER_ID

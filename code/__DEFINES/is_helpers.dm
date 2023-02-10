@@ -11,11 +11,17 @@
 
 #define isiceturf(A) (istype(A, /turf/environment/snow/ice))
 
+#define isfloorturf(A) (istype(A, /turf/simulated/floor))
+
+#define isplatingturf(A) (istype(A, /turf/simulated/floor/plating))
+
+#define iswallturf(A) (istype(A, /turf/simulated/wall))
+
 // HUMAN
 
-#define isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
-
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
+
+#define isskeleton(A) (A.get_species() in list(SKELETON, SKELETON_UNATHI, SKELETON_TAJARAN, SKELETON_SKRELL, SKELETON_VOX))
 
 // CARBON
 #define isxenoqueen(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/queen))
@@ -80,6 +86,10 @@
 
 #define isessence(A) (istype(A, /mob/living/parasite/essence))
 
+#define isshade(A) (istype(A, /mob/living/simple_animal/shade))
+
+#define isconstruct(A) istype(A, /mob/living/simple_animal/construct)
+
 #define isgod(A) (istype(A, /mob/living/simple_animal/shade/god))
 
 // MOB
@@ -125,23 +135,27 @@
 
 // TOOLS HELPERS
 
-#define iswrench(A) (istype(A, /obj/item/weapon/wrench))
+#define iswrenching(I) 	I.get_quality(QUALITY_WRENCHING)
 
-#define iswelder(A) (istype(A, /obj/item/weapon/weldingtool))
+#define iswelding(I) 	I.get_quality(QUALITY_WELDING)
 
-#define iswirecutter(A) (istype(A, /obj/item/weapon/wirecutters))
+#define iscutter(I) 	I.get_quality(QUALITY_CUTTING)
 
-#define isscrewdriver(A) (istype(A, /obj/item/weapon/screwdriver))
+#define isscrewing(I) 	I.get_quality(QUALITY_SCREWING)
 
-#define iscrowbar(A) (istype(A, /obj/item/weapon/crowbar))
+#define isprying(I)		I.get_quality(QUALITY_PRYING)
 
-#define ismultitool(A) (istype(A, /obj/item/device/multitool))
+#define ispulsing(I) 	I.get_quality(QUALITY_PULSING)
+
+#define issignaling(I)  I.get_quality(QUALITY_SIGNALLING)
 
 #define iscoil(A) (istype(A, /obj/item/stack/cable_coil))
 
 // OBJECTS
 
 #define isitem(A) (istype(A, /obj/item))
+
+#define isunder(A) (istype(A, /obj/item/clothing/under))
 
 // ROLES / ANTAG
 
@@ -153,6 +167,8 @@
 
 #define isanyantag(H) (H?.mind && H.mind.antag_roles.len)
 
+#define isabductor(H) isrolebytype(/datum/role/abductor, H)
+
 #define isabductorsci(H) isrole(ABDUCTOR_SCI, H)
 
 #define isabductoragent(H) isrole(ABDUCTOR_AGENT, H)
@@ -162,6 +178,8 @@
 #define isshadowthrall(H) isrole(SHADOW_THRALL, H)
 
 #define iscultist(mob) (mob && global.cult_religion?.is_member(mob))
+
+#define iseminence(A) (istype(A, /mob/camera/eminence))
 
 #define isvoxraider(H) isrole(VOXRAIDER, H)
 
@@ -193,6 +211,8 @@
 
 #define isrolezombie(H) isrole(ZOMBIE, H)
 
+#define iszombie(H) (H.get_species() in global.all_zombie_species_names)
+
 #define isalien(H) isrole(XENOMORPH, H)
 
 #define isgangster(H) isrole(GANGSTER, H)
@@ -209,16 +229,16 @@
 
 // BLOB
 
-#define isblob(A) (istype(A, /obj/effect/blob))
+#define isblob(A) (istype(A, /obj/structure/blob))
 
-#define isblobnormal(A) (istype(A, /obj/effect/blob/normal))
+#define isblobnormal(A) (istype(A, /obj/structure/blob/normal))
 
-#define isblobcore(A) (istype(A, /obj/effect/blob/core))
+#define isblobcore(A) (istype(A, /obj/structure/blob/core))
 
-#define isblobnode(A) (istype(A, /obj/effect/blob/node))
+#define isblobnode(A) (istype(A, /obj/structure/blob/node))
 
-#define isblobfactory(A) (istype(A, /obj/effect/blob/factory))
+#define isblobfactory(A) (istype(A, /obj/structure/blob/factory))
 
-#define isblobshield(A) (istype(A, /obj/effect/blob/shield))
+#define isblobshield(A) (istype(A, /obj/structure/blob/shield))
 
-#define isblobresource(A) (istype(A, /obj/effect/blob/resource))
+#define isblobresource(A) (istype(A, /obj/structure/blob/resource))

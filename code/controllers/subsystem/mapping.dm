@@ -223,6 +223,8 @@ SUBSYSTEM_DEF(mapping)
 	if(global.config.load_mine)
 		if(config.minetype == "asteroid")
 			LoadGroup(FailedZs, "Asteroid", "asteroid", "asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
+		else if(config.minetype == "prometheus_asteroid")
+			LoadGroup(FailedZs, "Asteroid", "prometheus_asteroid", "prometheus_asteroid.dmm", default_traits = ZTRAITS_ASTEROID)
 		else if (!isnull(config.minetype))
 			INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
 
@@ -261,6 +263,29 @@ SUBSYSTEM_DEF(mapping)
 
 	next_map_config = VM
 	return TRUE
+
+/datum/controller/subsystem/mapping/proc/autovote_next_map()
+	var/datum/map_config/current_next_map
+	var/should_revote = FALSE
+
+	 // todo: for some reason maps in SSmapping don't have config/maps.txt params?
+	if(next_map_config)	// maybe we shouldn't if it's admin choice
+		current_next_map = global.config.maplist[next_map_config.map_name]
+	else
+		current_next_map =  global.config.maplist[src.config.map_name]
+
+	if (current_next_map.config_min_users > 0 && length(player_list) < current_next_map.config_min_users)
+		should_revote = TRUE
+	else if (current_next_map.config_max_users > 0 && length(player_list) > current_next_map.config_max_users)
+		should_revote = TRUE
+
+	if(!should_revote)
+		return
+
+	var/datum/poll/map_poll = SSvote.votes[/datum/poll/nextmap]
+	if(map_poll && map_poll.can_start())
+		to_chat(world, "<span class='notice'>Current next map is inappropriate for ammount of players online. Map vote will be forced.</span>")
+		SSvote.start_vote(map_poll.type)
 
 #undef SPACE_STRUCTURES_AMOUNT
 #undef MAX_MINING_SECRET_ROOM

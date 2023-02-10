@@ -50,7 +50,7 @@
 		new /obj/item/stack/medical/ointment(src)
 	new /obj/item/device/healthanalyzer(src)
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
-	new /obj/item/stack/medical/suture(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine(src)
 
 /obj/item/weapon/storage/firstaid/toxin
 	name = "toxin first aid"
@@ -82,8 +82,9 @@
 		return
 	for (var/i in 1 to 4)
 		new /obj/item/weapon/reagent_containers/pill/dexalin(src)
-	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
 	new /obj/item/weapon/reagent_containers/syringe/inaprovaline(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
+	new /obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine(src)
 	new /obj/item/device/healthanalyzer(src)
 
 /obj/item/weapon/storage/firstaid/adv

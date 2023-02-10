@@ -1,42 +1,56 @@
 var/global/list/citizenship_choices = list(
-	"Earth",
 	"Mars",
-	"Moghes",
+	"Venus",
+	"Earth",
+	"Bimna",
+	"Luthien",
+	"New Gibson",
+	"Reed",
+	"Argelius",
 	"Ahdomai",
+	"Moghes",
 	"Qerrbalak"
 	)
 
 var/global/list/home_system_choices = list(
 	"Sol",
-	"Nyx",
 	"Tau Ceti",
-	"Epsilon Ursae Majoris",
+	"Epsilon Eridani",
 	"S'randarr"
 	)
 
 var/global/list/faction_choices = list(
-	"Sol Central",
-	"Vey Med",
-	"Aleph",
+	"Aether Atmospherics",
+	"BioTech Solutions",
 	"Einstein Engines",
 	"Free Trade Union",
-	"NanoTrasen",
-	"Ward-Takahashi GMB",
 	"Gilthari Exports",
 	"Grayson Manufactories Ltd.",
-	"Aether Atmospherics",
-	"Zeng-Hu Pharmaceuticals",
-	"Hesphaistos Industries"
+	"Hadii",
+	"Hesphaistos Industries",
+	"Kaytam",
+	"NanoTrasen",
+	"Nazkiin",
+	"Positronic Union",
+	"Skrellian Empire",
+	"Sol Central",
+	"Vey Med",
+	"Ward-Takahashi GMB",
+	"Xion",
+	"Zeng-Hu Pharmaceuticals"
 	)
 
 var/global/list/religion_choices = list(
-	"Unitarianism",
-	"Hinduism",
-	"Buddhist",
-	"Islamic",
-	"Christian",
+	"Acolism",
 	"Agnostic",
-	"Deist"
+	"Buddhist",
+	"Deist",
+	"Hinduism",
+	"Islamic",
+	"Order of Great Lady",
+	"Space-Christianity",
+	"Technologism",
+	"Unitarianism"
 	)
 var/global/list/rank_choices = list(
 	"Leader",

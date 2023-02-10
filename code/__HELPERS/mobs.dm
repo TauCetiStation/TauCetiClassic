@@ -191,7 +191,7 @@
 			. = FALSE
 			break
 
-		if(user.stat || user.weakened || user.stunned)
+		if(user.incapacitated(NONE))
 			. = FALSE
 			break
 
@@ -239,3 +239,14 @@
 	if(!mind || !mind.assigned_job)
 		return
 	return mind.assigned_job.head_position
+
+/mob/proc/IsShockproof()
+	return HAS_TRAIT(src, TRAIT_SHOCKIMMUNE)
+
+/mob/proc/IsClumsy()
+	return HAS_TRAIT(src, TRAIT_CLUMSY)
+
+/mob/proc/ClumsyProbabilityCheck(probability)
+	if(HAS_TRAIT(src, TRAIT_CLUMSY) && prob(probability))
+		return TRUE
+	return FALSE

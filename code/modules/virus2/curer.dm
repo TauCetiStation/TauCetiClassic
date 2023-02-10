@@ -9,6 +9,7 @@
 	var/virusing
 
 	var/obj/item/weapon/reagent_containers/container = null
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/medical = SKILL_LEVEL_PRO)
 
 /obj/machinery/computer/curer/attackby(obj/I, mob/user)
 	if(istype(I,/obj/item/weapon/reagent_containers))
@@ -21,6 +22,8 @@
 	if(istype(I, /obj/item/weapon/virusdish))
 		if(virusing)
 			to_chat(user, "<b>The pathogen materializer is still recharging..</b>")
+			return
+		if(!do_skill_checks(user))
 			return
 		var/obj/item/weapon/reagent_containers/glass/beaker/product = new(src.loc)
 

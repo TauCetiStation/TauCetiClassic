@@ -23,6 +23,8 @@
 	var/list/valid_accessory_slots
 	var/list/restricted_accessory_slots
 
+	var/can_be_modded = FALSE //modding hardsuits with modkits
+
 	var/flashbang_protection = FALSE
 
 //BS12: Species-restricted clothing check.
@@ -97,41 +99,6 @@
 		icon = sprite_sheets_obj[target_species]
 	else
 		icon = initial(icon)
-
-/obj/item/clothing/MouseDrop(obj/over_object)
-	. = ..()
-	if (ishuman(usr) || ismonkey(usr))
-		var/mob/M = usr
-		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
-		if (loc != usr)
-			return
-		if (!over_object)
-			return
-		if (usr.incapacitated())
-			return
-		add_fingerprint(usr)
-		if(!equip_time)
-			switch(over_object.name)
-				if("r_hand")
-					if(M.unEquip(src))
-						M.put_in_r_hand(src)
-				if("l_hand")
-					if(M.unEquip(src))
-						M.put_in_l_hand(src)
-		else
-			switch(over_object.name)
-				if("r_hand")
-					if(slot_equipped == SLOT_L_HAND) //item swap
-						if(M.unEquip(src))
-							M.put_in_r_hand(src)
-					else
-						usr.delay_clothing_unequip(src)
-				if("l_hand")
-					if(slot_equipped == SLOT_R_HAND) //item swap
-						if(M.unEquip(src))
-							M.put_in_l_hand(src)
-					else
-						usr.delay_clothing_unequip(src)
 
 /obj/item/clothing/emp_act(severity)
 	..()
@@ -232,6 +199,20 @@
 	if(displayed_accessories.len)
 		. += " with [get_english_list(displayed_accessories)] attached"
 
+/obj/item/clothing/proc/_spawn_shreds()
+	set waitfor = FALSE
+	var/turf/T = get_turf(src)
+	sleep(1)
+	new /obj/effect/decal/cleanable/shreds(T, name)
+
+/obj/item/clothing/atom_destruction(damage_flag)
+	switch(damage_flag)
+		if(FIRE, ACID)
+			return ..()
+		else
+			_spawn_shreds()
+			..()
+
 //Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
 	name = "ears"
@@ -280,7 +261,7 @@
 /obj/item/clothing/ears/offear
 	name = "Other ear"
 	w_class = SIZE_BIG
-	icon = 'icons/mob/screen1_Midnight.dmi'
+	icon = 'icons/hud/screen1_Midnight.dmi'
 	icon_state = "block"
 	slot_flags = SLOT_FLAGS_EARS | SLOT_FLAGS_TWOEARS
 
@@ -398,39 +379,13 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.9
 	body_parts_covered = LEGS
 	slot_flags = SLOT_FLAGS_FEET
-	var/clipped_status = NO_CLIPPING
 
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
-	species_restricted = list("exclude" , UNATHI , TAJARAN, VOX, VOX_ARMALIS)
 
 	sprite_sheet_slot = SPRITE_SHEET_FEET
 
 	dyed_type = DYED_SHOES
-
-//Cutting shoes
-/obj/item/clothing/shoes/attackby(obj/item/I, mob/user, params)
-	if(iswirecutter(I))
-		switch(clipped_status)
-			if(CLIPPABLE)
-				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
-				user.visible_message("<span class='red'>[user] cuts the toe caps off of [src].</span>","<span class='red'>You cut the toe caps off of [src].</span>")
-
-				name = "mangled [name]"
-				desc = "[desc]<br>They have the toe caps cut off of them."
-				if("exclude" in species_restricted)
-					species_restricted -= UNATHI
-					species_restricted -= TAJARAN
-					species_restricted -= VOX
-				src.icon_state += "_cut"
-				user.update_inv_shoes()
-				clipped_status = CLIPPED
-			if(NO_CLIPPING)
-				to_chat(user, "<span class='notice'>You have no idea of how to clip [src]!</span>")
-			if(CLIPPED)
-				to_chat(user, "<span class='notice'>[src] have already been clipped!</span>")
-	else
-		return ..()
 
 /obj/item/clothing/shoes/play_unique_footstep_sound()
 	..()
@@ -571,8 +526,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if(I.sharp && !ishuman(loc)) //you can cut only clothes lying on the floor
-		for (var/i in 1 to 3)
-			new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), null, null, crit_fail)
+		new /obj/item/stack/sheet/cloth(get_turf(src), 3, null, crit_fail)
 		qdel(src)
 		return
 
