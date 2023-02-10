@@ -36,6 +36,11 @@
 	question = "Вам понравилась работа администрации?"
 	result_message = "Оценка администрации"
 
+/datum/rating_template/map
+	category = "map_rating"
+	question = "Вам понравилась эта карта?"
+	result_message = "Оценка карты"
+
 SUBSYSTEM_DEF(rating)
 	name = "Round Rating"
 
