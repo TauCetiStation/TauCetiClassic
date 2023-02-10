@@ -349,9 +349,8 @@
 			M.apply_effect(25, IRRADIATE)
 		for(var/obj/item/device/geiger/counter as anything in global.geiger_items_list)
 			var/distance_rad_signal = get_dist(counter, src)
-			if(distance_rad_signal <= GEIGER_RANGE)
-				var/rads = 25 * sqrt(1 / (distance_rad_signal + 1))
-				counter.recieve_rad_signal(rads, distance_rad_signal)
+			var/rads = 25 * sqrt(1 / (distance_rad_signal + 1))
+			counter.recieve_rad_signal(rads, distance_rad_signal)
 
 
 	var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
