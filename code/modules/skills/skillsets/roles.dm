@@ -256,7 +256,6 @@
 		/datum/skill/construction = SKILL_LEVEL_MASTER,
 		/datum/skill/atmospherics = SKILL_LEVEL_MASTER,
 		/datum/skill/civ_mech = SKILL_LEVEL_PRO,
-		/datum/skill/combat_mech = SKILL_LEVEL_NOVICE,
 		/datum/skill/medical = SKILL_LEVEL_TRAINED,
 		/datum/skill/surgery = SKILL_LEVEL_NOVICE,
 		/datum/skill/research = SKILL_LEVEL_TRAINED,
