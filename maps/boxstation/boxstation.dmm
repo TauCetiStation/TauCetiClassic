@@ -31122,9 +31122,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
