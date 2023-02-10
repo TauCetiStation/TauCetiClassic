@@ -94,12 +94,12 @@
 	flag = ENERGY
 
 /obj/item/projectile/energy/floramut/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+	irradiate_in_dist(get_turf(target), rand(30, 80), 0)
 	var/mob/living/M = target
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = M
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))
 			if(prob(15))
-				M.apply_effect((rand(30,80)),IRRADIATE)
 				M.Stun(2)
 				M.Weaken(5)
 				visible_message("<span class='warning'>[M] writhes in pain as \his vacuoles boil.</span>", blind_message = "<span class='warning'>You hear the crunching of leaves.</span>")

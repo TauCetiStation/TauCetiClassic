@@ -69,15 +69,8 @@
 
 /obj/effect/accelerated_particle/proc/toxmob(mob/living/M)
 	var/radiation = (energy*2)
-/*			if(ishuman(M))
-		if(M:wear_suit) //TODO: check for radiation protection
-			radiation = round(radiation/2,1)
-	if(ismonkey(M))
-		if(M:wear_suit) //TODO: check for radiation protection
-			radiation = round(radiation/2,1)*/
-	M.apply_effect((radiation*3),IRRADIATE,0)
+	irradiate_in_dist(get_turf(M), radiation * 3, 0)
 	M.updatehealth()
-	//M << "<span class='warning'>You feel odd.</span>"
 	return
 
 

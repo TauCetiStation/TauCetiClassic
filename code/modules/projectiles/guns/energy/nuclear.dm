@@ -64,19 +64,10 @@
 	lightfail = 0
 	if (prob(src.reliability)) return 1 //No failure
 	if (prob(src.reliability))
-		for (var/mob/living/M in range(0,src)) //Only a minor failure, enjoy your radiation if you're in the same tile or carrying it
-			if (loc == M)
-				to_chat(M, "<span class='warning'>Your gun feels pleasantly warm for a moment.</span>")
-			else
-				to_chat(M, "<span class='warning'>You feel a warm sensation.</span>")
-			M.apply_effect(rand(3,120), IRRADIATE)
+		irradiate_in_dist(get_turf(src), rand(3, 120), 0)
 		lightfail = 1
 	else
-		for (var/mob/living/M in range(rand(1,4),src)) //Big failure, TIME FOR RADIATION BITCHES
-			if (loc == M)
-				to_chat(M, "<span class='warning'>Your gun's reactor overloads!</span>")
-			to_chat(M, "<span class='warning'>You feel a wave of heat wash over you.</span>")
-			M.apply_effect(300, IRRADIATE)
+		irradiate_in_dist(get_turf(src), 300, rand(1, 4))
 		crit_fail = 1 //break the gun so it stops recharging
 		STOP_PROCESSING(SSobj, src)
 		update_icon()

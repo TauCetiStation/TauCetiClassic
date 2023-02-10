@@ -161,7 +161,7 @@ var/global/list/tourette_bad_words= list(
 				return
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		if(!(get_species() in tourette_bad_words))
-			return 
+			return
 		speech_problem_flag = 1
 		if (prob(10))
 			spawn( 0 )
@@ -441,7 +441,7 @@ var/global/list/tourette_bad_words= list(
 		if(istype(loc, /obj/mecha) || istype(loc, /obj/structure/transit_tube_pod))
 			return
 		if(!(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space)) && radiation < 100)
-			apply_effect(5, IRRADIATE)
+			irradiate_in_dist(get_turf(src), 5, 0)
 
 	if(status_flags & GODMODE)
 		return 1	//godmode

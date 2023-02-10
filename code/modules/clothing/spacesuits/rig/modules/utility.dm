@@ -565,7 +565,7 @@
 	if(damage == MODULE_DAMAGED && prob(2))
 		if(holder.wearer)
 			to_chat(holder.wearer, "<span class='warning'>Your damaged [name] irradiates you</span>")
-			holder.wearer.apply_effect(rand(5, 25), IRRADIATE, 0)
+			irradiate_in_dist(get_turf(holder.wearer), rand(5, 25), 0)
 
 	if(damage >= MODULE_DESTROYED)
 		if(!unstable)
