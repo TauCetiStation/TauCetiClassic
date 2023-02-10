@@ -134,6 +134,6 @@ SUBSYSTEM_DEF(rating)
 			SSStatistics.rating.ratings[cat] += M.client.my_rate[cat]
 			voters[cat]++
 	for(var/cat in SSStatistics.rating.ratings)
-		SSStatistics.rating.ratings[cat] = SSStatistics.rating.ratings[cat] / voters[cat]
+		SSStatistics.rating.ratings[cat] = round(SSStatistics.rating.ratings[cat] / voters[cat], 0.01)
 
 #undef RATING_SHOW_ALWAYS
