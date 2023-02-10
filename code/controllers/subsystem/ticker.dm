@@ -113,7 +113,7 @@ SUBSYSTEM_DEF(ticker)
 			if(!explosion_in_progress && mode_finished)
 				current_state = GAME_STATE_FINISHED
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
-				global.rating_helper.calculate_rating()
+				SSrating.calculate_rating()
 				declare_completion()
 				spawn(50)
 					for(var/client/C in clients)
@@ -436,7 +436,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/get_ratings()
 	var/dat = "<h2>Round Ratings</h2>"
 	dat += "<div class='Section'>"
-	dat += global.rating_helper.get_voting_results()
+	dat += SSrating.get_voting_results()
 	dat += "</div>"
 	return dat
 

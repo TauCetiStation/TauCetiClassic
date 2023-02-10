@@ -201,5 +201,5 @@
 	var/leave_time
 
 /datum/stat/rating
-	// float, [0...5]
+	// map of [string, float] where float is [0..5]
 	var/list/ratings = list()

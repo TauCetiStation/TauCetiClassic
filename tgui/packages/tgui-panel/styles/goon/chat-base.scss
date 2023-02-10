@@ -497,11 +497,14 @@ div.rating {
   border-radius: 15px;
   text-align: center;
   background: #eeeeee;
+  padding-bottom: 5px;
+  padding-top: 5px;
 }
 
 .rating_questions {
   font-size: x-large;
   color: #34a1c5;
+  text-decoration: underline;
 }
 
 .rating_rates {

@@ -7,8 +7,7 @@
 	var/result_message
 
 /datum/rating_template/proc/get_result_message(rating)
-	// sorry for this
-	var/icon = global.rating_helper.get_icon(rating)
+	var/icon = SSrating.get_icon(rating)
 	return "[result_message]: [icon] <span style='font-size: 10px'>([rating])</span><br>"
 
 /datum/rating_template/generic
@@ -19,7 +18,7 @@
 
 /datum/rating_template/mode
 	category = "mode_rating"
-	question = "Вам понравился режим?"
+	question = "Вам понравился игровой режим?"
 	result_message = "Оценка режима"
 
 /datum/rating_template/rp
@@ -32,9 +31,17 @@
 	question = "Вам сильно помешали баги?"
 	result_message = "Оценка надоедливости багов"
 
-// my fucking DTOs without systems and layers
-var/global/datum/rating_helper/rating_helper = new
-/datum/rating_helper
+/datum/rating_template/admin
+	category = "admin_rating"
+	question = "Вам понравилась работа администрации?"
+	result_message = "Оценка администрации"
+
+SUBSYSTEM_DEF(rating)
+	name = "Round Rating"
+
+	init_order = SS_INIT_RATING
+	flags = SS_NO_FIRE
+
 	var/list/rating_templates = list()
 
 	var/list/rating_by_icon = list(
@@ -47,24 +54,25 @@ var/global/datum/rating_helper/rating_helper = new
 
 	var/max_random_questions = 2
 
-/datum/rating_helper/New()
+/datum/controller/subsystem/rating/Initialize(start_timeofday)
 	for(var/type in subtypesof(/datum/rating_template))
 		rating_templates += new type
+	..()
 
-/datum/rating_helper/proc/get_result_message(category, rating)
+/datum/controller/subsystem/rating/proc/get_result_message(category, rating)
 	for(var/datum/rating_template/template in rating_templates)
 		if(template.category == category)
 			return template.get_result_message(rating)
 
-/datum/rating_helper/proc/get_template(category)
+/datum/controller/subsystem/rating/proc/get_template(category)
 	for(var/datum/rating_template/template in rating_templates)
 		if(template.category == category)
 			return template
 
-/datum/rating_helper/proc/get_icon(rating)
+/datum/controller/subsystem/rating/proc/get_icon(rating)
 	return rating_by_icon["[CEIL(rating)]"]
 
-/datum/rating_helper/proc/get_voting_results()
+/datum/controller/subsystem/rating/proc/get_voting_results()
 	var/string = "<div>"
 
 	var/list/ratings = SSStatistics.rating.ratings
@@ -76,26 +84,24 @@ var/global/datum/rating_helper/rating_helper = new
 
 #define RATING_HREF(M, rating, cat, fa_icon) "<a href='?src=\ref[M];round_rating=[rating];rating_cat=[cat]'>[fa_icon]</a>"
 
-/datum/rating_helper/proc/announce_rating_collection()
+/datum/controller/subsystem/rating/proc/announce_rating_collection()
 	for(var/mob/M in global.player_list)
 		var/string = "<br><div class='rating'>"
-		var/list/temp_templates = rating_templates.Copy()
+		var/list/template_pool = rating_templates.Copy()
 
 		var/list/templates_to_render = list()
-		for(var/datum/rating_template/template in temp_templates)
-			if(!(template.show_options & RATING_SHOW_ALWAYS))
-				continue
-			templates_to_render += template
-			temp_templates -= template
+		for(var/datum/rating_template/template in template_pool)
+			if(template.show_options & RATING_SHOW_ALWAYS)
+				templates_to_render += template
+				template_pool -= template
 
-		temp_templates = shuffle(temp_templates)
 		var/question_asked = 0
 		while(question_asked != max_random_questions)
-			if(!temp_templates.len)
+			if(template_pool.len == 0)
 				break
-			var/template = pick(temp_templates)
+			var/template = pick(template_pool)
 			templates_to_render += template
-			temp_templates -= template
+			template_pool -= template
 			question_asked++
 
 		for(var/datum/rating_template/template in templates_to_render)
@@ -114,7 +120,7 @@ var/global/datum/rating_helper/rating_helper = new
 
 #undef RATING_HREF
 
-/datum/rating_helper/proc/calculate_rating()
+/datum/controller/subsystem/rating/proc/calculate_rating()
 	var/list/voters = list()
 	for(var/mob/M in global.player_list)
 		if(!length(M.client.my_rate))

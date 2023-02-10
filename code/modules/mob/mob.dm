@@ -483,7 +483,7 @@
 	if(href_list["round_rating"] && href_list["rating_cat"])
 		var/rating = text2num(href_list["round_rating"])
 		var/rating_cat = href_list["rating_cat"]
-		if(rating && isnum(rating) && global.rating_helper.get_template(rating_cat) && ("[rating]" in global.rating_helper.rating_by_icon))
+		if(rating && isnum(rating) && SSrating.get_template(rating_cat) && ("[rating]" in SSrating.rating_by_icon))
 			LAZYSET(client.my_rate, rating_cat, rating)
 			to_chat(src, "<span class='info'>Ваша оценка: [rating].</span>")
 
