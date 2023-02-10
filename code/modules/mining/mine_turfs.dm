@@ -326,7 +326,7 @@
 	playsound(src, 'sound/effects/rockfall.ogg', VOL_EFFECTS_MASTER)
 	// var/destroyed = 0 //used for breaking strange rocks
 	if (mineral && ore_amount)
-		
+
 		// if the turf has already been excavated, some of it's ore has been removed
 		for (var/i = 1 to round((ore_amount - mined_ore) * mineral_drop_coefficient, 1))
 			DropMineral()
@@ -347,6 +347,11 @@
 				if(prob(50))
 					M.Stun(5)
 			M.apply_effect(25, IRRADIATE)
+		for(var/obj/item/device/geiger/counter as anything in global.geiger_items_list)
+			var/distance_rad_signal = get_dist(counter, src)
+			if(distance_rad_signal <= GEIGER_RANGE)
+				var/rads = 25 * sqrt(1 / (distance_rad_signal + 1))
+				counter.recieve_rad_signal(rads, distance_rad_signal)
 
 
 	var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
