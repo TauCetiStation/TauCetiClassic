@@ -102,7 +102,7 @@
 					cell.use(cell_use)
 					var/mob/living/carbon/human/H = A
 					var/attack_obj = attacker.get_unarmed_attack()
-					var/damage = attack_obj["damage"] * 3
+					var/damage = attack_obj["damage"] * 2
 					if(!damage)
 						playsound(src, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
 						visible_message("<span class='warning'><B>[attacker] has attempted to punch [H]!</B></span>")
@@ -120,6 +120,7 @@
 
 					H.apply_damage(damage, BURN, BP, armor_block)
 					H.apply_damage(damage, BRUTE, BP, armor_block)
+					H.apply_damage(10, HALLOSS, BP, armor_block)
 					if(prob(50))
 						var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 						s.set_up(3, 1, L)
