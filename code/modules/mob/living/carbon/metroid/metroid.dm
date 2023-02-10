@@ -597,7 +597,7 @@
 	icon_state = "golem"
 	item_state = null
 	canremove = 0
-	flags = ABSTRACT | DROPDEL | NOSLIP
+	flags = ABSTRACT | DROPDEL | NOSLIP | AIR_FLOW_PROTECT
 	unacidable = 1
 
 

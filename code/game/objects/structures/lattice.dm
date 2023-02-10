@@ -45,7 +45,7 @@
 		var/turf/T = get_turf(src)
 		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead
 		return
-	if (iswelder(C))
+	if (iswelding(C))
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.use(0, user))
 			to_chat(user, "<span class='notice'>Slicing lattice joints ...</span>")

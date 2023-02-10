@@ -154,6 +154,7 @@
 #define TRAIT_COOLED              "external_cooling_device"
 #define TRAIT_NO_RUN              "no_run"
 #define TRAIT_FAST_EQUIP          "fast_equip"
+#define TRAIT_FRIENDLY            "friendly"
 #define TRAIT_NO_CLONE            "no_clone"
 #define TRAIT_VACCINATED          "vaccinated"
 #define TRAIT_DWARF               "dwarf"
@@ -167,6 +168,10 @@
 #define TRAIT_CULT_EYES           "cult_eyes"
 #define TRAIT_CULT_HALO           "cult_halo"
 #define TRAIT_HEALS_FROM_PYLONS   "heals_from_pylons"
+#define TRAIT_HEMOCOAGULATION     "hemocoagulation"
+#define TRAIT_CLUMSY              "clumsy"
+#define TRAIT_SHOCKIMMUNE         "shockimmune"
+#define TRAIT_NATURAL_AGILITY     "natural_agility"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -201,3 +206,9 @@
 
 // atom traits
 #define TRAIT_XENO_FUR "xeno_fur"
+
+// trait sources
+#define EYE_DAMAGE_TRAIT "eye_damage"
+#define EYE_DAMAGE_TEMPORARY_TRAIT "eye_damage_temporary"
+#define GENETIC_MUTATION_TRAIT "genetic"
+#define QUIRK_TRAIT "quirk"

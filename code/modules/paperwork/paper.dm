@@ -103,7 +103,7 @@
 	set src in usr
 
 
-	if((CLUMSY in usr.mutations) && prob(50))
+	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
 		if(istype(H) && !H.species.flags[NO_MINORCUTS])
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
@@ -118,7 +118,7 @@
 	set category = "Object"
 	set src in usr
 
-	if((CLUMSY in usr.mutations) && prob(50))
+	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
 		if(istype(H) && !H.species.flags[NO_MINORCUTS])
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
@@ -856,7 +856,7 @@
 	</ul>
 	<h2>Процедура</h2>
 	<ol>
-	<li>Place patient on CMF manipulation table</li>
+	<li>Поместите пациента на CMF manipulation table</li>
 	<li>Спросите пациента о его знаниях и навыках. Проверьте показатели IQ и MDI</li>
 	<li>Вставьте картридж в стол</li>
 	<li>Распакуйте картридж (процедура не является обратимой)</li>

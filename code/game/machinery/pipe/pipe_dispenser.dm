@@ -106,7 +106,7 @@
 		to_chat(usr, "<span class='notice'>You put \the [W] back into \the [src].</span>")
 		qdel(W)
 		return
-	else if (iswrench(W) && !user.is_busy(src))
+	else if (iswrenching(W) && !user.is_busy(src))
 		if (unwrenched == 0)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>")
 			if(W.use_tool(src, user, 40, volume = 50))

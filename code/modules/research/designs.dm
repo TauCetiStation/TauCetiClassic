@@ -1423,7 +1423,14 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_GLASS = 1000, "sacid" = 20, MAT_GOLD = 100)
 	build_path = /obj/item/weapon/circuitboard/recharger
 	category = list("Machine")
-
+/datum/design/cell_recharger
+	name = "Cell Recharger Board"
+	desc = "The circuit board for a Cell Recharger."
+	id = "cellcharger"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 500, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/cell_recharger
+	category = list("Machine")
 /datum/design/vendor
 	name = "Machine Design (Vendor Board)"
 	desc = "The circuit board for a Vendor."
@@ -2537,7 +2544,7 @@ other types of metals and chemistry for reagents).
 	name = "Jaws of Life"
 	desc = "A small, compact Jaws of Life with an interchangable pry jaws and cutting jaws"
 	id = "jawsoflife"
-	build_path = /obj/item/weapon/crowbar/power
+	build_path = /obj/item/weapon/multi/jaws_of_life
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_SILVER = 2000, MAT_GOLD = 1000)
 	category = list("Tools")
@@ -2548,7 +2555,7 @@ other types of metals and chemistry for reagents).
 	id = "handdrill"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_SILVER = 2000, MAT_GOLD = 1000)
-	build_path = /obj/item/weapon/screwdriver/power
+	build_path = /obj/item/weapon/multi/hand_drill
 	category = list("Tools")
 
 /datum/design/magboots

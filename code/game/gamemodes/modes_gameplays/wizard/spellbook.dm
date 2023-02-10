@@ -189,6 +189,12 @@
 	log_name = "TP"
 	category = "Мобильность"
 
+/datum/spellbook_entry/shapeshift
+	name = "Перевёртыш"
+	spell_type = /obj/effect/proc_holder/spell/no_target/shapeshift
+	log_name = "FH"
+	category = "Мобильность"
+
 /datum/spellbook_entry/mutate
 	name = "Мутация"
 	spell_type = /obj/effect/proc_holder/spell/targeted/genetic/mutate
@@ -389,6 +395,13 @@
 		new /obj/item/clothing/shoes/sandal(get_turf(user)) //In case they've lost them.
 		new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(user))//To complete the outfit
 		new /obj/item/clothing/gloves/combat/wizard(get_turf(user))//To complete the outfit COMPLETELY
+
+/datum/spellbook_entry/item/tiara
+	name = "Тиара защиты"
+	desc = "Дорогостоящая корона из драгоценного металла, инкрустированная магическими кристаллами. Излучает защитную ауру, используя силу РаЗуМа!"
+	item_path = /obj/item/clothing/head/wizard/amp/shielded
+	log_name = "TZ"
+	category = "Оборона"
 
 /datum/spellbook_entry/item/contract
 	name = "Контракт ученичества"

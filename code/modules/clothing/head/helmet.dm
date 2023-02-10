@@ -52,7 +52,7 @@
 			holochip.add_action(user)
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You modify the [src] with the [holochip]</span>")
-	else if(isscrewdriver(I))
+	else if(isscrewing(I))
 		if(!holochip)
 			to_chat(user, "<span class='notice'>There's no holochip to remove from the [src]</span>")
 			return
@@ -147,10 +147,10 @@
 	name = "SWAT helmet"
 	desc = "They're often used by highly trained Swat Members."
 	icon_state = "swat"
-	flags = HEADCOVERSEYES
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	item_state = "swat"
 	armor = list(melee = 80, bullet = 75, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
-	flags_inv = HIDEEARS|HIDEEYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.3
