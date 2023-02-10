@@ -191,7 +191,7 @@
 					else
 						randmutg(H) // Applies good mutation
 					domutcheck(H,null,MUTCHK_FORCED)
-		L.apply_effect((rand(40,70)),IRRADIATE,0)
+		irradiate_in_dist(get_turf(L), rand(40,70), 0)
 
 /datum/weather/rad_storm/end()
 	if(..())

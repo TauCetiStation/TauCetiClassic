@@ -145,8 +145,7 @@
 	..()
 
 /obj/machinery/door/airlock/uranium/proc/radiate()
-	for(var/mob/living/L in range (3,src))
-		L.apply_effect(15, IRRADIATE, 0)
+	irradiate_in_dist(get_turf(src), 15, 3)
 
 /obj/machinery/door/airlock/phoron
 	name = "phoron airlock"
