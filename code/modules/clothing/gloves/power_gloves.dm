@@ -16,7 +16,7 @@
 	action_button_name = "Toggle gloves"
 	origin_tech = "combat=5;powerstorage=5;magnets=4;syndicate=2"
 	var/cell_use = 0
-	var/selected_mode = OFF
+	var/selected_mode = GLOVES_MODE_OFF
 
 /obj/item/clothing/gloves/power/examine(mob/user)
 	. = ..()
