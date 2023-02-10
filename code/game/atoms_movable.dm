@@ -1,3 +1,5 @@
+#define GEIGER_RANGE 15
+
 /atom/movable
 	layer = OBJ_LAYER
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
@@ -525,8 +527,6 @@
 	AM.forceMove(loc)
 	return TRUE
 
-#define GEIGER_RANGE 15
-
 /proc/irradiate_in_dist(turf/source_turf, rad_dose, effect_distance)
 	for(var/mob/living/L in range(source_turf, effect_distance))
 		var/rads = rad_dose
@@ -536,7 +536,7 @@
 		var/distance_rad_signal = get_dist(counter, source_turf)
 		if(distance_rad_signal <= GEIGER_RANGE)
 			var/rad_power = rad_dose
-			rad_power *= sqrt(1 / distance_rad_signal + 1)
+			rad_power *= sqrt(1 / (distance_rad_signal + 1))
 			counter.recieve_rad_signal(rad_power, distance_rad_signal)
 
 #undef GEIGER_RANGE
