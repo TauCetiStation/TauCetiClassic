@@ -1,6 +1,6 @@
-#define OFF "off"
-#define KILL "kill"
-#define STUN "stun"
+#define GLOVES_MODE_OFF "off"
+#define GLOVES_MODE_KILL "kill"
+#define GLOVES_MODE_STUN "stun"
 
 /obj/item/clothing/gloves/power
 	name = "Black gloves"
@@ -30,18 +30,18 @@
 /obj/item/clothing/gloves/power/proc/toggle_gloves_mode(mob/user)
 	if((cell) && (cell.charge))
 		switch(selected_mode)
-			if(OFF)
-				selected_mode = KILL
+			if(GLOVES_MODE_OFF)
+				selected_mode = GLOVES_MODE_KILL
 				cell_use = 500
 				siemens_coefficient = 0.4
 				icon_state = "powerg_kill"
-			if(KILL)
-				selected_mode = STUN
-				cell_use = 2500
+			if(GLOVES_MODE_KILL)
+				selected_mode = GLOVES_MODE_STUN
+				cell_use = 5000
 				siemens_coefficient = 0.8
 				icon_state = "powerg_stun"
 			else
-				selected_mode = OFF
+				selected_mode = GLOVES_MODE_OFF
 				icon_state = "marinad"
 				cell_use = 0
 				siemens_coefficient = 0
@@ -50,7 +50,7 @@
 		to_chat(user,"<span class='warning'>Not enough energy!</span>")
 
 /obj/item/clothing/gloves/power/proc/turn_off_the_gloves(mob/user)
-	selected_mode = OFF
+	selected_mode = GLOVES_MODE_OFF
 	icon_state = "marinad"
 	cell_use = 0
 	siemens_coefficient = 0
@@ -82,7 +82,7 @@
 		attacker.do_attack_animation(L)
 		if(cell)
 			if(cell.charge >= cell_use)
-				if(selected_mode == STUN)
+				if(selected_mode == GLOVES_MODE_STUN)
 					cell.use(cell_use)
 					var/calc_power = 200 //twice as strong stungloves
 					if(ishuman(L))
@@ -98,7 +98,7 @@
 					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 					s.set_up(3, 1, L)
 					s.start()
-				if(selected_mode == KILL)
+				if(selected_mode == GLOVES_MODE_KILL)
 					cell.use(cell_use)
 					var/mob/living/carbon/human/H = A
 					var/attack_obj = attacker.get_unarmed_attack()
