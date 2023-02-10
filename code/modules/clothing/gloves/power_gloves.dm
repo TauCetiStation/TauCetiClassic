@@ -102,7 +102,7 @@
 					cell.use(cell_use)
 					var/mob/living/carbon/human/H = A
 					var/attack_obj = attacker.get_unarmed_attack()
-					var/damage = attack_obj["damage"] * 2
+					var/damage = attack_obj["damage"] * 2.5
 					if(!damage)
 						playsound(src, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
 						visible_message("<span class='warning'><B>[attacker] has attempted to punch [H]!</B></span>")
@@ -118,7 +118,7 @@
 					var/obj/item/organ/external/BP = H.get_bodypart(ran_zone(attacker.get_targetzone()))
 					var/armor_block = H.run_armor_check(BP, MELEE)
 
-					H.apply_damage(damage, BURN, BP, armor_block)
+					H.apply_damage(15, BURN, BP, armor_block)
 					H.apply_damage(damage, BRUTE, BP, armor_block)
 					H.apply_damage(10, HALLOSS, BP, armor_block)
 					if(prob(50))
