@@ -1013,8 +1013,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/process()
 	if(..())
-		for(var/mob/living/carbon/M in view(chassis))
-			M.apply_effect((rad_per_cycle*3),IRRADIATE,0)
+		irradiate_in_dist(get_turf(chassis), rad_per_cycle * 3, 7)
 	return 1
 
 
