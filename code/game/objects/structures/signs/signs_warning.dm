@@ -95,7 +95,7 @@
 	icon_state = "radio"
 
 /obj/structure/sign/warning/lethal_turrets
-	name = "LETHAL TURRETS"
+	name = "LASERS"
 	icon_state = "laser"
 	desc = "Enter at own risk!"
 
@@ -144,6 +144,10 @@
 	name = "WEAR MASK"
 	icon_state = "wearmask"
 
+/obj/structure/sign/warning/mask_medical
+	name = "WEAR MEDICAL MASK"
+	icon_state = "wearmask_medical"
+
 /obj/structure/sign/warning/boots
 	name = "WEAR BOOTS"
 	icon_state = "wearboots"
@@ -181,3 +185,15 @@
 /obj/structure/sign/warning/exit
 	name = "EXIT SIGN"
 	icon_state = "exit1"
+
+/obj/structure/sign/warning/exit_word
+	name = "EXIT SIGN"
+	icon_state = "exit2"
+
+/obj/structure/sign/warning/exit_arrow
+	name = "EXIT SIGN"
+	icon_state = "exit3"
+
+/obj/structure/sign/warning/exit_full
+	name = "EXIT SIGN"
+	icon_state = "exit4"

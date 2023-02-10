@@ -30,6 +30,11 @@
 	desc = "A sign labelling an area where evacuation procedures take place."
 	icon_state = "evac"
 
+/obj/structure/sign/departments/hydrant
+	name = "FIRE STORAGE"
+	desc = "A sign labelling a fire storage room."
+	icon_state = "hydrant"
+
 /obj/structure/sign/departments/custodian
 	name = "CUSTODIAN"
 	desc = "A sign labelling an area where the custodian works."
@@ -69,6 +74,21 @@
 	name = "SHOWERS"
 	desc = "A sign labelling a showers room."
 	icon_state = "showers"
+
+/obj/structure/sign/departments/firstaid
+	name = "MEDBAY"
+	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here."
+	icon_state = "firstaid"
+
+/obj/structure/sign/departments/hospital
+	name = "HOSPITAL"
+	desc = "The Hospital."
+	icon_state = "hospital"
+
+/obj/structure/sign/departments/medical_shower
+	name = "SHOWERS"
+	desc = "Medical showers."
+	icon_state = "medicalshower"
 
 /obj/structure/sign/departments/medbay
 	name = "MEDBAY"

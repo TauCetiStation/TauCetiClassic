@@ -584,9 +584,19 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "execution_room"
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
+/area/station/security/punish_cell
+	name = "Punishment Cell"
+	icon_state = "sec_punish_cell"
+	ambience = list('sound/ambience/prison_1.ogg')
+
 /area/station/security/prison
 	name = "Prison Wing"
 	icon_state = "sec_prison"
+	ambience = list('sound/ambience/prison_1.ogg')
+
+/area/station/security/prison_toilet
+	name = "Prison Wing Toilet"
+	icon_state = "sec_prison_toilet"
 	ambience = list('sound/ambience/prison_1.ogg')
 
 /area/station/security/warden
