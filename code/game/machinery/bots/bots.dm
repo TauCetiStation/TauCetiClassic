@@ -79,7 +79,7 @@
 			return damage_amount * brute_dam_coeff
 		if(BURN)
 			return damage_amount * fire_dam_coeff
-	
+
 /obj/machinery/bot/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
 	. = ..()
 	if(.)
@@ -96,11 +96,11 @@
 		visible_message("<span class='warning'><B>[user] has slashed [src]!</B></span>")
 
 /obj/machinery/bot/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewdriver(W))
+	if(isscrewing(W))
 		if(!locked)
 			open = !open
 			to_chat(user, "<span class='notice'>Maintenance panel is now [src.open ? "opened" : "closed"].</span>")
-	else if(iswelder(W))
+	else if(iswelding(W))
 		if(W.use(0, user))
 			if(get_integrity() < max_integrity)
 				if(open)

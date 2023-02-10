@@ -107,6 +107,9 @@
 		return FALSE
 
 	religion.add_member(AOG.buckled_mob, CULT_ROLE_HIGHPRIEST)
+	if(iscarbon(AOG.buckled_mob))
+		var/mob/living/carbon/C = AOG.buckled_mob
+		C.uncuff()
 	to_chat(AOG.buckled_mob, "<span class='[religion.style_text]'>Помогай другим культистам в тёмных делах. Их цель - твоя цель, а твоя - их. Вы вместе служите Тьме и тёмным богам.</span>")
 	religion.adjust_favor(300 * divine_power)
 	return TRUE
