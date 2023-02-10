@@ -202,11 +202,13 @@ Message ends."}
 
 /datum/faction/blob_conglomerate/GetScoreboard()
 	var/dat = ..()
+
 	var/list/result = check_quarantaine()
 	if (detect_overminds() && (result["numOffStation"] + result["numSpace"]))
 		dat += "<span class='danger'>The AI has failed to enforce the quarantine.</span>"
 	else
 		dat += "<span class='good'>The AI has managed to enforce the quarantine.</span><BR>"
+
 	return dat
 
 /datum/faction/blob_conglomerate/get_scorestat()
@@ -268,14 +270,14 @@ Message ends."}
 /datum/station_state/proc/count(count_territories)
 	for(var/Z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		for(var/turf/T in block(locate(1, 1, Z), locate(world.maxx, world.maxy, Z)))
-			if(isfloorturf(T))
+			if(istype(T,/turf/simulated/floor))
 				var/turf/simulated/floor/F = T
 				if(!F.burnt)
 					floor += 12
 				else
 					floor += 1
 
-			if(iswallturf(T))
+			if(istype(T, /turf/simulated/wall))
 				if(T.intact)
 					wall += 2
 				else

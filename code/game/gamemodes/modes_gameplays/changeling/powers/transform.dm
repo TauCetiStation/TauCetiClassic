@@ -23,7 +23,6 @@
 	user.flavor_text = ""
 	user.UpdateAppearance()
 	domutcheck(user, null)
-	SEND_SIGNAL(user, COMSIG_CHANGELING_TRANSFORM)
 
 	user.fixblood(FALSE) // to change blood DNA too
 

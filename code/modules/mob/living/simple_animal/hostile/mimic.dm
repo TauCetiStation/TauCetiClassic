@@ -40,7 +40,7 @@
 /mob/living/simple_animal/hostile/mimic/FindTarget()
 	. = ..()
 	if(.)
-		me_emote("growls at [.]")
+		emote("growls at [.]")
 
 
 
@@ -119,7 +119,6 @@
 	var/mob/living/L = .
 	if(istype(L))
 		if(prob(15))
-			L.Stun(1)
 			L.Weaken(2)
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 
@@ -195,7 +194,6 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 		var/mob/living/L = .
 		if(istype(L))
 			if(prob(15))
-				L.Stun(1)
 				L.Weaken(1)
 				L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 

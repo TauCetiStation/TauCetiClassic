@@ -292,7 +292,7 @@
 	},
 /area/space_structures/robostatoin)
 "bg" = (
-/obj/structure/glowshroom,
+/obj/effect/glowshroom,
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "bh" = (
@@ -483,7 +483,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
 "bU" = (
-/obj/structure/glowshroom,
+/obj/effect/glowshroom,
 /obj/item/toy/gun,
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)

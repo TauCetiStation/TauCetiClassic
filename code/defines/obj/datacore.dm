@@ -15,22 +15,16 @@ var/global/ManifestJSON
 	var/locked[] = list()
 
 
-/obj/effect/datacore/proc/remove_priority_field(list/L)
-	for(var/list/R in L)
-		R.Remove("priority")
-
-
 /*
 We can't just insert in HTML into the nanoUI so we need the raw data to play with.
 Instead of creating this list over and over when someone leaves their PDA open to the page
 we'll only update it when it changes.  The PDA_Manifest global list is zeroed out upon any change
-using /obj/effect/datacore/proc/manifest_inject( )
+using /obj/effect/datacore/proc/manifest_inject( ), or manifest_insert( )
 */
 
 /obj/effect/datacore/proc/load_manifest()
 	if (PDA_Manifest.len)
 		return
-
 	var/heads[0]
 	var/sec[0]
 	var/eng[0]
@@ -39,62 +33,59 @@ using /obj/effect/datacore/proc/manifest_inject( )
 	var/civ[0]
 	var/bot[0]
 	var/misc[0]
-
-	for(var/datum/data/record/t in general)
+	for(var/datum/data/record/t in data_core.general)
 		var/name = sanitize(t.fields["name"])
 		var/rank = sanitize(t.fields["rank"])
 		var/real_rank = t.fields["real_rank"]
 		var/isactive = t.fields["p_stat"]
 		var/account_number = t.fields["acc_number"]
 		var/account_datum = t.fields["acc_datum"]
-		var/in_department = FALSE
-
+		var/department = 0
+		var/depthead = 0 			// Department Heads will be placed at the top of their lists.
 		if(real_rank in command_positions)
-			heads[++heads.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = command_positions.Find(real_rank))
-			in_department = TRUE
+			heads[++heads.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
+			department = 1
+			depthead = 1
+			if(rank=="Captain" && heads.len != 1)
+				heads.Swap(1,heads.len)
 
 		if(real_rank in security_positions)
-			sec[++sec.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = security_positions.Find(real_rank))
-			in_department = TRUE
+			sec[++sec.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
+			department = 1
+			if(depthead && sec.len != 1)
+				sec.Swap(1,sec.len)
 
 		if(real_rank in engineering_positions)
-			eng[++eng.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = engineering_positions.Find(real_rank))
-			in_department = TRUE
+			eng[++eng.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
+			department = 1
+			if(depthead && eng.len != 1)
+				eng.Swap(1,eng.len)
 
 		if(real_rank in medical_positions)
-			med[++med.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = medical_positions.Find(real_rank))
-			in_department = TRUE
+			med[++med.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
+			department = 1
+			if(depthead && med.len != 1)
+				med.Swap(1,med.len)
 
 		if(real_rank in science_positions)
-			sci[++sci.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = science_positions.Find(real_rank))
-			in_department = TRUE
+			sci[++sci.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
+			department = 1
+			if(depthead && sci.len != 1)
+				sci.Swap(1,sci.len)
 
 		if(real_rank in civilian_positions)
-			civ[++civ.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum, "priority" = civilian_positions.Find(real_rank))
-			in_department = TRUE
+			civ[++civ.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
+			department = 1
+			if(depthead && civ.len != 1)
+				civ.Swap(1,civ.len)
 
 		if(real_rank in nonhuman_positions)
-			bot[++bot.len] = list("name" = name, "rank" = rank, "active" = isactive, "priority" = nonhuman_positions.Find(real_rank))
-			in_department = TRUE
+			bot[++bot.len] = list("name" = name, "rank" = rank, "active" = isactive)
+			department = 1
 
-		if(!in_department)
+		if(!department && !(name in heads))
 			misc[++misc.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "acc_datum" = account_datum)
 
-	sortTim(heads, /proc/cmp_job_titles, FALSE)
-	sortTim(sec,   /proc/cmp_job_titles, FALSE)
-	sortTim(eng,   /proc/cmp_job_titles, FALSE)
-	sortTim(med,   /proc/cmp_job_titles, FALSE)
-	sortTim(sci,   /proc/cmp_job_titles, FALSE)
-	sortTim(civ,   /proc/cmp_job_titles, FALSE)
-	sortTim(bot,   /proc/cmp_job_titles, FALSE)
-
-	remove_priority_field(heads)
-	remove_priority_field(sec)
-	remove_priority_field(eng)
-	remove_priority_field(med)
-	remove_priority_field(sci)
-	remove_priority_field(civ)
-	remove_priority_field(bot)
 
 	PDA_Manifest = list(\
 		"heads" = heads,\
@@ -109,35 +100,27 @@ using /obj/effect/datacore/proc/manifest_inject( )
 	ManifestJSON = replacetext(json_encode(PDA_Manifest), "'", "`")
 
 /obj/effect/datacore/proc/load_silicon_manifest()
-	if(Silicon_Manifest.len)
+	if (Silicon_Manifest.len)
 		return
-
-	for(var/mob/living/silicon/M as anything in silicon_list)
+	for (var/mob/living/silicon/M as anything in silicon_list)
 		var/name = "Unknown"
 		var/is_active = "Inactive"
 		var/rank = "Unknown"
 		var/net = null
-		var/prio = 99
-		if((!isAI(M) && !isrobot(M)) || isdrone(M) || istype(M, /mob/living/silicon/robot/syndicate))
+		if ((!isAI(M) && !isrobot(M)) || isdrone(M) || istype(M, /mob/living/silicon/robot/syndicate))
 			continue
 		name = sanitize(M.name)
-
-		if(M.mind && M.mind.active && !M.is_dead())
+		if (M.mind && M.mind.active && !M.is_dead())
 			is_active = "Active"
-		if(isrobot(M))
+		if (isrobot(M))
 			var/mob/living/silicon/robot/R = M
 			rank = sanitize("[R.modtype] [R.braintype]")
 			// use tag as network ID for limit few AI crossview
 			net = R.connected_ai ? ref(R.connected_ai) : ref(R)
-			prio = 2
-		if(isAI(M))
+		if (isAI(M))
 			rank = "AI"
 			net = ref(M)
-			prio = 1
-		Silicon_Manifest[++Silicon_Manifest.len] = list("name" = name, "rank" = rank, "active" = is_active, "net" = net, "priority" = prio)
-
-	sortTim(Silicon_Manifest, /proc/cmp_job_titles, FALSE)
-	remove_priority_field(Silicon_Manifest)
+		Silicon_Manifest[++Silicon_Manifest.len] = list("name" = name, "rank" = rank, "active" = is_active, "net" = net)
 
 /obj/effect/datacore/proc/get_manifest()
 	load_manifest()
@@ -161,7 +144,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		.manifest tr.alt td {[monochrome?"border-top-width: 2px":"background-color: #DEF"]}
 	</style></head>
 	<table class="manifest" width='350px'>
-	<tr class='head'><th>Name</th><th>Rank</th><th>Status</th></tr>
+	<tr class='head'><th>Name</th><th>Rank</th><th>Activity</th></tr>
 	"}
 	var/even = 0
 	// Formating keyword -> Description
@@ -179,7 +162,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 	// Collect inactive players-jobs if OOC
 	if (OOC)
 		for (var/mob/M in player_list)
-			if (M.real_name && M.job && M.client && M.client.inactivity > 10 MINUTES)
+			if (M.real_name && M.job && M.client && M.client.inactivity > 10 * 60 * 10)
 				inactive_players_namejob.Add("[M.real_name]/[M.job]")
 	// render crew manifest
 	var/list/person = new() // buffer for employ record
@@ -196,7 +179,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 					if(namejob in inactive_players_namejob)
 						dat += "<td>Inactive</td>"
 					else
-						dat += "<td>[person["active"]]</td>"
+						dat += "<td>Active</td>"
 				// Show record activity
 				else
 					dat += "<td>[person["active"]]</td>"
@@ -237,11 +220,12 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		CHECK_TICK
 
 /obj/effect/datacore/proc/manifest_modify(name, assignment)
-	PDA_Manifest.Cut()
+	if(PDA_Manifest.len)
+		PDA_Manifest.Cut()
 	var/datum/data/record/foundrecord
 	var/real_title = assignment
 
-	for(var/datum/data/record/t in general)
+	for(var/datum/data/record/t in data_core.general)
 		if (t)
 			if(t.fields["name"] == name)
 				foundrecord = t
@@ -251,8 +235,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 
 	for(var/datum/job/J in all_jobs)
 		var/list/alttitles = get_alternate_titles(J.title)
-		if(!J)
-			continue
+		if(!J)	continue
 		if(assignment in alttitles)
 			real_title = J.title
 			break
@@ -262,8 +245,10 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		foundrecord.fields["real_rank"] = real_title
 
 /obj/effect/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
+
 	set waitfor = FALSE
-	PDA_Manifest.Cut()
+	if(PDA_Manifest.len)
+		PDA_Manifest.Cut()
 
 	if(H.mind && (H.mind.assigned_role != "MODE"))
 		var/assignment
@@ -370,3 +355,4 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		locked += L
 
 		SSStatistics.score.crew_total++
+	return

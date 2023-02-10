@@ -1006,8 +1006,9 @@
 /turf/simulated/floor/plating,
 /area/awaymission/wildwest/refinery)
 "dj" = (
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 1e+007
 	},
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)

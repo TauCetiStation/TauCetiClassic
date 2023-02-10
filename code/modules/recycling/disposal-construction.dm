@@ -11,7 +11,6 @@
 	density = FALSE
 	m_amt = 1850
 	level = 2
-	resistance_flags = CAN_BE_HIT
 	var/ptype = 0
 	// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk, 6=disposal bin, 7=outlet, 8=inlet
 
@@ -192,7 +191,7 @@
 
 	var/obj/structure/disposalpipe/CP = locate() in T
 	if(ptype>=6 && ptype <= 8) // Disposal or outlet
-		if (!(iswrenching(I) && anchored))
+		if (!(iswrench(I) && anchored))
 			if(CP) // There's something there
 				if(!istype(CP,/obj/structure/disposalpipe/trunk))
 					to_chat(user, "The [nicetype] requires a trunk underneath it in order to work.")
@@ -211,7 +210,7 @@
 				return
 
 
-	if(iswrenching(I))
+	if(iswrench(I))
 		if(anchored)
 			anchored = FALSE
 			if(ispipe)
@@ -231,7 +230,7 @@
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		update()
 
-	else if(iswelding(I))
+	else if(iswelder(I))
 		if(anchored)
 			if(user.is_busy()) return
 			var/obj/item/weapon/weldingtool/W = I

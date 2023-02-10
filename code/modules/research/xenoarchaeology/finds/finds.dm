@@ -53,7 +53,7 @@
 			qdel(src)
 			return
 
-	if(iswelding(I))
+	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(WT.use_tool(src, user, 20, volume = 50))
@@ -551,9 +551,11 @@
 		new_item.desc = src.desc
 
 		if(talkative)
-			new_item.AddComponent(/datum/component/talking_atom)
+			new_item.talking_atom = new()
+			new_item.talking_atom.init(new_item)
 
 		return INITIALIZE_HINT_QDEL
 
 	else if(talkative)
-		AddComponent(/datum/component/talking_atom)
+		src.talking_atom = new()
+		talking_atom.init(src)

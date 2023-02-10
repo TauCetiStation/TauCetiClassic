@@ -3,6 +3,7 @@
 	var/mob/living/carbon/human/bloody_hands_mob
 	var/track_blood = 0
 	var/list/feet_blood_DNA
+	var/track_blood_type
 	var/datum/dirt_cover/feet_dirt_color
 
 /obj/item/clothing/gloves
@@ -22,8 +23,6 @@
 	possible_transfer_amounts = list(5)
 	volume = 5
 	can_be_placed_into = null
-	pickup_sound = null
-	dropped_sound = null
 
 /obj/item/weapon/reagent_containers/glass/rag/attack_self(mob/user)
 	return

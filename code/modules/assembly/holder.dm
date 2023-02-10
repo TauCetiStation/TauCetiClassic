@@ -3,7 +3,7 @@
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = "holder"
 	item_state = "assembly"
-	flags = CONDUCT | HEAR_TALK
+	flags = CONDUCT
 	throwforce = 5
 	w_class = SIZE_TINY
 	throw_speed = 3
@@ -79,6 +79,16 @@
 		else
 			to_chat(user, "\The [src] can be attached!")
 
+
+/obj/item/device/assembly_holder/HasProximity(atom/movable/AM)
+	if(a_left)
+		a_left.HasProximity(AM)
+	if(a_right)
+		a_right.HasProximity(AM)
+	if(special_assembly)
+		special_assembly.HasProximity(AM)
+
+
 /obj/item/device/assembly_holder/Crossed(atom/movable/AM)
 	. = ..()
 	if(a_left)
@@ -123,7 +133,7 @@
 	return
 
 /obj/item/device/assembly_holder/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(isscrewdriver(I))
 		if(!a_left || !a_right)
 			to_chat(user, "<span class='warning'>BUG:Assembly part missing, please report this!</span>")
 			return

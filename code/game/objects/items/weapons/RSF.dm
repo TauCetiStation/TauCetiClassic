@@ -63,7 +63,7 @@ RSF
 
 /obj/item/weapon/rsf/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if (!(istype(target, /obj/structure/table) || isfloorturf(target)))
+	if (!(istype(target, /obj/structure/table) || istype(target, /turf/simulated/floor)))
 		return
 
 	if (istype(target, /obj/structure/table) && mode == 1)
@@ -80,8 +80,8 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-	else if (isfloorturf(target) && mode == 1)
-		if (isfloorturf(target) && matter >= 1)
+	else if (istype(target, /turf/simulated/floor) && mode == 1)
+		if (istype(target, /turf/simulated/floor) && matter >= 1)
 			to_chat(user, "Dispensing Dosh...")
 			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/weapon/spacecash/c10( target )
@@ -108,8 +108,8 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-	else if (isfloorturf(target) && mode == 2)
-		if (isfloorturf(target) && matter >= 1)
+	else if (istype(target, /turf/simulated/floor) && mode == 2)
+		if (istype(target, /turf/simulated/floor) && matter >= 1)
 			to_chat(user, "Dispensing Drinking Glass...")
 			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass( target )
@@ -136,8 +136,8 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-	else if (isfloorturf(target) && mode == 3)
-		if (isfloorturf(target) && matter >= 1)
+	else if (istype(target, /turf/simulated/floor) && mode == 3)
+		if (istype(target, /turf/simulated/floor) && matter >= 1)
 			to_chat(user, "Dispensing Paper Sheet...")
 			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/weapon/paper( target )
@@ -164,8 +164,8 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-	else if (isfloorturf(target) && mode == 4)
-		if (isfloorturf(target) && matter >= 1)
+	else if (istype(target, /turf/simulated/floor) && mode == 4)
+		if (istype(target, /turf/simulated/floor) && matter >= 1)
 			to_chat(user, "Dispensing Pen...")
 			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/weapon/pen( target )
@@ -192,8 +192,8 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-	else if (isfloorturf(target) && mode == 5)
-		if (isfloorturf(target) && matter >= 1)
+	else if (istype(target, /turf/simulated/floor) && mode == 5)
+		if (istype(target, /turf/simulated/floor) && matter >= 1)
 			to_chat(user, "Dispensing Dice Pack...")
 			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/weapon/storage/pill_bottle/dice( target )
@@ -220,8 +220,8 @@ RSF
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
 
-	else if (isfloorturf(target) && mode == 6)
-		if (isfloorturf(target) && matter >= 1)
+	else if (istype(target, /turf/simulated/floor) && mode == 6)
+		if (istype(target, /turf/simulated/floor) && matter >= 1)
 			to_chat(user, "Dispensing Cigarette...")
 			playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
 			new /obj/item/clothing/mask/cigarette( target )
@@ -233,31 +233,3 @@ RSF
 				to_chat(user, "The RSF now holds [matter]/30 fabrication-units.")
 				desc = "A RSF. It currently holds [matter]/30 fabrication-units."
 		return
-
-/obj/item/weapon/rsf/cookiesynth
-	name = "Cookie Synthesizer"
-	desc = "A device used to rapidly deploy cookies."
-	icon = 'icons/obj/food.dmi'
-	icon_state = "COOKIE!!!"
-	matter = 30
-	var/poisoned = 0
-
-/obj/item/weapon/rsf/cookiesynth/attack_self(mob/living/silicon/robot/user)
-	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	poisoned = !poisoned
-	if(poisoned && user.emagged)
-		to_chat(user, "<span class='warning'>Cookie Synthesizer hacked.</span>")
-	else
-		to_chat(user, "<span class='notice'>Cookie Synthesizer operating normally.</span>")
-
-/obj/item/weapon/rsf/cookiesynth/afterattack(atom/target, mob/living/silicon/robot/user, proximity, params)
-	if(matter < 1 || !proximity || user.cell.charge < 100 || !user.cell || !istype(target, /obj/structure/table))
-		return
-	if(poisoned && user.emagged)
-		to_chat(user, "Dispensing Bad Cookie...")
-		new /obj/item/weapon/reagent_containers/food/snacks/cookie/toxin_cookie(target.loc)
-	else
-		to_chat(user, "Dispensing Cookie...")
-		new /obj/item/weapon/reagent_containers/food/snacks/cookie(target.loc)
-	playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 10)
-	user.cell.use(100)

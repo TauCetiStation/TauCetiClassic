@@ -33,7 +33,7 @@
 					var/type = pick(subtypesof(/obj/item/ammo_box))
 					var/obj/item/ammo_box/AB = new type(R.loc)
 					AB.make_empty(TRUE)
-			else if(isfloorturf(A))
+			else if(istype(A, /turf/simulated/floor))
 				if(prob(5))
 					var/list/types = list(/mob/living/simple_animal/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/hostile/carp, /mob/living/simple_animal/hostile/giant_spider, /mob/living/carbon/monkey, /mob/living/simple_animal/chicken, /mob/living/simple_animal/cow, /mob/living/simple_animal/hostile/bear, /mob/living/simple_animal/hostile/snake)
 					var/type = pick(types)

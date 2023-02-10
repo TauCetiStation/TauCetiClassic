@@ -7,12 +7,6 @@
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	rig_variant = "ert_commander"
 	var/obj/machinery/camera/camera
-	can_be_modded = FALSE
-
-/obj/item/clothing/head/helmet/space/rig/ert/atom_init()
-	. = ..()
-	holochip = new /obj/item/holochip/ert(src)
-	holochip.holder = src
 
 /obj/item/clothing/head/helmet/space/rig/ert/attack_self(mob/user)
 	if(camera)
@@ -35,7 +29,6 @@
 	icon_state = "ert_commander"
 	item_state = "ert_commander"
 	w_class = SIZE_SMALL
-	can_be_modded = FALSE
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,
 	/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,
 	/obj/item/weapon/tank,/obj/item/weapon/rcd)
@@ -44,11 +37,6 @@
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash)
-
-/obj/item/clothing/suit/space/rig/ert/atom_init()
-	. = ..()
-	var/obj/item/clothing/shoes/magboots/ert/SB = new(src)
-	boots = SB
 
 //Commander
 /obj/item/clothing/head/helmet/space/rig/ert/commander

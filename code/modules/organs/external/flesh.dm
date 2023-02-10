@@ -93,11 +93,11 @@
 
 	if(used_weapon)
 		if(brute > 0 && burn == 0)
-			BP.add_autopsy_data(used_weapon, brute, type_damage = BRUTE)
+			BP.add_autopsy_data("[used_weapon]", brute, type_damage = BRUTE)
 		else if(brute == 0 && burn > 0)
-			BP.add_autopsy_data(used_weapon, burn, type_damage = BURN)
+			BP.add_autopsy_data("[used_weapon]", burn, type_damage = BURN)
 		else if(brute > 0 && burn > 0)
-			BP.add_autopsy_data(used_weapon, brute + burn, type_damage = "mixed")
+			BP.add_autopsy_data("[used_weapon]", brute + burn, type_damage = "mixed")
 
 	var/can_cut = (prob(brute * 2) || sharp) && (bodypart_type != BODYPART_ROBOTIC)
 
@@ -589,8 +589,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return BP.species.blood_datum.color
 
 /datum/bodypart_controller/proc/sever_artery()
-	if(HAS_TRAIT(BP.owner, TRAIT_HEMOCOAGULATION))
-		return FALSE
 	if(!(BP.status & ORGAN_ARTERY_CUT) && BP.owner.organs_by_name[O_HEART])
 		BP.status |= ORGAN_ARTERY_CUT
 		return TRUE

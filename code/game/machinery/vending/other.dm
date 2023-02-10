@@ -105,9 +105,6 @@
 		/obj/item/clothing/glasses/gglasses = 1,
 		/obj/item/toy/figure/wizard = 1,
 		/obj/item/weapon/storage/fancy/crayons = 1,
-		/obj/item/clothing/mask/balaclava/richard = 1,
-		/obj/item/clothing/mask/balaclava/don_juan = 1,
-		/obj/item/clothing/mask/balaclava/rasmus = 1,
 	)
 	product_slogans = "Amicitiae nostrae memoriam spero sempiternam fore;Aequam memento rebus in arduis servare mentem;Vitanda est improba siren desidia;Serva me, servabo te;Faber est suae quisque fortunae"
 	vend_reply = "Have fun! No returns!"
@@ -139,7 +136,7 @@
 		if("Contract From Below")
 			new /obj/item/weapon/pen/ghost(loc)
 		if("Cryptorecorder")
-			new /obj/item/device/camera/polar/spooky(loc)
+			new /obj/item/device/camera/spooky(loc)
 		if("Black Candle Box")
 			new /obj/item/weapon/storage/fancy/black_candle_box(loc)
 		if("Cancel")
@@ -248,7 +245,7 @@
 	syndie = list(
 		/obj/item/toy/syndicateballoon = 6,
 	)
-	var/list/kits = list(
+	var/list/assortment = list(
 		"Scout kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/scout,
 		"Sniper kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/sniper,
 		"Assaultman kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/assaultman,
@@ -257,89 +254,39 @@
 		"Hacker kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/hacker,
 		"Machinengunner kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/heavygunner,
 		"Field Medic kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/medic,
-		"Chemical Fighter Kit" = /obj/item/weapon/storage/backpack/dufflebag/nuke/chemwarfare,
 		"Custom kit" =  /obj/item/weapon/storage/backpack/dufflebag/nuke/custom,
 	)
-	var/static/list/selections_kits
-
-	var/list/armor_kits = list(
-		"Hybrid suit" = /obj/item/weapon/storage/box/syndie_kit/rig,
-		"Heavy hybrid suit" = /obj/item/weapon/storage/box/syndie_kit/heavy_rig,
-		"Assault Armor" = /obj/item/weapon/storage/box/syndie_kit/armor,
-	)
-	
-	var/static/list/selections_armor
+	var/static/list/selection_items
 
 /obj/machinery/vending/syndi/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/mining_voucher/kit))
+	if(istype(I, /obj/item/weapon/mining_voucher/syndi))
 		givekit(I, user)
 		return
-	if(istype(I, /obj/item/weapon/mining_voucher/armour))
-		givearmor(I, user)
 	return ..()
 
-/obj/machinery/vending/syndi/proc/kitpopulate_selection()
-	selections_kits = list(
+/obj/machinery/vending/syndi/proc/populate_selection()
+	selection_items = list(
 	"Scout kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "c20r"),
 	"Sniper kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "heavyrifle"),
 	"Assaultman kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "a74"),
 	"Bomber kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "drozd"),
-	"Melee kit" = image(icon = 'icons/obj/weapons.dmi', icon_state = "dualsaberred1"),
+	"Melee kit" = image(icon = 'icons/obj/weapons.dmi', icon_state = "swordblue"),
 	"Hacker kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "bulldog"),
 	"Machinengunner kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "l6closed100"),
 	"Field Medic kit" = image(icon = 'icons/obj/gun.dmi', icon_state = "medigun_syndi"),
-	"Chemical Fighter Kit" = image(icon = 'icons/obj/hydroponics/equipment.dmi', icon_state = "misternuke"),
 	"Custom kit" = image(icon = 'icons/obj/radio.dmi', icon_state = "radio"),
 	)
 
-/obj/machinery/vending/syndi/proc/armourpopulate_selection()
-	selections_armor = list(
-		"Hybrid suit" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "rig-syndie-combat"),
-		"Heavy hybrid suit" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "rig-heavy-combat"),
-		"Assault Armor" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "assaultarmor"),
-	)
-
 /obj/machinery/vending/syndi/proc/givekit(obj/voucher, mob/user)
-	var/selection = show_radial_menu(user, src, selections_kits, require_near = TRUE, tooltips = TRUE)
+	var/selection = show_radial_menu(user, src, selection_items, require_near = TRUE, tooltips = TRUE)
 	if(voucher.in_use)
 		return
-	if(!selections_kits)
-		kitpopulate_selection()
+	if(!selection_items)
+		populate_selection()
 	if(!selection || !Adjacent(user))
 		return
 	voucher.in_use = TRUE
-	var/bought_type = kits[selection]
-	var/obj/item/bought = new bought_type(loc)
-	if(ishuman(user))
-		var/mob/living/carbon/human/A = user
-		A.put_in_any_hand_if_possible(bought)
-	qdel(voucher)
-
-	for(var/role in user.mind.antag_roles)
-		var/datum/role/R = user.mind.antag_roles[role]
-		var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
-		if(!S)
-			continue
-		if(istype(R, /datum/role/operative))
-			R.faction.faction_scoreboard_data += {"[bought.name] for 1 voucher."}
-		else
-			S.uplink_items_bought += {"[bought.name] for 1 voucher."}
-
-		var/datum/stat/uplink_purchase/stat = new
-		stat.bundlename = bought.name
-		stat.cost = 1
-		S.uplink_purchases += stat
-
-/obj/machinery/vending/syndi/proc/givearmor(obj/voucher, mob/user)
-	var/selection = show_radial_menu(user, src, selections_armor, require_near = TRUE, tooltips = TRUE)
-	if(voucher.in_use)
-		return
-	if(!selections_armor)
-		armourpopulate_selection()
-	if(!selection || !Adjacent(user))
-		return
-	voucher.in_use = TRUE
-	var/bought_type = armor_kits[selection]
+	var/bought_type = assortment[selection]
 	var/obj/item/bought = new bought_type(loc)
 	if(ishuman(user))
 		var/mob/living/carbon/human/A = user

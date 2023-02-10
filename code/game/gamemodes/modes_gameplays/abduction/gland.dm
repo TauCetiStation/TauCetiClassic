@@ -77,22 +77,28 @@
 
 
 //SLIME BOOM
-/obj/item/gland/true_form
-	desc = "Reveals true form of the host"
+/obj/item/gland/slime_boom
+	desc = "Explodes the host into slimes."
 	cooldown_low = 1200
 	cooldown_high = 2400
 	uses = 1
 
 /obj/item/gland/slime_boom/activate()
-	host.visible_message("<span class='danger'>[host] explodes into creatures!</span>")
+	to_chat(host, "<span class='warning'>You feel bloated.</span>")
+	sleep(150)
+	to_chat(host, "<span class='userdanger'>A massive stomachache overcomes you.</span>")
+	sleep(50)
+	host.visible_message("<span class='danger'>[host] explodes into slimes!</span>")
 	var/turf/pos = get_turf(host)
 	new /mob/living/carbon/slime(pos)
-	new /mob/living/simple_animal/corgi(pos)
-	new /mob/living/simple_animal/mouse(pos)
-	var/obj/effect/proc_holder/spell/S = new /obj/effect/proc_holder/spell/no_target/shapeshift/abductor()
-	host.AddSpell(S)
-	S.cast(null, host)
-	S.cast(null, host)
+	new /mob/living/carbon/slime(pos)
+	var/mob/living/simple_animal/slime/S = new /mob/living/carbon/slime(pos)
+	S.loc = pos
+	if(host.mind)
+		host.mind.transfer_to(S)
+	host.gib()
+	return
+
 
 //MINDSHOCK
 /obj/item/gland/mindshock
@@ -188,7 +194,7 @@
 	to_chat(host, "<span class='warning'>You feel something crawling in your skin.</span>")
 	if(uses == initial(uses))
 		host.faction = "spiders"
-	new /obj/structure/spider/spiderling(host.loc)
+	new /obj/effect/spider/spiderling(host.loc)
 
 
 //EGG

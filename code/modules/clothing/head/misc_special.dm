@@ -90,12 +90,12 @@
 	src.onfire = !( src.onfire )
 	if (src.onfire)
 		src.force = 3
-		src.damtype = BURN
+		src.damtype = "fire"
 		src.icon_state = "cake1"
 		START_PROCESSING(SSobj, src)
 	else
 		src.force = null
-		src.damtype = BRUTE
+		src.damtype = "brute"
 		src.icon_state = "cake0"
 	return
 

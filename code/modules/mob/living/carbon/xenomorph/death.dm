@@ -9,9 +9,8 @@
 	qdel(src)
 
 /mob/living/carbon/xenomorph/larva/death(gibbed)
-	if(stat == DEAD)
-		return
-
+	if(stat == DEAD)	return
+	if(healths)			healths.icon_state = "health6"
 	stat = DEAD
 	icon_state = "larva_dead"
 
@@ -26,6 +25,7 @@
 
 /mob/living/carbon/xenomorph/humanoid/death(gibbed)
 	if(stat == DEAD)	return
+	if(healths)			healths.icon_state = "health6"
 	stat = DEAD
 
 	if(!gibbed)

@@ -3,7 +3,6 @@ var/global/list/all_species[0]
 var/global/list/all_languages[0]
 var/global/list/language_keys[0]					//table of say codes for all languages
 var/global/list/whitelisted_species = list(HUMAN)
-var/global/list/all_zombie_species_names = list(ZOMBIE, ZOMBIE_TAJARAN, ZOMBIE_SKRELL, ZOMBIE_UNATHI)
 
 var/global/list/clients = list()							//list of all clients
 var/global/list/admins = list()							//list of all clients whom are admins
@@ -28,8 +27,7 @@ var/global/list/alien_list = list(
 									ALIEN_SENTINEL = list(),
 									ALIEN_HUNTER = list(),
 									ALIEN_LARVA = list(),
-									ALIEN_FACEHUGGER = list(),
-									ALIEN_MAID = list()
+									ALIEN_FACEHUGGER = list()
 								)
 var/global/list/human_list = list()
 var/global/list/monkey_list = list()

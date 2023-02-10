@@ -2,7 +2,6 @@
 	name = "Glare"
 	desc = "Stuns and mutes a target for a decent duration."
 	panel = "Shadowling Abilities"
-	action_icon_state = "glare"
 	charge_max = 300
 	clothes_req = 0
 
@@ -12,7 +11,7 @@
 			charge_counter = charge_max
 			to_chat(usr, "<span class='warning'>Your glare does not seem to affect [target].</span>")
 			return
-		if(target.stat != CONSCIOUS)
+		if(target.stat)
 			charge_counter = charge_max
 			return
 		if(isshadowling(target) || isshadowthrall(target))
@@ -35,7 +34,6 @@
 	name = "Veil"
 	desc = "Extinguishes most nearby light sources."
 	panel = "Shadowling Abilities"
-	action_icon_state = "veil"
 	charge_max = 250 //Short cooldown because people can just turn the lights back on
 	clothes_req = 0
 	range = 5
@@ -45,8 +43,12 @@
 	light_off_range(targets, usr)
 
 /proc/light_off_range(list/targets, atom/center)
+	var/list/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime, /obj/item/weapon/reagent_containers/food/snacks/glowstick)
 	for(var/turf/T in targets)
 		for(var/obj/item/F in T.contents)
+			if(is_type_in_list(F, blacklisted_lights))
+				F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
+				return
 			F.set_light(0)
 
 		for(var/obj/machinery/light/L in T.contents)
@@ -56,6 +58,9 @@
 
 		for(var/mob/living/carbon/human/H in T.contents)
 			for(var/obj/item/F in H)
+				if(is_type_in_list(F, blacklisted_lights))
+					F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
+					return
 				F.set_light(0)
 			H.set_light(0) //This is required with the object-based lighting
 
@@ -65,24 +70,17 @@
 					A.lights = 0
 					A.update_icon()
 
-		for(var/obj/structure/glowshroom/G in T.contents)
+		for(var/obj/effect/glowshroom/G in T.contents)
 			if(get_dist(center, G) <= 2) //Very small radius
 				G.visible_message("<span class='warning'>\The [G] withers away!</span>")
 				qdel(G)
-		
-		if(T.is_light_floor())
-			var/turf/simulated/floor/F = T
-			F.set_lightfloor_on(FALSE)
-			F.visible_message("<span class='danger'>\The [T] suddenly turns off!</span>")
-			F.update_icon()
-				
+
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
 	name = "Flash Freeze"
 	desc = "Instantly freezes the blood of nearby people, stunning them and causing burn damage."
 	panel = "Shadowling Abilities"
 	range = 5
 	charge_max = 1200
-	action_icon_state = "icy_veins"
 	clothes_req = 0
 
 /obj/effect/proc_holder/spell/aoe_turf/flashfreeze/cast(list/targets)
@@ -111,7 +109,6 @@
 	name = "Enthrall"
 	desc = "Allows you to enslave a conscious, non-braindead, non-catatonic human to your will. This takes some time to cast."
 	panel = "Shadowling Abilities"
-	action_icon_state = "enthrall"
 	charge_max = 450
 	clothes_req = 0
 	range = 1 //Adjacent to user
@@ -136,7 +133,7 @@
 			to_chat(usr, "<span class='warning'>The target has no mind.</span>")
 			charge_counter = charge_max
 			return
-		if(target.stat != CONSCIOUS)
+		if(target.stat)
 			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
 			charge_counter = charge_max
 			return
@@ -172,7 +169,6 @@
 					to_chat(usr, "<span class='notice'>You begin the enthralling of [target].</span>")
 					usr.visible_message("<span class='danger'>[usr] leans over [target], their eyes glowing a deep crimson, and stares into their face.</span>")
 					to_chat(target, "<span class='boldannounce'>Your gaze is forcibly drawn into a blinding red light. You fall to the floor as conscious thought is wiped away.</span>")
-					target.Stun(12)
 					target.Weaken(12)
 					sleep(20)
 				if(3)
@@ -200,7 +196,6 @@
 	name = "Hivemind Commune"
 	desc = "Allows you to silently communicate with all other shadowlings and thralls."
 	panel = "Shadowling Abilities"
-	action_icon_state = "commune"
 	charge_max = 0
 	clothes_req = 0
 	range = -1
@@ -212,14 +207,9 @@
 		if(!text)
 			return
 		log_say("Shadowling Hivemind: [key_name(usr)] : [text]")
-		var/text2speak = "<span class='shadowling [isshadowling(usr) ? "large" : ""]'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [text]</span>"
 		for(var/mob/M as anything in mob_list)
-			if(isobserver(M))
-				to_chat(M, "[FOLLOW_LINK(M, user)] [text2speak]")
-			else
-				if(isshadowling(M) || isshadowthrall(M))
-					to_chat(M, text2speak)
-
+			if(isshadowling(M) || isshadowthrall(M) || isobserver(M))
+				to_chat(M, "<span class='shadowling'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [text]</span>")
 
 
 
@@ -227,7 +217,6 @@
 	name = "Regenerate Chitin"
 	desc = "Re-forms protective chitin that may be lost during cloning or similar processes."
 	panel = "Shadowling Abilities"
-	action_icon_state = "regen_armor"
 	charge_max = 600
 	clothes_req = 0
 	range = -1
@@ -258,7 +247,6 @@
 	name = "Collective Hivemind"
 	desc = "Gathers the power of all of your thralls and compares it to what is needed for ascendance. Also gains you new abilities."
 	panel = "Shadowling Abilities"
-	action_icon_state = "collective_mind"
 	charge_max = 300 //30 second cooldown to prevent spam
 	clothes_req = 0
 	range = -1
@@ -330,7 +318,6 @@
 	name = "Blindness Smoke"
 	desc = "Spews a cloud of smoke which will blind enemies."
 	panel = "Shadowling Abilities"
-	action_icon_state = "black_smoke"
 	charge_max = 600
 	clothes_req = 0
 	range = -1
@@ -375,13 +362,13 @@
 	name = "Sonic Screech"
 	desc = "Deafens, stuns, and confuses nearby people. Also shatters windows."
 	panel = "Shadowling Abilities"
-	action_icon_state = "screech"
 	range = 7
 	charge_max = 300
 	clothes_req = 0
 
 /obj/effect/proc_holder/spell/aoe_turf/unearthly_screech/cast(list/targets)
-	usr.emote("scream", intentional = TRUE)
+	//usr.audible_message("<span class='warning'><b>[usr] lets out a horrible scream!</b></span>")
+	usr.emote("scream", SHOWMSG_AUDIO, message = "<span class='warning'><b>lets out a horrible scream!</b></span>", auto = FALSE)
 	playsound(usr, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/turf/T in targets)
@@ -405,9 +392,9 @@
 				var/datum/effect/effect/system/spark_spread/sp = new /datum/effect/effect/system/spark_spread
 				sp.set_up(5, 1, S)
 				sp.start()
-				S.Stun(6)
+				S.Weaken(6)
 		for(var/obj/structure/window/W in T.contents)
-			W.take_damage(rand(80, 100), BRUTE, BOMB)
+			W.take_damage(rand(80, 100))
 
 
 
@@ -415,7 +402,6 @@
 	name = "Drain Life"
 	desc = "Damages nearby humans, draining their life and healing your own wounds."
 	panel = "Shadowling Abilities"
-	action_icon_state = "drain_life"
 	range = 3
 	charge_max = 250
 	clothes_req = 0
@@ -449,7 +435,6 @@
 	name = "Black Recuperation"
 	desc = "Brings a dead thrall back to life."
 	panel = "Shadowling Abilities"
-	action_icon_state = "revive_thrall"
 	range = 1
 	charge_max = 3000
 	clothes_req = 0
@@ -496,7 +481,6 @@
 	name = "Annihilate"
 	desc = "Gibs a human after a short time."
 	panel = "Ascendant"
-	action_icon_state = "annihilate"
 	range = 7
 	charge_max = 50
 	clothes_req = 0
@@ -533,7 +517,6 @@
 	name = "Hypnosis"
 	desc = "Instantly enthralls a human."
 	panel = "Ascendant"
-	action_icon_state = "enthrall"
 	range = 7
 	charge_max = 0
 	clothes_req = 0
@@ -554,7 +537,7 @@
 			to_chat(usr, "<span class='warning'>The target has no mind.</span>")
 			charge_counter = charge_max
 			return
-		if(target.stat != CONSCIOUS)
+		if(target.stat)
 			to_chat(usr, "<span class='warning'>The target must be conscious.</span>")
 			charge_counter = charge_max
 			return
@@ -578,7 +561,6 @@
 	name = "Phase Shift"
 	desc = "Phases you into the space between worlds at will, allowing you to move through walls and become invisible."
 	panel = "Ascendant"
-	action_icon_state = "shadow_walk"
 	range = -1
 	include_user = 1
 	charge_max = 15
@@ -627,7 +609,6 @@
 					to_chat(target, "<span class='danger'>You feel a blast of paralyzingly cold air wrap around you and flow past, but you are unaffected!</span>")
 					continue
 			to_chat(target, "<span class='userdanger'>You are hit by a blast of cold unlike anything you have ever felt. Your limbs instantly lock in place and you feel ice burns across your body!</span>")
-			target.Stun(15)
 			target.Weaken(15)
 			if(target.bodytemperature)
 				target.adjust_bodytemperature(-INFINITY) //:^)
@@ -639,7 +620,6 @@
 	name = "Ascendant Commune"
 	desc = "Allows you to LOUDLY communicate with all other shadowlings and thralls."
 	panel = "Ascendant"
-	action_icon_state = "transmit"
 	charge_max = 0
 	clothes_req = 0
 	range = -1
@@ -660,7 +640,6 @@
 	name = "Ascendant Broadcast"
 	desc = "Sends a message to the whole wide world."
 	panel = "Ascendant"
-	action_icon_state = "transmit"
 	charge_max = 200
 	clothes_req = 0
 	range = -1

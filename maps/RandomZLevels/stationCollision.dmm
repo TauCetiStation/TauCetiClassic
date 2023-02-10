@@ -68,7 +68,7 @@
 	},
 /area/awaymission/stationcollision/northblock)
 "ap" = (
-/obj/singularity/gravitational/academy,
+/obj/singularity/academy,
 /turf/environment/space,
 /area/awaymission/stationcollision/research)
 "aq" = (

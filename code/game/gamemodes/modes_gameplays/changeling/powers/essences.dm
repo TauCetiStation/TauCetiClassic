@@ -6,8 +6,8 @@
 	var/obj/effect/essence_phantom/phantom
 	var/self_voice = FALSE
 	var/is_changeling = FALSE
-	var/atom/movable/screen/essence/voice/voice
-	var/atom/movable/screen/essence/phantom/phantom_s
+	var/atom/movable/screen/essence_voice/voice
+	var/atom/movable/screen/essence_phantom/phantom_s
 	var/rehost_timer_id = 0
 
 /mob/living/parasite/essence/atom_init(mapload, mob/living/carbon/host, mob/living/carbon/victim)
@@ -36,7 +36,6 @@
 		for(var/mob/living/parasite/essence/E in changeling.essences)
 			if(E.phantom && E.phantom.showed)
 				client.images += E.phantom.overlay
-		changeling.add_ui(hud_used)
 	if(rehost_timer_id)
 		deltimer(rehost_timer_id)
 		rehost_timer_id = 0
@@ -148,11 +147,11 @@
 
 	return host.whisper(message)
 
-/mob/living/parasite/essence/me_emote(message, message_type = SHOWMSG_VISUAL, intentional=FALSE)
-	if(!host && intentional)
+/mob/living/parasite/essence/me_verb(message as text)
+	set name = "Me"
+	if(!host)
 		to_chat(src, "<span class='userdanger'>You can't speak without host!</span>")
 		return
-
 	if(host.stat == DEAD)
 		return
 
@@ -160,7 +159,7 @@
 		to_chat(src, "<span class='userdanger'>Your host forbade you emoting!</span>")
 		return
 
-	return host.me_emote(message, message_type, intentional)
+	return host.custom_emote(1, message)
 
 /mob/living/parasite/essence/say_understands(mob/other, datum/language/speaking)
 	if(!host)
@@ -176,7 +175,7 @@
 	set name = "Point To"
 	set category = "Object"
 
-	if(!host || host.stat != CONSCIOUS)
+	if(!host || host.stat)
 		return
 	if(!(flags_allowed & ESSENCE_POINT))
 		to_chat(src, "<span class='userdanger'>Your host forbade you pointing!</span>")
@@ -203,7 +202,7 @@
 	if(!host)
 		return
 	if(changeling)
-		client.screen += changeling.lingchemdisplay
+		hud_used?.lingchemdisplay.maptext = host.hud_used.lingchemdisplay.maptext
 
 	sight = host.sight
 	see_in_dark = host.see_in_dark
@@ -378,7 +377,7 @@
 	else if(href_list["toggle_voice"])
 		choosen_essence.flags_allowed ^= ESSENCE_SELF_VOICE
 		choosen_essence.self_voice = FALSE
-		choosen_essence.voice.update_icon(choosen_essence)
+		choosen_essence.voice.icon_state = "voice_off"
 	else if(href_list["toggle_phantom"])
 		choosen_essence.flags_allowed ^= ESSENCE_PHANTOM
 		choosen_essence.phantom.hide_phantom()
@@ -414,9 +413,10 @@
 		return
 	if(showed)
 		return
+	if(host.phantom_s)
+		host.phantom_s.icon_state = "phantom_on"
 	loc = get_turf(place ? place : host)
 	showed = TRUE
-	host.phantom_s?.update_icon(host)
 	for(var/mob/living/M in host.changeling.essences)
 		if(!M.client)
 			continue
@@ -430,9 +430,9 @@
 		return
 	if(!showed)
 		return
+	host.phantom_s.icon_state = "phantom_off"
 	showed = FALSE
 	loc = host
-	host.phantom_s?.update_icon(host)
 	for(var/mob/living/M in host.changeling.essences)
 		if(!M.client)
 			continue

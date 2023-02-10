@@ -19,9 +19,6 @@
 	var/config_max_users = 0
 	var/config_min_users = 0
 
-	var/votable = FALSE
-	var/voteweight = 1
-
 	var/traits = null
 	var/space_ruin_levels = 2
 	var/space_empty_levels = 1

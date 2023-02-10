@@ -3,7 +3,7 @@
 /area/asteroid
 	name = "Asteroid"
 	icon_state = "unexplored"
-	sound_environment = SOUND_AREA_ASTEROID
+
 	outdoors = TRUE
 
 /area/asteroid/artifactroom
@@ -106,43 +106,41 @@
 /area/asteroid/mine/production
 	name = "Mining Station Starboard Wing"
 	icon_state = "mining_production"
-	sound_environment = SOUND_AREA_STATION_HALLWAY
+
 	outdoors = FALSE
 
 /area/asteroid/mine/abandoned
 	name = "Abandoned Mining Station"
 	looped_ambience = 'sound/ambience/loop_space.ogg'
-	sound_environment = SOUND_AREA_STATION_HALLWAY
+
 	outdoors = FALSE
 
 /area/asteroid/mine/living_quarters
 	name = "Mining Station Port Wing"
 	icon_state = "mining_living"
-	sound_environment = SOUND_AREA_DEFAULT
+
 	outdoors = FALSE
 
 /area/asteroid/mine/eva
 	name = "Mining Station EVA"
 	icon_state = "mining_eva"
-	looped_ambience = 'sound/ambience/loop_mineeva.ogg'
-	sound_environment = SOUND_AREA_DEFAULT
+
 	outdoors = FALSE
 
 /area/asteroid/mine/maintenance
 	name = "Mining Station Communications"
-	is_force_ambience = TRUE
 	ambience = list('sound/ambience/tcomms_1.ogg', 'sound/ambience/tcomms_2.ogg')
-	sound_environment = SOUND_AREA_SMALL_METALLIC
+
 	outdoors = FALSE
 
 /area/asteroid/mine/west_outpost
 	name = "West Mining Outpost"
 	looped_ambience = 'sound/ambience/loop_mineoutpost.ogg'
-	sound_environment = SOUND_AREA_DEFAULT
+
 	outdoors = FALSE
 
 /area/asteroid/mine/dwarf
 	name = "Dwarf"
 	icon_state = "dwarf"
-	sound_environment = SOUND_AREA_DEFAULT
+
 	outdoors = FALSE

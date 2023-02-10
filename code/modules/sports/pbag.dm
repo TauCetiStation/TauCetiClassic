@@ -79,7 +79,7 @@
 	if(ckey)
 		. = ..(capitalize(message), verb = "whispers", message_range = 1) // why not all args?
 
-/mob/living/pbag/me_emote(message, message_type = SHOWMSG_VISUAL, intentional=FALSE)
+/mob/living/pbag/emote(act, type, message, auto)
 	if(ckey)
 		visible_message("<span class='notice'>[bicon(src)] [src] swings ominously...</span>")
 		INVOKE_ASYNC(src, /mob/living/pbag.proc/swing)
@@ -92,7 +92,7 @@
 	if(gibbed)
 		var/list/pos_turfs = RANGE_TURFS(3, src)
 		for(var/i in 1 to 5)
-			var/obj/item/stack/sheet/cloth/R = new(get_turf(src))
+			var/obj/item/stack/medical/bruise_pack/rags/R = new(get_turf(src), null, null, FALSE)
 			R.color = color
 			var/turf/target = pick(pos_turfs)
 			R.throw_at(target, 3, 2)

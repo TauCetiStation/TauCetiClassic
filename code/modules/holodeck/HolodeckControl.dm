@@ -253,10 +253,13 @@
 		qdel(B)
 
 	if(!spawn_point)
-		var/obj/effect/landmark/L = locate("landmark*Holodeck Base")
-		if(!L)
-			return
-		spawn_point = get_turf(L)
+		for(var/obj/effect/landmark/L in landmarks_list)
+			if(L.name=="Holodeck Base")
+				spawn_point = get_turf(L)
+				break
+
+	if(!spawn_point)
+		return
 
 	var/datum/gas_mixture/cenv = spawn_point.return_air()
 	var/datum/gas_mixture/env = new()

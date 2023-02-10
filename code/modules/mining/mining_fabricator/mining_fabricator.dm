@@ -1,6 +1,6 @@
 /obj/machinery/mecha_part_fabricator/mining_fabricator
 	icon = 'icons/obj/robotics.dmi'
-	icon_state = "fab"
+	icon_state = "fab-idle"
 	name = "Mining fabricator"
 	desc = "Nothing is being built."
 	density = TRUE
@@ -27,7 +27,6 @@
 						"Support",
 						"Misc"
 						)
-	required_skills = list(/datum/skill/research = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/mecha_part_fabricator/mining_fabricator/New_parts()
 	component_parts = list()
@@ -144,17 +143,18 @@
 	return result
 
 
-/obj/machinery/mecha_part_fabricator/mining_fabricator/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/mecha_part_fabricator/mining_fabricator/attackby(obj/W, mob/user, params)
 
-	if(default_deconstruction_screwdriver(user, "fab", "fab", W))
-		update_icon()
+	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return
 
 	if(exchange_parts(user, W))
 		return
 
 	if(panel_open)
-		if(isprying(W))
+		if(iscrowbar(W))
+			for(var/material in resources)
+				remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
 			default_deconstruction_crowbar(W)
 			return 1
 		else

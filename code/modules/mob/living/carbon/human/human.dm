@@ -33,7 +33,6 @@
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
 
 /mob/living/carbon/human/atom_init(mapload, new_species)
-	AddComponent(/datum/component/mood)
 
 	dna = new
 	hulk_activator = pick(HULK_ACTIVATION_OPTIONS) //in __DEFINES/geneticts.dm
@@ -57,6 +56,7 @@
 	. = ..()
 
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN)
+	AddComponent(/datum/component/mood)
 	human_list += src
 
 	RegisterSignal(src, list(COMSIG_MOB_EQUIPPED), .proc/mood_item_equipped)
@@ -65,7 +65,6 @@
 		dna.real_name = real_name
 
 	handcrafting = new()
-	AddComponent(/datum/component/altcraft)
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
@@ -142,8 +141,6 @@
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/collective_mind)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor)
-
-	notify_ghosts("\A [src], new hatched shadowling, at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, header = "Shadowling")
 
 /mob/living/carbon/human/slime/atom_init(mapload)
 	. = ..(mapload, SLIME)
@@ -224,7 +221,7 @@
 	switch (severity)
 		if(EXPLODE_DEVASTATE)
 			b_loss += 500
-			if (!prob(getarmor(null, BOMB)))
+			if (!prob(getarmor(null, "bomb")))
 				gib()
 				return
 			else
@@ -240,7 +237,7 @@
 
 			f_loss += 60
 
-			if (prob(getarmor(null, BOMB)))
+			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/1.5
 				f_loss = f_loss/1.5
 
@@ -252,7 +249,7 @@
 
 		if(EXPLODE_LIGHT)
 			b_loss += 30
-			if (prob(getarmor(null, BOMB)))
+			if (prob(getarmor(null, "bomb")))
 				b_loss = b_loss/2
 			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 15
@@ -302,9 +299,9 @@
 /mob/living/carbon/human/blob_act()
 	if(stat == DEAD)	return
 	to_chat(src, "<span class='danger'>The blob attacks you!</span>")
-	var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG, BP_HEAD)
+	var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 	var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
-	apply_damage(rand(30, 40), BRUTE, BP, run_armor_check(BP, MELEE))
+	apply_damage(rand(30, 40), BRUTE, BP, run_armor_check(BP, "melee"))
 	return
 
 /mob/living/carbon/human/proc/can_use_two_hands(broken = TRUE) // Replace arms with hands in case of reverting Kurshan's PR.
@@ -409,7 +406,7 @@
 	var/has_breathable_mask = istype(wear_mask, /obj/item/clothing/mask)
 	var/list/obscured = check_obscured_slots()
 	var/list/dat = list()
-	var/obj/item/clothing/under/suit = isunder(w_uniform) ? w_uniform : null
+	var/obj/item/clothing/under/suit = istype(w_uniform, /obj/item/clothing/under) ? w_uniform : null
 
 	dat += "<table>"
 	dat += "<tr><td><B>Left Hand:</B></td><td><A href='?src=\ref[src];item=[SLOT_L_HAND]'>[(l_hand && !(l_hand.flags & ABSTRACT)) ? l_hand : "<font color=grey>Empty</font>"]</a></td></tr>"
@@ -608,7 +605,7 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, def_zone, tesla_shock)
 	if(status_flags & GODMODE)
 		return 0	//godmode
-	if(IsShockproof())
+	if(NO_SHOCK in src.mutations)
 		return 0 //#Z2 no shock with that mutation.
 
 	if((HULK in mutations) && hulk_activator == ACTIVATOR_ELECTRIC_SHOCK) //for check to transformation Hulk.
@@ -629,6 +626,7 @@
 	else if(def_zone)
 		var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 		siemens_coeff *= get_siemens_coefficient_organ(BP)
+	attack_heart(clamp(((shock_damage - 10) ** 2) / 100, 0, 100), shock_damage) //small shock can heal your heart
 	if(species)
 		siemens_coeff *= species.siemens_coefficient
 
@@ -641,16 +639,7 @@
 		electrocution_animation(40)
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if(href_list["skill"])
-		update_skills(href_list)
-	if(href_list["set_max_skills"])
-		mind.skills.maximize_active_skills()
-		to_chat(usr, "<span class='notice'>You are trying your best now.</span>")
-	if(href_list["help_other"])
-		var/mob/target = locate(href_list["help_other"])
-		help_other(target)
-	if(href_list["request_help"])
-		ask_for_help()
+
 	if (href_list["item"])
 		var/slot = text2num(href_list["item"])
 		if(slot in check_obscured_slots())
@@ -718,7 +707,7 @@
 				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) splints.</font>"
 
 	if (href_list["sensor"] && usr.CanUseTopicInventory(src))
-		if(isunder(w_uniform))
+		if(istype(w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/S = w_uniform
 			visible_message("<span class='danger'>[usr] is trying to set [src]'s suit sensors!</span>")
 			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
@@ -816,7 +805,8 @@
 								if(setmedical != "Cancel")
 									R.fields["p_stat"] = setmedical
 									modified = 1
-									PDA_Manifest.Cut()
+									if(PDA_Manifest.len)
+										PDA_Manifest.Cut()
 
 									spawn()
 										if(ishuman(usr))
@@ -914,7 +904,7 @@
 		var/obj/item/clothing/head/welding/W = head
 		if(!W.up)
 			number += 2
-	if(!istype(head, /obj/item/clothing/head/helmet/space/sk) && istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault) || istype(head, /obj/item/clothing/head/helmet/swat))
+	if(!istype(head, /obj/item/clothing/head/helmet/space/sk) && istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault))
 		number += 2
 	if(istype(glasses, /obj/item/clothing/glasses/thermal))
 		var/obj/item/clothing/glasses/thermal/G = glasses
@@ -922,10 +912,6 @@
 			number -= 1
 	if(istype(glasses, /obj/item/clothing/glasses/sunglasses))
 		number += 1
-	if(istype(glasses, /obj/item/clothing/glasses/hud/hos_aug))
-		var/obj/item/clothing/glasses/hud/hos_aug/G = glasses
-		if(!G.active)
-			number += 1
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/welding))
 		var/obj/item/clothing/mask/gas/welding/W = wear_mask
 		if(!W.up)
@@ -936,8 +922,6 @@
 			number += 2
 	if(istype(glasses, /obj/item/clothing/glasses/night/shadowling))
 		number -= 1
-	if(istype(glasses, /obj/item/clothing/glasses/cult_blindfold))
-		number += 2
 	return number
 
 
@@ -972,7 +956,7 @@
 			xylophone=0
 	return
 
-/mob/living/carbon/human/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, stun = TRUE, force = FALSE)
+/mob/living/carbon/human/vomit(punched = FALSE, masked = FALSE)
 	var/mask_ = masked
 	if(species.flags[NO_VOMIT])
 		return FALSE
@@ -980,7 +964,7 @@
 	if(wear_mask && (wear_mask.flags & MASKCOVERSMOUTH))
 		mask_ = TRUE
 
-	return ..(punched, mask_, vomit_type, stun, force)
+	return ..(punched, mask_)
 
 
 /mob/living/carbon/human/proc/force_vomit(mob/living/carbon/human/H)
@@ -1439,11 +1423,8 @@
 
 	typing_indicator_type = species.typing_indicator_type
 
+	species.handle_post_spawn(src)
 	species.on_gain(src)
-
-	for(var/datum/quirk/Q in roundstart_quirks)
-		if(SSquirks.quirk_blacklist_species[Q.name] && (species.name in SSquirks.quirk_blacklist_species[Q.name]))
-			qdel(Q)
 
 	regenerate_icons()
 	full_prosthetic = null
@@ -1463,6 +1444,7 @@
 	species = all_species[new_species]
 	maxHealth = species.total_health
 
+	species.handle_post_spawn(src)
 	species.on_gain(src)
 
 	regenerate_icons()
@@ -1513,164 +1495,6 @@
 		W.update_icon()
 		W.message = message
 		W.add_fingerprint(src)
-
-/mob/living/carbon/human/verb/skills_menu()
-	set category = "IC"
-	set name = "Skills Menu"
-	var/list/tables_data = list(
-		"Engineering related skills" = list(
-			/datum/skill/engineering,
-			/datum/skill/construction,
-			/datum/skill/atmospherics
-			),
-		"Medical skills" = list(
-			/datum/skill/medical,
-			/datum/skill/surgery,
-			/datum/skill/chemistry
-			),
-		"Combat skills" = list(
-			/datum/skill/melee,
-			/datum/skill/firearms,
-			/datum/skill/police,
-			/datum/skill/combat_mech
-			),
-		"Civilian skills" = list(
-			/datum/skill/command,
-			/datum/skill/research,
-			/datum/skill/civ_mech
-			)
-	)
-	var/dat = {"
-		<style>
-			.skill_slider {
-				width: 100%;
-				position: relative;
-				padding: 0;
-			}
-			table {
-				line-height: 5px;
-				width: 100%;
-				border-collapse: collapse;
-				border: 1px solid;
-				padding: 0;
-			}
-			td {
-				width: 25%;
-			}
-			td:nth-child(2n+0) {
-				width: 65%;
-			}
-			td:nth-child(3n+0) {
-				width: 10%;
-			}
-			caption {
-				line-height: normal;
-				color: white;
-				background-color: #444;
-				font-weight: bold;
-			}
-			.container{
-				text-align: center;
-				width: 100%;
-			}
-		</style>
-		"}
-	dat += {"
-		<div class = "container">
-			<button type="submit" value="1" onclick="setMaxSkills()">Set skills values to maximum</button>
-			<button type="submit" value="1" onclick="AskHelp()">Ask others for help</button>
-		</div>
-	"}
-	for(var/category in tables_data)
-		dat += {"
-			<table>
-				<caption>[category]</caption>
-		"}
-
-		var/list/sliders_data = tables_data[category]
-
-		for(var/datum/skill/s as anything in sliders_data)
-			var/datum/skill/skill = all_skills[s]
-			var/slider_id = skill.name
-			var/slider_value = mind.skills.get_value(s)
-			var/slider_min_value = SKILL_LEVEL_MIN
-			var/slider_max_value = mind.skills.get_max(s)
-			var/rank_list = skill.custom_ranks
-			var/rank_list_element = ""
-			for(var/rank in rank_list)
-				rank_list_element += "[rank]\n"
-			if(slider_max_value == slider_min_value)
-				continue
-			var/slider_hint = "Hint: [skill.hint]\n\nSkill ranks:\n[rank_list_element]"
-			dat += {"
-				<tr>
-					<td>
-						[slider_id] <span title="[slider_hint]">(?)</span>:
-					</td>
-					<td>
-						<input type="range" class="skill_slider" min="[slider_min_value]" max="[slider_max_value]" value="[slider_value]" id="[slider_id]" onchange="updateSkill('[slider_id]')" >
-					</td>
-					<td>
-						<p><b><center><a href='?src=\ref[src];skill=[slider_id]&value=[slider_value]'><span id="[slider_id]_value">[slider_value]</span></a></center></b></p>
-					</td>
-				</tr>
-			"}
-
-		dat += {"
-			</table>
-		"}
-
-	dat +={"
-		<p><span id="notice">&nbsp;</span></p>
-		<script>
-			var skillUpdating = false;
-			function updateSkill(slider_id) {
-				if (!skillUpdating) {
-					skillUpdating = true;
-					setTimeout(function() {
-						setSkill(slider_id);
-					}, 300);
-				}
-			}
-			function setSkill(slider_id) {
-				var element =  document.getElementById(slider_id);
-				var value = element.value;
-				window.location = 'byond://?src=\ref[src];skill=' + slider_id + '&value=' + value;
-				skillUpdating = false;
-
-				document.getElementById(slider_id + "_value").innerHTML = value;
-			}
-			function setMaxSkills() {
-				window.location  = 'byond://?src=\ref[src];set_max_skills=1';
-				setTimeout("location.reload(true);", 100);
-			}
-			function AskHelp()
-			{
-				window.location  = 'byond://?src=\ref[src];request_help=1';
-				setTimeout("location.reload(true);", 100);
-			}
-		</script>
-		"}
-	var/style = CSS_THEME_DARK
-	if (mind.antag_roles.len)
-		style = CSS_THEME_SYNDICATE
-	var/datum/browser/popup = new(usr, "mob\ref[src]", "Skills menu", 620, 500, null, style)
-	popup.set_content(dat)
-	popup.open()
-
-/mob/living/carbon/human/proc/update_skills(href_list)
-	var/skill_name = href_list["skill"]
-	var/value = text2num(href_list["value"])
-	if(!isnum(value) || !istext(skill_name))
-		return
-	if(!mind)
-		return
-	for(var/skill_type in all_skills)
-		var/datum/skill/skill = all_skills[skill_type]
-		if(skill.name == skill_name)
-			mind.skills.choose_value(skill_type, value)
-			return
-
 
 /mob/living/carbon/human/verb/examine_ooc()
 	set name = "Examine OOC"
@@ -1724,19 +1548,19 @@
 			if(error_msg)
 				to_chat(user, "<span class='warning'>You are trying to inject [src]'s synthetic body part!</span>")
 			return FALSE
-		//untrained 8 seconds, novice 6.8, trained 5.6, pro 4.4, expert 3.2 and master 2
-		var/injection_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical = SKILL_LEVEL_NONE), multiplier = -0.15) //-15% for each medical level
+
 		if(!instant)
+			var/time_to_inject = HUMAN_STRIP_DELAY
 			if(hunt_injection_port) // takes additional time
 				if(!stealth)
 					user.visible_message("<span class='danger'>[user] begins hunting for an injection port on [src]'s suit!</span>")
-				if(!do_mob(user, src, injection_time / 2, TRUE))
+				if(!do_mob(user, src, time_to_inject / 2, TRUE))
 					return FALSE
 
 			if(!stealth)
 				user.visible_message("<span class='danger'>[user] is trying to inject [src]!</span>")
 
-			if(!do_mob(user, src, injection_time, TRUE))
+			if(!do_mob(user, src, time_to_inject, TRUE))
 				return FALSE
 
 		if(!stealth)
@@ -1750,11 +1574,8 @@
 
 /atom/movable/screen/leap
 	name = "toggle leap"
-	icon = 'icons/hud/screen1_action.dmi'
+	icon = 'icons/mob/screen1_action.dmi'
 	icon_state = "action"
-	screen_loc = ui_human_leap
-
-	copy_flags = NONE
 
 	var/on = FALSE
 	var/time_used = 0
@@ -1800,13 +1621,12 @@
 		to_chat(src, "<span class='notice'>It is unsafe to leap without gravity!</span>")
 		return
 
-	if(incapacitated(LEGS) || buckled || anchored || stance_damage >= 4) //because you need !restrained legs to leap
+	if(incapacitated(LEGS) || buckled || pinned.len || stance_damage >= 4) //because you need !restrained legs to leap
 		to_chat(src, "<span class='warning'>You cannot leap in your current state.</span>")
 		return
 
 	leap_icon.time_used = world.time + leap_icon.cooldown
-	add_status_flags(LEAPING)
-	pass_flags |= PASSTABLE
+	status_flags |= LEAPING
 	stop_pulling()
 
 
@@ -1819,16 +1639,12 @@
 				V.overload()
 
 	toggle_leap()
+
 	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .proc/leap_end, prev_intent))
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)
-	remove_status_flags(LEAPING)
+	status_flags &= ~LEAPING
 	a_intent_change(prev_intent)
-	pass_flags &= ~PASSTABLE
-	//Call Crossed() for activate things and breake glass table
-	var/turf/my_turf = get_turf(src)
-	for(var/atom/A in my_turf.contents)
-		A.Crossed(src)
 
 /mob/living/carbon/human/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!(status_flags & LEAPING))
@@ -1838,21 +1654,15 @@
 		var/mob/living/L = hit_atom
 		L.visible_message("<span class='danger'>\The [src] leaps at [L]!</span>", "<span class='userdanger'>[src] leaps on you!</span>")
 		if(issilicon(L))
-			L.Stun(1) //Only brief stun
+			L.Weaken(1) //Only brief stun
 			step_towards(src, L)
 		else
-			L.Stun(2)
 			L.Weaken(2)
 			step_towards(src, L)
 
 	else if(hit_atom.density)
-		if(!hit_atom.CanPass(src, get_turf(hit_atom)))
-			visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smash into [hit_atom]!</span>")
-			Stun(2)
-			Weaken(2)
-		else if(istype(hit_atom, /obj/machinery/disposal))
-			INVOKE_ASYNC(src, /atom/movable.proc/do_simple_move_animation, hit_atom)
-			forceMove(hit_atom)
+		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smash into [hit_atom]!</span>")
+		weakened = 2
 
 	update_canmove()
 
@@ -1938,7 +1748,7 @@
 	set category = "IPC"
 	set name = "Change IPC Screen"
 	set desc = "Allow change monitor type"
-	if(stat != CONSCIOUS)
+	if(stat)
 		return
 	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
 	if(!BP || BP.is_stump)
@@ -1975,7 +1785,7 @@
 	set name = "Toggle IPC Screen"
 	set desc = "Allow toggle monitor"
 
-	if(stat != CONSCIOUS)
+	if(stat)
 		return
 	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
 	if(!BP || (BP.is_stump))
@@ -2000,7 +1810,7 @@
 	set name = "Display Text On Screen"
 	set desc = "Display text on your monitor"
 
-	if(stat != CONSCIOUS)
+	if(stat)
 		return
 
 	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
@@ -2035,7 +1845,7 @@
 		skipface |= wear_mask.flags_inv & HIDEFACE
 
 	if(!BP.disfigured && !skipface) // we still text even tho the screen may be broken or hidden
-		me_emote("отображает на экране, \"<span class=\"emojify\">[S]</span>\"", intentional=TRUE)
+		custom_emote(SHOWMSG_VISUAL, "отображает на экране, \"<span class=\"emojify\">[S]</span>\"")
 
 
 
@@ -2078,17 +1888,7 @@
 	for(var/mob/M in viewers(src))
 		if(M.client)
 			viewing += M.client
-	var/electrocuted_sprite = "electrocuted_generic"
-	switch(get_species())
-		if(UNATHI)
-			electrocuted_sprite += "_unathi"
-		if(TAJARAN)
-			electrocuted_sprite += "_tajaran"
-		if(SKRELL)
-			electrocuted_sprite += "_skrell"
-		if(VOX)
-			electrocuted_sprite += "_vox"
-	var/image/I = image(icon, src, electrocuted_sprite, MOB_LAYER+1)
+	var/image/I = image(icon,src,"electrocuted_generic",MOB_LAYER+1)
 	I = update_height(I)
 	flick_overlay(I, viewing, anim_duration)
 
@@ -2447,15 +2247,6 @@
 		if(HEART_FAILURE)
 			if(prob(heal_prob))
 				Heart.heart_fibrillate()
-
-
-/mob/living/carbon/human/proc/PutDisabilityMarks()
-	var/obj/item/weapon/card/id/card = locate(/obj/item/weapon/card/id, src)
-	if(!card)
-		return
-	for(var/datum/quirk/Q in roundstart_quirks)
-		if(Q.disability)
-			card.disabilities += Q.name
 
 /mob/living/carbon/human/handle_drunkenness()
 	. = ..()

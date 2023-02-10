@@ -153,7 +153,6 @@
 	throwforce = 0 // we shall not abuse
 	throw_range = 0
 	slot_flags = null
-	dropped_sound = 'sound/items/buttonswitch.ogg'
 	var/nearest_artifact_id = "unknown"
 	var/nearest_artifact_distance = -1
 	var/last_scan_time = 0
@@ -175,7 +174,9 @@
 	..()
 	if(wavescanner)
 		wavescanner.remove_processor()
+		playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 	else
+		playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 		qdel(src)
 
 /obj/item/device/searcher/afterattack(atom/target, mob/user, proximity, params)

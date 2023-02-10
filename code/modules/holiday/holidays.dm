@@ -13,11 +13,6 @@
 	/// for christmas neverending, or testing. Forces a holiday to be celebrated.
 	var/always_celebrate = FALSE
 
-	// ==== STAFFWHO ====
-	var/list/staffwho_group_name
-	var/list/staffwho_prefixs
-	var/staffwho_no_staff
-
 // This proc gets run before the game starts when the holiday is activated. Do festive shit here.
 /datum/holiday/proc/celebrate()
 	return

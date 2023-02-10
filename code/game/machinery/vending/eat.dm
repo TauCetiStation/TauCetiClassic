@@ -79,28 +79,24 @@
 		/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 6,
 		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,
 		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 6,
-		/obj/item/weapon/storage/food/small/chips = 6,
-		/obj/item/weapon/storage/food/normal/chips = 6,
-		/obj/item/weapon/storage/food/normal/sosjerky = 6,
-		/obj/item/weapon/storage/food/normal/no_raisin = 6,
+		/obj/item/weapon/reagent_containers/food/snacks/chips = 6,
+		/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 6,
+		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,
 		/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
-		/obj/item/weapon/storage/food/normal/honkers = 6,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6,
 	)
 	contraband = list(
-		/obj/item/weapon/storage/food/normal/syndi_cakes = 6,
-		/obj/item/weapon/storage/food/big/chips = 6,
+		/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6,
 	)
 	prices = list(
 		/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 5,
 		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 25,
 		/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen = 25,
-		/obj/item/weapon/storage/food/small/chips = 10,
-		/obj/item/weapon/storage/food/normal/chips = 20,
-		/obj/item/weapon/storage/food/big/chips = 50,
-		/obj/item/weapon/storage/food/normal/sosjerky = 14,
-		/obj/item/weapon/storage/food/normal/no_raisin = 15,
-		/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 20,
-		/obj/item/weapon/storage/food/normal/honkers = 15,
+		/obj/item/weapon/reagent_containers/food/snacks/chips = 10,
+		/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 14,
+		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 10,
+		/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 10,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 10,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/snack
 

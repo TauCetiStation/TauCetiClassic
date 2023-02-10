@@ -2,38 +2,40 @@
 ///// Construction datums //////
 ////////////////////////////////
 
-/datum/construction/reversible/mecha/custom_action(index, diff, obj/item/weapon/I, mob/user)
-	if(iswelding(I))
-		if (I.use(3, user))
+/datum/construction/reversible/mecha/custom_action(index, diff, atom/used_atom, mob/user)
+	if(iswelder(used_atom))
+		var/obj/item/weapon/weldingtool/W = used_atom
+		if (W.use(3, user))
 			playsound(holder, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
 			return 1
 		else
 			to_chat(user, ("There's not enough fuel."))
 			return 0
-	else if(iswrenching(I))
+	else if(iswrench(used_atom))
 		playsound(holder, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		return 1
-	else if(isscrewing(I))
+	else if(isscrewdriver(used_atom))
 		playsound(holder, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		return 1
-	else if(iscutter(I))
+	else if(iswirecutter(used_atom))
 		playsound(holder, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 		return 1
-	else if(iscoil(I))
-		var/obj/item/stack/cable_coil/C = I
+	else if(iscoil(used_atom))
+		var/obj/item/stack/cable_coil/C = used_atom
 		if(!C.use(4))
 			to_chat(user, ("There's not enough cable to finish the task."))
 			return 0
 		playsound(holder, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
-	else if(istype(I, /obj/item/stack))
-		var/obj/item/stack/S = I
+
+	else if(istype(used_atom, /obj/item/stack))
+		var/obj/item/stack/S = used_atom
 		if(!S.use(5))
 			to_chat(user, ("There's not enough material in this stack."))
 			return 0
-	if(istype(I, /obj))
-		var/obj/part = I
+	if(istype(used_atom, /obj))
+		var/obj/part = used_atom
 		if(part.crit_fail || part.reliability < 50)
-			user.visible_message("[user] was unable to connect [part] to [holder].", "You failed to connect [part] to [holder]")
+			user.visible_message("[user] was unable to connect [used_atom] to [holder].", "You failed to connect [used_atom] to [holder]")
 			return 0
 	return 1
 

@@ -16,7 +16,6 @@
 	icon_state = "l_windoor_assembly01"
 	anchored = FALSE
 	density = FALSE
-	can_block_air = TRUE
 	dir = NORTH
 
 	var/ini_dir
@@ -41,10 +40,11 @@
 /obj/structure/windoor_assembly/update_icon()
 	icon_state = "[facing]_[secure ? "secure_" : ""]windoor_assembly[state]"
 
-/obj/structure/windoor_assembly/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/windoor_assembly/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
+		if(air_group) return 0
 		return !density
 	else
 		return 1
@@ -63,7 +63,7 @@
 	if(user.is_busy()) return
 	switch(state)
 		if("01")
-			if(iswelding(W) && !anchored )
+			if(iswelder(W) && !anchored )
 				var/obj/item/weapon/weldingtool/WT = W
 				if (WT.use(0,user))
 					user.visible_message("[user] dissassembles the windoor assembly.", "You start to dissassemble the windoor assembly.")
@@ -78,7 +78,7 @@
 					return
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
-			if(iswrenching(W) && !anchored)
+			if(iswrench(W) && !anchored)
 				user.visible_message("[user] secures the windoor assembly to the floor.", "You start to secure the windoor assembly to the floor.")
 				if(W.use_tool(src, user, 40, volume = 100))
 					if(src.anchored)
@@ -91,7 +91,7 @@
 						src.name = "Anchored Windoor Assembly"
 
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
-			else if(iswrenching(W) && anchored)
+			else if(iswrench(W) && anchored)
 				user.visible_message("[user] unsecures the windoor assembly to the floor.", "You start to unsecure the windoor assembly to the floor.")
 				if(W.use_tool(src, user, 40, volume = 100))
 					if(!src.anchored)
@@ -140,7 +140,7 @@
 		if("02")
 
 			//Removing wire from the assembly. Step 5 undone.
-			if(iscutter(W) && !src.electronics)
+			if(iswirecutter(W) && !src.electronics)
 				user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
 				if(W.use_tool(src, user, 40, volume = 100))
 					if(src.state != "02")
@@ -171,7 +171,7 @@
 						AE.loc = src.loc
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
-			else if(isscrewing(W))
+			else if(isscrewdriver(W))
 				if(!electronics)
 					return
 				user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to uninstall electronics from the airlock assembly.")
@@ -195,7 +195,7 @@
 
 
 			//Crowbar to complete the assembly, Step 7 complete.
-			else if(isprying(W))
+			else if(iscrowbar(W))
 				if(!src.electronics)
 					to_chat(usr, "<span class='warning'>The assembly is missing electronics.</span>")
 					return

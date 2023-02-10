@@ -5,7 +5,7 @@
 	damage = 40
 	damage_type = BURN
 	sharp = TRUE // concentrated burns
-	flag = LASER
+	flag = "laser"
 	eyeblur = 4
 	var/frequency = 1
 	hitscan = 1
@@ -25,7 +25,7 @@
 	damage = 0
 	damage_type = BURN
 	fake = 1
-	flag = LASER
+	flag = "laser"
 	eyeblur = 2
 
 /obj/item/projectile/beam/practice/atom_init()
@@ -93,7 +93,7 @@
 	damage = 0
 	damage_type = BURN
 	fake = TRUE
-	flag = LASER
+	flag = "laser"
 
 	var/lasertag_color = "none"
 
@@ -107,7 +107,6 @@
 		if(istype(H.wear_suit, /obj/item/clothing/suit/lasertag))
 			var/obj/item/clothing/suit/lasertag/L = H.wear_suit
 			if(L.lasertag_color != lasertag_color)
-				H.Stun(1)
 				H.Weaken(2)
 	return TRUE
 
@@ -154,7 +153,7 @@
 	weaken = 5
 	stutter = 5
 
-	flag = BULLET
+	flag = "bullet"
 	pass_flags = PASSTABLE
 	damage_type = BRUTE
 	sharp = TRUE
@@ -195,6 +194,6 @@
 	def_zone = ran_zone()
 
 /obj/item/projectile/beam/cult_laser/Bump(atom/A, forced=0)
-	if(istype(A, /mob/living/simple_animal/hostile/pylon) || istype(A, /obj/structure/cult/pylon) || isconstruct(A) || istype(A, /obj/effect/anomaly/bluespace/cult_portal))
+	if(istype(A, /mob/living/simple_animal/hostile/pylon) || istype(A, /obj/structure/cult/pylon) || istype(A, /mob/living/simple_animal/construct) || istype(A, /obj/effect/anomaly/bluespace/cult_portal))
 		return FALSE
 	return ..()

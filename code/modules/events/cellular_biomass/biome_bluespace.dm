@@ -14,17 +14,17 @@
 
 
 /obj/structure/cellular_biomass/wall/bluespace
-	max_integrity = 100
+	health = 100
 	name = "Glitch"
 	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
 
 /obj/structure/cellular_biomass/grass/bluespace
-	max_integrity = 100
+	health = 100
 	name = "Glitch"
 	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
 
 /obj/structure/cellular_biomass/lair/bluespace
-	max_integrity = 100
+	health = 100
 	name = "Glitch"
 	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
 

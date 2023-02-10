@@ -767,7 +767,7 @@
 "cd" = (
 /obj/structure/table,
 /obj/item/weapon/screwdriver,
-/obj/item/device/tagger,
+/obj/item/weapon/hand_labeler,
 /obj/machinery/light{
 	dir = 8
 	},

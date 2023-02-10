@@ -74,7 +74,7 @@
 
 
 /obj/machinery/power/terminal/attackby(obj/item/W, mob/living/user)
-	if(iscutter(W))
+	if(iswirecutter(W))
 		dismantle(user)
 		return
 

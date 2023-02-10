@@ -10,7 +10,8 @@
 	icon_state = "medibot0"
 	density = FALSE
 	anchored = FALSE
-	max_integrity = 20
+	health = 20
+	maxhealth = 20
 	req_access =list(access_medical)
 	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
 //var/emagged = 0
@@ -200,11 +201,8 @@
 
 	else
 		..()
-
-/obj/machinery/bot/medbot/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
-	. = ..()
-	if(. && !QDELING(src))
-		step(src, reverse_dir[attack_dir])
+		if(health < maxhealth && !isscrewdriver(W) && W.force)
+			step_to(src, (get_step_away(src,user)))
 
 /obj/machinery/bot/medbot/emag_act(mob/user)
 	..()

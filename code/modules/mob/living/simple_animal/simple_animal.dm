@@ -1,6 +1,5 @@
 /mob/living/simple_animal
 	name = "animal"
-	desc = "Just simple animal"
 	icon = 'icons/mob/animal.dmi'
 	health = 20
 	maxHealth = 20
@@ -24,9 +23,9 @@
 	var/stop_automated_movement_when_pulled = TRUE // When set to 1 this stops the animal from moving when someone is pulling it.
 
 	// Interaction
-	var/response_help   = "pets the"
-	var/response_disarm = "gently pushes aside the"
-	var/response_harm   = "kicks the"
+	var/response_help   = "tries to help"
+	var/response_disarm = "tries to disarm"
+	var/response_harm   = "tries to hurt"
 	var/harm_intent_damage = 3
 
 	// Temperature effect
@@ -50,17 +49,17 @@
 	// LETTING SIMPLE ANIMALS ATTACK? WHAT COULD GO WRONG. Defaults to zero so Ian can still be cuddly
 	var/melee_damage = 0
 	var/melee_damtype = BRUTE
-	var/attacktext = "kicks"
+	var/attacktext = "attacks"
 	var/list/attack_sound = list()
 	var/friendly = "nuzzles" // If the mob does no damage with it's attack
 	var/environment_smash = 0 // Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
+
+	var/speed = 0 // LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
 	var/animalistic = TRUE // Determines whether the being here is an animal or nah.
 	var/has_head = FALSE
 	var/has_arm = FALSE
 	var/has_leg = FALSE
-
-	can_point = FALSE
 
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
 	var/footstep_type
@@ -107,7 +106,7 @@
 	var/retSound = null
 	if(length(attack_sound) > 0)
 		retSound = pick(attack_sound)
-	var/retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
+	var/retMissSound = 'sound/weapons/punchmiss.ogg'
 
 	if(HULK in mutations)
 		retDam += 4
@@ -135,6 +134,13 @@
 
 	if(client)
 		handle_regular_hud_updates()
+
+	if(stunned)
+		AdjustStunned(-1)
+	if(weakened)
+		AdjustWeakened(-1)
+	if(paralysis)
+		AdjustParalysis(-1)
 
 	// Movement
 	if(!client && !stop_automated_movement && wander && !anchored)
@@ -226,9 +232,9 @@
 		if(1)
 			say(pick(speak))
 		if(2)
-			me_emote(pick(emote_hear), SHOWMSG_AUDIO)
+			emote(pick(emote_hear), 2)
 		if(3)
-			me_emote(pick(emote_see), SHOWMSG_VISUAL)
+			emote(pick(emote_see), 1)
 
 /mob/living/simple_animal/rejuvenate()
 	..()
@@ -248,6 +254,11 @@
 				new path(loc)
 	..()
 
+/mob/living/simple_animal/emote(act, m_type = SHOWMSG_VISUAL, message = null, auto)
+	if(act)
+		if(act == "scream")	act = "whimper" //ugly hack to stop animals screaming when crushed :P
+		..(act, m_type, message)
+
 /mob/living/simple_animal/attack_larva(mob/living/carbon/xenomorph/larva/attacker)
 	if(attacker.a_intent == INTENT_HARM && stat != DEAD)
 		var/attack_obj = attacker.get_unarmed_attack()
@@ -256,7 +267,11 @@
 	return ..()
 
 /mob/living/simple_animal/movement_delay()
-	return speed + config.animal_delay
+	var/tally = 0 // Incase I need to add stuff other than "speed" later
+
+	tally = speed
+
+	return tally+config.animal_delay
 
 /mob/living/simple_animal/Stat()
 	..()
@@ -286,9 +301,6 @@
 		if(EXPLODE_LIGHT)
 			adjustBruteLoss(30)
 
-/mob/living/simple_animal/blob_act()
-	adjustBruteLoss(20)
-
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	var/perc_block = (10 - harm_intent_damage) / 10 // #define MAX_HARM_INTENT_DAMAGE 10. Turn harm_intent_damage into armor or something. ~Luduk
 	damage *= perc_block
@@ -305,7 +317,7 @@
 /mob/living/simple_animal/proc/SA_attackable(target_mob)
 	if (isliving(target_mob))
 		var/mob/living/L = target_mob
-		if(L.stat == CONSCIOUS && L.health >= 0)
+		if(!L.stat && L.health >= 0)
 			return FALSE
 	if (istype(target_mob, /obj/mecha))
 		var/obj/mecha/M = target_mob
@@ -313,7 +325,7 @@
 			return FALSE
 	if (isbot(target_mob))
 		var/obj/machinery/bot/B = target_mob
-		if(B.get_integrity() > 0)
+		if(B.health > 0)
 			return FALSE
 	return TRUE
 
@@ -343,7 +355,7 @@
 	return FALSE
 
 /mob/living/simple_animal/say(message)
-	if(stat != CONSCIOUS)
+	if(stat)
 		return
 
 	message = sanitize(message)
@@ -352,7 +364,7 @@
 		return
 
 	if(message[1] == "*")
-		return emote(copytext(message, 2))
+		return emote(copytext(message,2))
 
 	var/verb = "says"
 	var/ending = copytext(message, -1)
@@ -372,7 +384,7 @@
 
 /mob/living/simple_animal/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
-	if(icon_move && stat == CONSCIOUS && !ISDIAGONALDIR(Dir))
+	if(icon_move && !stat && !ISDIAGONALDIR(Dir))
 		flick(icon_move, src)
 
 /mob/living/simple_animal/update_stat()
@@ -399,7 +411,7 @@
 
 /mob/living/simple_animal/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
 	if(has_effect && !visual_effect_icon && melee_damage)
-		if(attack_push_vis_effect && !iswallturf(A)) // override the standard visual effect.
+		if(attack_push_vis_effect && !istype(A, /turf/simulated/wall)) // override the standard visual effect.
 			visual_effect_icon = attack_push_vis_effect
 		else if(melee_damage < 10)
 			visual_effect_icon = ATTACK_EFFECT_PUNCH
@@ -408,7 +420,4 @@
 	..()
 
 /mob/living/simple_animal/crawl()
-	return FALSE
-
-/mob/living/simple_animal/can_pickup(obj/O)
 	return FALSE

@@ -119,7 +119,6 @@ var/global/initial_station_money = 7500
 		station_account.owner_name = "[station_name()] Station Account"
 		station_account.account_number = rand(111111, 999999)
 		station_account.remote_access_pin = rand(1111, 111111)
-		station_account.security_level = 1
 		station_account.money = global.initial_station_money
 
 		//create an entry in the account transaction log for when it was created
@@ -142,7 +141,6 @@ var/global/initial_station_money = 7500
 	department_account.owner_name = "[department] Account"
 	department_account.account_number = rand(111111, 999999)
 	department_account.remote_access_pin = rand(1111, 111111)
-	department_account.security_level = 1
 	department_account.money = 500
 
 	//create an entry in the account transaction log for when it was created

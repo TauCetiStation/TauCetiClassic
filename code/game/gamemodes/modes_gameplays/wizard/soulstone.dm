@@ -78,7 +78,7 @@
 
 	if(href_list["choice"] == "Summon")
 		for(var/mob/living/simple_animal/shade/A in src)
-			A.remove_status_flags(GODMODE)
+			A.status_flags &= ~GODMODE
 			A.canmove = TRUE
 			to_chat(A, "<b>Вы были освобождены из своей тюрьмы, но вы остаётесь привязанным к [user.name] и его союзникам. Помогайте им добиться их целей любой ценой.</b>")
 			A.forceMove(user.loc)
@@ -128,7 +128,7 @@
 	var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade( H.loc )
 	S.my_religion = H.my_religion
 	S.forceMove(src)
-	S.add_status_flags(GODMODE) //So they won't die inside the stone somehow
+	S.status_flags |= GODMODE //So they won't die inside the stone somehow
 	S.canmove = FALSE //Can't move out of the soul stone
 	S.name = "Shade of [H.real_name]"
 	S.real_name = "Shade of [H.real_name]"
@@ -145,9 +145,6 @@
 
 /obj/item/device/soulstone/proc/capture_shade(target, mob/user)
 	var/mob/living/simple_animal/shade/S = target
-	if(istype(S, /mob/living/simple_animal/shade/evil_shade))
-		to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Эта душа не может вам подчинится!")
-		return
 	if(S.stat == DEAD)
 		to_chat(user, "<span class='warning'><b>Захват не удался!</b>:</span> Тень уже изгнана!")
 		return
@@ -159,7 +156,7 @@
 		return
 
 	S.forceMove(src)
-	S.add_status_flags(GODMODE)
+	S.status_flags |= GODMODE
 	S.canmove = FALSE
 	S.health = S.maxHealth
 	icon_state = "soulstone_glow_blink"

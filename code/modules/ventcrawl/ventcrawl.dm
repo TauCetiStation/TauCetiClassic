@@ -4,20 +4,20 @@ var/global/list/ventcrawl_machinery = list(
 	)
 
 // Vent crawling whitelisted items, whoo
-/mob/living
-	var/list/can_enter_vent_with = list(
-		/obj/item/weapon/implant,
-		/obj/item/device/radio/borg,
-		/obj/item/weapon/holder,
-		/obj/machinery/camera,
-		/mob/living/simple_animal/borer,
-		/mob/living/parasite
-		)
+/mob/living/var/list/can_enter_vent_with = list(
+	/obj/item/weapon/implant,
+	/obj/item/device/radio/borg,
+	/obj/item/weapon/holder,
+	/obj/machinery/camera,
+	/mob/living/simple_animal/borer,
+	/mob/living/parasite
+	)
 
-	var/list/icon/pipes_shown = list()
-	var/is_ventcrawling = 0
-	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
-	var/next_play_vent = 0
+/mob/living/var/list/icon/pipes_shown = list()
+/mob/living/var/last_played_vent
+/mob/living/var/is_ventcrawling = 0
+/mob/living/var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
+/mob/var/next_play_vent = 0
 
 /mob/living/proc/can_ventcrawl()
 	if(!client)

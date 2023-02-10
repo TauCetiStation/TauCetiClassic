@@ -1,8 +1,6 @@
 var/global/list/preferences_datums = list()
 
-#define MAX_SAVE_SLOTS 10
-#define MAX_SAVE_SLOTS_SUPPORTER MAX_SAVE_SLOTS+10
-#define GET_MAX_SAVE_SLOTS(Client) ((Client && Client.supporter) ? MAX_SAVE_SLOTS_SUPPORTER : MAX_SAVE_SLOTS)
+var/global/const/MAX_SAVE_SLOTS = 10
 
 #define MAX_GEAR_COST 5
 #define MAX_GEAR_COST_SUPPORTER MAX_GEAR_COST+3
@@ -35,6 +33,7 @@ var/global/list/preferences_datums = list()
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/chat_ghostsight = CHAT_GHOSTSIGHT_ALL
+	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/clientfps = -1
 
@@ -456,8 +455,11 @@ var/global/list/preferences_datums = list()
 	var/obj/item/organ/external/r_leg = character.bodyparts_by_name[BP_R_LEG]
 	if(!l_leg && !r_leg) // TODO cane if its only single leg.
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
+		character.buckled = W
+		character.update_canmove()
 		W.set_dir(character.dir)
-		W.buckle_mob(character)
+		W.buckled_mob = character
+		W.add_fingerprint(character)
 
 	if(underwear > underwear_m.len || underwear < 1)
 		underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES

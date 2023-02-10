@@ -9,17 +9,32 @@
 	device_type = BINARY
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/SetInitDirections()
-	initialize_directions = dir|reverse_dir[dir]
+	switch(dir)
+		if(SOUTH)
+			initialize_directions = NORTH
+			initialize_directions_he = SOUTH
+		if(NORTH)
+			initialize_directions = SOUTH
+			initialize_directions_he = NORTH
+		if(EAST)
+			initialize_directions = WEST
+			initialize_directions_he = EAST
+		if(WEST)
+			initialize_directions = EAST
+			initialize_directions_he = WEST
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/getNodeConnects()
-	return list(reverse_dir[dir], dir)
+	return list(turn(dir, 180), dir)
 
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/can_be_node(obj/machinery/atmospherics/target)
-	var/searchDir
-	if(istype(target, /obj/machinery/atmospherics/pipe/simple/heat_exchanging))
-		searchDir = dir
-	else
-		searchDir = reverse_dir[dir]
-	if((searchDir & get_dir(src, target)) && (target.initialize_directions & initialize_directions))
-		return TRUE
-	return FALSE
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/can_be_node(obj/machinery/atmospherics/target, iteration)
+	var/init_dir
+	switch(iteration)
+		if(1)
+			init_dir = target.initialize_directions
+		if(2)
+			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/H = target
+			if(!istype(H))
+				return 0
+			init_dir = H.initialize_directions_he
+	if(init_dir & get_dir(target,src))
+		return 1

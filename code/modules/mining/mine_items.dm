@@ -34,7 +34,7 @@
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
-		new /obj/item/clothing/suit/hooded/wintercoat/miner(src)
+		new /obj/item/clothing/suit/hooded/wintercoat/cargo
 		new /obj/item/clothing/head/santa(src)
 		new /obj/item/clothing/shoes/winterboots(src)
 
@@ -179,7 +179,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 	usesound = 'sound/items/pickaxe.ogg'
 	var/drill_verb = "picking"
-	var/mineral_multiply_coefficient = 1.0 // default
 	sharp = 1
 
 	var/excavation_amount = 100
@@ -188,7 +187,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "silver pickaxe"
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
-	toolspeed = 0.7
+	toolspeed = 0.9
 	origin_tech = "materials=3"
 	desc = "This makes no metallurgic sense."
 
@@ -196,17 +195,29 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "golden pickaxe"
 	icon_state = "gpickaxe"
 	item_state = "gpickaxe"
-	toolspeed = 0.2 // hi MiNeCrAfT golden pickaxe
-	mineral_multiply_coefficient = 0.6 // for speed balance
+	toolspeed = 0.9
 	origin_tech = "materials=4"
 	desc = "This makes no metallurgic sense."
+
+/obj/item/weapon/pickaxe/plasmacutter
+	name = "plasma cutter"
+	icon_state = "plasmacutter"
+	item_state = "plasmacutter"
+	w_class = SIZE_SMALL //it is smaller than the pickaxe
+	damtype = "fire"
+	toolspeed = 0.4 //Can slice though normal walls, all girders, or be used in reinforced wall deconstruction/ light thermite on fire
+	origin_tech = "materials=4;phorontech=3;engineering=3"
+	desc = "A rock cutter that uses bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+	drill_verb = "cutting"
+
+/obj/item/weapon/pickaxe/plasmacutter/get_current_temperature()
+	return 3800
 
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
-	toolspeed = 0.25
-	mineral_multiply_coefficient = 1.3
+	toolspeed = 0.2
 	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
 
@@ -243,12 +254,17 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if(target_zone == BP_HEAD)
 		shake_camera(target, 2, 2)
 
-	if((user.IsClumsy()) && asshole_counter >= 5)
+	if((CLUMSY in user.mutations) && asshole_counter >= 5)
 		target.emote("scream")
 		playsound(user, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 		user.say(pick("Spa-a-ace assho-o-o-o-ole!", "Spaaace asshoooole!", "Space assho-o-ole!"))
 		asshole_counter = 0
+	INVOKE_ASYNC(src, .proc/spin, user)
 
+/obj/item/weapon/sledgehammer/proc/spin(mob/living/user)
+	for(var/i in list(SOUTH, WEST, NORTH, EAST, SOUTH))
+		user.set_dir(i)
+		sleep(1)
 
 /obj/item/weapon/sledgehammer/dropped(mob/living/carbon/user)
 	..()
@@ -269,7 +285,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	m_amt = 50
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "bludgeoned", "thrashed", "whacked")
-	usesound = 'sound/effects/shovel_digging.ogg'
 	// Better than a rod, worse than a crowbar.
 	qualities = list(
 		QUALITY_PRYING = 0.75
@@ -315,13 +330,13 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	usesound = 'sound/items/drill.ogg'
 	hitsound = list('sound/items/drill_hit.ogg')
 	drill_verb = "drill"
-	toolspeed = 0.55
-	mineral_multiply_coefficient = 1.0
-	var/drill_cost = 35
+	toolspeed = 0.6
+	var/drill_cost = 15
 	var/state = 0
 	var/obj/item/weapon/stock_parts/cell/power_supply
-	var/cell_type = /obj/item/weapon/stock_parts/cell/high
-	var/effectively_mode = FALSE
+	var/cell_type = /obj/item/weapon/stock_parts/cell
+	var/mode = FALSE
+	var/initial_toolspeed
 
 /obj/item/weapon/pickaxe/drill/atom_init()
 	. = ..()
@@ -330,6 +345,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	else
 		power_supply = new(src)
 	power_supply.give(power_supply.maxcharge)
+	initial_toolspeed = toolspeed
+	update_mode_stats()
 
 
 /obj/item/weapon/pickaxe/drill/update_icon()
@@ -342,7 +359,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	return
 
 /obj/item/weapon/pickaxe/drill/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(isscrewdriver(I))
 		if(state==0)
 			state = 1
 			to_chat(user, "<span class='notice'>You open maintenance panel.</span>")
@@ -383,30 +400,26 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 
 /obj/item/weapon/pickaxe/drill/attack_self(mob/user)
-	effectively_mode = !effectively_mode
+	mode = !mode
 
-	if(effectively_mode)
-		to_chat(user, "<span class='notice'>[src] is now effectively mode. The speed is lowered and the cost of drilling is increased, but the amount of minerals is greater.</span>")
+	if(mode)
+		to_chat(user, "<span class='notice'>[src] is now standard mode. Chance to loose some precious ore, faster digging speed.</span>")
 	else
-		to_chat(user, "<span class='notice'>[src] is now standart drilling mode.</span>")
+		to_chat(user, "<span class='notice'>[src] is now safe mode. No ore loss, slow digging speed.</span>")
 	update_mode_stats()
 
 /obj/item/weapon/pickaxe/drill/proc/update_mode_stats()
-	if(effectively_mode)
-		toolspeed *= 1.25 // slow down drilling speed
-		drill_cost *= 2
-		mineral_multiply_coefficient += 0.25
+	if(mode)
+		initial_toolspeed = toolspeed
+		toolspeed *= 0.5
 	else
-		toolspeed = initial(toolspeed)
-		drill_cost = initial(drill_cost)
-		mineral_multiply_coefficient -= 0.25
+		toolspeed = initial_toolspeed
 
 /obj/item/weapon/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
-	toolspeed = 0.8 // Drills 3 tiles in front of user
-	mineral_multiply_coefficient = 0.8
+	toolspeed = 0.8 //Drills 3 tiles in front of user
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	drill_verb = "hammering"
@@ -418,8 +431,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "diamond mining drill"
 	icon_state = "diamond_drill"
 	item_state = "d_drill"
-	toolspeed = 0.3 // Digs through walls, girders, and can dig up sand
-	mineral_multiply_coefficient = 1.2
+	toolspeed = 0.3 //Digs through walls, girders, and can dig up sand
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
 	drill_verb = "drilling"
@@ -430,12 +442,13 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "diamond_drill"
 	item_state = "jackhammer"
 	toolspeed = 0.4
-	mineral_multiply_coefficient = 1.2
 	desc = ""
 	drill_verb = "drilling"
 
 /obj/item/weapon/pickaxe/drill/borgdrill/attackby(obj/item/I, mob/user, params)
 	return
+
+
 
 /*****************************Explosives********************************/
 /obj/item/weapon/mining_charge
@@ -454,8 +467,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/power = 5
 
 /obj/item/weapon/mining_charge/attack_self(mob/user)
-	if(!handle_fumbling(user, src, SKILL_TASK_TRIVIAL,list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around figuring out how to set timer on [src]...</span>"))
-		return
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(newtime < 5)
 		newtime = 5
@@ -470,10 +481,9 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		return
 	if(user.is_busy(src))
 		return
-
 	to_chat(user, "<span class='notice'>Planting explosives...</span>")
-	var/planting_time = apply_skill_bonus(user, SKILL_TASK_AVERAGE, list(/datum/skill/firearms = SKILL_LEVEL_MASTER, /datum/skill/engineering = SKILL_LEVEL_PRO), -0.1)
-	if(do_after(user, planting_time, target = target))
+
+	if(do_after(user, 50, target = target))
 		user.drop_item()
 		target = target
 		loc = null
@@ -504,16 +514,8 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = /obj/item/weapon/stock_parts/cell/crap
-	var/recharge_time = 2.1 SECONDS
-	var/damage = 10
-	var/range = 3
-	var/mineral_multiply_coefficient = 1.0
-
-	var/list/installed_upgrades = list()
-	var/max_upgrades = 3
-
-#define MAX_IDENTICAL_UPGRADES 2
-#define MAX_UPGRADES_LIMIT 5
+	var/recharge_time = 20
+	var/already_improved = FALSE
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
 	. = ..()
@@ -527,57 +529,18 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/proc/can_be_upgraded(mob/user, obj/item/kinetic_upgrade/UPG)
-	if(length(installed_upgrades) >= max_upgrades)
-		to_chat(user, "<span class='warning'>Достигнут общий лимит количества улучшений!</span>")
-		return FALSE
-
-	if(count_by_type(installed_upgrades, UPG.type) >= MAX_IDENTICAL_UPGRADES)
-		to_chat(user, "<span class='warning'>Достигнут лимит улучшений данного типа!</span>")
-		return FALSE
-	return TRUE
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/I, mob/user)
-	if(!isliving(user))
-		return
-
-	if(istype(I, /obj/item/kinetic_upgrade))
-		var/obj/item/kinetic_upgrade/UPG = I
-
-		if(!can_be_upgraded(user, UPG))
-			return
-
-		if(!user.unEquip(UPG))
-			return
-
-		UPG.install(src)
-
-	else if(istype(I, /obj/item/kinetic_expander))
-		if(max_upgrades >= MAX_UPGRADES_LIMIT)
-			to_chat(user, "<span class='warning'>Закончилось место для расширителей!</span>")
-			return
-		max_upgrades++
-		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
-		qdel(I)
-
-	else if(isscrewing(I))
-		if(!length(installed_upgrades))
-			to_chat(user, "<span class='warning'>Нет улучшений для извлечения!</span>")
-			return
-
-		var/list/possible_removals = list()
-		for(var/obj/item/kinetic_upgrade/upg in installed_upgrades)
-			possible_removals[upg] = image(icon = upg.icon, icon_state = upg.icon_state)
-
-		var/obj/item/kinetic_upgrade/removal_choice = show_radial_menu(user, src, possible_removals, require_near = TRUE, tooltips = TRUE)
-
-		if(!removal_choice)
-			return
-
-		if(!Adjacent(user))
-			return
-
-		removal_choice.remove(src)
+/obj/item/weapon/gun/energy/kinetic_accelerator/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/kinetic_upgrade/speed))
+		if(already_improved == FALSE)
+			already_improved = TRUE
+			recharge_time -= 8 //We get 1.2 seconds of reload instead.
+			to_chat(user, "<span class='notice'>You improve Kinetic accelerator reload speed.</span>")
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
+			qdel(I)
+		else
+			to_chat(user, "<span class='notice'>Already improved.</span>")
+	else
+		return ..()
 
 /obj/item/ammo_casing/energy/kinetic
 	projectile_type = /obj/item/projectile/kinetic
@@ -590,31 +553,20 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = null
 	damage = 10
 	damage_type = BRUTE
-	flag = BOMB
-	hitscan = TRUE
-	var/range = 3 // in tiles
-	var/mineral_multiply_coefficient = 1.0 // default
+	flag = "bomb"
+	var/range = 3
+	var/power = 4
 
 /obj/item/projectile/kinetic/atom_init()
 	. = ..()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
 		return INITIALIZE_HINT_QDEL
-
-/obj/item/projectile/kinetic/setup_trajectory()
-	if(istype(shot_from, /obj/item/weapon/gun/energy/kinetic_accelerator))
-		var/obj/item/weapon/gun/energy/kinetic_accelerator/KA = shot_from
-		damage = KA.damage
-		range = KA.range
-		mineral_multiply_coefficient = KA.mineral_multiply_coefficient
-
-	var/turf/proj_turf = get_turf(src)
 	var/datum/gas_mixture/environment = proj_turf.return_air()
 	var/pressure = environment.return_pressure()
 	if(pressure < 50)
 		name = "full strength kinetic force"
 		damage *= 4
-	return ..()
 
 /obj/item/projectile/kinetic/Range()
 	range--
@@ -627,7 +579,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/turf/target_turf = get_turf(target)
 	if(istype(target_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = target_turf
-		M.GetDrilled(firer, mineral_drop_coefficient = mineral_multiply_coefficient)
+		M.GetDrilled(firer)
 	new /obj/item/effect/kinetic_blast(target_turf)
 
 /obj/item/effect/kinetic_blast
@@ -641,183 +593,13 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/effect/kinetic_blast/atom_init_late()
-	QDEL_IN(src, 0.35 SECOND)
-
-#undef MAX_IDENTICAL_UPGRADES
-#undef MAX_UPGRADES_LIMIT
-
-///////////////*UPGRADES*///////////////
-/obj/item/kinetic_upgrade
-	name = "accelerator upgrade"
-	icon = 'icons/obj/module.dmi'
-	desc = "Улучшение для кинетического ускорителя. "
-	var/obj/item/weapon/gun/energy/kinetic_accelerator/holder
-
-/*****************************Plasma Cutter********************************/
-
-/obj/item/weapon/gun/energy/laser/cutter
-	name = "plasma cutter"
-	icon_state = "plasmacutter"
-	item_state = "plasmacutter"
-	force = 15
-	damtype = BURN
-	hitsound = list('sound/weapons/sear.ogg')
-	ammo_type = list(/obj/item/ammo_casing/energy/laser/cutter)
-	fire_delay = 3
-	w_class = SIZE_SMALL //it is smaller than the pickaxe
-	origin_tech = "materials=4;phorontech=3;engineering=3"
-	desc = "The latest self-rechargeable low-power cutter using bursts of hot plasma. You could use it to cut limbs off of xenos! Or, you know, mine stuff."
-	var/emagged = FALSE
-
-/obj/item/projectile/beam/plasma_cutter
-	name = "cutter"
-	damage = 5
-	damage_type = BURN
-	flag = ENERGY
-	light_color = "#4abdff"
-	muzzle_type = /obj/effect/projectile/laser_omni/muzzle
-	tracer_type = /obj/effect/projectile/laser_omni/tracer
-	impact_type = /obj/effect/projectile/laser_omni/impact
-	var/destruction_chance = 20
-
-/obj/item/projectile/beam/plasma_cutter/emagged
-	damage = 75
-	destruction_chance = 100
-
-/obj/item/projectile/beam/plasma_cutter/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	. = ..()
-	var/turf/target_turf = get_turf(target)
-	if(istype(target_turf, /turf/simulated/mineral))
-		var/turf/simulated/mineral/M = target_turf
-		M.GetDrilled(firer)
-	if((iswallturf(target)) && (prob(destruction_chance)))
-		target.ex_act(EXPLODE_HEAVY)
-
-
-/obj/item/weapon/gun/energy/laser/cutter/atom_init()
-	. = ..()
-	power_supply.AddComponent(/datum/component/cell_selfrecharge, 50)
-
-/obj/item/weapon/gun/energy/laser/cutter/emag_act(mob/user)
-	if(emagged)
-		return FALSE
-	ammo_type += new /obj/item/ammo_casing/energy/laser/cutter/emagged(src)
-	fire_delay = 5
-	origin_tech += ";syndicate=1"
-	emagged = TRUE
-	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибкаошибкаошибка.</span>")
-	return TRUE
-
-/obj/item/weapon/gun/energy/laser/cutter/emagged //for robots
-	emagged = TRUE
-	ammo_type = list(/obj/item/ammo_casing/energy/laser/cutter/emagged)
-
-/obj/item/weapon/gun/energy/laser/cutter/emagged/atom_init()
-	. = ..()
-	power_supply.AddComponent(/datum/component/cell_selfrecharge, 150)
-
-/obj/item/weapon/gun/energy/laser/cutter/emagged/newshot()
-	if(!isrobot(loc))
-		return FALSE
-	if(..())
-		var/mob/living/silicon/robot/R = loc
-		if(R && R.cell)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-			R.cell.use(shot.e_cost)
-
-/obj/item/kinetic_upgrade/proc/install(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
-	upgrade_kinetic(KA)
-	playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
-	holder = KA
-	holder.installed_upgrades += src
-	forceMove(holder)
-
-/obj/item/kinetic_upgrade/proc/remove(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
-	downgrade_kinetic(KA)
-	playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-	forceMove(get_turf(holder))
-	holder.installed_upgrades -= src
-	holder = null
-
-/obj/item/kinetic_upgrade/proc/upgrade_kinetic()
-	return
-
-/obj/item/kinetic_upgrade/proc/downgrade_kinetic()
-	return
-
-/obj/item/kinetic_expander
-	name = "accelerator upgrade"
-	icon = 'icons/obj/module.dmi'
-	icon_state = "card_mod"
-	desc = "Расширение для кинетического ускорителя. Даёт место для дополнительного улучшения."
-
-///////////////////////////////////////////
-
-/obj/item/kinetic_upgrade/resources
-	name = "accelerator upgrade(resources)"
-	icon_state = "accelerator_upg_resources"
-	var/additional_coefficient = 0.25 // 25%
-
-/obj/item/kinetic_upgrade/resources/atom_init()
-	desc += "Повышает <span class='notice'><B>эффективность добычи ресурсов</B></span> на <span class='notice'><B>[additional_coefficient * 100]%</B></span>. "
-	return ..()
-
-/obj/item/kinetic_upgrade/resources/upgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
-	KA.mineral_multiply_coefficient += additional_coefficient
-
-/obj/item/kinetic_upgrade/resources/downgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
-	KA.mineral_multiply_coefficient -= additional_coefficient
-
-///////////////////////////////////////////
-
-/obj/item/kinetic_upgrade/range
-	name = "accelerator upgrade(range)"
-	icon_state = "accelerator_upg_range"
-	var/range_increase = 1
-
-/obj/item/kinetic_upgrade/range/atom_init()
-	desc += "Повышает <span class='notice'><B>дальность стрельбы</B></span> на <span class='notice'><B>[range_increase]</B></span>."
-	return ..()
-
-/obj/item/kinetic_upgrade/range/upgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
-	KA.range += range_increase
-
-/obj/item/kinetic_upgrade/range/downgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
-	KA.range -= range_increase
-
-///////////////////////////////////////////
-
-/obj/item/kinetic_upgrade/damage
-	name = "accelerator upgrade(damage)"
-	icon_state = "accelerator_upg_damage"
-	var/damage_increase = 1.5
-
-/obj/item/kinetic_upgrade/damage/atom_init()
-	desc += "Повышает <span class='notice'><B>урон</B></span> на <span class='notice'><B>[damage_increase]</B></span>."
-	return ..()
-
-/obj/item/kinetic_upgrade/damage/upgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
-	KA.damage += damage_increase
-
-/obj/item/kinetic_upgrade/damage/downgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
-	KA.damage -= damage_increase
-
-///////////////////////////////////////////
+	QDEL_IN(src, 4)
 
 /obj/item/kinetic_upgrade/speed
-	name = "accelerator upgrade(speed)"
-	icon_state = "accelerator_upg_speed"
-	var/cooldown_reduction = 0.35 SECOND
-
-/obj/item/kinetic_upgrade/speed/atom_init()
-	desc += "Ускоряет <span class='notice'><B>перезарядку</B></span> на <span class='notice'><B>[cooldown_reduction / 10]</B></span> секунды."
-	return ..()
-
-/obj/item/kinetic_upgrade/speed/upgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
-	KA.recharge_time -= cooldown_reduction
-
-/obj/item/kinetic_upgrade/speed/downgrade_kinetic(obj/item/weapon/gun/energy/kinetic_accelerator/KA)
-	KA.recharge_time += cooldown_reduction
+	name = "upgrade for accelerator"
+	desc = "Speeds up reloading Proto-kinetic accelerator."
+	icon = 'icons/obj/module.dmi'
+	icon_state = "accelerator_speedupgrade"
 
 /*****************************Survival Pod********************************/
 
@@ -828,11 +610,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	requires_power = 0
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	has_gravity = 1
-	looped_ambience = 'sound/ambience/loop_mineoutpost.ogg'
-
-/area/custom/survivalpod/bar
-	name = "Emergency Bar"
-	looped_ambience = null
 
 /obj/item/weapon/survivalcapsule
 	name = "bluespace shelter capsule"
@@ -958,7 +735,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	icon_state = "surv_wall0"
 	var/basestate = "surv_wall"
 	opacity = TRUE
-	max_integrity = 100
+	health = 100
 
 /obj/structure/inflatable/survival/atom_init()
 	. = ..()
@@ -1023,7 +800,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	pixel_y = -32
 
 /obj/item/device/gps/computer/attackby(obj/item/I, mob/user, params)
-	if(iswrenching(I) && !(flags & NODECONSTRUCT))
+	if(iswrench(I) && !(flags & NODECONSTRUCT))
 		if(user.is_busy(src))
 			return
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
@@ -1106,7 +883,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/machinery/smartfridge/survival_pod/attackby(obj/item/O, mob/user)
 	if(is_type_in_typecache(O,forbidden_tools))
-		if(iswrenching(O))
+		if(iswrench(O))
 			if(user.is_busy(src))
 				return
 			to_chat(user, "<span class='notice'>You start to disassemble the storage unit...</span>")
@@ -1141,7 +918,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	density = TRUE
 
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
-	if(iswrenching(W) && !(flags&NODECONSTRUCT))
+	if(iswrench(W) && !(flags&NODECONSTRUCT))
 		if(user.is_busy(src))
 			return
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
@@ -1158,18 +935,23 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "A tiny fan, releasing a thin gust of air."
 	layer = ABOVE_NORMAL_TURF_LAYER
 	density = FALSE
-	can_block_air = TRUE
 	icon_state = "fan_tiny"
 
-/obj/structure/fans/tiny/CanPass(atom/movable/mover, turf/target, height)
-	if(istype(mover))
-		return ..()
-	return FALSE
+/obj/structure/fans/tiny/atom_init()
+	var/turf/T = get_turf(loc)
+	if(T)
+		T.blocks_air = 1
+	. = ..()
 
 /obj/structure/fans/tiny/Destroy()
 	var/turf/T = get_turf(loc)
 	if(T)
-		SSair?.mark_for_update(T)
+		T.blocks_air = 0
+		if(SSair)
+			SSair.mark_for_update(get_turf(loc))
+	return ..()
+
+/obj/structure/fans/Destroy()
 	return ..()
 
 //Signs

@@ -11,9 +11,6 @@
 
 	logo_state = "shadowling-logo"
 
-	skillset_type = /datum/skillset/shadowling
-	change_to_maximum_skills = TRUE
-
 /datum/role/shadowling/Greet(greeting, custom)
 	. = ..()
 	to_chat(antag.current, "<b>Currently, you are disguised as an employee aboard [station_name()].</b>")
@@ -27,7 +24,7 @@
 
 	if(antag.assigned_role == "Clown")
 		to_chat(S, "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>")
-		REMOVE_TRAIT(S, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
+		S.mutations.Remove(CLUMSY)
 
 	S.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 	S.AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall)
@@ -41,9 +38,6 @@
 	antag_hud_name = "hudthrall"
 
 	logo_state = "thrall-logo"
-
-	skillset_type = /datum/skillset/thrall
-	change_to_maximum_skills = TRUE
 
 /datum/role/thrall/OnPreSetup(greeting, custom)
 	. = ..()

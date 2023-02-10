@@ -28,15 +28,12 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/golem_rune = null //Used to check, if we already queued as a golem.
 
 	var/ghostvision = 1 //is the ghost able to see things humans can't?
-
-	var/next_point_to = 0
+	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 	var/datum/orbit_menu/orbit_menu
 	var/datum/spawners_menu/spawners_menu
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
-
-	show_examine_log = FALSE
 
 /mob/dead/observer/atom_init()
 	invisibility = INVISIBILITY_OBSERVER
@@ -151,8 +148,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		var/turf/T = get_turf(target)
 		forceMove(T)
 
-/mob/dead/CanPass(atom/movable/mover, turf/target, height=0)
-	return TRUE
+/mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	return 1
 
 /mob/proc/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE, timeofdeath = world.time)
 	if(!key)
@@ -379,8 +376,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(orbiting && orbiting.orbiting != target)
 		to_chat(src, "<span class='notice'>Now orbiting [target].</span>")
 
+	var/rot_seg
+
+	switch(ghost_orbit)
+		if(GHOST_ORBIT_TRIANGLE)
+			rot_seg = 3
+		if(GHOST_ORBIT_SQUARE)
+			rot_seg = 4
+		if(GHOST_ORBIT_PENTAGON)
+			rot_seg = 5
+		if(GHOST_ORBIT_HEXAGON)
+			rot_seg = 6
+		else //Circular
+			rot_seg = 36 //360/10 bby, smooth enough aproximation of a circle
+
 	forceMove(target)
-	orbit(target, orbitsize, FALSE, 20, 36)
+	orbit(target, orbitsize, FALSE, 20, rot_seg)
 
 /mob/dead/observer/orbit()
 	set_dir(SOUTH) // Reset dir so the right directional sprites show up
@@ -503,18 +514,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(src, "<span class='notice'><B>Living and available Ian not found.</B></span>")
 
-/mob/dead/observer/pointed(atom/A)
-	if(next_point_to > world.time)
-		return FALSE
-	if(!..())
-		return FALSE
-	emote_dead("points to [A]")
-	next_point_to = world.time + 2 SECONDS
-	return TRUE
-
-/mob/dead/observer/point_at(atom/pointed_atom)
-	..(pointed_atom, /obj/effect/decal/point/ghost)
-
 /mob/dead/observer/verb/view_manfiest()
 	set name = "View Crew Manifest"
 	set category = "Ghost"
@@ -535,7 +534,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='red'>That verb is not currently permitted.</span>")
 		return
 
-	if (stat == CONSCIOUS)
+	if (!src.stat)
 		return
 
 	if (usr != src)

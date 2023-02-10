@@ -31,7 +31,6 @@
 	var/list/crystals = list()
 	var/obj/item/device/gps/inserted_gps
 	var/obj/effect/portal/tsci_wormhole/active_wormhole = null
-	required_skills = list(/datum/skill/research = SKILL_LEVEL_PRO)
 
 /obj/machinery/computer/telescience/atom_init()
 	. = ..()
@@ -97,7 +96,7 @@
 			user.drop_from_inventory(W, src)
 			user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s GPS device slot.</span>")
 		return
-	else if(ispulsing(W))
+	else if(ismultitool(W))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
 			if(telepad)
@@ -171,10 +170,6 @@
 		var/atom/A = X
 		if(A.density)
 			return FALSE
-
-	if(SEND_SIGNAL(exit, COMSIG_ATOM_INTERCEPT_TELEPORT))
-		return FALSE
-
 	active_wormhole = new (telepad.loc, exit)
 	active_wormhole.linked_console = src
 	return active_wormhole

@@ -137,14 +137,6 @@ var/global/list/master_filter_info = list(
 			"WAVE_SIDEWAYS" = WAVE_SIDEWAYS,
 			"WAVE_BOUNDED" = WAVE_BOUNDED
 		)
-	),
-	"bloom" = list(
-		"defaults" = list(
-			"threshold" = NONE,
-			"size" = NONE,
-			"offset" = NONE,
-			"alpha" = 255,
-		)
 	)
 )
 
@@ -305,14 +297,3 @@ var/global/list/master_filter_info = list(
 		.["offset"] = offset
 	if(!isnull(flags))
 		.["flags"] = flags
-
-/proc/bloom_filter(threshold, size, offset, alpha)
-	. = list("type" = "bloom")
-	if(!isnull(threshold))
-		.["threshold"] = threshold
-	if(!isnull(size))
-		.["size"] = size
-	if(!isnull(offset))
-		.["offset"] = offset
-	if(!isnull(alpha))
-		.["alpha"] = alpha

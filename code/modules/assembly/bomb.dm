@@ -6,7 +6,7 @@
 	w_class = SIZE_SMALL
 	throw_speed = 2
 	throw_range = 4
-	flags = CONDUCT | HEAR_TALK //Copied this from old code, so this may or may not be necessary
+	flags = CONDUCT //Copied this from old code, so this may or may not be necessary
 	var/status = 0   //0 - not readied //1 - bomb finished with welder
 	var/obj/item/device/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/weapon/tank/bombtank = null //the second part of the bomb is a phoron tank
@@ -27,7 +27,7 @@
 	if(istype(I, /obj/item/device/analyzer))
 		return bombtank.attackby(I, user, params)
 
-	if(iswrenching(I) && !status)	//This is basically bomb assembly code inverted. apparently it works.
+	if(iswrench(I) && !status)	//This is basically bomb assembly code inverted. apparently it works.
 		to_chat(user, "<span class='notice'>You disassemble [src].</span>")
 
 		bombassembly.forceMove(user.loc)
@@ -41,7 +41,7 @@
 		qdel(src)
 		return
 
-	if((iswelding(I)))
+	if((iswelder(I)))
 		var/obj/item/weapon/weldingtool/W = I
 		if(!W.isOn())
 			if(!status)
@@ -70,6 +70,10 @@
 		bombtank.ignite()	//if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
 	else
 		bombtank.release()
+
+/obj/item/device/onetankbomb/HasProximity(atom/movable/AM)
+	if(bombassembly)
+		bombassembly.HasProximity(AM)
 
 /obj/item/device/onetankbomb/hear_talk(mob/living/M, msg)
 	if(bombassembly)

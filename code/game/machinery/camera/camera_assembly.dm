@@ -20,13 +20,11 @@
 				4 = Screwdriver panel closed and is fully built (you cannot attach upgrades)
 	*/
 
-	resistance_flags = CAN_BE_HIT
-
 /obj/item/weapon/camera_assembly/attackby(obj/item/I, mob/user, params)
 	switch(state)
 		if(0)
 			// State 0
-			if(iswrenching(I) && isturf(src.loc))
+			if(iswrench(I) && isturf(src.loc))
 				to_chat(user, "You wrench the assembly into place.")
 				anchored = TRUE
 				state = 1
@@ -36,14 +34,14 @@
 
 		if(1)
 			// State 1
-			if(iswelding(I))
+			if(iswelder(I))
 				if(weld(I, user))
 					to_chat(user, "You weld the assembly securely into place.")
 					anchored = TRUE
 					state = 2
 				return
 
-			else if(iswrenching(I))
+			else if(iswrench(I))
 				to_chat(user, "You unattach the assembly from it's place.")
 				anchored = FALSE
 				update_icon()
@@ -59,7 +57,7 @@
 					state = 3
 				return
 
-			else if(iswelding(I))
+			else if(iswelder(I))
 				if(weld(I, user))
 					to_chat(user, "You unweld the assembly from it's place.")
 					state = 1
@@ -68,7 +66,7 @@
 
 		if(3)
 			// State 3
-			if(isscrewing(I))
+			if(isscrewdriver(I))
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
 				var/input = sanitize_safe(input(usr, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13"), MAX_LNAME_LEN)
@@ -105,7 +103,7 @@
 							break
 				return
 
-			else if(iscutter(I))
+			else if(iswirecutter(I))
 				new /obj/item/stack/cable_coil/red(get_turf(src), 2)
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "You cut the wires from the circuits.")
@@ -119,7 +117,7 @@
 		user.drop_from_inventory(I, src)
 
 	// Taking out upgrades
-	else if(isprying(I) && upgrades.len)
+	else if(iscrowbar(I) && upgrades.len)
 		var/obj/U = locate(/obj) in upgrades
 		if(U)
 			to_chat(user, "You unattach an upgrade from the assembly.")
@@ -129,12 +127,6 @@
 
 	else
 		return ..()
-
-/obj/item/weapon/camera_assembly/deconstruct(disassembled)
-	if(flags & NODECONSTRUCT)
-		return ..()
-	new /obj/item/stack/sheet/metal(loc)
-	..()
 
 /obj/item/weapon/camera_assembly/update_icon()
 	if(anchored)

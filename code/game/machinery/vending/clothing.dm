@@ -89,6 +89,7 @@
 		/obj/item/clothing/head/tacticool_hat = 4,
 		/obj/item/clothing/head/ushanka = 2,
 		/obj/item/clothing/under/soviet = 2,
+		/obj/item/clothing/mask/gas/fawkes = 6,
 	)
 
 	premium = list(
@@ -301,10 +302,10 @@
 		/obj/item/clothing/shoes/sandal = 2,
 		/obj/item/clothing/shoes/sandal/brown = 2,
 		/obj/item/weapon/staff = 2,
-		/obj/item/device/modkit/skrell = 2,
-		/obj/item/device/modkit/unathi = 2,
-		/obj/item/device/modkit/tajaran = 2,
-		/obj/item/device/modkit/vox = 2,
+		/obj/item/device/modkit/wizard/skrell = 2,
+		/obj/item/device/modkit/wizard/unathi = 2,
+		/obj/item/device/modkit/wizard/tajaran = 2,
+		/obj/item/device/modkit/wizard/vox = 2,
 	)
 	contraband = list(
 		/obj/item/weapon/reagent_containers/pill/adminordrazine = 1,

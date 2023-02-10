@@ -27,8 +27,6 @@
 		"copper", "mercury", "radium", "water", "ethanol", "sugar", "sacid", "tungsten"
 	)
 	var/list/premium_reagents = list()
-	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
-	fumbling_time = 2 SECONDS
 
 /obj/machinery/chem_dispenser/atom_init()
 	. = ..()
@@ -72,6 +70,10 @@
 		if(EXPLODE_LIGHT)
 			return
 	qdel(src)
+
+/obj/machinery/chem_dispenser/blob_act()
+	if (prob(50))
+		qdel(src)
 
 /obj/machinery/chem_dispenser/ui_interact(mob/user)
 	tgui_interact(user)
@@ -160,7 +162,7 @@
 /obj/machinery/chem_dispenser/attackby(obj/item/weapon/B, mob/user)
 //	if(isrobot(user))
 //		return
-	if(ispulsing(B) && hackable)
+	if(ismultitool(B) && hackable)
 		hackedcheck = !hackedcheck
 		if(hackedcheck)
 			to_chat(user, msg_hack_enable)
@@ -185,8 +187,6 @@
 			if(!C.canopened)
 				to_chat(user, "<span class='notice'>You need to open the drink!</span>")
 				return
-		if(!do_skill_checks(user))
-			return
 		src.beaker =  B
 		user.drop_from_inventory(B, src)
 		to_chat(user, "You set [B] on the machine.")
@@ -231,7 +231,7 @@
 				"ethanol",
 				"chlorine",
 				"potassium",
-				"aluminum",
+				"aluminium",
 				"radium",
 				"fluorine",
 				"iron",
@@ -243,7 +243,6 @@
 				"diethylamine"
 		)
 	)
-	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/chem_dispenser/constructable/atom_init()
 	. = ..()
@@ -284,7 +283,7 @@
 		return
 
 	if(panel_open)
-		if(isprying(I))
+		if(iscrowbar(I))
 			if(beaker)
 				var/obj/item/weapon/reagent_containers/glass/B = beaker
 				B.loc = loc
@@ -307,8 +306,6 @@
 	hackable = TRUE
 	msg_hack_enable = "You change the mode from 'McNano' to 'Pizza King'."
 	msg_hack_disable = "You change the mode from 'Pizza King' to 'McNano'."
-	required_skills = list()
-	resistance_flags = FULL_INDESTRUCTIBLE
 
 /obj/machinery/chem_dispenser/beer
 	icon_state = "booze_dispenser"
@@ -323,8 +320,8 @@
 	hackable = TRUE
 	msg_hack_enable = "You disable the 'nanotrasen-are-cheap-bastards' lock, enabling hidden and very expensive boozes."
 	msg_hack_disable = "You re-enable the 'nanotrasen-are-cheap-bastards' lock, disabling hidden and very expensive boozes."
-	required_skills = list()
-	resistance_flags = FULL_INDESTRUCTIBLE
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -346,7 +343,6 @@
 	var/pillsprite = 1
 	var/client/has_sprites = list()
 	var/max_pill_count = 24
-	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
 
 
 /obj/machinery/chem_master/atom_init()
@@ -363,6 +359,10 @@
 		if(EXPLODE_LIGHT)
 			return
 	qdel(src)
+
+/obj/machinery/chem_master/blob_act()
+	if (prob(50))
+		qdel(src)
 
 /obj/machinery/chem_master/power_change()
 	if(anchored && powered())
@@ -405,7 +405,6 @@
 	. = ..()
 	if(!.)
 		return
-
 	if(href_list["ejectp"])
 		if(loaded_pill_bottle)
 			loaded_pill_bottle.loc = src.loc
@@ -686,14 +685,12 @@
 /obj/machinery/chem_master/condimaster
 	name = "CondiMaster 3000"
 	condi = 1
-	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_NOVICE)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_master/constructable
 	name = "ChemMaster 2999"
 	desc = "Used to seperate chemicals and distribute them in a variety of forms."
-	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/chem_master/constructable/atom_init()
 	. = ..()
@@ -720,7 +717,7 @@
 		return
 
 	if(panel_open)
-		if(isprying(B))
+		if(iscrowbar(B))
 			default_deconstruction_crowbar(B)
 			return 1
 		else
@@ -816,7 +813,6 @@
 
 
 	var/list/holdingitems = list()
-	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/reagentgrinder/atom_init()
 	. = ..()
@@ -829,7 +825,7 @@
 
 /obj/machinery/reagentgrinder/attackby(obj/item/O, mob/user)
 
-	if(iswrenching(O))
+	if(iswrench(O))
 		default_unfasten_wrench(user, O)
 		return
 
@@ -875,14 +871,6 @@
 	holdingitems += O
 	updateUsrDialog()
 	return 0
-
-/obj/machinery/reagentgrinder/deconstruct(disassembled)
-	drop_all_items()
-	if(beaker)
-		beaker.forceMove(loc)
-		beaker = null
-	return ..()
-
 
 /obj/machinery/reagentgrinder/attack_ai(mob/user)
 	if(IsAdminGhost(user))
@@ -940,6 +928,7 @@
 	. = ..()
 	if(!.)
 		return
+
 	switch(href_list["action"])
 		if ("grind")
 			grind()
@@ -962,18 +951,17 @@
 	beaker = null
 	update_icon()
 
-/obj/machinery/reagentgrinder/proc/drop_all_items()
-	if(holdingitems.len == 0)
-		return
-	for(var/obj/item/O as anything in holdingitems)
-		O.forceMove(loc)
-	holdingitems.Cut()
-
 /obj/machinery/reagentgrinder/proc/eject()
 
 	if(usr.incapacitated())
 		return
-	drop_all_items()
+	if (holdingitems && holdingitems.len == 0)
+		return
+
+	for(var/obj/item/O in holdingitems)
+		O.loc = src.loc
+		holdingitems -= O
+	holdingitems = list()
 
 /obj/machinery/reagentgrinder/proc/is_allowed(obj/item/weapon/reagent_containers/O)
 	for (var/i in blend_items)

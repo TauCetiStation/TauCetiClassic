@@ -7,12 +7,9 @@
 	maint_access = 0
 	//add_req_access = 0
 	//operation_req_access = list(access_hos)
-	damage_absorption = list(BRUTE=0.7,BURN=1,BULLET=0.7,LASER=0.85,ENERGY=1,BOMB=0.8)
+	damage_absorption = list("brute"=0.7,"fire"=1,"bullet"=0.7,"laser"=0.85,"energy"=1,"bomb"=0.8)
 	var/am = "d3c2fbcadca903a41161ccc9df9cf948"
 	var/animated = 0
-	speed_skills = list(/datum/skill/combat_mech = SKILL_LEVEL_MASTER)
-	interface_skills = list(/datum/skill/combat_mech = SKILL_LEVEL_TRAINED)
-
 
 /*
 /obj/mecha/combat/range_action(target)
@@ -30,20 +27,20 @@
 	if(isliving(target))
 		var/mob/living/M = target
 		if(src.occupant.a_intent == INTENT_HARM)
-			playsound(src, pick(SOUNDIN_PUNCH_VERYHEAVY), VOL_EFFECTS_MASTER)
-			if(damtype == BRUTE)
+			playsound(src, 'sound/weapons/punch4.ogg', VOL_EFFECTS_MASTER)
+			if(damtype == "brute")
 				step_away(M,src,15)
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD)]
 				if(BP)
 					switch(damtype)
-						if(BRUTE)
+						if("brute")
 							H.Paralyse(1)
 							BP.take_damage(rand(force / 2, force), 0)
-						if(BURN)
+						if("fire")
 							BP.take_damage(0, rand(force / 2, force))
-						if(TOX)
+						if("tox")
 							if(H.reagents)
 								if(H.reagents.get_reagent_amount("carpotoxin") + force < force*2)
 									H.reagents.add_reagent("carpotoxin", force)
@@ -55,12 +52,12 @@
 
 			else
 				switch(damtype)
-					if(BRUTE)
+					if("brute")
 						M.Paralyse(1)
 						M.take_overall_damage(rand(force/2, force))
-					if(BURN)
+					if("fire")
 						M.take_overall_damage(0, rand(force/2, force))
-					if(TOX)
+					if("tox")
 						if(M.reagents)
 							if(M.reagents.get_reagent_amount("carpotoxin") + force < force*2)
 								M.reagents.add_reagent("carpotoxin", force)
@@ -81,12 +78,12 @@
 		return
 
 	else
-		if(damtype == BRUTE)
+		if(damtype == "brute")
 			for(var/target_type in destroyable_obj)
 				if(istype(target, target_type) && hascall(target, "attackby"))
 					occupant_message("You hit [target].")
 					visible_message("<font color='red'><b>[name] hits [target]</b></font>")
-					if(iswallturf(target))
+					if(istype(target, /turf/simulated/wall))
 						var/turf/simulated/wall/W = target
 						W.add_dent(WALL_DENT_HIT)
 						if(prob(5))

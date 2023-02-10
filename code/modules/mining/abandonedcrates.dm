@@ -1,3 +1,8 @@
+#define GOOD_LOOT 3
+#define MEDIUM_LOOT 2
+#define BAD_LOOT 1
+#define DEATH_LOOT 0
+
 /obj/structure/closet/crate/secure/loot
 	name = "заброшенный ящик"
 	desc = "Что же может оказаться внутри?"
@@ -5,71 +10,30 @@
 	icon_opened = "securecrateopen"
 	icon_closed = "securecrate"
 	locked = TRUE
-	var/datum/minigame/minesweeper/Game
+	var/attempts = 3
+	var/successful_numbers = 0
+	var/list/buttons_pressed = list(FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)
+	var/list/code = list()
 
 /obj/structure/closet/crate/secure/loot/atom_init()
 	. = ..()
+	var/list/possible_numbers = list(1, 2, 3, 4, 5, 6, 7, 8, 9)
+	for (var/i in 1 to 3) // generate code
+		code += pick_n_take(possible_numbers)
 
-	Game = new()
-	Game.setup_game()
-
-/obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
-	if(!locked)
-		return ..()
-	tgui_interact(user)
-
-/obj/structure/closet/crate/secure/loot/tgui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "Minesweeper")
-		ui.open()
-
-/obj/structure/closet/crate/secure/loot/tgui_data(mob/user)
-	var/list/data = list()
-
-	data["grid"] = Game.grid
-	data["width"] = Game.grid_x*30
-	data["height"] = Game.grid_y*30
-	data["mines"] = "Замок ящика. [num2text(Game.grid_mines)] мин."
-
-	return data
-
-/obj/structure/closet/crate/secure/loot/tgui_act(action, params)
-	. = ..()
-	if(.)
-		return
-	if(action == "button_press")
-		if(Game.button_press(text2num(params["choice_y"]), text2num(params["choice_x"])))
-			playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
-		else
-			SpawnDeathLoot()
-			return TRUE
-
-	if(action == "button_flag")
-		if(Game.button_flag(text2num(params["choice_y"]), text2num(params["choice_x"])))
-			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
-
-
-	if(Game.check_complete())
-		won()
-
-	return TRUE
-
-/obj/structure/closet/crate/secure/loot/proc/won()
-	var/loot_quality = 2 * Game.grid_mines/Game.grid_blanks
-	if(prob(loot_quality * 100))
-		SpawnGoodLoot()
-	else
-		loot_quality = loot_quality / (1 - loot_quality)
-		if(prob(loot_quality * 100))
-			SpawnMediumLoot()
-		else
-			SpawnBadLoot()
-
+/obj/structure/closet/crate/secure/loot/proc/GetReward(loot_quality)
 	visible_message("<span class='notice'>Издавая звук, ящик открывается!</span>")
 	locked = FALSE
 	add_overlay(greenlight)
-	SStgui.close_uis(src)
+	switch(loot_quality)
+		if(GOOD_LOOT)
+			SpawnGoodLoot()
+		if(MEDIUM_LOOT)
+			SpawnMediumLoot()
+		if(BAD_LOOT)
+			SpawnBadLoot()
+		if(DEATH_LOOT)
+			SpawnDeathLoot()
 
 /obj/structure/closet/crate/secure/loot/proc/SpawnGoodLoot()
 	playsound(src, 'sound/misc/mining_reward_3.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
@@ -99,6 +63,7 @@
 			for (var/i in 1 to 3)
 				new/obj/item/weapon/reagent_containers/glass/beaker/bluespace(src)
 
+
 /obj/structure/closet/crate/secure/loot/proc/SpawnBadLoot()
 	playsound(src, 'sound/misc/mining_reward_1.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
 	switch(rand(1, 3))
@@ -122,20 +87,6 @@
 	new/mob/living/simple_animal/hostile/mimic/crate(loc)
 	qdel(src)
 
-/obj/structure/closet/crate/secure/loot/emag_act(mob/user)
-	if(locked)
-		visible_message("<span class='notice'>Таинственный ящик мерцает и со скрипом приоткрывается!</span>")
-		locked = FALSE
-		SpawnBadLoot()
-		return TRUE
-	return FALSE
-
-/obj/structure/closet/crate/secure/loot/deconstruct(disassembled)
-	if(locked)
-		SpawnDeathLoot()
-		return
-	..()
-
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user)
 	return
 
@@ -143,3 +94,68 @@
 	if(locked)
 		return
 	..()
+
+/obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
+	if(locked && ismultitool(W))
+		if(W.use_tool(src, user, 25, volume = 50))
+			var/addition = code[1] + code[2] + code[3]
+			to_chat(user, "Сложение трех кодовых чисел равно: [addition]")
+			return
+	return ..()
+
+/obj/structure/closet/crate/secure/loot/emag_act(mob/user)
+	if(locked)
+		visible_message("<span class='notice'>Таинственный ящик мерцает и со скрипом приоткрывается!</span>")
+		locked = FALSE
+		GetReward(rand(0, 4))
+		return TRUE
+	return FALSE
+
+/obj/structure/closet/crate/secure/loot/attack_hand(mob/user)
+	if(!locked)
+		return ..()
+	ui_interact(user)
+
+/obj/structure/closet/crate/secure/loot/ui_interact(mob/user)
+	tgui_interact(user)
+
+/obj/structure/closet/crate/secure/loot/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Lootcrate", name)
+		ui.open()
+
+/obj/structure/closet/crate/secure/loot/tgui_data()
+	var/data = list()
+	data["code"] = code
+	data["buttons_pressed"] = buttons_pressed
+
+	return data
+
+/obj/structure/closet/crate/secure/loot/tgui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("test_for_luck")
+
+			if(!attempts)
+				return
+
+			var/number = params["number"]
+			if(!buttons_pressed[number])
+				buttons_pressed[number] = TRUE
+				attempts--
+				if(number in code)
+					successful_numbers++
+					playsound(src, 'sound/misc/mining_crate_success.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+				else
+					playsound(src, 'sound/misc/mining_crate_fail.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
+				if(!attempts)
+					GetReward(successful_numbers)
+
+#undef GOOD_LOOT
+#undef MEDIUM_LOOT
+#undef BAD_LOOT
+#undef DEATH_LOOT

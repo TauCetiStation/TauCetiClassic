@@ -10,7 +10,7 @@
 
 /datum/event/feature/area/replace/del_cable/proc/remove_wire(obj/structure/cable/C)
 	var/turf/T = get_turf(C)
-	C.deconstruct(FALSE)
+	C.remove_cable(T)
 
 	var/turf/spawn_turf
 	var/mob/living/simple_animal/mouse/M

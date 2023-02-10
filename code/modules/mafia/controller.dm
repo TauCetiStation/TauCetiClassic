@@ -94,7 +94,7 @@
 /datum/mafia_controller/proc/prepare_game(setup_list,ready_players)
 
 	var/list/possible_maps = subtypesof(/datum/map_template/mafia)
-	var/turf/spawn_area = get_turf(locate("landmark*Mafia Area Spawn"))
+	var/turf/spawn_area = get_turf(locate(/obj/effect/landmark/mafia_game_area) in global.landmarks_list)
 
 	current_map = pick(possible_maps)
 	current_map = new current_map
@@ -107,8 +107,11 @@
 	map_deleter.defineRegion(spawn_area, locate(spawn_area.x + 23,spawn_area.y + 23,spawn_area.z), replace = TRUE) //so we're ready to mass delete when round ends
 
 	if(!landmarks.len)//we grab town center when we grab landmarks, if there is none (the first game signed up for let's grab them post load)
-		landmarks = landmarks_list["Mafia Player Spawn"].Copy()
-		town_center_landmark = locate("landmark*Mafia Town Center")
+		for(var/obj/effect/landmark/mafia/possible_spawn in global.landmarks_list)
+			if(istype(possible_spawn, /obj/effect/landmark/mafia/town_center))
+				town_center_landmark = possible_spawn
+			else
+				landmarks += possible_spawn
 
 	current_setup_text = list()
 	for(var/rtype in setup_list)

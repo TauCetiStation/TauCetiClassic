@@ -47,7 +47,7 @@
 	add_hiddenprint(usr)
 
 /obj/effect/decal/cleanable/crayon/proc/update_plane()
-	if(isfloorturf(loc))
+	if(istype(loc, /turf/simulated/floor))
 		plane = FLOOR_PLANE
 	else
 		plane = GAME_PLANE

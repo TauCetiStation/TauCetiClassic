@@ -72,7 +72,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(isprying(I))
+	if(iscrowbar(I))
 		if(anchored == 2)
 			to_chat(user, "Unscrew the hoses first!")
 			return
@@ -91,7 +91,10 @@
 		else if(prob(1 / (myseed.yield * myseed.yield) *100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
 			adjustSYield(1 * rating)
 
-/obj/machinery/hydroponics/CanPass(atom/movable/mover, turf/target, height = 0)
+/obj/machinery/hydroponics/CanPass(atom/movable/mover, turf/target, height = 0, air_group = 0)
+	if(air_group || (height == 0))
+		return TRUE
+
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return TRUE
 	else
@@ -378,7 +381,7 @@
 	if(pestlevel > 5)
 		visible_message("The pests seem to behave oddly...")
 		for(var/i in 1 to 3)
-			new /obj/structure/spider/spiderling(loc)
+			new /obj/effect/spider/spiderling(loc)
 	else
 		to_chat(usr, "The pests seem to behave oddly, but quickly settle down...")
 
@@ -678,7 +681,7 @@
 			S.handle_item_insertion(G, 1)
 			SSStatistics.score.stuffharvested++
 
-	else if(iswrenching(O) && unwrenchable)
+	else if(iswrench(O) && unwrenchable)
 		if(anchored == 2)
 			to_chat(user, "Unscrew the hoses first!")
 			return
@@ -694,7 +697,7 @@
 
 		wrenched_change()
 
-	else if(iscutter(O) && unwrenchable)
+	else if(iswirecutter(O) && unwrenchable)
 
 		if(anchored)
 			if(anchored == 2)

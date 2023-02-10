@@ -21,7 +21,8 @@
 	density = FALSE
 	anchored = FALSE
 	//weight = 1.0E7
-	max_integrity = 25
+	health = 25
+	maxhealth = 25
 	var/cleaning = 0
 	var/screwloose = 0
 	var/oddbutton = 0

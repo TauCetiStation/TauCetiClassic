@@ -95,11 +95,51 @@ If you have any questions/constructive-comments/bugs-to-report/or have a massivl
 Please contact me on #coderbus IRC. ~Carn x
 */
 
+//Human Overlays Indexes/////////
+#define BODY_LAYER				27
+#define MUTATIONS_LAYER			25
+#define DAMAGE_LAYER			24
+#define SURGERY_LAYER			23		//bs12 specific.
+#define BANDAGE_LAYER			22
+#define UNIFORM_LAYER			21
+#define ID_LAYER				20
+#define SHOES_LAYER				19
+#define TAIL_LAYER				18		//bs12 specific. this hack is probably gonna come back to haunt me
+#define GLOVES_LAYER			17
+#define EARS_LAYER				16
+#define SUIT_LAYER				15
+#define GLASSES_LAYER			14
+#define BELT_LAYER				13		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		12
+#define BACK_LAYER				11
+#define HAIR_LAYER				10		//TODO: make part of head layer?
+#define FACEMASK_LAYER			9
+#define HEAD_LAYER				8
+#define COLLAR_LAYER			7
+#define HANDCUFF_LAYER			6
+#define LEGCUFF_LAYER			5
+#define L_HAND_LAYER			4
+#define R_HAND_LAYER			3
+#define TARGETED_LAYER			2		//BS12: Layer for the target overlay from weapon targeting system
+#define FIRE_LAYER				1
+#define TOTAL_LAYERS			27
+//////////////////////////////////
+//Human Limb Overlays Indexes/////
+#define LIMB_HEAD_LAYER			7
+#define LIMB_TORSO_LAYER		6
+#define LIMB_L_ARM_LAYER		5
+#define LIMB_R_ARM_LAYER		4
+#define LIMB_GROIN_LAYER		3
+#define LIMB_L_LEG_LAYER		2
+#define LIMB_R_LEG_LAYER		1
+#define TOTAL_LIMB_LAYERS		7
+//////////////////////////////////
+
 /obj/item/proc/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
 	var/icon_path = def_icon_path
 
 	var/t_state
-	if(sprite_sheet_slot in list(SPRITE_SHEET_HELD, SPRITE_SHEET_GLOVES, SPRITE_SHEET_BELT, SPRITE_SHEET_UNIFORM, SPRITE_SHEET_UNIFORM_FAT))
+	if(sprite_sheet_slot in list(SPRITE_SHEET_HELD, SPRITE_SHEET_GLOVES, SPRITE_SHEET_BELT, SPRITE_SHEET_UNIFORM))
 		t_state = item_state
 		if(!icon_custom)
 			icon_state_appendix = null
@@ -118,13 +158,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	else if(S.sprite_sheets[sprite_sheet_slot])
 		icon_path = S.sprite_sheets[sprite_sheet_slot]
 
-	var/fem = ""
-	if(H.gender == FEMALE && S.gender_limb_icons)
-		if(t_state != null)
-			if("[t_state]_fem" in icon_states(def_icon_path))
-				fem = "_fem"
-
-	var/image/I = image(icon = icon_path, icon_state = "[t_state][fem][icon_state_appendix]", layer = layer)
+	var/image/I = image(icon = icon_path, icon_state = "[t_state][icon_state_appendix]", layer = layer)
 	I.color = color
 
 	if(dirt_overlay && bloodied_icon_state)
@@ -322,19 +356,14 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 /mob/living/carbon/human/update_fire() //TG-stuff, fire layer
-	remove_overlay(FIRE_LOWER_LAYER)
-	remove_overlay(FIRE_UPPER_LAYER)
+	remove_overlay(FIRE_LAYER)
 
 	if(on_fire)
-		var/image/under = image('icons/mob/OnFire.dmi', "human_underlay", layer = -FIRE_LOWER_LAYER)
-		var/image/over = image('icons/mob/OnFire.dmi', "human_overlay", layer = -FIRE_UPPER_LAYER)
-		under = update_height(under)
-		over = update_height(over)
-		overlays_standing[FIRE_LOWER_LAYER] = under
-		overlays_standing[FIRE_UPPER_LAYER] = over
+		var/image/standing = image("icon"='icons/mob/OnFire.dmi', "icon_state"="Standing", "layer"=-FIRE_LAYER)
+		standing = update_height(standing)
+		overlays_standing[FIRE_LAYER]	= standing
 
-	apply_overlay(FIRE_LOWER_LAYER)
-	apply_overlay(FIRE_UPPER_LAYER)
+	apply_overlay(FIRE_LAYER)
 
 
 /* --------------------------------------- */
@@ -381,7 +410,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	var/default_path = 'icons/mob/uniform.dmi'
 	var/uniform_sheet = SPRITE_SHEET_UNIFORM
-	if(isunder(w_uniform))
+	if(istype(w_uniform, /obj/item/clothing/under))
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open ...
 				w_uniform.screen_loc = ui_iclothing //...draw the item in the inventory screen
@@ -738,6 +767,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	apply_overlay(L_HAND_LAYER)
 
+
 /mob/living/carbon/human/proc/update_tail_showing()
 	remove_overlay(TAIL_LAYER)
 
@@ -746,11 +776,8 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/tail_state = species.tail
 			if(random_tail_holder)
 				tail_state = random_tail_holder
-			var/tail_gender_appendix = null
-			if(species.gender_tail_icons && gender == FEMALE)
-				tail_gender_appendix = "_fem"
 
-			var/image/tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = "[tail_state][tail_gender_appendix]")
+			var/image/tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = tail_state)
 
 			var/obj/item/organ/external/chest/BP = bodyparts_by_name[BP_CHEST]
 			if(BP.status & ORGAN_DEAD)
@@ -864,3 +891,32 @@ Please contact me on #coderbus IRC. ~Carn x
 		I.add_filter("Gnome_Cut_Torso", 1, displacement_map_filter(cut_torso_mask, x = 0, y = 0, size = 2))
 		I.add_filter("Gnome_Cut_Legs", 1, displacement_map_filter(cut_legs_mask, x = 0, y = 0, size = 3))
 	return I
+
+//Human Overlays Indexes/////////
+#undef BODY_LAYER
+#undef MUTATIONS_LAYER
+#undef DAMAGE_LAYER
+#undef SURGERY_LAYER
+#undef BANDAGE_LAYER
+#undef UNIFORM_LAYER
+#undef TAIL_LAYER
+#undef ID_LAYER
+#undef SHOES_LAYER
+#undef GLOVES_LAYER
+#undef EARS_LAYER
+#undef SUIT_LAYER
+#undef GLASSES_LAYER
+#undef FACEMASK_LAYER
+#undef BELT_LAYER
+#undef SUIT_STORE_LAYER
+#undef BACK_LAYER
+#undef HAIR_LAYER
+#undef HEAD_LAYER
+#undef COLLAR_LAYER
+#undef HANDCUFF_LAYER
+#undef LEGCUFF_LAYER
+#undef L_HAND_LAYER
+#undef R_HAND_LAYER
+#undef TARGETED_LAYER
+#undef FIRE_LAYER
+#undef TOTAL_LAYERS

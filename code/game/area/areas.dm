@@ -51,8 +51,6 @@
 
 	var/list/canSmoothWithAreas //typecache to limit the areas that atoms in this area can smooth with
 
-	var/sound_environment = SOUND_AREA_DEFAULT // Used to decide what kind of reverb the area makes sound have
-
 	var/looped_ambience = null
 	var/is_force_ambience = FALSE
 	var/ambience = list(
@@ -275,9 +273,6 @@ var/global/list/ghostteleportlocs = list()
 				else if(E.density)
 					INVOKE_ASYNC(E, /obj/machinery/door/firedoor.proc/open)
 
-/area/proc/airlocks_close(bolt_after = FALSE)
-	for(var/obj/machinery/door/airlock/A in src)
-		A.close_unsafe(bolt_after)
 
 /area/proc/firealert()
 	if(name == "Space") //no fire alarms in space

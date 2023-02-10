@@ -180,7 +180,6 @@ var/global/list/datum/spawners_cooldown = list()
 	ranks = list(ROLE_FAMILIES)
 
 	var/roletype
-	var/list/prefixes = list("Officer")
 
 /datum/spawner/cop/spawn_ghost(mob/dead/observer/ghost)
 	var/spawnloc = pick(copsstart)
@@ -190,7 +189,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 	var/mob/living/carbon/human/cop = new(null)
 
-	var/new_name = "[pick(prefixes)] [pick(last_names)]"
+	var/new_name = sanitize_safe(input(C, "Pick a name", "Name") as null|text, MAX_LNAME_LEN)
 	C.create_human_apperance(cop, new_name)
 
 	cop.loc = spawnloc
@@ -203,7 +202,8 @@ var/global/list/datum/spawners_cooldown = list()
 	add_faction_member(faction, cop, TRUE, TRUE)
 
 	var/obj/item/weapon/card/id/W = cop.wear_id
-	W.assign(cop.real_name)
+	W.name = "[cop.real_name]'s ID Card ([W.assignment])"
+	W.registered_name = cop.real_name
 
 /datum/spawner/cop/jump(mob/dead/observer/ghost)
 	var/jump_to = pick(copsstart)
@@ -223,20 +223,16 @@ var/global/list/datum/spawners_cooldown = list()
 	name = "Боец Тактической Группы ОБОП"
 	id = "c_swat"
 	roletype = /datum/role/cop/beatcop/swat
-	prefixes = list("Sergeant", "Captain")
 
 /datum/spawner/cop/fbi
 	name = "Инспектор ОБОП"
 	id = "c_fbi"
 	roletype = /datum/role/cop/beatcop/fbi
-	prefixes = list("Inspector")
 
 /datum/spawner/cop/military
 	name = "Боец ВСНТ ОБОП"
 	id = "c_military"
 	roletype = /datum/role/cop/beatcop/military
-	prefixes = list("Pvt.", "PFC", "Cpl.", "LCpl.", "SGT")
-
 
 /*
  * ERT
@@ -256,11 +252,21 @@ var/global/list/datum/spawners_cooldown = list()
 	important_info += mission
 
 /datum/spawner/ert/jump(mob/dead/observer/ghost)
-	var/jump_to = pick(landmarks_list["Commando"])
+	var/list/correct_landmarks = list()
+	for (var/obj/effect/landmark/L in landmarks_list)
+		if(L.name == "Commando")
+			correct_landmarks += L
+
+	var/jump_to = pick(correct_landmarks)
 	ghost.forceMove(get_turf(jump_to))
 
 /datum/spawner/ert/spawn_ghost(mob/dead/observer/ghost)
-	var/obj/spawnloc = pick(landmarks_list["Commando"])
+	var/list/correct_landmarks = list()
+	for (var/obj/effect/landmark/L in landmarks_list)
+		if(L.name == "Commando")
+			correct_landmarks += L
+
+	var/obj/spawnloc = pick(correct_landmarks)
 	var/new_name = sanitize_safe(input(ghost, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
 
 	var/datum/faction/strike_team/ert/ERT_team = find_faction_by_type(/datum/faction/strike_team/ert)
@@ -303,7 +309,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/blob_event/spawn_ghost(mob/dead/observer/ghost)
 	var/turf/spawn_turf = pick(blobstart)
-	new /obj/structure/blob/core(spawn_turf, ghost.client, 120)
+	new /obj/effect/blob/core(spawn_turf, ghost.client, 120)
 
 /*
  * Ninja
@@ -597,23 +603,6 @@ var/global/list/datum/spawners_cooldown = list()
 	..()
 	religion.add_member(mob, HOLY_ROLE_PRIEST)
 
-
-/datum/spawner/living/eminence
-	name = "Возвышенный культа"
-	id = "eminence"
-	desc = "Вы станете Возвышенным - ментором и неформальным лидером всего культа."
-	ranks = list(ROLE_CULTIST, ROLE_GHOSTLY)
-
-/datum/spawner/living/mimic
-	name = "Оживлённый предмет"
-	id = "mimic"
-	desc = "Вы магическим образом ожили на станции"
-
-/datum/spawner/living/evil_shade
-	name = "Злой Дух"
-	id = "evil_shade"
-	desc = "Магическая сила призвала вас в мир, отомстите живым за причинённые обиды!"
-
 /datum/spawner/living/rat
 	name = "Крыса"
 	id = "rat"
@@ -658,9 +647,6 @@ var/global/list/datum/spawners_cooldown = list()
 	H.loc = spawnloc
 	H.key = C.key
 	H.equipOutfit(/datum/outfit/spy)
-	H.mind.skills.add_available_skillset(/datum/skillset/max)
-	H.mind.skills.maximize_active_skills()
-	H.add_language(LANGUAGE_SYCODE)
 
 	to_chat(H, "<B>Вы - <span class='boldwarning'>Агент Прослушки Синдиката</span>, в чьи задачи входит слежение за активностью на [station_name_ru()].</B>")
 	if(mode_has_antags())

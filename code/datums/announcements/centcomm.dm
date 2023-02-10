@@ -20,18 +20,11 @@
 	subtitle = "Центральное Командование"
 	sound = "yesert"
 /datum/announcement/centcomm/yesert/New()
-	message = "Внимание! Мы получили запрос на отряд быстрого реагирования. Запрос одобрен. Отряд будет подготовлен и отправлен в кратчайшие сроки."
+	message = "Похоже, отряд быстрого реагирования был запрошен на [station_name_ru()]. Мы подготовим и отправим его в кратчайшие сроки."
 
 /datum/announcement/centcomm/noert
 	name = "Centcomm: ERT Denied"
 	subtitle = "Центральное Командование"
-	sound = "noert"
+	sound = "yesert"
 /datum/announcement/centcomm/noert/New()
-	message = "Внимание! Мы получили запрос на отряд быстрого реагирования. Запрос отклонен. Попытайтесь решить проблемы своими силами."
-
-/datum/announcement/centcomm/narsie_summon
-	name = "Central Command Higher Dimensional Affairs"
-	subtitle = "Центральное Командование"
-	sound = "portal"
-/datum/announcement/centcomm/narsie_summon/New(mob/user)
-	message = "Зафиксирована блюспейс аномалия в [get_area(user)], возможно раскрытие неизвестного портала."
+	message = "Похоже, отряд быстрого реагирования был запрошен на [station_name_ru()]. К сожалению, мы не сможем его отправить сейчас."

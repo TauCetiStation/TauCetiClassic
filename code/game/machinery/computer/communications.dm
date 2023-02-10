@@ -37,8 +37,6 @@
 
 	var/datum/announcement/station/command/announcement = new
 
-	required_skills = list(/datum/skill/command = SKILL_LEVEL_PRO)
-
 /obj/machinery/computer/communications/atom_init()
 	. = ..()
 	communications_list += src
@@ -55,7 +53,7 @@
 			return ..()
 
 	for(var/mob/living/silicon/ai/shuttlecaller as anything in ai_list)
-		if(shuttlecaller.stat == CONSCIOUS && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
+		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
 	if(sent_strike_team)

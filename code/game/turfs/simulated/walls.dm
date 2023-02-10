@@ -22,7 +22,7 @@
 
 	opacity = TRUE
 	density = TRUE
-	blocks_air = AIR_BLOCKED
+	blocks_air = TRUE
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
@@ -130,10 +130,11 @@
 
 //Damage
 
-/turf/simulated/wall/take_damage(dam, devastated) // doesnt use atom integrity system
+/turf/simulated/wall/proc/take_damage(dam, devastated)
 	if(dam)
 		damage = max(0, damage + dam)
 		update_damage(devastated)
+	return
 
 /turf/simulated/wall/proc/update_damage(devastated)
 	var/cap = damage_cap
@@ -260,16 +261,13 @@
 	to_chat(M, "<span class='notice'>You push the wall but nothing happens!</span>")
 	return */
 
-/turf/simulated/wall/attack_hulk(mob/living/simple_animal/hulk/M)
-	if(istype(M))
-		playsound(M, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-		M.health -= rand(4, 10)
-		attack_animal(M)
-		return TRUE
-
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
 	..()
 	if(M.environment_smash >= 2)
+		if(istype(M, /mob/living/simple_animal/hulk))
+			var/mob/living/simple_animal/hulk/Hulk = M
+			playsound(Hulk, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+			Hulk.health -= rand(4, 10)
 		playsound(M, 'sound/effects/hulk_hit_wall.ogg', VOL_EFFECTS_MASTER)
 		if(istype(src, /turf/simulated/wall/r_wall))
 			if(M.environment_smash >= 3)
@@ -314,7 +312,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(rotting)
-		if(iswelding(W))
+		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
 				to_chat(user, "<span class='notice'>Вы сжигаете грибок сваркой.</span>")
@@ -330,11 +328,15 @@
 
 	//THERMITE related stuff. Calls thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
-		if(iswelding(W))
+		if(iswelder(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
 				thermitemelt(user, seconds_to_melt)
 				return
+
+		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+			thermitemelt(user, seconds_to_melt)
+			return
 
 		else if(istype(W, /obj/item/weapon/melee/energy/blade))
 			var/obj/item/weapon/melee/energy/blade/EB = W
@@ -350,7 +352,7 @@
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//DECONSTRUCTION
-	if(iswelding(W))
+	if(iswelder(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.use(0, user))
 			to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
@@ -359,27 +361,43 @@
 			if(!damage)
 				return
 			to_chat(user, "<span class='warning'>Вы ремонтируете стену.</span>")
-			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
+			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100))
 				to_chat(user, "<span class='notice'>Вы отремонтировали стену.</span>")
 				take_damage(-damage)
 
 		else
 			to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
-			if(WT.use_tool(src, user, SKILL_TASK_DIFFICULT, 3, 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
-				if(!iswallturf(src))
+			if(WT.use_tool(src, user, 100, 3, 100))
+				if(!istype(src, /turf/simulated/wall))
 					return
 				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
 				dismantle_wall()
+
+	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+		if(user.is_busy(src))
+			return
+		to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
+		if(W.use_tool(src, user, 60, volume = 100))
+			if(mineral == "diamond")//Oh look, it's tougher
+				sleep(60)
+			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
+				return
+
+			if(user.loc == T && user.get_active_hand() == W)
+				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
+				dismantle_wall()
+				visible_message("<span class='warning'>[user] завершает разборку стены!</span>", blind_message = "<span class='warning'>Вы слышите, как металл разрезается на части.</span>", viewing_distance = 5)
+		return
 
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Вы бурите сквозь стену.</span>")
-		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
+		if(W.use_tool(src, user, 60, volume = 50))
 			if(mineral == "diamond")
 				sleep(60)
-			if(!iswallturf(src) || !user || !W || !T)
+			if(!istype(src, /turf/simulated/wall) || !user || !W || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
@@ -398,7 +416,7 @@
 		if(W.use_tool(src, user, 70))
 			if(mineral == "diamond")
 				sleep(70)
-			if(!iswallturf(src) || !user || !EB || !T)
+			if(!istype(src, /turf/simulated/wall) || !user || !EB || !T)
 				return
 
 			if(user.loc == T && user.get_active_hand() == W)
@@ -408,17 +426,13 @@
 				dismantle_wall(1)
 				visible_message("<span class='warning'>[user] прорезает стену!</span>", blind_message = "<span class='warning'>Вы слышите треск искр и скрежет металла.</span>", viewing_distance = 5)
 		return
-	//fulldestruct to walls when
-	else if(istype(W,/obj/item/weapon/melee/changeling_hammer) && !rotting)
-		var/obj/item/weapon/melee/changeling_hammer/hammer = W
-		//slowdown, user. No need destruct all walls without debuff
-		if(iscarbon(user))
-			var/mob/living/carbon/C = user
-			C.shock_stage += 5
-		user.visible_message("<span class='danger'><B>[user]</B> бьет стену!</span>")
+	else if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
+		var/obj/item/weapon/changeling_hammer/C = W
+		visible_message("<span class='danger'><B>[user]</B> бьет стену!</span>")
 		user.do_attack_animation(src)
-		playsound(user, pick(hammer.hitsound), VOL_EFFECTS_MASTER)
-		take_damage(hammer.get_object_damage())
+		if(C.use_charge(user))
+			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
+			take_damage(pick(10, 20, 30))
 		return
 
 	else if(istype(W,/obj/item/apc_frame))
@@ -460,10 +474,6 @@
 	else if(istype(W, /obj/item/noticeboard_frame))
 		var/obj/item/noticeboard_frame/NF = W
 		NF.try_build(user, src)
-
-	else if(istype(W,/obj/item/painting_frame))
-		var/obj/item/painting_frame/AH = W
-		AH.try_build(src)
 		return
 
 	//Poster stuff

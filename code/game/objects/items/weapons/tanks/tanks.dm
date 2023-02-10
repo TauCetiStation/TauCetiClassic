@@ -14,9 +14,6 @@
 	throw_speed = 1
 	throw_range = 4
 
-	max_integrity = 200
-	resistance_flags = CAN_BE_HIT
-
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
 	var/integrity = 3
@@ -161,8 +158,10 @@
 				var/mob/living/carbon/C = loc
 				if(C.internal == src)
 					C.internal = null
-					C.internals?.update_icon(C)
+					C.internals.icon_state = "internal0"
 					to_chat(usr, "<span class='notice'>You close the tank release valve.</span>")
+					if (C.internals)
+						C.internals.icon_state = "internal0"
 					internalsound = 'sound/misc/internaloff.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = C
@@ -173,7 +172,8 @@
 					if(C.wear_mask && (C.wear_mask.flags & MASKINTERNALS))
 						C.internal = src
 						to_chat(usr, "<span class='notice'>You open \the [src] valve.</span>")
-						C.internals?.update_icon(C)
+						if (C.internals)
+							C.internals.icon_state = "internal1"
 						internalsound = 'sound/misc/internalon.ogg'
 						if(ishuman(C)) // Because only human can wear a spacesuit
 							var/mob/living/carbon/human/H = C
@@ -211,15 +211,6 @@
 	air_contents.react()
 	check_status()
 
-/obj/item/weapon/tank/deconstruct(disassembled)
-	var/turf/location = get_turf(loc)
-	if(!isturf(location))
-		return ..()
-
-	if(air_contents)
-		location.assume_air(air_contents)
-
-	return ..()
 
 /obj/item/weapon/tank/proc/check_status()
 	//Handle exploding, leaking, and rupturing of the tank

@@ -111,7 +111,7 @@
 #define COMSIG_ATOM_ENTERED "atom_entered"
 /// from base of atom/Exited(): (atom/movable/exiting, /atom/NewLoc)
 #define COMSIG_ATOM_EXITED "atom_exited"
-/// from base of atom/movable/CanPass() & mob/CanPass(): (atom/movable/mover, atom/target, height)
+/// from base of atom/movable/CanPass() & mob/CanPass(): (atom/movable/mover, atom/target, height, air_group)
 #define COMSIG_ATOM_CANPASS "movable_canpass"
 	#define COMPONENT_CANPASS  1
 	#define COMPONENT_CANTPASS 2
@@ -144,14 +144,6 @@
 #define COMSIG_ATOM_ADD_DIRT "atom_add_dirt"
 /// from base of atom/clean_blood (WHICH APPERANTLY CLEANS ALL DIRT OVERLAYS ?? ??? ?)
 #define COMSIG_ATOM_CLEAN_BLOOD "atom_clean_blood"
-///from /mob/living/say() when atom catches message: (proc args list(message, atom/movable/speaker))
-// currently works for talking_atom only
-#define COMSIG_MOVABLE_HEAR "movable_hear"
-
-///called when teleporting into a protected turf: (channel, turf/origin)
-#define COMSIG_ATOM_INTERCEPT_TELEPORT "intercept_teleport"
-	#define COMPONENT_BLOCK_TELEPORT (1<<0)
-	//#define COMPONENT_INTERFERE_TELEPORT (1<<1)
 
 /// from base /atom/movable/proc/Moved() and /atom/proc/set_dir() return dir
 #define COMSIG_ATOM_CHANGE_DIR "change_dir"
@@ -200,8 +192,6 @@
 /// from base of obj/item/attack_self(): (/mob/user)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 	#define COMPONENT_NO_INTERACT 1
-///from base of obj/item/attack_atom(): (atom/attacked_atom, mob/living/user, params)
-#define COMSIG_ITEM_ATTACK_OBJ "item_attack_obj"
 ///from base of obj/item/pickup(): (/mob/user)
 #define COMSIG_ITEM_PICKUP "item_pickup"
 	#define COMPONENT_ITEM_NO_PICKUP 1
@@ -222,8 +212,6 @@
 /// from base of mob/MiddleClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_MIDDLECLICKWITH "item_middleclickwith"
 	#define COMSIG_ITEM_CANCEL_CLICKWITH 1
-/// from base of obj/item/CtrlShiftClick()
-#define COMSIG_CLICK_CTRL_SHIFT "ctrl_shift_click"
 /// from base of atom/MouseDrop(): (/atom/over, /atom/dropping, /mob/user)
 #define COMSIG_ITEM_MOUSEDROP_ONTO "item_mousedrop_onto"
 	// #define COMPONENT_NO_MOUSEDROP 1
@@ -234,8 +222,6 @@
 /// from mob/carbon/swap_hand: (mob/user)
 #define COMSIG_ITEM_BECOME_ACTIVE "item_become_active"
 #define COMSIG_ITEM_BECOME_INACTIVE "item_become_inactive"
-/// from /obj/item/weapon/stock_parts/cell
-#define COMSIG_CELL_CHARGE_CHANGED "cell_charge_changed"
 
 // hand_like /obj/item signals
 /// check if item is hand_like: ()
@@ -272,9 +258,6 @@
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 ///from base of item/equipped(): (obj/item/I, slot)
 #define COMSIG_MOB_EQUIPPED "mob_equipped"
-///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
-#define COMSIG_MOB_TRIED_ACCESS "tried_access"
-	#define COMSIG_ACCESS_ALLOWED 1
 
 // living signals
 ///from base of mob/living/rejuvenate(): ()
@@ -318,15 +301,6 @@
 ///from base of mob/living/carbon/swap_hand(): (obj/item)
 #define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
 	#define COMPONENT_BLOCK_SWAP 1
-///from mob/living/vomit(): (/mob)
-#define COMSIG_LIVING_VOMITED "living_vomited"
-
-/// from /datum/action/changeling/transform/sting_action(): (mob/living/carbon/human/user)
-#define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
-/// from /mob/living/carbon/proc/finish_monkeyize()
-#define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"
-/// from /mob/living/carbon/proc/finish_humanize(): (species)
-#define COMSIG_MONKEY_HUMANIZE "monkey_humanize"
 
 // simple_animal/hostile signals
 /// from simple_animal/hostile/proc/AttackingTarget(): (atom/target)

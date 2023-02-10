@@ -332,7 +332,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/BMPship1)
 "bh" = (
-/obj/item/device/tagger,
+/obj/item/weapon/hand_labeler,
 /turf/simulated/floor/plating,
 /area/awaymission/BMPship1)
 "bi" = (
@@ -617,7 +617,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/device/tagger,
+/obj/item/weapon/hand_labeler,
 /turf/simulated/floor/plating,
 /area/awaymission/BMPship1)
 "ca" = (

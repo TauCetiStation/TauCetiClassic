@@ -108,27 +108,12 @@
 				open(1)
 	return
 
-/obj/machinery/door/firedoor/attack_hulk(mob/living/user)
-	. = ..()
-
-	if(.)
-		return .
-
-	user.SetNextMove(CLICK_CD_INTERACT)
-
-	if(blocked)
-		if(user.hulk_scream(src))
-			qdel(src)
+/obj/machinery/door/firedoor/attack_animal(mob/user)
+	if(istype(user, /mob/living/simple_animal/hulk))
+		var/mob/living/simple_animal/hulk/H = user
+		H.attack_hulk(src)
 		return
 
-	if(density)
-		to_chat(user, "<span class='userdanger'>You force your fingers between \
-		 the doors and begin to pry them open...</span>")
-		playsound(src, 'sound/machines/firedoor_open.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
-		if (!user.is_busy() && do_after(user, 4 SECONDS, target = src) && !QDELETED(src))
-			open(1)
-
-/obj/machinery/door/firedoor/attack_animal(mob/user)
 	..()
 	if(density && !blocked)
 		open()
@@ -183,7 +168,7 @@
 	add_fingerprint(user)
 	if(operating)
 		return//Already doing something.
-	if(iswelding(C))
+	if(iswelder(C))
 		var/obj/item/weapon/weldingtool/W = C
 		if(W.use(0, user))
 			blocked = !blocked
@@ -194,7 +179,7 @@
 			update_icon()
 			return
 
-	if(density && isscrewing(C))
+	if(density && isscrewdriver(C))
 		hatch_open = !hatch_open
 		user.visible_message("<span class='danger'>[user] has [hatch_open ? "opened" : "closed"] \the [src] maintenance hatch.</span>",
 									"You have [hatch_open ? "opened" : "closed"] the [src] maintenance hatch.")
@@ -202,7 +187,7 @@
 		update_icon()
 		return
 
-	if(blocked && isprying(C))
+	if(blocked && iscrowbar(C))
 		if(!hatch_open)
 			to_chat(user, "<span class='danger'>You must open the maintenance hatch first!</span>")
 		else if(!user.is_busy(src))
@@ -213,18 +198,25 @@
 					user.visible_message("<span class='danger'>[user] has removed the electronics from \the [src].</span>",
 										"You have removed the electronics from [src].")
 
-					deconstruct(TRUE)
+					new/obj/item/weapon/airalarm_electronics(src.loc)
+					take_out_wedged_item()
+					var/obj/structure/firedoor_assembly/FA = new/obj/structure/firedoor_assembly(src.loc)
+					FA.anchored = TRUE
+					FA.density = TRUE
+					FA.wired = 1
+					FA.update_icon()
+					qdel(src)
 		return
 
 	if(blocked)
 		to_chat(user, "<span class='warning'>\The [src] is welded solid!</span>")
 		return
 
-	if(isprying(C) || ( istype(C,/obj/item/weapon/fireaxe) && HAS_TRAIT(C, TRAIT_DOUBLE_WIELDED)))
+	if(iscrowbar(C) || ( istype(C,/obj/item/weapon/fireaxe) && HAS_TRAIT(C, TRAIT_DOUBLE_WIELDED)))
 		if(operating)
 			return
 
-		if( blocked && isprying(C) )
+		if( blocked && iscrowbar(C) )
 			user.visible_message("<span class='warning'>\The [user] pries at \the [src] with \a [C], but \the [src] is welded in place!</span>",\
 			"You try to pry \the [src] [density ? "open" : "closed"], but it is welded in place!",\
 			"You hear someone struggle and metal straining.")
@@ -234,7 +226,7 @@
 				"You start forcing \the [src] [density ? "open" : "closed"] with \the [C]!",\
 				"You hear metal strain.")
 		if(C.use_tool(src, user, 30, volume = 50))
-			if( isprying(C) )
+			if( iscrowbar(C) )
 				if( stat & (BROKEN|NOPOWER) || !density)
 					user.visible_message("<span class='warning'>\The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!</span>",\
 					"You force \the [src] [density ? "open" : "closed"] with \the [C]!",\
@@ -251,18 +243,6 @@
 					close()
 			return
 
-/obj/machinery/door/firedoor/deconstruct(disassembled = TRUE)
-	if(flags & NODECONSTRUCT)
-		return ..()
-	take_out_wedged_item()
-	if(disassembled || prob(40))
-		var/obj/structure/firedoor_assembly/FA = new (loc)
-		if(disassembled)
-			FA.anchored = TRUE
-			FA.density = TRUE
-			FA.wired = TRUE
-			FA.update_icon()
-	..()
 
 /obj/machinery/door/firedoor/proc/latetoggle()
 	if(operating || stat & NOPOWER || !nextstate)

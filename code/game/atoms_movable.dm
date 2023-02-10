@@ -33,14 +33,6 @@
 	// A (nested) list of contents that need to be sent signals to when moving between areas. Can include src.
 	var/list/area_sensitive_contents
 
-/atom/movable/atom_init(mapload, ...)
-	. = ..()
-
-	if (can_block_air && isturf(loc))
-		var/turf/T = loc
-		if(!T.can_block_air)
-			T.can_block_air = TRUE
-
 /atom/movable/Destroy()
 
 	var/turf/T = loc
@@ -168,7 +160,7 @@
 		A.Bumped(src)
 
 
-/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE)
+/atom/movable/proc/forceMove(atom/destination, keep_pulling = FALSE)
 	if(destination)
 		if(pulledby && !keep_pulling)
 			pulledby.stop_pulling()
@@ -198,18 +190,15 @@
 		return TRUE
 	return FALSE
 
-/mob/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE)
+/mob/living/forceMove(atom/destination, keep_pulling = FALSE)
 	if(!keep_pulling)
 		stop_pulling()
-	if(buckled && !keep_buckled)
+	if(buckled)
 		buckled.unbuckle_mob()
 	. = ..()
-	if(buckled && keep_buckled)
-		buckled.loc = loc
-		buckled.set_dir(dir)
 	update_canmove()
 
-/mob/dead/observer/forceMove(atom/destination, keep_pulling, keep_buckled)
+/mob/dead/observer/forceMove(atom/destination, keep_pulling)
 	if(destination)
 		if(loc)
 			loc.Exited(src)
@@ -414,8 +403,6 @@
 
 /atom/movable/proc/get_size_flavor()
 	switch(w_class)
-		if(SIZE_MIDGET)
-			. = "midget"
 		if(SIZE_MINUSCULE)
 			. = "minuscule"
 		if(SIZE_TINY)

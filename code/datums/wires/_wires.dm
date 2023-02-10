@@ -48,11 +48,11 @@
 #define SEE_BLIND 1
 
 /proc/is_wire_tool(obj/item/I)
-	if(ispulsing(I))
+	if(ismultitool(I))
 		return TRUE
-	if(iscutter(I))
+	if(iswirecutter(I))
 		return TRUE
-	if(issignaling(I))
+	if(issignaler(I))
 		return TRUE
 	return
 
@@ -76,8 +76,6 @@ var/global/list/wire_daltonism_colors = list()
 	var/row_options2 = " width='260px'"
 	var/window_x = 370
 	var/window_y = 470
-
-	var/required_skills = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)
 
 	// All possible wires colors are here.
 	var/static/list/wire_colors = list("red", "blue", "green", "white", "orange", "brown", "gold", "gray", "cyan", "lime", "purple", "pink")
@@ -264,18 +262,16 @@ var/global/list/wire_daltonism_colors = list()
 		return
 	var/target_wire = params["wire"]
 	var/obj/item/I = L.get_active_hand()
-	if(!handle_fumbling(L, holder, SKILL_TASK_AVERAGE, required_skills, message_self = "<span class='notice'>You fumble around figuring out the wiring.</span>"))
-		return
 	switch(action)
 		if("cut")
-			if(I && iscutter(I))
+			if(I && iswirecutter(I))
 				cut_wire_color(target_wire)
 				I.play_tool_sound(holder, 20)
 				. = TRUE
 			else
 				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
 		if("pulse")
-			if(I && ispulsing(I))
+			if(I && ismultitool(I))
 				pulse_color(target_wire)
 				I.play_tool_sound(holder, 20)
 				. = TRUE
@@ -288,7 +284,7 @@ var/global/list/wire_daltonism_colors = list()
 					L.put_in_hands(O)
 					. = TRUE
 			else
-				if(I && issignaling(I))
+				if(issignaler(I))
 					L.drop_from_inventory(I, holder)
 					attach_signaler(target_wire, I)
 				else

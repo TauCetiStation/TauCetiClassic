@@ -4,6 +4,7 @@
 	icon_state = "wjboots"
 	item_state = "wjboots"
 	siemens_coefficient = 0.7
+	clipped_status = CLIPPABLE
 	var/obj/item/knife
 
 /obj/item/clothing/shoes/boots/Destroy()
@@ -16,9 +17,6 @@
 			playsound(user, 'sound/effects/throat_cutting.ogg', VOL_EFFECTS_MASTER, 25)
 			to_chat(user, "<span class='notice'>You slide [knife] out of [src].</span>")
 			remove_knife()
-			if(icon_state == "wjbootsknifed")
-				icon_state = "wjboots"
-				user.update_inv_shoes()
 			update_icon()
 	else
 		return ..()
@@ -27,15 +25,11 @@
 	if(knife)
 		return ..()
 
-	if((iscutter(I) > 0) && I.w_class <= SIZE_TINY)
+	if(I.get_quality(QUALITY_CUTTING) > 0)
 		user.drop_from_inventory(I, src)
 		playsound(user, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
 		to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")
 		add_knife(I)
-		if(icon_state == "wjboots")
-			icon_state = "wjbootsknifed"
-			user.update_inv_shoes()
-		update_icon()
 		return
 
 	return ..()
@@ -60,9 +54,9 @@
 	icon_state = "galoshes"
 	permeability_coefficient = 0.05
 	flags = NOSLIP
-	can_get_wet = FALSE
 	slowdown = SHOES_SLOWDOWN + 0.5
 	species_restricted = null
+	clipped_status = NO_CLIPPING
 
 /obj/item/clothing/shoes/boots/work
 	name = "work boots"
@@ -89,11 +83,19 @@
 	heat_protection = LEGS
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 
+/obj/item/clothing/shoes/boots/combat/cut // Basically combat shoes but for xenos.
+	name = "mangled combat boots"
+	desc = "When you REALLY want to turn up the heat<br>They have the toe caps cut off of them."
+	icon_state = "swat_cut"
+	clipped_status = CLIPPED
+	species_restricted = list("exclude", DIONA)
+
 /obj/item/clothing/shoes/boots/cult
 	name = "boots"
 	desc = "A pair of boots worn by the followers of Nar-Sie."
 	icon_state = "cult"
 	item_state = "cult"
+	clipped_status = NO_CLIPPING
 
 	cold_protection = LEGS
 	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
@@ -106,12 +108,4 @@
 	icon_state = "police_boots"
 	item_state = "wjboots"
 	siemens_coefficient = 0.7
-
-/obj/item/clothing/shoes/boots/work/jak
-	name = "Boots of Springheel Jak"
-	desc = "A pair of some old boots."
-	slowdown = -2.0 //because we don't have acrobatics skill
-
-/obj/item/clothing/shoes/boots/work/jak/atom_init(mapload, ...)
-	. = ..()
-	AddComponent(/datum/component/magic_item/wizard)
+	clipped_status = NO_CLIPPING

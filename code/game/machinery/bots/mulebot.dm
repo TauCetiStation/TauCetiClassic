@@ -13,7 +13,8 @@
 	density = TRUE
 	anchored = TRUE
 	animate_movement=1
-	max_integrity = 150 //yeah, it's tougher than ed209 because it is a big metal box with wheels --rastaf0
+	health = 150 //yeah, it's tougher than ed209 because it is a big metal box with wheels --rastaf0
+	maxhealth = 150
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
 
@@ -99,7 +100,7 @@
 		user.drop_from_inventory(C, src)
 		cell = C
 		updateDialog()
-	else if(isscrewing(I))
+	else if(isscrewdriver(I))
 		if(locked)
 			to_chat(user, "<span class='notice'>The maintenance hatch cannot be opened or closed while the controls are locked.</span>")
 			return
@@ -116,9 +117,9 @@
 		updateDialog()
 	else if(is_wire_tool(I))
 		wires.interact(user)
-	else if (iswrenching(I))
-		if (get_integrity() < max_integrity)
-			repair_damage(25)
+	else if (iswrench(I))
+		if (src.health < maxhealth)
+			src.health = min(maxhealth, src.health+25)
 			user.visible_message(
 				"<span class='warning'>[user] repairs [src]!</span>",
 				"<span class='notice'>You repair [src]!</span>"
@@ -427,8 +428,9 @@
 
 	else //post unbuckling
 		load = null
-		M.layer = M.default_layer
-		M.pixel_y = M.default_pixel_y
+		M.layer = initial(M.layer)
+		M.plane = initial(M.plane)
+		M.pixel_y = initial(M.pixel_y)
 
 // called to unload the bot
 // argument is optional direction to unload
@@ -448,8 +450,12 @@
 	load.loc = loc
 	load.pixel_y = initial(load.pixel_y)
 	load.layer = initial(load.layer)
+	load.plane = initial(load.plane)
 	if(dirn)
-		step(load, dirn)
+		var/turf/T = loc
+		var/turf/newT = get_step(T,dirn)
+		if(load.CanPass(load,newT)) //Can't get off onto anything that wouldn't let you pass normally
+			step(load, dirn)
 
 	load = null
 
@@ -664,8 +670,9 @@
 			else
 				visible_message("<span class='warning'>[src] knocks over [M]!</span>")
 				M.stop_pulling()
-				M.Stun(2)
+				M.Stun(8)
 				M.Weaken(5)
+				M.lying = 1
 	..()
 
 /obj/machinery/bot/mulebot/alter_health()

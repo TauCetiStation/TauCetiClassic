@@ -10,8 +10,6 @@
 	restricted_species_flags = list(IS_PLANT, IS_SYNTHETIC, NO_SCAN)
 	logo_state = "change-logoa"
 
-	stat_type = /datum/stat/role/changeling
-
 	var/list/absorbed_dna = list()
 	var/list/absorbed_species = list()
 	var/list/absorbed_languages = list()
@@ -38,9 +36,6 @@
 	var/mob/living/parasite/essence/controled_by
 	var/delegating = FALSE
 	var/absorbedamount = 0 //precise amount of ppl absorbed
-
-	var/atom/movable/screen/lingchemdisplay
-	var/atom/movable/screen/lingstingdisplay
 
 /datum/role/changeling/OnPostSetup(laterole = FALSE)
 	. = ..()
@@ -79,7 +74,7 @@
 
 	if(antag.current.mind && antag.current.mind.assigned_role == "Clown")
 		to_chat(antag.current, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
-		REMOVE_TRAIT(antag.current, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
+		antag.current.mutations.Remove(CLUMSY)
 
 	return TRUE
 
@@ -95,20 +90,8 @@
 		AppendObjective(/datum/objective/escape)
 	return TRUE
 
-/datum/role/changeling/add_ui(datum/hud/hud)
-	if(!lingchemdisplay)
-		lingchemdisplay = new /atom/movable/screen/chemical_display
-	if(!lingstingdisplay)
-		lingstingdisplay = new /atom/movable/screen/current_sting
-
-	lingchemdisplay.add_to_hud(hud)
-	lingstingdisplay.add_to_hud(hud)
-
-/datum/role/changeling/remove_ui(datum/hud/hud)
-	lingchemdisplay.remove_from_hud(hud)
-	lingstingdisplay.remove_from_hud(hud)
-
 /datum/role/changeling/RemoveFromRole(datum/mind/M, msg_admins)
+	antag.current?.hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "changeling")
 	. = ..()
 
@@ -116,8 +99,9 @@
 	chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
 	geneticdamage = max(0, geneticdamage-1)
 
-	if(antag?.current?.hud_used)
-		lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[chem_charges]</font></div>"
+	if(antag.current?.hud_used?.lingchemdisplay)
+		antag.current.hud_used.lingchemdisplay.invisibility = INVISIBILITY_NONE
+		antag.current.hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[chem_charges]</font></div>"
 
 /datum/role/changeling/proc/GetDNA(dna_owner)
 	var/datum/dna/chosen_dna
@@ -199,7 +183,6 @@
 	changeling.real_name = changeling.name
 	geneticpoints += 6
 
-	notify_ghosts("\A [changelingID], changeling as a new abomination, at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, header = "Abomination")
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
 			to_chat(M, "<font size='7' color='red'><b>A terrible roar is coming from somewhere around the station.</b></font>")

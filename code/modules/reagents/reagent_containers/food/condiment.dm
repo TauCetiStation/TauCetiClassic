@@ -137,7 +137,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /obj/item/weapon/condiment_shelf/attackby(obj/item/I, mob/user, params)
-	if(iswrenching(I))
+	if(iswrench(I))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		new /obj/item/stack/sheet/wood(loc)
 		qdel(src)
@@ -153,7 +153,7 @@
 	var/turf/T = target
 	if(!proximity)
 		return
-	if(!iswallturf(T))
+	if(!istype(T, /turf/simulated/wall))
 		return
 	var/ndir = get_dir(user, T)
 	if(!(ndir in cardinal))
@@ -197,8 +197,8 @@
 		pixel_y = (ndir & 3)? (ndir == NORTH ? 32 : -32) : 0
 	update_icon()
 
-/obj/structure/condiment_shelf/attackby(obj/item/weapon/O, mob/user)
-	if(iswrenching(O))
+/obj/structure/condiment_shelf/attackby(obj/O, mob/user)
+	if(iswrench(O))
 		if(user.is_busy())
 			return
 		user.visible_message("<span class='warning'>[user] starts to disassemble \the [src].</span>")

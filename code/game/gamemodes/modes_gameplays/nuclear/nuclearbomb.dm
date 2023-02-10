@@ -12,9 +12,6 @@ var/global/bomb_set
 	can_buckle = 1
 	use_power = NO_POWER_USE
 	unacidable = TRUE	//aliens can't destroy the bomb
-
-	resistance_flags = FULL_INDESTRUCTIBLE
-
 	var/deployable = 0.0
 	var/extended = 0.0
 	var/lighthack = 0
@@ -56,7 +53,7 @@ var/global/bomb_set
 		updateUsrDialog()
 
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/O, mob/user)
-	if (isscrewing(O))
+	if (isscrewdriver(O))
 		add_fingerprint(user)
 		if (removal_stage == 5)
 			if (src.opened == 0)
@@ -99,7 +96,7 @@ var/global/bomb_set
 	if (src.anchored)
 		switch(removal_stage)
 			if(0)
-				if(iswelding(O))
+				if(iswelder(O))
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn())
 						return FALSE
@@ -110,21 +107,21 @@ var/global/bomb_set
 						return FALSE
 					user.visible_message("[user] starts cutting thru something on [src] like \he knows what to do.", "With [O] you start cutting thru first layer...")
 
-					if(O.use_tool(src, user, SKILL_TASK_CHALLENGING, amount = 5, volume = 50))
+					if(O.use_tool(src, user, 150, amount = 5, volume = 50))
 						user.visible_message("[user] finishes cutting something on [src].", "You cut thru first layer.")
 						removal_stage = 1
 				return FALSE
 			if(1)
-				if(isprying(O))
+				if(iscrowbar(O))
 					user.visible_message("[user] starts smashing [src].", "You start forcing open the covers with [O]...")
 					if(user.is_busy())
 						return FALSE
-					if(O.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
+					if(O.use_tool(src, user, 50, volume = 50))
 						user.visible_message("[user] finishes smashing [src].", "You force open covers.")
 						removal_stage = 2
 				return FALSE
 			if(2)
-				if(iswelding(O))
+				if(iswelder(O))
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn())
 						return FALSE
@@ -135,25 +132,25 @@ var/global/bomb_set
 						return FALSE
 					user.visible_message("[user] starts cutting something on [src].. Again.", "You start cutting apart the safety plate with [O]...")
 
-					if(O.use_tool(src, user, SKILL_TASK_DIFFICULT , amount = 5, volume = 50))
+					if(O.use_tool(src, user, 100, amount = 5, volume = 50))
 						user.visible_message("[user] finishes cutting something on [src].", "You cut apart the safety plate.")
 						removal_stage = 3
 				return FALSE
 			if(3)
-				if(iswrenching(O))
+				if(iswrench(O))
 					if(user.is_busy())
 						return FALSE
 					user.visible_message("[user] begins poking inside [src].", "You begin unwrenching bolts...")
-					if(O.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
+					if(O.use_tool(src, user, 75, volume = 50))
 						user.visible_message("[user] begins poking inside [src].", "You unwrench bolts.")
 						removal_stage = 4
 				return FALSE
 			if(4)
-				if(isprying(O))
+				if(iscrowbar(O))
 					if(user.is_busy())
 						return FALSE
 					user.visible_message("[user] begings hitting [src].", "You begin forcing open last safety layer...")
-					if(O.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
+					if(O.use_tool(src, user, 75, volume = 50))
 						user.visible_message("[user] finishes hitting [src].", "You can now get inside the [src]. Use screwdriver to open control panel")
 						//anchored = FALSE
 						removal_stage = 5
@@ -218,21 +215,19 @@ var/global/bomb_set
 	set name = "Make Deployable"
 	set src in oview(1)
 
-	deploy(usr)
-
-/obj/machinery/nuclearbomb/proc/deploy(mob/user)
-	if (user.incapacitated())
+	if (usr.incapacitated())
 		return
-	if (!ishuman(user))
+	if (!ishuman(usr))
 		to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
 		return 1
 
 	if (src.deployable)
-		to_chat(user, "<span class = 'red'>You close several panels to make [src] undeployable.</span>")
+		to_chat(usr, "<span class = 'red'>You close several panels to make [src] undeployable.</span>")
 		src.deployable = 0
 	else
-		to_chat(user, "<span class = 'red'>You adjust some panels to make [src] deployable.</span>")
+		to_chat(usr, "<span class = 'red'>You adjust some panels to make [src] deployable.</span>")
 		src.deployable = 1
+	return
 
 /obj/machinery/nuclearbomb/is_operational()
 	return TRUE
@@ -296,7 +291,6 @@ var/global/bomb_set
 						var/area/nuclearbombloc = get_area(loc)
 						announce_nuke.play(nuclearbombloc)
 						set_security_level("delta")
-						notify_ghosts("[src] has been activated!", source = src, action = NOTIFY_ORBIT, header = "Nuclear bomb")
 						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 					else
 						bomb_set = 0
@@ -409,10 +403,11 @@ var/global/bomb_set
 		..()
 
 /obj/machinery/nuclearbomb/post_buckle_mob(mob/living/M)
+	..()
 	if(M == buckled_mob)
 		M.pixel_y = 10
 	else
-		M.pixel_y = M.default_pixel_y
+		M.pixel_y = 0
 
 /obj/machinery/nuclearbomb/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
@@ -475,63 +470,3 @@ var/global/bomb_set
 
 #undef TIMER_MIN
 #undef TIMER_MAX
-
-/obj/machinery/nuclearbomb/fake
-	var/false_activation = FALSE
-
-/obj/machinery/nuclearbomb/fake/atom_init()
-	. = ..()
-	r_code = "HONK"
-	if(SSticker)
-		var/image/I = image('icons/obj/clothing/masks.dmi', src, "sexyclown")
-		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/faction, "fake_nuke", I, /datum/faction/nuclear)
-
-/obj/machinery/nuclearbomb/fake/explode()
-	if(safety)
-		timing = 0
-		return
-	if(detonated)
-		return
-	detonated = 1
-	timing = -1.0
-	yes_code = 0
-	safety = 1
-	if(!lighthack)
-		icon_state = "nuclearbomb3"
-	addtimer(CALLBACK(src, .proc/fail), 10 SECONDS) //Good taste, right?
-	playsound(src, 'sound/effects/scary_honk.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 30)
-
-/obj/machinery/nuclearbomb/fake/examine(mob/user, distance)
-	. = ..()
-	if(isnukeop(user) || isobserver(user))
-		to_chat(user, "<span class ='boldwarning'>This is a fake one!</span>")
-
-/obj/machinery/nuclearbomb/fake/process() //Yes, it's alike normal, but not exactly
-	if(timing > 0) // because explode() sets it to -1, which is TRUE.
-		timeleft = max(timeleft - 2, 0) // 2 seconds per process()
-		playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 30, FALSE)
-		if(timeleft <= 0)
-			explode()
-		updateUsrDialog()
-
-/obj/machinery/nuclearbomb/fake/proc/fail(mob/user) //Resetting theatre of one actor and many watchers
-	if(!lighthack)
-		icon_state = "nuclearbomb1"
-
-/obj/machinery/nuclearbomb/fake/deploy(mob/user)
-	if(false_activation)
-		return
-	..()
-
-	if(!isnukeop(user))
-		return
-	if(!anchored)
-		return
-	if(tgui_alert(user, "False decoy activation. Continue?", "Decoy activation", list("Yes","No")) != "Yes")
-		return
-	icon_state = "nuclearbomb2"
-	timing = 1.0
-	yes_code = 1
-	safety = 0
-	false_activation = TRUE
-	return

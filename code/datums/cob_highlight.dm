@@ -74,7 +74,7 @@
 		to_chat(M, "<span class='warning'>\The [from_recipe.title] must be constructed on the floor!</span>")
 	else if(here.contents.len > 15) //we don't want for() thru tons of atoms.
 		. = FALSE
-	else if(!origin.CanPass(null, here, 0))
+	else if(!(origin.CanPass(null, here, 0, 0) && here.CanPass(null, origin, 0, 0)))
 		. = FALSE
 	else
 		for(var/atom/movable/AM in here)
@@ -105,9 +105,9 @@
 		holo_build.alpha = 160
 		holo_build.color = list(-1,0,0,0,-1,0,0,0,-1,1,1,1)
 		holo_build.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		var/failed = FALSE
 		to_chat(M, "Building [from_recipe.title] ...")
-		if(!do_skilled(M, M, from_recipe.time, from_recipe.required_skills,  -0.3))
+		var/failed = FALSE
+		if(!do_after(M, from_recipe.time, target = M))
 			failed = TRUE
 		busy = FALSE
 		if(!in_building_mode)

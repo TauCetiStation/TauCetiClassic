@@ -37,6 +37,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
 	thermal_conductivity = 0.040
+	heat_capacity = 10000
 	var/broken = 0
 	var/burnt = 0
 	var/mineral = "metal"
@@ -81,7 +82,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 	QDEL_NULL(holy)
 	return ..()
 
-//turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0)
+//turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 //	if ((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))
 //		if (!( locate(/obj/machinery/mass_driver, src) ))
 //			return 0
@@ -229,7 +230,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 				icon_state = "wood"
 				//world << "[icon_state]y's got [icon_state]"
 	/*spawn(1)
-		if(isfloorturf(src)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
+		if(istype(src,/turf/simulated/floor)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
 			if(air)
 				update_visuals(air)*/
 	..()
@@ -518,7 +519,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 			else
 				to_chat(user, "<span class='notice'>Похоже, лампочка в порядке, менять её не нужно.</span>")
 
-	if(isprying(C) && (!(is_plating())))
+	if(iscrowbar(C) && (!(is_plating())))
 		if(broken || burnt)
 			to_chat(user, "<span class='warning'>Вы сняли поврежденное покрытие.</span>")
 		else
@@ -538,7 +539,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 
 		return
 
-	if(isscrewing(C))
+	if(isscrewdriver(C))
 		if(is_wood_floor())
 			if(broken || burnt)
 				return
@@ -628,7 +629,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 		else
 			to_chat(user, "<span class='warning'>Это нельзя вскопать.</span>")
 
-	if(iswelding(C))
+	if(iswelder(C))
 		var/obj/item/weapon/weldingtool/W = C
 		if(!is_plating())
 			return

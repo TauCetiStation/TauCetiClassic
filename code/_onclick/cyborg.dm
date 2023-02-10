@@ -11,8 +11,8 @@
 		return
 	next_click = world.time + 1
 
-	if(client.click_intercept) // comes after object.Click to allow buildmode gui objects to be clicked
-		client.click_intercept.InterceptClickOn(src, params, A)
+	if(client.buildmode) // comes after object.Click to allow buildmode gui objects to be clicked
+		build_click(src, client.buildmode, params, A)
 		return
 
 	var/list/modifiers = params2list(params)
@@ -40,7 +40,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(incapacitated(NONE) || lockcharge)
+	if(stat || lockcharge || weakened || stunned || paralysis)
 		return
 
 	if(next_move >= world.time)
@@ -85,7 +85,9 @@
 	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
 	if(A == loc || (A.loc == loc) || (A.loc == src))
 		// No adjacency checks
-		W.melee_attack_chain(A, src, params)
+		var/resolved = A.attackby(W, src, params)
+		if(!resolved && A && W)
+			W.afterattack(A, src, 1, params)
 		return
 
 	if(!isturf(loc))
@@ -94,7 +96,9 @@
 	// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc && isturf(A.loc.loc))
 	if(isturf(A) || isturf(A.loc))
 		if(A.Adjacent(src)) // see adjacent.dm
-			W.melee_attack_chain(A, src, params)
+			var/resolved = A.attackby(W, src, params)
+			if(!resolved && A && W)
+				W.afterattack(A, src, 1, params)
 			return
 		W.afterattack(A, src, 0, params)
 

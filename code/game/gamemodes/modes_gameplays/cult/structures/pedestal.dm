@@ -58,7 +58,7 @@
 	if(istype(W, /obj/item/weapon/storage/bible/tome)) // So that you can destroy the pedestal and not put a tome on it
 		return FALSE
 
-	if(iswrenching(W))
+	if(iswrench(W))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
@@ -162,8 +162,13 @@
 		remove_filter("pedestal_outline")
 		have_outline = FALSE
 
-/obj/structure/pedestal/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/structure/pedestal/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
+		return TRUE
+	return ..()
+
+/obj/structure/pedestal/CheckExit(atom/movable/AM, target)
+	if(istype(AM) && AM.checkpass(PASSTABLE))
 		return TRUE
 	return ..()
 

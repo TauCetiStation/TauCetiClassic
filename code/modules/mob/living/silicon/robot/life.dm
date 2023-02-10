@@ -25,7 +25,9 @@
 
 /mob/living/silicon/robot/proc/clamp_values()
 
-	SetParalysis(min(AmountParalyzed(), 30))
+//	SetStunned(min(stunned, 30))
+	SetParalysis(min(paralysis, 30))
+//	SetWeakened(min(weakened, 20))
 	SetSleeping(0)
 	adjustBruteLoss(0)
 	adjustToxLoss(0)
@@ -82,7 +84,16 @@
 	if (src.stat != DEAD) //Alive.
 		if (src.paralysis || src.stunned || src.weakened || !src.has_power) //Stunned etc.
 			src.stat = UNCONSCIOUS
-			blinded = paralysis
+			if (src.stunned > 0)
+				AdjustStunned(-1)
+			if (src.weakened > 0)
+				AdjustWeakened(-1)
+			if (src.paralysis > 0)
+				AdjustParalysis(-1)
+				src.blinded = 1
+			else
+				src.blinded = 0
+
 		else	//Not stunned.
 			src.stat = CONSCIOUS
 
@@ -158,7 +169,6 @@
 		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	else if (sight_mode & BORGNIGHT)
 		sight_modifier = "nvg"
-		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	else if (sight_mode & BORGTHERM)
 		sight_modifier = "thermal"
 		sight |= SEE_MOBS
@@ -168,10 +178,29 @@
 
 /mob/living/silicon/robot/handle_regular_hud_updates()
 	if(!client)
-		return
+		return 0
 
 	regular_hud_updates()
 	update_sight()
+
+	if (healths)
+		if (stat != DEAD)
+			if(health >= maxHealth)
+				healths.icon_state = "health0"
+			else if(health >= maxHealth * 0.75)
+				healths.icon_state = "health1"
+			else if(health >= maxHealth * 0.5)
+				healths.icon_state = "health2"
+			else if(health >= maxHealth * 0.25)
+				healths.icon_state = "health3"
+			else if(health >= 0)
+				healths.icon_state = "health4"
+			else if(health >= config.health_threshold_dead)
+				healths.icon_state = "health5"
+			else
+				healths.icon_state = "health6"
+		else
+			healths.icon_state = "health7"
 
 	if (src.cell)
 		var/cellcharge = src.cell.charge/src.cell.maxcharge
@@ -190,6 +219,8 @@
 		throw_alert("charge", /atom/movable/screen/alert/nocell)
 
 	..()
+
+	return 1
 
 /mob/living/silicon/robot/proc/update_items()
 	if (src.client)
@@ -226,8 +257,11 @@
 			weaponlock_time = 120
 
 /mob/living/silicon/robot/update_canmove()
-	anchored = HAS_TRAIT(src, TRAIT_ANCHORED)
-	canmove = !(buckled || anchored || weakened || HAS_TRAIT(src, TRAIT_IMMOBILIZED))
+	if(paralysis || stunned || weakened || buckled || lockcharge || pinned.len)
+		canmove = FALSE
+	else
+		canmove = TRUE
+	return canmove
 
 //Robots on fire
 /mob/living/silicon/robot/handle_fire()
@@ -243,8 +277,6 @@
 
 /mob/living/silicon/robot/update_fire()
 	if(on_fire)
-		underlays += image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay")
-		add_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay"))
+		add_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning"))
 	else
-		underlays -= image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_underlay")
-		cut_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="generic_overlay"))
+		cut_overlay(image("icon"='icons/mob/OnFire.dmi', "icon_state"="Generic_mob_burning"))

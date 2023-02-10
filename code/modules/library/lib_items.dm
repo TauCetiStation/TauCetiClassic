@@ -19,9 +19,6 @@
 	density = TRUE
 	opacity = 1
 
-	max_integrity = 200
-	resistance_flags = CAN_BE_HIT
-
 /obj/structure/bookcase/atom_init()
 	. = ..()
 	for(var/obj/item/I in loc)
@@ -41,14 +38,6 @@
 			name = ("bookcase ([sanitize(newname)])")
 	else
 		..()
-
-/obj/structure/bookcase/deconstruct(disassembled)
-	for(var/obj/item/I as anything in contents)
-		I.forceMove(loc)
-	if(flags & NODECONSTRUCT)
-		return ..()
-	new /obj/item/stack/sheet/wood(loc, 4)
-	..()
 
 /obj/structure/bookcase/attack_hand(mob/user)
 	if(contents.len)
@@ -271,7 +260,7 @@
 							return
 					scanner.computer.inventory.Add(src)
 					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'")
-	else if(istype(I, /obj/item/weapon/kitchenknife) || iscutter(I))
+	else if(istype(I, /obj/item/weapon/kitchenknife) || iswirecutter(I))
 		if(carved)
 			return
 		if(user.is_busy(src))

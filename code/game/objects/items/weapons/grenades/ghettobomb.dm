@@ -120,7 +120,7 @@
 		var/obj/item/weapon/lighter/O = I
 		if(O.lit)
 			is_W_lit = TRUE
-	else if(iswelding(I))
+	else if(iswelder(I))
 		var/obj/item/weapon/weldingtool/O = I
 		if(O.isOn())
 			is_W_lit = TRUE

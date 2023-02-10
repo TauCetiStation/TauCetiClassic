@@ -51,20 +51,6 @@
 	else
 		desc += "."
 
-/obj/machinery/constructable_frame/deconstruct(disassembled)
-	if(flags & NODECONSTRUCT)
-		return ..()
-	new /obj/item/stack/sheet/metal(loc, 5)
-	if(circuit)
-		circuit.forceMove(loc)
-		circuit = null
-	if(state >= 2)
-		new /obj/item/stack/cable_coil(loc , 5)
-	for(var/obj/item/I in components)
-		I.forceMove(loc)
-	LAZYCLEARLIST(components)
-	..()
-
 /obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P, mob/user)
 	if(P.crit_fail)
 		to_chat(user, "<span class='danger'>This part is faulty, you cannot add this to the machine!</span>")
@@ -83,7 +69,7 @@
 				if(user.is_busy(src))
 					return
 				to_chat(user, "<span class='notice'>You start to add cables to the frame.</span>")
-				if(P.use_tool(src, user, SKILL_TASK_EASY, target = src, volume = 50, required_skills_override = list(/datum/skill/construction = SKILL_LEVEL_PRO)))
+				if(P.use_tool(src, user, 20, target = src, volume = 50))
 					if(state == 1)
 						if(!C.use(5))
 							return
@@ -92,30 +78,32 @@
 						state = 2
 						icon_state = "box_1"
 
-			else if(isscrewing(P) && !anchored)
+			else if(isscrewdriver(P) && !anchored)
 				if(user.is_busy(src))
 					return
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
-				if(P.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
+				if(P.use_tool(src, user, 40, volume = 50))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
-						deconstruct(TRUE)
+						var/obj/item/stack/sheet/metal/M = new (loc, 5)
+						M.add_fingerprint(user)
+						qdel(src)
 
-			else if(iswrenching(P))
+			else if(iswrench(P))
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				if(P.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 75))
+				if(P.use_tool(src, user, 40, volume = 75))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 						anchored = !anchored
 		if(2)
-			if(iswrenching(P))
+			if(iswrench(P))
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				if(P.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 75))
+				if(P.use_tool(src, user, 40, volume = 75))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 					anchored = !anchored
 
@@ -138,7 +126,7 @@
 					update_req_desc()
 				else
 					to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
-			if(iscutter(P))
+			if(iswirecutter(P))
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
@@ -146,7 +134,7 @@
 				new /obj/item/stack/cable_coil/red(loc, 5)
 
 		if(3)
-			if(isprying(P))
+			if(iscrowbar(P))
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				state = 2
 				circuit.loc = src.loc
@@ -163,15 +151,13 @@
 				components = null
 				icon_state = "box_1"
 
-			if(isscrewing(P))
+			if(isscrewdriver(P))
 				var/component_check = 1
 				for(var/R in req_components)
 					if(req_components[R] > 0)
 						component_check = 0
 						break
 				if(component_check)
-					if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/construction = SKILL_LEVEL_PRO), "<span class='notice'>You fumble around, figuring out how to construct machine.</span>"))
-						return
 					playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 					var/obj/machinery/new_machine = new circuit.build_path(src.loc)
 					transfer_fingerprints_to(new_machine)
@@ -253,7 +239,7 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/vending_refill/boozeomat = 3)
 
 /obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(isscrewdriver(I))
 		var/list/names = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
 							/obj/machinery/vending/snack = "Getmore Chocolate Corp (Red)",
 							/obj/machinery/vending/snack/blue = "Getmore Chocolate Corp (Blue)",
@@ -377,6 +363,7 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/manipulator = 1,
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/console_screen = 2)
+
 /obj/item/weapon/circuitboard/cryo_tube
 	name = "circuit board (Cryotube)"
 	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
@@ -732,13 +719,6 @@ to destroy them and players will be able to make replacements.
 	origin_tech = "powerstorage=3;engineering=3;materials=4"
 	req_components = list(
 							/obj/item/weapon/stock_parts/capacitor = 1,)
-/obj/item/weapon/circuitboard/cell_recharger
-	name = "circuit board (Cell Recharger)"
-	build_path = /obj/machinery/cell_charger
-	board_type = "machine"
-	origin_tech = "powerstorage=1;engineering=2;materials=1"
-	req_components = list(
-							/obj/item/weapon/stock_parts/capacitor = 1,)
 
 // Telecomms circuit boards:
 /obj/item/weapon/circuitboard/telecomms/receiver
@@ -853,43 +833,3 @@ to destroy them and players will be able to make replacements.
 	req_components = list(
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/matter_bin = 3)
-
-/obj/item/weapon/circuitboard/circulator
-	name = "circuit board (TEG circulator)"
-	build_path = /obj/machinery/atmospherics/components/binary/circulator
-	board_type = "machine"
-	origin_tech = "engineering=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 3,
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/stack/cable_coil = 5)
-
-/obj/item/weapon/circuitboard/teg
-	name = "circuit board (TEG generator)"
-	build_path = /obj/machinery/power/generator
-	board_type = "machine"
-	origin_tech = "engineering=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/weapon/stock_parts/capacitor = 3,
-							/obj/item/stack/cable_coil = 5)
-
-/obj/item/weapon/circuitboard/operating_table
-	name = "circuit board (Operating Table)"
-	build_path = /obj/machinery/optable
-	board_type = "machine"
-	origin_tech = "engineering=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/scanning_module = 2,
-							/obj/item/weapon/stock_parts/capacitor = 1,
-							/obj/item/stack/cable_coil = 2)
-
-/obj/item/weapon/circuitboard/operating_table/abductor
-	name = "circuit board (Abductor Operating Table)"
-	build_path = /obj/machinery/optable/abductor
-	board_type = "machine"
-	origin_tech = "engineering=3"
-	req_components = list(
-							/obj/item/weapon/stock_parts/scanning_module/triphasic = 2,
-							/obj/item/weapon/stock_parts/capacitor/quadratic = 1,
-							/obj/item/stack/cable_coil = 2)

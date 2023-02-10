@@ -50,7 +50,7 @@ var/global/const/AIRLOCK_WIRE_LIGHT         = 2048
 		return
 	if(action == "buffer")
 		var/obj/item/I = usr.get_active_hand()
-		if(ispulsing(I))
+		if(ismultitool(I))
 			var/obj/item/device/multitool/M = I
 			if(holder in M.doors_buffer)
 				to_chat(usr, "<span class='warning'>This <i>door</i> is already in the buffer!</span>")

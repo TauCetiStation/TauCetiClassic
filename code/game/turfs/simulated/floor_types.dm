@@ -40,6 +40,7 @@
 	name = "reinforced floor"
 	icon_state = "engine"
 	thermal_conductivity = 0.025
+	heat_capacity = 325000
 	footstep = FOOTSTEP_PLATING
 
 /turf/simulated/floor/goonplaque
@@ -48,7 +49,7 @@
 	icon_state = "plaque";
 
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
-	if(iswrenching(C))
+	if(iswrench(C))
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Вы начинаете удалять стержни.</span>")
@@ -141,6 +142,7 @@
 	name = "shuttle"
 	icon = 'icons/turf/shuttle.dmi'
 	thermal_conductivity = 0.05
+	heat_capacity = 0
 	layer = 2
 
 
@@ -149,7 +151,7 @@
 	icon_state = "wall1"
 	opacity = 1
 	density = TRUE
-	blocks_air = AIR_BLOCKED
+	blocks_air = 1
 
 /turf/simulated/shuttle/floor
 	name = "floor"
@@ -252,11 +254,11 @@
 /mob/living/silicon/robot/entered_water_turf()
 	Stun(2)
 	playsound(src, 'sound/effects/water_turf_entered_mob.ogg', VOL_EFFECTS_MASTER)
-	if(stat != CONSCIOUS)
+	if(stat)
 		return
 	if(prob(25))
 		adjustFireLoss(rand(10, 20))
-		Stun(rand(10, 15))
+		Weaken(rand(10, 15))
 		eye_blind += rand(20, 25)
 		playsound(src, 'sound/machines/cfieldfail.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -4)
 	if(!eye_blind)
@@ -399,7 +401,7 @@
 	desc = "Рабочий помост с сомнительным функционалом."
 
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
-	heat_capacity = HEAT_CAPACITY_VACUUM
+	heat_capacity = 700000
 	intact = 0
 	footstep = FOOTSTEP_CATWALK
 
@@ -407,9 +409,7 @@
 	. = ..()
 	update_icon(1)
 
-	var/env_light_color = SSenvironment.turf_light_color[z]
-	if(env_light_color)
-		set_light(1.5, l_color = env_light_color)
+	set_light(1.5, l_color = SSenvironment.turf_light_color[z])
 
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
 	underlays.Cut()

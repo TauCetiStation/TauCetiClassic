@@ -28,16 +28,11 @@
 	qdel(item_overlays[I])
 	item_overlays -= I
 
-/obj/item/weapon/storage/visuals/try_open(mob/user)
-	if(!user)
-		return FALSE
-
+/obj/item/weapon/storage/visuals/open(mob/user)
 	if(require_opened && !opened)
 		to_chat(user, "<span class='notice'>You can't view [src]'s inventory without opening it up!</span>")
 		return FALSE
-	
-	open(user)
-	return TRUE
+	return ..()
 
 /obj/item/weapon/storage/visuals/can_be_inserted(obj/item/W, stop_messages = FALSE)
 	if(require_opened && !opened)

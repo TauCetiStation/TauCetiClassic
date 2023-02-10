@@ -16,11 +16,6 @@ var/global/image/mark = image('icons/Testing/Zone.dmi', icon_state = "mark")
 	add_overlay(img)
 	dbg_img = img
 
-/turf/simulated/dbg(image/img, d = 0)
-	..()
-	if(zone)
-		maptext = "[zone]"
-
 /proc/soft_assert(thing,fail)
 	if(!thing)
 		message_admins(fail)

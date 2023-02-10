@@ -3,7 +3,6 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pai"
 	item_state = "electronic"
-	flags = HEAR_PASS_SAY
 	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "programming=2"
@@ -324,8 +323,3 @@
 	for(var/mob/M in src)
 		M.emplode(severity)
 	..()
-
-/obj/item/device/paicard/get_listeners()
-	. = list()
-	if(pai)
-		. += pai

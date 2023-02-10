@@ -34,8 +34,6 @@
 	var/picked = input("Select jumpsuit to change it to", "Chameleon Jumpsuit")as null|anything in clothing_choices
 	if(!picked || !clothing_choices[picked])
 		return
-	if(!(src in usr) || usr.incapacitated())
-		return
 	var/newtype = clothing_choices[picked]
 	var/obj/item/clothing/A = new newtype
 
@@ -95,8 +93,6 @@
 	var/picked = input("Select headwear to change it to", "Chameleon Hat")as null|anything in clothing_choices
 	if(!picked || !clothing_choices[picked])
 		return
-	if(!(src in usr) || usr.incapacitated())
-		return
 	var/newtype = clothing_choices[picked]
 	var/obj/item/clothing/A = new newtype
 
@@ -113,14 +109,9 @@
 	name = A.name
 	icon_state = A.icon_state
 	item_state = A.item_state
-	flags = initial(flags)
-	flags |= (A.flags & (BLOCKHAIR | BLOCKHEADHAIR))
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
 	update_inv_mob()
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.update_hair()
 
 //******************
 //**Chameleon Suit**
@@ -158,8 +149,6 @@
 
 	var/picked = input("Select exosuit to change it to", "Chameleon Exosuit")as null|anything in clothing_choices
 	if(!picked || !clothing_choices[picked])
-		return
-	if(!(src in usr) || usr.incapacitated())
 		return
 	var/newtype = clothing_choices[picked]
 	var/obj/item/clothing/A = new newtype
@@ -216,8 +205,6 @@
 	var/picked = input("Select shoes to change it to", "Chameleon Shoes")as null|anything in clothing_choices
 	if(!picked || !clothing_choices[picked])
 		return
-	if(!(src in usr) || usr.incapacitated())
-		return
 	var/newtype = clothing_choices[picked]
 	var/obj/item/clothing/A = new newtype
 
@@ -269,8 +256,6 @@
 
 	var/picked = input("Select backpack to change it to", "Chameleon Backpack")as null|anything in clothing_choices
 	if(!picked || !clothing_choices[picked])
-		return
-	if(!(src in usr) || usr.incapacitated())
 		return
 	var/newtype = clothing_choices[picked]
 	var/obj/item/weapon/storage/backpack/A = new newtype
@@ -325,8 +310,6 @@
 	var/picked = input("Select gloves to change it to", "Chameleon Gloves")as null|anything in clothing_choices
 	if(!picked || !clothing_choices[picked])
 		return
-	if(!(src in usr) || usr.incapacitated())
-		return
 	var/newtype = clothing_choices[picked]
 	var/obj/item/clothing/A = new newtype
 
@@ -380,8 +363,6 @@
 
 	var/picked = input("Select mask to change it to", "Chameleon Mask")as null|anything in clothing_choices
 	if(!picked || !clothing_choices[picked])
-		return
-	if(!(src in usr) || usr.incapacitated())
 		return
 	var/newtype = clothing_choices[picked]
 	var/obj/item/clothing/A = new newtype
@@ -438,8 +419,6 @@
 	var/picked = input("Select glasses to change it to", "Chameleon Glasses")as null|anything in clothing_choices
 	if(!picked || !clothing_choices[picked])
 		return
-	if(!(src in usr) || usr.incapacitated())
-		return
 	var/newtype = clothing_choices[picked]
 	var/obj/item/clothing/A = new newtype
 
@@ -494,8 +473,6 @@
 
 	var/picked = input("Select gun to change it to", "Chameleon Gun")as null|anything in gun_choices
 	if(!picked || !gun_choices[picked])
-		return
-	if(!(src in usr) || usr.incapacitated())
 		return
 	var/newtype = gun_choices[picked]
 	var/obj/item/weapon/gun/A = new newtype

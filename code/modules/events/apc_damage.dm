@@ -20,10 +20,14 @@
 			apc.update_icon()
 
 /datum/event/apc_damage/proc/acquire_random_apc()
-	var/list/possibleEpicentres = landmarks_list["lightsout"]
+	var/list/possibleEpicentres = list()
 	var/list/apcs = list()
 
-	if(!length(possibleEpicentres))
+	for(var/obj/effect/landmark/newEpicentre in landmarks_list)
+		if(newEpicentre.name == "lightsout")
+			possibleEpicentres += newEpicentre
+
+	if(!possibleEpicentres.len)
 		return
 
 	var/epicentre = pick(possibleEpicentres)

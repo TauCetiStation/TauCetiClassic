@@ -27,7 +27,6 @@
 	stat.time_of_death = roundtimestamp(world.time)
 	stat.from_suicide = H.suiciding
 	stat.mob_type = H.type
-	stat.last_phrase = H.last_phrase
 
 	var/turf/spot = get_turf(H)
 	stat.death_x = spot.x
@@ -65,18 +64,11 @@
 	stat.flash_range = flash_range
 	explosions += stat
 
-/datum/stat_collector/proc/add_manifest_entry(key, name, assigned_role, special_role, list/antag_roles, mob/controlled_mob)
+/datum/stat_collector/proc/add_manifest_entry(key, name, assigned_role, special_role, list/antag_roles)
 	var/datum/stat/manifest_entry/stat = new
 	stat.name = STRIP_NEWLINE(name)
 	stat.assigned_role = STRIP_NEWLINE(assigned_role)
 	stat.special_role = STRIP_NEWLINE(special_role)
-	if(controlled_mob)
-		stat.species = controlled_mob.get_species()
-		stat.gender = controlled_mob.gender
-		stat.flavor = STRIP_NEWLINE(controlled_mob.flavor_text)
-		if(ishuman(controlled_mob))
-			var/mob/living/carbon/human/H = controlled_mob
-			stat.age = H.age
 
 	if(antag_roles?.len)
 		stat.antag_roles = list()

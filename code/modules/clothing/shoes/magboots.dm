@@ -3,6 +3,7 @@
 	name = "magboots"
 	icon_state = "magboots0"
 	item_state = "magboots"
+	species_restricted = null
 	var/magpulse = 0
 	var/magboot_state = "magboots"
 	var/slowdown_off = 2
@@ -12,13 +13,13 @@
 
 /obj/item/clothing/shoes/magboots/attack_self(mob/user)
 	if(magpulse)
-		flags &= ~NOSLIP | AIR_FLOW_PROTECT
+		flags &= ~NOSLIP
 		slowdown = SHOES_SLOWDOWN
 		magpulse = 0
 		icon_state = "[magboot_state]0"
 		to_chat(user, "You disable the mag-pulse traction system.")
 	else
-		flags |= NOSLIP | AIR_FLOW_PROTECT
+		flags |= NOSLIP
 		slowdown = slowdown_off
 		magpulse = 1
 		icon_state = "[magboot_state]1"
@@ -29,7 +30,7 @@
 /obj/item/clothing/shoes/magboots/examine(mob/user)
 	..()
 	var/state = "disabled"
-	if(src.flags & (NOSLIP | AIR_FLOW_PROTECT))
+	if(src.flags & NOSLIP)
 		state = "enabled"
 	to_chat(user, "Its mag-pulse traction system appears to be [state].")
 

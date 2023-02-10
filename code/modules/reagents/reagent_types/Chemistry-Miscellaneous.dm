@@ -122,7 +122,7 @@
 /datum/reagent/thermite/reaction_turf(turf/T, volume)
 	. = ..()
 	if(volume >= 30)
-		if(iswallturf(T))
+		if(istype(T, /turf/simulated/wall))
 			var/turf/simulated/wall/W = T
 			W.thermite = 1
 			W.add_overlay(image('icons/effects/effects.dmi',icon_state = "#673910"))
@@ -322,12 +322,6 @@
 	reagent_state = GAS
 	color = "#404030" // rgb: 64, 64, 48
 	taste_message = "floor cleaner"
-
-/datum/reagent/ammonia/reaction_obj(obj/O, volume)
-	if(istype(O, /obj/machinery/camera))
-		var/obj/machinery/camera/C = O
-		C.color = null
-		C.remove_paint_state()
 
 /datum/reagent/ultraglue
 	name = "Ultra Glue"
@@ -701,11 +695,15 @@
 /datum/reagent/paint/reaction_obj(obj/O, volume)
 	if(istype(O, /obj/machinery/camera))
 		var/obj/machinery/camera/C = O
-		C.color = color
-	if(istype(O, /obj/item/canvas))
-		var/obj/item/canvas/C = O
-		C.canvas_color = color
-		C.reset_grid()
+		if(!C.painted)
+			if(!C.isXRay())
+				var/paint_time = min(volume * 1 SECOND, 10 SECONDS)
+				addtimer(CALLBACK(C, /obj/machinery/camera/proc/remove_paint_state, C.network), paint_time) // EMP turns it off for 90 SECONDS, 10 seems fair.
+				C.disconnect_viewers()
+				C.painted = TRUE
+				C.toggle_cam(FALSE) // Do not show deactivation message, it's just paint.
+				C.triggerCameraAlarm()
+			C.color = color
 
 /datum/reagent/paint_remover
 	name = "Paint Remover"
@@ -742,8 +740,9 @@
 /datum/reagent/paint_remover/reaction_obj(obj/O, volume)
 	if(istype(O, /obj/machinery/camera))
 		var/obj/machinery/camera/C = O
-		C.remove_paint_state()
-		C.color = null
+		if(C.painted)
+			C.remove_paint_state()
+			C.color = null
 
 ////////////////////////////////////
 ///// All the barber's bullshit/////

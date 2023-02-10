@@ -263,8 +263,6 @@
 		new /obj/item/clothing/shoes/white(src)
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/suit/storage/labcoat/chemist(src)
-	for (var/i in 1 to 2)
-		new /obj/item/weapon/storage/bag/chemistry(src)
 
 
 /obj/structure/closet/wardrobe/genetics_white

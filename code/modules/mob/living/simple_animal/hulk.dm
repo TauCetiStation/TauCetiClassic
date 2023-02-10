@@ -24,9 +24,10 @@
 	speed = 1
 	a_intent = INTENT_HARM
 	stop_automated_movement = TRUE
-	status_flags = NONE
+	status_flags = CANPUSH
 	universal_speak = 1
 	universal_understand = 1
+	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -44,12 +45,6 @@
 	has_head = TRUE
 	has_arm = TRUE
 	has_leg = TRUE
-
-	can_point = TRUE
-
-/mob/living/simple_animal/hulk/atom_init()
-	attack_sound = SOUNDIN_PUNCH_HEAVY
-	. = ..()
 
 /mob/living/simple_animal/hulk/human
 	hulk_powers = list(/obj/effect/proc_holder/spell/aoe_turf/hulk_jump,
@@ -107,6 +102,7 @@
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
+	status_flags ^= CANPUSH
 	for(var/spell in hulk_powers)
 		AddSpell(new spell(src))
 
@@ -156,6 +152,7 @@
 			if(prob(15))
 				emote("gasp")
 
+	weakened = 0
 	if(health > 0)
 		health = min(health + health_regen, maxHealth)
 	..()
@@ -190,7 +187,6 @@
 /mob/living/simple_animal/hulk/MobBump(mob/M)
 	if(isliving(M) && !(istype(M, /mob/living/simple_animal/hulk) || issilicon(M)))
 		var/mob/living/L = M
-		L.Stun(1)
 		L.Weaken(3)
 		L.take_overall_damage(rand(4,12), 0)
 	return 0
@@ -237,19 +233,35 @@
 
 	health -= P.agony / 10
 
-/mob/living/simple_animal/hulk/UnarmedAttack(atom/A)
-	if(A.attack_hulk(src))
-		do_attack_animation(A)
-		SetNextMove(CLICK_CD_MELEE)
-		return
-	..()
+/mob/living/simple_animal/hulk/proc/attack_hulk(obj/machinery/door/D)
+	do_attack_animation(D)
+	SetNextMove(CLICK_CD_MELEE)
+
+	if(istype(D,/obj/machinery/door/airlock))
+		var/obj/machinery/door/airlock/A = D
+		if(A.welded || A.locked)
+			if(hulk_scream(A, 75))
+				A.door_rupture(src)
+			return
+	if(istype(D,/obj/machinery/door/firedoor))
+		var/obj/machinery/door/firedoor/F = D
+		if(F.blocked)
+			if(hulk_scream(F))
+				qdel(F)
+				return
+	if(D.density)
+		to_chat(src, "<span class='userdanger'>You force your fingers between \
+		 the doors and begin to pry them open...</span>")
+		playsound(D, 'sound/machines/firedoor_open.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
+		if (!is_busy() && do_after(src, 40, target = D) && D)
+			D.open(1)
 
 /mob/living/simple_animal/hulk/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	. = ..()
 
 	if(!. || moving_diagonally)
 		return .
-
+	
 	var/turf/T = loc
 
 	if(isturf(T) && !(T.flags & NOSTEPSOUND) && !lying)

@@ -314,12 +314,12 @@
 	else if(href_list["delay_round_end"])
 		if(!check_rights(R_SERVER))	return
 
-		SSticker.admin_delayed = !SSticker.admin_delayed
-		log_admin("[key_name(usr)] [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].")
-		message_admins("[key_name(usr)] [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].")
+		SSticker.delay_end = !SSticker.delay_end
+		log_admin("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
+		message_admins("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
 		world.send2bridge(
 			type = list(BRIDGE_ROUNDSTAT),
-			attachment_msg = "**[key_name(usr)]** [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].",
+			attachment_msg = "**[key_name(usr)]** [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
 
@@ -1747,17 +1747,6 @@
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
 		show_traitor_panel(M)
-	else if(href_list["skills"])
-		if(!check_rights(R_ADMIN))
-			return
-		if(!SSticker || !SSticker.mode)
-			tgui_alert(usr, "The game hasn't started yet!")
-			return
-		var/mob/M = locate(href_list["skills"])
-		if(!ismob(M))
-			to_chat(usr, "This can only be used on instances of type /mob.")
-			return
-		show_skills_panel(M)
 
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))	return
@@ -2190,8 +2179,8 @@
 			return
 
 		library_recycle_bin()
-		log_admin("[key_name(usr)] restored '[title]' from the recycle bin")
-		message_admins("[key_name_admin(usr)] restored '[title]' from the recycle bin")
+		log_admin("[key_name(usr)] restored [title] from the recycle bin")
+		message_admins("[key_name_admin(usr)] restored [title] from the recycle bin")
 
 	else if(href_list["deletebook"])
 		if(!check_rights(R_PERMISSIONS))
@@ -2221,8 +2210,8 @@
 			return
 
 		library_recycle_bin()
-		log_admin("[key_name(usr)] removed '[title]' from the library database by player request")
-		message_admins("[key_name_admin(usr)] removed '[title]' from the library database by player request")
+		log_admin("[key_name(usr)] restored [title] from the recycle bin")
+		message_admins("[key_name_admin(usr)] removed [title] from the library database")
 
 	else if(href_list["vsc"])
 		if(check_rights(R_ADMIN|R_SERVER))

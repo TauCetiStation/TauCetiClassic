@@ -153,10 +153,7 @@
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	if(M.status_flags & GODMODE)
-		M.remove_status_flags(GODMODE)
-	else
-		M.add_status_flags(GODMODE)
+	M.status_flags ^= GODMODE
 	to_chat(usr, "<span class='notice'>Toggled [(M.status_flags & GODMODE) ? "ON" : "OFF"]</span>")
 
 	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
@@ -585,7 +582,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		var/datum/role/R = new_character.mind.GetRole(role)
 		R.OnPostSetup()
 
-	SSjob.EquipRank(new_character, new_character.mind.assigned_role, TRUE)
+	SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
 
 	//Announces the character on all the systems, based on the record.
 	if(!issilicon(new_character))//If they are not a cyborg/AI.

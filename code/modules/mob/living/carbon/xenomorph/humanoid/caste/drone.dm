@@ -5,7 +5,6 @@
 	health = 160
 	icon_state = "aliend_s"
 	plasma_rate = 15
-	speed = 1
 	alien_spells = list(/obj/effect/proc_holder/spell/no_target/weeds,
 						/obj/effect/proc_holder/spell/targeted/xeno_whisp,
 						/obj/effect/proc_holder/spell/targeted/transfer_plasma,
@@ -28,6 +27,9 @@
 /mob/living/carbon/xenomorph/humanoid/drone/Destroy()
 	alien_list[ALIEN_DRONE] -= src
 	return ..()
+
+/mob/living/carbon/xenomorph/humanoid/drone/movement_delay()
+	return(1 + move_delay_add + config.alien_delay)
 
 /mob/living/carbon/xenomorph/humanoid/drone/can_pickup(obj/O)
 	if(istype(O, /obj/item/clothing/mask/facehugger))

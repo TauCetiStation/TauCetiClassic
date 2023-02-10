@@ -45,5 +45,3 @@
 		msg += "\nIt is [pose]"
 
 	to_chat(user, msg)
-
-	..()

@@ -12,13 +12,6 @@
 	logo_state = "cult-logo"
 
 	var/holy_rank = CULT_ROLE_HIGHPRIEST
-	skillset_type = /datum/skillset/cultist
-	change_to_maximum_skills = TRUE
-
-/datum/role/cultist/Greet(greeting, custom)
-	if(!..())
-		return FALSE
-	antag.current.playsound_local(null, 'sound/antag/cultist_alert.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
 /datum/role/cultist/CanBeAssigned(datum/mind/M, laterole)
 	if(laterole == FALSE) // can be null
@@ -38,7 +31,7 @@
 	if(mob.mind)
 		if(mob.mind.assigned_role == "Clown")
 			to_chat(mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-			REMOVE_TRAIT(mob, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
+			mob.mutations.Remove(CLUMSY)
 
 	mob.equip_to_slot_or_del(new /obj/item/device/cult_camera(mob), SLOT_IN_BACKPACK)
 
@@ -99,4 +92,3 @@
 	antag_hud_name = "hudheadcultist"
 
 	holy_rank = CULT_ROLE_MASTER
-	skillset_type = /datum/skillset/cultist/leader

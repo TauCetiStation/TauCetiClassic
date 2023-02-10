@@ -341,9 +341,10 @@
 /obj/machinery/teleport/hub/proc/is_ready()
 	. = !panel_open && !(stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.stat & (BROKEN|NOPOWER))
 
-/obj/machinery/teleport/hub/attack_ghost(mob/user)
-	if(power_station?.teleporter_console?.target)
-		user.abstract_move(power_station.teleporter_console.target)
+//obj/machinery/teleport/hub/syndicate/atom_init()
+//	. = ..()
+//	component_parts += new /obj/item/weapon/stock_parts/matter_bin/super(null)
+//	RefreshParts()
 
 /obj/machinery/teleport/station
 	name = "station"
@@ -403,7 +404,7 @@
 	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/weapon/W, mob/user)
-	if(ispulsing(W) && !panel_open)
+	if(ismultitool(W) && !panel_open)
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
 			if(linked_stations.len < efficiency)
@@ -422,12 +423,12 @@
 	default_deconstruction_crowbar(W)
 
 	if(panel_open)
-		if(ispulsing(W))
+		if(ismultitool(W))
 			var/obj/item/device/multitool/M = W
 			M.buffer = src
 			to_chat(user, "<span class='notice'>You download the data to the [W.name]'s buffer.</span>")
 			return
-		if(iscutter(W))
+		if(iswirecutter(W))
 			link_console_and_hub()
 			to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
 			return

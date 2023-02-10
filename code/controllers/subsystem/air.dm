@@ -51,7 +51,7 @@ SUBSYSTEM_DEF(air)
 	var/currentpart = SSAIR_PIPENETS
 
 	var/map_loading = TRUE
-	var/map_init_levels = -1 // number of z-levels initialized under this type of SS.
+	var/map_init_levels = 0 // number of z-levels initialized under this type of SS.
 	var/list/queued_for_update
 
 /datum/controller/subsystem/air/stat_entry(msg)
@@ -206,7 +206,7 @@ SUBSYSTEM_DEF(air)
 		tiles_to_update.len--
 
 		// Check if the turf is self-zone-blocked
-		if(FAST_C_AIRBLOCK(T, T) == ZONE_BLOCKED)
+		if(T.c_airblock(T) & ZONE_BLOCKED)
 			deferred_tiles += T
 			if (MC_TICK_CHECK)
 				return
@@ -336,10 +336,10 @@ SUBSYSTEM_DEF(air)
 	ASSERT(isturf(B))
 	#endif
 
-	var/ablock = FAST_C_AIRBLOCK(A, B)
+	var/ablock = A.c_airblock(B)
 	if(ablock == BLOCKED)
 		return BLOCKED
-	return ablock | FAST_C_AIRBLOCK(B, A)
+	return ablock | B.c_airblock(A)
 
 /datum/controller/subsystem/air/proc/has_valid_zone(turf/simulated/T)
 	#ifdef ZASDBG
@@ -432,14 +432,10 @@ SUBSYSTEM_DEF(air)
 		T.needs_air_update = TRUE
 
 /datum/controller/subsystem/air/StartLoadingMap()
-	if(map_init_levels == -1) // SSair will init turfs itself
-		return
 	LAZYINITLIST(queued_for_update)
 	map_loading = TRUE
 
 /datum/controller/subsystem/air/StopLoadingMap()
-	if(map_init_levels == -1)
-		return
 	map_loading = FALSE
 	map_init_levels = world.maxz // update z level counting, so air start to work on added levels.
 

@@ -4,11 +4,8 @@
 	opacity = FALSE
 	density = FALSE
 	layer = SIGN_LAYER
-
+	var/health = 100
 	var/buildable_sign = TRUE //unwrenchable and modifiable
-
-	max_integrity = 100
-	resistance_flags = CAN_BE_HIT
 
 /obj/structure/sign/basic
 	name = "blank sign"
@@ -16,7 +13,7 @@
 	icon_state = "backing"
 
 /obj/structure/sign/attackby(obj/item/W, mob/user, params)
-	if(iswrenching(W) && buildable_sign)
+	if(iswrench(W) && buildable_sign)
 		if(user.is_busy(src))
 			return
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>",
@@ -25,7 +22,10 @@
 			playsound(src, 'sound/items/deconstruct.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='notice'>[user] unfastens [src].</span>",
 								 "<span class='notice'>You unfasten [src].</span>")
-			deconstruct(TRUE)
+			var/obj/item/sign_backing/SB = new (get_turf(src))
+			SB.icon_state = icon_state
+			SB.sign_path = type
+			qdel(src)
 		return
 	else if(istype(W, /obj/item/weapon/airlock_painter) && buildable_sign)
 		if(user.is_busy())
@@ -80,32 +80,18 @@
 		qdel(src)
 
 	else
-		..()
-		if(QDELING(src))
+		switch(W.damtype)
+			if("fire")
+				playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
+				src.health -= W.force * 1
+			if("brute")
+				playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
+				src.health -= W.force * 0.75
+			else
+		if (src.health <= 0)
 			visible_message("<span class='warning'>[user] smashed [src] apart!</span>")
-
-/obj/structure/sign/deconstruct(disassembled)
-	if(resistance_flags & NODECONSTRUCT)
-		return ..()
-	if(buildable_sign)
-		var/obj/item/sign_backing/SB = new(loc)
-		SB.icon_state = icon_state
-		SB.sign_path = type
-	..()
-
-/obj/structure/sign/play_attack_sound(damage_amount, damage_type, damage_flag)
-	switch(damage_type)
-		if(BRUTE)
-			playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
-		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER)
-
-/obj/structure/sign/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
-	switch(damage_type)
-		if(BRUTE)
-			return damage_amount * 0.75
-		if(BURN)
-			return damage_amount
+			qdel(src)
+		..()
 
 /obj/item/sign_backing
 	name = "sign backing"
@@ -128,7 +114,7 @@
 		return ..()
 
 /obj/item/sign_backing/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I))
+	if(iswelder(I))
 		if(I.use(0, user))
 			if(I.use_tool(src, user, 20, volume = 50))
 				new /obj/item/stack/sheet/mineral/plastic(user.loc, 2)

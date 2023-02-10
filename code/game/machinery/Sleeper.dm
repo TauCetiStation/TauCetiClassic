@@ -33,7 +33,6 @@
 		list("dexalinp", "alkysine")
 	)
 	var/upgraded = FALSE
-	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/sleeper/upgraded
 	upgraded = TRUE
@@ -104,12 +103,15 @@
 					for(var/datum/reagent/x in src.occupant.reagents.reagent_list)
 						H.reagents.trans_to(beaker, 3)
 						H.blood_trans_to(beaker, 1)
+		updateUsrDialog()
 	return
 
-/obj/machinery/sleeper/deconstruct(disassembled)
-	for(var/atom/movable/A as anything in src)
-		A.forceMove(loc)
-	..()
+/obj/machinery/sleeper/blob_act()
+	if(prob(75))
+		for(var/atom/movable/A as mob|obj in src)
+			A.loc = src.loc
+			A.blob_act()
+		qdel(src)
 
 /obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
 	..()
@@ -237,8 +239,8 @@
 		dat +=  "<div class='line'><div class='statusLabel'>\> Toxin Content:</div><div class='progressBar'><div style='width: [occupant.getToxLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getToxLoss()]%</div></div>"
 		dat +=  "<div class='line'><div class='statusLabel'>\> Burn Severity:</div><div class='progressBar'><div style='width: [occupant.getFireLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getFireLoss()]%</div></div>"
 
-		var/occupant_paralysis = occupant.AmountParalyzed()
-		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant_paralysis)]% [occupant_paralysis ? "([round(occupant_paralysis / 4)] seconds left)" : ""]</div></div>"
+		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant.paralysis)]% [occupant.paralysis ? "([round(occupant.paralysis / 4)] seconds left)" : ""]</div></div>"
+		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant.paralysis)]% [occupant.paralysis ? "([round(occupant.paralysis / 4)] seconds left)" : ""]</div></div>"
 		if(occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in occupant.reagents.reagent_list)
 				dat += text("<div class='line'><div class='statusLabel'>[R.name]:</div><div class='statusValue'>[] units</div></div>", round(R.volume, 0.1))

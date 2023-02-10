@@ -268,7 +268,6 @@ var/global/list/departments_genitive = list()
 			return FALSE
 
 		announcement.play(department_genitive, message)
-		message_admins("[key_name_admin(usr)] has made a department announcement. [ADMIN_JMP(usr)]")
 
 		announceAuth = FALSE
 		message = ""
@@ -371,7 +370,6 @@ var/global/list/departments_genitive = list()
 	department_genitive = "Кабинета Капитана"
 	departmentType = RC_ASSIST_INFO
 	announcementConsole = TRUE
-	announcement = new /datum/announcement/station/command/department/captain
 
 /obj/machinery/requests_console/hop
 	name = "Head of Personnel RC"
@@ -379,7 +377,6 @@ var/global/list/departments_genitive = list()
 	department_genitive = "Кабинета ГП"
 	departmentType = RC_ASSIST_INFO
 	announcementConsole = TRUE
-	announcement = new /datum/announcement/station/command/department/hop
 
 /obj/machinery/requests_console/hos
 	name = "Head of Security RC"
@@ -387,7 +384,6 @@ var/global/list/departments_genitive = list()
 	department_genitive = "Кабинета ГСБ"
 	departmentType = RC_ASSIST_INFO
 	announcementConsole = TRUE
-	announcement = new /datum/announcement/station/command/department/hos
 
 /obj/machinery/requests_console/rd
 	name = "Research Director RC"
@@ -395,7 +391,6 @@ var/global/list/departments_genitive = list()
 	department_genitive = "Кабинета ДИР"
 	departmentType = RC_ASSIST_INFO
 	announcementConsole = TRUE
-	announcement = new /datum/announcement/station/command/department/rd
 
 /obj/machinery/requests_console/cmo
 	name = "Chief Medical Officer RC"
@@ -403,7 +398,6 @@ var/global/list/departments_genitive = list()
 	department_genitive = "Кабинета Главврача"
 	departmentType = RC_ASSIST_INFO
 	announcementConsole = TRUE
-	announcement = new /datum/announcement/station/command/department/cmo
 
 /obj/machinery/requests_console/ce
 	name = "Chief Engineer RC"
@@ -411,7 +405,6 @@ var/global/list/departments_genitive = list()
 	department_genitive = "Кабинета СИ"
 	departmentType = RC_INFO
 	announcementConsole = TRUE
-	announcement = new /datum/announcement/station/command/department/ce
 
 /obj/machinery/requests_console/bridge
 	name = "Bridge Requests Console"

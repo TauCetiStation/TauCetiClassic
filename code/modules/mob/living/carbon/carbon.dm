@@ -376,7 +376,7 @@
 /mob/living/carbon/MiddleClickOn(atom/A)
 	if(mind)
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-		if(stat == CONSCIOUS && C && C.chosen_sting && (iscarbon(A)) && (A != src))
+		if(!stat && C && C.chosen_sting && (iscarbon(A)) && (A != src))
 			next_click = world.time + 5
 			C.chosen_sting.try_to_sting(src, A)
 		else
@@ -385,7 +385,7 @@
 /mob/living/carbon/AltClickOn(atom/A)
 	if(mind)
 		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
-		if(stat == CONSCIOUS && C && C.chosen_sting && (iscarbon(A)) && (A != src))
+		if(!stat && C && C.chosen_sting && (iscarbon(A)) && (A != src))
 			next_click = world.time + 5
 			C.chosen_sting.try_to_sting(src, A)
 		else
@@ -461,9 +461,13 @@
 	item_in_hand = get_active_hand()
 	if(item_in_hand)
 		SEND_SIGNAL(item_in_hand, COMSIG_ITEM_BECOME_ACTIVE, src)
-	if(hud_used && l_hand_hud_object && r_hand_hud_object)
-		l_hand_hud_object.update_icon(src)
-		r_hand_hud_object.update_icon(src)
+	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
+		if(hand)	//This being 1 means the left hand is in use
+			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
+			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
+		else
+			hud_used.l_hand_hud_object.icon_state = "hand_l_inactive"
+			hud_used.r_hand_hud_object.icon_state = "hand_r_active"
 
 	/*if (!( src.hand ))
 		src.hands.dir = NORTH
@@ -537,7 +541,7 @@
 			if(roundstart_quirks.len)
 				to_chat(src, "<span class='notice'>You have these traits: [get_trait_string()].</span>")
 
-			if((isskeleton(H)) && !H.w_uniform && !H.wear_suit)
+			if(H.species && (H.species.name == SKELETON) && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
 			var/t_him = "it"
@@ -571,35 +575,22 @@
 					else
 						M.visible_message("<span class='notice'>[M] gently touches [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You gently touch [src] trying to wake [t_him] up!</span>")
-			else
-				switch(M.get_targetzone())
-					if(BP_R_ARM, BP_L_ARM)
-						M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
-										"<span class='notice'>You shake [src]'s hand.</span>", )
-					if(BP_HEAD)
-						M.visible_message("<span class='notice'>[M] pats [src] on the head.</span>", \
-										"<span class='notice'>You pat [src] on the head.</span>", )
-					if(O_EYES)
-						M.visible_message("<span class='notice'>[M] looks into [src]'s eyes.</span>", \
-										"<span class='notice'>You look into [src]'s eyes.</span>", )
-					if(BP_GROIN)
-						M.visible_message("<span class='notice'>[M] does something to [src] to make [t_him] feel better!</span>", \
-										"<span class='notice'>You do something to [src] to make [t_him] feel better!</span>", )
-					else
-						M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
-										"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
-
-				if(HAS_TRAIT(M, TRAIT_FRIENDLY))
-					var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-					if(mood)
-						if(mood.mood_level >= MOOD_LEVEL_HAPPY2)
-							new /obj/effect/temp_visual/heart(loc)
-							SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
-						else if(mood.mood_level >= MOOD_LEVEL_NEUTRAL)
-							SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
-						SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/hug)
+			else switch(M.get_targetzone())
+				if(BP_R_ARM, BP_L_ARM)
+					M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
+									"<span class='notice'>You shake [src]'s hand.</span>", )
+				if(BP_HEAD)
+					M.visible_message("<span class='notice'>[M] pats [src] on the head.</span>", \
+									"<span class='notice'>You pat [src] on the head.</span>", )
+				if(O_EYES)
+					M.visible_message("<span class='notice'>[M] looks into [src]'s eyes.</span>", \
+									"<span class='notice'>You look into [src]'s eyes.</span>", )
+				if(BP_GROIN)
+					M.visible_message("<span class='notice'>[M] does something to [src] to make [t_him] feel better!</span>", \
+									"<span class='notice'>You do something to [src] to make [t_him] feel better!</span>", )
 				else
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/hug)
+					M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
+									"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
 
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
@@ -686,7 +677,7 @@
 		if(isitem(item))
 			var/obj/item/O = item
 			if(O.w_class >= SIZE_SMALL)
-				playsound(loc, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
+				playsound(loc, 'sound/weapons/punchmiss.ogg', VOL_EFFECTS_MASTER)
 
 		do_attack_animation(target, has_effect = FALSE)
 
@@ -984,7 +975,7 @@
 			return
 		if(istype(thing, /mob/living/carbon/monkey/diona))
 			return
-	remove_status_flags(PASSEMOTES)
+	status_flags &= ~PASSEMOTES
 
 /mob/living/carbon/proc/can_eat(flags = 255) //I don't know how and why does it work
 	return TRUE
@@ -1084,7 +1075,8 @@
 				if (internal)
 					internal.add_fingerprint(usr)
 					internal = null
-					internals?.update_icon(src)
+					if (internals)
+						internals.icon_state = "internal0"
 					internalsound = 'sound/misc/internaloff.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = C
@@ -1094,7 +1086,8 @@
 				else if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
 					internal = ITEM
 					internal.add_fingerprint(usr)
-					internals?.update_icon(src)
+					if (internals)
+						internals.icon_state = "internal1"
 					internalsound = 'sound/misc/internalon.ogg'
 					if(ishuman(C)) // Because only human can wear a spacesuit
 						var/mob/living/carbon/human/H = C
@@ -1114,12 +1107,12 @@
 				attack_log += text("\[[time_stamp()]\] <font color='orange'>Had their internals [internal ? "open" : "close"] by [usr.name] ([usr.ckey])[gas_log_string]</font>")
 				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name][gas_log_string]</font>")
 
-/mob/living/carbon/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, stun = TRUE, force = FALSE)
+/mob/living/carbon/vomit(punched = FALSE, masked = FALSE)
 	var/mask_ = masked
 	if(head && (head.flags & HEADCOVERSMOUTH))
 		mask_ = TRUE
 
-	. = ..(punched, mask_, vomit_type, stun, force)
+	. = ..(punched, mask_)
 	if(. && !mask_)
 		if(reagents.total_volume > 0)
 			var/toxins_puked = 0
@@ -1213,7 +1206,7 @@
 	var/retFlags = 0
 	var/retVerb = "attacks"
 	var/retSound = null
-	var/retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
+	var/retMissSound = 'sound/weapons/punchmiss.ogg'
 
 	var/specie = get_species()
 	var/datum/species/S = all_species[specie]
@@ -1228,7 +1221,7 @@
 		if(length(attack.attack_sound))
 			retSound = pick(attack.attack_sound)
 
-		retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
+		retMissSound = 'sound/weapons/punchmiss.ogg'
 
 	if(HULK in mutations)
 		retDam += 4

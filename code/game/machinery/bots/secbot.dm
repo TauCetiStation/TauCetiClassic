@@ -6,7 +6,8 @@
 	var/icon_state_arrest = "secbot-c"
 	density = FALSE
 	anchored = FALSE
-	max_integrity = 25
+	health = 25
+	maxhealth = 25
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
 
@@ -161,7 +162,7 @@
 
 
 /obj/machinery/bot/secbot/proc/beingAttacked(obj/item/weapon/W, mob/user)
-	if(!isscrewing(W) && W.force && !target)
+	if(!isscrewdriver(W) && W.force && !target)
 		target = user
 		mode = SECBOT_HUNT
 
@@ -240,7 +241,7 @@
 							addtimer(CALLBACK(src, /atom.proc/update_icon), 2)
 							do_attack_animation(target)
 							target.adjustBruteLoss(15)
-							if(target.stat != CONSCIOUS)
+							if(target.stat)
 								forgetCurrentTarget()
 								playsound(src, pick(SOUNDIN_BEEPSKY), VOL_EFFECTS_MASTER, null, FALSE)
 
@@ -543,7 +544,7 @@
 /obj/machinery/bot/secbot/proc/look_for_perp()
 	anchored = FALSE
 	for(var/mob/living/L in view(7, src)) //Let's find us a criminal
-		if(L.stat != CONSCIOUS)
+		if(L.stat)
 			continue
 
 		if(iscarbon(L))
@@ -644,7 +645,7 @@
 	qdel(src)
 
 /obj/item/weapon/secbot_assembly/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I) && !build_step)
+	if(iswelder(I) && !build_step)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			build_step++

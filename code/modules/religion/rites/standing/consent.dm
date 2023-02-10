@@ -27,7 +27,7 @@
 		ASPECT_TECH = 1,
 	)
 
-/datum/religion_rites/standing/consent/synthconversion/can_start(mob/user, obj/AOG)
+/datum/religion_rites/standing/consent/synthconversion/can_start(mob/living/user, obj/AOG)
 	if(!..())
 		return FALSE
 
@@ -51,7 +51,7 @@
 
 	return TRUE
 
-/datum/religion_rites/standing/consent/synthconversion/invoke_effect(mob/user, obj/AOG)
+/datum/religion_rites/standing/consent/synthconversion/invoke_effect(mob/living/user, obj/AOG)
 	..()
 
 	if(convert_god(AOG))
@@ -75,8 +75,6 @@
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(AOG), "Son of Heaven", religion.bible_info.laws_type, FALSE, religion)
 	god.mind.transfer_to(O)
 	O.job = "Cyborg"
-	O.mind.skills.add_available_skillset(/datum/skillset/cyborg)
-	O.mind.skills.maximize_active_skills()
 	qdel(god)
 	religion.add_deity(O, HOLY_ROLE_PRIEST)
 	return TRUE
@@ -198,7 +196,7 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), SLOT_IN_BACKPACK)
 
 	religion.add_member(H, HOLY_ROLE_PRIEST)
-	ADD_TRAIT(H, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
+	H.mutations.Add(CLUMSY)
 	H.mind.assigned_role = "Clown"
 	return TRUE
 

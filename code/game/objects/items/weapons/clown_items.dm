@@ -91,7 +91,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/soap/attack(mob/target, mob/user, def_zone)
 	if(user.a_intent == INTENT_HARM)
 		..()
-	else if(target && user && ishuman(target) && ishuman(user) && user.stat == CONSCIOUS && user.zone_sel && !user.is_busy())
+	else if(target && user && ishuman(target) && ishuman(user) && !user.stat && user.zone_sel && !user.is_busy())
 		var/mob/living/carbon/human/H = target
 		var/body_part_name
 		switch(def_zone)
@@ -320,9 +320,8 @@
 						'sound/weapons/Egloves.ogg',
 						'sound/weapons/genhit1.ogg',
 						'sound/weapons/metal_shield_hit.ogg',
-						'sound/effects/mob/hits/medium_1.ogg',
-						'sound/effects/mob/hits/heavy_1.ogg',
-						'sound/effects/mob/hits/veryheavy_1.ogg',
+						'sound/weapons/punch1.ogg',
+						'sound/weapons/punch2.ogg',
 						'sound/weapons/smash.ogg',
 						'sound/weapons/slash.ogg'),
 
@@ -339,7 +338,7 @@
 						'sound/effects/clang.ogg',
 						'sound/effects/clownstep1.ogg',
 						'sound/effects/curtain.ogg',
-						'sound/effects/shovel_digging.ogg',
+						'sound/effects/digging.ogg',
 						'sound/effects/electric_shock.ogg',
 						'sound/effects/EMPulse.ogg',
 						'sound/effects/Explosion1.ogg',

@@ -1,7 +1,9 @@
 var/global/list/empty_playable_ai_cores = list()
 
 /proc/spawn_empty_ai()
-	for(var/obj/effect/landmark/start/S as anything in landmarks_list["AI"])
+	for(var/obj/effect/landmark/start/S in landmarks_list)
+		if(S.name != "AI")
+			continue
 		if(locate(/mob/living) in S.loc)
 			continue
 		empty_playable_ai_cores += new /obj/structure/AIcore/deactivated(get_turf(S))
@@ -9,7 +11,7 @@ var/global/list/empty_playable_ai_cores = list()
 	return 1
 
 /mob/living/silicon/ai/proc/wipe_core()
-	if(ismalf(src) || istype(loc,/obj/item/device/aicard) || stat != CONSCIOUS)
+	if(ismalf(src) || istype(loc,/obj/item/device/aicard) || stat)
 		wipe_timer_id = 0
 		return
 	perform_wipe_core()

@@ -392,8 +392,8 @@
 	t = replacetext(t, "\[/h\]", "</b></center></font>")
 
 	// bordered head;
-	// t = replacetext(t, "\[bh\]", "<div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b>")
-	// t = replacetext(t, "\[/bh\]", "</b></center></font></div>")
+	t = replacetext(t, "\[bh\]", "<div style=\"border-width: 4px; border-style: solid; padding: 10px;\"><font size=\"4\"><center><b>")
+	t = replacetext(t, "\[/bh\]", "</b></center></font></div>")
 
 	// blockquote
 	t = replacetext(t, "\[quote\]", "<blockquote style=\"line-height:normal; margin-bottom:10px; font-style:italic; letter-spacing: 1.25px; text-align:right;\">")

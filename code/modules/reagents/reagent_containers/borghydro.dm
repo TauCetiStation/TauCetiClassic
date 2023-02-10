@@ -15,11 +15,11 @@
 	var/recharge_time = 5 //Time it takes for shots to recharge (in seconds)
 
 	var/list/datum/reagents/reagent_list = list()
-	var/list/reagent_ids = list("tricordrazine", "inaprovaline", "spaceacillin", "metatrombine")
+	var/list/reagent_ids = list("tricordrazine", "inaprovaline", "spaceacillin")
 	//var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "anti_toxin", "inaprovaline", "spaceacillin")
 
 /obj/item/weapon/reagent_containers/borghypo/medical
-	reagent_ids = list("bicaridine", "kelotane", "inaprovaline", "anti_toxin", "dexalin", "metatrombine", "tramadol")
+	reagent_ids = list("bicaridine", "kelotane", "inaprovaline", "dexalin", "tramadol", "anti_toxin")
 
 /obj/item/weapon/reagent_containers/borghypo/medical/drone
 	volume = 15
@@ -116,9 +116,3 @@
 				empty = 0
 		if(empty)
 			to_chat(user, "<span class='notice'>It is currently empty. Allow some time for the internal syntheszier to produce more.</span>")
-
-/obj/item/weapon/reagent_containers/borghypo/peace
-	name = "Peace Hypospray"
-	charge_cost = 150
-	volume = 15
-	reagent_ids = list("cryptobiolin", "ethylredoxrazine", "inaprovaline", "anti_toxin", "metatrombine", "tramadol")

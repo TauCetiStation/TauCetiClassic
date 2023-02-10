@@ -6,8 +6,6 @@
 		return
 	if(src.pierce_protection)
 		return
-	if(!can_get_wet)
-		return
 
 	var/wet_weight = rand(18,28)
 	if(wet)

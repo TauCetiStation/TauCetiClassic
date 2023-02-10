@@ -27,7 +27,7 @@
 				wired = 1
 				to_chat(user, "<span class='notice'>You wire \the [src].</span>")
 
-	else if(iscutter(C) && wired )
+	else if(iswirecutter(C) && wired )
 		if(user.is_busy(src)) return
 		user.visible_message("[user] cuts the wires from \the [src].", "You start to cut the wires from \the [src].")
 
@@ -46,12 +46,12 @@
 			qdel(src)
 		else
 			to_chat(user, "<span class='warning'>You must secure \the [src] first!</span>")
-	else if(iswrenching(C))
+	else if(iswrench(C))
 		anchored = !anchored
 		user.visible_message("<span class='warning'>[user] has [anchored ? "" : "un" ]secured \the [src]!</span>",
 							 "You have [anchored ? "" : "un" ]secured \the [src]!")
 		update_icon()
-	else if(!anchored && iswelding(C))
+	else if(!anchored && iswelder(C))
 		var/obj/item/weapon/weldingtool/WT = C
 		if(user.is_busy(src)) return
 		if(WT.use(0, user))

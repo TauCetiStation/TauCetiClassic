@@ -13,8 +13,6 @@
 
 	var/last_check = 0
 
-	var/start_help = TRUE
-
 	var/list/first_help = list("Xeno liquidator" = 4)
 	var/list/second_help = list("Xeno arsonist" = 4)
 	var/first_help_sent = FALSE
@@ -76,8 +74,7 @@
 	"[ALIEN_DRONE]_live" = 0, "[ALIEN_DRONE]_dead" = 0, "[ALIEN_DRONE]_key" = "",
 	"[ALIEN_SENTINEL]_live" = 0, "[ALIEN_SENTINEL]_dead" = 0, "[ALIEN_SENTINEL]_key" = "",
 	"[ALIEN_HUNTER]_live" = 0, "[ALIEN_HUNTER]_dead" = 0, "[ALIEN_HUNTER]_key" = "",
-	"[ALIEN_LARVA]_live" = 0, "[ALIEN_LARVA]_dead" = 0, "[ALIEN_LARVA]_key" = "",
-	"[ALIEN_MAID]_live" = 0, "[ALIEN_MAID]_dead" = 0, "[ALIEN_MAID]_key" = "")
+	"[ALIEN_LARVA]_live" = 0, "[ALIEN_LARVA]_dead" = 0, "[ALIEN_LARVA]_key" = "")
 	for(var/list_key in alien_list)
 		if(list_key == ALIEN_FACEHUGGER)
 			continue
@@ -184,10 +181,6 @@
 			xeno_name = "грудоломов"
 			xeno_icon_state_live = "larva0"
 			xeno_icon_state_dead = "larva0_dead"
-		if(ALIEN_MAID)
-			xeno_name = "горничных"
-			xeno_icon_state_live = "alienm_running"
-			xeno_icon_state_dead = "alienm_dead"
 
 	if(xeno_live)
 		I = icon('icons/mob/xenomorph.dmi', "[xeno_icon_state_live]", SOUTH)
@@ -229,7 +222,7 @@
 			dat += {"<tr><td><img src="logo_[tempstate].png"></td>"}
 			dat += "<td style='color: red; font-weight: bold;'>Королева была убита!</td></tr>"
 
-	var/list/L = list(ALIEN_DRONE, ALIEN_SENTINEL, ALIEN_HUNTER, ALIEN_LARVA, ALIEN_MAID)
+	var/list/L = list(ALIEN_DRONE, ALIEN_SENTINEL, ALIEN_HUNTER, ALIEN_LARVA)
 	for(var/list_key in L)
 		if(aliens["[list_key]_live"] || aliens["[list_key]_dead"])
 			dat += generate_completion_text(list_key, aliens["[list_key]_live"], aliens["[list_key]_dead"], aliens["[list_key]_key"])

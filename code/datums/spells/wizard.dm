@@ -27,7 +27,6 @@
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
 	desc = "Какое-то богохульство."
-	amt_stunned = 2
 	amt_weakened = 5
 	amt_dam_fire = 10
 	sound = 'sound/magic/MAGIC_MISSILE.ogg'
@@ -128,7 +127,7 @@
 	inner_tele_radius = 0
 	outer_tele_radius = 6
 
-	centcomm_cancast = FALSE //prevent people from getting to centcomm
+	centcomm_cancast = 0 //prevent people from getting to centcomm
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	name = "Телепорт"
@@ -171,18 +170,17 @@
 		new summon_path(get_step(user, SOUTH), user)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
-	name = "Призыв Карпа"
-	desc = "Это заклинание призывает очень злого карпа."
+	name = "Summon Carp"
+	desc = "This spell conjures a simple carp."
 
 	school = "conjuration"
-	charge_max = 300
-	action_icon_state = "purple_carp"
+	charge_max = 1200
 	clothes_req = 1
 	invocation = "NOUK FHUNMM SACP RISSKA"
 	invocation_type = "shout"
 	range = 1
 
-	summon_type = list(/mob/living/simple_animal/hostile/carp/wizard)
+	summon_type = list(/mob/living/simple_animal/hostile/carp)
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
@@ -262,7 +260,7 @@
 
 /obj/effect/proc_holder/spell/dumbfire/fireball
 	name = "Огненный Шар"
-	desc = "Выстреливает огненным шаром в цель."
+	desc = "Выстреливает огненным шаром в цель и не требует одежды для использования."
 
 	school = "evocation"
 	charge_max = 100
@@ -317,7 +315,7 @@
 	invocation_type = "none"
 	range = 0
 	summon_type = list(/turf/simulated/floor/engine/cult, /turf/simulated/floor/engine/cult/lava)
-	centcomm_cancast = FALSE //Stop crashing the server by spawning turfs on transit tiles
+	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
 	action_icon_state = "floorconstruct"
 	action_background_icon_state = "bg_cult"
@@ -333,26 +331,10 @@
 	invocation_type = "none"
 	range = 0
 	summon_type = list(/turf/simulated/wall/cult, /turf/simulated/wall/cult/runed, /turf/simulated/wall/cult/runed/anim)
-	centcomm_cancast = FALSE //Stop crashing the server by spawning turfs on transit tiles
+	centcomm_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
 	action_icon_state = "lesserconstruct"
 	action_background_icon_state = "bg_cult"
-
-/obj/effect/proc_holder/spell/aoe_turf/conjure/door
-	name = "Возвести Ворота"
-	desc = "Это заклинание создает Врата."
-
-	action_icon_state = "cult_door"
-	action_background_icon_state = "bg_cult"
-
-	school = "conjuration"
-	charge_max = 400
-	clothes_req = FALSE
-	invocation = "none"
-	invocation_type = "none"
-	range = 0
-	summon_type = list(/obj/structure/mineral_door/cult)
-	centcomm_cancast = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
 	name = "Создание камня души"
@@ -410,16 +392,13 @@
 		usr.RemoveSpell(src)
 		return
 
-	var/text = "<span class='[user.my_religion.style_text]'>[user.mind.holy_role == CULT_ROLE_MASTER ? "Предвестник" : "Аколит"] [user.real_name]: [input]</span>"
+	var/text = "<span class='[user.my_religion.style_text]'>Аколит [user.real_name]: [input]</span>"
 	log_say("([user.my_religion.name]) Аколит [user.real_name]: [input]")
 	for(var/mob/M in global.mob_list)
 		if(isobserver(M))
 			to_chat(M, "[FOLLOW_LINK(M, user)] [text]")
 		if(user.my_religion.is_member(M))
-			if(iseminence(M))
-				to_chat(M, "[FOLLOW_LINK(M, user)] [text]")
-			else
-				to_chat(M, text)
+			to_chat(M, text)
 
 	playsound(user, 'sound/magic/message.ogg', VOL_EFFECTS_MASTER, extrarange = -6) // radius 3
 

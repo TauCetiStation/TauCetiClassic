@@ -17,7 +17,6 @@
 	pixel_y = 8
 	},
 /obj/effect/decal/cleanable/cobweb,
-/obj/item/weapon/paper/github_easter_egg,
 /turf/simulated/floor/plating,
 /area/space)
 "e" = (

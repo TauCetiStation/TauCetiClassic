@@ -25,7 +25,7 @@
 		to_chat(src, "<span class='notice'>You will no longer interact with machines you click on.</span>")
 
 /mob/dead/observer/DblClickOn(atom/A, params)
-	if(client.click_intercept || istype(A, /obj/effect/statclick) || istype(A, /atom/movable/screen)) // handled in normal click.
+	if(client.buildmode || istype(A, /obj/effect/statclick) || istype(A, /atom/movable/screen)) // handled in normal click.
 		return
 	if(can_reenter_corpse && mind && mind.current)
 		if(A == mind.current || (mind.current in A)) // double click your corpse or whatever holds it
@@ -46,14 +46,11 @@
 		return
 	next_click = world.time + 1
 
-	if(client.click_intercept)
-		client.click_intercept.InterceptClickOn(src, params, A)
+	if(client.buildmode)
+		build_click(src, client.buildmode, params, A)
 		return
 
 	var/list/modifiers = params2list(params)
-	if(modifiers[SHIFT_CLICK] && modifiers[MIDDLE_CLICK])
-		MiddleShiftClickOn(A)
-		return
 	if(modifiers[SHIFT_CLICK])
 		ShiftClickOn(A)
 		return
@@ -77,6 +74,13 @@
 // ---------------------------------------
 // And here are some good things for free:
 // Now you can click through portals, wormholes, gateways, and teleporters while observing. -Sayu
+
+/obj/machinery/teleport/hub/attack_ghost(mob/user)
+	var/atom/l = loc
+	var/obj/machinery/computer/teleporter/com = locate(/obj/machinery/computer/teleporter, locate(l.x - 2, l.y, l.z))
+	if(com?.locked)
+		user.loc = get_turf(com.locked)
+
 /obj/effect/portal/attack_ghost(mob/user)
 	if(target)
 		user.loc = get_turf(target)

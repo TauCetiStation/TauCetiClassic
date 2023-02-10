@@ -19,7 +19,6 @@
 	var/volume_rate = SCRUBBER_DEFAULT_RATE
 
 	var/list/scrubbing_gas
-	required_skills = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/portable_atmospherics/powered/scrubber/atom_init()
 	. = ..()
@@ -128,10 +127,8 @@
 
 /obj/machinery/portable_atmospherics/powered/scrubber/tgui_act(action, params)
 	. = ..()
-
 	if(.)
 		return
-
 	switch(action)
 		if("power")
 			on = !on
@@ -235,7 +232,7 @@
 		update_connected_network()
 
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/attackby(obj/item/I, mob/user)
-	if(iswrenching(I))
+	if(iswrench(I))
 		if(on)
 			to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
 			return
@@ -250,7 +247,7 @@
 	//doesn't use power cells
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		return
-	if (isscrewing(I))
+	if (isscrewdriver(I))
 		return
 
 	//doesn't hold tanks
@@ -264,7 +261,7 @@
 	name = "Stationary Air Scrubber"
 
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/stationary/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W))
+	if(iswrench(W))
 		to_chat(user, "<span class='notice'>The bolts are too tight for you to unscrew!</span>")
 		return
 

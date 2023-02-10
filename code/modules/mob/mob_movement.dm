@@ -1,10 +1,12 @@
-/mob/CanPass(atom/movable/mover, turf/target, height=0)
-	var/retVal = SEND_SIGNAL(src, COMSIG_ATOM_CANPASS, mover, target, height)
+/mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	var/retVal = SEND_SIGNAL(src, COMSIG_ATOM_CANPASS, mover, target, height, air_group)
 	if(retVal & COMPONENT_CANTPASS)
 		return FALSE
 	else if(retVal & COMPONENT_CANPASS)
 		return TRUE
 
+	if(air_group || (height==0))
+		return 1
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
 		return (!density || lying)
 	if(mover.checkpass(PASSMOB) || checkpass(PASSMOB))
@@ -35,6 +37,11 @@
 /client/East()
 	..()
 
+/client/verb/drop_item()
+	set hidden = 1
+	if(!isrobot(mob) && mob.stat == CONSCIOUS && isturf(mob.loc))
+		return mob.drop_item()
+	return
 /client/proc/Move_object(direct)
 	if(mob && mob.control_object)
 		if(mob.control_object.density)
@@ -66,7 +73,7 @@
 
 	if(!n || !direct)
 		return
-	if(!forced && mob.stat != CONSCIOUS)
+	if(!forced && mob.stat)
 		return
 
 /*	// handle possible spirit movement
@@ -92,6 +99,15 @@
 			return
 	Process_Grab()
 
+	if(istype(mob.buckled, /obj/vehicle))
+		//manually set move_delay for vehicles so we don't inherit any mob movement penalties
+		//specific vehicle move delays are set in code\modules\vehicles\vehicle.dm
+		move_delay = world.time
+		//drunk driving
+		if(mob.confused)
+			direct = mob.confuse_input(direct)
+		return mob.buckled.relaymove(mob,direct)
+
 	if(!forced && !mob.canmove)
 		return
 
@@ -108,55 +124,55 @@
 	if(isturf(mob.loc))
 
 		if(mob.restrained())//Why being pulled while cuffed prevents you from moving
-			var/mob/M = mob.pulledby
-			if(M)
-				if(!M.incapacitated() && M.canmove && mob.Adjacent(M))
-					to_chat(src, "<span class='notice'>You're incapacitated! You can't move!</span>")
-					return 0
-				else
-					M.stop_pulling()
+			for(var/mob/M in range(mob, 1))
+				if(M.pulling == mob)
+					if(!M.incapacitated() && M.canmove && mob.Adjacent(M))
+						to_chat(src, "<span class='notice'>You're incapacitated! You can't move!</span>")
+						return 0
+					else
+						M.stop_pulling()
 
-		//Calculating delays
-		var/add_delay = 0
+		if(mob.pinned.len)
+			to_chat(src, "<span class='notice'>You're pinned to a wall by [mob.pinned[1]]!</span>")
+			return 0
 
+		//We are now going to move
+		var/add_delay
+		move_delay = world.time//set move delay
 		mob.last_move_intent = world.time + 10
-
 		switch(mob.m_intent)
 			if("run")
 				if(mob.drowsyness > 0)
 					add_delay += 6
-				add_delay += 1 + config.run_speed
+				add_delay += 1+config.run_speed
 			if("walk")
-				add_delay += 2.5 + config.walk_speed
-
-		var/list/grabs = mob.GetGrabs()
-		if(grabs.len)
-			var/grab_delay
-			for(var/obj/item/weapon/grab/G in grabs)
-				grab_delay += max(0, (G.state - 1) * 4 + (grabs.len - 1) * 4) // so if we have 2 grabs or 1 in high level we will be sloow
-				grab_delay += G.affecting.stat == CONSCIOUS ? ( G.affecting.a_intent == INTENT_HELP ? 0 : 0.5 ) : 1
-			add_delay += grab_delay
-
+				add_delay += 2.5+config.walk_speed
 		add_delay += mob.movement_delay()
+		move_delay += add_delay
 
-		move_delay = world.time + add_delay //set move delay
-
-		//Relaymoves
-		if(mob.buckled) // Wheelchair driving!
+		if(mob.pulledby || mob.buckled) // Wheelchair driving!
 			if(isspaceturf(mob.loc))
 				return // No wheelchair driving in space
-
-			return mob.buckled.relaymove(mob, direct)
+			if(istype(mob.pulledby, /obj/structure/stool/bed/chair/wheelchair))
+				return mob.pulledby.relaymove(mob, direct)
+			else if(istype(mob.buckled, /obj/structure/stool/bed/chair/wheelchair))
+				if(ishuman(mob.buckled))
+					var/mob/living/carbon/human/driver = mob.buckled
+					var/obj/item/organ/external/l_hand = driver.bodyparts_by_name[BP_L_ARM]
+					var/obj/item/organ/external/r_hand = driver.bodyparts_by_name[BP_R_ARM]
+					if((!l_hand || (l_hand.is_stump)) && (!r_hand || (r_hand.is_stump)))
+						return // No hands to drive your chair? Tough luck!
+				move_delay += 2
+				return mob.buckled.relaymove(mob,direct)
 
 		//We are now going to move
-		moving = TRUE
-
+		moving = 1
 		if(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
 			moving = FALSE
 			return
-
 		//Something with pulling things
-		if(grabs.len)
+		if(locate(/obj/item/weapon/grab, mob))
+			move_delay = max(move_delay, world.time + 7)
 			var/list/L = mob.ret_grab()
 			if(istype(L, /list))
 				if(L.len == 2)
@@ -193,19 +209,16 @@
 				n = get_step(get_turf(mob), direct)
 			. = mob.SelfMove(n, direct)
 
-		for(var/obj/item/weapon/grab/G in grabs)
-			if(G.state == GRAB_NECK)
+		for (var/obj/item/weapon/grab/G in mob.GetGrabs())
+			if (G.state == GRAB_NECK)
 				mob.set_dir(reverse_dir[direct])
 			G.adjust_position()
-
-		for(var/obj/item/weapon/grab/G in mob.grabbed_by)
+		for (var/obj/item/weapon/grab/G in mob.grabbed_by)
 			G.adjust_position()
 
-		if((direct & (direct - 1)) && mob.loc == n)
-			move_delay += add_delay * 0.4 // in general moving diagonally will be 1.4 (sqrt(2)) times slower
-
+		if((direct & (direct - 1)) && mob.loc == n) //moved diagonally successfully
+			move_delay += add_delay
 		moving = FALSE
-
 		if(mob && .)
 			mob.throwing = FALSE
 
@@ -261,6 +274,12 @@
 			minDist = dist
 	console.jump_on_click(src, minCam)
 	return TRUE
+
+/mob/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	if (pinned.len)
+		return FALSE
+
+	return ..()
 
 ///Process_Incorpmove
 ///Called by client/Move()

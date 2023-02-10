@@ -1,6 +1,6 @@
 /obj/structure/cellular_biomass/lair
 	layer = 3
-	max_integrity = 120
+	health = 120
 	var/spawn_chance = 1
 	var/active = 1
 	var/spawned_mob = /mob/living/simple_animal/hostile/carp

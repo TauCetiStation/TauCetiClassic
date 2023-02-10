@@ -117,24 +117,19 @@
 	greaterform = TAJARAN
 	add_language(LANGUAGE_SIIKTAJR)
 
-/mob/living/carbon/monkey/movement_delay()
-	var/tally = speed
-
+/mob/living/carbon/monkey/movement_delay(tally = 0)
 	if(reagents && reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola"))
 		return -1
 
 	var/health_deficiency = (100 - health)
-	if(health_deficiency >= 45)
-		tally += (health_deficiency / 25)
+	if(health_deficiency >= 45) tally += (health_deficiency / 25)
 
-	tally += count_pull_debuff()
+	if(pull_debuff)
+		tally += pull_debuff
 
-	if (bodytemperature < BODYTEMP_NORMAL - 30)
-		tally += 1.75 * (BODYTEMP_NORMAL - 30 - bodytemperature) / 10
-	return tally + config.monkey_delay
-
-/mob/living/carbon/monkey/count_pull_debuff()
-	return pulling ? ..() + 1 : 0
+	if (bodytemperature < 283.222)
+		tally += (283.222 - bodytemperature) / 10 * 1.75
+	return tally+config.monkey_delay
 
 /mob/living/carbon/monkey/helpReaction(mob/living/attacker, show_message = TRUE)
 	help_shake_act(attacker)
@@ -146,7 +141,7 @@
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
 		if(istype(src, /mob/living/carbon/monkey/diona))
-			stat(null, "Nutriment: [nutrition]/[NUTRITION_LEVEL_NORMAL]")
+			stat(null, "Nutriment: [nutrition]/400")
 	if(mind)
 		for(var/role in mind.antag_roles)
 			var/datum/role/R = mind.antag_roles[role]
@@ -204,14 +199,14 @@
 	return 0
 
 /mob/living/carbon/monkey/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=0, message_range = world.view, list/used_radios = list())
-	if(stat != CONSCIOUS)
+	if(stat)
 		return
 
 	if(!message)
 		return
 
 	if(message[1] == "*")
-		return emote(copytext(message, 2))
+		return emote(copytext(message,2))
 
 	if(speak_emote.len)
 		verb = pick(speak_emote)

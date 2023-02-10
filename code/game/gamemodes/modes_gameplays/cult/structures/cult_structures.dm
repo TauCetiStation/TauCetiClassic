@@ -3,12 +3,16 @@
 	anchored = TRUE
 	icon = 'icons/obj/cult.dmi'
 	var/can_unwrench = TRUE
-	max_integrity = 3000
+	var/health = 3000
 
-	resistance_flags = CAN_BE_HIT
+/obj/structure/cult/bullet_act(obj/item/projectile/Proj, def_zone)
+	health -= Proj.damage
+	. = ..()
+	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
+	healthcheck()
 
 /obj/structure/cult/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W) && can_unwrench)
+	if(iswrench(W) && can_unwrench)
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
@@ -16,16 +20,16 @@
 		return FALSE
 
 	. = ..()
+	if(!.)
+		return FALSE
 
-/obj/structure/cult/play_attack_sound(damage_amount, damage_type, damage_flag)
-	switch(damage_type)
-		if(BRUTE)
-			if(damage_amount)
-				playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
-			else
-				playsound(src, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
-		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+	if(length(W.hitsound))
+		playsound(src, pick(W.hitsound), VOL_EFFECTS_MASTER)
+	else
+		playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
+
+	health -= W.force
+	healthcheck()
 
 /obj/structure/cult/attack_hand(mob/living/carbon/human/user)
 	user.SetNextMove(CLICK_CD_MELEE)
@@ -34,11 +38,21 @@
 	BP.take_damage(3, 0, 0, "stone")
 	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
 
+/obj/structure/cult/attack_animal(mob/living/simple_animal/user)
+	. = ..()
+	health -= user.melee_damage
+	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
+	healthcheck()
+
 /obj/structure/cult/attack_paw(mob/living/user)
 	if(ishuman(user))
 		return attack_hand(user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	playsound(src, 'sound/effects/hit_statue.ogg', VOL_EFFECTS_MASTER)
+
+/obj/structure/cult/proc/healthcheck()
+	if(health <= 0)
+		qdel(src)
 
 /obj/structure/cult/tome
 	name = "desk"
@@ -48,10 +62,6 @@
 	light_power = 2
 	light_range = 3
 
-#define CORRUPT_FORBIDDEN 0
-#define CORRUPT_NOT_ALLOWED 1 //We don't know whether we should or not corrupt
-#define CORRUPT_ALLOWED 2
-ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 /obj/structure/cult/pylon
 	name = "pylon"
 	desc = "A floating crystal that hums with an unearthly energy."
@@ -60,71 +70,17 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	light_power = 2
 	light_range = 6
 	pass_flags = PASSTABLE
-	max_integrity = 200
-	var/list/validturfs = list()
-	var/should_corrupt = CORRUPT_NOT_ALLOWED
-	var/datum/religion/cult/C
+	health = 200
 
-	var/corruption_delay = 50 //Increases currupting delay by 5 each time it procs
-	COOLDOWN_DECLARE(corruption)
-
-/obj/structure/cult/pylon/atom_init()
-	. = ..()
-	if(global.cult_religion && global.cult_religion.get_tech(RTECH_IMPROVED_PYLONS))
-		init_healing()
-
-/obj/structure/cult/pylon/proc/init_healing()
-	AddComponent(/datum/component/aura_healing, 5, TRUE, 0.4, 0.4, 0.1, 1, 1, 0.1, 0.4, null, 1.2, \
-	TRAIT_HEALS_FROM_PYLONS,"#960000")
-	START_PROCESSING(SSprocessing, src)
-	C = cult_religion
-
-/obj/structure/cult/pylon/deconstruct(disassembled)
-	if(flags & NODECONSTRUCT)
-		return ..()
+/obj/structure/cult/pylon/Destroy()
 	new /obj/structure/cult/pylon_platform(loc)
 	new /obj/item/stack/sheet/metal(loc)
-	STOP_PROCESSING(SSprocessing, src)
-	validturfs = null
 	return ..()
-
-/obj/structure/cult/pylon/process()
-	if(!anchored)
-		if(length(validturfs))
-			validturfs = list()
-		return
-
-	//Now we have to decide whether we need to corrupt or not
-	if(should_corrupt == CORRUPT_FORBIDDEN)
-		return
-	else if(should_corrupt == CORRUPT_ALLOWED)
-		if(COOLDOWN_FINISHED(src, corruption))
-			corrupt()
-	else if(should_corrupt == CORRUPT_NOT_ALLOWED)
-		if(is_centcom_level(z))//It is cult' area, after all
-			should_corrupt = CORRUPT_FORBIDDEN
-		else
-			should_corrupt = CORRUPT_ALLOWED
-
-/obj/structure/cult/pylon/proc/corrupt()
-	if(!length(validturfs))
-		for(var/T as anything in circleviewturfs(src, 5))
-			validturfs += T
-	else
-		var/turf/simulated/T = pick(validturfs)
-		T.atom_religify(C)
-		validturfs -= T
-		corruption_delay += 5
-
-	COOLDOWN_START(src, corruption, corruption_delay)
-#undef CORRUPT_FORBIDDEN
-#undef CORRUPT_NOT_ALLOWED
-#undef CORRUPT_ALLOWED
 
 /obj/structure/cult/pylon/proc/activate(time_to_stop, datum/religion/R)
 	var/mob/living/simple_animal/hostile/pylon/charged = new(loc)
-	charged.maxHealth = max_integrity
-	charged.health = get_integrity()
+	charged.maxHealth = health
+	charged.health = health
 	forceMove(charged)
 
 	if(time_to_stop)
@@ -138,7 +94,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	name = "pylon platform"
 	desc = "Useless."
 	icon_state = "pylon_platform"
-	max_integrity = 50
+	health = 50
 	density = FALSE
 
 // For operations
@@ -146,10 +102,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	name = "torture table"
 	desc = "For tortures"
 	icon = 'icons/obj/cult.dmi'
-	icon_state = "table_surgey_idle"
+	icon_state = "table2-idle"
 	can_buckle = TRUE
 	buckle_lying = TRUE
-	flags = NODECONSTRUCT
 
 	var/datum/religion/cult/religion
 	var/charged = FALSE
@@ -179,7 +134,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 			new /obj/effect/temp_visual/cult/sparks(loc)
 			return FALSE
 
-	if(iswrenching(W))
+	if(iswrench(W))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
@@ -219,7 +174,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 /obj/structure/mineral_door/cult
 	name = "door"
 	icon_state = "cult"
-	max_integrity = 300
+	health = 300
 	sheetAmount = 2
 	sheetType = /obj/item/stack/sheet/metal
 	light_color = "#990000"

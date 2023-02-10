@@ -108,7 +108,7 @@
 			if(!wiresexposed)
 				if(istype(W, /obj/item/device/detective_scanner))
 					return
-				else if(isscrewing(W))
+				else if(isscrewdriver(W))
 					if(panel_locked && !issilicon(user) && !(stat & NOPOWER) && !emagged)
 						to_chat(user, "<span class='warning'>The panel is locked</span>")
 						return
@@ -129,7 +129,7 @@
 				else
 					return attack_hand(user)
 			else
-				if(isscrewing(W))
+				if(isscrewdriver(W))
 					wiresexposed = FALSE
 					panel_locked = TRUE
 					controls_locked = TRUE
@@ -144,7 +144,7 @@
 					else
 						to_chat(user, "<span class='warning'>Access Denied.</span>")
 						return
-				else if(ispulsing(W) && !(stat & NOPOWER))
+				else if(ismultitool(W) && !(stat & NOPOWER))
 					if(!controls_locked || emagged || issilicon(user))
 						set_up_door_control(user)
 						update_icon()
@@ -152,7 +152,7 @@
 					else
 						to_chat(usr, "<span class='warning'>Controls are locked!</span>")
 						return
-				else if(iscutter(W))
+				else if(iswirecutter(W))
 					to_chat(user, "You remove wires from the door control frame.")
 					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 					new /obj/item/stack/cable_coil/random(loc, 1)
@@ -180,19 +180,13 @@
 					return
 				name = t
 				return
-			else if(iswrenching(W))
+			else if(iswrench(W))
 				to_chat(user, "You remove the door control assembly from the wall!")
-				deconstruct(TRUE)
+				var/obj/item/door_control_frame/frame = new
+				frame.loc = user.loc
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				qdel(src)
 				return
-
-/obj/machinery/door_control/deconstruct(disassembled)
-	if(flags & NODECONSTRUCT)
-		return ..()
-	var/obj/item/door_control_frame/frame = new(loc)
-	transfer_fingerprints_to(frame)
-	..()
 
 /obj/machinery/door_control/emag_act(mob/user)
 	if((buildstage == DOOR_CONTROL_COMPLETE) && !emagged)
@@ -269,9 +263,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/item/I = usr.get_active_hand()
-
-	if(I && !ispulsing(I))
+	if(!ismultitool(usr.get_active_hand()))
 		to_chat(usr, "<span class='warning'>You need a multitool!</span>")
 		return
 	if(href_list["show_accesses"])
@@ -425,7 +417,7 @@
 	icon_state = "doorctrl_assembly0"
 
 /obj/item/door_control_frame/attackby(obj/item/I, mob/user, params)
-	if(iswrenching(I))
+	if(iswrench(I))
 		new /obj/item/stack/sheet/metal(get_turf(src.loc), 1)
 		qdel(src)
 		return
@@ -444,10 +436,10 @@
 		to_chat(usr, "<span class='warning'>Door Control cannot be placed in this area.</span>")
 		return
 
-	if(iswallturf(target))
+	if(istype(target, /turf/simulated/wall))
 		var/turf/loc = get_turf_loc(usr)
 
-		if(!isfloorturf(loc))
+		if(!istype(loc, /turf/simulated/floor))
 			to_chat(usr, "<span class='warning'>Door Control cannot be placed on this spot.</span>")
 			return
 
@@ -460,7 +452,7 @@
 	else if(istype(target, /obj/structure/table/reinforced))
 		var/turf/loc = get_turf_loc(target)
 
-		if (!isfloorturf(loc))
+		if (!istype(loc, /turf/simulated/floor))
 			to_chat(usr, "<span class='warning'>Door Control cannot be placed on this spot.</span>")
 			return
 

@@ -17,7 +17,7 @@
 		vis_contents -= graphic_remove
 
 /turf/proc/update_air_properties()
-	var/block = FAST_C_AIRBLOCK(src, src)
+	var/block = c_airblock(src)
 	if(block & AIR_BLOCKED)
 		//dbg(blocked)
 		return TRUE
@@ -33,13 +33,13 @@
 		if(!unsim)
 			continue
 
-		block = FAST_C_AIRBLOCK(unsim, src)
+		block = unsim.c_airblock(src)
 
 		if(block & AIR_BLOCKED)
 			//unsim.dbg(air_blocked, turn(180,d))
 			continue
 
-		var/r_block = FAST_C_AIRBLOCK(src, unsim)
+		var/r_block = c_airblock(unsim)
 
 		if(r_block & AIR_BLOCKED)
 			continue
@@ -62,17 +62,7 @@
 		return TRUE
 
 	var/check_dirs = get_zone_neighbours(src)
-	var/allow_error = FALSE
-
-	switch(check_dirs)
-		if(NORTH, SOUTH, WEST, EAST) //cardinal dir -> doesn't connect the zone
-			return TRUE
-		if(0, NORTH_SOUTH, EAST_WEST) // 0 (it's faster to rebuild) or tunnel
-			return FALSE
-		if(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST) // we have 1 corner to check
-			return check_zone_neighbours_corner(get_step(src, check_dirs), reverse_dir[check_dirs])
-		if(NORTHWEST | SOUTHEAST)
-			allow_error = TRUE // allow 1 of 4 corners without zone connection
+	var/unconnected_dirs = check_dirs
 
 	#ifdef MULTIZAS
 	var/to_check = cornerdirsz
@@ -85,16 +75,15 @@
 		//for each pair of "adjacent" cardinals (e.g. NORTH and WEST, but not NORTH and SOUTH)
 		if((dir & check_dirs) == dir)
 			//check that they are connected by the corner turf
-			if(!check_zone_neighbours_corner(get_step(src, dir), reverse_dir[dir]))
-				if(allow_error)
-					allow_error = FALSE
-				else
-					return FALSE
+			var/connected_dirs = get_zone_neighbours(get_step(src, dir))
+			if(connected_dirs && (dir & reverse_dir[connected_dirs]) == dir)
+				unconnected_dirs &= ~dir //they are, so unflag the cardinals in question
 
-	return TRUE
+	//it is safe to remove src from the zone if all cardinals are connected by corner turfs
+	return !unconnected_dirs
 
 //helper for can_safely_remove_from_zone()
-/proc/get_zone_neighbours(turf/simulated/T)
+/turf/simulated/proc/get_zone_neighbours(turf/simulated/T)
 	. = 0
 	if(istype(T) && T.zone)
 		#ifdef MULTIZAS
@@ -104,26 +93,15 @@
 		#endif
 		for(var/dir in to_check)
 			var/turf/simulated/other = get_step(T, dir)
-			if(istype(other) && other.zone == T.zone && !(FAST_C_AIRBLOCK(other, T) & AIR_BLOCKED))
+			if(istype(other) && other.zone == T.zone && !(other.c_airblock(T) & AIR_BLOCKED) && get_dist(src, other) <= 1)
 				. |= dir
-
-/proc/check_zone_neighbours_corner(turf/simulated/T, dir)
-	if(istype(T) && T.zone)
-		var/v = dir & NORTH_SOUTH
-		var/h = dir & EAST_WEST
-		var/turf/simulated/other = get_step(T, v)
-		if(istype(other) && other.zone == T.zone && !(FAST_C_AIRBLOCK(other, T) & AIR_BLOCKED))
-			other = get_step(T, h)
-			if(istype(other) && other.zone == T.zone && !(FAST_C_AIRBLOCK(other, T) & AIR_BLOCKED))
-				return TRUE
-	return FALSE
 
 /turf/simulated/update_air_properties()
 	if(zone && zone.invalid) //this turf's zone is in the process of being rebuilt
 		c_copy_air() //not very efficient :(
 		zone = null //Easier than iterating through the list at the zone.
 
-	var/s_block = FAST_C_AIRBLOCK(src, src)
+	var/s_block = c_airblock(src)
 	if(s_block & AIR_BLOCKED)
 		#ifdef ZASDBG
 		if(verbose)
@@ -156,7 +134,7 @@
 		if(!unsim) //edge of map
 			continue
 
-		var/block = FAST_C_AIRBLOCK(unsim, src)
+		var/block = unsim.c_airblock(src)
 		if(block & AIR_BLOCKED)
 
 			#ifdef ZASDBG
@@ -167,7 +145,7 @@
 
 			continue
 
-		var/r_block = FAST_C_AIRBLOCK(src, unsim)
+		var/r_block = c_airblock(unsim)
 		if(r_block & AIR_BLOCKED)
 
 			#ifdef ZASDBG

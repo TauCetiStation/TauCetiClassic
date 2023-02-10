@@ -5,7 +5,6 @@
 	icon_state = "off"
 	density = TRUE
 	anchored = TRUE
-	resistance_flags = FULL_INDESTRUCTIBLE
 
 	var/active = FALSE  // on away missions you should activate gateway from start, or place "awaystart" landmarks somewhere
 	var/hacked = FALSE
@@ -20,7 +19,7 @@
 	if(dir & SOUTH)
 		density = FALSE
 	if(!transit_loc)
-		transit_loc = locate("landmark*Gateway transit")
+		transit_loc = locate(/obj/effect/landmark/gateway_transit) in landmarks_list
 
 /obj/machinery/gateway/update_icon()
 	icon_state = active ? "on" : "off"
@@ -183,7 +182,7 @@
 	use_power(1000)
 
 /obj/machinery/gateway/center/attackby(obj/item/device/W, mob/user)
-	if(ispulsing(W))
+	if(ismultitool(W))
 		calibrate(user)
 	else
 		..()
@@ -194,9 +193,7 @@
 	entered.forceMove(transit_loc.loc)
 	if(isliving(entered))
 		var/mob/living/M = entered
-		ADD_TRAIT(M, TRAIT_IMMOBILIZED, src)
-		ADD_TRAIT(M, TRAIT_INCAPACITATED, src)
-		M.update_canmove()
+		M.Stun(10, 1, 1, 1)
 		var/atom/movable/screen/cinematic = new /atom/movable/screen{icon='icons/effects/gateway_entry.dmi'; icon_state="entry"; layer=21; mouse_opacity = MOUSE_OPACITY_TRANSPARENT; screen_loc="1,0"; } (src)
 		if(M.client)
 			M.client.screen += cinematic
@@ -214,15 +211,12 @@
 			sleep(12)
 			M.client.screen -= cinematic
 		qdel(cinematic)
-		REMOVE_TRAIT(M, TRAIT_IMMOBILIZED, src)
-		REMOVE_TRAIT(M, TRAIT_INCAPACITATED, src)
-		M.update_canmove()
+		M.AdjustStunned(-10, 1, 1, 0)
 	entered.freeze_movement = FALSE
 	entered.forceMove(target)
 	playsound(target, 'sound/machines/gateway/gateway_enter.ogg', VOL_EFFECTS_MASTER)
 
 /obj/effect/landmark/gateway_transit
-	name = "Gateway transit"
 
 /obj/effect/landmark/gateway_transit/Crossed(atom/movable/AM)
 	. = ..()

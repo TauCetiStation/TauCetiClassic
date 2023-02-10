@@ -9,7 +9,6 @@
 	icon_state = "safe"
 	anchored = TRUE
 	density = TRUE
-	resistance_flags = FULL_INDESTRUCTIBLE
 	/// The maximum combined w_class of stuff in the safe
 	var/maxspace = 24
 	/// The amount of tumblers that will be generated
@@ -26,6 +25,7 @@
 	var/current_tumbler_index = 1
 	/// The combined w_class of everything in the safe
 	var/space = 0
+	/// Tough, but breakable if explosion counts reaches set value
 
 /obj/structure/safe/atom_init()
 	. = ..()
@@ -151,7 +151,7 @@
 					current_tumbler_index = 1
 
 				if(!invalid_turn && dial == tumblers[current_tumbler_index])
-					notify_user(user, canhear, list("TINK", "KRINK", "PLINK"), ticks, i)
+					notify_user(user, canhear, list("tink", "krink", "plink"), ticks, i)
 					current_tumbler_index++
 				else
 					notify_user(user, canhear, list("clack", "scrape", "clank"), ticks, i)
@@ -169,7 +169,7 @@
 					current_tumbler_index = 1
 
 				if(!invalid_turn && dial == tumblers[current_tumbler_index])
-					notify_user(user, canhear, list("TONK", "KRUNK", "PLUNK"), ticks, i)
+					notify_user(user, canhear, list("tonk", "krunk", "plunk"), ticks, i)
 					current_tumbler_index++
 				else
 					notify_user(user, canhear, list("click", "chink", "clink"), ticks, i)

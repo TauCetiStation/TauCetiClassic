@@ -110,7 +110,7 @@
 			attach_assembly(A, user)
 			return
 
-	if(isscrewing(I))
+	if(isscrewdriver(I))
 		if(toggle_secure())
 			to_chat(user, "<span class='notice'>\The [src] is ready!</span>")
 		else

@@ -134,15 +134,15 @@ var/global/list/combat_combos_by_name = list()
 
 /datum/combat_combo/proc/can_execute(datum/combo_handler/CS, show_warning = FALSE)
 	if(heavy_animation)
-		if(CS.attacker.anchored)
+		if(CS.attacker.pinned.len)
 			if(show_warning)
-				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> because you are anchored.</span>")
+				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> because you are pinned to a wall.</span>")
 			return FALSE
-		if(CS.victim.anchored)
+		if(CS.victim.pinned.len)
 			if(show_warning)
-				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> because they are anchored.</span>")
+				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> because they are pinned to a wall.</span>")
 			return FALSE
-		if(!CS.attacker.canmove)
+		if(CS.attacker.anchored || !CS.attacker.canmove)
 			if(show_warning)
 				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while not being able to move.</span>")
 			return FALSE
@@ -239,7 +239,7 @@ var/global/list/combat_combos_by_name = list()
 	if(min_value < 0 || val >= min_value)
 		var/armor_check = 0
 		if(!armor_pierce)
-			armor_check = victim.run_armor_check(check_bodyarmor ? null : zone, MELEE)
+			armor_check = victim.run_armor_check(check_bodyarmor ? null : zone, "melee")
 		return victim.apply_damage(val, force_dam_type ? force_dam_type : attack_obj["type"],
 			def_zone = zone,
 			blocked = armor_check,
@@ -265,7 +265,7 @@ var/global/list/combat_combos_by_name = list()
 	if(min_value < 0 || val >= min_value)
 		var/armor_check = 0
 		if(!armor_pierce)
-			armor_check = victim.run_armor_check(check_bodyarmor ? null : zone, MELEE)
+			armor_check = victim.run_armor_check(check_bodyarmor ? null : zone, "melee")
 		return victim.apply_effect(duration, effect, blocked = armor_check)
 	return FALSE
 
@@ -297,7 +297,7 @@ var/global/list/combat_combos_by_name = list()
 	return FALSE
 
 /datum/combat_combo/proc/get_combo_icon()
-	var/image/I = image(icon='icons/hud/unarmed_combat_combos.dmi', icon_state=combo_icon_state)
+	var/image/I = image(icon='icons/mob/unarmed_combat_combos.dmi', icon_state=combo_icon_state)
 	I.plane = ABOVE_HUD_PLANE
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	I.pixel_x = 16

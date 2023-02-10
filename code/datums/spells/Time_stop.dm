@@ -70,10 +70,7 @@ var/global/timestop_count = 0
 				var/mob/living/simple_animal/hostile/H = M
 				H.LoseTarget()
 
-			ADD_TRAIT(M, TRAIT_IMMOBILIZED, src)
-			ADD_TRAIT(M, TRAIT_INCAPACITATED, src)
-			M.update_canmove()
-
+			M.Stun(10, 1, 1, 1)
 			M.silent += duration
 			M.freeze_movement = TRUE
 			stopped_atoms |= M
@@ -104,9 +101,7 @@ var/global/timestop_count = 0
 		if(isliving(AM))
 			var/mob/living/M = AM
 			M.silent = max(M.silent - duration, 0)
-			REMOVE_TRAIT(M, TRAIT_IMMOBILIZED, src)
-			REMOVE_TRAIT(M, TRAIT_INCAPACITATED, src)
-			M.update_canmove()
+			M.AdjustStunned(-10, 1, 1, 0)
 
 		if(istype(AM, /obj/item/projectile))
 			var/obj/item/projectile/P = AM

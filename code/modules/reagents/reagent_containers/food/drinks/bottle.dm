@@ -49,7 +49,6 @@
 					sleep_not_stacking = 25
 
 			stop_spin_bottle = TRUE
-			playsound(src, 'sound/items/glass_containers/bottle_spin.ogg', VOL_EFFECTS_MASTER)
 			SpinAnimation(speed, loops, pick(0, 1)) //SpinAnimation(speed, loops, clockwise, segments)
 			transform = turn(matrix(), dir2angle(pick(alldirs)))
 			sleep(sleep_not_stacking) //Not stacking
@@ -58,18 +57,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/pickup(mob/living/user)
 	. = ..()
 	animate(src, transform = null, time = 0) //Restore bottle to its original position
-	if(reagents.total_volume > 0)
-		playsound(user, 'sound/items/glass_containers/bottle_take-liquid.ogg', VOL_EFFECTS_MASTER)
-	else
-		playsound(user, 'sound/items/glass_containers/bottle_take-empty.ogg', VOL_EFFECTS_MASTER)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/dropped(mob/user)
-	. = ..()
-	if(isturf(loc) && (user.loc != loc))
-		if(reagents.total_volume > 0)
-			playsound(user, 'sound/items/glass_containers/bottle_put-liquid.ogg', VOL_EFFECTS_MASTER)
-		else
-			playsound(user, 'sound/items/glass_containers/bottle_put-empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
 
@@ -115,7 +103,7 @@
 	if(ishuman(target))
 
 		var/mob/living/carbon/human/H = target
-		armor_block = H.run_armor_check(def_zone, MELEE) // For normal attack damage
+		armor_block = H.run_armor_check(def_zone, "melee") // For normal attack damage
 
 		//Calculating the weakening duration for the target.
 		if(def_zone == BP_HEAD)
@@ -123,7 +111,7 @@
 
 	else
 		//Only humans can have armour, right?
-		armor_block = target.run_armor_check(def_zone, MELEE)
+		armor_block = target.run_armor_check(def_zone, "melee")
 		if(def_zone == BP_HEAD)
 			armor_duration = duration + force
 	armor_duration /= 10
@@ -157,19 +145,13 @@
 	if(src.reagents)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("<span class='notice'><B>The contents of the [src] splashes all over [target]!</B></span>"), 1)
-		reagents.standard_splash(target, user = user)
+		reagents.reaction(target, TOUCH)
 
 	//Finally, smash the bottle. This kills (del) the bottle.
 	smash(target, user)
 
 	// We're smashing the bottle into mob's face. There's no need for an afterattack.
 	return TRUE
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/afterattack(atom/target, mob/user, proximity, params)
-	. = ..()
-	if(target.is_open_container())
-		if(reagents.total_volume && target.reagents.total_volume < target.reagents.maximum_volume)
-			playsound(user, 'sound/items/glass_containers/bottle_pouring.ogg', VOL_EFFECTS_MASTER, 800)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/after_throw(datum/callback/callback)
 	..()

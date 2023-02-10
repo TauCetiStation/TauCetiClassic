@@ -25,16 +25,6 @@
 	variance = 0.8
 	select_name = "scatter"
 
-/obj/item/ammo_casing/energy/laser/cutter
-	e_cost = 100
-	select_name = "safe mode"
-	projectile_type = /obj/item/projectile/beam/plasma_cutter
-
-/obj/item/ammo_casing/energy/laser/cutter/emagged
-	projectile_type = /obj/item/projectile/beam/plasma_cutter/emagged
-	select_name = "combat mode"
-	e_cost = 1000
-
 /obj/item/ammo_casing/energy/laser/heavy
 	projectile_type = /obj/item/projectile/beam/heavylaser
 	select_name = "anti-vehicle"

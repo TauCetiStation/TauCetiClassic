@@ -35,7 +35,8 @@
 		current_user.unset_machine()
 		current_user = null
 	QDEL_NULL(eyeobj)
-	QDEL_LIST(actions)
+	QDEL_NULL(off_action)
+	QDEL_NULL(jump_action)
 	actions.Cut()
 	return ..()
 
@@ -44,9 +45,15 @@
 	eyeobj.origin = src
 
 /obj/machinery/computer/camera_advanced/proc/GrantActions(mob/living/user)
-	for(var/datum/action/to_grant as anything in actions)
-		to_grant.target = src
-		to_grant.Grant(user)
+	if(off_action)
+		off_action.target = user
+		off_action.Grant(user)
+
+
+	if(jump_action)
+		jump_action.target = user
+		jump_action.Grant(user)
+
 
 /obj/machinery/computer/camera_advanced/proc/remove_eye_control(mob/living/user)
 	if(!user)
@@ -174,28 +181,29 @@
 
 /datum/action/camera_off
 	name = "End Camera View"
-	button_icon = 'icons/hud/actions.dmi'
+	button_icon = 'icons/mob/actions.dmi'
 	button_icon_state = "camera_off"
 	action_type = AB_INNATE
 
 /datum/action/camera_off/Activate()
-	if(!owner || !isliving(owner))
+	if(!target || !isliving(target))
 		return
-	var/mob/living/C = owner
+	var/mob/living/C = target
 	var/mob/camera/Eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/console = remote_eye.origin
-	console.remove_eye_control(owner)
+	console.remove_eye_control(target)
 
 /datum/action/camera_jump
 	name = "Jump To Camera"
-	button_icon = 'icons/hud/actions.dmi'
+	button_icon = 'icons/mob/actions.dmi'
 	button_icon_state = "camera_jump"
 	action_type = AB_INNATE
 
 /datum/action/camera_jump/Activate()
-	if(!owner || !isliving(owner))
+	if(!target || !isliving(target))
 		return
-	var/mob/living/C = owner
+
+	var/mob/living/C = target
 	var/mob/camera/Eye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/origin = remote_eye.origin
 

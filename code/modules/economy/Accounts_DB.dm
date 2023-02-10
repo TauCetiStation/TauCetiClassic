@@ -12,7 +12,6 @@
 	var/obj/item/weapon/card/id/held_card
 	var/datum/money_account/detailed_account_view
 	var/creating_new_account = 0
-	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/account_database/proc/get_access_level()
 	if (!held_card)
@@ -150,7 +149,9 @@
 					var/trx = create_transation(account_name, "New account activation", "([starting_funds])")
 					station_account.transaction_log.Add(trx)
 
-				ui.close()
+					creating_new_account = 0
+					ui.close()
+
 				creating_new_account = 0
 			if("insert_card")
 				if(held_card)

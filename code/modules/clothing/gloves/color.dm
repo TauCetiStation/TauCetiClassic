@@ -35,8 +35,6 @@
 
 /obj/item/clothing/gloves/black/hos
 	name = "head of security's gloves"
-	desc = "Heavily padded heavy-duty black tactical gloves. Especially for the Head of Security."
-	siemens_coefficient = 0.5 //just like security gloves
 
 /obj/item/clothing/gloves/black/ce
 	name = "chief engineer's gloves"

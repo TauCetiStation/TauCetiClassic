@@ -116,7 +116,6 @@
 	desc = "It's janitor hat."
 	icon_state = "janitorsoft"
 	cap_color = "janitor"
-	can_get_wet = FALSE
 
 /obj/item/clothing/head/soft/nt_pmc_cap
 	name = "NT PMC Cap"

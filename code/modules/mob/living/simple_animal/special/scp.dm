@@ -29,6 +29,7 @@
 	status_flags = CANPUSH
 	universal_speak = 1
 	universal_understand = 1
+	attack_sound = list('sound/weapons/punch1.ogg')
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -53,7 +54,6 @@
 /turf/var/scp_was_here = 0
 
 /mob/living/simple_animal/special/scp173/atom_init()
-	attack_sound = SOUNDIN_PUNCH_MEDIUM
 	. = ..()
 	for(var/mob/living/simple_animal/special/scp173/SA in mob_list) //only 1 can exist at the same time
 		if(SA != src)
@@ -96,7 +96,7 @@
 					Light.update(0)
 				else
 					L.set_light(0)
-			for(var/obj/structure/glowshroom/G in T.contents) //Very small radius
+			for(var/obj/effect/glowshroom/G in T.contents) //Very small radius
 				qdel(G)
 			for(var/mob/living/carbon/human/H in T.contents)
 				for(var/obj/item/F in H)
@@ -187,7 +187,7 @@
 			L.scp_mark = 0
 
 /mob/living/simple_animal/special/scp173/attack_animal(mob/living/simple_animal/M)
-	M.me_emote("[M.friendly] \the <EM>[src]</EM>")
+	M.emote("[M.friendly] \the <EM>[src]</EM>")
 
 /mob/living/simple_animal/special/scp173/Process_Spacemove(movement_dir = 0)
 	return 1 //copypasta from carp code

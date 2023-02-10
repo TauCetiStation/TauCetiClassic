@@ -6,7 +6,7 @@
 	if(alert_admins)
 		msg_admin_attack("[key_name(src)] has been [msg], by [key_name(attacker)]", attacker)
 
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null)
 	var/armor = getarmor(def_zone, attack_flag)
 	if(armor >= 100)
 		if(absorb_text)
@@ -38,6 +38,8 @@
 	. = mob_bullet_act(P, def_zone)
 	if(. != PROJECTILE_ALL_OK)
 		return
+
+	flash_weak_pain()
 
 	//Being hit while using a deadman switch
 	if(istype(get_active_hand(),/obj/item/device/assembly/signaler))
@@ -123,7 +125,7 @@
 /mob/living/proc/resolve_thrown_attack(obj/O, throw_damage, dtype, zone, armor)
 
 	if(isnull(armor)) // Armor arg passed by human
-		armor = run_armor_check(null, MELEE)
+		armor = run_armor_check(null, "melee")
 		visible_message("<span class='warning'>[src] has been hit by [O].</span>")
 
 	var/damage_flags = O.damage_flags()
@@ -159,12 +161,6 @@
 	embedded += I
 	verbs += /mob/proc/yank_out_object
 
-/mob/living/proc/unpin_signal(obj/item/I)
-	SIGNAL_HANDLER
-	REMOVE_TRAIT(src, TRAIT_ANCHORED, I)
-	update_canmove()
-	UnregisterSignal(I, COMSIG_MOVABLE_MOVED)
-
 /mob/living/proc/pin_to_turf(obj/item/I)
 	if(!I)
 		return
@@ -180,8 +176,8 @@
 
 		visible_message("<span class='warning'>[src] is pinned to the [T] by [I]!</span>",
 			"<span class='danger'>You are pinned to the wall by [I]!</span>")
-		ADD_TRAIT(src, TRAIT_ANCHORED, I)
-		RegisterSignal(I, COMSIG_MOVABLE_MOVED, CALLBACK(src, .proc/unpin_signal, I))
+		anchored = TRUE
+		pinned += I
 		update_canmove() // instant update, no need to wait Life() tick
 
 //This is called when the mob is thrown into a dense turf
@@ -295,7 +291,7 @@
 	update_action_buttons()
 
 /mob/living/incapacitated(restrained_type = ARMS)
-	return stat || HAS_TRAIT(src, TRAIT_INCAPACITATED) || restrained(restrained_type)
+	return stat || paralysis || stunned || weakened || restrained(restrained_type)
 
 // These procs define whether this mob has a usable limb at a given targetzone. Heavily used in combo-combat.
 // If targetzone is not specified, returns TRUE if the mob has the bodypart in general.

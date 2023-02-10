@@ -3,15 +3,6 @@
 	begin_month = APRIL
 	begin_day = 1
 
-	staffwho_group_name = list(
-		SW_ADMINS     = "ClownAdmins",
-		SW_MENTORS    = "Mimes",
-		SW_XENOVISORS = "Clownvisors",
-		SW_DEVELOPERS = "Janitors",
-	)
-	staffwho_prefixs = list("Bored", "Boring", "Funny", "Not Funny", "Cute", "Ugly", "Evil", "Despot", "Sad", "Kind", "Smart", "Wise", "Stupid", "Dumb", "III", "Shit Spawner", "Confused", "Chaotic", "Toxic", "SSD", "Insane", "", "Golden", "Tiny", "Furry", "Holy", "Unholy", "Looser", "Foolish", "Red", "Blue", "ERP")
-	staffwho_no_staff = "No Clowns Online"
-
 /datum/holiday/spess
 	name = "Cosmonautics Day"
 	begin_day = 12

@@ -26,7 +26,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/maxf = 1499
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	var/grid = FALSE // protect from EMP
-	flags = CONDUCT | HEAR_TALK
+	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throw_speed = 2
 	throw_range = 9
@@ -118,7 +118,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/Topic(href, href_list)
 	//..()
-	if ((usr.stat != CONSCIOUS && !IsAdminGhost(usr)) || !on)
+	if ((usr.stat && !IsAdminGhost(usr)) || !on)
 		return
 
 	if (!(issilicon(usr) || IsAdminGhost(usr) || Adjacent(usr)))
@@ -413,7 +413,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		Broadcast_Message(connection, M, voicemask, pick(M.speak_emote),
 						  src, message, displayname, jobname, real_name, M.voice_name,
 		                  filter_type, signal.data["compression"], list(position.z), connection.frequency,verb,speaking)
-
+		
 		return TRUE
 
 
@@ -672,7 +672,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/obj/item/device/radio_grid/new_grid = I
 		new_grid.attach(src)
 
-	else if(iscutter(I))
+	else if(iswirecutter(I))
 		if(!grid)
 			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
 			return
@@ -681,7 +681,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
 		new_grid.dettach(src)
 
-	else if (isscrewing(I))
+	else if (isscrewdriver(I))
 		b_stat = !b_stat
 		add_fingerprint(user)
 		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
@@ -716,7 +716,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/borg/attackby(obj/item/I, mob/user, params)
 	user.set_machine(src)
 
-	if(isscrewing(I))
+	if(isscrewdriver(I))
 		if(keyslot)
 			for(var/ch_name in channels)
 				radio_controller.remove_object(src, radiochannels[ch_name])

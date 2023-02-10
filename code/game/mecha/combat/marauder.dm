@@ -8,7 +8,7 @@
 	step_in = 5
 	health = 500
 	deflect_chance = 25
-	damage_absorption = list(BRUTE=0.5,BURN=0.7,BULLET=0.45,LASER=0.6,ENERGY=0.7,BOMB=0.7)
+	damage_absorption = list("brute"=0.5,"fire"=0.7,"bullet"=0.45,"laser"=0.6,"energy"=0.7,"bomb"=0.7)
 	max_temperature = 60000
 	infra_luminosity = 3
 	var/zoom_mode = FALSE
@@ -138,8 +138,6 @@
 		return
 	if(src.occupant)
 		if(get_charge() > 0)
-			if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to [!thrusters_active? "en" : "dis"]able thrusters.</span>"))
-				return
 			thrusters_active = !thrusters_active
 			log_message("Toggled thrusters.")
 			occupant_message("<font color='[src.thrusters_active? "blue" : "red"]'>Thrusters [thrusters_active? "en" : "dis"]abled.</font>")
@@ -149,8 +147,6 @@
 	if(usr != src.occupant)
 		return
 	if(smoke_ready && smoke>0)
-		if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to use smoke system.</span>"))
-			return
 		smoke_system.start()
 		smoke--
 		smoke_ready = 0
@@ -162,8 +158,6 @@
 	if(usr != src.occupant)
 		return
 	if(src.occupant.client)
-		if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to [!zoom_mode?"en":"dis"]able zoom mode.</span>"))
-			return
 		src.zoom_mode = !src.zoom_mode
 		log_message("Toggled zoom mode.")
 		occupant_message("<font color='[src.zoom_mode?"blue":"red"]'>Zoom mode [zoom_mode?"en":"dis"]abled.</font>")

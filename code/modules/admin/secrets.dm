@@ -339,7 +339,7 @@
 		if("flicklights")
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","FL")
-			while(usr.stat == CONSCIOUS)
+			while(!usr.stat)
 				//knock yourself out to stop the ghosts
 				for(var/mob/M in player_list)
 					if(M.stat != DEAD && prob(25))
@@ -569,7 +569,7 @@
 		// Restore air in your zone
 		if("restore_air") // this is unproper way to restore turfs default gas values, since you can delete sleeping agent for example.
 			var/turf/simulated/T = get_turf(usr)
-			if((isfloorturf(T) || istype(T, /turf/simulated/shuttle/floor)) && T.zone.air)
+			if((istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/shuttle/floor)) && T.zone.air)
 				var/datum/gas_mixture/GM = T.zone.air
 
 				for(var/g in gas_data.gases)

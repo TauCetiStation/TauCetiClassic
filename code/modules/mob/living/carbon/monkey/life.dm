@@ -60,13 +60,7 @@
 			step(src, pick(cardinal))
 
 		if(prob(1))
-			var/list/rand_emote = list(
-				"scratches.",
-				"jumps!",
-				"rolls.",
-				"waves his tail.",
-			)
-			me_emote(pick(rand_emote))
+			emote(pick("scratch","jump","roll","tail"))
 	updatehealth()
 	if(client)
 		handle_alerts()
@@ -74,17 +68,17 @@
 /mob/living/carbon/monkey/proc/handle_disabilities()
 
 	if (disabilities & EPILEPSY || HAS_TRAIT(src, TRAIT_EPILEPSY))
-		if (prob(1))
+		if ((prob(1) && paralysis < 10))
 			to_chat(src, "<span class='warning'>You have a seizure!</span>")
 			Paralyse(10)
 	if (disabilities & COUGHING || HAS_TRAIT(src, TRAIT_COUGH))
-		if ((prob(5) && !paralysis))
+		if ((prob(5) && paralysis <= 1))
 			drop_item()
 			spawn( 0 )
 				emote("cough")
 				return
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
-		if (prob(10) && !paralysis)
+		if ((prob(10) && paralysis <= 1))
 			Stun(10)
 			spawn( 0 )
 				emote("twitch")
@@ -106,7 +100,6 @@
 	if ((HULK in mutations) && health <= 25)
 		mutations.Remove(HULK)
 		to_chat(src, "<span class='warning'>You suddenly feel very weak.</span>")
-		Stun(1)
 		Weaken(3)
 		emote("collapse")
 
@@ -123,7 +116,6 @@
 
 		if (radiation > 100)
 			radiation = 100
-			Stun(5)
 			Weaken(10)
 			if(!lying)
 				to_chat(src, "<span class='warning'>You feel weak.</span>")
@@ -140,7 +132,6 @@
 				adjustToxLoss(1)
 				if(prob(5))
 					radiation -= 5
-					Stun(1)
 					Weaken(3)
 					if(!lying)
 						to_chat(src, "<span class='warning'>You feel weak.</span>")
@@ -202,10 +193,12 @@
 		return null
 	if(!(contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS)))
 		internal = null
-		internals?.update_icon(src)
+		if(internals)
+			internals.icon_state = "internal0"
 		return null
-		
-	internals?.update_icon(src)
+
+	if(internals)
+		internals.icon_state = "internal1"
 	return internal.remove_air_volume(volume_needed)
 
 /mob/living/carbon/monkey/proc/handle_chemicals_in_body()
@@ -258,6 +251,7 @@
 			setHalLoss(99)
 
 		if(paralysis)
+			AdjustParalysis(-1)
 			blinded = 1
 			stat = UNCONSCIOUS
 			if(halloss > 0)
@@ -291,6 +285,12 @@
 			ear_damage = max(ear_damage-0.05, 0)
 
 		//Other
+		if(stunned)
+			AdjustStunned(-1)
+
+		if(weakened)
+			weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
+
 		if(stuttering > 0)
 			AdjustStuttering(-1)
 
@@ -301,13 +301,36 @@
 			adjustDrugginess(-1)
 	return 1
 
+
 /mob/living/carbon/monkey/handle_regular_hud_updates()
 	if(!client)
-		return
+		return 0
 
 	update_sight()
 
+	if (healths)
+		if (stat != DEAD)
+			switch(health)
+				if(100 to INFINITY)
+					healths.icon_state = "health0"
+				if(80 to 100)
+					healths.icon_state = "health1"
+				if(60 to 80)
+					healths.icon_state = "health2"
+				if(40 to 60)
+					healths.icon_state = "health3"
+				if(20 to 40)
+					healths.icon_state = "health4"
+				if(0 to 20)
+					healths.icon_state = "health5"
+				else
+					healths.icon_state = "health6"
+		else
+			healths.icon_state = "health7"
+
 	..()
+
+	return 1
 
 /mob/living/carbon/monkey/proc/handle_random_events()
 	if (prob(1) && prob(2))
@@ -336,8 +359,8 @@
 		nutrition += light_amount
 		traumatic_shock -= light_amount
 
-		if(nutrition > NUTRITION_LEVEL_NORMAL)
-			nutrition = NUTRITION_LEVEL_NORMAL
+		if(nutrition > 400)
+			nutrition = 400
 		if(light_amount > 2) //if there's enough light, heal
 			adjustBruteLoss(-1)
 			adjustToxLoss(-1)

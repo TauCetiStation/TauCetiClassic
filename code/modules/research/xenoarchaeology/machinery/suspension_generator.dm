@@ -12,14 +12,13 @@
 	var/power_use = 25
 	var/obj/effect/suspension_field/suspension_field
 	var/list/secured_mobs = list()
-	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/suspension_gen/atom_init()
 	cell = new/obj/item/weapon/stock_parts/cell/high(src)
 	. = ..()
 
 /obj/machinery/suspension_gen/attackby(obj/item/weapon/W, mob/user)
-	if (isscrewing(W))
+	if (isscrewdriver(W))
 		if(!open)
 			if(screwed)
 				screwed = 0
@@ -27,7 +26,7 @@
 				screwed = 1
 			to_chat(user, "<span class='info'>You [screwed ? "screw" : "unscrew"] the battery panel.</span>")
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-	else if (isprying(W))
+	else if (iscrowbar(W))
 		if(!locked)
 			if(!screwed)
 				if(!suspension_field)
@@ -44,7 +43,7 @@
 				to_chat(user, "<span class='warning'>Unscrew [src]'s battery panel first.</span>")
 		else
 			to_chat(user, "<span class='warning'>[src]'s security locks are engaged.</span>")
-	else if (iswrenching(W))
+	else if (iswrench(W))
 		if(!suspension_field)
 			if(anchored)
 				anchored = FALSE
@@ -136,15 +135,14 @@
 		var/turf/T = get_turf(suspension_field)
 		if(field_type == "carbon")
 			for(var/mob/living/carbon/M in T)
-				M.Stun(3)
-				M.Weaken(3)
+				M.weakened = max(M.weakened, 3)
 				cell.charge -= power_use
 				if(prob(5))
 					to_chat(M, "<span class='notice'>[pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]</span>")
 
 		if(field_type == "iron")
 			for(var/mob/living/silicon/M in T)
-				M.Stun(3)
+				M.weakened = max(M.weakened, 3)
 				cell.charge -= power_use
 				if(prob(5))
 					to_chat(M, "<span class='notice'>[pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]</span>")
@@ -156,8 +154,7 @@
 			I.loc = suspension_field
 
 		for(var/mob/living/simple_animal/M in T)
-			M.Stun(3)
-			M.Weaken(3)
+			M.weakened = max(M.weakened, 3)
 			cell.charge -= power_use
 			if(prob(5))
 				to_chat(M, "<span class='notice'>[pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]</span>")
@@ -221,8 +218,7 @@
 		if("carbon")
 			success = 1
 			for(var/mob/living/carbon/C in T)
-				C.AdjustStunned(5)
-				C.AdjustWeakened(5)
+				C.weakened += 5
 				C.visible_message("<span class='notice'>[bicon(C)] [C] begins to float in the air!</span>","You feel tingly and light, but it is difficult to move.")
 		if("nitrogen")
 			success = 1
@@ -245,7 +241,7 @@
 		if("iron")
 			success = 1
 			for(var/mob/living/silicon/R in T)
-				R.AdjustStunned(5)
+				R.weakened += 5
 				R.visible_message("<span class='notice'>[bicon(R)] [R] begins to float in the air!</span>","You feel tingly and light, but it is difficult to move.")
 			//
 	//in case we have a bad field type
@@ -254,8 +250,7 @@
 
 	for(var/mob/living/simple_animal/C in T)
 		C.visible_message("<span class='notice'>[bicon(C)] [C] begins to float in the air!</span>","You feel tingly and light, but it is difficult to move.")
-		C.AdjustStunned(5)
-		C.AdjustWeakened(5)
+		C.weakened += 5
 
 	suspension_field = new(T)
 	suspension_field.field_type = field_type
@@ -271,7 +266,7 @@
 		suspension_field.add_overlay("shield2")
 		visible_message("<span class='notice'>[bicon(suspension_field)] [suspension_field] gently absconds [collected > 1 ? "something" : "several things"].</span>")
 	else
-		if(istype(T,/turf/simulated/mineral) || iswallturf(T))
+		if(istype(T,/turf/simulated/mineral) || istype(T,/turf/simulated/wall))
 			suspension_field.icon_state = "shieldsparkles"
 		else
 			suspension_field.icon_state = "shield2"
@@ -283,7 +278,7 @@
 
 		for(var/mob/M in T)
 			to_chat(M, "<span class='info'>You no longer feel like floating.</span>")
-			M.Weaken(3)
+			M.weakened = min(M.weakened, 3)
 
 		visible_message("<span class='notice'>[bicon(src)] [src] deactivates with a gentle shudder.</span>")
 		qdel(suspension_field)

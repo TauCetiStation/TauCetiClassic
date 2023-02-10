@@ -23,16 +23,12 @@
 	src.target = null
 	return ..()
 
-/obj/machinery/meter/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
-		new /obj/item/pipe_meter(loc)
-	. = ..()
-
 /obj/machinery/meter/singularity_pull(S, current_size)
 	..()
 
 	if(current_size >= STAGE_FIVE)
-		deconstruct(FALSE)
+		new /obj/item/pipe_meter(loc)
+		qdel(src)
 
 /obj/machinery/meter/process_atmos()
 	if(!target)
@@ -111,7 +107,7 @@
 	return ..()
 
 /obj/machinery/meter/attackby(obj/item/weapon/W, mob/user)
-	if (!iswrenching(W))
+	if (!iswrench(W))
 		return ..()
 	if(user.is_busy(src))
 		return
@@ -121,7 +117,8 @@
 			"<span class='notice'>\The [user] unfastens \the [src].</span>",
 			"<span class='notice'>You have unfastened \the [src].</span>",
 			"You hear ratchet.")
-		deconstruct(TRUE)
+		new /obj/item/pipe_meter(src.loc)
+		qdel(src)
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
 

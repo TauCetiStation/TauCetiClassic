@@ -118,7 +118,7 @@
 		qdel(src)
 		return
 
-	else if(iswrenching(I))
+	else if(iswrench(I))
 		if(contents.len)
 			to_chat(user, "<span class='info'>You disassemble robot frame to parts!</span>")
 			var/turf/T = get_turf(src)
@@ -240,8 +240,7 @@
 				O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
 
 			O.job = "Cyborg"
-			O.mind.skills.add_available_skillset(/datum/skillset/cyborg)
-			O.mind.skills.maximize_active_skills()
+
 			O.cell = chest.cell
 			O.cell.forceMove(O)
 			I.forceMove(O) //Should fix cybros run time erroring when blown up. It got deleted before, along with the frame.
@@ -292,7 +291,7 @@
 		wires = 1.0
 		to_chat(user, "<span class='info'>You insert the wire!</span>")
 
-	else if(isprying(I))
+	else if(iscrowbar(I))
 		if(!cell)
 			to_chat(user, "<span class='warning'>No cell installed!</span>")
 			return
@@ -301,7 +300,7 @@
 		cell.forceMove(get_turf(src))
 		cell = null
 
-	else if(iscutter(I))
+	else if(iswirecutter(I))
 		if(!wires)
 			to_chat(user, "<span class='warning'>No wires installed!</span>")
 			return
@@ -328,7 +327,7 @@
 			else
 				flash1 = I
 
-	else if(isprying(I))
+	else if(iscrowbar(I))
 		if(flash1 || flash2)
 			to_chat(user, "<span class='info'>You remove the flash from the eye socket!</span>")
 			if(flash2)

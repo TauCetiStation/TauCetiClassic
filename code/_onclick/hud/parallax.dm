@@ -149,8 +149,7 @@
 
 		L.transform = newtransform
 
-		animate(L, transform = L.transform, time = 0, loop = -1, flags = ANIMATION_END_NOW)
-		animate(transform = matrix(), time = T)
+		animate(L, transform = matrix(), time = T, loop = -1, flags = ANIMATION_END_NOW)
 
 /datum/hud/proc/update_parallax()
 	var/client/C = mymob.client

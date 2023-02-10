@@ -13,12 +13,13 @@
 
 	opacity = 1
 	density = TRUE
-	blocks_air = AIR_BLOCKED
+	blocks_air = 1
 	temperature = TCMB
 
 	hud_possible = list(MINE_MINERAL_HUD, MINE_ARTIFACT_HUD)
 	var/mineral/mineral
 	var/mined_ore = 0
+	var/next_act = 0
 	basetype = /turf/simulated/floor/plating/airless/asteroid
 	var/datum/geosample/geologic_data
 	var/excavation_level = 0
@@ -33,22 +34,11 @@
 
 	has_resources = TRUE
 
-	var/global/list/rock_side_overlays
-
-/turf/simulated/mineral/atom_init(mapload)
-	. = ..()
+/turf/simulated/mineral/atom_init()
+	..()
 	icon_state = "rock"
 	geologic_data = new(src)
-	if(!rock_side_overlays)
-		rock_side_overlays = list(null, null, null, null, null, null, null, null, null) // 9 nulls to create dir -> appearance list
-		for(var/direction_to_check in cardinal)
-			var/mutable_appearance/MA = mutable_appearance('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", 6, FLOOR_PLANE)
-			rock_side_overlays[direction_to_check] = MA
-
-	if(mapload)
-		return INITIALIZE_HINT_LATELOAD
-	update_overlays_full()
-	return .
+	return INITIALIZE_HINT_LATELOAD
 
 /turf/simulated/mineral/atom_init_late()
 	MineralSpread()
@@ -56,12 +46,16 @@
 
 /turf/simulated/mineral/update_overlays()
 	cut_overlays()
-	if(!mineral || ore_amount < 8)
+	if(!mineral)
 		name = "Rock"
 		icon_state = "rock"
 	else
-		name = "[mineral.display_name] rich deposit"
-		add_overlay("rock_[mineral.name]")
+		if(ore_amount >= 8)
+			name = "[mineral.display_name] rich deposit"
+			add_overlay("rock_[mineral.name]")
+		else
+			name = "Rock"
+			icon_state = "rock"
 	if(excav_overlay)
 		add_overlay(excav_overlay)
 	if(archaeo_overlay)
@@ -69,10 +63,12 @@
 	var/turf/T
 	for(var/direction_to_check in cardinal)
 		T = get_step(src, direction_to_check)
-		if(isfloorturf(T) || isenvironmentturf(T) || istype(T, /turf/simulated/shuttle/floor))
-			T.add_overlay(rock_side_overlays[direction_to_check])
+		if(istype(T, /turf/simulated/floor) || isspaceturf(T) || istype(T, /turf/simulated/shuttle/floor))
+			var/image/I = image('icons/turf/asteroid.dmi', "rock_side_[direction_to_check]", layer=6)
+			I.plane = FLOOR_PLANE
+			T.add_overlay(I)
 
-	if(excav_overlay || archaeo_overlay || mineral)
+	if((excav_overlay || archaeo_overlay || mineral) && !istype(src, /turf/simulated/floor/plating/airless/asteroid))
 		update_hud()
 
 /turf/simulated/mineral/proc/update_hud()
@@ -96,23 +92,31 @@
 	. = ..()
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
-		if(istype(H.l_hand, /obj/item/weapon/pickaxe))
-			attackby(H.l_hand, H)
-		else if(istype(H.r_hand, /obj/item/weapon/pickaxe))
-			attackby(H.r_hand, H)
+		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
+			if(istype(H.l_hand,/obj/item/weapon/pickaxe/drill))
+				var/obj/item/weapon/pickaxe/drill/D = H.l_hand
+				if(!D.mode)
+					return
+			attackby(H.l_hand,H)
+		else if((istype(H.r_hand,/obj/item/weapon/pickaxe)) && H.hand)
+			if(istype(H.r_hand,/obj/item/weapon/pickaxe/drill))
+				var/obj/item/weapon/pickaxe/drill/D = H.r_hand
+				if(!D.mode)
+					return
+			attackby(H.r_hand,H)
 
 	else if(isrobot(AM))
 		var/mob/living/silicon/robot/R = AM
-		if(istype(R.module_active, /obj/item/weapon/pickaxe))
-			attackby(R.module_active, R)
+		if(istype(R.module_active,/obj/item/weapon/pickaxe))
+			attackby(R.module_active,R)
 
-	else if(istype(AM, /obj/mecha))
+	else if(istype(AM,/obj/mecha))
 		var/obj/mecha/M = AM
-		if(istype(M.selected, /obj/item/mecha_parts/mecha_equipment/drill))
+		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
 			M.selected.action(src)
 
 /turf/simulated/mineral/proc/MineralSpread()
-	if(mineral?.spread)
+	if(mineral && mineral.spread)
 		for(var/trydir in cardinal)
 			if(prob(mineral.spread_chance))
 				var/turf/simulated/mineral/random/target_turf = get_step(src, trydir)
@@ -128,11 +132,11 @@
 		return
 	else
 		if(prob(15))
-			ore_amount = rand(7, 9)
+			ore_amount = rand(6,9)
 		else if(prob(45))
-			ore_amount = rand(5, 7)
+			ore_amount = rand(4,6)
 		else
-			ore_amount = rand(3, 5)
+			ore_amount = rand(3,5)
 	if(ore_amount >= 8)
 		name = "[mineral.display_name] rich deposit"
 		cut_overlays()
@@ -158,9 +162,6 @@
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
 	user.SetNextMove(CLICK_CD_RAPID)
 
-	if (user.is_busy(src))
-		return
-
 	if (istype(W, /obj/item/device/core_sampler))
 		geologic_data.UpdateNearbyArtifactInfo(src)
 		var/obj/item/device/core_sampler/C = W
@@ -173,41 +174,49 @@
 		return
 
 	if (istype(W, /obj/item/device/measuring_tape))
+		if(user.is_busy(src))
+			return
 		var/obj/item/device/measuring_tape/P = W
 		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'>You extend [P] towards [src].</span>")
-		if(W.use_tool(src, user, 2.5 SECONDS, volume = 50))
+		if(W.use_tool(src, user, 25, volume = 50))
 			to_chat(user, "<span class='notice'>[bicon(P)] [src] has been excavated to a depth of [2*excavation_level]cm.</span>")
 		return
 
 	if (istype(W, /obj/item/weapon/sledgehammer))
 		var/obj/item/weapon/sledgehammer/S = W
 		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED))
-			user.do_attack_animation(src)
-			shake_camera(user, 1, 0.37)
-			playsound(src, 'sound/misc/sledgehammer_hit_rock.ogg', VOL_EFFECTS_MASTER)
-			GetDrilled(artifact_fail = 1, mineral_drop_coefficient = 0.7)
+			to_chat(user, "<span class='notice'>You successfully break [name].</span>")
+			GetDrilled(artifact_fail = 1)
 		else
 			to_chat(user, "<span class='warning'>You need to take it with both hands to break it!</span>")
 
 	if (istype(W, /obj/item/weapon/pickaxe))
 		var/turf/T = user.loc
-		if (!isturf(T))
+		if (!( istype(T, /turf) ))
 			return
 
 		var/obj/item/weapon/pickaxe/P = W
+		if(next_act > world.time)//prevents message spam
+			return
+		next_act = world.time + 50 * P.toolspeed
+
 		if(istype(P, /obj/item/weapon/pickaxe/drill))
 			var/obj/item/weapon/pickaxe/drill/D = P
 			if(!(istype(D, /obj/item/weapon/pickaxe/drill/borgdrill) || istype(D, /obj/item/weapon/pickaxe/drill/jackhammer)))	//borgdrill & jackhammer can't lose energy and crit fail
 				if(D.state)
 					to_chat(user, "<span class='danger'>[D] is not ready!</span>")
 					return
-				if(!D.power_supply?.use(D.drill_cost))
+				if(!D.power_supply || !D.power_supply.use(D.drill_cost))
 					to_chat(user, "<span class='danger'>No power!</span>")
 					return
+				if(D.mode)
+					if(mineral)
+						mined_ore = mineral.ore_loss
+				D.power_supply.use(D.drill_cost)
 
 		// handle any archaeological finds we might uncover
 		var/fail_message
-		if(length(finds))
+		if(finds && finds.len)
 			var/datum/find/F = finds[1]
 			if(excavation_level + P.excavation_amount > F.excavation_required)
 				// Chance to destroy / extract any finds here
@@ -224,20 +233,20 @@
 				if(prob(50))
 					artifact_debris()
 
-		if(P.use_tool(src, user, 50, volume = 100))
+		if(!user.is_busy(src) && P.use_tool(src, user, 50, volume = 70))
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				var/obj/item/organ/external/BPHand = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
 				BPHand.adjust_pumped(0.1, 30)
 			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 
-			if(istype(P, /obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
-				for(var/turf/simulated/mineral/M in range(user, 1))
-					if(get_dir(user, M) & user.dir)
+			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
+				for(var/turf/simulated/mineral/M in range(user,1))
+					if(get_dir(user,M) & user.dir)
 						M.GetDrilled()
 				return
 
-			if(length(finds))
+			if(finds && finds.len)
 				var/datum/find/F = finds[1]
 				if(round(excavation_level + P.excavation_amount) == F.excavation_required)
 					//Chance to extract any items here perfectly, otherwise just pull them out along with the rock surrounding them
@@ -299,6 +308,13 @@
 				excav_overlay = "overlay_excv[excav_quadrant]_[rand(1,3)]"
 				add_overlay(excav_overlay)
 
+			/* Nope.
+			//extract pesky minerals while we're excavating
+			while(excavation_minerals.len && excavation_level > excavation_minerals[excavation_minerals.len])
+				DropMineral()
+				pop(excavation_minerals)
+				mineralAmt-- */
+
 			// drop some rocks
 			next_rock += P.excavation_amount * 10
 			while(next_rock > 100)
@@ -322,13 +338,13 @@
 	return O
 
 
-/turf/simulated/mineral/proc/GetDrilled(artifact_fail = 0, mineral_drop_coefficient = 1.0)
+/turf/simulated/mineral/proc/GetDrilled(artifact_fail = 0)
 	playsound(src, 'sound/effects/rockfall.ogg', VOL_EFFECTS_MASTER)
 	// var/destroyed = 0 //used for breaking strange rocks
 	if (mineral && ore_amount)
-		
+
 		// if the turf has already been excavated, some of it's ore has been removed
-		for (var/i = 1 to round((ore_amount - mined_ore) * mineral_drop_coefficient, 1))
+		for (var/i = 1 to ore_amount - mined_ore)
 			DropMineral()
 
 	// destroyed artifacts have weird, unpleasant effects
@@ -340,6 +356,7 @@
 		for(var/mob/living/M in range(src, 200))
 			to_chat(M, "<span class='danger'>[pick("A high pitched [pick("keening","wailing","whistle")]","A rumbling noise like [pick("thunder","heavy machinery")]")] somehow penetrates your mind before fading away!</span>")
 			if(pain)
+				flick("pain",M.pain)
 				if(prob(50))
 					M.adjustBruteLoss(5)
 			else
@@ -355,6 +372,11 @@
 
 	var/turf/N = ChangeTurf(basetype)
 	N.update_overlays_full()
+	for(var/turf/simulated/floor/plating/airless/asteroid/D in RANGE_TURFS(1, src))
+		D.update_overlays()
+	for(var/turf/simulated/mineral/F in RANGE_TURFS(2, src))
+		F.update_overlays()
+
 
 	if(prob(CRATE_DROP_CHANCE))
 		visible_message("<span class='notice'>An old dusty crate was buried within!</span>")
@@ -397,12 +419,12 @@
 
 	//Give a random amount of loot from 1 to 3 or 5, varying on severity.
 	for(var/j in 1 to rand(1, 3 + max(min(severity, 1), 0) * 2))
-		switch(rand(1, 7))
+		switch(rand(1,7))
 			if(1)
 				new/obj/item/stack/rods(src, rand(5,25))
 
 			if(2)
-				new/obj/item/stack/tile/plasteel(src, rand(1,5))
+				new/obj/item/stack/tile(src, rand(1,5))
 
 			if(3)
 				new/obj/item/stack/sheet/metal(src, rand(5,25))
@@ -429,7 +451,7 @@
 	name = "Mineral deposit"
 	icon_state = "rock"
 
-	var/mineralSpawnChanceList = list("Phoron" = 25, "Iron" = 20, "Coal" = 15, "Silver" = 15, "Gold" = 15, "Uranium" = 10, "Platinum" = 10, "Diamond" = 5)
+	var/mineralSpawnChanceList = list("Uranium" = 10, "Platinum" = 10, "Iron" = 20, "Coal" = 15, "Diamond" = 5, "Gold" = 15, "Silver" = 15, "Phoron" = 25,)
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
 /turf/simulated/mineral/random/atom_init()
@@ -455,7 +477,7 @@
 /turf/simulated/mineral/random/high_chance
 	icon_state = "rock_highchance"
 	mineralChance = 40
-	mineralSpawnChanceList = list("Phoron" = 50, "Silver" = 50, "Gold" = 45, "Uranium" = 35, "Platinum" = 45, "Diamond" = 30)
+	mineralSpawnChanceList = list("Uranium" = 35, "Platinum" = 45, "Diamond" = 30, "Gold" = 45, "Silver" = 50, "Phoron" = 50)
 
 /turf/simulated/mineral/random/high_chance/atom_init()
 	icon_state = "rock"
@@ -464,14 +486,14 @@
 /turf/simulated/mineral/random/low_chance
 	icon_state = "rock_lowchance"
 	mineralChance = 5
-	mineralSpawnChanceList = list("Phoron" = 1, "Iron" = 33, "Coal" = 20, "Silver" = 1, "Gold" = 1, "Uranium" = 1,  "Platinum" = 1, "Diamond" = 1)
+	mineralSpawnChanceList = list("Uranium" = 1, "Platinum" = 1, "Iron" = 50, "Coal" = 20, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Phoron" = 1)
 
 /turf/simulated/mineral/random/low_chance/atom_init()
 	icon_state = "rock"
 	. = ..()
 
 /turf/simulated/mineral/random/labormineral
-	mineralSpawnChanceList = list("Phoron" = 2, "Iron" = 28, "Coal" = 17, "Silver" = 1, "Gold" = 1, "Uranium" = 1, "Platinum" = 2, "Diamond" = 1)
+	mineralSpawnChanceList = list("Uranium" = 1, "Platinum" = 1, "Iron" = 60, "Coal" = 30, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Phoron" = 2)
 	icon_state = "rock_labor"
 
 /turf/simulated/mineral/random/labormineral/atom_init()
@@ -481,7 +503,7 @@
 /turf/simulated/mineral/attack_animal(mob/living/simple_animal/user)
 	..()
 	if(user.environment_smash >= 2)
-		GetDrilled(mineral_drop_coefficient = 0.5)
+		GetDrilled()
 
 /**********************Caves**************************/
 /turf/simulated/floor/plating/airless/asteroid
@@ -598,6 +620,9 @@
 	var/proper_name = name
 	..()
 	name = proper_name
+	//if (prob(50))
+	//	seedName = pick(list("1","2","3","4"))
+	//	seedAmt = rand(1,4)
 	if(prob(20))
 		icon_state = "asteroid_stone_[rand(1, 10)]"
 
@@ -609,12 +634,22 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/proc/update_overlays()
+
 	cut_overlays()
 
 	for(var/direction_to_check in cardinal)
-		var/turf/simulated/mineral/T = get_step(src, direction_to_check)
-		if(istype(T))
-			add_overlay(T.rock_side_overlays[reverse_dir[direction_to_check]])
+		if(istype(get_step(src, direction_to_check), /turf/simulated/mineral))
+			var/overlay_name = null
+			switch(direction_to_check)
+				if(1)
+					overlay_name = "rock_side_2"
+				if(2)
+					overlay_name = "rock_side_1"
+				if(4)
+					overlay_name = "rock_side_8"
+				if(8)
+					overlay_name = "rock_side_4"
+			add_overlay(image('icons/turf/asteroid.dmi', "[overlay_name]", layer=6))
 
 /turf/simulated/floor/plating/airless/asteroid/update_overlays()
 	..()
@@ -622,7 +657,10 @@
 	for(var/direction_to_check in cardinal)
 		T = get_step(src, direction_to_check)
 		if(T && isspaceturf(T))
-			var/lattice = locate(/obj/structure/lattice) in T
+			var/lattice = 0
+			for(var/obj/O in T)
+				if(istype(O, /obj/structure/lattice))
+					lattice = 1
 			if(!lattice)
 				var/image/I = image('icons/turf/asteroid.dmi', "asteroid_edge_[direction_to_check]")
 				add_overlay(I)
@@ -662,18 +700,18 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='warning'>You start digging.</span>")
-		if(W.use_tool(src, user, 3.5 SECONDS, volume = 100))
+		if(W.use_tool(src, user, 40, volume = 50))
 			if((user.loc == T && user.get_active_hand() == W))
 				to_chat(user, "<span class='notice'>You dug a hole.</span>")
 				gets_dug()
 
-	else if(istype(W, /obj/item/weapon/storage/bag/ore))
+	else if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W
 		if(S.collection_mode)
 			for(var/obj/item/weapon/ore/O in contents)
 				O.attackby(W,user)
 				return
-	else if(istype(W, /obj/item/weapon/storage/bag/fossils))
+	else if(istype(W,/obj/item/weapon/storage/bag/fossils))
 		var/obj/item/weapon/storage/bag/fossils/S = W
 		if(S.collection_mode)
 			for(var/obj/item/weapon/fossil/F in contents)
@@ -686,13 +724,13 @@
 /turf/simulated/floor/plating/airless/asteroid/proc/gets_dug()
 	if(dug)
 		return
-	for(var/i in 1 to rand(3, 6))
+	for(var/i in 1 to 5)
 		new /obj/item/weapon/ore/glass(src)
 	dug = TRUE
 	icon_plating = "asteroid_dug"
 	icon_state = "asteroid_dug"
 
-/turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M)
+/turf/simulated/floor/plating/airless/asteroid/Entered(atom/movable/M as mob|obj)
 	..()
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M

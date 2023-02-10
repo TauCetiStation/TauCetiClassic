@@ -472,7 +472,7 @@
 
 		playsound(src, 'sound/items/matchstick_light.ogg', VOL_EFFECTS_MASTER, 20)
 		M.lit = TRUE
-		M.damtype = BURN
+		M.damtype = "burn"
 		M.icon_state = "match_lit"
 		START_PROCESSING(SSobj, M)
 		M.update_icon()

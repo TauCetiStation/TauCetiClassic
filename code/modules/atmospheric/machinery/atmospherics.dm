@@ -20,8 +20,6 @@ Pipelines + Other Objects -> Pipe network
 	power_channel = STATIC_ENVIRON
 	layer = GAS_PIPE_HIDDEN_LAYER // under wires
 
-	resistance_flags = FIRE_PROOF | CAN_BE_HIT
-
 	var/nodealert = FALSE
 	var/can_unwrench = FALSE
 	var/initialize_directions = 0
@@ -37,7 +35,6 @@ Pipelines + Other Objects -> Pipe network
 	var/list/obj/machinery/atmospherics/nodes
 
 	var/atmos_initalized = FALSE
-	required_skills = list(/datum/skill/atmospherics = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/atmospherics/atom_init(mapload, process = TRUE)
 	nodes = new(device_type)
@@ -95,7 +92,7 @@ Pipelines + Other Objects -> Pipe network
 
 	for(DEVICE_TYPE_LOOP)
 		for(var/obj/machinery/atmospherics/target in get_step(src, node_connects[I]))
-			if(can_be_node(target, I) && target.can_be_node(src))
+			if(can_be_node(target, I))
 				if(check_connect_types(target, src))
 					NODE_I = target
 					break
@@ -154,7 +151,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))
 		return
-	else if(iswrenching(W))
+	else if(iswrench(W))
 		if(user.is_busy()) return
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)
@@ -169,15 +166,13 @@ Pipelines + Other Objects -> Pipe network
 			var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
 
 			add_fingerprint(user)
-			if(!do_skill_checks())
-				return
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 
 			if (internal_pressure > 2 * ONE_ATMOSPHERE)
 				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
 				unsafe_wrenching = TRUE //Oh dear oh dear
 
-			if (W.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_NOVICE)))
+			if (W.use_tool(src, user, 20, volume = 50))
 				user.visible_message(
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src].</span>",
@@ -214,12 +209,10 @@ Pipelines + Other Objects -> Pipe network
 	user.throw_at(target, range, speed)
 
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
-	if(flags & NODECONSTRUCT)
-		return ..()
-
-	if(can_unwrench)
-		var/obj/item/pipe/stored = new(loc, null, null, src)
-		transfer_fingerprints_to(stored)
+	if(!(flags & NODECONSTRUCT))
+		if(can_unwrench)
+			var/obj/item/pipe/stored = new(loc, null, null, src)
+			transfer_fingerprints_to(stored)
 	..()
 
 /obj/machinery/atmospherics/construction(pipe_type, obj_color)
@@ -229,9 +222,8 @@ Pipelines + Other Objects -> Pipe network
 	atmos_init()
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)
-		if(can_be_node(A) && A.can_be_node(src))
-			A.atmos_init()
-			A.addMember(src)
+		A.atmos_init()
+		A.addMember(src)
 	build_network()
 
 /obj/machinery/atmospherics/singularity_pull(S, current_size)

@@ -98,7 +98,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell installed.</span>")
 
-	else if(isscrewing(I))
+	else if(isscrewdriver(I))
 		if(cell)
 			var/obj/item/C = cell
 			C.forceMove(get_turf(user))

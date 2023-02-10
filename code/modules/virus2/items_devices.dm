@@ -12,8 +12,7 @@
 	if(!iscarbon(M))
 		report("Scan aborted: Incompatible target.", user)
 		return
-	if(!handle_fumbling(user, M, SKILL_TASK_AVERAGE, list(/datum/skill/medical = SKILL_LEVEL_PRO, /datum/skill/research = SKILL_LEVEL_NOVICE), text_target = src))
-		return
+
 	var/mob/living/carbon/C = M
 	if (ishuman(C))
 		var/mob/living/carbon/human/H = C
@@ -25,7 +24,7 @@
 		report("Scan Complete: No antibodies detected.", user)
 		return
 
-	if (user.ClumsyProbabilityCheck(50))
+	if (CLUMSY in user.mutations && prob(50))
 		// I was tempted to be really evil and rot13 the output.
 		report("Antibodies detected: [reverse_text(antigens2string(C.antibodies))]", user)
 	else
@@ -55,7 +54,7 @@
 	//growth = 100//rand(5, 50)
 
 /obj/item/weapon/virusdish/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/tagger) || istype(I, /obj/item/weapon/reagent_containers/syringe))
+	if(istype(I, /obj/item/weapon/hand_labeler) || istype(I, /obj/item/weapon/reagent_containers/syringe))
 		return
 
 	. = ..()
@@ -84,7 +83,7 @@
 	desc = "The bacteria in the dish are completely dead."
 
 /obj/item/weapon/ruinedvirusdish/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/tagger) || istype(I, /obj/item/weapon/reagent_containers/syringe))
+	if(istype(I, /obj/item/weapon/hand_labeler) || istype(I, /obj/item/weapon/reagent_containers/syringe))
 		return
 
 	. = ..()

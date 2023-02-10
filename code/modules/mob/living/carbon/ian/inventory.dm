@@ -45,7 +45,8 @@
 		update_inv_mouth() //So items actually disappear from mouth.
 
 	W.screen_loc = null // will get moved if inventory is visible
-	W.forceMove(src)
+
+	W.loc = src
 
 	switch(slot)
 		if(SLOT_HEAD)
@@ -102,13 +103,6 @@
 	return FALSE
 
 /mob/living/carbon/ian/put_in_inactive_hand(obj/item/W)
-	return put_in_active_hand(W)
-
-// ian have only one hand
-/mob/living/carbon/ian/put_in_r_hand(obj/item/W)
-	return put_in_active_hand(W)
-
-/mob/living/carbon/ian/put_in_l_hand(obj/item/W)
 	return put_in_active_hand(W)
 
 /mob/living/carbon/ian/put_in_hands(obj/item/W)

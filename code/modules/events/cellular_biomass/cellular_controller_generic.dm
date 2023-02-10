@@ -18,7 +18,7 @@
 
 /obj/effect/cellular_biomass_controller/atom_init()
 	. = ..()
-	if(!isfloorturf(loc))
+	if(!istype(loc, /turf/simulated/floor))
 		return INITIALIZE_HINT_QDEL
 	spawn_cellular_biomass_core(loc)
 	spawn_cellular_biomass_piece(loc)
@@ -111,7 +111,7 @@
 	var/turf/S = get_step(T,pick(1,2,4,8))
 	if(locate(/obj/structure/cellular_biomass, S))
 		return
-	if(iswallturf(S) || istype(S,/turf/simulated/mineral))
+	if(istype(S,/turf/simulated/wall) || istype(S,/turf/simulated/mineral))
 		if(calcEnergy(S)==3)
 			S.blob_act()
 		return

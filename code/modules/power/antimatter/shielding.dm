@@ -20,8 +20,6 @@
 	idle_power_usage = 0
 	active_power_usage = 0
 
-	resistance_flags = FULL_INDESTRUCTIBLE
-
 	var/obj/machinery/power/am_control_unit/control_unit = null
 	var/processing = 0//To track if we are in the update list or not, we need to be when we are damaged and if we ever
 	var/stability = 100//If this gets low bad things tend to happen
@@ -75,8 +73,9 @@
 	return ..()
 
 
-/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0)
-	return FALSE
+/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	if(air_group || (height==0))	return 1
+	return 0
 
 
 /obj/machinery/am_shielding/process()
@@ -94,9 +93,9 @@
 	stability -= 20
 	if(prob(100-stability))
 		if(prob(10))//Might create a node
-			new /obj/structure/blob/node(loc, 150)
+			new /obj/effect/blob/node(src.loc,150)
 		else
-			new /obj/structure/blob(loc,60)
+			new /obj/effect/blob(src.loc,60)
 		spawn(0)
 			qdel(src)
 		return
@@ -118,7 +117,7 @@
 
 /obj/machinery/am_shielding/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
-	if(Proj.flag != BULLET)
+	if(Proj.flag != "bullet")
 		stability -= Proj.force/2
 
 /obj/machinery/am_shielding/update_icon()
@@ -213,7 +212,7 @@
 	m_amt = 100
 
 /obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user, params)
-	if(ispulsing(I) && istype(loc, /turf))
+	if(ismultitool(I) && istype(loc, /turf))
 		new/obj/machinery/am_shielding(loc)
 		qdel(src)
 		return

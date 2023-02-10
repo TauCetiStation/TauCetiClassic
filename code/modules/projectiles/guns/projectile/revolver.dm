@@ -84,13 +84,13 @@
 	var/mob/M = usr
 	var/input = sanitize_safe(input(M,"What do you want to name the gun?"), MAX_NAME_LEN)
 
-	if(input && M.stat == CONSCIOUS && Adjacent(M))
+	if(input && !M.stat && Adjacent(M))
 		name = input
 		to_chat(M, "You name the gun [input]. Say hello to your new friend.")
 		return 1
 
 /obj/item/weapon/gun/projectile/revolver/detective/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(isscrewdriver(I))
 		if(magazine.caliber == "38")
 			to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src].</span>")
 			if(magazine.ammo_count())
@@ -125,7 +125,7 @@
 	name = "mateba"
 	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."	//>10mm hole >.357
 	icon_state = "mateba"
-	item_state = "mateba"
+	item_state = "revolver"
 	origin_tech = "combat=2;materials=2"
 
 // A gun to play Russian Roulette!
@@ -249,8 +249,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/dungeon
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
-	icon_state = "dshotgun"
-	item_state = "shotgun-short"
+	icon_state = "sawnshotgun"
 	w_class = SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	name = "sawn-off shotgun"

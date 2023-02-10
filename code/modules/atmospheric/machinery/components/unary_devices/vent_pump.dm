@@ -364,7 +364,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/W, mob/user)
-	if(iswelding(W))
+	if(iswelder(W))
 		if(user.is_busy(src))
 			return
 

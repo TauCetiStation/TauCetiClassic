@@ -32,7 +32,7 @@
 	blade_color = pick("red","blue","green","purple","yellow","pink","black")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
-	if (user.ClumsyProbabilityCheck(50))
+	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src].</span>")
 		user.take_bodypart_damage(5, 5)
 	active = !active
@@ -98,10 +98,9 @@
 	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/melee/classic_baton/attack(mob/living/M, mob/living/user)
-	if (user.ClumsyProbabilityCheck(50))
+	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
-		user.Stun(16)
-		user.Weaken(16)
+		user.Weaken(3 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2 * force, BRUTE, BP_HEAD)
@@ -201,9 +200,9 @@
 
 /obj/item/weapon/melee/telebaton/attack(mob/target, mob/living/user)
 	if(on)
-		if (user.ClumsyProbabilityCheck(50))
+		if ((CLUMSY in user.mutations) && prob(50))
 			to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
-			user.adjustHalLoss(70)
+			user.Weaken(3 * force)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				H.apply_damage(2 * force, BRUTE, BP_HEAD)
@@ -212,12 +211,12 @@
 			return
 		if(user.a_intent == INTENT_HELP && ishuman(target))
 			var/mob/living/carbon/human/H = target
-			playsound(src, 'sound/weapons/hit_metalic.ogg', VOL_EFFECTS_MASTER)
+			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 			user.do_attack_animation(H)
 
 			if(H.wear_suit)
 				var/obj/item/clothing/suit/S = H.wear_suit
-				var/meleearm = S.armor[MELEE]
+				var/meleearm = S.armor["melee"]
 				if(meleearm)
 					if(meleearm != 100)
 						H.adjustHalLoss(round(35 - (35 / 100 * meleearm)))
@@ -306,7 +305,7 @@
 	return 0
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/user)
-	if (user.ClumsyProbabilityCheck(50))
+	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "<span class='danger'> You beat yourself in the head with [src].</span>")
 		user.take_bodypart_damage(5)
 	if(emp_cooldown >= world.time)

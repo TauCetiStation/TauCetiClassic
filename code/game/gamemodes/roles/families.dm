@@ -10,7 +10,6 @@
 
 	/// The action used to spawn family induction packages.
 	var/datum/action/cooldown/spawn_induction_package/package_spawner
-	skillset_type = /datum/skillset/gangster
 
 /datum/role/gangster/New(datum/mind/M, datum/faction/fac, override)
 	. = ..()
@@ -29,16 +28,21 @@
 	..()
 	package_spawner.Grant(antag.current)
 	package_spawner.my_gang_datum = faction
+	var/mob/living/M = antag.current
+	if(M.hud_used && M.client)
+		var/datum/hud/H = M.hud_used
+		var/atom/movable/screen/wanted/giving_wanted_lvl = new
+		H.wanted_lvl = giving_wanted_lvl
+		H.mymob.client.screen += giving_wanted_lvl
 
 /datum/role/gangster/RemoveFromRole(datum/mind/M, msg_admins)
 	. = ..()
 	package_spawner.Remove(M.current)
-
-/datum/role/gangster/add_ui(datum/hud/hud)
-	wanted_lvl_screen.add_to_hud(hud)
-
-/datum/role/gangster/remove_ui(datum/hud/hud)
-	wanted_lvl_screen.remove_from_hud(hud)
+	var/mob/living/L = M.current
+	if(L.hud_used && L.client)
+		var/datum/hud/H = L.hud_used
+		H.mymob.client.screen -= H.wanted_lvl
+		QDEL_NULL(H.wanted_lvl)
 
 /datum/role/gangster/Greet(laterole)
 	antag.current.playsound_local(null, 'sound/antag/thatshowfamiliesworks.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -90,7 +94,6 @@
 
 /datum/role/gangster/leader
 	id = GANGSTER_LEADER
-	skillset_type = /datum/skillset/gangster
 
 /datum/role/gangster/leader/OnPostSetup(laterole)
 	..()
@@ -100,12 +103,11 @@
 	name = "Gun Dealer"
 	id = GANGSTER_DEALER
 	required_pref = ROLE_FAMILIES
-	change_to_maximum_skills = TRUE
+
 	telecrystals = 10
 
 /datum/role/traitor/dealer/OnPostSetup(laterole)
 	var/mob/living/carbon/human/H = antag.current
-	notify_ghosts("New gun dealer!", source = H, action = NOTIFY_ORBIT, header = "Gun Dealer")
 	H.equipOutfit(/datum/outfit/families_traitor)
 	. = ..()
 

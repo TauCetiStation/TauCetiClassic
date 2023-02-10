@@ -16,7 +16,7 @@
 /obj/item/decoration/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(iswallturf(target))
+	if(istype(target,/turf/simulated/wall))
 		usr.remove_from_mob(src)
 		forceMove(target)
 
@@ -146,7 +146,7 @@
 	to_chat(user, "<span class='notice'>You can place a wrapped item here as a gift to someone special.</span>")
 
 /obj/item/device/flashlight/lamp/fir/special/attackby(obj/item/I, mob/user, params)
-	if(iswrenching(I))
+	if(iswrench(I))
 		return ..()
 	if(I.flags & ABSTRACT)
 		return
@@ -245,10 +245,7 @@
 	icon = 'icons/holidays/new_year/decorations.dmi'
 	icon_state = "snowman_s"
 	anchored = FALSE
-
-	max_integrity = 50
-	damage_deflection = 5
-	resistance_flags = CAN_BE_HIT
+	var/health = 50
 
 /obj/structure/snowman/attackby(obj/item/W, mob/user)
 	. = ..()
@@ -261,22 +258,17 @@
 		else
 			to_chat(user, "<span class='warning'>But snowman already has a hat!</span>")
 		return
-	..()
-
-/obj/structure/snowman/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
-	. = ..()
-	if(. && !QDELING(src))
-		visible_message("<span class='notice'>[src] is damaged!</span>")
-
-/obj/structure/snowman/deconstruct(disassembled)
-	if(flags & NODECONSTRUCT)
-		return ..()
-	visible_message("<span class='warning'>[src] is destroyed!</span>")
-	for(var/i in 1 to 6)
-		new /obj/item/snowball(loc)
-	if(icon_state == "snowman_hat")
-		new /obj/item/clothing/head/that(loc)
-	..()
+	if(W.force > 4)
+		health -= W.force
+		if(health <= 0)
+			visible_message("<span class='warning'>[src] is destroyed!</span>")
+			for(var/i = 0 to 6)
+				new /obj/item/snowball(get_turf(src))
+			if(icon_state == "snowman_hat")
+				new /obj/item/clothing/head/that(get_turf(src))
+			qdel(src)
+		else
+			visible_message("<span class='notice'>[src] is damaged!</span>")
 
 #undef FLICKER_CD_MAX
 #undef FLICKER_CD_MIN

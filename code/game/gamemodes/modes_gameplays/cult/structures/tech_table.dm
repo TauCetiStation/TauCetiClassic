@@ -15,7 +15,7 @@
 	var/static/list/category_images = list()
 
 	var/researching = FALSE
-	var/research_time = 15 MINUTES
+	var/research_time = 18 MINUTES
 	var/end_research_time
 
 	var/current_research = "Ничего"
@@ -49,7 +49,7 @@
 		var/datum/aspect/A = religion.aspects[name]
 		to_chat(user, "\t<font color='[A.color]'>[name]</font> с силой <font size='[1+A.power]'><i>[A.power]</i></font>")
 
-/obj/structure/cult/tech_table/attack_hand(mob/user)
+/obj/structure/cult/tech_table/attack_hand(mob/living/user)
 	if(!user.mind.holy_role || !user.my_religion)
 		return
 
@@ -63,12 +63,6 @@
 	if(researching)
 		to_chat(user, "<span class='warning'>Осталось [round((end_research_time - world.time) * 0.1)] секунд до конца исследования.</span>")
 		return
-
-	var/datum/religion/cult/R = religion
-	if(R)
-		if(R.research_forbidden && !iseminence(user))
-			to_chat(user, "<span class='warning'>По решению Возвышенного последователям запрещено самим исследовать!</span>")
-			return
 
 	if(!aspect_images.len)
 		gen_aspect_images()
@@ -85,7 +79,7 @@
 		if("Уникальные технологии")
 			choose_uniq_tech(user)
 
-/obj/structure/cult/tech_table/proc/choose_uniq_tech(mob/user)
+/obj/structure/cult/tech_table/proc/choose_uniq_tech(mob/living/user)
 	for(var/datum/building_agent/B in uniq_images)
 		B.name = "[initial(B.name)] [B.get_costs()]"
 
@@ -113,7 +107,7 @@
 
 	end_activity()
 
-/obj/structure/cult/tech_table/proc/choose_aspect(mob/user)
+/obj/structure/cult/tech_table/proc/choose_aspect(mob/living/user)
 	// Generates a name with the power of an aspect and upgrade cost
 	for(var/datum/aspect/A in aspect_images)
 		var/datum/aspect/in_religion = religion.aspects[initial(A.name)]
@@ -143,11 +137,7 @@
 
 /obj/structure/cult/tech_table/proc/get_upgrade_cost(datum/aspect/in_religion)
 	if(!in_religion)
-		var/all_aspects = 0
-		for(var/aspect_name in cult_religion.aspects)
-			all_aspects++
-		var/cost = max(100, 50 + 25 * all_aspects) //We don't count 6 initial aspects and scale for static 150, +50 piety for each new aspect
-		return cost
+		return 300
 	return in_religion.power * 50
 
 /obj/structure/cult/tech_table/proc/gen_category_images()
@@ -156,7 +146,7 @@
 		"Уникальные технологии" = uniq_images[pick(uniq_images)],
 	)
 
-/obj/structure/cult/tech_table/proc/gen_tech_images(mob/user)
+/obj/structure/cult/tech_table/proc/gen_tech_images(mob/living/user)
 	uniq_images = list()
 	for(var/datum/building_agent/tech/BA in religion.available_techs)
 		uniq_images[BA] = image(icon = BA.icon, icon_state = BA.icon_state)
@@ -181,7 +171,7 @@
 		P.icon_state = "pylon_glow"
 		P.can_unwrench = FALSE
 	researching = TRUE
-	var/time_reduce = 2.2*sqrt(pylon_around.len)MINUTE //https://www.desmos.com/Calculator/acwqntgi7v 1 pylon = 2 mins, 4 pyls = 4 mins, 10=7, 45=15
+	var/time_reduce = sqrt(pylon_around.len)MINUTE
 	end_research_time = max(1, world.time + research_time - time_reduce)
 	can_unwrench = FALSE
 	tech_timer = addtimer(end_activity, research_time - time_reduce, TIMER_STOPPABLE)

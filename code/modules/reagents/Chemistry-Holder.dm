@@ -60,13 +60,11 @@ var/global/const/INGEST = 2
 		return
 	if(amount < 0) return
 	if(amount > 2000) return
-	if(total_volume == 0)
-		return
 	var/datum/reagents/R
 	if(istype(target,/datum/reagents))
 		R = target
 	else
-		if (!target.reagents)
+		if (!target.reagents || src.total_volume<=0)
 			return
 		R = target.reagents
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
@@ -401,7 +399,6 @@ var/global/const/INGEST = 2
 						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_obj, A, R.volume+volume_modifier)
 	return
 
-// adds new reagent by ID, mix it with those already present if needed
 /datum/reagents/proc/add_reagent(reagent, amount, list/data = null, safety = FALSE, datum/religion/_religion)
 	if(!isnum(amount) || amount < 0 || amount > 2000)
 		return FALSE
@@ -410,20 +407,11 @@ var/global/const/INGEST = 2
 	if(total_volume + amount > maximum_volume)
 		amount = (maximum_volume - total_volume) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
 
-	// if we already have this reagent just trasnfer new data and update volume
 	for(var/datum/reagent/R in reagent_list)
 		if (R.id == reagent)
 			R.volume += amount
 
-			// blood is one common datum /datum/reagent/blood with different data uploads, we mix it here manually
-			// todo: currently only viruses, else it can break mobs
-			// part of the work happens in /inject_blood()
-			if(R.id == "blood" && reagent == "blood")
-				if(R.data && R.data["virus2"])
-					R.data["virus2"] |= virus_copylist(data["virus2"])
-
-			// not blood, but same problems
-			else if(R.id == "customhairdye" || R.id == "paint_custom")
+			if(R.id == "customhairdye" || R.id == "paint_custom")
 				for(var/color in R.data)
 					R.data[color] = (R.data[color] + data[color]) * 0.5
 				// I am well aware of RGB_CONTRAST define, but in reagent colors everywhere else we use hex codes, so I did the thing below. ~Luduk.
@@ -437,7 +425,6 @@ var/global/const/INGEST = 2
 				handle_reactions()
 			return TRUE
 
-	// new reagent we don't have, need to create
 	var/datum/reagent/D = chemical_reagents_list[reagent]
 	if(D)
 		var/datum/reagent/R = new D.type()
@@ -445,12 +432,6 @@ var/global/const/INGEST = 2
 		R.holder = src
 		R.volume = amount
 		R.religion = _religion
-
-		if(data)
-			R.data = data.Copy()
-
-			if(data["virus2"]) // list of datums, need to copy manually through virus_copylist()
-				R.data["virus2"] |= virus_copylist(data["virus2"])
 
 		if(reagent == "customhairdye" || reagent == "paint_custom")
 			R.color = numlist2hex(list(R.data["r_color"], R.data["g_color"], R.data["b_color"]))
@@ -627,11 +608,6 @@ var/global/const/INGEST = 2
 			var/contained = splash.get_reagents()
 
 			L.log_combat(user, "splashed with [my_atom.name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
-
-			var/image/splash_animation = image('icons/effects/effects.dmi', L, "splash")
-			splash_animation.color = mix_color_from_reagents(splash.reagent_list)
-			splash_animation.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
-			flick_overlay_view(splash_animation, target, 1 SECONDS)
 
 	splash.reaction(target, TOUCH)
 	splash.clear_reagents()

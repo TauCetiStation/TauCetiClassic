@@ -172,7 +172,7 @@
 	icon_state = "particle"
 	damage = 60
 	damage_type = BRUTE
-	flag = BULLET
+	flag = "bullet"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	embed = 0
 	weaken = 5

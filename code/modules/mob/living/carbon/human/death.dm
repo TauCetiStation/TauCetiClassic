@@ -33,8 +33,8 @@
 	dead_mob_list -= src
 
 /mob/living/carbon/human/death(gibbed)
-	if(stat == DEAD)
-		return
+	if(stat == DEAD)	return
+	if(healths)		healths.icon_state = "health5"
 
 	stat = DEAD
 	dizziness = 0
@@ -144,14 +144,15 @@
 
 
 /mob/living/carbon/human/proc/makeSkeleton()
-	if(!species || (isskeleton(src)))
+	if(!species || (species.name == SKELETON))
 		return
 	if(f_style)
 		f_style = "Shaved"
 	if(h_style)
 		h_style = "Bald"
-	set_species(species.skeleton_type)
-	add_status_flags(DISFIGURED)
+
+	set_species(SKELETON)
+	status_flags |= DISFIGURED
 	regenerate_icons()
 	return
 
@@ -170,7 +171,7 @@
 
 	update_hair()
 	mutations.Add(HUSK)
-	add_status_flags(DISFIGURED)	//makes them unknown without fucking up other stuff like admintools
+	status_flags |= DISFIGURED	//makes them unknown without fucking up other stuff like admintools
 	update_body()
 
 /mob/living/carbon/human/proc/Drain()

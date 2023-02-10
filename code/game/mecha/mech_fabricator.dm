@@ -1,6 +1,6 @@
 /obj/machinery/mecha_part_fabricator
 	icon = 'icons/obj/robotics.dmi'
-	icon_state = "fab"
+	icon_state = "fab-idle"
 	name = "Exosuit Fabricator"
 	desc = "Nothing is being built."
 	density = TRUE
@@ -49,7 +49,6 @@
 								"Misc",
 								"Stock Parts",
 								)
-	required_skills = list(/datum/skill/research = SKILL_LEVEL_PRO)
 
 /obj/machinery/mecha_part_fabricator/atom_init()
 	. = ..()
@@ -307,6 +306,7 @@
 /obj/machinery/mecha_part_fabricator/ui_interact(mob/user)
 	var/dat
 	var/left_part
+
 	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
 		visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"Error! Part outlet is obstructed.\"")
@@ -502,16 +502,17 @@
 	return result
 
 
-/obj/machinery/mecha_part_fabricator/attackby(obj/item/weapon/W, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "fab", "fab", W))
-		update_icon()
+/obj/machinery/mecha_part_fabricator/attackby(obj/W, mob/user, params)
+	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
 		return
 
 	if(exchange_parts(user, W))
 		return
 
 	if(panel_open)
-		if(isprying(W))
+		if(iscrowbar(W))
+			for(var/material in resources)
+				remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
 			default_deconstruction_crowbar(W)
 			return 1
 		else
@@ -559,21 +560,3 @@
 		else
 			to_chat(user, "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>")
 		return
-
-/obj/machinery/mecha_part_fabricator/deconstruction()
-	. = ..()
-	for(var/material in resources)
-		remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
-
-/obj/machinery/mecha_part_fabricator/update_icon()
-	if(powered())
-		icon_state = initial(icon_state)
-	else
-		icon_state = "[initial(icon_state)]-off"
-	cut_overlays()
-	if(panel_open)
-		add_overlay("[initial(icon_state)]-open")
-
-/obj/machinery/mecha_part_fabricator/power_change()
-	..()
-	update_icon()

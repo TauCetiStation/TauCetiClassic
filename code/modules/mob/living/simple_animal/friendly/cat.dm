@@ -32,11 +32,11 @@
 /mob/living/simple_animal/cat/Life()
 	//MICE!
 	if((src.loc) && isturf(src.loc))
-		if(stat == CONSCIOUS && !buckled)
+		if(!stat && !buckled)
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
-				if(M.stat == CONSCIOUS)
+				if(!M.stat)
 					M.splat()
-					me_emote(pick("<span class='warning'>splats the [M]!</span>","<span class='warning'>toys with the [M]</span>","worries the [M]"))
+					emote(pick("<span class='warning'>splats the [M]!</span>","<span class='warning'>toys with the [M]</span>","worries the [M]"))
 					movement_target = null
 					stop_automated_movement = FALSE
 					break
@@ -45,10 +45,10 @@
 
 	for(var/mob/living/simple_animal/mouse/snack in oview(src, 3))
 		if(prob(15))
-			me_emote(pick("hisses and spits!","mrowls fiercely!","eyes [snack] hungrily."))
+			emote(pick("hisses and spits!","mrowls fiercely!","eyes [snack] hungrily."))
 		break
 
-	if(stat == CONSCIOUS && !buckled)
+	if(!stat && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			walk_to(src,0)
@@ -60,7 +60,7 @@
 				movement_target = null
 				stop_automated_movement = FALSE
 				for(var/mob/living/simple_animal/mouse/snack in oview(src,3))
-					if(isturf(snack.loc) && snack.stat == CONSCIOUS)
+					if(isturf(snack.loc) && !snack.stat)
 						movement_target = snack
 						break
 			if(movement_target)
@@ -153,7 +153,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/cat/dusty, chief_animal_list)
 	 IS_SYNTHETIC = TRUE
 	,NO_BREATHE = TRUE
 	)
-	faction = "syndicate"
+	faction = list("syndicate")
 	//var/turns_since_scan = 0
 	//var/mob/living/simple_animal/mouse/movement_target
 

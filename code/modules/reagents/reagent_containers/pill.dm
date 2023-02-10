@@ -50,9 +50,7 @@
 	else
 		user.visible_message("<span class='warning'>[user] attempts to force [M] to swallow [src].</span>")
 
-		var/ingestion_time = apply_skill_bonus(user, SKILL_TASK_TOUGH, list(/datum/skill/medical = SKILL_LEVEL_NOVICE), -0.2)
-		if(!do_mob(user, M, ingestion_time))
-			return
+		if(!do_mob(user, M)) return
 
 		user.drop_from_inventory(src) //icon update
 		user.visible_message("<span class='warning'>[user] forces [M] to swallow [src].</span>")
@@ -87,15 +85,6 @@
 			qdel(src)
 
 	return
-
-/obj/item/weapon/reagent_containers/pill/examine(mob/user)
-	..()
-	if(!is_skill_competent(user, list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)))
-		return
-	to_chat(user, "It contains:")
-	if(reagents.reagent_list.len)
-		for(var/datum/reagent/R in reagents.reagent_list)
-			to_chat(user, "<span class='info'>[R.volume + R.volume * rand(-25,25) / 100] units of [R.name]</span>")
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Pills. END
@@ -264,9 +253,8 @@
 /obj/item/weapon/reagent_containers/pill/zoom/atom_init()
 	. = ..()
 	reagents.add_reagent("impedrezene", 10)
-	reagents.add_reagent("tramadol", 10)
-	reagents.add_reagent("stimulants",5)
-	reagents.add_reagent("toxin", 5)
+	reagents.add_reagent("synaptizine", 5)
+	reagents.add_reagent("hyperzine", 5)
 
 /obj/item/weapon/reagent_containers/pill/lipozine
 	name = "Lipozine (15u)"

@@ -10,7 +10,7 @@
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
 	var/disable = FALSE
-	COOLDOWN_DECLARE(cd_flash) //Don't want it getting spammed like regular flashes
+	var/last_flash = 0 //Don't want it getting spammed like regular flashes
 	var/strength = 10 //How weakened targets are when flashed.
 	var/base_state = "mflash"
 	anchored = TRUE
@@ -23,11 +23,6 @@
 	flasher_list -= src
 	return ..()
 
-/obj/machinery/flasher/powered()
-	if(!anchored)
-		return FALSE
-	return ..()
-
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
@@ -36,31 +31,25 @@
 	anchored = FALSE
 	base_state = "pflash"
 	density = TRUE
-	///Proximity monitor associated with this atom, needed for proximity checks.
-	var/datum/proximity_monitor/proximity_monitor
-
-/obj/machinery/flasher/portable/Destroy()
-	QDEL_NULL(proximity_monitor)
-	return ..()
 
 /obj/machinery/flasher/power_change()
-	if (powered())
+	if ( powered() )
 		stat &= ~NOPOWER
 		icon_state = "[base_state]1"
 	else
-		stat |= NOPOWER
+		stat |= ~NOPOWER
 		icon_state = "[base_state]1-p"
 	update_power_use()
 
 //Don't want to render prison breaks impossible
 /obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user)
-	if (iscutter(W))
+	if (iswirecutter(W))
 		add_fingerprint(user)
-		disable = !disable
+		src.disable = !src.disable
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(disable)
+		if (src.disable)
 			user.visible_message("<span class='warning'>[user] has disconnected the [src]'s flashbulb!</span>", "<span class='warning'>You disconnect the [src]'s flashbulb!</span>")
-		else
+		if (!src.disable)
 			user.visible_message("<span class='warning'>[user] has connected the [src]'s flashbulb!</span>", "<span class='warning'>You connect the [src]'s flashbulb!</span>")
 
 //Let the AI trigger them directly.
@@ -71,15 +60,22 @@
 		return
 
 /obj/machinery/flasher/proc/flash()
-	if(disable || !(powered() && COOLDOWN_FINISHED(src, cd_flash)))
+	if (!(powered()))
 		return
-	COOLDOWN_START(src, cd_flash, 15 SECONDS)
+
+	if ((src.disable) || (src.last_flash && world.time < src.last_flash + 150))
+		return
+
 	playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
 	flick("[base_state]_flash", src)
 	flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
+	src.last_flash = world.time
 	use_power(1000)
 
-	for (var/mob/O in viewers(range, src))
+	for (var/mob/O in viewers(src, null))
+		if (get_dist(src, O) > src.range)
+			continue
+
 		if (ishuman(O))
 			var/mob/living/carbon/human/H = O
 			if(H.eyecheck() > 0)
@@ -88,7 +84,6 @@
 		if (isxeno(O))//So aliens don't get flashed (they have no external eyes)/N
 			continue
 
-		O.Stun(strength * 0.5)
 		O.Weaken(strength)
 		if (ishuman(O))
 			var/mob/living/carbon/human/H = O
@@ -110,31 +105,28 @@
 		flash()
 	..(severity)
 
-/obj/machinery/flasher/portable/atom_init()
-	. = ..()
-	proximity_monitor = new(src, anchored ? 1 : null)
-
 /obj/machinery/flasher/portable/HasProximity(atom/movable/AM)
-	if(iscarbon(AM) && COOLDOWN_FINISHED(src, cd_flash))
+	if ((src.disable) || (src.last_flash && world.time < src.last_flash + 150))
+		return
+
+	if(iscarbon(AM))
 		var/mob/living/carbon/M = AM
-		if(M.m_intent != MOVE_INTENT_WALK)
+		if ((M.m_intent != "walk") && (src.anchored))
 			flash()
 
 /obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user)
-	if (iswrenching(W))
+	if (iswrench(W))
 		add_fingerprint(user)
-		anchored = !anchored
+		src.anchored = !src.anchored
 		user.SetNextMove(CLICK_CD_INTERACT)
 
-		if(anchored)
-			to_chat(user, "<span class='warning'>[src] is now secured.</span>")
-			add_overlay("[base_state]-s")
-			proximity_monitor.set_range(1)
-		else
+		if (!src.anchored)
 			to_chat(user, "<span class='warning'>[src] can now be moved.</span>")
 			cut_overlays()
-			proximity_monitor.set_range(null)
 
+		else if (src.anchored)
+			to_chat(user, "<span class='warning'>[src] is now secured.</span>")
+			add_overlay("[base_state]-s")
 
 /obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user)
 	return attack_hand(user)

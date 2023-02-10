@@ -1,5 +1,3 @@
-// wtf is this thing?
-
 // Reports are a way to notify admins of wrongdoings that happened
 // while no admin was present. They work a bit similar to news, but
 // they can only be read by admins and moderators.

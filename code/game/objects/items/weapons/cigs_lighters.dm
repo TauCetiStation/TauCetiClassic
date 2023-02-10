@@ -54,7 +54,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/match/proc/burn_out()
 	lit = 0
 	burnt = 1
-	damtype = BRUTE
+	damtype = "brute"
 	icon_state = "match_burnt"
 	item_state = "cigoff"
 	name = "burnt match"
@@ -95,7 +95,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/attackby(obj/item/I, mob/user, params)
 	// FML. this copypasta is everywhere somebody call the fucking police please. ~Luduk
-	if(iswelding(I))
+	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.isOn())//Badasses dont get blinded while lighting their cig with a welding tool
 			light("<span class='notice'>[user] casually lights the [name] with [WT].</span>")
@@ -151,7 +151,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/proc/light(flavor_text = "[usr] lights the [name].")
 	if(!src.lit)
 		src.lit = 1
-		damtype = BURN
+		damtype = "fire"
 
 		if(reagents.get_reagent_amount("phoron") || reagents.get_reagent_amount("fuel")) // the phoron (fuel also) explodes when exposed to fire
 			var/datum/effect/effect/system/reagents_explosion/e = new()
@@ -245,9 +245,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/cigar
 	name = "premium cigar"
 	desc = "A brown roll of tobacco and... well, you're not quite sure. This thing's huge!"
-	icon_state = "cigaroff"
-	icon_on = "cigaron"
-	icon_off = "cigaroff"
+	icon_state = "cigar2off"
+	icon_on = "cigar2on"
+	icon_off = "cigar2off"
 	type_butt = /obj/item/weapon/cigbutt/cigarbutt
 	throw_speed = 0.5
 	item_state = "cigaroff"
@@ -291,7 +291,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 
 /obj/item/clothing/mask/cigarette/cigar/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I))
+	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.isOn())
 			light("<span class='notice'>[user] insults [name] by lighting it with [I].</span>")
@@ -343,7 +343,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/pipe/light(flavor_text = "[usr] lights the [name].")
 	if(!src.lit)
 		src.lit = 1
-		damtype = BURN
+		damtype = "fire"
 		icon_state = icon_on
 		item_state = icon_on
 		var/turf/T = get_turf(src)
@@ -386,7 +386,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return
 
 /obj/item/clothing/mask/cigarette/pipe/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I))
+	if(iswelder(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.isOn())//
 			light("<span class='notice'>[user] recklessly lights [name] with [WT].</span>")

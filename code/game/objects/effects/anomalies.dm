@@ -42,17 +42,16 @@
 ///////////////////////
 
 /atom/movable/warp_effect
-	plane = ANOMALY_PLANE
+	plane = GRAVITY_PULSE_PLANE
 	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
-	icon = 'icons/effects/288x288.dmi'
-	icon_state = "gravitational_anti_lens"
-	pixel_x = -128
-	pixel_y = -128
+	icon = 'icons/effects/224x224.dmi'
+	icon_state = "emfield_s7"
+	pixel_x = -100
+	pixel_y = -100
 
 /atom/movable/warp_effect/atom_init(mapload, ...)
 	. = ..()
-	add_filter("ripple", 1, ripple_filter(radius = 0, size = 250, falloff = 0.5, repeat = 100))
-	add_filter("layer", 2, layering_filter(icon = icon(icon, "gravitational_lens"), transform = matrix().Scale(0.25, 0.25)))
+	add_filter("warp_blure", 1, gauss_blur_filter(4))
 	START_PROCESSING(SSobj, src)
 
 /atom/movable/warp_effect/Destroy()
@@ -61,9 +60,7 @@
 
 /atom/movable/warp_effect/process()
 	animate(src, time = 6, transform = matrix().Scale(0.5, 0.5))
-	animate(time = 14, transform = matrix(), flags = ANIMATION_PARALLEL)
-	animate(get_filter("ripple"), radius = 250, size = 0, time = 14, flags = ANIMATION_PARALLEL)
-	animate(radius = 0, size = 150, time = 0)
+	animate(time = 14, transform = matrix())
 
 /obj/effect/anomaly/grav
 	name = "gravitational anomaly"
@@ -107,7 +104,7 @@
 	return
 
 /obj/effect/anomaly/grav/proc/gravShock(mob/A)
-	if(boing && isliving(A) && A.stat == CONSCIOUS)
+	if(boing && isliving(A) && !A.stat)
 		A.Weaken(2)
 		var/atom/target = get_edge_target_turf(A, get_dir(src, get_step_away(A, src)))
 		A.throw_at(target, 5, 1)
@@ -249,7 +246,7 @@
 	need_bound = bound
 
 	enable()
-	notify_ghosts("Появился портал культа. Нажмите на него, чтобы стать конструктом.", source = src, action = NOTIFY_ATTACK, header = "Cult Portal")
+	notify_ghosts("Появился портал культа. Нажмите на него, чтобы стать конструктом.")
 
 /obj/effect/anomaly/bluespace/cult_portal/Destroy()
 	disable()
@@ -278,7 +275,7 @@
 	for(var/i in 1 to 4)
 		var/list/L = locate(x + coord_of_pylons[1], y + coord_of_pylons[2], z)
 		var/turf/F = get_turf(pick(L))
-		if(F && isfloorturf(F))
+		if(F && istype(F, /turf/simulated/floor))
 			for(var/obj in L)
 				if(istype(obj, /turf))
 					continue
@@ -327,11 +324,11 @@
 		to_chat(user, "<span class='warning'>Нар-Си создаст нового раба через [round((next_spawn - world.time) * 0.1)] секунд.</span>")
 		return
 
-	var/type = pick(70; /mob/living/simple_animal/construct/harvester,\
+	var/type = pick(200; /mob/living/simple_animal/construct/harvester,\
 					50; /mob/living/simple_animal/construct/wraith,\
 					30; /mob/living/simple_animal/construct/armoured,\
 					40; /mob/living/simple_animal/construct/proteon,\
-					50; /mob/living/simple_animal/construct/builder,\
+					70; /mob/living/simple_animal/construct/builder,\
 					1;  /mob/living/simple_animal/construct/behemoth)
 	create_shell(user, type)
 	next_spawn = world.time + spawn_cd
@@ -350,11 +347,11 @@
 		if(!slave) // I dont know why or how it can be null, but it can be null
 			continue
 		var/type = pick(
+				200;/mob/living/simple_animal/construct/harvester,\
 				50; /mob/living/simple_animal/construct/wraith,\
 				50; /mob/living/simple_animal/construct/armoured,\
 				40; /mob/living/simple_animal/construct/proteon,\
 				30; /mob/living/simple_animal/construct/builder,\
-				10;/mob/living/simple_animal/construct/harvester,\
 				1;  /mob/living/simple_animal/construct/behemoth)
 		INVOKE_ASYNC(src, .proc/create_shell, slave, type)
 		spawns--

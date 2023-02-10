@@ -38,9 +38,6 @@
 	S.start()
 	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot/syndicate(T)
 	R.key = C.key
-	R.mind.skills.add_available_skillset(/datum/skillset/cyborg)
-	R.mind.skills.maximize_active_skills()
-	R.pda.cmd_toggle_pda_receiver()
 	for(var/role_name in user.mind.antag_roles)
 		var/datum/role/role = user.mind.antag_roles[role_name]
 		if(!role.faction)

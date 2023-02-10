@@ -7,7 +7,7 @@
 #define MECHA_TIME_TO_ENTER 4 SECOND
 #define TIME_TO_RECALIBRATION 10 SECOND
 
-#define RANGE_MELEE 1
+#define MELEE 1
 #define RANGED 2
 
 
@@ -15,7 +15,6 @@
 	name = "Mecha"
 	desc = "Exosuit."
 	icon = 'icons/mecha/mecha.dmi'
-	flags = HEAR_TALK
 	density = TRUE //Dense. To raise the heat.
 	opacity = 1 ///opaque. Menacing.
 	anchored = TRUE //no pulling around.
@@ -34,7 +33,7 @@
 	var/maxhealth = 300
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	//the values in this list show how much damage will pass through, not how much will be absorbed.
-	var/list/damage_absorption = list(BRUTE=0.8,BURN=1.2,BULLET=0.9,LASER=1,ENERGY=1,BOMB=1)
+	var/list/damage_absorption = list("brute"=0.8,"fire"=1.2,"bullet"=0.9,"laser"=1,"energy"=1,"bomb"=1)
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/state = 0
 	var/list/log = new
@@ -91,8 +90,6 @@
 	var/mouse_pointer
 
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD)
-	var/list/speed_skills = list(/datum/skill/civ_mech = SKILL_LEVEL_TRAINED)
-	var/list/interface_skills = list(/datum/skill/civ_mech = SKILL_LEVEL_TRAINED)
 
 /obj/mecha/atom_init()
 	. = ..()
@@ -206,7 +203,7 @@
 
 /obj/mecha/proc/click_action(atom/target,mob/user)
 	if(!src.occupant || src.occupant != user ) return
-	if(user.stat != CONSCIOUS) return
+	if(user.stat) return
 	if(state)
 		occupant_message("<font color='red'>Maintenance protocols in effect</font>")
 		return
@@ -296,12 +293,9 @@
 	prev_move_dir = direction
 	if(move_result)
 		can_move = 0
-		VARSET_IN(src, can_move, TRUE, apply_skill_bonus(occupant, step_in, speed_skills, -0.2) * move_result) // -20% to step_in for each level
+		VARSET_IN(src, can_move, TRUE, step_in * move_result)
 		return 1
 	return 0
-
-/obj/mecha/proc/check_fumbling(fumble_text)
-	return handle_fumbling(occupant, occupant, SKILL_TASK_VERY_EASY, interface_skills, fumble_text, can_move = TRUE, check_busy = FALSE)
 
 /obj/mecha/proc/mechturn(direction)
 	set_dir(direction)
@@ -398,7 +392,7 @@
 ////////  Health related procs  ////////
 ////////////////////////////////////////
 
-/obj/mecha/take_damage(amount, type=BRUTE) // TODO port tg mechs
+/obj/mecha/proc/take_damage(amount, type="brute")
 	if(amount)
 		var/damage = absorbDamage(amount,type)
 		health -= damage
@@ -439,8 +433,6 @@
 	return attack_hand(user)
 
 /obj/mecha/proc/toggle_strafe()
-	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to toggle strafing mode [!strafe?"on":"off"].</span>"))
-		return
 	strafe = !strafe
 	prev_move_dir = 0
 
@@ -453,7 +445,7 @@
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(!prob(src.deflect_chance))
-		take_damage(40)
+		take_damage(15)
 		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='warning'>You slash at the armored suit!</span>")
@@ -472,7 +464,7 @@
 	..()
 
 	if(attacker.melee_damage == 0)
-		attacker.me_emote("[attacker.friendly] [src]")
+		attacker.emote("[attacker.friendly] [src]")
 	else
 		if(!prob(src.deflect_chance))
 			var/damage = attacker.melee_damage
@@ -574,7 +566,7 @@
 	destroy()
 
 /obj/mecha/blob_act()
-	take_damage(30, BRUTE)
+	take_damage(10, "brute")
 	return
 
 
@@ -582,7 +574,7 @@
 	if(get_charge())
 		use_power((cell.charge/2)/severity)
 		diag_hud_set_mechcell()
-		take_damage(50 / severity,ENERGY)
+		take_damage(50 / severity,"energy")
 	log_message("EMP detected",1)
 	check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
 	return
@@ -590,7 +582,7 @@
 /obj/mecha/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature>src.max_temperature)
 		log_message("Exposed to dangerous temperature.",1)
-		take_damage(5,BURN)
+		take_damage(5,"fire")
 		check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL))
 	return
 
@@ -646,7 +638,7 @@
 				to_chat(user, "<span class='warning'>Invalid ID: Access denied.</span>")
 		else
 			to_chat(user, "<span class='warning'>Maintenance protocols disabled by operator.</span>")
-	else if(iswrenching(W))
+	else if(iswrench(W))
 		if(state==1)
 			state = 2
 			to_chat(user, "You undo the securing bolts.")
@@ -654,7 +646,7 @@
 			state = 1
 			to_chat(user, "You tighten the securing bolts.")
 		return
-	else if(isprying(W))
+	else if(iscrowbar(W))
 		if(state==2)
 			state = 3
 			to_chat(user, "You open the hatch to the power unit")
@@ -671,7 +663,7 @@
 			clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
 			to_chat(user, "You replace the fused wires.")
 		return
-	else if(isscrewing(W))
+	else if(isscrewdriver(W))
 		if(hasInternalDamage(MECHA_INT_TEMP_CONTROL))
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 			to_chat(user, "You repair the damaged temperature controller.")
@@ -699,7 +691,7 @@
 			diag_hud_set_mechcell()
 		return
 
-	else if(iswelding(W) && user.a_intent != INTENT_HARM)
+	else if(iswelder(W) && user.a_intent != INTENT_HARM)
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_MELEE)
 		if (WT.use(0,user))
@@ -711,7 +703,6 @@
 		if(src.health<initial(src.health))
 			to_chat(user, "<span class='notice'>You repair some damage to [src.name].</span>")
 			src.health += min(10, initial(src.health)-src.health)
-			update_health()
 		else
 			to_chat(user, "The [src.name] is at full integrity")
 		return
@@ -722,12 +713,14 @@
 		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
 		return
 
-	else if(istype(W, /obj/item/weapon/melee/changeling_hammer))
-		var/obj/item/weapon/melee/changeling_hammer/hammer = W
+	else if(istype(W, /obj/item/weapon/changeling_hammer))
+		var/obj/item/weapon/changeling_hammer/Ham = W
+		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
-		playsound(src, pick(hammer.hitsound), VOL_EFFECTS_MASTER)
-		dynattackby(hammer, user)
-
+		visible_message("<span class='warning'><B>[user]</B> has punched \the <B>[src]!</B></span>")
+		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+		if(prob(50) && Ham.use_charge(user,6))
+			take_damage(Ham.force * 3)
 	else
 		user.SetNextMove(CLICK_CD_MELEE)
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
@@ -854,8 +847,7 @@
 
 	if(!has_charge(lights_power))
 		return
-	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to toggle lights [!lights?"on":"off"].</span>"))
-		return
+
 	lights = !lights
 	if(lights)
 		set_light(light_range + lights_power)
@@ -869,8 +861,7 @@
 /obj/mecha/proc/toggle_internal_tank()
 	if(usr != src.occupant)
 		return
-	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to toggle internal tank usage [!use_internal_tank?"on":"off"].</span>"))
-		return
+
 	use_internal_tank = !use_internal_tank
 	occupant_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
 	log_message("Now taking air from [use_internal_tank?"internal airtank":"environment"].")
@@ -944,7 +935,7 @@
 	if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 		to_chat(user, "Consciousness matrix not detected.")
 		return 0
-	else if(mmi_as_oc.brainmob.stat != CONSCIOUS)
+	else if(mmi_as_oc.brainmob.stat)
 		to_chat(user, "Beta-rhythm below acceptable level.")
 		return 0
 	else if(occupant)
@@ -970,7 +961,7 @@
 		if(!mmi_as_oc.brainmob || !mmi_as_oc.brainmob.client)
 			to_chat(user, "Consciousness matrix not detected.")
 			return 0
-		else if(mmi_as_oc.brainmob.stat != CONSCIOUS)
+		else if(mmi_as_oc.brainmob.stat)
 			to_chat(user, "Beta-rhythm below acceptable level.")
 			return 0
 		user.drop_from_inventory(mmi_as_oc)
@@ -980,6 +971,7 @@
 		brainmob.loc = src //should allow relaymove
 		brainmob.canmove = 1
 		mmi_as_oc.loc = src
+		mmi_as_oc.mecha = src
 		Entered(mmi_as_oc)
 		Move(src.loc)
 		src.icon_state = reset_icon()
@@ -996,8 +988,7 @@
 /obj/mecha/proc/view_stats()
 	if(usr != src.occupant)
 		return
-	if(!check_fumbling("<span class='notice'>You fumble around, figuring out how to open exosuit stats.</span>"))
-		return
+
 	src.occupant << browse(get_stats_html(), "window=exosuit")
 	return
 
@@ -1038,6 +1029,7 @@
 			var/obj/item/device/mmi/mmi = mob_container
 			if(mmi.brainmob)
 				occupant.loc = mmi
+			mmi.mecha = null
 			src.occupant.canmove = 0
 		src.occupant = null
 		src.icon_state = reset_icon()+"-open"
@@ -1206,7 +1198,7 @@
 		if(cabin_air && cabin_air.volume>0)
 			cabin_air.temperature = min(6000 + T0C, cabin_air.temperature+rand(10, 15))
 			if(cabin_air.temperature > max_temperature / 2)
-				take_damage(4 / round(max_temperature / cabin_air.temperature, 0.1),BURN)
+				take_damage(4 / round(max_temperature / cabin_air.temperature, 0.1),"fire")
 	if(hasInternalDamage(MECHA_INT_TANK_BREACH)) //remove some air from internal tank
 		if(internal_tank)
 			var/datum/gas_mixture/int_tank_air = internal_tank.return_air()

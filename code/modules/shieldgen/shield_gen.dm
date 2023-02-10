@@ -30,7 +30,6 @@
 							//2 use active power
 	idle_power_usage = 20
 	active_power_usage = 100
-	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
 
 /obj/machinery/shield_gen/atom_init()
 	field = list()
@@ -58,7 +57,7 @@
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
-	else if(iswrenching(W))
+	else if(iswrench(W))
 		src.anchored = !src.anchored
 		visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].</span>")
 
@@ -97,7 +96,6 @@
 			user.unset_machine()
 			user << browse(null, "window=shield_generator")
 			return
-
 	var/t = ""
 	if(locked && !isobserver(user))
 		t += "<div class='NoticeBox'>Swipe your ID card to begin.</div>"

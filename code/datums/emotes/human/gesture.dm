@@ -1,4 +1,4 @@
-/datum/emote/human/raisehand
+/datum/emote/raisehand
 	key = "raisehand"
 
 	message_1p = "You raise a hand."
@@ -12,7 +12,7 @@
 	)
 
 
-/datum/emote/human/rock
+/datum/emote/rock
 	key = "rock"
 
 	message_1p = "You play rock."
@@ -25,12 +25,12 @@
 		EMOTE_STATE(is_one_hand_usable),
 	)
 
-/datum/emote/human/rock/do_emote(mob/living/carbon/human/user, emote_key, intentional)
+/datum/emote/rock/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
 	user.play_rock_paper_scissors_animation(emote_key)
 
 
-/datum/emote/human/paper
+/datum/emote/paper
 	key = "paper"
 
 	message_1p = "You play paper."
@@ -43,12 +43,12 @@
 		EMOTE_STATE(is_one_hand_usable),
 	)
 
-/datum/emote/human/paper/do_emote(mob/living/carbon/human/user, emote_key, intentional)
+/datum/emote/paper/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
 	user.play_rock_paper_scissors_animation(emote_key)
 
 
-/datum/emote/human/scissors
+/datum/emote/scissors
 	key = "scissors"
 
 	message_1p = "You play scissors."
@@ -61,52 +61,6 @@
 		EMOTE_STATE(is_one_hand_usable),
 	)
 
-/datum/emote/human/scissors/do_emote(mob/living/carbon/human/user, emote_key, intentional)
+/datum/emote/scissors/do_emote(mob/living/carbon/human/user, emote_key, intentional)
 	. = ..()
 	user.play_rock_paper_scissors_animation(emote_key)
-
-
-/datum/emote/human/clap
-	key = "clap"
-
-	message_1p = "You clap."
-	message_3p = "claps."
-
-	message_impaired_reception = "You hear someone clapping."
-
-	message_type = SHOWMSG_VISUAL
-
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_one_hand_usable),
-	)
-
-
-/datum/emote/human/wave
-	key = "wave"
-
-	message_1p = "You wave your hand."
-	message_3p = "waves."
-
-	message_type = SHOWMSG_VISUAL
-
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_one_hand_usable),
-		EMOTE_STATE(is_not_species, ZOMBIE),
-	)
-
-
-/datum/emote/human/salute
-	key = "salute"
-
-	message_1p = "You salute."
-	message_3p = "salutes."
-
-	message_type = SHOWMSG_VISUAL
-
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_one_hand_usable),
-		EMOTE_STATE(is_not_species, ZOMBIE),
-	)

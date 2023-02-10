@@ -69,7 +69,7 @@
 	name = "double-barreled shotgun"
 	desc = "A true classic."
 	icon_state = "dshotgun"
-	item_state = "dshotgun"
+	item_state = "shotgun"
 	w_class = SIZE_NORMAL
 	force = 10
 	flags =  CONDUCT
@@ -77,23 +77,19 @@
 	origin_tech = "combat=3;materials=1"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	can_be_holstered = FALSE
-	var/open = FALSE
-	var/short = FALSE
-	var/can_be_shortened = TRUE
+	var/open = 0
+	var/short = 0
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/update_icon()
 	if(short)
-		icon_state = "[initial(icon_state)][short ? "-short" : ""][open ? "-o" : ""]"
+		icon_state = "sawnshotgun[open ? "-o" : ""]"
 	else
-		icon_state = "[initial(icon_state)][open ? "-o" : ""]"
-	cut_overlays()
-	if(open)
-		add_overlay("[initial(icon_state)]shell-[magazine.ammo_count()]")
+		icon_state = "dshotgun[open ? "-o" : ""]"
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/melee/energy))
-		if(short || !can_be_shortened)
+	if(istype(I, /obj/item/weapon/circular_saw) || istype(I, /obj/item/weapon/melee/energy) || istype(I, /obj/item/weapon/pickaxe/plasmacutter))
+		if(short)
 			return
 		if(get_ammo())
 			to_chat(user, "<span class='notice'>You try to shorten the barrel of \the [src].</span>")
@@ -107,10 +103,10 @@
 			return
 
 		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
-		if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50, required_skills_override = list(/datum/skill/firearms = SKILL_LEVEL_TRAINED)))
-			icon_state = "dshotgun"
-			item_state = "shotgun-short"
+		if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50))
+			icon_state = "sawnshotgun[open ? "-o" : ""]"
 			w_class = SIZE_SMALL
+			item_state = "gun"
 			slot_flags &= ~SLOT_FLAGS_BACK	//you can't sling it on your back
 			slot_flags |= SLOT_FLAGS_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
 			to_chat(user, "<span class='warning'>You shorten the barrel of \the [src]!</span>")
@@ -118,14 +114,17 @@
 			desc = "Omar's coming!"
 			short = TRUE
 			can_be_holstered = TRUE
-			update_icon()
 		return
 
 	else if(istype(I, /obj/item/ammo_box) || istype(I, /obj/item/ammo_casing))
 		if(open)
-			return ..()
+			to_chat(user, "<span class='notice'>You load shell into \the [src]!</span>")
+			playsound(src, 'sound/weapons/guns/reload_shotgun.ogg', VOL_EFFECTS_MASTER)
+			chamber_round()
 		else
 			to_chat(user, "<span class='notice'>You can't load shell while [src] is closed!</span>")
+
+	return ..()
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/attack_self(mob/living/user)
 	add_fingerprint(user)
@@ -201,14 +200,14 @@
 	return 1
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action
-	name = "Mosin-Nagant"
-	desc = "Produced by the same group of shady space-soviet people that scrapped together A74 for Gorlex Marauders, this ancient bolt-action rifle uses same 7.74 ammo in clips and is perfectly fit to arm human waves in the name of Revolution."
+	name = "bolt-action rifle"
+	desc = "Springfield M1903."
 	icon_state = "bolt-action"
 	item_state = "bolt-action"
 	origin_tech = "combat=5;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/a774clip
+	mag_type = /obj/item/ammo_box/magazine/a3006_clip
 	w_class = SIZE_BIG
-	slot_flags = SLOT_FLAGS_BACK
+	slot_flags = 0
 
 /obj/item/weapon/gun/projectile/shotgun/bolt_action/pump(mob/M)
 	playsound(M, 'sound/weapons/guns/reload_bolt.ogg', VOL_EFFECTS_MASTER, null, FALSE)

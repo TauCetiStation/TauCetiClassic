@@ -84,7 +84,7 @@
 /mob/living/simple_animal/hostile/panther/FindTarget()
 	. = ..()
 	if(.)
-		me_emote("nashes at [.]")
+		emote("nashes at [.]")
 
 /mob/living/simple_animal/hostile/panther/AttackingTarget()
 	. =..()
@@ -92,7 +92,6 @@
 	if(istype(L))
 		if(prob(15))
 			L.Weaken(3)
-			L.Stun(1)
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 
 /mob/living/simple_animal/hostile/panther/AttackTarget()
@@ -143,7 +142,7 @@
 /mob/living/simple_animal/hostile/snake/FindTarget()
 	. = ..()
 	if(.)
-		me_emote("hisses wickedly")
+		emote("hisses wickedly")
 
 /mob/living/simple_animal/hostile/snake/AttackingTarget()
 	. =..()

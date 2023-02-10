@@ -423,8 +423,9 @@
 /area/awaymission/labs/cave)
 "bx" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 1e+007
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1581,8 +1582,9 @@
 /area/awaymission/labs/researchdivision)
 "eo" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
 	id = "sandstorm shutters";
@@ -1890,8 +1892,9 @@
 /area/awaymission/labs/gateway)
 "eX" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 1e+007
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
@@ -2827,9 +2830,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/rdconsole/core{
-	id = 0
-	},
+/obj/machinery/computer/rdconsole/core,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -3158,7 +3159,7 @@
 /area/awaymission/labs/researchdivision)
 "hN" = (
 /obj/structure/table/reinforced,
-/obj/item/device/tagger,
+/obj/item/weapon/hand_labeler,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -3537,8 +3538,9 @@
 /area/awaymission/labs/researchdivision)
 "iI" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 1e+007
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
@@ -3682,8 +3684,9 @@
 /area/awaymission/labs/researchdivision)
 "ja" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 1e+007
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -4225,8 +4228,9 @@
 /area/awaymission/labs/command)
 "km" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
 	id = "sandstorm shutters";
@@ -4287,8 +4291,9 @@
 /area/awaymission/labs/command)
 "ks" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 1e+007
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -5027,8 +5032,9 @@
 /obj/structure/grille{
 	layer = 3.3
 	},
-/obj/structure/window/reinforced/indestructible{
+/obj/structure/window/reinforced{
 	dir = 5;
+	health = 1e+007;
 	layer = 3.4
 	},
 /obj/machinery/door/poddoor{
@@ -5419,8 +5425,9 @@
 /obj/structure/grille{
 	layer = 3.3
 	},
-/obj/structure/window/reinforced/indestructible{
+/obj/structure/window/reinforced{
 	dir = 5;
+	health = 1e+007;
 	layer = 3.4
 	},
 /obj/machinery/door/poddoor{
@@ -5444,8 +5451,9 @@
 /obj/structure/grille{
 	layer = 3.3
 	},
-/obj/structure/window/reinforced/indestructible{
+/obj/structure/window/reinforced{
 	dir = 5;
+	health = 1e+007;
 	layer = 3.4
 	},
 /obj/machinery/door/poddoor{
@@ -5662,8 +5670,9 @@
 /area/awaymission/labs/command)
 "mY" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -5741,8 +5750,9 @@
 /area/awaymission/labs/cargo)
 "ni" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 1e+007
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/cave)
@@ -6689,8 +6699,9 @@
 /obj/structure/grille{
 	layer = 3.3
 	},
-/obj/structure/window/reinforced/indestructible{
+/obj/structure/window/reinforced{
 	dir = 5;
+	health = 1e+007;
 	layer = 3.4
 	},
 /obj/machinery/door/poddoor{
@@ -7212,7 +7223,7 @@
 	},
 /area/awaymission/labs/command)
 "qE" = (
-/obj/structure/displaycase/captain,
+/obj/structure/displaycase,
 /turf/simulated/floor{
 	icon_state = "wood"
 	},
@@ -7545,8 +7556,9 @@
 /area/awaymission/labs/civilian)
 "ro" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 1e+007
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -7952,8 +7964,9 @@
 /obj/structure/grille{
 	layer = 3.3
 	},
-/obj/structure/window/reinforced/indestructible{
+/obj/structure/window/reinforced{
 	dir = 5;
+	health = 1e+007;
 	layer = 3.4
 	},
 /obj/machinery/door/poddoor{
@@ -7968,8 +7981,9 @@
 /area/awaymission/labs/medical)
 "sv" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -7991,8 +8005,9 @@
 /area/awaymission/labs/security)
 "sy" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 1e+007
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -8346,8 +8361,9 @@
 /area/awaymission/labs/medical)
 "tr" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced/indestructible{
-	dir = 5
+/obj/structure/window/reinforced{
+	dir = 5;
+	health = 1e+007
 	},
 /turf/environment/space,
 /area/awaymission/labs/medical)

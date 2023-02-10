@@ -176,14 +176,35 @@
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
-	else if(iswrenching(O))
+	else if(iswrench(O))
 		default_unfasten_wrench(user, O)
 
-/obj/machinery/photocopier/atom_break(damage_flag)
-	. = ..()
-	if(. && toner > 0)
-		new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
-		toner = 0
+
+/obj/machinery/photocopier/ex_act(severity)
+	switch(severity)
+		if(EXPLODE_HEAVY)
+			if(prob(50))
+				if(toner > 0)
+					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
+					toner = 0
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(50))
+				if(toner > 0)
+					new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
+					toner = 0
+			return
+	qdel(src)
+
+/obj/machinery/photocopier/blob_act()
+	if(prob(50))
+		qdel(src)
+	else
+		if(toner > 0)
+			new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
+			toner = 0
+	return
+
 
 /obj/machinery/photocopier/proc/copy(obj/item/weapon/paper/copy)
 	var/obj/item/weapon/paper/P = new(loc)

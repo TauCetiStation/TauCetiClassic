@@ -144,7 +144,6 @@
 			with suppressors."
 	item = /obj/item/weapon/gun/projectile/automatic/pistol
 	cost = 6
-	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/dangerous/deagle
 	name = "Desert Eagle"
@@ -168,7 +167,7 @@
 	name = "C-20r Submachine Gun"
 	desc = "A fully-loaded Scarborough Arms-developed submachine gun that fires .45 ACP automatic rounds with a 20-round magazine. Has large variety of ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r
-	cost = 10
+	cost = 12
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/mini_uzi
@@ -193,7 +192,7 @@
 	name = "V15 Bulldog shotgun"
 	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Uses various 12g magazines."
 	item = /obj/item/weapon/gun/projectile/automatic/bulldog
-	cost = 15
+	cost = 16
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/machinegun
@@ -207,14 +206,14 @@
 	name = "PTR-7 heavy rifle"
 	desc = "A portable anti-armour bolt-action rifle. Originally designed to used against armoured exosuits. Fires armor piercing 14.5mm shells."
 	item = /obj/item/weapon/gun/projectile/heavyrifle
-	cost = 15
+	cost = 20
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/bazooka
 	name = "Goliath missile launcher"
 	desc = "The Goliath is a single-shot shoulder-fired multipurpose missile launcher."
 	item = /obj/item/weapon/gun/projectile/revolver/rocketlauncher
-	cost = 20
+	cost = 35
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/a74
@@ -230,7 +229,7 @@
 	name = "Drozd OTs-114 Assault Carbine"
 	desc = "Semiauto assault rifle equipped with an underslung grenade launcher. Has a small mag full of high power ammo. Uses 12-round magazine of 12.7 ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/drozd
-	cost = 15
+	cost = 20
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/crossbow
@@ -288,7 +287,7 @@
 	name = "Viscerator Delivery Grenade"
 	desc = "A unique grenade that deploys a swarm of viscerators upon activation, which will chase down and shred any non-operatives in the area."
 	item = /obj/item/weapon/grenade/spawnergrenade/manhacks
-	cost = 3
+	cost = 5
 	uplink_types = list("nuclear")
 /*
 /datum/uplink_item/dangerous/bioterror
@@ -304,7 +303,7 @@
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent for hit-and-run style attacks. \
 	This model lacks a method of space propulsion, and therefore it is advised to repair the mothership's teleporter if you wish to make use of it."
 	item = /obj/mecha/combat/gygax/dark
-	cost = 40
+	cost = 45
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/dangerous/mauler
@@ -360,7 +359,6 @@
 	cost = 2
 	uplink_types = list("nuclear", "traitor")
 
-
 // AMMUNITION
 
 /datum/uplink_item/ammo
@@ -379,7 +377,6 @@
 			are dirt cheap but are half as effective as .357 rounds."
 	item = /obj/item/ammo_box/magazine/m9mm/ex
 	cost = 1
-	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/ammo/revolver
 	name = "Speedloader-.357"
@@ -390,9 +387,9 @@
 
 /datum/uplink_item/ammo/smg
 	name = "Ammo-.45 ACP"
-	desc = "A 30-round .45 ACP magazine for use in the C-20r submachine gun."
+	desc = "A 20-round .45 ACP magazine for use in the C-20r submachine gun."
 	item = /obj/item/ammo_box/magazine/m12mm
-	cost = 1
+	cost = 2
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/uzi
@@ -418,23 +415,23 @@
 
 /datum/uplink_item/ammo/smg_hp
 	name = "Ammo-.45 ACP High Power"
-	desc = "A 20-round .45 ACP HP magazine for use in the C-20r submachine gun. These rounds have better overall damage."
+	desc = "A 15-round .45 ACP HP magazine for use in the C-20r submachine gun. These rounds have better overall damage."
 	item = /obj/item/ammo_box/magazine/m12mm/hp
-	cost = 2
+	cost = 4
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/smg_hv
 	name = "Ammo-.45 ACP High Velocity"
-	desc = "A 20-round .45 ACP HV magazine for use in the C-20r submachine gun. These rounds used to hit target almost instantly."
+	desc = "A 15-round .45 ACP HV magazine for use in the C-20r submachine gun. These rounds used to hit target almost instantly."
 	item = /obj/item/ammo_box/magazine/m12mm/hv
-	cost = 2
+	cost = 4
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/smg_imp
 	name = "Ammo-.45 ACP Impact"
-	desc = "A 20-round .45 ACP IMP magazine for use in the C-20r submachine gun. These rounds will push enemies back and shortly stun unarmored targets."
+	desc = "A 15-round .45 ACP IMP magazine for use in the C-20r submachine gun. These rounds will push enemies back and shortly stun unarmored targets."
 	item = /obj/item/ammo_box/magazine/m12mm/imp
-	cost = 2
+	cost = 4
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/a74standart
@@ -464,19 +461,26 @@
 	item = /obj/item/ammo_box/magazine/m12g/incendiary
 	cost = 4
 	uplink_types = list("nuclear")
+/*
+/datum/uplink_item/ammo/pistol
+	name = "Ammo-10mm"
+	desc = "An additional 8-round 10mm magazine for use in the Stetchkin pistol."
+	item = /obj/item/ammo_box/magazine/m10mm
+	cost = 1
+	uplink_types = list("nuclear") */
 
 /datum/uplink_item/ammo/machinegun
 	name = "Ammo-7.62x51mm"
 	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
-	cost = 10
+	cost = 14
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/drozd
 	name = "Ammo-12.7mm"
 	desc = "A 12-round magazine of 12.7 ammunition for use in the Drozd OTs-114 automatic rifle. Small and dangerous."
 	item = /obj/item/ammo_box/magazine/drozd127
-	cost = 2
+	cost = 4
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/grenade_launcher
@@ -497,21 +501,21 @@
 	name = "A 14.5mm shell."
 	desc = "A 14.5mm shell for use with PTR-7 heavy rifle. One shot, one kill, no luck, just skill."
 	item = /obj/item/ammo_casing/a145
-	cost = 1
+	cost = 2
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/rocket
 	name = "HE missile"
 	desc = "A high explosive missile for Goliath launcher."
 	item = /obj/item/ammo_casing/caseless/rocket
-	cost = 5
+	cost = 10
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/rocket_emp
 	name = "EMP missile"
 	desc = "A EMP missile for Goliath launcher."
 	item = /obj/item/ammo_casing/caseless/rocket/emp
-	cost = 2
+	cost = 5
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/chemicals
@@ -593,13 +597,6 @@
 	cost = 2
 	uplink_types = list("dealer")
 
-/datum/uplink_item/stealthy_tools/throwingknives
-	name = "Throwing Knives"
-	desc = "Belt with a bunch of deadly sharp throwing knives."
-	item = /obj/item/weapon/storage/belt/security/tactical/throwing
-	cost = 9
-	uplink_types = list("dealer")
-
 /datum/uplink_item/stealthy_tools/icepick
 	name = "Ice Pick"
 	desc = "Used for chopping ice. Also excellent for mafia esque murders."
@@ -633,7 +630,7 @@
 			known to survive intact even beyond the current shift. "
 	item = /obj/item/weapon/storage/backpack/satchel/flat
 	cost = 1
-	uplink_types = list("nuclear", "traitor", "dealer")
+	uplink_types = list()
 
 /datum/uplink_item/stealthy_tools/syndigolashes
 	name = "No-Slip Brown Shoes"
@@ -670,7 +667,7 @@
 	name = "Syndicate Silencer"
 	desc = "A universal small-arms silencer favored by stealth operatives, this will make shots quieter when equipped onto any low-caliber weapon."
 	item = /obj/item/weapon/silencer
-	cost = 1
+	cost = 2
 
 /datum/uplink_item/stealthy_weapons/throwingweapons
 	name = "Box of Throwing Weapons"
@@ -718,7 +715,6 @@
 	desc = "The syndicate toolbox is a suspicious black and red. Aside from tools, it comes with cable and a multitool. Insulated gloves are not included."
 	item = /obj/item/weapon/storage/toolbox/syndicate
 	cost = 1
-	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/device_tools/surgerybag
 	name = "Syndicate Surgery Dufflebag"
@@ -726,7 +722,6 @@
 			a MMI, a straitjacket, and a muzzle."
 	item = /obj/item/weapon/storage/backpack/dufflebag/surgery
 	cost = 4
-	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/device_tools/c4bag
 	name = "Bag of C-4 explosives"
@@ -740,7 +735,6 @@
 	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment."
 	item = /obj/item/weapon/storage/belt/military
 	cost = 1
-	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Medical Supply Kit"
@@ -750,12 +744,16 @@
 	cost = 10
 	uplink_types = list("nuclear", "traitor")
 
+/datum/uplink_item/device_tools/medkit/nuke
+	cost = 15
+	uplink_types = list("nuclear")
+
+
 /datum/uplink_item/device_tools/medkit_small
 	name = "Syndicate Medical Small Kit"
 	desc = "The syndicate medkit. Included is a combat stimulant injector for rapid healing."
 	item = /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
 	cost = 5
-	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/device_tools/bonepen
 	name = "Prototype Bone Repair Kit"
@@ -813,7 +811,6 @@
 			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
 	item = /obj/item/device/encryptionkey/syndicate
 	cost = 2
-	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/device_tools/poster_kit
 	name = "Poster kit"
@@ -849,7 +846,6 @@
 	It has a modifiable timer with a minimum setting of 10 seconds."
 	item = /obj/item/weapon/plastique
 	cost = 1
-	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power sink"
@@ -903,7 +899,7 @@
 	name = "Traitor Caller"
 	desc = "Allows you to request an additional agent selected from the stealthy traitors."
 	item = /obj/item/device/traitor_caller
-	cost = 35
+	cost = 55
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/device_tools/syndidrone
@@ -912,20 +908,6 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/drone
 	cost = 14
 	uplink_types = list("nuclear", "traitor")
-
-/datum/uplink_item/device_tools/fake_nuke
-	name = "Fake Nuke"
-	desc = "The most common nuclear bomb. With one but: it doesn't explode. You can <activate> it by double deploying."
-	item = /obj/machinery/nuclearbomb/fake
-	cost = 6
-	uplink_types = list("nuclear")
-
-/datum/uplink_item/device_tools/nuke_teleporter
-	name = "Nuke Recaller"
-	desc = "A device that can teleport a nuclear bomb directly to the user. It takes a lot of time to activate. There will be an announce upon activation."
-	item = /obj/item/nuke_teleporter
-	cost = 17
-	uplink_types = list("nuclear")
 
 // IMPLANTS
 
@@ -938,10 +920,6 @@
 	desc = "An implant injected into the body and later activated using a bodily gesture to attempt to slip restraints."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	cost = 5
-
-/datum/uplink_item/implants/freedom/dealer
-	cost = 10
-	uplink_types = list("dealer")
 
 /datum/uplink_item/implants/uplink
 	name = "Uplink Implant"
@@ -963,20 +941,11 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_adrenaline
 	cost = 6
 
-/datum/uplink_item/implants/adrenaline/dealer
-	cost = 20
-	uplink_types = list("dealer")
-
 /datum/uplink_item/implants/emp
 	name = "EMP Implant"
 	desc = "An implant, that contains power of three emp grenades, can be activated at the user's will."
 	item = /obj/item/weapon/storage/box/syndie_kit/imp_emp
 	cost = 3
-
-/datum/uplink_item/implants/emp/dealer
-	cost = 14
-	uplink_types = list("dealer")
-	need_wanted_level = 2
 
 /datum/uplink_item/implants/explosive
 	name = "Explosive Implant"
@@ -1114,72 +1083,3 @@
 
 	U.uses -= cost
 
-/datum/uplink_item/revolution
-	category = "Revolution!"
-	uplink_types = list("rev")
-
-/datum/uplink_item/revolution/derringer
-	name = "Derringer Pistol"
-	desc = "A double-barelled pistol, small enough to fit in a pocket. That's how it got so close to Lincoln. Chambered in .38, go get them from cargo."
-	item = /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer
-	cost = 2
-
-/datum/uplink_item/revolution/mosin
-	name = "Mosin-Nagant Rifle"
-	desc = "A simple yet powerful bolt-action rifle chambered in 7.74."
-	item = /obj/item/weapon/gun/projectile/shotgun/bolt_action
-	cost = 4
-
-/datum/uplink_item/revolution/mosin_ammo
-	name = "Mosin-Nagant Clip"
-	desc = "A simple clip of 7.74 ammo for a simple rifle."
-	item = /obj/item/ammo_box/magazine/a774clip
-	cost = 1
-
-/datum/uplink_item/revolution/stechkin
-	name = "Stechkin Pistol"
-	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 7-round magazines."
-	item = /obj/item/weapon/gun/projectile/automatic/pistol
-	cost = 5
-
-/datum/uplink_item/revolution/stechkin_ammo
-	name = "9mm Handgun Magazine"
-	desc = "An additional 7-round 9mm magazine; compatible with the Stechkin Pistol."
-	item = /obj/item/ammo_box/magazine/m9mm
-	cost = 1
-
-/datum/uplink_item/revolution/double_barrel
-	name = "Double-Barrel Shotgun"
-	desc = "Twice the barrels - twice the fun."
-	item = /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon
-	cost = 5
-
-/datum/uplink_item/revolution/krinkov
-	name = "A74U Assault Rifle"
-	desc = "Also known as Krinkov. Nowadays mainly used by lower grade security forces on mining or prison facilites. Uses smaller 7.74 mags."
-	item = /obj/item/weapon/gun/projectile/automatic/a74/krinkov
-	cost = 12
-
-/datum/uplink_item/revolution/krinkov_ammo
-	name = "A74U Magazine"
-	desc = "Lower-capacity A74 mag for use in Krinkov."
-	item = /obj/item/ammo_box/magazine/a74mm/krinkov
-	cost = 2
-
-/datum/uplink_item/revolution/emp
-	name = "EMP Grenade"
-	desc = "Classic EMP grenade. Throw it at those pesky cyborgs."
-	item = /obj/item/weapon/grenade/empgrenade
-	cost = 2
-
-/datum/uplink_item/revolution/armor
-	name = "Surplus Armor Set"
-	desc = "Set of cheap armor stolen from forgotten military warehouses."
-	item = /obj/item/weapon/storage/box/syndie_kit/revolution/armor
-	cost = 1
-
-/datum/uplink_item/revolution/posters
-	name = "Revolutionary Posters"
-	desc = "These posters expose NT lies and promote violence towards monopolists, allowing to convert spacemen remotely."
-	item = /obj/item/weapon/storage/box/syndie_kit/revolution/posters
-	cost = 1

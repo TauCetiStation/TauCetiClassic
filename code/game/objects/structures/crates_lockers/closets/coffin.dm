@@ -93,13 +93,13 @@
 		cut_overlay(coffin_side)
 
 /obj/structure/closet/coffin/tools_interact(obj/item/I, mob/user)
-	if(opened && isprying(I))
+	if(opened && iscrowbar(I))
 		new /obj/item/stack/sheet/wood(loc, 5)
 		visible_message("<span class='notice'>\The [src] has been disassembled apart by [user] with \the [I].</span>",
 						"<span class='notice'>You hear splitting wood.</span>")
 		qdel(src)
 		return TRUE
-	else if(!opened && isscrewing(I))
+	else if(!opened && isscrewdriver(I))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		welded = !welded
 		visible_message("<span class='warning'>[src] has been [welded?"screwed":"unscrewed"] by [user].</span>",
@@ -115,8 +115,8 @@
 		M.pixel_y = -1
 		update_buckle_mob(M)
 	else
-		M.pixel_x = M.default_pixel_x
-		M.pixel_y = M.default_pixel_y
+		M.pixel_x = 0
+		M.pixel_y = 0
 
 /obj/structure/closet/coffin/update_buckle_mob(mob/living/M)
 	// When mob layering will properly work:

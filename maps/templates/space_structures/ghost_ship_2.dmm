@@ -580,7 +580,7 @@
 	mobname = "Clarke Isaac";
 	name = "Clarke Isaac"
 	},
-/obj/item/weapon/gun/energy/laser/cutter,
+/obj/item/weapon/pickaxe/plasmacutter,
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
 	},

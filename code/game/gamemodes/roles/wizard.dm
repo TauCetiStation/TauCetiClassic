@@ -9,11 +9,6 @@
 	antag_hud_name = "hudwizard"
 
 	logo_state = "wizard-logo"
-	skillset_type = /datum/skillset/wizard
-
-	stat_type = /datum/stat/role/wizard
-
-	var/list/list_of_purchases = list()
 
 /datum/role/wizard/Greet(greeting, custom)
 	. = ..()
@@ -119,7 +114,7 @@
 		. += "<br><b>[antag.name] used the following spells: </b>"
 		var/i = 1
 		for(var/obj/effect/proc_holder/spell/S in antag.current.spell_list)
-			var/icon/spellicon = icon('icons/hud/actions.dmi', S.action_icon_state)
+			var/icon/spellicon = icon('icons/mob/actions.dmi', S.action_icon_state)
 			end_icons += spellicon
 			var/tempstate = end_icons.len
 			. += {"<br><img src="logo_[tempstate].png"> [S.name]"}
@@ -161,7 +156,7 @@
 		. += "<br><b>[antag.name] used the following spells: </b>"
 		var/i = 1
 		for(var/obj/effect/proc_holder/spell/S in antag.current.spell_list)
-			var/icon/spellicon = icon('icons/hud/actions.dmi', S.action_icon_state)
+			var/icon/spellicon = icon('icons/mob/actions.dmi', S.action_icon_state)
 			end_icons += spellicon
 			var/tempstate = end_icons.len
 			. += {"<br><img src="logo_[tempstate].png"> [S.name]"}

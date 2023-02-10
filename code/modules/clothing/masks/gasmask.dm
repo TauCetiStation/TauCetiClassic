@@ -61,39 +61,31 @@
 // **** Security gas mask (TG-stuff) ****
 /obj/item/clothing/mask/gas/sechailer
 	name = "security gas mask"
-	desc = "Стандартный противогаз охраны с модификацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока офицер забивает преступника насмерть."
+	desc = "A standard issue Security gas mask with integrated 'Compli-o-nator 3000' device, plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you taze them. Do not tamper with the device."
 	action_button_name = "Toggle Mask"
 	icon_state = "secmask"
 	var/cooldown = 0
-	var/last_phrase_text = ""
-	var/shitcurity_mode = FALSE
+	var/aggressiveness = 2
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
-	var/static/list/phrases_lawful = list(
-		"Не двигаться!" = 'sound/voice/complionator/lawful_ne_dvigatsya.ogg',
-		"Ни с места!" = 'sound/voice/complionator/lawful_ni_s_mesta.ogg',
-		"Стоять!" = 'sound/voice/complionator/lawful_stoyat.ogg',
-		"Стоять на месте!" = 'sound/voice/complionator/lawful_stoyat_na_meste.ogg')
-
-	var/static/list/pharses_shitcurity = list(
-		"Давай, попробуй побежать. Безмозглый идиот." = 'sound/voice/complionator/davai_poprobui_pobejat.ogg',
-		"Неудачник выбрал не тот день для нарушения закона." = 'sound/voice/complionator/neudachnik_vybral.ogg',
-		"Сейчас узнаешь что такое настоящее правосудие, мудак." = 'sound/voice/complionator/seychas_uznaesh.ogg',
-		"Стой! Преступное отродье." = 'sound/voice/complionator/stoy_prestupnoe.ogg',
-		"Только двинешься и я оторву тебе бошку." = 'sound/voice/complionator/tolko_dvineshsya.ogg',
-		"Укрыться от правосудия у тебя удастся только крышкой гроба." = 'sound/voice/complionator/ukrytsya_ot_pravosudia.ogg',
-		"Упал мордой в пол, тварь." = 'sound/voice/complionator/upal_mordoy_v.ogg',
-		"У вас есть только право закрыть свой пиздак нахуй." = 'sound/voice/complionator/u_vas_est_tolko.ogg',
-		"Виновен или невиновен - это лишь вопрос времени." = 'sound/voice/complionator/vinoven_ili_nevinoven.ogg',
-		"Я - закон. Ты - убогое ничтожество." = 'sound/voice/complionator/ya_zakon_ty.ogg',
-		"Живым или мертвым - ты пиздуешь со мной." = 'sound/voice/complionator/zhivym_ili_mertvym.ogg')
-
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
-		var/obj/item/weapon/screwdriver/S = I
-		if(S.use_tool(src, user, SKILL_TASK_TRIVIAL, volume = 40))
-			shitcurity_mode = !shitcurity_mode
-			to_chat(user, "<span class='notice'>Вы подкрутили встроенный Compli-o-nator 3000.</span>")
+	if(isscrewdriver(I))
+		switch(aggressiveness)
+			if(1)
+				to_chat(user, "<span class='notice'>You set the restrictor to the middle position.</span>")
+				aggressiveness = 2
+			if(2)
+				to_chat(user, "<span class='notice'>You set the restrictor to the last position.</span>")
+				aggressiveness = 3
+			if(3)
+				to_chat(user, "<span class='notice'>You set the restrictor to the first position.</span>")
+				aggressiveness = 1
+			if(4)
+				to_chat(user, "<span class='warning'>You adjust the restrictor but nothing happens, probably because its broken.</span>")
+	else if(iswirecutter(I))
+		if(aggressiveness != 4)
+			to_chat(user, "<span class='warning'>You broke it!</span>")
+			aggressiveness = 4
 	else
 		return ..()
 
@@ -108,30 +100,85 @@
 	if(usr.incapacitated())
 		return
 
-	if(cooldown < world.time)
-		var/phrase_sound
-		var/phrase_text
+	var/phrase = 0	//selects which phrase to use
+	var/phrase_text = null
+	var/phrase_sound = null
 
-		if(shitcurity_mode)
-			do
-				phrase_text = pick(pharses_shitcurity)
-			while(last_phrase_text == phrase_text)
-			phrase_sound = pharses_shitcurity[phrase_text]
-			cooldown = world.time + 4 SECOND
-		else
-			do
-				phrase_text = pick(phrases_lawful)
-			while(last_phrase_text == phrase_text)
-			phrase_sound = phrases_lawful[phrase_text]
-			cooldown = world.time + 2 SECOND
-		last_phrase_text = phrase_text
 
-		playsound(src, phrase_sound, VOL_EFFECTS_MASTER, 100, FALSE)
-		usr.visible_message("[usr] compli-o-nator, <font color='red' size='4'><b>\"[phrase_text]\"</b></font>")
+	if(cooldown < world.time - 35) // A cooldown, to stop people being jerks
+		switch(aggressiveness)		// checks if the user has unlocked the restricted phrases
+			if(1)
+				phrase = rand(1,5)	// set the upper limit as the phrase above the first 'bad cop' phrase, the mask will only play 'nice' phrases
+			if(2)
+				phrase = rand(1,11)	// default setting, set upper limit to last 'bad cop' phrase. Mask will play good cop and bad cop phrases
+			if(3)
+				phrase = rand(1,18)	// user has unlocked all phrases, set upper limit to last phrase. The mask will play all phrases
+			if(4)
+				phrase = rand(12,18)	// user has broke the restrictor, it will now only play shitcurity phrases
+
+		switch(phrase)	//sets the properties of the chosen phrase
+			if(1)				// good cop
+				phrase_text = "HALT! HALT! HALT! HALT!"
+				phrase_sound = 'sound/voice/complionator/halt.ogg'
+			if(2)
+				phrase_text = "Stop in the name of the Law."
+				phrase_sound = 'sound/voice/complionator/bobby.ogg'
+			if(3)
+				phrase_text = "Compliance is in your best interest."
+				phrase_sound = 'sound/voice/complionator/compliance.ogg'
+			if(4)
+				phrase_text = "Prepare for justice!"
+				phrase_sound = 'sound/voice/complionator/justice.ogg'
+			if(5)
+				phrase_text = "Running will only increase your sentence."
+				phrase_sound = 'sound/voice/complionator/running.ogg'
+			if(6)				// bad cop
+				phrase_text = "Don't move, Creep!"
+				phrase_sound = 'sound/voice/complionator/dontmove.ogg'
+			if(7)
+				phrase_text = "Down on the floor, Creep!"
+				phrase_sound = "floor"
+			if(8)
+				phrase_text = "Dead or alive you're coming with me."
+				phrase_sound = 'sound/voice/complionator/robocop.ogg'
+			if(9)
+				phrase_text = "God made today for the crooks we could not catch yesterday."
+				phrase_sound = 'sound/voice/complionator/god.ogg'
+			if(10)
+				phrase_text = "Freeze, Scum Bag!"
+				phrase_sound = 'sound/voice/complionator/freeze.ogg'
+			if(11)
+				phrase_text = "Stop right there, criminal scum!"
+				phrase_sound = 'sound/voice/complionator/imperial.ogg'
+			if(12)				// LA-PD
+				phrase_text = "Stop or I'll bash you."
+				phrase_sound = 'sound/voice/complionator/bash.ogg'
+			if(13)
+				phrase_text = "Go ahead, make my day."
+				phrase_sound = 'sound/voice/complionator/harry.ogg'
+			if(14)
+				phrase_text = "Stop breaking the law, ass hole."
+				phrase_sound = 'sound/voice/complionator/asshole.ogg'
+			if(15)
+				phrase_text = "You have the right to shut the fuck up."
+				phrase_sound = 'sound/voice/complionator/stfu.ogg'
+			if(16)
+				phrase_text = "Shut up crime!"
+				phrase_sound = 'sound/voice/complionator/shutup.ogg'
+			if(17)
+				phrase_text = "Face the wrath of the golden bolt."
+				phrase_sound = 'sound/voice/complionator/super.ogg'
+			if(18)
+				phrase_text = "I am, the LAW!"
+				phrase_sound = 'sound/voice/complionator/dredd.ogg'
+
+		usr.visible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[phrase_text]</b></font>")
+		playsound(src, phrase_sound, VOL_EFFECTS_MASTER, vary = FALSE)
+		cooldown = world.time
 
 /obj/item/clothing/mask/gas/sechailer/police
 	name = "police respirator"
-	desc = "Стандартный распиратор полиции с модификацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока полицейский забивает преступника насмерть."
+	desc = "A standard issue police respirator with integrated 'Compli-o-nator 3000' device, plays over a dozen pre-recorded compliance phrases designed to get scumbags to stand still whilst you detain them. Do not tamper with the device."
 	icon_state = "police_mask"
 	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 

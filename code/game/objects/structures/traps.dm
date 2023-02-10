@@ -55,7 +55,6 @@
 
 /obj/structure/trap/stun/trap_effect(mob/living/L)
 	L.electrocute_act(30, src) // electrocute act does a message.
-	L.Stun(5)
 	L.Weaken(5)
 
 /obj/structure/trap/fire
@@ -76,7 +75,6 @@
 
 /obj/structure/trap/chill/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'>You're frozen solid!</span>")
-	L.Stun(1)
 	L.Weaken(1)
 	L.adjust_bodytemperature(-300)
 	L.reagents.add_reagent("frostoil", 15)

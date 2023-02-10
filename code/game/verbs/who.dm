@@ -73,29 +73,28 @@
 	msg += "<b>Total Players: [length(Lines)]</b>"
 	to_chat(src, msg)
 
+#define SW_ADMINS     1
+#define SW_MENTORS    2
+#define SW_XENOVISORS 3
+#define SW_DEVELOPERS 4
+#define SW_ALL_GROUPS 4 //update this, if add more staff groups
+
 #define SW_NAME       1
 #define SW_WHOTEXT    2
 #define SW_COUNT      3
-#define SW_CSS_CLASS  4
-#define SW_ALL_PARAMS 4 //update this, if add more params
+#define SW_ALL_PARAMS 3 //update this, if add more params
 
-#define SW_TR(CKEY, RANK, EXTRA) "<tr><td>&emsp;[CKEY]</td><td><b>[SSholiday.get_staffwho_prefix(CKEY.ckey) ? SSholiday.get_staffwho_prefix(ckey) + " " : ""][RANK]</b></td><td>[EXTRA]</td></tr>"
+#define SW_TR(CKEY, RANK, EXTRA) "<tr><td>&emsp;[CKEY]</td><td><b>[RANK]</b></td><td>[EXTRA]</td></tr>"
 #define SW_INCREMENT(GROUP, CKEY, RANK, EXTRA) staffwho[GROUP][SW_WHOTEXT] += SW_TR(CKEY, RANK, EXTRA);staffwho[GROUP][SW_COUNT]++
 /client/verb/staffwho()
 	set category = "Admin"
 	set name = "Staffwho"
 
 	var/list/staffwho[SW_ALL_GROUPS][SW_ALL_PARAMS]
-	staffwho[SW_ADMINS][SW_NAME] = SSholiday.get_admin_name(SW_ADMINS)
-	staffwho[SW_MENTORS][SW_NAME] = SSholiday.get_admin_name(SW_MENTORS)
-	staffwho[SW_XENOVISORS][SW_NAME] = SSholiday.get_admin_name(SW_XENOVISORS)
-	staffwho[SW_DEVELOPERS][SW_NAME] = SSholiday.get_admin_name(SW_DEVELOPERS)
-
-	// update tgui\packages\tgui-panel\styles\goon\chat-base.scss, if change this
-	staffwho[SW_ADMINS][SW_CSS_CLASS] =     "Admins"
-	staffwho[SW_MENTORS][SW_CSS_CLASS] =    "Mentors"
-	staffwho[SW_XENOVISORS][SW_CSS_CLASS] = "Xenovisors"
-	staffwho[SW_DEVELOPERS][SW_CSS_CLASS] = "Developers"
+	staffwho[SW_ADMINS][SW_NAME] = "Admins" // update tgui\packages\tgui-panel\styles\goon\chat-base.scss, if change this
+	staffwho[SW_MENTORS][SW_NAME] = "Mentors"
+	staffwho[SW_XENOVISORS][SW_NAME] = "Xenovisors"
+	staffwho[SW_DEVELOPERS][SW_NAME] = "Developers"
 
 	for(var/client/C as anything in admins|mentors)
 		if(C.ckey in stealth_keys)
@@ -130,20 +129,22 @@
 	for(var/staff in staffwho)
 		if(!staff[SW_COUNT])
 			continue
-		msg += "<tr><th class='[staff[SW_CSS_CLASS]]' colspan='3'>[staff[SW_NAME]] — [staff[SW_COUNT] || 0]</td></tr>"
+		msg += "<tr><th class='[staff[SW_NAME]]' colspan='3'>[staff[SW_NAME]] — [staff[SW_COUNT] || 0]</td></tr>"
 		msg += "[staff[SW_WHOTEXT]]"
 	if(!msg)
-		var/no_staff_text = SSholiday.get_no_staff_text()
-		if(!no_staff_text)
-			no_staff_text = "No Staff Online"
-		msg = "<b>[no_staff_text]</b>"
+		msg = "<b>No Staff Online</b>"
 	else
 		msg = "<table class='staffwho'>[msg]</table>"
 	to_chat(src, msg)
 
+#undef SW_ADMINS
+#undef SW_MENTORS
+#undef SW_XENOVISORS
+#undef SW_DEVELOPERS
 #undef SW_NAME
 #undef SW_WHOTEXT
 #undef SW_COUNT
 #undef SW_TR
 #undef SW_INCREMENT
+#undef SW_ALL_GROUPS
 #undef SW_ALL_PARAMS

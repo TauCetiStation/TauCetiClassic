@@ -28,7 +28,7 @@ var/global/list/gurgles = list(
 	. = ..()
 
 /obj/structure/drain/attackby(obj/item/thing, mob/user)
-	if(iswelding(thing))
+	if(iswelder(thing))
 		var/obj/item/weapon/weldingtool/WT = thing
 		if(WT.isOn())
 			welded = !welded

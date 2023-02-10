@@ -163,9 +163,6 @@
 			if(D.owner_PDA)
 				D.owner_PDA.transaction_inform(source_name, terminal_id, money)
 
-			if(terminal_id == CARGOSHOPNAME && attempt_account_number == global.cargo_account.account_number)
-				global.online_shop_profits += money
-
 			return TRUE
 	return FALSE
 

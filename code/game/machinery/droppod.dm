@@ -18,7 +18,8 @@
 	icon_state = "dropod_opened"
 	var/item_state = null
 
-	max_integrity = 100
+	var/max_integrity = 100
+	var/obj_integrity = 100
 
 	var/mob/living/carbon/intruder
 	var/mob/living/second_intruder
@@ -38,7 +39,7 @@
 /obj/structure/droppod/atom_init()
 	. = ..()
 	if(!initial_eyeobj_location)
-		initial_eyeobj_location = locate("landmark*Droppod")
+		initial_eyeobj_location = locate(/obj/effect/landmark/droppod) in landmarks_list
 	if(!allowed_areas)
 		allowed_areas = new
 
@@ -144,7 +145,6 @@
 			obscured_turfs += i
 
 /obj/effect/landmark/droppod
-	name = "Droppod"
 
 /********Move in and out********/
 
@@ -416,7 +416,7 @@
 		to_chat(user, "<span class ='userdanger'>[src] is lock down!</span>")
 		return
 
-	if(isscrewing(O))
+	if(isscrewdriver(O))
 		if(flags & ADVANCED_AIMING_INSTALLED)
 			if(flags & STATE_AIMING)
 				CancelAdvancedAiming()
@@ -427,16 +427,20 @@
 		else
 			to_chat(user, "<span class ='notice'>Advanced aiming system does not installed in [src]!</span>")
 
-	else if(iswelding(O))
+	else if(iswelder(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(get_integrity() < max_integrity && WT.use(0, user))
+		if(obj_integrity < max_integrity && WT.use(0, user))
 			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
-			repair_damage(10)
+			obj_integrity = min(obj_integrity + 10, max_integrity)
 			visible_message("<span class='notice'>[user] has repaired some dents on [src]!</span>")
 
-	else if(O.flags & ABSTRACT)
+	else if(user.a_intent == INTENT_HARM || (O.flags & ABSTRACT))
+		playsound(src, 'sound/weapons/smash.ogg', VOL_EFFECTS_MASTER)
+		user.SetNextMove(CLICK_CD_MELEE)
+		take_damage(O.force)
 		return ..()
+
 	else
 		if(istype(O, /obj/item/weapon/simple_drop_system))
 			if(!(flags & POOR_AIMING))
@@ -505,23 +509,26 @@
 
 /obj/structure/droppod/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
-	if(flags & IS_LOCKED)
-		return
-	if(intruder && prob(60))
-		intruder.bullet_act(Proj)
-	if(second_intruder && prob(40))
-		second_intruder.bullet_act(Proj)
+	if((Proj.damage && Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+		playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
+		visible_message("<span class='danger'>[src] was hit by [Proj].</span>")
+		take_damage(Proj.damage)
+		if(!(flags & IS_LOCKED))
+			if(intruder && prob(60))
+				intruder.bullet_act(Proj)
+			if(second_intruder && prob(40))
+				second_intruder.bullet_act(Proj)
 
-/obj/structure/droppod/play_attack_sound(damage_amount, damage_type, damage_flag)
-	if(damage_amount)
-		playsound(loc, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
+/obj/structure/droppod/proc/take_damage(amount)
+	obj_integrity -= amount / 2
+	if(obj_integrity <= 0)
+		visible_message("<span class='warning'>The [src] has been destroyed!</span>")
+		qdel(src)
 
-/obj/structure/droppod/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir)
-	..(damage_amount * 0.5, damage_type, damage_flag, sound_effect, attack_dir)
-
-/obj/structure/droppod/deconstruct()
-	visible_message("<span class='warning'>The [src] has been destroyed!</span>")
-	. = ..()
+/obj/structure/droppod/attack_animal(mob/living/simple_animal/attacker)
+	..()
+	playsound(src, 'sound/effects/bang.ogg', VOL_EFFECTS_MASTER)
+	take_damage(attacker.melee_damage)
 
 /********Stats********/
 
@@ -622,7 +629,7 @@
 		state = "Aiming"
 	if(flags & STATE_DROPING)
 		state = "Droping"
-	var/output = {"<b>Integrity: </b> [get_integrity()/max_integrity * 100]%<br>
+	var/output = {"<b>Integrity: </b> [obj_integrity/max_integrity * 100]%<br>
 					<b>Advanced Aiming System: </b> [(flags & ADVANCED_AIMING_INSTALLED) ? "" : "Un"]installed<br>
 					<b>Second Passenger: </b>[second_intruder ? "[second_intruder.name]" : "None"]<br>
 					<b>Nuclear bomb: </b> [Stored_Nuclear ? "" : "Un"]installed<br>
@@ -726,13 +733,6 @@
 		StartDrop()
 		return
 	..()
-
-/obj/structure/droppod/Syndi/StartDrop()
-	//mix stuff
-	var/datum/faction/nuclear/crossfire/N = find_faction_by_type(/datum/faction/nuclear/crossfire)
-	if(N)
-		N.landing_nuke()
-	return ..()
 
 /obj/structure/droppod/Syndi/perform_drop()
 	..()

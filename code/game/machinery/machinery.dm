@@ -106,13 +106,6 @@ Class Procs:
 	icon = 'icons/obj/stationobjs.dmi'
 	layer = DEFAULT_MACHINERY_LAYER
 	w_class = SIZE_MASSIVE
-
-	max_integrity = 200
-	integrity_failure = 0.3
-	damage_deflection = 15
-	resistance_flags = CAN_BE_HIT
-
-	var/icon_state_active = 0
 	var/stat = 0
 	var/emagged = 0 // Can be 0, 1 or 2
 	var/use_power = IDLE_POWER_USE
@@ -145,9 +138,6 @@ Class Procs:
 
 	var/min_operational_temperature = 5
 	var/max_operational_temperature = 10
-
-	var/list/required_skills //e.g. medical, engineering
-	var/fumbling_time = 5 SECONDS
 
 /obj/machinery/atom_init()
 	. = ..()
@@ -199,7 +189,14 @@ Class Procs:
 	if(use_power && stat == 0)
 		use_power(7500/severity)
 
-		new /obj/effect/overlay/pulse2(loc, 1)
+		var/obj/effect/overlay/pulse2 = new /obj/effect/overlay(loc)
+		pulse2.icon = 'icons/effects/effects.dmi'
+		pulse2.icon_state = "empdisable"
+		pulse2.name = "emp sparks"
+		pulse2.anchored = TRUE
+		pulse2.set_dir(pick(cardinal))
+
+		QDEL_IN(pulse2, 10)
 	..()
 
 /obj/machinery/proc/open_machine()
@@ -250,6 +247,10 @@ Class Procs:
 			if (prob(75))
 				return
 	qdel(src)
+
+/obj/machinery/blob_act()
+	if(prob(50))
+		qdel(src)
 
 // The main proc that controls power usage of a machine, change use_power only with this proc
 /obj/machinery/proc/set_power_use(new_use_power)
@@ -326,9 +327,6 @@ Class Procs:
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
-	if(!do_skill_checks(usr))
-		return FALSE
-
 	return TRUE
 
 /obj/machinery/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
@@ -337,8 +335,6 @@ Class Procs:
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
-	if(!do_skill_checks(usr))
-		return TRUE
 	return FALSE
 
 /obj/machinery/proc/issilicon_allowed(mob/living/silicon/S)
@@ -383,7 +379,7 @@ Class Procs:
 
 // set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user)
-	if((user.lying || user.stat != CONSCIOUS) && !IsAdminGhost(user))
+	if((user.lying || user.stat) && !IsAdminGhost(user))
 		return TRUE
 	if(!(ishuman(user) || issilicon(user) || ismonkey(user) || isxenoqueen(user) || IsAdminGhost(user)))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
@@ -422,53 +418,56 @@ Class Procs:
 	uid = gl_uid
 	gl_uid++
 
-/obj/machinery/proc/default_pry_open(obj/item/weapon/I)
-	. = isprying(I) && !(state_open || panel_open || is_operational() || (flags & NODECONSTRUCT))
+/obj/machinery/proc/default_pry_open(obj/item/weapon/crowbar/C)
+	. = !(state_open || panel_open || is_operational() || (flags & NODECONSTRUCT)) && istype(C)
 	if(.)
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'>[usr] pry open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
 		return 1
 
-/obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/I, ignore_panel = 0)
-	. = isprying(I) && (panel_open || ignore_panel) && !(flags & NODECONSTRUCT)
+/obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 0)
+	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
 	if(.)
-		if(!handle_fumbling(usr, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around, figuring out how to deconstruct [src].</span>"))
-			return
+		deconstruction()
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
-		deconstruct(TRUE)
+		var/obj/machinery/constructable_frame/machine_frame/M = new /obj/machinery/constructable_frame/machine_frame(loc)
+		transfer_fingerprints_to(M)
+		M.state = 2
+		M.icon_state = "box_1"
+		for(var/obj/item/I in component_parts)
+			if(I.reliability != 100 && crit_fail)
+				I.crit_fail = 1
+			I.loc = loc
+		qdel(src)
 
-/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/I)
-	if(isscrewing(I) &&  !(flags & NODECONSTRUCT))
+/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
+	if(istype(S) &&  !(flags & NODECONSTRUCT))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(!panel_open)
-			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around, figuring out how to open the maintenance hatch of [src].</span>"))
-				return 0
 			panel_open = 1
 			icon_state = icon_state_open
 			to_chat(user, "<span class='notice'>You open the maintenance hatch of [src].</span>")
 		else
-			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around, figuring out how to close the maintenance hatch of [src].</span>"))
-				return 1
 			panel_open = 0
 			icon_state = icon_state_closed
 			to_chat(user, "<span class='notice'>You close the maintenance hatch of [src].</span>")
 		return 1
 	return 0
 
-/obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/weapon/I)
-	if(panel_open && iswrenching(I))
+/obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
+	if(panel_open && istype(W))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		set_dir(turn(dir,-90))
 		to_chat(user, "<span class='notice'>You rotate [src].</span>")
 		return 1
 	return 0
 
-/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/I, time = SKILL_TASK_VERY_EASY)
-	if(iswrenching(I) &&  !(flags & NODECONSTRUCT))
+/obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+	if(istype(W) &&  !(flags & NODECONSTRUCT))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>")
-		if(I.use_tool(src, user, time, volume = 50, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
+		if(W.use_tool(src, user, time, volume = 50))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 			anchored = !anchored
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
@@ -521,39 +520,6 @@ Class Procs:
 /obj/machinery/proc/construction()
 	return
 
-/obj/machinery/proc/spawn_frame(disassembled)
-	var/obj/machinery/constructable_frame/machine_frame/new_frame = new /obj/machinery/constructable_frame/machine_frame(loc)
-
-	new_frame.state = 2
-	new_frame.icon_state = "box_1"
-	. = new_frame
-	if(!disassembled)
-		new_frame.update_integrity(new_frame.max_integrity * 0.5) //the frame is already half broken
-	transfer_fingerprints_to(new_frame)
-
-/obj/machinery/atom_break(damage_flag)
-	. = ..()
-	if(stat & BROKEN || flags & NODECONSTRUCT)
-		return
-	stat |= BROKEN
-	update_icon()
-	return TRUE
-
-/obj/machinery/deconstruct(disassembled = TRUE)
-	if(flags & NODECONSTRUCT)
-		return ..() //Just delete us, no need to call anything else.
-
-	deconstruction()
-	if(!length(component_parts))
-		return ..() //we don't have any parts.
-	spawn_frame(disassembled)
-	for(var/obj/item/part in component_parts)
-		part.forceMove(loc)
-		if(part.reliability != 100 && crit_fail)
-			part.crit_fail = 1
-	LAZYCLEARLIST(component_parts)
-	..()
-
 //called on deconstruction before the final deletion
 /obj/machinery/proc/deconstruction()
 	return
@@ -578,8 +544,3 @@ Class Procs:
 		ex_act(EXPLODE_HEAVY)
 	else
 		ex_act(EXPLODE_DEVASTATE)
-
-/obj/machinery/proc/do_skill_checks(mob/user)
-	if (!required_skills || !user || issilicon(user) || isobserver(user))
-		return TRUE
-	return handle_fumbling(user, src, fumbling_time, required_skills, check_busy = FALSE)

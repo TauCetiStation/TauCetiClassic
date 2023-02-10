@@ -10,9 +10,6 @@
 	var/damage_mask = TRUE
 	var/eyes = "eyes"                                    // Icon for eyes.
 	var/eyes_glowing = FALSE                             // To make those eyes gloooow.
-	var/gender_tail_icons = FALSE
-	var/gender_limb_icons = FALSE
-	var/fat_limb_icons = FALSE
 
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
@@ -153,12 +150,6 @@
 	// The usual species for the station
 	var/is_common = FALSE
 
-	// The type of skeleton species they would be turned into. default is human
-	var/skeleton_type = SKELETON
-
-	var/default_mood_event
-
-
 /datum/species/New()
 	blood_datum = new blood_datum_path
 	unarmed = new unarmed_type()
@@ -248,9 +239,6 @@
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_GAIN, src)
 
-	if(default_mood_event)
-		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "species", default_mood_event)
-
 /datum/species/proc/on_loose(mob/living/carbon/human/H, new_species)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -263,7 +251,6 @@
 		H.clear_emote(emote)
 
 	SEND_SIGNAL(H, COMSIG_SPECIES_LOSS, src, new_species)
-	SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "species")
 
 /datum/species/proc/regen(mob/living/carbon/human/H) // Perhaps others will regenerate in different ways?
 	return
@@ -301,8 +288,6 @@
 
 /datum/species/human
 	name = HUMAN
-	gender_limb_icons = TRUE
-	fat_limb_icons = TRUE
 	language = LANGUAGE_SOLCOMMON
 	primitive = /mob/living/carbon/monkey
 	unarmed_type = /datum/unarmed_attack/punch
@@ -327,9 +312,6 @@
 	name = UNATHI
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
 	deform = 'icons/mob/human_races/r_def_lizard.dmi'
-	gender_tail_icons = TRUE
-	gender_limb_icons = TRUE
-	fat_limb_icons = TRUE
 	language = LANGUAGE_SINTAUNATHI
 	tail = "unathi"
 	unarmed_type = /datum/unarmed_attack/claws
@@ -369,7 +351,13 @@
 
 	is_common = TRUE
 
-	skeleton_type = SKELETON_UNATHI
+	replace_outfit = list(
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut
+			)
+
+/datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
+	..()
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
 /datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_unathi_digest(M)
@@ -389,8 +377,6 @@
 	name = TAJARAN
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
-	gender_limb_icons = TRUE
-	fat_limb_icons = TRUE
 	language = LANGUAGE_SIIKMAAS
 	additional_languages = list(LANGUAGE_SIIKTAJR = LANGUAGE_NATIVE)
 	tail = "tajaran"
@@ -424,7 +410,6 @@
 	,HAS_HAIR = TRUE
 	,FACEHUGGABLE = TRUE
 	,IS_SOCIAL = TRUE
-	,FUR = TRUE
 	)
 
 	flesh_color = "#afa59e"
@@ -435,15 +420,13 @@
 
 	is_common = TRUE
 
-	skeleton_type = SKELETON_TAJARAN
+	replace_outfit = list(
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
+			)
 
-/datum/species/tajaran/on_gain(mob/living/M)
+/datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
 	..()
-	ADD_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
-
-/datum/species/tajaran/on_loose(mob/living/M)
-	..()
-	REMOVE_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
 /datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_tajaran_digest(M)
@@ -491,8 +474,6 @@
 	max_age = 150
 
 	is_common = TRUE
-
-	skeleton_type = SKELETON_SKRELL
 
 /datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skrell_digest(M)
@@ -576,13 +557,11 @@
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
 
 	replace_outfit = list(
+			/obj/item/clothing/shoes/boots/combat = /obj/item/clothing/shoes/boots/combat/cut,
 			/obj/item/clothing/mask/gas/syndicate = /obj/item/clothing/mask/gas/vox,
 			)
 
-	skeleton_type = SKELETON_VOX
-
-/datum/species/vox/on_gain(mob/living/carbon/human/H)
-	..()
+/datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
 /datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J, visualsOnly = FALSE)
@@ -591,6 +570,8 @@
 	if(H.wear_mask)
 		qdel(H.wear_mask)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
+
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), SLOT_SHOES, 1)
 
 /datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_vox_digest(M)
@@ -601,23 +582,30 @@
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
 		H.leap_icon = new /atom/movable/screen/leap()
+		H.leap_icon.screen_loc = "CENTER+3:20,SOUTH:5"
 
 		if(H.hud_used)
-			H.leap_icon.add_to_hud(H.hud_used)
+			H.hud_used.adding += H.leap_icon
+		if(H.client)
+			H.client.screen += H.leap_icon
 
 	else
 		H.verbs += /mob/living/carbon/human/proc/gut
+
 	..()
 
 /datum/species/vox/on_loose(mob/living/carbon/human/H, new_species)
 	if(name != VOX_ARMALIS)
 		if(H.leap_icon)
 			if(H.hud_used)
-				H.leap_icon.remove_from_hud(H.hud_used)
+				H.hud_used.adding -= H.leap_icon
+			if(H.client)
+				H.client.screen -= H.leap_icon
 			QDEL_NULL(H.leap_icon)
 
 	else
 		H.verbs -= /mob/living/carbon/human/proc/gut
+
 	..()
 
 // At 25 damage - no protection at all.
@@ -692,8 +680,6 @@
 
 	has_gendered_icons = TRUE
 
-	skeleton_type = SKELETON_VOX
-
 /datum/species/diona
 	name = DIONA
 	icobase = 'icons/mob/human_races/r_diona.dmi'
@@ -721,7 +707,6 @@
 	heat_level_3 = 4000
 
 	burn_mod = 1.3
-	oxy_mod = 0
 	speed_mod = 7
 	speed_mod_no_shoes = -2
 
@@ -788,30 +773,16 @@
 	// Podmen don't.
 	var/regen_limbs = TRUE
 
-/datum/species/diona/on_gain(mob/living/carbon/human/H)
-	..()
+/datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
-/datum/species/diona/regen(mob/living/carbon/human/H)
-	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
-	if(isturf(H.loc)) //else, there's considered to be no light
-		var/turf/T = H.loc
-		light_amount = round(10 * T.get_lumcount() - 5)
+	return ..()
 
-	if(H.is_type_organ(O_LIVER, /obj/item/organ/internal/liver/diona) && !H.is_bruised_organ(O_LIVER)) // Specie may require light, but only plants, with chlorophyllic plasts can produce nutrition out of light!
-		H.nutrition += light_amount
-
-	if(H.is_type_organ(O_KIDNEYS, /obj/item/organ/internal/kidneys/diona)) // Diona's kidneys contain all the nutritious elements. Damaging them means they aren't held.
-		var/obj/item/organ/internal/kidneys/KS = H.organs_by_name[O_KIDNEYS]
-		if(!KS)
-			H.nutrition = 0
-		else if(H.nutrition > (500 - KS.damage*5))
-			H.nutrition = 500 - KS.damage*5
-
+/datum/species/diona/regen(mob/living/carbon/human/H, light_amount)
 	if(light_amount >= 5) // If you can regen organs - do so.
 		for(var/obj/item/organ/internal/O in H.organs)
 			if(O.damage)
-				O.damage = max(0, O.damage - light_amount * regen_mod / 5)
+				O.damage -= light_amount * regen_mod / 5
 				H.nutrition -= light_amount
 				return
 
@@ -825,6 +796,9 @@
 
 	if(light_amount >= 3) // If you don't need to regen bodyparts, fix up small things.
 		H.adjustBruteLoss(-(light_amount * regen_mod))
+		// Dionaea don't have toxloss or oxyloss. Why is this here?
+		H.adjustToxLoss(-(light_amount * regen_mod))
+		H.adjustOxyLoss(-(light_amount * regen_mod))
 
 /datum/species/diona/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_diona_digest(M)
@@ -1010,15 +984,13 @@
 
 	is_common = TRUE
 
-	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST)
+	prohibit_roles = list(ROLE_CHANGELING, ROLE_SHADOWLING, ROLE_CULTIST, ROLE_BLOB)
 
 	emotes = list(
-		/datum/emote/robot/beep,
-		/datum/emote/robot/ping,
-		/datum/emote/robot/buzz,
+		/datum/emote/beep,
+		/datum/emote/ping,
+		/datum/emote/buzz,
 	)
-
-	default_mood_event = /datum/mood_event/machine
 
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	..()
@@ -1072,9 +1044,10 @@
 	min_age = 100
 	max_age = 500
 
-/datum/species/abductor/on_gain(mob/living/carbon/human/H)
-	..()
+/datum/species/abductor/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
+
+	return ..()
 
 /datum/species/abductor/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_abductor_digest(M)
@@ -1131,57 +1104,15 @@
 	min_age = 1
 	max_age = 1000
 
-	default_mood_event = /datum/mood_event/undead
-
-/datum/species/skeleton/on_gain(mob/living/carbon/human/H)
-	..()
+/datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
-	H.remove_status_flags(CANSTUN|CANPARALYSE)
 
-/datum/species/skeleton/on_loose(mob/living/carbon/human/H, new_species)
-	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
-	..()
+	H.status_flags &= ~(CANSTUN | CANPARALYSE)
 
-/datum/species/skeleton/regen(mob/living/carbon/human/H)
-	H.nutrition = NUTRITION_LEVEL_NORMAL
+	return ..()
 
 /datum/species/skeleton/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skeleton_digest(M)
-
-/datum/species/skeleton/unathi
-	name = SKELETON_UNATHI
-	icobase = 'icons/mob/human_races/r_skeleton_lizard.dmi'
-	deform = 'icons/mob/human_races/r_skeleton_lizard.dmi'
-	tail = "unathi_skeleton"
-
-/datum/species/skeleton/unathi/New()
-	.=..()
-	flags[HAS_TAIL]=TRUE
-
-/datum/species/skeleton/tajaran
-	name = SKELETON_TAJARAN
-	icobase = 'icons/mob/human_races/r_skeleton_tajaran.dmi'
-	deform = 'icons/mob/human_races/r_skeleton_tajaran.dmi'
-	tail = "tajaran_skeleton"
-
-/datum/species/skeleton/tajaran/New()
-	.=..()
-	flags[HAS_TAIL]=TRUE
-
-/datum/species/skeleton/skrell
-	name = SKELETON_SKRELL
-	icobase = 'icons/mob/human_races/r_skeleton_skrell.dmi'
-	deform = 'icons/mob/human_races/r_skeleton_skrell.dmi'
-
-/datum/species/skeleton/vox
-	name = SKELETON_VOX
-	icobase = 'icons/mob/human_races/r_skeleton_vox.dmi'
-	deform = 'icons/mob/human_races/r_skeleton_vox.dmi'
-	tail = "vox_skeleton"
-
-/datum/species/skeleton/vox/New()
-	.=..()
-	flags[HAS_TAIL]=TRUE
 
 //Species unarmed attacks
 
@@ -1189,13 +1120,13 @@
 	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
 	var/damage = 0						// Extra empty hand attack damage.
 	var/damType = BRUTE
-	var/miss_sound = 'sound/effects/mob/hits/miss_1.ogg'
+	var/miss_sound = 'sound/weapons/punchmiss.ogg'
 	var/sharp = FALSE
 	var/edge = FALSE
 	var/list/attack_sound
 
 /datum/unarmed_attack/New()
-	attack_sound = SOUNDIN_PUNCH_MEDIUM
+	attack_sound = SOUNDIN_PUNCH
 
 /datum/unarmed_attack/proc/damage_flags()
 	return (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)
@@ -1296,31 +1227,10 @@
 	min_age = 1
 	max_age = 10000
 
-/datum/species/shadowling/on_gain(mob/living/carbon/human/H)
-	..()
+/datum/species/shadowling/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
-/datum/species/shadowling/regen(mob/living/carbon/human/H)
-	H.nutrition = NUTRITION_LEVEL_NORMAL //i aint never get hongry
-
-	var/light_amount = 0
-	if(isturf(H.loc))
-		var/turf/T = H.loc
-		light_amount = round(10 * T.get_lumcount())
-
-	if(light_amount > LIGHT_DAM_THRESHOLD)
-		H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN)
-		to_chat(H, "<span class='userdanger'>The light burns you!</span>")
-		H.playsound_local(null, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-
-	else if(light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
-		H.heal_overall_damage(5, 5)
-		H.adjustToxLoss(-3)
-		H.adjustBrainLoss(-25) //gibbering shadowlings are hilarious but also bad to have
-		H.adjustCloneLoss(-1)
-		H.adjustOxyLoss(-10)
-		H.SetWeakened(0)
-		H.SetStunned(0)
+	return ..()
 
 /datum/species/shadowling/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_shadowling_digest(M)
@@ -1372,19 +1282,15 @@
 
 	is_common = TRUE
 
-	default_mood_event = /datum/mood_event/golem
-
 /datum/species/golem/on_gain(mob/living/carbon/human/H)
 	..()
 	// Clothing on the Golem is created before the hud_list is generated in the atom
 	H.prepare_huds()
 
-	H.remove_status_flags(CANSTUN|CANWEAKEN|CANPARALYSE)
+	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
 	H.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 
-	var/list/items_to_remove = H.get_all_slots()
-
-	for(var/x in items_to_remove)
+	for(var/x in list(H.w_uniform, H.head, H.wear_suit, H.shoes, H.wear_mask, H.gloves))
 		if(x)
 			H.remove_from_mob(x)
 
@@ -1395,12 +1301,8 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem, SLOT_WEAR_MASK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, SLOT_GLOVES)
 
-	for(var/x in items_to_remove)
-		if(x)
-			H.equip_to_appropriate_slot(x, TRUE)
-
 /datum/species/golem/on_loose(mob/living/carbon/human/H, new_species)
-	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
+	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
 	H.real_name = "unknown"
 
 	for(var/x in list(H.w_uniform, H.head, H.wear_suit, H.shoes, H.wear_mask, H.gloves))
@@ -1443,14 +1345,12 @@
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_EMOTION = TRUE
-	,NO_EMBED = TRUE
 	)
 
 	brute_mod = 2
 	burn_mod = 1
 	oxy_mod = 0
 	tox_mod = 0
-	brain_mod = 0
 	speed_mod = -0.2
 
 	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
@@ -1458,14 +1358,11 @@
 	min_age = 25
 	max_age = 85
 
-	default_mood_event = /datum/mood_event/undead
+/datum/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
+	return ..()
 
 /datum/species/zombie/on_gain(mob/living/carbon/human/H)
-	..()
-
-	ADD_TRAIT(H, TRAIT_HEMOCOAGULATION, GENERIC_TRAIT)
-
-	H.remove_status_flags(CANSTUN|CANPARALYSE) //CANWEAKEN
+	H.status_flags &= ~(CANSTUN  | CANPARALYSE) //CANWEAKEN
 
 	H.drop_l_hand()
 	H.drop_r_hand()
@@ -1475,10 +1372,10 @@
 
 	add_zombie(H)
 
-/datum/species/zombie/on_loose(mob/living/carbon/human/H, new_species)
-	REMOVE_TRAIT(H, TRAIT_HEMOCOAGULATION, GENERIC_TRAIT)
+	..()
 
-	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
+/datum/species/zombie/on_loose(mob/living/carbon/human/H, new_species)
+	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
 
 	if(istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
 		qdel(H.l_hand)
@@ -1489,6 +1386,7 @@
 	remove_zombie(H)
 
 	..()
+
 
 /datum/species/zombie/tajaran
 	name = ZOMBIE_TAJARAN
@@ -1514,19 +1412,10 @@
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
 	,NO_EMOTION = TRUE
-	,NO_EMBED = TRUE
 	)
 
 	min_age = 25
 	max_age = 85
-
-/datum/species/zombie/tajaran/on_gain(mob/living/M)
-	..()
-	ADD_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
-
-/datum/species/zombie/tajaran/on_loose(mob/living/M)
-	..()
-	REMOVE_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
 
 /datum/species/zombie/skrell
 	name = ZOMBIE_SKRELL
@@ -1566,7 +1455,6 @@
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
 	,NO_EMOTION = TRUE
-	,NO_EMBED = TRUE
 	)
 
 	min_age = 25
@@ -1674,7 +1562,7 @@
 
 /datum/species/abomination/on_gain(mob/living/carbon/human/H)
 	..()
-	H.remove_status_flags(CANSTUN|CANPARALYSE|CANWEAKEN)
+	H.status_flags &= ~(CANSTUN  | CANPARALYSE | CANWEAKEN)
 
 /datum/species/abomination/call_digest_proc(mob/living/M, datum/reagent/R)
 	return
@@ -1716,17 +1604,15 @@
 
 	is_common = FALSE
 
-	default_mood_event = /datum/mood_event/homunculus
-
 /datum/species/homunculus/on_gain(mob/living/carbon/human/H)
-	..()
+	. = ..()
 	var/list/tail_list = icon_states('icons/mob/species/tail.dmi') - "vox_armalis"
 	tail_list += ""
 	H.random_tail_holder = pick(tail_list)
 
 /datum/species/homunculus/create_bodyparts(mob/living/carbon/human/H)
 	var/list/keys = get_list_of_primary_keys(global.all_species)
-	keys -= list(PODMAN, IPC, SKELETON, SKELETON_UNATHI, SKELETON_TAJARAN, SKELETON_SKRELL, SKELETON_VOX, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION, SLIME)
+	keys -= list(PODMAN, IPC, SKELETON, DIONA, HOMUNCULUS, ABDUCTOR, SHADOWLING, VOX_ARMALIS, ABOMINATION, SLIME)
 
 	var/datum/species/head = global.all_species[pick(keys - VOX)]
 

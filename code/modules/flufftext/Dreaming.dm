@@ -44,7 +44,7 @@ var/global/list/nightmares = list(
 	return TRUE
 
 /mob/living/carbon/proc/dream_sequence(segments)
-	if(stat != UNCONSCIOUS)
+	if(stat != UNCONSCIOUS || paralysis <= 0)
 		dreaming = NOT_DREAMING
 		return
 
@@ -62,7 +62,7 @@ var/global/list/nightmares = list(
 		dreaming = NOT_DREAMING
 
 /mob/living/carbon/proc/handle_dreams()
-	if(client && !dreaming && prob(50))
+	if(client && !dreaming && prob(10))
 		dream()
 
 /mob/living/carbon/var/dreaming = NOT_DREAMING

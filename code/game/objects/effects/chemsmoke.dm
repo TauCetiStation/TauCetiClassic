@@ -229,7 +229,7 @@
 			for(var/D in cardinal)
 				var/turf/target = get_step(current, D)
 				if(wallList)
-					if(iswallturf(target))
+					if(istype(target, /turf/simulated/wall))
 						if(!(target in wallList))
 							wallList += target
 						continue
@@ -240,9 +240,9 @@
 					continue
 				if(!(target in targetTurfs))
 					continue
-				if(FAST_C_AIRBLOCK(current, target) & AIR_BLOCKED) //this is needed to stop chemsmoke from passing through thin window walls
+				if(current.c_airblock(target)) //this is needed to stop chemsmoke from passing through thin window walls
 					continue
-				if(FAST_C_AIRBLOCK(target, current) & AIR_BLOCKED)
+				if(target.c_airblock(current))
 					continue
 				pending += target
 

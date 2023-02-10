@@ -42,27 +42,7 @@
 
 /atom/movable/screen/plane_master/rendering_plate/game_world/atom_init(mapload, ...)
 	. = ..()
-	apply_singularity_effects()
-
-	add_filter("anomaly", 5, displacement_map_filter(render_source = ANOMALY_RENDER_TARGET, size = 10))
-
-/atom/movable/screen/plane_master/rendering_plate/game_world/proc/apply_singularity_effects()
-	add_filter("singularity_0", 1, displacement_map_filter(render_source = SINGULO_RENDER_TARGET_0, size = -40))
-	add_filter("singularity_1", 2, displacement_map_filter(render_source = SINGULO_RENDER_TARGET_1, size = 75))
-	add_filter("singularity_2", 3, displacement_map_filter(render_source = SINGULO_RENDER_TARGET_2, size = 400))
-	add_filter("singularity_3", 4, displacement_map_filter(render_source = SINGULO_RENDER_TARGET_3, size = 700))
-
-	animate(get_filter("singularity_0"), size = -20, time = 10, easing = LINEAR_EASING, loop = -1, flags = ANIMATION_PARALLEL)
-	animate(size = -30, time = 10, easing = LINEAR_EASING, loop = -1)
-
-	animate(get_filter("singularity_1"), size = 50, time = 10, easing = LINEAR_EASING, loop = -1, flags = ANIMATION_PARALLEL)
-	animate(size = 100, time = 10, easing = LINEAR_EASING, loop = -1)
-
-	animate(get_filter("singularity_2"), size = 400, time = 10, easing = LINEAR_EASING, loop = -1, flags = ANIMATION_PARALLEL)
-	animate(size = 300, time = 10, easing = LINEAR_EASING, loop = -1)
-
-	animate(get_filter("singularity_3"), size = 750, time = 10, easing = LINEAR_EASING, loop = -1, flags = ANIMATION_PARALLEL)
-	animate(size = 600, time = 10, easing = LINEAR_EASING, loop = -1)
+	add_filter("displacer", 1, displacement_map_filter(render_source = GRAVITY_PULSE_RENDER_TARGET, size = 10))
 
 ///everything that should be above game world. (for example, singularity, nar-si)
 /atom/movable/screen/plane_master/rendering_plate/above_game_world
