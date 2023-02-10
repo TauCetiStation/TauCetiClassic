@@ -100,3 +100,11 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/geiger, geiger_items_list)
 
 // https://freesound.org/people/Benboncan/sounds/66922/
 // https://freesound.org/people/leonelmail/sounds/328381/
+
+#undef SOUND_LIGHT
+#undef SOUND_MEDIUM
+#undef SOUND_LOUD
+#undef SOUND_ALERT
+#undef SAFE_DOSE
+#undef HEALTH_EFFECT_DOSE
+#undef DANGEROUS_DOSE
