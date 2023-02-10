@@ -14,10 +14,6 @@
 
 #define WARNING_DELAY 30 		//seconds between warnings.
 
-#define LIGHT_RANGE 8
-#define NORMAL_RANGE 10
-#define GEIGER_RANGE 15
-
 /obj/machinery/power/supermatter
 	name = "Supermatter"
 	desc = "A strangely translucent and iridescent crystal. <span class='warning'>You get headaches just from looking at it.</span>"
@@ -200,17 +196,7 @@
 	for(var/mob/living/carbon/human/l in view(src, min(7, round(power ** 0.25)))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			l.hallucination = max(0, min(200, l.hallucination + power * config_hallucination_power * sqrt( 1 / max(1,get_dist(l, src)) ) ) )
-
-	var/rads = (power / 10)
-	for(var/mob/living/l in range(src, LIGHT_RANGE))
-		rads *= sqrt(1 / get_dist(l, src))
-		l.apply_effect(rads, IRRADIATE)
-	for(var/obj/item/device/geiger/counter as anything in global.geiger_items_list)
-		var/distance_rad_signal = get_dist(counter, src)
-		if(distance_rad_signal <= GEIGER_RANGE)
-			rads *= sqrt(1 / distance_rad_signal)
-			counter.recieve_rad_signal(rads, distance_rad_signal)
-
+	irradiate_in_dist(get_turf(src), power / 10, 8)
 	power -= (power/500)**3
 
 	return 1
@@ -263,14 +249,7 @@
 	user.drop_from_inventory(W)
 	user.SetNextMove(CLICK_CD_MELEE)
 	Consume(W)
-	var/rads = 150
-	user.apply_effect(rads, IRRADIATE)
-	for(var/obj/item/device/geiger/counter as anything in global.geiger_items_list)
-		var/distance_rad_signal = get_dist(counter, src)
-		if(distance_rad_signal <= GEIGER_RANGE)
-			rads *= sqrt(1 / (distance_rad_signal + 1))
-			counter.recieve_rad_signal(rads, distance_rad_signal)
-
+	irradiate_in_dist(get_turf(src), 150, 1)
 
 /obj/machinery/power/supermatter/Bumped(atom/AM)
 	if(isliving(AM))
@@ -294,21 +273,10 @@
 	power += 200
 
 		//Some poor sod got eaten, go ahead and irradiate people nearby.
-	var/rads = 500
-	for(var/mob/living/l in range(NORMAL_RANGE))
+	irradiate_in_dist(get_turf(src), 500, 10)
+	for(var/mob/living/l in range(10))
 		if(l in view())
 			l.show_message("<span class=\"warning\">As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", SHOWMSG_VISUAL,\
 				"<span class=\"warning\">The unearthly ringing subsides and you notice you have new radiation burns.</span>", SHOWMSG_AUDIO)
 		else
 			l.show_message("<span class=\"warning\">You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", SHOWMSG_AUDIO)
-		rads *= sqrt(1 / (get_dist(l, src) + 1))
-		l.apply_effect(rads, IRRADIATE)
-	for(var/obj/item/device/geiger/counter as anything in global.geiger_items_list)
-		var/distance_rad_signal = get_dist(src, counter)
-		if(distance_rad_signal <= GEIGER_RANGE)
-			rads *= sqrt(1 / (distance_rad_signal + 1))
-			counter.recieve_rad_signal(rads, distance_rad_signal)
-
-#undef LIGHT_RANGE
-#undef NORMAL_RANGE
-#undef GEIGER_RANGE

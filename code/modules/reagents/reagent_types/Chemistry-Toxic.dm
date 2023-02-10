@@ -56,7 +56,7 @@
 
 /datum/reagent/toxin/mutagen/on_general_digest(mob/living/M)
 	..()
-	M.apply_effect(10, IRRADIATE, 0)
+	irradiate_in_dist(get_turf(M), 10, 0)
 
 /datum/reagent/toxin/phoron
 	name = "Phoron"
@@ -582,7 +582,7 @@
 
 	if(data["ticks"] >= 165)
 		M.adjustToxLoss(4)
-		M.apply_effect(5*REM,IRRADIATE,0)
+		irradiate_in_dist(get_turf(M), 5 * REM, 0)
 	data["ticks"]++
 
 /datum/reagent/chefspecial	//From VG. Only for traitors
