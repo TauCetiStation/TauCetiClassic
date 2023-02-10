@@ -87,7 +87,7 @@ Quick adjacency (to turf):
 	return FALSE
 
 // This is necessary for storage items not on your person.
-/obj/item/Adjacent(atom/neighbor, recurse = 1)
+/obj/item/Adjacent(atom/neighbor, recurse = MAX_STORAGE_DEEP_LEVEL)
 	if(neighbor == loc) return TRUE
 	if(isitem(loc) || isliving(loc))
 		if(recurse > 0)

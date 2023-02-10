@@ -23,6 +23,8 @@
 	anchored = FALSE
 	light_range = 4
 
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 	var/gasefficency = 0.25
 
 	var/base_icon_state = "darkmatter"
@@ -208,7 +210,7 @@
 				// Then bring it inside to explode instantly upon landing on a valid turf.
 
 
-	if(Proj.flag != "bullet")
+	if(Proj.flag != BULLET)
 		power += Proj.damage * config_bullet_energy
 	else
 		damage += Proj.damage * config_bullet_energy

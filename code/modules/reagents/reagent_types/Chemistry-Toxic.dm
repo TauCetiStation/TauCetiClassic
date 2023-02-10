@@ -199,8 +199,9 @@
 
 /datum/reagent/toxin/zombiepowder/on_general_digest(mob/living/M)
 	..()
-	M.status_flags |= FAKEDEATH
+	M.add_status_flags(FAKEDEATH)
 	M.adjustOxyLoss(0.5 * REM)
+	M.Stun(10)
 	M.Weaken(10)
 	M.silent = max(M.silent, 10)
 	M.tod = worldtime2text()
@@ -208,7 +209,7 @@
 /datum/reagent/toxin/zombiepowder/Destroy()
 	if(holder && ismob(holder.my_atom))
 		var/mob/M = holder.my_atom
-		M.status_flags &= ~FAKEDEATH
+		M.remove_status_flags(FAKEDEATH)
 	return ..()
 
 /datum/reagent/toxin/mindbreaker
@@ -238,7 +239,7 @@
 // Clear off wallrot fungi
 /datum/reagent/toxin/plantbgone/reaction_turf(turf/T, volume)
 	. = ..()
-	if(istype(T, /turf/simulated/wall))
+	if(iswallturf(T))
 		var/turf/simulated/wall/W = T
 		if(W.rotting)
 			W.rotting = 0
@@ -251,11 +252,10 @@
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, volume)
 	if(istype(O,/obj/structure/alien/weeds))
 		var/obj/structure/alien/weeds/alien_weeds = O
-		alien_weeds.health -= rand(15,35) // Kills alien weeds pretty fast
-		alien_weeds.healthcheck()
-	else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
+		alien_weeds.take_damage(rand(15, 35), BURN, ACID, FALSE)
+	else if(istype(O,/obj/structure/glowshroom)) //even a small amount is enough to kill it
 		qdel(O)
-	else if(istype(O,/obj/effect/spacevine))
+	else if(istype(O,/obj/structure/spacevine))
 		if(prob(50))
 			qdel(O) //Kills kudzu too.
 	// Damage that is done to growing plants is separately at code/game/machinery/hydroponics at obj/item/hydroponics
@@ -333,9 +333,11 @@
 			M.blurEyes(10)
 		if(15 to 49)
 			if(prob(50))
+				M.Stun(1)
 				M.Weaken(2)
 			M.drowsyness  = max(M.drowsyness, 20)
 		if(50 to INFINITY)
+			M.Stun(10)
 			M.Weaken(20)
 			M.drowsyness  = max(M.drowsyness, 30)
 	data["ticks"]++
@@ -363,6 +365,7 @@
 			M.AdjustConfused(2)
 			M.drowsyness += 2
 		if(2 to 199)
+			M.Stun(30)
 			M.Weaken(30)
 		if(200 to INFINITY)
 			M.SetSleeping(20 SECONDS)
@@ -384,6 +387,7 @@
 			if(M.losebreath >= 10)
 				M.losebreath = max(10, M.losebreath - 10)
 			M.adjustOxyLoss(2)
+			M.Stun(5)
 			M.Weaken(10)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -407,6 +411,7 @@
 			if(H.losebreath >= 10)
 				H.losebreath = max(10, M.losebreath - 10)
 			H.adjustOxyLoss(2)
+			H.Stun(5)
 			H.Weaken(10)
 		if(volume >= overdose)
 			H.attack_heart(5, 0)
@@ -523,7 +528,7 @@
 			M.take_bodypart_damage(min(6 * toxpwr, volume * toxpwr))
 
 /datum/reagent/toxin/acid/reaction_obj(obj/O, volume)
-	if((isitem(O) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
+	if((isitem(O) || istype(O,/obj/structure/glowshroom)) && prob(meltprob * 3))
 		if(!O.unacidable)
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 			I.desc = "Looks like this was \an [O] some time ago."
@@ -705,6 +710,7 @@
 						BP.status = 0
 					for(var/obj/item/organ/internal/BP in H.organs)
 						BP.rejuvenate()
+					H.restore_blood()
 			if(31 to 50)
 				M.heal_bodypart_damage(0,5)
 				M.adjustOxyLoss(-2 * REM)

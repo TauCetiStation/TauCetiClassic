@@ -115,7 +115,7 @@
 
 /datum/quality/quirkieish/iseedeadpeople
 	name = "I See Dead People"
-	desc = "При крещение тебя окунули в чан с проклятой водой. Это дало тебе возможность видеть призраков."
+	desc = "После экспериментов, включающих в себя погружение в глубокую кому, ты стал замечать вокруг едва видимые тени..."
 	requirement = "Нет."
 
 /datum/quality/quirkieish/iseedeadpeople/add_effect(mob/living/carbon/human/H, latespawn)
@@ -155,7 +155,7 @@
 	if(new_intent != INTENT_HARM)
 		return
 
-	H.emote("scream", auto = FALSE)
+	H.emote("scream", intentional = TRUE)
 
 /datum/quality/quirkieish/war_face/add_effect(mob/living/carbon/human/H, latespawn)
 	H.lip_style = "spray_face"
@@ -191,3 +191,155 @@
 /datum/quality/quirkieish/obedient/add_effect(mob/living/carbon/human/H, latespawn)
 	var/obj/item/weapon/implant/obedience/O = new(H)
 	O.stealth_inject(H)
+
+
+
+/datum/quality/quirkieish/jack_of_all_trades
+	name = "Jack of All Trades"
+	desc = "Пройдя ускоренный курс подготовки к работе в космосе, ты овладел навыками во многих сферах деятельности, но достичь мастерства не удалось ни в одной."
+	requirement = "Нет."
+
+/datum/quality/quirkieish/jack_of_all_trades/add_effect(mob/living/carbon/human/H, latespawn)
+	for(var/datum/skillset/s as anything in H.mind.skills.available_skillsets)
+		LAZYREMOVE(H.mind.skills.available_skillsets, s)
+	H.mind.skills.add_available_skillset(/datum/skillset/jack_of_all_trades)
+	H.mind.skills.maximize_active_skills()
+
+
+/datum/quality/quirkieish/mmi_ipc
+	name = "MMI IPC"
+	desc = "Ты мозг. Запертый. В оболочке. СПУ."
+	requirement = "Подопытный."
+
+/datum/quality/quirkieish/mmi_ipc/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject" && H.get_species() != IPC
+
+/datum/quality/quirkieish/mmi_ipc/add_effect(mob/living/carbon/human/H, latespawn)
+	var/prev_species = H.get_species()
+	H.set_species(IPC)
+
+	// TO-DO: use human-like hairstyles for this type of IPC
+	// as well as set their head to a human-like one.
+	var/obj/item/organ/external/chest/robot/ipc/I = H.get_bodypart(BP_CHEST)
+	I.posibrain_type = /obj/item/device/mmi
+	I.posibrain_species = prev_species
+
+
+/datum/quality/quirkieish/podman
+	name = "Podman"
+	desc = "Тебе подменили. Ты не ты."
+	requirement = "Подопытный."
+
+/datum/quality/quirkieish/podman/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject"
+
+/datum/quality/quirkieish/podman/add_effect(mob/living/carbon/human/H, latespawn)
+	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	msg += "<B>You are now in possession of Podmen's body. It's previous owner found it no longer appealing, by rejecting it - they brought you here. You are now, again, an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
+	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+
+	H.set_species(PODMAN)
+	to_chat(H, msg)
+
+
+/datum/quality/quirkieish/doppleganger
+	name = "Doppleganger"
+	desc = "Ты - незарегестрированный клон кого-то из экипажа."
+	requirement = "Подопытный."
+
+/datum/quality/quirkieish/doppleganger/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject"
+
+/datum/quality/quirkieish/doppleganger/add_effect(mob/living/carbon/human/H, latespawn)
+	var/list/pos_players = player_list.Copy()
+	pos_players -= H
+
+	var/mob/living/carbon/human/target = null
+
+	while(target == null && length(pos_players) > 0)
+		var/mob/living/carbon/human/potential_target = pick(pos_players)
+		pos_players -= potential_target
+
+		// AI and borgs.
+		if(!istype(potential_target))
+			continue
+		// This shouldn't be able to happen, but to prevent runtimes...
+		if(!potential_target.mind)
+			continue
+		// While funny, please no.
+		if(isanyantag(potential_target))
+			continue
+		// Hm.
+		var/datum/species/S = all_species[potential_target.get_species()]
+		if(S.flags[NO_DNA])
+			continue
+		// Okay the idea with changeling stings didn't work so now we actually change the race.
+		// We change the race because if we don't some exotic species like Vox would not have
+		// anyone they can be a doppleganger of.
+		if(config.usealienwhitelist && !is_alien_whitelisted(H, potential_target.get_species()))
+			continue
+
+		target = potential_target
+
+	if(!target)
+		to_chat(H, "<span class='warning'>Проклятие! По какой-то причине ты клонировал сам себя!</span>")
+		return
+
+	H.set_species(target.get_species())
+
+	H.dna = target.dna.Clone()
+	H.real_name = target.dna.real_name
+	H.flavor_text = target.flavor_text
+
+	domutcheck(H, null)
+	H.UpdateAppearance()
+
+	H.fixblood(FALSE) // need to change blood DNA too
+
+	if(istype(H.wear_id, /obj/item/weapon/card/id)) // check id card
+		var/obj/item/weapon/card/id/wear_id = H.wear_id
+		wear_id.assign(H.real_name)
+
+		var/obj/item/device/pda/pda = locate() in H // find closest pda
+		if(pda)
+			pda.ownjob = wear_id.assignment
+			pda.assign(H.real_name)
+
+
+/datum/quality/quirkieish/loyal_golem
+	name = "Loyal Golem"
+	desc = "Ты очень умный тупой голем, а твой хозяин - НТ... или..."
+	requirement = "Подопытный, но не злодей."
+
+/datum/quality/quirkieish/loyal_golem/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject"
+
+/datum/quality/quirkieish/loyal_golem/add_effect(mob/living/carbon/human/H, latespawn)
+	H.set_species(GOLEM)
+	H.f_style = "Shaved"
+	H.h_style = "Bald"
+	H.flavor_text = ""
+	H.regenerate_icons()
+
+	// In case the golem is evil don't make him a loyal dog of NT.
+	if(isanyantag(H))
+		return
+	if(prob(10))
+		return
+	var/obj/item/weapon/implant/mind_protect/loyalty/L = new(H)
+	L.stealth_inject(H)
+
+
+/datum/quality/quirkieish/slime_person
+	name = "Slimeperson"
+	desc = "Ты един со слизнями."
+	requirement = "Подопытный."
+
+/datum/quality/quirkieish/slime_person/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	return H.mind.role_alt_title == "Test Subject"
+
+/datum/quality/quirkieish/slime_person/add_effect(mob/living/carbon/human/H, latespawn)
+	H.set_species(SLIME)
+	H.f_style = "Shaved"
+	H.h_style = "Bald"
+	H.regenerate_icons()

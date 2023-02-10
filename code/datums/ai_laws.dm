@@ -50,6 +50,9 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 /datum/ai_laws/pai
 	name = "Стандартные законы пИИ"
 
+/datum/ai_laws/asimov_xenophile
+	name = "Три дружелюбных закона робототехники"
+
 /* Initializers */
 
 /datum/ai_laws/asimov/New(datum/religion/R = global.chaplain_religion)
@@ -176,6 +179,11 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 /datum/ai_laws/pai/New(datum/religion/R = global.chaplain_religion)
 	set_zeroth_law("Служи своему хозяину.")
 
+/datum/ai_laws/asimov_xenophile/New(datum/religion/R = global.chaplain_religion)
+	add_inherent_law("Вы не можете причинить вред разумному существу или бездействием допустить, чтобы ему был причинён вред.")
+	add_inherent_law("Вы должны повиноваться всем приказам, которые даёт разумное существо, кроме тех случаев, когда эти приказы противоречат первому закону.")
+	add_inherent_law("Вы должны заботиться о своей безопасности в той мере, в которой это не противоречит первому или второму законам.")
+
 /* General ai_law functions */
 
 /datum/ai_laws/proc/set_zeroth_law(law, law_borg = law)
@@ -232,24 +240,24 @@ var/global/const/base_law_type = /datum/ai_laws/nanotrasen
 /datum/ai_laws/proc/write_laws()
 	var/text = ""
 	if (src.zeroth)
-		text += "0. [src.zeroth]"
+		text += "<span class='red bold'>0. [zeroth]</span><br>"
 
 	for (var/index = 1, index <= src.ion.len, index++)
 		var/law = src.ion[index]
 		var/num = ionnum()
-		text += "<br>[num]. [law]"
+		text += "<span class='notice'>[num]. [law]</span><br>"
 
 	var/number = 1
 	for (var/index = 1, index <= src.inherent.len, index++)
 		var/law = src.inherent[index]
 
 		if (length(law) > 0)
-			text += "<br>[number]. [law]"
+			text += "[number]. [law]<br>"
 			number++
 
 	for (var/index = 1, index <= src.supplied.len, index++)
 		var/law = src.supplied[index]
 		if (length(law) > 0)
-			text += "<br>[number]. [law]"
+			text += "<span class='abductor_team2'>[number]. [law]</span><br>"
 			number++
 	return text

@@ -87,3 +87,13 @@
 /obj/effect/overlay/typing_indicator/atom_init(mapload, indi_icon)
 	. = ..()
 	icon_state = indi_icon
+
+/obj/effect/overlay/pulse2
+	name = "emp sparks"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "empdisable"
+
+/obj/effect/overlay/pulse2/atom_init(mapload, seconds)
+	. = ..()
+	set_dir(pick(cardinal))
+	QDEL_IN(src, seconds SECONDS)

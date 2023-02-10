@@ -783,13 +783,13 @@
 
 	switch(buildstage)
 		if(2)
-			if(isscrewdriver(W))  // Opening that Air Alarm up.
+			if(isscrewing(W))  // Opening that Air Alarm up.
 				wiresexposed = !wiresexposed
 				to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 				update_icon()
 				return
 
-			if (iswirecutter(W) && wiresexposed && wires.is_all_cut())
+			if (iscutter(W) && wiresexposed && wires.is_all_cut())
 				user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				new /obj/item/stack/cable_coil/random(loc, 5)
@@ -813,8 +813,6 @@
 				wires.interact(user)
 				return
 
-			return
-
 		if(1)
 			if(iscoil(W))
 				var/obj/item/stack/cable_coil/coil = W
@@ -830,7 +828,7 @@
 				wires.repair()
 				return
 
-			else if(iscrowbar(W))
+			else if(isprying(W))
 				if(user.is_busy())
 					return
 				to_chat(user, "You start prying out the circuit.")
@@ -849,14 +847,25 @@
 				update_icon()
 				return
 
-			else if(iswrench(W))
+			else if(iswrenching(W))
 				to_chat(user, "You remove the fire alarm assembly from the wall!")
-				var/obj/item/alarm_frame/frame = new /obj/item/alarm_frame()
-				frame.loc = user.loc
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-				qdel(src)
+				deconstruct(TRUE)
 
 	return ..()
+
+/obj/machinery/alarm/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(disassembled)
+		new /obj/item/alarm_frame(loc)
+	else
+		new /obj/item/stack/sheet/metal(loc, 2)
+	if(buildstage >= 1)
+		new /obj/item/weapon/airalarm_electronics(loc)
+		if(buildstage >= 2)
+			new /obj/item/stack/cable_coil(loc, 3)
+	..()
 
 /obj/machinery/alarm/power_change()
 	if(powered(power_channel))
@@ -900,7 +909,7 @@ Code shamelessly copied from apc_frame
 	flags = CONDUCT
 
 /obj/item/alarm_frame/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I))
+	if(iswrenching(I))
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
@@ -917,7 +926,7 @@ Code shamelessly copied from apc_frame
 
 	var/turf/loc = get_turf_loc(usr)
 	var/area/A = loc.loc
-	if (!istype(loc, /turf/simulated/floor))
+	if (!isfloorturf(loc))
 		to_chat(usr, "<span class='warning'>Air Alarm cannot be placed on this spot.</span>")
 		return
 	if (A.requires_power == 0 || A.name == "Space")
@@ -940,7 +949,6 @@ FIRE ALARM
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
 	var/detecting = 1.0
-	var/working = 1.0
 	var/time = 10.0
 	var/timing = 0.0
 	var/lockdownbyai = 0
@@ -976,6 +984,8 @@ FIRE ALARM
 
 /obj/machinery/firealarm/bullet_act(obj/item/projectile/P, def_zone)
 	. = ..()
+	if(!is_operational())
+		return
 	alarm()
 
 /obj/machinery/firealarm/emp_act(severity)
@@ -986,7 +996,7 @@ FIRE ALARM
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user)
 	add_fingerprint(user)
 
-	if (isscrewdriver(W) && buildstage == 2)
+	if (isscrewing(W) && buildstage == 2)
 		wiresexposed = !wiresexposed
 		update_icon()
 		return
@@ -994,13 +1004,13 @@ FIRE ALARM
 	if(wiresexposed)
 		switch(buildstage)
 			if(2)
-				if (ismultitool(W))
+				if (ispulsing(W))
 					detecting = !detecting
 					if (detecting)
 						user.visible_message("<span class='warning'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
 					else
 						user.visible_message("<span class='warning'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
-				else if (iswirecutter(W))
+				else if (iscutter(W))
 					user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 					new /obj/item/stack/cable_coil/random(loc, 5)
 					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
@@ -1017,7 +1027,7 @@ FIRE ALARM
 					to_chat(user, "You wire \the [src]!")
 					update_icon()
 
-				else if(iscrowbar(W))
+				else if(isprying(W))
 					to_chat(user, "You start prying out the circuit.")
 					if(W.use_tool(src, user, 20, volume = 50))
 						to_chat(user, "You pry out the circuit!")
@@ -1033,7 +1043,7 @@ FIRE ALARM
 					buildstage = 1
 					update_icon()
 
-				else if(iswrench(W))
+				else if(iswrenching(W))
 					if(user.is_busy())
 						return
 					to_chat(user, "You remove the fire alarm assembly from the wall!")
@@ -1043,11 +1053,13 @@ FIRE ALARM
 					qdel(src)
 		return
 
+	if(!is_operational())
+		return
 	alarm()
 	return
 
 /obj/machinery/firealarm/process()//Note: this processing was mostly phased out due to other code, and only runs when needed
-	if(stat & (NOPOWER|BROKEN))
+	if(!is_operational())
 		return
 
 	if(timing)
@@ -1126,6 +1138,8 @@ FIRE ALARM
 
 	if (buildstage != 2)
 		return FALSE
+	if(!is_operational())
+		return
 
 	if (href_list["reset"])
 		reset()
@@ -1143,8 +1157,6 @@ FIRE ALARM
 	updateUsrDialog()
 
 /obj/machinery/firealarm/proc/reset()
-	if (!working)
-		return
 	var/area/A = get_area(src)
 	A.firereset()
 	for(var/obj/machinery/firealarm/FA in A)
@@ -1152,14 +1164,28 @@ FIRE ALARM
 		FA.update_icon()
 
 /obj/machinery/firealarm/proc/alarm()
-	if (!working)
-		return
 	var/area/A = get_area(src)
 	A.firealert()
 	for(var/obj/machinery/firealarm/FA in A)
 		FA.detecting = FALSE
 		FA.update_icon()
 		playsound(src, 'sound/machines/alarm_fire.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+
+/obj/machinery/firealarm/atom_break(damage_flag)
+	if(buildstage == 0) //can't break the electronics if there isn't any inside.
+		return
+	return ..()
+
+/obj/machinery/firealarm/deconstruct(disassembled = TRUE)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 1)
+	if(buildstage >= 1)
+		var/obj/item/item = new /obj/item/weapon/firealarm_electronics(loc)
+		if(!disassembled)
+			item.update_integrity(item.max_integrity * 0.5)
+	new /obj/item/stack/cable_coil(loc, 3)
+	..()
 
 /obj/machinery/firealarm/examine(mob/user)
 	. = ..()
@@ -1231,7 +1257,7 @@ Code shamelessly copied from apc_frame
 	flags = CONDUCT
 
 /obj/item/firealarm_frame/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I))
+	if(iswrenching(I))
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
@@ -1248,7 +1274,7 @@ Code shamelessly copied from apc_frame
 
 	var/turf/loc = get_turf_loc(usr)
 	var/area/A = get_area(src)
-	if (!istype(loc, /turf/simulated/floor))
+	if (!isfloorturf(loc))
 		to_chat(usr, "<span class='warning'>Fire Alarm cannot be placed on this spot.</span>")
 		return
 	if (A.requires_power == 0 || A.name == "Space")

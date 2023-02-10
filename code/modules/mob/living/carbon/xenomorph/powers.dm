@@ -310,6 +310,8 @@
 /obj/effect/proc_holder/spell/no_target/resin/cast(list/targets, mob/user = usr)
 	if(!build_name)
 		return
+	if(!cast_check())
+		return
 	var/mob/living/carbon/xenomorph/humanoid/alien = user
 	alien.adjustToxLoss(-plasma_cost)
 	user.visible_message("<span class='notice'><B>[user]</B> vomits up a thick purple substance and begins to shape it.</span>", "<span class='notice'>You shape a [build_name].</span>")
@@ -384,6 +386,12 @@
 	var/mob/living/carbon/xenomorph/humanoid/queen/new_xeno = new (user.loc)
 	user.mind.transfer_to(new_xeno)
 	new_xeno.mind.name = new_xeno.real_name
+
+	var/datum/faction/infestation/F = find_faction_by_type(/datum/faction/infestation)//Buff only for the first queen
+	if(F.start_help)
+		new_xeno.apply_status_effect(/datum/status_effect/young_queen_buff)
+		F.start_help = FALSE
+
 	qdel(alien)
 
 //----------------------------------------------

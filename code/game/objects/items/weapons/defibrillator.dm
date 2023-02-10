@@ -97,7 +97,7 @@
 			to_chat(user, "<span class='notice'>You install a cell in \the [src].</span>")
 			update_icon()
 
-	else if(isscrewdriver(I))
+	else if(isscrewing(I))
 		if(bcell)
 			bcell.update_icon()
 			bcell.forceMove(get_turf(src.loc))
@@ -328,6 +328,8 @@
 
 // This proc is used so that we can return out of the revive process while ensuring that busy and update_icon() are handled
 /obj/item/weapon/shockpaddles/proc/try_revive(mob/living/carbon/human/H, mob/user)
+	if(!handle_fumbling(user, H, SKILL_TASK_DIFFICULT, list(/datum/skill/medical = SKILL_LEVEL_TRAINED), text_target = src))
+		return
 	//beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 	user.visible_message("<span class='warning'>\The [user] begins to place [src] on [H]'s chest.</span>", "<span class='warning'>You begin to place [src] on [H]'s chest...</span>")
 	if(!do_after(user, 30, target = H))
@@ -417,6 +419,7 @@
 		if(F)
 			F.electrocute_act(150)
 		else
+			user.Stun(6)
 			user.Weaken(6)
 
 	make_announcement("pings, \"Defibrillation successful.\"")

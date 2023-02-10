@@ -68,7 +68,7 @@
 		return say_dead(message)
 
 	if(message[1] == "*")
-		return emote(copytext(message,2))
+		return emote(copytext(message, 2))
 	else if(length(message) >= 2)
 		if(parse_message_mode(message, "NONE") == "dronechat")
 			if(!is_component_functioning("radio"))

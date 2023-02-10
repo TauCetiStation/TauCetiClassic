@@ -8,7 +8,7 @@
 	flags = CONDUCT
 
 /obj/item/apc_frame/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I))
+	if(iswrenching(I))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), 2 )
 		qdel(src)
 	else
@@ -22,7 +22,7 @@
 		return
 	var/turf/loc = get_turf(usr)
 	var/area/A = loc.loc
-	if (!istype(loc, /turf/simulated/floor))
+	if (!isfloorturf(loc))
 		to_chat(usr, "<span class='warning'>APC cannot be placed on this spot.</span>")
 		return
 	if (A.requires_power == 0 || istype(A,/area/space))

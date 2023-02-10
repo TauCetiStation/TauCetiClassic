@@ -32,21 +32,18 @@
 		qdel(src)
 	return
 
-/obj/effect/decal/mecha_wreckage/bullet_act(obj/item/projectile/Proj, def_zone)
-	return ..()
-
 /obj/effect/decal/mecha_wreckage/attackby(obj/item/weapon/W, mob/user)
 	var/salvage_with = ""
-	if(iswelder(W))
+	if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.use(3,user))
 			salvage_with = "welder"
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
-	if(iswirecutter(W))
+	if(iscutter(W))
 		salvage_with = "wirecutter"
-	if(iscrowbar(W))
+	if(isprying(W))
 		salvage_with = "crowbar"
 	if(!salvage_with)
 		..()

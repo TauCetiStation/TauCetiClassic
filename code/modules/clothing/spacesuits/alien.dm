@@ -131,6 +131,11 @@
 	flags = HEADCOVERSEYES
 	species_restricted = list(VOX , VOX_ARMALIS)
 
+/obj/item/clothing/head/helmet/space/vox/atom_init()
+	. = ..()
+	holochip = new /obj/item/holochip/vox(src)
+	holochip.holder = src
+
 /obj/item/clothing/head/helmet/space/vox/pressure
 	name = "alien helmet"
 	icon_state = "vox-pressure"
@@ -403,7 +408,7 @@
 
 /obj/item/clothing/shoes/magboots/vox/attack_self(mob/user)
 	if(src.magpulse)
-		flags &= ~NOSLIP
+		flags &= ~NOSLIP | AIR_FLOW_PROTECT
 		magpulse = 0
 		canremove = 1
 		to_chat(user, "You relax your deathgrip on the flooring.")
@@ -417,7 +422,7 @@
 			return
 
 
-		flags |= NOSLIP
+		flags |= NOSLIP | AIR_FLOW_PROTECT
 		magpulse = 1
 		canremove = 0	//kinda hard to take off magclaws when you are gripping them tightly.
 		to_chat(user, "You dig your claws deeply into the flooring, bracing yourself.")
@@ -428,7 +433,7 @@
 	..()
 	if(src.magpulse)
 		user.visible_message("The [src] go limp as they are removed from [usr]'s feet.", "The [src] go limp as they are removed from your feet.")
-		flags &= ~NOSLIP
+		flags &= ~NOSLIP | AIR_FLOW_PROTECT
 		magpulse = 0
 		canremove = 1
 

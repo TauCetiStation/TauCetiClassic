@@ -88,3 +88,12 @@
 	mob_trait = TRAIT_FAST_EQUIP
 	gain_text = "<span class='notice'Годы жизни на станции научили вас кое-чему.</span>"
 	lose_text = "<span class='danger'>Ваша координация стремительно деградировала.</span>"
+
+
+/datum/quirk/friendly
+	name = QUIRK_FRIENDLY
+	desc = "Ваши объятия прекрасны! В особенности, если вы в хорошем настроении."
+	value = 1
+	mob_trait = TRAIT_FRIENDLY
+	gain_text = "<span class='notice'>Вы хотите кого-нибудь обнять.</span>"
+	lose_text = "<span class='danger'>Ваши объятия теперь мало радуют.</span>"

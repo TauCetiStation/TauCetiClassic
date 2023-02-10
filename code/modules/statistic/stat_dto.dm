@@ -137,6 +137,8 @@
 	var/from_suicide
 	// string, anything
 	var/last_attacker_name
+	// string, anything
+	var/last_phrase
 	// object, where DAMAGE TYPE: int, [0...]
 	var/list/damage = list(
 		"BRUTE" = 0,
@@ -170,6 +172,14 @@
 	var/assigned_role
 	// string, anything, name of antagonists' role
 	var/special_role
+	// string, species name from code\modules\mob\living\carbon\species.dm
+	var/species
+	// int, anything
+	var/age
+	// string, by byond
+	var/gender
+	// string, anything
+	var/flavor
 	// array of strings, where strings are antagonists' roles
 	var/list/antag_roles = null
 

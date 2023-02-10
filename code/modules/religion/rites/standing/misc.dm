@@ -38,7 +38,7 @@
 			for(var/j in 1 to rand(1, 3))
 				step(B, pick(NORTH, SOUTH, EAST, WEST))
 
-/datum/religion_rites/standing/food/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/food/invoke_effect(mob/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -54,7 +54,7 @@
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/standing/food/rite_step(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/food/rite_step(mob/user, obj/AOG)
 	..()
 	if(prob(50))
 		spawn_food(get_turf(AOG), 1)
@@ -85,7 +85,7 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/standing/pray/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/pray/invoke_effect(mob/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -99,7 +99,7 @@
 	usr.visible_message("<span class='notice'>[usr] has been finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/standing/pray/rite_step(mob/living/user, obj/AOG, stage)
+/datum/religion_rites/standing/pray/rite_step(mob/user, obj/AOG, stage)
 	..()
 	religion.adjust_favor(15 + adding_favor)
 	adding_favor = min(adding_favor + 0.1, 20.0)
@@ -125,7 +125,7 @@
 		ASPECT_WACKY = 1,
 	)
 
-/datum/religion_rites/standing/honk/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/honk/invoke_effect(mob/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -136,7 +136,7 @@
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
 	return TRUE
 
-/datum/religion_rites/standing/honk/rite_step(mob/living/user, obj/AOG, stage)
+/datum/religion_rites/standing/honk/rite_step(mob/user, obj/AOG, stage)
 	..()
 	var/ratio = (100 / ritual_invocations.len) * stage
 	playsound(AOG, 'sound/items/bikehorn.ogg', VOL_EFFECTS_MISC, ratio)
@@ -161,7 +161,7 @@
 		ASPECT_WEAPON = 1,
 	)
 
-/datum/religion_rites/standing/animation/on_chosen(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/animation/on_chosen(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 	var/anim_items = 0
@@ -174,7 +174,7 @@
 	religion.update_rites()
 	return TRUE
 
-/datum/religion_rites/standing/animation/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/animation/invoke_effect(mob/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -223,7 +223,7 @@
 /datum/religion_rites/standing/spook/proc/remove_spook_effect(mob/living/carbon/M)
 	M.remove_alt_appearance("spookyscary")
 
-/datum/religion_rites/standing/spook/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/spook/invoke_effect(mob/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -275,7 +275,7 @@
 		ASPECT_LIGHT = 1,
 	)
 
-/datum/religion_rites/standing/illuminate/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/illuminate/invoke_effect(mob/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -334,7 +334,7 @@
 		ASPECT_RESCUE = 1,
 	)
 
-/datum/religion_rites/standing/revive_animal/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/revive_animal/can_start(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 	if(!AOG)
@@ -360,7 +360,7 @@
 
 	return TRUE
 
-/datum/religion_rites/standing/revive_animal/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/revive_animal/invoke_effect(mob/user, obj/AOG)
 	. = ..()
 	if(!.)
 		return FALSE

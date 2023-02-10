@@ -60,10 +60,10 @@
 		return
 	if(!ismovable(A) || is_blocked_turf(A))
 		if(confused && stat == CONSCIOUS && m_intent == "run")
-			playsound(get_turf(src), pick(SOUNDIN_PUNCH), VOL_EFFECTS_MASTER)
+			playsound(get_turf(src), pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
 			visible_message("<span class='warning'>[src] [pick("ran", "slammed")] into \the [A]!</span>")
 			apply_damage(3, BRUTE, pick(BP_HEAD , BP_CHEST , BP_L_LEG , BP_R_LEG))
-			Stun(3)
+			Stun(1)
 			Weaken(2)
 
 	if(ismob(A))
@@ -97,14 +97,19 @@
 
 	//BubbleWrap: Should stop you pushing a restrained person out of the way
 	if(ishuman(M))
-		for(var/mob/MM in range(M, 1))
-			if(MM.pinned.len || ((MM.pulling == M && ( M.restrained() && !( MM.restrained() ) && MM.stat == CONSCIOUS)) || locate(/obj/item/weapon/grab, M.grabbed_by.len)) )
-				if ( !(world.time % 5) )
-					to_chat(src, "<span class='warning'>[M] is restrained, you cannot push past.</span>")
-				return 1
-			if( M.pulling == MM && ( MM.restrained() && !( M.restrained() ) && M.stat == CONSCIOUS) )
-				if ( !(world.time % 5) )
-					to_chat(src, "<span class='warning'>[M] is restraining [MM], you cannot push past.</span>")
+		if(M.anchored)
+			if(!(world.time % 5))
+				to_chat(src, "<span class='warning'>[M] is anchored, you cannot push past.</span>")
+			return 1
+		if((M.pulledby && M.pulledby.stat == CONSCIOUS && !M.pulledby.restrained() && M.restrained()) || locate(/obj/item/weapon/grab, M.grabbed_by))
+			if(!(world.time % 5))
+				to_chat(src, "<span class='warning'>[M] is restrained, you cannot push past.</span>")
+			return 1
+		if(ismob(M.pulling))
+			var/mob/pulling_mob = M.pulling
+			if(pulling_mob.restrained() && !M.restrained() && M.stat == CONSCIOUS)
+				if(!(world.time % 5))
+					to_chat(src, "<span class='warning'>[M] is restraining [pulling_mob], you cannot push past.</span>")
 				return 1
 
 	//switch our position with M
@@ -121,8 +126,8 @@
 			//TODO: Make this use Move(). we're pretty much recreating it here.
 			//it could be done by setting one of the locs to null to make Move() work, then setting it back and Move() the other mob
 			var/oldloc = loc
-			forceMove(M.loc)
-			M.forceMove(oldloc)
+			forceMove(M.loc, pulling == M) // so if we pulling this mob we will continue so
+			M.forceMove(oldloc, TRUE)
 			M.LAssailant = src
 
 			for(var/mob/living/carbon/slime/slime in view(1,M))
@@ -158,7 +163,7 @@
 	if(!AM.anchored)
 		now_pushing = 1
 		var/t = get_dir(src, AM)
-		if(istype(AM, /obj/structure/window))
+		if(istype(AM, /obj/structure/window)) // Why is it here?
 			var/obj/structure/window/W = AM
 			if(W.ini_dir == NORTHWEST || W.ini_dir == NORTHEAST || W.ini_dir == SOUTHWEST || W.ini_dir == SOUTHEAST)
 				for(var/obj/structure/window/win in get_step(AM,t))
@@ -171,6 +176,7 @@
 		if(pulling == AM)
 			stop_pulling()
 		step(AM, t)
+		step(src, t)
 		now_pushing = 0
 
 //mob verbs are a lot faster than object verbs
@@ -183,32 +189,26 @@
 		start_pulling(AM)
 
 /mob/living/count_pull_debuff()
-	pull_debuff = 0
-	if(pulling)
-		var/tally = 0
+	if(!pulling)
+		return 0
 
-		//General pull debuff for playable mobs (playable without shitspawn, yeah)
-		if(ismonkey(src))
-			tally += 1
-		else if(isslime(src))
-			tally += 1.5
-		else
-			tally += 0.3
+	var/tally = 0
+	var/atom/movable/AM = pulling
+	//Mob pulling
+	if(ismob(AM))
+		var/mob/M = AM
+		tally += M.stat == CONSCIOUS ? ( M.a_intent == INTENT_HELP ? 0 : 0.5 ) : 1
+	//Structure pulling
+	else if(istype(AM, /obj/structure))
+		tally += 0.3
+		var/obj/structure/S = AM
+		if(istype(S, /obj/structure/stool/bed/roller))//should be without debuff
+			tally -= 0.3
+	//Machinery pulling
+	else if(ismachinery(AM))
+		tally += 0.3
 
-		var/atom/movable/AM = pulling
-		//Mob pulling
-		if(ismob(AM))
-			tally += 1
-		//Structure pulling
-		if(istype(AM, /obj/structure))
-			tally += 0.5
-			var/obj/structure/S = AM
-			if(istype(S, /obj/structure/stool/bed/roller))//should be without debuff
-				tally -= 0.5
-		//Machinery pulling
-		if(ismachinery(AM))
-			tally += 0.5
-		pull_debuff += tally
+	return tally
 
 /mob/living/proc/add_ingame_age()
 	if(client && isnum(client.player_ingame_age) && !client.is_afk(5 MINUTES)) // 5 minutes of inactive time will disable this, until player come back.
@@ -246,7 +246,7 @@
 /mob/living/proc/burn_skin(burn_amount)
 	if(ishuman(src))
 		//world << "DEBUG: burn_skin(), mutations=[mutations]"
-		if(NO_SHOCK in src.mutations) //shockproof
+		if(IsShockproof()) //shockproof
 			return 0
 		if (COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
@@ -559,18 +559,13 @@
 
 	// shut down ongoing problems
 	radiation = 0
-	nutrition = 400
+	nutrition = NUTRITION_LEVEL_NORMAL
 	bodytemperature = T20C
 	sdisabilities = 0
 	disabilities = 0
 	ExtinguishMob()
 	fire_stacks = 0
 	suiciding = FALSE
-
-	if(pinned.len)
-		for(var/obj/O in pinned)
-			O.forceMove(loc)
-		pinned.Cut()
 
 	// fix blindness and deafness
 	blinded = 0
@@ -678,6 +673,14 @@
 		to_chat(usr, "[src] does not have any stored infomation!")
 
 	return
+
+/mob/living/pointed(atom/A)
+	if(incapacitated() || (status_flags & FAKEDEATH))
+		return FALSE
+
+	. = ..()
+	if(.)
+		usr.visible_message("<span class='notice'><b>[usr]</b> points to [A].</span>")
 
 /mob/living/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if (buckled && buckled.loc != NewLoc)
@@ -886,10 +889,6 @@
 	//resisting grabs (as if it helps anyone...)
 	if (!L.incapacitated())
 		var/resisting = 0
-		for(var/obj/O in L.requests)
-			L.requests.Remove(O)
-			qdel(O)
-			resisting++
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++
 			switch(G.state)
@@ -905,7 +904,7 @@
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
 				if(GRAB_NECK)
-					if(prob(5 - L.stunned * 2))
+					if(prob(5))
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>")
 						qdel(G)
 		if(resisting)
@@ -936,7 +935,7 @@
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(loc && istype(loc, /obj) && !isturf(loc))
-		if(L.stat == CONSCIOUS && !L.stunned && !L.weakened && !L.paralysis)
+		if(!L.incapacitated(NONE))
 			var/obj/C = loc
 			C.container_resist(L)
 
@@ -946,7 +945,8 @@
 		if(CM.on_fire)
 			if(!CM.canmove && !CM.crawling)	return
 			CM.fire_stacks -= 5
-			CM.weakened = 5
+			CM.Stun(5)
+			CM.Weaken(5)
 			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>", \
 				"<span class='rose'>You stop, drop, and roll!</span>")
 			if(fire_stacks <= 0)
@@ -1059,21 +1059,12 @@
 	if((status_flags & FAKEDEATH) || buckled)
 		return
 
-//Already crawling and have others debuffs
-	if( crawling && (IsSleeping() || weakened || paralysis || stunned) )
-		to_chat(src, "<span class='rose'>You can't wake up.</span>")
-
-//Restrained and some debuffs
-	else if( restrained() && (paralysis || stunned) )
-		to_chat(src, "<span class='rose'>You can't move.</span>")
-
-//Restrained and lying on optable or simple table
-	else if( restrained() && can_operate(src) )	//TO DO: Refactor OpTable code to /bed subtype or "Rest" verb
-		to_chat(src, "<span class='rose'>You can't move.</span>")
-
-//Debuffs check
-	else if(!crawling && (IsSleeping() || weakened || paralysis || stunned) )
-		to_chat(src, "<span class='rose'>You can't control yourself.</span>")
+	if(incapacitated(NONE))
+		if(crawling)
+			to_chat(src, "<span class='rose'>You can't wake up.</span>")
+		else
+			to_chat(src, "<span class='rose'>You can't control yourself.</span>")
+		return
 
 	if(crawling)
 		crawl_getup = TRUE
@@ -1331,13 +1322,15 @@
 /mob/living/proc/CanObtainCentcommMessage()
 	return FALSE
 
-/mob/living/proc/vomit(punched = FALSE, masked = FALSE)
-	if(stat == DEAD && !punched)
+/mob/living/proc/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, stun = TRUE, force = FALSE)
+	if(stat == DEAD && !punched && !force)
 		return FALSE
-
-	Stun(3)
-	if(nutrition < 50)
-		visible_message("<span class='warning'>[src] convulses in place, gagging!</span>", "<span class='warning'>You try to throw up, but there is nothing!</span>")
+	SEND_SIGNAL(src, COMSIG_LIVING_VOMITED)
+	if(stun)
+		Stun(3)
+	if(nutrition < 50 && (vomit_type != VOMIT_BLOOD))
+		visible_message("<span class='warning'>[src] convulses in place, gagging!</span>",
+						"<span class='warning'>You try to throw up, but there is nothing!</span>")
 		adjustOxyLoss(3)
 		adjustHalLoss(5)
 		return FALSE
@@ -1354,7 +1347,8 @@
 
 		// The main reason why this is here, and not made into a polymorphized proc, is because we need to know from the subclasses that could cover their face, that they do.
 		if(masked)
-			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>","<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
+			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>gags on their own puke!</span>",
+							"<span class='warning'>You gag on your own puke, damn it, what could be worse!</span>")
 			if(gender == FEMALE)
 				vomitsound = SOUNDIN_FRIGVOMIT
 			else
@@ -1362,7 +1356,8 @@
 			eye_blurry = max(10, eye_blurry)
 			losebreath += 20
 		else
-			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")
+			visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>",
+							"<span class='warning'>You throw up!</span>")
 			if(gender == FEMALE)
 				vomitsound = SOUNDIN_FEMALEVOMIT
 			else
@@ -1370,7 +1365,8 @@
 		make_jittery(max(35 - jitteriness, 0))
 		playsound(src, pick(vomitsound), VOL_EFFECTS_MASTER, null, FALSE)
 	else
-		visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>","<span class='warning'>You throw up!</span>")
+		visible_message("<span class='warning bold'>[name]</span> <span class='warning'>throws up!</span>",
+						"<span class='warning'>You throw up!</span>")
 		playsound(src, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
 
 	var/turf/simulated/T = loc
@@ -1379,11 +1375,13 @@
 		return TRUE
 	if(locate(/obj/structure/sink) in T)
 		return TRUE
-
 	if(istype(T))
-		T.add_vomit_floor(src, getToxLoss() > 0 ? TRUE : FALSE)
+		switch(vomit_type)
+			if(VOMIT_BLOOD)
+				T.add_blood_floor(src)
+			else
+				T.add_vomit_floor(src, getToxLoss() > 0 ? VOMIT_TOXIC : vomit_type)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "puke", /datum/mood_event/puke)
-
 	return TRUE
 
 /mob/living/get_targetzone()
@@ -1421,8 +1419,7 @@
 
 	m_intent = intent
 	if(hud_used)
-		if(hud_used.move_intent)
-			hud_used.move_intent.icon_state = intent == MOVE_INTENT_WALK ? "walking" : "running"
+		move_intent?.update_icon(src)
 
 	return TRUE
 
@@ -1431,6 +1428,7 @@
 
 /mob/living/death(gibbed)
 	beauty.AddModifier("stat", additive=beauty_dead)
+	update_health_hud()
 	return ..()
 
 /mob/living/proc/update_beauty(datum/source, old_value)
@@ -1486,7 +1484,7 @@
 		AdjustDrunkenness(-1)
 
 	if(drunkenness >= DRUNKENNESS_PASS_OUT)
-		paralysis = max(paralysis, 3)
+		Paralyse(3)
 		drowsyness = max(drowsyness, 3)
 		return
 

@@ -18,6 +18,9 @@
 	// SDisability to give (or 0)
 	var/sdisability=0
 
+	// trait to give with source GENETIC_MUTATION_TRAIT
+	var/trait_disability = ""
+
 	// Activation message
 	var/activation_message=""
 
@@ -34,6 +37,8 @@
 		M.disabilities|=disability
 	if(mutation)
 		M.sdisabilities|=sdisability
+	if(trait_disability)
+		ADD_TRAIT(M, trait_disability, GENETIC_MUTATION_TRAIT)
 	if(activation_message)
 		to_chat(M, "<span class='warning'>[activation_message]</span>")
 	//else
@@ -46,6 +51,8 @@
 		M.disabilities-=disability
 	if(mutation)
 		M.sdisabilities-=sdisability
+	if(trait_disability)
+		REMOVE_TRAIT(M, trait_disability, GENETIC_MUTATION_TRAIT)
 	if(deactivation_message)
 		to_chat(M, "<span class='warning'>[deactivation_message]</span>")
 	//else
@@ -87,7 +94,7 @@
 /datum/dna/gene/disability/clumsy
 	name="Clumsiness"
 	activation_message="You feel lightheaded."
-	mutation=CLUMSY
+	trait_disability = TRAIT_CLUMSY
 
 /datum/dna/gene/disability/clumsy/New()
 	block=CLUMSYBLOCK
@@ -149,3 +156,11 @@
 
 /datum/dna/gene/disability/nearsighted/New()
 	block=GLASSESBLOCK
+
+/datum/dna/gene/disability/nearsighted/activate(mob/M, connected, flags)
+	. = ..()
+	M.become_nearsighted(GENETIC_MUTATION_TRAIT)
+
+/datum/dna/gene/disability/nearsighted/deactivate(mob/M, connected, flags)
+	. = ..()
+	M.cure_nearsighted(GENETIC_MUTATION_TRAIT)

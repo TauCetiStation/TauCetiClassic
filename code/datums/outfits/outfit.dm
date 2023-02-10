@@ -14,7 +14,7 @@
   * that can be restored at a later date
   */
 /datum/outfit
-	var/name = "Naked"  ///Name of the outfit (shows up in the equip admin verb)
+	var/name = null  ///Name of the outfit (shows up in the equip admin verb)
 
 	var/uniform = null    /// Type path of item to go in uniform slot
 	var/uniform_f = null    /// Type path of item to go in uniform slot	(female)
@@ -259,9 +259,9 @@
 						H.equip_to_slot_or_del(new path(H), SLOT_IN_BACKPACK)
 		else
 			if(l_pocket_back)
-				H.equip_to_slot_or_del(new l_pocket_back(H), SLOT_L_STORE)
+				H.equip_or_collect(new l_pocket_back(H), SLOT_L_STORE)
 			if(r_pocket_back)
-				H.equip_to_slot_or_del(new r_pocket_back(H), SLOT_R_STORE)
+				H.equip_or_collect(new r_pocket_back(H), SLOT_R_STORE)
 			if(l_hand_back)
 				H.put_in_l_hand(new l_hand_back(H))
 			if(r_hand_back)
@@ -273,12 +273,20 @@
 		apply_fingerprints(H)
 		if(internals_slot)
 			H.internal = H.get_equipped_item(internals_slot)
-			if(H.internals)
-				H.internals.icon_state = "internal1"
+			H.internals?.update_icon(H)
 		if(implants)
 			for(var/implant_type in implants)
 				var/obj/item/weapon/implant/I = new implant_type(H)
 				I.inject(H, implants[implant_type])
+
+	if(istype(H.wear_id, /obj/item/weapon/card/id)) // check id card
+		var/obj/item/weapon/card/id/wear_id = H.wear_id
+		wear_id.assign(H.real_name)
+
+		var/obj/item/device/pda/pda = locate() in H // find closest pda
+		if(pda)
+			pda.ownjob = wear_id.assignment
+			pda.assign(H.real_name)
 
 	H.sec_hud_set_ID()
 	H.update_body()

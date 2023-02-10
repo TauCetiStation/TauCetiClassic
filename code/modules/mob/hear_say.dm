@@ -96,6 +96,7 @@
 		if(H != src && H.mind?.assigned_role == "Mime" && length(H.languages))
 			H.emote("gasp")
 			H.adjustOxyLoss(20)
+			H.Stun(3)
 			H.Weaken(3)
 
 			H.loc.shake_act(2)
@@ -303,10 +304,9 @@
 			heardword = copytext(heardword,2)
 		if(copytext(heardword,-1) in punctuation)
 			heardword = copytext(heardword,1,-1)
-		heard = "<span class = 'game_say'>...You hear something about...[heardword]</span>"
-
+		heard = "<span class='notice italic'>... [heardword] ...</span>"
 	else
-		heard = "<span class = 'game_say'>...<i>You almost hear someone talking</i>...</span>"
+		return
 
 	to_chat(src, heard)
 

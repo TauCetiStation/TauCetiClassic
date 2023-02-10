@@ -10,9 +10,8 @@
 	if(animal.incapacitated() || !isturf(animal.loc))
 		return
 	var/list/attack = animal.get_unarmed_attack()
-	var/damage = attack["damage"]
 	for(var/obj/structure/cable/C in animal.loc)
-		C.take_damage(damage)
+		C.take_damage(attack["damage"], attack["type"], MELEE)
 
 /datum/component/gnawing/Destroy()
 	STOP_PROCESSING(SSgnaw, src)

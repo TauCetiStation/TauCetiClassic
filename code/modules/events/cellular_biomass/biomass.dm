@@ -20,7 +20,7 @@
 /obj/effect/biomass/attackby(obj/item/weapon/W, mob/user)
 	if (!W || !user || !W.type) return
 	var/temperature = W.get_current_temperature()
-	if(W.sharp || W.get_quality(QUALITY_CUTTING) > 0 || temperature > 3000)
+	if(W.sharp || iscutter(W) > 0 || temperature > 3000)
 		qdel(src)
 	else
 		return ..()
@@ -35,7 +35,7 @@
 
 /obj/effect/biomass_controller/atom_init()
 	. = ..()
-	if(!istype(loc, /turf/simulated/floor))
+	if(!isfloorturf(loc))
 		return INITIALIZE_HINT_QDEL
 
 	spawn_biomass_piece(loc)
@@ -111,7 +111,7 @@
 /obj/effect/biomass/proc/spread()
 	var/direction = pick(cardinal)
 	var/step = get_step(src,direction)
-	if(istype(step,/turf/simulated/floor))
+	if(isfloorturf(step))
 		var/turf/simulated/floor/F = step
 		if(!locate(/obj/effect/biomass,F))
 			if(F.Enter(src))
