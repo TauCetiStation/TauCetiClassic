@@ -187,7 +187,7 @@ for reference:
 				visible_message("<span class='warning'>BZZzZZzZZzZT</span>")
 				return
 		return
-	else if (iswrench(W))
+	else if (iswrenching(W))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if (get_integrity() < max_integrity || emagged)
 			update_integrity(max_integrity)

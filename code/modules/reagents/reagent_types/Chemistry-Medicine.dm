@@ -387,13 +387,13 @@
 /datum/reagent/synaptizine/on_general_digest(mob/living/M)
 	..()
 	M.drowsyness = max(M.drowsyness - 5, 0)
-	M.AdjustParalysis(-1)
-	M.AdjustStunned(-1)
-	M.AdjustWeakened(-1)
+	M.AdjustParalysis(-1.5)
+	M.AdjustStunned(-1.5)
+	M.AdjustWeakened(-1.5)
 	if(holder.has_reagent("mindbreaker"))
 		holder.remove_reagent("mindbreaker", 5)
 	M.hallucination = max(0, M.hallucination - 10)
-	if(prob(60))
+	if(prob(40))
 		M.adjustToxLoss(1)
 
 /datum/reagent/hyronalin
@@ -771,3 +771,30 @@
 	restrict_species = list(IPC, DIONA)
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
 	overdose = REAGENTS_OVERDOSE / 6
+	data = list()
+
+/datum/reagent/metatrombine/on_general_digest(mob/living/carbon/human/M)
+	..()
+	if(!ishuman(M))
+		return
+	if((volume <= overdose) && !data["ticks"])
+		return
+	if(!data["ticks"])
+		data["ticks"] = 1
+	data["ticks"]++
+	var/obj/item/organ/internal/heart/IO = M.organs_by_name[O_HEART]
+	switch(data["ticks"])
+		if(1 to 150)
+			if(prob(25))
+				to_chat(M, "<span class='notice'>You feel dizzy...</span>")
+			M.make_dizzy(5)
+			M.make_jittery(5)
+		if(150 to 200)
+			for(var/obj/item/organ/external/E in M.bodyparts)
+				if(E.is_artery_cut())
+					E.status &= ~ORGAN_ARTERY_CUT
+			if(IO.robotic == 1)
+				if(prob(75))
+					data["ticks"]--
+		if(200 to INFINITY && IO.robotic != 2)
+			IO.heart_stop()

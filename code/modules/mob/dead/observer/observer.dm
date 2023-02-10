@@ -36,6 +36,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
 
+	show_examine_log = FALSE
+
 /mob/dead/observer/atom_init()
 	invisibility = INVISIBILITY_OBSERVER
 

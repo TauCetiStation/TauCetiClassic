@@ -85,7 +85,7 @@
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'>The locker has been sliced open by [user] with an [W.name]!</span>", blind_message = "<span class='warning'>You hear metal being sliced and sparks flying.</span>", viewing_distance = 3)
 
-	else if(istype(W,/obj/item/weapon/packageWrap) || iswelder(W))
+	else if(istype(W,/obj/item/weapon/packageWrap) || iswelding(W))
 		return ..(W,user)
 	else
 		togglelock(user)
