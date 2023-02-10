@@ -494,6 +494,7 @@ table.staffwho th {
 div.rating {
   width: 80%;
   margin: auto;
+  border: 5px dashed #333333;
   border-radius: 15px;
   text-align: center;
   background: #eeeeee;
@@ -502,23 +503,46 @@ div.rating {
 }
 
 .rating_questions {
+  font-size: large;
+  color: #666666;
+  font-weight: bold;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+}
+
+.rating_rates_red,
+.rating_rates_orange,
+.rating_rates_yellow,
+.rating_rates_lime,
+.rating_rates_green {
   font-size: x-large;
-  color: #34a1c5;
+  color: #aaaaaa;
 }
 
-.rating_rates {
-  font-size: x-large;
-  color: #bb7d98;
+.rating_rates_red:visited,
+.rating_rates_orange:visited,
+.rating_rates_yellow:visited,
+.rating_rates_lime:visited,
+.rating_rates_green:visited {
+  color: #aaaaaa;
 }
 
-.rating_rates a {
-  color: #bb7d98;
+.rating_rates_red:hover {
+  color: #aa1111;
 }
 
-.rating_rates a:visited {
-  color: #bb7d98;
+.rating_rates_orange:hover {
+  color: #eb8921;
 }
 
-.rating_rates a:hover {
-  color: #b7145b;
+.rating_rates_yellow:hover {
+  color: #eec015;
+}
+
+.rating_rates_lime:hover {
+  color: #3d72a4;
+}
+
+.rating_rates_green:hover {
+  color: #73af59;
 }

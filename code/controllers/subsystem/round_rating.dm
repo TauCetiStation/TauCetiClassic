@@ -50,14 +50,34 @@ SUBSYSTEM_DEF(rating)
 	var/list/rating_templates = list()
 
 	var/list/rating_by_icon = list(
-		"1" = "<span class=\"far fa-angry\"></span>",
-		"2" = "<span class=\"far fa-frown\"></span>",
-		"3" = "<span class=\"far fa-meh\"></span>",
-		"4" = "<span class=\"far fa-smile\"></span>",
-		"5" = "<span class=\"far fa-laugh\"></span>",
+		"1" = list(
+			"a-class" = "rating_rates_red",
+			"icon" = "fa-angry"
+		),
+		"2" = list(
+			"a-class" = "rating_rates_orange",
+			"icon" = "fa-frown"
+		),
+		"3" = list(
+			"a-class" = "rating_rates_yellow",
+			"icon" = "fa-meh"
+		),
+		"4" = list(
+			"a-class" = "rating_rates_lime",
+			"icon" = "fa-smile"
+		),
+		"5" = list(
+			"a-class" = "rating_rates_green",
+			"icon" = "fa-laugh"
+		),
 	)
 
 	var/max_random_questions = 2
+
+	// only for games with a large numbers of players
+	var/list/cached_templates_pool
+
+	var/lowpop = 35
 
 /datum/controller/subsystem/rating/Initialize(start_timeofday)
 	for(var/type in subtypesof(/datum/rating_template))
@@ -87,39 +107,53 @@ SUBSYSTEM_DEF(rating)
 	string += "</div>"
 	return string
 
-#define RATING_HREF(M, rating, cat, fa_icon) "<a href='?src=\ref[M];round_rating=[rating];rating_cat=[cat]'>[fa_icon]</a>"
+
+/datum/controller/subsystem/rating/proc/generate_pool()
+	var/list/template_pool = rating_templates.Copy()
+
+	var/list/new_template_pool = list()
+	for(var/datum/rating_template/template in template_pool)
+		if(template.show_options & RATING_SHOW_ALWAYS)
+			new_template_pool += template
+			template_pool -= template
+
+	var/question_asked = 0
+	while(question_asked != max_random_questions)
+		if(template_pool.len == 0)
+			break
+		var/template = pick(template_pool)
+		new_template_pool += template
+		template_pool -= template
+		question_asked++
+	return new_template_pool
+
+/datum/controller/subsystem/rating/proc/get_question_pool()
+	if(global.player_list.len > lowpop)
+		return generate_pool()
+
+	if(!cached_templates_pool)
+		cached_templates_pool = generate_pool()
+
+	return cached_templates_pool
+
+#define RATING_HREF(M, rating, cat, fa_icon, a_class) "<a href='?src=\ref[M];round_rating=[rating];rating_cat=[cat]' class='[a_class]'><span class='far [fa_icon]'></span></a>"
 
 /datum/controller/subsystem/rating/proc/announce_rating_collection()
 	for(var/mob/M in global.player_list)
 		var/string = "<br><div class='rating'>"
-		var/list/template_pool = rating_templates.Copy()
 
-		var/list/templates_to_render = list()
-		for(var/datum/rating_template/template in template_pool)
-			if(template.show_options & RATING_SHOW_ALWAYS)
-				templates_to_render += template
-				template_pool -= template
+		var/list/new_template_pool = get_question_pool()
 
-		var/question_asked = 0
-		while(question_asked != max_random_questions)
-			if(template_pool.len == 0)
-				break
-			var/template = pick(template_pool)
-			templates_to_render += template
-			template_pool -= template
-			question_asked++
-
-		for(var/datum/rating_template/template in templates_to_render)
+		for(var/datum/rating_template/template in new_template_pool)
 			string += "<span class='rating_questions'>[template.question]</span><br>"
 			// render voting choises
-			string += "<span class='rating_rates'>"
 			var/i = 0
 			for(var/rate in rating_by_icon)
 				i++
-				string += RATING_HREF(M, rate, template.category, rating_by_icon[rate])
+				string += RATING_HREF(M, rate, template.category, rating_by_icon[rate]["icon"], rating_by_icon[rate]["a-class"])
 				if(rating_by_icon.len != i)
 					string += "  -  "
-			string += "</span><br>"
+			string += "<br>"
 		string += "</div><br>"
 		to_chat(M, string)
 
