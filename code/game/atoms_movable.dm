@@ -524,3 +524,19 @@
 /obj/item/weapon/holder/drop_from_contents(atom/movable/AM)
 	AM.forceMove(loc)
 	return TRUE
+
+#define GEIGER_RANGE 15
+
+/proc/irradiate_in_dist(turf/source_turf, rad_dose, effect_distance)
+	for(var/mob/living/L in range(source_turf, effect_distance))
+		var/rads = rad_dose
+		rads *= sqrt(1 / (get_dist(L, source_turf) + 1))
+		L.apply_effect(rads, IRRADIATE)
+	for(var/obj/item/device/geiger/counter as anything in global.geiger_items_list)
+		var/distance_rad_signal = get_dist(counter, source_turf)
+		if(distance_rad_signal <= GEIGER_RANGE)
+			var/rad_power = rad_dose
+			rad_power *= sqrt(1 / distance_rad_signal + 1)
+			counter.recieve_rad_signal(rad_power, distance_rad_signal)
+
+#undef GEIGER_RANGE
