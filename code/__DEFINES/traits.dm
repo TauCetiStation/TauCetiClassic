@@ -155,7 +155,7 @@
 #define TRAIT_NO_RUN              "no_run"
 #define TRAIT_FAST_EQUIP          "fast_equip"
 #define TRAIT_FRIENDLY            "friendly"
-#define TRAIT_HARDTOGET           "hard_to_get"
+#define TRAIT_HARDTOGET           "touchy"
 #define TRAIT_NO_CLONE            "no_clone"
 #define TRAIT_VACCINATED          "vaccinated"
 #define TRAIT_DWARF               "dwarf"
