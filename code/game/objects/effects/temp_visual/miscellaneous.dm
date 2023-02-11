@@ -25,3 +25,9 @@
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
 	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = 25)
+
+/obj/effect/temp_visual/heart/annoyed
+	name = "annoyed"
+	icon = 'icons/mob/animal.dmi'
+	icon_state = "annoyed"
+	duration = 15
