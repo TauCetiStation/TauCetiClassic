@@ -608,6 +608,14 @@
 						SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/hug)
 				else
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/hug)
+				if(HAS_TRAIT(src, TRAIT_HARDTOGET))
+					var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
+					if(mood)
+						new /obj/effect/temp_visual/heart/annoyed(loc)
+						if(mood.mood_level < MOOD_LEVEL_NEUTRAL)
+							SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "bad_hug", /datum/mood_event/very_bad_hug)
+						else
+							SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "bad_hug", /datum/mood_event/bad_hug)
 
 			AdjustParalysis(-3)
 			AdjustStunned(-3)
