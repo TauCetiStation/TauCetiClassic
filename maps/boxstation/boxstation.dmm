@@ -64064,10 +64064,6 @@
 	},
 /area/station/hallway/primary/central)
 "dNK" = (
-/obj/machinery/power/apc{
-	name = "Robotics Lab APC";
-	pixel_y = -26
-	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
 	},
