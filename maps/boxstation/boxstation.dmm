@@ -9375,7 +9375,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/visible,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28
@@ -9383,16 +9382,13 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 5
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
 	},
-/area/station/engineering/engine)
-"apC" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
-	},
-/turf/simulated/wall/r_wall,
 /area/station/engineering/engine)
 "apD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -9403,6 +9399,9 @@
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 10
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -68551,14 +68550,14 @@
 	pixel_y = -20;
 	req_access = list(10,13)
 	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 10
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
@@ -68828,10 +68827,10 @@
 /turf/environment/space,
 /area/shuttle/escape_pod4/station)
 "cLV" = (
-/obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 8
+	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -76749,6 +76748,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 10
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -78466,6 +78468,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "nyA" = (
@@ -78516,15 +78521,6 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
-"nBb" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 5
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/engineering/engine)
 "nCG" = (
 /obj/machinery/embedded_controller/radio/access_controller{
 	id_tag = "incinerator_access_control";
@@ -82059,9 +82055,7 @@
 /area/station/medical/virology)
 "rTO" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
 	id_tag = "engineering_aux_inner";
@@ -118902,7 +118896,7 @@ gIb
 kDT
 cPF
 apB
-nBb
+rLC
 crH
 oaB
 ojb
@@ -119417,7 +119411,7 @@ bVI
 bVI
 crH
 nys
-apC
+crH
 crH
 crH
 crH
