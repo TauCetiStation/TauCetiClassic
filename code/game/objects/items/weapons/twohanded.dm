@@ -26,8 +26,8 @@
 	AddComponent(/datum/component/swiping, SCB)
 
 	var/datum/twohanded_component_builder/TCB = new
-	TCB.force_wielded = 40
-	TCB.force_unwielded = 10
+	TCB.force_wielded = src.force * 4
+	TCB.force_unwielded = src.force
 	TCB.icon_wielded = "fireaxe1"
 	AddComponent(/datum/component/twohanded, TCB)
 
