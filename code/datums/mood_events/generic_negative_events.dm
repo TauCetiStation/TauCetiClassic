@@ -23,7 +23,7 @@
 	timeout = 30 SECONDS
 
 /datum/mood_event/very_bad_hug
-	description = "<span class='warning'>Somebody touch me. Gross!</span>"
+	description = "<span class='warning'>Somebody have touched me. Gross!</span>"
 	mood_change = -2
 	timeout = 2 MINUTE
 
