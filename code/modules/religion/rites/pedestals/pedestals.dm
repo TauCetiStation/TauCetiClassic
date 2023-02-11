@@ -203,3 +203,30 @@
 	H.regenerate_icons()
 
 	return TRUE
+
+/datum/religion_rites/pedestals/cult/ghost_form
+	name = "Путешествие в астрал"
+	desc = "Разделяет дух и тело живого существа, позволяя ему видеть глазами дyхa."
+	ritual_length = (20 SECONDS)
+	invoke_msg = "Покажи мне!!"
+	favor_cost = 500
+
+	rules = list(
+		/obj/item/weapon/reagent_containers/food/snacks/ectoplasm = 1,
+	)
+
+	needed_aspects = list(
+		ASPECT_MYSTIC = 3,
+	)
+
+
+/datum/religion_rites/pedestals/cult/ghost_form/invoke_effect(mob/user, obj/AOG)
+	..()
+	user.visible_message("<span class='userdanger'> Глаза [user] становятся словно стеклянными, а тело замирает.</span>", \
+		"<span class='cult'>Тень разделяет твоё тело и дух. Сейчас ты на ином слое самого пространства. \
+		Твой дух ничего не сдерживает сейчас, однако это не продлится долго...</span>")
+	var/mob/dead/observer/ghost = user.ghostize(TRUE)
+	VARSET_IN(user, key, ghost.key, 40 SECONDS)
+	animate(ghost.client, color = "#960000", time = 40 SECONDS)
+	playsound(ghost, 'sound/effects/ghost.ogg', VOL_EFFECTS_MASTER)
+
