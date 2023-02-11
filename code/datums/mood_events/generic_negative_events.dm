@@ -18,7 +18,7 @@
 	mood_change = _mood_change
 
 /datum/mood_event/bad_hug
-	description = "<span class='warning'>I don't like when peoples touch me!</span>"
+	description = "<span class='warning'>I don't like it when people touch me!</span>"
 	mood_change = -1
 	timeout = 30 SECONDS
 
