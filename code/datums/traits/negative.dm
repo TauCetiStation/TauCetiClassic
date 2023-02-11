@@ -234,3 +234,17 @@
 		IS_PLANT = FALSE,
 		IS_SYNTHETIC = FALSE,
 	)
+
+/datum/quirk/hard_to_get
+	name = QUIRK_HARDTOGET
+	desc = "Вы не любите когда вас трогают."
+	value = -1
+
+	mob_trait = TRAIT_HARDTOGET
+
+	gain_text = "<span class='notice'>Вы просто хотите чтоб вас оставили в покое.</span>"
+	lose_text = "<span class='notice'>Теперь вы не переживаете из-за касаний.</span>"
+
+	req_species_flags = list(
+		NO_EMOTION = FALSE,
+	)
