@@ -91,7 +91,7 @@
 /obj/item/weapon/photo/proc/show(mob/user)
 	user << browse_rsc(img, "tmp_photo.png")
 
-	var/datum/browser/popup = new(user, "window=book [name]", "[sanitize(name)]", 224, (scribble ? 400 : 224), ntheme = CSS_THEME_LIGHT)
+	var/datum/browser/popup = new(user, "window=book [name]", "[sanitize(name)]", 224, (scribble ? 400 : 236), ntheme = CSS_THEME_LIGHT)
 	popup.set_content("<div style='overflow:hidden;text-align:center;'> <img src='tmp_photo.png' width = '192' style='-ms-interpolation-mode:nearest-neighbor'>[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : null]</div>")
 	popup.open()
 

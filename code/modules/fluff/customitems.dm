@@ -14,6 +14,9 @@
 /obj/item/weapon/lighter/zippo/custom
 	name = "Custom zippo"
 
+/obj/item/weapon/photo/custom
+	name = "Custom photo"
+
 /obj/item/clothing/head/custom
 	name = "Custom hat"
 	body_parts_covered = 0
@@ -229,6 +232,23 @@
 				zippo.icon_on = "[custom_item_info.icon_state]_on"
 				zippo.icon_off = custom_item_info.icon_state
 				item = zippo
+			if("photo")
+				var/obj/item/weapon/photo/custom/Photo = new /obj/item/weapon/photo/custom()
+				var/icon/photo_itself = new(custom_item_info.icon, custom_item_info.icon_state)
+				var/icon/small_img = new(custom_item_info.icon, custom_item_info.icon_state)
+				var/icon/tiny_img = new(custom_item_info.icon, custom_item_info.icon_state)
+				var/icon/ic = icon('icons/obj/items.dmi',"photo")
+				var/icon/pc = icon('icons/obj/bureaucracy.dmi', "photo")
+				small_img.Scale(8, 8)
+				tiny_img.Scale(4, 4)
+				ic.Blend(small_img,ICON_OVERLAY, 13, 13)
+				pc.Blend(tiny_img,ICON_OVERLAY, 12, 19)
+
+				Photo.icon = ic
+				Photo.tiny = pc
+				Photo.img = photo_itself
+
+				item = Photo
 			if("hat")
 				item = new /obj/item/clothing/head/custom()
 			if("uniform")
@@ -260,10 +280,14 @@
 		item.desc = custom_item_info.desc
 		if(custom_item_info.sprite_author)
 			item.desc = "[item.desc]<br><small><span style='color:#00BFFF;'><i>sprite author:</i> [custom_item_info.sprite_author]</span></small>"
-		item.icon = custom_item_info.icon
-		item.icon_custom = custom_item_info.icon
-		item.icon_state = custom_item_info.icon_state
-		item.item_state = custom_item_info.icon_state
+		if(!item.icon)
+			item.icon = custom_item_info.icon
+		if(!item.icon_custom)
+			item.icon_custom = custom_item_info.icon
+		if(!item.icon_state)
+			item.icon_state = custom_item_info.icon_state
+		if(!item.item_state)
+			item.item_state = custom_item_info.icon_state
 
 		switch(custom_item_info.hair_flags)
 			if(FLUFF_HAIR_HIDE_HEAD)

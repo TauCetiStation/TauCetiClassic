@@ -36,12 +36,15 @@ var/global/list/editing_item_oldname_list = list()
 	preview_icon.Scale(150, 70)
 	if(editing_item.icon && editing_item.icon_state)
 		var/icon/I = new(editing_item.icon,icon_state = editing_item.icon_state,dir = SOUTH)
+		I.Scale(32, 32)
 		preview_icon.Blend(I, ICON_OVERLAY, 13, 22)
 
 		I = new(editing_item.icon,icon_state = editing_item.icon_state,dir = NORTH)
+		I.Scale(32, 32)
 		preview_icon.Blend(I, ICON_OVERLAY, 109, 19)
 
 		I = new(editing_item.icon,icon_state = editing_item.icon_state,dir = WEST)
+		I.Scale(32, 32)
 		preview_icon.Blend(I, ICON_OVERLAY, 60, 18)
 
 		if("[editing_item.icon_state]_mob" in icon_states(editing_item.icon))
@@ -51,12 +54,15 @@ var/global/list/editing_item_oldname_list = list()
 			preview_icon_mob.Scale(150, 70)
 
 			I = new(editing_item.icon,icon_state = mob_icon_state,dir = SOUTH)
+			I.Scale(32, 32)
 			preview_icon_mob.Blend(I, ICON_OVERLAY, 13, 22)
 
 			I = new(editing_item.icon,icon_state = mob_icon_state,dir = NORTH)
+			I.Scale(32, 32)
 			preview_icon_mob.Blend(I, ICON_OVERLAY, 109, 19)
 
 			I = new(editing_item.icon,icon_state = mob_icon_state,dir = WEST)
+			I.Scale(32, 32)
 			preview_icon_mob.Blend(I, ICON_OVERLAY, 60, 18)
 
 	user << browse_rsc(preview_icon, "itempreviewicon.png")
@@ -218,7 +224,7 @@ var/global/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["change_type"])
-		var/new_type = sanitize(input("Select item type", "Text")  as null|anything in list("normal", "small", "lighter", "hat", "uniform", "suit", "mask", "glasses", "gloves", "shoes", "accessory", "labcoat"))
+		var/new_type = sanitize(input("Select item type", "Text")  as null|anything in list("normal", "small", "lighter", "photo", "hat", "uniform", "suit", "mask", "glasses", "gloves", "shoes", "accessory", "labcoat"))
 		if(!editing_item || !new_type)
 			return
 		editing_item.item_type = new_type
@@ -329,7 +335,11 @@ var/global/list/editing_item_oldname_list = list()
 		if(icon_states.len > 6)
 			to_chat(user, "This icon has too many states")
 			return
-		if(I.Width() != 32 || I.Height() != 32)
+		if(editing_item.item_type == "photo")
+			if(I.Width() > 128 || I.Height() > 128)
+				to_chat(user, "This icon has incorrect size")
+				return
+		else if(I.Width() != 32 || I.Height() != 32)
 			to_chat(user, "This icon has incorrect size")
 			return
 		editing_item.icon = new_item_icon
