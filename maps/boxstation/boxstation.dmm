@@ -29112,10 +29112,6 @@
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "bba" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Disposal Access";
-	req_access = list(12)
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 1;
@@ -29123,6 +29119,10 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/door/airlock/maintenance{
+	name = "Cargo Bay Maintenance";
+	req_access = list(31)
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bbb" = (
@@ -29993,8 +29993,8 @@
 "bcB" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
-	name = "Disposal Access";
-	req_access = list(12)
+	name = "Cargo Bay Maintenance";
+	req_access = list(31)
 	},
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
@@ -73778,7 +73778,7 @@
 	name = "Disposal Vent Control";
 	pixel_x = -25;
 	pixel_y = 4;
-	req_access = list(12)
+	req_access = list(31)
 	},
 /obj/machinery/driver_button{
 	id = "trash";
