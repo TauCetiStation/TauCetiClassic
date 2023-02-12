@@ -180,6 +180,7 @@
 "iy" = (/obj/structure/cable{icon_state = "1-2"},/turf/simulated/floor,/area/space_structures/old_station/central/brig)
 "iE" = (/obj/structure/table,/turf/simulated/floor{dir = 8; icon_state = "red"},/area/space_structures/old_station/central/brig)
 "iG" = (/obj/structure/rack,/obj/item/clothing/head/helmet/riot{pixel_y = 8},/turf/simulated/floor{dir = 1; icon_state = "bot"},/area/space_structures/old_station/armory)
+"iH" = (/obj/structure/table,/obj/machinery/cell_charger,/turf/simulated/floor{dir = 1; icon_state = "yellow"},/area/space_structures/old_station/central/solars_c)
 "iI" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{dir = 8; icon_state = "neutralcorner"},/area/space_structures/old_station/left)
 "iM" = (/turf/simulated/floor{dir = 10; icon_state = "whitepurple"},/area/space_structures/old_station/right)
 "iN" = (/obj/machinery/computer/operating,/turf/simulated/floor{dir = 10; icon_state = "whiteblue_ex"},/area/space_structures/old_station/left/med)
@@ -234,7 +235,7 @@
 "kI" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/blood/writing,/turf/simulated/floor,/area/space_structures/old_station/central)
 "kK" = (/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/simulated/floor/plating,/area/space_structures/old_station/right)
 "kM" = (/obj/structure/alien/weeds,/obj/structure/extinguisher_cabinet{pixel_x = 27},/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/satellite)
-"kT" = (/obj/effect/decal/cleanable/cobweb,/turf/simulated/floor{dir = 9; icon_state = "yellow"},/area/space_structures/old_station/central/solars_c)
+"kT" = (/obj/effect/decal/cleanable/cobweb,/obj/machinery/power/port_gen/pacman,/turf/simulated/floor{dir = 9; icon_state = "yellow"},/area/space_structures/old_station/central/solars_c)
 "kW" = (/turf/simulated/floor/plating{icon_state = "platingdmg3"},/area/space_structures/old_station/central/solars_c)
 "la" = (/obj/structure/stool/bed/chair/office/dark{dir = 1},/turf/simulated/floor{icon_state = "dark"},/area/space_structures/old_station/central/bridge)
 "ld" = (/obj/structure/window/reinforced{dir = 5},/obj/structure/grille,/turf/simulated/floor/plating,/area/space_structures/old_station/right)
@@ -286,6 +287,7 @@
 "nr" = (/turf/simulated/floor{dir = 5; icon_state = "whitepurple"},/area/space_structures/old_station/right)
 "nt" = (/turf/simulated/wall,/area/space_structures/old_station/right/rnd)
 "nu" = (/obj/structure/stool/bed/chair/metal/black{dir = 8},/obj/structure/extinguisher_cabinet{pixel_x = 27},/turf/simulated/floor{dir = 6; icon_state = "brownold"},/area/space_structures/old_station/left)
+"nw" = (/obj/structure/sign/departments/engineering,/turf/simulated/wall,/area/space_structures/old_station/central/solars_c)
 "nB" = (/obj/structure/alien/weeds,/obj/effect/decal/cleanable/blood/writing,/obj/structure/extinguisher_cabinet{pixel_x = 27},/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/simulated/floor{dir = 4; icon_state = "whitepurple"},/area/space_structures/old_station/right)
 "nD" = (/obj/structure/closet/crate/freezer,/obj/structure/sign/warning/nosmoking{pixel_y = 32},/turf/simulated/floor{dir = 1; icon_state = "whiteblue"},/area/space_structures/old_station/left/med)
 "nE" = (/obj/machinery/power/solar,/obj/structure/cable/yellow{d2 = 2; icon_state = "0-2"},/turf/simulated/floor/airless{icon_state = "solarpanel"},/area/space)
@@ -396,7 +398,7 @@
 "sb" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/blood/gibs/up,/turf/simulated/floor,/area/space_structures/old_station/right/rnd)
 "sf" = (/obj/structure/sign/poster/contraband/kudzu,/turf/simulated/wall,/area/space_structures/old_station/central/hydro)
 "sg" = (/obj/structure/window/reinforced{dir = 5},/obj/structure/grille,/turf/simulated/floor/plating{icon_state = "panelscorched"},/area/space_structures/old_station/left)
-"sh" = (/obj/structure/sign/warning/electricshock,/turf/environment/space,/area/space)
+"sh" = (/obj/structure/closet/crate,/obj/item/stack/sheet/mineral/phoron{amount = 25},/obj/item/stack/sheet/mineral/phoron{amount = 25},/turf/simulated/floor/plating{icon_state = "panelscorched"},/area/space_structures/old_station/central/solars_c)
 "si" = (/obj/machinery/power/solar,/obj/structure/cable/yellow{d2 = 8; icon_state = "0-8"},/turf/simulated/floor/airless{icon_state = "solarpanel"},/area/space)
 "sj" = (/obj/machinery/door/airlock/glass{name = "Central Access"},/turf/simulated/floor,/area/space_structures/old_station/central)
 "sk" = (/turf/simulated/floor/plating{icon_state = "platingdmg2"},/area/space)
@@ -561,7 +563,7 @@
 "Al" = (/turf/simulated/floor/plating,/area/space_structures/old_station/central/solars_c)
 "Am" = (/obj/machinery/porta_turret/stationary{check_n_synth = 1; shot_synth = 1},/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/simulated/floor/whitegreed,/area/space_structures/old_station/satellite)
 "Ap" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{icon_state = "floorgrime"},/area/space_structures/old_station/right)
-"Aq" = (/turf/simulated/floor{dir = 1; icon_state = "yellow"},/area/space_structures/old_station/central/solars_c)
+"Aq" = (/obj/structure/table,/obj/item/clothing/accessory/storage/brown_vest{pixel_y = 8},/obj/item/clothing/accessory/storage/brown_vest,/turf/simulated/floor{dir = 1; icon_state = "yellow"},/area/space_structures/old_station/central/solars_c)
 "At" = (/obj/machinery/door/airlock/research/glass{name = "Research and Development"; req_access = list(42)},/turf/simulated/floor{icon_state = "whitepurplefull"},/area/space_structures/old_station/central)
 "Au" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/plating{icon_state = "platingdmg1"},/area/space_structures/old_station/right)
 "Av" = (/obj/structure/alien/weeds,/turf/simulated/floor,/area/space_structures/old_station/right/rnd)
@@ -633,7 +635,7 @@
 "DJ" = (/turf/simulated/wall,/area/space_structures/old_station/central/bridge)
 "DM" = (/obj/structure/alien/weeds/node,/obj/effect/decal/cleanable/blood/writing{dir = 4},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/simulated/floor{icon_state = "whitepurple"},/area/space_structures/old_station/right)
 "DN" = (/turf/simulated/floor{dir = 8; icon_state = "green"},/area/space_structures/old_station/central)
-"DP" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{dir = 1; icon_state = "yellow"},/area/space_structures/old_station/central/solars_c)
+"DP" = (/obj/effect/decal/cleanable/dirt,/obj/structure/table,/obj/item/clothing/glasses/meson{pixel_y = 4},/obj/item/clothing/glasses/meson,/turf/simulated/floor{dir = 1; icon_state = "yellow"},/area/space_structures/old_station/central/solars_c)
 "DR" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{dir = 1; icon_state = "whitepurple"},/area/space_structures/old_station/right)
 "DS" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{dir = 8; icon_state = "whitehall"},/area/space_structures/old_station/central)
 "DT" = (/obj/item/weapon/shard{icon_state = "small"},/obj/structure/lattice,/turf/environment/space,/area/space)
@@ -664,6 +666,7 @@
 "Fk" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/structure/disposalpipe/segment{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/simulated/floor/plating,/area/space_structures/old_station/left)
 "Fm" = (/obj/effect/decal/cleanable/blood/writing{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{dir = 4; icon_state = "yellow"},/area/space_structures/old_station/central/solars_c)
 "Fo" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor{dir = 4; icon_state = "green"},/area/space_structures/old_station/central/hydro)
+"Fp" = (/obj/structure/cable/yellow{d1 = 4; d2 = 8; icon_state = "4-8"},/obj/item/weapon/circuitboard/solar_control,/turf/simulated/floor,/area/space_structures/old_station/central/solars_c)
 "Fu" = (/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/power/apc/largecell{dir = 1; name = "Warehouse APC"; pixel_x = 22},/turf/simulated/floor{dir = 5; icon_state = "darkred"},/area/space_structures/old_station/warehouse)
 "Fv" = (/obj/structure/grille,/turf/environment/space,/area/space)
 "Fz" = (/obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer,/obj/effect/decal/cleanable/blood/writing{dir = 5},/turf/simulated/floor/carpet/black,/area/space_structures/old_station/central)
@@ -1016,7 +1019,7 @@
 "Vn" = (/obj/machinery/chem_dispenser,/turf/simulated/floor{dir = 4; icon_state = "purple"},/area/space_structures/old_station/right/rnd)
 "Vo" = (/obj/item/weapon/storage/firstaid/regular{empty = 1; name = "First-Aid (empty)"; pixel_y = -8; pixel_x = 8},/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{icon_state = "white"},/area/space_structures/old_station/left/med)
 "Vq" = (/obj/item/device/flashlight/seclite,/turf/simulated/floor,/area/space_structures/old_station/central/brig)
-"Vs" = (/obj/item/weapon/circuitboard/solar_control,/obj/machinery/light/small/emergency{dir = 1},/turf/simulated/floor/plating,/area/space_structures/old_station/central)
+"Vs" = (/obj/machinery/light/small/emergency{dir = 1},/turf/simulated/floor/plating,/area/space_structures/old_station/central)
 "Vw" = (/obj/effect/decal/cleanable/dirt,/turf/simulated/floor{dir = 10; icon_state = "whitepurple"},/area/space_structures/old_station/right)
 "Vx" = (/turf/simulated/floor{dir = 4; icon_state = "caution"},/area/space_structures/old_station/left)
 "VC" = (/obj/effect/decal/cleanable/blood/writing{dir = 5},/obj/structure/cable{icon_state = "1-2"},/turf/simulated/floor{dir = 4; icon_state = "green"},/area/space_structures/old_station/central)
@@ -1139,18 +1142,18 @@ UhOONnNnNnNnNnHbBXOoHbWjHblvzznjXBkfkfkfVFXBkfYgkfXBVFkfkfkfkfkfkHOuOulFDJDJganP
 OOOONnNnNnNnNnNnLdJGXpAyykfscqTyMwjPdSjPjPpJjPjPTPGMjPTPIejPjPdSjPvaEOzaEDgzypjUjUFWjUHSZibASDRXtWkCDXNnNnNnNncVeINnGaxaxaOOOOOOOOOOBJZLZLZLZLZLZLZLZLlMzGqTqTlMlMlMlMlMlMlMlMlMlMlMlMlMlMlMlMlMlMOOOOOO
 OOOONnNnNnNnNnNnMIwgZPqZOsUSaoXyzPPFPFrEDdPFAEaoFkPdverESpPFprLSLdsjMXMjVljjBKenXktjNzleGfGfNzkqIfcfcSNnNnNnNnNncVxaxaxaSAdOTYppppppftUZFAZLeZnrwIeZzkTtzkzkpUououououououotwIeZnrZLOOOOxaxaOOOOOOOOOOOO
 OOOOOOUhNnNnNndInigPJdGnZkMTKmnuXBkfkfkfkfkfITauktzhkfkfkfkfkfkfkfOukIcnMZJfUWUWUWUWUWUWUWJfJfXmeijHhENnNnNnhEhEOOGaOOOOxaOOOOOOOOOOldBzjStlcFjgwIiMLvsVWFfpUQwReVetDMetetzwmowGCFZLOOOOxaxaOOOOOOOOOOOO
-OOOOUhOOOOOOOOXBkfXBkfTbkfXBkfXBXBxaOOOOxakfNdiIcmDekfxaxaOOOOOOshqtnQosFfXxxJxJxJxJxJxJxJzWFfDNgzhExEtxQyYRZhhExaxaxaxaxaxaOOOOOOOOldUFFKZLKcjgntntntEoovHTntmZwNntntntntntntHuRiZLOOOOxaxaOOOOOOOOOOOO
+OOOOUhOOOOOOOOXBkfXBkfTbkfXBkfXBXBxaOOOOxakfNdiIcmDekfxaxaOOOOOOOOqtnQosFfXxxJxJxJxJxJxJxJzWFfDNgzhExEtxQyYRZhhExaxaxaxaxaxaOOOOOOOOldUFFKZLKcjgntntntEoovHTntmZwNntntntntntntHuRiZLOOOOxaxaOOOOOOOOOOOO
 OOOOOOOOOOxaxaxaOOkfdQStxrkfOOOOxaxaOOOOxakfkfhsuDkfkfxaxaOOOOOOOOqtEAVCUWlzivhzivivivRHivPsUWLWbAhEoDQgnVROtxhExaxaBAxaxaxaOOOOOOOOldVwgsZLSyYVntbfKTKTKTKTKTKTmWVQeeKTKTkFntcFdPZLOOOOOOxaNnNnNnNnNnOO
 OOOOOOUhOOxaxaxaOOkfZMStxrkfOOOOxaxaOOOOxaxakfkfkfkfxaxasAezezezezsAgzSKNTlzyjUTQaBxUjivivFoJQTGbAhEpDVeKZtxcbhEOOOOqbOOxaxaOOOOOOOOZLZLZLZLcFYVntQzQjZbJvyMQXAvljLsAvAvXqfvntSyggZLOOOOOONnNnNnNnNnNnOO
 OOOOOOOOOOxaxaxaOOkfdQStxrkfOOxaxaxaxaxaxaxaOOOOxaxaOOsAsARUItIthIhobAaKMZcKhzmIyWivSPRHkGjAJfatdJvYViAbDmQYOkhEhEhEhEOOxaxaOOOOOOOOldlAApAGHujgntPcjNTLnFtrAvAvAvAvAvAvIUWzntBcRiZLOOOONnNnNnNnNnNnNnOO
 OOOOOOOOOOxaxakEbgJEkfTbkfXBxaxaxaxaxaxaxaOOsAsAezezsAsAMNKBwPeYqCynmBThPIAdbrbrMMMMnGbrbrsKsflGfdqyAwyDqaQYYuQVQVWKSXxaxaxaxaxaxaxaldEWRbTkSyWdntPcjNnOjNsbAviaAUAvAvjNVUqPntSydPZLNFxaNnNnNnNnNnNnNnOO
-OOZCZCZCZCvBZCZCZChgULdpwWvqOOxaOOOOOOOOOOOOsAkTDPAqAqVhQfeQAlCTxShojtTTJfJfJfJfUWNTUWMZJfJfJfdfjfhdqoVIjWxLVqNOhFJcdrxaxaxaxaxaxaxaldMEBQFicFHuntHREGNJRoEplWlWlWlWwDEpuzndntKrwaYQHuHuNnNnNnNnNnNnNnOO
+OOZCZCZCZCvBZCZCZChgULdpwWvqOOxaOOOOOOOOOOOOsAkTDPAqiHVhQfeQAlCTxSnwjtTTJfJfJfJfUWNTUWMZJfJfJfdfjfhdqoVIjWxLVqNOhFJcdrxaxaxaxaxaxaxaldMEBQFicFHuntHREGNJRoEplWlWlWlWwDEpuzndntKrwaYQHuHuNnNnNnNnNnNnNnOO
 OOoIsPKwDUnDSLOPBWhXJBPPsqvqOOxaOOOOOOOOOOOOsABVCTeQeQWcDWvdGNTOfnoixXrBJTJTuCmLmLLiXPedededvfRLfdjEAwyDgMEUvEdaOdEJSXxaxaxaxaxaOOOOZLZLZLZLcFhhntwbwbwbwbdiEoYqmcmcntntntntntGswaoOHuMiNnNnNnNnNnNnNnOO
-OOAHTwYcyurKTvKaVNYwaDqMukFTOOxaxaOOOOOOOOOOsAyVyVErPyoWoWYToWAWoLhoVZLArkUvUvrDrDPkrDPSrDrDrDYPMoYljchpyDiyQqhEhEhEhEOOOOOOOOOOOOOOyHRQHubjSyjgntsmYJKTiuKTKTaiEougLHKjVTShntGswaZLHucRHuNnNnNnNnNnOOOO
+OOAHTwYcyurKTvKaVNYwaDqMukFTOOxaxaOOOOOOOOOOsAshyVErPyoWFpYToWAWoLhoVZLArkUvUvrDrDPkrDPSrDrDrDYPMoYljchpyDiyQqhEhEhEhEOOOOOOOOOOOOOOyHRQHubjSyjgntsmYJKTiuKTKTaiEougLHKjVTShntGswaZLHucRHuNnNnNnNnNnOOOO
 OOoIXDrUCgVoUPCRNfBjimCCqnvqOOxaxaOOOOOOOOXhADTIADADuOZcDxZNCTqUcrdYzQMXdRdRvNdRdRyydRdRdRdRdRVjRXhEiEogyDcdYENlOOOOtxOOOOOOOOOOOOOOZLPMPMZLehYVBnPcjNhNwYwYlTUaUaSvnKPcwzNyntGswaZLZLZLZLNFNnNnNnNnOOOO
 OOoIiNaeQmOeHOIuZCjdPeOtqxvqOOxaxaOOOOOOOONXOpNnNnNnNneLstahwrwrFmIZVdFSBYgHKXdhLfsOyZQdnIUYvNmhofhEiVQYQYeHrwhEOOOOOOOOOOOOOOOOOOOOZLZLZLZLKcjgntPcjNCpIMVGAvAvYvbwdiYbHoquntGsbVZLkKPQDaZLxaxaOOOOOOOO
-OOZCZCZCZCZCZCZCZCXBkfxzkfXBOOxaxaOOOOxaxacVcVNnNnNnNneLADqUqUwPWSsAvllmqGQPMsQPQPsxmtQPhjmaqjWubAhEaQQIlnAYbvhEOOOOOOxaxaxaxaxaxaxaZLQUNUZLSyjgntRvMkNuIMCSAvvPQCbwwbDVjNIdBnDlmdVPfZwymeZLxaxaOOOOOOOO
-OOOOOOOOOOxaxaOOOOvqecaykDvqOOxaxaOOOOxaxacVNnNnNnNnNnNnkWviYdrfTxsArRyxwXQPQPQPQADHKOQPhjQPwXRlbAhEKPIqhEhEhEhExaxaxaxaxaxaxaxaOOOOZLAuDBySMCjgntwFTLhNOTjNAvAvAUbwwbPcrVICntGsnBZLHuPMjYZLxaxaOOOOOOOO
+OOZCZCZCZCZCZCZCZCXBkfxzkfXBOOxaxaOOOOxaxacVcVNnNnNnNneLADqUqUwPWSnwvllmqGQPMsQPQPsxmtQPhjmaqjWubAhEaQQIlnAYbvhEOOOOOOxaxaxaxaxaxaxaZLQUNUZLSyjgntRvMkNuIMCSAvvPQCbwwbDVjNIdBnDlmdVPfZwymeZLxaxaOOOOOOOO
+OOOOOOOOOOxaxaOOOOvqecaykDvqOOxaxaOOOOxaxacVNnNnNnNnNnNnkWviYdrfTxhorRyxwXQPQPQPQADHKOQPhjQPwXRlbAhEKPIqhEhEhEhExaxaxaxaxaxaxaxaOOOOZLAuDBySMCjgntwFTLhNOTjNAvAvAUbwwbPcrVICntGsnBZLHuPMjYZLxaxaOOOOOOOO
 OOvsOOOOvsxaxaOOOOvqlQimaRvqOOxardOOOOxaxacVNnNnNnNncVNqOuOuOuOuOuOupfyxqGQPpgQPQPTMJeQPTZQPqGDSgzhEzpIKhEOOOOOOxaxaxaxaxaxaOOOOOOOOZLNUtnZLcFjgntPcjNgxEoUEYvXdAvbwnKPcwzVnntGswaRCRCRCRCRCRCxaxaxaqbOO
 OOOOvsOOOOxaxaOOOOvqrqeUaRvqOOxaxaOOOOxaxaAMNnNnNnOOOOOOqtameXSWGJqtEyyxdRHeRWVOgDQPGbRfBiHWdRcOWohEhEhEhEOOOOOJOOOOOOOOxaxaOOOOOOOOZLZLZLZLcFtLntuIEpTDpOXvYNlWlWIOwbyQQRGlntGswabKPCtqLGMYRCOOOOOOOOOO
 OOOOOOOOjuxaxaoJvUbskfaykfbsxaxaxaOOOOxaxaxaxaxaxaxaxaxaqtsrxVRXeSllQbyxdRdRqGqGcaaUJmqGqGvNdRKzjXPZiWcIOuhbhbhbOOOOhbhbdCdCTSFZFZFZiPmGLyDydmjgntntntntntrMBnDhgQgQntntntntntSyaXQFNGoULLiGRCxaxaxaskOO
