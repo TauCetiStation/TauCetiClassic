@@ -6,7 +6,7 @@
  *		FINGERPRINT CARD
  */
  
-/obj/item/weapon/card
+/obj/item/weapon/card // this item not use in game
 	name = "card"
 	desc = "Используется в карточных делах."
 	icon = 'icons/obj/card.dmi'
@@ -227,7 +227,7 @@
 
 /obj/item/weapon/card/id/medGold
 	name = "identification card"
-	desc = "ID карта начальника, олицетворяющая заботу и сострадание к раненым и больным у владельца."
+	desc = "ID карта начальника, олицетворяющая заботу и сострадание к раненым и больным."
 	icon_state = "medGold"
 	item_state = "medGold_id"
 
