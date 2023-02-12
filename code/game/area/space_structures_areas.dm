@@ -219,6 +219,8 @@
 	icon_state = "yellow"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
+
+
 /area/space_structures/old_station/central
 	name = "Central Station"
 	icon_state = "hallC"
@@ -241,6 +243,12 @@
 	name = "Brig"
 	icon_state = "brig"
 
+/area/space_structures/old_station/central/solars_c
+	name = "Solars control room"
+	icon_state = "yellow"
+
+
+
 /area/space_structures/old_station/left
 	name = "Left Station"
 	power_equip = 0
@@ -262,6 +270,8 @@
 	name = "Medbay"
 	icon_state = "medbay"
 	ambience = list('sound/ambience/morgue_1.ogg', 'sound/ambience/morgue_2.ogg', 'sound/ambience/morgue_3.ogg')
+
+
 
 /area/space_structures/old_station/right
 	name = "Right Station"
