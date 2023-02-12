@@ -562,6 +562,11 @@
 	var/unstable = FALSE
 
 /obj/item/rig_module/nuclear_generator/process_module()
+	if(holder.wearer.get_species() == IPC && !unstable)
+		visible_message("<span class='warning'>The nuclear reactor inside [holder] is gloving red and looks very unstable. This module is not compatible with machines!</span>")
+		unstable = TRUE
+		addtimer(CALLBACK(src, .proc/boom), 7 SECONDS)
+
 	if(damage == MODULE_DAMAGED && prob(2))
 		if(holder.wearer)
 			to_chat(holder.wearer, "<span class='warning'>Your damaged [name] irradiates you</span>")
