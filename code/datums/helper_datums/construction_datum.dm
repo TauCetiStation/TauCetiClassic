@@ -102,9 +102,9 @@
 
 /datum/construction/reversible/is_right_key(obj/item/I) // returns index step
 	var/list/L = steps[index]
-	if(ishavequality(I, L["key"]) || istype(I, L["key"]))
+	if(I.get_quality(L["key"]) || istype(I, L["key"]))
 		return FORWARD //to the first step -> forward
-	else if(L["backkey"] && (ishavequality(I, L["backkey"])))
+	else if(L["backkey"] && I.get_quality(L["backkey"]))
 		return BACKWARD //to the last step -> backwards
 	return 0
 
