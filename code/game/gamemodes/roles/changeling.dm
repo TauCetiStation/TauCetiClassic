@@ -11,6 +11,7 @@
 	logo_state = "change-logoa"
 
 	stat_type = /datum/stat/role/changeling
+	moveset_type = /datum/combat_moveset/changeling
 
 	var/list/absorbed_dna = list()
 	var/list/absorbed_species = list()
@@ -79,7 +80,7 @@
 
 	if(antag.current.mind && antag.current.mind.assigned_role == "Clown")
 		to_chat(antag.current, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
-		antag.current.mutations.Remove(CLUMSY)
+		REMOVE_TRAIT(antag.current, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 
 	return TRUE
 
