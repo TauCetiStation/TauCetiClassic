@@ -997,6 +997,7 @@
 #include "code\game\objects\items\devices\scanners\gas.dm"
 #include "code\game\objects\items\devices\scanners\health_analyzer.dm"
 #include "code\game\objects\items\devices\scanners\mass_spectrometer.dm"
+#include "code\game\objects\items\devices\scanners\nanite_scanner.dm"
 #include "code\game\objects\items\devices\scanners\occult_pinpointer.dm"
 #include "code\game\objects\items\devices\scanners\occult_scanner.dm"
 #include "code\game\objects\items\devices\scanners\reagent_scanner.dm"

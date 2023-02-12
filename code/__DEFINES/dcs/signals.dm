@@ -363,3 +363,8 @@
 
 // send this signal to toggle zoom in /datum/component/zoom: (mob/user)
 #define COMSIG_ZOOM_TOGGLE "zoom_toggle"
+
+///Nanites
+//from /obj/item/device/nanite_scanner/attack(): (/obj, mob/user, full_scan) returns TRUE if nanites are detected
+#define COMSIG_NANITE_SCAN "nanite_scan"
+	#define COMPONENT_NANITES_DETECTED 1
