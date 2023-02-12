@@ -7,12 +7,13 @@
 
 	for(var/item_name in custom_items)
 		var/datum/custom_item/item = custom_items[item_name]
+		var/item_link = "<a href='?_src_=prefs;preference=fluff;edit_item=[ckey(item.name)]'>[item.name], [item.item_type]</a>"
 		if(item.status == "submitted")
-			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[ckey(item.name)]'>[item.name]</a> <font color='#E67300'>(Awating premoderation)</font></center></td></tr>"
+			. += "<tr><td colspan=3><center>[item_link] <font color='#E67300'>(Awating premoderation)</font></center></td></tr>"
 		if(item.status == "accepted")
-			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[ckey(item.name)]'>[item.name]</a> <font color='#267F00'>(Accepted)</font></center></td></tr>"
+			. += "<tr><td colspan=3><center>[item_link] <font color='#267F00'>(Accepted)</font></center></td></tr>"
 		if(item.status == "rejected")
-			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[ckey(item.name)]'>[item.name]</a> <font color='#FF0000'>(Rejected)</font>[item.moderator_message? " <a href='?_src_=prefs;preference=fluff;read_reason=[ckey(item.name)]'>Reason</a>" : ""]</center></td></tr>"
+			. += "<tr><td colspan=3><center>[item_link] <font color='#FF0000'>(Rejected)</font>[item.moderator_message? " <a href='?_src_=prefs;preference=fluff;read_reason=[ckey(item.name)]'>Reason</a>" : ""]</center></td></tr>"
 
 	. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;add_item=1'>Create new</a></center></td></tr>"
 
@@ -156,7 +157,7 @@ var/global/list/editing_item_oldname_list = list()
 		editing_item.name = "new item"
 		editing_item.desc = "description"
 		editing_item.icon_state = ""
-		editing_item.item_type = "normal"
+		editing_item.item_type = FLUFF_TYPE_NORMAL
 
 		editing_item.status = "submitted"
 		editing_item.moderator_message = ""
@@ -218,7 +219,7 @@ var/global/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["change_type"])
-		var/new_type = sanitize(input("Select item type", "Text")  as null|anything in list("normal", "small", "lighter", "hat", "uniform", "suit", "mask", "glasses", "gloves", "shoes", "accessory", "labcoat"))
+		var/new_type = sanitize(input("Select item type", "Text")  as null|anything in FLUFF_TYPES_LIST)
 		if(!editing_item || !new_type)
 			return
 		editing_item.item_type = new_type
@@ -347,6 +348,8 @@ var/global/list/editing_item_oldname_list = list()
 	var/list/all_custom_items = get_custom_items(user.client.ckey)
 	for(var/item_name in all_custom_items)
 		var/datum/custom_item/item = all_custom_items[item_name]
+		if(item.item_type == FLUFF_TYPE_GHOST) // not loadout items
+			continue
 		var/ticked = (item_name in custom_items)
 		var/accepted = (item.status == "accepted")
 		if(accepted || ticked)
