@@ -221,6 +221,11 @@
 		if(custom_item_info.status != "accepted")
 			continue
 
+		var/item_icon = custom_item_info.icon
+		var/item_icon_custom = custom_item_info.icon
+		var/item_iconstate = custom_item_info.icon_state
+		var/item_itemstate = custom_item_info.icon_state
+
 		//item spawning
 		var/obj/item/item = null
 
@@ -244,7 +249,9 @@
 				ic.Blend(small_img, ICON_OVERLAY, 13, 13)
 				pc.Blend(tiny_img, ICON_OVERLAY, 12, 19)
 
-				Photo.icon = ic
+				item_icon = ic
+				item_icon_custom = null
+				item_itemstate = "paper"
 				Photo.tiny = pc
 				Photo.img = photo_itself
 
@@ -280,14 +287,11 @@
 		item.desc = custom_item_info.desc
 		if(custom_item_info.sprite_author)
 			item.desc = "[item.desc]<br><small><span style='color:#00BFFF;'><i>sprite author:</i> [custom_item_info.sprite_author]</span></small>"
-		if(!item.icon)
-			item.icon = custom_item_info.icon
-		if(!item.icon_custom)
-			item.icon_custom = custom_item_info.icon
-		if(!item.icon_state)
-			item.icon_state = custom_item_info.icon_state
-		if(!item.item_state)
-			item.item_state = custom_item_info.icon_state
+
+		item.icon = item_icon
+		item.icon_custom = item_icon_custom
+		item.icon_state = item_iconstate
+		item.item_state = item_itemstate
 
 		switch(custom_item_info.hair_flags)
 			if(FLUFF_HAIR_HIDE_HEAD)

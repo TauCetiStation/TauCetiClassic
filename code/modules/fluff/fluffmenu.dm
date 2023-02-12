@@ -228,6 +228,8 @@ var/global/list/editing_item_oldname_list = list()
 		if(!editing_item || !new_type)
 			return
 		editing_item.item_type = new_type
+		editing_item.icon = null
+		editing_item.icon_state = null
 		edit_custom_item_panel(src, user)
 		return
 
