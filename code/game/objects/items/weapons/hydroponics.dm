@@ -119,6 +119,8 @@ var/global/list/gourd_names = list(
 	"pepo",
 	"lagenaria",
 	"kabak",
+	"tykvyak",
+	"winter melon",
 )
 var/global/gourd_name = null
 
