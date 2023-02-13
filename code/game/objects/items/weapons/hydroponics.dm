@@ -128,6 +128,8 @@ var/global/gourd_name = null
 	global.gourd_name = pick(global.gourd_names)
 	return global.gourd_name
 
+#define MARACA_COOLDOWN (0.1 SECONDS)
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/gourd
 	seed_type = /obj/item/seeds/gourdseed
 	name = "gourd"
@@ -138,6 +140,8 @@ var/global/gourd_name = null
 	filling_color = "#95ba43"
 
 	var/restore_reagent = "gourd"
+
+	COOLDOWN_DECLARE(last_maraca)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/atom_init()
 	. = ..()
@@ -189,9 +193,12 @@ var/global/gourd_name = null
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/attack_self(mob/user)
 	. = ..()
-	// if(маракас_кд)
-	// 	playsound(маракас)
+	if(!COOLDOWN_FINISHED(src, last_maraca))
+		return
+	COOLDOWN_START(src, last_maraca, MARACA_COOLDOWN)
+	playsound(src, 'sound/musical_instruments/maraca/maraca.ogg', VOL_EFFECTS_INSTRUMENT, 100, TRUE, falloff = 5)
 
+#undef MARACA_COOLDOWN
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gourd
 	name = "bottle gourd bottle"
@@ -270,19 +277,9 @@ var/global/gourd_name = null
 	var/armor_duration = 0 //The more force the bottle has, the longer the duration.
 
 	//Calculating duration and calculating damage.
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		armor_block = H.run_armor_check(def_zone, MELEE) // For normal attack damage
-
-		//Calculating the weakening duration for the target.
-		if(def_zone == BP_HEAD)
-			armor_duration = (duration - armor_block) + force
-
-	else
-		//Only humans can have armour, right?
-		armor_block = target.run_armor_check(def_zone, MELEE)
-		if(def_zone == BP_HEAD)
-			armor_duration = duration + force
+	armor_block = target.run_armor_check(def_zone, MELEE)
+	if(def_zone == BP_HEAD)
+		armor_duration = (duration - armor_block) + force
 	armor_duration /= 10
 
 	//Apply the damage!
