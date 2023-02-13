@@ -793,7 +793,7 @@
 			if(prob(10))
 				step(M, pick(cardinal))
 	if(prob(25))
-		M.emote("cough")
+		M.emote(pick("cough","laugh","giggle"))
 	if(prob(15))
 		M.adjustToxLoss(1)
 
