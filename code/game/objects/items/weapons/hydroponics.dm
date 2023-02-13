@@ -133,7 +133,7 @@ var/global/gourd_name = null
 /obj/item/weapon/reagent_containers/food/snacks/grown/gourd
 	seed_type = /obj/item/seeds/gourdseed
 	name = "gourd"
-	desc = "Тыквяк. Твёрдый, и малосъедобный. Не кушай."
+	desc = "Тыквяк. Твёрдый и малосъедобный. Не кушай!"
 	icon_state = "gourd"
 	item_state = "gourd"
 	potency = 10
