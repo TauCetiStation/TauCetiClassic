@@ -698,6 +698,10 @@
 	holder.remove_reagent("gourd", gourd_am)
 	holder.add_reagent("tricordrazine", gourd_am)
 
+	var/gourd_beer_am = holder.get_reagent_amount("gourdbeer")
+	holder.remove_reagent("gourdbeer", gourd_beer_am)
+	holder.add_reagent("doctorsdelight", gourd_beer_am)
+
 	G.restore_reagent = "tricordrazine"
 
 /////////////////////////////////////////////NEW SLIME CORE REACTIONS/////////////////////////////////////////////

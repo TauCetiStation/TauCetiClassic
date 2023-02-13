@@ -979,10 +979,33 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 3
+	mutatelist = list(/obj/item/seeds/pumpkinseed, /obj/item/seeds/watermelonseed, /obj/item/seeds/magicgourdseed)
 
 /obj/item/seeds/gourdseed/atom_init()
 	. = ..()
 	name = "pack of [get_gourd_name()] seeds"
+
+/obj/item/seeds/magicgourdseed
+	name = "pack of gourd seeds"
+	desc = "Выростают в отборный декоративный тыквяк. В еду не потреблять!"
+	icon_state = "seed-gourd_magic"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	species = "magic_gourd"
+	plantname = "Refreshing Gourd"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/magic
+	lifespan = 70
+	endurance = 50
+	maturation = 6
+	production = 6
+	yield = 1
+	potency = 20
+	plant_type = 0
+	growthstages = 3
+	mutatelist = list(/obj/item/seeds/gourdseed, /obj/item/seeds/pumpkinseed, /obj/item/seeds/watermelonseed)
+
+/obj/item/seeds/magicgourdseed/atom_init()
+	. = ..()
+	name = "pack of refreshing [get_gourd_name()] seeds"
 
 /obj/item/seeds/limeseed
 	name = "pack of lime seeds"

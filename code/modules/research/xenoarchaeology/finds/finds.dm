@@ -494,8 +494,8 @@
 			new_item = new /obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle/relic(loc)
 
 		if(38)
-			var/obj/item/weapon/reagent_containers/food/snacks/grown/gourd/G = new /obj/item/weapon/reagent_containers/food/snacks/grown/gourd(loc)
-			G.name = "green mossy gourd"
+			var/obj/item/weapon/reagent_containers/food/snacks/grown/gourd/magic/G = new /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/magic(loc)
+			G.name = "purple mossy gourd"
 			G.desc = "Though it is strange that the gourd's medicinal waters refill automatically, the seeds within may hold the secret to how it works."
 			G.restore_reagent = pick("paracetamol", "tricordrazine", "hyperzine")
 			new_item = G

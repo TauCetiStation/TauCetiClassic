@@ -143,16 +143,37 @@ var/global/gourd_name = null
 
 	COOLDOWN_DECLARE(last_maraca)
 
+	var/bottle_type = /obj/item/weapon/reagent_containers/food/drinks/bottle/gourd
+
+	var/gourd_event = /datum/mood_event/gourd
+	var/unathi_gourd_event = /datum/mood_event/unathi_gourd
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/atom_init()
 	. = ..()
 	name = "[get_gourd_name()]"
 
 	reagents.maximum_volume = 30 * potency * 0.1
 
-	reagents.add_reagent("gourd", 1 + round(potency * 0.1, 1))
+	reagents.add_reagent(restore_reagent, 1 + round(potency * 0.1, 1))
 	// Tough fruit, lotsa bites.
 	bitesize = 1 + round(reagents.total_volume * 0.1, 1)
 	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/gourd/magic
+	seed_type = /obj/item/seeds/magicgourdseed
+	icon_state = "gourd_magic"
+	item_state = "gourd_magic"
+	potency = 20
+
+	restore_reagent = "gourdbeer"
+
+	bottle_type = /obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/magic
+
+	gourd_event = /datum/mood_event/magic_gourd
+	unathi_gourd_event = /datum/mood_event/unathi_magic_gourd
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/gourd/magic/atom_init()
+	name = "refreshing [get_gourd_name()]"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -187,9 +208,9 @@ var/global/gourd_name = null
 /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/examine(mob/user)
 	. = ..()
 	if(user.get_species() == UNATHI)
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", /datum/mood_event/unathi_gourd)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", unathi_gourd_event)
 	else
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", /datum/mood_event/gourd)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", gourd_event)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/attack_self(mob/user)
 	. = ..()
@@ -211,10 +232,30 @@ var/global/gourd_name = null
 	is_glass = FALSE
 	is_transparent = FALSE
 
+	var/gourd_event = /datum/mood_event/gourd
+	var/unathi_gourd_event = /datum/mood_event/unathi_gourd
+
+	var/broken_type = /obj/item/weapon/broken_bottle/gourd
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/atom_init()
 	. = ..()
 	name = "[get_gourd_name()] bottle"
 	verbs += /obj/item/weapon/reagent_containers/food/drinks/bottle/verb/spin_bottle
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/magic
+	icon_state = "gourd_magic_flask"
+	item_state = "gourd_magic_flask"
+
+	volume = 200
+
+	broken_type = /obj/item/weapon/broken_bottle/gourd/magic
+
+	gourd_event = /datum/mood_event/magic_gourd
+	unathi_gourd_event = /datum/mood_event/unathi_magic_gourd
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/magic/atom_init()
+	. = ..()
+	name = "refreshing [get_gourd_name()] bottle"
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/can_smash()
 	return TRUE
@@ -223,16 +264,9 @@ var/global/gourd_name = null
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
 	user.drop_from_inventory(src)
 
-	var/obj/item/weapon/broken_bottle/gourd/B = new /obj/item/weapon/broken_bottle/gourd(loc)
+	var/obj/item/weapon/broken_bottle/gourd/B = new broken_type(loc)
 	if(isturf(loc))
 		new /obj/effect/decal/cleanable/gourd(loc)
-
-	B.icon_state = src.icon_state
-
-	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
-	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
-	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
-	B.icon = I
 
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 
@@ -251,18 +285,25 @@ var/global/gourd_name = null
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gourd/examine(mob/user)
 	. = ..()
 	if(user.get_species() == UNATHI)
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", /datum/mood_event/unathi_gourd)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", unathi_gourd_event)
 	else
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", /datum/mood_event/gourd)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "gourd", gourd_event)
 
 /obj/item/weapon/broken_bottle/gourd
 	name = "shatttered gourd bottle"
 	desc = "Сломан, но не сломлен, тыквяк может нанести ещё один удар."
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "gourd_flask_broken"
+	item_state = "broken_beer"
+
 /obj/item/weapon/broken_bottle/gourd/atom_init()
 	. = ..()
 	name = "shattered [get_gourd_name()] bottle"
+
+/obj/item/weapon/broken_bottle/gourd/magic
+	icon_state = "gourd_magic_flask_broken"
 
 /obj/item/weapon/broken_bottle/gourd/attack(mob/living/target, mob/living/user, def_zone)
 	if(user.a_intent != INTENT_HARM)
