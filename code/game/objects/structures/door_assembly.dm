@@ -41,7 +41,7 @@
 		created_name = t
 		return
 
-	if(iswelder(W) && ((glass_material && !glass_only) || mineral || !anchored))
+	if(iswelding(W) && ((glass_material && !glass_only) || mineral || !anchored))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.tool_start_check(user, amount=0))
 			return
@@ -66,7 +66,7 @@
 				to_chat(user, "<span class='notice'>You dissasembled the airlock assembly!</span>")
 				deconstruct(TRUE)
 
-	else if(iswrench(W) && state == ASSEMBLY_SECURED)
+	else if(iswrenching(W) && state == ASSEMBLY_SECURED)
 		if(user.is_busy()) return
 		if(anchored)
 			user.visible_message("[user] unsecures the airlock assembly from the floor.", "You start to unsecure the airlock assembly from the floor.")
@@ -86,7 +86,7 @@
 			state = ASSEMBLY_WIRED
 			to_chat(user, "<span class='notice'>You wire the airlock!</span>")
 
-	else if(iswirecutter(W) && state == ASSEMBLY_WIRED)
+	else if(iscutter(W) && state == ASSEMBLY_WIRED)
 		if(user.is_busy()) return
 		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
@@ -108,7 +108,7 @@
 				state = ASSEMBLY_NEAR_FINISHED
 				electronics = AE
 
-	else if(iscrowbar(W) && state == ASSEMBLY_NEAR_FINISHED)
+	else if(isprying(W) && state == ASSEMBLY_NEAR_FINISHED)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove the electronics from the airlock assembly.")
 		if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100))
 			to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
@@ -153,7 +153,7 @@
 				else
 					to_chat(user, "<span class='notice'>You can't add [S] to the [src].</span>")
 
-	else if(isscrewdriver(W) && state == ASSEMBLY_NEAR_FINISHED )
+	else if(isscrewing(W) && state == ASSEMBLY_NEAR_FINISHED )
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Now finishing the airlock.</span>")

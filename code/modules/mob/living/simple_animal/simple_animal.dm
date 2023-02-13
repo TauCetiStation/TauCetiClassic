@@ -60,6 +60,8 @@
 	var/has_arm = FALSE
 	var/has_leg = FALSE
 
+	can_point = FALSE
+
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
 	var/footstep_type
 
@@ -283,6 +285,9 @@
 
 		if(EXPLODE_LIGHT)
 			adjustBruteLoss(30)
+
+/mob/living/simple_animal/blob_act()
+	adjustBruteLoss(20)
 
 /mob/living/simple_animal/adjustBruteLoss(damage)
 	var/perc_block = (10 - harm_intent_damage) / 10 // #define MAX_HARM_INTENT_DAMAGE 10. Turn harm_intent_damage into armor or something. ~Luduk

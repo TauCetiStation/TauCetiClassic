@@ -137,7 +137,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		do_animate("deny")
 	return
 
-/obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/door/window/c_airblock(turf/other)
+	if(get_dir(loc, other) == dir) //Make sure looking at appropriate border (so we wont zoneblock every direction)
+		return ..()
+	return NONE
+
+/obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
@@ -237,15 +242,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		change_paintjob(I, user)
 		return
 
-	if( istype(I,/obj/item/weapon/changeling_hammer))
-		var/obj/item/weapon/changeling_hammer/W = I
-		user.SetNextMove(CLICK_CD_MELEE)
-		if(W.use_charge(user, 6))
-			visible_message("<span class='red'><B>[user]</B> has punched [src]!</span>")
-			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			shatter()
-		return
-
 	//Emags and ninja swords? You may pass.
 	if (density && istype(I, /obj/item/weapon/melee/energy/blade))
 		flick("[src.base_state]spark", src)
@@ -261,7 +257,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		return
 
 	if(!(flags & NODECONSTRUCT))
-		if(isscrewdriver(I))
+		if(isscrewing(I))
 			if(src.density || src.operating == 1)
 				to_chat(user, "<span class='warning'>You need to open the [src.name] to access the maintenance panel.</span>")
 				return
@@ -270,7 +266,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 			to_chat(user, "<span class='notice'>You [p_open ? "open":"close"] the maintenance panel of the [src.name].</span>")
 			return
 
-		if(iscrowbar(I))
+		if(isprying(I))
 			if(p_open && !src.density)
 				if(user.is_busy(src)) return
 				user.visible_message("<span class='warning'>[user] removes the electronics from the [src.name].</span>", \
@@ -324,7 +320,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 
 
 	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
-	if(iscrowbar(I) || istype(I, /obj/item/weapon/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
+	if(isprying(I))
 		if(!hasPower())
 			user.SetNextMove(CLICK_CD_INTERACT)
 			if(density)

@@ -332,6 +332,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
+	dir = 1;
 	name = "apc top";
 	pixel_y = 28;
 	start_charge = 0

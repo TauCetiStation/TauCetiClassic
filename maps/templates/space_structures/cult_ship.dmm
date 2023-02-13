@@ -570,7 +570,8 @@
 /obj/machinery/power/apc/largecell{
 	dir = 8;
 	name = "largecell apc left";
-	pixel_x = -28
+	pixel_x = -28;
+	start_charge = 0
 	},
 /obj/structure/cable{
 	d2 = 2;

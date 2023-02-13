@@ -9,6 +9,7 @@
 	anchored = TRUE
 	density = TRUE
 	opacity = TRUE
+	can_block_air = TRUE
 
 	canSmoothWith = list(
 		/turf/simulated/wall,
@@ -28,8 +29,12 @@
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
 
-/obj/structure/falsewall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group) return !block_air_zones
+/obj/structure/falsewall/c_airblock(turf/other)
+	if(block_air_zones)
+		return ..() | ZONE_BLOCKED
+	return ..()
+
+/obj/structure/falsewall/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
 	return !density
@@ -85,12 +90,12 @@
 		if(T.density)
 			to_chat(user, "<span class='warning'>Стена заблокирована!</span>")
 			return
-		if(isscrewdriver(W))
+		if(isscrewing(W))
 			user.visible_message("[user] tightens some screws on the wall.", "Вы затягиваете винты на стене.")
 			T.ChangeTurf(walltype)
 			qdel(src)
 
-		if( iswelder(W) )
+		if( iswelding(W) )
 			var/obj/item/weapon/weldingtool/WT = W
 			if( WT.isOn() )
 				T.ChangeTurf(walltype)

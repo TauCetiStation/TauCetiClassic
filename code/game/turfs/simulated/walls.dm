@@ -22,7 +22,7 @@
 
 	opacity = TRUE
 	density = TRUE
-	blocks_air = TRUE
+	blocks_air = AIR_BLOCKED
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
@@ -314,7 +314,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(rotting)
-		if(iswelder(W))
+		if(iswelding(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
 				to_chat(user, "<span class='notice'>Вы сжигаете грибок сваркой.</span>")
@@ -330,7 +330,7 @@
 
 	//THERMITE related stuff. Calls thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
-		if(iswelder(W))
+		if(iswelding(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
 				thermitemelt(user, seconds_to_melt)
@@ -350,7 +350,7 @@
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//DECONSTRUCTION
-	if(iswelder(W))
+	if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.use(0, user))
 			to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
@@ -408,13 +408,17 @@
 				dismantle_wall(1)
 				visible_message("<span class='warning'>[user] прорезает стену!</span>", blind_message = "<span class='warning'>Вы слышите треск искр и скрежет металла.</span>", viewing_distance = 5)
 		return
-	else if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
-		var/obj/item/weapon/changeling_hammer/C = W
-		visible_message("<span class='danger'><B>[user]</B> бьет стену!</span>")
+	//fulldestruct to walls when
+	else if(istype(W,/obj/item/weapon/melee/changeling_hammer) && !rotting)
+		var/obj/item/weapon/melee/changeling_hammer/hammer = W
+		//slowdown, user. No need destruct all walls without debuff
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			C.shock_stage += 5
+		user.visible_message("<span class='danger'><B>[user]</B> бьет стену!</span>")
 		user.do_attack_animation(src)
-		if(C.use_charge(user))
-			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			take_damage(30)
+		playsound(user, pick(hammer.hitsound), VOL_EFFECTS_MASTER)
+		take_damage(hammer.get_object_damage())
 		return
 
 	else if(istype(W,/obj/item/apc_frame))

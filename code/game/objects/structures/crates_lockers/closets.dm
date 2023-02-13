@@ -46,7 +46,7 @@
 /obj/structure/closet/alter_health()
 	return get_turf(src)
 
-/obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=0)
 	if(wall_mounted)
 		return TRUE
 	return ..()
@@ -177,7 +177,7 @@
 		attack_hand(user)
 
 /obj/structure/closet/proc/tools_interact(obj/item/weapon/W, mob/user)
-	if(iswelder(W))
+	if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!WT.isOn())

@@ -672,12 +672,17 @@
 
 		shop_lots = list()
 		if(mode == 81)
-			for(var/index in global.online_shop_lots)
-				var/datum/shop_lot/Lot = global.online_shop_lots[index]
-				if(Lot && Lot.category == category && !Lot.sold)
-					var/datum/money_account/Acc = get_account(Lot.account)
-					shop_lots.len++
-					shop_lots[shop_lots.len] = Lot.to_list(Acc ? Acc.owner_name : "Unknown")
+			/*for(var/index in global.online_shop_lots)
+				var/datum/shop_lot/Lot = global.online_shop_lots[index] */
+
+			for(var/index in global.online_shop_lots_hashed)
+				var/list/Lots = global.online_shop_lots_hashed[index]
+				for(var/datum/shop_lot/Lot in Lots)
+					if(Lot && Lot.category == category && !Lot.sold)
+						var/datum/money_account/Acc = get_account(Lot.account)
+						shop_lots.len++
+						shop_lots[shop_lots.len] = Lot.to_list(Acc ? Acc.owner_name : "Unknown")
+						break
 
 		shop_lots_frontend = list()
 		if(shop_lots.len)
@@ -1804,7 +1809,10 @@
 	var/datum/money_account/MA = get_account(owner_account)
 	if(!MA || !Lot)
 		return
-	var/prepayment = round(Lot.price * 0.25)
+
+	var/discount_price = round((1 - global.online_shop_discount) * Lot.price)
+	var/prepayment = round(discount_price * global.online_shop_delivery_cost)
+
 	if(prepayment > MA.money)
 		return
 	Lot.sold = TRUE
@@ -1813,9 +1821,13 @@
 			global.online_shop_lots_latest[i] = null
 			break
 	var/datum/money_account/Acc = get_account(Lot.account)
-	shopping_cart[Lot.number] = Lot.to_list(Acc ? Acc.owner_name : "Unknown", Lot.price - prepayment)
+	shopping_cart[Lot.number] = Lot.to_list(Acc ? Acc.owner_name : "Unknown", discount_price - prepayment)
 
 	global.shop_categories[Lot.category]--
+
+	if(global.online_shop_discount)
+		charge_to_account(Lot.account, global.cargo_account.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.price - discount_price)
+		charge_to_account(global.cargo_account.account_number, MA.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -(Lot.price - discount_price))
 
 	charge_to_account(MA.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -prepayment)
 	charge_to_account(global.cargo_account.account_number, MA.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, prepayment)
