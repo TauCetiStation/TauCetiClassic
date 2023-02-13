@@ -293,7 +293,7 @@ var/global/gourd_name = null
 
 /obj/item/weapon/broken_bottle/gourd
 	name = "shatttered gourd bottle"
-	desc = "Сломан, но не сломлен. Тыквяк годен к второму удару!"
+	desc = "Сломан, но не сломлен. Тыквяк годен ко второму удару!"
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 
 	icon = 'icons/obj/drinks.dmi'
