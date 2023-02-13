@@ -62,10 +62,10 @@
 		if(initial(M.name))
 			possible_gamemodes += type
 
-/datum/modesbundle/casual_shift
-	name = "Casual Shift"
+/datum/modesbundle/casual
+	name = "Casual"
 	hidden = FALSE
-	possible_gamemodes = list(/datum/game_mode/casual_shift)
+	possible_gamemodes = list(/datum/game_mode/casual)
 
 /datum/modesbundle/all
 	name = "Random"
@@ -86,14 +86,14 @@
 	votable = TRUE
 
 /datum/modesbundle/all/secret/New()
-	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/casual_shift, /datum/game_mode/malfunction)
+	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/casual, /datum/game_mode/malfunction)
 	..()
 
 /datum/modesbundle/run_anyway
 	name = "Modes that will ALWAYS start"
 	votable = FALSE
 	hidden = FALSE
-	possible_gamemodes = list(/datum/game_mode/casual_shift)
+	possible_gamemodes = list(/datum/game_mode/casual)
 
 /datum/modesbundle/run_anyway/get_gamemodes_name()
 	var/list/L = list()

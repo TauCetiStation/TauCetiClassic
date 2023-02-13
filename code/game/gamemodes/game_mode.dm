@@ -180,7 +180,7 @@
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
 	addtimer(CALLBACK(src, .proc/send_intercept), rand(INTERCEPT_TIME_LOW , INTERCEPT_TIME_HIGH))
 
-	var/list/exclude_autotraitor_for = list(/datum/game_mode/casual_shift)
+	var/list/exclude_autotraitor_for = list(/datum/game_mode/casual)
 	if(!(type in exclude_autotraitor_for))
 		CreateFaction(/datum/faction/traitor/auto, num_players())
 

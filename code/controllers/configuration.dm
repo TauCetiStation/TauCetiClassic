@@ -783,7 +783,7 @@ var/global/bridge_secret = null
 		var/datum/game_mode/M = new type()
 		if (M.name == mode_name)
 			return M
-	return new /datum/game_mode/casual_shift()
+	return new /datum/game_mode/casual()
 
 /datum/configuration/proc/get_bundle_by_name(name)
 	for(var/type in subtypesof(/datum/modesbundle))

@@ -199,7 +199,7 @@
 
 /datum/vote_choice/gamemode
 	text = "Название режима игры"
-	var/new_gamemode = "casual_shift"
+	var/new_gamemode = "casual"
 
 /datum/vote_choice/gamemode/on_win()
 	if(master_mode != new_gamemode)
@@ -235,7 +235,7 @@
 /datum/poll/nextmap/init_choices()
 	for (var/map in config.maplist)
 		var/datum/map_config/VM = config.maplist[map]
-		
+
 		if (!VM.votable)
 			continue
 
