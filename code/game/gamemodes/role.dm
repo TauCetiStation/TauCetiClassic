@@ -34,6 +34,15 @@
 	// Allows you to change the number of greeting messages for a role
 	var/list/greets = list(GREET_DEFAULT, GREET_CUSTOM)
 
+	var/skillset_type
+	//if set to true, users skills will be set to maximum available after he gets this role
+	var/change_to_maximum_skills = TRUE
+
+	// Type for collector of statistics by this role
+	var/datum/stat/role/stat_type = /datum/stat/role
+
+	var/moveset_type
+
 // Initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
 /datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
@@ -51,6 +60,10 @@
 	objectives.owner = M
 	..()
 
+/datum/role/Destroy(force, ...)
+	QDEL_NULL(objectives)
+	return ..()
+
 /datum/role/proc/AssignToRole(datum/mind/M, override = FALSE, msg_admins = TRUE, laterole = TRUE)
 	if(!istype(M) && !override)
 		log_mode("M is [M.type]!")
@@ -62,6 +75,13 @@
 	antag = M
 	M.antag_roles[id] = src
 	objectives.owner = M
+	if(!isnull(skillset_type))
+		M.skills.add_available_skillset(skillset_type)
+	if(change_to_maximum_skills)
+		M.skills.maximize_active_skills()
+	var/mob/living/A = antag.current
+	if(!isnull(moveset_type))
+		A.add_moveset(new moveset_type(), MOVESET_ROLES)
 	if(msg_admins)
 		message_admins("[key_name(M)] is now \an [id].")
 		log_mode("[key_name(M)] is now \an [id].")
@@ -71,11 +91,27 @@
 
 	return TRUE
 
-/datum/role/proc/RemoveFromRole(datum/mind/M, msg_admins = TRUE) //Called on deconvert
+/datum/role/proc/Deconvert()
+	if(!deconverted_roles[id])
+		deconverted_roles[id] = list()
+
+	deconverted_roles[id] += antag.name
+	Drop()
+
+// if role has been deconverts use Deconvert()
+/datum/role/proc/RemoveFromRole(datum/mind/M, msg_admins = TRUE)
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
+	var/mob/living/A = antag.current
+	if(!isnull(skillset_type))
+		M.skills.remove_available_skillset(skillset_type)
+	if(!isnull(moveset_type))
+		A.remove_moveset_source(MOVESET_ROLES)
+
 	remove_antag_hud()
+	if(M.current?.hud_used)
+		remove_ui(M.current.hud_used)
 	if(msg_admins)
 		message_admins("[key_name(M)] is <span class='danger'>no longer</span> \an [id].[M.current ? " [ADMIN_FLW(M.current)]" : ""]")
 		log_mode("[key_name(M)] is <span class='danger'>no longer</span> \an [id].")
@@ -160,6 +196,8 @@
 /datum/role/proc/OnPostSetup(laterole = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	add_antag_hud()
+	if(antag.current?.hud_used)
+		add_ui(antag.current.hud_used)
 	SEND_SIGNAL(src, COMSIG_ROLE_POSTSETUP, laterole)
 
 /datum/role/process()
@@ -186,6 +224,13 @@
 		return O
 	return null
 
+/datum/role/proc/GetObjectives()
+	return objectives.GetObjectives()
+
+/datum/role/proc/calculate_completion()
+	for(var/datum/objective/O in GetObjectives())
+		O.calculate_completion()
+
 /datum/role/proc/get_logo_icon(custom)
 	if(custom)
 		return icon('icons/misc/logos.dmi', custom)
@@ -195,15 +240,15 @@
 
 /datum/role/proc/AdminPanelEntry(show_logo = FALSE, datum/mind/mind)
 	var/icon/logo = get_logo_icon()
-	var/mob/M = antag?.current
+	var/mob/M = antag.current
 	if (M)
-		return {"[show_logo ? "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> " : "" ]
+		return {"[show_logo ? "[bicon(logo, css = "style='position:relative; top:10;'")] " : "" ]
 	[name] <a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]/[M.key]</a>[M.client ? "" : " <i> - (logged out)</i>"][M.stat == DEAD ? " <b><font color=red> - (DEAD)</font></b>" : ""]
 	 - <a href='?src=\ref[usr];priv_msg=\ref[M]'>(PM)</a>
 	 - <a href='?_src_=holder;traitor=\ref[M]'>(TP)</a>
 	 - <a href='?_src_=holder;adminplayerobservejump=\ref[M]'>JMP</a>"}
 	else if(antag)
-		return {"[show_logo ? "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> " : "" ]
+		return {"[show_logo ? "[bicon(logo, css = "style='position:relative; top:10;'")] " : "" ]
 	[name] [antag.name]/[antag.key]<b><font color=red> - (DESTROYED)</font></b>
 	 - <a href='?src=\ref[usr];priv_msg=\ref[M]'>(PM)</a>
 	 - <a href='?_src_=holder;traitor=\ref[M]'>(TP)</a>
@@ -214,10 +259,10 @@
 	var/icon/logo = get_logo_icon()
 	switch(greeting)
 		if (GREET_CUSTOM)
-			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <B>You are \a [name][faction ? ", a member of the [faction.GetFactionHeader()]":"."]</B>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <B>You are \a [name][faction ? ", a member of the [faction.GetFactionHeader()]":"."]</B>")
 			to_chat(antag.current, "[custom]")
 		else
-			to_chat(antag.current, "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> <B>You are \a [name][faction ? ", a member of the [faction.GetFactionHeader()]":"."]</B>")
+			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <B>You are \a [name][faction ? ", a member of the [faction.GetFactionHeader()]":"."]</B>")
 
 	return TRUE
 
@@ -235,7 +280,7 @@
 /datum/role/proc/IsSuccessful()
 	if(objectives.objectives.len > 0)
 		for (var/datum/objective/objective in objectives.GetObjectives())
-			if(!objective.check_completion())
+			if(objective.completed == OBJECTIVE_LOSS)
 				return FALSE
 	return TRUE
 
@@ -244,11 +289,11 @@
 	var/mob/M = mind.current
 	if(!M)
 		var/icon/sprotch = icon('icons/effects/blood.dmi', "gibbearcore")
-		text += "<img src='data:image/png;base64,[icon2base64(sprotch)]' style='position:relative; top:10px;'/>"
+		text += "[bicon(sprotch, css = "style='position: relative;top:10px;'")]"
 	else
 		var/icon/flat = getFlatIcon(M, SOUTH, exact = 1)
 		if(M.stat == DEAD)
-			if (!istype(M, /mob/living/carbon/brain))
+			if (isbrain(M))
 				flat.Turn(90)
 			var/icon/ded = icon('icons/effects/blood.dmi', "floor_old")
 			ded.Blend(flat, ICON_OVERLAY)
@@ -259,7 +304,7 @@
 		text += "<img src='logo_[tempstate].png' style='position:relative; top:10px;'/>" // change to base64?
 
 	var/icon/logo = get_logo_icon()
-	text += "<img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative;top:10px;'/><b>[mind.key]</b> was <b>[mind.name]</b> ("
+	text += "[bicon(logo, css = "style='position: relative;top:10px;'")]<b>[mind.key]</b> was <b>[mind.name]</b> ("
 	if(M)
 		if(M.stat == DEAD)
 			text += "died"
@@ -277,21 +322,15 @@
 	var/win = TRUE
 	var/text = ""
 
-	if(!antag)
-		text += "<br> Has been deconverted, and is now a [pick("loyal", "effective", "nominal")] [pick("dog", "pig", "underdog", "servant")] of [pick("corporation", "NanoTrasen")]"
-		win = FALSE
-		return text
-
 	text = printplayerwithicon(antag)
 
 	if(objectives.objectives.len > 0)
 		var/count = 1
 		text += "<ul>"
 		for(var/datum/objective/objective in objectives.GetObjectives())
-			var/successful = objective.calculate_completion()
 			text += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
 			feedback_add_details("[id]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
-			if(!successful) //If one objective fails, then you did not win.
+			if(objective.completed == OBJECTIVE_LOSS) //If one objective fails, then you did not win.
 				win = FALSE
 			if (count < objectives.objectives.len)
 				text += "<br>"
@@ -300,13 +339,11 @@
 			if(win)
 				text += "<br><font color='green'><B>\The [name] was successful!</B></font>"
 				feedback_add_details("[id]_success","SUCCESS")
-				score["roleswon"]++
+				SSStatistics.score.roleswon++
 			else
 				text += "<br><font color='red'><B>\The [name] has failed.</B></font>"
 				feedback_add_details("[id]_success","FAIL")
 		text += "</ul>"
-
-	antagonists_completion += list(list("role" = id, "html" = text))
 
 	return text
 
@@ -336,7 +373,7 @@
 				text += "</ul>"
 
 	var/icon/logo = get_logo_icon()
-	text += "<b><img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> [name]</b>"
+	text += "<b>[bicon(logo, css = "style='position:relative; top:10;'")] [name]</b>"
 	if (admin_edit)
 		text += " - <a href='?src=\ref[M];role_edit=\ref[src];remove_role=1'>(remove)</a> - <a href='?src=\ref[M];greet_role=\ref[src]'>(greet)</a>[extraPanelButtons(M)]"
 
@@ -388,7 +425,7 @@
 			O.ShuttleDocked(state)
 
 /datum/role/proc/AnnounceObjectives()
-	if(!antag || !antag.current)
+	if(!antag.current)
 		return
 
 	var/text = ""
@@ -404,7 +441,7 @@
 
 	if(objectives.objectives.len)
 		var/icon/logo = get_logo_icon()
-		text += "<b><img src='data:image/png;base64,[icon2base64(logo)]' style='position: relative; top: 10;'/> [name]</b>"
+		text += "<b>[bicon(logo, css = "style='position:relative; top:10;'")] [name]</b>"
 		text += "<ul><b>[capitalize(name)] objectives:</b><br>"
 		var/obj_count = 1
 		for(var/datum/objective/O in objectives.objectives)
@@ -438,3 +475,9 @@
 		var/datum/atom_hud/antag/hud = global.huds[antag_hud_type]
 		hud.leave_hud(antag.current)
 		set_antag_hud(antag.current, null)
+
+/datum/role/proc/add_ui(datum/hud/hud)
+	return
+
+/datum/role/proc/remove_ui(datum/hud/hud)
+	return

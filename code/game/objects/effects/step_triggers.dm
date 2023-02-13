@@ -13,7 +13,7 @@
 	. = ..()
 	if(!AM)
 		return
-	if(istype(AM, /mob/dead/observer) && !affect_ghosts)
+	if(isobserver(AM) && !affect_ghosts)
 		return
 	Trigger(AM)
 

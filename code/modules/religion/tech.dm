@@ -10,11 +10,11 @@
 	id = RTECH_MEMORIZE_RUNE
 
 /datum/religion_tech/cult/memorizing_rune/proc/give_spell(datum/religion/R, mob/M, holy_role)
-	var/obj/effect/proc_holder/spell/dumbfire/memorize_rune/MR = new
+	var/obj/effect/proc_holder/spell/no_target/memorize_rune/MR = new
 	M.AddSpell(MR)
 
 /datum/religion_tech/cult/memorizing_rune/proc/remove_spell(datum/religion/R, mob/M)
-	var/obj/effect/proc_holder/spell/dumbfire/memorize_rune/S = locate() in M.spell_list
+	var/obj/effect/proc_holder/spell/no_target/memorize_rune/S = locate() in M.spell_list
 	M.RemoveSpell(S)
 
 /datum/religion_tech/cult/memorizing_rune/on_add(datum/religion/cult/R)
@@ -38,3 +38,10 @@
 
 /datum/religion_tech/cult/mirror_shield
 	id = RTECH_MIRROR_SHIELD
+
+/datum/religion_tech/cult/improved_pylons
+	id = RTECH_IMPROVED_PYLONS
+
+/datum/religion_tech/cult/improved_pylons/on_add(datum/religion/cult/R)
+	for(var/obj/structure/cult/pylon/P as anything in global.pylons)
+		P.init_healing()

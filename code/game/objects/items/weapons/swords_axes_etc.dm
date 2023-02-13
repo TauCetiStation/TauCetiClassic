@@ -29,25 +29,31 @@
 
 /obj/item/weapon/melee/energy/sword/atom_init()
 	. = ..()
-	item_color = pick("red","blue","green","purple","yellow","pink","black")
+	blade_color = pick("red","blue","green","purple","yellow","pink","black")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src].</span>")
 		user.take_bodypart_damage(5, 5)
 	active = !active
 	if (active)
+		qualities = list(
+			QUALITY_KNIFE = 1
+		)
+		sharp = TRUE
 		force = 30
 		hitsound = list('sound/weapons/blade1.ogg')
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass1"
 		else
-			icon_state = "sword[item_color]"
+			icon_state = "sword[blade_color]"
 		w_class = SIZE_NORMAL
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 
 	else
+		qualities = null
+		sharp = FALSE
 		force = 3
 		hitsound = initial(hitsound)
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
@@ -58,7 +64,7 @@
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
@@ -92,9 +98,10 @@
 	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/melee/classic_baton/attack(mob/living/M, mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
-		user.Weaken(3 * force)
+		user.Stun(16)
+		user.Weaken(16)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2 * force, BRUTE, BP_HEAD)
@@ -105,8 +112,8 @@
 	if (user.a_intent == INTENT_HARM)
 		if(!..()) return
 		playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
-		if (M.stuttering < 8 && (!(HULK in M.mutations))  /*&& (!istype(H:wear_suit, /obj/item/clothing/suit/judgerobe))*/)
-			M.stuttering = 8
+		if (!(HULK in M.mutations))
+			M.Stuttering(8)
 		M.Stun(8)
 		M.Weaken(8)
 		user.visible_message("<span class='warning'><B>[M] has been beaten with \the [src] by [user]!</B></span>", blind_message = "<span class='warning'>You hear someone fall</span>")
@@ -184,7 +191,7 @@
 		force = 3//not so robust now
 		attack_verb = list("hit", "punched")
 
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
@@ -192,49 +199,31 @@
 	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	add_fingerprint(user)
 
-	if(blood_overlay && blood_DNA && (blood_DNA.len >= 1)) //updates blood overlay, if any
-		cut_overlays()//this might delete other item overlays as well but eeeeeeeh
-
-		var/icon/I = new /icon(src.icon, src.icon_state)
-		I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD)
-		I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY)
-		blood_overlay = I
-
-		add_overlay(blood_overlay)
-
-	return
-
 /obj/item/weapon/melee/telebaton/attack(mob/target, mob/living/user)
 	if(on)
-		if ((CLUMSY in user.mutations) && prob(50))
+		if(user.ClumsyProbabilityCheck(50))
 			to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
-			user.Weaken(3 * force)
+			user.adjustHalLoss(70)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				H.apply_damage(2 * force, BRUTE, BP_HEAD)
 			else
 				user.take_bodypart_damage(2 * force)
 			return
+		if(!isliving(target))
+			return ..()
+		var/mob/living/L = target
+		var/target_armor = L.run_armor_check(user.get_targetzone(), MELEE)
 		if(user.a_intent == INTENT_HELP && ishuman(target))
 			var/mob/living/carbon/human/H = target
-			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
+			H.apply_effect(35, AGONY, target_armor)
+			playsound(src, 'sound/weapons/hit_metalic.ogg', VOL_EFFECTS_MASTER)
 			user.do_attack_animation(H)
-
-			if(H.wear_suit)
-				var/obj/item/clothing/suit/S = H.wear_suit
-				var/meleearm = S.armor["melee"]
-				if(meleearm)
-					if(meleearm != 100)
-						H.adjustHalLoss(round(35 - (35 / 100 * meleearm)))
-				else
-					H.adjustHalLoss(35)
-			else
-				H.adjustHalLoss(35)
-
 			H.visible_message("<span class='warning'>[user] hit [H] harmlessly with a telebaton.</span>")
 			H.log_combat(user, "hit harmlessly with [name]")
 			return
 		if(..())
+			L.apply_effect(30, AGONY, target_armor)
 			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 			return
 	else
@@ -248,31 +237,31 @@
 
 /obj/item/weapon/melee/energy/sword/green/atom_init()
 	. = ..()
-	item_color = "green"
+	blade_color = "green"
 
 /obj/item/weapon/melee/energy/sword/red/atom_init()
 	. = ..()
-	item_color = "red"
+	blade_color = "red"
 
 /obj/item/weapon/melee/energy/sword/blue/atom_init()
 	. = ..()
-	item_color = "blue"
+	blade_color = "blue"
 
 /obj/item/weapon/melee/energy/sword/purple/atom_init()
 	. = ..()
-	item_color = "purple"
+	blade_color = "purple"
 
 /obj/item/weapon/melee/energy/sword/yellow/atom_init()
 	. = ..()
-	item_color = "yellow"
+	blade_color = "yellow"
 
 /obj/item/weapon/melee/energy/sword/pink/atom_init()
 	. = ..()
-	item_color = "pink"
+	blade_color = "pink"
 
 /obj/item/weapon/melee/energy/sword/black/atom_init()
 	. = ..()
-	item_color = "black"
+	blade_color = "black"
 
 
 /obj/item/weapon/melee/energy/blade/atom_init()
@@ -311,7 +300,7 @@
 	return 0
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='danger'> You beat yourself in the head with [src].</span>")
 		user.take_bodypart_damage(5)
 	if(emp_cooldown >= world.time)

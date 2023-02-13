@@ -1,3 +1,5 @@
+ADD_TO_GLOBAL_LIST(/obj/item/device/radio/intercom, intercom_list)
+
 /obj/item/device/radio/intercom
 	name = "station intercom"
 	desc = "Talk through this."
@@ -5,7 +7,7 @@
 	anchored = TRUE
 	w_class = SIZE_NORMAL
 	canhear_range = 2
-	flags = CONDUCT | NOBLOODY
+	flags = CONDUCT | NOBLOODY | HEAR_TALK
 	var/number = 0
 	var/anyai = 1
 	var/mob/living/silicon/ai/ai = list()
@@ -17,7 +19,6 @@
 /obj/item/device/radio/intercom/attack_paw(mob/user)
 	to_chat(user, "<span class='info'>The console controls are far too complicated for your tiny brain!</span>")
 	return
-
 
 /obj/item/device/radio/intercom/attack_hand(mob/user)
 	add_fingerprint(user)

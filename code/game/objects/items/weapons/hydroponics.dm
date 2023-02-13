@@ -19,6 +19,7 @@
  * Nettle
  */
 /obj/item/weapon/grown/nettle/pickup(mob/living/user)
+	. = ..()
 	var/mob/living/carbon/human/H = user
 	if(!istype(H))
 		user.take_bodypart_damage(0, force)
@@ -47,6 +48,7 @@
  */
 
 /obj/item/weapon/grown/deathnettle/pickup(mob/living/user)
+	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.gloves)
@@ -62,14 +64,14 @@
 
 /obj/item/weapon/grown/deathnettle/attack(mob/living/carbon/M, mob/user)
 	if(!..()) return
-	if(istype(M, /mob/living))
+	if(isliving(M))
 		to_chat(M, "<span class='warning'>You are stunned by the powerful acid of the Deathnettle!</span>")
 
 		M.log_combat(user, "stunned with [name]")
 
 		playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
 
-		M.eye_blurry += force/7
+		M.blurEyes(force/7)
 		if(prob(20))
 			M.Paralyse(force/6)
 			M.Weaken(force/15)

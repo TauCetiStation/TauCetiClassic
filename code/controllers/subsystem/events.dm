@@ -1,6 +1,7 @@
 SUBSYSTEM_DEF(events)
 	name = "Events"
 	init_order = SS_INIT_EVENTS
+	runlevels = RUNLEVEL_GAME
 	// Report events at the end of the rouund
 	var/report_at_round_end = 0
 
@@ -10,7 +11,7 @@ SUBSYSTEM_DEF(events)
 	var/list/finished_events = list()
 	var/list/allEvents = list()
 	var/list/event_containers = list(
-			EVENT_LEVEL_ROUNDSTART = new/datum/event_container/roundstart,
+			EVENT_LEVEL_FEATURE    = new/datum/event_container/feature,
 			EVENT_LEVEL_MUNDANE    = new/datum/event_container/mundane,
 			EVENT_LEVEL_MODERATE   = new/datum/event_container/moderate,
 			EVENT_LEVEL_MAJOR      = new/datum/event_container/major,
@@ -18,15 +19,20 @@ SUBSYSTEM_DEF(events)
 
 	var/datum/event_meta/new_event = new
 
+	var/list/allowed_areas_for_events
+
 /datum/controller/subsystem/events/Initialize()
 	var/list/black_types = list(
 			/datum/event/anomaly,
-			/datum/event/roundstart,
-			/datum/event/roundstart/area,
-			/datum/event/roundstart/area/replace,
-			/datum/event/roundstart/area/maintenance_spawn,
+			/datum/event/feature,
+			/datum/event/feature/area,
+			/datum/event/feature/area/mess,
+			/datum/event/feature/area/replace,
+			/datum/event/feature/area/maintenance_spawn,
 	)
 	allEvents = subtypesof(/datum/event) - black_types
+
+	collectEventAreas()
 	return ..()
 
 /datum/controller/subsystem/events/fire()
@@ -38,7 +44,7 @@ SUBSYSTEM_DEF(events)
 		EC.process()
 
 /datum/controller/subsystem/events/proc/start_roundstart_event()
-	var/datum/event_container/roundstart/EC = event_containers[EVENT_LEVEL_ROUNDSTART]
+	var/datum/event_container/feature/EC = event_containers[EVENT_LEVEL_FEATURE]
 	for(var/i in 1 to rand(1, 3))
 		EC.start_event()
 
@@ -54,7 +60,7 @@ SUBSYSTEM_DEF(events)
 	if(!E.severity)
 		theseverity = EVENT_LEVEL_MODERATE
 
-	if(E.severity != EVENT_LEVEL_ROUNDSTART && E.severity != EVENT_LEVEL_MUNDANE && E.severity != EVENT_LEVEL_MODERATE && E.severity != EVENT_LEVEL_MAJOR)
+	if(E.severity != EVENT_LEVEL_FEATURE && E.severity != EVENT_LEVEL_MUNDANE && E.severity != EVENT_LEVEL_MODERATE && E.severity != EVENT_LEVEL_MAJOR)
 		theseverity = EVENT_LEVEL_MODERATE //just to be careful
 
 	if(E.severity)
@@ -324,3 +330,28 @@ SUBSYSTEM_DEF(events)
 			EC.next_event = null
 
 	Interact(usr)
+
+/datum/controller/subsystem/events/proc/collectEventAreas()
+	if(!allowed_areas_for_events)
+		//Places that shouldn't explode
+		var/list/safe_areas = typecacheof(list(
+			/area/station/ai_monitored/storage_secure,
+			/area/station/aisat/ai_chamber,
+			/area/station/bridge/ai_upload,
+			/area/station/engineering,
+			/area/station/solar,
+			/area/station/civilian/holodeck,
+			))
+
+		//Subtypes from the above that actually should explode.
+		var/list/unsafe_areas =  typecacheof(list(
+			/area/station/engineering/break_room,
+			/area/station/engineering/chiefs_office,
+			))
+
+		allowed_areas_for_events = make_associative(subtypesof(/area/station)) - safe_areas + unsafe_areas
+
+/datum/controller/subsystem/events/proc/findEventArea()
+	var/list/possible_areas = typecache_filter_list(global.all_areas, allowed_areas_for_events)
+	if(length(possible_areas))
+		return pick(possible_areas)

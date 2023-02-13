@@ -29,7 +29,7 @@
 						/obj/random/plushie								= 30,
 						/obj/item/toy/moocan							= 1,
 						/obj/item/weapon/bikehorn						= 1,
-						/obj/item/weapon/soap/deluxe					= 1,
+						/obj/item/weapon/reagent_containers/food/snacks/soap/deluxe					= 1,
 						/obj/item/device/guitar							= 1
 						)
 

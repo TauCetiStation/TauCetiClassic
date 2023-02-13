@@ -1,5 +1,3 @@
-var/global/list/aspect_name_by_type = list()
-
 /datum/aspect
 	var/name
 	var/desc = "This aspect not used in game"
@@ -10,7 +8,7 @@ var/global/list/aspect_name_by_type = list()
 	// Whether this aspect is allowed roundstart.
 	var/starter = TRUE
 	// Used in the radial menu when choosing a ritual
-	var/icon = 'icons/mob/radial.dmi'
+	var/icon = 'icons/hud/radial.dmi'
 	var/icon_state = "radial_magic"
 	var/image/aspect_image
 
@@ -50,7 +48,7 @@ var/global/list/aspect_name_by_type = list()
 /datum/aspect/proc/holy_turf_exit(datum/source, atom/movable/mover, atom/newLoc)
 	LAZYREMOVE(affecting, mover)
 
-//Gives mana from: any organs, limbs, and blood
+//Gives mana from: any organs, limbs, slabs of meat and blood
 //Needed for: spells and rituals related to the theme of death, interaction with dead body, necromancy
 /datum/aspect/death
 	name = ASPECT_DEATH
@@ -68,11 +66,14 @@ var/global/list/aspect_name_by_type = list()
 			blood_am = I.reagents.get_reagent_amount("blood")
 		return blood_am
 
-	else if(istype(I, /obj/item/organ/external))
+	else if(isbodypart(I))
 		return 50
 
 	else if(istype(I, /obj/item/brain))
 		return 100
+
+	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/meat))
+		return 25
 
 	return 0
 
@@ -111,14 +112,48 @@ var/global/list/aspect_name_by_type = list()
 
 	return 0
 
-//Gives mana from: does not affect mana accumulation
+//Gives mana from: guns and weapons
 //Needed for: spells and rituals related to the theme of weapon and armor, their damage, buff etc
 /datum/aspect/weapon
 	name = ASPECT_WEAPON //with armor
 	desc = "Weapons and related things, war"
 	icon_state = "aspect_weapon"
 
+	god_desc = "И пускай оружейный барон станет самым религиозным человеком."
+
 	color = COLOR_DARK_GRAY
+
+/datum/aspect/weapon/sacrifice(obj/item/I, mob/living/L, obj/AOG)
+	if(istype(I,/obj/item/weapon/gun/energy))
+		var/obj/item/weapon/gun/energy/G = I
+		var/cost = 0
+		for(var/obj/item/ammo_casing/A in G.ammo_type)
+			var/obj/item/projectile/P = initial(A.projectile_type)
+			cost += initial(P.damage) * 15
+		return cost
+
+	if(istype(I,/obj/item/weapon/gun/projectile))
+		var/obj/item/weapon/gun/projectile/W = I
+
+		var/cost = 0
+		var/obj/item/ammo_box/A = initial(W.mag_type)
+		var/obj/item/ammo_casing/C = initial(A.ammo_type)
+		var/obj/item/projectile/P = initial(C.projectile_type)
+		cost += initial(P.damage) * 20
+
+		if(W.mag_type2)
+			var/obj/item/ammo_box/A2 = initial(W.mag_type2)
+			var/obj/item/ammo_casing/C2 = initial(A2.ammo_type)
+			var/obj/item/projectile/P2 = initial(C2.projectile_type)
+			cost += initial(P2.damage) * 20
+		return cost
+
+	if(istype(I, /obj/item/weapon) && !istype(I,/obj/item/weapon/melee/cultblade))
+		var/datum/component/twohanded/T = I.GetComponent(/datum/component/twohanded)
+		if(T)
+			return T.force_wielded * sqrt(T.force_wielded)
+		return I.force * sqrt(I.force)
+	return 0
 
 //Gives mana from: minerals, sheet, steel, money etc
 //Needed for: spells and rituals related to the theme of materials, his shell, manipulation of the molecular composition of the resource
@@ -145,14 +180,6 @@ var/global/list/aspect_name_by_type = list()
 	icon_state = "aspect_spawn"
 
 	color = COLOR_PURPLE_GRAY
-
-//Gives mana from: allows you to accumulate mana when you beat yourself near the altar
-//Needed for: any spell in which there is damage to the chaplain or people around the altar should have this aspect.
-/datum/aspect/flagellation
-	name = ASPECT_FLAGELLATION
-	desc = "Self-flagellation, transformation of life energy into a magic"
-
-	color = COLOR_SKY_BLUE
 
 //Gives mana from: any heal near the altar
 //Needed for: spells and rituals related to the theme of heal, buff
@@ -195,7 +222,7 @@ var/global/list/aspect_name_by_type = list()
 	else if(istype(I, /obj/item/weapon/circuitboard))
 		return 30
 
-	else if(istype(I, /obj/item/device/assembly))
+	else if(isassembly(I))
 		return 10 * I.w_class
 
 	return 0
@@ -243,7 +270,7 @@ var/global/list/aspect_name_by_type = list()
 		return
 
 	// It ain't no fun if they don't suffer!
-	if(M.stat || !M.client)
+	if(M.stat != CONSCIOUS || !M.client)
 		return
 
 	F.holy.religion.adjust_favor(weaken_duration * power * 0.5)
@@ -251,14 +278,6 @@ var/global/list/aspect_name_by_type = list()
 /datum/aspect/wacky/holy_turf_exit(datum/source, atom/movable/mover, atom/newLoc)
 	..()
 	UnregisterSignal(mover, list(COMSIG_MOB_SLIP))
-
-//Gives mana from: "silenced" spells at wizard/cult
-//Needed for: spells and rituals related to the theme of muffle the magical abilities of the wizard/cult
-/datum/aspect/absence
-	name = ASPECT_ABSENCE
-	desc = "Silence, allows you to use the power of the magician or cult as you want"
-
-	color = COLOR_GRAY80
 
 // Children of this type somehow integrate with light on tiles.
 /datum/aspect/lightbending
@@ -310,7 +329,7 @@ var/global/list/aspect_name_by_type = list()
 	god_desc = "Вам нужная тьма на святой земле."
 
 /datum/aspect/lightbending/darkness/get_light_gain(turf/simulated/floor/F)
-	return (0.6 - F.get_lumcount()) * power * 0.05
+	return (0.6 - F.get_lumcount()) * 0.05 * (1.4 * sqrt(power) + (power / 4)) //https://www.desmos.com/calculator/nwle5biewp
 
 //Gives mana from: light levels on holy turfs
 //Needed for: spells and rituals related to the theme of receiving light
@@ -324,7 +343,7 @@ var/global/list/aspect_name_by_type = list()
 	god_desc = "Вам нужен свет на святой земле."
 
 /datum/aspect/lightbending/light/get_light_gain(turf/simulated/floor/F)
-	return (F.get_lumcount() - 0.4) * power * 0.03
+	return (F.get_lumcount() - 0.4) * 0.03 * (1.4 * sqrt(power) + (power / 4)) //https://www.desmos.com/calculator/nwle5biewp
 
 //Gives mana for economical cost of an item.
 //Needed for: anything economy related
@@ -339,12 +358,3 @@ var/global/list/aspect_name_by_type = list()
 
 /datum/aspect/greed/sacrifice(obj/item/I, mob/living/L, obj/AOG)
 	return I.get_price() * 0.05
-
-//Gives mana from: does not affect mana accumulation
-//Needed for: amassing followers, and giving them goods, mass-effect spells
-/datum/aspect/herd
-	name = ASPECT_HERD
-	desc = "Herd, consure"
-	icon_state = "aspect_herd"
-
-	color = COLOR_LUMINOL

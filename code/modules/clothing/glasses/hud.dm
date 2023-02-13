@@ -137,3 +137,25 @@
 	icon_state = "secmedhud"
 	body_parts_covered = 0
 	hud_types = list(DATA_HUD_MEDICAL, DATA_HUD_SECURITY)
+
+/obj/item/clothing/glasses/sunglasses/hud/med
+	name = "MEDHUD sunglasses"
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
+	icon_state = "sunmedhud"
+	body_parts_covered = 0
+	hud_types = list(DATA_HUD_MEDICAL)
+
+/obj/item/device/hud_calibrator
+	name = "Рекалибратор дисплея"
+	desc = "Рекалибрует дисплей с помощью интерференции волн, улучшая опыт пользования визуальным интерфейсом."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "motion2"
+
+/obj/item/clothing/glasses/attackby(obj/item/device/hud_calibrator/W, mob/living/user)
+	if(!istype(W))
+		return ..()
+	if(sightglassesmod == null)
+		to_chat(user, "<span class='notice'>Внедрение калибратора не принесло никакого эффекта</span>")
+		return
+	sightglassesmod = null
+	qdel(W)

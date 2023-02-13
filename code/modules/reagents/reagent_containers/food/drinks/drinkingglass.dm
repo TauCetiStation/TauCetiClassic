@@ -4,6 +4,14 @@
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 5
 	volume = 25
+	pickup_sound = 'sound/items/glass_containers/bottle_take-empty.ogg'
+	dropped_sound = 'sound/items/glass_containers/bottle_put-empty.ogg'
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/afterattack(atom/target, mob/user, proximity, params)
+	. = ..()
+	if(target.is_open_container())
+		if(reagents.total_volume && target.reagents.total_volume < target.reagents.maximum_volume)
+			playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/after_throw(datum/callback/callback)
 	..()
@@ -11,6 +19,9 @@
 	new /obj/item/weapon/shard(loc)
 	reagents.standard_splash(loc)
 	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/dropped(mob/user)
+	. = ..()
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/on_reagent_change()
 	/*if(reagents.reagent_list.len > 1 )
@@ -515,6 +526,34 @@
 				icon_state = "bacardilemonadeglass"
 				name = "Bacardi Lemonade"
 				desc = "Mixture of refreshing lemonade and sweet rum."
+			if("lean")
+				icon_state = "lean"
+				name = "Lean"
+				desc = "This shit'll make you lean alright."
+			if("sangria")
+				icon_state = "sangriaglass"
+				name = "Sangria"
+				desc = "You feel the freshness and tranquility of this berry-wine drink. Drink up!"
+			if("strongmandrink")
+				icon_state = "strongmandrinkglass"
+				name = "Strongman's Drink"
+				desc = "Strength and life in one glass, what more can you want?"
+			if("bluelagoone")
+				icon_state = "bluelagooneglass"
+				name = "The Blue Lagoone"
+				desc = "Sea.. Adrenaline.. How these times are missing."
+			if("bloodykuds")
+				icon_state = "bloodykudsglass"
+				name = "Bloody Kuds"
+				desc = "A madman's drink. Scared?"
+			if("sexbeach")
+				icon_state = "sexbeachglass"
+				name = "Sex On The Beach"
+				desc = "For those who miss beach parties!"
+			if("mojito")
+				icon_state = "mojitoglass"
+				name = "Mojito"
+				desc = "Good old mojito, not an aging classic."
 			else
 				icon_state ="glass_brown"
 				name = "Glass of ..what?"
@@ -542,5 +581,12 @@
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola
 	list_reagents = list("cola" = 25)
 
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/kvass
+	list_reagents = list("kvass" = 25)
+
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/blood
 	list_reagents = list("blood" = 25)
+
+// for emaged /obj/machinery/vending/boozeomat
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/beepskysmash
+	list_reagents = list("beepskysmash" = 25)

@@ -8,7 +8,7 @@
 	density = TRUE
 	use_power = NO_POWER_USE
 	var/energy = 0
-	var/creation_type = /obj/singularity
+	var/creation_type = /obj/singularity/gravitational
 	var/is_activated = FALSE
 
 /obj/machinery/the_singularitygen/process()
@@ -19,7 +19,8 @@
 		animation.master = src
 		animation.pixel_x = -32
 		animation.pixel_y = -32
-		animation.layer = SINGULARITY_EFFECT_LAYER
+		animation.plane = SINGULARITY_PLANE
+		animation.layer = ABOVE_SINGULARITY_LAYER
 		flick('icons/effects/singularity_effect.dmi', animation)
 		sleep(60)
 		new creation_type(T, 50)
@@ -27,7 +28,7 @@
 		QDEL_IN(animation, 10)
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		anchored = !anchored
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		if(anchored)

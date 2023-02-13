@@ -7,20 +7,21 @@
 
 	for(var/item_name in custom_items)
 		var/datum/custom_item/item = custom_items[item_name]
+		var/item_link = "<a href='?_src_=prefs;preference=fluff;edit_item=[ckey(item.name)]'>[item.name], [item.item_type]</a>"
 		if(item.status == "submitted")
-			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[ckey(item.name)]'>[item.name]</a> <font color='#E67300'>(Awating premoderation)</font></center></td></tr>"
+			. += "<tr><td colspan=3><center>[item_link] <font color='#E67300'>(Awating premoderation)</font></center></td></tr>"
 		if(item.status == "accepted")
-			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[ckey(item.name)]'>[item.name]</a> <font color='#267F00'>(Accepted)</font></center></td></tr>"
+			. += "<tr><td colspan=3><center>[item_link] <font color='#267F00'>(Accepted)</font></center></td></tr>"
 		if(item.status == "rejected")
-			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[ckey(item.name)]'>[item.name]</a> <font color='#FF0000'>(Rejected)</font>[item.moderator_message? " <a href='?_src_=prefs;preference=fluff;read_reason=[ckey(item.name)]'>Reason</a>" : ""]</center></td></tr>"
+			. += "<tr><td colspan=3><center>[item_link] <font color='#FF0000'>(Rejected)</font>[item.moderator_message? " <a href='?_src_=prefs;preference=fluff;read_reason=[ckey(item.name)]'>Reason</a>" : ""]</center></td></tr>"
 
 	. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;add_item=1'>Create new</a></center></td></tr>"
 
 	. += "</table>"
 
-var/list/editing_item_list = list() // stores the item that is currently being edited for each player
-var/list/editing_item_oldname_list = list()
-/proc/edit_custom_item_panel(datum/preferences/prefs, mob/user, readonly = FALSE, adminview = FALSE)
+var/global/list/editing_item_list = list() // stores the item that is currently being edited for each player
+var/global/list/editing_item_oldname_list = list()
+/proc/edit_custom_item_panel(datum/preferences/prefs, mob/user, readonly = FALSE)
 	if(!user)
 		return
 	var/datum/custom_item/editing_item = editing_item_list[user.client.ckey]
@@ -95,6 +96,10 @@ var/list/editing_item_oldname_list = list()
 	dat += "<td>Description</td>"
 	dat += "<td>[readonly?"<b>[editing_item.desc]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_desc=1'>[editing_item.desc]</a>"]</td>"
 	dat += "</tr>"
+	dat += "<tr>"
+	dat += "<td>Hide hair<br>(for mask, hat or uniform)</td>"
+	dat += "<td>[readonly?"<b>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_hair_flags=1'>[FLUFF_HAIR_HIDE_FLAG_TO_TEXT(editing_item.hair_flags)]</a>"]</td>"
+	dat += "</tr>"
 	if(!readonly)
 		dat += "<tr>"
 		dat += "<td>Icon</td>"
@@ -120,7 +125,7 @@ var/list/editing_item_oldname_list = list()
 
 		if(editing_item_oldname)
 			dat += " <a class='small' href='?_src_=prefs;preference=fluff;delete=1'>Delete</a>"
-	else if(adminview)
+	if(editing_item.icon)
 		dat += " <a class='small' href='?_src_=prefs;preference=fluff;download=1'>Download icon</a>"
 
 	dat += "</body></html>"
@@ -152,7 +157,7 @@ var/list/editing_item_oldname_list = list()
 		editing_item.name = "new item"
 		editing_item.desc = "description"
 		editing_item.icon_state = ""
-		editing_item.item_type = "normal"
+		editing_item.item_type = FLUFF_TYPE_NORMAL
 
 		editing_item.status = "submitted"
 		editing_item.moderator_message = ""
@@ -172,7 +177,7 @@ var/list/editing_item_oldname_list = list()
 			return
 
 	if(href_list["change_name"])
-		var/new_item_name = sanitize_safe(input("Enter item name:", "Text")  as text|null, MAX_LNAME_LEN)
+		var/new_item_name = sanitize_safe(input("Enter item name:", "Text")  as text|null, MAX_LNAME_LEN, ascii_only = TRUE)
 		if(!editing_item || !new_item_name || length(new_item_name) <= 2 || length(new_item_name) > 40)
 			return
 		editing_item.name = new_item_name
@@ -187,6 +192,22 @@ var/list/editing_item_oldname_list = list()
 		edit_custom_item_panel(src, user)
 		return
 
+	if(href_list["change_hair_flags"])
+		var/new_hair_flags = input("Select which hair item should hide", "Text") as null|anything in list("None", "Head Hair", "Head & Face Hair")
+		if(!editing_item || !new_hair_flags)
+			return
+
+		switch(new_hair_flags)
+			if("Head Hair")
+				editing_item.hair_flags = FLUFF_HAIR_HIDE_HEAD
+			if("Head & Face Hair")
+				editing_item.hair_flags = FLUFF_HAIR_HIDE_ALL
+			else
+				editing_item.hair_flags = null
+
+		edit_custom_item_panel(src, user)
+		return
+
 	if(href_list["change_iconname"])
 		if(!editing_item.icon || !length(icon_states(editing_item.icon)))
 			return
@@ -198,7 +219,7 @@ var/list/editing_item_oldname_list = list()
 		return
 
 	if(href_list["change_type"])
-		var/new_type = sanitize(input("Select item type", "Text")  as null|anything in list("normal", "small", "lighter", "hat", "uniform", "suit", "mask", "glasses", "gloves", "shoes", "accessory", "labcoat"))
+		var/new_type = sanitize(input("Select item type", "Text")  as null|anything in FLUFF_TYPES_LIST)
 		if(!editing_item || !new_type)
 			return
 		editing_item.item_type = new_type
@@ -288,7 +309,7 @@ var/list/editing_item_oldname_list = list()
 			user << browse(null, "window=edit_custom_item")
 
 	if(href_list["download"])
-		if(!editing_item || !editing_item.icon)
+		if(!editing_item || !editing_item.icon || !isicon(editing_item.icon))
 			return
 
 		usr << ftp(editing_item.icon)
@@ -327,6 +348,8 @@ var/list/editing_item_oldname_list = list()
 	var/list/all_custom_items = get_custom_items(user.client.ckey)
 	for(var/item_name in all_custom_items)
 		var/datum/custom_item/item = all_custom_items[item_name]
+		if(item.item_type == FLUFF_TYPE_GHOST) // not loadout items
+			continue
 		var/ticked = (item_name in custom_items)
 		var/accepted = (item.status == "accepted")
 		if(accepted || ticked)

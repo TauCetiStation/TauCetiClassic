@@ -2,16 +2,17 @@
                 BLOOD SYSTEM
 ****************************************************/
 // Blood levels
-var/const/BLOOD_VOLUME_MAXIMUM = 600
-var/const/BLOOD_VOLUME_NORMAL = 560
-var/const/BLOOD_VOLUME_SAFE = 501
-var/const/BLOOD_VOLUME_OKAY = 336
-var/const/BLOOD_VOLUME_BAD = 224
-var/const/BLOOD_VOLUME_SURVIVE = 122
+var/global/const/BLOOD_VOLUME_MAXIMUM = 600
+var/global/const/BLOOD_VOLUME_NORMAL = 560
+var/global/const/BLOOD_VOLUME_SAFE = 501
+var/global/const/BLOOD_VOLUME_OKAY = 336
+var/global/const/BLOOD_VOLUME_BAD = 224
+var/global/const/BLOOD_VOLUME_SURVIVE = 122
 
 
-/mob/living/carbon/human/var/datum/reagents/vessel // Container for blood and BLOOD ONLY. Do not transfer other chems here.
-/mob/living/carbon/human/var/pale = FALSE          // Should affect how mob sprite is drawn, but currently doesn't.
+/mob/living/carbon/human
+	var/datum/reagents/vessel // Container for blood and BLOOD ONLY. Do not transfer other chems here.
+	var/pale = FALSE          // Should affect how mob sprite is drawn, but currently doesn't.
 
 
 // Initializes blood vessels
@@ -30,13 +31,22 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	var/datum/reagent/blood/B = blood_get()
 	if(istype(B))
 		if(clean)
-			B.data = list("donor" = src, "viruses" = null, "blood_DNA" = dna.unique_enzymes,
-						"blood_type" = dna.b_type, "resistances" = null, "trace_chem" = null,
-						"virus2" = null, "antibodies" = null)
+			B.data = list("donor" = src, "blood_DNA" = dna.unique_enzymes,
+						"blood_type" = dna.b_type, "trace_chem" = null,
+						"virus2" = null, "antibodies" = null, "changeling_marker" = null)
 		else // Change DNA to ours, left the rest intact
 			B.data["donor"] = src
 			B.data["blood_DNA"] = dna.unique_enzymes
 			B.data["blood_type"] = dna.b_type
+
+// currently take_blood ingores blood reagent and creates new blood from air so this is useless
+// commented and preserved in case of future changeling mechanics or blood refactor
+// but you need to update "timelimit" somewhere after death
+// (and also you maybe need to write some reaction between different blood reagents)
+//		if(mind)
+//			var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+//			if(C)
+//				B.data["changeling_marker"] = list("id" = C.unique_changeling_marker, "timelimit" = FALSE)
 
 /mob/living/carbon/human/proc/blood_amount(exact = FALSE)
 	if(species && species.flags[NO_BLOOD])
@@ -130,7 +140,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 				if(!pale)
 					pale = TRUE
 					update_body()
-				eye_blurry += 6
+				blurEyes(6)
 				if(oxyloss < 50)
 					oxyloss += 10
 				oxyloss += 1
@@ -154,6 +164,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 			nutrition -= 10
 		else if(nutrition >= 200)
 			nutrition -= 3
+
+	if(reagents.has_reagent("metatrombine"))
+		return
 
 	// Bleeding out:
 	var/blood_max = 0
@@ -230,6 +243,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 // Makes a blood drop, leaking certain amount of blood from the mob
 /mob/living/carbon/human/proc/drip(amt, tar = src, ddir)
+	if(reagents.has_reagent("metatrombine"))
+		return
+
 	if(organs_by_name[O_HEART] && blood_remove(amt))
 		blood_splatter(tar, src, (ddir && ddir > 0), spray_dir = ddir, basedatum = species.blood_datum)
 
@@ -238,7 +254,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	var/decal_type = /obj/effect/decal/cleanable/blood/splatter
 	var/turf/T = get_turf(target)
 
-	if(istype(source, /mob/living/carbon/human))
+	if(ishuman(source))
 		var/mob/living/carbon/human/M = source
 		source = M.blood_get()
 
@@ -292,6 +308,8 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 /mob/living/carbon/human/proc/blood_squirt(amt, turf/sprayloc)
 	set waitfor = FALSE
 
+	if(reagents.has_reagent("metatrombine"))
+		return
 	if(amt <= 0 || !istype(sprayloc))
 		return
 
@@ -324,7 +342,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 								blinding = FALSE
 								break
 					if(blinding)
-						H.eye_blurry = max(H.eye_blurry, 10)
+						H.blurEyes(10)
 						H.eye_blind = max(H.eye_blind, 5)
 						to_chat(H, "<span class='danger'>You are blinded by a spray of blood!</span>")
 					else
@@ -355,7 +373,9 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 
 // Gets blood from mob to the container, preserving all data in it
 /mob/living/carbon/proc/take_blood(obj/item/weapon/reagent_containers/container, amount)
-	var/datum/reagent/blood/B = container.reagents.get_reagent(/datum/reagent/blood)
+	var/datum/reagent/blood/B
+	if(container)
+		container.reagents.get_reagent(/datum/reagent/blood)
 	if(!istype(B))
 		B = new /datum/reagent/blood
 	B.holder = container
@@ -367,13 +387,18 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		B.data["virus2"] = list()
 	B.data["virus2"] |= virus_copylist(virus2)
 	B.data["antibodies"] = antibodies
-	B.data["blood_DNA"] = dna.unique_enzymes
+	B.data["blood_DNA"] = dna.unique_enzymes // todo: for some reason we ignore original blood datum and all his data here, refactoring needed
 	B.data["blood_type"] = dna.b_type
-	if(resistances && resistances.len)
-		if(B.data["resistances"])
-			B.data["resistances"] |= resistances.Copy()
-		else
-			B.data["resistances"] = resistances.Copy()
+	B.data["time"] = world.time
+
+	if (mind)
+		// Changeling blood has unique marker like DNA but invisible for scanners
+		// timer means until what time marker should be considered "active" out of (alive) changeling body
+		var/datum/role/changeling/C = mind.GetRoleByType(/datum/role/changeling)
+		if (C)
+			var/marker_preserve_for = timeofdeath ? timeofdeath : world.time
+			marker_preserve_for += 1 MINUTES + rand(0, 20) MINUTES
+			B.data["changeling_marker"] = list("id" = C.unique_changeling_marker, "timelimit" = marker_preserve_for)
 
 	var/list/temp_chem = list()
 	for(var/datum/reagent/R in reagents.reagent_list)

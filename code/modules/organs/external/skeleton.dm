@@ -8,6 +8,9 @@
 /datum/bodypart_controller/skeleton/emp_act(severity)
 	return
 
+/datum/bodypart_controller/skeleton/adjust_pumped(value)
+	return 0
+
 // Bones just fly away if damage is too high. They also don't care about lasers
 /datum/bodypart_controller/skeleton/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
 	if(!BP.owner)
@@ -17,7 +20,7 @@
 	if(brute <= 0)
 		return 0
 
-	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, null, -2)
+	playsound(BP.owner, pick(SOUNDIN_BONEBREAK), VOL_EFFECTS_MASTER, null, FALSE, null, -2)
 
 	var/lose_bone_chance = 100
 	if(brute < BP.min_broken_damage)
@@ -109,6 +112,7 @@
 
 /obj/item/organ/external/head/skeleton
 	name = "skeleton head"
+	desc = "Poor Yorick!"
 	vital = FALSE
 	leaves_stump = FALSE
 	force = 8

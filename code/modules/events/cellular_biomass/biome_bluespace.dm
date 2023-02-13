@@ -14,17 +14,17 @@
 
 
 /obj/structure/cellular_biomass/wall/bluespace
-	health = 100
+	max_integrity = 100
 	name = "Glitch"
 	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
 
 /obj/structure/cellular_biomass/grass/bluespace
-	health = 100
+	max_integrity = 100
 	name = "Glitch"
 	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
 
 /obj/structure/cellular_biomass/lair/bluespace
-	health = 100
+	max_integrity = 100
 	name = "Glitch"
 	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
 
@@ -39,6 +39,8 @@
 	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
 	icon_state = "decal_1"
 	random_icon_states = list("decal_1", "decal_2", "decal_3", "decal_4", "decal_5")
+
+	beauty = 100
 
 /obj/structure/cellular_biomass/wall/bluespace/atom_init()
 	. = ..()
@@ -67,6 +69,8 @@
 	icon = 'icons/obj/structures/cellular_biomass/bluespace_cellular.dmi'
 	icon_state = "creep_1"
 	random_icon_states = list("decal_1", "decal_2", "decal_3", "decal_4", "decal_5")
+
+	beauty = 100
 
 /mob/living/simple_animal/hostile/cellular/bluespace
 	name = "Moving Glitch"
@@ -98,13 +102,13 @@
 	qdel(src)
 	return
 
-/mob/living/simple_animal/hostile/cellular/bluespace/meelee/bullet_act()
-	if(health>2)
+/mob/living/simple_animal/hostile/cellular/bluespace/meelee/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
+	if(health > 2)
 		visible_message("<b>[src]</b> duplicates!")
 		var/mob/living/simple_animal/newglitch = new /mob/living/simple_animal/hostile/cellular/bluespace/meelee(src.loc)
 		health = health / 2
 		newglitch.health = health
-	return
 
 /mob/living/simple_animal/hostile/cellular/bluespace/ranged/attackby(obj/item/weapon/W, mob/user)
 	if(health > 2)

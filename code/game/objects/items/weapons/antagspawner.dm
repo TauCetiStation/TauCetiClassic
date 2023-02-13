@@ -24,7 +24,7 @@
 		return
 	to_chat(user, "<span class='notice'>Searching for available borg personality. Please wait 30 seconds...</span>")
 	used = TRUE
-	var/list/borg_candicates = pollGhostCandidates("Syndicate requesting a personality for a syndicate borg. Would you like to play as one?", ROLE_OPERATIVE)
+	var/list/borg_candicates = pollGhostCandidates("Syndicate requesting a personality for a syndicate borg. Would you like to play as one?", ROLE_OPERATIVE, IGNORE_SYNDI_BORG)
 	if(borg_candicates.len)
 		var/mob/M = pick(borg_candicates)
 		spawn_antag(M.client, get_turf(src.loc), user)
@@ -38,6 +38,9 @@
 	S.start()
 	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot/syndicate(T)
 	R.key = C.key
+	R.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+	R.mind.skills.maximize_active_skills()
+	R.pda.cmd_toggle_pda_receiver()
 	for(var/role_name in user.mind.antag_roles)
 		var/datum/role/role = user.mind.antag_roles[role_name]
 		if(!role.faction)

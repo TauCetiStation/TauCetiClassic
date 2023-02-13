@@ -24,6 +24,7 @@
 	var/list/products	= list() // For each, use the following pattern:
 	var/list/contraband	= list() // list(/type/path = amount,/type/path2 = amount2)
 	var/list/premium 	= list() // No specified amount = only one in stock
+	var/list/syndie	= list()
 	var/list/prices     = list() // Prices for each item, list(/type/path = price), items not in the list don't have a price.
 
 	var/product_slogans = "" //String of slogans separated by semicolons, optional
@@ -31,6 +32,7 @@
 	var/list/product_records = list()
 	var/list/hidden_records = list()
 	var/list/coin_records = list()
+	var/list/emag_records = list()
 	var/list/slogan_list = list()
 	var/list/small_ads = list() // small ad messages in the vending screen - random chance of popping up whenever you open it
 	var/vend_reply //Thank you for shopping!
@@ -72,6 +74,7 @@
 	 //Add hidden inventory
 	build_inventory(contraband, 1)
 	build_inventory(premium, 0, 1)
+	build_inventory(syndie, 0, 0, 1)
 	power_change()
 	update_wires_check()
 
@@ -80,34 +83,27 @@
 	QDEL_NULL(coin)
 	return ..()
 
-/obj/machinery/vending/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				qdel(src)
-				return
-		if(3.0)
-			if (prob(25))
-				spawn(0)
-					malfunction()
-					return
-				return
-		else
-	return
+/obj/machinery/vending/RefreshParts()
+	..()
+	// eat refills
+	for(var/obj/item/weapon/vending_refill/refill in component_parts)
+		component_parts -= refill
+		qdel(refill)
 
-/obj/machinery/vending/blob_act()
-	if (prob(50))
-		spawn(0)
-			malfunction()
-			qdel(src)
-		return
+/obj/machinery/vending/deconstruct(disassembled = TRUE)
+	if(refill_canister)
+		return ..()
+	//the non constructable vendors drop metal instead of a machine frame.
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 3)
+	qdel(src)
 
-	return
+/obj/machinery/vending/atom_break(damage_flag)
+	. = ..()
+	if(.)
+		malfunction()
 
-/obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0)
+/obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0,req_emag=0)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
 		var/price = prices[typepath]
@@ -124,6 +120,8 @@
 			hidden_records += R
 		else if(req_coin)
 			coin_records += R
+		else if(req_emag)
+			emag_records += R
 		else
 			product_records += R
 
@@ -165,10 +163,10 @@
 		if(default_unfasten_wrench(user, W, time = 60))
 			return
 
-		if(iscrowbar(W))
+		if(isprying(W))
 			default_deconstruction_crowbar(W)
 
-	if(isscrewdriver(W) && anchored)
+	if(isscrewing(W) && anchored)
 		src.panel_open = !src.panel_open
 		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
 		cut_overlays()
@@ -186,7 +184,7 @@
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 		return
 
-	else if(iswrench(W))	//unwrenching vendomats
+	else if(iswrenching(W))	//unwrenching vendomats
 		var/turf/T = user.loc
 		if(user.is_busy(src))
 			return
@@ -250,11 +248,14 @@
 	if(emagged)
 		return FALSE
 	src.emagged = 1
-	to_chat(user, "You short out the product lock on [src]")
+	if(syndie.len)
+		to_chat(user, "You short out the product lock on [src] and reveal hidden products.")
+	else
+		to_chat(user, "You short out the product lock on [src].")
 	return TRUE
 
 /obj/machinery/vending/default_deconstruction_crowbar(obj/item/O)
-	var/list/all_products = product_records + hidden_records + coin_records
+	var/list/all_products = product_records + hidden_records + coin_records + emag_records
 	for(var/datum/data/vending_product/machine_content in all_products)
 		while(machine_content.amount !=0)
 			var/safety = 0 //to avoid infinite loop
@@ -373,6 +374,8 @@
 			dat += print_recors(hidden_records)
 		if(coin)
 			dat += print_recors(coin_records)
+		if(emagged)
+			dat += print_recors(emag_records)
 		dat += "</table>"
 	dat += "</div>"
 
@@ -504,9 +507,8 @@
 		new R.product_path(get_turf(src))
 		playsound(src, 'sound/items/vending.ogg', VOL_EFFECTS_MASTER)
 		src.vend_ready = 1
-		return
-
-	updateUsrDialog()
+		src.currently_vending = null
+		updateUsrDialog()
 
 /obj/machinery/vending/proc/stock(datum/data/vending_product/R, mob/user)
 	if(src.panel_open)

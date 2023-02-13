@@ -1,4 +1,4 @@
-var/list/station_departments = list("Command", "Medical", "Engineering", "Science", "Security", "Cargo", "Civilian")
+var/global/list/station_departments = list("Command", "Medical", "Engineering", "Science", "Security", "Cargo", "Civilian")
 
 // The department the job belongs to.
 /datum/job/var/department = null

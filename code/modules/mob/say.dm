@@ -23,10 +23,15 @@
 		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
+	if(!message)
+		return
+
 	message = sanitize(message)
+	message = uncapitalize(message)
+	message = add_period(message)
 
 	if(me_verb_allowed)
-		usr.emote("me", usr.emote_type, message, FALSE)
+		usr.me_emote(message, message_type=usr.emote_type, intentional=TRUE)
 	else
 		to_chat(usr, "You are unable to emote.")
 		return
@@ -96,12 +101,7 @@
 			return 1
 		return 0
 
-	//Language check.
-	for(var/datum/language/L in languages)
-		if(speaking.name == L.name)
-			return 1
-
-	return 0
+	return can_understand(speaking)
 
 /*
    ***Deprecated***
@@ -121,10 +121,6 @@
 		say_verb="asks"
 
 	return say_verb
-
-/mob/proc/emote(act, type, message, auto)
-	if(act == "me")
-		return custom_emote(type, message)
 
 /mob/proc/get_ear()
 	// returns an atom representing a location on the map from which this
@@ -157,7 +153,7 @@
 
 //parses the language code (e.g. :j) from text, such as that supplied to say.
 //returns the language object only if the code corresponds to a language that src can speak, otherwise null.
-/mob/proc/parse_language(message)
+/mob/proc/parse_language_code(message)
 	if(length_char(message) >= 2)
 		var/language_prefix = lowertext(copytext(message, 1, 2 + length(message[2])))
 		var/datum/language/L = language_keys[language_prefix]
@@ -165,3 +161,31 @@
 			return L
 
 	return null
+
+/mob/proc/add_approximation(sound, approximation, case_sensitive=FALSE)
+	if(case_sensitive)
+		LAZYSET(sensitive_sound_approximations, sound, approximation)
+		return
+
+	LAZYSET(sound_approximations, sound, approximation)
+
+/mob/proc/remove_approximation(sound, case_sensitive=FALSE)
+	if(case_sensitive)
+		LAZYREMOVE(sensitive_sound_approximations, sound)
+		return
+
+	LAZYREMOVE(sound_approximations, sound)
+
+/mob/proc/approximate_sounds(txt, datum/language/speaking)
+	if(speaking && (speaking.flags & SIGNLANG))
+		return txt
+
+	. = txt
+	. = replace_characters(., sound_approximations)
+	. = replaceEx_characters(., sensitive_sound_approximations)
+
+/mob/proc/accent_sounds(txt, datum/language/speaking)
+	return txt
+
+/mob/proc/init_languages()
+	return

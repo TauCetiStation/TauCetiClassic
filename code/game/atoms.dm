@@ -1,6 +1,7 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
+
 	var/level = 2
 	var/flags = 0
 	var/flags_2 = 0
@@ -10,6 +11,8 @@
 
 	var/list/blood_DNA      //forensic reasons
 	var/datum/dirt_cover/dirt_overlay  //style reasons
+
+	var/uncleanable = 0
 
 	var/last_bumped = 0
 	var/pass_flags = NONE
@@ -46,6 +49,25 @@
 
 	var/in_use_action = FALSE // do_after sets this to TRUE and is_busy() can check for that to disallow multiple users to interact with this at the same time.
 
+	/// Last name used to calculate a color for the chatmessage overlays
+	var/chat_color_name
+	/// Last color calculated for the the chatmessage overlays
+	var/chat_color
+	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
+	var/chat_color_darkened
+
+	///any atom that uses integrity and can be damaged must set this to true, otherwise the integrity procs will throw an error
+	var/uses_integrity = FALSE
+
+	var/list/armor // TODO armor gatum?
+	VAR_PRIVATE/atom_integrity //defaults to max_integrity
+	var/max_integrity = 500
+	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the atom breaks. 0.5 being 50%
+	///Damage under this value will be completely ignored
+	var/damage_deflection = 0
+
+	var/resistance_flags = FULL_INDESTRUCTIBLE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
+
 /atom/New(loc, ...)
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
@@ -73,8 +95,9 @@
 
 //Note: the following functions don't call the base for optimization and must copypasta:
 // /turf/atom_init
-// /turf/space/atom_init
+// /turf/environment/space/atom_init
 // /mob/dead/atom_init
+// /obj/item
 
 //Do also note that this proc always runs in New for /mob/dead
 /atom/proc/atom_init(mapload, ...)
@@ -90,6 +113,11 @@
 	if(opacity && isturf(src.loc))
 		var/turf/T = src.loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+
+	if(uses_integrity)
+		if (!armor)
+			armor = list()
+		atom_integrity = max_integrity
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -108,8 +136,7 @@
 			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[K]
 			AA.remove_from_hud(src)
 
-	if(reagents)
-		QDEL_NULL(reagents)
+	QDEL_NULL(reagents)
 
 	LAZYCLEARLIST(overlays)
 
@@ -119,6 +146,10 @@
 	A?.Exited(src, null)
 
 	return ..()
+
+///This atom has been hit by hulk (TODO a hulkified mob in hulk mode (user))
+/atom/proc/attack_hulk(mob/living/user)
+	return
 
 /atom/proc/CheckParts(list/parts_list)
 	for(var/A in parts_list)
@@ -148,7 +179,7 @@
 		return null
 
 /atom/proc/check_eye(user)
-	if (istype(user, /mob/living/silicon/ai)) // WHYYYY
+	if (isAI(user)) // WHYYYY
 		return 1
 	return
 
@@ -207,15 +238,12 @@
 
 /atom/proc/bullet_act(obj/item/projectile/P, def_zone)
 	P.on_hit(src, def_zone, 0)
-	. = 0
+	return PROJECTILE_ACTED
 
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
 	if(ispath(container))
-		if(istype(src.loc, container))
-			return 1
-	else if(src in container)
-		return 1
-	return
+		return istype(src.loc, container)
+	return src in container
 
 /*
  *	atom/proc/search_contents_for(path,list/filter_path=null)
@@ -276,24 +304,31 @@
 			alt_obj = AA.alternate_obj
 			break
 
-	to_chat(user, get_examine_string(user, TRUE, alt_obj))
+	var/msg = get_examine_string(user, TRUE, alt_obj)
 
-	if(alt_obj)
-		to_chat(user, alt_obj.desc)
-	else if(desc)
-		to_chat(user, desc)
+	var/visible_desc = alt_obj?.desc || desc
+	if(visible_desc)
+		msg += "<br>[visible_desc]"
 
 	// *****RM
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
-		to_chat(user, "It contains:")
+		msg += "<br>It contains:"
 		if(reagents.reagent_list.len)
 			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks
 				for(var/datum/reagent/R in reagents.reagent_list)
-					to_chat(user, "<span class='info'>[R.volume] units of [R.name]</span>")
+					msg += "<br><span class='info'>[R.volume] units of [R.name]</span>"
+			else if (is_skill_competent(user, list(/datum/skill/chemistry = SKILL_LEVEL_MASTER)))
+				if(length(reagents.reagent_list) == 1)
+					msg += "<br><span class='info'>[reagents.reagent_list[1].volume] units of [reagents.reagent_list[1].name]</span>"
+				else
+					for(var/datum/reagent/R in reagents.reagent_list)
+						msg += "<br><span class='info'>[R.volume + R.volume * rand(-25,25) / 100] units of [R.name]</span>"
 			else
-				to_chat(user, "<span class='info'>[reagents.total_volume] units of liquid.</span>")
+				msg += "<br><span class='info'>[reagents.total_volume] units of liquid.</span>"
 		else
-			to_chat(user, "Nothing.")
+			msg += "<br>Nothing."
+
+	to_chat(user, msg)
 
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
 	return distance == -1 || isobserver(user) || (get_dist(src, user) <= distance)
@@ -490,13 +525,16 @@
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/human/M)
-	if(flags & NOBLOODY) return 0
-	.=1
+	if(flags & NOBLOODY) return FALSE
+	. = TRUE
 	if (!istype(M))
-		return 0
+		return FALSE
 
 	if(M.species.flags[NO_BLOOD_TRAILS])
-		return 0
+		return FALSE
+
+	if(M.reagents.has_reagent("metatrombine"))
+		return FALSE
 
 	if (!istype(M.dna, /datum/dna))
 		M.dna = new /datum/dna(null)
@@ -507,6 +545,8 @@
 	add_dirt_cover(M.species.blood_datum)
 
 /atom/proc/add_dirt_cover(dirt_datum)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(flags & NOBLOODY)
 		return FALSE
 	if(!dirt_datum)
@@ -515,9 +555,15 @@
 		dirt_overlay = new/datum/dirt_cover(dirt_datum)
 	else
 		dirt_overlay.add_dirt(dirt_datum)
+	SEND_SIGNAL(src, COMSIG_ATOM_ADD_DIRT, dirt_datum)
 	return TRUE
 
 /atom/proc/clean_blood()
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(uncleanable)
+		return 0
+	SEND_SIGNAL(src, COMSIG_ATOM_CLEAN_BLOOD)
 	src.germ_level = 0
 	if(dirt_overlay)
 		dirt_overlay = null
@@ -543,10 +589,7 @@
 		return 0
 
 /atom/proc/isinspace()
-	if(istype(get_turf(src), /turf/space))
-		return 1
-	else
-		return 0
+	return isspaceturf(get_turf(src))
 
 /atom/proc/checkpass(passflag)
 	return pass_flags&passflag
@@ -590,7 +633,7 @@
 				return FALSE
 		if(!(lube & SLIDE_ICE))
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
-			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 
 		var/olddir = C.dir
 
@@ -621,7 +664,7 @@
 				C.inertia_dir = 0
 		return TRUE
 
-/turf/space/handle_slip()
+/turf/environment/space/handle_slip()
 	return
 
 // Recursive function to find everything this atom is holding.
@@ -740,3 +783,26 @@
 
 /atom/proc/update_icon()
 	return
+
+/**
+ * Point at an atom
+ *
+ * Intended to enable and standardise the pointing animation for all atoms
+ *
+ * Not intended as a replacement for the mob verb
+ */
+/atom/proc/point_at(atom/pointed_atom, arrow_type = /obj/effect/decal/point)
+	if (!isturf(loc))
+		return FALSE
+
+	var/turf/tile = get_turf(pointed_atom)
+	if (!tile)
+		return FALSE
+
+	var/turf/our_tile = get_turf(src)
+	var/obj/visual = new arrow_type(our_tile, invisibility)
+	QDEL_IN(visual, 20)
+
+	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
+
+	return TRUE

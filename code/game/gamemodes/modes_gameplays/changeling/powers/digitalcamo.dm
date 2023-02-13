@@ -8,7 +8,7 @@
 /obj/effect/proc_holder/changeling/digitalcamo/sting_action(mob/user)
 	if(user.digitalcamo)
 		to_chat(user, "<span class='notice'>We return to normal.</span>")
-		for(var/mob/living/silicon/ai/AI in ai_list)
+		for(var/mob/living/silicon/ai/AI as anything in ai_list)
 			if(AI.client)
 				AI.client.images -= user.digitaldisguise
 		UnhideFromAIHuds(user)
@@ -16,7 +16,7 @@
 		to_chat(user, "<span class='notice'>We distort our form to prevent AI-tracking.</span>")
 		user.digitaldisguise = image(loc = user)
 		user.digitaldisguise.override = 1
-		for(var/mob/living/silicon/ai/AI in ai_list)
+		for(var/mob/living/silicon/ai/AI as anything in ai_list)
 			if(AI.client)
 				AI.client.images += user.digitaldisguise
 		HideFromAIHuds(user)
@@ -29,7 +29,7 @@
 			sleep(40)
 
 	feedback_add_details("changeling_powers","CAM")
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/changeling/digitalcamo/proc/HideFromAIHuds(mob/living/target)
 	for(var/mob/living/silicon/ai/AI in global.ai_list)

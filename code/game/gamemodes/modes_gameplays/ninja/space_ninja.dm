@@ -30,9 +30,7 @@
 				spawn(0)
 					S.ninitialize(10, H)
 
-			var/datum/faction/ninja/N = find_faction_by_type(/datum/faction/ninja)
-			if(!N)
-				N = SSticker.mode.CreateFaction(/datum/faction/ninja)
+			var/datum/faction/ninja/N = create_uniq_faction(/datum/faction/ninja)
 			add_faction_member(N, H, FALSE)
 
 	else
@@ -75,8 +73,6 @@
 	if(space_ninja_arrival(input, mission))
 		message_admins("<span class='notice'>[key_name_admin(usr)] has spawned [input] as a Space Ninja.\nTheir <b>mission</b> is: [mission]</span>")
 
-	return
-
 // NINJA CREATION PROCS
 
 /proc/create_space_ninja(obj/spawn_point)
@@ -95,7 +91,6 @@
 
 /mob/living/carbon/human/proc/create_mind_space_ninja()
 	mind_initialize()
-	return 1
 
 /mob/living/carbon/human/proc/equip_space_ninja(safety=0)//Safety in case you need to unequip stuff for existing characters.
 	if(safety)
@@ -107,7 +102,6 @@
 		qdel(gloves)
 
 	equipOutfit(/datum/outfit/space_ninja)
-	return 1
 
 
 // HELPER PROCS
@@ -137,16 +131,16 @@
 		if(!isninja(U))
 			to_chat(U, "<span class='warning'><B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAU?HORIZED USÈ DETÈC???eD\nCoMMÈNCING SUB-R0U?IN3 13...\nTÈRMInATING U-U-USÈR...</span>")
 			U.gib()
-			return 0
+			return FALSE
 		if(!istype(U.head, /obj/item/clothing/head/helmet/space/space_ninja))
 			to_chat(U, "<span class='warning'><B>ERROR</B>: 100113</span> UNABLE TO LOCATE HEAD GEAR\nABORTING...")
-			return 0
+			return FALSE
 		if(!istype(U.shoes, /obj/item/clothing/shoes/space_ninja))
 			to_chat(U, "<span class='warning'><B>ERROR</B>: 122011</span> UNABLE TO LOCATE FOOT GEAR\nABORTING...")
-			return 0
+			return FALSE
 		if(!istype(U.gloves, /obj/item/clothing/gloves/space_ninja))
 			to_chat(U, "<span class='warning'><B>ERROR</B>: 110223</span> UNABLE TO LOCATE HAND GEAR\nABORTING...")
-			return 0
+			return FALSE
 
 		affecting = U
 		canremove = 0
@@ -165,7 +159,7 @@
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
 	affecting = null
 	canremove = 1
-	slowdown = 1
+	slowdown = 0.5
 	icon_state = "s-ninja"
 	if(n_hood)//Should be attached, might not be attached.
 		n_hood.canremove=1
@@ -181,7 +175,7 @@
 
 //Allows the mob to grab a stealth icon.
 /mob/proc/NinjaStealthActive(atom/A)//A is the atom which we are using as the overlay.
-	invisibility = INVISIBILITY_LEVEL_TWO//Set ninja invis to 2.
+	invisibility = INVISIBILITY_LEVEL_TWO//Set ninja invis to INVISIBILITY_LEVEL_TWO.
 	var/icon/opacity_icon = new(A.icon, A.icon_state)
 	var/icon/alpha_mask = getIconMask(src)
 	var/icon/alpha_mask_2 = new('icons/effects/effects.dmi', "at_shield1")
@@ -204,7 +198,7 @@
 
 //When ninja steal malfunctions.
 /mob/proc/NinjaStealthMalf()
-	invisibility = 0//Set ninja invis to 0.
+	invisibility = INVISIBILITY_NONE//Set ninja invis to INVISIBILITY_NONE.
 	add_overlay(image("icon"='icons/effects/effects.dmi',"icon_state" ="electricity","layer" = layer+0.9))
 	playsound(src, 'sound/effects/stealthoff.ogg', VOL_EFFECTS_MASTER)
 

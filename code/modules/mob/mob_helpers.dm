@@ -43,6 +43,12 @@
 			return TRUE
 	return FALSE
 
+/mob/proc/isimplantedobedience()
+	for(var/obj/item/weapon/implant/obedience/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
 /proc/check_zone(zone)
 	if(!zone)
 		return BP_CHEST
@@ -196,12 +202,14 @@
 					new_letter = "х"
 
 		switch(rand(1,15))
-			if(1,3,5,8)
+			if(1 to 4)
 				new_letter = lowertext(new_letter)
-			if(2,4,6,15)
+			if(5 to 9)
 				new_letter = uppertext(new_letter)
-			if(7)
+			if(10)
 				new_letter += "'"
+			if(11 to 15)
+				SWITCH_PASS
 
 		new_text += new_letter
 
@@ -304,18 +312,72 @@
 
 	return jointext(message_list, " ")
 
+/proc/turret_talk(message, species)
+	if(!(species in tourette_bad_words))
+		return message
+	var/list/message_list = splittext(message, " ")
+	var/maxchanges = max(round(message_list.len / 1.5), 2)
+	for(var/i in 1 to rand(maxchanges / 2, maxchanges))
+		var/insertpos = rand(1, message_list.len)
+		message_list[insertpos] = pick(tourette_bad_words[species])
+	return jointext(message_list, " ")
+
+var/global/list/cursed_words = list("МРАЧНЫЕ ВРЕМЕНА", "ТЬМА", "БУРЯ", "ВОЙНА", "ПУТЬ НА КОТОРОМ НЕ СНОСИТЬ ГОЛОВЫ", "КОПЬЕ", "УБИТЬ", "КРОВЬ",  "ЧИСТИЛИЩЕ", "МУЧИТЕЛЬНАЯ БОЛЬ", "МЯСО", "БОЙНЯ", "ПЫТКИ", "КРОВАВЫЙ ДОЖДЬ", "РАЗРЫВАЮЩИЕСЯ ГЛАЗНЫЕ ЯБЛОКИ", "ХАОС", "ВЗРЫВНОЕ УСТРОЙСТВО", "ДЕМОНИЧЕСКИЕ ВРАТА", "ЛАВА", "СМЕРТЬ", "РАЗОРВАННОЕ СЕРДЦЕ", "МУЧЕНИЯ", "СЖЕЧЬ", "РВОТА", "ВЫРВАННЫЙ ЯЗЫК", "ЗАБВЕНИЕ", "БЕЗЫСХОДНОСТЬ", "СУИЦИД", "БЕЗДНА", "ОБЕЗГЛАВЛИВАНИЕ", "РАЗРЫВ", "ДЫХАНИЕ СМЕРТИ", "УЖАСНАЯ УЧАСТЬ", "РАЗРУШЕНИЯ", "ГЛАЗНИЦА")
+/proc/cursed_talk(message)
+	var/text = ""
+	var/words = round(length_char(message)/6)
+	for(var/i in 1 to max(1, words))
+		text += pick(cursed_words)
+		if(i != words)
+			text += " "
+
+	return text
+
+
+#define TILES_PER_SECOND 0.7
+///Shake the camera of the person viewing the mob SO REAL!
+///Takes the mob to shake, the time span to shake for, and the amount of tiles we're allowed to shake by in tiles
+///Duration isn't taken as a strict limit, since we don't trust our coders to not make things feel shitty. So it's more like a soft cap.
 /proc/shake_camera(mob/M, duration, strength=1)
-	if(!M || !M.client || !strength) return
-	spawn()
-		strength *= 32
-		for(var/i=0; i<duration, i++)
-			animate(M.client, pixel_x = rand(-strength,strength), pixel_y = rand(-strength,strength), time = 2)
-			sleep(2)
-		animate(M.client, pixel_x = 0, pixel_y = 0, time = 2)
+	if(!M || !M.client || duration < 1)
+		return
+	var/client/C = M.client
+	var/oldx = C.pixel_x
+	var/oldy = C.pixel_y
+	var/max = strength*world.icon_size
+	var/min = -(strength*world.icon_size)
+
+	//How much time to allot for each pixel moved
+	var/time_scalar = (1 / world.icon_size) * TILES_PER_SECOND
+	var/last_x = oldx
+	var/last_y = oldy
+
+	var/time_spent = 0
+	while(time_spent < duration)
+		//Get a random pos in our box
+		var/x_pos = rand(min, max) + oldx
+		var/y_pos = rand(min, max) + oldy
+
+		//We take the smaller of our two distances so things still have the propencity to feel somewhat jerky
+		var/time = round(max(min(abs(last_x - x_pos), abs(last_y - y_pos)) * time_scalar, 1))
+
+		if (time_spent == 0)
+			animate(C, pixel_x=x_pos, pixel_y=y_pos, time=time)
+		else
+			animate(pixel_x=x_pos, pixel_y=y_pos, time=time)
+
+		last_x = x_pos
+		last_y = y_pos
+		//We go based on time spent, so there is a chance we'll overshoot our duration. Don't care
+		time_spent += time
+
+	animate(pixel_x=oldx, pixel_y=oldy, time=3)
+
+#undef TILES_PER_SECOND
 
 
 /proc/findname(msg)
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if (M.real_name == text("[msg]"))
 			return 1
 	return 0
@@ -334,7 +396,7 @@
 	return 0
 
 //converts intent-strings into numbers and back
-var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
+var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 /proc/intent_numeric(argument)
 	if(istext(argument))
 		switch(argument)
@@ -357,6 +419,12 @@ var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 			else
 				return INTENT_HARM
 
+/mob/proc/set_a_intent(new_intent)
+	SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, new_intent)
+	a_intent = new_intent
+	if(hud_used)
+		action_intent?.update_icon(src)
+
 //change a mob's act-intent. Use the defines of style INTENT_%thingy%
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
@@ -365,13 +433,11 @@ var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 	if(isliving(src))
 		switch(input)
 			if(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
-				a_intent = input
+				set_a_intent(input)
 			if(INTENT_HOTKEY_RIGHT)
-				a_intent = intent_numeric((intent_numeric(a_intent)+1) % 4)
+				set_a_intent(intent_numeric((intent_numeric(a_intent)+1) % 4))
 			if(INTENT_HOTKEY_LEFT)
-				a_intent = intent_numeric((intent_numeric(a_intent)+3) % 4)
-		if(hud_used && hud_used.action_intent)
-			hud_used.action_intent.icon_state = "intent_[a_intent]"
+				set_a_intent(intent_numeric((intent_numeric(a_intent)+3) % 4))
 
 /proc/broadcast_security_hud_message(message, broadcast_source)
 	var/datum/atom_hud/hud = huds[DATA_HUD_SECURITY]
@@ -493,3 +559,52 @@ var/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HARM)
 
 /mob/proc/become_not_busy(_hand = 0)
 	busy_with_action = FALSE
+
+/**
+ * Fancy notifications for ghosts
+ *
+ * The kitchen sink of notification procs
+ *
+ * Arguments:
+ * * message
+ * * ghost_sound sound to play
+ * * enter_link Href link to enter the ghost role being notified for
+ * * source The source of the notification
+ * * alert_overlay The alert overlay to show in the alert message
+ * * action What action to take upon the ghost interacting with the notification, defaults to NOTIFY_JUMP
+ * * header The header of the notifiaction
+ * * notify_volume How loud the sound should be to spook the user
+ */
+/proc/notify_ghosts(message, ghost_sound, enter_link, atom/source, mutable_appearance/alert_overlay, action = NOTIFY_JUMP, header, notify_volume = 100) //Easy notification of ghosts.
+	for(var/mob/dead/observer/ghost as anything in observer_list)
+		var/orbit_link
+		if(source && action == NOTIFY_ORBIT)
+			orbit_link = " <span class='ghostalert'>[FOLLOW_LINK(ghost, source)]</span>"
+		to_chat(ghost, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""][orbit_link]</span>")
+		if(ghost_sound)
+			playsound(ghost, ghost_sound, VOL_EFFECTS_MASTER, notify_volume)
+		if(!source)
+			continue
+		var/atom/movable/screen/alert/notify_action/alert = ghost.throw_alert("[REF(source)]_notify_action", /atom/movable/screen/alert/notify_action, new_master=source)
+		if(!alert)
+			continue
+		if (header)
+			alert.name = header
+		alert.desc = message
+		alert.action = action
+		alert.target = source
+		if(!alert_overlay)
+			alert_overlay = new(source)
+			var/icon/size_check = icon(source.icon, source.icon_state)
+			var/scale = 1
+			var/width = size_check.Width()
+			var/height = size_check.Height()
+			if(width > world.icon_size || height > world.icon_size)
+				if(width >= height)
+					scale = world.icon_size / width
+				else
+					scale = world.icon_size / height
+			alert_overlay.transform = alert_overlay.transform.Scale(scale)
+			alert_overlay.appearance_flags |= TILE_BOUND
+		alert_overlay.plane = ABOVE_HUD_PLANE
+		alert.add_overlay(alert_overlay)

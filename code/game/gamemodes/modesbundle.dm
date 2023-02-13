@@ -11,9 +11,7 @@
 		if(M.potential_runnable())
 			L += M.name
 		qdel(M)
-	if(!L.len) // if no mode can start, then the modes that will always start
-		var/datum/modesbundle/run_anyway/super_bundle = new
-		L = super_bundle.get_gamemodes_name()
+
 	return L
 
 /*
@@ -45,7 +43,6 @@
 /datum/modesbundle/teambased
 	name = "Team Based"
 	possible_gamemodes = list(
-		/datum/game_mode/abduction,
 		/datum/game_mode/blob,
 		/datum/game_mode/cult,
 		/datum/game_mode/infestation,
@@ -57,7 +54,7 @@
 
 /datum/modesbundle/mix
 	name = "Mix"
-	votable = TRUE
+	votable = FALSE
 
 /datum/modesbundle/mix/New()
 	for(var/type in subtypesof(/datum/game_mode/mix))
@@ -89,7 +86,7 @@
 	votable = TRUE
 
 /datum/modesbundle/all/secret/New()
-	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/casual_shift)
+	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/casual_shift, /datum/game_mode/malfunction)
 	..()
 
 /datum/modesbundle/run_anyway

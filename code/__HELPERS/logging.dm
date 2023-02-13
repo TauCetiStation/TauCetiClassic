@@ -43,9 +43,9 @@
 	if (config.log_debug)
 		global.game_log << "\[[time_stamp()]]DEBUG: [text][log_end]"
 
-	for(var/client/C in admins)
+	for(var/client/C as anything in admins)
 		if(C.prefs.chat_toggles & CHAT_DEBUGLOGS)
-			to_chat(C, "DEBUG: [text]")
+			to_chat_debug(C, "DEBUG: [text]")
 
 /proc/log_asset(text)
 	if (config && config.log_asset)
@@ -65,7 +65,7 @@
 	else if(istype(user, /mob))
 		var/mob/mob = user
 		entry += "[mob.ckey] (as [mob] at [COORD(mob)])"
-	else if(istype(user, /client))
+	else if(isclient(user))
 		var/client/client = user
 		entry += "[client.ckey]"
 	// Insert context
@@ -161,6 +161,14 @@
 			preconfig_init_log = null
 
 		global.initialization_log << "[text][log_end]"
+
+#ifdef REFERENCE_TRACKING
+/proc/log_gc(text)
+	global.gc_log << "\[[time_stamp()]] [text][log_end]"
+	for(var/client/C in global.admins)
+		if(C.prefs.chat_toggles & CHAT_DEBUGLOGS)
+			to_chat(C, "GC DEBUG: [text]")
+#endif
 
 /proc/log_qdel(text)
 	if (config.log_qdel)
@@ -270,28 +278,3 @@
 		text += "no antagonists this moment"
 
 	log_game(text)
-
-/proc/drop_round_stats()
-	var/list/stats = list()
-
-	stats["round_id"] = global.round_id
-	stats["start_time"] = time2text(round_start_realtime, "hh:mm:ss")
-	stats["end_time"] = time2text(world.realtime, "hh:mm:ss")
-	stats["duration"] = roundduration2text()
-	stats["mode"] = SSticker.mode
-	stats["mode_result"] = SSticker.mode.get_mode_result()
-	stats["map"] = SSmapping.config.map_name
-
-	stats["completion_html"] = SSticker.mode.completition_text
-	stats["completion_antagonists"] = antagonists_completion
-
-	stats["score"] = score
-	stats["achievements"] = achievements
-	stats["centcomm_communications"] = centcomm_communications
-
-	var/stat_file = file("[global.log_directory]/stat.json")
-
-	stat_file << json_encode(stats)
-
-/proc/add_communication_log(type = 0, title = 0, author = 0, content = 0, time = roundduration2text())
-	centcomm_communications += list(list("type" = type, "title" = title, "time" = time, "content" = content))

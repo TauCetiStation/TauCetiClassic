@@ -22,7 +22,7 @@ var/global/list/capture_statues_list = list()
 	name = "statue of gargoyle"
 	icon_state = "gargoyle"
 
-	health = 81
+	max_integrity = 81
 	can_unwrench = FALSE
 	var/obj/effect/rune/capture_rune
 
@@ -30,13 +30,11 @@ var/global/list/capture_statues_list = list()
 	. = ..()
 	capture_rune = R
 	capture_statues_list += src
-	poi_list += src
 
 /obj/structure/cult/statue/capture/Destroy()
 	if(!QDELETED(capture_rune))
 		qdel(capture_rune)
 	capture_statues_list -= src
-	poi_list -= src
 	return ..()
 
 /obj/structure/cult/statue/camera

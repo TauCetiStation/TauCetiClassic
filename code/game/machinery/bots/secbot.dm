@@ -6,8 +6,7 @@
 	var/icon_state_arrest = "secbot-c"
 	density = FALSE
 	anchored = FALSE
-	health = 25
-	maxhealth = 25
+	max_integrity = 25
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
 
@@ -162,7 +161,7 @@
 
 
 /obj/machinery/bot/secbot/proc/beingAttacked(obj/item/weapon/W, mob/user)
-	if(!isscrewdriver(W) && W.force && !target)
+	if(!isscrewing(W) && W.force && !target)
 		target = user
 		mode = SECBOT_HUNT
 
@@ -241,7 +240,7 @@
 							addtimer(CALLBACK(src, /atom.proc/update_icon), 2)
 							do_attack_animation(target)
 							target.adjustBruteLoss(15)
-							if(target.stat)
+							if(target.stat != CONSCIOUS)
 								forgetCurrentTarget()
 								playsound(src, pick(SOUNDIN_BEEPSKY), VOL_EFFECTS_MASTER, null, FALSE)
 
@@ -265,7 +264,7 @@
 			if(iscarbon(target))
 				var/mob/living/carbon/C = target
 				if(!C.handcuffed && !arrest_type)
-					playsound(src, 'sound/weapons/handcuffs.ogg', VOL_EFFECTS_MASTER, 30, null, -2)
+					playsound(src, 'sound/weapons/handcuffs.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -2)
 					mode = SECBOT_ARREST
 					visible_message("<span class='warning bold'>[src] is trying to put handcuffs on [target]!</span>")
 					addtimer(CALLBACK(src, .proc/subprocess, SECBOT_PREP_ARREST), 60)
@@ -544,7 +543,7 @@
 /obj/machinery/bot/secbot/proc/look_for_perp()
 	anchored = FALSE
 	for(var/mob/living/L in view(7, src)) //Let's find us a criminal
-		if(L.stat)
+		if(L.stat != CONSCIOUS)
 			continue
 
 		if(iscarbon(L))
@@ -645,7 +644,7 @@
 	qdel(src)
 
 /obj/item/weapon/secbot_assembly/attackby(obj/item/I, mob/user, params)
-	if(iswelder(I) && !build_step)
+	if(iswelding(I) && !build_step)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			build_step++

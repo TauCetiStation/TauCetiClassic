@@ -11,27 +11,44 @@
 	light_color = "#a91515"
 	req_access = list(access_syndicate)
 	var/area/curr_location
-	var/moving = 0
+	var/moving = FALSE
 	var/lastMove = 0
 
 /obj/effect/landmark/syndi_shuttle
+	name = "Syndi shuttle"
 
 /obj/machinery/computer/syndicate_station/atom_init()
 	..()
+	SSholomaps.holomap_landmarks += src
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/syndicate_station/atom_init_late()
-	var/obj/O = locate(/obj/effect/landmark/syndi_shuttle) in landmarks_list
-	curr_location = get_area(O)
+	curr_location = get_area(locate("landmark*Syndi shuttle"))
+
+/obj/machinery/computer/syndicate_station/Destroy()
+	SSholomaps.holomap_landmarks -= src
+	return ..()
+
+/obj/machinery/computer/syndicate_station/process()
+	if(..())
+		if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN + 20 >= world.time)
+			updateUsrDialog()
 
 /obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination)
-	if(moving)	return
-	if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN > world.time)	return
+	if(moving)
+		return
+	if(lastMove + SYNDICATE_SHUTTLE_COOLDOWN > world.time)
+		return
 	var/area/dest_location = locate(destination)
-	if(curr_location == dest_location)	return
+	if(curr_location == dest_location)
+		return
 
-	moving = 1
+	moving = TRUE
 	lastMove = world.time
+	//mix stuff
+	var/datum/faction/nuclear/crossfire/N = find_faction_by_type(/datum/faction/nuclear/crossfire)
+	if(N)
+		N.landing_nuke()
 
 	if(curr_location.z != dest_location.z)
 		var/area/transit_location = locate(/area/shuttle/syndicate/transit)
@@ -43,8 +60,8 @@
 
 	curr_location.move_contents_to(dest_location)
 	curr_location = dest_location
-	moving = 0
-	return 1
+	moving = FALSE
+	return TRUE
 
 /obj/machinery/computer/syndicate_station/ui_interact(mob/user)
 	var/dat = {"Location: [curr_location]<br>
@@ -101,3 +118,4 @@
 
 #undef SYNDICATE_SHUTTLE_MOVE_TIME
 #undef SYNDICATE_SHUTTLE_COOLDOWN
+

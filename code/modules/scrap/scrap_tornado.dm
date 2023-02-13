@@ -6,8 +6,6 @@
 	color = "#666666"
 	alpha = 200
 	current_size = STAGE_TWO
-//	layer = LIGHTING_LAYER + 1
-//	plane = LIGHTING_PLANE + 1
 	pixel_x = -64
 	pixel_y = -64
 	move_self = 1
@@ -30,7 +28,7 @@
 /obj/singularity/scrap_ball/process()
 	step(src, pick(alldirs - last_failed_movement))
 	for(var/datum/orbit/shot in orbiters)
-		if(istype(shot.orbiter, /mob/living))
+		if(isliving(shot.orbiter))
 			var/mob/living/getbrute = shot.orbiter
 			getbrute.adjustBruteLoss(10)
 			getbrute.apply_effect(2, STUN)
@@ -41,7 +39,7 @@
 
 /obj/singularity/scrap_ball/event()
 	for(var/mob/living/carbon/M in oviewers(8, src))
-		if(istype(M, /mob/living/carbon/brain)) //Ignore brains
+		if(isbrain(M)) //Ignore brains
 			continue
 		to_chat(M, "<span class='red'>You [pick("look in awe on", "can't withstand")] the [src.name].</span>")
 		M.apply_effect(3, STUN)
@@ -57,7 +55,7 @@
 			return
 		if(get_area(to_add) != get_area(src))
 			return
-		if(istype(to_add, /mob/living))
+		if(isliving(to_add))
 			var/mob/living/nomove = to_add
 			nomove.apply_effect(5, STUN)
 		var/icon/I = icon(icon,icon_state,dir)
@@ -72,3 +70,6 @@
 
 /obj/singularity/scrap_ball/Bumped(atom/A)
 	consume(A)
+
+/obj/singularity/scrap_ball/update_icon(stage)
+	return

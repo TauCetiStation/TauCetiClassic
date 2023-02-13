@@ -58,19 +58,21 @@
 			if(istype(U.get_active_hand(), /obj/item/weapon/melee/energy/blade))
 				if(cell.charge<=0)//If no charge left.
 					U.drop_item()//Blade is dropped from active hand (and deleted).
-				else	return 1
+				else
+					return TRUE
 			else if(istype(U.get_inactive_hand(), /obj/item/weapon/melee/energy/blade))
 				if(cell.charge<=0)
 					U.swap_hand()//swap hand
 					U.drop_item()//drop blade
-				else	return 1
+				else
+					return TRUE
 		if(2)
 			if(istype(U.get_active_hand(), /obj/item/weapon/melee/energy/blade))
 				U.drop_item()
 			if(istype(U.get_inactive_hand(), /obj/item/weapon/melee/energy/blade))
 				U.swap_hand()
 				U.drop_item()
-	return 0
+	return FALSE
 
 /obj/item/clothing/suit/space/space_ninja/examine(mob/user)
 	..()

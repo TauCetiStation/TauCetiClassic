@@ -67,6 +67,7 @@
 	)
 
 	// USE FILTER AFTER 513
+	/// Already 514
 	// var/ghostly_filter
 	var/saved_color
 
@@ -231,7 +232,7 @@
 
 	H.see_in_dark = 8
 	H.ventcrawler = 2
-	H.status_flags &= ~CANSTUN|CANWEAKEN
+	H.remove_status_flags(CANSTUN|CANWEAKEN)
 	H.pass_flags |= PASSTABLE
 
 	saved_color = H.color
@@ -242,13 +243,8 @@
 	var/my_color = pick(pos_colors)
 	var/my_color_matrix = pos_colors[my_color]
 
-	// USE FILTER AFTER 513
-	// slimy_color_filter = filter(type="color", color=my_color_matrix)
-	H.color = my_color_matrix
-	slimy_outline_filter = filter(type = "outline", size = 1, color = my_color)
-
-	//H.filters += slimy_color_filter
-	H.filters += slimy_outline_filter
+	H.add_filter("slimy_color", 2, color_matrix_filter(1, my_color_matrix))
+	H.add_filter("slimy_outline", 2, outline_filter(1, my_color))
 
 /datum/component/mob_modifier/slimy/revert(update = FALSE)
 	var/mob/living/simple_animal/hostile/H = parent
@@ -272,7 +268,7 @@
 	H.color = saved_color
 
 	if(!update)
-		H.filters -= slimy_outline_filter
+		H.remove_filter("slimy_outline")
 
 	return ..()
 
@@ -315,7 +311,28 @@
 
 	H.loc.shake_act(2 + strength)
 
+/atom/movable/antiwarp_effect
+	plane = ANOMALY_PLANE
+	appearance_flags = PIXEL_SCALE // no tile bound so you can see it around corners and so
+	icon = 'icons/effects/288x288.dmi'
+	icon_state = "gravitational_anti_lens"
+	pixel_x = -128
+	pixel_y = -128
 
+/atom/movable/antiwarp_effect/atom_init(mapload, ...)
+	. = ..()
+	add_filter("ripple", 1, ripple_filter(radius = 0, size = 250, falloff = 0.5, repeat = 100))
+	START_PROCESSING(SSobj, src)
+
+/atom/movable/antiwarp_effect/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/atom/movable/antiwarp_effect/process()
+	animate(src, time = 6, transform = matrix().Scale(0.5, 0.5))
+	animate(time = 14, transform = matrix(), flags = ANIMATION_PARALLEL)
+	animate(get_filter("ripple"), radius = 0, size = 150, time = 14, flags = ANIMATION_PARALLEL)
+	animate(radius = 250, size = 0, time = 0)
 
 /datum/component/mob_modifier/singular
 	modifier_name = RL_MM_SINGULAR
@@ -328,11 +345,11 @@
 	var/grav_pull = 4
 	var/pull_stage = STAGE_ONE
 
-	var/image/singularity_overlay
+	var/atom/movable/antiwarp_effect/warp
 
 /datum/component/mob_modifier/singular/Destroy()
 	STOP_PROCESSING(SSmob_modifier, src)
-	QDEL_NULL(singularity_overlay)
+	QDEL_NULL(warp)
 	return ..()
 
 /datum/component/mob_modifier/singular/apply(update = FALSE)
@@ -362,14 +379,13 @@
 
 	var/mob/living/simple_animal/hostile/H = parent
 
-	singularity_overlay = image('icons/obj/singularity.dmi', "singularity_s1")
-	singularity_overlay.alpha = 200
-	singularity_overlay.loc = H
-	// AFTER BYOND 513 USE THESE
-	// singularity_filter = filter(type = "layer", render_source = I)
+	warp = new(src)
+	warp.transform = matrix().Scale(0.01)
+	warp.pixel_x = -128
+	warp.pixel_y = -128
 
-	// H.filters += singularity_filter
-	H.add_overlay(singularity_overlay)
+	H.vis_contents += warp
+	H.plane = ABOVE_GAME_PLANE
 
 	START_PROCESSING(SSmob_modifier, src)
 	RegisterSignal(H, list(COMSIG_MOB_DIED), .proc/stop_pulling)
@@ -378,8 +394,8 @@
 /datum/component/mob_modifier/singular/revert(update = FALSE)
 	if(!update)
 		var/mob/living/simple_animal/hostile/H = parent
-		H.cut_overlay(singularity_overlay)
-		// H.filters -= singularity_filter
+		H.vis_contents -= warp
+		H.plane = initial(H.plane)
 
 		STOP_PROCESSING(SSmob_modifier, src)
 	return ..()
@@ -388,7 +404,7 @@
 	pull()
 
 /datum/component/mob_modifier/singular/proc/consume(atom/movable/AM)
-	if(!istype(AM, /obj/item))
+	if(!isitem(AM))
 		return
 
 	var/mob/living/simple_animal/hostile/H = parent
@@ -401,6 +417,8 @@
 	set background = BACKGROUND_ENABLED
 
 	var/mob/living/simple_animal/hostile/H = parent
+	if(QDELETED(parent))
+		return
 
 	for(var/tile in spiral_range_turfs(grav_pull, H, 1))
 		var/turf/T = tile
@@ -503,7 +521,7 @@
 	H.alpha = 0
 	animate(H, alpha=saved_alpha, time=1 SECOND)
 
-	if(H.stat)
+	if(H.stat != CONSCIOUS)
 		return
 
 	add_invis_timer()
@@ -511,7 +529,7 @@
 /datum/component/mob_modifier/invisible/proc/become_invisible()
 	var/mob/living/simple_animal/hostile/H = parent
 
-	if(H.stat)
+	if(H.stat != CONSCIOUS)
 		return
 
 	invisible = TRUE

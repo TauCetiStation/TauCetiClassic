@@ -18,19 +18,21 @@
 
 /datum/objective/heist/salvage/check_completion()
 	var/total_amount = 0
+	var/list/area/arkship_areas = list(/area/shuttle/vox/arkship, /area/shuttle/vox/arkship_hold)
 
-	for(var/obj/item/O in get_area_by_type(/area/shuttle/vox/arkship))
+	for(var/type in arkship_areas)
+		for(var/obj/O in get_area_by_type(type))
 
-		var/obj/item/stack/sheet/S
-		if(istype(O, /obj/item/stack/sheet))
-			if(O.name == str_target)
-				S = O
-				total_amount += S.get_amount()
-		for(var/obj/I in O.contents)
-			if(istype(I, /obj/item/stack/sheet))
-				if(I.name == str_target)
-					S = I
+			var/obj/item/stack/sheet/S
+			if(istype(O, /obj/item/stack/sheet))
+				if(O.name == str_target)
+					S = O
 					total_amount += S.get_amount()
+			for(var/obj/I in O.contents)
+				if(istype(I, /obj/item/stack/sheet))
+					if(I.name == str_target)
+						S = I
+						total_amount += S.get_amount()
 
 	for(var/datum/role/raider in faction.members)
 		if(raider.antag.current)

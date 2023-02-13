@@ -47,7 +47,7 @@
 	cold_protection = HEAD
 	flags = BLOCKHEADHAIR
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
-	
+
 /obj/item/clothing/suit/hooded/wintercoat/captain
 	name = "captain's winter coat"
 	icon_state = "coatcaptain"
@@ -142,6 +142,24 @@
 	name = "mining winter hood"
 	icon_state = "coatminer_hood"
 
+/obj/item/clothing/suit/hooded/wintercoat/wiz_blue
+	name = "Blue wizard winter coat"
+	icon_state = "coatwizblue"
+	hoodtype = /obj/item/clothing/head/wintercoat/wiz_blue
+
+/obj/item/clothing/head/wintercoat/wiz_blue
+	name = "Blue wizard winter hood"
+	icon_state = "coatwizblue_hood"
+
+/obj/item/clothing/suit/hooded/wintercoat/wiz_red
+	name = "Red wizard winter coat"
+	icon_state = "coatwizred"
+	hoodtype = /obj/item/clothing/head/wintercoat/wiz_red
+
+/obj/item/clothing/head/wintercoat/wiz_red
+	name = "Red wizard winter hood"
+	icon_state = "coatwizred_hood"
+
 /obj/item/clothing/shoes/winterboots
 	name = "winter boots"
 	desc = "Boots lined with 'synthetic' animal fur."
@@ -151,6 +169,11 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	heat_protection = LEGS
 
+/obj/item/clothing/shoes/winterboots/wizard
+
+/obj/item/clothing/shoes/winterboots/wizard/atom_init(mapload, ...)
+	. = ..()
+	AddComponent(/datum/component/magic_item/wizard)
 
 /obj/item/clothing/suit/storage/labcoat/winterlabcoat
 	name = "winter labcoat"
@@ -162,23 +185,6 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
-
-/obj/item/clothing/head/ushanka
-	name = "ushanka"
-	desc = "Perfect for winter in Siberia, da?"
-	icon_state = "ushankadown"
-	item_state = "ushankadown"
-	cold_protection = HEAD
-
-/obj/item/clothing/head/ushanka/attack_self(mob/user)
-	if(src.icon_state == "ushankadown")
-		src.icon_state = "ushankaup"
-		src.item_state = "ushankaup"
-		to_chat(user, "You raise the ear flaps on the ushanka.")
-	else
-		src.icon_state = "ushankadown"
-		src.item_state = "ushankadown"
-		to_chat(user, "You lower the ear flaps on the ushanka.")
 
 /obj/item/clothing/head/santa
 	name = "christmas hat"
@@ -193,7 +199,6 @@
 	desc = "Prepare to jingle all the bells."
 	icon_state = "sexy_santa"
 	item_state = "sexy_santa"
-	item_color = "sexy_santa"
 	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 10, rad = 0)

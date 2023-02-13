@@ -14,9 +14,9 @@
 	)
 
 
-	//Determines maximum amount of points that can be earned by certain methods. 
+	//Determines maximum amount of points that can be earned by certain methods.
 	//Total points that can be earned equal highest score multiplied by this number
-	var/cap_coeff = 2 
+	var/cap_coeff = 2
 
 	var/list/tech_points = list(
 		"materials" = 200,
@@ -45,25 +45,12 @@
 		"biotech" = 0,
 	)
 
-	// So we don't give points for researching non-artifact item
-	var/list/artifact_types = list(
-		/obj/item/clothing/glasses/hud/mining/ancient,
-		/obj/machinery/auto_cloner,
-		/obj/machinery/power/supermatter,
-		/obj/structure/constructshell,
-		/obj/machinery/giga_drill,
-		/obj/structure/cult/pylon,
-		/obj/mecha/working/hoverpod,
-		/obj/machinery/replicator,
-		/obj/machinery/power/crystal,
-		/obj/machinery/artifact
-	)
-
 	var/list/saved_tech_levels = list() // list("materials" = list(1, 4, ...), ...)
 	var/list/saved_autopsy_weapons = list()
-	var/list/saved_artifacts = list()
 	var/list/saved_symptoms = list()
 	var/list/saved_slimecores = list()
+	//xenoarcheology stuff
+	var/list/saved_artifacts = list()
 
 /datum/experiment_data/proc/init_known_tech()
 	for(var/tech in tech_points_rarity)
@@ -134,21 +121,20 @@
 			if(special_weapons[weapon])
 				points += special_weapons[weapon]
 			else
-				points += rand(5,10) * 200 // 1000-2000 points for random weapon
+				points += rand(1,5) * 100 // 100-500 points for random weapon
 
-	for(var/list/artifact in I.scanned_artifacts)
-		if(!(artifact["type"] in artifact_types)) // useless
-			continue
-
+	for(var/list/scanning_artifact in I.scanned_artifacts)
 		var/already_scanned = FALSE
-		for(var/list/our_artifact in saved_artifacts)
-			if(our_artifact["type"] == artifact["type"] && our_artifact["first_effect"] == artifact["first_effect"] && our_artifact["second_effect"] == artifact["second_effect"])
+		for(var/list/stored_artifact in saved_artifacts)
+			if(stored_artifact["type"] == scanning_artifact["type"] && stored_artifact["first_effect"] == scanning_artifact["first_effect"] && stored_artifact["second_effect"] == scanning_artifact["second_effect"])
 				already_scanned = TRUE
 				break
 
 		if(!already_scanned)
-			points += rand(5,10) * 1000 // 5000-10000 points for random artifact
-			saved_artifacts += list(artifact)
+			points += 10000 //10000 points for main effect
+			if(scanning_artifact["second_effect"] != "")
+				points += 5000 //5000 points for secondary effect
+			saved_artifacts += list(scanning_artifact)
 
 	for(var/symptom in I.scanned_symptoms)
 		if(saved_symptoms[symptom])
@@ -191,14 +177,14 @@
 	for(var/weapon in O.saved_autopsy_weapons)
 		saved_autopsy_weapons |= weapon
 
-	for(var/list/artifact in O.saved_artifacts)
+	for(var/list/scanning_artifact in O.saved_artifacts)
 		var/has_artifact = FALSE
-		for(var/list/our_artifact in saved_artifacts)
-			if(our_artifact["type"] == artifact["type"] && our_artifact["first_effect"] == artifact["first_effect"] && our_artifact["second_effect"] == artifact["second_effect"])
+		for(var/list/stored_artifact in saved_artifacts)
+			if(stored_artifact["type"] == scanning_artifact["type"] && stored_artifact["first_effect"] == scanning_artifact["first_effect"] && stored_artifact["second_effect"] == scanning_artifact["second_effect"])
 				has_artifact = TRUE
 				break
 		if(!has_artifact)
-			saved_artifacts += list(artifact)
+			saved_artifacts += list(scanning_artifact)
 
 	for(var/symptom in O.saved_symptoms)
 		saved_symptoms[symptom] = O.saved_symptoms[symptom]
@@ -261,8 +247,8 @@
 
 /obj/item/device/radio/beacon/interaction_watcher/proc/research_interaction(inter_type, score, new_score_coeff=800, repeat_score_coeff=160)
 	var/calculated_research_points = -1
-	for(var/obj/machinery/computer/rdconsole/RD in RDcomputer_list)
-		if(RD.id == 1)
+	for(var/obj/machinery/computer/rdconsole/RD as anything in global.RDcomputer_list)
+		if(RD.id == DEFAULT_SCIENCE_CONSOLE_ID)
 			var/saved_interaction_score = RD.files.experiments.saved_best_score[inter_type]
 			var/saved_earned_points = max(RD.files.experiments.earned_score[inter_type], 1)
 
@@ -353,8 +339,8 @@
 	if(istype(target, /obj/item/weapon/paper/artifact_info))
 		var/obj/item/weapon/paper/artifact_info/report = target
 		if(report.artifact_type)
-			for(var/list/artifact in scanned_artifacts)
-				if(artifact["type"] == report.artifact_type && artifact["first_effect"] == report.artifact_first_effect && artifact["second_effect"] == report.artifact_second_effect)
+			for(var/list/scanning_artifact in scanned_artifacts)
+				if(scanning_artifact["type"] == report.artifact_type && scanning_artifact["first_effect"] == report.artifact_first_effect && scanning_artifact["second_effect"] == report.artifact_second_effect)
 					to_chat(user, "<span class='notice'>[src] already has data about this artifact report</span>")
 					return
 
@@ -379,7 +365,7 @@
 	if(scanneddata > 0)
 		datablocks += scanneddata
 		to_chat(user, "<span class='notice'>[src] received [scanneddata] data block[scanneddata>1?"s":""] from scanning [target]</span>")
-	else if(istype(target, /obj/item))
+	else if(isitem(target))
 		var/science_value = experiments.get_object_research_value(target)
 		if(science_value > 0)
 			to_chat(user, "<span class='notice'>Estimated research value of [target.name] is [science_value]</span>")

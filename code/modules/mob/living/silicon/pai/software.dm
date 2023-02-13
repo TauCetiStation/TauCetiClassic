@@ -188,7 +188,7 @@
 
 /mob/living/silicon/pai/proc/get_carrier(mob/living/M)
 	var/count = 0
-	while(!istype(M, /mob/living))
+	while(!isliving(M))
 		if(!M || !M.loc) return null //For a runtime where M ends up in nullspace (similar to bluespace but less colourful)
 		M = M.loc
 		count++
@@ -396,7 +396,7 @@
 					C.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls [istype(C, /mob) && !C.is_in_hands(cable) ? "to the floor" : "onto someone's hand"].</span>", "<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls [istype(C, /mob) && !C.is_in_hands(cable) ? "to the floor" : "onto your hand"].</span>", "<span class='warning'>You hear the soft click of something light and hard falling [C ? "onto someone's hand" : "to the ground"].</span>")
 				if(href_list["cable"] == "2")
 					if(cable)
-						cable.visible_message("<span class='warning'>The data cable rapidly retracts back into its spool.</span>", "", "<span class='warning'>You hear a click and the sound of wire spooling rapidly.</span>")
+						cable.visible_message("<span class='warning'>The data cable rapidly retracts back into its spool.</span>", "<span class='warning'>You hear a click and the sound of wire spooling rapidly.</span>")
 						QDEL_NULL(cable)
 					hackobj = null
 	//updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
@@ -525,7 +525,7 @@
 					A.extended_inventory = !A.extended_inventory
 				if(INTERACTION_VENDING_ACCOUNT_VERIFY)
 					A.check_accounts = !A.check_accounts
-		if(istype(hackobj, /obj/machinery/bot))
+		if(isbot(hackobj))
 			switch(interaction_type)
 				if(INTERACTION_ANYBOT_INTERFACE_LOCK) //Unlock
 					var/obj/machinery/bot/Bot = hackobj
@@ -810,8 +810,8 @@
 				 <h4>Host Bioscan</h4>
 				"}
 		var/mob/living/M = src.loc
-		if(!istype(M, /mob/living))
-			while (!istype(M, /mob/living))
+		if(!isliving(M))
+			while (!isliving(M))
 				M = M.loc
 				if(istype(M, /turf))
 					src.temp = "Error: No biological host found. <br>"
@@ -827,13 +827,7 @@
 		Structural Integrity: [M.getBruteLoss() > 50 ? "<font color=#FF5555>[M.getBruteLoss()]</font>" : "<font color=#55FF55>[M.getBruteLoss()]</font>"]<br>
 		Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)<br>
 		"}
-		for(var/datum/disease/D in M.viruses)
-			dat += {"<h4>Infection Detected.</h4><br>
-					 Name: [D.name]<br>
-					 Type: [D.spread]<br>
-					 Stage: [D.stage]/[D.max_stages]<br>
-					 Possible Cure: [D.cure]<br>
-					"}
+
 		dat += "<br><a href='byond://?src=\ref[src];software=medicalhud;sub=1'>Refresh Bioscan</a><br>"
 		dat += "<br><a href='byond://?src=\ref[src];software=medicalhud;sub=0'>Visual Status Overlay</a><br>"
 	return dat
@@ -953,7 +947,7 @@
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_VENDING_SPEAK];sub=0'>Speak</a> <br>"
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_VENDING_CONTRABAND_MODE];sub=0'>Lock/Unlock Hidden Items</a> (Currently [Temp.extended_inventory ? "Shown" : "Hidden"]) <br>"
 				dat += "<a href='byond://?src=\ref[src];software=interaction;interactwith=[INTERACTION_VENDING_ACCOUNT_VERIFY];sub=0'>Toggle Account Verifying</a> (Actually, just make everything silently free. Currently [Temp.check_accounts ? "Active" : "Disabled"]) <br>"
-			if(istype(hackobj, /obj/machinery/bot))
+			if(isbot(hackobj))
 				var/botchecked = 0 //Should we name bot as "Unknown"?
 				if(istype(hackobj, /obj/machinery/bot/secbot))
 					botchecked = 1
@@ -1004,7 +998,7 @@
 /mob/living/silicon/pai/proc/hackloop()
 	var/turf/T = get_turf_or_move(loc)
 	if(is_type_in_list(hackobj, list(/obj/machinery/door, /obj/machinery/camera, /obj/machinery/bot)))
-		for(var/mob/living/silicon/ai/AI in ai_list)
+		for(var/mob/living/silicon/ai/AI as anything in ai_list)
 			if(T.loc)
 				to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>")
 			else
@@ -1059,20 +1053,20 @@
 	if(translator_on)
 		translator_on = 0
 
-		remove_language("Sinta'unathi")
-		remove_language("Siik'maas")
-		remove_language("Siik'tajr")
-		remove_language("Skrellian")
+		remove_language(LANGUAGE_SINTAUNATHI)
+		remove_language(LANGUAGE_SIIKMAAS)
+		remove_language(LANGUAGE_SIIKTAJR)
+		remove_language(LANGUAGE_SKRELLIAN)
 
 		to_chat(src, "<span class='notice'>Translator Module toggled OFF.</span>")
 
 	else
 		translator_on = 1
 
-		add_language("Sinta'unathi")
-		add_language("Siik'maas")
-		add_language("Siik'tajr", 0)
-		add_language("Skrellian")
+		add_language(LANGUAGE_SINTAUNATHI)
+		add_language(LANGUAGE_SIIKMAAS)
+		add_language(LANGUAGE_SIIKTAJR, 0)
+		add_language(LANGUAGE_SKRELLIAN)
 
 		to_chat(src, "<span class='notice'>Translator Module toggled ON.</span>")
 

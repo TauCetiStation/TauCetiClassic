@@ -1,7 +1,7 @@
 #define TESLA_DEFAULT_POWER 1738260
 #define TESLA_MINI_POWER 869130
 
-var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
+var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 										/obj/machinery/power/emitter,
 										/obj/machinery/field_generator,
 										/mob/living/simple_animal,
@@ -21,8 +21,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	desc = "An energy ball."
 	icon = 'icons/obj/tesla_engine/energy_ball.dmi'
 	icon_state = "energy_ball"
-	layer = LIGHTING_LAYER + 1
-	plane = LIGHTING_PLANE + 1
+	plane = SINGULARITY_PLANE
 	pixel_x = -32
 	pixel_y = -32
 	current_size = STAGE_TWO
@@ -37,6 +36,9 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
 
+	var/atom/movable/singularity_effect/singulo_effect
+	var/atom/movable/singularity_lens/singulo_lens
+
 /obj/singularity/energy_ball/Destroy()
 	if(orbiting && istype(orbiting.orbiting, /obj/singularity/energy_ball))
 		var/obj/singularity/energy_ball/EB = orbiting.orbiting
@@ -46,7 +48,11 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		var/obj/singularity/energy_ball/EB = ball
 		qdel(EB)
 
+	vis_contents -= singulo_effect
+	QDEL_NULL(singulo_effect)
+
 	return ..()
+
 
 /obj/singularity/energy_ball/process()
 	if(!orbiting)
@@ -55,7 +61,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 
 		move_the_basket_ball(4 + orbiting_balls.len * 2)
 
-		playsound(src, 'sound/magic/lightningbolt.ogg', VOL_EFFECTS_MISC, null, null, 30)
+		playsound(src, 'sound/magic/lightningbolt.ogg', VOL_EFFECTS_MISC, null, FALSE, null, 30)
 
 		pixel_x = 0
 		pixel_y = 0
@@ -95,7 +101,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		energy_to_lower = energy_to_raise - 20
 		energy_to_raise = energy_to_raise * 1.5
 
-		playsound(src, 'sound/magic/lightning_chargeup.ogg', VOL_EFFECTS_MISC, null, null, 30)
+		playsound(src, 'sound/magic/lightning_chargeup.ogg', VOL_EFFECTS_MISC, null, FALSE, null, 30)
 		addtimer(CALLBACK(src, .proc/create_energy_ball), 100)
 
 	else if(energy < energy_to_lower && orbiting_balls.len)
@@ -149,10 +155,28 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		qdel(src)
 
 /obj/singularity/energy_ball/proc/dust_mobs(atom/A)
-	if(istype(A, /mob/living/carbon))
+	if(iscarbon(A))
 		var/mob/living/carbon/C = A
 		C.dust()
 	return
+
+/obj/singularity/energy_ball/update_icon(stage)
+	if(!singulo_effect)
+		singulo_effect = new(src)
+		singulo_effect.transform = matrix().Scale(1.25)
+		vis_contents += singulo_effect
+
+	if(!singulo_lens)
+		singulo_lens = new(src)
+		singulo_lens.transform = matrix().Scale(0.2)
+		singulo_lens.pixel_x = -96
+		singulo_lens.pixel_y = -96
+		vis_contents += singulo_lens
+
+	singulo_effect.icon = icon
+	singulo_effect.icon_state = icon_state
+
+	singulo_lens.icon_state = "gravitational_anti_lens"
 
 /proc/tesla_zap(atom/source, zap_range = 3, power)
 	. = source.dir
@@ -205,7 +229,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		else if(closest_mob)
 			continue
 
-		else if(istype(A, /obj/machinery))
+		else if(ismachinery(A))
 			var/obj/machinery/M = A
 			var/dist = get_dist(source, A)
 			if((dist < closest_dist || !closest_machine) && !M.being_shocked)
@@ -228,7 +252,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	//Alright, we've done our loop, now lets see if was anything interesting in range
 	if(closest_atom)
 		//common stuff
-		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5, beam_layer=LIGHTING_LAYER+1)
+		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5, beam_plane=ABOVE_LIGHTING_PLANE)
 		var/zapdir = get_dir(source, closest_atom)
 		if(zapdir)
 			. = zapdir
@@ -243,7 +267,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	else if(closest_mob)
 		var/shock_damage = clamp(round(power/400), 10, 90) + rand(-5, 5)
 		closest_mob.electrocute_act(shock_damage, source, 1, tesla_shock = 1)
-		if(istype(closest_mob, /mob/living/silicon))
+		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob
 			S.emplode(2)
 			tesla_zap(S, 7, power / 1.5) // metallic folks bounce it further

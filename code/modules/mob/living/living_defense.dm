@@ -6,7 +6,7 @@
 	if(alert_admins)
 		msg_admin_attack("[key_name(src)] has been [msg], by [key_name(attacker)]", attacker)
 
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null)
 	var/armor = getarmor(def_zone, attack_flag)
 	if(armor >= 100)
 		if(absorb_text)
@@ -27,7 +27,7 @@
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	if(P.impact_force) // we want this to be before everything as this is unblockable type of effect at this moment. If something changes, then mob_bullet_act() won't be needed probably as separate proc.
-		if(istype(loc, /turf/simulated))
+		if(isturf(loc))
 			loc.add_blood(src)
 		throw_at(get_edge_target_turf(src, P.dir), P.impact_force, 1, P.firer, spin = TRUE)
 
@@ -38,8 +38,6 @@
 	. = mob_bullet_act(P, def_zone)
 	if(. != PROJECTILE_ALL_OK)
 		return
-
-	flash_weak_pain()
 
 	//Being hit while using a deadman switch
 	if(istype(get_active_hand(),/obj/item/device/assembly/signaler))
@@ -65,7 +63,7 @@
 	if(!P.nodamage)
 		apply_damage(damage, P.damage_type, def_zone, absorb, flags, P)
 		if(length(P.proj_act_sound))
-			playsound(src, pick(P.proj_act_sound), VOL_EFFECTS_MASTER, null, FALSE, -5)
+			playsound(src, pick(P.proj_act_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 	P.on_hit(src, def_zone, absorb)
 
 	return absorb
@@ -125,7 +123,7 @@
 /mob/living/proc/resolve_thrown_attack(obj/O, throw_damage, dtype, zone, armor)
 
 	if(isnull(armor)) // Armor arg passed by human
-		armor = run_armor_check(null, "melee")
+		armor = run_armor_check(null, MELEE)
 		visible_message("<span class='warning'>[src] has been hit by [O].</span>")
 
 	var/damage_flags = O.damage_flags()
@@ -136,7 +134,7 @@
 	var/created_wound = apply_damage(throw_damage, dtype, zone, armor, damage_flags, O)
 
 	//thrown weapon embedded object code.
-	if(dtype == BRUTE && istype(O, /obj/item))
+	if(dtype == BRUTE && isitem(O))
 		var/obj/item/I = O
 		if(!I.can_embed || I.is_robot_module())
 			return
@@ -161,6 +159,12 @@
 	embedded += I
 	verbs += /mob/proc/yank_out_object
 
+/mob/living/proc/unpin_signal(obj/item/I)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(src, TRAIT_ANCHORED, I)
+	update_canmove()
+	UnregisterSignal(I, COMSIG_MOVABLE_MOVED)
+
 /mob/living/proc/pin_to_turf(obj/item/I)
 	if(!I)
 		return
@@ -176,8 +180,8 @@
 
 		visible_message("<span class='warning'>[src] is pinned to the [T] by [I]!</span>",
 			"<span class='danger'>You are pinned to the wall by [I]!</span>")
-		anchored = TRUE
-		pinned += I
+		ADD_TRAIT(src, TRAIT_ANCHORED, I)
+		RegisterSignal(I, COMSIG_MOVABLE_MOVED, CALLBACK(src, .proc/unpin_signal, I))
 		update_canmove() // instant update, no need to wait Life() tick
 
 //This is called when the mob is thrown into a dense turf
@@ -216,6 +220,7 @@
 		visible_message("<span class='warning'>[src] catches fire!</span>",
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 		update_fire()
 
 /mob/living/proc/ExtinguishMob()
@@ -223,6 +228,7 @@
 		playsound(src, 'sound/effects/extinguish_mob.ogg', VOL_EFFECTS_MASTER)
 		on_fire = 0
 		fire_stacks = 0
+		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
 		for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 			qdel(F)
 		update_fire()
@@ -289,7 +295,7 @@
 	update_action_buttons()
 
 /mob/living/incapacitated(restrained_type = ARMS)
-	return stat || paralysis || stunned || weakened || restrained(restrained_type)
+	return stat || HAS_TRAIT(src, TRAIT_INCAPACITATED) || restrained(restrained_type)
 
 // These procs define whether this mob has a usable limb at a given targetzone. Heavily used in combo-combat.
 // If targetzone is not specified, returns TRUE if the mob has the bodypart in general.

@@ -21,7 +21,7 @@
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 10
-	var/colour = "black"	//what colour the ink is!
+	var/colour = "black"	// can we make it HEX?
 	var/click_cooldown = 0
 
 /obj/item/weapon/pen/proc/get_signature(mob/user)
@@ -36,7 +36,6 @@
 /obj/item/weapon/pen/ghost
 	desc = "An expensive looking pen. You wonder, what is it's cost?"
 	colour = "purple"
-	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "fountainpen" //paththegreat: Eli Stevens
 	var/entity = ""
 
@@ -46,7 +45,7 @@
 		if(!entity)
 			to_chat(user, "<span class='notice'>You feel the [src] quiver, as another entity attempts to possess it.</span>")
 			var/list/choices = list()
-			for(var/mob/dead/observer/D in observer_list)
+			for(var/mob/dead/observer/D as anything in observer_list)
 				if(D.started_as_observer)
 					choices += D.name
 			if(choices.len)
@@ -77,8 +76,8 @@
 				return
 			else if(istype(I, /obj/item/weapon/storage/bible))
 				var/obj/item/weapon/storage/bible/B = I
-				to_chat(user, "<span class='notice'>You feel a ceratin divine intelligence, as [capitalize(B.deity_name)] possesess \the [src].</span>")
-				entity = B.deity_name
+				entity = pick(B.religion.deity_names)
+				to_chat(user, "<span class='notice'>You feel a ceratin divine intelligence, as [entity] possesess \the [src].</span>")
 				return
 			else if(istype(I, /obj/item/weapon/photo))
 				var/obj/item/weapon/photo/P = I
@@ -164,45 +163,118 @@
 /obj/item/weapon/pen/edagger
 	origin_tech = "combat=3;syndicate=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
-	tools = list()
+
+	qualities = null
+	flags = NOBLOODY
+
 	var/on = 0
+	var/hacked = 0
+
+	var/blade_color
+
+/obj/item/weapon/pen/edagger/atom_init()
+	. = ..()
+	blade_color = pick("blue", "red", "green", "purple", "yellow", "pink", "black")
 
 /obj/item/weapon/pen/edagger/attack_self(mob/living/user)
 	..()
+	toggle(user)
+
+/obj/item/weapon/pen/edagger/proc/toggle(mob/living/user)
 	if(on)
 		on = 0
 		force = initial(force)
 		w_class = initial(w_class)
 		edge = initial(edge)
+		sharp = initial(sharp)
+		can_embed = initial(can_embed)
 		name = initial(name)
 		hitsound = initial(hitsound)
 		throwforce = initial(throwforce)
 		playsound(user, 'sound/weapons/saberoff.ogg', VOL_EFFECTS_MASTER, 5)
 		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
-		tools = list()
+		qualities = null
 	else
 		on = 1
 		force = 18
 		w_class = SIZE_SMALL
-		edge = 1
+		edge = TRUE
+		sharp = TRUE
+		can_embed = FALSE
 		name = "energy dagger"
 		hitsound = list('sound/weapons/blade1.ogg')
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER, 5)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
-		tools = list(
-			TOOL_KNIFE = 1
+		qualities = list(
+			QUALITY_CUTTING = 1
 			)
 	update_icon()
 
+/obj/item/weapon/pen/edagger/attackby(obj/item/I, mob/user, params)
+	. = ..()
+	if(ispulsing(I))
+		if(!hacked)
+			hacked = TRUE
+			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")
+			blade_color = "rainbow"
+			if (on)
+				toggle(user)
+		else
+			to_chat(user,"<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
+
+
 /obj/item/weapon/pen/edagger/update_icon()
 	if(on)
-		icon_state = "edagger"
-		item_state = "edagger"
+		icon_state = "edagger[blade_color]"
+		item_state = "edagger[blade_color]"
 	else
 		clean_blood()
 		icon_state = initial(icon_state) //looks like a normal pen when off.
 		item_state = initial(item_state)
+
+/*
+ * Colors of edagger
+*/
+
+/obj/item/weapon/pen/edagger/blue/atom_init()
+	. = ..()
+	blade_color = "blue"
+
+/obj/item/weapon/pen/edagger/red/atom_init()
+	. = ..()
+	blade_color = "red"
+
+/obj/item/weapon/pen/edagger/green/atom_init()
+	. = ..()
+	blade_color = "green"
+
+/obj/item/weapon/pen/edagger/purple/atom_init()
+	. = ..()
+	blade_color = "purple"
+
+/obj/item/weapon/pen/edagger/yellow/atom_init()
+	. = ..()
+	blade_color = "yellow"
+
+/obj/item/weapon/pen/edagger/pink/atom_init()
+	. = ..()
+	blade_color = "pink"
+
+/obj/item/weapon/pen/edagger/black/atom_init()
+	. = ..()
+	blade_color = "black"
+
+/*
+ * Legit edagger for NT boys
+ */
+
+/obj/item/weapon/pen/edagger/legitimate
+	origin_tech = "combat=3"
+
+/obj/item/weapon/pen/edagger/legitimate/atom_init()
+	. = ..()
+	blade_color = "blue"
 
 /*
  * Chameleon pen

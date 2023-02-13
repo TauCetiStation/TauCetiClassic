@@ -22,21 +22,21 @@
 	has_head = TRUE
 	has_leg = TRUE
 
+	default_emotes = list(
+		/datum/emote/dance,
+	)
+
 /mob/living/simple_animal/pug/Life()
 	..()
 
-	if(!stat && !resting && !buckled)
+	if(stat == CONSCIOUS && !buckled)
 		if(prob(1))
-			emote(pick("chases its tail"))
-			spawn(0)
-				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					set_dir(i)
-					sleep(1)
+			emote("dance")
 
 /mob/living/simple_animal/pug/attackby(obj/item/O, mob/user)  //Marker -Agouri
 	if(istype(O, /obj/item/weapon/newspaper))
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(!stat)
+		if(stat == CONSCIOUS)
 			user.visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))

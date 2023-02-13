@@ -179,7 +179,7 @@
 
 	default_deconstruction_crowbar(O)
 
-	if(isscrewdriver(O))
+	if(isscrewing(O))
 		panel_open = !panel_open
 		to_chat(user, "You [panel_open ? "open" : "close"] the maintenance panel.")
 		cut_overlays()
@@ -366,9 +366,7 @@
 *************************/
 
 /obj/machinery/smartfridge/secure/Topic(href, href_list)
-	. = ..()
-	if(!.)
-		return
-	if (!allowed(usr) && !emagged && locked != -1 && href_list["vend"])
+	if(!allowed(usr) && !emagged && locked != -1 && href_list["vend"])
 		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return FALSE
+	return ..()

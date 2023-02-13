@@ -1,6 +1,6 @@
 /turf/simulated/wall/cult
 	name = "wall"
-	desc = "The patterns engraved on the wall seem to shift as you try to focus on them. You feel sick."
+	desc = "Узоры, выгравированные на стене, двигаются и смещаются под вашим взглядом. Голова идёт кругом..."
 	icon = 'icons/turf/walls/cult/wall.dmi'
 	canSmoothWith = list(/turf/simulated/wall/cult, /turf/simulated/wall/cult/runed, /turf/simulated/wall/cult/runed/anim, /turf/unsimulated/wall/cult, /turf/unsimulated/wall/cult/runed, /turf/unsimulated/wall/cult/runed/anim)
 

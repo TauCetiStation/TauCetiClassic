@@ -8,7 +8,6 @@
 		"Traitor", "Nuke Op", "Cultist","Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Deathsquad Officer", "Ian")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
 	var/painting = FALSE
-	var/lastattacker = null
 	var/static/list/coloring
 
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)
@@ -53,7 +52,8 @@
 		push_over()
 	return ..()
 
-/obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P)
+/obj/item/cardboard_cutout/bullet_act(obj/item/projectile/P, def_zone)
+	. = ..()
 	visible_message("<span class='danger'>[src] has been hit by [P]!</span>")
 	playsound(src, 'sound/weapons/slice.ogg', VOL_EFFECTS_MASTER)
 	if(prob(P.damage))

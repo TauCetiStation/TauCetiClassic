@@ -1,5 +1,5 @@
 // SPACE VINES (Note that this code is very similar to Biomass code)
-/obj/effect/spacevine
+/obj/structure/spacevine
 	name = "space vines"
 	desc = "An extremely expansionistic species of vine."
 	icon = 'icons/effects/spacevines.dmi'
@@ -10,61 +10,71 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	var/energy = 0
 	var/obj/effect/spacevine_controller/master = null
+	var/block_light = TRUE
 
-/obj/effect/spacevine/Destroy()
+	max_integrity = 50
+	resistance_flags = CAN_BE_HIT
+
+/obj/structure/spacevine/Destroy()
 	if(master)
 		master.vines -= src
 		master.growth_queue -= src
 		master = null
 	return ..()
 
-/obj/effect/spacevine/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/spacevine/attackby(obj/item/weapon/W, mob/user)
 	if (!W || !user || !W.type) return
-	switch(W.type)
-		if(/obj/item/weapon/circular_saw) qdel(src)
-		if(/obj/item/weapon/kitchenknife) qdel(src)
-		if(/obj/item/weapon/scalpel) qdel(src)
-		if(/obj/item/weapon/twohanded/fireaxe) qdel(src)
-		if(/obj/item/weapon/hatchet) qdel(src)
-		if(/obj/item/weapon/melee/energy) qdel(src)
-
-		//less effective weapons
-		if(/obj/item/weapon/wirecutters)
-			if(prob(25)) qdel(src)
-		if(/obj/item/weapon/shard)
-			if(prob(25)) qdel(src)
-
-		else //weapons with subtypes
-			if(istype(W, /obj/item/weapon/melee/energy/sword)) qdel(src)
-			else if(iswelder(W))
-				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.use(0, user)) qdel(src)
-			else
-				user_unbuckle_mob(user)
-				return
+	var/temperature = W.get_current_temperature()
+	if(W.sharp || iscutter(W) > 0 || temperature > 3000)
+		qdel(src)
+	else
+		return ..()
 		//Plant-b-gone damage is handled in its entry in chemistry-reagents.dm
-	return ..()
 
-/obj/effect/spacevine/attack_hand(mob/user)
+/obj/structure/spacevine/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(loc, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/obj/structure/spacevine/attack_hand(mob/user)
+	user_unbuckle_mob(user)
+	user.SetNextMove(CLICK_CD_MELEE)
+
+/obj/structure/spacevine/attack_paw(mob/user)
 	user_unbuckle_mob(user)
 	user.SetNextMove(CLICK_CD_MELEE)
 
 
-/obj/effect/spacevine/attack_paw(mob/user)
-	user_unbuckle_mob(user)
-	user.SetNextMove(CLICK_CD_MELEE)
+/obj/structure/spacevine/diona
+	opacity = FALSE
+	block_light = FALSE
+
 
 /obj/effect/spacevine_controller
-	var/list/obj/effect/spacevine/vines = list()
+	var/list/obj/structure/spacevine/vines = list()
 	var/list/growth_queue = list()
 	var/reached_collapse_size
 	var/reached_slowdown_size
 	//What this does is that instead of having the grow minimum of 1, required to start growing, the minimum will be 0,
 	//meaning if you get the spacevines' size to something less than 20 plots, it won't grow anymore.
 
+	var/vine_type = /obj/structure/spacevine
+
+	var/slowdown_size = 30
+	var/collapse_size = 250
+
+/obj/effect/spacevine_controller/diona
+	vine_type = /obj/structure/spacevine/diona
+	opacity = FALSE
+
 /obj/effect/spacevine_controller/atom_init()
 	. = ..()
-	if(!istype(loc, /turf/simulated/floor))
+	if(!isfloorturf(loc))
 		return INITIALIZE_HINT_QDEL
 
 	spawn_spacevine_piece(src.loc)
@@ -75,7 +85,7 @@
 	return ..()
 
 /obj/effect/spacevine_controller/proc/spawn_spacevine_piece(turf/location)
-	var/obj/effect/spacevine/SV = new(location)
+	var/obj/structure/spacevine/SV = new vine_type(location)
 	growth_queue += SV
 	vines += SV
 	SV.master = src
@@ -87,9 +97,9 @@
 	if(!growth_queue)
 		qdel(src) //Sanity check
 		return
-	if(vines.len >= 250 && !reached_collapse_size)
+	if(vines.len >= collapse_size && !reached_collapse_size)
 		reached_collapse_size = 1
-	if(vines.len >= 30 && !reached_slowdown_size )
+	if(vines.len >= slowdown_size && !reached_slowdown_size )
 		reached_slowdown_size = 1
 
 	var/length = 0
@@ -102,11 +112,11 @@
 			length = 0
 	else
 		length = 1
-	length = min( 30 , max( length , vines.len / 5 ) )
+	length = min( slowdown_size , max( length , vines.len / 5 ) )
 	var/i = 0
-	var/list/obj/effect/spacevine/queue_end = list()
+	var/list/obj/structure/spacevine/queue_end = list()
 
-	for( var/obj/effect/spacevine/SV in growth_queue )
+	for( var/obj/structure/spacevine/SV in growth_queue )
 		i++
 		queue_end += SV
 		growth_queue -= SV
@@ -114,7 +124,10 @@
 			if(prob(20))
 				SV.grow()
 		else //If tile is fully grown
-			SV.buckle_mob()
+			if(prob(25))
+				var/mob/living/carbon/C = locate() in SV.loc
+				if(C)
+					SV.buckle_mob(C)
 
 		//if(prob(25))
 		SV.spread()
@@ -125,86 +138,51 @@
 	//sleep(5)
 	//process()
 
-/obj/effect/spacevine/proc/grow()
+/obj/structure/spacevine/proc/grow()
 	if(!energy)
 		src.icon_state = pick("Med1", "Med2", "Med3")
 		energy = 1
-		src.opacity = 1
+		if(block_light)
+			opacity = TRUE
 		layer = 5
 	else
 		src.icon_state = pick("Hvy1", "Hvy2", "Hvy3")
 		energy = 2
 
-/obj/effect/spacevine/buckle_mob()
-	if(!buckled_mob && prob(25))
-		for(var/mob/living/carbon/V in src.loc)
-			if((V.stat != DEAD)  && (V.buckled != src)) //if mob not dead or captured
-				V.buckled = src
-				V.loc = src.loc
-				V.update_canmove()
-				src.buckled_mob = V
-				to_chat(V, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
-				break //only capture one mob at a time.
+// simpler checks and removed user buckle
+/obj/structure/spacevine/can_buckle(mob/living/M)
+	if(M.buckled || buckled_mob)
+		return FALSE
+	return M.stat != DEAD
 
-/obj/effect/spacevine/proc/spread()
+/obj/structure/spacevine/user_buckle_mob(mob/living/M, mob/user)
+	return
+
+/obj/structure/spacevine/buckle_mob(mob/living/M)
+	. = ..()
+	if(.)
+		to_chat(M, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
+
+/obj/structure/spacevine/proc/spread()
 	var/direction = pick(cardinal)
 	var/step = get_step(src,direction)
-	if(istype(step,/turf/simulated/floor))
+	if(isfloorturf(step))
 		var/turf/simulated/floor/F = step
-		if(!locate(/obj/effect/spacevine,F))
+		if(!locate(/obj/structure/spacevine,F))
 			if(F.Enter(src))
 				if(master)
 					master.spawn_spacevine_piece( F )
 
-/*
-/obj/effect/spacevine/proc/Life()
-	if (!src) return
-	var/Vspread
-	if (prob(50)) Vspread = locate(src.x + rand(-1,1),src.y,src.z)
-	else Vspread = locate(src.x,src.y + rand(-1, 1),src.z)
-	var/dogrowth = 1
-	if (!istype(Vspread, /turf/simulated/floor)) dogrowth = 0
-	for(var/obj/O in Vspread)
-		if (istype(O, /obj/structure/window) || istype(O, /obj/effect/forcefield) || istype(O, /obj/effect/blob) || istype(O, /obj/structure/alien/weeds) || istype(O, /obj/effect/spacevine)) dogrowth = 0
-		if (istype(O, /obj/machinery/door))
-			if(O:p_open == 0 && prob(50)) O:open()
-			else dogrowth = 0
-	if (dogrowth == 1)
-		var/obj/effect/spacevine/B = new /obj/effect/spacevine(Vspread)
-		B.icon_state = pick("vine-light1", "vine-light2", "vine-light3")
-		spawn(20)
-			if(B)
-				B.Life()
-	src.growth += 1
-	if (src.growth == 10)
-		src.name = "Thick Space Kudzu"
-		src.icon_state = pick("vine-med1", "vine-med2", "vine-med3")
-		src.opacity = 1
-		src.waittime = 80
-	if (src.growth == 20)
-		src.name = "Dense Space Kudzu"
-		src.icon_state = pick("vine-hvy1", "vine-hvy2", "vine-hvy3")
-		src.density = TRUE
-	spawn(src.waittime)
-		if (src.growth < 20) Life()
-
-*/
-
-/obj/effect/spacevine/ex_act(severity)
+/obj/structure/spacevine/ex_act(severity)
 	switch(severity)
-		if(1.0)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(90))
-				qdel(src)
+		if(EXPLODE_HEAVY)
+			if(prob(10))
 				return
-		if(3.0)
-			if (prob(50))
-				qdel(src)
+		if(EXPLODE_LIGHT)
+			if(prob(50))
 				return
-	return
+	qdel(src)
 
-/obj/effect/spacevine/fire_act(null, temperature, volume) //hotspots kill vines
+/obj/structure/spacevine/fire_act(null, temperature, volume) //hotspots kill vines
 	if(temperature > T0C+100)
 		qdel(src)

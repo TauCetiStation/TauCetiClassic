@@ -29,6 +29,7 @@
 			if("feet")
 				if(!H.shoes && !H.buckled)
 					BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
+					H.Stun(1)
 					H.Weaken(3)
 			if(BP_L_ARM, BP_R_ARM)
 				if(!H.gloves)
@@ -51,7 +52,7 @@
 	if(!armed)
 		to_chat(user, "<span class='notice'>You arm [src].</span>")
 	else
-		if((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50))
+		if((user.getBrainLoss() >= 60 && prob(50)) || user.ClumsyProbabilityCheck(50))
 			triggered(user, user.hand ? BP_L_ARM : BP_R_ARM)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 								 "<span class='warning'>You accidentally trigger [src]!</span>")
@@ -59,11 +60,11 @@
 		to_chat(user, "<span class='notice'>You disarm [src].</span>")
 	armed = !armed
 	update_icon()
-	playsound(user, 'sound/weapons/handcuffs.ogg', VOL_EFFECTS_MASTER, 30, null, -3)
+	playsound(user, 'sound/weapons/handcuffs.ogg', VOL_EFFECTS_MASTER, 30, FALSE, null, -3)
 
 /obj/item/device/assembly/mousetrap/attack_hand(mob/living/user)
 	if(armed)
-		if((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50))
+		if((user.getBrainLoss() >= 60 && prob(50)) || user.ClumsyProbabilityCheck(50))
 			user.SetNextMove(CLICK_CD_INTERACT)
 			triggered(user, user.hand ? BP_L_ARM : BP_R_ARM)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \

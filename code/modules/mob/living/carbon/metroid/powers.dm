@@ -11,15 +11,15 @@
 
 	var/list/choices = list()
 	for(var/mob/living/C in view(1,src))
-		if(C!=src && !istype(C,/mob/living/carbon/slime))
+		if(C!=src && !isslime(C))
 			choices += C
 
 	var/mob/living/carbon/M = input(src,"Who do you wish to feed on?") in null|choices
 	if(!M) return
 	if(M in view(1, src))
 
-		if(!istype(src, /mob/living/carbon/brain))
-			if(!istype(M, /mob/living/carbon/slime))
+		if(!isbrain(src))
+			if(!isslime(M))
 				if(stat != DEAD)
 					if(health > -70)
 
@@ -49,7 +49,7 @@
 	anchored = TRUE
 	var/lastnut = nutrition
 	//if(M.client) M << "<span class='warning'>You legs become paralyzed!</span>"
-	if(istype(src, /mob/living/carbon/slime/adult))
+	if(isslimeadult(src))
 		icon_state = "[colour] adult slime eat"
 	else
 		icon_state = "[colour] baby slime eat"
@@ -61,7 +61,7 @@
 		if(M in view(1, src))
 			loc = M.loc
 
-			if(prob(15) && M.client && istype(M, /mob/living/carbon))
+			if(prob(15) && M.client && iscarbon(M))
 				to_chat(M, "<span class='warning'>[pick("You can feel your body becoming weak!", \
 				"You feel like you're about to die!", \
 				"You feel every part of your body screaming in agony!", \
@@ -70,7 +70,7 @@
 				"You feel extremely weak!", \
 				"A sharp, deep pain bathes every inch of your body!")]</span>")
 
-			if(istype(M, /mob/living/carbon))
+			if(iscarbon(M))
 				Victim.adjustCloneLoss(rand(1,10))
 				Victim.adjustToxLoss(rand(1,2))
 				if(Victim.health <= 0)
@@ -96,7 +96,7 @@
 						if(powerlevel > 10)
 							powerlevel = 10
 
-				if(istype(src, /mob/living/carbon/slime/adult))
+				if(isslimeadult(src))
 					if(nutrition > 1200)
 						nutrition = 1200
 				else
@@ -119,11 +119,11 @@
 			break
 
 	if(stat == DEAD)
-		if(!istype(src, /mob/living/carbon/slime/adult))
+		if(!isslimeadult(src))
 			icon_state = "[colour] baby slime dead"
 
 	else
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(isslimeadult(src))
 			icon_state = "[colour] adult slime"
 		else
 			icon_state = "[colour] baby slime"
@@ -142,7 +142,7 @@
 								Friends[Victim.LAssailant] = 1
 							else
 								++Friends[Victim.LAssailant]
-			if(M.client && istype(src, /mob/living/carbon/human))
+			if(M.client && ishuman(src))
 				if(prob(85))
 					rabid = 1 // UUUNNBGHHHH GONNA EAT JUUUUUU
 
@@ -178,12 +178,12 @@
 	if(incapacitated())
 		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
-	if(!istype(src, /mob/living/carbon/slime/adult))
+	if(!isslimeadult(src))
 		if(amount_grown >= max_grown)
 			var/mob/living/carbon/slime/adult/new_slime = new adulttype(loc)
 			new_slime.nutrition = nutrition
 			new_slime.powerlevel = max(0, powerlevel-1)
-			new_slime.a_intent = INTENT_HARM
+			new_slime.set_a_intent(INTENT_HARM)
 			new_slime.key = key
 			new_slime.universal_speak = universal_speak
 			to_chat(new_slime, "<B>You are now an adult slime.</B>")
@@ -201,7 +201,7 @@
 		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
 
-	if(istype(src, /mob/living/carbon/slime/adult))
+	if(isslimeadult(src))
 		if(amount_grown >= max_grown)
 			var/list/babies = list()
 			var/new_nutrition = round(nutrition * 0.9)
@@ -242,7 +242,7 @@
 							babies += M
 
 			var/mob/living/carbon/slime/new_slime = pick(babies)
-			new_slime.a_intent = INTENT_HARM
+			new_slime.set_a_intent(INTENT_HARM)
 			new_slime.universal_speak = universal_speak
 			new_slime.key = key
 

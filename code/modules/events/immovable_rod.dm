@@ -17,7 +17,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/turf/startT = spaceDebrisStartLoc(startside, z)
 	var/turf/endT = spaceDebrisFinishLoc(startside, z)
 	//rod time!
-	new /obj/effect/immovable_rod(startT, endT)
+	var/obj/O = new /obj/effect/immovable_rod(startT, endT)
+	notify_ghosts("[O.name] is coming!", source=O, action=NOTIFY_ORBIT, header="[O.name]")
 
 /obj/effect/immovable_rod
 	name = "Immovable Rod"
@@ -36,7 +37,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	. = ..()
 	if(notify)
 		message_admins("[src] has spawned at [COORD(src)] [ADMIN_JMP(src)] [ADMIN_FLW(src)].")
-	poi_list += src
 	z_original = z
 	destination = end
 	if(end && end.z == z_original)
@@ -48,7 +48,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	return ..()
 
 /obj/effect/immovable_rod/Destroy()
-	poi_list -= src
 	walk(src,0) //this cancels the walk_towards() proc
 	return ..()
 
@@ -68,7 +67,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		y = clong.y
 
 	if((istype(clong, /turf/simulated) || isobj(clong)) && clong.density)
-		clong.ex_act(2)
+		clong.ex_act(EXPLODE_HEAVY)
 
 	if(istype(clong, /turf/simulated/shuttle) || clong == src) //Skip shuttles without actually deleting the rod
 		return
@@ -79,7 +78,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 			H.visible_message("<span class='danger'>[H.name] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class ='danger'>You hear a CLANG!</span>")
 			H.adjustBruteLoss(160)
 		if(clong.density || prob(10))
-			clong.ex_act(2)
+			clong.ex_act(EXPLODE_HEAVY)
 	else if(istype(clong, type))
 		var/obj/effect/immovablerod/other = clong
 		visible_message("<span class='danger'>[src] collides with [other]!</span>")

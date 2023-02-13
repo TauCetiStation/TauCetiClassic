@@ -22,6 +22,7 @@
 	//blinded get reset each cycle and then get activated later in the
 	//code. Very ugly. I dont care. Moving this stuff here so its easy
 	//to find it.
+	reset_alerts()
 	blinded = null
 
 	//Handle temperature/pressure differences between body and environment
@@ -31,6 +32,9 @@
 	//Status updates, death etc.
 	handle_regular_status_updates()
 	update_canmove()
+
+	if(client)
+		handle_alerts()
 
 
 /mob/living/carbon/brain/proc/handle_mutations_and_radiation()
@@ -66,50 +70,14 @@
 				adjustToxLoss(3)
 				updatehealth()
 
-
-/mob/living/carbon/brain/handle_environment(datum/gas_mixture/environment)
-	if(!environment)
-		return
-	var/environment_heat_capacity = environment.heat_capacity()
-	if(istype(get_turf(src), /turf/space))
-		var/turf/heat_turf = get_turf(src)
-		environment_heat_capacity = heat_turf.heat_capacity
-
-	if((environment.temperature > (T0C + 50)) || (environment.temperature < (T0C + 10)))
-		var/transfer_coefficient = 1
-
-		handle_temperature_damage(HEAD, environment.temperature, environment_heat_capacity*transfer_coefficient)
-
-	if(stat==2)
-		bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
-
-	//Account for massive pressure differences
-
-	return //TODO: DEFERRED
-
-/mob/living/carbon/brain/proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
-	if(status_flags & GODMODE) return
-
-	if(exposed_temperature > bodytemperature)
-		var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
-		//adjustFireLoss(2.5*discomfort)
-		//adjustFireLoss(5.0*discomfort)
-		adjustFireLoss(20.0*discomfort)
-
-	else
-		var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
-		//adjustFireLoss(2.5*discomfort)
-		adjustFireLoss(5.0*discomfort)
-
-
-
 /mob/living/carbon/brain/proc/handle_chemicals_in_body()
 
 	if(reagents) reagents.metabolize(src)
 
-	confused = max(0, confused - 1)
+	AdjustConfused(-1)
+	AdjustDrunkenness(-1)
 	// decrement dizziness counter, clamped to 0
-	if(resting)
+	if(crawling)
 		dizziness = max(0, dizziness - 5)
 	else
 		dizziness = max(0, dizziness - 1)
@@ -134,7 +102,7 @@
 
 		//Handling EMP effect in the Life(), it's made VERY simply, and has some additional effects handled elsewhere
 		if(emp_damage)			//This is pretty much a damage type only used by MMIs, dished out by the emp_act
-			if(!(container && istype(container, /obj/item/device/mmi)))
+			if(!(container && isMMI(container)))
 				emp_damage = 0
 			else
 				emp_damage = round(emp_damage,1)//Let's have some nice numbers to work with
@@ -147,7 +115,7 @@
 					ear_deaf = 1
 					silent = 1
 					if(!alert)//Sounds an alarm, but only once per 'level'
-						emote("alarm")
+						emote("buzz")
 						to_chat(src, "<span class='warning'>Major electrical distruption detected: System rebooting.</span>")
 						alert = 1
 					if(prob(75))
@@ -160,22 +128,22 @@
 					silent = 0
 					emp_damage -= 1
 				if(11 to 19)//Moderate level of EMP damage, resulting in nearsightedness and ear damage
-					eye_blurry = 1
+					blurEyes(1)
 					ear_damage = 1
 					if(!alert)
-						emote("alert")
+						emote("buzz")
 						to_chat(src, "<span class='warning'>Primary systems are now online.</span>")
 						alert = 1
 					if(prob(50))
 						emp_damage -= 1
 				if(10)
 					alert = 0
-					eye_blurry = 0
+					setBlurriness(0)
 					ear_damage = 0
 					emp_damage -= 1
 				if(2 to 9)//Low level of EMP damage, has few effects(handled elsewhere)
 					if(!alert)
-						emote("notice")
+						emote("ping")
 						to_chat(src, "<span class='warning'>System reboot nearly complete.</span>")
 						alert = 1
 					if(prob(25))
@@ -186,14 +154,8 @@
 					emp_damage -= 1
 
 		//Other
-		if(stunned)
-			AdjustStunned(-1)
-
-		if(weakened)
-			weakened = max(weakened-1,0)	//before you get mad Rockdtben: I done this so update_canmove isn't called multiple times
-
 		if(stuttering)
-			stuttering = max(stuttering-1, 0)
+			AdjustStuttering(-1)
 
 		if(silent)
 			silent = max(silent-1, 0)
@@ -204,58 +166,8 @@
 
 /mob/living/carbon/brain/handle_regular_hud_updates()
 	if(!client)
-		return 0
+		return
 
-	if (stat == DEAD || (XRAY in src.mutations))
-		sight |= SEE_TURFS
-		sight |= SEE_MOBS
-		sight |= SEE_OBJS
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-	else if (stat != DEAD)
-		sight &= ~SEE_TURFS
-		sight &= ~SEE_MOBS
-		sight &= ~SEE_OBJS
-		see_in_dark = 2
-		see_invisible = SEE_INVISIBLE_LIVING
-
-	if (healths)
-		if (stat != DEAD)
-			switch(health)
-				if(100 to INFINITY)
-					healths.icon_state = "health0"
-				if(80 to 100)
-					healths.icon_state = "health1"
-				if(60 to 80)
-					healths.icon_state = "health2"
-				if(40 to 60)
-					healths.icon_state = "health3"
-				if(20 to 40)
-					healths.icon_state = "health4"
-				if(0 to 20)
-					healths.icon_state = "health5"
-				else
-					healths.icon_state = "health6"
-		else
-			healths.icon_state = "health7"
-
-	if(pullin)
-		pullin.icon_state = "pull[pulling ? 1 : 0]"
+	update_sight()
 
 	..()
-
-	return 1
-
-
-/*/mob/living/carbon/brain/emp_act(severity)
-	if(!(container && istype(container, /obj/item/device/mmi)))
-		return
-	else
-		switch(severity)
-			if(1)
-				emp_damage += rand(20,30)
-			if(2)
-				emp_damage += rand(10,20)
-			if(3)
-				emp_damage += rand(0,10)
-	..()*/

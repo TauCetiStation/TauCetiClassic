@@ -58,7 +58,7 @@ Note: If your code uses output() with assets you will need to call asset_flush o
 				client << browse_rsc(ACI.resource, asset)
 
 			client.sent_assets |= unreceived
-			addtimer(CALLBACK(client, /client/proc/asset_cache_update_json), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+		addtimer(CALLBACK(client, /client/proc/asset_cache_update_json), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 		return TRUE
 	return FALSE
 

@@ -9,6 +9,11 @@
 	antag_hud_name = "hudwizard"
 
 	logo_state = "wizard-logo"
+	skillset_type = /datum/skillset/wizard
+
+	stat_type = /datum/stat/role/wizard
+
+	var/list/list_of_purchases = list()
 
 /datum/role/wizard/Greet(greeting, custom)
 	. = ..()
@@ -74,17 +79,33 @@
 /datum/role/wizard/forgeObjectives()
 	if(!..())
 		return FALSE
-	switch(rand(1,100))
+	switch(rand(1,140))
 		if(1 to 30)
+			AppendObjective(/datum/objective/target/assassinate)
 			AppendObjective(/datum/objective/target/assassinate)
 			AppendObjective(/datum/objective/survive)
 
 		if(31 to 60)
 			AppendObjective(/datum/objective/steal)
+			AppendObjective(/datum/objective/steal)
+			AppendObjective(/datum/objective/steal)
 			AppendObjective(/datum/objective/survive)
 
-		if(61 to 99)
+		if(61 to 81)
 			AppendObjective(/datum/objective/target/assassinate)
+			AppendObjective(/datum/objective/target/assassinate)
+			AppendObjective(/datum/objective/steal)
+			AppendObjective(/datum/objective/survive)
+
+		if(82 to 100)
+			AppendObjective(/datum/objective/target/protect)
+			AppendObjective(/datum/objective/target/assassinate)
+			AppendObjective(/datum/objective/steal)
+			AppendObjective(/datum/objective/survive)
+
+		if(101 to 139)
+			AppendObjective(/datum/objective/target/assassinate)
+			AppendObjective(/datum/objective/steal)
 			AppendObjective(/datum/objective/steal)
 			AppendObjective(/datum/objective/survive)
 
@@ -98,7 +119,7 @@
 		. += "<br><b>[antag.name] used the following spells: </b>"
 		var/i = 1
 		for(var/obj/effect/proc_holder/spell/S in antag.current.spell_list)
-			var/icon/spellicon = icon('icons/mob/actions.dmi', S.action_icon_state)
+			var/icon/spellicon = icon('icons/hud/actions.dmi', S.action_icon_state)
 			end_icons += spellicon
 			var/tempstate = end_icons.len
 			. += {"<br><img src="logo_[tempstate].png"> [S.name]"}
@@ -140,7 +161,7 @@
 		. += "<br><b>[antag.name] used the following spells: </b>"
 		var/i = 1
 		for(var/obj/effect/proc_holder/spell/S in antag.current.spell_list)
-			var/icon/spellicon = icon('icons/mob/actions.dmi', S.action_icon_state)
+			var/icon/spellicon = icon('icons/hud/actions.dmi', S.action_icon_state)
 			end_icons += spellicon
 			var/tempstate = end_icons.len
 			. += {"<br><img src="logo_[tempstate].png"> [S.name]"}

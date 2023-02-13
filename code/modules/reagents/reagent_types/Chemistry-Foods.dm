@@ -149,19 +149,19 @@
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1 to 15)
-			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(holder.has_reagent("frostoil"))
 				holder.remove_reagent("frostoil", 5)
 			if(isslime(M))
-				M.bodytemperature += rand(5,20)
+				M.adjust_bodytemperature(rand(5,20))
 		if(15 to 25)
-			M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(isslime(M))
-				M.bodytemperature += rand(10,20)
+				M.adjust_bodytemperature(rand(10,20))
 		if(25 to INFINITY)
-			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT)
 			if(isslime(M))
-				M.bodytemperature += rand(15,20)
+				M.adjust_bodytemperature(rand(15,20))
 	data["ticks"]++
 
 /datum/reagent/consumable/condensedcapsaicin
@@ -207,7 +207,7 @@
 				return
 			else if (mouth_covered)	// Reduced effects if partially protected
 				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protect you from most of the pepperspray!</span>")
-				victim.eye_blurry = max(M.eye_blurry, 15)
+				victim.blurEyes(15)
 				victim.eye_blind = max(M.eye_blind, 5)
 				victim.Stun(5)
 				victim.Weaken(5)
@@ -215,12 +215,12 @@
 			else if (eyes_covered) // Eye cover is better than mouth cover
 				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protects your eyes from the pepperspray!</span>")
 				victim.emote("scream")
-				victim.eye_blurry = max(M.eye_blurry, 5)
+				victim.blurEyes(5)
 				return
 			else // Oh dear :D
 				victim.emote("scream")
 				to_chat(victim, "<span class='userdanger'> You're sprayed directly in the eyes with pepperspray!</span>")
-				victim.eye_blurry = max(M.eye_blurry, 25)
+				victim.blurEyes(25)
 				victim.eye_blind = max(M.eye_blind, 10)
 				victim.Stun(5)
 				victim.Weaken(5)
@@ -241,11 +241,12 @@
 
 /datum/reagent/consumable/frostoil/on_general_digest(mob/living/M)
 	..()
-	M.bodytemperature = max(M.bodytemperature - 10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0)
 	if(prob(1))
 		M.emote("shiver")
 	if(isslime(M))
-		M.bodytemperature = max(M.bodytemperature - rand(10,20), 0)
+		M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT - rand(10, 20))
+	else
+		M.adjust_bodytemperature(-10 * TEMPERATURE_DAMAGE_COEFFICIENT)
 	holder.remove_reagent("capsaicin", 5)
 	holder.remove_reagent(src.id, FOOD_METABOLISM)
 
@@ -294,8 +295,7 @@
 
 /datum/reagent/consumable/hot_coco/on_general_digest(mob/living/M)
 	..()
-	if (M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL)
 
 /datum/reagent/consumable/psilocybin
 	name = "Psilocybin"
@@ -313,22 +313,19 @@
 		data["ticks"] = 1
 	switch(data["ticks"])
 		if(1 to 5)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_dizzy(5)
 			if(prob(10))
 				M.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_jittery(10)
 			M.make_dizzy(10)
 			M.adjustDrugginess(3)
 			if(prob(20))
 				M.emote(pick("twitch","giggle"))
 		if(10 to INFINITY)
-			if(!M.stuttering)
-				M.stuttering = 1
+			M.Stuttering(1)
 			M.make_jittery(20)
 			M.make_dizzy(20)
 			M.adjustDrugginess(4)
@@ -389,8 +386,7 @@
 
 /datum/reagent/consumable/hot_ramen/on_general_digest(mob/living/M)
 	..()
-	if(M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL)
 
 /datum/reagent/consumable/hell_ramen
 	name = "Spicy Ramen"
@@ -403,8 +399,7 @@
 
 /datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M)
 	..()
-	if(M.bodytemperature < BODYTEMP_NORMAL + 40) // Not Tajaran friendly food (by the time of writing this, Tajaran has 330 heat limit, while this is 350 and human 360.
-		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	M.adjust_bodytemperature(15 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 40)
 
 /datum/reagent/consumable/hot_hell_ramen
 	name = "Hot Spicy Ramen"
@@ -417,8 +412,7 @@
 
 /datum/reagent/consumable/hot_hell_ramen/on_general_digest(mob/living/M)
 	..()
-	if(M.bodytemperature < BODYTEMP_NORMAL + 40)
-		M.bodytemperature = min(BODYTEMP_NORMAL + 40, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, max_temp = BODYTEMP_NORMAL + 40)
 
 /datum/reagent/consumable/rice
 	name = "Rice"

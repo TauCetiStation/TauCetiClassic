@@ -26,6 +26,8 @@
 		var/obj/item/weapon/reagent_containers/syringe/S = I
 		if(S.mode != 2)//SYRINGE_BROKEN in syringes.dm
 			if(syringes.len < max_syringes)
+				if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/chemistry = SKILL_LEVEL_NOVICE)))
+					return
 				user.drop_from_inventory(I, src)
 				syringes += I
 				to_chat(user, "<span class='notice'>You put the syringe in [src].</span>")
@@ -95,7 +97,7 @@
 						R += num2text(RA.volume) + "),"
 				M.log_combat(user, "shot with a <b>syringegun</b>")
 
-				if(!M.check_thickmaterial(target_zone = user.get_targetzone()) && !M.isSynthetic(user.get_targetzone()))
+				if(!M.check_pierce_protection(target_zone = user.get_targetzone()) && !M.isSynthetic(user.get_targetzone()))
 					if(D.reagents)
 						M.visible_message("<span class='danger'>[M] is hit by the syringe!</span>")
 						D.reagents.trans_to(M, 15)

@@ -1,7 +1,7 @@
 #define TIMER_MIN 600
 #define TIMER_MAX 780
 
-var/bomb_set
+var/global/bomb_set
 
 /obj/machinery/nuclearbomb
 	name = "Nuclear Fission Explosive"
@@ -12,6 +12,9 @@ var/bomb_set
 	can_buckle = 1
 	use_power = NO_POWER_USE
 	unacidable = TRUE	//aliens can't destroy the bomb
+
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 	var/deployable = 0.0
 	var/extended = 0.0
 	var/lighthack = 0
@@ -35,12 +38,10 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/atom_init()
 	. = ..()
-	poi_list += src
 	r_code = "[rand(10000, 99999.0)]"//Creates a random code upon object spawn.
 	wires = new(src)
 
 /obj/machinery/nuclearbomb/Destroy()
-	poi_list -= src
 	QDEL_NULL(wires)
 	QDEL_NULL(auth)
 	return ..()
@@ -55,15 +56,13 @@ var/bomb_set
 		updateUsrDialog()
 
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/O, mob/user)
-
-	if (isscrewdriver(O))
+	if (isscrewing(O))
 		add_fingerprint(user)
 		if (removal_stage == 5)
 			if (src.opened == 0)
 				src.opened = 1
 				add_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You unscrew the control panel of [src].")
-
 			else
 				src.opened = 0
 				cut_overlay(image(icon, "npanel_open"))
@@ -73,7 +72,6 @@ var/bomb_set
 				src.opened = 1
 				add_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You unscrew the control panel of [src].")
-
 			else
 				src.opened = 0
 				cut_overlay(image(icon, "npanel_open"))
@@ -86,87 +84,81 @@ var/bomb_set
 				cut_overlay(image(icon, "npanel_open"))
 				to_chat(user, "You screw the control panel of [src] back on.")
 			flick("nuclearbombc", src)
-
-		return
+		return FALSE
 	if (is_wire_tool(O) && opened)
 		if(wires.interact(user))
-			return
+			return FALSE
 
 	if (src.extended)
 		if (istype(O, /obj/item/weapon/disk/nuclear))
 			usr.drop_from_inventory(O, src)
 			src.auth = O
 			add_fingerprint(user)
-			return
+			return FALSE
 
 	if (src.anchored)
 		switch(removal_stage)
 			if(0)
-				if(iswelder(O))
-
+				if(iswelding(O))
 					var/obj/item/weapon/weldingtool/WT = O
-					if(!WT.isOn()) return
+					if(!WT.isOn())
+						return FALSE
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
 						to_chat(user, "<span class = 'red'>You need more fuel to complete this task.</span>")
-						return
+						return FALSE
 					if(user.is_busy())
-						return
+						return FALSE
 					user.visible_message("[user] starts cutting thru something on [src] like \he knows what to do.", "With [O] you start cutting thru first layer...")
 
-					if(O.use_tool(src, user, 150, amount = 5, volume = 50))
+					if(O.use_tool(src, user, SKILL_TASK_CHALLENGING, amount = 5, volume = 50))
 						user.visible_message("[user] finishes cutting something on [src].", "You cut thru first layer.")
 						removal_stage = 1
-				return
-
+				return FALSE
 			if(1)
-				if(iscrowbar(O))
+				if(isprying(O))
 					user.visible_message("[user] starts smashing [src].", "You start forcing open the covers with [O]...")
 					if(user.is_busy())
-						return
-					if(O.use_tool(src, user, 50, volume = 50))
+						return FALSE
+					if(O.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
 						user.visible_message("[user] finishes smashing [src].", "You force open covers.")
 						removal_stage = 2
-				return
-
+				return FALSE
 			if(2)
-				if(iswelder(O))
-
+				if(iswelding(O))
 					var/obj/item/weapon/weldingtool/WT = O
-					if(!WT.isOn()) return
+					if(!WT.isOn())
+						return FALSE
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
 						to_chat(user, "<span class = 'red'>You need more fuel to complete this task.</span>")
-						return
+						return FALSE
 					if(user.is_busy())
-						return
+						return FALSE
 					user.visible_message("[user] starts cutting something on [src].. Again.", "You start cutting apart the safety plate with [O]...")
 
-					if(O.use_tool(src, user, 100, amount = 5, volume = 50))
+					if(O.use_tool(src, user, SKILL_TASK_DIFFICULT , amount = 5, volume = 50))
 						user.visible_message("[user] finishes cutting something on [src].", "You cut apart the safety plate.")
 						removal_stage = 3
-				return
-
+				return FALSE
 			if(3)
-				if(iswrench(O))
+				if(iswrenching(O))
 					if(user.is_busy())
-						return
+						return FALSE
 					user.visible_message("[user] begins poking inside [src].", "You begin unwrenching bolts...")
-					if(O.use_tool(src, user, 75, volume = 50))
+					if(O.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
 						user.visible_message("[user] begins poking inside [src].", "You unwrench bolts.")
 						removal_stage = 4
-				return
-
+				return FALSE
 			if(4)
-				if(iscrowbar(O))
+				if(isprying(O))
 					if(user.is_busy())
-						return
+						return FALSE
 					user.visible_message("[user] begings hitting [src].", "You begin forcing open last safety layer...")
-
-					if(O.use_tool(src, user, 75, volume = 50))
+					if(O.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
 						user.visible_message("[user] finishes hitting [src].", "You can now get inside the [src]. Use screwdriver to open control panel")
 						//anchored = FALSE
 						removal_stage = 5
-				return
-	..()
+				return FALSE
+	return ..()
 
 /obj/machinery/nuclearbomb/attack_hand(mob/user)
 	. = ..()
@@ -176,7 +168,7 @@ var/bomb_set
 	if (!extended)
 		if (!ishuman(user) && !isobserver(user))
 			to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
-			return 1
+			return
 		var/turf/current_location = get_turf(user)//What turf is the user on?
 		if((!current_location || is_centcom_level(current_location.z)) && isnukeop(user))//If turf was not found or they're on z level 2.
 			to_chat(user, "<span class = 'red'>It's not the best idea to plant a bomb on your own base.</span>")
@@ -226,19 +218,21 @@ var/bomb_set
 	set name = "Make Deployable"
 	set src in oview(1)
 
-	if (usr.incapacitated())
+	deploy(usr)
+
+/obj/machinery/nuclearbomb/proc/deploy(mob/user)
+	if (user.incapacitated())
 		return
-	if (!ishuman(usr))
+	if (!ishuman(user))
 		to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
 		return 1
 
 	if (src.deployable)
-		to_chat(usr, "<span class = 'red'>You close several panels to make [src] undeployable.</span>")
+		to_chat(user, "<span class = 'red'>You close several panels to make [src] undeployable.</span>")
 		src.deployable = 0
 	else
-		to_chat(usr, "<span class = 'red'>You adjust some panels to make [src] deployable.</span>")
+		to_chat(user, "<span class = 'red'>You adjust some panels to make [src] deployable.</span>")
 		src.deployable = 1
-	return
 
 /obj/machinery/nuclearbomb/is_operational()
 	return TRUE
@@ -302,6 +296,7 @@ var/bomb_set
 						var/area/nuclearbombloc = get_area(loc)
 						announce_nuke.play(nuclearbombloc)
 						set_security_level("delta")
+						notify_ghosts("[src] has been activated!", source = src, action = NOTIFY_ORBIT, header = "Nuclear bomb")
 						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 					else
 						bomb_set = 0
@@ -339,8 +334,7 @@ var/bomb_set
 /obj/machinery/nuclearbomb/blob_act()
 	if (src.timing == -1.0)
 		return
-	else
-		return ..()
+	return ..()
 
 #define NUKERANGE 80
 /obj/machinery/nuclearbomb/proc/explode()
@@ -355,7 +349,7 @@ var/bomb_set
 	src.safety = 1
 	if(!src.lighthack)
 		src.icon_state = "nuclearbomb3"
-	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, 5)
+	playsound(src, 'sound/machines/Alarm.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 5)
 	if (SSticker)
 		SSticker.explosion_in_progress = 1
 	sleep(100)
@@ -368,7 +362,7 @@ var/bomb_set
 		if( (bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)) )
 			off_station = 1
 		else
-			score["nuked"]++
+			SSStatistics.score.nuked++
 			sleep(10)
 			explosion(src, 15, 70, 200)
 	else
@@ -401,8 +395,6 @@ var/bomb_set
 			sleep(450)
 			log_game("Rebooting due to nuclear detonation")
 			world.Reboot(end_state = "nuke - unhandled ending")
-			return
-	return
 
 /obj/machinery/nuclearbomb/MouseDrop_T(mob/living/M, mob/living/user)
 	if(!ishuman(M) || !ishuman(user))
@@ -417,18 +409,17 @@ var/bomb_set
 		..()
 
 /obj/machinery/nuclearbomb/post_buckle_mob(mob/living/M)
-	..()
 	if(M == buckled_mob)
 		M.pixel_y = 10
 	else
-		M.pixel_y = 0
+		M.pixel_y = M.default_pixel_y
 
-/obj/machinery/nuclearbomb/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/nuclearbomb/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(buckled_mob)
 		buckled_mob.bullet_act(Proj)
 		if(buckled_mob.weakened || buckled_mob.health < 0 || buckled_mob.halloss > 80)
 			unbuckle_mob()
-	return ..()
 
 /obj/machinery/nuclearbomb/MouseDrop(over_object, src_location, over_location)
 	..()
@@ -484,3 +475,63 @@ var/bomb_set
 
 #undef TIMER_MIN
 #undef TIMER_MAX
+
+/obj/machinery/nuclearbomb/fake
+	var/false_activation = FALSE
+
+/obj/machinery/nuclearbomb/fake/atom_init()
+	. = ..()
+	r_code = "HONK"
+	if(SSticker)
+		var/image/I = image('icons/obj/clothing/masks.dmi', src, "sexyclown")
+		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/faction, "fake_nuke", I, /datum/faction/nuclear)
+
+/obj/machinery/nuclearbomb/fake/explode()
+	if(safety)
+		timing = 0
+		return
+	if(detonated)
+		return
+	detonated = 1
+	timing = -1.0
+	yes_code = 0
+	safety = 1
+	if(!lighthack)
+		icon_state = "nuclearbomb3"
+	addtimer(CALLBACK(src, .proc/fail), 10 SECONDS) //Good taste, right?
+	playsound(src, 'sound/effects/scary_honk.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, 30)
+
+/obj/machinery/nuclearbomb/fake/examine(mob/user, distance)
+	. = ..()
+	if(isnukeop(user) || isobserver(user))
+		to_chat(user, "<span class ='boldwarning'>This is a fake one!</span>")
+
+/obj/machinery/nuclearbomb/fake/process() //Yes, it's alike normal, but not exactly
+	if(timing > 0) // because explode() sets it to -1, which is TRUE.
+		timeleft = max(timeleft - 2, 0) // 2 seconds per process()
+		playsound(src, 'sound/items/timer.ogg', VOL_EFFECTS_MASTER, 30, FALSE)
+		if(timeleft <= 0)
+			explode()
+		updateUsrDialog()
+
+/obj/machinery/nuclearbomb/fake/proc/fail(mob/user) //Resetting theatre of one actor and many watchers
+	if(!lighthack)
+		icon_state = "nuclearbomb1"
+
+/obj/machinery/nuclearbomb/fake/deploy(mob/user)
+	if(false_activation)
+		return
+	..()
+
+	if(!isnukeop(user))
+		return
+	if(!anchored)
+		return
+	if(tgui_alert(user, "False decoy activation. Continue?", "Decoy activation", list("Yes","No")) != "Yes")
+		return
+	icon_state = "nuclearbomb2"
+	timing = 1.0
+	yes_code = 1
+	safety = 0
+	false_activation = TRUE
+	return

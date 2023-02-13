@@ -1,4 +1,5 @@
-var/list/net_announcer_secret = list()
+var/global/list/net_announcer_secret = list()
+var/global/bridge_secret = null
 
 /datum/configuration
 	var/name = "Configuration"			// datum name
@@ -103,6 +104,9 @@ var/list/net_announcer_secret = list()
 
 	var/repository_link = ""
 
+	var/github_repository_owner = ""
+	var/github_repository_name = ""
+
 	var/forbid_singulo_possession = 0
 
 	var/allow_holidays = FALSE
@@ -136,17 +140,17 @@ var/list/net_announcer_secret = list()
 	var/expected_round_length = 90 MINUTES
 	// If the first delay has a custom start time
 	// No custom time
-	var/list/event_first_run = list(EVENT_LEVEL_ROUNDSTART = null,
+	var/list/event_first_run = list(EVENT_LEVEL_FEATURE = null,
 									EVENT_LEVEL_MUNDANE = null,
 									EVENT_LEVEL_MODERATE = null,
 									EVENT_LEVEL_MAJOR = list("lower" = 50 MINUTES, "upper" = 70 MINUTES))
 	// The lowest delay until next event
-	var/list/event_delay_lower = list(EVENT_LEVEL_ROUNDSTART = null,
+	var/list/event_delay_lower = list(EVENT_LEVEL_FEATURE = null,
 									  EVENT_LEVEL_MUNDANE  = 10 MINUTES,
 									  EVENT_LEVEL_MODERATE = 30 MINUTES,
 									  EVENT_LEVEL_MAJOR    = 50 MINUTES)
 	// The upper delay until next event
-	var/list/event_delay_upper = list(EVENT_LEVEL_ROUNDSTART = null,
+	var/list/event_delay_upper = list(EVENT_LEVEL_FEATURE = null,
 									  EVENT_LEVEL_MUNDANE  = 15 MINUTES,
 									  EVENT_LEVEL_MODERATE = 45 MINUTES,
 									  EVENT_LEVEL_MAJOR    = 70 MINUTES)
@@ -199,6 +203,9 @@ var/list/net_announcer_secret = list()
 	var/list/maplist = list()
 	var/datum/map_config/defaultmap
 	var/load_testmap = FALSE // swaps whatever.json with testmap.json in SSmapping init phase.
+	var/load_junkyard = TRUE
+	var/load_mine = TRUE
+	var/load_space_levels = TRUE
 
 	var/record_replays = FALSE
 
@@ -210,6 +217,9 @@ var/list/net_announcer_secret = list()
 	var/secondtopiclimit = 10
 
 	var/deathmatch_arena = TRUE
+
+	var/hard_deletes_overrun_threshold = 0.5
+	var/hard_deletes_overrun_limit = 0
 
 /datum/configuration/New()
 	for (var/type in subtypesof(/datum/game_mode))
@@ -614,6 +624,11 @@ var/list/net_announcer_secret = list()
 
 				if("repository_link")
 					config.repository_link = value
+					var/repo_path = replacetext(config.repository_link, "https://github.com/", "")
+					if(repo_path != config.repository_link)
+						var/split = splittext(repo_path, "/")
+						github_repository_owner = split[1]
+						github_repository_name = split[2]
 
 				if("registration_panic_bunker_age")
 					config.registration_panic_bunker_age = value
@@ -639,6 +654,15 @@ var/list/net_announcer_secret = list()
 				if("summon_testmap")
 					config.load_testmap = TRUE
 
+				if("no_junkyard")
+					config.load_junkyard = FALSE
+
+				if("no_mine")
+					config.load_mine = FALSE
+
+				if("no_space_levels")
+					config.load_space_levels = FALSE
+
 				if("record_replays")
 					config.record_replays = TRUE
 
@@ -653,6 +677,12 @@ var/list/net_announcer_secret = list()
 
 				if("second_topic_limit")
 					config.secondtopiclimit = text2num(value)
+
+				if("hard_deletes_overrun_threshold")
+					config.hard_deletes_overrun_threshold = text2num(value)
+
+				if("hard_deletes_overrun_limit")
+					config.hard_deletes_overrun_limit = text2num(value)
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
@@ -792,8 +822,7 @@ var/list/net_announcer_secret = list()
 			runnable_modes_names += M.name
 	log_mode("Current pool of gamemodes([runnable_modes.len]):")
 	log_mode(get_english_list(runnable_modes_names))
-	if(!runnable_modes.len) // if no mode can start, then the modes that will always start
-		return get_always_runnable_modes()
+
 	return runnable_modes
 
 /datum/configuration/proc/get_always_runnable_modes()
@@ -854,6 +883,10 @@ var/list/net_announcer_secret = list()
 				currentmap.config_min_users = text2num(data)
 			if ("maxplayers","maxplayer")
 				currentmap.config_max_users = text2num(data)
+			if ("votable")
+				currentmap.votable = TRUE
+			if ("voteweight")
+				currentmap.voteweight = text2num(data)
 			if ("default","defaultmap")
 				defaultmap = currentmap
 			if ("endmap")

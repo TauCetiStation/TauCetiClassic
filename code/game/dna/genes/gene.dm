@@ -31,10 +31,10 @@
 /datum/dna/gene/proc/is_active(mob/M)
 	return M.active_genes && (type in M.active_genes)
 
-// Return 1 if we can activate.
+// Return TRUE if we can activate.
 // HANDLE MUTCHK_FORCED HERE!
 /datum/dna/gene/proc/can_activate(mob/M, flags)
-	return 0
+	return FALSE
 
 // Called when the gene activates.  Do your magic here.
 /datum/dna/gene/proc/activate(mob/M, connected, flags)
@@ -75,7 +75,7 @@
 * @params fat Fat? (0 or 1)
 */
 /datum/dna/gene/proc/OnDrawUnderlays(mob/M, g, fat)
-	return 0
+	return ""
 
 
 /////////////////////
@@ -96,6 +96,9 @@
 	// Mutation to give
 	var/mutation=0
 
+	// Trait to give with GENETIC_MUTATION_TRAIT source
+	var/trait_mutation = ""
+
 	// Activation probability
 	//var/activation_prob=45 //#Z2 not used here anymore, now in /datum/dna/gene
 
@@ -107,18 +110,24 @@
 
 /datum/dna/gene/basic/can_activate(mob/M,flags)
 	if(flags & MUTCHK_FORCED)
-		return 1
+		return TRUE
 	// Probability check
 	return probinj(activation_prob,(flags&MUTCHK_FORCED))
 
 /datum/dna/gene/basic/activate(mob/M)
-	M.mutations.Add(mutation)
+	if(mutation)
+		M.mutations.Add(mutation)
+	if(trait_mutation)
+		ADD_TRAIT(M, trait_mutation, GENETIC_MUTATION_TRAIT)
 	if(activation_messages.len)
 		var/msg = pick(activation_messages)
 		to_chat(M, "<span class='notice'>[msg]</span>")
 
 /datum/dna/gene/basic/deactivate(mob/M)
-	M.mutations.Remove(mutation)
+	if(mutation)
+		M.mutations.Remove(mutation)
+	if(trait_mutation)
+		REMOVE_TRAIT(M, trait_mutation, GENETIC_MUTATION_TRAIT)
 	if(deactivation_messages.len)
 		var/msg = pick(deactivation_messages)
 		to_chat(M, "<span class='warning'>[msg]</span>")

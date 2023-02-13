@@ -6,6 +6,8 @@
 	anchored = TRUE
 	var/default_state = TRUE
 
+	beauty = -25
+
 /obj/effect/decal/cleanable/crayon/atom_init(mapload, main = "#ffffff", shade = "#000000", type = "rune", e_name = "rune", override_color = 0)
 	. = ..()
 	RegisterSignal(src, list(COMSIG_MOVABLE_MOVED), .proc/update_plane)
@@ -45,7 +47,7 @@
 	add_hiddenprint(usr)
 
 /obj/effect/decal/cleanable/crayon/proc/update_plane()
-	if(istype(loc, /turf/simulated/floor))
+	if(isfloorturf(loc))
 		plane = FLOOR_PLANE
 	else
 		plane = GAME_PLANE

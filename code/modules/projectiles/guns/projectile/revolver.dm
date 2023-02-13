@@ -26,6 +26,8 @@
 
 /obj/item/weapon/gun/projectile/revolver/attack_self(mob/living/user)
 	var/num_unloaded = 0
+	if(istwohanded)
+		return ..()
 	while (get_ammo() > 0)
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
@@ -82,13 +84,13 @@
 	var/mob/M = usr
 	var/input = sanitize_safe(input(M,"What do you want to name the gun?"), MAX_NAME_LEN)
 
-	if(input && !M.stat && Adjacent(M))
+	if(input && M.stat == CONSCIOUS && Adjacent(M))
 		name = input
 		to_chat(M, "You name the gun [input]. Say hello to your new friend.")
 		return 1
 
 /obj/item/weapon/gun/projectile/revolver/detective/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		if(magazine.caliber == "38")
 			to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src].</span>")
 			if(magazine.ammo_count())
@@ -123,7 +125,7 @@
 	name = "mateba"
 	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."	//>10mm hole >.357
 	icon_state = "mateba"
-	item_state = "revolver"
+	item_state = "mateba"
 	origin_tech = "combat=2;materials=2"
 
 // A gun to play Russian Roulette!
@@ -200,7 +202,7 @@
 		if(isliving(target) && isliving(user))
 			if(def_zone == BP_HEAD)
 				var/obj/item/ammo_casing/AC = chambered
-				if(AC.fire(user, user))
+				if(AC.fire(src, user, user))
 					user.apply_damage(300, BRUTE, def_zone, null, DAM_SHARP)
 					playsound(user, fire_sound, VOL_EFFECTS_MASTER)
 					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
@@ -230,6 +232,9 @@
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
+/obj/item/weapon/gun/projectile/revolver/peacemaker/detective
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev45/rubber
+
 /obj/item/weapon/gun/projectile/revolver/flare
 	name = "flare gun"
 	desc = "Fires flares."
@@ -244,7 +249,8 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot/dungeon
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off
-	icon_state = "sawnshotgun"
+	icon_state = "dshotgun"
+	item_state = "shotgun-short"
 	w_class = SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BELT
 	name = "sawn-off shotgun"

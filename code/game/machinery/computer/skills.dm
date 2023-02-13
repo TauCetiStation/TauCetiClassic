@@ -20,11 +20,15 @@
 	var/screen = null                        // What type of screen now output
 	var/datum/data/record/active1 = null     // Current using record
 	var/temp = null                          // Buffer for temporary menu show
-	var/printing = FALSE                     // Printing action lock
+	var/static/icon/mugshot = icon('icons/obj/mugshot.dmi', "background") //records photo background
+	var/next_print = 0
 	var/list/Perp                            // Buffer for searched results
 	var/searched_text = null                 // Name of found person
 	var/sortBy = "name"                      // field to sort
 	var/order = 1                            // -1 = Descending - 1 = Ascending
+	var/docname
+
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/computer/skills/attackby(obj/item/O, user)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -70,8 +74,8 @@
 							<td>[R.fields["fingerprint"]]</td>
 							</tr>"}
 						dat += "</table><hr width='75%' />"
-					dat += text("<A href='?src=\ref[];choice=Record Maintenance'>Record Maintenance</A><br><br>", src)
-					dat += text("<A href='?src=\ref[];choice=Log Out'>Log Out</A>",src)
+					dat += "<A href='?src=\ref[src];choice=Record Maintenance'>Record Maintenance</A><br><br>"
+					dat += "<A href='?src=\ref[src];choice=Log Out'>Log Out</A>"
 				if(SKILLS_MODE_MAINTENACE_SCREEN)
 					dat += {"<b>Records Maintenance</b>
 					<hr><br>
@@ -81,10 +85,12 @@
 					dat += "<center><b>Employment Record</b></center><br>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
 						var/icon/front = active1.fields["photo_f"]
+						front.Blend(mugshot,ICON_UNDERLAY,1,1)
 						var/icon/side = active1.fields["photo_s"]
+						side.Blend(mugshot,ICON_UNDERLAY,1,1)
 						user << browse_rsc(front, "front.png")
 						user << browse_rsc(side, "side.png")
-						dat += text({"<table><tr><td>
+						dat += {"<style>img.nearest { -ms-interpolation-mode:nearest-neighbor }</style><table><tr><td>
 							Name: <a href='?src=\ref[src];choice=Edit Field;field=name'>[active1.fields["name"]]</a><br>
 							ID: <a href='?src=\ref[src];choice=Edit Field;field=id'>[active1.fields["id"]]</a><br>
 							Sex: <a href='?src=\ref[src];choice=Edit Field;field=sex'>[active1.fields["sex"]]</a><br>
@@ -98,17 +104,18 @@
 							Physical Status: [active1.fields["p_stat"]]<br>
 							Mental Status: [active1.fields["m_stat"]]<br><br>
 							Employment/skills summary:<BR> [decode(active1.fields["notes"])]<br></td>
-							<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4>
-							<img src=side.png height=80 width=80 border=4></td></tr></table>"})
+							<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4 class=nearest>
+							<img src=side.png height=80 width=80 border=4 class=nearest></td></tr></table>"}
 					else
 						dat += "<b>General Record Lost!</b><br>"
 					dat += {"
 					<a href='?src=\ref[src];choice=Delete Record (ALL)'>Delete Record (ALL)</a><br><br>
 					<a href='?src=\ref[src];choice=Print Record'>Print Record</a><br>
+					<a href='?src=\ref[src];choice=Print Photos'>Print Photos</a><br>
 					<a href='?src=\ref[src];choice=Return'>Back</a><br>"}
 				if(SKILLS_MODE_SEARCH_SCREEN)
 					if(!Perp.len)
-						dat += text("ERROR.  String could not be located.<br><br><A href='?src=\ref[];choice=Return'>Back</A>", src)
+						dat += "ERROR.  String could not be located.<br><br><A href='?src=\ref[src];choice=Return'>Back</A>"
 					else
 						dat += {"
 							<table style="text-align:center;" cellspacing="0" width="100%">
@@ -131,16 +138,16 @@
 								crimstat = E.fields["criminal"]
 							var/background
 							background = "'background-color:#00FF7F;'"
-							dat += text("<tr style=[]><td><A href='?src=\ref[];choice=Browse Record;d_rec=\ref[]'>[]</a></td>", background, src, R, R.fields["name"])
-							dat += text("<td>[]</td>", R.fields["id"])
-							dat += text("<td>[]</td>", R.fields["rank"])
-							dat += text("<td>[]</td>", R.fields["fingerprint"])
-							dat += text("<td>[]</td></tr>", crimstat)
+							dat += "<tr style=[background]><td><A href='?src=\ref[src];choice=Browse Record;d_rec=\ref[R]'>[R.fields["name"]]</a></td>"
+							dat += "<td>[R.fields["id"]]</td>"
+							dat += "<td>[R.fields["rank"]]</td>"
+							dat += "<td>[R.fields["fingerprint"]]</td>"
+							dat += "<td>[crimstat]</td></tr>"
 						dat += "</table><hr width='75%' />"
-						dat += text("<br><A href='?src=\ref[];choice=Return'>Return to index</A>", src)
+						dat += "<br><A href='?src=\ref[src];choice=Return'>Return to index</A>"
 				else
 		else
-			dat += text("<A href='?src=\ref[];choice=Log In'>Log In</A>", src)
+			dat += "<A href='?src=\ref[src];choice=Log In'>Log In</A>"
 
 	var/datum/browser/popup = new(user, "secure_rec", "Employment Records", 600, 400)
 	popup.set_content("<TT>[dat]</TT>")
@@ -157,7 +164,6 @@ What a mess.*/
 
 	if (!( data_core.general.Find(active1) ))
 		active1 = null
-
 	switch(href_list["choice"])
 		// SORTING!
 		if("Sorting")
@@ -181,7 +187,7 @@ What a mess.*/
 
 		if("Confirm Identity")
 			if (scan)
-				if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
+				if(ishuman(usr) && !usr.get_active_hand())
 					usr.put_in_hands(scan)
 				else
 					scan.loc = get_turf(src)
@@ -262,26 +268,43 @@ What a mess.*/
 				screen = SKILLS_MODE_EDIT_SCREEN
 
 		if ("Print Record")
-			if (!( printing ))
-				printing = TRUE
-				sleep(50)
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
-				P.info = "<center><b>Employment Record</b></center><BR>"
-				if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
-					P.info += text("Name: []<BR>\n",active1.fields["name"])
-					P.info += text("ID: []<BR>\n", active1.fields["id"])
-					P.info += text("Sex: []<BR>\n",  active1.fields["sex"])
-					P.info += text("Age: []<BR>\n", active1.fields["age"])
-					P.info += text("Fingerprint: []<BR>\n", active1.fields["fingerprint"])
-					P.info += text("Physical Status: []<BR>\n", active1.fields["p_stat"])
-					P.info += text("Mental Status: []<BR>\n", active1.fields["m_stat"])
-					P.info += text("Employment/Skills Summary:<BR>\n[]<BR>",decode(active1.fields["notes"]))
-				else
-					P.info += "<b>General Record Lost!</b><br>"
-				P.info += "</tt>"
-				P.name = "Employment Record ([active1.fields["name"]])"
-				P.update_icon()
-				printing = FALSE
+			if(next_print > world.time)
+				return
+			var/info = "<center><b>Employment Record</b></center><BR>"
+			if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
+				info += "Name: [active1.fields["name"]]<BR>\n"
+				info += "ID: [active1.fields["id"]]<BR>\n"
+				info += "Sex: [active1.fields["sex"]]<BR>\n"
+				info += "Age: [active1.fields["age"]]<BR>\n"
+				info += "Fingerprint: [active1.fields["fingerprint"]]<BR>\n"
+				info += "Physical Status: [active1.fields["p_stat"]]<BR>\n"
+				info += "Mental Status: [active1.fields["m_stat"]]<BR>\n"
+				info += "Employment/Skills Summary:<BR>\n[decode(active1.fields["notes"])]<BR>"
+			else
+				info += "<b>General Record Lost!</b><br>"
+			info += "</tt>"
+			docname = "Employment Record ([active1.fields["name"]])"
+			print_document(info, docname)
+			updateUsrDialog()
+			next_print = world.time + 50
+
+		if("Print Photos")
+			if(next_print > world.time)
+				return
+			if (istype(active1, /datum/data/record) && data_core.general.Find(active1))
+				var/datum/data/record/photo = active1
+				photo.fields["image"] = photo.fields["photo_f"]
+				docname = "Employment Record's photo"
+				photo.fields["author"] = usr
+				photo.fields["icon"] = icon('icons/obj/mugshot.dmi',"photo")
+				photo.fields["small_icon"] = icon('icons/obj/mugshot.dmi',"small_photo")
+				if(istype(active1.fields["photo_f"], /icon))
+					print_photo(photo, docname)
+				if(istype(active1.fields["photo_s"], /icon))
+					photo.fields["image"] = active1.fields["photo_s"]
+					print_photo(photo, docname)
+				next_print = world.time + 50
+
 		// RECORD DELETE
 		if ("Delete All Records")
 			//FIXME: Now only removing security records, not general
@@ -294,8 +317,7 @@ What a mess.*/
 			temp = "<b>Error!</b> This function does not appear to be working at the moment. Our apologies."
 
 		if ("Purge All Records")
-			if(PDA_Manifest.len)
-				PDA_Manifest.Cut()
+			PDA_Manifest.Cut()
 			for(var/datum/data/record/R in data_core.security)
 				qdel(R)
 			temp = "All Employment records deleted."
@@ -307,8 +329,6 @@ What a mess.*/
 				temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
 		// RECORD CREATE
 		if ("New Record (General)")
-			if(PDA_Manifest.len)
-				PDA_Manifest.Cut()
 			active1 = CreateGeneralRecord() // todo: datacore.manifest_inject or scaner (Identity Analyser)
 
 		// FIELD FUNCTIONS
@@ -321,6 +341,7 @@ What a mess.*/
 						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr))) || active1 != a1)
 							return FALSE
 						active1.fields["name"] = t1
+						PDA_Manifest.Cut()
 				if("id")
 					if (istype(active1, /datum/data/record))
 						var/t1 = sanitize(input("Please input id:", "Secure. records", input_default(active1.fields["id"]), null)  as text)
@@ -369,20 +390,17 @@ What a mess.*/
 			switch(href_list["choice"])
 				if ("Change Rank")
 					if (active1)
-						if(PDA_Manifest.len)
-							PDA_Manifest.Cut()
+						PDA_Manifest.Cut()
 						active1.fields["rank"] = href_list["rank"]
 						if(href_list["rank"] in joblist)
 							active1.fields["real_rank"] = href_list["real_rank"]
 
 				if ("Delete Record (ALL) Execute")
 					if (active1)
-						if(PDA_Manifest.len)
-							PDA_Manifest.Cut()
+						PDA_Manifest.Cut()
 						for(var/datum/data/record/R in data_core.medical)
 							if ((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
 								qdel(R)
-							else
 						qdel(active1)
 				else
 					temp = "This function does not appear to be working at the moment. Our apologies."
@@ -406,7 +424,7 @@ What a mess.*/
 				if(4)
 					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Paroled", "Released")
 				if(5)
-					R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
+					R.fields["p_stat"] = pick("*SSD*", "Active", "Physically Unfit", "Disabled")
 				if(6)
 					R.fields["m_stat"] = pick("*Insane*", "*Unstable*", "*Watch*", "Stable")
 			continue

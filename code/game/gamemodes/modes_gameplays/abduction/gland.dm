@@ -13,8 +13,8 @@
 /obj/item/gland/proc/HostCheck()
 	if(ishuman(host) && host == src.loc)
 		if(host.stat != DEAD)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/gland/proc/Start()
 	active = 1
@@ -77,27 +77,22 @@
 
 
 //SLIME BOOM
-/obj/item/gland/slime_boom
-	desc = "Explodes the host into slimes."
+/obj/item/gland/true_form
+	desc = "Reveals true form of the host"
 	cooldown_low = 1200
 	cooldown_high = 2400
 	uses = 1
 
 /obj/item/gland/slime_boom/activate()
-	to_chat(host, "<span class='warning'>You feel bloated.</span>")
-	sleep(150)
-	to_chat(host, "<span class='userdanger'>A massive stomachache overcomes you.</span>")
-	sleep(50)
-	host.visible_message("<span class='danger'>[host] explodes into slimes!</span>")
+	host.visible_message("<span class='danger'>[host] explodes into creatures!</span>")
 	var/turf/pos = get_turf(host)
 	new /mob/living/carbon/slime(pos)
-	new /mob/living/carbon/slime(pos)
-	var/mob/living/simple_animal/slime/S = new /mob/living/carbon/slime(pos)
-	S.loc = pos
-	host.mind.transfer_to(S)
-	host.gib()
-	return
-
+	new /mob/living/simple_animal/corgi(pos)
+	new /mob/living/simple_animal/mouse(pos)
+	var/obj/effect/proc_holder/spell/S = new /obj/effect/proc_holder/spell/no_target/shapeshift/abductor()
+	host.AddSpell(S)
+	S.cast(null, host)
+	S.cast(null, host)
 
 //MINDSHOCK
 /obj/item/gland/mindshock
@@ -115,7 +110,7 @@
 		if(H == host)
 			continue
 		to_chat(H, "<span class='alien'> You hear a buzz in your head </span>")
-		H.confused += 20
+		H.AdjustConfused(20)
 
 
 //POP
@@ -128,7 +123,7 @@
 
 /obj/item/gland/pop/activate()
 	to_chat(host, "<span class='notice'>You feel unlike yourself.</span>")
-	host.set_species_soft(pick(HUMAN , UNATHI , TAJARAN , DIONA , VOX))
+	host.set_species_soft(pick(HUMAN, UNATHI, TAJARAN, SKRELL, DIONA, PODMAN, VOX))
 
 
 //VENTCRAWLING
@@ -160,7 +155,7 @@
 	D.makerandom()
 	D.infectionchance = rand(1,100)
 
-	if(istype(host,/mob/living/carbon/human))
+	if(ishuman(host))
 		var/mob/living/carbon/human/H = host
 		if (H.species)
 			D.affected_species = list(H.species.name)
@@ -193,7 +188,7 @@
 	to_chat(host, "<span class='warning'>You feel something crawling in your skin.</span>")
 	if(uses == initial(uses))
 		host.faction = "spiders"
-	new /obj/effect/spider/spiderling(host.loc)
+	new /obj/structure/spider/spiderling(host.loc)
 
 
 //EGG

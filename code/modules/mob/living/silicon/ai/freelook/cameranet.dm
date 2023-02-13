@@ -2,7 +2,7 @@
 //
 // The datum containing all the chunks.
 
-var/datum/cameranet/cameranet = new()
+var/global/datum/cameranet/cameranet = new()
 
 /datum/cameranet
 	var/name = "Camera Net" // Name to show for VV and stat()

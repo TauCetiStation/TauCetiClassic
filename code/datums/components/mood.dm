@@ -16,10 +16,13 @@
 
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
+	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
 	RegisterSignal(parent, COMSIG_LIVING_REJUVENATE, .proc/on_revive)
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
+	RegisterSignal(parent, COMSIG_MOB_SLIP, .proc/on_slip)
 
 	var/mob/living/owner = parent
+	owner.become_area_sensitive(MOOD_COMPONENT_TRAIT)
 	if(owner.hud_used)
 		modify_hud()
 		var/datum/hud/hud = owner.hud_used
@@ -27,6 +30,7 @@
 
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
+	REMOVE_TRAIT(parent, TRAIT_AREA_SENSITIVE, MOOD_COMPONENT_TRAIT)
 	unmodify_hud()
 	return ..()
 
@@ -68,11 +72,21 @@
 		if(9)
 			msg += "<span class='nicegreen'>I love life!</span>\n"
 
-	msg += "<span class='notice'>Moodlets:</span>\n"//All moodlets
+	msg += "<span class='notice'>Moodlets:</span>\n"
 	if(mood_events.len)
+		var/datum/mood_event/most_important = mood_events[mood_events[1]]
+
+		var/shown = 0
+
 		for(var/i in mood_events)
 			var/datum/mood_event/event = mood_events[i]
-			msg += event.description
+			if(shown > 4)
+				break
+			if(abs(event.mood_change) < abs(most_important.mood_change * 0.25))
+				continue
+			shown += 1
+			msg += "[event.description]\n"
+
 	else
 		msg += "<span class='notice'>I don't have much of a reaction to anything right now.\n</span>"
 	to_chat(user, msg)
@@ -109,6 +123,7 @@
 		if(MOOD_LEVEL_HAPPY4 to INFINITY)
 			mood_level = 9
 	update_mood_icon()
+	update_mood_client_color()
 
 /datum/component/mood/proc/update_mood_icon()
 	if(!screen_obj)
@@ -161,6 +176,30 @@
 			screen_obj.icon_state = "[event.special_screen_obj]"
 			break
 
+/datum/component/mood/proc/update_mood_client_color()
+	var/mob/living/carbon/human/H = parent
+	if(!istype(H))
+		return
+
+	H.moody_color = null
+
+	if(H.stat == DEAD)
+		return
+
+	if(spirit_level < 4)
+		return
+
+	var/dissapointment
+	switch(spirit_level)
+		if(6)
+			dissapointment = 0.8
+		if(5)
+			dissapointment = 0.4
+		if(4)
+			dissapointment = 0.2
+
+	H.moody_color = SADNESS_COLOR(dissapointment)
+
 ///Called on SSmood process
 /datum/component/mood/process(delta_time)
 	var/mob/living/moody_fellow = parent
@@ -186,6 +225,9 @@
 			setSpirit(spirit + 0.4 * delta_time, SPIRIT_NEUTRAL, SPIRIT_MAXIMUM)
 		if(9)
 			setSpirit(spirit + 0.6*  delta_time, SPIRIT_NEUTRAL, SPIRIT_MAXIMUM)
+
+	HandleNutrition()
+	HandleShock()
 
 ///Sets spirit to the specified amount and applies effects.
 /datum/component/mood/proc/setSpirit(amount, minimum=SPIRIT_BAD, maximum=SPIRIT_HIGH)
@@ -227,6 +269,7 @@
 			master.mood_multiplicative_actionspeed_modifier = -0.1
 			spirit_level = 1
 	update_mood_icon()
+	update_mood_client_color()
 
 // Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 /datum/component/mood/proc/add_event(datum/source, category, type, ...)
@@ -252,6 +295,8 @@
 
 	if(the_event.timeout)
 		addtimer(CALLBACK(src, .proc/clear_event, null, category), the_event.timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+	mood_events = sortTim(mood_events, cmp=/proc/cmp_abs_mood_dsc, associative=TRUE)
 
 /datum/component/mood/proc/clear_event(datum/source, category)
 	SIGNAL_HANDLER
@@ -281,10 +326,13 @@
 	var/datum/hud/hud = owner.hud_used
 	screen_obj = new
 	screen_obj.color = "#4b96c4"
-	hud.adding += screen_obj
+	screen_obj.add_to_hud(hud)
 
 	RegisterSignal(hud, COMSIG_PARENT_QDELETING, .proc/unmodify_hud)
 	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
+
+	update_mood_icon()
+	update_mood_client_color()
 
 /datum/component/mood/proc/unmodify_hud(datum/source)
 	SIGNAL_HANDLER
@@ -293,8 +341,7 @@
 		return
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
-	if(hud?.adding)
-		hud.adding -= screen_obj
+	screen_obj.remove_from_hud(hud)
 	QDEL_NULL(screen_obj)
 
 /datum/component/mood/proc/hud_click(datum/source, location, control, params, mob/user)
@@ -303,6 +350,82 @@
 	if(user != parent)
 		return
 	print_mood(user)
+
+/datum/component/mood/proc/HandleNutrition()
+	var/mob/living/L = parent
+
+	switch(L.nutrition)
+		if(NUTRITION_LEVEL_FULL to INFINITY)
+			add_event(null, "nutrition", /datum/mood_event/fat)
+
+		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+			add_event(null, "nutrition", /datum/mood_event/wellfed)
+
+		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+			add_event(null, "nutrition", /datum/mood_event/fed)
+
+		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+			clear_event(null, "nutrition")
+
+		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+			add_event(null, "nutrition", /datum/mood_event/hungry)
+
+		if(0 to NUTRITION_LEVEL_STARVING)
+			add_event(null, "nutrition", /datum/mood_event/starving)
+
+/datum/component/mood/proc/HandleShock()
+	if(!iscarbon(parent))
+		return
+	var/mob/living/carbon/C = parent
+
+	if(C.shock_stage <= 0)
+		if(C.traumatic_shock < 10)
+			clear_event(null, "pain")
+		else
+			add_event(null, "pain", /datum/mood_event/mild_pain)
+
+		return
+
+	switch(C.shock_stage)
+		if(0 to 30)
+			add_event(null, "pain", /datum/mood_event/moderate_pain)
+		if(30 to 60)
+			add_event(null, "pain", /datum/mood_event/intense_pain)
+		if(60 to 120)
+			add_event(null, "pain", /datum/mood_event/unspeakable_pain)
+		if(120 to INFINITY)
+			add_event(null, "pain", /datum/mood_event/agony)
+
+/datum/component/mood/proc/check_area_mood(datum/source, area/A, atom/OldLoc)
+	SIGNAL_HANDLER
+
+	update_beauty(A)
+	if(A.mood_bonus && (!A.mood_trait || HAS_TRAIT(source, A.mood_trait)))
+		add_event(null, "area", /datum/mood_event/area, A.mood_bonus, A.mood_message)
+	else
+		clear_event(null, "area")
+
+/datum/component/mood/proc/update_beauty(area/A)
+	SIGNAL_HANDLER
+
+	//if we're outside, we don't care.
+	if(A.outdoors)
+		clear_event(null, "area_beauty")
+		return FALSE
+
+	switch(A.beauty)
+		if(-INFINITY to BEAUTY_LEVEL_HORRID)
+			add_event(null, "area_beauty", /datum/mood_event/horridroom)
+		if(BEAUTY_LEVEL_HORRID to BEAUTY_LEVEL_BAD)
+			add_event(null, "area_beauty", /datum/mood_event/badroom)
+		if(BEAUTY_LEVEL_BAD to BEAUTY_LEVEL_DECENT)
+			clear_event(null, "area_beauty")
+		if(BEAUTY_LEVEL_DECENT to BEAUTY_LEVEL_GOOD)
+			add_event(null, "area_beauty", /datum/mood_event/decentroom)
+		if(BEAUTY_LEVEL_GOOD to BEAUTY_LEVEL_GREAT)
+			add_event(null, "area_beauty", /datum/mood_event/goodroom)
+		if(BEAUTY_LEVEL_GREAT to INFINITY)
+			add_event(null, "area_beauty", /datum/mood_event/greatroom)
 
 ///Called when parent is ahealed.
 /datum/component/mood/proc/on_revive(datum/source)
@@ -316,3 +439,9 @@
 	SIGNAL_HANDLER
 
 	setSpirit(spirit + amount)
+
+///Called when parent slips.
+/datum/component/mood/proc/on_slip(datum/source)
+	SIGNAL_HANDLER
+
+	add_event(null, "slipped", /datum/mood_event/slipped)

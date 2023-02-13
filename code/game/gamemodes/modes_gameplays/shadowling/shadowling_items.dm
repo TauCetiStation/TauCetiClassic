@@ -3,7 +3,6 @@
 	desc = "Black, chitonous skin."
 	icon_state = "golem"
 	item_state = "golem"
-	item_color = "golem"
 	has_sensor = 0
 	canremove = 0
 	origin_tech = null
@@ -17,11 +16,12 @@
 	icon_state = "shadowling_armor"
 	item_state = "golem"
 	body_parts_covered = FULL_BODY //Shadowlings are immune to space
+	pierce_protection = FULL_BODY
 	cold_protection = FULL_BODY
 	//min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
-	flags = ABSTRACT | DROPDEL | THICKMATERIAL
+	flags = ABSTRACT | DROPDEL
 	slowdown = 0
 	unacidable = 1
 	heat_protection = null //You didn't expect a light-sensitive creature to have heat resistance, did you?

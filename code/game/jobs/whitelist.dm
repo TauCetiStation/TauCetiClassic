@@ -1,4 +1,4 @@
-var/list/whitelist = list()
+var/global/list/whitelist = list()
 
 /proc/load_whitelist()
 	whitelist = file2list("config/whitelist.txt")

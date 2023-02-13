@@ -9,6 +9,8 @@
 	req_access = list(access_robotics)
 	circuit = /obj/item/weapon/circuitboard/robotics
 
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_PRO)
+
 	var/id = 0.0
 	var/temp = null
 	var/status = 0
@@ -37,19 +39,19 @@
 			dat += "<A href='?src=\ref[src];screen=2'>2. Emergency Full Destruct</A><BR>"
 		if(screen == 1)
 			for(var/mob/living/silicon/robot/R in silicon_list)
-				if(istype(R, /mob/living/silicon/robot/drone))
+				if(isdrone(R))
 					continue //There's a specific console for drones.
-				if(istype(user, /mob/living/silicon/ai))
+				if(isAI(user))
 					if (R.connected_ai != user)
 						continue
-				if(istype(user, /mob/living/silicon/robot))
+				if(isrobot(user))
 					if (R != user)
 						continue
 				if(R.scrambledcodes)
 					continue
 
 				dat += "[R.name] |"
-				if(R.stat)
+				if(R.stat != CONSCIOUS)
 					dat += " Not Responding |"
 				else if (!R.canmove)
 					dat += " Locked Down |"
@@ -68,7 +70,7 @@
 					dat += " Slaved to [R.connected_ai.name] |"
 				else
 					dat += " Independent from AI |"
-				if (istype(user, /mob/living/silicon))
+				if (issilicon(user))
 					if((user.mind.special_role && user.mind.original == user) && !R.emagged)
 						dat += "<A class='violet' href='?src=\ref[src];magbot=\ref[R]'><i>Hack</i></A> "
 				dat += "<A class='green' href='?src=\ref[src];stopbot=\ref[R]'><i>[R.canmove ? "Lockdown" : "Release"]</i></A> "
@@ -171,13 +173,13 @@
 						//	R.cell.charge = R.lockcharge
 							R.lockcharge = !R.lockcharge
 							to_chat(R, "Your lockdown has been lifted!")
-							playsound(R, 'sound/effects/robot_unlocked.ogg', VOL_EFFECTS_MASTER, , FALSE)
+							playsound(R, 'sound/effects/robot_unlocked.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 						else
 							R.throw_alert("locked", /atom/movable/screen/alert/locked)
 							R.lockcharge = !R.lockcharge
 					//		R.cell.charge = 0
 							to_chat(R, "You have been locked down!")
-							playsound(R, 'sound/effects/robot_locked.ogg', VOL_EFFECTS_MASTER, , FALSE)
+							playsound(R, 'sound/effects/robot_locked.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 		else
 			to_chat(usr, "<span class='warning'>Access Denied.</span>")
 
@@ -209,7 +211,7 @@
 	while(src.timeleft)
 
 	for(var/mob/living/silicon/robot/R in silicon_list)
-		if(!R.scrambledcodes && !istype(R, /mob/living/silicon/robot/drone))
+		if(!R.scrambledcodes && !isdrone(R))
 			R.self_destruct()
 
 	return

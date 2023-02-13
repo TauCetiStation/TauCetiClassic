@@ -7,6 +7,7 @@
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 	var/list/obj/item/weapon/reagent_containers/glass/beaker/beakers = list()
 	var/processing = FALSE
@@ -300,21 +301,21 @@ A proc that does all the animations before mix()-ing.
 			updateUsrDialog()
 			update_icon()
 			return
-		else if(isscrewdriver(O))
+		else if(isscrewing(O))
 			panel_open = !panel_open
 			update_icon(beaker_update = FALSE)
 			updateUsrDialog()
 			return
-	else if(isscrewdriver(O))
+	else if(isscrewing(O))
 		to_chat(user, "<span class='notice'>You try to open up the panel, but [beakers["output"]] is in the way.</span>")
 		return
 
 	if(panel_open)
-		if(iswirecutter(O))
+		if(iscutter(O))
 			return attack_hand(user)
-		else if(ismultitool(O))
+		else if(ispulsing(O))
 			return attack_hand(user)
-		else if(istype(O, /obj/item/device/assembly/signaler))
+		else if(issignaler(O))
 			return attack_hand(user)
 
 	if(exchange_parts(user, O))
@@ -359,7 +360,7 @@ A proc that does all the animations before mix()-ing.
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(C.client)
-			C.eye_blurry = max(C.eye_blurry, 3)
+			C.blurEyes(3)
 			C.eye_blind = max(C.eye_blind, 1)
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C

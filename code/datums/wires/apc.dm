@@ -1,7 +1,7 @@
-var/const/APC_WIRE_IDSCAN      = 1
-var/const/APC_WIRE_MAIN_POWER1 = 2
-var/const/APC_WIRE_MAIN_POWER2 = 4
-var/const/APC_WIRE_AI_CONTROL  = 8
+var/global/const/APC_WIRE_IDSCAN      = 1
+var/global/const/APC_WIRE_MAIN_POWER1 = 2
+var/global/const/APC_WIRE_MAIN_POWER2 = 4
+var/global/const/APC_WIRE_AI_CONTROL  = 8
 
 /datum/wires/apc
 	holder_type = /obj/machinery/power/apc

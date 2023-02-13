@@ -2,12 +2,16 @@
 	name = COMBO_DISARM
 	desc = "A move that knocks anything out of your opponent's hands."
 	combo_icon_state = "weapon_disarm"
-	fullness_lose_on_execute = 10
+	cost = 10
 	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
 
 	ignore_size = TRUE
 
 	allowed_target_zones = TARGET_ZONE_ALL
+
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 1,
+	)
 
 /datum/combat_combo/disarm/proc/item_swaparoo(mob/living/victim, mob/living/attacker)
 	if(!iscarbon(attacker))
@@ -62,9 +66,7 @@
 		to_give.attack_self(victim)
 	else
 		event_log(victim, C, "Forced self-attack by [to_give]")
-		var/resolved = victim.attackby(to_give, victim)
-		if(!resolved && victim && to_give)
-			to_give.afterattack(victim, victim, TRUE)
+		to_give.melee_attack_chain(victim, victim)
 
 /datum/combat_combo/disarm/execute(mob/living/victim, mob/living/attacker)
 	var/list/to_drop = list(victim.get_active_hand(), victim.get_inactive_hand())
@@ -79,7 +81,7 @@
 		victim.drop_from_inventory(I)
 	victim.visible_message("<span class='warning'><B>[attacker] has disarmed [victim]!</B></span>")
 
-	if(!(CLUMSY in attacker.mutations))
+	if(!(attacker.IsClumsy()))
 		return
 
 	// Clowns disarming put the last thing from their backpack into their opponent's hands
@@ -92,15 +94,21 @@
 	name = COMBO_PUSH
 	desc = "A move that simply pushes your opponent to the ground."
 	combo_icon_state = "push"
-	fullness_lose_on_execute = 40
+	cost = 40
 	combo_elements = list(COMBO_DISARM, INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
 
 	check_bodyarmor = TRUE
 
 	allowed_target_zones = list(BP_CHEST)
 
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 4,
+		BP_INACTIVE_ARM = 4,
+	)
+
 /datum/combat_combo/push/execute(mob/living/victim, mob/living/attacker)
 	var/list/attack_obj = attacker.get_unarmed_attack()
+	apply_effect(3, STUN, victim, attacker, attack_obj=attack_obj, min_value=1)
 	apply_effect(3, WEAKEN, victim, attacker, attack_obj=attack_obj, min_value=1)
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	victim.visible_message("<span class='danger'>[attacker] has pushed [victim] to the ground!</span>")
@@ -111,7 +119,7 @@
 	name = COMBO_SLIDE_KICK
 	desc = "A move that makes you slide, kicking down people on your way."
 	combo_icon_state = "slide_kick"
-	fullness_lose_on_execute = 40
+	cost = 40
 	combo_elements = list(COMBO_DISARM, INTENT_PUSH, INTENT_PUSH, INTENT_PUSH)
 
 	ignore_size = TRUE
@@ -122,6 +130,11 @@
 	require_leg_to_perform = TRUE
 
 	heavy_animation = TRUE
+
+	pump_bodyparts = list(
+		BP_L_LEG = 4,
+		BP_R_LEG = 4,
+	)
 
 // Returns what to replace the append to the slide kick message with
 /datum/combat_combo/slide_kick/proc/take_pants_off(mob/living/L, mob/living/attacker)
@@ -196,7 +209,7 @@
 
 				// Clowns take off the uniform while slidekicking.
 				// A little funny.
-				if(CLUMSY in attacker.mutations)
+				if(attacker.IsClumsy())
 					var/temp_end_string = take_pants_off(L, attacker)
 					if(temp_end_string != "")
 						end_string = temp_end_string
@@ -222,7 +235,7 @@
 	name = COMBO_CAPTURE
 	desc = "A move that allows you to quickly grab your opponent into a jointlock, and press them against the ground."
 	combo_icon_state = "capture"
-	fullness_lose_on_execute = 75
+	cost = 75
 	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_PUSH, INTENT_GRAB)
 
 	scale_size_exponent = 0.0
@@ -230,6 +243,12 @@
 	allowed_target_zones = list(BP_L_ARM, BP_R_ARM)
 
 	require_arm = TRUE
+
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 7,
+		BP_INACTIVE_ARM = 7,
+		BP_CHEST = 7,
+	)
 
 /datum/combat_combo/capture/execute(mob/living/victim, mob/living/attacker)
 	var/saved_targetzone = attacker.get_targetzone()
@@ -247,7 +266,7 @@
 		return
 
 	var/target_zone = attacker.get_targetzone()
-	var/armor_check = victim.run_armor_check(target_zone, "melee")
+	var/armor_check = victim.run_armor_check(target_zone, MELEE)
 
 	if(ishuman(victim))
 		var/mob/living/carbon/human/H = victim
@@ -259,6 +278,7 @@
 
 	victim_G.force_down = TRUE
 	apply_effect(3, WEAKEN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=1)
+	apply_effect(3, STUN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=1)
 	victim.visible_message("<span class='danger'>[attacker] presses [victim] to the ground!</span>")
 
 	step_to(attacker, victim)
@@ -271,7 +291,7 @@
 	name = COMBO_DROPKICK
 	desc = "A move in which you jump with your both legs into opponent's belly, knocking them backwards."
 	combo_icon_state = "dropkick"
-	fullness_lose_on_execute = 25
+	cost = 25
 	combo_elements = list(INTENT_PUSH, INTENT_HARM, INTENT_PUSH, INTENT_HARM)
 
 	armor_pierce = TRUE
@@ -285,6 +305,12 @@
 	require_leg_to_perform = TRUE
 
 	heavy_animation = TRUE
+
+	pump_bodyparts = list(
+		BP_L_LEG = 2,
+		BP_R_LEG = 2,
+		BP_GROIN = 2,
+	)
 
 /datum/combat_combo/dropkick/animate_combo(mob/living/victim, mob/living/attacker)
 	var/list/attack_obj = attacker.get_unarmed_attack()
@@ -329,7 +355,8 @@
 
 	attacker.anchored = prev_anchored
 	attacker.transform = prev_transform
-	attacker.apply_effect(3, WEAKEN, blocked = 0)
+	attacker.Weaken(3)
+	attacker.Stun(3)
 
 	playsound(victim, 'sound/weapons/thudswoosh.ogg', VOL_EFFECTS_MASTER)
 	attacker.visible_message("<span class='danger'>[attacker] dropkicks [victim], pushing them onward!</span>")
@@ -392,6 +419,7 @@
 					L.pixel_y = prev_info_el["pix_y"]
 					L.pass_flags = prev_info_el["pass_flags"]
 					apply_effect(4, WEAKEN, L, attacker, attack_obj=attack_obj, min_value=1)
+					apply_effect(4, STUN, L, attacker, attack_obj=attack_obj, min_value=1)
 				return
 
 	for(var/j in 1 to i)
@@ -401,7 +429,118 @@
 		L.pixel_y = prev_info_el["pix_y"]
 		L.pass_flags = prev_info_el["pass_flags"]
 		apply_effect(4, WEAKEN, L, attacker, attack_obj=attack_obj, min_value=1)
+		apply_effect(4, STUN, L, attacker, attack_obj=attack_obj, min_value=1)
 
 // We ought to execute the thing in animation, since it's very complex and so to not enter race conditions.
 /datum/combat_combo/dropkick/execute(mob/living/victim, mob/living/attacker)
 	return
+
+
+
+/datum/combat_combo/capture_cqc
+	name = COMBO_CAPTURE_CQC
+	desc = "A move that allows you to quickly grab the opponent's hand, quickly turn it around, breaking it, and then take the opponent into a very strong grab."
+	combo_icon_state = "capture_cqc"
+	cost = 90
+	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_HARM, INTENT_GRAB)
+
+	scale_size_exponent = 0.0
+
+	allowed_target_zones = list(BP_L_ARM, BP_R_ARM)
+
+	require_arm = TRUE
+
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 7,
+		BP_INACTIVE_ARM = 7,
+		BP_CHEST = 7,
+	)
+
+/datum/combat_combo/capture_cqc/execute(mob/living/victim, mob/living/attacker)
+	var/saved_targetzone = attacker.get_targetzone()
+	var/list/attack_obj = attacker.get_unarmed_attack()
+
+	victim.Stun(2)
+
+	if(victim.buckled)
+		victim.buckled.unbuckle_mob()
+	if(attacker.buckled)
+		attacker.buckled.unbuckle_mob()
+
+	var/obj/item/weapon/grab/victim_G = prepare_grab(victim, attacker, GRAB_NECK)
+	if(!istype(victim_G))
+		return
+
+	var/target_zone = attacker.get_targetzone()
+	var/armor_check = victim.run_armor_check(target_zone, MELEE)
+
+	if(ishuman(victim))
+		var/mob/living/carbon/human/H = victim
+		var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
+		victim.visible_message("<span class='danger'>[attacker] [pick("bent", "twisted")] [victim]'s [BP.name] into a jointlock!</span>")
+		to_chat(victim, "<span class='danger'>You feel extreme pain!</span>")
+		victim.adjustHalLoss(clamp(0, 40 - victim.halloss, 40)) // up to 40 halloss
+		if(armor_check < 30)
+			BP.fracture()
+
+	victim_G.force_down = TRUE
+	apply_effect(3, WEAKEN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=2)
+	apply_effect(3, STUN, victim, attacker, zone=saved_targetzone, attack_obj=attack_obj, min_value=2)
+	victim.visible_message("<span class='danger'>[attacker] bends [victim] arm sharply!</span>")
+
+	step_to(attacker, victim)
+	attacker.set_dir(EAST) //face the victim
+	victim.set_dir(SOUTH) //face up
+
+
+
+/datum/combat_combo/neck_blow
+	name = COMBO_NECK_CULT
+	desc = "A blow to the neck allows you to silence the target, as well as stop their breath."
+	combo_icon_state = "neckblow_cult"
+	cost = 15
+	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_HARM)
+	allowed_target_zones = list(BP_HEAD)
+	require_arm_to_perform = TRUE
+
+
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 7
+	)
+
+/datum/combat_combo/neck_blow/execute(mob/living/victim, mob/living/attacker)
+	victim.losebreath += 40
+	victim.silent += 15
+	victim.visible_message("<span class='danger'>[attacker] punches [victim] in the neck!</span>")
+	playsound(victim, 'sound/effects/mob/hits/medium_1.ogg', VOL_EFFECTS_MASTER)
+
+
+
+/datum/combat_combo/eyes
+	name = COMBO_EYES_CULT
+	desc = "You masterfully poke your opponent in the eyes, which allows you to disorient them, as well as damage their eyeballs. Does not work if the target is wearing glasses or a mask."
+	combo_icon_state = "eyes_cult"
+	cost = 10
+	combo_elements = list(INTENT_PUSH, INTENT_PUSH, INTENT_HARM)
+	allowed_target_zones = list(O_EYES)
+	require_arm_to_perform = TRUE
+
+	pump_bodyparts = list(
+		BP_ACTIVE_ARM = 7
+	)
+
+/datum/combat_combo/eyes/execute(mob/living/victim, mob/living/attacker)
+	if(ishuman(victim))
+		var/mob/living/carbon/human/H = victim
+		if(((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
+			// you can't stab someone in the eyes wearing a mask!
+			to_chat(attacker, "<span class='warning'>You're going to need to remove the eye covering first.</span>")
+			return
+	victim.MakeConfused(5)
+	victim.adjustBlurriness(5)
+	if(ishuman(victim))
+		var/mob/living/carbon/human/H = victim
+		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+		IO.damage += 20
+	victim.flash_eyes()
+	victim.visible_message("<span class='danger'>[attacker] pokes [victim] in the eye!</span>")

@@ -238,7 +238,7 @@
 				var/itemname = href_list["itemname"]
 				editing_item_list[usr.ckey] = get_custom_item(target_ckey, itemname)
 				if(editing_item_list[usr.ckey])
-					edit_custom_item_panel(null, usr, readonly = TRUE, adminview = TRUE)
+					edit_custom_item_panel(null, usr, readonly = TRUE)
 			if("moderation_accept")
 				var/itemname = href_list["itemname"]
 				custom_item_premoderation_accept(target_ckey, itemname)
@@ -314,12 +314,12 @@
 	else if(href_list["delay_round_end"])
 		if(!check_rights(R_SERVER))	return
 
-		SSticker.delay_end = !SSticker.delay_end
-		log_admin("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
-		message_admins("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
+		SSticker.admin_delayed = !SSticker.admin_delayed
+		log_admin("[key_name(usr)] [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].")
+		message_admins("[key_name(usr)] [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].")
 		world.send2bridge(
 			type = list(BRIDGE_ROUNDSTAT),
-			attachment_msg = "**[key_name(usr)]** [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
+			attachment_msg = "**[key_name(usr)]** [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].",
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
 
@@ -611,13 +611,6 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_DRONE];jobban4=\ref[M]'>[ROLE_DRONE]</a></td>"
 
-		//pAI isn't technically a job, but it goes in here.
-
-		if(jobban_isbanned(M, ROLE_PAI))
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_PAI];jobban4=\ref[M]'>[ROLE_PAI]</a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_PAI];jobban4=\ref[M]'>[ROLE_PAI]</a></td>"
-
 		//Observer is no job and probably not at all human still there's no better place.
 
 		if(jobban_isbanned(M, "Observer"))
@@ -761,11 +754,6 @@
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
 		jobs += "<tr bgcolor='ccccff'><th colspan='3'>Other Races</th></tr><tr align='center'>"
 
-		if(jobban_isbanned(M, ROLE_PLANT))
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_PLANT];jobban4=\ref[M]'>[ROLE_PLANT]</a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_PLANT];jobban4=\ref[M]'>[ROLE_PLANT]</a></td>"
-
 		//many roles available to ghost after die
 		if(jobban_isbanned(M, ROLE_GHOSTLY))
 			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_GHOSTLY];jobban4=\ref[M]'>[ROLE_GHOSTLY]</a></td>"
@@ -853,7 +841,6 @@
 					joblist += temp.title */
 			if("nonhumandept")
 				joblist += ROLE_DRONE
-				joblist += ROLE_PAI
 				for(var/jobPos in nonhuman_positions)
 					if(!jobPos)	continue
 					var/datum/job/temp = SSjob.GetJob(jobPos)
@@ -1019,13 +1006,13 @@
 				return
 			var/reason = sanitize(input("Please enter reason"))
 			if(!reason)
-				to_chat(M, "<span class='warning'>You have been kicked from the server</span>")
+				to_chat(M, "<span class='warning'>You have been kicked from the server by admin</span>")
 			else
-				to_chat(M, "<span class='warning'>You have been kicked from the server: [reason]</span>")
+				to_chat(M, "<span class='warning'>You have been kicked from the server by admin: [reason]</span>")
 			log_admin("[key_name(usr)] booted [key_name(M)].")
 			message_admins("<span class='notice'>[key_name_admin(usr)] booted [key_name_admin(M)].</span>")
 			//M.client = null
-			qdel(M.client)
+			QDEL_IN(M.client, 2 SECONDS)
 
 	else if(href_list["newban"])
 		if(!check_rights(R_BAN))  return
@@ -1224,7 +1211,7 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai")
 			return
 
@@ -1246,7 +1233,7 @@
 		if(!M)	return
 
 		M.loc = prison_cell
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/prisoner = M
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(prisoner), SLOT_W_UNIFORM)
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), SLOT_SHOES)
@@ -1266,7 +1253,7 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai")
 			return
 
@@ -1292,7 +1279,7 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai")
 			return
 
@@ -1318,7 +1305,7 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai")
 			return
 
@@ -1341,14 +1328,14 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai")
 			return
 
 		for(var/obj/item/I in M)
 			M.drop_from_inventory(I)
 
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/observer = M
 			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket(observer), SLOT_W_UNIFORM)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(observer), SLOT_SHOES)
@@ -1616,7 +1603,7 @@
 			M.adjustBruteLoss( min( 99 , (M.health - 1) )    )
 			M.Stun(20)
 			M.Weaken(20)
-			M.stuttering = 20
+			M.setStuttering(20)
 
 	else if(href_list["CentcommReply"])
 		var/mob/living/H = locate(href_list["CentcommReply"])
@@ -1699,7 +1686,7 @@
 			if("No")
 				send_fax(usr, P, "[department]")
 
-		add_communication_log(type = "fax-centcomm", title = customname ? customname : 0, author = "Centcomm Officer", content = input)
+		SSStatistics.add_communication_log(type = "fax-centcomm", title = customname ? customname : 0, author = "Centcomm Officer", content = input)
 
 		to_chat(src.owner, "Message reply to transmitted successfully.")
 		log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [input]")
@@ -1760,6 +1747,17 @@
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
 		show_traitor_panel(M)
+	else if(href_list["skills"])
+		if(!check_rights(R_ADMIN))
+			return
+		if(!SSticker || !SSticker.mode)
+			tgui_alert(usr, "The game hasn't started yet!")
+			return
+		var/mob/M = locate(href_list["skills"])
+		if(!ismob(M))
+			to_chat(usr, "This can only be used on instances of type /mob.")
+			return
+		show_skills_panel(M)
 
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))	return
@@ -1866,7 +1864,7 @@
 				if(!marked_datum)
 					to_chat(usr, "You don't have any object marked. Abandoning spawn.")
 					return
-				else if(!istype(marked_datum,/atom))
+				else if(!isatom(marked_datum))
 					to_chat(usr, "The object you have marked cannot be used as a target. Target must be of type /atom. Abandoning spawn.")
 					return
 				else
@@ -1896,16 +1894,15 @@
 								if(istype(O,/mob))
 									var/mob/M = O
 									M.real_name = obj_name
-							if(where == "inhand" && isliving(usr) && istype(O, /obj/item))
+							if(where == "inhand" && isliving(usr) && isitem(O))
 								var/mob/living/L = usr
 								var/obj/item/I = O
 								L.put_in_hands(I)
 								if(isrobot(L))
 									var/mob/living/silicon/robot/R = L
 									if(R.module)
-										R.module.modules += I
+										R.module.add_item(I)
 										I.loc = R.module
-										R.module.rebuild()
 										R.activate_module(I)
 				if(stop_main_loop)
 					break
@@ -2193,8 +2190,8 @@
 			return
 
 		library_recycle_bin()
-		log_admin("[key_name(usr)] restored [title] from the recycle bin")
-		message_admins("[key_name_admin(usr)] restored [title] from the recycle bin")
+		log_admin("[key_name(usr)] restored '[title]' from the recycle bin")
+		message_admins("[key_name_admin(usr)] restored '[title]' from the recycle bin")
 
 	else if(href_list["deletebook"])
 		if(!check_rights(R_PERMISSIONS))
@@ -2224,8 +2221,8 @@
 			return
 
 		library_recycle_bin()
-		log_admin("[key_name(usr)] restored [title] from the recycle bin")
-		message_admins("[key_name_admin(usr)] removed [title] from the library database")
+		log_admin("[key_name(usr)] removed '[title]' from the library database by player request")
+		message_admins("[key_name_admin(usr)] removed '[title]' from the library database by player request")
 
 	else if(href_list["vsc"])
 		if(check_rights(R_ADMIN|R_SERVER))

@@ -759,8 +759,8 @@
 	body.cut_overlays()
 	var/image/I = image('icons/mob/shadowling.dmi', body, "shadowling_ascended")
 	body.add_overlay(I)
-	var/image/ascend = image(icon = 'icons/mob/shadowling.dmi', icon_state = "shadowling_ascended_ms", layer = LIGHTING_LAYER + 1)
-	ascend.plane = LIGHTING_PLANE + 1
+	var/image/ascend = image(icon = 'icons/mob/shadowling.dmi', icon_state = "shadowling_ascended_ms", layer = ABOVE_LIGHTING_LAYER)
+	ascend.plane = ABOVE_LIGHTING_PLANE
 	body.add_overlay(ascend)
 
 /datum/mafia_role/nightmare/validate_action_target(datum/mafia_controller/game, action, datum/mafia_role/target)

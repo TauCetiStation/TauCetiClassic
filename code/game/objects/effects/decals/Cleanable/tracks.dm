@@ -137,6 +137,7 @@ var/global/list/image/fluidtrack_cache=list()
 			track.overlay=null
 		var/image/I = image(icon, icon_state=state, dir=num2dir(truedir))
 		I.color = track.basedatum.color
+		I.alpha = track.basedatum.alpha
 
 		track.fresh=0
 		track.overlay=I
@@ -150,6 +151,8 @@ var/global/list/image/fluidtrack_cache=list()
 	coming_state = "human1"
 	going_state  = "human2"
 	amount = 0
+
+	beauty = -50
 
 /obj/effect/decal/cleanable/blood/tracks/footprints/paws
 	coming_state = "paw1"

@@ -68,7 +68,17 @@
 	var/list/subordinate_staff = list()
 	var/last_trans_tick = 0
 
+	var/category
+	var/list/shop_lots = list()
+	var/list/shop_lots_paged = list()
+	var/list/shop_lots_frontend = list()
+	var/list/shopping_cart = list()
+	var/category_shop_page = 1
+	var/category_shop_per_page = 5
+
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
+
+	action_button_name = "Toggle light"
 
 /obj/item/device/pda/atom_init()
 	. = ..()
@@ -87,12 +97,7 @@
 			id = null
 		else
 			QDEL_NULL(id)
-	if (pen)
-		if (prob(50)) //Pens are kept in 50% of the cases
-			pen.forceMove(get_turf(loc))
-			pen = null
-		else
-			QDEL_NULL(pen)
+	QDEL_NULL(pen)
 	return ..()
 
 /obj/item/device/pda/examine(mob/user)
@@ -110,6 +115,30 @@
 /obj/item/device/pda/CtrlClick(mob/user)
 	if (can_use(user))
 		remove_pen(user)
+		return
+
+	return ..()
+
+/obj/item/device/pda/ui_action_click()
+	toggle_light()
+
+/obj/item/device/pda/verb/toggle_light()
+	set name = "Toggle light"
+	set category = "Object"
+
+	if(usr.incapacitated())
+		return
+
+	if(fon)
+		fon = FALSE
+		set_light(0)
+	else
+		fon = TRUE
+		set_light(f_lum)
+
+/obj/item/device/pda/proc/assign(real_name)
+	owner = real_name
+	name = "PDA-[real_name][ownjob ? " ([ownjob])" : ""]"
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -160,6 +189,44 @@
 		var/obj/item/weapon/cartridge/clown/cart = cartridge
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
+
+/obj/item/device/pda/clown/Destroy()
+	if(slot_equipped)
+		unslip_lying_user(loc)
+		var/mob/living/carbon/human/H = loc
+		if(istype(H) && H.lying)
+			remove_user_slip(loc)
+	return ..()
+
+/obj/item/device/pda/clown/proc/make_user_slip(mob/living/carbon/user)
+	user.AddComponent(/datum/component/slippery, 2, NO_SLIP_WHEN_WALKING)
+
+/obj/item/device/pda/clown/proc/remove_user_slip(mob/living/carbon/user)
+	qdel(user.GetComponent(/datum/component/slippery))
+
+/obj/item/device/pda/clown/equipped(mob/living/carbon/user, slot)
+	..()
+	if(slot in list(SLOT_L_STORE, SLOT_R_STORE, SLOT_BELT, SLOT_WEAR_ID))
+		slip_lying_user(user)
+		if(user.lying)
+			make_user_slip(user)
+	else
+		unslip_lying_user(user)
+		if(user.lying)
+			remove_user_slip(user)
+
+/obj/item/device/pda/clown/proc/slip_lying_user(mob/living/carbon/user)
+	RegisterSignal(user, COMSIG_MOB_STATUS_LYING, .proc/make_user_slip)
+	RegisterSignal(user, COMSIG_MOB_STATUS_NOT_LYING, .proc/remove_user_slip)
+
+/obj/item/device/pda/clown/proc/unslip_lying_user(mob/living/carbon/user)
+	UnregisterSignal(user, list(COMSIG_MOB_STATUS_LYING, COMSIG_MOB_STATUS_NOT_LYING))
+
+/obj/item/device/pda/clown/dropped(mob/living/carbon/user)
+	..()
+	unslip_lying_user(user)
+	if(user.lying)
+		remove_user_slip(user)
 
 /obj/item/device/pda/mime
 	default_cartridge = /obj/item/weapon/cartridge/mime
@@ -578,6 +645,78 @@
 		if(isnull(data["aircontents"]))
 			data["aircontents"] = list("reading" = 0)
 
+	if(mode == 8 || mode == 81 || mode == 82)
+		var/list/categories_frontend = list()
+		for(var/index in global.shop_categories)
+			categories_frontend.len++
+			categories_frontend[categories_frontend.len] = list("name" = index, "amount" = global.shop_categories[index])
+		data["categories"] = categories_frontend
+
+		data["category"] = category
+
+		var/list/online_shop_lots_latest_frontend[3]
+		for(var/i=1, i<=3, i++)
+			var/datum/shop_lot/Lot = global.online_shop_lots_latest[i]
+			if(!Lot)
+				online_shop_lots_latest_frontend[i] = null
+			else
+				var/datum/money_account/Acc = get_account(Lot.account)
+				online_shop_lots_latest_frontend[i] = Lot.to_list(Acc ? Acc.owner_name : "Unknown")
+		data["latest_lots"] = online_shop_lots_latest_frontend
+
+		shop_lots = list()
+		if(mode == 81)
+			/*for(var/index in global.online_shop_lots)
+				var/datum/shop_lot/Lot = global.online_shop_lots[index] */
+
+			for(var/index in global.online_shop_lots_hashed)
+				var/list/Lots = global.online_shop_lots_hashed[index]
+				for(var/datum/shop_lot/Lot in Lots)
+					if(Lot && Lot.category == category && !Lot.sold)
+						var/datum/money_account/Acc = get_account(Lot.account)
+						shop_lots.len++
+						shop_lots[shop_lots.len] = Lot.to_list(Acc ? Acc.owner_name : "Unknown")
+						break
+
+		shop_lots_frontend = list()
+		if(shop_lots.len)
+			var/lot_id = 1
+			shop_lots_paged = list()
+			shop_lots_paged.len++
+			shop_lots_paged[shop_lots_paged.len] = list()
+			for(var/list/Lot in shop_lots)
+				var/list/part_list = shop_lots_paged[shop_lots_paged.len]
+				part_list.len = lot_id
+				part_list[lot_id] = Lot
+				lot_id++
+				if(lot_id > category_shop_per_page)
+					lot_id = 1
+					shop_lots_paged.len++
+					shop_lots_paged[shop_lots_paged.len] = list()
+			shop_lots_frontend = shop_lots_paged[category_shop_page]
+
+		data["shop_lots"] = shop_lots_frontend
+
+		data["category_shop_page"] = category_shop_page
+
+		var/list/orders_and_offers_frontend = list()
+		if(global.orders_and_offers.len)
+			for(var/index in global.orders_and_offers)
+				var/list/OrOf = global.orders_and_offers[index]
+				orders_and_offers_frontend.len++
+				orders_and_offers_frontend[orders_and_offers_frontend.len] = OrOf
+		data["orders_and_offers"] = orders_and_offers_frontend
+
+		var/list/shopping_cart_frontend = list()
+		if(shopping_cart.len)
+			for(var/index in shopping_cart)
+				var/list/Item = shopping_cart[index]
+				shopping_cart_frontend.len++
+				shopping_cart_frontend[shopping_cart_frontend.len] = Item
+		data["shopping_cart"] = shopping_cart_frontend
+
+		data["shopping_cart_amount"] = shopping_cart_frontend.len
+
 	nanoUI = data
 	// update the ui if it exists, returns null if no ui is passed/found
 	if(ui)
@@ -664,11 +803,10 @@
 		if ("Authenticate")//Checks for ID
 			id_check(U, 1)
 		if("UpdateInfo")
-			owner = id.registered_name
 			ownjob = id.assignment
+			assign(id.registered_name)
 			ownrank = id.rank
 			check_rank(id.rank)		//check if we became the head
-			name = "PDA-[owner] ([ownjob])"
 			if(owner_account && owner_account.account_number == id.associated_account_number)
 				return
 			ui.close()
@@ -918,6 +1056,73 @@
 					account.change_salary(U, owner, name, ownrank)
 					break
 
+//Cargo Shop=================================================================
+
+		if("Shop")
+			category_shop_page = 1
+			mode = 8
+
+		//Maintain Category
+		if("Shop_Category")
+			category_shop_page = 1
+			mode = 81
+			category = href_list["categ"]
+		if("Shop_Change_Page")
+			var/page = href_list["shop_change_page"]
+			switch(page)
+				if("next")
+					category_shop_page++
+				if("previous")
+					category_shop_page--
+			category_shop_page = clamp(category_shop_page, 1, shop_lots_paged.len)
+		if("Shop_Change_Per_page")
+			var/number = text2num(href_list["shop_per_page"])
+			if(number)
+				category_shop_per_page = number
+
+		//Maintain Orders and Offers
+		if("Shop_Add_Order_or_Offer")
+			if(!check_pda_server())
+				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
+				mode = 0
+				return
+			var/T = sanitize(input(U, "Введите описание заказа или предложения", "Комментарий", "Куплю Гараж") as text)
+			if(T && istext(T) && owner)
+				add_order_or_offer(owner, T)
+
+		//Buy Item
+		if("Shop_Order")
+			if(!check_pda_server())
+				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
+				mode = 0
+				return
+			var/id = href_list["order_item"]
+			var/datum/shop_lot/Lot = global.online_shop_lots[id]
+			if(Lot && owner_account)
+				var/T = sanitize(input(U, "Введите адрес доставки или комментарий", "Комментарий", null) as text)
+				if(T && istext(T))
+					order_item(Lot, T)
+
+		//Shopping Cart
+		if("Shop_Shopping_Cart")
+			mode = 82
+		if("Shop_Mark_As_Delivered")
+			if(!check_pda_server())
+				to_chat(U, "<span class='notice'>ERROR: PDA server is not responding.</span>")
+				mode = 0
+				return
+			var/id = href_list["delivered_item"]
+			var/postpayment = shopping_cart[id]["postpayment"]
+			var/datum/shop_lot/Lot = global.online_shop_lots[id]
+			if(!Lot || !owner_account || postpayment > owner_account.money)
+				return
+			shopping_cart -= id
+			Lot.delivered = TRUE
+
+			charge_to_account(owner_account.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -postpayment)
+			charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, postpayment)
+			mode = 82
+
 //SYNDICATE FUNCTIONS===================================
 
 		if("Toggle Door")
@@ -982,7 +1187,7 @@
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed. [ADMIN_JMP(U)]")
 						else
-							to_chat("<span class='notice'>Success!</span>")
+							to_chat(U, "<span class='notice'>Success!</span>")
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded. [ADMIN_JMP(U)]")
 							detonate_act(P)
@@ -1071,14 +1276,14 @@
 		var/datum/effect/effect/system/smoke_spread/S = new /datum/effect/effect/system/smoke_spread
 		S.attach(P.loc)
 		S.set_up(n = 10, c = 0, loca = P.loc, direct = 0)
-		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		S.start()
 		message += "Large clouds of smoke billow forth from your [P]!"
 	if(i>=40 && i<=45) //Bad smoke
 		var/datum/effect/effect/system/smoke_spread/bad/B = new /datum/effect/effect/system/smoke_spread/bad
 		B.attach(P.loc)
 		B.set_up(n = 10, c = 0, loca = P.loc, direct = 0)
-		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(P, 'sound/effects/smoke.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		B.start()
 		message += "Large clouds of noxious smoke billow forth from your [P]!"
 	if(i>=65 && i<=75) //Weaken
@@ -1099,11 +1304,11 @@
 		j = prob(10)
 
 	if(j) //This kills the PDA
-		P.Destroy()
 		if(message)
 			message += "It melts in a puddle of plastic."
 		else
 			message += "Your [P] shatters in a thousand pieces!"
+		qdel(P)
 
 	if(M && isliving(M))
 		message = "<span class='warning'></span>" + message
@@ -1236,7 +1441,7 @@
 			var/who = src.owner
 			if(prob(50))
 				who = P.owner
-			for(var/mob/living/silicon/ai/ai in ai_list)
+			for(var/mob/living/silicon/ai/ai as anything in ai_list)
 				// Allows other AIs to intercept the message but the AI won't intercept their own message.
 				if(ai.pda != P && ai.pda != src)
 					to_chat(ai, "<i>Intercepted message from <b>[who]</b>: <span class='emojify linkify'>[t]</span></i>")
@@ -1258,15 +1463,14 @@
 
 
 		if(L)
-			to_chat(L, "[bicon(P)] <b>Message from [src.owner] ([ownjob]), </b>\"<span class='message emojify linkify'>[t]</span>\" (<a href='byond://?src=\ref[P];choice=Message;notap=[istype(loc, /mob/living/silicon)];skiprefresh=1;target=\ref[src]'>Reply</a>)")
+			to_chat(L, "[bicon(P)] <b>Message from [src.owner] ([ownjob]), </b>\"<span class='message emojify linkify'>[t]</span>\" (<a href='byond://?src=\ref[P];choice=Message;notap=[issilicon(loc)];skiprefresh=1;target=\ref[src]'>Reply</a>)")
 			nanomanager.update_user_uis(L, P) // Update the receiving user's PDA UI so that they can see the new message
 
 		nanomanager.update_user_uis(U, P) // Update the sending user's PDA UI so that they can see the new message
 
 		log_pda("[usr] (PDA: [src.name]) sent \"[t]\" to [P.name]")
-		P.cut_overlays()
-		P.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 		P.newmessage = 1
+		P.update_icon()
 	else
 		to_chat(U, "<span class='notice'>ERROR: Messaging server is not responding.</span>")
 
@@ -1336,8 +1540,8 @@
 			to_chat(user, "<span class='notice'>\The [src] rejects the ID.</span>")
 			return
 		if(!owner)
-			owner = idcard.registered_name
 			ownjob = idcard.assignment
+			assign(idcard.registered_name)
 			ownrank = idcard.rank
 			check_rank(idcard.rank)
 			var/datum/money_account/account = get_account(idcard.associated_account_number)
@@ -1345,7 +1549,6 @@
 				account.owner_PDA = src			//set PDA in /datum/money_account
 				owner_account = account			//bind the account to the pda
 				owner_fingerprints = list()		//remove old fingerprints
-			name = "PDA-[owner] ([ownjob])"
 			to_chat(user, "<span class='notice'>Card scanned.</span>")
 		else
 			//Basic safety check. If card is held by user and PDA is near user or in user's hand.
@@ -1375,7 +1578,7 @@
 		return ..()
 
 /obj/item/device/pda/attack(mob/living/L, mob/living/user)
-	if (istype(L, /mob/living/carbon))
+	if (iscarbon(L))
 		var/mob/living/carbon/C = L
 		var/data_message = ""
 		switch(scanmode)
@@ -1391,7 +1594,7 @@
 				data_message += "<span class='notice'>&emsp; Body Temperature: [C.bodytemperature-T0C]&deg;C ([C.bodytemperature*1.8-459.67]&deg;F)</span>"
 				if(C.tod && (C.stat == DEAD || (C.status_flags & FAKEDEATH)))
 					data_message += "<span class='notice'>&emsp; Time of Death: [C.tod]</span>"
-				if(istype(C, /mob/living/carbon/human))
+				if(ishuman(C))
 					var/mob/living/carbon/human/H = C
 					var/list/damaged = H.get_damaged_bodyparts(1, 1)
 					data_message += "<span class='notice'>Localized Damage, Brute/Burn:</span>"
@@ -1401,17 +1604,13 @@
 					else
 						data_message += "<span class='notice'>&emsp; Limbs are OK.</span>"
 
-				for(var/datum/disease/D in C.viruses)
-					if(!D.hidden[SCANNER])
-						data_message += "<span class='warning'><b>Warning: [D.form] Detected</b>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span>"
-
 				visible_message("<span class='warning'>[user] has analyzed [C]'s vitals!</span>")
 				to_chat(user, data_message)
 
 			if(2)
 				if (!istype(C.dna, /datum/dna))
 					data_message += "<span class='notice'>No fingerprints found on [C]</span>"
-				else if(istype(C, /mob/living/carbon/human))
+				else if(ishuman(C))
 					var/mob/living/carbon/human/H = C
 					if(H.gloves)
 						data_message += "<span class='notice'>No fingerprints found on [C]</span>"
@@ -1512,7 +1711,7 @@
 		A.emplode(severity)
 
 /obj/item/device/pda/proc/click_to_pay(atom/target)
-	if(istype(target, /mob/living/carbon/human))
+	if(ishuman(target))
 		var/mob/living/carbon/human/receiver = target
 		if(receiver.mind.initial_account)
 			target_account_number = text2num(receiver.mind.initial_account.account_number)
@@ -1577,5 +1776,71 @@
 /obj/item/device/pda/proc/check_rank(rank)
 	if((rank in command_positions) || (rank == "Quartermaster"))
 		boss_PDA = 1
+
+/obj/item/device/pda/proc/order_item(datum/shop_lot/Lot, destination)
+	if(!owner_account || !Lot)
+		return
+
+	var/discount_price = round((1 - global.online_shop_discount) * Lot.price)
+	var/prepayment = round(discount_price * global.online_shop_delivery_cost)
+
+	if(prepayment > owner_account.money)
+		return
+	Lot.sold = TRUE
+	for(var/i=1, i<=3, i++)
+		if(global.online_shop_lots_latest[i] == Lot)
+			global.online_shop_lots_latest[i] = null
+			break
+	var/datum/money_account/Acc = get_account(Lot.account)
+	shopping_cart[Lot.number] = Lot.to_list(Acc ? Acc.owner_name : "Unknown", discount_price - prepayment)
+
+	global.shop_categories[Lot.category]--
+
+	if(global.online_shop_discount)
+		charge_to_account(Lot.account, global.cargo_account.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.price - discount_price)
+		charge_to_account(global.cargo_account.account_number, owner_account.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -(Lot.price - discount_price))
+
+	charge_to_account(owner_account.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -prepayment)
+	charge_to_account(global.cargo_account.account_number, owner_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, prepayment)
+
+	for(var/obj/machinery/computer/cargo/Console in global.cargo_consoles)
+		if(istype(Console, /obj/machinery/computer/cargo/request))
+			continue
+		var/obj/item/weapon/paper/P = new(get_turf(Console.loc))
+
+		P.name = "Заказ предмета из магазина"
+		P.info += "Посылка номер #[Lot.number]<br>"
+		P.info += "Наименование: [Lot.name]<br>"
+		P.info += "Цена: [Lot.price]$<br>"
+		P.info += "Заказал: [owner ? owner : "Unknown"]<br>"
+		P.info += "Подпись заказчика: <span class=\"sign_field\"></span><br>"
+		P.info += "Комментарий: [destination]<br>"
+		P.info += "<hr>"
+		P.info += "МЕСТО ДЛЯ ШТАМПОВ:<br>"
+
+		var/obj/item/weapon/pen/Pen = new(src)
+
+		P.parsepencode(P.info, Pen)
+		P.updateinfolinks()
+		qdel(Pen)
+
+		P.update_icon()
+
+/obj/item/device/pda/proc/add_order_or_offer(name, desc)
+	global.orders_and_offers["[orders_and_offers_number]"] = list("name" = name, "description" = desc, "time" = worldtime2text())
+	global.orders_and_offers_number++
+	mode = 8
+	addtimer(CALLBACK(src, .proc/delete_order_or_offer, global.orders_and_offers_number), 15 MINUTES)
+
+/obj/item/device/pda/proc/delete_order_or_offer(num)
+	orders_and_offers -= "[num]"
+
+/obj/item/device/pda/proc/check_pda_server()
+	if(!global.message_servers)
+		return
+	for (var/obj/machinery/message_server/MS in global.message_servers)
+		if(MS.active)
+			var/turf/pos = get_turf(src)
+			return is_station_level(pos.z)
 
 #undef TRANSCATION_COOLDOWN

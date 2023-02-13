@@ -2,6 +2,12 @@
 	name = "host brain"
 	real_name = "host brain"
 
+/mob/living/captive_brain/say_understands(mob/other, datum/language/speaking)
+	var/mob/living/simple_animal/borer/my_borer = loc
+	if(!istype(loc))
+		return FALSE
+	return other == my_borer.host
+
 /mob/living/captive_brain/say(message)
 
 	if (client)
@@ -25,9 +31,6 @@
 				continue
 			if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 				to_chat(M, "[FOLLOW_LINK(M, src)] The captive mind of [src] whispers, \"[message]\"")
-
-/mob/living/captive_brain/emote(act, m_type = SHOWMSG_VISUAL, message, auto)
-	return
 
 /mob/living/simple_animal/borer
 	name = "cortical borer"
@@ -80,11 +83,10 @@
 
 	host_brain = new/mob/living/captive_brain(src)
 	if(request_ghosts)
-		for(var/mob/dead/observer/O in observer_list)
-			try_request_n_transfer(O, "A new Cortical Borer was born. Do you want to be him?", ROLE_ALIEN, IGNORE_BORER)
+		create_spawner(/datum/spawner/living/borer, src)
 
 /mob/living/simple_animal/borer/attack_ghost(mob/dead/observer/O)
-	try_request_n_transfer(O, "Cortical Borer, are you sure?", ROLE_ALIEN, , show_warnings = TRUE)
+	try_request_n_transfer(O, "Cortical Borer, are you sure?", ROLE_GHOSTLY, , show_warnings = TRUE)
 
 /mob/living/simple_animal/borer/Life()
 	..()
@@ -115,7 +117,10 @@
 		if(prob(5))
 			host.adjustBrainLoss(rand(1,2))
 		if(prob(host.getBrainLoss() * 0.05))
-			host.emote("[pick(list("blink", "choke", "aflap", "drool", "twitch", "gasp"))]")
+			host.emote("[pick(list("blink", "choke", "drool", "twitch", "gasp"))]")
+
+/mob/living/simple_animal/borer/say_understands(mob/other, datum/language/speaking)
+	return host == other
 
 /mob/living/simple_animal/borer/say(message)
 
@@ -128,7 +133,7 @@
 	if (stat == DEAD)
 		return say_dead(message)
 
-	if (stat)
+	if (stat != CONSCIOUS)
 		return
 
 	if (client)
@@ -167,7 +172,7 @@
 	if(!message)
 		return
 
-	for(var/mob/M in mob_list)
+	for(var/mob/M as anything in mob_list)
 		if(M.mind && (istype(M, /mob/living/simple_animal/borer) || isobserver(M)))
 			to_chat(M, "<i>Cortical link, <b>[truename]:</b> [copytext(message, 2)]</i>")
 
@@ -208,6 +213,7 @@
 
 	to_chat(src, "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>")
 	to_chat(M, "<span class='warning'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
+	M.Stun(3)
 	M.Weaken(3)
 
 	dominate_cd = world.time
@@ -279,7 +285,7 @@
 		to_chat(src, "<span class='notice'>You are feeling far too docile to do that.</span>")
 		return
 
-	var/chem = input("Select a chemical to secrete.", "Chemicals") as null|anything in list("bicaridine","tramadol","hyperzine","alkysine")
+	var/chem = input("Select a chemical to secrete.", "Chemicals") as null|anything in list("bicaridine","tramadol","nuka_cola","alkysine")
 	if(!chem)
 		return
 

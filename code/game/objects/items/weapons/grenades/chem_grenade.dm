@@ -5,6 +5,7 @@
 	desc = "A hand made chemical grenade."
 	w_class = SIZE_TINY
 	force = 2.0
+	flags = HEAR_TALK
 	var/stage = 0
 	var/state = 0
 	var/path = 0
@@ -62,7 +63,7 @@
 		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 		stage = 1
 
-	else if(isscrewdriver(I) && path != 2)
+	else if(isscrewing(I) && path != 2)
 		if(stage == 1)
 			path = 1
 			if(!detonator)
@@ -124,7 +125,7 @@
 			detonator.a_right.activate()
 			active = 1
 	if(active)
-		playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, null, -3)
+		playsound(src, activate_sound, VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 		icon_state = initial(icon_state) + "_active"
 
 		if(user)
@@ -165,7 +166,7 @@
 			if( A == src ) continue
 			reagents.reaction(A, 1, 10)
 
-	if(istype(loc, /mob/living/carbon))		//drop dat grenade if it goes off in your hand
+	if(iscarbon(loc))		//drop dat grenade if it goes off in your hand
 		var/mob/living/carbon/C = loc
 		C.drop_from_inventory(src)
 		C.throw_mode_off()
@@ -306,6 +307,52 @@
 	B1.reagents.add_reagent("potassium", 25)
 	B2.reagents.add_reagent("phosphorus", 25)
 	B2.reagents.add_reagent("sugar", 25)
+
+	detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
+
+	beakers += B1
+	beakers += B2
+	icon_state = initial(icon_state) +"_locked"
+
+///////Acid
+/obj/item/weapon/grenade/chem_grenade/acid
+	name = "Acid grenade"
+	desc = "Used to burn armor, things and human flesh."
+	stage = 2
+	path = 1
+
+/obj/item/weapon/grenade/chem_grenade/acid/atom_init()
+	. = ..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
+	B1.reagents.add_reagent("sacid", 50)
+	B1.reagents.add_reagent("sugar", 50)
+	B1.reagents.add_reagent("potassium", 50)
+	B2.reagents.add_reagent("pacid", 100)
+	B2.reagents.add_reagent("phosphorus", 50)
+
+	detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
+
+	beakers += B1
+	beakers += B2
+	icon_state = initial(icon_state) +"_locked"
+
+///Drugs
+/obj/item/weapon/grenade/chem_grenade/drugs
+	name = "Drugs grenade"
+	desc = "Grenade with illegal chemical compound used as drug."
+	path = 1
+	stage = 2
+
+/obj/item/weapon/grenade/chem_grenade/drugs/atom_init()
+	. = ..()
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B1 = new(src)
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/B2 = new(src)
+	B1.reagents.add_reagent("space_drugs", 50)
+	B1.reagents.add_reagent("sugar", 50)
+	B1.reagents.add_reagent("potassium", 50)
+	B2.reagents.add_reagent("space_drugs", 100)
+	B2.reagents.add_reagent("phosphorus", 50)
 
 	detonator = new/obj/item/device/assembly_holder/timer_igniter(src)
 

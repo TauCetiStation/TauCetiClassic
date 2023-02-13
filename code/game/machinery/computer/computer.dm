@@ -25,6 +25,8 @@
 	else
 		if(circuit)
 			circuit = new circuit(null)
+		else
+			resistance_flags |= FULL_INDESTRUCTIBLE // no circuit = INDESTRUCTIBLE cuz we cant build it
 	power_change()
 
 /obj/machinery/computer/Topic(href, href_list)
@@ -45,36 +47,80 @@
 		return 0
 	return 1
 
+/obj/machinery/computer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(stat & BROKEN)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER, 70, TRUE)
+			else
+				playsound(loc, 'sound/effects/glasshit.ogg', VOL_EFFECTS_MASTER, 75, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/obj/machinery/computer/atom_break(damage_flag)
+	if(!circuit) //no circuit, no breaking
+		return
+	. = ..()
+	if(.)
+		playsound(loc, 'sound/effects/glassbr3.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+		set_light(0)
+
+/obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	deconstruction()
+	if(circuit) //no circuit, no computer frame
+		var/obj/structure/computerframe/A = new /obj/structure/computerframe(loc)
+		A.set_dir(dir)
+		A.circuit = circuit
+		A.anchored = TRUE
+		transfer_fingerprints_to(A)
+		circuit = null
+		if(stat & BROKEN)
+			if(user)
+				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
+			else
+				playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', VOL_EFFECTS_MASTER, 70, TRUE)
+			new /obj/item/weapon/shard(loc)
+			A.state = 3
+			A.icon_state = "3"
+		else
+			if(user)
+				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
+			A.state = 4
+			A.icon_state = "4"
+	for(var/obj/C in src)
+		C.forceMove(loc)
+	..()
+
 /obj/machinery/computer/emp_act(severity)
-	if(prob(20/severity)) set_broken()
+	if(prob(20 / severity))
+		set_broken()
 	..()
 
 
 /obj/machinery/computer/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
 			return
-		if(2.0)
-			if (prob(25))
+		if(EXPLODE_HEAVY)
+			if(prob(25))
 				qdel(src)
 				return
-			if (prob(50))
-				for(var/x in verbs)
-					verbs -= x
-				set_broken()
-		if(3.0)
-			if (prob(25))
-				for(var/x in verbs)
-					verbs -= x
-				set_broken()
-		else
-	return
+			else if(prob(50))
+				return
+		if(EXPLODE_LIGHT)
+			if(prob(75))
+				return
+	for(var/x in verbs)
+		verbs -= x
+	set_broken()
 
-/obj/machinery/computer/bullet_act(obj/item/projectile/Proj)
+/obj/machinery/computer/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	if(prob(Proj.damage))
 		set_broken()
-	..()
 
 /obj/machinery/computer/update_icon()
 	..()
@@ -118,29 +164,11 @@
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>It's too complicated for you.</span>")
 		return
-	if(isscrewdriver(I) && circuit && !(flags&NODECONSTRUCT))
+	if(isscrewing(I) && circuit && !(flags&NODECONSTRUCT))
 		if(user.is_busy(src)) return
 		if(I.use_tool(src, user, 20, volume = 50))
-			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
-			transfer_fingerprints_to(A)
-			A.circuit = circuit
-			A.anchored = TRUE
-			A.set_dir(dir)
-			circuit = null
-			for (var/obj/C in src)
-				C.loc = src.loc
-			if (src.stat & BROKEN)
-				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
-				new /obj/item/weapon/shard( src.loc )
-				A.state = 3
-				A.icon_state = "3"
-			else
-				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
-				set_light(0)
-				A.state = 4
-				A.icon_state = "4"
-			qdel(src)
-	if(iswrench(I))
+			deconstruct(TRUE)
+	if(iswrenching(I))
 		if(user.is_busy(src))
 			return
 
@@ -175,7 +203,7 @@
 
 	var/obj/item/I = usr.get_active_hand()
 
-	if (!I || !iswrench(I))
+	if (!I || !iswrenching(I))
 		to_chat(usr, "<span class='warning'>You need to hold a wrench in your active hand to do this.</span>")
 		return
 
@@ -205,6 +233,20 @@
 			else
 				H.visible_message("<span class='danger'>[H.name] stares cluelessly at [src] and drools.</span>")
 				return 1
+		if(HAS_TRAIT_FROM(H, TRAIT_WET_HANDS, QUALITY_TRAIT))
+			var/emp_luck = rand(1, 20)
+			if(emp_luck > 12)
+				emp_act(1)
+				to_chat(H, "<span class='warning'>You pressed something and sparks appeared.</span>")
+				return 1
+			else if(emp_luck <= 2)
+				emp_act(2)
+				to_chat(H, "<span class='warning'>You pressed something and everything is gone.</span>")
+				return 1
+			else if(emp_luck == 10)
+				emp_act(3)
+				to_chat(H, "<span class='warning'>You poured water on the device.</span>")
+				return 1
 	. = ..()
 
 /obj/machinery/computer/attack_paw(mob/user)
@@ -222,20 +264,48 @@
 	"<span class='danger'>You hear a clicking sound.</span>")
 
 /obj/machinery/computer/attack_alien(mob/user)
-	if(istype(user, /mob/living/carbon/xenomorph/humanoid/queen))
+	if(isxenoqueen(user))
 		attack_hand(user)
 		return
 	else
 		to_chat(user, "You don't want to break these thing")
 
-/obj/machinery/computer/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/hulk))
-		var/mob/living/simple_animal/hulk/Hulk = M
-		Hulk.do_attack_animation(src)
-		playsound(Hulk, 'sound/effects/hulk_hit_computer.ogg', VOL_EFFECTS_MASTER)
-		to_chat(M, "<span class='warning'>You hit the computer, glass fragments hurt you!</span>")
-		Hulk.health -= rand(2,4)
-		if(prob(40))
-			set_broken()
-			to_chat(M, "<span class='warning'>You broke the computer.</span>")
-			return
+/obj/machinery/computer/attack_hulk(mob/living/simple_animal/hulk/user)
+	. = ..()
+
+	if(.)
+		return TRUE
+	if(!istype(user))
+		return
+
+	user.SetNextMove(CLICK_CD_INTERACT)
+	user.do_attack_animation(src)
+	playsound(user, 'sound/effects/hulk_hit_computer.ogg', VOL_EFFECTS_MASTER)
+	to_chat(user, "<span class='warning'>You hit the computer, glass fragments hurt you!</span>")
+	user.health -= rand(2,4)
+	if(prob(40))
+		set_broken()
+		to_chat(user, "<span class='warning'>You broke the computer.</span>")
+	return TRUE
+
+/obj/machinery/computer/proc/print_document(text, docname)
+	var/obj/item/weapon/paper/Paper = new /obj/item/weapon/paper()
+	Paper.info = text
+	Paper.update_icon()
+	Paper.name = docname
+	Paper.forceMove(loc)
+
+/obj/machinery/computer/proc/print_photo(datum/data/record/record, docname)
+	var/datum/picture/Picture = new()
+	Picture.fields["img"] = record.fields["image"]
+	Picture.fields["author"] = record.fields["author"]
+	Picture.fields["mob_names"] = list(record.fields["name"]=/mob/living/carbon/human)
+	Picture.fields["desc"] = "You can see [record.fields["name"]] on the photo"
+	Picture.fields["icon"] = record.fields["icon"]
+	Picture.fields["tiny"] = record.fields["small_icon"]
+	Picture.fields["pixel_x"] = rand(-10, 10)
+	Picture.fields["pixel_y"] = rand(-10, 10)
+	var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo()
+	Photo.name = docname
+	Photo.forceMove(loc)
+	Photo.construct(Picture)

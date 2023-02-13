@@ -9,6 +9,7 @@
 	name = "mining drill head"
 	desc = "An enormous drill."
 	icon_state = "mining_drill"
+	interact_open = TRUE
 
 	var/braces_needed = 2
 	var/list/supports = list()
@@ -96,7 +97,7 @@
 				T.gets_dug()
 		else if(istype(get_turf(src), /turf/simulated/floor))
 			var/turf/simulated/floor/T = get_turf(src)
-			T.ex_act(2.0)
+			T.ex_act(EXPLODE_HEAVY)
 
 	dig_ore()
 
@@ -113,12 +114,12 @@
 
 /obj/machinery/mining/drill/proc/use_cell_power()
 	if(wires_power_disable)
-		return 0
+		return FALSE
 	if(!cell)
-		return 0
+		return FALSE
 	if(cell.use(charge_use))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/mining/drill/proc/check_supports()
 	if(!supports || supports.len < braces_needed)
@@ -167,6 +168,8 @@
 		harvesting.has_resources = 0
 		harvesting.resources = null
 		resource_field -= harvesting
+		if(resource_field.len <= 0)
+			break
 		harvesting = pick(resource_field)
 
 	if(!harvesting)
@@ -266,7 +269,7 @@
 		if(istype(P, /obj/item/weapon/stock_parts/matter_bin))
 			capacity = 200 * P.rating
 		if(istype(P, /obj/item/weapon/stock_parts/capacitor))
-			charge_use -= 10 * P.rating
+			charge_use /= P.rating
 		if(istype(P, /obj/item/weapon/stock_parts/scanning_module))
 			radius = 1 + P.rating
 	cell = locate(/obj/item/weapon/stock_parts/cell) in component_parts
@@ -354,7 +357,7 @@
 /obj/machinery/mining/drill/proc/shock(mob/user)
 	if(!cell || wires_power_disable )
 		return 0
-	if(!istype(user, /mob/living/carbon))
+	if(!iscarbon(user))
 		return 0
 
 	var/mob/living/carbon/C = user
@@ -382,7 +385,7 @@
 	if(!BP || !BP.is_usable())
 		return
 
-	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, "melee")/2, 1)
+	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, MELEE)/2, 1)
 	to_chat(H, "<span class='danger'>You feel, that [src] try to cut your [BP]!</span>")
 
 	if(BP.is_stump)
@@ -390,7 +393,7 @@
 
 	BP = BP.parent
 
-	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, "melee")/2, 1)
+	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, MELEE)/2, 1)
 	to_chat(H, "<span class='danger'>You feel, that [src] try to cut your [BP]!</span>")
 
 /obj/machinery/mining/drill/update_icon()
@@ -419,6 +422,5 @@
 		to_chat(usr, "<span class='notice'>You unload the drill's storage cache into the ore box.</span>")
 	else
 		to_chat(usr, "<span class='notice'>You must move an ore box up to the drill before you can unload it.</span>")
-
 
 

@@ -1,4 +1,4 @@
-var/GLOBAL_RADIO_TYPE = 1 // radio type to use
+var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	// 0 = old radios
 	// 1 = new radios (subspace technology)
 
@@ -26,7 +26,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/maxf = 1499
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	var/grid = FALSE // protect from EMP
-	flags = CONDUCT
+	flags = CONDUCT | HEAR_TALK
 	slot_flags = SLOT_FLAGS_BELT
 	throw_speed = 2
 	throw_range = 9
@@ -118,7 +118,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/Topic(href, href_list)
 	//..()
-	if ((usr.stat && !IsAdminGhost(usr)) || !on)
+	if ((usr.stat != CONSCIOUS && !IsAdminGhost(usr)) || !on)
 		return
 
 	if (!(issilicon(usr) || IsAdminGhost(usr) || Adjacent(usr)))
@@ -197,7 +197,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if (!connection)
 		return
 
-	var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(src, null, null, 1)
+	var/mob/autosay/A = new /mob/autosay(src)
+	A.real_name = from
 	Broadcast_Message(connection, A,
 						0, "*garbled automated announcement*", src,
 						message, from, "Automated Announcement", from, "synthesized voice",
@@ -283,7 +284,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			jobname = "Cyborg"
 
 		// --- Personal AI (pAI) ---
-		else if (istype(M, /mob/living/silicon/pai))
+		else if (ispAI(M))
 			jobname = "Personal AI"
 
 		// --- Unidentifiable mob ---
@@ -412,7 +413,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		Broadcast_Message(connection, M, voicemask, pick(M.speak_emote),
 						  src, message, displayname, jobname, real_name, M.voice_name,
 		                  filter_type, signal.data["compression"], list(position.z), connection.frequency,verb,speaking)
-		
+
 		return TRUE
 
 
@@ -444,7 +445,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 			eqjobname = "AI"
 		else if (isrobot(M))
 			eqjobname = "Cyborg"//Androids don't really describe these too well, in my opinion.
-		else if (istype(M, /mob/living/silicon/pai))
+		else if (ispAI(M))
 			eqjobname = "Personal AI"
 		else
 			eqjobname = "Unknown"
@@ -562,7 +563,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 					J = "Unknown"
 				var/rendered = "[part_a][N][part_b][quotedmsg][part_c]"
 				for (var/mob/R in heard_masked)
-					if(istype(R, /mob/living/silicon/ai))
+					if(isAI(R))
 						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[N] ([J]) </a>[part_b][quotedmsg][part_c]", SHOWMSG_AUDIO)
 					else
 						R.show_message(rendered, SHOWMSG_AUDIO)
@@ -571,7 +572,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				var/rendered = "[part_a][M.real_name][part_b][quotedmsg][part_c]"
 
 				for (var/mob/R in heard_normal)
-					if(istype(R, /mob/living/silicon/ai))
+					if(isAI(R))
 						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.real_name] ([eqjobname]) </a>[part_b][quotedmsg][part_c]", SHOWMSG_AUDIO)
 					else
 						R.show_message(rendered, SHOWMSG_AUDIO)
@@ -580,7 +581,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				var/rendered = "[part_a][M.voice_name][part_b][pick(M.speak_emote)][part_c]"
 
 				for (var/mob/R in heard_voice)
-					if(istype(R, /mob/living/silicon/ai))
+					if(isAI(R))
 						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name] ([eqjobname]) </a>[part_b][pick(M.speak_emote)][part_c]", SHOWMSG_AUDIO)
 					else
 						R.show_message(rendered, SHOWMSG_AUDIO)
@@ -590,7 +591,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				var/rendered = "[part_a][M.voice_name][part_b][quotedmsg][part_c]"
 
 				for (var/mob/R in heard_voice)
-					if(istype(R, /mob/living/silicon/ai))
+					if(isAI(R))
 						R.show_message("[part_a]<a href='byond://?src=\ref[src];track2=\ref[R];track=\ref[M]'>[M.voice_name]</a>[part_b][quotedmsg][part_c]", SHOWMSG_AUDIO)
 					else
 						R.show_message(rendered, SHOWMSG_AUDIO)
@@ -671,7 +672,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/obj/item/device/radio_grid/new_grid = I
 		new_grid.attach(src)
 
-	else if(iswirecutter(I))
+	else if(iscutter(I))
 		if(!grid)
 			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
 			return
@@ -680,7 +681,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
 		new_grid.dettach(src)
 
-	else if (isscrewdriver(I))
+	else if (isscrewing(I))
 		b_stat = !b_stat
 		add_fingerprint(user)
 		playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
@@ -715,7 +716,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/borg/attackby(obj/item/I, mob/user, params)
 	user.set_machine(src)
 
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		if(keyslot)
 			for(var/ch_name in channels)
 				radio_controller.remove_object(src, radiochannels[ch_name])

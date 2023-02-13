@@ -66,13 +66,16 @@
 /obj/item/device/chameleon/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
+	if(!target.has_valid_appearance())
+		return
 	if(!active_dummy)
 		active_dummy = new
-	if(active_dummy.current_type != target.type)
-		if(istype(target,/obj/item) && !istype(target, /obj/item/weapon/disk/nuclear))
-			playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, null, null, -6)
-			to_chat(user, "<span class='notice'>\The [target] scanned.</span>")
-			copy_item(target)
+	if(active_dummy.current_type == target.type)
+		return
+	if(isitem(target) && !istype(target, /obj/item/weapon/disk/nuclear))
+		playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
+		to_chat(user, "<span class='notice'>\The [target] scanned.</span>")
+		copy_item(target)
 	else
 		to_chat(user, "<span class='notice'>\The [target] already scanned.</span>")
 
@@ -99,7 +102,7 @@
 	to_chat(usr, "<span class='notice'>You [toggled ? "activate" : "deactivate"] the [src].</span>")
 
 /obj/item/device/chameleon/proc/play_transform_effect()
-	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, null, -6)
+	playsound(src, 'sound/effects/pop.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 	var/obj/effect/overlay/T = new /obj/effect/overlay(get_turf(src))
 	T.icon = 'icons/effects/effects.dmi'
 	flick("emppulse",T)
@@ -165,13 +168,14 @@
 /obj/effect/dummy/chameleon/emp_act()
 	master.disrupt()
 
-/obj/effect/dummy/chameleon/bullet_act()
+/obj/effect/dummy/chameleon/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/relaymove(mob/user, direction)
 
 	// We can't move when we are in space or inside of an object.
-	if(istype(loc, /turf/space) || !isturf(loc))
+	if(isspaceturf(loc) || !isturf(loc))
 		return
 
 	if(can_move)

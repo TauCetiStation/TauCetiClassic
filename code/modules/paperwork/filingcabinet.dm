@@ -17,6 +17,8 @@
 	density = TRUE
 	anchored = TRUE
 
+	resistance_flags = CAN_BE_HIT
+
 
 /obj/structure/filingcabinet/chestdrawer
 	name = "chest drawer"
@@ -45,7 +47,7 @@
 		icon_state = initial(icon_state)
 		updateUsrDialog()
 
-	else if(iswrench(P))
+	else if(iswrenching(P))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
@@ -54,6 +56,13 @@
 	else
 		to_chat(user, "<span class='notice'>You can't put [P] in [src]!</span>")
 
+/obj/structure/filingcabinet/deconstruct(disassembled)
+	for(var/obj/item/I as anything in contents)
+		I.forceMove(loc)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/metal(loc, 2)
+	..()
 
 /obj/structure/filingcabinet/attack_hand(mob/user)
 	if(contents.len <= 0)
@@ -71,25 +80,6 @@
 	var/datum/browser/popup = new(user, "filingcabinet", src.name, 350, 300)
 	popup.set_content(dat)
 	popup.open()
-
-	return
-
-/obj/structure/filingcabinet/attack_tk(mob/user)
-	if(anchored)
-		attack_self_tk(user)
-	else
-		..()
-
-/obj/structure/filingcabinet/attack_self_tk(mob/user)
-	if(contents.len)
-		if(prob(40 + contents.len * 5))
-			var/obj/item/I = pick(contents)
-			I.loc = loc
-			if(prob(25))
-				step_rand(I)
-			to_chat(user, "<span class='notice'>You pull \a [I] out of [src] at random.</span>")
-			return
-	to_chat(user, "<span class='notice'>You find nothing in [src].</span>")
 
 /obj/structure/filingcabinet/Topic(href, href_list)
 	if(href_list["retrieve"])
@@ -138,10 +128,6 @@
 	populate()
 	..()
 
-/obj/structure/filingcabinet/security/attack_tk()
-	populate()
-	..()
-
 /*
  * Medical Record Cabinets
  */
@@ -171,9 +157,5 @@
 						//before the records have been generated, so we do this inside the loop.
 
 /obj/structure/filingcabinet/medical/attack_hand()
-	populate()
-	..()
-
-/obj/structure/filingcabinet/medical/attack_tk()
 	populate()
 	..()

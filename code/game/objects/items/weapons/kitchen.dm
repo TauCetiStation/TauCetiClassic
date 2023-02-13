@@ -38,7 +38,7 @@
 
 	if(user.a_intent != INTENT_HELP)
 		if(user.get_targetzone() == "head" || user.get_targetzone() == "eyes")
-			if((CLUMSY in user.mutations) && prob(50))
+			if(user.ClumsyProbabilityCheck(50))
 				M = user
 			return eyestab(M,user)
 		else
@@ -126,6 +126,7 @@
 	sharp = 1
 	edge = 1
 	force = 10.0
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	w_class = SIZE_TINY
 	throwforce = 6.0
 	throw_speed = 3
@@ -133,8 +134,8 @@
 	m_amt = 12000
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	tools = list(
-		TOOL_KNIFE = 1
+	qualities = list(
+		QUALITY_CUTTING = 1
 		)
 	sweep_step = 2
 
@@ -178,6 +179,16 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "combat_knife"
 	origin_tech = "materials=1;combat=1"
+
+/obj/item/weapon/kitchenknife/throwing
+	name = "throwing knife"
+	desc = "A blade designed to be apparently useless for normal melee combat, but very useful for throwing."
+	force = 5
+	throwforce = 18
+	throw_speed = 6
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "throwing_knife"
+
 /*
  * Bucher's cleaver
  */
@@ -214,7 +225,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M, mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>The [src] slips out of your hand and hits your head.</span>")
 		user.take_bodypart_damage(10)
 		user.Paralyse(2)
@@ -226,7 +237,7 @@
 	if (t == BP_HEAD)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if (H.stat < 2 && H.health < 50 && prob(90))
+			if (H.stat < DEAD && H.health < 50 && prob(90))
 				// ******* Check
 				if (istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
 					to_chat(H, "<span class='warning'>The helmet protects you from being hit hard in the head!</span>")
@@ -241,7 +252,7 @@
 				return
 			else
 				H.visible_message("<span class='warning'>[user] tried to knock [H] unconscious!</span>", "<span class='warning'>[user] tried to knock you unconscious!</span>")
-				H.eye_blurry += 3
+				H.blurEyes(3)
 	return ..()
 
 /obj/item/weapon/storage/visuals/tray
