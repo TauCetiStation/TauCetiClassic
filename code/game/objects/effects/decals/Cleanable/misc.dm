@@ -210,7 +210,7 @@ var/global/list/toilet_overlay_cache = list()
 
 /obj/effect/decal/cleanable/gourd
 	name = "swampy grease"
-	desc = "Мерзкая гадость, кто бы мог подумать такое пихать в себя?"
+	desc = "Мерзкая гадость. Кому придёт в голову пихать в себя ЭТО?"
 	anchored = TRUE
 	density = FALSE
 
