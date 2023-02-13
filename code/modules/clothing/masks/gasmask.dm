@@ -74,7 +74,7 @@
 		"Ни с места!" = 'sound/voice/complionator/lawful_ni_s_mesta.ogg',
 		"Стоять!" = 'sound/voice/complionator/lawful_stoyat.ogg',
 		"Стоять на месте!" = 'sound/voice/complionator/lawful_stoyat_na_meste.ogg')
-	
+
 	var/static/list/pharses_shitcurity = list(
 		"Давай, попробуй побежать. Безмозглый идиот." = 'sound/voice/complionator/davai_poprobui_pobejat.ogg',
 		"Неудачник выбрал не тот день для нарушения закона." = 'sound/voice/complionator/neudachnik_vybral.ogg',
@@ -89,7 +89,7 @@
 		"Живым или мертвым - ты пиздуешь со мной." = 'sound/voice/complionator/zhivym_ili_mertvym.ogg')
 
 /obj/item/clothing/mask/gas/sechailer/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		var/obj/item/weapon/screwdriver/S = I
 		if(S.use_tool(src, user, SKILL_TASK_TRIVIAL, volume = 40))
 			shitcurity_mode = !shitcurity_mode

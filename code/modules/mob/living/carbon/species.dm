@@ -437,6 +437,14 @@
 
 	skeleton_type = SKELETON_TAJARAN
 
+/datum/species/tajaran/on_gain(mob/living/M)
+	..()
+	ADD_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
+
+/datum/species/tajaran/on_loose(mob/living/M)
+	..()
+	REMOVE_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
+
 /datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_tajaran_digest(M)
 
@@ -599,7 +607,6 @@
 
 	else
 		H.verbs += /mob/living/carbon/human/proc/gut
-
 	..()
 
 /datum/species/vox/on_loose(mob/living/carbon/human/H, new_species)
@@ -611,7 +618,6 @@
 
 	else
 		H.verbs -= /mob/living/carbon/human/proc/gut
-
 	..()
 
 // At 25 damage - no protection at all.
@@ -1513,6 +1519,14 @@
 
 	min_age = 25
 	max_age = 85
+
+/datum/species/zombie/tajaran/on_gain(mob/living/M)
+	..()
+	ADD_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
+
+/datum/species/zombie/tajaran/on_loose(mob/living/M)
+	..()
+	REMOVE_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
 
 /datum/species/zombie/skrell
 	name = ZOMBIE_SKRELL

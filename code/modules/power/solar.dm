@@ -61,7 +61,7 @@
 
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user)
 
-	if(iscrowbar(W))
+	if(isprying(W))
 		if(user.is_busy()) return
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		if(do_after(user, 50,target = src))
@@ -184,12 +184,12 @@
 
 /obj/item/solar_assembly/attackby(obj/item/I, mob/user, params)
 	if(!anchored && isturf(loc))
-		if(iswrench(I))
+		if(iswrenching(I))
 			anchored = TRUE
 			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>")
 			return TRUE
 	else
-		if(iswrench(I))
+		if(iswrenching(I))
 			anchored = FALSE
 			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from it's place.</span>")
 			return TRUE
@@ -213,7 +213,7 @@
 			user.visible_message("<span class='notice'>[user] inserts the electronics into the solar assembly.</span>")
 			return TRUE
 	else
-		if(iscrowbar(I))
+		if(isprying(I))
 			new /obj/item/weapon/tracker_electronics(src.loc)
 			tracker = 0
 			user.visible_message("<span class='notice'>[user] takes out the electronics from the solar assembly.</span>")
@@ -286,8 +286,8 @@
 		add_overlay(image('icons/obj/computer.dmi', "solar_overlay_[dir]", FLY_LAYER, angle2dir(cdir)))
 	return
 
-/obj/machinery/power/solar_control/attackby(I, mob/user)
-	if(isscrewdriver(I))
+/obj/machinery/power/solar_control/attackby(obj/item/weapon/I, mob/user)
+	if(isscrewing(I))
 		if(user.is_busy()) return
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(do_after(user, 20, target = src))

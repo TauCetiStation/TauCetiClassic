@@ -31,7 +31,7 @@
 
 
 /obj/item/target/attackby(obj/item/I, mob/user, params)
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			cut_overlays()
