@@ -1916,7 +1916,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig/solitary_confinement)
+/area/station/security/brig)
 "ads" = (
 /obj/structure/closet/secure_closet/security,
 /turf/simulated/floor{
@@ -113126,10 +113126,10 @@ bEP
 bEP
 bEP
 bEP
-iuu
-iuu
+bEP
+adJ
 adr
-iuu
+adJ
 acX
 adH
 abC
