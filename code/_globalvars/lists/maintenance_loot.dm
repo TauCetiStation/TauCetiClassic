@@ -112,7 +112,7 @@ var/global/list/common_loot = list(
 		/obj/item/weapon/reagent_containers/syringe = 1,
 		/obj/item/weapon/reagent_containers/glass/beaker = 1,
 		/obj/item/weapon/reagent_containers/glass/rag = 1,
-		/obj/item/weapon/reagent_containers/food/condiment/sugar
+		/obj/item/weapon/reagent_containers/food/condiment/sugar = 1
 		) = 1,
 
 	list(
