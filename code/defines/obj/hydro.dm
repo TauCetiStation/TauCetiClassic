@@ -987,7 +987,7 @@
 
 /obj/item/seeds/magicgourdseed
 	name = "pack of gourd seeds"
-	desc = "Выростают в отборный декоративный тыквяк. В еду не потреблять!"
+	desc = "Вырастают в отборный декоративный тыквяк. В еду не потреблять!"
 	icon_state = "seed-gourd_magic"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "magic_gourd"
