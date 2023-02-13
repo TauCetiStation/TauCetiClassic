@@ -118,6 +118,9 @@
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
+	qualities = list(
+		QUALITY_PRYING = 1
+	)
 
 /obj/item/weapon/melee/arm_blade/atom_init()
 	. = ..()
