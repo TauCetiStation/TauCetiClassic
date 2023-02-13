@@ -41,7 +41,7 @@ var/global/list/drone_list = list()
 var/global/list/gods_list = list()
 
 //feel free to add shit to lists below
-var/global/list/tachycardics = list("coffee", "inaprovaline", "hyperzine", "nitroglycerin", "thirteenloko", "nicotine")	//increase heart rate
+var/global/list/tachycardics = list("coffee", "inaprovaline", "hyperzine", "nitroglycerin", "thirteenloko", "nicotine", "ambrozium", "jenkem")	//increase heart rate
 var/global/list/bradycardics = list("neurotoxin", "cryoxadone", "clonexadone", "space_drugs", "stoxin")					//decrease heart rate
 var/global/list/heartstopper = list("potassium_phorochloride", "zombie_powder") //this stops the heart
 var/global/list/cheartstopper = list("potassium_chloride") //this stops the heart when overdose is met -- c = conditional

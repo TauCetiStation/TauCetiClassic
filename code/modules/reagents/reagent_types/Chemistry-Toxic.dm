@@ -774,6 +774,51 @@
 	if(prob(7))
 		M.emote(pick("twitch","drool","moan","giggle"))
 
+/datum/reagent/ambrozium
+	name = "Ambrozium"
+	id = "ambrozium"
+	description = "Reagent isolated from ambrosia vulgaris. Its has narcotic and toxic effect."
+	reagent_state = LIQUID
+	color = "#003b08"
+	taste_message = "hash"
+	custom_metabolism = REAGENTS_METABOLISM * 0.5
+	overdose = REAGENTS_OVERDOSE
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/ambrozium/on_general_digest(mob/living/M)
+	..()
+	M.adjustDrugginess(2)
+	if(isturf(M.loc) && !isspaceturf(M.loc))
+		if(M.canmove && !M.incapacitated())
+			if(prob(10))
+				step(M, pick(cardinal))
+	if(prob(25))
+		M.emote("cough")
+	if(prob(15))
+		M.adjustToxLoss(1)
+
+/datum/reagent/jenkem
+	name = "Space jenkem"
+	id = "jenkem"
+	description = "A homemade illegal chemical compound used by the poor as a substitute for better quality drugs. Very toxic."
+	reagent_state = LIQUID
+	color = "#3f2020"
+	custom_metabolism = 0.4
+	overdose = 15
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/jenkem/on_general_digest(mob/living/M)
+	..()
+	M.adjustDrugginess(1)
+	if(isturf(M.loc) && !isspaceturf(M.loc))
+		if(M.canmove && !M.incapacitated())
+			if(prob(30))
+				step(M, pick(cardinal))
+	if(prob(25))
+		M.emote(pick("twitch","drool","moan","giggle"))
+	if(prob(60))
+		M.adjustToxLoss(1)
+
 /datum/reagent/serotrotium
 	name = "Serotrotium"
 	id = "serotrotium"
