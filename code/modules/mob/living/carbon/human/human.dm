@@ -972,7 +972,7 @@
 			xylophone=0
 	return
 
-/mob/living/carbon/human/vomit(punched = FALSE, masked = FALSE)
+/mob/living/carbon/human/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, stun = TRUE, force = FALSE)
 	var/mask_ = masked
 	if(species.flags[NO_VOMIT])
 		return FALSE
@@ -980,7 +980,7 @@
 	if(wear_mask && (wear_mask.flags & MASKCOVERSMOUTH))
 		mask_ = TRUE
 
-	return ..(punched, mask_)
+	return ..(punched, mask_, vomit_type, stun, force)
 
 
 /mob/living/carbon/human/proc/force_vomit(mob/living/carbon/human/H)
@@ -1806,6 +1806,7 @@
 
 	leap_icon.time_used = world.time + leap_icon.cooldown
 	add_status_flags(LEAPING)
+	pass_flags |= PASSTABLE
 	stop_pulling()
 
 
@@ -1818,12 +1819,16 @@
 				V.overload()
 
 	toggle_leap()
-
 	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .proc/leap_end, prev_intent))
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)
 	remove_status_flags(LEAPING)
 	a_intent_change(prev_intent)
+	pass_flags &= ~PASSTABLE
+	//Call Crossed() for activate things and breake glass table
+	var/turf/my_turf = get_turf(src)
+	for(var/atom/A in my_turf.contents)
+		A.Crossed(src)
 
 /mob/living/carbon/human/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!(status_flags & LEAPING))
@@ -1841,9 +1846,13 @@
 			step_towards(src, L)
 
 	else if(hit_atom.density)
-		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smash into [hit_atom]!</span>")
-		Stun(2)
-		Weaken(2)
+		if(!hit_atom.CanPass(src, get_turf(hit_atom)))
+			visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smash into [hit_atom]!</span>")
+			Stun(2)
+			Weaken(2)
+		else if(istype(hit_atom, /obj/machinery/disposal))
+			INVOKE_ASYNC(src, /atom/movable.proc/do_simple_move_animation, hit_atom)
+			forceMove(hit_atom)
 
 	update_canmove()
 

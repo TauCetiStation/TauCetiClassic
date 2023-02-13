@@ -139,17 +139,19 @@
 
 // TOOLS HELPERS
 
-#define iswrench(A) (istype(A, /obj/item/weapon/wrench))
+#define iswrenching(I) 	I.get_quality(QUALITY_WRENCHING)
 
-#define iswelder(A) (istype(A, /obj/item/weapon/weldingtool))
+#define iswelding(I) 	I.get_quality(QUALITY_WELDING)
 
-#define iswirecutter(A) (istype(A, /obj/item/weapon/wirecutters))
+#define iscutter(I) 	I.get_quality(QUALITY_CUTTING)
 
-#define isscrewdriver(A) (istype(A, /obj/item/weapon/screwdriver))
+#define isscrewing(I) 	I.get_quality(QUALITY_SCREWING)
 
-#define iscrowbar(A) (istype(A, /obj/item/weapon/crowbar))
+#define isprying(I)		I.get_quality(QUALITY_PRYING)
 
-#define ismultitool(A) (istype(A, /obj/item/device/multitool))
+#define ispulsing(I) 	I.get_quality(QUALITY_PULSING)
+
+#define issignaling(I)  I.get_quality(QUALITY_SIGNALLING)
 
 #define iscoil(A) (istype(A, /obj/item/stack/cable_coil))
 

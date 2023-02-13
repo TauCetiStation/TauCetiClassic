@@ -41,6 +41,8 @@
 	// Type for collector of statistics by this role
 	var/datum/stat/role/stat_type = /datum/stat/role
 
+	var/moveset_type
+
 // Initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
 /datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
@@ -77,6 +79,9 @@
 		M.skills.add_available_skillset(skillset_type)
 	if(change_to_maximum_skills)
 		M.skills.maximize_active_skills()
+	var/mob/living/A = antag.current
+	if(!isnull(moveset_type))
+		A.add_moveset(new moveset_type(), MOVESET_ROLES)
 	if(msg_admins)
 		message_admins("[key_name(M)] is now \an [id].")
 		log_mode("[key_name(M)] is now \an [id].")
@@ -98,8 +103,11 @@
 	antag.special_role = initial(antag.special_role)
 	M.antag_roles[id] = null
 	M.antag_roles.Remove(id)
+	var/mob/living/A = antag.current
 	if(!isnull(skillset_type))
 		M.skills.remove_available_skillset(skillset_type)
+	if(!isnull(moveset_type))
+		A.remove_moveset_source(MOVESET_ROLES)
 
 	remove_antag_hud()
 	if(M.current?.hud_used)
