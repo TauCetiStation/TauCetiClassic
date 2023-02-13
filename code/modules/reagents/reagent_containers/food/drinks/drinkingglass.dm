@@ -557,7 +557,7 @@
 			if("gourd")
 				icon_state = "glass_gourd"
 				name = "disgusting swamp juice"
-				desc = "Тыквяк. Хороший способ облегчить желудок."
+				desc = "Тыквячий сок. Хороший способ облегчить желудок."
 			if("gourdbeer")
 				icon_state = "gourdbeer"
 				name = "[get_gourd_name()] beer"
