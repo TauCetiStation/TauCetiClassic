@@ -20,7 +20,7 @@
 	/datum/game_mode/blob,
 	/datum/game_mode/changeling,
 	/datum/game_mode/cult,
-	/datum/game_mode/casual_shift,
+	/datum/game_mode/casual,
 	/datum/game_mode/heist,
 	/datum/game_mode/infestation,
 	/datum/game_mode/malfunction,
