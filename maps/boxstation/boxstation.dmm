@@ -8932,7 +8932,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/station/maintenance/eva)
+/area/station/security/prison/toilet)
 "aoN" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -10389,7 +10389,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/station/maintenance/eva)
+/area/station/security/prison/toilet)
 "arx" = (
 /turf/simulated/floor,
 /area/station/hallway/primary/fore)
@@ -15179,13 +15179,13 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/eva)
+/area/station/security/prison/toilet)
 "aAy" = (
 /obj/structure/drain,
 /turf/simulated/floor{
 	icon_state = "floorscorched1"
 	},
-/area/station/maintenance/eva)
+/area/station/security/prison/toilet)
 "aAz" = (
 /obj/machinery/door/airlock{
 	name = "Brig Restroom"
@@ -15761,7 +15761,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/station/maintenance/eva)
+/area/station/security/prison/toilet)
 "aBH" = (
 /obj/structure/mopbucket,
 /obj/item/weapon/mop,
@@ -15769,8 +15769,11 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/light_switch{
+	pixel_y = -25
+	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/eva)
+/area/station/security/prison/toilet)
 "aBI" = (
 /obj/machinery/door/firedoor,
 /obj/structure/grille,
@@ -28480,7 +28483,7 @@
 	pixel_x = 13
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/eva)
+/area/station/security/prison/toilet)
 "aYQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
@@ -69928,7 +69931,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/station/maintenance/eva)
+/area/station/security/prison/toilet)
 "dHv" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -76471,7 +76474,7 @@
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},
-/area/station/maintenance/eva)
+/area/station/security/prison/toilet)
 "lgb" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -79233,6 +79236,9 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"ovR" = (
+/turf/simulated/wall/r_wall,
+/area/station/security/prison/toilet)
 "owJ" = (
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
@@ -80697,6 +80703,9 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/chemistry)
+"qsh" = (
+/turf/simulated/wall,
+/area/station/security/prison/toilet)
 "qsv" = (
 /obj/structure/table/woodentable,
 /turf/simulated/floor{
@@ -110574,13 +110583,13 @@ alm
 aqd
 awE
 bLk
-adW
-adW
-adW
-adW
-adW
-adW
-adW
+ovR
+ovR
+ovR
+ovR
+ovR
+ovR
+ovR
 asi
 cFL
 alZ
@@ -110831,13 +110840,13 @@ alv
 alZ
 atc
 alZ
-adW
+ovR
 aYP
-agO
+qsh
 lga
 aAx
 aBG
-adW
+ovR
 alZ
 alZ
 alZ
@@ -111088,13 +111097,13 @@ alm
 afg
 afF
 cfP
-adW
+ovR
 dFe
 aoM
 arw
 aAy
 aBH
-adW
+ovR
 aqd
 alZ
 cFL

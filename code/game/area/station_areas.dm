@@ -558,6 +558,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "sec_prison"
 	ambience = list('sound/ambience/prison_1.ogg')
 
+/area/station/security/prison/toilet
+	name = "Prison Toilet"
+
 /area/station/security/warden
 	name = "Warden"
 	icon_state = "warden"
