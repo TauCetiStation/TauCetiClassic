@@ -28,6 +28,7 @@
 	stat.from_suicide = H.suiciding
 	stat.mob_type = H.type
 	stat.last_phrase = H.last_phrase
+	stat.last_examined_name = H.last_examined
 
 	var/turf/spot = get_turf(H)
 	stat.death_x = spot.x

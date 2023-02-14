@@ -326,6 +326,7 @@
 			return
 	if(!A.z) //no message if we examine something in a backpack
 		return
+	last_examined = A.name
 	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
