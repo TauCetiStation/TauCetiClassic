@@ -86,7 +86,7 @@
 	if(isliving(A))
 		var/mob/living/L = A
 		attacker.do_attack_animation(L)
-		if((cell) && (cell.charge >= cell_use) && (cell.use(cell_use)))
+		if(cell && cell.charge >= cell_use && cell.use(cell_use))
 			if(selected_mode == GLOVES_MODE_STUN)
 				var/calc_power = 200 //twice as strong stungloves
 				if(ishuman(L))
