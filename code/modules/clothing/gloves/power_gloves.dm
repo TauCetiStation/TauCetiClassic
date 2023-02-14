@@ -54,7 +54,7 @@
 	else
 		to_chat(user,"<span class='warning'>Not enough energy!</span>")
 
-/obj/item/clothing/gloves/power/proc/turn_off_the_gloves(mob/user)
+/obj/item/clothing/gloves/power/proc/turn_off(mob/user)
 	selected_mode = GLOVES_MODE_OFF
 	icon_state = "marinad"
 	cell_use = 0
