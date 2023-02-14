@@ -85,9 +85,8 @@
 	if(isliving(A))
 		var/mob/living/L = A
 		attacker.do_attack_animation(L)
-		if((cell) && (cell.charge >= cell_use))
+		if((cell) && (cell.charge >= cell_use) && (cell.use(cell_use)))
 			if(selected_mode == GLOVES_MODE_STUN)
-				cell.use(cell_use)
 				var/calc_power = 200 //twice as strong stungloves
 				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
@@ -100,7 +99,6 @@
 				s.set_up(3, 1, L)
 				s.start()
 			if(selected_mode == GLOVES_MODE_KILL)
-				cell.use(cell_use)
 				var/mob/living/carbon/human/H = A
 				var/attack_obj = attacker.get_unarmed_attack()
 				var/damage = attack_obj["damage"] * 2.5
