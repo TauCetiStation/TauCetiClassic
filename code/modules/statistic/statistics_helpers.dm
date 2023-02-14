@@ -77,6 +77,7 @@
 		if(ishuman(controlled_mob))
 			var/mob/living/carbon/human/H = controlled_mob
 			stat.age = H.age
+		stat.digested = controlled_mob.digested
 
 	if(antag_roles?.len)
 		stat.antag_roles = list()

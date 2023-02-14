@@ -238,3 +238,6 @@
 
 	var/can_point = TRUE
 	var/show_examine_log = TRUE
+
+	// Associative list of amount of digested reagents.
+	var/digested

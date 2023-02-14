@@ -182,6 +182,8 @@
 	var/flavor
 	// array of strings, where strings are antagonists' roles
 	var/list/antag_roles = null
+	// dict of string to float[0.0...], total amount per reagent the body digested
+	var/digested
 
 /datum/stat/leave_stat
 	// string, anything
