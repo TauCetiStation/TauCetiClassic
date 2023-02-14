@@ -138,7 +138,7 @@
 		var/cost = 0
 		var/obj/item/ammo_box/magazine/M = initial(W.initial_mag)
 		var/obj/item/ammo_casing/C = initial(M.ammo_type)
-		cost = W.magazine.stored_ammo.len*C.BB.damage
+		cost = W.magazine.stored_ammo.len * C.BB.damage
 		return cost
 
 	if(istype(I, /obj/item/weapon) && !istype(I,/obj/item/weapon/melee/cultblade))
