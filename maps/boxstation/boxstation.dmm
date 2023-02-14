@@ -15421,12 +15421,13 @@
 /obj/item/clothing/glasses/meson{
 	pixel_y = 4
 	},
-/obj/machinery/newscaster{
-	pixel_y = 30
-	},
 /obj/machinery/light_switch{
 	pixel_x = -23;
 	pixel_y = -6
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 20
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -26572,6 +26573,9 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
+	},
+/obj/machinery/newscaster{
+	pixel_y = -30
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -72264,6 +72268,9 @@
 /area/station/engineering/chiefs_office)
 "gDb" = (
 /obj/item/weapon/flora/random,
+/obj/machinery/requests_console/ce{
+	pixel_x = 32
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkyellow"
@@ -72685,14 +72692,8 @@
 /area/station/maintenance/cargo)
 "gWR" = (
 /obj/machinery/computer/atmos_alert,
-/obj/machinery/light_switch{
-	pixel_x = 10;
-	pixel_y = 25
-	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = -3;
-	pixel_y = 20
+/obj/machinery/keycard_auth{
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
@@ -80078,14 +80079,14 @@
 	desc = "A remote control-switch for secure storage.";
 	id = "Secure Storage";
 	name = "Engineering Secure Storage";
-	pixel_y = 24;
+	pixel_y = 27;
 	req_access = list(56)
 	},
 /obj/machinery/door_control{
 	id = "atmos";
 	name = "Atmospherics Lockdown";
 	pixel_x = 12;
-	pixel_y = 24;
+	pixel_y = 27;
 	req_access = list(24)
 	},
 /obj/machinery/door_control{
@@ -80093,16 +80094,8 @@
 	id = "Engineering";
 	name = "Engineering Lockdown";
 	pixel_x = -12;
-	pixel_y = 24;
+	pixel_y = 27;
 	req_access = list(10)
-	},
-/obj/machinery/keycard_auth{
-	pixel_x = -8;
-	pixel_y = 36
-	},
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = 12;
-	pixel_y = 38
 	},
 /obj/machinery/light{
 	dir = 1
@@ -80421,8 +80414,9 @@
 /obj/machinery/computer/skills,
 /obj/item/weapon/lighter/zippo,
 /obj/item/weapon/storage/fancy/cigarettes,
-/obj/machinery/requests_console/ce{
-	pixel_y = 32
+/obj/item/weapon/storage/secure/safe{
+	pixel_y = 27;
+	pixel_x = 6
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
