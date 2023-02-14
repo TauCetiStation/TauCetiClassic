@@ -50,7 +50,7 @@
 				icon_state = "marinad"
 				cell_use = 0
 				siemens_coefficient = 0
-		to_chat(user, "<span class='notice'>You change the regime in power gloves. Current mode:</span> <span class='danger'>[selected_mode]</span>.")
+		to_chat(user, "<span class='notice'>You change the power gloves mode to</span> <span class='danger'>[selected_mode]</span>.")
 	else
 		to_chat(user,"<span class='warning'>Not enough energy!</span>")
 
