@@ -221,6 +221,5 @@
 	var/efficency
 	// string, anything
 	var/produced_by
-	// float, [0.0...]
 	// string, [hh:mm]
 	var/produced_time
