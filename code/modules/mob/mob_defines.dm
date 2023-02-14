@@ -240,4 +240,4 @@
 	var/show_examine_log = TRUE
 
 	// Associative list of amount of digested reagents.
-	var/digested
+	var/list/digested
