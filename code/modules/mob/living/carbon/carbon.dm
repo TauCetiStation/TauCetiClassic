@@ -597,19 +597,25 @@
 						M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
 										"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
 
+				var/datum/component/mood/mood = GetComponent(/datum/component/mood)
 				if(HAS_TRAIT(M, TRAIT_FRIENDLY))
-					var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 					if(mood)
 						if(mood.mood_level >= MOOD_LEVEL_HAPPY2)
 							new /obj/effect/temp_visual/heart(loc)
-							SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
+							if(HAS_TRAIT(src, TRAIT_HARDTOGET))
+								SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug)
+							else
+								SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
 						else if(mood.mood_level >= MOOD_LEVEL_NEUTRAL)
-							SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
+							if(HAS_TRAIT(src, TRAIT_HARDTOGET))
+								SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug)
+							else
+								SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
 						SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/hug)
-				else
+				else if(!HAS_TRAIT(src, TRAIT_HARDTOGET))
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/hug)
+
 				if(HAS_TRAIT(src, TRAIT_HARDTOGET))
-					var/datum/component/mood/mood = GetComponent(/datum/component/mood)
 					if(mood)
 						new /obj/effect/temp_visual/heart/annoyed(loc)
 						if(mood.mood_level < MOOD_LEVEL_NEUTRAL)
