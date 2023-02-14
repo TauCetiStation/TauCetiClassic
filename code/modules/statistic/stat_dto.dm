@@ -219,5 +219,5 @@
 	var/glass_used
 	// float, [0.0...]
 	var/efficency
-	// int, [0,...]
+	// int, [0...]
 	var/multiplier
