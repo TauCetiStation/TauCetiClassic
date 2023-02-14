@@ -7342,6 +7342,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
+/obj/machinery/vending/coffee,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -10970,6 +10971,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
 	},
+/obj/machinery/vending/coffee,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "redcorner"
@@ -15240,7 +15242,9 @@
 	dir = 1;
 	network = list("SS13","Security")
 	},
-/obj/random/vending/cola,
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -15248,7 +15252,9 @@
 /area/station/security/lobby)
 "aAs" = (
 /obj/machinery/light,
-/obj/machinery/vending/coffee,
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -15259,7 +15265,9 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/machinery/vending/cigarette,
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
@@ -19022,6 +19030,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "aHJ" = (
+/obj/machinery/vending/cigarette,
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "bluecorner"
@@ -80511,15 +80520,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
-"pPF" = (
-/obj/structure/stool/bed/chair/metal/red{
-	dir = 8
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "red"
-	},
-/area/station/security/lobby)
 "pQb" = (
 /obj/machinery/door_control{
 	id = "HoP_queue";
@@ -117594,7 +117594,7 @@ aoC
 fDS
 apF
 aqi
-pPF
+aqi
 aAw
 cea
 cea
