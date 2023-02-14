@@ -34,7 +34,7 @@
 	toggle_gloves_mode(usr)
 
 /obj/item/clothing/gloves/power/proc/toggle_gloves_mode(mob/user)
-	if((cell) && (cell.charge))
+	if(cell?.charge)
 		switch(selected_mode)
 			if(GLOVES_MODE_OFF)
 				selected_mode = GLOVES_MODE_KILL
