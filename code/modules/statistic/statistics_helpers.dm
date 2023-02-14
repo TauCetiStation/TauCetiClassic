@@ -174,3 +174,26 @@
 
 	stat.set_custom_stat(F)
 	factions += stat
+
+/datum/stat_collector/proc/add_reagent_reaction(
+	atom/container,
+	datum/chemical_reaction/reaction,
+	created_volume,
+	list/mob/seen_by,
+)
+	var/datum/stat/reagent_reaction/stat = new
+	stat.container_name = container.name
+	stat.container_type = container.type
+	stat.reaction_type = reaction.type
+	stat.created_volume = created_volume
+	var/turf/T = get_turf(container)
+	stat.occured_x = T.x
+	stat.occured_y = T.y
+	var/list/seer_names = list()
+	for(var/m in seer_names)
+		var/mob/M = m
+		seer_names += M.real_name
+	stat.seen_by = seer_names
+	stat.occured_time = roundduration2text()
+
+	reagent_reactions += stat

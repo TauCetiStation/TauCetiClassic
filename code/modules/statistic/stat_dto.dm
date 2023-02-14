@@ -199,3 +199,21 @@
 	var/start_time
 	// string, [hh:mm]
 	var/leave_time
+
+/datum/stat/reagent_reaction
+	// string, anything
+	var/container_name
+	// string, byond_type
+	var/container_type
+	// string, byond_type
+	var/reaction_type
+	// float, [0.0...]
+	var/created_volume
+	// int, [0...]
+	var/occured_x
+	// int, [0...]
+	var/occured_y
+	// array of strings, real names of everyone who witnessed the reaction message
+	var/seen_by
+	// string, [hh:mm]
+	var/occured_time

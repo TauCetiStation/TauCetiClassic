@@ -317,6 +317,14 @@ var/global/const/INGEST = 2
 					playsound(my_atom, 'sound/effects/bubbles.ogg', VOL_EFFECTS_MASTER)
 
 					C.on_reaction(src, created_volume)
+
+					SSStatistics.add_reagent_reaction(
+						container=my_atom,
+						reaction=C,
+						created_volume=created_volume,
+						seen_by=seen,
+					)
+
 					reaction_occured = 1
 					break
 
