@@ -178,8 +178,7 @@
 /datum/stat_collector/proc/add_autolathe_product(
 	datum/autolathe_recipe/recipe,
 	product_name,
-	autolathe_x,
-	autolathe_y,
+	obj/machinery/autolathe/autolathe,
 	power_used,
 	metal_used,
 	glass_used,
@@ -190,8 +189,9 @@
 	var/datum/stat/autolathe_product/stat = new
 	stat.product_type = recipe.result_type
 	stat.product_name = product_name
-	stat.produced_at_x = autolathe_x
-	stat.produced_at_y = autolathe_y
+	stat.produced_at_x = autolathe.x
+	stat.produced_at_y = autolathe.y
+	stat.produced_at_z = autolathe.z
 	stat.power_used = power_used
 	stat.metal_used = metal_used
 	stat.glass_used = glass_used

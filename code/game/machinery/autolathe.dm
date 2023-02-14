@@ -453,8 +453,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 				SSStatistics.add_autolathe_product(
 					recipe=recipe,
 					product_name=product_name,
-					autolathe_x=x,
-					autolathe_y=y,
+					autolathe=src,
 					power_used=power,
 					metal_used=m_used,
 					glass_used=g_used,

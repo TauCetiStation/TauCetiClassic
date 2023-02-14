@@ -209,6 +209,8 @@
 	var/produced_at_x
 	// int, [0...]
 	var/produced_at_y
+	// int, [0...]
+	var/produced_at_z
 	// string, anything
 	var/producer_name
 	// float, [0.0...]
