@@ -40206,6 +40206,13 @@
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 8
 	},
+/obj/machinery/door_control{
+	id = "HoP_queue";
+	name = "Queue shutters";
+	pixel_x = -5;
+	pixel_y = 27;
+	req_access = list(57)
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "blue"
@@ -63618,7 +63625,7 @@
 	id = "HoP_private";
 	name = "Security Shutters";
 	pixel_x = -5;
-	pixel_y = 5;
+	pixel_y = 6;
 	req_access = list(57)
 	},
 /obj/machinery/requests_console/hop{
@@ -80194,7 +80201,7 @@
 /obj/machinery/door_control{
 	id = "HoP_queue";
 	name = "Queue shutters";
-	pixel_x = -5;
+	pixel_x = -6;
 	pixel_y = 27;
 	req_access = list(57)
 	},
