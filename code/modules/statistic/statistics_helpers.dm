@@ -174,3 +174,5 @@
 
 	stat.set_custom_stat(F)
 	factions += stat
+
+/datum/stat_collector/proc/add_protolathe_product()

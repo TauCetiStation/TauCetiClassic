@@ -199,3 +199,9 @@
 	var/start_time
 	// string, [hh:mm]
 	var/leave_time
+
+/datum/stat/protolathe_product
+	// string, anything
+	var/product_name
+	// string, byond_type
+	var/product_type
