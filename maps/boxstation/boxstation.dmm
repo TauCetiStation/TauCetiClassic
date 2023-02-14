@@ -13120,11 +13120,6 @@
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
-"awF" = (
-/turf/simulated/floor{
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/fore)
 "awG" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -18422,6 +18417,13 @@
 	icon_state = "white"
 	},
 /area/station/medical/hallway)
+"aGJ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "aGK" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -43766,6 +43768,12 @@
 	icon_state = "warning"
 	},
 /area/station/cargo/storage)
+"bAf" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/hallway/primary/central)
 "bAg" = (
 /obj/structure/closet/fireaxecabinet{
 	pixel_y = -32
@@ -45688,16 +45696,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"bDH" = (
-/obj/machinery/disposal,
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/turf/simulated/floor{
-	dir = 10;
-	icon_state = "neutral"
-	},
-/area/station/hallway/primary/central)
 "bDI" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -45792,7 +45790,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "neutral"
+	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
 "bDQ" = (
@@ -51959,6 +51957,21 @@
 	icon_state = "blue"
 	},
 /area/station/medical/surgeryobs)
+"bPg" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/effect/decal/cleanable/cobweb2,
+/turf/simulated/floor/plating,
+/area/station/maintenance/engineering)
 "bPh" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -69429,12 +69442,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
-"dcQ" = (
-/obj/machinery/vending/coffee,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/hallway/primary/central)
 "ddb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor{
@@ -73350,13 +73357,6 @@
 "hMb" = (
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
-"hNc" = (
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "hNO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -74704,20 +74704,11 @@
 	},
 /area/station/hallway/primary/central)
 "jed" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
+/obj/machinery/vending/donut,
+/turf/simulated/floor{
+	icon_state = "dark"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/effect/decal/cleanable/cobweb2,
-/turf/simulated/floor/plating,
-/area/station/maintenance/engineering)
+/area/station/hallway/primary/central)
 "jfb" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp,
@@ -79209,6 +79200,11 @@
 /obj/item/weapon/book/manual/nuclear,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"osZ" = (
+/turf/simulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/fore)
 "oti" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/yellow{
 	dir = 4
@@ -79407,9 +79403,10 @@
 	},
 /area/station/civilian/kitchen)
 "oHi" = (
-/obj/machinery/vending/donut,
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	icon_state = "dark"
+	dir = 4;
+	icon_state = "neutral"
 	},
 /area/station/hallway/primary/central)
 "oHZ" = (
@@ -79926,13 +79923,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
-"pxb" = (
-/obj/structure/disposalpipe/segment,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutral"
-	},
-/area/station/hallway/primary/central)
 "pyb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -110908,7 +110898,7 @@ bHs
 bIl
 bIQ
 bFW
-jed
+bPg
 cfq
 cfq
 byU
@@ -111422,9 +111412,9 @@ bHu
 bIv
 bJr
 bFW
-oHi
+jed
 aOe
-dcQ
+bAf
 rCb
 bIZ
 bIZ
@@ -111679,10 +111669,10 @@ aIR
 aIR
 aIR
 bDP
-aGK
-aGK
-aGK
-bDH
+bht
+bht
+bht
+bht
 bIZ
 jMb
 bBG
@@ -116256,7 +116246,7 @@ ase
 aAY
 atv
 aQK
-awF
+osZ
 auT
 ayp
 cQb
@@ -117027,7 +117017,7 @@ aAt
 asY
 aDZ
 arx
-awF
+osZ
 asM
 aui
 awT
@@ -118589,8 +118579,8 @@ aDK
 aEu
 aFs
 aHE
-pxb
-hNc
+oHi
+aGJ
 aKx
 aRR
 aGZ
