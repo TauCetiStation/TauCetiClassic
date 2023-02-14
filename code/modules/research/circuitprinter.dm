@@ -130,7 +130,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			G.set_amount(round(loaded_materials[M].amount / G.perunit))
 
 /obj/machinery/r_n_d/circuit_imprinter/proc/queue_design(datum/design/D, mob/producer)
-	var/datum/rnd_queue_design/RNDD = new /datum/rnd_queue_design(D, 1, producer.name)
+	var/datum/rnd_queue_design/RNDD = new /datum/rnd_queue_design(D, 1, producer.real_name)
 
 	if(queue.len) // Something is already being created, put us into queue
 		queue += RNDD
