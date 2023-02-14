@@ -197,7 +197,7 @@
 	stat.glass_used = glass_used
 	stat.efficency = efficency
 	stat.multiplier = multiplier
-	stat.producer_name = producer.name
+	stat.producer_name = producer.real_name
 	stat.produced_time = roundduration2text()
 
 	autolathe_products += stat
