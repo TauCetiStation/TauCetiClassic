@@ -34567,11 +34567,6 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/structure/table,
-/obj/item/weapon/folder/brown,
-/obj/item/device/eftpos{
-	eftpos_name = "Cargo Bay EFTPOS scanner"
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -35822,8 +35817,10 @@
 	c_tag = "Cargo Office North";
 	dir = 8
 	},
-/obj/machinery/computer/vendomat{
-	dir = 8
+/obj/structure/table,
+/obj/item/weapon/folder/brown,
+/obj/item/device/eftpos{
+	eftpos_name = "Cargo Bay EFTPOS scanner"
 	},
 /turf/simulated/floor{
 	dir = 4;
