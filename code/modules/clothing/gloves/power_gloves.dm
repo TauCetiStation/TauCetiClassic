@@ -59,7 +59,7 @@
 	icon_state = "marinad"
 	cell_use = 0
 	siemens_coefficient = 0
-	to_chat(user, "<span class='warning'>Not enough energy, gloves off!</span>")
+	to_chat(user, "<span class='warning'>Not enough energy, gloves turn off!</span>")
 
 /obj/item/clothing/gloves/power/emp_act(severity)
 	if(cell)
