@@ -63,7 +63,7 @@
 			L = new (get_turf(start_point))
 		role.antag.transfer_to(L)
 		QDEL_NULL(role.antag.original)
-		if(length(vents4spawn) > 0)
+		if(V)
 			L.add_ventcrawl(V)
 
 
