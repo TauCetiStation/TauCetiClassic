@@ -121,6 +121,6 @@
 					s.start()
 				return TRUE
 		else
-			turn_off_the_gloves()
+			turn_off()
 			return TRUE
 	return FALSE
