@@ -25,9 +25,10 @@
 
 /obj/item/clothing/gloves/power/examine(mob/user)
 	. = ..()
-	to_chat(user, "Current mode: [selected_mode].")
-	if(cell)
-		to_chat(user, "Cell charge: [cell.charge].")
+	if(user.Adjacent(src))
+		to_chat(user, "Current mode: [selected_mode].")
+		if(cell)
+			to_chat(user, "Cell charge: [cell.charge].")
 
 /obj/item/clothing/gloves/power/ui_action_click()
 	toggle_gloves_mode(usr)
