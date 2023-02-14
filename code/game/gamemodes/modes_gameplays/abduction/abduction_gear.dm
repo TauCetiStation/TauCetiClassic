@@ -35,6 +35,10 @@
 			DeactivateStealth()
 			armor = combat_armor
 			icon_state = "vest_combat"
+			body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+			pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+			cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+			heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_wear_suit()
@@ -43,6 +47,10 @@
 			mode = VEST_STEALTH
 			armor = stealth_armor
 			icon_state = "vest_stealth"
+			body_parts_covered = initial(body_parts_covered)
+			pierce_protection = initial(pierce_protection)
+			cold_protection = initial(cold_protection)
+			heat_protection = initial(heat_protection)
 			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_wear_suit()

@@ -8,3 +8,12 @@
 
 // Is used in calculating reliability increase per prototype created.
 #define RND_RELIABILITY_EXPONENT 0.75
+
+#define DEFAULT_CENTCOM_SERVER_ID -1
+#define DEFAULT_SCIENCE_SERVER_ID 1
+#define DEFAULT_ROBOTICS_SERVER_ID 2
+#define DEFAULT_MINING_SERVER_ID 3
+
+#define DEFAULT_SCIENCE_CONSOLE_ID 1
+#define DEFAULT_ROBOTICS_CONSOLE_ID 2
+#define DEFAULT_MINING_CONSOLE_ID 3

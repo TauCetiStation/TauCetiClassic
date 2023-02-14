@@ -52,7 +52,7 @@
 	if(exchange_parts(user, W))
 		return
 	if(panel_open)
-		if(ismultitool(W))
+		if(ispulsing(W))
 			var/obj/item/device/multitool/M = W
 			M.buffer = src
 			to_chat(user, "<span class='notice'>You save the data in the [W.name]'s buffer.</span>")
