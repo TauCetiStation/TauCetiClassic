@@ -174,3 +174,29 @@
 
 	stat.set_custom_stat(F)
 	factions += stat
+
+/datum/stat_collector/proc/add_autolathe_product(
+	datum/autolathe_recipe/recipe,
+	product_name,
+	autolathe_x,
+	autolathe_y,
+	power_used,
+	metal_used,
+	glass_used,
+	efficency,
+	multiplier,
+	mob/producer,
+)
+	var/datum/stat/autolathe_product/stat = new
+	stat.product_type = recipe.result_type
+	stat.product_name = product_name
+	stat.produced_at_x = autolathe_x
+	stat.produced_at_y = autolathe_y
+	stat.power_used = power_used
+	stat.metal_used = metal_used
+	stat.glass_used = glass_used
+	stat.efficency = efficency
+	stat.multiplier = multiplier
+	stat.producer_name = producer.name
+
+	autolathe_products += stat

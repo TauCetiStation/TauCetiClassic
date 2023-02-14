@@ -449,17 +449,19 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 				if(stored_material[MAT_GLASS] < 0)
 					stored_material[MAT_GLASS] = 0
 				busy = FALSE
-				var/datum/stat/autolathe_product/stat = new
-				stat.product_type = recipe.result_type
-				stat.product_name = product_name
-				stat.produced_at_x = x
-				stat.produced_at_y = y
-				stat.power_used = power
-				stat.metal_used = m_used
-				stat.glass_used = g_used
-				stat.efficency = coeff
-				stat.multiplier = multiplier
-				stat.producer_name = usr.name
-				SSStatistics.autolathe_products += stat
+
+				SSStatistics.add_autolathe_product(
+					recipe=recipe,
+					product_name=product_name,
+					autolathe_x=x,
+					autolathe_y=y,
+					power_used=power,
+					metal_used=m_used,
+					glass_used=g_used,
+					efficency=coeff,
+					multiplier=multiplier,
+					producer=usr
+				)
+
 	updateUsrDialog()
 #undef PATH2CSS
