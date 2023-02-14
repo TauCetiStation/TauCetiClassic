@@ -221,3 +221,5 @@
 	var/efficency
 	// int, [0...]
 	var/multiplier
+	// string, [hh:mm]
+	var/produced_time

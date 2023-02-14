@@ -198,5 +198,6 @@
 	stat.efficency = efficency
 	stat.multiplier = multiplier
 	stat.producer_name = producer.name
+	stat.produced_time = roundduration2text()
 
 	autolathe_products += stat
