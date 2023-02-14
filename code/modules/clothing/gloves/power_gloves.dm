@@ -94,7 +94,7 @@
 					var/obj/item/organ/external/BP = H.get_bodypart(attacker.get_targetzone())
 					calc_power *= H.get_siemens_coefficient_organ(BP)
 				L.visible_message("<span class='warning bold'>[L] has been touched with the gloves by [attacker]!</span>")
-				L.log_combat(attacker, "stungloved witht [name]")
+				L.log_combat(attacker, "stungloved with [name]")
 				L.apply_effects(0,0,0,0,2,0,0,calc_power)
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 				s.set_up(3, 1, L)
