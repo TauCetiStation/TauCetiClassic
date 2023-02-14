@@ -89,7 +89,6 @@
 
 		if("gadgets")
 			new /obj/item/clothing/gloves/power(src)
-			new /obj/item/weapon/stock_parts/cell/hyper(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/device/flashlight/emp(src)
 			new /obj/item/clothing/shoes/syndigaloshes(src)
@@ -425,7 +424,6 @@
 	/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 	/obj/item/weapon/storage/pouch/medical_supply/syndicate,
 	/obj/item/clothing/gloves/power,
-	/obj/item/weapon/stock_parts/cell/hyper,
 	)
 
 
