@@ -187,8 +187,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	SSStatistics.add_protolathe_product(
 		product_name = A.name,
 		product_type = A.type,
-		protolathe_x = x,
-		protolathe_y = y,
+		protolathe = src,
 		design = D,
 		produced_by = RNDD.produced_by,
 		product_reliability = 100,

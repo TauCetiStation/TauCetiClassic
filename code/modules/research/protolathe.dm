@@ -249,8 +249,7 @@ Note: Must be placed west/left of and R&D console to function.
 		SSStatistics.add_protolathe_product(
 			product_name = new_item.name,
 			product_type = new_item.type,
-			protolathe_x = x,
-			protolathe_y = y,
+			protolathe = src,
 			design = D,
 			produced_by = RNDD.produced_by,
 			product_reliability = new_item.reliability,

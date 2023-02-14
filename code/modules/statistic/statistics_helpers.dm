@@ -178,8 +178,7 @@
 /datum/stat_collector/proc/add_protolathe_product(
 	product_name,
 	product_type,
-	protolathe_x,
-	protolathe_y,
+	obj/machinery/protolathe,
 	datum/design/design,
 	produced_by,
 	product_reliability,
@@ -191,8 +190,9 @@
 
 	stat.product_name = product_name
 	stat.product_type = product_type
-	stat.produced_at_x = protolathe_x
-	stat.produced_at_y = protolathe_y
+	stat.produced_at_x = protolathe.x
+	stat.produced_at_y = protolathe.y
+	stat.produced_at_z = protolathe.z
 	stat.design_type = design.type
 	stat.produced_by = produced_by
 	stat.product_reliability = product_reliability
