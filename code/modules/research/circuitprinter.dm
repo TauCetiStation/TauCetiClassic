@@ -129,8 +129,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			var/obj/item/stack/sheet/G = new sheet_type(loc)
 			G.set_amount(round(loaded_materials[M].amount / G.perunit))
 
-/obj/machinery/r_n_d/circuit_imprinter/proc/queue_design(datum/design/D)
-	var/datum/rnd_queue_design/RNDD = new /datum/rnd_queue_design(D, 1)
+/obj/machinery/r_n_d/circuit_imprinter/proc/queue_design(datum/design/D, mob/producer)
+	var/datum/rnd_queue_design/RNDD = new /datum/rnd_queue_design(D, 1, producer.name)
 
 	if(queue.len) // Something is already being created, put us into queue
 		queue += RNDD
@@ -183,6 +183,19 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		O.origin_tech = null
 	busy = FALSE
 	queue -= RNDD
+
+	SSStatistics.add_protolathe_product(
+		product_name = A.name,
+		product_type = A.type,
+		protolathe_x = x,
+		protolathe_y = y,
+		design = D,
+		produced_by = RNDD.produced_by,
+		product_reliability = 100,
+		min_reliability = 100,
+		max_reliability = 100,
+		efficency = 1.0,
+	)
 
 	if(queue.len)
 		produce_design(queue[1])

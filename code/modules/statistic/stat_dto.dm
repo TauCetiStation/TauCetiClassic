@@ -205,3 +205,22 @@
 	var/product_name
 	// string, byond_type
 	var/product_type
+	// int, [0...]
+	var/produced_at_x
+	// int, [0...]
+	var/produced_at_y
+	// string, byond_type
+	var/design_type
+	// float, [0.0...]
+	var/product_reliability
+	// float, [0.0...]
+	var/min_reliability
+	// float, [0.0...]
+	var/max_reliability
+	// float, [0.0...]
+	var/efficency
+	// string, anything
+	var/produced_by
+	// float, [0.0...]
+	// string, [hh:mm]
+	var/produced_time

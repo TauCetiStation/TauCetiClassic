@@ -24,13 +24,17 @@ Note: Must be placed west/left of and R&D console to function.
 	var/datum/design/design
 	var/amount
 
-/datum/rnd_queue_design/New(datum/design/D, Amount)
+	var/produced_by
+
+/datum/rnd_queue_design/New(datum/design/D, Amount, produced_by)
 	name = D.name
 	if(Amount > 1)
 		name = "[name] x[Amount]"
 
 	design = D
 	amount = Amount
+
+	src.produced_by = produced_by
 
 /obj/machinery/r_n_d/protolathe
 	name = "Protolathe"
@@ -176,8 +180,8 @@ Note: Must be placed west/left of and R&D console to function.
 			var/obj/item/stack/sheet/G = new sheet_type(loc)
 			G.set_amount(round(loaded_materials[M].amount / G.perunit))
 
-/obj/machinery/r_n_d/protolathe/proc/queue_design(datum/design/D, amount)
-	var/datum/rnd_queue_design/RNDD = new /datum/rnd_queue_design(D, amount)
+/obj/machinery/r_n_d/protolathe/proc/queue_design(datum/design/D, amount, mob/producer)
+	var/datum/rnd_queue_design/RNDD = new /datum/rnd_queue_design(D, amount, producer.name)
 
 	if(queue.len) // Something is already being created, put us into queue
 		queue += RNDD
@@ -232,13 +236,29 @@ Note: Must be placed west/left of and R&D console to function.
 		// And are deconstructions of items made by deconstructing other items
 		// So consider them tests of "new" construction techniques for an item already known
 		// #define MAGIC_2_MANIPULATORS_MAX_OUTPUT_CONSIDERING_IT_SHOULD_ROUND_UP_TO_30_PERCENT_COEFFICIENT 3.75
-		new_item.prototipify(min_reliability=linked_console.files.design_reliabilities[D.id] + efficiency_coeff * 12.5,  max_reliability=70 + efficiency_coeff * 12.5)
+		var/min_reliability = linked_console.files.design_reliabilities[D.id] + efficiency_coeff * 12.5
+		var/max_reliability = 70 + efficiency_coeff * 12.5
+		new_item.prototipify(min_reliability=min_reliability,  max_reliability=max_reliability)
 		new_item.m_amt /= efficiency_coeff
 		new_item.g_amt /= efficiency_coeff
 
 		linked_console.files.design_reliabilities[D.id] += linked_console.files.design_reliabilities[D.id] * (RND_RELIABILITY_EXPONENT ** linked_console.files.design_created_prototypes[D.id])
 		linked_console.files.design_reliabilities[D.id] = max(round(linked_console.files.design_reliabilities[D.id], 5), 1)
 		linked_console.files.design_created_prototypes[D.id]++
+
+		SSStatistics.add_protolathe_product(
+			product_name = new_item.name,
+			product_type = new_item.type,
+			protolathe_x = x,
+			protolathe_y = y,
+			design = D,
+			produced_by = RNDD.produced_by,
+			product_reliability = new_item.reliability,
+			min_reliability = min_reliability,
+			max_reliability = max_reliability,
+			efficency = efficiency_coeff,
+		)
+
 	busy = FALSE
 	queue -= RNDD
 

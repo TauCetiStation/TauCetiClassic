@@ -228,7 +228,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 				being_built = D
 				break
 		if(being_built && amount)
-			linked_lathe.queue_design(being_built, amount)
+			linked_lathe.queue_design(being_built, amount, usr)
 	if(href_list["build"] && screen == "circuit_imprinter" && linked_imprinter)
 		var/datum/design/being_built = null
 		for(var/datum/design/D in files.known_designs)
@@ -236,7 +236,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 				being_built = D
 				break
 		if(being_built)
-			linked_imprinter.queue_design(being_built)
+			linked_imprinter.queue_design(being_built, usr)
 	if(href_list["search"])
 		var/input = sanitize_safe(input(usr, "Enter text to search", "Searching") as null|text, MAX_LNAME_LEN)
 		search_text = input

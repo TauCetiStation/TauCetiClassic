@@ -175,4 +175,30 @@
 	stat.set_custom_stat(F)
 	factions += stat
 
-/datum/stat_collector/proc/add_protolathe_product()
+/datum/stat_collector/proc/add_protolathe_product(
+	product_name,
+	product_type,
+	protolathe_x,
+	protolathe_y,
+	datum/design/design,
+	produced_by,
+	product_reliability,
+	min_reliability,
+	max_reliability,
+	efficency,
+)
+	var/datum/stat/protolathe_product/stat = new
+
+	stat.product_name = product_name
+	stat.product_type = product_type
+	stat.produced_at_x = protolathe_x
+	stat.produced_at_y = protolathe_y
+	stat.design_type = design.type
+	stat.produced_by = produced_by
+	stat.product_reliability = product_reliability
+	stat.min_reliability = min_reliability
+	stat.max_reliability = max_reliability
+	stat.efficency = efficency
+	stat.produced_time = roundduration2text()
+
+	protolathe_products += stat
