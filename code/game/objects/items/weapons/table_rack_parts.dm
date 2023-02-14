@@ -46,15 +46,16 @@
 	..()
 
 /obj/item/weapon/table_parts/attack_self(mob/user)
+	if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
+		return
 	var/turf/simulated/T = get_turf(user)
-	if (T.CanPass(null, T))
-		var/obj/structure/table/R = new table_type( T )
-		to_chat(user, "<span class='notice'>You assemble [src].</span>")
-		R.add_fingerprint(user)
-		qdel(src)
-	else
+	if(!T || !T.CanPass(null, T))
 		to_chat(user, "<span class='warning'>You can't put it here!</span>")
-
+		return
+	var/obj/structure/table/R = new table_type( T )
+	to_chat(user, "<span class='notice'>You assemble [src].</span>")
+	R.add_fingerprint(user)
+	qdel(src)
 
 /*
  * Reinforced Table Parts
