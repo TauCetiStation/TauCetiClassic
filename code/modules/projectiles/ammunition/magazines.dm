@@ -357,15 +357,6 @@
 	max_ammo = 20
 	overlay = "bar-mag"
 
-/obj/item/ammo_box/magazine/m9pmm
-	name = "magazine (9mm)"
-	icon_state = "9x19p"
-	origin_tech = "combat=2"
-	ammo_type = /obj/item/ammo_casing/c9mm
-	caliber = "9mm"
-	max_ammo = 8
-	multiple_sprites = TWO_STATES
-
 /obj/item/ammo_box/magazine/borg45
 	name = "magazine (.45)"
 	icon_state = "a762"

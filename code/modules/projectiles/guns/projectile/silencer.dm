@@ -10,10 +10,13 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 	icon_state = "silencer"
 	w_class = SIZE_TINY
 
-/obj/item/weapon/gun/projectile/proc/install_silencer(obj/item/I, mob/user)
+/obj/item/weapon/gun/projectile/automatic/proc/install_silencer(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/silencer))
 		if(user.l_hand != src && user.r_hand != src)
 			to_chat(user, "<span class='warning'>You'll need [src] in your hands to do that.</span>")
+			return
+		if(!src.can_be_silenced)
+			to_chat(user, "<span class='warning'>[src] can't be silenced.</span>")
 			return
 		user.drop_from_inventory(I, src)
 		to_chat(user, "<span class='notice'>You screw [I] onto [src].</span>")

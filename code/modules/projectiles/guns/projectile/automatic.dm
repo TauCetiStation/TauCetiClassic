@@ -86,7 +86,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
-	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? "mag" : "nomag"]"
+	item_state = "l6[cover_open ? "open" : "closed"][magazine ? "mag" : "nomag"]"
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(!HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
@@ -204,6 +204,7 @@
 	w_class = SIZE_SMALL
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	initial_mag = /obj/item/ammo_box/magazine/m556
+	suitable_mags = list(/obj/item/ammo_box/magazine/m556, /obj/item/ammo_box/magazine/m556/nonlethal)
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/a74
