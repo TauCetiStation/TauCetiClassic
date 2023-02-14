@@ -181,7 +181,7 @@ Note: Must be placed west/left of and R&D console to function.
 			G.set_amount(round(loaded_materials[M].amount / G.perunit))
 
 /obj/machinery/r_n_d/protolathe/proc/queue_design(datum/design/D, amount, mob/producer)
-	var/datum/rnd_queue_design/RNDD = new /datum/rnd_queue_design(D, amount, producer.name)
+	var/datum/rnd_queue_design/RNDD = new /datum/rnd_queue_design(D, amount, producer.real_name)
 
 	if(queue.len) // Something is already being created, put us into queue
 		queue += RNDD
