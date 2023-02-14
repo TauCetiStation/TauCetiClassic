@@ -219,7 +219,7 @@
 	var/contraband_enabled = FALSE
 	var/hacked = FALSE
 /obj/item/weapon/circuitboard/computer/vendomat
-	name = "Circuit board (Vendomat console)"
+	name = "Circuit board (Vending controller console)"
 	build_path = /obj/machinery/computer/vendomat
 	origin_tech = "programming=1"
 /obj/item/weapon/circuitboard/computer/stockexchange
