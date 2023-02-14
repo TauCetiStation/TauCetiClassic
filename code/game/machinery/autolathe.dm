@@ -425,20 +425,41 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 			icon_state = "autolathe"
 			flick("autolathe_n",src)
 			spawn(32/coeff)
+				var/m_used = 0
+				var/g_used = 0
+				var/product_name = null
 				if(istype(recipe, /datum/autolathe_recipe/stack))
-					stored_material[MAT_METAL] -= recipe.resources[MAT_METAL] * multiplier
-					stored_material[MAT_GLASS] -= recipe.resources[MAT_GLASS] * multiplier
-					new recipe.result_type(T, multiplier)
+					m_used = recipe.resources[MAT_METAL] * multiplier
+					g_used = recipe.resources[MAT_GLASS] * multiplier
+					stored_material[MAT_METAL] -= m_used
+					stored_material[MAT_GLASS] -= g_used
+					var/atom/A = new recipe.result_type(T, multiplier)
+					product_name = A.name
 				else
+					m_used = recipe.resources[MAT_METAL] / coeff
+					g_used = recipe.resources[MAT_GLASS] / coeff
 					stored_material[MAT_METAL] -= recipe.resources[MAT_METAL] / coeff
 					stored_material[MAT_GLASS] -= recipe.resources[MAT_GLASS] / coeff
 					var/obj/new_item = new recipe.result_type(T)
 					new_item.m_amt /= coeff
 					new_item.g_amt /= coeff
+					product_name = new_item.name
 				if(stored_material[MAT_METAL] < 0)
 					stored_material[MAT_METAL] = 0
 				if(stored_material[MAT_GLASS] < 0)
 					stored_material[MAT_GLASS] = 0
 				busy = FALSE
+				var/datum/stat/autolathe_product/stat = new
+				stat.product_type = recipe.result_type
+				stat.product_name = product_name
+				stat.produced_at_x = x
+				stat.produced_at_y = y
+				stat.power_used = power
+				stat.metal_used = m_used
+				stat.glass_used = g_used
+				stat.efficency = coeff
+				stat.multiplier = multiplier
+				stat.producer_name = usr.name
+				SSStatistics.autolathe_products += stat
 	updateUsrDialog()
 #undef PATH2CSS

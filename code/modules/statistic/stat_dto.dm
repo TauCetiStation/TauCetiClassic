@@ -199,3 +199,25 @@
 	var/start_time
 	// string, [hh:mm]
 	var/leave_time
+
+/datum/stat/autolathe_product
+	// string, byond_type
+	var/product_type
+	// string, anything
+	var/product_name
+	// int, [0...]
+	var/produced_at_x
+	// int, [0...]
+	var/produced_at_y
+	// string, anything
+	var/producer_name
+	// float, [0.0...]
+	var/power_used
+	// float, [0.0...]
+	var/metal_used
+	// float, [0.0...]
+	var/glass_used
+	// float, [0.0...]
+	var/efficency
+	// int, [0,...]
+	var/multiplier
