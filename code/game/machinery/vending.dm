@@ -598,8 +598,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
 
-	for(var/obj/machinery/computer/vendomat/Comp in global.vendomat_consoles)
-		cam.captureimage(src, null, null, Comp)
 	return
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
