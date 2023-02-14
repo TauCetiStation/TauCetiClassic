@@ -259,7 +259,7 @@
 		affecting.Stun(1)
 		if(isliving(affecting))
 			var/mob/living/L = affecting
-			L.adjustOxyLoss(1)
+			L.adjustOxyLoss(2)
 
 	if(state >= GRAB_KILL)
 		//affecting.apply_effect(STUTTER, 5) //would do this, but affecting isn't declared as mob/living for some stupid reason.

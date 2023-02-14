@@ -161,7 +161,7 @@ var/global/list/tourette_bad_words= list(
 				return
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		if(!(get_species() in tourette_bad_words))
-			return 
+			return
 		speech_problem_flag = 1
 		if (prob(10))
 			spawn( 0 )
@@ -769,7 +769,7 @@ var/global/list/tourette_bad_words= list(
 				spawn(0)
 					emote("gasp")
 			if(!reagents.has_reagent("inaprovaline"))
-				adjustOxyLoss(1)*/
+				adjustOxyLoss(2)*/
 
 		if(hallucination)
 			if(hallucination >= 20)

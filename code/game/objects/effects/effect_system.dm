@@ -247,7 +247,7 @@ steam.start() -- spawns the effect
 	if (!..())
 		return 0
 	M.drop_item()
-	M.adjustOxyLoss(1)
+	M.adjustOxyLoss(2)
 	if (M.coughedtime != 1)
 		M.coughedtime = 1
 		M.emote("cough")
