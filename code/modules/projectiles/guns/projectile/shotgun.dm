@@ -34,8 +34,7 @@
 		return
 	pump(user)
 	recentpump = TRUE
-	spawn(pump_cooldown)
-		recentpump = FALSE
+	VARSET_IN(src, recentpump, FALSE, pump_cooldown)
 
 /obj/item/weapon/gun/projectile/shotgun/proc/pump(mob/M)
 	playsound(M, pick(pump_sound), VOL_EFFECTS_MASTER, null, FALSE)

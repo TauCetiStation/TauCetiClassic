@@ -36,10 +36,8 @@
 		alarmed = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/attack_hand(mob/user)
-	if(loc == user)
-		if(silenced && can_be_silenced)
-			if(remove_silencer(user))
-				return
+	if(loc == user && silenced && can_be_silenced && remove_silencer(user))
+		return
 	..()
 
 /obj/item/weapon/gun/projectile/automatic/attackby(obj/item/I, mob/user, params)
