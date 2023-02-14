@@ -17,7 +17,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 // To ensure that if output file syntax is changed, we will still be able to process
 // new and old files
 // please increment this version whenever making changes
-#define STAT_OUTPUT_VERSION 6
+#define STAT_OUTPUT_VERSION 7
 #define STAT_FILE_NAME "stat.json"
 
 // Documentation rules:
@@ -75,6 +75,8 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/list/datum/stat/role/orphaned_roles = list()
 	// array of objects
 	var/list/datum/stat/faction/factions = list()
+	// array of objects
+	var/list/datum/stat/emp_stat/emps = list()
 
 /datum/stat_collector/New()
 	var/datum/default_datum = new

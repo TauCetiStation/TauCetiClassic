@@ -164,6 +164,8 @@
 	var/light_impact_range = 0
 	// int, [-infinity...MAX_EXPLOSION_RANGE], now MAX_EXPLOSION_RANGE is 14
 	var/flash_range = 0
+	// string, [hh:mm]
+	var/occured_time
 
 /datum/stat/manifest_entry
 	// string, anything
@@ -199,3 +201,19 @@
 	var/start_time
 	// string, [hh:mm]
 	var/leave_time
+
+/datum/stat/emp_stat
+	// int, [0...]
+	var/epicenter_x = 0
+	// int, [0...]
+	var/epicenter_y = 0
+	// int, [0...]
+	var/epicenter_z = 0
+	// int, [-infinity...]
+	var/devastation_range = 0
+	// int, [-infinity...]
+	var/heavy_range = 0
+	// int, [-infinity...]
+	var/light_range = 0
+	// string, [hh:mm]
+	var/occured_time
