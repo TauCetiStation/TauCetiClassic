@@ -164,7 +164,7 @@
 
 	area_type = /area
  
-	protected_areas = list(/area/station/maintenance, /area/station/civilian/dormitories/male, /area/station/civilian/dormitories/female, /area/station/storage/emergency, /area/station/storage/emergency2, /area/station/storage/emergency3, /area/station/storage/tech, /area/asteroid/mine, /area/station/security/prison/toilet,  /area/station/security/brig/solitary_confinement)
+	protected_areas = list(/area/station/maintenance, /area/station/civilian/dormitories/male, /area/station/civilian/dormitories/female, /area/station/storage/emergency, /area/station/storage/emergency2, /area/station/storage/emergency3, /area/station/storage/tech, /area/asteroid/mine, /area/station/security/prison/toilet, /area/station/security/brig/solitary_confinement)
 
 	target_ztrait = ZTRAIT_STATION
 
