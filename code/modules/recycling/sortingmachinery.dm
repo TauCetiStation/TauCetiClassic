@@ -368,7 +368,7 @@
 		lot_category = get_category(target)
 
 	target.price_tag = list("description" = lot_description, "price" = lot_price, "category" = lot_category, "account" = lot_account_number)
-	target.verbs += /obj/verb/remove_price_tag
+	target.verbs += /obj/proc/remove_price_tag
 
 	target.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
 
@@ -441,24 +441,25 @@
 	return
 
 /obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
-	if(istype(AM, /obj/item/projectile) || istype(AM, /obj/effect))	return
+	if(istype(AM, /obj/item/projectile) || istype(AM, /obj/effect))
+		return
 	switch(dir)
 		if(NORTH)
-			if(AM.loc.y != src.loc.y+1) return
+			if(AM.loc.y != src.loc.y+1)
+				return
 		if(EAST)
-			if(AM.loc.x != src.loc.x+1) return
+			if(AM.loc.x != src.loc.x+1)
+				return
 		if(SOUTH)
-			if(AM.loc.y != src.loc.y-1) return
+			if(AM.loc.y != src.loc.y-1)
+				return
 		if(WEST)
-			if(AM.loc.x != src.loc.x-1) return
+			if(AM.loc.x != src.loc.x-1)
+				return
 
-	if(istype(AM, /obj))
-		var/obj/O = AM
-		O.loc = src
-	else if(istype(AM, /mob))
-		var/mob/M = AM
-		M.loc = src
-	flush()
+	if(istype(AM, /obj) || istype(AM, /mob)) // istype(AM) ?
+		AM.forceMove(src)
+		flush()
 
 /obj/machinery/disposal/deliveryChute/flush()
 	flushing = 1
@@ -486,7 +487,7 @@
 	if(!I || !user)
 		return
 
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		if(c_mode==0)
 			c_mode=1
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
@@ -497,7 +498,7 @@
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You attach the screws around the power connection.")
 			return
-	else if(iswelder(I) && c_mode==1 && !user.is_busy())
+	else if(iswelding(I) && c_mode==1 && !user.is_busy())
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the delivery chute.")

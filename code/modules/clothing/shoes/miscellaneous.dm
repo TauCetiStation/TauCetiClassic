@@ -18,7 +18,7 @@
 	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
 	icon_state = "s-ninja"
 	permeability_coefficient = 0.01
-	flags = NOSLIP
+	flags = NOSLIP | AIR_FLOW_PROTECT
 	siemens_coefficient = 0.2
 
 	cold_protection = LEGS
@@ -74,7 +74,7 @@
 	return ..()
 
 /obj/item/clothing/shoes/clown_shoes/proc/start_waddling(mob/user)
-	if(CLUMSY in user.mutations)
+	if(user.IsClumsy())
 		slowdown = SHOES_SLOWDOWN
 	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_PIXELMOVE))
 
@@ -200,12 +200,12 @@
 	name = "gorlex magboots"
 	icon_state = "syndiemag0"
 	magboot_state = "syndiemag"
-	slowdown_off = 0
+	slowdown_off = 1
 
 /obj/item/clothing/shoes/magboots/ert
 	name = "advanced magboots"
 	desc = "A pair of advanced magboots designed specifically for ERT."
-	slowdown_off = 0
+	slowdown_off = 1
 	icon_state = "advmag0"
 	magboot_state = "advmag"
 

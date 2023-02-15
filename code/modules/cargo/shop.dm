@@ -8,6 +8,10 @@ var/global/list/shop_categories = list("Еда" = 0, "Одежда" = 0, "Уст
 var/global/list/orders_and_offers = list()
 var/global/orders_and_offers_number = 0
 
+var/global/online_shop_discount = 0
+var/global/online_shop_delivery_cost = 0.25
+var/global/online_shop_profits = 0
+
 /datum/shop_lot
 	var/name = "Лот"
 	var/description = "Описание лота"
@@ -51,4 +55,4 @@ var/global/orders_and_offers_number = 0
 	return ..()
 
 /datum/shop_lot/proc/to_list(account = "Unknown", postpayment = 0)
-	return list("name" = src.name, "description" = src.description, "price" = src.price, "number" = src.number, "account" = account, "delivered" = src.delivered, "postpayment" = postpayment, "icon" = src.item_icon)
+	return list("name" = src.name, "description" = src.description, "price" = (global.online_shop_discount ? "<S>[src.price]$</S> <B>[round((1 - global.online_shop_discount) * src.price)]</B>" : src.price), "number" = src.number, "account" = account, "delivered" = src.delivered, "postpayment" = postpayment, "icon" = src.item_icon)

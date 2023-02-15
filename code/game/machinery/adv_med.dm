@@ -344,7 +344,7 @@
 				if(occupant.sdisabilities & BLIND)
 					dat += text("<font color='red'>Cataracts detected.</font><BR>")
 					storedinfo += text("<font color='red'>Cataracts detected.</font><BR>")
-				if(occupant.sdisabilities & NEARSIGHTED)
+				if(HAS_TRAIT(occupant, TRAIT_NEARSIGHT))
 					dat += text("<font color='red'>Retinal misalignment detected.</font><BR>")
 					storedinfo += text("<font color='red'>Retinal misalignment detected.</font><BR>")
 		else
