@@ -6,7 +6,7 @@
 	force = 10
 	w_class = SIZE_SMALL
 	slot_flags = SLOT_FLAGS_BACK
-	flags = CANT_BE_INSERTED
+	flags_2 = CANT_BE_INSERTED
 	throwforce = 15
 	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")

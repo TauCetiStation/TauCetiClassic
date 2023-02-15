@@ -8,7 +8,7 @@
 	sharp = 1
 	edge = 1
 	w_class = SIZE_SMALL
-	flags = CANT_BE_INSERTED
+	flags_2 = CANT_BE_INSERTED
 	slot_flags = SLOT_FLAGS_BACK
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	sweep_step = 5
@@ -122,13 +122,13 @@
 /obj/item/weapon/dualsaber/proc/on_wield()
 	set_light(2)
 	w_class = SIZE_NORMAL
-	flags |= CANT_BE_INSERTED
+	flags_2 |= CANT_BE_INSERTED
 	return FALSE
 
 /obj/item/weapon/dualsaber/proc/on_unwield()
 	slicing = FALSE
 	set_light(0)
-	flags &= ~CANT_BE_INSERTED
+	flags_2 &= ~CANT_BE_INSERTED
 	w_class = initial(w_class)
 	return FALSE
 

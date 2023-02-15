@@ -209,7 +209,7 @@
 				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
 			return FALSE
 
-	if (W.flags & CANT_BE_INSERTED)
+	if (W.flags_2 & CANT_BE_INSERTED)
 		if(!stop_messages)
 			to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
 		return FALSE
