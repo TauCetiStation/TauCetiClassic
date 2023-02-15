@@ -46,6 +46,7 @@
 	var/give_uplink = TRUE
 	var/give_rp_rev_verb = TRUE
 	skillset_type = /datum/skillset/max
+	moveset_type = /datum/combat_moveset/cqc
 
 /datum/role/rev_leader/New()
 	..()

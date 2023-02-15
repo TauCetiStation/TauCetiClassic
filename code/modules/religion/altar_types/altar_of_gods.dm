@@ -391,7 +391,7 @@
 	return reactions
 
 /obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
-	if(iswrench(C))
+	if(iswrenching(C))
 		if(!user.is_busy(src) && C.use_tool(src, user, 40, volume = 50))
 			anchored = !anchored
 			visible_message("<span class='warning'>[src] has been [anchored ? "secured to the floor" : "unsecured from the floor"] by [user].</span>")
@@ -407,13 +407,8 @@
 
 	return ..()
 
-/obj/structure/altar_of_gods/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/altar_of_gods/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
-		return TRUE
-	return ..()
-
-/obj/structure/altar_of_gods/CheckExit(atom/movable/AM, target)
-	if(istype(AM) && AM.checkpass(PASSTABLE))
 		return TRUE
 	return ..()
 

@@ -131,7 +131,7 @@
 	user.visible_message("<span class='notice'>[user] cauterizes the incision around [target]'s eyes with \the [tool].</span>", \
 	"<span class='notice'>You cauterize the incision around [target]'s eyes with \the [tool].</span>")
 	if (target.op_stage.eyes == 3)
-		target.disabilities &= ~NEARSIGHTED
+		target.cure_nearsighted(list(EYE_DAMAGE_TRAIT, EYE_DAMAGE_TEMPORARY_TRAIT))
 		target.sdisabilities &= ~BLIND
 		eyes.damage = 0
 	target.op_stage.eyes = 0
@@ -228,7 +228,7 @@
 	if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
 		BP.take_damage(0, 6, used_weapon = tool)
 
-	else if(iswrench(tool))
+	else if(iswrenching(tool))
 		BP.take_damage(12, 0, used_weapon = tool)
 		BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
 	IO.take_damage(dam_amt,0)
@@ -259,7 +259,7 @@
 	user.visible_message("<span class='notice'>[user] locks [target]'s camera panels with \the [tool].</span>",
 	"<span class='notice'>You lock [target]'s camera panels with \the [tool].</span>")
 	if (target.op_stage.eyes == 2)
-		target.disabilities &= ~NEARSIGHTED
+		target.cure_nearsighted(EYE_DAMAGE_TRAIT)
 		target.sdisabilities &= ~BLIND
 		eyes.damage = 0
 	target.op_stage.eyes = 0

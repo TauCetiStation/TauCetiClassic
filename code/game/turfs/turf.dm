@@ -20,7 +20,7 @@
 	//Properties for both
 	var/temperature = T20C
 
-	var/blocks_air = 0
+	var/blocks_air = NONE
 	var/icon_old = null
 	var/pathweight = 1
 
@@ -95,8 +95,6 @@
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		to_chat(usr, "<span class='warning'>Передвижение отключено администрацией.</span>")//This is to identify lag problems
 		return FALSE
-	if (!(mover && isturf(mover.loc)))
-		return TRUE
 
 	var/list/second_check = list()
 	var/turf/mover_loc = mover.loc
@@ -120,7 +118,7 @@
 	for(var/atom/movable/border_obstacle as anything in src)
 		if(forget != border_obstacle)
 			if(border_obstacle.flags & ON_BORDER)
-				if(!border_obstacle.CanPass(mover, mover_loc, 1, 0))
+				if(!border_obstacle.CanPass(mover, mover_loc, 1))
 					mover.Bump(border_obstacle, TRUE)
 					return FALSE
 			else
@@ -133,7 +131,7 @@
 
 	//Finally, check objects/mobs to block entry that are not on the border
 	for(var/atom/movable/obstacle as anything in second_check)
-		if(!obstacle.CanPass(mover, mover_loc, 1, 0))
+		if(!obstacle.CanPass(mover, mover_loc, 1))
 			mover.Bump(obstacle, TRUE)
 			return FALSE
 	return TRUE //Nothing found to block so return success!
@@ -170,6 +168,9 @@
 	if (AM && AM.opacity)
 		recalc_atom_opacity() // Make sure to do this before reconsider_lights(), incase we're on instant updates.
 		reconsider_lights()
+
+	if(AM?.can_block_air && !can_block_air)
+		can_block_air = TRUE
 
 /turf/Exited(atom/movable/Obj, atom/newloc)
 	. = ..()
@@ -263,6 +264,8 @@
 
 	var/list/temp_res = resources
 
+	var/old_can_block_air = can_block_air
+
 	//world << "Replacing [src.type] with [N]"
 
 	if(connections)
@@ -321,6 +324,8 @@
 
 	if(SSair)
 		SSair.mark_for_update(W)
+
+	W.can_block_air = old_can_block_air
 
 	W.levelupdate()
 
@@ -492,13 +497,13 @@
 	else if(isrobot(M))
 		new /obj/effect/decal/cleanable/blood/oil(src)
 
-/turf/proc/add_vomit_floor(mob/living/carbon/C, toxvomit = 0)
+/turf/proc/add_vomit_floor(mob/living/carbon/C, vomit_type = DEFAULT_VOMIT)
 	if(flags & NOBLOODY)
 		return
 
 	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src)
 	// Make toxins vomit look different
-	if(toxvomit)
+	if(vomit_type == VOMIT_TOXIC)
 		var/datum/reagent/new_color = locate(/datum/reagent/luminophore) in C.reagents.reagent_list
 		if(!new_color)
 			V.icon_state = "vomittox_[pick(1,4)]"

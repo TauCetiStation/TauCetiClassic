@@ -39,3 +39,8 @@ endmap
 map prometheus
 	votable
 endmap
+
+map stroechka
+	votable
+	maxplayers 10
+endmap

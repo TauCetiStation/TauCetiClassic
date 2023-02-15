@@ -107,6 +107,9 @@
 		return FALSE
 
 	religion.add_member(AOG.buckled_mob, CULT_ROLE_HIGHPRIEST)
+	if(iscarbon(AOG.buckled_mob))
+		var/mob/living/carbon/C = AOG.buckled_mob
+		C.uncuff()
 	to_chat(AOG.buckled_mob, "<span class='[religion.style_text]'>Помогай другим культистам в тёмных делах. Их цель - твоя цель, а твоя - их. Вы вместе служите Тьме и тёмным богам.</span>")
 	religion.adjust_favor(300 * divine_power)
 	return TRUE
@@ -397,12 +400,12 @@
 	if(!..())
 		return FALSE
 
-	if(AOG.buckled_mob.get_species() == HOMUNCULUS)
-		to_chat(user, "<span class='warning'>Тело гомункула слишком слабо.</span>")
+	if(!isliving(AOG.buckled_mob))
+		to_chat(user, "<span class='warning'>На алтаре должно лежать живое существо.</span>")
 		return FALSE
 
-	if(!isliving(AOG.buckled_mob))
-		to_chat(user, "<span class='warning'>На алтаре должно лежать существо.</span>")
+	if(AOG.buckled_mob.get_species() == HOMUNCULUS)
+		to_chat(user, "<span class='warning'>Тело гомункула слишком слабо.</span>")
 		return FALSE
 
 	return TRUE
@@ -576,7 +579,7 @@
 		C.blurEyes(blindless_modifier)
 		C.eye_blind += blindless_modifier / 2
 		if(prob(5))
-			C.disabilities |= NEARSIGHTED
+			C.become_nearsighted(GENETIC_MUTATION_TRAIT)
 			if(prob(10))
 				C.sdisabilities |= BLIND
 		C.show_message("<span class='userdanger'>Внезапно вы видите красную вспышку, которая ослепила вас.</span>", SHOWMSG_VISUAL)

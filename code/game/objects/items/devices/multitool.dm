@@ -24,6 +24,10 @@
 	var/obj/machinery/telecomms/buffer // simple machine buffer for device linkage
 	var/list/obj/machinery/door/doors_buffer = list()
 
+	qualities = list(
+		QUALITY_PULSING = 1
+	)
+
 /obj/item/device/multitool/verb/clear_buffer()
 	set category = "Object"
 	set name = "Clear buffer"
