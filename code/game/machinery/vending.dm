@@ -118,9 +118,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 /obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0,req_emag=0)
 	for(var/typepath in productlist)
-		if(productlist == products)
-			load += productlist[typepath]
 		var/amount = productlist[typepath]
+		if(productlist == products)
+			amount = round(amount * rand(2, 4) / 10)
+			load += amount
 		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
 
