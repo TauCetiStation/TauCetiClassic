@@ -62,8 +62,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	var/load = 0
 	var/max_load = 0
 
-	var/obj/item/device/camera/vending/cam
-
 
 /obj/machinery/vending/atom_init()
 	. = ..()
@@ -88,12 +86,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	power_change()
 	update_wires_check()
 
-	cam = new(src)
-
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(coin)
-	QDEL_NULL(cam)
 	return ..()
 
 /obj/machinery/vending/RefreshParts()
