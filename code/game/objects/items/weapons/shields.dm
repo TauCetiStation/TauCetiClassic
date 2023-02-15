@@ -67,9 +67,9 @@
 				shake_camera(M, 1, 1)
 
 /obj/item/weapon/shield/AltClick(mob/living/user)
-	toogle_wallshield(user)
+	toggle_wallshield(user)
 
-/obj/item/weapon/shield/proc/toogle_wallshield(mob/living/user)
+/obj/item/weapon/shield/proc/toggle_wallshield(mob/living/user)
 	if(wall_of_shield_on)
 		disable_wallshield(user)
 		user.visible_message("<span class='notice'>[user] stopped holding the protective stance.</span>")
@@ -85,13 +85,21 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	saved_dir = user.dir
 	wall_of_shield_on = TRUE
+	add_filter("wallshield_outline", 2, outline_filter(1, "#C0C0C0"))
+	update_icon()
+	//item_state = "[icon_state]_outline"
+	user.update_inv_item(src)
 	return TRUE
 
 /obj/item/weapon/shield/proc/disable_wallshield(mob/living/user)
 	saved_dir = 0
 	wall_of_shield_on = FALSE
+	remove_filter("wallshield_outline")
+	update_icon()
+	//item_state = icon_state
 	if(user)
 		to_chat(user, "<span class='info'>You interrupted the Wall of Shields technique.</span>")
+		user.update_inv_item(src)
 
 /obj/item/weapon/shield/proc/user_moved(datum/source, mob/user, dir)
 	if(!wall_of_shield_on)
@@ -100,6 +108,11 @@
 		return
 	if(dir != saved_dir)
 		disable_wallshield(user)
+
+/obj/item/weapon/shield/update_icon()
+	..()
+	item_state = "[icon_state][wall_of_shield_on ? "_outline" : ""]"
+	//user.update_inv_item(src)
 
 //nothing happens but it should be because of logic
 /obj/item/weapon/shield/dropped(mob/living/user)
@@ -266,7 +279,7 @@
 		return ..(user)
 	return 0
 
-/obj/item/weapon/shield/riot/tele/toogle_wallshield(mob/living/user)
+/obj/item/weapon/shield/riot/tele/toggle_wallshield(mob/living/user)
 	if(active)
 		return ..()
 
@@ -292,6 +305,7 @@
 			disable_wallshield(user)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 	add_fingerprint(user)
+	update_icon()
 
 /obj/item/weapon/shield/riot/roman
 	name = "roman shield"

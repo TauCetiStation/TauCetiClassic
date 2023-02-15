@@ -205,7 +205,7 @@
 		remaining_uses--
 		return block_chance
 
-/obj/item/weapon/shield/changeling/toogle_wallshield(mob/living/user)
+/obj/item/weapon/shield/changeling/toggle_wallshield(mob/living/user)
 	to_chat(user, "<span class='warning'>You are fucking INVINCIBLE!</span>")
 
 /obj/effect/proc_holder/changeling/suit/organic_space_suit
