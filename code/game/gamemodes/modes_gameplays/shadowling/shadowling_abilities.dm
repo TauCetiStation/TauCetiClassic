@@ -694,6 +694,8 @@
 	if(activated)
 		user.add_overlay(image("icon"='icons/mob/shadowling.dmi', "icon_state"="shadowling_ms_s"))
 		user.thrall_sight = TRUE
+		user.update_sight()
 	else
 		user.cut_overlay(image("icon"='icons/mob/shadowling.dmi', "icon_state"="shadowling_ms_s"))
 		user.thrall_sight = FALSE
+		user.update_sight()
