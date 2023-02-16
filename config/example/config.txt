@@ -192,6 +192,11 @@ REQ_CULT_GHOSTWRITER 6
 ## place address for chat bridge
 # CHAT_BRIDGE http://localhost:3000
 
+## knowledgebase API, returning JSON of player preferences.
+# KNOWLEDGEBASE
+## knowledgebase API secret, if not set to anything, the API will only return errors.
+# KNOWLEDGEBASE_SECRET MY_PERSONAL_VERY_SECRETIVE_VALUE
+
 ## Media base URL - determines where to pull the jukebox playlist from.
 # MEDIA_BASE_URL http://game2.tauceti.ru/media
 

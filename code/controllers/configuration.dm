@@ -178,6 +178,7 @@ var/global/bridge_secret = null
 
 	var/chat_bridge = 0
 	var/knowledgebase = 0
+	var/knowledgebase_secret = null
 	var/check_randomizer = 0
 
 	var/guard_email = null
@@ -583,6 +584,9 @@ var/global/bridge_secret = null
 
 				if("knowledgebase")
 					config.knowledgebase = TRUE
+
+				if("knowledgebase_secret")
+					config.knowledgebase_secret = value
 
 				if("check_randomizer")
 					config.check_randomizer = value

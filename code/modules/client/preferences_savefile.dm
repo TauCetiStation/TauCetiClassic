@@ -690,6 +690,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	return 1
 
+// If adding new stuff to character save, please consider updating character_params in
+// /modules/knowledgebase/api.dm
+// Thanks! ~Luduk.
 /datum/preferences/proc/save_character()
 	if(!path)
 		return 0
@@ -700,6 +703,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	S["version"] << SAVEFILE_VERSION_MAX // load_character will sanitize any bad data, so assume up-to-date.
 
+	S["last_saved"] << world.realtime
 	//Character
 	S["OOC_Notes"]             << metadata
 	S["real_name"]             << real_name
