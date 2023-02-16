@@ -181,9 +181,11 @@ var/global/world_topic_spam_protect_time = world.timeofday
 		if (packet_data)
 			if(packet_data["announce"] == "")
 				return receive_net_announce(packet_data, addr)
-			if(packet_data["bridge"] == "" && addr == "127.0.0.1") // 
+			if(packet_data["bridge"] == "" && addr == "127.0.0.1") //
 				bridge2game(packet_data)
 				return "bridge=1" // no return data in topic, feedback should be send only through bridge
+			if(packet_data["knowledgebase"] == "")
+				return process_knowledgebase_request(packet_data)
 
 	else
 		log_href("WTOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
@@ -599,7 +601,7 @@ var/global/failed_db_connections = 0
 
 	packet_data["secret"] = "SECRET"
 	log_href("WTOPIC: NET ANNOUNCE: \"[list2params(packet_data)]\", from:[sender]")
-	
+
 	return proccess_net_announce(packet_data["type"], packet_data, sender)
 
 /world/proc/proccess_net_announce(type, list/data, sender)
