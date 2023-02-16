@@ -161,7 +161,7 @@ var/global/list/tourette_bad_words= list(
 				return
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		if(!(get_species() in tourette_bad_words))
-			return 
+			return
 		speech_problem_flag = 1
 		if (prob(10))
 			spawn( 0 )
@@ -1104,6 +1104,10 @@ var/global/list/tourette_bad_words= list(
 		animate(client, color = moody_color, time = 5)
 	else
 		animate(client, color = null, time = 5)
+
+	if(thrall_sight)
+		see_in_dark = 8
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 	return TRUE
 

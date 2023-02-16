@@ -675,3 +675,25 @@
 		if(!text)
 			return
 		to_chat(player_list - new_player_list, "<font size=4><span class='shadowling'><b>\"[sanitize(text)]\"</b></font></span>")
+
+
+/obj/effect/proc_holder/spell/targeted/thrall_sight
+	name = "Dark Sight"
+	desc = "Allows you to see through the darkness."
+	panel = "Shadowling Abilities"
+	charge_max = 100
+	clothes_req = 0
+	range = -1
+	include_user = 1
+	action_icon_state = "thrall_sight"
+	var/activated = FALSE
+
+/obj/effect/proc_holder/spell/targeted/thrall_sight/cast(list/targets)
+	var/mob/living/carbon/human/user = usr
+	activated = !activated
+	if(activated)
+		user.add_overlay(image("icon"='icons/mob/shadowling.dmi', "icon_state"="shadowling_ms_s"))
+		user.thrall_sight = TRUE
+	else
+		user.cut_overlay(image("icon"='icons/mob/shadowling.dmi', "icon_state"="shadowling_ms_s"))
+		user.thrall_sight = FALSE
