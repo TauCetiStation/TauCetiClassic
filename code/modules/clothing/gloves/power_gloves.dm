@@ -79,47 +79,53 @@
 			cell.updateicon()
 			to_chat(user, "<span class='notice'>You unscrew the [cell] away from the [src].</span>")
 			user.put_in_any_hand_if_possible(cell)
+			turn_off()
 			cell = null
 			return
 
 /obj/item/clothing/gloves/power/Touch(mob/living/carbon/human/attacker, atom/A, proximity)
-	if(isliving(A))
-		var/mob/living/L = A
-		attacker.do_attack_animation(L)
-		if(cell && cell.charge >= cell_use && cell.use(cell_use))
-			if(selected_mode == GLOVES_MODE_STUN)
-				var/calc_power = 200 //twice as strong stungloves
-				if(ishuman(L))
-					var/mob/living/carbon/human/H = L
-					var/obj/item/organ/external/BP = H.get_bodypart(attacker.get_targetzone())
-					calc_power *= H.get_siemens_coefficient_organ(BP)
-				L.visible_message("<span class='warning bold'>[L] has been touched with the gloves by [attacker]!</span>")
-				L.log_combat(attacker, "stungloved with [name]")
-				L.apply_damage(calc_power, HALLOSS)
-				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
-				s.set_up(3, 1, L)
-				s.start()
-			if(selected_mode == GLOVES_MODE_KILL)
-				var/mob/living/carbon/human/H = A
-				var/attack_obj = attacker.get_unarmed_attack()
-				var/damage = attack_obj["damage"] * 2.5
-				if(!damage)
-					playsound(src, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
-					visible_message("<span class='warning'><B>[attacker] has attempted to punch [H]!</B></span>")
-					return TRUE
-				if(attacker.engage_combat(H, attacker.a_intent, damage)) // We did a combo-wombo of some sort.
-					return TRUE
-				playsound(H, pick(SOUNDIN_PUNCH_HEAVY), VOL_EFFECTS_MASTER)
-				H.visible_message("<span class='warning'><B>[attacker] has punched [H]!</B></span>")
-				var/obj/item/organ/external/BP = H.get_bodypart(ran_zone(attacker.get_targetzone()))
-				var/armor_block = H.run_armor_check(BP, MELEE)
-				H.apply_damages(damage, 15, 0, 0, 0, 10, BP, armor_block)
-				if(prob(50))
-					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
-					s.set_up(3, 1, L)
-					s.start()
-				return TRUE
-		else
-			turn_off()
+	if(!isliving(A))
+		return
+	var/mob/living/L = A
+	attacker.do_attack_animation(L)
+	if(!cell)
+		turn_off()
+		return TRUE
+	if(cell.charge < cell_use)
+		turn_off()
+		return TRUE
+	if(selected_mode == GLOVES_MODE_STUN)
+		var/calc_power = 200 //twice as strong stungloves
+		cell.use(cell_use)
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			var/obj/item/organ/external/BP = H.get_bodypart(attacker.get_targetzone())
+			calc_power *= H.get_siemens_coefficient_organ(BP)
+		L.visible_message("<span class='warning bold'>[L] has been touched with the gloves by [attacker]!</span>")
+		L.log_combat(attacker, "stungloved with [name]")
+		L.apply_damage(calc_power, HALLOSS)
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
+		s.set_up(3, 1, L)
+		s.start()
+	if(selected_mode == GLOVES_MODE_KILL)
+		cell.use(cell_use)
+		var/mob/living/carbon/human/H = A
+		var/attack_obj = attacker.get_unarmed_attack()
+		var/damage = attack_obj["damage"] * 2.5
+		if(!damage)
+			playsound(src, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
+			visible_message("<span class='warning'><B>[attacker] has attempted to punch [H]!</B></span>")
 			return TRUE
-	return FALSE
+		if(attacker.engage_combat(H, attacker.a_intent, damage)) // We did a combo-wombo of some sort.
+			return TRUE
+		playsound(H, pick(SOUNDIN_PUNCH_HEAVY), VOL_EFFECTS_MASTER)
+		H.visible_message("<span class='warning'><B>[attacker] has punched [H]!</B></span>")
+		var/obj/item/organ/external/BP = H.get_bodypart(ran_zone(attacker.get_targetzone()))
+		var/armor_block = H.run_armor_check(BP, MELEE)
+		H.apply_damages(damage, 15, 0, 0, 0, 10, BP, armor_block)
+		if(prob(50))
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
+			s.set_up(3, 1, L)
+			s.start()
+		return TRUE
+	return TRUE
