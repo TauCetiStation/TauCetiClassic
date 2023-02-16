@@ -552,7 +552,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/brig/solitary_confinement)
 "abd" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
@@ -649,17 +649,21 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/brig/solitary_confinement)
 "abn" = (
 /obj/structure/stool/bed,
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/brig/solitary_confinement)
 "abo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/machinery/light_switch{
+	pixel_x = 28;
+	pixel_y = 4
+	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/brig/solitary_confinement)
 "abp" = (
 /obj/machinery/life_assist/cardiopulmonary_bypass,
 /turf/simulated/floor{
@@ -1881,7 +1885,7 @@
 	nitrogen = 0.01;
 	oxygen = 0.01
 	},
-/area/station/security/brig)
+/area/station/security/brig/solitary_confinement)
 "adp" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/two,
@@ -2191,7 +2195,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/brig/solitary_confinement)
 "adQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
@@ -2645,7 +2649,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/brig/solitary_confinement)
 "aeC" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -2678,7 +2682,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/brig/solitary_confinement)
 "aeF" = (
 /obj/machinery/light{
 	dir = 4
@@ -2778,7 +2782,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/brig/solitary_confinement)
 "aeQ" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/machinery/atmospherics/components/unary/portables_connector{
@@ -3063,7 +3067,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/brig/solitary_confinement)
 "afr" = (
 /obj/machinery/light{
 	dir = 1
@@ -73979,6 +73983,9 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/arrival)
+"iuu" = (
+/turf/simulated/wall/r_wall,
+/area/station/security/brig/solitary_confinement)
 "ivb" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/camera{
@@ -112096,10 +112103,10 @@ aaa
 aaa
 aah
 aah
-adJ
-adJ
-adJ
-adJ
+iuu
+iuu
+iuu
+iuu
 acX
 acY
 abr
@@ -112353,7 +112360,7 @@ aaa
 aah
 aah
 aaa
-adJ
+iuu
 aeB
 afq
 abc
@@ -112867,7 +112874,7 @@ aah
 aaa
 aaa
 aaa
-adJ
+iuu
 abm
 aeP
 abo
@@ -113124,7 +113131,7 @@ bEP
 bEP
 bEP
 bEP
-adJ
+bEP
 adJ
 adr
 adJ
