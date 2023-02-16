@@ -184,7 +184,7 @@ var/global/world_topic_spam_protect_time = world.timeofday
 			if(packet_data["bridge"] == "" && addr == "127.0.0.1")
 				bridge2game(packet_data)
 				return "bridge=1" // no return data in topic, feedback should be send only through bridge
-			if(packet_data["knowledgebase"] == "")// && addr == "127.0.0.1")
+			if(packet_data["knowledgebase"] == "" && addr == "127.0.0.1")
 				return process_knowledgebase_request(packet_data)
 
 	else
