@@ -23,7 +23,7 @@ var/global/knowledgebase_secret = "test"
 //          for example if a player opted out of statistics, only authorized administrators can access that player's preference file.
 // * ckey - is a string representing the ckey of a player who's preference data is requested.
 // * name - is a string representing the name of a character of the player who's preference data is requested.
-// * index - is an integer used only if the player has multiple characters with the same name to specify which of the characters to output.
+// * index - is an integer used if the player has multiple characters with the same name to specify which of the characters to output.
 /world/proc/process_knowledgebase_request(list/packed_data)
 	if(!config.knowledgebase)
 		return "error=410"
@@ -38,18 +38,23 @@ var/global/knowledgebase_secret = "test"
 	packed_data["secret"] = "SECRET"
 	log_href("WTOPIC: KNOWLEDGEBASE: \"[list2params(packed_data)]\"")
 
-	packed_data["userid"] = ckey(packed_data["userid"])
-	packed_data["ckey"] = ckey(packed_data["ckey"])
-	packed_data["name"] = ckey(packed_data["name"])
-	packed_data["index"] = sanitize_integer(text2num(packed_data["index"]), min=1, max=MAX_SAVE_SLOTS_SUPPORTER)
+	// var/userid = ckey(packed_data["userid"])
+	var/ckey = ckey(packed_data["ckey"])
+	if(!ckey)
+		return "error=400&message=Missing or invalid ckey."
 
-	if(!packed_data["userid"] || !packed_data["ckey"] || !packed_data["name"])
-		return
+	var/name = ckey(packed_data["name"])
+	if(!name)
+		return "error=400&message=Missing or invalid name."
 
-	var/ckey = packed_data["ckey"]
+	var/index = sanitize_integer(text2num(packed_data["index"]), min=1, max=MAX_SAVE_SLOTS_SUPPORTER)
+	if(!index)
+		return "error=400&message=Missing or invalid index."
 
+	return knowledgebase_get_preferences(ckey, name, index)
+
+/world/proc/knowledgebase_get_preferences(ckey, name, index)
 	var/path = "data/player_saves/[ckey[1]]/[ckey]/preferences.sav"
-
 	if(!fexists(path))
 		return "error=404&message=No preferences.sav for [ckey]."
 
@@ -57,21 +62,20 @@ var/global/knowledgebase_secret = "test"
 	if(!S)
 		return "error=500&message=Savefile could not be loaded."
 
-	var/list/slots = character_name2slots(S, packed_data["name"])
+	var/list/slots = character_name2slots(S, name)
 	if(length(slots) == 0)
-		return "error=404&message=No characters with name [packed_data["name"]] for [ckey]."
+		return "error=404&message=No characters with name [name] for [ckey]."
 
-	if(length(slots) < packed_data["index"])
-		return "error=404&message=No character index [packed_data["index"]] for [ckey]."
+	if(length(slots) < index)
+		return "error=404&message=No character index [name] for [ckey]."
 
-	var/slot = slots[packed_data["index"]]
-
+	var/slot = slots[index]
 	S.cd = "/character[slot]"
 
 	var/character_age
 	S["age"] >> character_age
 
 	return json_encode(list(
-		"name" = packed_data["name"],
+		"name" = name,
 		"age" = character_age,
 	))
