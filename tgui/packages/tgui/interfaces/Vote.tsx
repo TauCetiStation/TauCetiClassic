@@ -150,7 +150,7 @@ const Choices = (_, context) => {
     <Stack.Item grow>
       <Section
         fill
-        scrollable
+        scrollable={!!currentPoll && currentPoll.choices.length !== 0}
         title={
           currentPoll ? `Голосование: ${currentPoll.poll.name}` : 'Голосование'
         }
@@ -183,8 +183,10 @@ const Choices = (_, context) => {
               <br />
               {currentPoll.choices.map(choice => (
                 <Stack key={choice.ref} justify="space-between">
-                  <Box minHeight="22px">
+                  <Box height="22px">
                     <Button
+                      maxWidth="260px"
+                      ellipsis
                       disabled={!currentPoll.canRevote && anyChoiceMade}
                       selected={choice.selected}
                       onClick={() =>
@@ -194,7 +196,7 @@ const Choices = (_, context) => {
                       {choice.name.replace(/^\w/, (c) => c.toUpperCase())}
                     </Button>
                     {!!choice.selected && (
-                      <Icon name="vote-yea" color="green" ml={1} />
+                      <Icon name="vote-yea" color="green" ml={1} verticalAlign="super" />
                     )}
                   </Box>
                   <Box mr={15}>{choice.votes}</Box>
@@ -203,7 +205,7 @@ const Choices = (_, context) => {
             </Stack>
           </>
         ) : (
-          <NoticeBox info>
+          <NoticeBox info mb="0">
             {!currentPoll
               ? 'Нет активного голосования!'
               : 'Нет доступных вариантов!'}
@@ -279,7 +281,7 @@ const Timer = (_, context) => {
       <Section>
         <Stack justify="space-between">
           <Box fontSize={1.5}>
-            Осталось времени: {currentPoll?.timeRemaining || 0}s
+            Осталось времени: {currentPoll?.timeRemaining || 0}с
           </Box>
           {isAdmin && currentPoll && (
             <Button
