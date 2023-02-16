@@ -543,6 +543,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Brig"
 	icon_state = "brig"
 
+/area/station/security/brig/solitary_confinement
+	name = "Solitary Confinement"
+
 /area/station/security/interrogation
 	name = "Interrogation"
 	icon_state = "interrogation"
