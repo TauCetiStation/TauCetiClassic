@@ -34,26 +34,26 @@
 	toggle_gloves_mode(usr)
 
 /obj/item/clothing/gloves/power/proc/toggle_gloves_mode(mob/user)
-	if(cell?.charge)
-		switch(selected_mode)
-			if(GLOVES_MODE_OFF)
-				selected_mode = GLOVES_MODE_KILL
-				cell_use = 500
-				siemens_coefficient = 0.4
-				icon_state = "powerg_kill"
-			if(GLOVES_MODE_KILL)
-				selected_mode = GLOVES_MODE_STUN
-				cell_use = 5000
-				siemens_coefficient = 0.8
-				icon_state = "powerg_stun"
-			else
-				selected_mode = GLOVES_MODE_OFF
-				icon_state = "marinad"
-				cell_use = 0
-				siemens_coefficient = 0
-		to_chat(user, "<span class='notice'>You change the power gloves mode to</span> <span class='danger'>[selected_mode]</span>.")
-	else
+	if(!cell?.charge)
 		to_chat(user,"<span class='warning'>Not enough energy!</span>")
+		return
+	switch(selected_mode)
+		if(GLOVES_MODE_OFF)
+			selected_mode = GLOVES_MODE_KILL
+			cell_use = 500
+			siemens_coefficient = 0.4
+			icon_state = "powerg_kill"
+		if(GLOVES_MODE_KILL)
+			selected_mode = GLOVES_MODE_STUN
+			cell_use = 5000
+			siemens_coefficient = 0.8
+			icon_state = "powerg_stun"
+		else
+			selected_mode = GLOVES_MODE_OFF
+			icon_state = "marinad"
+			cell_use = 0
+			siemens_coefficient = 0
+	to_chat(user, "<span class='notice'>You change the power gloves mode to</span> <span class='danger'>[selected_mode]</span>.")
 
 /obj/item/clothing/gloves/power/proc/turn_off(mob/user)
 	selected_mode = GLOVES_MODE_OFF
@@ -90,10 +90,10 @@
 	attacker.do_attack_animation(L)
 	if(!cell)
 		turn_off()
-		return TRUE
+		return
 	if(cell.charge < cell_use)
 		turn_off()
-		return TRUE
+		return
 	if(selected_mode == GLOVES_MODE_STUN)
 		var/calc_power = 200 //twice as strong stungloves
 		cell.use(cell_use)
@@ -115,7 +115,7 @@
 		if(!damage)
 			playsound(src, 'sound/effects/mob/hits/miss_1.ogg', VOL_EFFECTS_MASTER)
 			visible_message("<span class='warning'><B>[attacker] has attempted to punch [H]!</B></span>")
-			return TRUE
+			return
 		if(attacker.engage_combat(H, attacker.a_intent, damage)) // We did a combo-wombo of some sort.
 			return TRUE
 		playsound(H, pick(SOUNDIN_PUNCH_HEAVY), VOL_EFFECTS_MASTER)
@@ -127,5 +127,4 @@
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 			s.set_up(3, 1, L)
 			s.start()
-		return TRUE
 	return TRUE
