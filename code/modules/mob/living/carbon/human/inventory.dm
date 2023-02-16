@@ -24,6 +24,11 @@
 					delay_clothing_equip_to_slot_if_possible(J, SLOT_WEAR_SUIT)
 					return 0
 
+		if(istype(I, /obj/item/weapon/card/id))
+			if(istype(H.wear_id, /obj/item/device/pda))
+				wear_id.attackby(I, H)
+				return
+
 		if(H.equip_to_appropriate_slot(I, TRUE))
 			if(hand)
 				update_inv_l_hand()
