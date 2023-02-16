@@ -46,6 +46,11 @@
 	treatment_fire = "kelotane"
 	treatment_tox = "anti_toxin"
 
+/obj/machinery/bot/medbot/mysterious/atom_init()
+	. = ..()
+	//contraband is points rich
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 1000, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+
 /obj/item/weapon/firstaid_arm_assembly
 	name = "first aid/robot arm assembly"
 	desc = "A first aid kit with a robot arm permanently grafted to it."
@@ -70,6 +75,7 @@
 		botcard.access = botcard_access
 	icon_state = "medibot[on]"
 	add_overlay(image('icons/obj/aibots.dmi', "kit_skin_[skin]"))
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 400, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/bot/medbot/turn_on()

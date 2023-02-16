@@ -64,6 +64,7 @@
 /obj/machinery/bot/floorbot/atom_init()
 	. = ..()
 	updateicon()
+	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 250, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/machinery/bot/floorbot/turn_on()
 	. = ..()
