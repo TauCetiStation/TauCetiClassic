@@ -13,6 +13,8 @@
 	var/title
 	// string, anything
 	var/author
+	// string, hashed "salted" ckey
+	var/ckey
 	// string, [hh:mm]
 	var/time
 	// string, anything
@@ -83,6 +85,8 @@
 	var/crew_survived  = 0      // how many people was registred as crew
 	// array of string, anything
 	var/captain        = list() // who was captain of the shift (or captains?...)
+	// array of string, hashed "salted" ckeys
+	var/captain_ckey  = list()
 
 	// these ones are mainly for the stat panel
 	// int, [0...]
@@ -131,6 +135,8 @@
 	var/real_name
 	// string, anything
 	var/name
+	// string, hashed "salted" ckey
+	var/ckey
 	// string, byond_type
 	var/mob_type
 	// boolean, [0, 1]
@@ -168,6 +174,8 @@
 /datum/stat/manifest_entry
 	// string, anything
 	var/name
+	// string, hashed "salted" ckey
+	var/ckey
 	// string, anything
 	var/assigned_role
 	// string, anything, name of antagonists' role
@@ -186,6 +194,8 @@
 /datum/stat/leave_stat
 	// string, anything
 	var/name
+	// string, hashed "salted" ckey
+	var/ckey
 	// string, anything
 	var/assigned_role
 	// string, anything, name of antagonists' role

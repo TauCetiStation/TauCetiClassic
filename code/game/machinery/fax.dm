@@ -200,7 +200,12 @@ var/global/list/alldepartments = list("Central Command")
 
 	send_fax(sender, P, "Central Command")
 
-	SSStatistics.add_communication_log(type = "fax-station", author = sender.name, content = P.info + "\n" + P.stamp_text)
+	SSStatistics.add_communication_log(
+		type = "fax-station",
+		author = sender.real_name,
+		ckey = sender.ckey,
+		content = P.info + "\n" + P.stamp_text
+	)
 
 	for(var/client/X in global.admins)
 		X.mob.playsound_local(null, 'sound/machines/fax_centcomm.ogg', VOL_NOTIFICATIONS, vary = FALSE, frequency = null, ignore_environment = TRUE)

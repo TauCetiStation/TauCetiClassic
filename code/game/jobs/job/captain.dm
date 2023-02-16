@@ -24,6 +24,7 @@
 	if(!visualsOnly)
 		to_chat(world, "<b>[H.real_name] is the captain!</b>")//maybe should be announcment, not OOC notification?
 		SSStatistics.score.captain += H.real_name
+		SSStatistics.score.captain_ckey += SSStatistics.obfuscate_ckey(H.ckey)
 
 /datum/job/captain/get_access()
 	return get_all_accesses()

@@ -1,8 +1,17 @@
-/datum/stat_collector/proc/add_communication_log(type, title, author, content, time = roundduration2text())
+/datum/stat_collector/proc/obfuscate_ckey(ckey)
+	if(!ckey)
+		return null
+	if(ckey == "")
+		return null
+	return sha1("[ckey]-[global.round_id]")
+
+/datum/stat_collector/proc/add_communication_log(type, title, author, content, ckey = null, time = roundduration2text())
 	var/datum/stat/communication_log/stat = new
 	stat.__type = type
 	stat.title = title
 	stat.author = author
+	if(ckey)
+		stat.ckey = obfuscate_ckey(ckey)
 	stat.time = time
 	stat.content = content
 	communication_logs += stat
@@ -36,6 +45,7 @@
 
 	stat.name = H.name
 	stat.real_name = H.real_name
+	stat.ckey = obfuscate_ckey(H.ckey)
 	stat.last_attacker_name = H.lastattacker_name
 
 	stat.damage["BRUTE"] = H.getBruteLoss()
@@ -65,11 +75,12 @@
 	stat.flash_range = flash_range
 	explosions += stat
 
-/datum/stat_collector/proc/add_manifest_entry(key, name, assigned_role, special_role, list/antag_roles, mob/controlled_mob)
+/datum/stat_collector/proc/add_manifest_entry(ckey, name, assigned_role, special_role, list/antag_roles, mob/controlled_mob)
 	var/datum/stat/manifest_entry/stat = new
 	stat.name = STRIP_NEWLINE(name)
 	stat.assigned_role = STRIP_NEWLINE(assigned_role)
 	stat.special_role = STRIP_NEWLINE(special_role)
+	stat.ckey = obfuscate_ckey(ckey)
 	if(controlled_mob)
 		stat.species = controlled_mob.get_species()
 		stat.gender = controlled_mob.gender
@@ -88,6 +99,7 @@
 /datum/stat_collector/proc/get_leave_stat(datum/mind/M, leave_type, leave_time = roundduration2text())
 	var/datum/stat/leave_stat/stat = new
 	stat.name = STRIP_NEWLINE(M.name)
+	stat.ckey = obfuscate_ckey(ckey(M.key))
 	stat.assigned_role = STRIP_NEWLINE(M.assigned_role)
 	stat.special_role = STRIP_NEWLINE(M.special_role)
 
@@ -120,6 +132,7 @@
 	if(istype(O, /datum/objective/target))
 		var/datum/objective/target/T = O
 		stat.target_name = STRIP_NEWLINE(T.target.name)
+		stat.target_ckey = obfuscate_ckey(ckey(T.target.key))
 		stat.target_assigned_role = T.target.assigned_role
 		stat.target_special_role = T.target.special_role
 

@@ -10,6 +10,8 @@
 
 	// string, anything
 	var/target_name
+	// string, hashed "salted" ckey
+	var/target_ckey
 	// string, anything
 	var/target_assigned_role
 	// string, anything

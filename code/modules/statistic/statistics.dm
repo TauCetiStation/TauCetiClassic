@@ -139,4 +139,4 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 		if(M.assigned_role == "Cyborg" && is_drone.Find(M.name)) // useless data
 			continue
 		var/my_mob = M.original ? M.original : M.current
-		add_manifest_entry(M.key, M.name, M.assigned_role, M.special_role, M.antag_roles, my_mob)
+		add_manifest_entry(ckey(M.key), M.name, M.assigned_role, M.special_role, M.antag_roles, my_mob)
