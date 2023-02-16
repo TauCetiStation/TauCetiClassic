@@ -52,11 +52,6 @@
 				if(H?.glasses)
 					if(isdiagnostichud(H.glasses))
 						succes_checks += check
-			if(SCIENCE_EXTRA_CHECK)
-				var/mob/living/carbon/human/H = user
-				if(H?.glasses)
-					if(isscienceglasses(H.glasses))
-						succes_checks += check
 			if(VIEW_EXTRA_CHECK)
 				if(user in viewers(parent))
 					succes_checks += check
