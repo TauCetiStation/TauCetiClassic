@@ -19,6 +19,7 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 // please increment this version whenever making changes
 #define STAT_OUTPUT_VERSION 6
 #define STAT_FILE_NAME "stat.json"
+#define DB_FILE_NAME "db.json"
 
 // Documentation rules:
 //  * First write the type of data
@@ -90,7 +91,16 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	do_post_round_checks()
 
 	var/start_time = world.realtime
-	statfile << datum2json(src)
+	statfile << datum2json(src, should_copy=JSON_ONLY_STAT_CALLBACK)
+
+	// write to db
+	var/dbfile = file("[global.log_directory]/[DB_FILE_NAME]")
+	if(length(dbfile))
+		fdel(dbfile)
+		dbfile = file("[global.log_directory]/[DB_FILE_NAME]")
+	// This script should dump the JSON into the database and delete the file.
+	// execute("python3 json2db.py [global.log_directory]/[DB_FILE_NAME]")
+
 	to_chat(stealth ? usr : world, "<span class='info'>Статистика была записана в файл за [(start_time - world.realtime)/10] секунд. </span>")
 
 	to_chat(stealth ? usr : world, "<span class='info'>Статистика по этому раунду вскоре будет доступа по ссылке [generate_url()]</span>")

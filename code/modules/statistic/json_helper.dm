@@ -8,11 +8,15 @@ var/global/list/ROOT_DATUM_VARS
 //			thing3 referencing thing1
 // you'll end up in an infinite loop
 // don't use it for that that's bad
-/proc/datum2list(datum/D, list/do_not_copy, parent_datum)
+/proc/datum2list(datum/D, list/do_not_copy, datum/callback/should_copy, parent_datum)
 	var/list/L = list()
 	for(var/I in D.vars)
 		if(I in ROOT_DATUM_VARS + do_not_copy)
 			continue
+
+		if(should_copy && !should_copy.Invoke(I))
+			continue
+
 		// avoid byond type
 		if(I == "__type")
 			L.Add("type")
@@ -30,14 +34,14 @@ var/global/list/ROOT_DATUM_VARS
 					if(X == parent_datum)
 						item[iter] = "parentRecursionPrevention"
 					else
-						item[iter] = datum2list(X, do_not_copy, parent_datum)
+						item[iter] = datum2list(X, do_not_copy, should_copy, parent_datum)
 			// avoid byond type
 			if(I == "__type")
 				L["type"] = item
 			else
 				L[I] = item
 		else if(istype(D.vars[I], /datum))
-			L[I] = datum2list(D.vars[I], do_not_copy, parent_datum)
+			L[I] = datum2list(D.vars[I], do_not_copy, should_copy, parent_datum)
 		else
 			// avoid byond type
 			if(I == "__type")
@@ -49,13 +53,13 @@ var/global/list/ROOT_DATUM_VARS
 
 // converts a datum to a JSON object
 // please, do not serialize anything other that the datums
-/proc/datum2json(datum/D, list/do_not_copy)
+/proc/datum2json(datum/D, list/do_not_copy, datum/callback/should_copy)
 	ASSERT(istype(D))
 
-	var/list/L = datum2list(D)
+	var/list/L = datum2list(D, do_not_copy, should_copy)
 	for(var/I in L)
 		if(istype(L[I], /datum))
-			L[I] = datum2list(L[I], do_not_copy, D)
+			L[I] = datum2list(L[I], do_not_copy, should_copy, D)
 		else
 			L[I] = L[I]
 	return json_encode(L)

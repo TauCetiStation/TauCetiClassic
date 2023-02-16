@@ -78,6 +78,8 @@
 			var/mob/living/carbon/human/H = controlled_mob
 			stat.age = H.age
 
+	GET_DB_STAT(stat, desc) = controlled_mob.desc
+
 	if(antag_roles?.len)
 		stat.antag_roles = list()
 		for(var/role in antag_roles)

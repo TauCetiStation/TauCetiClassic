@@ -183,6 +183,8 @@
 	// array of strings, where strings are antagonists' roles
 	var/list/antag_roles = null
 
+	DECLARE_DB_STAT(desc)
+
 /datum/stat/leave_stat
 	// string, anything
 	var/name
