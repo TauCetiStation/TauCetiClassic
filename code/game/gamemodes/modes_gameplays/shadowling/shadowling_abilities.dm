@@ -197,7 +197,7 @@
 		var/mob/living/carbon/human/H = target
 		var/obj/item/shadow_tumor/T = new(H)
 		var/obj/item/organ/external/head/BP = H.bodyparts_by_name[BP_HEAD]
-			BP.hidden = T
+		BP.hidden = T
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 	name = "Hivemind Commune"
