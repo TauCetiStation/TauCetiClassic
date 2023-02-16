@@ -23,6 +23,8 @@ var/global/list/spented_examined_objects = list()
 /datum/component/examine_research/proc/begin_scan(datum/source, mob/user)
 	if(user.is_busy())
 		return
+	if(!ishuman(user))
+		return
 	if(!success_check(user))
 		return
 	to_chat(user, "<span class='notice'>You concentrate on scanning [parent].</span>")
