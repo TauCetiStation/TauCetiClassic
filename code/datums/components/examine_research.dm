@@ -44,14 +44,13 @@ var/global/list/spented_examined_objects = list()
 			return 0
 	return points_value
 
-/datum/component/examine_research/proc/success_check(mob/user)
+/datum/component/examine_research/proc/success_check(mob/living/carbon/human/user)
 	var/list/succes_checks = list()
 	for(var/check in extra_check)
 		switch(check)
 			if(DIAGNOSTIC_EXTRA_CHECK)
-				var/mob/living/carbon/human/H = user
-				if(H?.glasses)
-					if(isdiagnostichud(H.glasses))
+				if(user.glasses)
+					if(isdiagnostichud(user.glasses))
 						succes_checks += check
 			if(VIEW_EXTRA_CHECK)
 				if(user in viewers(parent))
