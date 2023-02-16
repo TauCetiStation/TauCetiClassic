@@ -13,7 +13,7 @@
 
 /obj/mecha/medical/odysseus/atom_init()
 	. = ..()
-	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 800, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+	AddComponent(/datum/component/examine_research, DEFAULT_ROBOTICS_CONSOLE_ID, 800, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/medical/odysseus/moved_inside(mob/living/carbon/human/H)
 	. = ..()

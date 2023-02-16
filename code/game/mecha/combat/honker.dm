@@ -18,7 +18,7 @@
 
 /obj/mecha/combat/honker/atom_init()
 	. = ..()
-	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 500, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+	AddComponent(/datum/component/examine_research, DEFAULT_ROBOTICS_CONSOLE_ID, 500, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 	/*
 	weapons += new /datum/mecha_weapon/honker(src)
 	weapons += new /datum/mecha_weapon/missile_rack/banana_mortar(src)

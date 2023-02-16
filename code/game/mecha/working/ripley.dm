@@ -13,7 +13,7 @@
 
 /obj/mecha/working/ripley/atom_init()
 	. = ..()
-	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 1200, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+	AddComponent(/datum/component/examine_research, DEFAULT_ROBOTICS_CONSOLE_ID, 1200, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/working/ripley/go_out()
 	..()
@@ -49,7 +49,7 @@
 
 /obj/mecha/working/ripley/firefighter/atom_init()
 	. = ..()
-	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 1400, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+	AddComponent(/datum/component/examine_research, DEFAULT_ROBOTICS_CONSOLE_ID, 1400, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/working/ripley/deathripley
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE!!!"
@@ -118,7 +118,7 @@
 
 /obj/mecha/working/ripley/recycle_ripley/atom_init()
 	. = ..()
-	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 100, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+	AddComponent(/datum/component/examine_research, DEFAULT_ROBOTICS_CONSOLE_ID, 100, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/mecha/working/ripley/Exit(atom/movable/O)
 	if(O in cargo)

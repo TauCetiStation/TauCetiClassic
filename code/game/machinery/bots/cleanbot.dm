@@ -57,7 +57,7 @@
 	if(radio_controller)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 
-	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 250, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+	AddComponent(/datum/component/examine_research, DEFAULT_ROBOTICS_CONSOLE_ID, 250, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
 
 /obj/machinery/bot/cleanbot/Destroy()
 	if(radio_controller)
