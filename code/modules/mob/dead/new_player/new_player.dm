@@ -224,7 +224,7 @@
 	var/mob/living/carbon/human/blueshield = null
 	if(rank in protected_by_blueshield_list)
 		for(var/mob/living/carbon/human/player in player_list)
-			if(player && player.mind && player.mind.assigned_role && player.mind.assigned_role == "Blueshield Officer")
+			if(player && player.mind && player.isimplantedblueshield())
 				blueshield = player
 		if(blueshield)
 			SEND_SIGNAL(blueshield, COMSIG_CLEAR_MOOD_EVENT, "blueshield")

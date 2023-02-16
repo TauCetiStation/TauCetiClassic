@@ -122,5 +122,4 @@
 	l_pocket = /obj/item/weapon/pinpointer/heads
 
 	implants = list(
-		/obj/item/weapon/implant/mind_protect/loyalty
-		)
+		/obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/blueshield)

@@ -573,7 +573,7 @@
 				if(V.stealth_active)
 					to_chat(H, "<span class='notice'>You can't focus your eyes on [src].</span>")
 					return
-		if(H.mind.assigned_role == "Blueshield Officer" && mind && (mind.assigned_role in protected_by_blueshield_list))
+		if(H.isimplantedblueshield() && mind && (mind.assigned_role in protected_by_blueshield_list))
 			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
 			addtimer(CALLBACK(null, .proc/add_mood_event, H, "blueshield", /datum/mood_event/blueshield), 10 MINUTES)
 

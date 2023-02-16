@@ -583,3 +583,23 @@ var/global/list/death_alarm_stealth_areas = list(
 <b>Special Features:</b> Less-than-lethal controlled shocks.<BR>
 <b>Integrity:</b> Implant will last even after host's death, allowing re-implanting using special tools. Said tools are never delivered to station, however."}
 	return dat
+
+/obj/item/weapon/implant/blueshield
+	name = "blueshield implant"
+	desc = "Subtle brainwashing."
+
+/obj/item/weapon/implant/blueshield/get_data()
+	var/dat = {"
+<b>Implant Specifications:</b><BR>
+<b>Name:</b> NanoTrasen \"Blueshield\" Experimental Initiative<BR>
+<b>Life:</b> Activates upon injection.<BR>
+<b>Important Notes:</b> Subtly directs user to protect heads of staff.<BR>
+<HR>
+<b>Implant Details:</b><BR>
+<b>Function:</b> Contains special hormones which affect host's brain.<BR>
+<b>Integrity:</b> Implant will last even after host's death, allowing re-implanting using special tools. Said tools are never delivered to station, however."}
+	return dat
+
+/obj/item/weapon/implant/blueshield/implanted(mob/source)
+	var/mob/living/carbon/human/H = source
+	addtimer(CALLBACK(null, .proc/add_mood_event, H, "blueshield", /datum/mood_event/blueshield), 10 MINUTES)
