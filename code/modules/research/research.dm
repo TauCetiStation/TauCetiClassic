@@ -54,7 +54,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 
 	var/research_points = 0
 
-/datum/research/New()
+/datum/research/New(list/blacklisted_tech)
 	for(var/D in subtypesof(/datum/design))
 		var/datum/design/d = new D(src)
 		design_by_id[d.id] = d
@@ -64,9 +64,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 		else
 			design_reliabilities[d.id] = 10
 			design_created_prototypes[d.id] = 0
-
-	generate_trees()
-
+	generate_trees(blacklisted_tech)
 	for(var/T in subtypesof(/datum/technology))
 		var/datum/technology/Tech = new T
 		if(all_technologies[Tech.tech_type])
@@ -84,12 +82,6 @@ The tech datums are the actual "tech trees" that you improve through researching
 	experiments = new /datum/experiment_data()
 	// This is a science station. Most tech is already at least somewhat known.
 	experiments.init_known_tech()
-
-/datum/research/proc/generate_trees()
-	for(var/T in subtypesof(/datum/tech))
-		var/datum/tech/Tech_Tree = new T
-		tech_trees[Tech_Tree.id] = Tech_Tree
-		all_technologies[Tech_Tree.id] = list()
 
 /datum/research/proc/IsResearched(datum/technology/T)
 	return !!researched_tech[T.id]
@@ -155,7 +147,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 	researched_tech[T.id] = T
 	if(!force)
 		research_points -= T.cost
-	tech_trees[T.tech_type].level += 1
+	if(tech_trees[T.tech_type])
+		tech_trees[T.tech_type].level += 1
 
 	for(var/t in T.unlocks_designs)
 		var/datum/design/D = design_by_id[t]
@@ -280,6 +273,19 @@ The tech datums are the actual "tech trees" that you improve through researching
 			if(item_tech == T.item_tech_req)
 				T.shown = TRUE
 				return
+
+/datum/research/proc/generate_trees(list/blacklisted_tech)
+	for(var/T in subtypesof(/datum/tech))
+		var/datum/tech/Tech_Tree = new T
+		if(Tech_Tree.id in blacklisted_tech)
+			continue
+		tech_trees[Tech_Tree.id] = Tech_Tree
+		all_technologies[Tech_Tree.id] = list()
+
+/datum/research/robotics/generate_trees()
+	var/datum/tech/Tech_Tree = new /datum/tech/robotics
+	tech_trees[Tech_Tree.id] = Tech_Tree
+	all_technologies[Tech_Tree.id] = list()
 
 /***************************************************************
 **						Technology Datums					  **
