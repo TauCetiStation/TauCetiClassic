@@ -4,9 +4,6 @@
 	var/list/extra_check
 
 /datum/component/examine_research/Initialize(linked_techweb_id, research_value, _extra_check)
-	//Current use for mechs and items
-	if(!isobj(parent))
-		return COMPONENT_INCOMPATIBLE
 	for(var/obj/machinery/computer/rdconsole/RD in RDcomputer_list)
 		if(RD.id == linked_techweb_id)
 			linked_techweb = RD.files
