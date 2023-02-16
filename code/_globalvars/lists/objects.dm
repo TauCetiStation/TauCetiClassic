@@ -72,5 +72,3 @@ var/global/list/holy_reagents_by_aspects = list()
 var/global/list/faith_reactions = list()
 var/global/list/faith_reactions_by_aspects = list()
 var/global/list/bells = list()
-
-var/global/list/spented_examined_objects = list()

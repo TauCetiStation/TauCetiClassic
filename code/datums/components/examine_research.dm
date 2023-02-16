@@ -1,3 +1,5 @@
+var/global/list/spented_examined_objects = list()
+
 /datum/component/examine_research
 	var/datum/research/linked_techweb
 	var/points_value = 0
