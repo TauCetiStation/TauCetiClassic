@@ -88,10 +88,7 @@
 		return
 	var/mob/living/L = A
 	attacker.do_attack_animation(L)
-	if(!cell)
-		turn_off()
-		return
-	if(cell.charge < cell_use)
+	if(!cell || cell.charge < cell_use)
 		turn_off()
 		return
 	if(selected_mode == GLOVES_MODE_STUN)
