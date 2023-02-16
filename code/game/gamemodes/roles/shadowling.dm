@@ -58,6 +58,6 @@
 		antag.current.RemoveSpell(spell)
 	var/obj/effect/proc_holder/spell/targeted/thrall_sight/spell2 = locate() in antag.current.spell_list
 	if(spell2)
-		antag.current.RemoveSpell(spell)
+		antag.current.RemoveSpell(spell2)
 	SEND_SIGNAL(antag.current, COMSIG_CLEAR_MOOD_EVENT, "thralled")
 	..()
