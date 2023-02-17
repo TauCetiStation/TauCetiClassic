@@ -243,9 +243,9 @@
 
 /obj/item/device/tagger/shop
 	name = "shop tagger"
+	desc = "Используется для наклейки ценников и бирок."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler0"
-	desc = "Используется для наклейки ценников и бирок."
 	modes = list(1 = "Ценник", 2 = "Бирка")
 
 /obj/item/device/tagger/proc/openwindow(mob/user)
