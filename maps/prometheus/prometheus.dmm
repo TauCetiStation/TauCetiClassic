@@ -5614,7 +5614,7 @@
 	},
 /obj/item/device/camera,
 /obj/item/device/lens/rentgene,
-/obj/item/device/tagger/shop,
+/obj/item/tagger/shop,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -12070,7 +12070,7 @@
 	pixel_x = -28;
 	pixel_y = -5
 	},
-/obj/item/device/tagger/shop,
+/obj/item/tagger/shop,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "cEK" = (
@@ -23867,7 +23867,7 @@
 	pixel_x = 28;
 	pixel_y = -5
 	},
-/obj/item/device/tagger/shop,
+/obj/item/tagger/shop,
 /turf/simulated/floor{
 	icon_state = "warndark"
 	},
@@ -32443,7 +32443,7 @@
 	pixel_x = -3;
 	pixel_y = 9
 	},
-/obj/item/device/tagger,
+/obj/item/tagger,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -32679,7 +32679,7 @@
 /obj/item/device/camera/polar{
 	pixel_y = -8
 	},
-/obj/item/device/tagger/shop,
+/obj/item/tagger/shop,
 /turf/simulated/floor/wood,
 /area/station/security/lawyer_office)
 "hoy" = (
@@ -47089,7 +47089,7 @@
 /obj/item/weapon/packageWrap{
 	pixel_y = 1
 	},
-/obj/item/device/tagger/shop,
+/obj/item/tagger/shop,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -49105,7 +49105,7 @@
 /obj/item/device/eftpos{
 	eftpos_name = "Bar EFTPOS scanner"
 	},
-/obj/item/device/tagger/shop,
+/obj/item/tagger/shop,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "lAJ" = (
@@ -50421,9 +50421,9 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/item/device/tagger,
-/obj/item/device/tagger,
-/obj/item/device/tagger,
+/obj/item/tagger,
+/obj/item/tagger,
+/obj/item/tagger,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "brown"
@@ -53794,7 +53794,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/item/device/tagger,
+/obj/item/tagger,
 /obj/item/station_map/prometheus{
 	pixel_y = -8
 	},
@@ -54350,7 +54350,7 @@
 	pixel_x = 3;
 	pixel_y = 6
 	},
-/obj/item/device/tagger/shop,
+/obj/item/tagger/shop,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "warndark"
@@ -55481,7 +55481,7 @@
 	pixel_y = 5
 	},
 /obj/item/weapon/airlock_painter,
-/obj/item/device/tagger/shop,
+/obj/item/tagger/shop,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "caution"
@@ -77838,7 +77838,7 @@
 	},
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/device/tagger/shop,
+/obj/item/tagger/shop,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "sMV" = (
@@ -77877,7 +77877,7 @@
 	eftpos_name = "Botany EFTPOS scanner"
 	},
 /obj/machinery/light/small,
-/obj/item/device/tagger/shop,
+/obj/item/tagger/shop,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -87087,7 +87087,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -30
 	},
-/obj/item/device/tagger/shop,
+/obj/item/tagger/shop,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitecorner"
@@ -88589,7 +88589,7 @@
 	},
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/airlock_painter,
-/obj/item/device/tagger/shop,
+/obj/item/tagger/shop,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warndark"
@@ -91021,7 +91021,7 @@
 /obj/item/device/radio/headset/headset_sci{
 	pixel_x = -3
 	},
-/obj/item/device/tagger/shop,
+/obj/item/tagger/shop,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -97146,7 +97146,7 @@
 /obj/item/weapon/storage/secure/briefcase{
 	pixel_y = 6
 	},
-/obj/item/device/tagger/shop,
+/obj/item/tagger/shop,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkbrown"
@@ -98114,7 +98114,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
-/obj/item/device/tagger/shop,
+/obj/item/tagger/shop,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
