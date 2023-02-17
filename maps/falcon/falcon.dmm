@@ -707,7 +707,7 @@
 /obj/machinery/light_switch{
 	pixel_x = 28
 	},
-/obj/item/tagger,
+/obj/item/device/tagger,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "abh" = (
@@ -8463,7 +8463,7 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/packageWrap,
-/obj/item/tagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkpurplefull"
@@ -10473,7 +10473,7 @@
 /obj/item/device/radio/beacon/interaction_watcher{
 	pixel_x = 17
 	},
-/obj/item/tagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	icon_state = "darkpurple"
 	},
@@ -18159,7 +18159,7 @@
 "iHK" = (
 /obj/structure/table/glass,
 /obj/item/weapon/packageWrap,
-/obj/item/tagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -24002,7 +24002,7 @@
 	pixel_y = -28
 	},
 /obj/machinery/light,
-/obj/item/tagger,
+/obj/item/device/tagger,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
 "oou" = (
@@ -24842,7 +24842,7 @@
 	},
 /obj/item/device/camera/polar/detective,
 /obj/item/weapon/packageWrap,
-/obj/item/tagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -26820,8 +26820,8 @@
 	dir = 10
 	},
 /obj/item/weapon/packageWrap,
-/obj/item/tagger,
-/obj/item/tagger,
+/obj/item/device/tagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -30157,7 +30157,7 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/packageWrap,
-/obj/item/tagger,
+/obj/item/device/tagger,
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "tXr" = (
@@ -30699,7 +30699,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/item/tagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -31696,7 +31696,7 @@
 	},
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/airlock_painter,
-/obj/item/tagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warndark"

@@ -123,7 +123,7 @@
 		/obj/item/weapon/minihoe,
 		/obj/item/weapon/hatchet,
 		/obj/item/weapon/reagent_containers/spray/extinguisher/mini,
-		/obj/item/tagger,
+		/obj/item/device/tagger,
 		/obj/item/clothing/gloves,
 		/obj/item/clothing/glasses,
 		/obj/item/weapon/lighter,

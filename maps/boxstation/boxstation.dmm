@@ -5897,7 +5897,7 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_x = 32
 	},
-/obj/item/tagger/shop,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "red"
@@ -15842,7 +15842,7 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/packageWrap,
-/obj/item/tagger/shop,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -21372,7 +21372,7 @@
 /obj/item/device/eftpos{
 	eftpos_name = "Chapel EFTPOS scanner"
 	},
-/obj/item/tagger/shop,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -25295,7 +25295,7 @@
 	c_tag = "Bar Backroom";
 	dir = 4
 	},
-/obj/item/tagger/shop,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "aTq" = (
@@ -27264,7 +27264,7 @@
 /obj/structure/table,
 /obj/item/weapon/weldingtool,
 /obj/item/weapon/packageWrap,
-/obj/item/tagger/shop,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	icon_state = "neutral"
 	},
@@ -30922,7 +30922,7 @@
 /area/station/rnd/xenobiology)
 "bda" = (
 /obj/structure/table,
-/obj/item/tagger/shop,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "warning"
@@ -33016,7 +33016,7 @@
 	eftpos_name = "Bridge EFTPOS scanner"
 	},
 /obj/structure/table/woodentable,
-/obj/item/tagger/shop,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor/wood,
 /area/station/bridge/meeting_room)
 "bgH" = (
@@ -37364,7 +37364,7 @@
 	},
 /obj/item/clothing/glasses/welding,
 /obj/item/clothing/glasses/welding,
-/obj/item/tagger/shop,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	icon_state = "delivery"
 	},
@@ -38275,7 +38275,7 @@
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/packageWrap,
 /obj/structure/table,
-/obj/item/tagger/shop,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
@@ -39444,7 +39444,7 @@
 /area/station/cargo/office)
 "bsH" = (
 /obj/structure/table,
-/obj/item/tagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -45494,7 +45494,7 @@
 /area/station/medical/medbreak)
 "bDm" = (
 /obj/structure/table,
-/obj/item/tagger,
+/obj/item/device/tagger,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -56872,7 +56872,7 @@
 	},
 /obj/item/weapon/airlock_painter,
 /obj/item/weapon/packageWrap,
-/obj/item/tagger/shop,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "cdv" = (
@@ -59873,7 +59873,7 @@
 "cmn" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/tagger/shop,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cmp" = (
@@ -66230,7 +66230,7 @@
 /obj/item/weapon/cane,
 /obj/item/clothing/mask/muzzle,
 /obj/item/weapon/packageWrap,
-/obj/item/tagger/shop,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -71101,7 +71101,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 24
 	},
-/obj/item/tagger/shop,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "green"
@@ -75577,7 +75577,7 @@
 	},
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/airlock_painter,
-/obj/item/tagger/shop,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteyellow"
@@ -83874,7 +83874,7 @@
 /obj/item/device/paicard{
 	pixel_x = 4
 	},
-/obj/item/tagger/shop,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "uns" = (
@@ -84575,7 +84575,7 @@
 /area/station/engineering/engine)
 "wfg" = (
 /obj/structure/table/woodentable,
-/obj/item/tagger/shop,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "wfm" = (

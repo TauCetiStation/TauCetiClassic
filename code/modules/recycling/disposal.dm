@@ -1005,7 +1005,7 @@
 		return
 
 	if(istagger(I))
-		var/obj/item/tagger/O = I
+		var/obj/item/device/tagger/O = I
 
 		if(O.currTag)// Tag set
 			sort_tag = O.currTag
@@ -1176,7 +1176,7 @@
 		return
 
 	if(istagger(I))
-		var/obj/item/tagger/O = I
+		var/obj/item/device/tagger/O = I
 
 		if(O.currTag)// Tag set
 			sortType = O.currTag

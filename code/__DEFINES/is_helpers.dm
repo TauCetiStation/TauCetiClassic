@@ -112,7 +112,7 @@
 
 #define ismachinery(A) (istype(A, /obj/machinery))
 
-#define istagger(A) (istype(A, /obj/item/tagger))
+#define istagger(A) (istype(A, /obj/item/device/tagger))
 
 // GOONCHAT PORT
 

@@ -105,7 +105,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/pen/red,
 					/obj/item/weapon/pen/blue,
 					/obj/item/weapon/pen,
-					/obj/item/tagger,
+					/obj/item/device/tagger,
 					/obj/item/weapon/folder,
 					/obj/item/weapon/folder/blue,
 					/obj/item/weapon/folder/red)
