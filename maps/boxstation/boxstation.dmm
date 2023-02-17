@@ -80029,6 +80029,15 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"pGk" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "pIL" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -111572,7 +111581,7 @@ bDP
 bht
 bht
 bht
-bht
+pGk
 bIZ
 jMb
 bBG
