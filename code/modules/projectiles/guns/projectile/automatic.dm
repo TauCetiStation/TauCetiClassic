@@ -238,6 +238,7 @@
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
+	two_hand_weapon = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/atom_init()
 	. = ..()
