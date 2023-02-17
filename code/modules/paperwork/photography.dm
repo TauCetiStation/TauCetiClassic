@@ -355,14 +355,6 @@
 	can_put_lens = FALSE
 	base_lens = /obj/item/device/lens/old
 
-/obj/item/device/camera/vending
-	name = "vendomat camera"
-	desc = "A camera built in a vendomat."
-	pictures_left = 30
-	can_put_lens = FALSE
-	base_lens = /obj/item/device/lens/grayscale
-	photo_size = 3
-
 /obj/item/device/camera/atom_init()
 	. = ..()
 	if(base_lens)
@@ -553,6 +545,8 @@
 		return
 	captureimage(target, user, proximity)
 
+	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), VOL_EFFECTS_MASTER, null, FALSE, null, -3)
+
 	pictures_left--
 	update_desc()
 	to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
@@ -564,30 +558,26 @@
 	icon_state = icon_on
 	reloaded = TRUE
 
-/obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag, print_target = null)  //Proc for both regular and AI-based camera to take the image
-	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), VOL_EFFECTS_MASTER, null, FALSE, null, -3)
-
+/obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
 	if(flash_enabled)
 		flash_lighting_fx(8, light_power, light_color)
 
 	var/mobs = ""
 	var/list/mob_names = list()
+	var/isAi = isAI(user)
 	var/list/seen
-	if(user)
-		if(!isAI(user)) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
-			if(user.client)		//To make shooting through security cameras possible
-				seen = hear(world.view, user.client.eye)
-			else
-				seen = hear(world.view, user)
+	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
+		if(user.client)		//To make shooting through security cameras possible
+			seen = hear(world.view, user.client.eye)
 		else
-			seen = hear(world.view, target)
+			seen = hear(world.view, user)
 	else
-		seen = hear(world.view, src.loc)
+		seen = hear(world.view, target)
 
 	var/list/turfs = list()
 	for(var/turf/T in range(round(photo_size * 0.5), target))
 		if(T in seen)
-			if(user && isAI(user) && !cameranet.checkTurfVis(T))
+			if(isAi && !cameranet.checkTurfVis(T))
 				continue
 			else
 				var/detail_list = camera_get_mobs(T)
@@ -623,7 +613,7 @@
 				temp.MapColors(arglist(lens.effect["effect2"]))
 
 	var/datum/picture/P = createpicture(user, temp, mobs, mob_names, flag)
-	printpicture(user ? user : print_target, P)
+	printpicture(user, P)
 
 /obj/item/device/camera/proc/createpicture(mob/user, icon/temp, mobs, mob_names, flag)
 	var/icon/small_img = icon(temp)
@@ -637,7 +627,7 @@
 
 
 	var/datum/picture/P = new()
-	P.fields["author"] = user ? user : "Automatic Photo"
+	P.fields["author"] = user
 	P.fields["icon"] = ic
 	P.fields["tiny"] = pc
 	P.fields["img"] = temp
@@ -648,13 +638,11 @@
 
 	return P
 
-/obj/item/device/camera/proc/printpicture(atom/print_target, datum/picture/P)
+/obj/item/device/camera/proc/printpicture(mob/user, datum/picture/P)
 	var/obj/item/weapon/photo/Photo = new/obj/item/weapon/photo()
-	Photo.loc = print_target.loc
-	if(ismob(print_target))
-		var/mob/user = print_target
-		if(!user.get_inactive_hand())
-			user.put_in_inactive_hand(Photo)
+	Photo.loc = user.loc
+	if(!user.get_inactive_hand())
+		user.put_in_inactive_hand(Photo)
 	Photo.construct(P)
 
 /obj/item/device/camera/proc/get_base_photo_icon()
