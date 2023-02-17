@@ -245,7 +245,6 @@
 /obj/item/tagger/shop
 	name = "shop tagger"
 	desc = "Используется для наклейки ценников и бирок."
-	icon_state = "shop_tagger"
 	modes = list(1 = "Ценник", 2 = "Бирка")
 
 /obj/item/tagger/proc/openwindow(mob/user)
