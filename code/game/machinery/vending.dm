@@ -573,17 +573,22 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
+	//Dropping actual items
+	var/max_drop = rand(1, 3)
+	for(var/i = 1, i++, i < max_drop)
+		var/datum/data/vending_product_R = pick(src.product_records)
+		var/dumb_path = R.product_path
+		if(!R.amount)
+			continue
+		new dump_path(src.loc)
+		R.amount--
+		load--
+
+	//Dropping remaining items in a pack
 	var/refilling = 0
 	for(var/datum/data/vending_product/R in src.product_records)
-		var/max_drop = rand(1, 3)
-		var/dump_path = R.product_path
-		if (!dump_path)
-			continue
 		while(R.amount > 0)
-			if(R.amount <= max_drop)
-				new dump_path(src.loc)
-			else
-				refilling++
+			refilling++
 			R.amount--
 			load--
 
