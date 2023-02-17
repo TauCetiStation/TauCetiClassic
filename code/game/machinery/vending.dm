@@ -106,7 +106,7 @@
 /obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0,req_emag=0)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
-		if(productlist == products)
+		if(!hidden && !req_coin && !req_emag)
 			amount = round(amount * rand(5, 10) / 10) //50-100% roundstart load.
 		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
