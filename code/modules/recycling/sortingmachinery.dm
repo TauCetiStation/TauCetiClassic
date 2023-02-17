@@ -42,7 +42,7 @@
 	qdel(src)
 
 /obj/structure/bigDelivery/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/tagger))
+	if(istagger(W))
 		var/obj/item/tagger/O = W
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
