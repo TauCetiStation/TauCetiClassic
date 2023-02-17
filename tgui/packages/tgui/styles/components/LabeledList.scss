@@ -5,6 +5,8 @@
 
 @use '../base.scss';
 
+  $text-color: #8b9bb0 !default;
+
 .LabeledList {
   display: table;
   // IE8: Does not support calc
@@ -16,6 +18,7 @@
   margin: -0.25em -0.5em;
   margin-bottom: 0;
   padding: 0;
+  color: $text-color;
 }
 
 .LabeledList__row {

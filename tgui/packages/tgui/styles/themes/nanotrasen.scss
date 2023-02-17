@@ -1,0 +1,100 @@
+@use 'sass:color';
+@use 'sass:meta';
+
+$maingray: #373735;
+$whiteish: #faf4cf;
+
+$yellowish: #f3e387;
+$violetish: #8797f3;
+
+$softred: #db4935;
+$lightblueish: #35c7db;
+
+$greenish: #8af387;
+$purpleish: #f087f3;
+
+$brownish: #DB8735;
+$blueish: #3589db;
+
+@use '../colors.scss' with (
+  $white: $whiteish,
+  $black: $maingray,
+  $primary: $maingray,
+  $good: $greenish,
+  $average: $yellowish,
+  $bad: $softred,
+  $green: $greenish,
+  $label: $yellowish,
+  $fg-map-keys: (),
+  $bg-map-keys: (),
+);
+
+@use '../base.scss' with (
+  $color-bg: #373735,
+);
+
+.theme-nanotrasen {
+  // Components
+  @include meta.load-css('../components/Button.scss', $with: (
+    'color-default': $yellowish,
+    'color-transparent-text': rgba(227, 240, 255, 0.75),
+    'border-radius': 0px,
+    'color-selected': $greenish,
+    'color-disabled': $softred,
+  ));
+  @include meta.load-css('../components/Input.scss', $with: (
+    'background-color': $maingray,
+    'border-color': $softred,
+    'text-color': $whiteish,
+    'border-radius': 0px,
+  ));
+  @include meta.load-css('../components/NumberInput.scss', $with: (
+    'background-color': $maingray,
+    'border-color': $softred,
+    'text-color': $whiteish,
+    'border-radius': 0px,
+  ));
+  @include meta.load-css('../components/Knob.scss', $with: (
+    'ring-color': $yellowish,
+    'knob-color': $softred,
+    'popup-text-color': $yellowish,
+    'popup-background-color': $maingray,
+    'popup-border': 1px solid $softred,
+  ));
+  @include meta.load-css('../components/ProgressBar.scss', $with: (
+    'background-color': $maingray,
+    'border-radius': 0px,
+    'color-default-fill': $greenish,
+  ));
+  @include meta.load-css('../components/BlockQuote.scss', $with: (
+    'color-default': $softred,
+  ));
+  @include meta.load-css('../components/Tooltip.scss', $with: (
+    'color': $maingray,
+    'background-color': $yellowish,
+    'border-radius': 0px,
+  ));
+  @include meta.load-css('../components/Section.scss', $with: (
+    'title-text-color': $yellowish,
+    'separator-color': $softred,
+  ));
+  @include meta.load-css('../components/LabeledList.scss', $with: (
+    'text-color': $yellowish,
+  ));
+  @include meta.load-css('../components/Tabs.scss', $with: (
+    'border-radius': 0px,
+    'text-color': $maingray,
+    'tab-color': $brownish,
+    'tab-color-selected': $greenish,
+    'tab-color-hovered': $whiteish,
+    'color-default': $maingray,
+    'border-width': 1px solid $maingray,
+  ));
+
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css('../layouts/TitleBar.scss', $with: (
+    'background-color': $maingray,
+  ));
+}

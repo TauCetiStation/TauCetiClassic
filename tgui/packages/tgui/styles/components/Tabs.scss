@@ -14,7 +14,8 @@ $text-color-selected: color.scale($color-default, $lightness: 25%) !default;
 $tab-color: transparent !default;
 $tab-color-hovered: rgba(255, 255, 255, 0.075) !default;
 $tab-color-selected: rgba(255, 255, 255, 0.125) !default;
-$border-radius: base.$border-radius !default;
+$border-radius: 0.25em !default;
+$border-width: 0px solid #ffffff !default;
 $fg-map: colors.$fg-map !default;
 
 .Tabs {
@@ -101,10 +102,12 @@ $fg-map: colors.$fg-map !default;
 
 .Tabs--horizontal {
   .Tab {
+    border-right: $border-width;
+    border-left: $border-width;
     border-top: math.div(1em, 6) solid transparent;
     border-bottom: math.div(1em, 6) solid transparent;
-    border-top-left-radius: 0.25em;
-    border-top-right-radius: 0.25em;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
   }
 
   .Tab--selected {
@@ -115,10 +118,12 @@ $fg-map: colors.$fg-map !default;
 .Tabs--vertical {
   .Tab {
     min-height: 2em;
+    border-top: $border-width;
+    border-bottom: $border-width;
     border-left: math.div(1em, 6) solid transparent;
     border-right: math.div(1em, 6) solid transparent;
-    border-top-left-radius: 0.25em;
-    border-bottom-left-radius: 0.25em;
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
   }
 
   .Tab--selected {
