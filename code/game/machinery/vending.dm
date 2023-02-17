@@ -574,9 +574,9 @@ var/global/list/vending_machines = list()
 /obj/machinery/vending/proc/malfunction()
 	//Dropping actual items
 	var/max_drop = rand(1, 3)
-	for(var/i = 1, i++, i < max_drop)
+	for(var/i = 1, i < max_drop, i++)
 		var/datum/data/vending_product/R = pick(src.product_records)
-		var/dumb_path = R.product_path
+		var/dump_path = R.product_path
 		if(!R.amount)
 			continue
 		new dump_path(src.loc)
