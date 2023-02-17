@@ -217,8 +217,7 @@
 /obj/item/device/tagger
 	name = "tagger"
 	desc = "Используется для наклейки меток, ценников и бирок."
-	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "labeler0"
+	icon_state = "dest_tagger"
 	var/currTag = 0
 
 	w_class = SIZE_TINY
@@ -244,6 +243,8 @@
 
 /obj/item/device/tagger/shop
 	name = "shop tagger"
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "labeler0"
 	desc = "Используется для наклейки ценников и бирок."
 	modes = list(1 = "Ценник", 2 = "Бирка")
 
