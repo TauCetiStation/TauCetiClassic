@@ -112,6 +112,8 @@
 
 #define ismachinery(A) (istype(A, /obj/machinery))
 
+#define istagger(A) (istype(A, /obj/item/tagger))
+
 // GOONCHAT PORT
 
 #define isatom(A) (istype(A, /atom))
