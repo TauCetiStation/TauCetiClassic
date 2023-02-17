@@ -42,8 +42,8 @@
 	qdel(src)
 
 /obj/structure/bigDelivery/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/tagger))
-		var/obj/item/device/tagger/O = W
+	if(istype(W, /obj/item/tagger))
+		var/obj/item/tagger/O = W
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
 			src.sortTag = O.currTag
@@ -104,8 +104,8 @@
 	qdel(src)
 
 /obj/item/smallDelivery/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/tagger))
-		var/obj/item/device/tagger/O = I
+	if(istagger(I))
+		var/obj/item/tagger/O = I
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
 			sortTag = O.currTag
@@ -214,10 +214,11 @@
 	if(src in user)
 		to_chat(user, "<span class='notice'>There are [amount] units of package wrap left!</span>")
 
-/obj/item/device/tagger
+/obj/item/tagger
 	name = "tagger"
 	desc = "Используется для наклейки меток, ценников и бирок."
-	icon_state = "dest_tagger"
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "labeler0"
 	var/currTag = 0
 
 	w_class = SIZE_TINY
@@ -241,13 +242,13 @@
 
 	var/label = ""
 
-/obj/item/device/tagger/shop
+/obj/item/tagger/shop
 	name = "shop tagger"
 	desc = "Используется для наклейки ценников и бирок."
 	icon_state = "shop_tagger"
 	modes = list(1 = "Ценник", 2 = "Бирка")
 
-/obj/item/device/tagger/proc/openwindow(mob/user)
+/obj/item/tagger/proc/openwindow(mob/user)
 	var/dat = "<tt>"
 
 	dat += "<table style='width:100%; padding:4px;'><tr>"
@@ -283,7 +284,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/item/device/tagger/Topic(href, href_list)
+/obj/item/tagger/Topic(href, href_list)
 	add_fingerprint(usr)
 	if(href_list["nextTag"] && (href_list["nextTag"] in tagger_locations))
 		src.currTag = href_list["nextTag"]
@@ -326,11 +327,11 @@
 	openwindow(usr)
 
 
-/obj/item/device/tagger/attack_self(mob/user)
+/obj/item/tagger/attack_self(mob/user)
 	openwindow(user)
 	return
 
-/obj/item/device/tagger/afterattack(obj/target, mob/user, proximity, params)
+/obj/item/tagger/afterattack(obj/target, mob/user, proximity, params)
 	if(!proximity)
 		return
 	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
@@ -350,7 +351,7 @@
 		if("Бирка")
 			label(target, user)
 
-/obj/item/device/tagger/proc/price(obj/target, mob/user)
+/obj/item/tagger/proc/price(obj/target, mob/user)
 	if(target.price_tag)
 		to_chat(user, "<span class='notice'>[target] already has a price tag.</span>")
 		return
@@ -372,7 +373,7 @@
 
 	target.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
 
-/obj/item/device/tagger/proc/label(obj/target, mob/user)
+/obj/item/tagger/proc/label(obj/target, mob/user)
 	if(!label || !length(label))
 		to_chat(user, "<span class='notice'>Нет текста на бирке.</span>")
 		return
@@ -393,7 +394,7 @@
 						 "<span class='notice'>You label [target] as [label].</span>")
 	target.name = "[target.name] ([label])"
 
-/obj/item/device/tagger/proc/get_category(obj/target)
+/obj/item/tagger/proc/get_category(obj/target)
 	if(istype(target, /obj/item/weapon/reagent_containers/food))
 		return "Еда"
 	else if(istype(target, /obj/item/weapon/storage/food))
