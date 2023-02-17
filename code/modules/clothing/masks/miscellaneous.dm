@@ -180,6 +180,7 @@
 	flags = MASKCOVERSMOUTH
 	action_button_name = "Adjust Bandana"
 	icon_state = "bandbotany"
+	item_state = "greenbandana"
 	body_parts_covered = 0
 
 /obj/item/clothing/mask/chicken

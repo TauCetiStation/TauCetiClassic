@@ -64,6 +64,7 @@
 	desc = "Стандартный противогаз охраны с модификацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока офицер забивает преступника насмерть."
 	action_button_name = "Toggle Mask"
 	icon_state = "secmask"
+	item_state = "gas_alt"
 	var/cooldown = 0
 	var/last_phrase_text = ""
 	var/shitcurity_mode = FALSE
@@ -133,6 +134,7 @@
 	name = "police respirator"
 	desc = "Стандартный распиратор полиции с модификацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока полицейский забивает преступника насмерть."
 	icon_state = "police_mask"
+	item_state = "police_mask"
 	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
 //Plague Dr suit can be found in clothing/suits/bio.dm
