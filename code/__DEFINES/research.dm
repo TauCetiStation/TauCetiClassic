@@ -19,5 +19,4 @@
 #define DEFAULT_MINING_CONSOLE_ID 3
 
 #define DIAGNOSTIC_EXTRA_CHECK "diagnostic"
-#define SCIENCE_EXTRA_CHECK "science"
 #define VIEW_EXTRA_CHECK "view"
