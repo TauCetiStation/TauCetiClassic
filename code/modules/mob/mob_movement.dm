@@ -212,9 +212,8 @@
 		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_POSTMOVE, n, direct)
 
 /mob/proc/random_move(mob/M)
-	if(isturf(M.loc) && !isspaceturf(M.loc))
-		if(M.canmove && !M.incapacitated())
-			step(M, pick(cardinal))
+	if(isturf(M.loc) && !isspaceturf(M.loc) || (M.canmove && !M.incapacitated()))
+		step(M, pick(cardinal))
 
 /mob/proc/SelfMove(turf/n, direct)
 	if(camera_move(direct))

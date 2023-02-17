@@ -772,9 +772,9 @@
 	if(prob(7))
 		M.emote(pick("twitch","drool","moan","giggle"))
 
-/datum/reagent/ambrozium
-	name = "Ambrozium"
-	id = "ambrozium"
+/datum/reagent/ambrosium
+	name = "Ambrosium"
+	id = "ambrosium"
 	description = "Reagent isolated from ambrosia vulgaris. Its has narcotic and toxic effect."
 	reagent_state = LIQUID
 	color = "#003b08"
@@ -783,7 +783,7 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/ambrozium/on_general_digest(mob/living/M)
+/datum/reagent/ambrosium/on_general_digest(mob/living/M)
 	..()
 	M.adjustDrugginess(2)
 	if(prob(10))

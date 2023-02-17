@@ -20,7 +20,7 @@
 		src.traumatic_shock -= 15
 	if(reagents.has_reagent("inaprovaline"))
 		src.traumatic_shock -= 25
-	if(reagents.has_reagent("ambrozium"))
+	if(reagents.has_reagent("ambrosium"))
 		src.traumatic_shock -= 30
 	if(reagents.has_reagent("synaptizine"))
 		src.traumatic_shock -= 40
