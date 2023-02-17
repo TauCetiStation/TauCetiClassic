@@ -21,7 +21,7 @@
 	name = "sterile mask"
 	desc = "A sterile mask designed to help prevent the spread of diseases."
 	icon_state = "sterile"
-	item_state = "sterile"
+	item_state = "m_mask"
 	w_class = SIZE_TINY
 	flags = MASKCOVERSMOUTH
 	body_parts_covered = 0
