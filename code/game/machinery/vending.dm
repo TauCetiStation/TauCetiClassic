@@ -8,7 +8,6 @@ var/global/list/vending_machines = list()
 	var/max_amount = 0
 	var/price = 0
 
-ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
@@ -576,7 +575,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	//Dropping actual items
 	var/max_drop = rand(1, 3)
 	for(var/i = 1, i++, i < max_drop)
-		var/datum/data/vending_product_R = pick(src.product_records)
+		var/datum/data/vending_product/R = pick(src.product_records)
 		var/dumb_path = R.product_path
 		if(!R.amount)
 			continue
