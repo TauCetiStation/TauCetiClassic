@@ -208,7 +208,7 @@ SUBSYSTEM_DEF(mapping)
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, default_traits = ZTRAITS_STATION)
 	station_loaded = TRUE
-	change_lobbyscreen()
+	change_lobbyscreen() // todo: move to better place from map controller
 
 	if(global.config.load_space_levels)
 		while (space_levels_so_far < config.space_ruin_levels)
