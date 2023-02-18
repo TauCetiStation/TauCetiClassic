@@ -1,6 +1,7 @@
 @use 'sass:color';
 @use 'sass:meta';
 
+$darkgray: #252527;
 $maingray: #373735;
 $whiteish: #faf4cf;
 
@@ -30,7 +31,7 @@ $blueish: #3589db;
 );
 
 @use '../base.scss' with (
-  $color-bg: #373735,
+  $color-bg: $darkgray,
 );
 
 .theme-nanotrasen {
@@ -77,6 +78,7 @@ $blueish: #3589db;
   @include meta.load-css('../components/Section.scss', $with: (
     'title-text-color': $yellowish,
     'separator-color': $softred,
+    'background-color': $maingray,
   ));
   @include meta.load-css('../components/LabeledList.scss', $with: (
     'text-color': $yellowish,
@@ -95,6 +97,6 @@ $blueish: #3589db;
   @include meta.load-css('../layouts/Layout.scss');
   @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css('../layouts/TitleBar.scss', $with: (
-    'background-color': $maingray,
+    'background-color': $darkgray,
   ));
 }
