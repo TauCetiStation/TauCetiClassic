@@ -31,6 +31,8 @@
 
 		output += "[key] as [memory]<BR>"
 
+	output += "<a href=?src=\ref[mind];add_key_memory=1>Add/Remove a Memory</a><BR>"
+
 	var/datum/browser/popup = new(src, "window=key_memories")
 	popup.set_content(output)
 	popup.open()
@@ -54,7 +56,7 @@
 	if(!can_remember())
 		return
 
-	var/value = sanitize_safe(input(src, "Key Memory", "What would you like to remember?") as null|message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
+	var/value = sanitize_safe(input(src, "Key Memory", "What would you like to remember? Press cancel to forget.") as null|message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 
 	if(!can_remember())
 		return

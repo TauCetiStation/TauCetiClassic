@@ -224,6 +224,10 @@
 	popup.open()
 
 /datum/mind/Topic(href, href_list)
+	if(href_list["add_key_memory"])
+		current?.add_key_memory()
+		return
+
 	if(!check_rights(R_ADMIN))
 		return
 
