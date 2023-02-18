@@ -97,7 +97,7 @@ SUBSYSTEM_DEF(rating)
 		var/rating = text2num(href_list["round_rating"])
 		var/rating_cat = href_list["rating_cat"]
 		if(rating && isnum(rating) && SSrating.get_template(rating_cat) && ("[rating]" in SSrating.rating_by_icon))
-			LAZYSET(rates[usr.ckey], category, rate)
+			LAZYSET(rates[usr.ckey], rating_cat, rating)
 			to_chat(usr, "<span class='info'>Ваша оценка: [rating].</span>")
 
 /datum/controller/subsystem/rating/proc/get_result_message(category, rating)
