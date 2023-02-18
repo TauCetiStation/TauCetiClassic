@@ -123,6 +123,3 @@
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
-
-	// For round rating
-	var/list/my_rate

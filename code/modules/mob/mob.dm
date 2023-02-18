@@ -480,14 +480,6 @@
 		popup.set_content(flavor_text)
 		popup.open()
 
-	if(href_list["round_rating"] && href_list["rating_cat"])
-		var/rating = text2num(href_list["round_rating"])
-		var/rating_cat = href_list["rating_cat"]
-		if(rating && isnum(rating) && SSrating.get_template(rating_cat) && ("[rating]" in SSrating.rating_by_icon))
-			LAZYSET(client.my_rate, rating_cat, rating)
-			to_chat(src, "<span class='info'>Ваша оценка: [rating].</span>")
-
-
 /mob/proc/pull_damage()
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src

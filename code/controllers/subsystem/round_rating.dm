@@ -2,7 +2,7 @@
 
 /datum/rating_template
 	var/category
-	var/show_options
+	var/show_options = NONE
 	var/question
 	var/result_message
 
@@ -28,7 +28,7 @@
 
 /datum/rating_template/bugs
 	category = "bugs_rating"
-	question = "Вам сильно помешали баги?"
+	question = "Сильно ли мешали баги вашему раунду?"
 	result_message = "Оценка надоедливости багов"
 
 /datum/rating_template/admin
@@ -38,7 +38,7 @@
 
 /datum/rating_template/map
 	category = "map_rating"
-	question = "Вам понравилась эта карта?"
+	question = "Вам понравилась текущая карта?"
 	result_message = "Оценка карты"
 
 SUBSYSTEM_DEF(rating)
@@ -72,17 +72,33 @@ SUBSYSTEM_DEF(rating)
 		),
 	)
 
-	var/max_random_questions = 2
+	// map where key is ckey, value is a list, where 1 - category, 2 - rate
+	var/list/rates = list()
 
 	// only for games with a large numbers of players
 	var/list/cached_templates_pool
 
+	var/max_random_questions = 2
+
 	var/lowpop = 35
+
+	var/voting = FALSE
 
 /datum/controller/subsystem/rating/Initialize(start_timeofday)
 	for(var/type in subtypesof(/datum/rating_template))
 		rating_templates += new type
 	..()
+
+/datum/controller/subsystem/rating/Topic(href, href_list)
+	if(!voting)
+		return
+
+	if(href_list["round_rating"] && href_list["rating_cat"])
+		var/rating = text2num(href_list["round_rating"])
+		var/rating_cat = href_list["rating_cat"]
+		if(rating && isnum(rating) && SSrating.get_template(rating_cat) && ("[rating]" in SSrating.rating_by_icon))
+			LAZYSET(rates[usr.ckey], category, rate)
+			to_chat(usr, "<span class='info'>Ваша оценка: [rating].</span>")
 
 /datum/controller/subsystem/rating/proc/get_result_message(category, rating)
 	for(var/datum/rating_template/template in rating_templates)
@@ -101,8 +117,8 @@ SUBSYSTEM_DEF(rating)
 	var/string = "<div>"
 
 	var/list/ratings = SSStatistics.rating.ratings
-	for(var/cat in ratings)
-		string += get_result_message(cat, ratings[cat])
+	for(var/category in ratings)
+		string += get_result_message(category, ratings[category])
 
 	string += "</div>"
 	return string
@@ -136,38 +152,41 @@ SUBSYSTEM_DEF(rating)
 
 	return cached_templates_pool
 
-#define RATING_HREF(M, rating, cat, fa_icon, a_class) "<a href='?src=\ref[M];round_rating=[rating];rating_cat=[cat]' class='[a_class]'><span class='far [fa_icon]'></span></a>"
+#define RATING_HREF(rating, category, fa_icon, a_class) "<a href='?src=\ref[src];round_rating=[rating];rating_cat=[category]' class='[a_class]'><span class='far [fa_icon]'></span></a>"
 
 /datum/controller/subsystem/rating/proc/announce_rating_collection()
-	for(var/mob/M in global.player_list)
-		var/string = "<br><div class='rating'>"
+	voting = TRUE
 
-		var/list/new_template_pool = get_question_pool()
+	var/html = "<br><div class='rating'>"
 
-		for(var/datum/rating_template/template in new_template_pool)
-			string += "<span class='rating_questions'>[template.question]</span><br>"
-			// render voting choises
-			var/i = 0
-			for(var/rate in rating_by_icon)
-				i++
-				string += RATING_HREF(M, rate, template.category, rating_by_icon[rate]["icon"], rating_by_icon[rate]["a-class"])
-				if(rating_by_icon.len != i)
-					string += "  -  "
-			string += "<br>"
-		string += "</div><br>"
-		to_chat(M, string)
+	var/list/new_template_pool = get_question_pool()
+
+	for(var/datum/rating_template/template in new_template_pool)
+		html += "<span class='rating_questions'>[template.question]</span><br>"
+		// render voting choises
+		var/i = 0
+		for(var/rate in rating_by_icon)
+			i++
+			html += RATING_HREF(rate, template.category, rating_by_icon[rate]["icon"], rating_by_icon[rate]["a-class"])
+			if(rating_by_icon.len != i)
+				html += "  -  "
+		html += "<br>"
+	html += "</div><br>"
+
+	for(var/client/C in clients)
+		to_chat(C, html)
 
 #undef RATING_HREF
 
 /datum/controller/subsystem/rating/proc/calculate_rating()
+	voting = FALSE
+
 	var/list/voters = list()
-	for(var/mob/M in global.player_list)
-		if(!length(M.client.my_rate))
-			continue
-		for(var/cat in M.client.my_rate)
-			SSStatistics.rating.ratings[cat] += M.client.my_rate[cat]
-			voters[cat]++
-	for(var/cat in SSStatistics.rating.ratings)
-		SSStatistics.rating.ratings[cat] = round(SSStatistics.rating.ratings[cat] / voters[cat], 0.01)
+	for(var/ckey in rates)
+		for(var/category in rates[ckey])
+			SSStatistics.rating.ratings[category] += rates[ckey][category]
+			voters[category]++
+	for(var/category in SSStatistics.rating.ratings)
+		SSStatistics.rating.ratings[category] = round(SSStatistics.rating.ratings[category] / voters[category], 0.01)
 
 #undef RATING_SHOW_ALWAYS
