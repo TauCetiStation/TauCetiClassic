@@ -22,6 +22,7 @@
 #define F_WIZFEDERATION      "Wizard Federation"
 #define F_XENOMORPH_HIVE     "Alien Hivemind"
 #define F_ZOMBIES            "Zobmies"
+#define F_REPLICATORS           "Replicators"
 
 // Role IDs
 #define ABDUCTOR_AGENT "Abductor Agent"
@@ -59,6 +60,7 @@
 #define WIZARD "Wizard"
 #define WIZ_APPRENTICE "Wizard Apprentice"
 #define XENOMORPH "Xenomorph"
+#define REPLICATOR "Replicator"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"

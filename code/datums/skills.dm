@@ -62,9 +62,12 @@
 	set name = "Ask for help"
 	emote("help")
 
-/mob/living/proc/help_other(mob/living/target)
+/mob/living/proc/get_active_skillset()
 	if(!mind)
-		return
+		return null
+	return mind.skills.active
+
+/mob/living/proc/help_other(mob/living/target)
 	if(target == src)
 		return
 	if(incapacitated() || crawling || is_busy() || get_active_hand() || !Adjacent(target))
@@ -76,15 +79,28 @@
 		apply_effects(stun = 1, weaken = 1)
 		return
 
-	visible_message("<span class='notice'>[src] puts [P_THEIR(gender)] hand on \the [target]'s shoulder, assisting [P_THEM(target.gender)].</span>", "<span class='notice'>You put your hand on \the [target]'s shoulder, assisting [P_THEM(target.gender)]. You need to stand still while doing this.</span>")
-	LAZYDISTINCTADD(target.helpers_skillsets,mind.skills.active)
+	var/active_skillset = get_active_skillset()
+	if(!active_skillset)
+		return
+
+	on_start_help_other(target)
+
+	LAZYDISTINCTADD(target.helpers_skillsets, active_skillset)
 	while(do_mob(src, target, HELP_OTHER_TIME))
 		if(prob(40 / length(target.helpers_skillsets)))
 			target.emote("hmm")
 		else if(prob(25 / length(target.helpers_skillsets)))
 			emote("hmm")
 		continue
-	LAZYREMOVE(target.helpers_skillsets, mind.skills.active)
+
+	on_stop_help_other(target)
+
+	LAZYREMOVE(target.helpers_skillsets, active_skillset)
+
+/mob/living/proc/on_start_help_other(mob/living/target)
+	visible_message("<span class='notice'>[src] puts [P_THEIR(gender)] hand on \the [target]'s shoulder, assisting [P_THEM(target.gender)].</span>", "<span class='notice'>You put your hand on \the [target]'s shoulder, assisting [P_THEM(target.gender)]. You need to stand still while doing this.</span>")
+
+/mob/living/proc/on_stop_help_other(mob/living/target)
 	visible_message("<span class='notice'>[src] removes [P_THEIR(gender)] hand from \the [target]'s shoulder.</span>", "<span class='notice'>You remove your hand from \the [target]'s shoulder.</span>")
 
 /mob/living/proc/add_skills_buff(datum/skillset/skillset, time = -1)

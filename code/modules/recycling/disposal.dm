@@ -493,7 +493,7 @@
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 			AM.forceMove(src.loc)
 			AM.pipe_eject(0)
-			if(!isdrone(AM)) //Poor drones kept smashing windows and taking system damage being fired out of disposals. ~Z
+			if(!isdrone(AM) && !isreplicator(AM)) //Poor drones kept smashing windows and taking system damage being fired out of disposals. ~Z
 				AM.throw_at(target, 5, 2)
 
 		H.vent_gas(loc)
@@ -545,12 +545,17 @@
 	//Check for any living mobs trigger hasmob.
 	//hasmob effects whether the package goes to cargo or its tagged destination.
 	for(var/mob/living/M in D)
-		if(M && M.stat != DEAD && !isdrone(M))
+		if(M && M.stat != DEAD && !isdrone(M) && !isreplicator(M))
 			hasmob = 1
 
 	// now everything inside the disposal gets put into the holder
 	// note AM since can contain mobs or objs
 	for(var/atom/movable/AM in D)
+		if(AM.name == "")
+			continue
+		if(!AM.simulated)
+			continue
+
 		AM.loc = src
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
@@ -565,6 +570,9 @@
 		if(isdrone(AM))
 			var/mob/living/silicon/robot/drone/drone = AM
 			src.destinationTag = drone.mail_destination
+		if(isreplicator(AM))
+			var/mob/living/simple_animal/replicator/R = AM
+			src.destinationTag = R.mail_destination
 		if(istype(AM, /obj/structure/closet/body_bag))
 			has_bodybag = 1
 		if(isobj(AM))
@@ -594,13 +602,13 @@
 
 		if(hasmob && prob(3))
 			for(var/mob/living/H in src)
-				if(!isdrone(H)) //Drones use the mailing code to move through the disposal system,
+				if(!isdrone(H) && !isreplicator(H)) //Drones use the mailing code to move through the disposal system,
 					H.take_overall_damage(20, 0, "Blunt Trauma")//horribly maim any living creature jumping down disposals.  c'est la vie
 
 		if(has_bodybag && prob(3))
 			for(var/obj/structure/closet/body_bag/B in src)
 				for(var/mob/living/H in B)
-					if(!isdrone(H))
+					if(!isdrone(H) && !isreplicator(H))
 						H.take_overall_damage(20, 0, "Blunt Trauma")
 
 		if(has_fat_guy && prob(2)) // chance of becoming stuck per segment if contains a fat guy
@@ -1320,7 +1328,6 @@
 	// transfer to linked object (outlet or bin)
 
 /obj/structure/disposalpipe/trunk/transfer(obj/structure/disposalholder/H)
-
 	if(H.dir == DOWN)		// we just entered from a disposer
 		return ..()		// so do base transfer proc
 	// otherwise, go to the linked object
@@ -1406,7 +1413,7 @@
 		for(var/atom/movable/AM in H)
 			AM.forceMove(src.loc)
 			AM.pipe_eject(dir)
-			if(!isdrone(AM)) //Drones keep smashing windows from being fired out of chutes. Bad for the station. ~Z
+			if(!isdrone(AM) && !isreplicator(AM)) //Drones keep smashing windows from being fired out of chutes. Bad for the station. ~Z
 				AM.throw_at(target, 3, 2)
 		H.vent_gas(src.loc)
 		qdel(H)
@@ -1486,6 +1493,26 @@
 		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
 		qdel(src)
 	return
+
+/mob/proc/try_enter_disposal_system()
+	//Auto flush if we use this verb inside a disposal chute.
+	var/obj/machinery/disposal/D = loc
+	if(istype(D))
+		to_chat(src, "<span class='notice'>\The [D] acknowledges your signal.</span>")
+		D.flush_count = D.flush_every_ticks
+
+	/*
+		Cursed. Doesn't work. Trunk deletes when trying to enter it for no appearant reason.
+	var/turf/my_turf = get_turf(src)
+	// Otherwise you can enter by standing on a trunk.
+	var/obj/structure/disposalpipe/trunk/T = locate() in my_turf
+	if(istype(T) && T.layer > my_turf.layer && see_invisible > T.invisibility)
+		to_chat(src, "<span class='notice'>You enter into [T].</span>")
+		var/obj/structure/disposalholder/H = new()
+		H.tomail = TRUE
+		H.init(loc, return_air())
+		H.start(loc, T)
+	*/
 
 #undef SEND_PRESSURE
 #undef PRESSURE_TANK_VOLUME

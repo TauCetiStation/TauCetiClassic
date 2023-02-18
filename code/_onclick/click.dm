@@ -372,11 +372,11 @@
 	if(!dx && !dy) return
 
 	if(abs(dx) < abs(dy))
-		if(dy > 0)	usr.set_dir(NORTH)
-		else		usr.set_dir(SOUTH)
+		if(dy > 0)	src.set_dir(NORTH)
+		else		src.set_dir(SOUTH)
 	else
-		if(dx > 0)	usr.set_dir(EAST)
-		else		usr.set_dir(WEST)
+		if(dx > 0)	src.set_dir(EAST)
+		else		src.set_dir(WEST)
 
 // Simple helper to face what you clicked on, in case it should be needed in more than one place
 // This proc is currently only used in multi_carry.dm (/datum/component/multi_carry)

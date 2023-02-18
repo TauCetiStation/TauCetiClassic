@@ -1,4 +1,3 @@
-
 /datum/emote/clickable
 	var/duration
 

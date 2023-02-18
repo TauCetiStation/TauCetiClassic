@@ -121,7 +121,7 @@
 
 	updateicon()
 
-/obj/machinery/cell_charger/deconstruct()
+/obj/machinery/cell_charger/deconstruct(disassembled = TRUE)
 	if(charging)
 		charging.forceMove(loc)
 		charging = null

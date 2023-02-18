@@ -18,6 +18,7 @@
 #define ROLE_ABDUCTOR          "Abductor"
 #define ROLE_FAMILIES          "Families"
 #define ROLE_GHOSTLY           "Ghostly Roles"
+#define ROLE_REPLICATOR           "Replicator"
 
 #define ROLE_ERT               "Emergency Response Team"
 #define ROLE_DRONE             "Maintenance Drone"
