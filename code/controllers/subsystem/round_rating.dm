@@ -6,9 +6,30 @@
 	var/question
 	var/result_message
 
-/datum/rating_template/proc/get_result_message(rating)
-	var/icon = SSrating.get_icon(rating)
-	return "[result_message]: [icon] <span style='font-size: 10px'>([rating])</span><br>"
+	var/avg_rate = 0
+	var/total_voters = 0
+	var/list/choices = list()
+
+/datum/rating_template/New()
+	for(var/type in subtypesof(/datum/vote_choice/rating))
+		choices += new type
+
+/datum/rating_template/proc/get_result_message()
+	var/rating = "[CEIL(avg_rate)]"
+	var/datum/vote_choice/rating/choice = find_suitable_choice(rating)
+	return "[result_message]: <span class='far [choice.fa_icon]'></span> <span style='font-size: 10px'>([rating])</span><br>"
+
+/datum/rating_template/proc/find_suitable_choice(rating)
+	for(var/datum/vote_choice/choice in choices)
+		if(choice.text == rating)
+			return choice
+	return pick(choices)
+
+/datum/rating_template/proc/get_rating_choice(text)
+	for(var/datum/vote_choice/rating/R in choices)
+		if(R.text == text)
+			return R
+	return null
 
 /datum/rating_template/generic
 	category = "generic_rating"
@@ -41,6 +62,38 @@
 	question = "Вам понравилась текущая карта?"
 	result_message = "Оценка карты"
 
+/datum/vote_choice/rating
+	var/a_class = ""
+	var/fa_icon = ""
+
+/datum/vote_choice/rating/render_html(category)
+	return "<a href='?src=\ref[SSrating];round_rating=[text];rating_cat=[category]' class='[a_class]'><span class='far [fa_icon]'></span></a>"
+
+/datum/vote_choice/rating/one
+	text = "1"
+	a_class = "rating_rates_red"
+	fa_icon = "fa-angry"
+
+/datum/vote_choice/rating/two
+	text = "2"
+	a_class = "rating_rates_orange"
+	fa_icon = "fa-frown"
+
+/datum/vote_choice/rating/three
+	text = "3"
+	a_class = "rating_rates_yellow"
+	fa_icon = "fa-meh"
+
+/datum/vote_choice/rating/four
+	text = "4"
+	a_class = "rating_rates_lime"
+	fa_icon = "fa-smile"
+
+/datum/vote_choice/rating/five
+	text = "5"
+	a_class = "rating_rates_green"
+	fa_icon = "fa-laugh"
+
 SUBSYSTEM_DEF(rating)
 	name = "Round Rating"
 
@@ -48,32 +101,7 @@ SUBSYSTEM_DEF(rating)
 	flags = SS_NO_FIRE
 
 	var/list/rating_templates = list()
-
-	var/list/rating_by_icon = list(
-		"1" = list(
-			"a-class" = "rating_rates_red",
-			"icon" = "fa-angry"
-		),
-		"2" = list(
-			"a-class" = "rating_rates_orange",
-			"icon" = "fa-frown"
-		),
-		"3" = list(
-			"a-class" = "rating_rates_yellow",
-			"icon" = "fa-meh"
-		),
-		"4" = list(
-			"a-class" = "rating_rates_lime",
-			"icon" = "fa-smile"
-		),
-		"5" = list(
-			"a-class" = "rating_rates_green",
-			"icon" = "fa-laugh"
-		),
-	)
-
-	// map where key is ckey, value is a list, where 1 - category, 2 - rate
-	var/list/rates = list()
+	var/list/picked_templates = list()
 
 	// only for games with a large numbers of players
 	var/list/cached_templates_pool
@@ -96,33 +124,30 @@ SUBSYSTEM_DEF(rating)
 	if(href_list["round_rating"] && href_list["rating_cat"])
 		var/rating = text2num(href_list["round_rating"])
 		var/rating_cat = href_list["rating_cat"]
-		if(rating && isnum(rating) && SSrating.get_template(rating_cat) && ("[rating]" in SSrating.rating_by_icon))
-			LAZYSET(rates[usr.ckey], rating_cat, rating)
-			to_chat(usr, "<span class='info'>Ваша оценка: [rating].</span>")
-
-/datum/controller/subsystem/rating/proc/get_result_message(category, rating)
-	for(var/datum/rating_template/template in rating_templates)
-		if(template.category == category)
-			return template.get_result_message(rating)
+		var/datum/rating_template/template = get_template(rating_cat)
+		if(rating && isnum(rating) && template)
+			var/datum/vote_choice/choice = template.get_rating_choice("[rating]")
+			if(choice)
+				for(var/datum/vote_choice/VC in template.choices)
+					if(usr.ckey in VC.voters)
+						VC.voters.Remove(usr.ckey)
+				choice.voters[usr.ckey] = 1
+				to_chat(usr, "<span class='info'>Ваша оценка: [rating].</span>")
 
 /datum/controller/subsystem/rating/proc/get_template(category)
 	for(var/datum/rating_template/template in rating_templates)
 		if(template.category == category)
 			return template
 
-/datum/controller/subsystem/rating/proc/get_icon(rating)
-	return rating_by_icon["[CEIL(rating)]"]
-
 /datum/controller/subsystem/rating/proc/get_voting_results()
 	var/string = "<div>"
 
-	var/list/ratings = SSStatistics.rating.ratings
-	for(var/category in ratings)
-		string += get_result_message(category, ratings[category])
+	for(var/category in picked_templates)
+		var/datum/rating_template/template = picked_templates[category]
+		string += template.get_result_message()
 
 	string += "</div>"
 	return string
-
 
 /datum/controller/subsystem/rating/proc/generate_pool()
 	var/list/template_pool = rating_templates.Copy()
@@ -132,15 +157,17 @@ SUBSYSTEM_DEF(rating)
 		if(template.show_options & RATING_SHOW_ALWAYS)
 			new_template_pool += template
 			template_pool -= template
+			LAZYSET(picked_templates, template.category, template)
 
 	var/question_asked = 0
 	while(question_asked != max_random_questions)
 		if(template_pool.len == 0)
 			break
-		var/template = pick(template_pool)
+		var/datum/rating_template/template = pick(template_pool)
 		new_template_pool += template
 		template_pool -= template
 		question_asked++
+		LAZYSET(picked_templates, template.category, template)
 	return new_template_pool
 
 /datum/controller/subsystem/rating/proc/get_question_pool()
@@ -152,41 +179,39 @@ SUBSYSTEM_DEF(rating)
 
 	return cached_templates_pool
 
-#define RATING_HREF(rating, category, fa_icon, a_class) "<a href='?src=\ref[src];round_rating=[rating];rating_cat=[category]' class='[a_class]'><span class='far [fa_icon]'></span></a>"
-
 /datum/controller/subsystem/rating/proc/announce_rating_collection()
 	voting = TRUE
 
-	var/html = "<br><div class='rating'>"
-
-	var/list/new_template_pool = get_question_pool()
-
-	for(var/datum/rating_template/template in new_template_pool)
-		html += "<span class='rating_questions'>[template.question]</span><br>"
-		// render voting choises
-		var/i = 0
-		for(var/rate in rating_by_icon)
-			i++
-			html += RATING_HREF(rate, template.category, rating_by_icon[rate]["icon"], rating_by_icon[rate]["a-class"])
-			if(rating_by_icon.len != i)
-				html += "  -  "
-		html += "<br>"
-	html += "</div><br>"
-
 	for(var/client/C in clients)
-		to_chat(C, html)
+		var/html = "<br><div class='rating'>"
 
-#undef RATING_HREF
+		var/list/new_template_pool = get_question_pool()
+		for(var/datum/rating_template/template in new_template_pool)
+			html += "<span class='rating_questions'>[template.question]</span><br>"
+			// render voting choices
+			var/i = 0
+			for(var/datum/vote_choice/choice in template.choices)
+				i++
+				html += choice.render_html(template.category)
+				if(template.choices.len != i)
+					html += "  -  "
+			html += "<br>"
+		html += "</div><br>"
+
+		to_chat(C, html)
 
 /datum/controller/subsystem/rating/proc/calculate_rating()
 	voting = FALSE
 
-	var/list/voters = list()
-	for(var/ckey in rates)
-		for(var/category in rates[ckey])
-			SSStatistics.rating.ratings[category] += rates[ckey][category]
-			voters[category]++
-	for(var/category in SSStatistics.rating.ratings)
-		SSStatistics.rating.ratings[category] = round(SSStatistics.rating.ratings[category] / voters[category], 0.01)
+	for(var/category in picked_templates)
+		var/datum/rating_template/template = picked_templates[category]
+		for(var/datum/vote_choice/choice in template.choices)
+			var/total_votes = choice.total_votes()
+			if(total_votes == 0)
+				continue
+			template.avg_rate += text2num(choice.text) // :)
+			template.total_voters += total_votes
+		template.avg_rate = round(template.avg_rate / template.total_voters, 0.01)
+		SSStatistics.rating.ratings[category] = template.avg_rate
 
 #undef RATING_SHOW_ALWAYS
