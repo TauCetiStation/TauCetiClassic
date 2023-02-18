@@ -1,6 +1,3 @@
-var/global/list/vending_machines = list()
-
-
 /datum/data/vending_product
 	var/product_name = "generic"
 	var/product_path = null
