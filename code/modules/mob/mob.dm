@@ -479,6 +479,8 @@
 		var/datum/browser/popup = new(usr, "window=flavor [name]", "Flavor [name]", 500, 200, ntheme = CSS_THEME_LIGHT)
 		popup.set_content(flavor_text)
 		popup.open()
+	return
+
 
 /mob/proc/pull_damage()
 	if(ishuman(src))
