@@ -66,3 +66,4 @@
 		return
 
 	mind.add_key_memory(key, value)
+	list_key_memories()
