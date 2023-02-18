@@ -58,9 +58,6 @@ var/global/list/vending_machines = list()
 	var/datum/wires/vending/wires = null
 	var/scan_id = TRUE
 
-	var/load = 0
-	var/max_load = 0
-
 
 /obj/machinery/vending/atom_init()
 	. = ..()
@@ -77,7 +74,6 @@ var/global/list/vending_machines = list()
 	last_slogan = world.time + rand(0, slogan_delay)
 
 	build_inventory(products)
-	max_load = load
 	 //Add hidden inventory
 	build_inventory(contraband, 1)
 	build_inventory(premium, 0, 1)
@@ -112,8 +108,6 @@ var/global/list/vending_machines = list()
 
 /obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0,req_emag=0)
 	for(var/typepath in productlist)
-		if(productlist == products)
-			load += productlist[typepath]
 		var/amount = productlist[typepath]
 		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
@@ -165,7 +159,6 @@ var/global/list/vending_machines = list()
 				to_chat(usr, "<span class='notice'>[restock] of [machine_content.product_name]</span>")
 			if(refill.charges == 0) //due to rounding, we ran out of refill charges, exit.
 				break
-	load += total
 	return total
 
 /obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
@@ -487,9 +480,6 @@ var/global/list/vending_machines = list()
 		else
 			QDEL_NULL(coin)
 
-	if (R in product_records)
-		load--
-
 	R.amount--
 
 	if(((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
@@ -511,7 +501,6 @@ var/global/list/vending_machines = list()
 	if(src.panel_open)
 		to_chat(user, "<span class='notice'>You stock the [src] with \a [R.product_name]</span>")
 		R.amount++
-		load++
 
 	updateUsrDialog()
 
@@ -581,7 +570,6 @@ var/global/list/vending_machines = list()
 			continue
 		new dump_path(src.loc)
 		R.amount--
-		load--
 
 	//Dropping remaining items in a pack
 	var/refilling = 0
@@ -589,7 +577,6 @@ var/global/list/vending_machines = list()
 		while(R.amount > 0)
 			refilling++
 			R.amount--
-			load--
 
 	var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
 	Refill.charges = refilling
@@ -614,7 +601,6 @@ var/global/list/vending_machines = list()
 			continue
 
 		R.amount--
-		load--
 		throw_item = new dump_path(src.loc)
 		break
 	if (!throw_item)
