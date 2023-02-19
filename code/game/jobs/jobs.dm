@@ -131,6 +131,7 @@ var/global/list/nonhuman_positions = list(
 	"pAI"
 )
 
+
 /proc/get_job_datums()
 	var/list/occupations = list()
 	var/list/all_jobs = typesof(/datum/job)
