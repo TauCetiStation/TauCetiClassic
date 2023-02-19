@@ -1,17 +1,17 @@
-/datum/faction/enemy_revs
+/datum/faction/enemies_of_rev
 	name = "Enemies of Revolution"
-	ID = F_ENEMY_REVS
+	ID = F_ENEMIES_OF_REV
 	logo_state = "enemy_revs-logo"
 	initroletype = /datum/role/enemy_rev
 	roletype = /datum/role/enemy_rev
 
-/datum/faction/enemy_revs/forgeObjectives()
+/datum/faction/enemies_of_rev/forgeObjectives()
 	if(!..())
 		return FALSE
-	AppendObjective(/datum/objective/revolution/enemy_revs_survive)
+	AppendObjective(/datum/objective/revolution/enemies_of_rev_survive)
 	return TRUE
 
-/datum/faction/enemy_revs/proc/check_populated()
+/datum/faction/enemies_of_rev/proc/check_populated()
 	//faction created, but not populated.
 	if(!members.len)
 		//Than, destroy faction and do not show it in round end

@@ -295,7 +295,7 @@
 		//create enemies of revolution
 		if(!victory_is_near)
 			victory_is_near = TRUE
-			var/datum/faction/enemy_revs/enemies = create_uniq_faction(/datum/faction/enemy_revs)
+			var/datum/faction/enemies_of_rev/enemies = create_uniq_faction(/datum/faction/enemies_of_rev)
 			if(!enemies)
 				return FALSE
 			for(var/mob/living/carbon/human/M in global.player_list)

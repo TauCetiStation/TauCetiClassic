@@ -502,7 +502,7 @@
 #include "code\game\gamemodes\factions\cops.dm"
 #include "code\game\gamemodes\factions\cult.dm"
 #include "code\game\gamemodes\factions\custom.dm"
-#include "code\game\gamemodes\factions\enemy_revs.dm"
+#include "code\game\gamemodes\factions\enemies_of_rev.dm"
 #include "code\game\gamemodes\factions\families.dm"
 #include "code\game\gamemodes\factions\heist.dm"
 #include "code\game\gamemodes\factions\infestation.dm"
