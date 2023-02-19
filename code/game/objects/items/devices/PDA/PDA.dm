@@ -1104,7 +1104,7 @@
 					if(Lot.sold)
 						if(online_shop_lots_hashed.Find(Lot.hash))
 							for(var/datum/shop_lot/NewLot in online_shop_lots_hashed[Lot.hash])
-								if(NewLot && !NewLot.sold)
+								if(NewLot && !NewLot.sold && (Lot.get_price() <= NewLot.get_price()))
 									order_item(NewLot, T)
 									return
 						to_chat(U, "<span class='notice'>ОШИБКА: Этот предмет уже куплен.</span>")
@@ -1790,7 +1790,7 @@
 	if(!owner_account || !Lot)
 		return
 
-	var/discount_price = round((1 - global.online_shop_discount) * Lot.price)
+	var/discount_price = Lot.get_price()
 	var/prepayment = round(discount_price * global.online_shop_delivery_cost)
 
 	if(prepayment > owner_account.money)
