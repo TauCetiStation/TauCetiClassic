@@ -23,8 +23,6 @@
 	var/last_command_report = 0
 	var/tried_to_add_revheads = 0
 
-	var/type_of_objective = /datum/objective/target/rp_rev
-
 /datum/faction/revolution/proc/get_all_heads()
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player as anything in human_list)
@@ -44,7 +42,7 @@
 	var/list/heads = get_living_heads()
 
 	for(var/datum/mind/head_mind in heads)
-		var/datum/objective/target/rev_obj = AppendObjective(type_of_objective, TRUE)
+		var/datum/objective/target/rev_obj = AppendObjective(/datum/objective/target/syndicate_rev, TRUE)
 		if(rev_obj)
 			rev_obj.target = head_mind
 			rev_obj.explanation_text = rev_obj.format_explanation()
@@ -95,8 +93,7 @@
 	return dat
 
 /datum/faction/revolution/proc/add_new_objective(mob/M)
-	//ApendObjective or handleNewObjective ???
-	var/datum/objective/target/rev_obj = AppendObjective(type_of_objective, TRUE)
+	var/datum/objective/target/rev_obj = AppendObjective(/datum/objective/target/syndicate_rev, TRUE)
 	if(rev_obj)
 		rev_obj.target = M.mind
 		rev_obj.explanation_text = rev_obj.format_explanation()
@@ -250,7 +247,6 @@
 /datum/faction/revolution/flash_revolution
 	initroletype = /datum/role/rev_leader/flash_rev_leader
 	min_roles = 1
-	type_of_objective = /datum/objective/target/syndicate_rev
 	var/victory_is_near = FALSE
 	var/shuttle_timer_started = FALSE
 
