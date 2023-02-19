@@ -351,8 +351,8 @@
 
 /obj/item/weapon/storage/belt/utility/hacker
 	startswith = list(
-	/obj/item/weapon/wrench/power,
-	/obj/item/weapon/wirecutters/power,
+	/obj/item/weapon/multi/hand_drill,
+	/obj/item/weapon/multi/jaws_of_life,
 	/obj/item/weapon/weldingtool/largetank,
 	/obj/item/device/multitool,
 	/obj/item/device/flashlight/emp,)

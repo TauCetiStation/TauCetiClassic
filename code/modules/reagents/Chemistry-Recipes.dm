@@ -155,7 +155,14 @@
 	name = "Space Drugs"
 	id = "space_drugs"
 	result = "space_drugs"
-	required_reagents = list("mercury" = 1, "sugar" = 1, "lithium" = 1)
+	required_reagents = list("anti_toxin" = 1, "ambrosium" = 1, "sugar" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/jenkem
+	name = "Space Jenkem"
+	id = "jenkem"
+	result = "jenkem"
+	required_reagents = list("water" = 1, "fuel" = 1, "sugar" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/lube

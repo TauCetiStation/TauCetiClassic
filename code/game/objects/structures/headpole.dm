@@ -40,7 +40,7 @@
 
 /obj/structure/headpole/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if(iscrowbar(W))
+	if(isprying(W))
 		to_chat(user, "You pry \the [head] off \the [spear].")
 		if(head)
 			head.forceMove(get_turf(src))

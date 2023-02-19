@@ -63,7 +63,7 @@
 	if(user.is_busy()) return
 	switch(state)
 		if("01")
-			if(iswelder(W) && !anchored )
+			if(iswelding(W) && !anchored )
 				var/obj/item/weapon/weldingtool/WT = W
 				if (WT.use(0,user))
 					user.visible_message("[user] dissassembles the windoor assembly.", "You start to dissassemble the windoor assembly.")
@@ -78,7 +78,7 @@
 					return
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
-			if(iswrench(W) && !anchored)
+			if(iswrenching(W) && !anchored)
 				user.visible_message("[user] secures the windoor assembly to the floor.", "You start to secure the windoor assembly to the floor.")
 				if(W.use_tool(src, user, 40, volume = 100))
 					if(src.anchored)
@@ -91,7 +91,7 @@
 						src.name = "Anchored Windoor Assembly"
 
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
-			else if(iswrench(W) && anchored)
+			else if(iswrenching(W) && anchored)
 				user.visible_message("[user] unsecures the windoor assembly to the floor.", "You start to unsecure the windoor assembly to the floor.")
 				if(W.use_tool(src, user, 40, volume = 100))
 					if(!src.anchored)
@@ -140,7 +140,7 @@
 		if("02")
 
 			//Removing wire from the assembly. Step 5 undone.
-			if(iswirecutter(W) && !src.electronics)
+			if(iscutter(W) && !src.electronics)
 				user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
 				if(W.use_tool(src, user, 40, volume = 100))
 					if(src.state != "02")
@@ -171,7 +171,7 @@
 						AE.loc = src.loc
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
-			else if(isscrewdriver(W))
+			else if(isscrewing(W))
 				if(!electronics)
 					return
 				user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to uninstall electronics from the airlock assembly.")
@@ -195,7 +195,7 @@
 
 
 			//Crowbar to complete the assembly, Step 7 complete.
-			else if(iscrowbar(W))
+			else if(isprying(W))
 				if(!src.electronics)
 					to_chat(usr, "<span class='warning'>The assembly is missing electronics.</span>")
 					return
