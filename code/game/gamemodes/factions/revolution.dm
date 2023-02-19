@@ -12,10 +12,10 @@
 	ID = F_REVOLUTION
 	required_pref = ROLE_REV
 
-	initroletype = /datum/role/rev_leader/flash_rev_leader
+	initroletype = /datum/role/rev_leader
 	roletype = /datum/role/rev
 
-	min_roles = 2
+	min_roles = 1
 	max_roles = 2
 
 	logo_state = "rev-logo"
@@ -290,7 +290,7 @@
 			SSStatistics.score.roleswon++
 		else
 			dat += "<span class='orange'>The heads of staff were overthrown, but many heads died.</span><br>"
-			dat += "<span class='orange'>The revolutionaries were victorious, but they did not win overt support from the Syndicate.</span>"
+			dat += "<span class='orange'>The revolutionaries were victorious, but they did not win overt support from the Syndicate.</span><br>"
 			dat += "<span class='orange'>Nanotrasen's battle groups will be sent to the station.</span><br>"
 			feedback_add_details("[ID]_success","HALF")
 
