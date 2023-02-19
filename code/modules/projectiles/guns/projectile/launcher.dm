@@ -4,6 +4,7 @@
 	icon_state = "m79"
 	mag_type = /obj/item/ammo_box/magazine/internal/m79
 	can_be_holstered = FALSE
+	two_hand_weapon = TRUE
 
 /obj/item/weapon/gun/projectile/grenade_launcher/proc/unchamber()
 	playsound(src, 'sound/weapons/guns/m79_out.ogg', VOL_EFFECTS_MASTER)
@@ -77,3 +78,4 @@
 	desc = "It's a little tiny launcher. You shouldn't be seeing this."
 	mag_type = /obj/item/ammo_box/magazine/internal/m79/underslung
 	fire_sound = 'sound/weapons/guns/gunshot_m79.ogg'
+	two_hand_weapon = FALSE
