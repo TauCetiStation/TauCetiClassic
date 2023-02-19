@@ -822,6 +822,16 @@
 	. = ..()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 
+	component_parts += new /obj/item/weapon/circuitboard/reagentgrinder(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	RefreshParts()
+
+/obj/machinery/reagentgrinder/RefreshParts()
+	. = ..()
+	speed = 1
+	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+		speed = M.rating
+
 /obj/machinery/reagentgrinder/update_icon()
 	icon_state = "juicer"+num2text(!isnull(beaker))
 	return

@@ -695,7 +695,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 500
 
-	unlocks_designs = list("sleeper", "cryotube", "crewconsole")
+	unlocks_designs = list("sleeper", "cryotube", "crewconsole", "reagentgrinder")
 
 /datum/technology/cloning
 	name = "Cloning"
