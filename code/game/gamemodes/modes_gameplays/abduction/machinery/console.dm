@@ -174,7 +174,10 @@
 					if(C.team == team)
 						camera = new(get_turf(C))
 						camera.console = src
+						camera.team = C.team
+						camera.networks += "Abductor[team]"
 						qdel(C)
+						break
 			if("baton")
 				Dispense(/obj/item/weapon/abductor_baton, 2)
 			if("helmet")
