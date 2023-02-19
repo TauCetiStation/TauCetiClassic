@@ -194,7 +194,7 @@
 		if(P.crumpled)
 			to_chat(usr, "Paper too crumpled for anything.")
 			return
-		if(tgui_alert(user, "Would you like to hold up \the [P] to the camera?", "Let camera see your text!", list("Yes!", "No!")) != "Yes!")
+		if(tgui_alert(user, "Would you like to hold up \the [P] to the camera?", "Let AI see your text!", list("Yes!", "No!")) != "Yes!")
 			return
 		to_chat(user, "You hold \the [P] up to the camera...")
 		for(var/mob/living/silicon/ai/O as anything in ai_list)
@@ -210,27 +210,6 @@
 				var/mob/living/L = locate(M) // M is a \ref. weird
 				to_chat(L, "You can see [user] holding \the [P] to the camera you're watching...")
 				P.show_content(L)
-	else if(istype(W, /obj/item/weapon/photo))
-		user.SetNextMove(CLICK_CD_INTERACT)
-		if(show_paper_cooldown > world.time)
-			return
-		show_paper_cooldown = world.time + 5 SECONDS
-		var/obj/item/weapon/photo/P = W
-		if(tgui_alert(user, "Would you like to hold up \the [P] to the camera?", "Let camera see your photo!", list("Yes!", "No!")) != "Yes!")
-			return
-		to_chat(user, "You hold \the [P] up to the camera...")
-		for(var/mob/living/silicon/ai/O as anything in ai_list)
-			if(!O.client || O.stat == DEAD)
-				continue
-			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[user];trackname=[user.name]'>[user.name]</a></b> holds \the [P] up to one of your cameras...")
-			P.show(O)
-		for(var/obj/machinery/computer/security/S in computer_list) // show the paper to all people watching this camera. except ghosts, fuck ghosts
-			if(S.active_camera != src)
-				continue
-			for(var/M in S.concurrent_users)
-				var/mob/living/L = locate(M) // M is a \ref. weird
-				to_chat(L, "You can see [user] holding \the [P] to the camera you're watching...")
-				P.show(L)
 
 	else if (istype(W, /obj/item/device/camera_bug))
 		if(!can_use())
