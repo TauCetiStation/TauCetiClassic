@@ -3,7 +3,7 @@
 	var/mob/living/carbon/human/convert_target = null
 
 /obj/item/device/flash/rev_flash/AdjustFlashEffect(mob/living/M)
-	M.AdjustWeakened(rand(6, 10))
+	M.AdjustWeakened(4)
 	M.flash_eyes()
 
 /obj/item/device/flash/rev_flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
@@ -20,14 +20,13 @@
 		//red color flash for attract attention
 		flash_lighting_fx(_color = LIGHT_COLOR_FIREPLACE)
 		//give them time to think about the situation
-		convert_target.AdjustSleeping(2)
+		convert_target.Paralyse(4)
 	else
 		playsound(user, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	flick("flash2", src)
 	playsound(src, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/device/flash/rev_flash/proc/flash_convert(mob/living/carbon/user)
-	//maybe add some do_after(3 SECONDS)?
 	var/datum/role/user_role = null
 	//if we don't need converting by other revolutionaries/antags
 	if(headrev_only)
@@ -71,7 +70,7 @@
 		return FALSE
 	/*	Concept requires: target must be incapacitating.
 		There is no meta on revolution and that device.
-		We dont need lol-convert					*/
+		Dont need lol-convert						*/
 	var/have_incapacitating = FALSE
 	for(var/effect in convert_target.status_effects)
 		var/datum/status_effect/incapacitating/S = effect
