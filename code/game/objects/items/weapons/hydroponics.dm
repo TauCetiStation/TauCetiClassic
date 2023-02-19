@@ -188,7 +188,7 @@ var/global/gourd_name = null
 	reagents.add_reagent(restore_reagent, potency * 0.005)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/attackby(obj/item/I, mob/user)
-	if(I.qualities[QUALITY_CUTTING])
+	if(I.get_quality(QUALITY_CUTTING))
 		var/turf/T = I.loc
 		if(!isturf(T))
 			T = T.loc
