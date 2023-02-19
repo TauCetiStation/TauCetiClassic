@@ -76,10 +76,8 @@
 /obj/machinery/camera/update_icon()
 	if(!status)
 		icon_state = "[initial(icon_state)]1"
-	else if(stat & EMPED)
-		icon_state = "[initial(icon_state)]emp"
 	else
-		icon_state = "[initial(icon_state)]"
+		icon_state = "[isXRay() ? "xray" : ""][initial(icon_state)]"
 
 /obj/machinery/camera/examine(mob/user)
 	..()
@@ -94,6 +92,7 @@
 			stat |= EMPED
 			toggle_cam(TRUE)
 			triggerCameraAlarm()
+			flick("[isXRay() ? "xray" : ""][initial(icon_state)]emp", src)
 			..()
 
 /obj/machinery/camera/proc/fix_emp_state(list/previous_network)
@@ -224,7 +223,7 @@
 			src.bug = W
 			src.bug.bugged_cameras[src.c_tag] = src
 	else if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W, /obj/item/weapon/dualsaber))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
-		if(W:force > 3)
+		if(W.force > 3)
 			user.do_attack_animation(src)
 			disconnect_viewers()
 			var/datum/effect/effect/system/spark_spread/spark_system = new()
@@ -271,6 +270,28 @@
 		assembly.forceMove(loc)
 		assembly.update_icon()
 		assembly = null
+
+/obj/machinery/camera/examine(mob/user)
+	. = ..()
+	if(isEmpProof())
+		to_chat(user, "It has electromagnetic interference shielding installed.")
+	else
+		to_chat(user, "<span class='info'>It can be shielded against electromagnetic interference with some <b>plasma</b>.</span>")
+	if(isXRay())
+		to_chat(user, "It has an X-ray photodiode installed.")
+	else
+		to_chat(user, "<span class='info'>It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.</span>")
+	if(isMotion())
+		to_chat(user, "It has a proximity sensor installed.")
+	else
+		to_chat(user, "<span class='info'>It can be upgraded with a <b>proximity sensor</b>.</span>")
+
+	if(!status)
+		to_chat(user, "<span class='info'>It's currently deactivated.</span>")
+	if(panel_open)
+		to_chat(user, "<span class='info'>Its maintenance panel is currently open. You can close it with a <b>screwdriver</b>.</span>")
+	else
+		to_chat(user, "<span class='notice'>You can open its maintenance panel with a <b>screwdriver</b>.</span>")
 
 /obj/machinery/camera/proc/toggle_cam(show_message, mob/living/user = null)
 	status = !status
