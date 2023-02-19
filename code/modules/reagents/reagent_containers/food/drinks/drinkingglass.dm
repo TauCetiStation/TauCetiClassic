@@ -554,6 +554,14 @@
 				icon_state = "mojitoglass"
 				name = "Mojito"
 				desc = "Good old mojito, not an aging classic."
+			if("gourd")
+				icon_state = "glass_gourd"
+				name = "disgusting swamp juice"
+				desc = "Тыквячий сок. Хороший способ облегчить желудок."
+			if("gourdbeer")
+				icon_state = "gourdbeer"
+				name = "[get_gourd_name()] beer"
+				desc = "Тыквяк. Известный напиток на дрожжах из тыквячьего сока. Просто отвратителен."
 			else
 				icon_state ="glass_brown"
 				name = "Glass of ..what?"
