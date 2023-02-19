@@ -107,7 +107,13 @@
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
 		if(mapload && is_station_level(src.z) && !hidden && !req_coin && !req_emag)
-			amount = round(amount * clamp((num_players() / 75) * (rand(50,100) / 100), 0.1, 1.0)) //10-100% roundstart load depending on player amount
+			var/players_coefficient = num_players() / 75 //75 players = max load, 0 players = min load
+			var/random_coefficient = rand(50,100) / 100 //50-100% randomness
+
+			var/final_coefficient = clamp(players_coefficient * random_coefficient, 0.1, 1.0) //10% minimum, 100% maximum
+
+			amount = round(amount * final_coefficient) //10-100% roundstart load depending on player amount and randomness
+
 		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
 
