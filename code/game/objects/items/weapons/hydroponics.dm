@@ -175,6 +175,7 @@ var/global/gourd_name = null
 	unathi_gourd_event = /datum/mood_event/unathi_magic_gourd
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/magic/atom_init()
+	. = ..()
 	name = "refreshing [get_gourd_name()]"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/Destroy()
