@@ -56,7 +56,7 @@
 	var/scan_id = TRUE
 
 
-/obj/machinery/vending/atom_init()
+/obj/machinery/vending/atom_init(mapload)
 	. = ..()
 	wires = new(src)
 	src.anchored = TRUE
@@ -72,9 +72,9 @@
 
 	build_inventory(products)
 	 //Add hidden inventory
-	build_inventory(contraband, 1)
-	build_inventory(premium, 0, 1)
-	build_inventory(syndie, 0, 0, 1)
+	build_inventory(contraband, mapload, hidden = 1)
+	build_inventory(premium, mapload, req_coin = 1)
+	build_inventory(syndie, mapload, req_emag = 1)
 	power_change()
 	update_wires_check()
 
@@ -103,11 +103,11 @@
 	if(.)
 		malfunction()
 
-/obj/machinery/vending/proc/build_inventory(list/productlist,hidden=0,req_coin=0,req_emag=0)
+/obj/machinery/vending/proc/build_inventory(list/productlist, mapload, hidden = 0, req_coin = 0 , req_emag = 0)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
-		if(!hidden && !req_coin && !req_emag && is_station_level(src.z))
-			amount = round(amount * clamp(num_players() / 75, 0.1, 1.0)) //10-100% roundstart load depending on player amount
+		if(mapload && is_station_level(src.z) && !hidden && !req_coin && !req_emag)
+			amount = round(amount * clamp((num_players() / 75) * (rand(50,100) / 100), 0.1, 1.0)) //10-100% roundstart load depending on player amount
 		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
 
