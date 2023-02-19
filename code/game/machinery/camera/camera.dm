@@ -185,31 +185,46 @@
 		to_chat(user, "<span class='notice'>You fixed [src] lens.</span>")
 		G.use(1)
 	// OTHER
-	else if(istype(W, /obj/item/weapon/paper))
+	else if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(show_paper_cooldown > world.time)
 			return
 		show_paper_cooldown = world.time + 5 SECONDS
-		var/obj/item/weapon/paper/P = W
-		if(P.crumpled)
-			to_chat(usr, "Paper too crumpled for anything.")
+
+		var/obj/item/weapon/paper/Paper
+		var/obj/item/weapon/photo/Photo
+
+		if(istype(W, /obj/item/weapon/paper))
+			Paper = W
+			if(Paper.crumpled)
+				to_chat(usr, "Paper too crumpled for anything.")
+				return
+		else
+			Photo = W
+
+		if(tgui_alert(user, "Would you like to hold up \the [Paper ? Paper : Photo] to the camera?", "Let camera see your [Paper ? "text" : "photo"]!", list("Yes!", "No!")) != "Yes!")
 			return
-		if(tgui_alert(user, "Would you like to hold up \the [P] to the camera?", "Let AI see your text!", list("Yes!", "No!")) != "Yes!")
-			return
-		to_chat(user, "You hold \the [P] up to the camera...")
+		to_chat(user, "You hold \the [Paper ? Paper : Photo] up to the camera...")
 		for(var/mob/living/silicon/ai/O as anything in ai_list)
 			if(!O.client || O.stat == DEAD)
 				continue
-			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[user];trackname=[user.name]'>[user.name]</a></b> holds \the [P] up to one of your cameras...")
-			P.show_content(O)
+			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[user];trackname=[user.name]'>[user.name]</a></b> holds \the [Paper ? Paper : Photo] up to one of your cameras...")
+
+			if(Paper)
+				Paper.show_content(O)
+			else
+				Photo.show(O)
 
 		for(var/obj/machinery/computer/security/S in computer_list) // show the paper to all people watching this camera. except ghosts, fuck ghosts
 			if(S.active_camera != src)
 				continue
 			for(var/M in S.concurrent_users)
 				var/mob/living/L = locate(M) // M is a \ref. weird
-				to_chat(L, "You can see [user] holding \the [P] to the camera you're watching...")
-				P.show_content(L)
+				to_chat(L, "You can see [user] holding \the [Paper ? Paper : Photo] to the camera you're watching...")
+				if(Paper)
+					Paper.show_content(L)
+				else
+					Photo.show(L)
 
 	else if (istype(W, /obj/item/device/camera_bug))
 		if(!can_use())
