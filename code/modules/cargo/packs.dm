@@ -455,7 +455,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(/obj/item/weapon/vending_refill/coffee,
 					/obj/item/weapon/vending_refill/coffee,
 					/obj/item/weapon/vending_refill/coffee)
-	cost = 1625
+	cost = 1630
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "hotdrinks supply crate"
 	group = "Hospitality"
@@ -465,7 +465,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(/obj/item/weapon/vending_refill/snack,
 					/obj/item/weapon/vending_refill/snack,
 					/obj/item/weapon/vending_refill/snack)
-	cost = 1694
+	cost = 1690
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "snack supply crate"
 	group = "Hospitality"
@@ -545,7 +545,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(/obj/item/weapon/vending_refill/chinese,
 					/obj/item/weapon/vending_refill/chinese,
 					/obj/item/weapon/vending_refill/chinese)
-	cost = 1268
+	cost = 1270
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Mr. Chang supply crate"
 	group = "Hospitality"
@@ -585,7 +585,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(/obj/item/weapon/vending_refill/junkfood,
 					/obj/item/weapon/vending_refill/junkfood,
 					/obj/item/weapon/vending_refill/junkfood)
-	cost = 782
+	cost = 780
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Fast Food supply crate"
 	group = "Hospitality"
