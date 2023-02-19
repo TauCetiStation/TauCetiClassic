@@ -43,41 +43,13 @@
 	antag_hud_name = "hudheadrevolutionary"
 
 	var/rev_cooldown = 0
-	var/give_uplink = TRUE
-	var/give_rp_rev_verb = TRUE
 	skillset_type = /datum/skillset/max
 	moveset_type = /datum/combat_moveset/cqc
 
-/datum/role/rev_leader/New()
-	..()
-	if(give_uplink)
-		AddComponent(/datum/component/gamemode/syndicate, 1, "rev")
-
 /datum/role/rev_leader/OnPostSetup(laterole)
 	. = ..()
-	if(give_rp_rev_verb)
-		antag.current.verbs += /mob/living/carbon/human/proc/RevConvert
-
-	// Show each head revolutionary up to 3 candidates
-	var/list/already_considered = list()
-	for(var/i in 1 to 2)
-		var/mob/rev_mob = antag.current
-		already_considered += rev_mob
-		// Tell them about people they might want to contact.
-		var/mob/living/carbon/human/M = get_nt_opposed()
-		if(M && !isrevhead(M) && !(M in already_considered))
-			to_chat(rev_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
-			rev_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
-
-/datum/role/rev_leader/flash_rev_leader
-	name = "Head of Syndicate Revolution"
-	give_uplink = FALSE
-	give_rp_rev_verb = FALSE
-
-/datum/role/rev_leader/flash_rev_leader/OnPostSetup(laterole)
-	. = ..()
 	var/mob/living/carbon/human/H = antag.current
-	H.equip_to_slot_or_del(new /obj/item/device/flash/rev_flash, SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/device/flash/rev_flash, SLOT_IN_BACKPACK)
 
 /mob/living/carbon/human/proc/RevConvert()
 	set name = "Rev-Convert"
