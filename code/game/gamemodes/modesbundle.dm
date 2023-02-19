@@ -27,7 +27,6 @@
 	/datum/game_mode/nuclear,
 	/datum/game_mode/revolution,
 	/datum/game_mode/shadowling,
-	/datum/game_mode/syndirevolution,
 	/datum/game_mode/traitorchan,
 	/datum/game_mode/traitor,
 	/datum/game_mode/wizard,
@@ -87,7 +86,7 @@
 	votable = TRUE
 
 /datum/modesbundle/all/secret/New()
-	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended, /datum/game_mode/malfunction, /datum/game_mode/syndirevolution)
+	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended, /datum/game_mode/malfunction)
 	..()
 
 /datum/modesbundle/run_anyway
