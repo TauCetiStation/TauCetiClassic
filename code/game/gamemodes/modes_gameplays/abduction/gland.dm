@@ -83,7 +83,7 @@
 	cooldown_high = 2400
 	uses = 1
 
-/obj/item/gland/slime_boom/activate()
+/obj/item/gland/true_form/activate()
 	host.visible_message("<span class='danger'>[host] explodes into creatures!</span>")
 	var/turf/pos = get_turf(host)
 	new /mob/living/carbon/slime(pos)
@@ -91,7 +91,6 @@
 	new /mob/living/simple_animal/mouse(pos)
 	var/obj/effect/proc_holder/spell/S = new /obj/effect/proc_holder/spell/no_target/shapeshift/abductor()
 	host.AddSpell(S)
-	S.cast(null, host)
 	S.cast(null, host)
 
 //MINDSHOCK
@@ -124,6 +123,41 @@
 /obj/item/gland/pop/activate()
 	to_chat(host, "<span class='notice'>You feel unlike yourself.</span>")
 	host.set_species_soft(pick(HUMAN, UNATHI, TAJARAN, SKRELL, DIONA, PODMAN, VOX))
+
+//Abductor
+/obj/item/gland/abductor
+	desc = "Creates your new ally"
+	uses = 0
+	icon_state = "species"
+	var/team = 0
+
+/obj/item/gland/abductor/Inject(mob/living/carbon/human/target)
+	. = ..()
+	switch(tgui_alert(target, "Вы станите новым членом команды, похитившей вас, а за одно и предадите всё человечество!", "Стать ассистентом пришельцев?", list("Да","Нет")))
+		if("Да")
+			accept()
+		if("Нет")
+			host = null
+			target.organs -= src
+			forceMove(get_turf(target))
+
+/obj/item/gland/abductor/proc/accept()
+	to_chat(host, "<span class='notice'>You feel something moving in your brain.</span>")
+	host.AdjustConfused(8)
+	host.make_jittery(60)
+	host.emote("scream")
+	var/datum/faction/abductors/req_f
+	for(var/datum/faction/abductors/F in find_factions_by_type(/datum/faction/abductors))
+		if(F.team_number == team)
+			req_f = F
+			break
+	if(!req_f)
+		return
+	host.setOxyLoss(0) //They can't heal oxyloss, so we need to deal with it right now
+	var/datum/role/R = create_and_setup_role(/datum/role/abductor/assistant, host)
+	host.real_name = req_f.name + " " + "Assistant"
+	host.mind.name = host.real_name
+	req_f.HandleRecruitedRole(R)
 
 
 //VENTCRAWLING
