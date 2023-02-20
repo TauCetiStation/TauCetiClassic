@@ -125,7 +125,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
 	global.replicators_faction.give_gift(src)
 
-	generation = rand(0, 9)
+	generation = "[rand(0, 9)]"
 
 	name = "replicator ([generation])"
 	real_name = name
@@ -159,35 +159,35 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 /mob/living/simple_animal/replicator/Moved(atom/OldLoc, dir)
 	. = ..()
 
+	if(!isturf(loc))
+		return
+
+	try_construct(loc)
+
+/mob/living/simple_animal/replicator/proc/try_construct(turf/T)
 	if(!auto_construct_type)
 		return
 
 	if(global.replicators_faction.materials < auto_construct_cost)
 		return
 
-	var/turf/my_turf = get_turf(src)
-	if(loc != my_turf)
-		return
+	//if(!istype(my_turf, /turf/simulated/floor/plating/airless/catwalk/forcefield))
+	//	return
 
-	if(!istype(my_turf, /turf/simulated/floor/plating/airless/catwalk/forcefield))
-		return
-
-	if(locate(auto_construct_type) in my_turf)
+	if(locate(auto_construct_type) in T)
 		return
 
 	// Corridors can only connect to two other corridors if there's no portal connecting them.
-	if(auto_construct_type == /obj/structure/bluespace_corridor && !(locate(/obj/machinery/bluespace_transponder) in my_turf))
+	if(auto_construct_type == /obj/structure/bluespace_corridor && !(locate(/obj/machinery/bluespace_transponder) in T))
 		var/neighbor_count = 0
-		for(var/t in RANGE_TURFS(1, my_turf))
-			var/turf/T = t
-			if(locate(auto_construct_type) in T)
+		for(var/card_dir in global.cardinal)
+			var/turf/other = get_step(T, card_dir)
+			if(locate(auto_construct_type) in other)
 				neighbor_count += 1
-				// Elegant solution to forks.
-				if(neighbor_count >= 3)
+				if(neighbor_count >= 2)
 					return
-		return
 
-	new auto_construct_type(my_turf)
+	new auto_construct_type(T)
 	global.replicators_faction.adjust_materials(-auto_construct_cost, adjusted_by=last_controller_ckey)
 
 /mob/living/simple_animal/replicator/update_icon()
@@ -248,6 +248,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 /mob/living/simple_animal/replicator/UnarmedAttack(atom/A)
 	if(a_intent == INTENT_HARM)
 		INVOKE_ASYNC(src, .proc/disintegrate_turf, get_turf(A))
+		return
+
+	if(istype(A, /obj/structure/inflatable/forcefield) && auto_construct_type == /obj/structure/bluespace_corridor)
+		try_construct(get_turf(A))
 		return
 
 	if(istype(A, /turf))

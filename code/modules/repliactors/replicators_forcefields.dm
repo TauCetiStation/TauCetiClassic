@@ -21,6 +21,7 @@
 /turf/simulated/floor/plating/airless/catwalk/forcefield/update_icon(propogate=1)
 	return
 
+
 /obj/structure/inflatable/forcefield
 	name = "forcefield"
 	icon = 'icons/mob/replicator.dmi'
@@ -32,6 +33,12 @@
 
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
+
+/obj/structure/inflatable/forcefield/CanPass(atom/movable/mover, turf/target)
+	if(mover && mover.invisibility > 0)
+		return TRUE
+	return ..()
+
 
 var/global/list/forcefield_nodes = list()
 
