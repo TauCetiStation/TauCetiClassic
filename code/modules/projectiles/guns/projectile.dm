@@ -91,8 +91,6 @@
 			update_icon()
 			return
 		return ..()
-	if(istwohanded)
-		return ..()
 	else if(magazine)
 		magazine.loc = get_turf(src.loc)
 		user.put_in_hands(magazine)

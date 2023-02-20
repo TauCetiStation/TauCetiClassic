@@ -78,20 +78,14 @@
 	initial_mag = /obj/item/ammo_box/magazine/m762
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
 	has_cover = TRUE
-	istwohanded = TRUE
+	two_hand_weapon = TRUE
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/atom_init()
-	. = ..()
-	AddComponent(/datum/component/twohanded)
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
 	item_state = "l6[cover_open ? "open" : "closed"][magazine ? "mag" : "nomag"]"
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
-	if(!HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
-		to_chat(user, "<span class='notice'>You need wield [src] in both hands before firing!</span>")
-		return
 	if(cover_open)
 		to_chat(user, "<span class='notice'>[src]'s cover is open! Close it before firing!</span>")
 	else
@@ -104,11 +98,6 @@
 	if(user.get_inactive_hand() != src)
 		return ..()//let them take it from inventory
 	if(!cover_open)
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(!H.can_use_two_hands())
-				to_chat(user, "<span class='warning'>You need both of your hands to be intact.</span>")
-				return
 		cover_open = !cover_open
 		to_chat(user, "<span class='notice'>You open [src]'s cover.</span>")
 		update_icon()
@@ -195,6 +184,31 @@
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
 	suitable_mags = list(/obj/item/ammo_box/magazine/m12g, /obj/item/ammo_box/magazine/m12g/stun, /obj/item/ammo_box/magazine/m12g/incendiary)
 	should_alarm_when_empty = TRUE
+	two_hand_weapon = TRUE
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/atom_init()
+	. = ..()
+	update_icon()
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/proc/update_magazine()
+	if(magazine)
+		cut_overlays()
+		add_overlay("[magazine.icon_state]_o")
+		return
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/update_icon()
+	cut_overlays()
+	update_magazine()
+	icon_state = "bulldog[chambered ? "" : "-e"]"
+	return
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/afterattack(atom/target, mob/user, proximity, params)
+	..()
+	if(!chambered && !get_ammo() && !alarmed)
+		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)
+		update_icon()
+		alarmed = 1
+	return
 
 /obj/item/weapon/gun/projectile/automatic/a28
 	name = "A28 assault rifle"

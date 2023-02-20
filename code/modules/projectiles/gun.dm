@@ -32,6 +32,7 @@
 						// 1 for one bullet after tarrget moves and aim is lowered
 	var/fire_delay = 6
 	var/last_fired = 0
+	var/two_hand_weapon = FALSE
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
@@ -49,6 +50,10 @@
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
 	if(iswizard(M))
 		return FALSE
+	if(two_hand_weapon)
+		if(M.get_inactive_hand())
+			to_chat(M, "<span class='notice'>Your other hand must be free before firing! This weapon requires both hands to use.</span>")
+			return FALSE
 	return TRUE
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)

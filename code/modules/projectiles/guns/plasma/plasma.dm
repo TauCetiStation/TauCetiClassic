@@ -22,6 +22,7 @@
 	fire_sound = 'sound/weapons/guns/plasma10_shot.ogg'
 	recoil = FALSE
 	can_be_holstered = FALSE
+	two_hand_weapon = TRUE
 
 	var/overcharge_fire_sound = 'sound/weapons/guns/plasma10_overcharge_shot.ogg'
 
@@ -66,15 +67,6 @@
 	QDEL_LIST_ASSOC_VAL(ammo_type)
 	QDEL_NULL(magazine)
 	return ..()
-
-/obj/item/weapon/gun/plasma/special_check(mob/M, atom/target)
-	. = ..()
-	if(.)
-		// Two-handed wielding prototype for trying.
-		// Has modern codebases idea where you simply need an empty hand to shoot, while keeping old idea where it blocks shooting at all.
-		if(M.get_inactive_hand())
-			to_chat(M, "<span class='notice'>Your other hand must be free before firing! This weapon requires both hands to use.</span>")
-			return FALSE
 
 /obj/item/weapon/gun/plasma/Fire(atom/target, mob/living/user, params, reflex = 0)
 	newshot()

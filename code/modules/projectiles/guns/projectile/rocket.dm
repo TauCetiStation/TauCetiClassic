@@ -10,20 +10,13 @@
 	slot_flags = 0
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rocket
 	can_be_holstered = FALSE
-	istwohanded = TRUE
+	two_hand_weapon = TRUE
 	fire_sound = 'sound/effects/bang.ogg'
-
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/atom_init()
-	. = ..()
-	AddComponent(/datum/component/twohanded)
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/process_chamber()
 	return ..(1, 1)
 
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/attack_hand(mob/user)
-	if(loc != user)
-		..()
-		return	//let them pick it up
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/attack_self(mob/user)
 	var/num_unloaded = 0
 	while (get_ammo() > 0)
 		var/obj/item/ammo_casing/CB
@@ -37,14 +30,6 @@
 		to_chat(user, "<span class = 'notice'>You unload [num_unloaded] missile\s from [src].</span>")
 	else
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
-
-/obj/item/weapon/gun/projectile/revolver/rocketlauncher/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
-	if(!HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
-		to_chat(user, "<span class='notice'>You need wield [src] in both hands before firing!</span>")
-		return
-	else
-		..()
-		magazine.get_round(FALSE)
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo
 	name = "XASL Mk.2 singularity buster"
