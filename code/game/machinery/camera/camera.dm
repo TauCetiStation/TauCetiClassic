@@ -276,7 +276,7 @@
 	if(isEmpProof())
 		to_chat(user, "It has electromagnetic interference shielding installed.")
 	else
-		to_chat(user, "<span class='info'>It can be shielded against electromagnetic interference with some <b>plasma</b>.</span>")
+		to_chat(user, "<span class='info'>It can be shielded against electromagnetic interference with some <b>phoron</b>.</span>")
 	if(isXRay())
 		to_chat(user, "It has an X-ray photodiode installed.")
 	else
