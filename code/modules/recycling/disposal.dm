@@ -112,8 +112,9 @@
 			if(user.is_busy()) return
 			user.visible_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>")
 			if(G.use_tool(src, usr, 20, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
-				INVOKE_ASYNC(GM, /atom/movable.proc/do_simple_move_animation, src)
+				var/atom/old_loc = GM.loc
 				GM.forceMove(src)
+				INVOKE_ASYNC(GM, /atom/movable.proc/do_simple_move_animation, src, old_loc)
 				GM.instant_vision_update(1,src)
 				user.visible_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>")
 				qdel(G)
@@ -129,8 +130,6 @@
 	if(!I || !I.canremove || I.flags & NODROP)
 		return
 	user.drop_from_inventory(I, src)
-	//INVOKE_ASYNC(I, /atom/movable.proc/do_simple_move_animation, src)
-	//user.remove_from_mob(I, src)
 
 	user.visible_message("<span class='notice'>[user.name] places \the [I] into the [src].</span>", self_message = "<span class='notice'>You place \the [I] into the [src].</span>")
 
@@ -196,8 +195,9 @@
 
 		target.log_combat(user, "placed in disposals")
 
-	INVOKE_ASYNC(target, /atom/movable.proc/do_simple_move_animation, src)
+	var/atom/old_loc = target.loc
 	target.forceMove(src)
+	INVOKE_ASYNC(target, /atom/movable.proc/do_simple_move_animation, src, old_loc)
 	target.instant_vision_update(1,src)
 
 	user.visible_message(msg, self_message = self_msg)
@@ -238,8 +238,9 @@
 		//target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>")
 		//msg_admin_attack("[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		INVOKE_ASYNC(target, /atom/movable.proc/do_simple_move_animation, src)
+		var/atom/old_loc = target.loc
 		target.forceMove(src)
+		INVOKE_ASYNC(target, /atom/movable.proc/do_simple_move_animation, src, old_loc)
 
 		user.visible_message(msg, self_message = self_msg)
 

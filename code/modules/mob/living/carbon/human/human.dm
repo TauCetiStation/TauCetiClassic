@@ -1851,8 +1851,9 @@
 			Stun(2)
 			Weaken(2)
 		else if(istype(hit_atom, /obj/machinery/disposal))
-			INVOKE_ASYNC(src, /atom/movable.proc/do_simple_move_animation, hit_atom)
+			var/atom/old_loc = loc
 			forceMove(hit_atom)
+			INVOKE_ASYNC(src, /atom/movable.proc/do_simple_move_animation, hit_atom, old_loc)
 
 	update_canmove()
 
