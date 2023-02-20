@@ -89,6 +89,13 @@
 			to_chat(user, "<span class='notice'>Need more space for the transponder.</span>")
 		return FALSE
 
+	for(var/bt in global.transponders)
+		if(get_dist(bt, user) >= 7)
+			continue
+		if(try_start)
+			to_chat(user, "<span class='notice'>Transponder too close to other transponders. Need at least 7 tile distance.</span>")
+		return FALSE
+
 	return TRUE
 
 /obj/effect/proc_holder/spell/no_target/replicator_transponder/cast(list/targets, mob/user = usr)
@@ -137,6 +144,11 @@
 	if(locate(/obj/machinery/power/replicator_generator) in user.loc)
 		if(try_start)
 			to_chat(user, "<span class='notice'>Need more space for the generator.</span>")
+		return FALSE
+
+	if(!(locate(/obj/structure/cable) in user.loc))
+		if(try_start)
+			to_chat(user, "<span class='notice'>The generator requries a cable to attach to.</span>")
 		return FALSE
 
 	return TRUE

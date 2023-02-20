@@ -175,6 +175,18 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	if(locate(auto_construct_type) in my_turf)
 		return
 
+	// Corridors can only connect to two other corridors if there's no portal connecting them.
+	if(auto_construct_type == /obj/structure/bluespace_corridor && !(locate(/obj/machinery/bluespace_transponder) in my_turf))
+		var/neighbor_count = 0
+		for(var/t in RANGE_TURFS(1, my_turf))
+			var/turf/T = t
+			if(locate(auto_construct_type) in T)
+				neighbor_count += 1
+				// Elegant solution to forks.
+				if(neighbor_count >= 3)
+					return
+		return
+
 	new auto_construct_type(my_turf)
 	global.replicators_faction.adjust_materials(-auto_construct_cost, adjusted_by=last_controller_ckey)
 

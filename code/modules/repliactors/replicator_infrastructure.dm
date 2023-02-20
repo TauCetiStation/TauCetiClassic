@@ -1,4 +1,7 @@
+var/global/list/obj/machinery/bluespace_transponder/transponders = list()
 var/global/list/obj/machinery/bluespace_transponder/active_transponders = list()
+
+ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 
 /obj/machinery/bluespace_transponder
 	icon = 'icons/obj/objects.dmi'
