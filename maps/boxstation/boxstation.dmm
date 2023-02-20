@@ -19823,6 +19823,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 20
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bluecorner"
@@ -21397,16 +21398,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aMj" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
@@ -31912,7 +31913,6 @@
 	layer = 4;
 	pixel_y = 32
 	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bluecorner"
@@ -38084,7 +38084,6 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/dormitories)
 "bqo" = (
-/obj/item/weapon/scrap_lump,
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "stationscrap"
@@ -51917,7 +51916,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bPh" = (
@@ -59467,7 +59465,7 @@
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "neutral"
+	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
 "cls" = (
@@ -63514,11 +63512,11 @@
 	},
 /area/station/medical/chemistry)
 "cvf" = (
-/obj/item/stack/sheet/refined_scrap,
 /obj/machinery/conveyor{
-	dir = 1;
+	dir = 4;
 	id = "stationscrap"
 	},
+/obj/item/stack/sheet/refined_scrap,
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "cvg" = (
@@ -110039,10 +110037,10 @@ bFW
 xqb
 bQl
 bHa
-ciO
+cbf
 cvf
 cfT
-bqo
+cuZ
 cap
 sOh
 cap
@@ -110293,13 +110291,13 @@ bHp
 bHK
 bIO
 bFW
-aMh
+aMj
 bQl
 cap
-cap
-cap
-cap
-cap
+ciO
+bqo
+cbf
+bqo
 cap
 bFJ
 bRo
@@ -110550,13 +110548,13 @@ bHq
 bHV
 bIP
 bFW
-aMj
-bQl
+aMh
 bQl
 bIZ
-bQl
-bQl
-bQl
+bIZ
+bIZ
+bIZ
+bIZ
 bIZ
 bQl
 bFJ
@@ -114635,8 +114633,8 @@ aCu
 aOq
 aNU
 aJv
-aKx
-bbo
+bDW
+aGs
 aNV
 bnh
 bqi
@@ -114892,8 +114890,8 @@ aCu
 aCu
 aNU
 beO
-bDW
-aGs
+aKx
+bbo
 bkL
 bni
 clQ
@@ -116690,7 +116688,7 @@ aeJ
 asM
 aMP
 aOa
-aPE
+aMN
 aKx
 aRR
 aNX
