@@ -170,7 +170,7 @@
 
 /obj/effect/proc_holder/spell/no_target/dig_tunnel/proc/isAllowedTurf(turf/user_turf)
 	for(var/obj/structure/hindrance in user_turf)
-		if(!istype(hindrance, /obj/structure/alien/weeds))
+		if(hindrance.density)
 			return FALSE
 	return TRUE
 
