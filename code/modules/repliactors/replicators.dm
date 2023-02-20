@@ -283,8 +283,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
 	var/start_loc = loc
 
-	// Not checking for is_busy here allows to select multiple tiles for disintegration... and, after all... why not?
-	while(do_after(src, 1, target=src, progress=FALSE))
+	while(!is_busy() && do_after(src, 1, target=src, progress=FALSE))
 		if(start_loc != loc)
 			return
 

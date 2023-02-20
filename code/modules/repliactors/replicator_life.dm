@@ -57,6 +57,9 @@
 
 	if(href_list["replicator_jump"])
 		var/mob/living/simple_animal/replicator/target = locate(href_list["replicator_kill"])
+		if(!istype(target))
+			return
+
 		if(transfer_control(target, alert=FALSE))
 			return
 
@@ -81,6 +84,7 @@
 			return
 
 		if(target.excitement > 0)
+			to_chat(src, "<span class='warning'>Negative: The unit is serving a purpose.</span>")
 			return
 
 		// TO-DO: sound
