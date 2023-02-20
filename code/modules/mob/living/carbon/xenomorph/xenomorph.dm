@@ -100,7 +100,7 @@
 	if(!environment)
 		return
 
-	if(istype(loc, /obj/machinery/atmospherics/pipe) || istype(loc, /obj/item/alien_embryo))
+	if(istype(loc, /obj/item/alien_embryo))
 		return
 
 	var/loc_temp = get_temperature(environment)
