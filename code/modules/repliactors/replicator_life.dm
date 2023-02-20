@@ -11,13 +11,27 @@
 
 	var/help_steps = 7
 
+	var/excitement = 10
+	var/next_excitement_alert = 0
+	var/excitement_alert_cooldown = 30 SECONDS
+
 /mob/living/simple_animal/replicator/Life()
 	. = ..()
 	if(!.)
 		return
 
+	if(health < last_update_health && next_attacked_alert < world.time)
+		global.replicators_faction.drone_message(src, "I am taking damage.", transfer=TRUE)
+		next_attacked_alert = world.time + attacked_alert_cooldown
+
+	last_update_health = health
+
 	if(ckey)
 		return
+
+	if(excitement <= 0 && next_excitement_alert < world.time)
+		global.replicators_faction.drone_message(src, pick("I have no purpose.", "I am bored.", "Why am I still here."), transfer=TRUE, dismantle=TRUE)
+		next_excitement_alert = excitement_alert_cooldown
 
 	if(state == REPLICATOR_STATE_HELPING)
 		return
@@ -35,7 +49,47 @@
 		return
 	process_harvesting()
 
+/mob/living/simple_animal/replicator/Topic(href, href_list)
+	if(incapacitated())
+		return ..()
+	if(!mind)
+		return ..()
+
+	if(href_list["replicator_jump"])
+		var/mob/living/simple_animal/replicator/target = locate(href_list["replicator_kill"])
+		if(transfer_control(target, alert=FALSE))
+			return
+
+		for(var/r in global.replicators)
+			var/mob/living/simple_animal/replicator/R = r
+			if(R.ckey)
+				continue
+			if(get_dist(src, R) > 7)
+				continue
+			if(!transfer_control(R, alert=FALSE))
+				continue
+
+		to_chat(src, "<span class='notice'>Other presence is already attending this situation.</span>")
+		return
+
+	if(href_list["replicator_kill"])
+		var/mob/living/simple_animal/replicator/target = locate(href_list["replicator_kill"])
+		if(!istype(target))
+			return
+
+		if(target.incapacitated())
+			return
+
+		if(target.excitement > 0)
+			return
+
+		// TO-DO: sound
+		target.last_controller_ckey = ckey
+		INVOKE_ASYNC(target, .proc/disintegrate, target)
+		return
+
 /mob/living/simple_animal/replicator/proc/set_state(new_state)
+	excitement = 10
 	state = new_state
 	update_icon()
 
@@ -54,7 +108,7 @@
 		return
 
 	if(x != target_coordinates["x"] || y != target_coordinates["y"] || z != target_coordinates["z"])
-		var/turf/T = get_step_towards(
+		var/turf/T = get_step_to(
 			src,
 			locate(target_coordinates["x"], target_coordinates["y"], target_coordinates["z"])
 			)
@@ -91,12 +145,21 @@
 		set_state(REPLICATOR_STATE_HARVESTING)
 		return
 
-	var/mob/living/simple_animal/replicator/R = get_closest_sentient_replicator()
-	if(R && get_dist(src, R) < 7)
-		var/turf/closer_turf = get_step_towards(src, R)
+	var/mob/living/simple_animal/replicator/harvester = get_closest_harvesting_replicator()
+	if(harvester && get_dist(src, harvester) < 7)
+		var/turf/closer_turf = get_step_to(src, harvester)
 		var/closer_dir = get_dir(src, closer_turf)
 		Move(closer_turf, closer_dir)
 		return
+
+	var/mob/living/simple_animal/replicator/R = get_closest_sentient_replicator()
+	if(R && get_dist(src, R) < 7)
+		var/turf/closer_turf = get_step_to(src, R)
+		var/closer_dir = get_dir(src, closer_turf)
+		Move(closer_turf, closer_dir)
+		return
+
+	excitement -= 1
 
 	var/closest_replicator_dir = R ? get_dir(src, R) : pick(cardinal)
 	var/to_move_dir = pick(list(closest_replicator_dir) + cardinal)
@@ -141,7 +204,29 @@
 
 	set_state(REPLICATOR_STATE_WANDERING)
 
-// Replace to get_closest_harvesting_replicator?
+/mob/living/simple_animal/replicator/proc/get_closest_harvesting_replicator()
+	. = null
+	var/closest_distance = null
+
+	for(var/r in replicators)
+		var/mob/living/simple_animal/replicator/R = r
+		if(R == src)
+			continue
+		if(R.ckey)
+			continue
+		if(R.state != REPLICATOR_STATE_HARVESTING)
+			continue
+
+		var/dist = get_dist(src, R)
+
+		if(closest_distance == null)
+			. = R
+			closest_distance = dist
+			continue
+		else if(dist < closest_distance)
+			. = R
+			closest_distance = dist
+
 /mob/living/simple_animal/replicator/proc/get_closest_sentient_replicator()
 	. = null
 	var/closest_distance = null
@@ -183,6 +268,9 @@
 		return FALSE
 
 	if(A.is_disintegrating)
+		return FALSE
+
+	if((locate(/mob/living) in A) && !isturf(A))
 		return FALSE
 
 	return TRUE

@@ -13,6 +13,9 @@ var/global/list/obj/machinery/bluespace_transponder/active_transponders = list()
 	idle_power_usage = 20000
 
 /obj/machinery/bluespace_transponder/Crossed(atom/movable/AM)
+	if(stat & NOPOWER)
+		return ..()
+
 	var/obj/structure/bluespace_corridor/BC = locate() in loc
 	if(!BC)
 		return ..()

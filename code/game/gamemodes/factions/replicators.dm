@@ -64,7 +64,16 @@ var/global/datum/faction/replicators/replicators_faction
 		var/datum/role/replicator/R = r
 		if(!R.antag)
 			continue
-		to_chat(R.antag, "[presence_name] says, \"[message]\"")
+		to_chat(R.antag, "[presence_name] announces, \"[message]\"")
+
+/datum/faction/replicators/proc/drone_message(mob/living/simple_animal/replicator/drone, message, transfer=FALSE, dismantle=FALSE)
+	for(var/r in members)
+		var/datum/role/replicator/R = r
+		if(!R.antag)
+			continue
+		var/jump_button = transfer ? "<a href='?src=\ref[R.antag.current];replicator_jump=\ref[drone]'>(JMP)</a>" : ""
+		var/dismantle_button = dismantle ? "<a href='?src=\ref[R.antag.current];replicator_kill=\ref[drone]'>(KILL)</a>" : ""
+		to_chat(R.antag, "[drone.name] requests, \"[message]\"[jump_button][dismantle_button]")
 
 /datum/faction/replicators/proc/adjust_materials(material_amount, adjusted_by=null)
 	materials += material_amount

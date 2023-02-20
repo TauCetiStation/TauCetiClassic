@@ -70,6 +70,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
 	w_class = SIZE_TINY
 
+	var/generation = ""
+
+	var/next_attacked_alert = 0
+	var/attacked_alert_cooldown = 10 SECONDS
+
+	var/last_update_health = 0
+
 	// This item will be built on each move above a forcefield tile.
 	var/auto_construct_type = null
 	var/auto_construct_cost = 0
@@ -118,10 +125,12 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
 	global.replicators_faction.give_gift(src)
 
-	name = "replicator ([rand(1, 999)])"
+	generation = rand(0, 9)
+
+	name = "replicator ([generation])"
 	real_name = name
-	pixel_x = rand(-4, 4)
-	pixel_y = rand(-4, 4)
+	pixel_x = rand(-6, 6)
+	pixel_y = rand(-6, 6)
 
 	for(var/spell in replicator_spells)
 		AddSpell(new spell(src))
@@ -135,6 +144,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	indicator.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	overlays += indicator
+
+	last_update_health = health
 
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.75, -3)
 
@@ -243,6 +254,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		return
 
 /mob/living/simple_animal/replicator/RangedAttack(atom/A)
+	// Adjacent() checks make this work in an unintuitive way otherwise.
+	if(get_dist(src, A) <= 1 && a_intent == INTENT_HARM)
+		INVOKE_ASYNC(src, .proc/disintegrate_turf, get_turf(A))
+		return
 
 /mob/living/simple_animal/replicator/ShiftClickOn(atom/A)
 
@@ -276,6 +291,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		var/atom/disintegratable = get_disintegratable_from(locate(target_x, target_y, target_z))
 		if(!disintegratable)
 			return
+		face_atom(disintegratable)
 		disintegrate(disintegratable)
 
 /mob/living/simple_animal/replicator/proc/get_disintegratable_from(turf/T)
@@ -302,6 +318,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
 	if(A.flags & NODECONSTRUCT)
 		to_chat(src, "<span class='warning'>Object Does Not Disintegrate.</span>")
+		return FALSE
+
+	if((locate(/mob/living) in A) && !isturf(A))
+		to_chat(src, "<span class='warning'>Can Not Deconstruct: May Harm Organis</span>")
 		return FALSE
 
 	var/material_amount = A.get_replicator_material_amount()
@@ -392,16 +412,28 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	QDEL_NULL(integration_overlay)
 */
 
-/mob/living/simple_animal/replicator/proc/transfer_control(mob/living/simple_animal/replicator/target)
+// Return TRUE if succesful control transfer.
+/mob/living/simple_animal/replicator/proc/transfer_control(mob/living/simple_animal/replicator/target, alert=TRUE)
 	if(target.ckey)
-		to_chat(src, "<span class='warning'>Impossible: Target under presence control.</span>")
-		return
+		if(alert)
+			to_chat(src, "<span class='warning'>Impossible: Target under presence control.</span>")
+		return FALSE
 
 	if(target.last_controller_ckey != ckey && next_control_change > world.time)
-		to_chat(src, "<span class='warning'>Impossible: Target under lingering presence affect. Try again later.</span>")
-		return
+		if(alert)
+			to_chat(src, "<span class='warning'>Impossible: Target under lingering presence affect. Try again later.</span>")
+		return FALSE
+
+	if(target.incapacitated())
+		if(alert)
+			to_chat(src, "<span class='warning'>Impossible: Target unresponsive.</span>")
+		return FALSE
 
 	next_control_change = world.time + control_change_cooldown
 
 	mind.transfer_to(target)
 	playsound(target, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER)
+	return TRUE
+
+/mob/living/simple_animal/replicator/say(message)
+	global.replicators_faction.announce_swarm(global.replicators_faction.get_presence_name(ckey), ckey, message)

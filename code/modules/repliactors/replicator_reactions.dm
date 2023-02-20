@@ -61,9 +61,16 @@
 	return stat == DEAD
 
 /mob/living/simple_animal/replicator/get_replicator_material_amount()
-	if(stat == DEAD)
-		return REPLICATOR_COST_REPLICATE
-	return -1
+	if(ckey)
+		return -1
+	return REPLICATOR_COST_REPLICATE
+
+/mob/living/simple_animal/replicator/get_unit_disintegration_time()
+	return ..() * 0.5
+
+/mob/living/simple_animal/replicator/replicator_act(mob/living/simple_animal/replicator/R)
+	gib()
+	return TRUE
 
 /obj/structure/get_replicator_material_amount()
 	return w_class
@@ -94,6 +101,9 @@
 /obj/structure/bluespace_corridor/get_replicator_material_amount()
 	return 1
 
+/obj/structure/bluespace_corridor/get_unit_disintegration_time()
+	return ..() * 0.5
+
 // Can be used for navigation across the station. Why damage such infrastructure?
 /obj/structure/disposalpipe/can_be_auto_disintegrated()
 	return FALSE
@@ -114,18 +124,27 @@
 /obj/machinery/power/can_be_auto_disintegrated()
 	return FALSE
 
-/obj/machinery/bluespace_transponder/can_be_auto_disintegrated()
-	return FALSE
-
-/obj/machinery/power/replicator_generator/can_be_auto_disintegrated()
-	return FALSE
-
 /obj/machinery/disposal/can_be_auto_disintegrated()
+	return FALSE
+
+/obj/machinery/bluespace_transponder/can_be_auto_disintegrated()
 	return FALSE
 
 // Refund!
 /obj/machinery/bluespace_transponder/get_replicator_material_amount()
 	return REPLICATOR_COST_REPLICATE
+
+/obj/machinery/bluespace_transponder/get_unit_disintegration_time()
+	return ..() * 0.5
+
+/obj/machinery/power/replicator_generator/can_be_auto_disintegrated()
+	return FALSE
+
+/obj/machinery/power/replicator_generator/get_replicator_material_amount()
+	return REPLICATOR_COST_REPLICATE
+
+/obj/machinery/replicator_generator/get_unit_disintegration_time()
+	return ..() * 0.5
 
 /obj/item/get_replicator_material_amount()
 	return w_class

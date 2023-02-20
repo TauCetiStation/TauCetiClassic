@@ -41,6 +41,12 @@
 
 	var/mob/living/simple_animal/replicator/R = new(user_replicator.loc)
 	R.last_controller_ckey = user_replicator.last_controller_ckey
+
+	R.generation = user_replicator.generation + "[rand(0, 9)]"
+
+	R.name = "replicator ([R.generation])"
+	R.real_name = name
+
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 
 
