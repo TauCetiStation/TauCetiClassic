@@ -58,7 +58,7 @@
 
 	add_fingerprint(user)
 	if(mode<=0) // It's off
-		if(isscrewdriver(I))
+		if(isscrewing(I))
 			if(contents.len > 0)
 				to_chat(user, "Eject the items first!")
 				return
@@ -72,7 +72,7 @@
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "You attach the screws around the power connection.")
 				return
-		else if(iswelder(I) && mode==-1)
+		else if(iswelding(I) && mode==-1)
 			if(contents.len > 0)
 				to_chat(user, "<span class='warning'>Eject the items first!</span>")
 				return
@@ -167,17 +167,19 @@
 	var/target_loc = target.loc
 	var/msg
 	var/self_msg
-
+	var/time_climbing = 20
 	if(target == user)
 		if(user.incapacitated(LEGS))
 			return
 		user.visible_message("<span class='red'>[usr] starts climbing into the disposal.</span>")
+		if(HAS_TRAIT(user, TRAIT_NATURAL_AGILITY))
+			time_climbing *= 0.25
 	else
 		if(user.incapacitated(ARMS))
 			return
 		user.visible_message("<span class='red'>[usr] starts stuffing [target.name] into the disposal.</span>")
 
-	if(user.is_busy() || !do_after(usr, 20, target = src))
+	if(user.is_busy() || !do_after(usr, time_climbing, target = src))
 		return
 	if(target_loc != target.loc || target.anchored)
 		return
@@ -497,7 +499,7 @@
 		H.vent_gas(loc)
 		qdel(H)
 
-/obj/machinery/disposal/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/machinery/disposal/CanPass(atom/movable/mover, turf/target, height=0)
 	if (isitem(mover) && mover.throwing)
 		var/obj/item/I = mover
 		if(istype(I, /obj/item/projectile))
@@ -509,7 +511,7 @@
 			visible_message("\the [I] bounces off of \the [src]'s rim!")
 		return 0
 	else
-		return ..(mover, target, height, air_group)
+		return ..()
 
 // virtual disposal object
 // travels through pipes in lieu of actual items
@@ -565,6 +567,10 @@
 			src.destinationTag = drone.mail_destination
 		if(istype(AM, /obj/structure/closet/body_bag))
 			has_bodybag = 1
+		if(isobj(AM))
+			var/obj/Object = AM
+			if(Object.price_tag)
+				src.destinationTag = "OnlineShop"
 
 
 // start the movement process
@@ -858,7 +864,7 @@
 		return		// prevent interaction with T-scanner revealed pipes
 	add_fingerprint(user)
 	if(user.is_busy()) return
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/W = I
 
 		if(W.use(0,user))
@@ -998,8 +1004,8 @@
 	if(..())
 		return
 
-	if(istype(I, /obj/item/device/destTagger))
-		var/obj/item/device/destTagger/O = I
+	if(istype(I, /obj/item/device/tagger))
+		var/obj/item/device/tagger/O = I
 
 		if(O.currTag)// Tag set
 			sort_tag = O.currTag
@@ -1020,6 +1026,107 @@
 	name = "partial package tagger"
 	icon_state = "pipe-tagger-partial"
 	partial = 1
+
+
+/obj/structure/disposalpipe/shop_scanner
+	name = "shop scanner"
+	icon_state = "pipe-shop"
+
+/obj/structure/disposalpipe/shop_scanner/atom_init()
+	. = ..()
+	dpdir = dir | turn(dir, 180)
+	update()
+
+/obj/structure/disposalpipe/shop_scanner/nextdir(fromdir)
+	return dir
+
+/obj/structure/disposalpipe/shop_scanner/transfer(obj/structure/disposalholder/H)
+	for(var/obj/Object in H)
+		if(Object.price_tag)
+			scan_item(H, Object)
+	return ..()
+
+/obj/structure/disposalpipe/shop_scanner/proc/scan_item(obj/structure/disposalholder/H, obj/Item)
+	var/lot_name = Item.name
+	var/lot_desc = Item.price_tag["description"]
+	var/lot_price = Item.price_tag["price"]
+	var/lot_category = Item.price_tag["category"]
+	var/lot_account = Item.price_tag["account"]
+	var/item_icon = bicon(Item)
+
+	if (isitem(Item))
+		var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(src)
+		P.w_class = Item.w_class
+		var/i = round(Item.w_class)
+		if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
+			P.icon_state = "deliverycrate[i]"
+			var/image/Img = image('icons/obj/storage.dmi', "deliverycrate[i]-shop")
+			Img.appearance_flags = RESET_COLOR
+			P.add_overlay(Img)
+		P.modify_max_integrity(75)
+		P.atom_fix()
+		P.damage_deflection = 25
+		Item.loc = P
+		Item = P
+	else if (istype(Item, /obj/structure/closet/crate))
+		var/obj/structure/closet/crate/C = Item
+		if(C.opened)
+			C.close()
+		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
+		P.icon_state = "deliverycrate"
+		var/image/Img = image('icons/obj/storage.dmi', "deliverycrate-shop")
+		Img.appearance_flags = RESET_COLOR
+		P.add_overlay(Img)
+		P.modify_max_integrity(75)
+		P.atom_fix()
+		P.damage_deflection = 25
+		C.loc = P
+		Item = P
+	else if (istype(Item, /obj/structure/closet))
+		var/obj/structure/closet/C = Item
+		if(C.opened)
+			C.close()
+		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
+		P.icon_state = "deliverycloset"
+		var/image/Img = image('icons/obj/storage.dmi', "deliverycloset-shop")
+		Img.appearance_flags = RESET_COLOR
+		P.add_overlay(Img)
+		P.modify_max_integrity(75)
+		P.atom_fix()
+		P.damage_deflection = 25
+		C.welded = 1
+		C.loc = P
+		Item = P
+	else if (istype(Item, /obj/structure))
+		var/obj/structure/S = Item
+		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(S.loc))
+		P.icon_state = "deliverystructure"
+		var/image/Img = image('icons/obj/storage.dmi', "deliverystructure-shop")
+		Img.appearance_flags = RESET_COLOR
+		P.add_overlay(Img)
+		P.modify_max_integrity(75)
+		P.atom_fix()
+		P.damage_deflection = 25
+		S.loc = P
+		Item = P
+	else
+		return
+
+	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
+
+	global.shop_categories[lot_category]++
+
+	Item.name = "Посылка номер: [global.online_shop_number]"
+	Item.desc = "Наименование: [lot_name], Описание: [lot_desc], Цена: [lot_price]"
+
+	if(istype(Item, /obj/structure/bigDelivery))
+		var/obj/structure/bigDelivery/Package = Item
+		Package.lot_number = Lot.number
+	else
+		var/obj/item/smallDelivery/Package = Item
+		Package.lot_number = Lot.number
+
+	Item.forceMove(H)
 
 //a three-way junction that sorts objects
 /obj/structure/disposalpipe/sortjunction
@@ -1068,8 +1175,8 @@
 	if(..())
 		return
 
-	if(istype(I, /obj/item/device/destTagger))
-		var/obj/item/device/destTagger/O = I
+	if(istype(I, /obj/item/device/tagger))
+		var/obj/item/device/tagger/O = I
 
 		if(O.currTag)// Tag set
 			sortType = O.currTag
@@ -1194,7 +1301,7 @@
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
 	add_fingerprint(user)
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/W = I
 		if(user.is_busy()) return
 		if(W.use(0,user))
@@ -1310,7 +1417,7 @@
 	if(!I || !user)
 		return
 	add_fingerprint(user)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		if(mode==0)
 			mode=1
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
@@ -1321,7 +1428,7 @@
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You attach the screws around the power connection.")
 			return
-	else if(iswelder(I) && mode==1 && !user.is_busy())
+	else if(iswelding(I) && mode==1 && !user.is_busy())
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the disposal outlet.")

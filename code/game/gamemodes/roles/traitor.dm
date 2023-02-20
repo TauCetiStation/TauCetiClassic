@@ -12,11 +12,12 @@
 
 	var/telecrystals = 20
 	skillset_type = /datum/skillset/max
+	moveset_type = /datum/combat_moveset/cqc
 	change_to_maximum_skills = FALSE
 
 /datum/role/traitor/New()
 	..()
-	AddComponent(/datum/component/gamemode/syndicate, telecrystals)
+	AddComponent(/datum/component/gamemode/syndicate, telecrystals, "traitor")
 
 /datum/role/traitor/proc/add_one_objective(datum/mind/traitor)
 	switch(rand(1,120))

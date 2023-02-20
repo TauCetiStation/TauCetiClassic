@@ -253,9 +253,9 @@
 	if(istype(O,/obj/structure/alien/weeds))
 		var/obj/structure/alien/weeds/alien_weeds = O
 		alien_weeds.take_damage(rand(15, 35), BURN, ACID, FALSE)
-	else if(istype(O,/obj/effect/glowshroom)) //even a small amount is enough to kill it
+	else if(istype(O,/obj/structure/glowshroom)) //even a small amount is enough to kill it
 		qdel(O)
-	else if(istype(O,/obj/effect/spacevine))
+	else if(istype(O,/obj/structure/spacevine))
 		if(prob(50))
 			qdel(O) //Kills kudzu too.
 	// Damage that is done to growing plants is separately at code/game/machinery/hydroponics at obj/item/hydroponics
@@ -528,7 +528,7 @@
 			M.take_bodypart_damage(min(6 * toxpwr, volume * toxpwr))
 
 /datum/reagent/toxin/acid/reaction_obj(obj/O, volume)
-	if((isitem(O) || istype(O,/obj/effect/glowshroom)) && prob(meltprob * 3))
+	if((isitem(O) || istype(O,/obj/structure/glowshroom)) && prob(meltprob * 3))
 		if(!O.unacidable)
 			var/obj/effect/decal/cleanable/molten_item/I = new/obj/effect/decal/cleanable/molten_item(O.loc)
 			I.desc = "Looks like this was \an [O] some time ago."
@@ -767,12 +767,51 @@
 /datum/reagent/space_drugs/on_general_digest(mob/living/M)
 	..()
 	M.adjustDrugginess(2)
-	if(isturf(M.loc) && !isspaceturf(M.loc))
-		if(M.canmove && !M.incapacitated())
-			if(prob(10))
-				step(M, pick(cardinal))
+	if(prob(10))
+		M.random_move()
 	if(prob(7))
 		M.emote(pick("twitch","drool","moan","giggle"))
+
+/datum/reagent/ambrosium
+	name = "Ambrosium"
+	id = "ambrosium"
+	description = "Reagent isolated from ambrosia vulgaris. Its has narcotic and toxic effect."
+	reagent_state = LIQUID
+	color = "#003b08"
+	taste_message = "hash"
+	custom_metabolism = REAGENTS_METABOLISM * 0.5
+	overdose = REAGENTS_OVERDOSE
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/ambrosium/on_general_digest(mob/living/M)
+	..()
+	M.adjustDrugginess(2)
+	if(prob(10))
+		M.random_move()
+	if(prob(25))
+		M.emote(pick("cough","laugh","giggle"))
+	if(prob(15))
+		M.adjustToxLoss(1)
+
+/datum/reagent/jenkem
+	name = "Space jenkem"
+	id = "jenkem"
+	description = "A homemade illegal chemical compound used by the poor as a substitute for better quality drugs. Very toxic."
+	reagent_state = LIQUID
+	color = "#3f2020"
+	custom_metabolism = 0.4
+	overdose = 15
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/jenkem/on_general_digest(mob/living/M)
+	..()
+	M.adjustDrugginess(1)
+	if(prob(30))
+		M.random_move()
+	if(prob(25))
+		M.emote(pick("twitch","drool","moan","giggle"))
+	if(prob(60))
+		M.adjustToxLoss(1)
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"

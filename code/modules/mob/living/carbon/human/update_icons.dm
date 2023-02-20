@@ -120,11 +120,9 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	var/fem = ""
 	if(H.gender == FEMALE && S.gender_limb_icons)
-		if(item_state != null) // some sprites have null item_state, so check icon_states for sure
-			if("[item_state]_fem" in icon_states(def_icon_path))
+		if(t_state != null)
+			if("[t_state]_fem" in icon_states(def_icon_path))
 				fem = "_fem"
-		else if("[icon_state]_fem" in icon_states(def_icon_path))
-			fem = "_fem"
 
 	var/image/I = image(icon = icon_path, icon_state = "[t_state][fem][icon_state_appendix]", layer = layer)
 	I.color = color
@@ -383,7 +381,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	var/default_path = 'icons/mob/uniform.dmi'
 	var/uniform_sheet = SPRITE_SHEET_UNIFORM
-	if(istype(w_uniform, /obj/item/clothing/under))
+	if(isunder(w_uniform))
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open ...
 				w_uniform.screen_loc = ui_iclothing //...draw the item in the inventory screen
@@ -748,8 +746,11 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/tail_state = species.tail
 			if(random_tail_holder)
 				tail_state = random_tail_holder
+			var/tail_gender_appendix = null
+			if(species.gender_tail_icons && gender == FEMALE)
+				tail_gender_appendix = "_fem"
 
-			var/image/tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = tail_state)
+			var/image/tail_s = image("icon" = 'icons/mob/species/tail.dmi', "icon_state" = "[tail_state][tail_gender_appendix]")
 
 			var/obj/item/organ/external/chest/BP = bodyparts_by_name[BP_CHEST]
 			if(BP.status & ORGAN_DEAD)

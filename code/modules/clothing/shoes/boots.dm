@@ -27,7 +27,7 @@
 	if(knife)
 		return ..()
 
-	if(I.get_quality(QUALITY_CUTTING) > 0)
+	if((iscutter(I) > 0) && I.w_class <= SIZE_TINY)
 		user.drop_from_inventory(I, src)
 		playsound(user, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
 		to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")
@@ -60,6 +60,7 @@
 	icon_state = "galoshes"
 	permeability_coefficient = 0.05
 	flags = NOSLIP
+	can_get_wet = FALSE
 	slowdown = SHOES_SLOWDOWN + 0.5
 	species_restricted = null
 

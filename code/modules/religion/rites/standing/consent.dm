@@ -27,7 +27,7 @@
 		ASPECT_TECH = 1,
 	)
 
-/datum/religion_rites/standing/consent/synthconversion/can_start(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/consent/synthconversion/can_start(mob/user, obj/AOG)
 	if(!..())
 		return FALSE
 
@@ -51,7 +51,7 @@
 
 	return TRUE
 
-/datum/religion_rites/standing/consent/synthconversion/invoke_effect(mob/living/user, obj/AOG)
+/datum/religion_rites/standing/consent/synthconversion/invoke_effect(mob/user, obj/AOG)
 	..()
 
 	if(convert_god(AOG))
@@ -198,7 +198,7 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), SLOT_IN_BACKPACK)
 
 	religion.add_member(H, HOLY_ROLE_PRIEST)
-	H.mutations.Add(CLUMSY)
+	ADD_TRAIT(H, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 	H.mind.assigned_role = "Clown"
 	return TRUE
 

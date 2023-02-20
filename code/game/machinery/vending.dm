@@ -83,6 +83,13 @@
 	QDEL_NULL(coin)
 	return ..()
 
+/obj/machinery/vending/RefreshParts()
+	..()
+	// eat refills
+	for(var/obj/item/weapon/vending_refill/refill in component_parts)
+		component_parts -= refill
+		qdel(refill)
+
 /obj/machinery/vending/deconstruct(disassembled = TRUE)
 	if(refill_canister)
 		return ..()
@@ -156,10 +163,10 @@
 		if(default_unfasten_wrench(user, W, time = 60))
 			return
 
-		if(iscrowbar(W))
+		if(isprying(W))
 			default_deconstruction_crowbar(W)
 
-	if(isscrewdriver(W) && anchored)
+	if(isscrewing(W) && anchored)
 		src.panel_open = !src.panel_open
 		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
 		cut_overlays()
@@ -177,7 +184,7 @@
 		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
 		return
 
-	else if(iswrench(W))	//unwrenching vendomats
+	else if(iswrenching(W))	//unwrenching vendomats
 		var/turf/T = user.loc
 		if(user.is_busy(src))
 			return

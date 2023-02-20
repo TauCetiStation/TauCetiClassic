@@ -4,7 +4,7 @@
 	opacity = FALSE
 	density = FALSE
 	layer = SIGN_LAYER
-	
+
 	var/buildable_sign = TRUE //unwrenchable and modifiable
 
 	max_integrity = 100
@@ -16,7 +16,7 @@
 	icon_state = "backing"
 
 /obj/structure/sign/attackby(obj/item/W, mob/user, params)
-	if(iswrench(W) && buildable_sign)
+	if(iswrenching(W) && buildable_sign)
 		if(user.is_busy(src))
 			return
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>",
@@ -128,7 +128,7 @@
 		return ..()
 
 /obj/item/sign_backing/attackby(obj/item/I, mob/user, params)
-	if(iswelder(I))
+	if(iswelding(I))
 		if(I.use(0, user))
 			if(I.use_tool(src, user, 20, volume = 50))
 				new /obj/item/stack/sheet/mineral/plastic(user.loc, 2)

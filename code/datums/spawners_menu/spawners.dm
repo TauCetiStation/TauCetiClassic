@@ -303,7 +303,7 @@ var/global/list/datum/spawners_cooldown = list()
 
 /datum/spawner/blob_event/spawn_ghost(mob/dead/observer/ghost)
 	var/turf/spawn_turf = pick(blobstart)
-	new /obj/effect/blob/core(spawn_turf, ghost.client, 120)
+	new /obj/structure/blob/core(spawn_turf, ghost.client, 120)
 
 /*
  * Ninja
@@ -596,6 +596,13 @@ var/global/list/datum/spawners_cooldown = list()
 /datum/spawner/living/religion_familiar/spawn_ghost(mob/dead/observer/ghost)
 	..()
 	religion.add_member(mob, HOLY_ROLE_PRIEST)
+
+
+/datum/spawner/living/eminence
+	name = "Возвышенный культа"
+	id = "eminence"
+	desc = "Вы станете Возвышенным - ментором и неформальным лидером всего культа."
+	ranks = list(ROLE_CULTIST, ROLE_GHOSTLY)
 
 /datum/spawner/living/mimic
 	name = "Оживлённый предмет"

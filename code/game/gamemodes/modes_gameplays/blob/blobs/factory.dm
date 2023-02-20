@@ -1,4 +1,4 @@
-/obj/effect/blob/factory
+/obj/structure/blob/factory
 	name = "factory blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_factory"
@@ -8,9 +8,8 @@
 	var/max_spores = 3
 	var/spore_delay = 0
 	var/mob/living/simple_animal/hostile/blob/blobbernaut/naut = null
-	var/mob/camera/blob/overmind = null
 
-/obj/effect/blob/factory/Destroy()
+/obj/structure/blob/factory/Destroy()
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore as anything in spores)
 		if(spore.factory == src)
 			spore.factory = null
@@ -18,11 +17,11 @@
 		naut.factory = null
 		to_chat(naut, "<span class='danger'>Your factory was destroyed! You feel yourself dying!</span>")
 		naut.throw_alert("nofactory", /atom/movable/screen/alert/nofactory)
-	if(overmind)
-		overmind.factory_blobs -= src
+	if(OV)
+		OV.factory_blobs -= src
 	return ..()
 
-/obj/effect/blob/factory/run_action()
+/obj/structure/blob/factory/run_action()
 	if(naut)
 		return
 	if(spores.len >= max_spores)
@@ -34,9 +33,9 @@
 	PulseAnimation()
 
 	var/mob/living/simple_animal/hostile/blob/blobspore/S = new (loc, src)
-	if(overmind) //if we don't have an overmind, we don't need to do anything but make a spore
-		S.overmind = overmind
-		overmind.blob_mobs.Add(S)
+	if(OV) //if we don't have an overmind, we don't need to do anything but make a spore
+		S.overmind = OV
+		OV.blob_mobs.Add(S)
 
 ////////////////
 // BASE TYPE //
@@ -64,7 +63,7 @@
 	minbodytemp = 0
 	maxbodytemp = 360
 	var/mob/camera/blob/overmind = null
-	var/obj/effect/blob/factory/factory = null
+	var/obj/structure/blob/factory/factory = null
 	var/independent = FALSE
 
 /mob/living/simple_animal/hostile/blob/Login()
@@ -98,7 +97,7 @@
 				stat(null, "Core Health: [overmind.blob_core.get_integrity()]")
 			stat(null, "Progress: [blobs.len]/[overmind.b_congl.blobwincount]")
 
-/mob/living/simple_animal/hostile/blob/blob_act(/obj/effect/blob/B)
+/mob/living/simple_animal/hostile/blob/blob_act(/obj/structure/blob/B)
 	if(stat != DEAD && health < maxHealth)
 		health += maxHealth*0.0125
 
@@ -110,7 +109,7 @@
 		adjustFireLoss(5)
 
 /mob/living/simple_animal/hostile/blob/Process_Spacemove(movement_dir = 0)
-	for(var/obj/effect/blob/B in range(1, src))
+	for(var/obj/structure/blob/B in range(1, src))
 		return 1
 	return ..()
 
@@ -164,12 +163,12 @@
 /mob/living/simple_animal/hostile/blob/blobspore/blob_act()
 	return
 
-/mob/living/simple_animal/hostile/blob/blobspore/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/living/simple_animal/hostile/blob/blobspore/CanPass(atom/movable/mover, turf/target, height=0)
 	if(isblob(mover))
 		return TRUE
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/blobspore/atom_init(mapload, obj/effect/blob/factory/linked_node)
+/mob/living/simple_animal/hostile/blob/blobspore/atom_init(mapload, obj/structure/blob/factory/linked_node)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
@@ -328,16 +327,16 @@
 		return // strong independent blobbernaut that don't need blob
 	var/list/blobs_in_area = range(2, src)
 	var/damagesources = 0
-	if(!(locate(/obj/effect/blob) in blobs_in_area))
+	if(!(locate(/obj/structure/blob) in blobs_in_area))
 		damagesources++
 
 	if(!factory)
 		damagesources++
 	else
-		if(locate(/obj/effect/blob/core) in blobs_in_area)
+		if(locate(/obj/structure/blob/core) in blobs_in_area)
 			health += maxHealth*0.07
 			update_health_hud()
-		if(locate(/obj/effect/blob/node) in blobs_in_area)
+		if(locate(/obj/structure/blob/node) in blobs_in_area)
 			health += maxHealth*0.03
 			update_health_hud()
 

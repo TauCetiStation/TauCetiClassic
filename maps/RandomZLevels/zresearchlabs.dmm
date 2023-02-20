@@ -2827,7 +2827,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/rdconsole/core,
+/obj/machinery/computer/rdconsole/core{
+	id = 0
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -3156,7 +3158,7 @@
 /area/awaymission/labs/researchdivision)
 "hN" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/hand_labeler,
+/obj/item/device/tagger,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -7210,7 +7212,7 @@
 	},
 /area/awaymission/labs/command)
 "qE" = (
-/obj/structure/displaycase,
+/obj/structure/displaycase/captain,
 /turf/simulated/floor{
 	icon_state = "wood"
 	},

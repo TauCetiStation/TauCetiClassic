@@ -82,7 +82,7 @@
 
 
 /obj/machinery/computer/fusion_fuel_control/attackby(obj/item/W, mob/user)
-	if(ismultitool(W))
+	if(ispulsing(W))
 		var/new_ident = sanitize_safe(input("Enter a new ident tag.", "Fuel Control", id_tag) as null|text, MAX_LNAME_LEN)
 		if(new_ident && user.Adjacent(src))
 			id_tag = new_ident

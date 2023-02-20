@@ -209,7 +209,7 @@
 	cut_overlays()
 	if(ammo_count() == 0)
 		return
-	var/ammo_perc = (ammo_count() * 100) / max_ammo 
+	var/ammo_perc = (ammo_count() * 100) / max_ammo
 	var/image/ammo_icon = image('icons/obj/ammo.dmi', "12mmsh-[round(ammo_perc, 25)]")
 	add_overlay(ammo_icon)
 
@@ -375,15 +375,15 @@
 	max_ammo = 8
 	multiload = 0
 
-/obj/item/ammo_box/magazine/a3006_clip
-	name = ".30-06 ammo clip"
+/obj/item/ammo_box/magazine/a774clip
+	name = "7.74 ammo clip"
 	icon_state = "clip"
 	origin_tech = "combat=2"
-	caliber = "a3006"
-	ammo_type = /obj/item/ammo_casing/a3006
+	caliber = "7.74mm"
+	ammo_type = /obj/item/ammo_casing/a74
 	max_ammo = 5
 
-/obj/item/ammo_box/magazine/a3006_clip/update_icon()
+/obj/item/ammo_box/magazine/a774clip/update_icon()
 	..()
 	icon_state = "[initial(icon_state)]-[ammo_count()]"
 
@@ -489,6 +489,11 @@
 	..()
 	icon_state = "[initial(icon_state)]-[CEIL(ammo_count(0) / 30) * 30]"
 
+/obj/item/ammo_box/magazine/a74mm/krinkov
+	name = "small A74 magazine (7.74)"
+	icon_state = "krinkov"
+	max_ammo = 15
+
 /obj/item/ammo_box/magazine/plasma
 	name = "plasma weapon battery pack"
 	desc = "A special battery case with protection against EM pulse. Uses fast charge method. Has standardized dimensions and can be used with any plasma type gun of this series. Power cell can be replaced."
@@ -514,7 +519,7 @@
 	return ..()
 
 /obj/item/ammo_box/magazine/plasma/attackby(obj/item/I, mob/user, params)
-	if(power_supply && isscrewdriver(I))
+	if(power_supply && isscrewing(I))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		user.put_in_hands(power_supply)
 		power_supply = null

@@ -8,7 +8,7 @@
 	resistance_flags = CAN_BE_HIT
 
 /obj/structure/cult/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W) && can_unwrench)
+	if(iswrenching(W) && can_unwrench)
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
@@ -146,9 +146,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	name = "torture table"
 	desc = "For tortures"
 	icon = 'icons/obj/cult.dmi'
-	icon_state = "table2-idle"
+	icon_state = "table_surgey_idle"
 	can_buckle = TRUE
 	buckle_lying = TRUE
+	flags = NODECONSTRUCT
 
 	var/datum/religion/cult/religion
 	var/charged = FALSE
@@ -178,7 +179,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 			new /obj/effect/temp_visual/cult/sparks(loc)
 			return FALSE
 
-	if(iswrench(W))
+	if(iswrenching(W))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored

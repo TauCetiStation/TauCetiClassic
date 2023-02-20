@@ -3,7 +3,7 @@
   *  It will teleport people to a holding facility after 30 seconds. (Check the process() proc to change where teleport goes)
   *  It is possible to destroy the net by the occupant or someone else.
   */
-/obj/effect/energy_net
+/obj/structure/energy_net
 	name = "energy net"
 	desc = "It's a net made of green energy."
 	icon = 'icons/effects/effects.dmi'
@@ -19,7 +19,7 @@
 
 	resistance_flags = CAN_BE_HIT
 
-/obj/effect/energy_net/Destroy()
+/obj/structure/energy_net/Destroy()
 	if(affecting)
 		REMOVE_TRAIT(affecting, TRAIT_ANCHORED, src)
 		affecting.update_canmove()
@@ -27,7 +27,7 @@
 	affecting = null
 	return ..()
 
-/obj/effect/energy_net/proc/start_cooldown(mob/living/carbon/M)
+/obj/structure/energy_net/proc/start_cooldown(mob/living/carbon/M)
 	set waitfor = FALSE
 
 	affecting = M
@@ -49,19 +49,19 @@
 
 	qdel(src)
 
-/obj/effect/energy_net/ex_act(severity)
+/obj/structure/energy_net/ex_act(severity)
 	if(severity == EXPLODE_LIGHT && prob(50))
 		take_damage(25, BRUTE, BOMB)
 		return
 	take_damage(50, BRUTE, BOMB)
 
-/obj/effect/energy_net/attack_hand(mob/living/carbon/human/user)
+/obj/structure/energy_net/attack_hand(mob/living/carbon/human/user)
 	if (HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.visible_message("<span class='warning'>[user] rips the energy net apart!</span>", "<span class='notice'>You easily destroy the energy net.</span>")
 		attack_generic(user, 50, BRUTE, MELEE)
 
-/obj/effect/energy_net/attack_paw()
+/obj/structure/energy_net/attack_paw()
 	return attack_hand()
 
 /obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)

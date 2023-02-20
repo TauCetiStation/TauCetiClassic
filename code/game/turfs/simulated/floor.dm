@@ -81,7 +81,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 	QDEL_NULL(holy)
 	return ..()
 
-//turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+//turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0)
 //	if ((istype(mover, /obj/machinery/vehicle) && !(src.burnt)))
 //		if (!( locate(/obj/machinery/mass_driver, src) ))
 //			return 0
@@ -518,7 +518,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 			else
 				to_chat(user, "<span class='notice'>Похоже, лампочка в порядке, менять её не нужно.</span>")
 
-	if(iscrowbar(C) && (!(is_plating())))
+	if(isprying(C) && (!(is_plating())))
 		if(broken || burnt)
 			to_chat(user, "<span class='warning'>Вы сняли поврежденное покрытие.</span>")
 		else
@@ -538,7 +538,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 
 		return
 
-	if(isscrewdriver(C))
+	if(isscrewing(C))
 		if(is_wood_floor())
 			if(broken || burnt)
 				return
@@ -628,7 +628,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 		else
 			to_chat(user, "<span class='warning'>Это нельзя вскопать.</span>")
 
-	if(iswelder(C))
+	if(iswelding(C))
 		var/obj/item/weapon/weldingtool/W = C
 		if(!is_plating())
 			return

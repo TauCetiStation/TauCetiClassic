@@ -152,6 +152,7 @@
 			if(new_tone)
 				H.s_tone = max(min(round(new_tone), 220), 1)
 				H.s_tone =  -H.s_tone + 35
+			H.apply_recolor()
 			H.update_hair()
 			H.update_body()
 			H.check_dna(H)

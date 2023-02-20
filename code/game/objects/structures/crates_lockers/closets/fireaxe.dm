@@ -32,7 +32,7 @@
 		return
 
 	if (isrobot(usr) || locked)
-		if(ismultitool(O))
+		if(ispulsing(O))
 			to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
 			playsound(user, 'sound/machines/lockreset.ogg', VOL_EFFECTS_MASTER)
 			if (do_after(user, 50, target = src))
@@ -48,7 +48,7 @@
 					addtimer(CALLBACK(src, /atom.proc/update_icon), 10)
 				return
 			..()
-			
+
 	else if (istype(O, /obj/item/weapon/fireaxe) && localopened)
 		if(!fireaxe)
 			user.drop_from_inventory(O, src)
@@ -69,7 +69,7 @@
 	else
 		if(smashed)
 			return
-		if(ismultitool(O))
+		if(ispulsing(O))
 			if(localopened)
 				localopened = FALSE
 				icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
