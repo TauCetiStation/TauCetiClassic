@@ -204,20 +204,22 @@
 
 /mob/living/simple_animal/shade/god/resist()
 	. = ..()
-	if(. && container)
-		if(ismob(container.loc))
-			var/mob/M = container.loc
-			M.drop_from_inventory(container)
-			to_chat(M, "<span class='notice'>[container] wriggles out of your grip!</span>")
-			to_chat(src, "<span class='notice'>You wriggle out of [M]'s grip!</span>")
-		else if(isitem(container.loc) || istype(container.loc, /obj/machinery/pipedispenser/disposal))
+	if(!. || !container)
+		return FALSE
+
+	if(ismob(container.loc))
+		var/mob/M = container.loc
+		M.drop_from_inventory(container)
+		to_chat(M, "<span class='notice'>[container] wriggles out of your grip!</span>")
+		to_chat(src, "<span class='notice'>You wriggle out of [M]'s grip!</span>")
+	else if(isitem(container.loc) || istype(container.loc, /obj/machinery/pipedispenser/disposal))
+		to_chat(src, "<span class='notice'>You struggle free of [container.loc].</span>")
+		container.forceMove(get_turf(container.loc))
+	else if(istype(container.loc, /obj/structure/closet))
+		var/obj/structure/closet/C = container.loc
+		if(!C.opened)
 			to_chat(src, "<span class='notice'>You struggle free of [container.loc].</span>")
 			container.forceMove(get_turf(container.loc))
-		else if(istype(container.loc, /obj/structure/closet))
-			var/obj/structure/closet/C = container.loc
-			if(!C.opened)
-				to_chat(src, "<span class='notice'>You struggle free of [container.loc].</span>")
-				container.forceMove(get_turf(container.loc))
 
 /mob/living/simple_animal/shade/god/update_canmove(no_transform = FALSE)
 	canmove = !buckled
@@ -239,4 +241,4 @@
 /mob/living/simple_animal/shade/Destroy()
 	global.wizard_shades_count--
 	return ..()
-	
+

@@ -829,22 +829,20 @@
 		return ..()
 
 /mob/living/verb/resist()
+
 	set name = "Resist"
 	set category = "IC"
 
-	if(!isliving(usr) || usr.next_move > world.time)
+	if(next_move > world.time || is_busy())
 		return FALSE
 
 	. = TRUE
-	usr.SetNextMove(20)
-
-	var/mob/living/L = usr
+	AdjustNextMove(CLICK_CD_ACTION)
 
 	//Getting out of someone's inventory.
-
-	if(istype(src.loc,/obj/item/weapon/holder))
-		var/obj/item/weapon/holder/H = src.loc //Get our item holder.
-		var/mob/living/M = H.loc                      //Get our mob holder (if any).
+	if(istype(loc, /obj/item/weapon/holder))
+		var/obj/item/weapon/holder/H = loc //Get our item holder.
+		var/mob/living/M = H.loc           //Get our mob holder (if any).
 
 		if(istype(M))
 			M.drop_from_inventory(H)
@@ -855,39 +853,8 @@
 			H.forceMove(get_turf(H))
 		return
 
-	//Resisting control by an alien mind.
-	if(istype(src.loc,/mob/living/simple_animal/borer))
-		var/mob/living/simple_animal/borer/B = src.loc
-		var/mob/living/captive_brain/H = src
-
-		to_chat(H, "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately sixty seconds).</span>")
-		to_chat(B.host, "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>")
-
-		spawn(rand(350,450)+B.host.brainloss)
-
-			if(!B || !B.controlling)
-				return
-
-			B.host.adjustBrainLoss(rand(5,10))
-			to_chat(H, "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>")
-			to_chat(B.host, "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>")
-			B.controlling = 0
-
-			B.ckey = B.host.ckey
-			B.host.ckey = H.ckey
-
-			H.ckey = null
-			H.name = "host brain"
-			H.real_name = "host brain"
-
-			verbs -= /mob/living/carbon/proc/release_control
-			verbs -= /mob/living/carbon/proc/punish_host
-			verbs -= /mob/living/carbon/proc/spawn_larvae
-
-			return
-
 	//resisting grabs (as if it helps anyone...)
-	if (!L.incapacitated())
+	if (!incapacitated())
 		var/resisting = 0
 		for(var/obj/item/weapon/grab/G in usr.grabbed_by)
 			resisting++
@@ -900,135 +867,31 @@
 							H.shoving_fingers = FALSE
 					qdel(G)
 				if(GRAB_AGGRESSIVE)
-					if(prob(50 - (L.lying ? 35 : 0)))
-						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
+					if(prob(50 - (lying ? 35 : 0)))
+						visible_message("<span class='danger'>[src] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
 				if(GRAB_NECK)
 					if(prob(5))
-						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>")
+						visible_message("<span class='danger'>[src] has broken free of [G.assailant]'s headlock!</span>")
 						qdel(G)
 		if(resisting)
-			L.visible_message("<span class='danger'>[L] resists!</span>")
+			visible_message("<span class='danger'>[src] resists!</span>")
+
 	//Digging yourself out of a grave
-	if(istype(src.loc, /obj/structure/pit))
+	if(istype(loc, /obj/structure/pit))
 		var/obj/structure/pit/P = loc
-		spawn() P.digout(src)
+		INVOKE_ASYNC(P, /obj/structure/pit/proc/digout, src)
+
 	//unbuckling yourself
-	if(L.buckled && (L.last_special <= world.time) )
-		if(iscarbon(L))
-			var/mob/living/carbon/C = L
-			if (istype(C.buckled,/obj/structure/stool/bed/nest))
-				C.buckled.user_unbuckle_mob(C)
-				return
-			if(C.handcuffed || istype(C.buckled, /obj/machinery/optable/torture_table))
-				C.next_move = world.time + 100
-				C.last_special = world.time + 100
-				C.visible_message("<span class='danger'>[usr] attempts to unbuckle themself!</span>", self_message = "<span class='rose'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)</span>")
-				spawn(0)
-					if(do_after(usr, 1200, target = usr))
-						if(!C.buckled)
-							return
-						C.visible_message("<span class='danger'>[usr] manages to unbuckle themself!</span>", self_message = "<span class='notice'>You successfully unbuckle yourself.</span>")
-						C.buckled.user_unbuckle_mob(C)
-		else
-			L.buckled.user_unbuckle_mob(L)
+	if(buckled && (last_special <= world.time))
+		if(!iscarbon(src)) // carbon unbuckling is done in carbon's /resist, i don't know how to make it better
+			buckled.user_unbuckle_mob(src)
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
-	else if(loc && istype(loc, /obj) && !isturf(loc))
-		if(!L.incapacitated(NONE))
+	else if(istype(loc, /obj))
+		if(!incapacitated(NONE))
 			var/obj/C = loc
-			C.container_resist(L)
-
-	//breaking out of handcuffs and putting off fires
-	else if(iscarbon(L))
-		var/mob/living/carbon/CM = L
-		if(CM.on_fire)
-			if(!CM.canmove && !CM.crawling)	return
-			CM.fire_stacks -= 5
-			CM.Stun(5)
-			CM.Weaken(5)
-			CM.visible_message("<span class='danger'>[CM] rolls on the floor, trying to put themselves out!</span>", \
-				"<span class='rose'>You stop, drop, and roll!</span>")
-			if(fire_stacks <= 0)
-				CM.visible_message("<span class='danger'>[CM] has successfully extinguished themselves!</span>", \
-					"<span class='notice'>You extinguish yourself.</span>")
-				ExtinguishMob()
-			return
-		if(CM.handcuffed && (CM.last_special <= world.time))
-			CM.next_move = world.time + 100
-			CM.last_special = world.time + 100
-			if(isxenoadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
-				CM.visible_message("<span class='danger'>[CM] is trying to break the handcuffs!</span>", self_message = "<span class='rose'>You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)</span>")
-				spawn(0)
-					if(do_after(CM, 50, target = usr))
-						if(!CM.handcuffed || CM.buckled)
-							return
-						CM.visible_message("<span class='danger'>[CM] manages to break the handcuffs!</span>", self_message = "<span class='notice'>You successfully break your handcuffs.</span>")
-						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						qdel(CM.handcuffed)
-						CM.handcuffed = null
-						CM.update_inv_handcuffed()
-			else
-				var/obj/item/weapon/handcuffs/HC = CM.handcuffed
-				var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
-				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
-				if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
-					breakouttime = HC.breakouttime
-					displaytime = breakouttime / 600 //Minutes
-				CM.visible_message("<span class='danger'>[usr] attempts to remove \the [HC]!</span>", self_message = "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
-				spawn(0)
-					if(do_after(CM, breakouttime, target = usr))
-						if(!CM.handcuffed || CM.buckled)
-							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
-						if(istype(HC, /obj/item/weapon/handcuffs/alien))
-							CM.visible_message("<span class='danger'>[CM] break in a discharge of energy!</span>", \
-							"<span class='notice'>You successfully break in a discharge of energy!</span>")
-							var/datum/effect/effect/system/spark_spread/S = new
-							S.set_up(4,0,CM.loc)
-							S.start()
-						else
-							CM.visible_message("<span class='danger'>[CM] manages to remove the handcuffs!</span>", \
-								"<span class='notice'>You successfully remove \the [CM.handcuffed].</span>")
-						CM.drop_from_inventory(CM.handcuffed)
-
-		else if(CM.legcuffed && (CM.last_special <= world.time))
-			if(!CM.canmove && !CM.crawling)	return
-			CM.next_move = world.time + 100
-			CM.last_special = world.time + 100
-			if(isxenoadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
-				to_chat(usr, )
-				CM.visible_message("<span class='danger'>[CM] is trying to break the legcuffs!</span>", self_message = "<span class='notice'>You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)</span>")
-				spawn(0)
-					if(do_after(CM, 50, target = usr))
-						if(!CM.legcuffed || CM.buckled)
-							return
-						CM.visible_message("<span class='danger'>[CM] manages to break the legcuffs!</span>", self_message = "<span class='notice'>You successfully break your legcuffs.</span>")
-						CM.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-						qdel(CM.legcuffed)
-						CM.legcuffed = null
-						CM.update_inv_legcuffed()
-			else
-				var/obj/item/weapon/legcuffs/HC = CM.legcuffed
-				var/breakouttime = 1200 //A default in case you are somehow legcuffed with something that isn't an obj/item/weapon/legcuffs type
-				var/displaytime = 2 //Minutes to display in the "this will take X minutes."
-				if(istype(HC)) //If you are legcuffed with actual legcuffs... Well what do I know, maybe someone will want to legcuff you with toilet paper in the future...
-					breakouttime = HC.breakouttime
-					displaytime = breakouttime / 600 //Minutes
-				CM.visible_message("<span class='danger'>[usr] attempts to remove \the [HC]!</span>", self_message = "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
-				spawn(0)
-					if(do_after(CM, breakouttime, target = usr))
-						if(!CM.legcuffed || CM.buckled)
-							return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
-						if(istype(HC, /obj/item/weapon/handcuffs/alien))
-							CM.visible_message("<span class='danger'>[CM] break in a discharge of energy!</span>", \
-							"<span class='notice'>You successfully break in a discharge of energy!</span>")
-							var/datum/effect/effect/system/spark_spread/S = new
-							S.set_up(4,0,CM.loc)
-							S.start()
-						else
-							CM.visible_message("<span class='danger'>[CM] manages to remove the legcuffs!</span>", \
-								"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
-						CM.drop_from_inventory(CM.legcuffed)
+			C.container_resist(src)
 
 /// What should the mob do when laying down. Return TRUE to prevent default behavior.
 /mob/living/proc/crawl_can_use()

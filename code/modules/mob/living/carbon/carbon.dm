@@ -1317,3 +1317,112 @@
 				amount = max(amount, BODYTEMP_COOLING_MAX)
 
 	..(amount, min_temp, max_temp)
+
+/mob/living/carbon/proc/unbuckling_attempt()
+	if(do_after(src, 2 MINUTES, target = src))
+		if(!buckled)
+			return
+		visible_message("<span class='danger'>[src] manages to unbuckle themself!</span>", self_message = "<span class='notice'>You successfully unbuckle yourself.</span>")
+		buckled.user_unbuckle_mob(src)
+
+/mob/living/carbon/resist()
+	. = ..()
+	if(!.)
+		return FALSE
+	if(buckled && (last_special <= world.time))
+		if (istype(buckled, /obj/structure/stool/bed/nest))
+			buckled.user_unbuckle_mob(src)
+			return
+		if(handcuffed || istype(buckled, /obj/machinery/optable/torture_table))
+			AdjustNextMove(10 SECONDS)
+			last_special = world.time + (10 SECONDS)
+			visible_message("<span class='danger'>[src] attempts to unbuckle themself!</span>", self_message = "<span class='rose'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)</span>")
+			INVOKE_ASYNC(src, .proc/unbuckling_attempt)
+	if(on_fire)
+		if(!canmove && !crawling)
+			return
+		fire_stacks -= 5
+		Stun(5)
+		Weaken(5)
+		visible_message("<span class='danger'>[src] rolls on the floor, trying to put themselves out!</span>", \
+			"<span class='rose'>You stop, drop, and roll!</span>")
+		if(fire_stacks <= 0)
+			visible_message("<span class='danger'>[src] has successfully extinguished themselves!</span>", \
+				"<span class='notice'>You extinguish yourself.</span>")
+			ExtinguishMob()
+		return
+	if(handcuffed && (last_special <= world.time))
+		next_move = world.time + 100
+		last_special = world.time + 100
+		if(isxenoadult(src) || (HULK in mutations))//Don't want to do a lot of logic gating here.
+			visible_message("<span class='danger'>[src] is trying to break the handcuffs!</span>", self_message = "<span class='rose'>You attempt to break your handcuffs. (This will take around 5 seconds and you need to stand still)</span>")
+			spawn(0)
+				if(do_after(src, 50, target = src))
+					if(!handcuffed || buckled)
+						return
+					visible_message("<span class='danger'>[src] manages to break the handcuffs!</span>", self_message = "<span class='notice'>You successfully break your handcuffs.</span>")
+					say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+					qdel(handcuffed)
+					handcuffed = null
+					update_inv_handcuffed()
+		else
+			var/obj/item/weapon/handcuffs/HC = handcuffed
+			var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
+			var/displaytime = 2 //Minutes to display in the "this will take X minutes."
+			if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
+				breakouttime = HC.breakouttime
+				displaytime = breakouttime / 600 //Minutes
+			visible_message("<span class='danger'>[src] attempts to remove \the [HC]!</span>", self_message = "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
+			spawn(0)
+				if(do_after(src, breakouttime, target = src))
+					if(!handcuffed || buckled)
+						return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
+					if(istype(HC, /obj/item/weapon/handcuffs/alien))
+						visible_message("<span class='danger'>[src] break in a discharge of energy!</span>", \
+						"<span class='notice'>You successfully break in a discharge of energy!</span>")
+						var/datum/effect/effect/system/spark_spread/S = new
+						S.set_up(4,0,loc)
+						S.start()
+					else
+						visible_message("<span class='danger'>[src] manages to remove the handcuffs!</span>", \
+							"<span class='notice'>You successfully remove \the [handcuffed].</span>")
+					drop_from_inventory(handcuffed)
+
+	else if(legcuffed && (last_special <= world.time))
+		if(!canmove && !crawling)	return
+		next_move = world.time + 100
+		last_special = world.time + 100
+		if(isxenoadult(src) || (HULK in src.mutations))//Don't want to do a lot of logic gating here.
+			to_chat(src, )
+			visible_message("<span class='danger'>[src] is trying to break the legcuffs!</span>", self_message = "<span class='notice'>You attempt to break your legcuffs. (This will take around 5 seconds and you need to stand still)</span>")
+			spawn(0)
+				if(do_after(src, 50, target = src))
+					if(!legcuffed || buckled)
+						return
+					visible_message("<span class='danger'>[src] manages to break the legcuffs!</span>", self_message = "<span class='notice'>You successfully break your legcuffs.</span>")
+					say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+					qdel(legcuffed)
+					legcuffed = null
+					update_inv_legcuffed()
+		else
+			var/obj/item/weapon/legcuffs/HC = legcuffed
+			var/breakouttime = 1200 //A default in case you are somehow legcuffed with something that isn't an obj/item/weapon/legcuffs type
+			var/displaytime = 2 //Minutes to display in the "this will take X minutes."
+			if(istype(HC)) //If you are legcuffed with actual legcuffs... Well what do I know, maybe someone will want to legcuff you with toilet paper in the future...
+				breakouttime = HC.breakouttime
+				displaytime = breakouttime / 600 //Minutes
+			visible_message("<span class='danger'>[src] attempts to remove \the [HC]!</span>", self_message = "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
+			spawn(0)
+				if(do_after(src, breakouttime, target = src))
+					if(!legcuffed || buckled)
+						return // time leniency for lag which also might make this whole thing pointless but the server lags so hard that 40s isn't lenient enough - Quarxink
+					if(istype(HC, /obj/item/weapon/handcuffs/alien))
+						visible_message("<span class='danger'>[src] break in a discharge of energy!</span>", \
+						"<span class='notice'>You successfully break in a discharge of energy!</span>")
+						var/datum/effect/effect/system/spark_spread/S = new
+						S.set_up(4,0,loc)
+						S.start()
+					else
+						visible_message("<span class='danger'>[src] manages to remove the legcuffs!</span>", \
+							"<span class='notice'>You successfully remove \the [legcuffed].</span>")
+					drop_from_inventory(legcuffed)

@@ -8,6 +8,37 @@
 		return FALSE
 	return other == my_borer.host
 
+/mob/living/captive_brain/resist()
+	var/mob/living/simple_animal/borer/B = loc
+
+	to_chat(src, "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately sixty seconds).</span>")
+	to_chat(B.host, "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>")
+
+	addtimer(CALLBACK(src, .proc/resistance_succeeded), rand(35, 45) + B.host.brainloss / 10)
+
+/mob/living/captive_brain/proc/resistance_succeeded()
+	var/mob/living/simple_animal/borer/B = loc
+
+	if(!B || !B.controlling)
+		return
+
+	B.host.adjustBrainLoss(rand(5,10))
+	to_chat(src, "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>")
+	to_chat(B.host, "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>")
+	B.controlling = FALSE
+
+	B.ckey = B.host.ckey
+	B.host.ckey = ckey
+
+	ckey = null
+	name = "host brain"
+	real_name = "host brain"
+
+	verbs -= /mob/living/carbon/proc/release_control
+	verbs -= /mob/living/carbon/proc/punish_host
+	verbs -= /mob/living/carbon/proc/spawn_larvae
+	return
+
 /mob/living/captive_brain/say(message)
 
 	if (client)
