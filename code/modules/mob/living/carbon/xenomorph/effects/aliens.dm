@@ -118,6 +118,7 @@
 	opacity = FALSE
 	canSmoothWith = list()
 	smooth = SMOOTH_FALSE
+	layer = LOW_OBJ_LAYER
 
 /obj/structure/alien/resin/tunnel/atom_init()
 	. = ..()
@@ -145,20 +146,22 @@
 	travel(user)
 
 /obj/structure/alien/resin/tunnel/proc/travel(mob/living/carbon/xenomorph/user)
-	if(!user || !istype(user))
-		return ..()
+	if(!user || user.is_busy())
+		return
 
 	if(isxenoqueen(user))
 		to_chat(user, "<span class='userdanger'>You are too thicc for that hole.</span>")
 		return
 
-	for(var/obj/structure/hindrance in get_turf(user))
-		if(!istype(hindrance, /obj/structure/alien/weeds))
+	for(var/obj/structure/hindrance in loc)
+		if(hindrance.density)
 			return
 
-	var/target_tunnel = input(user, "Выберите конечную цель путешествия", "Вход в тоннель") as null|anything in global.xeno_tunnel_list + "Cancel"
-	if(!target_tunnel)
+	var/list/list_of_tunnels = global.xeno_tunnel_list - name + "Cancel"
+	var/target_tunnel = input(user, "Выберите конечную цель путешествия", "Вход в тоннель") as null|anything in list_of_tunnels
+	if(!target_tunnel || target_tunnel == "Cancel")
 		return
+
 	var/picked_tunnel = global.xeno_tunnel_list[target_tunnel]
 
 	if(picked_tunnel)
@@ -169,7 +172,9 @@
 			return
 
 		user.visible_message("<span class='warning'>[user] climbing in a [src]!</span>", "<span class='notice'>You start climbing in [src].</span>")
-		if(do_after(user, TUNNEL_CLIMB_DELAY, target = src)) //TODO: distance param when do_after() update
+		if(do_after(user, TUNNEL_CLIMB_DELAY, target = src))
+			if(!Adjacent(user))
+				return
 			user.forceMove(target_turf)
 
 /obj/structure/alien/resin/tunnel/examine(mob/user)
@@ -179,12 +184,13 @@
 		to_chat(user, "<span class='notice'>Stuffy air is felt inside, there is no through exit.</span>")
 		return
 	if(isxeno(user))
-		to_chat(user, "<span class='notice'>Number of tunnels - [count_holes]</span")
-	else
+		to_chat(user, "<span class='notice'>Number of tunnels - [count_holes].</span")
+		return
+	if(Adjacent(user))
 		to_chat(user, "<span class='notice'>You feel a draft in the hole.</span")
 
 /obj/structure/alien/resin/tunnel/Destroy()
-	global.xeno_tunnel_list.Remove(src)
+	global.xeno_tunnel_list.Remove(name)
 	return ..()
 
 //Weeds
