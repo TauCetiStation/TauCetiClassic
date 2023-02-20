@@ -166,7 +166,7 @@
 	result_amount = 3
 
 /datum/chemical_reaction/methamphetamine
-	name = "methamphetamine crystall"
+	name = "methamphetamine crystal"
 	id = "methamphetamine"
 	result = null
 	required_reagents = list("synaptizine" = 30, "space_drugs" = 30, "ammonia" = 30)

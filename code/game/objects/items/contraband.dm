@@ -21,7 +21,7 @@
 
 
 /obj/item/weapon/methamphetamine_shard //I have no idea where to put it
-	name = "Methamphetamine shard"
+	name = "methamphetamine shard"
 	desc = "A piece of crystal clear methamphetamine."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "methshard"
