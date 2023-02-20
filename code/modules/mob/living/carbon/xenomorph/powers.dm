@@ -133,7 +133,6 @@
 	action_icon_state = "build_tunnel"
 	plasma_cost = 200
 	sound = 'sound/effects/resin_build.ogg'
-	var/list/blacklisted_zone = list()
 
 /obj/effect/proc_holder/spell/no_target/dig_tunnel/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
 	if(ALREADY_STRUCTURE_THERE(user))
@@ -144,7 +143,11 @@
 		if(try_start)
 			to_chat (user, "<span class='warning'>You can dig tunnel on weeds only.</span>")
 		return FALSE
-	if(isAllowedZone(get_turf(user)) && isAllowedTurf(get_turf(user)))
+	if(!isAllowedZone(get_turf(user)))
+		if(try_start)
+			to_chat (user, "<span class='warning'>You can't dig tunnel in this area.</span>")
+		return FALSE
+	if(!isAllowedTurf(get_turf(user)))
 		if(try_start)
 			to_chat (user, "<span class='warning'>You can't dig tunnel in this area.</span>")
 		return FALSE
@@ -161,12 +164,18 @@
 	new /obj/structure/alien/resin/tunnel(user.loc)
 
 /obj/effect/proc_holder/spell/no_target/dig_tunnel/proc/isAllowedZone(turf/user_turf)
-	if(!is_station_level(user_turf.z) || !is_mining_level(user_turf.z))
-		return FALSE
-	blacklisted_zone += subtypesof(/area/station/aisat) + subtypesof(/area/station/tcommsat)
-	var/area/user_area = get_area(user_turf)
-	for(var/area/not_allowed_area in blacklisted_zone)
-		return !istype(user_area, not_allowed_area)
+	if(is_station_level(user_turf.z))
+		return TRUE
+	if(is_mining_level(user_turf.z))
+		if(!global.xeno_tunnel_list.len)
+			return TRUE
+		for(var/i in 1 to global.xeno_tunnel_list.len)
+			var/obj/structure/alien/resin/tunnel/tunnel = global.xeno_tunnel_list[i]
+			if(tunnel)
+				var/turf/tunnel_turf = get_turf(tunnel)
+				if(tunnel_turf && tunnel_turf.z != user_turf.z)
+					return FALSE
+	return FALSE
 
 /obj/effect/proc_holder/spell/no_target/dig_tunnel/proc/isAllowedTurf(turf/user_turf)
 	for(var/obj/structure/hindrance in user_turf)
