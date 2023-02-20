@@ -813,9 +813,9 @@
 	if(prob(60))
 		M.adjustToxLoss(1)
 
-/datum/reagent/methamphetamine
-	name = "Methamphetamine"
-	id = "methamphetamine"
+/datum/reagent/crystallephrine
+	name = "Crystallephrine"
+	id = "crystallephrine"
 	description = "A very powerful illegal psychostimulant."
 	reagent_state = LIQUID
 	color = "#e7e7f1"
@@ -823,7 +823,7 @@
 	overdose = 20
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/methamphetamine/on_general_digest(mob/living/M)
+/datum/reagent/crystallephrine/on_general_digest(mob/living/M)
 	..()
 	M.adjustDrugginess(2)
 	M.AdjustSleeping(-1)

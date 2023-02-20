@@ -33,22 +33,22 @@
 	icon_state = "big_ash"
 	beauty = -100
 
-/obj/effect/decal/cleanable/ash/meth
+/obj/effect/decal/cleanable/ash/cryst
 	name = "White powder"
 	desc = "Every junkie's dream."
 	gender = PLURAL
-	icon_state = "meth"
+	icon_state = "cryst"
 
 	beauty = 100
 
-/obj/effect/decal/cleanable/ash/meth/attack_hand(mob/user)
+/obj/effect/decal/cleanable/ash/cryst/attack_hand(mob/user)
 	if(user.a_intent == INTENT_GRAB)
 		if(!CanEat(user, user, src, "sniff"))
 			return
 		to_chat(user, "<span class='notice'>You try to inhale it...</span>")
 		if(do_after(user, 50, can_move = FALSE))
 			visible_message("<span class='warning'>[user.name] inhales the powder.</span>")
-			user.reagents.add_reagent("methamphetamine", 15)
+			user.reagents.add_reagent("crystallephrine", 15)
 			user.emote("woo")
 			qdel(src)
 		else

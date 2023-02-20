@@ -20,32 +20,32 @@
 		new /obj/item/weapon/reagent_containers/pill/zoom(src)
 
 
-/obj/item/weapon/methamphetamine_shard //I have no idea where to put it
-	name = "methamphetamine shard"
-	desc = "A piece of crystal clear methamphetamine."
+/obj/item/weapon/crystallephrine_shard //I have no idea where to put it
+	name = "crystallephrine shard"
+	desc = "A piece of crystal clear crystallephrine."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "methshard"
+	icon_state = "crystshard"
 	force = 3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	w_class = SIZE_MINUSCULE
 
-/obj/item/weapon/methamphetamine_shard/attack_self(mob/user)
+/obj/item/weapon/crystallephrine_shard/attack_self(mob/user)
 	. = ..()
 	var/mob/living/M = user
 	if(!CanEat(user, M, src, "sniff"))
 		return
 
-	to_chat(M, "<span class='notice'>You're trying to use methamphetamine...</span>")
+	to_chat(M, "<span class='notice'>You're trying to use crystallephrine...</span>")
 	if(do_after(M, 50, can_move = FALSE))
-		visible_message("<span class='warning'>[M.name] crushes a piece of meth and inhales it.</span>")
-		M.reagents.add_reagent("methamphetamine", 15)
+		visible_message("<span class='warning'>[M.name] crushes a piece of crystallephrine and inhales it.</span>")
+		M.reagents.add_reagent("crystallephrine", 15)
 		M.emote("woo")
 		qdel(src)
 	else
 		return
 
-/obj/item/weapon/methamphetamine_shard/after_throw(datum/callback/callback)
+/obj/item/weapon/crystallephrine_shard/after_throw(datum/callback/callback)
 	..()
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	new /obj/effect/decal/cleanable/ash/meth(loc)
+	new /obj/effect/decal/cleanable/ash/cryst(loc)
 	qdel(src)

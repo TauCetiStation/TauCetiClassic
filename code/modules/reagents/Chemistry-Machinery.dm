@@ -772,7 +772,7 @@
 		/obj/item/stack/sheet/mineral/clown = list("banana" = 20),
 		/obj/item/stack/sheet/mineral/silver = list("silver" = 20),
 		/obj/item/stack/sheet/mineral/gold = list("gold" = 20),
-		/obj/item/weapon/methamphetamine_shard = list("methamphetamine" = 20),
+		/obj/item/weapon/crystallephrine_shard = list("crystallephrine" = 20),
 		/obj/item/weapon/grown/nettle = list("sacid" = 0),
 		/obj/item/weapon/grown/deathnettle = list("pacid" = 0),
 
@@ -1155,11 +1155,11 @@
 		if(!O.reagents.total_volume)
 			remove_object(O)
 
-//methamphetamine
-	for (var/obj/item/weapon/methamphetamine_shard/O in holdingitems)
+//crystallephrine
+	for (var/obj/item/weapon/crystallephrine_shard/O in holdingitems)
 		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
-		beaker.reagents.add_reagent("methamphetamine", 20)
+		beaker.reagents.add_reagent("crystallephrine", 20)
 		remove_object(O)
 
 //Coin
