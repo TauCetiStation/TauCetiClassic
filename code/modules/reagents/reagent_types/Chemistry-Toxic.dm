@@ -832,32 +832,32 @@
 		data["ticks"] = 1
 	data["ticks"]++
 	switch(data["ticks"])
-		if(1 to 15)
+		if(1 to 7)
 			M.AdjustStunned(-1)
 			M.AdjustSleeping(-1)
 			M.AdjustWeakened(-2)
-		if(15 to 60)
+		if(7 to 30)
 			M.AdjustSleeping(-2)
 			M.AdjustStunned(-2)
 			M.AdjustWeakened(-4)
-		if(60 to 120)
+		if(30 to 60)
 			M.AdjustSleeping(-4)
 			M.AdjustStunned(-3)
 			M.AdjustWeakened(-4)
-		if(120 to 200)
+		if(60 to 100)
 			M.AdjustSleeping(-10)
 			M.AdjustStunned(-4)
 			M.AdjustWeakened(-5)
 			var/mob/living/carbon/human/H = M
 			H.shock_stage -= 3
-		if(200 to 230)
+		if(100 to 115)
 			M.AdjustSleeping(-3)
 			M.AdjustStunned(-1)
 			M.AdjustWeakened(-2)
 			M.adjustHalLoss(2)
 			M.losebreath += 1
 			M.make_dizzy(1)
-		if(230 to INFINITY)
+		if(115 to INFINITY)
 			M.adjustHalLoss(5)
 			M.losebreath += 1
 			M.adjustToxLoss(40)
