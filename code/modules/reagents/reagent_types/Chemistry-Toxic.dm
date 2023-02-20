@@ -813,6 +813,51 @@
 	if(prob(60))
 		M.adjustToxLoss(1)
 
+/datum/reagent/methamphetamine
+	name = "Methamphetamine"
+	id = "methamphetamine"
+	description = "A very powerful illegal psychostimulant."
+	reagent_state = LIQUID
+	color = "#e7e7f1"
+	custom_metabolism = 0.01
+	overdose = 20
+	restrict_species = list(IPC, DIONA)
+
+/datum/reagent/methamphetamine/on_general_digest(mob/living/M)
+	..()
+	M.adjustDrugginess(2)
+	M.AdjustSleeping(-1)
+	M.AdjustWeakened(-1)
+	M.AdjustStunned(-1)
+	if(prob(10))
+		M.playsound_local(M, 'sound/effects/Heart Beat.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+	if(volume >= 5)
+		M.AdjustWeakened(-2)
+	if(volume >= 10)
+		M.AdjustSleeping(-2)
+		M.AdjustStunned(-2)
+		M.AdjustWeakened(-4)
+	if(volume >= 15)
+		M.AdjustSleeping(-10)
+		M.AdjustStunned(-4)
+		M.AdjustWeakened(-5)
+		var/mob/living/carbon/human/H = M
+		H.shock_stage -= 3
+		if((prob(5)) && (ishuman(M)))
+			M.adjustHalLoss(50)
+			H.vomit()
+			to_chat(H,"<span class='warning'><b>You feel a VERY painful prick in your chest!</b></span>")
+			H.attack_heart(25, 0)
+	if(volume >= overdose)
+		M.AdjustStunned(10)
+		M.AdjustWeakened(15)
+		M.adjustToxLoss(5)
+		if(prob(25))
+			M.vomit()
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.attack_heart(80, 0)
+
 /datum/reagent/serotrotium
 	name = "Serotrotium"
 	id = "serotrotium"

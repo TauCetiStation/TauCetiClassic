@@ -33,6 +33,34 @@
 	icon_state = "big_ash"
 	beauty = -100
 
+/obj/effect/decal/cleanable/ash/meth
+	name = "White powder"
+	desc = "Every junkie's dream."
+	gender = PLURAL
+	icon_state = "meth"
+
+	beauty = 100
+
+/obj/effect/decal/cleanable/ash/meth/attack_hand(mob/user)
+	if(user.a_intent == INTENT_GRAB)
+		if(!CanEat(user, user, src, "sniff"))
+			return
+		to_chat(user, "<span class='notice'>You try to inhale it...</span>")
+		if(do_after(user, 50, can_move = FALSE))
+			visible_message("<span class='warning'>[user.name] inhales the powder.</span>")
+			user.reagents.add_reagent("methamphetamine", 15)
+			user.emote("woo")
+			qdel(src)
+		else
+			return
+	else
+		to_chat(user, "<span class='notice'>[src] sifts through your fingers.</span>")
+		user.SetNextMove(CLICK_CD_RAPID)
+		var/turf/simulated/floor/F = get_turf(src)
+		if (istype(F))
+			F.dirt += 4
+		qdel(src)
+
 /obj/effect/decal/cleanable/greenglow
 
 /obj/effect/decal/cleanable/greenglow/atom_init()

@@ -165,6 +165,18 @@
 	required_reagents = list("water" = 1, "fuel" = 1, "sugar" = 1)
 	result_amount = 3
 
+/datum/chemical_reaction/methamphetamine
+	name = "methamphetamine crystall"
+	id = "methamphetamine"
+	result = null
+	required_reagents = list("synaptizine" = 30, "space_drugs" = 30, "ammonia" = 30)
+	required_catalysts = list("phoron" = 5)
+	result_amount = 1
+
+/datum/chemical_reaction/methamphetamine/on_reaction(datum/reagents/holder)
+	new /obj/item/weapon/methamphetamine_shard(get_turf(holder.my_atom),10)
+	return
+
 /datum/chemical_reaction/lube
 	name = "Space Lube"
 	id = "lube"
