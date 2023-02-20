@@ -63,7 +63,7 @@
 /obj/item/mine/attackby(obj/item/I, mob/user, params)
 	. = ..()
 
-	if(!ismultitool(I) || !anchored)
+	if((I && !ispulsing(I)) || !anchored)
 		return
 
 	user.visible_message("<span class='notice'>[user] starts disarming [src].</span>", "<span class='notice'>You start disarming [src].</span>")

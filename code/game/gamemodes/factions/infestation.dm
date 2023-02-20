@@ -13,6 +13,8 @@
 
 	var/last_check = 0
 
+	var/start_help = TRUE
+
 	var/list/first_help = list("Xeno liquidator" = 4)
 	var/list/second_help = list("Xeno arsonist" = 4)
 	var/first_help_sent = FALSE

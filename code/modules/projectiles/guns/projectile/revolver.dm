@@ -26,8 +26,6 @@
 
 /obj/item/weapon/gun/projectile/revolver/attack_self(mob/living/user)
 	var/num_unloaded = 0
-	if(istwohanded)
-		return ..()
 	while (get_ammo() > 0)
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
@@ -90,7 +88,7 @@
 		return 1
 
 /obj/item/weapon/gun/projectile/revolver/detective/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		if(magazine.caliber == "38")
 			to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src].</span>")
 			if(magazine.ammo_count())

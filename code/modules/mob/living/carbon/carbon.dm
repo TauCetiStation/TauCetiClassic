@@ -576,6 +576,14 @@
 					if(BP_R_ARM, BP_L_ARM)
 						M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
 										"<span class='notice'>You shake [src]'s hand.</span>", )
+						if(HAS_TRAIT(M, TRAIT_WET_HANDS) && ishuman(src))
+							var/mob/living/carbon/human/H = src
+							var/obj/item/organ/external/BP = H.get_bodypart(M.get_targetzone())
+							if(BP && BP.is_robotic())
+								var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
+								sparks.set_up(3, 0, get_turf(H))
+								sparks.start()
+								to_chat(src, "<span class='userdanger'>[M]'s hand is wet!</span>")
 					if(BP_HEAD)
 						M.visible_message("<span class='notice'>[M] pats [src] on the head.</span>", \
 										"<span class='notice'>You pat [src] on the head.</span>", )
@@ -651,6 +659,14 @@
 	..()
 	if(throw_icon)
 		throw_icon.icon_state = "act_throw_on"
+	if(!COOLDOWN_FINISHED(src, toggle_throw_message))
+		return
+	var/obj/item/I = get_active_hand()
+	if(!I || (I.flags & (ABSTRACT|NODROP|DROPDEL)))
+		return
+	visible_message("<span class='notice'>[src] prepares to throw [I]!</span>",
+					"<span class='notice'>Вы замахиваетесь.</span>")
+	COOLDOWN_START(src, toggle_throw_message, 5 SECONDS)
 
 /mob/proc/throw_item(atom/target)
 	return
@@ -1114,12 +1130,12 @@
 				attack_log += text("\[[time_stamp()]\] <font color='orange'>Had their internals [internal ? "open" : "close"] by [usr.name] ([usr.ckey])[gas_log_string]</font>")
 				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name][gas_log_string]</font>")
 
-/mob/living/carbon/vomit(punched = FALSE, masked = FALSE)
+/mob/living/carbon/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, stun = TRUE, force = FALSE)
 	var/mask_ = masked
 	if(head && (head.flags & HEADCOVERSMOUTH))
 		mask_ = TRUE
 
-	. = ..(punched, mask_)
+	. = ..(punched, mask_, vomit_type, stun, force)
 	if(. && !mask_)
 		if(reagents.total_volume > 0)
 			var/toxins_puked = 0
@@ -1127,14 +1143,7 @@
 
 			while(TRUE)
 				var/datum/reagent/R_V = pick(reagents.reagent_list)
-				if(istype(R_V, /datum/reagent/water))
-					toxins_puked += 0.5
-				else if(R_V.id == "carbon")
-					toxins_puked += 2
-				else if(R_V.id == "anti_toxin")
-					toxins_puked += 3
-				else if(R_V.id == "thermopsis")
-					toxins_puked += 5
+				toxins_puked += R_V.toxin_absorption
 				reagents.trans_id_to(R, R_V.id, 1)
 				if(R.total_volume >= 10)
 					break
