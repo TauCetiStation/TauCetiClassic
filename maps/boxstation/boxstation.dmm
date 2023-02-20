@@ -45736,7 +45736,7 @@
 	dir = 8
 	},
 /turf/simulated/floor{
-	dir = 8;
+	dir = 1;
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
@@ -80033,7 +80033,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "neutralcorner"
+	icon_state = "neutral"
 	},
 /area/station/hallway/primary/central)
 "pIL" = (
@@ -111576,9 +111576,9 @@ aIR
 aIR
 aIR
 bDP
-bht
-bht
-bht
+aIR
+aIR
+aIR
 pGk
 bIZ
 jMb
