@@ -54,7 +54,6 @@ var/global/list/pylons = list()
 
 var/global/wizard_shades_count = 0
 var/global/peacekeeper_shields_count = 0
-var/global/list/xeno_tunnel_list = list()
 var/global/timezoneOffset = 0       // The difference betwen midnight (of the host computer) and 0 world.ticks.
 var/global/gametime_offset = 12 HOURS //Deciseconds to add to world.time for station time.
 

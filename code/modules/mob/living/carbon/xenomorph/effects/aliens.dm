@@ -14,6 +14,8 @@
 
 #define TUNNEL_CLIMB_DELAY 50
 
+var/global/list/xeno_tunnel_list = list()
+
 /obj/structure/alien
 	name = "alien thing"
 	desc = "theres something alien about this."
@@ -130,6 +132,14 @@
 		var/turf/simulated/floor/F = turf_with_hole
 		F.break_tile()
 
+/obj/structure/alien/resin/tunnel/proc/is_have_hindrance(turf/T)
+	if(!T)
+		return TRUE
+	for(var/obj/structure/hindrance in T)
+		if(hindrance.density)
+			return TRUE
+	return FALSE
+
 /obj/structure/alien/resin/tunnel/attack_facehugger(mob/user)
 	if(!user)
 		return ..()
@@ -153,9 +163,9 @@
 		to_chat(user, "<span class='userdanger'>You are too thicc for that hole.</span>")
 		return
 
-	for(var/obj/structure/hindrance in loc)
-		if(hindrance.density)
-			return
+	if(is_have_hindrance(loc))
+		to_chat(user, "<span class='warning'>That tunnel is blocked by something.</span>")
+		return
 
 	var/list/list_of_tunnels = global.xeno_tunnel_list - name + "Cancel"
 	var/target_tunnel = input(user, "Выберите конечную цель путешествия", "Вход в тоннель") as null|anything in list_of_tunnels
@@ -174,6 +184,9 @@
 		user.visible_message("<span class='warning'>[user] climbing in a [src]!</span>", "<span class='notice'>You start climbing in [src].</span>")
 		if(do_after(user, TUNNEL_CLIMB_DELAY, target = src))
 			if(!Adjacent(user))
+				return
+			if(is_have_hindrance(target_turf))
+				to_chat(user, "<span class='warning'>Exit tunnel is blocked by something.</span>")
 				return
 			user.forceMove(target_turf)
 
