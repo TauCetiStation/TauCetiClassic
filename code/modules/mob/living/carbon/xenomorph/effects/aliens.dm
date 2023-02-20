@@ -197,10 +197,10 @@ var/global/list/xeno_tunnel_list = list()
 		to_chat(user, "<span class='notice'>Stuffy air is felt inside, there is no through exit.</span>")
 		return
 	if(isxeno(user))
-		to_chat(user, "<span class='notice'>Number of tunnels - [count_holes].</span")
+		to_chat(user, "<span class='notice'>Number of tunnels - [count_holes].</span>")
 		return
 	if(Adjacent(user))
-		to_chat(user, "<span class='notice'>You feel a draft in the hole.</span")
+		to_chat(user, "<span class='notice'>You feel a draft in the hole.</span>")
 
 /obj/structure/alien/resin/tunnel/Destroy()
 	global.xeno_tunnel_list.Remove(name)
