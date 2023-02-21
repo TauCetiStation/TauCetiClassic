@@ -35,7 +35,7 @@
 	resistance_flags = CAN_BE_HIT
 
 /obj/structure/inflatable/forcefield/CanPass(atom/movable/mover, turf/target)
-	if(mover && mover.invisibility > 0)
+	if(mover && mover.invisibility > 0 && (locate(/obj/structure/bluespace_corridor) in loc))
 		return TRUE
 	return ..()
 

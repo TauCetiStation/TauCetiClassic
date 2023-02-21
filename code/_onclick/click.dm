@@ -186,7 +186,7 @@
 	if(!mutations.len)
 		return
 	if(a_intent == INTENT_HARM && (LASEREYES in mutations))
-		LaserEyes(A) // moved into a proc below
+		LaserEyes(A, params) // moved into a proc below
 	else if(TK in mutations)
 		ranged_attack_tk(A)
 
@@ -348,17 +348,17 @@
 	face_atom: turns the mob towards what you clicked on
 	cob_click: handles hotkeys for "craft or build"
 */
-/mob/proc/LaserEyes(atom/A)
+/mob/proc/LaserEyes(atom/A, params)
 	return
 
-/mob/living/carbon/human/LaserEyes(atom/A)
+/mob/living/carbon/human/LaserEyes(atom/A, params)
 	if(get_nutrition() > 300)
 		..()
 		SetNextMove(CLICK_CD_MELEE)
 		var/obj/item/projectile/beam/LE = new (loc)
 		LE.damage = 20
 		playsound(src, 'sound/weapons/guns/gunpulse_taser2.ogg', VOL_EFFECTS_MASTER)
-		LE.Fire(A, src)
+		LE.Fire(A, src, params)
 		nutrition = max(nutrition - rand(10, 40), 0)
 		handle_regular_hud_updates()
 	else

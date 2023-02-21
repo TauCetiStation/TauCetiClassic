@@ -256,6 +256,14 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 			transfer_control(C)
 
 /mob/living/simple_animal/replicator/UnarmedAttack(atom/A)
+	if(isliving(A) && !isreplicator(A) && a_intent == INTENT_HARM)
+		var/mob/living/L = A
+		do_attack_animation(L)
+		playsound(L, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
+		L.apply_effects(0, 0, 0, 0, 1, 1, 0, 30, 0)
+		SetNextMove(CLICK_CD_MELEE)
+		return
+
 	if(a_intent == INTENT_HARM)
 		INVOKE_ASYNC(src, .proc/disintegrate_turf, get_turf(A))
 		return
@@ -279,7 +287,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		// repair
 		return
 
-/mob/living/simple_animal/replicator/RangedAttack(atom/A)
+/mob/living/simple_animal/replicator/RangedAttack(atom/A, params)
 	// Adjacent() checks make this work in an unintuitive way otherwise.
 	if(get_dist(src, A) <= 1 && a_intent == INTENT_HARM)
 		INVOKE_ASYNC(src, .proc/disintegrate_turf, get_turf(A))
@@ -287,8 +295,9 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
 	if(a_intent == INTENT_HARM)
 		SetNextMove(CLICK_CD_MELEE)
+		playsound(src, 'sound/weapons/guns/gunpulse_taser2.ogg', VOL_EFFECTS_MASTER)
 		var/obj/item/projectile/disabler/D = new(loc)
-		D.Fire(A, src)
+		D.Fire(A, src, params)
 
 /mob/living/simple_animal/replicator/ShiftClickOn(atom/A)
 

@@ -4,8 +4,7 @@
 	light_color = "#0000ff"
 	//light_power = 2
 	//light_range = 2
-	damage = 2
+	damage = 3
 	damage_type = BURN
-	stun = 1
-	agony = 10
-	step_delay = 3
+	agony = 20
+	step_delay = 2

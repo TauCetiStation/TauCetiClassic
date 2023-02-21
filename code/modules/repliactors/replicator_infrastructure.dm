@@ -33,7 +33,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 		var/mob/M = AM
 		see_invisible_level = M.see_invisible
 
-	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', VOL_EFFECTS_MASTER)
+	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', VOL_EFFECTS_MASTER, 60)
 	AM.AddElement(/datum/element/bluespace_move, AM.invisibility, see_invisible_level, AM.alpha)
 
 /obj/machinery/bluespace_transponder/power_change()

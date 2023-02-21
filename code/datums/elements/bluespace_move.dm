@@ -49,8 +49,8 @@
 	if(!BC)
 		if(has_punishment)
 			to_chat(AM, "<span class='warning'>Such sudden jumps out of the bluespace web might damage you!</span>")
-			playsound(AM, 'sound/magic/Blind.ogg', VOL_EFFECTS_MASTER, 75)
+			playsound(AM, 'sound/magic/Blind.ogg', VOL_EFFECTS_MASTER, 80)
 		else
-			playsound(AM, 'sound/magic/blink.ogg', VOL_EFFECTS_MASTER, 75)
+			playsound(AM, 'sound/magic/blink.ogg', VOL_EFFECTS_MASTER, 60)
 		Detach(AM)
 		return
