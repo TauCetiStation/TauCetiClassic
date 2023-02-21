@@ -1252,6 +1252,7 @@
 	filling_color = "#d1f4ff"
 	bitesize = 5
 	list_reagents = list("water" = 10)
+	food_type = null
 
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/wishsoup/atom_init()
