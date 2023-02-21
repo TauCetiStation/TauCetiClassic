@@ -164,7 +164,7 @@ SUBSYSTEM_DEF(ticker)
 		delayed = TRUE
 
 	var/static/vote_delay_announced = FALSE
-	if(SSvote.active_vote)
+	if(SSvote.active_poll)
 		if(!vote_delay_announced)
 			to_chat(world, "<span class='info bold'>Restart delayed due to vote</span>")
 			vote_delay_announced = TRUE
@@ -199,7 +199,7 @@ SUBSYSTEM_DEF(ticker)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
 			// Players can initiate gamemode vote again
-			var/datum/poll/gamemode_vote = SSvote.votes[/datum/poll/gamemode]
+			var/datum/poll/gamemode_vote = SSvote.possible_polls[/datum/poll/gamemode]
 			if(gamemode_vote)
 				gamemode_vote.reset_next_vote()
 			return FALSE

@@ -67872,7 +67872,7 @@
 	id = "Secure Storage";
 	name = "Engineering Secure Storage";
 	pixel_y = 28;
-	req_access = list(10)
+	req_access = list(56)
 	},
 /turf/simulated/floor{
 	dir = 5;
