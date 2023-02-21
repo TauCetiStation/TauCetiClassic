@@ -122,7 +122,7 @@
 
 /obj/effect/proc_holder/spell/no_target/dig_tunnel
 	name = "Dig Tunnel"
-	desc = "Lay an egg to produce huggers to impregnate prey with."
+	desc = "Create a tunnel entrance. Use again to create the tunnel exit."
 	charge_max = 0
 	charge_type = "none"
 	clothes_req = FALSE
