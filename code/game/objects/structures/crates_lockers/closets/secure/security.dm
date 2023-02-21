@@ -454,7 +454,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/clothing/head/helmet/blueshield(src)
 	new /obj/item/clothing/suit/storage/flak/blueshield(src)
 
-	new /obj/item/weapon/melee/telebaton(src)
 	new /obj/item/weapon/melee/baton(src)
 	new /obj/item/weapon/gun/projectile/glock/spec(src)
 	for (var/i in 1 to 4)
