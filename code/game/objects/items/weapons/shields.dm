@@ -87,7 +87,6 @@
 	wall_of_shield_on = TRUE
 	add_filter("wallshield_outline", 2, outline_filter(1, "#C0C0C0"))
 	update_icon()
-	//item_state = "[icon_state]_outline"
 	user.update_inv_item(src)
 	return TRUE
 
@@ -96,7 +95,6 @@
 	wall_of_shield_on = FALSE
 	remove_filter("wallshield_outline")
 	update_icon()
-	//item_state = icon_state
 	if(user)
 		to_chat(user, "<span class='info'>You interrupted the Wall of Shields technique.</span>")
 		user.update_inv_item(src)
@@ -110,9 +108,7 @@
 		disable_wallshield(user)
 
 /obj/item/weapon/shield/update_icon()
-	..()
 	item_state = "[icon_state][wall_of_shield_on ? "_outline" : ""]"
-	//user.update_inv_item(src)
 
 //nothing happens but it should be because of logic
 /obj/item/weapon/shield/dropped(mob/living/user)
@@ -211,6 +207,9 @@
 	SCB.can_push_call = CALLBACK(src, /obj/item/weapon/shield/energy.proc/can_sweep_push)
 
 	AddComponent(/datum/component/swiping, SCB)
+
+/obj/item/weapon/shield/energy/AltClick(mob/user)
+	return
 
 /obj/item/weapon/shield/energy/proc/can_sweep(mob/user)
 	return active
