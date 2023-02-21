@@ -127,9 +127,6 @@
 /obj/machinery/power/can_be_auto_disintegrated()
 	return FALSE
 
-/obj/machinery/disposal/can_be_auto_disintegrated()
-	return FALSE
-
 /obj/machinery/bluespace_transponder/can_be_auto_disintegrated()
 	return FALSE
 

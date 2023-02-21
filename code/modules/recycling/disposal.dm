@@ -436,14 +436,18 @@
 
 // perform a flush
 /obj/machinery/disposal/proc/flush()
-
 	flushing = 1
 	flick("[icon_state]-flush", src)
 
+	sleep(10)
+	if(last_sound < world.time + 1)
+		playsound(src, 'sound/machines/disposalflush.ogg', VOL_EFFECTS_MASTER, null, FALSE)
+		last_sound = world.time
+	sleep(5) // wait for animation to finish
+
 	var/wrapcheck = 0
-	var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
-												// travels through the pipes.
-	//Hacky test to get drones to mail themselves through disposals.
+	var/obj/structure/disposalholder/H = new(contents, air_contents)
+
 	for(var/mob/living/silicon/robot/drone/D in src)
 		wrapcheck = 1
 
@@ -453,16 +457,10 @@
 	if(wrapcheck == 1)
 		H.tomail = 1
 
+	if(!trunk)
+		expel(H)
+		return
 
-
-	sleep(10)
-	if(last_sound < world.time + 1)
-		playsound(src, 'sound/machines/disposalflush.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-		last_sound = world.time
-	sleep(5) // wait for animation to finish
-
-
-	H.init(src, air_contents)	// copy the contents of disposer to holder
 	air_contents = new(PRESSURE_TANK_VOLUME)	// new empty gas resv.
 
 	H.start(src) // start the holder processing movement
@@ -534,24 +532,18 @@
 
 	var/partialTag = "" //set by a partial tagger the first time round, then put in destinationTag if it goes through again.
 
-/obj/structure/disposalholder/Destroy()
-	qdel(gas)
-	active = 0
-	return ..()
-
-// initialize a holder from the contents of a disposal unit
-/obj/structure/disposalholder/proc/init(obj/machinery/disposal/D, datum/gas_mixture/flush_gas)
-	gas = flush_gas	// transfer gas resv. into holder object -- let's be explicit about the data this proc consumes, please.
+/obj/structure/disposalholder/atom_init(mapload, list/contained, datum/gas_mixture/flush_gas)
+	gas = flush_gas
 
 	//Check for any living mobs trigger hasmob.
 	//hasmob effects whether the package goes to cargo or its tagged destination.
-	for(var/mob/living/M in D)
+	for(var/mob/living/M in contained)
 		if(M && M.stat != DEAD && !isdrone(M) && !isreplicator(M))
 			hasmob = 1
 
 	// now everything inside the disposal gets put into the holder
 	// note AM since can contain mobs or objs
-	for(var/atom/movable/AM in D)
+	for(var/atom/movable/AM in contained)
 		if(AM.name == "")
 			continue
 		if(!AM.simulated)
@@ -581,15 +573,15 @@
 			if(Object.price_tag)
 				src.destinationTag = "OnlineShop"
 
+/obj/structure/disposalholder/Destroy()
+	qdel(gas)
+	active = 0
+	return ..()
 
 // start the movement process
 // argument is the disposal unit the holder started in
-/obj/structure/disposalholder/proc/start(obj/machinery/disposal/D)
-	if(!D.trunk)
-		D.expel(src)	// no trunk connected, so expel immediately
-		return
-
-	loc = D.trunk
+/obj/structure/disposalholder/proc/start(obj/structure/disposalpipe/trunk/trunk)
+	loc = trunk
 	active = 1
 	set_dir(DOWN)
 	addtimer(CALLBACK(src, .proc/move), 1)
@@ -1502,18 +1494,14 @@
 		to_chat(src, "<span class='notice'>\The [D] acknowledges your signal.</span>")
 		D.flush_count = D.flush_every_ticks
 
-	/*
-		Cursed. Doesn't work. Trunk deletes when trying to enter it for no appearant reason.
 	var/turf/my_turf = get_turf(src)
 	// Otherwise you can enter by standing on a trunk.
 	var/obj/structure/disposalpipe/trunk/T = locate() in my_turf
 	if(istype(T) && T.layer > my_turf.layer && see_invisible > T.invisibility)
 		to_chat(src, "<span class='notice'>You enter into [T].</span>")
-		var/obj/structure/disposalholder/H = new()
+		var/obj/structure/disposalholder/H = new(list(src), return_air())
 		H.tomail = TRUE
-		H.init(loc, return_air())
-		H.start(loc, T)
-	*/
+		H.start(T)
 
 #undef SEND_PRESSURE
 #undef PRESSURE_TANK_VOLUME
