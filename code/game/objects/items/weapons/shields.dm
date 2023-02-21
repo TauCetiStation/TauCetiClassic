@@ -85,7 +85,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 	saved_dir = user.dir
 	wall_of_shield_on = TRUE
-	add_filter("wallshield_outline", 2, outline_filter(1, "#C0C0C0"))
+	add_filter("wallshield_outline", 2, outline_filter(1, "#c0c0c0"))
 	update_icon()
 	user.update_inv_item(src)
 	return TRUE
