@@ -2192,6 +2192,7 @@
 #include "code\modules\repliactors\replicator_life.dm"
 #include "code\modules\repliactors\replicator_reactions.dm"
 #include "code\modules\repliactors\replicator_spells.dm"
+#include "code\modules\repliactors\replicator_weapons.dm"
 #include "code\modules\repliactors\replicators.dm"
 #include "code\modules\repliactors\replicators_forcefields.dm"
 #include "code\modules\research\circuitprinter.dm"

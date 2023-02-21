@@ -178,14 +178,23 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		return
 
 	// Corridors can only connect to two other corridors if there's no portal connecting them.
+	// No more than 2 neighbors, and no more than 1 neighbor of the neigbhor(excluding us)
 	if(auto_construct_type == /obj/structure/bluespace_corridor && !(locate(/obj/machinery/bluespace_transponder) in T))
 		var/neighbor_count = 0
 		for(var/card_dir in global.cardinal)
-			var/turf/other = get_step(T, card_dir)
-			if(locate(auto_construct_type) in other)
+			var/turf/pos_neighbor = get_step(T, card_dir)
+			if(locate(auto_construct_type) in pos_neighbor)
 				neighbor_count += 1
-				if(neighbor_count >= 2)
+				if(neighbor_count > 2)
 					return
+
+				var/neighbor_neighbor_count = 0
+				for(var/card_dir2 in global.cardinal)
+					var/turf/pos_neighbor_neighbor = get_step(pos_neighbor, card_dir2)
+					if(locate(auto_construct_type) in pos_neighbor_neighbor)
+						neighbor_neighbor_count += 1
+						if(neighbor_neighbor_count > 1)
+							return
 
 	new auto_construct_type(T)
 	global.replicators_faction.adjust_materials(-auto_construct_cost, adjusted_by=last_controller_ckey)
@@ -275,6 +284,11 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		INVOKE_ASYNC(src, .proc/disintegrate_turf, get_turf(A))
 		return
 
+	if(a_intent == INTENT_HARM)
+		SetNextMove(CLICK_CD_MELEE)
+		var/obj/item/projectile/disabler/D = new(loc)
+		D.Fire(A, src)
+
 /mob/living/simple_animal/replicator/ShiftClickOn(atom/A)
 
 /mob/living/simple_animal/replicator/CtrlClickOn(atom/A)
@@ -287,9 +301,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 /mob/living/simple_animal/replicator/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/replicator))
 		return TRUE
+	if(istype(mover, /obj/item/projectile/disabler))
+		return TRUE
 	if(istype(mover) && mover.throwing)
 		return TRUE
-	// if istype replicator disabler projectile
 	return ..()
 
 /mob/living/simple_animal/replicator/proc/disintegrate_turf(turf/T)
@@ -451,4 +466,15 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	return TRUE
 
 /mob/living/simple_animal/replicator/say(message)
+	if(stat != CONSCIOUS)
+		return
+
+	message = sanitize(message)
+
+	if(!message)
+		return
+
+	if(message[1] == "*")
+		return emote(copytext(message, 2))
+
 	global.replicators_faction.announce_swarm(global.replicators_faction.get_presence_name(ckey), ckey, message)

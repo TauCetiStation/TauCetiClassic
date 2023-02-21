@@ -56,7 +56,7 @@
 		return ..()
 
 	if(href_list["replicator_jump"])
-		var/mob/living/simple_animal/replicator/target = locate(href_list["replicator_kill"])
+		var/mob/living/simple_animal/replicator/target = locate(href_list["replicator_jump"])
 		if(!istype(target))
 			return
 

@@ -26,6 +26,8 @@ var/global/datum/faction/replicators/replicators_faction
 	// Can't go any further.
 	var/max_bandwidth = 50
 
+	var/max_goodwill_ckey = null
+
 	var/list/swarms_goodwill = list(
 	)
 
@@ -64,7 +66,17 @@ var/global/datum/faction/replicators/replicators_faction
 		var/datum/role/replicator/R = r
 		if(!R.antag)
 			continue
-		to_chat(R.antag, "[presence_name] announces, \"[message]\"")
+		var/goodwill_open = ""
+		var/goodwill_close = ""
+
+		if(presence_ckey == max_goodwill_ckey)
+			goodwill_open = "<font size='2'>"
+			goodwill_close = "</font>"
+
+		to_chat(
+			R.antag,
+			"[goodwill_open]<span class='replicator'>\[???\]</span> <b>[presence_name]</b> announces, <span class='message'><span class='replicator'>\"[message]\"</span></span>[goodwill_close]"
+		)
 
 /datum/faction/replicators/proc/drone_message(mob/living/simple_animal/replicator/drone, message, transfer=FALSE, dismantle=FALSE)
 	for(var/r in members)
@@ -73,16 +85,21 @@ var/global/datum/faction/replicators/replicators_faction
 			continue
 		var/jump_button = transfer ? "<a href='?src=\ref[R.antag.current];replicator_jump=\ref[drone]'>(JMP)</a>" : ""
 		var/dismantle_button = dismantle ? "<a href='?src=\ref[R.antag.current];replicator_kill=\ref[drone]'>(KILL)</a>" : ""
-		to_chat(R.antag, "[drone.name] requests, \"[message]\"[jump_button][dismantle_button]")
+		to_chat(R.antag, "<span class='replicator'>\[???\]</span> <b>[drone.name]</b> requests, <span class='message'><span class='replicator'>\"[message]\"</span></span>[jump_button][dismantle_button]")
 
 /datum/faction/replicators/proc/adjust_materials(material_amount, adjusted_by=null)
 	materials += material_amount
 	this_second_materials_change += material_amount
+	if(adjusted_by == null)
+		return
+
 	// give Swarm's Goodwill to the one donated. Goodwill increases font size to enforce leadership.
-	if(adjusted_by != null)
-		if(!swarms_goodwill[adjusted_by])
-			swarms_goodwill[adjusted_by] = 0
-		swarms_goodwill[adjusted_by] += material_amount
+	if(!swarms_goodwill[adjusted_by])
+		swarms_goodwill[adjusted_by] = 0
+	swarms_goodwill[adjusted_by] += material_amount
+
+	if(swarms_goodwill[adjusted_by] > swarms_goodwill[max_goodwill_ckey])
+		max_goodwill_ckey = adjusted_by
 
 /datum/faction/replicators/proc/adjust_compute(compute_amount, adjusted_by=null)
 	compute += compute_amount

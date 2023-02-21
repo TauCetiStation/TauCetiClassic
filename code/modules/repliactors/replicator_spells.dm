@@ -13,9 +13,6 @@
 	var/material_cost = REPLICATOR_COST_REPLICATE
 
 /obj/effect/proc_holder/spell/no_target/replicator_replicate/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
-	if(!..())
-		return FALSE
-
 	if(length(global.replicators) >= global.replicators_faction.bandwidth)
 		if(try_start)
 			to_chat(user, "<span class='warning'>Not enough bandwidth for replication.</span>")
@@ -32,7 +29,7 @@
 			to_chat(user, "<span class='notice'>You mustn't be inside of anything for this to work.</span>")
 		return FALSE
 
-	return TRUE
+	return ..()
 
 /obj/effect/proc_holder/spell/no_target/replicator_replicate/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/replicator/user_replicator = user
@@ -65,9 +62,6 @@
 	var/material_cost = REPLICATOR_COST_REPLICATE
 
 /obj/effect/proc_holder/spell/no_target/replicator_transponder/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
-	if(!..())
-		return FALSE
-
 	if(global.replicators_faction.materials < material_cost)
 		if(try_start)
 			to_chat(user, "<span class='warning'>Not enough materials.</span>")
@@ -96,7 +90,7 @@
 			to_chat(user, "<span class='notice'>Transponder too close to other transponders. Need at least 7 tile distance.</span>")
 		return FALSE
 
-	return TRUE
+	return ..()
 
 /obj/effect/proc_holder/spell/no_target/replicator_transponder/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/replicator/user_replicator = user
@@ -122,9 +116,6 @@
 	var/material_cost = 200
 
 /obj/effect/proc_holder/spell/no_target/construct_generator/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
-	if(!..())
-		return FALSE
-
 	if(global.replicators_faction.materials < material_cost)
 		if(try_start)
 			to_chat(user, "<span class='warning'>Not enough materials.</span>")
@@ -151,7 +142,7 @@
 			to_chat(user, "<span class='notice'>The generator requries a cable to attach to.</span>")
 		return FALSE
 
-	return TRUE
+	return ..()
 
 /obj/effect/proc_holder/spell/no_target/construct_generator/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/replicator/user_replicator = user
@@ -253,6 +244,7 @@
 		return
 
 	to_chat(user, "<span class='notice'>No suitable hosts found in area.</span>")
+
 
 /obj/effect/proc_holder/spell/no_target/toggle_light
 	name = "Toggle Light"

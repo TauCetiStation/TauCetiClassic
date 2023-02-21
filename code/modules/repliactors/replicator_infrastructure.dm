@@ -55,7 +55,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 		return TRUE
 	if(istype(mover) && mover.throwing)
 		return TRUE
-	// if istype replicator disabler projectile
 	return ..()
 
 
@@ -85,7 +84,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 		return TRUE
 	if(istype(mover) && mover.throwing)
 		return TRUE
-	// if istype replicator disabler projectile
 	return ..()
 
 
