@@ -15,6 +15,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20000
 
+	var/next_sound = 0
+
 /obj/machinery/bluespace_transponder/Crossed(atom/movable/AM)
 	if(stat & NOPOWER)
 		return ..()
@@ -31,6 +33,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 		var/mob/M = AM
 		see_invisible_level = M.see_invisible
 
+	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg.ogg', VOL_EFFECTS_MASTER)
 	AM.AddElement(/datum/element/bluespace_move, AM.invisibility, see_invisible_level, AM.alpha)
 
 /obj/machinery/bluespace_transponder/power_change()
@@ -47,7 +50,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 	return ..()
 
 /obj/machinery/bluespace_transponder/process()
-	if(prob(1))
+	if(next_sound < world.time && prob(5))
+		next_sound = next_sound + 20 SECONDS
 		playsound(src, 'sound/machines/signal.ogg', VOL_EFFECTS_MASTER)
 
 /obj/machinery/bluespace_transponder/CanPass(atom/movable/mover, turf/target)
@@ -70,12 +74,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 0
 
+	var/next_sound = 0
+
 /obj/machinery/power/replicator_generator/atom_init()
 	. = ..()
 	new /obj/structure/cable/power_rune(loc)
 
 /obj/machinery/power/replicator_generator/process()
-	if(prob(1))
+	if(next_sound < world.time && prob(5))
+		next_sound = next_sound + 20 SECONDS
 		playsound(src, 'sound/machines/signal.ogg', VOL_EFFECTS_MASTER)
 	add_avail(20000)
 
@@ -177,6 +184,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 	if(my_turf)
 		neighbor_adjust_count(my_turf, -1)
 
+	return ..()
+
+/obj/structure/bluespace_corridor/Crossed(atom/movable/AM)
+	if(AM && AM.invisibility > 0 && prob(30))
+		playsound(AM, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_complite.ogg', VOL_EFFECTS_MASTER)
 	return ..()
 
 /obj/structure/bluespace_corridor/Moved(atom/OldLoc, move_dir)
