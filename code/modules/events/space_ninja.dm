@@ -75,6 +75,13 @@ When I already created about 4 new objectives, this doesn't seem terribly import
 #define DOWNLOAD_RESEARCH 5
 #define CAPTURE           6
 
+/proc/get_living_heads()
+	var/list/heads = list()
+	for(var/mob/living/carbon/human/player as anything in human_list)
+		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in command_positions))
+			heads += player.mind
+	return heads
+
 /proc/set_ninja_objectives(mob/living/carbon/human/new_ninja)
 	var/datum/mind/ninja_mind = new_ninja.mind//For easier reference.
 	//Xenos and deathsquads take precedence over everything else.

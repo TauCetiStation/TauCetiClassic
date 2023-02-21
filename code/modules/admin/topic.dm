@@ -51,10 +51,10 @@
 				message_admins("[success] number of changelings made.")
 				to_chat(usr, "<span class='notice'>[success] number of changelings made.</span>")
 			if("3")
-				message_admins("[key_name(usr)] has attempted to spawn [count] revolutionaries.")
+				/*(message_admins("[key_name(usr)] has attempted to spawn [count] revolutionaries.")
 				var/success = makeAntag(null, /datum/faction/revolution, count, FROM_PLAYERS, stealth)
-				message_admins("[success] number of revolutionaries made.")
-				to_chat(usr, "<span class='notice'>[success] number of revolutionaries made.</span>")
+				message_admins("[success] number of revolutionaries made.")*/
+				to_chat(usr, "<span class='notice'>Revolution is not allowed.</span>")
 			if("4")
 				message_admins("[key_name(usr)] has attempted to spawn [count] cultists.")
 				var/success = makeAntag(null, /datum/faction/cult, count, FROM_PLAYERS, stealth)

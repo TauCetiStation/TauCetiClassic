@@ -105,7 +105,7 @@
 		if(shuttlecaller.stat == CONSCIOUS && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
-	if(find_faction_by_type(/datum/faction/revolution) || find_faction_by_type(/datum/faction/malf_silicons) || sent_strike_team)
+	if(find_faction_by_type(/datum/faction/malf_silicons) || sent_strike_team)
 		return ..()
 
 	SSshuttle.incall(2)

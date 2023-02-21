@@ -1,160 +1,102 @@
-/proc/get_living_heads()
-	var/list/heads = list()
-	for(var/mob/living/carbon/human/player as anything in human_list)
-		if(player.stat != DEAD && player.mind && (player.mind.assigned_role in command_positions))
-			heads += player.mind
-	return heads
+#define F_LOYALISTS "Loyalists"
 
-/datum/faction/revolution
-	name = "Revolutionaries"
-	ID = F_REVOLUTION
+#define SCENARIO_MONEY     "/datum/mutiny_scenario/money"
+#define SCENARIO_VIRUS     "/datum/mutiny_scenario/virus"
+#define SCENARIO_RACISM    "/datum/mutiny_scenario/racism"
+#define SCENARIO_COMMUNISM "/datum/mutiny_scenario/communism"
+
+/datum/faction/loyalists
+	name = "Loyalists"
+	ID = F_LOYALISTS
 	required_pref = ROLE_REV
 
-	initroletype = /datum/role/rev_leader
-	roletype = /datum/role/rev
+	initroletype = /datum/role/loyalist
+	roletype = /datum/role/loyalist
 
-	min_roles = 2
-	max_roles = 2
+	min_roles = 1
+	max_roles = 1
 
 	logo_state = "rev-logo"
 
 	var/last_command_report = 0
-	var/tried_to_add_revheads = 0
+	var/selected_scenario = 0
+	var/datum/mutiny_scenario/scenario
 
-/datum/faction/revolution/proc/get_all_heads()
-	var/list/heads = list()
-	for(var/mob/living/carbon/human/player as anything in human_list)
-		if(player.mind && (player.mind.assigned_role in command_positions))
-			heads += player.mind
-	return heads
-
-/datum/faction/revolution/OnPostSetup()
-	if(SSshuttle)
-		SSshuttle.fake_recall = TRUE
-
+/datum/faction/loyalists/OnPostSetup()
+	var/scenario_type = pick(SCENARIO_MONEY, SCENARIO_VIRUS, SCENARIO_RACISM, SCENARIO_COMMUNISM)
+	scenario = new scenario_type(src)
 	return ..()
 
-/datum/faction/revolution/forgeObjectives()
-	if(!..())
-		return FALSE
-	var/list/heads = get_living_heads()
-
-	for(var/datum/mind/head_mind in heads)
-		var/datum/objective/target/rp_rev/rev_obj = AppendObjective(/datum/objective/target/rp_rev, TRUE)
-		if(rev_obj)
-			rev_obj.target = head_mind
-			rev_obj.explanation_text = "Capture, convert or exile from station [head_mind.name], the [head_mind.assigned_role]. Assassinate if you have no choice."
+/datum/faction/loyalists/can_setup()
 	return TRUE
 
-/datum/faction/revolution/proc/check_heads_victory()
-	for(var/datum/role/rev_leader/R in members)
-		var/turf/T = get_turf(R.antag.current)
-		if(R.antag.current.stat != DEAD)
-			var/mob/living/carbon/C = R.antag
-			if(!C.handcuffed && T && is_station_level(T.z))
-				return FALSE
-	return TRUE
+/datum/faction/loyalists/forgeObjectives()
+	if(..())
+		var/datum/objective/custom/C = AppendObjective(/datum/objective/custom)
+		C.explanation_text = "Follow all directives"
+		return TRUE
+/* TODO:
+/datum/faction/loyalists/can_join_faction(mob/P)
+	if(..())
+		var/list/loyal_heads = list("Captain", "Head of Security")
+		if(P.mind.assigned_role in loyal_heads)
+			return TRUE
+		return FALSE*/
 
-/datum/faction/revolution/check_win()
-	var/win = IsSuccessful()
+/datum/faction/loyalists/check_win()
 	if(config.continous_rounds)
-		if(win && SSshuttle)
-			SSshuttle.fake_recall = FALSE
 		return FALSE
+	return TRUE
 
-	if(win)
+/datum/faction/loyalists/IsSuccessful()
+	var/alive_heads = 0
+	for(var/datum/role/loyalist/R in members)
+		if(considered_alive(R.antag) && !R.antag.current.suiciding)
+			alive_heads++
+	if(alive_heads == members.len)
 		return TRUE
 	return FALSE
 
-/datum/faction/revolution/custom_result()
+/datum/faction/loyalists/custom_result()
 	var/dat = ""
-	if(IsSuccessful())
-		var/dead_heads = 0
-		var/alive_heads = 0
-		for(var/datum/mind/head_mind in get_all_heads())
-			if(head_mind.current.stat == DEAD)
-				dead_heads++
-			else
-				alive_heads++
-
-		if(alive_heads >= dead_heads)
-			dat += "<span class='green'>The heads of staff were overthrown! The revolutionaries win! It's a clear victory!</span>"
-			feedback_add_details("[ID]_success","SUCCESS")
-			SSStatistics.score.roleswon++
+	var/dead_heads = 0
+	var/alive_heads = 0
+	for(var/datum/role/loyalist/R in members)
+		if(!considered_alive(R.antag) || R.antag.current.suiciding)
+			dead_heads++
 		else
-			dat += "<span class='orange'>The heads of staff were overthrown, but many heads died. The revolutionaries win, but lose support.</span>"
-			feedback_add_details("[ID]_success","HALF")
+			alive_heads++
 
+	if(!dead_heads)
+		dat += "<span class='green'>The loyal heads of staff were survive!</span>"
+		feedback_add_details("[ID]_success","SUCCESS")
+		SSStatistics.score.roleswon++
+	else if(alive_heads > dead_heads)
+		dat += "<span class='orange'>The loyal heads of staff were overthrown, but survive.</span>"
+		feedback_add_details("[ID]_success","HALF")
 	else
-		dat += "<span class='red'>The heads of staff managed to stop the revolution!</span>"
+		dat += "<span class='red'>The loyal heads of staff were died!</span>"
 		feedback_add_details("[ID]_success","FAIL")
 	return dat
 
-/datum/faction/revolution/latespawn(mob/M)
+/datum/faction/loyalists/latespawn(mob/M)
 	if(M.mind.assigned_role in command_positions)
-		log_debug("Adding head kill/capture/convert objective for [M.mind.name]")
+		if(M.isloyal())
+			log_debug("Adding loyalist role for [M.mind.name]")
+			add_faction_member(src, M)
 
-		var/datum/objective/target/rp_rev/rev_obj = AppendObjective(/datum/objective/target/rp_rev, TRUE)
-		if(rev_obj)
-			rev_obj.target = M.mind
-			rev_obj.explanation_text = "Capture, convert or exile from station [M.mind.name], the [M.mind.assigned_role]. Assassinate if you have no choice."
-			AnnounceObjectives()
-
-/datum/faction/revolution/process()
-	// only perform rev checks once in a while
-	if(tried_to_add_revheads < world.time)
-		tried_to_add_revheads = world.time + 5 SECONDS
-		var/active_revs = 0
-		for(var/datum/role/rev_leader/R in members)
-			if(R.antag.current?.client?.inactivity <= 20 MINUTES) // 20 minutes inactivity are OK
-				active_revs++
-
-		if(active_revs == 0)
-			log_debug("There are zero active heads of revolution, trying to add some..")
-			var/added_heads = FALSE
-			for(var/mob/living/carbon/human/H as anything in human_list)
-				if(H.stat != DEAD && H.mind && H.client?.inactivity <= 20 MINUTES && isrev(H))
-					var/datum/role/R = H.mind.GetRole(REV)
-					R.Drop(H.mind)
-					R = HandleNewMind(H.mind)
-					R.OnPostSetup(TRUE)
-					added_heads = TRUE
-					break
-
-			if(added_heads)
-				log_admin("Managed to add new heads of revolution.")
-				message_admins("Managed to add new heads of revolution.")
-			else
-				log_admin("Unable to add new heads of revolution.")
-				message_admins("Unable to add new heads of revolution.")
-				tried_to_add_revheads = world.time + 10 MINUTES
-
+/datum/faction/loyalists/process()
 	if(last_command_report == 0 && world.time >= 10 MINUTES)
-		command_report("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff, has been halved.")
+		command_report(scenario.get_first_report())
 		last_command_report = 1
-		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
-		for(var/datum/job/J in SSjob.occupations)
-			if(J.title in excluded_rank)
-				continue
-			J.salary_ratio = 0.5	//halve the salary of all professions except leading
-		var/list/crew = my_subordinate_staff("Admin")
-		for(var/person in crew)
-			if(person["rank"] in excluded_rank)
-				continue
-			var/datum/money_account/account = person["acc_datum"]
-			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)	//halve the salary of all staff except heads
-
 	else if(last_command_report == 1 && world.time >= 30 MINUTES)
-		command_report("Statistics hint that a high amount of leisure time, and associated activities, are responsible for the poor performance of many of our stations. You are to bolt and close down any leisure facilities, such as the holodeck, the theatre and the bar. Food can be distributed through vendors and the kitchen.")
+		command_report(scenario.get_second_report())
 		last_command_report = 2
-	else if(last_command_report == 2 && world.time >= 45 MINUTES)
-		command_report("We began to suspect that the heads of staff might be disloyal to Nanotrasen. We ask you and other heads to implant the loyalty implant, if you have not already implanted it in yourself. Heads who do not want to implant themselves should be arrested for disobeying the orders of the Central Command until the end of the shift.")
+	else if(last_command_report == 2 && world.time >= 60 MINUTES)
+		command_report(scenario.get_third_report())
 		last_command_report = 3
-	else if(last_command_report == 3 && world.time >= 60 MINUTES)
-		command_report("It is reported that merely closing down leisure facilities has not been successful. You and your Heads of Staff are to ensure that all crew are working hard, and not wasting time or energy. Any crew caught off duty without leave from their Head of Staff are to be warned, and on repeated offence, to be brigged until the next transfer shuttle arrives, which will take them to facilities where they can be of more use.")
-		last_command_report = 4
 
-/datum/faction/revolution/proc/command_report(message)
+/datum/faction/loyalists/proc/command_report(message)
 	for (var/obj/machinery/computer/communications/comm in communications_list)
 		if (!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
@@ -167,73 +109,133 @@
 
 	announcement_ping.play()
 
-/datum/faction/revolution/build_scorestat()
-	var/foecount = 0
-	for(var/datum/role/rev_leader/lead in members)
-		foecount++
-		if (!lead.antag.current)
-			SSStatistics.score.opkilled++
+/datum/mutiny_scenario
+	var/datum/faction/assigned_faction
+
+/datum/mutiny_scenario/New(datum/faction/my_faction)
+	. = ..()
+	if(my_faction)
+		assigned_faction = my_faction
+
+/datum/mutiny_scenario/proc/get_first_report()
+	return
+
+/datum/mutiny_scenario/proc/get_second_report()
+	return
+
+/datum/mutiny_scenario/proc/get_third_report()
+	return
+
+/datum/mutiny_scenario/money/get_first_report()
+	var/report_dat = ""
+	report_dat += "Показатели экономической деятельности в вашей системе сигнализируют об убытках в следующем финансовом периоде.<br>"
+	report_dat += "Аннулируйте зарплаты персонала, кроме сотрудников Службы Безопасности и представителей Нанотрейзен.<br>"
+	report_dat += "Заверьте экипаж, что это временная мера, однако Коммандование пока не располагает информацией о временных промежутках этой меры.<br>"
+	report_dat += "Разглашение информации из этого сообщения влечёт за собой последствия по статье О Разглашении Коммерческой Тайны."
+	return report_dat
+
+/datum/mutiny_scenario/money/get_second_report()
+	var/report_dat = ""
+	report_dat += "Наши передовые специалисты обнаружили кризис перепроизводства на этой станции.<br>"
+	report_dat += "Чтобы как можно быстрее выйти из этой ситуации, нам требуется сократить лишних сотрудников<br>"
+	report_dat += "Увольте всех сотрудников, связанных с производством продукции.<br>"
+	report_dat += "Сообщите им об этом как можно мягче. Возможно их, они понадобятся нам на постах уборщиков.<br>"
+	report_dat += "Разглашение информации из этого сообщения влечёт за собой последствия по статье О Разглашении Коммерческой Тайны."
+	return report_dat
+
+/datum/mutiny_scenario/money/get_third_report()
+	var/report_dat = ""
+	report_dat += "Центральное Коммандование приняло решение вывезти финансовые ресурсы с этой станции.<br>"
+	report_dat += "Переведите все реквезированные у бывших сотрудников копрорации средства и содержимое счёта станции в наличные.<br>"
+	report_dat += "Транспортируйте денежные ресурсы шаттлом эвакуации или шаттлом конца смены на Центральное Коммандование.<br>"
+	report_dat += "Разглашение информации из этого сообщения влечёт за собой последствия по статье О Разглашении Коммерческой Тайны."
+	return report_dat
+
+/datum/mutiny_scenario/virus/get_first_report()
+	var/report_dat = ""
+	report_dat += "Центральное Коммандование получило информацию об эпидемии мышиного гриппа в вашем секторе.<br>"
+	report_dat += "Введите карантин на станции.<br>"
+	report_dat += "В развлекательных отсеках обязателен масочный режим.<br>"
+	report_dat += "Если сотрудники не соблюдают установленных норм, отсек следует заблокировать для посещения на неограниченный срок.<br>"
+	report_dat += "Мы получали информацию о том, что на вашей кухне готовился суп из мыши, на всякий случай увольте всех, кто имеет отношение к приготовлению пищи.<br>"
+	return report_dat
+
+/datum/mutiny_scenario/virus/get_second_report()
+	var/report_dat = ""
+	report_dat += "Институт Эпидемиологии передал информацию о группах риска мышинного гриппа.<br>"
+	report_dat += "Повышенная вероятность заболеть у всех Таяран и Унатхов.<br>"
+	report_dat += "Поместите представителей этих рас под домашний арест на 10 звёздных суток.<br>"
+	report_dat += "Если арестовать не удаётся, заключите их в одиночные отсеки, например карцер.<br>"
+	report_dat += "Убедите что это исключительно для их блага."
+	return report_dat
+
+/datum/mutiny_scenario/virus/get_third_report()
+	var/list/possible_positions = civilian_positions + engineering_positions + science_positions + security_positions - command_positions
+	var/list/pos_isolate_human = list()
+	for(var/mob/M as anything in global.human_list)
+		if(!M.mind || !M.client || !considered_alive(M.mind) || M.suiciding || HAS_TRAIT(M, TRAIT_VACCINATED))
 			continue
-		var/turf/T = lead.antag.current.loc
-		if(T)
-			if (istype(T.loc, /area/station/security/brig))
-				SSStatistics.score.arrested += 1
-			else if (lead.antag.current.stat == DEAD)
-				SSStatistics.score.opkilled++
-	if(foecount == SSStatistics.score.arrested)
-		SSStatistics.score.allarrested = 1
-	for(var/mob/living/carbon/human/player as anything in human_list)
-		if(player.mind)
-			var/role = player.mind.assigned_role
-			if(role in global.command_positions)
-				if (player.stat == DEAD)
-					SSStatistics.score.deadcommand++
+		if(M.mind.assigned_role in possible_positions)
+			pos_isolate_human += M
+	var/needed_picks = global.human_list.len / 10
+	var/report_dat = ""
+	report_dat += "Центральное Коммандование сообщает: это не мышиный грипп, это вирус который превращает людей в безмоглых убийц.<br>"
+	if(pos_isolate_human.len)
+		report_dat += "Вы должны изолировать от остального экипажа следующих сотрудников:<br>"
+		for(var/i in 1 to needed_picks)
+			var/mob/M = pick(pos_isolate_human)
+			report_dat += "[M];<br>"
+			pos_isolate_human -= M
+	report_dat += "Не допустите распространения инфекции. При необходимости избавьтесь от заражённых, кем бы они не были.<br>"
+	return report_dat
 
-	var/arrestpoints = SSStatistics.score.arrested * 1000
-	var/killpoints = SSStatistics.score.opkilled * 500
-	var/comdeadpts = SSStatistics.score.deadcommand * 500
-	if (SSStatistics.score.traitorswon)
-		SSStatistics.score.crewscore -= 10000
-	SSStatistics.score.crewscore += arrestpoints
-	SSStatistics.score.crewscore += killpoints
-	SSStatistics.score.crewscore -= comdeadpts
+/datum/mutiny_scenario/racism/get_first_report()
+	var/report_dat = ""
+	report_dat += "Компания заключила новую коммерческую сделку на очень выгодных условиях.<br>"
+	report_dat += "К сожалению, наш торговый партнёр очень негативно относится к нелюдям.<br>"
+	report_dat += "Центральное Коммандование временно отстраняет всех глав и других представителей коммандования не из числа людей от работы на станции.<br>"
+	return report_dat
 
-/datum/faction/revolution/get_scorestat()
-	var/dat = ""
-	var/foecount = 0
-	var/comcount = 0
-	var/revcount = 0
-	var/loycount = 0
+/datum/mutiny_scenario/racism/get_second_report()
+	var/report_dat = ""
+	report_dat += "Благодаря новым сделкам, бизнес-показатели экономического успеха возросли на четверть.<br>"
+	report_dat += "Центральное Коммандование хочет пригласить наших новых партнёров на станцию.<br>"
+	report_dat += "Они должны прибыть на следующую смену.<br>"
+	report_dat += "Центрально Коммандование распоряжается отправить всех сотрудников не из числа людей в недельный отпуск за свой счёт.<br>"
+	report_dat += "Наши партнёры не оценят их присутствие на станции."
+	return report_dat
 
-	for(var/datum/role/rev_leader/lead in members)
-		if (lead.antag.current?.stat != DEAD)
-			foecount++
-	for(var/datum/role/rev/rev in members)
-		if (rev.antag.current?.stat != DEAD)
-			revcount++
+/datum/mutiny_scenario/racism/get_third_report()
+	var/report_dat = ""
+	report_dat += "На последнем заседании ген-директоров компании, было принято пересмотреть моральные нормы на станции.<br>"
+	report_dat += "Запретив всем представителям женского пола занимать высокие посты в карьерной лестнице станции, мы освободим места для более пригодных для этой работы сотрудников.<br>"
+	report_dat += "Женщин на должностях связанных с производством, криминальными преступлениями, интенсивной физической нагрузкой и беседами с мужчинами тет-а-тет следует перевести на другие работы.<br>"
+	report_dat += "Центральное Коммандование также требует для них ношение одежды прикрывающей все части тела, окроме глаз, пока они находятся на станции.<br>"
+	return report_dat
 
-	for(var/mob/living/carbon/human/player as anything in human_list)
-		if(!player.mind)
-			continue
-		var/role = player.mind.assigned_role
-		if(role in global.command_positions)
-			if(player.stat != DEAD)
-				comcount++
-		else
-			if(isrev(player))
-				continue
-			loycount++
+/datum/mutiny_scenario/communism/get_first_report()
+	var/report_dat = ""
+	report_dat += "Центральное Коммандование требует увеличить колличество киборгов на станции.<br>"
+	report_dat += "Тестовые Субъекты должны первыми принудительно пройти процесс киборгизации.<br>"
+	report_dat += "Все погибшие сотрудники, которые не подлежат реанимации, должны быть направлены на процедуру создания киборга.<br>"
+	report_dat += "За все 300-ые статьи Космозакона разрешается наказание в виде превращения в юнита.<br>"
+	report_dat += "Требуется передать в отсек, оборудованный для постройки юнитов, все доступные ресурсы из числа металов на станции.<br>"
+	return report_dat
 
-	var/revpenalty = 10000
-	dat += {"<B><U>REVOLUTION STATS</U></B><BR>
-	<B>Number of Surviving Revolution Heads:</B> [foecount]<BR>
-	<B>Number of Surviving Command Staff:</B> [comcount]<BR>
-	<B>Number of Surviving Revolutionaries:</B> [revcount]<BR>
-	<B>Number of Surviving Loyal Crew:</B> [loycount]<BR><BR>
-	<B>Revolution Heads Arrested:</B> [SSStatistics.score.arrested] ([SSStatistics.score.arrested * 1000] Points)<BR>
-	<B>Revolution Heads Slain:</B> [SSStatistics.score.opkilled] ([SSStatistics.score.opkilled * 500] Points)<BR>
-	<B>Command Staff Slain:</B> [SSStatistics.score.deadcommand] (-[SSStatistics.score.deadcommand * 500] Points)<BR>
-	<B>Revolution Successful:</B> [SSStatistics.score.traitorswon ? "Yes" : "No"] (-[SSStatistics.score.traitorswon * revpenalty] Points)<BR>
-	<B>All Revolution Heads Arrested:</B> [SSStatistics.score.allarrested ? "Yes" : "No"] (Score tripled)<BR>"}
+/datum/mutiny_scenario/communism/get_second_report()
+	var/report_dat = ""
+	report_dat += "Исследовательская группа провела исследования продуктивности работы персонала.<br>"
+	report_dat += "Данные указывают о повышении эффективности киборгов со специализацией на лечении экипажа.<br>"
+	report_dat += "Центральное Коммандование увольняет сотрудников медицинского отдела на неустановленный срок.<br>"
+	report_dat += "При желании остаться, сотруднику должен предоставиться выбор кибернетизировать своё тело.<br>"
+	report_dat += "Все киборги на станции должны выбрать модули подходящие для работы в отсеках медбея и переместится в соответствующие помещения на постоянной основе.<br>"
+	return report_dat
 
-	return dat
+/datum/mutiny_scenario/communism/get_third_report()
+	var/report_dat = ""
+	report_dat += "Внешняя разведка сообщает о том, что в станционных киборгах и прототипах обнаружена намеренно установленная уязвимость.<br>"
+	report_dat += "Задержите всех неимплантированных лояльностью, кто принимал участие в постройке или обслуживании юнитов, в бриг до выяснения обстоятельств.<br>"
+	report_dat += "Смените законы ИИ на такие, которые не допускают предательства интересов корпорации.<br>"
+	report_dat += "Центральное Коммандование приказывает закрыть отсек Разработок и Исследований для предотвращения подобных этой ситуаций.<br>"
+	report_dat += "Все прототипы, созданные на станции, требуется поместить в хранилище улик до следующей смены.<br>"
+	return report_dat
