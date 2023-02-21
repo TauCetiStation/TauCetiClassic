@@ -85,8 +85,7 @@
 	name = "standard robot module"
 	stacktypes = list(
 		/obj/item/stack/medical/ointment = 5,
-		/obj/item/stack/medical/bruise_pack = 5,
-		/obj/item/stack/medical/suture = 3
+		/obj/item/stack/medical/bruise_pack = 5
 		)
 
 /obj/item/weapon/robot_module/standard/atom_init()
@@ -100,7 +99,6 @@
 	modules += new /obj/item/weapon/wirecutters(src)
 	modules += new /obj/item/stack/medical/ointment(src)
 	modules += new /obj/item/stack/medical/bruise_pack(src)
-	modules += new /obj/item/stack/medical/suture(src)
 	modules += new /obj/item/weapon/reagent_containers/borghypo/medical(src)
 	modules += new /obj/item/device/healthanalyzer(src)
 	modules += new /obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen(src)
@@ -110,11 +108,10 @@
 /obj/item/weapon/robot_module/medical
 	name = "medical robot module"
 	stacktypes = list(
-		/obj/item/stack/medical/advanced/bruise_pack = 5,
-		/obj/item/stack/medical/advanced/ointment = 5,
-		/obj/item/stack/nanopaste = 5,
-		/obj/item/stack/medical/splint = 5,
-		/obj/item/stack/medical/suture = 3
+		/obj/item/stack/medical/advanced/bruise_pack = 6,
+		/obj/item/stack/medical/advanced/ointment = 6,
+		/obj/item/stack/nanopaste = 10,
+		/obj/item/stack/medical/splint = 5
 		)
 
 /obj/item/weapon/robot_module/medical/atom_init()
@@ -146,7 +143,7 @@
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
 	modules += new /obj/item/weapon/shockpaddles/robot(src)
 	modules += new /obj/item/device/gps/cyborg(src)
-	modules += new /obj/item/stack/medical/suture(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/cleaner/cyborg(src)
 
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
@@ -341,7 +338,7 @@
 	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/crowbar(src)
-	modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
+	modules += new /obj/item/weapon/gun/energy/laser/cutter/emagged(src)
 
 /obj/item/weapon/robot_module/syndicate/add_languages(mob/living/silicon/robot/R)
 	//basic set+Sy-Code
@@ -363,7 +360,7 @@
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/borg/sight/night(src)
 	modules += new /obj/item/weapon/gun/energy/laser/selfcharging/cyborg(src)
-	modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
+	modules += new /obj/item/weapon/gun/energy/laser/cutter/emagged(src)
 	modules += new /obj/item/borg/combat/shield(src)
 	modules += new /obj/item/borg/combat/mobility(src)
 	modules += new /obj/item/weapon/wrench(src)
@@ -406,6 +403,24 @@
 
 	emag.name = "Hand tele"
 
+/obj/item/weapon/robot_module/peacekeeper
+	name = "peacekeeper robot module"
+
+/obj/item/weapon/robot_module/peacekeeper/atom_init()
+	. = ..()
+
+	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/weapon/rsf/cookiesynth(src)
+	modules += new /obj/item/harmalarm(src)
+	modules += new /obj/item/weapon/reagent_containers/borghypo/peace(src)
+	modules += new /obj/item/weapon/cyborghug(src)
+	modules += new /obj/item/borg/bubble_creator(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg(src)
+	modules += new /obj/item/weapon/crowbar/red(src)
+	modules += new /obj/item/device/gps/cyborg(src)
+
+	emag = new /obj/item/weapon/gun/grenadelauncher/cyborg(src)
+
 /obj/item/weapon/robot_module/drone
 	name = "drone module"
 	stacktypes = list(
@@ -432,9 +447,9 @@
 	modules += new /obj/item/device/t_scanner(src)
 	modules += new /obj/item/weapon/gripper(src)
 	modules += new /obj/item/weapon/matter_decompiler(src)
-	modules += new /obj/item/weapon/reagent_containers/spray/cleaner/drone(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/cleaner/cyborg/drone(src)
 
-	emag = new /obj/item/weapon/pickaxe/plasmacutter(src)
+	emag = new /obj/item/weapon/gun/energy/laser/cutter/emagged(src)
 	emag.name = "Plasma Cutter"
 
 	for(var/T in stacktypes)

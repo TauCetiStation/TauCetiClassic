@@ -39,3 +39,5 @@
 	var/obj/item/mouth
 
 	var/stamina = 100 //Ian uses this for now.
+
+	COOLDOWN_DECLARE(toggle_throw_message)

@@ -2,7 +2,7 @@
 	desc = "A close-fitting mask that can be connected to an air supply."
 	name = "breath mask"
 	icon_state = "breath"
-	item_state = "breath"
+	item_state = "b_mask"
 	flags = MASKCOVERSMOUTH | MASKINTERNALS
 	body_parts_covered = 0
 	w_class = SIZE_TINY

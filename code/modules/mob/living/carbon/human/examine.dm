@@ -24,6 +24,9 @@
 	if(wear_mask)
 		skipface |= wear_mask.flags_inv & HIDEFACE
 
+	if(get_species() == SKRELL && h_style != "Bald")
+		skipears = TRUE
+
 	var/obj/item/organ/external/head/MyHead = bodyparts_by_name[BP_HEAD]
 	if(!istype(MyHead) || MyHead.is_stump)
 		skipface = TRUE
@@ -119,7 +122,7 @@
 		else
 			msg += "[t_He] [t_has] [bicon(back)] \a [back] on [t_his] back.\n"
 
-	var/static/list/changeling_weapons = list(/obj/item/weapon/changeling_whip, /obj/item/weapon/shield/changeling, /obj/item/weapon/melee/arm_blade, /obj/item/weapon/changeling_hammer)
+	var/static/list/changeling_weapons = list(/obj/item/weapon/changeling_whip, /obj/item/weapon/shield/changeling, /obj/item/weapon/melee/arm_blade, /obj/item/weapon/melee/changeling_hammer)
 	//left hand
 	if(l_hand && !(l_hand.flags&ABSTRACT))
 		if(l_hand.dirt_overlay)
@@ -141,7 +144,11 @@
 			msg += "[t_He] [t_is] holding [bicon(r_hand)] \a [r_hand] in [t_his] right hand.\n"
 	else if(r_hand && (r_hand.type in changeling_weapons))
 		msg += "<span class='warning'>[t_He] [t_has] [bicon(r_hand)] \a [r_hand] instead of his right arm!</span>\n"
-
+	//Throw Swing
+	if(in_throw_mode)
+		var/obj/item/I = get_active_hand()
+		if(I)
+			msg += "<span class='warning'>[t_He] swings to throw, holding [I] in [t_his] hand!</span>\n"
 	//gloves
 	if(gloves && !skipgloves)
 		if(gloves.dirt_overlay)
@@ -202,8 +209,8 @@
 				msg += "<span class='wet'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] wet [glasses] covering [t_his] eyes!</span>\n"
 			else
 				msg += "[t_He] [t_has] [bicon(glasses)] \a [glasses] covering [t_his] eyes.\n"
-		if(HAS_TRAIT(src, TRAIT_CULT_EYES))
-			msg += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>"
+		else if(HAS_TRAIT(src, TRAIT_CULT_EYES))
+			msg += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>\n"
 
 	//left ear
 	if(l_ear && !skipears)

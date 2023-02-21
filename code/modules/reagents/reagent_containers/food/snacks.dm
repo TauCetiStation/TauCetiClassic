@@ -19,7 +19,11 @@
 		var/mob/living/L = M
 		if(taste)
 			L.taste_reagents(reagents)
-
+	if(HAS_TRAIT(src, TRAIT_XENO_FUR))
+		var/mob/living/carbon/human/H = M
+		if(istype(H) && !H.species.flags[FUR])
+			if(prob(50) && SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "nasty_throat_feel", /datum/mood_event/nasty_throat_feel))
+				to_chat(H, "<span class='warning'>You feel like something enveloping in your throat...</span>")
 	if(!reagents.total_volume)
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
@@ -138,10 +142,7 @@
 		)
 
 		bitecount++
-		U.cut_overlays()
-		var/image/IM = new(U.icon, "loadedfood")
-		IM.color = filling_color
-		U.add_overlay(IM)
+		U.create_food_overlay(filling_color)
 
 		var/obj/item/weapon/reagent_containers/food/snacks/collected = new type
 		collected.loc = U
@@ -289,6 +290,9 @@
 	filling_color = "#dbc94f"
 	bitesize = 1
 	list_reagents = list("nutriment" = 3)
+//Peacekeeper stuff
+/obj/item/weapon/reagent_containers/food/snacks/cookie/toxin_cookie
+	list_reagents = list("pacid" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/chocolatebar
 	name = "Chocolate Bar"
@@ -1720,7 +1724,7 @@
 	if((slices_num <= 0 || !slices_num) || !slice_path)
 		return FALSE
 	var/inaccurate = FALSE
-	if(!W.get_quality(QUALITY_CUTTING))
+	if(!iscutter(W))
 		inaccurate = TRUE
 
 	if ( \

@@ -16,7 +16,7 @@
 	description = "<span class='bold nicegreen'>For no apparent reason I feel great! I love life!</span>"
 
 /datum/mood_event/drugged
-	mood_change = 3
+	mood_change = 6
 	description = "<span class='nicegreen'>Oh my god! What a thrill!</span>"
 	timeout = 1 MINUTES
 
@@ -46,3 +46,24 @@
 	description = "<span class='nicegreen'>I've had a relaxing time in sauna.</span>"
 	mood_change = 3
 	timeout = 10 MINUTES
+
+/datum/mood_event/hug
+	description = "<span class='nicegreen'>Hugs are nice.</span>"
+	mood_change = 1
+	timeout = 1 MINUTE
+
+/datum/mood_event/betterhug
+	description = "<span class='nicegreen'>Someone was very nice to me.</span>"
+	mood_change = 2
+	timeout = 3 MINUTES
+
+/datum/mood_event/betterhug/add_effects(mob/friend)
+	description = "<span class='nicegreen'>[friend.name] was very nice to me.</span>"
+
+/datum/mood_event/besthug
+	description = "<span class='nicegreen'>Someone is great to be around, they make me feel so happy!</span>"
+	mood_change = 4
+	timeout = 3 MINUTES
+
+/datum/mood_event/besthug/add_effects(mob/friend)
+	description = "<span class='nicegreen'>[friend.name] is great to be around, [friend.name] makes me feel so happy!</span>"

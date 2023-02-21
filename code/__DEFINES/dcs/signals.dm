@@ -111,7 +111,7 @@
 #define COMSIG_ATOM_ENTERED "atom_entered"
 /// from base of atom/Exited(): (atom/movable/exiting, /atom/NewLoc)
 #define COMSIG_ATOM_EXITED "atom_exited"
-/// from base of atom/movable/CanPass() & mob/CanPass(): (atom/movable/mover, atom/target, height, air_group)
+/// from base of atom/movable/CanPass() & mob/CanPass(): (atom/movable/mover, atom/target, height)
 #define COMSIG_ATOM_CANPASS "movable_canpass"
 	#define COMPONENT_CANPASS  1
 	#define COMPONENT_CANTPASS 2
@@ -200,6 +200,8 @@
 /// from base of obj/item/attack_self(): (/mob/user)
 #define COMSIG_ITEM_ATTACK_SELF "item_attack_self"
 	#define COMPONENT_NO_INTERACT 1
+///from base of obj/item/attack_atom(): (atom/attacked_atom, mob/living/user, params)
+#define COMSIG_ITEM_ATTACK_OBJ "item_attack_obj"
 ///from base of obj/item/pickup(): (/mob/user)
 #define COMSIG_ITEM_PICKUP "item_pickup"
 	#define COMPONENT_ITEM_NO_PICKUP 1
@@ -220,6 +222,8 @@
 /// from base of mob/MiddleClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_MIDDLECLICKWITH "item_middleclickwith"
 	#define COMSIG_ITEM_CANCEL_CLICKWITH 1
+/// from base of obj/item/CtrlShiftClick()
+#define COMSIG_CLICK_CTRL_SHIFT "ctrl_shift_click"
 /// from base of atom/MouseDrop(): (/atom/over, /atom/dropping, /mob/user)
 #define COMSIG_ITEM_MOUSEDROP_ONTO "item_mousedrop_onto"
 	// #define COMPONENT_NO_MOUSEDROP 1
@@ -268,6 +272,9 @@
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"
 ///from base of item/equipped(): (obj/item/I, slot)
 #define COMSIG_MOB_EQUIPPED "mob_equipped"
+///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
+#define COMSIG_MOB_TRIED_ACCESS "tried_access"
+	#define COMSIG_ACCESS_ALLOWED 1
 
 // living signals
 ///from base of mob/living/rejuvenate(): ()
@@ -311,6 +318,8 @@
 ///from base of mob/living/carbon/swap_hand(): (obj/item)
 #define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"
 	#define COMPONENT_BLOCK_SWAP 1
+///from mob/living/vomit(): (/mob)
+#define COMSIG_LIVING_VOMITED "living_vomited"
 
 /// from /datum/action/changeling/transform/sting_action(): (mob/living/carbon/human/user)
 #define COMSIG_CHANGELING_TRANSFORM "changeling_transform"

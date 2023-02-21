@@ -1,6 +1,6 @@
 /obj/machinery/mecha_part_fabricator
 	icon = 'icons/obj/robotics.dmi'
-	icon_state = "fab-idle"
+	icon_state = "fab"
 	name = "Exosuit Fabricator"
 	desc = "Nothing is being built."
 	density = TRUE
@@ -502,15 +502,16 @@
 	return result
 
 
-/obj/machinery/mecha_part_fabricator/attackby(obj/W, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
+/obj/machinery/mecha_part_fabricator/attackby(obj/item/weapon/W, mob/user, params)
+	if(default_deconstruction_screwdriver(user, "fab", "fab", W))
+		update_icon()
 		return
 
 	if(exchange_parts(user, W))
 		return
 
 	if(panel_open)
-		if(iscrowbar(W))
+		if(isprying(W))
 			default_deconstruction_crowbar(W)
 			return 1
 		else
@@ -564,3 +565,15 @@
 	for(var/material in resources)
 		remove_material(material, resources[material]/MINERAL_MATERIAL_AMOUNT)
 
+/obj/machinery/mecha_part_fabricator/update_icon()
+	if(powered())
+		icon_state = initial(icon_state)
+	else
+		icon_state = "[initial(icon_state)]-off"
+	cut_overlays()
+	if(panel_open)
+		add_overlay("[initial(icon_state)]-open")
+
+/obj/machinery/mecha_part_fabricator/power_change()
+	..()
+	update_icon()

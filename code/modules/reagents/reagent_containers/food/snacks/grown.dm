@@ -374,10 +374,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiavulgaris/atom_init()
 	. = ..()
 	reagents.add_reagent("nutriment", 1)
-	reagents.add_reagent("space_drugs", 1+round(potency / 8, 1))
+	reagents.add_reagent("ambrosium", 1+round(potency / 8, 1))
 	reagents.add_reagent("kelotane", 1+round(potency / 8, 1))
 	reagents.add_reagent("bicaridine", 1+round(potency / 10, 1))
-	reagents.add_reagent("toxin", 1+round(potency / 10, 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ambrosiadeus
@@ -969,10 +968,10 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
 	if(isspaceturf(user.loc))
 		return
-	var/obj/effect/glowshroom/planted = new /obj/effect/glowshroom(user.loc)
+	var/obj/structure/glowshroom/planted = new /obj/structure/glowshroom(user.loc)
 
 	planted.delay = lifespan * 50
-	planted.endurance = endurance
+	planted.modify_max_integrity(endurance)
 	planted.yield = yield
 	planted.potency = potency
 	qdel(src)

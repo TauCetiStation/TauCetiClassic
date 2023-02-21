@@ -75,7 +75,7 @@
 /turf/simulated/mineral,
 /area/asteroid/mine/unexplored/safe)
 "an" = (
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/unexplored/safe)
 "ao" = (
@@ -175,7 +175,7 @@
 /area/asteroid/research_outpost/hallway)
 "aA" = (
 /obj/structure/transit_tube,
-/obj/effect/glowshroom,
+/obj/structure/glowshroom,
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
@@ -12442,9 +12442,6 @@
 /turf/environment/space,
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
-"FB" = (
-/turf/environment/space,
-/area/shuttle/mining/transit)
 "FQ" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -15234,11 +15231,11 @@ aa
 aa
 aa
 aa
-FB
-FB
-FB
-FB
-FB
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -15491,11 +15488,11 @@ aa
 aa
 aa
 aa
-FB
-FB
-FB
-FB
-FB
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -15748,11 +15745,11 @@ aa
 aa
 aa
 aa
-FB
-FB
-FB
-FB
-FB
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -16005,11 +16002,11 @@ aa
 aa
 aa
 aa
-FB
-FB
-FB
-FB
-FB
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -16262,11 +16259,11 @@ aa
 aa
 aa
 aa
-FB
-FB
-FB
-FB
-FB
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -16519,11 +16516,11 @@ aa
 aa
 aa
 aa
-FB
-FB
-FB
-FB
-FB
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -16776,11 +16773,11 @@ aa
 aa
 aa
 aa
-FB
-FB
-FB
-FB
-FB
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -17033,11 +17030,11 @@ aa
 aa
 aa
 aa
-FB
-FB
-FB
-FB
-FB
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -17290,11 +17287,11 @@ aa
 aa
 aa
 aa
-FB
-FB
-FB
-FB
-FB
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -65127,7 +65124,7 @@ aa
 aa
 aa
 aa
-ab
+aa
 ab
 ab
 ab
@@ -67183,7 +67180,7 @@ aa
 aa
 aa
 aa
-ab
+aa
 ab
 ab
 ab

@@ -131,7 +131,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
 
-	else if(isscrewdriver(I))
+	else if(isscrewing(I))
 		if(bcell)
 			to_chat(user, "<span class='notice'>You remove \the [bcell] from the [src].</span>")
 			bcell.updateicon()
@@ -145,7 +145,7 @@
 		return ..()
 
 /obj/item/weapon/melee/cattleprod/attack(mob/M, mob/living/user)
-	if(status && (CLUMSY in user.mutations) && prob(50))
+	if(status && user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='danger'>You accidentally hit yourself with [src]!</span>")
 		user.apply_effect(120, AGONY, 0)
 		deductcharge(hitcost)
@@ -237,7 +237,7 @@
 	qdel(src)
 
 /obj/item/weapon/noose/attackby(obj/item/W, mob/user)
-	if(!iswirecutter(W))
+	if(!iscutter(W))
 		return ..()
 	user.visible_message("<span class='notice'>[user] cuts the noose.</span>", "<span class='notice'>You cut the noose.</span>")
 	var/obj/item/stack/cable_coil/C = new(get_turf(src))

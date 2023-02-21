@@ -175,8 +175,8 @@
 /obj/item/clothing/under/suit_jacket/female
 	name = "executive suit"
 	desc = "A formal trouser suit for women, intended for the station's finest."
-	icon_state = "black_suit_fem"
-	item_state = "black_suit_fem"
+	icon_state = "black_suit_neck"
+	item_state = "black_suit_neck"
 
 /obj/item/clothing/under/suit_jacket/red
 	name = "red suit"

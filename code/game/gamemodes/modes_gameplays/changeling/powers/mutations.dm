@@ -115,6 +115,9 @@
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
+	qualities = list(
+		QUALITY_PRYING = 1
+	)
 
 /obj/item/weapon/melee/arm_blade/atom_init()
 	. = ..()
@@ -128,15 +131,8 @@
 /obj/item/weapon/melee/arm_blade/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(istype(target, /obj/structure/table))
-		var/obj/structure/table/T = target
-		T.destroy()
 
-	else if(istype(target, /obj/machinery/computer))
-		var/obj/machinery/computer/C = target
-		C.attack_alien(user) //muh copypasta
-
-	else if(istype(target, /obj/machinery/door/airlock))
+	if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = target
 
 		if(A.hasPower() && (!A.requiresID() || A.allowed(user))) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.

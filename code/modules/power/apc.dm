@@ -408,7 +408,7 @@
 	if(issilicon(user) && get_dist(src,user) > 1)
 		return attack_hand(user)
 	add_fingerprint(user)
-	if(iscrowbar(W) && opened != APC_COVER_CLOSED)
+	if(isprying(W) && opened != APC_COVER_CLOSED)
 		if(has_electronics == 1)
 			if(terminal)
 				to_chat(user, "<span class='warning'>Disconnect wires first.</span>")
@@ -434,7 +434,7 @@
 			opened = APC_COVER_CLOSED
 			update_icon()
 
-	else if(iscrowbar(W) && opened == APC_COVER_CLOSED)
+	else if(isprying(W) && opened == APC_COVER_CLOSED)
 		if(stat & BROKEN)
 			user.visible_message("<span class='warning'>[user.name] try open [src.name] cover.</span>", "<span class='notice'>You try open [src.name] cover.</span>")
 			if(W.use_tool(src, user, 25, volume = 25))
@@ -454,7 +454,7 @@
 				opened = APC_COVER_OPENED
 				update_icon()
 
-	else if(iswrench(W) && opened != APC_COVER_CLOSED && (stat & BROKEN))
+	else if(iswrenching(W) && opened != APC_COVER_CLOSED && (stat & BROKEN))
 		if(coverlocked)
 			to_chat(user, "<span class='notice'>Remove security APC bolts.</span>")
 			if(W.use_tool(src, user, 5, volume = 5))
@@ -479,7 +479,7 @@
 			chargecount = 0
 			update_icon()
 
-	else if	(isscrewdriver(W)) // haxing
+	else if	(isscrewing(W)) // haxing
 		if(opened != APC_COVER_CLOSED)
 			if(cell)
 				to_chat(user, "<span class='warning'>Close the APC first.</span>") // Less hints more mystery!
@@ -572,7 +572,7 @@
 			make_terminal()
 			terminal.connect_to_network()
 
-	else if(iswirecutter(W) && terminal && opened != APC_COVER_CLOSED && has_electronics!=2)
+	else if(iscutter(W) && terminal && opened != APC_COVER_CLOSED && has_electronics!=2)
 		terminal.dismantle(user)
 
 	else if(istype(W, /obj/item/weapon/module/power_control) && opened != APC_COVER_CLOSED && has_electronics == 0 && !((stat & BROKEN) || malfhack))
@@ -587,7 +587,7 @@
 		to_chat(user, "<span class='warning'>You cannot put the board inside, the frame is damaged.</span>")
 		return
 
-	else if(iswelder(W) && opened != APC_COVER_CLOSED && has_electronics == 0 && !terminal)
+	else if(iswelding(W) && opened != APC_COVER_CLOSED && has_electronics == 0 && !terminal)
 		if(user.is_busy()) return
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.get_fuel() < 3)
@@ -595,19 +595,7 @@
 			return
 		to_chat(user, "You start welding the APC frame...")
 		if(WT.use_tool(src, user, 50, amount = 3, volume = 50))
-			if(emagged || malfhack || (stat & BROKEN) || opened == APC_COVER_REMOVED)
-				new /obj/item/stack/sheet/metal(loc)
-				user.visible_message(\
-					"<span class='warning'>[src] has been cut apart by [user.name] with the weldingtool.</span>",\
-					"You disassembled the broken APC frame.",\
-					"<span class='warning'>You hear welding.</span>")
-			else
-				new /obj/item/apc_frame(loc)
-				user.visible_message(\
-					"<span class='warning'>[src] has been cut from the wall by [user.name] with the weldingtool.</span>",\
-					"You cut the APC frame from the wall.",\
-					"<span class='warning'>You hear welding.</span>")
-			qdel(src)
+			deconstruct(TRUE, user)
 			return
 
 	else if(istype(W, /obj/item/apc_frame) && opened != APC_COVER_CLOSED && emagged)
@@ -646,7 +634,27 @@
 			"<span class='warning'>You hit the [src.name] with your [W.name]!</span>", \
 			"You hear bang")
 		return wires.interact(user)
+	else
+		..()
 
+
+/obj/machinery/power/apc/deconstruct(disassembled, mob/user)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(!disassembled || emagged || malfhack || (stat & BROKEN) || opened == APC_COVER_REMOVED)
+		new /obj/item/stack/sheet/metal(loc)
+		user?.visible_message(\
+			"<span class='warning'>[src] has been cut apart by [user.name] with the weldingtool.</span>",\
+			"You disassembled the broken APC frame.",\
+			"<span class='warning'>You hear welding.</span>")
+	else
+		new /obj/item/apc_frame(loc)
+		user?.visible_message(\
+				"<span class='warning'>[src] has been cut from the wall by [user.name] with the weldingtool.</span>",\
+				"You cut the APC frame from the wall.",\
+				"<span class='warning'>You hear welding.</span>")
+
+	..()
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
@@ -1215,11 +1223,18 @@
 				if(cell && prob(25))
 					cell.ex_act(EXPLODE_LIGHT)
 
-/obj/machinery/power/apc/blob_act()
-	if(prob(75))
+/obj/machinery/power/apc/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if(stat & BROKEN)
+		switch(damage_type)
+			if(BRUTE, BURN)
+				return damage_amount
+		return
+	. = ..()
+
+/obj/machinery/power/apc/atom_break(damage_flag)
+	. = ..()
+	if(.)
 		set_broken()
-		if(cell && prob(5))
-			cell.blob_act()
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)

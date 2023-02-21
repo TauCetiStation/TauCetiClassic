@@ -24,6 +24,7 @@
 
 	var/spray_sound = 'sound/effects/spray2.ogg'
 	var/volume_modifier = -6
+	var/space_cleaner = "cleaner"
 
 	var/spray_cloud_move_delay = 3
 	var/spray_cloud_react_delay = 2
@@ -331,7 +332,7 @@
 
 /obj/item/weapon/reagent_containers/spray/thurible/attackby(obj/item/I, mob/user, params)
 	if(!lit && safety) // You can't lit the fuel when the cap's off, cause then it wouldn't start to burn.
-		if(iswelder(I))
+		if(iswelding(I))
 			var/obj/item/weapon/weldingtool/WT = I
 			if(WT.isOn())
 				light(user, "casually lights")
@@ -387,9 +388,39 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_l
 	desc = "BLAM!-brand non-foaming space cleaner!"
 	volume = 50
 
+
 /obj/item/weapon/reagent_containers/spray/cleaner/atom_init()
 	. = ..()
-	reagents.add_reagent("cleaner", volume)
+	reagents.add_reagent(space_cleaner, volume)
+
+/obj/item/weapon/reagent_containers/spray/cleaner/cyborg //Credit @Deahaka for rechargable extinguisher
+	name = "Cyborg cleaner"
+	desc = "Self-recharging cleaner spray."
+
+/obj/item/weapon/reagent_containers/spray/cleaner/cyborg/drone
+	name = "Drone cleaner"
+	desc = "Self-recharging cleaner spray."
+	volume = 50
+
+/obj/item/weapon/reagent_containers/spray/cleaner/cyborg/attackby(obj/item/I, mob/user, params)
+	to_chat(user, "<span class='notice'>[src] reagents are under pressure, don't open.</span>")
+	return TRUE
+
+/obj/item/weapon/reagent_containers/spray/cleaner/cyborg/afterattack(atom/target, mob/user, proximity, params)
+	if(..())
+		var/mob/living/silicon/robot/R = loc
+		if(R && R.cell)
+			R.cell.use(amount_per_transfer_from_this)
+	if(reagents.total_volume < reagents.maximum_volume)
+		START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/reagent_containers/spray/cleaner/cyborg/process()
+	if(reagents.total_volume == reagents.maximum_volume)
+		STOP_PROCESSING(SSobj, src)
+		return
+	// 5/250 cleaner per 2 seconds
+	reagents.add_reagent(space_cleaner, reagents.maximum_volume / 50)
+
 
 //pepperspray
 /obj/item/weapon/reagent_containers/spray/pepper

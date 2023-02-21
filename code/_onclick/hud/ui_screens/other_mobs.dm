@@ -1,36 +1,6 @@
-// Blob
-/atom/movable/screen/blob_power
-	name = "blob power"
-	icon_state = "block"
-	screen_loc = ui_health
-	plane = ABOVE_HUD_PLANE
-
-	copy_flags = NONE
-
-/atom/movable/screen/blob_power/add_to_hud(datum/hud/hud)
-	..()
-	hud.mymob.pwr_display = src
-
-/atom/movable/screen/blob_power/blobbernaut //Actually core healths
-	name = "core healths"
-	icon = 'icons/mob/blob.dmi'
-	icon_state = "corehealth"
-
-/atom/movable/screen/health/blob
-	name = "blob health"
-	icon = 'icons/mob/blob.dmi'
-	icon_state = "corehealth"
-	screen_loc = ui_internal
-	plane = ABOVE_HUD_PLANE
-
-/atom/movable/screen/health/blob/blobbernaut //Basically reverts icon
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "block"
-	plane = ABOVE_HUD_PLANE
-
 // Essence
 /atom/movable/screen/essence
-	icon = 'icons/mob/screen_gen.dmi'
+	icon = 'icons/hud/screen_gen.dmi'
 	plane = ABOVE_HUD_PLANE
 
 	copy_flags = NONE

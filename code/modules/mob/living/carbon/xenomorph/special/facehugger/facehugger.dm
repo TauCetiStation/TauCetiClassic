@@ -19,8 +19,13 @@
 	var/mob/living/carbon/target = null
 	var/chase_time = 0
 
-/obj/item/clothing/mask/facehugger/atom_init()
+/obj/item/clothing/mask/facehugger/atom_init(mapload, mob/hugger)
 	..()
+	if(hugger)
+		current_hugger = hugger
+		hugger.forceMove(src)
+	else
+		new /datum/proximity_monitor(src, 1)
 	facehuggers_list += src
 	return INITIALIZE_HINT_LATELOAD
 
@@ -256,6 +261,8 @@
 	if(target_head && mouth_is_protected(target_head))
 		if(prob(50) && unequip_head(target_head, C))
 			C.visible_message("<span class='danger'>[src] rips off [C]'s [target_head]!</span>", "<span class='userdanger'>[src] rips off your [target_head]!</span>")
+			if(!current_hugger && target_mask) //ai can rip off only one layer
+				fail_rip_off = TRUE
 		else
 			C.visible_message("<span class='danger'>[src] fail to rips off [C]'s [target_head]!</span>", "<span class='userdanger'>[src] fail to rips off your [target_head]!</span>")
 			fail_rip_off = TRUE
@@ -347,8 +354,9 @@
 
 	playsound(src, 'sound/voice/xenomorph/facehugger_dies.ogg', VOL_EFFECTS_MASTER)
 	visible_message("<span class='warning'>[src] curls up into a ball and exudes a strange substance!</span>")
-	for(var/mob/living/carbon/human/H in view(2, src))
-		H.invoke_vomit_async()
+	for(var/mob/living/carbon/human/H in view(1, src))
+		if(!mouth_is_protected())
+			H.invoke_vomit_async()
 
 /obj/item/clothing/mask/facehugger/verb/hide_fh()
 	set name = "Спрятать"

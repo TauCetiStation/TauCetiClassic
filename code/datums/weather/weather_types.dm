@@ -163,7 +163,9 @@
 	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
 
 	area_type = /area
-	protected_areas = list(/area/station/maintenance, /area/station/civilian/dormitories/male, /area/station/civilian/dormitories/female, /area/station/storage/emergency, /area/station/storage/emergency2, /area/station/storage/emergency3, /area/station/storage/tech, /area/asteroid/mine)
+ 
+	protected_areas = list(/area/station/maintenance, /area/station/civilian/dormitories/male, /area/station/civilian/dormitories/female, /area/station/storage/emergency, /area/station/storage/emergency2, /area/station/storage/emergency3, /area/station/storage/tech, /area/asteroid/mine, /area/station/security/prison/toilet, /area/station/security/brig/solitary_confinement)
+
 	target_ztrait = ZTRAIT_STATION
 
 	immunity_type = "rad"
@@ -254,7 +256,7 @@
 	if(!isturf(L.loc))
 		return
 	L.water_act(5)
-	if(!prob(L.getarmor(null, "bio")))
+	if(!prob(L.getarmor(null, BIO)))
 		L.adjustFireLoss(1)
 
 /datum/weather/acid_rain/additional_action() //Proc for other actions?

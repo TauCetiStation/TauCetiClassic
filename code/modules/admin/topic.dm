@@ -2186,8 +2186,8 @@
 			return
 
 		library_recycle_bin()
-		log_admin("[key_name(usr)] restored [title] from the recycle bin")
-		message_admins("[key_name_admin(usr)] restored [title] from the recycle bin")
+		log_admin("[key_name(usr)] restored '[title]' from the recycle bin")
+		message_admins("[key_name_admin(usr)] restored '[title]' from the recycle bin")
 
 	else if(href_list["deletebook"])
 		if(!check_rights(R_PERMISSIONS))
@@ -2217,8 +2217,8 @@
 			return
 
 		library_recycle_bin()
-		log_admin("[key_name(usr)] restored [title] from the recycle bin")
-		message_admins("[key_name_admin(usr)] removed [title] from the library database")
+		log_admin("[key_name(usr)] removed '[title]' from the library database by player request")
+		message_admins("[key_name_admin(usr)] removed '[title]' from the library database by player request")
 
 	else if(href_list["vsc"])
 		if(check_rights(R_ADMIN|R_SERVER))

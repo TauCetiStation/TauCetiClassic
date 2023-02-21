@@ -106,6 +106,8 @@
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
 		return TRUE
+	if(SEND_SIGNAL(M, COMSIG_MOB_TRIED_ACCESS, src) & COMSIG_ACCESS_ALLOWED)
+		return TRUE
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
@@ -418,15 +420,19 @@
 		if(access_cent_captain)
 			return "Code Gold"
 
-/proc/get_all_jobs()
+/proc/get_all_jobs(silicons = FALSE)
 	var/list/all_jobs = list()
-	var/list/all_datums = typesof(/datum/job)
-	all_datums.Remove(list(/datum/job,/datum/job/ai,/datum/job/cyborg))
+	var/list/all_datums = subtypesof(/datum/job)
+	if(!silicons)
+		all_datums.Remove(list(/datum/job/ai, /datum/job/cyborg))
 	var/datum/job/jobdatum
 	for(var/jobtype in all_datums)
 		jobdatum = new jobtype
 		all_jobs.Add(jobdatum.title)
 	return all_jobs
+
+/proc/get_all_jobs_with_silicons()
+	return get_all_jobs(TRUE)
 
 /proc/get_all_centcom_jobs()
 	return list("VIP Guest",

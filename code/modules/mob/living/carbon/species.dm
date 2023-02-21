@@ -10,6 +10,7 @@
 	var/damage_mask = TRUE
 	var/eyes = "eyes"                                    // Icon for eyes.
 	var/eyes_glowing = FALSE                             // To make those eyes gloooow.
+	var/gender_tail_icons = FALSE
 	var/gender_limb_icons = FALSE
 	var/fat_limb_icons = FALSE
 
@@ -300,6 +301,8 @@
 
 /datum/species/human
 	name = HUMAN
+	gender_limb_icons = TRUE
+	fat_limb_icons = TRUE
 	language = LANGUAGE_SOLCOMMON
 	primitive = /mob/living/carbon/monkey
 	unarmed_type = /datum/unarmed_attack/punch
@@ -324,6 +327,9 @@
 	name = UNATHI
 	icobase = 'icons/mob/human_races/r_lizard.dmi'
 	deform = 'icons/mob/human_races/r_def_lizard.dmi'
+	gender_tail_icons = TRUE
+	gender_limb_icons = TRUE
+	fat_limb_icons = TRUE
 	language = LANGUAGE_SINTAUNATHI
 	tail = "unathi"
 	unarmed_type = /datum/unarmed_attack/claws
@@ -418,6 +424,7 @@
 	,HAS_HAIR = TRUE
 	,FACEHUGGABLE = TRUE
 	,IS_SOCIAL = TRUE
+	,FUR = TRUE
 	)
 
 	flesh_color = "#afa59e"
@@ -429,6 +436,14 @@
 	is_common = TRUE
 
 	skeleton_type = SKELETON_TAJARAN
+
+/datum/species/tajaran/on_gain(mob/living/M)
+	..()
+	ADD_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
+
+/datum/species/tajaran/on_loose(mob/living/M)
+	..()
+	REMOVE_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
 
 /datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_tajaran_digest(M)
@@ -592,7 +607,6 @@
 
 	else
 		H.verbs += /mob/living/carbon/human/proc/gut
-
 	..()
 
 /datum/species/vox/on_loose(mob/living/carbon/human/H, new_species)
@@ -604,7 +618,6 @@
 
 	else
 		H.verbs -= /mob/living/carbon/human/proc/gut
-
 	..()
 
 // At 25 damage - no protection at all.
@@ -1369,7 +1382,9 @@
 	H.remove_status_flags(CANSTUN|CANWEAKEN|CANPARALYSE)
 	H.real_name = text("Adamantine Golem ([rand(1, 1000)])")
 
-	for(var/x in list(H.w_uniform, H.head, H.wear_suit, H.shoes, H.wear_mask, H.gloves))
+	var/list/items_to_remove = H.get_all_slots()
+
+	for(var/x in items_to_remove)
 		if(x)
 			H.remove_from_mob(x)
 
@@ -1379,6 +1394,10 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem, SLOT_SHOES)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem, SLOT_WEAR_MASK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, SLOT_GLOVES)
+
+	for(var/x in items_to_remove)
+		if(x)
+			H.equip_to_appropriate_slot(x, TRUE)
 
 /datum/species/golem/on_loose(mob/living/carbon/human/H, new_species)
 	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
@@ -1424,12 +1443,14 @@
 	,NO_PAIN = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,NO_EMOTION = TRUE
+	,NO_EMBED = TRUE
 	)
 
 	brute_mod = 2
 	burn_mod = 1
 	oxy_mod = 0
 	tox_mod = 0
+	brain_mod = 0
 	speed_mod = -0.2
 
 	var/list/spooks = list('sound/voice/growl1.ogg', 'sound/voice/growl2.ogg', 'sound/voice/growl3.ogg')
@@ -1442,6 +1463,8 @@
 /datum/species/zombie/on_gain(mob/living/carbon/human/H)
 	..()
 
+	ADD_TRAIT(H, TRAIT_HEMOCOAGULATION, GENERIC_TRAIT)
+
 	H.remove_status_flags(CANSTUN|CANPARALYSE) //CANWEAKEN
 
 	H.drop_l_hand()
@@ -1453,6 +1476,8 @@
 	add_zombie(H)
 
 /datum/species/zombie/on_loose(mob/living/carbon/human/H, new_species)
+	REMOVE_TRAIT(H, TRAIT_HEMOCOAGULATION, GENERIC_TRAIT)
+
 	H.add_status_flags(MOB_STATUS_FLAGS_DEFAULT)
 
 	if(istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
@@ -1489,10 +1514,19 @@
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
 	,NO_EMOTION = TRUE
+	,NO_EMBED = TRUE
 	)
 
 	min_age = 25
 	max_age = 85
+
+/datum/species/zombie/tajaran/on_gain(mob/living/M)
+	..()
+	ADD_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
+
+/datum/species/zombie/tajaran/on_loose(mob/living/M)
+	..()
+	REMOVE_TRAIT(M, TRAIT_NATURAL_AGILITY, GENERIC_TRAIT)
 
 /datum/species/zombie/skrell
 	name = ZOMBIE_SKRELL
@@ -1532,6 +1566,7 @@
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
 	,NO_EMOTION = TRUE
+	,NO_EMBED = TRUE
 	)
 
 	min_age = 25
@@ -1593,9 +1628,9 @@
 	cold_level_2 = -1
 	cold_level_3 = -1
 
-	heat_level_1 = 2000
-	heat_level_2 = 3000
-	heat_level_3 = 4000
+	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT
+	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 10
+	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 20
 
 	darksight = 8
 

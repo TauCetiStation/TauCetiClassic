@@ -27,8 +27,8 @@
 
 	var/raised = FALSE			//if the turret cover is "open" and the turret is raised
 	var/raising= FALSE			//if the turret is currently opening or closing its cover
-	var/health = 80			//the turret's health
-	var/maxhealth = 80		//turrets maximal health.
+	max_integrity = 160		//turrets maximal health.
+	integrity_failure = 0.5
 	var/auto_repair = FALSE		//if 1 the turret slowly repairs itself.
 	var/locked = TRUE			//if the turret's behaviour control access is locked
 	var/controllock = FALSE		//if the turret responds to control panels
@@ -312,7 +312,7 @@ var/global/list/turret_icons
 
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user)
 	if(stat & BROKEN)
-		if(iscrowbar(I))
+		if(isprying(I))
 			//If the turret is destroyed, you can remove it with a crowbar to
 			//try and salvage its components
 			if(user.is_busy()) return
@@ -333,7 +333,7 @@ var/global/list/turret_icons
 					to_chat(user, "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>")
 				qdel(src) // qdel
 
-	else if(iswrench(I))
+	else if(iswrenching(I))
 		if((anchored && enabled) || raised)
 			to_chat(user, "<span class='warning'>You cannot unsecure an active turret!</span>")
 			return
@@ -369,13 +369,6 @@ var/global/list/turret_icons
 			to_chat(user, "<span class='notice'>Access denied.</span>")
 
 	else
-		//if the turret was attacked with the intention of harming it:
-		take_damage(I.force * 0.5)
-		user.SetNextMove(CLICK_CD_MELEE)
-		if((I.force * 0.5) > 1) //if the force of impact dealt at least 1 damage, the turret gets pissed off
-			if(!attacked && !emagged)
-				attacked = TRUE
-				VARSET_IN(src, attacked, FALSE, 60)
 		..()
 
 /obj/machinery/porta_turret/emag_act(mob/user)
@@ -392,30 +385,29 @@ var/global/list/turret_icons
 	VARSET_IN(src, enabled, TRUE, 80) //8 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
 	return TRUE
 
-/obj/machinery/porta_turret/proc/take_damage(force)
-	if(!raised && !raising)
-		force = force / 8
-		if(force < 5)
+/obj/machinery/porta_turret/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
+	if(!(raised || raising))
+		damage_amount /= 8
+		if(damage_amount < 5)
 			return
 
-	health -= force
-	if (force > 5 && prob(45))
-		spark_system.start()
-	if(health <= 0)
-		die() //the death process :(
+	if(damage_flag == MELEE)
+		damage_amount /= 2
 
-/obj/machinery/porta_turret/bullet_act(obj/item/projectile/Proj, def_zone)
+	return damage_amount
+
+/obj/machinery/porta_turret/take_damage()
 	. = ..()
-	var/damage = Proj.damage
-	if(!damage)
-		return
+	if(. && enabled && !(attacked || emagged))
+		attacked = TRUE
+		VARSET_IN(src, attacked, FALSE, 6 SECONDS)
+	if(. > 5 && prob(45))
+		spark_system.start()
 
-	if(enabled)
-		if(!attacked && !emagged)
-			attacked = TRUE
-			VARSET_IN(src, attacked, FALSE, 60)
-
-	take_damage(damage)
+/obj/machinery/porta_turret/atom_break(disassembled)
+	. = ..()
+	if(.)
+		spark_system.start()	//creates some sparks because they look cool
 
 /obj/machinery/porta_turret/emp_act(severity)
 	if(enabled)
@@ -439,18 +431,12 @@ var/global/list/turret_icons
 	switch(severity)
 		if(EXPLODE_HEAVY)
 			if(prob(75))
-				take_damage(initial(health) * 8) //should instakill most turrets
+				take_damage(640, BRUTE, BOMB, FALSE) //should instakill most turrets
 				return
 		if(EXPLODE_LIGHT)
-			take_damage(initial(health) * 8 * 0.33) // 8/3 ~ 8*0.33
+			take_damage(220, BRUTE, BOMB, FALSE)
 			return
 	qdel(src)
-
-/obj/machinery/porta_turret/proc/die()	//called when the turret dies, ie, health <= 0
-	health = 0
-	stat |= BROKEN	//enables the BROKEN bit
-	spark_system.start()	//creates some sparks because they look cool
-	update_icon()
 
 /obj/machinery/porta_turret/process()
 	//the main machinery process
@@ -475,9 +461,9 @@ var/global/list/turret_icons
 		if(!tryToShootAt(secondarytargets)) // if no valid targets, go for secondary targets
 			popDown() // no valid targets, close the cover
 
-	if(auto_repair && (health < maxhealth))
+	if(auto_repair && (get_integrity() < max_integrity))
 		use_power(20000)
-		health = min(health + 1, maxhealth) // 1HP for 20kJ
+		repair_damage(1)
 
 /obj/machinery/porta_turret/proc/assess_and_assign(mob/living/L, list/targets, list/secondarytargets)
 	switch(assess_living(L))
@@ -665,17 +651,12 @@ var/global/list/turret_icons
 
 
 /obj/machinery/porta_turret/attack_alien(mob/living/carbon/xenomorph/humanoid/M)
-	M.do_attack_animation(src)
-	M.SetNextMove(CLICK_CD_MELEE)
-	if(!(stat & BROKEN))
-		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER, 25)
+	if(stat & BROKEN)
+		to_chat(M, "<span class='alien'>That object is useless to you.</span>")
+	. = ..()
+	if(.)
 		visible_message("<span class='danger'>[M] has slashed at [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
-		take_damage(15)
-	else
-		to_chat(M, "<span class='alien'>That object is useless to you.</span>")
-	return
-
 
 /datum/turret_checks
 	var/enabled
@@ -728,14 +709,14 @@ var/global/list/turret_icons
 	//this is a bit unwieldy but self-explanatory
 	switch(build_step)
 		if(0)	//first step
-			if(iswrench(I) && !anchored)
+			if(iswrenching(I) && !anchored)
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You secure the external bolts.</span>")
 				anchored = TRUE
 				build_step = 1
 				return
 
-			else if(iscrowbar(I) && !anchored)
+			else if(isprying(I) && !anchored)
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You dismantle the turret construction.</span>")
 				new /obj/item/stack/sheet/metal( loc, 5)
@@ -753,7 +734,7 @@ var/global/list/turret_icons
 					to_chat(user, "<span class='warning'>You need two sheets of metal to continue construction.</span>")
 				return
 
-			else if(iswrench(I))
+			else if(iswrenching(I))
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You unfasten the external bolts.</span>")
 				anchored = FALSE
@@ -762,13 +743,13 @@ var/global/list/turret_icons
 
 
 		if(2)
-			if(iswrench(I))
+			if(iswrenching(I))
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You bolt the metal armor into place.</span>")
 				build_step = 3
 				return
 
-			else if(iswelder(I))
+			else if(iswelding(I))
 				var/obj/item/weapon/weldingtool/WT = I
 				if(!WT.isOn())
 					return
@@ -798,7 +779,7 @@ var/global/list/turret_icons
 				qdel(I) //delete the gun :(
 				return
 
-			else if(iswrench(I))
+			else if(iswrenching(I))
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the turret's metal armor bolts.</span>")
 				build_step = 2
@@ -817,7 +798,7 @@ var/global/list/turret_icons
 			//attack_hand() removes the gun
 
 		if(5)
-			if(isscrewdriver(I))
+			if(isscrewing(I))
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				build_step = 6
 				to_chat(user, "<span class='notice'>You close the internal access hatch.</span>")
@@ -835,14 +816,14 @@ var/global/list/turret_icons
 					to_chat(user, "<span class='warning'>You need two sheets of metal to continue construction.</span>")
 				return
 
-			else if(isscrewdriver(I))
+			else if(isscrewing(I))
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				build_step = 5
 				to_chat(user, "<span class='notice'>You open the internal access hatch.</span>")
 				return
 
 		if(7)
-			if(iswelder(I))
+			if(iswelding(I))
 				var/obj/item/weapon/weldingtool/WT = I
 				if(!WT.isOn()) return
 				if(WT.get_fuel() < 5)
@@ -862,7 +843,7 @@ var/global/list/turret_icons
 
 					qdel(src) // qdel
 
-			else if(iscrowbar(I))
+			else if(isprying(I))
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You pry off the turret's exterior armor.</span>")
 				new /obj/item/stack/sheet/metal(loc, 2)

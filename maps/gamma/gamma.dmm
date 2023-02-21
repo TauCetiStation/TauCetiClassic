@@ -5928,7 +5928,6 @@
 /obj/item/weapon/medical/teleporter,
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/rxglasses,
-/obj/item/weapon/hand_labeler,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -8374,12 +8373,12 @@
 /obj/structure/table/woodentable,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
-/obj/item/device/camera,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/device/camera/polar,
 /turf/simulated/floor/carpet,
 /area/station/security/vacantoffice)
 "bFz" = (
@@ -8936,6 +8935,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/device/lens/posterization,
+/obj/item/device/lens/sepia,
+/obj/item/device/lens/grayscale,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -11970,7 +11972,6 @@
 /obj/machinery/requests_console/cargo_bay{
 	pixel_x = -30
 	},
-/obj/item/device/destTagger,
 /turf/simulated/floor,
 /area/station/cargo/office)
 "cMF" = (
@@ -12677,7 +12678,6 @@
 	pixel_y = 7
 	},
 /obj/item/weapon/pen,
-/obj/item/weapon/hand_labeler,
 /obj/item/weapon/storage/secure/safe{
 	pixel_x = 5;
 	pixel_y = 27
@@ -15537,7 +15537,6 @@
 	},
 /area/station/gateway)
 "dSQ" = (
-/obj/item/weapon/hand_labeler,
 /obj/item/device/flash,
 /obj/item/clothing/glasses/sunglasses,
 /obj/structure/table/glass,
@@ -15663,8 +15662,6 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/item/device/destTagger,
-/obj/item/device/destTagger,
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -18981,7 +18978,6 @@
 	pixel_y = 2
 	},
 /obj/item/weapon/storage/box/syringes,
-/obj/item/weapon/hand_labeler,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitegreen"
@@ -34865,7 +34861,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
 "jXG" = (
-/obj/item/weapon/hand_labeler,
 /obj/item/device/assembly/timer,
 /obj/item/device/eftpos{
 	eftpos_name = "Bridge EFTPOS scanner"
@@ -35229,13 +35224,13 @@
 /obj/structure/closet{
 	name = "Evidence Closet"
 	},
-/obj/item/device/camera,
 /obj/item/device/taperecorder,
 /obj/item/weapon/storage/box/evidence,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = 29
 	},
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "kdS" = (
@@ -35641,7 +35636,6 @@
 /area/station/storage/tech/north)
 "klT" = (
 /obj/structure/table,
-/obj/item/weapon/hand_labeler,
 /obj/item/weapon/packageWrap,
 /obj/machinery/light{
 	dir = 1
@@ -38241,7 +38235,7 @@
 	dir = 6
 	},
 /obj/structure/table/woodentable/fancy/black,
-/obj/item/device/camera,
+/obj/item/device/camera/polar,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -39095,7 +39089,7 @@
 	dir = 8;
 	pixel_x = 32
 	},
-/obj/structure/lamarr,
+/obj/structure/displaycase/labcage,
 /turf/simulated/floor{
 	icon_state = "whitebot"
 	},
@@ -46091,7 +46085,6 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engineering)
 "nxs" = (
-/obj/item/weapon/hand_labeler,
 /obj/item/weapon/pen,
 /obj/item/weapon/packageWrap,
 /obj/item/weapon/packageWrap,
@@ -46119,6 +46112,7 @@
 /area/station/security/hos)
 "nxW" = (
 /obj/machinery/computer/telescience,
+/obj/item/weapon/paper/space_structures,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -49488,17 +49482,13 @@
 /obj/item/weapon/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
 /obj/item/weapon/storage/secure/safe{
 	pixel_x = 30
 	},
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor/carpet,
 /area/station/security/detectives_office)
 "oDj" = (
@@ -52747,12 +52737,8 @@
 /area/station/civilian/dormitories/security)
 "pHg" = (
 /obj/structure/table,
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
 /obj/item/device/taperecorder,
+/obj/item/device/camera/polar/detective,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -54618,7 +54604,7 @@
 /obj/structure/table/woodentable,
 /obj/item/device/camera_film,
 /obj/item/device/camera_film,
-/obj/item/device/camera,
+/obj/item/device/camera/polar,
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/theater)
 "qjI" = (
@@ -66117,11 +66103,11 @@
 /obj/machinery/embedded_controller/radio/airlock_controller{
 	id_tag = "tox_airlock_control";
 	pixel_x = -28;
+	pixel_y = -10;
 	tag_airpump = "tox_airlock_pump";
 	tag_chamber_sensor = "tox_airlock_sensor";
 	tag_exterior_door = "tox_airlock_exterior";
-	tag_interior_door = "tox_airlock_interior";
-	pixel_y = -10
+	tag_interior_door = "tox_airlock_interior"
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime"
@@ -66951,7 +66937,6 @@
 /area/station/maintenance/science)
 "ugH" = (
 /obj/structure/table,
-/obj/item/weapon/paper/space_structures,
 /obj/machinery/computer/skills,
 /turf/simulated/floor{
 	dir = 5;
@@ -71777,7 +71762,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 24
 	},
-/obj/structure/displaycase,
+/obj/structure/displaycase/captain,
 /turf/simulated/floor/carpet,
 /area/station/bridge/captain_quarters)
 "vEL" = (
@@ -73392,7 +73377,6 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/weapon/hand_labeler,
 /turf/simulated/floor{
 	icon_state = "darkred"
 	},
@@ -75464,8 +75448,8 @@
 	id = "mixvent";
 	name = "Mixing Room Vent Control";
 	pixel_x = 25;
-	req_access = list(8);
-	pixel_y = 5
+	pixel_y = 5;
+	req_access = list(8)
 	},
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/meter,
@@ -79663,7 +79647,6 @@
 	},
 /area/station/cargo/storage)
 "yiK" = (
-/obj/item/weapon/hand_labeler,
 /obj/structure/table,
 /obj/item/weapon/folder/blue,
 /obj/machinery/camera{
@@ -94578,11 +94561,11 @@ yad
 ibW
 gxq
 qGD
-wFw
-wFw
-wFw
-wFw
-wFw
+plf
+plf
+plf
+plf
+plf
 kHU
 wce
 qmE
@@ -97148,11 +97131,11 @@ uzy
 xLy
 eEp
 svz
-plf
 wFw
 wFw
 wFw
-plf
+wFw
+wFw
 czH
 twf
 exM

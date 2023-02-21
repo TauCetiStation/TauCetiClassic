@@ -32,7 +32,7 @@
 	blade_color = pick("red","blue","green","purple","yellow","pink","black")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src].</span>")
 		user.take_bodypart_damage(5, 5)
 	active = !active
@@ -93,7 +93,7 @@
 	AddComponent(/datum/component/swiping, SCB)
 
 /obj/item/weapon/melee/classic_baton/attack(mob/living/M, mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
 		user.Stun(16)
 		user.Weaken(16)
@@ -192,7 +192,7 @@
 
 /obj/item/weapon/melee/telebaton/attack(mob/target, mob/living/user)
 	if(on)
-		if ((CLUMSY in user.mutations) && prob(50))
+		if(user.ClumsyProbabilityCheck(50))
 			to_chat(user, "<span class='warning'>You club yourself over the head.</span>")
 			user.adjustHalLoss(70)
 			if(ishuman(user))
@@ -201,26 +201,20 @@
 			else
 				user.take_bodypart_damage(2 * force)
 			return
+		if(!isliving(target))
+			return ..()
+		var/mob/living/L = target
+		var/target_armor = L.run_armor_check(user.get_targetzone(), MELEE)
 		if(user.a_intent == INTENT_HELP && ishuman(target))
 			var/mob/living/carbon/human/H = target
+			H.apply_effect(35, AGONY, target_armor)
 			playsound(src, 'sound/weapons/hit_metalic.ogg', VOL_EFFECTS_MASTER)
 			user.do_attack_animation(H)
-
-			if(H.wear_suit)
-				var/obj/item/clothing/suit/S = H.wear_suit
-				var/meleearm = S.armor["melee"]
-				if(meleearm)
-					if(meleearm != 100)
-						H.adjustHalLoss(round(35 - (35 / 100 * meleearm)))
-				else
-					H.adjustHalLoss(35)
-			else
-				H.adjustHalLoss(35)
-
 			H.visible_message("<span class='warning'>[user] hit [H] harmlessly with a telebaton.</span>")
 			H.log_combat(user, "hit harmlessly with [name]")
 			return
 		if(..())
+			L.apply_effect(30, AGONY, target_armor)
 			playsound(src, pick(SOUNDIN_GENHIT), VOL_EFFECTS_MASTER)
 			return
 	else
@@ -297,7 +291,7 @@
 	return 0
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
+	if (user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='danger'> You beat yourself in the head with [src].</span>")
 		user.take_bodypart_damage(5)
 	if(emp_cooldown >= world.time)

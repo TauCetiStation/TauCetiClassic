@@ -60,11 +60,13 @@ var/global/const/INGEST = 2
 		return
 	if(amount < 0) return
 	if(amount > 2000) return
+	if(total_volume == 0)
+		return
 	var/datum/reagents/R
 	if(istype(target,/datum/reagents))
 		R = target
 	else
-		if (!target.reagents || src.total_volume<=0)
+		if (!target.reagents)
 			return
 		R = target.reagents
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
@@ -446,7 +448,7 @@ var/global/const/INGEST = 2
 
 		if(data)
 			R.data = data.Copy()
-			
+
 			if(data["virus2"]) // list of datums, need to copy manually through virus_copylist()
 				R.data["virus2"] |= virus_copylist(data["virus2"])
 
@@ -625,6 +627,11 @@ var/global/const/INGEST = 2
 			var/contained = splash.get_reagents()
 
 			L.log_combat(user, "splashed with [my_atom.name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
+
+			var/image/splash_animation = image('icons/effects/effects.dmi', L, "splash")
+			splash_animation.color = mix_color_from_reagents(splash.reagent_list)
+			splash_animation.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
+			flick_overlay_view(splash_animation, target, 1 SECONDS)
 
 	splash.reaction(target, TOUCH)
 	splash.clear_reagents()

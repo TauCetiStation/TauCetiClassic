@@ -182,6 +182,14 @@
 	favor_cost = 300
 	piety_cost = 80
 
+/datum/building_agent/tech/cult/improved_pylons
+	name = "Улучшенные пилоны"
+	icon = 'icons/obj/cult.dmi'
+	icon_state = "pylon"
+	building_type = /datum/religion_tech/cult/improved_pylons
+	favor_cost = 300
+	piety_cost = 80
+
 // For forge
 /datum/building_agent/tool/cult
 /datum/building_agent/tool/cult/tome

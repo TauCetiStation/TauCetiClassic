@@ -118,12 +118,16 @@
 					armed = 0
 					H.visible_message("<span class='danger'>[H] steps on \the [src].</span>", "<span class='danger'>You step on \the [src]!</span>")
 					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
-		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !istype(AM, /mob/living/simple_animal/construct) && !istype(AM, /mob/living/simple_animal/shade) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
+		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !isconstruct(AM) && !isshade(AM) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
 			armed = 0
 			var/mob/living/simple_animal/SA = AM
 			SA.health -= 20
 
 		icon_state = "beartrap[armed]"
+
+/obj/item/weapon/legcuffs/beartrap/armed
+	icon_state = "beartrap1"
+	armed = TRUE
 
 /obj/item/weapon/legcuffs/bola
 	name = "bola"
@@ -181,6 +185,9 @@
 	icon_state = "rack_parts"
 	flags = CONDUCT
 	m_amt = 3750
+
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
 
 /obj/item/weapon/shard
 	name = "shard"
@@ -345,6 +352,10 @@
 	flags = CONDUCT
 	attack_verb = list("slammed", "bashed", "battered", "bludgeoned", "thrashed", "whacked")
 	var/table_type = /obj/structure/table
+	var/list/debris = list(/obj/item/stack/sheet/metal)
+
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
 
 /obj/item/weapon/table_parts/reinforced
 	name = "reinforced table parts"
@@ -354,6 +365,7 @@
 	m_amt = 7500
 	flags = CONDUCT
 	table_type = /obj/structure/table/reinforced
+	debris = list(/obj/item/stack/sheet/metal, /obj/item/stack/rods)
 
 /obj/item/weapon/table_parts/wood
 	name = "wooden table parts"
@@ -361,6 +373,7 @@
 	icon_state = "wood_tableparts"
 	flags = null
 	table_type = /obj/structure/table/woodentable
+	debris = list(/obj/item/stack/sheet/wood)
 
 /obj/item/weapon/table_parts/wood/poker
 	name = "poker table parts"
@@ -368,6 +381,7 @@
 	icon_state = "poker_tableparts"
 	flags = null
 	table_type = /obj/structure/table/woodentable/poker
+	debris = list(/obj/item/stack/sheet/wood, /obj/item/stack/tile/grass)
 
 /obj/item/weapon/table_parts/wood/fancy
 	name = "fancy table parts"
@@ -385,6 +399,7 @@
 	icon_state = "glass_tableparts"
 	flags = null
 	table_type = /obj/structure/table/glass
+	debris = list(/obj/item/stack/sheet/glass)
 
 /obj/item/weapon/wire
 	desc = "This is just a simple piece of regular insulated wire."
@@ -453,6 +468,7 @@
 	icon_state = "hatchet"
 	flags = CONDUCT
 	force = 12.0
+	hitsound = list('sound/weapons/bladeslice.ogg')
 	sharp = 1
 	edge = 1
 	w_class = SIZE_TINY
@@ -471,10 +487,6 @@
 	SCB.can_sweep = TRUE
 	SCB.can_spin = TRUE
 	AddComponent(/datum/component/swiping, SCB)
-
-/obj/item/weapon/hatchet/attack(mob/living/carbon/M, mob/living/carbon/user)
-	playsound(src, 'sound/weapons/bladeslice.ogg', VOL_EFFECTS_MASTER)
-	return ..()
 
 /obj/item/weapon/hatchet/unathiknife
 	name = "duelling knife"
@@ -509,8 +521,8 @@
 
 /obj/item/weapon/scythe/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(istype(target, /obj/effect/spacevine))
-		for(var/obj/effect/spacevine/B in orange(target, 1))
+	if(istype(target, /obj/structure/spacevine))
+		for(var/obj/structure/spacevine/B in orange(target, 1))
 			if(prob(80))
 				qdel(B)
 		qdel(target)

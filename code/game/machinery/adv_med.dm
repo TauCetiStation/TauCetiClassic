@@ -115,24 +115,10 @@
 		ex_act(severity)
 	qdel(src)
 
-/obj/machinery/bodyscanner/blob_act()
-	if(prob(50))
-		for(var/atom/movable/A in src)
-			A.forceMove(loc)
-		qdel(src)
-
-/obj/machinery/body_scanconsole/ex_act(severity)
-	switch(severity)
-		if(EXPLODE_LIGHT)
-			return
-		if(EXPLODE_HEAVY)
-			if(prob(50))
-				return
-	qdel(src)
-
-/obj/machinery/body_scanconsole/blob_act()
-	if(prob(50))
-		qdel(src)
+/obj/machinery/bodyscanner/deconstruct(disassembled)
+	for(var/atom/movable/A in src)
+		A.forceMove(loc)
+	..()
 
 /obj/machinery/body_scanconsole/power_change()
 	if(stat & BROKEN)
@@ -358,7 +344,7 @@
 				if(occupant.sdisabilities & BLIND)
 					dat += text("<font color='red'>Cataracts detected.</font><BR>")
 					storedinfo += text("<font color='red'>Cataracts detected.</font><BR>")
-				if(occupant.sdisabilities & NEARSIGHTED)
+				if(HAS_TRAIT(occupant, TRAIT_NEARSIGHT))
 					dat += text("<font color='red'>Retinal misalignment detected.</font><BR>")
 					storedinfo += text("<font color='red'>Retinal misalignment detected.</font><BR>")
 		else

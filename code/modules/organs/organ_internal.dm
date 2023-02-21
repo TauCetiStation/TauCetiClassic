@@ -13,6 +13,9 @@
 
 	// Will be moved, removed or refactored.
 	var/process_accuracy = 0    // Damage multiplier for organs, that have damage values.
+	// 0 - normal
+	// 1 - assisted
+	// 2 - mechanical
 	var/robotic = 0             // For being a robot
 
 /obj/item/organ/internal/Destroy()
@@ -76,7 +79,9 @@
 			if (prob(3))	//about once every 30 seconds
 				take_damage(1,silent=prob(30))
 
-/obj/item/organ/internal/proc/take_damage(amount, silent=0)
+/obj/item/organ/internal/take_damage(amount, silent=0)
+	if(!isnum(silent))
+		return // prevent basic take_damage usage (TODO remove workaround)
 	if(src.robotic == 2)
 		src.damage += (amount * 0.8)
 	else

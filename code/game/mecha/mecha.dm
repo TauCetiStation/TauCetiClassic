@@ -7,7 +7,7 @@
 #define MECHA_TIME_TO_ENTER 4 SECOND
 #define TIME_TO_RECALIBRATION 10 SECOND
 
-#define MELEE 1
+#define RANGE_MELEE 1
 #define RANGED 2
 
 
@@ -34,7 +34,7 @@
 	var/maxhealth = 300
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	//the values in this list show how much damage will pass through, not how much will be absorbed.
-	var/list/damage_absorption = list("brute"=0.8,"fire"=1.2,"bullet"=0.9,"laser"=1,"energy"=1,"bomb"=1)
+	var/list/damage_absorption = list(BRUTE=0.8,BURN=1.2,BULLET=0.9,LASER=1,ENERGY=1,BOMB=1)
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/state = 0
 	var/list/log = new
@@ -398,7 +398,7 @@
 ////////  Health related procs  ////////
 ////////////////////////////////////////
 
-/obj/mecha/proc/take_damage(amount, type="brute")
+/obj/mecha/take_damage(amount, type=BRUTE) // TODO port tg mechs
 	if(amount)
 		var/damage = absorbDamage(amount,type)
 		health -= damage
@@ -574,7 +574,7 @@
 	destroy()
 
 /obj/mecha/blob_act()
-	take_damage(10, "brute")
+	take_damage(30, BRUTE)
 	return
 
 
@@ -582,7 +582,7 @@
 	if(get_charge())
 		use_power((cell.charge/2)/severity)
 		diag_hud_set_mechcell()
-		take_damage(50 / severity,"energy")
+		take_damage(50 / severity,ENERGY)
 	log_message("EMP detected",1)
 	check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
 	return
@@ -590,7 +590,7 @@
 /obj/mecha/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature>src.max_temperature)
 		log_message("Exposed to dangerous temperature.",1)
-		take_damage(5,"fire")
+		take_damage(5,BURN)
 		check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL))
 	return
 
@@ -646,7 +646,7 @@
 				to_chat(user, "<span class='warning'>Invalid ID: Access denied.</span>")
 		else
 			to_chat(user, "<span class='warning'>Maintenance protocols disabled by operator.</span>")
-	else if(iswrench(W))
+	else if(iswrenching(W))
 		if(state==1)
 			state = 2
 			to_chat(user, "You undo the securing bolts.")
@@ -654,7 +654,7 @@
 			state = 1
 			to_chat(user, "You tighten the securing bolts.")
 		return
-	else if(iscrowbar(W))
+	else if(isprying(W))
 		if(state==2)
 			state = 3
 			to_chat(user, "You open the hatch to the power unit")
@@ -671,7 +671,7 @@
 			clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
 			to_chat(user, "You replace the fused wires.")
 		return
-	else if(isscrewdriver(W))
+	else if(isscrewing(W))
 		if(hasInternalDamage(MECHA_INT_TEMP_CONTROL))
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 			to_chat(user, "You repair the damaged temperature controller.")
@@ -699,7 +699,7 @@
 			diag_hud_set_mechcell()
 		return
 
-	else if(iswelder(W) && user.a_intent != INTENT_HARM)
+	else if(iswelding(W) && user.a_intent != INTENT_HARM)
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_MELEE)
 		if (WT.use(0,user))
@@ -711,6 +711,7 @@
 		if(src.health<initial(src.health))
 			to_chat(user, "<span class='notice'>You repair some damage to [src.name].</span>")
 			src.health += min(10, initial(src.health)-src.health)
+			update_health()
 		else
 			to_chat(user, "The [src.name] is at full integrity")
 		return
@@ -721,14 +722,12 @@
 		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
 		return
 
-	else if(istype(W, /obj/item/weapon/changeling_hammer))
-		var/obj/item/weapon/changeling_hammer/Ham = W
-		user.do_attack_animation(src)
+	else if(istype(W, /obj/item/weapon/melee/changeling_hammer))
+		var/obj/item/weapon/melee/changeling_hammer/hammer = W
 		user.SetNextMove(CLICK_CD_MELEE)
-		visible_message("<span class='warning'><B>[user]</B> has punched \the <B>[src]!</B></span>")
-		playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		if(Ham.use_charge(user,6))
-			take_damage(Ham.force * 2)
+		playsound(src, pick(hammer.hitsound), VOL_EFFECTS_MASTER)
+		dynattackby(hammer, user)
+
 	else
 		user.SetNextMove(CLICK_CD_MELEE)
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
@@ -981,7 +980,6 @@
 		brainmob.loc = src //should allow relaymove
 		brainmob.canmove = 1
 		mmi_as_oc.loc = src
-		mmi_as_oc.mecha = src
 		Entered(mmi_as_oc)
 		Move(src.loc)
 		src.icon_state = reset_icon()
@@ -1040,7 +1038,6 @@
 			var/obj/item/device/mmi/mmi = mob_container
 			if(mmi.brainmob)
 				occupant.loc = mmi
-			mmi.mecha = null
 			src.occupant.canmove = 0
 		src.occupant = null
 		src.icon_state = reset_icon()+"-open"
@@ -1209,7 +1206,7 @@
 		if(cabin_air && cabin_air.volume>0)
 			cabin_air.temperature = min(6000 + T0C, cabin_air.temperature+rand(10, 15))
 			if(cabin_air.temperature > max_temperature / 2)
-				take_damage(4 / round(max_temperature / cabin_air.temperature, 0.1),"fire")
+				take_damage(4 / round(max_temperature / cabin_air.temperature, 0.1),BURN)
 	if(hasInternalDamage(MECHA_INT_TANK_BREACH)) //remove some air from internal tank
 		if(internal_tank)
 			var/datum/gas_mixture/int_tank_air = internal_tank.return_air()

@@ -99,8 +99,11 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/update_icon()
 	show_filler_on_icon(3, 24, 0)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/can_smash()
+	return is_glass
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user, def_zone)
-	if(user.a_intent != INTENT_HARM || !is_glass)
+	if(user.a_intent != INTENT_HARM || !can_smash())
 		return ..()
 
 	if(!target)
@@ -115,7 +118,7 @@
 	if(ishuman(target))
 
 		var/mob/living/carbon/human/H = target
-		armor_block = H.run_armor_check(def_zone, "melee") // For normal attack damage
+		armor_block = H.run_armor_check(def_zone, MELEE) // For normal attack damage
 
 		//Calculating the weakening duration for the target.
 		if(def_zone == BP_HEAD)
@@ -123,7 +126,7 @@
 
 	else
 		//Only humans can have armour, right?
-		armor_block = target.run_armor_check(def_zone, "melee")
+		armor_block = target.run_armor_check(def_zone, MELEE)
 		if(def_zone == BP_HEAD)
 			armor_duration = duration + force
 	armor_duration /= 10
@@ -157,7 +160,7 @@
 	if(src.reagents)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("<span class='notice'><B>The contents of the [src] splashes all over [target]!</B></span>"), 1)
-		reagents.reaction(target, TOUCH)
+		reagents.standard_splash(target, user = user)
 
 	//Finally, smash the bottle. This kills (del) the bottle.
 	smash(target, user)

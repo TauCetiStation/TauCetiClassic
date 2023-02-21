@@ -13,6 +13,8 @@ var/global/list/alldepartments = list("Central Command")
 	active_power_usage = 200
 	interact_offline = TRUE
 	allowed_checks = ALLOWED_CHECK_NONE
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 	var/obj/item/weapon/card/id/scan = null // identification
 	var/authenticated = 0
 
@@ -179,7 +181,7 @@ var/global/list/alldepartments = list("Central Command")
 				var/mob/living/carbon/human/H = usr
 				H.sec_hud_set_ID()
 
-	else if(iswrench(O))
+	else if(iswrenching(O))
 		default_unfasten_wrench(user, O)
 
 /proc/centcomm_fax(mob/sender, obj/item/weapon/paper/P, obj/machinery/faxmachine/fax)
