@@ -144,7 +144,11 @@
 			msg += "[t_He] [t_is] holding [bicon(r_hand)] \a [r_hand] in [t_his] right hand.\n"
 	else if(r_hand && (r_hand.type in changeling_weapons))
 		msg += "<span class='warning'>[t_He] [t_has] [bicon(r_hand)] \a [r_hand] instead of his right arm!</span>\n"
-
+	//Throw Swing
+	if(in_throw_mode)
+		var/obj/item/I = get_active_hand()
+		if(I)
+			msg += "<span class='warning'>[t_He] swings to throw, holding [I] in [t_his] hand!</span>\n"
 	//gloves
 	if(gloves && !skipgloves)
 		if(gloves.dirt_overlay)

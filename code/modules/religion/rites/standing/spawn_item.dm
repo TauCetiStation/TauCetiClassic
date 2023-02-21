@@ -50,7 +50,7 @@
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/mob/living/carbon/human/M in viewers(get_turf(AOG)))
-		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0 && !(CLUMSY in M.mutations))
+		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0 && !(M.IsClumsy()))
 			M.flash_eyes()
 
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")
@@ -85,7 +85,7 @@
 	playsound(AOG, 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 
 	for(var/mob/living/carbon/human/M in viewers(get_turf(AOG)))
-		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0 && !(CLUMSY in M.mutations))
+		if(M.mind && !M.mind.holy_role && M.eyecheck() <= 0 && !(M.IsClumsy()))
 			M.flash_eyes()
 
 	user.visible_message("<span class='notice'>[user] has finished the rite of [name]!</span>")

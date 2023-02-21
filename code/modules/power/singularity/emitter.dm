@@ -175,7 +175,7 @@
 
 
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
 			return
@@ -198,7 +198,7 @@
 				to_chat(user, "<span class='warning'>The [src.name] needs to be unwelded from the floor.</span>")
 		return
 
-	if(iswelder(W))
+	if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
@@ -247,7 +247,7 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 
-	if(isscrewdriver(W))
+	if(isscrewing(W))
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
 			return
