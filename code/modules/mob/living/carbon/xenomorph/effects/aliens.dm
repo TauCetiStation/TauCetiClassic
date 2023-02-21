@@ -132,7 +132,7 @@ var/global/list/xeno_tunnel_list = list()
 		var/turf/simulated/floor/F = turf_with_hole
 		F.break_tile()
 
-/obj/structure/alien/resin/tunnel/proc/is_have_hindrance(turf/T)
+/obj/structure/alien/resin/tunnel/proc/has_hindrance(turf/T)
 	if(!T)
 		return TRUE
 	for(var/obj/structure/hindrance in T)
@@ -163,7 +163,7 @@ var/global/list/xeno_tunnel_list = list()
 		to_chat(user, "<span class='userdanger'>You are too thicc for that hole.</span>")
 		return
 
-	if(is_have_hindrance(loc))
+	if(has_hindrance(loc))
 		to_chat(user, "<span class='warning'>That tunnel is blocked by something.</span>")
 		return
 
@@ -185,7 +185,7 @@ var/global/list/xeno_tunnel_list = list()
 		if(do_after(user, TUNNEL_CLIMB_DELAY, target = src))
 			if(!Adjacent(user))
 				return
-			if(is_have_hindrance(target_turf))
+			if(has_hindrance(target_turf))
 				to_chat(user, "<span class='warning'>Exit tunnel is blocked by something.</span>")
 				return
 			user.forceMove(target_turf)
