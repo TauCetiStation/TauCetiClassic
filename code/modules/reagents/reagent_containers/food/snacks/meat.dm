@@ -6,6 +6,7 @@
 	filling_color = "#ff1c1c"
 	bitesize = 3
 	list_reagents = list("protein" = 3)
+	food_type = NATURAL_FOOD
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/kitchenknife))

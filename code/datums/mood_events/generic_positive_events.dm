@@ -67,3 +67,25 @@
 
 /datum/mood_event/besthug/add_effects(mob/friend)
 	description = "<span class='nicegreen'>[friend.name] is great to be around, [friend.name] makes me feel so happy!</span>"
+
+// Food
+
+/datum/mood_event/junk_food
+	description = "<span class='warning'>This food is hurting me!</span>"
+	mood_change = -2
+	timeout = 3 MINUTES
+
+/datum/mood_event/natural_food
+	description = "<span class='nicegreen'>Very nice to eat wholesome and natural food.</span>"
+	mood_change = 1
+	timeout = 3 MINUTES
+
+/datum/mood_event/tasty_food
+	description = "<span class='nicegreen'>This food tastes good, I like it.</span>"
+	mood_change = 3
+	timeout = 3 MINUTES
+
+/datum/mood_event/very_tasty_food
+	description = "<span class='bold nicegreen'>This food tastes just divine!</span>"
+	mood_change = 5
+	timeout = 5 MINUTES
