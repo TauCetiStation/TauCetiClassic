@@ -123,13 +123,9 @@
 		return block_chance
 	var/add_block = 0
 	var/turf/user_turf = get_turf(user)
-	//find comrads
+	//find comrads without build a line or smth
 	for(var/mob/living/carbon/human/H in range(1, user_turf))
-		var/turf/no_perpendicular = get_step(user_turf, saved_dir)
-		var/turf/no_perpendicular_back = get_step(user_turf, turn(saved_dir, 180))
-		var/turf/human_turf = get_turf(H)
-		//remove that line from counted buffs, because of beaty
-		if(human_turf == no_perpendicular || human_turf == user_turf || human_turf == no_perpendicular_back)
+		if(H == user)
 			continue
 		var/obj/item/weapon/shield/shield = H.is_in_hands(/obj/item/weapon/shield)
 		//no_shields
@@ -138,7 +134,7 @@
 		//should be in hand
 		if(!shield.wall_of_shield_on)
 			continue
-		//thats not a wall of shields
+		//Must face the same direction for balance
 		if(shield.saved_dir != saved_dir)
 			continue
 		//should be more unbalanced because of promotion teamplay
