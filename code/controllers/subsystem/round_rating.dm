@@ -34,32 +34,27 @@
 /datum/rating_template/generic
 	category = "generic_rating"
 	show_options = RATING_SHOW_ALWAYS
-	question = "Вам понравился раунд в целом?"
+	question = "Дайте оценку текущему раунду."
 	result_message = "Оценка раунда"
 
 /datum/rating_template/mode
 	category = "mode_rating"
-	question = "Вам понравился игровой режим?"
+	question = "Дайте оценку текущему режиму."
 	result_message = "Оценка режима"
 
 /datum/rating_template/rp
 	category = "roleplay_rating"
-	question = "Вам понравился отыгрыш других игроков?"
+	question = "Дайте оценку отыгрыша других игроков."
 	result_message = "Оценка отыгрыша"
-
-/datum/rating_template/bugs
-	category = "bugs_rating"
-	question = "Сильно ли мешали баги вашему раунду?"
-	result_message = "Оценка надоедливости багов"
 
 /datum/rating_template/admin
 	category = "admin_rating"
-	question = "Вам понравилась работа администрации?"
+	question = "Дайте оценку работы администрации."
 	result_message = "Оценка администрации"
 
 /datum/rating_template/map
 	category = "map_rating"
-	question = "Вам понравилась текущая карта?"
+	question = "Дайте оценку текущей карте."
 	result_message = "Оценка карты"
 
 /datum/vote_choice/rating
