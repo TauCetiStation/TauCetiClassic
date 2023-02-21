@@ -446,7 +446,7 @@
 	sleep(5) // wait for animation to finish
 
 	var/wrapcheck = 0
-	var/obj/structure/disposalholder/H = new(contents, air_contents)
+	var/obj/structure/disposalholder/H = new(null, contents, air_contents)
 
 	for(var/mob/living/silicon/robot/drone/D in src)
 		wrapcheck = 1
@@ -463,7 +463,7 @@
 
 	air_contents = new(PRESSURE_TANK_VOLUME)	// new empty gas resv.
 
-	H.start(src) // start the holder processing movement
+	H.start(trunk) // start the holder processing movement
 	flushing = 0
 	// now reset disposal state
 	flush = 0
@@ -533,6 +533,8 @@
 	var/partialTag = "" //set by a partial tagger the first time round, then put in destinationTag if it goes through again.
 
 /obj/structure/disposalholder/atom_init(mapload, list/contained, datum/gas_mixture/flush_gas)
+	. = ..()
+
 	gas = flush_gas
 
 	//Check for any living mobs trigger hasmob.

@@ -469,7 +469,7 @@
 	playsound(src, 'sound/machines/disposalflush.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	sleep(5) // wait for animation to finish
 
-	var/obj/structure/disposalholder/H = new(contents, new())
+	var/obj/structure/disposalholder/H = new(null, contents, new /datum/gas_mixture)
 
 	if(!trunk)
 		expel(H)
