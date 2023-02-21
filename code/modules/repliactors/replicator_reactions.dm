@@ -120,6 +120,9 @@
 /obj/machinery/atmospherics/can_be_auto_disintegrated()
 	return FALSE
 
+/obj/machinery/portable_atmospherics/can_be_auto_disintegrated()
+	return FALSE
+
 // Power is needed for the Transponders.
 /obj/machinery/power/can_be_auto_disintegrated()
 	return FALSE

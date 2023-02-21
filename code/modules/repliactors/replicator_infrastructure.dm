@@ -87,17 +87,34 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 	return ..()
 
 
+/turf/proc/get_untaken_replicator_color()
+	var/list/possibilities = REPLICATOR_COLORS
+	var/obj/structure/cable/power_rune/PR = locate() in src
+	if(PR)
+		possibilities -= PR.rune_color
+	var/obj/structure/bluespace_corridor/BC = locate() in src
+	if(BC)
+		possibilities -= BC.rune_color
+		possibilities -= BC.internal_rune_color
+	return possibilities
+
+
 /obj/structure/cable/power_rune
 	name = "rune"
 	desc = "Huh."
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "power_rune"
 
+	var/rune_color
+
 /obj/structure/cable/power_rune/atom_init()
 	. = ..()
 	icon_state = "power_rune_[rand(1, 3)]"
 
-	color = pick("#A8DFF0", "#F0A8DF", "#DFF0A8")
+	var/turf/my_turf = get_turf(src)
+
+	rune_color = pick(my_turf.get_untaken_replicator_color())
+	color = rune_color
 
 	d1 = 0
 	for(var/obj/structure/cable/C in get_turf(src))
@@ -120,7 +137,62 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "transit_rune"
 
+	var/neighbor_count = 0
+
+	var/rune_color
+	var/internal_rune_color
+
+	// Images don't have invisibility.
+	var/obj/effect/overlay/internal_overlay
+
 /obj/structure/bluespace_corridor/atom_init()
 	. = ..()
-	color = pick("#A8DFF0", "#F0A8DF", "#DFF0A8")
+
 	icon_state = "transit_rune_[rand(1, 3)]"
+
+	var/turf/my_turf = get_turf(src)
+
+	rune_color = pick(my_turf.get_untaken_replicator_color())
+	color = rune_color
+
+	internal_rune_color = pick(my_turf.get_untaken_replicator_color())
+
+	internal_overlay = new
+	internal_overlay.icon = icon
+	internal_overlay.icon_state = "corridor_internal"
+	internal_overlay.color = internal_rune_color
+	internal_overlay.invisibility = INVISIBILITY_LEVEL_TWO
+	internal_overlay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	// Invisibility doesn't work with overlays
+	vis_contents += internal_overlay
+
+	neighbor_adjust_count(my_turf, 1)
+
+/obj/structure/bluespace_corridor/Destroy()
+	vis_contents -= internal_overlay
+	QDEL_NULL(internal_overlay)
+
+	var/turf/my_turf = get_turf(src)
+	if(my_turf)
+		neighbor_adjust_count(my_turf, -1)
+
+	return ..()
+
+/obj/structure/bluespace_corridor/Moved(atom/OldLoc, move_dir)
+	var/turf/old_turf = get_turf(OldLoc)
+	var/turf/my_turf = get_turf(src)
+
+	if(old_turf)
+		neighbor_adjust_count(old_turf, -1)
+	if(my_turf)
+		neighbor_adjust_count(my_turf, 1)
+
+/obj/structure/bluespace_corridor/proc/neighbor_adjust_count(turf/T, value)
+	for(var/card_dir in global.cardinal)
+		var/turf/other = get_step(T, card_dir)
+		var/obj/structure/bluespace_corridor/BC = locate(/obj/structure/bluespace_corridor) in other
+		if(!BC)
+			continue
+		BC.neighbor_count += value
+		neighbor_count += value

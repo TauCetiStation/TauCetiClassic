@@ -183,18 +183,19 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		var/neighbor_count = 0
 		for(var/card_dir in global.cardinal)
 			var/turf/pos_neighbor = get_step(T, card_dir)
-			if(locate(auto_construct_type) in pos_neighbor)
-				neighbor_count += 1
-				if(neighbor_count > 2)
-					return
 
-				var/neighbor_neighbor_count = 0
-				for(var/card_dir2 in global.cardinal)
-					var/turf/pos_neighbor_neighbor = get_step(pos_neighbor, card_dir2)
-					if(locate(auto_construct_type) in pos_neighbor_neighbor)
-						neighbor_neighbor_count += 1
-						if(neighbor_neighbor_count > 1)
-							return
+			if(locate(/obj/machinery/bluespace_transponder) in pos_neighbor)
+				continue
+
+			var/obj/structure/bluespace_corridor/BC = locate(auto_construct_type) in pos_neighbor
+			if(!BC)
+				continue
+			neighbor_count += 1
+			if(neighbor_count > 2)
+				return
+
+			if(BC.neighbor_count > 1)
+				return
 
 	new auto_construct_type(T)
 	global.replicators_faction.adjust_materials(-auto_construct_cost, adjusted_by=last_controller_ckey)

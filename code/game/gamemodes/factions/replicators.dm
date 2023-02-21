@@ -70,7 +70,7 @@ var/global/datum/faction/replicators/replicators_faction
 		var/goodwill_close = ""
 
 		if(presence_ckey == max_goodwill_ckey)
-			goodwill_open = "<font size='2'>"
+			goodwill_open = "<font size='4'>"
 			goodwill_close = "</font>"
 
 		to_chat(
