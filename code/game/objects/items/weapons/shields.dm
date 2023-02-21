@@ -204,8 +204,8 @@
 
 	AddComponent(/datum/component/swiping, SCB)
 
-/obj/item/weapon/shield/energy/AltClick(mob/user)
-	return
+/obj/item/weapon/shield/energy/toggle_wallshield(mob/user)
+	to_chat(user, "<span class='warning'>Why do I have to move so slowly?</span>")
 
 /obj/item/weapon/shield/energy/proc/can_sweep(mob/user)
 	return active
