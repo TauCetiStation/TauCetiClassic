@@ -198,7 +198,7 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), SLOT_IN_BACKPACK)
 
 	religion.add_member(H, HOLY_ROLE_PRIEST)
-	H.mutations.Add(CLUMSY)
+	ADD_TRAIT(H, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 	H.mind.assigned_role = "Clown"
 	return TRUE
 

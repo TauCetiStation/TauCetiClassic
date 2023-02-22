@@ -59,7 +59,7 @@
 			return FALSE
 
 	if(stab_eyes && user.a_intent != INTENT_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))
-		if((CLUMSY in user.mutations) && prob(50))
+		if(user.ClumsyProbabilityCheck(50))
 			M = user
 		return eyestab(M,user)
 

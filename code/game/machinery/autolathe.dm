@@ -69,6 +69,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/weapon/retractor,                             CATEGORY_MEDICAL),
 	R(/obj/item/weapon/cautery,                               CATEGORY_MEDICAL),
 	R(/obj/item/weapon/hemostat,                              CATEGORY_MEDICAL),
+	R(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass, CATEGORY_MEDICAL),
 	R(/obj/item/weapon/reagent_containers/glass/beaker,       CATEGORY_MEDICAL),
 	R(/obj/item/weapon/reagent_containers/glass/beaker/large, CATEGORY_MEDICAL),
 	R(/obj/item/weapon/reagent_containers/glass/beaker/vial,  CATEGORY_MEDICAL),
@@ -285,7 +286,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		return
 
 	if(panel_open)
-		if(iscrowbar(I))
+		if(isprying(I))
 			default_deconstruction_crowbar(I)
 			return 1
 		else if(is_wire_tool(I))
