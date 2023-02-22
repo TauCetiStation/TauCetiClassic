@@ -59775,7 +59775,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/structure/table/reinforced,
 /obj/item/weapon/flora/pottedplant/orientaltree{
 	pixel_y = 12
 	},
@@ -61116,7 +61115,7 @@
 /obj/machinery/door/window{
 	dir = 1;
 	name = "AI SMES Door";
-	req_access = list(109)
+	req_access = list(16)
 	},
 /obj/machinery/ai_status_display{
 	pixel_y = -32
@@ -61900,7 +61899,7 @@
 	},
 /obj/machinery/door/window/northright{
 	name = "AI SMES Door";
-	req_access = list(109)
+	req_access = list(16)
 	},
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
@@ -66489,7 +66488,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/structure/table/reinforced,
 /obj/item/weapon/flora/pottedplant/aquatic{
 	pixel_y = 12
 	},
