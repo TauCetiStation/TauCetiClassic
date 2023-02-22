@@ -35,6 +35,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	default_emotes = list(
 		/datum/emote/list,
 		/datum/emote/clickable/help_replicator,
+		/datum/emote/robot/beep,
 	)
 
 	a_intent = INTENT_HELP
@@ -70,6 +71,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	speed = -1
 
 	w_class = SIZE_TINY
+
+	typing_indicator_type = "robot"
 
 	var/generation = ""
 
@@ -195,7 +198,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
 	if(prob(30))
 		// maybe it would be better to add some mechanical woosh woosh sound like when constructing a drone.
-		playsound_steathy(AM, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_complite.ogg', VOL_EFFECTS_MASTER)
+		playsound_stealthy(T, 'sound/misc/mining_crate_success.ogg', VOL_EFFECTS_MASTER, vol=40)
 
 	new auto_construct_type(T)
 	global.replicators_faction.adjust_materials(-auto_construct_cost, adjusted_by=last_controller_ckey)
@@ -244,6 +247,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	..()
 	global.replicators -= src
 
+	overlays -= indicator
+
 	playsound(src, 'sound/effects/Explosion1.ogg', VOL_EFFECTS_MASTER, 75, FALSE)
 
 	var/list/pos_replicators = list() + global.replicators
@@ -254,7 +259,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		if(!C.ckey)
 			to_chat(C, "<span class='warning'>DRONE INTEGRITY CRITICAL: PRESENCE TRANSFER PROTOCOL ACTIVATED</span>")
 			playsound(src, 'sound/mecha/lowpower.ogg', VOL_EFFECTS_MASTER)
-			// add red flashing to screen that would be super cool
+			// TO-DO: add red flashing to screen that would be super cool
 			transfer_control(C)
 
 /mob/living/simple_animal/replicator/CanPass(atom/movable/mover, turf/target)
@@ -427,7 +432,15 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	if(message[1] == "*")
 		return emote(copytext(message, 2))
 
-	message = add_period(capitalize(message))
+	message = add_period(capitalize(trim(message)))
+
+	var/image/I = image('icons/mob/talk.dmi', src, "[typing_indicator_type][say_test(message)]", MOB_LAYER + 1)
+	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	flick_overlay_view(I, src, 30)
+
+	emote("beep")
 
 	global.replicators_faction.announce_swarm(global.replicators_faction.get_presence_name(ckey), ckey, message, announcer=src)
 
@@ -477,8 +490,29 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 /mob/living/simple_animal/replicator/proc/has_swarms_gift()
 	return has_status_effect(STATUS_EFFECT_SWARMS_GIFT)
 
-/mob/living/simple_animal/replicator/proc/playsound_stealthy(atom/source, sound)
+/mob/living/simple_animal/replicator/proc/playsound_stealthy(atom/source, sound, vol=100)
 	var/mufflerange = has_swarms_gift() ? -5 : 0
 	var/mufflefalloff = has_swarms_gift() ? 0.75 : null
-	var/mufflevolume = has_swarms_gift() ? 75 : 100
-	return playsound(source, sound, VOL_EFFECTS_MASTER, volume=mufflevolume, falloff=mufflefalloff, extrarange=mufflerange)
+	var/mufflevolume = has_swarms_gift() ? vol * 0.75 : vol
+	to_chat(world, "[source] [mufflerange] [mufflefalloff] [mufflevolume]")
+	return playsound(source, sound, VOL_EFFECTS_MASTER, vol=mufflevolume, falloff=mufflefalloff, extrarange=mufflerange)
+
+/mob/living/simple_animal/replicator/proc/try_spawn_node(turf/T)
+	if(!prob(5))
+		return FALSE
+
+	if(global.replicators_faction.nodes_to_spawn <= 0)
+		return FALSE
+
+	if(locate(/obj/structure/forcefield_node) in T)
+		return FALSE
+
+	for(var/fn in global.forcefield_nodes)
+		if(get_dist(T, fn) < 5)
+			return FALSE
+
+	var/obj/structure/forcefield_node/FN = new(T)
+	FN.color = pick("#A8DFF0", "#F0A8DF", "#DFF0A8")
+
+	var/area/A = get_area(T)
+	global.replicators_faction.drone_message(src, "Node unveiled at [A.name].", transfer=TRUE)

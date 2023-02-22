@@ -1,6 +1,6 @@
 /atom/movable/screen/alert/status_effect/swarm_gift
 	name = "Swarm's Gift"
-	desc = "The Swarm gifts you with increased efficency. Prosper and multiply!"
+	desc = "The Swarm gifts you with increased efficency, as well as muffled disintegration noises. Prosper and multiply!"
 	icon_state = "swarm_gift"
 
 /datum/status_effect/swarm_gift

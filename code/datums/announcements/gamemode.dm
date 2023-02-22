@@ -223,7 +223,7 @@
 	subtitle = "Тревога! Блюспейс прорыв"
 
 /datum/announcement/centcomm/replicator/construction_began/play(area/A)
-	message = "Обнаружено открытие блюспейс прорыва в [initial(A.name)]. Прорыв необходимо закрыть."
+	message = "Обнаружено открытие блюспейс прорыва в [initial(A.name)]. Полное раскрытие прорыва приведёт к дестабилизации реальности вокруг станции!"
 
 /datum/announcement/centcomm/replicator/construction_quarter/play(area/A)
 	message = "Блюспейс прорыв в [initial(A.name)] достиг 25% от критического гиперобъема."

@@ -37,9 +37,9 @@
 	if(ckey)
 		return
 
-	if(excitement <= 0 && next_excitement_alert < world.time)
+	if(!disintegrating && excitement <= 0 && next_excitement_alert < world.time)
 		global.replicators_faction.drone_message(src, pick("I have no purpose.", "I am bored.", "Why am I still here."), transfer=TRUE, dismantle=TRUE)
-		next_excitement_alert = excitement_alert_cooldown
+		next_excitement_alert = excitement_alert_cooldown + world.time
 
 	if(state == REPLICATOR_STATE_COMBAT)
 		excitement -= 1

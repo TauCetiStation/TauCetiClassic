@@ -37,10 +37,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	desc = "Huh."
 
 	anchored = TRUE
-	density = TRUE
+	density = FALSE
 
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 10000
+	idle_power_usage = 15000
 
 	var/next_sound = 0
 
@@ -113,16 +113,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 		next_sound = next_sound + 20 SECONDS
 		playsound(src, 'sound/machines/signal.ogg', VOL_EFFECTS_MASTER)
 
-	var/surplus_power = min(surplus(), 10000)
-	if(surplus_power > 0)
-		add_load(surplus_power)
-		global.replicators_faction.energy += surplus_power
-	else
-		global.replicators_faction.energy += 10000
-
-	//if(global.replicators_faction.materials > 10)
-	//	global.replicators_faction.adjust_materials(-10)
-	//	global.replicators_faction.energy += 10000
+	global.replicators_faction.energy += 15000
 
 /obj/machinery/power/replicator_generator/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/replicator))

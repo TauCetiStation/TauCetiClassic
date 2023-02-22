@@ -32,6 +32,7 @@
 
 /turf/simulated/floor/replicator_act(mob/living/simple_animal/replicator/R)
 	if(is_plating())
+		R.try_spawn_node(src)
 		ChangeTurf(/turf/simulated/floor/plating/airless/catwalk/forcefield)
 		return TRUE
 

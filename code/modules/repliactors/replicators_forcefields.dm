@@ -16,18 +16,14 @@
 	. = ..()
 	icon_state = "floor"
 
-	if(prob(5))
-		var/too_close = FALSE
-		for(var/fn in global.forcefield_nodes)
-			if(get_dist(src, fn) < 5)
-				too_close = TRUE
-
-		if(!too_close)
-			var/obj/structure/forcefield_node/FN = new(src)
-			FN.color = pick("#A8DFF0", "#F0A8DF", "#DFF0A8")
-
 /turf/simulated/floor/plating/airless/catwalk/forcefield/update_icon(propogate=1)
 	return
+
+/turf/simulated/floor/plating/airless/catwalk/forcefield/ChangeTurf(newtype)
+	. = ..()
+	if(newtype != type)
+		var/obj/structure/forcefield_node/FN = locate() in src
+		qdel(FN)
 
 
 /obj/structure/replicator_forcefield
@@ -91,8 +87,16 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	anchored = TRUE
 	opacity = 0
 
+/obj/structure/forcefield_node/atom_init()
+	. = ..()
+	global.replicators_faction.nodes_to_spawn -= 1
+
+/obj/structure/forcefield_node/Destroy()
+	global.replicators_faction.nodes_to_spawn += 1
+	return ..()
+
 /obj/structure/forcefield_node/Crossed(atom/movable/AM)
-	if(icon_state != "floor_node_free")
+	if(captured())
 		return ..()
 
 	if(AM.invisibility <= 0)
@@ -105,3 +109,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	global.replicators_faction.adjust_compute(1, adjusted_by=R.last_controller_ckey)
 	icon_state = "floor_node_captured"
 	playsound(AM, 'sound/magic/heal.ogg', VOL_EFFECTS_MASTER)
+
+/obj/structure/forcefield_node/proc/captured()
+	return icon_state == "floor_node_captured"

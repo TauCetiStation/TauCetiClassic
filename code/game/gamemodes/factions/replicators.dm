@@ -42,6 +42,10 @@ var/global/datum/faction/replicators/replicators_faction
 
 	var/list/vents4spawn
 
+	var/nodes_to_spawn = 0
+	var/node_spawn_cooldown = 3 MINUTES
+	var/next_node_spawn = 0
+
 /datum/faction/replicators/New()
 	..()
 	spawned_at_time = world.time
@@ -90,6 +94,10 @@ var/global/datum/faction/replicators/replicators_faction
 		last_second_materials_change = this_second_materials_change
 		this_second_materials_change = 0
 		next_materials_update = world.time + 1 SECOND
+
+	if(next_node_spawn < world.time)
+		nodes_to_spawn += 1
+		next_node_spawn = world.time + node_spawn_cooldown
 
 	if(bandwidth >= max_bandwidth)
 		return

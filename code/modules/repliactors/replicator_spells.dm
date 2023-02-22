@@ -101,7 +101,7 @@
 
 /obj/effect/proc_holder/spell/no_target/replicator_transponder
 	name = "Emit (150)"
-	desc = "Create a transponder for the swarm. Transponders start consuming resources only after at least 200 have been accumulated."
+	desc = "Create a transponder for the swarm. Transponders start consuming resources only after at least 150 have been accumulated."
 
 	charge_type = "recharge"
 	charge_max = 10 SECONDS
@@ -188,9 +188,15 @@
 			to_chat(user, "<span class='notice'>Need more space for the generator.</span>")
 		return FALSE
 
-	if(!(locate(/obj/structure/cable) in user.loc))
+	var/obj/structure/forcefield_node/FN = locate() in user.loc
+	if(!FN)
 		if(try_start)
-			to_chat(user, "<span class='notice'>The generator requries a cable to attach to.</span>")
+			to_chat(user, "<span class='notice'>The generator requires a node to attach to.</span>")
+		return FALSE
+
+	if(!FN.captured())
+		if(try_start)
+			to_chat(user, "<span class='notice'>The node must be captured by walking to it through a bluespace corridor first.</span>")
 		return FALSE
 
 	return ..()
@@ -225,16 +231,17 @@
 
 		user_replicator.try_construct(get_turf(user_replicator))
 
-		action.background_icon_state = "ui_corridor_on"
+		action.button_icon_state = "ui_corridor_on"
 		action.button.UpdateIcon()
-
+		user.playsound_local(src, 'sound/effects/click_on.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 	else
 		user_replicator.auto_construct_type = null
 		user_replicator.auto_construct_cost = 0
 		to_chat(user_replicator, "<span class='notice'>You toggle web construction off.</span>")
 
-		action.background_icon_state = "ui_corridor"
+		action.button_icon_state = "ui_corridor"
 		action.button.UpdateIcon()
+		user.playsound_local(src, 'sound/effects/click_off.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 
 
 /obj/effect/proc_holder/spell/no_target/transfer_to_idle
