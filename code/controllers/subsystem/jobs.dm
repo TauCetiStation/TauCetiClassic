@@ -185,6 +185,8 @@ SUBSYSTEM_DEF(job)
 			var/datum/job/loyal_job = SSjob.GetJob(job_name)
 			for(var/level in JP_LEVELS)
 				var/list/candidates = FindOccupationCandidates(loyal_job, level, ROLE_LOYALIST)
+				if(!candidates.len)
+					continue
 				var/mob/dead/new_player/candidate = pick(candidates)
 				if(AssignRole(candidate, loyal_job.title))
 					one_loyalist_selected = TRUE
