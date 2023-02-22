@@ -648,6 +648,57 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Party equipment"
 	group = "Hospitality"
 
+/datum/supply_pack/ramens
+	name = "Ramens supply crate"
+	contains = list(/obj/random/foods/ramens,
+					/obj/random/foods/ramens,
+					/obj/random/foods/ramens,
+					/obj/random/foods/ramens,
+					/obj/random/foods/ramens,
+					/obj/random/foods/ramens,
+					/obj/random/foods/ramens,
+					/obj/random/foods/ramens,
+					/obj/random/foods/ramens,
+					/obj/random/foods/ramens)
+	cost = 800
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "Ramens supply crate"
+	group = "Hospitality"
+
+/datum/supply_pack/drinks
+	name = "Drinks supply crate"
+	contains = list(/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can)
+	cost = 600
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "Drinks supply crate"
+	group = "Hospitality"
+
+/datum/supply_pack/cigarettes
+	name = "Cigarettes supply crate"
+	contains = list(/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes)
+	cost = 900
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "Cigarettes supply crate"
+	group = "Hospitality"
+
 //----------------------------------------------
 //-----------------ENGINEERING------------------
 //----------------------------------------------
