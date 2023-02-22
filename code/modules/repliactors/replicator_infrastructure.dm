@@ -17,6 +17,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 
 	var/next_sound = 0
 
+	var/using_backup_power = FALSE
+
 /obj/machinery/bluespace_transponder/Crossed(atom/movable/AM)
 	if(stat & NOPOWER)
 		return ..()
@@ -36,8 +38,14 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', VOL_EFFECTS_MASTER, 60)
 	AM.AddElement(/datum/element/bluespace_move, AM.invisibility, see_invisible_level, AM.alpha)
 
+/obj/machinery/bluespace_transponder/powered()
+	return ..() && global.replicators_faction.energy > idle_power_usage
+
 /obj/machinery/bluespace_transponder/power_change()
 	..()
+	update_icon()
+
+/obj/machinery/bluespace_transponder/update_icon()
 	if(stat & NOPOWER)
 		global.active_transponders -= src
 		icon_state = "bhole3"
@@ -50,6 +58,20 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 	return ..()
 
 /obj/machinery/bluespace_transponder/process()
+	var/area/A = get_area(src)
+	var/area_powered = A && A.powered(power_channel)
+
+	var/has_reserve_power = global.replicators_faction.energy > idle_power_usage
+
+	if(!area_powered)
+		if(has_reserve_power)
+			stat &= ~NOPOWER
+			global.replicators_faction.energy -= idle_power_usage
+		else
+			stat |= NOPOWER
+
+		update_icon()
+
 	if(next_sound < world.time && prob(5))
 		next_sound = next_sound + 20 SECONDS
 		playsound(src, 'sound/machines/signal.ogg', VOL_EFFECTS_MASTER)
@@ -84,7 +106,17 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 	if(next_sound < world.time && prob(5))
 		next_sound = next_sound + 20 SECONDS
 		playsound(src, 'sound/machines/signal.ogg', VOL_EFFECTS_MASTER)
-	add_avail(20000)
+
+	var/surplus_power = min(surplus(), 20000)
+	if(surplus_power > 0)
+		add_load(surplus_power)
+		global.replicators_faction.energy += surplus_power
+	else
+		global.replicators_faction.energy += 20000
+
+	//if(global.replicators_faction.materials > 10)
+	//	global.replicators_faction.adjust_materials(-10)
+	//	global.replicators_faction.energy += 20000
 
 /obj/machinery/power/replicator_generator/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/replicator))

@@ -6,5 +6,6 @@
 #define REPLICATOR_STATE_HELPING "helping"
 #define REPLICATOR_STATE_WANDERING "wandering"
 #define REPLICATOR_STATE_GOING_TO_HELP "going_to_help"
+#define REPLICATOR_STATE_COMBAT "combat"
 
 #define REPLICATOR_COLORS list("#A8DFF0", "#F0A8DF", "#DFF0A8")

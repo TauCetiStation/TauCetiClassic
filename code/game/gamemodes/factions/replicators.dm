@@ -5,7 +5,8 @@ var/global/datum/faction/replicators/replicators_faction
 	ID = F_REPLICATORS
 	required_pref = ROLE_REPLICATOR
 
-	min_roles = 3
+	min_roles = 1
+	max_roles = 3
 
 	initroletype = /datum/role/replicator
 
@@ -19,6 +20,9 @@ var/global/datum/faction/replicators/replicators_faction
 	var/materials_consumed = 0
 	var/consumed_materials_until_upgrade = REPLICATOR_COST_REPLICATE
 
+	// Energy in posession of the swarm. Used as backup power if can't steal from station.
+	var/energy = 0
+
 	var/compute = 0
 
 	// Max amount of available drones.
@@ -31,14 +35,53 @@ var/global/datum/faction/replicators/replicators_faction
 	var/list/swarms_goodwill = list(
 	)
 
-	var/list/presence_names = list()
+	var/list/ckey2presence_name = list()
 
 	var/swarm_gift_duration = 5 MINUTES
 	var/spawned_at_time = 0
 
+	var/list/vents4spawn
+
 /datum/faction/replicators/New()
 	..()
 	spawned_at_time = world.time
+	vents4spawn = get_vents()
+
+/datum/faction/replicators/can_setup(num_players)
+	max_roles = max(1, round(num_players / 20))
+
+	if(length(vents4spawn) > 0)
+		return TRUE
+
+	return TRUE
+
+/datum/faction/replicators/OnPostSetup()
+	var/list/pos_vents = vents4spawn.Copy()
+	for(var/datum/role/role in members)
+		var/mob/living/simple_animal/replicator/R
+		var/V = pick_n_take(vents4spawn)
+
+		if(length(vents4spawn) > 0)
+			V = pick_n_take(vents4spawn)
+		else
+			V = pick(pos_vents)
+
+		R = new(V)
+		R.add_ventcrawl(V)
+
+		role.antag.transfer_to(R)
+		// I can not imagine why this is required but everyone else does this :shrug:
+		QDEL_NULL(role.antag.original)
+
+	vents4spawn = null
+
+	return ..()
+
+/datum/faction/replicators/forgeObjectives()
+	if(!..())
+		return FALSE
+	AppendObjective(/datum/objective/reproduct)
+	return TRUE
 
 /datum/faction/replicators/process()
 	. = ..()
@@ -61,22 +104,32 @@ var/global/datum/faction/replicators/replicators_faction
 		announce_swarm("The Swarm", "The Swarm", "Ample materials consumed. Bandwidth increased.")
 		bandwidth++
 
-/datum/faction/replicators/proc/announce_swarm(presence_name, presence_ckey, message)
+/datum/faction/replicators/proc/announce_swarm(presence_name, presence_ckey, message, atom/announcer=null)
 	for(var/r in members)
 		var/datum/role/replicator/R = r
 		if(!R.antag)
 			continue
-		var/goodwill_open = ""
-		var/goodwill_close = ""
+		var/open_tags = ""
+		var/close_tags = ""
 
-		if(presence_ckey == max_goodwill_ckey)
-			goodwill_open = "<font size='4'>"
-			goodwill_close = "</font>"
+		if(swarms_goodwill[presence_ckey] && swarms_goodwill[max_goodwill_ckey])
+			var/goodwill_coeff = swarms_goodwill[presence_ckey] / swarms_goodwill[max_goodwill_ckey]
+			var/goodwill_font_size = max(round(goodwill_coeff * 4), 1)
+			if(presence_ckey == max_goodwill_ckey)
+				open_tags += "<font size='[goodwill_font_size]'>"
+				close_tags += "</font>"
 
-		to_chat(
-			R.antag,
-			"[goodwill_open]<span class='replicator'>\[???\]</span> <b>[presence_name]</b> announces, <span class='message'><span class='replicator'>\"[message]\"</span></span>[goodwill_close]"
-		)
+		var/message_open_tags = "<span class='message'><span class='replicator'>"
+		var/message_close_tags = "</span></span>"
+
+		if(announcer && get_dist(announcer, R.antag.current) < 7)
+			message_open_tags += "<b>"
+			message_close_tags = "</b>[message_close_tags]"
+
+		var/channel = "<span class='replicator'>\[???\]</span>"
+		var/speaker_name = "<b>[presence_name]</b>"
+
+		to_chat(R.antag, "[open_tags][channel][speaker_name] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags]")
 
 /datum/faction/replicators/proc/drone_message(mob/living/simple_animal/replicator/drone, message, transfer=FALSE, dismantle=FALSE)
 	for(var/r in members)
@@ -105,11 +158,13 @@ var/global/datum/faction/replicators/replicators_faction
 	compute += compute_amount
 
 /datum/faction/replicators/proc/get_presence_name(ckey)
-	if(presence_names[ckey])
-		return presence_names[ckey]
+	if(ckey2presence_name[ckey])
+		return ckey2presence_name[ckey]
 
-	presence_names[ckey] = pick(list("Alpha", "Beta", "Gamma", "Delta")) + "-[rand(0, 9)]"
-	return presence_names[ckey]
+	var/new_name = greek_pronunciation[length(ckey2presence_name)] + "-[rand(0, 9)] Presence"
+
+	ckey2presence_name[ckey] = new_name
+	return ckey2presence_name[ckey]
 
 /datum/faction/replicators/proc/give_gift(mob/living/simple_animal/replicator/R)
 	if(spawned_at_time + swarm_gift_duration < world.time)

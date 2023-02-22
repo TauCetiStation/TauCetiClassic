@@ -1,4 +1,5 @@
 var/global/list/replicators = list()
+var/global/list/idle_replicators = list()
 
 ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
@@ -23,7 +24,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "replicator"
-	icon_dead = "replicator-deactivated"
+	icon_dead = "replicator_unactivated"
 
 	speak_emote = list("beeps")
 	emote_hear = list("beeps", "boops")
@@ -93,6 +94,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
 	var/list/replicator_spells = list(
 		/obj/effect/proc_holder/spell/no_target/replicator_replicate,
+		/obj/effect/proc_holder/spell/no_target/construct_barricade,
 		/obj/effect/proc_holder/spell/no_target/replicator_transponder,
 		/obj/effect/proc_holder/spell/no_target/construct_generator,
 		/obj/effect/proc_holder/spell/no_target/toggle_corridor_construction,
@@ -105,14 +107,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	var/datum/skills/skills
 
 	var/image/indicator
-	var/image/integration_overlay
-
-	var/list/state2color = list(
-		REPLICATOR_STATE_HARVESTING = "#CCFF00",
-		REPLICATOR_STATE_HELPING = "#00FFCC",
-		REPLICATOR_STATE_WANDERING = "#CC00FF",
-		REPLICATOR_STATE_GOING_TO_HELP = "#00CCFF",
-	)
+	var/playing_integration_animation = FALSE
 
 	// Roundstart status effect buffs this.
 	var/efficency = 1.0
@@ -149,11 +144,11 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.75, -3)
 
+	create_spawner(/datum/spawner/living/replicator, src)
+
 /mob/living/simple_animal/replicator/Destroy()
 	overlays -= indicator
 	QDEL_NULL(indicator)
-	overlays -= integration_overlay
-	QDEL_NULL(integration_overlay)
 	return ..()
 
 /mob/living/simple_animal/replicator/Moved(atom/OldLoc, dir)
@@ -217,6 +212,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	last_controller_ckey = ckey
 	overlays -= indicator
 
+	global.idle_replicators -= src
+
 /mob/living/simple_animal/replicator/mind_initialize()
 	. = ..()
 	var/datum/role/replicator/R = mind.GetRole(REPLICATOR)
@@ -254,59 +251,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 			playsound(src, 'sound/mecha/lowpower.ogg', VOL_EFFECTS_MASTER)
 			// add red flashing to screen that would be super cool
 			transfer_control(C)
-
-/mob/living/simple_animal/replicator/UnarmedAttack(atom/A)
-	if(isliving(A) && !isreplicator(A) && a_intent == INTENT_HARM)
-		var/mob/living/L = A
-		do_attack_animation(L)
-		playsound(L, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
-		L.apply_effects(0, 0, 0, 0, 1, 1, 0, 30, 0)
-		SetNextMove(CLICK_CD_MELEE)
-		return
-
-	if(a_intent == INTENT_HARM)
-		INVOKE_ASYNC(src, .proc/disintegrate_turf, get_turf(A))
-		return
-
-	if(istype(A, /obj/structure/inflatable/forcefield) && auto_construct_type == /obj/structure/bluespace_corridor)
-		try_construct(get_turf(A))
-		return
-
-	if(istype(A, /turf))
-		INVOKE_ASYNC(src, .proc/disintegrate, A)
-		return
-
-	if(istype(A, /obj))
-		INVOKE_ASYNC(src, .proc/disintegrate, A)
-		return
-
-	if(istype(A, /mob/living/simple_animal/replicator))
-		var/mob/living/simple_animal/replicator/R = A
-		if(R.stat == DEAD)
-			INVOKE_ASYNC(src, .proc/disintegrate, R)
-		// repair
-		return
-
-/mob/living/simple_animal/replicator/RangedAttack(atom/A, params)
-	// Adjacent() checks make this work in an unintuitive way otherwise.
-	if(get_dist(src, A) <= 1 && a_intent == INTENT_HARM)
-		INVOKE_ASYNC(src, .proc/disintegrate_turf, get_turf(A))
-		return
-
-	if(a_intent == INTENT_HARM)
-		SetNextMove(CLICK_CD_MELEE)
-		playsound(src, 'sound/weapons/guns/gunpulse_taser2.ogg', VOL_EFFECTS_MASTER)
-		var/obj/item/projectile/disabler/D = new(loc)
-		D.Fire(A, src, params)
-
-/mob/living/simple_animal/replicator/ShiftClickOn(atom/A)
-
-/mob/living/simple_animal/replicator/CtrlClickOn(atom/A)
-	if(istype(A, /mob/living/simple_animal/replicator))
-		var/mob/living/simple_animal/replicator/S = A
-		if(!S.ckey)
-			transfer_control(A)
-			return
 
 /mob/living/simple_animal/replicator/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/replicator))
@@ -427,29 +371,21 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	return TRUE
 
 /*
-	CURSED: I can't get the overlay to display on the mob for some reason. Please send help.
-
+	doesn't look neat :(
 /mob/living/simple_animal/replicator/proc/integrate_animation()
-	if(integration_overlay)
+	if(playing_integration_animation)
 		return
-	integration_overlay = image(icon=icon, icon_state="integrate")
-	integration_overlay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	integration_overlay.icon = icon
-	integration_overlay.icon_state = "integrate"
-	//integration_overlay.plane = plane
-	//integration_overlay.layer = layer
-	integration_overlay.loc = src
+	playing_integration_animation = TRUE
 
-	overlays += integration_overlay
+	var/image/I = image(icon=icon, icon_state="integrate")
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	I.layer = layer + 0.1
+	I.plane = plane
+	I.loc = src
 
-	to_chat(world, "ADDING INTEGRATE OVERLAY [world.time] with framework!")
+	flick_overlay_view(I, src, 5)
 
-	addtimer(CALLBACK(src, .proc/remove_integrate_overlay), 10)
-
-/mob/living/simple_animal/replicator/proc/remove_integrate_overlay()
-	to_chat(world, "REMOVING INTEGRATE OVERLAY [world.time] with framework!")
-	overlays -= integration_overlay
-	QDEL_NULL(integration_overlay)
+	VARSET_IN(src, playing_integration_animation, FALSE, 5)
 */
 
 // Return TRUE if succesful control transfer.
@@ -487,4 +423,49 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	if(message[1] == "*")
 		return emote(copytext(message, 2))
 
-	global.replicators_faction.announce_swarm(global.replicators_faction.get_presence_name(ckey), ckey, message)
+	message = add_period(capitalize(message))
+
+	global.replicators_faction.announce_swarm(global.replicators_faction.get_presence_name(ckey), ckey, message, announcer=src)
+
+/mob/living/simple_animal/replicator/Topic(href, href_list)
+	if(incapacitated())
+		return ..()
+	if(!mind)
+		return ..()
+
+	if(href_list["replicator_jump"])
+		var/mob/living/simple_animal/replicator/target = locate(href_list["replicator_jump"])
+		if(!istype(target))
+			return
+
+		if(transfer_control(target, alert=FALSE))
+			return
+
+		for(var/r in global.replicators)
+			var/mob/living/simple_animal/replicator/R = r
+			if(R.ckey)
+				continue
+			if(get_dist(src, R) > 7)
+				continue
+			if(!transfer_control(R, alert=FALSE))
+				continue
+
+		to_chat(src, "<span class='notice'>Other presence is already attending this situation.</span>")
+		return
+
+	if(href_list["replicator_kill"])
+		var/mob/living/simple_animal/replicator/target = locate(href_list["replicator_kill"])
+		if(!istype(target))
+			return
+
+		if(target.incapacitated())
+			return
+
+		if(target.excitement > 0)
+			to_chat(src, "<span class='warning'>Negative: The unit is serving a purpose.</span>")
+			return
+
+		// TO-DO: sound
+		target.last_controller_ckey = ckey
+		INVOKE_ASYNC(target, .proc/disintegrate, target)
+		return

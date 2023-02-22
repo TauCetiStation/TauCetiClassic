@@ -1,3 +1,11 @@
+/turf/proc/can_place_replicator_forcefield()
+	if(locate(/obj/structure/replicator_forcefield) in src)
+		return FALSE
+	if(locate(/obj/structure/replicator_barricade) in src)
+		return FALSE
+	return TRUE
+
+
 /turf/simulated/floor/plating/airless/catwalk/forcefield
 	name = "forcefield"
 	icon = 'icons/mob/replicator.dmi'
@@ -22,7 +30,7 @@
 	return
 
 
-/obj/structure/inflatable/forcefield
+/obj/structure/replicator_forcefield
 	name = "forcefield"
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "wall"
@@ -34,8 +42,39 @@
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
 
-/obj/structure/inflatable/forcefield/CanPass(atom/movable/mover, turf/target)
+/obj/structure/replicator_forcefield/CanPass(atom/movable/mover, turf/target)
 	if(mover && mover.invisibility > 0 && (locate(/obj/structure/bluespace_corridor) in loc))
+		return TRUE
+	return ..()
+
+/obj/structure/replicator_forcefield/Bumped(AM)
+	. = ..()
+	if(!isreplicator(AM))
+		return
+	var/mob/living/simple_animal/replicator/R = AM
+	if(R.auto_construct_type != /obj/structure/bluespace_corridor || global.replicators_faction.materials < R.auto_construct_cost)
+		return
+	R.try_construct(get_turf(src))
+
+
+/obj/structure/replicator_barricade
+	name = "forcefield barricade"
+	icon = 'icons/mob/replicator.dmi'
+	icon_state = "barricade"
+	density = TRUE
+	anchored = TRUE
+	opacity = 0
+	can_block_air = TRUE
+
+	max_integrity = 10
+	resistance_flags = CAN_BE_HIT
+
+/obj/structure/replicator_barricade/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover, /mob/living/simple_animal/replicator))
+		return TRUE
+	if(istype(mover, /obj/item/projectile/disabler))
+		return TRUE
+	if(istype(mover) && mover.throwing)
 		return TRUE
 	return ..()
 

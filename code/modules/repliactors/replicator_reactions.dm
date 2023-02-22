@@ -23,6 +23,7 @@
 
 	return REPLICATOR_TICKS_PER_MATERIAL / efficency
 
+/* TURFS */
 /turf/simulated/floor/get_replicator_material_amount()
 	if(type == basetype)
 		return -1
@@ -41,22 +42,28 @@
 	break_tile()
 	return TRUE
 
+
 /turf/simulated/floor/engine/replicator_act(mob/living/simple_animal/replicator/R)
 	ChangeTurf(basetype)
 	return TRUE
 
+
 /turf/simulated/floor/plating/airless/catwalk/forcefield/get_replicator_material_amount()
 	return -1
+
 
 // wall turns into barrier
 /turf/simulated/wall/get_replicator_material_amount()
 	return 1
 
 /turf/simulated/wall/replicator_act(mob/living/simple_animal/replicator/R)
-	new /obj/structure/inflatable/forcefield(get_turf(src))
+	var/turf/T = get_turf(src)
+	if(T.can_place_replicator_forcefield())
+		new /obj/structure/replicator_forcefield(T)
 	dismantle_wall()
 	return TRUE
 
+/* MOBS */
 /mob/living/simple_animal/replicator/can_be_auto_disintegrated()
 	return stat == DEAD
 
@@ -66,12 +73,14 @@
 	return REPLICATOR_COST_REPLICATE
 
 /mob/living/simple_animal/replicator/get_unit_disintegration_time()
-	return ..() * 0.5
+	return ..() * 0.25
 
 /mob/living/simple_animal/replicator/replicator_act(mob/living/simple_animal/replicator/R)
 	gib()
 	return TRUE
 
+
+/* OBJS */
 /obj/structure/get_replicator_material_amount()
 	return w_class
 
@@ -79,21 +88,43 @@
 	deconstruct(TRUE)
 	return TRUE
 
+
 // Power is needed for Transponders!
 /obj/structure/cable/can_be_auto_disintegrated()
 	return FALSE
 
+
 /obj/structure/window/replicator_act(mob/living/simple_animal/replicator/R)
-	if(is_fulltile())
-		new /obj/structure/inflatable/forcefield(get_turf(src))
+	var/turf/T = get_turf(src)
+	if(is_fulltile() && T.can_place_replicator_forcefield())
+		new /obj/structure/replicator_forcefield(T)
 	deconstruct(TRUE)
 	return TRUE
 
-/obj/structure/inflatable/forcefield/get_replicator_material_amount()
+
+/obj/structure/obj_wall/replicator_act(mob/living/simple_animal/replicator/R)
+	var/turf/T = get_turf(src)
+	if(T.can_place_replicator_forcefield())
+		new /obj/structure/replicator_forcefield(T)
+	deconstruct(TRUE)
+	return TRUE
+
+
+/obj/structure/inflatable/replicator_act(mob/living/simple_animal/replicator/R)
+	var/turf/T = get_turf(src)
+	if(T.can_place_replicator_forcefield())
+		new /obj/structure/replicator_forcefield(T)
+	deconstruct(TRUE)
+	return TRUE
+
+
+/obj/structure/replicator_forcefield/get_replicator_material_amount()
 	return -1
+
 
 /obj/structure/forcefield_node/get_replicator_material_amount()
 	return -1
+
 
 /obj/structure/bluespace_corridor/can_be_auto_disintegrated()
 	return FALSE
@@ -102,11 +133,33 @@
 	return 1
 
 /obj/structure/bluespace_corridor/get_unit_disintegration_time()
-	return ..() * 0.5
+	return ..() * 0.25
+
+
+/obj/structure/replicator_barricade/can_be_auto_disintegrated()
+	return FALSE
+
+/obj/structure/replicator_barricade/get_replicator_material_amount()
+	return 5
+
+/obj/structure/replicator_barricade/get_unit_disintegration_time()
+	return ..() * 0.25
+
+
+/obj/structure/cable/power_rune/can_be_auto_disintegrated()
+	return FALSE
+
+/obj/structure/cable/power_rune/get_replicator_material_amount()
+	return 0
+
+/obj/structure/cable/power_rune/get_unit_disintegration_time()
+	return ..() * 0.25
+
 
 // Can be used for navigation across the station. Why damage such infrastructure?
 /obj/structure/disposalpipe/can_be_auto_disintegrated()
 	return FALSE
+
 
 /obj/machinery/get_replicator_material_amount()
 	return w_class
@@ -116,26 +169,41 @@
 	deconstruct(TRUE)
 	return TRUE
 
+
+/obj/machinery/door/replicator_act(mob/living/simple_animal/replicator/R)
+	var/turf/T = get_turf(src)
+	if(T.can_place_replicator_forcefield())
+		new /obj/structure/replicator_barricade(T)
+	deconstruct(TRUE)
+	return TRUE
+
+
 // Vents and pipes are used to transport through the station.
 /obj/machinery/atmospherics/can_be_auto_disintegrated()
 	return FALSE
 
+
 /obj/machinery/portable_atmospherics/can_be_auto_disintegrated()
 	return FALSE
+
 
 // Power is needed for the Transponders.
 /obj/machinery/power/can_be_auto_disintegrated()
 	return FALSE
 
+
 /obj/machinery/bluespace_transponder/can_be_auto_disintegrated()
 	return FALSE
+
 
 // Refund!
 /obj/machinery/bluespace_transponder/get_replicator_material_amount()
 	return REPLICATOR_COST_REPLICATE
 
+
 /obj/machinery/bluespace_transponder/get_unit_disintegration_time()
-	return ..() * 0.5
+	return ..() * 0.25
+
 
 /obj/machinery/power/replicator_generator/can_be_auto_disintegrated()
 	return FALSE
@@ -144,7 +212,8 @@
 	return REPLICATOR_COST_REPLICATE
 
 /obj/machinery/replicator_generator/get_unit_disintegration_time()
-	return ..() * 0.5
+	return ..() * 0.25
+
 
 /obj/item/get_replicator_material_amount()
 	return w_class

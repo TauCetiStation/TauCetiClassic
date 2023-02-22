@@ -1,7 +1,3 @@
-/turf/simulated/floor/replicator_forcefield
-
-/turf/simulated/wall/replicator_forcefield
-
 /mob/living/simple_animal/replicator
 	var/state = REPLICATOR_STATE_HARVESTING
 
@@ -14,6 +10,16 @@
 	var/excitement = 10
 	var/next_excitement_alert = 0
 	var/excitement_alert_cooldown = 30 SECONDS
+
+	var/list/state2color = list(
+		REPLICATOR_STATE_HARVESTING = "#CCFF00",
+		REPLICATOR_STATE_HELPING = "#00FFCC",
+		REPLICATOR_STATE_WANDERING = "#CC00FF",
+		REPLICATOR_STATE_GOING_TO_HELP = "#00CCFF",
+		REPLICATOR_STATE_COMBAT = "#FF00CC",
+	)
+
+	var/next_pretend_delay_action = 0
 
 /mob/living/simple_animal/replicator/Life()
 	. = ..()
@@ -33,6 +39,15 @@
 		global.replicators_faction.drone_message(src, pick("I have no purpose.", "I am bored.", "Why am I still here."), transfer=TRUE, dismantle=TRUE)
 		next_excitement_alert = excitement_alert_cooldown
 
+	if(state == REPLICATOR_STATE_COMBAT)
+		excitement -= 1
+		if(excitement <= 0)
+			set_state(REPLICATOR_STATE_HARVESTING)
+			excitement = 10
+
+	if(state == REPLICATOR_STATE_COMBAT)
+		return
+
 	if(state == REPLICATOR_STATE_HELPING)
 		return
 
@@ -49,50 +64,91 @@
 		return
 	process_harvesting()
 
-/mob/living/simple_animal/replicator/Topic(href, href_list)
-	if(incapacitated())
-		return ..()
-	if(!mind)
+/mob/living/simple_animal/replicator/Crossed(atom/movable/AM)
+	if(ckey)
 		return ..()
 
-	if(href_list["replicator_jump"])
-		var/mob/living/simple_animal/replicator/target = locate(href_list["replicator_jump"])
-		if(!istype(target))
-			return
+	if(!isreplicator(AM))
+		return ..()
 
-		if(transfer_control(target, alert=FALSE))
-			return
+	var/mob/living/simple_animal/replicator/R = AM
+	if(!R.a_intent == INTENT_HARM)
+		return ..()
 
-		for(var/r in global.replicators)
-			var/mob/living/simple_animal/replicator/R = r
-			if(R.ckey)
-				continue
-			if(get_dist(src, R) > 7)
-				continue
-			if(!transfer_control(R, alert=FALSE))
-				continue
+	if(state == REPLICATOR_STATE_COMBAT)
+		return ..()
 
-		to_chat(src, "<span class='notice'>Other presence is already attending this situation.</span>")
+	RegisterSignal(R, list(COMSIG_CLIENTMOB_MOVE), .proc/_repeat_leader_move)
+	RegisterSignal(R, list(COMSIG_MOB_CLICK), .proc/_repeat_leader_attack)
+	RegisterSignal(R, list(COMSIG_MOB_SET_A_INTENT), .proc/on_leader_intent_change)
+	RegisterSignal(R, list(COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING), .proc/forget_leader)
+
+	set_a_intent(INTENT_HARM)
+	set_state(REPLICATOR_STATE_COMBAT)
+
+/mob/living/simple_animal/replicator/proc/forget_leader(datum/source)
+	UnregisterSignal(source, list(COMSIG_CLIENTMOB_MOVE, COMSIG_MOB_CLICK, COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING))
+	set_state(REPLICATOR_STATE_HARVESTING)
+
+/mob/living/simple_animal/replicator/proc/repeat_leader_move(datum/source, atom/NewLoc, move_dir)
+	Move(get_step(get_turf(src), move_dir), move_dir)
+
+/mob/living/simple_animal/replicator/proc/_repeat_leader_move(datum/source, atom/NewLoc, move_dir)
+	SIGNAL_HANDLER
+
+	var/atom/leader = source
+	if(loc != leader.loc)
+		set_state(REPLICATOR_STATE_HARVESTING)
 		return
 
-	if(href_list["replicator_kill"])
-		var/mob/living/simple_animal/replicator/target = locate(href_list["replicator_kill"])
-		if(!istype(target))
-			return
+	excitement = 10
 
-		if(target.incapacitated())
-			return
+	/*
+	var/fake_delay = 0
+	if(next_pretend_delay_action < world.time && prob(50))
+		fake_delay = rand(1, 2)
+		next_pretend_delay_action = world.time + fake_delay + 1
 
-		if(target.excitement > 0)
-			to_chat(src, "<span class='warning'>Negative: The unit is serving a purpose.</span>")
-			return
-
-		// TO-DO: sound
-		target.last_controller_ckey = ckey
-		INVOKE_ASYNC(target, .proc/disintegrate, target)
+	if(fake_delay > 0)
+		addtimer(CALLBACK(src, .proc/repeat_leader_move, source, OldLoc, move_dir), fake_delay)
 		return
+	*/
+	repeat_leader_move(leader, NewLoc, move_dir)
+
+/mob/living/simple_animal/replicator/proc/repeat_leader_attack(datum/source, atom/target, params)
+	if(target.Adjacent(src))
+		UnarmedAttack(target)
+	else
+		RangedAttack(target, params)
+
+/mob/living/simple_animal/replicator/proc/_repeat_leader_attack(datum/source, atom/target, params)
+	SIGNAL_HANDLER
+	if(!isturf(target) && !isturf(target.loc))
+		return
+
+	excitement = 10
+
+	var/fake_delay = 0
+	if(next_pretend_delay_action < world.time && prob(50))
+		fake_delay = rand(1, 2)
+		next_pretend_delay_action = world.time + fake_delay + 1
+
+	if(fake_delay > 0)
+		addtimer(CALLBACK(src, .proc/repeat_leader_attack, source, target, params), fake_delay)
+		return
+	repeat_leader_attack(source, target, params)
+
+/mob/living/simple_animal/replicator/proc/on_leader_intent_change(datum/source, new_intent)
+	SIGNAL_HANDLER
+	if(new_intent != INTENT_HARM)
+		forget_leader(source)
 
 /mob/living/simple_animal/replicator/proc/set_state(new_state)
+	if(new_state == REPLICATOR_STATE_WANDERING)
+		global.idle_replicators |= src
+	else
+		global.idle_replicators -= src
+
 	excitement = 10
 	state = new_state
 	update_icon()
@@ -149,14 +205,14 @@
 		set_state(REPLICATOR_STATE_HARVESTING)
 		return
 
-	var/mob/living/simple_animal/replicator/harvester = get_closest_harvesting_replicator()
+	var/mob/living/simple_animal/replicator/harvester = get_closest_replicator(harvesting=TRUE)
 	if(harvester && get_dist(src, harvester) < 7)
 		var/turf/closer_turf = get_step_to(src, harvester)
 		var/closer_dir = get_dir(src, closer_turf)
 		Move(closer_turf, closer_dir)
 		return
 
-	var/mob/living/simple_animal/replicator/R = get_closest_sentient_replicator()
+	var/mob/living/simple_animal/replicator/R = get_closest_replicator(sentient=TRUE)
 	if(R && get_dist(src, R) < 7)
 		var/turf/closer_turf = get_step_to(src, R)
 		var/closer_dir = get_dir(src, closer_turf)
@@ -208,7 +264,7 @@
 
 	set_state(REPLICATOR_STATE_WANDERING)
 
-/mob/living/simple_animal/replicator/proc/get_closest_harvesting_replicator()
+/mob/living/simple_animal/replicator/proc/get_closest_replicator(harvesting=FALSE, sentient=FALSE)
 	. = null
 	var/closest_distance = null
 
@@ -216,34 +272,15 @@
 		var/mob/living/simple_animal/replicator/R = r
 		if(R == src)
 			continue
-		if(R.ckey)
-			continue
-		if(R.state != REPLICATOR_STATE_HARVESTING)
+		var/sentient_check = !sentient || R.ckey
+		if(!sentient_check)
 			continue
 
-		var/dist = get_dist(src, R)
-
-		if(closest_distance == null)
-			. = R
-			closest_distance = dist
-			continue
-		else if(dist < closest_distance)
-			. = R
-			closest_distance = dist
-
-/mob/living/simple_animal/replicator/proc/get_closest_sentient_replicator()
-	. = null
-	var/closest_distance = null
-
-	for(var/r in replicators)
-		var/mob/living/simple_animal/replicator/R = r
-		if(R == src)
-			continue
-		if(!R.ckey)
+		var/harvest_check = !harvesting || R.stat == REPLICATOR_STATE_HARVESTING
+		if(!harvest_check)
 			continue
 
 		var/dist = get_dist(src, R)
-
 		if(closest_distance == null)
 			. = R
 			closest_distance = dist

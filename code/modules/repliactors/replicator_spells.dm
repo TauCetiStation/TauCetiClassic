@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/no_target/replicator_replicate
-	name = "Replicate"
+	name = "Replicate (200)"
 	desc = "Create a drone for the swarm."
 
 	charge_type = "recharge"
@@ -24,7 +24,7 @@
 		return FALSE
 
 	// Should fix replicating inside vents which would be buggy...
-	if(!isturf(user.loc))
+	if(!istype(user.loc, /turf/simulated/floor))
 		if(try_start)
 			to_chat(user, "<span class='notice'>You mustn't be inside of anything for this to work.</span>")
 		return FALSE
@@ -47,9 +47,61 @@
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 
 
+/obj/effect/proc_holder/spell/no_target/construct_barricade
+	name = "Barricade (10)"
+	desc = "Construct a barricade that replicators can pass through."
+
+	charge_type = "recharge"
+	charge_max = 1 SECOND
+
+	clothes_req = FALSE
+
+	action_icon = 'icons/mob/replicator.dmi'
+	action_icon_state = "ui_barricade"
+
+	var/material_cost = 10
+
+/obj/effect/proc_holder/spell/no_target/construct_barricade/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+	if(global.replicators_faction.materials < material_cost)
+		if(try_start)
+			to_chat(user, "<span class='warning'>Not enough materials.</span>")
+		return FALSE
+
+	if(!istype(user.loc, /turf/simulated/floor))
+		if(try_start)
+			to_chat(user, "<span class='notice'>You mustn't be inside of anything for this to work.</span>")
+		return FALSE
+
+	var/turf/my_turf = get_turf(user)
+	if(!my_turf.can_place_replicator_forcefield())
+		if(try_start)
+			to_chat(user, "<span class='notice'>This tile is already protected.</span>")
+		return FALSE
+
+	if(locate(/obj/machinery/bluespace_transponder) in user.loc)
+		if(try_start)
+			to_chat(user, "<span class='notice'>Need more space for the barricade.</span>")
+		return FALSE
+
+	if(locate(/obj/machinery/power/replicator_generator) in user.loc)
+		if(try_start)
+			to_chat(user, "<span class='notice'>Need more space for the barricade.</span>")
+		return FALSE
+
+	return ..()
+
+/obj/effect/proc_holder/spell/no_target/construct_barricade/cast(list/targets, mob/user = usr)
+	var/mob/living/simple_animal/replicator/user_replicator = user
+	to_chat(user, "<span class='notice'>SPAWNING...</span>")
+	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
+
+	new /obj/structure/replicator_barricade(user_replicator.loc)
+	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
+
+
 /obj/effect/proc_holder/spell/no_target/replicator_transponder
-	name = "Emit"
-	desc = "Create a transponder for the swarm."
+	name = "Emit (200)"
+	desc = "Create a transponder for the swarm. Transponders start consuming resources only after at least 200 have been accumulated."
 
 	charge_type = "recharge"
 	charge_max = 10 SECONDS
@@ -68,7 +120,7 @@
 		return FALSE
 
 	// Should fix replicating inside vents which would be buggy...
-	if(!isturf(user.loc))
+	if(!istype(user.loc, /turf/simulated/floor))
 		if(try_start)
 			to_chat(user, "<span class='notice'>You mustn't be inside of anything for this to work.</span>")
 		return FALSE
@@ -102,7 +154,7 @@
 
 
 /obj/effect/proc_holder/spell/no_target/construct_generator
-	name = "Construct Generator"
+	name = "Construct Generator (200)"
 	desc = "Construct a generator to power transponders."
 
 	charge_type = "recharge"
@@ -121,8 +173,7 @@
 			to_chat(user, "<span class='warning'>Not enough materials.</span>")
 		return FALSE
 
-	// Should fix replicating inside vents which would be buggy...
-	if(!isturf(user.loc))
+	if(!istype(user.loc, /turf/simulated/floor))
 		if(try_start)
 			to_chat(user, "<span class='notice'>You mustn't be inside of anything for this to work.</span>")
 		return FALSE
@@ -154,7 +205,7 @@
 
 
 /obj/effect/proc_holder/spell/no_target/toggle_corridor_construction
-	name = "Toggle Web Construction"
+	name = "Toggle Web Construction (1)"
 	desc = "Toggle auto construction of the Bluespace Web."
 
 	charge_type = "recharge"
@@ -171,10 +222,17 @@
 		user_replicator.auto_construct_type = /obj/structure/bluespace_corridor
 		user_replicator.auto_construct_cost = 1
 		to_chat(user_replicator, "<span class='notice'>You toggle web construction on.</span>")
+
+		user_replicator.try_construct(get_turf(user_replicator))
+
+		action.background_icon_state = "ui_corridor_on"
+
 	else
 		user_replicator.auto_construct_type = null
 		user_replicator.auto_construct_cost = 0
 		to_chat(user_replicator, "<span class='notice'>You toggle web construction off.</span>")
+
+		action.background_icon_state = "ui_corridor"
 
 
 /obj/effect/proc_holder/spell/no_target/transfer_to_idle
@@ -189,24 +247,18 @@
 	action_icon = 'icons/mob/replicator.dmi'
 	action_icon_state = "ui_transfer_idle"
 
+/obj/effect/proc_holder/spell/no_target/transfer_to_idle/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+	if(length(global.idle_replicators) <= 0)
+		if(try_start)
+			to_chat(user, "<span class='notice'>No suitable hosts found.</span>")
+		return FALSE
+
+	return ..()
+
 /obj/effect/proc_holder/spell/no_target/transfer_to_idle/cast(list/targets, mob/user = usr)
-	for(var/r in global.replicators)
-		var/mob/living/simple_animal/replicator/candidate = r
-		if(candidate.ckey)
-			continue
-		if(candidate.state == REPLICATOR_STATE_HARVESTING && candidate.disintegrating)
-			continue
-		if(candidate.state == REPLICATOR_STATE_GOING_TO_HELP)
-			continue
-		if(candidate.state == REPLICATOR_STATE_HELPING)
-			continue
-
-		var/mob/living/simple_animal/replicator/user_replicator = user
-		to_chat(user, "<span class='notice'>TRANSFERING...</span>")
-		user_replicator.transfer_control(candidate)
-		return
-
-	to_chat(user, "<span class='notice'>No suitable hosts found.</span>")
+	var/mob/living/simple_animal/replicator/user_replicator = user
+	to_chat(user, "<span class='notice'>TRANSFERING...</span>")
+	user_replicator.transfer_control(pick(global.idle_replicators))
 
 
 /obj/effect/proc_holder/spell/no_target/transfer_to_area
@@ -231,6 +283,7 @@
 
 	var/area_name = tgui_input_list(user, "Choose an area with replicators in it.", "Area Transfer", pos_areas)
 	if(!area_name)
+		charge_counter = charge_max
 		return FALSE
 
 	var/area/thearea = teleportlocs[area_name]
@@ -244,7 +297,7 @@
 		return
 
 	to_chat(user, "<span class='notice'>No suitable hosts found in area.</span>")
-
+	charge_counter = charge_max
 
 /obj/effect/proc_holder/spell/no_target/toggle_light
 	name = "Toggle Light"
