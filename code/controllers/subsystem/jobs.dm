@@ -178,6 +178,20 @@ SUBSYSTEM_DEF(job)
 //it locates a head or runs out of levels to check
 //This is basically to ensure that there's atleast a few heads in the round
 /datum/controller/subsystem/job/proc/FillHeadPosition()
+	//Fill loyal jobs first
+	if(istype(SSticker.mode, /datum/game_mode/mutiny))
+		var/one_loyalist_selected = FALSE
+		for(var/job_name in loyal_command_position)
+			var/datum/job/loyal_job = SSjob.GetJob(job_name)
+			for(var/level in JP_LEVELS)
+				var/list/candidates = FindOccupationCandidates(loyal_job, level, ROLE_REV)
+				var/mob/dead/new_player/candidate = pick(candidates)
+				if(AssignRole(candidate, loyal_job.title))
+					one_loyalist_selected = TRUE
+					break
+			if(one_loyalist_selected)
+				break
+
 	for(var/level in JP_LEVELS)
 		for(var/command_position in command_positions)
 			var/datum/job/job = GetJob(command_position)

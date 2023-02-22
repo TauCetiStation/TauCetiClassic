@@ -69,6 +69,11 @@ var/global/list/command_positions = list(
 	"Chief Medical Officer"
 )
 
+var/global/list/loyal_command_position = list(
+	"Captain",
+	"Head of Security"
+)
+
 var/global/list/security_positions = list(
 	"Head of Security",
 	"Warden",

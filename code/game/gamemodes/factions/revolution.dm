@@ -35,13 +35,18 @@
 		var/datum/objective/custom/C = AppendObjective(/datum/objective/custom)
 		C.explanation_text = "Follow all directives"
 		return TRUE
-/* TODO:
+
 /datum/faction/loyalists/can_join_faction(mob/P)
 	if(..())
-		var/list/loyal_heads = list("Captain", "Head of Security")
-		if(P.mind.assigned_role in loyal_heads)
-			return TRUE
-		return FALSE*/
+		var/datum/job/loyal_job = SSjob.GetJob("Head of Security")
+		if(!loyal_job || !loyal_job.map_check())
+			loyal_job = SSjob.GetJob("Captain")
+			if(!loyal_job || !loyal_job.map_check())
+				return FALSE
+		for(var/lvl in 1 to 3)
+			if(P.client.prefs.job_preferences[loyal_job.title] == lvl && (!jobban_isbanned(P, loyal_job.title)))
+				return TRUE
+		return FALSE
 
 /datum/faction/loyalists/check_win()
 	if(config.continous_rounds)
