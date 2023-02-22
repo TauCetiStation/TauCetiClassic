@@ -375,7 +375,7 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "dry ramen coated with what might just be your tears"
 
-/datum/reagent/consumable/hot_ramen/on_general_digest(mob/living/M)
+/datum/reagent/consumable/dry_ramen/on_general_digest(mob/living/M)
 	..()
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "junk_food", /datum/mood_event/junk_food)
 
