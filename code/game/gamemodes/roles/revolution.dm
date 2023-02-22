@@ -77,7 +77,7 @@
 /datum/role/rev_leader/flash_rev_leader/OnPostSetup(laterole)
 	. = ..()
 	var/mob/living/carbon/human/H = antag.current
-	H.equip_to_slot_or_del(new /obj/item/device/flash/rev_flash, SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/device/flash/rev_flash, SLOT_IN_BACKPACK)
 
 /mob/living/carbon/human/proc/RevConvert()
 	set name = "Rev-Convert"
