@@ -8,6 +8,7 @@
 	damage_type = BURN
 	agony = 20
 	step_delay = 2
+	dispersion = 5
 
 
 /mob/living/simple_animal/replicator/UnarmedAttack(atom/A)
@@ -55,6 +56,8 @@
 		SetNextMove(CLICK_CD_MELEE)
 		playsound(src, 'sound/weapons/guns/gunpulse_taser2.ogg', VOL_EFFECTS_MASTER)
 		var/obj/item/projectile/disabler/D = new(loc)
+		D.pixel_x += rand(-1, 1)
+		D.pixel_y += rand(-1, 1)
 		D.Fire(A, src, params)
 
 /mob/living/simple_animal/replicator/CtrlClickOn(atom/A)
