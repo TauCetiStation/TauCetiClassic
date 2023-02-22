@@ -193,6 +193,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 			if(BC.neighbor_count > 1)
 				return
 
+	if(prob(30))
+		// maybe it would be better to add some mechanical woosh woosh sound like when constructing a drone.
+		playsound_steathy(AM, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_complite.ogg', VOL_EFFECTS_MASTER)
+
 	new auto_construct_type(T)
 	global.replicators_faction.adjust_materials(-auto_construct_cost, adjusted_by=last_controller_ckey)
 
@@ -470,11 +474,11 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		INVOKE_ASYNC(target, .proc/disintegrate, target)
 		return
 
+/mob/living/simple_animal/replicator/proc/has_swarms_gift()
+	return has_status_effect(STATUS_EFFECT_SWARMS_GIFT)
+
 /mob/living/simple_animal/replicator/proc/playsound_stealthy(atom/source, sound)
 	var/mufflerange = has_swarms_gift() ? -5 : 0
 	var/mufflefalloff = has_swarms_gift() ? 0.75 : null
 	var/mufflevolume = has_swarms_gift() ? 75 : 100
 	return playsound(source, sound, VOL_EFFECTS_MASTER, volume=mufflevolume, falloff=mufflefalloff, extrarange=mufflerange)
-
-/mob/living/simple_animal/replicator/proc/has_swarms_gift()
-	return has_status_effect(STATUS_EFFECT_SWARMS_GIFT)
