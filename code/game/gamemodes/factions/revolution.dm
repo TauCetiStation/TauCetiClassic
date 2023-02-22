@@ -12,7 +12,7 @@
 	ID = F_REVOLUTION
 	required_pref = ROLE_REV
 
-	initroletype = /datum/role/rev_leader
+	initroletype = /datum/role/rev_leader/flash_rev_leader
 	roletype = /datum/role/rev
 
 	min_roles = 1
