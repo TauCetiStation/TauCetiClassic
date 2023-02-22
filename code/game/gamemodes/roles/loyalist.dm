@@ -3,7 +3,7 @@
 /datum/role/loyalist
 	name = LOYALIST
 	id = LOYALIST
-	required_pref = ROLE_REV
+	required_pref = ROLE_LOYALIST
 	logo_state = "rev-logo"
 
 	antag_hud_type = ANTAG_HUD_REV

@@ -51,10 +51,10 @@
 				message_admins("[success] number of changelings made.")
 				to_chat(usr, "<span class='notice'>[success] number of changelings made.</span>")
 			if("3")
-				/*(message_admins("[key_name(usr)] has attempted to spawn [count] revolutionaries.")
-				var/success = makeAntag(null, /datum/faction/revolution, count, FROM_PLAYERS, stealth)
-				message_admins("[success] number of revolutionaries made.")*/
-				to_chat(usr, "<span class='notice'>Revolution is not allowed.</span>")
+				message_admins("[key_name(usr)] has attempted to spawn [count] loyalists.")
+				var/success = makeAntag(null, /datum/faction/loyalists, count, FROM_PLAYERS, stealth)
+				message_admins("[success] number of loyalists made.")
+				to_chat(usr, "<span class='notice'>[success] number of loyalists made.</span>")
 			if("4")
 				message_admins("[key_name(usr)] has attempted to spawn [count] cultists.")
 				var/success = makeAntag(null, /datum/faction/cult, count, FROM_PLAYERS, stealth)
@@ -667,12 +667,6 @@
 			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_OPERATIVE];jobban4=\ref[M]'>[ROLE_OPERATIVE]</a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_OPERATIVE];jobban4=\ref[M]'>[ROLE_OPERATIVE]</a></td>"
-
-		//Revolutionary
-		if(jobban_isbanned(M, ROLE_REV) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_REV];jobban4=\ref[M]'>[ROLE_REV]</a></td>"
-		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_REV];jobban4=\ref[M]'>[ROLE_REV]</a></td>"
 
 		//Raider (New heist)
 		if(jobban_isbanned(M, ROLE_RAIDER) || isbanned_dept)

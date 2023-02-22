@@ -8,7 +8,7 @@
 /datum/faction/loyalists
 	name = "Loyalists"
 	ID = F_LOYALISTS
-	required_pref = ROLE_REV
+	required_pref = ROLE_LOYALIST
 
 	initroletype = /datum/role/loyalist
 	roletype = /datum/role/loyalist
