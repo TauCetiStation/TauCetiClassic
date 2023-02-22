@@ -16871,7 +16871,9 @@
 /obj/structure/closet,
 /obj/item/clothing/gloves/orange,
 /obj/item/clothing/head/justice/yellow,
-/turf/simulated/wall,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
 /area/station/maintenance/dormitory)
 "aDu" = (
 /obj/structure/table,
