@@ -30,8 +30,6 @@
 	TCB.force_wielded = 40
 	TCB.force_unwielded = 10
 	TCB.icon_wielded = "fireaxe1"
-	TCB.on_wield = CALLBACK(src, .proc/on_wield)
-	TCB.on_unwield = CALLBACK(src, .proc/on_unwield)
 	AddComponent(/datum/component/twohanded, TCB)
 
 	hitsound = SOUNDIN_DESCERATION
@@ -41,14 +39,6 @@
 
 /obj/item/weapon/fireaxe/proc/can_spin(mob/user)
 	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
-
-/obj/item/weapon/fireaxe/proc/on_wield()
-	w_class = SIZE_NORMAL
-	return FALSE
-
-/obj/item/weapon/fireaxe/proc/on_unwield()
-	w_class = initial(w_class)
-	return FALSE
 
 
 
@@ -121,7 +111,7 @@
 
 /obj/item/weapon/dualsaber/proc/on_wield()
 	set_light(2)
-	w_class = SIZE_NORMAL
+	w_class = SIZE_SMALL
 	flags_2 |= CANT_BE_INSERTED
 	return FALSE
 
