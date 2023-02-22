@@ -98,6 +98,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	var/list/replicator_spells = list(
 		/obj/effect/proc_holder/spell/no_target/replicator_replicate,
 		/obj/effect/proc_holder/spell/no_target/construct_barricade,
+		/obj/effect/proc_holder/spell/no_target/spawn_trap,
 		/obj/effect/proc_holder/spell/no_target/replicator_transponder,
 		/obj/effect/proc_holder/spell/no_target/construct_generator,
 		/obj/effect/proc_holder/spell/no_target/toggle_corridor_construction,

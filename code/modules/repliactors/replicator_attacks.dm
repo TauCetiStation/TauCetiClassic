@@ -67,3 +67,62 @@
 		if(!S.ckey)
 			transfer_control(A)
 			return
+
+
+/obj/item/mine/replicator
+	name = "mine"
+	desc = "Huh."
+	icon = 'icons/mob/replicator.dmi'
+	icon_state = "mine"
+	layer = 3
+	anchored = TRUE
+
+	var/next_activation = 0
+
+/obj/item/mine/replicator/try_trigger(atom/movable/AM)
+	if(isreplicator(AM))
+		return
+	if(istype(AM, /obj/item/projectile/disabler))
+		return
+	if(!anchored)
+		return
+
+	if(!iscarbon(AM) && !issilicon(AM) && !istype(AM, /obj/mecha))
+		return
+
+	AM.visible_message("<span class='danger'>[AM] steps on [src]!</span>")
+	trigger_act(AM)
+
+/obj/item/mine/replicator/atom_init()
+	. = ..()
+	name = "mine ([rand(0, 999)])"
+
+/obj/item/mine/replicator/trigger_act(atom/movable/AM)
+	if(next_activation > world.time)
+		return
+	next_activation = world.time + 12
+
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
+	s.set_up(3, 1, src)
+	s.start()
+
+	if(!isliving(AM))
+		return
+
+	playsound(src, 'sound/misc/mining_reward_0.ogg', VOL_EFFECTS_MASTER)
+
+	var/mob/living/L = AM
+
+	var/image/I = image('icons/mob/replicator.dmi', "dismantle")
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	I.plane = L.plane
+	I.layer = L.layer + 0.09
+
+	flick_overlay_view(I, L, 12)
+
+	var/stepped_by = pick(BP_R_LEG, BP_L_LEG)
+	L.electrocute_act(30, src, siemens_coeff = 1.0, def_zone = stepped_by) // electrocute act does a message.
+	L.Stun(2)
+
+	var/area/A = get_area(src)
+	global.replicators_faction.drone_message(src, "A mine has been triggered in [A.name].")

@@ -99,6 +99,47 @@
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 
 
+/obj/effect/proc_holder/spell/no_target/spawn_trap
+	name = "Trap (20)"
+	desc = "Constructs a multi-use trap, that stuns and electrocutes enemies."
+
+	charge_type = "recharge"
+	charge_max = 1 SECOND
+
+	clothes_req = FALSE
+
+	action_icon = 'icons/mob/replicator.dmi'
+	action_icon_state = "ui_trap"
+
+	var/material_cost = 20
+
+/obj/effect/proc_holder/spell/no_target/spawn_trap/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+	if(global.replicators_faction.materials < material_cost)
+		if(try_start)
+			to_chat(user, "<span class='warning'>Not enough materials.</span>")
+		return FALSE
+
+	if(!istype(user.loc, /turf/simulated/floor))
+		if(try_start)
+			to_chat(user, "<span class='notice'>You mustn't be inside of anything for this to work.</span>")
+		return FALSE
+
+	if(locate(/obj/item/mine/replicator) in user.loc)
+		if(try_start)
+			to_chat(user, "<span class='notice'>There is already a trap here.</span>")
+		return FALSE
+
+	return ..()
+
+/obj/effect/proc_holder/spell/no_target/spawn_trap/cast(list/targets, mob/user = usr)
+	var/mob/living/simple_animal/replicator/user_replicator = user
+	to_chat(user, "<span class='notice'>SPAWNING...</span>")
+	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
+
+	new /obj/item/mine/replicator(user_replicator.loc)
+	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
+
+
 /obj/effect/proc_holder/spell/no_target/replicator_transponder
 	name = "Emit (150)"
 	desc = "Create a transponder for the swarm. Transponders start consuming resources only after at least 150 have been accumulated."
