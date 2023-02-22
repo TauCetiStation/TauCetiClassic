@@ -35,8 +35,8 @@
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "natural_food", /datum/mood_event/natural_food)
 		if(food_type == TASTY_FOOD)
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tasty_food", /datum/mood_event/tasty_food)
-		if(food_type == VERY_TASTY_FOOD)
-			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "eary_tasty_food", /datum/mood_event/very_tasty_food)
+		else if(food_type == VERY_TASTY_FOOD)
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "very_tasty_food", /datum/mood_event/very_tasty_food)
 		SSStatistics.score.foodeaten++
 		usr.drop_from_inventory(src)	//so icons update :[
 
