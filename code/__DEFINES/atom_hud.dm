@@ -77,7 +77,7 @@
 #define ANTAG_HUD_ZOMB          "antag_hud_zomb"
 #define ANTAG_HUD_GANGSTER      "antag_hud_gangster"
 #define ANTAG_HUD_SPACECOP      "antag_hud_cop"
-#define ANTAG_HUD_ENEMY_REV     "antag_hud_enemy_rev"
+#define ANTAG_HUD_LOYAL         "antag_hud_loyal"
 
 
 /// cooldown for being shown the images for any particular data hud

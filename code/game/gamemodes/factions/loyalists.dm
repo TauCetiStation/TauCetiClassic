@@ -16,7 +16,7 @@
 	min_roles = 1
 	max_roles = 1
 
-	logo_state = "rev-logo"
+	logo_state = "loyal-logo"
 
 	var/last_command_report = 0
 	var/selected_scenario = 0

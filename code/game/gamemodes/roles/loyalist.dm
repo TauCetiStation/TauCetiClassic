@@ -4,10 +4,10 @@
 	name = LOYALIST
 	id = LOYALIST
 	required_pref = ROLE_LOYALIST
-	logo_state = "rev-logo"
+	logo_state = "loyal-logo"
 
-	antag_hud_type = ANTAG_HUD_REV
-	antag_hud_name = "hudrevolutionary"
+	antag_hud_type = ANTAG_HUD_LOYAL
+	antag_hud_name = "hudloyalist"
 
 /datum/role/loyalist/CanBeAssigned(datum/mind/M)
 	if(!..())
