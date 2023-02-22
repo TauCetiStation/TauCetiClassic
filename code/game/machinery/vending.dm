@@ -296,29 +296,13 @@
 
 							//transfer the money
 							D.adjust_money(-transaction_amount)
-							vendor_account.adjust_money(transaction_amount)
+							var/tax = round(transaction_amount * SSeconomy.tax_vendomat_sales * 0.01)
+							charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на продажу в вендомате", src.name, tax)
 
 							//create entries in the two account transaction logs
-							var/datum/transaction/T = new()
-							T.target_name = "[vendor_account.owner_name] (via [src.name])"
-							T.purpose = "Purchase of [currently_vending.product_name]"
-							if(transaction_amount > 0)
-								T.amount = "([transaction_amount])"
-							else
-								T.amount = "[transaction_amount]"
-							T.source_terminal = src.name
-							T.date = current_date_string
-							T.time = worldtime2text()
-							D.transaction_log.Add(T)
+							charge_to_account(D.account_number, "[global.cargo_account.owner_name] (via [src.name])", "Покупка: [currently_vending.product_name]", src.name, -transaction_amount)
 							//
-							T = new()
-							T.target_name = D.owner_name
-							T.purpose = "Purchase of [currently_vending.product_name]"
-							T.amount = "[transaction_amount]"
-							T.source_terminal = src.name
-							T.date = current_date_string
-							T.time = worldtime2text()
-							vendor_account.transaction_log.Add(T)
+							charge_to_account(global.cargo_account.account_number, global.cargo_account.owner_name, "Продажа: [currently_vending.product_name]", src.name, transaction_amount - tax)
 
 							// Vend the item
 							vend(src.currently_vending, usr)
@@ -574,20 +558,29 @@
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
-	for(var/datum/data/vending_product/R in src.product_records)
-		if (R.amount <= 0) //Try to use a record that actually has something to dump.
-			continue
+	//Dropping actual items
+	var/max_drop = rand(1, 3)
+	for(var/i = 1, i < max_drop, i++)
+		var/datum/data/vending_product/R = pick(src.product_records)
 		var/dump_path = R.product_path
-		if (!dump_path)
+		if(!R.amount)
 			continue
+		new dump_path(src.loc)
+		R.amount--
 
-		while(R.amount>0)
-			new dump_path(src.loc)
+	//Dropping remaining items in a pack
+	var/refilling = 0
+	for(var/datum/data/vending_product/R in src.product_records)
+		while(R.amount > 0)
+			refilling++
 			R.amount--
-		continue
+
+	var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
+	Refill.charges = refilling
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
+
 	return
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
