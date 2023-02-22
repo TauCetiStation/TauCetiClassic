@@ -174,7 +174,7 @@
 	item_state = "spacepolice_families"
 
 /obj/item/clothing/under/rank/blueshield
-	name = "blushield uniform"
+	name = "blueshield uniform"
 	desc = "It's made of a slightly sturdier material, to allow for robust protection."
 	icon_state = "blueshield"
 	item_state = "blueshield"

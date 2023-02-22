@@ -84,6 +84,6 @@
 	icon_state = "beret_fr"
 
 /obj/item/clothing/head/beret/blueshield
-	name = "blushield officer's beret"
+	name = "blueshield officer's beret"
 	desc = "A beret with the blueshield insignia emblazoned on it. It is advised that blueshield officers do NOT wear non-armored headwear during their shift."
 	icon_state = "beret_blueshield"
