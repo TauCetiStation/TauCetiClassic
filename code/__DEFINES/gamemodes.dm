@@ -14,6 +14,7 @@
 #define F_HIVEMIND           "Changeling Hivemind"
 #define F_PROPS              "Props"
 #define F_REVOLUTION         "Revolution"
+#define F_FLASH_REVOLUTION   "Syndicate Revolutionaries"
 #define F_ENEMIES_OF_REV     "Enemies of the Revolution"
 #define F_SYNDIOPS           "Syndicate Operatives"
 #define F_SYNDIOPS_CROSSFIRE "Syndicate Operatives (CrossFire)"

@@ -247,6 +247,8 @@
 	return dat
 
 /datum/faction/revolution/flash_revolution
+	name = F_FLASH_REVOLUTION
+	ID = F_FLASH_REVOLUTION
 	initroletype = /datum/role/rev_leader/flash_rev_leader
 	min_roles = 1
 	type_of_objective = /datum/objective/target/syndicate_rev
