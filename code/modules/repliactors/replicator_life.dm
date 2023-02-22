@@ -135,6 +135,11 @@
 	SIGNAL_HANDLER
 	if(!isturf(target) && !isturf(target.loc))
 		return
+	var/mob/living/simple_animal/replicator/R = source
+	if(R.next_move > world.time)
+		return
+	if(next_move > world.time)
+		return
 
 	excitement = 30
 
@@ -180,8 +185,9 @@
 	if(x != target_coordinates["x"] || y != target_coordinates["y"] || z != target_coordinates["z"])
 		var/turf/T = get_step_to(
 			src,
-			locate(target_coordinates["x"], target_coordinates["y"], target_coordinates["z"])
-			)
+			locate(target_coordinates["x"], target_coordinates["y"], target_coordinates["z"]),
+			-1
+		)
 		var/move_dir = get_dir(src, T)
 		Move(get_step(src, move_dir), move_dir)
 		help_steps--
@@ -217,14 +223,14 @@
 
 	var/mob/living/simple_animal/replicator/harvester = get_closest_replicator(harvesting=TRUE)
 	if(harvester && get_dist(src, harvester) < 7)
-		var/turf/closer_turf = get_step_to(src, get_turf(harvester))
+		var/turf/closer_turf = get_step_to(src, get_turf(harvester), -1)
 		var/closer_dir = get_dir(src, closer_turf)
 		Move(closer_turf, closer_dir)
 		return
 
 	var/mob/living/simple_animal/replicator/R = get_closest_replicator(sentient=TRUE)
 	if(R && get_dist(src, R) < 7)
-		var/turf/closer_turf = get_step_to(src, get_turf(R))
+		var/turf/closer_turf = get_step_to(src, get_turf(R), -1)
 		var/closer_dir = get_dir(src, closer_turf)
 		Move(closer_turf, closer_dir)
 		return

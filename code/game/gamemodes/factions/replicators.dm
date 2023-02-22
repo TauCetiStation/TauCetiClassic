@@ -133,7 +133,7 @@ var/global/datum/faction/replicators/replicators_faction
 		var/channel = "<span class='replicator'>\[???\]</span>"
 		var/speaker_name = "<b>[presence_name]</b>"
 
-		to_chat(R.antag, "[open_tags][channel][speaker_name] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags]")
+		to_chat(R.antag, "[open_tags][channel] [speaker_name] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags]")
 
 /datum/faction/replicators/proc/drone_message(mob/living/simple_animal/replicator/drone, message, transfer=FALSE, dismantle=FALSE)
 	for(var/r in members)

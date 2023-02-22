@@ -165,7 +165,7 @@
 	action_icon = 'icons/mob/replicator.dmi'
 	action_icon_state = "ui_generator"
 
-	var/material_cost = 200
+	var/material_cost = REPLICATOR_COST_REPLICATE
 
 /obj/effect/proc_holder/spell/no_target/construct_generator/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 	if(global.replicators_faction.materials < material_cost)
@@ -226,6 +226,7 @@
 		user_replicator.try_construct(get_turf(user_replicator))
 
 		action.background_icon_state = "ui_corridor_on"
+		action.button.UpdateIcon()
 
 	else
 		user_replicator.auto_construct_type = null
@@ -233,6 +234,7 @@
 		to_chat(user_replicator, "<span class='notice'>You toggle web construction off.</span>")
 
 		action.background_icon_state = "ui_corridor"
+		action.button.UpdateIcon()
 
 
 /obj/effect/proc_holder/spell/no_target/transfer_to_idle

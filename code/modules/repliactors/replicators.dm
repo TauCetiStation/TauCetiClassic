@@ -471,8 +471,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		return
 
 /mob/living/simple_animal/replicator/proc/playsound_stealthy(atom/source, sound)
-	var/mufflerange = has_swarms_gift() ? -3 : 0
-	return playsound(source, sound, VOL_EFFECTS_MASTER, extrarange=mufflerange)
+	var/mufflerange = has_swarms_gift() ? -5 : 0
+	var/mufflefalloff = has_swarms_gift() ? 0.75 : null
+	var/mufflevolume = has_swarms_gift() ? 75 : 100
+	return playsound(source, sound, VOL_EFFECTS_MASTER, volume=mufflevolume, falloff=mufflefalloff, extrarange=mufflerange)
 
 /mob/living/simple_animal/replicator/proc/has_swarms_gift()
 	return has_status_effect(STATUS_EFFECT_SWARMS_GIFT)
