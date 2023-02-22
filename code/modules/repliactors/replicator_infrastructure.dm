@@ -1,9 +1,34 @@
-var/global/list/obj/machinery/bluespace_transponder/transponders = list()
-var/global/list/obj/machinery/bluespace_transponder/active_transponders = list()
+var/global/list/obj/machinery/swarm_powered/bluespace_transponder/transponders = list()
+var/global/list/obj/machinery/swarm_powered/bluespace_transponder/active_transponders = list()
 
-ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
+ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transponders)
 
-/obj/machinery/bluespace_transponder
+/obj/machinery/swarm_powered
+
+/obj/machinery/swarm_powered/powered()
+	return ..() && global.replicators_faction.energy > idle_power_usage
+
+/obj/machinery/swarm_powered/power_change()
+	..()
+	update_icon()
+
+/obj/machinery/swarm_powered/proc/draw_energy()
+	var/area/A = get_area(src)
+	var/area_powered = A && A.powered(power_channel)
+
+	var/has_reserve_power = global.replicators_faction.energy > idle_power_usage
+
+	if(!area_powered)
+		if(has_reserve_power)
+			stat &= ~NOPOWER
+			global.replicators_faction.energy -= idle_power_usage
+		else
+			stat |= NOPOWER
+
+		update_icon()
+
+
+/obj/machinery/swarm_powered/bluespace_transponder
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "bluespace_wormhole_exit"
 	name = "bluespace transponder"
@@ -17,9 +42,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 
 	var/next_sound = 0
 
-	var/using_backup_power = FALSE
-
-/obj/machinery/bluespace_transponder/Crossed(atom/movable/AM)
+/obj/machinery/swarm_powered/bluespace_transponder/Crossed(atom/movable/AM)
 	if(stat & NOPOWER)
 		return ..()
 
@@ -38,14 +61,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', VOL_EFFECTS_MASTER, 60)
 	AM.AddElement(/datum/element/bluespace_move, AM.invisibility, see_invisible_level, AM.alpha)
 
-/obj/machinery/bluespace_transponder/powered()
-	return ..() && global.replicators_faction.energy > idle_power_usage
-
-/obj/machinery/bluespace_transponder/power_change()
-	..()
-	update_icon()
-
-/obj/machinery/bluespace_transponder/update_icon()
+/obj/machinery/swarm_powered/bluespace_transponder/update_icon()
 	if(stat & NOPOWER)
 		global.active_transponders -= src
 		icon_state = "bhole3"
@@ -53,30 +69,18 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 		global.active_transponders += src
 		icon_state = "bluespace_wormhole_exit"
 
-/obj/machinery/bluespace_transponder/Destroy()
+/obj/machinery/swarm_powered/bluespace_transponder/Destroy()
 	global.active_transponders -= src
 	return ..()
 
-/obj/machinery/bluespace_transponder/process()
-	var/area/A = get_area(src)
-	var/area_powered = A && A.powered(power_channel)
-
-	var/has_reserve_power = global.replicators_faction.energy > idle_power_usage
-
-	if(!area_powered)
-		if(has_reserve_power)
-			stat &= ~NOPOWER
-			global.replicators_faction.energy -= idle_power_usage
-		else
-			stat |= NOPOWER
-
-		update_icon()
+/obj/machinery/swarm_powered/bluespace_transponder/process()
+	draw_energy()
 
 	if(next_sound < world.time && prob(5))
 		next_sound = next_sound + 20 SECONDS
 		playsound(src, 'sound/machines/signal.ogg', VOL_EFFECTS_MASTER)
 
-/obj/machinery/bluespace_transponder/CanPass(atom/movable/mover, turf/target)
+/obj/machinery/swarm_powered/bluespace_transponder/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/replicator))
 		return TRUE
 	if(istype(mover) && mover.throwing)
@@ -240,3 +244,61 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/bluespace_transponder, transponders)
 			continue
 		BC.neighbor_count += value
 		neighbor_count += value
+
+
+// Requires 10 drones in teh swarm.
+/obj/machinery/swarm_powered/bluespace_catapult
+	name = "bluespace catapult"
+	desc = "Oh no."
+	icon = 'icons/mob/replicator.dmi'
+	icon_state = "catapult"
+
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 20000
+
+	var/required_power = 600000
+	var/required_materials = 2000
+
+	var/last_perc_announcement = 0
+
+/obj/machinery/swarm_powered/bluespace_catapult/atom_init()
+	. = ..()
+	var/datum/announcement/centcomm/replicator/construction_began = new
+	construction_began.play(get_area(src))
+
+/obj/machinery/swarm_powered/bluespace_catapult/process()
+	var/perc_finished = (1 - (required_power / 600000) * (required_materials / 2000)) * 100
+
+	var/datum/announcement/centcomm/replicator/announcement
+	if(perc_finished >= 25 && last_perc_announcement < 25)
+		announcement = new /datum/announcement/centcomm/replicator/construction_quarter
+		icon_state = "catapult_25"
+	else if(perc_finished >= 50 && last_perc_announcement < 50)
+		announcement = new /datum/announcement/centcomm/replicator/construction_half
+		icon_state = "catapult_50"
+	else if(perc_finished >= 75 && last_perc_announcement < 75)
+		announcement = new /datum/announcement/centcomm/replicator/construction_three_quarters
+		icon_state = "catapult_75"
+	else if(perc_finished >= 100 && last_perc_announcement < 100)
+		announcement = new /datum/announcement/centcomm/replicator/doom
+		icon_state = "catapult_100"
+	if(announcement)
+		last_perc_announcement = perc_finished
+		announcement.play(get_area(src))
+
+	if(perc_finished >= 100)
+		global.replicators_faction.announce_swarm("The Swarm", "The Swarm", "Mission accomplished.")
+
+	draw_energy()
+
+	if(stat & NOPOWER)
+		return
+
+	if(required_power >= 0)
+		required_power = max(0, required_power - idle_power_usage)
+
+	if(global.replicators_faction.materials < 5 || required_materials <= 0)
+		return
+
+	global.replicators_faction.adjust_materials(-5)
+	required_materials = max(0, required_materials - 5)

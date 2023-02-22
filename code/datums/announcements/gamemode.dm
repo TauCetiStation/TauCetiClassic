@@ -217,3 +217,22 @@
 			"Приятного дня!"
 	sound = "xeno_crew_win"
 
+/* Replicators */
+/datum/announcement/centcomm/replicator
+	name = "Bluespace Breach Detected"
+	subtitle = "Тревога! Блюспейс прорыв"
+
+/datum/announcement/centcomm/replicator/construction_began/play(area/A)
+	message = "Обнаружено открытие блюспейс прорыва в [initial(A.name)]. Прорыв необходимо закрыть."
+
+/datum/announcement/centcomm/replicator/construction_quarter/play(area/A)
+	message = "Блюспейс прорыв в [initial(A.name)] достиг 25% от критического гиперобъема."
+
+/datum/announcement/centcomm/replicator/construction_half/play(area/A)
+	message = "Блюспейс прорыв в [initial(A.name)] достиг 50% от критического гиперобъема."
+
+/datum/announcement/centcomm/replicator/construction_three_quarters/play(area/A)
+	message = "Блюспейс прорыв в [initial(A.name)] достиг 75% от критического гиперобъема."
+
+/datum/announcement/centcomm/replicator/doom/New()
+	message = "Конец."

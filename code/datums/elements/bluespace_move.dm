@@ -42,7 +42,7 @@
 	var/atom/movable/AM = source
 
 	var/obj/structure/bluespace_corridor/BC = locate() in AM.loc
-	var/obj/machinery/bluespace_transponder/BT = locate() in OldLoc
+	var/obj/machinery/swarm_powered/bluespace_transponder/BT = locate() in OldLoc
 
 	var/has_punishment = !BT || (BT.stat & NOPOWER)
 

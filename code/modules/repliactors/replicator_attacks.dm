@@ -8,7 +8,8 @@
 	damage_type = BURN
 	agony = 20
 	step_delay = 2
-	dispersion = 5
+	dispersion = 1
+	impact_force = 1
 
 
 /mob/living/simple_animal/replicator/UnarmedAttack(atom/A)
@@ -20,7 +21,7 @@
 		L.apply_effects(0, 0, 0, 0, 1, 1, 0, 30, 0)
 		SetNextMove(CLICK_CD_MELEE)
 		L.set_lastattacker_info(src)
-		L.log_combat(src, "replicator-attacked (INTENT: [uppertext(a_intent)])")
+		L.log_combat(src, "replicator-attacked (INTENT: [uppertext(a_intent)]) (CONTROLLER: [last_controller_ckey])")
 		return
 
 	if(a_intent == INTENT_GRAB)

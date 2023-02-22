@@ -192,16 +192,16 @@
 	return FALSE
 
 
-/obj/machinery/bluespace_transponder/can_be_auto_disintegrated()
+/obj/machinery/swarm_powered/bluespace_transponder/can_be_auto_disintegrated()
 	return FALSE
 
 
 // Refund!
-/obj/machinery/bluespace_transponder/get_replicator_material_amount()
+/obj/machinery/swarm_powered/bluespace_transponder/get_replicator_material_amount()
 	return REPLICATOR_COST_REPLICATE
 
 
-/obj/machinery/bluespace_transponder/get_unit_disintegration_time()
+/obj/machinery/swarm_powered/bluespace_transponder/get_unit_disintegration_time()
 	return ..() * 0.25
 
 

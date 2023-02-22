@@ -16,10 +16,12 @@
 		REPLICATOR_STATE_HELPING = "#00FFCC",
 		REPLICATOR_STATE_WANDERING = "#CC00FF",
 		REPLICATOR_STATE_GOING_TO_HELP = "#00CCFF",
-		REPLICATOR_STATE_COMBAT = "#FF00CC",
+		REPLICATOR_STATE_COMBAT = "#CC0000",
 	)
 
 	var/next_pretend_delay_action = 0
+
+	var/mob/living/simple_animal/replicator/leader
 
 /mob/living/simple_animal/replicator/Life()
 	. = ..()
@@ -42,7 +44,7 @@
 	if(state == REPLICATOR_STATE_COMBAT)
 		excitement -= 1
 		if(excitement <= 0)
-			set_state(REPLICATOR_STATE_HARVESTING)
+			forget_leader(leader)
 			excitement = 10
 
 	if(state == REPLICATOR_STATE_COMBAT)
@@ -67,16 +69,20 @@
 /mob/living/simple_animal/replicator/Crossed(atom/movable/AM)
 	if(ckey)
 		return ..()
+	if(state == REPLICATOR_STATE_COMBAT)
+		return ..()
 
 	if(!isreplicator(AM))
 		return ..()
 
 	var/mob/living/simple_animal/replicator/R = AM
-	if(!R.a_intent == INTENT_HARM)
+	if(R.a_intent != INTENT_HARM)
+		return ..()
+	if(!R.ckey)
 		return ..()
 
-	if(state == REPLICATOR_STATE_COMBAT)
-		return ..()
+	last_controller_ckey = R.ckey
+	leader = R
 
 	RegisterSignal(R, list(COMSIG_CLIENTMOB_MOVE), .proc/_repeat_leader_move)
 	RegisterSignal(R, list(COMSIG_MOB_CLICK), .proc/_repeat_leader_attack)
@@ -87,7 +93,8 @@
 	set_state(REPLICATOR_STATE_COMBAT)
 
 /mob/living/simple_animal/replicator/proc/forget_leader(datum/source)
-	UnregisterSignal(source, list(COMSIG_CLIENTMOB_MOVE, COMSIG_MOB_CLICK, COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(leader, list(COMSIG_CLIENTMOB_MOVE, COMSIG_MOB_CLICK, COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING))
+	leader = null
 	set_state(REPLICATOR_STATE_HARVESTING)
 
 /mob/living/simple_animal/replicator/proc/repeat_leader_move(datum/source, atom/NewLoc, move_dir)
@@ -96,9 +103,9 @@
 /mob/living/simple_animal/replicator/proc/_repeat_leader_move(datum/source, atom/NewLoc, move_dir)
 	SIGNAL_HANDLER
 
-	var/atom/leader = source
-	if(loc != leader.loc)
-		set_state(REPLICATOR_STATE_HARVESTING)
+	var/atom/A = source
+	if(loc != A.loc)
+		forget_leader()
 		return
 
 	excitement = 10
@@ -113,9 +120,10 @@
 		addtimer(CALLBACK(src, .proc/repeat_leader_move, source, OldLoc, move_dir), fake_delay)
 		return
 	*/
-	repeat_leader_move(leader, NewLoc, move_dir)
+	repeat_leader_move(A, NewLoc, move_dir)
 
 /mob/living/simple_animal/replicator/proc/repeat_leader_attack(datum/source, atom/target, params)
+	face_atom(target)
 	if(target.Adjacent(src))
 		UnarmedAttack(target)
 	else
@@ -207,14 +215,14 @@
 
 	var/mob/living/simple_animal/replicator/harvester = get_closest_replicator(harvesting=TRUE)
 	if(harvester && get_dist(src, harvester) < 7)
-		var/turf/closer_turf = get_step_to(src, harvester)
+		var/turf/closer_turf = get_step_to(src, get_turf(harvester))
 		var/closer_dir = get_dir(src, closer_turf)
 		Move(closer_turf, closer_dir)
 		return
 
 	var/mob/living/simple_animal/replicator/R = get_closest_replicator(sentient=TRUE)
 	if(R && get_dist(src, R) < 7)
-		var/turf/closer_turf = get_step_to(src, R)
+		var/turf/closer_turf = get_step_to(src, get_turf(R))
 		var/closer_dir = get_dir(src, closer_turf)
 		Move(closer_turf, closer_dir)
 		return

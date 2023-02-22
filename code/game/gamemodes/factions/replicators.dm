@@ -37,7 +37,7 @@ var/global/datum/faction/replicators/replicators_faction
 
 	var/list/ckey2presence_name = list()
 
-	var/swarm_gift_duration = 5 MINUTES
+	var/swarms_gift_duration = 5 MINUTES
 	var/spawned_at_time = 0
 
 	var/list/vents4spawn
@@ -119,6 +119,10 @@ var/global/datum/faction/replicators/replicators_faction
 				open_tags += "<font size='[goodwill_font_size]'>"
 				close_tags += "</font>"
 
+		if(presence_name == "The Swarm")
+			open_tags += "<font size='5'>"
+			close_tags += "</font>"
+
 		var/message_open_tags = "<span class='message'><span class='replicator'>"
 		var/message_close_tags = "</span></span>"
 
@@ -161,13 +165,13 @@ var/global/datum/faction/replicators/replicators_faction
 	if(ckey2presence_name[ckey])
 		return ckey2presence_name[ckey]
 
-	var/new_name = greek_pronunciation[length(ckey2presence_name)] + "-[rand(0, 9)] Presence"
+	var/new_name = greek_pronunciation[length(ckey2presence_name) + 1] + "-[rand(0, 9)] Presence"
 
 	ckey2presence_name[ckey] = new_name
 	return ckey2presence_name[ckey]
 
 /datum/faction/replicators/proc/give_gift(mob/living/simple_animal/replicator/R)
-	if(spawned_at_time + swarm_gift_duration < world.time)
+	if(spawned_at_time + swarms_gift_duration < world.time)
 		return
 
-	R.apply_status_effect(STATUS_EFFECT_SWARM_GIFT, spawned_at_time + swarm_gift_duration - world.time)
+	R.apply_status_effect(STATUS_EFFECT_SWARMS_GIFT, spawned_at_time + swarms_gift_duration - world.time)

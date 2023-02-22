@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/no_target/replicator_replicate
-	name = "Replicate (200)"
+	name = "Replicate (150)"
 	desc = "Create a drone for the swarm."
 
 	charge_type = "recharge"
@@ -78,7 +78,7 @@
 			to_chat(user, "<span class='notice'>This tile is already protected.</span>")
 		return FALSE
 
-	if(locate(/obj/machinery/bluespace_transponder) in user.loc)
+	if(locate(/obj/machinery/swarm_powered/bluespace_transponder) in user.loc)
 		if(try_start)
 			to_chat(user, "<span class='notice'>Need more space for the barricade.</span>")
 		return FALSE
@@ -100,7 +100,7 @@
 
 
 /obj/effect/proc_holder/spell/no_target/replicator_transponder
-	name = "Emit (200)"
+	name = "Emit (150)"
 	desc = "Create a transponder for the swarm. Transponders start consuming resources only after at least 200 have been accumulated."
 
 	charge_type = "recharge"
@@ -125,7 +125,7 @@
 			to_chat(user, "<span class='notice'>You mustn't be inside of anything for this to work.</span>")
 		return FALSE
 
-	if(locate(/obj/machinery/bluespace_transponder) in user.loc)
+	if(locate(/obj/machinery/swarm_powered/bluespace_transponder) in user.loc)
 		if(try_start)
 			to_chat(user, "<span class='notice'>Need more space for the transponder.</span>")
 		return FALSE
@@ -149,12 +149,12 @@
 	to_chat(user, "<span class='notice'>SPAWNING...</span>")
 	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 
-	new /obj/machinery/bluespace_transponder(user_replicator.loc)
+	new /obj/machinery/swarm_powered/bluespace_transponder(user_replicator.loc)
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 
 
 /obj/effect/proc_holder/spell/no_target/construct_generator
-	name = "Construct Generator (200)"
+	name = "Construct Generator (150)"
 	desc = "Construct a generator to power transponders."
 
 	charge_type = "recharge"
@@ -178,7 +178,7 @@
 			to_chat(user, "<span class='notice'>You mustn't be inside of anything for this to work.</span>")
 		return FALSE
 
-	if(locate(/obj/machinery/bluespace_transponder) in user.loc)
+	if(locate(/obj/machinery/swarm_powered/bluespace_transponder) in user.loc)
 		if(try_start)
 			to_chat(user, "<span class='notice'>Need more space for the generator.</span>")
 		return FALSE

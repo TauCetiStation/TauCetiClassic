@@ -62,8 +62,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		/obj/effect/proc_holder/spell,
 	)
 
-	maxHealth = 25
-	health = 25
+	maxHealth = 60
+	health = 60
 	response_harm = "hits"
 	harm_intent_damage = 2
 	melee_damage = 0
@@ -149,6 +149,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 /mob/living/simple_animal/replicator/Destroy()
 	overlays -= indicator
 	QDEL_NULL(indicator)
+	leader = null
 	return ..()
 
 /mob/living/simple_animal/replicator/Moved(atom/OldLoc, dir)
@@ -174,12 +175,12 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
 	// Corridors can only connect to two other corridors if there's no portal connecting them.
 	// No more than 2 neighbors, and no more than 1 neighbor of the neigbhor(excluding us)
-	if(auto_construct_type == /obj/structure/bluespace_corridor && !(locate(/obj/machinery/bluespace_transponder) in T))
+	if(auto_construct_type == /obj/structure/bluespace_corridor && !(locate(/obj/machinery/swarm_powered/bluespace_transponder) in T))
 		var/neighbor_count = 0
 		for(var/card_dir in global.cardinal)
 			var/turf/pos_neighbor = get_step(T, card_dir)
 
-			if(locate(/obj/machinery/bluespace_transponder) in pos_neighbor)
+			if(locate(/obj/machinery/swarm_powered/bluespace_transponder) in pos_neighbor)
 				continue
 
 			var/obj/structure/bluespace_corridor/BC = locate(auto_construct_type) in pos_neighbor
@@ -322,7 +323,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	D.icon_state = "disintegrate_static"
 
 	// Disintegration begin sound
-	playsound(A, 'sound/machines/cyclotron.ogg', VOL_EFFECTS_MASTER)
+	playsound_stealthy(A, 'sound/machines/cyclotron.ogg', VOL_EFFECTS_MASTER)
 
 	if(!do_skilled(src, A, A.get_unit_disintegration_time() * material_amount / efficency, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
 		qdel(D)
@@ -330,8 +331,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		A.is_disintegrating = FALSE
 		return FALSE
 
-	// Woooshoop sound.
-	playsound(src, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER)
+	playsound_stealthy(src, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER)
 
 	var/obj/effect/overlay/replicator/target_appearance = new(get_turf(A))
 	target_appearance.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -408,7 +408,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	next_control_change = world.time + control_change_cooldown
 
 	mind.transfer_to(target)
-	playsound(target, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER)
+	playsound_stealthy(target, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER)
 	return TRUE
 
 /mob/living/simple_animal/replicator/say(message)
@@ -469,3 +469,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		target.last_controller_ckey = ckey
 		INVOKE_ASYNC(target, .proc/disintegrate, target)
 		return
+
+/mob/living/simple_animal/replicator/proc/playsound_stealthy(atom/source, sound)
+	var/mufflerange = has_swarms_gift() ? -3 : 0
+	return playsound(source, sound, VOL_EFFECTS_MASTER, extrarange=mufflerange)
+
+/mob/living/simple_animal/replicator/proc/has_swarms_gift()
+	return has_status_effect(STATUS_EFFECT_SWARMS_GIFT)

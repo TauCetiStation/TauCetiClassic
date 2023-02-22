@@ -1,6 +1,7 @@
-#define REPLICATOR_COST_REPLICATE 200
+#define REPLICATOR_COST_REPLICATE 150
 // How many ticks should be per 1 material of effort
-#define REPLICATOR_TICKS_PER_MATERIAL 8
+// old 200 and 8
+#define REPLICATOR_TICKS_PER_MATERIAL 11
 
 #define REPLICATOR_STATE_HARVESTING "harvesting"
 #define REPLICATOR_STATE_HELPING "helping"
