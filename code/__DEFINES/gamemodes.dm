@@ -12,6 +12,7 @@
 #define F_FAMILIES           "Families"
 #define F_HEIST              "Vox Shoal"
 #define F_HIVEMIND           "Changeling Hivemind"
+#define F_LOYALISTS          "Loyalists"
 #define F_PROPS              "Props"
 #define F_REVOLUTION         "Revolution"
 #define F_SYNDIOPS           "Syndicate Operatives"

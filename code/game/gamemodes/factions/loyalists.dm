@@ -1,9 +1,7 @@
-#define F_LOYALISTS "Loyalists"
-
-#define SCENARIO_MONEY     "/datum/mutiny_scenario/money"
-#define SCENARIO_VIRUS     "/datum/mutiny_scenario/virus"
-#define SCENARIO_RACISM    "/datum/mutiny_scenario/racism"
-#define SCENARIO_COMMUNISM "/datum/mutiny_scenario/communism"
+#define SCENARIO_MONEY     /datum/mutiny_scenario/money
+#define SCENARIO_VIRUS     /datum/mutiny_scenario/virus
+#define SCENARIO_RACISM    /datum/mutiny_scenario/racism
+#define SCENARIO_COMMUNISM /datum/mutiny_scenario/communism
 
 /datum/faction/loyalists
 	name = "Loyalists"
@@ -14,7 +12,7 @@
 	roletype = /datum/role/loyalist
 
 	min_roles = 1
-	max_roles = 1
+	max_roles = 2
 
 	logo_state = "loyal-logo"
 
