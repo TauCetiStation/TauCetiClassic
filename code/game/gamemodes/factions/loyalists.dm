@@ -90,6 +90,7 @@
 /datum/faction/loyalists/process()
 	if(last_command_report == 0 && world.time >= 10 MINUTES)
 		command_report(scenario.get_first_report())
+		scenario.do_first_strike()
 		last_command_report = 1
 	else if(last_command_report == 1 && world.time >= 30 MINUTES)
 		command_report(scenario.get_second_report())
@@ -128,10 +129,14 @@
 /datum/mutiny_scenario/proc/get_third_report()
 	return
 
+/datum/mutiny_scenario/proc/do_first_strike()
+	return
+
 /datum/mutiny_scenario/money/get_first_report()
 	var/report_dat = ""
-	report_dat += "Показатели экономической деятельности в вашей системе сигнализируют об убытках в следующем финансовом периоде.<br>"
-	report_dat += "Аннулируйте зарплаты персонала, кроме сотрудников Службы Безопасности и представителей Нанотрейзен.<br>"
+	report_dat += "Показатели экономической деятельности сигнализируют об убытках в следующем финансовом периоде.<br>"
+	report_dat += "Центральное Коммандование вынуждено сократить финансовую поддержку станции.<br>"
+	report_dat += "Зарплата большей части персонала уменьшена вдвое.<br>"
 	report_dat += "Заверьте экипаж, что это временная мера, однако Коммандование пока не располагает информацией о временных промежутках этой меры.<br>"
 	report_dat += "Разглашение информации из этого сообщения влечёт за собой последствия по статье О Разглашении Коммерческой Тайны."
 	return report_dat
@@ -152,6 +157,19 @@
 	report_dat += "Транспортируйте денежные ресурсы шаттлом эвакуации или шаттлом конца смены на Центральное Коммандование.<br>"
 	report_dat += "Разглашение информации из этого сообщения влечёт за собой последствия по статье О Разглашении Коммерческой Тайны."
 	return report_dat
+
+/datum/mutiny_scenario/money/do_first_strike()
+	var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
+	for(var/datum/job/J in SSjob.occupations)
+		if(J.title in excluded_rank)
+			continue
+		J.salary_ratio = 0.5	//halve the salary of all professions except leading
+	var/list/crew = my_subordinate_staff("Admin")
+	for(var/person in crew)
+		if(person["rank"] in excluded_rank)
+			continue
+		var/datum/money_account/account = person["acc_datum"]
+		account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)	//halve the salary of all staff except heads
 
 /datum/mutiny_scenario/virus/get_first_report()
 	var/report_dat = ""
