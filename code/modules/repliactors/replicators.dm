@@ -124,8 +124,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
 	name = "replicator ([generation])"
 	real_name = name
-	pixel_x = rand(-6, 6)
-	pixel_y = rand(-6, 6)
+	pixel_x = rand(-8, 8)
+	pixel_y = rand(-8, 8)
 
 	for(var/spell in replicator_spells)
 		AddSpell(new spell(src))

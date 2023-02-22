@@ -89,11 +89,13 @@
 	RegisterSignal(R, list(COMSIG_MOB_SET_A_INTENT), .proc/on_leader_intent_change)
 	RegisterSignal(R, list(COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING), .proc/forget_leader)
 
+	excitement = 30
+
 	set_a_intent(INTENT_HARM)
 	set_state(REPLICATOR_STATE_COMBAT)
 
 /mob/living/simple_animal/replicator/proc/forget_leader(datum/source)
-	UnregisterSignal(leader, list(COMSIG_CLIENTMOB_MOVE, COMSIG_MOB_CLICK, COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(leader, list(COMSIG_CLIENTMOB_MOVE, COMSIG_MOB_CLICK, COMSIG_MOB_SET_A_INTENT, COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING))
 	leader = null
 	set_state(REPLICATOR_STATE_HARVESTING)
 
@@ -108,7 +110,7 @@
 		forget_leader()
 		return
 
-	excitement = 10
+	excitement = 30
 
 	/*
 	var/fake_delay = 0
@@ -134,7 +136,7 @@
 	if(!isturf(target) && !isturf(target.loc))
 		return
 
-	excitement = 10
+	excitement = 30
 
 	var/fake_delay = 0
 	if(next_pretend_delay_action < world.time && prob(50))

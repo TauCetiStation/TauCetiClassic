@@ -6,7 +6,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 /obj/machinery/swarm_powered
 
 /obj/machinery/swarm_powered/powered()
-	return ..() && global.replicators_faction.energy > idle_power_usage
+	return ..() || global.replicators_faction.energy > idle_power_usage
 
 /obj/machinery/swarm_powered/power_change()
 	..()
@@ -18,14 +18,16 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 
 	var/has_reserve_power = global.replicators_faction.energy > idle_power_usage
 
-	if(!area_powered)
-		if(has_reserve_power)
-			stat &= ~NOPOWER
-			global.replicators_faction.energy -= idle_power_usage
-		else
-			stat |= NOPOWER
+	if(area_powered)
+		return
 
-		update_icon()
+	if(has_reserve_power)
+		stat &= ~NOPOWER
+		global.replicators_faction.energy -= idle_power_usage
+	else
+		stat |= NOPOWER
+
+	update_icon()
 
 
 /obj/machinery/swarm_powered/bluespace_transponder
