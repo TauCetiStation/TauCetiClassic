@@ -1101,7 +1101,16 @@
 			if(Lot && owner_account)
 				var/T = sanitize(input(U, "Введите адрес доставки или комментарий", "Комментарий", null) as text)
 				if(T && istext(T))
-					order_item(Lot, T)
+					if(Lot.sold)
+						if(online_shop_lots_hashed.Find(Lot.hash))
+							for(var/datum/shop_lot/NewLot in online_shop_lots_hashed[Lot.hash])
+								if(NewLot && !NewLot.sold && (Lot.get_discounted_price() <= NewLot.get_discounted_price()))
+									order_item(NewLot, T)
+									return
+						to_chat(U, "<span class='notice'>ОШИБКА: Этот предмет уже куплен.</span>")
+						return
+					else
+						order_item(Lot, T)
 
 		//Shopping Cart
 		if("Shop_Shopping_Cart")
@@ -1781,7 +1790,7 @@
 	if(!owner_account || !Lot)
 		return
 
-	var/discount_price = round((1 - global.online_shop_discount) * Lot.price)
+	var/discount_price = Lot.get_discounted_price()
 	var/prepayment = round(discount_price * global.online_shop_delivery_cost)
 
 	if(prepayment > owner_account.money)
