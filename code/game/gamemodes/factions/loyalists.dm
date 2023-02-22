@@ -48,10 +48,9 @@
 				return TRUE
 		return FALSE
 
+//Never faction round end in mutiny gamemode
 /datum/faction/loyalists/check_win()
-	if(config.continous_rounds)
-		return FALSE
-	return TRUE
+	return FALSE
 
 /datum/faction/loyalists/IsSuccessful()
 	var/alive_heads = 0
