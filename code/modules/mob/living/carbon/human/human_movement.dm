@@ -124,6 +124,10 @@
 					tally += 0.25 * (I.w_class - 2) // (3 = 0.25) || (4 = 0.5) || (5 = 0.75)
 				if(HAS_TRAIT(I, TRAIT_DOUBLE_WIELDED))
 					tally += 0.25
+				var/obj/item/weapon/shield/shield = I
+				//give them debuff to speed for better combat stance control
+				if(istype(shield) && shield.wall_of_shield_on)
+					tally += 2
 
 	var/turf/T = get_turf(src)
 	if(T)
