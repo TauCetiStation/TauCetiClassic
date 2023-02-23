@@ -490,7 +490,7 @@
 		src.icon_state += "_open"
 		to_chat(usr, "You unbutton your jacket.")
 		src.is_button_up = 0
-	usr.update_inv_wear_suit()	//so our overlays update
+	update_inv_mob() //so our overlays update
 
 /obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger
 	name = "field jacket desert"
@@ -600,7 +600,7 @@
 	else
 		to_chat(usr, "You button-up some imaginary buttons on your [src].")
 		return
-	usr.update_inv_wear_suit()
+	update_inv_mob()
 
 /obj/item/clothing/suit/hooded/carp_costume
 	name = "carp costume"
@@ -637,16 +637,9 @@
 /obj/item/clothing/suit/student_jacket/ui_action_click()
 	if(fastened)
 		icon_state = "student_jacket_open"
-		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			if(H.wear_suit == src)
-				H.update_inv_wear_suit()
 	else
 		icon_state = "student_jacket"
-		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			if(H.wear_suit == src)
-				H.update_inv_wear_suit()
+	update_inv_mob()
 	fastened = !fastened
 
 /obj/item/clothing/suit/atlas_jacket

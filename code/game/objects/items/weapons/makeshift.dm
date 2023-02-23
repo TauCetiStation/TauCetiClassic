@@ -92,10 +92,6 @@
 			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
 	if(bcell && bcell.rigged)
 		bcell.explode()
-		if(user.hand)
-			user.update_inv_l_hand()
-		else
-			user.update_inv_r_hand()
 		qdel(src)
 		return
 	update_icon()
@@ -326,17 +322,13 @@
 		icon_state = not_bloody_state
 		item_state = not_bloody_item_state
 	..()
-	if(isliving(src.loc))
-		var/mob/living/user = src.loc
-		user.update_inv_l_hand()
-		user.update_inv_r_hand()
 
 /obj/item/weapon/transparant/clean_blood()
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/transparant/add_blood()
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/transparant/no_nt
