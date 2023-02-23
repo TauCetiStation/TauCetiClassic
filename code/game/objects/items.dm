@@ -773,7 +773,7 @@
 /obj/item/proc/IsReflect(def_zone, hol_dir, hit_dir) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
 	return FALSE
 
-/obj/item/proc/Get_shield_chance(mob/user)
+/obj/item/proc/Get_shield_chance()
 	return 0
 
 /obj/item/proc/get_loc_turf()
