@@ -79,7 +79,6 @@
 								"<span class='notice'>You got into a defensive stance with [src].</span>")
 
 /obj/item/weapon/shield/proc/enable_wallshield(mob/living/user)
-	//Using when shield on back, when
 	if(!user.is_in_hands(src))
 		return FALSE
 	user.SetNextMove(CLICK_CD_MELEE)
