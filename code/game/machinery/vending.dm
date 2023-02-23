@@ -55,7 +55,7 @@
 	var/datum/wires/vending/wires = null
 	var/scan_id = TRUE
 
-	var/private = FALSE
+	var/private = TRUE
 
 
 /obj/machinery/vending/atom_init(mapload)
