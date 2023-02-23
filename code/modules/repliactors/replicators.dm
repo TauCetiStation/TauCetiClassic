@@ -146,7 +146,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
 	last_update_health = health
 
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.75, -3)
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.75, -4)
 
 	create_spawner(/datum/spawner/living/replicator, src)
 
@@ -332,7 +332,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	D.layer = A.layer + 0.1
 	D.icon_state = "disintegrate_static"
 
-	// Disintegration begin sound
 	playsound_stealthy(A, 'sound/machines/cyclotron.ogg', VOL_EFFECTS_MASTER)
 
 	if(!do_skilled(src, A, A.get_unit_disintegration_time() * material_amount / efficency, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
@@ -491,12 +490,9 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 /mob/living/simple_animal/replicator/proc/has_swarms_gift()
 	return has_status_effect(STATUS_EFFECT_SWARMS_GIFT)
 
-/mob/living/simple_animal/replicator/proc/playsound_stealthy(atom/source, sound, vol=100)
+/mob/living/simple_animal/replicator/proc/playsound_stealthy(atom/source, sound, volume_channel, vol=100)
 	var/mufflerange = has_swarms_gift() ? -5 : 0
-	var/mufflefalloff = has_swarms_gift() ? 0.75 : null
-	var/mufflevolume = has_swarms_gift() ? vol * 0.75 : vol
-	to_chat(world, "[source] [mufflerange] [mufflefalloff] [mufflevolume]")
-	return playsound(source, sound, VOL_EFFECTS_MASTER, vol=mufflevolume, falloff=mufflefalloff, extrarange=mufflerange)
+	return playsound(source, sound, volume_channel, vol=vol, extrarange=mufflerange)
 
 /mob/living/simple_animal/replicator/proc/try_spawn_node(turf/T)
 	if(!prob(5))

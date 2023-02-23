@@ -73,7 +73,7 @@
 	name = "mine"
 	desc = "Huh."
 	icon = 'icons/mob/replicator.dmi'
-	icon_state = "mine"
+	icon_state = "trap"
 	layer = 3
 	anchored = TRUE
 
@@ -101,6 +101,7 @@
 	if(next_activation > world.time)
 		return
 	next_activation = world.time + 12
+	addtimer(CALLBACK(src, .proc/rearm), 12)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	s.set_up(3, 1, src)
@@ -126,3 +127,14 @@
 
 	var/area/A = get_area(src)
 	global.replicators_faction.drone_message(src, "A mine has been triggered in [A.name].")
+
+/obj/item/mine/replicator/proc/rearm()
+	update_icon()
+
+/obj/item/mine/replicator/update_icon()
+	if(next_activation < world.time)
+		icon_state = "[icon_state]armed"
+		alpha = 45
+	else
+		icon_state = initial(icon_state)
+		alpha = 255

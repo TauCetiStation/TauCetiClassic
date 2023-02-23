@@ -113,10 +113,19 @@ var/global/datum/faction/replicators/replicators_faction
 		bandwidth++
 
 /datum/faction/replicators/proc/announce_swarm(presence_name, presence_ckey, message, atom/announcer=null)
-	for(var/r in members)
-		var/datum/role/replicator/R = r
-		if(!R.antag)
+	var/list/listening = list()
+
+	for(var/mob/M in player_list)
+		if(QDELETED(M)) // avoid not hard-deleted mobs with client
 			continue
+		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
+			listening |= M
+
+		if(M.mind && M.mind.GetRole(/datum/role/replicator))
+			listening |= M
+
+	for(var/m in listening)
+		var/mob/M = m
 		var/open_tags = ""
 		var/close_tags = ""
 
@@ -134,14 +143,14 @@ var/global/datum/faction/replicators/replicators_faction
 		var/message_open_tags = "<span class='message'><span class='replicator'>"
 		var/message_close_tags = "</span></span>"
 
-		if(announcer && get_dist(announcer, R.antag.current) < 7)
+		if(announcer && get_dist(announcer, M) < 7)
 			message_open_tags += "<b>"
 			message_close_tags = "</b>[message_close_tags]"
 
 		var/channel = "<span class='replicator'>\[???\]</span>"
 		var/speaker_name = "<b>[presence_name]</b>"
 
-		to_chat(R.antag, "[open_tags][channel] [speaker_name] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags]")
+		to_chat(M, "[open_tags][channel] [speaker_name] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags]")
 
 /datum/faction/replicators/proc/drone_message(mob/living/simple_animal/replicator/drone, message, transfer=FALSE, dismantle=FALSE)
 	for(var/r in members)
