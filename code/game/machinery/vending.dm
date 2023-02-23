@@ -5,6 +5,9 @@
 	var/max_amount = 0
 	var/price = 0
 
+var/global/list/vending_machines = list()
+
+ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
@@ -55,6 +58,8 @@
 	var/datum/wires/vending/wires = null
 	var/scan_id = TRUE
 
+	var/obj/item/device/camera/integrated/camera
+
 
 /obj/machinery/vending/atom_init()
 	. = ..()
@@ -62,6 +67,8 @@
 	src.anchored = TRUE
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/vendor(null)
+
+	camera = new(src)
 
 	slogan_list = splittext(product_slogans, ";")
 
@@ -81,6 +88,7 @@
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(coin)
+	QDEL_NULL(camera)
 	return ..()
 
 /obj/machinery/vending/RefreshParts()
@@ -588,6 +596,9 @@
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
+
+	for(var/obj/machinery/computer/vending/console in global.vending_consoles)
+		camera.captureimage(src, print_target = console)
 	return
 
 //Somebody cut an important wire and now we're following a new definition of "pitch."
