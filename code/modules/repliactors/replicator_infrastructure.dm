@@ -283,6 +283,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	required_power = max_required_power
 	required_materials = max_required_materials
 
+	update_transform()
+
 /obj/machinery/swarm_powered/bluespace_catapult/process()
 	var/materials_satisfied = required_materials / max_required_materials
 	var/power_satisfied = required_power / max_required_power
