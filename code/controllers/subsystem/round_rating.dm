@@ -178,7 +178,7 @@ SUBSYSTEM_DEF(rating)
 	voting = TRUE
 
 	for(var/client/C in clients)
-		var/html = "<br><div class='rating'>"
+		var/html = "<div class='rating'>"
 
 		var/list/new_template_pool = get_question_pool()
 		for(var/datum/rating_template/template in new_template_pool)
@@ -191,7 +191,7 @@ SUBSYSTEM_DEF(rating)
 				if(template.choices.len != i)
 					html += "  -  "
 			html += "<br>"
-		html += "</div><br>"
+		html += "</div>"
 
 		to_chat(C, html)
 
