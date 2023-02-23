@@ -136,7 +136,7 @@
 			// observer.icon = client.prefs.preview_icon
 			observer.icon = 'icons/mob/mob.dmi'
 			observer.icon_state = "ghost"
-			
+
 			observer.alpha = 127
 
 			if(client.prefs.be_random_name)
@@ -227,16 +227,6 @@
 
 
 	SSjob.EquipRank(character, rank, TRUE)					//equips the human
-
-	var/list/blueshields = list()
-	if(rank in protected_by_blueshield_list)
-		for(var/mob/living/carbon/human/player in player_list)
-			if(player && player.mind && player.isimplantedblueshield())
-				blueshields += player
-		if(blueshields.len)
-			for(var/mob/living/carbon/human/H in blueshields)
-				SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
-				addtimer(CALLBACK(null, .proc/add_mood_event, H, "blueshield", /datum/mood_event/blueshield), 10 MINUTES)
 
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)

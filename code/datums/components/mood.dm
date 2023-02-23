@@ -445,6 +445,3 @@
 	SIGNAL_HANDLER
 
 	add_event(null, "slipped", /datum/mood_event/slipped)
-
-/proc/add_mood_event(mob/living/carbon/human/H, source, datum/mood_event/E)
-	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, source, E)

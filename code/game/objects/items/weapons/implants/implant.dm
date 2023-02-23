@@ -587,6 +587,7 @@ var/global/list/death_alarm_stealth_areas = list(
 /obj/item/weapon/implant/blueshield
 	name = "blueshield implant"
 	desc = "Subtle brainwashing."
+	var/last_examined = 0
 
 /obj/item/weapon/implant/blueshield/get_data()
 	var/dat = {"
@@ -601,5 +602,16 @@ var/global/list/death_alarm_stealth_areas = list(
 	return dat
 
 /obj/item/weapon/implant/blueshield/implanted(mob/source)
-	var/mob/living/carbon/human/H = source
-	addtimer(CALLBACK(null, .proc/add_mood_event, H, "blueshield", /datum/mood_event/blueshield), 10 MINUTES)
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/implant/blueshield/process()
+	if (!implanted)
+		STOP_PROCESSING(SSobj, src)
+		return
+	if(!imp_in)
+		STOP_PROCESSING(SSobj, src)
+		return
+
+	if(world.time > last_examined + 6000)
+		SEND_SIGNAL(imp_in, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
+		SEND_SIGNAL(imp_in, COMSIG_ADD_MOOD_EVENT, "blueshield", /datum/mood_event/blueshield)
