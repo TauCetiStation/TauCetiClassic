@@ -81,8 +81,8 @@
 
 	minimum_win_percentage = 0.501
 
-	cooldown = 30 MINUTES
-	next_vote = 90 MINUTES //Minimum round length before it can be called for the first time
+	cooldown = 10 MINUTES
+	next_vote = 0 MINUTES //Minimum round length before it can be called for the first time
 
 	description = "У вас будет больше вес голоса, если вы глава или антагонист, и меньше, если вы мертвы или если вы призрак."
 
@@ -101,8 +101,6 @@
 		return
 	if(SSshuttle.online || SSshuttle.location != 0)
 		return "Шаттл используется"
-	if(security_level >= SEC_LEVEL_RED)
-		return "Код безопасности КРАСНЫЙ или выше"
 
 /datum/poll/crew_transfer/get_vote_power(client/C, datum/vote_choice/choice)
 	return get_vote_power_by_role(C) * choice.vote_weight
