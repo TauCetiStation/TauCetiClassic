@@ -586,27 +586,35 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
-	//Dropping actual items
-	var/max_drop = rand(1, 3)
-	for(var/i = 1, i <= max_drop, i++)
-		var/datum/data/vending_product/R = pick(src.product_records)
-		var/dump_path = R.product_path
-		if(R.amount < 1)
-			continue
-		new dump_path(src.loc)
-		R.amount--
-		load--
-
-	//Dropping remaining items in a pack
-	var/refilling = 0
-	for(var/datum/data/vending_product/R in src.product_records)
-		while(R.amount > 0)
-			refilling++
+	if(refill_canister)
+		//Dropping actual items
+		var/max_drop = rand(1, 3)
+		for(var/i = 1, i <= max_drop, i++)
+			var/datum/data/vending_product/R = pick(src.product_records)
+			var/dump_path = R.product_path
+			if(R.amount < 1)
+				continue
+			new dump_path(src.loc)
 			R.amount--
 			load--
 
-	var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
-	Refill.charges = refilling
+		//Dropping remaining items in a pack
+		var/refilling = 0
+		for(var/datum/data/vending_product/R in src.product_records)
+			while(R.amount > 0)
+				refilling++
+				R.amount--
+				load--
+
+		var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
+		Refill.charges = refilling
+	else
+		for(var/datum/data/vending_product/R in src.product_records)
+			while(R.amount > 0)
+				var/dump_path = R.product_path
+				new dump_path(src.loc)
+				R.amount--
+				load--
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
