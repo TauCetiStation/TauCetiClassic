@@ -126,8 +126,8 @@
 					tally += 0.25
 				var/obj/item/weapon/shield/shield = I
 				//give them debuff to speed for better combat stance control
-				if(shield && shield.wall_of_shield_on)
-					tally += 3
+				if(istype(shield) && shield.wall_of_shield_on)
+					tally += 2
 
 	var/turf/T = get_turf(src)
 	if(T)
