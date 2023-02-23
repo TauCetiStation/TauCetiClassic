@@ -106,6 +106,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		/obj/effect/proc_holder/spell/no_target/transfer_to_area,
 		/obj/effect/proc_holder/spell/no_target/toggle_light,
 		/obj/effect/proc_holder/spell/no_target/set_mail_tag,
+		/obj/effect/proc_holder/spell/no_target/construct_catapult,
 	)
 
 	var/datum/skills/skills

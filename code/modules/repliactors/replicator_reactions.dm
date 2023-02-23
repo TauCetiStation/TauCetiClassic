@@ -179,6 +179,10 @@
 	return TRUE
 
 
+/obj/machinery/field_generator/can_be_auto_disintegrated()
+	return FALSE
+
+
 // Vents and pipes are used to transport through the station.
 /obj/machinery/atmospherics/can_be_auto_disintegrated()
 	return FALSE

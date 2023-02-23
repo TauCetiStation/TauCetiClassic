@@ -238,8 +238,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 		BC.neighbor_count += value
 		neighbor_count += value
 
-
+var/global/list/obj/machinery/swarm_powered/bluespace_catapult/bluespace_catapults = list()
 // Requires 10 drones in teh swarm.
+ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_catapults)
+
 /obj/machinery/swarm_powered/bluespace_catapult
 	name = "bluespace catapult"
 	desc = "Oh no."
@@ -249,13 +251,19 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20000
 
-	var/max_required_power = 12000000
+	resize = 1.5
+
+	density = TRUE
+
+	var/max_required_power = 24000000
 	var/max_required_materials = 2000
 
 	var/required_power = 0
 	var/required_materials = 0
 
 	var/last_perc_announcement = 0
+
+	var/victory = FALSE
 
 /obj/machinery/swarm_powered/bluespace_catapult/atom_init()
 	. = ..()
@@ -284,12 +292,16 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 		announcement = new /datum/announcement/centcomm/replicator/doom
 		icon_state = "catapult_100"
 
+		global.replicators_faction.announce_swarm("The Swarm", "The Swarm", "Mission accomplished.")
+		density = FALSE
+
+		for(var/mob/M in player_list)
+			if(!isnewplayer(M))
+				M.playsound_local(null, 'sound/effects/dimensional_rend.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+
 	if(announcement)
 		last_perc_announcement = perc_finished
 		announcement.play(get_area(src))
-
-	if(perc_finished >= 100)
-		global.replicators_faction.announce_swarm("The Swarm", "The Swarm", "Mission accomplished.")
 
 	draw_energy()
 
@@ -304,3 +316,16 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 
 	global.replicators_faction.adjust_materials(-5)
 	required_materials = max(0, required_materials - 5)
+
+/obj/machinery/swarm_powered/bluespace_catapult/Crossed(atom/movable/AM)
+	if(isreplicator(AM))
+		global.replicators_faction.replicators_launched += 1
+		qdel(AM)
+
+		if(global.replicators_faction.replicators_launched >= 10 && !victory)
+			victory = TRUE
+			INVOKE_ASYNC(global.replicators_faction, /datum/faction/replicators.proc/victory_animation, get_turf(src))
+
+		return
+
+	return ..()

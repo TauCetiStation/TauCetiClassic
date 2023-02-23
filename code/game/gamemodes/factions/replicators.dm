@@ -46,6 +46,9 @@ var/global/datum/faction/replicators/replicators_faction
 	var/node_spawn_cooldown = 3 MINUTES
 	var/next_node_spawn = 0
 
+	// Win condition is launching 10 replicators.
+	var/replicators_launched = 0
+
 /datum/faction/replicators/New()
 	..()
 	spawned_at_time = world.time
@@ -84,7 +87,7 @@ var/global/datum/faction/replicators/replicators_faction
 /datum/faction/replicators/forgeObjectives()
 	if(!..())
 		return FALSE
-	AppendObjective(/datum/objective/reproduct)
+	AppendObjective(/datum/objective/replicator_replicate)
 	return TRUE
 
 /datum/faction/replicators/process()
@@ -192,3 +195,23 @@ var/global/datum/faction/replicators/replicators_faction
 		return
 
 	R.apply_status_effect(STATUS_EFFECT_SWARMS_GIFT, spawned_at_time + swarms_gift_duration - world.time)
+
+/datum/faction/replicators/proc/victory_animation(turf/T)
+	SSticker.explosion_in_progress = TRUE
+	for(var/mob/M in player_list)
+		M.playsound_local(null, 'sound/AI/DeltaBOOM.ogg', VOL_EFFECTS_MASTER, vary = FALSE, frequency = null, ignore_environment = TRUE)
+
+	to_chat(world, "Reality warp imminent in 10")
+	for (var/i=9 to 1 step -1)
+		sleep(10)
+		to_chat(world, "[i]")
+
+	sleep(10)
+	enter_allowed = FALSE
+	SSticker.station_explosion_cinematic(0, null)
+	explosion(T, 15, 70, 200)
+	SSticker.station_was_nuked = TRUE
+	SSticker.explosion_in_progress = FALSE
+
+/datum/faction/replicators/check_win()
+	return SSticker.station_was_nuked

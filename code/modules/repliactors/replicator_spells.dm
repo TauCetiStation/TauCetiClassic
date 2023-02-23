@@ -307,8 +307,8 @@
 
 /obj/effect/proc_holder/spell/no_target/transfer_to_idle/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/replicator/user_replicator = user
-	to_chat(user, "<span class='notice'>TRANSFERING...</span>")
-	user_replicator.transfer_control(pick(global.idle_replicators))
+	if(user_replicator.transfer_control(pick(global.idle_replicators)))
+		to_chat(user, "<span class='notice'>TRANSFERING...</span>")
 
 
 /obj/effect/proc_holder/spell/no_target/transfer_to_area
@@ -325,26 +325,26 @@
 
 /obj/effect/proc_holder/spell/no_target/transfer_to_area/cast(list/targets, mob/user = usr)
 	var/list/pos_areas = list()
-	for(var/name in teleportlocs)
-		var/area/A = teleportlocs[name]
-		if(!(locate(/mob/living/simple_animal/replicator) in A))
-			continue
-		pos_areas[name] = teleportlocs[name]
+
+	for(var/r in global.replicators)
+		var/mob/living/simple_animal/replicator/R = r
+		var/area/A = get_area(R)
+		pos_areas[A.name] = A.type
 
 	var/area_name = tgui_input_list(user, "Choose an area with replicators in it.", "Area Transfer", pos_areas)
 	if(!area_name)
 		charge_counter = charge_max
 		return FALSE
 
-	var/area/thearea = teleportlocs[area_name]
+	var/area/thearea = pos_areas[area_name]
 
 	for(var/mob/living/simple_animal/replicator/R in thearea)
-		if(R.ckey)
+		if(R == user)
 			continue
 		var/mob/living/simple_animal/replicator/user_replicator = user
-		to_chat(user, "<span class='notice'>TRANSFERING...</span>")
-		user_replicator.transfer_control(R)
-		return
+		if(user_replicator.transfer_control(R))
+			to_chat(user, "<span class='notice'>TRANSFERING...</span>")
+			return
 
 	to_chat(user, "<span class='notice'>No suitable hosts found in area.</span>")
 	charge_counter = charge_max
@@ -397,3 +397,45 @@
 	user_replicator.mail_destination = new_tag
 
 	user_replicator.try_enter_disposal_system()
+
+
+/obj/effect/proc_holder/spell/no_target/construct_catapult
+	name = "Open Bluespace Rift"
+	desc = "Produce a device to open the bluespace rift. Rift will then consume energy and materials until completed."
+
+	charge_type = "recharge"
+	charge_max = 1 MINUTE
+
+	clothes_req = FALSE
+
+	action_icon = 'icons/mob/replicator.dmi'
+	action_icon_state = "ui_mail"
+
+/obj/effect/proc_holder/spell/no_target/construct_catapult/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
+	if(global.replicators_faction.bandwidth < 10)
+		if(try_start)
+			to_chat(user, "<span class='warning'>The rift requires 10 replicators to be sent through. You need more bandwidth.</span>")
+		return FALSE
+
+	if(!is_station_level(user.z))
+		if(try_start)
+			to_chat(user, "<span class='notice'>The rift must be opened aboard NSS Exodus.</span>")
+		return FALSE
+
+	var/area/A = get_area(user)
+	if(!(A.name in teleportlocs))
+		if(try_start)
+			to_chat(user, "<span class='notice'>Only inhabitable areas may be used to open a rift.</span>")
+		return FALSE
+
+	if(!istype(user.loc, /turf/simulated/floor))
+		if(try_start)
+			to_chat(user, "<span class='notice'>You mustn't be inside of anything for this to work.</span>")
+		return FALSE
+
+	return ..()
+
+/obj/effect/proc_holder/spell/no_target/construct_catapult/cast(list/targets, mob/user = usr)
+	new /obj/machinery/swarm_powered/bluespace_catapult(user.loc)
+	to_chat(user, "<span class='notice'>SPAWNING... What have you done.</span>")
+	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
