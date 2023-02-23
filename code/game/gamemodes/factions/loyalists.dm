@@ -3,6 +3,7 @@
 #define SCENARIO_RACISM    /datum/mutiny_scenario/racism
 #define SCENARIO_COMMUNISM /datum/mutiny_scenario/communism
 #define SCENARIO_BRUTALITY /datum/mutiny_scenario/brutality
+#define SCENARIO_MINE      /datum/mutiny_scenario/mine
 
 /datum/faction/loyalists
 	name = "Loyalists"
@@ -95,6 +96,7 @@
 		last_command_report = 1
 	else if(last_command_report == 1 && world.time >= 30 MINUTES)
 		command_report(scenario.get_second_report())
+		scenario.do_second_strike()
 		last_command_report = 2
 	else if(last_command_report == 2 && world.time >= 60 MINUTES)
 		command_report(scenario.get_third_report())
@@ -131,6 +133,9 @@
 	return
 
 /datum/mutiny_scenario/proc/do_first_strike()
+	return
+
+/datum/mutiny_scenario/proc/do_second_strike()
 	return
 
 /datum/mutiny_scenario/money/get_first_report()
@@ -289,3 +294,33 @@
 	report_dat += "Свежее мясо необходимо отправить в структурах-морозильниках грузовым шаттлом.<br>"
 	report_dat += "Не разглашайте экипажу информацию из этого сообщения."
 	return report_dat
+
+/datum/mutiny_scenario/mine/get_first_report()
+	var/report_dat = ""
+	report_dat += "Хранилище плазмы на ИСН Ками Хикари было потеряно.<br>"
+	report_dat += "Центральное Коммандование приказывает увеличить добычу фороновых слитков.<br>"
+	report_dat += "Мы отправляем дополнительное снаряжение для шахтёрских работ.<br>"
+	report_dat += "Отправьте нам не менее 200 едениц ресурса как можно скорее."
+	return report_dat
+
+/datum/mutiny_scenario/mine/get_second_report()
+	var/report_dat = ""
+	report_dat += "Компания получила хранилище большего объема, чем те, что были ранее.<br>"
+	report_dat += "Увеличьте поставки не менее чем в два раза, привлеките незанятый персонал к работам на полторы ставки.<br>"
+	report_dat += "Отказ сотрудником выполнять приказы Центрального Коммандования недопустим.<br>"
+	report_dat += "Убедитесь в наличии снабжения научным отсеком работников шахт передовыми разработками.
+	report_dat += "При непродуктивной работе, рекомендуется перевод всего персонала Исследований и Разработок в шахтёров и грузчиков до выполнения плана поставок."
+	return report_dat
+
+/datum/mutiny_scenario/mine/get_third_report()
+	var/report_dat = ""
+	report_dat += ".<br>"
+	report_dat += ".<br>"
+	report_dat += ".<br>"
+	return report_dat
+
+/datum/mutiny_scenario/mine/do_first_strike()
+	//do_postavka
+
+/datum/mutiny_scenario/mine/do_second_strike()
+	//do_postavka eshe bolshe
