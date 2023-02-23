@@ -422,3 +422,50 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/weapon/skill_cartridge/usp5(src)
 	new /obj/item/weapon/skill_cartridge/usp5(src)
 	new /obj/item/weapon/skill_cartridge/usp5(src)
+
+/obj/structure/closet/blueshield
+	name = "Blueshield Officer's Wardrobe"
+	req_access = list(access_blueshield)
+	icon_state = "blueshield"
+	icon_closed = "blueshield"
+	icon_opened = "blueshieldopen"
+
+/obj/structure/closet/blueshield/PopulateContents()
+	new /obj/item/clothing/head/beret/blueshield(src)
+	new /obj/item/clothing/head/soft/blueshield(src)
+	new /obj/item/clothing/under/rank/blueshield(src)
+	new /obj/item/clothing/head/helmet(src)
+	new /obj/item/clothing/suit/storage/flak(src)
+	if(prob(50))
+		new /obj/item/weapon/storage/backpack(src)
+	else
+		new /obj/item/weapon/storage/backpack/satchel/norm(src)
+
+/obj/structure/closet/secure_closet/blueshield
+	name = "Blueshield Officer's Equipment Locker"
+	icon_state = "blueshieldsecure1"
+	icon_closed = "blueshieldsecure"
+	icon_locked = "blueshieldsecure1"
+	icon_opened = "blueshieldsecureopen"
+	icon_broken = "blueshieldsecurebroken"
+	icon_off = "blueshieldsecureoff"
+
+/obj/structure/closet/secure_closet/blueshield/PopulateContents()
+	new /obj/item/clothing/head/helmet/blueshield(src)
+	new /obj/item/clothing/suit/storage/flak/blueshield(src)
+
+	new /obj/item/weapon/melee/baton(src)
+	new /obj/item/weapon/gun/projectile/glock/spec(src)
+	for (var/i in 1 to 4)
+		new /obj/item/ammo_box/magazine/m9mm_2/rubber(src)
+	for (var/i in 1 to 2)
+		new /obj/item/ammo_box/magazine/m9mm_2(src)
+	new /obj/item/weapon/shield/riot/tele(src)
+	new /obj/item/weapon/storage/belt/security(src)
+
+	new /obj/item/device/radio/headset/headset_int/blueshield(src)
+	new /obj/item/clothing/accessory/holster/armpit(src)
+	new /obj/item/device/flash(src)
+	new /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical(src)
+	new /obj/item/device/flashlight/seclite(src)
+	new /obj/item/weapon/storage/pouch/baton_holster(src)

@@ -118,9 +118,6 @@
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
 	update_inv_mob()
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.update_hair()
 
 //******************
 //**Chameleon Suit**

@@ -200,6 +200,10 @@
 	name = "Security Cadet"
 	icon_state = "Security Cadet"
 
+/obj/effect/landmark/start/blueshield_officer
+	name = "Blueshield Officer"
+	icon_state = "Blueshield Officer"
+
 // Engineering
 /obj/effect/landmark/start/chief_engineer
 	name = "Chief Engineer"
