@@ -249,7 +249,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20000
 
-	var/max_required_power = 1200000
+	var/max_required_power = 12000000
 	var/max_required_materials = 2000
 
 	var/required_power = 0
@@ -259,8 +259,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 
 /obj/machinery/swarm_powered/bluespace_catapult/atom_init()
 	. = ..()
-	var/datum/announcement/centcomm/replicator/construction_began = new
-	construction_began.play(get_area(src))
+	var/datum/announcement/centcomm/replicator/construction_began/CB = new
+	CB.play(get_area(src))
 
 	required_power = max_required_power
 	required_materials = max_required_materials

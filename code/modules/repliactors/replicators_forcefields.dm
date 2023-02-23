@@ -39,7 +39,9 @@
 	resistance_flags = CAN_BE_HIT
 
 /obj/structure/replicator_forcefield/CanPass(atom/movable/mover, turf/target)
-	if(mover && mover.invisibility > 0 && (locate(/obj/structure/bluespace_corridor) in loc))
+	if(!mover)
+		return FALSE
+	if(mover.invisibility > 0 && (locate(/obj/structure/bluespace_corridor) in loc))
 		return TRUE
 	return ..()
 
@@ -66,6 +68,8 @@
 	resistance_flags = CAN_BE_HIT
 
 /obj/structure/replicator_barricade/CanPass(atom/movable/mover, turf/target)
+	if(!mover)
+		return FALSE
 	if(istype(mover, /mob/living/simple_animal/replicator))
 		return TRUE
 	if(istype(mover, /obj/item/projectile/disabler))
