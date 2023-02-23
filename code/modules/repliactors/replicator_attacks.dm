@@ -42,8 +42,8 @@
 
 	if(istype(A, /mob/living/simple_animal/replicator))
 		var/mob/living/simple_animal/replicator/R = A
-		if(R.stat == DEAD)
-			INVOKE_ASYNC(src, .proc/disintegrate, R)
+		if(!R.ckey || R == src)
+			INVOKE_ASYNC(src, .proc/disintegrate, A)
 		// repair
 		return
 

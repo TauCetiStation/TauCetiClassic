@@ -69,8 +69,6 @@
 	return stat == DEAD
 
 /mob/living/simple_animal/replicator/get_replicator_material_amount()
-	if(ckey)
-		return -1
 	return REPLICATOR_COST_REPLICATE
 
 /mob/living/simple_animal/replicator/get_unit_disintegration_time()

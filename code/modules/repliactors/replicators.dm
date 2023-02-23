@@ -317,7 +317,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		return FALSE
 
 	if((locate(/mob/living) in A) && !isturf(A))
-		to_chat(src, "<span class='warning'>Can Not Deconstruct: May Harm Organis</span>")
+		to_chat(src, "<span class='warning'>Can Not Deconstruct: May Harm Organics.</span>")
 		return FALSE
 
 	var/material_amount = A.get_replicator_material_amount()
@@ -475,8 +475,9 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		var/mob/living/simple_animal/replicator/target = locate(href_list["replicator_kill"])
 		if(!istype(target))
 			return
-
 		if(target.incapacitated())
+			return
+		if(target.ckey)
 			return
 
 		if(target.excitement > 0)
@@ -484,6 +485,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 			return
 
 		// TO-DO: sound
+		to_chat(src, "<span class='notice'>Issued a self-destruct order to [target.name].</span>")
 		target.last_controller_ckey = ckey
 		INVOKE_ASYNC(target, .proc/disintegrate, target)
 		return
