@@ -116,14 +116,14 @@
 		disable_wallshield(user)
 
 /obj/item/weapon/shield/Get_shield_chance()
-	var/mob/living/carbon/human/H = loc
-	if(!H || !H.is_in_hands(src) || !wall_of_shield_on)
+	var/mob/living/carbon/human/M = loc
+	if(!M || !M.is_in_hands(src) || !wall_of_shield_on)
 		return block_chance
 	var/add_block = 0
-	var/turf/user_turf = get_turf(user)
+	var/turf/user_turf = get_turf(M)
 	//find comrads without build a line or smth
 	for(var/mob/living/carbon/human/H in range(1, user_turf))
-		if(H == user)
+		if(H == M)
 			continue
 		var/obj/item/weapon/shield/shield = H.is_in_hands(/obj/item/weapon/shield)
 		//no_shields
@@ -269,7 +269,7 @@
 
 /obj/item/weapon/shield/riot/tele/Get_shield_chance()
 	if(active)
-		return ..(user)
+		return ..()
 	return 0
 
 /obj/item/weapon/shield/riot/tele/toggle_wallshield(mob/living/user)
