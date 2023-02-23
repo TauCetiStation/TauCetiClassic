@@ -1,7 +1,7 @@
 import { Fragment } from 'inferno';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Icon, ProgressBar } from '../components';
+import { Box, Icon, ProgressBar, Collapsible } from '../components';
 import { Window } from "../layouts";
 
 export const VendingConsole = (properties, context) => {
@@ -16,9 +16,7 @@ export const VendingConsole = (properties, context) => {
       <Window.Content fitted={1}>
         {!!vending && (
           vending.map((vendslist, index) => (
-            <Box className="VendingConsole__Vendlist" key={index}>
-              {vendslist.name}
-              <br />
+            <Collapsible className="VendingConsole__Vendlist" key={index} title={vendslist.name}>
               {vendslist.listofvends.map((vendomat, id) => (
                 <Box className="VendingConsole__VendomatBox" key={id}>
                   <Box className="VendingConsole__VendomatBox-TextBox">
@@ -31,7 +29,7 @@ export const VendingConsole = (properties, context) => {
                   </Box>
                 </Box>
               ))}
-            </Box>
+            </Collapsible>
           ))
         )}
       </Window.Content>

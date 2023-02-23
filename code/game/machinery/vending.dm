@@ -118,7 +118,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		var/amount = productlist[typepath]
 		if(!hidden && !req_coin && !req_emag)
 			max_load += amount
-			if(mapload && is_station_level(src.z) && !hidden && !req_coin && !req_emag)
+			if(mapload && is_station_level(src.z) && refill_canister)
 				var/players_coefficient = num_players() / 75 //75 players = max load, 0 players = min load
 				var/randomness_coefficient = rand(50,100) / 100 //50-100% randomness
 
@@ -586,10 +586,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 /obj/machinery/vending/proc/malfunction()
 	//Dropping actual items
 	var/max_drop = rand(1, 3)
-	for(var/i = 1, i < max_drop, i++)
+	for(var/i = 1, i <= max_drop, i++)
 		var/datum/data/vending_product/R = pick(src.product_records)
 		var/dump_path = R.product_path
-		if(!R.amount)
+		if(R.amount < 1)
 			continue
 		new dump_path(src.loc)
 		R.amount--
