@@ -102,6 +102,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 0
 
+	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
+
 	var/next_sound = 0
 
 /obj/machinery/power/replicator_generator/atom_init()
