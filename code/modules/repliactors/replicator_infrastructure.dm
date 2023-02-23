@@ -21,13 +21,20 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	if(area_powered)
 		return
 
+	var/power_status_changed = FALSE
+
 	if(has_reserve_power)
-		stat &= ~NOPOWER
+		if(stat & NOPOWER)
+			power_status_changed = TRUE
+			stat &= ~NOPOWER
 		global.replicators_faction.energy -= idle_power_usage
-	else
+
+	else if(!(stat & NOPOWER))
+		power_status_changed = TRUE
 		stat |= NOPOWER
 
-	update_icon()
+	if(power_status_changed)
+		update_icon()
 
 
 /obj/machinery/swarm_powered/bluespace_transponder
@@ -68,7 +75,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 		global.active_transponders -= src
 		icon_state = "bhole3"
 	else
-		global.active_transponders += src
+		global.active_transponders |= src
 		icon_state = "bluespace_wormhole_exit"
 
 /obj/machinery/swarm_powered/bluespace_transponder/Destroy()

@@ -409,7 +409,7 @@
 	clothes_req = FALSE
 
 	action_icon = 'icons/mob/replicator.dmi'
-	action_icon_state = "ui_mail"
+	action_icon_state = "ui_catapult"
 
 /obj/effect/proc_holder/spell/no_target/construct_catapult/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
 	if(global.replicators_faction.bandwidth < 10)
