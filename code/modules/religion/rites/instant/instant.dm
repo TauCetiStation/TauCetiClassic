@@ -151,7 +151,7 @@
 
 	var/datum/religion/cult/C = religion
 	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
-		if(table.buckled_mob?.stat != DEAD && AOG.buckled_mob.get_species() != HOMUNCULUS)
+		if(table.buckled_mob && table.buckled_mob.stat != DEAD && table.buckled_mob.get_species() != HOMUNCULUS)
 			return TRUE
 
 	to_chat(user, "<span class='warning'>На заряженном столе пыток должна лежать хотя бы одна жертва.</span>")
@@ -162,7 +162,7 @@
 	var/drain = 0
 	var/datum/religion/cult/C = religion
 	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
-		if(!table.buckled_mob || table.buckled_mob.stat == DEAD || AOG.buckled_mob.get_species() == HOMUNCULUS)
+		if(!table.buckled_mob || table.buckled_mob.stat == DEAD || table.buckled_mob.get_species() == HOMUNCULUS)
 			continue
 		var/bdrain = rand(10, 25) * divine_power
 		to_chat(table.buckled_mob, "<span class='userdanger'>Вы чувствуете слабость.</span>")
