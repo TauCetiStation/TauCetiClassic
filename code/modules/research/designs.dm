@@ -1203,7 +1203,7 @@ other types of metals and chemistry for reagents).
 	name = "All-In-One Grinder Board"
 	desc = "The circuit board for an All-In-One Grinder."
 	id = "reagentgrinder"
-	build_path = /obj/item/circuitboard/machine/reagentgrinder
+	build_path = /obj/item/weapon/circuitboard/reagentgrinder
 	category = list("Machine")
 
 /datum/design/gas_heater
