@@ -55,7 +55,7 @@
 	var/datum/wires/vending/wires = null
 	var/scan_id = TRUE
 
-	var/private = TRUE
+	var/private = TRUE // Whether the vending machine is privately operated, and thus must not start with a deficit of goods.
 
 
 /obj/machinery/vending/atom_init(mapload)
