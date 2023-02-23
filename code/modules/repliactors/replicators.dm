@@ -516,3 +516,23 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
 	var/area/A = get_area(T)
 	global.replicators_faction.drone_message(src, "Node unveiled at [A.name].", transfer=TRUE)
+
+/mob/living/simple_animal/replicator/gib()
+	death(TRUE)
+	var/atom/movable/overlay/animation = null
+	notransform = TRUE
+	canmove = 0
+	icon = null
+	invisibility = INVISIBILITY_ABSTRACT
+
+	animation = new(loc)
+	animation.icon_state = "blank"
+	animation.icon = 'icons/mob/mob.dmi'
+	animation.master = src
+
+//	flick("gibbed-r", animation)
+	robogibs(loc)
+
+	dead_mob_list -= src
+	QDEL_IN(src, 15)
+	QDEL_IN(animation, 15)

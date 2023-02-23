@@ -329,8 +329,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 
 /obj/machinery/swarm_powered/bluespace_catapult/Crossed(atom/movable/AM)
 	if(isreplicator(AM))
+		var/mob/living/simple_animal/replicator/R = AM
 		global.replicators_faction.replicators_launched += 1
-		qdel(AM)
+
+		R.death()
+		qdel(R)
 
 		if(global.replicators_faction.replicators_launched >= 10 && !victory)
 			victory = TRUE
