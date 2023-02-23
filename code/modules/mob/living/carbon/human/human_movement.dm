@@ -111,13 +111,6 @@
 	else
 		tally += species.speed_mod_no_shoes
 
-	//small optimization, early check items in hand
-	if(l_hand || r_hand)
-		var/obj/item/weapon/shield/shield = is_in_hands(/obj/item/weapon/shield)
-		//give them debuff to speed for better combat stance control
-		if(shield && shield.wall_of_shield_on)
-			tally += 3
-
 	if(weight_tally > weight_negation)
 		tally += weight_tally - weight_negation
 
@@ -131,6 +124,10 @@
 					tally += 0.25 * (I.w_class - 2) // (3 = 0.25) || (4 = 0.5) || (5 = 0.75)
 				if(HAS_TRAIT(I, TRAIT_DOUBLE_WIELDED))
 					tally += 0.25
+				var/obj/item/weapon/shield/shield = I
+				//give them debuff to speed for better combat stance control
+				if(shield && shield.wall_of_shield_on)
+					tally += 3
 
 	var/turf/T = get_turf(src)
 	if(T)
