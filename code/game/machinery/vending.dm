@@ -59,6 +59,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	var/scan_id = TRUE
 
 	var/obj/item/device/camera/integrated/camera
+	var/load = 0
+	var/max_load = 0
 
 
 /obj/machinery/vending/atom_init(mapload)
@@ -77,7 +79,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 	last_slogan = world.time + rand(0, slogan_delay)
 
-	build_inventory(products)
+	build_inventory(products, mapload)
 	 //Add hidden inventory
 	build_inventory(contraband, mapload, hidden = 1)
 	build_inventory(premium, mapload, req_coin = 1)
@@ -114,13 +116,16 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 /obj/machinery/vending/proc/build_inventory(list/productlist, mapload, hidden = 0, req_coin = 0 , req_emag = 0)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
-		if(mapload && is_station_level(src.z) && !hidden && !req_coin && !req_emag)
-			var/players_coefficient = num_players() / 75 //75 players = max load, 0 players = min load
-			var/randomness_coefficient = rand(50,100) / 100 //50-100% randomness
+		if(!hidden && !req_coin && !req_emag)
+			max_load += amount
+			if(mapload && is_station_level(src.z) && !hidden && !req_coin && !req_emag)
+				var/players_coefficient = num_players() / 75 //75 players = max load, 0 players = min load
+				var/randomness_coefficient = rand(50,100) / 100 //50-100% randomness
 
-			var/final_coefficient = clamp(players_coefficient * randomness_coefficient, 0.1, 1.0) //10% minimum, 100% maximum
+				var/final_coefficient = clamp(players_coefficient * randomness_coefficient, 0.1, 1.0) //10% minimum, 100% maximum
 
-			amount = round(amount * final_coefficient) //10-100% roundstart load depending on player amount and randomness
+				amount = round(amount * final_coefficient) //10-100% roundstart load depending on player amount and randomness
+			load += amount
 
 		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
@@ -172,6 +177,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 				to_chat(usr, "<span class='notice'>[restock] of [machine_content.product_name]</span>")
 			if(refill.charges == 0) //due to rounding, we ran out of refill charges, exit.
 				break
+	load += total
 	return total
 
 /obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
@@ -494,6 +500,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 			QDEL_NULL(coin)
 
 	R.amount--
+	if(R in product_records)
+		load--
 
 	if(((src.last_reply + (src.vend_delay + 200)) <= world.time) && src.vend_reply)
 		spawn(0)
@@ -513,6 +521,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 /obj/machinery/vending/proc/stock(datum/data/vending_product/R, mob/user)
 	if(src.panel_open)
 		to_chat(user, "<span class='notice'>You stock the [src] with \a [R.product_name]</span>")
+		if(R in product_records)
+			load++
 		R.amount++
 
 	updateUsrDialog()
@@ -583,6 +593,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 			continue
 		new dump_path(src.loc)
 		R.amount--
+		load--
 
 	//Dropping remaining items in a pack
 	var/refilling = 0
@@ -590,6 +601,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		while(R.amount > 0)
 			refilling++
 			R.amount--
+			load--
 
 	var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
 	Refill.charges = refilling
@@ -616,6 +628,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 			continue
 
 		R.amount--
+		load--
 		throw_item = new dump_path(src.loc)
 		break
 	if (!throw_item)

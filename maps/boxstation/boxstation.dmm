@@ -32976,7 +32976,9 @@
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
 "bgJ" = (
-/obj/machinery/computer/cargo,
+/obj/machinery/computer/cargo{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -35759,10 +35761,7 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/weapon/folder/brown,
-/obj/item/device/eftpos{
-	eftpos_name = "Cargo Bay EFTPOS scanner"
-	},
+/obj/machinery/computer/stockexchange,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -45345,7 +45344,10 @@
 	pixel_x = 32
 	},
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
+/obj/item/weapon/folder/brown,
+/obj/item/device/eftpos{
+	eftpos_name = "Cargo Bay EFTPOS scanner"
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -71724,6 +71726,12 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/chapel/altar)
+"fUk" = (
+/obj/machinery/computer/vending{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/cargo/office)
 "fVb" = (
 /obj/structure/morgue{
 	dir = 8
@@ -98442,7 +98450,7 @@ bkW
 bbp
 buD
 cri
-bkW
+fUk
 jOv
 qlZ
 qlZ

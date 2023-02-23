@@ -208,6 +208,10 @@
 	name = "Circuit board (Mech Bay Power Control Console)"
 	build_path = /obj/machinery/computer/mech_bay_power_console
 	origin_tech = "programming=2;powerstorage=3"
+/obj/item/weapon/circuitboard/computer/vending
+	name = "Circuit board (Supply ordering console)"
+	build_path = /obj/machinery/computer/vending
+	origin_tech = "programming=2"
 /obj/item/weapon/circuitboard/computer/cargo/request
 	name = "Circuit board (Supply ordering console)"
 	build_path = /obj/machinery/computer/cargo/request
