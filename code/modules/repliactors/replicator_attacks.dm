@@ -118,6 +118,7 @@
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	I.plane = L.plane
 	I.layer = L.layer + 0.09
+	I.loc = L
 
 	flick_overlay_view(I, L, 12)
 
@@ -133,7 +134,7 @@
 
 /obj/item/mine/replicator/update_icon()
 	if(next_activation < world.time)
-		icon_state = "[icon_state]armed"
+		icon_state = "[initial(icon_state)]armed"
 		alpha = 45
 	else
 		icon_state = initial(icon_state)

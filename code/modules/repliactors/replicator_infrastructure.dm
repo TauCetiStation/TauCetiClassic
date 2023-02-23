@@ -249,8 +249,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20000
 
-	var/required_power = 600000
-	var/required_materials = 2000
+	var/max_required_power = 1200000
+	var/max_required_materials = 2000
+
+	var/required_power = 0
+	var/required_materials = 0
 
 	var/last_perc_announcement = 0
 
@@ -259,8 +262,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	var/datum/announcement/centcomm/replicator/construction_began = new
 	construction_began.play(get_area(src))
 
+	required_power = max_required_power
+	required_materials = max_required_materials
+
 /obj/machinery/swarm_powered/bluespace_catapult/process()
-	var/perc_finished = (1 - (required_power / 600000) * (required_materials / 2000)) * 100
+	var/materials_satisfied = required_materials / max_required_materials
+	var/power_satisfied = required_power / max_required_power
+	var/perc_finished = round((1 - materials_satisfied * power_satisfied) * 100)
 
 	var/datum/announcement/centcomm/replicator/announcement
 	if(perc_finished >= 25 && last_perc_announcement < 25)
@@ -275,6 +283,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	else if(perc_finished >= 100 && last_perc_announcement < 100)
 		announcement = new /datum/announcement/centcomm/replicator/doom
 		icon_state = "catapult_100"
+
 	if(announcement)
 		last_perc_announcement = perc_finished
 		announcement.play(get_area(src))
