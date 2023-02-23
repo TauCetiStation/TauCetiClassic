@@ -19,8 +19,6 @@
 
 	AddComponent(/datum/component/swiping, SCB)
 
-	RegisterSignal(src, list(COMSIG_ATOM_CHANGE_DIR), .proc/user_moved)
-
 /obj/item/weapon/shield/proc/on_sweep_hit(turf/current_turf, obj/effect/effect/weapon_sweep/sweep_image, atom/target, mob/living/user)
 	var/datum/component/swiping/SW = GetComponent(/datum/component/swiping)
 
@@ -87,6 +85,7 @@
 	add_filter("wallshield_outline", 2, outline_filter(1, "#c0c0c0"))
 	update_icon()
 	user.update_inv_item(src)
+	RegisterSignal(user, list(COMSIG_ATOM_CHANGE_DIR), .proc/user_moved)
 	return TRUE
 
 /obj/item/weapon/shield/proc/disable_wallshield(mob/living/user)
@@ -97,14 +96,15 @@
 	if(user)
 		to_chat(user, "<span class='info'>You interrupted the Wall of Shields technique.</span>")
 		user.update_inv_item(src)
+		UnregisterSignal(user, list(COMSIG_ATOM_CHANGE_DIR))
 
-/obj/item/weapon/shield/proc/user_moved(datum/source, mob/user, dir)
+/obj/item/weapon/shield/proc/user_moved(datum/source, dir)
 	if(!wall_of_shield_on)
 		return
 	if(!saved_dir)
 		return
 	if(dir != saved_dir)
-		disable_wallshield(user)
+		disable_wallshield(source)
 
 /obj/item/weapon/shield/update_icon()
 	item_state = "[icon_state][wall_of_shield_on ? "_outline" : ""]"
@@ -115,10 +115,9 @@
 	if(wall_of_shield_on)
 		disable_wallshield(user)
 
-/obj/item/weapon/shield/Get_shield_chance(mob/user)
-	if(!user || !ishuman(user))
-		return block_chance
-	if(!wall_of_shield_on)
+/obj/item/weapon/shield/Get_shield_chance()
+	var/mob/living/carbon/human/H = loc
+	if(!H || !H.is_in_hands(src) || !wall_of_shield_on)
 		return block_chance
 	var/add_block = 0
 	var/turf/user_turf = get_turf(user)
@@ -268,7 +267,7 @@
 /obj/item/weapon/shield/riot/tele/proc/can_sweep_push(mob/user)
 	return active
 
-/obj/item/weapon/shield/riot/tele/Get_shield_chance(mob/user)
+/obj/item/weapon/shield/riot/tele/Get_shield_chance()
 	if(active)
 		return ..(user)
 	return 0
