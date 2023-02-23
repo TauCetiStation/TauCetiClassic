@@ -66,7 +66,7 @@ export const Vote = (_, context) => {
         <Stack fill vertical>
           <Choices />
           {(!currentPoll || isAdmin) && <ListPolls />}
-          <Timer />
+          {!!currentPoll && <Timer />}
         </Stack>
       </Window.Content>
     </Window>
