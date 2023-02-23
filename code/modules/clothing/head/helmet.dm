@@ -310,3 +310,9 @@
 	desc = "A simple steel helmet - a steelpot, if you will."
 	icon_state = "surplus_helmet"
 	armor = list(melee = 45, bullet = 40, laser = 40,energy = 25, bomb = 35, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/blueshield
+	name = "blueshield helmet"
+	desc = "An advanced helmet issued to blueshield officers."
+	icon_state = "blueshield_helmet"
+	armor = list(melee = 60, bullet = 55, laser = 50,energy = 35, bomb = 35, bio = 0, rad = 0)

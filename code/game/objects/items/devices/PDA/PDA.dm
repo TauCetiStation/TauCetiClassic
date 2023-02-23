@@ -355,6 +355,10 @@
 	default_cartridge = /obj/item/weapon/cartridge/medical
 	icon_state = "pda-gene"
 
+/obj/item/device/pda/blueshield
+	icon_state = "pda-blu"
+	default_pen = /obj/item/weapon/pen/edagger/legitimate
+
 
 // Special AI/pAI PDAs that cannot explode.
 /obj/item/device/pda/silicon
