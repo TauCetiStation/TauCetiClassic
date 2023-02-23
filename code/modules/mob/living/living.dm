@@ -198,6 +198,10 @@
 	if(ismob(AM))
 		var/mob/M = AM
 		tally += M.stat == CONSCIOUS ? ( M.a_intent == INTENT_HELP ? 0 : 0.5 ) : 1
+	else if(isitem(AM))
+		var/obj/item/I = AM
+		if(I && !(I.flags & ABSTRACT) && I.w_class >= SIZE_NORMAL)
+			tally += 0.5 * (I.w_class - 2)
 	//Structure pulling
 	else if(istype(AM, /obj/structure))
 		tally += 0.3

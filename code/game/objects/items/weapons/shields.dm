@@ -150,6 +150,9 @@
 			emp_cooldown = world.time + rand(200, 400)
 			turn_off()
 
+/obj/item/weapon/shield/energy/on_enter_storage(obj/item/weapon/storage/S)
+	if(active)
+		attack_self(usr)
 
 /obj/item/weapon/shield/riot/tele
 	name = "telescopic shield"

@@ -47,7 +47,7 @@
 			icon_state = "cutlass1"
 		else
 			icon_state = "sword[blade_color]"
-		w_class = SIZE_NORMAL
+		w_class = SIZE_SMALL
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 
@@ -55,6 +55,7 @@
 		qualities = null
 		sharp = FALSE
 		force = 3
+		flags = NOBLOODY
 		hitsound = initial(hitsound)
 		if(istype(src,/obj/item/weapon/melee/energy/sword/pirate))
 			icon_state = "cutlass0"
@@ -67,6 +68,9 @@
 	update_inv_mob()
 	add_fingerprint(user)
 
+/obj/item/weapon/melee/energy/sword/on_enter_storage(obj/item/weapon/storage/S)
+	if(active)
+		attack_self(usr)
 
 /*
  * Classic Baton
@@ -306,7 +310,7 @@
 
 /obj/item/weapon/shield/energy/proc/turn_on(mob/living/user)
 	force = 10
-	w_class = SIZE_NORMAL
+	w_class = SIZE_SMALL
 	playsound(src, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='notice'> [src] is now active.</span>")
 	update_icon()
