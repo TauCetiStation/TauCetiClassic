@@ -125,6 +125,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 				var/final_coefficient = clamp(players_coefficient * randomness_coefficient, 0.1, 1.0) //10% minimum, 100% maximum
 
 				amount = round(amount * final_coefficient) //10-100% roundstart load depending on player amount and randomness
+				if(!amount && prob(20))
+					amount = 1
 			load += amount
 
 		var/price = prices[typepath]

@@ -46056,6 +46056,8 @@
 /obj/item/weapon/rack_parts,
 /obj/item/weapon/rack_parts,
 /obj/item/weapon/rack_parts,
+/obj/random/misc/vending_refill,
+/obj/random/misc/vending_refill,
 /turf/simulated/floor{
 	icon_state = "floorgrime"
 	},

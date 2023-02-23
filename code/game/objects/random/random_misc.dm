@@ -147,3 +147,30 @@
 						/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
 						/obj/item/weapon/storage/fancy/cigarettes,
 					)
+
+/obj/random/misc/vending_refill
+	name = "Random Refill Packs"
+	desc = "This is a random misc pack."
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "refill_unk"
+/obj/random/misc/vending_refill/item_to_spawn()
+		return pick(
+						/obj/item/weapon/vending_refill/boozeomat,
+						/obj/item/weapon/vending_refill/coffee,
+						/obj/item/weapon/vending_refill/snack,
+						/obj/item/weapon/vending_refill/cola,
+						/obj/item/weapon/vending_refill/cigarette,
+						/obj/item/weapon/vending_refill/clothing,
+						/obj/item/weapon/vending_refill/barbervend,
+						/obj/item/weapon/vending_refill/hydroseeds,
+						/obj/item/weapon/vending_refill/hydronutrients,
+						/obj/item/weapon/vending_refill/medical,
+						/obj/item/weapon/vending_refill/chinese,
+						/obj/item/weapon/vending_refill/tool,
+						/obj/item/weapon/vending_refill/engivend,
+						/obj/item/weapon/vending_refill/blood,
+						/obj/item/weapon/vending_refill/junkfood,
+						/obj/item/weapon/vending_refill/donut,
+						/obj/item/weapon/vending_refill/assist,
+						/obj/item/weapon/vending_refill/dinnerware,
+					)
