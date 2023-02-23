@@ -34,7 +34,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/ian/equip_to_slot(obj/item/W, slot, redraw_mob = 1)
+/mob/living/carbon/ian/equip_to_slot(obj/item/W, slot)
 	if(!slot)
 		return
 	if(!istype(W))
@@ -53,21 +53,17 @@
 				facehugger = TRUE
 			head = W
 			W.equipped(src, slot)
-			update_inv_head()
 		if(SLOT_MOUTH)
 			mouth = W
 			W.equipped(src, slot)
-			update_inv_mouth()
 		if(SLOT_NECK)
 			if(istype(W, /obj/item/weapon/handcuffs))
 				handcuffed = W
 			neck = W
 			W.equipped(src, slot)
-			update_inv_neck()
 		if(SLOT_BACK)
 			back = W
 			W.equipped(src, slot)
-			update_inv_back()
 		else
 			to_chat(usr, "<span class='red'>You are trying to equip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>")
 			return
@@ -75,6 +71,7 @@
 	W.plane = ABOVE_HUD_PLANE
 	W.appearance_flags = APPEARANCE_UI
 	W.slot_equipped = slot
+	W.update_inv_mob()
 
 //Puts the item into our active hand (errr... mouth!) if possible. returns 1 on success.
 /mob/living/carbon/ian/put_in_active_hand(obj/item/W)
@@ -125,21 +122,18 @@
 		W.slot_equipped = initial(W.slot_equipped)
 		return FALSE
 
-/mob/living/carbon/ian/u_equip(obj/W)
+/mob/living/carbon/ian/u_equip(obj/item/W)
 	if (W == head)
 		facehugger = FALSE
 		head = null
-		update_inv_head()
 	else if (W == neck)
 		handcuffed = null
 		neck = null
-		update_inv_neck()
 	else if (W == mouth)
 		mouth = null
-		update_inv_mouth()
 	else if (W == back)
 		back = null
-		update_inv_back()
+	W.update_inv_mob()
 
 /mob/living/carbon/ian/proc/update_corgi_ability()
 	name = real_name
