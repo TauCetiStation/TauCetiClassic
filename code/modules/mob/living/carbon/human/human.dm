@@ -60,7 +60,6 @@
 	human_list += src
 
 	RegisterSignal(src, list(COMSIG_MOB_EQUIPPED), .proc/mood_item_equipped)
-	RegisterSignal(src, list(COMSIG_ATOM_CHANGE_DIR), .proc/inform_items_about_changing_dir)
 
 	if(dna)
 		dna.real_name = real_name
