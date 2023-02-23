@@ -154,7 +154,6 @@
 	if(active)
 		attack_self(usr)
 
-
 /obj/item/weapon/shield/riot/tele
 	name = "telescopic shield"
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
