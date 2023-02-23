@@ -273,7 +273,7 @@
 	icon_state = "frame-empty"
 
 /obj/item/painting_frame/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		new /obj/item/stack/sheet/wood(get_turf(src.loc), 2)
 		qdel(src)
 	else
@@ -349,7 +349,7 @@
 /obj/structure/sign/painting/attackby(obj/item/I, mob/user, params)
 	if(!current_canvas && istype(I, /obj/item/canvas))
 		frame_canvas(user, I)
-	else if(iswirecutter(I))
+	else if(iscutter(I))
 		remove_canvas(user)
 	else if(current_canvas && current_canvas.painting_name == initial(current_canvas.painting_name) && istype(I, /obj/item/weapon/pen))
 		try_rename(user)

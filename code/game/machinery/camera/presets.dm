@@ -73,12 +73,15 @@
 
 /obj/machinery/camera/proc/upgradeEmpProof()
 	assembly.upgrades.Add(new /obj/item/stack/sheet/mineral/phoron(assembly))
+	update_icon()
 
 /obj/machinery/camera/proc/upgradeXRay()
 	assembly.upgrades.Add(new /obj/item/device/analyzer(assembly))
+	update_icon()
 
 // If you are upgrading Motion, and it isn't in the camera's New(), add it to the machines list.
 /obj/machinery/camera/proc/upgradeMotion()
 	assembly.upgrades.Add(new /obj/item/device/assembly/prox_sensor(assembly))
+	update_icon()
 	START_PROCESSING(SSmachines, src)
 	proximity_monitor = new (src, 1)

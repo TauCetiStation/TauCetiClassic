@@ -3,7 +3,7 @@
 // Drain acceleration, +10 kW per power tick:
 #define POWERSINK_RATE 10000
 // Max drain acceleration, 10 MW per power tick:
-#define POWERSINK_RATE_MAX 10000000 
+#define POWERSINK_RATE_MAX 10000000
 // Drain form APC's cells, ~25 kW per power tick:
 #define POWERSINK_APC_DRAIN 50
 // Maximum power that can be drained before exploding:
@@ -28,7 +28,7 @@
 	var/obj/structure/cable/attached // the attached cable
 
 /obj/item/device/powersink/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		if(mode == 0)
 			var/turf/T = loc
 			if(isturf(T) && !T.intact)

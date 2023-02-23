@@ -244,12 +244,6 @@
 		charge = 0
 
 	update_icon()
-
-	/*if(user.hand) with custom inhand sprites - yes, without - no.
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()*/
-
 	return 0
 
 /obj/item/weapon/gun/tesla/proc/los_check(mob/A, mob/B)
@@ -339,13 +333,13 @@
 		..()
 
 /obj/item/weapon/gun/energy/pyrometer/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		panel_open = !panel_open
 		user.visible_message("<span class='notice'>[user] [panel_open ? "un" : ""]screws [src]'s panel [panel_open ? "open" : "shut"].</span>", "<span class='notice'>You [panel_open ? "un" : ""]screw [src]'s panel [panel_open ? "open" : "shut"].</span>")
 
 	else if(panel_open)
-		if(iscrowbar(I))
+		if(isprying(I))
 			if(ML)
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				user.put_in_hands(ML)
@@ -506,7 +500,7 @@
 		update_icon()
 		update_inv_mob()
 
-	if(isscrewdriver(C))
+	if(isscrewing(C))
 		if(!firing_core)
 			to_chat(user, "<span class='warning'>There is no firing core installed!</span>")
 			return

@@ -60,9 +60,6 @@
 		H.visible_message("<span class='warning'>[H] casts off their [suit_name_simple]!</span>", "<span class='warning'>We cast off our [suit_name_simple][genetic_damage > 0 ? ", temporarily weakening our genomes." : "."]</span>", "<span class='warning'>You hear the organic matter ripping and tearing!</span>")
 		qdel(H.wear_suit)
 		qdel(H.head)
-		H.update_inv_wear_suit()
-		H.update_inv_head()
-		H.update_hair()
 
 		if(blood_on_castoff)
 			var/turf/T = get_turf(H)
@@ -86,8 +83,8 @@
 	user.drop_from_inventory(user.head)
 	user.drop_from_inventory(user.wear_suit)
 
-	user.equip_to_slot_if_possible(new suit_type(user), SLOT_WEAR_SUIT, 1, 1, 1)
-	user.equip_to_slot_if_possible(new helmet_type(user), SLOT_HEAD, 1, 1, 1)
+	user.equip_to_slot_if_possible(new suit_type(user), SLOT_WEAR_SUIT, TRUE, TRUE)
+	user.equip_to_slot_if_possible(new helmet_type(user), SLOT_HEAD, TRUE, TRUE)
 
 	var/datum/role/changeling/changeling = user.mind.GetRoleByType(/datum/role/changeling)
 	changeling.chem_recharge_slowdown += recharge_slowdown
@@ -118,6 +115,9 @@
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
+	qualities = list(
+		QUALITY_PRYING = 1
+	)
 
 /obj/item/weapon/melee/arm_blade/atom_init()
 	. = ..()
