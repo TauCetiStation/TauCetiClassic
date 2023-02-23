@@ -124,7 +124,7 @@ var/global/datum/faction/replicators/replicators_faction
 		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
 			listening |= M
 
-		if(M.mind && M.mind.GetRole(/datum/role/replicator))
+		if(M.mind && M.mind.GetRole(REPLICATOR))
 			listening |= M
 
 	for(var/m in listening)
