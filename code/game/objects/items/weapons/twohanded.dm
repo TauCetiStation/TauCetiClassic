@@ -40,8 +40,6 @@
 /obj/item/weapon/fireaxe/proc/can_spin(mob/user)
 	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
 
-
-
 /obj/item/weapon/dualsaber
 	var/reflect_chance = 0
 	icon_state = "dualsaber0"
