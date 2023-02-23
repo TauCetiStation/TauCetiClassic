@@ -299,7 +299,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	if(required_power >= 0)
 		required_power = max(0, required_power - idle_power_usage)
 
-	if(global.replicators_faction.materials < 5 || required_materials <= 0)
+	if(global.replicators_faction.materials < REPLICATOR_COST_REPLICATE + 5 || required_materials <= 0)
 		return
 
 	global.replicators_faction.adjust_materials(-5)
