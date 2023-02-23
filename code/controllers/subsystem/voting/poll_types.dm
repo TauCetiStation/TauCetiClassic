@@ -81,8 +81,8 @@
 
 	minimum_win_percentage = 0.501
 
-	cooldown = 10 MINUTES
-	next_vote = 0 MINUTES //Minimum round length before it can be called for the first time
+	cooldown = 20 MINUTES
+	next_vote = 30 MINUTES //Minimum round length before it can be called for the first time
 
 	description = "У вас будет больше вес голоса, если вы глава или антагонист, и меньше, если вы мертвы или если вы призрак."
 
