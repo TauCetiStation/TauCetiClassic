@@ -2270,10 +2270,15 @@
 			if(J.title in excluded_rank)
 				continue
 			J.salary_ratio = new_ratio
+
 		var/list/crew = my_subordinate_staff("Admin")
 		for(var/person in crew)
-			var/datum/money_account/account = person["acc_datum"]
+			var/datum/money_account/account = get_account(person["account"])
+			if(!account)
+				continue
+
 			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = ratio_rate)
+
 		if(new_ratio == 1)	//if 0 was selected
 			to_chat(usr, "<span class='warning'><b>You returned basic salaries to all professions</b></span>")
 		else

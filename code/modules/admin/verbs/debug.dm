@@ -421,7 +421,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	if(!ishuman(M))
 		tgui_alert(usr, "Invalid mob")
 		return
-	
+
 	var/dresscode = robust_dress_shop()
 
 	if(!dresscode)

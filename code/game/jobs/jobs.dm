@@ -191,7 +191,11 @@ var/global/list/nonhuman_positions = list(
 					continue
 				if(head_rank == "Quartermaster" && !QM_staff.Find(person["rank"]))	//QM only rules his boys
 					continue
-			var/datum/money_account/account = person["acc_datum"]
-			data[++data.len] = list("name" = person["name"], "rank" = person["rank"], "salary" = account.owner_salary, "acc_datum" = person["acc_datum"], "acc_number" = person["account"])
 
-	return data	// --> list(real_name, assignment, salary, /datum/money_account, account_number)
+			var/datum/money_account/MA = get_account(person["account"])
+			if(!MA)
+				continue
+
+			data[++data.len] = list("name" = person["name"], "rank" = person["rank"], "salary" = MA.owner_salary, "account" = person["account"])
+
+	return data	// --> list(real_name, assignment, salary, account_number)
