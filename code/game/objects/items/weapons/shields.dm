@@ -84,7 +84,7 @@
 	wall_of_shield_on = TRUE
 	add_filter("wallshield_outline", 2, outline_filter(1, "#c0c0c0"))
 	update_icon()
-	user.update_inv_item(src)
+	update_inv_mob()
 	RegisterSignal(user, list(COMSIG_ATOM_CHANGE_DIR), .proc/user_moved)
 	return TRUE
 
@@ -95,7 +95,7 @@
 	update_icon()
 	if(user)
 		to_chat(user, "<span class='info'>You interrupted the Wall of Shields technique.</span>")
-		user.update_inv_item(src)
+		update_inv_mob()
 		UnregisterSignal(user, list(COMSIG_ATOM_CHANGE_DIR))
 
 /obj/item/weapon/shield/proc/user_moved(datum/source, dir)
