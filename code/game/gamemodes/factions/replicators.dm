@@ -115,55 +115,6 @@ var/global/datum/faction/replicators/replicators_faction
 		announce_swarm("The Swarm", "The Swarm", "Ample materials consumed. Bandwidth increased.")
 		bandwidth++
 
-/datum/faction/replicators/proc/announce_swarm(presence_name, presence_ckey, message, atom/announcer=null)
-	var/list/listening = list()
-
-	for(var/mob/M in player_list)
-		if(QDELETED(M)) // avoid not hard-deleted mobs with client
-			continue
-		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
-			listening |= M
-
-		if(M.mind && M.mind.GetRole(REPLICATOR))
-			listening |= M
-
-	for(var/m in listening)
-		var/mob/M = m
-		var/open_tags = ""
-		var/close_tags = ""
-
-		if(swarms_goodwill[presence_ckey] && swarms_goodwill[max_goodwill_ckey])
-			var/goodwill_coeff = swarms_goodwill[presence_ckey] / swarms_goodwill[max_goodwill_ckey]
-			var/goodwill_font_size = max(round(goodwill_coeff * 4), 1)
-			if(presence_ckey == max_goodwill_ckey)
-				open_tags += "<font size='[goodwill_font_size]'>"
-				close_tags += "</font>"
-
-		if(presence_name == "The Swarm")
-			open_tags += "<font size='5'>"
-			close_tags += "</font>"
-
-		var/message_open_tags = "<span class='message'><span class='replicator'>"
-		var/message_close_tags = "</span></span>"
-
-		if(announcer && get_dist(announcer, M) < 7)
-			message_open_tags += "<b>"
-			message_close_tags = "</b>[message_close_tags]"
-
-		var/channel = "<span class='replicator'>\[???\]</span>"
-		var/speaker_name = "<b>[presence_name]</b>"
-
-		to_chat(M, "[open_tags][channel] [speaker_name] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags]")
-
-/datum/faction/replicators/proc/drone_message(mob/living/simple_animal/replicator/drone, message, transfer=FALSE, dismantle=FALSE)
-	for(var/r in members)
-		var/datum/role/replicator/R = r
-		if(!R.antag)
-			continue
-		var/jump_button = transfer ? "<a href='?src=\ref[R.antag.current];replicator_jump=\ref[drone]'>(JMP)</a>" : ""
-		var/dismantle_button = dismantle ? "<a href='?src=\ref[R.antag.current];replicator_kill=\ref[drone]'>(KILL)</a>" : ""
-		to_chat(R.antag, "<span class='replicator'>\[???\]</span> <b>[drone.name]</b> requests, <span class='message'><span class='replicator'>\"[message]\"</span></span>[jump_button][dismantle_button]")
-
 /datum/faction/replicators/proc/adjust_materials(material_amount, adjusted_by=null)
 	materials += material_amount
 	this_second_materials_change += material_amount
@@ -195,6 +146,8 @@ var/global/datum/faction/replicators/replicators_faction
 		return
 
 	R.apply_status_effect(STATUS_EFFECT_SWARMS_GIFT, spawned_at_time + swarms_gift_duration - world.time)
+	// Scale volume with amount of drones?
+	R.playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 /datum/faction/replicators/proc/victory_animation(turf/T)
 	SSticker.explosion_in_progress = TRUE
@@ -209,9 +162,24 @@ var/global/datum/faction/replicators/replicators_faction
 	sleep(10)
 	enter_allowed = FALSE
 	SSticker.station_explosion_cinematic(0, null)
-	explosion(T, 15, 70, 200)
+	addtimer(CALLBACK(src, .proc/blue_screen), 17.6 SECONDS)
+
+	var/obj/effect/cross_action/spacetime_dist/center = new(T)
+	center.linked_dist = center
+
+	for(var/turf/other as anything in RANGE_TURFS(80, center))
+		if(isspaceturf(other))
+			continue
+
+		var/obj/effect/cross_action/spacetime_dist/SD = new(other)
+		SD.linked_dist = center
+
 	SSticker.station_was_nuked = TRUE
 	SSticker.explosion_in_progress = FALSE
+
+/datum/faction/replicators/proc/blue_screen()
+	for(var/mob/M in player_list)
+		flash_color(M, flash_color="#A8DFF0", flash_time=1 MINUTE)
 
 /datum/faction/replicators/check_win()
 	return SSticker.station_was_nuked

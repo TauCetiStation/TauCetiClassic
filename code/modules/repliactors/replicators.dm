@@ -117,6 +117,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	// Roundstart status effect buffs this.
 	var/efficency = 1.0
 
+	var/pixel_offset = 8
+
 /mob/living/simple_animal/replicator/atom_init()
 	. = ..()
 
@@ -129,8 +131,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
 	name = "replicator ([generation])"
 	real_name = name
-	pixel_x = rand(-8, 8)
-	pixel_y = rand(-8, 8)
+	scatter_offset()
 
 	for(var/spell in replicator_spells)
 		AddSpell(new spell(src))
@@ -157,15 +158,24 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	leader = null
 	return ..()
 
+/mob/living/simple_animal/replicator/proc/scatter_offset()
+	pixel_x = rand(-pixel_offset, pixel_offset)
+	pixel_y = rand(-pixel_offset, pixel_offset)
+
 /mob/living/simple_animal/replicator/Moved(atom/OldLoc, dir)
 	. = ..()
 
 	if(!isturf(loc))
 		return
 
+	scatter_offset()
+
 	try_construct(loc)
 
 /mob/living/simple_animal/replicator/proc/try_construct(turf/T)
+	if(!ckey)
+		return
+
 	if(!auto_construct_type)
 		return
 
@@ -261,8 +271,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		if(!C.ckey)
 			to_chat(C, "<span class='warning'>DRONE INTEGRITY CRITICAL: PRESENCE TRANSFER PROTOCOL ACTIVATED</span>")
 			playsound(src, 'sound/mecha/lowpower.ogg', VOL_EFFECTS_MASTER)
-			// TO-DO: add red flashing to screen that would be super cool
 			transfer_control(C)
+			flash_color(C, flash_color="#ff0000", flash_time=1 SECOND)
 
 /mob/living/simple_animal/replicator/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/replicator))
@@ -272,131 +282,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	if(istype(mover) && mover.throwing)
 		return TRUE
 	return ..()
-
-/mob/living/simple_animal/replicator/proc/disintegrate_turf(turf/T)
-	var/target_x = T.x
-	var/target_y = T.y
-	var/target_z = T.z
-
-	var/start_loc = loc
-
-	while(!is_busy() && do_after(src, 1, target=src, progress=FALSE))
-		if(start_loc != loc)
-			return
-
-		var/atom/disintegratable = get_disintegratable_from(locate(target_x, target_y, target_z))
-		if(!disintegratable)
-			return
-		face_atom(disintegratable)
-		disintegrate(disintegratable)
-
-/mob/living/simple_animal/replicator/proc/get_disintegratable_from(turf/T)
-	for(var/a in T.contents)
-		var/atom/A = a
-		if(is_auto_disintegratable(A))
-			return A
-
-	if(istype(T, /turf/simulated/floor/plating/airless/catwalk/forcefield))
-		return null
-	if(!is_auto_disintegratable(T))
-		return null
-
-	return T
-
-// Return TRUE if disintegrated something.
-/mob/living/simple_animal/replicator/proc/disintegrate(atom/A)
-	if(is_busy())
-		return FALSE
-	if(disintegrating)
-		return FALSE
-	if(A.is_disintegrating)
-		return FALSE
-
-	if(A.flags & NODECONSTRUCT)
-		to_chat(src, "<span class='warning'>Object Does Not Disintegrate.</span>")
-		return FALSE
-
-	if((locate(/mob/living) in A) && !isturf(A))
-		to_chat(src, "<span class='warning'>Can Not Deconstruct: May Harm Organics.</span>")
-		return FALSE
-
-	var/material_amount = A.get_replicator_material_amount()
-	if(material_amount < 0)
-		return FALSE
-
-	disintegrating = TRUE
-	A.is_disintegrating = TRUE
-
-	var/obj/effect/overlay/replicator/D = new(get_turf(A))
-	D.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	D.plane = A.plane
-	D.layer = A.layer + 0.1
-	D.icon_state = "disintegrate_static"
-
-	playsound_stealthy(A, 'sound/machines/cyclotron.ogg', VOL_EFFECTS_MASTER)
-
-	if(!do_skilled(src, A, A.get_unit_disintegration_time() * material_amount / efficency, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
-		qdel(D)
-		disintegrating = FALSE
-		A.is_disintegrating = FALSE
-		return FALSE
-
-	playsound_stealthy(src, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER)
-
-	var/obj/effect/overlay/replicator/target_appearance = new(get_turf(A))
-	target_appearance.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	target_appearance.plane = A.plane
-	target_appearance.layer = A.layer + 0.09
-	target_appearance.appearance = A
-
-	var/matrix/M = matrix(A.transform)
-
-	// make the item we're targetting waddle?
-	if(!A.replicator_act(src))
-		qdel(D)
-		qdel(target_appearance)
-		disintegrating = FALSE
-		A.is_disintegrating = FALSE
-		return FALSE
-
-	D.icon = 'icons/mob/replicator.dmi'
-	D.icon_state = "disintegrate"
-
-	M.Scale(0.1, 0.1)
-	M = turn(M, 180)
-
-	var/matrix/M2 = matrix(M)
-
-	animate(target_appearance, transform=M, time=8)
-	animate(D, transform=M2, time=8)
-
-	QDEL_IN(D, 8)
-	QDEL_IN(target_appearance, 8)
-
-	//integrate_animation()
-
-	global.replicators_faction.adjust_materials(material_amount, adjusted_by=last_controller_ckey)
-	disintegrating = FALSE
-	A.is_disintegrating = FALSE
-	return TRUE
-
-/*
-	doesn't look neat :(
-/mob/living/simple_animal/replicator/proc/integrate_animation()
-	if(playing_integration_animation)
-		return
-	playing_integration_animation = TRUE
-
-	var/image/I = image(icon=icon, icon_state="integrate")
-	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	I.layer = layer + 0.1
-	I.plane = plane
-	I.loc = src
-
-	flick_overlay_view(I, src, 5)
-
-	VARSET_IN(src, playing_integration_animation, FALSE, 5)
-*/
 
 // Return TRUE if succesful control transfer.
 /mob/living/simple_animal/replicator/proc/transfer_control(mob/living/simple_animal/replicator/target, alert=TRUE)
@@ -421,30 +306,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	playsound_stealthy(target, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER)
 	return TRUE
 
-/mob/living/simple_animal/replicator/say(message)
-	if(stat != CONSCIOUS)
-		return
-
-	message = sanitize(message)
-
-	if(!message)
-		return
-
-	if(message[1] == "*")
-		return emote(copytext(message, 2))
-
-	message = add_period(capitalize(trim(message)))
-
-	var/image/I = image('icons/mob/talk.dmi', src, "[typing_indicator_type][say_test(message)]", MOB_LAYER + 1)
-	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
-	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-	flick_overlay_view(I, src, 30)
-
-	emote("beep")
-
-	global.replicators_faction.announce_swarm(global.replicators_faction.get_presence_name(ckey), ckey, message, announcer=src)
-
 /mob/living/simple_animal/replicator/Topic(href, href_list)
 	if(incapacitated())
 		return ..()
@@ -452,11 +313,11 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		return ..()
 
 	if(href_list["replicator_jump"])
-		var/mob/living/simple_animal/replicator/target = locate(href_list["replicator_jump"])
+		var/atom/target = locate(href_list["replicator_jump"])
 		if(!istype(target))
 			return
 
-		if(transfer_control(target, alert=FALSE))
+		if(isreplicator(target) && transfer_control(target, alert=FALSE))
 			return
 
 		for(var/r in global.replicators)
@@ -515,6 +376,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	FN.color = pick("#A8DFF0", "#F0A8DF", "#DFF0A8")
 
 	var/area/A = get_area(T)
+	emote("beep")
 	global.replicators_faction.drone_message(src, "Node unveiled at [A.name].", transfer=TRUE)
 
 /mob/living/simple_animal/replicator/gib()

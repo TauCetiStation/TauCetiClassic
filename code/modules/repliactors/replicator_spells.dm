@@ -263,6 +263,14 @@
 	action_icon = 'icons/mob/replicator.dmi'
 	action_icon_state = "ui_corridor"
 
+/obj/effect/proc_holder/spell/no_target/toggle_corridor_construction/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+	if(global.replicators_faction.materials < 1)
+		if(try_start)
+			to_chat(user, "<span class='warning'>Not enough materials.</span>")
+		return FALSE
+
+	return ..()
+
 /obj/effect/proc_holder/spell/no_target/toggle_corridor_construction/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/replicator/user_replicator = user
 	if(!user_replicator.auto_construct_type)
@@ -270,7 +278,8 @@
 		user_replicator.auto_construct_cost = 1
 		to_chat(user_replicator, "<span class='notice'>You toggle web construction on.</span>")
 
-		user_replicator.try_construct(get_turf(user_replicator))
+		if(isturf(user_replicator.loc))
+			user_replicator.try_construct(user_replicator.loc)
 
 		action.button_icon_state = "ui_corridor_on"
 		action.button.UpdateIcon()
@@ -415,6 +424,12 @@
 	if(global.replicators_faction.bandwidth < 10)
 		if(try_start)
 			to_chat(user, "<span class='warning'>The rift requires 10 replicators to be sent through. You need more bandwidth.</span>")
+		return FALSE
+
+	if(length(global.bluespace_catapults) > 0)
+		if(try_start)
+			var/area/A = get_area(pick(global.bluespace_catapults))
+			to_chat(user, "<span class='notice'>You already have a catapult being built in [A.name]. Protect it!</span>")
 		return FALSE
 
 	if(!is_station_level(user.z))

@@ -264,6 +264,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	resize = 1.5
 
 	density = TRUE
+	anchored = TRUE
 
 	var/max_required_power = 24000000
 	var/max_required_materials = 2000
@@ -344,3 +345,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 		return
 
 	return ..()
+
+/obj/machinery/swarm_powered/bluespace_catapult/examine(mob/user)
+	. = ..()
+	if(!isreplicator(user))
+		return
+	if(required_materials > 0)
+		to_chat(user, "<span class='notice'>It requires [required_materials] more materials.</span>")
+	if(required_power > 0)
+		to_chat(user, "<span class='notice'>It required [required_power] more power.</span>")

@@ -35,3 +35,28 @@
 /datum/emote/clickable/help_replicator/on_cloud_click(mob/living/carbon/human/target, mob/living/carbon/human/clicker)
 	if(target != clicker)
 		clicker.help_other(target)
+
+
+/datum/emote/replicator/beep
+	key = "beep"
+
+	message_1p = "You beep."
+	message_3p = "beeps."
+
+	message_impaired_production = "makes a weak noise."
+	message_impaired_reception = "You see a light flicker."
+
+	message_miming = "makes robot noises."
+	message_muzzled = "makes a weak noise."
+
+	message_type = SHOWMSG_AUDIO
+
+	sound = 'sound/machines/twobeep.ogg'
+
+	state_checks = list(
+		EMOTE_STATE(is_stat, CONSCIOUS),
+	)
+
+/datum/emote/replicator/beep/play_sound(mob/user, intentional, emote_sound)
+	var/mob/living/simple_animal/replicator/R = user
+	R.playsound_stealthy(user, emote_sound, VOL_EFFECTS_MASTER, vol=75)

@@ -29,6 +29,7 @@
 		return
 
 	if(health < last_update_health && next_attacked_alert < world.time)
+		emote("beep")
 		global.replicators_faction.drone_message(src, "I am taking damage.", transfer=TRUE)
 		next_attacked_alert = world.time + attacked_alert_cooldown
 
@@ -38,6 +39,7 @@
 		return
 
 	if(!disintegrating && excitement <= 0 && next_excitement_alert < world.time)
+		emote("beep")
 		global.replicators_faction.drone_message(src, pick("I have no purpose.", "I am bored.", "Why am I still here."), transfer=TRUE, dismantle=TRUE)
 		next_excitement_alert = excitement_alert_cooldown + world.time
 
@@ -304,33 +306,6 @@
 		else if(dist < closest_distance)
 			. = R
 			closest_distance = dist
-
-/mob/living/simple_animal/replicator/proc/is_auto_disintegratable(atom/A)
-	if(A.name == "")
-		return FALSE
-
-	if(!A.simulated)
-		return FALSE
-
-	if(A.flags & NODECONSTRUCT)
-		return FALSE
-
-	if(A.invisibility > see_invisible)
-		return FALSE
-
-	if(!A.can_be_auto_disintegrated())
-		return FALSE
-
-	if(A.get_replicator_material_amount() < 0)
-		return FALSE
-
-	if(A.is_disintegrating)
-		return FALSE
-
-	if((locate(/mob/living) in A) && !isturf(A))
-		return FALSE
-
-	return TRUE
 
 /mob/living/simple_animal/replicator/proc/find_most_clickable(turf/T)
 	if(!T.contents.len)

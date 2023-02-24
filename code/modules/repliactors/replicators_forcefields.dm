@@ -87,6 +87,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	name = "forcefield node"
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "floor_node_free"
+	layer = ABOVE_OBJ_LATER
 	density = FALSE
 	anchored = TRUE
 	opacity = 0
@@ -112,6 +113,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	var/mob/living/simple_animal/replicator/R = AM
 	global.replicators_faction.adjust_compute(1, adjusted_by=R.last_controller_ckey)
 	icon_state = "floor_node_captured"
+	layer = ABOVE_NORMAL_TURF_LAYER
 	playsound(AM, 'sound/magic/heal.ogg', VOL_EFFECTS_MASTER)
 
 /obj/structure/forcefield_node/proc/captured()

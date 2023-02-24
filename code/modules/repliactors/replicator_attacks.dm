@@ -22,6 +22,7 @@
 		SetNextMove(CLICK_CD_MELEE)
 		L.set_lastattacker_info(src)
 		L.log_combat(src, "replicator-attacked (INTENT: [uppertext(a_intent)]) (CONTROLLER: [last_controller_ckey])")
+		scatter_offset()
 		return
 
 	if(a_intent == INTENT_GRAB)
@@ -60,6 +61,7 @@
 		D.pixel_x += rand(-1, 1)
 		D.pixel_y += rand(-1, 1)
 		D.Fire(A, src, params)
+		scatter_offset()
 
 /mob/living/simple_animal/replicator/CtrlClickOn(atom/A)
 	if(istype(A, /mob/living/simple_animal/replicator))
@@ -126,8 +128,10 @@
 	L.electrocute_act(30, src, siemens_coeff = 1.0, def_zone = stepped_by) // electrocute act does a message.
 	L.Stun(2)
 
+	audible_message("<b>[src]</b> <i>buzzes.</i>", "You see a light flicker.", hearing_distance = 7, ignored_mobs = observer_list)
+
 	var/area/A = get_area(src)
-	global.replicators_faction.drone_message(src, "A mine has been triggered in [A.name].")
+	global.replicators_faction.drone_message(src, "A mine has been triggered in [A.name].", transfer=TRUE)
 
 /obj/item/mine/replicator/proc/rearm()
 	update_icon()
