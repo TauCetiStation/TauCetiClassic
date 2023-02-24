@@ -80421,8 +80421,9 @@
 /obj/machinery/computer/skills,
 /obj/item/weapon/lighter/zippo,
 /obj/item/weapon/storage/fancy/cigarettes,
-/obj/machinery/requests_console/ce{
-	pixel_y = 32
+/obj/item/weapon/storage/secure/safe{
+	pixel_x = 6;
+	pixel_y = 27
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellowfull"
