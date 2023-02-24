@@ -115,7 +115,7 @@ var/global/list/alldepartments = list("Central Command")
 
 	if(href_list["remove"])
 		if(tofax)
-			if(isAI(usr) || isrobot(usr))
+			if(issilicon(usr))
 				tofax.forceMove(loc)
 			else if(!usr.get_active_hand())
 				usr.put_in_hands(tofax)
