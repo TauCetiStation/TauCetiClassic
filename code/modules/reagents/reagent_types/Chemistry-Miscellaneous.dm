@@ -231,34 +231,29 @@
 		if(C.l_hand)
 			C.l_hand.clean_blood()
 		if(C.wear_mask)
-			if(C.wear_mask.clean_blood())
-				C.update_inv_wear_mask()
+			C.wear_mask.clean_blood()
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = C
 			if(H.head)
-				if(H.head.clean_blood())
-					H.update_inv_head()
+				H.head.clean_blood()
 			if(H.wear_suit)
-				if(H.wear_suit.clean_blood())
-					H.update_inv_wear_suit()
+				H.wear_suit.clean_blood()
 			else if(H.w_uniform)
-				if(H.w_uniform.clean_blood())
-					H.update_inv_w_uniform()
+				H.w_uniform.clean_blood()
 			if(H.shoes)
-				if(H.shoes.clean_blood())
-					H.update_inv_shoes()
+				H.shoes.clean_blood()
 			var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
 			var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
 			var/no_legs = FALSE
 			if(!l_foot && !r_foot)
 				no_legs = TRUE
 			if(!no_legs)
-				if(H.shoes && H.shoes.clean_blood())
-					H.update_inv_shoes()
+				if(H.shoes)
+					H.shoes.clean_blood()
 				else
 					H.feet_blood_DNA = null
 					H.feet_dirt_color = null
-					H.update_inv_shoes()
+					H.update_inv_slot(SLOT_SHOES)
 		M.clean_blood()
 
 /datum/reagent/fluorosurfactant//foam precursor

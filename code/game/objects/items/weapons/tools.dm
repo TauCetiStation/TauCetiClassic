@@ -134,8 +134,6 @@
 			"You hear handcuffs being cut.")
 			if(C.buckled && C.buckled.buckle_require_restraints)
 				C.buckled.unbuckle_mob()
-			C.update_inv_handcuffed()
-		return
 	else
 		..()
 /*
@@ -395,10 +393,7 @@
 		src.icon_state = initial(src.icon_state)
 		src.active = FALSE
 
-	if(usr.hand)
-		usr.update_inv_l_hand()
-	else
-		usr.update_inv_r_hand()
+	update_inv_mob()
 
 // Decides whether or not to damage a player's eyes based on what they're wearing as protection
 // Note: This should probably be moved to mob
