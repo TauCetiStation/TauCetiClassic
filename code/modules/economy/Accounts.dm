@@ -18,14 +18,6 @@
 							//1 - require manual login / account number and pin
 							//2 - require card and manual login
 
-/datum/money_account/New()
-	all_money_accounts += src
-	return ..()
-
-/datum/money_account/Destroy()
-	all_money_accounts -= src
-	return ..()
-
 /datum/money_account/proc/adjust_money(amount)
 	money = clamp(money + amount, MIN_MONEY_ON_ACCOUNT, MAX_MONEY_ON_ACCOUNT)
 
@@ -95,12 +87,8 @@
 		if(M.transaction_log.len)
 			var/datum/transaction/T = M.transaction_log[1]
 			remembered_info += "<b>Your account was created:</b> [T.time], [T.date] at [T.source_terminal]<br>"
-
 		H.mind.store_memory(remembered_info)
-
-		H.mind.add_key_memory(MEM_ACCOUNT_NUMBER, M.account_number)
-		H.mind.add_key_memory(MEM_ACCOUNT_PIN, M.remote_access_pin)
-
+		H.mind.initial_account = M
 	return M
 
 /proc/create_account(new_owner_name = "Default user", starting_funds = 0, obj/machinery/account_database/source_db, age = 10)
@@ -152,6 +140,7 @@
 
 	//add the account
 	M.transaction_log.Add(T)
+	all_money_accounts.Add(M)
 
 	return M
 

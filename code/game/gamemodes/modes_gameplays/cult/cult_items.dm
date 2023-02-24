@@ -62,9 +62,6 @@
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/shield/riot/mirror/toggle_wallshield(mob/living/user)
-	to_chat(user, "<span class='warning'>You are fucking INVINCIBLE!</span>")
-
 /obj/item/clothing/glasses/cult_blindfold
 	name = "blindfold"
 	desc = "Covers the eyes, preventing sight. Altough, something wrong with this one..."

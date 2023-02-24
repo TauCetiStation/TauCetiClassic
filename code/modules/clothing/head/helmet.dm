@@ -121,7 +121,7 @@
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push the visor up on")
-		update_inv_mob() //so our mob-overlays update
+		usr.update_inv_head()	//so our mob-overlays update
 
 /obj/item/clothing/head/helmet/bulletproof
 	name = "bulletproof helmet"
@@ -203,7 +203,7 @@
 /obj/item/clothing/head/helmet/helmet_of_justice/attack_self(mob/user)
 	on = !on
 	icon_state = "shitcuritron_[on]"
-	update_inv_mob()
+	user.update_inv_head()
 
 /obj/item/clothing/head/helmet/warden/blue
 	name = "warden's hat"
@@ -310,9 +310,3 @@
 	desc = "A simple steel helmet - a steelpot, if you will."
 	icon_state = "surplus_helmet"
 	armor = list(melee = 45, bullet = 40, laser = 40,energy = 25, bomb = 35, bio = 0, rad = 0)
-
-/obj/item/clothing/head/helmet/blueshield
-	name = "blueshield helmet"
-	desc = "An advanced helmet issued to blueshield officers."
-	icon_state = "blueshield_helmet"
-	armor = list(melee = 60, bullet = 55, laser = 50,energy = 35, bomb = 35, bio = 0, rad = 0)

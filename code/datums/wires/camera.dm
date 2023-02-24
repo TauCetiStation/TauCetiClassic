@@ -6,6 +6,7 @@ var/global/const/CAMERA_WIRE_NOTHING1 = 16
 var/global/const/CAMERA_WIRE_NOTHING2 = 32
 
 /datum/wires/camera
+	random = TRUE
 	holder_type = /obj/machinery/camera
 	wire_count = 6
 

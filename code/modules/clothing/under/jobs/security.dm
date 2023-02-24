@@ -172,12 +172,3 @@
 	desc = "A police uniform often found in the lines at donut shops."
 	icon_state = "spacepolice_families"
 	item_state = "spacepolice_families"
-
-/obj/item/clothing/under/rank/blueshield
-	name = "blueshield uniform"
-	desc = "It's made of a slightly sturdier material, to allow for robust protection."
-	icon_state = "blueshield"
-	item_state = "blueshield"
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
-	flags = ONESIZEFITSALL
-	siemens_coefficient = 0.9

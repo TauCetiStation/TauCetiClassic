@@ -208,6 +208,4 @@ MAP_REMOVE_JOB(warden)
 
 MAP_REMOVE_JOB(forensic)
 
-MAP_REMOVE_JOB(blueshield)
-
 #undef JOB_MODIFICATION_MAP_NAME

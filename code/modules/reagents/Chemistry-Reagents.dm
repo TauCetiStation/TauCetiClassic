@@ -40,8 +40,6 @@
 
 	var/datum/religion/religion
 
-	var/toxin_absorption = 0.0
-
 /datum/reagent/proc/reaction_mob(mob/M, method=TOUCH, volume) //By default we have a chance to transfer some
 	if(!isliving(M))
 		return FALSE

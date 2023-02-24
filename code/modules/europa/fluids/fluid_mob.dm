@@ -30,6 +30,13 @@
 					for(var/n = 3, n > 0, n--)
 						var/obj/item/I = pick(inv_contents)
 						I.make_wet()
+
+			C.stop_pulling()
+			to_chat(C, "<span class='notice'>You slipped on the wet floor!</span>")
+			playsound(src, 'sound/misc/slip.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
+			C.Stun(5)
+			C.Weaken(2)
+
 	if(prob(5))
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C

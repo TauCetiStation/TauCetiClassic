@@ -19,10 +19,14 @@
 		return
 	on = !on
 	icon_state = "[initial(icon_state)][on ? "-light" : ""]"
-	update_inv_mob()
+	usr.update_inv_head()
 
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/skrell/white
 	icon_state = "skrell_helmet_white"
@@ -75,10 +79,14 @@
 		return
 	on = !on
 	icon_state = "unathi_helm_cheap[on ? "-light" : ""]"
-	update_inv_mob()
+	usr.update_inv_head()
 
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_head()
 
 /obj/item/clothing/suit/space/unathi
 	armor = list(melee = 40, bullet = 30, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 50)

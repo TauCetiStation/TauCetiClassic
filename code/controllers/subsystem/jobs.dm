@@ -582,11 +582,9 @@ SUBSYSTEM_DEF(job)
 		C.assign(H.real_name)
 
 		//put the player's account number onto the ID
-		if(H.mind)
-			var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
-			if(MA)
-				C.associated_account_number = MA.account_number
-				MA.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
+		if(H.mind && H.mind.initial_account)
+			C.associated_account_number = H.mind.initial_account.account_number
+			H.mind.initial_account.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
 
 		H.equip_or_collect(C, SLOT_WEAR_ID)
 
@@ -597,11 +595,9 @@ SUBSYSTEM_DEF(job)
 		pda.assign(H.real_name)
 		pda.ownrank = C.rank
 		pda.check_rank(C.rank)
-
-		var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
-		pda.owner_account = MA.account_number //bind the account to the pda
-		pda.owner_fingerprints += C.fingerprint_hash //save fingerprints in pda from ID card
-		MA.owner_PDA = pda //add PDA in /datum/money_account
+		pda.owner_account = H.mind.initial_account		//bind the account to the pda
+		pda.owner_fingerprints += C.fingerprint_hash	//save fingerprints in pda from ID card
+		H.mind.initial_account.owner_PDA = pda			//add PDA in /datum/money_account
 
 	return TRUE
 

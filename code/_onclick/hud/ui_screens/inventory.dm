@@ -15,6 +15,8 @@
 
 /atom/movable/screen/inventory/action()
 	if(check_state() && usr.attack_ui(slot_id))
+		usr.update_inv_l_hand()
+		usr.update_inv_r_hand()
 		usr.next_move = world.time + 6
 
 

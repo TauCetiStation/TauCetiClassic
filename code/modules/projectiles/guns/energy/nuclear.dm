@@ -11,7 +11,10 @@
 /obj/item/weapon/gun/energy/gun/attack_self(mob/living/user)
 	..()
 	update_icon()
-	update_inv_mob()
+	if(user.hand)
+		user.update_inv_l_hand()
+	else
+		user.update_inv_r_hand()
 
 /obj/item/weapon/gun/energy/gun/head
 	desc = "A basic energy-based gun with two settings: Stun and kill. This one has a grip made of wood."

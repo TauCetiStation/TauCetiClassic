@@ -111,31 +111,38 @@
 					return
 				if("groin")
 					if(H.belt)
-						H.belt.clean_blood()
+						if(H.belt.clean_blood())
+							H.update_inv_belt()
 				if("head")
 					if(H.head)
 						var/washmask = !(H.head.flags_inv & HIDEMASK)
 						var/washears = !((H.head.flags_inv & HIDEEARS) || (H.wear_mask && H.wear_mask.flags_inv & HIDEEARS))
 						var/washglasses = !((H.head.flags_inv & HIDEEYES) || (H.wear_mask && H.wear_mask.flags_inv & HIDEEYES))
-						if(!(washmask && H.wear_mask && H.wear_mask.clean_blood()))
+						if(washmask && H.wear_mask && H.wear_mask.clean_blood())
+							H.update_inv_wear_mask()
+						else
 							H.lip_style = null
 							H.update_body()
-						if(H.glasses && washglasses)
-							H.glasses.clean_blood()
-						if(H.l_ear && washears)
-							H.l_ear.clean_blood()
-						if(H.r_ear && washears)
-							H.r_ear.clean_blood()
-						H.head.clean_blood()
+						if(H.glasses && washglasses && H.glasses.clean_blood())
+							H.update_inv_glasses()
+						if(H.l_ear && washears && H.l_ear.clean_blood())
+							H.update_inv_ears()
+						if(H.r_ear && washears && H.r_ear.clean_blood())
+							H.update_inv_ears()
+						if(H.head.clean_blood())
+							H.update_inv_head()
 				if("chest")
-					if(!(H.wear_suit && H.wear_suit.clean_blood()) && H.w_uniform)
-						H.w_uniform.clean_blood()
-					if(H.belt)
-						H.belt.clean_blood()
+					if(H.wear_suit && H.wear_suit.clean_blood())
+						H.update_inv_wear_suit()
+					else if(H.w_uniform && H.w_uniform.clean_blood())
+						H.update_inv_w_uniform()
+					if(H.belt && H.belt.clean_blood())
+						H.update_inv_belt()
 				if("eyes")
 					if(!(H.head && (H.head.flags_inv & HIDEEYES)))
 						if(H.glasses)
 							H.glasses.clean_blood()
+							H.update_inv_glasses()
 						else
 							H.blurEyes(5)
 							H.eye_blind = max(H.eye_blind, 1)
@@ -147,10 +154,12 @@
 					if((!l_foot || (l_foot && (l_foot.is_stump))) && (!r_foot || (r_foot && (r_foot.is_stump))))
 						no_legs = TRUE
 					if(!no_legs)
-						if(!(H.shoes && H.shoes.clean_blood()))
-							H.feet_blood_DNA = null  // blood mechanic (feet_blood_DNA, feet_dirt_color, etc) should be fused into organ item objects on mob instead of mob itself,
-							H.feet_dirt_color = null // so we can refer to that info in update_icons.dm to draw blood and do more advanced stuff which is much harder when its hardcoded to mob while actually tied to limbs.
-							H.update_inv_slot(SLOT_SHOES)
+						if(H.shoes && H.shoes.clean_blood())
+							H.update_inv_shoes()
+						else
+							H.feet_blood_DNA = null
+							H.feet_dirt_color = null
+							H.update_inv_shoes()
 					else
 						to_chat(user, "<span class='red'>There is nothing to clean!</span>")
 						return
@@ -159,11 +168,12 @@
 					var/obj/item/organ/external/l_hand = H.bodyparts_by_name[BP_R_ARM]
 					if((l_hand && !(l_hand.is_stump)) && (r_hand && !(r_hand.is_stump)))
 						if(H.gloves && H.gloves.clean_blood())
+							H.update_inv_gloves()
 							H.gloves.germ_level = 0
 						else
 							if(H.bloody_hands)
 								H.bloody_hands = 0
-								H.update_inv_slot(SLOT_GLOVES)
+								H.update_inv_gloves()
 							H.germ_level = 0
 			H.clean_blood()
 			if(target == user)

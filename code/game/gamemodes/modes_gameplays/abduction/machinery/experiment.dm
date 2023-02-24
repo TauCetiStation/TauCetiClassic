@@ -205,17 +205,23 @@
 
 /obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
 	H.Sleeping(10 SECONDS)
-	qdel(H.handcuffed)
 	var/area/A
 	if(console && console.pad)
 		if(console.pad.precise_teleport_target)
 			H.forceMove(console.pad.precise_teleport_target)
+			remove_handcuffs(H)
 			return
 		else if(console.pad.teleport_target)
 			A = console.pad.teleport_target
 	if(!A)
 		A = teleportlocs[pick(teleportlocs)]
 	TeleportToArea(H,A)
+	remove_handcuffs(H)
+
+/obj/machinery/abductor/experiment/proc/remove_handcuffs(mob/living/carbon/human/H)
+	var/obj/item/weapon/handcuffs/alien/handcuffs = H.handcuffed
+	H.drop_from_inventory(handcuffs)
+	qdel(handcuffs)
 
 /obj/machinery/abductor/experiment/update_icon()
 	if(state_open)

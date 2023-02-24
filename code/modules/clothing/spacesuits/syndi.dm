@@ -36,7 +36,8 @@
 /obj/item/clothing/head/helmet/space/syndicate/update_icon(mob/user)
 	. = ..()
 	icon_state = "[initial(icon_state)][lit ? "-lit" : ""]"
-	update_inv_mob()
+	if(user)
+		user.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/syndicate/attack_self(mob/user)
 	. = ..()

@@ -27,7 +27,7 @@
 	else
 		set_light(0)
 
-	update_inv_mob()
+	user.update_inv_head()
 
 /obj/item/clothing/head/hardhat/update_icon()
 	icon_state = "[initial(icon_state)][on]"

@@ -90,13 +90,19 @@
 	mag_type = /obj/item/ammo_box/magazine/m762
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
 	has_cover = TRUE
-	two_hand_weapon = TRUE
+	istwohanded = TRUE
 
+/obj/item/weapon/gun/projectile/automatic/l6_saw/atom_init()
+	. = ..()
+	AddComponent(/datum/component/twohanded)
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
+	if(!HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED))
+		to_chat(user, "<span class='notice'>You need wield [src] in both hands before firing!</span>")
+		return
 	if(cover_open)
 		to_chat(user, "<span class='notice'>[src]'s cover is open! Close it before firing!</span>")
 	else
@@ -109,6 +115,11 @@
 	if(user.get_inactive_hand() != src)
 		return ..()//let them take it from inventory
 	if(!cover_open)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(!H.can_use_two_hands())
+				to_chat(user, "<span class='warning'>You need both of your hands to be intact.</span>")
+				return
 		cover_open = !cover_open
 		to_chat(user, "<span class='notice'>You open [src]'s cover.</span>")
 		update_icon()
@@ -157,7 +168,12 @@
 /obj/item/weapon/gun/projectile/automatic/l13/update_icon(mob/M)
 	icon_state = "l13[magazine ? "" : "-e"]"
 	item_state = "l13[magazine ? "" : "-e"]"
-	update_inv_mob()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.update_inv_l_hand()
+		H.update_inv_r_hand()
+		H.update_inv_belt()
+	return
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"
@@ -233,7 +249,6 @@
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
-	two_hand_weapon = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/atom_init()
 	. = ..()

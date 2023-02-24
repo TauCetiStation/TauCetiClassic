@@ -100,11 +100,6 @@
 	item_state = "int_headset"
 	ks2type = /obj/item/device/encryptionkey/headset_int
 
-/obj/item/device/radio/headset/headset_int/blueshield
-	name = "blueshield radio headset"
-	icon_state = "blueshield"
-	desc = "Headset of the guy that for some reason follows our heads of staff... To access the security channel, use :s. For command, use :c."
-
 /obj/item/device/radio/headset/headset_eng
 	name = "engineering radio headset"
 	desc = "When the engineers wish to chat like girls. To access the engineering channel, use :e. "

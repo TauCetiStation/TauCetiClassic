@@ -7,8 +7,6 @@
 	custom_metabolism = 0.01
 	taste_message = null
 
-	toxin_absorption = 0.5
-
 /datum/reagent/water/reaction_mob(mob/M, method=TOUCH, volume)
 	if(method == TOUCH)
 		if(ishuman(M))
@@ -333,8 +331,6 @@
 	color = "#1c1300" // rgb: 30, 20, 0
 	taste_message = "like a pencil or something"
 	custom_metabolism = 0.01
-
-	toxin_absorption = 2.0
 
 /datum/reagent/carbon/reaction_turf(turf/T, volume)
 	. = ..()

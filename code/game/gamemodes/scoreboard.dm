@@ -27,10 +27,8 @@
 		dmgscore = 0
 		var/turf/location = get_turf(E.loc)
 		if(location in escape_zone) // Escapee Scores
-			if(E.mind)
-				var/datum/money_account/MA = get_account(E.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
-				if(MA)
-					cashscore += MA.money
+			if(E.mind && E.mind.initial_account)
+				cashscore += E.mind.initial_account.money
 
 			for (var/obj/item/weapon/spacecash/C2 in get_contents_in_object(E, /obj/item/weapon/spacecash))
 				cashscore += C2.worth

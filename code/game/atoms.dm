@@ -542,7 +542,7 @@
 	M.check_dna()
 	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
-	add_dirt_cover(M.species.blood_datum, FALSE) // FALSE - dont call update_inv_slot in add_dirt_cover as it will be handled in human/add_blood or it will be double call and runtime
+	add_dirt_cover(M.species.blood_datum)
 
 /atom/proc/add_dirt_cover(dirt_datum)
 	SHOULD_CALL_PARENT(TRUE)

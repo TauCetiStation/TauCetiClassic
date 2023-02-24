@@ -13,7 +13,6 @@
 	var/pumped = 0
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
 	can_be_holstered = FALSE
-	two_hand_weapon = TRUE
 
 /obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = magazine.attackby(I, user, 1)

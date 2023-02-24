@@ -41,17 +41,8 @@
 		return FALSE
 
 	var/list/possibles_objectives = subtypesof(/datum/objective/cult) + /datum/objective/target/sacrifice
-
-	var/objectives_weight = 0
-	while(objectives_weight < 5)
-		var/datum/objective/O = AppendObjective(pick(possibles_objectives), TRUE)
-		if(istype(O, /datum/objective/target/sacrifice) || istype(O, /datum/objective/cult/job_convert))
-			objectives_weight += 1.0
-			continue //Still in possibles_objectives
-		var/datum/objective/cult/C = O
-		objectives_weight += C.weight
-		possibles_objectives -= C.type
-
+	for(var/i in 1 to rand(3, 4))
+		AppendObjective(pick_n_take(possibles_objectives))
 	return TRUE
 
 /datum/faction/cult/AdminPanelEntry()

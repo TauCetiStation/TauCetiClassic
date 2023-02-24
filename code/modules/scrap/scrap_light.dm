@@ -40,7 +40,8 @@
 	on = !on
 	update_brightness(user)
 	item_state = icon_state
-	update_inv_mob()
+	if(loc == user)
+		user.update_inv_item(src)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/torch/attack_self()

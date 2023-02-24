@@ -10,6 +10,7 @@
 	var/bolt_slide_sound = 'sound/weapons/guns/TargetOn.ogg'
 	var/mag_type = /obj/item/ammo_box/magazine/m9mm //Removes the need for max_ammo and caliber info
 	var/mag_type2
+	var/istwohanded = FALSE
 	var/has_cover = FALSE //does this gun has cover
 	var/cover_open = FALSE //does gun cover is open
 	var/obj/item/ammo_box/magazine/magazine
@@ -85,6 +86,8 @@
 			to_chat(user, "<span class='notice'>You close [src]'s cover.</span>")
 			update_icon()
 			return
+		return ..()
+	if(istwohanded)
 		return ..()
 	else if(magazine)
 		magazine.loc = get_turf(src.loc)

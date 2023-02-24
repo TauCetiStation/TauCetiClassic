@@ -481,7 +481,10 @@
 		src.item_state = "sword0"
 		src.w_class = SIZE_TINY
 
-	update_inv_mob()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_l_hand()
+		H.update_inv_r_hand()
 
 	add_fingerprint(user)
 	return
@@ -1386,7 +1389,11 @@ Owl & Griffin toys
 /obj/item/toy/prize/poly/polycompanion/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You have clicked a switch behind the toy.</span>")
 	src.icon_state = "poly_companion" + pick("1","2","")
-	update_inv_mob()
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_l_hand()
+		H.update_inv_r_hand()
 
 /obj/item/toy/prize/poly/polygold
 	name = "golden Poly"
@@ -1401,7 +1408,10 @@ Owl & Griffin toys
 /obj/item/toy/prize/poly/polyspecial/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You have clicked a switch behind the toy.</span>")
 	src.icon_state = "poly_special" + pick("1","2","")
-	update_inv_mob()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_l_hand()
+		H.update_inv_r_hand()
 
 /*
  * Carp plushie

@@ -131,7 +131,9 @@ var/global/initial_station_money = 7500
 		T.time = "11:24"
 		T.source_terminal = "Biesel GalaxyNet Terminal #277"
 
+		//add the account
 		station_account.transaction_log.Add(T)
+		all_money_accounts.Add(station_account)
 
 /proc/create_department_account(department)
 	next_account_number = rand(111111, 999999)
@@ -154,5 +156,6 @@ var/global/initial_station_money = 7500
 
 	//add the account
 	department_account.transaction_log.Add(T)
+	all_money_accounts.Add(department_account)
 
 	department_accounts[department] = department_account

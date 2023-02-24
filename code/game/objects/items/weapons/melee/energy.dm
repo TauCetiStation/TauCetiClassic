@@ -123,8 +123,7 @@
 	throwforce = 1//Throwing or dropping the item deletes it.
 	throw_speed = 1
 	throw_range = 1
-	w_class = SIZE_SMALL
+	w_class = SIZE_NORMAL//So you can't hide it in your pocket or some such.
 	flags = NOBLOODY | DROPDEL
-	flags_2 = CANT_BE_INSERTED
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/datum/effect/effect/system/spark_spread/spark_system

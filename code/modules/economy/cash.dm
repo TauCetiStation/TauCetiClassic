@@ -15,46 +15,10 @@
 	var/access = list()
 	access = access_crate_cash
 	var/worth = 0
-	var/is_burning = FALSE
-	var/can_burn = TRUE
-	var/burning_timer
 
 /obj/item/weapon/spacecash/atom_init()
 	. = ..()
 	price = worth
-
-/obj/item/weapon/spacecash/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/lighter))
-		var/obj/item/weapon/lighter/P = I
-		if(P.lit && can_burn && !is_burning)
-			is_burning = TRUE
-			var/span = worth >= 50 ? "warning" : "notice"
-			user.visible_message("<span class='[span]'>[user] holds \the [P] up to \the [src] it looks like \he's trying to burn it.</span>", \
-								"<span class='notice'>You hold \the [P] up to \the [src], burning it slowly.</span>")
-			START_PROCESSING(SSobj, src)
-			burning_timer = QDEL_IN(src, 10 SECONDS)
-			var/image/fire = image(icon, icon_state = "on_fire_cash")
-			add_overlay(fire)
-			return
-	return ..()
-
-/obj/item/weapon/spacecash/process()
-	var/turf/location = get_turf(src)
-	if(location)
-		location.hotspot_expose(700, 5, src)
-
-/obj/item/weapon/spacecash/extinguish()
-	cut_overlays()
-	is_burning = FALSE
-	STOP_PROCESSING(SSobj, src)
-	deltimer(burning_timer)
-	burning_timer = null
-
-/obj/item/weapon/spacecash/Destroy()
-	if(is_burning)
-		new /obj/effect/decal/cleanable/ash(get_turf(src))
-	STOP_PROCESSING(SSobj, src)
-	return ..()
 
 /obj/item/weapon/spacecash/c1
 	name = "1 credit chip"
@@ -118,7 +82,6 @@
 	icon_state = "efundcard"
 	desc = "A card that holds an amount of money."
 	var/owner_name = "" //So the ATM can set it so the EFTPOS can put a valid name on transactions.
-	can_burn = FALSE
 
 /obj/item/weapon/spacecash/ewallet/examine(mob/user)
 	..()

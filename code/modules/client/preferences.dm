@@ -159,7 +159,6 @@ var/global/list/preferences_datums = list()
 	var/parallax = PARALLAX_HIGH
 	var/ambientocclusion = TRUE
 	var/auto_fit_viewport = TRUE
-	var/lobbyanimation = FALSE
 
   //custom loadout
 	var/list/gear = list()

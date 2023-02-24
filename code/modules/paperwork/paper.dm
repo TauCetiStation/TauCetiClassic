@@ -540,10 +540,16 @@
 				h_user.put_in_l_hand(B)
 			else if (h_user.l_store == src)
 				h_user.drop_from_inventory(src)
-				h_user.equip_to_slot_if_possible(B, SLOT_L_STORE)
+				B.loc = h_user
+				B.plane = ABOVE_HUD_PLANE
+				h_user.l_store = B
+				h_user.update_inv_pockets()
 			else if (h_user.r_store == src)
 				h_user.drop_from_inventory(src)
-				h_user.equip_to_slot_if_possible(B, SLOT_R_STORE)
+				B.loc = h_user
+				B.plane = ABOVE_HUD_PLANE
+				h_user.r_store = B
+				h_user.update_inv_pockets()
 			else if (h_user.head == src)
 				h_user.u_equip(src)
 				h_user.put_in_hands(B)

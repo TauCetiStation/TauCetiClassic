@@ -244,6 +244,12 @@
 		charge = 0
 
 	update_icon()
+
+	/*if(user.hand) with custom inhand sprites - yes, without - no.
+		user.update_inv_l_hand()
+	else
+		user.update_inv_r_hand()*/
+
 	return 0
 
 /obj/item/weapon/gun/tesla/proc/los_check(mob/A, mob/B)

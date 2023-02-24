@@ -72,7 +72,11 @@
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/attack(mob/M, mob/user)
 	..()
 	update_icon()
-	update_inv_mob()
+
+	if(user.hand)
+		user.update_inv_l_hand()
+	else
+		user.update_inv_r_hand()
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/update_icon()
 	if(reagents.total_volume > 0)

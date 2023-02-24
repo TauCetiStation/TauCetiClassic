@@ -54,7 +54,7 @@
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push \the [src] up out of your face.")
 
-		update_inv_mob()
+		usr.update_inv_wear_mask()
 
 // ********************************************************************
 
@@ -64,7 +64,6 @@
 	desc = "Стандартный противогаз охраны с модификацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока офицер забивает преступника насмерть."
 	action_button_name = "Toggle Mask"
 	icon_state = "secmask"
-	item_state = "gas_alt"
 	var/cooldown = 0
 	var/last_phrase_text = ""
 	var/shitcurity_mode = FALSE
@@ -134,7 +133,6 @@
 	name = "police respirator"
 	desc = "Стандартный распиратор полиции с модификацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока полицейский забивает преступника насмерть."
 	icon_state = "police_mask"
-	item_state = "police_mask"
 	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
 //Plague Dr suit can be found in clothing/suits/bio.dm
@@ -150,7 +148,6 @@
 	name = "SWAT mask"
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
 	icon_state = "swat"
-	item_state = "swat"
 	siemens_coefficient = 0.7
 	body_parts_covered = FACE|EYES
 

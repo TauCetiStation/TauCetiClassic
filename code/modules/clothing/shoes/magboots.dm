@@ -23,7 +23,7 @@
 		magpulse = 1
 		icon_state = "[magboot_state]1"
 		to_chat(user, "You enable the mag-pulse traction system.")
-	update_inv_mob()
+	user.update_inv_shoes()	//so our mob-overlays update
 	user.update_gravity(user.mob_has_gravity())
 
 /obj/item/clothing/shoes/magboots/examine(mob/user)

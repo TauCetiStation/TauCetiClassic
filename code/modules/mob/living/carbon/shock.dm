@@ -16,18 +16,12 @@
 		src.traumatic_shock -= 10
 	if(reagents.has_reagent("dextromethorphan"))
 		src.traumatic_shock -= 10
-	if(reagents.has_reagent("jenkem"))
-		src.traumatic_shock -= 15
 	if(reagents.has_reagent("inaprovaline"))
 		src.traumatic_shock -= 25
-	if(reagents.has_reagent("ambrosium"))
-		src.traumatic_shock -= 30
 	if(reagents.has_reagent("synaptizine"))
 		src.traumatic_shock -= 40
 	if(reagents.has_reagent("paracetamol"))
 		src.traumatic_shock -= 50
-	if(reagents.has_reagent("space_drugs"))
-		src.traumatic_shock -= 60
 	if(reagents.has_reagent("tramadol"))
 		src.traumatic_shock -= 80
 	if(reagents.has_reagent("oxycodone"))

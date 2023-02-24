@@ -135,15 +135,3 @@
 						prob(40);/obj/random/misc/book,\
 						prob(1);/obj/random/misc/musical\
 					)
-
-/obj/random/misc/cigarettes
-	name = "Random Cigarette Packs"
-	desc = "This is a random misc pack."
-	icon = 'icons/obj/cigarettes.dmi'
-	icon_state = "cigpacket"
-/obj/random/misc/cigarettes/item_to_spawn()
-		return pick(
-						/obj/item/weapon/storage/fancy/cigarettes/menthol,
-						/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
-						/obj/item/weapon/storage/fancy/cigarettes,
-					)

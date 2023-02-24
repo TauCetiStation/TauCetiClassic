@@ -79,6 +79,9 @@
 		M.skills.add_available_skillset(skillset_type)
 	if(change_to_maximum_skills)
 		M.skills.maximize_active_skills()
+	var/mob/living/A = antag.current
+	if(!isnull(moveset_type))
+		A.add_moveset(new moveset_type(), MOVESET_ROLES)
 	if(msg_admins)
 		message_admins("[key_name(M)] is now \an [id].")
 		log_mode("[key_name(M)] is now \an [id].")
@@ -193,9 +196,6 @@
 /datum/role/proc/OnPostSetup(laterole = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	add_antag_hud()
-	var/mob/living/A = antag.current
-	if(!isnull(moveset_type))
-		A.add_moveset(new moveset_type(), MOVESET_ROLES)
 	if(antag.current?.hud_used)
 		add_ui(antag.current.hud_used)
 	SEND_SIGNAL(src, COMSIG_ROLE_POSTSETUP, laterole)

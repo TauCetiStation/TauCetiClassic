@@ -261,8 +261,6 @@
 	if(target_head && mouth_is_protected(target_head))
 		if(prob(50) && unequip_head(target_head, C))
 			C.visible_message("<span class='danger'>[src] rips off [C]'s [target_head]!</span>", "<span class='userdanger'>[src] rips off your [target_head]!</span>")
-			if(!current_hugger && target_mask) //ai can rip off only one layer
-				fail_rip_off = TRUE
 		else
 			C.visible_message("<span class='danger'>[src] fail to rips off [C]'s [target_head]!</span>", "<span class='userdanger'>[src] fail to rips off your [target_head]!</span>")
 			fail_rip_off = TRUE

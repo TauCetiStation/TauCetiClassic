@@ -87,7 +87,7 @@
 		icon_state = "nun"
 		to_chat(usr, "You let off your sleeves.")
 		sleeves = TRUE
-	update_inv_mob()
+	usr.update_inv_wear_suit()
 
 //Chef
 /obj/item/clothing/suit/chef
@@ -137,7 +137,7 @@
 		icon_state += "_open"
 		to_chat(usr, "You have unfastened [src]")
 		is_fasten = FALSE
-	update_inv_mob()
+	usr.update_inv_wear_suit()
 
 /obj/item/clothing/suit/storage/det_suit/gray
 	name = "detective's gray trenchcoat"
@@ -226,7 +226,7 @@
 		else
 			to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are.")
 			return
-	update_inv_mob() //so our overlays update
+	usr.update_inv_wear_suit()	//so our overlays update
 
 //Medical
 /obj/item/clothing/suit/storage/fr_jacket
@@ -254,7 +254,7 @@
 		if("fr_jacket")
 			src.icon_state = "fr_jacket_open"
 			to_chat(usr, "You unbutton the jacket.")
-	update_inv_mob() //so our overlays update
+	usr.update_inv_wear_suit()	//so our overlays update
 
 //Mime
 /obj/item/clothing/suit/suspenders
@@ -290,7 +290,7 @@
         else
             to_chat(usr, "You attempt to button-up the velcro on your [src], before promptly realising how retarded you are.")
             return
-    update_inv_mob() //so our overlays update
+    usr.update_inv_wear_suit()    //so our overlays update
 
 /obj/item/clothing/suit/surgicalapron
 	name = "surgical apron"

@@ -52,7 +52,14 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		item_state = "[initial(icon_state)]_lit"
 	else
 		item_state = "[initial(icon_state)]"
-	update_inv_mob()
+	if(istype(loc, /mob))
+		var/mob/M = loc
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.l_hand == src)
+				M.update_inv_l_hand()
+			if(H.r_hand == src)
+				M.update_inv_r_hand()
 
 /obj/item/candle/attackby(obj/item/I, mob/user, params)
 	if(iswelding(I))

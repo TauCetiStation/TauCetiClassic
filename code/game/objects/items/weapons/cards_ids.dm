@@ -200,12 +200,6 @@
 	icon_state = "int"
 	item_state = "int_id"
 
-/obj/item/weapon/card/id/blueshield
-	name = "identification card"
-	desc = "A card issued to blueshield officer."
-	icon_state = "blueshield"
-	item_state = "int_id"
-
 /obj/item/weapon/card/id/secGold
 	name = "identification card"
 	desc = "A card which represents honor and protection."

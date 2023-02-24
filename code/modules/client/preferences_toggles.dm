@@ -160,20 +160,6 @@
 		if(screen.alpha && (screen.icon_state in icon_states))
 			screen.update_by_hud(hud)
 
-/client/verb/toggle_lobby_animation()
-	set name = "Toggle Lobby Animation"
-	set category = "Preferences"
-	set desc = "Toggles lobby animations."
-	prefs.lobbyanimation = !prefs.lobbyanimation
-	prefs.save_preferences()
-	if(isnewplayer(mob))
-		var/mob/dead/new_player/M = mob
-		M.show_titlescreen()
-	if(prefs.lobbyanimation)
-		to_chat(src, "You have enabled lobby animation.")
-	else
-		to_chat(src, "You have disabled lobby animation.")
-
 /client/verb/toggle_anim_attacks()
 	set name = "Show/Hide Melee Animations"
 	set category = "Preferences"

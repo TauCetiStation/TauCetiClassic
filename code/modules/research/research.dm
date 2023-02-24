@@ -1320,7 +1320,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.5
-	y = 0.15
+	y = 0.2
 	icon = "cyborganalyzer"
 
 	required_technologies = list()
@@ -1336,7 +1336,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.4
-	y = 0.25
+	y = 0.3
 	icon = "ripley"
 
 	required_technologies = list("basic_robotics")
@@ -1352,7 +1352,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	tech_type = RESEARCH_ROBOTICS
 
 	x = 0.6
-	y = 0.25
+	y = 0.3
 	icon = "odyssey"
 
 	required_technologies = list("basic_robotics")
@@ -1463,15 +1463,31 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "mech_utility_modules"
 	tech_type = RESEARCH_ROBOTICS
 
-	x = 0.7
-	y = 0.6
+	x = 0.25
+	y = 0.5
 	icon = "mechrcd"
 
 	required_technologies = list("advanced_robotics")
 	required_tech_levels = list()
-	cost = 2500
+	cost = 1000
 
-	unlocks_designs = list("mech_wormhole_gen", "mech_rcd", "mech_gravcatapult", "mech_repair_droid", "mech_energy_relay", "mech_syringe_gun", "mech_diamond_drill", "mech_generator_nuclear", "mech_teleporter")
+	unlocks_designs = list("mech_wormhole_gen", "mech_rcd", "mech_gravcatapult", "mech_repair_droid", "mech_energy_relay", "mech_syringe_gun", "mech_diamond_drill", "mech_generator_nuclear")
+
+/datum/technology/mech_teleporter_modules
+	name = "Exosuit Teleporter Module"
+	desc = "Exosuit Teleporter Module"
+	id = "mech_teleporter_modules"
+	tech_type = RESEARCH_ROBOTICS
+
+	x = 0.1
+	y = 0.5
+	icon = "mechteleporter"
+
+	required_technologies = list("mech_utility_modules")
+	required_tech_levels = list()
+	cost = 5000
+
+	unlocks_designs = list("mech_teleporter")
 
 /datum/technology/mech_armor_modules
 	name = "Exosuit Armor Modules"
@@ -1479,7 +1495,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "mech_armor_modules"
 	tech_type = RESEARCH_ROBOTICS
 
-	x = 0.7
+	x = 0.25
 	y = 0.8
 	icon = "mecharmor"
 
@@ -1495,8 +1511,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "mech_weaponry_modules"
 	tech_type = RESEARCH_ROBOTICS
 
-	x = 0.85
-	y = 0.6
+	x = 0.75
+	y = 0.5
 	icon = "mechgrenadelauncher"
 
 	required_technologies = list("advanced_robotics")
@@ -1511,7 +1527,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "mech_heavy_weaponry_modules"
 	tech_type = RESEARCH_ROBOTICS
 
-	x = 0.85
+	x = 0.75
 	y = 0.8
 	icon = "mechlaser"
 
@@ -1527,8 +1543,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "basic_hardsuit_modules"
 	tech_type = RESEARCH_ROBOTICS
 
-	x = 0.7
-	y = 0.15
+	x = 0.35
+	y = 0.1
 	icon = "rigscanner"
 
 	required_technologies = list()
@@ -1543,8 +1559,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "advanced_hardsuit_modules"
 	tech_type = RESEARCH_ROBOTICS
 
-	x = 0.7
-	y = 0.35
+	x = 0.5
+	y = 0.1
 	icon = "rigtaser"
 
 	required_technologies = list("basic_hardsuit_modules")
@@ -1559,8 +1575,8 @@ The tech datums are the actual "tech trees" that you improve through researching
 	id = "toptier_hardsuit_modules"
 	tech_type = RESEARCH_ROBOTICS
 
-	x = 0.85
-	y = 0.35
+	x = 0.65
+	y = 0.1
 	icon = "rignuclearreactor"
 
 	required_technologies = list("advanced_hardsuit_modules")
