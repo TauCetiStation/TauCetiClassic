@@ -1,5 +1,5 @@
-#define DESIRABLE_TWOHAND "This weapon is desirable to hold in two hands"
-#define ONLY_TWOHAND "This weapon can only be fired when wielding two hands"
+#define DESIRABLE_TWOHAND "For comfortable shooting, it is necessary that the inactive hand is free."
+#define ONLY_TWOHAND "To fire this weapon, the inactive hand MUST be free"
 
 /obj/item/weapon/gun
 	name = "gun"
