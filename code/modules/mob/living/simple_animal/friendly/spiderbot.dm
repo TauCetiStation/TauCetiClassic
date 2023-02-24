@@ -194,6 +194,8 @@
 	camera.c_tag = "Spiderbot-[real_name]"
 	camera.replace_networks(list("SS13"))
 
+	AddComponent(/datum/component/examine_research, DEFAULT_ROBOTICS_CONSOLE_ID, 500, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
+
 	. = ..()
 
 /mob/living/simple_animal/spiderbot/death()
