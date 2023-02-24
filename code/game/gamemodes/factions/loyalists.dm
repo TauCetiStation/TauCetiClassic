@@ -211,7 +211,7 @@
 			pos_isolate_human += M
 	var/needed_picks = round(global.human_list.len / 10)
 	var/report_dat = ""
-	report_dat += "Центральное Коммандование сообщает: это не мышиный грипп, это вирус который превращает людей в безмоглых убийц.<br>"
+	report_dat += "Центральное Коммандование сообщает: это не мышиный грипп, это вирус который превращает людей в безмозглых убийц.<br>"
 	if(pos_isolate_human.len)
 		report_dat += "Вы должны изолировать от остального экипажа следующих сотрудников:<br>"
 		for(var/i in 1 to needed_picks)
