@@ -111,7 +111,7 @@
 		flags |= MASKCOVERSMOUTH
 		icon_state = "[initial(icon_state)]"
 		to_chat(user, "You pull the scarf up to cover your face.")
-	user.update_inv_wear_mask()
+	update_inv_mob()
 
 
 
@@ -207,7 +207,7 @@
 		else
 			src.icon_state += "_up"
 			to_chat(usr, "You tie the bandana around your head.")
-		usr.update_inv_wear_mask()
+		update_inv_mob()
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)
