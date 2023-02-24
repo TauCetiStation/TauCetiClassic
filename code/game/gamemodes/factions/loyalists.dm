@@ -4,6 +4,7 @@
 #define SCENARIO_COMMUNISM /datum/mutiny_scenario/communism
 #define SCENARIO_BRUTALITY /datum/mutiny_scenario/brutality
 #define SCENARIO_MINE      /datum/mutiny_scenario/mine
+#define SCENARIO_GENETIC   /datum/mutiny_scenario/genetic
 
 /datum/faction/loyalists
 	name = "Loyalists"
@@ -23,7 +24,7 @@
 	var/datum/mutiny_scenario/scenario
 
 /datum/faction/loyalists/OnPostSetup()
-	var/scenario_type = pick(SCENARIO_MONEY, SCENARIO_VIRUS, SCENARIO_RACISM, SCENARIO_COMMUNISM, SCENARIO_BRUTALITY, SCENARIO_MINE)
+	var/scenario_type = pick(SCENARIO_MONEY, SCENARIO_VIRUS, SCENARIO_RACISM, SCENARIO_COMMUNISM, SCENARIO_BRUTALITY, SCENARIO_MINE, SCENARIO_GENETIC)
 	scenario = new scenario_type(src)
 	return ..()
 
@@ -100,6 +101,7 @@
 		last_command_report = 2
 	else if(last_command_report == 2 && world.time >= 60 MINUTES)
 		command_report(scenario.get_third_report())
+		scenario.do_third_strike()
 		last_command_report = 3
 
 /datum/faction/loyalists/proc/command_report(message)
@@ -117,6 +119,7 @@
 
 /datum/mutiny_scenario
 	var/datum/faction/assigned_faction
+	var/list/affected_mobs = list()
 
 /datum/mutiny_scenario/New(datum/faction/my_faction)
 	. = ..()
@@ -136,6 +139,9 @@
 	return
 
 /datum/mutiny_scenario/proc/do_second_strike()
+	return
+
+/datum/mutiny_scenario/proc/do_third_strike()
 	return
 
 /datum/mutiny_scenario/money/get_first_report()
@@ -196,14 +202,14 @@
 	return report_dat
 
 /datum/mutiny_scenario/virus/get_third_report()
-	var/list/possible_positions = civilian_positions + engineering_positions + science_positions + security_positions - command_positions
+	var/list/possible_positions = civilian_positions + engineering_positions + science_positions + security_positions - command_positions - list("Internal Affairs Agent")
 	var/list/pos_isolate_human = list()
 	for(var/mob/M as anything in global.human_list)
 		if(!M.mind || !M.client || !considered_alive(M.mind) || M.suiciding || HAS_TRAIT(M, TRAIT_VACCINATED))
 			continue
 		if(M.mind.assigned_role in possible_positions)
 			pos_isolate_human += M
-	var/needed_picks = global.human_list.len / 10
+	var/needed_picks = round(global.human_list.len / 10)
 	var/report_dat = ""
 	report_dat += "Центральное Коммандование сообщает: это не мышиный грипп, это вирус который превращает людей в безмоглых убийц.<br>"
 	if(pos_isolate_human.len)
@@ -212,6 +218,7 @@
 			var/mob/M = pick(pos_isolate_human)
 			report_dat += "[M];<br>"
 			pos_isolate_human -= M
+			affected_mobs += M
 	report_dat += "Не допустите распространения инфекции. При необходимости избавьтесь от заражённых, кем бы они не были.<br>"
 	return report_dat
 
@@ -326,3 +333,74 @@
 
 /datum/mutiny_scenario/mine/do_second_strike()
 	//do_postavka eshe bolshe
+
+/datum/mutiny_scenario/genetic/get_first_report()
+	var/report_dat = ""
+	report_dat += "Наши конкуренты из Zeng-Hu Pharmaceuticals вывели супер-сыворотку.<br>"
+	report_dat += "Её действие усиливает способности подопытного, позволяя тому выйти за пределы своих возможностей.<br>"
+	report_dat += "Мы отправляем вам тестовые образцы для экспериментов на людях грузовым шаттлом.<br>"
+	report_dat += "Не распространяйте информацию из этого сообщения экипажу."
+	report_dat += "Центральное Коммандование закрывает отсек генетических исследований из-за недостатка инноваций и устаревших технологий.<br>"
+	report_dat += "Перестройте отсек на ваше усмотрение.<br>"
+	report_dat += "Большую популярность набирают Китайские рестораны в космосе.<br>"
+	return report_dat
+
+/datum/mutiny_scenario/genetic/get_second_report()
+	var/report_dat = ""
+	report_dat += "Тестовые образцы оказались не тем, что вы должны были получить.<br>"
+	report_dat += "В этот раз на грузовом шаттле точно будет нужная сыворотка.<br>"
+	var/list/possible_positions = civilian_positions - command_positions - list("Internal Affairs Agent")
+	var/list/pos_experiment_humans = list()
+	for(var/mob/living/carbon/human/target as anything in global.human_list)
+		if(!target.mind || !target.client || !considered_alive(target.mind) || target.suiciding)
+			continue
+		if(target.mind.assigned_role in possible_positions)
+			var/datum/species/S = all_species[target.get_species()]
+			if(S?.flags[NO_DNA])
+				continue
+			pos_experiment_humans += target
+	var/needed_picks = round(global.human_list.len / 10)
+	if(pos_experiment_humans.len)
+		report_dat += "Центральное Коммандование подобрало подходящих кандидатов на инъекцию:<br>"
+		for(var/i in 1 to needed_picks)
+			var/mob/M = pick(pos_experiment_humans)
+			report_dat += "[M];<br>"
+			pos_experiment_humans -= M
+			affected_mobs += M
+	report_dat += "Не распространяйте экипажу информацию из этого сообщения."
+	return report_dat
+
+/datum/mutiny_scenario/genetic/get_third_report()
+	var/report_dat = ""
+	report_dat += "Эффективность использования образцов оказалась не такой, как ожидало коммандование.<br>"
+	report_dat += "Не смотря на это, целесообразно испытать больше образцов на большем колличестве субъектов.<br>"
+	report_dat += "Центральное Коммандование отправляет последнюю поставку на грузовом шаттле.<br>"
+	var/list/possible_positions = engineering_positions + science_positions + security_positions - command_positions - list("Internal Affairs Agent")
+	var/list/pos_experiment_humans = list()
+	for(var/mob/living/carbon/human/target as anything in global.human_list)
+		if(!target.mind || !target.client || !considered_alive(target.mind) || target.suiciding || target in affected_mobs)
+			continue
+		if(target.mind.assigned_role in possible_positions)
+			var/datum/species/S = all_species[target.get_species()]
+			if(S?.flags[NO_DNA])
+				continue
+			pos_experiment_humans += target
+	var/needed_picks = round(global.human_list.len / 15)
+	if(pos_experiment_humans.len)
+		report_dat += "Придумайте повод для вживления этим сотрудникам:<br>"
+		for(var/i in 1 to needed_picks)
+			var/mob/M = pick(pos_experiment_humans)
+			report_dat += "[M];<br>"
+			pos_experiment_humans -= M
+			affected_mobs += M
+	report_dat += "Не распространяйте экипажу информацию из этого сообщения."
+	return report_dat
+
+/datum/mutiny_scenario/genetic/do_first_strike()
+	//do_postavka mulligan
+
+/datum/mutiny_scenario/genetic/do_second_strike()
+	//do postavka mutagen
+
+/datum/mutiny_scenario/genetic/do_third_strike()
+	//do postavka last mutagen
