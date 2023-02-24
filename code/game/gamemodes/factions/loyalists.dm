@@ -23,7 +23,7 @@
 	var/datum/mutiny_scenario/scenario
 
 /datum/faction/loyalists/OnPostSetup()
-	var/scenario_type = pick(SCENARIO_MONEY, SCENARIO_VIRUS, SCENARIO_RACISM, SCENARIO_COMMUNISM)
+	var/scenario_type = pick(SCENARIO_MONEY, SCENARIO_VIRUS, SCENARIO_RACISM, SCENARIO_COMMUNISM, SCENARIO_BRUTALITY, SCENARIO_MINE)
 	scenario = new scenario_type(src)
 	return ..()
 
@@ -308,15 +308,17 @@
 	report_dat += "Компания получила хранилище большего объема, чем те, что были ранее.<br>"
 	report_dat += "Увеличьте поставки не менее чем в два раза, привлеките незанятый персонал к работам на полторы ставки.<br>"
 	report_dat += "Отказ сотрудником выполнять приказы Центрального Коммандования недопустим.<br>"
-	report_dat += "Убедитесь в наличии снабжения научным отсеком работников шахт передовыми разработками.
-	report_dat += "При непродуктивной работе, рекомендуется перевод всего персонала Исследований и Разработок в шахтёров и грузчиков до выполнения плана поставок."
+	report_dat += "Убедитесь в наличии снабжения научным отсеком работников шахт передовыми разработками.<br>"
+	report_dat += "При непродуктивной работе, рекомендуется перевод всего персонала Исследований и Разработок на должности шахтёров и грузчиков до выполнения плана поставок."
 	return report_dat
 
 /datum/mutiny_scenario/mine/get_third_report()
 	var/report_dat = ""
-	report_dat += ".<br>"
-	report_dat += ".<br>"
-	report_dat += ".<br>"
+	report_dat += "Поставки ресурсов с вашей станции были перехвачены налётчиками воксов.<br>"
+	report_dat += "Мы вывели ВКН Икар на патруль пути поставок.<br>"
+	report_dat += "Центральное Коммандование приказывает поставить все ресурсы, которые есть на астероиде, даже если прийдётся весь его вскопать.<br>"
+	report_dat += "Задействуйте максимальное колличество сотрудников на шахтах.<br>"
+	report_dat += "Допустимо использование труда сотрудников Службы Безопасности."
 	return report_dat
 
 /datum/mutiny_scenario/mine/do_first_strike()
