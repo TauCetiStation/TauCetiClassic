@@ -128,7 +128,10 @@
 		if("logoff")
 			if(!inserted_id)
 				return
-			usr.put_in_hands(inserted_id)
+			if(!usr.get_active_hand())
+				usr.put_in_hands(inserted_id)
+			else
+				inserted_id.loc = loc
 			inserted_id = null
 			. = TRUE
 		if("claim")
