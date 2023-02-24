@@ -136,7 +136,7 @@
 			// observer.icon = client.prefs.preview_icon
 			observer.icon = 'icons/mob/mob.dmi'
 			observer.icon_state = "ghost"
-			
+
 			observer.alpha = 127
 
 			if(client.prefs.be_random_name)

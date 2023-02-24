@@ -479,8 +479,6 @@
 				if(prob(meltprob) && !H.head.unacidable)
 					to_chat(H, "<span class='danger'>Your headgear melts away but protects you from the acid!</span>")
 					qdel(H.head)
-					H.update_inv_head()
-					H.update_hair()
 				else
 					to_chat(H, "<span class='warning'>Your headgear protects you from the acid.</span>")
 				return
@@ -489,8 +487,6 @@
 				if(prob(meltprob) && !H.wear_mask.unacidable)
 					to_chat(H, "<span class='danger'>Your mask melts away but protects you from the acid!</span>")
 					qdel(H.wear_mask)
-					H.update_inv_wear_mask()
-					H.update_hair()
 				else
 					to_chat(H, "<span class='warning'>Your mask protects you from the acid.</span>")
 				return
@@ -499,7 +495,6 @@
 				if(prob(meltprob) && !H.glasses.unacidable)
 					to_chat(H, "<span class='danger'>Your glasses melts away!</span>")
 					qdel(H.glasses)
-					H.update_inv_glasses()
 
 		else if(ismonkey(M))
 			var/mob/living/carbon/monkey/MK = M
@@ -507,7 +502,6 @@
 				if(!MK.wear_mask.unacidable)
 					to_chat(MK, "<span class='danger'>Your mask melts away but protects you from the acid!</span>")
 					qdel(MK.wear_mask)
-					MK.update_inv_wear_mask()
 				else
 					to_chat(MK, "<span class='warning'>Your mask protects you from the acid.</span>")
 				return
