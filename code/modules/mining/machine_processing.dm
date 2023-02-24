@@ -128,7 +128,7 @@
 		if("logoff")
 			if(!inserted_id)
 				return
-			if(isAI(usr) || isrobot(usr))
+			if(issilicon(usr))
 				inserted_id.forceMove(loc)
 			else if(!usr.get_active_hand())
 				usr.put_in_hands(inserted_id)
