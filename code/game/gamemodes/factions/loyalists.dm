@@ -378,7 +378,9 @@
 	var/list/possible_positions = engineering_positions + science_positions + security_positions - command_positions - list("Internal Affairs Agent")
 	var/list/pos_experiment_humans = list()
 	for(var/mob/living/carbon/human/target as anything in global.human_list)
-		if(!target.mind || !target.client || !considered_alive(target.mind) || target.suiciding || target in affected_mobs)
+		if(!target.mind || !target.client || !considered_alive(target.mind) || target.suiciding)
+			continue
+		if(target in affected_mobs)
 			continue
 		if(target.mind.assigned_role in possible_positions)
 			var/datum/species/S = all_species[target.get_species()]
