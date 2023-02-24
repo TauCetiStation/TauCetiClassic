@@ -14,6 +14,7 @@ var/global/const/CYBORG             =(1<<9)
 var/global/const/FORENSIC           =(1<<10)
 var/global/const/CADET              =(1<<11)
 var/global/const/TECHNICASSISTANT   =(1<<12)
+var/global/const/BLUESHIELD         =(1<<13)
 
 var/global/const/MEDSCI             =(1<<1)
 
@@ -51,6 +52,7 @@ var/global/const/ASSISTANT          =(1<<13)
 var/global/const/RECYCLER           =(1<<14)
 var/global/const/BARBER             =(1<<15)
 
+
 var/global/list/assistant_occupations = list(
 )
 
@@ -66,7 +68,8 @@ var/global/list/command_positions = list(
 	"Head of Security",
 	"Chief Engineer",
 	"Research Director",
-	"Chief Medical Officer"
+	"Chief Medical Officer",
+	"Blueshield Officer"
 )
 
 var/global/list/security_positions = list(
@@ -131,6 +134,26 @@ var/global/list/nonhuman_positions = list(
 	"pAI"
 )
 
+var/global/list/heads_positions = list(
+	"Captain",
+	"Head of Personnel",
+	"Head of Security",
+	"Chief Engineer",
+	"Research Director",
+	"Chief Medical Officer",
+)
+
+var/global/list/protected_by_blueshield_list = list(
+	"Captain",
+	"Head of Personnel",
+	"Head of Security",
+	"Chief Engineer",
+	"Research Director",
+	"Chief Medical Officer",
+	"Internal Affairs Agent"
+)
+
+
 
 /proc/get_job_datums()
 	var/list/occupations = list()
@@ -189,9 +212,15 @@ var/global/list/nonhuman_positions = list(
 			if(department == "civ")
 				if(head_rank != "Admin" && person["rank"] == "Internal Affairs Agent")	//only CentCom can change IAA's salary
 					continue
+				if(head_rank != "Admin" && person["rank"] == "Blueshield Officer")
+					continue
 				if(head_rank == "Quartermaster" && !QM_staff.Find(person["rank"]))	//QM only rules his boys
 					continue
-			var/datum/money_account/account = person["acc_datum"]
-			data[++data.len] = list("name" = person["name"], "rank" = person["rank"], "salary" = account.owner_salary, "acc_datum" = person["acc_datum"], "acc_number" = person["account"])
 
-	return data	// --> list(real_name, assignment, salary, /datum/money_account, account_number)
+			var/datum/money_account/MA = get_account(person["account"])
+			if(!MA)
+				continue
+
+			data[++data.len] = list("name" = person["name"], "rank" = person["rank"], "salary" = MA.owner_salary, "account" = person["account"])
+
+	return data	// --> list(real_name, assignment, salary, account_number)

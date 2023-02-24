@@ -168,9 +168,9 @@
 		g_hair = 85 // grey
 		b_hair = 85
 
-	update_hair()
 	mutations.Add(HUSK)
 	add_status_flags(DISFIGURED)	//makes them unknown without fucking up other stuff like admintools
+	update_hair()
 	update_body()
 
 /mob/living/carbon/human/proc/Drain()
