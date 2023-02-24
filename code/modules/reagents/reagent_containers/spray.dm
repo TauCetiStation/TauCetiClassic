@@ -106,9 +106,15 @@
 
 /obj/item/weapon/reagent_containers/spray/proc/add_container_effect(turf/T)
 	if(attached_igniter)
-		T.hotspot_expose(1000, 1000, attached_igniter)
+		if(isigniter(attached_igniter))
+			var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
+			sparks.set_up(3, 0, T)
+			sparks.start()
+		else
+			T.hotspot_expose(1000, 1000, attached_igniter)
 
 /obj/item/weapon/reagent_containers/spray/proc/on_spray(turf/T, mob/user)
+	add_container_effect(get_turf(src))
 	if(!triple_shot) // Currently only the big baddies have this mechanic.
 		return
 
@@ -166,7 +172,6 @@
 		step_towards(D, target)
 		var/turf/T = get_turf(D)
 		D.reagents.reaction(T)
-		add_container_effect(T)
 		var/turf/next_T = get_step(T, get_dir(T, target))
 		// When spraying against the wall, also react with the wall, but
 		// not its contents. BS12
