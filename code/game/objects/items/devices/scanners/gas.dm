@@ -40,7 +40,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/analyzer, geiger_items_list)
 	set category = "Object"
 	set src in usr
 
-	if (!user.incapacitated())
+	if(!user.incapacitated())
 		advanced_mode = !advanced_mode
 		to_chat(usr, "You toggle advanced gas analysis [advanced_mode ? "on" : "off"].")
 
@@ -48,10 +48,13 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/analyzer, geiger_items_list)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(user.incapacitated())
 		return
-	cut_overlays()
 	if(status)
-		status = FALSE
-		to_chat(user, "<span class='notice'>You turn off [src].</span>")
+		if(tgui_alert(user, "Вы хотите просканировать окружение?", "Сканировать?", list("Да", "Нет")) != "Да")
+			cut_overlays()
+			status = FALSE
+			to_chat(user, "<span class='notice'>You turn off [src].</span>")
+		else
+			analyze_gases(user.loc, user, advanced_mode)
 	else
 		status = TRUE
 		var/image/I = image(icon, icon_state = "atmos_overlay")
@@ -63,7 +66,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/analyzer, geiger_items_list)
 /obj/item/device/analyzer/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if (user.incapacitated())
+	if(user.incapacitated())
 		return
 	if(!isobj(target))
 		return
