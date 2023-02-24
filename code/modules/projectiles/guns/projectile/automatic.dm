@@ -90,7 +90,7 @@
 	mag_type = /obj/item/ammo_box/magazine/m762
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
 	has_cover = TRUE
-	two_hand_weapon = TRUE
+	two_hand_weapon = ONLY_TWOHAND
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
@@ -165,6 +165,7 @@
 	icon_state = "tommygun"
 	item_state = "tommygun"
 	w_class = SIZE_BIG
+	two_hand_weapon = DESIRABLE_TWOHAND
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
@@ -181,6 +182,7 @@
 	icon_state = "bar"
 	item_state = "bar"
 	w_class = SIZE_BIG
+	two_hand_weapon = DESIRABLE_TWOHAND
 	origin_tech = "combat=5;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/m3006
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
@@ -233,7 +235,7 @@
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
-	two_hand_weapon = TRUE
+	two_hand_weapon = ONLY_TWOHAND
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/atom_init()
 	. = ..()
@@ -265,6 +267,7 @@
 	icon_state = "a28"
 	item_state = "a28"
 	w_class = SIZE_SMALL
+	two_hand_weapon = DESIRABLE_TWOHAND
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m556
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
@@ -285,6 +288,7 @@
 	desc = "Stradi and Practican Maid Bai Spess soviets corporation, bazed he original design of 20 centuriyu fin about baars and vodka vile patrimonial it, saunds of balalaika place minvile, yuzes 7.74 caliber"
 	mag_type = /obj/item/ammo_box/magazine/a74mm
 	w_class = SIZE_SMALL
+	two_hand_weapon = DESIRABLE_TWOHAND
 	icon_state = "a74"
 	item_state = "a74"
 	origin_tech = "combat=5;materials=4;syndicate=6"
@@ -308,6 +312,7 @@
 	desc = "Small and deadly, A74U is lighter than it's older brother, but nontheless packs a serious punch."
 	mag_type = /obj/item/ammo_box/magazine/a74mm/krinkov
 	recoil = 1.5
+	two_hand_weapon = FALSE
 	icon_state = "krinkov"
 	item_state = "krinkov"
 	mag_icon = icon('icons/obj/gun.dmi',"mag-krinkov")
@@ -319,6 +324,7 @@
 	item_state = "drozd"
 	mag_type = /obj/item/ammo_box/magazine/drozd127
 	w_class = SIZE_SMALL
+	two_hand_weapon = DESIRABLE_TWOHAND
 	fire_sound = 'sound/weapons/guns/gunshot_drozd.ogg'
 	action_button_name = "Toggle GL"
 	fire_delay = 7

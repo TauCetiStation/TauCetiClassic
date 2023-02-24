@@ -1,3 +1,6 @@
+#define DESIRABLE_TWOHAND "This weapon is desirable to hold in two hands"
+#define ONLY_TWOHAND "This weapon can only be fired when wielding two hands"
+
 /obj/item/weapon/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
@@ -37,6 +40,12 @@
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 
+/obj/item/weapon/gun/examine(mob/user)
+	..()
+	if(two_hand_weapon)
+		to_chat(user, "<span class='warning'>[two_hand_weapon].</span>")
+
+
 /obj/item/weapon/gun/proc/ready_to_fire()
 	if(world.time >= last_fired + fire_delay)
 		last_fired = world.time
@@ -50,7 +59,7 @@
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
 	if(iswizard(M))
 		return FALSE
-	if(two_hand_weapon)
+	if(two_hand_weapon == ONLY_TWOHAND)
 		if(M.get_inactive_hand())
 			to_chat(M, "<span class='notice'>Your other hand must be free before firing! This weapon requires both hands to use.</span>")
 			return FALSE
@@ -64,9 +73,13 @@
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
 
 	var/skill_recoil = max(0, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
-	if(skill_recoil)
+	if((skill_recoil) && (two_hand_weapon != DESIRABLE_TWOHAND))
 		shake_camera(user, skill_recoil + 1, skill_recoil)
-
+	if(two_hand_weapon == DESIRABLE_TWOHAND)
+		if(user.get_inactive_hand())
+			shake_camera(user, recoil + 2, recoil + 1)
+		else
+			shake_camera(user, skill_recoil + 1, skill_recoil)
 	if(silenced)
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
 	else

@@ -10,7 +10,7 @@
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rocket
 	can_be_holstered = FALSE
-	two_hand_weapon = TRUE
+	two_hand_weapon = ONLY_TWOHAND
 	fire_sound = 'sound/effects/bang.ogg'
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/process_chamber()

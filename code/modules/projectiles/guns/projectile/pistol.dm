@@ -171,6 +171,7 @@
 	icon_state = "derringer"
 	item_state = null
 	w_class = SIZE_TINY
+	two_hand_weapon = FALSE
 	force = 2
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BELT

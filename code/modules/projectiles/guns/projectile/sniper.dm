@@ -12,7 +12,7 @@
 	fire_sound = 'sound/weapons/guns/gunshot_cannon.ogg'
 	can_be_holstered = FALSE
 	var/bolt_open = 0
-	two_hand_weapon = TRUE
+	two_hand_weapon = ONLY_TWOHAND
 
 /obj/item/weapon/gun/projectile/heavyrifle/update_icon()
 	if(bolt_open)

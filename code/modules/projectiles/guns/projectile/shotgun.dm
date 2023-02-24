@@ -13,7 +13,7 @@
 	var/pumped = 0
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
 	can_be_holstered = FALSE
-	two_hand_weapon = TRUE
+	two_hand_weapon = ONLY_TWOHAND
 
 /obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = magazine.attackby(I, user, 1)
@@ -75,6 +75,7 @@
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
+	two_hand_weapon = DESIRABLE_TWOHAND
 	origin_tech = "combat=3;materials=1"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/dualshot
 	can_be_holstered = FALSE
