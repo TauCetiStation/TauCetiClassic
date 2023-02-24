@@ -128,10 +128,10 @@
 		if("logoff")
 			if(!inserted_id)
 				return
-			if(!usr.get_active_hand())
-				usr.put_in_hands(inserted_id)
-			else
+			if(isAI(usr) || isrobot(usr))
 				inserted_id.loc = loc
+			else if(!usr.get_active_hand())
+				usr.put_in_hands(inserted_id)
 			inserted_id = null
 			. = TRUE
 		if("claim")

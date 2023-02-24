@@ -115,10 +115,10 @@ var/global/list/alldepartments = list("Central Command")
 
 	if(href_list["remove"])
 		if(tofax)
-			if(!usr.get_active_hand())
-				usr.put_in_hands(tofax)
-			else
+			if(isAI(usr) || isrobot(usr))
 				tofax.loc = loc
+			else if(!usr.get_active_hand())
+				usr.put_in_hands(tofax)
 			to_chat(usr, "<span class='notice'>You take the paper out of \the [src].</span>")
 			tofax = null
 
