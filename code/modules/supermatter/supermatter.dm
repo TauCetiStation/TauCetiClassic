@@ -126,7 +126,7 @@
 					mob:hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(mob, src) + 1)) ) )
 				rads *=  sqrt(1 / (get_dist(mob, src) + 1))
 				mob.apply_effect(rads, IRRADIATE)
-			for(var/obj/item/device/geiger/counter as anything in global.geiger_items_list)
+			for(var/obj/item/device/analyzer/counter as anything in global.geiger_items_list)
 				var/distance_rad_signal = get_dist(counter, src)
 				rads *= sqrt(1 / (distance_rad_signal + 1))
 				counter.recieve_rad_signal(rads, distance_rad_signal)

@@ -347,7 +347,7 @@
 				if(prob(50))
 					M.Stun(5)
 			M.apply_effect(25, IRRADIATE)
-		for(var/obj/item/device/geiger/counter as anything in global.geiger_items_list)
+		for(var/obj/item/device/analyzer/counter as anything in global.geiger_items_list)
 			var/distance_rad_signal = get_dist(counter, src)
 			var/rads = 25 * sqrt(1 / (distance_rad_signal + 1))
 			counter.recieve_rad_signal(rads, distance_rad_signal)

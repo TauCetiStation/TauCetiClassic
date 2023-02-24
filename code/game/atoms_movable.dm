@@ -532,7 +532,7 @@
 		var/rads = rad_dose
 		rads *= sqrt(1 / (get_dist(L, source_turf) + 1))
 		L.apply_effect(rads, IRRADIATE)
-	for(var/obj/item/device/geiger/counter as anything in global.geiger_items_list)
+	for(var/obj/item/device/analyzer/counter as anything in global.geiger_items_list)
 		var/distance_rad_signal = get_dist(counter, source_turf)
 		if(distance_rad_signal <= GEIGER_RANGE)
 			var/rad_power = rad_dose
