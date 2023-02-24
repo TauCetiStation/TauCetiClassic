@@ -404,3 +404,11 @@
 
 /datum/mutiny_scenario/genetic/do_third_strike()
 	//do postavka last mutagen
+
+#undef SCENARIO_MONEY
+#undef SCENARIO_VIRUS
+#undef SCENARIO_RACISM
+#undef SCENARIO_COMMUNISM
+#undef SCENARIO_BRUTALITY
+#undef SCENARIO_MINE
+#undef SCENARIO_GENETIC
