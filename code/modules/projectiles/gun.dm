@@ -1,4 +1,4 @@
-#define DESIRABLE_TWOHAND "For comfortable shooting, it is necessary that the inactive hand is free."
+#define DESIRABLE_TWOHAND "For comfortable shooting, it is necessary that the inactive hand is free"
 #define ONLY_TWOHAND "To fire this weapon, the inactive hand MUST be free"
 
 /obj/item/weapon/gun
