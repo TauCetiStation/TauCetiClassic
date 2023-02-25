@@ -35,13 +35,14 @@
 
 /obj/item/projectile/bullet/slug
 	name = "shotgun slug"
-	damage = 40
-	stoping_power = 3
+	damage = 30
+	armor_piercing = 0.25
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
 	damage = 14
 	dispersion = 2.5
+	armor_piercing = 1.25
 
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
@@ -67,6 +68,7 @@
 	name = "high velocity bullet"
 	damage = 20
 	hitscan = 1
+	armor_piercing = 0.7
 
 /obj/item/projectile/bullet/midbullet2 // 9x19
 	damage = 25
@@ -93,6 +95,7 @@
 	weaken = 3
 	impact_force = 5
 	hitscan = 1
+	armor_piercing = 0.5
 
 /obj/item/projectile/bullet/grenade/r4046
 	name = "rubber grenade"
