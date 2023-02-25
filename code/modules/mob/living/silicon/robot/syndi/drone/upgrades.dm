@@ -241,12 +241,6 @@
 	cost = 4
 	reagent = "cyanide"
 
-/datum/drone_upgrade/chems_poisons/dropper_refill/chloralhydrate
-	name = "Chloral Hydrate refill"
-	desc = "A powerful sedative."
-	cost = 3
-	reagent = "chloralhydrate"
-
 //==========UPGRADES============
 /datum/drone_upgrade/internal
 	category = "Chassis and internal upgrades"
