@@ -39,7 +39,7 @@
 #define GANGSTER "Gangster"
 #define GANGSTER_LEADER "Gangster Leader"
 #define GANGSTER_DEALER "Gangster Dealer"
-#define HEADREV "Head Revolutionary"
+#define LOYALIST "Loyalist"
 #define MALF "Malf AI"
 #define MALFBOT "Malf-Slaved Cyborg"
 #define NUKE_OP "Nuclear Operative"
