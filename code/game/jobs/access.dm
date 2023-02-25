@@ -39,7 +39,7 @@
 /var/const/access_virology = 39
 /var/const/access_cmo = 40
 /var/const/access_qm = 41
-/var/const/access_oldstation = 42
+/var/const/access_blueshield = 42
 /var/const/access_clown = 43
 /var/const/access_mime = 44
 /var/const/access_surgery = 45
@@ -70,6 +70,7 @@
 /var/const/access_paramedic = 70
 /var/const/access_engineering_lobby = 71
 /var/const/access_medbay_storage = 72
+/var/const/access_oldstation = 73
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
