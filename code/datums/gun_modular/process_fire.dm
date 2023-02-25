@@ -1,40 +1,51 @@
 /datum/process_fire
-    var/list/data = list()
+	var/datum/gun_modular/component/first_component
+	var/list/datum/gun_modular/component/data/cache_data = list()
 
-/datum/process_fire/proc/PrepareDataList()
+/datum/process_fire/proc/PrepareCacheData()
 
-    LAZYINITLIST(data)
+	LAZYINITLIST(cache_data)
 
-    return TRUE
+	return TRUE
 
-/datum/process_fire/proc/CheckData(id)
+/datum/process_fire/proc/GetCacheData(id_data)
 
-    PrepareDataList()
+	PrepareCacheData()
 
-    if(!data[id])
-        return FALSE
-    
-    return TRUE
+	if(!cache_data[id_data])
+		return FALSE
 
-/datum/process_fire/proc/GetData(id)
+	return cache_data[id_data]
 
-    PrepareDataList()
+/datum/process_fire/proc/AddCacheData(datum/gun_modular/component/data/cache)
 
-    if(!CheckData(id))
-        return null
+	var/datum/gun_modular/component/data/cache_data_add = cache
+	var/cache_data_id = cache_data_add.id_data
 
-    return data[id]
+	PrepareCacheData()
 
-/datum/process_fire/proc/SetData(id, value)
+	cache_data[cache_data_id] = cache_data_add
 
-    PrepareDataList()
+	return TRUE
 
-    data[id] = value
+/datum/process_fire/proc/AddComponentGun(datum/gun_modular/component/C)
 
-    return TRUE
+	var/datum/gun_modular/component/adding_component = C.CopyComponentGun()
 
-/datum/process_fire/proc/CopyData()
+	if(!istype(adding_component))
+		return FALSE
 
-    PrepareDataList()
+	if(!first_component)
+		first_component = adding_component
+		return TRUE
 
-    return data.Copy()
+	first_component.AddLastComponent(adding_component)
+
+	return TRUE
+
+
+/datum/process_fire/proc/RunComponents()
+
+	first_component.Action(src)
+
+	return TRUE

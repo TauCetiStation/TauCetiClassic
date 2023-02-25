@@ -12,7 +12,7 @@
 
 // process fire
 #define ACTIVE_FIRE "active"
-#define FIRE "fire"
+#define GUN_FIRE "gun_fire"
 #define TARGET_FIRE "target"
 #define USER_FIRE "user"
 #define PROXIMITY_FIRE "proximity"
@@ -23,3 +23,5 @@
 #define SILENSED "silensed"
 #define START_FIRE_LOC "start_fire_loc"
 #define GUN_LOC "gun_loc"
+
+#define RECOIL "recoil"
