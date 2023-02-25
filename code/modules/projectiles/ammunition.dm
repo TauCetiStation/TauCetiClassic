@@ -1,3 +1,6 @@
+#define MANY_STATES 1
+#define TWO_STATES 2
+
 //TG-stuff
 /obj/item/ammo_casing
 	name = "bullet casing"
@@ -74,7 +77,7 @@
 //Boxes of ammo
 /obj/item/ammo_box
 	name = "ammo box (null_reference_exception)"
-	desc = "A box of ammo"
+	desc = "A box of ammo."
 	icon_state = "357"
 	icon = 'icons/obj/ammo.dmi'
 	flags = CONDUCT
@@ -88,9 +91,9 @@
 	var/list/stored_ammo = list()
 	var/ammo_type = /obj/item/ammo_casing
 	var/max_ammo = 7
-	var/multiple_sprites = 0
+	var/multiple_sprites = TWO_STATES
 	var/caliber
-	var/multiload = 1
+	var/multiload = TRUE
 
 /obj/item/ammo_box/atom_init()
 	. = ..()
@@ -98,7 +101,7 @@
 		stored_ammo += new ammo_type(src)
 	update_icon()
 
-/obj/item/ammo_box/proc/get_round(keep = 0)
+/obj/item/ammo_box/proc/get_round(keep = FALSE)
 	if (!stored_ammo.len)
 		return null
 	else
@@ -114,8 +117,8 @@
 		if (stored_ammo.len < max_ammo && rb.caliber == caliber)
 			stored_ammo += rb
 			rb.loc = src
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/ammo_box/proc/make_empty(deleting = TRUE)
 	if(deleting)
@@ -160,12 +163,26 @@
 
 /obj/item/ammo_box/update_icon()
 	switch(multiple_sprites)
-		if(1)
+		if(MANY_STATES)
 			icon_state = "[initial(icon_state)]-[stored_ammo.len]"
-		if(2)
+			desc = "[initial(desc)] There are [stored_ammo.len] shell\s left!"
+		if(TWO_STATES)
 			icon_state = "[initial(icon_state)]-[stored_ammo.len ? "[max_ammo]" : "0"]"
-	desc = "[initial(desc)] There are [stored_ammo.len] shell\s left!"
+			desc = "[initial(desc)] [get_ammo_count_description()]."
 
 //Behavior for magazines
 /obj/item/ammo_box/magazine/proc/ammo_count()
 	return stored_ammo.len
+
+/obj/item/ammo_box/proc/get_ammo_count_description(message)
+	if(stored_ammo.len == max_ammo)
+		message = "It feels full"
+	if(stored_ammo.len < max_ammo)
+		message = "It feels almost full"
+	if(stored_ammo.len <= max_ammo*0.5)
+		message = "It feels half as full"
+	if(stored_ammo.len <= max_ammo*0.25)
+		message = "It feels almost empty"
+	if(!stored_ammo.len)
+		message = "It is empty"
+	return (message)
