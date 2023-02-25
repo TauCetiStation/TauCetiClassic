@@ -468,6 +468,10 @@
 	mode = SYRINGE_INJECT
 	update_icon()
 
+/obj/item/weapon/reagent_containers/syringe/mulligan/hidden
+	name = "syringe"
+	desc = "A syringe."
+
 /obj/item/weapon/reagent_containers/syringe/nutriment
 
 /obj/item/weapon/reagent_containers/syringe/nutriment/atom_init()
@@ -475,3 +479,18 @@
 	reagents.add_reagent("nutriment", 15)
 	mode = SYRINGE_INJECT
 	update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/mutagen
+	name = "unstable mutagen syringe"
+	desc = "A syringe of unstable mutagen. Randomly changes the DNA structure of whoever comes in contact"
+	amount_per_transfer_from_this = 15
+
+/obj/item/weapon/reagent_containers/syringe/mutagen/atom_init()
+	. = ..()
+	reagents.add_reagent("mutagen", 15)
+	mode = SYRINGE_INJECT
+	update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/mutagen/hidden
+	name = "syringe"
+	desc = "A syringe."
