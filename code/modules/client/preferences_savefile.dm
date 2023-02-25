@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 41
+#define SAVEFILE_VERSION_MAX 42
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -252,7 +252,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				S["ignore_question"] << ignore_question
 
 	//copypasting from upper code
-	if(current_version < 41)
+	if(current_version < 42)
 		if(ignore_question && ignore_question.len)
 			if("Revolutionary" in ignore_question)
 				ignore_question -= "Revolutionary"
