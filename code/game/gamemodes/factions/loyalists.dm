@@ -374,7 +374,7 @@
 /datum/mutiny_scenario/genetic/get_third_report()
 	var/report_dat = ""
 	report_dat += "Эффективность использования образцов оказалась не такой, как ожидало командование.<br>"
-	report_dat += "Не смотря на это, целесообразно испытать больше образцов на большем колличестве субъектов.<br>"
+	report_dat += "Несмотря на это, целесообразно испытать больше образцов на большем колличестве субъектов.<br>"
 	report_dat += "Центральное Командование отправляет последнюю поставку на грузовом шаттле.<br>"
 	var/list/possible_positions = engineering_positions + science_positions + security_positions - command_positions - list("Internal Affairs Agent")
 	var/list/pos_experiment_humans = list()
