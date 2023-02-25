@@ -1980,3 +1980,49 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Xeno arsonist crate"
 	group = "xeno"
 	hidden = TRUE
+
+//----------------------------------------------
+//-----------------MUTINY-----------------------
+//----------------------------------------------
+
+/datum/supply_pack/mining_centcom_supply
+	name = "Cent Com Shaft Miner Gear"
+	contains = list(/obj/item/clothing/head/helmet/space/globose/mining,
+					/obj/item/clothing/suit/space/globose/mining,
+					/obj/item/device/radio/headset/headset_cargo,
+					/obj/item/clothing/glasses/hud/mining,
+					/obj/item/weapon/pickaxe,
+					/obj/item/clothing/gloves/black,
+					/obj/item/weapon/storage/bag/ore,
+					/obj/item/device/flashlight/lantern,
+					/obj/item/clothing/under/rank/miner)
+	cost = 2000
+	crate_type = /obj/structure/closet/crate
+	crate_name = "Cent Com Crate"
+	group = "CentCom"
+
+/datum/supply_pack/mulligan_centcom_supply
+	name = "Cent Com Secure Crate"
+	contains = list(/obj/item/weapon/reagent_containers/syringe/mulligan/hidden,
+					/obj/item/weapon/reagent_containers/syringe/mulligan/hidden,
+					/obj/item/weapon/reagent_containers/syringe/mulligan/hidden,
+					/obj/item/weapon/reagent_containers/syringe/mulligan/hidden,
+					/obj/item/weapon/reagent_containers/syringe/mulligan/hidden)
+	cost = 5000
+	crate_type = /obj/structure/closet/crate/secure/gear
+	crate_name = "Cent Com Crate"
+	access = access_heads
+	group = "CentCom"
+
+/datum/supply_pack/mutagen_centcom_supply
+	name = "Cent Com Head Stuff Crate"
+	contains = list(/obj/item/weapon/reagent_containers/syringe/mutagen/hidden,
+					/obj/item/weapon/reagent_containers/syringe/mutagen/hidden,
+					/obj/item/weapon/reagent_containers/syringe/mutagen/hidden,
+					/obj/item/weapon/reagent_containers/syringe/mutagen/hidden,
+					/obj/item/weapon/reagent_containers/syringe/mutagen/hidden)
+	cost = 5000
+	crate_type = /obj/structure/closet/crate/secure/gear
+	crate_name = "Cent Com Crate"
+	access = access_heads
+	group = "CentCom"
