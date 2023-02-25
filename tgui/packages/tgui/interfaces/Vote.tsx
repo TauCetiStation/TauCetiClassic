@@ -54,7 +54,7 @@ export const Vote = (_, context) => {
 
   const height = Math.min(
     730,
-    135
+    90
     + (!currentPoll || isAdmin ? 45 + 26 * polls.length : 0)
     + (currentPoll ? 100 + 22 * currentPoll.choices.length : 23)
   );
