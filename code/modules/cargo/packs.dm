@@ -145,9 +145,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/pistol
 	name = "9mm pistol crate"
-	contains = list(/obj/item/weapon/gun/projectile/glock,
-					/obj/item/weapon/gun/projectile/glock,
-					/obj/item/weapon/gun/projectile/glock)
+	contains = list(/obj/item/weapon/gun/projectile/automatic/glock,
+					/obj/item/weapon/gun/projectile/automatic/glock,
+					/obj/item/weapon/gun/projectile/automatic/glock)
 	cost = 4500
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "9mm pistol crate"
@@ -1808,15 +1808,15 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/laser_tag
 	name = "Laser Tag Crate"
-	contains = list(/obj/item/weapon/gun/energy/laser/lasertag/redtag,
-					/obj/item/weapon/gun/energy/laser/lasertag/redtag,
-					/obj/item/weapon/gun/energy/laser/lasertag/redtag,
+	contains = list(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag,
+					/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag,
+					/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag,
 					/obj/item/clothing/suit/lasertag/redtag,
 					/obj/item/clothing/suit/lasertag/redtag,
 					/obj/item/clothing/suit/lasertag/redtag,
-					/obj/item/weapon/gun/energy/laser/lasertag/bluetag,
-					/obj/item/weapon/gun/energy/laser/lasertag/bluetag,
-					/obj/item/weapon/gun/energy/laser/lasertag/bluetag,
+					/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag,
+					/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag,
+					/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag,
 					/obj/item/clothing/suit/lasertag/bluetag,
 					/obj/item/clothing/suit/lasertag/bluetag,
 					/obj/item/clothing/suit/lasertag/bluetag)
