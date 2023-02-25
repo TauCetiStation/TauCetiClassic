@@ -116,6 +116,7 @@
 	desc = "It's janitor hat."
 	icon_state = "janitorsoft"
 	cap_color = "janitor"
+	can_get_wet = FALSE
 
 /obj/item/clothing/head/soft/nt_pmc_cap
 	name = "NT PMC Cap"
@@ -129,3 +130,9 @@
 	desc = "It's first responder hat. Shows who's saving lives here."
 	icon_state = "frsoft"
 	cap_color = "fr"
+
+/obj/item/clothing/head/soft/blueshield
+	name = "blueshield cap"
+	desc = "It's baseball hat in tasteful black color with blueshield insignia."
+	icon_state = "blueshieldsoft"
+	cap_color = "blueshield"

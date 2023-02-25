@@ -22,7 +22,7 @@
 
 	opacity = TRUE
 	density = TRUE
-	blocks_air = TRUE
+	blocks_air = AIR_BLOCKED
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 312500 //a little over 5 cm thick , 312500 for 1 m by 2.5 m by 0.25 m plasteel wall
@@ -314,7 +314,7 @@
 	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(rotting)
-		if(iswelder(W))
+		if(iswelding(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
 				to_chat(user, "<span class='notice'>Вы сжигаете грибок сваркой.</span>")
@@ -330,15 +330,11 @@
 
 	//THERMITE related stuff. Calls thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
-		if(iswelder(W))
+		if(iswelding(W))
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.use(0,user))
 				thermitemelt(user, seconds_to_melt)
 				return
-
-		else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-			thermitemelt(user, seconds_to_melt)
-			return
 
 		else if(istype(W, /obj/item/weapon/melee/energy/blade))
 			var/obj/item/weapon/melee/energy/blade/EB = W
@@ -354,7 +350,7 @@
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//DECONSTRUCTION
-	if(iswelder(W))
+	if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.use(0, user))
 			to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
@@ -374,22 +370,6 @@
 					return
 				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
 				dismantle_wall()
-
-	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
-		if(user.is_busy(src))
-			return
-		to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
-		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100))
-			if(mineral == "diamond")//Oh look, it's tougher
-				sleep(60)
-			if(!iswallturf(src) || !user || !W || !T)
-				return
-
-			if(user.loc == T && user.get_active_hand() == W)
-				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
-				dismantle_wall()
-				visible_message("<span class='warning'>[user] завершает разборку стены!</span>", blind_message = "<span class='warning'>Вы слышите, как металл разрезается на части.</span>", viewing_distance = 5)
-		return
 
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
@@ -428,13 +408,17 @@
 				dismantle_wall(1)
 				visible_message("<span class='warning'>[user] прорезает стену!</span>", blind_message = "<span class='warning'>Вы слышите треск искр и скрежет металла.</span>", viewing_distance = 5)
 		return
-	else if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
-		var/obj/item/weapon/changeling_hammer/C = W
-		visible_message("<span class='danger'><B>[user]</B> бьет стену!</span>")
+	//fulldestruct to walls when
+	else if(istype(W,/obj/item/weapon/melee/changeling_hammer) && !rotting)
+		var/obj/item/weapon/melee/changeling_hammer/hammer = W
+		//slowdown, user. No need destruct all walls without debuff
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			C.shock_stage += 5
+		user.visible_message("<span class='danger'><B>[user]</B> бьет стену!</span>")
 		user.do_attack_animation(src)
-		if(C.use_charge(user))
-			playsound(user, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			take_damage(30)
+		playsound(user, pick(hammer.hitsound), VOL_EFFECTS_MASTER)
+		take_damage(hammer.get_object_damage())
 		return
 
 	else if(istype(W,/obj/item/apc_frame))

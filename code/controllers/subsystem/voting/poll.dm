@@ -17,7 +17,7 @@
 	var/description = ""
 	var/warning_message = ""
 	var/list/choice_types = list(/datum/vote_choice) //Choices will be initialized from this list
-	var/list/choices = list() // contents initiated /datum/vote_choice
+	var/list/datum/vote_choice/choices = list() // contents initiated /datum/vote_choice
 	var/initiator = null
 
 	var/only_admin = TRUE //Is only admins can initiate this?
@@ -50,7 +50,6 @@
 	else
 		initiator = "Сервер"
 	on_start()
-	SSvote.active_vote = src
 	return TRUE
 
 /datum/poll/proc/get_force_blocking_reason()
@@ -84,8 +83,6 @@
 	choices.Cut()
 	initiator = null
 	description = initial(description)
-	if(SSvote.active_vote == src)
-		SSvote.active_vote = null
 
 /datum/poll/proc/reset_next_vote()
 	next_vote = 0
@@ -181,7 +178,7 @@
 	text += "Не проголосовало - [non_voters]<br>"
 
 	if(winner)
-		text += "<b>Результат голосования [winners.len > 1 ? " (Случайно)" : ""]: [winner.text]</b><br>"
+		text += "<b>Результат голосования[winners.len > 1 ? " (Случайно)" : ""]: [winner.text]</b><br>"
 
 	log_vote(text)
 	to_chat(world, "<span class='vote'>[text]</span>")

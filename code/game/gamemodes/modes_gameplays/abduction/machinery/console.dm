@@ -31,14 +31,14 @@
 							"heal injector" 					=2,
 							"decloner"							=2,
 							"advanced baton"					=2,
-							"addtional permissions"				=2,
+							"additional permissions"			=2,
 							"advanced console"					="Free",
 							"radio silencer"					=1,
 							"science tool" 						=1,
 							"agent helmet" 						=1,
 							"additional agent equipment" 		=1,
 							"additional scientist equipment" 	=1,
-							"silence_gloves"					=3)
+							"silence gloves"					=3)
 
 	var/baton_modules_bought = FALSE
 

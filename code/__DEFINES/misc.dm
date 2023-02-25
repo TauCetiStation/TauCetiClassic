@@ -306,3 +306,10 @@
 
 //For crawl_can_use() in /mob/living
 #define IS_ABOVE(A, B) (A.layer > B.layer || A.plane > B.plane)
+
+#define CARGOSHOPNAME "ГрузТорг"
+
+// Notification action types for ghosts
+#define NOTIFY_JUMP "jump"
+#define NOTIFY_ATTACK "attack"
+#define NOTIFY_ORBIT "orbit"

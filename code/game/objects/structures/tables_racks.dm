@@ -123,8 +123,7 @@
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return FALSE
 
-/obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+/obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover,/obj/item/projectile))
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
@@ -202,7 +201,7 @@
 
 // React to tools attacking src.
 /obj/structure/table/proc/attack_tools(obj/item/I, mob/user)
-	if(iswrench(I))
+	if(iswrenching(I))
 		if(user.is_busy(src))
 			return FALSE
 		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
@@ -499,8 +498,7 @@
 
 	var/status = 2
 
-/obj/structure/table/reinforced/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+/obj/structure/table/reinforced/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover,/obj/item/projectile))
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
@@ -521,7 +519,7 @@
 		return ..()
 
 /obj/structure/table/reinforced/attack_tools(obj/item/I, mob/user)
-	if(iswelder(I))
+	if(iswelding(I))
 		if(user.is_busy())
 			return FALSE
 		var/obj/item/weapon/weldingtool/WT = I
@@ -539,7 +537,7 @@
 			return TRUE
 		return FALSE
 
-	else if(status != 2 && iswrench(I))
+	else if(status != 2 && iswrenching(I))
 		if(user.is_busy(src))
 			return FALSE
 		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
@@ -582,8 +580,7 @@
 /obj/structure/rack/airlock_crush_act()
 	deconstruct(TRUE)
 
-/obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+/obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)
 	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
@@ -592,7 +589,7 @@
 		return 0
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if (iswrenching(W))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		deconstruct(TRUE)
 		return

@@ -21,16 +21,10 @@
 	smooth = SMOOTH_TRUE
 
 /obj/structure/girder/attackby(obj/item/W, mob/user)
-	if(user.is_busy()) return
-	if(istype (W,/obj/item/weapon/changeling_hammer))
-		var/obj/item/weapon/changeling_hammer/C = W
-		visible_message("<span class='warning'><B>[user]</B> бьет каркас!</span>")
-		user.do_attack_animation(src)
-		user.SetNextMove(CLICK_CD_MELEE)
-		if(C.use_charge(user, 1))
-			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			qdel(src)
-	else if(iswrench(W) && state == 0)
+	if(user.is_busy())
+		return
+
+	else if(iswrenching(W) && state == 0)
 		if(anchored && !istype(src,/obj/structure/girder/displaced))
 			to_chat(user, "<span class='notice'>Вы разбираете каркас.</span>")
 			if(W.use_tool(src, user, 40, volume = 100))
@@ -44,7 +38,7 @@
 				new/obj/structure/girder( src.loc )
 				qdel(src)
 
-	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+	else if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
 		to_chat(user, "<span class='notice'>Вы режете каркас.</span>")
 		if(W.use_tool(src, user, 30, volume = 100))
 			if(!src) return
@@ -55,14 +49,14 @@
 		to_chat(user, "<span class='notice'>Вы просверлили каркас!</span>")
 		deconstruct(TRUE)
 
-	else if(isscrewdriver(W) && state == 2 && istype(src,/obj/structure/girder/reinforced))
+	else if(isscrewing(W) && state == 2 && istype(src,/obj/structure/girder/reinforced))
 		to_chat(user, "<span class='notice'>Вы ослабляете кронштейны.</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return
 			to_chat(user, "<span class='notice'>Вы ослабили кронштейны!</span>")
 			state = 1
 
-	else if(iswirecutter(W) && istype(src,/obj/structure/girder/reinforced) && state == 1)
+	else if(iscutter(W) && istype(src,/obj/structure/girder/reinforced) && state == 1)
 		to_chat(user, "<span class='notice'>Вы разбираете кронштейны.</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return
@@ -70,7 +64,7 @@
 			new/obj/structure/girder( src.loc )
 			qdel(src)
 
-	else if(iscrowbar(W) && state == 0 && anchored )
+	else if(isprying(W) && state == 0 && anchored )
 		to_chat(user, "<span class='notice'>Вы делаете каркас подвижным.</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return

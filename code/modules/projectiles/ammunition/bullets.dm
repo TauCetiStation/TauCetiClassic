@@ -87,7 +87,7 @@
 	name = "shotgun shell"
 	desc = "A 12 gauge shell."
 	icon_state = "gshell"
-	pellets = 10
+	pellets = 7
 	projectile_type = /obj/item/projectile/bullet/pellet
 
 /obj/item/ammo_casing/shotgun/beanbag
@@ -205,12 +205,6 @@
 	caliber = "a3006"
 	projectile_type = /obj/item/projectile/bullet/midbullet3
 
-/obj/item/ammo_casing/flare
-	desc = "A flare for flare gun."
-	caliber = "flare"
-	icon_state = "flare"
-	projectile_type = /obj/item/projectile/bullet/flare
-
 /obj/item/ammo_casing/c38m
 	desc = "A .38 bullet casing."
 	caliber = "38"
@@ -222,7 +216,7 @@
 	icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c38m
 	max_ammo = 6
-	multiple_sprites = 1
+	multiple_sprites = MANY_STATES
 
 /obj/item/ammo_casing/a556
 	desc = "A 5.56mm bullet casing."

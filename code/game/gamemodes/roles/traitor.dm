@@ -4,7 +4,7 @@
 	required_pref = ROLE_TRAITOR
 	logo_state = "synd-logo"
 
-	restricted_jobs = list("Cyborg", "Security Cadet", "Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor")
+	restricted_jobs = list("Cyborg", "Security Cadet", "Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor", "Blueshield Officer")
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
 
@@ -12,11 +12,12 @@
 
 	var/telecrystals = 20
 	skillset_type = /datum/skillset/max
+	moveset_type = /datum/combat_moveset/cqc
 	change_to_maximum_skills = FALSE
 
 /datum/role/traitor/New()
 	..()
-	AddComponent(/datum/component/gamemode/syndicate, telecrystals)
+	AddComponent(/datum/component/gamemode/syndicate, telecrystals, "traitor")
 
 /datum/role/traitor/proc/add_one_objective(datum/mind/traitor)
 	switch(rand(1,120))

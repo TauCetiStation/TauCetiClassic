@@ -337,7 +337,7 @@
 /obj/structure/droppod/verb/Start_Verb()
 	set category = "Drop Pod"
 	set name = "Start Drop"
-	set src = orange(1)
+	set src = usr.loc
 	if(!(ishuman(usr) || isrobot(usr)) || usr.incapacitated() || !isturf(loc))
 		return FALSE
 	if(intruder)
@@ -416,7 +416,7 @@
 		to_chat(user, "<span class ='userdanger'>[src] is lock down!</span>")
 		return
 
-	if(isscrewdriver(O))
+	if(isscrewing(O))
 		if(flags & ADVANCED_AIMING_INSTALLED)
 			if(flags & STATE_AIMING)
 				CancelAdvancedAiming()
@@ -427,7 +427,7 @@
 		else
 			to_chat(user, "<span class ='notice'>Advanced aiming system does not installed in [src]!</span>")
 
-	else if(iswelder(O))
+	else if(iswelding(O))
 		var/obj/item/weapon/weldingtool/WT = O
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(get_integrity() < max_integrity && WT.use(0, user))
@@ -726,6 +726,13 @@
 		StartDrop()
 		return
 	..()
+
+/obj/structure/droppod/Syndi/StartDrop()
+	//mix stuff
+	var/datum/faction/nuclear/crossfire/N = find_faction_by_type(/datum/faction/nuclear/crossfire)
+	if(N)
+		N.landing_nuke()
+	return ..()
 
 /obj/structure/droppod/Syndi/perform_drop()
 	..()

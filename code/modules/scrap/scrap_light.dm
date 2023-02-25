@@ -40,8 +40,7 @@
 	on = !on
 	update_brightness(user)
 	item_state = icon_state
-	if(loc == user)
-		user.update_inv_item(src)
+	update_inv_mob()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/torch/attack_self()
@@ -279,14 +278,15 @@
 
 /obj/structure/bonfire/dynamic/Burn()
 	var/turf/current_location = get_turf(src)
+	var/datum/gas_mixture/GM = current_location.return_air()
 	current_location.assume_gas("oxygen", -0.5)
-	if (current_location.air.temperature >= 393)
+	if (GM.temperature >= 393)
 		current_location.assume_gas("carbon_dioxide", 0.5)
 	else
-		current_location.assume_gas("carbon_dioxide", 0.5, (current_location.air.temperature + 200))
+		current_location.assume_gas("carbon_dioxide", 0.5, (GM.temperature + 200))
 	current_location.hotspot_expose(1000, 500)
-	if ((world.time > last_time_smoke) && current_location.air.gas["carbon_dioxide"]) //It's time to make some smoke
-		if (current_location.air.gas["carbon_dioxide"] > 5)
+	if ((world.time > last_time_smoke) && GM.gas["carbon_dioxide"]) //It's time to make some smoke
+		if (GM.gas["carbon_dioxide"] > 5)
 			MakeSmoke()
 	return ..()
 

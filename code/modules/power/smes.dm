@@ -193,7 +193,7 @@
 		return
 
 	// disassembling the terminal
-	if(iswirecutter(I) && terminal && panel_open)
+	if(iscutter(I) && terminal && panel_open)
 		terminal.dismantle(user)
 
 	// crowbarring it!

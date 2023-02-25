@@ -35,18 +35,19 @@
 			DeactivateStealth()
 			armor = combat_armor
 			icon_state = "vest_combat"
-			if(ishuman(loc))
-				var/mob/living/carbon/human/H = loc
-				H.update_inv_wear_suit()
-			return
+			body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+			pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+			cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+			heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 		if(VEST_COMBAT)// TO STEALTH
 			mode = VEST_STEALTH
 			armor = stealth_armor
 			icon_state = "vest_stealth"
-			if(ishuman(loc))
-				var/mob/living/carbon/human/H = loc
-				H.update_inv_wear_suit()
-			return
+			body_parts_covered = initial(body_parts_covered)
+			pierce_protection = initial(pierce_protection)
+			cold_protection = initial(cold_protection)
+			heat_protection = initial(heat_protection)
+	update_inv_mob()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
 	disguise = entry
@@ -63,9 +64,6 @@
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
 		M.copy_overlays(disguise, TRUE)
-		M.update_inv_r_hand()
-		M.update_inv_l_hand()
-	return
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
 	if(!stealth_active)
@@ -279,6 +277,10 @@
 	action_button_is_hands_free = 1
 
 /obj/item/weapon/implant/abductor/attack_self()
+	var/turf/T = get_turf(src)
+	if(SEND_SIGNAL(T, COMSIG_ATOM_INTERCEPT_TELEPORT))
+		to_chat(imp_in, "<span class='warning'>WARNING! Bluespace interference has been detected in the location, preventing teleportation! Teleportation is canceled!</span>")
+		return FALSE
 	if(cooldown >= initial(cooldown))
 		if(imp_in.buckled)
 			imp_in.buckled.unbuckle_mob()
@@ -286,7 +288,7 @@
 		cooldown = 0
 		INVOKE_ASYNC(src, .proc/start_recharge, imp_in)
 	else
-		to_chat(imp_in, "<span class='warning'>You must wait [300 - cooldown] seconds to use [src] again!</span>")
+		to_chat(imp_in, "<span class='warning'>You must wait [(300 - cooldown) / 10] seconds to use [src] again!</span>")
 	return
 
 /obj/item/weapon/implant/abductor/proc/start_recharge(mob/user = usr)
@@ -338,7 +340,7 @@
 	else
 		icon_state = "alienhelmet_a"
 		item_state = "alienhelmet_a"
-		user.update_inv_head()
+		update_inv_mob()
 		var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)
 		team = A.get_team_num()
 		helm_cam = new /obj/machinery/camera(src)
@@ -399,8 +401,7 @@
 
 	to_chat(user, "<span class='notice'>You switch the baton to [txt] mode.</span>")
 	update_icon()
-	user.update_inv_l_hand()
-	user.update_inv_r_hand()
+	update_inv_mob()
 
 /obj/item/weapon/abductor_baton/update_icon()
 	switch(mode)
@@ -478,8 +479,7 @@
 								"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
-				C.handcuffed = new /obj/item/weapon/handcuffs/alien(C)
-				C.update_inv_handcuffed()
+				C.equip_to_slot_or_del(new /obj/item/weapon/handcuffs/alien, SLOT_HANDCUFFED)
 				to_chat(user, "<span class='notice'>You handcuff [C].</span>")
 				L.log_combat(user, "handcuffed with \a [src]")
 		else
@@ -575,7 +575,13 @@
 /obj/machinery/optable/abductor/atom_init()
 	belt = image("icons/obj/abductor.dmi", "belt", layer = FLY_LAYER)
 	. = ..()
-
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/operating_table/abductor(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module/triphasic(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module/triphasic(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor/quadratic(null)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
+	RefreshParts()
 /obj/machinery/optable/abductor/attack_hand(mob/living/carbon/C)
 	if(!victim && !fastened)
 		return

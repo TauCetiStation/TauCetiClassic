@@ -69,7 +69,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		return
 
 	if (panel_open)
-		if(iscrowbar(O))
+		if(isprying(O))
 			default_deconstruction_crowbar(O)
 			return
 		else if(is_wire_tool(O) && wires.interact(user))

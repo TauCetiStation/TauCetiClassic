@@ -62,6 +62,9 @@
 		return TRUE
 	return FALSE
 
+/obj/item/weapon/shield/riot/mirror/toggle_wallshield(mob/living/user)
+	to_chat(user, "<span class='warning'>You are fucking INVINCIBLE!</span>")
+
 /obj/item/clothing/glasses/cult_blindfold
 	name = "blindfold"
 	desc = "Covers the eyes, preventing sight. Altough, something wrong with this one..."
@@ -95,17 +98,18 @@
 	desc = "A hood worn by the followers of Nar-Sie."
 	flags_inv = HIDEFACE
 	flags = HEADCOVERSEYES
-	body_parts_covered = HEAD|EYES
+	body_parts_covered = HEAD|EYES|BLOCKHAIR
 	armor = list(melee = 30, bullet = 20, laser = 30,energy = 25, bomb = 0, bio = 0, rad = 0)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0
 
-/obj/item/clothing/suit/cultrobes
+/obj/item/clothing/suit/hooded/cultrobes
 	name = "cult robes"
 	desc = "A set of armored robes worn by the followers of Nar-Sie."
 	icon_state = "cultrobesalt"
 	item_state = "cultrobesalt"
+	hoodtype = /obj/item/clothing/head/culthood
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/weapon/storage/bible/tome,/obj/item/weapon/melee/cultblade)
 	armor = list(melee = 40, bullet = 25, laser = 45,energy = 40, bomb = 25, bio = 10, rad = 0)
@@ -163,8 +167,7 @@
 
 /obj/item/weapon/storage/backpack/cultpack/armor/atom_init()
 	. = ..()
-	new /obj/item/clothing/head/culthood(src)
-	new /obj/item/clothing/suit/cultrobes(src)
+	new /obj/item/clothing/suit/hooded/cultrobes(src)
 	new /obj/item/clothing/shoes/boots/cult(src)
 
 /obj/item/weapon/storage/backpack/cultpack/space_armor

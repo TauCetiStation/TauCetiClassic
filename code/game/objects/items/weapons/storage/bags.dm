@@ -173,6 +173,19 @@
 	max_w_class = SIZE_SMALL
 	can_hold = list(/obj/item/slime_extract,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/dropper,/obj/item/weapon/reagent_containers/glass/beaker,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/reagent_containers/blood,/obj/item/weapon/reagent_containers/food/snacks/monkeycube,/obj/item/organ)
 
+// -----------------------------
+//          Chemistry bag
+// -----------------------------
+
+/obj/item/weapon/storage/bag/chemistry
+	name = "Chemistry bag"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "chembag"
+	desc = "Bag for safe transportation of chemicals."
+	max_storage_space = 50
+	w_class = SIZE_SMALL
+	max_w_class = SIZE_SMALL
+	can_hold = list(/obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/pill, /obj/item/weapon/storage/pill_bottle)
 
 // -----------------------------
 //        Sheet Snatcher

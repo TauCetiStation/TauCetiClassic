@@ -109,7 +109,7 @@ field_generator power level display
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
 	if(active != FG_OFFLINE)
 		to_chat(user, "<span class='red'>The [src] needs to be off.</span>")
-	else if(iswrench(W))
+	else if(iswrenching(W))
 		switch(state)
 			if(FG_UNSECURED)
 				state = FG_SECURED
@@ -129,7 +129,7 @@ field_generator power level display
 				anchored = FALSE
 			if(FG_WELDED)
 				to_chat(user, "<span class='red'>The [src] needs to be unwelded from the floor.</span>")
-	else if(iswelder(W))
+	else if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		switch(state)
 			if(FG_UNSECURED)
@@ -294,9 +294,8 @@ field_generator power level display
 		var/field_dir = get_dir(T, get_step(G.loc, NSEW))
 		T = get_step(T, NSEW)
 		if(!locate(/obj/machinery/containment_field) in T)
-			var/obj/machinery/containment_field/CF = new
+			var/obj/machinery/containment_field/CF = new(T)
 			CF.set_master(src, G)
-			CF.loc = T
 			CF.set_dir(field_dir)
 
 	connected_gens |= G
