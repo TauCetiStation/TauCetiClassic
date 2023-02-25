@@ -1129,13 +1129,13 @@
 	description = "Deny drinking this and prepare for THE LAW."
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
-	boozepwr = 4
+	boozepwr = 6
 	taste_message = "THE LAW"
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_general_digest(mob/living/M)
 	..()
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
-		M.Stun(10)
+		M.MakeConfused(3)
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"
