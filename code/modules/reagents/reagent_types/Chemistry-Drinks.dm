@@ -567,20 +567,27 @@
 
 /datum/reagent/consumable/neurotoxin/on_general_digest(mob/living/M)
 	..()
-	M.Stun(3)
-	M.Weaken(3)
-	if(!data["ticks"])
+	if(data["ticks"])
+		data["ticks"]++
+	else
 		data["ticks"] = 1
-	data["ticks"]++
+		
 	M.dizziness += 6
-	if(data["ticks"] >= 15 && data["ticks"] < 45)
-		M.AdjustStuttering(4)
-	else if(data["ticks"] >= 45 && prob(50) && data["ticks"] <55)
-		M.AdjustConfused(3)
-	else if(data["ticks"] >=55)
-		M.adjustDrugginess(5)
-	else if(data["ticks"] >=200)
-		M.adjustToxLoss(2)
+	switch(data["ticks"])
+		if(1 to 5)
+			M.make_jittery(2)
+			M.Stuttering(4)
+		if(5 to 45)
+			M.Stun(3)
+			M.Weaken(3)
+		if(45 to 200)
+			M.Stun(3)
+			M.Weaken(3)
+			M.adjustDrugginess(5)
+		if(200 to INFINITY)
+			M.Stun(3)
+			M.Weaken(3)
+			M.adjustToxLoss(2)
 
 /datum/reagent/consumable/hippies_delight
 	name = "Hippies' Delight"
