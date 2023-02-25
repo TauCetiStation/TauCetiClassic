@@ -12,9 +12,11 @@
 	var/datum/gun_modular/component/data/cache_data = process.GetCacheData(id_data)
 
 	if(!cache_data)
-		return process.AddCacheData(src)
+		process.AddCacheData(src)
+		return ..()
 
-	return cache_data.ChangeData(value)
+	cache_data.ChangeData(value)
+	return ..()
 
 /datum/gun_modular/component/data/proc/ChangeData(new_value)
 

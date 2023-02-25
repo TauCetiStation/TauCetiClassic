@@ -38,6 +38,9 @@
 
 /datum/gun_modular/component/proc/Action(datum/process_fire/process)
 
+	var/mob/user = process.GetCacheData(USER_FIRE)
+	to_chat(user, "<span>[id_component]</span>")
+
 	if(!next_component)
 		return TRUE
 

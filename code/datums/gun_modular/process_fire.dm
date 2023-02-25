@@ -15,7 +15,9 @@
 	if(!cache_data[id_data])
 		return FALSE
 
-	return cache_data[id_data]
+	var/datum/gun_modular/component/data/cache_data_get = cache_data[id_data]
+
+	return cache_data_get.value
 
 /datum/process_fire/proc/AddCacheData(datum/gun_modular/component/data/cache)
 

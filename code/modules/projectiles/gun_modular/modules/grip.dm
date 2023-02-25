@@ -14,6 +14,7 @@
 	target_data.ChangeData(target)
 
 	main_action(process)
+	process.RunComponents()
 
 /obj/item/gun_modular/module/grip/init_default_components_module()
 	..()
@@ -35,12 +36,18 @@
 	var/datum/gun_modular/component/proc_gun/interrupter/interrupter_message_success_isHULKCheck = new (src)
 	message_success_isHULKCheck.AddLastComponent(interrupter_message_success_isHULKCheck)
 
-	var/datum/gun_modular/component/check/user_isHULK/user_isHULKCheck = new (src, message_success_isHULKCheck, null)
+	var/datum/gun_modular/component/check/user_isHuman/user_isHumanCheck = new (src, null, null)
+
+	var/datum/gun_modular/component/check/user_isHULK/user_isHULKCheck = new (src, message_success_isHULKCheck, user_isHumanCheck)
 
 	var/datum/gun_modular/component/check/user_isLiving/user_isLivingCheck = new (src, user_isHULKCheck, null)
+	add_default_component(user_isLivingCheck)
 
-	var/datum/gun_modular/component/check/user_advansedTool/user_advansedToolCheck = new (src, user_isLivingCheck, message_fail_advansedToolCheck)
+	var/datum/gun_modular/component/check/user_advansedTool/user_advansedToolCheck = new (src, null, message_fail_advansedToolCheck)
 	add_default_component(user_advansedToolCheck)
+
+	var/datum/gun_modular/component/proc_gun/user_addFingerptint/user_addFingerptint = new (src)
+	add_default_component(user_addFingerptint)
 
 
 /obj/item/gun_modular/module/grip/main_action(datum/process_fire/process)

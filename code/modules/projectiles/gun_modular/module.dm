@@ -143,8 +143,8 @@
 
 /obj/item/gun_modular/module/proc/main_action(datum/process_fire/process)
 
-	for(var/datum/gun_modular/component/C in default_components_module)
-		process.AddComponentGun(C.CopyComponentGun())
+	for(var/id_component in default_components_module)
+		process.AddComponentGun(default_components_module[id_component].CopyComponentGun())
 
 	for(var/obj/item/gun_modular/module/next_module in next_modules)
 		next_module.main_action(process)

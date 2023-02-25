@@ -1,5 +1,6 @@
 /datum/gun_modular/component/data/gun_recoil
-	id_data = TARGET_FIRE
+	id_component = RECOIL
+	id_data = RECOIL
 
 /datum/gun_modular/component/data/gun_recoil/New(obj/item/gun_modular/module/P, recoil = 0)
 

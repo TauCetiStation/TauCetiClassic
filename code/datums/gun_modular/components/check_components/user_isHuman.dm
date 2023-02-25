@@ -1,7 +1,7 @@
-/datum/gun_modular/component/check/user_advansedTool
-	id_component = "user_advansedTool"
+/datum/gun_modular/component/check/user_isHuman
+	id_component = "user_isHuman"
 
-/datum/gun_modular/component/check/user_advansedTool/Action(datum/process_fire/process)
+/datum/gun_modular/component/check/user_isHuman/Action(datum/process_fire/process)
 
 	var/mob/living/user = process.GetCacheData(USER_FIRE)
 
@@ -13,7 +13,7 @@
 		FailCheck(process)
 		return ..()
 
-	if(!user.IsAdvancedToolUser())
+	if(!ishuman(user))
 		FailCheck(process)
 		return ..()
 
