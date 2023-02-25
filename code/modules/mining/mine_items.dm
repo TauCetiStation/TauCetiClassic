@@ -710,7 +710,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/weapon/gun/energy/laser/cutter/attackby(obj/item/A, mob/user)
 	if(istype(A, /obj/item/stack/sheet/mineral/phoron))
 		if(power_supply.charge >= power_supply.maxcharge)
-			to_chat(user,"<span class='notice'>[src] is already fully charged.")
+			to_chat(user,"<span class='notice'>[src] is already fully charged.</span>")
 			return
 		var/obj/item/stack/sheet/S = A
 		S.use(1)
@@ -718,7 +718,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
 	else if(istype(A, /obj/item/weapon/ore/phoron))
 		if(power_supply.charge >= power_supply.maxcharge)
-			to_chat(user,"<span class='notice'>[src] is already fully charged.")
+			to_chat(user,"<span class='notice'>[src] is already fully charged.</span>")
 			return
 		qdel(A)
 		power_supply.give(500)
