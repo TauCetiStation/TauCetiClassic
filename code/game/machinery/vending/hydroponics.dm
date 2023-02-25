@@ -19,6 +19,7 @@
 		/obj/item/weapon/reagent_containers/glass/bottle/diethylamine = 5,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/hydronutrients
+	private = TRUE
 
 /obj/machinery/vending/hydroseeds
 	name = "MegaSeed Servitor"
@@ -75,3 +76,4 @@
 		/obj/item/toy/waterflower = 1,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/hydroseeds
+	private = TRUE

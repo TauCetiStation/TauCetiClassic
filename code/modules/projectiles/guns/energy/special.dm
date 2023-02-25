@@ -2,25 +2,13 @@
 	name = "ion rifle"
 	desc = "A man portable anti-armor weapon designed to disable mechanical threats."
 	icon_state = "ionrifle"
-	item_state = "ionrifle"
+	item_state = null
 	origin_tech = "combat=2;magnets=4"
 	w_class = SIZE_NORMAL
 	flags =  CONDUCT
 	slot_flags = SLOT_FLAGS_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
-
-/obj/item/weapon/gun/energy/ionrifle/update_icon()
-	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = CEIL(ratio * 4) * 25
-	switch(modifystate)
-		if (0)
-			if(ratio > 100)
-				icon_state = "[initial(icon_state)]100"
-				item_state = "[initial(item_state)]100"
-			else
-				icon_state = "[initial(icon_state)][ratio]"
-				item_state = "[initial(item_state)][ratio]"
-	return
+	modifystate = 0
 
 /obj/item/weapon/gun/energy/ionrifle/emp_act(severity)
 	if(severity <= 2)
