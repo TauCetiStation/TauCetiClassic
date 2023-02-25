@@ -834,13 +834,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 		SetWeakened(0, TRUE)
 	if(remove_flags & CANPARALYSE)
 		SetParalysis(0, TRUE)
-	if(remove_flags & (CANSTUN|CANPARALYSE|CANWEAKEN))
-		update_canmove()
 	status_flags &= ~remove_flags
+	if(remove_flags & (CANSTUN|CANPARALYSE|CANWEAKEN|FAKEDEATH))
+		update_canmove()
 
 /mob/proc/add_status_flags(add_flags)
 	if(add_flags & GODMODE)
 		stuttering = 0
+	if(add_flags & FAKEDEATH)
+		update_canmove()
 	status_flags |= add_flags
 
 // ========== CRAWLING ==========
