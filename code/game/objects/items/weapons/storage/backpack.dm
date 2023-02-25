@@ -402,5 +402,6 @@
 	item_state = "backpack-gryz"
 	w_class = SIZE_BIG
 	max_w_class = SIZE_BIG
-	storage_slots = 10
+	storage_slots = 14
+	max_storage_space = 100
 	can_hold = list(/obj/item/smallDelivery)
