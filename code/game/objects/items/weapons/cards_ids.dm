@@ -502,7 +502,7 @@
 	desc = "The old ID card, belongs to the captain of a very unlucky station named 'LCR'."
 	icon_state = "gold"
 	item_state = "gold_id"
-	access = list(access_oldstation, access_RC_announce, access_keycard_auth, access_engine_equip, access_medical, access_captain, access_engine)
+	access = list(access_oldstation, access_RC_announce, access_keycard_auth, access_engine_equip, access_medical, access_captain, access_engine, access_research)
 
 /obj/item/weapon/card/id/old_station/eng
 	name = "engineer ID"
@@ -510,7 +510,7 @@
 	icon_state = "eng"
 	item_state = "eng_id"
 	rank = "Senior Engineer"
-	access = list(access_oldstation, access_engine, access_engine_equip, access_medical)
+	access = list(access_oldstation, access_engine, access_engine_equip, access_medical, access_research)
 
 /obj/item/weapon/card/id/old_station/med
 	name = "medic ID"
@@ -518,4 +518,4 @@
 	icon_state = "med"
 	item_state = "med_id"
 	rank = "Senior Medic"
-	access = list(access_oldstation, access_engine, access_engine_equip, access_medical)
+	access = list(access_oldstation, access_engine, access_engine_equip, access_medica, access_research)
