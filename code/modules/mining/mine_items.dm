@@ -504,7 +504,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = /obj/item/weapon/stock_parts/cell/crap
-	var/recharge_time = 2.1 SECONDS
+	var/recharge_time = 2.0 SECONDS
 	var/damage = 10
 	var/range = 3
 	var/mineral_multiply_coefficient = 1.0
@@ -693,7 +693,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if((iswallturf(target)) && (prob(destruction_chance)))
 		target.ex_act(EXPLODE_HEAVY)
 
-
 /obj/item/weapon/gun/energy/laser/cutter/atom_init()
 	. = ..()
 	power_supply.AddComponent(/datum/component/cell_selfrecharge, 50)
@@ -707,6 +706,25 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	emagged = TRUE
 	to_chat(user, "<span class='warning'>Ошибка: Обнаружен несовместимый модуль. Ошибкаошибкаошибка.</span>")
 	return TRUE
+
+/obj/item/weapon/gun/energy/laser/cutter/attackby(obj/item/A, mob/user)
+	if(istype(A, /obj/item/stack/sheet/mineral/phoron))
+		if(power_supply.charge >= power_supply.maxcharge)
+			to_chat(user,"<span class='notice'>[src] is already fully charged.")
+			return
+		var/obj/item/stack/sheet/S = A
+		S.use(1)
+		power_supply.give(1000)
+		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
+	else if(istype(A, /obj/item/weapon/ore/phoron))
+		if(power_supply.charge >= power_supply.maxcharge)
+			to_chat(user,"<span class='notice'>[src] is already fully charged.")
+			return
+		qdel(A)
+		power_supply.give(500)
+		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
+	else
+		return ..()
 
 /obj/item/weapon/gun/energy/laser/cutter/emagged //for robots
 	emagged = TRUE
@@ -807,7 +825,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/kinetic_upgrade/speed
 	name = "accelerator upgrade(speed)"
 	icon_state = "accelerator_upg_speed"
-	var/cooldown_reduction = 0.35 SECOND
+	var/cooldown_reduction = 0.4 SECOND
 
 /obj/item/kinetic_upgrade/speed/atom_init()
 	desc += "Ускоряет <span class='notice'><B>перезарядку</B></span> на <span class='notice'><B>[cooldown_reduction / 10]</B></span> секунды."
