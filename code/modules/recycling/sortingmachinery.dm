@@ -270,7 +270,7 @@
 				dat += "Описание: <A href='?src=\ref[src];description=1'>[lot_description]</A>"
 			dat += " <A href='?src=\ref[src];autodesc=1'>авто</A><BR>\n"
 			dat += "Номер аккаунта: <A href='?src=\ref[src];number=1'>[lot_account_number]</A> <A href='?src=\ref[src];takeid=1'>id</A><BR>\n"
-			dat += "Цена: <A href='?src=\ref[src];price=1'>[lot_price]$</A><BR>\n"
+			dat += "Цена: <A href='?src=\ref[src];price=1'>[lot_price]$</A> Наценка: +[global.online_shop_delivery_cost * 100]% ([lot_price * global.online_shop_delivery_cost]$)<BR>\n"
 			if(autocategory)
 				dat += "Категория: [lot_category]"
 			else
