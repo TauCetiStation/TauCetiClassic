@@ -142,10 +142,7 @@
 		)
 
 		bitecount++
-		U.cut_overlays()
-		var/image/IM = new(U.icon, "loadedfood")
-		IM.color = filling_color
-		U.add_overlay(IM)
+		U.create_food_overlay(filling_color)
 
 		var/obj/item/weapon/reagent_containers/food/snacks/collected = new type
 		collected.loc = U

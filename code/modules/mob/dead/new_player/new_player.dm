@@ -37,10 +37,16 @@
 /mob/dead/new_player/proc/show_titlescreen()
 	winset(client, "lobbybrowser", "is-disabled=false;is-visible=true")
 
-	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/lobby) //Sending pictures to the client
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/lobby)
 	assets.send(src)
 
-	client << browse(global.current_lobby_screen, "file=titlescreen.gif;display=0")
+	if(global.custom_lobby_image)
+		client << browse(global.custom_lobby_image, "file=titlescreen.gif;display=0") // png? jpg?
+	else
+		if(client.prefs.lobbyanimation)
+			client << browse(global.lobby_screens[global.lobby_screen]["mp4"], "file=[global.lobby_screen].mp4;display=0")
+		client << browse(global.lobby_screens[global.lobby_screen]["png"], "file=[global.lobby_screen].png;display=0")
+
 	client << browse(get_lobby_html(), "window=lobbybrowser")
 
 /mob/dead/new_player/proc/hide_titlescreen()
@@ -130,7 +136,7 @@
 			// observer.icon = client.prefs.preview_icon
 			observer.icon = 'icons/mob/mob.dmi'
 			observer.icon_state = "ghost"
-			
+
 			observer.alpha = 127
 
 			if(client.prefs.be_random_name)

@@ -197,7 +197,7 @@
 			return get_all_centcom_access()
 
 /proc/get_all_accesses()
-	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers,
+	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_blueshield,
 	            access_medical, access_genetics, access_morgue, access_rd,
 	            access_tox, access_tox_storage, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
 	            access_external_airlocks, access_change_ids, access_ai_upload,
@@ -220,7 +220,7 @@
 		if(0)
 			return get_all_accesses()
 		if(1) //security
-			return list(access_sec_doors, access_security, access_brig, access_armory, access_forensics_lockers, access_hos, access_detective)
+			return list(access_sec_doors, access_security, access_brig, access_armory, access_forensics_lockers, access_hos, access_detective, access_blueshield)
 		if(2) //medbay
 			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_psychiatrist, access_virology, access_surgery, access_cmo, access_paramedic, access_medbay_storage)
 		if(3) //research
@@ -266,6 +266,8 @@
 			return "Cargo Bot Delivery"
 		if(access_security)
 			return "Security"
+		if(access_blueshield)
+			return "Blueshield Office"
 		if(access_brig)
 			return "Holding Cells"
 		if(access_forensics_lockers)
