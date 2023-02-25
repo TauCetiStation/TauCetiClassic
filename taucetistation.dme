@@ -358,6 +358,7 @@
 #include "code\datums\gun_modular\components\data.dm"
 #include "code\datums\gun_modular\components\proc.dm"
 #include "code\datums\gun_modular\components\check_components\user_advansedTool.dm"
+#include "code\datums\gun_modular\components\check_components\user_isHULK.dm"
 #include "code\datums\gun_modular\components\check_components\user_isLiving.dm"
 #include "code\datums\gun_modular\components\data_components\gun_recoil.dm"
 #include "code\datums\gun_modular\components\data_components\gun_target.dm"
