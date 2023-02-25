@@ -373,7 +373,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 /obj/machinery/swarm_powered/bluespace_catapult/process()
 	var/materials_satisfied = required_materials / max_required_materials
 	var/power_satisfied = required_power / max_required_power
-	var/perc_finished = FLOOR((1 - materials_satisfied * power_satisfied) * 100, 1)
+	var/perc_finished = CEIL((1 - materials_satisfied * power_satisfied) * 100)
 
 	var/datum/announcement/centcomm/replicator/announcement
 	if(perc_finished >= 25 && last_perc_announcement < 25)
