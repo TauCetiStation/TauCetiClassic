@@ -63,10 +63,10 @@
 	var/dead_heads = 0
 	var/alive_heads = 0
 	for(var/datum/role/loyalist/R in members)
-		if(!considered_alive(R.antag) || R.antag.current.suiciding)
-			dead_heads++
-		else
+		if(R.calculate_completion() == OBJECTIVE_WIN)
 			alive_heads++
+		else
+			dead_heads++
 
 	if(!dead_heads)
 		dat += "<span class='green'>The loyal heads of staff were survive!</span>"
