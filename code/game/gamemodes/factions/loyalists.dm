@@ -20,16 +20,12 @@
 	logo_state = "loyal-logo"
 
 	var/last_command_report = 0
-	var/selected_scenario = 0
 	var/datum/mutiny_scenario/scenario
 
 /datum/faction/loyalists/OnPostSetup()
 	var/scenario_type = pick(SCENARIO_MONEY, SCENARIO_VIRUS, SCENARIO_RACISM, SCENARIO_COMMUNISM, SCENARIO_BRUTALITY, SCENARIO_MINE, SCENARIO_GENETIC)
 	scenario = new scenario_type(src)
 	return ..()
-
-/datum/faction/loyalists/can_setup()
-	return TRUE
 
 /datum/faction/loyalists/forgeObjectives()
 	if(..())
