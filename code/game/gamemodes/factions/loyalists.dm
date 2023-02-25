@@ -19,9 +19,9 @@
 
 	logo_state = "loyal-logo"
 
+	accept_latejoiners = TRUE
 	/// The time, in deciseconds, that the datum's OnPostSetup() occured at. Used in /process()
 	var/start_time = null
-
 	var/last_command_report = 0
 	var/datum/mutiny_scenario/scenario
 
@@ -80,12 +80,6 @@
 		feedback_add_details("[ID]_success","FAIL")
 	return dat
 
-/datum/faction/loyalists/latespawn(mob/M)
-	if(M.mind.assigned_role in command_positions)
-		if(M.isloyal())
-			log_debug("Adding loyalist role for [M.mind.name]")
-			add_faction_member(src, M)
-
 /datum/faction/loyalists/process()
 	if(last_command_report == 0 && world.time - start_time >= 1 MINUTES)
 		command_report(scenario.get_first_report())
@@ -114,6 +108,7 @@
 	announcement_ping.play()
 
 /datum/mutiny_scenario
+	//hot access to faction
 	var/datum/faction/assigned_faction
 	var/list/affected_mobs = list()
 
