@@ -518,4 +518,4 @@
 	icon_state = "med"
 	item_state = "med_id"
 	rank = "Senior Medic"
-	access = list(access_oldstation, access_engine, access_engine_equip, access_medica, access_research)
+	access = list(access_oldstation, access_engine, access_engine_equip, access_medical, access_research)
