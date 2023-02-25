@@ -174,6 +174,9 @@
 	min_duration = 90
 	max_duration = 110
 
+/datum/surgery_step/ipc/eye/screw_open/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	return ..() && target.op_stage.eyes == 0
+
 /datum/surgery_step/ipc/eye/screw_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to unscrew [target]'s camera panels with \the [tool].",
 	"You unscrew [target]'s camera panels with \the [tool].")

@@ -1,3 +1,17 @@
+/mob/living/carbon
+	var/list/overlays_standing
+
+/mob/living/carbon/proc/apply_standing_overlay(cache_index)
+	var/image/I = overlays_standing[cache_index]
+	if(I)
+		add_overlay(I)
+
+/mob/living/carbon/proc/remove_standing_overlay(cache_index)
+	if(overlays_standing[cache_index])
+		cut_overlay(overlays_standing[cache_index])
+		overlays_standing[cache_index] = null
+
+
 /mob/living/carbon/update_transform()
 	var/matrix/ntransform = matrix(default_transform)
 	var/final_pixel_y = default_pixel_y
