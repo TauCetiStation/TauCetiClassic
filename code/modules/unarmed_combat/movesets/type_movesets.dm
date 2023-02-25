@@ -51,7 +51,7 @@
 	)
 
 
-/datum/combat_moveset/cqc //For traitors, nukies, headrevs, undercover cops and quality.
+/datum/combat_moveset/cqc //For traitors, nukies, undercover cops and quality.
 	name = "CQC Moveset"
 	teach_combos = list(
 		COMBO_CAPTURE_CQC,

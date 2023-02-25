@@ -185,12 +185,6 @@
 
 #define ischangeling(H) isrolebytype(/datum/role/changeling, H)
 
-#define isanyrev(H) (isrev(H) || isrevhead(H))
-
-#define isrev(H) isrole(REV, H)
-
-#define isrevhead(H) isrole(HEADREV, H)
-
 #define istraitor(H) isrole(TRAITOR, H)
 
 #define iselitesyndie(H) isrole(SYNDIESQUADIE, H)

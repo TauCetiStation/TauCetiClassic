@@ -5,15 +5,13 @@
 	if(!ishuman(M) || !M.mind)
 		return TRUE
 	var/mob/living/carbon/human/H = M
-	if(isrevhead(H) || isshadowling(H) || isshadowthrall(H)|| iswizard(H))
+	if(isshadowling(H) || isshadowthrall(H)|| iswizard(H))
 		M.visible_message("<span class='warning'>[M] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
 		return FALSE
 
-	var/list/role_to_deconvert = list(REV, GANGSTER)
-	for(var/role in role_to_deconvert)
-		if(isrole(role, M))
-			var/datum/role/R = H.mind.GetRole(role)
-			R.Deconvert()
+	if(isrole(GANGSTER, M))
+		var/datum/role/R = H.mind.GetRole(GANGSTER)
+		R.Deconvert()
 
 	if(iscultist(H))
 		to_chat(H, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
@@ -75,7 +73,7 @@
 	if(.)
 		if(M.mind)
 			var/cleared_role = FALSE
-			var/list/remove_roles = list(TRAITOR, NUKE_OP, NUKE_OP_LEADER, HEADREV, GANGSTER_LEADER)
+			var/list/remove_roles = list(TRAITOR, NUKE_OP, NUKE_OP_LEADER, GANGSTER_LEADER)
 			for(var/role in remove_roles)
 				var/datum/role/R = M.mind.GetRole(role)
 				if(!R)

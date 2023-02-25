@@ -216,10 +216,6 @@
 				to_chat(user, "<span class='warning'>Sticking a dead [M] into the frame would sort of defeat the purpose.</span>")
 				return
 
-			if(isrevhead(M.brainmob))
-				to_chat(user, "<span class='warning'>The frame's firmware lets out a shrill sound, and flashes 'Abnormal Memory Engram'. It refuses to accept the [M].</span>")
-				return
-
 			if(jobban_isbanned(M.brainmob, "Cyborg"))
 				to_chat(user, "<span class='warning'>This [M] does not seem to fit.</span>")
 				return

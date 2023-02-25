@@ -89,15 +89,6 @@
 		/datum/skill/command = SKILL_LEVEL_PRO
 	)
 
-/datum/skillset/revolutionary
-	name = REV
-	initial_skills = list(
-		/datum/skill/police = SKILL_LEVEL_TRAINED,
-		/datum/skill/firearms = SKILL_LEVEL_TRAINED,
-		/datum/skill/command = SKILL_LEVEL_NOVICE,
-		/datum/skill/melee = SKILL_LEVEL_TRAINED
-	)
-
 /datum/skillset/gangster
 	name = GANGSTER
 	initial_skills = list(

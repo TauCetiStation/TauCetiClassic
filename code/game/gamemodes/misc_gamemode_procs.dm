@@ -26,8 +26,7 @@
 		   man.client.prefs.nanotrasen_relation == "Skeptical" && prob(20))
 			suspects += man
 
-		else if(istraitor(man) && prob(40) || ischangeling(man) && prob(50) || iscultist(man) && prob(30) || \
-				isrevhead(man) && prob(30) || isshadowling(man) && prob(20))
+		else if(istraitor(man) && prob(40) || ischangeling(man) && prob(50) || iscultist(man) && prob(30) || isshadowling(man) && prob(20))
 
 			suspects += man
 
@@ -222,5 +221,5 @@
 // but all wizards have unique names
 /proc/get_roles_with_interesting_names()
 	return list(ABDUCTED, CHANGELING, CULTIST, CULT_LEADER, DEATHSQUADIE, GANGSTER, GANGSTER_LEADER,
-				GANGSTER_DEALER, HEADREV, MALF, MALFBOT, NUKE_OP, NUKE_OP_LEADER, NINJA, REV,
+				GANGSTER_DEALER, MALF, MALFBOT, NUKE_OP, NUKE_OP_LEADER, NINJA,
 				RESPONDER, SHADOW_THRALL, TRAITOR, TRAITORCHAN, UNDERCOVER_COP, WIZARD, WIZ_APPRENTICE)
