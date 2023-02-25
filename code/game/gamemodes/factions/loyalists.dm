@@ -19,10 +19,14 @@
 
 	logo_state = "loyal-logo"
 
+	/// The time, in deciseconds, that the datum's OnPostSetup() occured at. Used in /process()
+	var/start_time = null
+
 	var/last_command_report = 0
 	var/datum/mutiny_scenario/scenario
 
 /datum/faction/loyalists/OnPostSetup()
+	start_time = world.time
 	var/scenario_type = pick(SCENARIO_MONEY, SCENARIO_VIRUS, SCENARIO_RACISM, SCENARIO_COMMUNISM, SCENARIO_BRUTALITY, SCENARIO_MINE, SCENARIO_GENETIC)
 	scenario = new scenario_type(src)
 	return ..()
@@ -83,15 +87,15 @@
 			add_faction_member(src, M)
 
 /datum/faction/loyalists/process()
-	if(last_command_report == 0 && world.time >= 10 MINUTES)
+	if(last_command_report == 0 && world.time - start_time >= 1 MINUTES)
 		command_report(scenario.get_first_report())
 		scenario.do_first_strike()
 		last_command_report = 1
-	else if(last_command_report == 1 && world.time >= 30 MINUTES)
+	else if(last_command_report == 1 && world.time - start_time >= 3 MINUTES)
 		command_report(scenario.get_second_report())
 		scenario.do_second_strike()
 		last_command_report = 2
-	else if(last_command_report == 2 && world.time >= 60 MINUTES)
+	else if(last_command_report == 2 && world.time - start_time >= 6 MINUTES)
 		command_report(scenario.get_third_report())
 		scenario.do_third_strike()
 		last_command_report = 3
@@ -268,7 +272,7 @@
 
 /datum/mutiny_scenario/brutality/get_first_report()
 	var/report_dat = ""
-	report_dat += "Новый заместитель руководителя компании Vey Med предложил улучшить качество питания на вашей станции.<br>"
+	report_dat += "Новый заместитель главы компании Vey Med предложил улучшить качество питания на вашей станции.<br>"
 	report_dat += "Центральное Командование приказывает отправить все торговые автоматы с едой грузовым шаттлом.<br>"
 	report_dat += "Убедитесь, что у вас есть достаточно сотрудников связанных с выращиванием и приготовлением пищи.<br>"
 	report_dat += "Следите, чтобы сотрудники станции не повредили автоматы во время транспортировки.<br>"
@@ -277,7 +281,7 @@
 
 /datum/mutiny_scenario/brutality/get_second_report()
 	var/report_dat = ""
-	report_dat += "Замминистр поделился с нами информацией о новом методе снабжения едой.<br>"
+	report_dat += "Замглавы поделился с нами информацией о новом методе снабжения едой.<br>"
 	report_dat += "По его словам слизни, которые были на вашей станции, превращают мясо своих жертв в особый деликатес.<br>"
 	report_dat += "При питании, слизни разрушают твёрдые элементы волокон мышц, что увеличивает усваиваемость пищеварительного тракта.<br>"
 	report_dat += "Центральное Командование приказывает накормить слизней живыми существами.<br>"
