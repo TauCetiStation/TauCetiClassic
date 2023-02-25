@@ -45,10 +45,6 @@
 				return TRUE
 		return FALSE
 
-//Never faction round end in mutiny gamemode
-/datum/faction/loyalists/check_win()
-	return FALSE
-
 /datum/faction/loyalists/IsSuccessful()
 	var/alive_heads = 0
 	for(var/datum/role/loyalist/R in members)
