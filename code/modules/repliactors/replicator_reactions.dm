@@ -72,7 +72,7 @@
 	return REPLICATOR_COST_REPLICATE
 
 /mob/living/simple_animal/replicator/get_unit_disintegration_time()
-	return ..() * 0.25
+	return ..() * 0.1
 
 /mob/living/simple_animal/replicator/replicator_act(mob/living/simple_animal/replicator/R)
 	gib()

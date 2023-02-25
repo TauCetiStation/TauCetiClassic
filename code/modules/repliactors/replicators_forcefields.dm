@@ -16,6 +16,12 @@
 	. = ..()
 	icon_state = "floor"
 
+/turf/simulated/floor/plating/airless/catwalk/forcefield/Destroy()
+	var/obj/structure/forcefield_node/FN = locate() in src
+	qdel(FN)
+
+	return ..()
+
 /turf/simulated/floor/plating/airless/catwalk/forcefield/update_icon(propogate=1)
 	return
 
@@ -24,6 +30,14 @@
 	if(newtype != type)
 		var/obj/structure/forcefield_node/FN = locate() in src
 		qdel(FN)
+
+/turf/simulated/floor/plating/airless/catwalk/forcefield/attackby(obj/item/C, mob/user)
+	if(istype(C, /obj/item/stack/tile) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
+		// to-do: sound
+		ChangeTurf(/turf/simulated/floor/plating)
+		return
+
+	return ..()
 
 
 /obj/structure/replicator_forcefield
@@ -37,6 +51,12 @@
 
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
+
+/obj/structure/replicator_forcefield/Destroy()
+	// to-do: sound
+	if(!(locate(/obj/structure/stabilization_field) in loc))
+		new /obj/structure/stabilization_field(loc)
+	return ..()
 
 /obj/structure/replicator_forcefield/CanPass(atom/movable/mover, turf/target)
 	if(!mover)
@@ -55,6 +75,29 @@
 	R.try_construct(get_turf(src))
 
 
+/obj/structure/stabilization_field
+	name = "stabilization field"
+	icon = 'icons/mob/replicator.dmi'
+	icon_state = "stabillization_field"
+	density = FALSE
+	anchored = TRUE
+	opacity = 0
+	can_block_air = TRUE
+
+/obj/structure/stabilization_field/attackby(obj/item/C, mob/user)
+	if(isscrewing(C) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
+		// to-do: sound
+		qdel(src)
+		return
+
+	return ..()
+
+/obj/structure/stabilization_field/CanPass(atom/movable/mover, turf/target)
+	if(!mover)
+		return FALSE
+	return ..()
+
+
 /obj/structure/replicator_barricade
 	name = "forcefield barricade"
 	icon = 'icons/mob/replicator.dmi'
@@ -64,8 +107,13 @@
 	opacity = 0
 	can_block_air = TRUE
 
-	max_integrity = 10
+	max_integrity = 35
 	resistance_flags = CAN_BE_HIT
+
+/obj/structure/replicator_barricade/Destroy()
+	if(!(locate(/obj/structure/stabilization_field) in loc))
+		new /obj/structure/stabilization_field(loc)
+	return ..()
 
 /obj/structure/replicator_barricade/CanPass(atom/movable/mover, turf/target)
 	if(!mover)
@@ -113,7 +161,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	var/mob/living/simple_animal/replicator/R = AM
 	global.replicators_faction.adjust_compute(1, adjusted_by=R.last_controller_ckey)
 	icon_state = "floor_node_captured"
-	layer = ABOVE_NORMAL_TURF_LAYER
 	playsound(AM, 'sound/magic/heal.ogg', VOL_EFFECTS_MASTER)
 
 /obj/structure/forcefield_node/proc/captured()

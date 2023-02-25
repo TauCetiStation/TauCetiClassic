@@ -143,3 +143,28 @@
 	else
 		icon_state = initial(icon_state)
 		alpha = 255
+
+/obj/item/mine/replicator/Topic(href, href_list)
+	if(href_list["replicator_jump"])
+		var/atom/A = locate(href_list["replicator_jump"])
+		if(!isreplicator(A))
+			return
+		var/mob/living/simple_animal/replicator/R = A
+		if(R.incapacitated())
+			return
+		if(!R.mind)
+			return
+
+		for(var/r in global.replicators)
+			var/mob/living/simple_animal/replicator/other = r
+			if(other.ckey)
+				continue
+			if(get_dist(src, other) > 7)
+				continue
+			if(!R.transfer_control(other, alert=FALSE))
+				continue
+
+		to_chat(src, "<span class='notice'>Other presence is already attending this situation.</span>")
+		return
+
+	return ..()

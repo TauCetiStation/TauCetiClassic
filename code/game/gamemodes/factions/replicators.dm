@@ -43,7 +43,7 @@ var/global/datum/faction/replicators/replicators_faction
 	var/list/vents4spawn
 
 	var/nodes_to_spawn = 0
-	var/node_spawn_cooldown = 3 MINUTES
+	var/node_spawn_cooldown = 2 MINUTES
 	var/next_node_spawn = 0
 
 	// Win condition is launching 10 replicators.
@@ -111,7 +111,7 @@ var/global/datum/faction/replicators/replicators_faction
 
 	if(materials_consumed > consumed_materials_until_upgrade)
 		materials_consumed = 0
-		consumed_materials_until_upgrade += REPLICATOR_COST_REPLICATE
+		consumed_materials_until_upgrade += REPLICATOR_COST_REPLICATE * 0.5
 		announce_swarm("The Swarm", "The Swarm", "Ample materials consumed. Bandwidth increased.")
 		bandwidth++
 
@@ -146,8 +146,17 @@ var/global/datum/faction/replicators/replicators_faction
 		return
 
 	R.apply_status_effect(STATUS_EFFECT_SWARMS_GIFT, spawned_at_time + swarms_gift_duration - world.time)
-	// Scale volume with amount of drones?
-	R.playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
+	if(!R.mind)
+		return
+
+	var/datum/role/replicator/replicator_role = R.mind.GetRole(ROLE_REPLICATOR)
+	if(!replicator_role)
+		return
+
+	if(replicator_role.next_music_start < world.time)
+		// Scale volume with amount of drones?
+		R.playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
+		replicator_role.next_music_start = world.time + 5 MINUTES
 
 /datum/faction/replicators/proc/victory_animation(turf/T)
 	SSticker.explosion_in_progress = TRUE
@@ -161,7 +170,7 @@ var/global/datum/faction/replicators/replicators_faction
 
 	sleep(10)
 	enter_allowed = FALSE
-	SSticker.station_explosion_cinematic(0, null)
+	SSticker.station_explosion_cinematic(0, "replicators")
 	addtimer(CALLBACK(src, .proc/blue_screen), 17.6 SECONDS)
 
 	var/obj/effect/cross_action/spacetime_dist/center = new(T)
@@ -169,6 +178,8 @@ var/global/datum/faction/replicators/replicators_faction
 
 	for(var/turf/other as anything in RANGE_TURFS(80, center))
 		if(isspaceturf(other))
+			continue
+		if(prob(30))
 			continue
 
 		var/obj/effect/cross_action/spacetime_dist/SD = new(other)
@@ -183,3 +194,6 @@ var/global/datum/faction/replicators/replicators_faction
 
 /datum/faction/replicators/check_win()
 	return SSticker.station_was_nuked
+
+/datum/faction/replicators/proc/adjust_energy(amount)
+	energy = min(length(global.replicator_generators) * 15000, energy + amount)

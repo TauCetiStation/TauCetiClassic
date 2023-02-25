@@ -18,7 +18,7 @@
 #define ROLE_ABDUCTOR          "Abductor"
 #define ROLE_FAMILIES          "Families"
 #define ROLE_GHOSTLY           "Ghostly Roles"
-#define ROLE_REPLICATOR           "Replicator"
+#define ROLE_REPLICATOR        "Replicator"
 
 #define ROLE_ERT               "Emergency Response Team"
 #define ROLE_DRONE             "Maintenance Drone"
@@ -49,6 +49,7 @@ var/global/list/special_roles_ignore_question = list(
 	ROLE_SHADOWLING = null,
 	ROLE_ABDUCTOR   = null,
 	ROLE_FAMILIES   = null,
+	ROLE_REPLICATOR = null,
 	ROLE_GHOSTLY    = list(IGNORE_PAI, IGNORE_TSTAFF, IGNORE_SURVIVOR, IGNORE_POSBRAIN, IGNORE_DRONE),
 )
 

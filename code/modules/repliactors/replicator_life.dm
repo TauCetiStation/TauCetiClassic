@@ -223,6 +223,8 @@
 		set_state(REPLICATOR_STATE_HARVESTING)
 		return
 
+	excitement -= 1
+
 	var/mob/living/simple_animal/replicator/harvester = get_closest_replicator(harvesting=TRUE)
 	if(harvester && get_dist(src, harvester) < 7)
 		var/turf/closer_turf = get_step_to(src, get_turf(harvester), -1)
@@ -236,8 +238,6 @@
 		var/closer_dir = get_dir(src, closer_turf)
 		Move(closer_turf, closer_dir)
 		return
-
-	excitement -= 1
 
 	var/closest_replicator_dir = R ? get_dir(src, R) : pick(cardinal)
 	var/to_move_dir = pick(list(closest_replicator_dir) + cardinal)

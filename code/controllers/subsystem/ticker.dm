@@ -347,6 +347,11 @@ SUBSYSTEM_DEF(ticker)
 				summary = "summary_malf"
 			else if(override == "nuclear emergency")
 				summary = "summary_nukewin"
+			else if(override == "replicators")
+				screen = "intro_malf"
+				explosion = "station_swarmed"
+				summary = "summary_replicators"
+				screen_time = 76
 
 			for(var/mob/M as anything in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
 				if(M.stat != DEAD)	//Just you wait for real destruction!

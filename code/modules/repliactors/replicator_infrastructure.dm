@@ -4,9 +4,14 @@ var/global/list/obj/machinery/swarm_powered/bluespace_transponder/active_transpo
 ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transponders)
 
 /obj/machinery/swarm_powered
+	var/mob/living/simple_animal/replicator/drone_supply
+
+/obj/machinery/swarm_powered/Destroy()
+	drone_supply = null
+	return ..()
 
 /obj/machinery/swarm_powered/powered()
-	return ..() || global.replicators_faction.energy > idle_power_usage
+	return ..() || global.replicators_faction.energy > idle_power_usage || (drone_supply && !drone_supply.incapacitated())
 
 /obj/machinery/swarm_powered/power_change()
 	..()
@@ -16,25 +21,60 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	var/area/A = get_area(src)
 	var/area_powered = A && A.powered(power_channel)
 
-	var/has_reserve_power = global.replicators_faction.energy > idle_power_usage
-
 	if(area_powered)
 		return
 
-	var/power_status_changed = FALSE
+	var/has_reserve_power = global.replicators_faction.energy > idle_power_usage
 
 	if(has_reserve_power)
 		if(stat & NOPOWER)
-			power_status_changed = TRUE
 			stat &= ~NOPOWER
-		global.replicators_faction.energy -= idle_power_usage
+			update_icon()
+		global.replicators_faction.adjust_energy(-idle_power_usage)
+
+	else if(draw_energy_from_drone())
+		if(stat & NOPOWER)
+			stat &= ~NOPOWER
+			update_icon()
 
 	else if(!(stat & NOPOWER))
-		power_status_changed = TRUE
 		stat |= NOPOWER
-
-	if(power_status_changed)
 		update_icon()
+
+/obj/machinery/swarm_powered/proc/start_drone_energy_supply(mob/living/simple_animal/replicator/R)
+	if(drone_supply)
+		return
+
+	// to-do: sound
+	to_chat(R, "<span class='notice'>You power [src] via your own energy, breaking yourself apart.</span>")
+	R.visible_message("<span class='notice'>[R] is crumbling apart, holding the portal open.</span>")
+
+	drone_supply = R
+	RegisterSignal(drone_supply, list(COMSIG_PARENT_QDELETING), .proc/stop_drone_energy_supply)
+	RegisterSignal(drone_supply, list(COMSIG_MOVABLE_MOVED), .proc/check_drone_proximity)
+
+/obj/machinery/swarm_powered/proc/check_drone_proximity()
+	SIGNAL_HANDLER
+
+	if(drone_supply.loc != loc)
+		stop_drone_energy_supply()
+
+/obj/machinery/swarm_powered/proc/stop_drone_energy_supply()
+	SIGNAL_HANDLER
+
+	UnregisterSignal(drone_supply, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+	drone_supply = null
+
+/obj/machinery/swarm_powered/proc/draw_energy_from_drone()
+	if(!drone_supply)
+		return FALSE
+
+	if(drone_supply.incapacitated())
+		stop_drone_energy_supply()
+		return FALSE
+
+	drone_supply.take_bodypart_damage(0, 1)
+	return TRUE
 
 
 /obj/machinery/swarm_powered/bluespace_transponder
@@ -51,8 +91,29 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 
 	var/next_sound = 0
 
+	var/obj/item/device/assembly/signaler/anomaly/deactivation_signal = null
+
+/obj/machinery/swarm_powered/bluespace_transponder/atom_init()
+	. = ..()
+	deactivation_signal = new(src)
+	deactivation_signal.name = "[name] core"
+	deactivation_signal.code = rand(1, 100)
+
+	deactivation_signal.frequency = rand(1200, 1599)
+	if(IS_MULTIPLE(deactivation_signal.frequency, 2))//signaller frequencies are always uneven!
+		deactivation_signal.frequency++
+
+/obj/machinery/swarm_powered/bluespace_transponder/Destroy()
+	QDEL_NULL(deactivation_signal)
+	global.active_transponders -= src
+	return ..()
+
 /obj/machinery/swarm_powered/bluespace_transponder/Crossed(atom/movable/AM)
 	if(stat & NOPOWER)
+		if(isreplicator(AM))
+			start_drone_energy_supply(AM)
+			return
+
 		return ..()
 
 	var/obj/structure/bluespace_corridor/BC = locate() in loc
@@ -78,10 +139,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 		global.active_transponders |= src
 		icon_state = "bluespace_wormhole_exit"
 
-/obj/machinery/swarm_powered/bluespace_transponder/Destroy()
-	global.active_transponders -= src
-	return ..()
-
 /obj/machinery/swarm_powered/bluespace_transponder/process()
 	draw_energy()
 
@@ -96,6 +153,20 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 		return TRUE
 	return ..()
 
+/obj/machinery/swarm_powered/bluespace_transponder/proc/neutralize()
+	// TO-DO: some interesting sound
+	qdel(src)
+
+/obj/machinery/swarm_powered/bluespace_transponder/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/device/analyzer))
+		to_chat(user, "<span class='notice'>Analyzing... [src]'s unstable field is fluctuating along frequency [deactivation_signal.code]:[format_frequency(deactivation_signal.frequency)].</span>")
+		return
+	return ..()
+
+
+var/global/list/obj/machinery/power/replicator_generator/replicator_generators = list()
+// Requires 10 drones in teh swarm.
+ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generators)
 
 /obj/machinery/power/replicator_generator
 	name = "bluespace generator"
@@ -118,12 +189,22 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	. = ..()
 	new /obj/structure/cable/power_rune(loc)
 
+	var/obj/structure/forcefield_node/FN = locate() in loc
+	if(FN)
+		FN.layer = LOW_OBJ_LAYER
+
+/obj/machinery/power/replicator_generator/Destroy()
+	var/obj/structure/forcefield_node/FN = locate() in loc
+	if(FN)
+		FN.layer = ABOVE_OBJ_LATER
+	return ..()
+
 /obj/machinery/power/replicator_generator/process()
 	if(next_sound < world.time && prob(5))
 		next_sound = next_sound + 20 SECONDS
 		playsound(src, 'sound/machines/signal.ogg', VOL_EFFECTS_MASTER)
 
-	global.replicators_faction.energy += 15000
+	global.replicators_faction.adjust_energy(15000)
 
 /obj/machinery/power/replicator_generator/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/replicator))
@@ -266,7 +347,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	density = TRUE
 	anchored = TRUE
 
-	var/max_required_power = 24000000
+	max_integrity = 500
+	resistance_flags = CAN_BE_HIT
+
+	var/max_required_power = 12000000
 	var/max_required_materials = 2000
 
 	var/required_power = 0
@@ -289,7 +373,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 /obj/machinery/swarm_powered/bluespace_catapult/process()
 	var/materials_satisfied = required_materials / max_required_materials
 	var/power_satisfied = required_power / max_required_power
-	var/perc_finished = round((1 - materials_satisfied * power_satisfied) * 100)
+	var/perc_finished = floor((1 - materials_satisfied * power_satisfied) * 100)
 
 	var/datum/announcement/centcomm/replicator/announcement
 	if(perc_finished >= 25 && last_perc_announcement < 25)

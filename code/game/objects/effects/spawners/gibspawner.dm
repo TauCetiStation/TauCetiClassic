@@ -78,6 +78,18 @@
 		)
 	gibamounts = list(1,1,1,1,1,1)
 
+/obj/effect/gibspawner/robot
+	sparks = 1
+	gibtypes = list(
+		/obj/effect/decal/cleanable/blood/gibs/robot/up,
+		/obj/effect/decal/cleanable/blood/gibs/robot/down,
+		/obj/effect/decal/cleanable/blood/gibs/robot,
+		/obj/effect/decal/cleanable/blood/gibs/robot,
+		/obj/effect/decal/cleanable/blood/gibs/robot,
+		/obj/effect/decal/cleanable/blood/gibs/robot/limb
+		)
+	gibamounts = list(1,1,1,1,1,1)
+
 /obj/effect/gibspawner/robot/atom_init()
 	gibdirections = list(
 		list(NORTH, NORTHEAST, NORTHWEST),

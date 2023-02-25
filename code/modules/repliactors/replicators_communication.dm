@@ -62,7 +62,7 @@
 
 		var/jump_button = ""
 		if(announcer && isreplicator(M))
-			jump_button = "<a href='?src=\ref[M];replicator_jump=\ref[announcer]'>(JMP)</a>"
+			jump_button = "<a href='?src=\ref[announcer]'>(JMP)</a>"
 
 		to_chat(M, "[open_tags][channel] [speaker_name] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags][jump_button]")
 
@@ -71,6 +71,6 @@
 		var/datum/role/replicator/R = r
 		if(!R.antag)
 			continue
-		var/jump_button = transfer ? "<a href='?src=\ref[R.antag.current];replicator_jump=\ref[drone]'>(JMP)</a>" : ""
-		var/dismantle_button = dismantle ? "<a href='?src=\ref[R.antag.current];replicator_kill=\ref[drone]'>(KILL)</a>" : ""
-		to_chat(R.antag, "<span class='replicator'>\[???\]</span> <b>[drone.name]</b> requests, <span class='message'><span class='replicator'>\"[message]\"</span></span>[jump_button][dismantle_button]")
+		var/jump_button = transfer ? "<a href='?src=\ref[drone]'>(JMP)</a>" : ""
+		var/dismantle_button = dismantle ? "<a href='?src=\ref[drone]'>(KILL)</a>" : ""
+		to_chat(R.antag.current, "<span class='replicator'>\[???\]</span> <b>[drone.name]</b> requests, <span class='message'><span class='replicator'>\"[message]\"</span></span>[jump_button][dismantle_button]")

@@ -153,6 +153,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	create_spawner(/datum/spawner/living/replicator, src)
 
 /mob/living/simple_animal/replicator/Destroy()
+	global.idle_replicators -= src
+
 	overlays -= indicator
 	QDEL_NULL(indicator)
 	leader = null
@@ -237,14 +239,20 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 /mob/living/simple_animal/replicator/mind_initialize()
 	. = ..()
 	var/datum/role/replicator/R = mind.GetRole(REPLICATOR)
-	if(R)
-		return
+	if(!R)
+		R = add_faction_member(global.replicators_faction, src, TRUE)
 
-	add_faction_member(global.replicators_faction, src, TRUE)
+	// playsound_local(null, 'sound/lobby/Thunderdome_cut.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
+
+	if(has_swarms_gift() && R.next_music_start < world.time)
+		// Scale volume with amount of drones?
+		playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
+		R.next_music_start = world.time + 5 MINUTES
 
 /mob/living/simple_animal/replicator/Logout()
 	..()
 	overlays += indicator
+	set_state(REPLICATOR_STATE_HARVESTING)
 
 /mob/living/simple_animal/replicator/Stat()
 	..()
@@ -267,12 +275,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	while(length(pos_replicators))
 		var/mob/living/simple_animal/construct/C = pick(pos_replicators)
 		pos_replicators -= C
-
-		if(!C.ckey)
-			to_chat(C, "<span class='warning'>DRONE INTEGRITY CRITICAL: PRESENCE TRANSFER PROTOCOL ACTIVATED</span>")
-			playsound(src, 'sound/mecha/lowpower.ogg', VOL_EFFECTS_MASTER)
-			transfer_control(C)
-			flash_color(C, flash_color="#ff0000", flash_time=1 SECOND)
+		if(C.ckey)
+			continue
+		playsound(src, 'sound/mecha/lowpower.ogg', VOL_EFFECTS_MASTER)
+		transfer_control(C)
+		to_chat(C, "<span class='warning'>DRONE INTEGRITY CRITICAL: PRESENCE TRANSFER PROTOCOL ACTIVATED</span>")
+		flash_color(src, flash_color="#ff0000", flash_time=1 SECOND)
+		flash_color(C, flash_color="#ff0000", flash_time=1 SECOND)
 
 /mob/living/simple_animal/replicator/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/replicator))
@@ -285,6 +294,9 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
 // Return TRUE if succesful control transfer.
 /mob/living/simple_animal/replicator/proc/transfer_control(mob/living/simple_animal/replicator/target, alert=TRUE)
+	if(!mind)
+		return
+
 	if(target.ckey)
 		if(alert)
 			to_chat(src, "<span class='warning'>Impossible: Target under presence control.</span>")
@@ -307,49 +319,61 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	return TRUE
 
 /mob/living/simple_animal/replicator/Topic(href, href_list)
-	if(incapacitated())
-		return ..()
-	if(!mind)
-		return ..()
-
 	if(href_list["replicator_jump"])
-		var/atom/target = locate(href_list["replicator_jump"])
-		if(!istype(target))
+		var/mob/M = usr
+		if(!isreplicator(M))
+			return
+		var/mob/living/simple_animal/replicator/R = M
+		if(!R.mind)
 			return
 
-		if(isreplicator(target) && transfer_control(target, alert=FALSE))
+		if(R.transfer_control(src, alert=FALSE))
 			return
 
 		for(var/r in global.replicators)
-			var/mob/living/simple_animal/replicator/R = r
-			if(R.ckey)
+			var/mob/living/simple_animal/replicator/other = r
+			if(other.ckey)
 				continue
-			if(get_dist(src, R) > 7)
+			if(get_dist(src, other) > 7)
 				continue
-			if(!transfer_control(R, alert=FALSE))
+			if(!R.transfer_control(other, alert=FALSE))
 				continue
 
 		to_chat(src, "<span class='notice'>Other presence is already attending this situation.</span>")
 		return
 
 	if(href_list["replicator_kill"])
-		var/mob/living/simple_animal/replicator/target = locate(href_list["replicator_kill"])
-		if(!istype(target))
+		var/mob/M = usr
+		if(!isreplicator(M))
 			return
-		if(target.incapacitated())
+		var/mob/living/simple_animal/replicator/R = M
+		if(R.incapacitated())
+			to_chat(R, "<span class='warning'>Negative: Unit too weak to issue a self-disintegrate order.</span>")
 			return
-		if(target.ckey)
+		if(!R.mind)
 			return
 
-		if(target.excitement > 0)
+		if(disintegrating)
+			to_chat(src, "<span class='warning'>Negative: The unit is serving a purpose.</span>")
+			return
+		if(incapacitated())
+			to_chat(R, "<span class='warning'>Negative: Unit too weak to self-disintegrate.</span>")
+			return
+		if(ckey)
+			to_chat(R, "<span class='warning'>Negative: Unit is affected by another Presence.</span>")
+			return
+		if(excitement > 0)
 			to_chat(src, "<span class='warning'>Negative: The unit is serving a purpose.</span>")
 			return
 
 		// TO-DO: sound
-		to_chat(src, "<span class='notice'>Issued a self-destruct order to [target.name].</span>")
-		target.last_controller_ckey = ckey
-		INVOKE_ASYNC(target, .proc/disintegrate, target)
+		to_chat(R, "<span class='notice'>Issued a self-destruct order to [name].</span>")
+		set_state(REPLICATOR_STATE_HARVESTING)
+		last_controller_ckey = R.ckey
+		INVOKE_ASYNC(src, .proc/disintegrate, src)
 		return
+
+	return ..()
 
 /mob/living/simple_animal/replicator/proc/has_swarms_gift()
 	return has_status_effect(STATUS_EFFECT_SWARMS_GIFT)

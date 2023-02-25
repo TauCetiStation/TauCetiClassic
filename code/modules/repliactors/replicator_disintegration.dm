@@ -15,11 +15,6 @@
 			to_chat(src, "<span class='warning'>Object Does Not Disintegrate.</span>")
 		return FALSE
 
-	if(A.resistance_flags & FULL_INDESTRUCTIBLE)
-		if(alert)
-			to_chat(src, "<span class='warning'>Object Does Not Disintegrate.</span>")
-		return FALSE
-
 	if((locate(/mob/living) in A) && !isturf(A))
 		if(alert)
 			to_chat(src, "<span class='warning'>Can Not Deconstruct: May Harm Organics.</span>")
@@ -76,7 +71,7 @@
 	if(disintegrating)
 		return FALSE
 
-	if(!is_disintegratable(A))
+	if(!is_disintegratable(A, alert=TRUE))
 		return FALSE
 
 	var/material_amount = A.get_replicator_material_amount()
@@ -130,15 +125,22 @@
 	QDEL_IN(D, 8)
 	QDEL_IN(target_appearance, 8)
 
-	//integrate_animation()
-
-	global.replicators_faction.adjust_materials(material_amount, adjusted_by=last_controller_ckey)
 	disintegrating = FALSE
 	A.is_disintegrating = FALSE
+
+	var/healing_material_loss = min(material_amount, maxHealth - health)
+	if(healing_material_loss > 0)
+		integrate_animation()
+		// var/summ_dam = getBruteLoss() + getFireLoss()
+		//var/brute_perc = getBruteLoss() / summ_dam
+		// var/fire_perc = getFireLoss() / summ_dam
+		heal_bodypart_damage(healing_material_loss, 0)
+
+	material_amount -= healing_material_loss
+	if(material_amount > 0)
+		global.replicators_faction.adjust_materials(material_amount, adjusted_by=last_controller_ckey)
 	return TRUE
 
-/*
-	doesn't look neat :(
 /mob/living/simple_animal/replicator/proc/integrate_animation()
 	if(playing_integration_animation)
 		return
@@ -153,4 +155,3 @@
 	flick_overlay_view(I, src, 5)
 
 	VARSET_IN(src, playing_integration_animation, FALSE, 5)
-*/

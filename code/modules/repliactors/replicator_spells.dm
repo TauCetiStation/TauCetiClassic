@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/no_target/replicator_replicate
-	name = "Replicate (150)"
+	name = "Replicate (100)"
 	desc = "Create a drone for the swarm."
 
 	charge_type = "recharge"
@@ -48,7 +48,7 @@
 
 
 /obj/effect/proc_holder/spell/no_target/construct_barricade
-	name = "Barricade (10)"
+	name = "Barricade (15)"
 	desc = "Construct a barricade that replicators can pass through."
 
 	charge_type = "recharge"
@@ -59,7 +59,7 @@
 	action_icon = 'icons/mob/replicator.dmi'
 	action_icon_state = "ui_barricade"
 
-	var/material_cost = 10
+	var/material_cost = 15
 
 /obj/effect/proc_holder/spell/no_target/construct_barricade/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 	if(global.replicators_faction.materials < material_cost)
@@ -141,7 +141,7 @@
 
 
 /obj/effect/proc_holder/spell/no_target/replicator_transponder
-	name = "Emit (150)"
+	name = "Emit (100)"
 	desc = "Create a transponder for the swarm. Transponders start consuming resources only after at least 150 have been accumulated."
 
 	charge_type = "recharge"
@@ -195,7 +195,7 @@
 
 
 /obj/effect/proc_holder/spell/no_target/construct_generator
-	name = "Construct Generator (150)"
+	name = "Construct Generator (100)"
 	desc = "Construct a generator to power transponders."
 
 	charge_type = "recharge"
@@ -337,8 +337,10 @@
 
 	for(var/r in global.replicators)
 		var/mob/living/simple_animal/replicator/R = r
+		if(R.ckey || R.incapacitated())
+			continue
 		var/area/A = get_area(R)
-		pos_areas[A.name] = A.type
+		pos_areas[A.name] = A
 
 	var/area_name = tgui_input_list(user, "Choose an area with replicators in it.", "Area Transfer", pos_areas)
 	if(!area_name)
@@ -421,9 +423,9 @@
 	action_icon_state = "ui_catapult"
 
 /obj/effect/proc_holder/spell/no_target/construct_catapult/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
-	if(global.replicators_faction.bandwidth < 10)
+	if(global.replicators_faction.bandwidth < 20)
 		if(try_start)
-			to_chat(user, "<span class='warning'>The rift requires 10 replicators to be sent through. You need more bandwidth.</span>")
+			to_chat(user, "<span class='warning'>The rift requires 20 replicators to be sent through. You need more bandwidth.</span>")
 		return FALSE
 
 	if(length(global.bluespace_catapults) > 0)

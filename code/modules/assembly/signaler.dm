@@ -213,7 +213,11 @@ Code:
 		return 0
 	if(signal.encryption != code)
 		return 0
-	for(var/obj/effect/anomaly/A in orange(0, src))
+	if(istype(loc, /obj/machinery/swarm_powered/bluespace_transponder))
+		var/obj/machinery/swarm_powered/bluespace_transponder/BT = loc
+		BT.neutralize()
+	else if(istype(loc, /obj/effect/anomaly))
+		var/obj/effect/anomaly/A = loc
 		A.anomalyNeutralize()
 
 /obj/item/device/assembly/signaler/anomaly/attack_self()
