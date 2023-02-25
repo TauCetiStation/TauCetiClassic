@@ -166,13 +166,13 @@
 	for(var/datum/job/J in SSjob.occupations)
 		if(J.title in excluded_rank)
 			continue
-		J.salary_ratio = 0.5	//halve the salary of all professions except leading
+		J.salary_ratio = 0.5
 	var/list/crew = my_subordinate_staff("Admin")
 	for(var/person in crew)
 		if(person["rank"] in excluded_rank)
 			continue
 		var/datum/money_account/account = person["acc_datum"]
-		account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)	//halve the salary of all staff except heads
+		account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)
 
 /datum/mutiny_scenario/virus/get_first_report()
 	var/report_dat = ""
@@ -321,17 +321,22 @@
 	return report_dat
 
 /datum/mutiny_scenario/mine/do_first_strike()
-	//do_postavka
+	for(var/i in 1 to 3)
+		var/datum/supply_order/order = new(SSshuttle.supply_packs[ckey("Cent Com Shaft Miner Gear")], "Cent Comm", "Cent Comm", "", "Helping")
+		SSshuttle.shoppinglist += order
 
+//Let's believe they kill heads with pickaxes
 /datum/mutiny_scenario/mine/do_second_strike()
-	//do_postavka eshe bolshe
+	for(var/i in 1 to 8)
+		var/datum/supply_order/order = new(SSshuttle.supply_packs[ckey("Cent Com Shaft Miner Gear")], "Cent Comm", "Cent Comm", "", "Helping")
+		SSshuttle.shoppinglist += order
 
 /datum/mutiny_scenario/genetic/get_first_report()
 	var/report_dat = ""
 	report_dat += "Наши конкуренты из Zeng-Hu Pharmaceuticals вывели супер-сыворотку.<br>"
 	report_dat += "Её действие усиливает способности подопытного, позволяя тому выйти за пределы своих возможностей.<br>"
 	report_dat += "Мы отправляем вам тестовые образцы для экспериментов на людях грузовым шаттлом.<br>"
-	report_dat += "Не распространяйте информацию из этого сообщения экипажу."
+	report_dat += "Не распространяйте информацию из этого сообщения экипажу.<br>"
 	report_dat += "Центральное Командование закрывает отсек генетических исследований из-за недостатка инноваций и устаревших технологий.<br>"
 	report_dat += "Перестройте отсек на ваше усмотрение.<br>"
 	report_dat += "Большую популярность набирают Китайские рестораны в космосе."
@@ -391,13 +396,17 @@
 	return report_dat
 
 /datum/mutiny_scenario/genetic/do_first_strike()
-	//do_postavka mulligan
+	var/datum/supply_order/order = new(SSshuttle.supply_packs[ckey("Cent Com Secure Crate")], "Cent Comm", "Cent Comm", "", "Work")
+	SSshuttle.shoppinglist += order
 
 /datum/mutiny_scenario/genetic/do_second_strike()
-	//do postavka mutagen
+	var/datum/supply_order/order = new(SSshuttle.supply_packs[ckey("Cent Com Secure Supply Crate")], "Cent Comm", "Cent Comm", "", "Work")
+	SSshuttle.shoppinglist += order
 
 /datum/mutiny_scenario/genetic/do_third_strike()
-	//do postavka last mutagen
+	for(var/i in 1 to 2)
+		var/datum/supply_order/order = new(SSshuttle.supply_packs[ckey("Cent Com Head Stuff Crate")], "Cent Comm", "Cent Comm", "", "Work")
+		SSshuttle.shoppinglist += order
 
 #undef SCENARIO_MONEY
 #undef SCENARIO_VIRUS
