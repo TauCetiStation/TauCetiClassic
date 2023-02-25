@@ -598,6 +598,7 @@
 	description = "A strong neurotoxin that puts the subject into a death-like state."
 	reagent_state = LIQUID
 	color = "#2e2e61" // rgb: 46, 46, 97
+	custom_metabolism = 2
 	taste_message = "brain damageeeEEeee"
 	restrict_species = list(IPC, DIONA)
 
@@ -1206,13 +1207,14 @@
 	description = "Deny drinking this and prepare for THE LAW."
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
+	custom_metabolism = 2
 	boozepwr = 4
 	taste_message = "THE LAW"
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_general_digest(mob/living/M)
 	..()
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
-		M.Stun(10)
+		M.Stun(5)
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"
