@@ -396,7 +396,7 @@
 	slowdown = 0
 
 /obj/item/weapon/storage/backpack/delivery_bag
-	name = "Cargo Delivery Bag"
+	name = "cargo delivery bag"
 	desc = "A bag capable of holding 10 parcels for delivery."
 	icon_state = "backpack-gryz"
 	item_state = "backpack-gryz"
@@ -404,4 +404,4 @@
 	max_w_class = SIZE_BIG
 	storage_slots = 14
 	max_storage_space = 100
-	can_hold = list(/obj/item/smallDelivery)
+	can_hold = list(/obj/item/smallDelivery, /obj/item/weapon/storage/box)
