@@ -367,6 +367,13 @@
 	if(autocategory)
 		lot_category = get_category(target)
 
+	if(lot_account_number == 111111)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			var/obj/item/weapon/card/id/ID = H.get_idcard()
+			if(ID)
+				lot_account_number = ID.associated_account_number
+
 	target.price_tag = list("description" = lot_description, "price" = lot_price, "category" = lot_category, "account" = lot_account_number)
 	target.verbs += /obj/proc/remove_price_tag
 
