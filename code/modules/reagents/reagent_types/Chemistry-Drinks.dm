@@ -572,10 +572,10 @@
 	else
 		data["ticks"] = 1
 		
-	M.dizziness += 6
+	M.make_dizzy(6)
 	switch(data["ticks"])
 		if(1 to 5)
-			M.make_jittery(2)
+			M.make_jittery(20)
 			M.Stuttering(4)
 		if(5 to 45)
 			M.Stun(3)
