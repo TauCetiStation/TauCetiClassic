@@ -5099,12 +5099,6 @@
 	icon_state = "purple"
 	},
 /area/space_structures/old_station/right/rnd)
-"Ea" = (
-/obj/structure/lattice,
-/obj/structure/lattice,
-/obj/item/weapon/shard,
-/turf/environment/space,
-/area/space)
 "Eb" = (
 /obj/item/weapon/shard,
 /turf/simulated/floor{
@@ -9686,7 +9680,7 @@ gO
 BG
 gO
 fg
-Ea
+fg
 fg
 gO
 BG
