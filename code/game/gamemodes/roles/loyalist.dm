@@ -1,5 +1,3 @@
-#define LOYALIST "Loyalist"
-
 /datum/role/loyalist
 	name = LOYALIST
 	id = LOYALIST
@@ -8,14 +6,6 @@
 
 	antag_hud_type = ANTAG_HUD_LOYAL
 	antag_hud_name = "hudloyalist"
-
-/datum/role/loyalist/CanBeAssigned(datum/mind/M)
-	if(!..())
-		return FALSE
-	/* TODO:
-	if(M.current.isloyal())
-		return TRUE*/
-	return TRUE
 
 /datum/role/loyalist/Greet(greeting, custom)
 	. = ..()
