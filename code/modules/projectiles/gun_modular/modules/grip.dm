@@ -1,7 +1,7 @@
 /obj/item/gun_modular/module/grip
 	name = "рукоять"
 	module_id = GRIP_MODULE
-	var/recoil_change = 1;
+	var/recoil_change = -1;
 
 /obj/item/gun_modular/module/grip/afterattack(atom/target, mob/user, proximity, params)
 
@@ -32,6 +32,9 @@
 	var/datum/gun_modular/component/proc_gun/interrupter/interrupter_message_fail_advansedToolCheck = new (src)
 	message_fail_advansedToolCheck.AddLastComponent(interrupter_message_fail_advansedToolCheck)
 
+	var/datum/gun_modular/component/check/user_advansedTool/user_advansedToolCheck = new (src, null, message_fail_advansedToolCheck)
+	add_default_component(user_advansedToolCheck)
+
 	var/datum/gun_modular/component/proc_gun/message_from_user/message_success_isHULKCheck = new (src, "<span class='red'>Your meaty finger is much too large for the trigger guard!</span>")
 	var/datum/gun_modular/component/proc_gun/interrupter/interrupter_message_success_isHULKCheck = new (src)
 	message_success_isHULKCheck.AddLastComponent(interrupter_message_success_isHULKCheck)
@@ -42,9 +45,6 @@
 
 	var/datum/gun_modular/component/check/user_isLiving/user_isLivingCheck = new (src, user_isHULKCheck, null)
 	add_default_component(user_isLivingCheck)
-
-	var/datum/gun_modular/component/check/user_advansedTool/user_advansedToolCheck = new (src, null, message_fail_advansedToolCheck)
-	add_default_component(user_advansedToolCheck)
 
 	var/datum/gun_modular/component/proc_gun/user_addFingerptint/user_addFingerptint = new (src)
 	add_default_component(user_addFingerptint)

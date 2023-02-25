@@ -3,7 +3,13 @@
 
 /datum/gun_modular/component/check/user_isHuman/Action(datum/process_fire/process)
 
-	var/mob/living/user = process.GetCacheData(USER_FIRE)
+	var/datum/gun_modular/component/data/cache_data = process.GetCacheData(USER_FIRE)
+
+	if(!cache_data)
+		FailCheck(process)
+		return ..()
+
+	var/mob/living/user = cache_data.GetData()
 
 	if(isnull(user))
 		FailCheck(process)
