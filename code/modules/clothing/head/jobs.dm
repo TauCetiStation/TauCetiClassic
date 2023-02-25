@@ -54,6 +54,14 @@
 	flags = BLOCKHAIR
 	siemens_coefficient = 0.9
 
+/obj/item/clothing/head/cargo_hood
+	name = "cargo hood"
+	desc = "A cargo shop branded jacket's hood."
+	icon_state = "cargo_hood"
+	item_state = "cargo_hood"
+	flags = BLOCKHAIR
+	siemens_coefficient = 0.8
+
 //HoS
 /obj/item/clothing/head/hos_peakedcap
 	name = "head of security's peaked cap"

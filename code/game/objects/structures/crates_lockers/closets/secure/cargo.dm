@@ -14,7 +14,9 @@
 	new /obj/item/device/radio/headset/headset_cargo(src)
 	new /obj/item/clothing/gloves/brown(src)
 	new /obj/item/clothing/head/soft(src)
-//	new /obj/item/weapon/cartridge/quartermaster(src)
+	new /obj/item/clothing/suit/hooded/cargo(src)
+	new /obj/item/weapon/storage/backpack/delivery_bag(src)
+
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)
 		new /obj/item/clothing/suit/hooded/wintercoat/cargo(src)

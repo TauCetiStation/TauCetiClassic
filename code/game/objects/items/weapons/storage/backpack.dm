@@ -394,3 +394,13 @@
 	name = "NanoTrasen bag"
 	desc = "A large duffel bag for holding extra NanoTrasen gear."
 	slowdown = 0
+
+/obj/item/weapon/storage/backpack/delivery_bag
+	name = "Cargo Delivery Bag"
+	desc = "A bag capable of holding 10 parcels for delivery."
+	icon_state = "backpack-gryz"
+	item_state = "backpack-gryz"
+	w_class = SIZE_BIG
+	max_w_class = SIZE_BIG
+	storage_slots = 10
+	can_hold = list(/obj/item/smallDelivery)
