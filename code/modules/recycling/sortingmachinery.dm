@@ -232,7 +232,7 @@
 	var/list/modes = list(1 = "Метка", 2 = "Ценник", 3 = "Бирка")
 
 	var/lot_description = "Это что-то"
-	var/lot_account_number = 111111
+	var/lot_account_number = null
 	var/lot_category = "Разное"
 	var/lot_price = 0
 
@@ -269,7 +269,7 @@
 			else
 				dat += "Описание: <A href='?src=\ref[src];description=1'>[lot_description]</A>"
 			dat += " <A href='?src=\ref[src];autodesc=1'>авто</A><BR>\n"
-			dat += "Номер аккаунта: <A href='?src=\ref[src];number=1'>[lot_account_number]</A> <A href='?src=\ref[src];takeid=1'>id</A><BR>\n"
+			dat += "Номер аккаунта: <A href='?src=\ref[src];number=1'>[lot_account_number ? lot_account_number : 111111]</A> <A href='?src=\ref[src];takeid=1'>id</A><BR>\n"
 			dat += "Цена: <A href='?src=\ref[src];price=1'>[lot_price]$</A> Наценка: +[global.online_shop_delivery_cost * 100]% ([lot_price * global.online_shop_delivery_cost]$)<BR>\n"
 			if(autocategory)
 				dat += "Категория: [lot_category]"
@@ -367,7 +367,7 @@
 	if(autocategory)
 		lot_category = get_category(target)
 
-	if(lot_account_number == 111111)
+	if(!lot_account_number)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			var/obj/item/weapon/card/id/ID = H.get_idcard()
