@@ -257,7 +257,6 @@
 
 /obj/item/ammo_box/magazine/mac10
 	name = "Mac-10 magazine (9mm)"
-	icon = 'icons/obj/ammo.dmi'
 	icon_state = "mac10_mag"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
@@ -276,7 +275,6 @@
 
 /obj/item/ammo_box/magazine/deagle
 	name = "magazine (.50AE)"
-	icon = 'icons/obj/ammo.dmi'
 	icon_state = "deagle_mag"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/a50
