@@ -18,7 +18,7 @@
 	item_state = "9mm_glock"
 	origin_tech = "combat=2;materials=2"
 	initial_mag = /obj/item/ammo_box/magazine/glock/rubber
-	suitable_mags = list(/obj/item/ammo_box/magazine/glock, /obj/item/ammo_box/magazine/glock/rubber)
+	suitable_mags = list(/obj/item/ammo_box/magazine/glock, /obj/item/ammo_box/magazine/glock/rubber, /obj/item/ammo_box/magazine/glock/extended, /obj/item/ammo_box/magazine/glock/extended/rubber)
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	can_be_holstered = TRUE
 
@@ -26,6 +26,7 @@
 	name = "G17 GEN3"
 	icon_state = "9mm_glock_spec"
 	item_state = "9mm_glock_spec"
+	initial_mag = /obj/item/ammo_box/magazine/glock/extended/rubber
 
 /obj/item/weapon/gun/projectile/automatic/deagle
 	name = "desert eagle"

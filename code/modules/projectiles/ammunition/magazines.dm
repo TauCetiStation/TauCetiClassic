@@ -176,6 +176,17 @@
 	icon_state = "glock_mag_rubber"
 	ammo_type = /obj/item/ammo_casing/c9mmr
 
+/obj/item/ammo_box/magazine/glock/extended
+	name = "extended magazine (9mm)"
+	icon_state = "glock_mag_extended"
+	max_ammo = 20
+	overlay = "glock-mag-ex"
+
+/obj/item/ammo_box/magazine/glock/extended/rubber
+	name = "extended magazine (9mm rubber)"
+	icon_state = "glock_mag_extended_rubber"
+	ammo_type = /obj/item/ammo_casing/c9mmr
+
 /obj/item/ammo_box/magazine/smg
 	name = "SMG magazine (9mm)"
 	icon_state = "smg_mag"
