@@ -312,6 +312,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 /mob/living/simple_animal/replicator/death()
 	..()
 	global.alive_replicators -= src
+	global.idle_replicators -= src
 
 	overlays -= indicator
 
