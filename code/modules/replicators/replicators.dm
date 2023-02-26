@@ -365,7 +365,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 			if(!R.transfer_control(other, alert=FALSE))
 				continue
 
-		to_chat(src, "<span class='notice'>Other presence is already attending this situation.</span>")
+		to_chat(R, "<span class='notice'>Other presence is already attending this situation.</span>")
 		return
 
 	if(href_list["replicator_kill"])
@@ -380,7 +380,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 			return
 
 		if(disintegrating)
-			to_chat(src, "<span class='warning'>Negative: The unit is serving a purpose.</span>")
+			to_chat(R, "<span class='warning'>Negative: The unit is serving a purpose.</span>")
 			return
 		if(incapacitated())
 			to_chat(R, "<span class='warning'>Negative: Unit too weak to self-disintegrate.</span>")
@@ -389,7 +389,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 			to_chat(R, "<span class='warning'>Negative: Unit is affected by another Presence.</span>")
 			return
 		if(excitement > 0)
-			to_chat(src, "<span class='warning'>Negative: The unit is serving a purpose.</span>")
+			to_chat(R, "<span class='warning'>Negative: The unit is serving a purpose.</span>")
 			return
 
 		// TO-DO: sound

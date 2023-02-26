@@ -183,7 +183,7 @@
 			if(!R.transfer_control(other, alert=FALSE))
 				continue
 
-		to_chat(src, "<span class='notice'>Other presence is already attending this situation.</span>")
+		to_chat(R, "<span class='notice'>Other presence is already attending this situation.</span>")
 		return
 
 	return ..()

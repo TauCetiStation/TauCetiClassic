@@ -21,6 +21,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 
 /obj/machinery/swarm_powered/powered()
 	. = ..()
+	if(.)
+		return
 
 	if(drone_supply && !drone_supply.incapacitated())
 		return
@@ -196,7 +198,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 		next_sound = next_sound + 20 SECONDS
 		playsound(src, 'sound/machines/signal.ogg', VOL_EFFECTS_MASTER)
 
-	if(destroy_unpowered_after < world.time)
+	if(destroy_unpowered_after && destroy_unpowered_after < world.time)
 		global.replicators_faction.drone_message(src, "Has closed due to lack of energy.")
 		global.replicators_faction.adjust_materials(REPLICATOR_COST_TRANSPONDER)
 		neutralize()

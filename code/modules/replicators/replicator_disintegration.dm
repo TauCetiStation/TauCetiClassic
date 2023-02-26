@@ -116,6 +116,9 @@
 		A.is_disintegrating = FALSE
 		return FALSE
 
+	target_appearance.pixel_x = 0
+	target_appearance.pixel_y = 0
+
 	D.icon = 'icons/mob/replicator.dmi'
 	D.icon_state = "disintegrate"
 
@@ -136,12 +139,10 @@
 	var/healing_material_loss = min(material_amount, maxHealth - health)
 	if(healing_material_loss > 0)
 		integrate_animation()
-		// var/summ_dam = getBruteLoss() + getFireLoss()
-		//var/brute_perc = getBruteLoss() / summ_dam
-		// var/fire_perc = getFireLoss() / summ_dam
 		heal_bodypart_damage(healing_material_loss, 0)
 
-	material_amount -= healing_material_loss
+	// Healing is quite expensive otherwise...
+	// material_amount -= healing_material_loss
 	if(material_amount > 0)
 		global.replicators_faction.adjust_materials(material_amount, adjusted_by=last_controller_ckey)
 	return TRUE

@@ -6,7 +6,7 @@
 	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
 
 	var/prev_invisibility = 0
-	var/prev_see_invisible = 0
+	var/prev_see_invisible = SEE_INVISIBLE_LEVEL_ONE
 	var/prev_alpha = 255
 
 /datum/element/bluespace_move/Attach(datum/target, prev_invisibility, prev_see_invisible, prev_alpha)
