@@ -82,7 +82,13 @@
 	layer = 3
 	anchored = TRUE
 
+	max_integrity = 15
+	resistance_flags = CAN_BE_HIT | FIRE_PROOF
+
 	var/next_activation = 0
+
+/obj/item/mine/replicator/deconstruct()
+	try_trigger()
 
 /obj/item/mine/replicator/try_trigger(atom/movable/AM)
 	if(isreplicator(AM))

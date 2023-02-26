@@ -283,6 +283,7 @@
 	if(show_message)
 		visible_message("<span class='warning'><B>[attacker] [damVerb]ed [src]!</B></span>")
 
+	last_melee_hit = world.time
 	apply_damage(damage, damType, BP, armor_block, damFlags)
 	return TRUE
 

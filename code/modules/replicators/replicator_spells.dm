@@ -197,7 +197,8 @@
 	to_chat(user, "<span class='notice'>SPAWNING...</span>")
 	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 
-	new /obj/machinery/swarm_powered/bluespace_transponder(user_replicator.loc)
+	var/obj/machinery/swarm_powered/bluespace_transponder/BT = new(user_replicator.loc)
+	BT.name = "[BT.name] ([user_replicator.generation][rand(0, 9)])"
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 
 
@@ -254,7 +255,8 @@
 	to_chat(user, "<span class='notice'>SPAWNING...</span>")
 	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 
-	new /obj/machinery/power/replicator_generator(user_replicator.loc)
+	var/obj/machinery/power/replicator_generator/BG = new(user_replicator.loc)
+	BG.name = "[BG.name] ([user_replicator.generation][rand(0, 9)])"
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 
 

@@ -256,6 +256,8 @@
 					to_chat(M, "Aargh it burns!")
 					M.take_bodypart_damage(0, power)
 
+	M.last_melee_hit = world.time
+
 	add_fingerprint(user)
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(M)

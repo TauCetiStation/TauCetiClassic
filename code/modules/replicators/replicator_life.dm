@@ -36,6 +36,14 @@
 		global.replicators_faction.drone_message(src, "I am taking damage.", transfer=TRUE)
 		next_attacked_alert = world.time + attacked_alert_cooldown
 
+	// All replicators are slowly dying. Eating obviously fixes them.
+	// This fixes a lot of stupid tactics, such as:
+	// - hiding a replicator somewhere in vents
+	// - yeeting yourself into space
+	take_bodypart_damage(0.5, 0)
+	if(isspaceturf(loc))
+		take_bodypart_damage(1, 0)
+
 	last_update_health = health
 
 	if(ckey)

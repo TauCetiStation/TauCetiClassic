@@ -131,7 +131,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 
 /obj/machinery/swarm_powered/bluespace_transponder/atom_init()
 	. = ..()
-	name = "bluespace transponder ([rand(0, 999)])"
 
 	var/freq = rand(1200, 1599)
 	if(IS_MULTIPLE(freq, 2))//signaller frequencies are always uneven!

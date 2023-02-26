@@ -463,3 +463,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 			return
 
 	return ..()
+
+/mob/living/simple_animal/replicator/movement_delay()
+	. = ..()
+	if(invisibility > 0)
+		. -= 1
+	if(last_melee_hit + 1 SECOND < world.time)
+		. += 1
