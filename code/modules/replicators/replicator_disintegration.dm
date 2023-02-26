@@ -1,6 +1,47 @@
 /mob/living/simple_animal/replicator
 	var/last_disintegration = 0
 
+
+/atom/proc/is_replicator_structure()
+	return FALSE
+
+/mob/living/simple_animal/replicator/is_replicator_structure()
+	return TRUE
+
+/obj/item/mine/replicator/is_replicator_structure()
+	return TRUE
+
+/turf/simulated/floor/plating/airless/catwalk/forcefield/is_replicator_structure()
+	return TRUE
+
+/obj/structure/replicator_forcefield/is_replicator_structure()
+	return TRUE
+
+/obj/structure/forcefield_node/is_replicator_structure()
+	return TRUE
+
+/obj/structure/bluespace_corridor/is_replicator_structure()
+	return TRUE
+
+/obj/structure/replicator_barricade/is_replicator_structure()
+	return TRUE
+
+/obj/structure/stabilization_field/is_replicator_structure()
+	return TRUE
+
+/obj/structure/cable/power_rune/is_replicator_structure()
+	return TRUE
+
+/obj/machinery/swarm_powered/bluespace_transponder/is_replicator_structure()
+	return TRUE
+
+/obj/machinery/power/replicator_generator/is_replicator_structure()
+	return TRUE
+
+/obj/machinery/swarm_powered/bluespace_catapult/is_replicator_structure()
+	return TRUE
+
+
 /mob/living/simple_animal/replicator/proc/is_disintegratable(atom/A, alert=FALSE)
 	if(A.name == "")
 		return FALSE
@@ -101,7 +142,9 @@
 		A.is_disintegrating = FALSE
 		return FALSE
 
-	last_disintegration = world.time
+	// Building and disintegrating your own forcefield builds does not reset disintegration deficency debuff.
+	if(!A.is_replicator_structure())
+		last_disintegration = world.time
 
 	playsound_stealthy(src, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER)
 
@@ -142,7 +185,8 @@
 	A.is_disintegrating = FALSE
 
 	var/healing_material_loss = min(material_amount * REPLICATOR_DISINTEGRATION_REPAIR_RATE, maxHealth - health)
-	if(healing_material_loss > 0)
+	// Can't heal via your own barricades.
+	if(healing_material_loss > 0 && !A.is_replicator_structure())
 		//integrate_animation()
 		heal_bodypart_damage(healing_material_loss, 0)
 
