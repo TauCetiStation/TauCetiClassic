@@ -16,6 +16,10 @@
 	. = ..()
 	icon_state = "floor"
 
+	underlays.Cut()
+	var/image/I = SSenvironment.turf_image[z]
+	underlays += I
+
 /turf/simulated/floor/plating/airless/catwalk/forcefield/Destroy()
 	// to-do: sound
 	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER, 80)
@@ -172,6 +176,12 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	// to-do: sound
 	playsound(loc, 'sound/machines/arcade/heal2.ogg', VOL_EFFECTS_MASTER, 80)
 	global.replicators_faction.nodes_to_spawn += 1
+
+	var/obj/machinery/power/replicator_generator/RG = locate() in loc
+	if(RG)
+		// to-do: sound
+		global.replicators_faction.adjust_materials(REPLICATOR_COST_GENERATOR)
+		qdel(RG)
 
 	var/area/A = get_area(src)
 	if(A)

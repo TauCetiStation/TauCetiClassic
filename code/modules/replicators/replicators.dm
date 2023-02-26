@@ -74,7 +74,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	typing_indicator_type = "robot"
 
-	spawner_args = list(/datum/spawner/living/replicator, 2 MINUTES)
+	spawner_args = list(/datum/spawner/living/replicator, 10 SECONDS)
 
 	can_point = TRUE
 
@@ -253,6 +253,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 /mob/living/simple_animal/replicator/Login()
 	..()
 
+	forget_leader()
+
 	set_state(REPLICATOR_STATE_HARVESTING)
 	help_steps = 7
 	target_coordinates = 0
@@ -267,7 +269,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	var/datum/role/replicator/R = mind.GetRole(REPLICATOR)
 	if(!R)
 		R = add_faction_member(global.replicators_faction, src, TRUE)
-		if(R.next_music_start < world.time)
+		if(!global.replicators_faction.ckey2presence_name[mind.current.ckey] && R.next_music_start < world.time)
+			global.replicators_faction.get_presence_name(mind.current.ckey)
 			playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 			R.next_music_start = world.time + 5 MINUTES
 
@@ -292,7 +295,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 		stat("Drone Amount:", "[length(global.alive_replicators)]/[global.replicators_faction.bandwidth]")
 		if(length(global.active_transponders) > 0)
 			stat("Bandwidth Upgrade:", "[round(global.replicators_faction.materials_consumed)]/[global.replicators_faction.consumed_materials_until_upgrade]")
-		if(length(global.replicator_generators) > 0)
+		if(length(global.replicator_generators) > 0 || length(global.transponders) - length(global.active_transponders) > 0)
 			stat("Energy Reserves:", "[round(global.replicators_faction.energy)]/[round(length(global.replicator_generators) * REPLICATOR_GENERATOR_POWER_GENERATION)]")
 
 		if(length(global.area2free_forcefield_nodes) > 0)
@@ -349,6 +352,11 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 			to_chat(src, "<span class='warning'>Impossible: Target under presence control.</span>")
 		return FALSE
 
+	if(target.state == REPLICATOR_STATE_COMBAT)
+		if(alert)
+			to_chat(src, "<span class='warning'>Impossible: Target under presence control.</span>")
+		return FALSE
+
 	if(target.last_controller_ckey != ckey && next_control_change > world.time)
 		if(alert)
 			to_chat(src, "<span class='warning'>Impossible: Target under lingering presence affect. Try again later.</span>")
@@ -361,8 +369,21 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	next_control_change = world.time + control_change_cooldown
 
-	target.a_intent = a_intent
 	mind.transfer_to(target)
+
+	target.a_intent = a_intent
+
+	target.auto_construct_type = auto_construct_type
+	target.auto_construct_cost = auto_construct_cost
+
+	if(target.auto_construct_type == /obj/structure/bluespace_corridor)
+		if(isturf(target.loc))
+			target.try_construct(target.loc)
+
+		var/obj/effect/proc_holder/spell/no_target/toggle_corridor_construction/TCC = locate() in target
+		TCC.action.button_icon_state = "ui_corridor_on"
+		TCC.action.button.UpdateIcon()
+
 	playsound_stealthy(target, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER)
 	return TRUE
 

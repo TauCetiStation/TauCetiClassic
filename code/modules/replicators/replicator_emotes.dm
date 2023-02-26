@@ -58,5 +58,22 @@
 	)
 
 /datum/emote/replicator/beep/play_sound(mob/user, intentional, emote_sound)
+	// Handling corridor case.
+	if(user.invisibility > 0)
+		return
+
+	// Handling pipes.
+	if(!isturf(user.loc))
+		return
+
 	var/mob/living/simple_animal/replicator/R = user
 	R.playsound_stealthy(user, emote_sound, VOL_EFFECTS_MASTER, vol=75)
+	/*
+		for(var/mob/living/simple_animal/replicator/R as anything in global.replicators)
+		if(!R.ckey)
+			continue
+
+		if(get_dist(user, R) < world.view)
+			R.playsound_local(user, emote_sound, VOL_EFFECTS_MASTER, 75)
+	*/
+

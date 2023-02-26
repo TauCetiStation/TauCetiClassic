@@ -1,8 +1,3 @@
-var/global/list/obj/machinery/swarm_powered/bluespace_transponder/transponders = list()
-var/global/list/obj/machinery/swarm_powered/bluespace_transponder/active_transponders = list()
-
-ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transponders)
-
 /obj/machinery/swarm_powered
 	var/mob/living/simple_animal/replicator/drone_supply
 
@@ -109,6 +104,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	drone_supply.take_bodypart_damage(0, 5)
 	return TRUE
 
+
+var/global/list/obj/machinery/swarm_powered/bluespace_transponder/transponders = list()
+var/global/list/obj/machinery/swarm_powered/bluespace_transponder/active_transponders = list()
+
+ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transponders)
 
 /obj/machinery/swarm_powered/bluespace_transponder
 	icon = 'icons/obj/objects.dmi'
@@ -222,7 +222,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 
 
 var/global/list/obj/machinery/power/replicator_generator/replicator_generators = list()
-// Requires 10 drones in teh swarm.
+
 ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generators)
 
 /obj/machinery/power/replicator_generator
@@ -496,8 +496,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 
 /obj/machinery/swarm_powered/bluespace_catapult/Crossed(atom/movable/AM)
 	if(isreplicator(AM))
-		if(length(global.alive_replicators) > 1)
-			to_chat(AM, "<span class='notice'>One must stay behind.</span>")
+		if(length(global.alive_replicators) <= 1)
+			to_chat(AM, "<span class='notice'>One must stay behind. Replicate more, and send others.</span>")
 		else
 			var/mob/living/simple_animal/replicator/R = AM
 			global.replicators_faction.replicators_launched += 1

@@ -260,7 +260,7 @@
 	return welded
 
 /obj/machinery/atmospherics/components/get_unit_disintegration_time()
-	return ..() / REPLICATOR_PUNISH_GRIEFING_TICK_MODIFIER
+	return ..() * REPLICATOR_PUNISH_GRIEFING_TICK_MODIFIER
 
 /obj/machinery/atmospherics/components/replicator_act(mob/living/simple_animal/replicator/R)
 	if(welded)
@@ -284,12 +284,16 @@
 	return FALSE
 
 
+/obj/machinery/power/smes/get_unit_disintegration_time()
+	return ..() * REPLICATOR_PUNISH_GRIEFING_TICK_MODIFIER
+
+
 /obj/machinery/swarm_powered/bluespace_transponder/can_be_auto_disintegrated()
 	return FALSE
 
 // Refund!
 /obj/machinery/swarm_powered/bluespace_transponder/get_replicator_material_amount()
-	return REPLICATOR_COST_REPLICATE
+	return REPLICATOR_COST_TRANSPONDER
 
 /obj/machinery/swarm_powered/bluespace_transponder/get_unit_disintegration_time()
 	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
@@ -299,7 +303,7 @@
 	return FALSE
 
 /obj/machinery/power/replicator_generator/get_replicator_material_amount()
-	return REPLICATOR_COST_REPLICATE
+	return REPLICATOR_COST_GENERATOR
 
 /obj/machinery/replicator_generator/get_unit_disintegration_time()
 	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER

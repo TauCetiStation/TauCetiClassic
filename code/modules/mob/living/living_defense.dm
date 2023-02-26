@@ -33,9 +33,9 @@
 
 /mob/living/carbon/human/is_impact_force_affected(impact_force)
 	if(shoes && (shoes.flags & AIR_FLOW_PROTECT))
-		return FALSE
+		return !lying && !crawling
 	if(wear_suit && (wear_suit.flags & AIR_FLOW_PROTECT))
-		return FALSE
+		return !lying && !crawling
 	return ..()
 
 /mob/living/proc/get_projectile_impact_force(obj/item/projectile/P, def_zone)

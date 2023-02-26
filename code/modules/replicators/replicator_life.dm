@@ -50,22 +50,27 @@
 	if(last_disintegration + 1 MINUTE < world.time)
 		var/taken_damage = FALSE
 		if(!has_swarms_gift())
-			take_bodypart_damage(disintegration_abuse_punishment, 0.5)
+			take_bodypart_damage(0.0, 0.5)
 			taken_damage = TRUE
 
 		if(isspaceturf(loc))
-			take_bodypart_damage(0, 1.5)
+			take_bodypart_damage(0.0, 1.5)
 			taken_damage = TRUE
 
 		if(stat == DEAD)
 			global.replicators_faction.adjust_materials(REPLICATOR_COST_REPLICATE)
 			return
 
+		if(taken_damage)
+			throw_alert("swarm_hunger", /atom/movable/screen/alert/swarm_hunger)
+
 		if(next_consume_alert < world.time && taken_damage)
 			next_consume_alert = world.time + 20 SECONDS
 			playsound_local(null, 'sound/effects/alert.ogg', VOL_EFFECTS_MASTER, 30 + 70 * (maxHealth - health) / maxHealth, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 			flash_color(src, flash_color="#ff0000", flash_time=5)
 			to_chat(src, "<span class='danger'><font size=2>This world can not support your body for long. You must <b>consume</b> to survive.</font></span>")
+	else
+		clear_alert("swarm_hunger", /atom/movable/screen/alert/swarm_hunger)
 
 	last_update_health = health
 
@@ -119,6 +124,7 @@
 	if(!R.ckey)
 		return ..()
 	if(R.controlling_drones >= REPLICATOR_MAX_CONTROLLED_DRONES)
+		to_chat(R, "<span class='notice'>You are already controlling a max capacity of [REPLICATOR_MAX_CONTROLLED_DRONES] drones.</span>")
 		return ..()
 
 	last_controller_ckey = R.ckey
@@ -136,7 +142,9 @@
 	set_a_intent(INTENT_HARM)
 	set_state(REPLICATOR_STATE_COMBAT)
 
-/mob/living/simple_animal/replicator/proc/forget_leader(datum/source)
+/mob/living/simple_animal/replicator/proc/forget_leader()
+	SIGNAL_HANDLER
+
 	leader.controlling_drones -= 1
 
 	UnregisterSignal(leader, list(COMSIG_CLIENTMOB_MOVE, COMSIG_MOB_CLICK, COMSIG_MOB_SET_A_INTENT, COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING))

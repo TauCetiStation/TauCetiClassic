@@ -69,7 +69,7 @@
 
 	if(!istype(user.loc, /turf/simulated/floor))
 		if(try_start)
-			to_chat(user, "<span class='notice'>You mustn't be inside of anything for this to work.</span>")
+			to_chat(user, "<span class='notice'>You must be on solid ground to construct this.</span>")
 		return FALSE
 
 	var/turf/my_turf = get_turf(user)
@@ -121,7 +121,7 @@
 
 	if(!istype(user.loc, /turf/simulated/floor))
 		if(try_start)
-			to_chat(user, "<span class='notice'>You mustn't be inside of anything for this to work.</span>")
+			to_chat(user, "<span class='notice'>You must be on solid ground to construct this.</span>")
 		return FALSE
 
 	if(locate(/obj/item/mine/replicator) in user.loc)
@@ -170,7 +170,7 @@
 	// Should fix replicating inside vents which would be buggy...
 	if(!istype(user.loc, /turf/simulated/floor))
 		if(try_start)
-			to_chat(user, "<span class='notice'>You mustn't be inside of anything for this to work.</span>")
+			to_chat(user, "<span class='notice'>You must be on solid ground to construct this.</span>")
 		return FALSE
 
 	if(locate(/obj/machinery/swarm_powered/bluespace_transponder) in user.loc)
@@ -224,7 +224,7 @@
 
 	if(!istype(user.loc, /turf/simulated/floor))
 		if(try_start)
-			to_chat(user, "<span class='notice'>You mustn't be inside of anything for this to work.</span>")
+			to_chat(user, "<span class='notice'>You must be on solid ground to construct this.</span>")
 		return FALSE
 
 	if(locate(/obj/machinery/swarm_powered/bluespace_transponder) in user.loc)

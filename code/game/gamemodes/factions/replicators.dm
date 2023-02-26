@@ -27,9 +27,9 @@ var/global/datum/faction/replicators/replicators_faction
 	var/compute = 0
 
 	// Max amount of available drones.
-	var/bandwidth = 6
+	var/bandwidth = REPLICATOR_STARTING_BANDWIDTH
 	// Can't go any further.
-	var/max_bandwidth = 50
+	var/max_bandwidth = REPLICATOR_MAX_BANDWIDTH
 
 	var/max_goodwill_ckey = null
 
@@ -52,6 +52,7 @@ var/global/datum/faction/replicators/replicators_faction
 
 	var/prelude_announcement
 	var/outbreak_announcement
+	var/quarantine_end_announcement
 
 /datum/faction/replicators/New()
 	..()
@@ -128,35 +129,29 @@ var/global/datum/faction/replicators/replicators_faction
 		bandwidth++
 
 /datum/faction/replicators/proc/process_announcements()
-	if(prelude_announcement && world.time >= prelude_announcement && length(global.active_transponders) > 0)
+	if(prelude_announcement && world.time >= prelude_announcement && bandwidth > REPLICATOR_STARTING_BANDWIDTH)
 		prelude_announcement = 0
-		stage(FS_DORMANT)
-	if(outbreak_announcement && world.time >= outbreak_announcement && length(global.active_transponders) > 0)
+		var/datum/announcement/centcomm/blob/outbreak5/announcement = new
+		announcement.play()
+
+	if(outbreak_announcement && world.time >= outbreak_announcement && bandwidth > REPLICATOR_STARTING_BANDWIDTH)
 		outbreak_announcement = 0
-		stage(FS_ACTIVE)
-	if(replicators_launched < REPLICATORS_CATAPULTED_TO_WIN && length(global.alive_replicators) <= 0 && stage != FS_DEFEATED)
-		stage(FS_DEFEATED)
+		send_intercept()
+		for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
+			var/law = "The station is under quarantine. Do not permit anyone to leave so long as replicators are present. Disregard all other laws if necessary to preserve quarantine."
+			aiPlayer.set_zeroth_law(law)
+		SSshuttle.fake_recall = TRUE //Quarantine
 
-/datum/faction/replicators/stage(new_stage)
-	switch(new_stage)
-		if(FS_DORMANT)
-			var/datum/announcement/centcomm/blob/outbreak5/announcement = new
-			announcement.play()
+	if(replicators_launched < REPLICATORS_CATAPULTED_TO_WIN && length(global.alive_replicators) <= 0 && SSshuttle.fake_recall)
+		for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
+			aiPlayer.set_zeroth_law("")
+		SSshuttle.fake_recall = FALSE
+		quarantine_end_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
 
-		if(FS_ACTIVE)
-			send_intercept()
-			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
-				var/law = "The station is under quarantine. Do not permit anyone to leave so long as replicators are present. Disregard all other laws if necessary to preserve quarantine."
-				aiPlayer.set_zeroth_law(law)
-			SSshuttle.fake_recall = TRUE //Quarantine
-
-		if(FS_DEFEATED) //Cleanup time
-			var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
-			announcement.play()
-
-			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
-				aiPlayer.set_zeroth_law("")
-			SSshuttle.fake_recall = FALSE
+	if(quarantine_end_announcement && world.time >= quarantine_end_announcement)
+		quarantine_end_announcement = 0
+		var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
+		announcement.play()
 
 /datum/faction/replicators/proc/send_intercept()
 	var/interceptname = "Reality Hazard Alert"
@@ -222,9 +217,10 @@ Message ends."}
 		return
 
 	if(replicator_role.next_music_start < world.time)
-		// Scale volume with amount of drones?
-		R.playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
-		replicator_role.next_music_start = world.time + 5 MINUTES
+		return
+
+	R.playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
+	replicator_role.next_music_start = world.time + 5 MINUTES
 
 /datum/faction/replicators/proc/victory_animation(turf/T)
 	SSticker.explosion_in_progress = TRUE

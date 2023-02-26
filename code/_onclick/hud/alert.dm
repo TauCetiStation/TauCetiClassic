@@ -443,6 +443,11 @@
 	icon_state = "newlaw"
 	timeout = 300
 
+/atom/movable/screen/alert/swarm_hunger
+	name = "Swarm's Hunger"
+	desc = "This reality can not support your presence... You must consume to live."
+	icon_state = "swarm_hunger"
+
 //OBJECT-BASED
 
 /atom/movable/screen/alert/buckled

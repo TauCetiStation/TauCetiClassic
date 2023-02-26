@@ -1501,7 +1501,7 @@
 	var/obj/structure/disposalpipe/trunk/T = locate() in my_turf
 	if(istype(T) && T.layer > my_turf.layer && see_invisible > T.invisibility)
 		to_chat(src, "<span class='notice'>You enter into [T].</span>")
-		var/obj/structure/disposalholder/H = new(T, list(src), return_air())
+		var/obj/structure/disposalholder/H = new(T, list(src), new /datum/gas_mixture)
 		H.tomail = TRUE
 		H.start(T)
 
