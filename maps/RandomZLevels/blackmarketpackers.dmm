@@ -545,7 +545,7 @@
 /area/awaymission/BMPship1)
 "bN" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/spacecash/c1000,
+/obj/item/weapon/spacecash/c500,
 /obj/item/weapon/spacecash/c50,
 /turf/simulated/floor/plating{
 	dir = 4;
@@ -732,7 +732,7 @@
 /area/awaymission/BMPship1)
 "cs" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/spacecash/c1000,
+/obj/item/weapon/spacecash/c500,
 /obj/item/weapon/spacecash/c200,
 /obj/item/weapon/spacecash/c500,
 /turf/simulated/floor/plating{
