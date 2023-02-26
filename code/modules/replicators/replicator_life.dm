@@ -58,8 +58,7 @@
 
 		if(next_consume_alert < world.time)
 			next_consume_alert = world.time + 15 SECONDS
-			// to-do: sound
-			// heart beat sound
+			playsound_local(null, 'sound/effects/alert.ogg', VOL_EFFECTS_MASTER, 30 + 70 * (maxHealth - health) / maxHealth, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 			flash_color(src, flash_color="#ff0000", flash_time=5)
 			to_chat(src, "<span class='danger'><font size=2>This world can not support your body for long. You must <b>consume</b> to survive.</font></span>")
 
