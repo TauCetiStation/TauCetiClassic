@@ -58,8 +58,6 @@
 	// the world.time since the mob has been brigged, or -1 if not at all
 	var/brigged_since = -1
 
-	//put this here for easier tracking ingame
-	var/datum/money_account/initial_account
 	//skills
 	var/datum/skills/skills = new
 
@@ -226,6 +224,10 @@
 	popup.open()
 
 /datum/mind/Topic(href, href_list)
+	if(href_list["add_key_memory"])
+		current?.add_key_memory()
+		return
+
 	if(!check_rights(R_ADMIN))
 		return
 
