@@ -17,11 +17,11 @@
 
 // Disintegration time per 1 unit of material. By default is 1
 /atom/proc/get_unit_disintegration_time()
-	var/efficency = 1.0
+	var/tick_modifier = 1.0
 	if(flags & CONDUCT)
-		efficency *= 2.0
+		tick_modifier *= REPLICATOR_REWARD_CONDUCTIVE_TICK_MODIFIER
 
-	return REPLICATOR_TICKS_PER_MATERIAL / efficency
+	return REPLICATOR_TICKS_PER_MATERIAL * tick_modifier
 
 /* TURFS */
 /turf/simulated/floor/get_replicator_material_amount()
@@ -45,7 +45,14 @@
 
 
 /turf/simulated/floor/engine/replicator_act(mob/living/simple_animal/replicator/R)
-	ChangeTurf(basetype)
+	R.try_spawn_node(src)
+	ChangeTurf(/turf/simulated/floor/plating/airless/catwalk/forcefield)
+	return TRUE
+
+
+/turf/simulated/floor/plating/airless/catwalk/replicator_act(mob/living/simple_animal/replicator/R)
+	R.try_spawn_node(src)
+	ChangeTurf(/turf/simulated/floor/plating/airless/catwalk/forcefield)
 	return TRUE
 
 
@@ -72,7 +79,7 @@
 	return REPLICATOR_COST_REPLICATE
 
 /mob/living/simple_animal/replicator/get_unit_disintegration_time()
-	return ..() * 0.1
+	return ..() * REPLICATOR_RECLAIM_REPLICATOR_TICK_MODIFIER
 
 /mob/living/simple_animal/replicator/replicator_act(mob/living/simple_animal/replicator/R)
 	gib()
@@ -101,7 +108,7 @@
 	return TRUE
 
 
-/obj/structure/obj_wall/replicator_act(mob/living/simple_animal/replicator/R)
+/obj/structure/object_wall/replicator_act(mob/living/simple_animal/replicator/R)
 	var/turf/T = get_turf(src)
 	if(T.can_place_replicator_forcefield())
 		new /obj/structure/replicator_forcefield(T)
@@ -132,7 +139,14 @@
 	return 1
 
 /obj/structure/bluespace_corridor/get_unit_disintegration_time()
-	return ..() * 0.25
+	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
+
+/obj/structure/bluespace_corridor/replicator_act(mob/living/simple_animal/replicator/R)
+	deconstruct(TRUE)
+	if(R.auto_construct_type == type && isturf(R.loc))
+		R.try_construct(R.loc)
+
+	return TRUE
 
 
 /obj/structure/replicator_barricade/can_be_auto_disintegrated()
@@ -142,7 +156,11 @@
 	return 5
 
 /obj/structure/replicator_barricade/get_unit_disintegration_time()
-	return ..() * 0.25
+	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
+
+
+/obj/structure/stabilization_field/get_replicator_material_amount()
+	return -1
 
 
 /obj/structure/cable/power_rune/can_be_auto_disintegrated()
@@ -152,7 +170,14 @@
 	return 0
 
 /obj/structure/cable/power_rune/get_unit_disintegration_time()
-	return ..() * 0.25
+	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
+
+
+/obj/structure/particle_accelerator/can_be_auto_disintegrated()
+	return FALSE
+
+/obj/structure/particle_accelerator/get_unit_disintegration_time()
+	return ..() * REPLICATOR_PUNISH_GRIEFING_TICK_MODIFIER
 
 
 // Can be used for navigation across the station. Why damage such infrastructure?
@@ -185,6 +210,9 @@
 /obj/machinery/atmospherics/can_be_auto_disintegrated()
 	return FALSE
 
+/obj/machinery/atmospherics/get_unit_disintegration_time()
+	return ..() * REPLICATOR_PUNISH_GRIEFING_TICK_MODIFIER
+
 
 /obj/machinery/portable_atmospherics/can_be_auto_disintegrated()
 	return FALSE
@@ -203,7 +231,7 @@
 	return REPLICATOR_COST_REPLICATE
 
 /obj/machinery/swarm_powered/bluespace_transponder/get_unit_disintegration_time()
-	return ..() * 0.25
+	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
 
 
 /obj/machinery/power/replicator_generator/can_be_auto_disintegrated()
@@ -213,7 +241,7 @@
 	return REPLICATOR_COST_REPLICATE
 
 /obj/machinery/replicator_generator/get_unit_disintegration_time()
-	return ..() * 0.25
+	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
 
 
 /obj/machinery/swarm_powered/bluespace_catapult/get_replicator_material_amount()
@@ -232,4 +260,4 @@
 
 // Raw materials are eaten much faster.
 /obj/item/stack/get_unit_disintegration_time()
-	return ..() * 0.5
+	return ..() * REPLICATOR_REWARD_STACKS_TICK_MODIFIER

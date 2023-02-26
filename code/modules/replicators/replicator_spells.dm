@@ -13,7 +13,7 @@
 	var/material_cost = REPLICATOR_COST_REPLICATE
 
 /obj/effect/proc_holder/spell/no_target/replicator_replicate/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
-	if(length(global.replicators) >= global.replicators_faction.bandwidth)
+	if(length(global.alive_replicators) >= global.replicators_faction.bandwidth)
 		if(try_start)
 			to_chat(user, "<span class='warning'>Not enough bandwidth for replication.</span>")
 		return FALSE
@@ -42,7 +42,7 @@
 	R.generation = "[user_replicator.generation][rand(0, 9)]"
 
 	R.name = "replicator ([R.generation])"
-	R.real_name = name
+	R.real_name = R.name
 
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 
@@ -100,7 +100,7 @@
 
 
 /obj/effect/proc_holder/spell/no_target/spawn_trap
-	name = "Trap (20)"
+	name = "Trap (30)"
 	desc = "Constructs a multi-use trap, that stuns and electrocutes enemies."
 
 	charge_type = "recharge"
@@ -111,7 +111,7 @@
 	action_icon = 'icons/mob/replicator.dmi'
 	action_icon_state = "ui_trap"
 
-	var/material_cost = 20
+	var/material_cost = 30
 
 /obj/effect/proc_holder/spell/no_target/spawn_trap/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 	if(global.replicators_faction.materials < material_cost)
@@ -128,6 +128,13 @@
 		if(try_start)
 			to_chat(user, "<span class='notice'>There is already a trap here.</span>")
 		return FALSE
+
+	for(var/mine_dir in global.cardinal)
+		var/turf/T = get_step(user.loc, mine_dir)
+		if(locate(/obj/item/mine/replicator) in T)
+			if(try_start)
+				to_chat(user, "<span class='notice'>Can not place mines cardinally adjacent to other mines.</span>")
+			return FALSE
 
 	return ..()
 
@@ -335,7 +342,7 @@
 /obj/effect/proc_holder/spell/no_target/transfer_to_area/cast(list/targets, mob/user = usr)
 	var/list/pos_areas = list()
 
-	for(var/r in global.replicators)
+	for(var/r in global.alive_replicators)
 		var/mob/living/simple_animal/replicator/R = r
 		if(R.ckey || R.incapacitated())
 			continue

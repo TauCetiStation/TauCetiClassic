@@ -70,8 +70,11 @@
 	if(I.use_tool(src, user, 40, volume = 50))
 		user.visible_message("<span class='notice'>[user] finishes disarming [src].</span>", "<span class='notice'>You finish disarming [src].</span>")
 
-		anchored = FALSE
-		update_icon()
+		disarm()
+
+/obj/item/mine/proc/disarm()
+	anchored = FALSE
+	update_icon()
 
 /obj/item/mine/anchored
 	anchored = TRUE

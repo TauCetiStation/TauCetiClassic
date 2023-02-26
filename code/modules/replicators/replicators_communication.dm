@@ -25,13 +25,14 @@
 /datum/faction/replicators/proc/announce_swarm(presence_name, presence_ckey, message, atom/announcer=null)
 	var/list/listening = list()
 
-	for(var/mob/M in player_list)
-		if(QDELETED(M)) // avoid not hard-deleted mobs with client
+	for(var/mob/M as anything in mob_list)
+		if(!M.client)
 			continue
-		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
-			listening |= M
 
 		if(M.mind && M.mind.GetRole(REPLICATOR))
+			listening |= M
+
+		else if(isobserver(M))
 			listening |= M
 
 	for(var/m in listening)
@@ -42,6 +43,7 @@
 		if(swarms_goodwill[presence_ckey] && swarms_goodwill[max_goodwill_ckey])
 			var/goodwill_coeff = swarms_goodwill[presence_ckey] / swarms_goodwill[max_goodwill_ckey]
 			var/goodwill_font_size = max(round(goodwill_coeff * 3), 1)
+
 			if(presence_ckey == max_goodwill_ckey)
 				open_tags += "<font size='[goodwill_font_size]'>"
 				close_tags += "</font>"
@@ -62,15 +64,19 @@
 
 		var/jump_button = ""
 		if(announcer && isreplicator(M))
-			jump_button = "<a href='?src=\ref[announcer]'>(JMP)</a>"
+			jump_button = "<a href='?src=\ref[announcer];replicator_jump=1'> (JMP)</a>"
+
+		if(isobserver(M))
+			speaker_name = "[FOLLOW_LINK(M, announcer)] [speaker_name]"
 
 		to_chat(M, "[open_tags][channel] [speaker_name] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags][jump_button]")
 
-/datum/faction/replicators/proc/drone_message(mob/living/simple_animal/replicator/drone, message, transfer=FALSE, dismantle=FALSE)
+// Mines currently also use this.
+/datum/faction/replicators/proc/drone_message(atom/drone, message, transfer=FALSE, dismantle=FALSE)
 	for(var/r in members)
 		var/datum/role/replicator/R = r
 		if(!R.antag)
 			continue
-		var/jump_button = transfer ? "<a href='?src=\ref[drone]'>(JMP)</a>" : ""
-		var/dismantle_button = dismantle ? "<a href='?src=\ref[drone]'>(KILL)</a>" : ""
+		var/jump_button = transfer ? "<a href='?src=\ref[drone];replicator_jump=1'> (JMP)</a>" : ""
+		var/dismantle_button = dismantle ? "<a href='?src=\ref[drone];replicator_kill=1'> (KILL)</a>" : ""
 		to_chat(R.antag.current, "<span class='replicator'>\[???\]</span> <b>[drone.name]</b> requests, <span class='message'><span class='replicator'>\"[message]\"</span></span>[jump_button][dismantle_button]")

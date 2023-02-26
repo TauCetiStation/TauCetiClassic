@@ -37,6 +37,13 @@
 		ChangeTurf(/turf/simulated/floor/plating)
 		return
 
+	if(isscrewing(C))
+		// to-do: sound
+		if(!user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
+			qdel(src)
+		// Parent also has screwdriver disassembly so we ought to stop here...
+		return
+
 	return ..()
 
 
@@ -50,7 +57,7 @@
 	can_block_air = TRUE
 
 	max_integrity = 100
-	resistance_flags = CAN_BE_HIT
+	resistance_flags = CAN_BE_HIT | FIRE_PROOF
 
 /obj/structure/replicator_forcefield/Destroy()
 	// to-do: sound
@@ -84,6 +91,8 @@
 	opacity = 0
 	can_block_air = TRUE
 
+	resistance_flags = FULL_INDESTRUCTIBLE
+
 /obj/structure/stabilization_field/attackby(obj/item/C, mob/user)
 	if(isscrewing(C) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
 		// to-do: sound
@@ -108,7 +117,7 @@
 	can_block_air = TRUE
 
 	max_integrity = 35
-	resistance_flags = CAN_BE_HIT
+	resistance_flags = CAN_BE_HIT | FIRE_PROOF
 
 /obj/structure/replicator_barricade/Destroy()
 	if(!(locate(/obj/structure/stabilization_field) in loc))

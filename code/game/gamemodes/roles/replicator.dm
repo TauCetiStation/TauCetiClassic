@@ -18,3 +18,6 @@
 	to_chat(antag.current, {"<span class='notice'><b>You are a replicator. A part of a Swarm. You must consume materials and create infrastructure required for a Bluespace Catapult, which will utilize a
 	rift so that you will spread on through the galaxy. Multiply and prosper!</b></span>"})
 
+/datum/role/replicator/printplayerwithicon(datum/mind/M)
+	. = ..()
+	. += " <i>(Materials Contribution: [global.replicators_faction.swarms_goodwill[M.current.ckey]])</i>"

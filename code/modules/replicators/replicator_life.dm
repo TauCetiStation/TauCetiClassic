@@ -11,6 +11,9 @@
 	var/next_excitement_alert = 0
 	var/excitement_alert_cooldown = 30 SECONDS
 
+	var/next_attacked_alert = 0
+	var/attacked_alert_cooldown = 30 SECONDS
+
 	var/list/state2color = list(
 		REPLICATOR_STATE_HARVESTING = "#CCFF00",
 		REPLICATOR_STATE_HELPING = "#00FFCC",
@@ -28,7 +31,7 @@
 	if(!.)
 		return
 
-	if(health < last_update_health && next_attacked_alert < world.time)
+	if(health < last_update_health && next_attacked_alert < world.time && !sacrifice_powering)
 		emote("beep")
 		global.replicators_faction.drone_message(src, "I am taking damage.", transfer=TRUE)
 		next_attacked_alert = world.time + attacked_alert_cooldown
@@ -73,6 +76,8 @@
 		return ..()
 	if(state == REPLICATOR_STATE_COMBAT)
 		return ..()
+	if(incapacitated())
+		return ..()
 
 	if(!isreplicator(AM))
 		return ..()
@@ -82,9 +87,13 @@
 		return ..()
 	if(!R.ckey)
 		return ..()
+	if(R.controlling_drones >= REPLICATOR_MAX_CONTROLLED_DRONES)
+		return ..()
 
 	last_controller_ckey = R.ckey
 	leader = R
+
+	leader.controlling_drones += 1
 
 	RegisterSignal(R, list(COMSIG_CLIENTMOB_MOVE), .proc/_repeat_leader_move)
 	RegisterSignal(R, list(COMSIG_MOB_CLICK), .proc/_repeat_leader_attack)
@@ -97,6 +106,8 @@
 	set_state(REPLICATOR_STATE_COMBAT)
 
 /mob/living/simple_animal/replicator/proc/forget_leader(datum/source)
+	leader.controlling_drones -= 1
+
 	UnregisterSignal(leader, list(COMSIG_CLIENTMOB_MOVE, COMSIG_MOB_CLICK, COMSIG_MOB_SET_A_INTENT, COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING))
 	leader = null
 	set_state(REPLICATOR_STATE_HARVESTING)
@@ -112,18 +123,12 @@
 		forget_leader()
 		return
 
+	if(incapacitated())
+		forget_leader()
+		return
+
 	excitement = 30
 
-	/*
-	var/fake_delay = 0
-	if(next_pretend_delay_action < world.time && prob(50))
-		fake_delay = rand(1, 2)
-		next_pretend_delay_action = world.time + fake_delay + 1
-
-	if(fake_delay > 0)
-		addtimer(CALLBACK(src, .proc/repeat_leader_move, source, OldLoc, move_dir), fake_delay)
-		return
-	*/
 	repeat_leader_move(A, NewLoc, move_dir)
 
 /mob/living/simple_animal/replicator/proc/repeat_leader_attack(datum/source, atom/target, params)
@@ -137,10 +142,15 @@
 	SIGNAL_HANDLER
 	if(!isturf(target) && !isturf(target.loc))
 		return
+
 	var/mob/living/simple_animal/replicator/R = source
 	if(R.next_move > world.time)
 		return
 	if(next_move > world.time)
+		return
+
+	if(incapacitated())
+		forget_leader()
 		return
 
 	excitement = 30
@@ -286,7 +296,7 @@
 	. = null
 	var/closest_distance = null
 
-	for(var/r in replicators)
+	for(var/r in global.alive_replicators)
 		var/mob/living/simple_animal/replicator/R = r
 		if(R == src)
 			continue

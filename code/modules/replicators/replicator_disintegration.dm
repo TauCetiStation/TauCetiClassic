@@ -15,6 +15,11 @@
 			to_chat(src, "<span class='warning'>Object Does Not Disintegrate.</span>")
 		return FALSE
 
+	if(A.flags_2 & HOLOGRAM_2)
+		if(alert)
+			to_chat(src, "<span class='warning'>Can Not Disintegrate Hologram.</span>")
+		return FALSE
+
 	if((locate(/mob/living) in A) && !isturf(A))
 		if(alert)
 			to_chat(src, "<span class='warning'>Can Not Deconstruct: May Harm Organics.</span>")

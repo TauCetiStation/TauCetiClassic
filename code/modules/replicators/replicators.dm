@@ -1,7 +1,7 @@
-var/global/list/replicators = list()
+var/global/list/alive_replicators = list()
 var/global/list/idle_replicators = list()
 
-ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 /datum/skillset/replicator
 	name = "Replicator"
@@ -74,10 +74,16 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 
 	typing_indicator_type = "robot"
 
-	var/generation = ""
+	spawner_args = list(/datum/spawner/living/replicator, 2 MINUTES)
 
-	var/next_attacked_alert = 0
-	var/attacked_alert_cooldown = 10 SECONDS
+	can_point = TRUE
+
+	// How many drones are under direct control.
+	var/controlling_drones = 0
+
+	var/sacrifice_powering = FALSE
+
+	var/generation = ""
 
 	var/last_update_health = 0
 
@@ -218,7 +224,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	global.replicators_faction.adjust_materials(-auto_construct_cost, adjusted_by=last_controller_ckey)
 
 /mob/living/simple_animal/replicator/update_icon()
-	if(ckey)
+	if(ckey || stat == DEAD)
 		return
 	overlays -= indicator
 	indicator.color = state2color[state]
@@ -241,37 +247,42 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	var/datum/role/replicator/R = mind.GetRole(REPLICATOR)
 	if(!R)
 		R = add_faction_member(global.replicators_faction, src, TRUE)
+		if(R.next_music_start < world.time)
+			playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
+			R.next_music_start = world.time + 5 MINUTES
 
-	// playsound_local(null, 'sound/lobby/Thunderdome_cut.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
-
+	// It would make more sense lore-wise if it was tied to the swarms gift, but oh well...
+	/*
 	if(has_swarms_gift() && R.next_music_start < world.time)
 		// Scale volume with amount of drones?
 		playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 		R.next_music_start = world.time + 5 MINUTES
+	*/
 
 /mob/living/simple_animal/replicator/Logout()
 	..()
-	overlays += indicator
+	if(stat != DEAD)
+		overlays += indicator
 	set_state(REPLICATOR_STATE_HARVESTING)
 
 /mob/living/simple_animal/replicator/Stat()
 	..()
 	if(statpanel("Status"))
 		stat("Materials:", "[global.replicators_faction.materials] ([global.replicators_faction.last_second_materials_change])")
-		stat("Drone Amount:", "[length(global.replicators)]/[global.replicators_faction.bandwidth]")
+		stat("Drone Amount:", "[length(global.alive_replicators)]/[global.replicators_faction.bandwidth]")
 		stat("Bandwidth Upgrade:", "[global.replicators_faction.materials_consumed]/[global.replicators_faction.consumed_materials_until_upgrade]")
 		stat("Presence Count:", length(global.replicators_faction.members))
 		//stat("Swarm's Goodwill:", global.replicators_faction.swarms_goodwill[ckey])
 
 /mob/living/simple_animal/replicator/death()
 	..()
-	global.replicators -= src
+	global.alive_replicators -= src
 
 	overlays -= indicator
 
 	playsound(src, 'sound/effects/Explosion1.ogg', VOL_EFFECTS_MASTER, 75, FALSE)
 
-	var/list/pos_replicators = list() + global.replicators
+	var/list/pos_replicators = list() + global.alive_replicators
 	while(length(pos_replicators))
 		var/mob/living/simple_animal/construct/C = pick(pos_replicators)
 		pos_replicators -= C
@@ -330,7 +341,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 		if(R.transfer_control(src, alert=FALSE))
 			return
 
-		for(var/r in global.replicators)
+		for(var/r in global.alive_replicators)
 			var/mob/living/simple_animal/replicator/other = r
 			if(other.ckey)
 				continue
@@ -422,3 +433,17 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, replicators)
 	dead_mob_list -= src
 	QDEL_IN(src, 15)
 	QDEL_IN(animation, 15)
+
+/mob/living/simple_animal/replicator/attackby(obj/item/I, mob/user, params)
+	if(stat == DEAD && isscrewing(I))
+		visible_message("<span class='notice'>[user] starts disassembling [src] with [I].</span>")
+		if(!user.is_busy() && do_skilled(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/engineering = SKILL_LEVEL_TRAINED), -0.2))
+			playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
+			visible_message("<span class='notice'>[user] has disassembled [src].</span>")
+			new /obj/item/stack/sheet/metal(loc, 3)
+			new /obj/item/stack/cable_coil(loc, 2)
+			new /obj/item/weapon/stock_parts/cell/bluespace(loc)
+			qdel(src)
+			return
+
+	return ..()

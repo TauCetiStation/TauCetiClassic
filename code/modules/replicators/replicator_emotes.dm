@@ -19,7 +19,7 @@
 	. = ..()
 	user.request_help_until = world.time + 7 SECONDS
 
-	for(var/r in global.replicators)
+	for(var/r in global.alive_replicators)
 		var/mob/living/simple_animal/replicator/R = r
 		if(R == user)
 			continue

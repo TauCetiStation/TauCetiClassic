@@ -6,10 +6,11 @@
 	//light_range = 2
 	damage = 3
 	damage_type = BURN
-	agony = 20
+	agony = 10
 	step_delay = 2
 	dispersion = 1
 	impact_force = 1
+	pass_flags = PASSTABLE | PASSGLASS
 
 
 /mob/living/simple_animal/replicator/UnarmedAttack(atom/A)
@@ -63,6 +64,8 @@
 		D.Fire(A, src, params)
 		scatter_offset()
 
+		newtonian_move(get_dir(A, src))
+
 /mob/living/simple_animal/replicator/CtrlClickOn(atom/A)
 	if(istype(A, /mob/living/simple_animal/replicator))
 		var/mob/living/simple_animal/replicator/S = A
@@ -99,41 +102,57 @@
 	. = ..()
 	name = "mine ([rand(0, 999)])"
 
+/obj/item/mine/replicator/proc/do_audiovisual_effects(atom/movable/AM)
+	playsound(src, 'sound/misc/mining_reward_0.ogg', VOL_EFFECTS_MASTER)
+
+	var/image/I = image('icons/mob/replicator.dmi', "dismantle")
+	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	I.plane = AM.plane
+	I.layer = AM.layer + 0.09
+	I.loc = AM
+
+	flick_overlay_view(I, AM, 12)
+
+	audible_message("<b>[src]</b> <i>buzzes.</i>", "You see a light flicker.", hearing_distance = 7, ignored_mobs = observer_list)
+
 /obj/item/mine/replicator/trigger_act(atom/movable/AM)
 	if(next_activation > world.time)
 		return
-	next_activation = world.time + 12
-	addtimer(CALLBACK(src, .proc/rearm), 12)
+	next_activation = world.time + 30
+	addtimer(CALLBACK(src, .proc/rearm), 30)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	s.set_up(3, 1, src)
 	s.start()
 
-	if(!isliving(AM))
+	if(istype(AM, /obj/mecha))
+		var/obj/mecha/M = AM
+
+		do_audiovisual_effects(M)
+
+		M.emp_act(1)
+
+		var/area/A = get_area(src)
+		global.replicators_faction.drone_message(src, "A mine has been triggered in [A.name].", transfer=TRUE)
 		return
 
-	playsound(src, 'sound/misc/mining_reward_0.ogg', VOL_EFFECTS_MASTER)
+	if(isliving(AM))
+		var/mob/living/L = AM
 
-	var/mob/living/L = AM
+		do_audiovisual_effects(L)
 
-	var/image/I = image('icons/mob/replicator.dmi', "dismantle")
-	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	I.plane = L.plane
-	I.layer = L.layer + 0.09
-	I.loc = L
+		var/stepped_by = pick(BP_R_LEG, BP_L_LEG)
+		L.electrocute_act(20, src, siemens_coeff = 1.0, def_zone = stepped_by) // electrocute act does a message.
+		L.Stun(1)
 
-	flick_overlay_view(I, L, 12)
+		var/area/A = get_area(src)
+		global.replicators_faction.drone_message(src, "A mine has been triggered in [A.name].", transfer=TRUE)
 
-	var/stepped_by = pick(BP_R_LEG, BP_L_LEG)
-	L.electrocute_act(30, src, siemens_coeff = 1.0, def_zone = stepped_by) // electrocute act does a message.
-	L.Stun(2)
-
-	audible_message("<b>[src]</b> <i>buzzes.</i>", "You see a light flicker.", hearing_distance = 7, ignored_mobs = observer_list)
-
-	var/area/A = get_area(src)
-	global.replicators_faction.drone_message(src, "A mine has been triggered in [A.name].", transfer=TRUE)
+/obj/item/mine/replicator/disarm()
+	qdel(src)
 
 /obj/item/mine/replicator/proc/rearm()
+	// to-do: sound
 	update_icon()
 
 /obj/item/mine/replicator/update_icon()
@@ -146,16 +165,16 @@
 
 /obj/item/mine/replicator/Topic(href, href_list)
 	if(href_list["replicator_jump"])
-		var/atom/A = locate(href_list["replicator_jump"])
-		if(!isreplicator(A))
+		var/mob/M = usr
+		if(!isreplicator(M))
 			return
-		var/mob/living/simple_animal/replicator/R = A
+		var/mob/living/simple_animal/replicator/R = M
 		if(R.incapacitated())
 			return
 		if(!R.mind)
 			return
 
-		for(var/r in global.replicators)
+		for(var/r in global.alive_replicators)
 			var/mob/living/simple_animal/replicator/other = r
 			if(other.ckey)
 				continue

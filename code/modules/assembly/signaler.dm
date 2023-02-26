@@ -22,9 +22,9 @@
 		QUALITY_SIGNALLING = 1
 	)
 
-/obj/item/device/assembly/signaler/atom_init()
+/obj/item/device/assembly/signaler/atom_init(mapload, my_new_frequency=1457)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/set_frequency, frequency), 40)
+	addtimer(CALLBACK(src, .proc/set_frequency, my_new_frequency), 40)
 
 /obj/item/device/assembly/signaler/Destroy()
 	if(radio_controller)

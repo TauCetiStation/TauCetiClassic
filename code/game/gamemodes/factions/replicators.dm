@@ -49,10 +49,19 @@ var/global/datum/faction/replicators/replicators_faction
 	// Win condition is launching 10 replicators.
 	var/replicators_launched = 0
 
+	var/prelude_announcement
+	var/outbreak_announcement
+
 /datum/faction/replicators/New()
 	..()
 	spawned_at_time = world.time
 	vents4spawn = get_vents()
+
+/datum/faction/replicators/OnPostSetup()
+	prelude_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
+	outbreak_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
+
+	return ..()
 
 /datum/faction/replicators/can_setup(num_players)
 	max_roles = max(1, round(num_players / 20))
@@ -93,6 +102,8 @@ var/global/datum/faction/replicators/replicators_faction
 /datum/faction/replicators/process()
 	. = ..()
 
+	process_announcements()
+
 	if(next_materials_update < world.time)
 		last_second_materials_change = this_second_materials_change
 		this_second_materials_change = 0
@@ -105,15 +116,71 @@ var/global/datum/faction/replicators/replicators_faction
 	if(bandwidth >= max_bandwidth)
 		return
 
-	if(materials > REPLICATOR_COST_REPLICATE + length(global.active_transponders))
-		materials -= length(global.active_transponders)
-		materials_consumed += length(global.active_transponders)
+	if(materials > REPLICATOR_COST_REPLICATE + length(global.active_transponders) * REPLICATOR_TRANSPONDER_CONSUMPTION_RATE)
+		materials -= length(global.active_transponders) * REPLICATOR_TRANSPONDER_CONSUMPTION_RATE
+		materials_consumed += length(global.active_transponders) * REPLICATOR_TRANSPONDER_CONSUMPTION_RATE
 
 	if(materials_consumed > consumed_materials_until_upgrade)
 		materials_consumed = 0
-		consumed_materials_until_upgrade += REPLICATOR_COST_REPLICATE * 0.5
+		consumed_materials_until_upgrade += REPLICATOR_BANDWIDTH_COST_INCREASE
 		announce_swarm("The Swarm", "The Swarm", "Ample materials consumed. Bandwidth increased.")
 		bandwidth++
+
+/datum/faction/replicators/proc/process_announcements()
+	if(prelude_announcement && world.time >= prelude_announcement && length(global.alive_replicators) > 0)
+		prelude_announcement = 0
+		stage(FS_DORMANT)
+	if(outbreak_announcement && world.time >= outbreak_announcement && length(global.alive_replicators) > 0)
+		outbreak_announcement = 0
+		stage(FS_ACTIVE)
+	if(length(global.alive_replicators) <= 0)
+		stage(FS_DEFEATED)
+
+/datum/faction/replicators/stage(new_stage)
+	switch(new_stage)
+		if(FS_DORMANT)
+			var/datum/announcement/centcomm/blob/outbreak5/announcement = new
+			announcement.play()
+
+		if(FS_ACTIVE)
+			send_intercept()
+			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
+				var/law = "The station is under quarantine. Do not permit anyone to leave so long as replicators are present. Disregard all other laws if necessary to preserve quarantine."
+				aiPlayer.set_zeroth_law(law)
+			SSshuttle.fake_recall = TRUE //Quarantine
+
+		if(FS_DEFEATED) //Cleanup time
+			var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
+			announcement.play()
+
+			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
+				aiPlayer.set_zeroth_law("")
+			SSshuttle.fake_recall = FALSE
+
+/datum/faction/replicators/proc/send_intercept()
+	var/interceptname = "Reality Hazard Alert"
+	var/intercepttext = {"<FONT size = 3><B>Nanotrasen Update</B>: Reality Hazard Alert.</FONT><HR>
+Reports indicate the probable transfer of a reality distortion agent onto [station_name()] during the last crew deployment cycle.
+Preliminary analysis of the organism classifies it as a level 5 biohazard. Its origin is unknown.
+Nanotrasen has issued a directive 7-10 for [station_name()]. The station is to be considered quarantined.
+Orders for all [station_name()] personnel follows:
+<ol>
+	<li>Do not leave the quarantine area.</li>
+	<li>Locate any reality distortion outbreaks on the station.</li>
+	<li>If found, use any neccesary means to contain the outbreak.</li>
+	<li>Avoid damage to the capital infrastructure of the station.</li>
+</ol>
+Note in the event of a quarantine breach or uncontrolled spread of the biohazard, the directive 7-10 may be upgraded to a directive 7-12.
+Message ends."}
+
+	for(var/obj/machinery/computer/communications/comm in communications_list)
+		comm.messagetitle.Add(interceptname)
+		comm.messagetext.Add(intercepttext)
+		if(!(comm.stat & (BROKEN | NOPOWER)) && comm.prints_intercept)
+			var/obj/item/weapon/paper/intercept = new /obj/item/weapon/paper( comm.loc )
+			intercept.name = "paper- [interceptname]"
+			intercept.info = intercepttext
+			intercept.update_icon()
 
 /datum/faction/replicators/proc/adjust_materials(material_amount, adjusted_by=null)
 	materials += material_amount
