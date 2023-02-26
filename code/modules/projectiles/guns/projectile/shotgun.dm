@@ -14,6 +14,7 @@
 	can_be_holstered = FALSE
 	var/pump_cooldown = 10
 	var/pump_sound = list('sound/weapons/guns/shotgun_pump1.ogg', 'sound/weapons/guns/shotgun_pump2.ogg', 'sound/weapons/guns/shotgun_pump3.ogg')
+	two_hand_weapon = TRUE
 
 /obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = magazine.attackby(I, user, 1)

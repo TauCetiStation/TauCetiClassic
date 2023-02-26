@@ -78,7 +78,7 @@
 	initial_mag = /obj/item/ammo_box/magazine/saw
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
 	has_cover = TRUE
-	two_handed_weapon = TRUE
+	two_hand_weapon = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
