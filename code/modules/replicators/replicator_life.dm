@@ -48,17 +48,20 @@
 	// - hiding a replicator somewhere in vents
 	// - yeeting yourself into space
 	if(last_disintegration + 1 MINUTE < world.time)
+		var/taken_damage = FALSE
 		if(!has_swarms_gift())
 			take_bodypart_damage(0, 0.5)
+			taken_damage = TRUE
 
 		if(isspaceturf(loc))
 			take_bodypart_damage(0, 1.5)
+			taken_damage = TRUE
 
 		if(stat == DEAD)
 			global.replicators_faction.adjust_materials(REPLICATOR_COST_REPLICATE)
 			return
 
-		if(next_consume_alert < world.time)
+		if(next_consume_alert < world.time && taken_damage)
 			next_consume_alert = world.time + 15 SECONDS
 			playsound_local(null, 'sound/effects/alert.ogg', VOL_EFFECTS_MASTER, 30 + 70 * (maxHealth - health) / maxHealth, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 			flash_color(src, flash_color="#ff0000", flash_time=5)
