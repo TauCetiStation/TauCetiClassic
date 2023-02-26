@@ -187,7 +187,7 @@
 			/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,
 			/obj/item/clothing/mask/facehugger_toy,
 			/obj/item/weapon/card/mining_point_card,
-			/obj/item/weapon/spacecash/c1000,
+			/obj/item/weapon/spacecash/c500,
 			/obj/item/weapon/mining_voucher,
 	)
 	for (var/k in equipment_locker_products)

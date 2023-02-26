@@ -58,8 +58,14 @@
 
 /obj/item/weapon/spacecash/c1
 	name = "1 credit chip"
-	icon_state = "spacecash"
+	icon_state = "spacecash1"
 	desc = "It's worth 1 credit."
+	worth = 1
+
+/obj/item/weapon/spacecash/c5
+	name = "5 credit chip"
+	icon_state = "spacecash5"
+	desc = "It's worth 5 credit."
 	worth = 1
 
 /obj/item/weapon/spacecash/c10
@@ -98,15 +104,9 @@
 	desc = "It's worth 500 credits."
 	worth = 500
 
-/obj/item/weapon/spacecash/c1000
-	name = "1000 credit chip"
-	icon_state = "spacecash1000"
-	desc = "It's worth 1000 credits."
-	worth = 1000
-
 /proc/spawn_money(sum, spawnloc)
 	var/cash_type
-	for(var/i in list(1000,500,200,100,50,20,10,1))
+	for(var/i in list(500,200,100,50,20,10,5,1))
 		cash_type = text2path("/obj/item/weapon/spacecash/c[i]")
 		while(sum >= i)
 			sum -= i

@@ -159,9 +159,12 @@
 		qdel(briefcase_item)
 
 	sec_briefcase.contents += list(
-		new /obj/item/weapon/spacecash/c1000,
-		new /obj/item/weapon/spacecash/c1000,
-		new /obj/item/weapon/spacecash/c1000,
+		new /obj/item/weapon/spacecash/c500,
+		new /obj/item/weapon/spacecash/c500,
+		new /obj/item/weapon/spacecash/c500,
+		new /obj/item/weapon/spacecash/c500,
+		new /obj/item/weapon/spacecash/c500,
+		new /obj/item/weapon/spacecash/c500,
 		new /obj/item/weapon/gun/energy/crossbow,
 		new /obj/item/weapon/gun/projectile/revolver/mateba,
 		new /obj/item/ammo_box/a357,

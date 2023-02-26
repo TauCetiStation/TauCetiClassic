@@ -1016,7 +1016,7 @@
 	. = ..()
 	switch(rand(1,100))//(potency) //It wants to use the default potency instead of the new, so it was always 10. Will try to come back to this later - Cheridan
 		if(0 to 10)
-			new/obj/item/weapon/spacecash(loc)
+			new/obj/item/weapon/spacecash/c1(loc)
 		if(11 to 20)
 			new/obj/item/weapon/spacecash/c10(loc)
 		if(21 to 30)
@@ -1030,7 +1030,7 @@
 		if(61 to 80)
 			new/obj/item/weapon/spacecash/c500(loc)
 		else
-			new/obj/item/weapon/spacecash/c1000(loc)
+			new/obj/item/weapon/spacecash/c5(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato

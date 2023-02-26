@@ -10,7 +10,6 @@
 	requirement = "Нет."
 
 	var/list/money_types = list(
-		/obj/item/weapon/spacecash/c1000,
 		/obj/item/weapon/spacecash/c500,
 		/obj/item/weapon/spacecash/c200,
 		/obj/item/weapon/spacecash/c100,

@@ -130,7 +130,7 @@
 		var/next_money_type = money_type_by_cash_am[money_type_by_cash_am[i + 1]]
 		cash_increase_list[money_type] = next_money_type
 
-	cash_increase_list[/obj/item/weapon/spacecash/c1000] = /obj/item/stack/sheet/mineral/gold
+	cash_increase_list[/obj/item/weapon/spacecash/c500] = /obj/item/stack/sheet/mineral/gold
 	cash_increase_list[/obj/item/weapon/spacecash] = /obj/item/weapon/spacecash/c1
 
 	global.combat_combos = list()
