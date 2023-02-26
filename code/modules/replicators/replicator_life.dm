@@ -47,10 +47,14 @@
 	// This fixes a lot of stupid tactics, such as:
 	// - hiding a replicator somewhere in vents
 	// - yeeting yourself into space
-	if(last_disintegration + 1 MINUTE < world.time)
+	if(last_disintegration + 1 MINUTE < world.time && !disintegrating)
 		var/taken_damage = FALSE
+		// If the person thought about clicking in Life Tick to avoid being punished for not doing anything.
+		// 4 SECONDS is 2 SECONDS * 0.5 (the damage they would have taken each Life Tick)
+		var/disintegration_abuse_punishment = max(0.0, (world.time - last_disintegration - 1 MINUTE) / 4 SECONDS)
+
 		if(!has_swarms_gift())
-			take_bodypart_damage(0, 0.5)
+			take_bodypart_damage(disintegration_abuse_punishment, 0.5)
 			taken_damage = TRUE
 
 		if(isspaceturf(loc))
@@ -62,7 +66,7 @@
 			return
 
 		if(next_consume_alert < world.time && taken_damage)
-			next_consume_alert = world.time + 15 SECONDS
+			next_consume_alert = world.time + 20 SECONDS
 			playsound_local(null, 'sound/effects/alert.ogg', VOL_EFFECTS_MASTER, 30 + 70 * (maxHealth - health) / maxHealth, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 			flash_color(src, flash_color="#ff0000", flash_time=5)
 			to_chat(src, "<span class='danger'><font size=2>This world can not support your body for long. You must <b>consume</b> to survive.</font></span>")
