@@ -6,12 +6,26 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 /obj/machinery/swarm_powered
 	var/mob/living/simple_animal/replicator/drone_supply
 
+	var/prioritized = FALSE
+
+/obj/machinery/swarm_powered/atom_init()
+	. = ..()
+	if(prioritized)
+		global.replicators_faction.prioritized_load += idle_power_usage
+
 /obj/machinery/swarm_powered/Destroy()
+	if(prioritized)
+		global.replicators_faction.prioritized_load -= idle_power_usage
 	drone_supply = null
 	return ..()
 
 /obj/machinery/swarm_powered/powered()
-	return ..() || global.replicators_faction.energy > idle_power_usage || (drone_supply && !drone_supply.incapacitated())
+	. = ..()
+
+	if(drone_supply && !drone_supply.incapacitated())
+		return
+
+	return can_draw_swarm_energy()
 
 /obj/machinery/swarm_powered/power_change()
 	..()
@@ -24,22 +38,30 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	if(area_powered)
 		return
 
-	var/has_reserve_power = global.replicators_faction.energy > idle_power_usage
+	if(draw_energy_from_drone())
+		if(stat & NOPOWER)
+			stat &= ~NOPOWER
+			update_icon()
 
-	if(has_reserve_power)
+	else if(can_draw_swarm_energy())
 		if(stat & NOPOWER)
 			stat &= ~NOPOWER
 			update_icon()
 		global.replicators_faction.adjust_energy(-idle_power_usage)
 
-	else if(draw_energy_from_drone())
-		if(stat & NOPOWER)
-			stat &= ~NOPOWER
-			update_icon()
-
 	else if(!(stat & NOPOWER))
 		stat |= NOPOWER
 		update_icon()
+
+/obj/machinery/swarm_powered/proc/can_draw_swarm_energy()
+	var/energy_available = global.replicators_faction.energy
+	if(!prioritized)
+		energy_available -= global.replicators_faction.prioritized_load
+
+	if(energy_available < idle_power_usage)
+		return FALSE
+
+	return TRUE
 
 /obj/machinery/swarm_powered/proc/start_drone_energy_supply(mob/living/simple_animal/replicator/R)
 	if(drone_supply)
@@ -98,12 +120,17 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	use_power = IDLE_POWER_USE
 	idle_power_usage = REPLICATOR_TRANSPONDER_POWER_USAGE
 
+	var/destroy_unpowered_after = 0
+	var/destroy_unpowered_time = 2 MINUTES
+
 	var/next_sound = 0
 
 	var/obj/item/device/assembly/signaler/anomaly/deactivation_signal = null
 
 /obj/machinery/swarm_powered/bluespace_transponder/atom_init()
 	. = ..()
+	name = "bluespace transponder ([rand(0, 999)])"
+
 	var/freq = rand(1200, 1599)
 	if(IS_MULTIPLE(freq, 2))//signaller frequencies are always uneven!
 		freq++
@@ -141,13 +168,26 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', VOL_EFFECTS_MASTER, 60)
 	AM.AddElement(/datum/element/bluespace_move, AM.invisibility, see_invisible_level, AM.alpha)
 
+/obj/machinery/swarm_powered/bluespace_transponder/start_drone_energy_supply(mob/living/simple_animal/replicator/R)
+	. = ..()
+	// to-do: sound
+	playsound(R, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+	playsound(R, 'sound/mecha/Mech_Step.ogg', VOL_EFFECTS_MASTER, 80)
+
+/obj/machinery/swarm_powered/bluespace_transponder/stop_drone_energy_supply(mob/living/simple_animal/replicator/R)
+	// to-do: sound
+	playsound(R, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
+	return ..()
+
 /obj/machinery/swarm_powered/bluespace_transponder/update_icon()
 	if(stat & NOPOWER)
 		global.active_transponders -= src
 		icon_state = "bhole3"
+		destroy_unpowered_after = world.time + destroy_unpowered_time
 	else
 		global.active_transponders |= src
 		icon_state = "bluespace_wormhole_exit"
+		destroy_unpowered_after = 0
 
 /obj/machinery/swarm_powered/bluespace_transponder/process()
 	draw_energy()
@@ -155,6 +195,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	if(next_sound < world.time && prob(5))
 		next_sound = next_sound + 20 SECONDS
 		playsound(src, 'sound/machines/signal.ogg', VOL_EFFECTS_MASTER)
+
+	if(destroy_unpowered_after < world.time)
+		global.replicators_faction.drone_message(src, "Has closed due to lack of energy.")
+		global.replicators_faction.adjust_materials(REPLICATOR_COST_TRANSPONDER)
+		neutralize()
 
 /obj/machinery/swarm_powered/bluespace_transponder/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/replicator))
@@ -164,8 +209,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	return ..()
 
 /obj/machinery/swarm_powered/bluespace_transponder/proc/neutralize()
+	playsound(src, 'sound/effects/basscannon.ogg', VOL_EFFECTS_MASTER, 50)
 	visible_message("<span class='notice'>[src] beeps for the last time, and collapses.</span>")
-	// TO-DO: some interesting sound
 	qdel(src)
 
 /obj/machinery/swarm_powered/bluespace_transponder/attackby(obj/item/I, mob/user)
@@ -341,7 +386,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		neighbor_count += value
 
 /obj/structure/bluespace_corridor/attackby(obj/item/I, mob/user)
-	if(ispulsing(I) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_FORMIDABLE, list(/datum/skill/research = SKILL_LEVEL_TRAINED), -0.2))
+	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_FORMIDABLE : SKILL_TASK_TRIVIAL
+	if(ispulsing(I) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/research = SKILL_LEVEL_TRAINED), -0.2))
 		// to-do: sound
 		visible_message("<span class='notice'>[src] beeps loudly, before dissappearing.</span>")
 		qdel(src)
@@ -370,6 +416,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 
 	max_integrity = 500
 	resistance_flags = CAN_BE_HIT
+
+	prioritized = TRUE
 
 	var/max_required_power = 8000000
 	var/max_required_materials = 1000
@@ -422,7 +470,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 
 		for(var/mob/M in player_list)
 			if(!isnewplayer(M))
-				M.playsound_local(null, 'sound/effects/dimensional_rend.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+				M.playsound_local(null, 'sound/hallucinations/demons_3.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
+
+		var/area/A = get_area(src)
+		global.replicators_faction.announce_swarm("The Swarm", "The Swarm", "Bluespace Catapult construction finished in [A.name]. Escape through the dimensional rift before it closes!")
 
 	if(announcement)
 		last_perc_announcement = perc_finished

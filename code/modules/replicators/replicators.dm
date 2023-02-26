@@ -339,6 +339,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	next_control_change = world.time + control_change_cooldown
 
+	target.a_intent = a_intent
 	mind.transfer_to(target)
 	playsound_stealthy(target, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER)
 	return TRUE

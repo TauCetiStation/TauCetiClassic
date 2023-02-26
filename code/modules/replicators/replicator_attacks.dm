@@ -152,7 +152,7 @@
 	qdel(src)
 
 /obj/item/mine/replicator/proc/rearm()
-	// to-do: sound
+	playsound(src, 'sound/effects/stealthoff.ogg', VOL_EFFECTS_MASTER, 75)
 	update_icon()
 
 /obj/item/mine/replicator/update_icon()

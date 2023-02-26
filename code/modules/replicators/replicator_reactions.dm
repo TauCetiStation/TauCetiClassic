@@ -215,6 +215,25 @@
 	return ..() * REPLICATOR_PUNISH_GRIEFING_TICK_MODIFIER
 
 
+/obj/machinery/atmospherics/components/can_be_auto_disintegrated()
+	return welded
+
+/obj/machinery/atmospherics/components/get_unit_disintegration_time()
+	return ..() / REPLICATOR_PUNISH_GRIEFING_TICK_MODIFIER
+
+/obj/machinery/atmospherics/components/replicator_act(mob/living/simple_animal/replicator/R)
+	if(welded)
+		welded = !welded
+		update_icon()
+		R.visible_message("<span class='notice'>\The [R] [welded ? "welds \the [src] shut" : "unwelds \the [src]"].</span>", \
+			"<span class='notice'>You [welded ? "weld \the [src] shut" : "unweld \the [src]"].</span>", \
+			"You hear welding.")
+		return TRUE
+	deconstruct(TRUE)
+	return TRUE
+
+
+
 /obj/machinery/portable_atmospherics/can_be_auto_disintegrated()
 	return FALSE
 

@@ -22,6 +22,7 @@ var/global/datum/faction/replicators/replicators_faction
 
 	// Energy in posession of the swarm. Used as backup power if can't steal from station.
 	var/energy = 0
+	var/prioritized_load = 0
 
 	var/compute = 0
 
@@ -46,7 +47,7 @@ var/global/datum/faction/replicators/replicators_faction
 	var/node_spawn_cooldown = 2 MINUTES
 	var/next_node_spawn = 0
 
-	// Win condition is launching 10 replicators.
+	// Win condition is launching REPLICATORS_CATAPULTED_TO_WIN replicators.
 	var/replicators_launched = 0
 
 	var/prelude_announcement
