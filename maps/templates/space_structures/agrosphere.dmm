@@ -49,7 +49,7 @@
 /area/space_structures/agrospheregarden)
 "ag" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/spacecash/c1000,
+/obj/item/weapon/spacecash/c500,
 /turf/simulated/floor,
 /area/space_structures/agrospheregarden)
 "ah" = (
@@ -132,7 +132,7 @@
 /area/space_structures/agrospheregarden)
 "ap" = (
 /obj/structure/flora/ausbushes/stalkybush,
-/obj/item/weapon/spacecash/c1000{
+/obj/item/weapon/spacecash/c500{
 	pixel_x = 11;
 	pixel_y = 5
 	},
