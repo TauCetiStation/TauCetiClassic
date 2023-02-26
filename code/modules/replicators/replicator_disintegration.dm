@@ -141,7 +141,7 @@
 	disintegrating = FALSE
 	A.is_disintegrating = FALSE
 
-	var/healing_material_loss = min(material_amount, maxHealth - health)
+	var/healing_material_loss = min(material_amount * REPLICATOR_DISINTEGRATION_REPAIR_RATE, maxHealth - health)
 	if(healing_material_loss > 0)
 		//integrate_animation()
 		heal_bodypart_damage(healing_material_loss, 0)

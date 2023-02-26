@@ -30,3 +30,6 @@
 
 // How many materials do Transponders transfer per tick.
 #define REPLICATOR_TRANSPONDER_CONSUMPTION_RATE 2.0
+
+// How much health per material unit.
+#define REPLICATOR_DISINTEGRATION_REPAIR_RATE 2.0

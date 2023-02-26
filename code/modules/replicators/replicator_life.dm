@@ -26,6 +26,8 @@
 
 	var/mob/living/simple_animal/replicator/leader
 
+	var/next_consume_alert = 0
+
 /mob/living/simple_animal/replicator/Life()
 	. = ..()
 	if(!.)
@@ -54,7 +56,10 @@
 			global.replicators_faction.adjust_materials(REPLICATOR_COST_REPLICATE)
 			return
 
-		if(prob(10))
+		if(next_consume_alert < world.time)
+			next_consume_alert = world.time + 15 SECONDS
+			// to-do: sound
+			// heart beat sound
 			flash_color(src, flash_color="#ff0000", flash_time=5)
 			to_chat(src, "<span class='danger'><font size=2>This world can not support your body for long. You must <b>consume</b> to survive.</font></span>")
 
