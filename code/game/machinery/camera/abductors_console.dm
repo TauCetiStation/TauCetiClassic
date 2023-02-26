@@ -122,8 +122,6 @@
 	var/obj/machinery/abductor/console/console = C.console
 	console.FlipVest()
 
-	var/obj/machinery/abductor/console/console = C.console
-	console.ActivateVest()
 
 /datum/action/innate/vest_disguise_swap
 	name = "Switch Vest Disguise"
