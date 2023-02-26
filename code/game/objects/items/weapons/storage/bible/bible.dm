@@ -31,7 +31,7 @@
 	for(var/i in 1 to 2)
 		new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/spacecash(src)
+		new /obj/item/weapon/spacecash/c50(src)
 
 /obj/item/weapon/storage/bible/proc/can_convert(atom/target, mob/user)
 	if(!user.mind || !user.mind.holy_role)
