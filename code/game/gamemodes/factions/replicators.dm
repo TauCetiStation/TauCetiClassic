@@ -127,10 +127,10 @@ var/global/datum/faction/replicators/replicators_faction
 		bandwidth++
 
 /datum/faction/replicators/proc/process_announcements()
-	if(prelude_announcement && world.time >= prelude_announcement && length(global.alive_replicators) > 0)
+	if(prelude_announcement && world.time >= prelude_announcement && length(global.active_transponders) > 0)
 		prelude_announcement = 0
 		stage(FS_DORMANT)
-	if(outbreak_announcement && world.time >= outbreak_announcement && length(global.alive_replicators) > 0)
+	if(outbreak_announcement && world.time >= outbreak_announcement && length(global.active_transponders) > 0)
 		outbreak_announcement = 0
 		stage(FS_ACTIVE)
 	if(length(global.alive_replicators) <= 0)

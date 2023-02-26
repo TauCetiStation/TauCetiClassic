@@ -108,7 +108,7 @@
 	var/image/I = image('icons/mob/replicator.dmi', "dismantle")
 	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	I.plane = AM.plane
-	I.layer = AM.layer + 0.09
+	I.layer = AM.layer + 1.0
 	I.loc = AM
 
 	flick_overlay_view(I, AM, 12)
@@ -118,8 +118,8 @@
 /obj/item/mine/replicator/trigger_act(atom/movable/AM)
 	if(next_activation > world.time)
 		return
-	next_activation = world.time + 30
-	addtimer(CALLBACK(src, .proc/rearm), 30)
+	next_activation = world.time + 40
+	addtimer(CALLBACK(src, .proc/rearm), 40)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	s.set_up(3, 1, src)
@@ -142,7 +142,7 @@
 		do_audiovisual_effects(L)
 
 		var/stepped_by = pick(BP_R_LEG, BP_L_LEG)
-		L.electrocute_act(20, src, siemens_coeff = 1.0, def_zone = stepped_by) // electrocute act does a message.
+		L.electrocute_act(15, src, siemens_coeff = 1.0, def_zone = stepped_by) // electrocute act does a message.
 		L.Stun(1)
 
 		var/area/A = get_area(src)

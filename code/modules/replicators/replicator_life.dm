@@ -326,9 +326,6 @@
 	for(var/C in T.contents)
 		var/atom/movable/A = C
 
-		if(istype(A, /mob/living/simple_animal/replicator)) // && A.broken -> return A to repair
-			continue
-
 		if(!is_auto_disintegratable(A))
 			continue
 

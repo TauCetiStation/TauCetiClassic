@@ -137,6 +137,7 @@
 
 
 var/global/list/forcefield_nodes = list()
+var/global/list/area2free_forcefield_nodes = list()
 
 ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 
@@ -153,9 +154,35 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	. = ..()
 	global.replicators_faction.nodes_to_spawn -= 1
 
+	var/area/A = get_area(src)
+	if(A)
+		if(!global.area2free_forcefield_nodes[A.name])
+			global.area2free_forcefield_nodes[A.name] = 0
+		global.area2free_forcefield_nodes[A.name] += 1
+
 /obj/structure/forcefield_node/Destroy()
 	global.replicators_faction.nodes_to_spawn += 1
+
+	var/area/A = get_area(src)
+	if(A)
+		area2free_forcefield_nodes[A.name] -= 1
+		if(area2free_forcefield_nodes[A.name] <= 0)
+			area2free_forcefield_nodes -= A.name
 	return ..()
+
+/obj/structure/forcefield_node/Moved(atom/OldLoc, moveddir)
+	. = ..()
+	var/area/old_area = get_area(OldLoc)
+	if(old_area)
+		area2free_forcefield_nodes[old_area.name] -= 1
+		if(area2free_forcefield_nodes[old_area.name] <= 0)
+			area2free_forcefield_nodes -= old_area.name
+
+	var/area/new_area = get_area(src)
+	if(new_area)
+		if(!global.area2free_forcefield_nodes[new_area.name])
+			global.area2free_forcefield_nodes[new_area.name] = 0
+		global.area2free_forcefield_nodes[new_area.name] += 1
 
 /obj/structure/forcefield_node/Crossed(atom/movable/AM)
 	if(captured())
@@ -171,6 +198,11 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	global.replicators_faction.adjust_compute(1, adjusted_by=R.last_controller_ckey)
 	icon_state = "floor_node_captured"
 	playsound(AM, 'sound/magic/heal.ogg', VOL_EFFECTS_MASTER)
+
+	var/area/A = get_area(src)
+	global.area2free_forcefield_nodes[A.name] -= 1
+	if(global.area2free_forcefield_nodes[A.name] <= 0)
+		global.area2free_forcefield_nodes -= A.name
 
 /obj/structure/forcefield_node/proc/captured()
 	return icon_state == "floor_node_captured"

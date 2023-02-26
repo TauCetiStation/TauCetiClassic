@@ -71,6 +71,7 @@
 	dismantle_wall()
 	return TRUE
 
+
 /* MOBS */
 /mob/living/simple_animal/replicator/can_be_auto_disintegrated()
 	return stat == DEAD
