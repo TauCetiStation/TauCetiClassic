@@ -1127,6 +1127,14 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 //------------MEDICAL / SCIENCE-----------------
 //----------------------------------------------
 
+/datum/supply_pack/bonebreaker
+	name = "BB EX-01 crate"
+	contains = list(/obj/item/weapon/reagent_containers/glass/bottle/bonebreaker)
+	cost = 5000
+	crate_name = "BB EX-01 crate"
+	group = "Medical / Science"
+	hidden = TRUE
+
 /datum/supply_pack/medical
 	name = "Medical crate"
 	contains = list(/obj/item/weapon/storage/firstaid/regular,

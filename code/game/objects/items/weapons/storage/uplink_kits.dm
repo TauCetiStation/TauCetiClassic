@@ -71,6 +71,8 @@
 			new /obj/item/weapon/reagent_containers/glass/bottle/chefspecial(src)
 			new /obj/item/weapon/reagent_containers/glass/bottle/cyanide(src)
 			new /obj/item/weapon/reagent_containers/glass/bottle/chloralhydrate(src)
+			new /obj/item/weapon/reagent_containers/glass/bottle/sanguisacid(src)
+			new /obj/item/weapon/reagent_containers/glass/bottle/bonebreaker(src)
 			new /obj/item/weapon/reagent_containers/syringe(src)
 			new /obj/item/weapon/gun/syringe/syndicate(src)
 
