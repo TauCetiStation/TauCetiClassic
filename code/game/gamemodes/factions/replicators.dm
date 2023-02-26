@@ -134,7 +134,7 @@ var/global/datum/faction/replicators/replicators_faction
 	if(outbreak_announcement && world.time >= outbreak_announcement && length(global.active_transponders) > 0)
 		outbreak_announcement = 0
 		stage(FS_ACTIVE)
-	if(length(global.alive_replicators) <= 0)
+	if(replicators_launched < REPLICATORS_CATAPULTED_TO_WIN && length(global.alive_replicators) <= 0 && stage != FS_DEFEATED)
 		stage(FS_DEFEATED)
 
 /datum/faction/replicators/stage(new_stage)
@@ -264,4 +264,4 @@ Message ends."}
 	return SSticker.station_was_nuked
 
 /datum/faction/replicators/proc/adjust_energy(amount)
-	energy = min(length(global.replicator_generators) * 15000, energy + amount)
+	energy = min(length(global.replicator_generators) * REPLICATOR_GENERATOR_POWER_GENERATION, energy + amount)

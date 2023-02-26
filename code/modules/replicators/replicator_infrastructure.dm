@@ -497,17 +497,20 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 
 /obj/machinery/swarm_powered/bluespace_catapult/Crossed(atom/movable/AM)
 	if(isreplicator(AM))
-		var/mob/living/simple_animal/replicator/R = AM
-		global.replicators_faction.replicators_launched += 1
+		if(length(global.alive_replicators) > 1)
+			to_chat(AM, "<span class='notice'>One must stay behind.</span>")
+		else
+			var/mob/living/simple_animal/replicator/R = AM
+			global.replicators_faction.replicators_launched += 1
 
-		R.death()
-		qdel(R)
+			R.death()
+			qdel(R)
 
-		if(global.replicators_faction.replicators_launched >= REPLICATORS_CATAPULTED_TO_WIN && !victory)
-			victory = TRUE
-			INVOKE_ASYNC(global.replicators_faction, /datum/faction/replicators.proc/victory_animation, get_turf(src))
+			if(global.replicators_faction.replicators_launched >= REPLICATORS_CATAPULTED_TO_WIN && !victory)
+				victory = TRUE
+				INVOKE_ASYNC(global.replicators_faction, /datum/faction/replicators.proc/victory_animation, get_turf(src))
 
-		return
+			return
 
 	return ..()
 

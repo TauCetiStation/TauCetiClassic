@@ -270,9 +270,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	if(statpanel("Status"))
 		stat("Materials:", "[round(global.replicators_faction.materials)] ([round(global.replicators_faction.last_second_materials_change)])")
 		stat("Drone Amount:", "[length(global.alive_replicators)]/[global.replicators_faction.bandwidth]")
-		stat("Bandwidth Upgrade:", "[round(global.replicators_faction.materials_consumed)]/[global.replicators_faction.consumed_materials_until_upgrade]")
-		stat("Presence Count:", length(global.replicators_faction.members))
-		//stat("Swarm's Goodwill:", global.replicators_faction.swarms_goodwill[ckey])
+		if(length(global.active_transponders) > 0)
+			stat("Bandwidth Upgrade:", "[round(global.replicators_faction.materials_consumed)]/[global.replicators_faction.consumed_materials_until_upgrade]")
+		if(length(global.replicator_generators) > 0)
+			stat("Energy Reserves:", "[round(global.replicators_faction.energy)]/[round(length(global.replicator_generators) * REPLICATOR_GENERATOR_POWER_GENERATION)]")
 
 		if(length(global.area2free_forcefield_nodes) > 0)
 			var/node_string = ""

@@ -20,4 +20,5 @@
 
 /datum/role/replicator/printplayerwithicon(datum/mind/M)
 	. = ..()
-	. += " <i>(Materials Contribution: [global.replicators_faction.swarms_goodwill[M.current.ckey]])</i>"
+	if(M.current && M.current.ckey)
+		. += " <i>(Materials Contribution: [global.replicators_faction.swarms_goodwill[M.current.ckey]])</i>"
