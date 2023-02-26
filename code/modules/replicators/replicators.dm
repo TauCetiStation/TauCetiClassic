@@ -78,6 +78,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	can_point = TRUE
 
+	var/last_brute_hit = 0
+
 	// How many drones are under direct control.
 	var/controlling_drones = 0
 
@@ -468,5 +470,19 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	. = ..()
 	if(invisibility > 0)
 		. -= 1
-	if(last_melee_hit + 1 SECOND < world.time)
+	if(last_brute_hit + 1 SECOND < world.time)
 		. += 1
+
+/mob/living/simple_animal/replicator/adjustBruteLoss(damage)
+	..()
+	if(damage > 0)
+		last_brute_hit = world.time
+
+/mob/living/simple_animal/replicator/get_projectile_impact_force(obj/item/projectile/P, def_zone)
+	. = ..()
+	if(P.damage_type == BRUTE)
+		. += P.damage * 0.1
+
+/mob/living/simple_animal/replicator/emp_act(severity)
+	. = ..()
+	Stun(severity * 0.5)

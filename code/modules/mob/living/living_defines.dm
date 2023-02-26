@@ -70,5 +70,3 @@
 	var/beauty_dead = -100.0
 
 	var/list/spawner_args = null
-
-	var/last_melee_hit = 0

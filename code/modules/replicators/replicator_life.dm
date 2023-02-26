@@ -46,9 +46,9 @@
 	// - hiding a replicator somewhere in vents
 	// - yeeting yourself into space
 	if(last_disintegration + 1 MINUTE < world.time)
-		take_bodypart_damage(0.5, 0)
+		take_bodypart_damage(0, 0.5)
 		if(isspaceturf(loc))
-			take_bodypart_damage(1.5, 0)
+			take_bodypart_damage(0, 1.5)
 
 		if(stat == DEAD)
 			global.replicators_faction.adjust_materials(REPLICATOR_COST_REPLICATE)

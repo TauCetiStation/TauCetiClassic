@@ -24,7 +24,7 @@
 /mob/living/proc/getarmor(def_zone, type)
 	return 0
 
-/mob/proc/is_impact_force_affected(impact_force)
+/mob/living/proc/is_impact_force_affected(impact_force)
 	if(status_flags & GODMODE)
 		return FALSE
 	if(buckled || anchored)
@@ -38,11 +38,15 @@
 		return FALSE
 	return ..()
 
+/mob/living/proc/get_projectile_impact_force(obj/item/projectile/P, def_zone)
+	return P.impact_force
+
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-	if(P.impact_force && is_impact_force_affected(P.impact_force))
+	var/impact_force = get_projectile_impact_force(P, def_zone)
+	if(impact_force && is_impact_force_affected(P.impact_force))
 		if(isturf(loc))
 			loc.add_blood(src)
-		throw_at(get_edge_target_turf(src, P.dir), P.impact_force, 1, P.firer, spin = TRUE)
+		throw_at(get_edge_target_turf(src, P.dir), impact_force, 1, P.firer, spin = TRUE)
 
 	if(check_shields(P, P.damage, "the [P.name]", P.dir))
 		P.on_hit(src, def_zone, 100)
