@@ -31,6 +31,11 @@
 	if(!.)
 		return
 
+	if(health < maxHealth * 0.2 && next_attacked_alert < world.time)
+		emote("beep")
+		global.replicators_faction.drone_message(src, "I am nearly gone.", transfer=TRUE)
+		next_attacked_alert = world.time + attacked_alert_cooldown
+
 	if(health < last_update_health && next_attacked_alert < world.time && !sacrifice_powering)
 		emote("beep")
 		global.replicators_faction.drone_message(src, "I am taking damage.", transfer=TRUE)
@@ -40,9 +45,18 @@
 	// This fixes a lot of stupid tactics, such as:
 	// - hiding a replicator somewhere in vents
 	// - yeeting yourself into space
-	take_bodypart_damage(0.5, 0)
-	if(isspaceturf(loc))
-		take_bodypart_damage(1, 0)
+	if(last_disintegration + 1 MINUTE < world.time)
+		take_bodypart_damage(0.5, 0)
+		if(isspaceturf(loc))
+			take_bodypart_damage(1.5, 0)
+
+		if(stat == DEAD)
+			global.replicators_faction.adjust_materials(REPLICATOR_COST_REPLICATE)
+			return
+
+		if(prob(10))
+			flash_color(src, flash_color="#ff0000", flash_time=5)
+			to_chat(src, "<span class='danger'><font size=2>This world can not support your body for long. You must <b>consume</b> to survive.</font></span>")
 
 	last_update_health = health
 

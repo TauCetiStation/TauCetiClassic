@@ -1,3 +1,6 @@
+/mob/living/simple_animal/replicator
+	var/last_disintegration = 0
+
 /mob/living/simple_animal/replicator/proc/is_disintegratable(atom/A, alert=FALSE)
 	if(A.name == "")
 		return FALSE
@@ -98,6 +101,8 @@
 		A.is_disintegrating = FALSE
 		return FALSE
 
+	last_disintegration = world.time
+
 	playsound_stealthy(src, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER)
 
 	var/obj/effect/overlay/replicator/target_appearance = new(get_turf(A))
@@ -138,7 +143,7 @@
 
 	var/healing_material_loss = min(material_amount, maxHealth - health)
 	if(healing_material_loss > 0)
-		integrate_animation()
+		//integrate_animation()
 		heal_bodypart_damage(healing_material_loss, 0)
 
 	// Healing is quite expensive otherwise...
@@ -146,6 +151,11 @@
 	if(material_amount > 0)
 		global.replicators_faction.adjust_materials(material_amount, adjusted_by=last_controller_ckey)
 	return TRUE
+
+/*
+	Doesn't really look good :(
+	Was supposed to be an animation for repairs.
+	But... Now they repair ALL the time since they're slowly dying.
 
 /mob/living/simple_animal/replicator/proc/integrate_animation()
 	if(playing_integration_animation)
@@ -161,3 +171,4 @@
 	flick_overlay_view(I, src, 5)
 
 	VARSET_IN(src, playing_integration_animation, FALSE, 5)
+*/
