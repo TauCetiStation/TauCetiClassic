@@ -2125,7 +2125,7 @@
 	})
 "fz" = (
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/ammo_box/a357,
+/obj/item/ammo_box/speedloader/a357,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"

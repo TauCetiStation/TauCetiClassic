@@ -2835,7 +2835,7 @@
 /area/awaymission/spacebattle/cruiser)
 "it" = (
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/ammo_box/a357,
+/obj/item/ammo_box/speedloader/a357,
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "iu" = (

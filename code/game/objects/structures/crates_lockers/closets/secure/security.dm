@@ -457,9 +457,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/weapon/melee/baton(src)
 	new /obj/item/weapon/gun/projectile/automatic/glock/spec(src)
 	for (var/i in 1 to 4)
-		new /obj/item/ammo_box/magazine/m9mm_2/rubber(src)
+		new /obj/item/ammo_box/magazine/glock/rubber(src)
 	for (var/i in 1 to 2)
-		new /obj/item/ammo_box/magazine/m9mm_2(src)
+		new /obj/item/ammo_box/magazine/glock(src)
 	new /obj/item/weapon/shield/riot/tele(src)
 	new /obj/item/weapon/storage/belt/security(src)
 
