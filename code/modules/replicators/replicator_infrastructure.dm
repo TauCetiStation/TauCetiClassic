@@ -351,7 +351,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 
 
 var/global/list/obj/machinery/swarm_powered/bluespace_catapult/bluespace_catapults = list()
-// Requires 10 drones in teh swarm.
+
 ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_catapults)
 
 /obj/machinery/swarm_powered/bluespace_catapult
