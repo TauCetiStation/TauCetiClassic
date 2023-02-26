@@ -22893,52 +22893,52 @@
 /area/centcom/specops)
 "bfp" = (
 /obj/structure/rack,
-/obj/item/ammo_box/magazine/glock/rubber{
+/obj/item/ammo_box/magazine/glock/extended/rubber{
 	pixel_x = 9
 	},
-/obj/item/ammo_box/magazine/glock/rubber{
+/obj/item/ammo_box/magazine/glock/extended/rubber{
 	pixel_x = 9
 	},
-/obj/item/ammo_box/magazine/glock/rubber{
+/obj/item/ammo_box/magazine/glock/extended/rubber{
 	pixel_x = 9
 	},
-/obj/item/ammo_box/magazine/glock/rubber{
+/obj/item/ammo_box/magazine/glock/extended/rubber{
 	pixel_x = 6
 	},
-/obj/item/ammo_box/magazine/glock/rubber{
+/obj/item/ammo_box/magazine/glock/extended/rubber{
 	pixel_x = 6
 	},
-/obj/item/ammo_box/magazine/glock/rubber{
+/obj/item/ammo_box/magazine/glock/extended/rubber{
 	pixel_x = 6
 	},
-/obj/item/ammo_box/magazine/glock/rubber{
+/obj/item/ammo_box/magazine/glock/extended/rubber{
 	pixel_x = 3
 	},
-/obj/item/ammo_box/magazine/glock/rubber{
+/obj/item/ammo_box/magazine/glock/extended/rubber{
 	pixel_x = 3
 	},
-/obj/item/ammo_box/magazine/glock/rubber{
+/obj/item/ammo_box/magazine/glock/extended/rubber{
 	pixel_x = 3
 	},
-/obj/item/ammo_box/magazine/glock/rubber,
-/obj/item/ammo_box/magazine/glock/rubber,
-/obj/item/ammo_box/magazine/glock/rubber,
-/obj/item/ammo_box/magazine/glock/rubber{
+/obj/item/ammo_box/magazine/glock/extended/rubber,
+/obj/item/ammo_box/magazine/glock/extended/rubber,
+/obj/item/ammo_box/magazine/glock/extended/rubber,
+/obj/item/ammo_box/magazine/glock/extended/rubber{
 	pixel_x = -3
 	},
-/obj/item/ammo_box/magazine/glock/rubber{
+/obj/item/ammo_box/magazine/glock/extended/rubber{
 	pixel_x = -3
 	},
-/obj/item/ammo_box/magazine/glock/rubber{
+/obj/item/ammo_box/magazine/glock/extended/rubber{
 	pixel_x = -3
 	},
-/obj/item/ammo_box/magazine/glock/rubber{
+/obj/item/ammo_box/magazine/glock/extended/rubber{
 	pixel_x = -6
 	},
-/obj/item/ammo_box/magazine/glock/rubber{
+/obj/item/ammo_box/magazine/glock/extended/rubber{
 	pixel_x = -6
 	},
-/obj/item/ammo_box/magazine/glock/rubber{
+/obj/item/ammo_box/magazine/glock/extended/rubber{
 	pixel_x = -6
 	},
 /turf/unsimulated/floor{
@@ -22948,52 +22948,52 @@
 /area/centcom/specops)
 "bfq" = (
 /obj/structure/rack,
-/obj/item/ammo_box/magazine/glock{
+/obj/item/ammo_box/magazine/glock/extended{
 	pixel_x = 9
 	},
-/obj/item/ammo_box/magazine/glock{
+/obj/item/ammo_box/magazine/glock/extended{
 	pixel_x = 9
 	},
-/obj/item/ammo_box/magazine/glock{
+/obj/item/ammo_box/magazine/glock/extended{
 	pixel_x = 9
 	},
-/obj/item/ammo_box/magazine/glock{
+/obj/item/ammo_box/magazine/glock/extended{
 	pixel_x = 6
 	},
-/obj/item/ammo_box/magazine/glock{
+/obj/item/ammo_box/magazine/glock/extended{
 	pixel_x = 6
 	},
-/obj/item/ammo_box/magazine/glock{
+/obj/item/ammo_box/magazine/glock/extended{
 	pixel_x = 6
 	},
-/obj/item/ammo_box/magazine/glock{
+/obj/item/ammo_box/magazine/glock/extended{
 	pixel_x = 3
 	},
-/obj/item/ammo_box/magazine/glock{
+/obj/item/ammo_box/magazine/glock/extended{
 	pixel_x = 3
 	},
-/obj/item/ammo_box/magazine/glock{
+/obj/item/ammo_box/magazine/glock/extended{
 	pixel_x = 3
 	},
-/obj/item/ammo_box/magazine/glock,
-/obj/item/ammo_box/magazine/glock,
-/obj/item/ammo_box/magazine/glock,
-/obj/item/ammo_box/magazine/glock{
+/obj/item/ammo_box/magazine/glock/extended,
+/obj/item/ammo_box/magazine/glock/extended,
+/obj/item/ammo_box/magazine/glock/extended,
+/obj/item/ammo_box/magazine/glock/extended{
 	pixel_x = -3
 	},
-/obj/item/ammo_box/magazine/glock{
+/obj/item/ammo_box/magazine/glock/extended{
 	pixel_x = -3
 	},
-/obj/item/ammo_box/magazine/glock{
+/obj/item/ammo_box/magazine/glock/extended{
 	pixel_x = -3
 	},
-/obj/item/ammo_box/magazine/glock{
+/obj/item/ammo_box/magazine/glock/extended{
 	pixel_x = -6
 	},
-/obj/item/ammo_box/magazine/glock{
+/obj/item/ammo_box/magazine/glock/extended{
 	pixel_x = -6
 	},
-/obj/item/ammo_box/magazine/glock{
+/obj/item/ammo_box/magazine/glock/extended{
 	pixel_x = -6
 	},
 /turf/unsimulated/floor{
