@@ -10,7 +10,6 @@
 	var/bolt_slide_sound = 'sound/weapons/guns/TargetOn.ogg'
 	var/initial_mag = /obj/item/ammo_box/magazine/stechkin
 	var/list/suitable_mags = list()
-	var/istwohanded = FALSE
 	var/has_cover = FALSE //does this gun has cover
 	var/cover_open = FALSE //does gun cover is open
 	var/obj/item/ammo_box/magazine/magazine
@@ -90,8 +89,6 @@
 			to_chat(user, "<span class='notice'>You close [src]'s cover.</span>")
 			update_icon()
 			return
-		return ..()
-	if(istwohanded)
 		return ..()
 	else if(magazine)
 		magazine.loc = get_turf(src.loc)
