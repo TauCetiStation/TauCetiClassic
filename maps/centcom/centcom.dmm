@@ -29603,6 +29603,9 @@
 	syndie = 1
 	},
 /obj/item/weapon/flora/random,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -30473,6 +30476,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
+/obj/machinery/light/small,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
