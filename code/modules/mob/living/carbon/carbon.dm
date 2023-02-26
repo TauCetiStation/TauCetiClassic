@@ -576,6 +576,14 @@
 					if(BP_R_ARM, BP_L_ARM)
 						M.visible_message( "<span class='notice'>[M] shakes [src]'s hand.</span>", \
 										"<span class='notice'>You shake [src]'s hand.</span>", )
+						if(HAS_TRAIT(M, TRAIT_WET_HANDS) && ishuman(src))
+							var/mob/living/carbon/human/H = src
+							var/obj/item/organ/external/BP = H.get_bodypart(M.get_targetzone())
+							if(BP && BP.is_robotic())
+								var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
+								sparks.set_up(3, 0, get_turf(H))
+								sparks.start()
+								to_chat(src, "<span class='userdanger'>[M]'s hand is wet!</span>")
 					if(BP_HEAD)
 						M.visible_message("<span class='notice'>[M] pats [src] on the head.</span>", \
 										"<span class='notice'>You pat [src] on the head.</span>", )
@@ -630,16 +638,13 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.gloves)
-			if(H.gloves.clean_blood())
-				H.update_inv_gloves()
+			H.gloves.clean_blood()
 			H.gloves.germ_level = 0
 		else
 			if(H.bloody_hands)
 				H.bloody_hands = 0
-				H.update_inv_gloves()
+				H.update_inv_slot(SLOT_GLOVES)
 			H.germ_level = 0
-	update_icons()	//apply the now updated overlays to the mob
-
 
 //Throwing stuff
 /mob/living/carbon/throw_mode_off()
@@ -651,6 +656,14 @@
 	..()
 	if(throw_icon)
 		throw_icon.icon_state = "act_throw_on"
+	if(!COOLDOWN_FINISHED(src, toggle_throw_message))
+		return
+	var/obj/item/I = get_active_hand()
+	if(!I || (I.flags & (ABSTRACT|NODROP|DROPDEL)))
+		return
+	visible_message("<span class='notice'>[src] prepares to throw [I]!</span>",
+					"<span class='notice'>Вы замахиваетесь.</span>")
+	COOLDOWN_START(src, toggle_throw_message, 5 SECONDS)
 
 /mob/proc/throw_item(atom/target)
 	return
@@ -717,21 +730,18 @@
 	return
 
 /mob/living/carbon/u_equip(obj/item/W)
-	if(!W)	return 0
+	if(!W)
+		return
 
 	else if (W == handcuffed)
 		handcuffed = null
-		update_inv_handcuffed()
 		if(buckled && buckled.buckle_require_restraints)
 			buckled.unbuckle_mob()
 
 	else if (W == legcuffed)
 		legcuffed = null
-		update_inv_legcuffed()
-	else
-	 ..()
 
-	return
+	..()
 
 /mob/living/carbon/show_inv(mob/user)
 	user.set_machine(src)
@@ -861,32 +871,8 @@
 	new /mob/living/simple_animal/borer(loc, TRUE, B.generation + 1)
 
 /mob/living/carbon/proc/uncuff()
-	if(handcuffed)
-		var/obj/item/weapon/W = handcuffed
-		handcuffed = null
-		if(buckled && buckled.buckle_require_restraints)
-			buckled.unbuckle_mob()
-		update_inv_handcuffed()
-		if(client)
-			client.screen -= W
-		if(W)
-			W.loc = loc
-			W.dropped(src)
-			if(W)
-				W.layer = initial(W.layer)
-				W.plane = initial(W.plane)
-	if(legcuffed)
-		var/obj/item/weapon/W = legcuffed
-		legcuffed = null
-		update_inv_legcuffed()
-		if (client)
-			client.screen -= W
-		if (W)
-			W.loc = loc
-			W.dropped(src)
-			if(W)
-				W.layer = initial(W.layer)
-				W.plane = initial(W.plane)
+	remove_from_mob(handcuffed)
+	remove_from_mob(legcuffed)
 
 //-TG- port for smooth lying/standing animations
 /mob/living/carbon/get_pixel_y_offset(lying_current = FALSE)
@@ -1114,12 +1100,12 @@
 				attack_log += text("\[[time_stamp()]\] <font color='orange'>Had their internals [internal ? "open" : "close"] by [usr.name] ([usr.ckey])[gas_log_string]</font>")
 				usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[internal ? "opens" : "closes"] the valve on [src]'s [ITEM.name][gas_log_string]</font>")
 
-/mob/living/carbon/vomit(punched = FALSE, masked = FALSE)
+/mob/living/carbon/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, stun = TRUE, force = FALSE)
 	var/mask_ = masked
 	if(head && (head.flags & HEADCOVERSMOUTH))
 		mask_ = TRUE
 
-	. = ..(punched, mask_)
+	. = ..(punched, mask_, vomit_type, stun, force)
 	if(. && !mask_)
 		if(reagents.total_volume > 0)
 			var/toxins_puked = 0
@@ -1127,14 +1113,7 @@
 
 			while(TRUE)
 				var/datum/reagent/R_V = pick(reagents.reagent_list)
-				if(istype(R_V, /datum/reagent/water))
-					toxins_puked += 0.5
-				else if(R_V.id == "carbon")
-					toxins_puked += 2
-				else if(R_V.id == "anti_toxin")
-					toxins_puked += 3
-				else if(R_V.id == "thermopsis")
-					toxins_puked += 5
+				toxins_puked += R_V.toxin_absorption
 				reagents.trans_id_to(R, R_V.id, 1)
 				if(R.total_volume >= 10)
 					break
@@ -1363,8 +1342,6 @@
 					visible_message("<span class='danger'>[src] manages to break the handcuffs!</span>", self_message = "<span class='notice'>You successfully break your handcuffs.</span>")
 					say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 					qdel(handcuffed)
-					handcuffed = null
-					update_inv_handcuffed()
 		else
 			var/obj/item/weapon/handcuffs/HC = handcuffed
 			var/breakouttime = 1200 //A default in case you are somehow handcuffed with something that isn't an obj/item/weapon/handcuffs type
@@ -1402,8 +1379,6 @@
 					visible_message("<span class='danger'>[src] manages to break the legcuffs!</span>", self_message = "<span class='notice'>You successfully break your legcuffs.</span>")
 					say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 					qdel(legcuffed)
-					legcuffed = null
-					update_inv_legcuffed()
 		else
 			var/obj/item/weapon/legcuffs/HC = legcuffed
 			var/breakouttime = 1200 //A default in case you are somehow legcuffed with something that isn't an obj/item/weapon/legcuffs type

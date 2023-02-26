@@ -35,18 +35,19 @@
 			DeactivateStealth()
 			armor = combat_armor
 			icon_state = "vest_combat"
-			if(ishuman(loc))
-				var/mob/living/carbon/human/H = loc
-				H.update_inv_wear_suit()
-			return
+			body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+			pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+			cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+			heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 		if(VEST_COMBAT)// TO STEALTH
 			mode = VEST_STEALTH
 			armor = stealth_armor
 			icon_state = "vest_stealth"
-			if(ishuman(loc))
-				var/mob/living/carbon/human/H = loc
-				H.update_inv_wear_suit()
-			return
+			body_parts_covered = initial(body_parts_covered)
+			pierce_protection = initial(pierce_protection)
+			cold_protection = initial(cold_protection)
+			heat_protection = initial(heat_protection)
+	update_inv_mob()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
 	disguise = entry
@@ -63,9 +64,6 @@
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
 		M.copy_overlays(disguise, TRUE)
-		M.update_inv_r_hand()
-		M.update_inv_l_hand()
-	return
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
 	if(!stealth_active)
@@ -342,7 +340,7 @@
 	else
 		icon_state = "alienhelmet_a"
 		item_state = "alienhelmet_a"
-		user.update_inv_head()
+		update_inv_mob()
 		var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)
 		team = A.get_team_num()
 		helm_cam = new /obj/machinery/camera(src)
@@ -403,8 +401,7 @@
 
 	to_chat(user, "<span class='notice'>You switch the baton to [txt] mode.</span>")
 	update_icon()
-	user.update_inv_l_hand()
-	user.update_inv_r_hand()
+	update_inv_mob()
 
 /obj/item/weapon/abductor_baton/update_icon()
 	switch(mode)
@@ -482,8 +479,7 @@
 								"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
-				C.handcuffed = new /obj/item/weapon/handcuffs/alien(C)
-				C.update_inv_handcuffed()
+				C.equip_to_slot_or_del(new /obj/item/weapon/handcuffs/alien, SLOT_HANDCUFFED)
 				to_chat(user, "<span class='notice'>You handcuff [C].</span>")
 				L.log_combat(user, "handcuffed with \a [src]")
 		else

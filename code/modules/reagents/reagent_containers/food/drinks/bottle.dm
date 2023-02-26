@@ -99,8 +99,11 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/update_icon()
 	show_filler_on_icon(3, 24, 0)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/can_smash()
+	return is_glass
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user, def_zone)
-	if(user.a_intent != INTENT_HARM || !is_glass)
+	if(user.a_intent != INTENT_HARM || !can_smash())
 		return ..()
 
 	if(!target)
@@ -157,7 +160,7 @@
 	if(src.reagents)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("<span class='notice'><B>The contents of the [src] splashes all over [target]!</B></span>"), 1)
-		reagents.reaction(target, TOUCH)
+		reagents.standard_splash(target, user = user)
 
 	//Finally, smash the bottle. This kills (del) the bottle.
 	smash(target, user)

@@ -144,7 +144,11 @@
 			msg += "[t_He] [t_is] holding [bicon(r_hand)] \a [r_hand] in [t_his] right hand.\n"
 	else if(r_hand && (r_hand.type in changeling_weapons))
 		msg += "<span class='warning'>[t_He] [t_has] [bicon(r_hand)] \a [r_hand] instead of his right arm!</span>\n"
-
+	//Throw Swing
+	if(in_throw_mode)
+		var/obj/item/I = get_active_hand()
+		if(I)
+			msg += "<span class='warning'>[t_He] swings to throw, holding [I] in [t_his] hand!</span>\n"
 	//gloves
 	if(gloves && !skipgloves)
 		if(gloves.dirt_overlay)
@@ -573,6 +577,10 @@
 				if(V.stealth_active)
 					to_chat(H, "<span class='notice'>You can't focus your eyes on [src].</span>")
 					return
+		if(H.isimplantedblueshield() && mind && (mind.assigned_role in protected_by_blueshield_list))
+			for(var/obj/item/weapon/implant/blueshield/B in H)
+				B.last_examined = world.time
+			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
 
 	if(roundstart_quirks.len)
 		var/should_see_quirks = HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT)

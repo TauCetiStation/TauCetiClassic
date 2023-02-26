@@ -410,7 +410,7 @@
 	var/has_breathable_mask = istype(wear_mask, /obj/item/clothing/mask)
 	var/list/obscured = check_obscured_slots()
 	var/list/dat = list()
-	var/obj/item/clothing/under/suit = istype(w_uniform, /obj/item/clothing/under) ? w_uniform : null
+	var/obj/item/clothing/under/suit = isunder(w_uniform) ? w_uniform : null
 
 	dat += "<table>"
 	dat += "<tr><td><B>Left Hand:</B></td><td><A href='?src=\ref[src];item=[SLOT_L_HAND]'>[(l_hand && !(l_hand.flags & ABSTRACT)) ? l_hand : "<font color=grey>Empty</font>"]</a></td></tr>"
@@ -609,7 +609,7 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, def_zone, tesla_shock)
 	if(status_flags & GODMODE)
 		return 0	//godmode
-	if(NO_SHOCK in src.mutations)
+	if(IsShockproof())
 		return 0 //#Z2 no shock with that mutation.
 
 	if((HULK in mutations) && hulk_activator == ACTIVATOR_ELECTRIC_SHOCK) //for check to transformation Hulk.
@@ -719,7 +719,7 @@
 				usr.attack_log += "\[[time_stamp()]\] <font color='red'>Removed [name]'s ([ckey]) splints.</font>"
 
 	if (href_list["sensor"] && usr.CanUseTopicInventory(src))
-		if(istype(w_uniform, /obj/item/clothing/under))
+		if(isunder(w_uniform))
 			var/obj/item/clothing/under/S = w_uniform
 			visible_message("<span class='danger'>[usr] is trying to set [src]'s suit sensors!</span>")
 			if(do_mob(usr, src, HUMAN_STRIP_DELAY))
@@ -915,7 +915,7 @@
 		var/obj/item/clothing/head/welding/W = head
 		if(!W.up)
 			number += 2
-	if(!istype(head, /obj/item/clothing/head/helmet/space/sk) && istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault))
+	if(!istype(head, /obj/item/clothing/head/helmet/space/sk) && istype(head, /obj/item/clothing/head/helmet/space) || istype(head, /obj/item/clothing/head/helmet/syndiassault) || istype(head, /obj/item/clothing/head/helmet/swat))
 		number += 2
 	if(istype(glasses, /obj/item/clothing/glasses/thermal))
 		var/obj/item/clothing/glasses/thermal/G = glasses
@@ -973,7 +973,7 @@
 			xylophone=0
 	return
 
-/mob/living/carbon/human/vomit(punched = FALSE, masked = FALSE)
+/mob/living/carbon/human/vomit(punched = FALSE, masked = FALSE, vomit_type = DEFAULT_VOMIT, stun = TRUE, force = FALSE)
 	var/mask_ = masked
 	if(species.flags[NO_VOMIT])
 		return FALSE
@@ -981,7 +981,7 @@
 	if(wear_mask && (wear_mask.flags & MASKCOVERSMOUTH))
 		mask_ = TRUE
 
-	return ..(punched, mask_)
+	return ..(punched, mask_, vomit_type, stun, force)
 
 
 /mob/living/carbon/human/proc/force_vomit(mob/living/carbon/human/H)
@@ -1312,9 +1312,16 @@
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	hand_dirt_datum = new(dirt_overlay)
 
-	update_inv_gloves()	//handles bloody hands overlays and updating
+	update_inv_slot(SLOT_GLOVES) // handles bloody hands overlays and updating
 	verbs += /mob/living/carbon/human/proc/bloody_doodle
 	return 1 //we applied blood to the item
+
+/mob/living/carbon/human/add_dirt_cover(dirt_datum, update_hands_slot = TRUE)
+	. = ..()
+	if (!.)
+		return
+	if(update_hands_slot) // incase this proc was called by atom/proc/add_blood which will update gloves slot by itself to remove doublecall, -
+		update_inv_slot(SLOT_GLOVES) // - also it will runtime cause bloody hands isnt fully initialized yet and no idea why add_blood also adds dirt at the same time, not to mention both systems pretty much same thing in the end (legacy times when dirt was overlay?).
 
 // returns associative list (implant = bodypart)
 /mob/living/carbon/human/get_visible_implants(class = 0)
@@ -1807,6 +1814,7 @@
 
 	leap_icon.time_used = world.time + leap_icon.cooldown
 	add_status_flags(LEAPING)
+	pass_flags |= PASSTABLE
 	stop_pulling()
 
 
@@ -1819,12 +1827,16 @@
 				V.overload()
 
 	toggle_leap()
-
 	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .proc/leap_end, prev_intent))
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)
 	remove_status_flags(LEAPING)
 	a_intent_change(prev_intent)
+	pass_flags &= ~PASSTABLE
+	//Call Crossed() for activate things and breake glass table
+	var/turf/my_turf = get_turf(src)
+	for(var/atom/A in my_turf.contents)
+		A.Crossed(src)
 
 /mob/living/carbon/human/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!(status_flags & LEAPING))
@@ -1842,9 +1854,13 @@
 			step_towards(src, L)
 
 	else if(hit_atom.density)
-		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smash into [hit_atom]!</span>")
-		Stun(2)
-		Weaken(2)
+		if(!hit_atom.CanPass(src, get_turf(hit_atom)))
+			visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smash into [hit_atom]!</span>")
+			Stun(2)
+			Weaken(2)
+		else if(istype(hit_atom, /obj/machinery/disposal))
+			INVOKE_ASYNC(src, /atom/movable.proc/do_simple_move_animation, hit_atom)
+			forceMove(hit_atom)
 
 	update_canmove()
 
