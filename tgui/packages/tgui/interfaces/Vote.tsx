@@ -56,7 +56,7 @@ export const Vote = (_, context) => {
     730,
     90
     + (!currentPoll || isAdmin ? 45 + 26 * polls.length : 0)
-    + (currentPoll ? 100 + 22 * currentPoll.choices.length : 23)
+    + (currentPoll ? 130 + 22 * currentPoll.choices.length : 23)
   );
 
   return (
