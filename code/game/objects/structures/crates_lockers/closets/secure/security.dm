@@ -295,11 +295,11 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	if(prob(50))
 		new /obj/item/weapon/gun/projectile/automatic/colt1911(src)
 		for (var/i in 1 to 2)
-			new /obj/item/ammo_box/magazine/c45m/rubber(src)
+			new /obj/item/ammo_box/magazine/colt/rubber(src)
 	else
 		new /obj/item/weapon/gun/projectile/revolver/detective(src)
 		for (var/i in 1 to 2)
-			new /obj/item/ammo_box/c38(src)
+			new /obj/item/ammo_box/speedloader/c38(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/toy/crayon/chalk(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)

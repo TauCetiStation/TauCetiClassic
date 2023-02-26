@@ -8,7 +8,7 @@
 	fire_delay = 0
 	recoil = 1
 	var/bolt_slide_sound = 'sound/weapons/guns/TargetOn.ogg'
-	var/initial_mag = /obj/item/ammo_box/magazine/m9mm
+	var/initial_mag = /obj/item/ammo_box/magazine/stechkin
 	var/list/suitable_mags = list()
 	var/istwohanded = FALSE
 	var/has_cover = FALSE //does this gun has cover

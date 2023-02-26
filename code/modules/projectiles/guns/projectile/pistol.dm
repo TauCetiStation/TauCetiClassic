@@ -6,7 +6,8 @@
 	w_class = SIZE_SMALL
 	silenced = 1
 	origin_tech = "combat=2;materials=2;syndicate=8"
-	initial_mag = /obj/item/ammo_box/magazine/sm45
+	initial_mag = /obj/item/ammo_box/magazine/silenced_pistol
+	suitable_mags = list(/obj/item/ammo_box/magazine/silenced_pistol, /obj/item/ammo_box/magazine/silenced_pistol/nonlethal)
 	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
 	can_be_holstered = TRUE
 
@@ -16,8 +17,8 @@
 	icon_state = "9mm_glock"
 	item_state = "9mm_glock"
 	origin_tech = "combat=2;materials=2"
-	initial_mag = /obj/item/ammo_box/magazine/m9mm_2/rubber
-	suitable_mags = list(/obj/item/ammo_box/magazine/m9mm_2, /obj/item/ammo_box/magazine/m9mm_2/rubber)
+	initial_mag = /obj/item/ammo_box/magazine/glock/rubber
+	suitable_mags = list(/obj/item/ammo_box/magazine/glock, /obj/item/ammo_box/magazine/glock/rubber)
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	can_be_holstered = TRUE
 
@@ -32,8 +33,8 @@
 	icon_state = "deagle"
 	item_state = "deagle"
 	force = 14.0
-	initial_mag = /obj/item/ammo_box/magazine/m50
-	suitable_mags = list(/obj/item/ammo_box/magazine/m50, /obj/item/ammo_box/magazine/m50/weakened)
+	initial_mag = /obj/item/ammo_box/magazine/deagle
+	suitable_mags = list(/obj/item/ammo_box/magazine/deagle, /obj/item/ammo_box/magazine/deagle/weakened)
 	can_be_holstered = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
 
@@ -43,7 +44,7 @@
 	item_state = "deagleg"
 
 /obj/item/weapon/gun/projectile/automatic/deagle/weakened
-	initial_mag = /obj/item/ammo_box/magazine/m50/weakened
+	initial_mag = /obj/item/ammo_box/magazine/deagle/weakened
 
 /obj/item/weapon/gun/projectile/automatic/deagle/weakened/gold
 	desc = "A gold plated gun folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
@@ -59,8 +60,8 @@
 	silenced = FALSE
 	origin_tech = "combat=2;materials=2;syndicate=2"
 	can_be_holstered = TRUE
-	initial_mag = /obj/item/ammo_box/magazine/m9mm
-	suitable_mags = list(/obj/item/ammo_box/magazine/m9mm, /obj/item/ammo_box/magazine/m9mm/ex)
+	initial_mag = /obj/item/ammo_box/magazine/stechkin
+	suitable_mags = list(/obj/item/ammo_box/magazine/stechkin, /obj/item/ammo_box/magazine/stechkin/extended)
 	can_be_silenced = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/colt1911
@@ -69,15 +70,15 @@
 	icon_state = "colt"
 	item_state = "colt"
 	w_class = SIZE_SMALL
-	initial_mag = /obj/item/ammo_box/magazine/c45m/rubber
-	suitable_mags = list(/obj/item/ammo_box/magazine/c45m/rubber, /obj/item/ammo_box/magazine/c45m)
+	initial_mag = /obj/item/ammo_box/magazine/colt/rubber
+	suitable_mags = list(/obj/item/ammo_box/magazine/colt/rubber, /obj/item/ammo_box/magazine/colt)
 	can_be_holstered = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_colt1911.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/colt1911/dungeon
 	desc = "A single-action, semi-automatic, magazine-fed, recoil-operated pistol chambered for the .45 ACP cartridge."
 	name = "Colt M1911"
-	initial_mag = /obj/item/ammo_box/magazine/c45m
+	initial_mag = /obj/item/ammo_box/magazine/colt
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer
 	name = "Derringer"

@@ -68,8 +68,8 @@
 		/obj/item/device/flashlight/seclite = 4,
 	)
 	syndie = list(
-		/obj/item/ammo_box/a357 = 1,
-		/obj/item/ammo_box/magazine/m9mm = 1,
+		/obj/item/ammo_box/speedloader/a357 = 1,
+		/obj/item/ammo_box/magazine/stechkin = 1,
 	)
 
 /obj/machinery/vending/weirdomat
@@ -267,7 +267,7 @@
 		"Heavy hybrid suit" = /obj/item/weapon/storage/box/syndie_kit/heavy_rig,
 		"Assault Armor" = /obj/item/weapon/storage/box/syndie_kit/armor,
 	)
-	
+
 	var/static/list/selections_armor
 
 /obj/machinery/vending/syndi/attackby(obj/item/I, mob/user)

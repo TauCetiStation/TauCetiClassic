@@ -14703,36 +14703,36 @@
 /area/shuttle/supply/velocity)
 "aHl" = (
 /obj/structure/rack,
-/obj/item/ammo_box/magazine/msmg9mm{
+/obj/item/ammo_box/magazine/smg{
 	pixel_x = 5;
 	pixel_y = 3
 	},
-/obj/item/ammo_box/magazine/msmg9mm{
+/obj/item/ammo_box/magazine/smg{
 	pixel_x = 5;
 	pixel_y = 3
 	},
-/obj/item/ammo_box/magazine/msmg9mm{
+/obj/item/ammo_box/magazine/smg{
 	pixel_x = 5;
 	pixel_y = 3
 	},
-/obj/item/ammo_box/magazine/msmg9mm{
+/obj/item/ammo_box/magazine/smg{
 	pixel_y = 3
 	},
-/obj/item/ammo_box/magazine/msmg9mm{
+/obj/item/ammo_box/magazine/smg{
 	pixel_y = 3
 	},
-/obj/item/ammo_box/magazine/msmg9mm{
+/obj/item/ammo_box/magazine/smg{
 	pixel_y = 3
 	},
-/obj/item/ammo_box/magazine/msmg9mm{
+/obj/item/ammo_box/magazine/smg{
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/ammo_box/magazine/msmg9mm{
+/obj/item/ammo_box/magazine/smg{
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/ammo_box/magazine/msmg9mm{
+/obj/item/ammo_box/magazine/smg{
 	pixel_x = -5;
 	pixel_y = 3
 	},
@@ -17732,10 +17732,10 @@
 /area/custom/syndicate_mothership/armory)
 "aNQ" = (
 /obj/structure/rack,
-/obj/item/ammo_box/magazine/m12g{
+/obj/item/ammo_box/magazine/bulldog{
 	pixel_y = 4
 	},
-/obj/item/ammo_box/magazine/m12g,
+/obj/item/ammo_box/magazine/bulldog,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -17799,18 +17799,18 @@
 /area/custom/syndicate_mothership/elite_squad)
 "aNW" = (
 /obj/structure/rack,
-/obj/item/ammo_box/magazine/m12mm/hv{
+/obj/item/ammo_box/magazine/c20r/hv{
 	pixel_x = 4
 	},
-/obj/item/ammo_box/magazine/m12mm/hv{
+/obj/item/ammo_box/magazine/c20r/hv{
 	pixel_x = 4
 	},
-/obj/item/ammo_box/magazine/m12mm/hp,
-/obj/item/ammo_box/magazine/m12mm/hp,
-/obj/item/ammo_box/magazine/m12mm/imp{
+/obj/item/ammo_box/magazine/c20r/hp,
+/obj/item/ammo_box/magazine/c20r/hp,
+/obj/item/ammo_box/magazine/c20r/imp{
 	pixel_x = -4
 	},
-/obj/item/ammo_box/magazine/m12mm/imp{
+/obj/item/ammo_box/magazine/c20r/imp{
 	pixel_x = -4
 	},
 /turf/simulated/shuttle/floor/vox{
@@ -17937,28 +17937,28 @@
 /area/centcom/living)
 "aOi" = (
 /obj/structure/rack,
-/obj/item/ammo_box/magazine/m12mm{
+/obj/item/ammo_box/magazine/c20r{
 	pixel_x = 4
 	},
-/obj/item/ammo_box/magazine/m12mm{
+/obj/item/ammo_box/magazine/c20r{
 	pixel_x = 4
 	},
-/obj/item/ammo_box/magazine/m12mm{
+/obj/item/ammo_box/magazine/c20r{
 	pixel_x = 1
 	},
-/obj/item/ammo_box/magazine/m12mm{
+/obj/item/ammo_box/magazine/c20r{
 	pixel_x = 1
 	},
-/obj/item/ammo_box/magazine/m12mm{
+/obj/item/ammo_box/magazine/c20r{
 	pixel_x = -2
 	},
-/obj/item/ammo_box/magazine/m12mm{
+/obj/item/ammo_box/magazine/c20r{
 	pixel_x = -2
 	},
-/obj/item/ammo_box/magazine/m12mm{
+/obj/item/ammo_box/magazine/c20r{
 	pixel_x = -5
 	},
-/obj/item/ammo_box/magazine/m12mm{
+/obj/item/ammo_box/magazine/c20r{
 	pixel_x = -5
 	},
 /turf/simulated/shuttle/floor/vox{
@@ -18103,28 +18103,28 @@
 /area/custom/syndicate_mothership/armory)
 "aOx" = (
 /obj/structure/rack,
-/obj/item/ammo_box/magazine/sm45{
+/obj/item/ammo_box/magazine/silenced_pistol{
 	pixel_x = 9
 	},
-/obj/item/ammo_box/magazine/sm45{
+/obj/item/ammo_box/magazine/silenced_pistol{
 	pixel_x = 9
 	},
-/obj/item/ammo_box/magazine/sm45{
+/obj/item/ammo_box/magazine/silenced_pistol{
 	pixel_x = 3
 	},
-/obj/item/ammo_box/magazine/sm45{
+/obj/item/ammo_box/magazine/silenced_pistol{
 	pixel_x = 3
 	},
-/obj/item/ammo_box/magazine/sm45{
+/obj/item/ammo_box/magazine/silenced_pistol{
 	pixel_x = -3
 	},
-/obj/item/ammo_box/magazine/sm45{
+/obj/item/ammo_box/magazine/silenced_pistol{
 	pixel_x = -3
 	},
-/obj/item/ammo_box/magazine/sm45{
+/obj/item/ammo_box/magazine/silenced_pistol{
 	pixel_x = -9
 	},
-/obj/item/ammo_box/magazine/sm45{
+/obj/item/ammo_box/magazine/silenced_pistol{
 	pixel_x = -9
 	},
 /turf/simulated/shuttle/floor/vox{
@@ -18133,20 +18133,20 @@
 /area/custom/syndicate_mothership/armory)
 "aOy" = (
 /obj/structure/rack,
-/obj/item/ammo_box/a357{
+/obj/item/ammo_box/speedloader/a357{
 	pixel_y = 6
 	},
-/obj/item/ammo_box/a357{
+/obj/item/ammo_box/speedloader/a357{
 	pixel_y = 4
 	},
-/obj/item/ammo_box/a357{
+/obj/item/ammo_box/speedloader/a357{
 	pixel_y = 2
 	},
-/obj/item/ammo_box/a357,
-/obj/item/ammo_box/a357{
+/obj/item/ammo_box/speedloader/a357,
+/obj/item/ammo_box/speedloader/a357{
 	pixel_y = -2
 	},
-/obj/item/ammo_box/a357{
+/obj/item/ammo_box/speedloader/a357{
 	pixel_y = -4
 	},
 /turf/simulated/shuttle/floor/vox{
@@ -18745,24 +18745,24 @@
 /area/custom/syndicate_mothership/elite_squad)
 "aPK" = (
 /obj/structure/rack,
-/obj/item/ammo_box/magazine/a74mm{
+/obj/item/ammo_box/magazine/a74{
 	pixel_y = 6
 	},
-/obj/item/ammo_box/magazine/a74mm{
+/obj/item/ammo_box/magazine/a74{
 	pixel_y = 6
 	},
-/obj/item/ammo_box/magazine/a74mm{
+/obj/item/ammo_box/magazine/a74{
 	pixel_y = 3
 	},
-/obj/item/ammo_box/magazine/a74mm{
+/obj/item/ammo_box/magazine/a74{
 	pixel_y = 3
 	},
-/obj/item/ammo_box/magazine/a74mm,
-/obj/item/ammo_box/magazine/a74mm,
-/obj/item/ammo_box/magazine/a74mm{
+/obj/item/ammo_box/magazine/a74,
+/obj/item/ammo_box/magazine/a74,
+/obj/item/ammo_box/magazine/a74{
 	pixel_y = -3
 	},
-/obj/item/ammo_box/magazine/a74mm{
+/obj/item/ammo_box/magazine/a74{
 	pixel_y = -3
 	},
 /obj/effect/decal/cleanable/cobweb,
@@ -22893,52 +22893,52 @@
 /area/centcom/specops)
 "bfp" = (
 /obj/structure/rack,
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = 9
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = 9
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = 9
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = 6
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = 6
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = 6
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = 3
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = 3
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = 3
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = -3
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = -3
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = -3
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = -6
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = -6
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = -6
 	},
 /turf/unsimulated/floor{
@@ -22948,52 +22948,52 @@
 /area/centcom/specops)
 "bfq" = (
 /obj/structure/rack,
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = 9
 	},
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = 9
 	},
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = 9
 	},
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = 6
 	},
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = 6
 	},
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = 6
 	},
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = 3
 	},
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = 3
 	},
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = 3
 	},
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = -3
 	},
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = -3
 	},
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = -3
 	},
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = -6
 	},
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = -6
 	},
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = -6
 	},
 /turf/unsimulated/floor{

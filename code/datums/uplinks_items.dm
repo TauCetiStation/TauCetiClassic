@@ -377,105 +377,105 @@
 	name = "9mm Handgun Magazine"
 	desc = "An additional 16-round 9mm magazine; compatible with the Stechkin Pistol. These subsonic rounds \
 			are dirt cheap but are half as effective as .357 rounds."
-	item = /obj/item/ammo_box/magazine/m9mm/ex
+	item = /obj/item/ammo_box/magazine/stechkin/extended
 	cost = 1
 	uplink_types = list("nuclear", "traitor", "dealer")
 
 /datum/uplink_item/ammo/revolver
 	name = "Speedloader-.357"
 	desc = "A speedloader that contains seven additional rounds for the revolver, made using an automatic lathe."
-	item = /obj/item/ammo_box/a357
+	item = /obj/item/ammo_box/speedloader/a357
 	cost = 2
 	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/ammo/smg
 	name = "Ammo-.45 ACP"
 	desc = "A 30-round .45 ACP magazine for use in the C-20r submachine gun."
-	item = /obj/item/ammo_box/magazine/m12mm
+	item = /obj/item/ammo_box/magazine/c20r
 	cost = 1
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/uzi
 	name = "9mm Mac-10 Magazine"
 	desc = "A 32-round 9mm magazine for use in the Mac-10."
-	item = /obj/item/ammo_box/magazine/uzim9mm
+	item = /obj/item/ammo_box/magazine/mac10
 	cost = 3
 	uplink_types = list("dealer")
 
 /datum/uplink_item/ammo/tommygun
 	name = ".45 ACP Tommygun Magazine"
 	desc = "A 50-round .45 ACP magazine for use in the tommygun."
-	item = /obj/item/ammo_box/magazine/tommygunm45
+	item = /obj/item/ammo_box/magazine/tommygun
 	cost = 4
 	uplink_types = list("dealer")
 
 /datum/uplink_item/ammo/deagle
 	name = "Ammo-.50 AE Magazine"
 	desc = "A 7-round .50 AE magazine for use in the desert eagle."
-	item = /obj/item/ammo_box/magazine/m50/weakened
+	item = /obj/item/ammo_box/magazine/deagle/weakened
 	cost = 4
 	uplink_types = list("dealer")
 
 /datum/uplink_item/ammo/smg_hp
 	name = "Ammo-.45 ACP High Power"
 	desc = "A 20-round .45 ACP HP magazine for use in the C-20r submachine gun. These rounds have better overall damage."
-	item = /obj/item/ammo_box/magazine/m12mm/hp
+	item = /obj/item/ammo_box/magazine/c20r/hp
 	cost = 2
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/smg_hv
 	name = "Ammo-.45 ACP High Velocity"
 	desc = "A 20-round .45 ACP HV magazine for use in the C-20r submachine gun. These rounds used to hit target almost instantly."
-	item = /obj/item/ammo_box/magazine/m12mm/hv
+	item = /obj/item/ammo_box/magazine/c20r/hv
 	cost = 2
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/smg_imp
 	name = "Ammo-.45 ACP Impact"
 	desc = "A 20-round .45 ACP IMP magazine for use in the C-20r submachine gun. These rounds will push enemies back and shortly stun unarmored targets."
-	item = /obj/item/ammo_box/magazine/m12mm/imp
+	item = /obj/item/ammo_box/magazine/c20r/imp
 	cost = 2
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/a74standart
 	name = "Ammo-7.74mm"
 	desc = "A 30-round 7.74 magazine for use in the A74 assault rifle."
-	item = /obj/item/ammo_box/magazine/a74mm
+	item = /obj/item/ammo_box/magazine/a74
 	cost = 5
 	uplink_types = list("nuclear", "dealer")
 
 /datum/uplink_item/ammo/bullbuck
 	name = "Ammo-12g Buckshot"
 	desc = "An additional  8-round buckshot magazine for use in the Bulldog shotgun."
-	item = /obj/item/ammo_box/magazine/m12g
+	item = /obj/item/ammo_box/magazine/bulldog
 	cost = 3
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/bullstun
 	name = "Ammo-12g Stun Shot"
 	desc = "An alternative 8-round stun shot magazine for use in the Bulldog shotgun. Accurate, reliable, powerful."
-	item = /obj/item/ammo_box/magazine/m12g/stun
+	item = /obj/item/ammo_box/magazine/bulldog/stun
 	cost = 1
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/bullincendiary
 	name = "Ammo-12g Incendiary"
 	desc = "An alternative 8-round incendiary magazine for use in the Bulldog shotgun."
-	item = /obj/item/ammo_box/magazine/m12g/incendiary
+	item = /obj/item/ammo_box/magazine/bulldog/incendiary
 	cost = 4
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/machinegun
 	name = "Ammo-7.62x51mm"
 	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
-	item = /obj/item/ammo_box/magazine/m762
+	item = /obj/item/ammo_box/magazine/saw
 	cost = 10
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/drozd
 	name = "Ammo-12.7mm"
 	desc = "A 12-round magazine of 12.7 ammunition for use in the Drozd OTs-114 automatic rifle. Small and dangerous."
-	item = /obj/item/ammo_box/magazine/drozd127
+	item = /obj/item/ammo_box/magazine/drozd
 	cost = 2
 	uplink_types = list("nuclear")
 
@@ -1145,7 +1145,7 @@
 /datum/uplink_item/revolution/stechkin_ammo
 	name = "9mm Handgun Magazine"
 	desc = "An additional 7-round 9mm magazine; compatible with the Stechkin Pistol."
-	item = /obj/item/ammo_box/magazine/m9mm
+	item = /obj/item/ammo_box/magazine/stechkin
 	cost = 1
 
 /datum/uplink_item/revolution/double_barrel
@@ -1163,7 +1163,7 @@
 /datum/uplink_item/revolution/krinkov_ammo
 	name = "A74U Magazine"
 	desc = "Lower-capacity A74 mag for use in Krinkov."
-	item = /obj/item/ammo_box/magazine/a74mm/krinkov
+	item = /obj/item/ammo_box/magazine/a74/krinkov
 	cost = 2
 
 /datum/uplink_item/revolution/emp

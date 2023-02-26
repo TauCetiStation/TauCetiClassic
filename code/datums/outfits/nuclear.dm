@@ -2,7 +2,7 @@
 	startswith = list(
 	/obj/item/weapon/reagent_containers/pill/cyanide,
 	/obj/item/weapon/crowbar/red,
-	/obj/item/ammo_box/magazine/m9mm,
+	/obj/item/ammo_box/magazine/stechkin,
 	/obj/item/clothing/accessory/holster/armpit,
 	/obj/item/weapon/pinpointer/nukeop,
 	/obj/item/weapon/kitchenknife/combat,
@@ -47,7 +47,7 @@
 	startswith = list(
 	/obj/item/weapon/reagent_containers/pill/cyanide,
 	/obj/item/weapon/crowbar/red,
-	/obj/item/ammo_box/a357,
+	/obj/item/ammo_box/speedloader/a357,
 	/obj/item/clothing/accessory/holster/armpit,
 	/obj/item/weapon/pinpointer/nukeop,
 	/obj/item/device/radio/uplink,

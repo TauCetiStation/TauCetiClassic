@@ -5,7 +5,7 @@
 /obj/item/ammo_casing
 	name = "bullet casing"
 	desc = "A bullet casing."
-	icon = 'icons/obj/ammo.dmi'
+	icon = 'icons/obj/ammo/casings.dmi'
 	icon_state = "s-casing"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
@@ -32,7 +32,7 @@
 
 /obj/item/ammo_casing/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
+	icon_state = "[initial(icon_state)][BB ? "" : "-spent"]"
 	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
 
 /obj/item/ammo_casing/proc/newshot() //For energy weapons and shotgun shells.
@@ -79,7 +79,7 @@
 	name = "ammo box (null_reference_exception)"
 	desc = "A box of ammo."
 	icon_state = "357"
-	icon = 'icons/obj/ammo.dmi'
+	icon = 'icons/obj/ammo/boxes.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	item_state = "syringe_kit"
