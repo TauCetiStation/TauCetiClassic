@@ -122,6 +122,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	use_power = IDLE_POWER_USE
 	idle_power_usage = REPLICATOR_TRANSPONDER_POWER_USAGE
 
+	max_integrity = 600
+	resistance_flags = CAN_BE_HIT
+
 	var/destroy_unpowered_after = 0
 	var/destroy_unpowered_time = 2 MINUTES
 
@@ -415,7 +418,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	density = TRUE
 	anchored = TRUE
 
-	max_integrity = 500
+	max_integrity = 600
 	resistance_flags = CAN_BE_HIT
 
 	prioritized = TRUE

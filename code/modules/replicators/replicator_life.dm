@@ -59,6 +59,7 @@
 
 		if(stat == DEAD)
 			global.replicators_faction.adjust_materials(REPLICATOR_COST_REPLICATE)
+			gib()
 			return
 
 		if(taken_damage)

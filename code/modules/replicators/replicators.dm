@@ -253,7 +253,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 /mob/living/simple_animal/replicator/Login()
 	..()
 
-	forget_leader()
+	if(leader)
+		forget_leader()
 
 	set_state(REPLICATOR_STATE_HARVESTING)
 	help_steps = 7
