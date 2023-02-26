@@ -1092,6 +1092,7 @@
 /obj/machinery/reagentgrinder/proc/stop_operating()
 	inuse = FALSE
 	updateUsrDialog()
+	power_change()
 
 /obj/machinery/reagentgrinder/proc/juice()
 	power_change()

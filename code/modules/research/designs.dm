@@ -1203,6 +1203,8 @@ other types of metals and chemistry for reagents).
 	name = "All-In-One Grinder Board"
 	desc = "The circuit board for an All-In-One Grinder."
 	id = "reagentgrinder"
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/reagentgrinder
 	category = list("Machine")
 
@@ -1359,6 +1361,7 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/weapon/circuitboard/chem_dispenser
 	category = list("Machine")
 
+//obj/item/weapon/circuitboard/chem_dispenser
 /datum/design/chem_master
 	name = "Machine Design (Chem Master Board)"
 	desc = "The circuit board for a Chem Master 2999."
