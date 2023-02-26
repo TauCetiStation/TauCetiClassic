@@ -49,6 +49,12 @@
 			return TRUE
 	return FALSE
 
+/mob/proc/isimplantedblueshield()
+	for(var/obj/item/weapon/implant/blueshield/L in src)
+		if(L.implanted)
+			return TRUE
+	return FALSE
+
 /proc/check_zone(zone)
 	if(!zone)
 		return BP_CHEST

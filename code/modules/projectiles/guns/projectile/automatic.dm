@@ -1,20 +1,49 @@
 /obj/item/weapon/gun/projectile/automatic //Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
 	name = "submachine gun"
 	desc = "A lightweight, fast firing gun. Uses 9mm rounds."
-	icon_state = "saber"	//ugly
+	icon_state = "saber"
+	item_state = null
 	w_class = SIZE_SMALL
 	origin_tech = "combat=4;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/msmg9mm
+	initial_mag = /obj/item/ammo_box/magazine/msmg9mm
 	can_be_holstered = FALSE
 	var/alarmed = FALSE
+	var/should_alarm_when_empty = FALSE
+	var/can_be_silenced = FALSE
 
 /obj/item/weapon/gun/projectile/automatic/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][magazine ? "-[magazine.max_ammo]" : ""][chambered ? "" : "-e"]"
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
+	if(!item_state)
+		item_state = "[initial(icon_state)]"
+	cut_overlays()
+	if(magazine && magazine.overlay)
+		var/image/magazine_icon = image('icons/obj/gun.dmi', "[magazine.overlay]")
+		add_overlay(magazine_icon)
+	if(silenced)
+		var/image/silencer_icon = image('icons/obj/gun.dmi', "[initial(icon_state)]-silencer")
+		add_overlay(silencer_icon)
 
 /obj/item/weapon/gun/projectile/automatic/attackby(obj/item/I, mob/user, params)
 	if(..() && chambered)
 		alarmed = FALSE
+
+/obj/item/weapon/gun/projectile/automatic/afterattack(atom/target, mob/user, proximity, params)
+	..()
+	if(!chambered && !get_ammo() && !alarmed && should_alarm_when_empty)
+		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)
+		update_icon()
+		alarmed = TRUE
+
+/obj/item/weapon/gun/projectile/automatic/attack_hand(mob/user)
+	if(loc == user && silenced && can_be_silenced && remove_silencer(user))
+		return
+	..()
+
+/obj/item/weapon/gun/projectile/automatic/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/silencer))
+		return install_silencer(I, user, params)
+	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Mac-10"
@@ -24,13 +53,7 @@
 	w_class = SIZE_SMALL
 	can_be_holstered = TRUE
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	mag_type = /obj/item/ammo_box/magazine/uzim9mm
-
-/obj/item/weapon/gun/projectile/automatic/update_icon()
-	..()
-	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
-	return
-
+	initial_mag = /obj/item/ammo_box/magazine/uzim9mm
 
 /obj/item/weapon/gun/projectile/automatic/c20r
 	name = "C-20r SMG"
@@ -39,45 +62,10 @@
 	item_state = "c20r"
 	w_class = SIZE_SMALL
 	origin_tech = "combat=5;materials=2;syndicate=8"
-	mag_type = /obj/item/ammo_box/magazine/m12mm
+	initial_mag = /obj/item/ammo_box/magazine/m12mm
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
-
-
-/obj/item/weapon/gun/projectile/automatic/c20r/atom_init()
-	. = ..()
-	update_icon()
-
-/obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target, mob/user, proximity, params)
-	..()
-	if(!chambered && !get_ammo() && !alarmed)
-		playsound(user, 'sound/weapons/guns/empty_alarm.ogg', VOL_EFFECTS_MASTER, 40)
-		update_icon()
-		alarmed = 1
-	return
-
-/obj/item/weapon/gun/projectile/automatic/c20r/attack_hand(mob/user)
-	if(loc == user)
-		if(silenced)
-			if(silencer_attack_hand(user))
-				return
-	..()
-
-/obj/item/weapon/gun/projectile/automatic/c20r/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/silencer))
-		return silencer_attackby(I, user, params)
-	return ..()
-
-/obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
-	..()
-	cut_overlays()
-	if(magazine)
-		var/image/magazine_icon = image('icons/obj/gun.dmi', "mag-[CEIL(get_ammo(0) / 10) * 10]")
-		add_overlay(magazine_icon)
-	if(silenced)
-		var/image/silencer_icon = image('icons/obj/gun.dmi', "c20r-silencer")
-		add_overlay(silencer_icon)
-	icon_state = "c20r[chambered ? "" : "-e"]"
-	return
+	should_alarm_when_empty = TRUE
+	can_be_silenced = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "L6 SAW"
@@ -87,7 +75,7 @@
 	w_class = SIZE_BIG
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
-	mag_type = /obj/item/ammo_box/magazine/m762
+	initial_mag = /obj/item/ammo_box/magazine/m762
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
 	has_cover = TRUE
 	two_hand_weapon = TRUE
@@ -95,6 +83,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
+	item_state = "l6[cover_open ? "open" : "closed"][magazine ? "mag" : "nomag"]"
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/user, proximity, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(cover_open)
@@ -133,17 +122,6 @@
 		return
 	return ..()
 
-/* The thing I found with guns in ss13 is that they don't seem to simulate the rounds in the magazine in the gun.
-   Afaik, since projectile.dm features a revolver, this would make sense since the magazine is part of the gun.
-   However, it looks like subsequent guns that use removable magazines don't take that into account and just get
-   around simulating a removable magazine by adding the casings into the loaded list and spawning an empty magazine
-   when the gun is out of rounds. Which means you can't eject magazines with rounds in them. The below is a very
-   rough and poor attempt at making that happen. -Ausops */
-
-/* Where Ausops failed, I have not. -SirBayer */
-
-//=================NEW GUNS=================\\
-
 /obj/item/weapon/gun/projectile/automatic/l13
 	name = "security submachine gun"
 	desc = "L13 personal defense weapon - for combat security operations. Uses .38 ammo."
@@ -151,18 +129,8 @@
 	item_state = "l13"
 	w_class = SIZE_SMALL
 	origin_tech = "combat=4;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/l13_38
+	initial_mag = /obj/item/ammo_box/magazine/l13_38
 	fire_sound = 'sound/weapons/guns/gunshot_l13.ogg'
-
-/obj/item/weapon/gun/projectile/automatic/l13/update_icon(mob/M)
-	icon_state = "l13[magazine ? "" : "-e"]"
-	item_state = "l13[magazine ? "" : "-e"]"
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
-		H.update_inv_belt()
-	return
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"
@@ -172,13 +140,8 @@
 	w_class = SIZE_BIG
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
-	mag_type = /obj/item/ammo_box/magazine/tommygunm45
+	initial_mag = /obj/item/ammo_box/magazine/tommygunm45
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
-
-/obj/item/weapon/gun/projectile/automatic/tommygun/update_icon()
-	..()
-	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
-	item_state = icon_state
 
 /obj/item/weapon/gun/projectile/automatic/bar
 	name = "Browning M1918"
@@ -187,32 +150,13 @@
 	item_state = "bar"
 	w_class = SIZE_BIG
 	origin_tech = "combat=5;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/m3006
+	initial_mag = /obj/item/ammo_box/magazine/m3006
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
-
-/obj/item/weapon/gun/projectile/automatic/luger
-	name = "Luger P08"
-	desc = "A small, easily concealable gun. Uses 9mm rounds."
-	icon_state = "p08"
-	w_class = SIZE_TINY
-	origin_tech = "combat=2;materials=2;syndicate=2"
-	mag_type = /obj/item/ammo_box/magazine/m9pmm
-	can_be_holstered = TRUE
-
-/obj/item/weapon/gun/projectile/automatic/luger/update_icon()
-	..()
-	icon_state = "[initial(icon_state)][magazine ? "" : "-e"]"
-
-/obj/item/weapon/gun/projectile/automatic/colt1911/dungeon
-	desc = "A single-action, semi-automatic, magazine-fed, recoil-operated pistol chambered for the .45 ACP cartridge."
-	name = "Colt M1911"
-	mag_type = /obj/item/ammo_box/magazine/c45m
-	mag_type2 = /obj/item/ammo_box/magazine/c45r
 
 /obj/item/weapon/gun/projectile/automatic/borg
 	name = "Robot SMG"
 	icon_state = "borg_smg"
-	mag_type = /obj/item/ammo_box/magazine/borg45
+	initial_mag = /obj/item/ammo_box/magazine/borg45
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/borg/update_icon()
@@ -236,8 +180,10 @@
 	item_state = "bulldog"
 	w_class = SIZE_SMALL
 	origin_tech = "combat=5;materials=4;syndicate=6"
-	mag_type = /obj/item/ammo_box/magazine/m12g
+	initial_mag = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
+	suitable_mags = list(/obj/item/ammo_box/magazine/m12g, /obj/item/ammo_box/magazine/m12g/stun, /obj/item/ammo_box/magazine/m12g/incendiary)
+	should_alarm_when_empty = TRUE
 	two_hand_weapon = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/atom_init()
@@ -271,65 +217,41 @@
 	item_state = "a28"
 	w_class = SIZE_SMALL
 	origin_tech = "combat=5;materials=4;syndicate=6"
-	mag_type = /obj/item/ammo_box/magazine/m556
+	initial_mag = /obj/item/ammo_box/magazine/m556
+	suitable_mags = list(/obj/item/ammo_box/magazine/m556, /obj/item/ammo_box/magazine/m556/nonlethal)
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
-
-/obj/item/weapon/gun/projectile/automatic/a28/atom_init()
-	. = ..()
-	update_icon()
-
-/obj/item/weapon/gun/projectile/automatic/a28/update_icon()
-	cut_overlays()
-	if(magazine)
-		add_overlay("[magazine.icon_state]-o")
-	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
-	return
 
 /obj/item/weapon/gun/projectile/automatic/a74
 	name = "A74 assault rifle"
 	desc = "Stradi and Practican Maid Bai Spess soviets corporation, bazed he original design of 20 centuriyu fin about baars and vodka vile patrimonial it, saunds of balalaika place minvile, yuzes 7.74 caliber"
-	mag_type = /obj/item/ammo_box/magazine/a74mm
+	initial_mag = /obj/item/ammo_box/magazine/a74mm
+	suitable_mags = list(/obj/item/ammo_box/magazine/a74mm, /obj/item/ammo_box/magazine/a74mm/krinkov)
 	w_class = SIZE_SMALL
 	icon_state = "a74"
 	item_state = "a74"
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	fire_sound = 'sound/weapons/guns/gunshot_ak74.ogg'
-	var/icon/mag_icon = icon('icons/obj/gun.dmi',"mag-a74")
-
-/obj/item/weapon/gun/projectile/automatic/a74/atom_init()
-	. = ..()
-	update_icon()
-
-/obj/item/weapon/gun/projectile/automatic/a74/update_icon()
-	cut_overlays()
-	if(magazine)
-		add_overlay(mag_icon)
-		item_state = "[initial(icon_state)]"
-	else
-		item_state = "[initial(icon_state)]-e"
 
 /obj/item/weapon/gun/projectile/automatic/a74/krinkov
 	name = "Krinkov"
 	desc = "Small and deadly, A74U is lighter than it's older brother, but nontheless packs a serious punch."
-	mag_type = /obj/item/ammo_box/magazine/a74mm/krinkov
+	initial_mag = /obj/item/ammo_box/magazine/a74mm/krinkov
 	recoil = 1.5
 	icon_state = "krinkov"
 	item_state = "krinkov"
-	mag_icon = icon('icons/obj/gun.dmi',"mag-krinkov")
 
 /obj/item/weapon/gun/projectile/automatic/drozd
 	name = "OTs-114 assault rifle"
 	desc = "Also known as Drozd, this little son a of bitch comes equipped with a bloody grenade launcher! How cool is that?"
 	icon_state = "drozd"
 	item_state = "drozd"
-	mag_type = /obj/item/ammo_box/magazine/drozd127
+	initial_mag = /obj/item/ammo_box/magazine/drozd127
 	w_class = SIZE_SMALL
 	fire_sound = 'sound/weapons/guns/gunshot_drozd.ogg'
 	action_button_name = "Toggle GL"
 	fire_delay = 7
 	var/using_gl = FALSE
 	var/obj/item/weapon/gun/projectile/grenade_launcher/underslung/gl
-	var/icon/mag_icon = icon('icons/obj/gun.dmi',"drozd-mag")
 
 /obj/item/weapon/gun/projectile/automatic/drozd/examine(mob/user)
 	. = ..()
@@ -350,17 +272,13 @@
 
 /obj/item/weapon/gun/projectile/automatic/drozd/atom_init()
 	. = ..()
-	update_icon()
 	gl = new (src)
 
 /obj/item/weapon/gun/projectile/automatic/drozd/update_icon()
-	cut_overlays(mag_icon)
-	if(magazine)
-		add_overlay(mag_icon)
+	..()
 	if(using_gl)
-		icon_state = "[initial(icon_state)]-gl"
-	else
-		icon_state = "[initial(icon_state)]"
+		var/image/gl = image('icons/obj/gun.dmi', "drozd-gl")
+		add_overlay(gl)
 
 /obj/item/weapon/gun/projectile/automatic/drozd/afterattack(atom/target, mob/user, proximity, params)
 	if(!using_gl)

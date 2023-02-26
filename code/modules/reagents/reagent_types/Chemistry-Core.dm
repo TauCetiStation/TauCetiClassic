@@ -423,12 +423,13 @@
 	reagent_state = SOLID
 	color = "#ffffff" // rgb: 255, 255, 255
 	taste_message = "sweetness"
+	custom_metabolism = 0.5
 
 	needed_aspects = list(ASPECT_FOOD = 1)
 
 /datum/reagent/sugar/on_general_digest(mob/living/M)
 	..()
-	M.nutrition += 4 * REM
+	M.nutrition += 1
 
 /datum/reagent/sugar/on_vox_digest(mob/living/M)
 	..()

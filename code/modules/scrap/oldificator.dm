@@ -25,6 +25,7 @@
 /obj/item/make_old()
 	..()
 	siemens_coefficient += 0.3
+	update_inv_mob()
 
 
 /obj/item/weapon/storage/make_old()
