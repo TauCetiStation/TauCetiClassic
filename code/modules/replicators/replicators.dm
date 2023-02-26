@@ -78,6 +78,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	can_point = TRUE
 
+	status_flags = CANSTUN|CANPUSH
+
 	var/last_brute_hit = 0
 
 	// How many drones are under direct control.
@@ -178,9 +180,25 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	if(!isturf(loc))
 		return
 
+	handle_organic_matter(loc)
+
 	scatter_offset()
 
 	try_construct(loc)
+
+/mob/living/simple_animal/replicator/proc/handle_organic_matter(turf/T)
+	T.clean_blood()
+	if(istype(T, /turf/simulated))
+		var/turf/simulated/S = T
+		S.dirt = 0
+
+	for(var/A in T)
+		if(istype(A, /obj/effect/rune) || istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/overlay))
+			qdel(A)
+
+		else if(isitem(A))
+			var/obj/item/cleaned_item = A
+			cleaned_item.clean_blood()
 
 /mob/living/simple_animal/replicator/proc/try_construct(turf/T)
 	if(!ckey)
@@ -485,4 +503,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 /mob/living/simple_animal/replicator/emp_act(severity)
 	. = ..()
-	Stun(severity * 0.5)
+
+	var/impact = 2.5 - severity
+	if(impact <= 0)
+		return
+
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
+	s.set_up(impact, 1, src)
+	s.start()
+
+	Stun(impact * 0.5)
