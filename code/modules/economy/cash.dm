@@ -66,7 +66,7 @@
 	name = "5 credit chip"
 	icon_state = "spacecash5"
 	desc = "It's worth 5 credit."
-	worth = 1
+	worth = 5
 
 /obj/item/weapon/spacecash/c10
 	name = "10 credit chip"
