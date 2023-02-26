@@ -14,6 +14,7 @@
 
 /obj/item/ammo_box/magazine/a28/nonlethal
 	name = "A28 magazine (.556NL)"
+	icon_state = "a28_mag_nl"
 	ammo_type = /obj/item/ammo_casing/a556/nonlethal
 	caliber = "5.56mm"
 	max_ammo = 30

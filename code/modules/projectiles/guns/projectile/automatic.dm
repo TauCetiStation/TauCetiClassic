@@ -204,7 +204,7 @@
 	w_class = SIZE_SMALL
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	initial_mag = /obj/item/ammo_box/magazine/a28
-	suitable_mags = list(/obj/item/ammo_box/magazine/a28, /obj/item/ammo_box/magazine/a28/nonlethal)
+	suitable_mags = list(/obj/item/ammo_box/magazine/a28, /obj/item/ammo_box/magazine/a28/nonlethal, /obj/item/ammo_box/magazine/a28/incendiary)
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/a74
