@@ -397,7 +397,7 @@
 
 /obj/item/weapon/storage/backpack/delivery_bag
 	name = "cargo delivery bag"
-	desc = "A bag capable of holding 10 parcels for delivery."
+	desc = "A bag capable of holding 14 parcels for delivery."
 	icon_state = "backpack-gryz"
 	item_state = "backpack-gryz"
 	w_class = SIZE_BIG
