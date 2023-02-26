@@ -24,6 +24,7 @@
 	actions += M
 	actions += D
 	actions += P
+	networks += "Abductor[team]"
 
 /obj/machinery/computer/camera_advanced/abductor/Destroy()
 	if(console)
