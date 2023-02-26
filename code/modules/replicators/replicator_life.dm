@@ -47,12 +47,8 @@
 	// This fixes a lot of stupid tactics, such as:
 	// - hiding a replicator somewhere in vents
 	// - yeeting yourself into space
-	if(last_disintegration + 1 MINUTE < world.time && !disintegrating)
+	if(last_disintegration + 1 MINUTE < world.time)
 		var/taken_damage = FALSE
-		// If the person thought about clicking in Life Tick to avoid being punished for not doing anything.
-		// 4 SECONDS is 2 SECONDS * 0.5 (the damage they would have taken each Life Tick)
-		var/disintegration_abuse_punishment = max(0.0, (world.time - last_disintegration - 1 MINUTE) / 4 SECONDS)
-
 		if(!has_swarms_gift())
 			take_bodypart_damage(disintegration_abuse_punishment, 0.5)
 			taken_damage = TRUE
