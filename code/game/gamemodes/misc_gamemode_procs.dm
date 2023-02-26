@@ -226,7 +226,6 @@
 				RESPONDER, SHADOW_THRALL, TRAITOR, TRAITORCHAN, UNDERCOVER_COP, WIZARD, WIZ_APPRENTICE)
 
 //add crates to cargo
-//*list/supply_crates - associative list, string key - name of supply pack, int value - number of crates to send
 /datum/game_mode/proc/add_supply_to_cargo(num_supply_packs = 1, supply_pack_name = "Crate", orderer = "Cent Comm", orderer_rank = "Cent Comm", orderer_ckey = "", reason_string = "No reisin")
 	for(var/i in 1 to num_supply_packs)
 		var/datum/supply_order/order = new(SSshuttle.supply_packs[ckey(supply_pack_name)], orderer, orderer_rank, orderer_ckey, reason_string)
