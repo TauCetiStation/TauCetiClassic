@@ -48,7 +48,9 @@
 	// - hiding a replicator somewhere in vents
 	// - yeeting yourself into space
 	if(last_disintegration + 1 MINUTE < world.time)
-		take_bodypart_damage(0, 0.5)
+		if(!has_swarms_gift())
+			take_bodypart_damage(0, 0.5)
+
 		if(isspaceturf(loc))
 			take_bodypart_damage(0, 1.5)
 
