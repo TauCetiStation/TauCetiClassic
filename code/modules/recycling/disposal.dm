@@ -58,7 +58,7 @@
 
 	add_fingerprint(user)
 	if(mode<=0) // It's off
-		if(isscrewdriver(I))
+		if(isscrewing(I))
 			if(contents.len > 0)
 				to_chat(user, "Eject the items first!")
 				return
@@ -72,7 +72,7 @@
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "You attach the screws around the power connection.")
 				return
-		else if(iswelder(I) && mode==-1)
+		else if(iswelding(I) && mode==-1)
 			if(contents.len > 0)
 				to_chat(user, "<span class='warning'>Eject the items first!</span>")
 				return
@@ -167,17 +167,19 @@
 	var/target_loc = target.loc
 	var/msg
 	var/self_msg
-
+	var/time_climbing = 20
 	if(target == user)
 		if(user.incapacitated(LEGS))
 			return
 		user.visible_message("<span class='red'>[usr] starts climbing into the disposal.</span>")
+		if(HAS_TRAIT(user, TRAIT_NATURAL_AGILITY))
+			time_climbing *= 0.25
 	else
 		if(user.incapacitated(ARMS))
 			return
 		user.visible_message("<span class='red'>[usr] starts stuffing [target.name] into the disposal.</span>")
 
-	if(user.is_busy() || !do_after(usr, 20, target = src))
+	if(user.is_busy() || !do_after(usr, time_climbing, target = src))
 		return
 	if(target_loc != target.loc || target.anchored)
 		return
@@ -862,7 +864,7 @@
 		return		// prevent interaction with T-scanner revealed pipes
 	add_fingerprint(user)
 	if(user.is_busy()) return
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/W = I
 
 		if(W.use(0,user))
@@ -1303,7 +1305,7 @@
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
 	add_fingerprint(user)
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/W = I
 		if(user.is_busy()) return
 		if(W.use(0,user))
@@ -1419,7 +1421,7 @@
 	if(!I || !user)
 		return
 	add_fingerprint(user)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		if(mode==0)
 			mode=1
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
@@ -1430,7 +1432,7 @@
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You attach the screws around the power connection.")
 			return
-	else if(iswelder(I) && mode==1 && !user.is_busy())
+	else if(iswelding(I) && mode==1 && !user.is_busy())
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the disposal outlet.")

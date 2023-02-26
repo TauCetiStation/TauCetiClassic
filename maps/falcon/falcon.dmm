@@ -1142,7 +1142,7 @@
 /obj/item/weapon/kitchenknife/combat,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/weapon/gun/projectile/glock,
+/obj/item/weapon/gun/projectile/automatic/glock,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 32
 	},
@@ -15950,7 +15950,7 @@
 /obj/item/weapon/kitchenknife/combat,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/weapon/gun/projectile/glock,
+/obj/item/weapon/gun/projectile/automatic/glock,
 /obj/item/weapon/shield/riot,
 /obj/machinery/computer/guestpass{
 	dir = 1;
@@ -22949,7 +22949,7 @@
 /obj/item/weapon/kitchenknife/combat,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/weapon/gun/projectile/glock,
+/obj/item/weapon/gun/projectile/automatic/glock,
 /obj/item/ammo_box/magazine/m9mm_2,
 /obj/item/ammo_box/magazine/m9mm_2,
 /turf/simulated/floor{
@@ -31648,7 +31648,7 @@
 	},
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
 /obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/weapon/gun/projectile/glock,
+/obj/item/weapon/gun/projectile/automatic/glock,
 /obj/item/weapon/shield/riot,
 /turf/simulated/floor{
 	dir = 5;

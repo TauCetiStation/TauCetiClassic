@@ -118,9 +118,6 @@
 	flags_inv = A.flags_inv
 	body_parts_covered = A.body_parts_covered
 	update_inv_mob()
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.update_hair()
 
 //******************
 //**Chameleon Suit**
@@ -469,7 +466,7 @@
 	item_state = "deagle"
 	w_class = SIZE_SMALL
 	origin_tech = "combat=2;materials=2;syndicate=3"
-	mag_type = /obj/item/ammo_box/magazine/chameleon
+	initial_mag = /obj/item/ammo_box/magazine/chameleon
 	var/list/gun_choices = list()
 
 /obj/item/weapon/gun/projectile/chameleon/atom_init()

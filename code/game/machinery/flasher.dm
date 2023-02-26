@@ -54,7 +54,7 @@
 
 //Don't want to render prison breaks impossible
 /obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user)
-	if (iswirecutter(W))
+	if (iscutter(W))
 		add_fingerprint(user)
 		disable = !disable
 		user.SetNextMove(CLICK_CD_INTERACT)
@@ -121,20 +121,25 @@
 			flash()
 
 /obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if (iswrenching(W))
 		add_fingerprint(user)
-		anchored = !anchored
 		user.SetNextMove(CLICK_CD_INTERACT)
-
+		if(user.is_busy())
+			return
 		if(anchored)
-			to_chat(user, "<span class='warning'>[src] is now secured.</span>")
-			add_overlay("[base_state]-s")
-			proximity_monitor.set_range(1)
-		else
-			to_chat(user, "<span class='warning'>[src] can now be moved.</span>")
+			if(!allowed(user) && !do_after(user, SKILL_TASK_CHALLENGING, target = src))
+				to_chat(user, "<span class='warning'>You don't have access and failed to lift the bolts up.</span>")
+				return
+			to_chat(user, "<span class='notice'>[src] can now be moved.</span>")
 			cut_overlays()
 			proximity_monitor.set_range(null)
-
+			anchored = FALSE
+		else
+			to_chat(user, "<span class='warning'>[src] is now secured, security bolts down.</span>")
+			add_overlay("[base_state]-s")
+			proximity_monitor.set_range(1)
+			req_access = list(access_security)
+			anchored = TRUE
 
 /obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user)
 	return attack_hand(user)

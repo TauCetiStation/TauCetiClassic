@@ -27,6 +27,7 @@
 		/obj/item/weapon/reagent_containers/pill/dylovene = 6,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/medical
+	private = TRUE
 
 /obj/machinery/vending/wallmed1
 	name = "NanoMed"
@@ -49,6 +50,7 @@
 		/obj/item/weapon/reagent_containers/syringe/antiviral = 4,
 		/obj/item/weapon/reagent_containers/pill/tox = 1,
 	)
+	private = TRUE
 
 /obj/machinery/vending/wallmed2
 	name = "NanoMed"
@@ -70,6 +72,7 @@
 	contraband = list(
 		/obj/item/weapon/reagent_containers/pill/tox = 3,
 	)
+	private = TRUE
 
 /obj/machinery/vending/omskvend
 	name = "Omsk-o-mat"
@@ -82,6 +85,7 @@
 	contraband = list(
 		/obj/item/weapon/reagent_containers/glass/bottle/antitoxin = 4,
 	)
+	private = TRUE
 
 /obj/item/weapon/reagent_containers/pill/LSD
 	name = "LSD"
