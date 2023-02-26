@@ -12,6 +12,7 @@
 	fire_sound = 'sound/weapons/guns/gunshot_cannon.ogg'
 	can_be_holstered = FALSE
 	var/bolt_open = FALSE
+	two_hand_weapon = TRUE
 
 /obj/item/weapon/gun/projectile/heavyrifle/update_icon()
 	icon_state = "[initial(icon_state)][bolt_open ? "-open" : ""]"
