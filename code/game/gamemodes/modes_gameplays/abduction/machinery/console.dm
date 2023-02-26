@@ -39,8 +39,8 @@
 							"additional agent equipment" 		=1,
 							"additional scientist equipment" 	=1,
 							"transforming gland" 				=1,
-							"recall implant" 					=3,
-							"silence gloves"					=3)
+							"silence gloves"					=3,
+							"recall implant" 					=4)
 
 	var/baton_modules_bought = FALSE
 
@@ -100,8 +100,8 @@
 		dat += "<a href='?src=\ref[src];dispense=agent_gear'>Additional agent equipment</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=scientist_gear'>Additional scientist equipment</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=trans_gland'>Transforming gland</A><br>"
-		dat += "<a href='?src=\ref[src];dispense=recall_implant'>Recall implant</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=silence_gloves'>Silence gloves</A><br>"
+		dat += "<a href='?src=\ref[src];dispense=recall_implant'>Recall implant</A><br>"
 		dat += "<a href='?src=\ref[src];show_prices=1'>[show_price_list ? "Close Price List" : "Open Price List"]</a><br>"
 		if(show_price_list)
 			dat += "<div class='Section'>[get_price_list()]</div>"
@@ -174,10 +174,7 @@
 					if(C.team == team)
 						camera = new(get_turf(C))
 						camera.console = src
-						camera.team = C.team
-						camera.networks += "Abductor[team]"
 						qdel(C)
-						break
 			if("baton")
 				Dispense(/obj/item/weapon/abductor_baton, 2)
 			if("helmet")

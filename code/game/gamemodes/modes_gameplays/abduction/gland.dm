@@ -133,32 +133,26 @@
 
 /obj/item/gland/abductor/Inject(mob/living/carbon/human/target)
 	. = ..()
-	switch(tgui_alert(target, "Вы станите новым членом команды, похитившей вас, а за одно и предадите всё человечество!", "Стать ассистентом пришельцев?", list("Да","Нет")))
-		if("Да")
-			accept()
-		if("Нет")
-			host = null
-			target.organs -= src
-			forceMove(get_turf(target))
-
-/obj/item/gland/abductor/proc/accept()
-	to_chat(host, "<span class='notice'>You feel something moving in your brain.</span>")
-	host.AdjustConfused(8)
-	host.make_jittery(60)
-	host.emote("scream")
-	var/datum/faction/abductors/req_f
-	for(var/datum/faction/abductors/F in find_factions_by_type(/datum/faction/abductors))
-		if(F.team_number == team)
-			req_f = F
-			break
-	if(!req_f)
-		return
-	host.setOxyLoss(0) //They can't heal oxyloss, so we need to deal with it right now
-	var/datum/role/R = create_and_setup_role(/datum/role/abductor/assistant, host)
-	host.real_name = req_f.name + " " + "Assistant"
-	host.mind.name = host.real_name
-	req_f.HandleRecruitedRole(R)
-
+	if(tgui_alert(target, "Вы станите новым членом команды, похитившей вас, а за одно и предадите всё человечество!", "Стать ассистентом пришельцев?", list("Да","Нет"), 15 SECONDS) == "Да")
+		to_chat(host, "<span class='notice'>You feel something moving in your brain.</span>")
+		host.AdjustConfused(8)
+		host.make_jittery(60)
+		host.emote("scream")
+		var/datum/faction/abductors/req_f
+		for(var/datum/faction/abductors/F in find_factions_by_type(/datum/faction/abductors))
+			if(F.team_number == team)
+				req_f = F
+				break
+		if(!req_f)
+			return
+		host.setOxyLoss(0) //They can't heal oxyloss, so we need to deal with it right now
+		var/datum/role/R = SSticker.mode.CreateRole(/datum/role/abductor/assistant, host)
+		req_f.HandleRecruitedRole(R)
+		setup_role(R, TRUE)
+	else
+		host = null
+		target.organs -= src
+		forceMove(get_turf(target))
 
 //VENTCRAWLING
 /obj/item/gland/ventcrawling

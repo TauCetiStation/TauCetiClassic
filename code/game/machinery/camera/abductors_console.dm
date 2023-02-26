@@ -24,7 +24,6 @@
 	actions += M
 	actions += D
 	actions += P
-	networks += "Abductor0"
 
 /obj/machinery/computer/camera_advanced/abductor/Destroy()
 	if(console)
@@ -123,6 +122,8 @@
 	var/obj/machinery/abductor/console/console = C.console
 	console.FlipVest()
 
+	var/obj/machinery/abductor/console/console = C.console
+	console.ActivateVest()
 
 /datum/action/innate/vest_disguise_swap
 	name = "Switch Vest Disguise"
