@@ -42,7 +42,6 @@
 
 /obj/item/ammo_box/shotgun
 	name = "shotgun shells box (buckshot)"
-	icon = 'icons/obj/ammo.dmi'
 	caliber = "shotgun"
 	icon_state = "pellet_box"
 	w_class = SIZE_SMALL

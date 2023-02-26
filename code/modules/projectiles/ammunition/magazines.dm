@@ -178,7 +178,6 @@
 
 /obj/item/ammo_box/magazine/smg
 	name = "SMG magazine (9mm)"
-	icon = 'icons/obj/ammo.dmi'
 	icon_state = "smg_mag"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
@@ -204,7 +203,7 @@
 	var/ammo_perc = ammo_count() / max_ammo
 	ammo_perc = CEIL(ammo_perc * 4) * 25
 
-	var/image/ammo_icon = image('icons/obj/ammo.dmi', "12mmsh-[round(ammo_perc, 25)]")
+	var/image/ammo_icon = image('icons/obj/ammo/magazines.dmi', "12mmsh-[round(ammo_perc, 25)]")
 	add_overlay(ammo_icon)
 
 /obj/item/ammo_box/magazine/c20r/hp
