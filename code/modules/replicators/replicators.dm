@@ -295,7 +295,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	var/datum/replicator_array_info/RAI = global.replicators_faction.ckey2info[ckey]
 	if(!RAI)
-		RAI = new /datum/replicator_array_info
+		RAI = new /datum/replicator_array_info(global.replicators_faction)
 		global.replicators_faction.ckey2info[ckey] = RAI
 
 	mind.name = RAI.presence_name

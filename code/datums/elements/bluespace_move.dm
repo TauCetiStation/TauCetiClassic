@@ -53,6 +53,17 @@
 	if(M.m_intent == MOVE_INTENT_RUN)
 		return NONE
 
+	// FUCK YOU DIAGONAL MOVEMENT
+	// YOU ARE NOT ELEGANT
+	// YOU DO NOT WORK
+	// YOU ARE THE SOURCE OF ALL MOVEMENT INCONSISTENCIES IN THIS GAME
+	// AND YOU ARE THE REASON WHY THIS COOL FEATURE WORKS BADLY
+	// SO I AM FUCKING YOU OUT OF EXISTENCE
+	// BEGONE!
+	var/is_diagonal = ISDIAGONALDIR(Dir)
+	if(is_diagonal)
+		return COMPONENT_CLIENTMOB_BLOCK_MOVE
+
 	var/obj/structure/bluespace_corridor/BC = locate() in Newloc
 	var/obj/machinery/swarm_powered/bluespace_transponder/BT = locate() in M.loc
 
