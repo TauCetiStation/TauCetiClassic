@@ -21,3 +21,8 @@
 	if(survive_obj)
 		survive_obj.explanation_text = "The station has been overrun by revolutionaries, stay alive until the end."
 
+/datum/role/cultist/Greet(greeting, custom)
+	if(!..())
+		return FALSE
+	to_chat(antag.current, "<span class='userdanger'>The station is lost.</span>")
+	to_chat(antag.current, "<b>As a surviving loyalist of the previous system, Your days are numbered.</b>")
