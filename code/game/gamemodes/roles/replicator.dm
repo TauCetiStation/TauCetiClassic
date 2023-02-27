@@ -17,10 +17,10 @@
 
 	var/next_music_start = 0
 
-/datum/role/replicator/OnPreSetup(laterole = FALSE)
-	. = ..()
-	presence_name = greek_pronunciation[length(faction.members) + 1] + "-[rand(0, 9)] Presence"
+/datum/role/replicator/New(datum/mind/M, datum/faction/fac, override = FALSE)
+	presence_name = greek_pronunciation[length(fac.members) + 1] + "-[rand(0, 9)] Presence"
 	array_color = pick(REPLICATOR_COLORS)
+	return ..()
 
 /datum/role/replicator/Greet(greeting, custom)
 	. = ..()

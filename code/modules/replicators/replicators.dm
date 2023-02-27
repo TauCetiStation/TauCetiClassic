@@ -290,6 +290,14 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	if(R)
 		return
 
+	R = global.replicators_faction.get_member_by_ckey(ckey)
+	if(R)
+		var/datum/mind/old_mind_idk_anymore = R.antag
+		R.RemoveFromRole(old_mind_idk_anymore, msg_admins=FALSE)
+		qdel(old_mind_idk_anymore)
+		R.AssignToRole(mind, msg_admins=FALSE)
+		return
+
 	R = add_faction_member(global.replicators_faction, src, TRUE)
 
 	mind.name = R.presence_name
