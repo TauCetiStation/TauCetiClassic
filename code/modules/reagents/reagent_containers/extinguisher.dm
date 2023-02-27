@@ -76,6 +76,17 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 		icon_state = "[initial(icon_state)]"
 	to_chat(usr, "<span class = 'notice'>You switch the safety [safety ? "on" : "off"].</span>")
 
+/obj/item/weapon/reagent_containers/spray/extinguisher/Spray_at(turf/start, turf/target)
+	if(reagents.has_reagent("water"))
+		spray_size = 1
+		spray_sizes = list(1)
+		triple_shot = FALSE
+	else
+		spray_size = 3
+		spray_sizes = list(3)
+		triple_shot = TRUE
+	..()
+
 /obj/item/weapon/reagent_containers/spray/extinguisher/mini
 	name = "fire extinguisher"
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
