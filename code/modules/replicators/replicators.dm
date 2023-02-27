@@ -80,6 +80,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	status_flags = CANSTUN|CANPUSH
 
+	w_class = SIZE_SMALL
+
 	var/last_brute_hit = 0
 
 	// How many drones are under direct control.
@@ -106,11 +108,11 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	var/disintegrating = FALSE
 
 	var/list/replicator_spells = list(
-		/obj/effect/proc_holder/spell/no_target/replicator_replicate,
-		/obj/effect/proc_holder/spell/no_target/construct_barricade,
-		/obj/effect/proc_holder/spell/no_target/spawn_trap,
-		/obj/effect/proc_holder/spell/no_target/replicator_transponder,
-		/obj/effect/proc_holder/spell/no_target/construct_generator,
+		/obj/effect/proc_holder/spell/no_target/replicator_construct/replicate,
+		/obj/effect/proc_holder/spell/no_target/replicator_construct/barricade,
+		/obj/effect/proc_holder/spell/no_target/replicator_construct/trap,
+		/obj/effect/proc_holder/spell/no_target/replicator_construct/transponder,
+		/obj/effect/proc_holder/spell/no_target/replicator_construct/generator,
 		/obj/effect/proc_holder/spell/no_target/toggle_corridor_construction,
 		/obj/effect/proc_holder/spell/no_target/transfer_to_idle,
 		/obj/effect/proc_holder/spell/no_target/transfer_to_area,
@@ -153,6 +155,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	indicator = image(icon=icon, icon_state="replicator_indicator")
 	indicator.color = state2color[state]
 	indicator.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	indicator.appearance_flags |= KEEP_APART
 
 	overlays += indicator
 
@@ -260,7 +263,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	help_steps = 7
 	target_coordinates = 0
 
-	last_controller_ckey = ckey
+	set_last_controller(ckey)
 	overlays -= indicator
 
 	global.idle_replicators -= src
@@ -439,9 +442,29 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 		// TO-DO: sound
 		to_chat(R, "<span class='notice'>Issued a self-destruct order to [name].</span>")
 		set_state(REPLICATOR_STATE_HARVESTING)
-		last_controller_ckey = R.ckey
+		set_last_controller(R.ckey)
 		INVOKE_ASYNC(src, .proc/disintegrate, src)
 		return
+
+	if(href_list["replicator_objection"])
+		var/mob/M = usr
+		if(!isreplicator(M))
+			return
+		var/mob/living/simple_animal/replicator/R = M
+		if(R.incapacitated())
+			to_chat(R, "<span class='warning'>Negative: This unit is too weak to object.</span>")
+			return
+		if(!R.mind)
+			return
+
+		if(incapacitated())
+			to_chat(R, "<span class='warning'>Negative: Unit too weak to receive objections.</span>")
+			return
+		if(!ckey)
+			to_chat(R, "<span class='warning'>Negative: No presence to receive objections.</span>")
+			return
+
+		receive_objection(R)
 
 	return ..()
 
@@ -536,3 +559,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	s.start()
 
 	Stun(impact * 0.5)
+
+/mob/living/simple_animal/replicator/proc/set_last_controller(ckey)
+	last_controller_ckey = ckey
+	var/new_color = global.replicators_faction.get_array_color(ckey)
+	// to-do: sound on controller change
+	if(new_color)
+		color = new_color

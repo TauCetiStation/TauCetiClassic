@@ -201,7 +201,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 		playsound(src, 'sound/machines/signal.ogg', VOL_EFFECTS_MASTER)
 
 	if(destroy_unpowered_after && destroy_unpowered_after < world.time)
-		global.replicators_faction.drone_message(src, "Has closed due to lack of energy.")
+		var/area/A = get_area(src)
+		global.replicators_faction.drone_message(src, "Has closed in [A.name], due to lack of energy.")
 		global.replicators_faction.adjust_materials(REPLICATOR_COST_TRANSPONDER)
 		neutralize()
 
@@ -275,7 +276,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 
 
 /turf/proc/get_untaken_replicator_color()
-	var/list/possibilities = REPLICATOR_COLORS
+	var/list/possibilities = REPLICATOR_RUNE_COLORS
 	var/obj/structure/cable/power_rune/PR = locate() in src
 	if(PR)
 		possibilities -= PR.rune_color

@@ -1,67 +1,11 @@
-/obj/effect/proc_holder/spell/no_target/replicator_replicate
-	name = "Replicate (100)"
-	desc = "Create a drone for the swarm."
+/obj/effect/proc_holder/spell/no_target/replicator_construct
+	var/material_cost = 0
 
-	charge_type = "recharge"
-	charge_max = 10 SECONDS
+/obj/effect/proc_holder/spell/no_target/replicator_construct/atom_init()
+	. = ..()
+	name = "[name] ([material_cost])"
 
-	clothes_req = FALSE
-
-	action_icon = 'icons/mob/replicator.dmi'
-	action_icon_state = "ui_replicate"
-
-	var/material_cost = REPLICATOR_COST_REPLICATE
-
-/obj/effect/proc_holder/spell/no_target/replicator_replicate/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
-	if(length(global.alive_replicators) >= global.replicators_faction.bandwidth)
-		if(try_start)
-			to_chat(user, "<span class='warning'>Not enough bandwidth for replication.</span>")
-		return FALSE
-
-	if(global.replicators_faction.materials < material_cost)
-		if(try_start)
-			to_chat(user, "<span class='warning'>Not enough materials.</span>")
-		return FALSE
-
-	// Should fix replicating inside vents which would be buggy...
-	if(!istype(user.loc, /turf/simulated/floor))
-		if(try_start)
-			to_chat(user, "<span class='notice'>You mustn't be inside of anything for this to work.</span>")
-		return FALSE
-
-	return ..()
-
-/obj/effect/proc_holder/spell/no_target/replicator_replicate/cast(list/targets, mob/user = usr)
-	var/mob/living/simple_animal/replicator/user_replicator = user
-	to_chat(user, "<span class='notice'>SPAWNING...</span>")
-	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
-
-	var/mob/living/simple_animal/replicator/R = new(user_replicator.loc)
-	R.last_controller_ckey = user_replicator.last_controller_ckey
-
-	R.generation = "[user_replicator.generation][rand(0, 9)]"
-
-	R.name = "replicator ([R.generation])"
-	R.real_name = R.name
-
-	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
-
-
-/obj/effect/proc_holder/spell/no_target/construct_barricade
-	name = "Barricade (15)"
-	desc = "Construct a barricade that replicators can pass through."
-
-	charge_type = "recharge"
-	charge_max = 1 SECOND
-
-	clothes_req = FALSE
-
-	action_icon = 'icons/mob/replicator.dmi'
-	action_icon_state = "ui_barricade"
-
-	var/material_cost = 15
-
-/obj/effect/proc_holder/spell/no_target/construct_barricade/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+/obj/effect/proc_holder/spell/no_target/replicator_construct/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 	if(global.replicators_faction.materials < material_cost)
 		if(try_start)
 			to_chat(user, "<span class='warning'>Not enough materials.</span>")
@@ -72,6 +16,66 @@
 			to_chat(user, "<span class='notice'>You must be on solid ground to construct this.</span>")
 		return FALSE
 
+	return ..()
+
+
+/obj/effect/proc_holder/spell/no_target/replicator_construct/replicate
+	name = "Replicate"
+	desc = "Create a drone for the swarm."
+
+	charge_type = "recharge"
+	charge_max = 10 SECONDS
+
+	clothes_req = FALSE
+
+	action_icon = 'icons/mob/replicator.dmi'
+	action_icon_state = "ui_replicate"
+
+	material_cost = REPLICATOR_COST_REPLICATE
+
+/obj/effect/proc_holder/spell/no_target/replicator_replicate/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+	if(length(global.alive_replicators) >= global.replicators_faction.bandwidth)
+		if(try_start)
+			to_chat(user, "<span class='warning'>Not enough bandwidth for replication.</span>")
+		return FALSE
+
+	return ..()
+
+/obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/cast(list/targets, mob/user = usr)
+	var/mob/living/simple_animal/replicator/user_replicator = user
+	var/area/A = get_area(user_replicator)
+	if(!user_replicator.do_after_objections(3 SECONDS, "Proceeding with replication at [A.name]."))
+		return
+
+	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
+
+	var/mob/living/simple_animal/replicator/R = new(user_replicator.loc)
+	R.set_last_controller(user_replicator.last_controller_ckey)
+
+	R.generation = "[user_replicator.generation][rand(0, 9)]"
+
+	R.name = "replicator ([R.generation])"
+	R.real_name = R.name
+
+	to_chat(user, "<span class='notice'>Replication successful, meet [R.name]!</span>")
+	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
+
+
+/obj/effect/proc_holder/spell/no_target/replicator_construct/barricade
+	name = "Barricade"
+	desc = "Construct a barricade that replicators can pass through."
+
+	charge_type = "recharge"
+	charge_max = 1 SECOND
+
+	clothes_req = FALSE
+
+	action_icon = 'icons/mob/replicator.dmi'
+	action_icon_state = "ui_barricade"
+
+	material_cost = 15
+
+/obj/effect/proc_holder/spell/no_target/replicator_construct/barricade/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 	var/turf/my_turf = get_turf(user)
 	if(!my_turf.can_place_replicator_forcefield())
 		if(try_start)
@@ -90,17 +94,17 @@
 
 	return ..()
 
-/obj/effect/proc_holder/spell/no_target/construct_barricade/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/no_target/replicator_construct/barricade/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/replicator/user_replicator = user
-	to_chat(user, "<span class='notice'>SPAWNING...</span>")
+	to_chat(user, "<span class='notice'>Barricade deployed successfully.</span>")
 	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 
 	new /obj/structure/replicator_barricade(user_replicator.loc)
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 
 
-/obj/effect/proc_holder/spell/no_target/spawn_trap
-	name = "Trap (30)"
+/obj/effect/proc_holder/spell/no_target/replicator_construct/trap
+	name = "Trap"
 	desc = "Constructs a multi-use trap, that stuns and electrocutes enemies."
 
 	charge_type = "recharge"
@@ -111,19 +115,9 @@
 	action_icon = 'icons/mob/replicator.dmi'
 	action_icon_state = "ui_trap"
 
-	var/material_cost = 30
+	material_cost = 30
 
-/obj/effect/proc_holder/spell/no_target/spawn_trap/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
-	if(global.replicators_faction.materials < material_cost)
-		if(try_start)
-			to_chat(user, "<span class='warning'>Not enough materials.</span>")
-		return FALSE
-
-	if(!istype(user.loc, /turf/simulated/floor))
-		if(try_start)
-			to_chat(user, "<span class='notice'>You must be on solid ground to construct this.</span>")
-		return FALSE
-
+/obj/effect/proc_holder/spell/no_target/replicator_construct/trap/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 	if(locate(/obj/item/mine/replicator) in user.loc)
 		if(try_start)
 			to_chat(user, "<span class='notice'>There is already a trap here.</span>")
@@ -138,17 +132,17 @@
 
 	return ..()
 
-/obj/effect/proc_holder/spell/no_target/spawn_trap/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/no_target/replicator_construct/trap/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/replicator/user_replicator = user
-	to_chat(user, "<span class='notice'>SPAWNING...</span>")
+	to_chat(user, "<span class='notice'>Mine deployed successfully.</span>")
 	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 
 	new /obj/item/mine/replicator(user_replicator.loc)
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 
 
-/obj/effect/proc_holder/spell/no_target/replicator_transponder
-	name = "Emit (100)"
+/obj/effect/proc_holder/spell/no_target/replicator_construct/transponder
+	name = "Emit"
 	desc = "Create a transponder for the swarm. Transponders start consuming resources only after at least 150 have been accumulated."
 
 	charge_type = "recharge"
@@ -159,20 +153,9 @@
 	action_icon = 'icons/mob/replicator.dmi'
 	action_icon_state = "ui_transponder"
 
-	var/material_cost = REPLICATOR_COST_REPLICATE
+	material_cost = REPLICATOR_COST_REPLICATE
 
-/obj/effect/proc_holder/spell/no_target/replicator_transponder/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
-	if(global.replicators_faction.materials < material_cost)
-		if(try_start)
-			to_chat(user, "<span class='warning'>Not enough materials.</span>")
-		return FALSE
-
-	// Should fix replicating inside vents which would be buggy...
-	if(!istype(user.loc, /turf/simulated/floor))
-		if(try_start)
-			to_chat(user, "<span class='notice'>You must be on solid ground to construct this.</span>")
-		return FALSE
-
+/obj/effect/proc_holder/spell/no_target/replicator_construct/transponder/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 	if(locate(/obj/machinery/swarm_powered/bluespace_transponder) in user.loc)
 		if(try_start)
 			to_chat(user, "<span class='notice'>Need more space for the transponder.</span>")
@@ -192,9 +175,13 @@
 
 	return ..()
 
-/obj/effect/proc_holder/spell/no_target/replicator_transponder/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/no_target/replicator_construct/transponder/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/replicator/user_replicator = user
-	to_chat(user, "<span class='notice'>SPAWNING...</span>")
+	var/area/A = get_area(user_replicator)
+	if(!user_replicator.do_after_objections(3 SECONDS, "Deploying a bluespace transponder at [A.name]."))
+		return
+
+	to_chat(user, "<span class='notice'>Bluespace Transponder activation initiated...Establishing contact with The Swarm.</span>")
 	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 
 	var/obj/machinery/swarm_powered/bluespace_transponder/BT = new(user_replicator.loc)
@@ -202,8 +189,8 @@
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 
 
-/obj/effect/proc_holder/spell/no_target/construct_generator
-	name = "Construct Generator (100)"
+/obj/effect/proc_holder/spell/no_target/replicator_construct/generator
+	name = "Construct Generator"
 	desc = "Construct a generator to power transponders."
 
 	charge_type = "recharge"
@@ -214,19 +201,9 @@
 	action_icon = 'icons/mob/replicator.dmi'
 	action_icon_state = "ui_generator"
 
-	var/material_cost = REPLICATOR_COST_REPLICATE
+	material_cost = REPLICATOR_COST_REPLICATE
 
-/obj/effect/proc_holder/spell/no_target/construct_generator/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
-	if(global.replicators_faction.materials < material_cost)
-		if(try_start)
-			to_chat(user, "<span class='warning'>Not enough materials.</span>")
-		return FALSE
-
-	if(!istype(user.loc, /turf/simulated/floor))
-		if(try_start)
-			to_chat(user, "<span class='notice'>You must be on solid ground to construct this.</span>")
-		return FALSE
-
+/obj/effect/proc_holder/spell/no_target/replicator_construct/generator/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 	if(locate(/obj/machinery/swarm_powered/bluespace_transponder) in user.loc)
 		if(try_start)
 			to_chat(user, "<span class='notice'>Need more space for the generator.</span>")
@@ -250,9 +227,13 @@
 
 	return ..()
 
-/obj/effect/proc_holder/spell/no_target/construct_generator/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/no_target/replicator_construct/generator/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/replicator/user_replicator = user
-	to_chat(user, "<span class='notice'>SPAWNING...</span>")
+	var/area/A = get_area(user_replicator)
+	if(!user_replicator.do_after_objections(3 SECONDS, "Deploying a generator at [A.name]."))
+		return
+
+	to_chat(user, "<span class='notice'>Generator deployed.</span>")
 	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 
 	var/obj/machinery/power/replicator_generator/BG = new(user_replicator.loc)

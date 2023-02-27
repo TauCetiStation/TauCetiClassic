@@ -74,43 +74,32 @@
 
 /* MOBS */
 /mob/living/can_be_auto_disintegrated()
-	/*
-	var/list/equipment = get_equipped_items()
-	if(length(equipment) > 0 && (lying || crawling))
-		return TRUE
-	*/
-	return stat == DEAD
+	return stat == DEAD || lying || crawling
 
 /mob/living/get_replicator_material_amount()
 	if(stat == DEAD)
-		return w_class
+		return w_class * 4
 	return -1
 
 /mob/living/get_unit_disintegration_time()
-	. = REPLICATOR_TICKS_PER_MATERIAL
+	. = REPLICATOR_TICKS_PER_MATERIAL / 4
 	if(stat == DEAD)
 		. *= REPLICATOR_REWARD_DEAD_BODIES_TICK_MODIFIER
 	else
 		. *= REPLICATOR_PUNISH_LIVE_MOBS_TICK_MODIFIER
 
 /mob/living/replicator_act(mob/living/simple_animal/replicator/R)
-	/*
 	var/list/equipment = get_equipped_items()
-	if((lying || crawling || stat == DEAD) && length(equipment) > 0)
+	if(length(equipment) > 0)
 		var/attempts = 3
-		while(attempts > 3)
+		while(attempts > 0)
 			attempts -= 1
 			var/obj/item/I = pick(equipment)
-			if(drop_from_inventory(I, R.loc))
-				to_chat(world, "NO RESOURCE DUE TO ITEM FALL")
+			if(unEquip(I, R.loc))
 				return FALSE
-	*/
 
-	if(stat == DEAD)
-		gib()
-		return TRUE
-
-	return FALSE
+	gib()
+	return TRUE
 
 
 

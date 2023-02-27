@@ -2096,7 +2096,7 @@
 			electrocuted_sprite += "_skrell"
 		if(VOX)
 			electrocuted_sprite += "_vox"
-	var/image/I = image(icon, src, electrocuted_sprite, MOB_LAYER+1)
+	var/image/I = image(icon, src, electrocuted_sprite, MOB_ELECTROCUTION_LAYER)
 	I = update_height(I)
 	flick_overlay(I, viewing, anim_duration)
 

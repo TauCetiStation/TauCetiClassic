@@ -12,7 +12,8 @@
 #define REPLICATOR_STATE_GOING_TO_HELP "going_to_help"
 #define REPLICATOR_STATE_COMBAT "combat"
 
-#define REPLICATOR_COLORS list("#A8DFF0", "#F0A8DF", "#DFF0A8")
+#define REPLICATOR_COLORS list("#FFFFFF", "#FF5555", "#FF55FF", "#55FF55", "#FFFF55")
+#define REPLICATOR_RUNE_COLORS list("#A8DFF0", "#F0A8DF", "#DFF0A8")
 
 // Disintegration unit time modifiers.
 #define REPLICATOR_TICKS_PER_MATERIAL 16.0

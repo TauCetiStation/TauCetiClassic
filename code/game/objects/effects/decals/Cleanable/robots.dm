@@ -9,6 +9,9 @@
 
 	beauty = -50
 
+/obj/effect/decal/cleanable/blood/gibs/robot/update_icon()
+	return
+
 /obj/effect/decal/cleanable/blood/gibs/robot/dry()	//pieces of robots do not dry up like
 	return
 

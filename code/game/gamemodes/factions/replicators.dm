@@ -37,6 +37,7 @@ var/global/datum/faction/replicators/replicators_faction
 	)
 
 	var/list/ckey2presence_name = list()
+	var/list/ckey2array_color = list()
 
 	var/swarms_gift_duration = 5 MINUTES
 	var/spawned_at_time = 0
@@ -203,6 +204,15 @@ Message ends."}
 
 	ckey2presence_name[ckey] = new_name
 	return ckey2presence_name[ckey]
+
+/datum/faction/replicators/proc/get_array_color(ckey)
+	if(ckey2array_color[ckey])
+		return ckey2array_color[ckey]
+
+	var/array_color = pick(REPLICATOR_COLORS)
+
+	ckey2array_color[ckey] = array_color
+	return ckey2array_color[ckey]
 
 /datum/faction/replicators/proc/give_gift(mob/living/simple_animal/replicator/R)
 	if(spawned_at_time + swarms_gift_duration < world.time)

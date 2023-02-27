@@ -72,11 +72,16 @@
 		to_chat(M, "[open_tags][channel] [speaker_name] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags][jump_button]")
 
 // Mines currently also use this.
-/datum/faction/replicators/proc/drone_message(atom/drone, message, transfer=FALSE, dismantle=FALSE)
+/datum/faction/replicators/proc/drone_message(atom/drone, message, transfer=FALSE, dismantle=FALSE, objection_time=0)
+	if(isreplicator(drone))
+		var/mob/living/simple_animal/replicator/R = drone
+		R.objection_end_time = world.time + objection_time
+
 	for(var/r in members)
 		var/datum/role/replicator/R = r
 		if(!R.antag)
 			continue
 		var/jump_button = transfer ? " <a href='?src=\ref[drone];replicator_jump=1'>(JMP)</a>" : ""
 		var/dismantle_button = dismantle ? " <a href='?src=\ref[drone];replicator_kill=1'>(KILL)</a>" : ""
-		to_chat(R.antag.current, "<span class='replicator'>\[???\]</span> <b>[drone.name]</b> requests, <span class='message'><span class='replicator'>\"[message]\"</span></span>[jump_button][dismantle_button]")
+		var/objection_button = objection_time > 0 ? " <a href='?src=\ref[drone];replicator_objection=1'>(OBJ)</a>" : ""
+		to_chat(R.antag.current, "<span class='replicator'>\[???\]</span> <b>[drone.name]</b> requests, <span class='message'><span class='replicator'>\"[message]\"</span></span>[jump_button][dismantle_button][objection_button]")

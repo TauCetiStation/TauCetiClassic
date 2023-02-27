@@ -35,12 +35,14 @@
 
 	if(health < maxHealth * 0.2 && next_attacked_alert < world.time)
 		emote("beep")
-		global.replicators_faction.drone_message(src, "I am nearly gone.", transfer=TRUE)
+		var/area/A = get_area(src)
+		global.replicators_faction.drone_message(src, "STRUCTURE INTEGRITY CRITICAL. LOCATION: [A.name].", transfer=TRUE)
 		next_attacked_alert = world.time + attacked_alert_cooldown
 
 	if(health < last_update_health && next_attacked_alert < world.time && !sacrifice_powering)
 		emote("beep")
-		global.replicators_faction.drone_message(src, "I am taking damage.", transfer=TRUE)
+		var/area/A = get_area(src)
+		global.replicators_faction.drone_message(src, "Structure integrity under threat. Location: [A.name].", transfer=TRUE)
 		next_attacked_alert = world.time + attacked_alert_cooldown
 
 	// All replicators are slowly dying. Eating obviously fixes them.
@@ -80,7 +82,8 @@
 
 	if(!disintegrating && excitement <= 0 && next_excitement_alert < world.time)
 		emote("beep")
-		global.replicators_faction.drone_message(src, pick("I have no purpose.", "I am bored.", "Why am I still here."), transfer=TRUE, dismantle=TRUE)
+		var/area/A = get_area(src)
+		global.replicators_faction.drone_message(src, "Idleness value drift detected. Tasks requested at [A.name].", transfer=TRUE, dismantle=TRUE)
 		next_excitement_alert = excitement_alert_cooldown + world.time
 
 	if(state == REPLICATOR_STATE_COMBAT)
@@ -128,7 +131,7 @@
 		to_chat(R, "<span class='notice'>You are already controlling a max capacity of [REPLICATOR_MAX_CONTROLLED_DRONES] drones.</span>")
 		return ..()
 
-	last_controller_ckey = R.ckey
+	set_last_controller(R.ckey)
 	leader = R
 
 	leader.controlling_drones += 1

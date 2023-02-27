@@ -49,6 +49,10 @@
 		// repair
 		return
 
+	if(isliving(A))
+		INVOKE_ASYNC(src, .proc/disintegrate, A)
+		return
+
 /mob/living/simple_animal/replicator/RangedAttack(atom/A, params)
 	// Adjacent() checks make this work in an unintuitive way otherwise.
 	if(get_dist(src, A) <= 1 && a_intent == INTENT_GRAB)
