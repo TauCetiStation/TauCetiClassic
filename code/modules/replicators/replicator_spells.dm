@@ -44,6 +44,7 @@
 /obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
+	// to-do: sound
 	if(!user_replicator.do_after_objections(3 SECONDS, "Proceeding with replication at [A.name]."))
 		return
 
@@ -178,6 +179,7 @@
 /obj/effect/proc_holder/spell/no_target/replicator_construct/transponder/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
+	// to-do: sound
 	if(!user_replicator.do_after_objections(3 SECONDS, "Deploying a bluespace transponder at [A.name]."))
 		return
 
@@ -230,6 +232,7 @@
 /obj/effect/proc_holder/spell/no_target/replicator_construct/generator/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
+	// to-do: sound
 	if(!user_replicator.do_after_objections(3 SECONDS, "Deploying a generator at [A.name]."))
 		return
 

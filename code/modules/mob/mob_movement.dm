@@ -23,6 +23,10 @@
 	if(client)
 		client.move_delay = max(world.time + timeout, client.move_delay)
 
+// Whether this mob can choose to move to NewLoc. Return FALSE if not.
+/mob/proc/can_intentionally_move(atom/NewLoc, movedir)
+	return TRUE
+
 /client/North()
 	..()
 
@@ -146,6 +150,10 @@
 		moving = TRUE
 
 		if(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
+			moving = FALSE
+			return
+
+		if(!mob.can_intentionally_move(n, direct))
 			moving = FALSE
 			return
 

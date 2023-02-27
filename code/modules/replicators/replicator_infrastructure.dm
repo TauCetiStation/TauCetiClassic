@@ -342,6 +342,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "transit_rune"
 
+	var/next_obstacle_animation = 0
+
 	var/neighbor_count = 0
 
 	var/rune_color
@@ -383,6 +385,19 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		neighbor_adjust_count(my_turf, -1)
 
 	return ..()
+
+/obj/structure/bluespace_corridor/proc/animate_obstacle()
+	if(next_obstacle_animation > world.time)
+		return
+	next_obstacle_animation = world.time + 6
+
+	var/matrix/old_transform = matrix(transform)
+	var/matrix/M = matrix(transform)
+	M.Turn(rand(-45, 45))
+	M.Scale(1.2, 1.2)
+
+	animate(src, transform=M, time=4)
+	animate(transform=old_transform,time=2)
 
 /obj/structure/bluespace_corridor/Crossed(atom/movable/AM)
 	if(AM && AM.invisibility > 0 && prob(30))

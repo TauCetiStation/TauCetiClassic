@@ -219,25 +219,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	if(locate(auto_construct_type) in T)
 		return
 
-	// Corridors can only connect to two other corridors if there's no portal connecting them.
-	// No more than 2 neighbors, and no more than 1 neighbor of the neigbhor(excluding us)
-	if(auto_construct_type == /obj/structure/bluespace_corridor && !(locate(/obj/machinery/swarm_powered/bluespace_transponder) in T))
-		var/neighbor_count = 0
-		for(var/card_dir in global.cardinal)
-			var/turf/pos_neighbor = get_step(T, card_dir)
-
-			if(locate(/obj/machinery/swarm_powered/bluespace_transponder) in pos_neighbor)
-				continue
-
-			var/obj/structure/bluespace_corridor/BC = locate(auto_construct_type) in pos_neighbor
-			if(!BC)
-				continue
-			neighbor_count += 1
-			if(neighbor_count > 2)
-				return
-
-			if(BC.neighbor_count > 1)
-				return
+	if(auto_construct_type == /obj/structure/bluespace_corridor && !(locate(/obj/machinery/swarm_powered/bluespace_transponder) in T) && !can_place_corridor(T))
+		return
 
 	if(prob(30))
 		// maybe it would be better to add some mechanical woosh woosh sound like when constructing a drone.
@@ -245,6 +228,38 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	new auto_construct_type(T)
 	global.replicators_faction.adjust_materials(-auto_construct_cost, adjusted_by=last_controller_ckey)
+
+// Corridors can only connect to two other corridors if there's no portal connecting them.
+// No more than 2 neighbors, and no more than 1 neighbor of the neigbhor(excluding us)
+/mob/living/simple_animal/replicator/proc/can_place_corridor(turf/T)
+	var/neighbor_count = 0
+	for(var/card_dir in global.cardinal)
+		var/turf/pos_neighbor = get_step(T, card_dir)
+
+		if(locate(/obj/machinery/swarm_powered/bluespace_transponder) in pos_neighbor)
+			continue
+
+		var/obj/structure/bluespace_corridor/BC = locate(auto_construct_type) in pos_neighbor
+		if(!BC)
+			continue
+		neighbor_count += 1
+		if(neighbor_count > 2)
+			to_chat(src, "<span class='notice'>Can not place Bluespace Corridor, this tile has more than two neighboring Bluespace Corridors.</span>")
+			for(var/card_dir_anim in global.cardinal)
+				var/turf/anim_turf = get_step(T, card_dir_anim)
+
+				var/obj/structure/bluespace_corridor/BC_anim = locate() in anim_turf
+				if(BC_anim)
+					BC_anim.animate_obstacle()
+
+			return FALSE
+
+		if(BC.neighbor_count > 1)
+			to_chat(src, "<span class='notice'>Can not place Bluespace Corridor, a neighbor has more than one other neighboring Bluespace Corridor.</span>")
+			BC.animate_obstacle()
+			return FALSE
+
+	return TRUE
 
 /mob/living/simple_animal/replicator/update_icon()
 	if(ckey || stat == DEAD)
@@ -270,6 +285,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 /mob/living/simple_animal/replicator/mind_initialize()
 	. = ..()
+
 	var/datum/role/replicator/R = mind.GetRole(REPLICATOR)
 	if(R)
 		return
@@ -584,3 +600,18 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 		return
 
 	to_chat(user, "<span class='notice'>[ckey ? "Is currently" : "Was lastly"] under the influence of [R.presence_name].</span>")
+
+/mob/living/simple_animal/replicator/can_intentionally_move(atom/NewLoc, movedir)
+	. = ..()
+	if(!.)
+		return
+
+	if(m_intent != MOVE_INTENT_WALK)
+		return
+
+	if(auto_construct_type != /obj/structure/bluespace_corridor)
+		return
+
+	var/turf/T = get_turf(NewLoc)
+	if(!can_place_corridor(T))
+		return FALSE
