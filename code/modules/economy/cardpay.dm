@@ -1,6 +1,6 @@
 /obj/item/device/cardpay
 	name = "Card pay device"
-	desc = "Совершайте покупки простым движением карты."
+	desc = "РЎРѕРІРµСЂС€Р°Р№С‚Рµ РїРѕРєСѓРїРєРё РїСЂРѕСЃС‚С‹Рј РґРІРёР¶РµРЅРёРµРј РєР°СЂС‚С‹."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "card-pay-idle"
 
@@ -38,9 +38,9 @@
 			if(D)
 				linked_account = D
 				playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
-				to_chat(user, "<span class='notice'>Аккаунт подключён.</span>")
+				to_chat(user, "<span class='notice'>РђРєРєР°СѓРЅС‚ РїРѕРґРєР»СЋС‡С‘РЅ.</span>")
 			else
-				to_chat(user, "<span class='notice'>Нет аккаунта, привязанного к карте.</span>")
+				to_chat(user, "<span class='notice'>РќРµС‚ Р°РєРєР°СѓРЅС‚Р°, РїСЂРёРІСЏР·Р°РЅРЅРѕРіРѕ Рє РєР°СЂС‚Рµ.</span>")
 		else
 			scan_card(I)
 	else if(istype(I, /obj/item/weapon/wrench) && isturf(src.loc))
@@ -51,16 +51,16 @@
 			if(user.is_busy())
 				return
 			if(anchored)
-				to_chat(user, "<span class='notice'>Сканер откручен.</span>")
+				to_chat(user, "<span class='notice'>РЎРєР°РЅРµСЂ РѕС‚РєСЂСѓС‡РµРЅ.</span>")
 				anchored = FALSE
 				update_holoprice(TRUE)
 				SStgui.close_uis(src)
 			else
 				if(locate(/obj/structure/table, get_turf(src)))
-					to_chat(user, "<span class='warning'>Сканер прикручен.</span>")
+					to_chat(user, "<span class='warning'>РЎРєР°РЅРµСЂ РїСЂРёРєСЂСѓС‡РµРЅ.</span>")
 					anchored = TRUE
 				else
-					to_chat(user, "<span class='warning'>Сканер можно прикрутить только к столу.</span>")
+					to_chat(user, "<span class='warning'>РЎРєР°РЅРµСЂ РјРѕР¶РЅРѕ РїСЂРёРєСЂСѓС‚РёС‚СЊ С‚РѕР»СЊРєРѕ Рє СЃС‚РѕР»Сѓ.</span>")
 	else
 		. = ..()
 
@@ -71,21 +71,21 @@
 		set_dir(turn(dir,-90))
 
 /obj/item/device/cardpay/proc/scan_card(obj/item/weapon/card/id/Card)
-	visible_message("<span class='info'>[usr] прикладывает карту к терминалу.</span>")
+	visible_message("<span class='info'>[usr] РїСЂРёРєР»Р°РґС‹РІР°РµС‚ РєР°СЂС‚Сѓ Рє С‚РµСЂРјРёРЅР°Р»Сѓ.</span>")
 	if(!linked_account)
-		visible_message("[bicon(src)]<span class='warning'>Нет подключённого аккаунта.</span>")
+		visible_message("[bicon(src)]<span class='warning'>РќРµС‚ РїРѕРґРєР»СЋС‡С‘РЅРЅРѕРіРѕ Р°РєРєР°СѓРЅС‚Р°.</span>")
 		return
 	if(linked_account.suspended)
-		visible_message("[bicon(src)]<span class='warning'>Подключённый аккаунт заблокирован.</span>")
+		visible_message("[bicon(src)]<span class='warning'>РџРѕРґРєР»СЋС‡С‘РЅРЅС‹Р№ Р°РєРєР°СѓРЅС‚ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ.</span>")
 		return
 
 	var/datum/money_account/D = get_account(Card.associated_account_number)
 	var/attempt_pin = 0
 	if(D)
 		if(D.security_level > 0)
-			attempt_pin = input("Введите ПИН-код", "Терминал оплаты") as num
+			attempt_pin = input("Р’РІРµРґРёС‚Рµ РџРРќ-РєРѕРґ", "РўРµСЂРјРёРЅР°Р» РѕРїР»Р°С‚С‹") as num
 			if(isnull(attempt_pin))
-				to_chat(usr, "[bicon(src)]<span class='warning'>Неверный ПИН-код!</span>")
+				to_chat(usr, "[bicon(src)]<span class='warning'>РќРµРІРµСЂРЅС‹Р№ РџРРќ-РєРѕРґ!</span>")
 				return
 			D = attempt_account_access(Card.associated_account_number, attempt_pin, 2)
 		icon_state = "card-pay-processing"
@@ -97,13 +97,13 @@
 	if(amount <= Acc.money)
 		flick("card-pay-complete", src)
 		if(amount > 0)
-			charge_to_account(Acc.account_number, "Терминал оплаты", "Оплата", src.name, -amount)
-			charge_to_account(linked_account.account_number, "Терминал оплаты", "Прибыль", src.name, amount)
+			charge_to_account(Acc.account_number, "РўРµСЂРјРёРЅР°Р» РѕРїР»Р°С‚С‹", "РћРїР»Р°С‚Р°", src.name, -amount)
+			charge_to_account(linked_account.account_number, "РўРµСЂРјРёРЅР°Р» РѕРїР»Р°С‚С‹", "РџСЂРёР±С‹Р»СЊ", src.name, amount)
 		if(reset)
 			pay_amount = 0
 			update_holoprice(TRUE)
 	else
-		visible_message("[bicon(src)]<span class='warning'>Недостаточно средств!</span>")
+		visible_message("[bicon(src)]<span class='warning'>РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ!</span>")
 		flick("card-pay-error", src)
 
 /obj/item/device/cardpay/attack_hand(mob/user)
@@ -114,7 +114,7 @@
 /obj/item/device/cardpay/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "CardPay", "Терминал")
+		ui = new(user, src, "CardPay", "РўРµСЂРјРёРЅР°Р»")
 		ui.open()
 
 /obj/item/device/cardpay/tgui_data(mob/user)
@@ -159,7 +159,7 @@
 				playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 				return TRUE
 			else
-				to_chat(usr, "<span class='warning'>Доступ запрещён.</span>")
+				to_chat(usr, "<span class='warning'>Р”РѕСЃС‚СѓРї Р·Р°РїСЂРµС‰С‘РЅ.</span>")
 		if("approveprice")
 			if(check_id(usr))
 				if(display_price > 0)
@@ -169,7 +169,7 @@
 					update_holoprice(FALSE)
 					return TRUE
 			else
-				to_chat(usr, "<span class='warning'>Доступ запрещён.</span>")
+				to_chat(usr, "<span class='warning'>Р”РѕСЃС‚СѓРї Р·Р°РїСЂРµС‰С‘РЅ.</span>")
 		if("togglereset")
 			reset = !reset
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
