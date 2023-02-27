@@ -118,7 +118,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 		/obj/effect/proc_holder/spell/no_target/transfer_to_area,
 		/obj/effect/proc_holder/spell/no_target/toggle_light,
 		/obj/effect/proc_holder/spell/no_target/set_mail_tag,
-		/obj/effect/proc_holder/spell/no_target/construct_catapult,
+		/obj/effect/proc_holder/spell/no_target/replicator_construct/catapult,
 	)
 
 	var/datum/skills/skills
@@ -241,7 +241,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	if(prob(30))
 		// maybe it would be better to add some mechanical woosh woosh sound like when constructing a drone.
-		playsound_stealthy(T, 'sound/misc/mining_crate_success.ogg', VOL_EFFECTS_MASTER, vol=40)
+		playsound_stealthy(T, 'sound/misc/mining_crate_success.ogg', vol=40)
 
 	new auto_construct_type(T)
 	global.replicators_faction.adjust_materials(-auto_construct_cost, adjusted_by=last_controller_ckey)
@@ -388,7 +388,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 		TCC.action.button_icon_state = "ui_corridor_on"
 		TCC.action.button.UpdateIcon()
 
-	playsound_stealthy(target, 'sound/mecha/UI_SCI-FI_Tone_10.ogg', VOL_EFFECTS_MASTER)
+	playsound_stealthy(target, 'sound/mecha/UI_SCI-FI_Tone_10.ogg')
 	return TRUE
 
 /mob/living/simple_animal/replicator/Topic(href, href_list)
@@ -471,7 +471,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 /mob/living/simple_animal/replicator/proc/has_swarms_gift()
 	return has_status_effect(STATUS_EFFECT_SWARMS_GIFT)
 
-/mob/living/simple_animal/replicator/proc/playsound_stealthy(atom/source, sound, volume_channel, vol=100)
+/mob/living/simple_animal/replicator/proc/playsound_stealthy(atom/source, sound, vol=100)
 	var/mufflerange = has_swarms_gift() ? -5 : 0
 	return playsound(source, sound, volume_channel, vol=vol, extrarange=mufflerange)
 

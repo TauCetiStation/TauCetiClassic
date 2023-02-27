@@ -2,13 +2,13 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 41
+#define SAVEFILE_VERSION_MAX 42
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
 #define SAVEFILE_VERSION_SPECIES_JOBS 41 // job preferences after breaking changes to any /datum/job/
 #define SAVEFILE_VERSION_QUIRKS 30 // quirks preferences after breaking changes to any /datum/quirk/
-#define SAVEFILE_VERSION_SPECIAL_ROLES 41 // if you change any values in global.special_roles_ignore_question
+#define SAVEFILE_VERSION_SPECIAL_ROLES 42 // if you change any values in global.special_roles_ignore_question
 //breaking changes is when you remove any existing quirk/job or change their restrictions
 //Don't forget to bump SAVEFILE_VERSION_MAX too
 

@@ -5,12 +5,8 @@
 
 	factions_allowed = list(/datum/faction/replicators)
 
-	// TO-DO: uncomment these
-	//minimum_player_count = 25
-	//minimum_players_bundles = 35
-
-	minimum_player_count = 1
-	minimum_players_bundles = 1
+	minimum_player_count = 25
+	minimum_players_bundles = 35
 
 /datum/game_mode/infestation/announce()
 	to_chat(world, "<b>The current game mode is - Replicators!</b>")

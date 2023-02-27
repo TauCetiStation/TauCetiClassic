@@ -67,7 +67,7 @@
 		return
 
 	var/mob/living/simple_animal/replicator/R = user
-	R.playsound_stealthy(user, emote_sound, VOL_EFFECTS_MASTER, vol=75)
+	R.playsound_stealthy(user, emote_sound, vol=75)
 	/*
 		for(var/mob/living/simple_animal/replicator/R as anything in global.replicators)
 		if(!R.ckey)

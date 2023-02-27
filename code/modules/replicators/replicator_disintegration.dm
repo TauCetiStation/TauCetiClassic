@@ -134,7 +134,7 @@
 	D.layer = A.layer + 0.1
 	D.icon_state = "disintegrate_static"
 
-	playsound_stealthy(A, 'sound/machines/cyclotron.ogg', VOL_EFFECTS_MASTER)
+	playsound_stealthy(A, 'sound/machines/cyclotron.ogg')
 
 	if(!do_skilled(src, A, A.get_unit_disintegration_time() * material_amount / efficency, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
 		qdel(D)
@@ -146,7 +146,7 @@
 	if(!A.is_replicator_structure())
 		last_disintegration = world.time
 
-	playsound_stealthy(src, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg', VOL_EFFECTS_MASTER)
+	playsound_stealthy(src, 'sound/mecha/UI_SCI-FI_Compute_01_Wet.ogg')
 
 	var/obj/effect/overlay/replicator/target_appearance = new(get_turf(A))
 	target_appearance.mouse_opacity = MOUSE_OPACITY_TRANSPARENT

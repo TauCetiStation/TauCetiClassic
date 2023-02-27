@@ -11,7 +11,7 @@
 			to_chat(user, "<span class='warning'>Not enough materials.</span>")
 		return FALSE
 
-	if(!istype(user.loc, /turf/simulated/floor))
+	if(!isfloorturf(user.loc))
 		if(try_start)
 			to_chat(user, "<span class='notice'>You must be on solid ground to construct this.</span>")
 		return FALSE
@@ -400,7 +400,7 @@
 	user_replicator.try_enter_disposal_system()
 
 
-/obj/effect/proc_holder/spell/no_target/construct_catapult
+/obj/effect/proc_holder/spell/no_target/replicator_construct/catapult
 	name = "Open Bluespace Rift"
 	desc = "Produce a device to open the bluespace rift. Rift will then consume energy and materials until completed."
 
@@ -412,7 +412,9 @@
 	action_icon = 'icons/mob/replicator.dmi'
 	action_icon_state = "ui_catapult"
 
-/obj/effect/proc_holder/spell/no_target/construct_catapult/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
+	material_cost = 0
+
+/obj/effect/proc_holder/spell/no_target/replicator_construct/catapult/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
 	if(global.replicators_faction.bandwidth < 20)
 		if(try_start)
 			to_chat(user, "<span class='warning'>The rift requires 20 replicators to be sent through. You need more bandwidth.</span>")
@@ -433,11 +435,6 @@
 	if(!(A.name in teleportlocs))
 		if(try_start)
 			to_chat(user, "<span class='notice'>Only inhabitable areas may be used to open a rift.</span>")
-		return FALSE
-
-	if(!istype(user.loc, /turf/simulated/floor))
-		if(try_start)
-			to_chat(user, "<span class='notice'>You mustn't be inside of anything for this to work.</span>")
 		return FALSE
 
 	return ..()
