@@ -52,6 +52,9 @@
 	var/list/wall_types
 	var/list/floor_types
 	var/list/door_types
+	var/area/cross_teleport_area_type
+	var/obj/effect/temp_visual/teleport_entry_vis
+	var/obj/effect/temp_visual/teleport_exit_vis
 
 	// Default is "0" TO-DO: convert this to icon_states. ~Luduk
 	var/carpet_dir
@@ -289,6 +292,7 @@
 		var/atom_changed = FALSE
 		if(A.atom_religify(src))
 			atom_changed = TRUE
+			A.AddComponent(/datum/component/cross_teleport/religion, get_area_by_type(cross_teleport_area_type), null, 0, src, list(src, global.chaplain_religion))
 
 		i++
 		if(after_action && atom_changed)

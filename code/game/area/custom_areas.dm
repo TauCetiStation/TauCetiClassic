@@ -88,6 +88,12 @@
 		'sound/ambience/ambiruin6.ogg',
 	)
 
+/area/custom/cult_wasteland
+	name = "Unknown Wasteland"
+	icon_state = "cult-heaven"
+	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+
 /area/custom/ninjaspawn
 	name = "Space Dojo"
 	icon_state = "red"

@@ -303,6 +303,7 @@
 #include "code\datums\components\cell_selfrecharge.dm"
 #include "code\datums\components\clickplace.dm"
 #include "code\datums\components\connect_range.dm"
+#include "code\datums\components\cross_teleport.dm"
 #include "code\datums\components\cult_eyes.dm"
 #include "code\datums\components\cult_halo.dm"
 #include "code\datums\components\footstep.dm"

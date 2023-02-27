@@ -39,6 +39,9 @@
 	wall_types = list(/turf/simulated/wall/cult, /turf/simulated/wall/cult/runed, /turf/simulated/wall/cult/runed/anim)
 	floor_types = list(/turf/simulated/floor/engine/cult, /turf/simulated/floor/engine/cult/lava)
 	door_types = list(/obj/structure/mineral_door/cult)
+	cross_teleport_area_type = /area/custom/cult_wasteland
+	teleport_entry_vis = /obj/effect/temp_visual/cult/blood
+	teleport_exit_vis = /obj/effect/temp_visual/cult/blood/out
 
 	favor = 1000
 	max_favor = 10000
