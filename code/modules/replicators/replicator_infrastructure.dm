@@ -232,8 +232,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 /obj/machinery/power/replicator_generator
 	name = "bluespace generator"
 	desc = "Huh."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "coolanttank"
+	icon = 'icons/obj/machines/field_generator.dmi'
+	icon_state = "Field_Gen"
 
 	density = TRUE
 	anchored = TRUE
@@ -487,7 +487,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 		announcement = new /datum/announcement/centcomm/replicator/doom
 		icon_state = "catapult_100"
 
-		global.replicators_faction.announce_swarm("The Swarm", "The Swarm", "Mission accomplished.")
+		global.replicators_faction.swarm_chat_message("The Swarm", "Mission accomplished.", 5)
 		density = FALSE
 
 		for(var/mob/M in player_list)
@@ -495,7 +495,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 				M.playsound_local(null, 'sound/hallucinations/demons_3.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 		var/area/A = get_area(src)
-		global.replicators_faction.announce_swarm("The Swarm", "The Swarm", "Bluespace Catapult construction finished in [A.name]. Escape through the dimensional rift before it closes!")
+		global.replicators_faction.swarm_chat_message("The Swarm", "Bluespace Catapult construction finished in [A.name]. Escape through the dimensional rift before it closes!", 5)
 
 	if(announcement)
 		last_perc_announcement = perc_finished

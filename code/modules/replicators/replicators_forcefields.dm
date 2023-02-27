@@ -197,8 +197,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	if(!isreplicator(AM))
 		return ..()
 
-	var/mob/living/simple_animal/replicator/R = AM
-	global.replicators_faction.adjust_compute(1, adjusted_by=R.last_controller_ckey)
 	icon_state = "floor_node_captured"
 	playsound(AM, 'sound/magic/heal.ogg', VOL_EFFECTS_MASTER)
 

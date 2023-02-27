@@ -20,9 +20,13 @@
 
 	emote("beep")
 
-	global.replicators_faction.announce_swarm(global.replicators_faction.get_presence_name(ckey), ckey, message, announcer=src)
+	var/datum/role/replicator/R = mind?.GetRole(REPLICATOR)
+	if(!R)
+		return
 
-/datum/faction/replicators/proc/announce_swarm(presence_name, presence_ckey, message, atom/announcer=null)
+	global.replicators_faction.announce_swarm(R, message, announcer=src)
+
+/datum/faction/replicators/proc/swarm_chat_message(presence_name, message, font_size, announcer=null)
 	var/list/listening = list()
 
 	for(var/mob/M as anything in mob_list)
@@ -35,22 +39,13 @@
 		else if(isobserver(M))
 			listening |= M
 
+	var/all_open_tags = "<font size='[font_size]'>"
+	var/all_close_tags = "</font>"
+
 	for(var/m in listening)
 		var/mob/M = m
-		var/open_tags = ""
-		var/close_tags = ""
-
-		if(swarms_goodwill[presence_ckey] && swarms_goodwill[max_goodwill_ckey])
-			var/goodwill_coeff = swarms_goodwill[presence_ckey] / swarms_goodwill[max_goodwill_ckey]
-			var/goodwill_font_size = max(round(goodwill_coeff * 3), 1)
-
-			if(presence_ckey == max_goodwill_ckey)
-				open_tags += "<font size='[goodwill_font_size]'>"
-				close_tags += "</font>"
-
-		if(presence_name == "The Swarm")
-			open_tags += "<font size='5'>"
-			close_tags += "</font>"
+		var/open_tags = all_open_tags
+		var/close_tags = all_close_tags
 
 		var/message_open_tags = "<span class='message'><span class='replicator'>"
 		var/message_close_tags = "</span></span>"
@@ -70,6 +65,18 @@
 			speaker_name = "[FOLLOW_LINK(M, announcer)] [speaker_name]"
 
 		to_chat(M, "[open_tags][channel] [speaker_name] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags][jump_button]")
+
+/datum/faction/replicators/proc/announce_swarm(datum/role/replicator/R, message, atom/announcer=null)
+	var/font_size = 1
+
+	var/datum/role/replicator/R_max = get_member_by_ckey(max_goodwill_ckey)
+	if(R_max && R_max.swarms_goodwill > 0)
+		var/goodwill_coeff = R.swarms_goodwill / R_max.swarms_goodwill
+		var/goodwill_font_size = clamp(CEIL(goodwill_coeff * 3), 1, 3)
+
+		font_size = goodwill_font_size
+
+	swarm_chat_message(R.presence_name, message, font_size, announcer=announcer)
 
 // Mines currently also use this.
 /datum/faction/replicators/proc/drone_message(atom/drone, message, transfer=FALSE, dismantle=FALSE, objection_time=0)

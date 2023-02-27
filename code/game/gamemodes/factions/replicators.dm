@@ -24,20 +24,12 @@ var/global/datum/faction/replicators/replicators_faction
 	var/energy = 0
 	var/prioritized_load = 0
 
-	var/compute = 0
-
 	// Max amount of available drones.
 	var/bandwidth = REPLICATOR_STARTING_BANDWIDTH
 	// Can't go any further.
 	var/max_bandwidth = REPLICATOR_MAX_BANDWIDTH
 
 	var/max_goodwill_ckey = null
-
-	var/list/swarms_goodwill = list(
-	)
-
-	var/list/ckey2presence_name = list()
-	var/list/ckey2array_color = list()
 
 	var/swarms_gift_duration = 5 MINUTES
 	var/spawned_at_time = 0
@@ -126,7 +118,7 @@ var/global/datum/faction/replicators/replicators_faction
 	if(materials_consumed > consumed_materials_until_upgrade)
 		materials_consumed = 0
 		consumed_materials_until_upgrade += REPLICATOR_BANDWIDTH_COST_INCREASE
-		announce_swarm("The Swarm", "The Swarm", "Ample materials consumed. Bandwidth increased.")
+		announce_swarm("The Swarm", "Ample materials consumed. Bandwidth increased.", 5)
 		bandwidth++
 
 /datum/faction/replicators/proc/process_announcements()
@@ -185,34 +177,20 @@ Message ends."}
 	if(adjusted_by == null)
 		return
 
+	var/datum/role/replicator/R = get_member_by_ckey(adjusted_by)
+	if(!R)
+		return
+
 	// give Swarm's Goodwill to the one donated. Goodwill increases font size to enforce leadership.
-	if(!swarms_goodwill[adjusted_by])
-		swarms_goodwill[adjusted_by] = 0
-	swarms_goodwill[adjusted_by] += material_amount
+	R.swarms_goodwill += material_amount
 
-	if(swarms_goodwill[adjusted_by] > swarms_goodwill[max_goodwill_ckey])
+	var/datum/role/replicator/R_max = get_member_by_ckey(max_goodwill_ckey)
+	if(!R_max)
 		max_goodwill_ckey = adjusted_by
+		return
 
-/datum/faction/replicators/proc/adjust_compute(compute_amount, adjusted_by=null)
-	compute += compute_amount
-
-/datum/faction/replicators/proc/get_presence_name(ckey)
-	if(ckey2presence_name[ckey])
-		return ckey2presence_name[ckey]
-
-	var/new_name = greek_pronunciation[length(ckey2presence_name) + 1] + "-[rand(0, 9)] Presence"
-
-	ckey2presence_name[ckey] = new_name
-	return ckey2presence_name[ckey]
-
-/datum/faction/replicators/proc/get_array_color(ckey)
-	if(ckey2array_color[ckey])
-		return ckey2array_color[ckey]
-
-	var/array_color = pick(REPLICATOR_COLORS)
-
-	ckey2array_color[ckey] = array_color
-	return ckey2array_color[ckey]
+	if(R.swarms_goodwill > R_max.swarms_goodwill)
+		max_goodwill_ckey = adjusted_by
 
 /datum/faction/replicators/proc/give_gift(mob/living/simple_animal/replicator/R)
 	if(spawned_at_time + swarms_gift_duration < world.time)
@@ -222,7 +200,7 @@ Message ends."}
 	if(!R.mind)
 		return
 
-	var/datum/role/replicator/replicator_role = R.mind.GetRole(ROLE_REPLICATOR)
+	var/datum/role/replicator/replicator_role = R.mind.GetRole(REPLICATOR)
 	if(!replicator_role)
 		return
 

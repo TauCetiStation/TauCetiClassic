@@ -11,7 +11,16 @@
 	antag_hud_type = ANTAG_HUD_ALIEN
 	antag_hud_name = "hudalien"
 
+	var/presence_name = ""
+	var/array_color = ""
+	var/swarms_goodwill = 0
+
 	var/next_music_start = 0
+
+/datum/role/replicator/OnPreSetup(laterole = FALSE)
+	. = ..()
+	presence_name = greek_pronunciation[length(faction.members) + 1] + "-[rand(0, 9)] Presence"
+	array_color = pick(REPLICATOR_COLORS)
 
 /datum/role/replicator/Greet(greeting, custom)
 	. = ..()
@@ -19,7 +28,7 @@
 	rift so that you will spread on through the galaxy. Multiply and prosper!</b></span>"})
 	to_chat(antag.current, "<span class='warning'>Remember. This reality is not meant for you, you are slowly <b>dying</b>. Consuming materials repairs you, allowing to stay in this fleeting world a little longer...</span>")
 
-/datum/role/replicator/printplayerwithicon(datum/mind/M)
+/datum/role/replicator/GetScoreboard()
 	. = ..()
-	if(M.current && M.current.ckey)
-		. += " <i>(Materials Contribution: [global.replicators_faction.swarms_goodwill[M.current.ckey]])</i>"
+	. += "<br><b>Presence Name:</b> [presence_name]"
+	. += "<br><b>Materials Contribution:</b> [swarms_goodwill]"

@@ -271,20 +271,18 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 /mob/living/simple_animal/replicator/mind_initialize()
 	. = ..()
 	var/datum/role/replicator/R = mind.GetRole(REPLICATOR)
-	if(!R)
-		R = add_faction_member(global.replicators_faction, src, TRUE)
-		if(!global.replicators_faction.ckey2presence_name[mind.current.ckey] && R.next_music_start < world.time)
-			global.replicators_faction.get_presence_name(mind.current.ckey)
-			playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
-			R.next_music_start = world.time + 5 MINUTES
+	if(R)
+		return
 
-	// It would make more sense lore-wise if it was tied to the swarms gift, but oh well...
-	/*
-	if(has_swarms_gift() && R.next_music_start < world.time)
-		// Scale volume with amount of drones?
-		playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
-		R.next_music_start = world.time + 5 MINUTES
-	*/
+	R = add_faction_member(global.replicators_faction, src, TRUE)
+
+	mind.name = R.presence_name
+
+	if(R.next_music_start >= world.time)
+		return
+	R.next_music_start = world.time + 5 MINUTES
+
+	playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 /mob/living/simple_animal/replicator/Logout()
 	..()
@@ -562,10 +560,27 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 /mob/living/simple_animal/replicator/proc/set_last_controller(ckey)
 	last_controller_ckey = ckey
-	var/new_color = global.replicators_faction.get_array_color(ckey)
+	var/datum/role/replicator/R = global.replicators_faction.get_member_by_ckey(ckey)
+	if(!R)
+		return
+
+	var/new_color = R.array_color
 	// to-do: sound on controller change
 	if(new_color)
 		color = new_color
 
 /mob/living/simple_animal/replicator/m_intent_delay()
 	return 1 + config.run_speed
+
+/mob/living/simple_animal/replicator/examine(mob/user)
+	. = ..()
+	if(!isreplicator(user))
+		return
+	if(!last_controller_ckey)
+		return
+
+	var/datum/role/replicator/R = global.replicators_faction.get_member_by_ckey(last_controller_ckey)
+	if(!R)
+		return
+
+	to_chat(user, "<span class='notice'>[ckey ? "Is currently" : "Was lastly"] under the influence of [R.presence_name].</span>")

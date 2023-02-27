@@ -93,6 +93,7 @@
 
 /obj/item/mine/replicator/deconstruct()
 	try_trigger()
+	qdel(src)
 
 /obj/item/mine/replicator/try_trigger(atom/movable/AM)
 	if(isreplicator(AM))

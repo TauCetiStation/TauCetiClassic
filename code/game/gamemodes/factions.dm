@@ -393,3 +393,8 @@
 	for(var/datum/role/R in members)
 		if(R.antag == M)
 			return R
+
+/datum/faction/proc/get_member_by_ckey(ckey)
+	for(var/datum/role/R in members)
+		if(R.antag && R.antag.current && R.antag.current.ckey == ckey)
+			return R

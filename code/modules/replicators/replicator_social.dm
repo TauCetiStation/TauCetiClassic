@@ -11,21 +11,24 @@
 	if(objection_end_time < world.time)
 		return
 
-	var/presence_name = global.replicators_faction.get_presence_name(R.last_controller_ckey)
-	if(!presence_name)
+	if(!R.mind)
 		return
 
-	if(next_objection_time[presence_name] > world.time)
+	var/datum/role/replicator/R_role = R.mind.GetRole(REPLICATOR)
+	if(!R_role)
 		return
-	next_objection_time[presence_name] = world.time + objection_cooldown
 
-	to_chat(src, "<span class='bold warning'>[presence_name] objects to your actions!</span>")
+	if(next_objection_time[R_role.presence_name] > world.time)
+		return
+	next_objection_time[R_role.presence_name] = world.time + objection_cooldown
+
+	to_chat(src, "<span class='bold warning'>[R_role.presence_name] objects to your actions!</span>")
 
 	if(next_objection_sound > world.time)
 		return
 	next_objection_sound = world.time + objection_sound_cooldown
 
-	playsound_local(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER, 60)
+	playsound_local(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/simple_animal/replicator/proc/do_after_objections(delay, message)
 	global.replicators_faction.drone_message(src, message, objection_time=delay)
