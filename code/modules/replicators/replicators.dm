@@ -80,7 +80,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	status_flags = CANSTUN|CANPUSH
 
-	w_class = SIZE_SMALL
+	// Prevents from opening airlocks and a lot of other things.
+	w_class = SIZE_TINY
 
 	immune_to_ssd = TRUE
 
@@ -334,7 +335,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 			stat("Unclaimed Nodes:", node_string)
 
 		if(length(global.bluespace_catapults) > 0)
-			stat("Catapult Location:", get_area(global.bluespace_catapults[1]))
+			var/area/A = get_area(global.bluespace_catapults[1])
+			stat("Catapult Location:", "[A.name]")
 
 /mob/living/simple_animal/replicator/death()
 	..()
@@ -395,7 +397,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	mind.transfer_to(target)
 
-	target.a_intent = a_intent
+	target.set_a_intent(a_intent)
+	target.set_m_intent(m_intent)
 
 	target.auto_construct_type = auto_construct_type
 	target.auto_construct_cost = auto_construct_cost
@@ -631,3 +634,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 		R.Drop()
 
 	return ..()
+
+// No lore reason as of now. It's just somewhat annoying otherwise.
+/mob/living/simple_animal/replicator/ventcrawl_enter_delay()
+	return ..() * 2

@@ -294,7 +294,7 @@
 /obj/machinery/power/replicator_generator/get_replicator_material_amount()
 	return REPLICATOR_COST_GENERATOR
 
-/obj/machinery/replicator_generator/get_unit_disintegration_time()
+/obj/machinery/power/replicator_generator/get_unit_disintegration_time()
 	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
 
 
@@ -320,8 +320,8 @@
 /obj/item/mine/replicator/can_be_auto_disintegrated()
 	return FALSE
 
-/obj/machinery/power/replicator_generator/get_replicator_material_amount()
+/obj/item/mine/replicator/get_replicator_material_amount()
 	return REPLICATOR_COST_MINE
 
-/obj/machinery/replicator_generator/get_unit_disintegration_time()
+/obj/item/mine/replicator/get_unit_disintegration_time()
 	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER

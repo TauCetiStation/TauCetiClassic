@@ -1408,12 +1408,16 @@
 
 /// Try changing move intent. Return success.
 /mob/living/proc/set_m_intent(intent)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(m_intent == intent)
 		return FALSE
 
 	if(intent == MOVE_INTENT_RUN && HAS_TRAIT(src, TRAIT_NO_RUN))
 		to_chat(src, "<span class='notice'>Something prevents you from running!</span>")
 		return FALSE
+
+	SEND_SIGNAL(src, COMSIG_MOB_SET_M_INTENT, intent)
 
 	m_intent = intent
 	if(hud_used)

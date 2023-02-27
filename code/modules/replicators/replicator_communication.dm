@@ -20,11 +20,7 @@
 
 	emote("beep")
 
-	var/datum/role/replicator/R = mind?.GetRole(REPLICATOR)
-	if(!R)
-		return
-
-	global.replicators_faction.announce_swarm(R, message, announcer=src)
+	global.replicators_faction.announce_swarm(last_controller_ckey, message, announcer=src)
 
 /datum/faction/replicators/proc/swarm_chat_message(presence_name, message, font_size, announcer=null)
 	var/list/listening = list()

@@ -72,11 +72,9 @@
 		newtonian_move(get_dir(A, src))
 
 /mob/living/simple_animal/replicator/CtrlClickOn(atom/A)
-	if(istype(A, /mob/living/simple_animal/replicator))
-		var/mob/living/simple_animal/replicator/S = A
-		if(!S.ckey)
-			transfer_control(A)
-			return
+	if(!isreplicator(A))
+		return
+	transfer_control(A)
 
 
 /obj/item/mine/replicator

@@ -119,7 +119,7 @@ var/global/datum/faction/replicators/replicators_faction
 	if(materials_consumed > consumed_materials_until_upgrade)
 		materials_consumed = 0
 		consumed_materials_until_upgrade += REPLICATOR_BANDWIDTH_COST_INCREASE
-		announce_swarm("The Swarm", "Ample materials consumed. Bandwidth increased.", 5)
+		swarm_chat_message("The Swarm", "Ample materials consumed. Bandwidth increased.", 5)
 		bandwidth++
 
 /datum/faction/replicators/proc/process_announcements()
@@ -279,5 +279,6 @@ Message ends."}
 		var/datum/replicator_array_info/RAI = ckey2info[member_ckey]
 		score_results += "[bicon(logo, css = "style='position: relative;top:10px;'")]<b>[member_ckey]</b> was <b>[RAI.presence_name]</b>"
 		score_results += "<br><b>Materials Contribution:</b> [RAI.swarms_goodwill]"
+		score_results += "<br>"
 	score_results += "</ul>"
 	return score_results

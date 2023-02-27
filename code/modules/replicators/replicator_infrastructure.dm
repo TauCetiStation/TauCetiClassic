@@ -391,13 +391,35 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		return
 	next_obstacle_animation = world.time + 6
 
+	var/pivot_x = -16
+	var/pivot_y = 16
+
+	var/old_pixel_x = pixel_x
+	var/old_pixel_y = pixel_y
+
+	pixel_x += pivot_x
+	pixel_y += pivot_y
+
 	var/matrix/old_transform = matrix(transform)
 	var/matrix/M = matrix(transform)
-	M.Turn(rand(-45, 45))
-	M.Scale(1.2, 1.2)
+	var/angle = rand(-60, 60)
+	M.Turn(angle)
+	M.Scale(1.1, 1.1)
+	M.Translate(-pivot_x, -pivot_y)
 
-	animate(src, transform=M, time=4)
-	animate(transform=old_transform,time=2)
+	var/matrix/M2 = matrix(transform)
+	M2.Turn(-angle * 0.5)
+	M2.Scale(1.1, 1.1)
+	M2.Translate(-pivot_x, -pivot_y)
+
+	animate(src, transform=M, time=2)
+	animate(transform=M2, time=3)
+	animate(transform=old_transform,time=1)
+
+	sleep(6)
+
+	pixel_x = old_pixel_x
+	pixel_y = old_pixel_y
 
 /obj/structure/bluespace_corridor/Crossed(atom/movable/AM)
 	if(AM && AM.invisibility > 0 && prob(30))

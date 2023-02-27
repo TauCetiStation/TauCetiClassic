@@ -134,11 +134,14 @@
 	set_last_controller(R.ckey)
 	leader = R
 
+	set_m_intent(leader.m_intent)
+
 	leader.controlling_drones += 1
 
 	RegisterSignal(R, list(COMSIG_CLIENTMOB_MOVE), .proc/_repeat_leader_move)
 	RegisterSignal(R, list(COMSIG_MOB_CLICK), .proc/_repeat_leader_attack)
 	RegisterSignal(R, list(COMSIG_MOB_SET_A_INTENT), .proc/on_leader_intent_change)
+	RegisterSignal(R, list(COMSIG_MOB_SET_M_INTENT), .proc/on_leader_m_intent_change)
 	RegisterSignal(R, list(COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING), .proc/forget_leader)
 
 	excitement = 30
@@ -151,7 +154,7 @@
 
 	leader.controlling_drones -= 1
 
-	UnregisterSignal(leader, list(COMSIG_CLIENTMOB_MOVE, COMSIG_MOB_CLICK, COMSIG_MOB_SET_A_INTENT, COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(leader, list(COMSIG_CLIENTMOB_MOVE, COMSIG_MOB_CLICK, COMSIG_MOB_SET_A_INTENT, COMSIG_MOB_SET_M_INTENT, COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING))
 	leader = null
 	set_state(REPLICATOR_STATE_HARVESTING)
 
@@ -212,6 +215,10 @@
 	SIGNAL_HANDLER
 	if(new_intent != INTENT_HARM)
 		forget_leader(source)
+
+/mob/living/simple_animal/replicator/proc/on_leader_m_intent_change(datum/source, new_m_intent)
+	SIGNAL_HANDLER
+	set_m_intent(new_m_intent)
 
 /mob/living/simple_animal/replicator/proc/set_state(new_state)
 	if(new_state == REPLICATOR_STATE_WANDERING)

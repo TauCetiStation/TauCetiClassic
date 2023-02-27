@@ -60,7 +60,7 @@
 	var/mob/living/simple_animal/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
 	// to-do: sound
-	if(!objection_timer(user_replicator, 3 SECONDS, "Proceeding with replication at [A.name]."))
+	if(!objection_timer(user_replicator, "Proceeding with replication at [A.name]."))
 		return
 
 	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
@@ -72,6 +72,8 @@
 
 	R.name = "replicator ([R.generation])"
 	R.real_name = R.name
+
+	R.next_control_change = world.time + R.control_change_cooldown
 
 	to_chat(user, "<span class='notice'>Replication successful, meet [R.name]!</span>")
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
@@ -196,7 +198,7 @@
 	var/mob/living/simple_animal/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
 	// to-do: sound
-	if(!objection_timer(user_replicator, 3 SECONDS, "Deploying a bluespace transponder at [A.name]."))
+	if(!objection_timer(user_replicator, "Deploying a bluespace transponder at [A.name]."))
 		return
 
 	to_chat(user, "<span class='notice'>Bluespace Transponder activation initiated...Establishing contact with The Swarm.</span>")
@@ -250,7 +252,7 @@
 	var/mob/living/simple_animal/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
 	// to-do: sound
-	if(objection_timer(user_replicator, 3 SECONDS, "Deploying a generator at [A.name]."))
+	if(objection_timer(user_replicator, "Deploying a generator at [A.name]."))
 		return
 
 	to_chat(user, "<span class='notice'>Generator deployed.</span>")
@@ -464,7 +466,7 @@
 	var/mob/living/simple_animal/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
 	// to-do: sound
-	if(!objection_timer(user_replicator, 10 SECONDS, "Constructing a Bluespace Catapult at [A.name]!"))
+	if(!objection_timer(user_replicator, "Constructing a Bluespace Catapult at [A.name]!"))
 		return
 
 	new /obj/machinery/swarm_powered/bluespace_catapult(user_replicator.loc)
