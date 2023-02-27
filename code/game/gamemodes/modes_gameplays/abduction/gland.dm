@@ -133,7 +133,7 @@
 
 /obj/item/gland/abductor/Inject(mob/living/carbon/human/target)
 	. = ..()
-	if(tgui_alert(target, "Вы станите новым членом команды, похитившей вас, а за одно и предадите всё человечество!", "Стать ассистентом пришельцев?", list("Да","Нет"), 15 SECONDS) == "Да")
+	if(tgui_alert(target, "Вы станете новым членом команды пришельцев, и за одно предадите всё человечество!", "Стать ассистентом пришельцев?", list("Да", "Нет"), 15 SECONDS) == "Да")
 		to_chat(host, "<span class='notice'>You feel something moving in your brain.</span>")
 		host.AdjustConfused(8)
 		host.make_jittery(60)
