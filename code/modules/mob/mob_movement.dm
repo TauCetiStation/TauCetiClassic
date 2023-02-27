@@ -121,13 +121,7 @@
 
 		mob.last_move_intent = world.time + 10
 
-		switch(mob.m_intent)
-			if("run")
-				if(mob.drowsyness > 0)
-					add_delay += 6
-				add_delay += 1 + config.run_speed
-			if("walk")
-				add_delay += 2.5 + config.walk_speed
+		add_delay += mob.m_intent_delay()
 
 		var/list/grabs = mob.GetGrabs()
 		if(grabs.len)

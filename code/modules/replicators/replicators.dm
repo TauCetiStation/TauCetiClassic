@@ -70,7 +70,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	melee_damage = 0
 	speed = -1
 
-	w_class = SIZE_TINY
+	w_class = SIZE_SMALL
 
 	typing_indicator_type = "robot"
 
@@ -566,3 +566,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	// to-do: sound on controller change
 	if(new_color)
 		color = new_color
+
+/mob/living/simple_animal/replicator/m_intent_delay()
+	return 1 + config.run_speed

@@ -23,7 +23,10 @@
 	if(ismob(AM))
 		var/mob/M = AM
 		M.see_invisible = INVISIBILITY_LEVEL_TWO
+
 	AM.alpha = 204
+
+	RegisterSignal(target, COMSIG_CLIENTMOB_MOVE, .proc/on_move_intent)
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_movement)
 
 /datum/element/bluespace_move/Detach(datum/target)
@@ -33,12 +36,35 @@
 	if(ismob(AM))
 		var/mob/M = AM
 		M.see_invisible = prev_see_invisible
+
 	AM.alpha = prev_alpha
 
-	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(target, list(COMSIG_CLIENTMOB_MOVE, COMSIG_MOVABLE_MOVED))
 	return ..()
 
+/datum/element/bluespace_move/proc/on_move_intent(datum/source, atom/Newloc, dir)
+	SIGNAL_HANDLER
+
+	var/mob/M = source
+	// Lulwhat clientmob move on a non-mob?
+	if(!ismob(M))
+		return NONE
+
+	if(M.m_intent == MOVE_INTENT_RUN)
+		return NONE
+
+	var/obj/structure/bluespace_corridor/BC = locate() in Newloc
+	var/obj/machinery/swarm_powered/bluespace_transponder/BT = locate() in M.loc
+
+	if(!BT && !BC)
+		to_chat(M, "<span class='warning'>You can't run out of the bluespace corridor! Try switching your movement intention if you want to exit without a portal.</span>")
+		return COMPONENT_CLIENTMOB_BLOCK_MOVE
+
+	return NONE
+
 /datum/element/bluespace_move/proc/on_movement(datum/source, atom/OldLoc, dir)
+	SIGNAL_HANDLER
+
 	var/atom/movable/AM = source
 
 	var/obj/structure/bluespace_corridor/BC = locate() in AM.loc
@@ -53,4 +79,6 @@
 		else
 			playsound(AM, 'sound/magic/blink.ogg', VOL_EFFECTS_MASTER, 60)
 		Detach(AM)
-		return
+		return NONE
+
+	return NONE
