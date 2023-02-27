@@ -263,7 +263,7 @@
 	//located not on station - you are not a headstuff, goodbye
 	var/turf/T = get_turf(M)
 	if(T && is_station_level(T.z))
-		return ..()
+		return ..(M)
 
 /datum/faction/revolution/flash_revolution/latespawn(mob/M)
 	if(M.mind.assigned_role in command_positions)
