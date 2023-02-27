@@ -294,15 +294,20 @@
 		gizmo = G
 		G.console = src
 		return FALSE
-	if(istype(O, /obj/item/clothing/suit/armor/abductor/vest))
+	else if(istype(O, /obj/item/clothing/suit/armor/abductor/vest))
 		var/obj/item/clothing/suit/armor/abductor/vest/V = O
 		to_chat(user, "<span class='notice'>You link the vest to the console.</span>")
 		vest = V
 		return FALSE
-	if(istype(O, /obj/item/weapon/abductor_baton))
+	else if(istype(O, /obj/item/weapon/abductor_baton))
 		var/obj/item/weapon/abductor_baton/B = O
 		to_chat(user, "<span class='notice'>You link the advanced baton to the console.</span>")
 		B.console = src
+		return FALSE
+	else if(istype(O, /obj/item/gland/abductor))
+		experiment.points++
+		visible_message("Refunded!")
+		qdel(O)
 		return FALSE
 	return ..()
 
