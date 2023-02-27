@@ -8145,6 +8145,9 @@
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
+/obj/item/device/cardpay{
+	pixel_x = -10
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "anx" = (
@@ -12906,6 +12909,11 @@
 	dir = 2;
 	name = "Hydroponics";
 	req_access = list(35)
+	},
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 6
 	},
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
@@ -29729,6 +29737,11 @@
 	pixel_x = -32;
 	supply_display = 1
 	},
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 6
+	},
 /turf/simulated/floor,
 /area/station/cargo/office)
 "baC" = (
@@ -30588,6 +30601,9 @@
 	req_access = list(7)
 	},
 /obj/item/weapon/bell,
+/obj/item/device/cardpay{
+	pixel_x = -10
+	},
 /turf/simulated/floor/plating,
 /area/station/rnd/lab)
 "bcd" = (
@@ -31319,6 +31335,7 @@
 	pixel_x = 10;
 	pixel_y = 2
 	},
+/obj/item/device/cardpay,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "bdy" = (
@@ -35870,6 +35887,11 @@
 "blJ" = (
 /obj/structure/table/woodentable,
 /obj/item/ashtray/glass,
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 6
+	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "blK" = (
@@ -37328,6 +37350,11 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/item/weapon/bell,
+/obj/item/device/cardpay{
+	dir = 8;
+	pixel_y = 10;
+	pixel_x = -3
+	},
 /turf/simulated/floor,
 /area/station/bridge/hop_office)
 "box" = (
@@ -37575,6 +37602,10 @@
 	dir = 4
 	},
 /obj/item/clothing/head/cakehat,
+/obj/item/device/cardpay{
+	dir = 4;
+	pixel_y = 10
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -47972,6 +48003,11 @@
 /obj/item/weapon/haircomb,
 /obj/structure/table/glass,
 /obj/item/weapon/reagent_containers/dropper,
+/obj/item/device/cardpay{
+	dir = 8;
+	pixel_y = 10;
+	pixel_x = -3
+	},
 /turf/simulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -49085,6 +49121,9 @@
 	},
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
+/obj/item/device/cardpay{
+	pixel_x = -10
+	},
 /turf/simulated/floor/plating,
 /area/station/rnd/robotics)
 "bJm" = (
@@ -55463,6 +55502,11 @@
 	req_one_access = list(47,9)
 	},
 /obj/item/weapon/bell,
+/obj/item/device/cardpay{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 6
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/genetics)
 "bXs" = (
@@ -70876,6 +70920,11 @@
 	name = "Chemistry Desk";
 	req_access = list(33)
 	},
+/obj/item/device/cardpay{
+	dir = 4;
+	pixel_y = 10;
+	pixel_x = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/chemistry)
 "eBb" = (
@@ -84751,6 +84800,10 @@
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced,
 /obj/item/weapon/bell,
+/obj/item/device/cardpay{
+	dir = 4;
+	pixel_y = 10
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
