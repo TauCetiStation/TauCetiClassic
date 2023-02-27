@@ -74,8 +74,8 @@
 	damage = 25
 
 /obj/item/projectile/bullet/revbullet //.357
-	damage = 35
-	stoping_power = 8
+	damage = 60
+	armor_piercing = 1.5
 
 /obj/item/projectile/bullet/rifle1
 	damage = 40
