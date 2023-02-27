@@ -22,7 +22,7 @@
 
 /turf/simulated/floor/plating/airless/catwalk/forcefield/Destroy()
 	// to-do: sound
-	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER, 80)
+	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 
 	var/obj/structure/forcefield_node/FN = locate() in src
 	qdel(FN)
@@ -69,7 +69,7 @@
 
 /obj/structure/replicator_forcefield/Destroy()
 	// to-do: sound
-	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER, 80)
+	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 	if(!(locate(/obj/structure/stabilization_field) in loc))
 		new /obj/structure/stabilization_field(loc)
 	return ..()
@@ -105,7 +105,7 @@
 /obj/structure/stabilization_field/attackby(obj/item/C, mob/user)
 	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
 		// to-do: sound
-		playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER, 80)
+		playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 		qdel(src)
 		return
 
@@ -131,7 +131,7 @@
 
 /obj/structure/replicator_barricade/Destroy()
 	// to-do: sound
-	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER, 80)
+	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 	if(!(locate(/obj/structure/stabilization_field) in loc))
 		new /obj/structure/stabilization_field(loc)
 	return ..()
@@ -166,43 +166,26 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	. = ..()
 	global.replicators_faction.nodes_to_spawn -= 1
 
-	var/area/A = get_area(src)
-	if(A)
-		if(!global.area2free_forcefield_nodes[A.name])
-			global.area2free_forcefield_nodes[A.name] = 0
-		global.area2free_forcefield_nodes[A.name] += 1
+	add_area_node(src)
 
 /obj/structure/forcefield_node/Destroy()
 	// to-do: sound
-	playsound(loc, 'sound/machines/arcade/heal2.ogg', VOL_EFFECTS_MASTER, 80)
+	playsound(loc, 'sound/machines/arcade/heal2.ogg', VOL_EFFECTS_MASTER)
 	global.replicators_faction.nodes_to_spawn += 1
 
 	var/obj/machinery/power/replicator_generator/RG = locate() in loc
 	if(RG)
-		// to-do: sound
 		global.replicators_faction.adjust_materials(REPLICATOR_COST_GENERATOR)
 		qdel(RG)
 
-	var/area/A = get_area(src)
-	if(A)
-		area2free_forcefield_nodes[A.name] -= 1
-		if(area2free_forcefield_nodes[A.name] <= 0)
-			area2free_forcefield_nodes -= A.name
+	remove_area_node(src)
 	return ..()
 
 /obj/structure/forcefield_node/Moved(atom/OldLoc, moveddir)
 	. = ..()
-	var/area/old_area = get_area(OldLoc)
-	if(old_area)
-		area2free_forcefield_nodes[old_area.name] -= 1
-		if(area2free_forcefield_nodes[old_area.name] <= 0)
-			area2free_forcefield_nodes -= old_area.name
 
-	var/area/new_area = get_area(src)
-	if(new_area)
-		if(!global.area2free_forcefield_nodes[new_area.name])
-			global.area2free_forcefield_nodes[new_area.name] = 0
-		global.area2free_forcefield_nodes[new_area.name] += 1
+	remove_area_node(OldLoc)
+	add_area_node(src)
 
 /obj/structure/forcefield_node/Crossed(atom/movable/AM)
 	if(captured())
@@ -219,10 +202,23 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	icon_state = "floor_node_captured"
 	playsound(AM, 'sound/magic/heal.ogg', VOL_EFFECTS_MASTER)
 
-	var/area/A = get_area(src)
+/obj/structure/forcefield_node/proc/captured()
+	return icon_state == "floor_node_captured"
+
+/obj/structure/forcefield_node/proc/add_area_node(atom/node_loc)
+	var/area/A = get_area(node_loc)
+	if(!A)
+		return
+
+	if(!global.area2free_forcefield_nodes[A.name])
+		global.area2free_forcefield_nodes[A.name] = 0
+	global.area2free_forcefield_nodes[A.name] += 1
+
+/obj/structure/forcefield_node/proc/remove_area_node(atom/node_loc)
+	var/area/A = get_area(node_loc)
+	if(!A)
+		return
+
 	global.area2free_forcefield_nodes[A.name] -= 1
 	if(global.area2free_forcefield_nodes[A.name] <= 0)
 		global.area2free_forcefield_nodes -= A.name
-
-/obj/structure/forcefield_node/proc/captured()
-	return icon_state == "floor_node_captured"

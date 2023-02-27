@@ -253,12 +253,29 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 	var/obj/structure/forcefield_node/FN = locate() in loc
 	if(FN)
 		FN.layer = LOW_OBJ_LAYER
+		FN.remove_area_node(FN)
 
 /obj/machinery/power/replicator_generator/Destroy()
+	// to-do: sound
+	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
+
 	var/obj/structure/forcefield_node/FN = locate() in loc
 	if(FN)
 		FN.layer = ABOVE_OBJ_LATER
+		FN.add_area_node(FN)
+
 	return ..()
+
+/obj/machinery/power/replicator_generator/Moved(atom/OldLoc, moveddir)
+	. = ..()
+
+	var/obj/structure/forcefield_node/FN_oldLoc = locate() in OldLoc
+	if(FN_oldLoc)
+		FN_oldLoc.add_area_node(FN_oldLoc)
+
+	var/obj/structure/forcefield_node/FN = locate() in loc
+	if(FN)
+		FN.remove_area_node(FN)
 
 /obj/machinery/power/replicator_generator/process()
 	if(next_sound < world.time && prob(5))
