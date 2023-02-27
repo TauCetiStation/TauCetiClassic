@@ -309,9 +309,8 @@
 	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screen/move_intent/action()
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		C.set_m_intent(C.m_intent == MOVE_INTENT_WALK ? MOVE_INTENT_RUN : MOVE_INTENT_WALK)
+	var/mob/living/L = usr
+	L.set_m_intent(L.m_intent == MOVE_INTENT_WALK ? MOVE_INTENT_RUN : MOVE_INTENT_WALK)
 
 /atom/movable/screen/move_intent/update_icon(mob/mymob)
 	icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")

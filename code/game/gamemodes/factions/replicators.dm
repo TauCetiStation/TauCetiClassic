@@ -264,7 +264,7 @@ Message ends."}
 
 /datum/faction/replicators/proc/blue_screen()
 	for(var/mob/M in player_list)
-		flash_color(M, flash_color="#A8DFF0", flash_time=1 MINUTE)
+		flash_color(M, flash_color="#a8dff0", flash_time=1 MINUTE)
 
 /datum/faction/replicators/check_win()
 	return SSticker.station_was_nuked

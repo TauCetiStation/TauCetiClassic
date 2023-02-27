@@ -473,7 +473,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 /mob/living/simple_animal/replicator/proc/playsound_stealthy(atom/source, sound, vol=100)
 	var/mufflerange = has_swarms_gift() ? -5 : 0
-	return playsound(source, sound, vol=vol, extrarange=mufflerange)
+	return playsound(source, sound, VOL_EFFECTS_MASTER, vol=vol, extrarange=mufflerange)
 
 /mob/living/simple_animal/replicator/proc/try_spawn_node(turf/T)
 	if(!prob(5))
@@ -490,7 +490,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 			return FALSE
 
 	var/obj/structure/forcefield_node/FN = new(T)
-	FN.color = pick("#A8DFF0", "#F0A8DF", "#DFF0A8")
+	FN.color = pick(REPLICATOR_RUNE_COLORS)
 
 	var/area/A = get_area(T)
 	emote("beep")
