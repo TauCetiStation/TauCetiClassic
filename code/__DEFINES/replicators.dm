@@ -1,6 +1,10 @@
 #define REPLICATOR_COST_REPLICATE 100
 #define REPLICATOR_COST_TRANSPONDER REPLICATOR_COST_REPLICATE
 #define REPLICATOR_COST_GENERATOR REPLICATOR_COST_REPLICATE
+#define REPLICATOR_COST_MINE 30
+#define REPLICATOR_COST_BARRICADE 15
+	// Because they also autospawn when breaking airlocks.
+	#define REPLICATOR_COST_RECLAIM_BARRICADE 5
 
 #define REPLICATOR_BANDWIDTH_COST_INCREASE 50
 
@@ -40,3 +44,9 @@
 
 #define REPLICATOR_STARTING_BANDWIDTH 6
 #define REPLICATOR_MAX_BANDWIDTH 50
+
+// Rewarding killing mobs.
+#define REPLICATOR_MATERIAL_AMOUNT_COEFF_ORGANIC 4.0
+
+// This amount is sent to the "infrastructure pool" of materials. Portals and the Catapult first consume materials from infrastructure pool, and then if empty from the other one.
+#define REPLICATOR_GLOBAL_TAX 0.1

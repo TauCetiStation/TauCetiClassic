@@ -77,12 +77,12 @@
 	return stat == DEAD || lying || crawling
 
 /mob/living/get_replicator_material_amount()
-	if(stat == DEAD)
-		return w_class * 4
+	if(stat == DEAD || lying || crawling)
+		return w_class * REPLICATOR_MATERIAL_AMOUNT_COEFF_ORGANIC
 	return -1
 
 /mob/living/get_unit_disintegration_time()
-	. = REPLICATOR_TICKS_PER_MATERIAL / 4
+	. = REPLICATOR_TICKS_PER_MATERIAL / REPLICATOR_MATERIAL_AMOUNT_COEFF_ORGANIC
 	if(stat == DEAD)
 		. *= REPLICATOR_REWARD_DEAD_BODIES_TICK_MODIFIER
 	else
@@ -184,7 +184,7 @@
 	return FALSE
 
 /obj/structure/replicator_barricade/get_replicator_material_amount()
-	return 5
+	return REPLICATOR_COST_RECLAIM_BARRICADE
 
 /obj/structure/replicator_barricade/get_unit_disintegration_time()
 	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
@@ -315,3 +315,13 @@
 // Raw materials are eaten much faster.
 /obj/item/stack/get_unit_disintegration_time()
 	return ..() * REPLICATOR_REWARD_STACKS_TICK_MODIFIER
+
+
+/obj/item/mine/replicator/can_be_auto_disintegrated()
+	return FALSE
+
+/obj/machinery/power/replicator_generator/get_replicator_material_amount()
+	return REPLICATOR_COST_MINE
+
+/obj/machinery/replicator_generator/get_unit_disintegration_time()
+	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER

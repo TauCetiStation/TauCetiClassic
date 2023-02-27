@@ -1,5 +1,6 @@
 /obj/effect/proc_holder/spell/no_target/replicator_construct
 	var/material_cost = 0
+	var/objection_delay = 0
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/atom_init()
 	. = ..()
@@ -18,11 +19,18 @@
 
 	return TRUE
 
+/obj/effect/proc_holder/spell/no_target/replicator_construct/proc/replicator_checks_do_after_handler(mob/user, atom/target)
+	return replicator_checks(user, TRUE)
+
 /obj/effect/proc_holder/spell/no_target/replicator_construct/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 	if(!replicator_checks(user, try_start))
 		return FALSE
 
 	return ..()
+
+/obj/effect/proc_holder/spell/no_target/replicator_construct/proc/objection_timer(mob/living/simple_animal/replicator/user_replicator, message)
+	var/datum/callback/checks = CALLBACK(src, .proc/replicator_checks_do_after_handler)
+	return user_replicator.do_after_objections(objection_delay, message, extra_checks=checks)
 
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/replicate
@@ -38,6 +46,7 @@
 	action_icon_state = "ui_replicate"
 
 	material_cost = REPLICATOR_COST_REPLICATE
+	objection_delay = 3 SECONDS
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/replicator_checks(mob/user, try_start)
 	if(length(global.alive_replicators) >= global.replicators_faction.bandwidth)
@@ -51,9 +60,7 @@
 	var/mob/living/simple_animal/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
 	// to-do: sound
-	if(!user_replicator.do_after_objections(3 SECONDS, "Proceeding with replication at [A.name]."))
-		return
-	if(!replicator_checks(user, TRUE))
+	if(!objection_timer(user_replicator, 3 SECONDS, "Proceeding with replication at [A.name]."))
 		return
 
 	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
@@ -82,7 +89,7 @@
 	action_icon = 'icons/mob/replicator.dmi'
 	action_icon_state = "ui_barricade"
 
-	material_cost = 15
+	material_cost = REPLICATOR_COST_BARRICADE
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/barricade/replicator_checks(mob/user, try_start)
 	var/turf/my_turf = get_turf(user)
@@ -124,7 +131,7 @@
 	action_icon = 'icons/mob/replicator.dmi'
 	action_icon_state = "ui_trap"
 
-	material_cost = 30
+	material_cost = REPLICATOR_COST_MINE
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/trap/replicator_checks(mob/user, try_start)
 	if(locate(/obj/item/mine/replicator) in user.loc)
@@ -163,6 +170,7 @@
 	action_icon_state = "ui_transponder"
 
 	material_cost = REPLICATOR_COST_REPLICATE
+	objection_delay = 3 SECONDS
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/transponder/replicator_checks(mob/user, try_start)
 	if(locate(/obj/machinery/swarm_powered/bluespace_transponder) in user.loc)
@@ -188,9 +196,7 @@
 	var/mob/living/simple_animal/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
 	// to-do: sound
-	if(!user_replicator.do_after_objections(3 SECONDS, "Deploying a bluespace transponder at [A.name]."))
-		return
-	if(!replicator_checks(user, TRUE))
+	if(!objection_timer(user_replicator, 3 SECONDS, "Deploying a bluespace transponder at [A.name]."))
 		return
 
 	to_chat(user, "<span class='notice'>Bluespace Transponder activation initiated...Establishing contact with The Swarm.</span>")
@@ -214,6 +220,7 @@
 	action_icon_state = "ui_generator"
 
 	material_cost = REPLICATOR_COST_REPLICATE
+	objection_delay = 3 SECONDS
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/generator/replicator_checks(mob/user, try_start)
 	if(locate(/obj/machinery/swarm_powered/bluespace_transponder) in user.loc)
@@ -243,9 +250,7 @@
 	var/mob/living/simple_animal/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
 	// to-do: sound
-	if(!user_replicator.do_after_objections(3 SECONDS, "Deploying a generator at [A.name]."))
-		return
-	if(!replicator_checks(user, TRUE))
+	if(objection_timer(user_replicator, 3 SECONDS, "Deploying a generator at [A.name]."))
 		return
 
 	to_chat(user, "<span class='notice'>Generator deployed.</span>")
@@ -428,6 +433,7 @@
 	action_icon_state = "ui_catapult"
 
 	material_cost = 0
+	objection_delay = 10 SECONDS
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/catapult/replicator_checks(mob/user, try_start)
 	if(global.replicators_faction.bandwidth < 20)
@@ -458,9 +464,7 @@
 	var/mob/living/simple_animal/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
 	// to-do: sound
-	if(!user_replicator.do_after_objections(10 SECONDS, "Constructing a Bluespace Catapult at [A.name]!"))
-		return
-	if(!replicator_checks(user, TRUE))
+	if(!objection_timer(user_replicator, 10 SECONDS, "Constructing a Bluespace Catapult at [A.name]!"))
 		return
 
 	new /obj/machinery/swarm_powered/bluespace_catapult(user_replicator.loc)

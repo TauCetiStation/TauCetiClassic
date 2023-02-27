@@ -17,8 +17,8 @@
 
 	return result
 
-/proc/do_skilled(mob/user, atom/target,  delay, required_skills, multiplier)
-	return do_after(user, delay = apply_skill_bonus(user, delay, required_skills, multiplier), target = target)
+/proc/do_skilled(mob/user, atom/target,  delay, required_skills, multiplier, datum/callback/extra_checks=null)
+	return do_after(user, delay = apply_skill_bonus(user, delay, required_skills, multiplier), target = target, extra_checks = extra_checks)
 
 /proc/handle_fumbling(mob/user, atom/target, delay, required_skills, message_self = "", text_target = null, check_busy = TRUE, can_move = FALSE)
 	if(is_skill_competent(user, required_skills))

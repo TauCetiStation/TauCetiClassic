@@ -61,13 +61,16 @@
 
 	if(A.flags_2 & HOLOGRAM_2)
 		if(alert)
-			to_chat(src, "<span class='warning'>Can Not Disintegrate Hologram.</span>")
+			to_chat(src, "<span class='warning'>Can Not Disintegrate Holograms.</span>")
 		return FALSE
 
+	/*
+		We're not afraid of G-d now, are we?
 	if((locate(/mob/living) in A) && !isturf(A))
 		if(alert)
 			to_chat(src, "<span class='warning'>Can Not Deconstruct: May Harm Organics.</span>")
 		return FALSE
+	*/
 
 	return TRUE
 
@@ -136,7 +139,8 @@
 
 	playsound_stealthy(A, 'sound/machines/cyclotron.ogg')
 
-	if(!do_skilled(src, A, A.get_unit_disintegration_time() * material_amount / efficency, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
+	var/datum/callback/checks = CALLBACK(src, .proc/disintegrate_do_after_checks)
+	if(!do_skilled(src, A, A.get_unit_disintegration_time() * material_amount / efficency, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2, extra_checks=checks))
 		qdel(D)
 		disintegrating = FALSE
 		A.is_disintegrating = FALSE
@@ -216,3 +220,6 @@
 
 	VARSET_IN(src, playing_integration_animation, FALSE, 5)
 */
+
+/mob/living/simple_animal/replicator/proc/disintegrate_do_after_checks(mob/living/simple_animal/replicator/R, atom/target)
+	return R.is_disintegratable(target, alert=TRUE)

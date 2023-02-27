@@ -1,6 +1,7 @@
 /obj/item/projectile/disabler
 	name = "bolt"
-	icon_state = "bluelaser"
+	icon_state = "projectile"
+	icon = 'icons/mob/replicator.dmi'
 	light_color = "#0000ff"
 	//light_power = 2
 	//light_range = 2
@@ -116,11 +117,7 @@
 /obj/item/mine/replicator/proc/do_audiovisual_effects(atom/movable/AM)
 	playsound(src, 'sound/misc/mining_reward_0.ogg', VOL_EFFECTS_MASTER)
 
-	var/image/I = image('icons/mob/replicator.dmi', "dismantle")
-	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	I.plane = AM.plane
-	I.layer = AM.layer + 1.0
-	I.loc = AM
+	var/image/I = image('icons/mob/replicator.dmi', AM, "dismantle", MOB_ELECTROCUTION_LAYER + 0.1)
 
 	flick_overlay_view(I, AM, 12)
 
@@ -130,6 +127,8 @@
 	if(next_activation > world.time)
 		return
 	next_activation = world.time + 40
+	update_icon()
+
 	addtimer(CALLBACK(src, .proc/rearm), 40)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
@@ -144,7 +143,7 @@
 		M.emp_act(1)
 
 		var/area/A = get_area(src)
-		global.replicators_faction.drone_message(src, "A mine has been triggered in [A.name].", transfer=TRUE)
+		global.replicators_faction.drone_message(src, "Mine trigger event at [A.name].", transfer=TRUE)
 		return
 
 	if(isliving(AM))
@@ -154,10 +153,10 @@
 
 		var/stepped_by = pick(BP_R_LEG, BP_L_LEG)
 		L.electrocute_act(15, src, siemens_coeff = 1.0, def_zone = stepped_by) // electrocute act does a message.
-		L.Stun(1)
+		L.Stun(2)
 
 		var/area/A = get_area(src)
-		global.replicators_faction.drone_message(src, "A mine has been triggered in [A.name].", transfer=TRUE)
+		global.replicators_faction.drone_message(src, "Mine trigger event at [A.name].", transfer=TRUE)
 
 /obj/item/mine/replicator/disarm()
 	qdel(src)
@@ -167,12 +166,12 @@
 	update_icon()
 
 /obj/item/mine/replicator/update_icon()
-	if(next_activation < world.time)
-		icon_state = "[initial(icon_state)]armed"
+	if(next_activation <= world.time)
 		alpha = 45
+		icon_state = "traparmed"
 	else
-		icon_state = initial(icon_state)
 		alpha = 255
+		icon_state = "trap"
 
 /obj/item/mine/replicator/Topic(href, href_list)
 	if(href_list["replicator_jump"])

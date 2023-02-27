@@ -38,7 +38,7 @@ var/global/datum/faction/replicators/replicators_faction
 	var/list/vents4spawn
 
 	var/nodes_to_spawn = 0
-	var/node_spawn_cooldown = 2 MINUTES
+	var/node_spawn_cooldown = 3 MINUTES
 	var/next_node_spawn = 0
 
 	// Win condition is launching REPLICATORS_CATAPULTED_TO_WIN replicators.
@@ -253,8 +253,6 @@ Message ends."}
 
 /datum/faction/replicators/GetScoreboard()
 	. = ..()
-	if(!faction_scoreboard_data)
-		return
 
 	var/node_string = ""
 	if(length(global.area2free_forcefield_nodes) > 0)
@@ -273,3 +271,13 @@ Message ends."}
 	if(node_string != "")
 		. += "Nodes unclaimed: [node_string]<br>"
 	. += "<br>"
+
+/datum/faction/replicators/custom_member_output()
+	var/score_results = "<FONT size = 2><B>Members:</B></FONT><br><ul>"
+	for(var/member_ckey in ckey2info)
+		var/icon/logo = icon('icons/misc/logos.dmi', "replicators")
+		var/datum/replicator_array_info/RAI = ckey2info[member_ckey]
+		score_results += "[bicon(logo, css = "style='position: relative;top:10px;'")]<b>[member_ckey]</b> was <b>[RAI.presence_name]</b>"
+		score_results += "<br><b>Materials Contribution:</b> [RAI.swarms_goodwill]"
+	score_results += "</ul>"
+	return score_results

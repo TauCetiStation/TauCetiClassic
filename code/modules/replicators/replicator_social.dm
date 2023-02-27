@@ -30,6 +30,6 @@
 
 	playsound_local(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 
-/mob/living/simple_animal/replicator/proc/do_after_objections(delay, message)
+/mob/living/simple_animal/replicator/proc/do_after_objections(delay, message, datum/callback/extra_checks=null)
 	global.replicators_faction.drone_message(src, message, objection_time=delay)
-	return do_after(src, delay, target=src)
+	return do_after(src, delay, target=src, extra_checks=extra_checks)
