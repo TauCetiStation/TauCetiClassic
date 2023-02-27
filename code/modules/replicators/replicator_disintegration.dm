@@ -48,9 +48,6 @@
 	if(!A.simulated)
 		return FALSE
 
-	if(A.is_disintegrating)
-		return FALSE
-
 	if(A.get_replicator_material_amount() < 0)
 		return FALSE
 
@@ -75,6 +72,9 @@
 	return TRUE
 
 /mob/living/simple_animal/replicator/proc/is_auto_disintegratable(atom/A)
+	if(A.is_disintegrating)
+		return FALSE
+
 	if(!is_disintegratable(A))
 		return FALSE
 
@@ -121,6 +121,8 @@
 	if(is_busy())
 		return FALSE
 	if(disintegrating)
+		return FALSE
+	if(A.is_disintegrating)
 		return FALSE
 
 	if(!is_disintegratable(A, alert=TRUE))
