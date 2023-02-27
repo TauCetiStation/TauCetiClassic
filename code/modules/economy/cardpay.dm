@@ -163,7 +163,7 @@
 		return
 
 	if(!check_direction(usr))
-		SStgui.force_close_window(usr, SStgui.get_open_ui(usr, src).window.id)
+		SStgui.close_user_uis(usr, src)
 		return
 
 	switch(action)
