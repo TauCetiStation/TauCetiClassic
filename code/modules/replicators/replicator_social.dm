@@ -11,18 +11,18 @@
 	if(objection_end_time < world.time)
 		return
 
-	if(!R.mind)
+	if(!R.ckey)
 		return
 
-	var/datum/role/replicator/R_role = R.mind.GetRole(REPLICATOR)
-	if(!R_role)
+	var/datum/replicator_array_info/RAI = global.replicators_faction.ckey2info[R.ckey]
+	if(!RAI)
 		return
 
-	if(next_objection_time[R_role.presence_name] > world.time)
+	if(next_objection_time[R.ckey] > world.time)
 		return
-	next_objection_time[R_role.presence_name] = world.time + objection_cooldown
+	next_objection_time[R.ckey] = world.time + objection_cooldown
 
-	to_chat(src, "<span class='bold warning'>[R_role.presence_name] objects to your actions!</span>")
+	to_chat(src, "<span class='bold warning'>[RAI.presence_name] objects to your actions!</span>")
 
 	if(next_objection_sound > world.time)
 		return

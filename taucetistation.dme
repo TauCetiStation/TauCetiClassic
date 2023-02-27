@@ -2191,6 +2191,7 @@
 #include "code\modules\religion\rites_type\pedestal_rite.dm"
 #include "code\modules\religion\rites_type\rites.dm"
 #include "code\modules\religion\rites_type\standing_rite.dm"
+#include "code\modules\replicators\array_info.dm"
 #include "code\modules\replicators\replicator_attacks.dm"
 #include "code\modules\replicators\replicator_communication.dm"
 #include "code\modules\replicators\replicator_disintegration.dm"

@@ -5,7 +5,7 @@
 	. = ..()
 	name = "[name] ([material_cost])"
 
-/obj/effect/proc_holder/spell/no_target/replicator_construct/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+/obj/effect/proc_holder/spell/no_target/replicator_construct/proc/replicator_checks(mob/user, try_start)
 	if(global.replicators_faction.materials < material_cost)
 		if(try_start)
 			to_chat(user, "<span class='warning'>Not enough materials.</span>")
@@ -14,6 +14,12 @@
 	if(!isfloorturf(user.loc))
 		if(try_start)
 			to_chat(user, "<span class='notice'>You must be on solid ground to construct this.</span>")
+		return FALSE
+
+	return TRUE
+
+/obj/effect/proc_holder/spell/no_target/replicator_construct/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+	if(!replicator_checks(user, try_start))
 		return FALSE
 
 	return ..()
@@ -33,7 +39,7 @@
 
 	material_cost = REPLICATOR_COST_REPLICATE
 
-/obj/effect/proc_holder/spell/no_target/replicator_replicate/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+/obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/replicator_checks(mob/user, try_start)
 	if(length(global.alive_replicators) >= global.replicators_faction.bandwidth)
 		if(try_start)
 			to_chat(user, "<span class='warning'>Not enough bandwidth for replication.</span>")
@@ -46,6 +52,8 @@
 	var/area/A = get_area(user_replicator)
 	// to-do: sound
 	if(!user_replicator.do_after_objections(3 SECONDS, "Proceeding with replication at [A.name]."))
+		return
+	if(!replicator_checks(user, TRUE))
 		return
 
 	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
@@ -76,7 +84,7 @@
 
 	material_cost = 15
 
-/obj/effect/proc_holder/spell/no_target/replicator_construct/barricade/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+/obj/effect/proc_holder/spell/no_target/replicator_construct/barricade/replicator_checks(mob/user, try_start)
 	var/turf/my_turf = get_turf(user)
 	if(!my_turf.can_place_replicator_forcefield())
 		if(try_start)
@@ -118,7 +126,7 @@
 
 	material_cost = 30
 
-/obj/effect/proc_holder/spell/no_target/replicator_construct/trap/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+/obj/effect/proc_holder/spell/no_target/replicator_construct/trap/replicator_checks(mob/user, try_start)
 	if(locate(/obj/item/mine/replicator) in user.loc)
 		if(try_start)
 			to_chat(user, "<span class='notice'>There is already a trap here.</span>")
@@ -156,7 +164,7 @@
 
 	material_cost = REPLICATOR_COST_REPLICATE
 
-/obj/effect/proc_holder/spell/no_target/replicator_construct/transponder/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+/obj/effect/proc_holder/spell/no_target/replicator_construct/transponder/replicator_checks(mob/user, try_start)
 	if(locate(/obj/machinery/swarm_powered/bluespace_transponder) in user.loc)
 		if(try_start)
 			to_chat(user, "<span class='notice'>Need more space for the transponder.</span>")
@@ -182,6 +190,8 @@
 	// to-do: sound
 	if(!user_replicator.do_after_objections(3 SECONDS, "Deploying a bluespace transponder at [A.name]."))
 		return
+	if(!replicator_checks(user, TRUE))
+		return
 
 	to_chat(user, "<span class='notice'>Bluespace Transponder activation initiated...Establishing contact with The Swarm.</span>")
 	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
@@ -205,7 +215,7 @@
 
 	material_cost = REPLICATOR_COST_REPLICATE
 
-/obj/effect/proc_holder/spell/no_target/replicator_construct/generator/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+/obj/effect/proc_holder/spell/no_target/replicator_construct/generator/replicator_checks(mob/user, try_start)
 	if(locate(/obj/machinery/swarm_powered/bluespace_transponder) in user.loc)
 		if(try_start)
 			to_chat(user, "<span class='notice'>Need more space for the generator.</span>")
@@ -234,6 +244,8 @@
 	var/area/A = get_area(user_replicator)
 	// to-do: sound
 	if(!user_replicator.do_after_objections(3 SECONDS, "Deploying a generator at [A.name]."))
+		return
+	if(!replicator_checks(user, TRUE))
 		return
 
 	to_chat(user, "<span class='notice'>Generator deployed.</span>")
@@ -417,7 +429,7 @@
 
 	material_cost = 0
 
-/obj/effect/proc_holder/spell/no_target/replicator_construct/catapult/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
+/obj/effect/proc_holder/spell/no_target/replicator_construct/catapult/replicator_checks(mob/user, try_start)
 	if(global.replicators_faction.bandwidth < 20)
 		if(try_start)
 			to_chat(user, "<span class='warning'>The rift requires 20 replicators to be sent through. You need more bandwidth.</span>")
@@ -442,7 +454,15 @@
 
 	return ..()
 
-/obj/effect/proc_holder/spell/no_target/construct_catapult/cast(list/targets, mob/user = usr)
-	new /obj/machinery/swarm_powered/bluespace_catapult(user.loc)
-	to_chat(user, "<span class='notice'>SPAWNING... What have you done.</span>")
-	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
+/obj/effect/proc_holder/spell/no_target/replicator_construct/catapult/cast(list/targets, mob/user = usr)
+	var/mob/living/simple_animal/replicator/user_replicator = user
+	var/area/A = get_area(user_replicator)
+	// to-do: sound
+	if(!user_replicator.do_after_objections(10 SECONDS, "Constructing a Bluespace Catapult at [A.name]!"))
+		return
+	if(!replicator_checks(user, TRUE))
+		return
+
+	new /obj/machinery/swarm_powered/bluespace_catapult(user_replicator.loc)
+	to_chat(user_replicator, "<span class='notice'>SPAWNING... What have you done.</span>")
+	playsound(user_replicator, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)

@@ -66,17 +66,18 @@
 
 		to_chat(M, "[open_tags][channel] [speaker_name] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags][jump_button]")
 
-/datum/faction/replicators/proc/announce_swarm(datum/role/replicator/R, message, atom/announcer=null)
+/datum/faction/replicators/proc/announce_swarm(presence_ckey, message, atom/announcer=null)
 	var/font_size = 1
 
-	var/datum/role/replicator/R_max = get_member_by_ckey(max_goodwill_ckey)
-	if(R_max && R_max.swarms_goodwill > 0)
-		var/goodwill_coeff = R.swarms_goodwill / R_max.swarms_goodwill
+	var/datum/replicator_array_info/RAI_max = ckey2info[max_goodwill_ckey]
+	var/datum/replicator_array_info/RAI = ckey2info[presence_ckey]
+	if(RAI_max && RAI_max.swarms_goodwill > 0)
+		var/goodwill_coeff = RAI.swarms_goodwill / RAI_max.swarms_goodwill
 		var/goodwill_font_size = clamp(CEIL(goodwill_coeff * 3), 1, 3)
 
 		font_size = goodwill_font_size
 
-	swarm_chat_message(R.presence_name, message, font_size, announcer=announcer)
+	swarm_chat_message(RAI.presence_name, message, font_size, announcer=announcer)
 
 // Mines currently also use this.
 /datum/faction/replicators/proc/drone_message(atom/drone, message, transfer=FALSE, dismantle=FALSE, objection_time=0)

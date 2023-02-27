@@ -29,6 +29,7 @@ var/global/datum/faction/replicators/replicators_faction
 	// Can't go any further.
 	var/max_bandwidth = REPLICATOR_MAX_BANDWIDTH
 
+	var/list/datum/replicator_array_info/ckey2info = list()
 	var/max_goodwill_ckey = null
 
 	var/swarms_gift_duration = 5 MINUTES
@@ -177,19 +178,19 @@ Message ends."}
 	if(adjusted_by == null)
 		return
 
-	var/datum/role/replicator/R = get_member_by_ckey(adjusted_by)
-	if(!R)
+	var/datum/replicator_array_info/RAI = ckey2info[adjusted_by]
+	if(!RAI)
 		return
 
 	// give Swarm's Goodwill to the one donated. Goodwill increases font size to enforce leadership.
-	R.swarms_goodwill += material_amount
+	RAI.swarms_goodwill += material_amount
 
-	var/datum/role/replicator/R_max = get_member_by_ckey(max_goodwill_ckey)
-	if(!R_max)
+	var/datum/replicator_array_info/RAI_max = ckey2info[max_goodwill_ckey]
+	if(!RAI_max)
 		max_goodwill_ckey = adjusted_by
 		return
 
-	if(R.swarms_goodwill > R_max.swarms_goodwill)
+	if(RAI.swarms_goodwill > RAI_max.swarms_goodwill)
 		max_goodwill_ckey = adjusted_by
 
 /datum/faction/replicators/proc/give_gift(mob/living/simple_animal/replicator/R)
@@ -200,15 +201,15 @@ Message ends."}
 	if(!R.mind)
 		return
 
-	var/datum/role/replicator/replicator_role = R.mind.GetRole(REPLICATOR)
-	if(!replicator_role)
+	var/datum/replicator_array_info/RAI = ckey2info[R.ckey]
+	if(!RAI)
 		return
 
-	if(replicator_role.next_music_start < world.time)
+	if(RAI.next_music_start < world.time)
 		return
+	RAI.next_music_start = world.time + 5 MINUTES
 
 	R.playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
-	replicator_role.next_music_start = world.time + 5 MINUTES
 
 /datum/faction/replicators/proc/victory_animation(turf/T)
 	SSticker.explosion_in_progress = TRUE
@@ -249,3 +250,26 @@ Message ends."}
 
 /datum/faction/replicators/proc/adjust_energy(amount)
 	energy = min(length(global.replicator_generators) * REPLICATOR_GENERATOR_POWER_GENERATION, energy + amount)
+
+/datum/faction/replicators/GetScoreboard()
+	. = ..()
+	if(!faction_scoreboard_data)
+		return
+
+	var/node_string = ""
+	if(length(global.area2free_forcefield_nodes) > 0)
+		var/first = TRUE
+		for(var/area_name in global.area2free_forcefield_nodes)
+			var/node_count = global.area2free_forcefield_nodes[area_name]
+			if(!first)
+				node_string += ", "
+			first = FALSE
+			node_string += "[area_name] ([node_count])"
+
+	. += "Bandwidth: [bandwidth]/[max_bandwidth]<br>"
+	. += "Replicators abandoned: [length(global.alive_replicators)]<br>"
+	. += "Generators active: [length(global.replicator_generators)]<br>"
+	. += "Portals active: [length(global.active_transponders)]<br>"
+	if(node_string != "")
+		. += "Nodes unclaimed: [node_string]<br>"
+	. += "<br>"

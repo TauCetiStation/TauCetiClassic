@@ -11,17 +11,6 @@
 	antag_hud_type = ANTAG_HUD_ALIEN
 	antag_hud_name = "hudalien"
 
-	var/presence_name = ""
-	var/array_color = ""
-	var/swarms_goodwill = 0
-
-	var/next_music_start = 0
-
-/datum/role/replicator/New(datum/mind/M, datum/faction/fac, override = FALSE)
-	presence_name = greek_pronunciation[length(fac.members) + 1] + "-[rand(0, 9)] Presence"
-	array_color = pick(REPLICATOR_COLORS)
-	return ..()
-
 /datum/role/replicator/Greet(greeting, custom)
 	. = ..()
 	to_chat(antag.current, {"<span class='notice'><b>You are a replicator. A part of a Swarm. You must consume materials and create infrastructure required for a Bluespace Catapult, which will utilize a
@@ -30,5 +19,6 @@
 
 /datum/role/replicator/GetScoreboard()
 	. = ..()
-	. += "<br><b>Presence Name:</b> [presence_name]"
-	. += "<br><b>Materials Contribution:</b> [swarms_goodwill]"
+	var/ckey = ckey(antag.key)
+	var/datum/replicator_array_info/RAI = global.replicators_faction.ckey2info[ckey]
+	. += "<br><b>Materials Contribution:</b> [RAI.swarms_goodwill]"

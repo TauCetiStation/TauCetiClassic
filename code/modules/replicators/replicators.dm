@@ -82,6 +82,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	w_class = SIZE_SMALL
 
+	immune_to_ssd = TRUE
+
 	var/last_brute_hit = 0
 
 	// How many drones are under direct control.
@@ -289,22 +291,18 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	var/datum/role/replicator/R = mind.GetRole(REPLICATOR)
 	if(R)
 		return
-
-	R = global.replicators_faction.get_member_by_ckey(ckey)
-	if(R)
-		var/datum/mind/old_mind_idk_anymore = R.antag
-		R.RemoveFromRole(old_mind_idk_anymore, msg_admins=FALSE)
-		qdel(old_mind_idk_anymore)
-		R.AssignToRole(mind, msg_admins=FALSE)
-		return
-
 	R = add_faction_member(global.replicators_faction, src, TRUE)
 
-	mind.name = R.presence_name
+	var/datum/replicator_array_info/RAI = global.replicators_faction.ckey2info[ckey]
+	if(!RAI)
+		RAI = new /datum/replicator_array_info
+		global.replicators_faction.ckey2info[ckey] = RAI
 
-	if(R.next_music_start >= world.time)
+	mind.name = RAI.presence_name
+
+	if(RAI.next_music_start >= world.time)
 		return
-	R.next_music_start = world.time + 5 MINUTES
+	RAI.next_music_start = world.time + 5 MINUTES
 
 	playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
@@ -584,11 +582,11 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 /mob/living/simple_animal/replicator/proc/set_last_controller(ckey)
 	last_controller_ckey = ckey
-	var/datum/role/replicator/R = global.replicators_faction.get_member_by_ckey(ckey)
-	if(!R)
+	var/datum/replicator_array_info/RAI = global.replicators_faction.ckey2info[ckey]
+	if(!RAI)
 		return
 
-	var/new_color = R.array_color
+	var/new_color = RAI.array_color
 	// to-do: sound on controller change
 	if(new_color)
 		color = new_color
@@ -603,11 +601,11 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	if(!last_controller_ckey)
 		return
 
-	var/datum/role/replicator/R = global.replicators_faction.get_member_by_ckey(last_controller_ckey)
-	if(!R)
+	var/datum/replicator_array_info/RAI = global.replicators_faction.ckey2info[last_controller_ckey]
+	if(!RAI)
 		return
 
-	to_chat(user, "<span class='notice'>[ckey ? "Is currently" : "Was lastly"] under the influence of [R.presence_name].</span>")
+	to_chat(user, "<span class='notice'>[ckey ? "Is currently" : "Was lastly"] under the influence of [RAI.presence_name].</span>")
 
 /mob/living/simple_animal/replicator/can_intentionally_move(atom/NewLoc, movedir)
 	. = ..()
@@ -623,3 +621,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	var/turf/T = get_turf(NewLoc)
 	if(!can_place_corridor(T))
 		return FALSE
+
+/mob/living/simple_animal/replicator/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE, timeofdeath = world.time)
+	if(!key)
+		return ..()
+
+	var/datum/role/replicator/R = mind.GetRole(REPLICATOR)
+	if(R)
+		R.Drop()
+
+	return ..()
