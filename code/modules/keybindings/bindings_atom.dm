@@ -3,8 +3,10 @@
 
 /atom/movable/keyLoop(client/user)
 	var/movement_dir = NONE
-	for(var/_key in user.keys_held)
-		movement_dir = movement_dir | user.movement_keys[_key]
+	if(length(user.keys_held) > 0)
+		var/_key = user.keys_held[1]
+		movement_dir = user.movement_keys[_key]
+
 	if(user.next_move_dir_add)
 		movement_dir |= user.next_move_dir_add
 	if(user.next_move_dir_sub)
