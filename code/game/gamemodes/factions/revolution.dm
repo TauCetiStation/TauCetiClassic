@@ -75,7 +75,7 @@
 	if(IsSuccessful())
 		var/dead_heads = 0
 		var/alive_heads = 0
-		for(var/datum/mind/head_mind in get_all_heads())
+		for(var/datum/mind/head_mind as anything in get_all_heads())
 			if(head_mind.current.stat == DEAD)
 				dead_heads++
 			else
@@ -332,7 +332,7 @@
 	if(IsSuccessful())
 		var/dead_heads = 0
 		var/alive_heads = 0
-		for(var/datum/mind/head_mind in get_all_heads())
+		for(var/datum/mind/head_mind as anything in get_all_heads())
 			if(!considered_alive(head_mind))
 				dead_heads++
 			else
