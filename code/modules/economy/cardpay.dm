@@ -1,6 +1,6 @@
 /obj/item/device/cardpay
 	name = "Card pay device"
-	desc = "Scan your ID card to make purchases electronically."
+	desc = "Совершайте покупки простым движением карты."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "card-pay-idle"
 
@@ -10,13 +10,25 @@
 
 	var/datum/money_account/linked_account
 	var/pay_amount = 0
+	var/display_price = 0
 	var/reset = TRUE
+
+	var/image/holoprice
 
 /obj/item/device/cardpay/atom_init(mapload)
 	. = ..()
 
 	if(mapload && locate(/obj/structure/table, get_turf(src)))
 		anchored = TRUE
+
+	holoprice = image('icons/effects/32x32.dmi', "blank")
+	holoprice.layer = INDICATOR_LAYER
+
+	holoprice.maptext_y = 5
+	holoprice.maptext_width = 40
+	holoprice.maptext_x = -4
+
+	add_overlay(holoprice)
 
 /obj/item/device/cardpay/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id))
@@ -25,6 +37,7 @@
 			var/datum/money_account/D = get_account(Card.associated_account_number)
 			if(D)
 				linked_account = D
+				playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>Аккаунт подключён.</span>")
 			else
 				to_chat(user, "<span class='notice'>Нет аккаунта, привязанного к карте.</span>")
@@ -40,6 +53,8 @@
 			if(anchored)
 				to_chat(user, "<span class='notice'>Сканер откручен.</span>")
 				anchored = FALSE
+				update_holoprice(TRUE)
+				SStgui.close_uis(src)
 			else
 				if(locate(/obj/structure/table, get_turf(src)))
 					to_chat(user, "<span class='warning'>Сканер прикручен.</span>")
@@ -56,7 +71,7 @@
 		set_dir(turn(dir,-90))
 
 /obj/item/device/cardpay/proc/scan_card(obj/item/weapon/card/id/Card)
-	visible_message("<span class='info'>[usr] waves a card through [src].</span>")
+	visible_message("<span class='info'>[usr] прикладывает карту к терминалу.</span>")
 	if(!linked_account)
 		visible_message("[bicon(src)]<span class='warning'>Нет подключённого аккаунта.</span>")
 		return
@@ -85,7 +100,89 @@
 			charge_to_account(Acc.account_number, "Терминал оплаты", "Оплата", src.name, -amount)
 			charge_to_account(linked_account.account_number, "Терминал оплаты", "Прибыль", src.name, amount)
 		if(reset)
-			amount = 0
+			pay_amount = 0
+			update_holoprice(TRUE)
 	else
 		visible_message("[bicon(src)]<span class='warning'>Недостаточно средств!</span>")
 		flick("card-pay-error", src)
+
+/obj/item/device/cardpay/attack_hand(mob/user)
+	. = ..()
+	if(isturf(src.loc) && anchored)
+		tgui_interact(user)
+
+/obj/item/device/cardpay/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "CardPay", "Терминал")
+		ui.open()
+
+/obj/item/device/cardpay/tgui_data(mob/user)
+	var/list/data = list()
+	data["numbers"] = display_price
+	data["reset_numbers"] = reset
+	return data
+
+/obj/item/device/cardpay/proc/check_id(mob/user)
+	if(!ishuman(user))
+		return FALSE
+
+	var/mob/living/carbon/human/H = usr
+	var/obj/item/weapon/card/id/ID = H.get_idcard()
+
+	if(!ID)
+		return FALSE
+
+	return get_account(ID.associated_account_number) == linked_account
+
+/obj/item/device/cardpay/tgui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("pressnumber")
+			var/num = params["number"]
+			if(isnum(num))
+				num = clamp(num, 0, 9)
+				display_price *= 10
+				display_price += num
+				if(display_price > 999)
+					display_price %= 1000
+				playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
+				return TRUE
+		if("clearnumbers")
+			if(check_id(usr))
+				if(display_price == 0)
+					pay_amount = 0
+				display_price = 0
+				playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
+				return TRUE
+			else
+				to_chat(usr, "<span class='warning'>Доступ запрещён.</span>")
+		if("approveprice")
+			if(check_id(usr))
+				if(display_price > 0)
+					pay_amount = display_price
+					display_price = 0
+					playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
+					update_holoprice(FALSE)
+					return TRUE
+			else
+				to_chat(usr, "<span class='warning'>Доступ запрещён.</span>")
+		if("togglereset")
+			reset = !reset
+			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
+			return TRUE
+
+/obj/item/device/cardpay/proc/update_holoprice(clear)
+	cut_overlay(holoprice)
+	if(clear)
+		holoprice.maptext = ""
+		holoprice.icon = 'icons/effects/32x32.dmi'
+		holoprice.icon_state = "blank"
+	else
+		holoprice.maptext = {"<div style="font-size:9pt;color:#22DD22;font:'Arial Black';text-align:center;" valign="top">[pay_amount]$</div>"}
+		holoprice.icon = 'icons/obj/device.dmi'
+		holoprice.icon_state = "holo_overlay"
+	add_overlay(holoprice)
