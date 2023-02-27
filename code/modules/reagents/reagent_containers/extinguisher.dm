@@ -63,6 +63,17 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 	else
 		return ..()
 
+/obj/item/weapon/reagent_containers/spray/extinguisher/afterattack(atom/target, mob/user, proximity, params)
+	..()
+	if(reagents.has_reagent("water"))
+		triple_shot = FALSE
+		spray_size = 1
+		spray_sizes = list(1)
+	else
+		triple_shot = TRUE
+		spray_size = 3
+		spray_sizes = list(3)
+
 /obj/item/weapon/reagent_containers/spray/extinguisher/examine(mob/user)
 	..()
 	to_chat(user, "The safety is [safety ? "on" : "off"].")
@@ -75,17 +86,6 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 	else
 		icon_state = "[initial(icon_state)]"
 	to_chat(usr, "<span class = 'notice'>You switch the safety [safety ? "on" : "off"].</span>")
-
-/obj/item/weapon/reagent_containers/spray/extinguisher/Spray_at(turf/start, turf/target)
-	if(reagents.has_reagent("water"))
-		spray_size = 1
-		spray_sizes = list(1)
-		triple_shot = FALSE
-	else
-		spray_size = 3
-		spray_sizes = list(3)
-		triple_shot = TRUE
-	..()
 
 /obj/item/weapon/reagent_containers/spray/extinguisher/mini
 	name = "fire extinguisher"
