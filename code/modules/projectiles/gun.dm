@@ -1,3 +1,6 @@
+//Please do not increase power in shake_camera(). It is really not needed for players.
+#define OPTIMAL_POWER_RECOIL
+
 /obj/item/weapon/gun
 	name = "gun"
 	desc = "It's a gun. It's pretty terrible, though."
@@ -62,10 +65,9 @@
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
-
-	var/skill_recoil = max(0, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
+	var/skill_recoil = max(1, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
 	if(skill_recoil)
-		shake_camera(user, skill_recoil + 1, skill_recoil)
+		shake_camera(user, skill_recoil, OPTIMAL_POWER_RECOIL)
 
 	if(silenced)
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
@@ -246,3 +248,5 @@
 			return
 	else
 		return ..()
+
+#undef OPTIMAL_POWER_RECOIL
