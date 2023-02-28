@@ -9,10 +9,8 @@
 	var/list/radial_choices = list()
 	for(var/upgrade_name in choices)
 		var/datum/replicator_array_upgrade/RAU = choices[upgrade_name]
-		to_chat(world, "[upgrade_name] [RAU]")
 		radial_choices[upgrade_name] = image(icon=initial(RAU.icon), icon_state=initial(RAU.icon_state))
 
-	to_chat(world, "SHOWING RADIAL MENU: [length(radial_choices)]")
 	var/upgrade_name = show_radial_menu(src, src, radial_choices, radius = 30, tooltips = TRUE)
 	if(!upgrade_name)
 		return
