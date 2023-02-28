@@ -190,14 +190,13 @@
 	disintegrating = FALSE
 	A.is_disintegrating = FALSE
 
-	var/healing_material_loss = min(material_amount * REPLICATOR_DISINTEGRATION_REPAIR_RATE, maxHealth - health)
+	var/healing_amount = material_amount * REPLICATOR_DISINTEGRATION_REPAIR_RATE
 	// Can't heal via your own barricades.
-	if(healing_material_loss > 0 && !A.is_replicator_structure())
+	if(healing_amount > 0 && !A.is_replicator_structure())
 		//integrate_animation()
-		heal_bodypart_damage(healing_material_loss, 0)
+		heal_bodypart_damage(healing_amount, 0)
 
 	// Healing is quite expensive otherwise...
-	// material_amount -= healing_material_loss
 	if(material_amount > 0)
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		FR.adjust_materials(material_amount, adjusted_by=last_controller_ckey)
