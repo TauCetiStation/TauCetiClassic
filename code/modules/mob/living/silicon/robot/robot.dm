@@ -596,6 +596,9 @@
 /mob/living/silicon/robot/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
+		
+	if (user.a_intent != INTENT_HELP)
+		return ..()
 
 	if(opened) // Are they trying to insert something?
 		for(var/V in components)
