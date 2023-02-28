@@ -22,7 +22,7 @@
 #define F_WIZFEDERATION      "Wizard Federation"
 #define F_XENOMORPH_HIVE     "Alien Hivemind"
 #define F_ZOMBIES            "Zobmies"
-#define F_REPLICATORS           "Replicators"
+#define F_REPLICATORS        "Replicators"
 
 // Role IDs
 #define ABDUCTOR_AGENT "Abductor Agent"

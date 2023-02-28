@@ -6,7 +6,14 @@
 
 	var/list/choices = RAI.get_upgrade_choices()
 
-	var/upgrade_name = tgui_input_list(src, "Choose an upgrade.", "Upgrade Protocol", choices)
+	var/list/radial_choices = list()
+	for(var/upgrade_name in choices)
+		var/datum/replicator_array_upgrade/RAU = choices[upgrade_name]
+		to_chat(world, "[upgrade_name] [RAU]")
+		radial_choices[upgrade_name] = image(icon=initial(RAU.icon), icon_state=initial(RAU.icon_state))
+
+	to_chat(world, "SHOWING RADIAL MENU: [length(radial_choices)]")
+	var/upgrade_name = show_radial_menu(src, src, radial_choices, radius = 30, tooltips = TRUE)
 	if(!upgrade_name)
 		return
 
@@ -78,6 +85,10 @@
 /datum/replicator_array_upgrade
 	var/name
 	var/desc
+
+	// For radial choices.
+	var/icon = 'icons/mob/replicator.dmi'
+	var/icon_state
 
 	// one of REPLICATOR_UPGRADE_CATEGORIES
 	var/category

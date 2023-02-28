@@ -6,6 +6,8 @@
 	name = "Efficency"
 	desc = "Manipulator upgrade speeds up disintegration speed."
 
+	icon_state = "upgrade_efficency"
+
 /datum/replicator_array_upgrade/support/efficency/add_to_unit(mob/living/simple_animal/replicator/R)
 	R.efficency += 0.2
 

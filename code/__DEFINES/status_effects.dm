@@ -13,7 +13,6 @@
 // BUFFS //
 ///////////
 
-// line added for consistency, remove this line with first effect.
 #define STATUS_EFFECT_SWARMS_GIFT /datum/status_effect/swarm_gift
 
 /////////////

@@ -6,6 +6,8 @@
 	name = "Destruction"
 	desc = "Further concentration of plasmatic bursts allows for greater ranged capabilities."
 
+	icon_state = "upgrade_ranged_attack_damage"
+
 /datum/replicator_array_upgrade/offensive/ranged_attack_damage/add_to_unit(mob/living/simple_animal/replicator/R)
 	R.disabler_damage_increase += 1.0
 
