@@ -200,6 +200,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	if(!isreplicator(AM))
 		return ..()
 
+	if(!(locate(/obj/structure/bluespace_corridor) in loc))
+		return ..()
+
 	icon_state = "floor_node_captured"
 	playsound(AM, 'sound/magic/heal.ogg', VOL_EFFECTS_MASTER)
 

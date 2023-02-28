@@ -40,7 +40,7 @@
 		FR.drone_message(src, "STRUCTURE INTEGRITY CRITICAL. LOCATION: [A.name].", transfer=TRUE)
 		next_attacked_alert = world.time + attacked_alert_cooldown
 
-	if(health - last_update_health > 1 && next_attacked_alert < world.time && !sacrifice_powering)
+	if(last_update_health - health > 1 && next_attacked_alert < world.time && !sacrifice_powering)
 		emote("beep")
 		var/area/A = get_area(src)
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
@@ -143,7 +143,7 @@
 	leader.controlling_drones += 1
 
 	RegisterSignal(R, list(COMSIG_CLIENTMOB_MOVE), .proc/_repeat_leader_move)
-	RegisterSignal(R, list(COMSIG_MOB_CLICK), .proc/_repeat_leader_attack)
+	RegisterSignal(R, list(COMSIG_MOB_REGULAR_CLICK), .proc/_repeat_leader_attack)
 	RegisterSignal(R, list(COMSIG_MOB_SET_A_INTENT), .proc/on_leader_intent_change)
 	RegisterSignal(R, list(COMSIG_MOB_SET_M_INTENT), .proc/on_leader_m_intent_change)
 	RegisterSignal(R, list(COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING), .proc/forget_leader)
@@ -158,7 +158,7 @@
 
 	leader.controlling_drones -= 1
 
-	UnregisterSignal(leader, list(COMSIG_CLIENTMOB_MOVE, COMSIG_MOB_CLICK, COMSIG_MOB_SET_A_INTENT, COMSIG_MOB_SET_M_INTENT, COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(leader, list(COMSIG_CLIENTMOB_MOVE, COMSIG_MOB_REGULAR_CLICK, COMSIG_MOB_SET_A_INTENT, COMSIG_MOB_SET_M_INTENT, COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING))
 	leader = null
 	set_state(REPLICATOR_STATE_HARVESTING)
 

@@ -91,7 +91,7 @@
 	if(modifiers[CTRL_CLICK])
 		CtrlClickOn(A)
 		return
-	if(RegularClickOn(A))
+	if(RegularClickOn(A, params))
 		return
 
 	if(incapacitated(NONE))
@@ -165,7 +165,9 @@
 	return
 
 // Click without any modifiers
-/mob/proc/RegularClickOn(atom/A)
+/mob/proc/RegularClickOn(atom/A, params)
+	if(SEND_SIGNAL(src, COMSIG_MOB_REGULAR_CLICK, A, params) & COMPONENT_CANCEL_CLICK)
+		return FALSE
 	return FALSE
 
 //	Translates into attack_hand, etc.
