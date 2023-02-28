@@ -12,7 +12,9 @@
 	opacity = 0
 	plane = GAME_PLANE
 	// Why did they have NODECONSTRUCT o.o
-	flags = 0
+	flags = NONE
+	w_class = SIZE_MASSIVE
+
 	var/list/salvage  = list(
 		"welder" = list(
 			/obj/item/stack/sheet/metal,
