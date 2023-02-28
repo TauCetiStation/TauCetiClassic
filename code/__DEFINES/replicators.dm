@@ -47,3 +47,14 @@
 
 // Rewarding killing mobs.
 #define REPLICATOR_MATERIAL_AMOUNT_COEFF_ORGANIC 4.0
+
+// Upgrade defines.
+#define REPLICATOR_UPGRADE_CATEGORY_OFFENSIVE "Offensive"
+#define REPLICATOR_UPGRADE_CATEGORY_DEFENSIVE "Defensive"
+#define REPLICATOR_UPGRADE_CATEGORY_SUPPORT "Support"
+#define REPLICATOR_UPGRADE_CATEGORIES list(REPLICATOR_UPGRADE_CATEGORY_OFFENSIVE, REPLICATOR_UPGRADE_CATEGORY_DEFENSIVE, REPLICATOR_UPGRADE_CATEGORY_SUPPORT)
+#define REPLICATOR_STARTING_UPGRADE_POOL list(\
+	/datum/replicator_array_upgrade/offensive/ranged_attack_damage,\
+	/datum/replicator_array_upgrade/defensive/max_health_points,\
+	/datum/replicator_array_upgrade/support/efficency,\
+)

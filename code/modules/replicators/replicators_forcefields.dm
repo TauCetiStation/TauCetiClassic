@@ -14,7 +14,8 @@
 
 /turf/simulated/floor/plating/airless/catwalk/forcefield/atom_init()
 	. = ..()
-	icon_state = "floor"
+	icon_state = "floor_new"
+	color = "#a8dff0"
 
 	underlays.Cut()
 	var/image/I = SSenvironment.turf_image[z]
@@ -57,8 +58,8 @@
 
 /obj/structure/replicator_forcefield
 	name = "forcefield"
-	icon = 'icons/mob/replicator.dmi'
-	icon_state = "wall"
+	icon = 'icons/turf/walls/replicator_forcefield.dmi'
+	icon_state = "box"
 	density = TRUE
 	anchored = TRUE
 	opacity = 0
@@ -66,6 +67,11 @@
 
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT | FIRE_PROOF
+
+	canSmoothWith = list(
+		/obj/structure/replicator_forcefield
+	)
+	smooth = SMOOTH_TRUE
 
 /obj/structure/replicator_forcefield/Destroy()
 	// to-do: sound

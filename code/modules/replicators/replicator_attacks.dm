@@ -65,6 +65,8 @@
 		playsound(src, 'sound/weapons/guns/gunpulse_taser2.ogg', VOL_EFFECTS_MASTER)
 		var/obj/item/projectile/disabler/D = new(loc)
 		D.color = color
+		D.damage += disabler_damage_increase * 1.5
+		D.agony += disabler_damage_increase * 10
 		D.pixel_x += rand(-1, 1)
 		D.pixel_y += rand(-1, 1)
 		D.Fire(A, src, params)

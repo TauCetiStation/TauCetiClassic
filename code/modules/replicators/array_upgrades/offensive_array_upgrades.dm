@@ -1,0 +1,13 @@
+/datum/replicator_array_upgrade/offensive
+	category = REPLICATOR_UPGRADE_CATEGORY_OFFENSIVE
+
+
+/datum/replicator_array_upgrade/offensive/ranged_attack_damage
+	name = "Destruction"
+	desc = "Further concentration of plasmatic bursts allows for greater ranged capabilities."
+
+/datum/replicator_array_upgrade/offensive/ranged_attack_damage/add_to_unit(mob/living/simple_animal/replicator/R)
+	R.disabler_damage_increase += 1.0
+
+/datum/replicator_array_upgrade/offensive/ranged_attack_damage/remove_from_unit(mob/living/simple_animal/replicator/R)
+	R.disabler_damage_increase -= 1.0

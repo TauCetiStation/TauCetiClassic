@@ -14,15 +14,4 @@
 	src.duration = world.time + duration
 
 /datum/status_effect/swarm_gift/on_apply()
-	if(!istype(owner, /mob/living/simple_animal/replicator))
-		return FALSE
-
-	var/mob/living/simple_animal/replicator/R = owner
-
-	R.efficency *= 2.0
-
-	return TRUE
-
-/datum/status_effect/swarm_gift/on_remove()
-	var/mob/living/simple_animal/replicator/R = owner
-	R.efficency *= 0.5
+	return isreplicator(owner)

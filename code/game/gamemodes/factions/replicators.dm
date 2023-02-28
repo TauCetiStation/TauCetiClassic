@@ -42,6 +42,10 @@
 	// Win condition is launching REPLICATORS_CATAPULTED_TO_WIN replicators.
 	var/replicators_launched = 0
 
+	var/upgrades_amount = 1
+	var/next_upgrade_at = 0
+	var/upgrade_cooldown = 30 MINUTES
+
 	var/prelude_announcement
 	var/outbreak_announcement
 	var/quarantine_end_announcement
@@ -50,6 +54,8 @@
 	..()
 	spawned_at_time = world.time
 	vents4spawn = get_vents()
+
+	next_upgrade_at = world.time + upgrade_cooldown
 
 /datum/faction/replicators/OnPostSetup()
 	prelude_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
@@ -106,6 +112,11 @@
 	if(next_node_spawn < world.time)
 		nodes_to_spawn += 1
 		next_node_spawn = world.time + node_spawn_cooldown
+
+	if(next_upgrade_at < world.time)
+		upgrades_amount += 1
+		next_upgrade_at = world.time + upgrade_cooldown
+		swarm_chat_message("The Swarm", "Array upgrade capacity incremented. Examine yourself for possible upgrade prospectives.", 5)
 
 	if(bandwidth >= max_bandwidth)
 		return

@@ -85,6 +85,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	immune_to_ssd = TRUE
 
+	var/disabler_damage_increase = 0.0
+
 	var/last_brute_hit = 0
 
 	// How many drones are under direct control.
@@ -319,6 +321,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	..()
 	if(statpanel("Status"))
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		var/datum/replicator_array_info/RAI = FR.ckey2info[last_controller_ckey]
+
 		stat("Materials:", "[round(FR.materials)] ([round(FR.last_second_materials_change)])")
 		stat("Drone Amount:", "[length(global.alive_replicators)]/[FR.bandwidth]")
 		if(length(global.active_transponders) > 0)
@@ -340,6 +344,9 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 		if(length(global.bluespace_catapults) > 0)
 			var/area/A = get_area(global.bluespace_catapults[1])
 			stat("Catapult Location:", "[A.name]")
+
+		if(length(RAI.acquired_upgrades) > 0)
+			stat("Array Upgrades:", RAI.get_upgrades_string())
 
 /mob/living/simple_animal/replicator/death()
 	..()
@@ -491,6 +498,20 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 			return
 
 		receive_objection(R)
+		return
+
+	if(href_list["replicator_upgrade"])
+		var/mob/M = usr
+		if(M != src)
+			return
+		if(incapacitated())
+			to_chat(src, "<span class='warning'>Negative: This unit is too weak to upgrade.</span>")
+			return
+		if(!mind)
+			return
+
+		acquire_array_upgrade()
+		return
 
 	return ..()
 
@@ -588,11 +609,18 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	Stun(impact * 0.5)
 
 /mob/living/simple_animal/replicator/proc/set_last_controller(ckey)
-	last_controller_ckey = ckey
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-	var/datum/replicator_array_info/RAI = FR.ckey2info[ckey]
+	var/datum/replicator_array_info/old_RAI = FR.ckey2info[last_controller_ckey]
+	if(old_RAI)
+		old_RAI.remove_unit(src)
+
+	last_controller_ckey = ckey
+
+	var/datum/replicator_array_info/RAI = FR.ckey2info[last_controller_ckey]
 	if(!RAI)
 		return
+
+	RAI.add_unit(src)
 
 	var/new_color = RAI.array_color
 	// to-do: sound on controller change
@@ -616,6 +644,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	to_chat(user, "<span class='notice'>[ckey ? "Is currently" : "Was lastly"] under the influence of [RAI.presence_name].</span>")
 	if(ckey)
+		if(user == src && FR.upgrades_amount > length(RAI.acquired_upgrades))
+			to_chat(user, "<span class='bold notice'><a href='?src=\ref[src];replicator_upgrade=1'>Upgrade Prospectives Analyzed. Click here to upgrade.</a></span>")
 		return
 
 	switch(state)

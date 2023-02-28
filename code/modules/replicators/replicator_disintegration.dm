@@ -142,7 +142,11 @@
 	playsound_stealthy(A, 'sound/machines/cyclotron.ogg')
 
 	var/datum/callback/checks = CALLBACK(src, .proc/disintegrate_do_after_checks)
-	if(!do_skilled(src, A, A.get_unit_disintegration_time() * material_amount / efficency, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2, extra_checks=checks))
+	var/effective_efficency = efficency
+	if(has_swarms_gift())
+		effective_efficency *= 2
+
+	if(!do_skilled(src, A, A.get_unit_disintegration_time() * material_amount / effective_efficency, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2, extra_checks=checks))
 		qdel(D)
 		disintegrating = FALSE
 		A.is_disintegrating = FALSE
@@ -196,7 +200,6 @@
 		//integrate_animation()
 		heal_bodypart_damage(healing_amount, 0)
 
-	// Healing is quite expensive otherwise...
 	if(material_amount > 0)
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		FR.adjust_materials(material_amount, adjusted_by=last_controller_ckey)
