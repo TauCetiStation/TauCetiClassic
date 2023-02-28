@@ -199,7 +199,7 @@
 		if(is_lit)
 			var/turf/T = get_turf(hit_atom)
 			T.hotspot_expose(1000, 500)
-			if(istype(hit_atom, /mob/living))
+			if(isliving(hit_atom))
 				var/mob/living/L = hit_atom
 				L.IgniteMob()
 		qdel(src)
