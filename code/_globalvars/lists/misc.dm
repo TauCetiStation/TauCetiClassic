@@ -197,3 +197,5 @@ var/global/static/list/color_by_hex = list(
 
 // role_id = list(names)
 var/global/list/deconverted_roles = list()
+
+var/global/list/reagents_list = typecacheof(/datum/reagent)

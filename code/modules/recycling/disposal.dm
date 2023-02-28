@@ -1062,8 +1062,12 @@
 		P.w_class = Item.w_class
 		var/i = round(Item.w_class)
 		if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
-			P.icon_state = "deliverycrate[i]"
-			var/image/Img = image('icons/obj/storage.dmi', "deliverycrate[i]-shop")
+			if(istype(Item, /obj/item/pizzabox))
+				var/obj/item/pizzabox/B = Item
+				P.icon_state = "deliverypizza[length(B.boxes)]"
+			else
+				P.icon_state = "deliverycrate[i]"
+			var/image/Img = image('icons/obj/storage.dmi', "[P.icon_state]-shop")
 			Img.appearance_flags = RESET_COLOR
 			P.add_overlay(Img)
 		P.modify_max_integrity(75)
