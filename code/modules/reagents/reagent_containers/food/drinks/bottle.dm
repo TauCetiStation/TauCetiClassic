@@ -14,6 +14,10 @@
 
 	var/stop_spin_bottle = FALSE //Gotta stop the rotation.
 
+	var/is_molotoved = FALSE
+	var/is_lit = FALSE
+	var/lit_time = null
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/atom_init()
 	. = ..()
 	if (!is_glass)
@@ -89,6 +93,9 @@
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	user.put_in_active_hand(B)
 	transfer_fingerprints_to(B)
+	if(is_lit)
+		var/turf/T = get_turf(target)
+		T.hotspot_expose(1000, 500)
 
 	qdel(src)
 
@@ -98,6 +105,11 @@
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/update_icon()
 	show_filler_on_icon(3, 24, 0)
+	cut_overlays()
+	if(is_molotoved)
+		add_overlay(image(icon, "molotov"))
+	if(is_lit)
+		add_overlay(image(icon, "molotov_lit"))
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/can_smash()
 	return is_glass
@@ -174,8 +186,7 @@
 		if(reagents.total_volume && target.reagents.total_volume < target.reagents.maximum_volume)
 			playsound(user, 'sound/items/glass_containers/bottle_pouring.ogg', VOL_EFFECTS_MASTER, 800)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/after_throw(datum/callback/callback)
-	..()
+/obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(is_glass)
 		var/obj/item/weapon/broken_bottle/BB =  new /obj/item/weapon/broken_bottle(loc)
 		var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
@@ -185,12 +196,46 @@
 		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 		new /obj/item/weapon/shard(loc)
 		reagents.standard_splash(loc)
+		if(is_lit)
+			var/turf/T = get_turf(hit_atom)
+			T.hotspot_expose(1000, 500)
+			if(istype(hit_atom, /mob/living))
+				var/mob/living/L = hit_atom
+				L.IgniteMob()
 		qdel(src)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/sheet/cloth) && is_glass && !is_molotoved)
+		var/obj/item/stack/sheet/cloth/C = I
+		C.use(1)
+		is_molotoved = TRUE
+		flags ^= OPENCONTAINER
+		to_chat(user, "<span class='notice'You stuff some cloth into the bottleneck.</span>")
+
+	if(istype(I, /obj/item/weapon/lighter))
+		var/obj/item/weapon/lighter/L = I
+		if(L.lit && is_molotoved && !is_lit)
+			is_lit = TRUE
+			lit_time = world.time + rand(200, 400)
+			user.visible_message("<span class='warning'>[user] lights up a molotov!</span>")
+			playsound(src, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
+			START_PROCESSING(SSobj, src)
+
+	update_icon()
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/process()
+	if(world.time >= lit_time)
+		throw_impact(loc)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/attack_self(mob/user)
+	if(is_molotoved && !is_lit)
+		new /obj/item/stack/sheet/cloth(user.loc)
+		is_molotoved = FALSE
+		flags |= OPENCONTAINER
+		update_icon()
 
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/weapon/broken_bottle
-
 	name = "Broken Bottle"
 	desc = "A bottle with a sharp broken bottom."
 	w_class = SIZE_TINY
@@ -214,7 +259,6 @@
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	new /obj/item/weapon/shard(loc)
 	qdel(src)
-
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gin
 	name = "Griffeater Gin"
