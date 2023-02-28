@@ -93,7 +93,7 @@
 		var/obj/item/weapon/shield/shield = L.is_in_hands(/obj/item/weapon/shield)
 		if(shield && check_shield_dir(hit_atom))
 			L.visible_message("<span class='danger'>[src] smashed into [L]'s [shield]!</span>", "<span class='userdanger'>[src] pounces on your [shield]!</span>")
-			Stun(2)
+			Stun(2, TRUE)
 			Weaken(2)
 		else
 			L.visible_message("<span class='danger'>[src] pounces on [L]!</span>", "<span class='userdanger'>[src] pounces on you!</span>")
@@ -109,7 +109,7 @@
 			playsound(src, pick(SOUNDIN_HUNTER_LEAP), VOL_EFFECTS_MASTER, vary = FALSE)
 	else if(hit_atom.density)
 		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='alertalien'>You smashes into [hit_atom]!</span>")
-		Stun(2)
+		Stun(2, TRUE)
 		Weaken(2)
 
 	pounce_cooldown = TRUE
