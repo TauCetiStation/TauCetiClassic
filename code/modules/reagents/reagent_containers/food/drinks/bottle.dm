@@ -189,7 +189,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(is_glass)
 		var/obj/item/weapon/broken_bottle/BB =  new /obj/item/weapon/broken_bottle(loc)
-		var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
+		var/icon/I = new('icons/obj/drinks.dmi', icon_state)
 		I.Blend(BB.broken_outline, ICON_OVERLAY, rand(5), 1)
 		I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 		BB.icon = I
