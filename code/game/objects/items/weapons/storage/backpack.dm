@@ -68,7 +68,7 @@
 		crit_fail = 1
 		icon_state = "brokenpack"
 
-/obj/item/weapon/storage/backpack/holding/singularity_act(current_size)
+/obj/item/weapon/storage/backpack/holding/singularity_act(obj/singularity/S, current_size)
 	var/dist = max((current_size - 2),1)
 	explosion(src.loc,(dist),(dist*2),(dist*4))
 	return

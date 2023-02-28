@@ -36,13 +36,15 @@
 	if(health < maxHealth * 0.2 && next_attacked_alert < world.time)
 		emote("beep")
 		var/area/A = get_area(src)
-		global.replicators_faction.drone_message(src, "STRUCTURE INTEGRITY CRITICAL. LOCATION: [A.name].", transfer=TRUE)
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		FR.drone_message(src, "STRUCTURE INTEGRITY CRITICAL. LOCATION: [A.name].", transfer=TRUE)
 		next_attacked_alert = world.time + attacked_alert_cooldown
 
-	if(health < last_update_health && next_attacked_alert < world.time && !sacrifice_powering)
+	if(health - last_update_health > 1 && next_attacked_alert < world.time && !sacrifice_powering)
 		emote("beep")
 		var/area/A = get_area(src)
-		global.replicators_faction.drone_message(src, "Structure integrity under threat. Location: [A.name].", transfer=TRUE)
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		FR.drone_message(src, "Structure integrity under threat. Location: [A.name].", transfer=TRUE)
 		next_attacked_alert = world.time + attacked_alert_cooldown
 
 	// All replicators are slowly dying. Eating obviously fixes them.
@@ -60,7 +62,8 @@
 			taken_damage = TRUE
 
 		if(stat == DEAD)
-			global.replicators_faction.adjust_materials(REPLICATOR_COST_REPLICATE)
+			var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+			FR.adjust_materials(REPLICATOR_COST_REPLICATE)
 			gib()
 			return
 
@@ -83,7 +86,8 @@
 	if(!disintegrating && excitement <= 0 && next_excitement_alert < world.time)
 		emote("beep")
 		var/area/A = get_area(src)
-		global.replicators_faction.drone_message(src, "Idleness value drift detected. Tasks requested at [A.name].", transfer=TRUE, dismantle=TRUE)
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		FR.drone_message(src, "Idleness value drift detected. Tasks requested at [A.name].", transfer=TRUE, dismantle=TRUE)
 		next_excitement_alert = excitement_alert_cooldown + world.time
 
 	if(state == REPLICATOR_STATE_COMBAT)
@@ -170,6 +174,10 @@
 		return
 
 	if(incapacitated())
+		forget_leader()
+		return
+
+	if(!isturf(NewLoc))
 		forget_leader()
 		return
 
@@ -350,12 +358,12 @@
 		var/mob/living/simple_animal/replicator/R = r
 		if(R == src)
 			continue
-		var/sentient_check = !sentient || R.ckey
-		if(!sentient_check)
+		var/sentient_check_failed = sentient && !R.ckey
+		if(sentient_check_failed)
 			continue
 
-		var/harvest_check = !harvesting || R.stat == REPLICATOR_STATE_HARVESTING
-		if(!harvest_check)
+		var/harvest_check_failed = harvesting && R.stat != REPLICATOR_STATE_HARVESTING
+		if(harvest_check_failed)
 			continue
 
 		var/dist = get_dist(src, R)

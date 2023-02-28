@@ -64,6 +64,7 @@
 		SetNextMove(CLICK_CD_MELEE)
 		playsound(src, 'sound/weapons/guns/gunpulse_taser2.ogg', VOL_EFFECTS_MASTER)
 		var/obj/item/projectile/disabler/D = new(loc)
+		D.color = color
 		D.pixel_x += rand(-1, 1)
 		D.pixel_y += rand(-1, 1)
 		D.Fire(A, src, params)
@@ -88,7 +89,7 @@
 	max_integrity = 15
 	resistance_flags = CAN_BE_HIT | FIRE_PROOF
 
-	var/next_activation = 0
+	var/armed = TRUE
 
 /obj/item/mine/replicator/deconstruct()
 	try_trigger()
@@ -122,9 +123,9 @@
 	audible_message("<b>[src]</b> <i>buzzes.</i>", "You see a light flicker.", hearing_distance = 7, ignored_mobs = observer_list)
 
 /obj/item/mine/replicator/trigger_act(atom/movable/AM)
-	if(next_activation > world.time)
+	if(!armed)
 		return
-	next_activation = world.time + 40
+	armed = FALSE
 	update_icon()
 
 	addtimer(CALLBACK(src, .proc/rearm), 40)
@@ -141,7 +142,8 @@
 		M.emp_act(1)
 
 		var/area/A = get_area(src)
-		global.replicators_faction.drone_message(src, "Mine trigger event at [A.name].", transfer=TRUE)
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		FR.drone_message(src, "Mine trigger event at [A.name].", transfer=TRUE)
 		return
 
 	if(isliving(AM))
@@ -154,22 +156,24 @@
 		L.Stun(2)
 
 		var/area/A = get_area(src)
-		global.replicators_faction.drone_message(src, "Mine trigger event at [A.name].", transfer=TRUE)
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		FR.drone_message(src, "Mine trigger event at [A.name].", transfer=TRUE)
 
 /obj/item/mine/replicator/disarm()
 	qdel(src)
 
 /obj/item/mine/replicator/proc/rearm()
 	playsound(src, 'sound/effects/stealthoff.ogg', VOL_EFFECTS_MASTER, 75)
+	armed = TRUE
 	update_icon()
 
 /obj/item/mine/replicator/update_icon()
-	if(next_activation <= world.time)
+	if(armed)
 		alpha = 45
 		icon_state = "traparmed"
 	else
-		alpha = 255
 		icon_state = "trap"
+		alpha = 255
 
 /obj/item/mine/replicator/Topic(href, href_list)
 	if(href_list["replicator_jump"])

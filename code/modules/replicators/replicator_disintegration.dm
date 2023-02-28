@@ -199,7 +199,8 @@
 	// Healing is quite expensive otherwise...
 	// material_amount -= healing_material_loss
 	if(material_amount > 0)
-		global.replicators_faction.adjust_materials(material_amount, adjusted_by=last_controller_ckey)
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		FR.adjust_materials(material_amount, adjusted_by=last_controller_ckey)
 	return TRUE
 
 /*

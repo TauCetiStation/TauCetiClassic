@@ -408,13 +408,13 @@
 
 ////////////////
 
-/turf/singularity_act()
+/turf/singularity_act(obj/singularity/S, current_size)
 	if(intact)
 		for(var/obj/O in contents) //this is for deleting things like wires contained in the turf
 			if(O.level != 1)
 				continue
 			if(O.invisibility == 101)
-				O.singularity_act()
+				O.singularity_act(S, current_size)
 	ChangeTurf(/turf/environment/space)
 	return(2)
 

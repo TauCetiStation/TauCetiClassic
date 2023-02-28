@@ -20,7 +20,8 @@
 
 	emote("beep")
 
-	global.replicators_faction.announce_swarm(last_controller_ckey, message, announcer=src)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.announce_swarm(last_controller_ckey, message, announcer=src)
 
 /datum/faction/replicators/proc/swarm_chat_message(presence_name, message, font_size, announcer=null)
 	var/list/listening = list()
@@ -63,13 +64,14 @@
 		to_chat(M, "[open_tags][channel] [speaker_name] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags][jump_button]")
 
 /datum/faction/replicators/proc/announce_swarm(presence_ckey, message, atom/announcer=null)
-	var/font_size = 1
+	var/font_size = 2.0
 
-	var/datum/replicator_array_info/RAI_max = ckey2info[max_goodwill_ckey]
 	var/datum/replicator_array_info/RAI = ckey2info[presence_ckey]
-	if(RAI_max && RAI_max.swarms_goodwill > 0)
+	var/datum/replicator_array_info/RAI_max = ckey2info[max_goodwill_ckey]
+
+	if(RAI_max && RAI_max.swarms_goodwill > 0.0)
 		var/goodwill_coeff = RAI.swarms_goodwill / RAI_max.swarms_goodwill
-		var/goodwill_font_size = clamp(CEIL(goodwill_coeff * 3), 1, 3)
+		var/goodwill_font_size = clamp(CEIL(goodwill_coeff * 3.0) + 1.0, 2.0, 4.0)
 
 		font_size = goodwill_font_size
 

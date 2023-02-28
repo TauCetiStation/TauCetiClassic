@@ -7,7 +7,8 @@
 	name = "[name] ([material_cost])"
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/proc/replicator_checks(mob/user, try_start)
-	if(global.replicators_faction.materials < material_cost)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	if(FR.materials < material_cost)
 		if(try_start)
 			to_chat(user, "<span class='warning'>Not enough materials.</span>")
 		return FALSE
@@ -49,7 +50,8 @@
 	objection_delay = 3 SECONDS
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/replicator_checks(mob/user, try_start)
-	if(length(global.alive_replicators) >= global.replicators_faction.bandwidth)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	if(length(global.alive_replicators) >= FR.bandwidth)
 		if(try_start)
 			to_chat(user, "<span class='warning'>Not enough bandwidth for replication.</span>")
 		return FALSE
@@ -63,7 +65,8 @@
 	if(!objection_timer(user_replicator, "Proceeding with replication at [A.name]."))
 		return
 
-	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 
 	var/mob/living/simple_animal/replicator/R = new(user_replicator.loc)
 	R.set_last_controller(user_replicator.last_controller_ckey)
@@ -115,7 +118,9 @@
 /obj/effect/proc_holder/spell/no_target/replicator_construct/barricade/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/replicator/user_replicator = user
 	to_chat(user, "<span class='notice'>Barricade deployed successfully.</span>")
-	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
+
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 
 	new /obj/structure/replicator_barricade(user_replicator.loc)
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
@@ -153,7 +158,9 @@
 /obj/effect/proc_holder/spell/no_target/replicator_construct/trap/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/replicator/user_replicator = user
 	to_chat(user, "<span class='notice'>Mine deployed successfully.</span>")
-	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
+
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 
 	new /obj/item/mine/replicator(user_replicator.loc)
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
@@ -202,7 +209,8 @@
 		return
 
 	to_chat(user, "<span class='notice'>Bluespace Transponder activation initiated...Establishing contact with The Swarm.</span>")
-	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 
 	var/obj/machinery/swarm_powered/bluespace_transponder/BT = new(user_replicator.loc)
 	BT.name = "[BT.name] ([user_replicator.generation][rand(0, 9)])"
@@ -252,11 +260,12 @@
 	var/mob/living/simple_animal/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
 	// to-do: sound
-	if(objection_timer(user_replicator, "Deploying a generator at [A.name]."))
+	if(!objection_timer(user_replicator, "Deploying a generator at [A.name]."))
 		return
 
 	to_chat(user, "<span class='notice'>Generator deployed.</span>")
-	global.replicators_faction.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 
 	var/obj/machinery/power/replicator_generator/BG = new(user_replicator.loc)
 	BG.name = "[BG.name] ([user_replicator.generation][rand(0, 9)])"
@@ -276,7 +285,8 @@
 	action_icon_state = "ui_corridor"
 
 /obj/effect/proc_holder/spell/no_target/toggle_corridor_construction/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
-	if(global.replicators_faction.materials < 1)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	if(FR.materials < 1)
 		if(try_start)
 			to_chat(user, "<span class='warning'>Not enough materials.</span>")
 		return FALSE
@@ -438,7 +448,8 @@
 	objection_delay = 10 SECONDS
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/catapult/replicator_checks(mob/user, try_start)
-	if(global.replicators_faction.bandwidth < 20)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	if(FR.bandwidth < 20)
 		if(try_start)
 			to_chat(user, "<span class='warning'>The rift requires 20 replicators to be sent through. You need more bandwidth.</span>")
 		return FALSE

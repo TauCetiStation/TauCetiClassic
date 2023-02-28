@@ -86,7 +86,8 @@
 	if(!isreplicator(AM))
 		return
 	var/mob/living/simple_animal/replicator/R = AM
-	if(R.auto_construct_type != /obj/structure/bluespace_corridor || global.replicators_faction.materials < R.auto_construct_cost)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	if(R.auto_construct_type != /obj/structure/bluespace_corridor || FR.materials < R.auto_construct_cost)
 		return
 	R.try_construct(get_turf(src))
 
@@ -164,18 +165,20 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 
 /obj/structure/forcefield_node/atom_init()
 	. = ..()
-	global.replicators_faction.nodes_to_spawn -= 1
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.nodes_to_spawn -= 1
 
 	add_area_node(src)
 
 /obj/structure/forcefield_node/Destroy()
 	// to-do: sound
 	playsound(loc, 'sound/machines/arcade/heal2.ogg', VOL_EFFECTS_MASTER)
-	global.replicators_faction.nodes_to_spawn += 1
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.nodes_to_spawn += 1
 
 	var/obj/machinery/power/replicator_generator/RG = locate() in loc
 	if(RG)
-		global.replicators_faction.adjust_materials(REPLICATOR_COST_GENERATOR)
+		FR.adjust_materials(REPLICATOR_COST_GENERATOR)
 		qdel(RG)
 
 	remove_area_node(src)

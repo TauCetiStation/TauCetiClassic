@@ -137,10 +137,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 /mob/living/simple_animal/replicator/atom_init()
 	. = ..()
 
-	global.replicators_faction = create_uniq_faction(/datum/faction/replicators)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	spawned_at_time = world.time
 
-	global.replicators_faction.give_gift(src)
+	FR.give_gift(src)
 
 	generation = "[rand(0, 9)]"
 
@@ -158,7 +158,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	indicator = image(icon=icon, icon_state="replicator_indicator")
 	indicator.color = state2color[state]
 	indicator.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	indicator.appearance_flags |= KEEP_APART
+	indicator.appearance_flags |= KEEP_APART|RESET_COLOR
 
 	overlays += indicator
 
@@ -213,7 +213,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	if(!auto_construct_type)
 		return
 
-	if(global.replicators_faction.materials < auto_construct_cost)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	if(FR.materials < auto_construct_cost)
 		return
 
 	//if(!istype(my_turf, /turf/simulated/floor/plating/airless/catwalk/forcefield))
@@ -230,7 +231,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 		playsound_stealthy(T, 'sound/misc/mining_crate_success.ogg', vol=40)
 
 	new auto_construct_type(T)
-	global.replicators_faction.adjust_materials(-auto_construct_cost, adjusted_by=last_controller_ckey)
+	FR.adjust_materials(-auto_construct_cost, adjusted_by=last_controller_ckey)
 
 // Corridors can only connect to two other corridors if there's no portal connecting them.
 // No more than 2 neighbors, and no more than 1 neighbor of the neigbhor(excluding us)
@@ -253,13 +254,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 				var/obj/structure/bluespace_corridor/BC_anim = locate() in anim_turf
 				if(BC_anim)
-					BC_anim.animate_obstacle()
+					INVOKE_ASYNC(BC, /obj/structure/bluespace_corridor.proc/animate_obstacle)
 
 			return FALSE
 
 		if(BC.neighbor_count > 1)
 			to_chat(src, "<span class='notice'>Can not place Bluespace Corridor, a neighbor has more than one other neighboring Bluespace Corridor.</span>")
-			BC.animate_obstacle()
+			INVOKE_ASYNC(BC, /obj/structure/bluespace_corridor.proc/animate_obstacle)
 			return FALSE
 
 	return TRUE
@@ -292,12 +293,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	var/datum/role/replicator/R = mind.GetRole(REPLICATOR)
 	if(R)
 		return
-	R = add_faction_member(global.replicators_faction, src, TRUE)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	R = add_faction_member(FR, src, TRUE)
 
-	var/datum/replicator_array_info/RAI = global.replicators_faction.ckey2info[ckey]
+	var/datum/replicator_array_info/RAI = FR.ckey2info[ckey]
 	if(!RAI)
-		RAI = new /datum/replicator_array_info(global.replicators_faction)
-		global.replicators_faction.ckey2info[ckey] = RAI
+		RAI = new /datum/replicator_array_info(FR)
+		FR.ckey2info[ckey] = RAI
 
 	mind.name = RAI.presence_name
 
@@ -316,12 +318,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 /mob/living/simple_animal/replicator/Stat()
 	..()
 	if(statpanel("Status"))
-		stat("Materials:", "[round(global.replicators_faction.materials)] ([round(global.replicators_faction.last_second_materials_change)])")
-		stat("Drone Amount:", "[length(global.alive_replicators)]/[global.replicators_faction.bandwidth]")
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		stat("Materials:", "[round(FR.materials)] ([round(FR.last_second_materials_change)])")
+		stat("Drone Amount:", "[length(global.alive_replicators)]/[FR.bandwidth]")
 		if(length(global.active_transponders) > 0)
-			stat("Bandwidth Upgrade:", "[round(global.replicators_faction.materials_consumed)]/[global.replicators_faction.consumed_materials_until_upgrade]")
+			stat("Bandwidth Upgrade:", "[round(FR.materials_consumed)]/[FR.consumed_materials_until_upgrade]")
 		if(length(global.replicator_generators) > 0 || length(global.transponders) - length(global.active_transponders) > 0)
-			stat("Energy Reserves:", "[round(global.replicators_faction.energy)]/[round(length(global.replicator_generators) * REPLICATOR_GENERATOR_POWER_GENERATION)]")
+			stat("Energy Reserves:", "[round(FR.energy)]/[round(length(global.replicator_generators) * REPLICATOR_GENERATOR_POWER_GENERATION)]")
 
 		if(length(global.area2free_forcefield_nodes) > 0)
 			var/node_string = ""
@@ -502,7 +505,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	if(!prob(5))
 		return FALSE
 
-	if(global.replicators_faction.nodes_to_spawn <= 0)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	if(FR.nodes_to_spawn <= 0)
 		return FALSE
 
 	if(locate(/obj/structure/forcefield_node) in T)
@@ -517,7 +521,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	var/area/A = get_area(T)
 	emote("beep")
-	global.replicators_faction.drone_message(src, "Node unveiled at [A.name].", transfer=TRUE)
+	FR.drone_message(src, "Node unveiled at [A.name].", transfer=TRUE)
 
 /mob/living/simple_animal/replicator/gib()
 	death(TRUE)
@@ -585,7 +589,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 /mob/living/simple_animal/replicator/proc/set_last_controller(ckey)
 	last_controller_ckey = ckey
-	var/datum/replicator_array_info/RAI = global.replicators_faction.ckey2info[ckey]
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	var/datum/replicator_array_info/RAI = FR.ckey2info[ckey]
 	if(!RAI)
 		return
 
@@ -604,15 +609,33 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	if(!last_controller_ckey)
 		return
 
-	var/datum/replicator_array_info/RAI = global.replicators_faction.ckey2info[last_controller_ckey]
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	var/datum/replicator_array_info/RAI = FR.ckey2info[last_controller_ckey]
 	if(!RAI)
 		return
 
 	to_chat(user, "<span class='notice'>[ckey ? "Is currently" : "Was lastly"] under the influence of [RAI.presence_name].</span>")
+	if(ckey)
+		return
+
+	switch(state)
+		if(REPLICATOR_STATE_HARVESTING)
+			to_chat(user, "<span class='notice'>They are currently harvesting.</span>")
+		if(REPLICATOR_STATE_HELPING)
+			to_chat(user, "<span class='notice'>They are currently assisting another unit.</span>")
+		if(REPLICATOR_STATE_WANDERING)
+			to_chat(user, "<span class='notice'>They are currently wandering, idly.</span>")
+		if(REPLICATOR_STATE_GOING_TO_HELP)
+			to_chat(user, "<span class='notice'>They are currently moving in to assist another unit.</span>")
+		if(REPLICATOR_STATE_COMBAT)
+			to_chat(user, "<span class='warning'>BATTLESTATIONS! FULL COMBAT MODE ENGAGED! RED ALERT!</span>")
 
 /mob/living/simple_animal/replicator/can_intentionally_move(atom/NewLoc, movedir)
 	. = ..()
 	if(!.)
+		return
+
+	if(!ckey)
 		return
 
 	if(m_intent != MOVE_INTENT_WALK)
@@ -622,6 +645,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 		return
 
 	var/turf/T = get_turf(NewLoc)
+	if((locate(/obj/structure/bluespace_corridor) in loc) && (locate(/obj/structure/bluespace_corridor) in NewLoc))
+		return
 	if(!can_place_corridor(T))
 		return FALSE
 
@@ -638,3 +663,17 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 // No lore reason as of now. It's just somewhat annoying otherwise.
 /mob/living/simple_animal/replicator/ventcrawl_enter_delay()
 	return ..() * 2
+
+/mob/living/simple_animal/replicator/singularity_act(obj/singularity/S, current_size)
+	qdel(S)
+
+	if(length(global.active_transponders) <= 0)
+		return
+
+	var/obj/machinery/swarm_powered/bluespace_transponder/BT = pick(global.active_transponders)
+
+	var/obj/effect/cross_action/spacetime_dist/SD1 = new(S.loc)
+	var/obj/effect/cross_action/spacetime_dist/SD2 = new(BT.loc)
+
+	SD1.linked_dist = SD2
+	SD2.linked_dist = SD1

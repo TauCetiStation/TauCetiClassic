@@ -1,5 +1,3 @@
-var/global/datum/faction/replicators/replicators_faction
-
 /datum/faction/replicators
 	name = F_REPLICATORS
 	ID = F_REPLICATORS

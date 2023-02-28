@@ -6,11 +6,13 @@
 /obj/machinery/swarm_powered/atom_init()
 	. = ..()
 	if(prioritized)
-		global.replicators_faction.prioritized_load += idle_power_usage
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		FR.prioritized_load += idle_power_usage
 
 /obj/machinery/swarm_powered/Destroy()
 	if(prioritized)
-		global.replicators_faction.prioritized_load -= idle_power_usage
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		FR.prioritized_load -= idle_power_usage
 	drone_supply = null
 	return ..()
 
@@ -44,16 +46,18 @@
 		if(stat & NOPOWER)
 			stat &= ~NOPOWER
 			update_icon()
-		global.replicators_faction.adjust_energy(-idle_power_usage)
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		FR.adjust_energy(-idle_power_usage)
 
 	else if(!(stat & NOPOWER))
 		stat |= NOPOWER
 		update_icon()
 
 /obj/machinery/swarm_powered/proc/can_draw_swarm_energy()
-	var/energy_available = global.replicators_faction.energy
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	var/energy_available = FR.energy
 	if(!prioritized)
-		energy_available -= global.replicators_faction.prioritized_load
+		energy_available -= FR.prioritized_load
 
 	if(energy_available < idle_power_usage)
 		return FALSE
@@ -202,8 +206,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 
 	if(destroy_unpowered_after && destroy_unpowered_after < world.time)
 		var/area/A = get_area(src)
-		global.replicators_faction.drone_message(src, "Has closed in [A.name], due to lack of energy.")
-		global.replicators_faction.adjust_materials(REPLICATOR_COST_TRANSPONDER)
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		FR.drone_message(src, "Has closed in [A.name], due to lack of energy.")
+		FR.adjust_materials(REPLICATOR_COST_TRANSPONDER)
 		neutralize()
 
 /obj/machinery/swarm_powered/bluespace_transponder/CanPass(atom/movable/mover, turf/target)
@@ -282,7 +287,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		next_sound = next_sound + 20 SECONDS
 		playsound(src, 'sound/machines/signal.ogg', VOL_EFFECTS_MASTER)
 
-	global.replicators_faction.adjust_energy(REPLICATOR_GENERATOR_POWER_GENERATION)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.adjust_energy(REPLICATOR_GENERATOR_POWER_GENERATION)
 
 /obj/machinery/power/replicator_generator/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/replicator))
@@ -391,35 +397,21 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		return
 	next_obstacle_animation = world.time + 6
 
-	var/pivot_x = -16
-	var/pivot_y = 16
-
-	var/old_pixel_x = pixel_x
-	var/old_pixel_y = pixel_y
-
-	pixel_x += pivot_x
-	pixel_y += pivot_y
-
 	var/matrix/old_transform = matrix(transform)
+	var/old_color = color
+
+	color = pick(REPLICATOR_RUNE_COLORS)
+
 	var/matrix/M = matrix(transform)
-	var/angle = rand(-60, 60)
-	M.Turn(angle)
-	M.Scale(1.1, 1.1)
-	M.Translate(-pivot_x, -pivot_y)
+	M.Scale(1.2, 1.2)
 
-	var/matrix/M2 = matrix(transform)
-	M2.Turn(-angle * 0.5)
-	M2.Scale(1.1, 1.1)
-	M2.Translate(-pivot_x, -pivot_y)
-
-	animate(src, transform=M, time=2)
-	animate(transform=M2, time=3)
-	animate(transform=old_transform,time=1)
+	animate(src, transform=M, time=4)
+	animate(transform=old_transform,time=2)
 
 	sleep(6)
 
-	pixel_x = old_pixel_x
-	pixel_y = old_pixel_y
+	transform = old_transform
+	color = old_color
 
 /obj/structure/bluespace_corridor/Crossed(atom/movable/AM)
 	if(AM && AM.invisibility > 0 && prob(30))
@@ -509,6 +501,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	var/power_satisfied = 1 - required_power / max_required_power
 
 	var/perc_finished = FLOOR(materials_satisfied * power_satisfied * 100, 1)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 
 	var/datum/announcement/centcomm/replicator/announcement
 	if(perc_finished >= 25 && last_perc_announcement < 25)
@@ -524,7 +517,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 		announcement = new /datum/announcement/centcomm/replicator/doom
 		icon_state = "catapult_100"
 
-		global.replicators_faction.swarm_chat_message("The Swarm", "Mission accomplished.", 5)
+		FR.swarm_chat_message("The Swarm", "Mission accomplished.", 5)
 		density = FALSE
 
 		for(var/mob/M in player_list)
@@ -532,7 +525,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 				M.playsound_local(null, 'sound/hallucinations/demons_3.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
 		var/area/A = get_area(src)
-		global.replicators_faction.swarm_chat_message("The Swarm", "Bluespace Catapult construction finished in [A.name]. Escape through the dimensional rift before it closes!", 5)
+		FR.swarm_chat_message("The Swarm", "Bluespace Catapult construction finished in [A.name]. Escape through the dimensional rift before it closes!", 5)
 
 	if(announcement)
 		last_perc_announcement = perc_finished
@@ -546,10 +539,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	if(required_power >= 0)
 		required_power = max(0, required_power - idle_power_usage)
 
-	if(global.replicators_faction.materials < REPLICATOR_COST_REPLICATE + 5 || required_materials <= 0)
+	if(FR.materials < REPLICATOR_COST_REPLICATE + 5 || required_materials <= 0)
 		return
 
-	global.replicators_faction.adjust_materials(-5)
+	FR.adjust_materials(-5)
 	required_materials = max(0, required_materials - 5)
 
 /obj/machinery/swarm_powered/bluespace_catapult/Crossed(atom/movable/AM)
@@ -558,14 +551,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 			to_chat(AM, "<span class='notice'>One must stay behind. Replicate more, and send others.</span>")
 		else
 			var/mob/living/simple_animal/replicator/R = AM
-			global.replicators_faction.replicators_launched += 1
+			var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+			FR.replicators_launched += 1
 
 			R.death()
 			qdel(R)
 
-			if(global.replicators_faction.replicators_launched >= REPLICATORS_CATAPULTED_TO_WIN && !victory)
+			if(FR.replicators_launched >= REPLICATORS_CATAPULTED_TO_WIN && !victory)
 				victory = TRUE
-				INVOKE_ASYNC(global.replicators_faction, /datum/faction/replicators.proc/victory_animation, get_turf(src))
+				INVOKE_ASYNC(FR, /datum/faction/replicators.proc/victory_animation, get_turf(src))
 
 			return
 

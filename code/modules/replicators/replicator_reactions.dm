@@ -325,3 +325,28 @@
 
 /obj/item/mine/replicator/get_unit_disintegration_time()
 	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
+
+
+/obj/mecha/get_replicator_material_amount()
+	return w_class
+
+/obj/mecha/replicator_act(mob/living/simple_animal/replicator/R)
+	destroy()
+	return TRUE
+
+
+/obj/effect/decal/mecha_wreckage/get_replicator_material_amount()
+	return 1
+
+/obj/effect/decal/mecha_wreckage/replicator_act(mob/living/simple_animal/replicator/R)
+	if(salvage_num > 0)
+		var/list/pos_tools = list("welder", "wirecutter", "crowbar")
+		while(length(pos_tools) > 0)
+			var/tool = pick(pos_tools)
+			pos_tools -= tool
+
+			if(detach_part(tool) > 0)
+				return TRUE
+
+	qdel(src)
+	return TRUE
