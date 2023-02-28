@@ -155,7 +155,14 @@
 	name = "Space Drugs"
 	id = "space_drugs"
 	result = "space_drugs"
-	required_reagents = list("mercury" = 1, "sugar" = 1, "lithium" = 1)
+	required_reagents = list("anti_toxin" = 1, "ambrosium" = 1, "sugar" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/jenkem
+	name = "Space Jenkem"
+	id = "jenkem"
+	result = "jenkem"
+	required_reagents = list("water" = 1, "fuel" = 1, "sugar" = 1)
 	result_amount = 3
 
 /datum/chemical_reaction/lube
@@ -658,6 +665,51 @@
 	result = "plantbgone"
 	required_reagents = list("toxin" = 1, "water" = 4)
 	result_amount = 5
+
+/datum/chemical_reaction/gourd_thermopsis
+	name = "Thermopsis"
+	id = "gourdthermopsis"
+	result = "thermopsis"
+	required_reagents = list("toxin" = 3, "sugar" = 3)
+	required_container = /obj/item/weapon/reagent_containers/food/snacks/grown/gourd
+	result_amount = 1
+
+/datum/chemical_reaction/gourd_lipozine
+	name = "Lipozine"
+	id = "gourdlipozine"
+	result = "lipozine"
+	required_reagents = list("vodka" = 3, "sodiumchloride" = 3)
+	required_container = /obj/item/weapon/reagent_containers/food/snacks/grown/gourd
+	result_amount = 1
+
+/datum/chemical_reaction/holy_gourd
+	name = "Gourd Blessification"
+	id = "holygourd"
+	result = null
+	required_reagents = list("holywater"= 10)
+	required_container = /obj/item/weapon/reagent_containers/food/snacks/grown/gourd
+	result_amount = 1
+
+/datum/chemical_reaction/holy_gourd/on_reaction(datum/reagents/holder)
+	var/obj/item/weapon/reagent_containers/food/snacks/grown/gourd/G = holder.my_atom
+	if(G.blessed)
+		return
+
+	G.name = "holy healing [G.name]"
+	G.force += 1
+	G.add_filter("holy_spell_outline", 2, outline_filter(1, "#fffb00a1"))
+
+	G.blessed = 1
+
+	var/gourd_am = holder.get_reagent_amount("gourd")
+	holder.remove_reagent("gourd", gourd_am)
+	holder.add_reagent("tricordrazine", gourd_am)
+
+	var/gourd_beer_am = holder.get_reagent_amount("gourdbeer")
+	holder.remove_reagent("gourdbeer", gourd_beer_am)
+	holder.add_reagent("doctorsdelight", gourd_beer_am)
+
+	G.restore_reagent = "tricordrazine"
 
 /////////////////////////////////////////////NEW SLIME CORE REACTIONS/////////////////////////////////////////////
 
@@ -1285,6 +1337,14 @@
 	id = "spacebeer"
 	result = "beer"
 	required_reagents = list("cornoil" = 10)
+	required_catalysts = list("enzyme" = 5)
+	result_amount = 10
+
+/datum/chemical_reaction/gourdbeer
+	name = "Gourd Beer"
+	id = "gourdbeer"
+	result = "gourdbeer"
+	required_reagents = list("gourd" = 10)
 	required_catalysts = list("enzyme" = 5)
 	result_amount = 10
 

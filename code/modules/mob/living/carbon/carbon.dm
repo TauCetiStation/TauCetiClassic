@@ -638,16 +638,13 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.gloves)
-			if(H.gloves.clean_blood())
-				H.update_inv_gloves()
+			H.gloves.clean_blood()
 			H.gloves.germ_level = 0
 		else
 			if(H.bloody_hands)
 				H.bloody_hands = 0
-				H.update_inv_gloves()
+				H.update_inv_slot(SLOT_GLOVES)
 			H.germ_level = 0
-	update_icons()	//apply the now updated overlays to the mob
-
 
 //Throwing stuff
 /mob/living/carbon/throw_mode_off()
@@ -733,21 +730,18 @@
 	return
 
 /mob/living/carbon/u_equip(obj/item/W)
-	if(!W)	return 0
+	if(!W)
+		return
 
 	else if (W == handcuffed)
 		handcuffed = null
-		update_inv_handcuffed()
 		if(buckled && buckled.buckle_require_restraints)
 			buckled.unbuckle_mob()
 
 	else if (W == legcuffed)
 		legcuffed = null
-		update_inv_legcuffed()
-	else
-	 ..()
 
-	return
+	..()
 
 /mob/living/carbon/show_inv(mob/user)
 	user.set_machine(src)
@@ -877,32 +871,8 @@
 	new /mob/living/simple_animal/borer(loc, TRUE, B.generation + 1)
 
 /mob/living/carbon/proc/uncuff()
-	if(handcuffed)
-		var/obj/item/weapon/W = handcuffed
-		handcuffed = null
-		if(buckled && buckled.buckle_require_restraints)
-			buckled.unbuckle_mob()
-		update_inv_handcuffed()
-		if(client)
-			client.screen -= W
-		if(W)
-			W.loc = loc
-			W.dropped(src)
-			if(W)
-				W.layer = initial(W.layer)
-				W.plane = initial(W.plane)
-	if(legcuffed)
-		var/obj/item/weapon/W = legcuffed
-		legcuffed = null
-		update_inv_legcuffed()
-		if (client)
-			client.screen -= W
-		if (W)
-			W.loc = loc
-			W.dropped(src)
-			if(W)
-				W.layer = initial(W.layer)
-				W.plane = initial(W.plane)
+	remove_from_mob(handcuffed)
+	remove_from_mob(legcuffed)
 
 //-TG- port for smooth lying/standing animations
 /mob/living/carbon/get_pixel_y_offset(lying_current = FALSE)
@@ -1143,14 +1113,7 @@
 
 			while(TRUE)
 				var/datum/reagent/R_V = pick(reagents.reagent_list)
-				if(istype(R_V, /datum/reagent/water))
-					toxins_puked += 0.5
-				else if(R_V.id == "carbon")
-					toxins_puked += 2
-				else if(R_V.id == "anti_toxin")
-					toxins_puked += 3
-				else if(R_V.id == "thermopsis")
-					toxins_puked += 5
+				toxins_puked += R_V.toxin_absorption
 				reagents.trans_id_to(R, R_V.id, 1)
 				if(R.total_volume >= 10)
 					break

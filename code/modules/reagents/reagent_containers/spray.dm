@@ -225,10 +225,7 @@
 		name = "white hair color spray"
 		icon_state = "hairspraywhite"
 	update_icon()
-	if(usr.hand)
-		usr.update_inv_l_hand()
-	else
-		usr.update_inv_r_hand()
+	update_inv_mob()
 
 //thurible
 /obj/item/weapon/reagent_containers/spray/thurible

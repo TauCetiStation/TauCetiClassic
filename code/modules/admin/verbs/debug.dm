@@ -253,7 +253,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 			id.assignment = "Captain"
 			id.assign(H.real_name)
 			H.equip_to_slot_or_del(id, SLOT_WEAR_ID)
-			H.update_inv_wear_id()
 	else
 		tgui_alert(usr, "Invalid mob")
 	feedback_add_details("admin_verb","GFA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -421,7 +420,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc for that p
 	if(!ishuman(M))
 		tgui_alert(usr, "Invalid mob")
 		return
-	
+
 	var/dresscode = robust_dress_shop()
 
 	if(!dresscode)

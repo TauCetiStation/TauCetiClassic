@@ -30,18 +30,17 @@
 	else
 		equip_to_slot_if_possible(W, slot)
 
-/mob/proc/put_in_any_hand_if_possible(obj/item/W, del_on_fail = 0, disable_warning = 1, redraw_mob = 1)
-	if(equip_to_slot_if_possible(W, SLOT_L_HAND, del_on_fail, disable_warning, redraw_mob))
+/mob/proc/put_in_any_hand_if_possible(obj/item/W, del_on_fail = 0, disable_warning = 1)
+	if(equip_to_slot_if_possible(W, SLOT_L_HAND, del_on_fail, disable_warning))
 		return 1
-	else if(equip_to_slot_if_possible(W, SLOT_R_HAND, del_on_fail, disable_warning, redraw_mob))
+	else if(equip_to_slot_if_possible(W, SLOT_R_HAND, del_on_fail, disable_warning))
 		return 1
 	return 0
 
 //This is a SAFE proc. Use this instead of equip_to_slot()!
 //set del_on_fail to have it delete W if it fails to equip
 //set disable_warning to disable the 'you are unable to equip that' warning.
-//unset redraw_mob to prevent the mob from being redrawn at the end.
-/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
+/mob/proc/equip_to_slot_if_possible(obj/item/W, slot, del_on_fail = 0, disable_warning = 0)
 	if(!istype(W)) return 0
 
 	if(!W.mob_can_equip(src, slot, disable_warning))
@@ -52,7 +51,7 @@
 				to_chat(src, "<span class='red'>You are unable to equip that.</span>")//Only print if del_on_fail is false
 		return 0
 
-	equip_to_slot(W, slot, redraw_mob) //This proc should not ever fail.
+	equip_to_slot(W, slot) //This proc should not ever fail.
 	return 1
 
 //This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on whether you can or can't eqip need to be done before! Use mob_can_equip() for that task.
@@ -62,7 +61,7 @@
 
 //This is just a commonly used configuration for the equip_to_slot_if_possible() proc, used to equip people when the rounds tarts and when events happen and such.
 /mob/proc/equip_to_slot_or_del(obj/item/W, slot)
-	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
+	return equip_to_slot_if_possible(W, slot, TRUE, TRUE)
 
 //The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
 var/global/list/slot_equipment_priority = list(
@@ -99,7 +98,7 @@ var/global/list/slot_equipment_priority = list(
 		if (slot in obscured)
 			continue
 
-		if (equip_to_slot_if_possible(W, slot, FALSE, TRUE, TRUE))
+		if (equip_to_slot_if_possible(W, slot, FALSE, TRUE))
 			return TRUE
 
 	return FALSE
@@ -191,7 +190,7 @@ var/global/list/slot_equipment_priority = list(
 //		l_hand.screen_loc = ui_lhand
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
-		update_inv_l_hand()
+		W.update_inv_mob()
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)
 
@@ -219,7 +218,7 @@ var/global/list/slot_equipment_priority = list(
 //		r_hand.screen_loc = ui_rhand
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
-		update_inv_r_hand()
+		W.update_inv_mob()
 		W.pixel_x = initial(W.pixel_x)
 		W.pixel_y = initial(W.pixel_y)
 
@@ -261,7 +260,6 @@ var/global/list/slot_equipment_priority = list(
 
 	var/was_holding = (get_active_hand() == W) || (get_inactive_hand() == W)
 
-	var/prev_slot = W.slot_equipped
 	remove_from_mob(W, target)
 	if(!(W && W.loc))
 		return TRUE // self destroying objects (tk, grabs)
@@ -269,7 +267,6 @@ var/global/list/slot_equipment_priority = list(
 	if(target && putdown_anim && was_holding && target != src && target.loc != src)
 		INVOKE_ASYNC(W, /atom/movable.proc/do_putdown_animation, target, src, additional_pixel_x, additional_pixel_y)
 
-	update_inv_slot(prev_slot)
 	return TRUE
 
 //Drops the item in our left hand
@@ -304,20 +301,17 @@ var/global/list/slot_equipment_priority = list(
 	As far as I can tell the proc exists so that mobs with different inventory slots can override
 	the search through all the slots, without having to duplicate the rest of the item dropping.
 */
-/mob/proc/u_equip(obj/W)
+/mob/proc/u_equip(obj/item/W)
 	if (W == r_hand)
 		r_hand = null
-		update_inv_r_hand()
 	else if (W == l_hand)
 		l_hand = null
-		update_inv_l_hand()
 	else if (W == back)
 		back = null
-		update_inv_back()
 	else if (W == wear_mask)
 		wear_mask = null
-		update_inv_wear_mask()
-	return
+
+	W.update_inv_mob()
 
 //This differs from remove_from_mob() in that it checks canremove first.
 /mob/proc/unEquip(obj/item/I, force = FALSE) //Force overrides NODROP for things like wizarditis and admin undress.
@@ -550,7 +544,7 @@ var/global/list/slot_equipment_priority = list(
 	to_chat(usr, "<span class='notice'>You have finished unequipping the [C].</span>")
 	return TRUE
 
-/mob/proc/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/C, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1, delay_time = 0)
+/mob/proc/delay_clothing_equip_to_slot_if_possible(obj/item/clothing/C, slot)
 	if(!istype(C))
 		return 0
 
