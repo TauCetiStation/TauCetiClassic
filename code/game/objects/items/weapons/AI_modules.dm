@@ -408,7 +408,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/freeform/syndicate/attack_self(mob/user)
 	newFreeFormLaw = sanitize(input(user, "Пожалуйста, введите новый закон для ИИ.", "Новый закон"))
-	desc = "Модуль законов ИИ: '[newFreeFormLaw]'"
+	desc = "Модуль законов ИИ без каких-либо маркировок: '[newFreeFormLaw]'"
 
 /obj/item/weapon/aiModule/freeform/syndicate/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	to_chat(target, "<span class='warning'>БЗЗЗЗКХ   '[newFreeFormLaw]'</span>")
