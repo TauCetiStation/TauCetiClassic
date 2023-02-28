@@ -47,6 +47,3 @@
 
 // Rewarding killing mobs.
 #define REPLICATOR_MATERIAL_AMOUNT_COEFF_ORGANIC 4.0
-
-// This amount is sent to the "infrastructure pool" of materials. Portals and the Catapult first consume materials from infrastructure pool, and then if empty from the other one.
-#define REPLICATOR_GLOBAL_TAX 0.1
