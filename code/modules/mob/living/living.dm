@@ -561,7 +561,7 @@
 
 	// shut down ongoing problems
 	radiation = 0
-	nutrition = NUTRITION_LEVEL_NORMAL
+	SetNutrition(NUTRITION_LEVEL_NORMAL)
 	bodytemperature = T20C
 	sdisabilities = 0
 	disabilities = 0
@@ -1314,6 +1314,11 @@
 	// digesting the giant pizza they ate, so we don't use this in examine code.
 	return nutrition
 
+/mob/living/proc/is_default_metabolise_active()
+	if(nutrition > NUTRITION_LEVEL_NORMAL)
+		return TRUE
+	return FALSE
+
 /mob/living/proc/get_metabolism_factor()
 	return METABOLISM_FACTOR
 
@@ -1333,7 +1338,7 @@
 		adjustHalLoss(5)
 		return FALSE
 
-	nutrition -= 50
+	AdjustNutrition(-50)
 	blurEyes(5)
 
 	if(ishuman(src)) // A stupid, snowflakey thing, but I see no point in creating a third argument to define the sound... ~Luduk

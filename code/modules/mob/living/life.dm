@@ -14,6 +14,9 @@
 
 	handle_combat()
 
+	if(get_metabolism_factor())
+		handle_nutrition()
+
 	if(client)
 		handle_regular_hud_updates()
 
@@ -156,3 +159,16 @@
 			hud_used.hide_actions_toggle.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number+1)
 			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
 		client.screen += hud_used.hide_actions_toggle
+
+/mob/living/proc/AdjustNutrition(amount)
+	if(nutrition + amount < 0)
+		nutrition = 0
+	nutrition += amount
+
+/mob/living/proc/SetNutrition(amount)
+	if(amount < 0)
+		nutrition = 0
+	nutrition = amount
+
+/mob/living/proc/handle_nutrition()
+	return

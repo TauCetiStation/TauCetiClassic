@@ -161,7 +161,7 @@ var/global/list/tourette_bad_words= list(
 				return
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		if(!(get_species() in tourette_bad_words))
-			return 
+			return
 		speech_problem_flag = 1
 		if (prob(10))
 			spawn( 0 )
@@ -282,7 +282,7 @@ var/global/list/tourette_bad_words= list(
 			if(species.flags[RAD_ABSORB])
 				var/rads = radiation/25
 				radiation -= rads
-				nutrition += rads
+				AdjustNutrition(rads)
 				adjustBruteLoss(-(rads))
 				adjustOxyLoss(-(rads))
 				adjustToxLoss(-(rads))
@@ -545,7 +545,7 @@ var/global/list/tourette_bad_words= list(
 
 	if(bodytemperature < species.cold_level_1) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
 		if(nutrition >= 2) //If we are very, very cold we'll use up quite a bit of nutriment to heat us up.
-			nutrition -= 2
+			AdjustNutrition(-2)
 		var/recovery_amt = max((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
 		//world << "Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]"
 //				log_debug("Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
@@ -704,16 +704,6 @@ var/global/list/tourette_bad_words= list(
 				update_inv_wear_suit()
 				update_size_class()
 
-	// nutrition decrease
-	if (nutrition > 0 && stat != DEAD)
-		var/met_factor = get_metabolism_factor()
-		for(var/obj/item/organ/external/BP in bodyparts)
-			met_factor += BP.pumped / 100
-		nutrition = max(0, nutrition - met_factor * 0.1)
-		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
-			var/pain = getHalLoss()
-			if(pain > 0)
-				nutrition = max(0, nutrition - met_factor * pain * 0.01)
 	if (nutrition > 450)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
 			overeatduration++
@@ -1287,6 +1277,24 @@ var/global/list/tourette_bad_words= list(
 	we only set those statuses and icons upon changes.  Then those HUD items will simply add those pre-made images.
 
 */
+
+/mob/living/carbon/human/handle_nutrition()
+	. = ..()
+	var/nutrition_to_remove = 0
+	var/met_factor = get_metabolism_factor()
+	var/bumped_bodyparts_met = 0
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.pumped > 0)
+			bumped_bodyparts_met += BP.pumped / 100
+	if(bumped_bodyparts_met > 0)
+		nutrition_to_remove += (met_factor + bumped_bodyparts_met) * 0.1
+		AdjustNutrition(-nutrition_to_remove)
+
+/mob/living/carbon/human/is_default_metabolise_active()
+	//Enable nutrition decrease for nonhumans
+	if(species.flags[IS_PLANT] || species.flags[IS_SYNTHETIC])
+		return TRUE
+	return ..()
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS
