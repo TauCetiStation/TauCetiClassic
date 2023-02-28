@@ -1,4 +1,6 @@
-
+#define IS_NOT_MOLOTOV 0
+#define IS_MOLOTOV 1
+#define IS_LIT 2
 
 ///////////////////////////////////////////////Alchohol bottles! -Agouri //////////////////////////
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
@@ -14,8 +16,7 @@
 
 	var/stop_spin_bottle = FALSE //Gotta stop the rotation.
 
-	var/is_molotoved = FALSE
-	var/is_lit = FALSE
+	var/molotov_state = IS_NOT_MOLOTOV
 	var/lit_time = null
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/atom_init()
@@ -93,7 +94,7 @@
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	user.put_in_active_hand(B)
 	transfer_fingerprints_to(B)
-	if(is_lit)
+	if(molotov_state == IS_LIT)
 		var/turf/T = get_turf(target)
 		T.hotspot_expose(1000, 500)
 
@@ -106,9 +107,9 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/update_icon()
 	show_filler_on_icon(3, 24, 0)
 	cut_overlays()
-	if(is_molotoved)
+	if(molotov_state == IS_MOLOTOV)
 		add_overlay(image(icon, "molotov"))
-	if(is_lit)
+	if(molotov_state == IS_LIT)
 		add_overlay(image(icon, "molotov_lit"))
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/can_smash()
@@ -196,7 +197,7 @@
 		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 		new /obj/item/weapon/shard(loc)
 		reagents.standard_splash(loc)
-		if(is_lit)
+		if(molotov_state == IS_LIT)
 			var/turf/T = get_turf(hit_atom)
 			T.hotspot_expose(1000, 500)
 			if(isliving(hit_atom))
@@ -205,17 +206,17 @@
 		qdel(src)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/stack/sheet/cloth) && is_glass && !is_molotoved)
+	if(istype(I, /obj/item/stack/sheet/cloth) && is_glass && molotov_state == IS_NOT_MOLOTOV)
 		var/obj/item/stack/sheet/cloth/C = I
 		C.use(1)
-		is_molotoved = TRUE
+		molotov_state = IS_MOLOTOV
 		flags ^= OPENCONTAINER
 		to_chat(user, "<span class='notice'You stuff some cloth into the bottleneck.</span>")
 
 	if(istype(I, /obj/item/weapon/lighter))
 		var/obj/item/weapon/lighter/L = I
-		if(L.lit && is_molotoved && !is_lit)
-			is_lit = TRUE
+		if(L.lit && molotov_state == IS_MOLOTOV)
+			molotov_state = IS_LIT
 			lit_time = world.time + rand(200, 400)
 			user.visible_message("<span class='warning'>[user] lights up a molotov!</span>")
 			playsound(src, 'sound/items/torch.ogg', VOL_EFFECTS_MASTER)
@@ -228,9 +229,9 @@
 		throw_impact(loc)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attack_self(mob/user)
-	if(is_molotoved && !is_lit)
+	if(molotov_state == IS_MOLOTOV)
 		new /obj/item/stack/sheet/cloth(user.loc)
-		is_molotoved = FALSE
+		molotov_state = IS_NOT_MOLOTOV
 		flags |= OPENCONTAINER
 		update_icon()
 
