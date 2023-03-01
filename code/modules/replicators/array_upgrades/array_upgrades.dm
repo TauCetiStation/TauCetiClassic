@@ -4,6 +4,9 @@
 	if(!RAI)
 		return
 
+	if(length(RAI.acquired_upgrades) > FR.upgrades_amount)
+		return
+
 	var/list/choices = RAI.get_upgrade_choices()
 
 	var/list/radial_choices = list()
@@ -46,6 +49,8 @@
 /datum/replicator_array_info/proc/acquire_upgrade(upgrade_type, list/mob/living/simple_animal/replicator/array_units)
 	var/datum/replicator_array_upgrade/RAU = new upgrade_type
 	RAU.on_acquire(src)
+
+	acquired_upgrades += RAU
 
 	for(var/mob/living/simple_animal/replicator/R as anything in array_units)
 		RAU.add_to_unit(R)
