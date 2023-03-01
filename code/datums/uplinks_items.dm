@@ -45,6 +45,7 @@
 	var/category = "item category"
 	var/desc = "item description"
 	var/item = null
+	var/group = "standart"
 	var/cost = 0
 	var/last = 0 // Appear last
 	var/list/uplink_types = list() //Empty list means that the object will be available in all types of uplinks. Alias you will need to state its type.
@@ -124,6 +125,7 @@
 
 /datum/uplink_item/dangerous
 	category = "Conspicuous and Dangerous Weapons"
+	group = "dangerous"
 
 /datum/uplink_item/dangerous/revolver
 	name = "TR-7 Revolver"
@@ -365,6 +367,7 @@
 
 /datum/uplink_item/ammo
 	category = "Ammunition"
+	group = "ammo"
 
 /datum/uplink_item/ammo/borg
 	name = "Robot Ammo Box"
@@ -525,6 +528,7 @@
 
 /datum/uplink_item/stealthy_weapons
 	category = "Stealthy and Inconspicuous Weapons"
+	group = "stealthy_weapons"
 	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
@@ -584,6 +588,7 @@
 
 /datum/uplink_item/stealthy_tools
 	category = "Stealth and Camouflage Items"
+	group = "stealthy_tools"
 	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/stealthy_tools/switchblade
@@ -695,6 +700,7 @@
 
 /datum/uplink_item/device_tools
 	category = "Devices and Tools"
+	group = "device_tools"
 
 /datum/uplink_item/device_tools/rad_laser
 	name = "Radioactive Microlaser"
@@ -931,6 +937,7 @@
 
 /datum/uplink_item/implants
 	category = "Implants"
+	group = "implants"
 	uplink_types = list("nuclear", "traitor")
 
 /datum/uplink_item/implants/freedom
