@@ -57,6 +57,8 @@
 		EMOTE_STATE(is_stat, CONSCIOUS),
 	)
 
+	cloud = "robot0"
+
 /datum/emote/replicator/beep/play_sound(mob/user, intentional, emote_sound)
 	// Handling corridor case.
 	if(user.invisibility > 0)
@@ -68,3 +70,19 @@
 
 	var/mob/living/simple_animal/replicator/R = user
 	R.playsound_stealthy(user, emote_sound, vol=75)
+
+/datum/emote/replicator/beep/exclamation
+	key = "beep!"
+
+	message_1p = "You beep!"
+	message_3p = "beeps!"
+
+	cloud = "robot2"
+
+/datum/emote/replicator/beep/question
+	key = "beep?"
+
+	message_1p = "You beep?"
+	message_3p = "beeps?"
+
+	cloud = "robot1"

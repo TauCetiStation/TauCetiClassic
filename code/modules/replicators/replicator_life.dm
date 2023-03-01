@@ -42,7 +42,7 @@
 			clear_alert("swarm_upgrade")
 
 	if(health < maxHealth * 0.2 && next_attacked_alert < world.time)
-		emote("beep")
+		emote("beep!")
 		var/area/A = get_area(src)
 		FR.drone_message(src, "STRUCTURE INTEGRITY CRITICAL. LOCATION: [A.name].", transfer=TRUE)
 		next_attacked_alert = world.time + attacked_alert_cooldown
@@ -89,7 +89,7 @@
 		return
 
 	if(!disintegrating && excitement <= 0 && next_excitement_alert < world.time)
-		emote("beep")
+		emote("beep?")
 		var/area/A = get_area(src)
 		FR.drone_message(src, "Idleness value drift detected. Tasks requested at [A.name].", transfer=TRUE, dismantle=TRUE)
 		next_excitement_alert = excitement_alert_cooldown + world.time

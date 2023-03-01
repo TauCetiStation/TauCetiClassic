@@ -34,5 +34,14 @@
 
 /mob/living/simple_animal/replicator/proc/do_after_objections(delay, message, datum/callback/extra_checks=null)
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+
+	var/indicator = say_test(message)
+	var/ending = ""
+	if(indicator == 1)
+		ending = "?"
+	else if(indicator == 2)
+		ending = "!"
+
+	emote("beep[ending]")
 	FR.drone_message(src, message, objection_time=delay)
 	return do_after(src, delay, target=src, extra_checks=extra_checks)

@@ -212,7 +212,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	if(destroy_unpowered_after && destroy_unpowered_after < world.time)
 		var/area/A = get_area(src)
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-		FR.drone_message(src, "Has closed in [A.name], due to lack of energy.")
+		FR.object_communicate(src, "", "Has closed in [A.name], due to lack of energy.")
 		FR.adjust_materials(REPLICATOR_COST_TRANSPONDER)
 		neutralize()
 

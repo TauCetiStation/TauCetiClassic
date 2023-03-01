@@ -146,7 +146,7 @@
 
 		var/area/A = get_area(src)
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-		FR.drone_message(src, "Mine trigger event at [A.name].", transfer=TRUE)
+		FR.object_communicate(src, "!", "Mine trigger event at [A.name].", transfer=TRUE)
 		return
 
 	if(isliving(AM))
@@ -160,7 +160,7 @@
 
 		var/area/A = get_area(src)
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-		FR.drone_message(src, "Mine trigger event at [A.name].", transfer=TRUE)
+		FR.object_communicate(src, "!", "Mine trigger event at [A.name].", transfer=TRUE)
 
 /obj/item/mine/replicator/disarm()
 	qdel(src)

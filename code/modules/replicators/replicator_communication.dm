@@ -12,13 +12,14 @@
 
 	message = add_period(capitalize(trim(message)))
 
-	var/image/I = image('icons/mob/talk.dmi', src, "[typing_indicator_type][say_test(message)]", MOB_LAYER + 1)
-	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA|KEEP_APART
-	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	var/indicator = say_test(message)
+	var/ending = ""
+	if(indicator == 1)
+		ending = "?"
+	else if(indicator == 2)
+		ending = "!"
 
-	flick_overlay_view(I, src, 30)
-
-	emote("beep")
+	emote("beep[ending]")
 
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	FR.announce_swarm(last_controller_ckey, message, announcer=src)
@@ -91,3 +92,17 @@
 		var/dismantle_button = dismantle ? " <a href='?src=\ref[drone];replicator_kill=1'>(KILL)</a>" : ""
 		var/objection_button = objection_time > 0 ? " <a href='?src=\ref[drone];replicator_objection=1'>(OBJ)</a>" : ""
 		to_chat(R.antag.current, "<span class='replicator'>\[???\]</span> <b>[drone.name]</b> requests, <span class='message'><span class='replicator'>\"[message]\"</span></span>[jump_button][dismantle_button][objection_button]")
+
+/datum/faction/replicators/proc/object_communicate(atom/object, tone, message, transfer=FALSE)
+	object.visible_message("<b>[src]</b> <i>beeps[tone]</i>")
+
+	var/indicator = say_test(tone)
+
+	var/image/emote_bubble = image('icons/mob/emote.dmi', src, "robot[indicator]", EMOTE_LAYER)
+	emote_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	flick_overlay(emote_bubble, global.clients, 3 SECONDS)
+	QDEL_IN(emote_bubble, 3 SECONDS)
+
+	playsound(src, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER, 75)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.drone_message(object, message, transfer=transfer)
