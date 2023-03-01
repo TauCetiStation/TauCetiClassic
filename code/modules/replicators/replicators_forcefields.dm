@@ -8,6 +8,7 @@
 
 /turf/simulated/floor/plating/airless/catwalk/forcefield
 	name = "forcefield"
+	desc = "Distant stars under this crystallic floor are seemingly more blueish. Foreshadowing?!"
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "floor"
 	airless = FALSE
@@ -29,6 +30,13 @@
 	qdel(FN)
 
 	return ..()
+
+/turf/simulated/floor/plating/airless/catwalk/examine(mob/living/user)
+	. = ..()
+	if(!isreplicator(user))
+		return
+
+	to_chat(user, "<span class='notice'>A crystallic field of flickering lights. Flowers, that grow no longer.</span>")
 
 /turf/simulated/floor/plating/airless/catwalk/forcefield/update_icon(propogate=1)
 	return
@@ -58,6 +66,7 @@
 
 /obj/structure/replicator_forcefield
 	name = "forcefield"
+	desc = "Geometrically perfect walls of floating crystals."
 	icon = 'icons/turf/walls/replicator_forcefield.dmi'
 	icon_state = "box"
 	density = TRUE
@@ -80,6 +89,13 @@
 		new /obj/structure/stabilization_field(loc)
 	return ..()
 
+/obj/structure/replicator_forcefield/examine(mob/living/user)
+	. = ..()
+	if(!isreplicator(user))
+		return
+
+	to_chat(user, "<span class='notice'>Upon closer inspection you notice the link to the Web. You are certain you can construct a corridor over this field.</span>")
+
 /obj/structure/replicator_forcefield/CanPass(atom/movable/mover, turf/target)
 	if(!mover)
 		return FALSE
@@ -100,6 +116,8 @@
 
 /obj/structure/stabilization_field
 	name = "stabilization field"
+	desc = "This field stabilizes air inside of it via microscopic crystals."
+
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "stabillization_field"
 	density = FALSE
@@ -108,6 +126,13 @@
 	can_block_air = TRUE
 
 	resistance_flags = FULL_INDESTRUCTIBLE
+
+/obj/structure/stabilization_field/examine(mob/living/user)
+	. = ..()
+	if(!isreplicator(user))
+		return
+
+	to_chat(user, "<span class='notice'>Ah, the trickster's greatest achivement. A wall that allows everything to pass through but the most tiny of things.</span>")
 
 /obj/structure/stabilization_field/attackby(obj/item/C, mob/user)
 	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
@@ -126,6 +151,8 @@
 
 /obj/structure/replicator_barricade
 	name = "forcefield barricade"
+	desc = "Floating wall of crystals that shifts and moves in perfect harmony. You wonder what wonderful creature's the frequency dances to."
+
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "barricade"
 	density = TRUE
@@ -142,6 +169,13 @@
 	if(!(locate(/obj/structure/stabilization_field) in loc))
 		new /obj/structure/stabilization_field(loc)
 	return ..()
+
+/obj/structure/replicator_barricade/examine(mob/living/user)
+	. = ..()
+	if(!isreplicator(user))
+		return
+
+	to_chat(user, "<span class='notice'>Completely attuned to the resonance of it's dance, you are sure you can pass through it freely.</span>")
 
 /obj/structure/replicator_barricade/CanPass(atom/movable/mover, turf/target)
 	if(!mover)
@@ -162,6 +196,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 
 /obj/structure/forcefield_node
 	name = "forcefield node"
+	desc = "The flow of bluespace seems to be more potent at these coordinates. If only there was a way to harness these energies..."
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "floor_node_free"
 	layer = ABOVE_OBJ_LATER
@@ -189,6 +224,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 
 	remove_area_node(src)
 	return ..()
+
+/obj/structure/forcefield_node/examine(mob/living/user)
+	. = ..()
+	if(!isreplicator(user))
+		return
+
+	to_chat(user, "<span class='notice'>Don't waste a good Node extracting energy you don't need.</span>")
 
 /obj/structure/forcefield_node/Moved(atom/OldLoc, moveddir)
 	. = ..()

@@ -59,10 +59,7 @@
 	if(!prioritized)
 		energy_available -= FR.prioritized_load
 
-	if(energy_available < idle_power_usage)
-		return FALSE
-
-	return TRUE
+	return energy_available >= idle_power_usage
 
 /obj/machinery/swarm_powered/proc/start_drone_energy_supply(mob/living/simple_animal/replicator/R)
 	if(drone_supply)
@@ -115,10 +112,11 @@ var/global/list/obj/machinery/swarm_powered/bluespace_transponder/active_transpo
 ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transponders)
 
 /obj/machinery/swarm_powered/bluespace_transponder
+	name = "bluespace transponder"
+	desc = "An exit from the web of bluespace corridors - or is it the entrance to them?"
+
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "bluespace_wormhole_exit"
-	name = "bluespace transponder"
-	desc = "Huh."
 
 	anchored = TRUE
 	density = FALSE
@@ -152,6 +150,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	QDEL_NULL(deactivation_signal)
 	global.active_transponders -= src
 	return ..()
+
+/obj/machinery/swarm_powered/bluespace_transponder/examine(mob/living/user)
+	. = ..()
+	if(!isreplicator(user))
+		return
+
+	to_chat(user, "<span class='notice'>And only you could possibly know. That they are indeed both. The beggining and the end.</span>")
 
 /obj/machinery/swarm_powered/bluespace_transponder/Crossed(atom/movable/AM)
 	if(stat & NOPOWER)
@@ -236,7 +241,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 
 /obj/machinery/power/replicator_generator
 	name = "bluespace generator"
-	desc = "Huh."
+	desc = "A device to harness the power of the bluespace flow. You wonder what might need so much energy."
 	icon = 'icons/obj/machines/field_generator.dmi'
 	icon_state = "Field_Gen"
 
@@ -270,6 +275,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		FN.add_area_node(FN)
 
 	return ..()
+
+/obj/machinery/power/replicator_generator/examine(mob/living/user)
+	. = ..()
+	if(!isreplicator(user))
+		return
+
+	to_chat(user, "<span class='notice'>It's obivous! The power is needed for Bluespace Transponders. Powers approximately [round(REPLICATOR_GENERATOR_POWER_GENERATION / REPLICATOR_TRANSPONDER_POWER_USAGE)] of them.</span>")
 
 /obj/machinery/power/replicator_generator/Moved(atom/OldLoc, moveddir)
 	. = ..()
@@ -312,7 +324,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 
 /obj/structure/cable/power_rune
 	name = "rune"
-	desc = "Huh."
+	desc = "A cypher, beholdeth to no one."
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "power_rune"
 
@@ -338,13 +350,20 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 	mergeConnectedNetworks(d2) //merge the powernet with adjacents powernets
 	mergeConnectedNetworksOnTurf() //merge the powernet with on turf powernets
 
+/obj/structure/cable/power_rune/examine(mob/living/user)
+	. = ..()
+	if(!isreplicator(user))
+		return
+
+	to_chat(user, "<span class='notice'>Not even you could possibly know what use this has.</span>")
+
 /obj/structure/cable/power_rune/update_icon()
 	return
 
 
 /obj/structure/bluespace_corridor
 	name = "rune"
-	desc = "Huh."
+	desc = "A cypher, to the web of lies."
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "transit_rune"
 
@@ -391,6 +410,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		neighbor_adjust_count(my_turf, -1)
 
 	return ..()
+
+/obj/structure/bluespace_corridor/examine(mob/living/user)
+	. = ..()
+	if(!isreplicator(user))
+		return
+
+	to_chat(user, "<span class='notice'>Ah, the subtle intricacies of how this rune interacts with the Web, with how it interacts with the Nodes. You are certain you can enter it through a Bluespace Transponder.</span>")
 
 /obj/structure/bluespace_corridor/proc/animate_obstacle()
 	if(next_obstacle_animation > world.time)
@@ -453,7 +479,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 
 /obj/machinery/swarm_powered/bluespace_catapult
 	name = "bluespace catapult"
-	desc = "Oh no."
+	desc = "The immensity of this structure leaves you in pure awe. This thing, a quiet madness made. Oh no."
+
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "catapult"
 
@@ -546,29 +573,33 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	required_materials = max(0, required_materials - 5)
 
 /obj/machinery/swarm_powered/bluespace_catapult/Crossed(atom/movable/AM)
-	if(isreplicator(AM))
-		if(length(global.alive_replicators) <= 1)
-			to_chat(AM, "<span class='notice'>One must stay behind. Replicate more, and send others.</span>")
-		else
-			var/mob/living/simple_animal/replicator/R = AM
-			var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-			FR.replicators_launched += 1
+	if(!isreplicator(AM))
+		return ..()
 
-			R.death()
-			qdel(R)
+	if(length(global.alive_replicators) <= 1)
+		to_chat(AM, "<span class='notice'>One must stay behind. Replicate more, and send others.</span>")
+		return
 
-			if(FR.replicators_launched >= REPLICATORS_CATAPULTED_TO_WIN && !victory)
-				victory = TRUE
-				INVOKE_ASYNC(FR, /datum/faction/replicators.proc/victory_animation, get_turf(src))
+	var/mob/living/simple_animal/replicator/R = AM
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.replicators_launched += 1
 
-			return
+	var/datum/replicator_array_info/RAI = FR.ckey2info[R.last_controller_ckey]
+	if(RAI)
+		RAI.replicators_launched += 1
 
-	return ..()
+	R.death()
+	qdel(R)
+
+	if(FR.replicators_launched >= REPLICATORS_CATAPULTED_TO_WIN && !victory)
+		victory = TRUE
+		INVOKE_ASYNC(FR, /datum/faction/replicators.proc/victory_animation, get_turf(src))
 
 /obj/machinery/swarm_powered/bluespace_catapult/examine(mob/user)
 	. = ..()
 	if(!isreplicator(user))
 		return
+	to_chat(user, "<span class='warning'>This is your way out, onwards. Protect it at <b>ALL</b> costs.</span>")
 	if(required_materials > 0)
 		to_chat(user, "<span class='notice'>It requires [required_materials] more materials.</span>")
 	if(required_power > 0)

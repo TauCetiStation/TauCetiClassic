@@ -78,6 +78,9 @@
 
 	R.next_control_change = world.time + R.control_change_cooldown
 
+	if(user_replicator.a_intent == INTENT_HARM)
+		R.set_leader(user_replicator)
+
 	to_chat(user, "<span class='notice'>Replication successful, meet [R.name]!</span>")
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 

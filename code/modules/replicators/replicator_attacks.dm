@@ -1,5 +1,6 @@
 /obj/item/projectile/disabler
 	name = "bolt"
+	desc = "A tiny crystal of death."
 	icon_state = "projectile"
 	icon = 'icons/mob/replicator.dmi'
 	light_color = "#0000ff"
@@ -82,7 +83,7 @@
 
 /obj/item/mine/replicator
 	name = "mine"
-	desc = "Huh."
+	desc = "Distant stars under this crystallic floor are seemingly more blueish. Foreshadowing?!"
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "trap"
 	layer = 3

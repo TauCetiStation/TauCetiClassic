@@ -31,7 +31,7 @@
 // NEUTRAL //
 /////////////
 
-// line added for consistency, remove this line with first effect.
+#define STATUS_EFFECT_ARRAY_TURN_BACK /datum/status_effect/array_turn_back
 
 // Stasis helpers
 

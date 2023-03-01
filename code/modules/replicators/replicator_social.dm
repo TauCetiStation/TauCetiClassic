@@ -24,12 +24,13 @@
 	next_objection_time[R.ckey] = world.time + objection_cooldown
 
 	to_chat(src, "<span class='bold warning'>[RAI.presence_name] objects to your actions!</span>")
+	to_chat(R, "<span class='notice'>You have objected to [R]'s actions.</span>")
 
 	if(next_objection_sound > world.time)
 		return
 	next_objection_sound = world.time + objection_sound_cooldown
 
-	playsound_local(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
+	playsound_local(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
 
 /mob/living/simple_animal/replicator/proc/do_after_objections(delay, message, datum/callback/extra_checks=null)
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()

@@ -448,6 +448,23 @@
 	desc = "This reality can not support your presence... You must consume to live."
 	icon_state = "swarm_hunger"
 
+/atom/movable/screen/alert/swarm_upgrade
+	name = "Array Upgrade"
+	desc = "There is an array upgrade available. Examine yourself to reflect on prospective adaptabilities."
+	icon_state = "swarm_upgrade"
+
+/atom/movable/screen/alert/swarm_upgrade/Click()
+	if(!mob_viewer)
+		return
+	if(mob_viewer.incapacitated())
+		return
+	if(!mob_viewer.mind)
+		return
+	if(!isreplicator(mob_viewer))
+		return
+	var/mob/living/simple_animal/replicator/R = mob_viewer
+	R.acquire_array_upgrade()
+
 //OBJECT-BASED
 
 /atom/movable/screen/alert/buckled

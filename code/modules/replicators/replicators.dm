@@ -170,6 +170,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	create_spawner(/datum/spawner/living/replicator, src)
 
+	last_disintegration = world.time
+
 /mob/living/simple_animal/replicator/Destroy()
 	global.idle_replicators -= src
 
@@ -284,6 +286,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	help_steps = 7
 	target_coordinates = 0
 
+	to_chat(world, "SET LAST CONTROLLER")
 	set_last_controller(ckey)
 	overlays -= indicator
 
@@ -305,9 +308,16 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	mind.name = RAI.presence_name
 
+	var/datum/replicator_array_info/RAI_parent = FR.ckey2info[last_controller_ckey]
+	if(RAI_parent)
+		for(var/datum/replicator_array_upgrade/RAU as anything in RAI_parent.acquired_upgrades)
+			RAI.acquire_upgrade(RAU.type, list(src))
+
+	to_chat(world, "COPY PARENT")
+
 	if(RAI.next_music_start >= world.time)
 		return
-	RAI.next_music_start = world.time + 5 MINUTES
+	RAI.next_music_start = world.time + 2 MINUTES + 30 SECONDS
 
 	playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
@@ -357,7 +367,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	playsound(src, 'sound/effects/Explosion1.ogg', VOL_EFFECTS_MASTER, 75, FALSE)
 
-	var/list/pos_replicators = list() + global.alive_replicators
+	var/list/pos_replicators = global.alive_replicators.Copy()
 	while(length(pos_replicators))
 		var/mob/living/simple_animal/construct/C = pick(pos_replicators)
 		pos_replicators -= C
@@ -420,6 +430,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 		var/obj/effect/proc_holder/spell/no_target/toggle_corridor_construction/TCC = locate() in target
 		TCC.action.button_icon_state = "ui_corridor_on"
 		TCC.action.button.UpdateIcon()
+
+	target.apply_status_effect(STATUS_EFFECT_ARRAY_TURN_BACK, src, 1 MINUTE)
 
 	playsound_stealthy(target, 'sound/mecha/UI_SCI-FI_Tone_10.ogg')
 	return TRUE
@@ -663,22 +675,24 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 /mob/living/simple_animal/replicator/can_intentionally_move(atom/NewLoc, movedir)
 	. = ..()
 	if(!.)
-		return
+		return TRUE
 
 	if(!ckey)
-		return
+		return TRUE
 
 	if(m_intent != MOVE_INTENT_WALK)
-		return
+		return TRUE
 
 	if(auto_construct_type != /obj/structure/bluespace_corridor)
-		return
+		return TRUE
 
 	var/turf/T = get_turf(NewLoc)
 	if((locate(/obj/structure/bluespace_corridor) in loc) && (locate(/obj/structure/bluespace_corridor) in NewLoc))
-		return
-	if(!can_place_corridor(T))
-		return FALSE
+		return TRUE
+	if((locate(/obj/structure/replicator_forcefield) in loc))
+		return TRUE
+
+	return can_place_corridor(T)
 
 /mob/living/simple_animal/replicator/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE, timeofdeath = world.time)
 	if(!key)

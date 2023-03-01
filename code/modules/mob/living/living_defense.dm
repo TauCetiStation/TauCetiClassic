@@ -33,8 +33,10 @@
 
 /mob/living/carbon/human/is_impact_force_affected(impact_force)
 	if(shoes && (shoes.flags & AIR_FLOW_PROTECT))
+		to_chat(world, "would be affeted if [!lying] && [!crawling]")
 		return !lying && !crawling
 	if(wear_suit && (wear_suit.flags & AIR_FLOW_PROTECT))
+		to_chat(world, "would be affeted if [!lying] && [!crawling]")
 		return !lying && !crawling
 	return ..()
 
@@ -43,6 +45,7 @@
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	var/impact_force = get_projectile_impact_force(P, def_zone)
+	to_chat(world, "IS IMPACT FORCE AFFECTED? [is_impact_force_affected(P.impact_force)]")
 	if(impact_force && is_impact_force_affected(P.impact_force))
 		if(isturf(loc))
 			loc.add_blood(src)

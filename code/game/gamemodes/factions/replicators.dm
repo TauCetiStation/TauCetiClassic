@@ -21,6 +21,9 @@
 	// Energy in posession of the swarm. Used as backup power if can't steal from station.
 	var/energy = 0
 	var/prioritized_load = 0
+	var/next_energy_update = 0
+	var/this_second_energy_change = 0
+	var/last_second_energy_change  = 0
 
 	// Max amount of available drones.
 	var/bandwidth = REPLICATOR_STARTING_BANDWIDTH
@@ -108,6 +111,11 @@
 		last_second_materials_change = this_second_materials_change
 		this_second_materials_change = 0
 		next_materials_update = world.time + 1 SECOND
+
+	if(next_energy_update < world.time)
+		last_second_energy_change = this_second_energy_change
+		this_second_energy_change = 0
+		next_energy_update = world.time + 1 SECOND
 
 	if(next_node_spawn < world.time)
 		nodes_to_spawn += 1
@@ -216,7 +224,7 @@ Message ends."}
 
 	if(RAI.next_music_start < world.time)
 		return
-	RAI.next_music_start = world.time + 5 MINUTES
+	RAI.next_music_start = world.time + 2 MINUTES + 30 SECONDS
 
 	R.playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
@@ -258,7 +266,9 @@ Message ends."}
 	return SSticker.station_was_nuked
 
 /datum/faction/replicators/proc/adjust_energy(amount)
+	var/old_energy = energy
 	energy = min(length(global.replicator_generators) * REPLICATOR_GENERATOR_POWER_GENERATION, energy + amount)
+	this_second_energy_change += energy - old_energy
 
 /datum/faction/replicators/GetScoreboard()
 	. = ..()
@@ -286,8 +296,9 @@ Message ends."}
 	for(var/member_ckey in ckey2info)
 		var/icon/logo = icon('icons/misc/logos.dmi', "replicators")
 		var/datum/replicator_array_info/RAI = ckey2info[member_ckey]
-		score_results += "[bicon(logo, css = "style='position: relative;top:10px;'")]<b>[member_ckey]</b> was <b>[RAI.presence_name]</b>"
+		score_results += "[bicon(logo, css = "style='position: relative;top:10px;'")]<b>[member_ckey]</b> was <b><span style='color:[RAI.array_color]'>[RAI.presence_name]</span></b>"
 		score_results += "<br><b>Materials Contribution:</b> [RAI.swarms_goodwill]"
+		score_results += "<br><b>Replicators Launched:</b> [RAI.replicators_launched]"
 		score_results += "<br>"
 	score_results += "</ul>"
 	return score_results

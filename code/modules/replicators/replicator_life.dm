@@ -33,17 +33,23 @@
 	if(!.)
 		return
 
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	var/datum/replicator_array_info/RAI = FR.ckey2info[last_controller_ckey]
+	if(ckey && RAI)
+		if(FR.upgrades_amount > length(RAI.acquired_upgrades))
+			throw_alert("swarm_upgrade", /atom/movable/screen/alert/swarm_upgrade)
+		else
+			clear_alert("swarm_upgrade")
+
 	if(health < maxHealth * 0.2 && next_attacked_alert < world.time)
 		emote("beep")
 		var/area/A = get_area(src)
-		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		FR.drone_message(src, "STRUCTURE INTEGRITY CRITICAL. LOCATION: [A.name].", transfer=TRUE)
 		next_attacked_alert = world.time + attacked_alert_cooldown
 
 	if(last_update_health - health > 1 && next_attacked_alert < world.time && !sacrifice_powering)
 		emote("beep")
 		var/area/A = get_area(src)
-		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		FR.drone_message(src, "Structure integrity under threat. Location: [A.name].", transfer=TRUE)
 		next_attacked_alert = world.time + attacked_alert_cooldown
 
@@ -62,7 +68,6 @@
 			taken_damage = TRUE
 
 		if(stat == DEAD)
-			var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 			FR.adjust_materials(REPLICATOR_COST_REPLICATE)
 			gib()
 			return
@@ -76,7 +81,7 @@
 			flash_color(src, flash_color="#ff0000", flash_time=5)
 			to_chat(src, "<span class='danger'><font size=2>This world can not support your body for long. You must <b>consume</b> to survive.</font></span>")
 	else
-		clear_alert("swarm_hunger", /atom/movable/screen/alert/swarm_hunger)
+		clear_alert("swarm_hunger")
 
 	last_update_health = health
 
@@ -86,7 +91,6 @@
 	if(!disintegrating && excitement <= 0 && next_excitement_alert < world.time)
 		emote("beep")
 		var/area/A = get_area(src)
-		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		FR.drone_message(src, "Idleness value drift detected. Tasks requested at [A.name].", transfer=TRUE, dismantle=TRUE)
 		next_excitement_alert = excitement_alert_cooldown + world.time
 
@@ -114,119 +118,6 @@
 	if(disintegrating)
 		return
 	process_harvesting()
-
-/mob/living/simple_animal/replicator/Crossed(atom/movable/AM)
-	if(ckey)
-		return ..()
-	if(state == REPLICATOR_STATE_COMBAT)
-		return ..()
-	if(incapacitated())
-		return ..()
-
-	if(!isreplicator(AM))
-		return ..()
-
-	var/mob/living/simple_animal/replicator/R = AM
-	if(R.a_intent != INTENT_HARM)
-		return ..()
-	if(!R.ckey)
-		return ..()
-	if(R.controlling_drones >= REPLICATOR_MAX_CONTROLLED_DRONES)
-		to_chat(R, "<span class='notice'>You are already controlling a max capacity of [REPLICATOR_MAX_CONTROLLED_DRONES] drones.</span>")
-		return ..()
-
-	set_last_controller(R.ckey)
-	leader = R
-
-	set_m_intent(leader.m_intent)
-
-	leader.controlling_drones += 1
-
-	RegisterSignal(R, list(COMSIG_CLIENTMOB_MOVE), .proc/_repeat_leader_move)
-	RegisterSignal(R, list(COMSIG_MOB_REGULAR_CLICK), .proc/_repeat_leader_attack)
-	RegisterSignal(R, list(COMSIG_MOB_SET_A_INTENT), .proc/on_leader_intent_change)
-	RegisterSignal(R, list(COMSIG_MOB_SET_M_INTENT), .proc/on_leader_m_intent_change)
-	RegisterSignal(R, list(COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING), .proc/forget_leader)
-
-	excitement = 30
-
-	set_a_intent(INTENT_HARM)
-	set_state(REPLICATOR_STATE_COMBAT)
-
-/mob/living/simple_animal/replicator/proc/forget_leader()
-	SIGNAL_HANDLER
-
-	leader.controlling_drones -= 1
-
-	UnregisterSignal(leader, list(COMSIG_CLIENTMOB_MOVE, COMSIG_MOB_REGULAR_CLICK, COMSIG_MOB_SET_A_INTENT, COMSIG_MOB_SET_M_INTENT, COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING))
-	leader = null
-	set_state(REPLICATOR_STATE_HARVESTING)
-
-/mob/living/simple_animal/replicator/proc/repeat_leader_move(datum/source, atom/NewLoc, move_dir)
-	Move(get_step(get_turf(src), move_dir), move_dir)
-
-/mob/living/simple_animal/replicator/proc/_repeat_leader_move(datum/source, atom/NewLoc, move_dir)
-	SIGNAL_HANDLER
-
-	var/atom/A = source
-	if(loc != A.loc)
-		forget_leader()
-		return
-
-	if(incapacitated())
-		forget_leader()
-		return
-
-	if(!isturf(NewLoc))
-		forget_leader()
-		return
-
-	excitement = 30
-
-	repeat_leader_move(A, NewLoc, move_dir)
-
-/mob/living/simple_animal/replicator/proc/repeat_leader_attack(datum/source, atom/target, params)
-	face_atom(target)
-	if(target.Adjacent(src))
-		UnarmedAttack(target)
-	else
-		RangedAttack(target, params)
-
-/mob/living/simple_animal/replicator/proc/_repeat_leader_attack(datum/source, atom/target, params)
-	SIGNAL_HANDLER
-	if(!isturf(target) && !isturf(target.loc))
-		return
-
-	var/mob/living/simple_animal/replicator/R = source
-	if(R.next_move > world.time)
-		return
-	if(next_move > world.time)
-		return
-
-	if(incapacitated())
-		forget_leader()
-		return
-
-	excitement = 30
-
-	var/fake_delay = 0
-	if(next_pretend_delay_action < world.time && prob(50))
-		fake_delay = rand(1, 2)
-		next_pretend_delay_action = world.time + fake_delay + 1
-
-	if(fake_delay > 0)
-		addtimer(CALLBACK(src, .proc/repeat_leader_attack, source, target, params), fake_delay)
-		return
-	repeat_leader_attack(source, target, params)
-
-/mob/living/simple_animal/replicator/proc/on_leader_intent_change(datum/source, new_intent)
-	SIGNAL_HANDLER
-	if(new_intent != INTENT_HARM)
-		forget_leader(source)
-
-/mob/living/simple_animal/replicator/proc/on_leader_m_intent_change(datum/source, new_m_intent)
-	SIGNAL_HANDLER
-	set_m_intent(new_m_intent)
 
 /mob/living/simple_animal/replicator/proc/set_state(new_state)
 	if(new_state == REPLICATOR_STATE_WANDERING)

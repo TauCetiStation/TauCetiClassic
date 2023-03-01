@@ -4,7 +4,7 @@
 	if(!RAI)
 		return
 
-	if(length(RAI.acquired_upgrades) > FR.upgrades_amount)
+	if(length(RAI.acquired_upgrades) >= FR.upgrades_amount)
 		return
 
 	var/list/choices = RAI.get_upgrade_choices()
