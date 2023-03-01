@@ -222,7 +222,7 @@
 		var/turf/T = t
 		if(T == my_turf)
 			continue
-		if(!is_auto_disintegratable(T))
+		if(!can_auto_disintegrate(T))
 			continue
 		face_atom(T)
 		INVOKE_ASYNC(src, .proc/disintegrate, T)
@@ -234,7 +234,7 @@
 		INVOKE_ASYNC(src, .proc/disintegrate, to_disintegrate)
 		return
 
-	if(is_auto_disintegratable(my_turf))
+	if(can_auto_disintegrate(my_turf))
 		face_atom(my_turf)
 		INVOKE_ASYNC(src, .proc/disintegrate, my_turf)
 		return
@@ -275,7 +275,7 @@
 	for(var/C in T.contents)
 		var/atom/movable/A = C
 
-		if(!is_auto_disintegratable(A))
+		if(!can_auto_disintegrate(A))
 			continue
 
 		if(!most_clickable)

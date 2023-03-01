@@ -42,7 +42,7 @@
 	return TRUE
 
 
-/mob/living/simple_animal/replicator/proc/is_disintegratable(atom/A, alert=FALSE)
+/mob/living/simple_animal/replicator/proc/can_disintegrate(atom/A, alert=FALSE)
 	if(A.name == "")
 		return FALSE
 	if(!A.simulated)
@@ -71,11 +71,11 @@
 
 	return TRUE
 
-/mob/living/simple_animal/replicator/proc/is_auto_disintegratable(atom/A)
+/mob/living/simple_animal/replicator/proc/can_auto_disintegrate(atom/A)
 	if(A.is_disintegrating)
 		return FALSE
 
-	if(!is_disintegratable(A))
+	if(!can_disintegrate(A))
 		return FALSE
 
 	if(!A.can_be_auto_disintegrated())
@@ -106,12 +106,12 @@
 /mob/living/simple_animal/replicator/proc/get_disintegratable_from(turf/T)
 	for(var/a in T.contents)
 		var/atom/A = a
-		if(is_auto_disintegratable(A))
+		if(can_auto_disintegrate(A))
 			return A
 
 	if(istype(T, /turf/simulated/floor/plating/airless/catwalk/forcefield))
 		return null
-	if(!is_auto_disintegratable(T))
+	if(!can_auto_disintegrate(T))
 		return null
 
 	return T
@@ -125,7 +125,7 @@
 	if(A.is_disintegrating)
 		return FALSE
 
-	if(!is_disintegratable(A, alert=TRUE))
+	if(!can_disintegrate(A, alert=TRUE))
 		return FALSE
 
 	var/material_amount = A.get_replicator_material_amount()
@@ -227,4 +227,4 @@
 */
 
 /mob/living/simple_animal/replicator/proc/disintegrate_do_after_checks(mob/living/simple_animal/replicator/R, atom/target)
-	return R.is_disintegratable(target, alert=TRUE)
+	return R.can_disintegrate(target, alert=TRUE)
