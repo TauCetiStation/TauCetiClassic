@@ -198,7 +198,7 @@
 
 // self explanatory
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
-#define BLUESPACE_MOVE_ELEMENT_TRAIT "bluespace_move_element_trait"
+#define BLUESPACE_MOVE_COMPONENT_TRAIT "bluespace_move_element_trait"
 #define MOOD_COMPONENT_TRAIT "mood_component"
 #define SPAWN_AREA_TRAIT "spawn_area_trait"
 // medical stuff I guess

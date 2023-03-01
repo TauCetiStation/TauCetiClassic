@@ -8,8 +8,8 @@
 
 	logo_state = "replicators"
 
-	antag_hud_type = ANTAG_HUD_ALIEN
-	antag_hud_name = "hudalien"
+	antag_hud_type = ANTAG_HUD_REPLICATOR
+	antag_hud_name = "replicator"
 
 /datum/role/replicator/Greet(greeting, custom)
 	. = ..()

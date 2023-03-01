@@ -228,18 +228,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(h_style in deleted_hairstyles)
 			h_style = "Skrell Long Tentacles"
 
-	if(current_version < 38)
-		if("Raider" in be_role)
-			be_role -= "Raider"
-
-		S["be_role"] << be_role
-
 	// if you change a values in global.special_roles_ignore_question, you can copypaste this code
 	if(current_version < 38)
 		if(ignore_question && ignore_question.len)
 			var/list/diff = ignore_question - global.full_ignore_question
 			if(diff.len)
 				S["ignore_question"] << ignore_question - diff
+
+	if(current_version < 38)
+		if("Raider" in be_role)
+			be_role -= "Raider"
+
+		S["be_role"] << be_role
 
 	if(current_version < 39)
 		S["ghost_orbit"] << null
