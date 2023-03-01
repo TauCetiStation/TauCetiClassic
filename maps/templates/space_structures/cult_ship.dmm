@@ -230,7 +230,7 @@
 "tJ" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/gun/projectile/glock/spec,
+/obj/item/weapon/gun/projectile/automatic/glock/spec,
 /turf/simulated/floor/engine/cult,
 /area/space_structures/cult_ship)
 "uJ" = (
@@ -570,7 +570,8 @@
 /obj/machinery/power/apc/largecell{
 	dir = 8;
 	name = "largecell apc left";
-	pixel_x = -28
+	pixel_x = -28;
+	start_charge = 0
 	},
 /obj/structure/cable{
 	d2 = 2;

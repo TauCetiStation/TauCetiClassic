@@ -75,9 +75,8 @@
 	return ..()
 
 
-/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0))	return 1
-	return 0
+/obj/machinery/am_shielding/CanPass(atom/movable/mover, turf/target, height=0)
+	return FALSE
 
 
 /obj/machinery/am_shielding/process()
@@ -214,7 +213,7 @@
 	m_amt = 100
 
 /obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user, params)
-	if(ismultitool(I) && istype(loc, /turf))
+	if(ispulsing(I) && istype(loc, /turf))
 		new/obj/machinery/am_shielding(loc)
 		qdel(src)
 		return

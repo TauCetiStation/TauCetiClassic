@@ -310,12 +310,6 @@
 	icon_state = "floor"
 	},
 /area/centcom)
-"aQ" = (
-/mob/living/carbon/monkey/skrell,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom)
 "aR" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -350,14 +344,6 @@
 	icon_state = "floor"
 	},
 /area/centcom)
-"bf" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom)
 "bg" = (
 /obj/machinery/light{
 	dir = 4
@@ -374,6 +360,20 @@
 "bn" = (
 /turf/unsimulated/wall{
 	icon_state = "iron4"
+	},
+/area/centcom)
+"br" = (
+/mob/living/carbon/monkey/skrell,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bI" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
 /area/centcom)
 
@@ -4845,7 +4845,7 @@ ay
 ay
 ay
 aR
-bf
+bI
 ay
 aT
 bl
@@ -6362,7 +6362,7 @@ aD
 ay
 ay
 ay
-aQ
+br
 ay
 ac
 aa

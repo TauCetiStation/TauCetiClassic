@@ -56,7 +56,7 @@ var/global/bomb_set
 		updateUsrDialog()
 
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/O, mob/user)
-	if (isscrewdriver(O))
+	if (isscrewing(O))
 		add_fingerprint(user)
 		if (removal_stage == 5)
 			if (src.opened == 0)
@@ -99,7 +99,7 @@ var/global/bomb_set
 	if (src.anchored)
 		switch(removal_stage)
 			if(0)
-				if(iswelder(O))
+				if(iswelding(O))
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn())
 						return FALSE
@@ -115,7 +115,7 @@ var/global/bomb_set
 						removal_stage = 1
 				return FALSE
 			if(1)
-				if(iscrowbar(O))
+				if(isprying(O))
 					user.visible_message("[user] starts smashing [src].", "You start forcing open the covers with [O]...")
 					if(user.is_busy())
 						return FALSE
@@ -124,7 +124,7 @@ var/global/bomb_set
 						removal_stage = 2
 				return FALSE
 			if(2)
-				if(iswelder(O))
+				if(iswelding(O))
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn())
 						return FALSE
@@ -140,7 +140,7 @@ var/global/bomb_set
 						removal_stage = 3
 				return FALSE
 			if(3)
-				if(iswrench(O))
+				if(iswrenching(O))
 					if(user.is_busy())
 						return FALSE
 					user.visible_message("[user] begins poking inside [src].", "You begin unwrenching bolts...")
@@ -149,7 +149,7 @@ var/global/bomb_set
 						removal_stage = 4
 				return FALSE
 			if(4)
-				if(iscrowbar(O))
+				if(isprying(O))
 					if(user.is_busy())
 						return FALSE
 					user.visible_message("[user] begings hitting [src].", "You begin forcing open last safety layer...")
@@ -296,6 +296,7 @@ var/global/bomb_set
 						var/area/nuclearbombloc = get_area(loc)
 						announce_nuke.play(nuclearbombloc)
 						set_security_level("delta")
+						notify_ghosts("[src] has been activated!", source = src, action = NOTIFY_ORBIT, header = "Nuclear bomb")
 						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 					else
 						bomb_set = 0

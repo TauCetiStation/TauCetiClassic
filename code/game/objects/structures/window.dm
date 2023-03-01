@@ -5,6 +5,7 @@
 	density = TRUE
 	layer = 3.2//Just above doors
 	anchored = TRUE
+	can_block_air = TRUE
 	flags = ON_BORDER
 	can_be_unanchored = TRUE
 
@@ -108,7 +109,7 @@
 /obj/structure/window/blob_act()
 	take_damage(rand(30, 50), BRUTE, MELEE)
 
-/obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
 	if(is_fulltile())
@@ -179,14 +180,14 @@
 
 /obj/structure/window/attackby(obj/item/W, mob/user)
 	if(flags & NODECONSTRUCT)
-		if(isscrewdriver(W) | iscrowbar(W))
+		if(isscrewing(W) | isprying(W))
 			return ..()
 
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/airlock_painter))
 		change_paintjob(W, user)
 
-	else if(isscrewdriver(W))
+	else if(isscrewing(W))
 		if(reinf && state >= 1)
 			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [state == 1 ? "fasten the window to the frame." : "unfasten the window from the frame."]</span>" ))
 				return
@@ -212,7 +213,7 @@
 			to_chat(user, (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>"))
 			fastened_change()
 
-	else if(iscrowbar(W) && reinf && state <= 1)
+	else if(isprying(W) && reinf && state <= 1)
 		if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [state ? "pry the window out of the frame." : "pry the window into the frame."]</span>" ))
 			return
 		state = 1 - state
@@ -249,13 +250,6 @@
 					take_damage(12, BRUTE, MELEE)
 					visible_message("<span class='danger'><big>[A] crushes [M] against \the [src]!</big></span>")
 					M.log_combat(user, "crushed against [name]")
-
-	else if(istype(W,/obj/item/weapon/changeling_hammer))
-		var/obj/item/weapon/changeling_hammer/C = W
-		user.SetNextMove(CLICK_CD_MELEE)
-		if(C.use_charge(user))
-			playsound(src, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), VOL_EFFECTS_MASTER)
-			shatter()
 	else
 		return ..()
 
@@ -527,7 +521,7 @@
 	icon_state = "light[active]"
 
 /obj/machinery/windowtint/attackby(obj/item/W as obj, mob/user as mob)
-	if(ismultitool(W))
+	if(ispulsing(W))
 		var/t = sanitize(input(user, "Enter an ID for \the [src].", src.name, null), MAX_NAME_LEN)
 		src.id = t
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
@@ -535,7 +529,7 @@
 	. = ..()
 
 /obj/structure/window/reinforced/polarized/attackby(obj/item/W as obj, mob/user as mob)
-	if(ismultitool(W) && !anchored) // Only allow programming if unanchored!
+	if(ispulsing(W) && !anchored) // Only allow programming if unanchored!
 		var/t = sanitize(input(user, "Enter the ID for the window.", src.name, null), MAX_NAME_LEN)
 		src.id = t
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")

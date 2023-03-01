@@ -330,7 +330,7 @@
 		if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
 			BP.take_damage(0, 6, used_weapon = tool)
 
-		else if(iswrench(tool))
+		else if(iswrenching(tool))
 			BP.take_damage(12, 0, used_weapon = tool)
 			BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
 
@@ -468,8 +468,38 @@
 
 	target.log_combat(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
 
-	var/obj/item/device/mmi/posibrain/P = new(target.loc)
-	P.transfer_identity(target)
+	var/brain_type = /obj/item/device/mmi/posibrain
+	var/brain_species = target.get_species()
+
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	if(istype(BP, /obj/item/organ/external/chest/robot/ipc))
+		var/obj/item/organ/external/chest/robot/ipc/I = BP
+		brain_type = I.posibrain_type
+		brain_species = I.posibrain_species
+
+	var/obj/item/device/mmi/P = new brain_type(target.loc)
+	if(brain_species == DIONA)
+		var/mob/living/carbon/monkey/diona/D = new(target)
+
+		D.real_name = target.real_name
+		D.name = target.real_name
+
+		D.dna = target.dna.Clone()
+		D.dna.SetSEState(MONKEYBLOCK, 1)
+		D.dna.SetSEValueRange(MONKEYBLOCK, 0xDAC, 0xFFF)
+
+		if(target.mind)
+			target.mind.transfer_to(D)
+
+		for(var/datum/language/L as anything in target.languages)
+			D.add_language(L.name, target.languages[L])
+
+		for(var/datum/quirk/Q in target.roundstart_quirks)
+			D.saved_quirks += Q.type
+
+		P.transfer_nymph(D)
+	else
+		P.transfer_identity(target)
 
 	target.chest_brain_op_stage = 2
 	target.death()

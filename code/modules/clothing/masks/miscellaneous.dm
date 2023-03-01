@@ -21,7 +21,7 @@
 	name = "sterile mask"
 	desc = "A sterile mask designed to help prevent the spread of diseases."
 	icon_state = "sterile"
-	item_state = "sterile"
+	item_state = "m_mask"
 	w_class = SIZE_TINY
 	flags = MASKCOVERSMOUTH
 	body_parts_covered = 0
@@ -111,7 +111,7 @@
 		flags |= MASKCOVERSMOUTH
 		icon_state = "[initial(icon_state)]"
 		to_chat(user, "You pull the scarf up to cover your face.")
-	user.update_inv_wear_mask()
+	update_inv_mob()
 
 
 
@@ -180,6 +180,7 @@
 	flags = MASKCOVERSMOUTH
 	action_button_name = "Adjust Bandana"
 	icon_state = "bandbotany"
+	item_state = "greenbandana"
 	body_parts_covered = 0
 
 /obj/item/clothing/mask/chicken
@@ -206,7 +207,7 @@
 		else
 			src.icon_state += "_up"
 			to_chat(usr, "You tie the bandana around your head.")
-		usr.update_inv_wear_mask()
+		update_inv_mob()
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)

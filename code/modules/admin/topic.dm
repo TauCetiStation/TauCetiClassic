@@ -1558,10 +1558,6 @@
 				log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
 				message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
 				return
-			else
-				H.update_inv_r_hand()//To ensure the icon appears in the HUD
-		else
-			H.update_inv_l_hand()
 		log_admin("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		feedback_inc("admin_cookies_spawned",1)
@@ -2190,8 +2186,8 @@
 			return
 
 		library_recycle_bin()
-		log_admin("[key_name(usr)] restored [title] from the recycle bin")
-		message_admins("[key_name_admin(usr)] restored [title] from the recycle bin")
+		log_admin("[key_name(usr)] restored '[title]' from the recycle bin")
+		message_admins("[key_name_admin(usr)] restored '[title]' from the recycle bin")
 
 	else if(href_list["deletebook"])
 		if(!check_rights(R_PERMISSIONS))
@@ -2221,8 +2217,8 @@
 			return
 
 		library_recycle_bin()
-		log_admin("[key_name(usr)] restored [title] from the recycle bin")
-		message_admins("[key_name_admin(usr)] removed [title] from the library database")
+		log_admin("[key_name(usr)] removed '[title]' from the library database by player request")
+		message_admins("[key_name_admin(usr)] removed '[title]' from the library database by player request")
 
 	else if(href_list["vsc"])
 		if(check_rights(R_ADMIN|R_SERVER))
@@ -2270,10 +2266,15 @@
 			if(J.title in excluded_rank)
 				continue
 			J.salary_ratio = new_ratio
+
 		var/list/crew = my_subordinate_staff("Admin")
 		for(var/person in crew)
-			var/datum/money_account/account = person["acc_datum"]
+			var/datum/money_account/account = get_account(person["account"])
+			if(!account)
+				continue
+
 			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = ratio_rate)
+
 		if(new_ratio == 1)	//if 0 was selected
 			to_chat(usr, "<span class='warning'><b>You returned basic salaries to all professions</b></span>")
 		else

@@ -6,11 +6,12 @@
 	antag_hud_type = ANTAG_HUD_CHANGELING
 	antag_hud_name = "changeling"
 
-	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Blueshield Officer")
 	restricted_species_flags = list(IS_PLANT, IS_SYNTHETIC, NO_SCAN)
 	logo_state = "change-logoa"
 
 	stat_type = /datum/stat/role/changeling
+	moveset_type = /datum/combat_moveset/changeling
 
 	var/list/absorbed_dna = list()
 	var/list/absorbed_species = list()
@@ -79,7 +80,7 @@
 
 	if(antag.current.mind && antag.current.mind.assigned_role == "Clown")
 		to_chat(antag.current, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
-		antag.current.mutations.Remove(CLUMSY)
+		REMOVE_TRAIT(antag.current, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 
 	return TRUE
 
@@ -199,6 +200,7 @@
 	changeling.real_name = changeling.name
 	geneticpoints += 6
 
+	notify_ghosts("\A [changelingID], changeling as a new abomination, at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, header = "Abomination")
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
 			to_chat(M, "<font size='7' color='red'><b>A terrible roar is coming from somewhere around the station.</b></font>")

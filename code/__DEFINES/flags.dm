@@ -53,24 +53,28 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define NOSLIP                 (1<<18)   // Prevents from slipping on wet floors, in space etc.
 
-#define NOATTACKANIMATION      (1<<19)   // Removes attack animation
+#define AIR_FLOW_PROTECT       (1<<19)   //  Protects against air flow.
+
+#define NOATTACKANIMATION      (1<<20)   // Removes attack animation
 
 // objects hear flags
 // HEAR_PASS_SAY, HEAR_TA_SAY is temporary solution for optimisations reasons before we do hear() code refactoring
-#define HEAR_TALK              (1<<20)   // like old tg HEAR_1, marks objects with hear_talk()
-#define HEAR_PASS_SAY          (1<<21)   // temp for say code, for objects that need to pass SAY to inner mobs through get_listeners()
-#define HEAR_TA_SAY            (1<<22)   // temp for talking_atoms
-
-#define IN_INVENTORY           (1<<23)
-#define IN_STORAGE             (1<<23) // reuse of last bit we have
+#define HEAR_TALK              (1<<21)   // like old tg HEAR_1, marks objects with hear_talk()
+#define HEAR_PASS_SAY          (1<<22)   // temp for say code, for objects that need to pass SAY to inner mobs through get_listeners()
+#define HEAR_TA_SAY            (1<<23)   // temp for talking_atoms
+// !!!!     THERE IS NO MORE BITS, 23 IS LAST     !!!!!
+// You can use flags_2, or check this task https://github.com/TauCetiStation/TauCetiClassic/issues/10023
 
 /* Secondary atom flags, for the flags_2 var, denoted with a _2 */
 #define HOLOGRAM_2         (1<<0)
 /// atom queued to SSoverlay
-#define OVERLAY_QUEUED_2   (1<<1)
+#define OVERLAY_QUEUED_2       (1<<1)
 /// atom with this flag will never appear on demo
-#define PROHIBIT_FOR_DEMO_2   (1<<2)
+#define PROHIBIT_FOR_DEMO_2    (1<<2)
 
+#define IN_INVENTORY           (1<<3)
+#define IN_STORAGE             (1<<4)
+#define CANT_BE_INSERTED       (1<<5)   // Prohibits putting an item in a containers
 //alternate appearance flags
 #define AA_TARGET_SEE_APPEARANCE (1<<0)
 #define AA_MATCH_TARGET_OVERLAYS (1<<1)

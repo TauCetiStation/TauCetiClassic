@@ -69,6 +69,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/weapon/retractor,                             CATEGORY_MEDICAL),
 	R(/obj/item/weapon/cautery,                               CATEGORY_MEDICAL),
 	R(/obj/item/weapon/hemostat,                              CATEGORY_MEDICAL),
+	R(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass, CATEGORY_MEDICAL),
 	R(/obj/item/weapon/reagent_containers/glass/beaker,       CATEGORY_MEDICAL),
 	R(/obj/item/weapon/reagent_containers/glass/beaker/large, CATEGORY_MEDICAL),
 	R(/obj/item/weapon/reagent_containers/glass/beaker/vial,  CATEGORY_MEDICAL),
@@ -83,7 +84,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/weapon/rcd_ammo,                     CATEGORY_ENGINEERING),
 	R(/obj/item/weapon/camera_assembly,              CATEGORY_ENGINEERING),
 	R(/obj/item/ammo_box/eight_shells/beanbag,   CATEGORY_AMMO),
-	R(/obj/item/ammo_box/magazine/c45r,          CATEGORY_AMMO),
+	R(/obj/item/ammo_box/magazine/c45m/rubber,          CATEGORY_AMMO),
 	R(/obj/item/ammo_box/magazine/m9mm_2/rubber, CATEGORY_AMMO),
 	R(/obj/item/ammo_box/c38,                    CATEGORY_AMMO),
 	R(/obj/item/device/taperecorder,         CATEGORY_DEVICES),
@@ -96,7 +97,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/device/assembly/timer,       CATEGORY_DEVICES),
 	R(/obj/item/device/assembly/prox_sensor, CATEGORY_DEVICES),
 	R(/obj/item/device/flashlight,           CATEGORY_DEVICES),
-	R(/obj/item/device/destTagger,           CATEGORY_DEVICES),
+	R(/obj/item/device/tagger/shop,          CATEGORY_DEVICES),
 	R(/obj/item/device/analyzer,             CATEGORY_DEVICES),
 	R(/obj/item/device/plant_analyzer,       CATEGORY_DEVICES),
 	R(/obj/item/device/healthanalyzer,       CATEGORY_DEVICES),
@@ -111,7 +112,6 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/weapon/light/tube,                            CATEGORY_GENERAL),
 	R(/obj/item/weapon/light/bulb,                            CATEGORY_GENERAL),
 	R(/obj/item/ashtray/glass,                                CATEGORY_GENERAL),
-	R(/obj/item/weapon/hand_labeler,                          CATEGORY_GENERAL),
 	R(/obj/item/toy/gun,                                      CATEGORY_GENERAL),
 	R(/obj/item/toy/ammo/gun,                                 CATEGORY_GENERAL),
 	R(/obj/item/weapon/game_kit/random,                       CATEGORY_GENERAL),
@@ -124,6 +124,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_hidden = list(
 	R(/obj/item/device/harmonica, CATEGORY_DEVICES),
 	R(/obj/item/weapon/handcuffs, CATEGORY_GENERAL),
 	R(/obj/item/weapon/bell, CATEGORY_GENERAL),
+	R(/obj/item/device/tagger, CATEGORY_DEVICES),
 	R(/obj/item/weapon/flamethrower/full, CATEGORY_TOOLS),
 	R(/obj/item/weapon/rcd, CATEGORY_TOOLS),
 	R(/obj/item/weapon/weldingtool/largetank, CATEGORY_TOOLS),
@@ -285,7 +286,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 		return
 
 	if(panel_open)
-		if(iscrowbar(I))
+		if(isprying(I))
 			default_deconstruction_crowbar(I)
 			return 1
 		else if(is_wire_tool(I))

@@ -32,6 +32,8 @@ var/global/list/all_emotes
 
 	// Sound produced. (HAHAHAHA)
 	var/sound
+	// Whether sound pitch varies with age.
+	var/age_variations = FALSE
 
 	// What group does this emote belong to. By default uses emote type
 	var/cooldown_group = null
@@ -104,7 +106,14 @@ var/global/list/all_emotes
 	return sound
 
 /datum/emote/proc/play_sound(mob/user, intentional, emote_sound)
-	playsound(user, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, null)
+	var/sound_frequency = null
+	if(age_variations && ishuman(user))
+		// TO-DO: add get_min_age, get_max_age to all mobs? ~Luduk
+		var/mob/living/carbon/human/H = user
+		var/voice_frequency = TRANSLATE_RANGE(H.age, H.species.min_age, H.species.max_age, 0.85, 1.05)
+		sound_frequency = 1.05 - (voice_frequency - 0.85)
+
+	playsound(user, emote_sound, VOL_EFFECTS_MASTER, null, FALSE, sound_frequency)
 
 /datum/emote/proc/can_emote(mob/user, intentional)
 	if(!check_cooldown(user.next_emote_use, intentional))

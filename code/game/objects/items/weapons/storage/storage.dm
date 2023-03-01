@@ -198,7 +198,7 @@
 				break
 		if(!ok)
 			if(!stop_messages)
-				if (istype(W, /obj/item/weapon/hand_labeler))
+				if (istype(W, /obj/item/device/tagger))
 					return FALSE
 				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
 			return FALSE
@@ -208,6 +208,11 @@
 			if(!stop_messages)
 				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
 			return FALSE
+
+	if (W.flags_2 & CANT_BE_INSERTED)
+		if(!stop_messages)
+			to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
+		return FALSE
 
 	if (max_w_class != null && W.w_class > max_w_class)
 		if(!stop_messages)
@@ -332,7 +337,7 @@
 	if(istype(I, /obj/item/weapon/implanter/compressed))
 		return FALSE
 
-	if(istype(I, /obj/item/weapon/packageWrap) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
+	if((istype(I, /obj/item/weapon/packageWrap) || istype(I, /obj/item/device/tagger)) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
 		return FALSE
 
 	I.add_fingerprint(user)

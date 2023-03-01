@@ -193,6 +193,7 @@
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	slowdown = 0.5
 	armor = list(melee = 80, bullet = 70, laser = 70,energy = 70, bomb = 70, bio = 0, rad = 0)
+	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/clothing/head/helmet, /obj/item/weapon/tank)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
@@ -217,6 +218,13 @@
 	flags = ONESIZEFITSALL
 	armor = list(melee = 50, bullet = 55, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 
+/obj/item/clothing/suit/storage/flak/blueshield
+	name = "blueshield armor vest"
+	desc = "It's heavy and somehow... comfortable?"
+	icon_state = "blueshield"
+	item_state = "armor"
+	armor = list(melee = 60, bullet = 55, laser = 50, energy = 35, bomb = 35, bio = 0, rad = 0)
+	flags = ONESIZEFITSALL
 
 //Reactive armor
 //When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)

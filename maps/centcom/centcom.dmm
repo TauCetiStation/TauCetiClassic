@@ -609,9 +609,6 @@
 /turf/unsimulated/wall/fakeglass,
 /area/centcom/evac)
 "abo" = (
-/obj/machinery/shower{
-	dir = 8
-	},
 /obj/structure/drain{
 	drainage = 2
 	},
@@ -619,6 +616,9 @@
 /obj/machinery/door/window{
 	dir = 8;
 	name = "Shower cabin"
+	},
+/obj/machinery/shower/free{
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -4895,9 +4895,6 @@
 	},
 /area/centcom/specops)
 "ame" = (
-/obj/machinery/shower{
-	dir = 1
-	},
 /obj/machinery/door/window{
 	dir = 1;
 	name = "Shower cabin"
@@ -4907,6 +4904,9 @@
 	},
 /obj/item/weapon/reagent_containers/food/snacks/soap/syndie,
 /obj/structure/curtain/open/shower/security,
+/obj/machinery/shower/free{
+	dir = 1
+	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -5635,9 +5635,6 @@
 	},
 /area/custom/syndicate_mothership)
 "anE" = (
-/obj/machinery/shower{
-	dir = 1
-	},
 /obj/structure/curtain/open/shower/security,
 /obj/machinery/door/window{
 	dir = 1;
@@ -5645,6 +5642,9 @@
 	},
 /obj/structure/drain{
 	drainage = 2
+	},
+/obj/machinery/shower/free{
+	dir = 1
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -6587,28 +6587,28 @@
 	},
 /area/velocity)
 "apU" = (
-/obj/machinery/shower{
-	pixel_y = 20
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
 	dir = 8
+	},
+/obj/machinery/shower/free{
+	pixel_y = 20
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
 /area/velocity)
 "apV" = (
-/obj/machinery/shower{
-	pixel_y = 20
-	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
 	dir = 4
+	},
+/obj/machinery/shower/free{
+	pixel_y = 20
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -7771,7 +7771,7 @@
 /area/velocity)
 "asw" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/hand_labeler,
+/obj/item/device/tagger,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -13017,7 +13017,7 @@
 /area/centcom/specops)
 "aDD" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/glock/spec,
+/obj/item/weapon/gun/projectile/automatic/glock/spec,
 /obj/machinery/camera{
 	c_tag = "Spec. Ops. Commander";
 	dir = 4;
@@ -16171,7 +16171,7 @@
 /area/centcom/evac)
 "aKH" = (
 /obj/structure/table,
-/obj/item/weapon/hand_labeler,
+/obj/item/device/tagger,
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aKI" = (
@@ -16743,20 +16743,20 @@
 /area/centcom/specops)
 "aLW" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/glock/spec{
+/obj/item/weapon/gun/projectile/automatic/glock/spec{
 	pixel_y = 6
 	},
-/obj/item/weapon/gun/projectile/glock/spec{
+/obj/item/weapon/gun/projectile/automatic/glock/spec{
 	pixel_y = 6
 	},
-/obj/item/weapon/gun/projectile/glock/spec{
+/obj/item/weapon/gun/projectile/automatic/glock/spec{
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/projectile/glock/spec{
+/obj/item/weapon/gun/projectile/automatic/glock/spec{
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/projectile/glock/spec,
-/obj/item/weapon/gun/projectile/glock/spec,
+/obj/item/weapon/gun/projectile/automatic/glock/spec,
+/obj/item/weapon/gun/projectile/automatic/glock/spec,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -17106,11 +17106,11 @@
 /turf/unsimulated/floor,
 /area/centcom/living)
 "aMA" = (
-/obj/machinery/shower{
-	dir = 8
-	},
 /obj/machinery/porta_turret/stationary{
 	lethal = 0
+	},
+/obj/machinery/shower/free{
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -18880,6 +18880,23 @@
 	icon_state = "floor"
 	},
 /area/centcom/holding)
+"aPY" = (
+/obj/effect/step_trigger/teleporter/random{
+	affect_ghosts = 1;
+	name = "escapeshuttle_leave";
+	pixel_y = -1;
+	teleport_x = 25;
+	teleport_x_offset = 245;
+	teleport_y = 25;
+	teleport_y_offset = 245;
+	teleport_z = 6;
+	teleport_z_offset = 6
+	},
+/turf/environment/space,
+/area/space)
+"aPZ" = (
+/turf/environment/space,
+/area/shuttle/mining/transit)
 "aQa" = (
 /obj/machinery/vending/cigarette,
 /turf/unsimulated/floor{
@@ -24444,7 +24461,7 @@
 /obj/structure/sign/warning/securearea{
 	pixel_x = -32
 	},
-/obj/machinery/shower{
+/obj/machinery/shower/free{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -26892,7 +26909,7 @@
 /area/custom/syndicate_mothership/elite_squad)
 "iab" = (
 /obj/structure/window/reinforced,
-/obj/machinery/shower{
+/obj/machinery/shower/free{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -26901,7 +26918,7 @@
 /area/centcom/living)
 "ibb" = (
 /obj/structure/window/reinforced,
-/obj/machinery/shower{
+/obj/machinery/shower/free{
 	dir = 8
 	},
 /turf/unsimulated/floor{
@@ -29586,6 +29603,9 @@
 	syndie = 1
 	},
 /obj/item/weapon/flora/random,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -30456,6 +30476,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
+/obj/machinery/light/small,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorcatwalk"
 	},
@@ -36653,26 +36674,26 @@ ahG
 ahG
 ahG
 ahG
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 aaM
 aaM
 aaM
@@ -36929,7 +36950,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -37186,7 +37207,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -37443,7 +37464,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -37700,7 +37721,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -37957,7 +37978,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -38214,7 +38235,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -38471,7 +38492,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -38728,7 +38749,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -38972,20 +38993,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aVb
+aVb
+aVb
+aVb
+aVb
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -39229,20 +39250,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -39486,20 +39507,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -39743,20 +39764,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -40000,20 +40021,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -40257,20 +40278,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -40514,20 +40535,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -40771,20 +40792,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -41028,20 +41049,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -41285,20 +41306,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aPZ
+aPZ
+aPZ
+aPZ
+aPZ
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -41542,20 +41563,20 @@ aaM
 aaM
 aaM
 aaM
+aVb
+aVb
+aVb
+aVb
+aVb
+aVb
+aVb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -41812,7 +41833,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -42069,7 +42090,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -42326,7 +42347,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -42583,7 +42604,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -42840,7 +42861,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -43097,7 +43118,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -43354,7 +43375,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+ahG
 aaM
 aaM
 aaM
@@ -43566,6 +43587,7 @@ ahG
 ahG
 ahG
 ahG
+aPY
 ahG
 ahG
 ahG
@@ -43592,26 +43614,25 @@ ahG
 ahG
 ahG
 ahG
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
+ahG
 aaM
 aaM
 aaM
@@ -47957,7 +47978,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+aVb
 aaM
 aaM
 aaM

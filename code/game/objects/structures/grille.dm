@@ -73,8 +73,7 @@
 						"<span class='warning'>You smash against [src].</span>", \
 						"You hear twisting metal.")
 
-/obj/structure/grille/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+/obj/structure/grille/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGRILLE))
 		return 1
 	else
@@ -85,12 +84,12 @@
 
 /obj/structure/grille/attackby(obj/item/weapon/W, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(iswirecutter(W))
+	if(iscutter(W))
 		if(!shock(user, 100))
 			playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 			deconstruct(TRUE)
 			return
-	else if((isscrewdriver(W)) && (istype(loc, /turf/simulated) || anchored))
+	else if((isscrewing(W)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			anchored = !anchored

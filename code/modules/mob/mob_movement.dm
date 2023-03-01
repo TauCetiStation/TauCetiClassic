@@ -1,12 +1,10 @@
-/mob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	var/retVal = SEND_SIGNAL(src, COMSIG_ATOM_CANPASS, mover, target, height, air_group)
+/mob/CanPass(atom/movable/mover, turf/target, height=0)
+	var/retVal = SEND_SIGNAL(src, COMSIG_ATOM_CANPASS, mover, target, height)
 	if(retVal & COMPONENT_CANTPASS)
 		return FALSE
 	else if(retVal & COMPONENT_CANPASS)
 		return TRUE
 
-	if(air_group || (height==0))
-		return 1
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
 		return (!density || lying)
 	if(mover.checkpass(PASSMOB) || checkpass(PASSMOB))
@@ -212,6 +210,10 @@
 			mob.throwing = FALSE
 
 		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_POSTMOVE, n, direct)
+
+/mob/proc/random_move(mob/M)
+	if(isturf(M.loc) && !isspaceturf(M.loc) || (M.canmove && !M.incapacitated()))
+		step(M, pick(cardinal))
 
 /mob/proc/SelfMove(turf/n, direct)
 	if(camera_move(direct))

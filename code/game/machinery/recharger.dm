@@ -29,7 +29,7 @@
 		recharge_coeff = C.rating
 
 /obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
-	if(issilicon(user))
+	if(issilicon(user) && is_type_in_list(G, allowed_items))
 		return
 	if(is_type_in_list(G, allowed_items))
 		if(charging || panel_open)
@@ -54,7 +54,7 @@
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		set_power_use(ACTIVE_POWER_USE)
 		update_icon()
-	else if(iswrench(G))
+	else if(iswrenching(G))
 		if(charging)
 			to_chat(user, "<span class='warning'>Remove the weapon first!</span>")
 			return
@@ -65,7 +65,7 @@
 		if(default_deconstruction_screwdriver(user, istype(src, /obj/machinery/recharger/wallcharger) ? "wrechargeropen" : "rechargeropen", istype(src, /obj/machinery/recharger/wallcharger) ? "wrecharger0" : "recharger0", G))
 			return
 
-		if(panel_open && iscrowbar(G))
+		if(panel_open && isprying(G))
 			default_deconstruction_crowbar(G)
 			return
 

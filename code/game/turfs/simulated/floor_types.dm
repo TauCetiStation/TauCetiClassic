@@ -48,7 +48,7 @@
 	icon_state = "plaque";
 
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
-	if(iswrench(C))
+	if(iswrenching(C))
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Вы начинаете удалять стержни.</span>")
@@ -149,7 +149,7 @@
 	icon_state = "wall1"
 	opacity = 1
 	density = TRUE
-	blocks_air = 1
+	blocks_air = AIR_BLOCKED
 
 /turf/simulated/shuttle/floor
 	name = "floor"
