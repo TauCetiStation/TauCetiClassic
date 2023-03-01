@@ -46,8 +46,6 @@
 	..()
 
 /obj/item/weapon/table_parts/attack_self(mob/user)
-	if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
-		return
 	var/turf/simulated/T = get_turf(user)
 	if(!T || !T.CanPass(null, T))
 		to_chat(user, "<span class='warning'>You can't put it here!</span>")
@@ -66,6 +64,9 @@
 		return TRUE
 	return FALSE
 
+/obj/item/weapon/table_parts/reinforced/attack_self(mob/user)
+	if(handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
+		return ..()
 /*
  * Glass Table Parts
  */
