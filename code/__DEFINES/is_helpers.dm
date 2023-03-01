@@ -92,7 +92,7 @@
 
 #define isgod(A) (istype(A, /mob/living/simple_animal/shade/god))
 
-#define isreplicator(A) (istype(A, /mob/living/simple_animal/replicator))
+#define isreplicator(A) (istype(A, /mob/living/simple_animal/hostile/replicator))
 
 // MOB
 

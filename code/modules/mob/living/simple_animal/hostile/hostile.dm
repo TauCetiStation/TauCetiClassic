@@ -151,6 +151,12 @@
 		stance = HOSTILE_STANCE_ATTACK
 	return
 
+/mob/living/simple_animal/hostile/proc/Retreat(target_distance)
+	if(target_distance <= retreat_distance)//If target's closer than our retreat distance, run
+		walk_away(src,target,retreat_distance,move_to_delay)
+	else
+		Goto(target, move_to_delay, minimum_distance)//Otherwise, get to our minimum distance so we chase them
+
 /mob/living/simple_animal/hostile/proc/MoveToTarget()//Step 5, handle movement between us and our target
 	stop_automated_movement = TRUE
 	if(!target || !CanAttack(target))
@@ -162,10 +168,7 @@
 			if(target_distance >= 2 && ranged_cooldown <= 0)//But make sure they're a tile away at least, and our range attack is off cooldown
 				OpenFire(target)
 		if(canmove && retreat_distance != null)//If we have a retreat distance, check if we need to run from our target
-			if(target_distance <= retreat_distance)//If target's closer than our retreat distance, run
-				walk_away(src,target,retreat_distance,move_to_delay)
-			else
-				Goto(target, move_to_delay, minimum_distance)//Otherwise, get to our minimum distance so we chase them
+			Retreat(target_distance)
 		else if(canmove)
 			Goto(target, move_to_delay, minimum_distance)
 		if(isturf(loc) && target.Adjacent(src))	//If they're next to us, attack

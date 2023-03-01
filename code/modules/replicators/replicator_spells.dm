@@ -29,7 +29,7 @@
 
 	return ..()
 
-/obj/effect/proc_holder/spell/no_target/replicator_construct/proc/objection_timer(mob/living/simple_animal/replicator/user_replicator, message)
+/obj/effect/proc_holder/spell/no_target/replicator_construct/proc/objection_timer(mob/living/simple_animal/hostile/replicator/user_replicator, message)
 	var/datum/callback/checks = CALLBACK(src, .proc/replicator_checks_do_after_handler)
 	return user_replicator.do_after_objections(objection_delay, message, extra_checks=checks)
 
@@ -59,7 +59,7 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/cast(list/targets, mob/user = usr)
-	var/mob/living/simple_animal/replicator/user_replicator = user
+	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
 	// to-do: sound
 	if(!objection_timer(user_replicator, "Proceeding with replication at [A.name]."))
@@ -68,7 +68,7 @@
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 
-	var/mob/living/simple_animal/replicator/R = new(user_replicator.loc)
+	var/mob/living/simple_animal/hostile/replicator/R = new(user_replicator.loc)
 	R.set_last_controller(user_replicator.last_controller_ckey)
 
 	R.generation = "[user_replicator.generation][rand(0, 9)]"
@@ -119,7 +119,7 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/barricade/cast(list/targets, mob/user = usr)
-	var/mob/living/simple_animal/replicator/user_replicator = user
+	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
 	to_chat(user, "<span class='notice'>Barricade deployed successfully.</span>")
 
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
@@ -159,7 +159,7 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/trap/cast(list/targets, mob/user = usr)
-	var/mob/living/simple_animal/replicator/user_replicator = user
+	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
 	to_chat(user, "<span class='notice'>Mine deployed successfully.</span>")
 
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
@@ -205,7 +205,7 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/transponder/cast(list/targets, mob/user = usr)
-	var/mob/living/simple_animal/replicator/user_replicator = user
+	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
 	// to-do: sound
 	if(!objection_timer(user_replicator, "Deploying a bluespace transponder at [A.name]."))
@@ -260,7 +260,7 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/generator/cast(list/targets, mob/user = usr)
-	var/mob/living/simple_animal/replicator/user_replicator = user
+	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
 	// to-do: sound
 	if(!objection_timer(user_replicator, "Deploying a generator at [A.name]."))
@@ -297,7 +297,7 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/no_target/toggle_corridor_construction/cast(list/targets, mob/user = usr)
-	var/mob/living/simple_animal/replicator/user_replicator = user
+	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
 	if(!user_replicator.auto_construct_type)
 		user_replicator.auto_construct_type = /obj/structure/bluespace_corridor
 		user_replicator.auto_construct_cost = 1
@@ -340,7 +340,7 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/no_target/transfer_to_idle/cast(list/targets, mob/user = usr)
-	var/mob/living/simple_animal/replicator/user_replicator = user
+	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
 	if(user_replicator.transfer_control(pick(global.idle_replicators)))
 		to_chat(user, "<span class='notice'>TRANSFERING...</span>")
 
@@ -361,7 +361,7 @@
 	var/list/pos_areas = list()
 
 	for(var/r in global.alive_replicators)
-		var/mob/living/simple_animal/replicator/R = r
+		var/mob/living/simple_animal/hostile/replicator/R = r
 		if(R.ckey || R.incapacitated())
 			continue
 		var/area/A = get_area(R)
@@ -374,10 +374,10 @@
 
 	var/area/thearea = pos_areas[area_name]
 
-	for(var/mob/living/simple_animal/replicator/R in thearea)
+	for(var/mob/living/simple_animal/hostile/replicator/R in thearea)
 		if(R == user)
 			continue
-		var/mob/living/simple_animal/replicator/user_replicator = user
+		var/mob/living/simple_animal/hostile/replicator/user_replicator = user
 		if(user_replicator.transfer_control(R))
 			to_chat(user, "<span class='notice'>TRANSFERING...</span>")
 			return
@@ -422,7 +422,7 @@
 	action_icon_state = "ui_mail"
 
 /obj/effect/proc_holder/spell/no_target/set_mail_tag/cast(list/targets, mob/user = usr)
-	var/mob/living/simple_animal/replicator/user_replicator = user
+	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
 
 	var/new_tag = input("Select the desired destination.", "Set Mail Tag", null) as null|anything in tagger_locations
 	if(!new_tag)
@@ -477,7 +477,7 @@
 	return ..()
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/catapult/cast(list/targets, mob/user = usr)
-	var/mob/living/simple_animal/replicator/user_replicator = user
+	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
 	// to-do: sound
 	if(!objection_timer(user_replicator, "Constructing a Bluespace Catapult at [A.name]!"))

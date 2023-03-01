@@ -4,7 +4,7 @@
 // This proc is the reaction to a replicator's disintegration.
 // Return TRUE if item is succesfully disintegrated.
 // This proc should handle disintegration of the item, as well as any error messages to the replicator.
-/atom/proc/replicator_act(mob/living/simple_animal/replicator)
+/atom/proc/replicator_act(mob/living/simple_animal/hostile/replicator)
 	return FALSE
 
 // Return a negative value if you don't want the auto-replicator to try disintegrating this.
@@ -30,7 +30,7 @@
 
 	return 1
 
-/turf/simulated/floor/replicator_act(mob/living/simple_animal/replicator/R)
+/turf/simulated/floor/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	if(is_plating())
 		R.try_spawn_node(src)
 		ChangeTurf(/turf/simulated/floor/plating/airless/catwalk/forcefield)
@@ -44,13 +44,13 @@
 	return TRUE
 
 
-/turf/simulated/floor/engine/replicator_act(mob/living/simple_animal/replicator/R)
+/turf/simulated/floor/engine/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	R.try_spawn_node(src)
 	ChangeTurf(/turf/simulated/floor/plating/airless/catwalk/forcefield)
 	return TRUE
 
 
-/turf/simulated/floor/plating/airless/catwalk/replicator_act(mob/living/simple_animal/replicator/R)
+/turf/simulated/floor/plating/airless/catwalk/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	R.try_spawn_node(src)
 	ChangeTurf(/turf/simulated/floor/plating/airless/catwalk/forcefield)
 	return TRUE
@@ -64,7 +64,7 @@
 /turf/simulated/wall/get_replicator_material_amount()
 	return 1
 
-/turf/simulated/wall/replicator_act(mob/living/simple_animal/replicator/R)
+/turf/simulated/wall/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	var/turf/T = get_turf(src)
 	if(T.can_place_replicator_forcefield())
 		new /obj/structure/replicator_forcefield(T)
@@ -88,7 +88,7 @@
 	else
 		. *= REPLICATOR_PUNISH_LIVE_MOBS_TICK_MODIFIER
 
-/mob/living/replicator_act(mob/living/simple_animal/replicator/R)
+/mob/living/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	var/list/equipment = get_equipped_items()
 	if(length(equipment) > 0)
 		var/attempts = 3
@@ -103,16 +103,16 @@
 
 
 
-/mob/living/simple_animal/replicator/can_be_auto_disintegrated()
+/mob/living/simple_animal/hostile/replicator/can_be_auto_disintegrated()
 	return stat == DEAD
 
-/mob/living/simple_animal/replicator/get_replicator_material_amount()
+/mob/living/simple_animal/hostile/replicator/get_replicator_material_amount()
 	return REPLICATOR_COST_REPLICATE
 
-/mob/living/simple_animal/replicator/get_unit_disintegration_time()
+/mob/living/simple_animal/hostile/replicator/get_unit_disintegration_time()
 	return ..() * REPLICATOR_RECLAIM_REPLICATOR_TICK_MODIFIER
 
-/mob/living/simple_animal/replicator/replicator_act(mob/living/simple_animal/replicator/R)
+/mob/living/simple_animal/hostile/replicator/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	gib()
 	return TRUE
 
@@ -121,7 +121,7 @@
 /obj/structure/get_replicator_material_amount()
 	return w_class
 
-/obj/structure/replicator_act(mob/living/simple_animal/replicator/R)
+/obj/structure/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	deconstruct(TRUE)
 	return TRUE
 
@@ -131,7 +131,7 @@
 	return FALSE
 
 
-/obj/structure/window/replicator_act(mob/living/simple_animal/replicator/R)
+/obj/structure/window/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	var/turf/T = get_turf(src)
 	if(is_fulltile() && T.can_place_replicator_forcefield())
 		new /obj/structure/replicator_forcefield(T)
@@ -139,7 +139,7 @@
 	return TRUE
 
 
-/obj/structure/object_wall/replicator_act(mob/living/simple_animal/replicator/R)
+/obj/structure/object_wall/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	var/turf/T = get_turf(src)
 	if(T.can_place_replicator_forcefield())
 		new /obj/structure/replicator_forcefield(T)
@@ -147,7 +147,7 @@
 	return TRUE
 
 
-/obj/structure/inflatable/replicator_act(mob/living/simple_animal/replicator/R)
+/obj/structure/inflatable/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	var/turf/T = get_turf(src)
 	if(T.can_place_replicator_forcefield())
 		new /obj/structure/replicator_forcefield(T)
@@ -172,7 +172,7 @@
 /obj/structure/bluespace_corridor/get_unit_disintegration_time()
 	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
 
-/obj/structure/bluespace_corridor/replicator_act(mob/living/simple_animal/replicator/R)
+/obj/structure/bluespace_corridor/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	deconstruct(TRUE)
 	if(R.auto_construct_type == type && isturf(R.loc))
 		R.try_construct(R.loc)
@@ -219,13 +219,13 @@
 /obj/machinery/get_replicator_material_amount()
 	return w_class
 
-/obj/machinery/replicator_act(mob/living/simple_animal/replicator/R)
+/obj/machinery/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	// dismantle and fall into pieces
 	deconstruct(TRUE)
 	return TRUE
 
 
-/obj/machinery/door/replicator_act(mob/living/simple_animal/replicator/R)
+/obj/machinery/door/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	var/turf/T = get_turf(src)
 	if(T.can_place_replicator_forcefield())
 		new /obj/structure/replicator_barricade(T)
@@ -251,7 +251,7 @@
 /obj/machinery/atmospherics/components/get_unit_disintegration_time()
 	return ..() * REPLICATOR_PUNISH_GRIEFING_TICK_MODIFIER
 
-/obj/machinery/atmospherics/components/replicator_act(mob/living/simple_animal/replicator/R)
+/obj/machinery/atmospherics/components/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	if(welded)
 		welded = !welded
 		update_icon()
@@ -305,7 +305,7 @@
 /obj/item/get_replicator_material_amount()
 	return w_class
 
-/obj/item/replicator_act(mob/living/simple_animal/replicator/R)
+/obj/item/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	deconstruct(TRUE)
 	return TRUE
 
@@ -330,7 +330,7 @@
 /obj/mecha/get_replicator_material_amount()
 	return w_class
 
-/obj/mecha/replicator_act(mob/living/simple_animal/replicator/R)
+/obj/mecha/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	destroy()
 	return TRUE
 
@@ -338,7 +338,7 @@
 /obj/effect/decal/mecha_wreckage/get_replicator_material_amount()
 	return 1
 
-/obj/effect/decal/mecha_wreckage/replicator_act(mob/living/simple_animal/replicator/R)
+/obj/effect/decal/mecha_wreckage/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	if(salvage_num > 0)
 		var/list/pos_tools = list("welder", "wirecutter", "crowbar")
 		while(length(pos_tools) > 0)

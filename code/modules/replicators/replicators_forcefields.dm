@@ -107,7 +107,7 @@
 	. = ..()
 	if(!isreplicator(AM))
 		return
-	var/mob/living/simple_animal/replicator/R = AM
+	var/mob/living/simple_animal/hostile/replicator/R = AM
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	if(R.auto_construct_type != /obj/structure/bluespace_corridor || FR.materials < R.auto_construct_cost)
 		return
@@ -180,7 +180,7 @@
 /obj/structure/replicator_barricade/CanPass(atom/movable/mover, turf/target)
 	if(!mover)
 		return FALSE
-	if(istype(mover, /mob/living/simple_animal/replicator))
+	if(istype(mover, /mob/living/simple_animal/hostile/replicator))
 		return TRUE
 	if(istype(mover, /obj/item/projectile/disabler))
 		return TRUE

@@ -1,4 +1,4 @@
-/mob/living/simple_animal/replicator/Crossed(atom/movable/AM)
+/mob/living/simple_animal/hostile/replicator/Crossed(atom/movable/AM)
 	if(!isreplicator(AM))
 		return ..()
 
@@ -7,15 +7,15 @@
 
 	return ..()
 
-/mob/living/simple_animal/replicator/set_a_intent(new_intent)
+/mob/living/simple_animal/hostile/replicator/set_a_intent(new_intent)
 	. = ..()
 	if(new_intent != INTENT_HARM)
 		return
 
-	for(var/mob/living/simple_animal/replicator/R in loc)
+	for(var/mob/living/simple_animal/hostile/replicator/R in loc)
 		R.set_leader(src)
 
-/mob/living/simple_animal/replicator/proc/set_leader(mob/living/simple_animal/replicator/R, alert=TRUE)
+/mob/living/simple_animal/hostile/replicator/proc/set_leader(mob/living/simple_animal/hostile/replicator/R, alert=TRUE)
 	if(ckey)
 		return FALSE
 	if(state == REPLICATOR_STATE_COMBAT)
@@ -50,7 +50,7 @@
 
 	return TRUE
 
-/mob/living/simple_animal/replicator/proc/forget_leader()
+/mob/living/simple_animal/hostile/replicator/proc/forget_leader()
 	SIGNAL_HANDLER
 
 	leader.controlling_drones -= 1
@@ -60,10 +60,10 @@
 
 	set_state(REPLICATOR_STATE_HARVESTING)
 
-/mob/living/simple_animal/replicator/proc/repeat_leader_move(datum/source, atom/NewLoc, move_dir)
+/mob/living/simple_animal/hostile/replicator/proc/repeat_leader_move(datum/source, atom/NewLoc, move_dir)
 	Move(get_step(get_turf(src), move_dir), move_dir)
 
-/mob/living/simple_animal/replicator/proc/_repeat_leader_move(datum/source, atom/NewLoc, move_dir)
+/mob/living/simple_animal/hostile/replicator/proc/_repeat_leader_move(datum/source, atom/NewLoc, move_dir)
 	SIGNAL_HANDLER
 
 	var/atom/A = source
@@ -87,19 +87,19 @@
 
 	repeat_leader_move(A, NewLoc, move_dir)
 
-/mob/living/simple_animal/replicator/proc/repeat_leader_attack(datum/source, atom/target, params)
+/mob/living/simple_animal/hostile/replicator/proc/repeat_leader_attack(datum/source, atom/target, params)
 	face_atom(target)
 	if(target.Adjacent(src))
 		UnarmedAttack(target)
 	else
 		RangedAttack(target, params)
 
-/mob/living/simple_animal/replicator/proc/_repeat_leader_attack(datum/source, atom/target, params)
+/mob/living/simple_animal/hostile/replicator/proc/_repeat_leader_attack(datum/source, atom/target, params)
 	SIGNAL_HANDLER
 	if(!isturf(target) && !isturf(target.loc))
 		return
 
-	var/mob/living/simple_animal/replicator/R = source
+	var/mob/living/simple_animal/hostile/replicator/R = source
 	if(R.next_move > world.time)
 		return
 	if(next_move > world.time)
@@ -121,11 +121,11 @@
 		return
 	repeat_leader_attack(source, target, params)
 
-/mob/living/simple_animal/replicator/proc/on_leader_intent_change(datum/source, new_intent)
+/mob/living/simple_animal/hostile/replicator/proc/on_leader_intent_change(datum/source, new_intent)
 	SIGNAL_HANDLER
 	if(new_intent != INTENT_HARM)
 		forget_leader(source)
 
-/mob/living/simple_animal/replicator/proc/on_leader_m_intent_change(datum/source, new_m_intent)
+/mob/living/simple_animal/hostile/replicator/proc/on_leader_m_intent_change(datum/source, new_m_intent)
 	SIGNAL_HANDLER
 	set_m_intent(new_m_intent)

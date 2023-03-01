@@ -1,4 +1,4 @@
-/mob/living/simple_animal/replicator
+/mob/living/simple_animal/hostile/replicator
 	var/state = REPLICATOR_STATE_HARVESTING
 
 	var/list/target_coordinates
@@ -20,19 +20,88 @@
 		REPLICATOR_STATE_WANDERING = "#cc00ff",
 		REPLICATOR_STATE_GOING_TO_HELP = "#00ccff",
 		REPLICATOR_STATE_COMBAT = "#cc0000",
+		REPLICATOR_STATE_AI_COMBAT = "#cc0000",
 	)
 
 	var/next_pretend_delay_action = 0
 
-	var/mob/living/simple_animal/replicator/leader
+	var/mob/living/simple_animal/hostile/replicator/leader
 
 	var/next_consume_alert = 0
 
-/mob/living/simple_animal/replicator/Life()
+	var/next_combat_alert = 0
+	var/combat_alert_cooldown = 1 MINUTE
+
+/mob/living/simple_animal/hostile/replicator/Life()
 	. = ..()
 	if(!.)
 		return
 
+	handle_status_updates()
+
+	if(ckey)
+		return
+
+	if(!disintegrating && excitement <= 0 && next_excitement_alert < world.time)
+		next_excitement_alert = excitement_alert_cooldown + world.time
+
+		emote("beep?")
+		var/area/A = get_area(src)
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		FR.drone_message(src, "Idleness value drift detected. Tasks requested at [A.name].", transfer=TRUE, dismantle=TRUE)
+
+	if(state == REPLICATOR_STATE_AI_COMBAT)
+		excitement -= 1
+		if(excitement <= 0)
+			clear_priority_target()
+			LoseTarget()
+			excitement = 10
+
+	if(stance != HOSTILE_STANCE_IDLE)
+		excitement = 30
+		set_a_intent(INTENT_HARM)
+		set_state(REPLICATOR_STATE_AI_COMBAT)
+
+		if(next_combat_alert < world.time)
+			next_combat_alert = world.time + combat_alert_cooldown
+
+			emote("beep!")
+			var/area/A = get_area(src)
+			var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+			FR.drone_message(src, "Alert! Retreating from combat at: [A.name].", transfer=TRUE)
+
+		return
+
+	if(state == REPLICATOR_STATE_AI_COMBAT)
+		set_a_intent(INTENT_HELP)
+		set_state(REPLICATOR_STATE_HARVESTING)
+
+	if(state == REPLICATOR_STATE_COMBAT)
+		excitement -= 1
+		if(excitement <= 0)
+			forget_leader(leader)
+			excitement = 10
+
+	if(state == REPLICATOR_STATE_COMBAT)
+		return
+
+	if(state == REPLICATOR_STATE_HELPING)
+		return
+
+	if(state == REPLICATOR_STATE_GOING_TO_HELP)
+		process_going_to_help()
+		return
+
+	// TO-DO: if wandering for too long, send a signal of idleness, and cease all activity. Perhaps try to hide?
+	if(state == REPLICATOR_STATE_WANDERING)
+		process_wandering()
+		return
+
+	if(disintegrating)
+		return
+	process_harvesting()
+
+/mob/living/simple_animal/hostile/replicator/proc/handle_status_updates()
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	var/datum/replicator_array_info/RAI = FR.ckey2info[last_controller_ckey]
 	if(ckey && RAI)
@@ -85,41 +154,7 @@
 
 	last_update_health = health
 
-	if(ckey)
-		return
-
-	if(!disintegrating && excitement <= 0 && next_excitement_alert < world.time)
-		emote("beep?")
-		var/area/A = get_area(src)
-		FR.drone_message(src, "Idleness value drift detected. Tasks requested at [A.name].", transfer=TRUE, dismantle=TRUE)
-		next_excitement_alert = excitement_alert_cooldown + world.time
-
-	if(state == REPLICATOR_STATE_COMBAT)
-		excitement -= 1
-		if(excitement <= 0)
-			forget_leader(leader)
-			excitement = 10
-
-	if(state == REPLICATOR_STATE_COMBAT)
-		return
-
-	if(state == REPLICATOR_STATE_HELPING)
-		return
-
-	if(state == REPLICATOR_STATE_GOING_TO_HELP)
-		process_going_to_help()
-		return
-
-	// TO-DO: if wandering for too long, send a signal of idleness, and cease all activity. Perhaps try to hide?
-	if(state == REPLICATOR_STATE_WANDERING)
-		process_wandering()
-		return
-
-	if(disintegrating)
-		return
-	process_harvesting()
-
-/mob/living/simple_animal/replicator/proc/set_state(new_state)
+/mob/living/simple_animal/hostile/replicator/proc/set_state(new_state)
 	if(new_state == REPLICATOR_STATE_WANDERING)
 		global.idle_replicators |= src
 	else
@@ -129,16 +164,16 @@
 	state = new_state
 	update_icon()
 
-/mob/living/simple_animal/replicator/get_active_skillset()
+/mob/living/simple_animal/hostile/replicator/get_active_skillset()
 	return skills.active
 
-/mob/living/simple_animal/replicator/on_start_help_other(mob/living/target)
+/mob/living/simple_animal/hostile/replicator/on_start_help_other(mob/living/target)
 	set_state(REPLICATOR_STATE_HELPING)
 
-/mob/living/simple_animal/replicator/on_stop_help_other(mob/living/target)
+/mob/living/simple_animal/hostile/replicator/on_stop_help_other(mob/living/target)
 	set_state(REPLICATOR_STATE_HARVESTING)
 
-/mob/living/simple_animal/replicator/proc/process_going_to_help()
+/mob/living/simple_animal/hostile/replicator/proc/process_going_to_help()
 	if(!target_coordinates)
 		set_state(REPLICATOR_STATE_HARVESTING)
 		return
@@ -159,7 +194,7 @@
 
 	target_coordinates = null
 
-	for(var/mob/living/simple_animal/replicator/R in loc)
+	for(var/mob/living/simple_animal/hostile/replicator/R in loc)
 		if(!R.ckey)
 			continue
 		if(R.request_help_until < world.time)
@@ -169,7 +204,7 @@
 		INVOKE_ASYNC(src, /mob/living.proc/help_other, R)
 		return
 
-/mob/living/simple_animal/replicator/proc/process_wandering()
+/mob/living/simple_animal/hostile/replicator/proc/process_wandering()
 	var/list/wander_directions = list() + cardinal
 	for(var/wander_dir in wander_directions)
 		var/turf/T = get_step(src, wander_dir)
@@ -184,14 +219,14 @@
 
 	excitement -= 1
 
-	var/mob/living/simple_animal/replicator/harvester = get_closest_replicator(harvesting=TRUE)
+	var/mob/living/simple_animal/hostile/replicator/harvester = get_closest_replicator(harvesting=TRUE)
 	if(harvester && get_dist(src, harvester) < 7)
 		var/turf/closer_turf = get_step_to(src, get_turf(harvester), -1)
 		var/closer_dir = get_dir(src, closer_turf)
 		Move(closer_turf, closer_dir)
 		return
 
-	var/mob/living/simple_animal/replicator/R = get_closest_replicator(sentient=TRUE)
+	var/mob/living/simple_animal/hostile/replicator/R = get_closest_replicator(sentient=TRUE)
 	if(R && get_dist(src, R) < 7)
 		var/turf/closer_turf = get_step_to(src, get_turf(R), -1)
 		var/closer_dir = get_dir(src, closer_turf)
@@ -202,7 +237,7 @@
 	var/to_move_dir = pick(list(closest_replicator_dir) + cardinal)
 	Move(get_step(src, to_move_dir), to_move_dir)
 
-/mob/living/simple_animal/replicator/proc/process_harvesting()
+/mob/living/simple_animal/hostile/replicator/proc/process_harvesting()
 	var/turf/my_turf = get_turf(src)
 
 	var/list/turf/surrounding_turfs = RANGE_TURFS(1, src)
@@ -241,12 +276,12 @@
 
 	set_state(REPLICATOR_STATE_WANDERING)
 
-/mob/living/simple_animal/replicator/proc/get_closest_replicator(harvesting=FALSE, sentient=FALSE)
+/mob/living/simple_animal/hostile/replicator/proc/get_closest_replicator(harvesting=FALSE, sentient=FALSE)
 	. = null
 	var/closest_distance = null
 
 	for(var/r in global.alive_replicators)
-		var/mob/living/simple_animal/replicator/R = r
+		var/mob/living/simple_animal/hostile/replicator/R = r
 		if(R == src)
 			continue
 		var/sentient_check_failed = sentient && !R.ckey
@@ -266,7 +301,7 @@
 			. = R
 			closest_distance = dist
 
-/mob/living/simple_animal/replicator/proc/find_most_clickable(turf/T)
+/mob/living/simple_animal/hostile/replicator/proc/find_most_clickable(turf/T)
 	if(!T.contents.len)
 		return null
 

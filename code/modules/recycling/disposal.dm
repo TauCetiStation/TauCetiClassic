@@ -566,7 +566,7 @@
 			var/mob/living/silicon/robot/drone/drone = AM
 			src.destinationTag = drone.mail_destination
 		if(isreplicator(AM))
-			var/mob/living/simple_animal/replicator/R = AM
+			var/mob/living/simple_animal/hostile/replicator/R = AM
 			src.destinationTag = R.mail_destination
 		if(istype(AM, /obj/structure/closet/body_bag))
 			has_bodybag = 1

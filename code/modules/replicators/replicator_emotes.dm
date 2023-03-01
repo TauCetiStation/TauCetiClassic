@@ -15,12 +15,12 @@
 
 // TO-DO: sound
 
-/datum/emote/clickable/help_replicator/add_cloud(mob/living/simple_animal/replicator/user)
+/datum/emote/clickable/help_replicator/add_cloud(mob/living/simple_animal/hostile/replicator/user)
 	. = ..()
 	user.request_help_until = world.time + 7 SECONDS
 
 	for(var/r in global.alive_replicators)
-		var/mob/living/simple_animal/replicator/R = r
+		var/mob/living/simple_animal/hostile/replicator/R = r
 		if(R == user)
 			continue
 		if(get_dist(user, R) > emote_range)
@@ -68,7 +68,7 @@
 	if(!isturf(user.loc))
 		return
 
-	var/mob/living/simple_animal/replicator/R = user
+	var/mob/living/simple_animal/hostile/replicator/R = user
 	R.playsound_stealthy(user, emote_sound, vol=75)
 
 /datum/emote/replicator/beep/exclamation

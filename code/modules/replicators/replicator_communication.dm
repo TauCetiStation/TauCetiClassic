@@ -1,4 +1,4 @@
-/mob/living/simple_animal/replicator/say(message)
+/mob/living/simple_animal/hostile/replicator/say(message)
 	if(stat != CONSCIOUS)
 		return
 
@@ -81,7 +81,7 @@
 // Mines currently also use this.
 /datum/faction/replicators/proc/drone_message(atom/drone, message, transfer=FALSE, dismantle=FALSE, objection_time=0)
 	if(isreplicator(drone))
-		var/mob/living/simple_animal/replicator/R = drone
+		var/mob/living/simple_animal/hostile/replicator/R = drone
 		R.objection_end_time = world.time + objection_time
 
 	for(var/r in members)

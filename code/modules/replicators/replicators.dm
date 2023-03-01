@@ -1,7 +1,7 @@
 var/global/list/alive_replicators = list()
 var/global/list/idle_replicators = list()
 
-ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
+ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicators)
 
 /datum/skillset/replicator
 	name = "Replicator"
@@ -11,13 +11,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 		/datum/skill/atmospherics = SKILL_LEVEL_TRAINED,
 	)
 
-/mob/living/simple_animal/replicator/get_skills()
+/mob/living/simple_animal/hostile/replicator/get_skills()
 	return skills
 
 /obj/effect/overlay/replicator
 	icon = 'icons/mob/replicator.dmi'
 
-/mob/living/simple_animal/replicator
+/mob/living/simple_animal/hostile/replicator
 	name = "replicator"
 	real_name = "replicator"
 	desc = "Prepare to be assimilated!"
@@ -136,7 +136,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	var/pixel_offset = 8
 
-/mob/living/simple_animal/replicator/atom_init()
+/mob/living/simple_animal/hostile/replicator/atom_init()
 	. = ..()
 
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
@@ -172,7 +172,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	last_disintegration = world.time
 
-/mob/living/simple_animal/replicator/Destroy()
+/mob/living/simple_animal/hostile/replicator/Destroy()
 	global.idle_replicators -= src
 
 	overlays -= indicator
@@ -180,11 +180,11 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	leader = null
 	return ..()
 
-/mob/living/simple_animal/replicator/proc/scatter_offset()
+/mob/living/simple_animal/hostile/replicator/proc/scatter_offset()
 	pixel_x = rand(-pixel_offset, pixel_offset)
 	pixel_y = rand(-pixel_offset, pixel_offset)
 
-/mob/living/simple_animal/replicator/Moved(atom/OldLoc, dir)
+/mob/living/simple_animal/hostile/replicator/Moved(atom/OldLoc, dir)
 	. = ..()
 
 	if(!isturf(loc))
@@ -196,7 +196,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	try_construct(loc)
 
-/mob/living/simple_animal/replicator/proc/handle_organic_matter(turf/T)
+/mob/living/simple_animal/hostile/replicator/proc/handle_organic_matter(turf/T)
 	T.clean_blood()
 	if(istype(T, /turf/simulated))
 		var/turf/simulated/S = T
@@ -210,7 +210,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 			var/obj/item/cleaned_item = A
 			cleaned_item.clean_blood()
 
-/mob/living/simple_animal/replicator/proc/try_construct(turf/T)
+/mob/living/simple_animal/hostile/replicator/proc/try_construct(turf/T)
 	if(!ckey)
 		return
 
@@ -239,7 +239,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 // Corridors can only connect to two other corridors if there's no portal connecting them.
 // No more than 2 neighbors, and no more than 1 neighbor of the neigbhor(excluding us)
-/mob/living/simple_animal/replicator/proc/can_place_corridor(turf/T)
+/mob/living/simple_animal/hostile/replicator/proc/can_place_corridor(turf/T)
 	var/neighbor_count = 0
 	for(var/card_dir in global.cardinal)
 		var/turf/pos_neighbor = get_step(T, card_dir)
@@ -269,14 +269,14 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	return TRUE
 
-/mob/living/simple_animal/replicator/update_icon()
+/mob/living/simple_animal/hostile/replicator/update_icon()
 	if(ckey || stat == DEAD)
 		return
 	overlays -= indicator
 	indicator.color = state2color[state]
 	overlays += indicator
 
-/mob/living/simple_animal/replicator/Login()
+/mob/living/simple_animal/hostile/replicator/Login()
 	..()
 
 	if(leader)
@@ -291,7 +291,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	global.idle_replicators -= src
 
-/mob/living/simple_animal/replicator/mind_initialize()
+/mob/living/simple_animal/hostile/replicator/mind_initialize()
 	. = ..()
 
 	var/datum/role/replicator/R = mind.GetRole(REPLICATOR)
@@ -320,14 +320,14 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
-/mob/living/simple_animal/replicator/Logout()
+/mob/living/simple_animal/hostile/replicator/Logout()
 	..()
 	if(stat != DEAD)
 		overlays += indicator
 	set_state(REPLICATOR_STATE_HARVESTING)
 
 /*
-/mob/living/simple_animal/replicator/Stat()
+/mob/living/simple_animal/hostile/replicator/Stat()
 	..()
 	if(statpanel("Status"))
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
@@ -359,7 +359,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 			stat("Array Upgrades:", RAI.get_upgrades_string())
 */
 
-/mob/living/simple_animal/replicator/death()
+/mob/living/simple_animal/hostile/replicator/death()
 	..()
 	global.alive_replicators -= src
 	global.idle_replicators -= src
@@ -380,8 +380,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 		flash_color(src, flash_color="#ff0000", flash_time=1 SECOND)
 		flash_color(C, flash_color="#ff0000", flash_time=1 SECOND)
 
-/mob/living/simple_animal/replicator/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /mob/living/simple_animal/replicator))
+/mob/living/simple_animal/hostile/replicator/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover, /mob/living/simple_animal/hostile/replicator))
 		return TRUE
 	if(istype(mover, /obj/item/projectile/disabler))
 		return TRUE
@@ -390,7 +390,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	return ..()
 
 // Return TRUE if succesful control transfer.
-/mob/living/simple_animal/replicator/proc/transfer_control(mob/living/simple_animal/replicator/target, alert=TRUE)
+/mob/living/simple_animal/hostile/replicator/proc/transfer_control(mob/living/simple_animal/hostile/replicator/target, alert=TRUE)
 	if(!mind)
 		return
 
@@ -437,12 +437,12 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	playsound_stealthy(target, 'sound/mecha/UI_SCI-FI_Tone_10.ogg')
 	return TRUE
 
-/mob/living/simple_animal/replicator/Topic(href, href_list)
+/mob/living/simple_animal/hostile/replicator/Topic(href, href_list)
 	if(href_list["replicator_jump"])
 		var/mob/M = usr
 		if(!isreplicator(M))
 			return
-		var/mob/living/simple_animal/replicator/R = M
+		var/mob/living/simple_animal/hostile/replicator/R = M
 		if(!R.mind)
 			return
 
@@ -450,7 +450,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 			return
 
 		for(var/r in global.alive_replicators)
-			var/mob/living/simple_animal/replicator/other = r
+			var/mob/living/simple_animal/hostile/replicator/other = r
 			if(other.ckey)
 				continue
 			if(get_dist(src, other) > 7)
@@ -465,7 +465,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 		var/mob/M = usr
 		if(!isreplicator(M))
 			return
-		var/mob/living/simple_animal/replicator/R = M
+		var/mob/living/simple_animal/hostile/replicator/R = M
 		if(R.incapacitated())
 			to_chat(R, "<span class='warning'>Negative: Unit too weak to issue a self-disintegrate order.</span>")
 			return
@@ -496,7 +496,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 		var/mob/M = usr
 		if(!isreplicator(M))
 			return
-		var/mob/living/simple_animal/replicator/R = M
+		var/mob/living/simple_animal/hostile/replicator/R = M
 		if(R.incapacitated())
 			to_chat(R, "<span class='warning'>Negative: This unit is too weak to object.</span>")
 			return
@@ -528,14 +528,14 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	return ..()
 
-/mob/living/simple_animal/replicator/proc/has_swarms_gift()
+/mob/living/simple_animal/hostile/replicator/proc/has_swarms_gift()
 	return has_status_effect(STATUS_EFFECT_SWARMS_GIFT)
 
-/mob/living/simple_animal/replicator/proc/playsound_stealthy(atom/source, sound, vol=100)
+/mob/living/simple_animal/hostile/replicator/proc/playsound_stealthy(atom/source, sound, vol=100)
 	var/mufflerange = has_swarms_gift() ? -5 : 0
 	return playsound(source, sound, VOL_EFFECTS_MASTER, vol=vol, extrarange=mufflerange)
 
-/mob/living/simple_animal/replicator/proc/try_spawn_node(turf/T)
+/mob/living/simple_animal/hostile/replicator/proc/try_spawn_node(turf/T)
 	if(!prob(5))
 		return FALSE
 
@@ -557,7 +557,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	emote("beep")
 	FR.drone_message(src, "Node unveiled at [A.name].", transfer=TRUE)
 
-/mob/living/simple_animal/replicator/gib()
+/mob/living/simple_animal/hostile/replicator/gib()
 	death(TRUE)
 	var/atom/movable/overlay/animation = null
 	notransform = TRUE
@@ -577,7 +577,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	QDEL_IN(src, 15)
 	QDEL_IN(animation, 15)
 
-/mob/living/simple_animal/replicator/attackby(obj/item/I, mob/user, params)
+/mob/living/simple_animal/hostile/replicator/attackby(obj/item/I, mob/user, params)
 	if(stat == DEAD && isscrewing(I))
 		visible_message("<span class='notice'>[user] starts disassembling [src] with [I].</span>")
 		if(!user.is_busy() && do_skilled(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/engineering = SKILL_LEVEL_TRAINED), -0.2))
@@ -591,24 +591,24 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	return ..()
 
-/mob/living/simple_animal/replicator/movement_delay()
+/mob/living/simple_animal/hostile/replicator/movement_delay()
 	. = ..()
 	if(invisibility > 0)
 		. -= 1
 	if(last_brute_hit + 1 SECOND < world.time)
 		. += 1
 
-/mob/living/simple_animal/replicator/adjustBruteLoss(damage)
+/mob/living/simple_animal/hostile/replicator/adjustBruteLoss(damage)
 	..()
 	if(damage > 0)
 		last_brute_hit = world.time
 
-/mob/living/simple_animal/replicator/get_projectile_impact_force(obj/item/projectile/P, def_zone)
+/mob/living/simple_animal/hostile/replicator/get_projectile_impact_force(obj/item/projectile/P, def_zone)
 	. = ..()
 	if(P.damage_type == BRUTE)
 		. += P.damage * 0.1
 
-/mob/living/simple_animal/replicator/emp_act(severity)
+/mob/living/simple_animal/hostile/replicator/emp_act(severity)
 	. = ..()
 
 	var/impact = 2.5 - severity
@@ -621,7 +621,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	Stun(impact * 0.5)
 
-/mob/living/simple_animal/replicator/proc/set_last_controller(ckey)
+/mob/living/simple_animal/hostile/replicator/proc/set_last_controller(ckey)
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	var/datum/replicator_array_info/old_RAI = FR.ckey2info[last_controller_ckey]
 	if(old_RAI)
@@ -640,10 +640,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	if(new_color)
 		color = new_color
 
-/mob/living/simple_animal/replicator/m_intent_delay()
+/mob/living/simple_animal/hostile/replicator/m_intent_delay()
 	return 1 + config.run_speed
 
-/mob/living/simple_animal/replicator/examine(mob/user)
+/mob/living/simple_animal/hostile/replicator/examine(mob/user)
 	. = ..()
 	if(!isreplicator(user))
 		return
@@ -670,10 +670,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 			to_chat(user, "<span class='notice'>They are currently wandering, idly.</span>")
 		if(REPLICATOR_STATE_GOING_TO_HELP)
 			to_chat(user, "<span class='notice'>They are currently moving in to assist another unit.</span>")
-		if(REPLICATOR_STATE_COMBAT)
+		if(REPLICATOR_STATE_COMBAT, REPLICATOR_STATE_AI_COMBAT)
 			to_chat(user, "<span class='warning'>BATTLESTATIONS! FULL COMBAT MODE ENGAGED! RED ALERT!</span>")
 
-/mob/living/simple_animal/replicator/can_intentionally_move(atom/NewLoc, movedir)
+/mob/living/simple_animal/hostile/replicator/can_intentionally_move(atom/NewLoc, movedir)
 	. = ..()
 	if(!.)
 		return TRUE
@@ -695,7 +695,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 	return can_place_corridor(T)
 
-/mob/living/simple_animal/replicator/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE, timeofdeath = world.time)
+/mob/living/simple_animal/hostile/replicator/ghostize(can_reenter_corpse = TRUE, bancheck = FALSE, timeofdeath = world.time)
 	if(!key)
 		return ..()
 
@@ -706,10 +706,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	return ..()
 
 // No lore reason as of now. It's just somewhat annoying otherwise.
-/mob/living/simple_animal/replicator/ventcrawl_enter_delay()
+/mob/living/simple_animal/hostile/replicator/ventcrawl_enter_delay()
 	return ..() * 2
 
-/mob/living/simple_animal/replicator/singularity_act(obj/singularity/S, current_size)
+/mob/living/simple_animal/hostile/replicator/singularity_act(obj/singularity/S, current_size)
 	qdel(S)
 
 	if(length(global.active_transponders) <= 0)

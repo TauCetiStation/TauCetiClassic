@@ -1,4 +1,4 @@
-/mob/living/simple_animal/replicator/proc/acquire_array_upgrade()
+/mob/living/simple_animal/hostile/replicator/proc/acquire_array_upgrade()
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	var/datum/replicator_array_info/RAI = FR.ckey2info[last_controller_ckey]
 	if(!RAI)
@@ -20,8 +20,8 @@
 
 	var/datum/replicator_array_upgrade/upgrade_type = choices[upgrade_name]
 
-	var/list/mob/living/simple_animal/replicator/array_units = list()
-	for(var/mob/living/simple_animal/replicator/R as anything in global.alive_replicators)
+	var/list/mob/living/simple_animal/hostile/replicator/array_units = list()
+	for(var/mob/living/simple_animal/hostile/replicator/R as anything in global.alive_replicators)
 		if(R.last_controller_ckey != last_controller_ckey)
 			continue
 		array_units += R
@@ -38,21 +38,21 @@
 
 	var/list/cached_choice_upgrades
 
-/datum/replicator_array_info/proc/add_unit(mob/living/simple_animal/replicator/R)
+/datum/replicator_array_info/proc/add_unit(mob/living/simple_animal/hostile/replicator/R)
 	for(var/datum/replicator_array_upgrade/RAU as anything in acquired_upgrades)
 		RAU.add_to_unit(R)
 
-/datum/replicator_array_info/proc/remove_unit(mob/living/simple_animal/replicator/R)
+/datum/replicator_array_info/proc/remove_unit(mob/living/simple_animal/hostile/replicator/R)
 	for(var/datum/replicator_array_upgrade/RAU as anything in acquired_upgrades)
 		RAU.remove_from_unit(R)
 
-/datum/replicator_array_info/proc/acquire_upgrade(upgrade_type, list/mob/living/simple_animal/replicator/array_units)
+/datum/replicator_array_info/proc/acquire_upgrade(upgrade_type, list/mob/living/simple_animal/hostile/replicator/array_units)
 	var/datum/replicator_array_upgrade/RAU = new upgrade_type
 	RAU.on_acquire(src)
 
 	acquired_upgrades += RAU
 
-	for(var/mob/living/simple_animal/replicator/R as anything in array_units)
+	for(var/mob/living/simple_animal/hostile/replicator/R as anything in array_units)
 		RAU.add_to_unit(R)
 
 /datum/replicator_array_info/proc/get_upgrades_string()
@@ -110,9 +110,9 @@
 	RAI.upgrade_type_pool |= allow_upgrade_types
 	RAI.upgrade_type_pool -= prohibit_upgrade_types
 
-/datum/replicator_array_upgrade/proc/add_to_unit(mob/living/simple_animal/replicator/R)
+/datum/replicator_array_upgrade/proc/add_to_unit(mob/living/simple_animal/hostile/replicator/R)
 	return
 
 // Must be a complete reversal of add_to_unit.
-/datum/replicator_array_upgrade/proc/remove_from_unit(mob/living/simple_animal/replicator/R)
+/datum/replicator_array_upgrade/proc/remove_from_unit(mob/living/simple_animal/hostile/replicator/R)
 	return

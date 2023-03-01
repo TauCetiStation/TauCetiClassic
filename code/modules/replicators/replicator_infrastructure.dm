@@ -1,5 +1,5 @@
 /obj/machinery/swarm_powered
-	var/mob/living/simple_animal/replicator/drone_supply
+	var/mob/living/simple_animal/hostile/replicator/drone_supply
 
 	var/prioritized = FALSE
 
@@ -61,7 +61,7 @@
 
 	return energy_available >= idle_power_usage
 
-/obj/machinery/swarm_powered/proc/start_drone_energy_supply(mob/living/simple_animal/replicator/R)
+/obj/machinery/swarm_powered/proc/start_drone_energy_supply(mob/living/simple_animal/hostile/replicator/R)
 	if(drone_supply)
 		return
 
@@ -181,13 +181,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', VOL_EFFECTS_MASTER, 60)
 	AM.AddComponent(/datum/component/bluespace_move, AM.invisibility, see_invisible_level, AM.alpha)
 
-/obj/machinery/swarm_powered/bluespace_transponder/start_drone_energy_supply(mob/living/simple_animal/replicator/R)
+/obj/machinery/swarm_powered/bluespace_transponder/start_drone_energy_supply(mob/living/simple_animal/hostile/replicator/R)
 	. = ..()
 	// to-do: sound
 	playsound(R, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	playsound(R, 'sound/mecha/Mech_Step.ogg', VOL_EFFECTS_MASTER, 80)
 
-/obj/machinery/swarm_powered/bluespace_transponder/stop_drone_energy_supply(mob/living/simple_animal/replicator/R)
+/obj/machinery/swarm_powered/bluespace_transponder/stop_drone_energy_supply(mob/living/simple_animal/hostile/replicator/R)
 	// to-do: sound
 	playsound(R, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	return ..()
@@ -217,7 +217,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 		neutralize()
 
 /obj/machinery/swarm_powered/bluespace_transponder/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /mob/living/simple_animal/replicator))
+	if(istype(mover, /mob/living/simple_animal/hostile/replicator))
 		return TRUE
 	if(istype(mover) && mover.throwing)
 		return TRUE
@@ -303,7 +303,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 	FR.adjust_energy(REPLICATOR_GENERATOR_POWER_GENERATION)
 
 /obj/machinery/power/replicator_generator/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /mob/living/simple_animal/replicator))
+	if(istype(mover, /mob/living/simple_animal/hostile/replicator))
 		return TRUE
 	if(istype(mover) && mover.throwing)
 		return TRUE
@@ -580,7 +580,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 		to_chat(AM, "<span class='notice'>One must stay behind. Replicate more, and send others.</span>")
 		return
 
-	var/mob/living/simple_animal/replicator/R = AM
+	var/mob/living/simple_animal/hostile/replicator/R = AM
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	FR.replicators_launched += 1
 

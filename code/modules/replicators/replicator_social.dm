@@ -1,4 +1,4 @@
-/mob/living/simple_animal/replicator
+/mob/living/simple_animal/hostile/replicator
 	var/list/next_objection_time = list()
 	var/objection_cooldown = 5 SECONDS
 
@@ -7,7 +7,7 @@
 
 	var/objection_end_time = 0
 
-/mob/living/simple_animal/replicator/proc/receive_objection(mob/living/simple_animal/replicator/R)
+/mob/living/simple_animal/hostile/replicator/proc/receive_objection(mob/living/simple_animal/hostile/replicator/R)
 	if(objection_end_time < world.time)
 		return
 
@@ -32,7 +32,7 @@
 
 	playsound_local(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
 
-/mob/living/simple_animal/replicator/proc/do_after_objections(delay, message, datum/callback/extra_checks=null)
+/mob/living/simple_animal/hostile/replicator/proc/do_after_objections(delay, message, datum/callback/extra_checks=null)
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 
 	var/indicator = say_test(message)

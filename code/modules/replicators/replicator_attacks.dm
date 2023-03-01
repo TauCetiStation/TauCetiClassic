@@ -15,7 +15,7 @@
 	pass_flags = PASSTABLE | PASSGLASS
 
 
-/mob/living/simple_animal/replicator/UnarmedAttack(atom/A)
+/mob/living/simple_animal/hostile/replicator/UnarmedAttack(atom/A)
 	if(isliving(A) && !isreplicator(A) && a_intent == INTENT_HARM)
 		var/mob/living/L = A
 		do_attack_animation(L)
@@ -44,8 +44,8 @@
 		INVOKE_ASYNC(src, .proc/disintegrate, A)
 		return
 
-	if(istype(A, /mob/living/simple_animal/replicator))
-		var/mob/living/simple_animal/replicator/R = A
+	if(istype(A, /mob/living/simple_animal/hostile/replicator))
+		var/mob/living/simple_animal/hostile/replicator/R = A
 		if(!R.ckey || R == src)
 			INVOKE_ASYNC(src, .proc/disintegrate, A)
 		// repair
@@ -55,7 +55,7 @@
 		INVOKE_ASYNC(src, .proc/disintegrate, A)
 		return
 
-/mob/living/simple_animal/replicator/RangedAttack(atom/A, params)
+/mob/living/simple_animal/hostile/replicator/RangedAttack(atom/A, params)
 	// Adjacent() checks make this work in an unintuitive way otherwise.
 	if(get_dist(src, A) <= 1 && a_intent == INTENT_GRAB)
 		INVOKE_ASYNC(src, .proc/disintegrate_turf, get_turf(A))
@@ -75,7 +75,7 @@
 
 		newtonian_move(get_dir(A, src))
 
-/mob/living/simple_animal/replicator/CtrlClickOn(atom/A)
+/mob/living/simple_animal/hostile/replicator/CtrlClickOn(atom/A)
 	if(!isreplicator(A))
 		return
 	transfer_control(A)
@@ -183,14 +183,14 @@
 		var/mob/M = usr
 		if(!isreplicator(M))
 			return
-		var/mob/living/simple_animal/replicator/R = M
+		var/mob/living/simple_animal/hostile/replicator/R = M
 		if(R.incapacitated())
 			return
 		if(!R.mind)
 			return
 
 		for(var/r in global.alive_replicators)
-			var/mob/living/simple_animal/replicator/other = r
+			var/mob/living/simple_animal/hostile/replicator/other = r
 			if(other.ckey)
 				continue
 			if(get_dist(src, other) > 7)

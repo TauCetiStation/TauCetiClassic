@@ -462,7 +462,7 @@
 		return
 	if(!isreplicator(mob_viewer))
 		return
-	var/mob/living/simple_animal/replicator/R = mob_viewer
+	var/mob/living/simple_animal/hostile/replicator/R = mob_viewer
 	R.acquire_array_upgrade()
 
 //OBJECT-BASED

@@ -3,7 +3,7 @@
 	desc = "Affect the replicator you were controlling before this one."
 	icon_state = "swarm_turn_back"
 
-	var/mob/living/simple_animal/replicator/remembered
+	var/mob/living/simple_animal/hostile/replicator/remembered
 
 /atom/movable/screen/alert/status_effect/array_turn_back/Destroy()
 	UnregisterSignal(remembered, list(COMSIG_MOB_DIED, COMSIG_LOGIN, COMSIG_PARENT_QDELETING))
@@ -19,17 +19,17 @@
 		return
 	if(!isreplicator(mob_viewer))
 		return
-	var/mob/living/simple_animal/replicator/R = mob_viewer
-	var/mob/living/simple_animal/replicator/target = remembered
+	var/mob/living/simple_animal/hostile/replicator/R = mob_viewer
+	var/mob/living/simple_animal/hostile/replicator/target = remembered
 	R.remove_status_effect(STATUS_EFFECT_ARRAY_TURN_BACK)
 	R.transfer_control(target, alert=TRUE)
 
-/atom/movable/screen/alert/status_effect/array_turn_back/proc/remember(mob/living/simple_animal/replicator/R)
+/atom/movable/screen/alert/status_effect/array_turn_back/proc/remember(mob/living/simple_animal/hostile/replicator/R)
 	remembered = R
 	RegisterSignal(R, list(COMSIG_MOB_DIED, COMSIG_LOGIN, COMSIG_PARENT_QDELETING), .proc/forget)
 
 /atom/movable/screen/alert/status_effect/array_turn_back/proc/forget(datum/source)
-	var/mob/living/simple_animal/replicator/R = mob_viewer
+	var/mob/living/simple_animal/hostile/replicator/R = mob_viewer
 	R.remove_status_effect(STATUS_EFFECT_ARRAY_TURN_BACK)
 
 
@@ -37,7 +37,7 @@
 	id = "array_transfer_back"
 	alert_type = /atom/movable/screen/alert/status_effect/array_turn_back
 
-/datum/status_effect/array_turn_back/on_creation(mob/living/new_owner, mob/living/simple_animal/replicator/R, duration)
+/datum/status_effect/array_turn_back/on_creation(mob/living/new_owner, mob/living/simple_animal/hostile/replicator/R, duration)
 	. = ..()
 	if(!.)
 		return

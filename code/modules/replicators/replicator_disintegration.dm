@@ -1,11 +1,11 @@
-/mob/living/simple_animal/replicator
+/mob/living/simple_animal/hostile/replicator
 	var/last_disintegration = 0
 
 
 /atom/proc/is_replicator_structure()
 	return FALSE
 
-/mob/living/simple_animal/replicator/is_replicator_structure()
+/mob/living/simple_animal/hostile/replicator/is_replicator_structure()
 	return TRUE
 
 /obj/item/mine/replicator/is_replicator_structure()
@@ -42,7 +42,7 @@
 	return TRUE
 
 
-/mob/living/simple_animal/replicator/proc/can_disintegrate(atom/A, alert=FALSE)
+/mob/living/simple_animal/hostile/replicator/proc/can_disintegrate(atom/A, alert=FALSE)
 	if(A.name == "")
 		return FALSE
 	if(!A.simulated)
@@ -71,7 +71,7 @@
 
 	return TRUE
 
-/mob/living/simple_animal/replicator/proc/can_auto_disintegrate(atom/A)
+/mob/living/simple_animal/hostile/replicator/proc/can_auto_disintegrate(atom/A)
 	if(A.is_disintegrating)
 		return FALSE
 
@@ -86,7 +86,7 @@
 
 	return TRUE
 
-/mob/living/simple_animal/replicator/proc/disintegrate_turf(turf/T)
+/mob/living/simple_animal/hostile/replicator/proc/disintegrate_turf(turf/T)
 	var/target_x = T.x
 	var/target_y = T.y
 	var/target_z = T.z
@@ -103,7 +103,7 @@
 		face_atom(disintegratable)
 		disintegrate(disintegratable)
 
-/mob/living/simple_animal/replicator/proc/get_disintegratable_from(turf/T)
+/mob/living/simple_animal/hostile/replicator/proc/get_disintegratable_from(turf/T)
 	for(var/a in T.contents)
 		var/atom/A = a
 		if(can_auto_disintegrate(A))
@@ -117,7 +117,7 @@
 	return T
 
 // Return TRUE if disintegrated something.
-/mob/living/simple_animal/replicator/proc/disintegrate(atom/A)
+/mob/living/simple_animal/hostile/replicator/proc/disintegrate(atom/A)
 	if(is_busy())
 		return FALSE
 	if(disintegrating)
@@ -210,7 +210,7 @@
 	Was supposed to be an animation for repairs.
 	But... Now they repair ALL the time since they're slowly dying.
 
-/mob/living/simple_animal/replicator/proc/integrate_animation()
+/mob/living/simple_animal/hostile/replicator/proc/integrate_animation()
 	if(playing_integration_animation)
 		return
 	playing_integration_animation = TRUE
@@ -226,5 +226,5 @@
 	VARSET_IN(src, playing_integration_animation, FALSE, 5)
 */
 
-/mob/living/simple_animal/replicator/proc/disintegrate_do_after_checks(mob/living/simple_animal/replicator/R, atom/target)
+/mob/living/simple_animal/hostile/replicator/proc/disintegrate_do_after_checks(mob/living/simple_animal/hostile/replicator/R, atom/target)
 	return R.can_disintegrate(target, alert=TRUE)

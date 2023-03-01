@@ -77,7 +77,7 @@
 /datum/faction/replicators/OnPostSetup()
 	var/list/pos_vents = vents4spawn.Copy()
 	for(var/datum/role/role in members)
-		var/mob/living/simple_animal/replicator/R
+		var/mob/living/simple_animal/hostile/replicator/R
 		var/V = pick_n_take(vents4spawn)
 
 		if(length(vents4spawn) > 0)
@@ -210,7 +210,7 @@ Message ends."}
 	if(RAI.swarms_goodwill > RAI_max.swarms_goodwill)
 		max_goodwill_ckey = adjusted_by
 
-/datum/faction/replicators/proc/give_gift(mob/living/simple_animal/replicator/R)
+/datum/faction/replicators/proc/give_gift(mob/living/simple_animal/hostile/replicator/R)
 	if(spawned_at_time + swarms_gift_duration < world.time)
 		return
 

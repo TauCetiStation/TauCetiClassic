@@ -8,9 +8,9 @@
 
 	icon_state = "upgrade_max_health"
 
-/datum/replicator_array_upgrade/defensive/max_health_points/add_to_unit(mob/living/simple_animal/replicator/R)
+/datum/replicator_array_upgrade/defensive/max_health_points/add_to_unit(mob/living/simple_animal/hostile/replicator/R)
 	R.maxHealth += 30
 
-/datum/replicator_array_upgrade/defensive/max_health_points/remove_from_unit(mob/living/simple_animal/replicator/R)
+/datum/replicator_array_upgrade/defensive/max_health_points/remove_from_unit(mob/living/simple_animal/hostile/replicator/R)
 	R.maxHealth -= 30
 	R.health = min(R.health, R.maxHealth)

@@ -8,8 +8,8 @@
 
 	icon_state = "upgrade_ranged_attack_damage"
 
-/datum/replicator_array_upgrade/offensive/ranged_attack_damage/add_to_unit(mob/living/simple_animal/replicator/R)
+/datum/replicator_array_upgrade/offensive/ranged_attack_damage/add_to_unit(mob/living/simple_animal/hostile/replicator/R)
 	R.disabler_damage_increase += 1.0
 
-/datum/replicator_array_upgrade/offensive/ranged_attack_damage/remove_from_unit(mob/living/simple_animal/replicator/R)
+/datum/replicator_array_upgrade/offensive/ranged_attack_damage/remove_from_unit(mob/living/simple_animal/hostile/replicator/R)
 	R.disabler_damage_increase -= 1.0
