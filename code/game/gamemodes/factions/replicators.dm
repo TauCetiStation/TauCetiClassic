@@ -222,7 +222,7 @@ Message ends."}
 	if(!RAI)
 		return
 
-	if(RAI.next_music_start < world.time)
+	if(RAI.next_music_start >= world.time)
 		return
 	RAI.next_music_start = world.time + REPLICATOR_MUSIC_LENGTH
 

@@ -14,7 +14,7 @@
 	var/datum/replicator_array_info/RAI = FR.ckey2info[mob_viewer.ckey]
 	if(!RAI)
 		return
-	if(RAI.next_music_start < world.time)
+	if(RAI.next_music_start >= world.time)
 		return
 	RAI.next_music_start = world.time + REPLICATOR_MUSIC_LENGTH
 
