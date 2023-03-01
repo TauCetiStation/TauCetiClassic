@@ -12,6 +12,7 @@
 	var/pay_amount = 0
 	var/display_price = 0
 	var/reset = TRUE
+	var/enter_account = FALSE
 
 	var/image/holoprice
 
@@ -31,8 +32,8 @@
 	add_overlay(holoprice)
 
 /obj/item/device/cardpay/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/card/id))
-		if(src.loc == user)
+	if(istype(I, /obj/item/weapon/card/id) && anchored)
+		if(enter_account)
 			var/obj/item/weapon/card/id/Card = I
 			var/datum/money_account/D = get_account(Card.associated_account_number)
 			if(D)
@@ -67,8 +68,7 @@
 /obj/item/device/cardpay/attack_self(mob/living/user)
 	. = ..()
 
-	if(user && !isturf(src.loc))
-		set_dir(turn(dir,-90))
+	set_dir(turn(dir,-90))
 
 /obj/item/device/cardpay/proc/scan_card(obj/item/weapon/card/id/Card)
 	visible_message("<span class='info'>[usr] прикладывает карту к терминалу.</span>")
@@ -77,6 +77,8 @@
 		return
 	if(linked_account.suspended)
 		visible_message("[bicon(src)]<span class='warning'>Подключённый аккаунт заблокирован.</span>")
+		return
+	if(pay_amount <= 0)
 		return
 
 	var/datum/money_account/D = get_account(Card.associated_account_number)
@@ -89,8 +91,7 @@
 				return
 			D = attempt_account_access(Card.associated_account_number, attempt_pin, 2)
 		icon_state = "card-pay-processing"
-		if(pay_amount > 0)
-			addtimer(CALLBACK(src, .proc/make_transaction, D, pay_amount), 3 SECONDS)
+		addtimer(CALLBACK(src, .proc/make_transaction, D, pay_amount), 3 SECONDS)
 
 /obj/item/device/cardpay/proc/make_transaction(datum/money_account/Acc, amount)
 	icon_state = "card-pay-idle"
@@ -114,37 +115,6 @@
 	if(anchored && check_direction(user))
 		tgui_interact(user)
 
-/obj/item/device/cardpay/CtrlClick(mob/user)
-	if(!Adjacent(user))
-		return ..()
-	if(user.incapacitated())
-		return
-	if(usr.get_active_hand() != src && !isAI(usr))
-		return ..()
-
-	var/acc_number = 0
-
-	var/list/memory_numbers = list(MEM_ACCOUNT_NUMBER)
-	if(user.mind.has_key_memory(MEM_DEPARTMENT_ACCOUNT_NUMBER))
-		memory_numbers += MEM_DEPARTMENT_ACCOUNT_NUMBER
-	memory_numbers += "Ввести"
-
-	var/choice = tgui_alert(user,"Номер аккаунта",, memory_numbers)
-	if(choice == "Ввести")
-		var/customnum = sanitize(input(user, "Введите номер аккаунта", "Номер", "111111") as text)
-		if(customnum)
-			acc_number = text2num(customnum)
-	else
-		acc_number = user.mind.get_key_memory(choice)
-
-	var/datum/money_account/D = get_account(acc_number)
-	if(D)
-		linked_account = D
-		playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>Аккаунт подключён.</span>")
-	else
-		to_chat(user, "<span class='notice'>Нет аккаунта под указанным номером.</span>")
-
 /obj/item/device/cardpay/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -155,6 +125,7 @@
 	var/list/data = list()
 	data["numbers"] = display_price
 	data["reset_numbers"] = reset
+	data["enter_account"] = enter_account
 	return data
 
 /obj/item/device/cardpay/tgui_act(action, params)
@@ -173,7 +144,9 @@
 				num = clamp(num, 0, 9)
 				display_price *= 10
 				display_price += num
-				if(display_price > 999)
+				if(enter_account && display_price > 999999)
+					display_price %= 1000000
+				else if(!enter_account && display_price > 999)
 					display_price %= 1000
 				playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
 				return TRUE
@@ -184,14 +157,25 @@
 			playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
 		if("approveprice")
-			if(display_price > 0)
-				pay_amount = display_price
+			if(display_price > 0 && linked_account)
+				if(enter_account)
+					if(display_price >= 111111 && display_price <= 999999)
+						var/datum/money_account/D = get_account(display_price)
+						if(D)
+							linked_account = D
+				else
+					pay_amount = display_price
+					update_holoprice(FALSE)
 				display_price = 0
 				playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
-				update_holoprice(FALSE)
 				return TRUE
 		if("togglereset")
 			reset = !reset
+			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
+			return TRUE
+		if("toggleenteraccount")
+			display_price = 0
+			enter_account = !enter_account
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
 

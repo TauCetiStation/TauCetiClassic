@@ -1,23 +1,20 @@
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
+import { Box, Button, Icon, Grid } from '../components';
 import { Window } from '../layouts';
-import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 export const CardPay = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     numbers,
     reset_numbers,
+    enter_account,
   } = data;
   const buttons = [];
   for (let row = 0; row < 3; row++) {
     for (let col = 1; col < 4; col++) {
       buttons.push(<Button
-        mr={0.5}
-        ml={0.5}
-        mb={0.5}
-        mt={0.5}
         pl={2.4}
+        m={0.375}
         lineHeight={1.5}
         height={4}
         width={4}
@@ -26,12 +23,11 @@ export const CardPay = (props, context) => {
         onClick={() => act("pressnumber", { number: row * 3 + col })}
       />);
     }
-    buttons.push(<br />);
   }
   return (
     <Window
-      width={174}
-      height={332}>
+      width={170}
+      height={330}>
       <Window.Content>
         <Box
           fluid
@@ -39,20 +35,18 @@ export const CardPay = (props, context) => {
           textColor="#66AADD"
           textAlign="center"
           fontSize={2}
+          m={0.375}
           mb={0.5}
         >
-          {numbers}
+          {enter_account ? "№"+(numbers) : (numbers)+"$"}
         </Box>
         {buttons}
         <Button
-          mr={0.5}
-          ml={0.5}
-          mb={0.5}
-          mt={0.5}
           height={4}
           width={4}
           lineHeight={1.55}
           pl={2}
+          m={0.375}
           fontSize={2.5}
           content={"X"}
           color={"red"}
@@ -61,12 +55,9 @@ export const CardPay = (props, context) => {
           onClick={() => act("clearnumbers")}
         />
         <Button
-          mr={0.5}
-          ml={0.5}
-          mb={0.5}
-          mt={0.5}
           lineHeight={1.55}
           pl={2.4}
+          m={0.375}
           height={4}
           width={4}
           fontSize={2.5}
@@ -74,12 +65,9 @@ export const CardPay = (props, context) => {
           onClick={() => act("pressnumber", { number: 0 })}
         />
         <Button
-          mr={0.5}
-          ml={0.5}
-          mb={0.5}
-          mt={0.5}
           lineHeight={1.55}
           pl={2}
+          m={0.375}
           height={4}
           width={4}
           fontSize={2.5}
@@ -91,15 +79,25 @@ export const CardPay = (props, context) => {
         />
         <Button
           selected={reset_numbers ? 1 : 0}
-          fluid
           textAlign="center"
-          mr={0.5}
-          ml={0.5}
-          mb={0.5}
-          mt={0.5}
-          fontSize={1.75}
-          content={"Сбрасывать?"}
+          pl={4}
+          m={0.3}
+          width={6.25}
+          fontSize={2}
+          color={"grey"}
+          content={<Icon name="retweet" />}
           onClick={() => act("togglereset")}
+        />
+        <Button
+          selected={enter_account ? 1 : 0}
+          textAlign="center"
+          pl={4}
+          m={0.3}
+          width={6.25}
+          fontSize={2}
+          color={"grey"}
+          content={<Icon name="id-badge" />}
+          onClick={() => act("toggleenteraccount")}
         />
       </Window.Content>
     </Window>
