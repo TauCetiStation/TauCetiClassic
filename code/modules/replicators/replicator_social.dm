@@ -24,7 +24,7 @@
 	next_objection_time[R.ckey] = world.time + objection_cooldown
 
 	to_chat(src, "<span class='bold warning'>[RAI.presence_name] objects to your actions!</span>")
-	to_chat(R, "<span class='notice'>You have objected to [R]'s actions.</span>")
+	// to_chat(R, "<span class='notice'>You have objected to [R]'s actions.</span>")
 
 	if(next_objection_sound > world.time)
 		return

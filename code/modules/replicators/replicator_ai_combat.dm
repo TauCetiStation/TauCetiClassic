@@ -8,7 +8,11 @@
 	for(var/mob/living/simple_animal/hostile/replicator/R as anything in global.alive_replicators)
 		if(get_dist(src, R) > 7)
 			continue
-		R.set_priority_target(pointed_atom)
+
+		if(a_intent == INTENT_HARM)
+			R.set_priority_target(pointed_atom)
+		else
+			R.clear_priority_target()
 
 	return ..(pointed_atom, /obj/effect/decal/point/crystal)
 

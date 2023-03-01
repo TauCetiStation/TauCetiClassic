@@ -48,6 +48,9 @@
 	set_m_intent(leader.m_intent)
 	set_state(REPLICATOR_STATE_COMBAT)
 
+	clear_priority_target()
+	LoseTarget()
+
 	return TRUE
 
 /mob/living/simple_animal/hostile/replicator/proc/forget_leader()
