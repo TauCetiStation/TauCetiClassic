@@ -22,6 +22,16 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	dat += "<HR>"
 	dat += "<B>Request item:</B><BR>"
 	dat += "<I>Each item costs a number of tele-crystals as indicated by the number following their name.</I><br><BR>"
+	var/mob_discount_group = "discount_group"
+	var/is_mob_traitor = FALSE
+
+
+	var/datum/role/traitor/R = user.mind.antag_roles["Traitor"]
+	if(R)
+		is_mob_traitor = TRUE
+		mob_discount_group = R.discount_group
+
+
 
 	if(uplink_items.len)
 		uplink_items.Cut()
@@ -40,6 +50,15 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 		for(var/datum/uplink_item/item in buyable_items[category])
 			i++
 			var/cost_text = ""
+
+
+			if(is_mob_traitor==TRUE && item.group != "standart")
+				if(item.group == mob_discount_group)
+					item.cost *= 0.5
+				else
+					item.cost *= 2		
+
+
 			if(item.cost > 0)
 				cost_text = "([item.cost])"
 			if(item.cost <= uses)
