@@ -15,7 +15,6 @@
 	if(!RAI)
 		return
 	if(RAI.next_music_start < world.time)
-		to_chat(world, "[(world.time - RAI.next_music_start) * 0.1] seconds until this works.")
 		return
 	RAI.next_music_start = world.time + REPLICATOR_MUSIC_LENGTH
 
