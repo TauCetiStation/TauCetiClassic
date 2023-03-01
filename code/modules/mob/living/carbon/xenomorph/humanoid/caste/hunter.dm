@@ -25,7 +25,7 @@
 /mob/living/carbon/xenomorph/humanoid/hunter/handle_environment()
 	if(invisible)	//if the hunter is invisible
 		adjustToxLoss(-heal_rate)	//plasma is spent on invisibility
-	if(storedPlasma < heal_rate || stat == UNCONSCIOUS)
+	if(storedPlasma < heal_rate || IsParalyzed())
 		set_m_intent(MOVE_INTENT_RUN)	//get out of invisibility if plasma runs out
 	..()
 
@@ -150,7 +150,7 @@
 	return FALSE
 
 /mob/living/carbon/xenomorph/humanoid/hunter/proc/toggle_invisible()
-	if(invisible || has_status_effect(/datum/status_effect/incapacitating/stun) || stat == UNCONSCIOUS)
+	if(invisible || IsStun() || IsParalyzed())
 		invisible = FALSE
 		animate(src, alpha = initial(alpha), time = 5, loop = 1, LINEAR_EASING)
 	else if (m_intent == MOVE_INTENT_WALK)
