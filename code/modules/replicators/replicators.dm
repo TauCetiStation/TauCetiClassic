@@ -286,7 +286,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	help_steps = 7
 	target_coordinates = 0
 
-	to_chat(world, "SET LAST CONTROLLER")
 	set_last_controller(ckey)
 	overlays -= indicator
 
@@ -302,22 +301,22 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	R = add_faction_member(FR, src, TRUE)
 
 	var/datum/replicator_array_info/RAI = FR.ckey2info[ckey]
-	if(!RAI)
-		RAI = new /datum/replicator_array_info(FR)
-		FR.ckey2info[ckey] = RAI
+	if(RAI)
+		mind.name = RAI.presence_name
+		return
+	RAI = new /datum/replicator_array_info(FR)
+	FR.ckey2info[ckey] = RAI
 
 	mind.name = RAI.presence_name
 
 	var/datum/replicator_array_info/RAI_parent = FR.ckey2info[last_controller_ckey]
-	if(RAI_parent)
+	if(RAI_parent && last_controller_ckey != ckey)
 		for(var/datum/replicator_array_upgrade/RAU as anything in RAI_parent.acquired_upgrades)
 			RAI.acquire_upgrade(RAU.type, list(src))
 
-	to_chat(world, "COPY PARENT")
-
 	if(RAI.next_music_start >= world.time)
 		return
-	RAI.next_music_start = world.time + 2 MINUTES + 30 SECONDS
+	RAI.next_music_start = world.time + REPLICATOR_MUSIC_LENGTH
 
 	playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
@@ -327,6 +326,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 		overlays += indicator
 	set_state(REPLICATOR_STATE_HARVESTING)
 
+/*
 /mob/living/simple_animal/replicator/Stat()
 	..()
 	if(statpanel("Status"))
@@ -357,6 +357,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 
 		if(length(RAI.acquired_upgrades) > 0)
 			stat("Array Upgrades:", RAI.get_upgrades_string())
+*/
 
 /mob/living/simple_animal/replicator/death()
 	..()
@@ -689,7 +690,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/replicator, alive_replicators)
 	var/turf/T = get_turf(NewLoc)
 	if((locate(/obj/structure/bluespace_corridor) in loc) && (locate(/obj/structure/bluespace_corridor) in NewLoc))
 		return TRUE
-	if((locate(/obj/structure/replicator_forcefield) in loc))
+	if((locate(/obj/structure/replicator_forcefield) in NewLoc))
 		return TRUE
 
 	return can_place_corridor(T)

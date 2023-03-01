@@ -172,6 +172,7 @@
 #define TRAIT_CLUMSY              "clumsy"
 #define TRAIT_SHOCKIMMUNE         "shockimmune"
 #define TRAIT_NATURAL_AGILITY     "natural_agility"
+#define TRAIT_BLUESPACE_MOVING    "bluespace_moving"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -197,6 +198,7 @@
 
 // self explanatory
 #define BEAUTY_ELEMENT_TRAIT "beauty_element"
+#define BLUESPACE_MOVE_ELEMENT_TRAIT "bluespace_move_element_trait"
 #define MOOD_COMPONENT_TRAIT "mood_component"
 #define SPAWN_AREA_TRAIT "spawn_area_trait"
 // medical stuff I guess

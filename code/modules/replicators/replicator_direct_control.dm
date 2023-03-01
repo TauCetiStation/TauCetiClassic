@@ -79,6 +79,10 @@
 		forget_leader()
 		return
 
+	// Client move failure.
+	if(leader.loc != NewLoc)
+		return
+
 	excitement = 30
 
 	repeat_leader_move(A, NewLoc, move_dir)
@@ -124,6 +128,4 @@
 
 /mob/living/simple_animal/replicator/proc/on_leader_m_intent_change(datum/source, new_m_intent)
 	SIGNAL_HANDLER
-	to_chat(world, "LEADER CHANGED INTENT TO [new_m_intent] MY INTENT WAS [m_intent]")
 	set_m_intent(new_m_intent)
-	to_chat(world, "MY INTENT NOW IS [m_intent]")

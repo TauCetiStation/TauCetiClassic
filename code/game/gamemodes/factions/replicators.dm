@@ -224,7 +224,7 @@ Message ends."}
 
 	if(RAI.next_music_start < world.time)
 		return
-	RAI.next_music_start = world.time + 2 MINUTES + 30 SECONDS
+	RAI.next_music_start = world.time + REPLICATOR_MUSIC_LENGTH
 
 	R.playsound_local(null, 'sound/music/storm_resurrection.ogg', VOL_MUSIC, null, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 
@@ -299,6 +299,7 @@ Message ends."}
 		score_results += "[bicon(logo, css = "style='position: relative;top:10px;'")]<b>[member_ckey]</b> was <b><span style='color:[RAI.array_color]'>[RAI.presence_name]</span></b>"
 		score_results += "<br><b>Materials Contribution:</b> [RAI.swarms_goodwill]"
 		score_results += "<br><b>Replicators Launched:</b> [RAI.replicators_launched]"
+		score_results += "<br><b>Upgrades Acquired:</b> [RAI.get_upgrades_string()]"
 		score_results += "<br>"
 	score_results += "</ul>"
 	return score_results

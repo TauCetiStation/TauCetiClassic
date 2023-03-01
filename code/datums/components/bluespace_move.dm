@@ -1,20 +1,17 @@
 /**
-	Bluespace move element.
+	Bluespace move component.
 	Allows invisible stealth movement while moving on tiles with bluespace_corridor on them.
 */
-/datum/element/bluespace_move
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
-
+/datum/component/bluespace_move
 	var/prev_invisibility = 0
 	var/prev_see_invisible = SEE_INVISIBLE_LEVEL_ONE
 	var/prev_alpha = 255
 
-/datum/element/bluespace_move/Attach(datum/target, prev_invisibility, prev_see_invisible, prev_alpha)
-	. = ..()
-	if(!ismovable(target))
-		return ELEMENT_INCOMPATIBLE
+/datum/component/bluespace_move/Initialize(prev_invisibility, prev_see_invisible, prev_alpha)
+	if(!ismovable(parent))
+		return COMPONENT_INCOMPATIBLE
 
-	var/atom/movable/AM = target
+	var/atom/movable/AM = parent
 	src.prev_invisibility = prev_invisibility
 	src.prev_see_invisible = prev_see_invisible
 	src.prev_alpha = prev_alpha
@@ -26,12 +23,14 @@
 
 	AM.alpha = 204
 
-	RegisterSignal(target, COMSIG_CLIENTMOB_MOVE, .proc/on_move_intent)
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_movement)
+	ADD_TRAIT(AM, TRAIT_BLUESPACE_MOVING, BLUESPACE_MOVE_ELEMENT_TRAIT)
 
-/datum/element/bluespace_move/Detach(datum/target)
+	RegisterSignal(AM, COMSIG_CLIENTMOB_MOVE, .proc/on_move_intent)
+	RegisterSignal(AM, COMSIG_MOVABLE_MOVED, .proc/on_movement)
+
+/datum/component/bluespace_move/Destroy()
 	// What happens if while in the bleuspace corridor subject turns invis? What about modvals, guys?
-	var/atom/movable/AM = target
+	var/atom/movable/AM = parent
 	AM.invisibility = prev_invisibility
 	if(ismob(AM))
 		var/mob/M = AM
@@ -39,10 +38,12 @@
 
 	AM.alpha = prev_alpha
 
-	UnregisterSignal(target, list(COMSIG_CLIENTMOB_MOVE, COMSIG_MOVABLE_MOVED))
+	REMOVE_TRAIT(AM, TRAIT_BLUESPACE_MOVING, BLUESPACE_MOVE_ELEMENT_TRAIT)
+
+	UnregisterSignal(AM, list(COMSIG_CLIENTMOB_MOVE, COMSIG_MOVABLE_MOVED))
 	return ..()
 
-/datum/element/bluespace_move/proc/on_move_intent(datum/source, atom/Newloc, dir)
+/datum/component/bluespace_move/proc/on_move_intent(datum/source, atom/Newloc, dir)
 	SIGNAL_HANDLER
 
 	var/mob/M = source
@@ -73,7 +74,7 @@
 
 	return NONE
 
-/datum/element/bluespace_move/proc/on_movement(datum/source, atom/OldLoc, dir)
+/datum/component/bluespace_move/proc/on_movement(datum/source, atom/OldLoc, dir)
 	SIGNAL_HANDLER
 
 	var/atom/movable/AM = source
@@ -89,7 +90,7 @@
 			playsound(AM, 'sound/magic/Blind.ogg', VOL_EFFECTS_MASTER, 80)
 		else
 			playsound(AM, 'sound/magic/blink.ogg', VOL_EFFECTS_MASTER, 60)
-		Detach(AM)
+		qdel(src)
 		return NONE
 
 	return NONE

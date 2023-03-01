@@ -1,16 +1,16 @@
-/atom/movable/screen/alert/array_turn_back
+/atom/movable/screen/alert/status_effect/array_turn_back
 	name = "Turn Back"
 	desc = "Affect the replicator you were controlling before this one."
-	icon_state = "swarm_transfer_back"
+	icon_state = "swarm_turn_back"
 
 	var/mob/living/simple_animal/replicator/remembered
 
-/atom/movable/screen/alert/array_turn_back/Destroy()
+/atom/movable/screen/alert/status_effect/array_turn_back/Destroy()
 	UnregisterSignal(remembered, list(COMSIG_MOB_DIED, COMSIG_LOGIN, COMSIG_PARENT_QDELETING))
 	remembered = null
 	return ..()
 
-/atom/movable/screen/alert/array_turn_back/Click()
+/atom/movable/screen/alert/status_effect/array_turn_back/Click()
 	if(!mob_viewer)
 		return
 	if(mob_viewer.incapacitated())
@@ -24,25 +24,25 @@
 	R.remove_status_effect(STATUS_EFFECT_ARRAY_TURN_BACK)
 	R.transfer_control(target, alert=TRUE)
 
-/atom/movable/screen/alert/array_turn_back/proc/remember(mob/living/simple_animal/replicator/R)
+/atom/movable/screen/alert/status_effect/array_turn_back/proc/remember(mob/living/simple_animal/replicator/R)
 	remembered = R
 	RegisterSignal(R, list(COMSIG_MOB_DIED, COMSIG_LOGIN, COMSIG_PARENT_QDELETING), .proc/forget)
 
-/atom/movable/screen/alert/array_turn_back/proc/forget(datum/source)
+/atom/movable/screen/alert/status_effect/array_turn_back/proc/forget(datum/source)
 	var/mob/living/simple_animal/replicator/R = mob_viewer
 	R.remove_status_effect(STATUS_EFFECT_ARRAY_TURN_BACK)
 
 
 /datum/status_effect/array_turn_back
 	id = "array_transfer_back"
-	alert_type = /atom/movable/screen/alert/array_turn_back
+	alert_type = /atom/movable/screen/alert/status_effect/array_turn_back
 
 /datum/status_effect/array_turn_back/on_creation(mob/living/new_owner, mob/living/simple_animal/replicator/R, duration)
 	. = ..()
 	if(!.)
 		return
 	src.duration = world.time + duration
-	var/atom/movable/screen/alert/array_turn_back/ATR = linked_alert
+	var/atom/movable/screen/alert/status_effect/array_turn_back/ATR = linked_alert
 	ATR.remember(R)
 
 /datum/status_effect/array_turn_back/on_apply()

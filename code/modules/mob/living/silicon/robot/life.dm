@@ -144,6 +144,9 @@
 	if(!..())
 		return FALSE
 
+	if(HAS_TRAIT(src, TRAIT_BLUESPACE_MOVING))
+		return TRUE
+
 	sight = initial(sight)
 	lighting_alpha = initial(lighting_alpha)
 	see_in_dark = 8

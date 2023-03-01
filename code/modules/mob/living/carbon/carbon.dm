@@ -1135,6 +1135,9 @@
 	if(!..())
 		return FALSE
 
+	if(HAS_TRAIT(src, TRAIT_BLUESPACE_MOVING))
+		return TRUE
+
 	if(blinded)
 		see_in_dark = 8
 		see_invisible = SEE_INVISIBLE_MINIMUM

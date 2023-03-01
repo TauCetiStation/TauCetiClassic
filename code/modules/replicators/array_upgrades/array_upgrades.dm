@@ -56,9 +56,16 @@
 		RAU.add_to_unit(R)
 
 /datum/replicator_array_info/proc/get_upgrades_string()
-	. = ""
+	var/list/upgrade_strings = list()
 	for(var/datum/replicator_array_upgrade/RAU as anything in acquired_upgrades)
-		. += "[RAU.name]. [RAU.desc]\n"
+		var/keystring = "[RAU.name]. [RAU.desc]\n"
+		if(!upgrade_strings[keystring])
+			upgrade_strings[keystring] = 0
+		upgrade_strings[keystring] += 1
+
+	. = list()
+	for(var/keystring in upgrade_strings)
+		. += "[keystring] ([upgrade_strings[keystring]])\n"
 
 /datum/replicator_array_info/proc/get_upgrade_choices()
 	if(cached_choice_upgrades)

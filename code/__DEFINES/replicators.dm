@@ -58,3 +58,5 @@
 	/datum/replicator_array_upgrade/defensive/max_health_points,\
 	/datum/replicator_array_upgrade/support/efficency,\
 )
+
+#define REPLICATOR_MUSIC_LENGTH ((2 MINUTES) + (26 SECONDS))

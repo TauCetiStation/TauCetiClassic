@@ -179,7 +179,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 		see_invisible_level = M.see_invisible
 
 	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', VOL_EFFECTS_MASTER, 60)
-	AM.AddElement(/datum/element/bluespace_move, AM.invisibility, see_invisible_level, AM.alpha)
+	AM.AddComponent(/datum/component/bluespace_move, AM.invisibility, see_invisible_level, AM.alpha)
 
 /obj/machinery/swarm_powered/bluespace_transponder/start_drone_energy_supply(mob/living/simple_animal/replicator/R)
 	. = ..()
@@ -463,7 +463,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		neighbor_count += value
 
 /obj/structure/bluespace_corridor/attackby(obj/item/I, mob/user)
-	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_FORMIDABLE : SKILL_TASK_TRIVIAL
+	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_CHALLENGING : SKILL_TASK_TRIVIAL
 	if(ispulsing(I) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/research = SKILL_LEVEL_TRAINED), -0.2))
 		// to-do: sound
 		visible_message("<span class='notice'>[src] beeps loudly, before dissappearing.</span>")
@@ -497,8 +497,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 
 	prioritized = TRUE
 
-	var/max_required_power = 8000000
-	var/max_required_materials = 1000
+	var/max_required_power = 6000000
+	var/max_required_materials = 800
 
 	var/required_power = 0
 	var/required_materials = 0
