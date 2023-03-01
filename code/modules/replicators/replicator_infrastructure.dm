@@ -216,6 +216,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 		FR.adjust_materials(REPLICATOR_COST_TRANSPONDER)
 		neutralize()
 
+	if(!(stat & NOPOWER))
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		if(FR.collect_taxes(REPLICATOR_TRANSPONDER_CONSUMPTION_RATE))
+			FR.materials_consumed += REPLICATOR_TRANSPONDER_CONSUMPTION_RATE
+
 /obj/machinery/swarm_powered/bluespace_transponder/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/hostile/replicator))
 		return TRUE
@@ -566,11 +571,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	if(required_power >= 0)
 		required_power = max(0, required_power - idle_power_usage)
 
-	if(FR.materials < REPLICATOR_COST_REPLICATE + 5 || required_materials <= 0)
+	if(required_materials <= 0)
 		return
 
-	FR.adjust_materials(-5)
-	required_materials = max(0, required_materials - 5)
+	if(FR.collect_taxes(5))
+		required_materials = max(0, required_materials - 5)
 
 /obj/machinery/swarm_powered/bluespace_catapult/Crossed(atom/movable/AM)
 	if(!isreplicator(AM))

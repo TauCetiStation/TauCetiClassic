@@ -11,6 +11,8 @@
 	logo_state = "replicators"
 
 	var/materials = 0
+	// Each disintegration puts a part of the disintegrated material into the tax pool. Portals and catapults try to empty out the tax pool first.
+	var/materials_tax_pool = 0
 	var/next_materials_update = 0
 	var/this_second_materials_change = 0
 	var/last_second_materials_change  = 0
@@ -129,10 +131,6 @@
 	if(bandwidth >= max_bandwidth)
 		return
 
-	if(materials > REPLICATOR_COST_REPLICATE + length(global.active_transponders) * REPLICATOR_TRANSPONDER_CONSUMPTION_RATE)
-		materials -= length(global.active_transponders) * REPLICATOR_TRANSPONDER_CONSUMPTION_RATE
-		materials_consumed += length(global.active_transponders) * REPLICATOR_TRANSPONDER_CONSUMPTION_RATE
-
 	if(materials_consumed > consumed_materials_until_upgrade)
 		materials_consumed = 0
 		consumed_materials_until_upgrade += REPLICATOR_BANDWIDTH_COST_INCREASE
@@ -192,6 +190,10 @@ Message ends."}
 /datum/faction/replicators/proc/adjust_materials(material_amount, adjusted_by=null)
 	materials += material_amount
 	this_second_materials_change += material_amount
+
+	if(material_amount > 0)
+		materials_tax_pool += material_amount * REPLICATOR_TAX_RATE
+
 	if(adjusted_by == null)
 		return
 
@@ -305,3 +307,22 @@ Message ends."}
 		score_results += "<br>"
 	score_results += "</ul>"
 	return score_results
+
+/datum/faction/replicators/proc/collect_taxes(amount)
+	var/tax_to_consume = 0
+	var/material_to_consume = 0
+
+	if(materials_tax_pool > 0)
+		tax_to_consume = min(materials_tax_pool, amount)
+		amount -= tax_to_consume
+
+	if(materials > REPLICATOR_COST_REPLICATE + amount && amount > 0)
+		material_to_consume = min(materials, amount)
+		amount -= material_to_consume
+
+	if(amount > 0)
+		return FALSE
+
+	materials_tax_pool -= tax_to_consume
+	adjust_materials(-material_to_consume)
+	return TRUE

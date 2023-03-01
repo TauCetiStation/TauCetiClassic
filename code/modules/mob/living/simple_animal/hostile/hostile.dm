@@ -47,6 +47,25 @@
 	else if(health <= maxHealth * 0.9)
 		to_chat(user, "<span class='notice'>Appears to be slightly wounded.</span>")
 
+/mob/living/simple_animal/hostile/proc/handle_combat_ai()
+	switch(stance)
+		if(HOSTILE_STANCE_IDLE)
+			if(environment_smash)
+				EscapeConfinement()
+			var/new_target = FindTarget()
+			GiveTarget(new_target)
+
+		if(HOSTILE_STANCE_ATTACK)
+			MoveToTarget()
+			DestroySurroundings()
+
+		if(HOSTILE_STANCE_ATTACKING)
+			AttackTarget()
+			DestroySurroundings()
+
+	if(ranged)
+		ranged_cooldown--
+
 /mob/living/simple_animal/hostile/Life()
 	. = ..()
 	if(!.)
@@ -58,23 +77,7 @@
 		return
 
 	if(stat == CONSCIOUS)
-		switch(stance)
-			if(HOSTILE_STANCE_IDLE)
-				if(environment_smash)
-					EscapeConfinement()
-				var/new_target = FindTarget()
-				GiveTarget(new_target)
-
-			if(HOSTILE_STANCE_ATTACK)
-				MoveToTarget()
-				DestroySurroundings()
-
-			if(HOSTILE_STANCE_ATTACKING)
-				AttackTarget()
-				DestroySurroundings()
-
-		if(ranged)
-			ranged_cooldown--
+		handle_combat_ai()
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////
 /mob/living/simple_animal/hostile/proc/ListTargets()//Step 1, find out what we can see

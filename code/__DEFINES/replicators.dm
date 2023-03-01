@@ -61,3 +61,6 @@
 )
 
 #define REPLICATOR_MUSIC_LENGTH ((2 MINUTES) + (26 SECONDS))
+
+// How much goes into the Materials Tax Pool per disintegration.
+#define REPLICATOR_TAX_RATE 0.1

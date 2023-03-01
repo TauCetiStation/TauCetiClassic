@@ -329,6 +329,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	if(stat != DEAD)
 		overlays += indicator
 	set_state(REPLICATOR_STATE_HARVESTING)
+	remove_status_effect(STATUS_EFFECT_ARRAY_TURN_BACK)
 
 /mob/living/simple_animal/hostile/replicator/Stat()
 	..()

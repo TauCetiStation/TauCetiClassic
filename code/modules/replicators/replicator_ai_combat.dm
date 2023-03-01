@@ -38,6 +38,11 @@
 
 	var/priority_target_ref
 
+/mob/living/simple_animal/hostile/replicator/handle_combat_ai()
+	if(state == REPLICATOR_STATE_COMBAT)
+		return
+	return ..()
+
 /mob/living/simple_animal/hostile/replicator/AttackingTarget()
 	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, target)
 
