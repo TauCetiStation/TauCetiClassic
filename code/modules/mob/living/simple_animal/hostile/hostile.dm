@@ -55,7 +55,7 @@
 	if(client)
 		if(target)
 			LoseTarget()
-		return 0
+		return
 
 	if(stat == CONSCIOUS)
 		switch(stance)

@@ -106,3 +106,6 @@
 
 	walk_to(src, BT, 0)
 */
+
+/mob/living/simple_animal/hostile/replicator/LoseAggro()
+	vision_range = idle_vision_range
