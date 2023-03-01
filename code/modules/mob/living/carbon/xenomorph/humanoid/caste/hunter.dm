@@ -25,7 +25,7 @@
 /mob/living/carbon/xenomorph/humanoid/hunter/handle_environment()
 	if(invisible)	//if the hunter is invisible
 		adjustToxLoss(-heal_rate)	//plasma is spent on invisibility
-	if(storedPlasma < heal_rate)
+	if(storedPlasma < heal_rate || stat == UNCONSCIOUS)
 		set_m_intent(MOVE_INTENT_RUN)	//get out of invisibility if plasma runs out
 	..()
 
@@ -94,7 +94,7 @@
 		if(shield && check_shield_dir(hit_atom))
 			L.visible_message("<span class='danger'>[src] smashed into [L]'s [shield]!</span>", "<span class='userdanger'>[src] pounces on your [shield]!</span>")
 			Stun(2, TRUE)
-			Weaken(2)
+			Weaken(2, TRUE)
 		else
 			L.visible_message("<span class='danger'>[src] pounces on [L]!</span>", "<span class='userdanger'>[src] pounces on you!</span>")
 			if(issilicon(L))
@@ -110,7 +110,7 @@
 	else if(hit_atom.density)
 		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='alertalien'>You smashes into [hit_atom]!</span>")
 		Stun(2, TRUE)
-		Weaken(2)
+		Weaken(2, TRUE)
 
 	pounce_cooldown = TRUE
 	VARSET_IN(src, pounce_cooldown, FALSE, pounce_cooldown_time)
@@ -150,10 +150,10 @@
 	return FALSE
 
 /mob/living/carbon/xenomorph/humanoid/hunter/proc/toggle_invisible()
-	if(invisible)
+	if(invisible || has_status_effect(/datum/status_effect/incapacitating/stun) || has_status_effect(STATUS_EFFECT_SLEEPING) || stat == UNCONSCIOUS)
 		invisible = FALSE
 		animate(src, alpha = initial(alpha), time = 5, loop = 1, LINEAR_EASING)
-	else
+	else if (m_intent == MOVE_INTENT_WALK)
 		invisible = TRUE
 		animate(src, alpha = 20, time = 5, loop = 1, LINEAR_EASING)
 
