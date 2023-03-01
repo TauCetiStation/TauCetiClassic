@@ -43,11 +43,7 @@
 						set_dir(SOUTH)
 
 					if(isturf(movement_target.loc))
-						if(istype(movement_target, /obj/item/weapon/reagent_containers/food/snacks))
-							var/obj/item/weapon/reagent_containers/food/snacks/snack = movement_target
-							snack.bite_food(src)
-						else
-							movement_target.attack_paw(src)
+						movement_target.bite_food(src)
 					else if(ishuman(movement_target.loc) )
 						if(prob(20))
 							me_emote("stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
