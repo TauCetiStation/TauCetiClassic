@@ -163,18 +163,14 @@
 				if(user.client)
 					user.client.screen -= I
 			P.w_class = I.w_class
-			if(P.w_class <= SIZE_MINUSCULE)
-				P.icon_state = "deliverycrate1"
-			else if (P.w_class <= SIZE_TINY)
-				P.icon_state = "deliverycrate2"
-			else if (P.w_class <= SIZE_SMALL)
-				P.icon_state = "deliverycrate3"
-			else
-				P.icon_state = "deliverycrate4"
-			I.loc = P
 			var/i = round(I.w_class)
-			if(i in list(1,2,3,4,5))
-				P.icon_state = "deliverycrate[i]"
+			if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
+				if(istype(I, /obj/item/pizzabox))
+					var/obj/item/pizzabox/B = I
+					P.icon_state = "deliverypizza[length(B.boxes)]"
+				else
+					P.icon_state = "deliverycrate[i]"
+			I.loc = P
 			P.add_fingerprint(usr)
 			I.add_fingerprint(usr)
 			add_fingerprint(usr)
