@@ -3,6 +3,7 @@
 	id = TRAITOR
 	required_pref = ROLE_TRAITOR
 	logo_state = "synd-logo"
+	var/discount_group = "group"
 
 	restricted_jobs = list("Cyborg", "Security Cadet", "Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor", "Blueshield Officer")
 	antag_hud_type = ANTAG_HUD_TRAITOR
@@ -18,6 +19,21 @@
 /datum/role/traitor/New()
 	..()
 	AddComponent(/datum/component/gamemode/syndicate, telecrystals, "traitor")
+
+/datum/role/traitor/proc/get_discount_group()
+	switch(rand(1,60))
+		if (1 to 10)
+			return "dangerous"
+		if (11 to 20)
+			return "ammo"
+		if (21 to 30)
+			return "stealthy_weapons"
+		if (31 to 40)
+			return "stealthy_tools"
+		if (41 to 50)
+			return "device_tools"
+		if(51 to 60)
+			return "implants"
 
 /datum/role/traitor/proc/add_one_objective(datum/mind/traitor)
 	switch(rand(1,120))
@@ -94,6 +110,7 @@
 		else
 			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>You are a Traitor.</span>")
 
+	group = get_discount_group()
 	return TRUE
 
 /datum/role/traitor/OnPostSetup(laterole)
