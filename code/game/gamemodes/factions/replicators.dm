@@ -298,6 +298,8 @@ Message ends."}
 		var/datum/replicator_array_info/RAI = ckey2info[member_ckey]
 		score_results += "[bicon(logo, css = "style='position: relative;top:10px;'")]<b>[member_ckey]</b> was <b><span style='color:[RAI.array_color]'>[RAI.presence_name]</span></b>"
 		score_results += "<br><b>Materials Contribution:</b> [RAI.swarms_goodwill]"
+		score_results += "<br><b>Replicated Times:</b> [RAI.replicated_times]"
+		score_results += "<br><b>Corridors Constructed:</b> [RAI.corridors_constructed]"
 		score_results += "<br><b>Replicators Launched:</b> [RAI.replicators_launched]"
 		score_results += "<br><b>Upgrades Acquired:</b> [RAI.get_upgrades_string()]"
 		score_results += "<br>"

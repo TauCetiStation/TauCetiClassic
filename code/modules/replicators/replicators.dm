@@ -234,6 +234,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 		// maybe it would be better to add some mechanical woosh woosh sound like when constructing a drone.
 		playsound_stealthy(T, 'sound/misc/mining_crate_success.ogg', vol=40)
 
+	var/datum/replicator_array_info/RAI = FR.ckey2info[last_controller_ckey]
+	if(RAI)
+		RAI.corridors_constructed += 1
+
 	new auto_construct_type(T)
 	FR.adjust_materials(-auto_construct_cost, adjusted_by=last_controller_ckey)
 
@@ -326,38 +330,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 		overlays += indicator
 	set_state(REPLICATOR_STATE_HARVESTING)
 
-/*
 /mob/living/simple_animal/hostile/replicator/Stat()
 	..()
 	if(statpanel("Status"))
-		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-		var/datum/replicator_array_info/RAI = FR.ckey2info[last_controller_ckey]
-
-		stat("Materials:", "[round(FR.materials)] ([round(FR.last_second_materials_change)])")
-		stat("Drone Amount:", "[length(global.alive_replicators)]/[FR.bandwidth]")
-		if(length(global.active_transponders) > 0)
-			stat("Bandwidth Upgrade:", "[round(FR.materials_consumed)]/[FR.consumed_materials_until_upgrade]")
-		if(length(global.replicator_generators) > 0 || length(global.transponders) - length(global.active_transponders) > 0)
-			stat("Energy Reserves:", "[round(FR.energy)]/[round(length(global.replicator_generators) * REPLICATOR_GENERATOR_POWER_GENERATION)]")
-
-		if(length(global.area2free_forcefield_nodes) > 0)
-			var/node_string = ""
-			var/first = TRUE
-			for(var/area_name in global.area2free_forcefield_nodes)
-				var/node_count = global.area2free_forcefield_nodes[area_name]
-				if(!first)
-					node_string += ", "
-				first = FALSE
-				node_string += "[area_name] ([node_count])"
-			stat("Unclaimed Nodes:", node_string)
-
-		if(length(global.bluespace_catapults) > 0)
-			var/area/A = get_area(global.bluespace_catapults[1])
-			stat("Catapult Location:", "[A.name]")
-
-		if(length(RAI.acquired_upgrades) > 0)
-			stat("Array Upgrades:", RAI.get_upgrades_string())
-*/
+		if(!mind)
+			return
+		var/datum/role/replicator/R = mind.GetRole(REPLICATOR)
+		R.StatPanel()
 
 /mob/living/simple_animal/hostile/replicator/death()
 	..()

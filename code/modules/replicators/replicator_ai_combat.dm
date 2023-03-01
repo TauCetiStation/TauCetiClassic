@@ -83,6 +83,9 @@
 	retreat_distance = 9
 	minimum_distance = 9
 
+/*
+	Results in a somewhat stupid behavior, as the mobs don't know how to navigate the web after they get to the portal.
+
 /mob/living/simple_animal/hostile/replicator/proc/get_closest_web_entry()
 	. = null
 	for(var/obj/machinery/swarm_powered/bluespace_transponder/BT as anything in global.active_transponders)
@@ -102,3 +105,4 @@
 		return ..()
 
 	walk_to(src, BT, 0)
+*/

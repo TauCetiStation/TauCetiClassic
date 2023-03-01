@@ -81,6 +81,10 @@
 	if(user_replicator.a_intent == INTENT_HARM)
 		R.set_leader(user_replicator)
 
+	var/datum/replicator_array_info/RAI = FR.ckey2info[user_replicator.last_controller_ckey]
+	if(RAI)
+		RAI.replicated_times += 1
+
 	to_chat(user, "<span class='notice'>Replication successful, meet [R.name]!</span>")
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 
@@ -125,6 +129,10 @@
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 
+	var/datum/replicator_array_info/RAI = FR.ckey2info[user_replicator.last_controller_ckey]
+	if(RAI)
+		RAI.barricades_built += 1
+
 	new /obj/structure/replicator_barricade(user_replicator.loc)
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 
@@ -164,6 +172,10 @@
 
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
+
+	var/datum/replicator_array_info/RAI = FR.ckey2info[user_replicator.last_controller_ckey]
+	if(RAI)
+		RAI.traps_built += 1
 
 	new /obj/item/mine/replicator(user_replicator.loc)
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
@@ -214,6 +226,10 @@
 	to_chat(user, "<span class='notice'>Bluespace Transponder activation initiated...Establishing contact with The Swarm.</span>")
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
+
+	var/datum/replicator_array_info/RAI = FR.ckey2info[user_replicator.last_controller_ckey]
+	if(RAI)
+		RAI.transponders_built += 1
 
 	var/obj/machinery/swarm_powered/bluespace_transponder/BT = new(user_replicator.loc)
 	BT.name = "[BT.name] ([user_replicator.generation][rand(0, 9)])"
@@ -269,6 +285,10 @@
 	to_chat(user, "<span class='notice'>Generator deployed.</span>")
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
+
+	var/datum/replicator_array_info/RAI = FR.ckey2info[user_replicator.last_controller_ckey]
+	if(RAI)
+		RAI.generators_built += 1
 
 	var/obj/machinery/power/replicator_generator/BG = new(user_replicator.loc)
 	BG.name = "[BG.name] ([user_replicator.generation][rand(0, 9)])"
@@ -482,6 +502,11 @@
 	// to-do: sound
 	if(!objection_timer(user_replicator, "Constructing a Bluespace Catapult at [A.name]!"))
 		return
+
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	var/datum/replicator_array_info/RAI = FR.ckey2info[user_replicator.last_controller_ckey]
+	if(RAI)
+		RAI.catapults_built += 1
 
 	new /obj/machinery/swarm_powered/bluespace_catapult(user_replicator.loc)
 	to_chat(user_replicator, "<span class='notice'>SPAWNING... What have you done.</span>")

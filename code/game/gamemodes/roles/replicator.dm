@@ -21,31 +21,31 @@
 /datum/role/replicator/StatPanel()
 	if(!antag)
 		return
-	if(statpanel("Status"))
-		var/datum/faction/replicators/FR = faction
-		var/datum/replicator_array_info/RAI = FR.ckey2info[ckey(antag.key)]
 
-		stat("Materials:", "[round(FR.materials)] ([round(FR.last_second_materials_change)])")
-		stat("Drone Amount:", "[length(global.alive_replicators)]/[FR.bandwidth]")
-		if(length(global.active_transponders) > 0)
-			stat("Bandwidth Upgrade:", "[round(FR.materials_consumed)]/[FR.consumed_materials_until_upgrade]")
-		if(length(global.replicator_generators) > 0 || length(global.transponders) - length(global.active_transponders) > 0)
-			stat("Energy Reserves:", "[round(FR.energy)]/[round(length(global.replicator_generators) * REPLICATOR_GENERATOR_POWER_GENERATION)] ([round(FR.last_second_energy_change)])")
+	var/datum/faction/replicators/FR = faction
+	var/datum/replicator_array_info/RAI = FR.ckey2info[ckey(antag.key)]
 
-		if(length(global.area2free_forcefield_nodes) > 0)
-			var/node_string = ""
-			var/first = TRUE
-			for(var/area_name in global.area2free_forcefield_nodes)
-				var/node_count = global.area2free_forcefield_nodes[area_name]
-				if(!first)
-					node_string += ", "
-				first = FALSE
-				node_string += "[area_name] ([node_count])"
-			stat("Unclaimed Nodes:", node_string)
+	stat("Materials:", "[round(FR.materials)] ([round(FR.last_second_materials_change)])")
+	stat("Drone Amount:", "[length(global.alive_replicators)]/[FR.bandwidth]")
+	if(length(global.active_transponders) > 0)
+		stat("Bandwidth Upgrade:", "[round(FR.materials_consumed)]/[FR.consumed_materials_until_upgrade]")
+	if(length(global.replicator_generators) > 0 || length(global.transponders) - length(global.active_transponders) > 0)
+		stat("Energy Reserves:", "[round(FR.energy)]/[round(length(global.replicator_generators) * REPLICATOR_GENERATOR_POWER_GENERATION)] ([round(FR.last_second_energy_change)])")
 
-		if(length(global.bluespace_catapults) > 0)
-			var/area/A = get_area(global.bluespace_catapults[1])
-			stat("Catapult Location:", "[A.name]")
+	if(length(global.area2free_forcefield_nodes) > 0)
+		var/node_string = ""
+		var/first = TRUE
+		for(var/area_name in global.area2free_forcefield_nodes)
+			var/node_count = global.area2free_forcefield_nodes[area_name]
+			if(!first)
+				node_string += ", "
+			first = FALSE
+			node_string += "[area_name] ([node_count])"
+		stat("Unclaimed Nodes:", node_string)
 
-		if(length(RAI.acquired_upgrades) > 0)
-			stat("Array Upgrades:", RAI.get_upgrades_string())
+	if(length(global.bluespace_catapults) > 0)
+		var/area/A = get_area(global.bluespace_catapults[1])
+		stat("Catapult Location:", "[A.name]")
+
+	if(length(RAI.acquired_upgrades) > 0)
+		stat("Array Upgrades:", RAI.get_upgrades_string())
