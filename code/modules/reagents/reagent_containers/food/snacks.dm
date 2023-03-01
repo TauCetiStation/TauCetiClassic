@@ -183,7 +183,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
 	..()
-	if(ismouse(M))
+	if(iscorgi(M))
+		bite_food(M)
+	else if(ismouse(M))
 		var/mob/living/simple_animal/mouse/N = M
 		if(M.layer == MOB_LAYER)
 			N.visible_message("<span class ='notice'><b>[N]</b> nibbles away at [src].</span>", "<span class='notice'>You nibble away at [src].</span>")
@@ -194,8 +196,6 @@
 				qdel(src)
 		else
 			to_chat(N, text("<span class='notice'>You are unable to nibble away at \the [src] while being hidden.</span>"))
-
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /// FOOD END

@@ -47,7 +47,7 @@
 							var/obj/item/weapon/reagent_containers/food/snacks/snack = movement_target
 							snack.bite_food(src)
 						else
-							movement_target.attack_animal(src)
+							movement_target.attack_paw(src)
 					else if(ishuman(movement_target.loc) )
 						if(prob(20))
 							me_emote("stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
