@@ -25,3 +25,9 @@
 		if(BP.disfigured)
 			return OBJECTIVE_WIN
 	return OBJECTIVE_LOSS
+
+/datum/objective/target/harm/select_target()
+	..()
+	to_chat(target.current,"<span class='warning'><B>Вы чувствуете, будто кто-то следит за вами...</B></span>")
+	to_chat(target.current, "<span class='warning'>Вы вспоминаете, что недавно вы насолили одному влиятельному человеку и<B> вам это точно не сойдёт с рук. </B></span>")
+	return TRUE
