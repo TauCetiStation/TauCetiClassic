@@ -150,7 +150,7 @@
 	return FALSE
 
 /mob/living/carbon/xenomorph/humanoid/hunter/proc/toggle_invisible()
-	if(invisible || has_status_effect(/datum/status_effect/incapacitating/stun) || has_status_effect(STATUS_EFFECT_SLEEPING) || stat == UNCONSCIOUS)
+	if(invisible || has_status_effect(/datum/status_effect/incapacitating/stun) || stat == UNCONSCIOUS)
 		invisible = FALSE
 		animate(src, alpha = initial(alpha), time = 5, loop = 1, LINEAR_EASING)
 	else if (m_intent == MOVE_INTENT_WALK)
