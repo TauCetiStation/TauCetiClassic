@@ -702,3 +702,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	SD1.linked_dist = SD2
 	SD2.linked_dist = SD1
+
+/mob/living/simple_animal/hostile/replicator/help_prank(mob/living/target)
+	return FALSE

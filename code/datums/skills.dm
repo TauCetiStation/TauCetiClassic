@@ -67,16 +67,21 @@
 		return null
 	return mind.skills.active
 
+/mob/living/proc/help_prank(mob/living/target)
+	if(target.a_intent == INTENT_HARM)
+		visible_message("<span class='notice'>[target] pranks \the [src].</span>", "<span class='notice'>You tried to help \the [target], but [P_THEY(target.gender)] rejects your help and pranks you instead!</span>")
+		to_chat(target, "<span class='notice'>You prank \the [src]!</span>")
+		apply_effects(stun = 1, weaken = 1)
+		return TRUE
+	return FALSE
+
 /mob/living/proc/help_other(mob/living/target)
 	if(target == src)
 		return
 	if(incapacitated() || crawling || is_busy() || get_active_hand() || !Adjacent(target))
 		return
 
-	if(target.a_intent == INTENT_HARM)
-		visible_message("<span class='notice'>[target] pranks \the [src].</span>", "<span class='notice'>You tried to help \the [target], but [P_THEY(target.gender)] rejects your help and pranks you instead!</span>")
-		to_chat(target, "<span class='notice'>You prank \the [src]!</span>")
-		apply_effects(stun = 1, weaken = 1)
+	if(help_prank(target))
 		return
 
 	var/active_skillset = get_active_skillset()

@@ -77,8 +77,11 @@
 	priority_target_ref = null
 	chill_down()
 
-/mob/living/simple_animal/hostile/replicator/Found(atom/A)
+/mob/living/simple_animal/hostile/replicator/proc/is_priority_target(atom/A)
 	return "\ref[A]" == priority_target_ref
+
+/mob/living/simple_animal/hostile/replicator/Found(atom/A)
+	return is_priority_target(A)
 
 /mob/living/simple_animal/hostile/replicator/proc/brave_up()
 	retreat_distance = null
@@ -114,3 +117,15 @@
 
 /mob/living/simple_animal/hostile/replicator/LoseAggro()
 	vision_range = idle_vision_range
+
+/mob/living/simple_animal/hostile/replicator/ListTargets()//Step 1, find out what we can see
+	. = ..()
+	if(priority_target_ref)
+		. += locate(priority_target_ref)
+
+/mob/living/simple_animal/hostile/replicator/CanAttack(atom/the_target)
+	if(see_invisible < the_target.invisibility)
+		return FALSE
+	if(is_priority_target(the_target))
+		return TRUE
+	return FALSE

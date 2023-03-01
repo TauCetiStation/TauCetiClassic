@@ -62,13 +62,13 @@
 		set_a_intent(INTENT_HARM)
 		set_state(REPLICATOR_STATE_AI_COMBAT)
 
-		if(next_combat_alert < world.time)
+		if(next_combat_alert < world.time && !is_priority_target(target))
 			next_combat_alert = world.time + combat_alert_cooldown
 
 			emote("beep!")
 			var/area/A = get_area(src)
 			var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-			FR.drone_message(src, "Alert! Retreating from combat at: [A.name].", transfer=TRUE)
+			FR.drone_message(src, "Alert! Retreating from combat with [target.name] at: [A.name].", transfer=TRUE)
 
 		return
 
@@ -168,9 +168,13 @@
 	return skills.active
 
 /mob/living/simple_animal/hostile/replicator/on_start_help_other(mob/living/target)
+	if(state == REPLICATOR_STATE_COMBAT)
+		return
 	set_state(REPLICATOR_STATE_HELPING)
 
 /mob/living/simple_animal/hostile/replicator/on_stop_help_other(mob/living/target)
+	if(state == REPLICATOR_STATE_COMBAT)
+		return
 	set_state(REPLICATOR_STATE_HARVESTING)
 
 /mob/living/simple_animal/hostile/replicator/proc/process_going_to_help()

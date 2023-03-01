@@ -62,6 +62,7 @@
 
 /mob/living/simple_animal/hostile/replicator/proc/repeat_leader_move(datum/source, atom/NewLoc, move_dir)
 	Move(get_step(get_turf(src), move_dir), move_dir)
+	INVOKE_ASYNC(src, /mob/living.proc/help_other, leader)
 
 /mob/living/simple_animal/hostile/replicator/proc/_repeat_leader_move(datum/source, atom/NewLoc, move_dir)
 	SIGNAL_HANDLER
@@ -77,10 +78,6 @@
 
 	if(!isturf(NewLoc))
 		forget_leader()
-		return
-
-	// Client move failure.
-	if(leader.loc != NewLoc)
 		return
 
 	excitement = 30
