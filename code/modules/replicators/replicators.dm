@@ -70,7 +70,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	melee_damage = 0
 	speed = -1
 
-	move_to_delay = 5
+	move_to_delay = 6
 
 	w_class = SIZE_SMALL
 
@@ -222,9 +222,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	if(FR.materials < auto_construct_cost)
 		return
-
-	//if(!istype(my_turf, /turf/simulated/floor/plating/airless/catwalk/forcefield))
-	//	return
 
 	if(locate(auto_construct_type) in T)
 		return

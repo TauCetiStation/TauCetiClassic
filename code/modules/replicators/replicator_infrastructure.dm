@@ -349,7 +349,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		return FALSE
 	if(target.stat & BROKEN)
 		return FALSE
-	if(!(locate(/obj/structure/bluespace_corridor) in RG.loc))
+	if(!(locate(/obj/structure/bluespace_corridor) in target.loc))
 		return FALSE
 	if(R.invisibility <= 0)
 		return FALSE
