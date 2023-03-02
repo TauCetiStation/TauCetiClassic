@@ -89,3 +89,17 @@
 
 	specific_heat = 30	// J/(mol*K)
 	molar_mass = 0.020	// kg/mol
+
+/datum/xgm_gas/fractol
+	id = "fractol"
+	name = "Fractol"
+	specific_heat = 160	// J/(mol*K)
+	molar_mass = 0.397	// kg/mol hypothetical 149th element, a halogen that for some reason is breathable by everoyne.
+
+	tile_overlay = "fractol"
+	overlay_limit = 0.7
+
+	flags = XGM_GAS_OXIDIZER | XGM_GAS_FUSION_FUEL
+	knowable = FALSE
+
+	burn_product = "helium"

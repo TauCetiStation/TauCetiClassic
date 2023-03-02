@@ -79,6 +79,7 @@
 	var/const/safe_pressure_min = 16 // Minimum safe partial pressure of breathable gas in kPa
 	var/const/safe_exhaled_max = 10 // Yes it's an arbitrary value who cares?
 	var/const/safe_toxins_max = 0.005
+	var/const/safe_fractol_max = 0.02
 	var/const/SA_para_min = 1
 	var/const/SA_sleep_min = 5
 	var/const/SA_giggle_min = 0.15
@@ -102,6 +103,15 @@
 	var/exhaled_pp = exhaling ? (exhaling / breath_total_moles) * breath_pressure : 0
 	var/poison_pp = poison ? (poison / breath_total_moles) * breath_pressure : 0
 	var/SA_pp = sleeping_agent ? (sleeping_agent / breath_total_moles) * breath_pressure : 0
+
+	// Anyone can breath this!
+	var/druggy_inhale_type = "fractol"
+	var/druggy_inhaling = breath_gas[druggy_inhale_type]
+	var/druggy_inhale_pp = druggy_inhaling ? (druggy_inhaling / breath_total_moles) * breath_pressure : 0
+
+	inhale_type = inhale_pp >= druggy_inhale_pp ? inhale_type : druggy_inhale_type
+	inhaling = inhale_pp >= druggy_inhale_pp ? inhaling : druggy_inhaling
+	inhale_pp = inhale_pp >= druggy_inhale_pp ? inhale_pp : druggy_inhale_pp
 
 	if(inhale_pp < safe_pressure_min)
 		if(prob(20))
@@ -149,6 +159,14 @@
 				emote("cough")
 		else
 			co2overloadtime = null
+
+	if(druggy_inhale_pp > safe_fractol_max)
+		adjustDrugginess(1)
+		if(prob(5))
+			emote(pick("twitch","drool","moan","giggle"))
+			random_move()
+		else if(prob(7))
+			emote(pick("twitch","drool","moan","giggle"))
 
 	// Too much poison in the air.
 	if(poison_pp > safe_toxins_max)

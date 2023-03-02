@@ -37,6 +37,13 @@
 	if(!.)
 		return
 
+	if(SSmobs.times_fired % 4 == 2)
+		var/datum/gas_mixture/environment = loc.return_air()
+		var/datum/gas_mixture/breath = loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
+		breath.volume = BREATH_VOLUME
+		breath.adjust_gas_temp("fractol", 10, bodytemperature)
+		loc.assume_air(breath)
+
 	handle_status_updates()
 
 	if(ckey)
