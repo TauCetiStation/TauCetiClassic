@@ -684,7 +684,6 @@
 #include "code\game\gamemodes\objectives\target\assassinate.dm"
 #include "code\game\gamemodes\objectives\target\debrain.dm"
 #include "code\game\gamemodes\objectives\target\dehead.dm"
-#include "code\game\gamemodes\objectives\target\harm.dm"
 #include "code\game\gamemodes\objectives\target\protect.dm"
 #include "code\game\gamemodes\objectives\target\rp_rev.dm"
 #include "code\game\gamemodes\objectives\target\sacrifice.dm"
