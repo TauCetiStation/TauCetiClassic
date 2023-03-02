@@ -163,10 +163,10 @@
 	if(druggy_inhale_pp > safe_fractol_max)
 		adjustDrugginess(1)
 		if(prob(5))
-			emote(pick("twitch","drool","moan","giggle"))
+			emote("twitch")
 			random_move()
 		else if(prob(7))
-			emote(pick("twitch","drool","moan","giggle"))
+			emote(pick("drool","moan","giggle"))
 
 	// Too much poison in the air.
 	if(poison_pp > safe_toxins_max)
