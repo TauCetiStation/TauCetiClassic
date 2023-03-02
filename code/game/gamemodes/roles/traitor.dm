@@ -114,7 +114,7 @@
 
 /datum/role/traitor/OnPostSetup(laterole)
 	. = ..()
-	group = get_discount_group()
+	discount_group = get_discount_group()
 	if(issilicon(antag.current))
 		add_law_zero(antag.current)
 
