@@ -113,6 +113,7 @@ SUBSYSTEM_DEF(ticker)
 			if(!explosion_in_progress && mode_finished)
 				current_state = GAME_STATE_FINISHED
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
+				SSrating.calculate_rating()
 				declare_completion()
 				spawn(50)
 					for(var/client/C in clients)
@@ -434,7 +435,15 @@ SUBSYSTEM_DEF(ticker)
 	var/completition = "<h1>Round End Information</h1><HR>"
 	completition += get_ai_completition()
 	completition += mode.declare_completion()
+	completition += get_ratings()
 	scoreboard(completition, one_mob)
+
+/datum/controller/subsystem/ticker/proc/get_ratings()
+	var/dat = "<h2>Round Ratings</h2>"
+	dat += "<div class='Section'>"
+	dat += SSrating.get_voting_results()
+	dat += "</div>"
+	return dat
 
 /datum/controller/subsystem/ticker/proc/get_ai_completition()
 	var/ai_completions = ""
