@@ -386,7 +386,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 			to_chat(src, "<span class='warning'>Impossible: Target under presence control.</span>")
 		return FALSE
 
-	if(target.last_controller_ckey != ckey && next_control_change > world.time)
+	if(target.last_controller_ckey && target.last_controller_ckey != ckey && target.next_control_change > world.time)
 		if(alert)
 			to_chat(src, "<span class='warning'>Impossible: Target under lingering presence affect. Try again later.</span>")
 		return FALSE

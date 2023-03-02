@@ -342,15 +342,30 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 
 	INVOKE_ASYNC(src, .proc/try_teleport, AM)
 
+/obj/machinery/power/replicator_generator/proc/teleportation_checks(mob/living/simple_animal/hostile/replicator/R, obj/machinery/power/replicator_generator/target)
+	if(!R.ckey)
+		return FALSE
+	if(target.next_teleportation > world.time)
+		return FALSE
+	if(target.stat & BROKEN)
+		return FALSE
+	if(!(locate(/obj/structure/bluespace_corridor) in RG.loc))
+		return FALSE
+	if(R.invisibility <= 0)
+		return FALSE
+	return TRUE
+
 /obj/machinery/power/replicator_generator/proc/try_teleport(mob/living/simple_animal/hostile/replicator/R)
 	if(R.incapacitated())
+		return
+	if(!R.ckey)
 		return
 	if(next_teleportation > world.time)
 		to_chat(R, "<span class='notice'>Can not teleport at this moment, please wait for [CEIL((next_teleportation - world.time) * 0.1)] seconds.</span>")
 		return ..()
 
 	visible_message("<span class='notice'>[src] appears to be charging up.</span>")
-	if(!do_after(R, src, 3 SECONDS))
+	if(!do_after(R, 3 SECONDS, target=src, extra_checks=CALLBACK(src, .proc/teleportation_checks)))
 		return
 
 	var/list/pos_areas = list()
@@ -360,7 +375,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 			continue
 		if(RG.stat & BROKEN)
 			continue
-		if(!(locate(/obj/structure/bluespace_corridor) in RG))
+		if(!(locate(/obj/structure/bluespace_corridor) in RG.loc))
 			continue
 		if(RG.next_teleportation > world.time)
 			continue
@@ -391,7 +406,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 			continue
 		if(RG.stat & BROKEN)
 			continue
-		if(!(locate(/obj/structure/bluespace_corridor) in RG))
+		if(!(locate(/obj/structure/bluespace_corridor) in RG.loc))
 			continue
 		if(RG.next_teleportation > world.time)
 			continue
