@@ -5,5 +5,8 @@
 /turf/simulated/shuttle/wall/newes_shuttle/mining
 	icon = 'icons/locations/shuttles/shuttle_mining.dmi'
 
+/turf/simulated/shuttle/wall/newes_shuttle/labor
+	icon = 'icons/locations/shuttles/sec_labor.dmi'
+
 /turf/simulated/shuttle/wall/newes_shuttle/evac
 	icon = 'icons/locations/shuttles/evac_shuttle.dmi'
