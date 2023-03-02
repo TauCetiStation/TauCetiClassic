@@ -20,10 +20,12 @@
 	AddComponent(/datum/component/gamemode/syndicate, telecrystals, "traitor")
 
 /datum/role/traitor/proc/add_one_objective(datum/mind/traitor)
-	switch(rand(1,110))
-		if(1 to 50)
+	switch(rand(1,120))
+		if(1 to 20)
 			AppendObjective(/datum/objective/target/assassinate, TRUE)
-		if(51 to 100)
+		if(21 to 50)
+			AppendObjective(/datum/objective/target/protect, TRUE)
+		if(51 to 115)
 			AppendObjective(/datum/objective/steal, TRUE)
 		else
 			AppendObjective(/datum/objective/target/dehead, TRUE)
