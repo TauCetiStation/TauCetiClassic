@@ -51,7 +51,7 @@
 		/datum/game_mode/revolution,
 		/datum/game_mode/shadowling,
 		/datum/game_mode/families,
-		/datum/game_mode/replicators,
+		// /datum/game_mode/replicators,
 	)
 
 /datum/modesbundle/mix
@@ -75,7 +75,7 @@
 	var/list/black_types
 
 /datum/modesbundle/all/New()
-	for(var/type in subtypesof(/datum/game_mode))
+	for(var/type in subtypesof(/datum/game_mode) - list(/datum/game_mode/replicators))
 		if(black_types)
 			if(type in black_types)
 				continue
@@ -88,7 +88,7 @@
 	votable = TRUE
 
 /datum/modesbundle/all/secret/New()
-	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended, /datum/game_mode/malfunction)
+	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended, /datum/game_mode/malfunction) - list(/datum/game_mode/replicators)
 	..()
 
 /datum/modesbundle/run_anyway
