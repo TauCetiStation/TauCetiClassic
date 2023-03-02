@@ -238,7 +238,7 @@
 	var/turf/target = get_turf(A)
 	var/turf/curr = get_turf(src)
 	for(var/i in 1 to max_steps)
-		curr = get_step_to(curr, -1)
+		curr = get_step_to(curr, target, -1)
 		if(curr == target || get_dist(curr, target) <= 1)
 			return TRUE
 	return FALSE
