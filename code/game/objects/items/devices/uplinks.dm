@@ -26,7 +26,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	var/is_mob_traitor = FALSE
 
 
-	var/datum/role/traitor/R = user.mind.antag_roles["Traitor"]
+	var/datum/role/traitor/R = user.mind.GetRole(TRAITOR)
 	if(R)
 		is_mob_traitor = TRUE
 		mob_discount_group = R.discount_group
