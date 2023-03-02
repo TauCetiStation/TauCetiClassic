@@ -292,6 +292,9 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	set_last_controller(ckey)
 	overlays -= indicator
 
+	walk(src, 0)
+	target_coordinates = null
+
 	global.idle_replicators -= src
 
 /mob/living/simple_animal/hostile/replicator/mind_initialize()

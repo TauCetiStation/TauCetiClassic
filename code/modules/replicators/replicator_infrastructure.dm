@@ -362,7 +362,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		return
 	if(next_teleportation > world.time)
 		to_chat(R, "<span class='notice'>Can not teleport at this moment, please wait for [CEIL((next_teleportation - world.time) * 0.1)] seconds.</span>")
-		return ..()
+		return
+
+	if(length(global.replicator_generators) <= 1)
+		to_chat(R, "<span class='notice'>No other generators to teleport to.</span>")
+		return
 
 	visible_message("<span class='notice'>[src] appears to be charging up.</span>")
 	if(!do_after(R, 3 SECONDS, target=src, extra_checks=CALLBACK(src, .proc/teleportation_checks)))
@@ -427,8 +431,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		update_icon()
 		RG.update_icon()
 
-		addtimer(src, CALLBACK(src, /atom.proc/update_icon), teleportation_cooldown)
-		addtimer(RG, CALLBACK(src, /atom.proc/update_icon), teleportation_cooldown)
+		addtimer(CALLBACK(src, /atom.proc/update_icon), teleportation_cooldown)
+		addtimer(CALLBACK(RG, /atom.proc/update_icon), teleportation_cooldown)
 
 		if(teleported_anyone)
 			playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', VOL_EFFECTS_MASTER, 60)

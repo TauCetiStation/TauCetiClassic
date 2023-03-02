@@ -164,6 +164,10 @@
 	else
 		global.idle_replicators -= src
 
+	if(new_state != REPLICATOR_STATE_WANDERING && new_state != REPLICATOR_STATE_GOING_TO_HELP)
+		target_coordinates = null
+		walk(src, 0)
+
 	excitement = 10
 	state = new_state
 	update_icon()
