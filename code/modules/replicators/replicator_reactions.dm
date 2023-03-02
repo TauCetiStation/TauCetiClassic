@@ -50,6 +50,12 @@
 	return TRUE
 
 
+/turf/simulated/floor/beach/water/waterpool/replicator_act(mob/living/simple_animal/hostile/replicator/R)
+	R.try_spawn_node(src)
+	ChangeTurf(/turf/simulated/floor/plating/airless/catwalk/forcefield)
+	return TRUE
+
+
 /turf/simulated/floor/plating/airless/catwalk/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	R.try_spawn_node(src)
 	ChangeTurf(/turf/simulated/floor/plating/airless/catwalk/forcefield)
@@ -158,6 +164,14 @@
 	var/turf/T = get_turf(src)
 	if(T.can_place_replicator_forcefield())
 		new /obj/structure/replicator_forcefield(T)
+	deconstruct(TRUE)
+	return TRUE
+
+
+/obj/structure/plasticflaps/replicator_act(mob/living/simple_animal/hostile/replicator/R)
+	var/turf/T = get_turf(src)
+	if(T.can_place_replicator_forcefield())
+		new /obj/structure/replicator_barricade(T)
 	deconstruct(TRUE)
 	return TRUE
 
@@ -352,7 +366,7 @@
 			var/tool = pick(pos_tools)
 			pos_tools -= tool
 
-			if(detach_part(tool) > 0)
+			if(detach_part(tool))
 				return TRUE
 
 	qdel(src)

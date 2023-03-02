@@ -24,6 +24,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "replicator"
+	icon_living = "replicator"
 	icon_dead = "replicator_unactivated"
 
 	speak_emote = list("beeps")

@@ -11,12 +11,11 @@
 	desc = "Distant stars under this crystallic floor are seemingly more blueish. Foreshadowing?!"
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "floor"
+	color = "#a8dff0"
 	airless = FALSE
 
 /turf/simulated/floor/plating/airless/catwalk/forcefield/atom_init()
 	. = ..()
-	icon_state = "floor_new"
-	color = "#a8dff0"
 
 	underlays.Cut()
 	var/image/I = SSenvironment.turf_image[z]

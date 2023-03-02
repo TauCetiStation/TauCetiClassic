@@ -231,6 +231,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 /obj/machinery/swarm_powered/bluespace_transponder/proc/neutralize()
 	playsound(src, 'sound/effects/basscannon.ogg', VOL_EFFECTS_MASTER, 50)
 	visible_message("<span class='notice'>[src] beeps for the last time, and collapses.</span>")
+	deactivation_signal.forceMove(loc)
+	deactivation_signal = null
 	qdel(src)
 
 /obj/machinery/swarm_powered/bluespace_transponder/attackby(obj/item/I, mob/user)
@@ -276,6 +278,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 /obj/machinery/power/replicator_generator/Destroy()
 	// to-do: sound
 	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
+
+	new /obj/item/bluespace_crystal/artificial(loc)
 
 	var/obj/structure/forcefield_node/FN = locate() in loc
 	if(FN)
@@ -368,6 +372,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		to_chat(R, "<span class='notice'>No other generators to teleport to.</span>")
 		return
 
+	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	visible_message("<span class='notice'>[src] appears to be charging up.</span>")
 	if(!do_after(R, 3 SECONDS, target=src, extra_checks=CALLBACK(src, .proc/teleportation_checks)))
 		return
