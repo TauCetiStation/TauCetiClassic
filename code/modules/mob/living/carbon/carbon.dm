@@ -79,7 +79,7 @@
 	var/const/safe_pressure_min = 16 // Minimum safe partial pressure of breathable gas in kPa
 	var/const/safe_exhaled_max = 10 // Yes it's an arbitrary value who cares?
 	var/const/safe_toxins_max = 0.005
-	var/const/safe_fractol_max = 0.02
+	var/const/safe_fractol_max = 0.15
 	var/const/SA_para_min = 1
 	var/const/SA_sleep_min = 5
 	var/const/SA_giggle_min = 0.15
