@@ -33,8 +33,8 @@
 		return FALSE
 	var/datum/role/second_ninja = get_other_ninja()
 	if(!antag.protector_role && !second_ninja)
-		var/objective_list = list(1,2, 3)
-		for(var/i = rand(1,3), i > 0, i--)
+		var/objective_list = list(1,2,3)
+		for(var/i = rand(2,3), i > 0, i--)
 			switch(pick(objective_list))
 				if(1)
 					AppendObjective(/datum/objective/target/assassinate)
