@@ -131,6 +131,10 @@
 
 
 /* OBJS */
+/obj/effect/energy_field/get_replicator_material_amount()
+	return -1
+
+
 /obj/structure/get_replicator_material_amount()
 	return w_class
 
@@ -258,6 +262,14 @@
 	return FALSE
 
 
+/obj/machinery/shield/get_replicator_material_amount()
+	return -1
+
+
+/obj/machinery/shieldwall/get_replicator_material_amount()
+	return -1
+
+
 // Vents and pipes are used to transport through the station.
 /obj/machinery/atmospherics/can_be_auto_disintegrated()
 	return FALSE
@@ -282,7 +294,6 @@
 		return TRUE
 	deconstruct(TRUE)
 	return TRUE
-
 
 
 /obj/machinery/portable_atmospherics/can_be_auto_disintegrated()
