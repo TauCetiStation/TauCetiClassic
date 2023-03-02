@@ -52,7 +52,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			var/cost_text = ""
 
 
-			if(is_mob_traitor==TRUE && item.group != "standart")
+			if(is_mob_traitor && item.group != "standart")
 				if(item.group == mob_discount_group)
 					item.cost *= 0.5
 				else
