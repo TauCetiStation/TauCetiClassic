@@ -83,10 +83,10 @@
 		user.visible_message("<span class='warning'>[user] fails to blind [convert_target] with the flash!</span>",
 							"<span class='warning'>You fails to blind [convert_target] with the [src].</span>")
 		return FALSE
-	//find all user's factions and add target as recruit.
+	//find all user's factions and add target as recruit
 	var/list/factions = find_factions_by_member(user_role, user.mind)
 	for(var/datum/faction/faction in factions)
-		//No double convert (should work in CanBeAssigned() but doesnt works)
+		//No double convert
 		if(faction.get_member_by_mind(convert_target.mind))
 			continue
 		add_faction_member(faction, convert_target)
