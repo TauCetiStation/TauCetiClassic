@@ -115,6 +115,28 @@
 	return TRUE
 
 
+/mob/living/silicon/can_be_auto_disintegrated()
+	return stat != CONSCIOUS
+
+/mob/living/get_replicator_material_amount()
+	if(stat != CONSCIOUS)
+		return w_class * REPLICATOR_MATERIAL_AMOUNT_COEFF_ORGANIC
+	return -1
+
+/mob/living/silicon/get_unit_disintegration_time()
+	. = REPLICATOR_TICKS_PER_MATERIAL / REPLICATOR_MATERIAL_AMOUNT_COEFF_ORGANIC
+	switch(stat)
+		if(DEAD)
+			. *= REPLICATOR_REWARD_DEAD_BODIES_TICK_MODIFIER
+		if(UNCONSCIOUS)
+			. *= REPLICATOR_PUNISH_UNCONSCIOUS_MOBS_TICK_MODIFIER
+		else
+			. *= REPLICATOR_PUNISH_LIVE_MOBS_TICK_MODIFIER
+
+/mob/living/silicon/replicator_act(mob/living/simple_animal/hostile/replicator/R)
+	gib()
+	return TRUE
+
 
 /mob/living/simple_animal/hostile/replicator/can_be_auto_disintegrated()
 	return stat == DEAD

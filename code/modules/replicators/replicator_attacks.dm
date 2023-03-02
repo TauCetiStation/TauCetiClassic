@@ -28,7 +28,7 @@
 		var/target_zone = get_targetzone()
 		L.apply_damage(3.0, BRUTE, target_zone, 0.0, NONE)
 		L.apply_effects(0, 0, 0, 0, 2, 1, 0, 30 + additional_damage * 0.5, 0)
-		L.silent = max(L.silent, 1)
+		L.silent = max(L.silent, 2)
 
 		SetNextMove(CLICK_CD_MELEE)
 		L.set_lastattacker_info(src)

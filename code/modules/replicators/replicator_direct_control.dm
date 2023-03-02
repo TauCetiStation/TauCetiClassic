@@ -30,13 +30,17 @@
 		if(alert)
 			to_chat(R, "<span class='notice'>You are already controlling a max capacity of [REPLICATOR_MAX_CONTROLLED_DRONES] drones.</span>")
 		return FALSE
+	if(leader)
+		if(alert)
+			to_chat(R, "<span class='notice'>They are already under an influence of some other presence.</span>")
+		return FALSE
 
 	leader = R
 	set_last_controller(leader.ckey)
 
 	leader.controlling_drones += 1
 
-	RegisterSignal(R, list(COMSIG_CLIENTMOB_MOVE), .proc/_repeat_leader_move)
+	RegisterSignal(R, list(COMSIG_CLIENTMOB_MOVING), .proc/_repeat_leader_move)
 	RegisterSignal(R, list(COMSIG_MOB_REGULAR_CLICK), .proc/_repeat_leader_attack)
 	RegisterSignal(R, list(COMSIG_MOB_SET_A_INTENT), .proc/on_leader_intent_change)
 	RegisterSignal(R, list(COMSIG_MOB_SET_M_INTENT), .proc/on_leader_m_intent_change)
@@ -60,7 +64,7 @@
 
 	leader.controlling_drones -= 1
 
-	UnregisterSignal(leader, list(COMSIG_CLIENTMOB_MOVE, COMSIG_MOB_REGULAR_CLICK, COMSIG_MOB_SET_A_INTENT, COMSIG_MOB_SET_M_INTENT, COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(leader, list(COMSIG_CLIENTMOB_MOVING, COMSIG_MOB_REGULAR_CLICK, COMSIG_MOB_SET_A_INTENT, COMSIG_MOB_SET_M_INTENT, COMSIG_MOB_DIED, COMSIG_LOGOUT, COMSIG_PARENT_QDELETING))
 	leader = null
 
 	set_state(REPLICATOR_STATE_HARVESTING)

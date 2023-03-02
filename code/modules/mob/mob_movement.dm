@@ -152,10 +152,11 @@
 		if(!mob.can_intentionally_move(n, direct))
 			moving = FALSE
 			return
-
 		if(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
 			moving = FALSE
 			return
+
+		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVING, n, direct)
 
 		//Something with pulling things
 		if(grabs.len)

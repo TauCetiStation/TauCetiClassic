@@ -88,6 +88,8 @@
 /// from base of client/Move(): (atom/NewLoc, direction)
 #define COMSIG_CLIENTMOB_MOVE "client_move"
 	#define COMPONENT_CLIENTMOB_BLOCK_MOVE 1
+/// from base of client/Move(): (atom/NewLoc, direction), can not be blocked like the above one can.
+#define COMSIG_CLIENTMOB_MOVING "client_moving"
 /// from base of client/Move, after all movement is finished(): (atom/NewLoc, direction)
 #define COMSIG_CLIENTMOB_POSTMOVE "client_postmove"
 /// from base of mob/set_a_intent(): (new_intent)

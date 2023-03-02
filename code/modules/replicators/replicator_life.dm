@@ -32,6 +32,8 @@
 	var/next_combat_alert = 0
 	var/combat_alert_cooldown = 1 MINUTE
 
+	var/is_hungry = FALSE
+
 /mob/living/simple_animal/hostile/replicator/Life()
 	. = ..()
 	if(!.)
@@ -41,9 +43,10 @@
 		var/datum/gas_mixture/environment = loc.return_air()
 		if(environment.return_pressure() < WARNING_HIGH_PRESSURE)
 			var/datum/gas_mixture/breath = loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
-			breath.volume = BREATH_VOLUME
-			breath.adjust_gas_temp("fractol", 10, bodytemperature)
-			loc.assume_air(breath)
+			if(breath)
+				breath.volume = BREATH_VOLUME
+				breath.adjust_gas_temp("fractol", 10, bodytemperature)
+				loc.assume_air(breath)
 
 	handle_status_updates()
 
@@ -154,6 +157,7 @@
 			return
 
 		if(taken_damage)
+			is_hungry = TRUE
 			throw_alert("swarm_hunger", /atom/movable/screen/alert/swarm_hunger)
 
 		if(next_consume_alert < world.time && taken_damage)
@@ -162,6 +166,7 @@
 			flash_color(src, flash_color="#ff0000", flash_time=5)
 			to_chat(src, "<span class='danger'><font size=2>This world can not support your body for long. You must <b>consume</b> to survive.</font></span>")
 	else
+		is_hungry = FALSE
 		clear_alert("swarm_hunger")
 
 	last_update_health = health

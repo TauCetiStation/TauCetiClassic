@@ -642,6 +642,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 		return
 
 	to_chat(user, "<span class='notice'>[ckey ? "Is currently" : "Was lastly"] under the influence of [RAI.presence_name].</span>")
+	to_chat(user, "<span class='notice'>They have the following upgrades:\n[RAI.get_upgrades_string()]</span>")
+
 	if(ckey)
 		if(user == src && FR.upgrades_amount > length(RAI.acquired_upgrades))
 			to_chat(user, "<span class='bold notice'><a href='?src=\ref[src];replicator_upgrade=1'>Upgrade Prospectives Analyzed. Click here to upgrade.</a></span>")

@@ -9,6 +9,8 @@
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		FR.prioritized_load += idle_power_usage
 
+	update_icon()
+
 /obj/machinery/swarm_powered/Destroy()
 	if(prioritized)
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
@@ -657,6 +659,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 
 /obj/machinery/swarm_powered/bluespace_catapult/Destroy()
 	global.poi_list -= src
+
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.swarm_chat_message("The Swarm", "The Bluespace Catapult has been destroyed! A setback, you must construct another one.", 5)
+
 	return ..()
 
 /obj/machinery/swarm_powered/bluespace_catapult/process()
@@ -680,7 +686,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 		announcement = new /datum/announcement/centcomm/replicator/doom
 		icon_state = "catapult_100"
 
-		FR.swarm_chat_message("The Swarm", "Mission accomplished.", 5)
 		density = FALSE
 
 		for(var/mob/M in player_list)
@@ -730,6 +735,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	qdel(R)
 
 	if(FR.replicators_launched >= REPLICATORS_CATAPULTED_TO_WIN && !victory)
+		FR.swarm_chat_message("The Swarm", "Mission accomplished.", 5)
 		victory = TRUE
 		INVOKE_ASYNC(FR, /datum/faction/replicators.proc/victory_animation, get_turf(src))
 

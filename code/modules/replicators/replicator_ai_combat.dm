@@ -48,12 +48,14 @@
 /mob/living/simple_animal/hostile/replicator/handle_combat_ai()
 	if(state == REPLICATOR_STATE_COMBAT)
 		return
+	if(is_hungry && !priority_target_ref)
+		return
 	return ..()
 
 /mob/living/simple_animal/hostile/replicator/AttackingTarget()
 	SEND_SIGNAL(src, COMSIG_MOB_HOSTILE_ATTACKINGTARGET, target)
 
-	if(can_disintegrate(target))
+	if(!target.is_disintegrating && can_disintegrate(target))
 		INVOKE_ASYNC(src, .proc/disintegrate, target)
 		return
 
