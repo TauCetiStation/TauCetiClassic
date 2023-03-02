@@ -33,14 +33,16 @@
 		return FALSE
 	var/datum/role/second_ninja = get_other_ninja()
 	if(!antag.protector_role && !second_ninja)
-		var/objective_list = list(1,2)
-		for(var/i = rand(1,2), i > 0, i--)
+		var/objective_list = list(1,2, 3)
+		for(var/i = rand(1,3), i > 0, i--)
 			switch(pick(objective_list))
 				if(1)
 					AppendObjective(/datum/objective/target/assassinate)
 					objective_list -= 1
 				if(2)
 					AppendObjective(/datum/objective/steal)
+				if(3)
+					AppendObjective(/datum/objective/target/dehead)
 	else
 		if(!second_ninja.antag.protector_role)
 			for(var/datum/objective/target/objective_p in second_ninja.objectives.GetObjectives())
