@@ -110,11 +110,11 @@
 		else
 			to_chat(antag.current, "[bicon(logo, css = "style='position:relative; top:10;'")] <span class='danger'>You are a Traitor.</span>")
 
-	group = get_discount_group()
 	return TRUE
 
 /datum/role/traitor/OnPostSetup(laterole)
 	. = ..()
+	group = get_discount_group()
 	if(issilicon(antag.current))
 		add_law_zero(antag.current)
 
