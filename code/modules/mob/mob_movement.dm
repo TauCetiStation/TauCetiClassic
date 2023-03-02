@@ -5,6 +5,9 @@
 	else if(retVal & COMPONENT_CANPASS)
 		return TRUE
 
+	if(!mover)
+		return TRUE
+
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
 		return (!density || lying)
 	if(mover.checkpass(PASSMOB) || checkpass(PASSMOB))
