@@ -521,6 +521,9 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	if(!prob(5))
 		return FALSE
 
+	if(!is_station_level(T.z))
+		return FALSE
+
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	if(FR.nodes_to_spawn <= 0)
 		return FALSE

@@ -261,6 +261,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 
 	var/next_sound = 0
 
+	var/next_teleportation = 0
+	var/teleportation_cooldown = 1 MINUTE
+
 /obj/machinery/power/replicator_generator/atom_init()
 	. = ..()
 	new /obj/structure/cable/power_rune(loc)
@@ -281,12 +284,21 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 
 	return ..()
 
+/obj/machinery/power/replicator_generator/update_icon()
+	cut_overlays()
+	if(next_teleportation <= world.time)
+		add_overlay("+on")
+
 /obj/machinery/power/replicator_generator/examine(mob/living/user)
 	. = ..()
 	if(!isreplicator(user))
 		return
 
 	to_chat(user, "<span class='notice'>It's obivous! The power is needed for Bluespace Transponders. Powers approximately [round(REPLICATOR_GENERATOR_POWER_GENERATION / REPLICATOR_TRANSPONDER_POWER_USAGE)] of them.</span>")
+	var/teleport_string = "."
+	if(next_teleportation > world.time)
+		teleport_string = ", this one however can not for the next [CEIL((next_teleportation - world.time) * 0.1)] seconds."
+	to_chat(user, "<span class='notice'>You also know it can be used to teleport to other generators[teleport_string]</span>")
 
 /obj/machinery/power/replicator_generator/Moved(atom/OldLoc, moveddir)
 	. = ..()
@@ -300,6 +312,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		FN.remove_area_node(FN)
 
 /obj/machinery/power/replicator_generator/process()
+	if(next_teleportation > world.time)
+		return
+
 	if(next_sound < world.time && prob(5))
 		next_sound = next_sound + 20 SECONDS
 		playsound(src, 'sound/machines/signal.ogg', VOL_EFFECTS_MASTER)
@@ -314,6 +329,98 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		return TRUE
 	return ..()
 
+/obj/machinery/power/replicator_generator/Crossed(atom/movable/AM)
+	if(!isreplicator(AM))
+		return ..()
+
+	var/obj/structure/bluespace_corridor/BC = locate() in loc
+	if(!BC)
+		return ..()
+
+	if(AM.invisibility <= 0)
+		return ..()
+
+	INVOKE_ASYNC(src, .proc/try_teleport, AM)
+
+/obj/machinery/power/replicator_generator/proc/try_teleport(mob/living/simple_animal/hostile/replicator/R)
+	if(R.incapacitated())
+		return
+	if(next_teleportation > world.time)
+		to_chat(R, "<span class='notice'>Can not teleport at this moment, please wait for [CEIL((next_teleportation - world.time) * 0.1)] seconds.</span>")
+		return ..()
+
+	visible_message("<span class='notice'>[src] appears to be charging up.</span>")
+	if(!do_after(R, src, 3 SECONDS))
+		return
+
+	var/list/pos_areas = list()
+
+	for(var/obj/machinery/power/replicator_generator/RG as anything in global.replicator_generators)
+		if(RG == src)
+			continue
+		if(RG.stat & BROKEN)
+			continue
+		if(!(locate(/obj/structure/bluespace_corridor) in RG))
+			continue
+		if(RG.next_teleportation > world.time)
+			continue
+
+		var/area/A = get_area(RG)
+		pos_areas[A.name] = A
+
+	var/area_name = tgui_input_list(R, "Choose an area with a generator in it.", "Generator Transfer", pos_areas)
+	if(!area_name)
+		return
+	if(R.loc != loc)
+		return
+	if(!R.ckey)
+		return
+	if(R.incapacitated())
+		to_chat(R, "<span class='notice'>Unit too weak to support teleportation efforts.</span>")
+		return
+	if(R.invisibility <= 0)
+		return
+	var/obj/structure/bluespace_corridor/BC = locate() in loc
+	if(!BC)
+		return
+
+	var/area/thearea = pos_areas[area_name]
+
+	for(var/obj/machinery/power/replicator_generator/RG in thearea)
+		if(RG == src)
+			continue
+		if(RG.stat & BROKEN)
+			continue
+		if(!(locate(/obj/structure/bluespace_corridor) in RG))
+			continue
+		if(RG.next_teleportation > world.time)
+			continue
+
+		var/teleported_anyone = FALSE
+		for(var/mob/living/simple_animal/hostile/replicator/R_teleporting in loc)
+			if(R_teleporting.invisibility <= 0)
+				continue
+
+			flash_color(src, flash_color=BC.color, flash_time=5)
+
+			R_teleporting.forceMove(RG.loc)
+			teleported_anyone = TRUE
+
+		next_teleportation = world.time + teleportation_cooldown
+		RG.next_teleportation = world.time + teleportation_cooldown
+
+		update_icon()
+		RG.update_icon()
+
+		addtimer(src, CALLBACK(src, /atom.proc/update_icon), teleportation_cooldown)
+		addtimer(RG, CALLBACK(src, /atom.proc/update_icon), teleportation_cooldown)
+
+		if(teleported_anyone)
+			playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', VOL_EFFECTS_MASTER, 60)
+			playsound(RG, 'sound/magic/blink.ogg', VOL_EFFECTS_MASTER, 60)
+		return
+
+	to_chat(R, "<span class='notice'>Teleportation failed, due to a cooldown, lack of generators in the area, or destruction of the Web.</span>")
 
 /turf/proc/get_untaken_replicator_color()
 	var/list/possibilities = REPLICATOR_RUNE_COLORS
@@ -592,6 +699,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	var/datum/replicator_array_info/RAI = FR.ckey2info[R.last_controller_ckey]
 	if(RAI)
 		RAI.replicators_launched += 1
+
+	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', VOL_EFFECTS_MASTER, 75)
 
 	R.death()
 	qdel(R)
