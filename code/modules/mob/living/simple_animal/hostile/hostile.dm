@@ -174,7 +174,7 @@
 			Retreat(target_distance)
 		else if(canmove)
 			Goto(target, move_to_delay, minimum_distance)
-		if(isturf(loc) && target.Adjacent(src))	//If they're next to us, attack
+		if(isturf(loc) && IsMeleeAttackReachable(src))	//If they're next to us, attack
 			AttackingTarget()
 		return
 	if(canmove && target.loc != null && get_dist(src, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
@@ -190,6 +190,9 @@
 
 /mob/living/simple_animal/hostile/proc/Goto(target, delay, minimum_distance)
 	walk_to(src, target, minimum_distance, delay)
+
+/mob/living/simple_animal/hostile/proc/IsMeleeAttackReachable(atom/target)
+	return target.Adjacent(src)
 
 /mob/living/simple_animal/hostile/adjustBruteLoss(damage)
 	..()
@@ -215,7 +218,7 @@
 	if(!(target in ListTargets()))
 		LostTarget()
 		return 0
-	if(isturf(loc) && target.Adjacent(src))
+	if(isturf(loc) && IsMeleeAttackReachable(src))
 		AttackingTarget()
 		return 1
 

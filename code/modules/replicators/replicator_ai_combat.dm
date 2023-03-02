@@ -57,7 +57,10 @@
 		INVOKE_ASYNC(src, .proc/disintegrate, target)
 		return
 
-	UnarmedAttack(target)
+	if(target.Adjacent(src))
+		UnarmedAttack(target)
+	else
+		RangedAttack(target)
 
 /mob/living/simple_animal/hostile/replicator/OpenFire(the_target)
 	// TO-DO: randomize params so that all shots not in one spot on the walls.
@@ -149,3 +152,6 @@
 		return TRUE
 
 	return ..()
+
+/mob/living/simple_animal/hostile/replicator/IsMeleeAttackReachable(atom/target)
+	return get_dist(src, target) <= 1
