@@ -19,5 +19,11 @@
 	var/disintegrated_entities = 0
 
 /datum/replicator_array_info/New(datum/faction/replicators/faction)
-	presence_name = greek_pronunciation[length(faction.members)] + "-[rand(0, 9)] Presence"
+	var/letter_number = length(faction.ckey2info) % length(greek_pronunciation) + 1
+	var/magnitude = CEIL(length(faction.ckey2info) / (length(greek_pronunciation) - 1))
+	var/magnitude_string = ""
+	for(var/i in 1 to magnitude)
+		magnitude_string += rand(0, 9)
+
+	presence_name = greek_pronunciation[letter_number] + "-[magnitude_string] Presence"
 	array_color = pick(REPLICATOR_COLORS)

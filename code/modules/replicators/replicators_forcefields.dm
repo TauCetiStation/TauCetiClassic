@@ -24,7 +24,7 @@
 
 /turf/simulated/floor/plating/airless/catwalk/forcefield/Destroy()
 	// to-do: sound
-	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
+	playsound(src, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 
 	var/obj/structure/forcefield_node/FN = locate() in src
 	qdel(FN)
@@ -42,10 +42,14 @@
 	return
 
 /turf/simulated/floor/plating/airless/catwalk/forcefield/ChangeTurf(newtype)
-	. = ..()
 	if(newtype != type)
 		var/obj/structure/forcefield_node/FN = locate() in src
 		qdel(FN)
+
+		// to-do: sound
+		playsound(src, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
+
+	return ..()
 
 /turf/simulated/floor/plating/airless/catwalk/forcefield/attackby(obj/item/C, mob/user)
 	if(istype(C, /obj/item/stack/tile) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
@@ -57,8 +61,8 @@
 		to_chat(user, "<span class='warning'>What would that do to a forcefield?</span>")
 		return
 
-	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
-		qdel(src)
+	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
+		ChangeTurf(SSenvironment.turf_type)
 		return
 
 	return ..()
@@ -73,6 +77,8 @@
 	anchored = TRUE
 	opacity = 0
 	can_block_air = TRUE
+
+	layer = BELOW_MACHINERY_LAYER
 
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT | FIRE_PROOF
@@ -125,6 +131,8 @@
 	opacity = 0
 	can_block_air = TRUE
 
+	layer = BELOW_OBJ_LAYER
+
 	resistance_flags = FULL_INDESTRUCTIBLE
 
 /obj/structure/stabilization_field/examine(mob/living/user)
@@ -135,7 +143,7 @@
 	to_chat(user, "<span class='notice'>Ah, the trickster's greatest achivement. A wall that allows everything to pass through but the most tiny of things.</span>")
 
 /obj/structure/stabilization_field/attackby(obj/item/C, mob/user)
-	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
+	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
 		// to-do: sound
 		playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 		qdel(src)

@@ -48,6 +48,8 @@
 	set_m_intent(leader.m_intent)
 	set_state(REPLICATOR_STATE_COMBAT)
 
+	INVOKE_ASYNC(src, /mob/living.proc/help_other, leader)
+
 	clear_priority_target()
 	LoseTarget()
 

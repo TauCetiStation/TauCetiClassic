@@ -83,10 +83,17 @@
 
 /mob/living/get_unit_disintegration_time()
 	. = REPLICATOR_TICKS_PER_MATERIAL / REPLICATOR_MATERIAL_AMOUNT_COEFF_ORGANIC
-	if(stat == DEAD)
-		. *= REPLICATOR_REWARD_DEAD_BODIES_TICK_MODIFIER
-	else
-		. *= REPLICATOR_PUNISH_LIVE_MOBS_TICK_MODIFIER
+	switch(stat)
+		if(DEAD)
+			. *= REPLICATOR_REWARD_DEAD_BODIES_TICK_MODIFIER
+			var/list/equipment = get_equipped_items()
+			if(length(equipment) > 0)
+				. *= 0.5
+
+		if(UNCONSCIOUS)
+			. *= REPLICATOR_PUNISH_UNCONSCIOUS_MOBS_TICK_MODIFIER
+		else
+			. *= REPLICATOR_PUNISH_LIVE_MOBS_TICK_MODIFIER
 
 /mob/living/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	var/list/equipment = get_equipped_items()

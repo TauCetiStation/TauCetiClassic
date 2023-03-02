@@ -21,7 +21,15 @@
 		do_attack_animation(L)
 		visible_message("<span class='warning'>[src] attacks [A]!</span>")
 		playsound(L, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
-		L.apply_effects(0, 0, 0, 0, 1, 1, 0, 30, 0)
+
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		var/additional_damage = FR.energy / 10000
+
+		var/target_zone = get_targetzone()
+		L.apply_damage(3.0, BRUTE, target_zone, 0.0, NONE)
+		L.apply_effects(0, 0, 0, 0, 2, 1, 0, 30 + additional_damage * 0.5, 0)
+		L.silent = max(L.silent, 1)
+
 		SetNextMove(CLICK_CD_MELEE)
 		L.set_lastattacker_info(src)
 		L.log_combat(src, "replicator-attacked (INTENT: [uppertext(a_intent)]) (CONTROLLER: [last_controller_ckey])")
@@ -66,8 +74,13 @@
 		playsound(src, 'sound/weapons/guns/gunpulse_taser2.ogg', VOL_EFFECTS_MASTER)
 		var/obj/item/projectile/disabler/D = new(loc)
 		D.color = color
-		D.damage += disabler_damage_increase * 1.5
-		D.agony += disabler_damage_increase * 10
+
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		var/additional_damage = FR.energy / 10000
+
+		D.damage += disabler_damage_increase * 2.0 + additional_damage * 0.1
+		D.agony += disabler_damage_increase * 10 + additional_damage * 0.3
+
 		D.pixel_x += rand(-1, 1)
 		D.pixel_y += rand(-1, 1)
 		D.Fire(A, src, params)
@@ -154,12 +167,16 @@
 
 		do_audiovisual_effects(L)
 
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		var/additional_damage = FR.energy / 10000
+
 		var/stepped_by = pick(BP_R_LEG, BP_L_LEG)
-		L.electrocute_act(15, src, siemens_coeff = 1.0, def_zone = stepped_by) // electrocute act does a message.
+		L.electrocute_act(15 + additional_damage * 0.5, src, siemens_coeff = 1.0, def_zone = stepped_by) // electrocute act does a message.
 		L.Stun(2)
 
+		L.silent = max(L.silent, 2)
+
 		var/area/A = get_area(src)
-		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		FR.object_communicate(src, "!", "Mine trigger event at [A.name].", transfer=TRUE)
 
 /obj/item/mine/replicator/disarm()

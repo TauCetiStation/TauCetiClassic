@@ -40,6 +40,7 @@
 	handle_status_updates()
 
 	if(ckey)
+		walk(src, 0)
 		return
 
 	if(!disintegrating && excitement <= 0 && next_excitement_alert < world.time)
@@ -83,9 +84,11 @@
 			excitement = 10
 
 	if(state == REPLICATOR_STATE_COMBAT)
+		walk(src, 0)
 		return
 
 	if(state == REPLICATOR_STATE_HELPING)
+		walk(src, 0)
 		return
 
 	if(state == REPLICATOR_STATE_GOING_TO_HELP)
@@ -99,6 +102,7 @@
 
 	if(disintegrating)
 		return
+	walk(src, 0)
 	process_harvesting()
 
 /mob/living/simple_animal/hostile/replicator/proc/handle_status_updates()
@@ -110,13 +114,13 @@
 		else
 			clear_alert("swarm_upgrade")
 
-	if(health < maxHealth * 0.2 && next_attacked_alert < world.time)
+	if(health < maxHealth * 0.2 && next_attacked_alert < world.time && !ckey && state != REPLICATOR_STATE_COMBAT)
 		emote("beep!")
 		var/area/A = get_area(src)
 		FR.drone_message(src, "STRUCTURE INTEGRITY CRITICAL. LOCATION: [A.name].", transfer=TRUE)
 		next_attacked_alert = world.time + attacked_alert_cooldown
 
-	if(last_update_health - health > 1 && next_attacked_alert < world.time && !sacrifice_powering)
+	if(last_update_health - health > 1 && next_attacked_alert < world.time && !sacrifice_powering && !ckey && state != REPLICATOR_STATE_COMBAT)
 		emote("beep")
 		var/area/A = get_area(src)
 		FR.drone_message(src, "Structure integrity under threat. Location: [A.name].", transfer=TRUE)
@@ -129,11 +133,11 @@
 	if(last_disintegration + 1 MINUTE < world.time)
 		var/taken_damage = FALSE
 		if(!has_swarms_gift())
-			take_bodypart_damage(0.0, 0.5)
+			take_bodypart_damage(0.0, maxHealth / 120)
 			taken_damage = TRUE
 
 		if(isspaceturf(loc))
-			take_bodypart_damage(0.0, 1.5)
+			take_bodypart_damage(0.0, maxHealth / 40)
 			taken_damage = TRUE
 
 		if(stat == DEAD)
@@ -146,7 +150,7 @@
 
 		if(next_consume_alert < world.time && taken_damage)
 			next_consume_alert = world.time + 20 SECONDS
-			playsound_local(null, 'sound/effects/alert.ogg', VOL_EFFECTS_MASTER, 30 + 70 * (maxHealth - health) / maxHealth, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
+			playsound_local(null, 'sound/effects/alert.ogg', VOL_EFFECTS_MASTER, 15 + 60 * (maxHealth - health) / maxHealth, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
 			flash_color(src, flash_color="#ff0000", flash_time=5)
 			to_chat(src, "<span class='danger'><font size=2>This world can not support your body for long. You must <b>consume</b> to survive.</font></span>")
 	else
@@ -183,13 +187,9 @@
 		return
 
 	if(x != target_coordinates["x"] || y != target_coordinates["y"] || z != target_coordinates["z"])
-		var/turf/T = get_step_to(
-			src,
-			locate(target_coordinates["x"], target_coordinates["y"], target_coordinates["z"]),
-			-1
-		)
-		var/move_dir = get_dir(src, T)
-		Move(get_step(src, move_dir), move_dir)
+		var/turf/T = locate(target_coordinates["x"], target_coordinates["y"], target_coordinates["z"])
+		Goto(T, move_to_delay, 0)
+
 		help_steps--
 		if(help_steps < 0)
 			help_steps = 7
@@ -208,6 +208,37 @@
 		INVOKE_ASYNC(src, /mob/living.proc/help_other, R)
 		return
 
+/mob/living/simple_animal/hostile/replicator/proc/check_any_auto_disintegratables(turf/T)
+	if(can_auto_disintegrate(T))
+		return TRUE
+
+	for(var/atom/A in T)
+		if(!can_auto_disintegrate(A))
+			continue
+		return TRUE
+
+	return FALSE
+
+/mob/living/simple_animal/hostile/replicator/proc/move_to_target_coordinates()
+	if(!target_coordinates)
+		return FALSE
+
+	if(x == target_coordinates["x"] && y == target_coordinates["y"] && z == target_coordinates["z"])
+		target_coordinates = null
+		return FALSE
+
+	Goto(locate(target_coordinates["x"], target_coordinates["y"], target_coordinates["z"]), move_to_delay, 0)
+	return TRUE
+
+/mob/living/simple_animal/hostile/replicator/proc/check_can_move_to(atom/A, max_steps=2)
+	var/turf/target = get_turf(A)
+	var/turf/curr = get_turf(src)
+	for(var/i in 1 to max_steps)
+		curr = get_step_to(curr, -1)
+		if(curr == target)
+			return TRUE
+	return FALSE
+
 /mob/living/simple_animal/hostile/replicator/proc/process_wandering()
 	var/list/wander_directions = list() + cardinal
 	for(var/wander_dir in wander_directions)
@@ -223,18 +254,28 @@
 
 	excitement -= 1
 
+	if(move_to_target_coordinates())
+		return
+
+	for(var/turf/T in BORDER_TURFS(2, src))
+		if(!check_can_move_to(T))
+			continue
+
+		if(!check_any_auto_disintegratables(T))
+			continue
+
+		target_coordinates = list("x"=T.x, "y"=T.y, "z"=T.z)
+		move_to_target_coordinates()
+		return
+
 	var/mob/living/simple_animal/hostile/replicator/harvester = get_closest_replicator(harvesting=TRUE)
 	if(harvester && get_dist(src, harvester) < 7)
-		var/turf/closer_turf = get_step_to(src, get_turf(harvester), -1)
-		var/closer_dir = get_dir(src, closer_turf)
-		Move(closer_turf, closer_dir)
+		Goto(get_turf(harvester), move_to_delay, 0)
 		return
 
 	var/mob/living/simple_animal/hostile/replicator/R = get_closest_replicator(sentient=TRUE)
 	if(R && get_dist(src, R) < 7)
-		var/turf/closer_turf = get_step_to(src, get_turf(R), -1)
-		var/closer_dir = get_dir(src, closer_turf)
-		Move(closer_turf, closer_dir)
+		Goto(get_turf(R), move_to_delay, 0)
 		return
 
 	var/closest_replicator_dir = R ? get_dir(src, R) : pick(cardinal)

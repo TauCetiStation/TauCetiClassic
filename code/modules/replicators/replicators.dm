@@ -63,12 +63,14 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 		/obj/effect/proc_holder/spell,
 	)
 
-	maxHealth = 60
-	health = 60
+	maxHealth = 80
+	health = 80
 	response_harm = "hits"
-	harm_intent_damage = 2
+	harm_intent_damage = 0
 	melee_damage = 0
 	speed = -1
+
+	move_to_delay = 5
 
 	w_class = SIZE_SMALL
 

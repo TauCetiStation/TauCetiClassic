@@ -74,10 +74,21 @@
 	INVOKE_ASYNC(src, .proc/disintegrate, loc)
 
 /mob/living/simple_animal/hostile/replicator/proc/set_priority_target(atom/target)
+	if(is_priority_target(target))
+		return
+
+	if(priority_target_ref)
+		clear_priority_target()
+
+	RegisterSignal(target, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING), .proc/clear_priority_target)
 	priority_target_ref = "\ref[target]"
 	brave_up()
 
 /mob/living/simple_animal/hostile/replicator/proc/clear_priority_target()
+	var/atom/A = locate(priority_target_ref)
+	if(A)
+		UnregisterSignal(A, list(COMSIG_MOB_DIED, COMSIG_PARENT_QDELETING))
+
 	priority_target_ref = null
 	chill_down()
 
@@ -130,6 +141,8 @@
 /mob/living/simple_animal/hostile/replicator/CanAttack(atom/the_target)
 	if(see_invisible < the_target.invisibility)
 		return FALSE
+
 	if(is_priority_target(the_target))
 		return TRUE
-	return FALSE
+
+	return ..()

@@ -47,8 +47,9 @@
 	// Win condition is launching REPLICATORS_CATAPULTED_TO_WIN replicators.
 	var/replicators_launched = 0
 
-	var/upgrades_amount = 1
+	var/upgrades_amount = 0
 	var/next_upgrade_at = 0
+	var/first_ugprade_cooldown = 5 MINUTES
 	var/upgrade_cooldown = 30 MINUTES
 
 	var/prelude_announcement
@@ -60,7 +61,7 @@
 	spawned_at_time = world.time
 	vents4spawn = get_vents()
 
-	next_upgrade_at = world.time + upgrade_cooldown
+	next_upgrade_at = world.time + first_ugprade_cooldown
 
 /datum/faction/replicators/OnPostSetup()
 	prelude_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
@@ -192,7 +193,7 @@ Message ends."}
 	this_second_materials_change += material_amount
 
 	if(material_amount > 0)
-		materials_tax_pool += material_amount * REPLICATOR_TAX_RATE
+		materials_tax_pool = min(materials_tax_pool + material_amount * REPLICATOR_TAX_RATE, 100)
 
 	if(adjusted_by == null)
 		return

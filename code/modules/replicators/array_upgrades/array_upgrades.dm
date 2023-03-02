@@ -63,7 +63,7 @@
 			upgrade_strings[keystring] = 0
 		upgrade_strings[keystring] += 1
 
-	. = list()
+	. = ""
 	for(var/keystring in upgrade_strings)
 		. += "[keystring] ([upgrade_strings[keystring]])\n"
 
