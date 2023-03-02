@@ -9,6 +9,9 @@
 		if(get_dist(src, R) > 7)
 			continue
 
+		if(R.last_controller_ckey != last_controller_ckey)
+			continue
+
 		if(a_intent == INTENT_HARM)
 			R.set_priority_target(pointed_atom)
 		else
