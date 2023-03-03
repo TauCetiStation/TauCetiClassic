@@ -134,7 +134,7 @@
 	if(bandwidth >= max_bandwidth)
 		return
 
-	if(materials_consumed > consumed_materials_until_upgrade)
+	if(materials_consumed >= consumed_materials_until_upgrade)
 		materials_consumed = 0
 		consumed_materials_until_upgrade += REPLICATOR_BANDWIDTH_COST_INCREASE
 		swarm_chat_message("The Swarm", "Ample materials consumed. Bandwidth increased.", 5)
