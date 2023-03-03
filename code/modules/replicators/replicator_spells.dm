@@ -47,7 +47,7 @@
 	action_icon_state = "ui_replicate"
 
 	material_cost = REPLICATOR_COST_REPLICATE
-	objection_delay = 3 SECONDS
+	// objection_delay = 3 SECONDS
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/replicator_checks(mob/user, try_start)
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
@@ -60,16 +60,16 @@
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
-	var/area/A = get_area(user_replicator)
 	// to-do: sound
-	if(!objection_timer(user_replicator, "Proceeding with replication at [A.name]."))
+	var/datum/callback/checks = CALLBACK(src, .proc/replicator_checks_do_after_handler)
+	if(!do_after(3 SECONDS, user_replicator, target=user_replicator, extra_checks=checks))
 		return
 
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 
 	var/mob/living/simple_animal/hostile/replicator/R = new(user_replicator.loc)
-	R.set_last_controller(user_replicator.last_controller_ckey)
+	R.set_last_controller(user_replicator.last_controller_ckey, just_spawned=TRUE)
 
 	R.generation = "[user_replicator.generation][rand(0, 9)]"
 
