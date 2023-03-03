@@ -79,5 +79,6 @@
 #define ANTAG_HUD_SPACECOP      "antag_hud_cop"
 #define ANTAG_HUD_ENEMY_REV     "antag_hud_enemy_rev"
 
+
 /// cooldown for being shown the images for any particular data hud
 #define ADD_HUD_TO_COOLDOWN 20
