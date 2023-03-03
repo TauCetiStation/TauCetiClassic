@@ -69,7 +69,7 @@
 
 	if(a_intent == INTENT_HARM && get_turf(A) && get_turf(src))
 		SetNextMove(CLICK_CD_MELEE)
-		playsound(src, 'sound/weapons/crystal_pew.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, 'sound/weapons/guns/gunpulse_taser2.ogg', VOL_EFFECTS_MASTER)
 		var/obj/item/projectile/disabler/D = new(loc)
 		D.color = color
 
