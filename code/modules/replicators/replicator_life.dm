@@ -34,14 +34,14 @@
 
 	var/is_hungry = FALSE
 
+	var/can_starve = FALSE
+
 /mob/living/simple_animal/hostile/replicator/Life()
 	. = ..()
 	if(!.)
 		return
 
-	if(SSmobs.times_fired % 4 == 2)
-		handle_breath()
-
+	handle_breath()
 	handle_status_updates()
 
 	if(ckey)
@@ -116,18 +116,22 @@
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	if(!environment)
+		can_starve = TRUE
 		return
 
 	var/datum/gas_mixture/breath = loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
 	if(!breath)
+		can_starve = TRUE
 		return
 
 	if(breath.get_gas("fractol") < 1.0)
+		can_starve = TRUE
 		return
 
 	breath.volume = BREATH_VOLUME
 	breath.adjust_gas("fractol", -1.0)
 	loc.assume_air(breath)
+	can_starve = FALSE
 
 	last_disintegration = world.time
 
@@ -156,7 +160,7 @@
 	// This fixes a lot of stupid tactics, such as:
 	// - hiding a replicator somewhere in vents
 	// - yeeting yourself into space
-	if(last_disintegration + 1 MINUTE < world.time)
+	if(can_starve && last_disintegration + 1 MINUTE < world.time)
 		var/taken_damage = FALSE
 		if(!has_swarms_gift())
 			take_bodypart_damage(0.0, maxHealth / 120)
