@@ -62,7 +62,7 @@
 		if(isobserver(M))
 			speaker_name = "[FOLLOW_LINK(M, announcer)] [speaker_name]"
 
-		to_chat(M, "[open_tags][channel] [speaker_name] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags][jump_button]")
+		to_chat(M, "[open_tags][speaker_name] [channel] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags][jump_button]")
 
 /datum/faction/replicators/proc/announce_swarm(presence_ckey, message, atom/announcer=null)
 	var/font_size = 2.0
@@ -91,7 +91,7 @@
 		var/jump_button = transfer ? " <a href='?src=\ref[drone];replicator_jump=1'>(JMP)</a>" : ""
 		var/dismantle_button = dismantle ? " <a href='?src=\ref[drone];replicator_kill=1'>(KILL)</a>" : ""
 		var/objection_button = objection_time > 0 ? " <a href='?src=\ref[drone];replicator_objection=1'>(OBJ)</a>" : ""
-		to_chat(R.antag.current, "<span class='replicator'>\[???\]</span> <b>[drone.name]</b> requests, <span class='message'><span class='replicator'>\"[message]\"</span></span>[jump_button][dismantle_button][objection_button]")
+		to_chat(R.antag.current, "<b>[drone.name]</b> <span class='replicator'>\[???\]</span> requests, <span class='message'><span class='replicator'>\"[message]\"</span></span>[jump_button][dismantle_button][objection_button]")
 
 /datum/faction/replicators/proc/object_communicate(atom/object, tone, message, transfer=FALSE)
 	object.visible_message("<b>[src]</b> <i>beeps[tone]</i>")

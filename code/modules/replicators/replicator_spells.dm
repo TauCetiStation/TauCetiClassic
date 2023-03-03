@@ -177,7 +177,8 @@
 	if(RAI)
 		RAI.traps_built += 1
 
-	new /obj/item/mine/replicator(user_replicator.loc)
+	var/obj/item/mine/replicator/trap = new(user_replicator.loc)
+	trap.creator_ckey = user_replicator.last_controller_ckey
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 
 

@@ -18,6 +18,8 @@
 
 	var/disintegrated_entities = 0
 
+	var/mine_triggers = 0
+
 /datum/replicator_array_info/New(datum/faction/replicators/faction)
 	var/letter_number = length(faction.ckey2info) % length(greek_pronunciation) + 1
 	var/magnitude = 1 + round(length(faction.ckey2info) / (length(greek_pronunciation) - 1))

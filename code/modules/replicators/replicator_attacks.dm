@@ -105,6 +105,8 @@
 
 	var/armed = TRUE
 
+	var/creator_ckey
+
 /obj/item/mine/replicator/deconstruct()
 	try_trigger()
 	qdel(src)
@@ -163,6 +165,10 @@
 
 		var/area/A = get_area(src)
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		var/datum/replicator_array_info/RAI = FR.ckey2info[creator_ckey]
+		if(RAI)
+			RAI.mine_triggers += 1
+
 		FR.object_communicate(src, "!", "Mine trigger event at [A.name].", transfer=TRUE)
 		return
 
@@ -172,6 +178,10 @@
 		do_audiovisual_effects(L)
 
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		var/datum/replicator_array_info/RAI = FR.ckey2info[creator_ckey]
+		if(RAI)
+			RAI.mine_triggers += 1
+
 		var/additional_damage = FR.energy / 10000
 
 		var/stepped_by = pick(BP_R_LEG, BP_L_LEG)
