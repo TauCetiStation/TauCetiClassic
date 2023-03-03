@@ -613,7 +613,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	Stun(impact * 0.5)
 
-/mob/living/simple_animal/hostile/replicator/proc/set_last_controller(ckey)
+/mob/living/simple_animal/hostile/replicator/proc/set_last_controller(ckey, just_spawned=FALSE)
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	var/datum/replicator_array_info/old_RAI = FR.ckey2info[last_controller_ckey]
 	if(old_RAI)
@@ -625,7 +625,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	if(!RAI)
 		return
 
-	RAI.add_unit(src)
+	RAI.add_unit(src, just_spawned)
 
 	var/new_color = RAI.array_color
 	// to-do: sound on controller change
@@ -637,7 +637,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 /mob/living/simple_animal/hostile/replicator/examine(mob/user)
 	. = ..()
-	if(!isreplicator(user))
+	if(!isreplicator(user) && !isobserver(user))
 		return
 	if(!last_controller_ckey)
 		return

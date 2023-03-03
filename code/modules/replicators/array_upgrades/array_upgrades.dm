@@ -38,9 +38,9 @@
 
 	var/list/cached_choice_upgrades
 
-/datum/replicator_array_info/proc/add_unit(mob/living/simple_animal/hostile/replicator/R)
+/datum/replicator_array_info/proc/add_unit(mob/living/simple_animal/hostile/replicator/R, just_spawned=FALSE)
 	for(var/datum/replicator_array_upgrade/RAU as anything in acquired_upgrades)
-		RAU.add_to_unit(R)
+		RAU.add_to_unit(R, just_spawned)
 
 /datum/replicator_array_info/proc/remove_unit(mob/living/simple_animal/hostile/replicator/R)
 	for(var/datum/replicator_array_upgrade/RAU as anything in acquired_upgrades)
@@ -110,7 +110,7 @@
 	RAI.upgrade_type_pool |= allow_upgrade_types
 	RAI.upgrade_type_pool -= prohibit_upgrade_types
 
-/datum/replicator_array_upgrade/proc/add_to_unit(mob/living/simple_animal/hostile/replicator/R)
+/datum/replicator_array_upgrade/proc/add_to_unit(mob/living/simple_animal/hostile/replicator/R, just_spawned)
 	return
 
 // Must be a complete reversal of add_to_unit.
