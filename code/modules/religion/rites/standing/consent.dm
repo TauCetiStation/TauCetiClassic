@@ -140,7 +140,7 @@
 /datum/religion_rites/standing/consent/clownconversion
 	name = "Клоунконверсия"
 	desc = "Превращает маленького человека в Клоуна." // this is ref to Russian writers
-	ritual_length = (50 SECONDS)
+	ritual_length = (40 SECONDS)
 	ritual_invocations = list("From our mother to our soil we got the gift of bananas...",
 						"...From our mother to our ears we got the gift of horns...",
 						"...From our mother to our feet we walk on we got the shoes of length...")
