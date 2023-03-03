@@ -95,7 +95,6 @@
 	weaken = 3
 	impact_force = 5
 	hitscan = 1
-	armor_piercing = 0.5
 
 /obj/item/projectile/bullet/grenade/r4046
 	name = "rubber grenade"
