@@ -148,6 +148,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	deactivation_signal.name = "[name] core"
 	deactivation_signal.code = rand(1, 100)
 
+	AddComponent(/datum/component/replicator_regeneration)
+
 /obj/machinery/swarm_powered/bluespace_transponder/Destroy()
 	QDEL_NULL(deactivation_signal)
 	global.active_transponders -= src
@@ -181,7 +183,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 		see_invisible_level = M.see_invisible
 
 	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', VOL_EFFECTS_MASTER, 60)
-	AM.AddComponent(/datum/component/bluespace_move, AM.invisibility, see_invisible_level, AM.alpha)
+	AM.AddComponent(/datum/component/bluespace_move, src, AM.invisibility, see_invisible_level, AM.alpha)
 
 /obj/machinery/swarm_powered/bluespace_transponder/start_drone_energy_supply(mob/living/simple_animal/hostile/replicator/R)
 	. = ..()
@@ -218,10 +220,20 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 		FR.adjust_materials(REPLICATOR_COST_TRANSPONDER)
 		neutralize()
 
-	if(!(stat & NOPOWER))
-		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-		if(FR.collect_taxes(REPLICATOR_TRANSPONDER_CONSUMPTION_RATE))
-			FR.materials_consumed += REPLICATOR_TRANSPONDER_CONSUMPTION_RATE
+	if(stat & NOPOWER)
+		return
+
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+
+	if(FR.gas > 0)
+		var/total_waste = min(FR.gas, global.active_transponders * REPLICATOR_GAS_MOLES_TRANSPONDER_DISSIPATE_PER_TICK)
+		var/waste_per_portal = total_waste / global.active_transponders
+
+		if(FR.dissipate_fractol(src, waste_per_portal))
+			FR.adjust_fractol(-waste_per_portal)
+
+	if(FR.collect_taxes(REPLICATOR_TRANSPONDER_CONSUMPTION_RATE))
+		FR.materials_consumed += REPLICATOR_TRANSPONDER_CONSUMPTION_RATE
 
 /obj/machinery/swarm_powered/bluespace_transponder/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover, /mob/living/simple_animal/hostile/replicator))
@@ -233,8 +245,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 /obj/machinery/swarm_powered/bluespace_transponder/proc/neutralize()
 	playsound(src, 'sound/effects/basscannon.ogg', VOL_EFFECTS_MASTER, 50)
 	visible_message("<span class='notice'>[src] beeps for the last time, and collapses.</span>")
-	deactivation_signal.forceMove(loc)
-	deactivation_signal = null
+	if(deactivation_signal)
+		deactivation_signal.forceMove(loc)
+		deactivation_signal = null
 	qdel(src)
 
 /obj/machinery/swarm_powered/bluespace_transponder/attackby(obj/item/I, mob/user)
@@ -268,6 +281,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 	var/next_teleportation = 0
 	var/teleportation_cooldown = 1 MINUTE
 
+	var/has_crystal = TRUE
+
 /obj/machinery/power/replicator_generator/atom_init()
 	. = ..()
 	new /obj/structure/cable/power_rune(loc)
@@ -277,11 +292,16 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		FN.layer = LOW_OBJ_LAYER
 		FN.remove_area_node(FN)
 
+	AddComponent(/datum/component/replicator_regeneration)
+
+	update_icon()
+
 /obj/machinery/power/replicator_generator/Destroy()
 	// to-do: sound
 	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 
-	new /obj/item/bluespace_crystal/artificial(loc)
+	if(has_crystal)
+		new /obj/item/bluespace_crystal/artificial(loc)
 
 	var/obj/structure/forcefield_node/FN = locate() in loc
 	if(FN)
@@ -645,6 +665,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 
 	var/victory = FALSE
 
+	var/perc_finished = 0
+
 /obj/machinery/swarm_powered/bluespace_catapult/atom_init()
 	. = ..()
 	var/datum/announcement/centcomm/replicator/construction_began/CB = new
@@ -656,6 +678,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	update_transform()
 
 	global.poi_list += src
+
+	AddComponent(/datum/component/replicator_regeneration)
 
 /obj/machinery/swarm_powered/bluespace_catapult/Destroy()
 	global.poi_list -= src
@@ -669,7 +693,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	var/materials_satisfied = 1 - required_materials / max_required_materials
 	var/power_satisfied = 1 - required_power / max_required_power
 
-	var/perc_finished = FLOOR(materials_satisfied * power_satisfied * 100, 1)
+	perc_finished = FLOOR(materials_satisfied * power_satisfied * 100, 1)
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 
 	var/datum/announcement/centcomm/replicator/announcement
@@ -741,10 +765,17 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 
 /obj/machinery/swarm_powered/bluespace_catapult/examine(mob/user)
 	. = ..()
-	if(!isreplicator(user))
+	if(!isreplicator(user) && !isobserver(user))
 		return
-	to_chat(user, "<span class='warning'>This is your way out, onwards. Protect it at <b>ALL</b> costs.</span>")
+
+	if(isreplicator(user))
+		to_chat(user, "<span class='warning'>This is your way out, onwards. Protect it at <b>ALL</b> costs.</span>")
+	if(isobserver(user) && perc_finished < 100)
+		to_chat(user, "<span class='warning'>It is [perc_finished]% finished.</span>")
+
 	if(required_materials > 0)
 		to_chat(user, "<span class='notice'>It requires [required_materials] more materials.</span>")
 	if(required_power > 0)
 		to_chat(user, "<span class='notice'>It required [required_power] more power.</span>")
+	if(stat & NOPOWER)
+		to_chat(user, "<span class='warning'>It is not powered. It must be powered to consume.</span>")

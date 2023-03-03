@@ -12,7 +12,7 @@
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.9
 	var/gas_filter_strength = 1			//For gas mask filters
-	var/filter = list("phoron", "sleeping_agent")
+	var/filter = list("phoron", "sleeping_agent", "fractol")
 
 // **** Welding gas mask ****
 

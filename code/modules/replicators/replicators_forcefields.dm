@@ -87,6 +87,10 @@
 	)
 	smooth = SMOOTH_TRUE
 
+/obj/structure/replicator_forcefield/atom_init()
+	. = ..()
+	AddComponent(/datum/component/replicator_regeneration)
+
 /obj/structure/replicator_forcefield/Destroy()
 	// to-do: sound
 	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
@@ -169,6 +173,10 @@
 
 	max_integrity = 35
 	resistance_flags = CAN_BE_HIT | FIRE_PROOF
+
+/obj/structure/replicator_barricade/atom_init()
+	. = ..()
+	AddComponent(/datum/component/replicator_regeneration)
 
 /obj/structure/replicator_barricade/Destroy()
 	// to-do: sound

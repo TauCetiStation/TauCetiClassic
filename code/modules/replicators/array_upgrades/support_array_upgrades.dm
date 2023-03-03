@@ -2,14 +2,14 @@
 	category = REPLICATOR_UPGRADE_CATEGORY_SUPPORT
 
 
-/datum/replicator_array_upgrade/support/efficency
-	name = "Efficency"
+/datum/replicator_array_upgrade/support/efficiency
+	name = "Efficiency"
 	desc = "Manipulator upgrade speeds up disintegration speed."
 
-	icon_state = "upgrade_efficency"
+	icon_state = "upgrade_efficiency"
 
-/datum/replicator_array_upgrade/support/efficency/add_to_unit(mob/living/simple_animal/hostile/replicator/R)
+/datum/replicator_array_upgrade/support/efficiency/add_to_unit(mob/living/simple_animal/hostile/replicator/R)
 	R.efficency += 0.5
 
-/datum/replicator_array_upgrade/support/efficency/remove_from_unit(mob/living/simple_animal/hostile/replicator/R)
+/datum/replicator_array_upgrade/support/efficiency/remove_from_unit(mob/living/simple_animal/hostile/replicator/R)
 	R.efficency -= 0.5

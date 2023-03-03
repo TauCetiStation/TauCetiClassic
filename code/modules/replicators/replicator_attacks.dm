@@ -4,8 +4,6 @@
 	icon_state = "projectile"
 	icon = 'icons/mob/replicator.dmi'
 	light_color = "#0000ff"
-	//light_power = 2
-	//light_range = 2
 	damage = 3
 	damage_type = BURN
 	agony = 10
@@ -69,7 +67,7 @@
 		INVOKE_ASYNC(src, .proc/disintegrate_turf, get_turf(A))
 		return
 
-	if(a_intent == INTENT_HARM)
+	if(a_intent == INTENT_HARM && get_turf(A) && get_turf(src))
 		SetNextMove(CLICK_CD_MELEE)
 		playsound(src, 'sound/weapons/guns/gunpulse_taser2.ogg', VOL_EFFECTS_MASTER)
 		var/obj/item/projectile/disabler/D = new(loc)
@@ -83,7 +81,7 @@
 
 		D.pixel_x += rand(-1, 1)
 		D.pixel_y += rand(-1, 1)
-		D.Fire(A, src, params)
+		INVOKE_ASYNC(D, /obj/item/projectile.proc/Fire, A, src, params)
 		scatter_offset()
 
 		newtonian_move(get_dir(A, src))
@@ -96,7 +94,7 @@
 
 /obj/item/mine/replicator
 	name = "mine"
-	desc = "Distant stars under this crystallic floor are seemingly more blueish. Foreshadowing?!"
+	desc = "A floating barely visible crystal of immense energy. You can imagine it hurts to step onto."
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "trap"
 	layer = 3
@@ -110,6 +108,12 @@
 /obj/item/mine/replicator/deconstruct()
 	try_trigger()
 	qdel(src)
+
+/obj/item/mine/replicator/examine(mob/living/user)
+	. = ..()
+	if(!isreplicator(user))
+		return
+	to_chat(user, "<span class='notice'>At least if you are not elegant enough to dance around it's trappings.</span>")
 
 /obj/item/mine/replicator/try_trigger(atom/movable/AM)
 	if(isreplicator(AM))
@@ -218,4 +222,9 @@
 		to_chat(R, "<span class='notice'>Other presence is already attending this situation.</span>")
 		return
 
+	return ..()
+
+
+/mob/living/simple_animal/hostile/replicator/attacked_by(obj/item/I, mob/living/user, def_zone, power)
+	power /= armor["melee"]
 	return ..()

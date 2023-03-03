@@ -56,6 +56,8 @@
 	var/outbreak_announcement
 	var/quarantine_end_announcement
 
+	var/gas = 0
+
 /datum/faction/replicators/New()
 	..()
 	spawned_at_time = world.time
@@ -188,12 +190,12 @@ Message ends."}
 			intercept.info = intercepttext
 			intercept.update_icon()
 
+/datum/faction/replicators/proc/adjust_taxes(material_amount)
+	materials_tax_pool = min(materials_tax_pool + material_amount * REPLICATOR_TAX_RATE, 100)
+
 /datum/faction/replicators/proc/adjust_materials(material_amount, adjusted_by=null)
 	materials += material_amount
 	this_second_materials_change += material_amount
-
-	if(material_amount > 0)
-		materials_tax_pool = min(materials_tax_pool + material_amount * REPLICATOR_TAX_RATE, 100)
 
 	if(adjusted_by == null)
 		return
@@ -327,3 +329,36 @@ Message ends."}
 	materials_tax_pool -= tax_to_consume
 	adjust_materials(-material_to_consume)
 	return TRUE
+
+// Return whether dissipation is succesful.
+/datum/faction/replicators/proc/dissipate_fractol(atom/source_loc, moles)
+	var/datum/gas_mixture/environment = source_loc.return_air()
+	if(environment.return_pressure() >= WARNING_HIGH_PRESSURE)
+		return FALSE
+
+	var/datum/gas_mixture/breath = source_loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
+	if(!breath)
+		return FALSE
+
+	breath.volume = BREATH_VOLUME
+	breath.adjust_gas("fractol", moles)
+	source_loc.assume_air(breath)
+	return TRUE
+
+/datum/faction/replicators/proc/adjust_fractol(moles)
+	gas = clamp(gas + moles, 0, global.active_transponders * REPLICATOR_GAS_MOLES_PER_TRANSPODNER)
+
+/datum/faction/replicators/proc/create_fractol(atom/source, moles)
+	var/atom/source_loc = source.loc
+	if(!source_loc)
+		return
+
+	// They're in the corridor, it belongs to The Swarm.
+	if(source.invisibility > 0 && (locate(/obj/structure/bluespace_corridor) in source_loc))
+		adjust_fractol(moles)
+		return
+
+	if(dissipate_fractol(source_loc, moles))
+		return
+
+	adjust_fractol(moles)

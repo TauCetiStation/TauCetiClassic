@@ -58,10 +58,18 @@
 #define REPLICATOR_STARTING_UPGRADE_POOL list(\
 	/datum/replicator_array_upgrade/offensive/ranged_attack_damage,\
 	/datum/replicator_array_upgrade/defensive/max_health_points,\
-	/datum/replicator_array_upgrade/support/efficency,\
+	/datum/replicator_array_upgrade/support/efficiency,\
 )
 
 #define REPLICATOR_MUSIC_LENGTH ((2 MINUTES) + (26 SECONDS))
 
 // How much goes into the Materials Tax Pool per disintegration.
 #define REPLICATOR_TAX_RATE 0.15
+
+#define REPLICATOR_GAS_MOLES_PER_TRANSPODNER 20
+
+#define REPLICATOR_GAS_MOLES_TRANSPONDER_DISSIPATE_PER_TICK 10
+
+#define REPLICATOR_GAS_HEAL_PER_MOLE 1.0
+
+#define REPLICATOR_REGEN_PER_TICK 1.0

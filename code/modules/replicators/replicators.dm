@@ -139,6 +139,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	var/pixel_offset = 8
 
+	armor = list(
+		"melee" = 0.75
+	)
+
 /mob/living/simple_animal/hostile/replicator/atom_init()
 	. = ..()
 
@@ -174,6 +178,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	create_spawner(/datum/spawner/living/replicator, src)
 
 	last_disintegration = world.time
+
+	AddComponent(/datum/component/replicator_regeneration)
 
 /mob/living/simple_animal/hostile/replicator/Destroy()
 	global.idle_replicators -= src
@@ -642,7 +648,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 		return
 
 	to_chat(user, "<span class='notice'>[ckey ? "Is currently" : "Was lastly"] under the influence of [RAI.presence_name].</span>")
-	to_chat(user, "<span class='notice'>They have the following upgrades:\n[RAI.get_upgrades_string()]</span>")
+	if(length(RAI.acquired_upgrades) > 0)
+		to_chat(user, "<span class='notice'>They have the following upgrades:\n[RAI.get_upgrades_string()]</span>")
 
 	if(ckey)
 		if(user == src && FR.upgrades_amount > length(RAI.acquired_upgrades))
@@ -713,3 +720,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 /mob/living/simple_animal/hostile/replicator/help_prank(mob/living/target)
 	return FALSE
+
+/mob/living/simple_animal/hostile/replicator/start_pulling(atom/movable/AM)
+	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")

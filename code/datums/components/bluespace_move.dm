@@ -7,9 +7,14 @@
 	var/prev_see_invisible = SEE_INVISIBLE_LEVEL_ONE
 	var/prev_alpha = 255
 
-/datum/component/bluespace_move/Initialize(prev_invisibility, prev_see_invisible, prev_alpha)
+	var/atom/entry
+
+/datum/component/bluespace_move/Initialize(atom/entry, prev_invisibility, prev_see_invisible, prev_alpha)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	src.entry = entry
+	RegisterSignal(entry, list(COMSIG_PARENT_QDELETING), .proc/clear_entry)
 
 	var/atom/movable/AM = parent
 	src.prev_invisibility = prev_invisibility
@@ -41,7 +46,15 @@
 	REMOVE_TRAIT(AM, TRAIT_BLUESPACE_MOVING, BLUESPACE_MOVE_COMPONENT_TRAIT)
 
 	UnregisterSignal(AM, list(COMSIG_CLIENTMOB_MOVE, COMSIG_MOVABLE_MOVED))
+
+	clear_entry()
 	return ..()
+
+/datum/component/bluespace_move/proc/clear_entry()
+	SIGNAL_HANDLER
+
+	UnregisterSignal(entry, list(COMSIG_PARENT_QDELETING))
+	entry = null
 
 /datum/component/bluespace_move/proc/on_move_intent(datum/source, atom/Newloc, dir)
 	SIGNAL_HANDLER

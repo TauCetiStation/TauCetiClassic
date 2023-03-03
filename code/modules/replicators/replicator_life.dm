@@ -40,13 +40,7 @@
 		return
 
 	if(SSmobs.times_fired % 4 == 2)
-		var/datum/gas_mixture/environment = loc.return_air()
-		if(environment.return_pressure() < WARNING_HIGH_PRESSURE)
-			var/datum/gas_mixture/breath = loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
-			if(breath)
-				breath.volume = BREATH_VOLUME
-				breath.adjust_gas_temp("fractol", 10, bodytemperature)
-				loc.assume_air(breath)
+		handle_breath()
 
 	handle_status_updates()
 
@@ -116,6 +110,27 @@
 	walk(src, 0)
 	process_harvesting()
 
+/mob/living/simple_animal/hostile/replicator/proc/handle_breath()
+	if(last_disintegration + 1 MINUTE > world.time)
+		return
+
+	var/datum/gas_mixture/environment = loc.return_air()
+	if(!environment)
+		return
+
+	var/datum/gas_mixture/breath = loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
+	if(!breath)
+		return
+
+	if(breath.get_gas("fractol") < 1.0)
+		return
+
+	breath.volume = BREATH_VOLUME
+	breath.adjust_gas("fractol", -1.0)
+	loc.assume_air(breath)
+
+	last_disintegration = world.time
+
 /mob/living/simple_animal/hostile/replicator/proc/handle_status_updates()
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	var/datum/replicator_array_info/RAI = FR.ckey2info[last_controller_ckey]
@@ -148,11 +163,12 @@
 			taken_damage = TRUE
 
 		if(isspaceturf(loc))
-			take_bodypart_damage(0.0, maxHealth / 40)
+			take_bodypart_damage(0.0, maxHealth / 20)
 			taken_damage = TRUE
 
 		if(stat == DEAD)
-			FR.adjust_materials(REPLICATOR_COST_REPLICATE)
+			if(!isspaceturf(loc))
+				FR.adjust_materials(REPLICATOR_COST_REPLICATE)
 			gib()
 			return
 

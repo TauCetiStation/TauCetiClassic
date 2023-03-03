@@ -3,7 +3,7 @@
 
 
 /datum/replicator_array_upgrade/defensive/max_health_points
-	name = "Integriy"
+	name = "Integrity"
 	desc = "Growing out plates increases structural integrity."
 
 	icon_state = "upgrade_max_health"

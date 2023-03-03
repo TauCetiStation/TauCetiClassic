@@ -341,6 +341,11 @@
 /obj/machinery/swarm_powered/bluespace_transponder/get_unit_disintegration_time()
 	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
 
+/obj/machinery/swarm_powered/bluespace_transponder/replicator_act(mob/living/simple_animal/hostile/replicator/R)
+	QDEL_NULL(deactivation_signal)
+	deconstruct(TRUE)
+	return TRUE
+
 
 /obj/machinery/power/replicator_generator/can_be_auto_disintegrated()
 	return FALSE
@@ -350,6 +355,11 @@
 
 /obj/machinery/power/replicator_generator/get_unit_disintegration_time()
 	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
+
+/obj/machinery/power/replicator_generator/replicator_act(mob/living/simple_animal/hostile/replicator/R)
+	has_crystal = FALSE
+	deconstruct(TRUE)
+	return TRUE
 
 
 /obj/machinery/swarm_powered/bluespace_catapult/get_replicator_material_amount()

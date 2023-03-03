@@ -58,7 +58,7 @@
 /datum/replicator_array_info/proc/get_upgrades_string()
 	var/list/upgrade_strings = list()
 	for(var/datum/replicator_array_upgrade/RAU as anything in acquired_upgrades)
-		var/keystring = "[RAU.name]. [RAU.desc]\n"
+		var/keystring = "[RAU.name]. [RAU.desc]"
 		if(!upgrade_strings[keystring])
 			upgrade_strings[keystring] = 0
 		upgrade_strings[keystring] += 1
