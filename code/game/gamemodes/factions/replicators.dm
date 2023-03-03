@@ -347,7 +347,7 @@ Message ends."}
 	return TRUE
 
 /datum/faction/replicators/proc/adjust_fractol(moles)
-	gas = clamp(gas + moles, 0, global.active_transponders * REPLICATOR_GAS_MOLES_PER_TRANSPODNER)
+	gas = clamp(gas + moles, 0, length(global.active_transponders) * REPLICATOR_GAS_MOLES_PER_TRANSPODNER)
 
 /datum/faction/replicators/proc/create_fractol(atom/source, moles)
 	var/atom/source_loc = source.loc
