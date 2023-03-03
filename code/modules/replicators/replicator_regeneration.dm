@@ -14,7 +14,7 @@
 		return R.maxHealth - R.health
 
 	var/obj/O = parent
-	return O.max_integrity - O.atom_integrity
+	return O.max_integrity - O.get_integrity()
 
 /datum/component/replicator_regeneration/proc/regenerate(amount)
 	if(isreplicator(parent))
