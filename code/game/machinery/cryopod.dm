@@ -170,7 +170,7 @@ var/global/list/frozen_items = list()
 		return
 
 	//We don't want revs to get objectives that aren't for heads of staff. Letting them win or lose based on cryo is silly so we remove the objective.
-	if(!istype(O, /datum/objective/target/rp_rev) && !istype(O, /datum/objective/target/syndicate_rev))
+	if(!istype(O, /datum/objective/target/syndicate_rev))
 		O.find_target()
 
 	if(!O.target)
