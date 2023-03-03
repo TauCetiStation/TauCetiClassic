@@ -71,7 +71,12 @@
 		if(isobserver(M))
 			speaker_name = "[FOLLOW_LINK(M, announcer)] [speaker_name]"
 
-		send_to_chat(M, "[open_tags][speaker_name] [channel] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags][jump_button]", message, speaker=announcer)
+		send_to_chat(
+			M,
+			"[open_tags][speaker_name] [channel] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags][jump_button]",
+			message,
+			speaker=announcer,
+		)
 
 /datum/faction/replicators/proc/announce_swarm(presence_ckey, message, atom/announcer=null)
 	var/font_size = 2.0
@@ -85,7 +90,7 @@
 
 		font_size = goodwill_font_size
 
-	swarm_chat_message(RAI.presence_name, message, font_size, announcer=announcer, speaker=announcer)
+	swarm_chat_message(RAI.presence_name, message, font_size, announcer=announcer)
 
 // Mines currently also use this.
 /datum/faction/replicators/proc/drone_message(atom/drone, message, transfer=FALSE, dismantle=FALSE, objection_time=0)
@@ -102,7 +107,7 @@
 		var/objection_button = objection_time > 0 ? " <a href='?src=\ref[drone];replicator_objection=1;id='>(OBJ)</a>" : ""
 		var/processed_message = "<b>[drone.name]</b> <span class='replicator'>\[???\]</span> requests, <span class='message'><span class='replicator'>\"[message]\"</span></span>[jump_button][dismantle_button][objection_button]"
 
-		send_to_chat(R.antag.current, processed_message, message)
+		send_to_chat(R.antag.current, processed_message, message, speaker=drone)
 
 /datum/faction/replicators/proc/object_communicate(atom/object, tone, message, transfer=FALSE)
 	object.visible_message("<b>[src]</b> <i>beeps[tone]</i>")
