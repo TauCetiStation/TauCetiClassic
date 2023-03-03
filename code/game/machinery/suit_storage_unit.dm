@@ -611,18 +611,18 @@
 	return ..()
 
 /obj/machinery/suit_storage_unit/eris/standard_unit
-	overlay_color = "#B0B0B0"
+	overlay_color = "#b0b0b0"
 	SUIT_TYPE = /obj/item/clothing/suit/space/globose
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
 /obj/machinery/suit_storage_unit/eris/medical
-	overlay_color = "#50649A"
+	overlay_color = "#50649a"
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/medical
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/medical
 
 /obj/machinery/suit_storage_unit/eris/security
-	overlay_color = "#D04044" //A62228?
+	overlay_color = "#d04044" //A62228?
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/security
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/security
 
@@ -635,7 +635,7 @@
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/atmos
 
 /obj/machinery/suit_storage_unit/eris/syndi
-	overlay_color = "#D04044"
+	overlay_color = "#d04044"
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/syndi
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi
 	MASK_TYPE = /obj/item/clothing/mask/gas/syndicate
