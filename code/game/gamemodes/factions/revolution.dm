@@ -281,7 +281,7 @@
 					continue
 				if(!M.mind)
 					continue
-				if(M.mind.assigned_role in (global.command_positions + global.security_positions))
+				if(M.mind.assigned_role in (global.command_positions + global.security_positions + list("Internal Affairs Agent")))
 					add_faction_member(enemies, M)
 			//empty faction will be destroyed
 			enemies.check_populated()
