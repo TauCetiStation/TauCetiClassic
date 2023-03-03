@@ -62,7 +62,7 @@
 	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
 	// to-do: sound
 	var/datum/callback/checks = CALLBACK(src, .proc/replicator_checks_do_after_handler)
-	if(!do_after(3 SECONDS, user_replicator, target=user_replicator, extra_checks=checks))
+	if(!do_after(user_replicator, 3 SECONDS, target=user_replicator, extra_checks=checks))
 		return
 
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
