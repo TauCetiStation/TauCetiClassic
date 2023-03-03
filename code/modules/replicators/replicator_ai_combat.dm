@@ -47,8 +47,10 @@
 
 /mob/living/simple_animal/hostile/replicator/handle_combat_ai()
 	if(state == REPLICATOR_STATE_COMBAT)
+		stance = HOSTILE_STANCE_IDLE
 		return
 	if(is_hungry && !priority_target_ref)
+		stance = HOSTILE_STANCE_IDLE
 		return
 	return ..()
 

@@ -197,7 +197,7 @@
 	else
 		global.idle_replicators -= src
 
-	if(new_state != REPLICATOR_STATE_WANDERING && new_state != REPLICATOR_STATE_GOING_TO_HELP)
+	if(new_state != REPLICATOR_STATE_WANDERING && new_state != REPLICATOR_STATE_GOING_TO_HELP && new_state != REPLICATOR_STATE_AI_COMBAT)
 		target_coordinates = null
 		walk(src, 0)
 
