@@ -174,7 +174,7 @@
 			Retreat(target_distance)
 		else if(canmove)
 			Goto(target, move_to_delay, minimum_distance)
-		if(isturf(loc) && IsMeleeAttackReachable(src))	//If they're next to us, attack
+		if(isturf(loc) && IsMeleeAttackReachable(target))	//If they're next to us, attack
 			AttackingTarget()
 		return
 	if(canmove && target.loc != null && get_dist(src, target.loc) <= vision_range)//We can't see our target, but he's in our vision range still
@@ -218,7 +218,7 @@
 	if(!(target in ListTargets()))
 		LostTarget()
 		return 0
-	if(isturf(loc) && IsMeleeAttackReachable(src))
+	if(isturf(loc) && IsMeleeAttackReachable(target))
 		AttackingTarget()
 		return 1
 
