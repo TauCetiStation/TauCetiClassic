@@ -18,7 +18,7 @@
 		var/mob/living/L = A
 		do_attack_animation(L)
 		visible_message("<span class='warning'>[src] attacks [A]!</span>")
-		playsound(L, 'sound/weapons/flash.ogg', VOL_EFFECTS_MASTER)
+		playsound(L, 'sound/weapons/crystal_hit.ogg', VOL_EFFECTS_MASTER)
 
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		var/additional_damage = FR.energy / 10000
@@ -69,7 +69,7 @@
 
 	if(a_intent == INTENT_HARM && get_turf(A) && get_turf(src))
 		SetNextMove(CLICK_CD_MELEE)
-		playsound(src, 'sound/weapons/guns/gunpulse_taser2.ogg', VOL_EFFECTS_MASTER)
+		playsound(src, 'sound/weapons/crystal_pew.ogg', VOL_EFFECTS_MASTER)
 		var/obj/item/projectile/disabler/D = new(loc)
 		D.color = color
 
