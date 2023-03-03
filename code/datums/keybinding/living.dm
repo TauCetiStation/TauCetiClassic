@@ -73,6 +73,8 @@
 	description = ""
 
 /datum/keybinding/living/select_help_intent/down(client/user)
+	if(issilicon(user))
+		return
 	user.mob?.a_intent_change(INTENT_HELP)
 	return TRUE
 
@@ -83,6 +85,8 @@
 	description = ""
 
 /datum/keybinding/living/select_disarm_intent/down(client/user)
+	if(issilicon(user))
+		return
 	user.mob?.a_intent_change(INTENT_PUSH)
 	return TRUE
 
@@ -93,6 +97,8 @@
 	description = ""
 
 /datum/keybinding/living/select_grab_intent/down(client/user)
+	if(issilicon(user))
+		return
 	user.mob?.a_intent_change(INTENT_GRAB)
 	return TRUE
 
@@ -103,5 +109,7 @@
 	description = ""
 
 /datum/keybinding/living/select_harm_intent/down(client/user)
+	if(issilicon(user))
+		return
 	user.mob?.a_intent_change(INTENT_HARM)
 	return TRUE
