@@ -24,6 +24,15 @@
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	FR.announce_swarm(last_controller_ckey, message, announcer=src)
 
+/datum/faction/replicators/proc/send_to_chat(mob/target, message, unprocessed_message, mob/speaker=null)
+	if(speaker && target.client && target.client.prefs.show_runechat)
+		var/list/span_list = list()
+		if(copytext_char(message, -2) == "!!")
+			span_list.Add("yell")
+		target.show_runechat_message(speaker, null, capitalize(unprocessed_message), span_list)
+
+	to_chat(target, message)
+
 /datum/faction/replicators/proc/swarm_chat_message(presence_name, message, font_size, announcer=null)
 	var/list/listening = list()
 
@@ -62,7 +71,7 @@
 		if(isobserver(M))
 			speaker_name = "[FOLLOW_LINK(M, announcer)] [speaker_name]"
 
-		to_chat(M, "[open_tags][speaker_name] [channel] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags][jump_button]")
+		send_to_chat(M, "[open_tags][speaker_name] [channel] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags][jump_button]", message, speaker=announcer)
 
 /datum/faction/replicators/proc/announce_swarm(presence_ckey, message, atom/announcer=null)
 	var/font_size = 2.0
@@ -70,13 +79,13 @@
 	var/datum/replicator_array_info/RAI = ckey2info[presence_ckey]
 	var/datum/replicator_array_info/RAI_max = ckey2info[max_goodwill_ckey]
 
-	if(RAI_max && RAI_max.swarms_goodwill > 0.0)
+	if(RAI && RAI_max && RAI_max.swarms_goodwill > 0.0)
 		var/goodwill_coeff = RAI.swarms_goodwill / RAI_max.swarms_goodwill
 		var/goodwill_font_size = clamp(CEIL(goodwill_coeff * 3.0) + 1.0, 2.0, 4.0)
 
 		font_size = goodwill_font_size
 
-	swarm_chat_message(RAI.presence_name, message, font_size, announcer=announcer)
+	swarm_chat_message(RAI.presence_name, message, font_size, announcer=announcer, speaker=announcer)
 
 // Mines currently also use this.
 /datum/faction/replicators/proc/drone_message(atom/drone, message, transfer=FALSE, dismantle=FALSE, objection_time=0)
@@ -90,8 +99,10 @@
 			continue
 		var/jump_button = transfer ? " <a href='?src=\ref[drone];replicator_jump=1'>(JMP)</a>" : ""
 		var/dismantle_button = dismantle ? " <a href='?src=\ref[drone];replicator_kill=1'>(KILL)</a>" : ""
-		var/objection_button = objection_time > 0 ? " <a href='?src=\ref[drone];replicator_objection=1'>(OBJ)</a>" : ""
-		to_chat(R.antag.current, "<b>[drone.name]</b> <span class='replicator'>\[???\]</span> requests, <span class='message'><span class='replicator'>\"[message]\"</span></span>[jump_button][dismantle_button][objection_button]")
+		var/objection_button = objection_time > 0 ? " <a href='?src=\ref[drone];replicator_objection=1;id='>(OBJ)</a>" : ""
+		var/processed_message = "<b>[drone.name]</b> <span class='replicator'>\[???\]</span> requests, <span class='message'><span class='replicator'>\"[message]\"</span></span>[jump_button][dismantle_button][objection_button]"
+
+		send_to_chat(R.antag.current, processed_message, message)
 
 /datum/faction/replicators/proc/object_communicate(atom/object, tone, message, transfer=FALSE)
 	object.visible_message("<b>[src]</b> <i>beeps[tone]</i>")
