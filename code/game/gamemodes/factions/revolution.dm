@@ -59,23 +59,12 @@
 				return FALSE
 	return TRUE
 
-/datum/faction/revolution/check_win()
-	var/win = IsSuccessful()
-	if(config.continous_rounds)
-		if(win && SSshuttle)
-			SSshuttle.fake_recall = FALSE
-		return FALSE
-
-	if(win)
-		return TRUE
-	return FALSE
-
 /datum/faction/revolution/custom_result()
 	var/dat = ""
 	if(IsSuccessful())
 		var/dead_heads = 0
 		var/alive_heads = 0
-		for(var/datum/mind/head_mind in get_all_heads())
+		for(var/datum/mind/head_mind as anything in get_all_heads())
 			if(head_mind.current.stat == DEAD)
 				dead_heads++
 			else
@@ -255,26 +244,10 @@
 
 	return dat
 
-/datum/faction/revolution/flash_revolution
-	initroletype = /datum/role/rev_leader/flash_rev_leader
-	min_roles = 1
-	var/victory_is_near = FALSE
-	var/shuttle_timer_started = FALSE
-
-/datum/faction/revolution/flash_revolution/add_new_objective(mob/M)
-	//located not on station - you are not a headstuff, goodbye
-	var/turf/T = get_turf(M)
-	if(T && is_station_level(T.z))
-		return ..()
-
-/datum/faction/revolution/flash_revolution/latespawn(mob/M)
-	if(M.mind.assigned_role in command_positions)
-		//shuttle delay
-		addtimer(CALLBACK(src, .proc/add_new_objective, M), 6000)
-
-/datum/faction/revolution/flash_revolution/proc/send_evac_to_centcom()
+/datum/faction/revolution/proc/send_evac_to_centcom()
 	if(SSshuttle.online || SSshuttle.departed)
 		return
+	SSshuttle.fake_recall = FALSE
 	SSshuttle.incall(1)
 	SSshuttle.announce_emer_called.play()
 	//lore: CentCom does not expect to save the remaining heads with this shuttle. That one is for civilians workers.
