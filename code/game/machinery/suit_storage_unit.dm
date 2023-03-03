@@ -574,10 +574,6 @@
 		A.vis_contents -= src
 	return ..()
 
-/*obj/effect/flicker_overlay/eris_door
-	icon = 'icons/obj/suitstorage.dmi'
-	icon_state = "closed"*/
-
 /obj/machinery/suit_storage_unit/eris
 	icon_state = "suit_storage_map"
 	layer = BELOW_OBJ_LAYER // Removed suit should always display above it
