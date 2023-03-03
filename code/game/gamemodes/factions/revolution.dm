@@ -12,7 +12,7 @@
 	ID = F_REVOLUTION
 	required_pref = ROLE_REV
 
-	initroletype = /datum/role/rev_leader
+	initroletype = /datum/role/rev_leader/flash_rev_leader
 	roletype = /datum/role/rev
 
 	min_roles = 1
@@ -22,6 +22,8 @@
 
 	var/last_command_report = 0
 	var/tried_to_add_revheads = 0
+	var/victory_is_near = FALSE
+	var/shuttle_timer_started = FALSE
 
 /datum/faction/revolution/proc/get_all_heads()
 	var/list/heads = list()
@@ -73,7 +75,7 @@
 	if(IsSuccessful())
 		var/dead_heads = 0
 		var/alive_heads = 0
-		for(var/datum/mind/head_mind as anything in get_all_heads())
+		for(var/datum/mind/head_mind in get_all_heads())
 			if(head_mind.current.stat == DEAD)
 				dead_heads++
 			else
@@ -93,16 +95,21 @@
 	return dat
 
 /datum/faction/revolution/proc/add_new_objective(mob/M)
+	//located not on station - you are not a headstuff, goodbye
+	var/turf/T = get_turf(M)
+	if(!T || !is_station_level(T.z))
+		return
 	var/datum/objective/target/rev_obj = AppendObjective(/datum/objective/target/syndicate_rev, TRUE)
 	if(rev_obj)
 		rev_obj.target = M.mind
 		rev_obj.explanation_text = rev_obj.format_explanation()
 		AnnounceObjectives()
+		log_debug("Adding head kill/capture/convert objective for [M.mind.name]")
 
 /datum/faction/revolution/latespawn(mob/M)
 	if(M.mind.assigned_role in command_positions)
-		log_debug("Adding head kill/capture/convert objective for [M.mind.name]")
-		add_new_objective(M)
+		//shuttle delay
+		addtimer(CALLBACK(src, .proc/add_new_objective, M), 6000)
 
 /datum/faction/revolution/proc/add_revhead()
 	// only perform rev checks once in a while
@@ -258,7 +265,7 @@
 	//located not on station - you are not a headstuff, goodbye
 	var/turf/T = get_turf(M)
 	if(T && is_station_level(T.z))
-		return ..(M)
+		return ..()
 
 /datum/faction/revolution/flash_revolution/latespawn(mob/M)
 	if(M.mind.assigned_role in command_positions)
@@ -274,7 +281,7 @@
 	var/datum/announcement/centcomm/revolution_succesfull/announcement = new
 	announcement.play()
 
-/datum/faction/revolution/flash_revolution/IsSuccessful()
+/datum/faction/revolution/IsSuccessful()
 	var/all_heads = objective_holder.objectives.len
 	if(all_heads <= 0)
 		//no heads stuff. Victory?
@@ -287,7 +294,7 @@
 		return TRUE
 	return FALSE
 
-/datum/faction/revolution/flash_revolution/check_win()
+/datum/faction/revolution/check_win()
 	//check half-win revolution
 	if(IsSuccessful())
 		//create enemies of revolution
@@ -321,8 +328,7 @@
 			return TRUE
 	return FALSE
 
-//I couldn't think of anything better than leaving the current heads count and colorize custom text output
-/datum/faction/revolution/flash_revolution/custom_result()
+/datum/faction/revolution/custom_result()
 	var/dat = ""
 	if(IsSuccessful())
 		var/dead_heads = 0
