@@ -11027,7 +11027,7 @@
 	},
 /area/station/medical/hallway)
 "cvh" = (
-/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/suit_storage_unit/eris/standard_unit,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -13042,11 +13042,7 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "cZe" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/engineering,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/engineering,
+/obj/machinery/suit_storage_unit/eris/engineering,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -25255,11 +25251,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/dormitories/dormthree)
 "gRo" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/security,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/security,
+/obj/machinery/suit_storage_unit/eris/security,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -39705,12 +39697,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "luW" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/atmos,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/atmos,
-/obj/item/weapon/tank/oxygen,
+/obj/machinery/suit_storage_unit/eris/engineering/atmos,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -42366,11 +42353,7 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/gym)
 "mkf" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/rig/security,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/security,
-/obj/item/clothing/shoes/magboots,
+/obj/machinery/suit_storage_unit/eris/security,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -61160,11 +61143,7 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "smG" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/rig/medical,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/medical,
-/obj/item/clothing/shoes/magboots,
+/obj/machinery/suit_storage_unit/eris/medical,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -79046,15 +79025,10 @@
 	},
 /area/station/civilian/locker)
 "xUM" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/atmos,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/atmos,
-/obj/item/weapon/tank/oxygen,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/machinery/suit_storage_unit/eris/engineering/atmos,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"

@@ -555,3 +555,91 @@
 /obj/machinery/suit_storage_unit/attack_paw(mob/user)
 	to_chat(user, "<span class='info'>The console controls are far too complicated for your tiny brain!</span>")
 	return
+
+/obj/effect/flicker_overlay
+	name = ""
+	icon_state = ""
+	mouse_opacity = 0
+
+/obj/effect/flicker_overlay/New(atom/movable/loc)
+	..()
+	icon = loc.icon
+	layer = loc.layer
+	plane = loc.plane
+	loc.vis_contents += src
+
+/obj/effect/flicker_overlay/Destroy()
+	if(istype(loc, /atom/movable))
+		var/atom/movable/A = loc
+		A.vis_contents -= src
+	return ..()
+
+/*obj/effect/flicker_overlay/eris_door
+	icon = 'icons/obj/suitstorage.dmi'
+	icon_state = "closed"*/
+
+/obj/machinery/suit_storage_unit/eris
+	icon_state = "suit_storage_map"
+	layer = BELOW_OBJ_LAYER // Removed suit should always display above it
+	var/overlay_color
+	var/obj/effect/flicker_overlay/door_overlay
+
+/obj/machinery/suit_storage_unit/eris/atom_init()
+	. = ..()
+	door_overlay = new(src)
+	if(icon_state == "suit_storage_map")
+		icon_state = "suit_storage"
+	update_icon()
+
+/obj/machinery/suit_storage_unit/eris/update_icon()
+	cut_overlays()
+
+	if(overlay_color)
+		var/image/I = image(icon, icon_state = "color_grayscale")
+		I.color = overlay_color
+		add_overlay(I)
+
+	if(HELMET)
+		add_overlay("helmet")
+	if(SUIT)
+		add_overlay("suit")
+
+	door_overlay?.icon_state = isopen ? "open" : "closed"
+
+/obj/machinery/suit_storage_unit/eris/toggle_open(mob/user)
+	. = ..()
+	flick(isopen ? "anim_open" : "anim_close", door_overlay)
+
+/obj/machinery/suit_storage_unit/eris/Destroy()
+	QDEL_NULL(door_overlay)
+	return ..()
+
+/obj/machinery/suit_storage_unit/eris/standard_unit
+	overlay_color = "#B0B0B0"
+	SUIT_TYPE = /obj/item/clothing/suit/space/globose
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose
+	MASK_TYPE = /obj/item/clothing/mask/breath
+
+/obj/machinery/suit_storage_unit/eris/medical
+	overlay_color = "#50649A"
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/medical
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/medical
+
+/obj/machinery/suit_storage_unit/eris/security
+	overlay_color = "#D04044" //A62228?
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/security
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/security
+
+/obj/machinery/suit_storage_unit/eris/engineering
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/engineering
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/engineering
+
+/obj/machinery/suit_storage_unit/eris/engineering/atmos
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/atmos
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/atmos
+
+/obj/machinery/suit_storage_unit/eris/syndi
+	overlay_color = "#D04044"
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/syndi
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/syndi
+	MASK_TYPE = /obj/item/clothing/mask/gas/syndicate
