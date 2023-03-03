@@ -47,5 +47,5 @@
 		var/area/A = get_area(global.bluespace_catapults[1])
 		stat("Catapult Location:", "[A.name]")
 
-	if(length(RAI.acquired_upgrades) > 0)
+	if(RAI && length(RAI.acquired_upgrades) > 0)
 		stat("Array Upgrades:", RAI.get_upgrades_string())
