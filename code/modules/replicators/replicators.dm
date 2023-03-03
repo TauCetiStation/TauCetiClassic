@@ -140,7 +140,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	var/pixel_offset = 8
 
 	armor = list(
-		"melee" = 0.75
+		"melee" = 0.7
 	)
 
 /mob/living/simple_animal/hostile/replicator/atom_init()
