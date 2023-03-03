@@ -618,20 +618,23 @@
 
 /obj/machinery/suit_storage_unit/eris/medical
 	overlay_color = "#50649a"
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/medical
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/medical/magpulse
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/medical
+	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
 
 /obj/machinery/suit_storage_unit/eris/security
 	overlay_color = "#d04044" //A62228?
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/security
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/security/magpulse
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/security
+	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
 
 /obj/machinery/suit_storage_unit/eris/engineering
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/engineering
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/engineering/magpulse
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/engineering
+	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
 
 /obj/machinery/suit_storage_unit/eris/engineering/atmos
-	SUIT_TYPE = /obj/item/clothing/suit/space/rig/atmos
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/atmos/magpulse
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/atmos
 
 /obj/machinery/suit_storage_unit/eris/syndi

@@ -607,6 +607,10 @@
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/metalfoam_spray)
 
+/obj/item/clothing/suit/space/rig/engineering/magpulse/atom_init()
+	. = ..()
+	boots = new(src)
+
 //Chief Engineer's rig
 /obj/item/clothing/head/helmet/space/rig/engineering/chief
 	name = "advanced hardsuit helmet"
@@ -998,6 +1002,10 @@
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/healthscanner)
 
+/obj/item/clothing/suit/space/rig/medical/magpulse/atom_init()
+	. = ..()
+	boots = new(src)
+
 //CMO Rig
 /obj/item/clothing/head/helmet/space/rig/medical/cmo
 	name = "advanced medical hardsuit helmet"
@@ -1053,6 +1061,10 @@
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
 
+/obj/item/clothing/suit/space/rig/security/magpulse/atom_init()
+	. = ..()
+	boots = new(src)
+
 //HoS Rig
 /obj/item/clothing/head/helmet/space/rig/security/hos
 	name = "advanced security hardsuit helmet"
@@ -1091,6 +1103,10 @@
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/metalfoam_spray)
+
+/obj/item/clothing/suit/space/rig/atmos/magpulse/atom_init()
+	. = ..()
+	boots = new(src)
 
 //Science rig
 /obj/item/clothing/head/helmet/space/rig/science
