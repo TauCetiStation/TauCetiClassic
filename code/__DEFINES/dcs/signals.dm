@@ -363,3 +363,15 @@
 
 // send this signal to toggle zoom in /datum/component/zoom: (mob/user)
 #define COMSIG_ZOOM_TOGGLE "zoom_toggle"
+
+// sent if the waiter check was successful in /datum/gun_modular/component/check/proc/SuccessCheck(datum/process_fire/process)
+#define COMSIG_GUN_CHECK_SUCCESS "gun_check_success"
+
+// sent if the waiter check was failed in /datum/gun_modular/component/check/proc/FailCheck(datum/process_fire/process)
+#define COMSIG_GUN_CHECK_FAIL "gun_check_fail"
+
+// sent when a new action has occurred in the firing process and a transition to the next one occurs in /datum/gun_modular/component/proc/Action(datum/process_fire/process)
+#define COMSIG_GUN_COMPONENT_ACTION "gun_component_action"
+
+// sent when a new action has occurred in the firing process and this is the last component in /datum/gun_modular/component/proc/Action(datum/process_fire/process)
+#define COMSIG_GUN_COMPONENT_ACTION_LAST "gun_component_action_last"

@@ -162,7 +162,7 @@
 			if(!chambered.BB.fake)
 				user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
 			chambered.BB.damage *= 1.3
-		if(!chambered.fire(src, target, user, params, , silenced))
+		if(!chambered.fire(new /datum/process_fire(), target, user, params, , silenced))
 			shoot_with_empty_chamber(user)
 		else
 			shoot_live_shot(user)

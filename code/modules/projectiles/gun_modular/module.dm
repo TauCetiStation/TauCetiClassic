@@ -14,6 +14,7 @@
 	point_module = AddComponent(/datum/component/point_and_point, module_id)
 	configuration = new(src)
 	init_default_components_module()
+	init_allowed_modules()
 
 /obj/item/gun_modular/module/attackby(obj/item/I, mob/user, params)
 	. = ..()
@@ -54,6 +55,9 @@
 
 	default_components_module[C.id_component] = C
 
+	return TRUE
+
+/obj/item/gun_modular/module/proc/init_allowed_modules()
 	return TRUE
 
 // добавляем айди модуля в доступные для прицепления модули

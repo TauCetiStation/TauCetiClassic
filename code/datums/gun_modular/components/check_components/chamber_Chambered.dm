@@ -3,15 +3,13 @@
 
 /datum/gun_modular/component/check/chamber_Chambered/Action(datum/process_fire/process)
 
-	var/datum/gun_modular/component/data/cache_data = process.GetCacheData(AMMO_FIRE)
+	var/datum/gun_modular/component/data/chamber_ammoCase/cache_data = process.GetCacheData(AMMO_FIRE)
 
 	if(!cache_data)
 		FailCheck(process)
 		return ..()
 
-	var/obj/item/ammo_casing/chambered = cache_data.GetData()
-
-	if(isnull(chambered))
+	if(!cache_data.IsValid())
 		FailCheck(process)
 		return ..()
 

@@ -9,3 +9,16 @@
 
 	value = ammo
 	. = ..()
+
+/datum/gun_modular/component/data/chamber_ammoCase/IsValid()
+	if(!..())
+		return FALSE
+
+	if(isnull(value))
+		return FALSE
+
+	if(!istype(value, /obj/item/ammo_casing))
+		return FALSE
+
+	return TRUE
+

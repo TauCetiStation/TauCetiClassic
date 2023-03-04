@@ -13,12 +13,16 @@
 
 /datum/gun_modular/component/check/proc/FailCheck(datum/process_fire/process)
 
+	SEND_SIGNAL(src, COMSIG_GUN_CHECK_FAIL)
+
 	if(!fail_component)
 		return FALSE
 
 	return ChangeNextComponent(fail_component.CopyComponentGun())
 
 /datum/gun_modular/component/check/proc/SuccessCheck(datum/process_fire/process)
+
+	SEND_SIGNAL(src, COMSIG_GUN_CHECK_SUCCESS)
 
 	if(!success_component)
 		return FALSE

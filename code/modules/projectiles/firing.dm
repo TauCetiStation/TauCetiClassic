@@ -1,22 +1,22 @@
-/obj/item/ammo_casing/proc/fire(obj/item/weapon/gun/weapon, atom/target, mob/living/user, params, distro, quiet)
+/obj/item/ammo_casing/proc/fire(datum/process_fire/process, atom/target, mob/living/user, params, distro, quiet)
 	var/boolet_number = 0
 	distro += variance
 	if(isnull(BB))
 		return
 	BB.shot_from = loc
+	var/datum/gun_modular/component/data/start_fire_loc/curloc_fire = process.GetCacheData(START_FIRE_LOC)
+	var/atom/curloc = get_turf(src)
+	var/targloc = get_turf(target)
+
+	if(!curloc_fire.IsValid())
+		curloc = curloc_fire.GetData()
 
 	for(var/i = max(1, pellets), i > 0, i--)
 		boolet_number++
-		var/atom/curloc = weapon.loc
-		if(istype(curloc, /obj/item/weapon/gun/projectile))
-			curloc = curloc.loc
-		if(ismob(curloc))
-			curloc = curloc.loc
-		var/targloc = get_turf(target)
 		ready_proj(target, user, quiet)
 		if(distro)
 			targloc = spread(targloc, curloc, distro)
-		if(!throw_proj(weapon, target, targloc, user, params, boolet_number))
+		if(!throw_proj(curloc, target, targloc, user, params, boolet_number))
 			return 0
 		if(i > 1)
 			newshot()
@@ -35,12 +35,7 @@
 	BB.silenced = quiet
 	return
 
-/obj/item/ammo_casing/proc/throw_proj(obj/item/weapon/gun/weapon, atom/target, turf/targloc, mob/living/user, params, boolet_number)
-	var/turf/curloc = weapon.loc
-	if(istype(curloc, /obj/item/weapon/gun/projectile))
-		curloc = curloc.loc
-	if(ismob(curloc))
-		curloc = curloc.loc
+/obj/item/ammo_casing/proc/throw_proj(turf/curloc, atom/target, turf/targloc, mob/living/user, params, boolet_number)
 	if (!istype(targloc) || !istype(curloc) || !BB)
 		return 0
 	if(targloc == curloc)

@@ -9,3 +9,16 @@
 
 	value = user
 	. = ..()
+
+/datum/gun_modular/component/data/gun_user/IsValid()
+
+	if(!..())
+		return FALSE
+
+	if(isnull(value))
+		return FALSE
+
+	if(!istype(value, /mob))
+		return FALSE
+
+	return TRUE

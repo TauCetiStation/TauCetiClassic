@@ -15,12 +15,21 @@
 		process.AddCacheData(src)
 		return ..()
 
-	cache_data.ChangeData(value)
+	cache_data.ChangeData(cache_data)
 	return ..()
 
-/datum/gun_modular/component/data/proc/ChangeData(new_value)
+/datum/gun_modular/component/data/CopyComponentGun()
 
-	value = new_value
+	var/datum/gun_modular/component/data/new_component = ..()
+
+	new_component.value = value
+	new_component.id_data = id_data
+
+	return new_component
+
+/datum/gun_modular/component/data/proc/ChangeData(datum/gun_modular/component/data/data)
+
+	value = data.value
 
 	return TRUE
 
@@ -31,10 +40,9 @@
 
 	return value
 
-/datum/gun_modular/component/data/CopyComponentGun()
+/datum/gun_modular/component/data/proc/IsValid()
 
-	var/datum/gun_modular/component/data/new_component = ..()
+	if(!value)
+		return FALSE
 
-	new_component.value = value
-
-	return new_component
+	return TRUE

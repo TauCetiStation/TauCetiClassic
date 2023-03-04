@@ -23,5 +23,6 @@
 #define SILENSED "silensed"
 #define START_FIRE_LOC "start_fire_loc"
 #define GUN_LOC "gun_loc"
+#define FIRE_RESULT "fire_result"
 
 #define RECOIL "recoil"

@@ -1,6 +1,7 @@
 /datum/process_fire
 	var/datum/gun_modular/component/first_component
 	var/list/datum/gun_modular/component/data/cache_data = list()
+	var/datum/gun_modular/component/active_component = null
 
 /datum/process_fire/proc/PrepareCacheData()
 
@@ -51,3 +52,11 @@
 	first_component.Action(src)
 
 	return TRUE
+
+/datum/process_fire/proc/SetActiveComponent(datum/gun_modular/component/C)
+
+	active_component = C
+
+/datum/process_fire/proc/GetActiveComponent()
+
+	return active_component

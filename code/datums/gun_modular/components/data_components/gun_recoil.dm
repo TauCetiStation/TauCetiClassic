@@ -11,8 +11,8 @@
 	. = ..()
 
 
-/datum/gun_modular/component/data/gun_recoil/ChangeData(new_value)
+/datum/gun_modular/component/data/gun_recoil/ChangeData(datum/gun_modular/component/data/data)
 
-	value += new_value
+	value += data.GetData()
 
 	return TRUE
