@@ -1282,6 +1282,18 @@ var/global/list/tourette_bad_words= list(
 
 	return temp
 
+/mob/living/carbon/human/handle_nutrition()
+	. = ..()
+	var/nutrition_to_remove = 0
+	var/met_factor = get_metabolism_factor()
+	var/bumped_bodyparts_met = 0
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.pumped > 0)
+			bumped_bodyparts_met += BP.pumped / 100
+	if(bumped_bodyparts_met > 0)
+		nutrition_to_remove += (met_factor + bumped_bodyparts_met) * 0.1
+		nutrition -= nutrition_to_remove
+
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes
 	we only set those statuses and icons upon changes.  Then those HUD items will simply add those pre-made images.
