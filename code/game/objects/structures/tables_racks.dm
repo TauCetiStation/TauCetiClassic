@@ -495,6 +495,7 @@
 	max_integrity = 200
 	parts = /obj/item/weapon/table_parts/reinforced
 	flipable = FALSE
+	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table/reinforced/stall)
 
 	var/status = 2
 
@@ -554,6 +555,23 @@
 		return
 
 	return ..()
+
+/obj/structure/table/reinforced/stall
+	name = "stall table"
+	desc = "A market stall table equipped with magnetic grip."
+	icon = 'icons/obj/smooth_structures/stall_table.dmi'
+	max_integrity = 200
+	parts = /obj/item/weapon/table_parts/stall
+	flipable = FALSE
+	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table/reinforced/stall)
+
+/obj/structure/table/reinforced/stall/atom_init()
+	. = ..()
+	AddComponent(/datum/component/clickplace, CALLBACK(src, .proc/try_magnet))
+
+/obj/structure/table/reinforced/stall/proc/try_magnet(atom/A, obj/item/I, mob/user)
+	if(I.price_tag)
+		I.AddComponent(/datum/component/stall_lot, src)
 
 /*
  * Racks

@@ -12900,13 +12900,13 @@
 	},
 /area/station/security/prison)
 "avT" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/westleft{
 	dir = 2;
 	name = "Hydroponics";
 	req_access = list(35)
 	},
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
 "avU" = (
@@ -36198,8 +36198,8 @@
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
 "bmn" = (
-/obj/structure/table/reinforced,
 /obj/item/ashtray/plastic,
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -41682,12 +41682,12 @@
 	},
 /area/station/hallway/secondary/entry)
 "bwf" = (
-/obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
 /obj/item/weapon/flora/pottedplant/shoot{
 	pixel_x = -8;
 	pixel_y = 16
 	},
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -70859,7 +70859,6 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "eAb" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
@@ -70876,6 +70875,7 @@
 	name = "Chemistry Desk";
 	req_access = list(33)
 	},
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor/plating,
 /area/station/medical/chemistry)
 "eBb" = (
@@ -84069,9 +84069,9 @@
 	},
 /area/station/cargo/storage)
 "ujL" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/weapon/storage/fancy/donut_box,
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -84749,8 +84749,8 @@
 /area/station/maintenance/cargo)
 "vWz" = (
 /obj/machinery/door/firedoor,
-/obj/structure/table/reinforced,
 /obj/item/weapon/bell,
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"

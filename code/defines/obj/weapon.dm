@@ -367,6 +367,16 @@
 	table_type = /obj/structure/table/reinforced
 	debris = list(/obj/item/stack/sheet/metal, /obj/item/stack/rods)
 
+/obj/item/weapon/table_parts/stall
+	name = "stall table parts"
+	desc = "Stall table parts."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "stall_tableparts"
+	m_amt = 15000
+	flags = CONDUCT
+	table_type = /obj/structure/table/reinforced/stall
+	debris = list(/obj/item/stack/sheet/metal, /obj/item/stack/rods)
+
 /obj/item/weapon/table_parts/wood
 	name = "wooden table parts"
 	desc = "Keep away from fire."
