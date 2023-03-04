@@ -4,6 +4,8 @@
 	icon_state = "blank"
 	anchored = TRUE
 
+	flags = ABSTRACT
+
 	var/tag_description = ""
 
 /obj/lot_holder/examine(mob/user)
