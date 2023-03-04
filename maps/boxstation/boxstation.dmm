@@ -36198,7 +36198,6 @@
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
 "bmn" = (
-/obj/item/ashtray/plastic,
 /obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 4;
@@ -41667,6 +41666,10 @@
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
+/obj/item/weapon/flora/pottedplant/shoot{
+	pixel_x = 12;
+	pixel_y = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -41683,10 +41686,6 @@
 /area/station/hallway/secondary/entry)
 "bwf" = (
 /obj/structure/window/reinforced,
-/obj/item/weapon/flora/pottedplant/shoot{
-	pixel_x = -8;
-	pixel_y = 16
-	},
 /obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 4;
@@ -56287,6 +56286,7 @@
 	pixel_y = 23
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/table_parts/stall,
 /turf/simulated/floor/plating,
 /area/station/construction)
 "bZQ" = (
@@ -74581,6 +74581,7 @@
 /area/station/maintenance/medbay)
 "iJB" = (
 /obj/structure/table/reinforced,
+/obj/item/ashtray/plastic,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -84070,7 +84071,6 @@
 /area/station/cargo/storage)
 "ujL" = (
 /obj/machinery/door/firedoor,
-/obj/item/weapon/storage/fancy/donut_box,
 /obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 5;
@@ -84751,6 +84751,9 @@
 /obj/machinery/door/firedoor,
 /obj/item/weapon/bell,
 /obj/structure/table/reinforced/stall,
+/obj/item/weapon/storage/fancy/donut_box{
+	pixel_y = 8
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -85119,6 +85122,10 @@
 /obj/item/weapon/crowbar,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"wEP" = (
+/obj/item/weapon/table_parts/stall,
+/turf/simulated/floor,
+/area/station/construction)
 "wER" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 1
@@ -114498,7 +114505,7 @@ bUW
 bVo
 cga
 chV
-bTH
+wEP
 cmA
 cgP
 cMx

@@ -32,11 +32,11 @@
 
 	Holder = new(Table.loc)
 	Lot_Item.forceMove(Holder)
-	Holder.pixel_x = Lot_Item.pixel_x
-	Holder.pixel_y = Lot_Item.pixel_y
-	Holder.name = Lot_Item.name
+
 	Holder.add_overlay(Lot_Item)
-	Holder.tag_description = "Прикреплён ценник. Описание: [Tag["description"]], Цена: [Tag["price"]]$"
+
+	Holder.name = Lot_Item.name
+	Holder.tag_description = "РџСЂРёРєСЂРµРїР»С‘РЅ С†РµРЅРЅРёРє. РћРїРёСЃР°РЅРёРµ: [Tag["description"]], Р¦РµРЅР°: [Tag["price"]]$"
 
 	RegisterSignal(Holder, list(COMSIG_PARENT_ATTACKBY), .proc/on_clicked)
 	RegisterSignal(Table, list(COMSIG_PARENT_QDELETING), .proc/on_table_destroy)
@@ -47,7 +47,7 @@
 	return ..()
 
 /datum/component/stall_lot/proc/on_clicked(datum/source, obj/item/I,  mob/living/user)
-	Table.visible_message("<span class='info'>[user] прикладывает карту к столу.</span>")
+	Table.visible_message("<span class='info'>[user] РїСЂРёРєР»Р°РґС‹РІР°РµС‚ РєР°СЂС‚Сѓ Рє СЃС‚РѕР»Сѓ.</span>")
 	if(istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/Card = I
 		var/datum/money_account/Buyer = get_account(Card.associated_account_number)
@@ -57,21 +57,21 @@
 
 		var/attempt_pin = 0
 		if(Buyer.security_level > 0)
-			attempt_pin = input("Введите ПИН-код", "Прилавок") as num
+			attempt_pin = input("Р’РІРµРґРёС‚Рµ РџРРќ-РєРѕРґ", "РџСЂРёР»Р°РІРѕРє") as num
 			if(isnull(attempt_pin))
-				to_chat(user, "[bicon(Table)]<span class='warning'>Неверный ПИН-код!</span>")
+				to_chat(user, "[bicon(Table)]<span class='warning'>РќРµРІРµСЂРЅС‹Р№ РџРРќ-РєРѕРґ!</span>")
 				return
 			Buyer = attempt_account_access(Card.associated_account_number, attempt_pin, 2)
 
 		if(cost > 0 && Seller)
 			if(Seller.suspended)
-				Table.visible_message("[bicon(Table)]<span class='warning'>Подключённый аккаунт заблокирован.</span>")
+				Table.visible_message("[bicon(Table)]<span class='warning'>РџРѕРґРєР»СЋС‡С‘РЅРЅС‹Р№ Р°РєРєР°СѓРЅС‚ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ.</span>")
 				return
 			if(cost <= Buyer.money)
-				charge_to_account(Buyer.account_number, Buyer.owner_name, "Покупка [Lot_Item.name]", "Прилавок", -cost)
-				charge_to_account(Seller.account_number, Seller.owner_name, "Прибыль за продажу [Lot_Item.name]", "Прилавок", cost)
+				charge_to_account(Buyer.account_number, Buyer.owner_name, "РџРѕРєСѓРїРєР° [Lot_Item.name]", "РџСЂРёР»Р°РІРѕРє", -cost)
+				charge_to_account(Seller.account_number, Seller.owner_name, "РџСЂРёР±С‹Р»СЊ Р·Р° РїСЂРѕРґР°Р¶Сѓ [Lot_Item.name]", "РџСЂРёР»Р°РІРѕРє", cost)
 			else
-				Table.visible_message("[bicon(Table)]<span class='warning'>Недостаточно средств!</span>")
+				Table.visible_message("[bicon(Table)]<span class='warning'>РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃСЂРµРґСЃС‚РІ!</span>")
 				return
 
 		qdel(src)
