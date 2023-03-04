@@ -85,12 +85,12 @@
 
 /obj/item/clothing/gloves/power/Touch(mob/living/carbon/human/attacker, atom/A, proximity)
 	if(!isliving(A))
-		return
+		return FALSE
 	var/mob/living/L = A
 	attacker.do_attack_animation(L)
 	if(!cell || cell.charge < cell_use)
 		turn_off()
-		return
+		return FALSE
 	if(selected_mode == GLOVES_MODE_STUN)
 		var/calc_power = 200 //twice as strong stungloves
 		cell.use(cell_use)
