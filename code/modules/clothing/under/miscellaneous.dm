@@ -138,25 +138,28 @@
 	icon_state = "gentlesuit"
 	item_state = "gentlesuit"
 
-/obj/item/clothing/under/gimmick/rank/captain/suit
+/obj/item/clothing/under/suit_jacket/green
 	name = "captain's suit"
 	desc = "A green suit and yellow necktie. Exemplifies authority."
 	icon_state = "green_suit"
 	item_state = "green_suit"
 	flags = ONESIZEFITSALL
+	starting_accessories = list(/obj/item/clothing/accessory/tie/yellow)
 
-/obj/item/clothing/under/gimmick/rank/head_of_personnel/suit
+/obj/item/clothing/under/suit_jacket/teal
 	name = "head of personnel's suit"
 	desc = "A teal suit and yellow necktie. An authoritative yet tacky ensemble."
 	icon_state = "teal_suit"
 	item_state = "teal_suit"
 	flags = ONESIZEFITSALL
+	starting_accessories = list(/obj/item/clothing/accessory/tie/yellow)
 
 /obj/item/clothing/under/suit_jacket
 	name = "black suit"
-	desc = "A black suit and red tie. Very formal."
+	desc = "A black suit and a white shirt. Very formal."
 	icon_state = "black_suit"
 	item_state = "black_suit"
+	starting_accessories = list(/obj/item/clothing/accessory/tie/red)
 
 /obj/item/clothing/under/suit_jacket/reinforced //armored jackets for special agents
 	desc = "A black suit and red tie. Very formal. This one looks a bit stronger than others."
@@ -168,6 +171,7 @@
 	desc = "A formal trouser suit for women, intended for the station's finest."
 	icon_state = "black_suit_neck"
 	item_state = "black_suit_neck"
+	starting_accessories = list()
 
 /obj/item/clothing/under/suit_jacket/navy
 	name = "navy suit"
@@ -180,24 +184,28 @@
 	desc = "A burgundy suit and black tie. Somewhat formal."
 	icon_state = "burgundy_suit"
 	item_state = "burgundy_suit"
+	starting_accessories = list(/obj/item/clothing/accessory/tie/black)
 
 /obj/item/clothing/under/suit_jacket/checkered
 	name = "checkered suit"
 	desc = "That's a very nice suit you have there. Shame if something were to happen to it, eh?"
 	icon_state = "checkered_suit"
 	item_state = "checkered_suit"
+	starting_accessories = list(/obj/item/clothing/accessory/tie/black)
 
 /obj/item/clothing/under/suit_jacket/tan
 	name = "tan suit"
 	desc = "A tan suit with a yellow tie. Smart, but casual."
 	icon_state = "tan_suit"
 	item_state = "tan_suit"
+	starting_accessories = list(/obj/item/clothing/accessory/tie/yellow)
 
 /obj/item/clothing/under/suit_jacket/white
 	name = "white suit"
 	desc = "A white suit and jacket with a black shirt. You wanna play rough? OKAY!"
 	icon_state = "white_suit"
 	item_state = "white_suit"
+	starting_accessories = list(/obj/item/clothing/accessory/tie/white)
 
 /obj/item/clothing/under/suit_jacket/rouge
 	name = "rogue jacket"
@@ -205,6 +213,7 @@
 	icon_state = "rogue_jacket"
 	item_state = "rogue_jacket"
 	flags = ONESIZEFITSALL
+	starting_accessories = list(/obj/item/clothing/accessory/tie/white)
 
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"

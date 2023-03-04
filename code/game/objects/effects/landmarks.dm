@@ -360,7 +360,7 @@
 
 /obj/effect/landmark/costume/madscientist/atom_init()
 	..()
-	new /obj/item/clothing/under/gimmick/rank/captain/suit(loc)
+	new /obj/item/clothing/under/suit_jacket/green(loc)
 	new /obj/item/clothing/head/flatcap(loc)
 	new /obj/item/clothing/suit/storage/labcoat/mad(loc)
 	new /obj/item/clothing/glasses/gglasses(loc)
@@ -368,7 +368,7 @@
 
 /obj/effect/landmark/costume/elpresidente/atom_init()
 	..()
-	new /obj/item/clothing/under/gimmick/rank/captain/suit(loc)
+	new /obj/item/clothing/under/suit_jacket/green(loc)
 	new /obj/item/clothing/head/flatcap(loc)
 	new /obj/item/clothing/mask/cigarette/cigar/havana(loc)
 	new /obj/item/clothing/shoes/boots(loc)

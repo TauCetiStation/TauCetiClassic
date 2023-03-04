@@ -22,10 +22,22 @@
 	var/list/accessories
 	var/list/valid_accessory_slots
 	var/list/restricted_accessory_slots
+	var/list/starting_accessories = list()
 
 	var/can_be_modded = FALSE //modding hardsuits with modkits
 
 	var/flashbang_protection = FALSE
+
+/obj/item/clothing/atom_init()
+	. = ..()
+	if(!starting_accessories.len)
+		return
+	for(var/A in starting_accessories)
+		var/obj/item/clothing/accessory/T = new A(src)
+		T.on_attached(src, null, TRUE)
+		LAZYADD(accessories, T)
+		if(ishuman(loc))
+			update_inv_mob()
 
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M, slot)

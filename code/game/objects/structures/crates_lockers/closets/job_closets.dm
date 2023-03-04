@@ -86,7 +86,7 @@
 			new /obj/item/clothing/mask/gas/sexymime(src)
 			new /obj/item/clothing/under/sexymime(src)
 		if (4)
-			new /obj/item/clothing/under/gimmick/rank/captain/suit(src)
+			new /obj/item/clothing/under/suit_jacket/green(src)
 			new /obj/item/clothing/head/flatcap(src)
 			new /obj/item/clothing/mask/cigarette/cigar/havana(src)
 			new /obj/item/clothing/shoes/boots(src)

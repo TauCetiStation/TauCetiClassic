@@ -13,7 +13,7 @@
 
 /obj/item/clothing/under/chameleon/atom_init()
 	. = ..()
-	var/blocked = list(/obj/item/clothing/under/chameleon, /obj/item/clothing/under/golem, /obj/item/clothing/under/gimmick)//Prevent infinite loops and bad jumpsuits.
+	var/blocked = list(/obj/item/clothing/under/chameleon, /obj/item/clothing/under/golem)//Prevent infinite loops and bad jumpsuits.
 	for(var/U in subtypesof(/obj/item/clothing/under)-blocked)
 		var/obj/item/clothing/under/V = U
 		clothing_choices[initial(V.name)] = U

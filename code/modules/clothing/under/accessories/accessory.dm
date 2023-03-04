@@ -25,7 +25,7 @@
 
 	if(!silent)
 		to_chat(user, "<span class='notice'>You attach [src] to [has_suit].</span>")
-	add_fingerprint(user)
+		add_fingerprint(user)
 
 /obj/item/clothing/accessory/proc/on_removed(mob/user)
 	if(!has_suit)
@@ -64,6 +64,14 @@
 /obj/item/clothing/accessory/tie/black
 	name = "black tie"
 	icon_state = "blacktie"
+
+/obj/item/clothing/accessory/tie/yellow
+	name = "yellow tie"
+	icon_state = "yellowtie"
+
+/obj/item/clothing/accessory/tie/white
+	name = "white tie"
+	icon_state = "whitetie"
 
 /obj/item/clothing/accessory/tie/horrible
 	name = "horrible tie"
