@@ -22,15 +22,11 @@
 	var/datum/gun_modular/component/data/chamber_ammoCase/chamber_ammoCase_component = new (src, chambered)
 	add_default_component(chamber_ammoCase_component)
 
-	var/datum/gun_modular/component/data/sound_data/click_sound_component = new (src)
-	click_sound_component.id_data = "click_sound"
-	click_sound_component.id_component = "click_sound"
+	var/datum/gun_modular/component/data/sound_data/click_sound/click_sound_component = new (src)
 	click_sound_component.sound = click_sound
 	add_default_component(click_sound_component)
 
-	var/datum/gun_modular/component/data/sound_data/fire_sound_component = new (src)
-	fire_sound_component.id_data = "fire_sound"
-	fire_sound_component.id_component = "fire_sound"
+	var/datum/gun_modular/component/data/sound_data/fire_sound/fire_sound_component = new (src)
 	fire_sound_component.sound = fire_sound
 	add_default_component(fire_sound_component)
 
