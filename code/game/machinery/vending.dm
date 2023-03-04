@@ -78,7 +78,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	power_change()
 	update_wires_check()
 
-/obj/machinery/vending/proc/load_products()
+	if(!mapload)
+		load_products(FALSE)
+
+/obj/machinery/vending/proc/load_products(mapload = TRUE)
 	build_inventory(products, mapload)
 	 //Add hidden inventory
 	build_inventory(contraband, mapload, hidden = 1)
