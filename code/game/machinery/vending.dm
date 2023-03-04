@@ -5,6 +5,9 @@
 	var/max_amount = 0
 	var/price = 0
 
+var/global/list/vending_machines = list()
+
+ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
@@ -72,13 +75,15 @@
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 	last_slogan = world.time + rand(0, slogan_delay)
 
+	power_change()
+	update_wires_check()
+
+/obj/machinery/vending/proc/load_products()
 	build_inventory(products, mapload)
 	 //Add hidden inventory
 	build_inventory(contraband, mapload, hidden = 1)
 	build_inventory(premium, mapload, req_coin = 1)
 	build_inventory(syndie, mapload, req_emag = 1)
-	power_change()
-	update_wires_check()
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -111,7 +116,7 @@
 		var/product_max_amount = amount
 		if(!hidden && !req_coin && !req_emag)
 			if(mapload && is_station_level(src.z) && !private)
-				var/players_coefficient = global.player_list.len / 75 //75 players = max load, 0 players = min load
+				var/players_coefficient = num_players() / 75 //75 players = max load, 0 players = min load
 				var/randomness_coefficient = rand(50,100) / 100 //50-100% randomness
 				var/final_coefficient = clamp(players_coefficient * randomness_coefficient, 0.1, 1.0) //10% minimum, 100% maximum
 

@@ -315,6 +315,9 @@ SUBSYSTEM_DEF(ticker)
 
 		create_default_spawners()
 
+	for(var/obj/machinery/vending/Vendomat in global.vending_machines)
+		Vendomat.load_products()
+
 	return TRUE
 
 /datum/controller/subsystem/ticker/proc/show_blurbs()
