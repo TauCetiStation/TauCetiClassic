@@ -704,28 +704,6 @@ var/global/list/tourette_bad_words= list(
 				update_inv_wear_suit()
 				update_size_class()
 
-	// nutrition decrease
-	if (nutrition > 0 && stat != DEAD)
-		var/met_factor = get_metabolism_factor()
-		for(var/obj/item/organ/external/BP in bodyparts)
-			met_factor += BP.pumped / 100
-		nutrition = max(0, nutrition - met_factor * 0.1)
-		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
-			var/pain = getHalLoss()
-			if(pain > 0)
-				nutrition = max(0, nutrition - met_factor * pain * 0.01)
-	if (nutrition > 450)
-		if(overeatduration < 600) //capped so people don't take forever to unfat
-			overeatduration++
-	else
-		if(overeatduration > 1)
-			overeatduration -= 2 //doubled the unfat rate
-
-	if(species.flags[REQUIRE_LIGHT])
-		if(nutrition < 200)
-			take_overall_damage(2,0)
-			traumatic_shock++
-
 	AdjustConfused(-1)
 	AdjustDrunkenness(-1)
 	// decrement dizziness counter, clamped to 0
@@ -1293,6 +1271,18 @@ var/global/list/tourette_bad_words= list(
 	if(bumped_bodyparts_met > 0)
 		nutrition_to_remove += (met_factor + bumped_bodyparts_met) * 0.1
 		nutrition -= nutrition_to_remove
+	
+	if(nutrition > 450)
+		if(overeatduration < 600) //capped so people don't take forever to unfat
+			overeatduration++
+	else
+		if(overeatduration > 1)
+			overeatduration -= 2 //doubled the unfat rate
+
+	if(species.flags[REQUIRE_LIGHT])
+		if(nutrition < 200)
+			take_overall_damage(2,0)
+			traumatic_shock++
 
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes
