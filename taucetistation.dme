@@ -2120,6 +2120,7 @@
 #include "code\modules\projectiles\gun_modular\type_damage.dm"
 #include "code\modules\projectiles\gun_modular\modules\chamber.dm"
 #include "code\modules\projectiles\gun_modular\modules\grip.dm"
+#include "code\modules\projectiles\gun_modular\modules\magazine_holder.dm"
 #include "code\modules\projectiles\guns\alien.dm"
 #include "code\modules\projectiles\guns\energy.dm"
 #include "code\modules\projectiles\guns\magic.dm"

@@ -1,10 +1,6 @@
-/obj/item/gun_modular/module/chamber
-	name = "патронник"
-	module_id = CHAMBER_MODULE
-	var/recoil_change = 1
-	var/click_sound = 'sound/weapons/guns/empty.ogg'
-	var/fire_sound = 'sound/weapons/guns/Gunshot.ogg'
-	var/obj/item/ammo_casing/chambered = null
+/obj/item/gun_modular/module/magazine_holder
+	name = "держатель магазина"
+	module_id = MAGAZINE_HOLDER
 
 /obj/item/gun_modular/module/chamber/main_action(datum/process_fire/process)
 

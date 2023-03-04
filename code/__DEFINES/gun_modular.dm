@@ -9,6 +9,7 @@
 //modules id
 #define GRIP_MODULE "grip"
 #define CHAMBER_MODULE "chamber"
+#define MAGAZINE_HOLDER "magazine_holder"
 
 // process fire
 #define ACTIVE_FIRE "active"
