@@ -91,7 +91,7 @@ var/global/list/image/splatter_cache=list()
 			else
 				feet_blood_DNA = dirt_DNA.Copy()
 
-		update_inv_shoes()
+		update_inv_slot(SLOT_SHOES)
 		if(blood && lying)
 			crawl_in_blood(dirt_cover)
 
@@ -129,7 +129,7 @@ var/global/list/image/splatter_cache=list()
 		user.blood_DNA |= blood_DNA.Copy()
 		user.bloody_hands += taken
 		user.hand_dirt_datum = new(basedatum)
-		user.update_inv_gloves()
+		user.update_inv_slot(SLOT_GLOVES)
 		user.verbs += /mob/living/carbon/human/proc/bloody_doodle
 
 /obj/effect/decal/cleanable/blood/splatter

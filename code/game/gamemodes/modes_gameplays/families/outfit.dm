@@ -23,7 +23,7 @@
 	survival_box = TRUE
 
 	backpack_contents = list(
-		/obj/item/ammo_box/magazine/c45r = 3,
+		/obj/item/ammo_box/magazine/c45m/rubber = 3,
 		/obj/item/ammo_box/c45 = 2,
 		/obj/item/weapon/gun/projectile/automatic/colt1911 = 1,
 	)
@@ -40,7 +40,7 @@
 	backpack_contents = list(
 		/obj/item/weapon/storage/box/teargas = 1,
 		/obj/item/weapon/storage/box/shotgun/buckshot = 1,
-		/obj/item/ammo_box/magazine/c45r = 3,
+		/obj/item/ammo_box/magazine/c45m/rubber = 3,
 		/obj/item/weapon/gun/projectile/automatic/colt1911 = 1,
 	)
 
@@ -56,7 +56,7 @@
 		/obj/item/weapon/storage/box/teargas = 1,
 		/obj/item/weapon/storage/box/shotgun/buckshot = 1,
 		/obj/item/weapon/gun/projectile/automatic/colt1911 = 1,
-		/obj/item/ammo_box/magazine/c45r = 3,
+		/obj/item/ammo_box/magazine/c45m/rubber = 3,
 	)
 
 /datum/outfit/families_police/beatcop/fbi

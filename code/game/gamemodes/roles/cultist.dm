@@ -3,7 +3,7 @@
 	id = CULTIST
 
 	required_pref = ROLE_CULTIST
-	restricted_jobs = list("Security Cadet", "Chaplain", "AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
+	restricted_jobs = list("Security Cadet", "Chaplain", "AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent", "Blueshield Officer")
 	restricted_species_flags = list(NO_BLOOD)
 
 	antag_hud_type = ANTAG_HUD_CULT
@@ -12,6 +12,7 @@
 	logo_state = "cult-logo"
 
 	var/holy_rank = CULT_ROLE_HIGHPRIEST
+	moveset_type = /datum/combat_moveset/cult
 	skillset_type = /datum/skillset/cultist
 	change_to_maximum_skills = TRUE
 
