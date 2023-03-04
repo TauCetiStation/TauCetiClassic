@@ -76,7 +76,7 @@
 							/obj/item/clothing/suit/jacket/letterman_red,
 							/obj/item/clothing/under/color/red,
 							/obj/item/clothing/mask/bandana/red,
-							/obj/item/clothing/under/suit_jacket/red)
+							/obj/item/clothing/under/suit_jacket/burgundy)
 	free_clothes = list(/obj/item/clothing/suit/jacket/letterman_red,
 						/obj/item/clothing/under/color/red,
 						/obj/item/toy/crayon/spraycan)

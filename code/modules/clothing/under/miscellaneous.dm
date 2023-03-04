@@ -159,37 +159,15 @@
 	item_state = "black_suit"
 
 /obj/item/clothing/under/suit_jacket/reinforced //armored jackets for special agents
-	name = "black suit"
 	desc = "A black suit and red tie. Very formal. This one looks a bit stronger than others."
-	icon_state = "black_suit"
-	item_state = "black_suit"
 	body_parts_covered = UPPER_TORSO|ARMS
 	armor = list(melee = 18, bullet = 12, laser = 5, energy = 5, bomb = 0, bio = 0, rad = 0)
-
-/obj/item/clothing/under/suit_jacket/really_black
-	name = "executive suit"
-	desc = "A formal black suit and red tie, intended for the station's finest."
-	icon_state = "really_black_suit"
-	item_state = "really_black_suit"
 
 /obj/item/clothing/under/suit_jacket/female
 	name = "executive suit"
 	desc = "A formal trouser suit for women, intended for the station's finest."
 	icon_state = "black_suit_neck"
 	item_state = "black_suit_neck"
-
-/obj/item/clothing/under/suit_jacket/red
-	name = "red suit"
-	desc = "A red suit and blue tie. Somewhat formal."
-	icon_state = "red_suit"
-	item_state = "red_suit"
-	flags = ONESIZEFITSALL
-
-/obj/item/clothing/under/suit_jacket/charcoal
-	name = "charcoal suit"
-	desc = "A charcoal suit and red tie. Very professional."
-	icon_state = "charcoal_suit"
-	item_state = "charcoal_suit"
 
 /obj/item/clothing/under/suit_jacket/navy
 	name = "navy suit"
@@ -217,7 +195,7 @@
 
 /obj/item/clothing/under/suit_jacket/white
 	name = "white suit"
-	desc = "A white suit and jacket with a blue shirt. You wanna play rough? OKAY!."
+	desc = "A white suit and jacket with a black shirt. You wanna play rough? OKAY!"
 	icon_state = "white_suit"
 	item_state = "white_suit"
 

@@ -128,9 +128,8 @@
 	..()
 	var/jackets = list()
 	jackets["navy"] = /obj/item/clothing/under/suit_jacket/navy
-	jackets["black"] = /obj/item/clothing/under/suit_jacket/really_black
 	jackets["burgundy"] = /obj/item/clothing/under/suit_jacket/burgundy
-	jackets["charcoal"] = /obj/item/clothing/under/suit_jacket/charcoal
+	jackets["black"] = /obj/item/clothing/under/suit_jacket
 	jackets["white"] = /obj/item/clothing/under/suit_jacket/white
 	gear_tweaks += new/datum/gear_tweak/path(jackets)
 

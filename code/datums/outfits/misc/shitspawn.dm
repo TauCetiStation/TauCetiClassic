@@ -525,7 +525,7 @@
 	name = "jolly gravedigger"
 
 	shoes = /obj/item/clothing/shoes/jolly_gravedigger
-	uniform = /obj/item/clothing/under/suit_jacket/charcoal
+	uniform = /obj/item/clothing/under/suit_jacket
 	gloves = /obj/item/clothing/gloves/white
 	glasses = /obj/item/clothing/glasses/aviator_mirror
 	head = /obj/item/clothing/head/beret/black

@@ -66,7 +66,7 @@
 /datum/outfit/job/librarian
 	name = OUTFIT_JOB_NAME("Librarian")
 
-	uniform = /obj/item/clothing/under/suit_jacket/red
+	uniform = /obj/item/clothing/under/suit_jacket/burgundy
 	shoes = /obj/item/clothing/shoes/black
 
 	belt = /obj/item/weapon/storage/bag/bookbag
