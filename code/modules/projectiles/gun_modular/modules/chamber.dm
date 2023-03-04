@@ -38,9 +38,10 @@
 
 	var/datum/gun_modular/component/check/chamber_Chambered/chamber_Chambered_check = new (src, null, null)
 
-	var/datum/gun_modular/component/proc_gun/playsound_fire/playsound_fire = new (src)
 	var/datum/gun_modular/component/proc_gun/ammoCase_fire/ammoCase_fire_proc = new(src)
+	var/datum/gun_modular/component/proc_gun/playsound_fire/playsound_fire = new (src)
 	ammoCase_fire_proc.AddLastComponent(playsound_fire)
+
 	var/datum/gun_modular/component/proc_gun/add_last_component/add_last_component_proc = new (src, ammoCase_fire_proc)
 
 	var/datum/gun_modular/component/awaiter/await_ammoCase = new (src, add_last_component_proc, chamber_Chambered_check, list(COMSIG_GUN_CHECK_SUCCESS), message_empty_chamber)
