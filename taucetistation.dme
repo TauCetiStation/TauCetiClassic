@@ -374,6 +374,8 @@
 #include "code\datums\gun_modular\components\data_components\gun_user.dm"
 #include "code\datums\gun_modular\components\data_components\sound.dm"
 #include "code\datums\gun_modular\components\data_components\start_fire_loc.dm"
+#include "code\datums\gun_modular\components\data_components\sounds\click_sound.dm"
+#include "code\datums\gun_modular\components\data_components\sounds\fire_sound.dm"
 #include "code\datums\gun_modular\components\proc_components\add_last_component.dm"
 #include "code\datums\gun_modular\components\proc_components\ammoCase_fire.dm"
 #include "code\datums\gun_modular\components\proc_components\interrupter.dm"
