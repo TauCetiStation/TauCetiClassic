@@ -108,9 +108,10 @@
 /obj/machinery/vending/proc/build_inventory(list/productlist, mapload, hidden = 0, req_coin = 0 , req_emag = 0)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
+		var/product_max_amount = amount
 		if(!hidden && !req_coin && !req_emag)
 			if(mapload && is_station_level(src.z) && !private)
-				var/players_coefficient = num_players() / 75 //75 players = max load, 0 players = min load
+				var/players_coefficient = global.player_list.len / 75 //75 players = max load, 0 players = min load
 				var/randomness_coefficient = rand(50,100) / 100 //50-100% randomness
 				var/final_coefficient = clamp(players_coefficient * randomness_coefficient, 0.1, 1.0) //10% minimum, 100% maximum
 
@@ -126,7 +127,7 @@
 		global.vending_products[typepath] = 1
 		R.product_path = typepath
 		R.amount = amount
-		R.max_amount = amount
+		R.max_amount = product_max_amount
 		R.price = price
 
 		if(hidden)
