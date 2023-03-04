@@ -296,15 +296,7 @@
 		return .
 
 	handle_phantom_move(NewLoc, Dir)
-	if(nutrition && stat != DEAD)
-		var/met_factor = get_metabolism_factor()
-		nutrition -= met_factor * 0.01
-		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
-			var/pain = getHalLoss()
-			if(pain > 0)
-				nutrition -= met_factor * pain * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
-		if(m_intent == "run")
-			nutrition -= met_factor * 0.01
+	
 	if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == "run" && bodytemperature <= 360)
 		adjust_bodytemperature(2)
 
@@ -1296,3 +1288,16 @@
 				amount = max(amount, BODYTEMP_COOLING_MAX)
 
 	..(amount, min_temp, max_temp)
+
+/mob/living/carbon/handle_nutrition()
+	var/nutrition_to_remove = 0
+	var/met_factor = get_metabolism_factor()
+	nutrition_to_remove += 0.01
+	if(m_intent == MOVE_INTENT_RUN)
+		nutrition_to_remove += 0.01
+	if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
+		var/pain = getHalLoss()
+		if(pain > 0)
+			nutrition_to_remove += pain * 0.01
+	nutrition_to_remove *= met_factor
+	nutrition -= nutrition_to_remove
