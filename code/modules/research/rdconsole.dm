@@ -30,6 +30,8 @@ cause a ton of data to be lost, an admin can go send it back.
 	icon_state = "rdcomp"
 	light_color = "#a97faa"
 	circuit = /obj/item/weapon/circuitboard/rdconsole
+	var/research_datum_type = /datum/research
+	var/list/blacklisted_techs_list = list()
 	var/datum/research/files							//Stores all the collected research data.
 	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
 	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
@@ -114,8 +116,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 
 /obj/machinery/computer/rdconsole/atom_init()
 	. = ..()
-	files = new /datum/research(src) //Setup the research data holder.
+	//Setup the research data holder.
+	create_research_files()
 	SyncRDevices()
+
+/obj/machinery/computer/rdconsole/proc/create_research_files()
+	files = new research_datum_type(src, blacklisted_tech = blacklisted_techs_list)
 
 /obj/machinery/computer/rdconsole/Destroy()
 	if(linked_destroy)
@@ -296,7 +302,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 		if(choice == "Continue")
 			screen = "working"
 			qdel(files)
-			files = new /datum/research(src)
+			create_research_files()
 			spawn(20)
 				screen = "main"
 				nanomanager.update_uis(src)
@@ -671,8 +677,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 /obj/machinery/computer/rdconsole/robotics
 	name = "Robotics R&D Console"
 	id = DEFAULT_ROBOTICS_CONSOLE_ID
+	research_datum_type = /datum/research/robotics
 	req_access = list(29)
-	can_research = FALSE
 	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/computer/rdconsole/robotics/atom_init()
@@ -685,12 +691,14 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 	name = "Core R&D Console"
 	id = DEFAULT_SCIENCE_CONSOLE_ID
 	can_research = TRUE
+	blacklisted_techs_list = list(RESEARCH_ROBOTICS)
 
 /obj/machinery/computer/rdconsole/mining
 	name = "Mining R&D Console"
 	id = DEFAULT_MINING_CONSOLE_ID
 	req_access = list(48)
 	can_research = FALSE
+	blacklisted_techs_list = list(RESEARCH_ROBOTICS)
 	required_skills = list(/datum/skill/research = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/computer/rdconsole/mining/atom_init()
