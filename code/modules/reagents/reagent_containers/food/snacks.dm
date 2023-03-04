@@ -368,6 +368,17 @@
 	filling_color = "#ed1169"
 	list_reagents = list("nutriment" = 1, "anti_toxin" = 3, "plantmatter" = 2)
 
+/obj/item/weapon/reagent_containers/food/snacks/donut/chaos
+	desc = "Chaos undivided - in this very donut!"
+	donut_sprite_type = "chaos"
+	filling_color = "#ed1169"
+
+/obj/item/weapon/reagent_containers/food/snacks/donut/chaos/atom_init()
+	. = ..()
+	var/datum/reagent/random_reagent = pick(global.reagents_list)
+	var/datum/reagent/R = new random_reagent(src)
+	reagents.add_reagent(R.id, 3)
+
 /obj/item/weapon/reagent_containers/food/snacks/egg
 	name = "egg"
 	desc = "An egg!"
