@@ -361,6 +361,7 @@
 #include "code\datums\gun_modular\components\data.dm"
 #include "code\datums\gun_modular\components\proc.dm"
 #include "code\datums\gun_modular\components\check_components\chamber_Chambered.dm"
+#include "code\datums\gun_modular\components\check_components\fire_result.dm"
 #include "code\datums\gun_modular\components\check_components\user_advansedTool.dm"
 #include "code\datums\gun_modular\components\check_components\user_isHULK.dm"
 #include "code\datums\gun_modular\components\check_components\user_isHuman.dm"

@@ -23,6 +23,9 @@
 
 /datum/gun_modular/component/proc/AddLastComponent(datum/gun_modular/component/C)
 
+	if(isnull(C))
+		return FALSE
+
 	if(!next_component)
 		next_component = C
 		return TRUE

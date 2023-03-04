@@ -40,7 +40,8 @@
 
 	var/datum/gun_modular/component/proc_gun/ammoCase_fire/ammoCase_fire_proc = new(src)
 	var/datum/gun_modular/component/proc_gun/playsound_fire/playsound_fire = new (src)
-	ammoCase_fire_proc.AddLastComponent(playsound_fire)
+	var/datum/gun_modular/component/check/fire_result/fire_result_check = new(src, playsound_fire, playsound_click)
+	ammoCase_fire_proc.AddLastComponent(fire_result_check)
 
 	var/datum/gun_modular/component/proc_gun/add_last_component/add_last_component_proc = new (src, ammoCase_fire_proc)
 
