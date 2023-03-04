@@ -55976,7 +55976,7 @@
 /area/station/civilian/library)
 "bYL" = (
 /obj/structure/closet/cabinet,
-/obj/item/clothing/under/suit_jacket/red,
+/obj/item/clothing/under/suit_jacket/burgundy,
 /obj/item/device/eftpos{
 	eftpos_name = "Library EFTPOS scanner"
 	},
@@ -77349,7 +77349,7 @@
 	},
 /obj/structure/table,
 /obj/item/clothing/under/lawyer/oldman,
-/obj/item/clothing/under/suit_jacket/really_black{
+/obj/item/clothing/under/suit_jacket{
 	pixel_x = -2
 	},
 /obj/item/clothing/under/suit_jacket/female{

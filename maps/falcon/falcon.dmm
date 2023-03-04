@@ -727,15 +727,15 @@
 	},
 /area/station/rnd/lab)
 "abj" = (
-/mob/living/simple_animal/cow{
-	name = "Betsy"
-	},
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/machinery/vending/wallmed1{
 	pixel_y = 30
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
+	},
+/mob/living/simple_animal/cow{
+	name = "Betsy"
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
@@ -4790,10 +4790,10 @@
 	},
 /area/station/civilian/gym)
 "aix" = (
-/mob/living/pbag,
 /obj/machinery/ai_status_display{
 	pixel_y = 32
 	},
+/mob/living/pbag,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -5613,7 +5613,6 @@
 	},
 /area/station/maintenance/escape)
 "ajU" = (
-/mob/living/pbag,
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_y = 32
@@ -5622,6 +5621,7 @@
 	dir = 4;
 	pixel_x = -21
 	},
+/mob/living/pbag,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -6029,7 +6029,7 @@
 	},
 /area/station/maintenance/science)
 "akR" = (
-/obj/item/clothing/under/suit_jacket/red,
+/obj/item/clothing/under/suit_jacket/burgundy,
 /obj/random/foods/food_trash,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg2"
@@ -12178,7 +12178,6 @@
 /area/station/maintenance/auxsolarport)
 "cFx" = (
 /obj/structure/flora/ausbushes/fullgrass,
-/mob/living/carbon/monkey,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -12187,6 +12186,7 @@
 	name = "Station Intercom (Medbay)";
 	pixel_y = 22
 	},
+/mob/living/carbon/monkey,
 /turf/simulated/floor/grass,
 /area/station/medical/storage)
 "cFV" = (
@@ -16395,8 +16395,8 @@
 /area/station/solar/auxstarboard)
 "gQL" = (
 /obj/structure/closet/firecloset,
-/mob/living/simple_animal/mouse,
 /obj/effect/decal/cleanable/generic,
+/mob/living/simple_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "gQR" = (
@@ -17422,8 +17422,8 @@
 /area/station/maintenance/medbay)
 "hZm" = (
 /obj/structure/window/reinforced,
-/mob/living/carbon/monkey,
 /obj/structure/flora/ausbushes/fullgrass,
+/mob/living/carbon/monkey,
 /turf/simulated/floor/grass,
 /area/station/medical/storage)
 "hZF" = (
@@ -17514,7 +17514,7 @@
 	input_tag = "o2_in";
 	name = "Oxygen Supply Control";
 	output_tag = "o2_out";
-	sensors = list("o2_sensor"="Tank")
+	sensors = list("o2_sensor" = "Tank")
 	},
 /obj/machinery/light{
 	dir = 8
@@ -21065,7 +21065,6 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "lBh" = (
-/mob/living/simple_animal/walle,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
@@ -21080,6 +21079,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/mob/living/simple_animal/walle,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "lBC" = (
@@ -21209,9 +21209,6 @@
 	},
 /area/station/maintenance/cargo)
 "lHz" = (
-/mob/living/simple_animal/yithian{
-	name = "Silvester"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -21227,6 +21224,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/hologram/holopad,
+/mob/living/simple_animal/yithian{
+	name = "Silvester"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -21979,7 +21979,7 @@
 	input_tag = "air_in";
 	name = "Mixed Air Supply Control";
 	output_tag = "air_out";
-	sensors = list("air_sensor"="Tank")
+	sensors = list("air_sensor" = "Tank")
 	},
 /obj/machinery/light,
 /turf/simulated/floor{
@@ -22997,8 +22997,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/mob/living/simple_animal/corgi/borgi,
 /obj/structure/stool/bed/chair/comfy/black,
+/mob/living/simple_animal/corgi/borgi,
 /turf/simulated/floor/carpet/red,
 /area/station/security/hos)
 "npY" = (
@@ -23317,11 +23317,11 @@
 /obj/structure/rack,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/suit/space/rig/wizard{
-	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
+	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 55, "bio" = 100, "rad" = 20);
 	desc = "Old bizarre gem-encrusted suit that radiates magical energies."
 	},
 /obj/item/clothing/head/helmet/space/rig/wizard{
-	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
+	armor = list("melee" = 40, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 55, "bio" = 100, "rad" = 20);
 	desc = "Old bizarre gem-encrusted helmet that radiates magical energies."
 	},
 /obj/machinery/light/small{
@@ -26248,10 +26248,10 @@
 	},
 /area/station/engineering/break_room)
 "qmI" = (
-/mob/living/carbon/monkey/punpun,
 /obj/structure/sink{
 	pixel_y = 24
 	},
+/mob/living/carbon/monkey/punpun,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "qmM" = (
@@ -29533,7 +29533,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/mob/living/simple_animal/mouse,
 /obj/machinery/access_button{
 	command = "cycle_interior";
 	frequency = 1379;
@@ -29542,6 +29541,7 @@
 	pixel_y = 28;
 	req_one_access = list(13,45,1)
 	},
+/mob/living/simple_animal/mouse,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -30896,8 +30896,8 @@
 /area/station/civilian/kitchen)
 "uKl" = (
 /obj/structure/window/reinforced,
-/mob/living/carbon/monkey,
 /obj/structure/flora/junglebush,
+/mob/living/carbon/monkey,
 /turf/simulated/floor/grass,
 /area/station/medical/storage)
 "uKs" = (
@@ -31077,10 +31077,10 @@
 	},
 /area/station/maintenance/medbay)
 "uVc" = (
-/mob/living/simple_animal/det5,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/mob/living/simple_animal/det5,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkpurple"
@@ -31831,7 +31831,7 @@
 	input_tag = "n2_in";
 	name = "Nitrogen Supply Control";
 	output_tag = "n2_out";
-	sensors = list("n2_sensor"="Tank")
+	sensors = list("n2_sensor" = "Tank")
 	},
 /obj/machinery/light{
 	dir = 8
@@ -34167,10 +34167,10 @@
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/auxsolarport)
 "xSt" = (
-/mob/living/simple_animal/fox/Renault,
 /obj/structure/stool/bed/chair/comfy/teal{
 	dir = 1
 	},
+/mob/living/simple_animal/fox/Renault,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
 "xSy" = (

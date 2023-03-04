@@ -81100,7 +81100,7 @@
 "tBq" = (
 /obj/structure/closet/cabinet,
 /obj/item/device/camera,
-/obj/item/clothing/under/suit_jacket/red,
+/obj/item/clothing/under/suit_jacket/burgundy,
 /obj/item/device/eftpos{
 	eftpos_name = "Library EFTPOS scanner"
 	},
