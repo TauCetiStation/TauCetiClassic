@@ -316,7 +316,7 @@ SUBSYSTEM_DEF(ticker)
 		create_default_spawners()
 
 	for(var/obj/machinery/vending/Vendomat in global.vending_machines)
-		Vendomat.load_products()
+		Vendomat.load_products(TRUE)
 
 	return TRUE
 
