@@ -55,7 +55,7 @@ export const Vote = (_, context) => {
   const height = Math.min(
     730,
     135
-    + (!currentPoll || isAdmin ? 45 + 26 * polls.length : 0)
+    + (!currentPoll || isAdmin ? 45 + 26 * polls.filter(poll => (!poll.adminOnly || !!isAdmin)).length : 0)
     + (currentPoll ? 100 + 22 * currentPoll.choices.length : 23)
   );
 
@@ -204,7 +204,7 @@ const Choices = (_, context) => {
               ))}
             </Stack>
           </>
-        ) : (
+        )   : (
           <NoticeBox info mb="0">
             {!currentPoll
               ? 'Нет активного голосования!'
@@ -226,9 +226,10 @@ const ListPolls = (_, context) => {
         <Stack vertical justify="space-between">
           {polls ? (
             polls.map((poll) => (
-              <Stack.Item key={poll.name}>
+              (!poll.adminOnly || !!isAdmin)
+              && <Stack.Item key={poll.name}>
                 <Stack horizontal>
-                  {isAdmin && (
+                  {!!isAdmin && (
                     <Stack.Item>
                       <Button
                         width={9.5}
