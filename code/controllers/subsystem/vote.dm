@@ -39,7 +39,7 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/tgui_data(mob/user)
 	var/list/data = ..()
 
-	var/is_admin = !!user.client.holder && (user.client.holder.rights & R_ADMIN)
+	var/is_admin = user.client.holder?.rights & R_ADMIN
 	data["isAdmin"] = is_admin
 
 	data["polls"] = list()
