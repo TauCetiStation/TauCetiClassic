@@ -12,7 +12,6 @@
 	var/trigger_cooldown = 50	//Deciseconds required between each trigger activation
 	var/next_trigger = 0		//World time required for the next trigger activation
 
-	var/program_flags = NONE
 	var/passive_enabled = FALSE //If the nanites have an on/off-style effect, it's tracked by this var
 
 	//The following vars are customizable
