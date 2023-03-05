@@ -81,12 +81,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	if(!mapload)
 		load_products(FALSE)
 
-/obj/machinery/vending/proc/load_products(mapload = FALSE)
-	build_inventory(products, mapload)
+/obj/machinery/vending/proc/load_products(roundstart)
+	build_inventory(products, roundstart)
 	 //Add hidden inventory
-	build_inventory(contraband, mapload, hidden = 1)
-	build_inventory(premium, mapload, req_coin = 1)
-	build_inventory(syndie, mapload, req_emag = 1)
+	build_inventory(contraband, hidden = 1)
+	build_inventory(premium, req_coin = 1)
+	build_inventory(syndie, req_emag = 1)
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -113,7 +113,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	if(.)
 		malfunction()
 
-/obj/machinery/vending/proc/build_inventory(list/productlist, mapload, hidden = 0, req_coin = 0 , req_emag = 0)
+/obj/machinery/vending/proc/build_inventory(list/productlist, roundstart = FALSE, hidden = 0, req_coin = 0 , req_emag = 0)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
 		var/product_max_amount = amount
