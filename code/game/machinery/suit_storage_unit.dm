@@ -678,7 +678,7 @@
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/science
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
-/obj/machinery/suit_storage_unit/eris/science/soft
+/obj/machinery/suit_storage_unit/eris/science/standart
 	SUIT_TYPE = /obj/item/clothing/suit/space/globose/science
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose/science
 

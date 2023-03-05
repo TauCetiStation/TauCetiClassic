@@ -28638,7 +28638,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/machinery/suit_storage_unit/eris/science/soft,
+/obj/machinery/suit_storage_unit/eris/science/standart,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitepurple"
