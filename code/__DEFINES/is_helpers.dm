@@ -112,6 +112,8 @@
 
 #define ismachinery(A) (istype(A, /obj/machinery))
 
+#define isnanitebackup(A) (istype(A, /datum/nanite_cloud_backup))
+
 // GOONCHAT PORT
 
 #define isatom(A) (istype(A, /atom))
