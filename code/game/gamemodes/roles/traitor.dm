@@ -24,7 +24,7 @@
 		if(1 to 20)
 			AppendObjective(/datum/objective/target/assassinate, TRUE)
 		if(21 to 50)
-			AppendObjective(/datum/objective/target/protect, TRUE)
+			AppendObjective(/datum/objective/target/debrain, TRUE)
 		if(51 to 115)
 			AppendObjective(/datum/objective/steal, TRUE)
 		else
