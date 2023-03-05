@@ -123,7 +123,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		var/product_max_amount = amount
 		if(!hidden && !req_coin && !req_emag)
 			if(mapload && is_station_level(src.z) && !private)
-				var/players_coefficient = num_players() / 75 //75 players = max load, 0 players = min load
+				var/players_coefficient = num_players() / 50 //100 players = double load, 50 players = max load, 0 players = min load
 				var/randomness_coefficient = rand(50,100) / 100 //50-100% randomness
 				var/final_coefficient = clamp(players_coefficient * randomness_coefficient, 0.1, 1.0) //10% minimum, 100% maximum
 
