@@ -644,9 +644,10 @@
 	..()
 	if(!ishuman(H))
 		return
-	if(!data["ticks"])
+	if(data["ticks"])
+		data["ticks"]++
+	else
 		data["ticks"] = 1
-	data["ticks"]++
 	switch(data["ticks"])
 		if(1 to 30)
 			if(prob(15))
