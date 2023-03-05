@@ -8,9 +8,6 @@
 	src.success_component = success_component
 	src.fail_component = fail_component
 
-/datum/gun_modular/component/check/Action(datum/process_fire/process)
-	return ..()
-
 /datum/gun_modular/component/check/proc/FailCheck(datum/process_fire/process)
 
 	SEND_SIGNAL(src, COMSIG_GUN_CHECK_FAIL)

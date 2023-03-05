@@ -1,7 +1,7 @@
 /datum/gun_modular/component/check/user_advansedTool
 	id_component = "user_advansedTool"
 
-/datum/gun_modular/component/check/user_advansedTool/Action(datum/process_fire/process)
+/datum/gun_modular/component/check/user_advansedTool/RunTimeAction(datum/process_fire/process)
 
 	var/datum/gun_modular/component/data/gun_user/cache_data = process.GetCacheData(USER_FIRE)
 

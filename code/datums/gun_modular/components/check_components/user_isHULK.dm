@@ -1,7 +1,7 @@
 /datum/gun_modular/component/check/user_isHULK
 	id_component = "user_isHULK"
 
-/datum/gun_modular/component/check/user_isHULK/Action(datum/process_fire/process)
+/datum/gun_modular/component/check/user_isHULK/RunTimeAction(datum/process_fire/process)
 
 	var/datum/gun_modular/component/data/gun_user/cache_data = process.GetCacheData(USER_FIRE)
 

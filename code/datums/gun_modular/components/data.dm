@@ -7,7 +7,7 @@
 	value = value_data
 	. = ..()
 
-/datum/gun_modular/component/data/Action(datum/process_fire/process)
+/datum/gun_modular/component/data/RunTimeAction(datum/process_fire/process)
 
 	var/datum/gun_modular/component/data/cache_data = process.GetCacheData(id_data)
 
@@ -15,7 +15,7 @@
 		process.AddCacheData(src)
 		return ..()
 
-	cache_data.ChangeData(cache_data)
+	cache_data.ChangeData(src)
 	return ..()
 
 /datum/gun_modular/component/data/CopyComponentGun()
@@ -35,14 +35,14 @@
 
 /datum/gun_modular/component/data/proc/GetData()
 
-	if(!value)
+	if(isnull(value))
 		return FALSE
 
 	return value
 
 /datum/gun_modular/component/data/proc/IsValid()
 
-	if(!value)
+	if(isnull(value))
 		return FALSE
 
 	return TRUE

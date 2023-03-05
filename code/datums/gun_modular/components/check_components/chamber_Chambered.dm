@@ -1,7 +1,7 @@
 /datum/gun_modular/component/check/chamber_Chambered
 	id_component = "chamber_Chambered"
 
-/datum/gun_modular/component/check/chamber_Chambered/Action(datum/process_fire/process)
+/datum/gun_modular/component/check/chamber_Chambered/RunTimeAction(datum/process_fire/process)
 
 	var/datum/gun_modular/component/data/chamber_ammoCase/cache_data = process.GetCacheData(AMMO_FIRE)
 

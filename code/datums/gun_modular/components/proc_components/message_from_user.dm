@@ -5,7 +5,7 @@
 /datum/gun_modular/component/proc_gun/message_from_user/New(obj/item/gun_modular/module/P, message_send = "")
 	src.message = message_send
 
-/datum/gun_modular/component/proc_gun/message_from_user/Action(datum/process_fire/process)
+/datum/gun_modular/component/proc_gun/message_from_user/RunTimeAction(datum/process_fire/process)
 
 	var/datum/gun_modular/component/data/gun_user/cache_data = process.GetCacheData(USER_FIRE)
 

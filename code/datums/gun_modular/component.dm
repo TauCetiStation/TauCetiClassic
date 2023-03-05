@@ -39,20 +39,34 @@
 
 	return next_component.GetLastComponent()
 
+/datum/gun_modular/component/proc/RunTimeAction(datum/process_fire/process)
+
+	return TRUE
+
 /datum/gun_modular/component/proc/Action(datum/process_fire/process)
 
 	process.SetActiveComponent(src)
+
+	RunTimeAction(process)
+
+	process.activate += 1
 
 	var/datum/gun_modular/component/data/gun_user/cache_data = process.GetCacheData(USER_FIRE)
 
 	if(cache_data)
 		var/mob/user = cache_data.GetData()
-		to_chat(user, "<span>[id_component]</span>")
+		to_chat(user, "<span>([process.activate])[id_component]</span>")
 
 	SEND_SIGNAL(process, COMSIG_GUN_COMPONENT_ACTION)
 
 	if(!next_component)
 		SEND_SIGNAL(process, COMSIG_GUN_COMPONENT_ACTION_LAST)
+
+	return TryActionNextComponent(process)
+
+/datum/gun_modular/component/proc/TryActionNextComponent(datum/process_fire/process)
+
+	if(!next_component)
 		return TRUE
 
 	return next_component.Action(process)
@@ -60,6 +74,8 @@
 /datum/gun_modular/component/proc/CopyComponentGun()
 
 	var/datum/gun_modular/component/new_component = new src.type(parent)
+
+	new_component.id_component = id_component
 
 	if(next_component)
 		new_component.next_component = next_component.CopyComponentGun()

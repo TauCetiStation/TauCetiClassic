@@ -40,20 +40,11 @@
 
 	return TRUE
 
-/obj/item/gun_modular/module/proc/get_default_component(id_component)
-
-	prepare_default_components_list()
-
-	if(!default_components_module[id_component])
-		return FALSE
-
-	return default_components_module[id_component]
-
 /obj/item/gun_modular/module/proc/add_default_component(datum/gun_modular/component/C)
 
 	prepare_default_components_list()
 
-	default_components_module[C.id_component] = C
+	LAZYADD(default_components_module, C)
 
 	return TRUE
 
@@ -147,8 +138,8 @@
 
 /obj/item/gun_modular/module/proc/main_action(datum/process_fire/process)
 
-	for(var/id_component in default_components_module)
-		process.AddComponentGun(default_components_module[id_component].CopyComponentGun())
+	for(var/datum/gun_modular/component/component in default_components_module)
+		process.AddComponentGun(component.CopyComponentGun())
 
 	for(var/obj/item/gun_modular/module/next_module in next_modules)
 		next_module.main_action(process)

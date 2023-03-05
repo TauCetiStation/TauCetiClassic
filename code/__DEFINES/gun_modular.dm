@@ -10,6 +10,7 @@
 #define GRIP_MODULE "grip"
 #define CHAMBER_MODULE "chamber"
 #define MAGAZINE_HOLDER "magazine_holder"
+#define BARREL "barrel"
 
 // process fire
 #define ACTIVE_FIRE "active"
@@ -25,5 +26,7 @@
 #define START_FIRE_LOC "start_fire_loc"
 #define GUN_LOC "gun_loc"
 #define FIRE_RESULT "fire_result"
+#define AMMO_BOX "ammo_box"
+#define AMMO_RETURN "ammo_return"
 
 #define RECOIL "recoil"

@@ -1,7 +1,7 @@
 /datum/gun_modular/component/check/fire_result
-	id_component = "fire_result"
+	id_component = "fire_result_check"
 
-/datum/gun_modular/component/check/fire_result/Action(datum/process_fire/process)
+/datum/gun_modular/component/check/fire_result/RunTimeAction(datum/process_fire/process)
 
 	var/datum/gun_modular/component/data/fire_result/cache_data = process.GetCacheData(FIRE_RESULT)
 

@@ -1,7 +1,7 @@
 /datum/gun_modular/component/proc_gun/ammoCase_fire
 	id_component = "ammoCase_fire"
 
-/datum/gun_modular/component/proc_gun/ammoCase_fire/Action(datum/process_fire/process)
+/datum/gun_modular/component/proc_gun/ammoCase_fire/RunTimeAction(datum/process_fire/process)
 
 	var/datum/gun_modular/component/data/chamber_ammoCase/ammo_fire_data = process.GetCacheData(AMMO_FIRE)
 	var/datum/gun_modular/component/data/gun_target/target_fire_data = process.GetCacheData(TARGET_FIRE)
@@ -21,6 +21,8 @@
 
 	result_fire_data.value = ammo_case.fire(process, target, user, params, , 0)
 	ChangeNextComponent(result_fire_data)
+
+	ammo_fire_data.value = null
 
 	return ..()
 

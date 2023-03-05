@@ -5,7 +5,7 @@
 /datum/gun_modular/component/proc_gun/add_last_component/New(obj/item/gun_modular/module/P, datum/gun_modular/component/last_component = null)
 	src.last_component = last_component
 
-/datum/gun_modular/component/proc_gun/add_last_component/Action(datum/process_fire/process)
+/datum/gun_modular/component/proc_gun/add_last_component/RunTimeAction(datum/process_fire/process)
 
 	if(last_component)
 		AddLastComponent(last_component)

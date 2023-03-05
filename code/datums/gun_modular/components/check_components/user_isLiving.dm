@@ -1,7 +1,7 @@
 /datum/gun_modular/component/check/user_isLiving
 	id_component = "user_isLiving"
 
-/datum/gun_modular/component/check/user_isLiving/Action(datum/process_fire/process)
+/datum/gun_modular/component/check/user_isLiving/RunTimeAction(datum/process_fire/process)
 
 	var/datum/gun_modular/component/data/gun_user/cache_data = process.GetCacheData(USER_FIRE)
 

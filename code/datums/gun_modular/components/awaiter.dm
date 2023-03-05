@@ -4,7 +4,6 @@
 	var/datum/gun_modular/component/waiting_component = null
 	var/datum/gun_modular/component/timeout_component = null
 	var/list/signal_checker_wait = list(COMSIG_GUN_CHECK_SUCCESS)
-	var/invoke_waiting_component = FALSE
 
 /datum/gun_modular/component/awaiter/New(obj/item/gun_modular/module/P, datum/gun_modular/component/waiting_component, datum/gun_modular/component/checker, list/signal_checker_wait, datum/gun_modular/component/timeout_component = null)
 	. = ..()
@@ -14,9 +13,7 @@
 	src.checker = checker
 	src.signal_checker_wait = signal_checker_wait
 
-/datum/gun_modular/component/awaiter/Action(datum/process_fire/process)
-
-	RegisterSignal(src.checker, signal_checker_wait, CALLBACK(src, .proc/InvokeWaitingComponent, process))
+/datum/gun_modular/component/awaiter/RunTimeAction(datum/process_fire/process)
 
 	RegisterSignal(process, COMSIG_GUN_COMPONENT_ACTION, CALLBACK(src, .proc/InvokeCheckerComponent, process))
 
@@ -25,13 +22,19 @@
 	return ..()
 
 /datum/gun_modular/component/awaiter/CopyComponentGun()
+
 	var/datum/gun_modular/component/awaiter/new_component = ..()
 
-	new_component.checker = checker.CopyComponentGun()
-	new_component.waiting_component = waiting_component.CopyComponentGun()
-	new_component.timeout_component = timeout_component.CopyComponentGun()
+	if(checker)
+		new_component.checker = checker.CopyComponentGun()
+
+	if(waiting_component)
+		new_component.waiting_component = waiting_component.CopyComponentGun()
+
+	if(timeout_component)
+		new_component.timeout_component = timeout_component.CopyComponentGun()
+
 	new_component.signal_checker_wait = signal_checker_wait
-	new_component.invoke_waiting_component = invoke_waiting_component
 
 	return new_component
 
@@ -39,25 +42,52 @@
 /datum/gun_modular/component/awaiter/proc/InvokeWaitingComponent(datum/process_fire/process)
 
 	UnregisterSignalsAll(process)
-	var/datum/gun_modular/component/C = process.GetActiveComponent()
-	C.ChangeNextComponent(waiting_component.CopyComponentGun())
-	invoke_waiting_component = TRUE
+
+	if(!waiting_component)
+		return FALSE
+
+	InsertComponent(process, waiting_component)
 
 /datum/gun_modular/component/awaiter/proc/InvokeCheckerComponent(datum/process_fire/process)
 
-	if(invoke_waiting_component)
+	if(!src.checker)
 		return FALSE
 
-	invoke_waiting_component = TRUE
-	src.checker.Action(process)
-	invoke_waiting_component = FALSE
+	RunIncludeComponentsChecker(process, src.checker)
+
+/datum/gun_modular/component/awaiter/proc/RunIncludeComponentsChecker(datum/process_fire/process, datum/gun_modular/component/include)
+
+	var/datum/gun_modular/component/data/gun_user/cache_data = process.GetCacheData(USER_FIRE)
+
+	process.activate += 1
+
+	if(cache_data)
+		var/mob/user = cache_data.GetData()
+		to_chat(user, "<span>([process.activate])([src.id_component])[include.id_component]</span>")
+
+	RegisterSignal(include, signal_checker_wait, CALLBACK(src, .proc/InvokeWaitingComponent, process))
+
+	include.RunTimeAction(process)
+
+	UnregisterSignal(include, signal_checker_wait)
+
+	if(include.next_component)
+		RunIncludeComponentsChecker(process, include.next_component)
 
 /datum/gun_modular/component/awaiter/proc/InvokeTimeoutComponent(datum/process_fire/process)
 
 	UnregisterSignalsAll(process)
-	src.timeout_component.Action(process)
+
+	if(!timeout_component)
+		return FALSE
+
+	InsertComponent(process, timeout_component)
 
 /datum/gun_modular/component/awaiter/proc/UnregisterSignalsAll(datum/process_fire/process)
 
-	UnregisterSignal(src.checker, signal_checker_wait)
 	UnregisterSignal(process, list(COMSIG_GUN_COMPONENT_ACTION_LAST, COMSIG_GUN_COMPONENT_ACTION))
+
+/datum/gun_modular/component/awaiter/proc/InsertComponent(datum/process_fire/process, datum/gun_modular/component/insert_component)
+
+	var/datum/gun_modular/component/active_component = process.GetActiveComponent()
+	active_component.ChangeNextComponent(insert_component.CopyComponentGun())

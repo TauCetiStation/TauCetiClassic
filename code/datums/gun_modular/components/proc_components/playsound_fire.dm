@@ -1,7 +1,7 @@
 /datum/gun_modular/component/proc_gun/playsound_fire
 	id_component = "playsound_fire"
 
-/datum/gun_modular/component/proc_gun/playsound_fire/Action(datum/process_fire/process)
+/datum/gun_modular/component/proc_gun/playsound_fire/RunTimeAction(datum/process_fire/process)
 
 	var/datum/gun_modular/component/data/sound_data/fire_sound_data = process.GetCacheData("fire_sound")
 	var/datum/gun_modular/component/data/gun_user/gun_user_data = process.GetCacheData(USER_FIRE)

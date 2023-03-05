@@ -2,6 +2,7 @@
 	var/datum/gun_modular/component/first_component
 	var/list/datum/gun_modular/component/data/cache_data = list()
 	var/datum/gun_modular/component/active_component = null
+	var/activate = 0
 
 /datum/process_fire/proc/PrepareCacheData()
 
