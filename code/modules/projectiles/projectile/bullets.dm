@@ -36,7 +36,7 @@
 /obj/item/projectile/bullet/slug
 	name = "shotgun slug"
 	damage = 30
-	armor_piercing = 0.40
+	armor_piercing = 0.4
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
