@@ -6773,10 +6773,6 @@
 	},
 /area/station/civilian/dormitories/dormthree)
 "bgu" = (
-/obj/machinery/camera{
-	c_tag = "Kitchen";
-	dir = 4
-	},
 /obj/machinery/chem_master/condimaster{
 	name = "CondiMaster Neo";
 	pixel_x = -5
@@ -29000,13 +28996,16 @@
 	},
 /area/station/medical/virology)
 "idB" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -24
 	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "redyellowfull"
+	},
+/turf/simulated/floor{
+	icon_state = "siding1"
 	},
 /area/station/civilian/bar)
 "idC" = (
@@ -30984,6 +30983,9 @@
 "iKu" = (
 /obj/structure/table,
 /obj/item/weapon/packageWrap,
+/obj/item/device/radio/intercom{
+	pixel_x = 25
+	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -34351,6 +34353,10 @@
 	dir = 1
 	},
 /obj/machinery/deepfryer,
+/obj/item/device/radio/intercom{
+	pixel_x = -29;
+	pixel_y = -1
+	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -39941,9 +39947,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -23
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -43237,8 +43243,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/item/device/radio/intercom{
-	pixel_y = -30
+/obj/machinery/camera{
+	c_tag = "Kitchen";
+	dir = 1;
+	pixel_x = 20
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -105064,7 +105072,7 @@ hSM
 oUf
 oUf
 huQ
-idB
+hSM
 abS
 dXw
 lzL
@@ -108410,7 +108418,7 @@ abW
 eKK
 uIU
 hau
-abt
+idB
 gYQ
 gYQ
 gYQ
