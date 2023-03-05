@@ -119,12 +119,7 @@
 		can_starve = TRUE
 		return
 
-	var/datum/gas_mixture/breath = loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
-	if(!breath)
-		can_starve = TRUE
-		return
-
-	if(breath.get_gas("fractol") < 1.0)
+	if(environment.get_gas("fractol") < 1.0)
 		can_starve = TRUE
 		return
 

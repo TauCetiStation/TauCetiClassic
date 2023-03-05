@@ -69,17 +69,6 @@
 	prelude_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
 	outbreak_announcement = world.time + rand(INTERCEPT_TIME_LOW, 2 * INTERCEPT_TIME_HIGH)
 
-	return ..()
-
-/datum/faction/replicators/can_setup(num_players)
-	max_roles = max(1, round(num_players / 20))
-
-	if(length(vents4spawn) > 0)
-		return TRUE
-
-	return TRUE
-
-/datum/faction/replicators/OnPostSetup()
 	var/list/pos_vents = vents4spawn.Copy()
 	for(var/datum/role/role in members)
 		var/mob/living/simple_animal/hostile/replicator/R
@@ -91,15 +80,23 @@
 			V = pick(pos_vents)
 
 		R = new(V)
+		role.antag.transfer_to(R)
 		R.add_ventcrawl(V)
 
-		role.antag.transfer_to(R)
 		// I can not imagine why this is required but everyone else does this :shrug:
 		QDEL_NULL(role.antag.original)
 
 	vents4spawn = null
 
 	return ..()
+
+/datum/faction/replicators/can_setup(num_players)
+	max_roles = max(1, round(num_players / 20))
+
+	if(length(vents4spawn) > 0)
+		return TRUE
+
+	return TRUE
 
 /datum/faction/replicators/forgeObjectives()
 	if(!..())
@@ -337,13 +334,7 @@ Message ends."}
 	if(environment.return_pressure() >= WARNING_HIGH_PRESSURE)
 		return FALSE
 
-	var/datum/gas_mixture/breath = source_loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
-	if(!breath)
-		return FALSE
-
-	breath.volume = BREATH_VOLUME
-	breath.adjust_gas("fractol", moles)
-	source_loc.assume_air(breath)
+	environment.adjust_gas("fractol", moles)
 	return TRUE
 
 /datum/faction/replicators/proc/adjust_fractol(moles)

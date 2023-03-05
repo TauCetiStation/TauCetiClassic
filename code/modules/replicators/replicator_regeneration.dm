@@ -54,13 +54,12 @@
 		regen_from_swarm(repair_amount)
 		return
 
-	var/datum/gas_mixture/breath = source_loc.remove_air(environment.total_moles * BREATH_PERCENTAGE)
-	if(!breath)
+	if(environment.get_gas("fractol") < REPLICATOR_GAS_HEAL_MINIMUM)
 		regen_from_swarm(repair_amount)
 		return
 
-	repair_amount = min(repair_amount, breath.get_gas("fractol"))
-	if(repair_amount <= 0)
+	repair_amount = min(repair_amount, environment.get_gas("fractol"))
+	if(repair_amount < REPLICATOR_GAS_HEAL_MINIMUM)
 		return
 
 	breath.volume = BREATH_VOLUME

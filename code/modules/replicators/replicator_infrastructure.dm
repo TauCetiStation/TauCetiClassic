@@ -218,6 +218,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		FR.object_communicate(src, "", "Has closed in [A.name], due to lack of energy.")
 		FR.adjust_materials(REPLICATOR_COST_TRANSPONDER)
+		QDEL_NULL(deactivation_signal)
 		neutralize()
 
 	if(stat & NOPOWER)

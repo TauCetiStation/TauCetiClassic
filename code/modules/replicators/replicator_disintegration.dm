@@ -204,7 +204,11 @@
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		FR.adjust_taxes(material_amount)
 		FR.adjust_materials(material_amount, adjusted_by=last_controller_ckey)
-		FR.create_fractol(src, material_amount)
+
+		if(has_swarms_gift())
+			FR.adjust_fractol(material_amount)
+		else
+			FR.create_fractol(src, material_amount)
 
 	return TRUE
 

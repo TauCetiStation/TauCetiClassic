@@ -64,8 +64,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 		/obj/effect/proc_holder/spell,
 	)
 
-	maxHealth = 80
-	health = 80
+	maxHealth = 70
+	health = 70
 	response_harm = "hits"
 	harm_intent_damage = 0
 	melee_damage = 0
@@ -307,11 +307,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 /mob/living/simple_animal/hostile/replicator/mind_initialize()
 	. = ..()
 
-	var/datum/role/replicator/R = mind.GetRole(REPLICATOR)
-	if(R)
-		return
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-	R = add_faction_member(FR, src, TRUE)
+
+	if(!mind.GetRole(REPLICATOR))
+		add_faction_member(FR, src, TRUE)
 
 	var/datum/replicator_array_info/RAI = FR.ckey2info[ckey]
 	if(RAI)
