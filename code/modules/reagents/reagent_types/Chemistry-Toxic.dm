@@ -612,7 +612,6 @@
 	taste_message = "bitter blood"
 	restrict_species = list(IPC, DIONA)
 
-	data = list()
 
 /datum/reagent/sanguisacid/on_general_digest(mob/living/carbon/human/H)
 	..()
@@ -638,7 +637,6 @@
 	taste_message = "something disgusting"
 	restrict_species = list(IPC, DIONA)
 
-	data = list()
 
 /datum/reagent/bonebreaker/on_general_digest(mob/living/carbon/human/H)
 	..()
