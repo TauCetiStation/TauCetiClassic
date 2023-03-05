@@ -204,7 +204,7 @@ const Choices = (_, context) => {
               ))}
             </Stack>
           </>
-        )   : (
+        ) : (
           <NoticeBox info mb="0">
             {!currentPoll
               ? 'Нет активного голосования!'
@@ -225,9 +225,8 @@ const ListPolls = (_, context) => {
       <Section title="Начать голосование">
         <Stack vertical justify="space-between">
           {polls ? (
-            polls.map((poll) => (
-              (!poll.adminOnly || !!isAdmin)
-              && <Stack.Item key={poll.name}>
+            polls.map(poll => (!poll.adminOnly || !!isAdmin) && (
+              <Stack.Item key={poll.name}>
                 <Stack horizontal>
                   {!!isAdmin && (
                     <Stack.Item>
