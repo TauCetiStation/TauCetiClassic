@@ -71,10 +71,10 @@
 
 	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunshot))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
-		P.agony *= get_siemens_coefficient_organ(BP)
-		P.stun *= get_siemens_coefficient_organ(BP)
-		P.weaken *= get_siemens_coefficient_organ(BP)
-		P.stutter *= get_siemens_coefficient_organ(BP)
+		P.agony *= get_siemens_coefficient_organ(BP) * P.armor_piercing
+		P.stun *=  get_siemens_coefficient_organ(BP) * P.armor_piercing
+		P.weaken *=  get_siemens_coefficient_organ(BP) * P.armor_piercing
+		P.stutter *=  get_siemens_coefficient_organ(BP) * P.armor_piercing
 
 		if(P.agony) // No effect against full protection.
 			if(prob(max(P.agony, 20)))
