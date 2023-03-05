@@ -236,25 +236,25 @@
 	for (var/map in config.maplist)
 		var/datum/map_config/VM = config.maplist[map]
 
-		if (VM.map_name != SSmapping.config.map_name)
+		if (VM.map_name == SSmapping.config.map_name)
+			continue
 		
-			if (!VM.votable)
-				continue
+		if (!VM.votable)
+			continue
 
-			if (VM.config_min_users > 0 && length(player_list) < VM.config_min_users)
-				continue
+		if (VM.config_min_users > 0 && length(player_list) < VM.config_min_users)
+			continue
 
-			if (VM.config_max_users > 0 && length(player_list) > VM.config_max_users)
-				continue
+		if (VM.config_max_users > 0 && length(player_list) > VM.config_max_users)
+			continue
 
-			var/datum/vote_choice/nextmap/vc = new
-			vc.text = VM.GetFullMapName()
-			if(VM.voteweight != 1)
-				vc.text += "\[vote weight: [VM.voteweight]\]"
-			vc.mapname = VM.map_name
-			vc.vote_weight = VM.voteweight
-
-			choices.Add(vc)
+		var/datum/vote_choice/nextmap/vc = new
+		vc.text = VM.GetFullMapName()
+		if(VM.voteweight != 1)
+			vc.text += "\[vote weight: [VM.voteweight]\]"
+		vc.mapname = VM.map_name
+		vc.vote_weight = VM.voteweight
+		choices.Add(vc)
 
 /datum/vote_choice/nextmap
 	text = "Box Station"
