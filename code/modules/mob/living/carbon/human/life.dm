@@ -161,7 +161,7 @@ var/global/list/tourette_bad_words= list(
 				return
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		if(!(get_species() in tourette_bad_words))
-			return 
+			return
 		speech_problem_flag = 1
 		if (prob(10))
 			spawn( 0 )
@@ -1264,14 +1264,17 @@ var/global/list/tourette_bad_words= list(
 	. = ..()
 	var/nutrition_to_remove = 0
 	var/met_factor = get_metabolism_factor()
+	if(!met_factor)
+		return
 	var/bumped_bodyparts_met = 0
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.pumped > 0)
 			bumped_bodyparts_met += BP.pumped / 100
 	if(bumped_bodyparts_met > 0)
-		nutrition_to_remove += (met_factor + bumped_bodyparts_met) * 0.1
+		//multiply to 2 because its now lifetick, not movetick
+		nutrition_to_remove += ((met_factor + bumped_bodyparts_met) * 0.1) * 2
 		nutrition -= nutrition_to_remove
-	
+
 	if(nutrition > 450)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
 			overeatduration++
