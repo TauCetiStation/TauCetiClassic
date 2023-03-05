@@ -125,7 +125,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 			if(mapload && is_station_level(src.z) && !private)
 				var/players_coefficient = num_players() / 50 //100 players = double load, 50 players = max load, 0 players = min load
 				var/randomness_coefficient = rand(50,100) / 100 //50-100% randomness
-				var/final_coefficient = clamp(players_coefficient * randomness_coefficient, 0.1, 1.0) //10% minimum, 100% maximum
+				var/list/jobs = list("Cargo Technician", "Quartermaster", "Chef", "Botanist")
+				var/jobs_number = 0
+				for(var/job in jobs)
+					jobs_number += SSjob.name_occupations[job].current_positions
+				var/jobs_coefficient = 1.5 - jobs_number / 8 //50 - 150% depends on active players at specific jobs
+				var/final_coefficient = clamp(players_coefficient * randomness_coefficient * jobs_coefficient, 0.1, 1.0) //10% minimum, 100% maximum
 
 				amount = round(amount * final_coefficient) //10-100% roundstart load depending on player amount and randomness
 
