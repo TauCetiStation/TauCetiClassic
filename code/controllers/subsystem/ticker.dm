@@ -611,6 +611,10 @@ SUBSYSTEM_DEF(ticker)
 	SSticker.timeLeft = 0
 	return TRUE
 
+/datum/controller/subsystem/ticker/proc/fill_all_vending_machines()
+	for(var/obj/machinery/vending/Vendomat in global.vending_machines)
+		Vendomat.load_products(TRUE)
+
 /world/proc/has_round_started()
 	return (SSticker && SSticker.current_state >= GAME_STATE_PLAYING)
 

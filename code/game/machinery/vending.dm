@@ -5,10 +5,6 @@
 	var/max_amount = 0
 	var/price = 0
 
-/proc/fill_all_vending_machines()
-	for(var/obj/machinery/vending/Vendomat in global.vending_machines)
-		Vendomat.load_products(TRUE)
-
 var/global/list/vending_machines = list()
 
 ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
