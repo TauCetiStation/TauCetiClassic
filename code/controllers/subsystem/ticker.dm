@@ -272,6 +272,8 @@ SUBSYSTEM_DEF(ticker)
 		if(player.spawning)
 			qdel(player)
 
+	fill_all_vending_machines()
+
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
 
@@ -314,9 +316,6 @@ SUBSYSTEM_DEF(ticker)
 		antagonist_announce()
 
 		create_default_spawners()
-
-	for(var/obj/machinery/vending/Vendomat in global.vending_machines)
-		Vendomat.load_products(TRUE)
 
 	return TRUE
 
