@@ -616,17 +616,48 @@
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose
 	MASK_TYPE = /obj/item/clothing/mask/breath
 
+/obj/machinery/suit_storage_unit/eris/nt_breacher
+	overlay_color = "#b0b0b0"
+	SUIT_TYPE = /obj/item/clothing/suit/space/unathi/rig_cheap
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
+	MASK_TYPE = /obj/item/clothing/mask/breath
+
+/obj/machinery/suit_storage_unit/eris/skrellian
+	overlay_color = "#b0b0b0"
+	SUIT_TYPE = /obj/item/clothing/suit/space/skrell/white
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/skrell/white
+	MASK_TYPE = /obj/item/clothing/mask/breath
+
+/obj/machinery/suit_storage_unit/eris/skrellian/black
+	SUIT_TYPE = /obj/item/clothing/suit/space/skrell/black
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/skrell/black
+
+/obj/machinery/suit_storage_unit/eris/captain
+	overlay_color = "#50649a"
+	SUIT_TYPE = /obj/item/clothing/suit/armor/captain
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/capspace
+	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
+
 /obj/machinery/suit_storage_unit/eris/medical
 	overlay_color = "#50649a"
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/medical/magpulse
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/medical
 	MASK_TYPE = /obj/item/clothing/mask/gas/coloured
 
+/obj/machinery/suit_storage_unit/eris/medical/chief
+	overlay_color = "#baddff"
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/medical/cmo/magpulse
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/medical/cmo
+
 /obj/machinery/suit_storage_unit/eris/security
-	overlay_color = "#d04044" //A62228?
+	overlay_color = "#d04044"
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/security/magpulse
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/security
 	MASK_TYPE = /obj/item/clothing/mask/gas/sechailer
+
+/obj/machinery/suit_storage_unit/eris/security/chief
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/security/hos/magpulse
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/security/hos
 
 /obj/machinery/suit_storage_unit/eris/engineering
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/engineering/magpulse
@@ -636,6 +667,24 @@
 /obj/machinery/suit_storage_unit/eris/engineering/atmos
 	SUIT_TYPE = /obj/item/clothing/suit/space/rig/atmos/magpulse
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/atmos
+
+/obj/machinery/suit_storage_unit/eris/engineering/chief
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/engineering/chief/magpulse
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/engineering/chief
+
+/obj/machinery/suit_storage_unit/eris/science
+	overlay_color = "#b58fb8"
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/science/magpulse
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/science
+	MASK_TYPE = /obj/item/clothing/mask/breath
+
+/obj/machinery/suit_storage_unit/eris/science/soft
+	SUIT_TYPE = /obj/item/clothing/suit/space/globose/science
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose/science
+
+/obj/machinery/suit_storage_unit/eris/science/chief
+	SUIT_TYPE = /obj/item/clothing/suit/space/rig/science/rd/magpulse
+	HELMET_TYPE = /obj/item/clothing/head/helmet/space/rig/science/rd
 
 /obj/machinery/suit_storage_unit/eris/syndi
 	overlay_color = "#d04044"
