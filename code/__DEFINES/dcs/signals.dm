@@ -363,3 +363,34 @@
 
 // send this signal to toggle zoom in /datum/component/zoom: (mob/user)
 #define COMSIG_ZOOM_TOGGLE "zoom_toggle"
+
+
+///Nanites
+// from /datum/component/nanites (atom) send this signal to find nanites in atom.
+#define COMSIG_HAS_NANITES "has_nanites"
+	// returns TRUE if nanites are found
+	#define COMPONENT_NANITES_DETECTED 1
+// from /datum/component/nanites (atom, amount). Sets current nanite volume to the given amount
+#define COMSIG_NANITE_SET_VOLUME "nanite_set_volume"
+// from /datum/component/nanites (atom|null, amount). Adjusts nanite volume by the given amount
+#define COMSIG_NANITE_ADJUST_VOLUME "nanite_adjust"
+// from /datum/component/nanites (atom, amount). Sets maximum nanite volume to the given amount
+#define COMSIG_NANITE_SET_MAX_VOLUME "nanite_set_max_volume"
+// from /datum/component/nanites (atom, amount(0-100)). Sets cloud ID to the given amount
+#define COMSIG_NANITE_SET_CLOUD "nanite_set_cloud"
+// from /datum/component/nanites (atom, amount). Sets safety threshold to the given amount
+#define COMSIG_NANITE_SET_SAFETY "nanite_set_safety"
+// from /datum/component/nanites (atom, amount). Sets regeneration rate to the given amount
+#define COMSIG_NANITE_SET_REGEN "nanite_set_regen"
+// from /datum/component/nanites (atom, code(1-9999), "source"). Called when sending a nanite signal to a mob.
+#define COMSIG_NANITE_SIGNAL "nanite_signal"
+// from /datum/component/nanites (atom, datum/nanite_program/new_program, datum/nanite_program/source_program). Called when adding a program to a nanite component
+#define COMSIG_NANITE_ADD_PROGRAM "nanite_add_program"
+	///Installation failed, but there are still nanites
+	#define COMPONENT_PROGRAM_NOT_INSTALLED 1
+// from /datum/component/nanites (atom, datum/component/nanites, full_overwrite, copy_activation). Called to sync the target's nanites to a given nanite component
+#define COMSIG_NANITE_SYNC "nanite_sync"
+// from /datum/component/nanites (atom) deletes the nanite component
+#define COMSIG_NANITE_DELETE "nanite_delete"
+// from /datum/component/nanites (atom, method). Modify cloud sync status. Method can be toggle, enable or disable
+#define COMSIG_NANITE_SET_CLOUD_SYNC "nanite_set_cloud_sync"
