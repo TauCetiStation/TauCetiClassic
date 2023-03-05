@@ -590,6 +590,12 @@
 	..()
 	LoseTarget()
 
+/obj/item/weapon/gun/medbeam/attack(atom/target, mob/living/user)
+	if(user.a_intent != INTENT_HARM)
+		Fire(target, user)
+		return
+	return ..()
+
 /obj/item/weapon/gun/medbeam/proc/LoseTarget()
 	if(active)
 		QDEL_NULL(current_beam)
@@ -605,6 +611,8 @@
 	if(current_target)
 		LoseTarget()
 	if(!isliving(target))
+		return
+	if(target == user)
 		return
 
 	current_target = target
