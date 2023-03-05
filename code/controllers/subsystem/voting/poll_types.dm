@@ -251,7 +251,8 @@
 			vc.text += "\[vote weight: [VM.voteweight]\]"
 		vc.mapname = VM.map_name
 		vc.vote_weight = VM.voteweight
-		choices.Add(vc)
+		if(vc.mapname != SSmapping.config.map_name)
+			choices.Add(vc)
 
 /datum/vote_choice/nextmap
 	text = "Box Station"
