@@ -286,7 +286,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 
 /obj/machinery/power/replicator_generator/atom_init()
 	. = ..()
-	new /obj/structure/cable/power_rune(loc)
+	if(!(locate(/obj/structure/cable/power_rune) in loc))
+		new /obj/structure/cable/power_rune(loc)
 
 	var/obj/structure/forcefield_node/FN = locate() in loc
 	if(FN)
