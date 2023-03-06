@@ -17,11 +17,11 @@
     for(var/datum/component/point_and_point/point in child_points)
         RemovePoint(point)
         point.Destroy()
-    
+
     parent_point = null
 
     return ..()
-    
+
 
 /datum/component/point_and_point/proc/PrepareEntryPointsList(id, type, dir)
 
@@ -98,7 +98,7 @@
 
     if(!image_holders["[type]"])
         return FALSE
-    
+
     return image_holders["[type]"]
 
 /datum/component/point_and_point/proc/GetEntryPoint(id, type, dir)
@@ -128,7 +128,7 @@
 /datum/component/point_and_point/proc/AddPoint(datum/component/point_and_point/point)
 
     PrepareChildPoints()
-    
+
     LAZYADD(child_points, point)
     point.parent_point = src
 
@@ -153,5 +153,5 @@
         var/image/child_image = point.GetImage(type, dir)
         child_image = point.SetOffsetImage(type, dir, child_image)
         image_return.add_overlay(child_image)
-    
+
     return image_return

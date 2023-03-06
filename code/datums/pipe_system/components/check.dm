@@ -2,7 +2,7 @@
 	var/datum/pipe_system/component/success_component = null
 	var/datum/pipe_system/component/fail_component = null
 
-/datum/pipe_system/component/check/New(datum/P, var/datum/pipe_system/component/success_component = null, var/datum/pipe_system/component/fail_component = null)
+/datum/pipe_system/component/check/New(datum/P, datum/pipe_system/component/success_component = null, datum/pipe_system/component/fail_component = null)
 	. = ..()
 
 	src.success_component = success_component

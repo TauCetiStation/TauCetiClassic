@@ -2127,7 +2127,6 @@
 #include "code\modules\projectiles\ammunition\magazines.dm"
 #include "code\modules\projectiles\ammunition\special.dm"
 #include "code\modules\projectiles\gun_modular\module.dm"
-#include "code\modules\projectiles\gun_modular\type_damage.dm"
 #include "code\modules\projectiles\gun_modular\modules\barrel.dm"
 #include "code\modules\projectiles\gun_modular\modules\chamber.dm"
 #include "code\modules\projectiles\gun_modular\modules\grip.dm"

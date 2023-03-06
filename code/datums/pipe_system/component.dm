@@ -73,7 +73,7 @@
 
 /datum/pipe_system/component/proc/CopyComponentGun()
 
-	var/datum/pipe_system/component/new_component = new src.type(parent)
+	var/datum/pipe_system/component/new_component = new type(parent)
 
 	new_component.id_component = id_component
 
