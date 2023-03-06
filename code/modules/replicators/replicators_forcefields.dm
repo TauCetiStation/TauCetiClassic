@@ -61,7 +61,7 @@
 		return
 
 	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
-		ChangeTurf(SSenvironment.turf_type)
+		ChangeTurf(SSenvironment.turf_type[z])
 		return
 
 	return ..()
