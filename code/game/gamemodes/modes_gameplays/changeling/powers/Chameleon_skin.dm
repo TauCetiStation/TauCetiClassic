@@ -2,7 +2,7 @@
 	name = "Chameleon Skin"
 	desc = "Our skin pigmentation rapidly changes to suit our current environment."
 	helptext = "Allows us to become invisible after a few seconds of standing still. Can be toggled on and off."
-	genomecost = 2
+	genomecost = 1
 	chemical_cost = 0
 	req_human = 1
 	max_genetic_damage = 50
@@ -32,13 +32,13 @@
 	if(owner.l_hand)
 		var/obj/item/I = owner.l_hand
 		if(!(I.flags & ABSTRACT))
-			owner.alpha = 200
+			owner.alpha = 125
 	if(owner.r_hand)
 		var/obj/item/I = owner.r_hand
 		if(!(I.flags & ABSTRACT))
-			owner.alpha = 200
+			owner.alpha = 125
 	if(owner.loc != last_loc) // looks like a shit, but meh
-		owner.alpha = 200
+		owner.alpha = 125
 	if(owner.stat == DEAD || owner.lying || owner.buckled)
 		active = !active
 		turn_off()
@@ -51,6 +51,10 @@
 	var/datum/role/changeling/C = owner.mind.GetRoleByType(/datum/role/changeling)
 	C.chem_recharge_slowdown -= 0.25
 	owner.invisibility = INVISIBILITY_NONE
+	var/datum/atom_hud/M = global.huds[DATA_HUD_MEDICAL]
+	M.add_to_hud(owner)
+	var/datum/atom_hud/S = global.huds[DATA_HUD_SECURITY]
+	S.add_to_hud(owner)
 
 /obj/effect/proc_holder/changeling/chameleon_skin/proc/turn_on()
 	to_chat(owner, "<span class='notice'>We feel one with our surroundings.</span>")
@@ -58,3 +62,7 @@
 	START_PROCESSING(SSobj, src)
 	var/datum/role/changeling/C = owner.mind.GetRoleByType(/datum/role/changeling)
 	C.chem_recharge_slowdown += 0.25
+	var/datum/atom_hud/M = global.huds[DATA_HUD_MEDICAL]
+	M.remove_from_hud(owner)
+	var/datum/atom_hud/S = global.huds[DATA_HUD_SECURITY]
+	S.remove_from_hud(owner)
