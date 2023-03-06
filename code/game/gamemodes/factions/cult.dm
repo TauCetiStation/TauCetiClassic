@@ -40,7 +40,9 @@
 	if(!..())
 		return FALSE
 
-	var/list/possibles_objectives = subtypesof(/datum/objective/cult) + /datum/objective/target/sacrifice
+	AppendObjective(/datum/objective/cult/capture_areas, TRUE)
+
+	var/list/possibles_objectives = subtypesof(/datum/objective/cult) + /datum/objective/target/sacrifice - /datum/objective/cult/capture_areas
 
 	var/objectives_weight = 0
 	while(objectives_weight < 5)
