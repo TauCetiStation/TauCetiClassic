@@ -214,6 +214,13 @@
 				to_chat(user, "<span class='warning'>Ты не можешь построить второй алтарь недалеко от первого.</span>")
 				return
 
+	if(ispath(choice.building_type, /turf/simulated/wall/cult))
+		var/area/A = get_area(src)
+		if(istype(A, /area/custom/cult) || istype(A, /area/custom/cult_wasteland))
+			if(!religion.get_tech(RTECH_BUILD_EVERYWHERE))
+				to_chat(user, "<span class='warning'>Ты не можешь возводить стены здесь.</span>")
+				return
+
 	if(!religion.check_costs(choice.favor_cost * cost_coef, choice.piety_cost * cost_coef, user))
 		return
 
