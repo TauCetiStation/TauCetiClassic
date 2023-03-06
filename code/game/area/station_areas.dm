@@ -329,6 +329,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Library"
 	icon_state = "library"
 
+/area/station/civilian/artsroom
+	name = "Arts Room"
+	icon_state = "library"
+
+/area/station/civilian/journalist
+	name = "Journalist office"
+	icon_state = "library"
+
 /area/station/civilian/chapel
 	name = "Chapel"
 	icon_state = "chapel"
@@ -784,6 +792,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/station/storage/emergency3
 	name = "Central Emergency Storage"
+	icon_state = "emergencystorage"
+	sound_environment = SOUND_AREA_SMALL_METALLIC
+
+/area/station/storage/emergency4
+	name = "Arrival Emergency Storage"
 	icon_state = "emergencystorage"
 	sound_environment = SOUND_AREA_SMALL_METALLIC
 
