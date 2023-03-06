@@ -13017,7 +13017,7 @@
 /area/centcom/specops)
 "aDD" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/glock/spec,
+/obj/item/weapon/gun/projectile/automatic/glock/spec,
 /obj/machinery/camera{
 	c_tag = "Spec. Ops. Commander";
 	dir = 4;
@@ -16743,20 +16743,20 @@
 /area/centcom/specops)
 "aLW" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/projectile/glock/spec{
+/obj/item/weapon/gun/projectile/automatic/glock/spec{
 	pixel_y = 6
 	},
-/obj/item/weapon/gun/projectile/glock/spec{
+/obj/item/weapon/gun/projectile/automatic/glock/spec{
 	pixel_y = 6
 	},
-/obj/item/weapon/gun/projectile/glock/spec{
+/obj/item/weapon/gun/projectile/automatic/glock/spec{
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/projectile/glock/spec{
+/obj/item/weapon/gun/projectile/automatic/glock/spec{
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/projectile/glock/spec,
-/obj/item/weapon/gun/projectile/glock/spec,
+/obj/item/weapon/gun/projectile/automatic/glock/spec,
+/obj/item/weapon/gun/projectile/automatic/glock/spec,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "vault"

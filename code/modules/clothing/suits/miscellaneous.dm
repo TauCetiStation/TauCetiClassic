@@ -15,7 +15,7 @@
 	item_state = "bluetag"
 	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO
-	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag)
+	allowed = list(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag)
 	siemens_coefficient = 3.0
 
 	var/lasertag_color = "none"
@@ -25,7 +25,7 @@
 	desc = "Blue Pride, Station Wide."
 	icon_state = "bluetag"
 	item_state = "bluetag"
-	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag/bluetag)
+	allowed = list(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag)
 	lasertag_color = "blue"
 
 /obj/item/clothing/suit/lasertag/redtag
@@ -33,7 +33,7 @@
 	desc = "Reputed to go faster."
 	icon_state = "redtag"
 	item_state = "redtag"
-	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag/redtag)
+	allowed = list(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag)
 	lasertag_color = "red"
 
 /*

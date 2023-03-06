@@ -10,3 +10,6 @@
 	. = 0
 	for(var/voter in voters)
 		. += voters[voter]
+
+/datum/vote_choice/proc/render_html()
+	return

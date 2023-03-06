@@ -28,7 +28,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	var/stop_automated_movement_when_pulled = TRUE
 	var/turns_since_scan = 0
 	var/wander = TRUE
-	var/obj/movement_target
+	var/obj/item/weapon/reagent_containers/food/snacks/movement_target
 
 	attack_push_vis_effect = ATTACK_EFFECT_BITE
 	attack_disarm_vis_effect = ATTACK_EFFECT_BITE

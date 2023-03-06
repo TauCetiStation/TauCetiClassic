@@ -295,7 +295,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	if(prob(50))
 		new /obj/item/weapon/gun/projectile/automatic/colt1911(src)
 		for (var/i in 1 to 2)
-			new /obj/item/ammo_box/magazine/c45r(src)
+			new /obj/item/ammo_box/magazine/c45m/rubber(src)
 	else
 		new /obj/item/weapon/gun/projectile/revolver/detective(src)
 		for (var/i in 1 to 2)
@@ -409,7 +409,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 
 /obj/structure/closet/secure_closet/pistols/PopulateContents()
 	for (var/i in 1 to 3)
-		new /obj/item/weapon/gun/projectile/glock(src)
+		new /obj/item/weapon/gun/projectile/automatic/glock(src)
 
 /obj/structure/closet/secure_closet/usp_cartridges
 	name = "USP cartridges Secure Closet"
@@ -455,7 +455,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/clothing/suit/storage/flak/blueshield(src)
 
 	new /obj/item/weapon/melee/baton(src)
-	new /obj/item/weapon/gun/projectile/glock/spec(src)
+	new /obj/item/weapon/gun/projectile/automatic/glock/spec(src)
 	for (var/i in 1 to 4)
 		new /obj/item/ammo_box/magazine/m9mm_2/rubber(src)
 	for (var/i in 1 to 2)
