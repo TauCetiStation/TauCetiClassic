@@ -7,11 +7,11 @@
 /obj/item/gun_modular/module/barrel/atom_init(mapload, ...)
 	. = ..()
 
-/obj/item/gun_modular/module/barrel/main_action(datum/process_fire/process)
+/obj/item/gun_modular/module/barrel/main_action(datum/pipe_system/process/process)
 
 	return ..()
 
 /obj/item/gun_modular/module/barrel/init_default_components_module()
 
-	var/datum/gun_modular/component/data/gun_recoil/recoil_component = new (src, recoil_change)
+	var/datum/pipe_system/component/data/gun_recoil/recoil_component = new (src, recoil_change)
 	add_default_component(recoil_component)

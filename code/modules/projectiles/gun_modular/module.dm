@@ -6,7 +6,7 @@
 	var/datum/configuration_module/configuration
 	var/list/obj/item/gun_modular/module/next_modules
 	var/obj/item/gun_modular/module/previous_module
-	var/list/datum/gun_modular/component/default_components_module
+	var/list/datum/pipe_system/component/default_components_module
 
 /obj/item/gun_modular/module/atom_init(mapload, ...)
 	. = ..()
@@ -40,7 +40,7 @@
 
 	return TRUE
 
-/obj/item/gun_modular/module/proc/add_default_component(datum/gun_modular/component/C)
+/obj/item/gun_modular/module/proc/add_default_component(datum/pipe_system/component/C)
 
 	prepare_default_components_list()
 
@@ -136,9 +136,9 @@
 
 	return TRUE
 
-/obj/item/gun_modular/module/proc/main_action(datum/process_fire/process)
+/obj/item/gun_modular/module/proc/main_action(datum/pipe_system/process/process)
 
-	for(var/datum/gun_modular/component/component in default_components_module)
+	for(var/datum/pipe_system/component/component in default_components_module)
 		process.AddComponentGun(component.CopyComponentGun())
 
 	for(var/obj/item/gun_modular/module/next_module in next_modules)
@@ -150,11 +150,11 @@
 // когда цепочка завершится, произойдет пост активация, которая по результатам из процесса стрельбы, произведет необходимые действия
 // пример: патронник получил патрон от магазина и отправился дальше, магазин не произвел никакой активации и отправил процесс дальше, ствол принял процесс и он оказался сломан
 // из за сломанного ствола, выстрел произойти не может, но за выстрел отвечает патронник ранее, для этого нужна пост активация которая, по кторой модули могут прийти к итоговому результату и сделать действие
-/obj/item/gun_modular/module/proc/activate(datum/process_fire/process)
+/obj/item/gun_modular/module/proc/activate(datum/pipe_system/process/process)
 
 	return TRUE
 
-/obj/item/gun_modular/module/proc/post_activate(datum/process_fire/process)
+/obj/item/gun_modular/module/proc/post_activate(datum/pipe_system/process/process)
 
 	return TRUE
 
@@ -163,24 +163,24 @@
 // пример: патроннику нужен патрон, он запускает сигнал с запросом патрона, его принимает держатель магазина и если тот может, то он возвращает патрон
 // если патрон вернуть не получилось, возвращает FALSE, на что реагирует патронник.
 // если патронник получил патрон, он его использует чтобы произвести выстрел и активировать следующий модуль, елси не получил, происходит click и цепочка прерывается
-/obj/item/gun_modular/module/proc/send_signal_module(datum/process_fire/process, signal)
+/obj/item/gun_modular/module/proc/send_signal_module(datum/pipe_system/process/process, signal)
 
 	//process.SetData(SIGNAL_INFO, signal)
 
 	return relaying_module(process)
 
 // метод на проверку наличия подходящего сигнала для модуля, если модуль может принять сигнал, он его принимает
-/obj/item/gun_modular/module/proc/check_signal_module(datum/process_fire/process)
+/obj/item/gun_modular/module/proc/check_signal_module(datum/pipe_system/process/process)
 
 	return FALSE
 
 // метод приема сигнала, производит необходимые действия которые запрашивались в сигнале и возвращает результат
-/obj/item/gun_modular/module/proc/receive_signal_module(datum/process_fire/process)
+/obj/item/gun_modular/module/proc/receive_signal_module(datum/pipe_system/process/process)
 
 	return FALSE
 
 // метод перенаправления, если модуль не может принять сигнал, он посылает его в следующий модуль, если следующего модуля нет, то возвращается FALSE
-/obj/item/gun_modular/module/proc/relaying_module(datum/process_fire/process)
+/obj/item/gun_modular/module/proc/relaying_module(datum/pipe_system/process/process)
 
 	if(check_signal_module(process))
 		var/result = receive_signal_module(process)
@@ -190,7 +190,7 @@
 	return relay_next_modules(process)
 
 // метод отправки сигнала следующему модулю, вынесен на случай, если в одном модуле есть разветвление на несколько цепочек, чтобы можно было по очереди послать в них
-/obj/item/gun_modular/module/proc/relay_next_modules(datum/process_fire/process)
+/obj/item/gun_modular/module/proc/relay_next_modules(datum/pipe_system/process/process)
 
 	for(var/obj/item/gun_modular/module/M in next_modules)
 		var/result = M.relaying_module(process)

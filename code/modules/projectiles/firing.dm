@@ -1,10 +1,10 @@
-/obj/item/ammo_casing/proc/fire(datum/process_fire/process, atom/target, mob/living/user, params, distro, quiet)
+/obj/item/ammo_casing/proc/fire(datum/pipe_system/process/process, atom/target, mob/living/user, params, distro, quiet)
 	var/boolet_number = 0
 	distro += variance
 	if(isnull(BB))
 		return
 	BB.shot_from = loc
-	var/datum/gun_modular/component/data/start_fire_loc/curloc_fire = process.GetCacheData(START_FIRE_LOC)
+	var/datum/pipe_system/component/data/start_fire_loc/curloc_fire = process.GetCacheData(START_FIRE_LOC)
 	var/atom/curloc = get_turf(src)
 	var/targloc = get_turf(target)
 
