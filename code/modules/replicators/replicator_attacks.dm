@@ -105,6 +105,8 @@
 
 	var/armed = TRUE
 
+	var/being_disarmed = FALSE
+
 	var/creator_ckey
 
 /obj/item/mine/replicator/deconstruct()
@@ -123,6 +125,8 @@
 	if(istype(AM, /obj/item/projectile/disabler))
 		return
 	if(!anchored)
+		return
+	if(being_disarmed)
 		return
 
 	if(!iscarbon(AM) && !issilicon(AM) && !istype(AM, /obj/mecha))
@@ -194,7 +198,25 @@
 		FR.object_communicate(src, "!", "Mine trigger event at [A.name].", transfer=TRUE)
 
 /obj/item/mine/replicator/disarm()
+	new /obj/item/weapon/stock_parts/capacitor/quadratic(loc)
 	qdel(src)
+
+/obj/item/mine/replicator/try_disarm(obj/item/I, mob/user)
+	if((I && !ispulsing(I)))
+		return
+
+	being_disarmed = TRUE
+	update_icon()
+
+	user.visible_message("<span class='notice'>[user] starts disarming [src].</span>", "<span class='notice'>You start disarming [src].</span>")
+	if(I.use_tool(src, user, 40, volume = 50))
+		user.visible_message("<span class='notice'>[user] finishes disarming [src].</span>", "<span class='notice'>You finish disarming [src].</span>")
+
+		disarm()
+		return
+
+	being_disarmed = FALSE
+	update_icon()
 
 /obj/item/mine/replicator/proc/rearm()
 	playsound(src, 'sound/effects/stealthoff.ogg', VOL_EFFECTS_MASTER, 75)
@@ -202,6 +224,11 @@
 	update_icon()
 
 /obj/item/mine/replicator/update_icon()
+	if(being_disarmed)
+		icon_state = "traparmed"
+		alpha = 255
+		return
+
 	if(armed)
 		alpha = 45
 		icon_state = "traparmed"

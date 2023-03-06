@@ -60,9 +60,7 @@
 /obj/item/mine/proc/trigger_act(obj)
 	explosion(loc, 1, 1, 3, 3)
 
-/obj/item/mine/attackby(obj/item/I, mob/user, params)
-	. = ..()
-
+/obj/item/mine/proc/try_disarm(obj/item/I, mob/user)
 	if((I && !ispulsing(I)) || !anchored)
 		return
 
@@ -71,6 +69,11 @@
 		user.visible_message("<span class='notice'>[user] finishes disarming [src].</span>", "<span class='notice'>You finish disarming [src].</span>")
 
 		disarm()
+
+/obj/item/mine/attackby(obj/item/I, mob/user, params)
+	. = ..()
+
+	try_disarm(I, user)
 
 /obj/item/mine/proc/disarm()
 	anchored = FALSE
