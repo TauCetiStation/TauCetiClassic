@@ -293,7 +293,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	return ..()
 
 /obj/structure/big_bell/attackby(obj/item/I, mob/user)
-	if(iswrench(I) && !user.is_busy(src) && I.use_tool(src, user, 40, volume = 50))
+	if(iswrenching(I) && !user.is_busy(src) && I.use_tool(src, user, 40, volume = 50))
 		anchored = !anchored
 		visible_message("<span class='warning'>[src] has been [anchored ? "secured to the floor" : "unsecured from the floor"] by [user].</span>")
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
@@ -511,7 +511,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	return ..()
 
 /obj/structure/stool/bed/chair/lectern/attackby(obj/item/weapon/W, mob/user, params)
-	if(iswrench(W))
+	if(iswrenching(W))
 		if(flipped)
 			to_chat(user, "<span class='notice'>You need to flip [src] back upright.</span>")
 			return
@@ -522,7 +522,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 		to_chat(user, "<span class='notice'>You have [anchored ? "secured" : "unsecured"] [src].</span>")
 		return
 
-	if(iscrowbar(W))
+	if(isprying(W))
 		if(anchored)
 			to_chat(user, "<span class='notice'>You need to unsecure [src] first.</span>")
 			return
