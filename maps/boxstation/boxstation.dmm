@@ -22711,10 +22711,8 @@
 	},
 /area/station/rnd/robotics)
 "aZP" = (
-/obj/machinery/computer/telecomms/monitor{
-	dir = 1;
-	network = list("tcommsat")
-	},
+/obj/structure/closet/malf/suits,
+/obj/item/clothing/glasses/night,
 /turf/simulated/floor/carpet,
 /area/space)
 "aZQ" = (
@@ -30279,7 +30277,13 @@
 	},
 /area/station/hallway/primary/starboard)
 "bpc" = (
-/obj/structure/closet/malf/suits,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	icon_state = "freezer_1";
+	power_setting = 20;
+	set_temperature = 73;
+	use_power = 1;
+	dir = 8
+	},
 /turf/simulated/floor/carpet,
 /area/space)
 "bpd" = (
@@ -51537,13 +51541,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cmz" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/telecomms/bus/preset_two,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
 	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
 /area/space)
 "cmA" = (
 /turf/simulated/floor/plating,
@@ -52201,6 +52205,7 @@
 	},
 /area/station/hallway/primary/starboard)
 "cpl" = (
+/obj/machinery/telecomms/processor/preset_three,
 /turf/simulated/floor/bluegrid{
 	name = "Server Base";
 	nitrogen = 500;
@@ -52505,14 +52510,13 @@
 	},
 /area/station/storage/tech)
 "cqs" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
-	icon_state = "freezer_1";
-	power_setting = 20;
-	set_temperature = 73;
-	use_power = 1;
-	dir = 4
+/obj/machinery/telecomms/server/presets/engineering,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
 	},
-/turf/simulated/floor/carpet,
 /area/space)
 "cqt" = (
 /obj/structure/disposalpipe/segment,
@@ -53102,6 +53106,15 @@
 	icon_state = "blue"
 	},
 /area/station/bridge/hop_office)
+"csZ" = (
+/obj/machinery/telecomms/relay/preset/station,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/space)
 "ctb" = (
 /obj/structure/noticeboard{
 	pixel_y = 32
@@ -53171,8 +53184,12 @@
 /obj/structure/transit_tube{
 	icon_state = "E-NW"
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
+/obj/machinery/telecomms/server/presets/science,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
 	},
 /area/space)
 "ctp" = (
@@ -54825,16 +54842,16 @@
 /turf/simulated/floor,
 /area/station/engineering/monitoring)
 "cyX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
 /obj/structure/transit_tube{
 	icon_state = "D-NE"
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/telecomms/server/presets/security,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
 /area/space)
 "cza" = (
 /obj/machinery/access_button{
@@ -56273,16 +56290,19 @@
 	},
 /area/station/engineering/drone_fabrication)
 "cDq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/machinery/light/small{
+	dir = 8
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/table/reinforced,
+/obj/item/weapon/flora/pottedplant/crystal{
+	pixel_y = 12
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
 /area/space)
 "cDv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -56565,10 +56585,15 @@
 	},
 /area/station/hallway/primary/central)
 "cEI" = (
-/obj/structure/transit_tube/station{
+/obj/structure/grille,
+/obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor/carpet,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
 /area/space)
 "cEK" = (
 /turf/simulated/floor{
@@ -56653,13 +56678,12 @@
 /area/station/maintenance/engineering)
 "cFj" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced{
 	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -56886,6 +56910,7 @@
 /area/station/medical/cmo)
 "cGx" = (
 /obj/structure/transit_tube,
+/obj/machinery/telecomms/bus/preset_three,
 /turf/simulated/floor/bluegrid{
 	name = "Server Base";
 	nitrogen = 500;
@@ -56896,7 +56921,7 @@
 "cGy" = (
 /obj/machinery/computer/telecomms/server{
 	network = list("tcommsat");
-	dir = 1
+	dir = 4
 	},
 /turf/simulated/floor/carpet,
 /area/space)
@@ -59380,6 +59405,18 @@
 	icon_state = "whiteblue"
 	},
 /area/station/medical/storage)
+"dri" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "drJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -59444,6 +59481,15 @@
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor,
 /area/station/security/lobby)
+"dtH" = (
+/obj/machinery/telecomms/broadcaster/preset_right,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/space)
 "dtZ" = (
 /obj/structure/window/reinforced{
 	dir = 5
@@ -59575,6 +59621,15 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"dAF" = (
+/obj/machinery/telecomms/processor/preset_four,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/space)
 "dBb" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/simulated/floor/grass,
@@ -61076,6 +61131,15 @@
 	icon_state = "greenfull"
 	},
 /area/station/civilian/hydroponics)
+"eML" = (
+/obj/machinery/telecomms/relay/preset/telecomms,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/space)
 "eNb" = (
 /obj/structure/closet/crate,
 /turf/simulated/floor{
@@ -61694,6 +61758,15 @@
 /obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"fni" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/space)
 "fob" = (
 /obj/structure/stool,
 /obj/effect/decal/remains/human{
@@ -61940,6 +62013,15 @@
 	icon_state = "white"
 	},
 /area/station/rnd/mixing)
+"fwl" = (
+/obj/machinery/telecomms/bus/preset_one,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/space)
 "fxa" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/simulated/floor{
@@ -62348,12 +62430,10 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/transit_tube{
-	icon_state = "W-SE"
+	icon_state = "N-SE"
 	},
+/obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
 /area/space)
 "fNL" = (
@@ -65099,6 +65179,15 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/arrival)
+"hIh" = (
+/obj/machinery/telecomms/processor/preset_one,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/space)
 "hIp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -68185,6 +68274,15 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/chapel)
+"jNM" = (
+/obj/machinery/telecomms/processor/preset_two,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/space)
 "jNY" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -68511,6 +68609,21 @@
 	},
 /turf/simulated/floor,
 /area/station/security/secconfhall)
+"jYE" = (
+/obj/machinery/camera{
+	c_tag = "Central Compartment South";
+	dir = 1;
+	network = list("Tcomsat");
+	pixel_x = 10
+	},
+/obj/machinery/telecomms/hub/preset,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/space)
 "jZa" = (
 /obj/machinery/camera{
 	c_tag = "Brig North-West";
@@ -68665,6 +68778,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/genetics_cloning)
+"kds" = (
+/obj/machinery/computer/telecomms/monitor{
+	dir = 4;
+	network = list("tcommsat")
+	},
+/turf/simulated/floor/carpet,
+/area/space)
 "kdQ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
@@ -69962,6 +70082,15 @@
 	icon_state = "redcorner"
 	},
 /area/station/security/secconfhall)
+"kVl" = (
+/obj/machinery/telecomms/server/presets/supply,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/space)
 "kVy" = (
 /obj/structure/rack,
 /obj/item/weapon/wrench,
@@ -71258,6 +71387,18 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
+"lPi" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "lQb" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood{
@@ -75615,6 +75756,12 @@
 	icon_state = "red"
 	},
 /area/station/security/checkpoint)
+"oTw" = (
+/obj/structure/transit_tube/station{
+	dir = 8
+	},
+/turf/simulated/floor/carpet,
+/area/space)
 "oTJ" = (
 /obj/machinery/light{
 	dir = 1
@@ -75651,6 +75798,15 @@
 	},
 /turf/simulated/floor,
 /area/station/civilian/garden)
+"oWh" = (
+/obj/machinery/telecomms/server/presets/medical,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/space)
 "oWS" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -76762,6 +76918,15 @@
 	icon_state = "warnplate"
 	},
 /area/station/cargo/office)
+"pOf" = (
+/obj/machinery/telecomms/bus/preset_four,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/space)
 "pPF" = (
 /obj/structure/stool/bed,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -79976,6 +80141,15 @@
 /obj/structure/sign/departments/hospital,
 /turf/simulated/wall,
 /area/station/medical/infectious_disease_ward)
+"sae" = (
+/obj/machinery/telecomms/receiver/preset_right,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/space)
 "sai" = (
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -81879,6 +82053,15 @@
 	icon_state = "grimy"
 	},
 /area/station/civilian/chapel/office)
+"txD" = (
+/obj/machinery/telecomms/server/presets/common,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/space)
 "tyb" = (
 /obj/structure/flora/ausbushes/brflowers,
 /turf/simulated/floor/grass,
@@ -83558,6 +83741,18 @@
 	icon_state = "yellow"
 	},
 /area/station/engineering/engine)
+"uZf" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/telecomms/server/presets/command,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/space)
 "uZw" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -84332,6 +84527,15 @@
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/library)
+"vOc" = (
+/obj/machinery/telecomms/receiver/preset_left,
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/space)
 "vPn" = (
 /obj/structure/sign/warning/exit_arrow{
 	dir = 1;
@@ -129250,7 +129454,7 @@ ctf
 crX
 wOB
 wOB
-aaa
+wOB
 aaa
 cDJ
 csc
@@ -129272,7 +129476,7 @@ cmU
 bww
 cEd
 aaa
-aaa
+wOB
 wOB
 wOB
 cmU
@@ -129506,7 +129710,7 @@ ctf
 cpC
 cuc
 cqX
-wOB
+cqX
 wOB
 aaa
 cGQ
@@ -129530,10 +129734,10 @@ bww
 czy
 aaa
 wOB
-wOB
-cpl
-cpl
-cpl
+cmz
+jNM
+fwl
+hIh
 wOB
 wOB
 cGQ
@@ -129775,7 +129979,7 @@ cBx
 bvy
 bvy
 bvy
-cqX
+bvy
 bvy
 bvy
 bvy
@@ -129787,11 +129991,11 @@ sxr
 czy
 aaa
 wOB
-cpl
+vOc
 cqX
 cqX
 cqX
-cpl
+eML
 wOB
 aaa
 brj
@@ -130032,7 +130236,7 @@ bvy
 bvy
 bvy
 bvy
-cqX
+bvy
 bvy
 bvy
 bvy
@@ -130046,9 +130250,9 @@ wOB
 wOB
 cnM
 cIp
+oWh
 cqX
 cqX
-cpl
 wOB
 wOB
 cym
@@ -130289,7 +130493,7 @@ bvy
 bvy
 cBx
 wOB
-cqX
+bvy
 wOB
 cBx
 bvy
@@ -130301,12 +130505,12 @@ cov
 wOB
 wOB
 cGy
-clO
-aWS
-cIp
+kds
+fni
+kVl
+txD
 cqX
-cqX
-cpl
+cDq
 wOB
 cGQ
 sxr
@@ -130542,28 +130746,28 @@ cqX
 cqX
 wOB
 cqX
-bvy
+cqX
 bvy
 wOB
 bsv
-cqX
+bvy
 bsv
 wOB
 bvy
-bvy
-cqX
-wOB
-cqX
 cqX
 cqX
 wOB
-aZP
+cqX
+cqX
+cqX
+wOB
+clO
 cCG
-cqs
-cDq
-csG
+aWS
 cFj
-cpl
+lPi
+cqX
+dtH
 wOB
 cGQ
 csc
@@ -130816,11 +131020,11 @@ cqX
 bij
 cDE
 cDE
-cDE
 csG
 cqX
-cmz
-cpl
+csG
+cqX
+jYE
 wOB
 cym
 csc
@@ -131056,28 +131260,28 @@ cqX
 cqX
 wOB
 cqX
-bvy
+cqX
 bvy
 wOB
 bsv
-cqX
+bvy
 bsv
 wOB
 bvy
-bvy
-cqX
-wOB
-cqX
 cqX
 cqX
 wOB
-cDE
+cqX
+cqX
+cqX
+wOB
+aZP
 cDE
 cEI
 cFj
-csG
-cDq
-cpl
+dri
+cqX
+dtH
 wOB
 cGQ
 csc
@@ -131317,7 +131521,7 @@ bvy
 bvy
 cBx
 wOB
-cqX
+bvy
 wOB
 cBx
 bvy
@@ -131329,12 +131533,12 @@ cov
 wOB
 wOB
 bpc
-bpc
+oTw
 fNk
 cyX
+cqs
 cqX
-cqX
-cpl
+uZf
 wOB
 cGQ
 sxr
@@ -131574,7 +131778,7 @@ bvy
 bvy
 bvy
 bvy
-cqX
+bvy
 bvy
 bvy
 bvy
@@ -131590,7 +131794,7 @@ cnM
 aIo
 ctn
 cqX
-cpl
+cqX
 wOB
 wOB
 cym
@@ -131831,7 +132035,7 @@ cBx
 bvy
 bvy
 bvy
-cqX
+bvy
 bvy
 bvy
 bvy
@@ -131843,11 +132047,11 @@ sxr
 czy
 aaa
 wOB
-cpl
+sae
 cqX
 cEc
 cqX
-cpl
+csZ
 wOB
 aaa
 csN
@@ -132076,7 +132280,7 @@ cHP
 cpQ
 cGa
 cqX
-wOB
+cqX
 wOB
 aaa
 cGQ
@@ -132100,8 +132304,8 @@ bww
 czy
 aaa
 wOB
-wOB
-cpl
+pOf
+dAF
 cGx
 cpl
 wOB
@@ -132334,7 +132538,7 @@ cHP
 cqF
 wOB
 wOB
-aaa
+wOB
 aaa
 csN
 csc
@@ -132356,7 +132560,7 @@ cmU
 bww
 cEE
 aaa
-aaa
+wOB
 wOB
 wOB
 tbb
