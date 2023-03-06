@@ -9,11 +9,11 @@
 /obj/item/gun_modular/module/chamber/atom_init(mapload, ...)
 	. = ..()
 
-	var/obj/item/gun_modular/module/magazine_holder/magazine_holder = new(src.loc)
-	src.attach(magazine_holder)
+	var/obj/item/gun_modular/module/magazine_holder/magazine_holder = new(loc)
+	attach(magazine_holder)
 
-	var/obj/item/gun_modular/module/barrel/barrel = new(src.loc)
-	src.attach(barrel)
+	var/obj/item/gun_modular/module/barrel/barrel = new(loc)
+	attach(barrel)
 
 /obj/item/gun_modular/module/chamber/init_allowed_modules()
 

@@ -6,8 +6,8 @@
 /obj/item/gun_modular/module/grip/atom_init(mapload, ...)
 	. = ..()
 
-	var/obj/item/gun_modular/module/chamber/chamber = new(src.loc)
-	src.attach(chamber)
+	var/obj/item/gun_modular/module/chamber/chamber = new(loc)
+	attach(chamber)
 
 /obj/item/gun_modular/module/grip/init_allowed_modules()
 
