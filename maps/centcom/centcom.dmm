@@ -11919,7 +11919,6 @@
 	},
 /area/custom/wizard_station)
 "aBs" = (
-/mob/living/simple_animal/cat/runtime/fake,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/carpets.dmi';
 	icon_state = "bluecarpet";
