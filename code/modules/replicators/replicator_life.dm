@@ -123,9 +123,7 @@
 		can_starve = TRUE
 		return
 
-	breath.volume = BREATH_VOLUME
-	breath.adjust_gas("fractol", -1.0)
-	loc.assume_air(breath)
+	environment.adjust_gas("fractol", -1.0)
 	can_starve = FALSE
 
 	last_disintegration = world.time

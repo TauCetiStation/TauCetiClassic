@@ -62,8 +62,6 @@
 	if(repair_amount < REPLICATOR_GAS_HEAL_MINIMUM)
 		return
 
-	breath.volume = BREATH_VOLUME
-	breath.adjust_gas("fractol", -repair_amount / REPLICATOR_GAS_HEAL_PER_MOLE)
-	source_loc.assume_air(breath)
+	environment.adjust_gas("fractol", -repair_amount / REPLICATOR_GAS_HEAL_PER_MOLE)
 
 	regenerate(repair_amount)
