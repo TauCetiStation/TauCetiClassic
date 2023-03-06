@@ -53,6 +53,9 @@
 /datum/component/bluespace_move/proc/clear_entry()
 	SIGNAL_HANDLER
 
+	if(!entry)
+		return
+
 	UnregisterSignal(entry, list(COMSIG_PARENT_QDELETING))
 	entry = null
 
