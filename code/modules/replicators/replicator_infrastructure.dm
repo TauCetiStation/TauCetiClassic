@@ -443,6 +443,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		if(RG.next_teleportation > world.time)
 			continue
 
+		next_teleportation = world.time + teleportation_cooldown
+		RG.next_teleportation = world.time + teleportation_cooldown
+
+		update_icon()
+		RG.update_icon()
+
 		var/teleported_anyone = FALSE
 		for(var/mob/living/simple_animal/hostile/replicator/R_teleporting in loc)
 			if(R_teleporting.invisibility <= 0)
@@ -452,12 +458,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 
 			R_teleporting.forceMove(RG.loc)
 			teleported_anyone = TRUE
-
-		next_teleportation = world.time + teleportation_cooldown
-		RG.next_teleportation = world.time + teleportation_cooldown
-
-		update_icon()
-		RG.update_icon()
 
 		addtimer(CALLBACK(src, /atom.proc/update_icon), teleportation_cooldown)
 		addtimer(CALLBACK(RG, /atom.proc/update_icon), teleportation_cooldown)
