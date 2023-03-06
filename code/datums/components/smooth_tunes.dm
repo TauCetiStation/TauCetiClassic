@@ -27,7 +27,7 @@
 
 /datum/component/smooth_tunes/Destroy(force, silent)
 	var/mob/M = parent
-	if(linked_song?.particles_path == M.particles)
+	if(M.particles.type == particles_path)
 		QDEL_NULL(M.particles)
 	qdel(linked_songtuner_rite)
 	return ..()
@@ -81,14 +81,16 @@
 	SIGNAL_HANDLER
 	STOP_PROCESSING(SSobj, src)
 	if(viable_for_final_effect)
+		var/mob/M = parent
 		if(finished && linked_songtuner_rite && linked_song)
-			for(var/mob/living/listener in range(7, linked_song.instrument))
-				if(listener == parent)//listener.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 1))
+			for(var/mob/living/listener in range(7, parent))
+				if(listener == parent)
 					continue
-				if(!linked_songtuner_rite.buff && listener.mind?.holy_role)
+				if(!linked_songtuner_rite.buff && listener.my_religion == M.my_religion)
 					continue
 
 				linked_songtuner_rite.finish_effect(listener, parent)
+			linked_songtuner_rite.end_song()
 		else
 			to_chat(parent, "<span class='warning'>The song was interrupted, you cannot activate the finishing ability!</span>")
 
@@ -103,12 +105,12 @@
 
 /datum/component/smooth_tunes/process()
 	if(linked_songtuner_rite && linked_song)
-		for(var/mob/living/listener in range(7, linked_song.instrument))
+		var/mob/M = parent
+		for(var/mob/living/listener in range(7, parent))
 			if(listener == parent)
 				continue
-			if(!linked_songtuner_rite.buff && listener.mind?.holy_role)
+			if(!linked_songtuner_rite.buff && listener.my_religion == M.my_religion)
 				continue
-
 			linked_songtuner_rite.song_effect(listener, linked_song.instrument)
 	else
 		stop_singing()

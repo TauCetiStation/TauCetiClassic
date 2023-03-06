@@ -81,3 +81,5 @@
 		"sleepy_9" = 2, //sleepy theme specific
 		"sleepy_10" = 2, //sleepy theme specific
 	)
+	spawning = 0.3
+	lifespan = 1 SECOND
