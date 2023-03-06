@@ -68114,8 +68114,7 @@
 	id = "InnerBrig";
 	name = "Inner Brig Doors";
 	pixel_y = 6;
-	range = 10;
-	req_access = list(63)
+	range = 10
 	},
 /turf/simulated/floor{
 	dir = 8;
