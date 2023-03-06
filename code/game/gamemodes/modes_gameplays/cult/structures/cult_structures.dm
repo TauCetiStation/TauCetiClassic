@@ -280,7 +280,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 
 // Just trash
 /obj/structure/cult/anomaly
-	max_integrity = 100
+	max_integrity = 20
 	resistance_flags = CAN_BE_HIT
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
