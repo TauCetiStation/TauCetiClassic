@@ -50,10 +50,10 @@
 
 /datum/pipe_system/component/awaiter/proc/InvokeCheckerComponent(datum/pipe_system/process/process)
 
-	if(!src.checker)
+	if(!checker)
 		return FALSE
 
-	RunIncludeComponentsChecker(process, src.checker)
+	RunIncludeComponentsChecker(process, checker)
 
 /datum/pipe_system/component/awaiter/proc/RunIncludeComponentsChecker(datum/pipe_system/process/process, datum/pipe_system/component/include)
 
@@ -63,7 +63,7 @@
 
 	if(cache_data)
 		var/mob/user = cache_data.GetData()
-		to_chat(user, "<span>([process.activate])([src.id_component])[include.id_component]</span>")
+		to_chat(user, "<span>([process.activate])([id_component])[include.id_component]</span>")
 
 	RegisterSignal(include, signal_checker_wait, CALLBACK(src, .proc/InvokeWaitingComponent, process))
 
