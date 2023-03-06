@@ -150,14 +150,16 @@
 	return FALSE
 
 /mob/living/carbon/xenomorph/humanoid/hunter/proc/toggle_invisible()
-	if(invisible || incapacitated())
+	if(invisible)
 		invisible = FALSE
 		animate(src, alpha = initial(alpha), time = 5, loop = 1, LINEAR_EASING)
-	else if (m_intent == MOVE_INTENT_WALK)
+	else
 		invisible = TRUE
 		animate(src, alpha = 20, time = 5, loop = 1, LINEAR_EASING)
 
 /mob/living/carbon/xenomorph/humanoid/hunter/set_m_intent(intent)
+	if(incapacitated() && !invisible)
+		return
 	. = ..()
 	if(.)
 		toggle_invisible()
