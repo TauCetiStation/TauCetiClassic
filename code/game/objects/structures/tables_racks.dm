@@ -556,6 +556,68 @@
 
 	return ..()
 
+/obj/lot_holder
+	name = "Lot Holder"
+	icon = 'icons/effects/32x32.dmi'
+	icon_state = "blank"
+	anchored = TRUE
+
+	flags = ABSTRACT
+
+	var/obj/structure/table/Table
+	var/obj/item/Lot_Item
+
+/obj/lot_holder/examine(mob/user)
+	. = ..()
+
+	Lot_Item.examine(user)
+
+/obj/lot_holder/Destroy()
+	Lot_Item.forceMove(Table.loc)
+	return ..()
+
+/obj/lot_holder/proc/on_table_destroy()
+	qdel(src)
+
+/obj/lot_holder/attackby(obj/item/weapon/W, mob/user, params)
+	Table.visible_message("<span class='info'>[user] прикладывает карту к столу.</span>")
+	if(istype(W, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/Card = W
+		scan_card(Card, user)
+	else if(istype(W, /obj/item/device/pda) && W.GetID())
+		var/obj/item/weapon/card/id/Card = W.GetID()
+		scan_card(Card, user)
+
+/obj/lot_holder/proc/scan_card(obj/item/weapon/card/id/Card, mob/user)
+	var/datum/money_account/Buyer = get_account(Card.associated_account_number)
+	var/datum/money_account/Seller = get_account(Lot_Item.price_tag["account"])
+
+	if(!Buyer)
+		return
+
+	var/attempt_pin = 0
+	if(Buyer.security_level > 0)
+		attempt_pin = input("Введите ПИН-код", "Прилавок") as num
+		if(isnull(attempt_pin))
+			to_chat(user, "[bicon(Table)]<span class='warning'>Неверный ПИН-код!</span>")
+			return
+		Buyer = attempt_account_access(Card.associated_account_number, attempt_pin, 2)
+
+	var/cost = Lot_Item.price_tag["price"]
+
+	if(cost > 0 && Seller)
+		if(Seller.suspended)
+			Table.visible_message("[bicon(Table)]<span class='warning'>Подключённый аккаунт заблокирован.</span>")
+			return
+		if(cost <= Buyer.money)
+			charge_to_account(Buyer.account_number, Buyer.owner_name, "Покупка [Lot_Item.name]", "Прилавок", -cost)
+			charge_to_account(Seller.account_number, Seller.owner_name, "Прибыль за продажу [Lot_Item.name]", "Прилавок", cost)
+		else
+			Table.visible_message("[bicon(Table)]<span class='warning'>Недостаточно средств!</span>")
+			return
+
+	qdel(src)
+
 /obj/structure/table/reinforced/stall
 	name = "stall table"
 	desc = "A market stall table equipped with magnetic grip."
@@ -575,7 +637,15 @@
 
 /obj/structure/table/reinforced/stall/proc/magnet_item(obj/item/I)
 	if(I.loc == get_turf(src))
-		I.AddComponent(/datum/component/stall_lot, src)
+		var/obj/lot_holder/Holder = new(src.loc)
+		Holder.Table = src
+		Holder.RegisterSignal(src, list(COMSIG_PARENT_QDELETING), /obj/lot_holder/proc/on_table_destroy)
+
+		Holder.Lot_Item = I
+		I.forceMove(Holder)
+
+		Holder.add_overlay(I)
+		Holder.name = I.name
 
 /*
  * Racks
