@@ -159,6 +159,7 @@ var/global/list/ghostteleportlocs = list()
 /area/atom_init_late()
 	update_beauty()
 
+ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 /**
  * Set the area size of the area
  *
