@@ -20,10 +20,10 @@
 	return
 
 /obj/machinery/door/poddoor/shutters/syndi
-	var/allow_open = FALSE
+	var/open_allowed = FALSE
 
 /obj/machinery/door/poddoor/shutters/syndi/open_checks(forced)
-	return allow_open
+	return open_allowed
 
 /obj/machinery/door/poddoor/shutters/syndi/emag_act(mob/user)
 	return FALSE
