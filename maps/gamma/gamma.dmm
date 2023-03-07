@@ -4523,11 +4523,11 @@
 /turf/simulated/wall,
 /area/station/civilian/toilet)
 "atv" = (
-/obj/structure/rack,
-/obj/item/clothing/gloves/black,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/simulated/floor/plating,
-/area/station/maintenance/dormitory)
+/turf/simulated/floor{
+	icon_state = "wood_stairs2";
+	dir = 6
+	},
+/area/station/civilian/chapel)
 "atx" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -7191,8 +7191,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutralcorner"
+	icon_state = "yellow"
 	},
 /area/station/hallway/primary/central)
 "bmI" = (
@@ -21090,9 +21089,6 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/chapel)
-"fBx" = (
-/turf/simulated/wall,
-/area/station/civilian/dormitories/dormtwo)
 "fBZ" = (
 /obj/structure/closet/l3closet/security,
 /turf/simulated/floor{
@@ -21884,7 +21880,7 @@
 	pixel_x = -32
 	},
 /turf/simulated/floor/carpet,
-/area/station/civilian/dormitories/dormtwo)
+/area/station/civilian/dormitories/dormthree)
 "fOv" = (
 /obj/structure/closet/toolcloset,
 /obj/machinery/camera{
@@ -21911,7 +21907,7 @@
 	pixel_y = 26
 	},
 /turf/simulated/floor/carpet,
-/area/station/civilian/dormitories/dormtwo)
+/area/station/civilian/dormitories/dormthree)
 "fOJ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -22710,9 +22706,15 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "gce" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/simulated/floor,
-/area/station/civilian/dormitories)
+/obj/machinery/driver_button{
+	id = "chapelgun";
+	name = "Chapel Mass Driver";
+	pixel_y = -25
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/civilian/chapel)
 "gck" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -25973,7 +25975,7 @@
 /obj/structure/table/woodentable,
 /obj/item/device/flashlight/lamp,
 /turf/simulated/floor/wood,
-/area/station/civilian/dormitories/dormtwo)
+/area/station/civilian/dormitories/dormthree)
 "hfo" = (
 /turf/simulated/floor{
 	icon_state = "warningcorner"
@@ -27936,7 +27938,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
 /area/station/civilian/dormitories)
 "hLH" = (
 /obj/machinery/door/airlock/external,
@@ -31591,7 +31596,7 @@
 "jaY" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/floor/wood,
-/area/station/civilian/dormitories/dormtwo)
+/area/station/civilian/dormitories/dormthree)
 "jbn" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced,
@@ -33259,7 +33264,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood,
-/area/station/civilian/dormitories/dormtwo)
+/area/station/civilian/dormitories/dormthree)
 "jAO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -33329,8 +33334,11 @@
 	},
 /area/station/rnd/robotics)
 "jBE" = (
-/turf/simulated/floor/carpet,
-/area/station/civilian/dormitories/dormtwo)
+/obj/structure/rack,
+/obj/item/clothing/gloves/black,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/simulated/floor/plating,
+/area/station/maintenance/cargo)
 "jBG" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -34185,7 +34193,10 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
 /area/station/civilian/dormitories)
 "jNf" = (
 /obj/structure/table,
@@ -34849,7 +34860,7 @@
 	},
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "neutralcorner"
+	icon_state = "neutral"
 	},
 /area/station/civilian/dormitories)
 "jWU" = (
@@ -37844,10 +37855,7 @@
 /area/station/bridge/captain_quarters)
 "kUU" = (
 /obj/random/vending/snack,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutral"
-	},
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "kVg" = (
 /obj/structure/stool/bed/chair/office/dark,
@@ -52647,12 +52655,6 @@
 /obj/structure/table/glass,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
-/obj/machinery/driver_button{
-	id = "chapelgun";
-	name = "Chapel Mass Driver";
-	pixel_x = 25;
-	pixel_y = -25
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -56477,6 +56479,10 @@
 /obj/machinery/atm{
 	pixel_x = -30
 	},
+/obj/machinery/camera{
+	c_tag = "Central Hallway East-South";
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutralcorner"
@@ -58027,7 +58033,7 @@
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/brown,
 /turf/simulated/floor/carpet,
-/area/station/civilian/dormitories/dormtwo)
+/area/station/civilian/dormitories/dormthree)
 "rpR" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -62474,7 +62480,8 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor{
-	icon_state = "wood_stairs2"
+	icon_state = "wood_stairs2";
+	dir = 6
 	},
 /area/station/civilian/chapel)
 "sIU" = (
@@ -62547,10 +62554,6 @@
 "sKV" = (
 /obj/machinery/light{
 	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Central Hallway East-South";
-	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -64481,9 +64484,6 @@
 	name = "Old Note #6"
 	},
 /area/station/maintenance/bridge)
-"trr" = (
-/turf/simulated/floor/wood,
-/area/station/civilian/dormitories/dormtwo)
 "trC" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced{
@@ -73963,7 +73963,10 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
 /area/station/civilian/dormitories)
 "wjC" = (
 /turf/simulated/floor{
@@ -75659,7 +75662,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
-	icon_state = "yellow"
+	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
 "wSy" = (
@@ -75872,7 +75875,7 @@
 	pixel_x = -30
 	},
 /turf/simulated/floor/wood,
-/area/station/civilian/dormitories/dormtwo)
+/area/station/civilian/dormitories/dormthree)
 "wWH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -100297,7 +100300,7 @@ qhf
 itL
 dLj
 aAT
-hus
+jBE
 tHJ
 qbQ
 xFj
@@ -101584,10 +101587,10 @@ lfn
 lfn
 wQh
 aJp
-atv
 fjj
 jhl
 fjj
+plf
 pGa
 pGa
 pGa
@@ -101844,7 +101847,7 @@ rBj
 rBj
 rBj
 fjj
-fjj
+plf
 plf
 plf
 plf
@@ -105425,7 +105428,7 @@ jsq
 uKj
 eRn
 uKj
-wsb
+uKj
 jMS
 jWT
 iIe
@@ -105945,9 +105948,9 @@ kSN
 kSN
 kSN
 sea
-nBf
+kSN
 hLD
-bxt
+kSN
 ahs
 kSN
 kSN
@@ -106950,7 +106953,7 @@ bBN
 iai
 dvF
 iry
-wgA
+bbD
 aSN
 gdT
 spd
@@ -107464,7 +107467,7 @@ bIO
 iai
 heR
 cgL
-itl
+dEZ
 fmb
 qQK
 bFb
@@ -107721,20 +107724,20 @@ bIO
 iai
 sDk
 thd
-uWp
+beG
 pYX
 pYX
-fBx
-fBx
-fBx
-fBx
-fBx
-fBx
-fBx
+srY
+srY
+srY
+srY
+srY
+srY
+srY
 oPc
 fpd
 wdg
-bxt
+gQM
 oPc
 axb
 dte
@@ -107758,7 +107761,7 @@ aGK
 jSj
 bur
 jSj
-bur
+gce
 pNq
 plf
 plf
@@ -107981,13 +107984,13 @@ vaN
 bmE
 ygB
 fPI
-fBx
+srY
 rpE
 fOs
 jaY
 hfn
 wWd
-fBx
+srY
 dAS
 jSS
 lvg
@@ -108235,16 +108238,16 @@ bIO
 iai
 tWu
 nBy
-uWp
+itl
 pYX
 qRf
-fBx
+srY
 fOH
-jBE
-trr
-trr
+nwq
+wJK
+wJK
 jAK
-fBx
+srY
 qlD
 kdW
 vvx
@@ -108517,7 +108520,7 @@ aMb
 dxL
 nhP
 tzW
-ukX
+atv
 idL
 brZ
 eCU
@@ -109017,7 +109020,7 @@ wJK
 uul
 srY
 wjz
-baG
+nBf
 lvg
 jsq
 fxx
@@ -109274,7 +109277,7 @@ hoK
 hoK
 srY
 erq
-gce
+fpd
 eKo
 sPU
 sPU
@@ -109533,7 +109536,7 @@ srY
 jkL
 uQr
 lvg
-gQM
+baG
 kUU
 aMb
 iOY
