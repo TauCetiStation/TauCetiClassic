@@ -199,6 +199,9 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	if(!isturf(loc))
 		return
 
+	if(stat != CONSCIOUS)
+		return
+
 	handle_organic_matter(loc)
 
 	scatter_offset()
@@ -571,12 +574,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 /mob/living/simple_animal/hostile/replicator/attackby(obj/item/I, mob/user, params)
 	if(stat == DEAD && isscrewing(I))
 		visible_message("<span class='notice'>[user] starts disassembling [src] with [I].</span>")
-		if(!user.is_busy() && do_skilled(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/engineering = SKILL_LEVEL_TRAINED), -0.2))
+		if(!user.is_busy() && do_skilled(user, src, SKILL_TASK_TOUGH, list(/datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/engineering = SKILL_LEVEL_TRAINED), -0.2))
 			playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>[user] has disassembled [src].</span>")
-			new /obj/item/stack/sheet/metal(loc, 3)
-			new /obj/item/stack/cable_coil(loc, 2)
-			new /obj/item/weapon/stock_parts/cell/bluespace(loc)
+			new /obj/item/stack/sheet/metal(loc, rand(2, 5))
+			new /obj/item/stack/cable_coil(loc, rand(1, 4))
+			if(prob(30))
+				new /obj/item/weapon/stock_parts/cell/bluespace(loc)
 			qdel(src)
 			return
 
