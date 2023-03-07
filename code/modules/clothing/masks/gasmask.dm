@@ -256,7 +256,7 @@
 	body_parts_covered = 0
 	w_class = SIZE_TINY
 	gas_transfer_coefficient = 0.10
-	filter = list("phoron", "sleeping_agent", "oxygen")
+	filter = list("phoron", "sleeping_agent", "oxygen", "fractol")
 	species_restricted = list(VOX , VOX_ARMALIS)
 
 /obj/item/clothing/mask/gas/German
