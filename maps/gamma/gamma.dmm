@@ -7263,15 +7263,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "bnp" = (
-/obj/structure/stool/bed/chair/office/dark{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
 /obj/effect/landmark/start/recycler,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
+/obj/structure/stool/bed/chair/office/dark,
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -8493,15 +8488,12 @@
 /turf/simulated/wall/r_wall,
 /area/station/security/lobby)
 "bFR" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
-	},
 /obj/structure/disposalpipe/segment{
-	dir = 2;
+	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -25616,15 +25608,15 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -26019,13 +26011,15 @@
 	},
 /area/station/hallway/primary/central)
 "hfk" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/structure/filingcabinet,
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk,
 /turf/simulated/floor{
-	dir = 5;
+	dir = 8;
 	icon_state = "vault"
 	},
 /area/station/cargo/recycleroffice)
@@ -31864,6 +31858,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -34372,16 +34367,6 @@
 	icon_state = "darkred"
 	},
 /area/station/security/checkpoint)
-"jOq" = (
-/obj/structure/disposaloutlet{
-	dir = 8
-	},
-/obj/structure/disposalpipe/trunk,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "vault"
-	},
-/area/station/cargo/recycleroffice)
 "jOr" = (
 /obj/structure/closet/secure_closet/quartermaster,
 /turf/simulated/floor{
@@ -55275,11 +55260,19 @@
 	},
 /area/station/medical/reception)
 "qpW" = (
-/obj/structure/sign/poster/official/random{
-	pixel_x = 32
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
+	},
+/obj/structure/table,
+/obj/item/weapon/paper_bin,
+/obj/item/weapon/packageWrap,
+/obj/item/weapon/folder/yellow,
+/obj/item/weapon/stamp{
+	name = "recycler's rubber stamp";
+	stamp_message = "Recycler"
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -61647,9 +61640,8 @@
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/science)
 "stH" = (
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -68570,10 +68562,11 @@
 	},
 /area/station/medical/hallway)
 "uCY" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
+/obj/structure/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
-/obj/item/weapon/flora/random,
+/obj/structure/filingcabinet,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -72637,19 +72630,16 @@
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "vOH" = (
-/obj/structure/table,
-/obj/item/weapon/folder/yellow,
 /obj/machinery/newscaster{
 	dir = 1;
 	pixel_y = 30
 	},
-/obj/item/weapon/stamp{
-	name = "recycler's rubber stamp";
-	stamp_message = "Recycler"
+/obj/machinery/conveyor{
+	id = "Minedoc2";
+	dir = 8
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+/turf/simulated/floor/plating{
+	icon_state = "warnplate"
 	},
 /area/station/cargo/recycleroffice)
 "vOK" = (
@@ -75945,15 +75935,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "wVK" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/packageWrap,
 /obj/machinery/alarm{
 	pixel_y = 26
 	},
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "vault"
+/obj/machinery/conveyor{
+	id = "Minedoc2";
+	dir = 8
+	},
+/turf/simulated/floor/plating{
+	dir = 6;
+	icon_state = "warnplate"
 	},
 /area/station/cargo/recycleroffice)
 "wVZ" = (
@@ -76146,7 +76137,6 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating{
-	dir = 6;
 	icon_state = "warnplate"
 	},
 /area/station/cargo/recycleroffice)
@@ -99373,7 +99363,7 @@ yfs
 mhE
 gxh
 hyK
-jOq
+wYP
 stH
 nFE
 hyK
