@@ -161,7 +161,7 @@ var/global/list/tourette_bad_words= list(
 				return
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		if(!(get_species() in tourette_bad_words))
-			return 
+			return
 		speech_problem_flag = 1
 		if (prob(10))
 			spawn( 0 )
@@ -1108,10 +1108,6 @@ var/global/list/tourette_bad_words= list(
 	return TRUE
 
 /mob/living/carbon/human/proc/handle_random_events()
-	// Puke if toxloss is too high
-	if(stat == CONSCIOUS)
-		if (getToxLoss() >= 45)
-			invoke_vomit_async()
 
 	//0.1% chance of playing a scary sound to someone who's in complete darkness
 	if(isturf(loc) && rand(1,1000) == 1)
