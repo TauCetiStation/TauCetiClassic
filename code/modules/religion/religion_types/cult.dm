@@ -92,6 +92,8 @@
 	var/mob/camera/eminence/eminence
 	var/research_forbidden = FALSE //If Eminence forbade research for fellow cultist
 
+	var/next_narsie_punch
+
 /datum/religion/cult/New()
 	..()
 	// Init anomalys
@@ -111,6 +113,7 @@
 	RegisterSignal(area, list(COMSIG_AREA_ENTERED), .proc/area_entered)
 	RegisterSignal(area, list(COMSIG_AREA_EXITED), .proc/area_exited)
 
+	next_narsie_punch = world.time + 30 MINUTES
 	START_PROCESSING(SSreligion, src)
 
 /datum/religion/cult/setup_religions()
@@ -128,11 +131,6 @@
 		var/mob/living/carbon/human/H = pick(humans_in_heaven)
 		if(!H || !H.mind)
 			return
-		if(H.mind.holy_role && prob(80))
-			if(prob(15) && iscultist(H)) // Heal
-				H.apply_damages(rand(-clamp(world.time**(1/3), 1, 30), 0), rand(-clamp(world.time**(1/3), 1, 30), 0), rand(-clamp(world.time**(1/3), 1, 30), 0))
-				log_game("[H] healed by Cult Heaven")
-			return
 
 		if(prob(20)) // sound
 			var/list/sounds = pick(SOUNDIN_EXPLOSION, SOUNDIN_SPARKS, SOUNDIN_FEMALE_HEAVY_PAIN, SOUNDIN_MALE_HEAVY_PAIN, SOUNDIN_SHATTER, SOUNDIN_HORROR)
@@ -141,13 +139,17 @@
 		else if(prob(20)) // chat_message
 			to_chat(H, "<font size='15' color='red'><b>[pick(possible_god_phrases)]!</b></font>")
 
-		else if(prob(20)) // receive damage
-			H.take_overall_damage(rand(-3, clamp(world.time**(1/3), 1, 30)), rand(-3, clamp(world.time**(1/3), 1, 30)), used_weapon = "Plasma ions") // Its science, baby
-			log_game("[H] attacked by Cult Heaven")
-
-		else if(prob(15)) // Heal
-			H.apply_damages(rand(-clamp(world.time**(1/3), 1, 30), 3), rand(-clamp(world.time**(1/3), 1, 30), 3), rand(-clamp(world.time**(1/3), 1, 30), 3))
-			log_game("[H] healed by Cult Heaven")
+		else if(next_narsie_punch < world.time) // receive damage
+			next_narsie_punch = world.time + rand(1 MINUTES, 5 MINUTES)
+			for(var/datum/objective/O in mode.GetObjectives())
+				if(istype(O, /datum/objective/cult/capture_areas))
+					var/datum/objective/cult/capture_areas/area_objective = O
+					var/damage_modify = area_objective.need_capture - (captured_areas.len - area_types.len)
+					if(damage_modify > 0)
+						H.take_overall_damage(damage_modify * 10, damage_modify * 10, used_weapon = "Plasma ions") // Its science, baby
+						to_chat(H, "<font size='15' color='red'><b>НУЖНО БОЛЬШЕ ТЕРРИТОРИЙ!</b></font>")
+						log_game("[H] attacked by Cult Heaven")
+						break
 
 		else if(prob(5)) // temp alt_apperance of humans or item
 			if(prob(50))
