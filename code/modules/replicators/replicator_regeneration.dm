@@ -11,6 +11,9 @@
 /datum/component/replicator_regeneration/proc/get_damage()
 	if(isreplicator(parent))
 		var/mob/living/simple_animal/hostile/replicator/R = parent
+		if(R.stat == DEAD)
+			return 0
+
 		return R.maxHealth - R.health
 
 	var/obj/O = parent
