@@ -99,7 +99,7 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 	var/Me = pickweight(meteortypes)
 	var/obj/effect/meteor/M = new Me(pickedstart)
 	M.dest = pickedgoal
-	message_admins("[M] has spawned at [COORD(M)] [ADMIN_JMP(M)] [ADMIN_FLW(M)].")
+	//message_admins("[M] has spawned at [COORD(M)] [ADMIN_JMP(M)] [ADMIN_FLW(M)].")
 	spawn(0)
 		walk_towards(M, M.dest, 1)
 	return
