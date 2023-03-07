@@ -349,7 +349,7 @@
 			if( health <= 20 && prob(1) )
 				emote("gasp")
 			if(!reagents.has_reagent("inaprovaline"))
-				adjustOxyLoss(2)
+				losebreath = max(losebreath + 1, 2)
 			Paralyse(3)
 		if(halloss > 100)
 			to_chat(src, "<span class='notice'>You're in too much pain to keep going...</span>")

@@ -647,7 +647,7 @@
 	if(volume >= overdose)
 		if(M.losebreath <= 3)
 			M.losebreath = max(0, M.losebreath + 3)
-			M.adjustOxyLoss(2)
+			M.adjustOxyLoss(1)
 
 /*boozepwr chart
 1-2 = non-toxic alcohol

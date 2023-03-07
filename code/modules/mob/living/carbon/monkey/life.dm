@@ -250,7 +250,7 @@
 				spawn(0)
 					emote("gasp")
 			if(!reagents.has_reagent("inaprovaline"))
-				adjustOxyLoss(2)
+				losebreath = max(losebreath + 1, 2)
 			Paralyse(3)
 		if(halloss > 100)
 			visible_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", self_message = "<span class='notice'>You're in too much pain to keep going...</span>")

@@ -32,7 +32,7 @@
 		// Handle power damage (oxy)
 		if(src:aiRestorePowerRoutine != 0)
 			// Lost power
-			adjustOxyLoss(2)
+			adjustOxyLoss(1)
 		else
 			// Gain Power
 			adjustOxyLoss(-1)
