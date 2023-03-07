@@ -118,7 +118,7 @@
 /mob/living/silicon/can_be_auto_disintegrated()
 	return stat != CONSCIOUS
 
-/mob/living/get_replicator_material_amount()
+/mob/living/silicon/get_replicator_material_amount()
 	if(stat != CONSCIOUS)
 		return w_class * REPLICATOR_MATERIAL_AMOUNT_COEFF_ORGANIC
 	return -1
