@@ -54496,8 +54496,8 @@
 "qgd" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/conveyor{
-	dir = 4;
-	id = "Minedoc2"
+	id = "Minedoc2";
+	dir = 8
 	},
 /obj/structure/plasticflaps/mining,
 /turf/simulated/floor/plating,
@@ -76142,8 +76142,8 @@
 /area/station/civilian/gym)
 "wYP" = (
 /obj/machinery/conveyor{
-	dir = 4;
-	id = "Minedoc2"
+	id = "Minedoc2";
+	dir = 8
 	},
 /turf/simulated/floor/plating{
 	dir = 6;
