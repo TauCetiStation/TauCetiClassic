@@ -304,6 +304,7 @@ Message ends."}
 		score_results += "<br><b>Placed Mine Triggers:</b> [RAI.mine_triggers]"
 		score_results += "<br><b>Corridors Constructed:</b> [RAI.corridors_constructed]"
 		score_results += "<br><b>Replicators Launched:</b> [RAI.replicators_launched]"
+		score_results += "<br><b>Array Replicators Screwed:</b> [RAI.replicators_screwed]"
 		score_results += "<br><b>Upgrades Acquired:</b> [RAI.get_upgrades_string()]"
 		score_results += "<br>"
 	score_results += "</ul>"

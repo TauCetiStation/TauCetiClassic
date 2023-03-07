@@ -575,6 +575,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	if(stat == DEAD && isscrewing(I))
 		visible_message("<span class='notice'>[user] starts disassembling [src] with [I].</span>")
 		if(!user.is_busy() && do_skilled(user, src, SKILL_TASK_TOUGH, list(/datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/engineering = SKILL_LEVEL_TRAINED), -0.2))
+			var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+			var/datum/replicator_array_info/RAI = FR.ckey2info[last_controller_ckey]
+			RAI.replicators_screwed += 1
+
 			playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 			visible_message("<span class='notice'>[user] has disassembled [src].</span>")
 			new /obj/item/stack/sheet/metal(loc, rand(2, 5))
