@@ -611,6 +611,46 @@
 	icon_state = "random_official"
 	random_basetype = /obj/structure/sign/poster/revolution
 
+/obj/structure/sign/poster/revolution/attack_hand(mob/user)
+	if(ruined)
+		return
+	var/temp_loc = user.loc
+	switch(tgui_alert(usr,"Do I want to rip the poster from the wall or does it inspire me to join the cuase?","You think...", list("Rip Off","Join Revolution")))
+		if("Rip Off")
+			if(user.loc != temp_loc || ruined)
+				return
+			visible_message("<span class='warning'>[user] rips [src] in a single, decisive motion!</span>" )
+			playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
+			ruined = 1
+			icon_state = "poster_ripped"
+			name = "ripped poster"
+			desc = "You can't make out anything from the poster's original print. It's ruined."
+			add_fingerprint(user)
+		if("Join Revolution")
+			ask_him_about_revolution(user)
+
+/obj/structure/sign/poster/revolution/proc/ask_him_about_revolution(mob/user)
+	var/datum/faction/revolution/rev = find_faction_by_type(/datum/faction/revolution)
+	if(!rev)
+		to_chat(user, "<span class='warning'><b>The revolutionary minded society has collapsed.</b></span>")
+		return
+	if(user.ismindprotect())
+		to_chat(user, "<span class='warning'><b>You shake your head in disapproval. Who in their right mind would even believe such blatant lies?</b></span>")
+		return
+	else if(jobban_isbanned(user, ROLE_REV) || jobban_isbanned(user, "Syndicate"))
+		to_chat(user, "<span class='warning'><b>You can't overcome the guilt to join the revolutionaries. (You are banned.)</b></span>")
+		return
+	else if(!isrevhead(user) || !isrev(user))
+		rev.convert_revolutionare(user, null)
+
+/obj/structure/sign/poster/revolution/examine(mob/user)
+	. = ..()
+	var/choice = tgui_alert(user, "Does this inspire me to join the cause?", "You think...", list("No!","Yes!"))
+	if(choice == "Yes!")
+		to_chat(user, "<span class='warning'><b>You start thinking about [src]...</b></span>")
+		if(do_after(user, 50, target = src))
+			ask_him_about_revolution(user)
+
 /obj/structure/sign/poster/revolution/brainwashing
 	name = "NanoTrasen Neural Statistics"
 	desc = "Statistics on this poster indicate that every third NT employee is being brainwashed by propaganda, implants and other methods."

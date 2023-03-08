@@ -21,6 +21,9 @@
 	var/last_command_report = 0
 	var/tried_to_add_revheads = 0
 
+	//associative
+	var/list/reasons = list()
+
 /datum/faction/revolution/proc/get_all_heads()
 	var/list/heads = list()
 	for(var/mob/living/carbon/human/player as anything in human_list)
@@ -56,7 +59,10 @@
 	return TRUE
 
 /datum/faction/revolution/check_win()
+	var/aboba = TRUE
 	var/win = IsSuccessful()
+	if(aboba)
+		return FALSE
 	if(config.continous_rounds)
 		if(win && SSshuttle)
 			SSshuttle.fake_recall = FALSE
@@ -239,5 +245,51 @@
 	<B>Command Staff Slain:</B> [SSStatistics.score.deadcommand] (-[SSStatistics.score.deadcommand * 500] Points)<BR>
 	<B>Revolution Successful:</B> [SSStatistics.score.traitorswon ? "Yes" : "No"] (-[SSStatistics.score.traitorswon * revpenalty] Points)<BR>
 	<B>All Revolution Heads Arrested:</B> [SSStatistics.score.allarrested ? "Yes" : "No"] (Score tripled)<BR>"}
-
+	if(reasons.len)
+		dat += "<B>Reasons to join the revolution:</B>"
+		for(var/datum/role/rev/R in members)
+			var/reason_string = reasons[R.antag.key]
+			if(reason_string)
+				dat += "<DD><B>[R.antag.key]'s</B> reason is [reason_string]</DD><BR>"
 	return dat
+
+/datum/faction/revolution/proc/convert_revolutionare(mob/possible_rev, mob/inviter)
+	if(inviter)
+		var/datum/role/rev_leader/lead = get_member_by_mind(inviter.mind)
+		var/choice = tgui_alert(possible_rev, "Asked by [inviter]: Do you want to join the revolution?", "Join the Revolution!", list("No!","Yes!"))
+		if(choice == "Yes!")
+			var/reason_string = sanitize_safe(input(possible_rev, "Please write reason why you joined the ranks of the revolution", "Write Reason") as null|message, MAX_REV_REASON_LEN)
+			if(!reason_string)
+				to_chat(possible_rev, "<span class='warning'>You have no reason to join the revolution!</span>")
+				to_chat(inviter, "<span class='warning'><b>[possible_rev] has no reason to support the revolution!</b></span>")
+				lead.rev_cooldown = world.time + 50
+				return FALSE
+			if(add_faction_member(src, possible_rev, TRUE))
+				reasons[possible_rev.mind.key] = reason_string
+				to_chat(possible_rev, "<span class='notice'>You join the revolution!</span>")
+				to_chat(inviter, "<span class='notice'><b>[possible_rev] joins the revolution!</b></span>")
+				var/obj/item/device/uplink/hidden/U = find_syndicate_uplink(inviter)
+				if(!U)
+					return TRUE
+				U.uses += 3
+				var/datum/component/gamemode/syndicate/S = lead.GetComponent(/datum/component/gamemode/syndicate)
+				if(!S)
+					return TRUE
+				S.total_TC += 3
+				return TRUE
+			else
+				to_chat(inviter, "<span class='warning'><b>[possible_rev] cannot be converted.</b></span>")
+				return FALSE
+		to_chat(possible_rev, "<span class='warning'>You reject this traitorous cause!</span>")
+		to_chat(inviter, "<span class='warning'><b>[possible_rev] does not support the revolution!</b></span>")
+		lead.rev_cooldown = world.time + 50
+	else
+		var/reason_string = sanitize_safe(input(possible_rev, "Please write reason why you joined the ranks of the revolution", "Write Reason") as null|message, MAX_REV_REASON_LEN)
+		if(!reason_string)
+			to_chat(possible_rev, "<span class='warning'>You have no reason to join the revolution!</span>")
+			return FALSE
+		if(add_faction_member(src, possible_rev, TRUE))
+			reasons[possible_rev.mind.key] = reason_string
+			to_chat(possible_rev, "<span class='notice'>You join the revolution!</span>")
+			return TRUE
+	return FALSE

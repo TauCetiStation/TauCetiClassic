@@ -22,6 +22,7 @@
 #define MAX_BOOK_MESSAGE_LEN  27648
 #define MAX_NAME_LEN          26
 #define MAX_LNAME_LEN         64
+#define MAX_REV_REASON_LEN    255
 
 //Update this whenever you need to take advantage of more recent byond features
 #define MIN_COMPILER_VERSION 514
