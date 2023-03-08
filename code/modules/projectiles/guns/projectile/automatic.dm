@@ -129,6 +129,7 @@
 	w_class = SIZE_SMALL
 	origin_tech = "combat=4;materials=2"
 	initial_mag = /obj/item/ammo_box/magazine/l13
+	suitable_mags = list(/obj/item/ammo_box/magazine/l13, /obj/item/ammo_box/magazine/l13/lethal)
 	fire_sound = 'sound/weapons/guns/gunshot_l13.ogg'
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
