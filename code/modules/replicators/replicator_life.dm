@@ -153,11 +153,17 @@
 		next_attacked_alert = world.time + attacked_alert_cooldown
 
 	var/turf/T = get_turf(src)
-	if(SEND_SIGNAL(T, COMSIG_ATOM_INTERCEPT_TELEPORT))
+	if(can_starve && SEND_SIGNAL(T, COMSIG_ATOM_INTERCEPT_TELEPORT))
 		if(next_jamming_alert < world.time)
 			next_jamming_alert = world.time + jamming_alert_cooldown
 			to_chat(src, "<span class='bold warning'>You feel your essence being jammed by a teleportation supressor nearby!</span>")
 		take_bodypart_damage(0.0, maxHealth / 120)
+
+		if(stat == DEAD)
+			if(!isspaceturf(loc))
+				FR.adjust_materials(REPLICATOR_COST_REPLICATE)
+			gib()
+			return
 
 	// All replicators are slowly dying. Eating obviously fixes them.
 	// This fixes a lot of stupid tactics, such as:
