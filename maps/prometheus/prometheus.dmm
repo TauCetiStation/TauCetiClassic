@@ -23697,15 +23697,6 @@
 	icon_state = "warndark"
 	},
 /area/station/gateway)
-"fme" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/station/maintenance/atmos)
 "fms" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -25386,6 +25377,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/rnd/telesci)
+"fEI" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/atmos)
 "fEJ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
@@ -33895,6 +33892,12 @@
 	icon_state = "warndark"
 	},
 /area/station/rnd/xenobiology)
+"hBD" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop,
+/obj/item/weapon/wrench,
+/turf/simulated/floor/plating,
+/area/station/maintenance/atmos)
 "hBE" = (
 /obj/effect/landmark{
 	name = "carpspawn"
@@ -46442,12 +46445,6 @@
 /obj/structure/grille,
 /turf/simulated/floor/wood,
 /area/station/maintenance/brig)
-"kRS" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/five,
-/obj/item/weapon/storage/briefcase/inflatable,
-/turf/simulated/floor/plating,
-/area/station/maintenance/atmos)
 "kRT" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -62563,6 +62560,12 @@
 	icon_state = "warndark"
 	},
 /area/station/rnd/robotics)
+"oNp" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/five,
+/obj/item/weapon/storage/briefcase/inflatable,
+/turf/simulated/floor/plating,
+/area/station/maintenance/atmos)
 "oNA" = (
 /obj/structure/rack,
 /obj/random/tools/tech_supply,
@@ -64044,12 +64047,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/auxsolarstarboard)
-"phC" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop,
-/obj/item/weapon/wrench,
-/turf/simulated/floor/plating,
-/area/station/maintenance/atmos)
 "phL" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating{
@@ -65605,7 +65602,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "pEB" = (
-/obj/random/foods/food_trash,
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/maintenance/four,
+/obj/item/weapon/storage/fancy/cigarettes,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "pEC" = (
@@ -70260,12 +70259,6 @@
 "qNI" = (
 /turf/simulated/wall/r_wall,
 /area/station/security/range)
-"qNR" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/four,
-/obj/item/weapon/storage/fancy/cigarettes,
-/turf/simulated/floor/plating,
-/area/station/maintenance/atmos)
 "qNS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -80534,6 +80527,10 @@
 	icon_state = "vault"
 	},
 /area/station/cargo/storage)
+"tvr" = (
+/obj/random/foods/food_trash,
+/turf/simulated/floor/plating,
+/area/station/maintenance/atmos)
 "tvs" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/three,
@@ -82184,6 +82181,15 @@
 	icon_state = "panelscorched"
 	},
 /area/station/maintenance/medbay)
+"tOU" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/station/maintenance/atmos)
 "tPp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/conveyor{
@@ -84206,12 +84212,6 @@
 	icon_state = "darkred"
 	},
 /area/station/security/main)
-"uqH" = (
-/obj/structure/reagent_dispensers/fueltank,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/station/maintenance/atmos)
 "uqP" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -88415,13 +88415,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
-"vqU" = (
-/obj/structure/closet/firecloset,
-/obj/effect/decal/cleanable/dirt,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/station/maintenance/atmos)
 "vqW" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -129646,7 +129639,7 @@ gJw
 gJw
 hYE
 mGI
-qNR
+pEB
 fzS
 xSk
 mJn
@@ -131203,7 +131196,7 @@ lYa
 gVn
 lYa
 lYa
-phC
+hBD
 jCK
 pRJ
 hks
@@ -131454,7 +131447,7 @@ qWK
 aaL
 nmB
 cQi
-pEB
+tvr
 auD
 wpV
 orf
@@ -131462,7 +131455,7 @@ vUA
 ghy
 jCK
 jCK
-fme
+tOU
 fbr
 hks
 hks
@@ -131966,7 +131959,7 @@ fmz
 fmz
 fmz
 fmz
-kRS
+oNp
 pyu
 pyu
 pyu
@@ -131985,7 +131978,7 @@ wWp
 mxm
 nZX
 ryM
-vqU
+jCK
 lfl
 pKw
 acN
@@ -132236,7 +132229,7 @@ pyu
 iii
 qOp
 usd
-uqH
+fEI
 auD
 gny
 uSi
