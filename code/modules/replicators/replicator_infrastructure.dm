@@ -257,6 +257,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 		return
 	return ..()
 
+/obj/machinery/swarm_powered/bluespace_transponder/emp_act(severity)
+	. = ..()
+	take_damage(100.0 / severity, damage_type = BURN)
+	if(get_integrity() <= 0)
+		QDEL_NULL(deactivation_signal)
 
 var/global/list/obj/machinery/power/replicator_generator/replicator_generators = list()
 
@@ -311,6 +316,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		FN.add_area_node(FN)
 
 	return ..()
+
+/obj/machinery/power/replicator_generator/emp_act(severity)
+	. = ..()
+	next_teleportation = world.time + teleportation_cooldown / severity
+	update_icon()
 
 /obj/machinery/power/replicator_generator/update_icon()
 	cut_overlays()
@@ -520,6 +530,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 /obj/structure/cable/power_rune/update_icon()
 	return
 
+/obj/structure/cable/power_rune/emp_act(severity)
+	. = ..()
+	if(prob(20 / severity))
+		qdel(src)
+
 
 /obj/structure/bluespace_corridor
 	name = "rune"
@@ -632,6 +647,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 
 	return ..()
 
+/obj/structure/bluespace_corridor/emp_act(severity)
+	. = ..()
+	if(prob(20 / severity))
+		qdel(src)
+
 
 var/global/list/obj/machinery/swarm_powered/bluespace_catapult/bluespace_catapults = list()
 
@@ -669,6 +689,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 
 	var/perc_finished = 0
 
+	var/next_construction = 0
+
 /obj/machinery/swarm_powered/bluespace_catapult/atom_init()
 	. = ..()
 	var/datum/announcement/centcomm/replicator/construction_began/CB = new
@@ -692,6 +714,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	return ..()
 
 /obj/machinery/swarm_powered/bluespace_catapult/process()
+	if(next_construction > world.time)
+		return
+
 	var/materials_satisfied = 1 - required_materials / max_required_materials
 	var/power_satisfied = 1 - required_power / max_required_power
 
@@ -779,5 +804,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 		to_chat(user, "<span class='notice'>It requires [required_materials] more materials.</span>")
 	if(required_power > 0)
 		to_chat(user, "<span class='notice'>It required [required_power] more power.</span>")
-	if(stat & NOPOWER)
+
+	if(next_construction > 0)
+		to_chat(user, "<span class='warning'>It's construction is disabled for the next [(world.time - next_construction) * 0.1] seconds.</span>")
+	else if(stat & NOPOWER)
 		to_chat(user, "<span class='warning'>It is not powered. It must be powered to consume.</span>")
+
+/obj/machinery/swarm_powered/bluespace_catapult/emp_act(severity)
+	. = ..()
+	next_construction = world.time + (10 SECONDS / severity)
