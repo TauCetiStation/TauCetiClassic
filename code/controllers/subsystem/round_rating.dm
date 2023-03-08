@@ -62,7 +62,13 @@
 	var/fa_icon = ""
 
 /datum/vote_choice/rating/render_html(category)
-	return "<a href='?src=\ref[SSrating];round_rating=[text];rating_cat=[category]' class='[a_class]'><span class='far [fa_icon]'></span></a>"
+	return {"<input
+				type="radio"
+				name="round_rating_[category]"
+				class='[a_class]
+				onclick="window.location='byond://?src=\ref[SSrating];round_rating=[text];rating_cat=[category]';">
+					<span class='far [fa_icon]'></span>
+				</input>"}
 
 /datum/vote_choice/rating/one
 	text = "1"
@@ -187,6 +193,7 @@ SUBSYSTEM_DEF(rating)
 		var/list/new_template_pool = get_question_pool()
 		for(var/datum/rating_template/template in new_template_pool)
 			html += "<span class='rating_questions'>[template.question]</span><br>"
+			html += "<fieldset id='round_rating_[template.category]'>"
 			// render voting choices
 			var/i = 0
 			for(var/datum/vote_choice/choice in template.choices)
@@ -194,6 +201,7 @@ SUBSYSTEM_DEF(rating)
 				html += choice.render_html(template.category)
 				if(template.choices.len != i)
 					html += "  -  "
+			html += "</fieldset>"
 			html += "<br>"
 		html += "</div>"
 
@@ -210,6 +218,8 @@ SUBSYSTEM_DEF(rating)
 				continue
 			template.avg_rate += text2num(choice.text) * total_votes // :)
 			template.total_voters += total_votes
+		if(template.total_voters == 0)
+			continue
 		template.avg_rate = round(template.avg_rate / template.total_voters, 0.01)
 		SSStatistics.rating.ratings[category] = template.avg_rate
 
