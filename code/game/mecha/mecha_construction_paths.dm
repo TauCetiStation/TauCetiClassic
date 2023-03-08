@@ -1589,6 +1589,8 @@
 					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Super capacitor is installed"),
 					 //8
+					 list("key"=/obj/item/weapon/stock_parts/capacitor/adv/super,
+					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Phasic scanner module is secured"),
 					 //9
 					 list("key"=QUALITY_SCREWING,
