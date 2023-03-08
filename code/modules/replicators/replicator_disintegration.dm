@@ -69,6 +69,11 @@
 		return FALSE
 	*/
 
+	if(!istype(A, /obj/machinery/telescience_jammer) && SEND_SIGNAL(A, COMSIG_ATOM_INTERCEPT_TELEPORT))
+		if(alert)
+			to_chat(src, "<span class='warning'>Some bluespace jamming technology is preventing you from disintegrating here.</span>")
+		return FALSE
+
 	return TRUE
 
 /mob/living/simple_animal/hostile/replicator/proc/can_auto_disintegrate(atom/A)

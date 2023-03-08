@@ -330,6 +330,10 @@
 	return FALSE
 
 
+/obj/machinery/telescience_jammer/get_unit_disintegration_time()
+	return ..() * REPLICATOR_PUNISH_GRIEFING_TICK_MODIFIER
+
+
 // Power is needed for the Transponders.
 /obj/machinery/power/can_be_auto_disintegrated()
 	return FALSE

@@ -159,6 +159,9 @@
 			take_bodypart_damage(0.0, maxHealth / 120)
 			taken_damage = TRUE
 
+		if(SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_TELEPORT))
+			take_bodypart_damage(0.0, maxHealth / 120)
+
 		if(isspaceturf(loc))
 			take_bodypart_damage(0.0, maxHealth / 20)
 			taken_damage = TRUE
