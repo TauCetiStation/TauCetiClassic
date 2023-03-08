@@ -110,10 +110,14 @@ SUBSYSTEM_DEF(ticker)
 			mode.process(wait * 0.1)
 
 			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1)
-			if(!explosion_in_progress && mode_finished)
+			if(!explosion_in_progress && mode_finished && !SSrating.voting)
+
+				if(!SSrating.already_started)
+					start_rating_vote_if_unexpected_roundend()
+					return
+
 				current_state = GAME_STATE_FINISHED
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
-				SSrating.calculate_rating()
 				declare_completion()
 				spawn(50)
 					for(var/client/C in clients)
@@ -148,6 +152,9 @@ SUBSYSTEM_DEF(ticker)
 
 					end_timer_id = addtimer(CALLBACK(src, .proc/try_to_end), restart_timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
+/datum/controller/subsystem/ticker/proc/start_rating_vote_if_unexpected_roundend()
+	to_chat(world, "<span class='info bold'><B>Конец раунда задержан из-за голосования.</B></span>")
+	SSrating.start_rating_collection()
 
 /datum/controller/subsystem/ticker/proc/try_to_end()
 	var/delayed = FALSE

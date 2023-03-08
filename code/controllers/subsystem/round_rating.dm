@@ -106,6 +106,7 @@ SUBSYSTEM_DEF(rating)
 	var/lowpop = 35
 
 	var/voting = FALSE
+	var/already_started = FALSE
 
 /datum/controller/subsystem/rating/Initialize(start_timeofday)
 	for(var/type in subtypesof(/datum/rating_template))
@@ -174,8 +175,11 @@ SUBSYSTEM_DEF(rating)
 
 	return cached_templates_pool
 
-/datum/controller/subsystem/rating/proc/announce_rating_collection()
+/datum/controller/subsystem/rating/proc/start_rating_collection()
 	voting = TRUE
+	already_started = TRUE
+
+	addtimer(CALLBACK(src, .proc/calculate_rating), 1 MINUTE)
 
 	for(var/client/C in clients)
 		var/html = "<div class='rating'>"
