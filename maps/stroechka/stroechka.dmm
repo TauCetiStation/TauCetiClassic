@@ -200,7 +200,7 @@
 	},
 /obj/machinery/alarm{
 	locked = 0;
-	mode =  2;
+	mode = 2;
 	pixel_x = -28;
 	pixel_y = -6
 	},
