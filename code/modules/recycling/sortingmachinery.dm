@@ -163,18 +163,14 @@
 				if(user.client)
 					user.client.screen -= I
 			P.w_class = I.w_class
-			if(P.w_class <= SIZE_MINUSCULE)
-				P.icon_state = "deliverycrate1"
-			else if (P.w_class <= SIZE_TINY)
-				P.icon_state = "deliverycrate2"
-			else if (P.w_class <= SIZE_SMALL)
-				P.icon_state = "deliverycrate3"
-			else
-				P.icon_state = "deliverycrate4"
-			I.loc = P
 			var/i = round(I.w_class)
-			if(i in list(1,2,3,4,5))
-				P.icon_state = "deliverycrate[i]"
+			if(i >= SIZE_MINUSCULE && i <= SIZE_BIG)
+				if(istype(I, /obj/item/pizzabox))
+					var/obj/item/pizzabox/B = I
+					P.icon_state = "deliverypizza[length(B.boxes)]"
+				else
+					P.icon_state = "deliverycrate[i]"
+			I.loc = P
 			P.add_fingerprint(usr)
 			I.add_fingerprint(usr)
 			add_fingerprint(usr)
@@ -232,7 +228,7 @@
 	var/list/modes = list(1 = "Метка", 2 = "Ценник", 3 = "Бирка")
 
 	var/lot_description = "Это что-то"
-	var/lot_account_number = 111111
+	var/lot_account_number = null
 	var/lot_category = "Разное"
 	var/lot_price = 0
 
@@ -269,8 +265,8 @@
 			else
 				dat += "Описание: <A href='?src=\ref[src];description=1'>[lot_description]</A>"
 			dat += " <A href='?src=\ref[src];autodesc=1'>авто</A><BR>\n"
-			dat += "Номер аккаунта: <A href='?src=\ref[src];number=1'>[lot_account_number]</A> <A href='?src=\ref[src];takeid=1'>id</A><BR>\n"
-			dat += "Цена: <A href='?src=\ref[src];price=1'>[lot_price]$</A><BR>\n"
+			dat += "Номер аккаунта: <A href='?src=\ref[src];number=1'>[lot_account_number ? lot_account_number : 111111]</A> <A href='?src=\ref[src];takeid=1'>id</A><BR>\n"
+			dat += "Цена: <A href='?src=\ref[src];price=1'>[lot_price]$</A> Наценка: +[global.online_shop_delivery_cost * 100]% ([lot_price * global.online_shop_delivery_cost]$)<BR>\n"
 			if(autocategory)
 				dat += "Категория: [lot_category]"
 			else
@@ -366,6 +362,13 @@
 
 	if(autocategory)
 		lot_category = get_category(target)
+
+	if(!lot_account_number)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			var/obj/item/weapon/card/id/ID = H.get_idcard()
+			if(ID)
+				lot_account_number = ID.associated_account_number
 
 	target.price_tag = list("description" = lot_description, "price" = lot_price, "category" = lot_category, "account" = lot_account_number)
 	target.verbs += /obj/proc/remove_price_tag
