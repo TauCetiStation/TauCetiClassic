@@ -195,19 +195,19 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	else
 		return ..()
 
-/obj/machinery/optable/torture_table/buckle_mob(mob/living/M, mob/user)
-	..()
-	if(M.pixel_x != 0)
-		M.pixel_x = 0
-	if(M.pixel_y != -1)
-		M.pixel_y = -1
-	if(M.dir & (EAST|WEST|NORTH))
-		M.dir = SOUTH
-	add_overlay(belt)
-
-/obj/machinery/optable/torture_table/unbuckle_mob(mob/user)
-	..()
-	cut_overlay(belt)
+/obj/machinery/optable/torture_table/post_buckle_mob(mob/living/M)
+	if(buckled_mob == M)
+		if(M.pixel_x != 0)
+			M.pixel_x = 0
+		if(M.pixel_y != -1)
+			M.pixel_y = -1
+		if(M.dir & (EAST|WEST|NORTH))
+			M.dir = SOUTH
+		add_overlay(belt)
+	else
+		M.pixel_x = M.default_pixel_y
+		M.pixel_y = M.default_pixel_y
+		cut_overlay(belt)
 
 /obj/machinery/optable/torture_table/attack_hand(mob/living/user)
 	if(user == buckled_mob)
