@@ -260,7 +260,15 @@ to destroy them and players will be able to make replacements.
 			for(var/obj/machinery/vending/type as anything in typesof(/obj/machinery/vending))
 				if(!initial(type.refill_canister))
 					continue
-				names_of_vendings["[initial(type.name)] ([initial(type.icon_state)])"] = type
+				var/full_name
+				if(initial(type.subname))
+					full_name = "[initial(type.name)] ([initial(type.subname)])"
+				else
+					full_name = initial(type.name)
+
+				ASSERT(!names_of_vendings[full_name])
+
+				names_of_vendings[full_name] = type
 
 		var/vending_name = tgui_input_list(user, "Выберите новую марку", "Выбор торгового автомата", names_of_vendings)
 		if(isnull(vending_name))

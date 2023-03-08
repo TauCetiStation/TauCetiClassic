@@ -10,6 +10,9 @@
 	desc = "A generic vending machine."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "generic"
+
+	var/subname = null // subname for vendor's circuit name
+
 	var/light_range_on = 3
 	var/light_power_on = 1
 	layer = 2.9
