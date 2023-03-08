@@ -286,7 +286,6 @@ Message ends."}
 			node_string += "[area_name] ([node_count])"
 
 	. += "Bandwidth: [bandwidth]/[max_bandwidth]<br>"
-	. += "Replicators abandoned: [length(global.alive_replicators)]<br>"
 	. += "Generators active: [length(global.replicator_generators)]<br>"
 	. += "Portals active: [length(global.active_transponders)]<br>"
 	if(node_string != "")
