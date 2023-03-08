@@ -3606,9 +3606,13 @@
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "arm" = (
-/obj/structure/closet/firecloset,
-/obj/machinery/newscaster{
+/obj/machinery/power/apc{
+	name = "apc down";
 	pixel_y = -28
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor{
 	icon_state = "yellow"
@@ -4230,11 +4234,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
@@ -5707,6 +5706,9 @@
 "aQd" = (
 /obj/item/weapon/storage/firstaid,
 /obj/structure/table,
+/obj/machinery/newscaster{
+	pixel_x = -28
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -24425,6 +24427,9 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice{
 	pixel_y = 4
 	},
+/obj/machinery/newscaster{
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -24558,13 +24563,9 @@
 	pixel_y = 4
 	},
 /obj/item/device/flashlight,
-/obj/machinery/power/apc{
-	name = "apc down";
-	pixel_y = -28
-	},
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -32
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -24591,10 +24592,13 @@
 	},
 /area/station/storage/tech)
 "fvf" = (
-/obj/machinery/space_heater,
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -22
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/alarm{
+	pixel_y = -32
 	},
 /turf/simulated/floor{
 	icon_state = "yellow"
@@ -25305,9 +25309,6 @@
 /area/station/maintenance/brig)
 "fEb" = (
 /obj/structure/reagent_dispensers/water_cooler,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28;
@@ -25676,10 +25677,10 @@
 	},
 /area/station/maintenance/medbay)
 "fHH" = (
-/obj/structure/closet/crate/engi,
 /obj/structure/sign/departments/engineering{
 	pixel_y = -32
 	},
+/obj/structure/closet/emcloset,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -30398,6 +30399,11 @@
 /turf/simulated/floor,
 /area/station/medical/reception)
 "gLU" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -36581,9 +36587,6 @@
 /area/station/medical/reception)
 "ikr" = (
 /obj/machinery/disposal,
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/structure/disposalpipe/trunk,
 /obj/structure/disposalpipe/trunk,
 /turf/simulated/floor{
@@ -37748,9 +37751,6 @@
 "iAF" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/emergency,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "yellow"
@@ -43087,6 +43087,11 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -49659,12 +49664,6 @@
 /area/station/maintenance/medbay)
 "lDb" = (
 /obj/machinery/recharge_station,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 29
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "yellow"
@@ -53077,13 +53076,10 @@
 /area/station/maintenance/science)
 "mur" = (
 /obj/structure/table,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/alarm{
-	pixel_y = 22
-	},
 /obj/item/weapon/storage/belt/utility,
+/obj/machinery/light_switch{
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -59956,7 +59952,6 @@
 /area/station/engineering/atmos)
 "oeW" = (
 /obj/structure/closet/emcloset,
-/obj/machinery/light/small,
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -63399,7 +63394,6 @@
 	},
 /area/station/maintenance/medbay)
 "oXg" = (
-/obj/structure/closet/emcloset,
 /obj/machinery/alarm{
 	pixel_x = 29;
 	pixel_y = -6
@@ -63844,10 +63838,15 @@
 	},
 /area/station/hallway/secondary/arrival)
 "pdR" = (
-/obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/machinery/light,
-/obj/machinery/light_switch{
-	pixel_y = -28
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
 	},
 /turf/simulated/floor{
 	icon_state = "yellow"
@@ -64744,12 +64743,6 @@
 "prS" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 28
-	},
-/obj/machinery/newscaster{
-	pixel_y = 28
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "yellow"
@@ -65002,12 +64995,17 @@
 	},
 /area/station/civilian/kitchen)
 "puI" = (
-/obj/structure/closet/emcloset,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -22
 	},
+/obj/structure/rack,
+/obj/item/clothing/suit/storage/hazardvest,
+/obj/item/weapon/tank/emergency_oxygen/engi,
+/obj/item/weapon/tank/emergency_oxygen/engi,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/gas/coloured,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "yellow"
@@ -70969,6 +70967,7 @@
 	dir = 4;
 	pixel_y = 38
 	},
+/obj/item/clothing/suit/storage/hazardvest,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -85399,6 +85398,11 @@
 "uEB" = (
 /obj/structure/stool,
 /obj/effect/landmark/start/technical_assistant,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
@@ -87858,13 +87862,6 @@
 	},
 /area/station/civilian/barbershop)
 "vhx" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/storage/hazardvest,
-/obj/item/clothing/suit/storage/hazardvest,
-/obj/item/weapon/tank/emergency_oxygen/engi,
-/obj/item/weapon/tank/emergency_oxygen/engi,
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/clothing/mask/gas/coloured,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "apc top";
@@ -98463,10 +98460,6 @@
 /obj/structure/table,
 /obj/machinery/light{
 	dir = 1
-	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
 	},
 /obj/item/device/assembly/signaler{
 	pixel_x = -5;
