@@ -170,17 +170,22 @@
 			something.loc = get_turf(src)
 	return ..()
 
+/obj/item/weapon/reagent_containers/food/snacks/proc/bite_food(mob/user)
+	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(bitecount == 0 || prob(50))
+		user.visible_message("<b>[user]</b> nibbles away at the [src]")
+	bitecount++
+	if(bitecount >= 5)
+		var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
+		user.visible_message("<b>[user]</b> [sattisfaction_text]")
+		qdel(src)
+
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
 	..()
-	if(iscorgi(M) || isIAN(M))
-		if(bitecount == 0 || prob(50))
-			M.visible_message("<b>[M]</b> nibbles away at the [src]")
-		bitecount++
-		if(bitecount >= 5)
-			var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
-			M.visible_message("<b>[M]</b> [sattisfaction_text]")
-			qdel(src)
-	if(ismouse(M))
+	if(iscorgi(M))
+		bite_food(M)
+	else if(ismouse(M))
 		var/mob/living/simple_animal/mouse/N = M
 		if(M.layer == MOB_LAYER)
 			N.visible_message("<span class ='notice'><b>[N]</b> nibbles away at [src].</span>", "<span class='notice'>You nibble away at [src].</span>")
