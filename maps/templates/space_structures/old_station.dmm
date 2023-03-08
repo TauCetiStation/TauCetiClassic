@@ -70,8 +70,9 @@
 	},
 /area/space_structures/old_station/left/med)
 "aA" = (
-/obj/machinery/telecomms/broadcaster/preset_right,
 /obj/structure/alien/weeds,
+/obj/machinery/constructable_frame,
+/obj/item/weapon/circuitboard/telecomms/processor,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -305,12 +306,6 @@
 	},
 /turf/environment/space,
 /area/space)
-"bJ" = (
-/obj/machinery/constructable_frame,
-/turf/simulated/floor{
-	icon_state = "purple"
-	},
-/area/space_structures/old_station/right/rnd)
 "bN" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -609,8 +604,11 @@
 	},
 /area/space_structures/old_station/central/brig)
 "dB" = (
-/mob/living/simple_animal/hostile/carp,
-/turf/simulated/floor/plating/airless/asteroid,
+/obj/structure/cable/yellow,
+/obj/item/solar_assembly,
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel"
+	},
 /area/space)
 "dJ" = (
 /obj/machinery/light/small/emergency{
@@ -811,7 +809,8 @@
 /turf/simulated/floor,
 /area/space_structures/old_station/central/solars_c)
 "eM" = (
-/obj/machinery/washing_machine,
+/obj/structure/rack,
+/obj/item/clothing/under/rainbow,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central)
 "eO" = (
@@ -1860,7 +1859,8 @@
 	},
 /area/space_structures/old_station/central/brig)
 "kI" = (
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/constructable_frame,
+/obj/item/weapon/circuitboard/protolathe,
 /turf/simulated/floor,
 /area/space_structures/old_station/right/rnd)
 "kK" = (
@@ -2174,12 +2174,6 @@
 	icon_state = "neutral"
 	},
 /area/space_structures/old_station/central)
-"mR" = (
-/obj/machinery/portable_atmospherics/canister/phoron,
-/turf/simulated/floor{
-	icon_state = "bot"
-	},
-/area/space_structures/old_station/left)
 "mS" = (
 /obj/item/fish_carp,
 /turf/environment/space,
@@ -2675,14 +2669,6 @@
 	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/left/med)
-"qa" = (
-/obj/machinery/power/solar,
-/obj/structure/cable/yellow,
-/obj/structure/cable/yellow,
-/turf/simulated/floor/airless{
-	icon_state = "solarpanel"
-	},
-/area/space)
 "qb" = (
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/beakers{
@@ -2799,9 +2785,8 @@
 	},
 /area/space_structures/old_station/left/med)
 "qJ" = (
-/obj/machinery/mecha_part_fabricator{
-	dir = 8
-	},
+/obj/item/weapon/circuitboard/mechfab,
+/obj/machinery/constructable_frame,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "purple"
@@ -2958,11 +2943,11 @@
 	},
 /area/space_structures/old_station/armory)
 "rS" = (
-/obj/machinery/power/solar,
 /obj/structure/cable/yellow{
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/item/solar_assembly,
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
@@ -3061,16 +3046,6 @@
 	icon_state = "whitepurplecorner"
 	},
 /area/space_structures/old_station/right)
-"sF" = (
-/obj/machinery/power/solar,
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/airless{
-	icon_state = "solarpanel"
-	},
-/area/space)
 "sJ" = (
 /turf/simulated/floor{
 	dir = 5;
@@ -3271,6 +3246,9 @@
 	},
 /obj/item/stack/sheet/metal{
 	amount = 50
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -3677,15 +3655,11 @@
 	},
 /area/space_structures/old_station/central/bridge)
 "wu" = (
-/obj/machinery/power/solar,
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
+/obj/item/solar_assembly,
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
@@ -3700,11 +3674,19 @@
 /turf/simulated/floor,
 /area/space_structures/old_station/central/brig)
 "ww" = (
-/obj/structure/disposalpipe/broken{
-	dir = 4
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
 	},
-/turf/simulated/wall/r_wall,
-/area/space_structures/old_station/left/med)
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/item/solar_assembly,
+/turf/simulated/floor/airless{
+	icon_state = "solarpanel"
+	},
+/area/space)
 "wy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -4187,11 +4169,12 @@
 /turf/simulated/floor,
 /area/space_structures/old_station/central)
 "zn" = (
-/obj/random/vending/snack,
+/obj/machinery/constructable_frame,
+/obj/item/weapon/circuitboard/telecomms/server,
 /turf/simulated/floor{
-	icon_state = "purple"
+	icon_state = "dark"
 	},
-/area/space_structures/old_station/right/rnd)
+/area/space_structures/old_station/satellite)
 "zp" = (
 /obj/structure/sign/departments/chemistry,
 /turf/simulated/wall,
@@ -4568,12 +4551,6 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/space_structures/old_station/central/bridge)
-"BA" = (
-/obj/machinery/vending/coffee,
-/turf/simulated/floor{
-	icon_state = "purple"
-	},
-/area/space_structures/old_station/right/rnd)
 "BB" = (
 /obj/structure/closet/secure_closet/atmos_personal,
 /turf/simulated/floor,
@@ -5584,7 +5561,6 @@
 /obj/structure/closet/fireaxecabinet{
 	pixel_x = 31
 	},
-/obj/machinery/portable_atmospherics/powered/pump,
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 8
 	},
@@ -5716,8 +5692,7 @@
 	},
 /area/space_structures/old_station/central)
 "Hr" = (
-/obj/machinery/power/solar,
-/obj/structure/cable/yellow,
+/obj/item/solar_assembly,
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel"
 	},
@@ -5867,7 +5842,7 @@
 	},
 /area/space_structures/old_station/central)
 "Ih" = (
-/obj/machinery/chem_master,
+/obj/machinery/constructable_frame,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "purple"
@@ -5962,10 +5937,11 @@
 	},
 /area/space_structures/old_station/armory)
 "IQ" = (
-/obj/machinery/washing_machine,
 /obj/machinery/light/small/emergency{
 	dir = 8
 	},
+/obj/item/weapon/reagent_containers/food/snacks/soap/syndie,
+/obj/structure/rack,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central)
 "IR" = (
@@ -6045,13 +6021,36 @@
 	},
 /area/space_structures/old_station/central/solars_c)
 "Jv" = (
-/obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/xenomorph/sentinel,
+/obj/structure/closet/crate,
+/obj/item/weapon/stock_parts/capacitor/adv,
+/obj/item/weapon/stock_parts/capacitor/adv,
+/obj/item/weapon/stock_parts/cell/hyper,
+/obj/item/weapon/stock_parts/cell/hyper,
+/obj/item/weapon/stock_parts/capacitor/adv,
+/obj/item/weapon/stock_parts/manipulator/nano,
+/obj/item/weapon/stock_parts/manipulator/nano,
+/obj/item/weapon/stock_parts/manipulator/nano,
+/obj/item/weapon/stock_parts/manipulator/nano,
+/obj/item/weapon/stock_parts/matter_bin/adv,
+/obj/item/weapon/stock_parts/matter_bin/adv,
+/obj/item/weapon/stock_parts/matter_bin/adv,
+/obj/item/weapon/stock_parts/matter_bin/adv,
+/obj/item/weapon/stock_parts/matter_bin/adv,
+/obj/item/weapon/stock_parts/micro_laser/high,
+/obj/item/weapon/stock_parts/micro_laser/high,
+/obj/item/weapon/stock_parts/micro_laser/high,
+/obj/item/weapon/stock_parts/micro_laser/high,
+/obj/item/weapon/stock_parts/micro_laser/high,
+/obj/item/weapon/stock_parts/micro_laser/high,
+/obj/item/weapon/stock_parts/scanning_module/adv,
+/obj/item/weapon/stock_parts/scanning_module/adv,
+/obj/item/weapon/stock_parts/scanning_module/adv,
+/obj/item/weapon/stock_parts/scanning_module/adv,
 /turf/simulated/floor{
 	dir = 8;
-	icon_state = "whitepurple"
+	icon_state = "purple"
 	},
-/area/space_structures/old_station/right)
+/area/space_structures/old_station/right/rnd)
 "Jx" = (
 /obj/structure/girder/reinforced,
 /turf/simulated/floor/plating,
@@ -6297,7 +6296,9 @@
 	},
 /area/space_structures/old_station/satellite)
 "KZ" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/constructable_frame,
+/obj/item/weapon/circuitboard/circuit_imprinter,
+/obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
 /turf/simulated/floor,
 /area/space_structures/old_station/right/rnd)
 "Lb" = (
@@ -6541,11 +6542,9 @@
 /turf/simulated/wall,
 /area/space_structures/old_station/central/bridge)
 "MB" = (
-/obj/machinery/power/solar,
-/turf/simulated/floor/airless{
-	icon_state = "solarpanel"
-	},
-/area/space)
+/obj/item/weapon/storage/part_replacer,
+/turf/simulated/floor,
+/area/space_structures/old_station/right/rnd)
 "MD" = (
 /obj/structure/grille{
 	destroyed = 1
@@ -6580,13 +6579,6 @@
 /obj/structure/alien/weeds/node,
 /turf/simulated/floor,
 /area/space_structures/old_station/right/rnd)
-"MS" = (
-/mob/living/simple_animal/hostile/xenomorph/sentinel,
-/obj/structure/alien/weeds,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/space_structures/old_station/satellite)
 "MU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
@@ -6706,14 +6698,16 @@
 /turf/simulated/floor,
 /area/space_structures/old_station/left)
 "NJ" = (
-/obj/machinery/telecomms/receiver/preset_right,
 /obj/structure/alien/weeds,
+/obj/machinery/constructable_frame,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/space_structures/old_station/satellite)
 "NM" = (
-/obj/machinery/telecomms/processor/preset_three,
+/obj/structure/alien/weeds,
+/obj/machinery/constructable_frame,
+/obj/item/weapon/circuitboard/telecomms/bus,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -6946,8 +6940,9 @@
 	},
 /area/space_structures/old_station/central)
 "OY" = (
-/obj/machinery/telecomms/server/presets/science,
 /obj/structure/alien/weeds,
+/obj/machinery/constructable_frame,
+/obj/item/weapon/circuitboard/telecomms/hub,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -7152,10 +7147,6 @@
 /obj/structure/sign/poster/contraband/revolver,
 /turf/simulated/wall/r_wall,
 /area/space_structures/old_station/central)
-"Qy" = (
-/mob/living/simple_animal/hostile/xenomorph/drone,
-/turf/simulated/floor,
-/area/space_structures/old_station/right/rnd)
 "QA" = (
 /obj/item/stack/rods,
 /turf/simulated/floor{
@@ -7230,7 +7221,8 @@
 /turf/environment/space,
 /area/space)
 "QS" = (
-/obj/machinery/telecomms/server/presets/science,
+/obj/machinery/constructable_frame,
+/obj/item/weapon/circuitboard/telecomms/relay,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -7267,9 +7259,6 @@
 	},
 /area/space_structures/old_station/central)
 "Rh" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -7447,7 +7436,6 @@
 	},
 /area/space_structures/old_station/central)
 "Sj" = (
-/obj/structure/alien/weeds,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 4;
@@ -7552,7 +7540,8 @@
 	},
 /area/space_structures/old_station)
 "SV" = (
-/obj/machinery/r_n_d/destructive_analyzer,
+/obj/machinery/constructable_frame,
+/obj/item/weapon/circuitboard/destructive_analyzer,
 /turf/simulated/floor,
 /area/space_structures/old_station/right/rnd)
 "Tc" = (
@@ -7721,9 +7710,11 @@
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right/rnd)
 "TF" = (
-/obj/machinery/autolathe,
-/obj/structure/alien/weeds,
 /obj/machinery/light,
+/obj/item/weapon/circuitboard/autolathe{
+	pixel_y = 4
+	},
+/obj/machinery/constructable_frame,
 /turf/simulated/floor{
 	icon_state = "purple"
 	},
@@ -7949,7 +7940,13 @@
 	},
 /area/space_structures/old_station/left)
 "Vc" = (
-/obj/machinery/vending/blood,
+/obj/structure/closet/crate/freezer,
+/obj/item/weapon/reagent_containers/blood/AMinus,
+/obj/item/weapon/reagent_containers/blood/APlus,
+/obj/item/weapon/reagent_containers/blood/BMinus,
+/obj/item/weapon/reagent_containers/blood/BPlus,
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/reagent_containers/blood/OPlus,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -8092,9 +8089,7 @@
 	},
 /area/space_structures/old_station/central/bridge)
 "VN" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/vending/engivend,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "neutral"
@@ -8233,7 +8228,6 @@
 	},
 /area/space_structures/old_station/central/brig)
 "WJ" = (
-/mob/living/simple_animal/hostile/xenomorph/sentinel,
 /obj/structure/alien/weeds/node,
 /turf/simulated/floor{
 	dir = 8;
@@ -8303,8 +8297,6 @@
 /turf/simulated/floor,
 /area/space_structures/old_station/central/brig)
 "Xp" = (
-/obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/xenomorph/sentinel,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 8;
@@ -8357,8 +8349,7 @@
 	},
 /area/space_structures/old_station/central)
 "XE" = (
-/obj/machinery/constructable_frame,
-/obj/structure/alien/weeds,
+/obj/item/weapon/storage/toolbox/electrical,
 /turf/simulated/floor,
 /area/space_structures/old_station/right/rnd)
 "XI" = (
@@ -8929,7 +8920,7 @@ wi
 we
 wi
 wi
-we
+wi
 wi
 wi
 wi
@@ -8949,9 +8940,9 @@ wi
 wi
 wi
 wi
-we
 wi
-we
+wi
+wi
 wi
 wi
 wi
@@ -9045,7 +9036,7 @@ ay
 EQ
 JF
 wi
-we
+wi
 wi
 bC
 wi
@@ -9072,7 +9063,7 @@ wi
 wi
 gr
 wi
-we
+wi
 wi
 wi
 wi
@@ -9098,7 +9089,7 @@ gO
 gO
 gO
 gO
-ww
+JF
 Kl
 gx
 Eg
@@ -9112,8 +9103,8 @@ wi
 wi
 wi
 Ha
-mR
-mR
+rX
+rX
 yy
 yn
 yn
@@ -9146,7 +9137,7 @@ yn
 yn
 yn
 fI
-dB
+fI
 yn
 yn
 yn
@@ -9189,7 +9180,7 @@ gO
 gO
 HP
 gO
-HP
+gO
 gO
 gr
 gr
@@ -9227,7 +9218,7 @@ JF
 wi
 wi
 wi
-HP
+gO
 gO
 gO
 gO
@@ -9308,7 +9299,7 @@ wi
 gr
 AK
 gO
-we
+wi
 wi
 wi
 wi
@@ -9409,7 +9400,7 @@ do
 HV
 ya
 ig
-cw
+rX
 cw
 Ki
 lt
@@ -9550,7 +9541,7 @@ wi
 wi
 wi
 wi
-we
+wi
 Gl
 mx
 Gl
@@ -9729,7 +9720,7 @@ wi
 wi
 we
 wi
-we
+wi
 wi
 Ha
 Ha
@@ -9772,7 +9763,7 @@ gO
 gO
 gO
 gO
-MB
+hD
 gO
 gO
 fI
@@ -9831,7 +9822,7 @@ wi
 wi
 gO
 gO
-rS
+Hr
 xg
 Hr
 DO
@@ -9891,9 +9882,9 @@ xg
 wi
 gO
 gO
-rS
+Hr
 xg
-qa
+Hr
 gO
 gO
 fI
@@ -9951,10 +9942,10 @@ xg
 gO
 gO
 gO
-rS
+hD
 bs
-MB
-MB
+hD
+hD
 bs
 hD
 gO
@@ -10071,15 +10062,15 @@ gO
 DO
 gO
 MD
-nE
+rS
 aT
-mG
+dB
 nE
 AR
 mG
-nE
+rS
 uD
-mG
+dB
 gO
 wi
 wi
@@ -10131,15 +10122,15 @@ gO
 gO
 gO
 MD
-nE
+rS
 aT
-mG
-nE
+dB
+rS
 AR
-mG
-nE
+dB
+rS
 uD
-mG
+dB
 gO
 MD
 wi
@@ -10191,15 +10182,15 @@ gO
 gO
 HH
 MD
-rS
+nE
 aT
-MB
-rS
+hD
+nE
 AR
-MB
+mG
 rS
 uD
-MB
+hD
 gO
 Hb
 wi
@@ -10252,13 +10243,13 @@ gO
 gO
 qz
 gO
-wu
+ww
 gO
 gO
 wu
 gO
 gO
-sF
+wu
 gO
 gO
 Hb
@@ -13042,10 +13033,10 @@ wX
 zu
 aA
 NJ
-OY
+NM
 OY
 QS
-QS
+zn
 wX
 wX
 wi
@@ -13106,7 +13097,7 @@ uF
 Hn
 ft
 sk
-NM
+zu
 wX
 wi
 wi
@@ -13177,7 +13168,7 @@ rf
 nF
 ye
 ZY
-ZY
+Jv
 hi
 TE
 LA
@@ -13225,7 +13216,7 @@ mb
 jv
 Wf
 Oh
-HB
+pc
 Ev
 wX
 wi
@@ -13306,7 +13297,7 @@ Bk
 hG
 OQ
 xL
-BA
+Ni
 rf
 hV
 NA
@@ -13357,8 +13348,8 @@ XX
 GY
 qS
 BZ
-sq
-bJ
+MB
+Ni
 TE
 pM
 Jy
@@ -13366,7 +13357,7 @@ aZ
 aZ
 cm
 vX
-zn
+Ni
 rf
 Se
 Yo
@@ -13405,7 +13396,7 @@ HB
 zd
 Ok
 pc
-MS
+pc
 pc
 kX
 Cm
@@ -13475,13 +13466,13 @@ us
 bO
 rf
 GY
+sq
+sq
 XE
-WR
-WR
-DP
+Ni
 vX
 GY
-Qy
+sq
 WR
 WR
 WR
@@ -13535,10 +13526,10 @@ DA
 Ro
 WA
 GY
-WR
+sq
 WR
 pb
-DP
+Ni
 rU
 Oy
 eE
@@ -13598,7 +13589,7 @@ pf
 Sj
 WR
 MR
-DP
+Ni
 VA
 vX
 eE
@@ -13658,7 +13649,7 @@ ht
 Xp
 WR
 WR
-DP
+Ni
 VA
 Gp
 DY
@@ -13715,9 +13706,9 @@ DA
 hu
 rf
 Px
-WR
-WR
-WR
+sq
+sq
+sq
 TF
 rf
 zp
@@ -13769,14 +13760,14 @@ JU
 JU
 JU
 JU
-UI
+pc
 wX
 DA
 lR
 rf
 GY
-WR
-WR
+sq
+sq
 sq
 Ni
 rf
@@ -14018,7 +14009,7 @@ jM
 Pj
 fj
 Pj
-Jv
+Eo
 Eo
 Eo
 Eo
@@ -14188,7 +14179,7 @@ pc
 pc
 zd
 pc
-UI
+pc
 pc
 wX
 wi
