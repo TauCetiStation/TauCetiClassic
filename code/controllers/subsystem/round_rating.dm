@@ -17,7 +17,7 @@
 /datum/rating_template/proc/get_result_message()
 	var/rating = "[CEIL(avg_rate)]"
 	var/datum/vote_choice/rating/choice = find_suitable_choice(rating)
-	return "[result_message]: <span class='far [choice.fa_icon]'></span> <span style='font-size: 10px'>([rating])</span><br>"
+	return "[result_message]: <span class='far [choice.fa_icon]'></span> <span style='font-size: 10px'>([avg_rate])</span><br>"
 
 /datum/rating_template/proc/find_suitable_choice(rating)
 	for(var/datum/vote_choice/choice in choices)
