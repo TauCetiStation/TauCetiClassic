@@ -419,7 +419,7 @@
 	return(2)
 
 /turf/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	if(isliving(AM))
+	if(isliving(AM) && density)
 		var/mob/living/L = AM
 		L.turf_collision(src)
 
