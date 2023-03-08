@@ -69,7 +69,8 @@
 		return FALSE
 	*/
 
-	if(!istype(A, /obj/machinery/telescience_jammer) && SEND_SIGNAL(A, COMSIG_ATOM_INTERCEPT_TELEPORT))
+	var/turf/T = get_turf(A)
+	if(!istype(A, /obj/machinery/telescience_jammer) && SEND_SIGNAL(T, COMSIG_ATOM_INTERCEPT_TELEPORT))
 		if(alert)
 			to_chat(src, "<span class='warning'>Some bluespace jamming technology is preventing you from disintegrating here.</span>")
 		return FALSE

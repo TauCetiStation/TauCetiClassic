@@ -159,7 +159,8 @@
 			take_bodypart_damage(0.0, maxHealth / 120)
 			taken_damage = TRUE
 
-		if(SEND_SIGNAL(src, COMSIG_ATOM_INTERCEPT_TELEPORT))
+		var/turf/T = get_turf(src)
+		if(SEND_SIGNAL(T, COMSIG_ATOM_INTERCEPT_TELEPORT))
 			take_bodypart_damage(0.0, maxHealth / 120)
 
 		if(isspaceturf(loc))
