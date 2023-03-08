@@ -143,7 +143,7 @@
 
 	var/datum/callback/checks = CALLBACK(src, .proc/disintegrate_do_after_checks)
 	var/effective_efficency = efficency
-	if(has_swarms_gift())
+	if(ckey && has_swarms_gift())
 		effective_efficency *= 1.5
 
 	if(!do_skilled(src, A, A.get_unit_disintegration_time() * material_amount / effective_efficency, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2, extra_checks=checks))
@@ -235,3 +235,28 @@
 
 /mob/living/simple_animal/hostile/replicator/proc/disintegrate_do_after_checks(mob/living/simple_animal/hostile/replicator/R, atom/target)
 	return R.can_disintegrate(target, alert=TRUE)
+
+/mob/living/simple_animal/hostile/replicator/proc/try_spawn_node(turf/T)
+	if(!prob(5) && !(ckey && has_swarms_gift()))
+		return FALSE
+
+	if(!is_station_level(T.z))
+		return FALSE
+
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	if(FR.nodes_to_spawn <= 0)
+		return FALSE
+
+	if(locate(/obj/structure/forcefield_node) in T)
+		return FALSE
+
+	for(var/fn in global.forcefield_nodes)
+		if(get_dist(T, fn) < REPLICATOR_NODE_PROXIMITY)
+			return FALSE
+
+	var/obj/structure/forcefield_node/FN = new(T)
+	FN.color = pick(REPLICATOR_RUNE_COLORS)
+
+	var/area/A = get_area(T)
+	emote("beep")
+	FR.drone_message(src, "Node unveiled at [A.name].", transfer=TRUE)

@@ -526,31 +526,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	var/mufflerange = has_swarms_gift() ? -5 : 0
 	return playsound(source, sound, VOL_EFFECTS_MASTER, vol=vol, extrarange=mufflerange)
 
-/mob/living/simple_animal/hostile/replicator/proc/try_spawn_node(turf/T)
-	if(!prob(5))
-		return FALSE
-
-	if(!is_station_level(T.z))
-		return FALSE
-
-	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-	if(FR.nodes_to_spawn <= 0)
-		return FALSE
-
-	if(locate(/obj/structure/forcefield_node) in T)
-		return FALSE
-
-	for(var/fn in global.forcefield_nodes)
-		if(get_dist(T, fn) < 5)
-			return FALSE
-
-	var/obj/structure/forcefield_node/FN = new(T)
-	FN.color = pick(REPLICATOR_RUNE_COLORS)
-
-	var/area/A = get_area(T)
-	emote("beep")
-	FR.drone_message(src, "Node unveiled at [A.name].", transfer=TRUE)
-
 /mob/living/simple_animal/hostile/replicator/gib()
 	death(TRUE)
 	var/atom/movable/overlay/animation = null

@@ -56,6 +56,20 @@
 			to_chat(user, "<span class='warning'>Not enough bandwidth for replication.</span>")
 		return FALSE
 
+	var/node_proximity = FALSE
+	for(var/obj/structure/forcefield_node/FN as anything in global.forcefield_nodes)
+		if(get_dist(FN, src) >= REPLICATOR_NODE_PROXIMITY)
+			continue
+		if(locate(/obj/machinery/power/replicator_generator) in FN.loc)
+			continue
+		node_proximity = TRUE
+		break
+
+	if(!node_proximity)
+		if(try_start)
+			to_chat(user, "<span class='warning'>You require an unclaimed node close by to replicate.</span>")
+		return FALSE
+
 	return ..()
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/cast(list/targets, mob/user = usr)
@@ -200,12 +214,17 @@
 /obj/effect/proc_holder/spell/no_target/replicator_construct/transponder/replicator_checks(mob/user, try_start)
 	if(locate(/obj/machinery/swarm_powered/bluespace_transponder) in user.loc)
 		if(try_start)
-			to_chat(user, "<span class='notice'>Need more space for the transponder.</span>")
+			to_chat(user, "<span class='notice'>Need more space for the transponder, there is a trasponder here already.</span>")
 		return FALSE
 
 	if(locate(/obj/machinery/power/replicator_generator) in user.loc)
 		if(try_start)
-			to_chat(user, "<span class='notice'>Need more space for the transponder.</span>")
+			to_chat(user, "<span class='notice'>Need more space for the transponder, a generator is in the way.</span>")
+		return FALSE
+
+	if(locate(/obj/structure/forcefield_node) in user.loc)
+		if(try_start)
+			to_chat(user, "<span class='notice'>Can not construct a transponder here because of the node.</span>")
 		return FALSE
 
 	for(var/bt in global.transponders)
@@ -255,12 +274,12 @@
 /obj/effect/proc_holder/spell/no_target/replicator_construct/generator/replicator_checks(mob/user, try_start)
 	if(locate(/obj/machinery/swarm_powered/bluespace_transponder) in user.loc)
 		if(try_start)
-			to_chat(user, "<span class='notice'>Need more space for the generator.</span>")
+			to_chat(user, "<span class='notice'>Need more space for the generator, a transponder is in the way.</span>")
 		return FALSE
 
 	if(locate(/obj/machinery/power/replicator_generator) in user.loc)
 		if(try_start)
-			to_chat(user, "<span class='notice'>Need more space for the generator.</span>")
+			to_chat(user, "<span class='notice'>Need more space for the generator, another generator is already here.</span>")
 		return FALSE
 
 	var/obj/structure/forcefield_node/FN = locate() in user.loc
