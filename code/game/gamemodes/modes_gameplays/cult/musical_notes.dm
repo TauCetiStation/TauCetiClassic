@@ -37,7 +37,7 @@
 		"holy_9" = 4, //holy theme specific
 	)
 
-/particles/musical_notes/nullwave
+/particles/musical_notes/grey
 	icon = 'icons/effects/notes/note_null.dmi'
 	icon_state = list(
 		"null_1" = 1,

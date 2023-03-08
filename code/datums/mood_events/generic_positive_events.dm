@@ -20,6 +20,11 @@
 	description = "<span class='nicegreen'>Oh my god! What a thrill!</span>"
 	timeout = 1 MINUTES
 
+/datum/mood_event/blessing
+	description = "<span class='nicegreen'>Я был благословлен.</span>"
+	mood_change = 3
+	timeout = 5 MINUTES
+
 /datum/mood_event/drunk
 	mood_change = 1
 	description = "<span class='nicegreen'>Everything just feels better after a drink or two.</span>"

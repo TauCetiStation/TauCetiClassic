@@ -20,6 +20,8 @@
 /datum/component/smooth_tunes/Initialize(linked_songtuner_rite, allow_repeats, particles_path, glow_color)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
+	if(GetExactComponent(type))
+		return
 	src.linked_songtuner_rite = linked_songtuner_rite
 	src.allow_repeats = allow_repeats
 	src.particles_path = particles_path
@@ -27,7 +29,7 @@
 
 /datum/component/smooth_tunes/Destroy(force, silent)
 	var/mob/M = parent
-	if(M.particles.type == particles_path)
+	if(M.particles?.type == particles_path)
 		QDEL_NULL(M.particles)
 	qdel(linked_songtuner_rite)
 	return ..()
@@ -66,7 +68,7 @@
 		var/mob/M = parent
 		M.particles = new particles_path()
 	//filters
-	linked_song.instrument?.add_filter("smooth_tunes_outline", 9, list("type" = "outline", "color" = glow_color))
+	linked_song.instrument.add_filter("smooth_tunes_outline", 9, list("type" = "outline", "color" = glow_color))
 
 ///Prevents changing tempo during a song to sneak in final effects quicker
 
@@ -94,7 +96,7 @@
 		else
 			to_chat(parent, "<span class='warning'>The song was interrupted, you cannot activate the finishing ability!</span>")
 
-	linked_song.instrument?.remove_filter("smooth_tunes_outline")
+	linked_song.instrument.remove_filter("smooth_tunes_outline")
 	UnregisterSignal(linked_song.instrument, list(
 		COMSIG_INSTRUMENT_TEMPO_CHANGE,
 		COMSIG_INSTRUMENT_END,

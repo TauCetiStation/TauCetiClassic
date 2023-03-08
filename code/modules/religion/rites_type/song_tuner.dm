@@ -1,13 +1,12 @@
 ///prototype for rites that tune a song.
 /datum/religion_rites/song_tuner
-	name = "Tune Song"
-	desc = "this is a prototype."
+	name = "Песенка"
 	ritual_length = 10 SECONDS
 	favor_cost = 10
 	///if repeats count as continuations instead of a song's end, TRUE
 	var/repeats_okay = TRUE
 	///personal message sent to the chaplain as feedback for their chosen song
-	var/song_invocation_message = "beep borp you forgot to fill in a variable report to git hub"
+	var/song_invocation_message = "Да будет песенка"
 	///visible message sent to indicate a song will have special properties
 	var/song_start_message
 	///particle effect of playing this tune
@@ -17,10 +16,10 @@
 	///if song gives a buff, TRUE
 	var/buff = FALSE
 
-/datum/religion_rites/song_tuner/invoke_effect(mob/living/user, obj/structure/altar_of_gods/altar)
+/datum/religion_rites/song_tuner/invoke_effect(mob/user, obj/AOG)
 	. = ..()
 	to_chat(user, "<span class='notice'>[song_invocation_message]</span>")
-	user.AddComponent(/datum/component/smooth_tunes, src, repeats_okay, particles_path, glow_color, user)
+	user.AddComponent(/datum/component/smooth_tunes, src, repeats_okay, particles_path, glow_color)
 
 /**
  * Perform the song effect.
@@ -50,8 +49,8 @@
 
 /datum/religion_rites/song_tuner/evangelism
 	name = "Благовестнический Гимн"
-	desc = "Распространяйте слово вашего Бога, завоевывая благосклонность каждого слушателя. В конце песни вы благословите всех слушателей, улучшив их настроение."
-	particles_path = /particles/musical_notes/nullwave
+	desc = "Распространяйте слово вашего Бога, распространяя его волю. В конце песни вы благословите всех слушателей, улучшив их настроение."
+	particles_path = /particles/musical_notes/holy
 	song_invocation_message = "Вы приготовили песнь Святых!"
 	song_start_message = "<span class='notice'>Эта музыка благословенна!</span>"
 	glow_color = "#a5a793"
@@ -62,23 +61,18 @@
 	)
 
 /datum/religion_rites/song_tuner/evangelism/song_effect(mob/living/listener, atom/song_source)
-	// A ckey requirement is good to have for gaining favor, to stop monkey farms and such.
+	//To stop monkey farms
 	if(listener.mind?.holy_role || !listener.ckey)
 		return
-	religion.adjust_favor(0.2)
+	religion.adjust_favor(0.4)
 
 /datum/religion_rites/song_tuner/evangelism/finish_effect(mob/living/listener, atom/song_source)
 	SEND_SIGNAL(listener, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 
-/datum/mood_event/blessing
-	description = "Я был благословлен."
-	mood_change = 3
-	timeout = 5 MINUTES
-
 /datum/religion_rites/song_tuner/life
 	name = "Симфония Жизни"
 	desc = "Спойте спокойную песню, излечив раны ближнего своего"
-	particles_path = /particles/musical_notes/holy
+	particles_path = /particles/musical_notes/grey
 	favor_cost = 400
 	song_invocation_message = "Вы приготовили песнь Жизни!"
 	song_start_message = "<span class='nicegreen'>Эта песня греет душу и тело</span>"
