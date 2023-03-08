@@ -2,15 +2,16 @@
 	var/material_cost = 0
 	var/objection_delay = 0
 
+	var/remembered_ckey = ""
+
 /obj/effect/proc_holder/spell/no_target/replicator_construct/atom_init()
 	. = ..()
 	name = "[name] ([material_cost])"
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/proc/replicator_checks(mob/user, try_start)
-	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-	if(FR.materials < material_cost)
-		if(try_start)
-			to_chat(user, "<span class='warning'>Not enough materials.</span>")
+	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
+
+	if(remembered_ckey != user_replicator.last_controller_ckey)
 		return FALSE
 
 	if(!isfloorturf(user.loc))
@@ -24,14 +25,28 @@
 	return replicator_checks(user, TRUE)
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	if(FR.materials < material_cost)
+		if(try_start)
+			to_chat(user, "<span class='warning'>Not enough materials.</span>")
+		return FALSE
+
+	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
+	remembered_ckey = user_replicator.last_controller_ckey
+
 	if(!replicator_checks(user, try_start))
 		return FALSE
 
 	return ..()
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/proc/objection_timer(mob/living/simple_animal/hostile/replicator/user_replicator, message)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.last_controller_ckey)
+
 	var/datum/callback/checks = CALLBACK(src, .proc/replicator_checks_do_after_handler)
-	return user_replicator.do_after_objections(objection_delay, message, extra_checks=checks)
+	. = user_replicator.do_after_objections(objection_delay, message, extra_checks=checks)
+	if(!.)
+		FR.adjust_materials(material_cost, adjusted_by=user_replicator.last_controller_ckey)
 
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/replicate
@@ -74,13 +89,14 @@
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
-	// to-do: sound
-	var/datum/callback/checks = CALLBACK(src, .proc/replicator_checks_do_after_handler)
-	if(!do_after(user_replicator, 3 SECONDS, target=user_replicator, extra_checks=checks))
-		return
-
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	var/datum/callback/checks = CALLBACK(src, .proc/replicator_checks_do_after_handler)
+
 	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
+	// to-do: sound
+	if(!do_after(user_replicator, 3 SECONDS, target=user_replicator, extra_checks=checks))
+		FR.adjust_materials(material_cost, adjusted_by=user_replicator.ckey)
+		return
 
 	var/mob/living/simple_animal/hostile/replicator/R = new(user_replicator.loc)
 	R.set_last_controller(user_replicator.last_controller_ckey, just_spawned=TRUE)
