@@ -4,7 +4,7 @@
 /area/station/solar/auxport)
 "ac" = (
 /obj/structure/cable/yellow{
-	d2 = 4;
+	d2 = 2;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/airless{
