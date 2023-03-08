@@ -77,6 +77,7 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(world, "<b><font color='blue'>Welcome to the pre-game lobby!</font></b>")
 			to_chat(world, "Please, setup your character and select ready. Game will start in [timeLeft/10] seconds")
 			current_state = GAME_STATE_PREGAME
+			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
 
 			log_initialization() // need to dump cached log
 
@@ -99,12 +100,14 @@ SUBSYSTEM_DEF(ticker)
 			if(timeLeft <= 0)
 				current_state = GAME_STATE_SETTING_UP
 				Master.SetRunLevel(RUNLEVEL_SETUP)
+				SEND_SIGNAL(src, COMSIG_TICKER_ENTER_SETTING_UP)
 
 		if(GAME_STATE_SETTING_UP)
 			if(!setup())
 				//setup failed
 				current_state = GAME_STATE_STARTUP
 				Master.SetRunLevel(RUNLEVEL_LOBBY)
+				SEND_SIGNAL(src, COMSIG_TICKER_ERROR_SETTING_UP)
 
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
@@ -247,6 +250,7 @@ SUBSYSTEM_DEF(ticker)
 	if(!bundle || !bundle.hidden)
 		mode.announce()
 
+	SEND_SIGNAL(src, COMSIG_TICKER_ROUND_STARTING)
 	current_state = GAME_STATE_PLAYING
 	round_start_time = world.time
 	round_start_realtime = world.realtime
