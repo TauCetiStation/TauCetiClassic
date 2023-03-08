@@ -5705,10 +5705,8 @@
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/dormitories)
 "aQd" = (
-/obj/item/weapon/storage/belt/utility,
 /obj/item/weapon/storage/firstaid,
 /obj/structure/table,
-/obj/random/tools/tool,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -7831,7 +7829,6 @@
 	pixel_y = -4
 	},
 /obj/item/weapon/screwdriver,
-/obj/random/tools/tool,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -24561,8 +24558,6 @@
 	pixel_y = 4
 	},
 /obj/item/device/flashlight,
-/obj/random/tools/tool,
-/obj/random/tools/technology_scanner,
 /obj/machinery/power/apc{
 	name = "apc down";
 	pixel_y = -28
@@ -37753,7 +37748,6 @@
 "iAF" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/emergency,
-/obj/random/tools/tool,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -53083,14 +53077,13 @@
 /area/station/maintenance/science)
 "mur" = (
 /obj/structure/table,
-/obj/random/tools/technology_scanner,
-/obj/random/tools/tool,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/machinery/alarm{
 	pixel_y = 22
 	},
+/obj/item/weapon/storage/belt/utility,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -56680,9 +56673,7 @@
 /area/station/cargo/office)
 "nny" = (
 /obj/structure/table,
-/obj/item/weapon/wrench,
-/obj/item/device/analyzer,
-/obj/random/tools/tool,
+/obj/item/device/tagger/shop,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -70962,9 +70953,7 @@
 /area/station/maintenance/medbay)
 "qWo" = (
 /obj/structure/table,
-/obj/item/device/t_scanner,
 /obj/item/clothing/gloves/fyellow,
-/obj/random/tools/tool,
 /obj/structure/sign/directions/security{
 	buildable_sign = 0;
 	dir = 4;
@@ -76152,7 +76141,6 @@
 "smC" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/toolbox/electrical,
-/obj/random/tools/tool,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "yellow"
@@ -83745,7 +83733,6 @@
 	pixel_y = 5
 	},
 /obj/item/weapon/stock_parts/cell/high,
-/obj/random/tools/tool,
 /obj/machinery/camera{
 	c_tag = "Primary Tool Storage"
 	},
@@ -93286,14 +93273,16 @@
 /area/station/civilian/bar)
 "wxH" = (
 /obj/structure/rack,
-/obj/item/stack/cable_coil/random{
-	pixel_y = 4
-	},
-/obj/item/stack/cable_coil/random,
-/obj/random/tools/tool,
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/toolbox/mechanical{
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/toolbox/mechanical,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -98472,9 +98461,6 @@
 /area/station/ai_monitored/storage_secure)
 "xPR" = (
 /obj/structure/table,
-/obj/item/weapon/crowbar,
-/obj/item/device/assembly/signaler,
-/obj/random/tools/tool,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -98482,7 +98468,15 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
-/obj/item/device/tagger/shop,
+/obj/item/device/assembly/signaler{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/device/assembly/signaler{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/device/assembly/signaler,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
