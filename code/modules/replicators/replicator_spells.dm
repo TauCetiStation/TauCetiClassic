@@ -260,9 +260,8 @@
 		return
 
 	to_chat(user, "<span class='notice'>Bluespace Transponder activation initiated...Establishing contact with The Swarm.</span>")
-	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	var/datum/replicator_array_info/RAI = FR.ckey2info[user_replicator.last_controller_ckey]
 	if(RAI)
 		RAI.transponders_built += 1
@@ -320,8 +319,6 @@
 
 	to_chat(user, "<span class='notice'>Generator deployed.</span>")
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
-
 	var/datum/replicator_array_info/RAI = FR.ckey2info[user_replicator.last_controller_ckey]
 	if(RAI)
 		RAI.generators_built += 1
