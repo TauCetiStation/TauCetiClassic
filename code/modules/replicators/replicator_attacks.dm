@@ -90,6 +90,10 @@
 		return
 	transfer_control(A)
 
+/mob/living/simple_animal/hostile/replicator/attacked_by(obj/item/I, mob/living/user, def_zone, power)
+	power /= armor["melee"]
+	return ..()
+
 
 /obj/item/mine/replicator
 	name = "mine"
@@ -258,7 +262,9 @@
 
 	return ..()
 
+/obj/item/mine/replicator/bluespace_transponder/emp_act(severity)
+	. = ..()
+	armed = FALSE
+	update_icon()
 
-/mob/living/simple_animal/hostile/replicator/attacked_by(obj/item/I, mob/living/user, def_zone, power)
-	power /= armor["melee"]
-	return ..()
+	addtimer(CALLBACK(src, .proc/rearm), (8 SECONDS / severity))
