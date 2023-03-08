@@ -199,7 +199,7 @@
 		FR.object_communicate(src, "!", "Mine trigger event at [A.name].", transfer=TRUE)
 
 /obj/item/mine/replicator/disarm()
-	new /obj/item/weapon/stock_parts/capacitor/quadratic(loc)
+	new /obj/item/weapon/stock_parts/capacitor/adv/super/quadratic(loc)
 	qdel(src)
 
 /obj/item/mine/replicator/try_disarm(obj/item/I, mob/user)
