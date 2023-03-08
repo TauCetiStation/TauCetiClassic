@@ -20,7 +20,7 @@
 	death(1)
 	qdel(src)
 
-	QDEL_IN(animation, 1 SECOND)
+	QDEL_IN(animation, 2 SECONDS)
 
 /mob/proc/dust()
 	new /obj/effect/decal/cleanable/ash(loc)
