@@ -20,8 +20,6 @@
 /datum/component/smooth_tunes/Initialize(linked_songtuner_rite, allow_repeats, particles_path, glow_color)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
-	if(GetExactComponent(type))
-		return
 	src.linked_songtuner_rite = linked_songtuner_rite
 	src.allow_repeats = allow_repeats
 	src.particles_path = particles_path
