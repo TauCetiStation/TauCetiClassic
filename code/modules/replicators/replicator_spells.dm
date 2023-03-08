@@ -82,7 +82,7 @@
 
 	if(!node_proximity)
 		if(try_start)
-			to_chat(user, "<span class='warning'>You require an unclaimed node close by to replicate.</span>")
+			to_chat(user, "<span class='warning'>You require an unclaimed node closeby to replicate.</span>")
 		return FALSE
 
 	return ..()
