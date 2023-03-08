@@ -83,11 +83,11 @@
 		return FALSE
 
 	if(isrevhead(M) || isrev(M))
-		to_chat(src, "<span class='warning'><b>[M] is already be a revolutionary!</b></span>")
+		to_chat(src, "<span class='bold warning'>[M] is already be a revolutionary!</span>")
 	else if(M.ismindprotect())
-		to_chat(src, "<span class='warning'><b>[M] is implanted with a mind protected implant - Remove it first!</b></span>")
+		to_chat(src, "<span class='bold warning'>[M] is implanted with a mind protected implant - Remove it first!</span>")
 	else if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate"))
-		to_chat(src, "<span class='warning'><b>[M] is a blacklisted player!</b></span>")
+		to_chat(src, "<span class='bold warning'>[M] is a blacklisted player!</span>")
 	else
 		var/datum/role/rev_leader/lead = mind.GetRole(HEADREV)
 		if(world.time < lead.rev_cooldown)

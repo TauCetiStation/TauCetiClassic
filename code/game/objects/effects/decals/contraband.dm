@@ -615,7 +615,7 @@
 	if(ruined)
 		return
 	var/temp_loc = user.loc
-	switch(tgui_alert(usr,"Do I want to rip the poster from the wall or does it inspire me to join the cuase?","You think...", list("Rip Off","Join Revolution")))
+	switch(tgui_alert(usr,"Do I want to rip the poster from the wall or does it inspire me to join the cause?","You think...", list("Rip Off","Join Revolution")))
 		if("Rip Off")
 			if(user.loc != temp_loc || ruined)
 				return
@@ -627,29 +627,30 @@
 			desc = "You can't make out anything from the poster's original print. It's ruined."
 			add_fingerprint(user)
 		if("Join Revolution")
-			ask_him_about_revolution(user)
+			ask_about_revolution(user)
 
-/obj/structure/sign/poster/revolution/proc/ask_him_about_revolution(mob/user)
+/obj/structure/sign/poster/revolution/proc/ask_about_revolution(mob/user)
 	var/datum/faction/revolution/rev = find_faction_by_type(/datum/faction/revolution)
 	if(!rev)
-		to_chat(user, "<span class='warning'><b>The revolutionary minded society has collapsed.</b></span>")
+		to_chat(user, "<span class='bold warning'><b>The revolutionary minded society has collapsed.</span>")
 		return
 	if(user.ismindprotect())
-		to_chat(user, "<span class='warning'><b>You shake your head in disapproval. Who in their right mind would even believe such blatant lies?</b></span>")
+		to_chat(user, "<span class='bold warning'><b>You shake your head in disapproval. Who in their right mind would even believe such blatant lies?</span>")
 		return
 	else if(jobban_isbanned(user, ROLE_REV) || jobban_isbanned(user, "Syndicate"))
-		to_chat(user, "<span class='warning'><b>You can't overcome the guilt to join the revolutionaries. (You are banned.)</b></span>")
+		to_chat(user, "<span class='bold warning'>You can't overcome the guilt to join the revolutionaries. (You are banned.)</span>")
 		return
 	else if(!isrevhead(user) || !isrev(user))
 		rev.convert_revolutionare(user, null)
 
 /obj/structure/sign/poster/revolution/examine(mob/user)
 	. = ..()
+	to_chat(user, "<span class='notice'>The image on the poster looks like a meme agent</span>")
 	var/choice = tgui_alert(user, "Does this inspire me to join the cause?", "You think...", list("No!","Yes!"))
 	if(choice == "Yes!")
-		to_chat(user, "<span class='warning'><b>You start thinking about [src]...</b></span>")
-		if(do_after(user, 50, target = src))
-			ask_him_about_revolution(user)
+		to_chat(user, "<span class='bold warning'>You start thinking about [src]...</span>")
+		if(do_after(user, 5 SECONDS, target = src))
+			ask_about_revolution(user)
 
 /obj/structure/sign/poster/revolution/brainwashing
 	name = "NanoTrasen Neural Statistics"

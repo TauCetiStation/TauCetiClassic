@@ -258,13 +258,13 @@
 			var/reason_string = sanitize_safe(input(possible_rev, "Please write reason why you joined the ranks of the revolution", "Write Reason") as null|message, MAX_REV_REASON_LEN)
 			if(!reason_string)
 				to_chat(possible_rev, "<span class='warning'>You have no reason to join the revolution!</span>")
-				to_chat(inviter, "<span class='warning'><b>[possible_rev] has no reason to support the revolution!</b></span>")
-				lead.rev_cooldown = world.time + 50
+				to_chat(inviter, "<span class='bold warning'>[possible_rev] has no reason to support the revolution!</span>")
+				lead.rev_cooldown = world.time + 5 SECONDS
 				return FALSE
 			if(add_faction_member(src, possible_rev, TRUE))
 				reasons[possible_rev.mind.key] = reason_string
 				to_chat(possible_rev, "<span class='notice'>You join the revolution!</span>")
-				to_chat(inviter, "<span class='notice'><b>[possible_rev] joins the revolution!</b></span>")
+				to_chat(inviter, "<span class='bold_notice'>[possible_rev] has joined the revolution!</span>")
 				var/obj/item/device/uplink/hidden/U = find_syndicate_uplink(inviter)
 				if(!U)
 					return TRUE
@@ -275,11 +275,11 @@
 				S.total_TC += 3
 				return TRUE
 			else
-				to_chat(inviter, "<span class='warning'><b>[possible_rev] cannot be converted.</b></span>")
+				to_chat(inviter, "<span class='bold warning'>[possible_rev] cannot be converted.</span>")
 				return FALSE
 		to_chat(possible_rev, "<span class='warning'>You reject this traitorous cause!</span>")
-		to_chat(inviter, "<span class='warning'><b>[possible_rev] does not support the revolution!</b></span>")
-		lead.rev_cooldown = world.time + 50
+		to_chat(inviter, "<span class='bold warning'>[possible_rev] does not support the revolution!</span>")
+		lead.rev_cooldown = world.time + 5 SECONDS
 	else
 		var/reason_string = sanitize_safe(input(possible_rev, "Please write reason why you joined the ranks of the revolution", "Write Reason") as null|message, MAX_REV_REASON_LEN)
 		if(!reason_string)
