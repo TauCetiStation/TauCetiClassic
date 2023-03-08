@@ -210,6 +210,8 @@ SUBSYSTEM_DEF(rating)
 				continue
 			template.avg_rate += text2num(choice.text) * total_votes // :)
 			template.total_voters += total_votes
+		if(template.total_voters == 0)
+			continue
 		template.avg_rate = round(template.avg_rate / template.total_voters, 0.01)
 		SSStatistics.rating.ratings[category] = template.avg_rate
 
