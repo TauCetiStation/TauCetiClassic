@@ -2037,8 +2037,8 @@
 "ado" = (
 /obj/machinery/atmospherics/components/trinary/mixer/m_mixer/on{
 	name = "Gas mixer (N2/O2)";
-	node1_concentration = 0.8;
-	node2_concentration = 0.2
+	node1_concentration = 0.2;
+	node2_concentration = 0.8
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
@@ -2183,6 +2183,7 @@
 	pixel_y = 28;
 	req_access = list(42)
 	},
+/obj/item/station_map/prometheus,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -13831,6 +13832,7 @@
 /area/station/cargo/recycler)
 "cYQ" = (
 /obj/structure/reagent_dispensers/acid{
+	density = 0;
 	pixel_y = 32
 	},
 /turf/simulated/floor{
@@ -68112,8 +68114,7 @@
 	id = "InnerBrig";
 	name = "Inner Brig Doors";
 	pixel_y = 6;
-	range = 10;
-	req_access = list(63)
+	range = 10
 	},
 /turf/simulated/floor{
 	dir = 8;
