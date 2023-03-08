@@ -140,6 +140,7 @@
 	needed_aspects = list(
 		ASPECT_MYSTIC = 1,
 	)
+
 /datum/religion_rites/song_tuner/lullaby/song_effect(mob/living/listener, atom/song_source)
 	if(listener.mind?.holy_role)
 		return
