@@ -201,10 +201,12 @@
 		RegisterSignal(I, COMSIG_MOVABLE_MOVED, CALLBACK(src, .proc/unpin_signal, I))
 		update_canmove() // instant update, no need to wait Life() tick
 
-//This is called when the mob is thrown into a dense turf
-/mob/living/proc/turf_collision(turf/T)
-	visible_message("<span class='warning'>[src] crashed into \the [T]!</span>","<span class='danger'>You are crashed into \the [T]!</span>")
-	take_bodypart_damage(fly_speed * 5)
+/mob/living/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+
+	if(hit_atom.density)
+		visible_message("<span class='warning'>[src] crashed into \the [hit_atom]!</span>","<span class='danger'>You are crashed into \the [hit_atom]!</span>")
+		take_bodypart_damage(fly_speed * 5)
 
 /mob/living/proc/near_wall(direction, distance = 1, check_dense_objs = FALSE)
 	var/turf/T = get_step(get_turf(src), direction)

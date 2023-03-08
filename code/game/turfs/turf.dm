@@ -418,11 +418,6 @@
 	ChangeTurf(/turf/environment/space)
 	return(2)
 
-/turf/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
-	if(isliving(AM) && density)
-		var/mob/living/L = AM
-		L.turf_collision(src)
-
 /turf/update_icon()
 	if(is_flooded(absolute = 1))
 		if(!(locate(/obj/effect/flood) in contents))
