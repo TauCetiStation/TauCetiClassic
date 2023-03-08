@@ -263,7 +263,6 @@
 	if(choice == "Yes!")
 		var/reason_string = find_reason(possible_rev)
 		if(!reason_string)
-			return FALSE
 			to_chat(inviter, "<span class='bold warning'>[possible_rev] has no reason to support the revolution!</span>")
 			lead.rev_cooldown = world.time + 5 SECONDS
 			return FALSE
