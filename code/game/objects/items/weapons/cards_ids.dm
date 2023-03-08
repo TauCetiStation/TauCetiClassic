@@ -378,7 +378,7 @@
 
 /obj/item/weapon/card/id/captains_spare
 	name = "captain's spare ID"
-	desc = "Запасная ID карта самого Верховного властелина."
+	desc = "Запасная ID карта самого Верховного Властелина."
 	icon_state = "gold"
 	item_state = "gold_id"
 	registered_name = "Captain"
