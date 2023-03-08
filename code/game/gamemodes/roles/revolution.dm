@@ -93,7 +93,7 @@
 		if(world.time < lead.rev_cooldown)
 			to_chat(src, "<span class='warning'>Wait five seconds before reconversion attempt.</span>")
 			return
-		var/convert_question = sanitize_safe(input(src, "Please write reason why you joined the ranks of the revolution", "Write Reason") as null|message, MAX_REV_REASON_LEN)
+		var/convert_question = sanitize_safe(input(src, "Please write a question for joining the revolution", "Write Question") as null|message, MAX_REV_REASON_LEN)
 		if(!convert_question)
 			to_chat(src, "<span class='bold warning'>Write question to attempt convert!</span>")
 			lead.rev_cooldown = world.time + 5 SECONDS
