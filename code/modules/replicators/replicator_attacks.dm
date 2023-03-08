@@ -262,7 +262,7 @@
 
 	return ..()
 
-/obj/item/mine/replicator/bluespace_transponder/emp_act(severity)
+/obj/item/mine/replicator/emp_act(severity)
 	. = ..()
 	armed = FALSE
 	update_icon()
