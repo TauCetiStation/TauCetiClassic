@@ -128,7 +128,7 @@ SUBSYSTEM_DEF(rating)
 					if(usr.ckey in VC.voters)
 						VC.voters.Remove(usr.ckey)
 				choice.voters[usr.ckey] = 1
-				to_chat(usr, "<span class='info'>Ваша оценка: [rating].</span>")
+				to_chat(usr, "<span class='info'>[template.result_message]: [rating].</span>")
 
 /datum/controller/subsystem/rating/proc/get_template(category)
 	for(var/datum/rating_template/template in rating_templates)
