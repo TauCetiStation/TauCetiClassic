@@ -314,6 +314,8 @@
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
+	toxin_absorption = 3.0
+
 /datum/reagent/anti_toxin/on_general_digest(mob/living/M)
 	..()
 	M.reagents.remove_all_type(/datum/reagent/toxin, REM, 0, 1)
@@ -331,6 +333,8 @@
 	restrict_species = list(IPC, DIONA)
 
 	data = list()
+
+	toxin_absorption = 5.0
 
 /datum/reagent/thermopsis/on_general_digest(mob/living/M)
 	..()
@@ -387,13 +391,13 @@
 /datum/reagent/synaptizine/on_general_digest(mob/living/M)
 	..()
 	M.drowsyness = max(M.drowsyness - 5, 0)
-	M.AdjustParalysis(-1)
-	M.AdjustStunned(-1)
-	M.AdjustWeakened(-1)
+	M.AdjustParalysis(-1.5)
+	M.AdjustStunned(-1.5)
+	M.AdjustWeakened(-1.5)
 	if(holder.has_reagent("mindbreaker"))
 		holder.remove_reagent("mindbreaker", 5)
 	M.hallucination = max(0, M.hallucination - 10)
-	if(prob(60))
+	if(prob(40))
 		M.adjustToxLoss(1)
 
 /datum/reagent/hyronalin

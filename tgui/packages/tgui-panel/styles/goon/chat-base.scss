@@ -178,8 +178,7 @@ a.popt {
 }
 
 .filterMessages input,
-.filterMessages label {
-}
+.filterMessages label {}
 
 .icon-stack {
   height: 1em;
@@ -279,13 +278,13 @@ em {
 .boldannounce {
   font-weight: bold;
 }
+
 .success {
   font-weight: bold;
 }
 
 /* Miscellaneous */
-.say {
-}
+.say {}
 
 .emote {
   font-style: italic;
@@ -418,7 +417,8 @@ em {
   padding: 5px;
   z-index: 1;
   bottom: 125%;
-  width: 90vw; /* maybe max-width ?? */
+  width: 90vw;
+  /* maybe max-width ?? */
   word-wrap: break-word;
 }
 
@@ -446,6 +446,7 @@ table.staffwho {
   border-collapse: collapse;
   line-height: 1;
 }
+
 table.staffwho td,
 table.staffwho th {
   margin: 0;
@@ -488,4 +489,62 @@ table.staffwho th {
 
 .ml-3 {
   margin-left: 3em;
+}
+
+div.rating {
+  width: 80%;
+  margin: auto;
+  border: 5px dashed #333333;
+  border-radius: 15px;
+  text-align: center;
+  background: #eeeeee;
+  padding-bottom: 10px;
+  padding-top: 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.rating_questions {
+  font-size: large;
+  color: #666666;
+  font-weight: bold;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+}
+
+.rating_rates_red,
+.rating_rates_orange,
+.rating_rates_yellow,
+.rating_rates_lime,
+.rating_rates_green {
+  font-size: x-large;
+  color: #aaaaaa;
+}
+
+.rating_rates_red:visited,
+.rating_rates_orange:visited,
+.rating_rates_yellow:visited,
+.rating_rates_lime:visited,
+.rating_rates_green:visited {
+  color: #aaaaaa;
+}
+
+.rating_rates_red:hover {
+  color: #aa1111;
+}
+
+.rating_rates_orange:hover {
+  color: #eb8921;
+}
+
+.rating_rates_yellow:hover {
+  color: #eec015;
+}
+
+.rating_rates_lime:hover {
+  color: #3d72a4;
+}
+
+.rating_rates_green:hover {
+  color: #73af59;
 }

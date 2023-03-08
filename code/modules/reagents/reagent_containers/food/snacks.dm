@@ -142,10 +142,7 @@
 		)
 
 		bitecount++
-		U.cut_overlays()
-		var/image/IM = new(U.icon, "loadedfood")
-		IM.color = filling_color
-		U.add_overlay(IM)
+		U.create_food_overlay(filling_color)
 
 		var/obj/item/weapon/reagent_containers/food/snacks/collected = new type
 		collected.loc = U
@@ -173,17 +170,22 @@
 			something.loc = get_turf(src)
 	return ..()
 
+/obj/item/weapon/reagent_containers/food/snacks/proc/bite_food(mob/user)
+	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(bitecount == 0 || prob(50))
+		user.visible_message("<b>[user]</b> nibbles away at the [src]")
+	bitecount++
+	if(bitecount >= 5)
+		var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
+		user.visible_message("<b>[user]</b> [sattisfaction_text]")
+		qdel(src)
+
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
 	..()
-	if(iscorgi(M) || isIAN(M))
-		if(bitecount == 0 || prob(50))
-			M.visible_message("<b>[M]</b> nibbles away at the [src]")
-		bitecount++
-		if(bitecount >= 5)
-			var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
-			M.visible_message("<b>[M]</b> [sattisfaction_text]")
-			qdel(src)
-	if(ismouse(M))
+	if(iscorgi(M))
+		bite_food(M)
+	else if(ismouse(M))
 		var/mob/living/simple_animal/mouse/N = M
 		if(M.layer == MOB_LAYER)
 			N.visible_message("<span class ='notice'><b>[N]</b> nibbles away at [src].</span>", "<span class='notice'>You nibble away at [src].</span>")
@@ -370,6 +372,17 @@
 	donut_sprite_type = "ambrosia"
 	filling_color = "#ed1169"
 	list_reagents = list("nutriment" = 1, "anti_toxin" = 3, "plantmatter" = 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/donut/chaos
+	desc = "Chaos undivided - in this very donut!"
+	donut_sprite_type = "chaos"
+	filling_color = "#ed1169"
+
+/obj/item/weapon/reagent_containers/food/snacks/donut/chaos/atom_init()
+	. = ..()
+	var/datum/reagent/random_reagent = pick(global.reagents_list)
+	var/datum/reagent/R = new random_reagent(src)
+	reagents.add_reagent(R.id, 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg
 	name = "egg"

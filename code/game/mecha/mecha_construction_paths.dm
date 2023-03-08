@@ -62,59 +62,59 @@
 	result_type = /obj/mecha/working/ripley
 	steps = list(
 					//1
-					list("key"=/obj/item/weapon/weldingtool,
-							"backkey"=/obj/item/weapon/wrench,
+					list("key"=QUALITY_WELDING,
+							"backkey"=QUALITY_WRENCHING,
 							"desc"="External armor is wrenched."),
 					//2
-					 list("key"=/obj/item/weapon/wrench,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_WRENCHING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="External armor is installed."),
 					 //3
 					 list("key"=/obj/item/stack/sheet/plasteel,
-					 		"backkey"=/obj/item/weapon/weldingtool,
+					 		"backkey"=QUALITY_WELDING,
 					 		"desc"="Internal armor is welded."),
 					 //4
-					 list("key"=/obj/item/weapon/weldingtool,
-					 		"backkey"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_WELDING,
+					 		"backkey"=QUALITY_WRENCHING,
 					 		"desc"="Internal armor is wrenched"),
 					 //5
-					 list("key"=/obj/item/weapon/wrench,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_WRENCHING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Internal armor is installed"),
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Peripherals control module is secured"),
 					 //7
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Peripherals control module is installed"),
 					 //8
 					 list("key"=/obj/item/weapon/circuitboard/mecha/ripley/peripherals,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Central control module is secured"),
 					 //9
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Central control module is installed"),
 					 //10
 					 list("key"=/obj/item/weapon/circuitboard/mecha/ripley/main,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The wiring is adjusted"),
 					 //11
-					 list("key"=/obj/item/weapon/wirecutters,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 list("key"=QUALITY_CUTTING,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The wiring is added"),
 					 //12
 					 list("key"=/obj/item/stack/cable_coil,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The hydraulic systems are active."),
 					 //13
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_WRENCHING,
 					 		"desc"="The hydraulic systems are connected."),
 					 //14
-					 list("key"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_WRENCHING,
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
@@ -260,83 +260,83 @@
 	result_type = /obj/mecha/combat/gygax
 	steps = list(
 					//1
-					list("key"=/obj/item/weapon/weldingtool,
-							"backkey"=/obj/item/weapon/wrench,
+					list("key"=QUALITY_WELDING,
+							"backkey"=QUALITY_WRENCHING,
 							"desc"="External armor is wrenched."),
 					 //2
-					 list("key"=/obj/item/weapon/wrench,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_WRENCHING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="External armor is installed."),
 					 //3
 					 list("key"=/obj/item/mecha_parts/part/gygax_armour,
-					 		"backkey"=/obj/item/weapon/weldingtool,
+					 		"backkey"=QUALITY_WELDING,
 					 		"desc"="Internal armor is welded."),
 					 //4
-					 list("key"=/obj/item/weapon/weldingtool,
-					 		"backkey"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_WELDING,
+					 		"backkey"=QUALITY_WRENCHING,
 					 		"desc"="Internal armor is wrenched"),
 					 //5
-					 list("key"=/obj/item/weapon/wrench,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_WRENCHING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Internal armor is installed"),
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Advanced capacitor is secured"),
 					 //7
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Advanced capacitor is installed"),
 					 //8
 					 list("key"=/obj/item/weapon/stock_parts/capacitor/adv,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Advanced scanner module is secured"),
 					 //9
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Advanced scanner module is installed"),
 					 //10
 					 list("key"=/obj/item/weapon/stock_parts/scanning_module/adv,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Targeting module is secured"),
 					 //11
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Targeting module is installed"),
 					 //12
 					 list("key"=/obj/item/weapon/circuitboard/mecha/gygax/targeting,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Peripherals control module is secured"),
 					 //13
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Peripherals control module is installed"),
 					 //14
 					 list("key"=/obj/item/weapon/circuitboard/mecha/gygax/peripherals,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Central control module is secured"),
 					 //15
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Central control module is installed"),
 					 //16
 					 list("key"=/obj/item/weapon/circuitboard/mecha/gygax/main,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The wiring is adjusted"),
 					 //17
-					 list("key"=/obj/item/weapon/wirecutters,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 list("key"=QUALITY_CUTTING,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The wiring is added"),
 					 //18
 					 list("key"=/obj/item/stack/cable_coil,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The hydraulic systems are active."),
 					 //19
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_WRENCHING,
 					 		"desc"="The hydraulic systems are connected."),
 					 //20
-					 list("key"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_WRENCHING,
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
@@ -530,64 +530,64 @@
 	result_type = /obj/mecha/working/ripley/firefighter
 	steps = list(
 					//1
-					list("key"=/obj/item/weapon/weldingtool,
-							"backkey"=/obj/item/weapon/wrench,
+					list("key"=QUALITY_WELDING,
+							"backkey"=QUALITY_WRENCHING,
 							"desc"="External armor is wrenched."),
 					//2
-					 list("key"=/obj/item/weapon/wrench,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_WRENCHING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="External armor is installed."),
 					 //3
 					 list("key"=/obj/item/stack/sheet/plasteel,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="External armor is being installed."),
 					 //4
 					 list("key"=/obj/item/stack/sheet/plasteel,
-					 		"backkey"=/obj/item/weapon/weldingtool,
+					 		"backkey"=QUALITY_WELDING,
 					 		"desc"="Internal armor is welded."),
 					 //5
-					 list("key"=/obj/item/weapon/weldingtool,
-					 		"backkey"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_WELDING,
+					 		"backkey"=QUALITY_WRENCHING,
 					 		"desc"="Internal armor is wrenched"),
 					 //6
-					 list("key"=/obj/item/weapon/wrench,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_WRENCHING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Internal armor is installed"),
 
 					 //7
 					 list("key"=/obj/item/stack/sheet/plasteel,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Peripherals control module is secured"),
 					 //8
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Peripherals control module is installed"),
 					 //9
 					 list("key"=/obj/item/weapon/circuitboard/mecha/ripley/peripherals,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Central control module is secured"),
 					 //10
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Central control module is installed"),
 					 //11
 					 list("key"=/obj/item/weapon/circuitboard/mecha/ripley/main,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The wiring is adjusted"),
 					 //12
-					 list("key"=/obj/item/weapon/wirecutters,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 list("key"=QUALITY_CUTTING,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The wiring is added"),
 					 //13
 					 list("key"=/obj/item/stack/cable_coil,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The hydraulic systems are active."),
 					 //14
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_WRENCHING,
 					 		"desc"="The hydraulic systems are connected."),
 					 //15
-					 list("key"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_WRENCHING,
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
@@ -810,83 +810,83 @@
 	result_type = /obj/mecha/combat/durand
 	steps = list(
 					//1
-					list("key"=/obj/item/weapon/weldingtool,
-							"backkey"=/obj/item/weapon/wrench,
+					list("key"=QUALITY_WELDING,
+							"backkey"=QUALITY_WRENCHING,
 							"desc"="External armor is wrenched."),
 					 //2
-					 list("key"=/obj/item/weapon/wrench,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_WRENCHING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="External armor is installed."),
 					 //3
 					 list("key"=/obj/item/mecha_parts/part/durand_armour,
-					 		"backkey"=/obj/item/weapon/weldingtool,
+					 		"backkey"=QUALITY_WELDING,
 					 		"desc"="Internal armor is welded."),
 					 //4
-					 list("key"=/obj/item/weapon/weldingtool,
-					 		"backkey"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_WELDING,
+					 		"backkey"=QUALITY_WRENCHING,
 					 		"desc"="Internal armor is wrenched"),
 					 //5
-					 list("key"=/obj/item/weapon/wrench,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_WRENCHING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Internal armor is installed"),
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Advanced capacitor is secured"),
 					 //7
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Advanced capacitor is installed"),
 					 //8
 					 list("key"=/obj/item/weapon/stock_parts/capacitor/adv,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Advanced scanner module is secured"),
 					 //9
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Advanced scanner module is installed"),
 					 //10
 					 list("key"=/obj/item/weapon/stock_parts/scanning_module/adv,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Targeting module is secured"),
 					 //11
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Targeting module is installed"),
 					 //12
 					 list("key"=/obj/item/weapon/circuitboard/mecha/durand/targeting,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Peripherals control module is secured"),
 					 //13
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Peripherals control module is installed"),
 					 //14
 					 list("key"=/obj/item/weapon/circuitboard/mecha/durand/peripherals,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Central control module is secured"),
 					 //15
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Central control module is installed"),
 					 //16
 					 list("key"=/obj/item/weapon/circuitboard/mecha/durand/main,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The wiring is adjusted"),
 					 //17
-					 list("key"=/obj/item/weapon/wirecutters,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 list("key"=QUALITY_CUTTING,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The wiring is added"),
 					 //18
 					 list("key"=/obj/item/stack/cable_coil,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The hydraulic systems are active."),
 					 //19
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_WRENCHING,
 					 		"desc"="The hydraulic systems are connected."),
 					 //20
-					 list("key"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_WRENCHING,
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
@@ -1094,59 +1094,59 @@
 	result_type = /obj/mecha/medical/odysseus
 	steps = list(
 					//1
-					list("key"=/obj/item/weapon/weldingtool,
-							"backkey"=/obj/item/weapon/wrench,
+					list("key"=QUALITY_WELDING,
+							"backkey"=QUALITY_WRENCHING,
 							"desc"="External armor is wrenched."),
 					//2
-					 list("key"=/obj/item/weapon/wrench,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_WRENCHING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="External armor is installed."),
 					 //3
 					 list("key"=/obj/item/stack/sheet/plasteel,
-					 		"backkey"=/obj/item/weapon/weldingtool,
+					 		"backkey"=QUALITY_WELDING,
 					 		"desc"="Internal armor is welded."),
 					 //4
-					 list("key"=/obj/item/weapon/weldingtool,
-					 		"backkey"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_WELDING,
+					 		"backkey"=QUALITY_WRENCHING,
 					 		"desc"="Internal armor is wrenched"),
 					 //5
-					 list("key"=/obj/item/weapon/wrench,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_WRENCHING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Internal armor is installed"),
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Peripherals control module is secured"),
 					 //7
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Peripherals control module is installed"),
 					 //8
 					 list("key"=/obj/item/weapon/circuitboard/mecha/odysseus/peripherals,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Central control module is secured"),
 					 //9
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Central control module is installed"),
 					 //10
 					 list("key"=/obj/item/weapon/circuitboard/mecha/odysseus/main,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The wiring is adjusted"),
 					 //11
-					 list("key"=/obj/item/weapon/wirecutters,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 list("key"=QUALITY_CUTTING,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The wiring is added"),
 					 //12
 					 list("key"=/obj/item/stack/cable_coil,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The hydraulic systems are active."),
 					 //13
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_WRENCHING,
 					 		"desc"="The hydraulic systems are connected."),
 					 //14
-					 list("key"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_WRENCHING,
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
@@ -1291,83 +1291,83 @@
 	result_type = /obj/mecha/combat/durand/vindicator
 	steps = list(
 					//1
-					list("key"=/obj/item/weapon/weldingtool,
-							"backkey"=/obj/item/weapon/wrench,
+					list("key"=QUALITY_WELDING,
+							"backkey"=QUALITY_WRENCHING,
 							"desc"="External armor is wrenched."),
 					 //2
-					 list("key"=/obj/item/weapon/wrench,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_WRENCHING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="External armor is installed."),
 					 //3
 					 list("key"=/obj/item/mecha_parts/part/vindicator_armour,
-					 		"backkey"=/obj/item/weapon/weldingtool,
+					 		"backkey"=QUALITY_WELDING,
 					 		"desc"="Internal armor is welded."),
 					 //4
-					 list("key"=/obj/item/weapon/weldingtool,
-					 		"backkey"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_WELDING,
+					 		"backkey"=QUALITY_WRENCHING,
 					 		"desc"="Internal armor is wrenched"),
 					 //5
-					 list("key"=/obj/item/weapon/wrench,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_WRENCHING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Internal armor is installed"),
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Advanced capacitor is secured"),
 					 //7
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Advanced capacitor is installed"),
 					 //8
 					 list("key"=/obj/item/weapon/stock_parts/capacitor/adv/super,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Advanced scanner module is secured"),
 					 //9
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Advanced scanner module is installed"),
 					 //10
 					 list("key"=/obj/item/weapon/stock_parts/scanning_module/adv/phasic,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Targeting module is secured"),
 					 //11
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Targeting module is installed"),
 					 //12
 					 list("key"=/obj/item/weapon/circuitboard/mecha/vindicator/targeting,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Peripherals control module is secured"),
 					 //13
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Peripherals control module is installed"),
 					 //14
 					 list("key"=/obj/item/weapon/circuitboard/mecha/vindicator/peripherals,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Central control module is secured"),
 					 //15
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Central control module is installed"),
 					 //16
 					 list("key"=/obj/item/weapon/circuitboard/mecha/vindicator/main,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The wiring is adjusted"),
 					 //17
-					 list("key"=/obj/item/weapon/wirecutters,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 list("key"=QUALITY_CUTTING,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The wiring is added"),
 					 //18
 					 list("key"=/obj/item/stack/cable_coil,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The hydraulic systems are active."),
 					 //19
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_WRENCHING,
 					 		"desc"="The hydraulic systems are connected."),
 					 //20
-					 list("key"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_WRENCHING,
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 
@@ -1561,83 +1561,81 @@
 	result_type = /obj/mecha/combat/gygax/ultra
 	steps = list(
 					//1
-					list("key"=/obj/item/weapon/weldingtool,
-							"backkey"=/obj/item/weapon/wrench,
+					list("key"=QUALITY_WELDING,
+							"backkey"=QUALITY_WRENCHING,
 							"desc"="External armor is wrenched."),
 					 //2
-					 list("key"=/obj/item/weapon/wrench,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_WRENCHING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="External armor is installed."),
 					 //3
 					 list("key"=/obj/item/mecha_parts/part/ultra_armour,
-					 		"backkey"=/obj/item/weapon/weldingtool,
+					 		"backkey"=QUALITY_WELDING,
 					 		"desc"="Internal armor is welded."),
 					 //4
-					 list("key"=/obj/item/weapon/weldingtool,
-					 		"backkey"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_WELDING,
+					 		"backkey"=QUALITY_WRENCHING,
 					 		"desc"="Internal armor is wrenched"),
 					 //5
-					 list("key"=/obj/item/weapon/wrench,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_WRENCHING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Internal armor is installed"),
 					 //6
 					 list("key"=/obj/item/stack/sheet/metal,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Super capacitor is secured"),
 					 //7
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Super capacitor is installed"),
 					 //8
-					 list("key"=/obj/item/weapon/stock_parts/capacitor/adv/super,
-					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Phasic scanner module is secured"),
 					 //9
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Phasic scanner module is installed"),
 					 //10
 					 list("key"=/obj/item/weapon/stock_parts/scanning_module/adv/phasic,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="Targeting module is secured"),
 					 //11
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Targeting module is installed"),
 					 //12
 					 list("key"=/obj/item/weapon/circuitboard/mecha/ultra/targeting,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Peripherals control module is secured"),
 					 //13
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Peripherals control module is installed"),
 					 //14
 					 list("key"=/obj/item/weapon/circuitboard/mecha/ultra/peripherals,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="Central control module is secured"),
 					 //15
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/crowbar,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_PRYING,
 					 		"desc"="Central control module is installed"),
 					 //16
 					 list("key"=/obj/item/weapon/circuitboard/mecha/ultra/main,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The wiring is adjusted"),
 					 //17
-					 list("key"=/obj/item/weapon/wirecutters,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 list("key"=QUALITY_CUTTING,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The wiring is added"),
 					 //18
 					 list("key"=/obj/item/stack/cable_coil,
-					 		"backkey"=/obj/item/weapon/screwdriver,
+					 		"backkey"=QUALITY_SCREWING,
 					 		"desc"="The hydraulic systems are active."),
 					 //19
-					 list("key"=/obj/item/weapon/screwdriver,
-					 		"backkey"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_SCREWING,
+					 		"backkey"=QUALITY_WRENCHING,
 					 		"desc"="The hydraulic systems are connected."),
 					 //20
-					 list("key"=/obj/item/weapon/wrench,
+					 list("key"=QUALITY_WRENCHING,
 					 		"desc"="The hydraulic systems are disconnected.")
 					)
 

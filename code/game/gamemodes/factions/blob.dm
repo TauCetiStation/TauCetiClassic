@@ -22,10 +22,13 @@
 	var/outbreak_announcement
 	var/reached_crit_mass = FALSE
 
+/datum/faction/blob_conglomerate/New()
+	..()
+	spawn_locs += get_vents()
+
 /datum/faction/blob_conglomerate/can_setup(num_players)
 	max_roles = max(round(num_players/PLAYER_PER_BLOB_CORE, 1), 1)
 
-	spawn_locs += get_vents()
 	if(spawn_locs.len < max_roles)
 		// we were unable to setup because we didn't have enough spawn locations
 		return FALSE

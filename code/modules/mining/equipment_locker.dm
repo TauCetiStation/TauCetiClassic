@@ -911,14 +911,9 @@
 		return
 
 /obj/item/weapon/lazarus_injector/attack(mob/living/M, mob/living/user, def_zone)
-	if(!..())
-		return TRUE
-
-/obj/item/weapon/lazarus_injector/afterattack(atom/target, mob/user, proximity, params)
-	if(!loaded)
-		return
-	if(isliving(target) && proximity)
-		revive(target, user)
+	..()
+	if(loaded)
+		revive(M, user)
 
 /obj/item/weapon/lazarus_injector/examine(mob/user)
 	..()

@@ -235,7 +235,7 @@
 /datum/poll/nextmap/init_choices()
 	for (var/map in config.maplist)
 		var/datum/map_config/VM = config.maplist[map]
-		
+
 		if (!VM.votable)
 			continue
 
