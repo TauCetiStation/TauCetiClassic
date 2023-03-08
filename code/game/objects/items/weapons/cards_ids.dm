@@ -5,7 +5,7 @@
  *		FINGERPRINT CARD HOLDER
  *		FINGERPRINT CARD
  */
- 
+
 /obj/item/weapon/card // this item not use in game
 	name = "card"
 	desc = "Используется в карточных делах."
@@ -500,14 +500,14 @@
 
 /obj/item/weapon/card/id/old_station
 	name = "captain's ID"
-	desc = "The old ID card, belongs to the captain of a very unlucky station named 'LCR'."
+	desc = "Старая ID карта, ранее она принадлежала капитану станции 'LCR'."
 	icon_state = "gold"
 	item_state = "gold_id"
 	access = list(access_oldstation, access_RC_announce, access_keycard_auth, access_engine_equip, access_medical, access_captain, access_engine, access_research)
 
 /obj/item/weapon/card/id/old_station/eng
 	name = "engineer ID"
-	desc = "A card issued to 'LCR' station engineering staff."
+	desc = "ID карта, принадлежащая старшему сотруднику инженерного отдела станции 'LCR'."
 	icon_state = "eng"
 	item_state = "eng_id"
 	rank = "Senior Engineer"
@@ -515,7 +515,7 @@
 
 /obj/item/weapon/card/id/old_station/med
 	name = "medic ID"
-	desc = "A card issued to 'LCR' station medical staff."
+	desc = "ID карта, принадлежащая старшему сотруднику медицинского отдела станции 'LCR'."
 	icon_state = "med"
 	item_state = "med_id"
 	rank = "Senior Medic"
