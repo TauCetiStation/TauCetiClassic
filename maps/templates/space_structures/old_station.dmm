@@ -238,7 +238,7 @@
 "bq" = (
 /obj/item/weapon/shard,
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "bs" = (
 /obj/structure/cable/yellow{
 	d2 = 4;
@@ -285,9 +285,12 @@
 	},
 /area/space_structures/old_station/right)
 "bC" = (
-/mob/living/simple_animal/hostile/carp/megacarp,
-/turf/environment/space,
-/area/space)
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/space_structures/carp_space)
 "bD" = (
 /obj/structure/sign/poster/official/science,
 /turf/simulated/wall/r_wall,
@@ -356,7 +359,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "damaged2"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "cl" = (
 /obj/effect/decal/cleanable/vomit,
 /turf/simulated/floor{
@@ -395,7 +398,7 @@
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "cy" = (
 /obj/item/weapon/rcd_ammo,
 /obj/structure/cable{
@@ -520,7 +523,7 @@
 "de" = (
 /obj/structure/lattice,
 /turf/environment/space,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "dh" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -563,7 +566,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "damaged4"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "dn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -695,7 +698,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "ek" = (
 /obj/effect/decal/cleanable/blood/writing{
 	dir = 4
@@ -788,7 +791,7 @@
 "eG" = (
 /obj/item/stack/rods,
 /turf/simulated/floor,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "eH" = (
 /obj/item/stack/sheet/metal,
 /turf/environment/space,
@@ -822,6 +825,10 @@
 	icon_state = "blue"
 	},
 /area/space_structures/old_station/left)
+"eT" = (
+/obj/item/weapon/shard,
+/turf/environment/space,
+/area/space_structures/carp_space)
 "eU" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -832,6 +839,13 @@
 	icon_state = "blue"
 	},
 /area/space_structures/old_station/left)
+"eV" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/carp_space)
 "eW" = (
 /obj/structure/alien/weeds/node,
 /obj/structure/mineral_door/resin,
@@ -852,7 +866,7 @@
 /obj/structure/lattice,
 /obj/item/weapon/shard,
 /turf/environment/space,
-/area/space)
+/area/space_structures/carp_space)
 "fj" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/simulated/floor{
@@ -913,7 +927,7 @@
 "fw" = (
 /obj/structure/sign/departments/engineering,
 /turf/simulated/wall/r_wall,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "fB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -999,6 +1013,9 @@
 	icon_state = "warning"
 	},
 /area/space_structures/old_station/armory)
+"gi" = (
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space_structures/carp_space)
 "gm" = (
 /obj/effect/decal/cleanable/vomit,
 /turf/simulated/floor{
@@ -1036,8 +1053,8 @@
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/kitchen)
 "gr" = (
-/turf/simulated/floor/plating,
-/area/space)
+/turf/simulated/floor,
+/area/space_structures/carp_space)
 "gt" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/splatter,
@@ -1162,13 +1179,13 @@
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "hb" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/airless{
 	icon_state = "damaged4"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "hd" = (
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg1"
@@ -1189,13 +1206,13 @@
 /turf/simulated/floor/airless{
 	icon_state = "damaged5"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "hq" = (
 /obj/item/weapon/rack_parts,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg1"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "ht" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -1291,17 +1308,17 @@
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "hN" = (
 /obj/item/weapon/shard,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "hP" = (
 /obj/item/pipe,
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "hU" = (
 /obj/item/weapon/crowbar/red,
 /turf/simulated/floor,
@@ -1316,7 +1333,7 @@
 "hW" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/simulated/floor,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "hY" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -1373,7 +1390,7 @@
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "ii" = (
 /obj/structure/rack,
 /obj/item/weapon/pickaxe/drill/jackhammer,
@@ -1388,7 +1405,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "ik" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -1420,7 +1437,7 @@
 "iq" = (
 /obj/item/ammo_casing/c45,
 /turf/simulated/floor,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "ir" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -1952,7 +1969,7 @@
 	dir = 1;
 	icon_state = "caution"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "lu" = (
 /obj/structure/table,
 /obj/item/weapon/lighter/zippo,
@@ -2097,7 +2114,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "damaged5"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "mA" = (
 /obj/effect/decal/cleanable/blood/writing{
 	dir = 4
@@ -2287,7 +2304,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /obj/effect/decal/remains/human,
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "nv" = (
 /obj/item/weapon/reagent_containers/syringe{
 	pixel_x = -2;
@@ -2584,7 +2601,7 @@
 /obj/effect/decal/cleanable/generic,
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /turf/simulated/floor,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "pE" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
@@ -2638,7 +2655,7 @@
 /obj/item/clothing/suit/space/syndicate/infiltrator,
 /obj/item/clothing/head/helmet/space/syndicate/infiltrator,
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "pW" = (
 /obj/structure/cable{
 	d2 = 2;
@@ -2832,7 +2849,7 @@
 	dir = 6;
 	icon_state = "yellow"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "rk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -2955,7 +2972,7 @@
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "sg" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -3018,7 +3035,7 @@
 	dir = 1;
 	icon_state = "caution"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "sz" = (
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/solars_c)
@@ -3043,7 +3060,7 @@
 	dir = 8;
 	icon_state = "yellow"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "sM" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door_control{
@@ -3361,7 +3378,7 @@
 	icon_state = "small"
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "uU" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -3583,15 +3600,14 @@
 /turf/simulated/wall,
 /area/space_structures/old_station/central/kitchen)
 "we" = (
-/mob/living/simple_animal/hostile/carp,
 /turf/environment/space,
-/area/space)
+/area/space_structures/carp_space)
 "wf" = (
 /obj/structure/grille{
 	destroyed = 1
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "wh" = (
 /obj/machinery/door/window{
 	dir = 8
@@ -3860,7 +3876,7 @@
 	dir = 4;
 	icon_state = "caution"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "xC" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -4022,7 +4038,7 @@
 	dir = 4;
 	icon_state = "yellow"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "yr" = (
 /obj/structure/inflatable/door,
 /turf/environment/space,
@@ -4260,7 +4276,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg2"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "zW" = (
 /obj/structure/lattice,
 /obj/structure/grille{
@@ -4381,9 +4397,8 @@
 /turf/simulated/wall/r_wall,
 /area/space_structures/old_station/right)
 "AK" = (
-/mob/living/simple_animal/hostile/carp,
 /turf/simulated/floor/plating,
-/area/space)
+/area/space_structures/carp_space)
 "AM" = (
 /obj/structure/disposalpipe/broken{
 	dir = 4
@@ -4510,7 +4525,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "By" = (
 /obj/machinery/turretid/stun{
 	control_area = "OldStation";
@@ -4525,12 +4540,12 @@
 "BB" = (
 /obj/structure/closet/secure_closet/atmos_personal,
 /turf/simulated/floor,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "BF" = (
 /obj/structure/door_assembly/door_assembly_atmo,
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /turf/simulated/floor,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "BG" = (
 /obj/structure/lattice,
 /obj/item/weapon/shard{
@@ -4690,7 +4705,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg1"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "Cq" = (
 /obj/machinery/door/airlock/glass{
 	name = "Hydroponics";
@@ -4714,7 +4729,7 @@
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "Cu" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
@@ -4743,7 +4758,7 @@
 "CA" = (
 /obj/structure/girder/reinforced,
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "CF" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -4843,7 +4858,7 @@
 	dir = 4;
 	icon_state = "yellow"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "Dj" = (
 /obj/structure/alien/weeds/node,
 /obj/effect/decal/cleanable/blood/writing,
@@ -4919,7 +4934,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "DG" = (
 /obj/structure/girder/displaced,
 /turf/simulated/floor/plating,
@@ -5240,7 +5255,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg3"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "Fd" = (
 /obj/machinery/porta_turret/stationary{
 	check_n_synth = 1;
@@ -5414,7 +5429,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "Gi" = (
 /obj/structure/stool,
 /obj/effect/decal/cleanable/cobweb,
@@ -5453,7 +5468,7 @@
 "Go" = (
 /obj/item/ammo_casing/c45,
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "Gp" = (
 /turf/simulated/floor{
 	dir = 5;
@@ -5483,12 +5498,12 @@
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "Gy" = (
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "GB" = (
 /obj/machinery/door/window{
 	dir = 8;
@@ -5525,7 +5540,7 @@
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "GM" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
@@ -5551,6 +5566,10 @@
 	icon_state = "green"
 	},
 /area/space_structures/old_station/central/hydro)
+"GT" = (
+/obj/item/stack/sheet/plasteel,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space_structures/carp_space)
 "GU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/writing{
@@ -5699,6 +5718,10 @@
 	icon_state = "whiteblue_ex"
 	},
 /area/space_structures/old_station/central)
+"HG" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/space_structures/carp_space)
 "HH" = (
 /obj/structure/lattice,
 /obj/item/stack/sheet/plasteel,
@@ -5721,12 +5744,13 @@
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "HP" = (
-/mob/living/simple_animal/hostile/carp,
-/obj/structure/lattice,
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
 /turf/environment/space,
-/area/space)
+/area/space_structures/carp_space)
 "HR" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/small/emergency{
@@ -5761,7 +5785,7 @@
 "HW" = (
 /obj/item/weapon/shard,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/space)
+/area/space_structures/carp_space)
 "HZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -6118,7 +6142,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "Kk" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
 /turf/simulated/floor{
@@ -6145,6 +6169,10 @@
 "Kq" = (
 /turf/simulated/wall,
 /area/space_structures/old_station/central/kitchen)
+"Kr" = (
+/obj/item/stack/sheet/plasteel,
+/turf/environment/space,
+/area/space_structures/carp_space)
 "Ks" = (
 /obj/structure/stool,
 /turf/simulated/floor/plating,
@@ -6165,7 +6193,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg1"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "Kz" = (
 /obj/machinery/door/airlock{
 	name = "Unit 2"
@@ -6410,7 +6438,7 @@
 /turf/simulated/floor{
 	icon_state = "yellow"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "LV" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -6422,7 +6450,7 @@
 	dir = 1;
 	icon_state = "caution"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "LW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/writing,
@@ -6532,7 +6560,7 @@
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "MR" = (
 /obj/structure/alien/weeds/node,
 /turf/simulated/floor,
@@ -6559,6 +6587,12 @@
 	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/central)
+"Ne" = (
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "yellow"
+	},
+/area/space_structures/carp_space)
 "Nf" = (
 /obj/item/weapon/tank/emergency_oxygen/engi,
 /turf/simulated/floor{
@@ -6717,7 +6751,7 @@
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg2"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "Ok" = (
 /obj/structure/alien{
 	desc = "It looks like a weird egg";
@@ -6815,7 +6849,7 @@
 "OJ" = (
 /obj/item/weapon/storage/belt/utility,
 /turf/environment/space,
-/area/space)
+/area/space_structures/carp_space)
 "OO" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -6915,7 +6949,7 @@
 	dir = 5;
 	icon_state = "caution"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "Pg" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -7085,7 +7119,7 @@
 /obj/structure/closet/secure_closet/atmos_personal,
 /obj/effect/decal/cleanable/blood/gibs/body,
 /turf/simulated/floor,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "Qq" = (
 /obj/structure/cable,
 /turf/simulated/floor,
@@ -7100,7 +7134,7 @@
 	dir = 4;
 	icon_state = "yellow"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "QE" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/snacks/donut/banana,
@@ -7331,7 +7365,7 @@
 "RQ" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "RT" = (
 /obj/structure/alien/weeds,
 /obj/structure/stool/bed/nest,
@@ -7390,6 +7424,13 @@
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/right/rnd)
+"Sk" = (
+/obj/structure/lattice,
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/turf/environment/space,
+/area/space_structures/carp_space)
 "Sl" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 5;
@@ -7710,6 +7751,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/space_structures/old_station/central/brig)
+"Ue" = (
+/obj/item/weapon/shard{
+	icon_state = "small"
+	},
+/turf/environment/space,
+/area/space_structures/carp_space)
 "Uf" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -7760,6 +7807,9 @@
 	icon_state = "floorgrime"
 	},
 /area/space_structures/old_station/right)
+"Us" = (
+/turf/simulated/wall/r_wall,
+/area/space_structures/carp_space)
 "Uy" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -7910,7 +7960,7 @@
 	dir = 1;
 	icon_state = "caution"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "Vk" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating{
@@ -7987,7 +8037,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "damaged3"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "VA" = (
 /obj/machinery/door/airlock/research/glass{
 	name = "Research and Development";
@@ -8108,7 +8158,7 @@
 	dir = 4
 	},
 /turf/environment/space,
-/area/space)
+/area/space_structures/carp_space)
 "Wt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/circuitboard/rdserver{
@@ -8491,11 +8541,11 @@
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg1"
 	},
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "Zd" = (
 /obj/item/stack/rods,
 /turf/environment/space,
-/area/space)
+/area/space_structures/carp_space)
 "Zf" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -8628,7 +8678,7 @@
 "ZE" = (
 /obj/structure/door_assembly/door_assembly_eng,
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "ZG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
@@ -8685,7 +8735,7 @@
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/item/weapon/shard,
 /turf/simulated/floor/plating,
-/area/space_structures/old_station/left)
+/area/space_structures/carp_space)
 "ZW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/yellow{
@@ -8703,175 +8753,175 @@
 /area/space_structures/old_station/right/rnd)
 
 (1,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-oo
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+Kr
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
 "}
 (2,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
 JF
 Jz
 mW
 Jz
 Jz
 JF
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-fI
-fI
-fI
-fI
+we
+we
+we
+we
+we
+we
+we
+we
+we
+gi
+gi
+gi
+gi
 yn
 yn
 yn
 yn
-wi
-wi
+we
+we
 "}
 (3,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-oo
-oo
-wi
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+Kr
+Kr
+we
 yn
-oo
-wi
-wi
-wi
-wi
-bC
-wi
-yn
-yn
+Kr
+we
+we
+we
+we
+we
+we
 yn
 yn
-wi
-oo
-wi
-wi
-wi
-wi
+yn
+yn
+we
+Kr
+we
+we
+we
+we
 JF
 qv
 HK
 dk
 Fe
 JF
-wi
-wi
 we
-wi
-wi
-wi
-wi
-wi
-wi
-fI
+we
+we
+we
+we
+we
+we
+we
+we
+gi
 yn
 yn
 yn
@@ -8879,59 +8929,59 @@ yn
 yn
 yn
 yn
-wi
-wi
+we
+we
 "}
 (4,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
 yn
 yn
 yn
-wi
-wi
-wi
-wi
+we
+we
+we
+we
 yn
 yn
 yn
 yn
 yn
-oo
-wi
-wi
-oo
-wi
-wi
+Kr
+we
+we
+Kr
+we
+we
 JF
 Vc
 ZO
 qI
 nI
 JF
-wi
-wi
-wi
-wi
 we
-wi
-wi
-wi
-wi
-fI
+we
+we
+we
+we
+we
+we
+we
+we
+gi
 yn
 yn
 yn
@@ -8939,59 +8989,59 @@ yn
 yn
 yn
 yn
-wi
-wi
+we
+we
 "}
 (5,1,1) = {"
-wi
-wi
-wi
-wi
 we
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-oo
-yn
-yn
-yn
-yn
-yn
-wi
 we
-wi
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+Kr
+yn
+yn
+yn
+yn
+yn
+we
+we
+we
 yn
 yn
 yn
 yn
 yn
 yn
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
 JF
 WB
 WZ
 ay
 EQ
 JF
-wi
-wi
-wi
-bC
-wi
-wi
-wi
-Ha
-Ha
-Ha
+we
+we
+we
+we
+we
+we
+we
+Us
+Us
+Us
 CA
 yn
 yn
@@ -8999,117 +9049,117 @@ yn
 yn
 yn
 yn
-wi
-wi
+we
+we
 "}
 (6,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-gr
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+AK
+we
+we
+we
+we
+we
+we
+we
+we
 yn
 yn
 yn
 yn
 yn
 yn
-fI
-fI
+gi
+gi
 yn
 yn
 yn
 yn
 yn
 yn
-wi
-gO
-gO
-gO
-gO
+we
+de
+de
+de
+de
 JF
 Kl
 gx
 Eg
 Xz
 JF
-gO
-gO
-gO
-gO
-wi
-wi
-wi
-Ha
+de
+de
+de
+de
+we
+we
+we
+Us
 rX
 rX
-yy
+AK
 yn
 yn
 yn
 yn
 yn
 yn
-wi
-wi
+we
+we
 "}
 (7,1,1) = {"
-wi
 we
-wi
-gO
-gO
-gr
-gr
-gr
-wi
-wi
-wi
-wi
-wi
-FH
+we
+we
+de
+de
+AK
+AK
+AK
+we
+we
+we
+we
+we
+GT
 yn
 yn
 yn
 yn
 yn
 yn
-fI
-fI
+gi
+gi
 yn
 yn
 yn
 yn
 yn
 yn
-wi
-gO
-gO
-gO
-gO
+we
+de
+de
+de
+de
 JF
 pW
 UB
 Ox
 zS
 JF
-gO
-gO
-gO
-gO
-gO
-wi
-wi
-Ha
+de
+de
+de
+de
+de
+we
+we
+Us
 Ct
 rX
 Gf
@@ -9120,31 +9170,31 @@ yn
 yn
 yn
 yn
-wi
+we
 "}
 (8,1,1) = {"
-gO
-gO
-HP
-gO
-gO
-gO
-gr
-gr
-wi
-wi
-wi
-wi
+de
+de
+de
+de
+de
+de
+AK
+AK
+we
+we
+we
+we
 Zd
-fI
+gi
 yn
 yn
 yn
 yn
 yn
 yn
-fI
-FH
+gi
+GT
 yn
 yn
 um
@@ -9152,9 +9202,9 @@ yn
 yn
 EN
 Ah
-gO
-gO
-gO
+de
+de
+de
 Wp
 JF
 li
@@ -9162,14 +9212,14 @@ Eu
 Rh
 Lb
 JF
-wi
-wi
-wi
-gO
-gO
-gO
-gO
-Ha
+we
+we
+we
+de
+de
+de
+de
+Us
 MQ
 rX
 Gf
@@ -9180,23 +9230,23 @@ yn
 yn
 yn
 yn
-wi
+we
 "}
 (9,1,1) = {"
-gr
-gr
-gO
-wi
-wi
-gO
-gO
-gO
-gO
+AK
+AK
+de
+we
+we
+de
+de
+de
+de
 Oi
 CA
-wi
-wi
-fI
+we
+we
+gi
 yn
 yn
 yn
@@ -9204,17 +9254,17 @@ yn
 yn
 yn
 HW
-fI
-fI
+gi
+gi
 fS
 FY
 yy
 vj
 rN
 ya
-wi
-wi
-wi
+we
+we
+we
 ge
 JF
 IJ
@@ -9222,14 +9272,14 @@ rp
 mZ
 JF
 JF
-wi
-wi
-wi
+we
+we
+we
 Zd
-gO
-gO
-gO
-Ha
+de
+de
+de
+Us
 HM
 hN
 hP
@@ -9240,22 +9290,22 @@ yn
 yn
 yn
 yn
-wi
+we
 "}
 (10,1,1) = {"
-gr
 AK
-gO
-wi
-wi
-wi
-wi
-wi
-yy
-yy
+AK
+de
+we
+we
+we
+we
+we
+AK
+AK
 fw
-gO
-gO
+de
+de
 yn
 yn
 yn
@@ -9287,12 +9337,12 @@ fm
 fm
 Ha
 wf
-fm
-fm
-Ha
+eV
+eV
+Us
 hq
-yy
-yy
+AK
+AK
 yn
 yn
 yn
@@ -9300,23 +9350,23 @@ yn
 yn
 yn
 yn
-wi
+we
 "}
 (11,1,1) = {"
-gr
-gr
-gO
-wi
-wi
-yy
+AK
+AK
+de
+we
+we
+AK
 pU
-yy
+AK
 Go
 hb
 ZE
-gO
-Ww
-gO
+de
+eT
+de
 yn
 yn
 yn
@@ -9324,7 +9374,7 @@ yn
 yn
 yn
 bq
-yy
+AK
 sK
 Fr
 um
@@ -9351,7 +9401,7 @@ rX
 cw
 Ki
 lt
-yy
+AK
 Gf
 yn
 yn
@@ -9360,23 +9410,23 @@ yn
 yn
 yn
 yn
-wi
+we
 "}
 (12,1,1) = {"
-wi
-gO
-gO
-wi
-wi
-yy
+we
+de
+de
+we
+we
+AK
 cd
 dm
 hn
 LU
 wf
-Dd
+HG
 eG
-Dd
+HG
 yn
 yn
 yn
@@ -9420,32 +9470,32 @@ yn
 yn
 yn
 yn
-wi
+we
 "}
 (13,1,1) = {"
-wi
-wi
-wi
 we
-wi
-yy
+we
+we
+we
+we
+AK
 Vy
 dm
 RQ
 Gy
 Kv
 yp
-dl
+Ne
 QA
-dl
-dl
-dl
-dl
-dl
+Ne
+Ne
+Ne
+Ne
+Ne
 Cp
 Cp
-yy
-dl
+AK
+Ne
 Fr
 um
 vI
@@ -9480,32 +9530,32 @@ yn
 yn
 yn
 yn
-wi
+we
 "}
 (14,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-Gl
+we
+we
+we
+we
+we
+we
+gr
 mx
-Gl
+gr
 hM
-Ha
+Us
 Zd
-gO
-gO
-BG
-gO
-gO
+de
+de
+Sk
+de
+de
 fg
-gO
-gO
-ya
-ya
-ya
+de
+de
+bC
+bC
+bC
 Ah
 vA
 qX
@@ -9529,9 +9579,9 @@ Ha
 Ha
 Ha
 Ha
-Ha
+Us
 Vf
-yy
+AK
 yn
 yn
 yn
@@ -9540,32 +9590,32 @@ yn
 yn
 yn
 yn
-wi
+we
 "}
 (15,1,1) = {"
-bC
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
 Cp
 hW
 iq
 Gw
-Ha
-wi
+Us
+we
 Zd
-An
+Ue
 Zd
-wi
+we
 fg
 Zd
 Zd
-bH
-wi
-wi
-wi
+HP
+we
+we
+we
 Ah
 sj
 jo
@@ -9589,7 +9639,7 @@ gO
 wi
 wi
 wi
-Ha
+Us
 Pe
 xA
 xA
@@ -9600,32 +9650,32 @@ yn
 yn
 yn
 yn
-wi
+we
 "}
 (16,1,1) = {"
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
 OJ
 Go
 Di
 Di
 ri
-Ha
-gO
-BG
-gO
+Us
+de
+Sk
+de
 fg
 fg
 fg
-gO
-BG
-gO
-gO
-gO
-gO
+de
+Sk
+de
+de
+de
+de
 Ah
 lf
 jz
@@ -9649,7 +9699,7 @@ gO
 gO
 gO
 gO
-Ha
+Us
 ij
 ei
 ij
@@ -9663,29 +9713,29 @@ yn
 wi
 "}
 (17,1,1) = {"
-wi
-wi
 we
-wi
-wi
-wi
-Ha
-Ha
-Ha
-Ha
-Ha
-gO
-gO
-gO
-gO
-gO
-gO
-BG
-gO
-gO
-gO
-gO
-gO
+we
+we
+we
+we
+we
+Us
+Us
+Us
+Us
+Us
+de
+de
+de
+de
+de
+de
+Sk
+de
+de
+de
+de
+de
 Ah
 Ah
 ba
@@ -9723,30 +9773,30 @@ yn
 wi
 "}
 (18,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-gO
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+de
+we
+we
+we
 ya
 no
 Sn
@@ -9783,30 +9833,30 @@ wi
 wi
 "}
 (19,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-gO
-gO
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+de
+de
+we
+we
 ya
 WU
 Sn
@@ -9843,24 +9893,24 @@ eH
 wi
 "}
 (20,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
 xg
 xg
 xg
@@ -9903,22 +9953,22 @@ wi
 wi
 "}
 (21,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 xg
@@ -9963,20 +10013,20 @@ wi
 wi
 "}
 (22,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi
@@ -10023,19 +10073,19 @@ wi
 wi
 "}
 (23,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi
@@ -10083,16 +10133,16 @@ MD
 wi
 "}
 (24,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi
@@ -10143,15 +10193,15 @@ Hb
 wi
 "}
 (25,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi
@@ -10203,14 +10253,14 @@ Hb
 wi
 "}
 (26,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi
@@ -10263,14 +10313,14 @@ Hb
 mS
 "}
 (27,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi
@@ -10323,14 +10373,14 @@ wi
 wi
 "}
 (28,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi
@@ -10383,14 +10433,14 @@ wi
 wi
 "}
 (29,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi
@@ -10443,14 +10493,14 @@ mS
 wi
 "}
 (30,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi
@@ -10503,14 +10553,14 @@ wi
 wi
 "}
 (31,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi
@@ -10563,14 +10613,14 @@ wi
 wi
 "}
 (32,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi
@@ -10623,14 +10673,14 @@ wi
 wi
 "}
 (33,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 mS
 wi
@@ -10683,14 +10733,14 @@ wi
 mS
 "}
 (34,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi
@@ -10743,14 +10793,14 @@ wi
 wi
 "}
 (35,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi
@@ -10803,14 +10853,14 @@ mS
 wi
 "}
 (36,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 mS
 wi
@@ -10863,14 +10913,14 @@ wi
 wi
 "}
 (37,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi
@@ -10923,14 +10973,14 @@ wi
 Fd
 "}
 (38,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi
@@ -10983,14 +11033,14 @@ Ou
 Ou
 "}
 (39,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi
@@ -11043,14 +11093,14 @@ Yd
 Ou
 "}
 (40,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi
@@ -11103,14 +11153,14 @@ PC
 Ou
 "}
 (41,1,1) = {"
-wi
-wi
-wi
-wi
-wi
-wi
-wi
-wi
+we
+we
+we
+we
+we
+we
+we
+we
 wi
 wi
 wi

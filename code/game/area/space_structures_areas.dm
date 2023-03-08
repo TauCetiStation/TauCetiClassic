@@ -298,3 +298,49 @@
 /area/space_structures/old_station/armory
 	name = "Armory"
 	icon_state = "purple"
+
+/area/space_structures/carp_space
+	name = "dangerous space"
+	icon_state = "space_carps"
+	var/static/list/mob_spawn_list = list(
+		/mob/living/simple_animal/hostile/carp = 5,
+		/mob/living/simple_animal/hostile/carp/megacarp = 1
+	)
+
+/area/space_structures/carp_space/atom_init()
+	. = ..()
+	InitSpawnArea()
+
+// Creates the spawn area component for this area.
+/area/space_structures/carp_space/proc/InitSpawnArea()
+	// 8 is 1 more than client's view. So mobs spawn right after the view's border
+	// 16 is the entire screen diameter + 1. So mobs don't spawn on one side of the screen
+	AddComponent(/datum/component/spawn_area,
+		"space",
+		CALLBACK(src, .proc/spawnmob),
+		CALLBACK(src, .proc/despawn),
+		CALLBACK(src, .proc/checkspawn),
+		8,
+		16,
+		1 MINUTE,
+		1 MINUTE,
+	)
+
+/area/space_structures/carp_space/proc/spawnmob(turf/T)
+	var/to_spawn = pickweight(mob_spawn_list)
+	var/atom/A = new to_spawn(T)
+	if(A)
+		return list(A)
+	return null
+
+
+/area/space_structures/carp_space/proc/despawn(atom/movable/instance)
+	var/mob/M = instance
+	if(M.stat == DEAD)
+		return
+	qdel(M)
+
+/area/space_structures/carp_space/proc/checkspawn(turf/T)
+	if(!isspaceturf(T))
+		return FALSE
+	return T.is_mob_placeable(null)
