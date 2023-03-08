@@ -205,7 +205,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 			M.dir = SOUTH
 		add_overlay(belt)
 	else
-		M.pixel_x = M.default_pixel_y
+		M.pixel_x = M.default_pixel_x
 		M.pixel_y = M.default_pixel_y
 		cut_overlay(belt)
 
