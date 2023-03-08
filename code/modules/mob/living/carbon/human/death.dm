@@ -17,9 +17,9 @@
 	..()
 
 /mob/living/carbon/human/dust()
-	dust_process()
 	new /obj/effect/decal/cleanable/ash(loc)
 	new /obj/effect/decal/remains/human/burned(loc)
+	dust_process()
 
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)

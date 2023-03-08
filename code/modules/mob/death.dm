@@ -23,8 +23,8 @@
 	QDEL_IN(animation, 1 SECOND)
 
 /mob/proc/dust()
-	dust_process()
 	new /obj/effect/decal/cleanable/ash(loc)
+	dust_process()
 	
 
 /mob/proc/death(gibbed)

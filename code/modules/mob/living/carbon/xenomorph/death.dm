@@ -49,6 +49,6 @@
 	QDEL_IN(animation, 2 SECONDS)
 
 /mob/living/carbon/xenomorph/dust()
-	dust_process()
 	new /obj/effect/decal/cleanable/ash(loc)
 	new /obj/effect/decal/remains/xeno/burned(loc)
+	dust_process()

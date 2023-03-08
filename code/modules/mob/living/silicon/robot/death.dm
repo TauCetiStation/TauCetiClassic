@@ -11,10 +11,9 @@
 /mob/living/silicon/robot/dust()
 	if(mmi)
 		qdel(mmi)	//Delete the MMI first so that it won't go popping out.
-	dust_process()
 	new /obj/effect/decal/cleanable/ash(loc)
 	new /obj/effect/decal/remains/robot(loc)
-	
+	dust_process()
 
 /mob/living/silicon/robot/death(gibbed)
 	if(stat == DEAD)	return

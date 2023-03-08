@@ -5,8 +5,8 @@
 	QDEL_IN(animation, 2 SECOND)
 
 /mob/living/carbon/monkey/dust()
-	dust_process()
 	new /obj/effect/decal/cleanable/ash(loc)
+	dust_process()
 
 /mob/living/carbon/monkey/death(gibbed)
 	if(stat == DEAD)
