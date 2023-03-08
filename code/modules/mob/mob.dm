@@ -28,6 +28,13 @@
 			mind.set_current(null)
 		if(mind.original == src)
 			mind.original = null
+
+	if(buckled) // simpler version of /unbuckle_mob
+		buckled.buckled_mob = null
+		SEND_SIGNAL(buckled, COMSIG_MOVABLE_UNBUCKLE, src)
+		buckled.post_buckle_mob(src)
+		buckled = null
+
 	return ..()
 
 
