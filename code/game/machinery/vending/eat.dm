@@ -132,9 +132,9 @@
 	light_color = "#10ff1f"
 
 /obj/machinery/vending/snack/teal
+	subname = "Teal"
 	icon_state = "snackteal"
 	light_color = "#ffc400"
-	subname = "Teal"
 
 /obj/machinery/vending/chinese
 	name = "Mr. Chang"
