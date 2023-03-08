@@ -302,6 +302,7 @@ Message ends."}
 		score_results += "<br><b>Materials Contribution:</b> [RAI.swarms_goodwill]"
 		score_results += "<br><b>Replicated Times:</b> [RAI.replicated_times]"
 		score_results += "<br><b>Placed Mine Triggers:</b> [RAI.mine_triggers]"
+		score_results += "<br><b>Eaten Humans:</b> [RAI.eaten_humans]"
 		score_results += "<br><b>Corridors Constructed:</b> [RAI.corridors_constructed]"
 		score_results += "<br><b>Replicators Launched:</b> [RAI.replicators_launched]"
 		score_results += "<br><b>Array Replicators Screwed:</b> [RAI.replicators_screwed]"

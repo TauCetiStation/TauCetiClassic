@@ -115,6 +115,14 @@
 	return TRUE
 
 
+/mob/living/carbon/human/replicator_act(mob/living/simple_animal/hostile/replicator/R)
+	. = ..()
+	if(.)
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+		var/datum/replicator_array_info/RAI = FR.ckey2info[R.last_controller_ckey]
+		RAI.eaten_humans += 1
+
+
 /mob/living/silicon/can_be_auto_disintegrated()
 	return stat != CONSCIOUS
 

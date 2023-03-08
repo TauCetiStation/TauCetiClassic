@@ -542,6 +542,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "transit_rune"
 
+	density = FALSE
+	anchored = TRUE
+
 	var/next_obstacle_animation = 0
 
 	var/neighbor_count = 0
