@@ -36,6 +36,9 @@
 
 	var/can_starve = FALSE
 
+	var/next_jamming_alert = 0
+	var/jamming_alert_cooldown = 30 SECONDS
+
 /mob/living/simple_animal/hostile/replicator/Life()
 	. = ..()
 	if(!.)
@@ -149,6 +152,13 @@
 		FR.drone_message(src, "Structure integrity under threat. Location: [A.name].", transfer=TRUE)
 		next_attacked_alert = world.time + attacked_alert_cooldown
 
+	var/turf/T = get_turf(src)
+	if(SEND_SIGNAL(T, COMSIG_ATOM_INTERCEPT_TELEPORT))
+		if(next_jamming_alert < world.time)
+			next_jamming_alert = world.time + jamming_alert_cooldown
+			to_chat(src, "<span class='bold warning'>You feel your essence being jammed by a teleportation supressor nearby!</span>")
+		take_bodypart_damage(0.0, maxHealth / 120)
+
 	// All replicators are slowly dying. Eating obviously fixes them.
 	// This fixes a lot of stupid tactics, such as:
 	// - hiding a replicator somewhere in vents
@@ -158,10 +168,6 @@
 		if(!has_swarms_gift())
 			take_bodypart_damage(0.0, maxHealth / 120)
 			taken_damage = TRUE
-
-		var/turf/T = get_turf(src)
-		if(SEND_SIGNAL(T, COMSIG_ATOM_INTERCEPT_TELEPORT))
-			take_bodypart_damage(0.0, maxHealth / 120)
 
 		if(isspaceturf(loc))
 			take_bodypart_damage(0.0, maxHealth / 20)
