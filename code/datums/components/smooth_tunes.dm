@@ -61,11 +61,10 @@
 
 
 	linked_song = song
-	//particles
 	if(particles_path && ismovable(linked_song.instrument))
 		var/mob/M = parent
 		M.particles = new particles_path()
-	//filters
+
 	linked_song.instrument.add_filter("smooth_tunes_outline", 9, list("type" = "outline", "color" = glow_color))
 
 ///Prevents changing tempo during a song to sneak in final effects quicker
