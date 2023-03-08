@@ -4,9 +4,9 @@
 	icon_state = "projectile"
 	icon = 'icons/mob/replicator.dmi'
 	light_color = "#0000ff"
-	damage = 3
+	damage = 2
 	damage_type = BURN
-	agony = 10
+	agony = 8
 	step_delay = 2
 	dispersion = 1
 	impact_force = 1
@@ -25,7 +25,7 @@
 
 		var/target_zone = get_targetzone()
 		L.apply_damage(3.0, BRUTE, target_zone, 0.0, NONE)
-		L.apply_effects(0, 0, 0, 0, 2, 1, 0, 30 + additional_damage * 0.5, 0)
+		L.apply_effects(0, 0, 0, 0, 2, 1, 0, 20 + additional_damage * 0.5, 0)
 
 		SetNextMove(CLICK_CD_MELEE)
 		L.set_lastattacker_info(src)
@@ -75,8 +75,8 @@
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		var/additional_damage = FR.energy / 10000
 
-		D.damage += disabler_damage_increase * 2.0 + additional_damage * 0.1
-		D.agony += disabler_damage_increase * 10 + additional_damage * 0.3
+		D.damage += disabler_damage_increase * 1.5 + additional_damage * 0.1
+		D.agony += disabler_damage_increase * 6.0 + additional_damage * 0.3
 
 		D.pixel_x += rand(-1, 1)
 		D.pixel_y += rand(-1, 1)
