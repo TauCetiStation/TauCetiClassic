@@ -262,7 +262,7 @@ to destroy them and players will be able to make replacements.
 					continue
 				names_of_vendings["[initial(type.name)] ([initial(type.icon_state)])"] = type
 
-		var/vending_name = tgui_input_list(user, "Выбери новую марку", "Выбор торгового автомата", names_of_vendings)
+		var/vending_name = tgui_input_list(user, "Выберите новую марку", "Выбор торгового автомата", names_of_vendings)
 		if(isnull(vending_name))
 			return
 		
