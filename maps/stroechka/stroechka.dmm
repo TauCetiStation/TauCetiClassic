@@ -4,7 +4,7 @@
 /area/station/solar/auxport)
 "ac" = (
 /obj/structure/cable/yellow{
-	d2 = 2;
+	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/airless{
@@ -200,7 +200,7 @@
 	},
 /obj/machinery/alarm{
 	locked = 0;
-	mode =  2;
+	mode = 2;
 	pixel_x = -28;
 	pixel_y = -6
 	},
