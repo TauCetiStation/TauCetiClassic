@@ -153,7 +153,7 @@
 	armed = FALSE
 	update_icon()
 
-	addtimer(CALLBACK(src, .proc/rearm), 40)
+	addtimer(CALLBACK(src, .proc/rearm), 8 SECONDS)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	s.set_up(3, 1, src)
