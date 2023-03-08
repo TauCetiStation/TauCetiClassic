@@ -1,16 +1,12 @@
-/mob/living/carbon/human/gib()
-	death(1)
-	var/atom/movable/overlay/animation = null
-	notransform = TRUE
-	canmove = 0
-	icon = null
-	invisibility = 101
-
+/mob/living/carbon/human/spawn_gibs()
 	if(!species.flags[NO_BLOOD_TRAILS])
-		animation = new(loc)
-		animation.icon_state = "blank"
-		animation.icon = 'icons/mob/mob.dmi'
-		animation.master = src
+		hgibs(loc, dna, species.flesh_color, species.blood_datum)
+
+/mob/living/carbon/human/gib()
+	if(!species.flags[NO_BLOOD_TRAILS])
+		var/atom/movable/overlay/animation = new (loc)
+		flick(icon('icons/mob/mob.dmi', "gibbed-h"), animation)
+		QDEL_IN(animation, 2 SECOND)
 
 	for(var/obj/item/organ/external/BP in bodyparts)
 		// Only make the limb drop if it's not too damaged
@@ -18,19 +14,12 @@
 			// Override the current limb status and don't cause an explosion
 			BP.droplimb(TRUE, null, DROPLIMB_EDGE)
 
-	if(!species.flags[NO_BLOOD_TRAILS])
-		flick("gibbed-h", animation)
-		hgibs(loc, dna, species.flesh_color, species.blood_datum)
-
-	spawn(15)
-		if(animation)	qdel(animation)
-		if(src)			qdel(src)
+	..()
 
 /mob/living/carbon/human/dust()
 	dust_process()
 	new /obj/effect/decal/cleanable/ash(loc)
 	new /obj/effect/decal/remains/human/burned(loc)
-	dead_mob_list -= src
 
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
