@@ -12,7 +12,8 @@
 		return
 	var/datum/role/rev/R = D.GetRole(REV)
 	if(R)
-		var/datum/role/rev_leader/leader_role = create_and_setup_role(/datum/role/rev_leader, H)
+		var/datum/role/rev_leader/leader_role = create_and_setup_role(/datum/role/rev_leader, H, setup_role = FALSE)
 		R.faction.HandleRecruitedRole(leader_role)
 		R.RemoveFromRole(D)
+		setup_role(leader_role)
 		qdel(src)

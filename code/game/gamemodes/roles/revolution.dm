@@ -97,7 +97,7 @@
 	else
 		var/datum/role/rev_leader/lead = mind.GetRole(HEADREV)
 		if(world.time < lead.rev_cooldown)
-			to_chat(src, "<span class='warning'>Wait five seconds before reconversion attempt.</span>")
+			to_chat(src, "<span class='warning'>Wait few seconds before reconversion attempt.</span>")
 			return
 		to_chat(src, "<span class='warning'>Attempting to convert [M]...</span>")
 		log_admin("[key_name(src)]) attempted to convert [M].")
@@ -107,9 +107,9 @@
 			lead.rev_cooldown = world.time + 50
 			return
 
-		SEND_SIGNAL(M, COMSIG_ADJUST_LOYALITY, lead ? -50 : -5, src)
 		say(say_string)
 		point_at(M)
+		SEND_SIGNAL(M, COMSIG_ADJUST_LOYALITY, lead ? -50 : -5, src)
 		lead.rev_cooldown = world.time + DEFAULT_REV_VERB_CD
 
 #undef DEFAULT_REV_VERB_CD
