@@ -62,10 +62,10 @@
 
 /datum/mood_event/tasty_food
 	description = "<span class='nicegreen'>This food tastes good, I like it.</span>"
-	mood_change = 3
+	mood_change = 2
 	timeout = 3 MINUTES
 
 /datum/mood_event/very_tasty_food
 	description = "<span class='bold nicegreen'>This food tastes just divine!</span>"
-	mood_change = 5
+	mood_change = 4
 	timeout = 5 MINUTES
