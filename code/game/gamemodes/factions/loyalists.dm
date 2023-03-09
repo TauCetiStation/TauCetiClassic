@@ -321,11 +321,13 @@
 	return report_dat
 
 /datum/mutiny_scenario/mine/do_first_strike()
-	add_supply_to_cargo(3, "Cent Com Shaft Miner Gear", reason_string = "Helping")
+	var/datum/game_mode/gamemode = SSticker.mode
+	gamemode.add_supply_to_cargo(3, "Cent Com Shaft Miner Gear", reason_string = "Helping")
 
 //Let's believe they kill heads with pickaxes
 /datum/mutiny_scenario/mine/do_second_strike()
-	add_supply_to_cargo(8, "Cent Com Shaft Miner Gear", reason_string = "Helping")
+	var/datum/game_mode/gamemode = SSticker.mode
+	gamemode.add_supply_to_cargo(8, "Cent Com Shaft Miner Gear", reason_string = "Helping")
 
 /datum/mutiny_scenario/genetic/get_first_report()
 	var/report_dat = ""
@@ -392,13 +394,16 @@
 	return report_dat
 
 /datum/mutiny_scenario/genetic/do_first_strike()
-	add_supply_to_cargo(1, "Cent Com Secure Crate", reason_string = "Work")
+	var/datum/game_mode/gamemode = SSticker.mode
+	gamemode.add_supply_to_cargo(1, "Cent Com Secure Crate", reason_string = "Work")
 
 /datum/mutiny_scenario/genetic/do_second_strike()
-	add_supply_to_cargo(1, "Cent Com Secure Supply Crate", reason_string = "Work")
+	var/datum/game_mode/gamemode = SSticker.mode
+	gamemode.add_supply_to_cargo(1, "Cent Com Secure Supply Crate", reason_string = "Work")
 
 /datum/mutiny_scenario/genetic/do_third_strike()
-	add_supply_to_cargo(2, "Cent Com Head Stuff Crate", reason_string = "Work")
+	var/datum/game_mode/gamemode = SSticker.mode
+	gamemode.add_supply_to_cargo(2, "Cent Com Head Stuff Crate", reason_string = "Work")
 
 #undef SCENARIO_MONEY
 #undef SCENARIO_VIRUS
