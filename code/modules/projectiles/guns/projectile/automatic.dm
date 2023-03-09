@@ -63,6 +63,7 @@
 	w_class = SIZE_SMALL
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	initial_mag = /obj/item/ammo_box/magazine/m12mm
+	suitable_mags = list(/obj/item/ammo_box/magazine/m12mm, /obj/item/ammo_box/magazine/m12mm/hp, /obj/item/ammo_box/magazine/m12mm/hv, /obj/item/ammo_box/magazine/m12mm/imp)
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	should_alarm_when_empty = TRUE
 	can_be_silenced = TRUE

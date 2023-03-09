@@ -255,15 +255,6 @@ SUBSYSTEM_DEF(shuttle)
 
 			/* --- Shuttle leaves the station, enters transit --- */
 			else
-				//if(alert == 1)
-				//	sleep(100)
-				// Turn on the star effects
-
-				/* // kinda buggy atm, i'll fix this later
-				for(var/obj/effect/starspawner/S in not_world)
-					if(!S.spawning)
-						spawn() S.startspawn()
-				*/
 
 				departed = 1 // It's going!
 				location = SHUTTLE_IN_TRANSIT // in deep space
@@ -334,6 +325,8 @@ SUBSYSTEM_DEF(shuttle)
 					announce_emer_left.play()
 				else
 					announce_crew_left.play()
+
+				start_transit()
 
 				return TRUE
 
@@ -649,6 +642,9 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/set_eta_timeofday(flytime = SSshuttle.movetime)
 	eta_timeofday = (REALTIMEOFDAY + flytime) % MIDNIGHT_ROLLOVER
+
+/datum/controller/subsystem/shuttle/proc/start_transit()
+	SSrating.announce_rating_collection()
 
 /obj/effect/bgstar
 	name = "star"
