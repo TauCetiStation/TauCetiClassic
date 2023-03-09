@@ -1219,7 +1219,8 @@
 /obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "RnD APC";
-	pixel_y = 25
+	pixel_y = 25;
+	cell_type = 1000
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -2076,19 +2077,6 @@
 	icon_state = "darkblue"
 	},
 /area/space_structures/old_station/central/bridge)
-"mp" = (
-/mob/living/simple_animal/hostile/xenomorph/sentinel,
-/obj/effect/decal/cleanable/blood/writing,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitepurple"
-	},
-/area/space_structures/old_station/right)
 "ms" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -2820,6 +2808,9 @@
 "rc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/emergency{
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellow"
@@ -3126,7 +3117,8 @@
 /obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "Brig APC";
-	pixel_x = 22
+	pixel_x = 22;
+	cell_type = 1000
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -4601,7 +4593,8 @@
 	dir = 1;
 	name = "R Station APC";
 	pixel_y = 27;
-	pixel_x = 1
+	pixel_x = 1;
+	cell_type = 1000
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -4877,7 +4870,8 @@
 /obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "C Station APC";
-	pixel_x = -23
+	pixel_x = -23;
+	cell_type = 1000
 	},
 /obj/structure/cable{
 	d2 = 4;
@@ -5554,7 +5548,8 @@
 /obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "Hydroponic APC";
-	pixel_y = 25
+	pixel_y = 25;
+	cell_type = 1000
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -6555,6 +6550,12 @@
 	icon_state = "green"
 	},
 /area/space_structures/old_station/central)
+"MP" = (
+/obj/machinery/light/small/emergency,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/space_structures/old_station/central/solars_c)
 "MQ" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor{
@@ -6659,8 +6660,8 @@
 	},
 /area/space_structures/old_station/right)
 "NC" = (
-/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable,
+/obj/machinery/power/smes/fullcharge/not_outputting,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right)
 "ND" = (
@@ -7600,7 +7601,8 @@
 /obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "Kitchen APC";
-	pixel_x = 22
+	pixel_x = 22;
+	cell_type = 1000
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -8592,8 +8594,8 @@
 	},
 /area/space_structures/old_station/central)
 "Zo" = (
-/obj/machinery/power/smes/fullcharge,
 /obj/structure/cable,
+/obj/machinery/power/smes/fullcharge/not_outputting,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -10471,7 +10473,7 @@ eI
 DK
 Eh
 Nl
-ud
+MP
 wB
 Ou
 vh
@@ -13389,7 +13391,7 @@ wi
 wX
 pc
 Ok
-HB
+pc
 zd
 Ok
 pc
@@ -13693,7 +13695,7 @@ UI
 JU
 pc
 pc
-UI
+pc
 pc
 pc
 BW
@@ -14063,7 +14065,7 @@ iz
 Fs
 zO
 RP
-mp
+RP
 zO
 RP
 cC
