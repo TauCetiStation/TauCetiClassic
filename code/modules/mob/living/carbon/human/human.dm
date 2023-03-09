@@ -294,7 +294,7 @@
 			if(prob(current_size * 5) && hand.w_class >= ((STAGE_FIVE-current_size)/2)  && unEquip(hand))
 				step_towards(hand, src)
 				to_chat(src, "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>")
-	irradiate_in_dist(get_turf(src), current_size * 3, 0)
+	irradiate_one_mob(get_turf(src), src, current_size * 3)
 	if(mob_negates_gravity())//Magboots protection
 		return
 	..()

@@ -69,7 +69,7 @@
 
 /obj/effect/accelerated_particle/proc/toxmob(mob/living/M)
 	var/radiation = (energy*2)
-	irradiate_in_dist(get_turf(M), radiation * 3, 0)
+	irradiate_one_mob(get_turf(M), M, radiation * 3)
 	M.updatehealth()
 	return
 

@@ -249,7 +249,7 @@
 	user.drop_from_inventory(W)
 	user.SetNextMove(CLICK_CD_MELEE)
 	Consume(W)
-	irradiate_in_dist(get_turf(src), 150, 1)
+	irradiate_one_mob(get_turf(src), user, 150)
 
 /obj/machinery/power/supermatter/Bumped(atom/AM)
 	if(isliving(AM))

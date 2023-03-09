@@ -163,7 +163,7 @@
 	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
 
 	area_type = /area
- 
+
 	protected_areas = list(/area/station/maintenance, /area/station/civilian/dormitories/male, /area/station/civilian/dormitories/female, /area/station/storage/emergency, /area/station/storage/emergency2, /area/station/storage/emergency3, /area/station/storage/tech, /area/asteroid/mine, /area/station/security/prison/toilet, /area/station/security/brig/solitary_confinement)
 
 	target_ztrait = ZTRAIT_STATION
@@ -193,7 +193,7 @@
 					else
 						randmutg(H) // Applies good mutation
 					domutcheck(H,null,MUTCHK_FORCED)
-		irradiate_in_dist(get_turf(L), rand(40,70), 0)
+		irradiate_one_mob(get_turf(L), L, rand(40,70))
 
 /datum/weather/rad_storm/end()
 	if(..())

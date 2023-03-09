@@ -1013,7 +1013,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/process()
 	if(..())
-		irradiate_in_dist(get_turf(chassis), rad_per_cycle * 3, 7)
+		irradiate_in_dist(get_turf(chassis), rad_per_cycle * 3, world.view)
 	return 1
 
 
