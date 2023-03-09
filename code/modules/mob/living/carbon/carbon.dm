@@ -1290,11 +1290,11 @@
 	..(amount, min_temp, max_temp)
 
 /mob/living/carbon/handle_nutrition()
-	var/nutrition_to_remove = 0
 	var/met_factor = get_metabolism_factor()
 	if(!met_factor)
 		return
-	nutrition_to_remove += 0.04
+	var/nutrition_to_remove = 0
+	nutrition_to_remove += 0.16
 	if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
 		var/pain = getHalLoss()
 		if(pain > 0)
