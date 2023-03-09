@@ -564,33 +564,48 @@
 
 	flags = ABSTRACT
 
-	var/obj/structure/table/Table
-	var/obj/item/Lot_Item
+	var/obj/structure/table/table_attached_to
+	var/obj/item/held_Item
+
+/obj/lot_holder/atom_init(mapload, obj/item/Item, obj/structure/table/Table)
+	. = ..()
+
+	table_attached_to = Table
+	RegisterSignal(table_attached_to, list(COMSIG_PARENT_QDELETING), .proc/on_table_destroy)
+
+	held_Item = Item
+	Item.forceMove(src)
+
+	add_overlay(Item)
+	name = Item.name
 
 /obj/lot_holder/examine(mob/user)
 	. = ..()
 
-	Lot_Item.examine(user)
+	held_Item.examine(user)
 
 /obj/lot_holder/Destroy()
-	Lot_Item.forceMove(Table.loc)
+	held_Item.forceMove(table_attached_to.loc)
 	return ..()
 
 /obj/lot_holder/proc/on_table_destroy()
 	qdel(src)
 
 /obj/lot_holder/attackby(obj/item/weapon/W, mob/user, params)
-	Table.visible_message("<span class='info'>[user] прикладывает карту к столу.</span>")
 	if(istype(W, /obj/item/weapon/card/id))
+		table_attached_to.visible_message("<span class='info'>[user] прикладывает карту к столу.</span>")
 		var/obj/item/weapon/card/id/Card = W
 		scan_card(Card, user)
 	else if(istype(W, /obj/item/device/pda) && W.GetID())
+		table_attached_to.visible_message("<span class='info'>[user] прикладывает КПК к столу.</span>")
 		var/obj/item/weapon/card/id/Card = W.GetID()
 		scan_card(Card, user)
 
+	. = ..()
+
 /obj/lot_holder/proc/scan_card(obj/item/weapon/card/id/Card, mob/user)
 	var/datum/money_account/Buyer = get_account(Card.associated_account_number)
-	var/datum/money_account/Seller = get_account(Lot_Item.price_tag["account"])
+	var/datum/money_account/Seller = get_account(held_Item.price_tag["account"])
 
 	if(!Buyer)
 		return
@@ -599,21 +614,21 @@
 	if(Buyer.security_level > 0)
 		attempt_pin = input("Введите ПИН-код", "Прилавок") as num
 		if(isnull(attempt_pin))
-			to_chat(user, "[bicon(Table)]<span class='warning'>Неверный ПИН-код!</span>")
+			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
 			return
 		Buyer = attempt_account_access(Card.associated_account_number, attempt_pin, 2)
 
-	var/cost = Lot_Item.price_tag["price"]
+	var/cost = held_Item.price_tag["price"]
 
 	if(cost > 0 && Seller)
 		if(Seller.suspended)
-			Table.visible_message("[bicon(Table)]<span class='warning'>Подключённый аккаунт заблокирован.</span>")
+			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Подключённый аккаунт заблокирован.</span>")
 			return
 		if(cost <= Buyer.money)
-			charge_to_account(Buyer.account_number, Buyer.owner_name, "Покупка [Lot_Item.name]", "Прилавок", -cost)
-			charge_to_account(Seller.account_number, Seller.owner_name, "Прибыль за продажу [Lot_Item.name]", "Прилавок", cost)
+			charge_to_account(Buyer.account_number, Buyer.owner_name, "Покупка [held_Item.name]", "Прилавок", -cost)
+			charge_to_account(Seller.account_number, Seller.owner_name, "Прибыль за продажу [held_Item.name]", "Прилавок", cost)
 		else
-			Table.visible_message("[bicon(Table)]<span class='warning'>Недостаточно средств!</span>")
+			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Недостаточно средств!</span>")
 			return
 
 	qdel(src)
@@ -636,16 +651,10 @@
 		addtimer(CALLBACK(src, .proc/magnet_item, I), 1 SECONDS)
 
 /obj/structure/table/reinforced/stall/proc/magnet_item(obj/item/I)
-	if(I.loc == get_turf(src))
-		var/obj/lot_holder/Holder = new(src.loc)
-		Holder.Table = src
-		Holder.RegisterSignal(src, list(COMSIG_PARENT_QDELETING), /obj/lot_holder/proc/on_table_destroy)
+	if(I.loc != get_turf(src))
+		return
 
-		Holder.Lot_Item = I
-		I.forceMove(Holder)
-
-		Holder.add_overlay(I)
-		Holder.name = I.name
+	new /obj/lot_holder(loc, Item = I, Table = src)
 
 /*
  * Racks
