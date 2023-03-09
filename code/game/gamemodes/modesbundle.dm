@@ -89,6 +89,10 @@
 	black_types = subtypesof(/datum/game_mode/mix) + list(/datum/game_mode/extended, /datum/game_mode/malfunction)
 	..()
 
+/datum/modesbundle/all/teambased/New()
+	black_types = list(/datum/game_mode/extended)
+	..()
+	
 /datum/modesbundle/run_anyway
 	name = "Modes that will ALWAYS start"
 	votable = FALSE
