@@ -540,7 +540,7 @@
 
 /proc/irradiate_in_dist(turf/source_turf, rad_dose, effect_distance)
 	for(var/mob/living/L in range(source_turf, effect_distance))
-		var/list/neighbours_in_turf = 0
+		var/neighbours_in_turf = 0
 		for(var/mob/living/neighbour in L.loc)
 			if(neighbour == L)
 				continue
