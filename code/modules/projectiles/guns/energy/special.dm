@@ -612,8 +612,6 @@
 		LoseTarget()
 	if(!isliving(target))
 		return
-	if(target == user)
-		return
 
 	current_target = target
 	RegisterSignal(current_target, COMSIG_PARENT_QDELETING, .proc/LoseTarget)
