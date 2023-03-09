@@ -5,7 +5,6 @@
 			message_admins("RoundStart Event: [headset_to_del] was removed from [H]")
 			log_game("RoundStart Event: [headset_to_del] was removed from [H]")
 			qdel(headset_to_del)
-			H.update_inv_ears()
 
 /datum/event/feature/survbox/start()
 	for(var/mob/living/carbon/human/H as anything in human_list)

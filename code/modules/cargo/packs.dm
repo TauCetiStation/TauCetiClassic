@@ -145,9 +145,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/pistol
 	name = "9mm pistol crate"
-	contains = list(/obj/item/weapon/gun/projectile/glock,
-					/obj/item/weapon/gun/projectile/glock,
-					/obj/item/weapon/gun/projectile/glock)
+	contains = list(/obj/item/weapon/gun/projectile/automatic/glock,
+					/obj/item/weapon/gun/projectile/automatic/glock,
+					/obj/item/weapon/gun/projectile/automatic/glock)
 	cost = 4500
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "9mm pistol crate"
@@ -646,6 +646,57 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	cost = 2000
 	crate_type = /obj/structure/closet/crate
 	crate_name = "Party equipment"
+	group = "Hospitality"
+
+/datum/supply_pack/ramens
+	name = "Ramens supply crate"
+	contains = list(/obj/random/foods/ramens,
+					/obj/random/foods/ramens,
+					/obj/random/foods/ramens,
+					/obj/random/foods/ramens,
+					/obj/random/foods/ramens,
+					/obj/random/foods/ramens,
+					/obj/random/foods/ramens,
+					/obj/random/foods/ramens,
+					/obj/random/foods/ramens,
+					/obj/random/foods/ramens)
+	cost = 800
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "Ramens supply crate"
+	group = "Hospitality"
+
+/datum/supply_pack/drinks
+	name = "Drinks supply crate"
+	contains = list(/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can,
+					/obj/random/foods/drink_can)
+	cost = 600
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "Drinks supply crate"
+	group = "Hospitality"
+
+/datum/supply_pack/cigarettes
+	name = "Cigarettes supply crate"
+	contains = list(/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes,
+					/obj/random/misc/cigarettes)
+	cost = 900
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "Cigarettes supply crate"
 	group = "Hospitality"
 
 //----------------------------------------------
@@ -1757,15 +1808,15 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/laser_tag
 	name = "Laser Tag Crate"
-	contains = list(/obj/item/weapon/gun/energy/laser/lasertag/redtag,
-					/obj/item/weapon/gun/energy/laser/lasertag/redtag,
-					/obj/item/weapon/gun/energy/laser/lasertag/redtag,
+	contains = list(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag,
+					/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag,
+					/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag,
 					/obj/item/clothing/suit/lasertag/redtag,
 					/obj/item/clothing/suit/lasertag/redtag,
 					/obj/item/clothing/suit/lasertag/redtag,
-					/obj/item/weapon/gun/energy/laser/lasertag/bluetag,
-					/obj/item/weapon/gun/energy/laser/lasertag/bluetag,
-					/obj/item/weapon/gun/energy/laser/lasertag/bluetag,
+					/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag,
+					/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag,
+					/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag,
 					/obj/item/clothing/suit/lasertag/bluetag,
 					/obj/item/clothing/suit/lasertag/bluetag,
 					/obj/item/clothing/suit/lasertag/bluetag)

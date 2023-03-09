@@ -32,7 +32,7 @@
 	hooded = !hooded
 	if(icon_suit_up)
 		icon_state = initial(icon_state)
-		usr.update_inv_wear_suit()
+		update_inv_mob()
 
 /obj/item/clothing/suit/hooded/dropped()
 	..()
@@ -48,10 +48,10 @@
 			if(H.head)
 				to_chat(H, "<span class='userdanger'>You're already wearing something on your head!</span>")
 				return
-			H.equip_to_slot_if_possible(hood, SLOT_HEAD, 0, 0, 1)
+			H.equip_to_slot_if_possible(hood, SLOT_HEAD)
 			if(icon_suit_up)
 				icon_state = icon_suit_up
-				usr.update_inv_wear_suit()
+				update_inv_mob()
 			hooded = !hooded
 	else
 		RemoveHood()

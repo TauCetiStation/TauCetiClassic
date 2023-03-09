@@ -227,8 +227,8 @@
 				var/obj/item/clothing/suit/lasertag/L = I
 				if(L.lasertag_color != lasertag_color)
 					threatcount += 4
-			else if(istype(I, /obj/item/weapon/gun/energy/laser/lasertag))
-				var/obj/item/weapon/gun/energy/laser/lasertag/L = I
+			else if(istype(I, /obj/item/weapon/gun/energy/laser/selfcharging/lasertag))
+				var/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/L = I
 				if(L.lasertag_color != lasertag_color)
 					threatcount += 4
 
@@ -252,10 +252,10 @@
 		var/obj/item/weapon/gun/energy/taser/G = new /obj/item/weapon/gun/energy/taser(Tsec)
 		G.power_supply.charge = 0
 	else if(lasertag_color == "blue")
-		var/obj/item/weapon/gun/energy/laser/lasertag/bluetag/G = new /obj/item/weapon/gun/energy/laser/lasertag/bluetag(Tsec)
+		var/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag/G = new /obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag(Tsec)
 		G.power_supply.charge = 0
 	else if(lasertag_color == "red")
-		var/obj/item/weapon/gun/energy/laser/lasertag/redtag/G = new /obj/item/weapon/gun/energy/laser/lasertag/redtag(Tsec)
+		var/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag/G = new /obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag(Tsec)
 		G.power_supply.charge = 0
 
 	if(prob(50))
@@ -438,11 +438,11 @@
 		if(7)
 			switch(lasertag_color)
 				if("blue")
-					if(!istype(I, /obj/item/weapon/gun/energy/laser/lasertag/bluetag))
+					if(!istype(I, /obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag))
 						return
 					name = "bluetag ED-209 assembly"
 				if("red")
-					if(!istype(I, /obj/item/weapon/gun/energy/laser/lasertag/redtag))
+					if(!istype(I, /obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag))
 						return
 					name = "redtag ED-209 assembly"
 				if("")

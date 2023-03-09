@@ -468,8 +468,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			M.l_hand.clean_blood()
 		if(M.back)
 			M.back.make_wet(1) //<= wet
-			if(M.back.clean_blood())
-				M.update_inv_back()
+			M.back.clean_blood()
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/washgloves = 1
@@ -498,24 +497,19 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 
 			if(H.head)
 				H.head.make_wet(1) //<= wet
-				if(H.head.clean_blood())
-					H.update_inv_head()
+				H.head.clean_blood()
 			if(H.wear_suit)
 				H.wear_suit.make_wet(1) //<= wet
-				if(H.wear_suit.clean_blood())
-					H.update_inv_wear_suit()
+				H.wear_suit.clean_blood()
 			else if(H.w_uniform)
 				H.w_uniform.make_wet(1) //<= wet
-				if(H.w_uniform.clean_blood())
-					H.update_inv_w_uniform()
+				H.w_uniform.clean_blood()
 			if(H.gloves && washgloves)
 				H.gloves.make_wet(1) //<= wet
-				if(H.gloves.clean_blood())
-					H.update_inv_gloves()
+				H.gloves.clean_blood()
 			if(H.shoes && washshoes)
 				H.shoes.make_wet(1) //<= wet
-				if(H.shoes.clean_blood())
-					H.update_inv_shoes()
+				H.shoes.clean_blood()
 			else
 				var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
 				var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
@@ -525,30 +519,24 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 				if(!no_legs)
 					H.feet_blood_DNA = null
 					H.feet_dirt_color = null
-					H.update_inv_shoes()
+					H.update_inv_slot(SLOT_SHOES)
 			if(H.wear_mask && washmask)
 				H.wear_mask.make_wet(1) //<= wet
-				if(H.wear_mask.clean_blood())
-					H.update_inv_wear_mask()
+				H.wear_mask.clean_blood()
 			if(H.glasses && washglasses)
 				H.glasses.make_wet(1) //<= wet
-				if(H.glasses.clean_blood())
-					H.update_inv_glasses()
+				H.glasses.clean_blood()
 			if(H.l_ear && washears)
-				if(H.l_ear.clean_blood())
-					H.update_inv_ears()
+				H.l_ear.clean_blood()
 			if(H.r_ear && washears)
-				if(H.r_ear.clean_blood())
-					H.update_inv_ears()
+				H.r_ear.clean_blood()
 			if(H.belt)
 				H.belt.make_wet(1) //<= wet
-				if(H.belt.clean_blood())
-					H.update_inv_belt()
+				H.belt.clean_blood()
 			H.clean_blood()
 		else
 			if(M.wear_mask)						//if the mob is not human, it cleans the mask without asking for bitflags
-				if(M.wear_mask.clean_blood())
-					M.update_inv_wear_mask()
+				M.wear_mask.clean_blood()
 			M.clean_blood()
 	else
 		O.clean_blood()
@@ -644,8 +632,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	if(do_after(user, 30, target = src))
 		busy = FALSE
 		user.clean_blood()
-		if(ishuman(user))
-			user:update_inv_gloves()
 		user.visible_message("<span class='notice'>[user] washes their hands using \the [src].</span>")
 		if(HAS_TRAIT_FROM(user, TRAIT_GREASY_FINGERS, QUALITY_TRAIT))
 			var/mob/living/carbon/human/H = user

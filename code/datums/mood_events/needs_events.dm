@@ -47,3 +47,18 @@
 /datum/mood_event/very_lonely
 	description = "<span class='boldwarning'>Am I the loneliest being in the universe?... I need to be heard!</span>"
 	mood_change = -12
+
+//well it's bascially their need to see heads of staff i guess
+/datum/mood_event/blueshield
+	description = "<span class='warning'>Нужно проверить моих подопечных.</span>"
+	mood_change = -6
+
+/datum/mood_event/blueshield/add_effects()
+	var/list/to_protect = list()
+	for(var/mob/living/carbon/human/player as anything in human_list)
+		if(player.mind && (player.mind.assigned_role in protected_by_blueshield_list))
+			to_protect += player.mind
+
+	if(!to_protect.len)
+		mood_change = 0
+		description = "<span class='notice'>А где главы?</span>"
