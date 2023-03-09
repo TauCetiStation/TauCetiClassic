@@ -49,6 +49,11 @@
 				for(var/mob/living/carbon/M in get_hearers_in_view(command_power, user))
 					if(M != user)
 						M.add_command_buff(usr, cooldown)
+
+						for(var/i in list(REV, HEADREV))
+							var/datum/role/R = user.mind?.GetRole(i)
+							if(R)
+								SEND_SIGNAL(M, COMSIG_ADJUST_LOYALITY, -20, src)
 			user.audible_message("<B>[user]</B> broadcasts, <FONT size=[max(3, command_power)]>\"[message]\"</FONT>")
 
 		spamcheck = 1

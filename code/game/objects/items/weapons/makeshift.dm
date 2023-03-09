@@ -311,9 +311,11 @@
 		to_chat(user, "<span class='notice'>You are too tired, to do that.</span>")
 		return
 
-/obj/item/weapon/transparant/attack(mob/M, mob/user)
+/obj/item/weapon/transparant/attack(mob/living/M, mob/living/user, def_zone)
 	..()
 	M.show_message("<span class='red'>\The <EM>[src.blood_DNA ? "bloody " : ""][bicon(src)][src.name]</EM> says: <span class='emojify bold'>[src.desc]</span></span>", SHOWMSG_VISUAL)
+	if(def_zone == BP_HEAD)
+		SEND_SIGNAL(M, COMSIG_ADJUST_LOYALITY, -20, src)
 
 /obj/item/weapon/transparant/update_icon()
 	if(blood_DNA)

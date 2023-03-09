@@ -363,3 +363,6 @@
 
 // send this signal to toggle zoom in /datum/component/zoom: (mob/user)
 #define COMSIG_ZOOM_TOGGLE "zoom_toggle"
+
+// send this signal to adjust loyality in /datum/component/nanotrasen_loyality: (source, amount)
+#define COMSIG_ADJUST_LOYALITY "adjust_loyality"

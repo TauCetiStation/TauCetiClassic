@@ -606,6 +606,20 @@
 	poster_item_desc = "Some weird poster shaming Nanotrasen for things they never did... or did they?"
 	poster_item_icon_state = "rolled_poster"
 
+/obj/structure/sign/poster/revolution/atom_init()
+	. = ..()
+	var/datum/faction/F = find_faction_by_type(/datum/faction/revolution)
+	if(F)
+		START_PROCESSING(SSobj, src)
+
+/obj/structure/sign/poster/revolution/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/structure/sign/poster/revolution/process(mob/user)
+	for(var/atom/A in viewers(3, src))
+		SEND_SIGNAL(A, COMSIG_ADJUST_LOYALITY, -10, src)
+
 /obj/structure/sign/poster/revolution/random
 	name = "random official poster"
 	icon_state = "random_official"

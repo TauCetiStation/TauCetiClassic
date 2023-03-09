@@ -27,6 +27,10 @@
 	. = ..()
 	to_chat(antag.current, "<span class='warning'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill, capture or convert the heads to win the revolution!</FONT></span>")
 
+/datum/role/rev/OnPostSetup(laterole)
+	. = ..()
+	antag.current.verbs += /mob/living/carbon/human/proc/RevConvert
+
 /datum/role/rev_leader
 	name = HEADREV
 	id = HEADREV
@@ -60,6 +64,8 @@
 		if(M && !isrevhead(M) && !(M in already_considered))
 			to_chat(rev_mob, "We have received credible reports that [M.real_name] might be willing to help our cause. If you need assistance, consider contacting them.")
 			rev_mob.mind.store_memory("<b>Potential Collaborator</b>: [M.real_name]")
+
+#define DEFAULT_REV_VERB_CD 600
 
 /mob/living/carbon/human/proc/RevConvert()
 	set name = "Rev-Convert"
@@ -96,24 +102,14 @@
 		to_chat(src, "<span class='warning'>Attempting to convert [M]...</span>")
 		log_admin("[key_name(src)]) attempted to convert [M].")
 		message_admins("<span class='warning'>[key_name_admin(src)] attempted to convert [M]. [ADMIN_JMP(src)]</span>")
-		var/choice = tgui_alert(M,"Asked by [src]: Do you want to join the revolution?","Join the Revolution!",list("No!","Yes!"))
-		if(choice == "Yes!")
-			var/datum/faction/revolution/rev = lead.GetFaction()
-			if(add_faction_member(rev, M, TRUE))
-				to_chat(M, "<span class='notice'>You join the revolution!</span>")
-				to_chat(src, "<span class='notice'><b>[M] joins the revolution!</b></span>")
-				var/obj/item/device/uplink/hidden/U = find_syndicate_uplink(src)
-				if(!U)
-					return
-				U.uses += 3
-				var/datum/component/gamemode/syndicate/S = lead.GetComponent(/datum/component/gamemode/syndicate)
-				if(!S)
-					return
-				S.total_TC += 3
+		var/say_string = sanitize_safe(input("What you want to proclaim?", "Viva la revolution!", "") as text)
+		if(!say_string)
+			lead.rev_cooldown = world.time + 50
+			return
 
-			else
-				to_chat(src, "<span class='warning'><b>[M] cannot be converted.</b></span>")
-		else if(choice == "No!")
-			to_chat(M, "<span class='warning'>You reject this traitorous cause!</span>")
-			to_chat(src, "<span class='warning'><b>[M] does not support the revolution!</b></span>")
-		lead.rev_cooldown = world.time + 50
+		SEND_SIGNAL(M, COMSIG_ADJUST_LOYALITY, lead ? -50 : -5, src)
+		say(say_string)
+		point_at(M)
+		lead.rev_cooldown = world.time + DEFAULT_REV_VERB_CD
+
+#undef DEFAULT_REV_VERB_CD

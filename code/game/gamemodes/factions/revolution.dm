@@ -34,6 +34,19 @@
 
 	return ..()
 
+/datum/faction/revolution/HandleRecruitedMind(datum/mind/M, laterole)
+	. = ..()
+	if(.)
+		for(var/datum/role/R in members)
+			var/obj/item/device/uplink/hidden/U = find_syndicate_uplink(R.antag.current)
+			if(!U)
+				return
+			U.uses += 1
+			var/datum/component/gamemode/syndicate/S = R.GetComponent(/datum/component/gamemode/syndicate)
+			if(!S)
+				return
+			S.total_TC += 1
+
 /datum/faction/revolution/forgeObjectives()
 	if(!..())
 		return FALSE
@@ -56,6 +69,9 @@
 	return TRUE
 
 /datum/faction/revolution/check_win()
+	var/aboba = TRUE
+	if(aboba)
+		return FALSE
 	var/win = IsSuccessful()
 	if(config.continous_rounds)
 		if(win && SSshuttle)
@@ -128,6 +144,17 @@
 				log_admin("Unable to add new heads of revolution.")
 				message_admins("Unable to add new heads of revolution.")
 				tried_to_add_revheads = world.time + 10 MINUTES
+
+	for(var/datum/role/rev/converted_rev in members)
+		for(var/datum/role/rev_leader/rev_head in members)
+			var/obj/item/device/uplink/hidden/U = find_syndicate_uplink(rev_head.antag.current)
+			if(!U)
+				return
+			U.uses += 1
+			var/datum/component/gamemode/syndicate/S = rev_head.GetComponent(/datum/component/gamemode/syndicate)
+			if(!S)
+				return
+			S.total_TC += 1
 
 	if(last_command_report == 0 && world.time >= 10 MINUTES)
 		command_report("We are regrettably announcing that your performance has been disappointing, and we are thus forced to cut down on financial support to your station. To achieve this, the pay of all personnal, except the Heads of Staff, has been halved.")

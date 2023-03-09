@@ -198,3 +198,10 @@
 		broken = 1
 		to_chat(user, "<span class='warning'>The bulb has burnt out!</span>")
 		icon_state = "flashburnt"
+
+/obj/item/device/flash/rev/attack(mob/living/M, mob/living/user, def_zone)
+	var/mob/living/carbon/human/H = M
+	if(H && !H.eyecheck())
+		if(!H.blinded)
+			SEND_SIGNAL(H, COMSIG_ADJUST_LOYALITY, -DEFAULT_MAX_NANOTRASEN_LOYALITY, src)
+			qdel(src)
