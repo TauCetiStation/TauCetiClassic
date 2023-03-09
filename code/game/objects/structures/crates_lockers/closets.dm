@@ -170,7 +170,8 @@
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
-	else if(istype(W, /obj/item/device/tagger))
+
+	else if(istagger(W))
 		return
 
 	else

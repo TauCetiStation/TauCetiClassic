@@ -270,6 +270,17 @@
 	item = /obj/item/weapon/melee/energy/sword/traitor
 	uplink_types = list("traitor")
 
+/datum/uplink_item/dangerous/power_gloves
+	name = "Power Gloves"
+	desc = "A pair of combat power gloves, powered by power cells, work in two modes: stun and kill. \
+	In KILL mode, increases the owner unarmed attack. \
+	In STUN mode, the gloves inflict a very powerful electric shock on enemies. \
+	When activated, gloves do not protect against electric shocks. \
+	They are disguised as heavy padded black gloves."
+	item = /obj/item/clothing/gloves/power
+	cost = 4
+	uplink_types = list("nuclear", "traitor")
+
 /datum/uplink_item/dangerous/emp
 	name = "EMP Grenades"
 	desc = "A box that contains an EMP grenades. Useful to disrupt communication and silicon lifeforms."

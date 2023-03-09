@@ -207,3 +207,6 @@
 	if(laws && isobserver(user))
 		to_chat(user, "<b>[src] has the following laws:</b><br>[write_laws()]")
 
+/mob/living/silicon/update_canmove(no_transform)
+	return
+
