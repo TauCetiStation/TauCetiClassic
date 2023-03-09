@@ -47,7 +47,7 @@
 		icon_state = initial(icon_state)
 		updateUsrDialog()
 
-	else if(iswrench(P))
+	else if(iswrenching(P))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored

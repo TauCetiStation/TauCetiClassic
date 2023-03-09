@@ -88,7 +88,7 @@
 			new /obj/item/weapon/storage/backpack/satchel/flat(src)
 
 		if("gadgets")
-			new /obj/item/clothing/gloves/yellow(src)
+			new /obj/item/clothing/gloves/power(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/device/flashlight/emp(src)
 			new /obj/item/clothing/shoes/syndigaloshes(src)
@@ -351,8 +351,8 @@
 
 /obj/item/weapon/storage/belt/utility/hacker
 	startswith = list(
-	/obj/item/weapon/wrench/power,
-	/obj/item/weapon/wirecutters/power,
+	/obj/item/weapon/multi/hand_drill,
+	/obj/item/weapon/multi/jaws_of_life,
 	/obj/item/weapon/weldingtool/largetank,
 	/obj/item/device/multitool,
 	/obj/item/device/flashlight/emp,)
@@ -423,6 +423,7 @@
 	/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 	/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat,
 	/obj/item/weapon/storage/pouch/medical_supply/syndicate,
+	/obj/item/clothing/gloves/power,
 	)
 
 

@@ -773,7 +773,9 @@
 /turf/simulated/floor/plating/airless/catwalk,
 /area/space_structures/derelict_lab)
 "cs" = (
-/obj/machinery/computer/rdconsole/core,
+/obj/machinery/computer/rdconsole/core{
+	id = 0
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},

@@ -136,7 +136,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 		files.research_points += disk.stored_points
 		user.remove_from_mob(disk)
 		qdel(disk)
-	else if(ismultitool(D))
+	else if(ispulsing(D))
 		var/obj/item/device/multitool/M = D
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You save the data in the [D.name]'s buffer.</span>")

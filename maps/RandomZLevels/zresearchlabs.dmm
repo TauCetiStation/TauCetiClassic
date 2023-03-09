@@ -2827,7 +2827,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/rdconsole/core,
+/obj/machinery/computer/rdconsole/core{
+	id = 0
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"

@@ -201,7 +201,7 @@
 
 // React to tools attacking src.
 /obj/structure/table/proc/attack_tools(obj/item/I, mob/user)
-	if(iswrench(I))
+	if(iswrenching(I))
 		if(user.is_busy(src))
 			return FALSE
 		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
@@ -519,7 +519,7 @@
 		return ..()
 
 /obj/structure/table/reinforced/attack_tools(obj/item/I, mob/user)
-	if(iswelder(I))
+	if(iswelding(I))
 		if(user.is_busy())
 			return FALSE
 		var/obj/item/weapon/weldingtool/WT = I
@@ -537,7 +537,7 @@
 			return TRUE
 		return FALSE
 
-	else if(status != 2 && iswrench(I))
+	else if(status != 2 && iswrenching(I))
 		if(user.is_busy(src))
 			return FALSE
 		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
@@ -589,7 +589,7 @@
 		return 0
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if (iswrenching(W))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		deconstruct(TRUE)
 		return

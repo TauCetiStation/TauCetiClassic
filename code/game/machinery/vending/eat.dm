@@ -44,6 +44,7 @@
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
 	req_access = list(25)
 	refill_canister = /obj/item/weapon/vending_refill/boozeomat
+	private = TRUE
 
 /obj/machinery/vending/coffee
 	name = "Hot Drinks machine"
@@ -67,6 +68,7 @@
 		/obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 15,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/coffee
+	private = FALSE
 
 /obj/machinery/vending/snack
 	name = "Getmore Chocolate Corp"
@@ -103,6 +105,7 @@
 		/obj/item/weapon/storage/food/normal/honkers = 15,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/snack
+	private = FALSE
 
 /obj/random/vending/snack
 	name = "random snack vendor"
@@ -151,6 +154,7 @@
 		/obj/item/weapon/kitchen/utensil/fork/sticks = 1,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/chinese
+	private = FALSE
 
 /obj/machinery/vending/cola
 	name = "Robust Softdrinks"
@@ -183,6 +187,7 @@
 		/obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice = 3,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/cola
+	private = FALSE
 
 /obj/random/vending/cola
 	name = "random cola vendor"
@@ -240,6 +245,7 @@
 	syndie = list(
 		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/kvass = 10,
 	)
+	private = TRUE
 
 /obj/machinery/vending/junkfood
 	name = "McNuffin's Fast Food"
@@ -271,6 +277,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/fishfingers = 2,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/junkfood
+	private = FALSE
 
 /obj/machinery/vending/donut
 	name = "Monkin' Donuts"
@@ -301,6 +308,7 @@
 		/obj/item/weapon/storage/fancy/donut_box = 3,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/donut
+	private = FALSE
 
 /obj/machinery/vending/sustenance
 	name = "Sustenance Vendor"
@@ -318,3 +326,4 @@
 	contraband = list(
 		/obj/item/weapon/kitchenknife = 6,
 	)
+	private = TRUE

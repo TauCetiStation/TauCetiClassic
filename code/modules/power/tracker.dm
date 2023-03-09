@@ -56,7 +56,7 @@
 
 /obj/machinery/power/tracker/attackby(obj/item/weapon/W, mob/user)
 
-	if(iscrowbar(W))
+	if(isprying(W))
 		if(user.is_busy()) return
 		if(W.use_tool(src, user, 50, volume = 50))
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)

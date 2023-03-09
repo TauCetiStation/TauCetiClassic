@@ -38,7 +38,7 @@
 
 	uniform = /obj/item/clothing/under/det
 	shoes = /obj/item/clothing/shoes/black
-	
+
 	suit = /obj/item/clothing/suit/storage/det_suit
 	glasses = /obj/item/clothing/glasses/thermal/monocle
 	head = /obj/item/clothing/head/det_hat
@@ -48,7 +48,7 @@
 
 /datum/outfit/tournament_chief
 	name = "Tournament: chef"
-	
+
 	uniform = /obj/item/clothing/under/rank/chef
 	shoes = /obj/item/clothing/shoes/black
 	head = /obj/item/clothing/head/chefhat
@@ -60,7 +60,7 @@
 
 /datum/outfit/tournament_janitor
 	name = "Tournament: janitor"
-	
+
 	uniform = /obj/item/clothing/under/rank/janitor
 	shoes = /obj/item/clothing/shoes/black
 	back = /obj/item/weapon/storage/backpack
@@ -98,7 +98,7 @@
 
 /datum/outfit/soviet_soldier
 	name = "soviet soldier"
-		
+
 	uniform = /obj/item/clothing/under/soviet
 	shoes = /obj/item/clothing/shoes/black
 	head = /obj/item/clothing/head/ushanka
@@ -121,7 +121,7 @@
 
 /datum/outfit/masked_killer
 	name = "masked killer"
-	
+
 	uniform = /obj/item/clothing/under/overalls
 	shoes = /obj/item/clothing/shoes/white
 	gloves = /obj/item/clothing/gloves/latex
@@ -141,7 +141,7 @@
 
 /datum/outfit/assasin
 	name = "assassin"
-	
+
 	uniform = /obj/item/clothing/under/suit_jacket
 	shoes = /obj/item/clothing/shoes/black
 	gloves = /obj/item/clothing/gloves/black
@@ -232,7 +232,7 @@
 
 /datum/outfit/syndicate_commando
 	name = "Syndicate: commando"
-	
+
 	l_ear = /obj/item/device/radio/headset/syndicate
 
 	uniform = /obj/item/clothing/under/syndicate
@@ -266,14 +266,14 @@
 		var/obj/item/clothing/accessory/storage/syndi_vest/SV = new (US)
 		LAZYADD(US.accessories, SV)
 		SV.on_attached(US, H, TRUE)
-		new /obj/item/weapon/screwdriver/power(SV.hold)
-		new /obj/item/weapon/wirecutters/power(SV.hold)
+		new /obj/item/weapon/multi/hand_drill(SV.hold)
+		new /obj/item/weapon/multi/jaws_of_life(SV.hold)
 		new /obj/item/weapon/weldingtool/largetank(SV.hold)
 		new /obj/item/device/multitool(SV.hold)
 
 /datum/outfit/syndicate_commando/leader
 	name = "Syndicate: commando commander"
-	
+
 	backpack_contents = list(
 		/obj/item/weapon/storage/box,
 		/obj/item/ammo_box/magazine/sm45,
@@ -298,7 +298,7 @@
 
 /datum/outfit/nanotrasen/representatives
 	name = "NanoTraset: representative"
-	
+
 	uniform = /obj/item/clothing/under/rank/centcom/representative
 	l_ear = /obj/item/device/radio/headset/heads/hop
 	belt = /obj/item/weapon/clipboard
@@ -540,7 +540,7 @@
 
 /datum/outfit/jolly_gravedigger/surpeme
 	name = "jolly gravedigger supreme"
-		
+
 	head = /obj/item/clothing/head/that
 
 /datum/outfit/jolly_gravedigger/surpeme/post_equip(mob/living/carbon/human/H)

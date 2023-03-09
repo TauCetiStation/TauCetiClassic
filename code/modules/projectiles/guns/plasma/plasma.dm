@@ -22,6 +22,7 @@
 	fire_sound = 'sound/weapons/guns/plasma10_shot.ogg'
 	recoil = FALSE
 	can_be_holstered = FALSE
+	two_hand_weapon = TRUE
 
 	var/overcharge_fire_sound = 'sound/weapons/guns/plasma10_overcharge_shot.ogg'
 
@@ -30,7 +31,7 @@
 		PLASMAGUN_OVERCHARGE_TYPE = /obj/item/ammo_casing/plasma/overcharge
 		)
 
-	var/mag_type = /obj/item/ammo_box/magazine/plasma
+	var/initial_mag = /obj/item/ammo_box/magazine/plasma
 	var/obj/item/ammo_box/magazine/plasma/magazine
 	var/number_of_shots = 25 // with 20000 battery
 	var/max_projectile_per_fire = 1 // this is amount of pellets at 100% used energy required to shoot, incase of spread guns like shotguns.
@@ -56,7 +57,7 @@
 
 /obj/item/weapon/gun/plasma/atom_init()
 	. = ..()
-	magazine = new mag_type(src)
+	magazine = new initial_mag(src)
 	for(var/i in ammo_type)
 		var/path = ammo_type[i]
 		ammo_type[i] = new path(src)
@@ -66,15 +67,6 @@
 	QDEL_LIST_ASSOC_VAL(ammo_type)
 	QDEL_NULL(magazine)
 	return ..()
-
-/obj/item/weapon/gun/plasma/special_check(mob/M, atom/target)
-	. = ..()
-	if(.)
-		// Two-handed wielding prototype for trying.
-		// Has modern codebases idea where you simply need an empty hand to shoot, while keeping old idea where it blocks shooting at all.
-		if(M.get_inactive_hand())
-			to_chat(M, "<span class='notice'>Your other hand must be free before firing! This weapon requires both hands to use.</span>")
-			return FALSE
 
 /obj/item/weapon/gun/plasma/Fire(atom/target, mob/living/user, params, reflex = 0)
 	newshot()
@@ -144,7 +136,7 @@
 /obj/item/weapon/gun/plasma/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ammo_box/magazine/plasma))
 		var/obj/item/ammo_box/magazine/plasma/AB = I
-		if(!magazine && istype(AB, mag_type))
+		if(!magazine && istype(AB, initial_mag))
 			user.drop_from_inventory(AB, src)
 			magazine = AB
 			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")

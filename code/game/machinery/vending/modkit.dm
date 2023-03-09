@@ -8,6 +8,7 @@
 		/obj/item/device/modkit/vox = 15,
 		/obj/item/device/modkit = 30,
 	)
+	private = TRUE
 
 /obj/machinery/vending/eva/mining
 	name = "Mining Hardsuit Kits"
@@ -20,6 +21,7 @@
 		/obj/item/device/modkit/vox = 3,
 		/obj/item/device/modkit = 5,
 	)
+	private = TRUE
 
 /obj/machinery/vending/eva/engineering
 	name = "Engineering Hardsuit Kits"
@@ -33,3 +35,4 @@
 		/obj/item/device/modkit/vox = 6,
 		/obj/item/device/modkit = 12,
 	)
+	private = TRUE

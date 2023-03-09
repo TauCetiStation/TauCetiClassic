@@ -105,7 +105,7 @@
 	if(T.intact)
 		return		// prevent intraction when T-scanner revealed
 
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		open = !open
 		user.SetNextMove(CLICK_CD_RAPID)
 

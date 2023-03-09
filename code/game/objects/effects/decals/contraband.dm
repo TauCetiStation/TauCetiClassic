@@ -86,7 +86,7 @@
 	return pick(approved_types)
 
 /obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
-	if(iswirecutter(W))
+	if(iscutter(W))
 		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 		if(ruined)
 			to_chat(user, "<span class='notice'>You remove the remnants of the poster.</span>")

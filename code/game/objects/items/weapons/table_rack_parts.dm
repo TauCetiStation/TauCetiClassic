@@ -16,7 +16,7 @@
  */
 // Return TRUE if reacted to a tool.
 /obj/item/weapon/table_parts/proc/attack_tools(obj/item/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		deconstruct(TRUE, user)
 		return TRUE
 
@@ -46,21 +46,22 @@
 	..()
 
 /obj/item/weapon/table_parts/attack_self(mob/user)
+	if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
+		return
 	var/turf/simulated/T = get_turf(user)
-	if (T.CanPass(null, T))
-		var/obj/structure/table/R = new table_type( T )
-		to_chat(user, "<span class='notice'>You assemble [src].</span>")
-		R.add_fingerprint(user)
-		qdel(src)
-	else
+	if(!T || !T.CanPass(null, T))
 		to_chat(user, "<span class='warning'>You can't put it here!</span>")
-
+		return
+	var/obj/structure/table/R = new table_type( T )
+	to_chat(user, "<span class='notice'>You assemble [src].</span>")
+	R.add_fingerprint(user)
+	qdel(src)
 
 /*
  * Reinforced Table Parts
  */
 /obj/item/weapon/table_parts/reinforced/attack_tools(obj/item/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
@@ -69,7 +70,7 @@
  * Glass Table Parts
  */
 /obj/item/weapon/table_parts/glass/attack_tools(obj/item/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
@@ -79,7 +80,7 @@
  * Wooden Table Parts
  */
 /obj/item/weapon/table_parts/wood/attack_tools(obj/item/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		deconstruct(TRUE, user)
 		return TRUE
 
@@ -97,7 +98,7 @@
  * Fancy Wooden Table Parts
  */
 /obj/item/weapon/table_parts/wood/fancy/attack_tools(obj/item/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
@@ -107,7 +108,7 @@
  */
 
 /obj/item/weapon/table_parts/wood/poker/attack_tools(obj/item/W, mob/user)
-	if(iswrench(W))
+	if(iswrenching(W))
 		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
@@ -116,7 +117,7 @@
  * Rack Parts
  */
 /obj/item/weapon/rack_parts/attackby(obj/item/I, mob/user, params)
-	if(iswrench(I))
+	if(iswrenching(I))
 		deconstruct(TRUE, user)
 		return
 	return ..()

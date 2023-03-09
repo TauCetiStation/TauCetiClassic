@@ -7,6 +7,8 @@
 	custom_metabolism = 0.01
 	taste_message = null
 
+	toxin_absorption = 0.5
+
 /datum/reagent/water/reaction_mob(mob/M, method=TOUCH, volume)
 	if(method == TOUCH)
 		if(ishuman(M))
@@ -332,6 +334,8 @@
 	taste_message = "like a pencil or something"
 	custom_metabolism = 0.01
 
+	toxin_absorption = 2.0
+
 /datum/reagent/carbon/reaction_turf(turf/T, volume)
 	. = ..()
 	if(!isspaceturf(T))
@@ -419,12 +423,13 @@
 	reagent_state = SOLID
 	color = "#ffffff" // rgb: 255, 255, 255
 	taste_message = "sweetness"
+	custom_metabolism = 0.5
 
 	needed_aspects = list(ASPECT_FOOD = 1)
 
 /datum/reagent/sugar/on_general_digest(mob/living/M)
 	..()
-	M.nutrition += 4 * REM
+	M.nutrition += 1
 
 /datum/reagent/sugar/on_vox_digest(mob/living/M)
 	..()
