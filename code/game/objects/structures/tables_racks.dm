@@ -580,8 +580,6 @@
 	name = Item.name
 
 /obj/lot_holder/examine(mob/user)
-	. = ..()
-
 	held_Item.examine(user)
 
 /obj/lot_holder/Destroy()
