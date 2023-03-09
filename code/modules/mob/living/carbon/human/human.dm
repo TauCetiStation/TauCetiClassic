@@ -68,7 +68,7 @@
 	AddComponent(/datum/component/altcraft)
 
 	var/loyality_num = DEFAULT_MAX_NANOTRASEN_LOYALITY
-	if(client.prefs)
+	if(client?.prefs)
 		if(client.prefs.nanotrasen_relation == "Opposed")
 			loyality_num = 20
 		if(client.prefs.nanotrasen_relation == "Skeptical")

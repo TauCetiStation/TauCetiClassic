@@ -18,6 +18,7 @@
 
 	var/mob/M = parent
 	if(!M.mind)
+		qdel(src)
 		return
 	for(var/i in list(REV, HEADREV))
 		if(M.mind.GetRole(i))
