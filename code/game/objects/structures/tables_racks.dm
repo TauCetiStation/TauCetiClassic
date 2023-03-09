@@ -598,8 +598,8 @@
 		table_attached_to.visible_message("<span class='info'>[user] прикладывает КПК к столу.</span>")
 		var/obj/item/weapon/card/id/Card = W.GetID()
 		scan_card(Card, user)
-
-	. = ..()
+	else
+		return ..()
 
 /obj/lot_holder/proc/scan_card(obj/item/weapon/card/id/Card, mob/user)
 	var/datum/money_account/Buyer = get_account(Card.associated_account_number)
