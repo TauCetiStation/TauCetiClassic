@@ -321,15 +321,11 @@
 	return report_dat
 
 /datum/mutiny_scenario/mine/do_first_strike()
-	for(var/i in 1 to 3)
-		var/datum/supply_order/order = new(SSshuttle.supply_packs[ckey("Cent Com Shaft Miner Gear")], "Cent Comm", "Cent Comm", "", "Helping")
-		SSshuttle.shoppinglist += order
+	add_supply_to_cargo(3, "Cent Com Shaft Miner Gear", reason_string = "Helping")
 
 //Let's believe they kill heads with pickaxes
 /datum/mutiny_scenario/mine/do_second_strike()
-	for(var/i in 1 to 8)
-		var/datum/supply_order/order = new(SSshuttle.supply_packs[ckey("Cent Com Shaft Miner Gear")], "Cent Comm", "Cent Comm", "", "Helping")
-		SSshuttle.shoppinglist += order
+	add_supply_to_cargo(8, "Cent Com Shaft Miner Gear", reason_string = "Helping")
 
 /datum/mutiny_scenario/genetic/get_first_report()
 	var/report_dat = ""
@@ -396,17 +392,13 @@
 	return report_dat
 
 /datum/mutiny_scenario/genetic/do_first_strike()
-	var/datum/supply_order/order = new(SSshuttle.supply_packs[ckey("Cent Com Secure Crate")], "Cent Comm", "Cent Comm", "", "Work")
-	SSshuttle.shoppinglist += order
+	add_supply_to_cargo(1, "Cent Com Secure Crate", reason_string = "Work")
 
 /datum/mutiny_scenario/genetic/do_second_strike()
-	var/datum/supply_order/order = new(SSshuttle.supply_packs[ckey("Cent Com Secure Supply Crate")], "Cent Comm", "Cent Comm", "", "Work")
-	SSshuttle.shoppinglist += order
+	add_supply_to_cargo(1, "Cent Com Secure Supply Crate", reason_string = "Work")
 
 /datum/mutiny_scenario/genetic/do_third_strike()
-	for(var/i in 1 to 2)
-		var/datum/supply_order/order = new(SSshuttle.supply_packs[ckey("Cent Com Head Stuff Crate")], "Cent Comm", "Cent Comm", "", "Work")
-		SSshuttle.shoppinglist += order
+	add_supply_to_cargo(2, "Cent Com Head Stuff Crate", reason_string = "Work")
 
 #undef SCENARIO_MONEY
 #undef SCENARIO_VIRUS
