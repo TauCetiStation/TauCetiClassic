@@ -57,10 +57,11 @@
 	if(!do_after(user, construction_time, target = src))
 		to_chat(user, "<span class='warning'>You must stand still!</span>")
 		return
-	if(!is_place_allowed(get_turf(user)))
+	var/turf/T = get_turf(user)
+	if(!is_place_allowed(T))
 		to_chat(user, "<span class='warning'>You can't put it here!</span>")
 		return
-	var/obj/structure/table/R = new table_type( T )
+	var/obj/structure/table/R = new table_type(T)
 	to_chat(user, "<span class='notice'>You assemble [src].</span>")
 	R.add_fingerprint(user)
 	qdel(src)
