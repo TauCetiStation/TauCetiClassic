@@ -16,7 +16,7 @@
  */
 // Return TRUE if reacted to a tool.
 /obj/item/weapon/table_parts
-	var/construction_time = 10
+	var/construction_time = 1 SECOND
 
 /obj/item/weapon/table_parts/proc/attack_tools(obj/item/W, mob/user)
 	if(iswrenching(W))
@@ -49,7 +49,7 @@
 	..()
 
 /obj/item/weapon/table_parts/attack_self(mob/user)
-	if(!is_place_allowed(get_turf(user)))
+	if(!can_place(get_turf(user)))
 		to_chat(user, "<span class='warning'>You can't put it here!</span>")
 		return
 	if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
@@ -58,7 +58,7 @@
 		to_chat(user, "<span class='warning'>You must stand still!</span>")
 		return
 	var/turf/T = get_turf(user)
-	if(!is_place_allowed(T))
+	if(!can_place(T))
 		to_chat(user, "<span class='warning'>You can't put it here!</span>")
 		return
 	var/obj/structure/table/R = new table_type(T)
@@ -66,17 +66,15 @@
 	R.add_fingerprint(user)
 	qdel(src)
 
-/obj/item/weapon/table_parts/proc/is_place_allowed(turf/user_turf)
-	var/turf/current_turf = user_turf
-	if(current_turf && current_turf.CanPass(null, current_turf))
-		return TRUE
-	return FALSE
+/obj/item/weapon/table_parts/proc/can_place(turf/T)
+	return T && T.CanPass(null, T)
 
 /*
  * Reinforced Table Parts
  */
+
 /obj/item/weapon/table_parts/reinforced
-	construction_time = 20
+	construction_time = 2 SECONDS
 
 /obj/item/weapon/table_parts/reinforced/attack_tools(obj/item/W, mob/user)
 	if(iswrenching(W))
