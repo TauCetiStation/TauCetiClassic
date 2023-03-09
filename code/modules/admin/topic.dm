@@ -51,10 +51,10 @@
 				message_admins("[success] number of changelings made.")
 				to_chat(usr, "<span class='notice'>[success] number of changelings made.</span>")
 			if("3")
-				message_admins("[key_name(usr)] has attempted to spawn [count] loyalists.")
-				var/success = makeAntag(null, /datum/faction/loyalists, count, FROM_PLAYERS, stealth)
-				message_admins("[success] number of loyalists made.")
-				to_chat(usr, "<span class='notice'>[success] number of loyalists made.</span>")
+				message_admins("[key_name(usr)] has attempted to spawn [count] revolutionaries.")
+				var/success = makeAntag(null, /datum/faction/revolution, count, FROM_PLAYERS, stealth)
+				message_admins("[success] number of revolutionaries made.")
+				to_chat(usr, "<span class='notice'>[success] number of revolutionaries made.</span>")
 			if("4")
 				message_admins("[key_name(usr)] has attempted to spawn [count] cultists.")
 				var/success = makeAntag(null, /datum/faction/cult, count, FROM_PLAYERS, stealth)
@@ -80,6 +80,11 @@
 				var/success = makeAntag(null, /datum/faction/heist, count, FROM_GHOSTS, stealth)
 				message_admins("[success] number of voxs made.")
 				to_chat(usr, "<span class='notice'>[success] number of voxs made.</span>")
+			if("9")
+				message_admins("[key_name(usr)] has attempted to spawn [count] loyalists.")
+				var/success = makeAntag(null, /datum/faction/loyalists, count, FROM_PLAYERS, stealth)
+				message_admins("[success] number of loyalists made.")
+				to_chat(usr, "<span class='notice'>[success] number of loyalists made.</span>")
 
 	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"] || href_list["dbsearchip"] || href_list["dbsearchcid"] || href_list["dbsearchbantype"])
 		var/adminckey = href_list["dbsearchadmin"]
@@ -667,6 +672,12 @@
 			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_OPERATIVE];jobban4=\ref[M]'>[ROLE_OPERATIVE]</a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_OPERATIVE];jobban4=\ref[M]'>[ROLE_OPERATIVE]</a></td>"
+
+		//Revolutionary
+		if(jobban_isbanned(M, ROLE_REV) || isbanned_dept)
+			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_REV];jobban4=\ref[M]'>[ROLE_REV]</a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_REV];jobban4=\ref[M]'>[ROLE_REV]</a></td>"
 
 		//Raider (New heist)
 		if(jobban_isbanned(M, ROLE_RAIDER) || isbanned_dept)

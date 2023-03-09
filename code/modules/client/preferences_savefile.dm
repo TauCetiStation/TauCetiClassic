@@ -251,13 +251,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				ignore_question |= IGNORE_LARVA
 				S["ignore_question"] << ignore_question
 
-	//copypasting from upper code
-	if(current_version < 42)
-		if(ignore_question && ignore_question.len)
-			if("Revolutionary" in ignore_question)
-				ignore_question -= "Revolutionary"
-				S["ignore_question"] << ignore_question
-
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 
