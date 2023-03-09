@@ -49,6 +49,10 @@
 			filling.icon += mix_color_from_reagents(beaker.reagents.reagent_list)
 			add_overlay(filling)
 
+/obj/machinery/iv_drip/on_reagent_change()
+	..()
+	update_icon()
+
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
 	..()
 	if(!iscarbon(usr) && !isrobot(usr))
@@ -136,7 +140,6 @@
 				visible_message("\The [src] beeps loudly.")
 
 			T.take_blood(beaker, amount)
-			update_icon()
 
 /obj/machinery/iv_drip/attack_ai(mob/user)
 	if(IsAdminGhost(user))
