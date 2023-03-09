@@ -654,7 +654,7 @@
 	if(I.loc != get_turf(src))
 		return
 
-	new /obj/lot_holder(loc, Item = I, Table = src)
+	new /obj/lot_holder(loc, I, src)
 
 /*
  * Racks
