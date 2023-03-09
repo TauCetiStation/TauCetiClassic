@@ -15,6 +15,7 @@
 	var/datum/reagent/liquid_fuel
 	var/start_brightness = 4
 	food_type = JUNK_FOOD
+	food_moodlet = /datum/mood_event/junk_food
 	action_button_name = "Break Glowstick"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/atom_init()
