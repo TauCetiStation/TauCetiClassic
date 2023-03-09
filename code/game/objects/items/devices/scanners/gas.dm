@@ -49,12 +49,9 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/analyzer, geiger_items_list)
 	if(user.incapacitated())
 		return
 	if(status)
-		if(tgui_alert(user, "Вы хотите просканировать окружение?", "Сканировать?", list("Да", "Нет")) != "Да")
-			cut_overlays()
-			status = FALSE
-			to_chat(user, "<span class='notice'>You turn off [src].</span>")
-		else
-			analyze_gases(user.loc, user, advanced_mode)
+		cut_overlays()
+		status = FALSE
+		to_chat(user, "<span class='notice'>You turn off [src].</span>")
 	else
 		status = TRUE
 		var/image/I = image(icon, icon_state = "atmos_overlay")
@@ -68,13 +65,10 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/analyzer, geiger_items_list)
 		return
 	if(user.incapacitated())
 		return
-	if(!isobj(target))
-		return
 	if(!status)
 		return
-	var/obj/O = target
-	if(O.simulated)
-		analyze_gases(O, user, advanced_mode)
+	if(isobj(target) || isfloorturf(target))
+		analyze_gases(target, user, advanced_mode)
 
 /obj/item/device/analyzer/examine(mob/user)
 	. = ..()
