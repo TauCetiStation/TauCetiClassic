@@ -557,7 +557,7 @@
 	return ..()
 
 /obj/lot_holder
-	name = "Lot Holder"
+	name = "lot holder"
 	icon = 'icons/effects/32x32.dmi'
 	icon_state = "blank"
 	anchored = TRUE
