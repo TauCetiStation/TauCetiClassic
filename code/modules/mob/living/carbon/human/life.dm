@@ -704,18 +704,6 @@ var/global/list/tourette_bad_words= list(
 				update_inv_wear_suit()
 				update_size_class()
 
-	if (nutrition > 450)
-		if(overeatduration < 600) //capped so people don't take forever to unfat
-			overeatduration++
-	else
-		if(overeatduration > 1)
-			overeatduration -= 2 //doubled the unfat rate
-
-	if(species.flags[REQUIRE_LIGHT])
-		if(nutrition < 200)
-			take_overall_damage(2,0)
-			traumatic_shock++
-
 	AdjustConfused(-1)
 	AdjustDrunkenness(-1)
 	// decrement dizziness counter, clamped to 0
@@ -1280,8 +1268,10 @@ var/global/list/tourette_bad_words= list(
 
 /mob/living/carbon/human/handle_nutrition()
 	. = ..()
-	var/nutrition_to_remove = 0
 	var/met_factor = get_metabolism_factor()
+	if(!met_factor)
+		return
+	var/nutrition_to_remove = 0
 	var/bumped_bodyparts_met = 0
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.pumped > 0)
@@ -1289,6 +1279,18 @@ var/global/list/tourette_bad_words= list(
 	if(bumped_bodyparts_met > 0)
 		nutrition_to_remove += (met_factor + bumped_bodyparts_met) * 0.1
 		AdjustNutrition(-nutrition_to_remove)
+
+	if(nutrition > 450)
+		if(overeatduration < 600) //capped so people don't take forever to unfat
+			overeatduration++
+	else
+		if(overeatduration > 1)
+			overeatduration -= 2 //doubled the unfat rate
+
+	if(species.flags[REQUIRE_LIGHT])
+		if(nutrition < 200)
+			take_overall_damage(2,0)
+			traumatic_shock++
 
 /mob/living/carbon/human/is_default_metabolise_active()
 	//Enable nutrition decrease for nonhumans

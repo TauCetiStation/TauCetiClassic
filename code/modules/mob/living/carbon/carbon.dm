@@ -1290,8 +1290,10 @@
 	..(amount, min_temp, max_temp)
 
 /mob/living/carbon/handle_nutrition()
-	var/nutrition_to_remove = 0
 	var/met_factor = get_metabolism_factor()
+	if(!met_factor)
+		return
+	var/nutrition_to_remove = 0
 	if(is_default_metabolise_active())
 		nutrition_to_remove += 0.01
 		//weight loss
