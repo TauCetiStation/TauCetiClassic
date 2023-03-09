@@ -1271,7 +1271,6 @@ var/global/list/tourette_bad_words= list(
 		if(BP.pumped > 0)
 			bumped_bodyparts_met += BP.pumped / 100
 	if(bumped_bodyparts_met > 0)
-		//multiply to 2 because its now lifetick, not movetick
 		nutrition_to_remove += (met_factor + bumped_bodyparts_met) * 0.1
 		nutrition -= nutrition_to_remove
 
