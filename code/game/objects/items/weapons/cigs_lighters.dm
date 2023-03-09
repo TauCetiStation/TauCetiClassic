@@ -170,13 +170,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.handle_reactions()
 		icon_state = icon_on
 		item_state = icon_on
+		update_inv_mob()
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		START_PROCESSING(SSobj, src)
-
-		if(ismob(loc))
-			var/mob/M = loc
-			M.update_inv_item(src)
 
 
 /obj/item/clothing/mask/cigarette/process()
@@ -235,7 +232,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		var/mob/living/M = loc
 		to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
 		M.remove_from_mob(src)	//un-equip it so the overlays can update
-		M.update_inv_wear_mask(0)
 	STOP_PROCESSING(SSobj, src)
 	qdel(src)
 
@@ -351,12 +347,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		damtype = BURN
 		icon_state = icon_on
 		item_state = icon_on
+		update_inv_mob()
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		START_PROCESSING(SSobj, src)
-		if(ismob(loc))
-			var/mob/M = loc
-			M.update_inv_wear_mask()
 
 /obj/item/clothing/mask/cigarette/pipe/process()
 	var/turf/location = get_turf(src)
@@ -370,7 +364,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			lit = 0
 			icon_state = icon_off
 			item_state = icon_off
-			M.update_inv_wear_mask(0)
+			update_inv_mob()
 		STOP_PROCESSING(SSobj, src)
 		return
 	if(location)

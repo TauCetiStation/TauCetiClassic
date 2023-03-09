@@ -199,3 +199,7 @@
 	var/start_time
 	// string, [hh:mm]
 	var/leave_time
+
+/datum/stat/rating
+	// map of [string, float] where float is [0..5]
+	var/list/ratings = list()

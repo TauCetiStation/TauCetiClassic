@@ -282,7 +282,7 @@ SUBSYSTEM_DEF(mapping)
 	if(!should_revote)
 		return
 
-	var/datum/poll/map_poll = SSvote.votes[/datum/poll/nextmap]
+	var/datum/poll/map_poll = SSvote.possible_polls[/datum/poll/nextmap]
 	if(map_poll && map_poll.can_start())
 		to_chat(world, "<span class='notice'>Current next map is inappropriate for ammount of players online. Map vote will be forced.</span>")
 		SSvote.start_vote(map_poll.type)

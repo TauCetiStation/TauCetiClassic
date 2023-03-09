@@ -12,6 +12,7 @@
 	)
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
 	refill_canister = /obj/item/weapon/vending_refill/assist
+	private = FALSE
 
 /obj/machinery/vending/phoronresearch
 	name = "Toximate 3000"
@@ -23,6 +24,7 @@
 		/obj/item/device/assembly/prox_sensor = 6,
 		/obj/item/device/assembly/igniter = 6,
 	)
+	private = TRUE
 
 /obj/machinery/vending/tool
 	name = "YouTool"
@@ -50,6 +52,7 @@
 		/obj/item/weapon/gun/energy/pyrometer/engineering = 1,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/tool
+	private = TRUE
 
 /obj/machinery/vending/engivend
 	name = "Engi-Vend"
@@ -81,6 +84,7 @@
 		/obj/item/weapon/storage/part_replacer = 1,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/engivend
+	private = TRUE
 
 /obj/machinery/vending/engineering
 	name = "Robco Tool Maker"
@@ -116,6 +120,7 @@
 		/obj/item/weapon/stock_parts/console_screen = 5,
 		/obj/item/weapon/gun/energy/pyrometer/engineering = 4,
 	)
+	private = TRUE
 	// There was an incorrect entry (cablecoil/power).  I improvised to cablecoil/heavyduty.
 	// Another invalid entry, /obj/item/weapon/circuitry.  I don't even know what that would translate to, removed it.
 	// The original products list wasn't finished.  The ones without given quantities became quantity 5.  -Sayu
@@ -140,3 +145,4 @@
 		/obj/item/weapon/gun/energy/pyrometer/engineering/robotics = 2,
 		/obj/item/clothing/glasses/hud/diagnostic = 5,
 	)
+	private = TRUE

@@ -577,6 +577,10 @@
 				if(V.stealth_active)
 					to_chat(H, "<span class='notice'>You can't focus your eyes on [src].</span>")
 					return
+		if(H.isimplantedblueshield() && mind && (mind.assigned_role in protected_by_blueshield_list))
+			for(var/obj/item/weapon/implant/blueshield/B in H)
+				B.last_examined = world.time
+			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
 
 	if(roundstart_quirks.len)
 		var/should_see_quirks = HAS_TRAIT_FROM(user, TRAIT_ANATOMIST, QUALITY_TRAIT)

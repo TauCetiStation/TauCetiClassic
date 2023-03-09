@@ -57,7 +57,7 @@
 /mob/living/carbon/xenomorph/facehugger/u_equip(obj/item/W)
 	if (W == r_hand)
 		r_hand = null
-		update_inv_r_hand(0)
+		W.update_inv_mob()
 
 /mob/living/carbon/xenomorph/facehugger/attack_ui(slot_id)
 	return
@@ -481,8 +481,6 @@ When we finish, facehugger's player will be transfered inside embryo.
 		var/obj/item/clothing/mask/facehugger/hugger = affecting.wear_mask
 		if(istype(hugger, /obj/item/clothing/mask/facehugger))
 			hugger.get_off()
-		if(iscarbon(affecting))
-			affecting.update_inv_wear_mask(1)
 		qdel(src)
 		return FALSE
 
