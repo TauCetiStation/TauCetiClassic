@@ -16,7 +16,7 @@
 /mob/living/simple_animal/hostile/replicator/UnarmedAttack(atom/A)
 	if(isliving(A) && !isreplicator(A) && a_intent == INTENT_HARM)
 		var/mob/living/L = A
-		do_attack_animation(L)
+		INVOKE_ASYNC(src, /atom/movable.proc/do_attack_animation, L)
 		visible_message("<span class='warning'>[src] attacks [A]!</span>")
 		playsound(L, 'sound/weapons/crystal_hit.ogg', VOL_EFFECTS_MASTER)
 
@@ -25,7 +25,7 @@
 
 		var/target_zone = get_targetzone()
 		L.apply_damage(3.0, BRUTE, target_zone, 0.0, NONE)
-		L.apply_effects(0, 0, 0, 0, 2, 1, 0, 20 + additional_damage * 0.5, 0)
+		L.apply_effects(0, 0, 0, 0, 2, 1, 0, 17 + additional_damage * 0.5, 0)
 
 		SetNextMove(CLICK_CD_MELEE)
 		L.set_lastattacker_info(src)
@@ -93,6 +93,9 @@
 /mob/living/simple_animal/hostile/replicator/attacked_by(obj/item/I, mob/living/user, def_zone, power)
 	power /= armor["melee"]
 	return ..()
+
+/mob/living/simple_animal/hostile/replicator/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
+	return ..(A, end_pixel_y, has_effect, visual_effect_icon = "disintegrate", visual_effect_color = "#ffffff")
 
 
 /obj/item/mine/replicator
