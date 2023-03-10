@@ -33,8 +33,8 @@
 
 /datum/faction/loyalists/forgeObjectives()
 	if(..())
-		var/datum/objective/custom/C = AppendObjective(/datum/objective/custom)
-		C.explanation_text = "Follow all directives"
+		var/datum/objective/stay_loyal/C = AppendObjective(/datum/objective/stay_loyal)
+		C.explanation_text = "Follow all directives and stay loyal"
 		return TRUE
 
 /datum/faction/loyalists/can_join_faction(mob/P)
@@ -58,26 +58,32 @@
 		return TRUE
 	return FALSE
 
+/datum/faction/loyalists/proc/check_loyality_members()
+	for(var/datum/role/R in members)
+		if(R.antag.current.isloyal())
+			return TRUE
+	return FALSE
+
 /datum/faction/loyalists/custom_result()
 	var/dat = ""
-	var/dead_heads = 0
-	var/alive_heads = 0
+	var/overthrown_heads = 0
+	var/alive_loyal_heads = 0
 	for(var/datum/role/loyalist/R in members)
-		if(R.calculate_completion() == OBJECTIVE_WIN)
-			alive_heads++
-		else
-			dead_heads++
-
-	if(!dead_heads)
-		dat += "<span class='green'>The loyal heads of staff have survived!</span>"
+		for(var/datum/objective/O in R.GetObjectives())
+			if(O.calculate_completion() == OBJECTIVE_WIN)
+				alive_loyal_heads++
+			else
+				overthrown_heads++
+	if(overthrown_heads > 0 && alive_loyal_heads < overthrown_heads)
+		dat += "<span class='red'>The loyal heads of staff were overthrown!</span>"
+		feedback_add_details("[ID]_success","FAIL")
+	else if(overthrown_heads <= 0 && alive_loyal_heads > 0)
+		dat += "<span class='green'>All regime leaders have survived!</span>"
 		feedback_add_details("[ID]_success","SUCCESS")
 		SSStatistics.score.roleswon++
-	else if(alive_heads > dead_heads)
+	else
 		dat += "<span class='orange'>The loyal heads of staff were overthrown, but survived.</span>"
 		feedback_add_details("[ID]_success","HALF")
-	else
-		dat += "<span class='red'>The loyal heads of staff have died!</span>"
-		feedback_add_details("[ID]_success","FAIL")
 	return dat
 
 /datum/faction/loyalists/process()

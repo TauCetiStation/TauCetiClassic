@@ -657,6 +657,7 @@
 #include "code\game\gamemodes\objectives\prop_points.dm"
 #include "code\game\gamemodes\objectives\reproduct.dm"
 #include "code\game\gamemodes\objectives\silence.dm"
+#include "code\game\gamemodes\objectives\stay_loyal.dm"
 #include "code\game\gamemodes\objectives\steal.dm"
 #include "code\game\gamemodes\objectives\survive.dm"
 #include "code\game\gamemodes\objectives\turn_into_zombie.dm"
