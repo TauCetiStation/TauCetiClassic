@@ -162,20 +162,19 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 
 	to_chat(user, "<span class='notice'>And only you could possibly know. That they are indeed both. The beggining and the end.</span>")
 
-/obj/machinery/swarm_powered/bluespace_transponder/Crossed(atom/movable/AM)
+/obj/machinery/swarm_powered/bluespace_transponder/proc/try_enter_corridor(atom/movable/AM)
 	if(stat & NOPOWER)
 		if(isreplicator(AM))
 			start_drone_energy_supply(AM)
-			return
-
-		return ..()
+			return FALSE
+		return FALSE
 
 	var/obj/structure/bluespace_corridor/BC = locate() in loc
 	if(!BC)
-		return ..()
+		return FALSE
 
 	if(AM.invisibility > 0)
-		return ..()
+		return FALSE
 
 	var/see_invisible_level = 0
 	if(ismob(AM))
@@ -184,6 +183,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 
 	playsound(src, 'sound/magic/MAGIC_MISSILE.ogg', VOL_EFFECTS_MASTER, 60)
 	AM.AddComponent(/datum/component/bluespace_move, src, AM.invisibility, see_invisible_level, AM.alpha)
+	return TRUE
+
+/obj/machinery/swarm_powered/bluespace_transponder/Crossed(atom/movable/AM)
+	if(try_enter_corridor(AM))
+		return
+
+	return ..()
 
 /obj/machinery/swarm_powered/bluespace_transponder/start_drone_energy_supply(mob/living/simple_animal/hostile/replicator/R)
 	. = ..()
