@@ -253,7 +253,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	new auto_construct_type(T)
 	FR.adjust_materials(-auto_construct_cost, adjusted_by=last_controller_ckey)
-	announce_material_adjustment(-auto_construct_cost)
+	announce_material_adjustment(-auto_construct_cost, ignore_intent=FALSE)
 
 // Corridors can only connect to two other corridors if there's no portal connecting them.
 // No more than 2 neighbors, and no more than 1 neighbor of the neigbhor(excluding us)
