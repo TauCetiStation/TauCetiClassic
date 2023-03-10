@@ -107,6 +107,7 @@ SUBSYSTEM_DEF(rating)
 
 	var/voting = FALSE
 	var/already_started = FALSE
+	var/voting_time = 1 MINUTE
 
 /datum/controller/subsystem/rating/Initialize(start_timeofday)
 	for(var/type in subtypesof(/datum/rating_template))
@@ -115,6 +116,9 @@ SUBSYSTEM_DEF(rating)
 
 /datum/controller/subsystem/rating/Topic(href, href_list)
 	if(!voting)
+		var/voting_time_minute = voting_time / 600
+		var/rus_minute_word = pluralize_russian(voting_time_minute, "минута", "минуты", "минут")
+		to_chat(usr, "<span class='warning'>На голосование отводится всего [voting_time_minute] [rus_minute_word]. В следующий раз стоит быть пошустрее!</span>")
 		return
 
 	if(href_list["round_rating"] && href_list["rating_cat"])
@@ -179,7 +183,7 @@ SUBSYSTEM_DEF(rating)
 	voting = TRUE
 	already_started = TRUE
 
-	addtimer(CALLBACK(src, .proc/calculate_rating), 1 MINUTE)
+	addtimer(CALLBACK(src, .proc/calculate_rating), voting_time)
 
 	for(var/client/C in clients)
 		var/html = "<div class='rating'>"
