@@ -69,14 +69,14 @@
 			dead_heads++
 
 	if(!dead_heads)
-		dat += "<span class='green'>The loyal heads of staff were survive!</span>"
+		dat += "<span class='green'>The loyal heads of staff have survived!</span>"
 		feedback_add_details("[ID]_success","SUCCESS")
 		SSStatistics.score.roleswon++
 	else if(alive_heads > dead_heads)
-		dat += "<span class='orange'>The loyal heads of staff were overthrown, but survive.</span>"
+		dat += "<span class='orange'>The loyal heads of staff were overthrown, but survived.</span>"
 		feedback_add_details("[ID]_success","HALF")
 	else
-		dat += "<span class='red'>The loyal heads of staff were died!</span>"
+		dat += "<span class='red'>The loyal heads of staff have died!</span>"
 		feedback_add_details("[ID]_success","FAIL")
 	return dat
 
