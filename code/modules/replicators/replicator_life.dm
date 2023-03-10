@@ -132,6 +132,8 @@
 	last_disintegration = world.time
 
 /mob/living/simple_animal/hostile/replicator/proc/handle_status_updates()
+	var/color_to_flash = null
+
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	var/datum/replicator_array_info/RAI = FR.ckey2info[last_controller_ckey]
 	if(ckey && RAI)
@@ -158,6 +160,7 @@
 			next_jamming_alert = world.time + jamming_alert_cooldown
 			to_chat(src, "<span class='bold warning'>You feel your essence being jammed by a teleportation supressor nearby!</span>")
 		take_bodypart_damage(0.0, maxHealth / 120)
+		color_to_flash = "#0000ff"
 
 		if(stat == DEAD)
 			if(!isspaceturf(loc))
@@ -192,11 +195,14 @@
 		if(next_consume_alert < world.time && taken_damage)
 			next_consume_alert = world.time + 20 SECONDS
 			playsound_local(null, 'sound/effects/alert.ogg', VOL_EFFECTS_MASTER, 15 + 60 * (maxHealth - health) / maxHealth, null, CHANNEL_MUSIC, vary = FALSE, frequency = null, ignore_environment = TRUE)
-			flash_color(src, flash_color="#ff0000", flash_time=5)
+			color_to_flash = "#ff0000"
 			to_chat(src, "<span class='danger'><font size=2>This world can not support your body for long. You must <b>consume</b> to survive.</font></span>")
 	else
 		is_hungry = FALSE
 		clear_alert("swarm_hunger")
+
+	if(color_to_flash)
+		flash_color(src, flash_color=color_to_flash, flash_time=5)
 
 	last_update_health = health
 
