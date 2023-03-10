@@ -229,11 +229,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 /obj/structure/forcefield_node/Destroy()
 	// to-do: sound
 	playsound(loc, 'sound/machines/arcade/heal2.ogg', VOL_EFFECTS_MASTER)
-	// var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-	// FR.nodes_to_spawn += 1
 
 	var/obj/machinery/power/replicator_generator/RG = locate() in loc
 	if(RG)
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		FR.adjust_materials(REPLICATOR_COST_GENERATOR)
 		qdel(RG)
 

@@ -812,9 +812,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	if(isobserver(user) && perc_finished < 100)
 		to_chat(user, "<span class='warning'>It is [perc_finished]% finished.</span>")
 
-	if(catapult.perc_finished >= 100)
+	if(perc_finished >= 100)
+		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		to_chat(user, "<span class='notice'>Launched [FR.replicators_launched]/[REPLICATORS_CATAPULTED_TO_WIN] replicators.</span>")
-
 	else
 		if(required_materials > 0)
 			to_chat(user, "<span class='notice'>It requires [required_materials] more materials.</span>")
