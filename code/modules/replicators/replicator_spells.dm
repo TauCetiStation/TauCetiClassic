@@ -101,10 +101,10 @@
 	var/mob/living/simple_animal/hostile/replicator/R = new(user_replicator.loc)
 	R.set_last_controller(user_replicator.last_controller_ckey, just_spawned=TRUE)
 
-	R.generation = "[user_replicator.generation][rand(0, 9)]"
-
-	R.name = "replicator ([R.generation])"
-	R.real_name = R.name
+	if(length(user_replicator.generation) < 10)
+		R.generation = "[user_replicator.generation][rand(0, 9)]"
+		R.name = "replicator ([R.generation])"
+		R.real_name = R.name
 
 	R.next_control_change = world.time + R.control_change_cooldown
 
