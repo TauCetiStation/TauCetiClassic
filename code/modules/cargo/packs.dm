@@ -1982,7 +1982,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	hidden = TRUE
 
 //----------------------------------------------
-//-----------------MUTINY-----------------------
+//-----------------REBELLION--------------------
 //----------------------------------------------
 
 /datum/supply_pack/mining_centcom_supply

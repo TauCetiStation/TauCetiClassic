@@ -179,7 +179,7 @@ SUBSYSTEM_DEF(job)
 //This is basically to ensure that there's atleast a few heads in the round
 /datum/controller/subsystem/job/proc/FillHeadPosition()
 	//Fill loyal jobs first
-	if(istype(SSticker.mode, /datum/game_mode/mutiny))
+	if(istype(SSticker.mode, /datum/game_mode/rebellion))
 		var/one_loyalist_selected = FALSE
 		for(var/job_name in loyal_command_position)
 			var/datum/job/loyal_job = SSjob.GetJob(job_name)

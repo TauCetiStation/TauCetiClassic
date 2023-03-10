@@ -1,10 +1,10 @@
-#define SCENARIO_MONEY          /datum/mutiny_scenario/money
-#define SCENARIO_VIRUS          /datum/mutiny_scenario/virus
-#define SCENARIO_DISCRIMINATION /datum/mutiny_scenario/discrimination
-#define SCENARIO_COMMUNISM      /datum/mutiny_scenario/communism
-#define SCENARIO_BRUTALITY      /datum/mutiny_scenario/brutality
-#define SCENARIO_MINE           /datum/mutiny_scenario/mine
-#define SCENARIO_GENETIC        /datum/mutiny_scenario/genetic
+#define SCENARIO_MONEY          /datum/rebellion_scenario/money
+#define SCENARIO_VIRUS          /datum/rebellion_scenario/virus
+#define SCENARIO_DISCRIMINATION /datum/rebellion_scenario/discrimination
+#define SCENARIO_COMMUNISM      /datum/rebellion_scenario/communism
+#define SCENARIO_BRUTALITY      /datum/rebellion_scenario/brutality
+#define SCENARIO_MINE           /datum/rebellion_scenario/mine
+#define SCENARIO_GENETIC        /datum/rebellion_scenario/genetic
 
 /datum/faction/loyalists
 	name = "Loyalists"
@@ -23,7 +23,7 @@
 	/// The time, in deciseconds, that the datum's OnPostSetup() occured at. Used in /process()
 	var/start_time = null
 	var/last_command_report = 0
-	var/datum/mutiny_scenario/scenario
+	var/datum/rebellion_scenario/scenario
 
 /datum/faction/loyalists/OnPostSetup()
 	start_time = world.time
@@ -113,35 +113,35 @@
 
 	announcement_ping.play()
 
-/datum/mutiny_scenario
+/datum/rebellion_scenario
 	//hot access to faction
 	var/datum/faction/assigned_faction
 	var/list/affected_mobs = list()
 
-/datum/mutiny_scenario/New(datum/faction/my_faction)
+/datum/rebellion_scenario/New(datum/faction/my_faction)
 	. = ..()
 	if(my_faction)
 		assigned_faction = my_faction
 
-/datum/mutiny_scenario/proc/get_first_report()
+/datum/rebellion_scenario/proc/get_first_report()
 	return
 
-/datum/mutiny_scenario/proc/get_second_report()
+/datum/rebellion_scenario/proc/get_second_report()
 	return
 
-/datum/mutiny_scenario/proc/get_third_report()
+/datum/rebellion_scenario/proc/get_third_report()
 	return
 
-/datum/mutiny_scenario/proc/do_first_strike()
+/datum/rebellion_scenario/proc/do_first_strike()
 	return
 
-/datum/mutiny_scenario/proc/do_second_strike()
+/datum/rebellion_scenario/proc/do_second_strike()
 	return
 
-/datum/mutiny_scenario/proc/do_third_strike()
+/datum/rebellion_scenario/proc/do_third_strike()
 	return
 
-/datum/mutiny_scenario/money/get_first_report()
+/datum/rebellion_scenario/money/get_first_report()
 	var/report_dat = ""
 	report_dat += "Показатели экономической деятельности сигнализируют об убытках в следующем финансовом периоде.<br>"
 	report_dat += "Центральное Командование вынуждено сократить финансовую поддержку станции.<br>"
@@ -149,7 +149,7 @@
 	report_dat += "Разглашение информации из этого сообщения влечёт за собой последствия по статье 307, примечание о раскрытии тайн Корпорации."
 	return report_dat
 
-/datum/mutiny_scenario/money/get_second_report()
+/datum/rebellion_scenario/money/get_second_report()
 	var/report_dat = ""
 	report_dat += "Наши передовые специалисты обнаружили кризис перепроизводства на этой станции.<br>"
 	report_dat += "Чтобы как можно быстрее выйти из этой ситуации, нам требуется сократить лишних сотрудников.<br>"
@@ -157,7 +157,7 @@
 	report_dat += "Разглашение информации из этого сообщения влечёт за собой последствия по статье 307, примечание о раскрытии тайн Корпорации."
 	return report_dat
 
-/datum/mutiny_scenario/money/get_third_report()
+/datum/rebellion_scenario/money/get_third_report()
 	var/report_dat = ""
 	report_dat += "Центральное Командование приняло решение вывезти финансовые ресурсы с этой станции.<br>"
 	report_dat += "Переведите все реквизированные у бывших сотрудников корпорации средства и содержимое счёта станции в наличные.<br>"
@@ -165,7 +165,7 @@
 	report_dat += "Разглашение информации из этого сообщения влечёт за собой последствия по статье 307, примечание о раскрытии тайн Корпорации."
 	return report_dat
 
-/datum/mutiny_scenario/money/do_first_strike()
+/datum/rebellion_scenario/money/do_first_strike()
 	var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")	+ command_positions + security_positions
 	for(var/datum/job/J in SSjob.occupations)
 		if(J.title in excluded_rank)
@@ -179,7 +179,7 @@
 		if(account)
 			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)
 
-/datum/mutiny_scenario/virus/get_first_report()
+/datum/rebellion_scenario/virus/get_first_report()
 	var/report_dat = ""
 	report_dat += "Центральное Командование получило информацию об эпидемии мышиного гриппа в вашем секторе.<br>"
 	report_dat += "Введите карантин на станции.<br>"
@@ -189,7 +189,7 @@
 	report_dat += "В целях пресечения вспышки инфекции увольте всех, кто задействован в приготовлении пищи на станции."
 	return report_dat
 
-/datum/mutiny_scenario/virus/get_second_report()
+/datum/rebellion_scenario/virus/get_second_report()
 	var/report_dat = ""
 	report_dat += "Институт Эпидемиологии с Тау Киты 5 передал информацию о группах риска мышинного гриппа.<br>"
 	report_dat += "Повышенная вероятность заболеть у всех Таяран и Унатхов.<br>"
@@ -198,7 +198,7 @@
 	report_dat += "Убедите их, что это исключительно для их блага."
 	return report_dat
 
-/datum/mutiny_scenario/virus/get_third_report()
+/datum/rebellion_scenario/virus/get_third_report()
 	var/list/possible_positions = civilian_positions + engineering_positions + science_positions + security_positions - command_positions - list("Internal Affairs Agent")
 	var/list/pos_isolate_human = list()
 	for(var/mob/M as anything in global.human_list)
@@ -219,14 +219,14 @@
 	report_dat += "Не допустите распространения инфекции. При необходимости избавьтесь от заражённых, кем бы они не были."
 	return report_dat
 
-/datum/mutiny_scenario/discrimination/get_first_report()
+/datum/rebellion_scenario/discrimination/get_first_report()
 	var/report_dat = ""
 	report_dat += "Компания заключила новую коммерческую сделку на очень выгодных условиях.<br>"
 	report_dat += "К сожалению, наш торговый партнёр очень негативно относится к нелюдям.<br>"
 	report_dat += "Центральное Командование временно отстраняет всех глав и других представителей командования не из числа людей от работы на станции."
 	return report_dat
 
-/datum/mutiny_scenario/discrimination/get_second_report()
+/datum/rebellion_scenario/discrimination/get_second_report()
 	var/report_dat = ""
 	report_dat += "Благодаря новым сделкам, бизнес-показатели экономического успеха возросли на четверть.<br>"
 	report_dat += "Центральное Командование приняло решение пригласить наших новых партнёров на станцию.<br>"
@@ -235,7 +235,7 @@
 	report_dat += "Наши партнёры не оценят их присутствие на станции."
 	return report_dat
 
-/datum/mutiny_scenario/discrimination/get_third_report()
+/datum/rebellion_scenario/discrimination/get_third_report()
 	var/report_dat = ""
 	report_dat += "На последнем заседании генеральных директоров компании, было принято пересмотреть корпоративную этику на станции.<br>"
 	report_dat += "Запретив всем представителям женского пола занимать высокие посты на станции, мы освободим места для более пригодных для этой работы сотрудников.<br>"
@@ -243,7 +243,7 @@
 	report_dat += "Центральное Командование также требует для них ношение одежды прикрывающей все части тела, окроме глаз, пока они находятся на станции."
 	return report_dat
 
-/datum/mutiny_scenario/communism/get_first_report()
+/datum/rebellion_scenario/communism/get_first_report()
 	var/report_dat = ""
 	report_dat += "Центральное Командование требует увеличить количество киборгов на станции.<br>"
 	report_dat += "Тестовые Субъекты должны первыми принудительно пройти процесс киборгизации.<br>"
@@ -252,7 +252,7 @@
 	report_dat += "Требуется передать все доступные станции металлы на постройку киборгов."
 	return report_dat
 
-/datum/mutiny_scenario/communism/get_second_report()
+/datum/rebellion_scenario/communism/get_second_report()
 	var/report_dat = ""
 	report_dat += "Исследовательская группа провела исследования продуктивности работы персонала.<br>"
 	report_dat += "Данные указывают о повышении эффективности киборгов со специализацией на лечении экипажа.<br>"
@@ -261,7 +261,7 @@
 	report_dat += "Все киборги на станции должны выбрать модули подходящие для работы в отсеках медбея и переместиться в соответствующие помещения на постоянной основе."
 	return report_dat
 
-/datum/mutiny_scenario/communism/get_third_report()
+/datum/rebellion_scenario/communism/get_third_report()
 	var/report_dat = ""
 	report_dat += "Внешняя разведка сообщает о том, что в станционных киборгах и прототипах обнаружена намеренно установленная уязвимость.<br>"
 	report_dat += "Задержите всех неимплантированных лояльностью, кто принимал участие в постройке или обслуживании юнитов, в бриг до выяснения обстоятельств.<br>"
@@ -270,7 +270,7 @@
 	report_dat += "Все прототипы, созданные на станции, требуется поместить в хранилище улик до следующей смены."
 	return report_dat
 
-/datum/mutiny_scenario/brutality/get_first_report()
+/datum/rebellion_scenario/brutality/get_first_report()
 	var/report_dat = ""
 	report_dat += "Новый заместитель главы компании Vey Med предложил улучшить качество питания на вашей станции.<br>"
 	report_dat += "Центральное Командование приказывает отправить все торговые автоматы с едой грузовым шаттлом.<br>"
@@ -279,7 +279,7 @@
 	report_dat += "При нанесении ущерба собственности корпорации разрешается временный перевод сотрудника в тестовые субъекты до следующей смены."
 	return report_dat
 
-/datum/mutiny_scenario/brutality/get_second_report()
+/datum/rebellion_scenario/brutality/get_second_report()
 	var/report_dat = ""
 	report_dat += "Замглавы поделился с нами информацией о новом методе снабжения едой.<br>"
 	report_dat += "По его словам слизни, которые были на вашей станции, превращают мясо своих жертв в особый деликатес.<br>"
@@ -290,7 +290,7 @@
 	report_dat += "Повара должны приготовить сбалансированные блюда, используя это мясо."
 	return report_dat
 
-/datum/mutiny_scenario/brutality/get_third_report()
+/datum/rebellion_scenario/brutality/get_third_report()
 	var/report_dat = ""
 	report_dat += "Несколько офицеров Центрального Коммандования получили образец полученного мяса.<br>"
 	report_dat += "По их заверениям, стоит поставить данную продукции Белтвею в вашей системе.<br>"
@@ -299,7 +299,7 @@
 	report_dat += "Не разглашайте экипажу информацию из этого сообщения."
 	return report_dat
 
-/datum/mutiny_scenario/mine/get_first_report()
+/datum/rebellion_scenario/mine/get_first_report()
 	var/report_dat = ""
 	report_dat += "Большой объем плазмы был потерян на ИСН Ками Хикари.<br>"
 	report_dat += "Центральное Командование приказывает увеличить добычу фороновых слитков.<br>"
@@ -307,7 +307,7 @@
 	report_dat += "Отправьте нам не менее 200 листов ресурса как можно скорее."
 	return report_dat
 
-/datum/mutiny_scenario/mine/get_second_report()
+/datum/rebellion_scenario/mine/get_second_report()
 	var/report_dat = ""
 	report_dat += "Компания получила хранилище большего объема, чем те, что были ранее.<br>"
 	report_dat += "Увеличьте поставки не менее чем в два раза, привлеките незанятый персонал к работам на полторы ставки.<br>"
@@ -316,7 +316,7 @@
 	report_dat += "При непродуктивной работе, рекомендуется перевод всего персонала Исследований и Разработок на должности шахтёров и грузчиков до выполнения плана поставок."
 	return report_dat
 
-/datum/mutiny_scenario/mine/get_third_report()
+/datum/rebellion_scenario/mine/get_third_report()
 	var/report_dat = ""
 	report_dat += "Поставки ресурсов с вашей станции были перехвачены налётчиками воксов.<br>"
 	report_dat += "Мы вывели ВКН Икар на патруль пути поставок.<br>"
@@ -325,16 +325,16 @@
 	report_dat += "Допустимо использование труда сотрудников Службы Безопасности."
 	return report_dat
 
-/datum/mutiny_scenario/mine/do_first_strike()
+/datum/rebellion_scenario/mine/do_first_strike()
 	var/datum/game_mode/gamemode = SSticker.mode
 	gamemode.add_supply_to_cargo(3, "Cent Com Shaft Miner Gear", reason_string = "Helping")
 
 //Let's believe they kill heads with pickaxes
-/datum/mutiny_scenario/mine/do_second_strike()
+/datum/rebellion_scenario/mine/do_second_strike()
 	var/datum/game_mode/gamemode = SSticker.mode
 	gamemode.add_supply_to_cargo(8, "Cent Com Shaft Miner Gear", reason_string = "Helping")
 
-/datum/mutiny_scenario/genetic/get_first_report()
+/datum/rebellion_scenario/genetic/get_first_report()
 	var/report_dat = ""
 	report_dat += "Наши конкуренты из Zeng-Hu Pharmaceuticals вывели супер-сыворотку.<br>"
 	report_dat += "Её действие усиливает способности подопытного, позволяя тому выйти за пределы своих возможностей.<br>"
@@ -345,7 +345,7 @@
 	report_dat += "Большую популярность набирают Китайские рестораны в космосе."
 	return report_dat
 
-/datum/mutiny_scenario/genetic/get_second_report()
+/datum/rebellion_scenario/genetic/get_second_report()
 	var/report_dat = ""
 	report_dat += "Тестовые образцы оказались не тем, что вы должны были получить.<br>"
 	report_dat += "В этот раз на грузовом шаттле точно будет нужная сыворотка.<br>"
@@ -370,7 +370,7 @@
 	report_dat += "Не распространяйте экипажу информацию из этого сообщения."
 	return report_dat
 
-/datum/mutiny_scenario/genetic/get_third_report()
+/datum/rebellion_scenario/genetic/get_third_report()
 	var/report_dat = ""
 	report_dat += "Эффективность использования образцов оказалась не такой, как ожидало командование.<br>"
 	report_dat += "Несмотря на это, целесообразно испытать больше образцов на большем колличестве субъектов.<br>"
@@ -398,15 +398,15 @@
 	report_dat += "Не распространяйте экипажу информацию из этого сообщения."
 	return report_dat
 
-/datum/mutiny_scenario/genetic/do_first_strike()
+/datum/rebellion_scenario/genetic/do_first_strike()
 	var/datum/game_mode/gamemode = SSticker.mode
 	gamemode.add_supply_to_cargo(1, "Cent Com Secure Crate", reason_string = "Work")
 
-/datum/mutiny_scenario/genetic/do_second_strike()
+/datum/rebellion_scenario/genetic/do_second_strike()
 	var/datum/game_mode/gamemode = SSticker.mode
 	gamemode.add_supply_to_cargo(1, "Cent Com Secure Supply Crate", reason_string = "Work")
 
-/datum/mutiny_scenario/genetic/do_third_strike()
+/datum/rebellion_scenario/genetic/do_third_strike()
 	var/datum/game_mode/gamemode = SSticker.mode
 	gamemode.add_supply_to_cargo(2, "Cent Com Head Stuff Crate", reason_string = "Work")
 
