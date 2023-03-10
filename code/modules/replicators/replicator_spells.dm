@@ -73,7 +73,7 @@
 
 	var/node_proximity = FALSE
 	for(var/obj/structure/forcefield_node/FN as anything in global.forcefield_nodes)
-		if(get_dist(FN, src) >= REPLICATOR_NODE_PROXIMITY)
+		if(get_dist(FN, src) >= 2)
 			continue
 		if(locate(/obj/machinery/power/replicator_generator) in FN.loc)
 			continue
@@ -82,7 +82,7 @@
 
 	if(!node_proximity)
 		if(try_start)
-			to_chat(user, "<span class='warning'>You require an unclaimed node closeby to replicate.</span>")
+			to_chat(user, "<span class='warning'>You require an unclaimed node adjacent to you to replicate.</span>")
 		return FALSE
 
 	return ..()
