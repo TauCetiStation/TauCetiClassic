@@ -78,12 +78,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	power_change()
 	update_wires_check()
 
-	if(!mapload)
+	if(SSticker.current_state == GAME_STATE_PLAYING)
 		load_products(FALSE)
 	else
-		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, .proc/load_products, roundstart = TRUE)
+		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, .proc/load_products)
 
-/obj/machinery/vending/proc/load_products(roundstart)
+/obj/machinery/vending/proc/load_products(roundstart = TRUE)
 	build_inventory(products, roundstart)
 	 //Add hidden inventory
 	build_inventory(contraband, hidden = 1)
