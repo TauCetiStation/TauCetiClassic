@@ -1,8 +1,3 @@
-#define SOUND_LIGHT "sound/items/radioactive_machine_light.ogg"
-#define SOUND_MEDIUM "sound/items/radioactive_machine_medium.ogg"
-#define SOUND_LOUD "sound/items/radioactive_machine_huge.ogg"
-#define SOUND_ALERT "sound/items/radioactive_machine_alert.ogg"
-
 // radiation dose per second
 #define SAFE_DOSE 5
 #define HEALTH_EFFECT_DOSE 7.5
@@ -82,14 +77,14 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/analyzer, geiger_items_list)
 	if(distance_to_rad < 0)
 		return
 	var/distance_volume = abs(clamp(distance_to_rad, 0, 70)-100)
-	var/dose_sound = SOUND_LIGHT
+	var/dose_sound = "sound/items/radioactive_machine_light.ogg"
 	switch(amount_rad)
 		if(SAFE_DOSE to HEALTH_EFFECT_DOSE)
-			dose_sound = SOUND_MEDIUM
+			dose_sound = "sound/items/radioactive_machine_medium.ogg"
 		if(HEALTH_EFFECT_DOSE to DANGEROUS_DOSE)
-			dose_sound = SOUND_LOUD
+			dose_sound = "sound/items/radioactive_machine_huge.ogg"
 		if(DANGEROUS_DOSE to INFINITY)
-			dose_sound = SOUND_ALERT
+			dose_sound = "sound/items/radioactive_machine_alert.ogg"
 	if(COOLDOWN_FINISHED(src, sound_play_cd))
 		playsound(src, dose_sound, VOL_EFFECTS_MASTER, distance_volume)
 		var/sound/S = sound(dose_sound)
@@ -97,10 +92,6 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/analyzer, geiger_items_list)
 	last_rad_signal = round(amount_rad)
 	last_distance = distance_to_rad
 
-#undef SOUND_LIGHT
-#undef SOUND_MEDIUM
-#undef SOUND_LOUD
-#undef SOUND_ALERT
 #undef SAFE_DOSE
 #undef HEALTH_EFFECT_DOSE
 #undef DANGEROUS_DOSE
