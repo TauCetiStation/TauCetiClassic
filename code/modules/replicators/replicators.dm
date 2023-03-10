@@ -91,6 +91,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	var/disabler_damage_increase = 0.0
 
 	var/last_brute_hit = 0
+	var/last_melee_attack = 0
 
 	// How many drones are under direct control.
 	var/controlling_drones = 0
@@ -573,9 +574,11 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 /mob/living/simple_animal/hostile/replicator/movement_delay()
 	. = ..()
 	if(invisibility > 0)
-		. -= 1
-	if(last_brute_hit + 1 SECOND < world.time)
-		. += 1
+		. -= 1.0
+	if(last_brute_hit + 2 SECONDS < world.time)
+		. += 1.5
+	if(last_melee_attack + 2 SECONDS < world.time)
+		. += 1.0
 
 /mob/living/simple_animal/hostile/replicator/adjustBruteLoss(damage)
 	..()

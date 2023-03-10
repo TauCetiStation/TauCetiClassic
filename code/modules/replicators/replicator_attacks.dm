@@ -31,6 +31,8 @@
 		L.set_lastattacker_info(src)
 		L.log_combat(src, "replicator-attacked (INTENT: [uppertext(a_intent)]) (CONTROLLER: [last_controller_ckey])")
 		scatter_offset()
+
+		last_melee_attack = world.time
 		return
 
 	if(a_intent == INTENT_GRAB)
