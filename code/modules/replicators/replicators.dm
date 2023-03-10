@@ -716,6 +716,9 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	if(!client)
 		return
 
+	if(!client.prefs.show_runechat)
+		return
+
 	var/sign_txt = amount >= 0 ? "+" : "-"
 
 	show_runechat_message(src, null, "[sign_txt][round(amount, 0.1)]", lifespan=REPLICATOR_DISINTEGRATION_MESSAGE_LIFESPAN)
