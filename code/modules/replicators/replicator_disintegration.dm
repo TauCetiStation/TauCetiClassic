@@ -214,7 +214,7 @@
 		FR.adjust_taxes(material_amount)
 		FR.adjust_materials(material_amount, adjusted_by=last_controller_ckey)
 
-		announce_material_adjustment(material_amount)
+		announce_material_adjustment(material_amount, ignore_intent=FALSE)
 
 		if(!A.is_replicator_structure())
 			if(has_swarms_gift())
