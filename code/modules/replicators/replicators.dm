@@ -601,7 +601,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	s.set_up(impact, 1, src)
 	s.start()
 
-	Stun(impact * 0.5)
+	Stun(impact * 0.75)
 
 /mob/living/simple_animal/hostile/replicator/proc/set_last_controller(ckey, just_spawned=FALSE)
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
