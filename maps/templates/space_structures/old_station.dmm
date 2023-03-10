@@ -3328,7 +3328,6 @@
 	},
 /obj/item/clothing/mask/balaclava/tactical,
 /obj/effect/spawner/mob_spawn/alien,
-/obj/effect/spawner/mob_spawn/alien,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
