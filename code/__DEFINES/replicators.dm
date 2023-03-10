@@ -32,7 +32,7 @@
 #define REPLICATOR_PUNISH_UNCONSCIOUS_MOBS_TICK_MODIFIER 1.0
 
 // When disintegrating non-replicator items, how much materials do you get per unit.
-#define REPLICATOR_DISINTEGRATION_RESOURCE_EFFICENCY 0.85
+#define REPLICATOR_DISINTEGRATION_RESOURCE_EFFICENCY 0.8
 #define REPLICATOR_GAS_PER_MATERIAL 1.0
 
 // Power usage.
