@@ -95,7 +95,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/replicator/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
-	return ..(A, end_pixel_y, has_effect, visual_effect_icon = "disintegrate", visual_effect_color = "#ffffff")
+	return ..(A, end_pixel_y, has_effect, visual_effect_icon = "disintegrate", visual_effect_color = color)
 
 
 /obj/item/mine/replicator
