@@ -1,10 +1,10 @@
-#define SCENARIO_MONEY     /datum/mutiny_scenario/money
-#define SCENARIO_VIRUS     /datum/mutiny_scenario/virus
-#define SCENARIO_RACISM    /datum/mutiny_scenario/racism
-#define SCENARIO_COMMUNISM /datum/mutiny_scenario/communism
-#define SCENARIO_BRUTALITY /datum/mutiny_scenario/brutality
-#define SCENARIO_MINE      /datum/mutiny_scenario/mine
-#define SCENARIO_GENETIC   /datum/mutiny_scenario/genetic
+#define SCENARIO_MONEY          /datum/mutiny_scenario/money
+#define SCENARIO_VIRUS          /datum/mutiny_scenario/virus
+#define SCENARIO_DISCRIMINATION /datum/mutiny_scenario/discrimination
+#define SCENARIO_COMMUNISM      /datum/mutiny_scenario/communism
+#define SCENARIO_BRUTALITY      /datum/mutiny_scenario/brutality
+#define SCENARIO_MINE           /datum/mutiny_scenario/mine
+#define SCENARIO_GENETIC        /datum/mutiny_scenario/genetic
 
 /datum/faction/loyalists
 	name = "Loyalists"
@@ -27,7 +27,7 @@
 
 /datum/faction/loyalists/OnPostSetup()
 	start_time = world.time
-	var/scenario_type = pick(SCENARIO_MONEY, SCENARIO_VIRUS, SCENARIO_RACISM, SCENARIO_COMMUNISM, SCENARIO_BRUTALITY, SCENARIO_MINE, SCENARIO_GENETIC)
+	var/scenario_type = pick(SCENARIO_MONEY, SCENARIO_VIRUS, SCENARIO_DISCRIMINATION, SCENARIO_COMMUNISM, SCENARIO_BRUTALITY, SCENARIO_MINE, SCENARIO_GENETIC)
 	scenario = new scenario_type(src)
 	return ..()
 
@@ -212,14 +212,14 @@
 	report_dat += "Не допустите распространения инфекции. При необходимости избавьтесь от заражённых, кем бы они не были."
 	return report_dat
 
-/datum/mutiny_scenario/racism/get_first_report()
+/datum/mutiny_scenario/discrimination/get_first_report()
 	var/report_dat = ""
 	report_dat += "Компания заключила новую коммерческую сделку на очень выгодных условиях.<br>"
 	report_dat += "К сожалению, наш торговый партнёр очень негативно относится к нелюдям.<br>"
 	report_dat += "Центральное Командование временно отстраняет всех глав и других представителей командования не из числа людей от работы на станции."
 	return report_dat
 
-/datum/mutiny_scenario/racism/get_second_report()
+/datum/mutiny_scenario/discrimination/get_second_report()
 	var/report_dat = ""
 	report_dat += "Благодаря новым сделкам, бизнес-показатели экономического успеха возросли на четверть.<br>"
 	report_dat += "Центральное Командование приняло решение пригласить наших новых партнёров на станцию.<br>"
@@ -228,7 +228,7 @@
 	report_dat += "Наши партнёры не оценят их присутствие на станции."
 	return report_dat
 
-/datum/mutiny_scenario/racism/get_third_report()
+/datum/mutiny_scenario/discrimination/get_third_report()
 	var/report_dat = ""
 	report_dat += "На последнем заседании генеральных директоров компании, было принято пересмотреть корпоративную этику на станции.<br>"
 	report_dat += "Запретив всем представителям женского пола занимать высокие посты на станции, мы освободим места для более пригодных для этой работы сотрудников.<br>"
@@ -405,7 +405,7 @@
 
 #undef SCENARIO_MONEY
 #undef SCENARIO_VIRUS
-#undef SCENARIO_RACISM
+#undef SCENARIO_DISCRIMINATION
 #undef SCENARIO_COMMUNISM
 #undef SCENARIO_BRUTALITY
 #undef SCENARIO_MINE
