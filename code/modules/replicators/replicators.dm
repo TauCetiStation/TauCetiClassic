@@ -616,6 +616,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	// to-do: sound on controller change
 	if(new_color)
 		color = new_color
+		chat_color = new_color
 
 /mob/living/simple_animal/hostile/replicator/m_intent_delay()
 	return 1 + config.run_speed
