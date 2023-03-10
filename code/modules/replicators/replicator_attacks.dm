@@ -88,6 +88,8 @@
 /mob/living/simple_animal/hostile/replicator/CtrlClickOn(atom/A)
 	if(!isreplicator(A))
 		return
+	if(stat == DEAD)
+		return
 	transfer_control(A)
 
 /mob/living/simple_animal/hostile/replicator/attacked_by(obj/item/I, mob/living/user, def_zone, power)

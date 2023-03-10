@@ -371,7 +371,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 		if(C.ckey)
 			continue
 		playsound(src, 'sound/mecha/lowpower.ogg', VOL_EFFECTS_MASTER)
-		transfer_control(C)
+		transfer_control(C, emergency=TRUE)
 		to_chat(C, "<span class='warning'>DRONE INTEGRITY CRITICAL: PRESENCE TRANSFER PROTOCOL ACTIVATED</span>")
 		flash_color(src, flash_color="#ff0000", flash_time=1 SECOND)
 		flash_color(C, flash_color="#ff0000", flash_time=1 SECOND)
@@ -386,7 +386,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	return ..()
 
 // Return TRUE if succesful control transfer.
-/mob/living/simple_animal/hostile/replicator/proc/transfer_control(mob/living/simple_animal/hostile/replicator/target, alert=TRUE)
+/mob/living/simple_animal/hostile/replicator/proc/transfer_control(mob/living/simple_animal/hostile/replicator/target, alert=TRUE, emergency=TRUE)
 	if(!mind)
 		return
 
@@ -395,12 +395,12 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 			to_chat(src, "<span class='warning'>Impossible: Target under presence control.</span>")
 		return FALSE
 
-	if(target.state == REPLICATOR_STATE_COMBAT)
+	if(target.state == REPLICATOR_STATE_COMBAT && !emergency)
 		if(alert)
 			to_chat(src, "<span class='warning'>Impossible: Target under presence control.</span>")
 		return FALSE
 
-	if(target.last_controller_ckey && target.last_controller_ckey != ckey && target.next_control_change > world.time)
+	if(target.last_controller_ckey && target.last_controller_ckey != ckey && target.next_control_change > world.time && !emergency)
 		if(alert)
 			to_chat(src, "<span class='warning'>Impossible: Target under lingering presence affect. Try again later.</span>")
 		return FALSE

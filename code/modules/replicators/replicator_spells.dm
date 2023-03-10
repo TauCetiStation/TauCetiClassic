@@ -391,10 +391,17 @@
 	action_icon = 'icons/mob/replicator.dmi'
 	action_icon_state = "ui_transfer_idle"
 
-/obj/effect/proc_holder/spell/no_target/transfer_to_idle/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+	stat_allowed = TRUE
+
+/obj/effect/proc_holder/spell/no_target/transfer_to_idle/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
 	if(length(global.idle_replicators) <= 0)
 		if(try_start)
 			to_chat(user, "<span class='notice'>No suitable hosts found.</span>")
+		return FALSE
+
+	if(user.stat == DEAD)
+		if(try_start)
+			to_chat(user, "Not when you're incapacitated.")
 		return FALSE
 
 	return ..()
@@ -416,6 +423,16 @@
 
 	action_icon = 'icons/mob/replicator.dmi'
 	action_icon_state = "ui_transfer_area"
+
+	stat_allowed = TRUE
+
+/obj/effect/proc_holder/spell/no_target/transfer_to_area/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE)
+	if(user.stat == DEAD)
+		if(try_start)
+			to_chat(user, "Not when you're incapacitated.")
+		return FALSE
+
+	return ..()
 
 /obj/effect/proc_holder/spell/no_target/transfer_to_area/cast(list/targets, mob/user = usr)
 	var/list/pos_areas = list()
