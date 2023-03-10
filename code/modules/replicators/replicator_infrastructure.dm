@@ -694,6 +694,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 
 	var/next_construction = 0
 
+	var/next_lemming_reminder = 0
+	var/lemming_reminder_cooldown = 2 MINUTES
+
 /obj/machinery/swarm_powered/bluespace_catapult/atom_init()
 	. = ..()
 	var/datum/announcement/centcomm/replicator/construction_began/CB = new
@@ -749,6 +752,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 		var/area/A = get_area(src)
 		FR.swarm_chat_message("The Swarm", "Bluespace Catapult construction finished in [A.name]. Escape through the dimensional rift before it closes!", 5)
 
+		next_lemming_reminder = world.time + lemming_reminder_cooldown
+
+	if(perc_finished >= 100 && next_lemming_reminder < world.time && FR.replicators_launched < REPLICATORS_CATAPULTED_TO_WIN)
+		var/area/A = get_area(src)
+		FR.swarm_chat_message("The Swarm", "[REPLICATORS_CATAPULTED_TO_WIN - FR.replicators_launched] more replicators are required to launch from the catapult at [A.name]. You must go there, now!", 5)
+
 	if(announcement)
 		last_perc_announcement = perc_finished
 		announcement.play(get_area(src))
@@ -803,15 +812,20 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	if(isobserver(user) && perc_finished < 100)
 		to_chat(user, "<span class='warning'>It is [perc_finished]% finished.</span>")
 
-	if(required_materials > 0)
-		to_chat(user, "<span class='notice'>It requires [required_materials] more materials.</span>")
-	if(required_power > 0)
-		to_chat(user, "<span class='notice'>It required [required_power] more power.</span>")
+	if(catapult.perc_finished >= 100)
+		to_chat(user, "<span class='notice'>Launched [FR.replicators_launched]/[REPLICATORS_CATAPULTED_TO_WIN] replicators.</span>")
 
-	if(next_construction > 0)
-		to_chat(user, "<span class='warning'>It's construction is disabled for the next [(world.time - next_construction) * 0.1] seconds.</span>")
-	else if(stat & NOPOWER)
-		to_chat(user, "<span class='warning'>It is not powered. It must be powered to consume.</span>")
+	else
+		if(required_materials > 0)
+			to_chat(user, "<span class='notice'>It requires [required_materials] more materials.</span>")
+		if(required_power > 0)
+			to_chat(user, "<span class='notice'>It required [required_power] more power.</span>")
+
+		if(next_construction > 0)
+			to_chat(user, "<span class='warning'>It's construction is disabled for the next [(world.time - next_construction) * 0.1] seconds.</span>")
+		else if(stat & NOPOWER)
+			to_chat(user, "<span class='warning'>It is not powered. It must be powered to consume.</span>")
+
 
 /obj/machinery/swarm_powered/bluespace_catapult/emp_act(severity)
 	. = ..()

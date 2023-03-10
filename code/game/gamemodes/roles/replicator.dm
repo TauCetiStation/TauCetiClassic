@@ -44,8 +44,11 @@
 		stat("Unclaimed Nodes:", node_string)
 
 	if(length(global.bluespace_catapults) > 0)
-		var/area/A = get_area(global.bluespace_catapults[1])
+		var/obj/machinery/swarm_powered/bluespace_catapult/catapult = global.bluespace_catapults[1]
+		var/area/A = get_area(catapult)
 		stat("Catapult Location:", "[A.name]")
+		if(catapult.perc_finished >= 100)
+			stat("Catapult replicators launched:", "[FR.replicators_launched]/[REPLICATORS_CATAPULTED_TO_WIN]")
 
 	if(RAI && length(RAI.acquired_upgrades) > 0)
 		stat("Array Upgrades:", RAI.get_upgrades_string())
