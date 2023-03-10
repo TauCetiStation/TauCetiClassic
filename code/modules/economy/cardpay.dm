@@ -63,7 +63,7 @@
 				else
 					to_chat(user, "<span class='warning'>Сканер можно прикрутить только к столу.</span>")
 	else
-		. = ..()
+		return ..()
 
 /obj/item/device/cardpay/attack_self(mob/living/user)
 	. = ..()
