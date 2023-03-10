@@ -8,7 +8,7 @@
 	m_amt = 7000
 	g_amt = 2000
 
-	var/datum/money_account/linked_account
+	var/linked_account = 0
 	var/pay_amount = 0
 	var/display_price = 0
 	var/reset = TRUE
@@ -37,7 +37,7 @@
 			var/obj/item/weapon/card/id/Card = I
 			var/datum/money_account/D = get_account(Card.associated_account_number)
 			if(D)
-				linked_account = D
+				linked_account = D.account_number
 				playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>Аккаунт подключён.</span>")
 			else
@@ -54,7 +54,7 @@
 			if(anchored)
 				to_chat(user, "<span class='notice'>Сканер откручен.</span>")
 				anchored = FALSE
-				update_holoprice(TRUE)
+				update_holoprice(clear = TRUE)
 				SStgui.close_uis(src)
 			else
 				if(locate(/obj/structure/table, get_turf(src)))
@@ -75,11 +75,14 @@
 	if(!linked_account)
 		visible_message("[bicon(src)]<span class='warning'>Нет подключённого аккаунта.</span>")
 		return
-	if(linked_account.suspended)
+	var/datum/money_account/Acc = get_account(linked_account)
+	if(!Acc || Acc.suspended)
 		visible_message("[bicon(src)]<span class='warning'>Подключённый аккаунт заблокирован.</span>")
 		return
 	if(pay_amount <= 0)
 		return
+
+	var/pay_holder = pay_amount
 
 	var/datum/money_account/D = get_account(Card.associated_account_number)
 	var/attempt_pin = 0
@@ -91,7 +94,7 @@
 				return
 			D = attempt_account_access(Card.associated_account_number, attempt_pin, 2)
 		icon_state = "card-pay-processing"
-		addtimer(CALLBACK(src, .proc/make_transaction, D, pay_amount), 3 SECONDS)
+		addtimer(CALLBACK(src, .proc/make_transaction, D, pay_holder), 3 SECONDS)
 
 /obj/item/device/cardpay/proc/make_transaction(datum/money_account/Acc, amount)
 	icon_state = "card-pay-idle"
@@ -99,10 +102,10 @@
 	if(amount <= Acc.money)
 		flick("card-pay-complete", src)
 		charge_to_account(Acc.account_number, "Терминал оплаты", "Оплата", src.name, -amount)
-		charge_to_account(linked_account.account_number, "Терминал оплаты", "Прибыль", src.name, amount)
+		charge_to_account(linked_account, "Терминал оплаты", "Прибыль", src.name, amount)
 		if(reset)
 			pay_amount = 0
-			update_holoprice(TRUE)
+			update_holoprice(clear = TRUE)
 	else
 		visible_message("[bicon(src)]<span class='warning'>Недостаточно средств!</span>")
 		flick("card-pay-error", src)
@@ -157,15 +160,15 @@
 			playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
 		if("approveprice")
-			if(display_price > 0 && linked_account)
+			if(display_price > 0)
 				if(enter_account)
 					if(display_price >= 111111 && display_price <= 999999)
 						var/datum/money_account/D = get_account(display_price)
 						if(D)
-							linked_account = D
+							linked_account = display_price
 				else
 					pay_amount = display_price
-					update_holoprice(FALSE)
+					update_holoprice(clear = FALSE)
 				display_price = 0
 				playsound(src, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER)
 				return TRUE
