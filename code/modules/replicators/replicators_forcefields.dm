@@ -58,6 +58,9 @@
 
 	return ..()
 
+/turf/simulated/floor/plating/airless/catwalk/forcefield/make_wet_floor(severity = WATER_FLOOR)
+	return
+
 
 /obj/structure/replicator_forcefield
 	name = "forcefield"

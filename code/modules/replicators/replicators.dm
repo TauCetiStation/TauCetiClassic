@@ -81,7 +81,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	can_point = TRUE
 
-	status_flags = CANSTUN|CANPUSH
+	status_flags = CANSTUN|CANPUSH|CANWEAKEN
 
 	// Prevents from opening airlocks and a lot of other things.
 	w_class = SIZE_TINY
@@ -575,9 +575,11 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	. = ..()
 	if(invisibility > 0)
 		. -= 1.0
-	if(last_brute_hit + 2 SECONDS < world.time)
+	if(last_brute_hit + 2 SECONDS >= world.time)
 		. += 1.5
-	if(last_melee_attack + 2 SECONDS < world.time)
+	if(last_melee_attack + 2 SECONDS <= world.time)
+		. += 1.0
+	if(weakened_until >= world.time)
 		. += 1.0
 
 /mob/living/simple_animal/hostile/replicator/adjustBruteLoss(damage)

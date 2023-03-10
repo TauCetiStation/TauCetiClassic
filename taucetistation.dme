@@ -2199,6 +2199,7 @@
 #include "code\modules\replicators\replicator_ai_combat.dm"
 #include "code\modules\replicators\replicator_attacks.dm"
 #include "code\modules\replicators\replicator_communication.dm"
+#include "code\modules\replicators\replicator_defense.dm"
 #include "code\modules\replicators\replicator_direct_control.dm"
 #include "code\modules\replicators\replicator_disintegration.dm"
 #include "code\modules\replicators\replicator_emotes.dm"
