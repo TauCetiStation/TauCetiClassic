@@ -647,7 +647,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		neighbor_count += value
 
 /obj/structure/bluespace_corridor/attackby(obj/item/I, mob/user)
-	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_CHALLENGING : SKILL_TASK_TRIVIAL
+	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
 	if(ispulsing(I) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/research = SKILL_LEVEL_TRAINED), -0.2))
 		// to-do: sound
 		visible_message("<span class='notice'>[src] beeps loudly, before dissappearing.</span>")
