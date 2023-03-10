@@ -557,8 +557,6 @@
 /datum/mind/proc/set_current(mob/new_current)
 	if(current)
 		UnregisterSignal(src, COMSIG_PARENT_QDELETING)
-		if(isnull(new_current))
-			leave_all_antag_huds()
 	current = new_current
 	if(current)
 		RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/clear_current)
