@@ -72,8 +72,9 @@
 
 /turf/simulated/wall/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	var/turf/T = get_turf(src)
-	if(T.can_place_replicator_forcefield())
+	if(!(locate(/obj/structure/replicator_forcefield) in T))
 		new /obj/structure/replicator_forcefield(T)
+		qdel(locate(/obj/structure/replicator_barricade) in T)
 	dismantle_wall()
 	return TRUE
 
@@ -180,31 +181,34 @@
 
 /obj/structure/window/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	var/turf/T = get_turf(src)
-	if(is_fulltile() && T.can_place_replicator_forcefield())
+	if(is_fulltile() && !(locate(/obj/structure/replicator_forcefield) in T))
 		new /obj/structure/replicator_forcefield(T)
+		qdel(locate(/obj/structure/replicator_barricade) in T)
 	deconstruct(TRUE)
 	return TRUE
 
 
 /obj/structure/object_wall/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	var/turf/T = get_turf(src)
-	if(T.can_place_replicator_forcefield())
+	if(!(locate(/obj/structure/replicator_forcefield) in T))
 		new /obj/structure/replicator_forcefield(T)
+		qdel(locate(/obj/structure/replicator_barricade) in T)
 	deconstruct(TRUE)
 	return TRUE
 
 
 /obj/structure/inflatable/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	var/turf/T = get_turf(src)
-	if(T.can_place_replicator_forcefield())
+	if(!(locate(/obj/structure/replicator_forcefield) in T))
 		new /obj/structure/replicator_forcefield(T)
+		qdel(locate(/obj/structure/replicator_barricade) in T)
 	deconstruct(TRUE)
 	return TRUE
 
 
 /obj/structure/plasticflaps/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	var/turf/T = get_turf(src)
-	if(T.can_place_replicator_forcefield())
+	if(!(locate(/obj/structure/replicator_forcefield) in T) && !(locate(/obj/structure/replicator_barricade) in T))
 		new /obj/structure/replicator_barricade(T)
 	deconstruct(TRUE)
 	return TRUE
@@ -282,7 +286,7 @@
 
 /obj/machinery/door/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	var/turf/T = get_turf(src)
-	if(T.can_place_replicator_forcefield())
+	if(!(locate(/obj/structure/replicator_forcefield) in T) && !(locate(/obj/structure/replicator_barricade) in T))
 		new /obj/structure/replicator_barricade(T)
 	deconstruct(TRUE)
 	return TRUE

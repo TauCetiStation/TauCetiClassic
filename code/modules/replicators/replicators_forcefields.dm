@@ -1,11 +1,3 @@
-/turf/proc/can_place_replicator_forcefield()
-	if(locate(/obj/structure/replicator_forcefield) in src)
-		return FALSE
-	if(locate(/obj/structure/replicator_barricade) in src)
-		return FALSE
-	return TRUE
-
-
 /turf/simulated/floor/plating/airless/catwalk/forcefield
 	name = "forcefield"
 	desc = "Distant stars under this crystallic floor are seemingly more blueish. Foreshadowing?!"

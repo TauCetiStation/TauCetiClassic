@@ -140,7 +140,7 @@
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/barricade/replicator_checks(mob/user, try_start)
 	var/turf/my_turf = get_turf(user)
-	if(!my_turf.can_place_replicator_forcefield())
+	if((locate(/obj/structure/replicator_forcefield) in my_turf) || (locate(/obj/structure/replicator_barricade) in my_turf))
 		if(try_start)
 			to_chat(user, "<span class='notice'>This tile is already protected.</span>")
 		return FALSE
