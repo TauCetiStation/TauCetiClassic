@@ -5,6 +5,7 @@
 
 	factions_allowed = list(/datum/faction/loyalists)
 
+	//TODO 4:20
 	minimum_player_count = 1
 	minimum_players_bundles = 1
 
