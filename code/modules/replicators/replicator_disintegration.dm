@@ -207,14 +207,18 @@
 		heal_bodypart_damage(healing_amount, 0)
 
 	if(material_amount > 0)
+		if(!A.is_replicator_structure())
+			material_amount *= REPLICATOR_DISINTEGRATION_RESOURCE_EFFICENCY
+
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		FR.adjust_taxes(material_amount)
 		FR.adjust_materials(material_amount, adjusted_by=last_controller_ckey)
 
-		if(has_swarms_gift())
-			FR.adjust_fractol(material_amount)
-		else
-			FR.create_fractol(src, material_amount)
+		if(!A.is_replicator_structure())
+			if(has_swarms_gift())
+				FR.adjust_fractol(material_amount * REPLICATOR_GAS_PER_MATERIAL)
+			else
+				FR.create_fractol(src, material_amount * REPLICATOR_GAS_PER_MATERIAL)
 
 	return TRUE
 
