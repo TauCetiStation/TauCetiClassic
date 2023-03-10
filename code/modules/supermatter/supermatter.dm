@@ -274,9 +274,3 @@
 
 		//Some poor sod got eaten, go ahead and irradiate people nearby.
 	irradiate_in_dist(get_turf(src), 500, 10)
-	for(var/mob/living/l in range(10))
-		if(l in view())
-			l.show_message("<span class=\"warning\">As \the [src] slowly stops resonating, you find your skin covered in new radiation burns.</span>", SHOWMSG_VISUAL,\
-				"<span class=\"warning\">The unearthly ringing subsides and you notice you have new radiation burns.</span>", SHOWMSG_AUDIO)
-		else
-			l.show_message("<span class=\"warning\">You hear an uneartly ringing and notice your skin is covered in fresh radiation burns.</span>", SHOWMSG_AUDIO)

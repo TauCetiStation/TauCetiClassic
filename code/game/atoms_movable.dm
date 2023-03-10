@@ -527,8 +527,20 @@
 	AM.forceMove(loc)
 	return TRUE
 
+/mob/living/proc/get_radiation_message(rad_dose)
+	var/message = ""
+	switch(rad_dose)
+	if(0 to 299)
+		message += "You feel warm."
+	if(300 to 499)
+		message += "You feel a wave of heat wash over you."
+	if(500 to INFINITY)
+		message += "You notice your skin is covered in fresh radiation burns."
+	return message
+
 /proc/irradiate_one_mob(mob/living/victim, rad_dose)
 	victim.apply_effect(rad_dose, IRRADIATE)
+	to_chat(victim, "<span class='warning'>[victim.get_radiation_message(rad_dose)]</span>")
 	for(var/obj/item/device/analyzer/counter as anything in global.geiger_items_list)
 		var/distance_rad_signal = get_dist(counter, victim)
 		if(distance_rad_signal <= GEIGER_RANGE)
@@ -546,6 +558,7 @@
 		var/rads = rad_dose / (neighbours_in_turf > 0 ? neighbours_in_turf : 1)
 		rads *= sqrt(1 / (get_dist(L, source_turf) + 1))
 		L.apply_effect(rads, IRRADIATE)
+		to_chat(L, "<span class='warning'>[L.get_radiation_message(rad_dose)]</span>")
 	for(var/obj/item/device/analyzer/counter as anything in global.geiger_items_list)
 		var/distance_rad_signal = get_dist(counter, source_turf)
 		if(distance_rad_signal <= GEIGER_RANGE)
