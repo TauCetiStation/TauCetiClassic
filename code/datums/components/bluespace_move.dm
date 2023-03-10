@@ -81,6 +81,9 @@
 	if(is_diagonal)
 		return COMPONENT_CLIENTMOB_BLOCK_MOVE
 
+	if((locate(/obj/structure/replicator_forcefield) in Newloc))
+		return NONE
+
 	var/obj/structure/bluespace_corridor/BC = locate() in Newloc
 	var/obj/machinery/swarm_powered/bluespace_transponder/BT = locate() in M.loc
 
