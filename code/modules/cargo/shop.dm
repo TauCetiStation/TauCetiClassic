@@ -55,7 +55,10 @@ var/global/online_shop_profits = 0
 	return ..()
 
 /datum/shop_lot/proc/to_list(account = "Unknown", postpayment = 0)
-	return list("name" = src.name, "description" = src.description, "price" = (global.online_shop_discount ? "<S>[src.price]$</S> <B>[round((1 - global.online_shop_discount) * src.price)]</B>" : src.price), "number" = src.number, "account" = account, "delivered" = src.delivered, "postpayment" = postpayment, "icon" = src.item_icon)
+	return list("name" = src.name, "description" = src.description, "price" = (global.online_shop_discount ? "<S>[src.price + get_delivery_cost()]$</S> <B>[get_discounted_price() + get_delivery_cost()]</B>" : (src.price + get_delivery_cost())), "number" = src.number, "account" = account, "delivered" = src.delivered, "postpayment" = postpayment, "icon" = src.item_icon)
+
+/datum/shop_lot/proc/get_delivery_cost()
+	return round(price * global.online_shop_delivery_cost)
 
 /datum/shop_lot/proc/get_discounted_price()
 	return round((1 - global.online_shop_discount) * price)

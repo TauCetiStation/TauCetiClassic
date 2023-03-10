@@ -55,6 +55,8 @@
 	var/datum/wires/vending/wires = null
 	var/scan_id = TRUE
 
+	var/private = TRUE // Whether the vending machine is privately operated, and thus must not start with a deficit of goods.
+
 
 /obj/machinery/vending/atom_init(mapload)
 	. = ..()
@@ -70,7 +72,7 @@
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 	last_slogan = world.time + rand(0, slogan_delay)
 
-	build_inventory(products)
+	build_inventory(products, mapload)
 	 //Add hidden inventory
 	build_inventory(contraband, mapload, hidden = 1)
 	build_inventory(premium, mapload, req_coin = 1)
@@ -106,13 +108,16 @@
 /obj/machinery/vending/proc/build_inventory(list/productlist, mapload, hidden = 0, req_coin = 0 , req_emag = 0)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
-		if(mapload && is_station_level(src.z) && !hidden && !req_coin && !req_emag)
-			var/players_coefficient = num_players() / 75 //75 players = max load, 0 players = min load
-			var/randomness_coefficient = rand(50,100) / 100 //50-100% randomness
+		if(!hidden && !req_coin && !req_emag)
+			if(mapload && is_station_level(src.z) && !private)
+				var/players_coefficient = num_players() / 75 //75 players = max load, 0 players = min load
+				var/randomness_coefficient = rand(50,100) / 100 //50-100% randomness
+				var/final_coefficient = clamp(players_coefficient * randomness_coefficient, 0.1, 1.0) //10% minimum, 100% maximum
 
-			var/final_coefficient = clamp(players_coefficient * randomness_coefficient, 0.1, 1.0) //10% minimum, 100% maximum
+				amount = round(amount * final_coefficient) //10-100% roundstart load depending on player amount and randomness
 
-			amount = round(amount * final_coefficient) //10-100% roundstart load depending on player amount and randomness
+				if(!amount && prob(20)) //20% that empty slot will be not empty. For very low-pop rounds.
+					amount = 1
 
 		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
@@ -566,25 +571,32 @@
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
-	//Dropping actual items
-	var/max_drop = rand(1, 3)
-	for(var/i = 1, i < max_drop, i++)
-		var/datum/data/vending_product/R = pick(src.product_records)
-		var/dump_path = R.product_path
-		if(!R.amount)
-			continue
-		new dump_path(src.loc)
-		R.amount--
-
-	//Dropping remaining items in a pack
-	var/refilling = 0
-	for(var/datum/data/vending_product/R in src.product_records)
-		while(R.amount > 0)
-			refilling++
+	if(refill_canister)
+		//Dropping actual items
+		var/max_drop = rand(1, 3)
+		for(var/i = 1, i < max_drop, i++)
+			var/datum/data/vending_product/R = pick(src.product_records)
+			var/dump_path = R.product_path
+			if(!R.amount)
+				continue
+			new dump_path(src.loc)
 			R.amount--
 
-	var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
-	Refill.charges = refilling
+		//Dropping remaining items in a pack
+		var/refilling = 0
+		for(var/datum/data/vending_product/R in src.product_records)
+			while(R.amount > 0)
+				refilling++
+				R.amount--
+
+		var/obj/item/weapon/vending_refill/Refill = new refill_canister(src.loc)
+		Refill.charges = refilling
+	else //If no canister - drop everything
+		for(var/datum/data/vending_product/R in src.product_records)
+			while(R.amount > 0)
+				var/dump_path = R.product_path
+				new dump_path(src.loc)
+				R.amount--
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
