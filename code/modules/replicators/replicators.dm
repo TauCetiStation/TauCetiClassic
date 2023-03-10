@@ -155,6 +155,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	name = "replicator ([generation])"
 	real_name = name
+	chat_color_name = name
 	scatter_offset()
 
 	for(var/spell in replicator_spells)
@@ -252,6 +253,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	new auto_construct_type(T)
 	FR.adjust_materials(-auto_construct_cost, adjusted_by=last_controller_ckey)
+	announce_material_adjustment(-auto_construct_cost)
 
 // Corridors can only connect to two other corridors if there's no portal connecting them.
 // No more than 2 neighbors, and no more than 1 neighbor of the neigbhor(excluding us)
@@ -709,3 +711,11 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 /mob/living/simple_animal/hostile/replicator/start_pulling(atom/movable/AM)
 	to_chat(src, "<span class='warning'>You are too small to pull anything.</span>")
+
+/mob/living/simple_animal/hostile/replicator/proc/announce_material_adjustment(amount)
+	if(!client)
+		return
+
+	var/sign_txt = amount >= 0 ? "+" : "-"
+
+	show_runechat_message(src, null, "[sign_txt][round(amount, 0.1)]", lifespan=REPLICATOR_DISINTEGRATION_MESSAGE_LIFESPAN)

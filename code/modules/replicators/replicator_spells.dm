@@ -47,6 +47,8 @@
 	. = user_replicator.do_after_objections(objection_delay, message, extra_checks=checks)
 	if(!.)
 		FR.adjust_materials(material_cost, adjusted_by=user_replicator.last_controller_ckey)
+	else
+		user_replicator.announce_material_adjustment(-material_cost)
 
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/replicate
@@ -98,6 +100,8 @@
 		FR.adjust_materials(material_cost, adjusted_by=user_replicator.ckey)
 		return
 
+	user_replicator.announce_material_adjustment(-material_cost)
+
 	var/mob/living/simple_animal/hostile/replicator/R = new(user_replicator.loc)
 	R.set_last_controller(user_replicator.last_controller_ckey, just_spawned=TRUE)
 
@@ -105,6 +109,7 @@
 		R.generation = "[user_replicator.generation][rand(0, 9)]"
 		R.name = "replicator ([R.generation])"
 		R.real_name = R.name
+		R.chat_color_name = R.name
 
 	R.next_control_change = world.time + R.control_change_cooldown
 
@@ -158,6 +163,7 @@
 
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
+	user_replicator.announce_material_adjustment(-material_cost)
 
 	var/datum/replicator_array_info/RAI = FR.ckey2info[user_replicator.last_controller_ckey]
 	if(RAI)
@@ -202,6 +208,7 @@
 
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
+	user_replicator.announce_material_adjustment(-material_cost)
 
 	var/datum/replicator_array_info/RAI = FR.ckey2info[user_replicator.last_controller_ckey]
 	if(RAI)

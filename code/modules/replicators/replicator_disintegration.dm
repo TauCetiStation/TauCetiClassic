@@ -214,7 +214,7 @@
 		FR.adjust_taxes(material_amount)
 		FR.adjust_materials(material_amount, adjusted_by=last_controller_ckey)
 
-		show_runechat_message(src, null, "+[round(material_amount, 0.1)]", lifespan=REPLICATOR_DISINTEGRATION_MESSAGE_LIFESPAN)
+		announce_material_adjustment(material_amount)
 
 		if(!A.is_replicator_structure())
 			if(has_swarms_gift())
