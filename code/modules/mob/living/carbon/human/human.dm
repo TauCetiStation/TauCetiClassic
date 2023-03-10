@@ -84,6 +84,7 @@
 	my_golem = null
 	QDEL_LIST(bodyparts)
 	QDEL_LIST(organs)
+	QDEL_NULL(vessel)
 	return ..()
 
 /mob/living/carbon/human/skrell/atom_init(mapload)
