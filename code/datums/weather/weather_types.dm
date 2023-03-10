@@ -193,7 +193,7 @@
 					else
 						randmutg(H) // Applies good mutation
 					domutcheck(H,null,MUTCHK_FORCED)
-		irradiate_one_mob(get_turf(L), L, rand(40,70))
+		irradiate_one_mob(L, rand(40,70))
 
 /datum/weather/rad_storm/end()
 	if(..())

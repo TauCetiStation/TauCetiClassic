@@ -322,7 +322,7 @@
 				//			M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
 				//			human.set_species(/datum/species/fly)
 
-						irradiate_one_mob(get_turf(human), human, rand(120 - accurate * 40, 180 - accurate * 60))
+						irradiate_one_mob(human, rand(120 - accurate * 40, 180 - accurate * 60))
 			calibrated = 0
 	return
 

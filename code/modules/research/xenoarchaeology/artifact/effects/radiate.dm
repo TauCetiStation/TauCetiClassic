@@ -11,18 +11,18 @@
 	. = ..()
 	if(!.)
 		return
-	irradiate_one_mob(get_turf(user), user, radiation_amount * 5)
+	irradiate_one_mob(user, radiation_amount * 5)
 	user.updatehealth()
 
 /datum/artifact_effect/radiate/DoEffectAura()
 	. = ..()
 	if(!.)
 		return
-	irradiate_one_mob(get_turf(holder), holder, radiation_amount)
+	irradiate_one_mob(holder, radiation_amount)
 
 /datum/artifact_effect/radiate/DoEffectPulse()
 	. = ..()
 	if(!.)
 		return
 	var/used_power = .
-	irradiate_one_mob(get_turf(holder), holder, radiation_amount * used_power)
+	irradiate_one_mob(holder, radiation_amount * used_power)

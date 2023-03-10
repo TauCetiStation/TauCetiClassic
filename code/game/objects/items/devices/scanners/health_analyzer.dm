@@ -104,7 +104,7 @@
 			if(M)
 				if(intensity >= 5)
 					M.apply_effect(round(intensity/1.5), PARALYZE)
-				irradiate_one_mob(get_turf(M), M, intensity * 10)
+				irradiate_one_mob(M, intensity * 10)
 	else
 		to_chat(user,"<span class='warning'>The radioactive microlaser is still recharging.</span>")
 

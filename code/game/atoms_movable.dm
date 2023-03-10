@@ -527,12 +527,10 @@
 	AM.forceMove(loc)
 	return TRUE
 
-/proc/irradiate_one_mob(turf/source_turf, mob/living/victim, rad_dose)
-	var/rads = rad_dose
-	rads *= sqrt(1 / (get_dist(victim, source_turf) + 1))
-	victim.apply_effect(rads, IRRADIATE)
+/proc/irradiate_one_mob(mob/living/victim, rad_dose)
+	victim.apply_effect(rad_dose, IRRADIATE)
 	for(var/obj/item/device/analyzer/counter as anything in global.geiger_items_list)
-		var/distance_rad_signal = get_dist(counter, source_turf)
+		var/distance_rad_signal = get_dist(counter, victim)
 		if(distance_rad_signal <= GEIGER_RANGE)
 			var/rad_power = rad_dose
 			rad_power *= sqrt(1 / (distance_rad_signal + 1))

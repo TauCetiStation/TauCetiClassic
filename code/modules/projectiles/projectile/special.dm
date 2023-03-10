@@ -94,7 +94,7 @@
 	flag = ENERGY
 
 /obj/item/projectile/energy/floramut/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	irradiate_one_mob(get_turf(target), target, rand(30, 80))
+	irradiate_one_mob(target, rand(30, 80))
 	var/mob/living/M = target
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = M
