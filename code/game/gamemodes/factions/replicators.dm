@@ -41,7 +41,7 @@
 	var/list/vents4spawn
 
 	var/nodes_to_spawn = 1
-	var/node_spawn_cooldown = 5 MINUTES
+	var/node_spawn_cooldown = 6 MINUTES
 	var/next_node_spawn = 0
 
 	// Win condition is launching REPLICATORS_CATAPULTED_TO_WIN replicators.
