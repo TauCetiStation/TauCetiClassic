@@ -69,7 +69,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	response_harm = "hits"
 	harm_intent_damage = 0
 	melee_damage = 0
-	speed = -1
+	speed = -0.5
 
 	move_to_delay = 6
 
@@ -192,6 +192,9 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 /mob/living/simple_animal/hostile/replicator/proc/scatter_offset()
 	pixel_x = rand(-pixel_offset, pixel_offset)
 	pixel_y = rand(-pixel_offset, pixel_offset)
+
+	default_pixel_x = pixel_x
+	default_pixel_y = pixel_y
 
 /mob/living/simple_animal/hostile/replicator/Moved(atom/OldLoc, dir)
 	. = ..()
