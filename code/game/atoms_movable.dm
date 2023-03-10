@@ -530,12 +530,12 @@
 /mob/living/proc/get_radiation_message(rad_dose)
 	var/message = ""
 	switch(rad_dose)
-	if(0 to 299)
-		message += "You feel warm."
-	if(300 to 499)
-		message += "You feel a wave of heat wash over you."
-	if(500 to INFINITY)
-		message += "You notice your skin is covered in fresh radiation burns."
+		if(0 to 299)
+			message += "You feel warm."
+		if(300 to 499)
+			message += "You feel a wave of heat wash over you."
+		if(500 to INFINITY)
+			message += "You notice your skin is covered in fresh radiation burns."
 	return message
 
 /proc/irradiate_one_mob(mob/living/victim, rad_dose)
