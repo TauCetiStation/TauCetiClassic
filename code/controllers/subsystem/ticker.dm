@@ -272,8 +272,6 @@ SUBSYSTEM_DEF(ticker)
 		if(player.spawning)
 			qdel(player)
 
-	fill_all_vending_machines()
-
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
 
@@ -610,10 +608,6 @@ SUBSYSTEM_DEF(ticker)
 	SSticker.can_fire = TRUE
 	SSticker.timeLeft = 0
 	return TRUE
-
-/datum/controller/subsystem/ticker/proc/fill_all_vending_machines()
-	for(var/obj/machinery/vending/Vendomat in global.vending_machines)
-		Vendomat.load_products(TRUE)
 
 /world/proc/has_round_started()
 	return (SSticker && SSticker.current_state >= GAME_STATE_PLAYING)

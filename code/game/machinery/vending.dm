@@ -80,6 +80,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 	if(!mapload)
 		load_products(FALSE)
+	else
+		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, .proc/load_products(TRUE))
 
 /obj/machinery/vending/proc/load_products(roundstart)
 	build_inventory(products, roundstart)
