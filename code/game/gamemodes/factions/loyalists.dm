@@ -170,7 +170,8 @@
 		if(person["rank"] in excluded_rank)
 			continue
 		var/datum/money_account/account = person["acc_datum"]
-		account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)
+		if(account)
+			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = -50)
 
 /datum/mutiny_scenario/virus/get_first_report()
 	var/report_dat = ""
