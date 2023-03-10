@@ -220,6 +220,10 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 
+/area/space_structures/old_station/Entered()
+	. = ..()
+	for(var/obj/effect/spawner/mob_spawn/alien/M in src)
+		M.creatMob()
 
 /area/space_structures/old_station/central
 	name = "Central Station"

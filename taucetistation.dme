@@ -940,6 +940,7 @@
 #include "code\game\objects\effects\spawners\bombspawner.dm"
 #include "code\game\objects\effects\spawners\gibspawner.dm"
 #include "code\game\objects\effects\spawners\lootdrop.dm"
+#include "code\game\objects\effects\spawners\mobspawner.dm"
 #include "code\game\objects\effects\temp_visual\cult.dm"
 #include "code\game\objects\effects\temp_visual\miscellaneous.dm"
 #include "code\game\objects\effects\temp_visual\temp_visual.dm"

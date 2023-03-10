@@ -1659,12 +1659,6 @@
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/left)
-"js" = (
-/mob/living/simple_animal/hostile/xenomorph/sentinel,
-/turf/simulated/floor{
-	icon_state = "whitepurple"
-	},
-/area/space_structures/old_station/right)
 "jv" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs/xeno/core,
@@ -2501,6 +2495,19 @@
 	icon_state = "warndark"
 	},
 /area/space_structures/old_station/warehouse)
+"oX" = (
+/obj/effect/decal/cleanable/blood/writing,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/spawner/mob_spawn/alien/drone,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "whitepurple"
+	},
+/area/space_structures/old_station/right)
 "oZ" = (
 /obj/item/weapon/gun/energy/gun/adv,
 /obj/effect/decal/remains/human/burned,
@@ -2510,8 +2517,11 @@
 	},
 /area/space_structures/old_station/warehouse)
 "pb" = (
+/obj/item/weapon/shard{
+	icon_state = "medium"
+	},
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/xenomorph/sentinel,
+/obj/effect/spawner/mob_spawn/alien,
 /turf/simulated/floor,
 /area/space_structures/old_station/right/rnd)
 "pc" = (
@@ -3317,6 +3327,8 @@
 	stat = 2
 	},
 /obj/item/clothing/mask/balaclava/tactical,
+/obj/effect/spawner/mob_spawn/alien,
+/obj/effect/spawner/mob_spawn/alien,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -3776,6 +3788,13 @@
 /area/space_structures/old_station/central)
 "wX" = (
 /turf/simulated/wall/r_wall,
+/area/space_structures/old_station/satellite)
+"wY" = (
+/obj/structure/alien/weeds,
+/obj/effect/spawner/mob_spawn/alien,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/space_structures/old_station/satellite)
 "wZ" = (
 /obj/structure/cable{
@@ -4326,7 +4345,7 @@
 /area/space_structures/old_station/central)
 "Am" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/xenomorph/queen,
+/obj/effect/spawner/mob_spawn/alien/queen,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5573,8 +5592,8 @@
 /turf/simulated/floor,
 /area/space_structures/old_station/central)
 "GW" = (
-/mob/living/simple_animal/hostile/xenomorph/sentinel,
 /obj/structure/alien/weeds,
+/obj/effect/spawner/mob_spawn/alien/sentinel,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitepurple"
@@ -5699,7 +5718,7 @@
 /area/space_structures/old_station/warehouse)
 "HB" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/xenomorph/sentinel,
+/obj/effect/spawner/mob_spawn/alien/sentinel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -6477,7 +6496,6 @@
 "Mf" = (
 /obj/item/clothing/head/helmet/tactical/marinad,
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/xenomorph/sentinel,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -6701,7 +6719,6 @@
 /area/space_structures/old_station/satellite)
 "NO" = (
 /obj/item/weapon/paper,
-/mob/living/simple_animal/hostile/xenomorph/drone,
 /obj/structure/alien/weeds,
 /turf/simulated/floor,
 /area/space_structures/old_station/right/rnd)
@@ -6937,6 +6954,11 @@
 	icon_state = "bot"
 	},
 /area/space_structures/old_station/armory)
+"Pa" = (
+/obj/structure/alien/weeds/node,
+/obj/effect/spawner/mob_spawn/alien,
+/turf/simulated/floor,
+/area/space_structures/old_station/right/rnd)
 "Pb" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -7317,6 +7339,7 @@
 /area/space_structures/old_station/central/bridge)
 "RE" = (
 /obj/effect/decal/cleanable/blood/gibs/limb,
+/obj/effect/spawner/mob_spawn/alien,
 /turf/simulated/floor{
 	icon_state = "whitepurple"
 	},
@@ -7870,7 +7893,7 @@
 /area/space_structures/old_station/central/brig)
 "UI" = (
 /obj/structure/alien/weeds,
-/mob/living/simple_animal/hostile/xenomorph/drone,
+/obj/effect/spawner/mob_spawn/alien/drone,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -13215,7 +13238,7 @@ mb
 jv
 Wf
 Oh
-pc
+wY
 Ev
 wX
 wi
@@ -13342,7 +13365,7 @@ Cm
 Cm
 pr
 Se
-js
+hz
 XX
 GY
 qS
@@ -13527,7 +13550,7 @@ WA
 GY
 sq
 WR
-pb
+WR
 Ni
 rU
 Oy
@@ -13587,12 +13610,12 @@ qi
 pf
 Sj
 WR
-MR
+Pa
 Ni
 VA
 vX
 eE
-aH
+pb
 db
 MR
 WR
@@ -14064,7 +14087,7 @@ wX
 iz
 Fs
 zO
-RP
+oX
 RP
 zO
 RP
