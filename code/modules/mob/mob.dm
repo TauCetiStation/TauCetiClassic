@@ -28,6 +28,10 @@
 			mind.set_current(null)
 		if(mind.original == src)
 			mind.original = null
+
+	for(var/datum/action/action as anything in actions)
+		action.Remove(src)
+
 	return ..()
 
 

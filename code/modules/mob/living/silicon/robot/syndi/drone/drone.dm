@@ -30,7 +30,6 @@
 
 /mob/living/silicon/robot/drone/syndi/Destroy()
 	loose_control()
-	QDEL_LIST(actions)
 	return ..()
 
 /mob/living/silicon/robot/drone/syndi/init(laws_type, ai_link, datum/religion/R)
