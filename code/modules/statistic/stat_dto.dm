@@ -216,4 +216,4 @@
 	// int, [-infinity...]
 	var/light_range = 0
 	// string, [hh:mm]
-	var/occured_time
+	var/occurred_time

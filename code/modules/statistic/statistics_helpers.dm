@@ -63,7 +63,7 @@
 	stat.heavy_impact_range = hi_range
 	stat.light_impact_range = li_range
 	stat.flash_range = flash_range
-	stat.occured_time = roundduration2text()
+	stat.occurred_time = roundduration2text()
 
 	explosions += stat
 
@@ -77,7 +77,7 @@
 	stat.epicenter_z = epicenter.z
 	stat.heavy_range = high_range
 	stat.light_range = light_range
-	stat.occured_time = roundduration2text()
+	stat.occurred_time = roundduration2text()
 
 	emps += stat
 
