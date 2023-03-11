@@ -9,25 +9,30 @@
 	for(var/type in possible_areas)
 		for(var/obj/structure/window/W in get_area_by_type(type))
 			W.color = color
+			if(istype(W, /obj/structure/window/fulltile))
+				var/obj/structure/window/fulltile/FT = W
+				FT.glass_color = color
+			else
+				W.color = color
 		for(var/obj/machinery/door/window/D in get_area_by_type(type))
 			D.color = color
 
 //replaces color in some area
 /proc/color_windows_init()
 	//RED (Only sec stuff honestly)
-	var/list/red = list("#aa0808", "#990707", "#e50909", "#e50909")
+	var/list/red = list("#855363", "#7d5263", "#a35364", "#a35364")
 	//BAR
-	var/list/bar = list("#0d8395", "#58b5c3", "#58c366", "#90d79a", "#3399ff", "#00ffff", "#ff6600", "#ffffff")
+	var/list/bar = list("#3790aa", "#5ca9c1", "#5cb092", "#78baac", "#4a9bdf", "#30cedf", "#b0825f", "#b0cedf")
 	//DWARFS
-	var/list/dw = list("#993300", "#ff6600", "#ffcc00", "#ff9933")
+	var/list/dw = list("#7d685f", "#b0825f", "#b0b55f", "#b09b79")
 	//PURPLE (RnD + Research outpost)
-	var/list/purple = list("#ba62b1", "#ba3fad", "#a54f9e", "#b549d1")
+	var/list/purple = list("#8d80b8", "#8d6eb6", "#8376ae", "#8b73c8")
 	//BROWN (Mining + Cargo)
-	var/list/brown = list("#9e5312", "#99761e", "#a56b00", "#d87f2b")
+	var/list/brown = list("#7f7868", "#7d8a6e", "#83845f", "#9c8e75")
 	//GREEN (Virology and Hydro areas)
-	var/list/green = list("#aed18b", "#7bce23", "#5a9619", "#709348")
+	var/list/green = list("#87b7a5", "#6eb671", "#5d9a6c", "#689883")
 	//BLUE (Some of Medbay areas)
-	var/list/blue = list("#054166", "#5995ba", "#1e719e", "#7cb8dd")
+	var/list/blue = list("#336f92", "#5d99bc", "#3f87ae", "#6eabce")
 
 	var/list/color_by_types = list(
 		pick(red)    = typesof(/area/station/security),

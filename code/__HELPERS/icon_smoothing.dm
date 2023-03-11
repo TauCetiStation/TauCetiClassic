@@ -110,7 +110,7 @@
 	return adjacencies
 
 //do not use, use queue_smooth(atom)
-/proc/smooth_icon(atom/A)
+/proc/smooth_icon(atom/A) // adapter
 	if(!A || !A.smooth)
 		return
 	A.smooth &= ~SMOOTH_QUEUED
@@ -308,7 +308,7 @@
 				else
 					queue_smooth(A)
 
-/atom/proc/smooth_set_icon(adjacencies, list/parts)
+/atom/proc/smooth_set_icon(adjacencies, list/parts) // todo: what parts
 #ifdef MANUAL_ICON_SMOOTH
 	return
 #endif
@@ -318,6 +318,46 @@
 	var/cache_string = "["[type]"]"
 	if(!global.baked_smooth_icons[cache_string])
 		var/icon/I = SliceNDice(smooth_icon_initial)
+		global.baked_smooth_icons[cache_string] = I // todo: we can filecache it
+
+	icon = global.baked_smooth_icons[cache_string]
+	icon_state = "[adjacencies]"
+
+/obj/structure/window/fulltile/smooth_set_icon(adjacencies, list/parts)
+#ifdef MANUAL_ICON_SMOOTH // manual smoothing not supported
+	return
+#endif
+
+	var/cache_string = "["[type]"]"
+
+	if(glass_color)
+		cache_string += "[glass_color]"
+
+	if(grilled)
+		cache_string += "_grilled"
+
+	if(!global.baked_smooth_icons[cache_string])
+
+		//var/smooth_icon_windowstill = 'icons/smooth_structures/windows/window_sill.dmi'
+		//var/smooth_icon_window = 'icons/smooth_structures/windows/window.dmi'
+		//var/smooth_icon_grille = 'icons/obj/smooth_structures/grille.dmi'
+
+		var/icon/blended = new(smooth_icon_windowstill)
+
+		if(grilled)
+			var/icon/grille = new(smooth_icon_grille)
+			blended.Blend(grille,ICON_OVERLAY)
+
+		var/icon/window = new(smooth_icon_window)
+		if(glass_color)
+			window.Blend(glass_color, ICON_MULTIPLY)
+		blended.Blend(window,ICON_OVERLAY)
+
+		var/fname = "cache/ftwindows/tempo_[cache_string].dmi" // todo: temp work around SliceNDice bug (works strange with /icon/)
+		fcopy(blended, fname)
+		var/icon/I = SliceNDice(file(fname))
+		//fdel(fname)
+
 		global.baked_smooth_icons[cache_string] = I
 
 	icon = global.baked_smooth_icons[cache_string]

@@ -1,8 +1,14 @@
 /obj/structure/grille
 	desc = "A flimsy lattice of metal rods, with screws to secure it to the floor."
 	name = "grille"
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "grille"
+	//icon = 'icons/obj/structures.dmi' // todo: cleanup old icon
+	//icon_state = "grille"
+	icon = 'icons/obj/smooth_structures/grille.dmi'
+	icon_state = "box"
+
+	smooth = SMOOTH_TRUE
+	//canSmoothWith = CAN_SMOTH_WITH_WALLS
+
 	density = TRUE
 	anchored = TRUE
 	flags = CONDUCT
