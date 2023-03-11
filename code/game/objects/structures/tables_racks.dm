@@ -584,6 +584,8 @@
 
 /obj/lot_holder/Destroy()
 	held_Item.forceMove(table_attached_to.loc)
+	held_Item = null
+	table_attached_to = null
 	return ..()
 
 /obj/lot_holder/proc/on_table_destroy()
@@ -615,6 +617,10 @@
 			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
 			return
 		Buyer = attempt_account_access(Card.associated_account_number, attempt_pin, 2)
+
+		if(!Buyer)
+			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
+			return
 
 	var/cost = held_Item.price_tag["price"]
 
