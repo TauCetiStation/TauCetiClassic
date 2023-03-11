@@ -55,7 +55,8 @@ var/global/list/huds = list(
 	if(!M || !hudusers[M])
 		return
 	if (absolute || !--hudusers[M])
-		UnregisterSignal(M, COMSIG_PARENT_QDELETING)
+		if(!hudatoms[M])
+			UnregisterSignal(M, COMSIG_PARENT_QDELETING)
 		hudusers -= M
 		if(next_time_allowed[M])
 			next_time_allowed -= M
@@ -68,7 +69,8 @@ var/global/list/huds = list(
 /datum/atom_hud/proc/remove_from_hud(atom/A)
 	if(!A)
 		return FALSE
-	UnregisterSignal(A, COMSIG_PARENT_QDELETING)
+	if(!hudusers[A])
+		UnregisterSignal(A, COMSIG_PARENT_QDELETING)
 	for(var/mob/M in hudusers)
 		remove_from_single_hud(M, A)
 	hudatoms -= A
