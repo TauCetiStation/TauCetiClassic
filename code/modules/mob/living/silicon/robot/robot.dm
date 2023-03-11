@@ -184,7 +184,7 @@
 				"Service" = "Service",
 				"Security" = "secborg",
 				"Science" = "toxbot",
-				"PeaceKeeper" = "marina-peace"
+				"PeaceKeeper" = "bear-peace"
 				)
 
 		choose_module = list()
@@ -306,6 +306,7 @@
 				to_chat(src, "<span class='warning'>#Error: Needed security circuitboard.</span>")
 				return
 			module = new /obj/item/weapon/robot_module/peacekeeper(src)
+			module_sprites["Bear"] = "bear-peace"
 			module_sprites["Marina"] = "marina-peace"
 			module_sprites["Sleak"] = "sleek-peace"
 
