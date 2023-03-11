@@ -165,7 +165,7 @@
 	// int, [-infinity...MAX_EXPLOSION_RANGE], now MAX_EXPLOSION_RANGE is 14
 	var/flash_range = 0
 	// string, [hh:mm]
-	var/occured_time
+	var/occurred_time
 
 /datum/stat/manifest_entry
 	// string, anything
