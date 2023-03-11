@@ -400,7 +400,11 @@
 	darksight = 8
 	nighteyes = 1
 
-	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 10
+	breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
+	breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
+	breath_cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 60
+
+	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 20
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
 	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 60
 
@@ -1628,9 +1632,9 @@
 	cold_level_2 = -1
 	cold_level_3 = -1
 
-	heat_level_1 = 2000
-	heat_level_2 = 3000
-	heat_level_3 = 4000
+	heat_level_1 = BODYTEMP_HEAT_DAMAGE_LIMIT
+	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 10
+	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 20
 
 	darksight = 8
 

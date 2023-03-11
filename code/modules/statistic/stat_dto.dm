@@ -139,6 +139,8 @@
 	var/last_attacker_name
 	// string, anything
 	var/last_phrase
+	// string, anything
+	var/last_examined_name
 	// object, where DAMAGE TYPE: int, [0...]
 	var/list/damage = list(
 		"BRUTE" = 0,
@@ -217,3 +219,7 @@
 	var/light_range = 0
 	// string, [hh:mm]
 	var/occurred_time
+
+/datum/stat/rating
+	// map of [string, float] where float is [0..5]
+	var/list/ratings = list()

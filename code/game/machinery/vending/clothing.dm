@@ -180,6 +180,7 @@
 		/obj/item/clothing/glasses/gar = 34,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
+	private = FALSE
 
 /obj/machinery/vending/theater
 	name = "Theater-o-mat"
@@ -236,6 +237,7 @@
 	contraband = list(
 		/obj/item/clothing/mask/gas/fawkes = 2,
 	)
+	private = TRUE
 
 /obj/machinery/vending/noiromat
 	name = "Noir-O-Mat"
@@ -276,6 +278,7 @@
 	product_slogans = "The cheaper the crook, the gaudier the patter.;Dead men are heavier than broken hearts.;Life is a bucket of shit with a barbed wire handle.;After all, you are only an immortal until someone manages to kill you. After that, you were just long-lived.;The rain fell like dead bullets.;Though I often run out of courage and good sense, stubbornness keeps me going."
 	product_ads = "Keep your mind too open, and you never know what might walk in.;After all, you are only an immortal until someone manages to kill you. After that, you were just long-lived.;If you don't trust anyone, they can't let you down.;Wait. You've got principles? We'll have to update your file.;I always feel most alive when everything else is dying all around me."
 	req_access = list(68)
+	private = TRUE
 
 /obj/machinery/vending/magivend
 	name = "MagiVend"
@@ -309,3 +312,4 @@
 	contraband = list(
 		/obj/item/weapon/reagent_containers/pill/adminordrazine = 1,
 	)
+	private = TRUE

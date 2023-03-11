@@ -147,6 +147,42 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "puke, you're pretty sure"
 
+/datum/reagent/consumable/drink/gourd_juice
+	name = "Gourd Juice"
+	id = "gourd"
+	description = "Тыквячий сок. Выглядит хорошо, на вкус - не очень."
+	color = "#95ba43" // rgb: 149, 186, 067
+	taste_message = "swamp"
+
+	toxin_absorption = 2.0
+
+/datum/reagent/consumable/drink/gourd_juice/New()
+	. = ..()
+	name = "[get_gourd_name()] juice"
+
+/datum/reagent/consumable/drink/gourd_juice/on_general_digest(mob/living/M)
+	..()
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+
+	H.adjust_bodytemperature(-2 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+
+	if(prob(10))
+		to_chat(H, "<span class='warning'>Any more and you'll probably puke.</span>")
+
+	if(H.reagents.total_volume >= 3)
+		H.invoke_vomit_async()
+
+/datum/reagent/consumable/drink/gourd_juice/on_unathi_digest(mob/living/M)
+	..()
+	M.adjust_bodytemperature(-2 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+	return FALSE
+
+/datum/reagent/consumable/drink/gourd_juice/reaction_turf(turf/simulated/T, volume)
+	. = ..()
+	new /obj/effect/decal/cleanable/gourd(T)
+
 /datum/reagent/consumable/drink/milk
 	name = "Milk"
 	id = "milk"
@@ -743,6 +779,47 @@
 	M.jitteriness = max(M.jitteriness - 3,0)
 	if(HAS_TRAIT(M, TRAIT_DWARF))
 		M.heal_bodypart_damage(1, 1)
+
+/datum/reagent/consumable/ethanol/gourd_beer
+	name = "Gourd Beer"
+	id = "gourdbeer"
+	description = "Тыквячье пиво. Красивое, но не очень вкусное."
+	color = "#6aa72d" // rgb: 106, 167, 45
+	boozepwr = 1.5
+	nutriment_factor = 1.5
+	taste_message = "swampy beer"
+
+	toxin_absorption = 4.0
+
+/datum/reagent/consumable/ethanol/gourd_beer/New()
+	. = ..()
+	name = "[get_gourd_name()] beer"
+
+/datum/reagent/consumable/ethanol/gourd_beer/on_general_digest(mob/living/M)
+	..()
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+
+	H.adjust_bodytemperature(-4 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+
+	if(prob(10))
+		to_chat(H, "<span class='warning'>Any more and you'll probably puke.</span>")
+
+	H.heal_bodypart_damage(1, 1)
+
+	if(H.reagents.total_volume >= 3)
+		H.invoke_vomit_async()
+
+/datum/reagent/consumable/ethanol/gourd_beer/on_unathi_digest(mob/living/M)
+	..()
+	M.adjust_bodytemperature(-2 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT, BODYTEMP_HEAT_DAMAGE_LIMIT)
+	M.heal_bodypart_damage(1, 1)
+	return FALSE
+
+/datum/reagent/consumable/ethanol/gourd_beer/reaction_turf(turf/simulated/T, volume)
+	. = ..()
+	new /obj/effect/decal/cleanable/gourd(T)
 
 /datum/reagent/consumable/ethanol/kahlua
 	name = "Kahlua"

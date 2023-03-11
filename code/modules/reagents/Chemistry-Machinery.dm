@@ -351,7 +351,7 @@
 
 /obj/machinery/chem_master/atom_init()
 	. = ..()
-	var/datum/reagents/R = new/datum/reagents(100)
+	var/datum/reagents/R = new/datum/reagents(150)
 	reagents = R
 	R.my_atom = src
 

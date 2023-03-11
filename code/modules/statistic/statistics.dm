@@ -51,6 +51,8 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/base_commit_sha
 	// string, ["#pr_id #pr_id..."]
 	var/test_merges
+	// object
+	var/datum/stat/rating/rating = new /datum/stat/rating
 
 	// string, html page
 	var/completion_html
@@ -91,11 +93,9 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 
 	do_post_round_checks()
 
-	var/start_time = world.realtime
 	statfile << datum2json(src)
-	to_chat(stealth ? usr : world, "<span class='info'>Статистика была записана в файл за [(start_time - world.realtime)/10] секунд. </span>")
 
-	to_chat(stealth ? usr : world, "<span class='info'>Статистика по этому раунду вскоре будет доступа по ссылке [generate_url()]</span>")
+	to_chat(stealth ? usr : world, "<span class='info'>Статистика по этому раунду вскоре будет доступна по ссылке [generate_url()]</span>")
 
 /datum/stat_collector/proc/generate_url()
 	var/root = "https://stat.taucetistation.org/html"

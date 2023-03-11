@@ -2,11 +2,11 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 40
+#define SAVEFILE_VERSION_MAX 41
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
-#define SAVEFILE_VERSION_SPECIES_JOBS 30 // job preferences after breaking changes to any /datum/job/
+#define SAVEFILE_VERSION_SPECIES_JOBS 41 // job preferences after breaking changes to any /datum/job/
 #define SAVEFILE_VERSION_QUIRKS 30 // quirks preferences after breaking changes to any /datum/quirk/
 //breaking changes is when you remove any existing quirk/job or change their restrictions
 //Don't forget to bump SAVEFILE_VERSION_MAX too
@@ -350,6 +350,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]          >> parallax
 	S["ambientocclusion"]  >> ambientocclusion
 	S["auto_fit_viewport"] >> auto_fit_viewport
+	S["lobbyanimation"]    >> lobbyanimation
 	S["tooltip"]           >> tooltip
 	S["tooltip_size"]      >> tooltip_size
 	S["tooltip_font"]      >> tooltip_font
@@ -402,6 +403,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
+	lobbyanimation	= sanitize_integer(lobbyanimation, 0, 1, initial(lobbyanimation))
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
 	tooltip = sanitize_integer(tooltip, 0, 1, initial(tooltip))
 	tooltip_size 	= sanitize_integer(tooltip_size, 1, 15, initial(tooltip_size))
@@ -468,7 +470,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["randomslot"]        << randomslot
 	S["permamuted"]        << permamuted
 	S["parallax"]          << parallax
-	S["ambientocclusion"]	 << ambientocclusion
+	S["ambientocclusion"]  << ambientocclusion
+	S["lobbyanimation"]    << lobbyanimation
 	S["auto_fit_viewport"] << auto_fit_viewport
 	S["tooltip"]           << tooltip
 	S["tooltip_size"]      << tooltip_size
