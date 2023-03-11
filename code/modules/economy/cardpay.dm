@@ -33,6 +33,7 @@
 
 /obj/item/device/cardpay/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id) && anchored)
+		visible_message("<span class='info'>[usr] прикладывает карту к терминалу.</span>")
 		if(enter_account)
 			var/obj/item/weapon/card/id/Card = I
 			var/datum/money_account/D = get_account(Card.associated_account_number)
@@ -44,6 +45,10 @@
 				to_chat(user, "<span class='notice'>Нет аккаунта, привязанного к карте.</span>")
 		else
 			scan_card(I)
+	else if(istype(W, /obj/item/device/pda) && W.GetID())
+		visible_message("<span class='info'>[usr] прикладывает КПК к терминалу.</span>")
+		var/obj/item/weapon/card/id/Card = W.GetID()
+		scan_card(Card)
 	else if(istype(I, /obj/item/weapon/wrench) && isturf(src.loc))
 		var/obj/item/weapon/wrench/Tool = I
 		if(Tool.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50))
@@ -71,7 +76,6 @@
 	set_dir(turn(dir,-90))
 
 /obj/item/device/cardpay/proc/scan_card(obj/item/weapon/card/id/Card)
-	visible_message("<span class='info'>[usr] прикладывает карту к терминалу.</span>")
 	if(!linked_account)
 		visible_message("[bicon(src)]<span class='warning'>Нет подключённого аккаунта.</span>")
 		return
@@ -93,6 +97,10 @@
 				to_chat(usr, "[bicon(src)]<span class='warning'>Неверный ПИН-код!</span>")
 				return
 			D = attempt_account_access(Card.associated_account_number, attempt_pin, 2)
+			if(!D)
+				to_chat(usr, "[bicon(src)]<span class='warning'>Неверный ПИН-код!</span>")
+				return
+
 		icon_state = "card-pay-processing"
 		addtimer(CALLBACK(src, .proc/make_transaction, D, pay_holder), 3 SECONDS)
 
