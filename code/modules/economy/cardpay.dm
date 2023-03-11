@@ -45,9 +45,9 @@
 				to_chat(user, "<span class='notice'>Нет аккаунта, привязанного к карте.</span>")
 		else
 			scan_card(I)
-	else if(istype(W, /obj/item/device/pda) && W.GetID())
+	else if(istype(I, /obj/item/device/pda) && I.GetID())
 		visible_message("<span class='info'>[usr] прикладывает КПК к терминалу.</span>")
-		var/obj/item/weapon/card/id/Card = W.GetID()
+		var/obj/item/weapon/card/id/Card = I.GetID()
 		scan_card(Card)
 	else if(istype(I, /obj/item/weapon/wrench) && isturf(src.loc))
 		var/obj/item/weapon/wrench/Tool = I
