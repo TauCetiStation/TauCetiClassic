@@ -4,7 +4,6 @@
 
 /mob/living/carbon/Destroy()
 	carbon_list -= src
-	remove_from_all_data_huds()
 	return ..()
 
 /mob/living/carbon/Life()
