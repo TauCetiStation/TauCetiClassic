@@ -65,7 +65,7 @@ export const Vote = (_, context) => {
         <VoteInfoModal />
         <Stack fill vertical>
           <Choices />
-          {(!currentPoll || isAdmin) && <ListPolls />}
+          {(!currentPoll || !!isAdmin) && <ListPolls />}
           <Timer />
         </Stack>
       </Window.Content>
@@ -283,7 +283,7 @@ const Timer = (_, context) => {
           <Box fontSize={1.5}>
             Осталось времени: {currentPoll?.timeRemaining || 0}с
           </Box>
-          {isAdmin && currentPoll && (
+          {!!isAdmin && !!currentPoll && (
             <Button
               color="red"
               disabled={!isAdmin}
