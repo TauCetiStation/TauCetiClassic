@@ -1,6 +1,5 @@
 ///prototype for rites that tune a song.
 /datum/religion_rites/song_tuner
-	name = "Песенка"
 	ritual_length = 10 SECONDS
 	favor_cost = 10
 	///if repeats count as continuations instead of a song's end, TRUE
@@ -53,11 +52,11 @@
 	particles_path = /particles/musical_notes/holy
 	song_invocation_message = "Вы приготовили песнь Святых!"
 	song_start_message = "<span class='notice'>Эта музыка благословенна!</span>"
-	glow_color = "#a5a793"
+	glow_color = "#AAAAAA"
 	favor_cost = 0
 	buff = TRUE
 	needed_aspects = list(
-		ASPECT_LIGHT = 1,
+		ASPECT_RESCUE = 1,
 	)
 
 /datum/religion_rites/song_tuner/evangelism/song_effect(mob/living/listener, atom/song_source)
@@ -80,7 +79,7 @@
 	repeats_okay = FALSE
 	buff = TRUE
 	needed_aspects = list(
-		ASPECT_RESCUE = 1,
+		ASPECT_LIGHT = 1,
 	)
 
 /datum/religion_rites/song_tuner/life/song_effect(mob/living/listener, atom/song_source)
@@ -104,7 +103,7 @@
 	particles_path = /particles/musical_notes/harm
 	song_invocation_message = "От песни будет кровь из ушей. И не только."
 	song_start_message = "<span class='danger'>Словно иглу воткнули!</span>"
-	glow_color = "#FF4460"
+	glow_color = "#CC0000"
 	repeats_okay = FALSE
 	needed_aspects = list(
 		ASPECT_DEATH = 1,

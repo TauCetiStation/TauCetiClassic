@@ -83,7 +83,7 @@
 	if(viable_for_final_effect)
 		var/mob/M = parent
 		if(finished && linked_songtuner_rite && linked_song)
-			for(var/mob/living/listener in range(7, parent))
+			for(var/mob/living/listener in hearers(7, parent))//range(7, parent))
 				if(listener == parent)
 					continue
 				if(!linked_songtuner_rite.buff && listener.my_religion == M.my_religion)
@@ -106,7 +106,7 @@
 /datum/component/smooth_tunes/process()
 	if(linked_songtuner_rite && linked_song)
 		var/mob/M = parent
-		for(var/mob/living/listener in range(7, parent))
+		for(var/mob/living/listener in hearers(7, parent))//range(7, parent))
 			if(listener == parent)
 				continue
 			if(!linked_songtuner_rite.buff && listener.my_religion == M.my_religion)

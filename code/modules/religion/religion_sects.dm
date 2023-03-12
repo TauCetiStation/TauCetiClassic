@@ -173,6 +173,19 @@
 		/datum/aspect/technology = 1,
 	)
 
+/datum/religion_sect/preset/cult/songs
+	name = "The Cult of Sound"
+	desc = "Sound can lead the masses, and you will become its source"
+	convert_opener = "And let your moment be illuminated by the Sound"
+	aspect_preset = list(
+		/datum/aspect/rescue = 1,
+		/datum/aspect/lightbending/light = 1,
+		/datum/aspect/death = 1,
+		/datum/aspect/mystic = 1,
+		/datum/aspect/conjure = 1,
+		/datum/aspect/chaos = 1,
+	)
+
 /datum/religion_sect/custom/cult
 	name = "Custom Cult"
 	convert_opener = "Chaos is power."
