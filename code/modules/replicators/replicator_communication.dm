@@ -78,6 +78,7 @@
 		"ссан" = "паутин",
 		"бзд" = "вис",
 		"перд" = "вис",
+		"сцу" = "вью",
 	)
 	return replace_characters(message, swears)
 
