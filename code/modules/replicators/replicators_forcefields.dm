@@ -13,7 +13,6 @@
 
 	underlays.Cut()
 	var/image/I = SSenvironment.turf_image[z]
-	I.appearance_flags |= RESET_COLOR
 	underlays += I
 
 /turf/simulated/floor/plating/airless/catwalk/forcefield/Destroy()
