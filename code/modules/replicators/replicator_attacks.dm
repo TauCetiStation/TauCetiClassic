@@ -177,6 +177,11 @@
 
 		M.emp_act(1)
 
+		M.take_damage(50, ENERGY)
+
+		M.can_move = FALSE
+		VARSET_IN(M, can_move, TRUE, 2 SECONDS)
+
 		var/area/A = get_area(src)
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		var/datum/replicator_array_info/RAI = FR.ckey2info[creator_ckey]
