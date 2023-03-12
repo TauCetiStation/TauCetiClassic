@@ -385,7 +385,7 @@
 	desc = "Transfer to an idle member of the swarm."
 
 	charge_type = "recharge"
-	charge_max = 10 SECONDS
+	charge_max = 1 SECOND
 
 	clothes_req = FALSE
 
@@ -418,7 +418,7 @@
 	desc = "Transfer to a replicator from an area."
 
 	charge_type = "recharge"
-	charge_max = 10 SECONDS
+	charge_max = 1 SECOND
 
 	clothes_req = FALSE
 
