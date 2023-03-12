@@ -47,13 +47,19 @@
 	religion = cur_religion_ref
 	return ..(t_area, t_turf, timer_to_del)
 
-/datum/component/cross_teleport/religion/teleport_to(atom/movable/AM, turf/target_turf)
+/datum/component/cross_teleport/religion/teleport_start(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+	//not for objects
 	if(ismob(AM))
-		var/mob/M = AM
-		if(whitelist_religions.len)
-			if(M.my_religion in whitelist_religions)
-				return
-		new /atom/movable/screen/temp/cult_teleportation(M, M)
+		return ..(source, AM)
+
+/datum/component/cross_teleport/religion/teleport_to(atom/movable/AM, turf/target_turf)
+	//It always mob. See religion/teleport_start
+	var/mob/M = AM
+	if(whitelist_religions.len)
+		if(M.my_religion in whitelist_religions)
+			return
+	new /atom/movable/screen/temp/cult_teleportation(M, M)
 	if(religion)
 		var/turf/atom_turf = get_turf(AM)
 		playsound(atom_turf, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
