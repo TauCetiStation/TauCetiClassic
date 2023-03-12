@@ -786,7 +786,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	if(!isreplicator(AM))
 		return ..()
 
-	if(length(global.alive_replicators) <= 1)
+	if(length(global.alive_replicators) <= 1 && FR.replicators_launched < REPLICATORS_CATAPULTED_TO_WIN)
 		to_chat(AM, "<span class='notice'>One must stay behind. Replicate more, and send others.</span>")
 		return
 
