@@ -249,13 +249,17 @@
 	return R.can_disintegrate(target, alert=TRUE)
 
 /mob/living/simple_animal/hostile/replicator/proc/try_spawn_node(turf/T)
-	if(!prob(5) && !(ckey && has_swarms_gift()))
+	var/spawn_prob = 5
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	if(FR.nodes_to_spawn > 1 || (ckey && has_swarms_gift()))
+		spawn_prob = 50
+
+	if(!prob(spawn_prob))
 		return FALSE
 
 	if(!is_station_level(T.z))
 		return FALSE
 
-	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	if(FR.nodes_to_spawn <= 0)
 		return FALSE
 
