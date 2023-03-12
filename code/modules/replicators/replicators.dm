@@ -590,7 +590,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 		last_brute_hit = world.time
 
 /mob/living/simple_animal/hostile/replicator/get_projectile_impact_force(obj/item/projectile/P, def_zone)
-	. = ..()
+	. = ..() * 0.1
 	if(P.damage_type == BRUTE)
 		. += P.damage * 0.1
 
