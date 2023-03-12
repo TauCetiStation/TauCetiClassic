@@ -42,7 +42,7 @@
 	qdel(src)
 
 /obj/structure/bigDelivery/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/tagger))
+	if(istagger(W))
 		var/obj/item/device/tagger/O = W
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
@@ -104,7 +104,7 @@
 	qdel(src)
 
 /obj/item/smallDelivery/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/tagger))
+	if(istagger(I))
 		var/obj/item/device/tagger/O = I
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
@@ -213,7 +213,8 @@
 /obj/item/device/tagger
 	name = "tagger"
 	desc = "Используется для наклейки меток, ценников и бирок."
-	icon_state = "dest_tagger"
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "labeler_shop"
 	var/currTag = 0
 
 	w_class = SIZE_TINY
@@ -240,7 +241,8 @@
 /obj/item/device/tagger/shop
 	name = "shop tagger"
 	desc = "Используется для наклейки ценников и бирок."
-	icon_state = "shop_tagger"
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "labeler0"
 	modes = list(1 = "Ценник", 2 = "Бирка")
 
 /obj/item/device/tagger/proc/openwindow(mob/user)
