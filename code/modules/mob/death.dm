@@ -11,7 +11,7 @@
 	qdel(src)
 
 /mob/proc/dust_process()
-	var/icon/I = build_disappear_icon(src)
+	var/icon/I = build_disappear_icon(src, lying ? -lying_current : 0)
 	var/atom/movable/overlay/animation = new(loc)
 	animation.transform = transform
 	flick(I, animation)
