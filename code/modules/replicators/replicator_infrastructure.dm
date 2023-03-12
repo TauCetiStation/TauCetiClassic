@@ -763,6 +763,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	if(perc_finished >= 100 && next_lemming_reminder < world.time && FR.replicators_launched < REPLICATORS_CATAPULTED_TO_WIN)
 		var/area/A = get_area(src)
 		FR.swarm_chat_message("The Swarm", "[REPLICATORS_CATAPULTED_TO_WIN - FR.replicators_launched] more replicators are required to launch from the catapult at [A.name]. You must go there, now!", 5)
+		next_lemming_reminder = world.time + lemming_reminder_cooldown
 
 	if(announcement)
 		last_perc_announcement = perc_finished
@@ -786,12 +787,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	if(!isreplicator(AM))
 		return ..()
 
+	var/mob/living/simple_animal/hostile/replicator/R = AM
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+
 	if(length(global.alive_replicators) <= 1 && FR.replicators_launched < REPLICATORS_CATAPULTED_TO_WIN)
 		to_chat(AM, "<span class='notice'>One must stay behind. Replicate more, and send others.</span>")
 		return
 
-	var/mob/living/simple_animal/hostile/replicator/R = AM
-	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	FR.replicators_launched += 1
 
 	var/datum/replicator_array_info/RAI = FR.ckey2info[R.last_controller_ckey]

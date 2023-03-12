@@ -53,7 +53,7 @@
 
 	if(isreplicator(A))
 		var/mob/living/simple_animal/hostile/replicator/R = A
-		if(R == src || R.stat == DEAD || !R.ckey))
+		if(R == src || R.stat == DEAD || !R.ckey)
 			INVOKE_ASYNC(src, .proc/disintegrate, A)
 		// repair
 		return
