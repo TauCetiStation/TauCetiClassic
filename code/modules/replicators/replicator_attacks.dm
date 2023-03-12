@@ -24,8 +24,8 @@
 		var/additional_damage = FR.energy / 10000
 
 		var/target_zone = get_targetzone()
-		L.apply_damage(3.0, BRUTE, target_zone, 0.0, NONE)
-		L.apply_effects(0, 0, 0, 0, 2, 1, 0, 10 + additional_damage * 0.3, 0)
+		L.apply_damage(3.0 + disabler_damage_increase * 1.5, BRUTE, target_zone, 0.0, NONE)
+		L.apply_effects(0, 0, 0, 0, 2, 1, 0, 10 + disabler_damage_increase * 5.0 + additional_damage * 0.3, 0)
 
 		SetNextMove(CLICK_CD_MELEE)
 		L.set_lastattacker_info(src)

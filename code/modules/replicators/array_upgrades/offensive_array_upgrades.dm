@@ -4,7 +4,7 @@
 
 /datum/replicator_array_upgrade/offensive/ranged_attack_damage
 	name = "Destruction"
-	desc = "Further concentration of plasmatic bursts allows for greater ranged capabilities."
+	desc = "Further concentration of energy allows for greater combat capabilities."
 
 	icon_state = "upgrade_ranged_attack_damage"
 
