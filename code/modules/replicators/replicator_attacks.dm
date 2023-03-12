@@ -51,9 +51,9 @@
 		INVOKE_ASYNC(src, .proc/disintegrate, A)
 		return
 
-	if(istype(A, /mob/living/simple_animal/hostile/replicator))
+	if(isreplicator(A))
 		var/mob/living/simple_animal/hostile/replicator/R = A
-		if(!R.ckey || R == src)
+		if(R == src || R.stat == DEAD || !R.ckey))
 			INVOKE_ASYNC(src, .proc/disintegrate, A)
 		// repair
 		return
