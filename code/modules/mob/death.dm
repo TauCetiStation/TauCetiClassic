@@ -13,6 +13,7 @@
 /mob/proc/dust_process()
 	var/icon/I = build_disappear_icon(src)
 	var/atom/movable/overlay/animation = new(loc)
+	animation.transform = transform
 	flick(I, animation)
 
 	playsound(src, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER)
