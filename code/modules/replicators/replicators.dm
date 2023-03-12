@@ -529,7 +529,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	return has_status_effect(STATUS_EFFECT_SWARMS_GIFT)
 
 /mob/living/simple_animal/hostile/replicator/proc/playsound_stealthy(atom/source, sound, vol=100)
-	var/mufflerange = has_swarms_gift() ? -5 : 0
+	var/mufflerange = has_swarms_gift() ? -6 : 0
 	return playsound(source, sound, VOL_EFFECTS_MASTER, vol=vol, extrarange=mufflerange)
 
 /mob/living/simple_animal/hostile/replicator/gib()
