@@ -561,6 +561,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 	// Images don't have invisibility.
 	var/obj/effect/overlay/internal_overlay
 
+	var/creator_ckey
+
 /obj/structure/bluespace_corridor/atom_init()
 	. = ..()
 
@@ -626,6 +628,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 /obj/structure/bluespace_corridor/Crossed(atom/movable/AM)
 	if(AM && AM.invisibility > 0 && prob(30))
 		playsound(AM, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_complite.ogg', VOL_EFFECTS_MASTER)
+
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	var/datum/replicator_array_info/RAI = FR.ckey2info[creator_ckey]
+	if(RAI)
+		RAI.corridor_crossed_times += 1
+
 	return ..()
 
 /obj/structure/bluespace_corridor/Moved(atom/OldLoc, move_dir)

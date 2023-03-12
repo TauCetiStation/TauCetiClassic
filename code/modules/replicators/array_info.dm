@@ -13,6 +13,7 @@
 	var/barricades_built = 0
 	var/traps_built = 0
 	var/corridors_constructed = 0
+	var/corridor_crossed_times = 0
 
 	var/catapults_built = 0
 

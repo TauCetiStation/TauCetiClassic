@@ -248,11 +248,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 		// maybe it would be better to add some mechanical woosh woosh sound like when constructing a drone.
 		playsound_stealthy(T, 'sound/misc/mining_crate_success.ogg', vol=40)
 
-	var/datum/replicator_array_info/RAI = FR.ckey2info[last_controller_ckey]
-	if(RAI)
-		RAI.corridors_constructed += 1
+	var/obj/structure/bluespace_corridor/BC = new auto_construct_type(T)
+	if(istype(BC))
+		BC.creator_ckey = last_controller_ckey
+		var/datum/replicator_array_info/RAI = FR.ckey2info[last_controller_ckey]
+		if(RAI)
+			RAI.corridors_constructed += 1
 
-	new auto_construct_type(T)
 	FR.adjust_materials(-auto_construct_cost, adjusted_by=last_controller_ckey)
 	announce_material_adjustment(-auto_construct_cost, ignore_intent=FALSE)
 

@@ -303,6 +303,7 @@ Message ends."}
 		score_results += "<br><b>Placed Mine Triggers:</b> [RAI.mine_triggers]"
 		score_results += "<br><b>Eaten Humans:</b> [RAI.eaten_humans]"
 		score_results += "<br><b>Corridors Constructed:</b> [RAI.corridors_constructed]"
+		score_results += "<br><b>Corridors Crossed Times</b>: [RAI.corridor_crossed_times]"
 		score_results += "<br><b>Replicators Launched:</b> [RAI.replicators_launched]"
 		score_results += "<br><b>Array Replicators Screwed:</b> [RAI.replicators_screwed]"
 		score_results += "<br><b>Objections Received:</b> [RAI.objections_received]"
