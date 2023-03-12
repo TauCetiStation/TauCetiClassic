@@ -39,6 +39,12 @@
 		INVOKE_ASYNC(src, .proc/disintegrate_turf, get_turf(A))
 		return
 
+	if(istype(A, /obj/structure/forcefield_node))
+		var/obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/replicate_spell = locate() in src
+		if(replicate_spell)
+			replicate_spell.Click()
+		return
+
 	if(istype(A, /obj/structure/replicator_forcefield) && auto_construct_type == /obj/structure/bluespace_corridor)
 		try_construct(get_turf(A))
 		return
@@ -55,7 +61,6 @@
 		var/mob/living/simple_animal/hostile/replicator/R = A
 		if(R == src || R.stat == DEAD || !R.ckey)
 			INVOKE_ASYNC(src, .proc/disintegrate, A)
-		// repair
 		return
 
 	if(isliving(A))
