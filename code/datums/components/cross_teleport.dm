@@ -48,7 +48,6 @@
 	return ..(t_area, t_turf, timer_to_del)
 
 /datum/component/cross_teleport/religion/teleport_start(datum/source, atom/movable/AM)
-	SIGNAL_HANDLER
 	//not for objects
 	if(ismob(AM))
 		return ..(source, AM)
