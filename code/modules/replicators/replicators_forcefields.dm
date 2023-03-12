@@ -13,7 +13,7 @@
 
 	underlays.Cut()
 	var/image/I = SSenvironment.turf_image[z]
-	I.appearance_flags &= ~KEEP_COLOR
+	I.appearance_flags |= RESET_COLOR
 	underlays += I
 
 /turf/simulated/floor/plating/airless/catwalk/forcefield/Destroy()
@@ -228,9 +228,11 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	// to-do: sound
 	playsound(loc, 'sound/machines/arcade/heal2.ogg', VOL_EFFECTS_MASTER)
 
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.destroyed_nodes += 1
+
 	var/obj/machinery/power/replicator_generator/RG = locate() in loc
 	if(RG)
-		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		FR.adjust_materials(REPLICATOR_COST_GENERATOR)
 		qdel(RG)
 

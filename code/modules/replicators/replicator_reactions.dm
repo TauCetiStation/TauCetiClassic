@@ -361,6 +361,10 @@
 	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
 
 /obj/machinery/swarm_powered/bluespace_transponder/replicator_act(mob/living/simple_animal/hostile/replicator/R)
+	// Not destroyed, dismantled.
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.destroyed_transponders -= 1
+
 	QDEL_NULL(deactivation_signal)
 	deconstruct(TRUE)
 	return TRUE
@@ -376,6 +380,10 @@
 	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
 
 /obj/machinery/power/replicator_generator/replicator_act(mob/living/simple_animal/hostile/replicator/R)
+	// Not destroyed, dismantled.
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.destroyed_generators -= 1
+
 	has_crystal = FALSE
 	deconstruct(TRUE)
 	return TRUE

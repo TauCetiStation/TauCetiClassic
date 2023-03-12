@@ -58,6 +58,11 @@
 
 	var/gas = 0
 
+	var/destroyed_transponders = 0
+	var/destroyed_generators = 0
+	var/destroyed_nodes = 0
+	var/destroyed_catapults = 0
+
 /datum/faction/replicators/New()
 	..()
 	spawned_at_time = world.time
@@ -288,6 +293,12 @@ Message ends."}
 	. += "Bandwidth: [bandwidth]/[max_bandwidth]<br>"
 	. += "Generators active: [length(global.replicator_generators)]<br>"
 	. += "Portals active: [length(global.active_transponders)]<br>"
+
+	. += "Transponders Destroyed By Crew: [destroyed_transponders]<br>"
+	. += "Generators Destroyed By Crew: [destroyed_generators]<br>"
+	. += "Nodes Destroyed By Crew: [destroyed_nodes]<br>"
+	. += "Catapults Destroyed By Crew: [destroyed_catapults]<br>"
+
 	if(node_string != "")
 		. += "Nodes unclaimed: [node_string]<br>"
 	. += "<br>"

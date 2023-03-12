@@ -153,6 +153,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 /obj/machinery/swarm_powered/bluespace_transponder/Destroy()
 	QDEL_NULL(deactivation_signal)
 	global.active_transponders -= src
+
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.destroyed_transponders += 1
+
 	return ..()
 
 /obj/machinery/swarm_powered/bluespace_transponder/examine(mob/living/user)
@@ -224,6 +228,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		FR.object_communicate(src, "", "Has closed in [A.name], due to lack of energy.")
 		FR.adjust_materials(REPLICATOR_COST_TRANSPONDER)
+
+		// I'm not destroyed I did it on my own.
+		FR.destroyed_transponders -= 1
+
 		QDEL_NULL(deactivation_signal)
 		neutralize()
 
@@ -312,6 +320,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 /obj/machinery/power/replicator_generator/Destroy()
 	// to-do: sound
 	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
+
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	FR.destroyed_generators += 1
 
 	if(has_crystal)
 		new /obj/item/bluespace_crystal/artificial(loc)
@@ -730,6 +741,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	FR.swarm_chat_message("The Swarm", "The Bluespace Catapult has been destroyed! A setback, you must construct another one.", 5)
+
+	FR.destroyed_catapults += 1
 
 	return ..()
 
