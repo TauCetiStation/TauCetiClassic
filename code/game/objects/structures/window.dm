@@ -404,12 +404,12 @@
 		take_damage(round(exposed_volume / 100), BURN, FIRE, FALSE)
 
 
-/obj/structure/window/basic
+/obj/structure/window/basic // !
 	desc = "It looks thin and flimsy. A few knocks with... anything, really should shatter it."
 	icon_state = "window"
 	basestate = "window"
 
-/obj/structure/window/phoronbasic
+/obj/structure/window/phoronbasic // ! (remove me? dont exists on maps)
 	name = "phoron window"
 	desc = "A phoron-glass alloy window. It looks insanely tough to break. It appears it's also insanely tough to burn through."
 	basestate = "phoronwindow"
@@ -421,7 +421,7 @@
 	if(exposed_temperature > T0C + 32000)
 		take_damage(round(exposed_volume / 1000), BURN, FIRE, FALSE)
 
-/obj/structure/window/phoronreinforced
+/obj/structure/window/phoronreinforced // !
 	name = "reinforced phoron window"
 	desc = "A phoron-glass alloy window, with rods supporting it. It looks hopelessly tough to break. It also looks completely fireproof, considering how basic phoron windows are insanely fireproof."
 	basestate = "phoronrwindow"
@@ -433,7 +433,7 @@
 /obj/structure/window/phoronreinforced/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
 
-/obj/structure/window/reinforced
+/obj/structure/window/reinforced // !
 	name = "reinforced window"
 	desc = "It looks rather strong. Might take a few good hits to shatter it."
 	icon_state = "rwindow"
@@ -442,7 +442,7 @@
 	reinf = 1
 	damage_threshold = 15
 
-/obj/structure/window/reinforced/indestructible
+/obj/structure/window/reinforced/indestructible // !
 	flags = NODECONSTRUCT | ON_BORDER
 	resistance_flags = FULL_INDESTRUCTIBLE
 
@@ -453,15 +453,15 @@
 	basestate = "twindow"
 	opacity = 1
 
-/obj/structure/window/reinforced/tinted/frosted //Actually, there is no icon for this!!
+/*/obj/structure/window/reinforced/tinted/frosted //Actually, there is no icon for this!!
 	name = "frosted window"
 	desc = "It looks rather strong and frosted over. Looks like it might take a few less hits then a normal reinforced window."
 	icon_state = "fwindow"
 	basestate = "fwindow"
 	max_integrity = 30
-	damage_threshold = 0
+	damage_threshold = 0*/
 
-/obj/structure/window/shuttle
+/obj/structure/window/shuttle // move to fulltile
 	name = "shuttle window"
 	desc = "It looks rather strong. Might take a few good hits to shatter it."
 	icon = 'icons/obj/podwindows.dmi'
@@ -475,7 +475,7 @@
 /obj/structure/window/shuttle/update_icon() //icon_state has to be set manually
 	return
 
-/obj/structure/window/reinforced/polarized
+/obj/structure/window/reinforced/polarized // !
 	name = "electrochromic window"
 	desc = "Adjusts its tint with voltage. Might take a few good hits to shatter it."
 	icon_state = "fwindow"
