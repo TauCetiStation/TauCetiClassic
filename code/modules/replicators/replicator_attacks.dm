@@ -26,6 +26,7 @@
 		var/target_zone = get_targetzone()
 		L.apply_damage(3.0 + disabler_damage_increase * 1.5, BRUTE, target_zone, 0.0, NONE)
 		L.apply_effects(0, 0, 0, 0, 2, 1, 0, 10 + disabler_damage_increase * 5.0 + additional_damage * 0.3, 0)
+		L.silent = max(L.silent, 2)
 
 		SetNextMove(CLICK_CD_MELEE)
 		L.set_lastattacker_info(src)
@@ -213,6 +214,8 @@
 		var/stepped_by = pick(BP_R_LEG, BP_L_LEG)
 		L.electrocute_act(15 + additional_damage * 0.5, src, siemens_coeff = 1.0, def_zone = stepped_by) // electrocute act does a message.
 		L.Stun(2)
+
+		L.silent = max(L.silent, 2)
 
 		var/area/A = get_area(src)
 		FR.object_communicate(src, "!", "Mine trigger event at [A.name].", transfer=TRUE)
