@@ -1,3 +1,40 @@
+/mob/living/simple_animal/hostile/proc/filter_swears(message)
+	var/static/list/swears = list(
+		"еба" = "реплик",
+		"ебу" = "репликую",
+		"ебо" = "реплик",
+		"ёб" = "реплиц",
+		"ебн" = "реплик",
+		"ебл" = "реплик",
+		"сук" = "малорот",
+		"суч" = "мал",
+		"хуй" = "кристалл",
+		"хуи" = "кристалли",
+		"хуе" = "кристал",
+		"хуё" = "кристал",
+		"хуя" = "кристалла",
+		"хер" = "кристалл",
+		"оху" = "окрист",
+		"хую" = "кристал",
+		"пизд" = "узл",
+		"бля" = "бип",
+		"дерьм" = "паутин",
+		"гомн" = "паутин",
+		"говн" = "паутин",
+		"гамн" = "паутин",
+		"гавн" = "паутин",
+		"кал" = "паутина",
+		"дебил" = "малорот",
+		"идиот" = "малорот",
+		"даун" = "треснут",
+		"мраз" = "тесл",
+		"срат" = "фрактал",
+		"срал" = "фрактал",
+		"пидор" = "генератор",
+		"педик" = "генератор",
+	)
+	return replace_characters(message, swears)
+
 /mob/living/simple_animal/hostile/replicator/say(message)
 	if(stat != CONSCIOUS)
 		return
@@ -10,7 +47,7 @@
 	if(message[1] == "*")
 		return emote(copytext(message, 2))
 
-	message = add_period(capitalize(trim(message)))
+	message = add_period(capitalize(filter_swears(lowertext(trim(message)))))
 
 	var/indicator = say_test(message)
 	var/ending = ""
