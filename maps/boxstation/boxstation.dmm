@@ -13508,7 +13508,8 @@
 /area/station/security/range)
 "axc" = (
 /obj/machinery/computer/cargo{
-	dir = 1
+	dir = 1;
+	req_access = list()
 	},
 /turf/simulated/floor{
 	dir = 9;

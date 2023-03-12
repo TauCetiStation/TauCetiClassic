@@ -15,6 +15,9 @@
  * Table Parts
  */
 // Return TRUE if reacted to a tool.
+/obj/item/weapon/table_parts
+	var/build_time = 0
+
 /obj/item/weapon/table_parts/proc/attack_tools(obj/item/W, mob/user)
 	if(iswrenching(W))
 		deconstruct(TRUE, user)
@@ -46,20 +49,29 @@
 	..()
 
 /obj/item/weapon/table_parts/attack_self(mob/user)
-	if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
-		return
 	var/turf/simulated/T = get_turf(user)
-	if(!T || !T.CanPass(null, T))
+	if(!can_place(T))
 		to_chat(user, "<span class='warning'>You can't put it here!</span>")
 		return
-	var/obj/structure/table/R = new table_type( T )
+	if(build_time > 0 && !handle_fumbling(user, src, build_time, list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))
+		return
+	if(!can_place(T))
+		to_chat(user, "<span class='warning'>You can't put it here!</span>")
+		return
+	var/obj/structure/table/R = new table_type(T)
 	to_chat(user, "<span class='notice'>You assemble [src].</span>")
 	R.add_fingerprint(user)
 	qdel(src)
 
+/obj/item/weapon/table_parts/proc/can_place(turf/T)
+	return T && T.CanPass(null, T)
+
 /*
  * Reinforced Table Parts
  */
+/obj/item/weapon/table_parts/reinforced
+	build_time = SKILL_TASK_AVERAGE
+
 /obj/item/weapon/table_parts/reinforced/attack_tools(obj/item/W, mob/user)
 	if(iswrenching(W))
 		deconstruct(TRUE, user)
