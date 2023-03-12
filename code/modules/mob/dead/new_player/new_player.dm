@@ -434,7 +434,7 @@
 	new_character.dna.UpdateSE()
 	new_character.nutrition = rand(NUTRITION_LEVEL_STARVING, NUTRITION_LEVEL_FAT)
 	var/c = new_character.get_metabolism_factor()
-	new_character.metabolism_factor.Set(c*(1+pick(-0.1,0.1)))
+	new_character.metabolism_factor.Set(c * (1 + pick(-0.1, 0.1)))
 	
 	if(key)
 		new_character.key = key		//Manually transfer the key to log them in
