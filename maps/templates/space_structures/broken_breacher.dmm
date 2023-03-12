@@ -337,11 +337,9 @@
 	},
 /area/space_structures/broken_breacher)
 "nh" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
-/obj/structure/grille,
 /turf/simulated/shuttle/plating,
 /area/space_structures/broken_breacher)
 "nj" = (
@@ -727,13 +725,6 @@
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
-/area/space_structures/broken_breacher)
-"BC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/turf/simulated/shuttle/plating,
 /area/space_structures/broken_breacher)
 "BO" = (
 /turf/simulated/shuttle/floor{
@@ -1370,13 +1361,6 @@
 	icon_state = "grimy"
 	},
 /area/space_structures/broken_breacher)
-"Zy" = (
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
-/area/space_structures/broken_breacher)
 "ZV" = (
 /obj/machinery/porta_turret/stationary{
 	check_n_synth = 1;
@@ -1810,7 +1794,7 @@ sO
 sO
 sO
 sO
-BC
+nh
 PU
 OG
 KJ
@@ -1932,7 +1916,7 @@ sO
 sO
 "}
 (14,1,1) = {"
-Zy
+nh
 Ip
 dy
 oa
@@ -1974,7 +1958,7 @@ sO
 sO
 "}
 (15,1,1) = {"
-Zy
+nh
 Ip
 me
 Gc

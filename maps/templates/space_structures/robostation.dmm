@@ -14,9 +14,8 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "ad" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
@@ -467,9 +466,8 @@
 	},
 /area/space_structures/robostatoin)
 "bR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /turf/environment/space,

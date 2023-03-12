@@ -42,9 +42,7 @@
 	},
 /area/space_structures/planetarium)
 "i" = (
-/obj/structure/window/phoronreinforced{
-	dir = 6
-	},
+/obj/structure/window/fulltile/reinforced/phoron,
 /turf/unsimulated/floor/abductor,
 /turf/environment/space,
 /area/space_structures/planetarium)
@@ -71,15 +69,11 @@
 	},
 /area/space_structures/planetarium)
 "n" = (
-/obj/structure/window/phoronreinforced{
-	dir = 6
-	},
+/obj/structure/window/fulltile/reinforced/phoron,
 /turf/environment/space,
 /area/space_structures/planetarium)
 "o" = (
-/obj/structure/window/phoronreinforced{
-	dir = 6
-	},
+/obj/structure/window/fulltile/reinforced/phoron,
 /turf/unsimulated/floor/abductor,
 /area/space_structures/planetarium)
 "p" = (

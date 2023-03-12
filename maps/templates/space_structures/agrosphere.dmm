@@ -231,9 +231,8 @@
 /turf/simulated/floor,
 /area/space_structures/agrospheregarden)
 "aA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
