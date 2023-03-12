@@ -14,6 +14,8 @@
 			if(!use(1))
 				to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")
 				return FALSE
+			if(!do_mob(user, R, time = 10, check_target_zone = TRUE))
+				return
 			R.adjustBruteLoss(-15)
 			R.adjustFireLoss(-15)
 			R.updatehealth()
@@ -31,6 +33,8 @@
 				if(!use(1))
 					to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")
 					return FALSE
+				if(!do_mob(user, H, time = 10, check_target_zone = TRUE))
+					return
 				BP.heal_damage(15, 15, robo_repair = 1)
 				H.updatehealth()
 				user.visible_message("<span class='notice'>\The [user] applies some nanite paste at[user != M ? " \the [M]'s" : " \the"][BP.name] with \the [src].</span>",\
