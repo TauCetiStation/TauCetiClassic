@@ -7,7 +7,7 @@
 	icon_state = "box"
 
 	smooth = SMOOTH_TRUE
-	//canSmoothWith = CAN_SMOTH_WITH_WALLS
+	//canSmoothWith = CAN_SMOOTH_WITH_WALLS
 
 	density = TRUE
 	anchored = TRUE

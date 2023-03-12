@@ -29,7 +29,8 @@
 
 	var/sheet_type = /obj/item/stack/sheet/metal
 
-	canSmoothWith = CAN_SMOTH_WITH_WALLS
+	canSmoothWith = CAN_SMOOTH_WITH_WALLS
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS_FOR_WALLS
 	smooth = SMOOTH_TRUE
 
 /turf/simulated/wall/Destroy()

@@ -8,10 +8,10 @@
 /proc/painting_objects(list/possible_areas, color)
 	for(var/type in possible_areas)
 		for(var/obj/structure/window/W in get_area_by_type(type))
-			W.color = color
 			if(istype(W, /obj/structure/window/fulltile))
 				var/obj/structure/window/fulltile/FT = W
 				FT.glass_color = color
+				//FT.regenerate_smooth_icon()
 			else
 				W.color = color
 		for(var/obj/machinery/door/window/D in get_area_by_type(type))
@@ -50,3 +50,6 @@
 
 	for(var/color in color_by_types)
 		painting_objects(color_by_types[color], color)
+
+/client/verb/repaint()
+	return

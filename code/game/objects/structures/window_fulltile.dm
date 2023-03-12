@@ -5,8 +5,8 @@
 
 // todo: we can save more on objects if we redo windowsills and fulltile windows as turfs
 /obj/structure/windowsill
-	name = "windowstill"
-	desc = "A windowstill. You can mount a window on it."
+	name = "windowsill"
+	desc = "A windowsill. You can mount a window on it."
 	icon = 'icons/obj/smooth_structures/windows/window_sill.dmi'
 	icon_state = "box"
 
@@ -17,7 +17,8 @@
 	climbable = TRUE
 
 	smooth = SMOOTH_TRUE
-	canSmoothWith = CAN_SMOTH_WITH_WALLS
+	canSmoothWith = CAN_SMOOTH_WITH_WALLS
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS
 
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
@@ -30,7 +31,8 @@
 	dir = 5 // todo
 
 	smooth = SMOOTH_TRUE
-	canSmoothWith = CAN_SMOTH_WITH_WALLS
+	canSmoothWith = CAN_SMOOTH_WITH_WALLS
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS
 
 	// has own smoothing algoritm
 	var/smooth_icon_windowstill = 'icons/obj/smooth_structures/windows/window_sill.dmi'

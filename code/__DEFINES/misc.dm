@@ -314,7 +314,7 @@
 #define NOTIFY_ATTACK "attack"
 #define NOTIFY_ORBIT "orbit"
 
-#define CAN_SMOTH_WITH_WALLS list( \
+#define CAN_SMOOTH_WITH_WALLS list( \
 		/turf/simulated/wall, \
 		/turf/simulated/wall/r_wall, \
 		/obj/structure/falsewall, \
@@ -351,4 +351,15 @@
 		/obj/machinery/door/airlock/atmos/glass, \
 		/obj/machinery/door/airlock/science/glass, \
 		/obj/machinery/door/airlock/science/neutral, \
+)
+
+#define SMOOTH_ADAPTERS_WALLS list( \
+		/turf/simulated/wall = "wall", \
+		/obj/structure/falsewall = "wall", \
+		/obj/machinery/door/airlock = "wall", \
+)
+
+// wall don't need adapter with another wall
+#define SMOOTH_ADAPTERS_WALLS_FOR_WALLS list( \
+		/obj/machinery/door/airlock = "wall", \
 )
