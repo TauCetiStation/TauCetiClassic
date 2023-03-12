@@ -24,6 +24,8 @@
 
 	var/eaten_humans = 0
 
+	var/objections_received = 0
+
 /datum/replicator_array_info/New(datum/faction/replicators/faction)
 	var/letter_number = length(faction.ckey2info) % length(greek_pronunciation) + 1
 	var/magnitude = 1 + round(length(faction.ckey2info) / (length(greek_pronunciation) - 1))

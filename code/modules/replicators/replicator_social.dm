@@ -23,14 +23,28 @@
 		return
 	next_objection_time[R.ckey] = world.time + objection_cooldown
 
-	to_chat(src, "<span class='bold warning'>[RAI.presence_name] objects to your actions!</span>")
+	var/datum/role/replicator/repl_role = FR.get_member_by_ckey(last_controller_ckey)
+	if(!repl_role)
+		return
+
+	var/datum/mind/repl_mind = repl_role.antag
+	if(!repl_mind)
+		return
+
+	if(!repl_mind.current)
+		return
+
+	to_chat(repl_mind.current, "<span class='bold warning'>[RAI.presence_name] objects to your actions!</span>")
 	// to_chat(R, "<span class='notice'>You have objected to [R]'s actions.</span>")
 
 	if(next_objection_sound > world.time)
 		return
 	next_objection_sound = world.time + objection_sound_cooldown
 
-	playsound_local(src, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
+	var/datum/replicator_array_info/my_RAI = FR.ckey2info[last_controller_ckey]
+
+	playsound_local(repl_mind.current, 'sound/machines/buzz-sigh.ogg', VOL_EFFECTS_MASTER)
+	my_RAI.objections_received += 1
 
 /mob/living/simple_animal/hostile/replicator/proc/do_after_objections(delay, message, datum/callback/extra_checks=null)
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
