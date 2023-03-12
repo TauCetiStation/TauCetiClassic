@@ -321,6 +321,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	if(!mind.GetRole(REPLICATOR))
 		add_faction_member(FR, src, TRUE)
 
+	client?.show_metahelp_greeting("replicator")
+
 	var/datum/replicator_array_info/RAI = FR.ckey2info[ckey]
 	if(RAI)
 		mind.name = RAI.presence_name
