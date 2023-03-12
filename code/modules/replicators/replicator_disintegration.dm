@@ -149,7 +149,7 @@
 
 	var/datum/callback/checks = CALLBACK(src, .proc/disintegrate_do_after_checks)
 	var/effective_efficency = efficency
-	if(ckey && has_swarms_gift())
+	if(has_swarms_gift())
 		effective_efficency *= 1.5
 
 	if(!do_skilled(src, A, A.get_unit_disintegration_time() * material_amount / effective_efficency, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2, extra_checks=checks))
