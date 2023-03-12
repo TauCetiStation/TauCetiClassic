@@ -316,6 +316,9 @@
 	return welded
 
 /obj/machinery/atmospherics/components/get_unit_disintegration_time()
+	if(welded)
+		return ..()
+
 	return ..() * REPLICATOR_PUNISH_GRIEFING_TICK_MODIFIER
 
 /obj/machinery/atmospherics/components/replicator_act(mob/living/simple_animal/hostile/replicator/R)
