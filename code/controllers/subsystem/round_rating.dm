@@ -116,7 +116,7 @@ SUBSYSTEM_DEF(rating)
 
 /datum/controller/subsystem/rating/Topic(href, href_list)
 	if(!voting)
-		var/voting_time_minute = voting_time / 600
+		var/voting_time_minute = voting_time / (1 MINUTE)
 		var/rus_minute_word = pluralize_russian(voting_time_minute, "минута", "минуты", "минут")
 		to_chat(usr, "<span class='warning'>На голосование отводится всего [voting_time_minute] [rus_minute_word]. В следующий раз стоит быть пошустрее!</span>")
 		return
