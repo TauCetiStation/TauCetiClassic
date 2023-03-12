@@ -113,7 +113,9 @@
 	},
 /area/space_structures/ghostship)
 "aq" = (
-/obj/structure/window/fulltile/reinforced/phoron,
+/obj/structure/window/phoronreinforced{
+	dir = 5
+	},
 /obj/machinery/shieldgen,
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
@@ -863,7 +865,9 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/ghostship)
 "da" = (
-/obj/structure/window/fulltile/reinforced/phoron,
+/obj/structure/window/phoronreinforced{
+	dir = 5
+	},
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "dc" = (

@@ -245,9 +245,33 @@
 /turf/unsimulated/floor,
 /area/start)
 "aI" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/window/reinforced{
+	dir = 1
 	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/grille,
+/turf/unsimulated/floor,
+/area/centcom)
+"aJ" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/structure/grille,
+/turf/unsimulated/floor,
+/area/centcom)
+"aK" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
 /turf/unsimulated/floor,
 /area/centcom)
 "aL" = (
@@ -3752,7 +3776,7 @@ ac
 aw
 ay
 aF
-aI
+aJ
 ay
 ay
 ay
@@ -3904,7 +3928,7 @@ ac
 ax
 ay
 ay
-aI
+aK
 ay
 ay
 ay

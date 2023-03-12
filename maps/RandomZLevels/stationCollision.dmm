@@ -1036,9 +1036,17 @@
 	},
 /area/awaymission/stationcollision/research)
 "cV" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/research)
 "cW" = (
@@ -1545,10 +1553,14 @@
 /turf/simulated/wall,
 /area/awaymission/stationcollision/research)
 "ed" = (
-/obj/item/weapon/shard,
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/window/reinforced{
+	dir = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/grille,
+/obj/item/weapon/shard,
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/northblock)
 "ee" = (
@@ -1646,9 +1658,13 @@
 	},
 /area/awaymission/stationcollision/research)
 "er" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/window/reinforced{
+	dir = 4
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/northblock)
 "es" = (
@@ -2258,9 +2274,24 @@
 /turf/simulated/wall/cult,
 /area/awaymission/stationcollision/midblock)
 "fM" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/stationcollision/midblock)
+"fN" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/midblock)
 "fO" = (
@@ -2274,9 +2305,33 @@
 	},
 /area/awaymission/stationcollision/arrivalblock)
 "fQ" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
+/turf/simulated/shuttle/plating,
+/area/awaymission/stationcollision/arrivalblock)
+"fR" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
+/turf/simulated/shuttle/plating,
+/area/awaymission/stationcollision/arrivalblock)
+"fS" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
 /turf/simulated/shuttle/plating,
 /area/awaymission/stationcollision/arrivalblock)
 "fT" = (
@@ -2340,6 +2395,14 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
+/area/awaymission/stationcollision/midblock)
+"gb" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
 /area/awaymission/stationcollision/midblock)
 "gc" = (
 /turf/simulated/shuttle/wall{
@@ -2463,6 +2526,29 @@
 	icon_state = "dark"
 	},
 /area/awaymission/stationcollision/midblock)
+"gy" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/stationcollision/midblock)
+"gz" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
+/turf/simulated/shuttle/plating,
+/area/awaymission/stationcollision/arrivalblock)
 "gA" = (
 /obj/machinery/status_display{
 	pixel_y = 32
@@ -2470,6 +2556,20 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
+/area/awaymission/stationcollision/arrivalblock)
+"gB" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/turf/simulated/shuttle/plating,
 /area/awaymission/stationcollision/arrivalblock)
 "gC" = (
 /turf/simulated/wall,
@@ -2598,6 +2698,16 @@
 	icon_state = "chapel"
 	},
 /area/awaymission/stationcollision/midblock)
+"gT" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/turf/simulated/shuttle/plating,
+/area/awaymission/stationcollision/arrivalblock)
 "gU" = (
 /obj/machinery/door/unpowered/shuttle{
 	name = "Shuttle Airlock"
@@ -2774,9 +2884,41 @@
 	icon_state = "chapel"
 	},
 /area/awaymission/stationcollision/midblock)
+"hr" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/turf/simulated/shuttle/plating,
+/area/awaymission/stationcollision/arrivalblock)
+"hs" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/shuttle/plating,
+/area/awaymission/stationcollision/arrivalblock)
 "ht" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/arrivalblock)
@@ -2881,6 +3023,16 @@
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/midblock)
+"hI" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/shuttle/plating,
+/area/awaymission/stationcollision/arrivalblock)
 "hJ" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -2962,6 +3114,34 @@
 	icon_state = "dark"
 	},
 /area/awaymission/stationcollision/midblock)
+"hX" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/stationcollision/midblock)
+"hY" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/stationcollision/midblock)
+"hZ" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/stationcollision/arrivalblock)
 "ia" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/item/ammo_casing/a12mm,
@@ -3186,6 +3366,36 @@
 /obj/item/ammo_casing/a12mm,
 /turf/simulated/floor,
 /area/awaymission/stationcollision/arrivalblock)
+"iI" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/awaymission/stationcollision/arrivalblock)
+"iJ" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/stationcollision/arrivalblock)
+"iK" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/awaymission/stationcollision/arrivalblock)
 "iL" = (
 /obj/machinery/door/airlock/security,
 /turf/simulated/floor,
@@ -3398,9 +3608,32 @@
 /turf/simulated/wall,
 /area/awaymission/stationcollision/gateroom)
 "jA" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/window/reinforced{
+	dir = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/stationcollision/southblock)
+"jB" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/stationcollision/southblock)
+"jC" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/southblock)
 "jD" = (
@@ -3532,6 +3765,27 @@
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
 /area/awaymission/stationcollision/southblock)
+"jZ" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/stationcollision/southblock)
+"ka" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/stationcollision/arrivalblock)
 "kb" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/item/ammo_casing/a12mm,
@@ -3645,6 +3899,28 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
+/area/awaymission/stationcollision/arrivalblock)
+"ks" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/stationcollision/arrivalblock)
+"kt" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
 /area/awaymission/stationcollision/arrivalblock)
 "ku" = (
 /obj/machinery/door/airlock/external{
@@ -4037,6 +4313,33 @@
 	icon_state = "warning"
 	},
 /area/awaymission/stationcollision/gateroom)
+"lw" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/stationcollision/southblock)
+"lx" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/stationcollision/southblock)
+"ly" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/stationcollision/southblock)
 "lz" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
@@ -4046,6 +4349,20 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall12"
 	},
+/area/awaymission/stationcollision/arrivalblock)
+"lB" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/shuttle/plating,
 /area/awaymission/stationcollision/arrivalblock)
 "lC" = (
 /turf/simulated/shuttle/wall{
@@ -4476,15 +4793,15 @@ aa
 aa
 fO
 gc
-fQ
-fQ
-fQ
+gz
+gT
+hr
 gc
 gc
 gc
-fQ
-fQ
-fQ
+gz
+gT
+hr
 gc
 gc
 gc
@@ -4672,7 +4989,7 @@ aa
 aa
 aa
 aa
-fQ
+fR
 gf
 ge
 ge
@@ -4738,7 +5055,7 @@ aa
 aa
 aa
 aa
-fQ
+fS
 ge
 ge
 ge
@@ -4872,15 +5189,15 @@ aa
 aa
 fT
 gc
-fQ
+gB
 gU
-fQ
+hs
 gc
 gc
 gc
-fQ
+gz
 iO
-fQ
+hr
 gc
 gc
 gc
@@ -4941,15 +5258,15 @@ aa
 gC
 gV
 ht
-fQ
-ht
-ht
+hI
+hZ
+hZ
 iG
 iP
 jd
-fQ
-ht
-ht
+hI
+hZ
+ka
 gC
 aa
 aa
@@ -5016,7 +5333,7 @@ hy
 iH
 hy
 kb
-ht
+ks
 fO
 gc
 gc
@@ -5082,7 +5399,7 @@ ip
 ip
 hu
 iH
-ht
+kt
 kH
 kX
 kX
@@ -5153,7 +5470,7 @@ gU
 kY
 ge
 gf
-fQ
+lB
 aa
 aa
 aa
@@ -5214,7 +5531,7 @@ je
 gC
 jE
 ia
-ht
+ks
 kI
 kZ
 kZ
@@ -5274,13 +5591,13 @@ hy
 hy
 ic
 is
-ht
+iI
 iS
 jf
 gC
 jF
 hy
-ht
+kt
 kJ
 gc
 gc
@@ -5340,7 +5657,7 @@ hy
 hK
 ic
 is
-ht
+iJ
 iS
 jf
 gC
@@ -5406,7 +5723,7 @@ dJ
 hL
 id
 is
-ht
+iK
 iS
 jg
 gC
@@ -7528,7 +7845,7 @@ jV
 jV
 jV
 kC
-jA
+lw
 aa
 aa
 aa
@@ -7587,14 +7904,14 @@ aa
 aa
 aa
 aa
-jA
+jB
 jY
 kq
 kD
 jY
 kq
 jY
-jA
+lx
 aa
 aa
 aa
@@ -7653,14 +7970,14 @@ aa
 aa
 aa
 aa
-jA
-jA
-jA
-jA
-jA
-jA
-jA
-jA
+jC
+jZ
+jZ
+jZ
+jZ
+jZ
+jZ
+ly
 aa
 aa
 aa
@@ -7905,14 +8222,14 @@ aq
 aa
 aa
 aa
-fM
-fM
+fN
+gb
 ga
 gS
 hq
 ga
-fM
-fM
+hX
+hY
 aa
 aa
 aa
@@ -7972,12 +8289,12 @@ aa
 aa
 aa
 aa
-fM
-fM
-fM
-fM
-fM
-fM
+fN
+gy
+gy
+gy
+gy
+hY
 aa
 aa
 aa
