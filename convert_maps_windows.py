@@ -1,7 +1,7 @@
 # please don't look
 # one time govnokode script, i don't want to see it ever again
 
-# note: merge driver or/and sdmm should be as last step after converts
+# note: dmm pre-commit hook or sdmm should be as last step after converts
 
 import sys, re, io
 import fnmatch
@@ -11,8 +11,8 @@ def main():
 
 	for root, subdirs, files in walk("maps/"):
 		for filename in files:
-			#if fnmatch.fnmatch(filename, "*.dmm"):
-			if filename == "boxstation.dmm":
+			if fnmatch.fnmatch(filename, "*.dmm"):
+			#if filename == "boxstation.dmm":
 				file_path = path.join(root, filename)
 				print(file_path)
 				with open(file_path, 'r') as file :
