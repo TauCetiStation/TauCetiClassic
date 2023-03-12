@@ -93,15 +93,8 @@
 		if(world.time < lead.rev_cooldown)
 			to_chat(src, "<span class='warning'>Wait five seconds before reconversion attempt.</span>")
 			return
-		var/convert_question = sanitize_safe(input(src, "Please write a question for joining the revolution", "Write Question") as null|message, MAX_REV_REASON_LEN)
-		if(!convert_question)
-			to_chat(src, "<span class='bold warning'>Write question to attempt convert!</span>")
-			lead.rev_cooldown = world.time + 5 SECONDS
-			return FALSE
-		var/ask_string = "Asked by [src]: [convert_question]"
 		to_chat(src, "<span class='warning'>Attempting to convert [M]...</span>")
 		log_admin("[key_name(src)]) attempted to convert [M].")
 		message_admins("<span class='warning'>[key_name_admin(src)] attempted to convert [M]. [ADMIN_JMP(src)]</span>")
 		var/datum/faction/revolution/rev = lead.GetFaction()
-		rev.head_rev_reasons += ask_string
-		rev.convert_revolutionare_by_invite(M, src, ask_string)
+		rev.convert_revolutionare_by_invite(M, src)

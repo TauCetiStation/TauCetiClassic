@@ -23,7 +23,6 @@
 
 	//associative
 	var/list/reasons = list()
-	var/list/head_rev_reasons = list()
 
 /datum/faction/revolution/proc/get_all_heads()
 	var/list/heads = list()
@@ -243,10 +242,6 @@
 	<B>Command Staff Slain:</B> [SSStatistics.score.deadcommand] (-[SSStatistics.score.deadcommand * 500] Points)<BR>
 	<B>Revolution Successful:</B> [SSStatistics.score.traitorswon ? "Yes" : "No"] (-[SSStatistics.score.traitorswon * revpenalty] Points)<BR>
 	<B>All Revolution Heads Arrested:</B> [SSStatistics.score.allarrested ? "Yes" : "No"] (Score tripled)<BR>"}
-	if(head_rev_reasons.len)
-		dat += "<B>Headrev asks to convert:</B>"
-		for(var/text in head_rev_reasons)
-			dat += "<DD>[text]</DD><BR>"
 	if(reasons.len)
 		dat += "<B>Reasons to join the revolution:</B>"
 		for(var/datum/role/rev/R in members)
@@ -255,11 +250,11 @@
 				dat += "<DD><B>[R.antag.key]'s</B> reason is [reason_string]</DD><BR>"
 	return dat
 
-/datum/faction/revolution/proc/convert_revolutionare_by_invite(mob/possible_rev, mob/inviter, ask_string)
+/datum/faction/revolution/proc/convert_revolutionare_by_invite(mob/possible_rev, mob/inviter)
 	if(!inviter)
 		return FALSE
 	var/datum/role/rev_leader/lead = get_member_by_mind(inviter.mind)
-	var/choice = tgui_alert(possible_rev, "[ask_string]?", "Join the Revolution!", list("No!","Yes!"))
+	var/choice = tgui_alert(possible_rev, "Asked by [inviter]: Do you want to join the revolution?", "Join the Revolution!", list("No!","Yes!"))
 	if(choice == "Yes!")
 		var/reason_string = find_reason(possible_rev)
 		if(!reason_string)
