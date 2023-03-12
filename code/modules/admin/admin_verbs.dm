@@ -123,7 +123,8 @@ var/global/list/admin_verbs_fun = list(
 	/client/proc/achievement,
 	/client/proc/toggle_AI_interact, //toggle admin ability to interact with machines as an AI,
 	/client/proc/centcom_barriers_toggle,
-	/client/proc/gateway_toggle
+	/client/proc/gateway_toggle,
+	/client/proc/repaint_area_windows
 	)
 var/global/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		//allows us to spawn instances,

@@ -11,7 +11,8 @@
 			if(istype(W, /obj/structure/window/fulltile))
 				var/obj/structure/window/fulltile/FT = W
 				FT.glass_color = color
-				//FT.regenerate_smooth_icon()
+				if(SSticker.current_state > GAME_STATE_SETTING_UP)
+					FT.regenerate_smooth_icon()
 			else
 				W.color = color
 		for(var/obj/machinery/door/window/D in get_area_by_type(type))
@@ -51,5 +52,26 @@
 	for(var/color in color_by_types)
 		painting_objects(color_by_types[color], color)
 
-/client/verb/repaint()
-	return
+/client/proc/repaint_area_windows()
+	set category = "Fun"
+	set name = "Repaint area windows"
+
+	if(!check_rights(R_FUN))
+		return
+
+	if(SSticker.current_state <= GAME_STATE_SETTING_UP) // todo: need own flag for color_windows_init (subsystem?)
+		to_chat(usr, "<span class='warning'>Can't do this before round start</span>")
+
+	var/new_color = input(src, "Please select new colour.", "Windows colour") as color|null
+
+	if(!new_color)
+		return
+
+	var/area/A = get_area(usr)
+	if(!A)
+		return
+
+	painting_objects(list(A), new_color)
+
+	log_admin("[key_name(src)] repainted the windows [new_color] in \the [A]")
+	message_admins("[key_name(src)] repainted the windows [new_color] in \the [A]")
