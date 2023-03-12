@@ -25,6 +25,7 @@
 	if(ismob(AM))
 		var/mob/M = AM
 		M.see_invisible = INVISIBILITY_LEVEL_TWO
+		RegisterSignal(M, list(COMSIG_MOB_CLICK), .proc/on_click)
 
 	AM.alpha = 204
 
@@ -40,6 +41,7 @@
 	if(ismob(AM))
 		var/mob/M = AM
 		M.see_invisible = prev_see_invisible
+		UnregisterSignal(entry, list(COMSIG_MOB_CLICK))
 
 	AM.alpha = prev_alpha
 
@@ -113,3 +115,16 @@
 		return NONE
 
 	return NONE
+
+/datum/component/bluespace_move/proc/on_click(datum/source, atom/target)
+	SIGNAL_HANDLER
+
+	if(!isturf(target.loc))
+		return
+	var/mob/clicker = source
+	if(!isturf(clicker.loc))
+		return
+	var/obj/structure/bluespace_corridor/BC = locate() in clicker.loc
+	if(!BC)
+		return
+	INVOKE_ASYNC(BC, /obj/structure/bluespace_corridor.proc/animate_obstacle)
