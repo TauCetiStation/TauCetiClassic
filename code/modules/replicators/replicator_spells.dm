@@ -96,6 +96,7 @@
 
 	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 	// to-do: sound
+	to_chat(user_replicator, "<span class='notice'>Initiating replication protocols...</span>")
 	if(!do_after(user_replicator, 3 SECONDS, target=user_replicator, extra_checks=checks))
 		FR.adjust_materials(material_cost, adjusted_by=user_replicator.ckey)
 		return

@@ -9,6 +9,8 @@
 /turf/simulated/floor/plating/airless/catwalk/forcefield/atom_init()
 	. = ..()
 
+	name = "forcefield"
+
 	underlays.Cut()
 	var/image/I = SSenvironment.turf_image[z]
 	underlays += I
