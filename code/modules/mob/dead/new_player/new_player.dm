@@ -432,7 +432,7 @@
 	new_character.dna.ready_dna(new_character)
 	new_character.dna.b_type = client.prefs.b_type
 	new_character.dna.UpdateSE()
-
+	new_character.nutrition = rand(NUTRITION_LEVEL_STARVING, NUTRITION_LEVEL_FAT)
 	if(key)
 		new_character.key = key		//Manually transfer the key to log them in
 
