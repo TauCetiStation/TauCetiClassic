@@ -46,6 +46,9 @@
 	var/priority_target_ref
 
 /mob/living/simple_animal/hostile/replicator/handle_combat_ai()
+	if(incapacitated())
+		return
+
 	if(state == REPLICATOR_STATE_COMBAT)
 		stance = HOSTILE_STANCE_IDLE
 		return

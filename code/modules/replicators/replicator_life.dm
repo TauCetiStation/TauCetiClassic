@@ -51,6 +51,10 @@
 		walk(src, 0)
 		return
 
+	if(incapacitated())
+		walk(src, 0)
+		return
+
 	if(!disintegrating && excitement <= 0 && next_excitement_alert < world.time)
 		next_excitement_alert = excitement_alert_cooldown + world.time
 
