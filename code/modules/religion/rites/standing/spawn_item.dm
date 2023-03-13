@@ -102,7 +102,7 @@
 /datum/religion_rites/standing/spawn_item/call_animal
 	name = "Призыв Животного"
 	desc = "Создаёт случайного дружелюбного помощника."
-	ritual_length = (40 SECONDS)
+	ritual_length = (1 MINUTES)
 	ritual_invocations = list("As these complex nodules of the world are interconnected...",
 						"...so even my animal will be connected with this place...",
 						"...My will has allowed me to create and call you to life...",

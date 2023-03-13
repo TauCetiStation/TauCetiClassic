@@ -14,7 +14,7 @@
 /datum/religion_rites/standing/consent/synthconversion
 	name = "Синтетическое Возвышение"
 	desc = "Превращает <i>homosapiens</i> в (превосходящего) Андройда."
-	ritual_length = (25 SECONDS)
+	ritual_length = (50 SECONDS)
 	ritual_invocations = list("By the inner workings of our god...",
 						"...We call upon you, in the face of adversity...",
 						"...to complete us, removing that which is undesirable...")
