@@ -28,10 +28,9 @@
 
 		if(BP && BP.is_robotic())
 			if(can_operate(H))
-				if(use(1))
-					do_surgery(H, user, src)
+				if(use(1) && do_surgery(H, user, src))
 					return TRUE
-			if(BP.get_damage())
+			else if(BP.get_damage())
 				if(!use(1))
 					to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")
 					return FALSE
