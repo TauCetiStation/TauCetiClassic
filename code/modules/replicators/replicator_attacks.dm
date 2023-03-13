@@ -11,7 +11,10 @@
 	dispersion = 1
 	impact_force = 1
 	pass_flags = PASSTABLE | PASSGLASS
-	flag = ENERGY
+	// Okay, so yeah, this is bullshit. BUT:
+	// Laserproof armor has siemens_coefficient of 0, which means it protects from mines
+	// Thus it shouldn't also protect you from pew pew.
+	flag = BULLET
 
 /obj/item/projectile/disabler/on_impact(atom/A)
 	..()
