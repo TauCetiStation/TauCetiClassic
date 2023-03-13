@@ -432,7 +432,7 @@
 	new_character.dna.ready_dna(new_character)
 	new_character.dna.b_type = client.prefs.b_type
 	new_character.dna.UpdateSE()
-	new_character.nutrition = rand(NUTRITION_LEVEL_STARVING, NUTRITION_LEVEL_FAT)
+	new_character.nutrition = rand(NUTRITION_LEVEL_HUNGRY, NUTRITION_LEVEL_FULL)
 	var/old_base_metabolism = new_character.get_metabolism_factor()
 	new_character.metabolism_factor.Set(old_base_metabolism * rand(9, 11) * 0.1)
 	
