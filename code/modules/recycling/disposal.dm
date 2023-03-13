@@ -1007,7 +1007,7 @@
 	if(..())
 		return
 
-	if(istype(I, /obj/item/device/tagger))
+	if(istagger(I))
 		var/obj/item/device/tagger/O = I
 
 		if(O.currTag)// Tag set
@@ -1182,7 +1182,7 @@
 	if(..())
 		return
 
-	if(istype(I, /obj/item/device/tagger))
+	if(istagger(I))
 		var/obj/item/device/tagger/O = I
 
 		if(O.currTag)// Tag set
