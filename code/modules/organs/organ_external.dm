@@ -626,7 +626,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	return (status & ORGAN_ARTERY_CUT)
 
 /obj/item/organ/external/proc/is_malfunctioning()
-	return (is_robotic() && prob(brute_dam + burn_dam))
+	return (is_robotic() && prob(min(brute_dam + burn_dam, 25)))
 
 //for arms and hands
 /obj/item/organ/external/proc/process_grasp(obj/item/c_hand, hand_name)
