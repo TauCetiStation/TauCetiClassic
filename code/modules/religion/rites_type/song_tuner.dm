@@ -52,7 +52,7 @@
 	particles_path = /particles/musical_notes/holy
 	song_invocation_message = "Вы приготовили песнь Святых!"
 	song_start_message = "<span class='notice'>Эта музыка благословенна!</span>"
-	glow_color = "#AAAAAA"
+	glow_color = "#aaaaaa"
 	favor_cost = 0
 	buff = TRUE
 	needed_aspects = list(
@@ -103,7 +103,7 @@
 	particles_path = /particles/musical_notes/harm
 	song_invocation_message = "От песни будет кровь из ушей. И не только."
 	song_start_message = "<span class='danger'>Словно иглу воткнули!</span>"
-	glow_color = "#CC0000"
+	glow_color = "#cc0000"
 	repeats_okay = FALSE
 	needed_aspects = list(
 		ASPECT_DEATH = 1,
@@ -132,7 +132,7 @@
 	song_invocation_message = "Вы приготовили колыбель!"
 	song_start_message = "<span class='warning'>От этой музыки клонит в сон...</span>"
 	favor_cost = 200
-	glow_color = "#83F6FF"
+	glow_color = "#83f6ff"
 	repeats_okay = FALSE
 	///["name of living" = "times heard this song"]
 	var/list/listeners = list()
