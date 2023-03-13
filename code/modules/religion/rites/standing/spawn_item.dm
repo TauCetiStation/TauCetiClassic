@@ -196,7 +196,7 @@
 /datum/religion_rites/standing/spawn_item/talisman
 	name = "Создание Талисмана"
 	desc = "Создаёт пустой талисман, в который можно поместить ритуал."
-	ritual_length = (30 SECONDS)
+	ritual_length = (1 MINUTE)
 	invoke_msg = "Portable magic!!!"
 	favor_cost = 200
 	spawn_type = /obj/item/weapon/paper/talisman/chaplain
