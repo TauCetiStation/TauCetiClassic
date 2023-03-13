@@ -102,7 +102,7 @@
 /datum/religion_rites/standing/spawn_item/call_animal
 	name = "Призыв Животного"
 	desc = "Создаёт случайного дружелюбного помощника."
-	ritual_length = (1.3 MINUTES)
+	ritual_length = (40 SECONDS)
 	ritual_invocations = list("As these complex nodules of the world are interconnected...",
 						"...so even my animal will be connected with this place...",
 						"...My will has allowed me to create and call you to life...",
@@ -157,7 +157,7 @@
 /datum/religion_rites/standing/spawn_item/create_sword
 	name = "Создание Меча"
 	desc = "Создаёт меч во имя Бога."
-	ritual_length = (50 SECONDS)
+	ritual_length = (40 SECONDS)
 	ritual_invocations = list("The Holy Spirit, who solves all problems, sheds light on all roads so that I can reach my goal...",
 						"...You are giving me the Divine gift of forgiveness and the forgiveness of all evil done against me...",
 						"...who abides with all the storms of life...",
@@ -196,7 +196,7 @@
 /datum/religion_rites/standing/spawn_item/talisman
 	name = "Создание Талисмана"
 	desc = "Создаёт пустой талисман, в который можно поместить ритуал."
-	ritual_length = (1 MINUTE)
+	ritual_length = (30 SECONDS)
 	invoke_msg = "Portable magic!!!"
 	favor_cost = 200
 	spawn_type = /obj/item/weapon/paper/talisman/chaplain
