@@ -55,7 +55,7 @@
 	mood_change = -5
 
 /datum/mood_event/self_tending
-	description = "<span class='warning'>I had to tend my own wounds or inject myself with something, is there nobody else to help me?</span>"
+	description = "<span class='warning'>I had to tend my own wounds, is there nobody else to help me?</span>"
 	mood_change = -3
 	timeout = 1 MINUTE
 
