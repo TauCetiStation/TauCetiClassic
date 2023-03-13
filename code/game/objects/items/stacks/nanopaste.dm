@@ -32,9 +32,7 @@
 					if(IO.is_bruised())
 						..()
 						return TRUE
-					else
-						return FALSE
-			else if(BP.get_damage())
+			if(BP.get_damage())
 				if(!use(1))
 					to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")
 					return FALSE
