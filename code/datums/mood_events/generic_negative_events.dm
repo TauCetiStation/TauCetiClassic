@@ -59,6 +59,11 @@
 	mood_change = -3
 	timeout = 1 MINUTE
 
+/datum/mood_event/self_inject
+	description = "<span class='warning'>I hate it when I inject something into myself, let someone else do it to me.</span>"
+	mood_change = -2
+	timeout = 1 MINUTE
+
 /datum/mood_event/depression
 	description = "<span class='boldwarning'>I feel bad for no apparent reason. My life sucks...</span>"
 	mood_change = -6
