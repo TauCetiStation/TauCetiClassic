@@ -28,5 +28,6 @@
 #define FIRE_RESULT "fire_result"
 #define AMMO_BOX "ammo_box"
 #define AMMO_RETURN "ammo_return"
+#define ALLOW_CALIBER "allow_caliber"
 
 #define RECOIL "recoil"

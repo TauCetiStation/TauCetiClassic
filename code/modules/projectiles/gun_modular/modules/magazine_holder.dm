@@ -22,4 +22,5 @@
 
 	var/datum/pipe_system/component/awaiter/await_get_ammo = new (src, ammo_box_get_round_proc, get_ammo_check, list(COMSIG_GUN_CHECK_SUCCESS), null)
 	await_get_ammo.id_component = "await request ammo"
+	await_get_ammo.AddLastComponent(await_get_ammo.CopyComponentGun())
 	add_default_component(await_get_ammo)
