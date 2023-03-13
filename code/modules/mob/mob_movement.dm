@@ -5,6 +5,9 @@
 	else if(retVal & COMPONENT_CANPASS)
 		return TRUE
 
+	if(!mover)
+		return TRUE
+
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
 		return (!density || lying)
 	if(mover.checkpass(PASSMOB) || checkpass(PASSMOB))
@@ -211,9 +214,9 @@
 
 		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_POSTMOVE, n, direct)
 
-/mob/proc/random_move(mob/M)
-	if(isturf(M.loc) && !isspaceturf(M.loc) || (M.canmove && !M.incapacitated()))
-		step(M, pick(cardinal))
+/mob/proc/random_move()
+	if(isturf(loc) && !isspaceturf(loc) || (canmove && !incapacitated()))
+		step(src, pick(cardinal))
 
 /mob/proc/SelfMove(turf/n, direct)
 	if(camera_move(direct))
