@@ -121,7 +121,7 @@
 					pre_escapees += M.real_name
 			send_intercept(FS_ACTIVE)
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
-				var/law = "Станция находится на карантине. Не позвольте никому покинуть станцию, пока на ней присудствует живой Блоб. Игнорируйте все другие законы, если это необходимо для сохранения карантина."
+				var/law = "Станция находится на карантине. Не позвольте никому покинуть станцию, пока на ней присутствует живой Блоб. Игнорируйте все другие законы, если это необходимо для сохранения карантина."
 				aiPlayer.set_zeroth_law(law)
 			SSshuttle.fake_recall = TRUE //Quarantine
 		if(FS_ENDGAME)
@@ -136,7 +136,7 @@
 					if(is_station_level(bomb.z))
 						nukecode = bomb.r_code
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
-				var/law = "Была утверждена Директива 7-12. Не позвольте ни одному разумному существу избежать уничтожение. Ядерная Боеголовка должна быть активирована любой ценой. Код от Ядерной Боеголовки: [nukecode]."
+				var/law = "Была утверждена Директива 7-12. Не позвольте ни одному разумному существу избежать уничтожение. ядерная боеголовка должна быть активирована любой ценой. Код от ядерной боеголовки: [nukecode]."
 				aiPlayer.set_zeroth_law(law)
 		if (FS_DEFEATED) //Cleanup time
 			var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
