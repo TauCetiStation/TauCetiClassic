@@ -12,13 +12,29 @@
 	impact_force = 1
 	pass_flags = PASSTABLE | PASSGLASS
 
+/obj/item/projectile/disabler/on_impact(atom/A)
+	..()
+	spit_prismaline(src, A, 1.0)
+
+
+/mob/living
+	var/next_replicator_explosion = 0
+
+/mob/living/simple_animal/hostile/replicator/proc/check_for_explosion(mob/living/L)
+	if(L.stat == CONSCIOUS && !L.lying && !L.crawling)
+		return
+
+	if(L.next_replicator_explosion > world.time)
+		return
+	L.next_replicator_explosion = world.time + 3 SECONDS
+
+	INVOKE_ASYNC(src, /atom/movable.proc/do_attack_animation, L, null, TRUE, "disintegrate", null)
+	playsound(L, 'sound/weapons/crystal_explosion.ogg', VOL_EFFECTS_MASTER, vol=150)
 
 /mob/living/simple_animal/hostile/replicator/UnarmedAttack(atom/A)
 	if(isliving(A) && !isreplicator(A) && a_intent == INTENT_HARM)
 		var/mob/living/L = A
-		INVOKE_ASYNC(src, /atom/movable.proc/do_attack_animation, L)
 		visible_message("<span class='warning'>[src] attacks [A]!</span>")
-		playsound(L, 'sound/weapons/crystal_hit.ogg', VOL_EFFECTS_MASTER)
 
 		var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 		var/additional_damage = FR.energy / 10000
@@ -28,10 +44,18 @@
 		L.apply_effects(0, 0, 0, 0, 2, 1, 0, 10 + disabler_damage_increase * 5.0 + additional_damage * 0.3, 0)
 		L.silent = max(L.silent, 2)
 
+		if(L.stat == CONSCIOUS && !L.lying && !L.crawling)
+			addtimer(CALLBACK(src, .proc/check_for_explosion, A), 2 SECONDS)
+
+		INVOKE_ASYNC(src, /atom/movable.proc/do_attack_animation, L)
+		playsound(L, 'sound/weapons/crystal_hit.ogg', VOL_EFFECTS_MASTER)
+
 		SetNextMove(CLICK_CD_MELEE)
 		L.set_lastattacker_info(src)
 		L.log_combat(src, "replicator-attacked (INTENT: [uppertext(a_intent)]) (CONTROLLER: [last_controller_ckey])")
 		scatter_offset()
+
+		spit_prismaline(src, L, 1.0)
 
 		last_melee_attack = world.time
 		return
@@ -107,7 +131,11 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/replicator/do_attack_animation(atom/A, end_pixel_y, has_effect = TRUE, visual_effect_icon, visual_effect_color)
-	return ..(A, end_pixel_y, has_effect, visual_effect_icon = "disintegrate", visual_effect_color = color)
+	if(!visual_effect_icon)
+		visual_effect_icon = "disarm"
+	if(!visual_effect_color)
+		visual_effect_color = color
+	return ..(A, end_pixel_y, has_effect, visual_effect_icon, visual_effect_color)
 
 
 /obj/item/mine/replicator

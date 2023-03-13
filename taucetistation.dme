@@ -2206,6 +2206,7 @@
 #include "code\modules\replicators\replicator_infrastructure.dm"
 #include "code\modules\replicators\replicator_life.dm"
 #include "code\modules\replicators\replicator_reactions.dm"
+#include "code\modules\replicators\replicator_reagent.dm"
 #include "code\modules\replicators\replicator_regeneration.dm"
 #include "code\modules\replicators\replicator_social.dm"
 #include "code\modules\replicators\replicator_spells.dm"
