@@ -36,7 +36,7 @@
 
 	M.nutrition -= 1.0 * volume
 
-/datum/reagent/prsimaline/reaction_obj(obj/O, volume)
+/datum/reagent/prismaline/reaction_obj(obj/O, volume)
 	. = ..()
 	if(istype(O, /obj/mecha))
 		var/obj/mecha/M = O
@@ -48,7 +48,7 @@
 		M.use_power(1.0 * volume)
 		return
 
-/datum/reagent/prsimaline/on_general_digest(mob/living/M)
+/datum/reagent/prismaline/on_general_digest(mob/living/M)
 	..()
 	var/affect_amount = min(1.0, volume)
 	M.nutrition -= affect_amount
