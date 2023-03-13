@@ -393,7 +393,7 @@
 		/obj/item/ammo_casing/energy/pyrometer/atmospherics,
 	)
 
-	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/quadultra
+	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra
 
 /obj/item/weapon/gun/energy/pyrometer/ce/atom_init()
 	. = ..()
@@ -440,7 +440,7 @@
 
 	ammo_type = list(/obj/item/ammo_casing/energy/pyrometer/medical)
 
-	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/ultra
+	my_laser_type = /obj/item/weapon/stock_parts/micro_laser/high/ultra
 
 /obj/item/weapon/gun/energy/gun/portal
 	name = "bluespace wormhole projector"
@@ -589,6 +589,12 @@
 /obj/item/weapon/gun/medbeam/equipped(mob/user)
 	..()
 	LoseTarget()
+
+/obj/item/weapon/gun/medbeam/attack(atom/target, mob/living/user)
+	if(user.a_intent != INTENT_HARM)
+		Fire(target, user)
+		return
+	return ..()
 
 /obj/item/weapon/gun/medbeam/proc/LoseTarget()
 	if(active)

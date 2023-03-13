@@ -42,7 +42,7 @@
 	qdel(src)
 
 /obj/structure/bigDelivery/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/tagger))
+	if(istagger(W))
 		var/obj/item/device/tagger/O = W
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
@@ -104,7 +104,7 @@
 	qdel(src)
 
 /obj/item/smallDelivery/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/tagger))
+	if(istagger(I))
 		var/obj/item/device/tagger/O = I
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
@@ -213,7 +213,8 @@
 /obj/item/device/tagger
 	name = "tagger"
 	desc = "Используется для наклейки меток, ценников и бирок."
-	icon_state = "dest_tagger"
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "labeler_shop"
 	var/currTag = 0
 
 	w_class = SIZE_TINY
@@ -228,7 +229,7 @@
 	var/list/modes = list(1 = "Метка", 2 = "Ценник", 3 = "Бирка")
 
 	var/lot_description = "Это что-то"
-	var/lot_account_number = 111111
+	var/lot_account_number = null
 	var/lot_category = "Разное"
 	var/lot_price = 0
 
@@ -240,7 +241,8 @@
 /obj/item/device/tagger/shop
 	name = "shop tagger"
 	desc = "Используется для наклейки ценников и бирок."
-	icon_state = "shop_tagger"
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "labeler0"
 	modes = list(1 = "Ценник", 2 = "Бирка")
 
 /obj/item/device/tagger/proc/openwindow(mob/user)
@@ -265,8 +267,8 @@
 			else
 				dat += "Описание: <A href='?src=\ref[src];description=1'>[lot_description]</A>"
 			dat += " <A href='?src=\ref[src];autodesc=1'>авто</A><BR>\n"
-			dat += "Номер аккаунта: <A href='?src=\ref[src];number=1'>[lot_account_number]</A> <A href='?src=\ref[src];takeid=1'>id</A><BR>\n"
-			dat += "Цена: <A href='?src=\ref[src];price=1'>[lot_price]$</A><BR>\n"
+			dat += "Номер аккаунта: <A href='?src=\ref[src];number=1'>[lot_account_number ? lot_account_number : 111111]</A> <A href='?src=\ref[src];takeid=1'>id</A><BR>\n"
+			dat += "Цена: <A href='?src=\ref[src];price=1'>[lot_price]$</A> Наценка: +[global.online_shop_delivery_cost * 100]% ([lot_price * global.online_shop_delivery_cost]$)<BR>\n"
 			if(autocategory)
 				dat += "Категория: [lot_category]"
 			else
@@ -362,6 +364,13 @@
 
 	if(autocategory)
 		lot_category = get_category(target)
+
+	if(!lot_account_number)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			var/obj/item/weapon/card/id/ID = H.get_idcard()
+			if(ID)
+				lot_account_number = ID.associated_account_number
 
 	target.price_tag = list("description" = lot_description, "price" = lot_price, "category" = lot_category, "account" = lot_account_number)
 	target.verbs += /obj/proc/remove_price_tag
