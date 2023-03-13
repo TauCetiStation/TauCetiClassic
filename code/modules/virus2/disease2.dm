@@ -1,7 +1,7 @@
 /datum/disease2/disease
 	var/infectionchance = 70
 	var/speed = 1
-	var/spreadtype = "Contact" // Can also be "Airborne"
+	var/spreadtype = DISEASE_SPREAD_CONTACT
 	var/stage = 1
 	var/stageprob = 10
 	var/dead = 0
@@ -13,6 +13,7 @@
 	var/max_symptoms = 6
 	var/cooldown_mul = 1
 	var/list/affected_species = list(HUMAN , UNATHI , SKRELL , TAJARAN)
+	var/list/spread_types = list(DISEASE_SPREAD_AIRBORNE = 5, DISEASE_SPREAD_CONTACT = 3, DISEASE_SPREAD_BLOOD = 2)
 
 /datum/disease2/disease/New()
 	uniqueID = rand(0,10000)
@@ -79,7 +80,7 @@
 	infectionchance = rand(30,60)
 	antigen |= text2num(pick(ANTIGENS))
 	antigen |= text2num(pick(ANTIGENS))
-	spreadtype = prob(60) ? "Airborne" : "Contact"
+	spreadtype = pickweight(spread_types)
 
 	if(all_species.len)
 		affected_species = get_infectable_species()
@@ -106,6 +107,10 @@
 
 	if(mob.stat == DEAD)
 		return
+
+	if(HAS_TRAIT(mob, TRAIT_VACCINATED))
+		return
+
 	if(stage <= 1 && clicks == 0 && !mob.is_infected_with_zombie_virus()) 	// with a certain chance, the mob may become immune to the disease before it starts properly
 		if(prob(5))
 			mob.antibodies |= antigen // 20% immunity is a good chance IMO, because it allows finding an immune person easily
@@ -136,11 +141,11 @@
 			e.runeffect(mob, src)
 
 	//Short airborne spread
-	if(src.spreadtype == "Airborne" && prob(10))
+	if(spreadtype == DISEASE_SPREAD_AIRBORNE && prob(10))
 		spread(mob, 1)
 
 	//fever
-	mob.bodytemperature = max(mob.bodytemperature, min(310+2*stage ,mob.bodytemperature+2*stage))
+	mob.adjust_bodytemperature(2*stage, max_temp = BODYTEMP_NORMAL + 2*stage)
 	clicks+=speed
 
 /datum/disease2/disease/proc/advance_stage()
@@ -149,8 +154,10 @@
 		stage++
 
 /datum/disease2/disease/proc/spread(mob/living/carbon/mob, radius = 1)
+	if (spreadtype == DISEASE_SPREAD_BLOOD)
+		return
 	for(var/mob/living/carbon/M in oview(radius,mob))
-		if(airborne_can_reach(get_turf(mob), get_turf(M)))
+		if (airborne_can_reach(get_turf(mob), get_turf(M)))
 			infect_virus2(M,src)
 			mob.med_hud_set_status()
 

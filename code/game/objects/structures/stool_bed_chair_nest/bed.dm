@@ -76,7 +76,7 @@
 
 /obj/structure/stool/bed/roller/CanPass(atom/movable/mover)
 	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
-		return 0
+		return TRUE
 	return ..()
 
 /obj/structure/stool/bed/roller/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
@@ -139,8 +139,7 @@
 /obj/structure/stool/bed/roller/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
 		if(M.crawling)
-			M.pass_flags &= ~PASSCRAWL
-			M.crawling = FALSE
+			M.SetCrawling(FALSE)
 			M.layer = 4.0
 		density = TRUE
 		icon_state = "up"
@@ -171,7 +170,7 @@
 		if(G.use_tool(src, user, 20, volume = 50))
 			L.loc = loc
 			if(buckle_mob(L))
-				L.visible_message(\
-					"<span class='danger'>[L.name] is buckled to [src] by [user.name]!</span>",\
-					"<span class='danger'>You are buckled to [src] by [user.name]!</span>",\
+				L.visible_message(
+					"<span class='danger'>[L.name] is buckled to [src] by [user.name]!</span>",
+					"<span class='danger'>You are buckled to [src] by [user.name]!</span>",
 					"<span class='notice'>You hear metal clanking.</span>")

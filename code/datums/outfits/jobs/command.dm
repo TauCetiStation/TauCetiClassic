@@ -8,19 +8,16 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 
 	l_ear = /obj/item/device/radio/headset/heads/captain
-	belt = /obj/item/device/pda/captain
+	belt = /obj/item/weapon/melee/chainofcommand
 
 	r_hand_back = /obj/item/weapon/storage/box/ids
-
+	l_pocket = /obj/item/device/pda/captain
 	back_style = BACKPACK_STYLE_CAPTAIN
 
 	implants = list(
 		/obj/item/weapon/implant/mind_protect/loyalty
 		)
 
-/datum/outfit/job/captain/pre_equip(mob/living/carbon/human/H)
-	if(H.age > (H.species.min_age + H.species.max_age) / 2)
-		neck = /obj/item/clothing/accessory/medal/gold/captain
 // HOP OUTFIT
 /datum/outfit/job/hop
 	name = OUTFIT_JOB_NAME("Head of Personnel")

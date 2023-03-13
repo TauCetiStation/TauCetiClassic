@@ -1,11 +1,12 @@
-var/const/NUKE_WIRE_LIGHT  = 1
-var/const/NUKE_WIRE_TIMING = 2
-var/const/NUKE_WIRE_SAFETY = 4
+var/global/const/NUKE_WIRE_LIGHT  = 1
+var/global/const/NUKE_WIRE_TIMING = 2
+var/global/const/NUKE_WIRE_SAFETY = 4
 
 /datum/wires/nuclearbomb
 	random = TRUE
 	holder_type = /obj/machinery/nuclearbomb
 	wire_count = 7
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_PRO)
 
 /datum/wires/nuclearbomb/can_use()
 	var/obj/machinery/nuclearbomb/N = holder

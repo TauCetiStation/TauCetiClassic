@@ -24,7 +24,7 @@
 			pixel_y = rand(-5, 5)
 
 /obj/item/weapon/shard/phoron/attackby(obj/item/I, mob/user, params)
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(WT.use(0, user))

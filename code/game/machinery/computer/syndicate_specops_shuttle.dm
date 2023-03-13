@@ -3,12 +3,12 @@
 #define SYNDICATE_ELITE_STATION_AREATYPE /area/shuttle/syndicate_elite/station //Type of the spec ops shuttle area for station
 #define SYNDICATE_ELITE_DOCK_AREATYPE /area/shuttle/syndicate_elite/mothership	//Type of the spec ops shuttle area for dock
 
-var/syndicate_elite_shuttle_moving_to_station = FALSE
-var/syndicate_elite_shuttle_moving_to_mothership = FALSE
-var/syndicate_elite_shuttle_at_station = FALSE
-var/syndicate_elite_shuttle_can_send = TRUE
-var/syndicate_elite_shuttle_time = 0
-var/syndicate_elite_shuttle_timeleft = 0
+var/global/syndicate_elite_shuttle_moving_to_station = FALSE
+var/global/syndicate_elite_shuttle_moving_to_mothership = FALSE
+var/global/syndicate_elite_shuttle_at_station = FALSE
+var/global/syndicate_elite_shuttle_can_send = TRUE
+var/global/syndicate_elite_shuttle_time = 0
+var/global/syndicate_elite_shuttle_timeleft = 0
 
 /obj/machinery/computer/syndicate_elite_shuttle
 	name = "Elite Syndicate Squad Shuttle Console"

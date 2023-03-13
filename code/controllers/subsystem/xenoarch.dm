@@ -4,6 +4,7 @@ SUBSYSTEM_DEF(xenoarch)
 	init_order = SS_INIT_XENOARCH
 
 	flags = SS_NO_FIRE
+	msg_lobby = "Закапываем древние артефакты..."
 
 	var/const/XENOARCH_SPAWN_CHANCE  = 10 // %
 	var/const/DIGSITESIZE_LOWER      = 5
@@ -48,14 +49,16 @@ SUBSYSTEM_DEF(xenoarch)
 	)
 
 /datum/controller/subsystem/xenoarch/Initialize(timeofday)
+	var/list/asteroid_zlevels = SSmapping.levels_by_trait(ZTRAIT_MINING)
+	for(var/z in asteroid_zlevels)
+		populate_z_level(z)
+	..()
+
+/datum/controller/subsystem/xenoarch/proc/populate_z_level(asteroid_zlevel)
 	// Local lists for sonic speed.
 	var/list/turfs_to_process        = list()
 	var/list/artifact_spawning_turfs = list()
 	var/list/digsite_spawning_turfs  = list()
-
-	var/asteroid_zlevel = SSmapping.level_by_trait(ZTRAIT_MINING)
-	if(!asteroid_zlevel)
-		return
 
 	for(var/turf/simulated/mineral/M in block(locate(1, 1, asteroid_zlevel), locate(world.maxx, world.maxy, asteroid_zlevel)))
 		if(!prob(XENOARCH_SPAWN_CHANCE))
@@ -158,8 +161,6 @@ SUBSYSTEM_DEF(xenoarch)
 			new_sequence.full_genome_sequence.Add("[prefixletter][rand(0, 9)][rand(0, 9)][pick(alphabet_uppercase)][pick(alphabet_uppercase)]")
 
 		all_plant_genesequences += new_sequence
-
-	..()
 
 /datum/controller/subsystem/xenoarch/Recover()
 	flags |= SS_NO_INIT

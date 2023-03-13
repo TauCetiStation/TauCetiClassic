@@ -10,6 +10,7 @@
 	w_class = SIZE_SMALL
 	throwforce = 5
 	throw_speed = 4
+	hitsound = list('sound/weapons/genhit1.ogg')
 	throw_range = 5
 	force = 5.0
 	origin_tech = "combat=1"
@@ -31,6 +32,7 @@
 						// 1 for one bullet after tarrget moves and aim is lowered
 	var/fire_delay = 6
 	var/last_fired = 0
+	var/two_hand_weapon = FALSE
 
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
@@ -48,6 +50,10 @@
 /obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
 	if(iswizard(M))
 		return FALSE
+	if(two_hand_weapon)
+		if(M.get_inactive_hand())
+			to_chat(M, "<span class='notice'>Your other hand must be free before firing! This weapon requires both hands to use.</span>")
+			return FALSE
 	return TRUE
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)
@@ -56,8 +62,10 @@
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
-	if(recoil)
-		shake_camera(user, recoil + 1, recoil)
+
+	var/skill_recoil = max(0, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
+	if(skill_recoil)
+		shake_camera(user, skill_recoil + 1, skill_recoil)
 
 	if(silenced)
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
@@ -116,11 +124,11 @@
 			return
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.species.name == SHADOWLING)
+			if(H.species.name == SHADOWLING || H.species.name == ABOMINATION)
 				to_chat(H, "<span class='notice'>Your fingers don't fit in the trigger guard!</span>")
 				return
 
-			if(user.dna && user.dna.mutantrace == "adamantine")
+			if(user.get_species() == GOLEM)
 				to_chat(user, "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>")
 				return
 			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
@@ -129,7 +137,7 @@
 
 			if(clumsy_check) //it should be AFTER hulk or monkey check.
 				var/going_to_explode = 0
-				if ((CLUMSY in H.mutations) && prob(50))
+				if(H.ClumsyProbabilityCheck(50))
 					going_to_explode = 1
 				if(chambered && chambered.crit_fail && prob(10))
 					going_to_explode = 1
@@ -154,7 +162,7 @@
 			if(!chambered.BB.fake)
 				user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [target]!</b></span>")
 			chambered.BB.damage *= 1.3
-		if(!chambered.fire(target, user, params, , silenced))
+		if(!chambered.fire(src, target, user, params, , silenced))
 			shoot_with_empty_chamber(user)
 		else
 			shoot_live_shot(user)
@@ -163,11 +171,7 @@
 		shoot_with_empty_chamber(user)
 	process_chamber()
 	update_icon()
-
-	if(user.hand)
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()
+	update_inv_mob()
 
 
 /obj/item/weapon/gun/proc/can_fire()
@@ -212,6 +216,7 @@
 			if(istype(chambered.BB, /obj/item/projectile/bullet/chameleon))
 				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
 									"<span class = 'notice'>You feel weakness and the taste of gunpowder, but no more.</span>")
+				user.Stun(5)
 				user.apply_effect(5,WEAKEN,0)
 				return
 

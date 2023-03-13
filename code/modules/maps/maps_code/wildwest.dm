@@ -57,30 +57,24 @@
 					to_chat(user, "<span class='notice'>Your body feels warm.</span>")
 				if (!(XRAY in user.mutations))
 					user.mutations.Add(XRAY)
-					user.sight |= (SEE_MOBS|SEE_OBJS|SEE_TURFS)
-					user.see_in_dark = 8
-					user.see_invisible = SEE_INVISIBLE_LEVEL_TWO
+					user.update_sight()
 					to_chat(user, "<span class='notice'>The walls suddenly disappear.</span>")
-				user.dna.mutantrace = "shadow"
-				user.update_mutantrace()
+				user.set_species(SHADOWLING)
 			if("Wealth")
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
 				to_chat(user, "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart.")
 				new /obj/structure/closet/syndicate/resources/everything(loc)
-				user.dna.mutantrace = "shadow"
-				user.update_mutantrace()
+				user.set_species(SHADOWLING)
 			if("Immortality")
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
 				to_chat(user, "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart.")
 				user.verbs += /mob/living/carbon/proc/immortality
-				user.dna.mutantrace = "shadow"
-				user.update_mutantrace()
+				user.set_species(SHADOWLING)
 			if("To Kill")
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
 				to_chat(user, "The Wish Granter punishes you for your wickedness, claiming your soul and warping your body to match the darkness in your heart.")
 				create_and_setup_role(/datum/role/traitor/wishgranter, user)
-				user.dna.mutantrace = "shadow"
-				user.update_mutantrace()
+				user.set_species(SHADOWLING)
 			if("Peace")
 				to_chat(user, "<B>Whatever alien sentience that the Wish Granter possesses is satisfied with your wish. There is a distant wailing as the last of the Faithless begin to die, then silence.</B>")
 				to_chat(user, "You feel as if you just narrowly avoided a terrible fate...")
@@ -115,7 +109,7 @@
 
 	if(triggered) return
 
-	if(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey))
+	if(ishuman(M) || ismonkey(M))
 		for(var/mob/O in viewers(world.view, src.loc))
 			O << "<font color='red'>[M] triggered the \icon[src] [src]</font>"
 		triggered = 1
@@ -142,7 +136,7 @@
 	set name = "Resurrection"
 
 	var/mob/living/carbon/C = usr
-	if(!C.stat)
+	if(C.stat == CONSCIOUS)
 		C << "<span class='notice'>You're not dead yet!</span>"
 		return
 	C << "<span class='notice'>Death is not your end!</span>"

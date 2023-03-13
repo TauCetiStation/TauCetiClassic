@@ -17,7 +17,7 @@
 		icon_state = "larva[state]_dead"
 	else if (handcuffed || legcuffed) //This should be an overlay. Who made this an icon_state?
 		icon_state = "larva[state]_cuff"
-	else if(stat == UNCONSCIOUS || lying || resting)
+	else if(stat == UNCONSCIOUS || lying || crawling)
 		icon_state = "larva[state]_sleep"
 	else if (stunned)
 		icon_state = "larva[state]_stun"

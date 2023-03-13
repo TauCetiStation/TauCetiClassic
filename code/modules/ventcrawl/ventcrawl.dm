@@ -1,23 +1,23 @@
-var/list/ventcrawl_machinery = list(
+var/global/list/ventcrawl_machinery = list(
 	/obj/machinery/atmospherics/components/unary/vent_scrubber,
 	/obj/machinery/atmospherics/components/unary/vent_pump
 	)
 
 // Vent crawling whitelisted items, whoo
-/mob/living/var/list/can_enter_vent_with = list(
-	/obj/item/weapon/implant,
-	/obj/item/device/radio/borg,
-	/obj/item/weapon/holder,
-	/obj/machinery/camera,
-	/mob/living/simple_animal/borer,
-	/mob/living/parasite
-	)
+/mob/living
+	var/list/can_enter_vent_with = list(
+		/obj/item/weapon/implant,
+		/obj/item/device/radio/borg,
+		/obj/item/weapon/holder,
+		/obj/machinery/camera,
+		/mob/living/simple_animal/borer,
+		/mob/living/parasite
+		)
 
-/mob/living/var/list/icon/pipes_shown = list()
-/mob/living/var/last_played_vent
-/mob/living/var/is_ventcrawling = 0
-/mob/living/var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
-/mob/var/next_play_vent = 0
+	var/list/icon/pipes_shown = list()
+	var/is_ventcrawling = 0
+	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
+	var/next_play_vent = 0
 
 /mob/living/proc/can_ventcrawl()
 	if(!client)
@@ -91,7 +91,7 @@ var/list/ventcrawl_machinery = list(
 	to_chat(src, "You begin climbing into the ventilation system...")
 	var/time = 40
 	if(w_class)
-		time = w_class^2
+		time = w_class ** 2
 	if(!do_after(src, time, null, vent_found))
 		return
 
@@ -150,7 +150,6 @@ var/list/ventcrawl_machinery = list(
 		var/obj/machinery/atmospherics/A = X //all elements in totalMembers are necessarily of this type.
 		if(!A.pipe_image)
 			A.pipe_image = image(A, A.loc, dir = A.dir)
-		A.pipe_image.layer = HUD_LAYER
 		A.pipe_image.plane = HUD_PLANE
 		pipes_shown += A.pipe_image
 		client.images += A.pipe_image

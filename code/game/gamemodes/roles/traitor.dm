@@ -4,17 +4,20 @@
 	required_pref = ROLE_TRAITOR
 	logo_state = "synd-logo"
 
-	restricted_jobs = list("Cyborg", "Security Cadet", "Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor")
+	restricted_jobs = list("Cyborg", "Security Cadet", "Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Velocity Officer", "Velocity Chief", "Velocity Medical Doctor", "Blueshield Officer")
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
 
 	greets = list(GREET_SYNDBEACON, GREET_LATEJOIN, GREET_AUTOTRAITOR, GREET_ROUNDSTART, GREET_DEFAULT)
 
 	var/telecrystals = 20
+	skillset_type = /datum/skillset/max
+	moveset_type = /datum/combat_moveset/cqc
+	change_to_maximum_skills = FALSE
 
 /datum/role/traitor/New()
 	..()
-	AddComponent(/datum/component/gamemode/syndicate, telecrystals)
+	AddComponent(/datum/component/gamemode/syndicate, telecrystals, "traitor")
 
 /datum/role/traitor/proc/add_one_objective(datum/mind/traitor)
 	switch(rand(1,120))
@@ -30,7 +33,7 @@
 /datum/role/traitor/forgeObjectives()
 	if(!..())
 		return FALSE
-	if(istype(antag.current, /mob/living/silicon))
+	if(issilicon(antag.current))
 		AppendObjective(/datum/objective/target/assassinate, TRUE)
 		AppendObjective(/datum/objective/target/assassinate, TRUE)
 		AppendObjective(/datum/objective/survive)
@@ -65,7 +68,8 @@
 	killer.set_zeroth_law(law, law_borg)
 	to_chat(killer, "New law: 0. [law]")
 
-	killer.add_language("Sy-Code", 1)
+	killer.add_language(LANGUAGE_SYCODE)
+
 	if(isAI(killer))
 		qdel(killer.aiRadio.keyslot1)
 		killer.aiRadio.keyslot1 = new /obj/item/device/encryptionkey/syndicate()

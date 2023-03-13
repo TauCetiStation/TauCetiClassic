@@ -10,8 +10,9 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud
 
 	suit_store = /obj/item/weapon/gun/energy/gun
-	belt = /obj/item/device/pda/heads/hos
+	belt = /obj/item/weapon/melee/chainofcommand
 	l_pocket_back = /obj/item/weapon/handcuffs
+	l_pocket = /obj/item/device/pda/heads/hos
 	r_pocket = /obj/item/device/flash
 
 	implants = list(/obj/item/weapon/implant/mind_protect/loyalty)
@@ -34,7 +35,7 @@
 	l_hand_back = /obj/item/weapon/handcuffs
 
 	backpack_contents = null
-	implants = list(/obj/item/weapon/implant/mind_protect/mindshield)
+	implants = list(/obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/obedience)
 
 	back_style = BACKPACK_STYLE_SECURITY
 
@@ -68,7 +69,7 @@
 	l_hand_back = /obj/item/weapon/handcuffs
 	l_pocket = /obj/item/device/flash
 
-	implants = list(/obj/item/weapon/implant/mind_protect/mindshield)
+	implants = list(/obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/obedience)
 
 	back_style = BACKPACK_STYLE_SECURITY
 
@@ -100,6 +101,25 @@
 	l_hand_back = /obj/item/weapon/handcuffs
 	r_hand = /obj/item/weapon/book/manual/wiki/security_space_law
 
-	implants = list(/obj/item/weapon/implant/mind_protect/mindshield)
+	implants = list(/obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/obedience)
 
 	back_style = BACKPACK_STYLE_SECURITY
+
+
+
+/datum/outfit/job/blueshield
+	name = OUTFIT_JOB_NAME("Blueshield Officer")
+
+	uniform = /obj/item/clothing/under/rank/blueshield
+	shoes = /obj/item/clothing/shoes/boots
+	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
+
+	l_ear = /obj/item/device/radio/headset/headset_int/blueshield
+	belt = /obj/item/device/pda/blueshield
+
+	r_pocket = /obj/item/device/flash
+	r_pocket_back = /obj/item/weapon/handcuffs
+	l_pocket = /obj/item/weapon/pinpointer/heads
+
+	implants = list(
+		/obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/blueshield)

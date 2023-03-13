@@ -13,7 +13,6 @@
 	item_state = "armor"
 	blood_overlay_type = "armor"
 	origin_tech = "materials=5;biotech=4;powerstorage=5"
-	armor = list(melee = 15, bullet = 15, laser = 15, energy = 15, bomb = 15, bio = 15, rad = 15)
 	action_button_name = "Activate"
 	action_button_is_hands_free = 1
 	var/mode = VEST_STEALTH
@@ -25,6 +24,10 @@
 
 	action_button_name = "Toggle Vest"
 
+/obj/item/clothing/suit/armor/abductor/vest/atom_init()
+	. = ..()
+	armor = mode == VEST_STEALTH ? stealth_armor : combat_armor
+
 /obj/item/clothing/suit/armor/abductor/vest/proc/flip_mode()
 	switch(mode)
 		if(VEST_STEALTH)
@@ -32,18 +35,19 @@
 			DeactivateStealth()
 			armor = combat_armor
 			icon_state = "vest_combat"
-			if(istype(loc, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = loc
-				H.update_inv_wear_suit()
-			return
+			body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+			pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+			cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+			heat_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 		if(VEST_COMBAT)// TO STEALTH
 			mode = VEST_STEALTH
 			armor = stealth_armor
 			icon_state = "vest_stealth"
-			if(istype(loc, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = loc
-				H.update_inv_wear_suit()
-			return
+			body_parts_covered = initial(body_parts_covered)
+			pierce_protection = initial(pierce_protection)
+			cold_protection = initial(cold_protection)
+			heat_protection = initial(heat_protection)
+	update_inv_mob()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
 	disguise = entry
@@ -60,9 +64,6 @@
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
 		M.copy_overlays(disguise, TRUE)
-		M.update_inv_r_hand()
-		M.update_inv_l_hand()
-	return
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/DeactivateStealth()
 	if(!stealth_active)
@@ -83,27 +84,17 @@
 
 	DeactivateStealth()
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/IsAbductor(user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.species.name != ABDUCTOR)
-			return 0
-		return 1
-	return 0
 
-/obj/item/clothing/suit/armor/abductor/vest/proc/AbductorCheck(user)
-	if(IsAbductor(user))
-		return 1
+/obj/item/clothing/suit/armor/abductor/vest/proc/AbductorCheck(mob/user)
+	if(isabductor(user))
+		return TRUE
 	to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
-	return 0
-
-/obj/item/clothing/suit/armor/abductor/vest/proc/AgentCheck(mob/living/carbon/human/user)
-	return isabductoragent(user)
+	return FALSE
 
 /obj/item/clothing/suit/armor/abductor/vest/attack_self(mob/user)
 	if(!AbductorCheck(user))
 		return
-	if(!AgentCheck(user))
+	if(!isabductoragent(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	switch(mode)
@@ -124,8 +115,6 @@
 		M.SetParalysis(0)
 		M.SetStunned(0)
 		M.SetWeakened(0)
-		M.lying = 0
-		M.update_canmove()
 //		M.adjustStaminaLoss(-75)
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
@@ -137,22 +126,11 @@
 
 
 //SCIENCE TOOL
-/obj/item/device/abductor/proc/IsAbductor(user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.species.name != ABDUCTOR)
-			return 0
-		return 1
-	return 0
-
-/obj/item/device/abductor/proc/AbductorCheck(user)
-	if(IsAbductor(user))
-		return 1
+/obj/item/device/abductor/proc/AbductorCheck(mob/user)
+	if(isabductor(user))
+		return TRUE
 	to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
-	return 0
-
-/obj/item/device/abductor/proc/ScientistCheck(mob/living/carbon/human/user)
-	return isabductorsci(user)
+	return FALSE
 
 /obj/item/device/abductor/gizmo
 	name = "science tool"
@@ -168,7 +146,7 @@
 /obj/item/device/abductor/gizmo/attack_self(mob/user)
 	if(!AbductorCheck(user))
 		return
-	if(!ScientistCheck(user))
+	if(!isabductorsci(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	if(mode == GIZMO_SCAN)
@@ -182,7 +160,7 @@
 /obj/item/device/abductor/gizmo/attack(mob/living/M, mob/user)
 	if(!AbductorCheck(user))
 		return
-	if(!ScientistCheck(user))
+	if(!isabductorsci(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
 		return
 	switch(mode)
@@ -197,8 +175,10 @@
 		return
 	if(!AbductorCheck(user))
 		return
-	if(!ScientistCheck(user))
+	if(!isabductorsci(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
+		return
+	if(!ismob(target))
 		return
 	switch(mode)
 		if(GIZMO_SCAN)
@@ -212,16 +192,21 @@
 			console.AddSnapshot(target)
 			to_chat(user, "<span class='notice'>You scan [target] and add them to the database.</span>")
 
-/obj/item/device/abductor/gizmo/proc/mark(atom/target, mob/living/user)
+/obj/item/device/abductor/gizmo/proc/mark(mob/target, mob/living/user)
 	if(marked == target)
 		to_chat(user, "<span class='notice'>This specimen is already marked.</span>")
 		return
-	if(ishuman(target))
-		if(IsAbductor(target))
-			marked = target
-			to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
-		else
-			prepare(target, user)
+	if(isabductor(target) || istype(target, /mob/living/simple_animal/cow))
+		var/mob/M = target
+		var/datum/role/R = M.mind.GetRoleByType(/datum/role/abductor)
+		if(R) // Now, we shouldn't let two teams to steal one another
+			var/datum/role/R2 = user.mind.GetRoleByType(/datum/role/abductor)
+			if(R.faction != R2.faction)
+				to_chat(user, "<span class='notice'>One team shouldn't interfere with another by these means!</span>")
+				user.burn_skin(40) //You dont wanna to repeat, yea?
+				return
+		marked = target
+		to_chat(user, "<span class='notice'>You mark [target] for future retrieval.</span>")
 	else
 		prepare(target, user)
 
@@ -286,28 +271,35 @@
 	icon_state = "implant"
 //	activated = 1
 	var/obj/machinery/abductor/pad/home
-	var/cooldown = 30
+	var/cooldown = 30 SECONDS
 
 	action_button_name = "Activate Implant"
 	action_button_is_hands_free = 1
 
 /obj/item/weapon/implant/abductor/attack_self()
-	if(cooldown == initial(cooldown))
+	var/turf/T = get_turf(src)
+	if(SEND_SIGNAL(T, COMSIG_ATOM_INTERCEPT_TELEPORT))
+		to_chat(imp_in, "<span class='warning'>WARNING! Bluespace interference has been detected in the location, preventing teleportation! Teleportation is canceled!</span>")
+		return FALSE
+	if(cooldown >= initial(cooldown))
 		if(imp_in.buckled)
 			imp_in.buckled.unbuckle_mob()
 		home.Retrieve(imp_in)
 		cooldown = 0
-		START_PROCESSING(SSobj, src)
+		INVOKE_ASYNC(src, .proc/start_recharge, imp_in)
 	else
-		to_chat(imp_in, "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>")
+		to_chat(imp_in, "<span class='warning'>You must wait [(300 - cooldown) / 10] seconds to use [src] again!</span>")
 	return
 
-/obj/item/weapon/implant/abductor/process()
-	if(cooldown < initial(cooldown))
+/obj/item/weapon/implant/abductor/proc/start_recharge(mob/user = usr)
+	var/atom/movable/screen/cooldown_overlay/cooldowne = start_cooldown(action.button, initial(cooldown))
+	while(cooldown < initial(cooldown))
+		sleep(1)
 		cooldown++
-		if(cooldown == initial(cooldown))
-			STOP_PROCESSING(SSobj, src)
-
+		if(cooldowne)
+			cooldowne.tick()
+	to_chat(imp_in, "<span class='warning'>Your [name] recharged!</span>")
+	qdel(cooldowne)
 
 //ALIEN DECLONER
 /obj/item/weapon/gun/energy/decloner/alien
@@ -320,8 +312,8 @@
 /obj/item/weapon/gun/energy/decloner/alien/special_check(mob/living/carbon/human/M)
 	if(M.species.name != ABDUCTOR)
 		to_chat(M, "<span class='notice'>You can't figure how this works.</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/item/weapon/gun/energy/decloner/alien
 	ammo_type = list(/obj/item/ammo_casing/energy/declone/light)
@@ -340,7 +332,7 @@
 	var/obj/machinery/camera/helm_cam
 
 /obj/item/clothing/head/helmet/abductor/attack_self(mob/living/carbon/human/user)
-	if(!IsAbductor(user))
+	if(!isabductor(user))
 		to_chat(user, "<span class='notice'>You can't figure how this works.</span>")
 		return
 	if(helm_cam)
@@ -348,7 +340,7 @@
 	else
 		icon_state = "alienhelmet_a"
 		item_state = "alienhelmet_a"
-		user.update_inv_head()
+		update_inv_mob()
 		var/datum/role/abductor/A = user.mind.GetRoleByType(/datum/role/abductor)
 		team = A.get_team_num()
 		helm_cam = new /obj/machinery/camera(src)
@@ -364,17 +356,6 @@
 		blockTracking = 1
 		to_chat(user, "<span class='notice'>Abductor detected. Camera activated.</span>")
 		return
-
-/obj/item/clothing/head/helmet/abductor/proc/IsAbductor(mob/living/user)
-	if(!ishuman(user))
-		return 0
-	var/mob/living/carbon/human/H = user
-	if(!H.species)
-		return 0
-	if(H.species.name != ABDUCTOR)
-		return 0
-	return 1
-
 
 //ADVANCED BATON
 #define BATON_STUN 0
@@ -395,12 +376,16 @@
 	force = 7
 	w_class = SIZE_SMALL
 	action_button_name = "Toggle Mode"
+	var/obj/machinery/abductor/console/console
 
 /obj/item/weapon/abductor_baton/proc/toggle(mob/living/user=usr)
-	if(!IsAbductor(user))
+	if(!isabductor(user))
 		return
-	if(!AgentCheck(user))
+	if(!isabductoragent(user))
 		to_chat(user, "<span class='notice'>You're not trained to use this</span>")
+		return
+	if(!console || !console.baton_modules_bought)
+		to_chat(user, "<span class='notice'>You need additional permissions from Mothership to use other modes of [name]!</span>")
 		return
 	mode = (mode + 1) % BATON_MODES
 	var/txt
@@ -416,8 +401,7 @@
 
 	to_chat(user, "<span class='notice'>You switch the baton to [txt] mode.</span>")
 	update_icon()
-	user.update_inv_l_hand()
-	user.update_inv_r_hand()
+	update_inv_mob()
 
 /obj/item/weapon/abductor_baton/update_icon()
 	switch(mode)
@@ -434,21 +418,8 @@
 			icon_state = "wonderprodProbe"
 			item_state = "wonderprodProbe"
 
-/obj/item/weapon/abductor_baton/proc/IsAbductor(mob/living/user)
-	if(!ishuman(user))
-		return 0
-	var/mob/living/carbon/human/H = user
-	if(!H.species)
-		return 0
-	if(H.species.name != ABDUCTOR)
-		return 0
-	return 1
-
-/obj/item/weapon/abductor_baton/proc/AgentCheck(mob/living/carbon/human/user)
-	return isabductoragent(user)
-
 /obj/item/weapon/abductor_baton/attack(mob/target, mob/living/user)
-	if(!IsAbductor(user))
+	if(!isabductor(user))
 		return
 
 	if(isrobot(target))
@@ -475,8 +446,7 @@
 	toggle(user)
 
 /obj/item/weapon/abductor_baton/proc/StunAttack(mob/living/L,mob/living/user)
-	user.lastattacked = L
-	L.lastattacker = user
+	L.set_lastattacker_info(user)
 
 	L.Stun(7)
 	L.Weaken(7)
@@ -509,8 +479,7 @@
 								"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
-				C.handcuffed = new /obj/item/weapon/handcuffs/alien(C)
-				C.update_inv_handcuffed()
+				C.equip_to_slot_or_del(new /obj/item/weapon/handcuffs/alien, SLOT_HANDCUFFED)
 				to_chat(user, "<span class='notice'>You handcuff [C].</span>")
 				L.log_combat(user, "handcuffed with \a [src]")
 		else
@@ -518,17 +487,22 @@
 	return
 
 /obj/item/weapon/abductor_baton/proc/ProbeAttack(mob/living/L,mob/living/user)
-	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
-						"<span class='userdanger'>[user] probes you!</span>")
-
 	var/species = "<span class='warning'>Unknown species</span>"
+	var/gland = "<span class='warning'>Experimental gland <span class='danger'>wasn't</span> detected!</span>"
+
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if(H.dna && H.dna.species)
-			species = "<span clas=='notice'>[H.species.name]</span>"
+		species = "<span class='notice'>[H.species.name]</span>"
 		if(ischangeling(L))
-			species = "<span class='warning'>Changeling lifeform</span>"
-	to_chat(user, "<span class='notice'>Probing result: </span>[species]")
+			species = "<span class='warning'> Changeling lifeform</span>"
+		var/obj/item/gland/temp = locate() in H
+		if(temp)
+			gland = "<span class='warning'>Experimental gland detected!</span>"
+
+	to_chat(user, "<span class='notice'>Probing result:[species]</span>")
+	to_chat(user, "[gland]")
+	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
+						"<span class='userdanger'>[user] probes you!</span>")
 
 /obj/item/weapon/abductor_baton/examine(mob/user)
 	..()
@@ -594,14 +568,20 @@
 	name = "alien optable"
 	desc = "Used for experiments on creatures."
 	icon = 'icons/obj/abductor.dmi'
-	var/holding = 0
+	var/holding = FALSE
 	var/belt = null
 	var/mob/living/carbon/fastened = null
 
 /obj/machinery/optable/abductor/atom_init()
 	belt = image("icons/obj/abductor.dmi", "belt", layer = FLY_LAYER)
 	. = ..()
-
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/operating_table/abductor(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic(null)
+	component_parts += new /obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor/adv/super/quadratic(null)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
+	RefreshParts()
 /obj/machinery/optable/abductor/attack_hand(mob/living/carbon/C)
 	if(!victim && !fastened)
 		return
@@ -643,6 +623,7 @@
 		add_overlay(belt)
 		fastened.anchored = TRUE
 		fastened.SetStunned(INFINITY)
+		fastened.can_be_pulled = FALSE
 		qdel(animation)
 	else
 		cut_overlay(belt)
@@ -653,6 +634,7 @@
 		sleep(9)
 		fastened.SetStunned(0)
 		fastened.anchored = FALSE
+		fastened.can_be_pulled = TRUE
 		fastened = null
 		qdel(animation)
 
@@ -692,10 +674,10 @@
  4.Сделайте надрез скальпелем в области груди особи.<br>
  5.Остановите кровотечение с помощью щипцов.<br>
  6.Раскройте надрез хирургическим зажимом.<br>
- 7.Вскройте грудную клетку пилой и зафиксируйте с помощью зажима.<br>
+ 7.Вскройте грудную клетку пилой и раскройте с помощью щипцов.<br>
  8.Сделайте небольшое углубление во внутренностях особи дрелью. Это не так плохо для субъекта, как звучит.<br>
  9.Поместите внутрь разреза гланду. (Их можно получить в раздатчике гланд.)<br>
- 10.<b>ОПЦИОНАЛЬНО.</b> Закройте вскрытую грудную клетку субъекта, замажьте гелем или эктоплазмой и прижгите рану.<br>
+ 10.Закройте вскрытую грудную клетку субъекта, замажьте гелем или эктоплазмой и прижгите рану.<br>
  11.Оденьте особь, чтобы не потревожить среду обитания.<br>
  12.Поместите субъект в устройство для экспериментов.<br>
  13.Выберите одну из настроек устройства и следуйте показанным там инструкциям.<br>

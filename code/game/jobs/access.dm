@@ -39,7 +39,7 @@
 /var/const/access_virology = 39
 /var/const/access_cmo = 40
 /var/const/access_qm = 41
-//var/const/access_ = 42 // FREE SPACE, USE THIS FIRST
+/var/const/access_blueshield = 42
 /var/const/access_clown = 43
 /var/const/access_mime = 44
 /var/const/access_surgery = 45
@@ -106,6 +106,8 @@
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
 		return TRUE
+	if(istype(M) && SEND_SIGNAL(M, COMSIG_MOB_TRIED_ACCESS, src) & COMSIG_ACCESS_ALLOWED)
+		return TRUE
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		//if they are holding or wearing a card that has access, that works
@@ -131,11 +133,14 @@
 /mob/living/silicon/robot/syndicate/GetAccess()
 	return list(access_maint_tunnels, access_syndicate, access_external_airlocks) //syndicate basic access
 
+/mob/living/silicon/robot/drone/syndi/GetAccess()
+	return list(access_maint_tunnels, access_syndicate, access_external_airlocks) //syndicate basic access
+
 /obj/item/proc/GetID()
 	return null
 
 /obj/proc/check_access(atom/movable/AM)
-	if(istype(src, /obj/machinery))
+	if(ismachinery(src))
 		var/obj/machinery/Machine = src
 		if(Machine.emagged)
 			return TRUE
@@ -191,7 +196,7 @@
 			return get_all_centcom_access()
 
 /proc/get_all_accesses()
-	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers,
+	return list(access_security, access_sec_doors, access_brig, access_armory, access_forensics_lockers, access_blueshield,
 	            access_medical, access_genetics, access_morgue, access_rd,
 	            access_tox, access_tox_storage, access_chemistry, access_engine, access_engine_equip, access_maint_tunnels,
 	            access_external_airlocks, access_change_ids, access_ai_upload,
@@ -214,7 +219,7 @@
 		if(0)
 			return get_all_accesses()
 		if(1) //security
-			return list(access_sec_doors, access_security, access_brig, access_armory, access_forensics_lockers, access_hos, access_detective)
+			return list(access_sec_doors, access_security, access_brig, access_armory, access_forensics_lockers, access_hos, access_detective, access_blueshield)
 		if(2) //medbay
 			return list(access_medical, access_genetics, access_morgue, access_chemistry, access_psychiatrist, access_virology, access_surgery, access_cmo, access_paramedic, access_medbay_storage)
 		if(3) //research
@@ -260,6 +265,8 @@
 			return "Cargo Bot Delivery"
 		if(access_security)
 			return "Security"
+		if(access_blueshield)
+			return "Blueshield Office"
 		if(access_brig)
 			return "Holding Cells"
 		if(access_forensics_lockers)
@@ -415,15 +422,19 @@
 		if(access_cent_captain)
 			return "Code Gold"
 
-/proc/get_all_jobs()
+/proc/get_all_jobs(silicons = FALSE)
 	var/list/all_jobs = list()
-	var/list/all_datums = typesof(/datum/job)
-	all_datums.Remove(list(/datum/job,/datum/job/ai,/datum/job/cyborg))
+	var/list/all_datums = subtypesof(/datum/job)
+	if(!silicons)
+		all_datums.Remove(list(/datum/job/ai, /datum/job/cyborg))
 	var/datum/job/jobdatum
 	for(var/jobtype in all_datums)
 		jobdatum = new jobtype
 		all_jobs.Add(jobdatum.title)
 	return all_jobs
+
+/proc/get_all_jobs_with_silicons()
+	return get_all_jobs(TRUE)
 
 /proc/get_all_centcom_jobs()
 	return list("VIP Guest",

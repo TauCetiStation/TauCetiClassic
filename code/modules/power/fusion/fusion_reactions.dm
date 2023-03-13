@@ -1,6 +1,6 @@
 #define FUSION_HEAT_CAP 1.57e7
 
-var/list/fusion_reactions
+var/global/list/fusion_reactions
 
 /datum/fusion_reaction
 	var/p_react = "" // Primary reactant.

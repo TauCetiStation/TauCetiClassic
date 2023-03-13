@@ -13,6 +13,8 @@
 
 	var/static/image/sword_overlay
 
+	spawner_args = list(/datum/spawner/living/robot/syndi, 2 MINUTES)
+
 /mob/living/silicon/robot/syndicate/atom_init()
 	. = ..()
 	updatename("Syndicate")
@@ -40,6 +42,7 @@
 /obj/item/device/radio/borg/syndicate/atom_init()
 	. = ..()
 	set_frequency(SYND_FREQ)
+	INVOKE_ASYNC(src, .proc/recalculateChannels)
 
 /obj/item/weapon/melee/energy/sword/cyborg
 	var/hitcost = 500

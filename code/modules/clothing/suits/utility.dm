@@ -19,7 +19,7 @@
 	permeability_coefficient = 0.50
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/reagent_containers/spray/extinguisher)
-	slowdown = 1.0
+	slowdown = 0.5
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	flags_pressure = STOPS_HIGHPRESSUREDMAGE
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -38,7 +38,7 @@
 	//icon_state = "thermal"
 	item_state = "ro_suit"
 	w_class = SIZE_NORMAL//bulky item
-	slowdown = 1.5
+	slowdown = 0.7
 
 /*
  * Bomb protection
@@ -62,7 +62,7 @@
 	w_class = SIZE_NORMAL//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
-	slowdown = 2
+	slowdown = 1
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 100, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT|HIDETAIL
 	heat_protection = UPPER_TORSO|LOWER_TORSO
@@ -103,6 +103,6 @@
 	permeability_coefficient = 0.50
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/clothing/head/radiation,/obj/item/clothing/mask/gas)
-	slowdown = 1.5
+	slowdown = 0.7
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 100)
 	flags_inv = HIDEJUMPSUIT|HIDETAIL

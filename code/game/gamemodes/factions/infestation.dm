@@ -13,6 +13,18 @@
 
 	var/last_check = 0
 
+	var/start_help = TRUE
+
+	var/first_help_sent = FALSE
+	var/second_help_sent = FALSE
+	var/win_declared = FALSE
+
+	var/list/vents4spawn
+
+/datum/faction/infestation/New()
+	..()
+	vents4spawn = get_vents()
+
 /datum/faction/infestation/AdminPanelEntry(datum/admins/A)
 	var/dat = ..()
 	var/data = count_alien_percent()
@@ -29,29 +41,31 @@
 /datum/faction/infestation/can_setup(num_players)
 	if(!..())
 		return FALSE
-	if(xeno_spawn.len > 0)
+	if(xeno_spawn.len > 0 || vents4spawn.len > 0)
 		return TRUE
 	return FALSE
 
 /datum/faction/infestation/OnPostSetup()
-	for(var/check_spawn in xeno_spawn)
-		var/turf/T = get_turf(check_spawn)
-		if(T.loc.name == "Construction Area")
-			xeno_spawn -= check_spawn
-		if(T.loc.name == "Technical Storage")
-			xeno_spawn -= check_spawn
-
 	for(var/datum/role/role in members)
-		var/start_point = pick(xeno_spawn)
-		xeno_spawn -= start_point
-		var/area/A = get_area(start_point)
+		var/mob/living/carbon/xenomorph/larva/L
+		var/V
+		if(length(vents4spawn) > 0)
+			V = pick_n_take(vents4spawn)
+			L = new(V) // spawn them inside vents
+		else
+			var/start_point = pick(xeno_spawn)
+			xeno_spawn -= start_point
+			var/area/A = get_area(start_point)
 
-		for(var/obj/machinery/power/apc/apc in A.apc)
-			apc.overload_lighting()
+			for(var/obj/machinery/power/apc/apc in A.apc)
+				apc.overload_lighting()
 
-		var/mob/living/carbon/xenomorph/larva/L = new /mob/living/carbon/xenomorph/larva(get_turf(start_point))
+			L = new (get_turf(start_point))
 		role.antag.transfer_to(L)
 		QDEL_NULL(role.antag.original)
+		if(V)
+			L.add_ventcrawl(V)
+
 
 	return ..()
 
@@ -68,11 +82,12 @@
 	"[ALIEN_DRONE]_live" = 0, "[ALIEN_DRONE]_dead" = 0, "[ALIEN_DRONE]_key" = "",
 	"[ALIEN_SENTINEL]_live" = 0, "[ALIEN_SENTINEL]_dead" = 0, "[ALIEN_SENTINEL]_key" = "",
 	"[ALIEN_HUNTER]_live" = 0, "[ALIEN_HUNTER]_dead" = 0, "[ALIEN_HUNTER]_key" = "",
-	"[ALIEN_LARVA]_live" = 0, "[ALIEN_LARVA]_dead" = 0, "[ALIEN_LARVA]_key" = "")
+	"[ALIEN_LARVA]_live" = 0, "[ALIEN_LARVA]_dead" = 0, "[ALIEN_LARVA]_key" = "",
+	"[ALIEN_MAID]_live" = 0, "[ALIEN_MAID]_dead" = 0, "[ALIEN_MAID]_key" = "")
 	for(var/list_key in alien_list)
 		if(list_key == ALIEN_FACEHUGGER)
 			continue
-		for(var/mob/living/carbon/xenomorph/A in alien_list[list_key])
+		for(var/mob/living/carbon/xenomorph/A as anything in alien_list[list_key])
 			var/turf/xeno_loc = get_turf(A)
 			if(!xeno_loc)
 				continue
@@ -107,7 +122,7 @@
 
 /datum/faction/infestation/proc/check_crew()
 	var/total_human = 0
-	for(var/mob/living/carbon/human/H in human_list)
+	for(var/mob/living/carbon/human/H as anything in human_list)
 		var/turf/human_loc = get_turf(H)
 		if(!human_loc || !is_station_level(human_loc.z))
 			continue
@@ -127,6 +142,35 @@
 	else if(!total_human && total_alien)
 		alien_percent = WIN_PERCENT
 	. = list(TOTAL_HUMAN = total_human, TOTAL_ALIEN = total_alien, ALIEN_PERCENT = alien_percent)
+
+/datum/faction/infestation/process()
+	var/data = count_alien_percent()
+	if(data[ALIEN_PERCENT] == 0 && first_help_sent && !win_declared)
+		var/datum/announcement/centcomm/xeno/crew_win/announcement = new
+		announcement.play()
+		SSshuttle.fake_recall = FALSE
+		win_declared = TRUE
+	else if(data[ALIEN_PERCENT] >= FIRST_HELP_PERCENT && !first_help_sent)
+		var/datum/game_mode/gamemode = SSticker.mode
+		if(gamemode.add_supply_to_cargo(4, "Xeno liquidator", "Cent Comm", "Cent Comm", "", "Xeno threat"))
+			if(send_shuttle())
+				var/datum/announcement/centcomm/xeno/first_help/announcement = new()
+				announcement.play()
+			else
+				var/datum/announcement/centcomm/xeno/first_help/fail/announcement = new()
+				announcement.play()
+		first_help_sent = TRUE
+		SSshuttle.fake_recall = TRUE //Quarantine
+	else if(data[ALIEN_PERCENT] >= SECOND_HELP_PERCENT && !second_help_sent)
+		var/datum/game_mode/gamemode = SSticker.mode
+		if(gamemode.add_supply_to_cargo(4, "Xeno arsonist", "Cent Comm", "Cent Comm", "", "Xeno threat"))
+			if(send_shuttle())
+				var/datum/announcement/centcomm/xeno/second_help/announcement = new()
+				announcement.play()
+			else
+				var/datum/announcement/centcomm/xeno/second_help/fail/announcement = new()
+				announcement.play()
+		second_help_sent = TRUE
 
 /datum/faction/infestation/check_win()
 	if(last_check > world.time)
@@ -160,6 +204,10 @@
 			xeno_name = "грудоломов"
 			xeno_icon_state_live = "larva0"
 			xeno_icon_state_dead = "larva0_dead"
+		if(ALIEN_MAID)
+			xeno_name = "горничных"
+			xeno_icon_state_live = "alienm_running"
+			xeno_icon_state_dead = "alienm_dead"
 
 	if(xeno_live)
 		I = icon('icons/mob/xenomorph.dmi', "[xeno_icon_state_live]", SOUTH)
@@ -201,7 +249,7 @@
 			dat += {"<tr><td><img src="logo_[tempstate].png"></td>"}
 			dat += "<td style='color: red; font-weight: bold;'>Королева была убита!</td></tr>"
 
-	var/list/L = list(ALIEN_DRONE, ALIEN_SENTINEL, ALIEN_HUNTER, ALIEN_LARVA)
+	var/list/L = list(ALIEN_DRONE, ALIEN_SENTINEL, ALIEN_HUNTER, ALIEN_LARVA, ALIEN_MAID)
 	for(var/list_key in L)
 		if(aliens["[list_key]_live"] || aliens["[list_key]_dead"])
 			dat += generate_completion_text(list_key, aliens["[list_key]_live"], aliens["[list_key]_dead"], aliens["[list_key]_key"])
@@ -209,5 +257,20 @@
 	dat += "</table>"
 
 	return dat
+
+/datum/faction/infestation/proc/send_shuttle()
+	if(!SSshuttle.can_move())
+		return FALSE
+	if(SSshuttle.at_station)
+		SSshuttle.send()
+		SSshuttle.sell()
+		SSshuttle.buy()
+		SSshuttle.moving = 1
+		SSshuttle.set_eta_timeofday()
+	else
+		SSshuttle.buy()
+		SSshuttle.moving = 1
+		SSshuttle.set_eta_timeofday()
+	return TRUE
 
 #undef CHECK_PERIOD

@@ -14,7 +14,6 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
 	circuit = /obj/item/weapon/circuitboard/reconstitutor
-	req_access = list(access_xenoarch) //Only used for record deletion right now. //xenoarch couldn't use it when it was access_heads
 	var/obj/machinery/clonepod/pod1 = 1 //Linked cloning pod.
 	var/last_used = 0 // We don't want seeds getting spammed
 	var/temp = ""
@@ -30,6 +29,7 @@
 	var/list/manually_placed_genomes = list()
 	var/list/discovered_genomes = list("! Clear !")
 	var/list/accepted_fossil_types = list(/obj/item/weapon/fossil/plant)
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED)
 
 /obj/machinery/computer/reconstitutor/atom_init()
 	. = ..()
@@ -91,11 +91,10 @@
 	if(stat & (NOPOWER|BROKEN) || get_dist(src, user) > 1 && !issilicon(user) && !isobserver(user))
 		user.unset_machine(src)
 		return
-
 	var/dat = ""
 	dat += "<HR>"
 	if(!pod1)
-		pod1 = locate() in orange(1, src)
+		pod1 = locate() in orange(5, src)
 
 	if(!pod1)
 		dat += "<span class='red bold'>Unable to locate cloning pod.</span><br>"

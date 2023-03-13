@@ -4,4 +4,4 @@
 		for(var/role in list(CULTIST, REV, HEADREV))
 			var/datum/role/R = mind.GetRole(role)
 			if(R)
-				R.RemoveFromRole(mind)
+				R.Deconvert()

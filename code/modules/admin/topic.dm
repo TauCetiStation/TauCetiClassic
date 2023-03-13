@@ -238,7 +238,7 @@
 				var/itemname = href_list["itemname"]
 				editing_item_list[usr.ckey] = get_custom_item(target_ckey, itemname)
 				if(editing_item_list[usr.ckey])
-					edit_custom_item_panel(null, usr, readonly = TRUE, adminview = TRUE)
+					edit_custom_item_panel(null, usr, readonly = TRUE)
 			if("moderation_accept")
 				var/itemname = href_list["itemname"]
 				custom_item_premoderation_accept(target_ckey, itemname)
@@ -314,12 +314,12 @@
 	else if(href_list["delay_round_end"])
 		if(!check_rights(R_SERVER))	return
 
-		SSticker.delay_end = !SSticker.delay_end
-		log_admin("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
-		message_admins("[key_name(usr)] [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].")
+		SSticker.admin_delayed = !SSticker.admin_delayed
+		log_admin("[key_name(usr)] [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].")
+		message_admins("[key_name(usr)] [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].")
 		world.send2bridge(
 			type = list(BRIDGE_ROUNDSTAT),
-			attachment_msg = "**[key_name(usr)]** [SSticker.delay_end ? "delayed the round end" : "has made the round end normally"].",
+			attachment_msg = "**[key_name(usr)]** [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].",
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
 
@@ -1211,7 +1211,7 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai")
 			return
 
@@ -1233,7 +1233,7 @@
 		if(!M)	return
 
 		M.loc = prison_cell
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/prisoner = M
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/under/color/orange(prisoner), SLOT_W_UNIFORM)
 			prisoner.equip_to_slot_or_del(new /obj/item/clothing/shoes/orange(prisoner), SLOT_SHOES)
@@ -1253,7 +1253,7 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai")
 			return
 
@@ -1279,7 +1279,7 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai")
 			return
 
@@ -1305,7 +1305,7 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai")
 			return
 
@@ -1328,14 +1328,14 @@
 		if(!ismob(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
-		if(istype(M, /mob/living/silicon/ai))
+		if(isAI(M))
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai")
 			return
 
 		for(var/obj/item/I in M)
 			M.drop_from_inventory(I)
 
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/observer = M
 			observer.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket(observer), SLOT_W_UNIFORM)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(observer), SLOT_SHOES)
@@ -1558,10 +1558,6 @@
 				log_admin("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
 				message_admins("[key_name(H)] has their hands full, so they did not receive their cookie, spawned by [key_name(src.owner)].")
 				return
-			else
-				H.update_inv_r_hand()//To ensure the icon appears in the HUD
-		else
-			H.update_inv_l_hand()
 		log_admin("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		message_admins("[key_name(H)] got their cookie, spawned by [key_name(src.owner)]")
 		feedback_inc("admin_cookies_spawned",1)
@@ -1686,7 +1682,7 @@
 			if("No")
 				send_fax(usr, P, "[department]")
 
-		add_communication_log(type = "fax-centcomm", title = customname ? customname : 0, author = "Centcomm Officer", content = input)
+		SSStatistics.add_communication_log(type = "fax-centcomm", title = customname ? customname : 0, author = "Centcomm Officer", content = input)
 
 		to_chat(src.owner, "Message reply to transmitted successfully.")
 		log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [input]")
@@ -1747,6 +1743,17 @@
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
 		show_traitor_panel(M)
+	else if(href_list["skills"])
+		if(!check_rights(R_ADMIN))
+			return
+		if(!SSticker || !SSticker.mode)
+			tgui_alert(usr, "The game hasn't started yet!")
+			return
+		var/mob/M = locate(href_list["skills"])
+		if(!ismob(M))
+			to_chat(usr, "This can only be used on instances of type /mob.")
+			return
+		show_skills_panel(M)
 
 	else if(href_list["create_object"])
 		if(!check_rights(R_SPAWN))	return
@@ -1853,7 +1860,7 @@
 				if(!marked_datum)
 					to_chat(usr, "You don't have any object marked. Abandoning spawn.")
 					return
-				else if(!istype(marked_datum,/atom))
+				else if(!isatom(marked_datum))
 					to_chat(usr, "The object you have marked cannot be used as a target. Target must be of type /atom. Abandoning spawn.")
 					return
 				else
@@ -1883,16 +1890,15 @@
 								if(istype(O,/mob))
 									var/mob/M = O
 									M.real_name = obj_name
-							if(where == "inhand" && isliving(usr) && istype(O, /obj/item))
+							if(where == "inhand" && isliving(usr) && isitem(O))
 								var/mob/living/L = usr
 								var/obj/item/I = O
 								L.put_in_hands(I)
 								if(isrobot(L))
 									var/mob/living/silicon/robot/R = L
 									if(R.module)
-										R.module.modules += I
+										R.module.add_item(I)
 										I.loc = R.module
-										R.module.rebuild()
 										R.activate_module(I)
 				if(stop_main_loop)
 					break
@@ -2180,8 +2186,8 @@
 			return
 
 		library_recycle_bin()
-		log_admin("[key_name(usr)] restored [title] from the recycle bin")
-		message_admins("[key_name_admin(usr)] restored [title] from the recycle bin")
+		log_admin("[key_name(usr)] restored '[title]' from the recycle bin")
+		message_admins("[key_name_admin(usr)] restored '[title]' from the recycle bin")
 
 	else if(href_list["deletebook"])
 		if(!check_rights(R_PERMISSIONS))
@@ -2211,8 +2217,8 @@
 			return
 
 		library_recycle_bin()
-		log_admin("[key_name(usr)] restored [title] from the recycle bin")
-		message_admins("[key_name_admin(usr)] removed [title] from the library database")
+		log_admin("[key_name(usr)] removed '[title]' from the library database by player request")
+		message_admins("[key_name_admin(usr)] removed '[title]' from the library database by player request")
 
 	else if(href_list["vsc"])
 		if(check_rights(R_ADMIN|R_SERVER))
@@ -2260,10 +2266,15 @@
 			if(J.title in excluded_rank)
 				continue
 			J.salary_ratio = new_ratio
+
 		var/list/crew = my_subordinate_staff("Admin")
 		for(var/person in crew)
-			var/datum/money_account/account = person["acc_datum"]
+			var/datum/money_account/account = get_account(person["account"])
+			if(!account)
+				continue
+
 			account.change_salary(null, "CentComm", "CentComm", "Admin", force_rate = ratio_rate)
+
 		if(new_ratio == 1)	//if 0 was selected
 			to_chat(usr, "<span class='warning'><b>You returned basic salaries to all professions</b></span>")
 		else

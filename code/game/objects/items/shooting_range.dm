@@ -31,7 +31,7 @@
 
 
 /obj/item/target/attackby(obj/item/I, mob/user, params)
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			cut_overlays()
@@ -80,7 +80,8 @@
 	desc = "A shooting target with a threatening silhouette."
 	hp = 2350 // alium onest too kinda
 
-/obj/item/target/bullet_act(obj/item/projectile/Proj)
+/obj/item/target/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	hp -= Proj.damage
 	if(hp <= 0)
 		for(var/mob/O in oviewers())

@@ -17,9 +17,9 @@
 	var/sqljob = sanitize_sql(H.mind.assigned_role)
 	var/laname
 	var/lakey
-	if(H.lastattacker)
-		laname = sanitize_sql(H.lastattacker:real_name)
-		lakey = sanitize_sql(H.lastattacker:key)
+	if(H.lastattacker_name && H.lastattacker_key)
+		laname = sanitize_sql(H.lastattacker_name)
+		lakey = sanitize_sql(H.lastattacker_key)
 	var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
 	var/sqlcoord = sanitize_sql("[H.x], [H.y], [H.z]")
 
@@ -53,9 +53,9 @@
 	var/sqljob = sanitize_sql(H.mind.assigned_role)
 	var/laname
 	var/lakey
-	if(H.lastattacker)
-		laname = sanitize_sql(H.lastattacker:real_name)
-		lakey = sanitize_sql(H.lastattacker:key)
+	if(H.lastattacker_name && H.lastattacker_key)
+		laname = sanitize_sql(H.lastattacker_name)
+		lakey = sanitize_sql(H.lastattacker_key)
 	var/sqltime = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
 	var/sqlcoord = sanitize_sql("[H.x], [H.y], [H.z]")
 

@@ -58,7 +58,7 @@
 	var/time_to_wait = fileaccess_timer - world.time
 	if(time_to_wait > 0)
 		to_chat(src, "<font color='red'>Error: file_spam_check(): Spam. Please wait [round(time_to_wait/10)] seconds.</font>")
-		return 1
+		return TRUE
 	fileaccess_timer = world.time + FTPDELAY
-	return 0
+	return FALSE
 #undef FTPDELAY

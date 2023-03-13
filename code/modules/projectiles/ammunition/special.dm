@@ -20,10 +20,10 @@
 
 /obj/item/ammo_casing/magic/teleport
 	projectile_type = /obj/item/projectile/magic/teleport
-
+*/
 /obj/item/ammo_casing/magic/fireball
 	projectile_type = /obj/item/projectile/magic/fireball
-*/
+
 /obj/item/ammo_casing/syringegun
 	name = "syringe gun spring"
 	desc = "A high-power spring that throws syringes."
@@ -52,3 +52,13 @@
 
 /obj/item/ammo_casing/plasma/overcharge/massive
 	projectile_type = /obj/item/projectile/plasma/overcharge/massive
+
+/obj/item/ammo_casing/energy/wormhole
+	projectile_type = /obj/item/projectile/beam/wormhole
+	e_cost = 0
+	select_name = "blue"
+	fire_sound = 'sound/weapons/guns/portalgun.ogg'
+
+/obj/item/ammo_casing/energy/wormhole/orange
+	projectile_type = /obj/item/projectile/beam/wormhole/orange
+	select_name = "orange"

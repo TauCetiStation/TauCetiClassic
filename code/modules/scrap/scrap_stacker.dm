@@ -15,7 +15,7 @@
 /obj/machinery/scrap/stacking_machine/Bumped(atom/movable/AM)
 	if(stat & (BROKEN|NOPOWER))
 		return
-	if(istype(AM, /mob/living))
+	if(isliving(AM))
 		return
 	if(istype(AM, /obj/item/stack/sheet/refined_scrap))
 		var/obj/item/stack/sheet/refined_scrap/S = AM

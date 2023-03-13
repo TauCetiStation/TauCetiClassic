@@ -57,12 +57,14 @@
 //HoS
 /obj/item/clothing/head/hos_peakedcap
 	name = "head of security's peaked cap"
-	desc = "The peaked cap of the Head of Security. I heard you, criminal scum. Now go to GOOLAG."
+	desc = "The peaked cap of the Head of Security. I heard you, criminal scum. Now go to GOOLAG. Also has some space for special armor plate."
 	icon_state = "hos_peakedcap"
 	item_state = "hos_peakedcap"
 	w_class = SIZE_TINY
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
+	valid_accessory_slots = list("dermal")
+	restricted_accessory_slots = list("dermal")
 
 //Medical
 /obj/item/clothing/head/surgery
@@ -88,20 +90,12 @@
 /obj/item/clothing/head/det_hat
 	name = "detective's brown hat"
 	desc = "Someone who wears this will look very smart."
-	icon_state = "detective_brown"
+	icon_state = "detective_hat_brown"
 	allowed = list(/obj/item/weapon/reagent_containers/food/snacks/candy_corn, /obj/item/weapon/pen)
 	armor = list(melee = 50, bullet = 5, laser = 25,energy = 10, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 
-/obj/item/clothing/head/det_hat/grey
-	name = "detective's grey hat"
-	icon_state = "detective_grey"
-
-/obj/item/clothing/head/det_hat/darkgrey
-	name = "detective's dark grey hat"
-	icon_state = "detective_darkgrey"
-
-/obj/item/clothing/head/det_hat/black
-	name = "detective's black hat"
-	icon_state = "detective_black"
+/obj/item/clothing/head/det_hat/gray
+	name = "detective's gray hat"
+	icon_state = "detective_hat_gray"

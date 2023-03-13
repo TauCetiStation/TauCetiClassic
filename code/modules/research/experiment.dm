@@ -14,9 +14,9 @@
 	)
 
 
-	//Determines maximum amount of points that can be earned by certain methods. 
+	//Determines maximum amount of points that can be earned by certain methods.
 	//Total points that can be earned equal highest score multiplied by this number
-	var/cap_coeff = 2 
+	var/cap_coeff = 2
 
 	var/list/tech_points = list(
 		"materials" = 200,
@@ -121,7 +121,7 @@
 			if(special_weapons[weapon])
 				points += special_weapons[weapon]
 			else
-				points += rand(5,10) * 200 // 1000-2000 points for random weapon
+				points += rand(1,5) * 100 // 100-500 points for random weapon
 
 	for(var/list/scanning_artifact in I.scanned_artifacts)
 		var/already_scanned = FALSE
@@ -247,8 +247,8 @@
 
 /obj/item/device/radio/beacon/interaction_watcher/proc/research_interaction(inter_type, score, new_score_coeff=800, repeat_score_coeff=160)
 	var/calculated_research_points = -1
-	for(var/obj/machinery/computer/rdconsole/RD in RDcomputer_list)
-		if(RD.id == 1)
+	for(var/obj/machinery/computer/rdconsole/RD as anything in global.RDcomputer_list)
+		if(RD.id == DEFAULT_SCIENCE_CONSOLE_ID)
 			var/saved_interaction_score = RD.files.experiments.saved_best_score[inter_type]
 			var/saved_earned_points = max(RD.files.experiments.earned_score[inter_type], 1)
 
@@ -365,7 +365,7 @@
 	if(scanneddata > 0)
 		datablocks += scanneddata
 		to_chat(user, "<span class='notice'>[src] received [scanneddata] data block[scanneddata>1?"s":""] from scanning [target]</span>")
-	else if(istype(target, /obj/item))
+	else if(isitem(target))
 		var/science_value = experiments.get_object_research_value(target)
 		if(science_value > 0)
 			to_chat(user, "<span class='notice'>Estimated research value of [target.name] is [science_value]</span>")

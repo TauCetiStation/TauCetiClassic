@@ -3,6 +3,7 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "aicard" // aicard-full
 	item_state = "electronic"
+	flags = HEAR_PASS_SAY
 	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
 	var/flush = null
@@ -10,7 +11,7 @@
 
 
 /obj/item/device/aicard/attack(mob/living/silicon/ai/M, mob/user)
-	if(!istype(M, /mob/living/silicon/ai))//If target is not an AI.
+	if(!isAI(M))//If target is not an AI.
 		return ..()
 
 	M.log_combat(user, "carded via [name]")
@@ -104,7 +105,7 @@
 				else
 					flush = 1
 					for(var/mob/living/silicon/ai/A in src)
-						A.suiciding = 1
+						A.suiciding = TRUE
 						to_chat(A, "Your core files are being wiped!")
 						while (A.stat != DEAD)
 							A.adjustOxyLoss(2)

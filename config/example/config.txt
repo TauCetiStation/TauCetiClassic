@@ -256,6 +256,18 @@ REPOSITORY_LINK https://github.com/TauCetiStation/TauCetiClassic
 ## Saves alot of initialization time, since only centcomm and testmap will be loaded. For tests where map doesn't matter.
 # SUMMON_TESTMAP
 
+## Force map not to load junkyard
+## Saves some initialization time
+NO_JUNKYARD
+
+## Force map not to load mine (asteroid)
+## Saves some initialization time
+# NO_MINE
+
+## Force map not to load ruins and empty z_levels
+## Saves some initialization time
+# NO_SPACE_LEVELS
+
 ## Enables demo recordings, works slower on windows
 # RECORD_REPLAYS
 
@@ -278,3 +290,9 @@ MINUTE_TOPIC_LIMIT 100
 
 ## This config option enables or disables deathmatch arena after round end.
 DEATHMATCH_ARENA 1
+
+## How long in seconds after which a hard delete is treated as causing lag. This can be a float and supports a precision as low as nanoseconds.
+#HARD_DELETES_OVERRUN_THRESHOLD 0.5
+
+## Once a typepath causes overrun from hard deletes this many times, stop hard deleting it on garbage collection failures. (set to 0 to disable)
+#HARD_DELETES_OVERRUN_LIMIT 0

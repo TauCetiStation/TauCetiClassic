@@ -56,19 +56,21 @@
 
 /obj/structure/pedestal/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/storage/bible/tome)) // So that you can destroy the pedestal and not put a tome on it
-		return
+		return FALSE
 
-	if(iswrench(W))
+	if(iswrenching(W))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-		return
+		return FALSE
 
 	return ..()
 
 // Tracking items on a pedestal
 /obj/structure/pedestal/proc/put_item(atom/pedestal, obj/item/I, mob/user)
+	if(HAS_TRAIT(I, TRAIT_NO_SACRIFICE))
+		return
 	lying_items += I
 
 	if(lying_illusions.len)
@@ -160,13 +162,8 @@
 		remove_filter("pedestal_outline")
 		have_outline = FALSE
 
-/obj/structure/pedestal/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/pedestal/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSTABLE))
-		return TRUE
-	return ..()
-
-/obj/structure/pedestal/CheckExit(atom/movable/AM, target)
-	if(istype(AM) && AM.checkpass(PASSTABLE))
 		return TRUE
 	return ..()
 

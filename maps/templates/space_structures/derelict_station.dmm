@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/environment/space,
 /area/space)
 "ab" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "ac" = (
 /turf/simulated/floor/plating/airless,
@@ -44,8 +44,7 @@
 "al" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/solar_control)
@@ -554,7 +553,7 @@
 /area/space)
 "bu" = (
 /obj/item/stack/cable_coil/cut/red,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "bv" = (
 /obj/machinery/light/small{
@@ -803,8 +802,7 @@
 /area/space_structures/derelict/bridge/access)
 "cm" = (
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge/access)
@@ -967,7 +965,7 @@
 /area/space_structures/derelict/bridge)
 "cM" = (
 /obj/item/stack/rods,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "cN" = (
 /obj/structure/grille,
@@ -1641,7 +1639,7 @@
 /obj/structure/window/basic{
 	dir = 5
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "eL" = (
 /obj/structure/table,
@@ -1671,11 +1669,11 @@
 /area/space_structures/derelict/medical/chapel)
 "eR" = (
 /obj/item/weapon/shard,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "eS" = (
 /obj/structure/grille,
-/turf/space,
+/turf/environment/space,
 /area/space_structures/derelict/singularity_engine)
 "eT" = (
 /obj/item/weapon/shard,
@@ -1686,7 +1684,7 @@
 "eU" = (
 /obj/structure/lattice,
 /obj/structure/window/basic,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "eV" = (
 /turf/simulated/floor/airless{
@@ -1762,7 +1760,7 @@
 /area/space)
 "fi" = (
 /obj/structure/grille,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "fj" = (
 /turf/simulated/floor/airless{
@@ -1819,7 +1817,7 @@
 /obj/structure/window/basic{
 	dir = 1
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "fu" = (
 /turf/simulated/floor/plating,
@@ -1953,7 +1951,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "fP" = (
 /obj/structure/table,
@@ -2013,7 +2011,7 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "fY" = (
 /obj/structure/table,
@@ -2063,14 +2061,14 @@
 /area/space_structures/derelict/arrival)
 "gg" = (
 /obj/structure/window/reinforced,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "gh" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "gi" = (
 /obj/structure/table,
@@ -2316,13 +2314,13 @@
 /area/space)
 "gO" = (
 /obj/structure/window/basic,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "gP" = (
 /obj/structure/window/basic{
 	dir = 8
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "gQ" = (
 /obj/machinery/light{
@@ -2359,7 +2357,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "gV" = (
 /obj/structure/window/reinforced{
@@ -2368,7 +2366,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "gW" = (
 /obj/structure/table,
@@ -2486,12 +2484,12 @@
 	dir = 8
 	},
 /obj/structure/window/basic,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "hj" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "hk" = (
 /obj/machinery/door/airlock/external{
@@ -2640,7 +2638,7 @@
 /obj/structure/window/basic{
 	dir = 1
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "hC" = (
 /obj/structure/window/basic{
@@ -2653,7 +2651,7 @@
 /obj/structure/window/basic{
 	dir = 1
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "hE" = (
 /obj/structure/window/basic{
@@ -2776,7 +2774,7 @@
 /obj/structure/window/basic{
 	dir = 4
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "hU" = (
 /obj/structure/girder,
@@ -2826,7 +2824,7 @@
 /area/space_structures/derelict/hallway/primary)
 "ia" = (
 /obj/item/weapon/cigbutt,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "ib" = (
 /obj/structure/window/basic{
@@ -2882,7 +2880,7 @@
 "ik" = (
 /obj/structure/lattice,
 /obj/item/stack/cable_coil/cut/red,
-/turf/space,
+/turf/environment/space,
 /area/space)
 "il" = (
 /obj/structure/girder,
@@ -2907,7 +2905,7 @@
 /obj/structure/window/basic{
 	dir = 4
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "iq" = (
 /obj/structure/grille,
@@ -2999,8 +2997,7 @@
 "iE" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/arrival)
@@ -3080,8 +3077,7 @@
 "iQ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
-	dir = 5;
-	health = 60
+	dir = 5
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -3102,7 +3098,7 @@
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
-/turf/space,
+/turf/environment/space,
 /area/space)
 "iU" = (
 /obj/structure/cable{
@@ -3304,7 +3300,7 @@
 /area/space_structures/derelict/hallway/secondary)
 "jz" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/environment/space,
 /area/space_structures/derelict/hallway/secondary)
 "jA" = (
 /obj/structure/grille,

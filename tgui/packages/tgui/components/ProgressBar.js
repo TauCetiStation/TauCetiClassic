@@ -14,7 +14,6 @@ export const ProgressBar = props => {
     value,
     minValue = 0,
     maxValue = 1,
-    fractionDigits = 0,
     color,
     ranges = {},
     children,
@@ -42,7 +41,7 @@ export const ProgressBar = props => {
       <div className="ProgressBar__content">
         {hasContent
           ? children
-          : toFixed(scaledValue * 100, fractionDigits) + '%'}
+          : toFixed(scaledValue * 100) + '%'}
       </div>
     </div>
   );

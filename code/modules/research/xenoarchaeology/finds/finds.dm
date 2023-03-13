@@ -53,7 +53,7 @@
 			qdel(src)
 			return
 
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(WT.use_tool(src, user, 20, volume = 50))
@@ -97,7 +97,7 @@
 	if(new_item_type)
 		find_type = new_item_type
 	else
-		find_type = rand(1,37) // update this when you add new find types
+		find_type = rand(1,38) // update this when you add new find types
 
 	var/item_type = "object"
 	icon_state = "unknown[rand(1,4)]"
@@ -386,10 +386,9 @@
 			if(prob(33))
 				new_gun.magazine.caliber = "999"
 
-			// 33% chance to fill it with a random amount of bullets
-			new_gun.magazine.max_ammo = rand(1,12)
+			// 33% chance to make the gun non-empty
 			if(prob(33))
-				var/num_bullets = rand(1,new_gun.magazine.max_ammo)
+				var/num_bullets = rand(1, new_gun.magazine.max_ammo)
 				new_gun.magazine.stored_ammo.len = num_bullets
 			else
 				new_gun.magazine.stored_ammo.len = 0
@@ -494,6 +493,13 @@
 			//relic water bottle
 			new_item = new /obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle/relic(loc)
 
+		if(38)
+			var/obj/item/weapon/reagent_containers/food/snacks/grown/gourd/magic/G = new /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/magic(loc)
+			G.name = "purple mossy gourd"
+			G.desc = "Though it is strange that the gourd's medicinal waters refill automatically, the seeds within may hold the secret to how it works."
+			G.restore_reagent = pick("paracetamol", "tricordrazine", "hyperzine")
+			new_item = G
+
 	var/decorations = ""
 	if(apply_material_decorations)
 		source_material = pick("cordite","quadrinium","steel","titanium","aluminium","ferritic-alloy","plasteel","duranium")
@@ -552,11 +558,9 @@
 		new_item.desc = src.desc
 
 		if(talkative)
-			new_item.talking_atom = new()
-			new_item.talking_atom.init(new_item)
+			new_item.AddComponent(/datum/component/talking_atom)
 
 		return INITIALIZE_HINT_QDEL
 
 	else if(talkative)
-		src.talking_atom = new()
-		talking_atom.init(src)
+		AddComponent(/datum/component/talking_atom)

@@ -85,7 +85,6 @@
 /obj/item/device/radio/headset/headset_sec/nt_pmc
 	name = "NT PMC Radio Headset. Works with default security frequency."
 	icon_state = "nt_pmc_earset"
-	item_color = "nt_pmc_earset"
 
 /obj/item/device/radio/headset/headset_sec/marinad
 	name = "marine headset"
@@ -100,6 +99,11 @@
 	icon_state = "int_headset"
 	item_state = "int_headset"
 	ks2type = /obj/item/device/encryptionkey/headset_int
+
+/obj/item/device/radio/headset/headset_int/blueshield
+	name = "blueshield radio headset"
+	icon_state = "blueshield"
+	desc = "Headset of the guy that for some reason follows our heads of staff... To access the security channel, use :s. For command, use :c."
 
 /obj/item/device/radio/headset/headset_eng
 	name = "engineering radio headset"
@@ -254,7 +258,7 @@
 	set_frequency(1341)
 
 /obj/item/device/radio/headset/velocity
-	name = "Velocity Crew headset"
+	name = "velocity crew headset"
 	desc = "The headset, if you wish to talk to your fellow crew-nies. ; - Velocity crew channel."
 	icon_state = "vel_headset"
 	item_state = "headset"
@@ -277,7 +281,7 @@
 		var/obj/item/device/radio_grid/new_grid = I
 		new_grid.attach(src)
 
-	else if(iswirecutter(I))
+	else if(iscutter(I))
 		if(!grid)
 			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
 			return
@@ -286,7 +290,7 @@
 		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
 		new_grid.dettach(src)
 
-	else if(isscrewdriver(I))
+	else if(isscrewing(I))
 		if(!keyslot1 && !keyslot2)
 			to_chat(user, "<span class='notice'>This headset doesn't have any encryption keys!  How useless...</span>")
 			return

@@ -1,3 +1,5 @@
+// wtf is this thing?
+
 // Reports are a way to notify admins of wrongdoings that happened
 // while no admin was present. They work a bit similar to news, but
 // they can only be read by admins and moderators.
@@ -23,7 +25,7 @@
 	else if(href_list["action"] == "edit")
 		C.edit_report(text2num(href_list["ID"]))
 
-var/datum/report_topic_handler/report_topic_handler
+var/global/datum/report_topic_handler/report_topic_handler
 
 /world/New()
 	..()

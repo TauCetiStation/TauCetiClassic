@@ -2,6 +2,7 @@ SUBSYSTEM_DEF(mob_modifier)
 	name = "Mob Modifiers"
 	init_order = SS_INIT_DEFAULT
 	flags = SS_NO_INIT
+	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/processing = list()
 	var/list/currentrun = list()

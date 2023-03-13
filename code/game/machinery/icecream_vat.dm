@@ -10,7 +10,7 @@
 #define INGR_ICE 10
 #define MUCK 11
 
-var/list/ingredients_source = list(
+var/global/list/ingredients_source = list(
 "berryjuice" = FLAVOUR_STRAWBERRY,\
 "coco" = FLAVOUR_CHOCOLATE,\
 "singulo" = FLAVOUR_BLUE,\

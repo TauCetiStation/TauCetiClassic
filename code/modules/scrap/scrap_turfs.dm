@@ -74,7 +74,7 @@
 	if(prob(2))
 		new /obj/structure/scrap/poor/structure(src)
 	if(prob(4))
-		new /obj/effect/glowshroom(src)
+		new /obj/structure/glowshroom(src)
 	if(prob(4))
 		new /obj/random/scrap/sparse_weighted(src)
 	if(prob(6))

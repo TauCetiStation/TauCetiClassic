@@ -70,6 +70,8 @@
 	new_prog.tag_interior_sensor = tag_interior_sensor
 	new_prog.memory["secure"] = tag_secure
 
+	new_prog.memory["external_sensor_pressure"] = SSenvironment.air_pressure[z]
+
 	new_prog.master = src
 	program = new_prog
 

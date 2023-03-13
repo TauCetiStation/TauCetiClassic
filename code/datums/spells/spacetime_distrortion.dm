@@ -78,6 +78,11 @@
 /obj/effect/cross_action/spacetime_dist/proc/walk_link(atom/movable/AM)
 	if(linked_dist && walks_left > 0 && !AM.freeze_movement)
 		flick("purplesparkles", src)
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(!iswizard(H) && !iswizardapprentice(H) && prob(30) && global.wizard_shades_count < 5)
+				var/mob/living/simple_animal/A = new /mob/living/simple_animal/shade/evil_shade(H.loc)
+				create_spawner(/datum/spawner/living/evil_shade, A)
 		linked_dist.get_walker(AM)
 		walks_left--
 
@@ -98,6 +103,7 @@
 		walk_link(W)
 	else
 		walk_link(user)
+	return FALSE
 
 /obj/effect/cross_action/spacetime_dist/attack_hand(mob/user)
 	walk_link(user)

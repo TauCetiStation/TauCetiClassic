@@ -13,7 +13,7 @@
 	for(var/role in role_to_deconvert)
 		if(isrole(role, M))
 			var/datum/role/R = H.mind.GetRole(role)
-			R.Drop()
+			R.Deconvert()
 
 	if(iscultist(H))
 		to_chat(H, "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")
@@ -25,6 +25,10 @@
 		H.visible_message("[H] suddenly goes very red and starts writhing. There is a strange smell in the air...", \
 		"<span class='userdanger'>Suddenly the horrible pain strikes your body! Your mind is in complete disorder! Blood pulses and starts burning! The pain is impossible!!!</span>")
 		H.adjustBrainLoss(80)
+
+	for(var/obj/item/weapon/implant/skill/S in H)
+		if(S.implanted)
+			S.meltdown()
 
 	return TRUE
 
@@ -76,12 +80,16 @@
 				var/datum/role/R = M.mind.GetRole(role)
 				if(!R)
 					continue
-				R.RemoveFromRole(M.mind)
+				R.Deconvert()
 				cleared_role = TRUE
 
 			if(cleared_role)
 				// M.mind.remove_objectives() Uncomment this if you're feeling suicidal, and inable to see player's objectives.
 				to_chat(M, "<span class='danger'>You were implanted with [src] and now you must serve NT. Your old mission doesn't matter now.</span>")
+
+		for(var/obj/item/weapon/implant/skill/S in M)
+			if(S.implanted)
+				S.meltdown()
 
 		START_PROCESSING(SSobj, src)
 		to_chat(M, "NanoTrasen - is the best corporation in the whole Universe!")

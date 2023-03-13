@@ -3,11 +3,11 @@
 #define AB_INNATE 3
 #define AB_GENERIC 4
 
-#define AB_CHECK_RESTRAINED 1
-#define AB_CHECK_STUNNED 2
+#define AB_CHECK_INCAPACITATED 2
 #define AB_CHECK_LYING 4
 #define AB_CHECK_ALIVE 8
 #define AB_CHECK_INSIDE 16
+#define AB_CHECK_ACTIVE 32
 
 
 /datum/action
@@ -15,14 +15,15 @@
 	var/action_type = AB_ITEM
 	var/atom/movable/target = null
 	var/check_flags = 0
+	var/restained_check = ARMS // for AB_CHECK_INCAPACITATED
 	var/processing = 0
 	var/active = 0
 	var/atom/movable/screen/movable/action_button/button = null
-	var/button_icon = 'icons/mob/actions.dmi'
+	var/button_icon = 'icons/hud/actions.dmi'
 	var/button_icon_state = "default"
 	var/background_icon_state = "bg_default"
 	var/transparent_when_unavailable = TRUE
-	var/mob/living/owner
+	var/mob/owner
 
 /datum/action/New(Target)
 	target = Target
@@ -37,7 +38,7 @@
 	QDEL_NULL(button)
 	return ..()
 
-/datum/action/proc/Grant(mob/living/T)
+/datum/action/proc/Grant(mob/T)
 	if(owner)
 		if(owner == T)
 			return
@@ -47,7 +48,7 @@
 	owner.update_action_buttons()
 	return
 
-/datum/action/proc/Remove(mob/living/T)
+/datum/action/proc/Remove(mob/T)
 	if(button)
 		if(T.client)
 			T.client.screen -= button
@@ -84,8 +85,8 @@
 /datum/action/proc/Process()
 	return
 
-/datum/action/proc/CheckRemoval(mob/living/user) // 1 if action is no longer valid for this mob and should be removed
-	return 0
+/datum/action/proc/CheckRemoval(mob/user) // TRUE if action is no longer valid for this mob and should be removed
+	return FALSE
 
 /datum/action/proc/IsAvailable()
 	return Checks()
@@ -105,23 +106,23 @@
 
 /datum/action/proc/Checks()// returns 1 if all checks pass
 	if(!owner)
-		return 0
-	if(check_flags & AB_CHECK_RESTRAINED)
-		if(owner.restrained())
-			return 0
-	if(check_flags & AB_CHECK_STUNNED)
-		if(owner.stunned || owner.weakened)
-			return 0
+		return FALSE
+	if(check_flags & AB_CHECK_INCAPACITATED)
+		if(owner.incapacitated(restained_check))
+			return FALSE
 	if(check_flags & AB_CHECK_LYING)
 		if(owner.lying && !owner.crawling)
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_ALIVE)
-		if(owner.stat)
-			return 0
+		if(owner.stat != CONSCIOUS)
+			return FALSE
 	if(check_flags & AB_CHECK_INSIDE)
 		if(!(target in owner))
-			return 0
-	return 1
+			return FALSE
+	if(check_flags & AB_CHECK_ACTIVE)
+		if(owner.get_active_hand() != target)
+			return FALSE
+	return TRUE
 
 /datum/action/proc/UpdateName()
 	return name
@@ -182,11 +183,11 @@
 	var/list/modifiers = params2list(params)
 	if(modifiers[SHIFT_CLICK])
 		moved = 0
-		return 1
+		return TRUE
 	if(usr.next_move >= world.time) // Is this needed ?
 		return
 	owner.Trigger()
-	return 1
+	return TRUE
 
 /atom/movable/screen/movable/action_button/proc/UpdateIcon()
 	if(!owner)
@@ -213,7 +214,7 @@
 //Hide/Show Action Buttons ... Button
 /atom/movable/screen/movable/action_button/hide_toggle
 	name = "Hide Buttons"
-	icon = 'icons/mob/actions.dmi'
+	icon = 'icons/hud/actions.dmi'
 	icon_state = "bg_default"
 	var/hidden = 0
 
@@ -228,7 +229,7 @@
 	UpdateIcon()
 	usr.update_action_buttons()
 
-/atom/movable/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(mob/living/user)
+/atom/movable/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(mob/user)
 	if(isxeno(user))
 		icon_state = "bg_alien"
 	else
@@ -252,7 +253,19 @@
 
 /mob/proc/update_sight()
 	SHOULD_CALL_PARENT(TRUE)
+	if(!client)
+		return FALSE
+
 	sync_lighting_plane_alpha()
+
+	if(stat == DEAD)
+		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+		see_in_dark = 8
+		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		set_EyesVision(null)
+		return FALSE
+
+	return TRUE
 
 ///Set the lighting plane hud alpha to the mobs lighting_alpha var
 /mob/proc/sync_lighting_plane_alpha()
@@ -282,7 +295,7 @@
 
 //Presets for item actions
 /datum/action/item_action
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_LYING|AB_CHECK_ALIVE|AB_CHECK_INSIDE
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_LYING|AB_CHECK_INSIDE
 
 /datum/action/item_action/CheckRemoval(mob/living/user)
 	return !(target in user)
@@ -302,7 +315,7 @@
 
 /datum/action/spell_action/IsAvailable()
 	if(!target)
-		return 0
+		return FALSE
 	var/obj/effect/proc_holder/spell/spell = target
 
 	if(usr)
@@ -310,12 +323,12 @@
 	else
 		if(owner)
 			return spell.can_cast(owner)
-	return 1
+	return TRUE
 
 /datum/action/spell_action/CheckRemoval()
 	if(owner.mind)
 		if(target in owner.mind.spell_list)
-			return 0
+			return FALSE
 	return !(target in owner.spell_list)
 
 #undef AB_WEST_OFFSET

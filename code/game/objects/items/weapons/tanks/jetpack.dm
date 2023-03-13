@@ -42,11 +42,9 @@
 	if(on)
 		icon_state = "[icon_state]-on"
 		ion_trail.start()
-		usr.update_inv_back()
 	else
 		icon_state = initial(icon_state)
 		ion_trail.stop()
-		usr.update_inv_back()
 
 /obj/item/weapon/tank/jetpack/proc/allow_thrust(num, mob/living/user)
 	if(!on)
@@ -97,6 +95,16 @@
 /obj/item/weapon/tank/jetpack/carbondioxide/atom_init()
 	. = ..()
 	air_contents.adjust_gas("carbon_dioxide", (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
+
+/obj/item/weapon/tank/jetpack/nitrogen
+	name = "Jetpack (Nitrogen)"
+	desc = "A tank of compressed nitrogen for use as propulsion in zero-gravity areas. Painted red to indicate that it should not be used as a source for internals for humans."
+	icon_state = "jetpack-nitro"
+	item_state = "jetpack-nitro"
+
+/obj/item/weapon/tank/jetpack/nitrogen/atom_init()
+	. = ..()
+	air_contents.adjust_gas("nitrogen", (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
 /obj/item/weapon/tank/jetpack/oxygen/harness //TG-nuke jetpack
 	name = "jet harness (oxygen)"

@@ -13,6 +13,7 @@
 
 // a talking gas mask!
 /obj/item/clothing/mask/gas/poltergeist
+	flags = HEAR_TALK
 	var/list/heard_talk = list()
 	var/last_twitch = 0
 	var/max_stored_messages = 100
@@ -21,7 +22,7 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
-var/list/bad_messages = list("Never take me off, please!",
+var/global/list/bad_messages = list("Never take me off, please!",
 		"They all want to wear me... But I'm yours!",
 		"They're all want to take me from you! Bastards!",
 		"We are one",
@@ -29,11 +30,11 @@ var/list/bad_messages = list("Never take me off, please!",
 		"Help me!")
 
 /obj/item/clothing/mask/gas/poltergeist/process(mob/living/H)
-	if(heard_talk.len && istype(src.loc, /mob/living) && prob(20))
+	if(heard_talk.len && isliving(src.loc) && prob(20))
 		var/mob/living/M = src.loc
 		if(M.stat == CONSCIOUS)
 			M.say(pick(heard_talk))
-	if(istype(src.loc, /mob/living) && prob(2))
+	if(isliving(src.loc) && prob(2))
 		var/mob/living/M = src.loc
 		to_chat(M, "A strange voice goes through your head: <font color='red' size='[num2text(rand(1,3))]'><b>[pick(bad_messages)]</b></font>")
 
@@ -42,7 +43,7 @@ var/list/bad_messages = list("Never take me off, please!",
 	if(heard_talk.len > max_stored_messages)
 		heard_talk.Remove(pick(heard_talk))
 	heard_talk.Add(text)
-	if(istype(src.loc, /mob/living) && world.time - last_twitch > 50)
+	if(isliving(src.loc) && world.time - last_twitch > 50)
 		last_twitch = world.time
 
 
@@ -53,6 +54,7 @@ var/list/bad_messages = list("Never take me off, please!",
 	name = "statuette"
 	icon_state = "statuette"
 	icon = 'icons/obj/xenoarchaeology/finds.dmi'
+	flags = HEAR_TALK
 	var/charges = 0
 	var/list/nearby_mobs = list()
 	var/last_bloodcall = 0
@@ -90,7 +92,7 @@ var/list/bad_messages = list("Never take me off, please!",
 	// use up stored charges
 	if(charges >= 10)
 		charges -= 10
-		new /obj/effect/spider/eggcluster(pick(view(1,src)))
+		new /obj/structure/spider/eggcluster(pick(view(1,src)))
 
 	if(charges >= 3)
 		if(prob(5))

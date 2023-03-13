@@ -72,7 +72,7 @@
 		if(potency != -1)
 			to_chat(user, "-Plant Potency: <span class='notice'>[potency]</span>")
 		user.SetNextMove(CLICK_CD_INTERACT)
-		return
+		return FALSE
 	return ..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
 /obj/item/seeds/blackpepper
@@ -943,6 +943,7 @@
 	potency = 1
 	plant_type = 0
 	growthstages = 6
+	mutatelist = list(/obj/item/seeds/gourdseed)
 
 /obj/item/seeds/pumpkinseed
 	name = "pack of pumpkin seeds"
@@ -960,7 +961,51 @@
 	potency = 10
 	plant_type = 0
 	growthstages = 3
+	mutatelist = list(/obj/item/seeds/gourdseed)
 
+/obj/item/seeds/gourdseed
+	name = "pack of gourd seeds"
+	desc = "Вырастают в отборный декоративный тыквяк. В еду не потреблять!"
+	icon_state = "seed-gourd"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	species = "gourd"
+	plantname = "Gourd"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/gourd
+	lifespan = 70
+	endurance = 50
+	maturation = 6
+	production = 6
+	yield = 1
+	potency = 10
+	plant_type = 0
+	growthstages = 3
+	mutatelist = list(/obj/item/seeds/pumpkinseed, /obj/item/seeds/watermelonseed, /obj/item/seeds/magicgourdseed)
+
+/obj/item/seeds/gourdseed/atom_init()
+	. = ..()
+	name = "pack of [get_gourd_name()] seeds"
+
+/obj/item/seeds/magicgourdseed
+	name = "pack of gourd seeds"
+	desc = "Вырастают в отборный декоративный тыквяк. В еду не потреблять!"
+	icon_state = "seed-gourd_magic"
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
+	species = "magic_gourd"
+	plantname = "Refreshing Gourd"
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/gourd/magic
+	lifespan = 70
+	endurance = 50
+	maturation = 6
+	production = 6
+	yield = 1
+	potency = 20
+	plant_type = 0
+	growthstages = 3
+	mutatelist = list(/obj/item/seeds/gourdseed, /obj/item/seeds/pumpkinseed, /obj/item/seeds/watermelonseed)
+
+/obj/item/seeds/magicgourdseed/atom_init()
+	. = ..()
+	name = "pack of refreshing [get_gourd_name()] seeds"
 
 /obj/item/seeds/limeseed
 	name = "pack of lime seeds"
@@ -1132,7 +1177,7 @@
 	plant_type = 1
 
 /obj/item/seeds/kudzuseed/attack_self(mob/user)
-	if(istype(user.loc,/turf/space) || istype(user.loc,/turf/simulated/shuttle))
+	if(isspaceturf(user.loc) || istype(user.loc, /turf/simulated/shuttle))
 		to_chat(user, "<span class='notice'>You cannot plant kudzu on a moving shuttle or space.</span>")
 		return
 	to_chat(user, "<span class='notice'>You plant the kudzu. You monster.</span>")
@@ -1188,7 +1233,7 @@
 		for(var/i in 1 to 2)
 			new/obj/item/stack/sheet/wood(user.loc)
 		qdel(src)
-		return
+		return FALSE
 	return ..()
 
 
@@ -1197,7 +1242,7 @@
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
-	damtype = "fire"
+	damtype = BURN
 	force = 0
 	throwforce = 1
 	w_class = SIZE_MINUSCULE
@@ -1211,7 +1256,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	name = "nettle"
 	icon_state = "nettle"
-	damtype = "fire"
+	damtype = BURN
 	force = 15
 	throwforce = 1
 	w_class = SIZE_TINY
@@ -1233,7 +1278,7 @@
 	icon = 'icons/obj/weapons.dmi'
 	name = "deathnettle"
 	icon_state = "deathnettle"
-	damtype = "fire"
+	damtype = BURN
 	force = 30
 	throwforce = 1
 	w_class = SIZE_TINY

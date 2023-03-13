@@ -269,6 +269,8 @@
 
 	assembly_type = /obj/structure/door_assembly/door_assembly_vault
 
+	max_integrity = 600
+
 
 /***************
 * Hatch airlocks
@@ -349,6 +351,8 @@
 /obj/machinery/door/airlock/centcom
 	icon          = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
+
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 
 /******************

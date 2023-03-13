@@ -13,11 +13,11 @@
 		changeling.mimicing = ""
 		changeling.chem_recharge_slowdown -= 0.25
 		to_chat(user, "<span class='notice'>We return our vocal glands to their original position.</span>")
-		return
+		return FALSE
 
 	var/mimic_voice = sanitize_safe(input("Enter a name to mimic.", "Mimic Voice", null) as text, MAX_NAME_LEN)
 	if(!mimic_voice)
-		return
+		return FALSE
 
 	changeling.mimicing = mimic_voice
 	changeling.chem_recharge_slowdown += 0.25
@@ -25,4 +25,4 @@
 	to_chat(user, "<span class='notice'>Use this power again to return to our original voice and reproduce chemicals again.</span>")
 
 	feedback_add_details("changeling_powers","MV")
-
+	return FALSE

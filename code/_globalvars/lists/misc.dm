@@ -3,7 +3,7 @@ var/global/list/alphabet_uppercase = list("A","B","C","D","E","F","G","H","I","J
 
 var/global/list/hex_characters = list("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f")
 
-var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accessed by preexisting terminals. AIs and new terminals can't use them.
+var/global/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accessed by preexisting terminals. AIs and new terminals can't use them.
 	"thunder",
 	"ERT",
 	"NUKE",
@@ -14,11 +14,10 @@ var/list/RESTRICTED_CAMERA_NETWORKS = list( //Those networks can only be accesse
 // Posters
 //var/global/list/datum/poster/poster_designs = subtypesof(/datum/poster)
 
-var/list/roles_ingame_minute_unlock = list(
+var/global/list/roles_ingame_minute_unlock = list(
 	ROLE_TRAITOR = 720,
 	ROLE_OPERATIVE = 2160,
 	ROLE_CHANGELING = 2160,
-	ROLE_RAIDER = 4320,
 	ROLE_ALIEN = 1440,
 	ROLE_WIZARD = 2880,
 	ROLE_ERT = 1440,
@@ -97,30 +96,30 @@ var/global/list/cash_increase_list = list()
 //TODO: make the function the same as in cash_increase_list
 var/global/static/list/stock_parts_increase_list = list(
 	/obj/item/weapon/stock_parts/capacitor = /obj/item/weapon/stock_parts/capacitor/adv,
-	/obj/item/weapon/stock_parts/capacitor/adv = /obj/item/weapon/stock_parts/capacitor/super,
-	/obj/item/weapon/stock_parts/capacitor/super = /obj/item/weapon/stock_parts/capacitor/quadratic,
-	/obj/item/weapon/stock_parts/capacitor/quadratic = /obj/item/weapon/stock_parts/capacitor,
+	/obj/item/weapon/stock_parts/capacitor/adv = /obj/item/weapon/stock_parts/capacitor/adv/super,
+	/obj/item/weapon/stock_parts/capacitor/adv/super = /obj/item/weapon/stock_parts/capacitor/adv/super/quadratic,
+	/obj/item/weapon/stock_parts/capacitor/adv/super/quadratic = /obj/item/weapon/stock_parts/capacitor,
 	/obj/item/weapon/stock_parts/scanning_module = /obj/item/weapon/stock_parts/scanning_module/adv,
-	/obj/item/weapon/stock_parts/scanning_module/adv = /obj/item/weapon/stock_parts/scanning_module/phasic,
-	/obj/item/weapon/stock_parts/scanning_module/phasic = /obj/item/weapon/stock_parts/scanning_module/triphasic,
-	/obj/item/weapon/stock_parts/scanning_module/triphasic = /obj/item/weapon/stock_parts/scanning_module,
+	/obj/item/weapon/stock_parts/scanning_module/adv = /obj/item/weapon/stock_parts/scanning_module/adv/phasic,
+	/obj/item/weapon/stock_parts/scanning_module/adv/phasic = /obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic,
+	/obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic = /obj/item/weapon/stock_parts/scanning_module,
 	/obj/item/weapon/stock_parts/manipulator = /obj/item/weapon/stock_parts/manipulator/nano,
-	/obj/item/weapon/stock_parts/manipulator/nano = /obj/item/weapon/stock_parts/manipulator/pico,
-	/obj/item/weapon/stock_parts/manipulator/pico = /obj/item/weapon/stock_parts/manipulator/femto,
-	/obj/item/weapon/stock_parts/manipulator/femto = /obj/item/weapon/stock_parts/manipulator,
+	/obj/item/weapon/stock_parts/manipulator/nano = /obj/item/weapon/stock_parts/manipulator/nano/pico,
+	/obj/item/weapon/stock_parts/manipulator/nano/pico = /obj/item/weapon/stock_parts/manipulator/nano/pico/femto,
+	/obj/item/weapon/stock_parts/manipulator/nano/pico/femto = /obj/item/weapon/stock_parts/manipulator,
 	/obj/item/weapon/stock_parts/micro_laser = /obj/item/weapon/stock_parts/micro_laser/high,
-	/obj/item/weapon/stock_parts/micro_laser/high = /obj/item/weapon/stock_parts/micro_laser/ultra,
-	/obj/item/weapon/stock_parts/micro_laser/ultra = /obj/item/weapon/stock_parts/micro_laser/quadultra,
-	/obj/item/weapon/stock_parts/micro_laser/quadultra = /obj/item/weapon/stock_parts/micro_laser,
+	/obj/item/weapon/stock_parts/micro_laser/high = /obj/item/weapon/stock_parts/micro_laser/high/ultra,
+	/obj/item/weapon/stock_parts/micro_laser/high/ultra = /obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra,
+	/obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra = /obj/item/weapon/stock_parts/micro_laser,
 	/obj/item/weapon/stock_parts/matter_bin = /obj/item/weapon/stock_parts/matter_bin/adv,
-	/obj/item/weapon/stock_parts/matter_bin/adv = /obj/item/weapon/stock_parts/matter_bin/super,,
-	/obj/item/weapon/stock_parts/matter_bin/super = /obj/item/weapon/stock_parts/matter_bin/bluespace,
-	/obj/item/weapon/stock_parts/matter_bin/bluespace = /obj/item/weapon/stock_parts/matter_bin,
+	/obj/item/weapon/stock_parts/matter_bin/adv = /obj/item/weapon/stock_parts/matter_bin/adv/super,,
+	/obj/item/weapon/stock_parts/matter_bin/adv/super = /obj/item/weapon/stock_parts/matter_bin/adv/super/bluespace,
+	/obj/item/weapon/stock_parts/matter_bin/adv/super/bluespace = /obj/item/weapon/stock_parts/matter_bin,
 )
 
 var/global/static/list/radial_question = list(
-	"Yes" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_confirm"),
-	"No" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_cancel")
+	"Yes" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_confirm"),
+	"No" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_cancel")
 )
 
 // Alternate version of color_by_hex
@@ -194,3 +193,8 @@ var/global/static/list/color_by_hex = list(
 	"navy" = "#000080",
 	"gold" = "#ffd700",
 )
+
+// role_id = list(names)
+var/global/list/deconverted_roles = list()
+
+var/global/list/reagents_list = typecacheof(/datum/reagent)

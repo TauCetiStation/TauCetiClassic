@@ -32,10 +32,10 @@
 		density = FALSE
 		name = "collector [mysize] OFF"
 
-/obj/effect/fusion_particle_catcher/bullet_act(obj/item/projectile/Proj)
+/obj/effect/fusion_particle_catcher/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	parent.AddEnergy(Proj.damage)
 	update_icon()
-	return 0
 
 /obj/effect/fusion_particle_catcher/Bumped(atom/AM)
 	if(ismob(AM) && density)

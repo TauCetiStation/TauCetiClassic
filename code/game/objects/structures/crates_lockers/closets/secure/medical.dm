@@ -126,6 +126,7 @@
 	new /obj/item/clothing/suit/surgicalapron(src)
 	new /obj/item/airbag(src)
 	new /obj/item/weapon/storage/pouch/medical_supply(src)
+	new /obj/item/weapon/storage/lockbox/medal/cmo(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "Animal Control"

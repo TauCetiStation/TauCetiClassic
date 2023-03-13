@@ -11,7 +11,7 @@
 /obj/item/weapon/evidencebag/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 
-	if(!istype(target, /obj/item))
+	if(!isitem(target))
 		return ..()
 
 	var/obj/item/I = target

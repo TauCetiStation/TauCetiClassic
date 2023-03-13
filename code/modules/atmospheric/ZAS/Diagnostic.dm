@@ -37,7 +37,7 @@
 		return
 
 	if(direction == "N/A")
-		if(!(T.c_airblock(T) & AIR_BLOCKED))
+		if(!(FAST_C_AIRBLOCK(T, T) & AIR_BLOCKED))
 			to_chat(mob, "The turf can pass air! :D")
 		else
 			to_chat(mob, "No air passage :x")
@@ -47,8 +47,8 @@
 	if(!istype(other_turf))
 		return
 
-	var/t_block = T.c_airblock(other_turf)
-	var/o_block = other_turf.c_airblock(T)
+	var/t_block = FAST_C_AIRBLOCK(T, other_turf)
+	var/o_block = FAST_C_AIRBLOCK(other_turf, T)
 
 	if(o_block & AIR_BLOCKED)
 		if(t_block & AIR_BLOCKED)

@@ -53,9 +53,11 @@
 		walk(src, 0)
 		return 0
 	if(client)
+		if(target)
+			LoseTarget()
 		return 0
 
-	if(!stat)
+	if(stat == CONSCIOUS)
 		switch(stance)
 			if(HOSTILE_STANCE_IDLE)
 				if(environment_smash)
@@ -80,7 +82,7 @@
 	if(search_objects)
 		var/list/Objects = oview(vision_range, src)
 		L += Objects
-	else
+	else if(SSchunks.has_enemy_faction(src, vision_range))
 		var/list/Mobs = hearers(vision_range, src) - src //Remove self, so we don't suicide
 		L += Mobs
 		for(var/obj/mecha/M in range(vision_range, src))
@@ -185,7 +187,7 @@
 
 /mob/living/simple_animal/hostile/adjustBruteLoss(damage)
 	..()
-	if(!stat && search_objects < 3)//Not unconscious, and we don't ignore mobs
+	if(stat == CONSCIOUS && search_objects < 3)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
 			search_objects = 0
 			target = null
@@ -250,10 +252,8 @@
 	ranged_cooldown = ranged_cooldown_cap
 
 /mob/living/simple_animal/hostile/proc/start_shoot(the_target)
-	var/tturf
 	for(var/i in 1 to amount_shoot)
-		tturf = get_turf(the_target) // need for refresh target location between shoots
-		Shoot(tturf, src.loc, src)
+		Shoot(the_target, loc, src)
 		if(casingtype)
 			new casingtype(get_turf(src))
 		sleep(4)
@@ -269,13 +269,9 @@
 	if(!A)
 		return
 
-	if (!istype(target, /turf))
-		qdel(A)
-		return
-
 	A.current = target
 	A.starting = get_turf(src)
-	A.original = get_turf(target)
+	A.original = target
 	A.yo = target:y - start:y
 	A.xo = target:x - start:x
 	spawn(0)
@@ -286,7 +282,7 @@
 		EscapeConfinement()
 		for(var/dir in cardinal) // North, South, East, West
 			var/turf/T = get_step(src, dir)
-			if(istype(T, /turf/simulated/wall) || istype(T, /turf/simulated/mineral))
+			if(iswallturf(T) || istype(T, /turf/simulated/mineral))
 				if(T.Adjacent(src))
 					T.attack_animal(src)
 			for(var/obj/structure/window/W in get_step(src, dir))

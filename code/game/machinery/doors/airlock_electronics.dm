@@ -15,7 +15,7 @@
 	var/broken = FALSE
 
 /obj/item/weapon/airlock_electronics/attack_self(mob/user)
-	if (!ishuman(user) && !istype(user,/mob/living/silicon/robot))
+	if (!ishuman(user) && !isrobot(user))
 		return ..(user)
 
 	var/mob/living/carbon/human/H = user
@@ -57,10 +57,10 @@
 
 /obj/item/weapon/airlock_electronics/Topic(href, href_list)
 	..()
-	if (usr.incapacitated() || (!ishuman(usr) && !istype(usr,/mob/living/silicon)))
+	if (usr.incapacitated() || (!ishuman(usr) && !issilicon(usr)))
 		return
 	if (href_list["login"])
-		if(istype(usr,/mob/living/silicon))
+		if(issilicon(usr))
 			src.locked = 0
 			src.last_configurator = usr.name
 		else

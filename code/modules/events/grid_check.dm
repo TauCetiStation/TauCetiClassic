@@ -15,7 +15,7 @@
 		power_restore()
 
 
-var/power_fail_event = FALSE
+var/global/power_fail_event = FALSE
 /proc/power_failure()
 	if(power_fail_event)
 		return

@@ -1,4 +1,4 @@
-var/list/chatrooms = list()
+var/global/list/chatrooms = list()
 
 /datum/chatroom
 	var/name = "Generic Chatroom"

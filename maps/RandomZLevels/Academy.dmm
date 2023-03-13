@@ -1,15 +1,14 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/environment/space,
 /area)
 "ab" = (
 /turf/simulated/wall/r_wall,
 /area/awaymission/academy/headmaster)
 "ac" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/headmaster)
@@ -248,7 +247,7 @@
 /area/awaymission/academy/headmaster)
 "aN" = (
 /obj/structure/lattice,
-/turf/space,
+/turf/environment/space,
 /area)
 "aO" = (
 /obj/machinery/door/airlock/gold{
@@ -321,7 +320,7 @@
 /area/awaymission/academy/headmaster)
 "ba" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/hand_labeler,
+/obj/item/device/tagger,
 /turf/simulated/floor/wood,
 /area/awaymission/academy/headmaster)
 "bb" = (
@@ -578,9 +577,8 @@
 /area/awaymission/academy/headmaster)
 "bP" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -664,9 +662,8 @@
 /area/awaymission/academy/headmaster)
 "cd" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -941,9 +938,8 @@
 /area/awaymission/academy/headmaster)
 "cS" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable,
 /turf/simulated/floor/plating,
@@ -1457,9 +1453,8 @@
 /area/awaymission/academy/classrooms)
 "eo" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/classrooms)
@@ -1473,8 +1468,8 @@
 	},
 /area/awaymission/academy/classrooms)
 "eq" = (
-/obj/singularity/academy,
-/turf/space,
+/obj/singularity/gravitational/academy,
+/turf/environment/space,
 /area)
 "er" = (
 /obj/structure/window/reinforced{
@@ -1976,9 +1971,8 @@
 /area/awaymission/academy/classrooms)
 "fy" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -1989,9 +1983,8 @@
 /area/awaymission/academy/classrooms)
 "fz" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -2002,9 +1995,8 @@
 /area/awaymission/academy/classrooms)
 "fA" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -2029,9 +2021,8 @@
 /area/awaymission/academy/academyaft)
 "fE" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -2157,9 +2148,8 @@
 /area/awaymission/academy/classrooms)
 "fW" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3283,9 +3273,8 @@
 /area/awaymission/academy/academyaft)
 "iJ" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -3309,9 +3298,8 @@
 /area/awaymission/academy/academyaft)
 "iL" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -3354,23 +3342,22 @@
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion_l"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/academy/academyaft)
 "iP" = (
 /obj/structure/shuttle/engine/propulsion,
-/turf/space,
+/turf/environment/space,
 /area/awaymission/academy/academyaft)
 "iQ" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion_r"
 	},
-/turf/space,
+/turf/environment/space,
 /area/awaymission/academy/academyaft)
 "iR" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/academyaft)
@@ -3382,9 +3369,8 @@
 /area/awaymission/academy/academyaft)
 "iT" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3422,9 +3408,8 @@
 /area/awaymission/academy/academyaft)
 "iW" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -3574,7 +3559,7 @@
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/turf/space,
+/turf/environment/space,
 /area)
 "jq" = (
 /obj/machinery/igniter,
@@ -3586,9 +3571,8 @@
 /area/awaymission/academy/academyaft)
 "js" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /obj/structure/cable,
 /turf/simulated/floor/plating,
@@ -3697,9 +3681,8 @@
 /area/awaymission/academy/academygate)
 "jK" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5;
-	health = 1e+007
+/obj/structure/window/reinforced/indestructible{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/academygate)

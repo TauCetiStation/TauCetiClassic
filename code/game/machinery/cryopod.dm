@@ -208,7 +208,8 @@ var/global/list/frozen_items = list()
 			return
 
 		if(!occupant.client && occupant.stat != DEAD) //Occupant is living and has no client.
-
+			if(occupant.key != null && occupant.key[1] == "@") //for aghosted mobs and those who are using remote control
+				return
 			//Drop all items into the pod.
 			for(var/obj/item/W in occupant)
 				occupant.drop_from_inventory(W)
@@ -221,13 +222,13 @@ var/global/list/frozen_items = list()
 			//Handle job slot/tater cleanup.
 			if(occupant && occupant.mind)
 				var/job = occupant.mind.assigned_role
-
 				SSjob.FreeRole(job)
+				if(occupant.ckey)
+					SSStatistics.add_leave_stat(occupant.mind, "Cryopod")
 
 			// Delete them from datacore.
 
-			if(PDA_Manifest.len)
-				PDA_Manifest.Cut()
+			PDA_Manifest.Cut()
 			for(var/datum/data/record/R in data_core.medical)
 				if ((R.fields["name"] == occupant.real_name))
 					qdel(R)

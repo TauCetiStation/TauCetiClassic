@@ -3,7 +3,6 @@
 	desc = "Black, chitonous skin."
 	icon_state = "golem"
 	item_state = "golem"
-	item_color = "golem"
 	has_sensor = 0
 	canremove = 0
 	origin_tech = null
@@ -120,7 +119,6 @@
 			usr.lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 			lighting_alpha = usr.lighting_alpha
 	usr.update_sight()
-	usr.update_inv_glasses()
 
 /obj/structure/shadow_vortex
 	name = "vortex"

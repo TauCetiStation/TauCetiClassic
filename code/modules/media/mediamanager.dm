@@ -10,7 +10,7 @@
 
 // Open up VLC and play musique.
 // Converted to VLC for cross-platform and ogg support. - N3X
-var/const/PLAYER_HTML={"
+var/global/const/PLAYER_HTML={"
 	<OBJECT id='player' CLASSID='CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6' type='application/x-oleobject'></OBJECT>
 	<script>
 function noErrorMessages () { return true; }

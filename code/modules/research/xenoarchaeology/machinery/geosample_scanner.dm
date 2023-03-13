@@ -42,6 +42,8 @@
 	var/radiation = 0 // 0-100 mSv
 	var/t_left_radspike = 0
 	var/rad_shield = 0
+	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED)
+
 
 /obj/machinery/radiocarbon_spectrometer/atom_init()
 	. = ..()
@@ -54,7 +56,6 @@
 	coolant_reagents_purity["kelotane"] = 0.7
 	coolant_reagents_purity["sterilizine"] = 0.7
 	coolant_reagents_purity["dermaline"] = 0.7
-	coolant_reagents_purity["hyperzine"] = 0.8
 	coolant_reagents_purity["cryoxadone"] = 0.9
 	coolant_reagents_purity["coolant"] = 1
 	coolant_reagents_purity["adminordrazine"] = 2
@@ -88,8 +89,11 @@
 				to_chat(user, "<span class='info'>You remove [amount_transferred]u of coolant from [src].</span>")
 				update_coolant()
 				return
-		user.drop_from_inventory(I, src)
-		scanned_item = I
+		if(!scanned_item)
+			user.drop_from_inventory(I, src)
+			scanned_item = I
+		else
+			to_chat(user, "<span class='warning'>There is already something in [src].</span>")
 
 /obj/machinery/radiocarbon_spectrometer/proc/update_coolant()
 	var/total_purity = 0
@@ -112,9 +116,8 @@
 
 /obj/machinery/radiocarbon_spectrometer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 
-	if(user.stat && !isobserver(user))
+	if(user.stat != CONSCIOUS && !isobserver(user))
 		return
-
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["scanned_item"] = (scanned_item ? scanned_item.name : "")
@@ -284,7 +287,7 @@
 				data = " - Mundane object (archaic xenos origins)<br>"
 
 				var/obj/item/weapon/archaeological_find/A = scanned_item
-				if(A.talking_atom)
+				if(A.GetComponent(/datum/component/talking_atom))
 					data = " - Exhibits properties consistent with sonic reproduction and audio capture technologies.<br>"
 
 		var/anom_found = 0

@@ -11,35 +11,11 @@
 /obj/item/weapon/gun/energy/gun/attack_self(mob/living/user)
 	..()
 	update_icon()
-	if(user.hand)
-		user.update_inv_l_hand()
-	else
-		user.update_inv_r_hand()
+	update_inv_mob()
 
 /obj/item/weapon/gun/energy/gun/head
 	desc = "A basic energy-based gun with two settings: Stun and kill. This one has a grip made of wood."
 	icon_state = "energy"
-
-/obj/item/weapon/gun/energy/gun/carbine
-	name = "energy carbine"
-	desc = "A basic energy-based carbine with two settings: Stun and kill."
-	icon = 'icons/obj/gun.dmi'
-	icon_state = "ecar"
-	icon_custom = null
-	can_be_holstered = FALSE
-
-/obj/item/weapon/gun/energy/gun/carbine/atom_init()
-	. = ..()
-	if(power_supply)
-		power_supply.maxcharge = 1500
-		power_supply.charge = 1500
-
-/obj/item/weapon/gun/energy/gun/pistol
-	icon = 'icons/obj/gun.dmi'
-	icon_state = "egun"
-	icon_custom = null
-	fire_delay = 0
-	ammo_type = list(/obj/item/ammo_casing/energy/stun, /obj/item/ammo_casing/energy/laser_pulse)
 
 /obj/item/weapon/gun/energy/gun/hos
 	name = "\"Revenant\" Energy Advanced Pistol"

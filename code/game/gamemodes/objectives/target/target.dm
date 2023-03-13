@@ -40,8 +40,6 @@ var/global/list/target_objectives = list()
 			target = possible_target
 			if(target && target.current)
 				explanation_text = format_explanation()
-			return TRUE
-	return FALSE
 
 /datum/objective/target/proc/get_targets()
 	var/list/targets = list()

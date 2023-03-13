@@ -5,7 +5,6 @@
 	icon_custom = 'icons/obj/sports/wrestling.dmi'
 	icon_state = "robust-black"
 	item_state = "robust-black"
-	item_color = "robust-black"
 
 /obj/item/clothing/shoes/boxing
 	name = "Black fighting boots"
@@ -14,7 +13,6 @@
 	icon_custom = 'icons/obj/sports/wrestling.dmi'
 	icon_state = "boots-black"
 	item_state = "boots-black"
-	item_color = "boots-black"
 
 /obj/item/clothing/under/boxing/green
 	name = "Gray-green fighting outfit"
@@ -23,7 +21,6 @@
 	icon_custom = 'icons/obj/sports/wrestling.dmi'
 	icon_state = "robust-green"
 	item_state = "robust-green"
-	item_color = "robust-green"
 
 /obj/item/clothing/shoes/boxing/gray
 	name = "Gray fighting boots"
@@ -32,7 +29,6 @@
 	icon_custom = 'icons/obj/sports/wrestling.dmi'
 	icon_state = "boots-green"
 	item_state = "boots-black"
-	item_color = "boots-green"
 
 /obj/item/clothing/gloves/wrestling
 	name = "Gray-green gloves"
@@ -40,7 +36,6 @@
 	icon = 'icons/obj/sports/wrestling.dmi'
 	icon_custom = 'icons/obj/sports/wrestling.dmi'
 	icon_state = "gloves-green"
-	item_color="gloves-green"
 
 /obj/item/clothing/under/boxing/red
 	name = "Red fighting outfit"
@@ -49,7 +44,6 @@
 	icon_custom = 'icons/obj/sports/wrestling.dmi'
 	icon_state = "robust-red"
 	item_state = "robust-red"
-	item_color = "robust-red"
 
 /obj/item/clothing/shoes/boxing/red
 	name = "Red fighting boots"
@@ -58,7 +52,6 @@
 	icon_custom = 'icons/obj/sports/wrestling.dmi'
 	icon_state = "boots-red"
 	item_state = "boots-black"
-	item_color = "boots-red"
 
 /obj/item/clothing/under/boxing/white
 	name = "White fighting outfit"
@@ -67,7 +60,6 @@
 	icon_custom = 'icons/obj/sports/wrestling.dmi'
 	icon_state = "robust-white"
 	item_state = "robust-white"
-	item_color = "robust-white"
 
 /obj/item/clothing/shoes/boxing/white
 	name = "White fighting boots"
@@ -75,8 +67,7 @@
 	icon = 'icons/obj/sports/wrestling.dmi'
 	icon_custom = 'icons/obj/sports/wrestling.dmi'
 	icon_state = "boots-white"
-	item_state = "boots-black"
-	item_color = "boots-white"
+	item_state = "boots-white"
 
 /obj/item/clothing/mask/luchador/white
 	name = "White fighting mask"
@@ -93,7 +84,6 @@
 	icon_custom = 'icons/obj/sports/wrestling.dmi'
 	icon_state = "robust-pink"
 	item_state = "robust-pink"
-	item_color = "robust-pink"
 
 /obj/item/clothing/shoes/boxing/pink
 	name = "Pink fighting boots"
@@ -101,8 +91,7 @@
 	icon = 'icons/obj/sports/wrestling.dmi'
 	icon_custom = 'icons/obj/sports/wrestling.dmi'
 	icon_state = "boots-pink"
-	item_state = "boots-black"
-	item_color = "boots-pink"
+	item_state = "boots-pink"
 
 /obj/item/clothing/gloves/wrestling/pink
 	name = "Pink gloves"
@@ -110,7 +99,6 @@
 	icon = 'icons/obj/sports/wrestling.dmi'
 	icon_custom = 'icons/obj/sports/wrestling.dmi'
 	icon_state = "gloves-pink"
-	item_color="gloves-pink"
 
 /obj/item/clothing/mask/luchador/pink
 	name = "Pink fighting mask"

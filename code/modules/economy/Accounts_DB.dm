@@ -12,6 +12,7 @@
 	var/obj/item/weapon/card/id/held_card
 	var/datum/money_account/detailed_account_view
 	var/creating_new_account = 0
+	required_skills = list(/datum/skill/command = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/account_database/proc/get_access_level()
 	if (!held_card)
@@ -67,6 +68,7 @@
 	data["station_account_number"] = station_account.account_number
 	data["transactions"] = null
 	data["accounts"] = null
+	data["cargo_export_tax"] = SSeconomy.tax_cargo_export
 
 	if (detailed_account_view)
 		data["account_number"] = detailed_account_view.account_number
@@ -122,6 +124,11 @@
 				if(detailed_account_view)
 					detailed_account_view.adjust_money(amount)
 
+			if("change_export_tax")
+				var/amount = input("Enter the percent you want to set a tax to", "Export Tax %") as num
+				amount = clamp(amount, 0, 100)
+				SSeconomy.tax_cargo_export = amount
+
 			if("remove_funds")
 				var/amount = input("Enter the amount you wish to remove", "Silently remove funds") as num
 				if(detailed_account_view)
@@ -143,9 +150,7 @@
 					var/trx = create_transation(account_name, "New account activation", "([starting_funds])")
 					station_account.transaction_log.Add(trx)
 
-					creating_new_account = 0
-					ui.close()
-
+				ui.close()
 				creating_new_account = 0
 			if("insert_card")
 				if(held_card)

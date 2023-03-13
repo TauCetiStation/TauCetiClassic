@@ -58,7 +58,7 @@
 	var/retFlags = 0
 	var/retVerb = "attack"
 	var/retSound = null
-	var/retMissSound = 'sound/weapons/punchmiss.ogg'
+	var/retMissSound = 'sound/effects/mob/hits/miss_1.ogg'
 
 	if(HULK in mutations)
 		retDam += 4
@@ -76,7 +76,7 @@
 
 /mob/living/attack_animal(mob/living/simple_animal/attacker)
 	if(attacker.melee_damage <= 0)
-		attacker.emote("[attacker.friendly] [src]")
+		attacker.me_emote("[attacker.friendly] [src]")
 		return TRUE
 	return attack_unarmed(attacker)
 
@@ -275,7 +275,7 @@
 	if(ishuman(src)) // This is stupid. TODO: abstract get_armor() proc.
 		var/mob/living/carbon/human/H = src
 		BP = H.get_bodypart(ran_zone(BP))
-		armor_block = run_armor_check(BP, "melee")
+		armor_block = run_armor_check(BP, MELEE)
 
 	if(damSound)
 		playsound(src, damSound, VOL_EFFECTS_MASTER)
@@ -295,12 +295,12 @@
 // Add combo points to all attackers.
 /mob/living/proc/add_combo_value_all(value)
 	for(var/datum/combo_handler/CS in combos_saved)
-		CS.fullness += value
+		CS.points += value
 
 // Add combo points to all my combo-controllers.
 /mob/living/proc/add_my_combo_value(value)
 	for(var/datum/combo_handler/CS in combos_performed)
-		CS.fullness += value
+		CS.points += value
 
 // Returns TRUE if a combo was executed.
 /mob/living/proc/try_combo(mob/living/target)

@@ -92,7 +92,7 @@ export const storeWindowGeometry = async () => {
   storage.set(windowKey, geometry);
   // Update the list of stored geometries
   const [geometries, trimmedKey] = touchRecents(
-    storage.get('geometries') || [],
+    await storage.get('geometries') || [],
     windowKey);
   if (trimmedKey) {
     storage.remove(trimmedKey);
@@ -123,6 +123,7 @@ export const recallWindowGeometry = async (options = {}) => {
     ];
     setWindowSize(size);
   }
+  // Set window position
   if (pos) {
     // Constraint window position if monitor lock was set in preferences.
     if (size && options.locked) {
@@ -130,7 +131,6 @@ export const recallWindowGeometry = async (options = {}) => {
     }
     setWindowPosition(pos);
   }
-
   // Set window position at the center of the screen.
   else if (size) {
     pos = vecAdd(
@@ -139,7 +139,6 @@ export const recallWindowGeometry = async (options = {}) => {
       vecScale(screenOffset, -1.0));
     setWindowPosition(pos);
   }
-
 };
 
 export const setupDrag = async () => {

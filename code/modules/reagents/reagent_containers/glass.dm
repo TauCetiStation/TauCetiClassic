@@ -14,6 +14,8 @@
 	flags = OPENCONTAINER
 	action_button_name = "Switch Lid"
 	var/label_text = ""
+	pickup_sound = 'sound/items/glass_containers/bottle_take-empty.ogg'
+	dropped_sound = 'sound/items/glass_containers/bottle_put-empty.ogg'
 
 	//var/list/
 	can_be_placed_into = list(
@@ -29,7 +31,6 @@
 		/obj/machinery/dna_scannernew,
 		/obj/item/weapon/grenade/chem_grenade,
 		/obj/machinery/bot/medbot,
-		/obj/machinery/computer/pandemic,
 		/obj/item/weapon/storage/secure/safe,
 		/obj/machinery/iv_drip,
 		/obj/machinery/disease2/incubator,
@@ -105,7 +106,7 @@
 
 		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class = 'notice'>You transfer [trans] units of the solution to [target].</span>")
-		playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 15) // Sound taken from "Eris" build
+		playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER) // Sound taken from "Eris" build
 
 	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
 	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
@@ -181,13 +182,16 @@
 	m_amt = 0
 	g_amt = 500
 	volume = 60
+	var/list/filling_states = list()
 	possible_transfer_amounts = list(5,10,15,25,30,60)
 
 /obj/item/weapon/reagent_containers/glass/beaker/atom_init()
 	. = ..()
 	desc += " Can hold up to [volume] units."
+	filling_states = list(20, 40, 60, 80, 100)
 
 /obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
+	..()
 	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/attack_hand()
@@ -197,25 +201,31 @@
 /obj/item/weapon/reagent_containers/glass/beaker/update_icon()
 	cut_overlays()
 
-	if(reagents.total_volume)
-		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
-
-		var/percent = round((reagents.total_volume / volume) * 100)
-		switch(percent)
-			if(0 to 9)		filling.icon_state = "[icon_state]-10"
-			if(10 to 24) 	filling.icon_state = "[icon_state]10"
-			if(25 to 49)	filling.icon_state = "[icon_state]25"
-			if(50 to 74)	filling.icon_state = "[icon_state]50"
-			if(75 to 79)	filling.icon_state = "[icon_state]75"
-			if(80 to 90)	filling.icon_state = "[icon_state]80"
-			if(91 to INFINITY)	filling.icon_state = "[icon_state]100"
-
-		filling.icon += mix_color_from_reagents(reagents.reagent_list)
+	if(reagents?.total_volume)
+		var/mutable_appearance/filling = mutable_appearance('icons/obj/reagentfillings.dmi', "[icon_state][get_filling_state()]")
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(filling)
 
-	if (!is_open_container())
-		var/image/lid = image(icon, src, "lid_[initial(icon_state)]")
+	if(!is_open_container())
+		var/mutable_appearance/lid = mutable_appearance(icon, "lid_[icon_state]")
 		add_overlay(lid)
+
+/obj/item/weapon/reagent_containers/glass/beaker/proc/get_filling_state()
+	var/percent = round((reagents.total_volume / volume) * 100)
+	var/list/increments = list()
+	for(var/x in filling_states)
+		increments += text2num(x)
+	if(!length(increments))
+		return
+
+	var/last_increment = increments[1]
+	for(var/increment in increments)
+		if(percent < increment)
+			break
+
+		last_increment = increment
+
+	return last_increment
 
 /obj/item/weapon/reagent_containers/glass/beaker/large
 	name = "large beaker"
@@ -256,6 +266,37 @@
 	possible_transfer_amounts = list(5,10,15,25)
 	flags = OPENCONTAINER
 
+/obj/item/weapon/reagent_containers/glass/beaker/vial/update_icon()
+	cut_overlays()
+
+	if(reagents.total_volume)
+		var/image/filling = image('icons/obj/reagentfillings.dmi', src, "[icon_state]10")
+
+		var/percent = round((reagents.total_volume / volume) * 100)
+		switch(percent)
+			if(0 to 9)		filling.icon_state = "[icon_state]-10"
+			if(10 to 24) 	filling.icon_state = "[icon_state]10"
+			if(25 to 49)	filling.icon_state = "[icon_state]25"
+			if(50 to 74)	filling.icon_state = "[icon_state]50"
+			if(75 to 79)	filling.icon_state = "[icon_state]75"
+			if(80 to 90)	filling.icon_state = "[icon_state]80"
+			if(91 to INFINITY)	filling.icon_state = "[icon_state]100"
+
+		filling.icon += mix_color_from_reagents(reagents.reagent_list)
+		add_overlay(filling)
+
+	if (!is_open_container())
+		var/image/lid = image(icon, src, "lid_[initial(icon_state)]")
+		add_overlay(lid)
+
+
+/obj/item/weapon/reagent_containers/glass/beaker/teapot
+	name = "teapot"
+	desc = "An elegant teapot."
+	icon_state = "teapot"
+	item_state = "teapot"
+
+
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone/atom_init()
@@ -294,6 +335,8 @@
 	slot_flags = SLOT_FLAGS_HEAD
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 3, bomb = 5, bio = 0, rad = 0)
 	force = 5
+	pickup_sound = null
+	dropped_sound = null
 
 /obj/item/weapon/reagent_containers/glass/bucket/attackby(obj/item/I, mob/user, params)
 	if(isprox(I))
@@ -303,7 +346,7 @@
 		qdel(src)
 		return
 
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0,user))
 			var/obj/item/clothing/head/helmet/battlebucket/BBucket = new(usr.loc)

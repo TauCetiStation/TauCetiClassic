@@ -167,6 +167,7 @@
 
 	min_duration = 70
 	max_duration = 90
+	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED, /datum/skill/engineering = SKILL_LEVEL_NOVICE)
 
 /datum/surgery_step/groin_organs/fixing_robot/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!..())
@@ -209,7 +210,7 @@
 		if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
 			BP.take_damage(0, 6, used_weapon = tool)
 
-		else if(iswrench(tool))
+		else if(iswrenching(tool))
 			BP.take_damage(12, 0, used_weapon = tool)
 			BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
 

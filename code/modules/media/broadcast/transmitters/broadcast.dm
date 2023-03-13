@@ -50,7 +50,7 @@
 	broadcast() // Bzzt
 /*
 /obj/machinery/media/transmitter/broadcast/attackby(obj/item/W, mob/user, params)
-	if(ismultitool(W))
+	if(ispulsing(W))
 		attack_hand(user)
 		return 1
 

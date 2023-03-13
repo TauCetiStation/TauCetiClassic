@@ -6,6 +6,7 @@
 	antag_hud_name = "abductor"
 
 	logo_state = "abductor-logo"
+	skillset_type = /datum/skillset/abductor
 
 /datum/role/abductor/Greet(greeting, custom)
 	if(!..())
@@ -22,7 +23,7 @@
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate/alt(agent)
 	R.set_frequency(radio_freq)
 	agent.equip_to_slot_or_del(R, SLOT_L_EAR)
-	agent.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/combat(agent), SLOT_SHOES)
+	agent.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(agent), SLOT_SHOES)
 	agent.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(agent), SLOT_W_UNIFORM) //they're greys gettit
 	agent.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(agent), SLOT_BACK)
 
@@ -36,11 +37,13 @@
 	var/faction_name = faction ? faction.name : ""
 	H.real_name = faction_name + " " + name
 	H.mind.name = H.real_name
+	H.f_style = "Shaved"
+	H.h_style = "Bald"
 	H.flavor_text = ""
 	equip_common(H)
 	equip_class()
 	H.regenerate_icons()
-
+	SEND_SIGNAL(antag.current, COMSIG_ADD_MOOD_EVENT, "abductor", /datum/mood_event/abductor)
 	return TRUE
 
 /datum/role/abductor/proc/get_team_num()
@@ -50,6 +53,7 @@
 /datum/role/abductor/agent
 	name = "Agent"
 	id = ABDUCTOR_AGENT
+	skillset_type = /datum/skillset/abductor/agent
 
 /datum/role/abductor/agent/Greet(greeting, custom)
 	if(!..())
@@ -62,8 +66,9 @@
 /datum/role/abductor/agent/equip_class()
 	var/mob/living/carbon/human/agent = antag.current
 	var/obj/item/clothing/suit/armor/abductor/vest/V = new /obj/item/clothing/suit/armor/abductor/vest(agent)
+	var/obj/item/weapon/abductor_baton/B = new(agent)
 	agent.equip_to_slot_or_del(V, SLOT_WEAR_SUIT)
-	agent.equip_to_slot_or_del(new /obj/item/weapon/abductor_baton(agent), SLOT_IN_BACKPACK)
+	agent.equip_to_slot_or_del(B, SLOT_IN_BACKPACK)
 	agent.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/decloner/alien(agent), SLOT_BELT)
 	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), SLOT_IN_BACKPACK)
 	agent.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/abductor(agent), SLOT_HEAD)
@@ -74,10 +79,12 @@
 	var/obj/machinery/abductor/console/console = A.get_team_console()
 	if(console)
 		console.vest = V
+		B.console = console
 
 /datum/role/abductor/scientist
 	name = "Scientist"
 	id = ABDUCTOR_SCI
+	skillset_type = /datum/skillset/abductor/scientist
 
 /datum/role/abductor/scientist/Greet(greeting, custom)
 	if(!..())

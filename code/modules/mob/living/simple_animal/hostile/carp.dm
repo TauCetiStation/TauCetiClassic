@@ -75,13 +75,14 @@
 /mob/living/simple_animal/hostile/carp/FindTarget()
 	. = ..()
 	if(.)
-		custom_emote(1,"nashes at [.]")
+		me_emote("nashes at [.].")
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
 	. =..()
 	var/mob/living/L = .
 	if(istype(L))
 		if(prob(15))
+			L.Stun(1)
 			L.Weaken(3)
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 
@@ -101,6 +102,24 @@
 	randomify = FALSE
 
 	melee_damage = 20
+
+/mob/living/simple_animal/hostile/carp/wizard
+	faction = "wizard"
+	desc = "A ferocious, fang-bearing creature that resembles a fish. This one looks kinda weird."
+	melee_damage = 10
+	maxHealth = 60
+	health = 60
+
+/mob/living/simple_animal/hostile/carp/wizard/Life()
+	..()
+	adjustBruteLoss(30)
+
+
+/mob/living/simple_animal/hostile/carp/wizard/death()
+	..()
+	visible_message("<span class='warning'><b>[src]</b> disappears.</span>")
+	qdel(src)
+	return
 
 /mob/living/simple_animal/hostile/carp/dog
 	name = "REX"

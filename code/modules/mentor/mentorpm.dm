@@ -3,7 +3,7 @@
 		to_chat(src, "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>")
 		return
 
-	if(!istype(C,/client))
+	if(!isclient(C))
 		if(holder)
 			to_chat(src, "<font color='red'>Error: Private-Message: Client not found.</font>")
 		else
@@ -75,7 +75,7 @@
 	)
 
 	//we don't use message_admins here because the sender/receiver might get it too
-	for(var/client/X in admins)
+	for(var/client/X as anything in admins)
 		//check client/X is an admin and isn't the sender or recipient
 		if(X == C || X == src)
 			continue

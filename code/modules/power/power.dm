@@ -14,6 +14,7 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
@@ -149,7 +150,7 @@
 
 		var/turf/T = user.loc
 
-		if(T.intact || !istype(T, /turf/simulated/floor))
+		if(T.intact || !isfloorturf(T))
 			return
 
 		if(!Adjacent(user))
@@ -312,7 +313,7 @@
 	//This is for performance optimization only.
 	//DO NOT modify siemens_coeff here. That is checked in human/electrocute_act()
 	var/def_zone
-	if(istype(M,/mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		def_zone = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM] //strikes only active hand
 		if(H.gloves)
@@ -380,7 +381,7 @@
 // return a knot cable (O-X) if one is present in the turf
 // null if there's none
 /turf/proc/get_cable_node()
-	if(!istype(src, /turf/simulated/floor))
+	if(!isfloorturf(src))
 		return null
 	for(var/obj/structure/cable/C in src)
 		if(C.d1 == 0)

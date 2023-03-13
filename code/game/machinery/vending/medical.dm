@@ -19,7 +19,7 @@
 		/obj/item/stack/medical/advanced/bruise_pack = 3,
 		/obj/item/stack/medical/advanced/ointment = 3,
 		/obj/item/stack/medical/splint = 2,
-		/obj/item/stack/medical/suture = 6,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine = 9,
 	)
 	contraband = list(
 		/obj/item/weapon/reagent_containers/pill/tox = 3,
@@ -27,6 +27,7 @@
 		/obj/item/weapon/reagent_containers/pill/dylovene = 6,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/medical
+	private = TRUE
 
 /obj/machinery/vending/wallmed1
 	name = "NanoMed"
@@ -42,13 +43,14 @@
 		/obj/item/stack/medical/ointment = 2,
 		/obj/item/weapon/reagent_containers/hypospray/autoinjector = 4,
 		/obj/item/device/healthanalyzer = 1,
-		/obj/item/stack/medical/suture = 2,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine = 3,
 	)
 	contraband = list(
 		/obj/item/weapon/reagent_containers/syringe/antitoxin = 4,
 		/obj/item/weapon/reagent_containers/syringe/antiviral = 4,
 		/obj/item/weapon/reagent_containers/pill/tox = 1,
 	)
+	private = TRUE
 
 /obj/machinery/vending/wallmed2
 	name = "NanoMed"
@@ -65,11 +67,12 @@
 		/obj/item/stack/medical/bruise_pack = 3,
 		/obj/item/stack/medical/ointment =3,
 		/obj/item/device/healthanalyzer = 3,
-		/obj/item/stack/medical/suture = 2,
+		/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine = 3,
 	)
 	contraband = list(
 		/obj/item/weapon/reagent_containers/pill/tox = 3,
 	)
+	private = TRUE
 
 /obj/machinery/vending/omskvend
 	name = "Omsk-o-mat"
@@ -82,6 +85,7 @@
 	contraband = list(
 		/obj/item/weapon/reagent_containers/glass/bottle/antitoxin = 4,
 	)
+	private = TRUE
 
 /obj/item/weapon/reagent_containers/pill/LSD
 	name = "LSD"

@@ -15,7 +15,7 @@
 	item_state = "bluetag"
 	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO
-	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag)
+	allowed = list(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag)
 	siemens_coefficient = 3.0
 
 	var/lasertag_color = "none"
@@ -25,7 +25,7 @@
 	desc = "Blue Pride, Station Wide."
 	icon_state = "bluetag"
 	item_state = "bluetag"
-	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag/bluetag)
+	allowed = list(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag)
 	lasertag_color = "blue"
 
 /obj/item/clothing/suit/lasertag/redtag
@@ -33,7 +33,7 @@
 	desc = "Reputed to go faster."
 	icon_state = "redtag"
 	item_state = "redtag"
-	allowed = list(/obj/item/weapon/gun/energy/laser/lasertag/redtag)
+	allowed = list(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag)
 	lasertag_color = "red"
 
 /*
@@ -335,7 +335,6 @@
 	desc = "A black trenchcoat."
 	icon_state = "dude_coat"
 	item_state = "jensensuit"
-	item_color = "dude_coat"
 
 //pyjamas
 //originally intended to be pinstripes >.>
@@ -376,35 +375,30 @@
 	name = "pink swimsuit"
 	desc = "A rather skimpy pink swimsuit."
 	icon_state = "stripper_p"
-	item_color = "stripper_p"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/stripper/stripper_green
 	name = "green swimsuit"
 	desc = "A rather skimpy green swimsuit."
 	icon_state = "stripper_g"
-	item_color = "stripper_g"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/stripper_pink
 	name = "pink skimpy dress"
 	desc = "A rather skimpy pink dress."
 	icon_state = "stripper_p"
-	item_state = "stripper_p"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/stripper_green
 	name = "green skimpy dress"
 	desc = "A rather skimpy green dress."
 	icon_state = "stripper_g"
-	item_state = "stripper_g"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/stripper/mankini
 	name = "the mankini"
 	desc = "No honest man would wear this abomination"
 	icon_state = "mankini"
-	item_color = "mankini"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/xenos
@@ -419,40 +413,36 @@
 /obj/item/clothing/under/swimsuit
 	siemens_coefficient = 1
 	body_parts_covered = 0
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/swimsuit/black
 	name = "black swimsuit"
 	desc = "An oldfashioned black swimsuit."
 	icon_state = "swim_black"
-	item_color = "swim_black"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/swimsuit/blue
 	name = "blue swimsuit"
 	desc = "An oldfashioned blue swimsuit."
 	icon_state = "swim_blue"
-	item_color = "swim_blue"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/swimsuit/purple
 	name = "purple swimsuit"
 	desc = "An oldfashioned purple swimsuit."
 	icon_state = "swim_purp"
-	item_color = "swim_purp"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/swimsuit/green
 	name = "green swimsuit"
 	desc = "An oldfashioned green swimsuit."
 	icon_state = "swim_green"
-	item_color = "swim_green"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/swimsuit/red
 	name = "red swimsuit"
 	desc = "An oldfashioned red swimsuit."
 	icon_state = "swim_red"
-	item_color = "swim_red"
 	siemens_coefficient = 1
 
 /obj/item/clothing/suit/batman
@@ -500,7 +490,7 @@
 		src.icon_state += "_open"
 		to_chat(usr, "You unbutton your jacket.")
 		src.is_button_up = 0
-	usr.update_inv_wear_suit()	//so our overlays update
+	update_inv_mob() //so our overlays update
 
 /obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger
 	name = "field jacket desert"
@@ -610,7 +600,7 @@
 	else
 		to_chat(usr, "You button-up some imaginary buttons on your [src].")
 		return
-	usr.update_inv_wear_suit()
+	update_inv_mob()
 
 /obj/item/clothing/suit/hooded/carp_costume
 	name = "carp costume"
@@ -647,16 +637,9 @@
 /obj/item/clothing/suit/student_jacket/ui_action_click()
 	if(fastened)
 		icon_state = "student_jacket_open"
-		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			if(H.wear_suit == src)
-				H.update_inv_wear_suit()
 	else
 		icon_state = "student_jacket"
-		if(ishuman(loc))
-			var/mob/living/carbon/human/H = loc
-			if(H.wear_suit == src)
-				H.update_inv_wear_suit()
+	update_inv_mob()
 	fastened = !fastened
 
 /obj/item/clothing/suit/atlas_jacket
@@ -710,3 +693,10 @@
 	name = "blue letterman jacket"
 	desc = "A blue letterman jacket with a proud Nanotrasen N on the back. The tag says that it was made in Space China."
 	icon_state = "letterman_n"
+
+/obj/item/clothing/suit/kung
+	name = "Kung jacket"
+	desc = "Leather jaket with an old security badge attached to it"
+	icon_state = "kung_jacket"
+	item_state = "kung_jacket"
+	w_class = SIZE_SMALL

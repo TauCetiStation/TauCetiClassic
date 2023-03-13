@@ -5,6 +5,7 @@
 	desc = "A huge chunk of metal and electronics used to construct shuttle."
 	density = TRUE
 	anchored = TRUE
+	can_block_air = TRUE
 	opacity = 1
 	icon = 'icons/locations/shuttles/shuttle.dmi'
 
@@ -12,9 +13,7 @@
 	. = ..()
 	update_nearby_tiles(need_rebuild = 1)
 
-/obj/structure/object_wall/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group)
-		return 0
+/obj/structure/object_wall/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
 	return !density
@@ -48,3 +47,14 @@
 /obj/structure/object_wall/evac
 	icon = 'icons/locations/shuttles/evac_shuttle.dmi'
 	icon_state = "9,1"
+
+/obj/structure/object_wall/vox
+	name = "skipjack wall"
+	desc = "Shuttle wall covered with graffitis."
+	icon = 'icons/locations/shuttles/vox_shuttle.dmi'
+	icon_state = "14,11"
+
+/obj/structure/object_wall/vox/internal
+	desc = "Internal shuttle wall. Cleaner than outside walls, but not by far."
+	icon = 'icons/locations/shuttles/vox_shuttle_inner.dmi'
+	icon_state = "3,0"

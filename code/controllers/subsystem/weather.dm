@@ -3,6 +3,11 @@ SUBSYSTEM_DEF(weather)
 	name = "Weather"
 	flags = SS_BACKGROUND
 	wait = 10
+
+	runlevels = RUNLEVEL_GAME
+
+	msg_lobby = "Предсказываем метеоритные дожди..."
+
 	var/list/processing = list()
 	var/list/existing_weather = list()
 	var/list/eligible_zlevels = list()
@@ -12,7 +17,7 @@ SUBSYSTEM_DEF(weather)
 		var/datum/weather/W = V
 		if(W.aesthetic)
 			continue
-		for(var/mob/living/L in living_list)
+		for(var/mob/living/L as anything in living_list)
 			if(W.can_impact(L))
 				W.impact(L)
 		if(W.additional_action)
@@ -27,7 +32,7 @@ SUBSYSTEM_DEF(weather)
 		var/datum/weather/W = pickweight(possible_weather_for_this_z)
 		run_weather(W.name, W.target_ztrait)
 		eligible_zlevels -= Z
-		addtimer(CALLBACK(src, .proc/make_z_eligible, Z), rand(3000, 6000) + W.weather_duration_upper, TIMER_UNIQUE) //Around 5-10 minutes between weathers
+		addtimer(CALLBACK(src, .proc/make_z_eligible, Z), rand(5 MINUTES, 10 MINUTES) + W.weather_duration_upper, TIMER_UNIQUE) //Around 5-10 minutes between weathers
 
 /datum/controller/subsystem/weather/Initialize(start_timeofday)
 	..()

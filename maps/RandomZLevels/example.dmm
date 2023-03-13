@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
+/turf/environment/space,
 /area)
 "ab" = (
 /turf/simulated/wall,
@@ -767,7 +767,7 @@
 "cd" = (
 /obj/structure/table,
 /obj/item/weapon/screwdriver,
-/obj/item/weapon/hand_labeler,
+/obj/item/device/tagger,
 /obj/machinery/light{
 	dir = 8
 	},

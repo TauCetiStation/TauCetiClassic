@@ -89,7 +89,6 @@
 		/obj/item/clothing/head/tacticool_hat = 4,
 		/obj/item/clothing/head/ushanka = 2,
 		/obj/item/clothing/under/soviet = 2,
-		/obj/item/clothing/mask/gas/fawkes = 6,
 	)
 
 	premium = list(
@@ -181,6 +180,7 @@
 		/obj/item/clothing/glasses/gar = 34,
 	)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
+	private = FALSE
 
 /obj/machinery/vending/theater
 	name = "Theater-o-mat"
@@ -212,11 +212,8 @@
 		/obj/item/clothing/suit/apron/overalls = 5,
 		/obj/item/clothing/suit/chickensuit = 5,
 		/obj/item/clothing/head/chicken = 5,
-		/obj/item/clothing/under/fluff/tian_dress = 5,
-		/obj/item/clothing/under/fluff/wyatt_1 = 5,
-		/obj/item/clothing/under/fluff/olddressuniform = 5,
-		/obj/item/clothing/under/fluff/jumpsuitdown = 5,
-		/obj/item/clothing/under/fluff/jane_sidsuit = 5,
+		/obj/item/clothing/under/dress/dress_purple = 5,
+		/obj/item/clothing/under/test_subject = 5,
 		/obj/item/clothing/under/sundress = 5,
 		/obj/item/clothing/under/roman = 3,
 		/obj/item/clothing/shoes/roman = 3,
@@ -240,6 +237,7 @@
 	contraband = list(
 		/obj/item/clothing/mask/gas/fawkes = 2,
 	)
+	private = TRUE
 
 /obj/machinery/vending/noiromat
 	name = "Noir-O-Mat"
@@ -251,21 +249,14 @@
 		/obj/item/clothing/glasses/sunglasses/noir = 2,
 		/obj/item/clothing/gloves/black = 2,
 		/obj/item/clothing/head/det_hat = 1,
-		/obj/item/clothing/head/det_hat = 1,
-		/obj/item/clothing/head/det_hat/grey = 1,
-		/obj/item/clothing/head/det_hat/darkgrey = 1,
-		/obj/item/clothing/head/det_hat/black = 1,
-		/obj/item/clothing/head/fedora = 1,
-		/obj/item/clothing/head/fedora/white = 1,
+		/obj/item/clothing/head/det_hat/gray = 1,
 		/obj/item/clothing/gloves/black = 2,
 		/obj/item/clothing/under/det = 1,
 		/obj/item/clothing/under/det/black = 1,
 		/obj/item/clothing/under/det/slob = 1,
 		/obj/item/clothing/under/det/max_payne = 1,
 		/obj/item/clothing/suit/storage/det_suit = 1,
-		/obj/item/clothing/suit/storage/det_suit/grey = 1,
-		/obj/item/clothing/suit/storage/det_suit/black = 1,
-		/obj/item/clothing/suit/storage/det_suit/noir_trenchcoat = 1,
+		/obj/item/clothing/suit/storage/det_suit/gray = 1,
 		/obj/item/clothing/accessory/tie/black = 2,
 		/obj/item/clothing/accessory/tie/red = 2,
 		/obj/item/clothing/shoes/brown = 2,
@@ -287,6 +278,7 @@
 	product_slogans = "The cheaper the crook, the gaudier the patter.;Dead men are heavier than broken hearts.;Life is a bucket of shit with a barbed wire handle.;After all, you are only an immortal until someone manages to kill you. After that, you were just long-lived.;The rain fell like dead bullets.;Though I often run out of courage and good sense, stubbornness keeps me going."
 	product_ads = "Keep your mind too open, and you never know what might walk in.;After all, you are only an immortal until someone manages to kill you. After that, you were just long-lived.;If you don't trust anyone, they can't let you down.;Wait. You've got principles? We'll have to update your file.;I always feel most alive when everything else is dying all around me."
 	req_access = list(68)
+	private = TRUE
 
 /obj/machinery/vending/magivend
 	name = "MagiVend"
@@ -302,17 +294,22 @@
 		/obj/item/clothing/suit/wizrobe = 1,
 		/obj/item/clothing/head/wizard/red = 1,
 		/obj/item/clothing/suit/wizrobe/red = 1,
-		/obj/item/clothing/shoes/sandal = 1,
-		/obj/item/weapon/staff = 2,
-		/obj/item/device/modkit/wizard/skrell = 1,
-		/obj/item/device/modkit/wizard/unathi = 1,
-		/obj/item/device/modkit/wizard/tajaran = 1,
-		/obj/item/device/modkit/wizard/vox = 1,
-		/obj/item/clothing/head/wizard/redhood = 1,
 		/obj/item/clothing/head/wizard/bluehood = 1,
 		/obj/item/clothing/suit/wizrobe/wiz_blue = 1,
+		/obj/item/clothing/head/wizard/redhood = 1,
 		/obj/item/clothing/suit/wizrobe/wiz_red = 1,
+		/obj/item/clothing/suit/wizrobe/magusblue = 1,
+		/obj/item/clothing/suit/wizrobe/magusred = 1,
+		/obj/item/clothing/head/wizard/magus = 2,
+		/obj/item/clothing/shoes/sandal = 2,
+		/obj/item/clothing/shoes/sandal/brown = 2,
+		/obj/item/weapon/staff = 2,
+		/obj/item/device/modkit/skrell = 2,
+		/obj/item/device/modkit/unathi = 2,
+		/obj/item/device/modkit/tajaran = 2,
+		/obj/item/device/modkit/vox = 2,
 	)
 	contraband = list(
-		/obj/item/weapon/reagent_containers/glass/bottle/wizarditis = 1,
-	)	//No one can get to the machine to hack it anyways; for the lulz - Microwave
+		/obj/item/weapon/reagent_containers/pill/adminordrazine = 1,
+	)
+	private = TRUE

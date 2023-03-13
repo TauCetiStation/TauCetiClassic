@@ -50,7 +50,6 @@
 	..()
 	var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible/booze(src.loc)
 	B.name = "The Holy book of the Geometer"
-	B.deity_name = "Narsie"
 	B.icon_state = "melted"
 	B.item_state = "melted"
 	new /obj/item/weapon/paper/sc_safehint_paper_bible(B)
@@ -106,11 +105,11 @@
  */
 
 //These vars hold the code itself, they'll be generated at round-start
-var/sc_safecode1 = "[rand(0,9)]"
-var/sc_safecode2 = "[rand(0,9)]"
-var/sc_safecode3 = "[rand(0,9)]"
-var/sc_safecode4 = "[rand(0,9)]"
-var/sc_safecode5 = "[rand(0,9)]"
+var/global/sc_safecode1 = "[rand(0,9)]"
+var/global/sc_safecode2 = "[rand(0,9)]"
+var/global/sc_safecode3 = "[rand(0,9)]"
+var/global/sc_safecode4 = "[rand(0,9)]"
+var/global/sc_safecode5 = "[rand(0,9)]"
 
 //Pieces of paper actually containing the hints
 /obj/item/weapon/paper/sc_safehint_paper_prison

@@ -59,14 +59,13 @@
 			updateUsrDialog()
 			return
 		charges -= 1
-		switch(rand(1,2))
-			if(1)
-				temptext = "<font color=red><i><b>Double-crosser. You planned to betray us from the start. Allow us to repay the favor in kind.</b></i></font>"
-				updateUsrDialog()
-				spawn(rand(50,200))
-					selfdestruct()
-				return
-		if(istype(M, /mob/living/carbon/human))
+		if(prob(50))
+			temptext = "<font color=red><i><b>Double-crosser. You planned to betray us from the start. Allow us to repay the favor in kind.</b></i></font>"
+			updateUsrDialog()
+			spawn(rand(50,200))
+				selfdestruct()
+			return
+		if(ishuman(M))
 			var/mob/living/carbon/human/N = M
 			var/datum/role/traitor/wishgranter/T = create_and_setup_role(/datum/role/traitor/syndbeacon, N)
 			T.Greet(GREET_SYNDBEACON)
@@ -139,7 +138,7 @@
 
 
 /obj/machinery/singularity_beacon/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewdriver(W))
+	if(isscrewing(W))
 		if(active)
 			to_chat(user, "<span class='warning'>You need to deactivate the beacon first!</span>")
 			return

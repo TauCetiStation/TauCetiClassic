@@ -173,7 +173,7 @@
 				continue
 			else
 				var/mob/M = I.loc
-				if (M.stat == 2)
+				if (M.stat == DEAD)
 					if (M.timeofdeath + 6000 < world.time)
 						continue
 				var/turf/T = get_turf(M)
@@ -307,6 +307,11 @@
 			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
+					var/list/stabilizer = M.search_contents_for(/obj/item/rig_module/teleporter_stabilizer)
+					for(var/obj/item/rig_module/teleporter_stabilizer/s in stabilizer)
+						if (s.stabilize_teleportation(2))
+							calibrated = 0
+							return
 					// Effects similar to mutagen.
 					if(!human.species.flags[IS_SYNTHETIC])
 						randmuti(human)
@@ -336,10 +341,9 @@
 /obj/machinery/teleport/hub/proc/is_ready()
 	. = !panel_open && !(stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.stat & (BROKEN|NOPOWER))
 
-//obj/machinery/teleport/hub/syndicate/atom_init()
-//	. = ..()
-//	component_parts += new /obj/item/weapon/stock_parts/matter_bin/super(null)
-//	RefreshParts()
+/obj/machinery/teleport/hub/attack_ghost(mob/user)
+	if(power_station?.teleporter_console?.target)
+		user.abstract_move(power_station.teleporter_console.target)
 
 /obj/machinery/teleport/station
 	name = "station"
@@ -399,7 +403,7 @@
 	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/weapon/W, mob/user)
-	if(ismultitool(W) && !panel_open)
+	if(ispulsing(W) && !panel_open)
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
 			if(linked_stations.len < efficiency)
@@ -418,12 +422,12 @@
 	default_deconstruction_crowbar(W)
 
 	if(panel_open)
-		if(ismultitool(W))
+		if(ispulsing(W))
 			var/obj/item/device/multitool/M = W
 			M.buffer = src
 			to_chat(user, "<span class='notice'>You download the data to the [W.name]'s buffer.</span>")
 			return
-		if(iswirecutter(W))
+		if(iscutter(W))
 			link_console_and_hub()
 			to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
 			return

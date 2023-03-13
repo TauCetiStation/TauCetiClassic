@@ -4,8 +4,7 @@
 	icon_state = "stage1"
 	opacity = 0
 	density = FALSE
-	anchored = TRUE
-	layer = ABOVE_HUD_LAYER //DEBUG
+	anchored = TRUE //DEBUG
 	plane = ABOVE_HUD_PLANE
 	var/health = 10
 	var/stage = 1

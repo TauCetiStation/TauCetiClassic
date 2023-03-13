@@ -70,7 +70,7 @@
 				src.desc = "Owned by [user_registered_name]."
 		else
 			to_chat(user, "<span class='warning'>Access Denied</span>")
-	else if((istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber)) && !src.broken)
+	else if((istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/dualsaber)) && !src.broken)
 		emag_act(user)
 		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 		spark_system.set_up(5, 0, src.loc)

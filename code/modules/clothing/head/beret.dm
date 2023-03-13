@@ -63,8 +63,10 @@
 
 /obj/item/clothing/head/beret/sec/hos
 	name = "head of security's beret"
-	desc = "A beret with the gold security insignia emblazoned on it. Shows who has the longest baton on the station."
+	desc = "A beret with the gold security insignia emblazoned on it. Shows who has the longest baton on the station. Also has some space for special armor plate."
 	icon_state = "beret_hos"
+	valid_accessory_slots = list("dermal")
+	restricted_accessory_slots = list("dermal")
 
 // Engineering
 
@@ -80,3 +82,8 @@
 	name = "first responder beret"
 	desc = "A beret with the medical insignia emblazoned on it. Noticable beret for paramedics, shows who's saving lives here."
 	icon_state = "beret_fr"
+
+/obj/item/clothing/head/beret/blueshield
+	name = "blueshield officer's beret"
+	desc = "A beret with the blueshield insignia emblazoned on it. It is advised that blueshield officers do NOT wear non-armored headwear during their shift."
+	icon_state = "beret_blueshield"

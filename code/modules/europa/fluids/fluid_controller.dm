@@ -4,7 +4,6 @@ SUBSYSTEM_DEF(fluids)
 	init_order    = SS_INIT_FLUIDS
 	priority      = SS_PRIORITY_FLUIDS
 	wait          = SS_WAIT_FLUIDS
-	display_order = SS_DISPLAY_FLUIDS
 
 	flags = SS_NO_INIT | SS_BACKGROUND | SS_POST_FIRE_TIMING
 

@@ -31,8 +31,8 @@
 	if(valid_step)
 		if(custom_action(valid_step, used_atom, user))
 			next_step()
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/construction/proc/is_right_key(atom/used_atom) // returns current step num if used_atom is of the right type.
 	var/list/L = steps[steps.len]
@@ -41,7 +41,7 @@
 	return 0
 
 /datum/construction/proc/custom_action(step, used_atom, user)
-	return 1
+	return TRUE
 
 /datum/construction/proc/check_all_steps(atom/used_atom,mob/user) //check all steps, remove matching one.
 	for(var/i=1;i<=steps.len;i++)
@@ -52,8 +52,8 @@
 				listclearnulls(steps);
 				if(!steps.len)
 					spawn_result()
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /datum/construction/proc/spawn_result()
 	if(result_type)
@@ -72,11 +72,11 @@
 		var/obj/part = used_atom
 		if(part.crit_fail || part.reliability < 50)
 			user.visible_message("[user] was unable to connect [used_atom] to [holder].", "You failed to connect [used_atom] to [holder]")
-			return 0
+			return FALSE
 	user.visible_message("[user] has connected [used_atom] to [holder].", "You connect [used_atom] to [holder]")
 	holder.add_overlay(used_atom.icon_state+"+o")
 	qdel(used_atom)
-	return 1
+	return TRUE
 
 
 /datum/construction/mecha/action(atom/used_atom,mob/user)
@@ -100,11 +100,11 @@
 		set_desc(index)
 	return
 
-/datum/construction/reversible/is_right_key(atom/used_atom) // returns index step
+/datum/construction/reversible/is_right_key(obj/item/I) // returns index step
 	var/list/L = steps[index]
-	if(istype(used_atom, L["key"]))
+	if(I.get_quality(L["key"]) || istype(I, L["key"]))
 		return FORWARD //to the first step -> forward
-	else if(L["backkey"] && istype(used_atom, L["backkey"]))
+	else if(L["backkey"] && I.get_quality(L["backkey"]))
 		return BACKWARD //to the last step -> backwards
 	return 0
 
@@ -113,8 +113,8 @@
 	if(diff)
 		if(custom_action(index, diff, used_atom, user))
 			update_index(diff)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/construction/reversible/custom_action(index, diff, used_atom, user)
-	return 1
+	return TRUE

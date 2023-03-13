@@ -49,6 +49,8 @@
 # Good luck!
 # - xales
 
+TEMPFILE=/tmp/$$.tmp
+echo 0 > $TEMPFILE
 # Global counter of failed tests
 FAILED=0
 # List of names of failed tests
@@ -83,7 +85,8 @@ function err {
 
 function fail {
     warn "test \"$1\" failed: $2"
-    ((FAILED++))
+    FAILED=$(($(cat $TEMPFILE) + 1))
+    echo $FAILED > $TEMPFILE
     FAILED_BYNAME+=("$1")
 }
 
@@ -118,7 +121,24 @@ function run_test_fail {
     fi
 }
 
+function run_test_fail_desc {
+    msg "running(fail) \"$1\""
+    name=$1
+    desc=$2
+    shift
+    shift
+    exec_test "$*"
+    ret=$?
+    if [[ ret -eq 0 ]]
+    then
+        fail "$name" $ret
+        warn $desc
+    else ((PASSED++))
+    fi
+}
+
 function check_fail {
+    FAILED=$(cat $TEMPFILE)
     if [[ $FAILED -ne 0 ]]; then
         for t in "${FAILED_BYNAME[@]}"; do
             msg_bad "TEST FAILED: \"$t\""
@@ -137,6 +157,9 @@ function exec_test {
 function find_tool_deps {
     need_cmd grep
     need_cmd awk
+    need_cmd sed
+    need_cmd cat
+    need_cmd find
     need_cmd md5sum
     need_cmd python2
     need_cmd python3
@@ -162,6 +185,45 @@ function find_code {
     fi
 }
 
+function newline_at_eof {
+    TEMPCOUNTER=/tmp/counter.tmp
+    echo 0 > $TEMPCOUNTER
+    find ./code -regex '.*\.dm' | \
+        while read line
+        do
+            if [[ -s "$line" && -n "$(tail -c 1 "$line")" ]]
+            then
+                echo "No newline at end of file: $line"
+                counter=$(($(cat $TEMPCOUNTER) + 1))
+                echo $counter > $TEMPCOUNTER
+            fi
+        done
+    counter=$(cat $TEMPCOUNTER)
+    unlink $TEMPCOUNTER
+    return $counter
+}
+
+function match_helper {
+    local s=$1 regex='([A-Za-z1-9._]+)\([A-Za-z1-9._]+\) \((istype\([A-Za-z1-9._]+,\s*[A-Za-z0-9\/]+\))\)'
+    while [[ $s =~ $regex ]]; do
+        define="${BASH_REMATCH[1]}"
+        s=${s#*"${BASH_REMATCH[1]}"}
+        istype="${BASH_REMATCH[2]}"
+        s=${s#*"${BASH_REMATCH[2]}"}
+        istype_pattern=`echo "$istype" | sed -r "s/istype\([A-Za-z1-9._]+,\s*([A-Za-z0-9\/]+)\)/istype\\\\\(([A-Za-z1-9._]+),\\\\\s*\1\\\\\)/"`
+        run_test_fail_desc "$define" "Change istype to $define. Use this pattern for your VSCode: ^(?!//|#define|\.\*)(.*)$istype_pattern -> \$1$define(\$2)" "grep -RPnr --include='*.dm' '^(?!//|#define|\.\*).*$istype_pattern' code/"
+    done
+}
+
+function match_is_helpers {
+    regex="([\w]+)\(([\w]+)\) \((istype\([\w]+, [\w\d\/]+\))\)"
+    grep -RPor "$regex" ./code/__DEFINES/is_helpers.dm | \
+    while read line
+    do
+        match_helper "$line"
+    done
+}
+
 function run_code_tests {
     msg "*** running code tests ***"
     run_test_fail "code contains no byond escapes" "grep -REnr --include='*.dm' '\\\\(red|blue|green|black|b|i)\s' code/"
@@ -174,6 +236,10 @@ function run_code_tests {
     run_test_fail "changed files contains \"src.proc()\"" "grep -RPnr --include='*.dm' '[\s\(\[!,\/=]src\.[\w\d_\.]*\(' code/"
     run_test_fail "path must not end with /" "grep -RPnr --include='*.dm' \"/(obj|datum|atom|turf|area|mob)/[^\s,\(\)']*/[\n\s\(\),\\']\" code/"
     run_test_fail ".dmi must be in /icons/" "find code/|grep -e '\.dmi$'"
+    run_test_fail "global variable is declared without the /global/ modifier" "grep -RPnr \"^var/(?!global)\" code/**/*.dm"
+    match_is_helpers
+
+    run_test "check eof" "newline_at_eof"
     run_test "indentation check" "awk -f scripts/indentation.awk **/*.dm"
     run_test "check tags" "python2 scripts/tag-matcher.py ."
     run_test "check color hex" "python2 scripts/color-hex-checker.py ."
@@ -240,3 +306,5 @@ function run_configured_tests {
 find_code
 run_configured_tests
 check_fail
+
+unlink $TEMPFILE

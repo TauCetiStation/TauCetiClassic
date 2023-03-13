@@ -30,7 +30,7 @@
 	//Only call this if you are certain that the painter will be used right after this check!
 /obj/item/weapon/airlock_painter/use(cost)
 	if(cost < 0)
-		stack_trace("[src.type]/use() called with a negative parameter [cost]")
+		stack_trace("[src.type]/use() called with a negative parameter")
 		return 0
 	if(can_use(usr, cost))
 		ink.charges -= cost

@@ -2,6 +2,7 @@
 	name = "voice analyzer"
 	desc = "A small electronic device able to record a voice sample, and send a signal when that sample is repeated."
 	icon_state = "voice"
+	flags = HEAR_TALK
 	materials = list(MAT_METAL=500, MAT_GLASS=50)
 	origin_tech = "magnets=1"
 	m_amt = 500
@@ -16,6 +17,9 @@
 	msg = lowertext(msg)
 
 	if(listening)
+		msg = trim(replace_characters(msg, list("." = "", "?" = "", "!" = "", ";" = ""))) // deleting last symbol
+		if(!msg)
+			return
 		recorded = msg
 		listening = 0
 		audible_message("Activation message is '[recorded]'.", hearing_distance = 1)

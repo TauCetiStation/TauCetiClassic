@@ -3,11 +3,9 @@ var/global/list/possible_items_for_steal = list()
 #define ADD_TO_POIFS_LIST(type) ADD_TO_GLOBAL_LIST(type, possible_items_for_steal)
 ADD_TO_POIFS_LIST(/obj/item/weapon/gun/energy/laser/selfcharging/captain)
 ADD_TO_POIFS_LIST(/obj/item/weapon/hand_tele)
-ADD_TO_POIFS_LIST(/obj/item/weapon/rcd)
-ADD_TO_POIFS_LIST(/obj/item/weapon/tank/jetpack)
+ADD_TO_POIFS_LIST(/obj/item/weapon/tank/jetpack/oxygen)
 ADD_TO_POIFS_LIST(/obj/item/clothing/under/rank/captain)
 ADD_TO_POIFS_LIST(/obj/item/device/aicard)
-ADD_TO_POIFS_LIST(/obj/item/clothing/shoes/magboots)
 ADD_TO_POIFS_LIST(/obj/item/blueprints)
 ADD_TO_POIFS_LIST(/obj/item/clothing/suit/space/nasavoid)
 ADD_TO_POIFS_LIST(/obj/item/weapon/tank)
@@ -38,11 +36,9 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 	var/static/possible_items[] = list(
 		"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser/selfcharging/captain,
 		"a hand teleporter" = /obj/item/weapon/hand_tele,
-		"an RCD" = /obj/item/weapon/rcd,
-		"a jetpack" = /obj/item/weapon/tank/jetpack,
+		"a captain's jetpack" = /obj/item/weapon/tank/jetpack/oxygen,
 		"a captain's jumpsuit" = /obj/item/clothing/under/rank/captain,
 		"a functional AI" = /obj/item/device/aicard,
-		"a pair of magboots" = /obj/item/clothing/shoes/magboots,
 		"the station blueprints" = /obj/item/blueprints,
 		"a nasa voidsuit" = /obj/item/clothing/suit/space/nasavoid,
 		"28 moles of phoron (full tank)" = /obj/item/weapon/tank,
@@ -82,7 +78,6 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 /datum/objective/steal/find_target()
 	set_target(pick(possible_items))
 	return TRUE
-
 
 /datum/objective/steal/select_target()
 	var/list/possible_items_all = possible_items+possible_items_special+"custom"
@@ -134,13 +129,13 @@ ADD_TO_POIFS_LIST(/obj/item/stack/sheet/mineral/uranium)
 		if("a functional AI")
 			for(var/obj/item/device/aicard/C in all_items) //Check for ai card
 				for(var/mob/living/silicon/ai/M in C)
-					if(istype(M, /mob/living/silicon/ai) && M.stat != DEAD) //See if any AI's are alive inside that card.
+					if(isAI(M) && M.stat != DEAD) //See if any AI's are alive inside that card.
 						return OBJECTIVE_WIN
 
 			for(var/obj/item/clothing/suit/space/space_ninja/S in all_items) //Let an AI downloaded into a space ninja suit count
 				if(S.AI && S.AI.stat != DEAD)
 					return OBJECTIVE_WIN
-			for(var/mob/living/silicon/ai/ai in ai_list)
+			for(var/mob/living/silicon/ai/ai as anything in ai_list)
 				if(ai.stat == DEAD)
 					continue
 				if(istype(ai.loc, /turf))

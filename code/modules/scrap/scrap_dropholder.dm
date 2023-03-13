@@ -17,7 +17,7 @@
 	dropped.loc = get_turf_loc(src)
 	var/initial_x = dropped.pixel_x
 	var/initial_y = dropped.pixel_y
-	dropped.plane = 1
+	dropped.plane = ABOVE_GAME_PLANE
 	dropped.pixel_x = rand(-150, 150)
 	dropped.pixel_y = 500 //when you think that pixel_z is height but you are wrong
 	dropped.density = FALSE
@@ -29,7 +29,7 @@
 /atom/movable/proc/end_fall()
 	for(var/atom/movable/AM in loc)
 		if(AM != src)
-			AM.ex_act(1)
+			AM.ex_act(EXPLODE_DEVASTATE)
 	for(var/mob/living/M in oviewers(6, src))
 		shake_camera(M, 2, 2)
 	if(istype(src, /obj/structure/scrap))

@@ -29,13 +29,14 @@
 /obj/item/latexballon/ex_act(severity)
 	burst()
 	switch(severity)
-		if (1)
+		if(EXPLODE_DEVASTATE)
 			qdel(src)
-		if (2)
+		if(EXPLODE_HEAVY)
 			if (prob(50))
 				qdel(src)
 
-/obj/item/latexballon/bullet_act()
+/obj/item/latexballon/bullet_act(obj/item/projectile/Proj, def_zone)
+	. = ..()
 	burst()
 
 /obj/item/latexballon/fire_act(datum/gas_mixture/air, temperature, volume)

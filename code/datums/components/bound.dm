@@ -129,7 +129,7 @@
 
 // Is called when bounds are inside bounded(or vice-versa), yet they shouldn't be.
 /datum/component/bounded/proc/jump_out_of(atom/container, atom/movable/escapee)
-	if(istype(escapee, /obj/item))
+	if(isitem(escapee))
 		if(istype(container, /obj/item/weapon/storage))
 			var/obj/item/weapon/storage/S = container
 			S.remove_from_storage(escapee, get_turf(container))

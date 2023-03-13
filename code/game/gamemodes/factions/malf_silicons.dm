@@ -133,7 +133,7 @@
 		dat += "<span class='red'>AI Victory!</span>"
 		dat += "<br><b>Everyone was killed by the self-destruct!</b>"
 		feedback_add_details("[ID]_success","SUCCESS")
-		score["roleswon"]++
+		SSStatistics.score.roleswon++
 
 	else if(station_captured && malf_dead &&	!SSticker.station_was_nuked)
 		dat += "<span class='red'>Neutral Victory.</span>"
@@ -144,7 +144,7 @@
 		dat += "<span class='red'>AI Victory!</span>"
 		dat += "<br><b>The AI has chosen not to explode you all!</b>"
 		feedback_add_details("[ID]_success","SUCCESS")
-		score["roleswon"]++
+		SSStatistics.score.roleswon++
 
 	else if(!station_captured && SSticker.station_was_nuked)
 		dat += "<span class='red'>Neutral Victory.</span>"

@@ -9,11 +9,15 @@
 	storedPlasma = 50
 	max_plasma = 50
 
+	speed = -1
+
 	density = FALSE
-	w_class = SIZE_TINY
+	w_class = SIZE_SMALL
 	var/amount_grown = 0
 	var/max_grown = 200
 	var/time_of_birth
+	alien_spells = list(/obj/effect/proc_holder/spell/no_target/hide,
+						/obj/effect/proc_holder/spell/no_target/larva_evolve)
 
 	var/obj/item/clothing/suit/wear_suit = null		//TODO: necessary? Are they even used? ~Carn
 	var/obj/item/weapon/r_store = null
@@ -27,7 +31,6 @@
 	name = "alien larva ([rand(1, 1000)])"
 	real_name = name
 	regenerate_icons()
-	verbs += /mob/living/carbon/xenomorph/proc/hide
 	alien_list[ALIEN_LARVA] += src
 	. = ..()
 
@@ -71,9 +74,6 @@
 
 /mob/living/carbon/xenomorph/larva/swap_hand()
 	return
-
-/mob/living/carbon/xenomorph/larva/movement_delay()
-	return (move_delay_add + config.alien_delay - 1)
 
 /mob/living/carbon/xenomorph/larva/can_pickup(obj/O)
 	return FALSE

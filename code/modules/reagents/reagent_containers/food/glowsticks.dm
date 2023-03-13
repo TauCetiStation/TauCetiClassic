@@ -14,6 +14,8 @@
 	var/eaten = 0
 	var/datum/reagent/liquid_fuel
 	var/start_brightness = 4
+	food_type = JUNK_FOOD
+	food_moodlet = /datum/mood_event/junk_food
 	action_button_name = "Break Glowstick"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/atom_init()
@@ -102,9 +104,9 @@
 
 	if(!CanEat(user, M, src, "eat")) return	//tc code
 
-	if(istype(M, /mob/living/carbon))
+	if(iscarbon(M))
 		if(M != user)
-			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
+			if(!isslime(M))		//If you're feeding it to someone else.
 
 				M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
 						"<span class='warning'><B>[user]</B> attempts to feed you <B>[src]</B>.</span>")

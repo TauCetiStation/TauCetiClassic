@@ -2,7 +2,7 @@
 // is not in use.
 
 // The SPACEMAN_DMM define is set by the linter and other tooling when it runs.
-// See https://github.com/SpaceManiac/SpacemanDMM/tree/suite-1.6/src/dreamchecker
+// See https://github.com/SpaceManiac/SpacemanDMM/tree/suite-1.7.2/crates/dreamchecker
 #ifdef SPACEMAN_DMM
 	#define RETURN_TYPE(X) set SpacemanDMM_return_type = X
 	#define SHOULD_CALL_PARENT(X) set SpacemanDMM_should_call_parent = X

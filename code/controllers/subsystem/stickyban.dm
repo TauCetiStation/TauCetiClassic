@@ -4,6 +4,8 @@ SUBSYSTEM_DEF(stickyban)
 	init_order = SS_INIT_STICKY_BAN
 	flags = SS_NO_FIRE
 
+	msg_lobby = "Сверяем списки космопреступников..."
+
 	// List on bans on start of round
 	// Update record after admin any modifications
 	var/list/cache = list()

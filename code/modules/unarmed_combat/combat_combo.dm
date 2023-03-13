@@ -13,7 +13,7 @@ var/global/list/combat_combos_by_name = list()
 	var/full_desc
 
 	// Combo points required for this combo.
-	var/fullness_lose_on_execute = 50
+	var/cost = 50
 	// Combo elements required for this combo.
 	var/list/combo_elements = list()
 
@@ -62,13 +62,15 @@ var/global/list/combat_combos_by_name = list()
 	// Should admins be PM-ed about this combo?
 	var/needs_logging = TRUE
 
+	var/list/pump_bodyparts
+
 /datum/combat_combo/New()
 	gen_description()
 
 /datum/combat_combo/proc/gen_description()
 	full_desc += "<b>Name:</b> <i>[name]</i><br>"
 	full_desc += "<b>Desc:</b> [desc]<br>"
-	full_desc += "<b>Combopoints cost:</b> [fullness_lose_on_execute]%<br>"
+	full_desc += "<b>Combopoints cost:</b> [cost]%<br>"
 
 	var/tz_txt = ""
 	var/first = TRUE
@@ -132,15 +134,15 @@ var/global/list/combat_combos_by_name = list()
 
 /datum/combat_combo/proc/can_execute(datum/combo_handler/CS, show_warning = FALSE)
 	if(heavy_animation)
-		if(CS.attacker.pinned.len)
+		if(CS.attacker.anchored)
 			if(show_warning)
-				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> because you are pinned to a wall.</span>")
+				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> because you are anchored.</span>")
 			return FALSE
-		if(CS.victim.pinned.len)
+		if(CS.victim.anchored)
 			if(show_warning)
-				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> because they are pinned to a wall.</span>")
+				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> because they are anchored.</span>")
 			return FALSE
-		if(CS.attacker.anchored || !CS.attacker.canmove)
+		if(!CS.attacker.canmove)
 			if(show_warning)
 				to_chat(CS.attacker, "<span class='notice'>Can't perform <b>[name]</b> while not being able to move.</span>")
 			return FALSE
@@ -167,7 +169,7 @@ var/global/list/combat_combos_by_name = list()
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>[CS.victim] is too big for you to perform <b>[name]</b> on them.</span>")
 		return FALSE
-	if(CS.fullness < fullness_lose_on_execute)
+	if(CS.points < cost)
 		if(show_warning)
 			to_chat(CS.attacker, "<span class='notice'>You don't have enough combopoints for <b>[name]</b>.</span>")
 		return FALSE
@@ -237,7 +239,7 @@ var/global/list/combat_combos_by_name = list()
 	if(min_value < 0 || val >= min_value)
 		var/armor_check = 0
 		if(!armor_pierce)
-			armor_check = victim.run_armor_check(check_bodyarmor ? null : zone, "melee")
+			armor_check = victim.run_armor_check(check_bodyarmor ? null : zone, MELEE)
 		return victim.apply_damage(val, force_dam_type ? force_dam_type : attack_obj["type"],
 			def_zone = zone,
 			blocked = armor_check,
@@ -263,7 +265,7 @@ var/global/list/combat_combos_by_name = list()
 	if(min_value < 0 || val >= min_value)
 		var/armor_check = 0
 		if(!armor_pierce)
-			armor_check = victim.run_armor_check(check_bodyarmor ? null : zone, "melee")
+			armor_check = victim.run_armor_check(check_bodyarmor ? null : zone, MELEE)
 		return victim.apply_effect(duration, effect, blocked = armor_check)
 	return FALSE
 
@@ -295,8 +297,7 @@ var/global/list/combat_combos_by_name = list()
 	return FALSE
 
 /datum/combat_combo/proc/get_combo_icon()
-	var/image/I = image(icon='icons/mob/unarmed_combat_combos.dmi', icon_state=combo_icon_state)
-	I.layer = ABOVE_HUD_LAYER
+	var/image/I = image(icon='icons/hud/unarmed_combat_combos.dmi', icon_state=combo_icon_state)
 	I.plane = ABOVE_HUD_PLANE
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	I.pixel_x = 16
@@ -356,6 +357,17 @@ var/global/list/combat_combos_by_name = list()
 
 /datum/combat_combo/proc/execute(mob/living/victim, mob/living/attacker)
 	return
+
+/datum/combat_combo/proc/after_combo_finished(mob/living/victim, mob/living/attacker)
+	if(!ishuman(attacker))
+		return
+	var/mob/living/carbon/human/H = attacker
+
+	var/cap = victim.get_pumped(H.get_targetzone()) + 20
+
+	for(var/bodypart in pump_bodyparts)
+		var/obj/item/organ/external/BP = H.get_bodypart(bodypart)
+		BP?.adjust_pumped(pump_bodyparts[bodypart], cap)
 
 /// A lot of combos currently have such mechanic, so it's somewhat reasonable to abstract it here.
 /datum/combat_combo/proc/prepare_grab(mob/living/victim, mob/living/attacker, state)

@@ -6,8 +6,8 @@
 	icon_state = "9mm_glock"
 /obj/random/guns/handgun_security/item_to_spawn()
 		return pick(\
-						prob(3);/obj/item/weapon/gun/projectile/glock,\
-						prob(1);/obj/item/weapon/gun/projectile/glock/spec
+						prob(3);/obj/item/weapon/gun/projectile/automatic/glock,\
+						prob(1);/obj/item/weapon/gun/projectile/automatic/glock/spec
 					)
 
 /obj/random/guns/projectile_security
@@ -25,11 +25,11 @@
 	name = "Random Energy Weapon"
 	desc = "This is a random energy weapon."
 	icon = 'icons/obj/gun.dmi'
-	icon_state = "laser"
+	icon_state = LASER
 /obj/random/guns/energy_weapon/item_to_spawn()
 		return pick(\
 						prob(25);/obj/item/weapon/gun/energy/taser/stunrevolver,\
-						prob(15);/obj/item/weapon/gun/energy/laser/retro,\
+						prob(15);/obj/item/weapon/gun/energy/retro,\
 						prob(15);/obj/item/weapon/gun/energy/laser/practice,\
 						prob(10);/obj/item/weapon/gun/energy/toxgun,\
 						prob(10);/obj/item/weapon/gun/energy/laser,\
@@ -54,10 +54,9 @@
 	icon_state = "revolver"
 /obj/random/guns/projectile_handgun/item_to_spawn()
 		return pick(\
-						prob(15);/obj/item/weapon/gun/projectile/glock,\
+						prob(15);/obj/item/weapon/gun/projectile/automatic/glock,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/pistol,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/colt1911,\
-						prob(15);/obj/item/weapon/gun/projectile/automatic/luger,\
 						prob(15);/obj/item/weapon/gun/projectile/automatic/silenced,\
 						prob(15);/obj/item/weapon/gun/projectile/revolver/peacemaker,\
 						prob(15);/obj/item/weapon/gun/projectile/revolver/detective,\
@@ -65,8 +64,7 @@
 						prob(5);/obj/item/weapon/gun/projectile/revolver/syndie,\
 						prob(5);/obj/item/weapon/gun/projectile/revolver,\
 						prob(5);/obj/item/weapon/gun/projectile/automatic/deagle,\
-						prob(2);/obj/item/weapon/gun/projectile/automatic/gyropistol,\
-						prob(2);/obj/item/weapon/gun/projectile/glock/spec,\
+						prob(2);/obj/item/weapon/gun/projectile/automatic/glock,\
 						prob(2);/obj/item/weapon/gun/projectile/automatic/deagle/gold,\
 						prob(2);/obj/item/weapon/gun/projectile/revolver/mateba\
 					)
@@ -114,7 +112,7 @@
 		return pick(\
 						prob(6);/obj/item/weapon/gun/grenadelauncher,\
 						prob(1);/obj/item/weapon/gun/projectile/revolver/rocketlauncher,\
-						prob(3);/obj/item/weapon/gun/projectile/m79\
+						prob(3);/obj/item/weapon/gun/projectile/grenade_launcher/m79\
 					)
 
 /obj/random/guns/weapon_item
@@ -141,8 +139,7 @@
 						prob(180);/obj/item/ammo_casing/c9mm,\
 						prob(25);/obj/item/ammo_casing/c9mmr,\
 						prob(5);/obj/item/ammo_box/c9mm,\
-						prob(2);/obj/item/weapon/gun/projectile/automatic/luger,\
-						prob(2);/obj/item/weapon/gun/projectile/glock,\
+						prob(2);/obj/item/weapon/gun/projectile/automatic/glock,\
 						prob(2);/obj/item/weapon/gun/projectile/automatic/pistol,\
 						prob(1);/obj/item/weapon/gun/projectile/automatic/mini_uzi\
 					)
@@ -155,7 +152,7 @@
 /obj/random/guns/set_shotgun/item_to_spawn()
 		return pick(\
 						prob(100);/obj/item/ammo_casing/shotgun/beanbag,\
-						prob(75);/obj/item/ammo_casing/shotgun/stunslug,\
+						prob(75);/obj/item/ammo_casing/shotgun/stunshot,\
 						prob(50);/obj/item/ammo_casing/shotgun/buckshot,\
 						prob(50);/obj/item/ammo_casing/shotgun/incendiary,\
 						prob(50);/obj/item/ammo_casing/shotgun/dart,\

@@ -3,6 +3,7 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pai"
 	item_state = "electronic"
+	flags = HEAR_PASS_SAY
 	w_class = SIZE_TINY
 	slot_flags = SLOT_FLAGS_BELT
 	origin_tech = "programming=2"
@@ -254,7 +255,7 @@
 		if(pai.master_dna)
 			return
 		var/mob/M = usr
-		if(!istype(M, /mob/living/carbon))
+		if(!iscarbon(M))
 			to_chat(usr, "<font color=blue>You don't have any DNA, or your DNA is incompatible with this device.</font>")
 		else
 			var/datum/dna/dna = usr.dna
@@ -323,3 +324,8 @@
 	for(var/mob/M in src)
 		M.emplode(severity)
 	..()
+
+/obj/item/device/paicard/get_listeners()
+	. = list()
+	if(pai)
+		. += pai

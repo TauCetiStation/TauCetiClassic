@@ -152,12 +152,12 @@
 
 	if(!newRole)
 		log_mode("Role killed itself or was otherwise missing!")
-		return FALSE
+		return null
 
 	if(!newRole.AssignToRole(P.mind))
 		log_mode("Role refused mind and dropped!")
 		newRole.Drop()
-		return FALSE
+		return null
 
 	return newRole
 
@@ -207,12 +207,12 @@
 	feedback_set_details("game_mode","[SSticker.mode]")
 	feedback_set_details("server_ip","[sanitize_sql(world.internet_address)]:[sanitize_sql(world.port)]")
 
-	return TRUE
-
 /datum/game_mode/proc/GetScoreboard()
 	completition_text = "<h2>Factions & Roles</h2>"
 	var/exist = FALSE
 	for(var/datum/faction/F in factions)
+		F.calculate_completion()
+		SSStatistics.add_faction(F)
 		if (F.members.len > 0)
 			exist = TRUE
 			completition_text += "<div class='Section'>"
@@ -222,6 +222,8 @@
 	if (orphaned_roles.len > 0)
 		completition_text += "<FONT size = 2><B>Independents:</B></FONT><br>"
 	for(var/datum/role/R in orphaned_roles)
+		R.calculate_completion()
+		SSStatistics.add_orphaned_role(R)
 		exist = TRUE
 		completition_text += "<div class='Section'>"
 		completition_text += R.GetScoreboard()

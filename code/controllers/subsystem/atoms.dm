@@ -7,6 +7,7 @@ SUBSYSTEM_DEF(atoms)
 	name = "Atoms"
 	init_order = SS_INIT_ATOMS
 	flags = SS_NO_FIRE
+	msg_lobby = "Заполняем отсеки..."
 
 	initialized = INITIALIZATION_INSSATOMS
 	var/old_initialized

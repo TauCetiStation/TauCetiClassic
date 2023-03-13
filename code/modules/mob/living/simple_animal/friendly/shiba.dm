@@ -25,6 +25,10 @@
 	has_head = TRUE
 	has_leg = TRUE
 
+	default_emotes = list(
+		/datum/emote/dance,
+	)
+
 	var/facehugger
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
@@ -41,7 +45,7 @@
 /mob/living/simple_animal/shiba/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/newspaper))
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(!stat)
+		if(stat == CONSCIOUS)
 			visible_message("<span class='notice'>[user] baps [name] on the nose with the rolled up [O]</span>")
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
@@ -53,20 +57,16 @@
 /mob/living/simple_animal/shiba/Life()
 	..()
 
-	if(!stat && !resting && !buckled)
+	if(stat == CONSCIOUS && !buckled)
 		if(prob(1))
-			emote(pick("chases its tail"))
-			spawn(0)
-				for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2,1,2,4,8,4,2))
-					set_dir(i)
-					sleep(1)
+			emote("dance")
 
 	for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(src, 3))
 		if(prob(30))
-			emote(pick("barks!","woofs loudly!","eyes [histoy] joyfully."))
+			me_emote(pick("barks!","woofs loudly!","eyes [histoy] joyfully."))
 		break
 
-	if(!stat && !resting && !buckled)
+	if(stat == CONSCIOUS && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
 			walk_to(src,0)
@@ -90,4 +90,4 @@
 				set_dir(i)
 				sleep(1)
 		if(prob(40))
-			visible_message(pick("[bicon(src)][src] joyfully plays with the toy!","[bicon(src)][src] rolls the toy back and forth!","[bicon(src)][src] happily twists and spins the toy!","[bicon(src)][src] thoroughly sniffs the toy all around!"), 2)
+			visible_message(pick("[bicon(src)][src] joyfully plays with the toy!","[bicon(src)][src] rolls the toy back and forth!","[bicon(src)][src] happily twists and spins the toy!","[bicon(src)][src] thoroughly sniffs the toy all around!"))

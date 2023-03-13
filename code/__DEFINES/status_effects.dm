@@ -23,6 +23,10 @@
 
 #define STATUS_EFFECT_STASIS_BAG /datum/status_effect/incapacitating/stasis_bag // Halts biological functions like bleeding, chemical processing, blood regeneration, etc
 
+#define STATUS_EFFECT_REMOVE_WET /datum/status_effect/remove_trait/wet_hands
+
+#define STATUS_EFFECT_REMOVE_GREASY /datum/status_effect/remove_trait/greasy_hands
+
 /////////////
 // NEUTRAL //
 /////////////

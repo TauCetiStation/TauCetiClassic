@@ -20,6 +20,9 @@
 
 	initroletype = /datum/role/emergency_responder
 
+	// Indicates that the first member of ERT will be the leader
+	var/leader_selected = FALSE
+
 //________________________________________________
 
 /datum/faction/strike_team/deathsquad

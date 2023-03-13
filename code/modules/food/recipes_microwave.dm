@@ -83,6 +83,19 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/donut/choco
 
+/datum/recipe/microwave/donut/chaos
+	reagents = list("sugar" = 5, "salt" = 5, "water" = 5, "fuel" = 5, "toxin" = 5, "anti_toxin" = 5, "coffee" = 5, "stoxin" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/donut/normal,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/classic,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/cherryjelly,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/banana,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/ambrosia,
+		/obj/item/weapon/reagent_containers/food/snacks/donut/choco
+
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/donut/chaos
+
 /datum/recipe/microwave/human/burger
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat/human,
@@ -169,11 +182,10 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/donkpocket
 
 /datum/recipe/microwave/donkpocket/proc/warm_up(obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked)
-	being_cooked.warm = 1
+	being_cooked.warm = TRUE
 	being_cooked.reagents.add_reagent("tricordrazine", 5)
 	being_cooked.bitesize = 6
-	being_cooked.name = "Warm " + being_cooked.name
-	being_cooked.cooltime()
+	being_cooked.name = "warm " + being_cooked.name
 
 /datum/recipe/microwave/donkpocket/make_food(obj/container)
 	var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/being_cooked = ..(container)
