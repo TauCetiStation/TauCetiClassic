@@ -13,12 +13,15 @@
 	color = "#40e0d0" // rgb: 64, 224, 208
 	taste_message = null
 
+	// Screw you and your armor. It's bluespace magic, I ain't gotta explain this.
+	permeability_multiplier = 10.0
+
 /datum/reagent/prismaline/reaction_mob(mob/M, method=TOUCH, volume)
 	. = ..()
 	if(method != TOUCH)
 		return
 
-	M.adjust_bodytemperature(-5.0 * volume * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT - 5.0, BODYTEMP_HEAT_DAMAGE_LIMIT)
+	M.adjust_bodytemperature(-1.0 * volume * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_COLD_DAMAGE_LIMIT - 5.0, BODYTEMP_HEAT_DAMAGE_LIMIT)
 
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M

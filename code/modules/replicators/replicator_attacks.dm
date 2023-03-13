@@ -11,10 +11,11 @@
 	dispersion = 1
 	impact_force = 1
 	pass_flags = PASSTABLE | PASSGLASS
+	flag = ENERGY
 
 /obj/item/projectile/disabler/on_impact(atom/A)
 	..()
-	spit_prismaline(src, A, 1.0)
+	spit_prismaline(src, A, 1.5)
 
 
 /mob/living
