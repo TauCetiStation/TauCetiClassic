@@ -68315,7 +68315,9 @@
 /turf/simulated/floor,
 /area/station/construction)
 "cJn" = (
-/obj/structure/reagent_dispensers/water_cooler,
+/obj/structure/stool/bed/chair/electrotherapy{
+	dir = 1
+	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "cJo" = (
@@ -75185,7 +75187,6 @@
 	name = "Psychiatrist's Locker";
 	req_access = list(64)
 	},
-/obj/item/weapon/storage/box/cups,
 /obj/machinery/camera{
 	c_tag = "Psychiatric Office";
 	dir = 8;

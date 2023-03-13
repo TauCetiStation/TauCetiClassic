@@ -60801,11 +60801,10 @@
 	},
 /area/station/civilian/fitness)
 "oqi" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/folder/white{
-	pixel_y = 4
+/obj/structure/stool/bed/chair/electrotherapy{
+	dir = 4
 	},
-/turf/simulated/floor/carpet/green,
+/turf/simulated/floor/wood,
 /area/station/medical/psych)
 "oqk" = (
 /obj/item/weapon/flora/random,
@@ -120864,7 +120863,7 @@ ngU
 ngU
 ngU
 hiT
-bmU
+oqi
 bmU
 xpt
 peQ
@@ -121122,7 +121121,7 @@ oXw
 ngU
 mFN
 rzq
-oqi
+rzq
 eXL
 pFa
 pUn
