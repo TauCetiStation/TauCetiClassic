@@ -90,7 +90,7 @@
 	if(block)
 		return
 
-	chance = permeability_multiplier * chance * 100
+	chance = self.permeability_multiplier * chance * 100
 
 	if(!prob(chance))
 		return
