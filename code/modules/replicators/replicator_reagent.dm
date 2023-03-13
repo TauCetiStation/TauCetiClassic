@@ -43,7 +43,7 @@
 		M.use_power(1.0 * volume)
 		return
 
-	if(istype(O, /obj/machinery))
+	if(ismachinery(O))
 		var/obj/machinery/M = O
 		M.use_power(1.0 * volume)
 		return
