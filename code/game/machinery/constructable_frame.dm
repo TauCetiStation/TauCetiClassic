@@ -255,6 +255,7 @@ to destroy them and players will be able to make replacements.
 /obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user, params)
 	if(isscrewing(I))
 		var/static/list/names_of_vendings = list()
+		var/static/list/radial_icons = list()
 
 		if(names_of_vendings.len == 0)
 			for(var/obj/machinery/vending/type as anything in typesof(/obj/machinery/vending))
@@ -269,8 +270,9 @@ to destroy them and players will be able to make replacements.
 				ASSERT(!names_of_vendings[full_name])
 
 				names_of_vendings[full_name] = type
+				radial_icons[full_name] = icon(initial(type.icon), initial(type.icon_state))
 
-		var/vending_name = tgui_input_list(user, "Выберите новую марку", "Выбор торгового автомата", names_of_vendings)
+		var/vending_name = show_radial_menu(user, src, radial_icons, require_near = TRUE, tooltips = TRUE)
 		if(isnull(vending_name))
 			return
 		
