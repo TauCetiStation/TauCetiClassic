@@ -19,6 +19,8 @@
 	return
 
 /obj/structure/stool/bed/chair/electrotherapy/AltClick(mob/user)
+	if(!user.Adjacent(src))
+		return
 	if(!buckled_mob)
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, get_turf(src))
