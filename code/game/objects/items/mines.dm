@@ -51,7 +51,7 @@
 	qdel(src)
 
 /obj/item/mine/proc/try_trigger(atom/movable/AM)
-	if(iscarbon(AM) || issilicon(AM) || istype(AM, /obj/mecha))
+	if(isliving(AM) || istype(AM, /obj/mecha))
 		if(anchored)
 			AM.visible_message("<span class='danger'>[AM] steps on [src]!</span>")
 			trigger_act(AM)
