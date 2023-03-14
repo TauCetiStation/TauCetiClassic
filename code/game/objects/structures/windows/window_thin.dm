@@ -10,6 +10,7 @@
 	icon_state = "window"
 
 	flags = ON_BORDER
+	can_be_unanchored = TRUE
 
 	var/ini_dir = null
 
@@ -54,11 +55,11 @@
 
 /obj/structure/window/thin/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(loc, target) & dir)
 		return !density
 	else
-		return 1
+		return TRUE
 
 /obj/structure/window/thin/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	if(!density)
@@ -70,10 +71,10 @@
 
 /obj/structure/window/thin/CheckExit(atom/movable/O, target)
 	if(istype(O) && O.checkpass(PASSGLASS))
-		return 1
+		return TRUE
 	if(get_dir(O.loc, target) == dir)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/structure/window/thin/attackby(obj/item/W, mob/user)
 /*	if(flags & NODECONSTRUCT)

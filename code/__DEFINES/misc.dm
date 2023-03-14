@@ -323,9 +323,12 @@
 		/obj/structure/girder/reinforced, \
 		/obj/structure/windowsill, \
 		/obj/structure/window/fulltile, \
+		/obj/structure/window/fulltile/phoron, \
 		/obj/structure/window/fulltile/reinforced, \
 		/obj/structure/window/fulltile/reinforced/phoron, \
 		/obj/structure/window/fulltile/reinforced/tinted, \
+		/obj/structure/window/fulltile/reinforced/polarized, \
+		/obj/structure/window/fulltile/reinforced/indestructible, \
 		/obj/machinery/door/airlock, \
 		/obj/machinery/door/airlock/command, \
 		/obj/machinery/door/airlock/security, \

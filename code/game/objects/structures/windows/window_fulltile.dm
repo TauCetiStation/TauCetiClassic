@@ -8,7 +8,7 @@
 	icon = 'icons/obj/smooth_structures/windows/placeholder.dmi'
 	icon_state = "window"
 
-	//dir = 5 // todo
+	can_block_air = TRUE
 
 	smooth = SMOOTH_TRUE
 	canSmoothWith = CAN_SMOOTH_WITH_WALLS
@@ -21,9 +21,10 @@
 
 	var/grilled = TRUE
 	var/glass_color
-	//var/glass_color_to_blend
+	var/glass_color_blend_to_color
+	var/glass_color_blend_to_ratio
 
-	var/damage_threshold = 5   // this will be deducted from any physical damage source. Main difference in sturdiness between fulltiles and base windows
+	var/damage_threshold = 5   // this will be deducted from any physical damage source. Main difference in sturdiness between fulltiles and thin windows
 	var/image/crack_overlay
 
 /obj/structure/window/fulltile/atom_init()
@@ -43,7 +44,10 @@
 		world.log << "WORNING: [x].[y].[z]: DIR [dir]"
 
 /obj/structure/window/fulltile/change_color(new_color)
-	glass_color = new_color
+	if(glass_color_blend_to_color && glass_color_blend_to_ratio)
+		glass_color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
+	else
+		glass_color = new_color
 	
 	if(SSticker.current_state > GAME_STATE_SETTING_UP) // todo: need own flag for color_windows_init (subsystem?)
 		regenerate_smooth_icon()
@@ -82,16 +86,12 @@
 
 	max_integrity = 120
 
+	glass_color_blend_to_color = "#8000ff"
+	glass_color_blend_to_ratio = 0.5
+
 /obj/structure/window/fulltile/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 32000)
 		take_damage(round(exposed_volume / 1000), BURN, FIRE, FALSE)
-
-/obj/structure/window/fulltile/phoron/change_color(new_color)
-	glass_color = BlendRGB(new_color, "#8000ff", 0.5)
-	
-	if(SSticker.current_state > GAME_STATE_SETTING_UP)
-		regenerate_smooth_icon()
-
 
 /**
  * Fulltile reinforced
@@ -119,11 +119,8 @@
 
 	max_integrity = 160
 
-/obj/structure/window/fulltile/reinforced/phoron/change_color(new_color)
-	glass_color = BlendRGB(new_color, "#8000ff", 0.5)
-	
-	if(SSticker.current_state > GAME_STATE_SETTING_UP)
-		regenerate_smooth_icon()
+	glass_color_blend_to_color = "#8000ff"
+	glass_color_blend_to_ratio = 0.5
 
 /obj/structure/window/fulltile/reinforced/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
@@ -139,11 +136,8 @@
 
 	icon_state = "window_reinforced_tinted"
 
-/obj/structure/window/fulltile/reinforced/tinted/change_color(new_color)
-	glass_color = BlendRGB(new_color, "#000000", 0.7)
-
-	if(SSticker.current_state > GAME_STATE_SETTING_UP)
-		regenerate_smooth_icon()
+	glass_color_blend_to_color = "#000000"
+	glass_color_blend_to_ratio = 0.7
 
 /**
  * Fulltile reinforced polarized
@@ -154,6 +148,9 @@
 	desc = "Adjusts its tint with voltage. Might take a few good hits to shatter it."
 
 	icon_state = "window_reinforced_polarized"
+
+	glass_color_blend_to_color = "#bebebe"
+	glass_color_blend_to_ratio = 0.7
 
 	var/id
 
@@ -171,16 +168,10 @@
 		return TRUE
 	return ..()
 
-/obj/structure/window/fulltile/reinforced/polarized/change_color(new_color)
-	glass_color = BlendRGB(new_color, "#bebebe", 0.7)
-	
-	if(SSticker.current_state > GAME_STATE_SETTING_UP)
-		regenerate_smooth_icon()
-
 /**
  * Fulltile reinforced indestructible
  */
 
 /obj/structure/window/fulltile/reinforced/indestructible
-	flags = NODECONSTRUCT | ON_BORDER
+	flags = NODECONSTRUCT
 	resistance_flags = FULL_INDESTRUCTIBLE

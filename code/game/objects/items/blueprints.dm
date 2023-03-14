@@ -192,7 +192,9 @@ move an amendment</a> to the drawing.</p>
 	if (!istype(T2, /turf/simulated) || (dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
 		return BORDER_BETWEEN
 
-	for (var/obj/structure/window/W in T2)
+	for (var/obj/structure/window/fulltile/W in T2)
+		return BORDER_2NDTILE
+	for (var/obj/structure/window/thin/W in T2)
 		if(turn(dir,180) == W.dir)
 			return BORDER_2NDTILE
 		if (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST))
@@ -222,7 +224,7 @@ move an amendment</a> to the drawing.</p>
 		for (var/dir in alldirs)
 			if(!greedy) // we want to add windows to area or not
 				var/skip = 0
-				for (var/obj/structure/window/W in T)
+				for (var/obj/structure/window/thin/W in T)
 					if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
 						skip = 1; break
 				if (skip) continue

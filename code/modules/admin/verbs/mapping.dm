@@ -86,7 +86,7 @@ var/global/intercom_range_display_status = 0
 		if(!T || !isturf(T) || !T.density )
 			if(!(locate(/obj/structure/grille,T)))
 				var/window_check = 0
-				for(var/obj/structure/window/W in T)
+				for(var/obj/structure/window/thin/W in T)
 					if (W.dir == turn(C1.dir,180) || (W.dir in list(5,6,9,10)) )
 						window_check = 1
 						break

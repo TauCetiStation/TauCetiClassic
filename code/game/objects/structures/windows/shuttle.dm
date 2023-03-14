@@ -5,9 +5,12 @@
 /obj/structure/window/shuttle
 	name = "shuttle window"
 	desc = "It looks rather strong. Might take a few good hits to shatter it."
+
 	icon = 'icons/obj/podwindows.dmi'
 	icon_state = "window"
+
 	max_integrity = 150
+
 	var/damage_threshold = 30
 
 /obj/structure/window/shuttle/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)

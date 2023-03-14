@@ -173,7 +173,7 @@
 
 			var/obj/structure/window/W = locate() in T
 
-			if(W && W.density)
+			if(W && W.density) // todo: should check only /thin/ and only some dirs
 				continue
 
 			new /obj/structure/alien/weeds(T, linked_node)

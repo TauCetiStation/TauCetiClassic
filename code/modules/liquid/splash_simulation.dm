@@ -171,7 +171,7 @@ var/global/list/datum/puddle/puddles = list()
 	return 1
 
 /turf/simulated/floor/can_accept_liquid(from_direction)
-	for(var/obj/structure/window/W in src)
+	for(var/obj/structure/window/thin/W in src)
 		if(W.dir in list(5,6,9,10))
 			return 0
 		if(W.dir & from_direction)
@@ -182,7 +182,7 @@ var/global/list/datum/puddle/puddles = list()
 	return 1
 
 /turf/simulated/floor/can_leave_liquid(to_direction)
-	for(var/obj/structure/window/W in src)
+	for(var/obj/structure/window/thin/W in src)
 		if(W.dir in list(5,6,9,10))
 			return 0
 		if(W.dir & to_direction)
@@ -202,5 +202,11 @@ var/global/list/datum/puddle/puddles = list()
 
 /obj/machinery/door/liquid_pass()
 	return !density
+
+/obj/structure/liquid_pass() // i'm not sure, possible fix for fulltile windows, shuttle walls, maybe other structures
+	return !(density && can_block_air)
+
+/obj/structure/window/thin/liquid_pass() // depends, can_accept_liquid/can_leave_liquid do own check
+	return TRUE
 
 #undef LIQUID_TRANSFER_THRESHOLD

@@ -4,13 +4,11 @@
 
 /obj/structure/window // should not be used by itself
 	name = "window"
-	desc = "A window."
+	desc = "A window you should not see. Contact coders about this anomaly."
 	icon = 'icons/obj/window.dmi' // has many legacy icons
 	density = TRUE
 	layer = 3.2//Just above doors
 	anchored = TRUE
-	can_block_air = TRUE
-	can_be_unanchored = TRUE
 
 	max_integrity = 14
 	integrity_failure = 0.75
@@ -47,6 +45,19 @@
 				visible_message("Cracks begin to appear in [src]!" )
 			integrity_failure = 0.5
 	update_icon()
+
+/obj/structure/window/CanPass(atom/movable/mover, turf/target, height=0)
+	if(istype(mover) && mover.checkpass(PASSGLASS))
+		return TRUE
+	return !density
+
+/obj/structure/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+	if(!density)
+		return TRUE
+	if((dir == SOUTHWEST) || (dir == to_dir))
+		return FALSE
+
+	return TRUE
 
 /obj/structure/window/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.pass_flags & PASSGLASS)	//Lasers mostly use this flag.. Why should they able to focus damage with direct click...
