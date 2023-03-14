@@ -446,7 +446,7 @@
 
 /datum/reagent/radium/on_general_digest(mob/living/M)
 	..()
-	M.apply_effect(2 * REM,IRRADIATE, 0)
+	irradiate_one_mob(M, 2 * REM)
 	// radium may increase your chances to cure a disease
 	if(iscarbon(M)) // make sure to only use it on carbon mobs
 		var/mob/living/carbon/C = M
@@ -510,7 +510,7 @@
 
 /datum/reagent/uranium/on_general_digest(mob/living/M)
 	..()
-	M.apply_effect(1, IRRADIATE, 0)
+	irradiate_one_mob(M, 1)
 
 /datum/reagent/uranium/reaction_turf(turf/T, volume)
 	. = ..()
