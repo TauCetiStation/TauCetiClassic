@@ -12,7 +12,7 @@ def main():
 	for root, subdirs, files in walk("maps/"):
 		for filename in files:
 			if fnmatch.fnmatch(filename, "*.dmm"):
-			#if filename == "gamma.dmm":
+			#if filename == "prometheus.dmm":
 				file_path = path.join(root, filename)
 				print(file_path)
 				with open(file_path, 'r') as file :
@@ -95,7 +95,7 @@ def main():
 
 								if idcode:
 									batch = re.sub(r'/obj/structure/grille({\s+.*\s+})?(,)?\n?', '', batch)
-									batch = re.sub(r'/obj/structure/window/reinforced/polarized(?!/)({\s+.*\s+})?(,)?\n?', '', batch, flags=re.DOTALL)
+									batch = re.sub(r'/obj/structure/window/reinforced/polarized(?!/)({[\sa-zA-Z0-9=;\" ]*})?(,)?\n?', '', batch)
 									batch = batch[:-1] + ",\n/obj/structure/window/fulltile/reinforced/polarized{{\n\tgrilled = 1;\n\tid = \"{}\"\n}}\n".format(idcode)
 
 							output += batch
