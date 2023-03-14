@@ -332,7 +332,7 @@
 	return FALSE
 
 /datum/faction/revolution/proc/find_reason(mob/user)
-	var/reason_string = sanitize_safe(input(user, "Please write reason why you joined the ranks of the revolution", "Write Reason") as null|message, MAX_REV_REASON_LEN)
+	var/reason_string = sanitize_safe(input(user, "Please write the reason why you want to join the ranks of the revolution", "Write Reason") as null|message, MAX_REV_REASON_LEN)
 	if(!reason_string)
 		to_chat(user, "<span class='warning'>You have no reason to join the revolution!</span>")
 		return null
