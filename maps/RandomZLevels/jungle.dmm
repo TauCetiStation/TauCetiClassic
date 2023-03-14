@@ -932,9 +932,11 @@
 	},
 /area/awaymission/jungle/crash_ship_source)
 "dB" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
+/obj/structure/window/reinforced,
 /turf/unsimulated/floor,
 /area/awaymission/jungle/crash_ship_source)
 "dC" = (
@@ -949,7 +951,7 @@
 /area/awaymission/jungle/crash_ship_source)
 "dE" = (
 /obj/structure/grille,
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/unsimulated/floor,
 /area/awaymission/jungle/crash_ship_source)
 "dF" = (
@@ -1017,7 +1019,7 @@
 /area/awaymission/jungle/crash_ship_source)
 "dS" = (
 /obj/structure/grille,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/unsimulated/floor,
