@@ -74,7 +74,9 @@
 	var/turf/T = get_turf(src)
 	if(!(locate(/obj/structure/replicator_forcefield) in T))
 		new /obj/structure/replicator_forcefield(T)
-		qdel(locate(/obj/structure/replicator_barricade) in T)
+		var/obj/structure/replicator_barricade/RB = locate() in T
+		RB.leave_stabilization_field = FALSE
+		qdel(RB)
 	dismantle_wall()
 	return TRUE
 
@@ -183,7 +185,9 @@
 	var/turf/T = get_turf(src)
 	if(is_fulltile() && !(locate(/obj/structure/replicator_forcefield) in T))
 		new /obj/structure/replicator_forcefield(T)
-		qdel(locate(/obj/structure/replicator_barricade) in T)
+		var/obj/structure/replicator_barricade/RB = locate() in T
+		RB.leave_stabilization_field = FALSE
+		qdel(RB)
 	deconstruct(TRUE)
 	return TRUE
 
@@ -192,7 +196,9 @@
 	var/turf/T = get_turf(src)
 	if(!(locate(/obj/structure/replicator_forcefield) in T))
 		new /obj/structure/replicator_forcefield(T)
-		qdel(locate(/obj/structure/replicator_barricade) in T)
+		var/obj/structure/replicator_barricade/RB = locate() in T
+		RB.leave_stabilization_field = FALSE
+		qdel(RB)
 	deconstruct(TRUE)
 	return TRUE
 
@@ -201,7 +207,9 @@
 	var/turf/T = get_turf(src)
 	if(!(locate(/obj/structure/replicator_forcefield) in T))
 		new /obj/structure/replicator_forcefield(T)
-		qdel(locate(/obj/structure/replicator_barricade) in T)
+		var/obj/structure/replicator_barricade/RB = locate() in T
+		RB.leave_stabilization_field = FALSE
+		qdel(RB)
 	deconstruct(TRUE)
 	return TRUE
 

@@ -171,6 +171,8 @@
 	max_integrity = 35
 	resistance_flags = CAN_BE_HIT | FIRE_PROOF
 
+	var/leave_stabilization_field = TRUE
+
 /obj/structure/replicator_barricade/atom_init()
 	. = ..()
 	AddComponent(/datum/component/replicator_regeneration)
@@ -178,7 +180,7 @@
 /obj/structure/replicator_barricade/Destroy()
 	// to-do: sound
 	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
-	if(!(locate(/obj/structure/stabilization_field) in loc))
+	if(leave_stabilization_field && !(locate(/obj/structure/stabilization_field) in loc))
 		new /obj/structure/stabilization_field(loc)
 	return ..()
 
