@@ -170,9 +170,8 @@
 	},
 /area/space_structures/derelict_lab)
 "aA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/shuttle/plating,
 /area/space_structures/derelict_lab)
@@ -643,9 +642,8 @@
 	},
 /area/space_structures/derelict_lab)
 "bZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "white"
