@@ -35,12 +35,12 @@
 
 	for(var/atom/A in get_turf(src))
 		if(istype(A, /obj/structure/window) && A != src)
-			world.log << "WARNING: [x].[y].[z]: type [A.type]"
+			world.log << "WORNING: [x].[y].[z]: type [A.type]"
 		else if(istype(A, /obj/structure/grille))
-			world.log << "WARNING: [x].[y].[z]: type [A.type]"
+			world.log << "WORNING: [x].[y].[z]: type [A.type]"
 
 	if(dir in cornerdirs)
-		world.log << "WARNING: [x].[y].[z]: DIR [dir]"
+		world.log << "WORNING: [x].[y].[z]: DIR [dir]"
 
 /obj/structure/window/fulltile/change_color(new_color)
 	glass_color = new_color
