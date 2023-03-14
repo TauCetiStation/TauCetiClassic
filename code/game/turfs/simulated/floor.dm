@@ -122,8 +122,8 @@ var/global/list/wood_icons = list("wood","wood-broken")
 /turf/simulated/floor/adjacent_fire_act(turf/simulated/floor/adj_turf, datum/gas_mixture/adj_air, adj_temp, adj_volume)
 	var/dir_to = get_dir(src, adj_turf)
 
-	for(var/obj/structure/window/W in src)
-		if(W.dir == dir_to || W.is_fulltile()) //Same direction or diagonal (full tile)
+	for(var/obj/structure/window/thin/W in src)
+		if(W.dir == dir_to) //Same direction // should it be other direction (closest window to us, instead of distant)?
 			W.fire_act(adj_air, adj_temp, adj_volume)
 
 /turf/simulated/floor/blob_act()

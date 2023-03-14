@@ -1,0 +1,186 @@
+/**
+ * Base fulltile window
+ */
+
+/obj/structure/window/fulltile
+	name = "window"
+	desc = "A window."
+	icon = 'icons/obj/smooth_structures/windows/placeholder.dmi'
+	icon_state = "window"
+
+	//dir = 5 // todo
+
+	smooth = SMOOTH_TRUE
+	canSmoothWith = CAN_SMOOTH_WITH_WALLS
+	smooth_adapters = SMOOTH_ADAPTERS_WALLS
+
+	// has own smoothing algoritm
+	var/smooth_icon_windowstill = 'icons/obj/smooth_structures/windows/window_sill.dmi'
+	var/smooth_icon_window = 'icons/obj/smooth_structures/windows/window.dmi'
+	var/smooth_icon_grille = 'icons/obj/smooth_structures/grille.dmi'
+
+	var/grilled = TRUE
+	var/glass_color
+	//var/glass_color_to_blend
+
+	var/damage_threshold = 5   // this will be deducted from any physical damage source. Main difference in sturdiness between fulltiles and base windows
+	var/image/crack_overlay
+
+/obj/structure/window/fulltile/atom_init()
+	. = ..()
+
+	if(color) // tmp remove me
+		glass_color = color
+		color = null
+
+	for(var/atom/A in get_turf(src))
+		if(istype(A, /obj/structure/window) && A != src)
+			world.log << "WARNING: [x].[y].[z]: type [A.type]"
+		else if(istype(A, /obj/structure/grille))
+			world.log << "WARNING: [x].[y].[z]: type [A.type]"
+
+	if(dir in cornerdirs)
+		world.log << "WARNING: [x].[y].[z]: DIR [dir]"
+
+/obj/structure/window/fulltile/change_color(new_color)
+	glass_color = new_color
+	
+	if(SSticker.current_state > GAME_STATE_SETTING_UP) // todo: need own flag for color_windows_init (subsystem?)
+		regenerate_smooth_icon()
+
+// 
+/obj/structure/window/fulltile/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
+	if(damage_threshold)
+		switch(damage_type)
+			if(BRUTE)
+				return max(0, damage_amount - damage_threshold)
+			if(BURN)
+				return damage_amount * 0.3
+	return ..()
+
+/obj/structure/window/fulltile/attackby(obj/item/W, mob/user)
+
+/obj/structure/window/fulltile/update_icon()
+	var/ratio = get_integrity() / max_integrity
+	ratio = CEIL(ratio * 4) * 25
+
+	cut_overlay(crack_overlay)
+	if(ratio > 75)
+		return
+	crack_overlay = image('icons/obj/window.dmi',"damage[ratio]",-(layer+0.1))
+	add_overlay(crack_overlay)
+
+/**
+ * Fulltile phoron
+ */
+
+/obj/structure/window/fulltile/phoron
+	name = "phoron window"
+	desc = "A phoron-glass alloy window. It looks insanely tough to break. It appears it's also insanely tough to burn through."
+
+	icon_state = "window_phoron"
+
+	max_integrity = 120
+
+/obj/structure/window/fulltile/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature > T0C + 32000)
+		take_damage(round(exposed_volume / 1000), BURN, FIRE, FALSE)
+
+/obj/structure/window/fulltile/phoron/change_color(new_color)
+	glass_color = BlendRGB(new_color, "#8000ff", 0.5)
+	
+	if(SSticker.current_state > GAME_STATE_SETTING_UP)
+		regenerate_smooth_icon()
+
+
+/**
+ * Fulltile reinforced
+ */
+
+/obj/structure/window/fulltile/reinforced
+	name = "reinforced window"
+	desc = "It looks rather strong. Might take a few good hits to shatter it."
+
+	smooth_icon_window = 'icons/obj/smooth_structures/windows/window_reinforced.dmi'
+	icon_state = "window_reinforced"
+
+	max_integrity = 100
+	damage_threshold = 15
+
+/**
+ * Fulltile reinforced phoron
+ */
+
+/obj/structure/window/fulltile/reinforced/phoron
+	name = "reinforced phoron window"
+	desc = "A phoron-glass alloy window, with rods supporting it. It looks hopelessly tough to break. It also looks completely fireproof, considering how basic phoron windows are insanely fireproof."
+
+	icon_state = "window_reinforced_phoron"
+
+	max_integrity = 160
+
+/obj/structure/window/fulltile/reinforced/phoron/change_color(new_color)
+	glass_color = BlendRGB(new_color, "#8000ff", 0.5)
+	
+	if(SSticker.current_state > GAME_STATE_SETTING_UP)
+		regenerate_smooth_icon()
+
+/obj/structure/window/fulltile/reinforced/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	return
+
+/**
+ * Fulltile reinforced tinted
+ */
+
+/obj/structure/window/fulltile/reinforced/tinted
+	name = "reinforced tinted window"
+	desc = "It looks rather strong and opaque. Might take a few good hits to shatter it."
+	opacity = 1
+
+	icon_state = "window_reinforced_tinted"
+
+/obj/structure/window/fulltile/reinforced/tinted/change_color(new_color)
+	glass_color = BlendRGB(new_color, "#000000", 0.7)
+
+	if(SSticker.current_state > GAME_STATE_SETTING_UP)
+		regenerate_smooth_icon()
+
+/**
+ * Fulltile reinforced polarized
+ */
+
+/obj/structure/window/fulltile/reinforced/polarized
+	name = "electrochromic window"
+	desc = "Adjusts its tint with voltage. Might take a few good hits to shatter it."
+
+	icon_state = "window_reinforced_polarized"
+
+	var/id
+
+/obj/structure/window/fulltile/reinforced/polarized/proc/toggle()
+	if(opacity) // todo: color change?
+		set_opacity(0)
+	else
+		set_opacity(1)
+
+/obj/structure/window/fulltile/reinforced/polarized/attackby(obj/item/W as obj, mob/user as mob)
+	if(ispulsing(W)) // todo: need something for access unlocking
+		var/t = sanitize(input(user, "Enter the ID for the window.", src.name, null), MAX_NAME_LEN)
+		src.id = t
+		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
+		return TRUE
+	return ..()
+
+/obj/structure/window/fulltile/reinforced/polarized/change_color(new_color)
+	glass_color = BlendRGB(new_color, "#bebebe", 0.7)
+	
+	if(SSticker.current_state > GAME_STATE_SETTING_UP)
+		regenerate_smooth_icon()
+
+/**
+ * Fulltile reinforced indestructible
+ */
+
+/obj/structure/window/fulltile/reinforced/indestructible
+	flags = NODECONSTRUCT | ON_BORDER
+	resistance_flags = FULL_INDESTRUCTIBLE

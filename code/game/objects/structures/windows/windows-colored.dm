@@ -8,13 +8,7 @@
 /proc/painting_objects(list/possible_areas, color)
 	for(var/type in possible_areas)
 		for(var/obj/structure/window/W in get_area_by_type(type))
-			if(istype(W, /obj/structure/window/fulltile))
-				var/obj/structure/window/fulltile/FT = W
-				FT.glass_color = color
-				if(SSticker.current_state > GAME_STATE_SETTING_UP)
-					FT.regenerate_smooth_icon()
-			else
-				W.color = color
+			W.change_color("#ffffff")//
 		for(var/obj/machinery/door/window/D in get_area_by_type(type))
 			D.color = color
 

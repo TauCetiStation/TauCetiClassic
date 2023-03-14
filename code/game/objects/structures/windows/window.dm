@@ -1,0 +1,139 @@
+/**
+ * Base window structure
+ */
+
+/obj/structure/window // should not be used by itself
+	name = "window"
+	desc = "A window."
+	icon = 'icons/obj/window.dmi' // has many legacy icons
+	density = TRUE
+	layer = 3.2//Just above doors
+	anchored = TRUE
+	can_block_air = TRUE
+	can_be_unanchored = TRUE
+
+	max_integrity = 14
+	integrity_failure = 0.75
+	resistance_flags = CAN_BE_HIT
+
+	var/list/contents_drop = list()
+
+/obj/structure/window/play_attack_sound(damage_amount, damage_type, damage_flag)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(loc, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER, 90)
+			else
+				playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/obj/structure/window/atom_break(damage_flag)
+	. = ..()
+
+	var/ratio = get_integrity() / max_integrity
+
+	switch(ratio)
+		if(0 to 0.25)
+			if(!istype(src, /obj/structure/window/fulltile))
+				visible_message("[src] looks like it's about to shatter!" )
+			integrity_failure = 0
+		if(0.25 to 0.5)
+			if(!istype(src, /obj/structure/window/fulltile))
+				visible_message("[src] looks seriously damaged!" )
+			integrity_failure = 0.25
+		if(0.5 to 0.75)
+			if(!istype(src, /obj/structure/window/fulltile))
+				visible_message("Cracks begin to appear in [src]!" )
+			integrity_failure = 0.5
+	update_icon()
+
+/obj/structure/window/bullet_act(obj/item/projectile/Proj, def_zone)
+	if(Proj.pass_flags & PASSGLASS)	//Lasers mostly use this flag.. Why should they able to focus damage with direct click...
+		return PROJECTILE_FORCE_MISS
+
+	return ..()
+
+/obj/structure/window/ex_act(severity)
+	switch(severity)
+		if(EXPLODE_DEVASTATE)
+			qdel(src)
+		if(EXPLODE_HEAVY)
+			take_damage(rand(30, 50), BRUTE, BOMB)
+		if(EXPLODE_LIGHT)
+			take_damage(rand(5, 15), BRUTE, BOMB)
+
+/obj/structure/window/airlock_crush_act()
+	take_damage(DOOR_CRUSH_DAMAGE * 2, BRUTE, MELEE)
+	..()
+
+/obj/structure/window/blob_act()
+	take_damage(rand(30, 50), BRUTE, MELEE)
+
+/obj/structure/window/attack_hand(mob/user)	//specflags please!!
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(HULK in user.mutations)
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
+		attack_generic(user, rand(15, 25), BRUTE, MELEE)
+	else if(user.get_species() == GOLEM || user.get_species() == ABOMINATION)
+		attack_generic(user, rand(15, 25), BRUTE, MELEE)
+	else if (user.a_intent == INTENT_HARM)
+		playsound(src, 'sound/effects/glassknock.ogg', VOL_EFFECTS_MASTER)
+		user.visible_message("<span class='danger'>[usr.name] bangs against the [src.name]!</span>", \
+							"<span class='danger'>You bang against the [src.name]!</span>", \
+							"You hear a banging sound.")
+	else
+		playsound(src, 'sound/effects/glassknock.ogg', VOL_EFFECTS_MASTER)
+		user.visible_message("[usr.name] knocks on the [src.name].", \
+							"You knock on the [src.name].", \
+							"You hear a knocking sound.")
+
+/obj/structure/window/attack_tk(mob/user)
+	user.visible_message("<span class='notice'>Something knocks on [src].</span>")
+	playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
+	return TRUE
+
+/obj/structure/window/attack_paw(mob/user)
+	return attack_hand(user)
+
+/obj/structure/window/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = TRUE)
+	if(!damage_amount)
+		return
+	if(damage_amount >= 10)
+		visible_message("<span class='danger'>[user] smashes into [src]!</span>")
+		return ..(user, damage_amount, damage_type, damage_flag, sound_effect)
+
+	visible_message("<span class='notice'>\The [user] bonks \the [src] harmlessly.</span>")
+	user.do_attack_animation(src)
+
+/obj/structure/window/attack_slime(mob/user)
+	if(!isslimeadult(user))
+		return
+	user.SetNextMove(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	attack_generic(user, rand(10, 15))
+
+/obj/structure/window/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature > T0C + 800)
+		take_damage(round(exposed_volume / 100), BURN, FIRE, FALSE)
+
+/obj/structure/window/proc/change_color(new_color)
+	color = new_color
+
+/obj/structure/window/proc/change_paintjob(obj/item/C, mob/user)
+	var/obj/item/weapon/airlock_painter/W
+	if(istype(C, /obj/item/weapon/airlock_painter))
+		W = C
+	else
+		return
+
+	if(!W.can_use(user, 1))
+		return
+
+	var/new_color = input(user, "Choose color!") as color|null
+	if(!new_color) return
+	// do_after
+	if(!Adjacent(usr) || !W.use(1))
+		return
+	else
+		change_color(new_color)
