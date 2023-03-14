@@ -60,14 +60,16 @@
 	name = "stunprod"
 	desc = "An improvised stun baton."
 	icon_state = "stunprod"
-	item_state = "prod"
+	item_state = "stunprod"
 	var/obj/item/weapon/stock_parts/cell/bcell = null
 	var/stunforce = 5
 	var/hitcost = 2000
 	force = 3
 	throwforce = 5
 	var/status = 0
-	slot_flags = null
+	slot_flags = SLOT_FLAGS_BACK
+	flags_2 = CANT_BE_INSERTED
+
 
 /obj/item/weapon/melee/cattleprod/atom_init()
 	. = ..()
