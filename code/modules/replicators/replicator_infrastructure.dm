@@ -136,7 +136,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 
 	var/obj/item/device/assembly/signaler/anomaly/deactivation_signal = null
 
-/obj/machinery/swarm_powered/bluespace_transponder/atom_init()
+/obj/machinery/swarm_powered/bluespace_transponder/atom_init(mapload, atom/constructor)
 	. = ..()
 
 	var/freq = rand(1200, 1599)
@@ -149,6 +149,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 	deactivation_signal.code = rand(1, 100)
 
 	AddComponent(/datum/component/replicator_regeneration)
+
+	if(constructor)
+		try_enter_corridor(constructor)
 
 /obj/machinery/swarm_powered/bluespace_transponder/Destroy()
 	QDEL_NULL(deactivation_signal)
