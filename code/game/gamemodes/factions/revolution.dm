@@ -289,7 +289,7 @@
 			if(have_reason_string)
 				var/reason_string = reasons[R.antag.key]
 				if(reason_string)
-					score_results += "<DD><B>Reason to join the revolution:</B> reason is [reason_string]</DD><BR>"
+					score_results += "<DD><B>Reason to join the revolution:</B> [reason_string]</DD><BR>"
 
 		score_results += "</ul>"
 
