@@ -54,9 +54,9 @@ export const Vote = (_, context) => {
 
   const height = Math.min(
     730,
-    135
+    90
     + (!currentPoll || isAdmin ? 45 + 26 * polls.filter(poll => (!poll.adminOnly || !!isAdmin)).length : 0)
-    + (currentPoll ? 100 + 22 * currentPoll.choices.length : 23)
+    + (currentPoll ? 135 + 22 * currentPoll.choices.length : 23)
   );
 
   return (
@@ -66,7 +66,7 @@ export const Vote = (_, context) => {
         <Stack fill vertical>
           <Choices />
           {(!currentPoll || isAdmin) && <ListPolls />}
-          <Timer />
+          {!!currentPoll && <Timer />}
         </Stack>
       </Window.Content>
     </Window>
