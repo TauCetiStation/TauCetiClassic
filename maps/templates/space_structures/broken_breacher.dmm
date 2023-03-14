@@ -41,13 +41,13 @@
 	},
 /area/space_structures/broken_breacher)
 "bf" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/machinery/door/window/brigdoor,
@@ -241,7 +241,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/broken_breacher)
 "kj" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/machinery/door/window/brigdoor{
 	dir = 1
 	},
@@ -337,11 +337,9 @@
 	},
 /area/space_structures/broken_breacher)
 "nh" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
-/obj/structure/grille,
 /turf/simulated/shuttle/plating,
 /area/space_structures/broken_breacher)
 "nj" = (
@@ -383,8 +381,8 @@
 	},
 /area/space_structures/broken_breacher)
 "oc" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
@@ -728,13 +726,6 @@
 	icon_state = "cafeteria"
 	},
 /area/space_structures/broken_breacher)
-"BC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/turf/simulated/shuttle/plating,
-/area/space_structures/broken_breacher)
 "BO" = (
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -748,7 +739,7 @@
 /area/space_structures/broken_breacher)
 "Cl" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/shuttle/plating,
@@ -784,13 +775,13 @@
 	},
 /area/space_structures/broken_breacher)
 "CX" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor,
@@ -941,13 +932,13 @@
 /area/space_structures/broken_breacher)
 "HT" = (
 /obj/structure/rack,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/machinery/door/window/brigdoor,
@@ -1177,8 +1168,8 @@
 	},
 /area/space_structures/broken_breacher)
 "RH" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/structure/rack,
@@ -1308,8 +1299,8 @@
 	},
 /area/space_structures/broken_breacher)
 "Xv" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/machinery/door/window/brigdoor{
@@ -1369,13 +1360,6 @@
 /turf/simulated/floor/plating/airless{
 	icon_state = "grimy"
 	},
-/area/space_structures/broken_breacher)
-"Zy" = (
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
 /area/space_structures/broken_breacher)
 "ZV" = (
 /obj/machinery/porta_turret/stationary{
@@ -1810,7 +1794,7 @@ sO
 sO
 sO
 sO
-BC
+nh
 PU
 OG
 KJ
@@ -1932,7 +1916,7 @@ sO
 sO
 "}
 (14,1,1) = {"
-Zy
+nh
 Ip
 dy
 oa
@@ -1974,7 +1958,7 @@ sO
 sO
 "}
 (15,1,1) = {"
-Zy
+nh
 Ip
 me
 Gc

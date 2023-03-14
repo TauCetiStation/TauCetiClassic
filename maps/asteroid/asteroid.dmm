@@ -21,20 +21,6 @@
 /obj/structure/lattice,
 /turf/environment/space,
 /area/space)
-"ag" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/research_outpost/entry)
 "ah" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube,
@@ -89,9 +75,8 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "ap" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -110,21 +95,6 @@
 /obj/structure/lattice,
 /turf/environment/space,
 /area/space)
-"as" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
-/area/asteroid/research_outpost/med)
 "at" = (
 /obj/structure/transit_tube{
 	icon_state = "D-NW"
@@ -181,9 +151,8 @@
 	},
 /area/asteroid/mine/unexplored/safe)
 "aB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/transit_tube,
@@ -203,9 +172,8 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "aE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -689,9 +657,8 @@
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/atmos)
 "bJ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/transit_tube{
@@ -710,23 +677,15 @@
 	},
 /area/asteroid/mine/living_quarters)
 "bL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/entry)
 "bM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/abandoned)
@@ -816,7 +775,7 @@
 	},
 /area/asteroid/research_outpost/sample)
 "bX" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/item/weapon/flora/pottedplant,
@@ -826,7 +785,7 @@
 	},
 /area/asteroid/research_outpost/sample)
 "bY" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/machinery/vending/hydroseeds{
@@ -918,7 +877,7 @@
 /turf/simulated/floor/grass,
 /area/asteroid/research_outpost/maintstore1)
 "ch" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -978,16 +937,6 @@
 	icon_state = "whitecorner"
 	},
 /area/asteroid/research_outpost/hallway)
-"cn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/abandoned)
 "co" = (
 /turf/simulated/floor,
 /area/asteroid/mine/abandoned)
@@ -1220,7 +1169,7 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "cM" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/item/weapon/shard{
@@ -1234,24 +1183,6 @@
 	name = "Broken External Airlock"
 	},
 /turf/simulated/floor,
-/area/asteroid/mine/abandoned)
-"cO" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/abandoned)
-"cP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
 /area/asteroid/mine/abandoned)
 "cQ" = (
 /obj/machinery/chem_dispenser,
@@ -1354,10 +1285,10 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/atmos)
 "dc" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/machinery/atmospherics/pipe/simple/hidden/red{
 	dir = 5
 	},
@@ -1631,20 +1562,15 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/atmos)
 "dC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/hallway)
 "dD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/transit_tube{
@@ -1653,7 +1579,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/hallway)
 "dE" = (
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/thin/reinforced/tinted{
 	dir = 4
 	},
 /obj/structure/shuttle/engine/propulsion{
@@ -1696,25 +1622,13 @@
 	icon_state = "damaged5"
 	},
 /area/asteroid/mine/abandoned)
-"dK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/abandoned)
 "dL" = (
 /obj/machinery/atmospherics/pipe/manifold4w/hidden,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/atmos)
 "dM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/transit_tube{
@@ -1817,7 +1731,7 @@
 	id = "anolaser"
 	},
 /obj/structure/plasticflaps,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -2135,7 +2049,7 @@
 	name = "laser testing";
 	req_access = list(65)
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -2223,7 +2137,7 @@
 /area/asteroid/research_outpost/hallway)
 "eM" = (
 /obj/item/stack/rods,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/item/weapon/shard,
@@ -2654,14 +2568,6 @@
 	},
 /turf/environment/space,
 /area/space)
-"fs" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/abandoned)
 "ft" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds2"
@@ -2693,9 +2599,8 @@
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/outpost_misc_lab)
 "fx" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/transit_tube{
@@ -2956,31 +2861,8 @@
 /turf/simulated/mineral,
 /area/asteroid/research_outpost/power)
 "fY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/asteroid/mine/abandoned)
-"fZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating/airless,
-/area/asteroid/mine/abandoned)
-"ga" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/asteroid/mine/abandoned)
@@ -3110,9 +2992,8 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "gr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/transit_tube{
@@ -3149,11 +3030,10 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "gv" = (
-/obj/structure/grille,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
@@ -3194,7 +3074,7 @@
 /area/asteroid/mine/abandoned)
 "gC" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
@@ -3285,7 +3165,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/power)
 "gR" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/structure/closet/secure_closet/xenoarchaeologist{
@@ -3328,18 +3208,6 @@
 /turf/simulated/floor{
 	icon_state = "blue"
 	},
-/area/asteroid/research_outpost/entry)
-"gW" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
 /area/asteroid/research_outpost/entry)
 "gX" = (
 /obj/machinery/door/window/westleft{
@@ -3468,17 +3336,6 @@
 	icon_state = "floorscorched2"
 	},
 /area/asteroid/mine/abandoned)
-"hm" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/abandoned)
 "hn" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -3501,15 +3358,10 @@
 /turf/simulated/wall,
 /area/asteroid/research_outpost/entry)
 "hq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/med)
 "hr" = (
@@ -3562,9 +3414,8 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/entry)
 "hw" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/transit_tube{
@@ -3641,7 +3492,7 @@
 	},
 /area/asteroid/research_outpost/outpost_misc_lab)
 "hH" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -3734,9 +3585,8 @@
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/power)
 "hP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -3820,9 +3670,8 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/entry)
 "ia" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -3947,9 +3796,8 @@
 	},
 /area/asteroid/research_outpost/tempstorage)
 "ik" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -4080,10 +3928,10 @@
 /obj/structure/rack,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/glasses/science,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/item/clothing/head/bio_hood/particle_protection,
 /obj/item/clothing/suit/bio_suit/particle_protection,
 /obj/item/clothing/gloves/latex,
@@ -4096,7 +3944,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/glasses/science,
 /obj/structure/disposalpipe/segment,
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/item/clothing/head/bio_hood/particle_protection,
 /obj/item/clothing/suit/bio_suit/particle_protection,
 /obj/item/clothing/gloves/latex,
@@ -4133,7 +3981,7 @@
 /obj/structure/rack,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/glasses/science,
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/item/clothing/head/bio_hood/particle_protection,
 /obj/item/clothing/suit/bio_suit/particle_protection,
 /obj/item/clothing/gloves/latex,
@@ -4153,8 +4001,8 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "iA" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -4297,7 +4145,7 @@
 /area/asteroid/research_outpost/hallway)
 "iM" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -4348,9 +4196,8 @@
 	},
 /area/asteroid/mine/abandoned)
 "iU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/transit_tube{
@@ -4396,9 +4243,8 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "iX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -4472,7 +4318,7 @@
 /area/asteroid/research_outpost/hallway)
 "jb" = (
 /obj/machinery/shieldwallgen,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/cable{
@@ -4681,7 +4527,7 @@
 	name = "Test Chamber";
 	req_access = list(47)
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/environment/space,
@@ -4734,25 +4580,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor,
 /area/asteroid/research_outpost/entry)
-"jH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/asteroid/mine/abandoned)
-"jI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating/airless,
-/area/asteroid/mine/abandoned)
 "jJ" = (
 /turf/simulated/floor/airless{
 	icon_state = "damaged4"
@@ -4800,9 +4627,8 @@
 /turf/simulated/wall,
 /area/asteroid/mine/explored)
 "jT" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -4922,9 +4748,8 @@
 	},
 /area/asteroid/research_outpost/entry)
 "kc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -5362,9 +5187,8 @@
 	},
 /area/asteroid/mine/explored)
 "kR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
@@ -5973,57 +5797,11 @@
 	icon_state = "floorscorched2"
 	},
 /area/asteroid/mine/abandoned)
-"mf" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/abandoned)
 "mg" = (
 /obj/structure/grille,
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/item/weapon/shard{
 	icon_state = "medium"
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/abandoned)
-"mh" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/abandoned)
-"mi" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/abandoned)
-"mj" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/abandoned)
-"mk" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/abandoned)
@@ -6188,18 +5966,10 @@
 /turf/simulated/floor,
 /area/asteroid/research_outpost/iso1)
 "mK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/iso1)
 "mL" = (
@@ -6627,7 +6397,7 @@
 	},
 /area/asteroid/mine/explored)
 "nJ" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/structure/lattice,
@@ -6715,7 +6485,7 @@
 /area/asteroid/mine/explored)
 "nT" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/transit_tube{
 	icon_state = "W-NE"
 	},
@@ -6913,28 +6683,6 @@
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
 	},
-/area/asteroid/mine/abandoned)
-"or" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/abandoned)
-"os" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
 /area/asteroid/mine/abandoned)
 "ot" = (
 /obj/structure/alien/weeds{
@@ -7213,14 +6961,10 @@
 	},
 /area/asteroid/mine/abandoned)
 "oY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/item/weapon/shard,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
+	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
@@ -7233,20 +6977,6 @@
 	dir = 5;
 	icon_state = "asteroidfloor"
 	},
-/area/asteroid/mine/abandoned)
-"pa" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
 /area/asteroid/mine/abandoned)
 "pb" = (
 /obj/structure/disposalpipe/trunk,
@@ -7501,29 +7231,10 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/unexplored)
 "pD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/research_outpost/gearstore)
-"pE" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/gearstore)
 "pF" = (
@@ -7534,7 +7245,7 @@
 /obj/machinery/door/window/westleft{
 	dir = 2
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless{
@@ -7575,9 +7286,8 @@
 	},
 /area/asteroid/mine/explored)
 "pL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -7633,7 +7343,7 @@
 	icon_state = "D-SW"
 	},
 /obj/structure/lattice,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/environment/space,
@@ -7659,7 +7369,7 @@
 /area/asteroid/mine/explored)
 "pW" = (
 /obj/structure/transit_tube,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -7674,7 +7384,7 @@
 /area/asteroid/mine/living_quarters)
 "pY" = (
 /obj/machinery/mech_bay_recharge_port,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/airless{
@@ -7711,17 +7421,10 @@
 	},
 /area/asteroid/mine/living_quarters)
 "qd" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
 /obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "qe" = (
@@ -7772,44 +7475,34 @@
 	},
 /area/asteroid/mine/abandoned)
 "ql" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/explored)
 "qm" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/structure/transit_tube{
 	icon_state = "D-NE"
+	},
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/explored)
 "qn" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/lattice,
 /obj/structure/transit_tube{
 	icon_state = "E-NW"
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/environment/space,
 /area/asteroid/mine/explored)
 "qo" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/transit_tube,
 /turf/environment/space,
 /area/asteroid/mine/explored)
@@ -7821,27 +7514,11 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/explored)
 "qq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/transit_tube{
 	icon_state = "D-NW"
 	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/explored)
-"qr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/explored)
@@ -7854,7 +7531,7 @@
 	},
 /area/asteroid/mine/explored)
 "qt" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless{
@@ -7921,8 +7598,8 @@
 	},
 /area/asteroid/mine/explored)
 "qE" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/airless,
@@ -7978,7 +7655,7 @@
 /area/asteroid/mine/unexplored/safe)
 "qM" = (
 /obj/structure/transit_tube,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -7999,7 +7676,7 @@
 /obj/structure/transit_tube{
 	icon_state = "W-NE"
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -8028,16 +7705,12 @@
 	},
 /area/asteroid/mine/abandoned)
 "qT" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/item/weapon/shard{
 	icon_state = "small"
 	},
 /obj/item/stack/rods,
-/obj/structure/grille{
-	destroyed = 1
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/abandoned)
@@ -8052,7 +7725,7 @@
 /area/asteroid/mine/living_quarters)
 "qV" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/environment/space,
@@ -8130,8 +7803,8 @@
 	},
 /area/asteroid/mine/living_quarters)
 "re" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless{
@@ -8150,7 +7823,7 @@
 /obj/machinery/door/window/westleft{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
 	},
@@ -8225,16 +7898,10 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/abandoned)
 "rs" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/item/stack/rods,
 /obj/item/weapon/shard,
-/obj/structure/grille{
-	destroyed = 1
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
@@ -8425,16 +8092,8 @@
 	},
 /area/asteroid/mine/explored)
 "rY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/airless{
 	icon_state = "circuit"
@@ -8788,17 +8447,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
-"sY" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/living_quarters)
 "sZ" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
@@ -8829,16 +8477,9 @@
 	},
 /area/asteroid/mine/living_quarters)
 "td" = (
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "te" = (
@@ -8935,17 +8576,6 @@
 	icon_state = "warnplate"
 	},
 /area/asteroid/mine/dwarf)
-"tr" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/dwarf)
 "ts" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -8972,19 +8602,11 @@
 	},
 /area/asteroid/mine/dwarf)
 "tv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/barricade/wooden,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "tw" = (
@@ -9111,30 +8733,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
-"tN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/explored)
-"tO" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/explored)
 "tP" = (
 /obj/machinery/door/airlock/external{
 	name = "Mining Bridge";
@@ -9147,16 +8745,16 @@
 /area/asteroid/mine/explored)
 "tQ" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/environment/space,
 /area/asteroid/mine/explored)
 "tR" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/airless,
@@ -9169,7 +8767,7 @@
 /area/asteroid/mine/living_quarters)
 "tT" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/environment/space,
@@ -9182,13 +8780,13 @@
 /area/asteroid/mine/west_outpost)
 "tV" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/environment/space,
 /area/asteroid/mine/explored)
 "tW" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/environment/space,
@@ -9197,21 +8795,21 @@
 /turf/simulated/wall/r_wall,
 /area/asteroid/mine/maintenance)
 "tY" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/airless,
 /area/asteroid/mine/explored)
 "tZ" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/airless,
 /area/asteroid/mine/explored)
 "ua" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/airless,
@@ -9253,34 +8851,22 @@
 /obj/machinery/cell_charger,
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
-"uf" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/explored)
 "ug" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/environment/space,
 /area/asteroid/mine/explored)
 "uh" = (
 /obj/structure/lattice,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/environment/space,
@@ -9514,7 +9100,7 @@
 /area/asteroid/mine/eva)
 "uK" = (
 /obj/machinery/mech_bay_recharge_port,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/airless{
@@ -9527,7 +9113,7 @@
 /area/asteroid/mine/west_outpost)
 "uM" = (
 /obj/machinery/computer/mech_bay_power_console,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/airless{
@@ -9729,17 +9315,10 @@
 	},
 /area/asteroid/mine/west_outpost)
 "vl" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/west_outpost)
 "vm" = (
@@ -9982,18 +9561,6 @@
 	icon_state = "bar"
 	},
 /area/asteroid/mine/west_outpost)
-"vK" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/west_outpost)
 "vL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
@@ -10092,18 +9659,6 @@
 /area/asteroid/mine/living_quarters)
 "vX" = (
 /turf/simulated/floor,
-/area/asteroid/mine/living_quarters)
-"vY" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "vZ" = (
 /obj/structure/table,
@@ -10318,14 +9873,14 @@
 	},
 /area/asteroid/mine/west_outpost)
 "wA" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/lattice,
 /turf/environment/space,
 /area/asteroid/mine/living_quarters)
 "wB" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/lattice,
@@ -10787,12 +10342,12 @@
 	},
 /area/asteroid/mine/production)
 "xv" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/lattice,
 /turf/environment/space,
 /area/asteroid/mine/living_quarters)
 "xw" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/lattice,
 /turf/environment/space,
 /area/asteroid/mine/production)
@@ -11069,19 +10624,11 @@
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "yC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/eva)
 "yM" = (
@@ -11133,21 +10680,6 @@
 	name = "HIGH VOLTAGE"
 	},
 /turf/simulated/wall,
-/area/asteroid/mine/living_quarters)
-"zb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
 /area/asteroid/mine/living_quarters)
 "zc" = (
 /obj/structure/sign/warning/securearea{
@@ -11202,10 +10734,10 @@
 /turf/simulated/wall,
 /area/asteroid/mine/production)
 "zi" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -11220,10 +10752,10 @@
 	},
 /area/asteroid/mine/production)
 "zj" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -11514,10 +11046,10 @@
 	},
 /area/asteroid/mine/living_quarters)
 "zU" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -11532,10 +11064,10 @@
 	},
 /area/asteroid/mine/living_quarters)
 "zW" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -11662,28 +11194,10 @@
 	},
 /area/asteroid/mine/explored)
 "Ak" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
 /obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/production)
-"Al" = (
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/production)
 "Am" = (
@@ -11704,17 +11218,9 @@
 	},
 /area/asteroid/research_outpost/entry)
 "Ao" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/entry)
@@ -11724,7 +11230,7 @@
 	},
 /area/asteroid/research_outpost/entry)
 "Aq" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /mob/living/carbon/monkey,
 /turf/simulated/floor{
 	dir = 1;
@@ -11874,27 +11380,6 @@
 	icon_state = "greenfull"
 	},
 /area/asteroid/research_outpost/hallway)
-"AR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/research_outpost/hallway)
-"AT" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/production)
 "AU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
@@ -11913,18 +11398,6 @@
 	icon_state = "loadingarea"
 	},
 /area/asteroid/mine/production)
-"AX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/research_outpost/hallway)
 "AY" = (
 /turf/simulated/floor{
 	icon_state = "warning"
@@ -12002,7 +11475,7 @@
 /area/shuttle/vox/mining)
 "Bk" = (
 /obj/machinery/shieldwallgen,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment{
@@ -12037,27 +11510,6 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/asteroid/research_outpost/outpost_misc_lab)
-"Bs" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/production)
-"Bt" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/production)
 "Bu" = (
 /obj/machinery/camera{
 	c_tag = "Shuttle Dock";
@@ -12065,18 +11517,6 @@
 	network = list("MINE")
 	},
 /turf/simulated/floor,
-/area/asteroid/mine/production)
-"Bv" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
 /area/asteroid/mine/production)
 "Bw" = (
 /obj/structure/rack,
@@ -12093,18 +11533,10 @@
 	},
 /area/asteroid/research_outpost/gearstore)
 "Bx" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/maintstore1)
 "BA" = (
@@ -12180,19 +11612,11 @@
 	},
 /area/asteroid/mine/production)
 "Cg" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/visible,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/iso2)
 "Cr" = (
@@ -12276,10 +11700,10 @@
 	},
 /area/asteroid/mine/production)
 "Dg" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/engine,
@@ -12294,18 +11718,6 @@
 	icon_state = "bot"
 	},
 /area/asteroid/research_outpost/gearstore)
-"DC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/barricade/wooden,
-/turf/simulated/floor/plating,
-/area/asteroid/mine/dwarf)
 "DL" = (
 /obj/machinery/light/small,
 /turf/simulated/floor{
@@ -12438,7 +11850,7 @@
 	name = "Test Chamber";
 	req_access = list(47)
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/environment/space,
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/outpost_misc_lab)
@@ -12549,19 +11961,6 @@
 "Hg" = (
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/iso2)
-"Hq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/firedoor,
-/obj/structure/barricade/wooden,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/dwarf)
 "Ib" = (
 /obj/structure/sign/warning/nosmoking/circle{
 	pixel_x = -32
@@ -12684,7 +12083,7 @@
 	},
 /area/asteroid/mine/production)
 "Jf" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/structure/closet/crate/secure/miningsec,
@@ -12711,9 +12110,8 @@
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/atmos)
 "Kc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/transit_tube{
@@ -12771,9 +12169,8 @@
 	},
 /area/asteroid/research_outpost/maintstore1)
 "Lc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/sign/warning/securearea{
@@ -12841,9 +12238,8 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "Mc" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/sign/warning/securearea{
@@ -12935,7 +12331,7 @@
 	},
 /area/asteroid/mine/living_quarters)
 "Ne" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/machinery/alarm{
@@ -13184,18 +12580,10 @@
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
 "Sb" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
+	},
 /turf/simulated/floor/plating,
 /area/asteroid/research_outpost/iso2)
 "Sc" = (
@@ -13574,22 +12962,6 @@
 	icon_state = "white"
 	},
 /area/asteroid/research_outpost/hallway)
-"XO" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/grille,
-/obj/structure/barricade/wooden,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/asteroid/mine/dwarf)
 "Yb" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -27211,9 +26583,9 @@ qA
 qA
 qA
 qA
-qr
+ql
 tP
-uf
+ql
 lA
 qA
 qA
@@ -28508,10 +27880,10 @@ lA
 lA
 uU
 vl
-vK
+vl
 wH
 vl
-vK
+vl
 uU
 uU
 uU
@@ -29016,8 +28388,8 @@ ug
 tQ
 tQ
 tQ
-tN
-tO
+ql
+ql
 lA
 lA
 ik
@@ -29263,8 +28635,8 @@ qA
 lA
 lA
 lA
-tN
-tO
+ql
+ql
 tQ
 tQ
 tW
@@ -29530,8 +28902,8 @@ uh
 tT
 tT
 tT
-tN
-tO
+ql
+ql
 lA
 lA
 ik
@@ -29777,8 +29149,8 @@ lA
 lA
 lA
 lA
-tN
-tO
+ql
+ql
 tT
 tT
 tT
@@ -32248,7 +31620,7 @@ aa
 aa
 aa
 ar
-jH
+fY
 ei
 ei
 ei
@@ -32505,10 +31877,10 @@ aa
 aa
 hT
 iM
-jI
+fY
 gE
 gD
-mf
+bM
 ml
 eO
 oq
@@ -33022,10 +32394,10 @@ gB
 gB
 kI
 lx
-mh
+bM
 mZ
 gb
-or
+bM
 oX
 jN
 jN
@@ -33282,7 +32654,7 @@ kH
 ei
 kH
 eO
-os
+bM
 jN
 jN
 dJ
@@ -34050,7 +33422,7 @@ eO
 jL
 kL
 ly
-mi
+bM
 dJ
 lz
 ei
@@ -34299,7 +33671,7 @@ dF
 df
 ar
 ar
-fZ
+fY
 gD
 hk
 hV
@@ -34307,10 +33679,10 @@ iQ
 hj
 hk
 kM
-mj
+bM
 nb
 fu
-or
+bM
 hj
 hi
 fu
@@ -34556,7 +33928,7 @@ dG
 df
 ar
 fr
-ga
+fY
 gE
 hl
 hj
@@ -34564,10 +33936,10 @@ hk
 jM
 kM
 kM
-mk
+bM
 jN
 nE
-os
+bM
 kK
 jN
 iT
@@ -34806,21 +34178,21 @@ aa
 aa
 aa
 bM
-cn
+bM
 cM
 dg
 dH
 eg
 eM
-fs
+bM
 ei
 bM
-hm
+bM
 ei
 iR
 ei
 bM
-hm
+bM
 ei
 dJ
 eO
@@ -35320,8 +34692,8 @@ aa
 aa
 aa
 bM
-cn
-cO
+bM
+bM
 di
 dJ
 di
@@ -35578,9 +34950,9 @@ aa
 aa
 aa
 ar
-cP
-cn
-dK
+bM
+bM
+bM
 ei
 ei
 ei
@@ -35853,12 +35225,12 @@ kH
 co
 kH
 nb
-or
+bM
 pz
 jP
 co
 jQ
-pa
+bM
 pA
 rn
 rs
@@ -36375,7 +35747,7 @@ jQ
 qT
 jQ
 rn
-pa
+bM
 rz
 rE
 pC
@@ -36624,7 +35996,7 @@ co
 dJ
 dJ
 jN
-pa
+bM
 pB
 pP
 pB
@@ -36959,7 +36331,7 @@ ss
 tv
 tE
 Kr
-DC
+tv
 tL
 lA
 kO
@@ -37470,10 +36842,10 @@ sJ
 tu
 ss
 tn
-Hq
+tv
 AI
 Lo
-XO
+tv
 tL
 lA
 lA
@@ -39268,7 +38640,7 @@ st
 sG
 st
 td
-tr
+td
 st
 tI
 st
@@ -46243,7 +45615,7 @@ vw
 sR
 vU
 tc
-zb
+qd
 wl
 pX
 Nc
@@ -46757,7 +46129,7 @@ pv
 vW
 ux
 vw
-zb
+qd
 wn
 yv
 Pc
@@ -48451,7 +47823,7 @@ ow
 qy
 qm
 qD
-qr
+ql
 aa
 aa
 aa
@@ -48553,8 +47925,8 @@ ia
 uo
 uo
 qd
-sY
-vY
+qd
+qd
 uo
 uo
 ww
@@ -49070,7 +48442,7 @@ qe
 tD
 tD
 vp
-zb
+qd
 rd
 wG
 xn
@@ -49584,7 +48956,7 @@ qv
 Au
 Au
 vq
-zb
+qd
 wn
 ym
 Tc
@@ -50359,7 +49731,7 @@ uo
 wn
 vN
 Pc
-zb
+qd
 Pd
 Ce
 uo
@@ -51019,9 +50391,9 @@ hP
 hP
 mp
 pV
-qr
+ql
 oC
-qr
+ql
 kO
 YV
 YV
@@ -52037,8 +51409,8 @@ ar
 hp
 Ao
 hL
-ag
-gW
+Ao
+Ao
 hp
 mc
 mr
@@ -52298,10 +51670,10 @@ Ba
 kj
 hp
 pD
-pE
+pD
 mu
 pD
-pE
+pD
 mp
 ew
 ey
@@ -53065,7 +52437,7 @@ da
 dC
 hq
 if
-as
+hq
 hF
 bh
 la
@@ -53319,7 +52691,7 @@ eR
 fh
 AJ
 gK
-AR
+dC
 ha
 ie
 jj
@@ -53576,7 +52948,7 @@ eR
 fh
 AL
 gL
-AX
+dC
 hb
 ih
 ke
@@ -57820,7 +57192,7 @@ Ne
 Se
 Cf
 Jf
-Bt
+Ak
 AW
 ws
 lA
@@ -58077,7 +57449,7 @@ Py
 Te
 Df
 Lf
-Bs
+Ak
 Rf
 ws
 lA
@@ -58334,7 +57706,7 @@ Pe
 Te
 Df
 Lf
-Bv
+Ak
 Sf
 ws
 lA
@@ -58844,11 +58216,11 @@ Fd
 Td
 Dd
 Ak
-Al
-AT
+Ak
+Ak
 AK
 Ak
-AT
+Ak
 Uf
 ws
 lA
