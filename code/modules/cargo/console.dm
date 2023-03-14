@@ -21,6 +21,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 		cannot transport live organisms, classified nuclear weaponry or \
 		homing beacons."
 
+/obj/machinery/computer/cargo/attackby(obj/item/I, mob/user, params)
+	if(isprying(I))
+		to_chat(world, "Starting shop monitoring...")
+		SSeconomy.monitor_cargo_shop()
+		to_chat(world, "Done!")
+		return
+
+	return ..()
+
 /obj/machinery/computer/cargo/request
 	name = "Supply request console"
 	desc = "Used to request supplies from cargo."
