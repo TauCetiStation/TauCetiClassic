@@ -97,7 +97,13 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 		if (reagents.has_reagent("nutriment")) // Getting food speeds it up
 			change_volume += 0.4
 			reagents.remove_reagent("nutriment", 0.1)
+		if (reagents.has_reagent("copper") && get_species(src) == SKRELL) // skrell blood base on copper
+			change_volume += 1
+			reagents.remove_reagent("copper", 0.1)
 		if (reagents.has_reagent("iron")) // Hematogen candy anyone?
+			if(get_species(src) == SKRELL) // a little more toxins when trying to restore blood with iron
+				src.adjustToxLoss(1)
+				return
 			change_volume += 0.8
 			reagents.remove_reagent("iron", 0.1)
 		blood_add(change_volume)
