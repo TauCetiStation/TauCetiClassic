@@ -1140,8 +1140,8 @@
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
 /obj/item/weapon/kitchenknife/combat,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
 /obj/item/weapon/gun/projectile/automatic/glock,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 32
@@ -15948,8 +15948,8 @@
 /obj/structure/closet/secure_closet/security,
 /obj/item/clothing/mask/gas/sechailer,
 /obj/item/weapon/kitchenknife/combat,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
 /obj/item/weapon/gun/projectile/automatic/glock,
 /obj/item/weapon/shield/riot,
 /obj/machinery/computer/guestpass{
@@ -22947,11 +22947,11 @@
 /obj/structure/closet/secure_closet/hos,
 /obj/item/clothing/mask/gas/sechailer,
 /obj/item/weapon/kitchenknife/combat,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
 /obj/item/weapon/gun/projectile/automatic/glock,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkred"
@@ -31646,8 +31646,8 @@
 /obj/machinery/requests_console/security{
 	pixel_y = 25
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
 /obj/item/weapon/gun/projectile/automatic/glock,
 /obj/item/weapon/shield/riot,
 /turf/simulated/floor{

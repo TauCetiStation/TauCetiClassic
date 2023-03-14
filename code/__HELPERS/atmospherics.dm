@@ -1,4 +1,4 @@
-/obj/proc/analyze_gases(obj/A, mob/user, advanced)
+/obj/proc/analyze_gases(atom/A, mob/user, advanced)
 	user.visible_message("<span class='notice'>\The [user] has used \an [src] on \the [A].</span>")
 	A.add_fingerprint(user)
 

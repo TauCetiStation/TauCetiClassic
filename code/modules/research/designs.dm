@@ -2027,7 +2027,7 @@ other types of metals and chemistry for reagents).
 	id = "smg_ammo_9mm"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3750, MAT_SILVER = 100)
-	build_path = /obj/item/ammo_box/magazine/msmg9mm
+	build_path = /obj/item/ammo_box/magazine/smg
 	category = list("Weapons")
 
 /datum/design/stunshot
