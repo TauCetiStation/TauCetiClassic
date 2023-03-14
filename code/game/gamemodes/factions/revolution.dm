@@ -59,6 +59,8 @@
 	return TRUE
 
 /datum/faction/revolution/check_win()
+	var/aboba = TRUE
+	if(aboba) return FALSE
 	var/win = IsSuccessful()
 	if(config.continous_rounds)
 		if(win && SSshuttle)
@@ -242,13 +244,61 @@
 	<B>Command Staff Slain:</B> [SSStatistics.score.deadcommand] (-[SSStatistics.score.deadcommand * 500] Points)<BR>
 	<B>Revolution Successful:</B> [SSStatistics.score.traitorswon ? "Yes" : "No"] (-[SSStatistics.score.traitorswon * revpenalty] Points)<BR>
 	<B>All Revolution Heads Arrested:</B> [SSStatistics.score.allarrested ? "Yes" : "No"] (Score tripled)<BR>"}
-	if(reasons.len)
-		dat += "<B>Reasons to join the revolution:</B>"
-		for(var/datum/role/rev/R in members)
-			var/reason_string = reasons[R.antag.key]
-			if(reason_string)
-				dat += "<DD><B>[R.antag.key]'s</B> reason is [reason_string]</DD><BR>"
+
 	return dat
+
+/datum/faction/revolution/GetScoreboard()
+	var/count = 1
+	var/score_results = ""
+	if(objective_holder.objectives.len > 0)
+		score_results += "<ul>"
+		var/custom_result = custom_result()
+		score_results += custom_result
+		score_results += "<br><br>"
+		for(var/datum/objective/objective in objective_holder.GetObjectives())
+			objective.extra_info()
+			score_results += "<B>Objective #[count]</B>: [objective.explanation_text] [objective.completion_to_string()]"
+			feedback_add_details("[ID]_objective","[objective.type]|[objective.completion_to_string(FALSE)]")
+			count++
+			if(count <= objective_holder.objectives.len)
+				score_results += "<br>"
+		score_results += "</ul>"
+	score_results += "<ul>"
+
+	var/have_objectives = FALSE
+	var/have_reason_string = FALSE
+	if(reasons.len)
+		have_reason_string = TRUE
+
+	var/list/name_by_members = list()
+	score_results += "<FONT size = 2><B>Members:</B></FONT><br>"
+	for(var/datum/role/R in members)
+		if(!name_by_members[R.name])
+			name_by_members[R.name] = list()
+		name_by_members[R.name] += R
+
+	for(var/name in name_by_members)
+		score_results += "<b>[name]:</b><ul>"
+		for(var/datum/role/R in name_by_members[name])
+			var/results = R.GetScoreboard()
+			if(results)
+				score_results += results
+				score_results += "<br>"
+				if(R.objectives.objectives.len)
+					have_objectives = TRUE
+			if(have_reason_string)
+				var/reason_string = reasons[R.antag.key]
+				if(reason_string)
+					score_results += "<DD><B>Reason to join the revolution:</B> reason is [reason_string]</DD><BR>"
+
+		score_results += "</ul>"
+
+	score_results += "</ul>"
+
+	if(!have_objectives)
+		score_results += "<br>"
+
+	return score_results
 
 /datum/faction/revolution/proc/convert_revolutionare_by_invite(mob/possible_rev, mob/inviter)
 	if(!inviter)
