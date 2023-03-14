@@ -6,7 +6,7 @@
 	icon_state = "tube"
 	origin_tech = "materials=4;engineering=3"
 	amount = 10
-	var/delay = 10
+	var/delay = 1 SECOND
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 /obj/item/stack/nanopaste/attack(mob/living/M, mob/user, def_zone)
