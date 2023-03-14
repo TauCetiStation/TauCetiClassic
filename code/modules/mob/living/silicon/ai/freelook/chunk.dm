@@ -120,6 +120,7 @@
 		if(obscuredTurfs[t])
 			if(!t.obscured)
 				t.obscured = image('icons/effects/cameravis.dmi', t, "black")
+				t.obscured.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
 				t.obscured.plane = CAMERA_STATIC_PLANE
 
 			obscured += t.obscured
@@ -178,6 +179,7 @@
 		var/turf/t = turf
 		if(!t.obscured)
 			t.obscured = image('icons/effects/cameravis.dmi', t, "black")
+			t.obscured.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
 			t.obscured.plane = CAMERA_STATIC_PLANE
 		obscured += t.obscured
 
