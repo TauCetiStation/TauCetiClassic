@@ -700,13 +700,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_catapult, bluespace_ca
 	density = TRUE
 	anchored = TRUE
 
-	max_integrity = 600
+	max_integrity = 900
 	resistance_flags = CAN_BE_HIT
 
 	prioritized = TRUE
 
-	var/max_required_power = 6000000
-	var/max_required_materials = 800
+	var/max_required_power = 9000000
+	var/max_required_materials = 1200
 
 	var/required_power = 0
 	var/required_materials = 0
