@@ -50,6 +50,7 @@
 	var/computer_id = null
 	var/lastattacker_name = ""
 	var/lastattacker_key = ""
+	var/last_examined = ""
 	var/attack_log = list( )
 	var/obj/machinery/machine = null
 	var/other_mobs = null
