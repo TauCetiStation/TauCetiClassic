@@ -699,7 +699,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 // No lore reason as of now. It's just somewhat annoying otherwise.
 /mob/living/simple_animal/hostile/replicator/ventcrawl_enter_delay()
-	return ..() * 2
+	return ..() * 4.0
 
 /mob/living/simple_animal/hostile/replicator/singularity_act(obj/singularity/S, current_size)
 	qdel(S)
