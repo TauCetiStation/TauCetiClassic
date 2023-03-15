@@ -154,7 +154,7 @@
 	return stat == DEAD
 
 /mob/living/simple_animal/hostile/replicator/get_replicator_material_amount()
-	return REPLICATOR_COST_REPLICATE
+	return REPLICATOR_COST_REPLICATE * health / maxHealth
 
 /mob/living/simple_animal/hostile/replicator/get_unit_disintegration_time()
 	return ..() * REPLICATOR_RECLAIM_REPLICATOR_TICK_MODIFIER
@@ -255,7 +255,7 @@
 	return FALSE
 
 /obj/structure/replicator_barricade/get_replicator_material_amount()
-	return REPLICATOR_COST_RECLAIM_BARRICADE
+	return REPLICATOR_COST_RECLAIM_BARRICADE * get_integrity() / max_integrity
 
 /obj/structure/replicator_barricade/get_unit_disintegration_time()
 	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
@@ -367,7 +367,7 @@
 
 // Refund!
 /obj/machinery/swarm_powered/bluespace_transponder/get_replicator_material_amount()
-	return REPLICATOR_COST_TRANSPONDER
+	return REPLICATOR_COST_TRANSPONDER * get_integrity() / max_integrity
 
 /obj/machinery/swarm_powered/bluespace_transponder/get_unit_disintegration_time()
 	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
@@ -386,7 +386,7 @@
 	return FALSE
 
 /obj/machinery/power/replicator_generator/get_replicator_material_amount()
-	return REPLICATOR_COST_GENERATOR
+	return REPLICATOR_COST_GENERATOR * get_integrity() / max_integrity
 
 /obj/machinery/power/replicator_generator/get_unit_disintegration_time()
 	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
@@ -424,7 +424,7 @@
 	return FALSE
 
 /obj/item/mine/replicator/get_replicator_material_amount()
-	return REPLICATOR_COST_MINE
+	return REPLICATOR_COST_MINE * get_integrity() / max_integrity
 
 /obj/item/mine/replicator/get_unit_disintegration_time()
 	return ..() * REPLICATOR_RECLAIM_OWN_STRUCTURES_TICK_MODIFIER
