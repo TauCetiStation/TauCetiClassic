@@ -1295,10 +1295,7 @@
 		return
 	var/nutrition_to_remove = 0
 	if(is_default_metabolise_active())
-		nutrition_to_remove += 0.01
-		//weight loss
-		if(m_intent == MOVE_INTENT_RUN)
-			nutrition_to_remove += 0.01
+		nutrition_to_remove += 0.16
 	if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
 		var/pain = getHalLoss()
 		if(pain > 0)
