@@ -13,7 +13,6 @@
 	..()
 	cut_overlays()
 	add_overlay(image('icons/obj/objects.dmi', src, "echair_over", MOB_LAYER + 1, dir))
-	return
 
 /obj/structure/stool/bed/chair/electrotherapy/attackby(obj/item/weapon/W, mob/user)
 	return
