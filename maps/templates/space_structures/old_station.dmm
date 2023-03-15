@@ -2936,15 +2936,6 @@
 	icon_state = "brownold"
 	},
 /area/space_structures/old_station/left)
-"rP" = (
-/obj/structure/rack,
-/obj/item/ammo_box/magazine/msmg9mm,
-/obj/item/ammo_box/magazine/msmg9mm,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "bot"
-	},
-/area/space_structures/old_station/armory)
 "rS" = (
 /obj/structure/cable/yellow{
 	d2 = 2;
@@ -3910,6 +3901,9 @@
 	name = "Armory APC";
 	pixel_y = 25
 	},
+/obj/item/ammo_box/magazine/smg,
+/obj/item/ammo_box/magazine/smg,
+/obj/item/ammo_box/magazine/smg,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -14221,7 +14215,7 @@ ed
 Qg
 je
 Zz
-rP
+pj
 ed
 gO
 gO
