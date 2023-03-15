@@ -29,7 +29,7 @@
 
 /obj/item/ammo_casing/c9mmr
 	desc = "A 9mm rubber bullet casing."
-	icon_state = "st-casing"
+	icon_state = "casing_rubber"
 	caliber = "9mm"
 	projectile_type = /obj/item/projectile/bullet/weakbullet/rubber
 	m_amt = 100
