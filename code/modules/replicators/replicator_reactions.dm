@@ -329,7 +329,7 @@
 
 /obj/machinery/atmospherics/components/get_unit_disintegration_time()
 	if(welded)
-		return ..()
+		return ..() * 0.5
 
 	return ..() * REPLICATOR_PUNISH_GRIEFING_TICK_MODIFIER
 
