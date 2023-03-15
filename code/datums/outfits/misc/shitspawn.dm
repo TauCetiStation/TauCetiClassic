@@ -226,13 +226,13 @@
 
 	if(prob(50))
 		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/l6_saw(H), SLOT_S_STORE)
-		H.equip_or_collect(new /obj/item/ammo_box/magazine/m762(H), SLOT_IN_BACKPACK)
-		H.equip_or_collect(new /obj/item/ammo_box/magazine/m762(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/saw(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/saw(H), SLOT_IN_BACKPACK)
 	else if(prob(20))
 		H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/rocketlauncher/commando(H), SLOT_S_STORE)
 		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic(H), SLOT_IN_BACKPACK)
-		H.equip_or_collect(new /obj/item/ammo_box/magazine/msmg9mm(H), SLOT_IN_BACKPACK)
-		H.equip_or_collect(new /obj/item/ammo_box/magazine/msmg9mm(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/smg(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/smg(H), SLOT_IN_BACKPACK)
 	else
 		H.equip_or_collect(new /obj/item/weapon/gun/energy/pulse_rifle(H), SLOT_S_STORE)
 
