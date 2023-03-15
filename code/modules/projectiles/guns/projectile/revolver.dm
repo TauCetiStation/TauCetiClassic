@@ -255,10 +255,3 @@
 	desc = "A powerful revolver, very popular among mercenaries and pirates. Uses .357 ammo."
 	icon_state = "synd_revolver"
 
-/obj/item/weapon/gun/projectile/revolver/empty/atom_init()
-	. = ..()
-	while (get_ammo() > 0)
-		var/obj/item/ammo_casing/CB
-		CB = magazine.get_round(0)
-		chambered = null
-		QDEL_NULL(CB)

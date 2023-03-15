@@ -1131,6 +1131,7 @@
 #include "code\game\objects\structures\art.dm"
 #include "code\game\objects\structures\barsign.dm"
 #include "code\game\objects\structures\bedsheet_bin.dm"
+#include "code\game\objects\structures\blueshield_safe.dm"
 #include "code\game\objects\structures\bobross.dm"
 #include "code\game\objects\structures\chalkboard.dm"
 #include "code\game\objects\structures\chapel.dm"

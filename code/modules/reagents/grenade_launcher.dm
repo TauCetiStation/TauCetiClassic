@@ -44,7 +44,7 @@
 
 /obj/item/weapon/gun/grenadelauncher/proc/fire_grenade(atom/target, mob/user)
 	user.visible_message("<span class='warning'>[user] fired a grenade!</span>", self_message = "<span class='warning'>You fire the grenade launcher!</span>")
-	var/obj/item/weapon/grenade/chem_grenade/F = grenades[1] //Now with less copypasta!
+	var/obj/item/weapon/grenade/F = grenades[1] //Now with less copypasta!
 	grenades -= F
 	F.loc = user.loc
 	F.throw_at(target, 30, 2, user)
