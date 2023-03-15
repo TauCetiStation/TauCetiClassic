@@ -294,7 +294,7 @@
 			if(prob(current_size * 5) && hand.w_class >= ((STAGE_FIVE-current_size)/2)  && unEquip(hand))
 				step_towards(hand, src)
 				to_chat(src, "<span class='warning'>\The [S] pulls \the [hand] from your grip!</span>")
-	apply_effect(current_size * 3, IRRADIATE)
+	irradiate_one_mob(src, current_size * 3)
 	if(mob_negates_gravity())//Magboots protection
 		return
 	..()
@@ -1311,9 +1311,16 @@
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	hand_dirt_datum = new(dirt_overlay)
 
-	update_inv_gloves()	//handles bloody hands overlays and updating
+	update_inv_slot(SLOT_GLOVES) // handles bloody hands overlays and updating
 	verbs += /mob/living/carbon/human/proc/bloody_doodle
 	return 1 //we applied blood to the item
+
+/mob/living/carbon/human/add_dirt_cover(dirt_datum, update_hands_slot = TRUE)
+	. = ..()
+	if (!.)
+		return
+	if(update_hands_slot) // incase this proc was called by atom/proc/add_blood which will update gloves slot by itself to remove doublecall, -
+		update_inv_slot(SLOT_GLOVES) // - also it will runtime cause bloody hands isnt fully initialized yet and no idea why add_blood also adds dirt at the same time, not to mention both systems pretty much same thing in the end (legacy times when dirt was overlay?).
 
 // returns associative list (implant = bodypart)
 /mob/living/carbon/human/get_visible_implants(class = 0)

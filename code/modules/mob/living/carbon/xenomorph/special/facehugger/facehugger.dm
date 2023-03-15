@@ -193,10 +193,10 @@
 
 /obj/item/clothing/mask/facehugger/Crossed(atom/movable/AM)
 	..()
-	return HasProximity(AM)
+	HasProximity(AM)
 
 /obj/item/clothing/mask/facehugger/HasProximity(mob/living/carbon/C)
-	if(!current_hugger && istype(loc, /turf)) //not in hands
+	if(istype(C) && !current_hugger && istype(loc, /turf)) //not in hands
 		return Attach(C)
 
 /obj/item/clothing/mask/facehugger/on_found(mob/finder)

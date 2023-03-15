@@ -145,9 +145,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/pistol
 	name = "9mm pistol crate"
-	contains = list(/obj/item/weapon/gun/projectile/glock,
-					/obj/item/weapon/gun/projectile/glock,
-					/obj/item/weapon/gun/projectile/glock)
+	contains = list(/obj/item/weapon/gun/projectile/automatic/glock,
+					/obj/item/weapon/gun/projectile/automatic/glock,
+					/obj/item/weapon/gun/projectile/automatic/glock)
 	cost = 4500
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "9mm pistol crate"
@@ -156,12 +156,12 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/pistol_magazine
 	name = "9mm magazine"
-	contains = list(/obj/item/ammo_box/magazine/m9mm_2,
-					/obj/item/ammo_box/magazine/m9mm_2,
-					/obj/item/ammo_box/magazine/m9mm_2,
-					/obj/item/ammo_box/magazine/m9mm_2,
-					/obj/item/ammo_box/magazine/m9mm_2,
-					/obj/item/ammo_box/magazine/m9mm_2)
+	contains = list(/obj/item/ammo_box/magazine/glock,
+					/obj/item/ammo_box/magazine/glock,
+					/obj/item/ammo_box/magazine/glock,
+					/obj/item/ammo_box/magazine/glock,
+					/obj/item/ammo_box/magazine/glock,
+					/obj/item/ammo_box/magazine/glock)
 	cost = 2000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "9mm magazine"
@@ -170,12 +170,12 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/pistol_magazine_rubber
 	name = "9mm magazine (rubber)"
-	contains = list(/obj/item/ammo_box/magazine/m9mm_2/rubber,
-					/obj/item/ammo_box/magazine/m9mm_2/rubber,
-					/obj/item/ammo_box/magazine/m9mm_2/rubber,
-					/obj/item/ammo_box/magazine/m9mm_2/rubber,
-					/obj/item/ammo_box/magazine/m9mm_2/rubber,
-					/obj/item/ammo_box/magazine/m9mm_2/rubber)
+	contains = list(/obj/item/ammo_box/magazine/glock/rubber,
+					/obj/item/ammo_box/magazine/glock/rubber,
+					/obj/item/ammo_box/magazine/glock/rubber,
+					/obj/item/ammo_box/magazine/glock/rubber,
+					/obj/item/ammo_box/magazine/glock/rubber,
+					/obj/item/ammo_box/magazine/glock/rubber)
 	cost = 1000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "9mm magazine (rubber)"
@@ -1808,15 +1808,15 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/laser_tag
 	name = "Laser Tag Crate"
-	contains = list(/obj/item/weapon/gun/energy/laser/lasertag/redtag,
-					/obj/item/weapon/gun/energy/laser/lasertag/redtag,
-					/obj/item/weapon/gun/energy/laser/lasertag/redtag,
+	contains = list(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag,
+					/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag,
+					/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/redtag,
 					/obj/item/clothing/suit/lasertag/redtag,
 					/obj/item/clothing/suit/lasertag/redtag,
 					/obj/item/clothing/suit/lasertag/redtag,
-					/obj/item/weapon/gun/energy/laser/lasertag/bluetag,
-					/obj/item/weapon/gun/energy/laser/lasertag/bluetag,
-					/obj/item/weapon/gun/energy/laser/lasertag/bluetag,
+					/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag,
+					/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag,
+					/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag,
 					/obj/item/clothing/suit/lasertag/bluetag,
 					/obj/item/clothing/suit/lasertag/bluetag,
 					/obj/item/clothing/suit/lasertag/bluetag)

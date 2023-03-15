@@ -246,15 +246,15 @@ log transactions
 					if(transfer_amount <= 0)
 						tgui_alert(usr, "That is not a valid amount.")
 					else if(transfer_amount <= authenticated_account.money)
-						var/target_account_number = text2num(href_list["target_acc_number"])
+						var/target_account = text2num(href_list["target_acc_number"])
 						var/transfer_purpose = href_list["purpose"]
-						if(charge_to_account(target_account_number, authenticated_account.owner_name, transfer_purpose, machine_id, transfer_amount))
+						if(charge_to_account(target_account, authenticated_account.owner_name, transfer_purpose, machine_id, transfer_amount))
 							to_chat(usr, "[bicon(src)]<span class='info'>Funds transfer successful.</span>")
 							authenticated_account.adjust_money(-transfer_amount)
 
 							//create an entry in the account transaction log
 							var/datum/transaction/T = new()
-							T.target_name = "Account #[target_account_number]"
+							T.target_name = "Account #[target_account]"
 							T.purpose = transfer_purpose
 							T.source_terminal = machine_id
 							T.date = current_date_string
