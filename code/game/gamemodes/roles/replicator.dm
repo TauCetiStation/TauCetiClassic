@@ -26,7 +26,7 @@
 	var/datum/replicator_array_info/RAI = FR.ckey2info[ckey(antag.key)]
 
 	stat("Materials:", "[round(FR.materials)] ([round(FR.last_second_materials_change)])")
-	stat("Drone Amount:", "[length(global.alive_replicators)]/[FR.bandwidth]")
+	stat("Drone Amount:", "[length(global.alive_replicators) + FR.bandwidth_borrowed]/[FR.bandwidth]")
 	if(length(global.active_transponders) > 0)
 		stat("Bandwidth Upgrade:", "[round(FR.materials_consumed)]/[FR.consumed_materials_until_upgrade]")
 	if(length(global.replicator_generators) > 0 || length(global.transponders) - length(global.active_transponders) > 0)

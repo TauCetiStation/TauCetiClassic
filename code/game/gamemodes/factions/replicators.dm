@@ -31,6 +31,8 @@
 	var/bandwidth = REPLICATOR_STARTING_BANDWIDTH
 	// Can't go any further.
 	var/max_bandwidth = REPLICATOR_MAX_BANDWIDTH
+	// Since replicators have a delay when replicating, they borrow bandwidth for some time but then return it after success.
+	var/bandwidth_borrowed = 0
 
 	var/list/datum/replicator_array_info/ckey2info = list()
 	var/max_goodwill_ckey = null

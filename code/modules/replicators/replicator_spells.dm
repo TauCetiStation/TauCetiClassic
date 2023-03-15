@@ -68,7 +68,7 @@
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/replicator_checks(mob/user, try_start)
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
-	if(length(global.alive_replicators) >= FR.bandwidth)
+	if(length(global.alive_replicators) + FR.bandwidth_borrowed >= FR.bandwidth)
 		if(try_start)
 			to_chat(user, "<span class='warning'>Not enough bandwidth for replication.</span>")
 		return FALSE
@@ -95,11 +95,15 @@
 	var/datum/callback/checks = CALLBACK(src, .proc/replicator_checks_do_after_handler)
 
 	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
+	FR.bandwidth_borrowed += 1
 	// to-do: sound
 	to_chat(user_replicator, "<span class='notice'>Initiating replication protocols...</span>")
 	if(!do_after(user_replicator, 3 SECONDS, target=user_replicator, extra_checks=checks))
 		FR.adjust_materials(material_cost, adjusted_by=user_replicator.ckey)
+		FR.bandwidth_borrowed -= 1
 		return
+
+	FR.bandwidth_borrowed -= 1
 
 	user_replicator.announce_material_adjustment(-material_cost)
 
