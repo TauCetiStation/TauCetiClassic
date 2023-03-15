@@ -228,16 +228,6 @@
 
 	SSjob.EquipRank(character, rank, TRUE)					//equips the human
 
-	var/list/blueshields = list()
-	if(rank in protected_by_blueshield_list)
-		for(var/mob/living/carbon/human/player in player_list)
-			if(player && player.mind && player.isimplantedblueshield())
-				blueshields += player
-		if(blueshields.len)
-			for(var/mob/living/carbon/human/H in blueshields)
-				SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "blueshield")
-				addtimer(CALLBACK(null, .proc/add_mood_event, H, "blueshield", /datum/mood_event/blueshield), 10 MINUTES)
-
 	if(!issilicon(character))
 		SSquirks.AssignQuirks(character, character.client, TRUE)
 		SSqualities.give_quality(character, TRUE)
@@ -445,7 +435,7 @@
 	new_character.nutrition = rand(NUTRITION_LEVEL_HUNGRY, NUTRITION_LEVEL_FULL)
 	var/old_base_metabolism = new_character.get_metabolism_factor()
 	new_character.metabolism_factor.Set(old_base_metabolism * rand(9, 11) * 0.1)
-	
+
 	if(key)
 		new_character.key = key		//Manually transfer the key to log them in
 
