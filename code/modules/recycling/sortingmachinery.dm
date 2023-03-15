@@ -145,6 +145,8 @@
 	if(!isobj(target))
 		return
 	var/obj/O = target
+	if(O.flags_2 & CANT_BE_INSERTED)
+		return
 	if(O.anchored)
 		return
 	if(O in user)
