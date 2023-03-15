@@ -714,7 +714,7 @@ var/global/list/tourette_bad_words= list(
 			var/pain = getHalLoss()
 			if(pain > 0)
 				nutrition = max(0, nutrition - met_factor * pain * 0.01)
-	if (nutrition > 450)
+	if (nutrition > NUTRITION_LEVEL_FULL)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
 			overeatduration++
 	else
