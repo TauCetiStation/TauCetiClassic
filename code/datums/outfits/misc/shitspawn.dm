@@ -44,7 +44,7 @@
 	head = /obj/item/clothing/head/det_hat
 
 	r_hand = /obj/item/weapon/gun/projectile
-	l_pocket = /obj/item/ammo_box/a357
+	l_pocket = /obj/item/ammo_box/speedloader/a357
 
 /datum/outfit/tournament_chief
 	name = "Tournament: chef"
@@ -164,7 +164,7 @@
 		new /obj/item/weapon/spacecash/c1000,
 		new /obj/item/weapon/gun/energy/crossbow,
 		new /obj/item/weapon/gun/projectile/revolver/mateba,
-		new /obj/item/ammo_box/a357,
+		new /obj/item/ammo_box/speedloader/a357,
 		new /obj/item/weapon/plastique,
 	)
 
@@ -212,7 +212,7 @@
 /datum/outfit/death_squad/post_equip(mob/living/carbon/human/H)
 	var/obj/item/weapon/storage/pouch/ammo/P = H.r_store
 	for(var/i in 1 to 3)
-		new /obj/item/ammo_box/a357(P)
+		new /obj/item/ammo_box/speedloader/a357(P)
 
 	var/obj/item/clothing/under/color/green/U = H.w_uniform
 	if(istype(U))
@@ -271,8 +271,8 @@
 
 	backpack_contents = list(
 		/obj/item/weapon/storage/box,
-		/obj/item/ammo_box/magazine/sm45,
-		/obj/item/ammo_box/magazine/sm45,
+		/obj/item/ammo_box/magazine/silenced_pistol,
+		/obj/item/ammo_box/magazine/silenced_pistol,
 		/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike,
 		/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment,
 		/obj/item/device/radio/uplink/strike,
@@ -299,8 +299,8 @@
 
 	backpack_contents = list(
 		/obj/item/weapon/storage/box,
-		/obj/item/ammo_box/magazine/sm45,
-		/obj/item/ammo_box/magazine/sm45,
+		/obj/item/ammo_box/magazine/silenced_pistol,
+		/obj/item/ammo_box/magazine/silenced_pistol,
 		/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike,
 		/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment,
 		/obj/item/device/radio/uplink/strike_leader,
