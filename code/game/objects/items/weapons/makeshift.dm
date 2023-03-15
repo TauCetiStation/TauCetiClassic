@@ -60,7 +60,7 @@
 	name = "stunprod"
 	desc = "An improvised stun baton."
 	icon_state = "stunprod"
-	item_state = "stunprod"
+	item_state = "prod"
 	var/obj/item/weapon/stock_parts/cell/bcell = null
 	var/stunforce = 5
 	var/hitcost = 2000
