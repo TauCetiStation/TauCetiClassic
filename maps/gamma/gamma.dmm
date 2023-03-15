@@ -55856,6 +55856,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
+/obj/structure/safe/floor/blueshield,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

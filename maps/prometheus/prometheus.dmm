@@ -2118,6 +2118,12 @@
 "adx" = (
 /turf/simulated/wall/r_wall,
 /area/station/rnd/mixing)
+"ady" = (
+/obj/structure/safe/floor/blueshield,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/blueshield/shuttle)
 "adz" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -117045,7 +117051,7 @@ cJy
 hGN
 ooO
 adC
-adM
+ady
 aee
 ooO
 hGN
