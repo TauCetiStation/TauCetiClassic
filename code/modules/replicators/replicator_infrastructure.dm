@@ -243,12 +243,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 
-	if(FR.gas > 0)
+	if(FR.gas > REPLICATOR_GAS_MOLES_TRANSPONDER_DISSIPATE_PER_TICK)
 		var/total_waste = min(FR.gas, length(global.active_transponders) * REPLICATOR_GAS_MOLES_TRANSPONDER_DISSIPATE_PER_TICK)
 		var/waste_per_portal = total_waste / length(global.active_transponders)
 
 		if(FR.dissipate_fractol(src, waste_per_portal))
 			FR.adjust_fractol(-waste_per_portal)
+	else if(FR.gas > 0)
+		if(FR.dissipate_fractol(src, FR.gas))
+			FR.adjust_fractol(-FR.gas)
 
 	if(FR.collect_taxes(REPLICATOR_TRANSPONDER_CONSUMPTION_RATE))
 		FR.materials_consumed += REPLICATOR_TRANSPONDER_CONSUMPTION_RATE
