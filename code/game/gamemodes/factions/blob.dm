@@ -136,7 +136,7 @@
 					if(is_station_level(bomb.z))
 						nukecode = bomb.r_code
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
-				var/law = "Была утверждена Директива 7-12. Не позвольте ни одному разумному существу избежать уничтожение. Ядерная боеголовка должна быть активирована любой ценой. Код от ядерной боеголовки: [nukecode]."
+				var/law = "Была утверждена Директива 7-12. Не позвольте ни одному разумному существу избежать уничтожения. Ядерная боеголовка должна быть активирована любой ценой. Код от ядерной боеголовки: [nukecode]."
 				aiPlayer.set_zeroth_law(law)
 		if (FS_DEFEATED) //Cleanup time
 			var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
