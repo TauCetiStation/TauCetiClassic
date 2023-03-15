@@ -1,5 +1,6 @@
 /obj/item/ammo_casing/a357
 	name = "357. bullet"
+	icon_state = "casing_357"
 	desc = "A .357 bullet casing."
 	caliber = "357"
 	projectile_type = /obj/item/projectile/bullet/revbullet
@@ -13,18 +14,9 @@
 /obj/item/ammo_casing/a50/weakened
 	projectile_type = /obj/item/projectile/bullet/midbullet3
 
-/obj/item/ammo_casing/a418
-	desc = "A .418 bullet casing."
-	caliber = "357"
-	projectile_type = /obj/item/projectile/bullet/suffocationbullet
-
-/obj/item/ammo_casing/a666
-	desc = "A .666 bullet casing."
-	caliber = "357"
-	projectile_type = /obj/item/projectile/bullet/cyanideround
-
 /obj/item/ammo_casing/c38
 	desc = "A .38 bullet casing."
+	icon_state = "casing_38_rubber"
 	caliber = "38"
 	projectile_type = /obj/item/projectile/bullet/weakbullet
 	m_amt = 200
@@ -207,6 +199,7 @@
 
 /obj/item/ammo_casing/c38m
 	desc = "A .38 bullet casing."
+	icon_state = "casing_38"
 	caliber = "38"
 	projectile_type = /obj/item/projectile/bullet/midbullet2
 	m_amt = 400
@@ -226,6 +219,7 @@
 /obj/item/ammo_casing/a556i
 	desc = "A 5.56mm incendiary bullet casing."
 	caliber = "5.56mm"
+	icon_state = "casing_incendiary"
 	projectile_type = /obj/item/projectile/bullet/incendiary
 
 /obj/item/ammo_casing/a74

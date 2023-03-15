@@ -409,7 +409,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		qdel(O)
 	return
 
-var/global/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/item/ammo_box/a357,\
+var/global/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/item/ammo_box/speedloader/a357,\
 	/obj/item/weapon/gun/energy/crossbow, /obj/item/weapon/melee/energy/sword,\
 	/obj/item/weapon/storage/box/syndicate, /obj/item/weapon/storage/box/emps,\
 	/obj/item/weapon/cartridge/syndicate, /obj/item/clothing/under/chameleon,\

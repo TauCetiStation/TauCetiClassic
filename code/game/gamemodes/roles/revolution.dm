@@ -83,11 +83,11 @@
 		return FALSE
 
 	if(isrevhead(M) || isrev(M))
-		to_chat(src, "<span class='warning'><b>[M] is already be a revolutionary!</b></span>")
+		to_chat(src, "<span class='bold warning'>[M] is already be a revolutionary!</span>")
 	else if(M.ismindprotect())
-		to_chat(src, "<span class='warning'><b>[M] is implanted with a mind protected implant - Remove it first!</b></span>")
+		to_chat(src, "<span class='bold warning'>[M] is implanted with a mind protected implant - Remove it first!</span>")
 	else if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate"))
-		to_chat(src, "<span class='warning'><b>[M] is a blacklisted player!</b></span>")
+		to_chat(src, "<span class='bold warning'>[M] is a blacklisted player!</span>")
 	else
 		var/datum/role/rev_leader/lead = mind.GetRole(HEADREV)
 		if(world.time < lead.rev_cooldown)
@@ -96,24 +96,5 @@
 		to_chat(src, "<span class='warning'>Attempting to convert [M]...</span>")
 		log_admin("[key_name(src)]) attempted to convert [M].")
 		message_admins("<span class='warning'>[key_name_admin(src)] attempted to convert [M]. [ADMIN_JMP(src)]</span>")
-		var/choice = tgui_alert(M,"Asked by [src]: Do you want to join the revolution?","Join the Revolution!",list("No!","Yes!"))
-		if(choice == "Yes!")
-			var/datum/faction/revolution/rev = lead.GetFaction()
-			if(add_faction_member(rev, M, TRUE))
-				to_chat(M, "<span class='notice'>You join the revolution!</span>")
-				to_chat(src, "<span class='notice'><b>[M] joins the revolution!</b></span>")
-				var/obj/item/device/uplink/hidden/U = find_syndicate_uplink(src)
-				if(!U)
-					return
-				U.uses += 3
-				var/datum/component/gamemode/syndicate/S = lead.GetComponent(/datum/component/gamemode/syndicate)
-				if(!S)
-					return
-				S.total_TC += 3
-
-			else
-				to_chat(src, "<span class='warning'><b>[M] cannot be converted.</b></span>")
-		else if(choice == "No!")
-			to_chat(M, "<span class='warning'>You reject this traitorous cause!</span>")
-			to_chat(src, "<span class='warning'><b>[M] does not support the revolution!</b></span>")
-		lead.rev_cooldown = world.time + 50
+		var/datum/faction/revolution/rev = lead.GetFaction()
+		rev.convert_revolutionare_by_invite(M, src)
