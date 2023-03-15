@@ -308,6 +308,10 @@
 			module = new /obj/item/weapon/robot_module/peacekeeper(src)
 			module_sprites["Marina"] = "marina-peace"
 			module_sprites["Sleak"] = "sleek-peace"
+			module_sprites["Nanotrasen"] = "kerfusNT"
+			module_sprites["Flushed"] = "kerfusFlushed"
+			module_sprites["NO ERP"] = "kerfusNoERP"
+			module_sprites["Maid"] = "kerfusMaid"
 
 		if("Combat")
 			build_combat_borg()
@@ -596,7 +600,7 @@
 /mob/living/silicon/robot/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
-		
+
 	if (user.a_intent == INTENT_HARM)
 		return ..()
 
