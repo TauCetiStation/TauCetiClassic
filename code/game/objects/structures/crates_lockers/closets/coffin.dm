@@ -106,9 +106,6 @@
 						"<span class='warning'>You hear screwing.</span>")
 		return TRUE
 
-/obj/structure/closet/coffin/correct_pixel_shift(mob/living/M)
-	return
-
 /obj/structure/closet/coffin/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
 		M.pixel_x = 1
