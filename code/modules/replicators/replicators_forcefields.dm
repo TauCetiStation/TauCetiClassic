@@ -179,8 +179,8 @@
 
 /obj/structure/replicator_barricade/Destroy()
 	// to-do: sound
-	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 	if(leave_stabilization_field && !(locate(/obj/structure/stabilization_field) in loc))
+		playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 		new /obj/structure/stabilization_field(loc)
 	return ..()
 
