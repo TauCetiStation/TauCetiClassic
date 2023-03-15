@@ -255,6 +255,10 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 		if(RAI)
 			RAI.corridors_constructed += 1
 
+		var/obj/machinery/swarm_powered/bluespace_transponder/BT = locate() in T
+		if(BT)
+			BT.try_enter_corridor(src)
+
 	FR.adjust_materials(-auto_construct_cost, adjusted_by=last_controller_ckey)
 	announce_material_adjustment(-auto_construct_cost, ignore_intent=FALSE)
 
