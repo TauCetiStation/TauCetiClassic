@@ -42,7 +42,9 @@
 	},
 /area/space_structures/planetarium)
 "i" = (
-/obj/structure/window/fulltile/reinforced/phoron,
+/obj/structure/window/phoronreinforced{
+	dir = 6
+	},
 /turf/unsimulated/floor/abductor,
 /turf/environment/space,
 /area/space_structures/planetarium)
@@ -69,11 +71,15 @@
 	},
 /area/space_structures/planetarium)
 "n" = (
-/obj/structure/window/fulltile/reinforced/phoron,
+/obj/structure/window/phoronreinforced{
+	dir = 6
+	},
 /turf/environment/space,
 /area/space_structures/planetarium)
 "o" = (
-/obj/structure/window/fulltile/reinforced/phoron,
+/obj/structure/window/phoronreinforced{
+	dir = 6
+	},
 /turf/unsimulated/floor/abductor,
 /area/space_structures/planetarium)
 "p" = (
@@ -153,15 +159,15 @@
 /turf/unsimulated/floor/abductor,
 /area/space_structures/planetarium)
 "D" = (
-/obj/structure/window/thin/reinforced/phoron,
-/obj/structure/window/thin/reinforced/phoron{
+/obj/structure/window/phoronreinforced,
+/obj/structure/window/phoronreinforced{
 	dir = 8
 	},
 /turf/unsimulated/floor/abductor,
 /area/space_structures/planetarium)
 "E" = (
-/obj/structure/window/thin/reinforced/phoron,
-/obj/structure/window/thin/reinforced/phoron{
+/obj/structure/window/phoronreinforced,
+/obj/structure/window/phoronreinforced{
 	dir = 4
 	},
 /turf/unsimulated/floor/abductor,
@@ -208,19 +214,19 @@
 	},
 /area/space_structures/planetarium)
 "O" = (
-/obj/structure/window/thin/reinforced/phoron{
+/obj/structure/window/phoronreinforced{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced/phoron{
+/obj/structure/window/phoronreinforced{
 	dir = 4
 	},
 /turf/unsimulated/floor/abductor,
 /area/space_structures/planetarium)
 "P" = (
-/obj/structure/window/thin/reinforced/phoron{
+/obj/structure/window/phoronreinforced{
 	dir = 8
 	},
-/obj/structure/window/thin/reinforced/phoron{
+/obj/structure/window/phoronreinforced{
 	dir = 1
 	},
 /obj/item/weapon/haircomb,

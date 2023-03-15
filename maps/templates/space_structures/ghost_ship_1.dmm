@@ -16,21 +16,21 @@
 	},
 /area/space_structures/ghostship)
 "ad" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/ghostship)
 "ae" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -113,7 +113,9 @@
 	},
 /area/space_structures/ghostship)
 "aq" = (
-/obj/structure/window/fulltile/reinforced/phoron,
+/obj/structure/window/phoronreinforced{
+	dir = 5
+	},
 /obj/machinery/shieldgen,
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
@@ -314,7 +316,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -658,7 +660,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -863,7 +865,9 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/ghostship)
 "da" = (
-/obj/structure/window/fulltile/reinforced/phoron,
+/obj/structure/window/phoronreinforced{
+	dir = 5
+	},
 /turf/simulated/floor/airless,
 /area/space_structures/ghostship)
 "dc" = (
