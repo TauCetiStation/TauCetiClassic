@@ -69,7 +69,23 @@
 	var/status = 0
 	slot_flags = SLOT_FLAGS_BACK
 	flags_2 = CANT_BE_INSERTED
+	var/mob/foundmob = "" //Used in throwing proc.
 
+/obj/item/weapon/melee/cattleprod/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(isliving(hit_atom))
+		var/mob/living/carbon/human/H = hit_atom
+		if(status)
+			H.apply_effect(60,AGONY,0)
+			deductcharge(hitcost)
+			for(var/mob/M in player_list) if(M.key == src.fingerprintslast)
+				foundmob = M
+				break
+
+			H.visible_message("<span class='danger'>[src], thrown by [foundmob.name], strikes [H]!</span>")
+
+			H.attack_log += "\[[time_stamp()]\]<font color='orange'> Hit by thrown [src.name] last touched by ([src.fingerprintslast])</font>"
+			msg_admin_attack("Flying [src.name], last touched by ([src.fingerprintslast]) hit [key_name(H)]", H)
 
 /obj/item/weapon/melee/cattleprod/atom_init()
 	. = ..()
@@ -158,6 +174,7 @@
 	if(isrobot(M))
 		..()
 		return
+
 
 	if(user.a_intent == INTENT_HARM)
 		if(!..()) return
