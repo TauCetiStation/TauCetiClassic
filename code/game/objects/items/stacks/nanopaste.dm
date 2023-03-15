@@ -6,14 +6,19 @@
 	icon_state = "tube"
 	origin_tech = "materials=4;engineering=3"
 	amount = 10
+	var/delay = 1 SECOND
+	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 /obj/item/stack/nanopaste/attack(mob/living/M, mob/user, def_zone)
+	var/skill_delay = apply_skill_bonus(user, delay, required_skills, multiplier = -0.25)
 	if (isrobot(M))	//Repairing cyborgs
 		var/mob/living/silicon/robot/R = M
 		if (R.getBruteLoss() || R.getFireLoss() )
 			if(!use(1))
 				to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")
 				return FALSE
+			if(!do_mob(user, R, time = skill_delay, check_target_zone = TRUE))
+				return
 			R.adjustBruteLoss(-15)
 			R.adjustFireLoss(-15)
 			R.updatehealth()
@@ -31,6 +36,8 @@
 				if(!use(1))
 					to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")
 					return FALSE
+				if(!do_mob(user, H, time = skill_delay, check_target_zone = TRUE))
+					return
 				BP.heal_damage(15, 15, robo_repair = 1)
 				H.updatehealth()
 				user.visible_message("<span class='notice'>\The [user] applies some nanite paste at[user != M ? " \the [M]'s" : " \the"][BP.name] with \the [src].</span>",\
