@@ -42,6 +42,13 @@
 			space += I.w_class
 			I.forceMove(src)
 
+	PopulateContents()
+
+	desc = "A huge chunk of metal with a dial embedded in it. Fine print on the dial reads \"Scarborough Arms - [number_of_tumblers] tumbler safe, guaranteed thermite resistant, explosion resistant, and assistant resistant.\""
+
+/obj/structure/safe/proc/PopulateContents()
+	return
+
 /obj/structure/safe/update_icon()
 	if(open)
 		icon_state = "[initial(icon_state)]-open"
@@ -226,4 +233,67 @@
 /obj/structure/safe/floor/hide(intact)
 	invisibility = intact ? 101 : 0
 
+/obj/structure/safe/floor/blueshield
+	name = "blueshield safe"
+	number_of_tumblers = 4
+
+/obj/structure/safe/floor/blueshield/check_unlocked()
+	if(current_tumbler_index > number_of_tumblers)
+		if (!(get_security_level() in list("red", "delta")))
+			to_chat(usr, "<span class='italics'>Этот сейф можно открыть только при красном или Дельта коде.</span>")
+			return FALSE
+	return ..()
+
+/obj/structure/safe/floor/blueshield/examine(mob/user)
+	..()
+	var/mob/living/carbon/human/H = user
+	if(H.mind.assigned_role == "Blueshield Officer")
+		to_chat(H, "<span class='notice'>Вы вспоминаете код от сейфа, полученный во время инструктажа... [get_combination()].</span>")
+
+/obj/structure/safe/floor/blueshield/PopulateContents()
+	switch(rand(1, 5))
+		if(1)
+			new /obj/item/clothing/head/helmet/space/rig/blueshield(src)
+			new /obj/item/clothing/suit/space/rig/blueshield(src)
+			new /obj/item/weapon/tank/emergency_oxygen/double(src)
+		if(2)
+			new /obj/item/weapon/storage/firstaid/blueshield(src)
+		if(3)
+			new /obj/item/weapon/gun/projectile/automatic/l13(src)
+			for (var/i in 1 to 2)
+				new /obj/item/ammo_box/magazine/l13_38(src)
+			for (var/i in 1 to 3)
+				new /obj/item/ammo_box/magazine/l13_38/lethal(src)
+		if(4)
+			new /obj/item/weapon/fireaxe/blue(src)
+		if(5)
+			new /obj/item/weapon/reagent_containers/food/snacks/pastatomato(src)
+			new /obj/item/weapon/reagent_containers/food/snacks/salmonsteak(src)
+			new /obj/item/weapon/reagent_containers/food/snacks/tossedsalad(src)
+			new /obj/item/weapon/reagent_containers/food/snacks/sliceable/cake/chocolate(src)
+			new /obj/item/weapon/reagent_containers/food/drinks/bottle/wine(src)
+			for (var/i in 1 to 3)
+				new /obj/item/weapon/reagent_containers/food/drinks/drinkingglass(src)
+			new /obj/item/weapon/storage/visuals/tray(src)
+		if(6)
+			new /obj/item/weapon/storage/secure/briefcase/syndie(src)
+		if(7)
+			for (var/i in 1 to 6)
+			new /obj/item/weapon/reagent_containers/food/snacks/grown/bluespacetomato(src)
+		if(8)
+			new /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater(src)
+			new /obj/item/clothing/accessory/metal_cross(src)
+			new /obj/item/weapon/storage/bible(src)
+		if(9)
+			new /obj/item/weapon/gun/projectile/shotgun/combat/nonlethal(src)
+			new /obj/item/ammo_box/eight_shells(src)
+			new /obj/item/ammo_box/eight_shells/buckshot(src)
+			new /obj/item/ammo_box/eight_shells/incendiary(src)
+			new /obj/item/ammo_box/eight_shells/stunshot(src)
+		if(9)
+			new /obj/item/weapon/gun/projectile/revolver(src)
+		if(10)
+			new /obj/item/weapon/gun/projectile/revolver/empty(src)
+
 #undef SOUND_CHANCE
+ADD_TO_GLOBAL_LIST(/obj/structure/safe, safes_list)

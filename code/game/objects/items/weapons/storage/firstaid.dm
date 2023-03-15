@@ -104,6 +104,28 @@
 		new /obj/item/stack/medical/advanced/ointment(src)
 	new /obj/item/stack/medical/splint(src)
 
+/obj/item/weapon/storage/firstaid/blueshield
+	name = "blueshield first-aid kit"
+	desc = "Special first-aid kit issued to Blueshield Officers."
+	icon_state = "blueshield"
+	item_state = "firstaid-blueshield"
+
+/obj/item/weapon/storage/firstaid/blueshield/atom_init()
+	. = ..()
+	if (empty)
+		return
+	new /obj/item/weapon/storage/pill_bottle/bicaridine(src)
+	new /obj/item/weapon/storage/pill_bottle/dermaline(src)
+	new /obj/item/weapon/storage/pill_bottle/dexalin_plus(src)
+	new /obj/item/weapon/storage/pill_bottle/dylovene(src)
+	new /obj/item/weapon/storage/pill_bottle/tramadol(src)
+	new /obj/item/weapon/storage/pill_bottle/peridaxon(src)
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen(src)
+	new /obj/item/stack/medical/suture(src)
+
+	make_exact_fit()
+
 /*
  * Pill Bottles
  */
@@ -276,3 +298,10 @@
 			/obj/item/weapon/reagent_containers/pill/kelotane = 2,
 			/obj/item/weapon/reagent_containers/pill/hyronalin = 2
 		)
+
+/obj/item/weapon/storage/pill_bottle/peridaxon
+	name = "pill bottle (Peridaxon)"
+	desc = "Contains pills used to treat organs."
+
+	startswith = list(/obj/item/weapon/reagent_containers/pill/peridaxon = 7)
+	wrapper_color = COLOR_PURPLE

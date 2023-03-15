@@ -1154,3 +1154,21 @@
 	slowdown = 0.2
 	offline_slowdown = 4
 	initial_modules = list(/obj/item/rig_module/mounted_relay, /obj/item/rig_module/teleporter_stabilizer, /obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer, /obj/item/rig_module/device/anomaly_scanner)
+
+/obj/item/clothing/head/helmet/space/rig/blueshield
+	desc = "A special helmet designed for work in a hazardous, low pressure environments. Has low weight and additional armour platings."
+	name = "blueshield hardsuit helmet"
+	icon_state = "rig0-blueshield"
+	item_state = "blueshield_helmet"
+	rig_variant = "blueshield"
+	armor = list(melee = 45, bullet = 30, laser = 30, energy = 30, bomb = 65, bio = 100, rad = 10)
+
+/obj/item/clothing/suit/space/rig/blueshield
+	desc = "A special suit that protects against hazardous, low pressure environments.. Has low weight and additional armour platings."
+	icon_state = "rig-blueshield"
+	name = "blueshield hardsuit"
+	item_state = "ert_commander"
+	armor = list(melee = 45, bullet = 30, laser = 30, energy = 30, bomb = 65, bio = 100, rad = 10)
+	slowdown = 0.3
+	offline_slowdown = 3.5
+	initial_modules = list(/obj/item/rig_module/selfrepair, /obj/item/rig_module/simple_ai, /obj/item/rig_module/device/healthscanner, /obj/item/rig_module/chem_dispenser/medical/ert)

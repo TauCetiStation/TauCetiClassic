@@ -1,7 +1,7 @@
 #define DUALSABER_BLOCK_CHANCE_MODIFIER 1.2
 
 /obj/item/weapon/fireaxe
-	icon_state = "fireaxe0"
+	icon_state = "fireaxe"
 	name = "fire axe"
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	force = 10
@@ -32,7 +32,7 @@
 	var/datum/twohanded_component_builder/TCB = new
 	TCB.force_wielded = 40
 	TCB.force_unwielded = 10
-	TCB.icon_wielded = "fireaxe1"
+	TCB.icon_wielded = "[initial(icon_state)]1"
 	AddComponent(/datum/component/twohanded, TCB)
 
 	hitsound = SOUNDIN_DESCERATION
@@ -42,6 +42,11 @@
 
 /obj/item/weapon/fireaxe/proc/can_spin(mob/user)
 	return HAS_TRAIT(src, TRAIT_DOUBLE_WIELDED)
+
+/obj/item/weapon/fireaxe/blue
+	name = "blue fire axe"
+	desc = "Blue fire is a product of burning carbon. In some sense, every person on this station is carbon."
+	icon_state = "bluefireaxe"
 
 /obj/item/weapon/dualsaber
 	var/reflect_chance = 0
