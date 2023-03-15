@@ -46,7 +46,6 @@ SUBSYSTEM_DEF(icon_smooth)
 
 #ifdef MANUAL_ICON_SMOOTH
 /mob/verb/ChooseDMI(dmi as file)
-	var/dmifile = file(dmi)
 	if(isfile(dmifile) && (copytext("[dmifile]",-4) == ".dmi"))
 		SliceNDice(dmifile)
 	else
@@ -61,10 +60,14 @@ SUBSYSTEM_DEF(icon_smooth)
 	var/STATE_COUNT_NORMAL = 4
 	var/STATE_COUNT_DIAGONAL = 7
 
-	if(!isfile(dmifile) || (copytext("[dmifile]",-4) != ".dmi"))
-		CRASH("Bad DMI file '[dmifile]'")
+	var/icon/sourceIcon
+	if(isfile(dmifile) && (copytext("[dmifile]",-4) == ".dmi"))
+		sourceIcon = icon(dmifile)
+	else if(isicon(dmifile))
+		sourceIcon = dmifile
+	else
+		CRASH("Bad DMI file/icon '[dmifile]'")
 
-	var/icon/sourceIcon = icon(dmifile)
 	var/list/SourceIconStates = sourceIcon.IconStates()
 	var/list/states = list("box", "line", "line_v", "line_h", "center_4", "center_8", "diag", "diag_corner_a", "diag_corner_b")
 	var/list/ExcludedMiscIconStates = SourceIconStates - states // any states that are not related to smooth states, will be added as is in the end
@@ -114,11 +117,11 @@ SUBSYSTEM_DEF(icon_smooth)
 
 	var/icon/outputIcon = new /icon()
 
-	var/filename_temp = "[copytext("[dmifile]", 1, -4)]-smooth_temp.dmi"
+	var/filename_temp = "cache/smooth_temp_[rand(1, 99999)].dmi"
 
 	for(var/state in states)
 		var/statename = lowertext(state)
-		outputIcon = icon(filename_temp) //open the icon again each iteration, to work around byond memory limits
+		outputIcon = icon(filename_temp) //open the icon again each iteration, to work around byond memory limits (what limits?)
 
 		switch(statename)
 			if("box")

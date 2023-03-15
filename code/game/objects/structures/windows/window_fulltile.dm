@@ -19,7 +19,7 @@
 	var/smooth_icon_window = 'icons/obj/smooth_structures/windows/window.dmi'
 	var/smooth_icon_grille = 'icons/obj/smooth_structures/grille.dmi'
 
-	var/grilled = TRUE
+	var/grilled = FALSE
 	var/glass_color
 	var/glass_color_blend_to_color
 	var/glass_color_blend_to_ratio
@@ -27,12 +27,13 @@
 	var/damage_threshold = 5   // this will be deducted from any physical damage source. Main difference in sturdiness between fulltiles and thin windows
 	var/image/crack_overlay
 
-/obj/structure/window/fulltile/atom_init()
+	var/disassemble_glass_type = /obj/item/stack/sheet/glass // any better ideas to handle drops and disassembles?
+
+/obj/structure/window/fulltile/atom_init(mapload, grill)
 	. = ..()
 
-	if(color) // tmp remove me
-		glass_color = color
-		color = null
+	if(grill)
+		grilled = TRUE
 
 	for(var/atom/A in get_turf(src))
 		if(istype(A, /obj/structure/window) && A != src)
@@ -51,8 +52,9 @@
 	
 	if(SSticker.current_state > GAME_STATE_SETTING_UP) // todo: need own flag for color_windows_init (subsystem?)
 		regenerate_smooth_icon()
+	else
+		queue_smooth(src)
 
-// 
 /obj/structure/window/fulltile/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
 	if(damage_threshold)
 		switch(damage_type)
@@ -63,6 +65,17 @@
 	return ..()
 
 /obj/structure/window/fulltile/attackby(obj/item/W, mob/user)
+	if(isscrewing(W))
+		if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to unfasten the window from the frame."))
+			return
+
+		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
+		to_chat(user, "<span class='notice'>You have unfastened the window from the frame.</span>")
+		
+		deconstruct(TRUE)
+		return
+
+	return ..()
 
 /obj/structure/window/fulltile/update_icon()
 	var/ratio = get_integrity() / max_integrity
@@ -73,6 +86,25 @@
 		return
 	crack_overlay = image('icons/obj/window.dmi',"damage[ratio]",-(layer+0.1))
 	add_overlay(crack_overlay)
+
+/obj/structure/window/fulltile/CanPass(atom/movable/mover, turf/target, height=0)
+	if(istype(mover) && mover.checkpass(PASSGLASS) && (!grilled || mover.checkpass(PASSGRILLE)))
+		return TRUE
+	return !density
+
+/obj/structure/window/fulltile/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+
+	if(disassembled)
+		new disassemble_glass_type(loc, 2)
+
+	if(grilled)
+		new /obj/structure/grille(loc)
+
+	new /obj/structure/windowsill(loc)
+
+	return ..()
 
 /**
  * Fulltile phoron

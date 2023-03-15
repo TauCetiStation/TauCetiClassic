@@ -7,14 +7,14 @@
 	desc = "A window you should not see. Contact coders about this anomaly."
 	icon = 'icons/obj/window.dmi' // has many legacy icons
 	density = TRUE
-	layer = 3.2//Just above doors
+	layer = WINDOWS_LAYER
 	anchored = TRUE
 
 	max_integrity = 14
 	integrity_failure = 0.75
 	resistance_flags = CAN_BE_HIT
 
-	var/list/contents_drop = list()
+	var/list/drops = list(/obj/item/weapon/shard)
 
 /obj/structure/window/play_attack_sound(damage_amount, damage_type, damage_flag)
 	switch(damage_type)
@@ -25,6 +25,26 @@
 				playsound(loc, 'sound/weapons/tap.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
+
+/obj/structure/window/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/airlock_painter))
+		change_paintjob(W, user)
+		return
+	
+	return ..()
+
+/obj/structure/window/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+
+	if(!disassembled) // disassembled == true is handled by tools in /thin/ and own deconstruct in /fulltile/
+		playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
+		visible_message("[src] shatters!")
+
+		for(var/path in drops)
+			new path(loc)
+
+	return ..()
 
 /obj/structure/window/atom_break(damage_flag)
 	. = ..()
@@ -52,12 +72,41 @@
 	return !density
 
 /obj/structure/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
-	if(!density)
-		return TRUE
-	if((dir == SOUTHWEST) || (dir == to_dir))
-		return FALSE
+	return !density
 
-	return TRUE
+/obj/structure/window/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+		var/obj/item/weapon/grab/G = W
+		if (isliving(G.affecting))
+			user.SetNextMove(CLICK_CD_MELEE)
+			var/mob/living/M = G.affecting
+			var/mob/living/A = G.assailant
+			var/state = G.state
+			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
+			switch (state)
+				if(1)
+					M.apply_damage(7)
+					take_damage(7, BRUTE, MELEE)
+					visible_message("<span class='danger'>[A] slams [M] against \the [src]!</span>")
+
+					M.log_combat(user, "slammed against [name]")
+				if(2)
+					if (prob(50))
+						M.Stun(1)
+						M.Weaken(1)
+					M.apply_damage(8)
+					take_damage(9, BRUTE, MELEE)
+					visible_message("<span class='danger'>[A] bashes [M] against \the [src]!</span>")
+					M.log_combat(user, "bashed against [name]")
+				if(3)
+					M.Stun(5)
+					M.Weaken(5)
+					M.apply_damage(20)
+					take_damage(12, BRUTE, MELEE)
+					visible_message("<span class='danger'><big>[A] crushes [M] against \the [src]!</big></span>")
+					M.log_combat(user, "crushed against [name]")
+	else
+		return ..()
 
 /obj/structure/window/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.pass_flags & PASSGLASS)	//Lasers mostly use this flag.. Why should they able to focus damage with direct click...

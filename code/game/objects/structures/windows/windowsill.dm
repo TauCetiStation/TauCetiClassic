@@ -10,7 +10,7 @@
 
 	density = TRUE
 	anchored = TRUE
-	layer = BELOW_OBJ_LAYER
+	layer = BELOW_MACHINERY_LAYER - 0.01 // below grilles (temp?)
 	throwpass = TRUE
 	climbable = TRUE
 
@@ -20,3 +20,41 @@
 
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
+
+/obj/structure/windowsill/attackby(obj/item/W, mob/user)
+	var/obj/structure/grille/grille_in_loc = locate() in loc
+
+	if(!grille_in_loc && istype(W, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = W
+		R.try_to_build_grille(user, loc)
+		return
+
+	else if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
+		if(grille_in_loc && !grille_in_loc.anchored) // grille optional, but if we have one - should be secured
+			to_chat(user, "<span class='warning'>You need to secure [grille_in_loc] first!</span>")
+			return
+
+		var/type
+		switch(W.type)
+			if(/obj/item/stack/sheet/glass)
+				type = /obj/structure/window/fulltile
+			if(/obj/item/stack/sheet/glass/phoronglass)
+				type = /obj/structure/window/fulltile/phoron
+			if(/obj/item/stack/sheet/rglass)
+				type = /obj/structure/window/fulltile/reinforced
+			if(/obj/item/stack/sheet/glass/phoronrglass)
+				type = /obj/structure/window/fulltile/reinforced/phoron
+
+		if(!type) // should not happen
+			return
+		
+		if(!W.use_tool(usr, usr, 10, 2))
+			return
+
+		new type(loc, !!grille_in_loc)
+		QDEL_NULL(grille_in_loc)
+		qdel(src)
+
+	return ..()
+
+///obj/structure/windowsill/deconstruct(disassembled) // nothing

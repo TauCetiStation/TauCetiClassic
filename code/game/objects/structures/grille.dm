@@ -99,12 +99,18 @@
 		if(!shock(user, 90))
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			anchored = !anchored
+			var/obj/structure/windowsill = locate() in loc
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] the grille.</span>", \
-								 "<span class='notice'>You have [anchored ? "fastened the grille to" : "unfastened the grill from"] the floor.</span>")
+								 "<span class='notice'>You have [anchored ? "fastened the grille to" : "unfastened the grill from"] [windowsill ? "\the [windowsill]" : "the floor"].</span>")
 			return
 
 //window placing begin
 	else if( istype(W,/obj/item/stack/sheet/rglass) || istype(W,/obj/item/stack/sheet/glass) )
+		var/obj/structure/windowsill/WS = locate() in loc
+		if(WS) // thats for fulltile window, redirect
+			WS.attackby(W, user)
+			return
+
 		var/obj/item/stack/ST = W
 		if(ST.get_amount() < 1)
 			return
@@ -173,7 +179,7 @@
 /obj/structure/grille/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
 	. = ..()
 	if(. && !(destroyed || damaged))
-		icon_state = "grille_damaged_[rand(1, 4)]"
+		//icon_state = "grille_damaged_[rand(1, 4)]" // todo ?
 		damaged = TRUE
 
 /obj/structure/grille/atom_break(damage_flag)

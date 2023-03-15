@@ -86,7 +86,7 @@ var/global/list/drain_atoms = list(
 		drain(A, suit)
 		return TRUE
 
-	if(istype(A, /obj/structure/grille))
+	if(istype(A, /obj/structure/grille)) // todo: windowsills
 		var/obj/structure/cable/C = locate() in A.loc
 		if(C)
 			drain(C, suit)

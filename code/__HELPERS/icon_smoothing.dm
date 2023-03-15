@@ -320,7 +320,6 @@
 #ifdef MANUAL_ICON_SMOOTH
 	return
 #endif
-
 	if(!smooth_icon_initial)
 		smooth_icon_initial = icon
 	var/cache_string = "["[type]"]"
@@ -331,11 +330,11 @@
 	icon = global.baked_smooth_icons[cache_string]
 	icon_state = "[adjacencies]"
 
-/atom/proc/regenerate_smooth_icon()
-	smooth_set_icon(icon_state)
+/atom/proc/regenerate_smooth_icon() // mostly for windows, so we can regenerate same icon with new colors
+	smooth_set_icon(icon_state) // todo: flag if we already done first generation
 
 /obj/structure/window/fulltile/smooth_set_icon(adjacencies)
-#ifdef MANUAL_ICON_SMOOTH // manual smoothing not supported
+#ifdef MANUAL_ICON_SMOOTH
 	return
 #endif
 
@@ -349,10 +348,6 @@
 
 	if(!global.baked_smooth_icons[cache_string])
 
-		//var/smooth_icon_windowstill = 'icons/smooth_structures/windows/window_sill.dmi'
-		//var/smooth_icon_window = 'icons/smooth_structures/windows/window.dmi'
-		//var/smooth_icon_grille = 'icons/obj/smooth_structures/grille.dmi'
-
 		var/icon/blended = new(smooth_icon_windowstill)
 
 		if(grilled)
@@ -364,11 +359,7 @@
 			window.Blend(glass_color, ICON_MULTIPLY)
 		blended.Blend(window,ICON_OVERLAY)
 
-		var/fname = "cache/ftwindows/tempo_[ckey(cache_string)].dmi" // todo: temp work around SliceNDice bug (works strange with /icon/)
-		fcopy(blended, fname)
-		var/icon/I = SliceNDice(file(fname))
-		//fdel(fname)
-
+		var/icon/I = SliceNDice(blended)
 		global.baked_smooth_icons[cache_string] = I
 
 	icon = global.baked_smooth_icons[cache_string]

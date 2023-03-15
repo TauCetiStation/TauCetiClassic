@@ -123,7 +123,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 	var/dir_to = get_dir(src, adj_turf)
 
 	for(var/obj/structure/window/thin/W in src)
-		if(W.dir == dir_to) //Same direction // should it be other direction (closest window to us, instead of distant)?
+		if(W.dir == dir_to) //Same direction
 			W.fire_act(adj_air, adj_temp, adj_volume)
 
 /turf/simulated/floor/blob_act()

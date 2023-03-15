@@ -72,18 +72,15 @@
 
 		return FALSE
 
+	try_to_build_grille(user, build_loc)
 
+/obj/item/stack/rods/proc/try_to_build_grille(mob/living/user, build_loc)
 	if(get_amount() < 2)
 		to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")
 		return
-	if(user.is_busy(src))
-		return
 	to_chat(usr, "<span class='notice'>Assembling grille...</span>")
-	if (!use_tool(usr, usr, 10))
-		return
-	if (!use(2))
+	if (!use_tool(src, usr, 10, 2))
 		return
 	var/obj/structure/grille/F = new /obj/structure/grille(build_loc)
-	user.try_take(F, build_loc)
-	to_chat(usr, "<span class='notice'>You assemble a grille.</span>")
+	to_chat(usr, "<span class='notice'>You assembled \a [F].</span>")
 	F.add_fingerprint(usr)

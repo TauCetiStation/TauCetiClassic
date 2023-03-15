@@ -26,7 +26,7 @@
  * Shuttle reinforced(?)
  */
 
-/obj/structure/window/shuttle/reinforced/shuttle
+/obj/structure/window/shuttle/reinforced
 	icon = 'icons/locations/shuttles/shuttle.dmi'
 	dir = SOUTHWEST
 	flags = NODECONSTRUCT | ON_BORDER
