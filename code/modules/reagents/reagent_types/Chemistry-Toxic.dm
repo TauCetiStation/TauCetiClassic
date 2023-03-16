@@ -817,7 +817,6 @@
 	if(prob(60))
 		M.adjustToxLoss(1)
 
-
 /datum/reagent/serotrotium
 	name = "Serotrotium"
 	id = "serotrotium"
