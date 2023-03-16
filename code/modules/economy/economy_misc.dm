@@ -106,6 +106,8 @@ var/global/initial_station_money = 7500
 	vendor_account = department_accounts["Vendor"]
 	cargo_account = department_accounts["Cargo"]
 
+	SSeconomy.set_dividend_rate("Cargo", 0.05)
+
 	current_date_string = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year]"
 
 	economy_init = TRUE

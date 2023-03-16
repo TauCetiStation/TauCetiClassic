@@ -17,6 +17,7 @@
 	var/security_level = 0	//0 - auto-identify from worn ID, require only account number
 							//1 - require manual login / account number and pin
 							//2 - require card and manual login
+	var/list/stocks
 
 /datum/money_account/New()
 	all_money_accounts += src
@@ -25,6 +26,14 @@
 /datum/money_account/Destroy()
 	all_money_accounts -= src
 	return ..()
+
+/datum/money_account/proc/adjust_stocks(department, amount)
+	LAZYINITLIST(stocks)
+
+	if(!stocks[department])
+		LAZYSET(stocks, department, 0)
+
+	stocks[department] += amount
 
 /datum/money_account/proc/adjust_money(amount)
 	money = clamp(money + amount, MIN_MONEY_ON_ACCOUNT, MAX_MONEY_ON_ACCOUNT)
@@ -85,8 +94,13 @@
 	var/time = ""
 	var/source_terminal = ""
 
-/proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H, start_money = rand(50, 200) * 10)
+/proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H, start_money = rand(50, 200) * 10, department_stocks=null)
 	var/datum/money_account/M = create_account(H.real_name, start_money, null, H.age)
+
+	for(var/department in department_stocks)
+		SSeconomy.print_stocks(department, department_stocks[department])
+		M.adjust_stocks(department, department_stocks[department])
+
 	if(H.mind)
 		var/remembered_info = ""
 		remembered_info += "<b>Your account number is:</b> #[M.account_number]<br>"
