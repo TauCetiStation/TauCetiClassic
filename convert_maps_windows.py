@@ -96,6 +96,7 @@ def main():
 								if idcode:
 									batch = re.sub(r'/obj/structure/grille({\s+.*\s+})?(,)?\n?', '', batch)
 									batch = re.sub(r'/obj/structure/window/reinforced/polarized(?!/)({[\sa-zA-Z0-9=;\" ]*})?(,)?\n?', '', batch)
+									batch = re.sub(r'/obj/structure/window/fulltile/reinforced(?!/)({[\sa-zA-Z0-9=;\" ]*})?(,)?\n?', '', batch) # priority to polarised fulltile
 									batch = batch[:-1] + ",\n/obj/structure/window/fulltile/reinforced/polarized{{\n\tgrilled = 1;\n\tid = \"{}\"\n}}\n".format(idcode)
 
 							output += batch
