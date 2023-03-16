@@ -8,7 +8,7 @@
 	resistance_flags = CAN_BE_HIT
 
 /obj/structure/cult/attackby(obj/item/weapon/W, mob/user)
-	if(iswrench(W) && can_unwrench)
+	if(iswrenching(W) && can_unwrench)
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
@@ -179,7 +179,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 			new /obj/effect/temp_visual/cult/sparks(loc)
 			return FALSE
 
-	if(iswrench(W))
+	if(iswrenching(W))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		if(W.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
@@ -195,19 +195,19 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	else
 		return ..()
 
-/obj/machinery/optable/torture_table/buckle_mob(mob/living/M, mob/user)
-	..()
-	if(M.pixel_x != 0)
-		M.pixel_x = 0
-	if(M.pixel_y != -1)
-		M.pixel_y = -1
-	if(M.dir & (EAST|WEST|NORTH))
-		M.dir = SOUTH
-	add_overlay(belt)
-
-/obj/machinery/optable/torture_table/unbuckle_mob(mob/user)
-	..()
-	cut_overlay(belt)
+/obj/machinery/optable/torture_table/post_buckle_mob(mob/living/M)
+	if(buckled_mob == M)
+		if(M.pixel_x != 0)
+			M.pixel_x = 0
+		if(M.pixel_y != -1)
+			M.pixel_y = -1
+		if(M.dir & (EAST|WEST|NORTH))
+			M.dir = SOUTH
+		add_overlay(belt)
+	else
+		M.pixel_x = M.default_pixel_x
+		M.pixel_y = M.default_pixel_y
+		cut_overlay(belt)
 
 /obj/machinery/optable/torture_table/attack_hand(mob/living/user)
 	if(user == buckled_mob)

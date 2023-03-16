@@ -71,7 +71,7 @@
 
 	else if(istype(W, /obj/item/weapon/packageWrap))	//OOP? Doesn't heard.
 		return
-	else if(istype(W, /obj/item/device/tagger))
+	else if(istagger(W))
 		return
 	else if(iscoil(W))
 		if(rigged)
@@ -88,7 +88,7 @@
 		if(rigged)
 			to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
 			user.drop_from_inventory(W, src)
-	else if(iswirecutter(W))
+	else if(iscutter(W))
 		if(rigged)
 			to_chat(user, "<span class='notice'>You cut away the wiring.</span>")
 			playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)

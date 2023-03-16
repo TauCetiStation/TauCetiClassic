@@ -52,7 +52,7 @@
 			holochip.add_action(user)
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You modify the [src] with the [holochip]</span>")
-	else if(isscrewdriver(I))
+	else if(isscrewing(I))
 		if(!holochip)
 			to_chat(user, "<span class='notice'>There's no holochip to remove from the [src]</span>")
 			return
@@ -121,7 +121,7 @@
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push the visor up on")
-		usr.update_inv_head()	//so our mob-overlays update
+		update_inv_mob() //so our mob-overlays update
 
 /obj/item/clothing/head/helmet/bulletproof
 	name = "bulletproof helmet"
@@ -147,10 +147,10 @@
 	name = "SWAT helmet"
 	desc = "They're often used by highly trained Swat Members."
 	icon_state = "swat"
-	flags = HEADCOVERSEYES
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	item_state = "swat"
 	armor = list(melee = 80, bullet = 75, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
-	flags_inv = HIDEEARS|HIDEEYES
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.3
@@ -203,7 +203,7 @@
 /obj/item/clothing/head/helmet/helmet_of_justice/attack_self(mob/user)
 	on = !on
 	icon_state = "shitcuritron_[on]"
-	user.update_inv_head()
+	update_inv_mob()
 
 /obj/item/clothing/head/helmet/warden/blue
 	name = "warden's hat"
@@ -310,3 +310,9 @@
 	desc = "A simple steel helmet - a steelpot, if you will."
 	icon_state = "surplus_helmet"
 	armor = list(melee = 45, bullet = 40, laser = 40,energy = 25, bomb = 35, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/blueshield
+	name = "blueshield helmet"
+	desc = "An advanced helmet issued to blueshield officers."
+	icon_state = "blueshield_helmet"
+	armor = list(melee = 60, bullet = 55, laser = 50,energy = 35, bomb = 35, bio = 0, rad = 0)

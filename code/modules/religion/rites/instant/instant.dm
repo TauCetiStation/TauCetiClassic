@@ -36,13 +36,13 @@
 	if(S)
 		R.mode.sacrificed += S.mind
 		if(sacrifice_target && sacrifice_target == S.mind)
-			to_chat(user, "<span class='[religion.style_text]'>Я͒̐͐ п͆̚͝р̒͘и̐̀͊н͋͠͝и͒́̾м͐͒а̒̕͝ю̀͒̾ э̾͑̓т͊̓͝у̾͊̾ ж̿͛͝е͝͠͠р̓͑̾т͋͌͐в̓͆͘у͋͌͠,͐̽̒ т͒̾̀в́̿̓о̒͋͝я́̽ ц͛̓͝е͆̒̚л͋̓ь͛͑̚ т̔̐̚е̽̐͘п͘͝͝е̒̕͠р͐̓̚ь͑͠ м͛̈́̚о̀͘̕ж͌̽͋е̓̾͊т́͐͝ с́͛͝ч̀̿͠и̔͊͝т͑́͌а͌̀͝т̓͋̈́ь̈́͆͘с̓̀͝я̈́̒͝ в͋̔̀ы̿͌͛п̓͑о͛̀̈́л͌͛͘н͆͛͝е͋̈́н̐͆̈́н͐̔͝о͆͋̾й̈́̈́̚.</span>")
+			R.send_message_to_members("<span class='[religion.style_text]'>[pick("Я̔̓̀͝͠͝ п͒̓͋̚̚͝р̀̒̾̒͑̀ѝ̈́͆́͌͝н̐͆͛̿͌͝и̒́͌̀̈́̿м͆͛̈́́͠͝а̽͐͋̽̚ю́̈́͆̕̕ т̒̿͛͑̿͑в̈́͆͊̿̕̕о́́̾͋͒̔ю͊͛̔̚̕͝ ж̓͋̈́̐͑͘е̓͋͘͠͝͝р͆̀̓̚̕͝т͋͛͋͊͝͠в͆͌͊̐̓̚у̾͋̒̈́̔͝", "Я͆̐͛ п͑̐̔р̒͆͘и͐͒̕н͑͘͝ӥ́͋͝м̀͌͌а͛͑̚ю̐͝ ж̓͆͝е̿̿р͊̓̿т̓́͘в̈́̚̚у͌̿͑ о̀̽̔б̈́̓͠р̀̽͊е͛̚͝ч͋̀̕е̾͘͝н̈́̓͠н͑͆о̐͑͝г͋̒͠о͛̚̕", "Ж͆͘͝е͋͑̽р̚͝т̽̓̈́в̿̓͠а̔͑̕ п̈́͒́р̐̈́̚и̚͠н̈́͆̾я̀̈́͘т͐́̽а͆͑͛")]</span>", null, 6, user)
 			R.adjust_favor(300 * divine_power)
 		S.dust()
 	else if(ishuman(AOG.buckled_mob))
 		R.mode.sacrificed += AOG.buckled_mob.mind
 		if(sacrifice_target && sacrifice_target == AOG.buckled_mob.mind)
-			to_chat(user, "<span class='[religion.style_text]'>Я͒̐͐ п͆̚͝р̒͘и̐̀͊н͋͠͝и͒́̾м͐͒а̒̕͝ю̀͒̾ э̾͑̓т͊̓͝у̾͊̾ ж̿͛͝е͝͠͠р̓͑̾т͋͌͐в̓͆͘у͋͌͠,͐̽̒ т͒̾̀в́̿̓о̒͋͝я́̽ ц͛̓͝е͆̒̚л͋̓ь͛͑̚ т̔̐̚е̽̐͘п͘͝͝е̒̕͠р͐̓̚ь͑͠ м͛̈́̚о̀͘̕ж͌̽͋е̓̾͊т́͐͝ с́͛͝ч̀̿͠и̔͊͝т͑́͌а͌̀͝т̓͋̈́ь̈́͆͘с̓̀͝я̈́̒͝ в͋̔̀ы̿͌͛п̓͑о͛̀̈́л͌͛͘н͆͛͝е͋̈́н̐͆̈́н͐̔͝о͆͋̾й̈́̈́̚.</span>")
+			R.send_message_to_members("<span class='[religion.style_text]'>[pick("Я̔̓̀͝͠͝ п͒̓͋̚̚͝р̀̒̾̒͑̀ѝ̈́͆́͌͝н̐͆͛̿͌͝и̒́͌̀̈́̿м͆͛̈́́͠͝а̽͐͋̽̚ю́̈́͆̕̕ т̒̿͛͑̿͑в̈́͆͊̿̕̕о́́̾͋͒̔ю͊͛̔̚̕͝ ж̓͋̈́̐͑͘е̓͋͘͠͝͝р͆̀̓̚̕͝т͋͛͋͊͝͠в͆͌͊̐̓̚у̾͋̒̈́̔͝", "Я͆̐͛ п͑̐̔р̒͆͘и͐͒̕н͑͘͝ӥ́͋͝м̀͌͌а͛͑̚ю̐͝ ж̓͆͝е̿̿р͊̓̿т̓́͘в̈́̚̚у͌̿͑ о̀̽̔б̈́̓͠р̀̽͊е͛̚͝ч͋̀̕е̾͘͝н̈́̓͠н͑͆о̐͑͝г͋̒͠о͛̚̕", "Ж͆͘͝е͋͑̽р̚͝т̽̓̈́в̿̓͠а̔͑̕ п̈́͒́р̐̈́̚и̚͠н̈́͆̾я̀̈́͘т͐́̽а͆͑͛")]</span>", null, 6, user)
 			R.adjust_favor(300 * divine_power)
 		AOG.buckled_mob.gib()
 
@@ -107,6 +107,9 @@
 		return FALSE
 
 	religion.add_member(AOG.buckled_mob, CULT_ROLE_HIGHPRIEST)
+	if(iscarbon(AOG.buckled_mob))
+		var/mob/living/carbon/C = AOG.buckled_mob
+		C.uncuff()
 	to_chat(AOG.buckled_mob, "<span class='[religion.style_text]'>Помогай другим культистам в тёмных делах. Их цель - твоя цель, а твоя - их. Вы вместе служите Тьме и тёмным богам.</span>")
 	religion.adjust_favor(300 * divine_power)
 	return TRUE
@@ -148,7 +151,7 @@
 
 	var/datum/religion/cult/C = religion
 	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
-		if(table.buckled_mob?.stat != DEAD && AOG.buckled_mob.get_species() != HOMUNCULUS)
+		if(table.buckled_mob && table.buckled_mob.stat != DEAD && table.buckled_mob.get_species() != HOMUNCULUS)
 			return TRUE
 
 	to_chat(user, "<span class='warning'>На заряженном столе пыток должна лежать хотя бы одна жертва.</span>")
@@ -159,7 +162,7 @@
 	var/drain = 0
 	var/datum/religion/cult/C = religion
 	for(var/obj/machinery/optable/torture_table/table in C.torture_tables)
-		if(!table.buckled_mob || table.buckled_mob.stat == DEAD || AOG.buckled_mob.get_species() == HOMUNCULUS)
+		if(!table.buckled_mob || table.buckled_mob.stat == DEAD || table.buckled_mob.get_species() == HOMUNCULUS)
 			continue
 		var/bdrain = rand(10, 25) * divine_power
 		to_chat(table.buckled_mob, "<span class='userdanger'>Вы чувствуете слабость.</span>")

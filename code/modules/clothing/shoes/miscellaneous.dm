@@ -74,7 +74,7 @@
 	return ..()
 
 /obj/item/clothing/shoes/clown_shoes/proc/start_waddling(mob/user)
-	if(CLUMSY in user.mutations)
+	if(user.IsClumsy())
 		slowdown = SHOES_SLOWDOWN
 	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_PIXELMOVE))
 

@@ -90,12 +90,12 @@
 		if(T.density)
 			to_chat(user, "<span class='warning'>Стена заблокирована!</span>")
 			return
-		if(isscrewdriver(W))
+		if(isscrewing(W))
 			user.visible_message("[user] tightens some screws on the wall.", "Вы затягиваете винты на стене.")
 			T.ChangeTurf(walltype)
 			qdel(src)
 
-		if( iswelder(W) )
+		if( iswelding(W) )
 			var/obj/item/weapon/weldingtool/WT = W
 			if( WT.isOn() )
 				T.ChangeTurf(walltype)
@@ -174,8 +174,7 @@
 	if(!active)
 		if(world.time > last_event + 15)
 			active = 1
-			for(var/mob/living/L in range(3, src))
-				L.apply_effect(12, IRRADIATE, 0)
+			irradiate_in_dist(get_turf(src), 12, 3)
 			for(var/turf/simulated/wall/mineral/uranium/T in range(3, src))
 				T.radiate()
 			last_event = world.time

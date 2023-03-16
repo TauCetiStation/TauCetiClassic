@@ -246,7 +246,7 @@
 
 /datum/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
-		H.mutations.Add(CLUMSY)
+		ADD_TRAIT(H, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 
 /datum/job/mime
 	title = "Mime"

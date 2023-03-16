@@ -216,8 +216,7 @@
 	return H.mind.assigned_role != "Clown"
 
 /datum/quality/clumsy/add_effect(mob/living/carbon/human/H, latespawn)
-	H.mutations.Add(CLUMSY)
-
+	ADD_TRAIT(H, TRAIT_CLUMSY, QUALITY_TRAIT)
 
 var/global/list/allergen_reagents_list
 /datum/quality/negativeish/allergies

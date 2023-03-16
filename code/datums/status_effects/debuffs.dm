@@ -190,3 +190,39 @@
 /datum/status_effect/remove_trait/greasy_hands
 	trait = TRAIT_GREASY_FINGERS
 	trait_source = QUALITY_TRAIT
+
+//Roundstart help for xeno
+/datum/status_effect/young_queen_buff
+	id = "queen_help"
+	duration = 7 MINUTES
+	alert_type = /atom/movable/screen/alert/status_effect/young_queen_buff
+	examine_text = "Looks quite young"
+
+/datum/status_effect/young_queen_buff/on_apply()
+	. = ..()
+	if(!isxeno(owner))
+		return
+	var/mob/living/carbon/xenomorph/Q = owner
+	Q.maxHealth = Q.maxHealth * 2
+	Q.health = Q.health * 2
+	Q.heal_rate = Q.heal_rate * 2.5
+	Q.plasma_rate = Q.plasma_rate * 1.5
+	to_chat(Q, "<span class='alien large'>Пока ваш улей слаб, вам будет помогать Императрица. Некоторое время...</span>")
+
+/datum/status_effect/young_queen_buff/on_remove()
+	if(!isxeno(owner))
+		return
+	var/mob/living/carbon/xenomorph/Q = owner
+	Q.bruteloss = Q.bruteloss / 2
+	Q.fireloss = Q.fireloss / 2
+	Q.maxHealth = Q.maxHealth / 2
+	Q.update_health_hud()
+	Q.heal_rate = Q.heal_rate / 2.5
+	Q.plasma_rate = Q.plasma_rate / 1.5
+	to_chat(Q, "<span class='alien large'>Императрица перестала активно поддерживать улей. Улей теперь должен заботиться о себе сам.</span>")
+
+/atom/movable/screen/alert/status_effect/young_queen_buff
+	name = "Помощь Императрицы"
+	desc = "Некоторое время вы гораздо быстрее залечиваете свои раны, более живучи и у вас куда больше плазмы."
+	icon_state = "alien_help"
+	alerttooltipstyle = "alien"

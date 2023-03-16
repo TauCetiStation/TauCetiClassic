@@ -1,9 +1,12 @@
+#define MANY_STATES 1
+#define TWO_STATES 2
+
 //TG-stuff
 /obj/item/ammo_casing
 	name = "bullet casing"
 	desc = "A bullet casing."
-	icon = 'icons/obj/ammo.dmi'
-	icon_state = "s-casing"
+	icon = 'icons/obj/ammo/casings.dmi'
+	icon_state = "casing_normal"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 1
@@ -29,7 +32,7 @@
 
 /obj/item/ammo_casing/update_icon()
 	..()
-	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
+	icon_state = "[initial(icon_state)][BB ? "" : "-spent"]"
 	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
 
 /obj/item/ammo_casing/proc/newshot() //For energy weapons and shotgun shells.
@@ -38,7 +41,7 @@
 	return
 
 /obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		if(BB)
 			if(initial(BB.name) == "bullet")
 				var/label_text = sanitize_safe(input(user, "Inscribe some text into \the [initial(BB.name)]","Inscription"), MAX_NAME_LEN)
@@ -74,9 +77,9 @@
 //Boxes of ammo
 /obj/item/ammo_box
 	name = "ammo box (null_reference_exception)"
-	desc = "A box of ammo"
+	desc = "A box of ammo."
 	icon_state = "357"
-	icon = 'icons/obj/ammo.dmi'
+	icon = 'icons/obj/ammo/boxes.dmi'
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	item_state = "syringe_kit"
@@ -88,9 +91,9 @@
 	var/list/stored_ammo = list()
 	var/ammo_type = /obj/item/ammo_casing
 	var/max_ammo = 7
-	var/multiple_sprites = 0
+	var/multiple_sprites = TWO_STATES
 	var/caliber
-	var/multiload = 1
+	var/multiload = TRUE
 
 /obj/item/ammo_box/atom_init()
 	. = ..()
@@ -98,7 +101,7 @@
 		stored_ammo += new ammo_type(src)
 	update_icon()
 
-/obj/item/ammo_box/proc/get_round(keep = 0)
+/obj/item/ammo_box/proc/get_round(keep = FALSE)
 	if (!stored_ammo.len)
 		return null
 	else
@@ -114,8 +117,8 @@
 		if (stored_ammo.len < max_ammo && rb.caliber == caliber)
 			stored_ammo += rb
 			rb.loc = src
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /obj/item/ammo_box/proc/make_empty(deleting = TRUE)
 	if(deleting)
@@ -160,12 +163,26 @@
 
 /obj/item/ammo_box/update_icon()
 	switch(multiple_sprites)
-		if(1)
+		if(MANY_STATES)
 			icon_state = "[initial(icon_state)]-[stored_ammo.len]"
-		if(2)
+			desc = "[initial(desc)] There are [stored_ammo.len] shell\s left!"
+		if(TWO_STATES)
 			icon_state = "[initial(icon_state)]-[stored_ammo.len ? "[max_ammo]" : "0"]"
-	desc = "[initial(desc)] There are [stored_ammo.len] shell\s left!"
+			desc = "[initial(desc)] [get_ammo_count_description()]."
 
 //Behavior for magazines
 /obj/item/ammo_box/magazine/proc/ammo_count()
 	return stored_ammo.len
+
+/obj/item/ammo_box/proc/get_ammo_count_description(message)
+	if(stored_ammo.len == max_ammo)
+		message = "It feels full"
+	if(stored_ammo.len < max_ammo)
+		message = "It feels almost full"
+	if(stored_ammo.len <= max_ammo*0.5)
+		message = "It feels half as full"
+	if(stored_ammo.len <= max_ammo*0.25)
+		message = "It feels almost empty"
+	if(!stored_ammo.len)
+		message = "It is empty"
+	return (message)

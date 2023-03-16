@@ -24,7 +24,7 @@
 	if(user.is_busy())
 		return
 
-	else if(iswrench(W) && state == 0)
+	else if(iswrenching(W) && state == 0)
 		if(anchored && !istype(src,/obj/structure/girder/displaced))
 			to_chat(user, "<span class='notice'>Вы разбираете каркас.</span>")
 			if(W.use_tool(src, user, 40, volume = 100))
@@ -49,14 +49,14 @@
 		to_chat(user, "<span class='notice'>Вы просверлили каркас!</span>")
 		deconstruct(TRUE)
 
-	else if(isscrewdriver(W) && state == 2 && istype(src,/obj/structure/girder/reinforced))
+	else if(isscrewing(W) && state == 2 && istype(src,/obj/structure/girder/reinforced))
 		to_chat(user, "<span class='notice'>Вы ослабляете кронштейны.</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return
 			to_chat(user, "<span class='notice'>Вы ослабили кронштейны!</span>")
 			state = 1
 
-	else if(iswirecutter(W) && istype(src,/obj/structure/girder/reinforced) && state == 1)
+	else if(iscutter(W) && istype(src,/obj/structure/girder/reinforced) && state == 1)
 		to_chat(user, "<span class='notice'>Вы разбираете кронштейны.</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return
@@ -64,7 +64,7 @@
 			new/obj/structure/girder( src.loc )
 			qdel(src)
 
-	else if(iscrowbar(W) && state == 0 && anchored )
+	else if(isprying(W) && state == 0 && anchored )
 		to_chat(user, "<span class='notice'>Вы делаете каркас подвижным.</span>")
 		if(W.use_tool(src, user, 40, volume = 100))
 			if(!src) return

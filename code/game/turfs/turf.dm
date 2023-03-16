@@ -95,8 +95,6 @@
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
 		to_chat(usr, "<span class='warning'>Передвижение отключено администрацией.</span>")//This is to identify lag problems
 		return FALSE
-	if (!(mover && isturf(mover.loc)))
-		return TRUE
 
 	var/list/second_check = list()
 	var/turf/mover_loc = mover.loc
@@ -499,13 +497,13 @@
 	else if(isrobot(M))
 		new /obj/effect/decal/cleanable/blood/oil(src)
 
-/turf/proc/add_vomit_floor(mob/living/carbon/C, toxvomit = 0)
+/turf/proc/add_vomit_floor(mob/living/carbon/C, vomit_type = DEFAULT_VOMIT)
 	if(flags & NOBLOODY)
 		return
 
 	var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src)
 	// Make toxins vomit look different
-	if(toxvomit)
+	if(vomit_type == VOMIT_TOXIC)
 		var/datum/reagent/new_color = locate(/datum/reagent/luminophore) in C.reagents.reagent_list
 		if(!new_color)
 			V.icon_state = "vomittox_[pick(1,4)]"

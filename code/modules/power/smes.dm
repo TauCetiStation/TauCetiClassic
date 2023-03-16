@@ -193,7 +193,7 @@
 		return
 
 	// disassembling the terminal
-	if(iswirecutter(I) && terminal && panel_open)
+	if(iscutter(I) && terminal && panel_open)
 		terminal.dismantle(user)
 
 	// crowbarring it!
@@ -519,7 +519,11 @@
 	. = ..()
 	charge = capacity
 
-
+/obj/machinery/power/smes/fullcharge/not_outputting
+	input_attempt = FALSE
+	output_attempt = FALSE
+	input_level = 0
+	output_level = 0
 
 /proc/rate_control(S, V, C, Min = 1, Max = 5, Limit = null)
 	var/href = "<A href='?src=\ref[S];rate control=1;[V]"
