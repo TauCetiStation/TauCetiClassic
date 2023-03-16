@@ -377,6 +377,8 @@
 
 	target.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
 
+	to_chat(user, "<span class='notice'>Теперь осталось только отправить этот предмет по пневмопочте(смыть в мусорку), или выставить на прилавок - и денюжки будут у тебя в кармане!")
+
 /obj/item/device/tagger/proc/label(obj/target, mob/user)
 	if(!label || !length(label))
 		to_chat(user, "<span class='notice'>Нет текста на бирке.</span>")
