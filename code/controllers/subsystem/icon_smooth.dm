@@ -47,26 +47,17 @@ SUBSYSTEM_DEF(icon_smooth)
 #ifdef MANUAL_ICON_SMOOTH
 /mob/verb/ChooseDMI(dmi as file)
 	if(isfile(dmifile) && (copytext("[dmifile]",-4) == ".dmi"))
-		SliceNDice(dmifile)
+		SliceNDice(icon(dmifile))
 	else
 		to_chat(world, "<span class='warning'>Bad DMI file '[dmifile]'</span>")
 
-/atom/proc/SliceNDice(dmifile as file)
+/atom/proc/SliceNDice(icon/sourceIcon as file)
 	var/font_size = 32
 #else
-/atom/proc/SliceNDice(dmifile)
+/atom/proc/SliceNDice(icon/sourceIcon, create_false_wall_animations = FALSE)
 #endif
-
 	var/STATE_COUNT_NORMAL = 4
 	var/STATE_COUNT_DIAGONAL = 7
-
-	var/icon/sourceIcon
-	if(isfile(dmifile) && (copytext("[dmifile]",-4) == ".dmi"))
-		sourceIcon = icon(dmifile)
-	else if(isicon(dmifile))
-		sourceIcon = dmifile
-	else
-		CRASH("Bad DMI file/icon '[dmifile]'")
 
 	var/list/SourceIconStates = sourceIcon.IconStates()
 	var/list/states = list("box", "line", "line_v", "line_h", "center_4", "center_8", "diag", "diag_corner_a", "diag_corner_b")
@@ -79,9 +70,7 @@ SUBSYSTEM_DEF(icon_smooth)
 		STATE_COUNT_DIAGONAL = 8
 
 #ifdef MANUAL_ICON_SMOOTH
-	var/create_false_wall_animations = tgui_alert(usr, "Generate false wall animation states?", "Confirmation", list("Yes", "No")) == "Yes" ? TRUE : FALSE
-#else
-	var/create_false_wall_animations = findtext("[dmifile]", "has_false_walls") ? TRUE : FALSE
+	create_false_wall_animations = tgui_alert(usr, "Generate false wall animation states?", "Confirmation", list("Yes", "No")) == "Yes" ? TRUE : FALSE
 #endif
 
 	for(var/state in states) // exclude states that doesn't exist
@@ -89,7 +78,7 @@ SUBSYSTEM_DEF(icon_smooth)
 			states -= state
 
 #ifdef MANUAL_ICON_SMOOTH
-	to_chat(world, "<B>[dmifile] - states: [states.len]</B>")
+	to_chat(world, "<B>dmi file states: [states.len]</B>")
 #endif
 
 	var/sourceIconWidth = sourceIcon.Width() // x
@@ -478,7 +467,7 @@ SUBSYSTEM_DEF(icon_smooth)
 			master.Insert(icon(sourceIcon, state), state)
 
 #ifdef MANUAL_ICON_SMOOTH
-	world << ftp(master, "[copytext("[dmifile]", 1, -4)]-smooth.dmi")
+	world << ftp(master, "smooth_icon.dmi")
 #else
 	return master
 #endif

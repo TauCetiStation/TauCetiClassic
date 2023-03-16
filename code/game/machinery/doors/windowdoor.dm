@@ -30,7 +30,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		icon_state = "[icon_state]"
 		base_state = icon_state
 
-	color = color_windows()
+	color = SSstation_coloring.get_default_color()
 
 /obj/machinery/door/window/Destroy()
 	density = FALSE

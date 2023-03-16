@@ -19,7 +19,7 @@
 	. = ..()
 
 	ini_dir = dir
-	color = color_windows()
+	color = SSstation_coloring.get_default_color()
 
 	if(dir in cornerdirs)
 		world.log << "WARNING: [x].[y].[z]: DIR [dir]"

@@ -30,10 +30,13 @@
 	var/disassemble_glass_type = /obj/item/stack/sheet/glass // any better ideas to handle drops and disassembles?
 
 /obj/structure/window/fulltile/atom_init(mapload, grill)
-	. = ..()
-
+	 // need to prepare atom before icon smoothing in ..()
 	if(grill)
 		grilled = TRUE
+
+	change_color(SSstation_coloring.get_default_color(), need_smoothing = FALSE)
+
+	. = ..()
 
 	for(var/atom/A in get_turf(src))
 		if(istype(A, /obj/structure/window) && A != src)
@@ -44,16 +47,15 @@
 	if(dir in cornerdirs)
 		world.log << "WORNING: [x].[y].[z]: DIR [dir]"
 
-/obj/structure/window/fulltile/change_color(new_color)
+/obj/structure/window/fulltile/change_color(new_color, need_smoothing = TRUE)
 	if(glass_color_blend_to_color && glass_color_blend_to_ratio)
 		glass_color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
 	else
 		glass_color = new_color
 	
-	if(SSticker.current_state > GAME_STATE_SETTING_UP) // todo: need own flag for color_windows_init (subsystem?)
+
+	if(need_smoothing && SSicon_smooth.initialized) // in some cases SSicon_smooth will do smoothing for us
 		regenerate_smooth_icon()
-	else
-		queue_smooth(src)
 
 /obj/structure/window/fulltile/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
 	if(damage_threshold)

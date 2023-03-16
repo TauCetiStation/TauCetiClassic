@@ -43,6 +43,7 @@
 #define SMOOTH_DIAGONAL   (1<<2) //if atom should smooth diagonally, this should be present in 'smooth' var
 #define SMOOTH_BORDER     (1<<3) //atom will smooth with the borders of the map
 #define SMOOTH_QUEUED     (1<<4) //atom is currently queued to smooth.
+#define SMOOTH_SMOOTHED   (1<<5) //atom was already smoothed once
 
 #define NULLTURF_BORDER 123456789
 
@@ -113,7 +114,7 @@
 	return adjacencies
 
 //do not use, use queue_smooth(atom)
-/proc/smooth_icon(atom/A) // adapter
+/proc/smooth_icon(atom/A)
 	if(!A || !(A.smooth || length(A.smooth_adapters)))
 		return
 	A.smooth &= ~SMOOTH_QUEUED
@@ -131,6 +132,8 @@
 
 	if(length(A.smooth_adapters))
 		A.update_adapters()
+
+	A.smooth |= SMOOTH_SMOOTHED
 
 /atom/proc/diagonal_smooth(adjacencies, read_values = FALSE)
 	var/diagonal_states
@@ -161,7 +164,6 @@
 
 	if(diagonal_states)
 		if(!read_values)
-			//smooth_set_icon(adjacencies, diagonal_states)
 			smooth_set_icon(adjacencies)
 		else
 			return diagonal_states
@@ -257,7 +259,6 @@
 			se = "4-e"
 
 	if(A)
-		//A.smooth_set_icon(adjacencies, list(nw, ne, sw, se))
 		A.smooth_set_icon(adjacencies)
 	else
 		return list(nw, ne, sw, se)
@@ -324,14 +325,19 @@
 		smooth_icon_initial = icon
 	var/cache_string = "["[type]"]"
 	if(!global.baked_smooth_icons[cache_string])
-		var/icon/I = SliceNDice(smooth_icon_initial)
+		world.log << "Baking [cache_string]"
+		// has_false_walls is a file PATH flag, yes
+		var/icon/I = SliceNDice(icon(smooth_icon_initial), !!findtext("[smooth_icon_initial]", "has_false_walls"))
 		global.baked_smooth_icons[cache_string] = I // todo: we can filecache it
 
 	icon = global.baked_smooth_icons[cache_string]
 	icon_state = "[adjacencies]"
 
-/atom/proc/regenerate_smooth_icon() // mostly for windows, so we can regenerate same icon with new colors
-	smooth_set_icon(icon_state) // todo: flag if we already done first generation
+/atom/proc/regenerate_smooth_icon() // mostly for windows, so we can quickly regenerate same (with same adjacencies) icon with new colors
+	if(smooth & SMOOTH_SMOOTHED)
+		smooth_set_icon(icon_state) // todo: change to queue with skip_adjacencies flag
+	else
+		queue_smooth(src)
 
 /obj/structure/window/fulltile/smooth_set_icon(adjacencies)
 #ifdef MANUAL_ICON_SMOOTH
@@ -347,6 +353,8 @@
 		cache_string += "_grilled"
 
 	if(!global.baked_smooth_icons[cache_string])
+
+		world.log << "Baking [cache_string]"
 
 		var/icon/blended = new(smooth_icon_windowstill)
 
@@ -417,6 +425,7 @@
 	SSicon_smooth.smooth_queue += A
 	SSicon_smooth.can_fire = TRUE
 	A.smooth |= SMOOTH_QUEUED
+	A.smooth &= ~SMOOTH_SMOOTHED
 
 /turf/proc/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = icon
