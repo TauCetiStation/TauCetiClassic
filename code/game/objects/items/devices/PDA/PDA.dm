@@ -1165,7 +1165,7 @@
 				return
 
 			shopping_cart -= id
-			Lot.delivered = TRUE
+			Lot.mark_delivered()
 
 			if(global.online_shop_discount)
 				charge_to_account(Lot.account, global.cargo_account.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.price - postpayment)

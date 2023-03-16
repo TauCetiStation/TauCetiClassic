@@ -1183,10 +1183,11 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 		<tr><th colspan="4" class="cargo" style="padding: 5px; font-size: medium;">Корзина заказов:</th></tr>
 		{{for data.shopping_cart}}
 			{{if !value.delivered}}
-				<tr><th colspan="4" class="cargo">{{:value.name}}  №{{:value.number}}</th></tr>
+				<tr><th colspan="5" class="cargo">{{:value.name}}  №{{:value.number}}</th></tr>
 				<tr><td rowspan="2">{{:value.icon}}<br></td>
 				<td><B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
 				<td><B>Продавец: </B><SMALL><I>{{:value.account}}</I></SMALL></td>
+                <td><B>Локация: </B>{{:value.area}}</td>
 				<td>{{:helper.link('Доставлено', 'check', {'choice' : "Shop_Mark_As_Delivered", 'delivered_item' : value.number}, null, 'floatRight')}}</td></tr>
 				<tr><td colspan="3"><SMALL><I>{{:value.description}}</I></SMALL><br></td></tr>
 

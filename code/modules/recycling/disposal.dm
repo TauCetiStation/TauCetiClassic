@@ -1064,9 +1064,9 @@
 				P.icon_state = "deliverypizza[length(B.boxes)]"
 			else
 				P.icon_state = "deliverycrate[i]"
-			var/image/Img = image('icons/obj/storage.dmi', "[P.icon_state]-shop")
-			Img.appearance_flags = RESET_COLOR
-			P.add_overlay(Img)
+			P.lot_lock_image = image('icons/obj/storage.dmi', "[P.icon_state]-shop")
+			P.lot_lock_image.appearance_flags = RESET_COLOR
+			P.add_overlay(P.lot_lock_image)
 		P.modify_max_integrity(75)
 		P.atom_fix()
 		P.damage_deflection = 25
@@ -1078,9 +1078,9 @@
 			C.close()
 		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
 		P.icon_state = "deliverycrate"
-		var/image/Img = image('icons/obj/storage.dmi', "deliverycrate-shop")
-		Img.appearance_flags = RESET_COLOR
-		P.add_overlay(Img)
+		P.lot_lock_image = image('icons/obj/storage.dmi', "deliverycrate-shop")
+		P.lot_lock_image.appearance_flags = RESET_COLOR
+		P.add_overlay(P.lot_lock_image)
 		P.modify_max_integrity(75)
 		P.atom_fix()
 		P.damage_deflection = 25
@@ -1092,9 +1092,9 @@
 			C.close()
 		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(C.loc))
 		P.icon_state = "deliverycloset"
-		var/image/Img = image('icons/obj/storage.dmi', "deliverycloset-shop")
-		Img.appearance_flags = RESET_COLOR
-		P.add_overlay(Img)
+		P.lot_lock_image = image('icons/obj/storage.dmi', "deliverycloset-shop")
+		P.lot_lock_image.appearance_flags = RESET_COLOR
+		P.add_overlay(P.lot_lock_image)
 		P.modify_max_integrity(75)
 		P.atom_fix()
 		P.damage_deflection = 25
@@ -1105,9 +1105,9 @@
 		var/obj/structure/S = Item
 		var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(S.loc))
 		P.icon_state = "deliverystructure"
-		var/image/Img = image('icons/obj/storage.dmi', "deliverystructure-shop")
-		Img.appearance_flags = RESET_COLOR
-		P.add_overlay(Img)
+		P.lot_lock_image = image('icons/obj/storage.dmi', "deliverystructure-shop")
+		P.lot_lock_image.appearance_flags = RESET_COLOR
+		P.add_overlay(P.lot_lock_image)
 		P.modify_max_integrity(75)
 		P.atom_fix()
 		P.damage_deflection = 25
@@ -1116,7 +1116,7 @@
 	else
 		return
 
-	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
+	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon, "[REF(Item)]")
 
 	global.shop_categories[lot_category]++
 

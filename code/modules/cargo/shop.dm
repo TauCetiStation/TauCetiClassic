@@ -23,9 +23,9 @@ var/global/online_shop_profits = 0
 	var/account = 111111
 	var/item_icon = ""
 	var/hash = ""
+	var/lot_item_ref = ""
 
-
-/datum/shop_lot/New(name, description, price, category, account, icon)
+/datum/shop_lot/New(name, description, price, category, account, icon, lot_item_ref)
 	global.online_shop_number++
 	global.online_shop_lots["[global.online_shop_number]"] = src
 
@@ -36,8 +36,9 @@ var/global/online_shop_profits = 0
 	src.number = "[global.online_shop_number]"
 	src.account = account
 	src.item_icon = icon
-	src.hash = "[src.category]-[src.name]-[src.description]-[src.price]-[src.account]"
+	src.lot_item_ref = lot_item_ref
 
+	src.hash = "[src.category]-[src.name]-[src.description]-[src.price]-[src.account]"
 	LAZYADDASSOCLIST(global.online_shop_lots_hashed, src.hash, src)
 
 	global.online_shop_lots_latest.Swap(2, 3)
@@ -55,10 +56,31 @@ var/global/online_shop_profits = 0
 	return ..()
 
 /datum/shop_lot/proc/to_list(account = "Unknown", postpayment = 0)
-	return list("name" = src.name, "description" = src.description, "price" = (global.online_shop_discount ? "<S>[src.price + get_delivery_cost()]$</S> <B>[get_discounted_price() + get_delivery_cost()]</B>" : (src.price + get_delivery_cost())), "number" = src.number, "account" = account, "delivered" = src.delivered, "postpayment" = postpayment, "icon" = src.item_icon)
+	var/atom/A = locate(lot_item_ref)
+	var/area/A_area = get_area(A)
+	return list("name" = src.name, "description" = src.description, "price" = (global.online_shop_discount ? "<S>[src.price + get_delivery_cost()]$</S> <B>[get_discounted_price() + get_delivery_cost()]</B>" : (src.price + get_delivery_cost())), "number" = src.number, "account" = account, "delivered" = src.delivered, "postpayment" = postpayment, "icon" = src.item_icon, "area" = A_area.name)
 
 /datum/shop_lot/proc/get_delivery_cost()
 	return round(price * global.online_shop_delivery_cost)
 
 /datum/shop_lot/proc/get_discounted_price()
 	return round((1 - global.online_shop_discount) * price)
+
+/datum/shop_lot/proc/mark_delivered()
+	delivered = TRUE
+
+	var/atom/A = locate(lot_item_ref)
+	if(!A)
+		return
+
+	if(istype(A, /obj/item/smallDelivery))
+		var/obj/item/smallDelivery/package = A
+		package.cut_overlay(package.lot_lock_image)
+		package.lot_lock_image = null
+		return
+
+	if(istype(A, /obj/structure/bigDelivery))
+		var/obj/structure/bigDelivery/package = A
+		package.cut_overlay(package.lot_lock_image)
+		package.lot_lock_image = null
+		return
