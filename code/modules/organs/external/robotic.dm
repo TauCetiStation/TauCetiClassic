@@ -112,7 +112,7 @@
 	controller_type = /datum/bodypart_controller/robot
 
 /obj/item/organ/external/l_arm/robot/update_sprite()
-	return
+	icon = species.prothesis_icobase
 
 /obj/item/organ/external/r_arm/robot
 	name = "robotic right arm"
@@ -123,7 +123,7 @@
 	controller_type = /datum/bodypart_controller/robot
 
 /obj/item/organ/external/r_arm/robot/update_sprite()
-	return
+	icon = species.prothesis_icobase
 
 /obj/item/organ/external/r_leg/robot
 	name = "robotic right leg"
@@ -134,7 +134,7 @@
 	controller_type = /datum/bodypart_controller/robot
 
 /obj/item/organ/external/r_leg/robot/update_sprite()
-	return
+	icon = species.prothesis_icobase
 
 /obj/item/organ/external/l_leg/robot
 	name = "robotic left leg"
@@ -145,4 +145,4 @@
 	controller_type = /datum/bodypart_controller/robot
 
 /obj/item/organ/external/l_leg/robot/update_sprite()
-	return
+	icon = species.prothesis_icobase

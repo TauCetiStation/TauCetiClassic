@@ -32,6 +32,12 @@
 	for(var/datum/action/action as anything in actions)
 		action.Remove(src)
 
+	if(buckled) // simpler version of /unbuckle_mob
+		buckled.buckled_mob = null
+		SEND_SIGNAL(buckled, COMSIG_MOVABLE_UNBUCKLE, src)
+		buckled.post_buckle_mob(src)
+		buckled = null
+
 	return ..()
 
 
@@ -330,6 +336,8 @@
 			return
 	if(!A.z) //no message if we examine something in a backpack
 		return
+	if(stat == CONSCIOUS)
+		last_examined = A.name
 	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
 /mob/verb/pointed(atom/A as mob|obj|turf in view())

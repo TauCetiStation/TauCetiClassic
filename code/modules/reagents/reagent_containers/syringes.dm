@@ -156,6 +156,7 @@
 				else
 					if(!L.try_inject(user, TRUE, TRUE))
 						return
+					SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "self_tending", /datum/mood_event/self_tending)
 					user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject self ([user.ckey]). Reagents: [contained]</font>")
 					reagents.reaction(target, INGEST)
 					infect_limb(user, target)

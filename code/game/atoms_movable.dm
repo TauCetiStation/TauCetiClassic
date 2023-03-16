@@ -1,3 +1,5 @@
+#define GEIGER_RANGE 15
+
 /atom/movable
 	layer = OBJ_LAYER
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
@@ -530,3 +532,44 @@
 /obj/item/weapon/holder/drop_from_contents(atom/movable/AM)
 	AM.forceMove(loc)
 	return TRUE
+
+/mob/living/proc/get_radiation_message(rad_dose)
+	var/message = ""
+	switch(rad_dose)
+		if(0 to 299)
+			message += "You feel warm."
+		if(300 to 499)
+			message += "You feel a wave of heat wash over you."
+		if(500 to INFINITY)
+			message += "You notice your skin is covered in fresh radiation burns."
+	return message
+
+/proc/irradiate_one_mob(mob/living/victim, rad_dose)
+	victim.apply_effect(rad_dose, IRRADIATE)
+	to_chat(victim, "<span class='warning'>[victim.get_radiation_message(rad_dose)]</span>")
+	for(var/obj/item/device/analyzer/counter as anything in global.geiger_items_list)
+		var/distance_rad_signal = get_dist(counter, victim)
+		if(distance_rad_signal <= GEIGER_RANGE)
+			var/rad_power = rad_dose
+			rad_power *= sqrt(1 / (distance_rad_signal + 1))
+			counter.recieve_rad_signal(rad_power, distance_rad_signal)
+
+/proc/irradiate_in_dist(turf/source_turf, rad_dose, effect_distance)
+	for(var/mob/living/L in range(source_turf, effect_distance))
+		var/neighbours_in_turf = 0
+		for(var/mob/living/neighbour in L.loc)
+			if(neighbour == L)
+				continue
+			neighbours_in_turf++
+		var/rads = rad_dose / (neighbours_in_turf > 0 ? neighbours_in_turf : 1)
+		rads *= sqrt(1 / (get_dist(L, source_turf) + 1))
+		L.apply_effect(rads, IRRADIATE)
+		to_chat(L, "<span class='warning'>[L.get_radiation_message(rad_dose)]</span>")
+	for(var/obj/item/device/analyzer/counter as anything in global.geiger_items_list)
+		var/distance_rad_signal = get_dist(counter, source_turf)
+		if(distance_rad_signal <= GEIGER_RANGE)
+			var/rad_power = rad_dose
+			rad_power *= sqrt(1 / (distance_rad_signal + 1))
+			counter.recieve_rad_signal(rad_power, distance_rad_signal)
+
+#undef GEIGER_RANGE
