@@ -1156,24 +1156,8 @@
 				mode = 0
 				return
 			var/id = href_list["delivered_item"]
-			var/postpayment = shopping_cart[id]["postpayment"]
-			var/datum/shop_lot/Lot = global.online_shop_lots[id]
-			var/datum/money_account/MA = get_account(owner_account)
-
-			if(!Lot || !MA || postpayment > MA.money)
-				to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
-				return
-
-			shopping_cart -= id
-			Lot.delivered = TRUE
-
-			if(global.online_shop_discount)
-				charge_to_account(Lot.account, global.cargo_account.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.price - postpayment)
-				charge_to_account(global.cargo_account.account_number, MA.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -(Lot.price - postpayment))
-
-			charge_to_account(MA.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -postpayment)
-			charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, postpayment)
-			mode = 82
+			if(mark_as_delivered(U, id))
+				mode = 82
 
 //SYNDICATE FUNCTIONS===================================
 
@@ -1689,7 +1673,19 @@
 				to_chat(user, data_message)
 
 /obj/item/device/pda/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity) return
+	if(!proximity)
+		return
+
+	if(istype(target, /obj/structure/bigDelivery))
+		var/obj/structure/bigDelivery/package = target
+		if(package.lot_number && mark_as_delivered(user, package.lot_number))
+			return
+
+	if(istype(target, /obj/item/smallDelivery))
+		var/obj/item/smallDelivery/package = target
+		if(package.lot_number && mark_as_delivered(user, package.lot_number))
+			return
+
 	switch(scanmode)
 
 		if(3)
@@ -1886,6 +1882,37 @@
 
 		P.update_icon()
 	return TRUE
+
+/obj/item/device/pda/proc/mark_as_delivered(mob/user, id)
+	id = "[id]"
+
+	if(!shopping_cart[id])
+		to_chat(user, "<span class='notice'>Это не один из твоих закаов. Это заказ номер №[id].</span>")
+		return
+	var/datum/shop_lot/Lot = global.online_shop_lots[id]
+	if(!Lot)
+		to_chat(user, "<span class='warning'>Этот лот больше не существует.</span>")
+		return
+
+	var/datum/money_account/MA = get_account(owner_account)
+	if(!MA)
+		to_chat(user, "<span class='notice'>ОШИБКА: Никакой счёт не подвязан к данному КПК.</span>")
+		return
+
+	var/postpayment = shopping_cart[id]["postpayment"]
+	if(postpayment > MA.money)
+		to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
+		return
+
+	shopping_cart -= id
+	Lot.delivered = TRUE
+
+	if(global.online_shop_discount)
+		charge_to_account(Lot.account, global.cargo_account.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.price - postpayment)
+		charge_to_account(global.cargo_account.account_number, MA.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -(Lot.price - postpayment))
+
+	charge_to_account(MA.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -postpayment)
+	charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, postpayment)
 
 /obj/item/device/pda/proc/add_order_or_offer(name, desc)
 	global.orders_and_offers["[orders_and_offers_number]"] = list("name" = name, "description" = desc, "time" = worldtime2text())
