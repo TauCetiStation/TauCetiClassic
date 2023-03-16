@@ -31,6 +31,7 @@
 		theme = ntheme
 
 	add_stylesheet("common", 'html/browser/common.css') // this CSS sheet is common to all UIs
+	add_stylesheet("font-awesome.css", 'html/font-awesome/css/all.min.css')
 
 /datum/browser/Destroy()
 	user.browsers -= window_id

@@ -19,7 +19,7 @@
 
 	var/being_shocked = 0
 
-	var/list/price_tag = null
+	var/list/price_tag = null //list("description" = lot_description, "price" = lot_price, "category" = lot_category, "account" = lot_account_number)
 
 	uses_integrity = TRUE
 
@@ -39,7 +39,7 @@
 	. = ..()
 
 	if(price_tag)
-		to_chat(user, "It has a price tag attached. Description: [price_tag["description"]], Price: [price_tag["price"]]$")
+		to_chat(user, "Прикреплён ценник. Описание: [price_tag["description"]], Цена: [price_tag["price"]]$")
 
 /obj/proc/remove_price_tag()
 	set name = "Снять ценник"

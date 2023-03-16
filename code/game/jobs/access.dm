@@ -70,6 +70,7 @@
 /var/const/access_paramedic = 70
 /var/const/access_engineering_lobby = 71
 /var/const/access_medbay_storage = 72
+/var/const/access_oldstation = 73
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -106,7 +107,7 @@
 	if(IsAdminGhost(M))
 		//Access can't stop the abuse
 		return TRUE
-	if(SEND_SIGNAL(M, COMSIG_MOB_TRIED_ACCESS, src) & COMSIG_ACCESS_ALLOWED)
+	if(istype(M) && SEND_SIGNAL(M, COMSIG_MOB_TRIED_ACCESS, src) & COMSIG_ACCESS_ALLOWED)
 		return TRUE
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
