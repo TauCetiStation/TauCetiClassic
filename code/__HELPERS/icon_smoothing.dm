@@ -335,7 +335,7 @@
 
 /atom/proc/regenerate_smooth_icon() // mostly for windows, so we can quickly regenerate same (with same adjacencies) icon with new colors
 	if(smooth & SMOOTH_SMOOTHED)
-		smooth_set_icon(icon_state) // todo: change to queue with skip_adjacencies flag
+		smooth_set_icon(icon_state) // better to do this through SSicon_smooth but idk how
 	else
 		queue_smooth(src)
 

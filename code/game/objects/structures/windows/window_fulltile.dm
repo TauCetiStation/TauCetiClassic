@@ -34,7 +34,11 @@
 	if(grill)
 		grilled = TRUE
 
-	change_color(SSstation_coloring.get_default_color(), need_smoothing = FALSE)
+	var/new_color = SSstation_coloring.get_default_color()
+	if(glass_color_blend_to_color && glass_color_blend_to_ratio)
+		glass_color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
+	else
+		glass_color = new_color
 
 	. = ..()
 
@@ -47,15 +51,13 @@
 	if(dir in cornerdirs)
 		world.log << "WORNING: [x].[y].[z]: DIR [dir]"
 
-/obj/structure/window/fulltile/change_color(new_color, need_smoothing = TRUE)
+/obj/structure/window/fulltile/change_color(new_color)
 	if(glass_color_blend_to_color && glass_color_blend_to_ratio)
 		glass_color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
 	else
 		glass_color = new_color
 	
-
-	if(need_smoothing && SSicon_smooth.initialized) // in some cases SSicon_smooth will do smoothing for us
-		regenerate_smooth_icon()
+	regenerate_smooth_icon()
 
 /obj/structure/window/fulltile/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
 	if(damage_threshold)
