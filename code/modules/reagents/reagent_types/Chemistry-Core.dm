@@ -486,6 +486,7 @@
 		M.visible_message("<span class='warning'>You feel pain inside you body.</span>")
 	M.adjustToxLoss(1)
 	M.adjustHalLoss(1)
+	return FALSE
 
 /datum/reagent/gold
 	name = "Gold"

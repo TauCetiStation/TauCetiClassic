@@ -338,6 +338,7 @@
 
 	M.adjustDrugginess(3)
 	M.nutrition += 10 * REM
+	return FALSE
 
 /datum/reagent/consumable/cornoil
 	name = "Corn Oil"

@@ -775,6 +775,7 @@
 
 	M.nutrition += 4 * REM
 	M.adjustDrugginess(2)
+	return FALSE
 
 /datum/reagent/ambrosium
 	name = "Ambrosium"
@@ -816,7 +817,6 @@
 		M.emote(pick("twitch","drool","moan","giggle"))
 	if(prob(60))
 		M.adjustToxLoss(1)
-
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"
