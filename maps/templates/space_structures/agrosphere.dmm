@@ -149,7 +149,7 @@
 	},
 /area/space_structures/agrospheregarden)
 "ar" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/structure/flora/junglebush,
@@ -160,7 +160,7 @@
 /turf/simulated/floor,
 /area/space_structures/agrospheregarden)
 "at" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/machinery/vending/snack{
@@ -231,9 +231,8 @@
 /turf/simulated/floor,
 /area/space_structures/agrospheregarden)
 "aA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
@@ -299,7 +298,7 @@
 	},
 /area/space_structures/agrospheregarden)
 "aK" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -312,7 +311,7 @@
 /turf/simulated/floor,
 /area/space_structures/agrospheregarden)
 "aM" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -592,7 +591,7 @@
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
 "bn" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -634,7 +633,7 @@
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
 "bs" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -806,7 +805,7 @@
 /turf/simulated/floor,
 /area/space_structures/agrospheregarden)
 "bM" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/reagent_containers/pill/LSD{
 	pixel_x = -7;
@@ -828,7 +827,7 @@
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
 "bP" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/clothing{
 	name = "hacked ClothesMate";
@@ -866,7 +865,7 @@
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
 "bV" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/item/weapon/bikehorn/dogtoy,
@@ -886,7 +885,7 @@
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
 "bY" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 5
@@ -954,7 +953,7 @@
 	},
 /area/space_structures/agrospheregarden)
 "ce" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/structure/flora/junglebush/large,
@@ -976,7 +975,7 @@
 /turf/simulated/floor/beach/water/waterpool,
 /area/space_structures/agrospheregarden)
 "ci" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/machinery/door_control{
@@ -1347,7 +1346,7 @@
 /obj/structure/shuttle/engine/heater{
 	icon_state = "heater1"
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
