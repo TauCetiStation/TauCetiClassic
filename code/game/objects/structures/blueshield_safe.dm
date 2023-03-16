@@ -5,7 +5,7 @@
 /obj/structure/safe/floor/blueshield/check_unlocked()
 	if(current_tumbler_index > number_of_tumblers)
 		if (!(get_security_level() in list("red", "delta")))
-			to_chat(usr, "<span class='italics'>Этот сейф можно открыть только при красном или Дельта коде.</span>")
+			to_chat(usr, "<span class='italics'Р­С‚РѕС‚ СЃРµР№С„ РјРѕР¶РЅРѕ РѕС‚РєСЂС‹С‚СЊ С‚РѕР»СЊРєРѕ РїСЂРё РєСЂР°СЃРЅРѕРј РёР»Рё Р”РµР»СЊС‚Р° РєРѕРґРµ.</span>")
 			return FALSE
 	return ..()
 
@@ -13,7 +13,7 @@
 	..()
 	var/mob/living/carbon/human/H = user
 	if(H.isimplantedblueshield())
-		to_chat(H, "<span class='notice'>Вы вспоминаете код от сейфа, полученный во время инструктажа... [get_combination()].</span>")
+		to_chat(H, "<span class='notice'>Р’С‹ РІСЃРїРѕРјРёРЅР°РµС‚Рµ РєРѕРґ РѕС‚ СЃРµР№С„Р°, РїРѕР»СѓС‡РµРЅРЅС‹Р№ РІРѕ РІСЂРµРјСЏ РёРЅСЃС‚СЂСѓРєС‚Р°Р¶Р°... [get_combination()].</span>")
 
 /obj/structure/safe/floor/blueshield/PopulateContents()
 	switch(rand(1, 5))
