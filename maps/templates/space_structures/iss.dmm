@@ -62,8 +62,9 @@
 	},
 /area/space_structures/iss)
 "aj" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/iss)

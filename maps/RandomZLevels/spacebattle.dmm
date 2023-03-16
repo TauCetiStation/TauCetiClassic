@@ -48,7 +48,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/awaymission/spacebattle/syndicate2)
 "aj" = (
@@ -181,7 +181,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/awaymission/spacebattle/syndicate3)
 "aD" = (
@@ -320,25 +320,25 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/awaymission/spacebattle/syndicate1)
 "aY" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/awaymission/spacebattle/syndicate2)
 "aZ" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -633,11 +633,11 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "bP" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
@@ -648,11 +648,11 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "bR" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /obj/structure/shuttle/engine/heater{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -704,7 +704,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -1006,8 +1006,15 @@
 /turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "da" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)
@@ -1031,6 +1038,17 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor4"
 	},
+/area/awaymission/spacebattle/cruiser)
+"df" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "dg" = (
 /obj/machinery/shieldgen{
@@ -1191,15 +1209,37 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)
 "dH" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/awaymission/spacebattle/cruiser)
+"dI" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
 /turf/simulated/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "dJ" = (
 /obj/structure/grille,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/awaymission/spacebattle/cruiser)
+"dK" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
 	},
 /turf/simulated/floor/engine,
 /area/awaymission/spacebattle/cruiser)
@@ -1304,6 +1344,16 @@
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)
+"eb" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/awaymission/spacebattle/cruiser)
 "ec" = (
 /obj/machinery/porta_turret{
 	dir = 8;
@@ -1320,6 +1370,16 @@
 /turf/simulated/floor{
 	icon_state = "damaged5"
 	},
+/area/awaymission/spacebattle/cruiser)
+"ee" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "ef" = (
 /obj/machinery/gateway{
@@ -1372,6 +1432,17 @@
 	dir = 6;
 	icon_state = "warning"
 	},
+/area/awaymission/spacebattle/cruiser)
+"en" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "eo" = (
 /turf/simulated/floor/engine,
@@ -1486,6 +1557,19 @@
 	icon_state = "bluefull"
 	},
 /area/awaymission/spacebattle/cruiser)
+"eI" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/awaymission/spacebattle/cruiser)
 "eJ" = (
 /mob/living/simple_animal/hostile/syndicate/melee/space,
 /turf/simulated/floor/plating/airless,
@@ -1548,6 +1632,16 @@
 /turf/simulated/floor{
 	icon_state = "bluefull"
 	},
+/area/awaymission/spacebattle/cruiser)
+"eU" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "eV" = (
 /obj/machinery/sleeper,
@@ -2222,7 +2316,7 @@
 /area/awaymission/spacebattle/syndicate7)
 "gW" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -2282,6 +2376,17 @@
 	icon_state = "blue"
 	},
 /area/awaymission/spacebattle/cruiser)
+"hf" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/awaymission/spacebattle/cruiser)
 "hg" = (
 /turf/environment/space,
 /turf/simulated/shuttle/wall{
@@ -2326,8 +2431,15 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission/spacebattle/cruiser)
 "hn" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/syndicate7)
@@ -2346,7 +2458,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 4
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -2385,6 +2497,42 @@
 	icon_state = "warning"
 	},
 /area/awaymission/spacebattle/cruiser)
+"hx" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/awaymission/spacebattle/cruiser)
+"hy" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/awaymission/spacebattle/cruiser)
+"hz" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/awaymission/spacebattle/syndicate7)
 "hA" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8;
@@ -2437,6 +2585,16 @@
 /obj/item/device/violin,
 /turf/simulated/floor/wood,
 /area/awaymission/spacebattle/cruiser)
+"hJ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/awaymission/spacebattle/cruiser)
 "hK" = (
 /turf/environment/space,
 /turf/simulated/shuttle/wall{
@@ -2473,9 +2631,33 @@
 	icon_state = "warning"
 	},
 /area/awaymission/spacebattle/cruiser)
+"hR" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/awaymission/spacebattle/cruiser)
+"hS" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/awaymission/spacebattle/cruiser)
 "hT" = (
 /obj/structure/grille,
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
+/turf/simulated/floor/engine,
+/area/awaymission/spacebattle/cruiser)
+"hU" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "hV" = (
@@ -2827,7 +3009,7 @@
 /area/awaymission/spacebattle/syndicate5)
 "iV" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -2857,7 +3039,7 @@
 /area/awaymission/spacebattle/syndicate5)
 "ja" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -2932,7 +3114,7 @@
 /area/awaymission/spacebattle/syndicate6)
 "jm" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -38116,18 +38298,18 @@ cg
 cf
 cg
 dy
-da
-da
-da
-da
-da
-da
-da
-da
-da
-da
-da
-da
+eI
+eU
+eU
+eU
+eU
+eU
+eU
+eU
+eU
+eU
+eU
+hf
 dy
 cg
 cf
@@ -44024,8 +44206,8 @@ ab
 ab
 ab
 dH
-dH
-dH
+eb
+en
 eo
 bX
 ce
@@ -44040,9 +44222,9 @@ ce
 ce
 bX
 eo
-dH
-dH
-dH
+hx
+hJ
+hR
 ab
 ab
 ab
@@ -44280,7 +44462,7 @@ ab
 ab
 ab
 ab
-dH
+dI
 ec
 eo
 eo
@@ -44299,7 +44481,7 @@ bX
 eo
 eo
 ec
-dH
+hS
 ab
 ab
 ab
@@ -44538,8 +44720,8 @@ ab
 ab
 ab
 dJ
-dH
-dH
+eb
+en
 eo
 bX
 ce
@@ -44554,8 +44736,8 @@ ce
 ce
 bX
 eo
-dH
-dH
+hx
+hJ
 hT
 ab
 ab
@@ -44794,7 +44976,7 @@ ab
 ab
 ab
 ab
-dH
+dI
 ec
 eo
 eo
@@ -44813,7 +44995,7 @@ bX
 eo
 eo
 ec
-dH
+hS
 ab
 ab
 ab
@@ -45052,8 +45234,8 @@ ab
 ab
 ab
 dJ
-dH
-dH
+eb
+en
 eo
 bX
 ce
@@ -45068,8 +45250,8 @@ ce
 ce
 bX
 eo
-dH
-dH
+hx
+hJ
 hT
 ab
 ab
@@ -45308,7 +45490,7 @@ ab
 ab
 ab
 ab
-dH
+dI
 ec
 eo
 eo
@@ -45327,7 +45509,7 @@ bX
 eo
 eo
 ec
-dH
+hS
 ab
 ab
 ab
@@ -45566,8 +45748,8 @@ ab
 ab
 ab
 dJ
-dH
-dH
+eb
+en
 eo
 bX
 ce
@@ -45582,8 +45764,8 @@ ce
 ce
 bX
 eo
-dH
-dH
+hy
+hJ
 hT
 ab
 ab
@@ -45822,7 +46004,7 @@ ab
 ab
 ab
 ab
-dH
+dI
 ec
 eo
 eo
@@ -45841,7 +46023,7 @@ bX
 eo
 eo
 ec
-dH
+hS
 ab
 ab
 ab
@@ -46080,8 +46262,8 @@ ab
 ab
 ab
 dJ
-dH
-dH
+eb
+en
 eo
 bX
 ce
@@ -46096,8 +46278,8 @@ ce
 ce
 bX
 eo
-dH
-dH
+hy
+hJ
 hT
 ab
 ab
@@ -46336,7 +46518,7 @@ ab
 ab
 ab
 ab
-dH
+dI
 ec
 eo
 eo
@@ -46355,7 +46537,7 @@ bX
 eo
 eo
 ec
-dH
+hS
 ab
 ab
 ab
@@ -46594,8 +46776,8 @@ ab
 ab
 ab
 dJ
-dH
-dH
+eb
+en
 eo
 bX
 ce
@@ -46610,8 +46792,8 @@ ce
 ce
 bX
 eo
-dH
-dH
+hy
+hJ
 hT
 ab
 ab
@@ -46850,7 +47032,7 @@ ab
 ab
 ab
 ab
-dH
+dI
 ec
 eo
 eo
@@ -46869,7 +47051,7 @@ cf
 eo
 eo
 ec
-dH
+hS
 ab
 ab
 ab
@@ -47108,8 +47290,8 @@ ab
 ab
 ab
 dJ
-dH
-dH
+eb
+en
 eo
 bX
 ce
@@ -47124,8 +47306,8 @@ ce
 ce
 bX
 eo
-dH
-dH
+hy
+hJ
 hT
 ab
 ab
@@ -47364,7 +47546,7 @@ ab
 ab
 ab
 ab
-dH
+dI
 ec
 eo
 eo
@@ -47383,7 +47565,7 @@ bX
 eo
 eo
 ec
-dH
+hS
 ab
 ab
 ab
@@ -47622,8 +47804,8 @@ ab
 ab
 ab
 dJ
-dH
-dH
+eb
+en
 eo
 bX
 ce
@@ -47638,8 +47820,8 @@ ce
 ce
 bX
 eo
-dH
-dH
+hy
+hJ
 hT
 ab
 ab
@@ -47878,7 +48060,7 @@ ab
 ab
 ab
 ab
-dH
+dI
 ec
 eo
 eo
@@ -47897,7 +48079,7 @@ bX
 eo
 eo
 ec
-dH
+hS
 ab
 ab
 ab
@@ -48136,8 +48318,8 @@ ab
 ab
 ab
 dJ
-dH
-dH
+eb
+en
 eo
 bX
 ce
@@ -48152,8 +48334,8 @@ ce
 ce
 bX
 eo
-dH
-dH
+hy
+hJ
 hT
 ab
 ab
@@ -48392,7 +48574,7 @@ ab
 ab
 ab
 ab
-dH
+dI
 ec
 eo
 eo
@@ -48411,7 +48593,7 @@ bX
 eo
 eo
 ec
-dH
+hS
 ab
 ab
 ab
@@ -48650,8 +48832,8 @@ ab
 ab
 ab
 dJ
-dH
-dH
+eb
+en
 eo
 bX
 ce
@@ -48666,8 +48848,8 @@ ce
 ce
 bX
 eo
-dH
-dH
+hy
+hJ
 hT
 ab
 ab
@@ -48906,7 +49088,7 @@ ab
 ab
 ab
 ab
-dH
+dI
 ec
 eo
 eo
@@ -48925,7 +49107,7 @@ bX
 eo
 eo
 ec
-dH
+hS
 ab
 ab
 ab
@@ -49164,8 +49346,8 @@ ab
 ab
 ab
 dJ
-dH
-dH
+eb
+en
 eo
 bX
 ce
@@ -49180,8 +49362,8 @@ ce
 ce
 bX
 eo
-dH
-dH
+hy
+hJ
 hT
 ab
 ab
@@ -49420,7 +49602,7 @@ ab
 ab
 ab
 ab
-dH
+dI
 ec
 eo
 eo
@@ -49439,7 +49621,7 @@ bX
 eo
 eo
 ec
-dH
+hS
 ab
 ab
 ab
@@ -49677,9 +49859,9 @@ ab
 ab
 ab
 ab
-dH
-dH
-dH
+dK
+eb
+en
 eo
 bX
 ce
@@ -49694,9 +49876,9 @@ ce
 ce
 bX
 eo
-dH
-dH
-dH
+hy
+hJ
+hU
 ab
 ab
 ab
@@ -53787,31 +53969,31 @@ ab
 ab
 bX
 da
-da
+df
 cL
 da
-da
-da
-da
-da
+ee
+ee
+ee
+df
 cL
 da
-da
+df
 bX
 ab
 ab
 bX
 da
-da
+df
 cL
 da
-da
-da
-da
-da
+ee
+ee
+ee
+df
 cL
 da
-da
+df
 bX
 ab
 ab
@@ -61773,12 +61955,12 @@ ab
 ab
 hg
 hn
-hn
-hn
-hn
-hn
-hn
-hn
+hz
+hz
+hz
+hz
+hz
+hz
 ir
 ab
 ab

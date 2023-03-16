@@ -42,8 +42,9 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/solar_control)
 "al" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/solar_control)
@@ -155,10 +156,20 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
+/area/space_structures/derelict/solar_control)
+"az" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
 /area/space_structures/derelict/solar_control)
 "aA" = (
 /obj/structure/cable{
@@ -208,7 +219,7 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/solar_control)
 "aE" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -257,6 +268,17 @@
 	},
 /turf/simulated/floor,
 /area/space_structures/derelict/solar_control)
+"aK" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/solar_control)
 "aL" = (
 /obj/structure/cable{
 	d2 = 2;
@@ -271,18 +293,18 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor,
 /area/space_structures/derelict/solar_control)
 "aN" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor,
 /area/space_structures/derelict/solar_control)
 "aO" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor,
 /area/space_structures/derelict/solar_control)
 "aP" = (
@@ -357,6 +379,19 @@
 "aW" = (
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/solar/starboard)
+"aX" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/solar_control)
 "aY" = (
 /turf/simulated/wall,
 /area/space_structures/derelict/bridge/access)
@@ -465,19 +500,34 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge/access)
 "bn" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/bridge/access)
 "bo" = (
+/obj/structure/grille,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/bridge/access)
+"bp" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/bridge/access)
@@ -531,7 +581,7 @@
 /turf/simulated/wall/r_wall,
 /area/space_structures/derelict/singularity_engine)
 "bA" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge/access)
 "bB" = (
@@ -544,7 +594,7 @@
 	icon_state = "0-2"
 	},
 /obj/structure/cable,
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge/access)
 "bD" = (
@@ -581,7 +631,7 @@
 /turf/simulated/wall/r_wall,
 /area/space_structures/derelict/singularity_engine)
 "bJ" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -632,7 +682,7 @@
 "bR" = (
 /obj/item/weapon/grenade/empgrenade,
 /obj/structure/table,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -684,32 +734,32 @@
 /area/space_structures/derelict/bridge)
 "cc" = (
 /obj/structure/table,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge)
 "cd" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /obj/machinery/portable_atmospherics/canister/phoron,
 /turf/simulated/floor/airless{
 	icon_state = "damaged3"
 	},
 /area/space_structures/derelict/singularity_engine)
 "ce" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor/airless{
 	icon_state = "damaged5"
 	},
 /area/space_structures/derelict/singularity_engine)
 "cf" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor/airless{
 	icon_state = "damaged4"
 	},
 /area/space_structures/derelict/singularity_engine)
 "cg" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /obj/item/weapon/table_parts/reinforced,
 /obj/item/weapon/table_parts/reinforced,
 /turf/simulated/floor/airless{
@@ -717,7 +767,7 @@
 	},
 /area/space_structures/derelict/singularity_engine)
 "ch" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor/airless{
 	icon_state = "damaged3"
 	},
@@ -747,15 +797,17 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge/access)
 "cm" = (
-/obj/structure/window/fulltile/reinforced,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge/access)
 "cn" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -766,12 +818,25 @@
 /area/space)
 "cp" = (
 /obj/structure/grille,
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
 "cq" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"cr" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
@@ -799,7 +864,7 @@
 "cx" = (
 /obj/structure/table,
 /obj/item/weapon/stock_parts/cell,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -832,7 +897,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/bridge/access)
 "cC" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/cable{
@@ -868,7 +933,7 @@
 	},
 /area/space_structures/derelict/singularity_engine)
 "cH" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -893,7 +958,7 @@
 "cL" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -902,6 +967,16 @@
 /obj/item/stack/rods,
 /turf/environment/space,
 /area/space)
+"cN" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
 "cO" = (
 /obj/item/weapon/shard,
 /obj/structure/grille{
@@ -935,8 +1010,18 @@
 /area/space_structures/derelict/singularity_engine)
 "cT" = (
 /obj/structure/grille,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"cU" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
@@ -947,11 +1032,11 @@
 /area/space_structures/derelict/bridge)
 "cW" = (
 /obj/structure/table,
-/obj/structure/window/thin,
+/obj/structure/window/basic,
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge)
 "cX" = (
-/obj/structure/window/thin,
+/obj/structure/window/basic,
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge)
 "cY" = (
@@ -969,7 +1054,7 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/bridge)
 "da" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/airless{
@@ -987,16 +1072,16 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
 "dd" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
 "de" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
@@ -1023,13 +1108,13 @@
 /area/space_structures/derelict/bridge)
 "di" = (
 /obj/structure/grille,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
 "dj" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -1040,7 +1125,7 @@
 	},
 /area/space_structures/derelict/singularity_engine)
 "dk" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -1050,7 +1135,7 @@
 /area/space_structures/derelict/singularity_engine)
 "dl" = (
 /obj/structure/grille,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
@@ -1110,7 +1195,7 @@
 	},
 /area/space_structures/derelict/singularity_engine)
 "dv" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
@@ -1175,15 +1260,17 @@
 	},
 /area/space_structures/derelict/singularity_engine)
 "dD" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/simulated/floor/airless{
 	icon_state = "damaged2"
 	},
 /area/space_structures/derelict/singularity_engine)
 "dE" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/airless{
@@ -1226,7 +1313,7 @@
 	},
 /area/space_structures/derelict/singularity_engine)
 "dM" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/airless{
@@ -1241,9 +1328,11 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/bridge/access)
 "dO" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
+/obj/structure/window/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/bridge/access)
 "dP" = (
@@ -1255,7 +1344,7 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/bridge/access)
 "dQ" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/airless{
@@ -1324,7 +1413,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
 "ec" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -1346,13 +1435,13 @@
 	},
 /area/space_structures/derelict/hallway/primary)
 "eg" = (
-/obj/structure/window/thin{
+/obj/structure/window/basic{
 	dir = 4
 	},
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
 "eh" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/airless{
@@ -1360,11 +1449,28 @@
 	},
 /area/space_structures/derelict/singularity_engine)
 "ei" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /obj/item/weapon/shard{
 	icon_state = "medium"
 	},
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"ej" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
@@ -1405,7 +1511,7 @@
 /area/space_structures/derelict/hallway/primary)
 "ep" = (
 /obj/structure/grille,
-/obj/structure/window/thin{
+/obj/structure/window/basic{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -1420,6 +1526,16 @@
 	icon_state = "damaged2"
 	},
 /area/space)
+"es" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
 "et" = (
 /obj/machinery/door/window,
 /turf/simulated/floor/plating/airless,
@@ -1477,7 +1593,18 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
 "eD" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
+"eE" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
 "eF" = (
@@ -1494,6 +1621,14 @@
 "eH" = (
 /turf/simulated/wall,
 /area/space_structures/derelict/arrival)
+"eI" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/singularity_engine)
 "eJ" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/airless{
@@ -1501,7 +1636,9 @@
 	},
 /area/space_structures/derelict/hallway/primary)
 "eK" = (
-/obj/structure/window/fulltile,
+/obj/structure/window/basic{
+	dir = 5
+	},
 /turf/environment/space,
 /area/space)
 "eL" = (
@@ -1546,7 +1683,7 @@
 /area/space_structures/derelict/singularity_engine)
 "eU" = (
 /obj/structure/lattice,
-/obj/structure/window/thin,
+/obj/structure/window/basic,
 /turf/environment/space,
 /area/space)
 "eV" = (
@@ -1585,14 +1722,16 @@
 /turf/simulated/wall,
 /area/space_structures/derelict/medical)
 "fc" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/medical)
 "fd" = (
 /obj/structure/grille,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -1668,14 +1807,14 @@
 	},
 /area/space_structures/derelict/singularity_engine)
 "fs" = (
-/obj/structure/window/thin{
+/obj/structure/window/basic{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/primary)
 "ft" = (
 /obj/structure/lattice,
-/obj/structure/window/thin{
+/obj/structure/window/basic{
 	dir = 1
 	},
 /turf/environment/space,
@@ -1713,7 +1852,7 @@
 /area/space)
 "fz" = (
 /obj/structure/table,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -1750,7 +1889,7 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/arrival)
 "fG" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/stool/bed/chair/metal{
@@ -1775,7 +1914,7 @@
 /area/space_structures/derelict/medical/chapel)
 "fJ" = (
 /obj/structure/table,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/airless{
@@ -1783,11 +1922,11 @@
 	},
 /area/space_structures/derelict/medical)
 "fK" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "fL" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor/airless{
 	icon_state = "white"
 	},
@@ -1803,20 +1942,20 @@
 	},
 /area/space_structures/derelict/hallway/primary)
 "fN" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor,
 /area/space_structures/derelict/arrival)
 "fO" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/environment/space,
 /area/space)
 "fP" = (
 /obj/structure/table,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -1863,7 +2002,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/medical)
 "fW" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -1876,7 +2015,7 @@
 /area/space)
 "fY" = (
 /obj/structure/table,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -1896,7 +2035,7 @@
 	},
 /area/space_structures/derelict/medical/chapel)
 "gb" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/airless{
@@ -1921,36 +2060,36 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/arrival)
 "gg" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/environment/space,
 /area/space)
 "gh" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/environment/space,
 /area/space)
 "gi" = (
 /obj/structure/table,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "chapel"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gj" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "chapel"
 	},
 /area/space_structures/derelict/medical/chapel)
 "gk" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "chapel"
@@ -2016,7 +2155,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/airless{
@@ -2040,10 +2179,10 @@
 	},
 /area/space_structures/derelict/medical)
 "gu" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -2168,17 +2307,17 @@
 	},
 /area/space_structures/derelict/medical)
 "gN" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "gO" = (
-/obj/structure/window/thin,
+/obj/structure/window/basic,
 /turf/environment/space,
 /area/space)
 "gP" = (
-/obj/structure/window/thin{
+/obj/structure/window/basic{
 	dir = 8
 	},
 /turf/environment/space,
@@ -2196,32 +2335,45 @@
 /turf/simulated/floor,
 /area/space_structures/derelict/arrival)
 "gS" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/derelict/arrival)
+"gT" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/arrival)
 "gU" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/environment/space,
 /area/space)
 "gV" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/environment/space,
 /area/space)
 "gW" = (
 /obj/structure/table,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -2230,7 +2382,7 @@
 	},
 /area/space_structures/derelict/medical/chapel)
 "gX" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -2239,7 +2391,7 @@
 	},
 /area/space_structures/derelict/medical/chapel)
 "gY" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -2328,10 +2480,10 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "hi" = (
-/obj/structure/window/thin{
+/obj/structure/window/basic{
 	dir = 8
 	},
-/obj/structure/window/thin,
+/obj/structure/window/basic,
 /turf/environment/space,
 /area/space)
 "hj" = (
@@ -2368,7 +2520,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "ho" = (
-/obj/structure/window/thin{
+/obj/structure/window/basic{
 	dir = 1
 	},
 /obj/structure/cable{
@@ -2397,7 +2549,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "hr" = (
-/obj/structure/window/thin,
+/obj/structure/window/basic,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -2483,24 +2635,26 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
 "hB" = (
-/obj/structure/window/thin{
+/obj/structure/window/basic{
 	dir = 1
 	},
 /turf/environment/space,
 /area/space)
 "hC" = (
-/obj/structure/window/fulltile,
+/obj/structure/window/basic{
+	dir = 5
+	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "hD" = (
 /obj/structure/grille,
-/obj/structure/window/thin{
+/obj/structure/window/basic{
 	dir = 1
 	},
 /turf/environment/space,
 /area/space)
 "hE" = (
-/obj/structure/window/thin{
+/obj/structure/window/basic{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -2617,14 +2771,14 @@
 /area/space_structures/derelict/hallway/primary)
 "hT" = (
 /obj/structure/lattice,
-/obj/structure/window/thin{
+/obj/structure/window/basic{
 	dir = 4
 	},
 /turf/environment/space,
 /area/space)
 "hU" = (
 /obj/structure/girder,
-/obj/structure/window/thin,
+/obj/structure/window/basic,
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/arrival)
 "hV" = (
@@ -2632,8 +2786,32 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
 "hW" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/primary)
+"hX" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/primary)
+"hY" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/primary)
@@ -2649,7 +2827,7 @@
 /turf/environment/space,
 /area/space)
 "ib" = (
-/obj/structure/window/thin{
+/obj/structure/window/basic{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
@@ -2686,7 +2864,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "ii" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/airless,
@@ -2724,7 +2902,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "ip" = (
-/obj/structure/window/thin{
+/obj/structure/window/basic{
 	dir = 4
 	},
 /turf/environment/space,
@@ -2748,16 +2926,21 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor/airless,
 /area/space)
 "iu" = (
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor/airless,
 /area/space)
 "iv" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -2786,9 +2969,37 @@
 /obj/item/device/healthanalyzer,
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/primary)
+"iB" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "iC" = (
 /obj/structure/closet/wardrobe/mixed,
 /turf/simulated/floor,
+/area/space_structures/derelict/arrival)
+"iD" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"iE" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
 /area/space_structures/derelict/arrival)
 "iF" = (
 /obj/machinery/door/airlock/external{
@@ -2815,7 +3026,7 @@
 /turf/simulated/wall/r_wall,
 /area/space_structures/derelict/hallway/secondary)
 "iK" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
@@ -2845,7 +3056,7 @@
 /turf/simulated/wall/r_wall,
 /area/space_structures/derelict/hallway/secondary)
 "iO" = (
-/obj/structure/window/thin{
+/obj/structure/window/basic{
 	dir = 1
 	},
 /obj/structure/cable{
@@ -2860,6 +3071,13 @@
 /obj/item/weapon/shard,
 /obj/item/weapon/shard{
 	icon_state = "medium"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"iQ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -2892,8 +3110,12 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/hallway/secondary)
 "iV" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/secondary)
@@ -2943,6 +3165,19 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jd" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/secondary)
 "je" = (
 /turf/simulated/floor/plating/airless,
@@ -3069,7 +3304,26 @@
 /area/space_structures/derelict/hallway/secondary)
 "jA" = (
 /obj/structure/grille,
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jB" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space_structures/derelict/hallway/secondary)
+"jC" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jD" = (
@@ -3098,13 +3352,13 @@
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jH" = (
-/obj/structure/window/thin{
+/obj/structure/window/basic{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/secondary)
 "jI" = (
-/obj/structure/window/thin{
+/obj/structure/window/basic{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -3124,7 +3378,7 @@
 /area/space_structures/derelict/hallway/secondary)
 "jL" = (
 /obj/structure/grille,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -3163,8 +3417,10 @@
 /turf/simulated/floor/airless,
 /area/space_structures/derelict/bridge/ai_upload)
 "jP" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/bridge/ai_upload)
@@ -6261,7 +6517,7 @@ bz
 bz
 bz
 dC
-cq
+cU
 dl
 dl
 cq
@@ -6407,7 +6663,7 @@ ey
 iH
 iY
 iY
-iV
+jB
 ap
 aa
 aa
@@ -6490,7 +6746,7 @@ dY
 dY
 dY
 hd
-hW
+hX
 dY
 im
 id
@@ -6510,7 +6766,7 @@ ey
 iH
 jf
 iY
-iV
+jB
 ap
 aa
 aa
@@ -6566,7 +6822,7 @@ cp
 cs
 bU
 bS
-cq
+cN
 di
 di
 dD
@@ -6613,7 +6869,7 @@ ef
 iH
 iY
 iY
-iV
+jB
 ap
 aa
 aa
@@ -6668,7 +6924,7 @@ cg
 cp
 cs
 bS
-cq
+cN
 da
 dj
 da
@@ -6696,7 +6952,7 @@ dY
 gz
 dY
 hd
-hW
+hY
 dY
 dY
 dY
@@ -6819,7 +7075,7 @@ dV
 iH
 iY
 iY
-iV
+jB
 ap
 aa
 aa
@@ -6922,7 +7178,7 @@ aa
 iH
 iY
 iY
-iV
+jB
 ap
 aa
 aa
@@ -6974,7 +7230,7 @@ ac
 bF
 bS
 ch
-cq
+cr
 bS
 bU
 cQ
@@ -7025,7 +7281,7 @@ aa
 iH
 iY
 iY
-iV
+jB
 ap
 aa
 aa
@@ -7128,7 +7384,7 @@ aq
 iH
 iY
 iY
-iV
+jB
 ap
 aa
 aa
@@ -7231,7 +7487,7 @@ ab
 iH
 jg
 jr
-iV
+jB
 ap
 aa
 aa
@@ -7401,7 +7657,7 @@ aa
 du
 bS
 cf
-cq
+eI
 cs
 bS
 cs
@@ -7437,7 +7693,7 @@ ab
 iH
 ji
 jt
-iV
+jB
 ap
 aa
 aa
@@ -7540,7 +7796,7 @@ ab
 jb
 jj
 ju
-iV
+jB
 ap
 aa
 aa
@@ -7643,7 +7899,7 @@ aa
 iH
 jk
 jv
-iV
+jB
 ap
 aa
 aa
@@ -7698,7 +7954,7 @@ bS
 bU
 bT
 bS
-cq
+cU
 de
 dk
 dv
@@ -7746,7 +8002,7 @@ aa
 iH
 jl
 jw
-iV
+jB
 ap
 aa
 aa
@@ -7802,17 +8058,17 @@ cs
 bT
 bS
 cs
-cq
+cU
 dl
 dl
 cq
 bW
 bW
 eb
-cq
-cq
-cq
-cq
+ej
+es
+es
+eE
 bS
 bU
 bT
@@ -7849,7 +8105,7 @@ aa
 iH
 jm
 jx
-iV
+jB
 ap
 aa
 aa
@@ -8055,7 +8311,7 @@ ab
 iH
 iY
 iY
-iV
+jB
 co
 aa
 aa
@@ -8158,7 +8414,7 @@ ab
 iH
 iY
 iY
-iV
+jB
 co
 aa
 aa
@@ -8261,7 +8517,7 @@ aa
 iH
 iY
 iY
-iV
+jB
 ap
 aa
 aa
@@ -8364,7 +8620,7 @@ aa
 iH
 iY
 iY
-iV
+jB
 ap
 aa
 aa
@@ -8467,7 +8723,7 @@ aa
 iH
 iY
 iY
-iV
+jB
 ap
 aa
 aa
@@ -8673,7 +8929,7 @@ aa
 iH
 iY
 iY
-iV
+jB
 ap
 aa
 ac
@@ -8776,7 +9032,7 @@ ac
 iH
 iY
 iY
-iV
+jB
 ap
 aa
 ac
@@ -8863,8 +9119,8 @@ ad
 ae
 ae
 iv
-iv
-iv
+iB
+iD
 ad
 iM
 ac
@@ -8879,7 +9135,7 @@ ad
 iH
 iY
 iY
-iV
+jB
 ap
 aa
 jD
@@ -8982,7 +9238,7 @@ ad
 iH
 iY
 iY
-iV
+jB
 ap
 aa
 jM
@@ -9803,10 +10059,10 @@ aa
 aa
 aa
 aa
+jd
 iV
 iV
-iV
-iV
+jC
 jF
 iJ
 iJ
@@ -9954,7 +10210,7 @@ aY
 bd
 bg
 bb
-bn
+bp
 bb
 bb
 bA
@@ -10975,11 +11231,11 @@ ai
 ao
 ai
 ai
-al
-al
-al
+az
+az
+aK
 aQ
-al
+aX
 aY
 aY
 aY
@@ -11027,7 +11283,7 @@ il
 iq
 iq
 iq
-gS
+iE
 iK
 iP
 iT
@@ -11233,9 +11489,9 @@ eN
 eN
 eN
 eN
-gS
+iE
 gN
-iv
+iQ
 aa
 aa
 aa
@@ -11943,9 +12199,9 @@ aa
 aa
 aa
 aa
-gS
+gT
 hk
-gS
+gT
 aa
 aa
 aa
