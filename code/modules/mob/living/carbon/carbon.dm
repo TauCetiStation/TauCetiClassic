@@ -244,6 +244,7 @@
 
 /mob/living/carbon/proc/stabilize_body_temperature()
 	adjust_bodytemperature((BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR)
+	message_admins("This wrong")
 
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment)
 	if(stat != DEAD) // lets put this shit somewhere here
@@ -254,7 +255,7 @@
 
 	var/pressure = environment.return_pressure()
 	var/temperature = environment.temperature
-	var/affecting_temp = (temperature - bodytemperature) * environment.return_relative_density()
+	var/affecting_temp = (temperature - bodytemperature) * environment.return_relative_density() / BODYTEMP_AUTORECOVERY_DIVISOR
 	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 
 	if(!on_fire)

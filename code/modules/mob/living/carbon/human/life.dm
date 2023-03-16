@@ -161,7 +161,7 @@ var/global/list/tourette_bad_words= list(
 				return
 	if (disabilities & TOURETTES || HAS_TRAIT(src, TRAIT_TOURETTE))
 		if(!(get_species() in tourette_bad_words))
-			return 
+			return
 		speech_problem_flag = 1
 		if (prob(10))
 			spawn( 0 )
@@ -390,7 +390,7 @@ var/global/list/tourette_bad_words= list(
 	//breathing in hot/cold air also heats/cools you a bit
 	var/affecting_temp = (breath.temperature - bodytemperature) * breath.return_relative_density()
 
-	adjust_bodytemperature(affecting_temp / 5, use_insulation = TRUE, use_steps = TRUE)
+	adjust_bodytemperature(affecting_temp / 5, use_insulation = FALSE, use_steps = TRUE)
 
 /mob/living/carbon/human/handle_suffocating(datum/gas_mixture/breath)
 	if(suiciding)
@@ -547,7 +547,8 @@ var/global/list/tourette_bad_words= list(
 		if(nutrition >= 2) //If we are very, very cold we'll use up quite a bit of nutriment to heat us up.
 			nutrition -= 2
 		var/recovery_amt = max((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
-		//world << "Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]"
+		message_admins("Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]. Tick [life_tick]")
+//		world << "Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]. Tick [life_tick]"
 //				log_debug("Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
 		adjust_bodytemperature(recovery_amt)
 	else if(species.cold_level_1 <= bodytemperature && bodytemperature <= species.heat_level_1)
