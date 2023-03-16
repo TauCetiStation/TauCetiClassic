@@ -6,7 +6,7 @@
 	name = "bullet casing"
 	desc = "A bullet casing."
 	icon = 'icons/obj/ammo/casings.dmi'
-	icon_state = "s-casing"
+	icon_state = "casing_normal"
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 1

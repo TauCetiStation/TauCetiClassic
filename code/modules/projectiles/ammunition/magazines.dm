@@ -359,7 +359,7 @@
 
 /obj/item/ammo_box/magazine/borg45
 	name = "magazine (.45)"
-	icon_state = "saw"
+	icon_state = "saw_mag"
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
 	max_ammo = 40
