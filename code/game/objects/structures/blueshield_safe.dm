@@ -16,7 +16,7 @@
 		to_chat(H, "<span class='notice'>Вы вспоминаете код от сейфа, полученный во время инструктажа... [get_combination()].</span>")
 
 /obj/structure/safe/floor/blueshield/PopulateContents()
-	switch(rand(1, 5))
+	switch(rand(1, 25))
 		if(1)
 			new /obj/item/clothing/head/helmet/space/rig/blueshield(src)
 			new /obj/item/clothing/suit/space/rig/blueshield(src)
