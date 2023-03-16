@@ -138,15 +138,6 @@
 	. = ..()
 	reagents.add_reagent("cyanide", 50)
 
-/obj/item/weapon/reagent_containers/pill/adminordrazine
-	name = "Adminordrazine pill"
-	desc = "It's magic. We don't have to explain it."
-	icon_state = "pill16"
-
-/obj/item/weapon/reagent_containers/pill/adminordrazine/atom_init()
-	. = ..()
-	reagents.add_reagent("adminordrazine", 50)
-
 /obj/item/weapon/reagent_containers/pill/stox
 	name = "Sleeping pill (15u)"
 	desc = "Commonly used to treat insomnia."
@@ -304,7 +295,7 @@
 	reagents.add_reagent("anti_toxin", 10)
 
 /obj/item/weapon/reagent_containers/pill/adminordrazine
-	name = "AB-X-7921 compound pill."
+	name = "AB-X-7921 compound pill"
 	desc = "Experimental chemical agent which is believed to completely heal a human being of any damage upon consumption."
 	icon_state = "pillA"
 

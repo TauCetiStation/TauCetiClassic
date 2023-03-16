@@ -125,8 +125,8 @@
 			/obj/item/weapon/circuitboard/mecha/ultra/targeting,
 			/obj/item/weapon/circuitboard/mecha/ultra/peripherals,
 			/obj/item/weapon/circuitboard/mecha/ultra/main,
-			/obj/item/weapon/stock_parts/capacitor/super,
-			/obj/item/weapon/stock_parts/scanning_module/phasic,
+			/obj/item/weapon/stock_parts/capacitor/adv/super,
+			/obj/item/weapon/stock_parts/scanning_module/adv/phasic,
 			/obj/item/stack/rods
 			),
 		"crowbar" = list(
@@ -271,8 +271,8 @@
 			/obj/item/weapon/circuitboard/mecha/vindicator/targeting,
 			/obj/item/weapon/circuitboard/mecha/vindicator/peripherals,
 			/obj/item/weapon/circuitboard/mecha/vindicator/main,
-			/obj/item/weapon/stock_parts/capacitor/super,
-			/obj/item/weapon/stock_parts/scanning_module/phasic,
+			/obj/item/weapon/stock_parts/capacitor/adv/super,
+			/obj/item/weapon/stock_parts/scanning_module/adv/phasic,
 			/obj/item/stack/rods
 			),
 		"crowbar" = list(

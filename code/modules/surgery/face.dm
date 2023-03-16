@@ -190,7 +190,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s screen with \the [tool]!</span>",
 	"<span class='warning'>Your hand slips, scratching [target]'s screen with \the [tool]!</span>")
-	BP.take_damage(60, 0, DAM_SHARP|DAM_EDGE, tool)
+	BP.take_damage(6, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc/face/pry_screen
 	allowed_tools = list(

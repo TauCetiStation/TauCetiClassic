@@ -44,7 +44,7 @@
 	head = /obj/item/clothing/head/det_hat
 
 	r_hand = /obj/item/weapon/gun/projectile
-	l_pocket = /obj/item/ammo_box/a357
+	l_pocket = /obj/item/ammo_box/speedloader/a357
 
 /datum/outfit/tournament_chief
 	name = "Tournament: chef"
@@ -164,7 +164,7 @@
 		new /obj/item/weapon/spacecash/c1000,
 		new /obj/item/weapon/gun/energy/crossbow,
 		new /obj/item/weapon/gun/projectile/revolver/mateba,
-		new /obj/item/ammo_box/a357,
+		new /obj/item/ammo_box/speedloader/a357,
 		new /obj/item/weapon/plastique,
 	)
 
@@ -194,8 +194,8 @@
 	back = /obj/item/weapon/storage/backpack/security
 
 	backpack_contents = list(
-		/obj/item/ammo_box/a357,
-		/obj/item/ammo_box/a357,
+		/obj/item/ammo_box/speedloader/a357,
+		/obj/item/ammo_box/speedloader/a357,
 		/obj/item/weapon/storage/firstaid/tactical,
 		/obj/item/weapon/storage/box/flashbangs,
 		/obj/item/device/flashlight/seclite,
@@ -218,8 +218,8 @@
 	uniform = /obj/item/clothing/under/rank/centcom_officer
 
 	backpack_contents = list(
-		/obj/item/ammo_box/a357,
-		/obj/item/ammo_box/a357,
+		/obj/item/ammo_box/speedloader/a357,
+		/obj/item/ammo_box/speedloader/a357,
 		/obj/item/weapon/storage/firstaid/tactical,
 		/obj/item/weapon/storage/box/flashbangs,
 		/obj/item/device/flashlight/seclite,
@@ -248,8 +248,8 @@
 
 	backpack_contents = list(
 		/obj/item/weapon/storage/box,
-		/obj/item/ammo_box/magazine/sm45,
-		/obj/item/ammo_box/magazine/sm45,
+		/obj/item/ammo_box/magazine/silenced_pistol,
+		/obj/item/ammo_box/magazine/silenced_pistol,
 		/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike,
 		/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment,
 		/obj/item/device/radio/uplink/strike,
@@ -276,8 +276,8 @@
 
 	backpack_contents = list(
 		/obj/item/weapon/storage/box,
-		/obj/item/ammo_box/magazine/sm45,
-		/obj/item/ammo_box/magazine/sm45,
+		/obj/item/ammo_box/magazine/silenced_pistol,
+		/obj/item/ammo_box/magazine/silenced_pistol,
 		/obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian/strike,
 		/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment,
 		/obj/item/device/radio/uplink/strike_leader,
