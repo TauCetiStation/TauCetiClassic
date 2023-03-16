@@ -12,7 +12,7 @@
 /obj/structure/safe/floor/blueshield/examine(mob/user)
 	..()
 	var/mob/living/carbon/human/H = user
-	if(H.mind.assigned_role == "Blueshield Officer")
+	if(H.isimplantedblueshield())
 		to_chat(H, "<span class='notice'>Вы вспоминаете код от сейфа, полученный во время инструктажа... [get_combination()].</span>")
 
 /obj/structure/safe/floor/blueshield/PopulateContents()
