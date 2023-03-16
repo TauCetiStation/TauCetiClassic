@@ -708,7 +708,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 					if(Master)
 						stat(null)
 						for(var/datum/controller/subsystem/SS in Master.subsystems)
-							SS.stat_entry()
+							(SS.flags & SS_SHOW_IN_MC_TAB)
+								SS.stat_entry()
 					cameranet.stat_entry()
 
 	if(listed_turf && client)
