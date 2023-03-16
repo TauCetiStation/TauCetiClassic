@@ -122,7 +122,7 @@ var/global/online_shop_profits = 0
 		P.info += "<hr>"
 		P.info += "МЕСТО ДЛЯ ШТАМПОВ:<br>"
 
-		var/obj/item/weapon/pen/Pen = new(src)
+		var/obj/item/weapon/pen/Pen = new
 
 		P.parsepencode(P.info, Pen)
 		P.updateinfolinks()
