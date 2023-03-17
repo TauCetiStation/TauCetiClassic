@@ -154,6 +154,8 @@
 	return stat == DEAD
 
 /mob/living/simple_animal/hostile/replicator/get_replicator_material_amount()
+	if(stat == DEAD)
+		return REPLICATOR_COST_REPLICATE
 	return REPLICATOR_COST_REPLICATE * health / maxHealth
 
 /mob/living/simple_animal/hostile/replicator/get_unit_disintegration_time()
