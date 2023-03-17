@@ -26,10 +26,6 @@
 	if(client)
 		client.move_delay = max(world.time + timeout, client.move_delay)
 
-// Whether this mob can choose to move to NewLoc. Return FALSE if not.
-/mob/proc/can_intentionally_move(atom/NewLoc, movedir)
-	return !(SEND_SIGNAL(src, COMSIG_CLIENTMOB_MOVE, NewLoc, movedir) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
-
 /client/North()
 	..()
 
@@ -152,7 +148,7 @@
 		//We are now going to move
 		moving = TRUE
 
-		if(!mob.can_intentionally_move(n, direct))
+		if(!SEND_SIGNAL(src, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
 			// Someone please investigate why we can't do moving = TRUE *after* this check. ~Luduk
 			moving = FALSE
 			return

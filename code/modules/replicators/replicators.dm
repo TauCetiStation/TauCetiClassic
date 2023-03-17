@@ -183,7 +183,11 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 	AddComponent(/datum/component/replicator_regeneration)
 
+	RegisterSignal(src, list(COMSIG_CLIENTMOB_MOVE), .proc/on_clientmob_move)
+
 /mob/living/simple_animal/hostile/replicator/Destroy()
+	UnregisterSignal(src, list(COMSIG_CLIENTMOB_MOVE))
+
 	global.idle_replicators -= src
 
 	overlays -= indicator
@@ -671,7 +675,16 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 		if(REPLICATOR_STATE_COMBAT, REPLICATOR_STATE_AI_COMBAT)
 			to_chat(user, "<span class='warning'>BATTLESTATIONS! FULL COMBAT MODE ENGAGED! RED ALERT!</span>")
 
-/mob/living/simple_animal/hostile/replicator/can_intentionally_move(atom/NewLoc, movedir)
+/mob/living/simple_animal/hostile/replicator/proc/on_clientmob_move(datum/source, atom/NewLoc, movedir)
+	SIGNAL_HANDLER
+
+	if(!can_intentionally_move(NewLoc, movedir))
+		return COMPONENT_CLIENTMOB_BLOCK_MOVE
+
+	return NONE
+
+// Whether this mob can choose to move to NewLoc. Return FALSE if not.
+/mob/living/simple_animal/hostile/replicator/proc/can_intentionally_move(atom/NewLoc, movedir)
 	. = ..()
 	if(!.)
 		return TRUE
