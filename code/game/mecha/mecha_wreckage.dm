@@ -11,8 +11,7 @@
 	anchored = FALSE
 	opacity = 0
 	plane = GAME_PLANE
-	// Why did they have NODECONSTRUCT o.o
-	flags = NONE
+	flags = NODECONSTRUCT
 	w_class = SIZE_MASSIVE
 
 	var/list/salvage  = list(

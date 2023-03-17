@@ -51,11 +51,6 @@
 	if(A.get_replicator_material_amount() < 0)
 		return FALSE
 
-	if(A.flags & NODECONSTRUCT)
-		if(alert)
-			to_chat(src, "<span class='warning'>Object Does Not Disintegrate.</span>")
-		return FALSE
-
 	if(A.flags_2 & HOLOGRAM_2)
 		if(alert)
 			to_chat(src, "<span class='warning'>Can Not Disintegrate Holograms.</span>")
