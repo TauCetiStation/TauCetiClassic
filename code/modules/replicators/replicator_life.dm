@@ -163,8 +163,9 @@
 		if(next_jamming_alert < world.time)
 			next_jamming_alert = world.time + jamming_alert_cooldown
 			to_chat(src, "<span class='bold warning'>You feel your essence being jammed by a teleportation supressor nearby!</span>")
-		take_bodypart_damage(0.0, maxHealth / 120)
-		color_to_flash = "#0000ff"
+			color_to_flash = "#0000ff"
+
+		take_bodypart_damage(0.0, maxHealth / 12.5)
 
 		if(stat == DEAD)
 			if(!isspaceturf(loc))
