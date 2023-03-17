@@ -93,7 +93,14 @@ log transactions
 					return
 				else
 					money_stock += SC.worth
+
+			var/stock_string = ""
 			authenticated_account.adjust_money(SC.worth)
+			if(istype(SC, /obj/item/weapon/spacecash/ewallet))
+				var/obj/item/weapon/spacecash/ewallet/EW = SC
+				stock_string = EW.get_stocks_string()
+				authenticated_account.adjust_stocks_list(EW.stocks)
+
 			if(prob(50))
 				playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
 			else
@@ -103,6 +110,9 @@ log transactions
 			var/datum/transaction/T = new()
 			T.target_name = authenticated_account.owner_name
 			T.purpose = "Credit deposit"
+			if(stock_string)
+				T.purpose += ". Stock deposit: [stock_string]"
+
 			T.amount = SC.worth
 			T.source_terminal = machine_id
 			T.date = current_date_string
@@ -339,7 +349,7 @@ log transactions
 							authenticated_account.adjust_money(-amount)
 							playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
 							if(response == "Chip")
-								spawn_ewallet(amount,src.loc)
+								spawn_ewallet(amount, null, src.loc)
 							else
 								print_money_stock(amount)
 
@@ -472,9 +482,10 @@ log transactions
 	authenticated_account = null
 	held_card = null
 
-/obj/machinery/atm/proc/spawn_ewallet(sum, loc)
+/obj/machinery/atm/proc/spawn_ewallet(sum, list/stocks, loc)
 	var/obj/item/weapon/spacecash/ewallet/E = new /obj/item/weapon/spacecash/ewallet(loc)
 	E.worth = sum
+	E.stocks = stocks
 	E.owner_name = authenticated_account.owner_name
 
 /obj/machinery/atm/proc/print_money_stock(sum)

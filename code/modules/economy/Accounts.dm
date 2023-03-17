@@ -35,6 +35,10 @@
 
 	stocks[department] += amount
 
+/datum/money_account/proc/adjust_stocks_list(list/new_stocks)
+	for(var/department in new_stocks)
+		adjust_stocks(department, new_stocks[department])
+
 /datum/money_account/proc/adjust_money(amount)
 	money = clamp(money + amount, MIN_MONEY_ON_ACCOUNT, MAX_MONEY_ON_ACCOUNT)
 

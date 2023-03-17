@@ -117,10 +117,28 @@
 	name = "Charge card"
 	icon_state = "efundcard"
 	desc = "A card that holds an amount of money."
-	var/owner_name = "" //So the ATM can set it so the EFTPOS can put a valid name on transactions.
 	can_burn = FALSE
+
+	//So the ATM can set it so the EFTPOS can put a valid name on transactions.
+	var/owner_name = ""
+
+	var/list/stocks
 
 /obj/item/weapon/spacecash/ewallet/examine(mob/user)
 	..()
 	if(src in view(1, user))
-		to_chat(user, "<span class='notice'>Charge card's owner: [src.owner_name]. Credits remaining: [src.worth].</span>")
+		to_chat(user, "<span class='notice'>Charge card's issuer: [src.owner_name].</span>")
+		if(worth > 0)
+			to_chat(user, "<span class='notice'>Credits remaining: [src.worth].</span>")
+		if(stocks)
+			to_chat(user, "<span class='notice'>Charge card's stocks: [get_stocks_string()].</span>")
+
+/obj/item/weapon/spacecash/ewallet/proc/get_stocks_string()
+	. = ""
+	var/first = TRUE
+	for(var/department in stocks)
+		if(first)
+			first = FALSE
+		else
+			. += ", "
+		. += "[department]: [stocks[department]]"
