@@ -24,6 +24,8 @@
 
 /obj/item/device/assembly/signaler/atom_init(mapload, my_new_frequency=1457)
 	. = ..()
+	if(my_new_frequency)
+		frequency = my_new_frequency
 	addtimer(CALLBACK(src, .proc/set_frequency, my_new_frequency), 40)
 
 /obj/item/device/assembly/signaler/Destroy()
