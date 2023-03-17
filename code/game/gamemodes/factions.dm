@@ -37,6 +37,9 @@
 	// Type for collector of statistics by this faction
 	var/datum/stat/faction/stat_type = /datum/stat/faction
 
+	// Whether the faction should be printed to the scoreboard even if it has 0 members.
+	var/always_print = FALSE
+
 /datum/faction/New()
 	SHOULD_CALL_PARENT(TRUE)
 	..()

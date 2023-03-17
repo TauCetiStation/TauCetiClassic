@@ -213,11 +213,12 @@
 	for(var/datum/faction/F in factions)
 		F.calculate_completion()
 		SSStatistics.add_faction(F)
-		exist = TRUE
-		completition_text += "<div class='Section'>"
-		completition_text += F.GetFactionHeader()
-		completition_text += F.GetScoreboard()
-		completition_text += "</div>"
+		if(F.members.len > 0 || F.always_print)
+			exist = TRUE
+			completition_text += "<div class='Section'>"
+			completition_text += F.GetFactionHeader()
+			completition_text += F.GetScoreboard()
+			completition_text += "</div>"
 
 	if (orphaned_roles.len > 0)
 		completition_text += "<FONT size = 2><B>Independents:</B></FONT><br>"

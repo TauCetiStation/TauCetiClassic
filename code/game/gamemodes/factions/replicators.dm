@@ -10,6 +10,8 @@
 
 	logo_state = "replicators"
 
+	always_print = TRUE
+
 	var/materials = 0
 	// Each disintegration puts a part of the disintegrated material into the tax pool. Portals and catapults try to empty out the tax pool first.
 	var/materials_tax_pool = 0
