@@ -67,7 +67,7 @@
 	if(drone_supply)
 		return
 
-	// to-do: sound
+	// to-do: (replicators) add a sound here. the sound should sound somewhat scary but awe-inspiring, a noble sacrifice is being made
 	to_chat(R, "<span class='notice'>You power [src] via your own energy, breaking yourself apart.</span>")
 	R.visible_message("<span class='notice'>[R] is crumbling apart, holding the portal open.</span>")
 
@@ -86,7 +86,7 @@
 /obj/machinery/swarm_powered/proc/stop_drone_energy_supply()
 	SIGNAL_HANDLER
 
-	// to-do: sound
+	// to-do: (replicators) add a sound here. something noble, the drone has either fallen helping out his comrades, or the deed has been accomplished
 	drone_supply.sacrifice_powering = FALSE
 
 	UnregisterSignal(drone_supply, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
@@ -200,12 +200,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 
 /obj/machinery/swarm_powered/bluespace_transponder/start_drone_energy_supply(mob/living/simple_animal/hostile/replicator/R)
 	. = ..()
-	// to-do: sound
 	playsound(R, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	playsound(R, 'sound/mecha/Mech_Step.ogg', VOL_EFFECTS_MASTER, 80)
 
 /obj/machinery/swarm_powered/bluespace_transponder/stop_drone_energy_supply(mob/living/simple_animal/hostile/replicator/R)
-	// to-do: sound
 	playsound(R, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 	return ..()
 
@@ -327,7 +325,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 	update_icon()
 
 /obj/machinery/power/replicator_generator/Destroy()
-	// to-do: sound
 	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
@@ -677,7 +674,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 /obj/structure/bluespace_corridor/attackby(obj/item/I, mob/user)
 	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
 	if(ispulsing(I) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/research = SKILL_LEVEL_TRAINED), -0.2))
-		// to-do: sound
+		// to-do: (replicators) add a sound here. the sound should be somewhat melancholic and mechanical. even though this web is made by enemies, it still is a magnificent thing
 		visible_message("<span class='notice'>[src] beeps loudly, before dissappearing.</span>")
 		qdel(src)
 		return

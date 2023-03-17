@@ -16,7 +16,6 @@
 	underlays += I
 
 /turf/simulated/floor/plating/airless/catwalk/forcefield/Destroy()
-	// to-do: sound
 	playsound(src, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 
 	var/obj/structure/forcefield_node/FN = locate() in src
@@ -39,7 +38,6 @@
 		var/obj/structure/forcefield_node/FN = locate() in src
 		qdel(FN)
 
-		// to-do: sound
 		playsound(src, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 
 	return ..()
@@ -89,7 +87,6 @@
 	AddComponent(/datum/component/replicator_regeneration)
 
 /obj/structure/replicator_forcefield/Destroy()
-	// to-do: sound
 	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 	if(!(locate(/obj/structure/stabilization_field) in loc))
 		new /obj/structure/stabilization_field(loc)
@@ -144,7 +141,6 @@
 
 /obj/structure/stabilization_field/attackby(obj/item/C, mob/user)
 	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
-		// to-do: sound
 		playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 		qdel(src)
 		return
@@ -178,7 +174,6 @@
 	AddComponent(/datum/component/replicator_regeneration)
 
 /obj/structure/replicator_barricade/Destroy()
-	// to-do: sound
 	if(leave_stabilization_field && !(locate(/obj/structure/stabilization_field) in loc))
 		playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 		new /obj/structure/stabilization_field(loc)
@@ -226,7 +221,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	add_area_node(src)
 
 /obj/structure/forcefield_node/Destroy()
-	// to-do: sound
 	playsound(loc, 'sound/machines/arcade/heal2.ogg', VOL_EFFECTS_MASTER)
 
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()

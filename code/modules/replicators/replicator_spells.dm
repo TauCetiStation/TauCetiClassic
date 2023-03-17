@@ -105,7 +105,7 @@
 
 	FR.adjust_materials(-material_cost, adjusted_by=user_replicator.ckey)
 	FR.bandwidth_borrowed += 1
-	// to-do: sound
+	// to-do: (replicators) add a sound here. I don't know what replication should sound like
 	to_chat(user_replicator, "<span class='notice'>Initiating replication protocols...</span>")
 	if(!do_after(user_replicator, 3 SECONDS, target=user_replicator, extra_checks=checks))
 		FR.adjust_materials(material_cost, adjusted_by=user_replicator.ckey)
@@ -276,7 +276,7 @@
 /obj/effect/proc_holder/spell/no_target/replicator_construct/transponder/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
-	// to-do: sound
+	// to-do: (replicators) add a sound here.
 	if(!objection_timer(user_replicator, "Deploying a bluespace transponder at [A.name]."))
 		return
 
@@ -334,7 +334,7 @@
 /obj/effect/proc_holder/spell/no_target/replicator_construct/generator/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
-	// to-do: sound
+	// to-do: (replicators) add a sound here.
 	if(!objection_timer(user_replicator, "Deploying a generator at [A.name]."))
 		return
 
@@ -570,7 +570,7 @@
 /obj/effect/proc_holder/spell/no_target/replicator_construct/catapult/cast(list/targets, mob/user = usr)
 	var/mob/living/simple_animal/hostile/replicator/user_replicator = user
 	var/area/A = get_area(user_replicator)
-	// to-do: sound
+	// to-do: (replicators) add a sound here. something ominous and loud, everyone should know that the end is about to begin
 	if(!objection_timer(user_replicator, "Constructing a Bluespace Catapult at [A.name]!"))
 		return
 

@@ -13,7 +13,7 @@
 		EMOTE_STATE(is_not_species, ZOMBIE)
 	)
 
-// TO-DO: sound
+	// to-do: (replicators) add a sound here. the sound should be pleasant and musical
 
 /datum/emote/clickable/help_replicator/add_cloud(mob/living/simple_animal/hostile/replicator/user)
 	. = ..()

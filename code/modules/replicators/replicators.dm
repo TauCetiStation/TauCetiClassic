@@ -492,7 +492,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 			to_chat(R, "<span class='warning'>Negative: The unit is serving a purpose.</span>")
 			return
 
-		// TO-DO: sound
+		// to-do: (replicators) add a sound here. something somewhat melancholic, you are destroying a drone that has lost it's purpose and maybe... lost it's way
 		to_chat(R, "<span class='notice'>Issued a self-destruct order to [name].</span>")
 		set_state(REPLICATOR_STATE_HARVESTING)
 		set_last_controller(R.ckey)
@@ -630,7 +630,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	RAI.add_unit(src, just_spawned)
 
 	var/new_color = RAI.array_color
-	// to-do: sound on controller change
+	// to-do: (replicators) add a sound here.
 	if(new_color)
 		color = new_color
 		chat_color = new_color

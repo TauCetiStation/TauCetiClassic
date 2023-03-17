@@ -26,7 +26,6 @@
 			continue
 		array_units += R
 
-	// to-do: sound
 	playsound(src, 'sound/magic/heal.ogg', VOL_EFFECTS_MASTER)
 	to_chat(src, "<span class='notice'>[initial(upgrade_type.name)] upgrade acquired. Adapting array drones...</span>")
 	RAI.acquire_upgrade(upgrade_type, array_units)
