@@ -387,6 +387,9 @@
 
 	target.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
 
+	if(user.client && LAZYACCESS(user.client.browsers, "destTagScreen"))
+		openwindow(user)
+
 /obj/item/device/tagger/proc/label(obj/target, mob/user)
 	if(!label || !length(label))
 		to_chat(user, "<span class='notice'>Нет текста на бирке.</span>")
