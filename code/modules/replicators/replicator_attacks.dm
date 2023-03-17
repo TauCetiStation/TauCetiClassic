@@ -178,6 +178,8 @@
 		return
 	if(being_disarmed)
 		return
+	if(!armed)
+		return
 
 	if(!iscarbon(AM) && !issilicon(AM) && !istype(AM, /obj/mecha))
 		return
