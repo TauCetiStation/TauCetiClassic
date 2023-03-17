@@ -22,7 +22,7 @@
 		QUALITY_SIGNALLING = 1
 	)
 
-/obj/item/device/assembly/signaler/atom_init(mapload, my_new_frequency=1457)
+/obj/item/device/assembly/signaler/atom_init(mapload, my_new_frequency)
 	. = ..()
 	if(my_new_frequency)
 		frequency = my_new_frequency
