@@ -79,6 +79,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 	S.volume = vol
 	S.environment = SOUND_AREA_DEFAULT // this is the default environment and should not ever be ignored or overwrited (this exact line).
 	S.frequency = 1
+
 	if(frequency)
 		S.frequency = frequency
 	if(playsound_frequency_admin)
