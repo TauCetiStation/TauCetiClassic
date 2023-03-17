@@ -389,6 +389,9 @@
 
 	to_chat(user, "<span class='notice'>Осталось отправить этот предмет по пневмопочте(смыть в мусорку) или выставить на прилавок - и денюжки будут у тебя в кармане!</span>")
 
+	if(user.client && LAZYACCESS(user.client.browsers, "destTagScreen"))
+		openwindow(user)
+
 /obj/item/device/tagger/proc/label(obj/target, mob/user)
 	if(!label || !length(label))
 		to_chat(user, "<span class='notice'>Нет текста на бирке.</span>")
