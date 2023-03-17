@@ -102,6 +102,12 @@
 
 /mob/living/simple_animal/hostile/replicator/proc/_repeat_leader_attack(datum/source, atom/target, params)
 	SIGNAL_HANDLER
+
+	var/atom/A = source
+	if(loc != A.loc)
+		forget_leader()
+		return
+
 	if(!isturf(target) && !isturf(target.loc))
 		return
 
