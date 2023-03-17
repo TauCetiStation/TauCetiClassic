@@ -94,20 +94,12 @@
 		else if(isobserver(M))
 			listening |= M
 
-	var/all_open_tags = "<font size='[font_size]'>"
-	var/all_close_tags = "</font>"
-
 	for(var/m in listening)
 		var/mob/M = m
-		var/open_tags = all_open_tags
-		var/close_tags = all_close_tags
 
-		var/message_open_tags = "<span class='message'><span class='replicator'>"
-		var/message_close_tags = "</span></span>"
-
+		var/message_span_class = "message replicator"
 		if(announcer && get_dist(announcer, M) < 7)
-			message_open_tags += "<b>"
-			message_close_tags = "</b>[message_close_tags]"
+			message_span_class += " bold"
 
 		var/channel = "<span class='replicator'>\[???\]</span>"
 		var/speaker_name = "<b>[presence_name]</b>"
@@ -121,7 +113,7 @@
 
 		send_to_chat(
 			M,
-			"[open_tags][speaker_name] [channel] announces, [message_open_tags]\"[message]\"[message_close_tags][close_tags][jump_button]",
+			"<font size='[font_size]'>[speaker_name] [channel] announces, <span class='[message_span_class]'>\"[message]\"</span>[jump_button]</font>",
 			message,
 			speaker=announcer,
 		)
