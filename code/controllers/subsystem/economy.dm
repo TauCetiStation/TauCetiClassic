@@ -59,6 +59,8 @@ SUBSYSTEM_DEF(economy)
 			if(total_dividend_payout > 0.0)
 				charge_to_account(D.account_number, D.account_number, "Dividend payout", "StockBond", total_dividend_payout)
 
+		monitor_cargo_shop()
+
 	payment_counter += 1
 
 /datum/controller/subsystem/economy/proc/set_endtime()
