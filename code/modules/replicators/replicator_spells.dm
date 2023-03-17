@@ -66,9 +66,18 @@
 	material_cost = REPLICATOR_COST_REPLICATE
 	// objection_delay = 3 SECONDS
 
-/obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/replicator_checks(mob/user, try_start)
+/obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/cast_check(skipcharge = FALSE, mob/user = usr, try_start = TRUE) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 	if(length(global.alive_replicators) + FR.bandwidth_borrowed >= FR.bandwidth)
+		if(try_start)
+			to_chat(user, "<span class='warning'>Not enough bandwidth for replication.</span>")
+		return FALSE
+
+	return ..()
+
+/obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/replicator_checks(mob/user, try_start)
+	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
+	if(length(global.alive_replicators) + FR.bandwidth_borrowed > FR.bandwidth)
 		if(try_start)
 			to_chat(user, "<span class='warning'>Not enough bandwidth for replication.</span>")
 		return FALSE
