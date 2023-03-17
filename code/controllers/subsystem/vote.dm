@@ -97,12 +97,12 @@ SUBSYSTEM_DEF(vote)
 				active_poll.vote(choice, usr.client)
 
 		if("callVote")
-			var/datum/poll/poll = locate(params["pollRef"]) in possible_polls
+			var/datum/poll/poll = locate(params["pollRef"])
 			if(istype(poll) && (check_rights(R_ADMIN) || (!poll.only_admin && poll.can_start())))
 				start_vote(poll.type)
 
 		if("toggleAdminOnly")
-			var/datum/poll/poll = locate(params["pollRef"]) in possible_polls
+			var/datum/poll/poll = locate(params["pollRef"])
 			if(istype(poll) && check_rights(R_ADMIN))
 				poll.only_admin = !poll.only_admin
 
