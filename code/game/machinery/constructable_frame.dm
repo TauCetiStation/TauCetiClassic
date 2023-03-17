@@ -92,7 +92,7 @@
 						state = 2
 						icon_state = "box_1"
 
-			else if(isscrewdriver(P) && !anchored)
+			else if(isscrewing(P) && !anchored)
 				if(user.is_busy(src))
 					return
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
@@ -102,7 +102,7 @@
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
 						deconstruct(TRUE)
 
-			else if(iswrench(P))
+			else if(iswrenching(P))
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
@@ -111,7 +111,7 @@
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 						anchored = !anchored
 		if(2)
-			if(iswrench(P))
+			if(iswrenching(P))
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
@@ -138,7 +138,7 @@
 					update_req_desc()
 				else
 					to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
-			if(iswirecutter(P))
+			if(iscutter(P))
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
@@ -146,7 +146,7 @@
 				new /obj/item/stack/cable_coil/red(loc, 5)
 
 		if(3)
-			if(iscrowbar(P))
+			if(isprying(P))
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				state = 2
 				circuit.loc = src.loc
@@ -163,7 +163,7 @@
 				components = null
 				icon_state = "box_1"
 
-			if(isscrewdriver(P))
+			if(isscrewing(P))
 				var/component_check = 1
 				for(var/R in req_components)
 					if(req_components[R] > 0)
@@ -253,41 +253,36 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/vending_refill/boozeomat = 3)
 
 /obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
-		var/list/names = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
-							/obj/machinery/vending/snack = "Getmore Chocolate Corp (Red)",
-							/obj/machinery/vending/snack/blue = "Getmore Chocolate Corp (Blue)",
-							/obj/machinery/vending/snack/orange = "Getmore Chocolate Corp (Orange)",
-							/obj/machinery/vending/snack/green = "Getmore Chocolate Corp (Green)",
-							/obj/machinery/vending/snack/teal = "Getmore Chocolate Corp (Teal)",
-							/obj/machinery/vending/coffee = "Hot Drinks",
-							/obj/machinery/vending/cola = "Robust Softdrinks (Blue)",
-							/obj/machinery/vending/cola/black = "Robust Softdrinks (Black)",
-							/obj/machinery/vending/cola/red = "Robust Softdrinks (Red)",
-							/obj/machinery/vending/cola/spaceup = "Robust Softdrinks (Space-Up!)",
-							/obj/machinery/vending/cola/starkist = "Robust Softdrinks (Starkist)",
-							/obj/machinery/vending/cola/soda = "Robust Softdrinks (Soda)",
-							/obj/machinery/vending/cola/gib = "Robust Softdrinks (Dr. Gibb)",
-							/obj/machinery/vending/cigarette = "Cigarette",
-							/obj/machinery/vending/barbervend = "Fab-O-Vend",
-							/obj/machinery/vending/chinese = "Mr. Chang",
-							/obj/machinery/vending/medical = "NanoMed Plus",
-							/obj/machinery/vending/hydronutrients = "NutriMax",
-							/obj/machinery/vending/hydroseeds = "MegaSeed Servitor",
-							/obj/machinery/vending/dinnerware = "Dinnerware",
-							/obj/machinery/vending/tool = "YouTool",
-							/obj/machinery/vending/engivend = "Engi-Vend",
-							/obj/machinery/vending/clothing = "ClothesMate",
-							/obj/machinery/vending/blood = "Blood'O'Matic",
-							/obj/machinery/vending/junkfood = "McNuffin's Fast Food",
-							/obj/machinery/vending/donut = "Monkin' Donuts",
-			)
-//							/obj/machinery/vending/autodrobe = "AutoDrobe")
+	if(isscrewing(I))
+		var/static/list/names_of_vendings = list()
+		var/static/list/radial_icons = list()
 
-		build_path = pick(names)
-		name = "circuit board ([names[build_path]] Vendor)"
-		to_chat(user, "<span class='notice'>You set the board to [names[build_path]].</span>")
-		req_components = list(text2path("/obj/item/weapon/vending_refill/[copytext("[build_path]", 24)]") = 3)       //Never before has i used a method as horrible as this one, im so sorry
+		if(names_of_vendings.len == 0)
+			for(var/obj/machinery/vending/type as anything in typesof(/obj/machinery/vending))
+				if(!initial(type.refill_canister))
+					continue
+				var/full_name
+				if(initial(type.subname))
+					full_name = "[initial(type.name)] ([initial(type.subname)])"
+				else
+					full_name = initial(type.name)
+
+				ASSERT(!names_of_vendings[full_name])
+
+				names_of_vendings[full_name] = type
+				radial_icons[full_name] = icon(initial(type.icon), initial(type.icon_state))
+
+		var/vending_name = show_radial_menu(user, src, radial_icons, require_near = TRUE, tooltips = TRUE)
+		if(isnull(vending_name))
+			return
+		
+		var/obj/machinery/vending/vending_type = names_of_vendings[vending_name]
+
+		to_chat(user, "<span class='notice'>You set the board to [vending_name].</span>")
+
+		name = "circuit board ([vending_name] Vendor)"
+		build_path = vending_type
+		req_components = list(initial(vending_type.refill_canister) = 3)
 		return
 	return ..()
 
@@ -890,6 +885,6 @@ to destroy them and players will be able to make replacements.
 	board_type = "machine"
 	origin_tech = "engineering=3"
 	req_components = list(
-							/obj/item/weapon/stock_parts/scanning_module/triphasic = 2,
-							/obj/item/weapon/stock_parts/capacitor/quadratic = 1,
+							/obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic = 2,
+							/obj/item/weapon/stock_parts/capacitor/adv/super/quadratic = 1,
 							/obj/item/stack/cable_coil = 2)

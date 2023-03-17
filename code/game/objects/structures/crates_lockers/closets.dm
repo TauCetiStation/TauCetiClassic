@@ -170,14 +170,15 @@
 
 	else if(istype(W, /obj/item/weapon/packageWrap))
 		return
-	else if(istype(W, /obj/item/device/tagger))
+
+	else if(istagger(W))
 		return
 
 	else
 		attack_hand(user)
 
 /obj/structure/closet/proc/tools_interact(obj/item/weapon/W, mob/user)
-	if(iswelder(W))
+	if(iswelding(W))
 		var/obj/item/weapon/weldingtool/WT = W
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!WT.isOn())

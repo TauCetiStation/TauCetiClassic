@@ -35,7 +35,7 @@
 	var/custommessage 	= "This is a test, please ignore."
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/weapon/O, mob/living/user)
-	if(isscrewdriver(O) && emag)
+	if(isscrewing(O) && emag)
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		to_chat(user, "<span class='warning'>It is too hot to mess with!</span>")
 		return

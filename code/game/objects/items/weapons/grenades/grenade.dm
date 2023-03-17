@@ -16,7 +16,7 @@
 	action_button_name = "Activate Grenade"
 
 /obj/item/weapon/grenade/proc/clown_check(mob/living/user)
-	if((CLUMSY in user.mutations) && prob(50))
+	if(user.ClumsyProbabilityCheck(50))
 		to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
 		activate(user)
 		add_fingerprint(user)
@@ -63,7 +63,7 @@
 		T.hotspot_expose(700,125)
 
 /obj/item/weapon/grenade/attackby(obj/item/I, mob/user, params)
-	if(isscrewdriver(I))
+	if(isscrewing(I))
 		switch(det_time)
 			if(1)
 				det_time = 3 SECONDS

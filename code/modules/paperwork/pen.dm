@@ -213,7 +213,7 @@
 
 /obj/item/weapon/pen/edagger/attackby(obj/item/I, mob/user, params)
 	. = ..()
-	if(ismultitool(I))
+	if(ispulsing(I))
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")

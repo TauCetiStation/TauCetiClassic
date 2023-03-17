@@ -163,7 +163,6 @@
 			200; /obj/item/weapon/hatchet, \
 			/obj/item/weapon/gun/projectile/automatic/pistol, \
 			/obj/item/weapon/gun/projectile/automatic/deagle, \
-			/obj/item/weapon/gun/projectile/revolver/russian, \
 			)
 			new new_type(C)
 		if("spacesuit")

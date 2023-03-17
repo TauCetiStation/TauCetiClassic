@@ -140,7 +140,7 @@
 /datum/religion_rites/standing/consent/clownconversion
 	name = "Клоунконверсия"
 	desc = "Превращает маленького человека в Клоуна." // this is ref to Russian writers
-	ritual_length = (1.9 MINUTES)
+	ritual_length = (40 SECONDS)
 	ritual_invocations = list("From our mother to our soil we got the gift of bananas...",
 						"...From our mother to our ears we got the gift of horns...",
 						"...From our mother to our feet we walk on we got the shoes of length...")
@@ -198,7 +198,7 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), SLOT_IN_BACKPACK)
 
 	religion.add_member(H, HOLY_ROLE_PRIEST)
-	H.mutations.Add(CLUMSY)
+	ADD_TRAIT(H, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 	H.mind.assigned_role = "Clown"
 	return TRUE
 

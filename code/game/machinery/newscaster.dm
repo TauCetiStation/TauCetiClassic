@@ -843,7 +843,7 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 	updateUsrDialog()
 
 /obj/machinery/newscaster/attackby(obj/item/I, mob/user)
-	if(iswrench(I))
+	if(iswrenching(I))
 		if(user.is_busy())
 			return
 		to_chat(user, "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>")

@@ -174,6 +174,9 @@
 	min_duration = 90
 	max_duration = 110
 
+/datum/surgery_step/ipc/eye/screw_open/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	return ..() && target.op_stage.eyes == 0
+
 /datum/surgery_step/ipc/eye/screw_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to unscrew [target]'s camera panels with \the [tool].",
 	"You unscrew [target]'s camera panels with \the [tool].")
@@ -228,7 +231,7 @@
 	if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
 		BP.take_damage(0, 6, used_weapon = tool)
 
-	else if(iswrench(tool))
+	else if(iswrenching(tool))
 		BP.take_damage(12, 0, used_weapon = tool)
 		BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
 	IO.take_damage(dam_amt,0)

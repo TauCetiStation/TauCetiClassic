@@ -1,7 +1,9 @@
 /datum/objective/cult
+	var/weight = 1.0
 
 /datum/objective/cult/recruit
 	var/acolytes_needed
+	weight = 1.5
 
 /datum/objective/cult/recruit/New()
 	acolytes_needed = round(player_list.len * 0.08)
@@ -16,6 +18,7 @@
 
 /datum/objective/cult/convert
 	var/acolytes_needed
+	weight = 0.5
 
 /datum/objective/cult/convert/New()
 	acolytes_needed = max(5, round(player_list.len * 0.3))
@@ -30,6 +33,7 @@
 
 /datum/objective/cult/survive
 	var/acolytes_needed
+	weight = 1.0
 
 /datum/objective/cult/survive/New()
 	acolytes_needed = max(5, round(player_list.len * 0.15))
@@ -49,6 +53,7 @@
 
 /datum/objective/cult/summon_narsie
 	explanation_text = "Призовите Нар-Си с помощью ритуала с пьедесталами на станции."
+	weight = 2.0
 
 /datum/objective/cult/summon_narsie/check_completion()
 	if(SSticker.nar_sie_has_risen)
@@ -58,6 +63,7 @@
 /datum/objective/cult/capture_areas
 	var/need_capture = 4 // areas
 	explanation_text = "Захватите не менее 4 отсеков станции с помощью руны захвата зон."
+	weight = 1.0
 
 /datum/objective/cult/capture_areas/New()
 	need_capture = max(4, round(player_list.len * 0.1) + 1)
@@ -73,6 +79,7 @@
 /datum/objective/cult/job_convert
 	var/convertees_needed
 	var/datum/job/job
+	weight = 1.0
 
 /datum/objective/cult/job_convert/New()
 	var/list/all_jobs = list() + engineering_positions + medical_positions + science_positions + civilian_positions - command_positions
@@ -81,17 +88,24 @@
 		var/datum/job/J = SSjob.GetJob(I)
 		if(J.current_positions > 1)
 			possible_jobs += I
+	if(!possible_jobs.len)
+		explanation_text = "Свободная задача"
+		convertees_needed = 0
+		return
 	job = SSjob.GetJob(pick(possible_jobs))
 	convertees_needed = rand(1, CEIL(job.current_positions / 2))
 	explanation_text = "Культ нуждается в [convertees_needed] [pluralize_russian(convertees_needed, "последователе, являющемся", "последователях, являющихся", "последователях, являющихся")] [job.title]."
 	..()
 
 /datum/objective/cult/job_convert/check_completion()
+	if(!convertees_needed)
+		return OBJECTIVE_WIN
+
 	var/datum/faction/cult/C = faction
 	if(istype(C))
 		var/convertees = 0
 		for(var/datum/role/R in C.members)
-			if(R.antag.current?.mind.assigned_job == job)
+			if(R.antag.assigned_job == job)
 				convertees++
 		if(convertees >= convertees_needed)
 			return OBJECTIVE_WIN

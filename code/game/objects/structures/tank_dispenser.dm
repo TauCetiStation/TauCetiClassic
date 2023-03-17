@@ -66,7 +66,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/dispenser, tank_dispenser_list)
 			to_chat(user, "<span class='notice'>[src] is full.</span>")
 		updateUsrDialog()
 		return
-	if(iswrench(I))
+	if(iswrenching(I))
 		if(anchored)
 			to_chat(user, "<span class='notice'>You lean down and unwrench [src].</span>")
 			anchored = FALSE

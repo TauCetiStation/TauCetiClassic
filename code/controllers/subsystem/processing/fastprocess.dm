@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(fastprocess)
 	name = "Fast Process"
 	priority = SS_PRIORITY_FASTPROCESS
-	flags = SS_BACKGROUND | SS_POST_FIRE_TIMING | SS_NO_INIT
+	flags = SS_BACKGROUND | SS_POST_FIRE_TIMING | SS_NO_INIT | SS_SHOW_IN_MC_TAB
 	wait = SS_WAIT_FASTPROCESS
 
 	var/list/processing = list()

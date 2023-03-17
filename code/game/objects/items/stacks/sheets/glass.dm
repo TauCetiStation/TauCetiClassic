@@ -340,7 +340,7 @@
 			pixel_y = rand(-5, 5)
 
 /obj/item/weapon/shard/attackby(obj/item/I, mob/user, params)
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			var/obj/item/stack/sheet/glass/NG = new (user.loc)

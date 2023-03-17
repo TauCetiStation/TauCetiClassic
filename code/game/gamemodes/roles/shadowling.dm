@@ -3,7 +3,7 @@
 	id = SHADOW
 
 	required_pref = ROLE_SHADOWLING
-	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	restricted_jobs = list("AI", "Cyborg", "Security Cadet", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Blueshield Officer")
 	restricted_species_flags = list(IS_SYNTHETIC)
 
 	antag_hud_type = ANTAG_HUD_SHADOW
@@ -27,7 +27,7 @@
 
 	if(antag.assigned_role == "Clown")
 		to_chat(S, "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>")
-		S.mutations.Remove(CLUMSY)
+		REMOVE_TRAIT(S, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 
 	S.verbs += /mob/living/carbon/human/proc/shadowling_hatch
 	S.AddSpell(new /obj/effect/proc_holder/spell/targeted/enthrall)

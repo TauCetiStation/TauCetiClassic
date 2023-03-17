@@ -4,7 +4,7 @@
 	id = UNDERCOVER_COP
 
 	required_pref = ROLE_FAMILIES
-	restricted_jobs = list("Security Cadet", "AI", "Cyborg", "Security Officer", "Head of Security", "Captain", "Internal Affairs Agent")
+	restricted_jobs = list("Security Cadet", "AI", "Cyborg", "Security Officer", "Head of Security", "Captain", "Internal Affairs Agent", "Blueshield Officer")
 
 	logo_state = "undercover_cop"
 
@@ -14,6 +14,7 @@
 					/obj/item/clothing/head/spacepolice,
 					)
 	skillset_type = /datum/skillset/undercover
+	moveset_type = /datum/combat_moveset/cqc
 
 /datum/role/cop/undercover/OnPostSetup(laterole)
 	. = ..()

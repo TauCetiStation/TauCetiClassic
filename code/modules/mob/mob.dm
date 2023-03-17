@@ -28,6 +28,13 @@
 			mind.set_current(null)
 		if(mind.original == src)
 			mind.original = null
+
+	if(buckled) // simpler version of /unbuckle_mob
+		buckled.buckled_mob = null
+		SEND_SIGNAL(buckled, COMSIG_MOVABLE_UNBUCKLE, src)
+		buckled.post_buckle_mob(src)
+		buckled = null
+
 	return ..()
 
 
@@ -326,6 +333,8 @@
 			return
 	if(!A.z) //no message if we examine something in a backpack
 		return
+	if(stat == CONSCIOUS)
+		last_examined = A.name
 	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
@@ -699,7 +708,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 					if(Master)
 						stat(null)
 						for(var/datum/controller/subsystem/SS in Master.subsystems)
-							SS.stat_entry()
+							if(SS.flags & SS_SHOW_IN_MC_TAB)
+								SS.stat_entry()
 					cameranet.stat_entry()
 
 	if(listed_turf && client)
