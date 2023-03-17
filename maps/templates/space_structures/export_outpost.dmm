@@ -10,8 +10,9 @@
 /turf/environment/space,
 /area/space)
 "ad" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
 /obj/machinery/door/poddoor/shutters{
 	id = "export"
@@ -92,21 +93,37 @@
 	dir = 5;
 	icon_state = "bar"
 	},
-/area/space_structures/export_outpost{
+/area/space_structures/export_outpost)
+"ao" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = -7
-	})
-"ao" = (
-/obj/structure/window/fulltile/reinforced{
+	},
+/turf/simulated/floor/plating,
+/area/space_structures/export_outpost)
+"ap" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
 	dir = 1;
-	grilled = 1;
 	pixel_y = -7
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/export_outpost)
 "aq" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = -7
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/export_outpost)
@@ -1083,7 +1100,7 @@ ab
 ag
 aK
 aK
-ao
+ap
 bl
 bp
 au
