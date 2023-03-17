@@ -1852,8 +1852,7 @@
 		if(global.online_shop_lots_latest[i] == Lot)
 			global.online_shop_lots_latest[i] = null
 			break
-	var/datum/money_account/Acc = get_account(Lot.account)
-	shopping_cart[Lot.number] = Lot.to_list(Acc ? Acc.owner_name : "Unknown", discount_price)
+	shopping_cart[Lot.number] = Lot.to_list()
 
 	global.shop_categories[Lot.category]--
 
