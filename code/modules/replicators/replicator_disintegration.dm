@@ -94,9 +94,13 @@
 
 	var/start_loc = loc
 
-	while(!is_busy() && do_after(src, 1, target=src, progress=FALSE))
+	var/disintegration_attempts = 100
+
+	while(disintegration_attempts > 0 && !is_busy() && do_after(src, 1, target=src, progress=FALSE))
 		if(start_loc != loc)
 			return
+
+		disintegration_attempts -= 1
 
 		var/atom/disintegratable = get_disintegratable_from(locate(target_x, target_y, target_z))
 		if(!disintegratable)
