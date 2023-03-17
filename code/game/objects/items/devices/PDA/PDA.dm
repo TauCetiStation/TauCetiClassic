@@ -692,9 +692,8 @@
 				var/list/Lots = global.online_shop_lots_hashed[index]
 				for(var/datum/shop_lot/Lot in Lots)
 					if(Lot && Lot.category == category && !Lot.sold)
-						var/datum/money_account/Acc = get_account(Lot.account)
 						shop_lots.len++
-						shop_lots[shop_lots.len] = Lot.to_list(Acc ? Acc.owner_name : "Unknown")
+						shop_lots[shop_lots.len] = Lot.to_list()
 						break
 
 		shop_lots_frontend = list()
@@ -1136,13 +1135,15 @@
 						if(online_shop_lots_hashed.Find(Lot.hash))
 							for(var/datum/shop_lot/NewLot in online_shop_lots_hashed[Lot.hash])
 								if(NewLot && !NewLot.sold && (Lot.get_discounted_price() <= NewLot.get_discounted_price()))
-									if(!order_item(NewLot, T))
+									if(!order_onlineshop_item(owner, owner_account, NewLot, T))
+										shopping_cart[NewLot.number] = Lot.to_list()
 										to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 									return
 						to_chat(U, "<span class='notice'>ОШИБКА: Этот предмет уже куплен.</span>")
 						return
 					else
-						if(!order_item(Lot, T))
+						if(!order_onlineshop_item(owner, owner_account, Lot, T))
+							shopping_cart[Lot.number] = Lot.to_list()
 							to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 				else
 					to_chat(U, "<span class='notice'>ОШИБКА: Не введён адрес доставки.</span>")
