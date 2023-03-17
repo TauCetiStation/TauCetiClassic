@@ -108,6 +108,8 @@
 	else if(indicator == 2)
 		ending = "!"
 
+	log_say("[key_name(src)] : [message]")
+
 	emote("beep[ending]")
 
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
