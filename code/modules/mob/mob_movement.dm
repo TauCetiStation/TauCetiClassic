@@ -28,7 +28,7 @@
 
 // Whether this mob can choose to move to NewLoc. Return FALSE if not.
 /mob/proc/can_intentionally_move(atom/NewLoc, movedir)
-	return TRUE
+	return !(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
 
 /client/North()
 	..()
@@ -153,9 +153,7 @@
 		moving = TRUE
 
 		if(!mob.can_intentionally_move(n, direct))
-			moving = FALSE
-			return
-		if(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
+			// Someone please investigate why we can't do moving = TRUE *after* this check. ~Luduk
 			moving = FALSE
 			return
 
