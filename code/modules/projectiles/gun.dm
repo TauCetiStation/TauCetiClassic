@@ -1,5 +1,8 @@
 #define DESIRABLE_TWOHAND "For comfortable shooting, it is necessary that the inactive hand is free"
 #define ONLY_TWOHAND "To fire this weapon, the inactive hand MUST be free"
+//Please do not increase power in shake_camera(). It is really not needed for players.
+#define OPTIMAL_POWER_RECOIL 1
+#define DEFAULT_DURATION_RECOIL 1
 
 /obj/item/weapon/gun
 	name = "gun"
@@ -71,15 +74,17 @@
 	return
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
+	if(recoil > 0)
+		var/skill_recoil_duration = max(DEFAULT_DURATION_RECOIL, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
+		if(two_hand_weapon != DESIRABLE_TWOHAND)
+			shake_camera(user, skill_recoil_duration, OPTIMAL_POWER_RECOIL)
+		if(two_hand_weapon == DESIRABLE_TWOHAND)
+			//No OPTIMAL_POWER_RECOIL only for increasing user's motivation to drop other hand
+			if(user.get_inactive_hand())
+				shake_camera(user, recoil + 2, recoil + 1)
+			else
+				shake_camera(user, skill_recoil_duration, OPTIMAL_POWER_RECOIL)
 
-	var/skill_recoil = max(0, apply_skill_bonus(user, recoil, list(/datum/skill/firearms = SKILL_LEVEL_TRAINED), multiplier = -0.5))
-	if((skill_recoil) && (two_hand_weapon != DESIRABLE_TWOHAND))
-		shake_camera(user, skill_recoil + 1, skill_recoil)
-	if(two_hand_weapon == DESIRABLE_TWOHAND)
-		if(user.get_inactive_hand())
-			shake_camera(user, recoil + 2, recoil + 1)
-		else
-			shake_camera(user, skill_recoil + 1, skill_recoil)
 	if(silenced)
 		playsound(user, fire_sound, VOL_EFFECTS_MASTER, 30, FALSE, null, -4)
 	else
@@ -259,3 +264,6 @@
 			return
 	else
 		return ..()
+
+#undef OPTIMAL_POWER_RECOIL
+#undef DEFAULT_DURATION_RECOIL
