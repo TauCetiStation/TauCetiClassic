@@ -41,7 +41,7 @@
 	if(ismob(AM))
 		var/mob/M = AM
 		M.see_invisible = prev_see_invisible
-		UnregisterSignal(entry, list(COMSIG_MOB_CLICK))
+		UnregisterSignal(M, list(COMSIG_MOB_CLICK))
 
 	AM.alpha = prev_alpha
 
