@@ -24,18 +24,22 @@
 /mob/living/proc/getarmor(def_zone, type)
 	return 0
 
-/mob/living/proc/is_impact_force_affected(impact_force)
+/mob/living/proc/is_impact_force_affected(impact_force, impact_dir)
 	if(status_flags & GODMODE)
 		return FALSE
 	if(buckled || anchored)
 		return FALSE
 	return impact_force > 0
 
-/mob/living/carbon/human/is_impact_force_affected(impact_force)
+/mob/living/carbon/human/is_impact_force_affected(impact_force, impact_dir)
 	if(shoes && (shoes.flags & AIR_FLOW_PROTECT))
 		return lying || crawling
 	if(wear_suit && (wear_suit.flags & AIR_FLOW_PROTECT))
 		return lying || crawling
+
+	if(check_shield_dir(src, impact_dir))
+		return FALSE
+
 	return ..()
 
 /mob/living/proc/get_projectile_impact_force(obj/item/projectile/P, def_zone)
@@ -43,7 +47,7 @@
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	var/impact_force = get_projectile_impact_force(P, def_zone)
-	if(impact_force && is_impact_force_affected(P.impact_force))
+	if(impact_force && is_impact_force_affected(P.impact_force, get_dir(P, src)))
 		if(isturf(loc))
 			loc.add_blood(src)
 		throw_at(get_edge_target_turf(src, P.dir), impact_force, 1, P.firer, spin = TRUE)
