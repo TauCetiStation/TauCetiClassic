@@ -387,6 +387,8 @@
 
 	target.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
 
+	to_chat(user, "<span class='notice'>Осталось отправить этот предмет по пневмопочте(смыть в мусорку) или выставить на прилавок - и денюжки будут у тебя в кармане!</span>")
+
 	if(user.client && LAZYACCESS(user.client.browsers, "destTagScreen"))
 		openwindow(user)
 
