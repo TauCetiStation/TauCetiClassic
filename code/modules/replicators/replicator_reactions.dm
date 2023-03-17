@@ -319,21 +319,13 @@
 
 
 // Vents and pipes are used to transport through the station.
-/obj/machinery/atmospherics/can_be_auto_disintegrated()
-	return FALSE
-
-/obj/machinery/atmospherics/get_unit_disintegration_time()
-	return ..() * REPLICATOR_PUNISH_GRIEFING_TICK_MODIFIER
-
-
 /obj/machinery/atmospherics/components/can_be_auto_disintegrated()
 	return welded
 
 /obj/machinery/atmospherics/components/get_unit_disintegration_time()
+	. = ..()
 	if(welded)
-		return ..() * 0.5
-
-	return ..() * REPLICATOR_PUNISH_GRIEFING_TICK_MODIFIER
+		return . * 0.5
 
 /obj/machinery/atmospherics/components/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	if(welded)
@@ -347,8 +339,23 @@
 	return TRUE
 
 
-/obj/machinery/portable_atmospherics/can_be_auto_disintegrated()
+// Vents and pipes are used to transport through the station.
+/obj/machinery/atmospherics/pipe/can_be_auto_disintegrated()
 	return FALSE
+
+
+/obj/machinery/portable_atmospherics/canister/can_be_auto_disintegrated()
+	return FALSE
+
+/obj/machinery/portable_atmospherics/canister/get_unit_disintegration_time()
+	return ..() * REPLICATOR_PUNISH_GRIEFING_TICK_MODIFIER
+
+
+/obj/machinery/atmospherics/components/unary/tank/can_be_auto_disintegrated()
+	return FALSE
+
+/obj/machinery/atmospherics/components/unary/tank/can_be_auto_disintegrated()
+	return ..() * REPLICATOR_PUNISH_GRIEFING_TICK_MODIFIER
 
 
 /obj/machinery/telescience_jammer/get_unit_disintegration_time()
