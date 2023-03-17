@@ -358,6 +358,16 @@
 		to_chat(user, "<span class='notice'>Нельзя повесить ценник на [target].</span>")
 		return
 
+	if(user.get_inactive_hand() == target)
+		var/new_price = input("Введите цену:", "Маркировщик", input_default(lot_price), null)  as num
+		if(user.get_active_hand() != src || user.get_inactive_hand() != target)
+			return
+		if(user.incapacitated())
+			return
+
+		if(new_price && isnum(new_price) && new_price >= 0)
+			lot_price = min(new_price, 5000)
+
 	user.visible_message("<span class='notice'>[user] adds a price tag to [target].</span>", \
 						 "<span class='notice'>You added a price tag to [target].</span>")
 
@@ -378,6 +388,11 @@
 	target.verbs += /obj/proc/remove_price_tag
 
 	target.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
+
+	to_chat(user, "<span class='notice'>Осталось отправить этот предмет по пневмопочте(смыть в мусорку) или выставить на прилавок - и денюжки будут у тебя в кармане!</span>")
+
+	if(user.client && LAZYACCESS(user.client.browsers, "destTagScreen"))
+		openwindow(user)
 
 /obj/item/device/tagger/proc/label(obj/target, mob/user)
 	if(!label || !length(label))
