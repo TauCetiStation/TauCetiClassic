@@ -253,6 +253,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 		if(FR.dissipate_fractol(src, FR.gas))
 			FR.adjust_fractol(-FR.gas)
 
+	if(length(global.alive_replicators) < FR.bandwidth * 0.5)
+		return
+
 	if(FR.collect_taxes(REPLICATOR_TRANSPONDER_CONSUMPTION_RATE))
 		FR.materials_consumed += REPLICATOR_TRANSPONDER_CONSUMPTION_RATE
 
