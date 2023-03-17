@@ -1887,7 +1887,7 @@
 	id = "[id]"
 
 	if(!shopping_cart[id])
-		to_chat(user, "<span class='notice'>Это не один из твоих закаов. Это заказ номер №[id].</span>")
+		to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[id].</span>")
 		return
 	var/datum/shop_lot/Lot = global.online_shop_lots[id]
 	if(!Lot)
