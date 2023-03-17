@@ -136,7 +136,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 
 	var/obj/item/device/assembly/signaler/anomaly/deactivation_signal = null
 
-/obj/machinery/swarm_powered/bluespace_transponder/atom_init(mapload, atom/constructor)
+/obj/machinery/swarm_powered/bluespace_transponder/atom_init(mapload)
 	. = ..()
 
 	var/freq = rand(1200, 1599)
@@ -150,8 +150,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/swarm_powered/bluespace_transponder, transpond
 
 	AddComponent(/datum/component/replicator_regeneration)
 
-	if(constructor)
-		try_enter_corridor(constructor)
+	for(var/mob/living/simple_animal/hostile/replicator/R in get_turf(src))
+		try_enter_corridor(R)
 
 /obj/machinery/swarm_powered/bluespace_transponder/Destroy()
 	QDEL_NULL(deactivation_signal)

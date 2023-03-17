@@ -287,7 +287,7 @@
 	if(RAI)
 		RAI.transponders_built += 1
 
-	var/obj/machinery/swarm_powered/bluespace_transponder/BT = new(user_replicator.loc, user_replicator)
+	var/obj/machinery/swarm_powered/bluespace_transponder/BT = new(user_replicator.loc)
 	BT.name = "[BT.name] ([user_replicator.generation][rand(0, 9)])"
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 
