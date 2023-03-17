@@ -771,7 +771,6 @@
 		M.emote(pick("twitch","drool","moan","giggle"))
 
 /datum/reagent/space_drugs/on_skrell_digest(mob/living/M)
-	..()
 
 	M.nutrition += 4 * REM
 	M.adjustDrugginess(2)
