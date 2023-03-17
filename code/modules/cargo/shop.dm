@@ -77,7 +77,7 @@ var/global/online_shop_profits = 0
 		"delivered" = delivered,
 		"postpayment" = get_discounted_price(),
 		"icon" = item_icon,
-    "area" = A_area.name,
+		"area" = A_area.name,
 	)
 
 /datum/shop_lot/proc/get_delivery_cost()
