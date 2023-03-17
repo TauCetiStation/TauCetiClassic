@@ -71,9 +71,6 @@
 		return TRUE
 	return !density
 
-/obj/structure/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
-	return !density
-
 /obj/structure/window/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W

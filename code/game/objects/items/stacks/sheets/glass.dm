@@ -94,8 +94,8 @@
 	if(!handle_fumbling(user, user, SKILL_TASK_AVERAGE, required_skills, "<span class='notice'>You fumble around figuring out how to use glass to make window.</span>"))
 		return
 	title += " ([get_amount()] sheet\s left)"
-	switch(input(title, "What would you like to make?", "One Direction") in list("One Direction", "Full Window", "Glass Table Parts", "Cancel"))
-		if("One Direction")
+	switch(input(title, "What would you like to make?", "Thin Windows") in list("Thin Windows", "Glass Table Parts", "Cancel"))
+		if("Thin Windows")
 			if(QDELETED(src))
 				return 1
 			if(src.loc != user)
@@ -133,26 +133,7 @@
 			W.set_dir(dir_to_set)
 			W.ini_dir = W.dir
 			W.anchored = FALSE
-		if("Full Window") // todo
-			if(QDELETED(src))
-				return 1
-			if(src.loc != user)
-				return 1
-/*			var/step = get_step(user, user.dir)
-			var/turf/T = get_turf(step)
-			if(T.density || (locate(/obj/structure/window) in step))
-				to_chat(user, "<span class='warning'>There is something in the way.</span>")
-				return 1
 
-			if(!use(2))
-				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
-				return 1
-
-			var/obj/structure/window/W
-			W = new created_window(step)
-			W.set_dir(SOUTHWEST)
-			W.ini_dir = SOUTHWEST
-			W.anchored = FALSE*/
 		if("Glass Table Parts")
 			if(QDELETED(src))
 				return 1
@@ -214,8 +195,8 @@
 	title += " ([get_amount()] sheet\s left)"
 	if(!handle_fumbling(user, user, SKILL_TASK_AVERAGE, required_skills, "<span class='notice'>You fumble around figuring out how to use reinforced glass to make window.</span>"))
 		return
-	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
-		if("One Direction")
+	switch(input(title, "Would you like thin windows glass pane or a windoor?") in list("Thin Windows", "Windoor", "Cancel"))
+		if("Thin Windows")
 			if(QDELETED(src))
 				return 1
 			if(src.loc != user)
@@ -252,27 +233,6 @@
 			W.set_dir(dir_to_set)
 			W.ini_dir = W.dir
 			W.anchored = FALSE
-
-		if("Full Window") // todo
-			if(QDELETED(src))
-				return 1
-			if(src.loc != user)
-				return 1
-/*			var/step = get_step(user, user.dir)
-			var/turf/T = get_turf(step)
-			if(T.density || (locate(/obj/structure/window) in step))
-				to_chat(user, "<span class='warning'>There is something in the way.</span>")
-				return 1
-			if(!use(2))
-				to_chat(user, "<span class='warning'>You need more glass to do that.</span>")
-				return 1
-			var/obj/structure/window/W
-			W = new /obj/structure/window/reinforced(step)
-			W.state = 0
-			W.set_dir(SOUTHWEST)
-			W.ini_dir = SOUTHWEST
-			W.state = 0
-			W.anchored = FALSE*/
 
 		if("Windoor")
 			if(QDELETED(src) || src.loc != user)

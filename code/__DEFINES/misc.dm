@@ -315,6 +315,7 @@
 #define NOTIFY_ORBIT "orbit"
 
 #define CAN_SMOOTH_WITH_WALLS list( \
+		/turf/unsimulated/wall, \
 		/turf/simulated/wall, \
 		/turf/simulated/wall/r_wall, \
 		/obj/structure/falsewall, \
@@ -330,6 +331,7 @@
 		/obj/structure/window/fulltile/reinforced/polarized, \
 		/obj/structure/window/fulltile/reinforced/indestructible, \
 		/obj/machinery/door/airlock, \
+		/obj/machinery/door/airlock/centcomm, \
 		/obj/machinery/door/airlock/command, \
 		/obj/machinery/door/airlock/security, \
 		/obj/machinery/door/airlock/engineering, \
@@ -359,6 +361,7 @@
 )
 
 #define SMOOTH_ADAPTERS_WALLS list( \
+		/turf/unsimulated/wall = "wall", \
 		/turf/simulated/wall = "wall", \
 		/obj/structure/falsewall = "wall", \
 		/obj/machinery/door/airlock = "wall", \

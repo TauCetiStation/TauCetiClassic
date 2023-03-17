@@ -5,7 +5,7 @@ SUBSYSTEM_DEF(icon_smooth)
 	init_order = SS_INIT_ICON_SMOOTH
 	wait = SS_WAIT_ICON_SMOOTH
 	priority = SS_PRIOTITY_ICON_SMOOTH
-	flags = SS_TICKER
+	flags = SS_TICKER | SS_SHOW_IN_MC_TAB
 	msg_lobby = "Достраиваем станцию..."
 
 	var/list/smooth_queue = list()
@@ -43,6 +43,9 @@ SUBSYSTEM_DEF(icon_smooth)
 		CHECK_TICK
 
 	return ..()
+
+/datum/controller/subsystem/icon_smooth/stat_entry()
+	..("B:[length(global.baked_smooth_icons)]")
 
 #ifdef MANUAL_ICON_SMOOTH
 /mob/verb/ChooseDMI(dmi as file)

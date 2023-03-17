@@ -325,7 +325,6 @@
 		smooth_icon_initial = icon
 	var/cache_string = "["[type]"]"
 	if(!global.baked_smooth_icons[cache_string])
-		world.log << "Baking [cache_string]"
 		// has_false_walls is a file PATH flag, yes
 		var/icon/I = SliceNDice(icon(smooth_icon_initial), !!findtext("[smooth_icon_initial]", "has_false_walls"))
 		global.baked_smooth_icons[cache_string] = I // todo: we can filecache it
@@ -353,8 +352,6 @@
 		cache_string += "_grilled"
 
 	if(!global.baked_smooth_icons[cache_string])
-
-		world.log << "Baking [cache_string]"
 
 		var/icon/blended = new(smooth_icon_windowstill)
 

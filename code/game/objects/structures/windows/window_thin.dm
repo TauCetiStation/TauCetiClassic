@@ -41,7 +41,7 @@
 /obj/structure/window/thin/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
 	if(!density)
 		return TRUE
-	if(dir in cornerdirs || (dir == to_dir))
+	if(dir == to_dir)
 		return FALSE
 
 	return TRUE

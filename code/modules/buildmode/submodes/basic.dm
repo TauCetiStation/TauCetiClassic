@@ -48,10 +48,9 @@
 		log_admin("Build Mode: [key_name(c)] built an airlock at [AREACOORD(object)]")
 		new/obj/machinery/door/airlock(get_turf(object))
 	else if(isturf(object) && ctrl_click && left_click) // todo: buildmode fulltiles
-		var/obj/structure/window/thin/reinforced/window
-		if(ISDIAGONALDIR(BM.build_dir))
-			window = new /obj/structure/window/thin/reinforced(get_turf(object))
-			window.set_dir(NORTHWEST)
+		var/obj/structure/window/window
+		if(BM.build_dir in cornerdirs) // consistent with old behaviour
+			window = new /obj/structure/window/fulltile/reinforced(get_turf(object), grilled = TRUE)
 		else
 			window = new /obj/structure/window/thin/reinforced(get_turf(object))
 			window.set_dir(BM.build_dir)
