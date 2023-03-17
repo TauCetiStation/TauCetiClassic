@@ -79,7 +79,7 @@
 	initial_mag = /obj/item/ammo_box/magazine/saw
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
 	has_cover = TRUE
-	two_hand_weapon = TRUE
+	two_hand_weapon = ONLY_TWOHAND
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 12.5) * 25 : "-empty"]"
@@ -139,6 +139,7 @@
 	icon_state = "tommygun"
 	item_state = "tommygun"
 	w_class = SIZE_BIG
+	two_hand_weapon = DESIRABLE_TWOHAND
 	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	initial_mag = /obj/item/ammo_box/magazine/tommygun
@@ -150,6 +151,7 @@
 	icon_state = "bar"
 	item_state = "bar"
 	w_class = SIZE_BIG
+	two_hand_weapon = DESIRABLE_TWOHAND
 	origin_tech = "combat=5;materials=2"
 	initial_mag = /obj/item/ammo_box/magazine/bar
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
@@ -192,6 +194,7 @@
 	icon_state = "a28"
 	item_state = "a28"
 	w_class = SIZE_SMALL
+	two_hand_weapon = DESIRABLE_TWOHAND
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	initial_mag = /obj/item/ammo_box/magazine/a28
 	suitable_mags = list(/obj/item/ammo_box/magazine/a28, /obj/item/ammo_box/magazine/a28/nonlethal, /obj/item/ammo_box/magazine/a28/incendiary)
@@ -203,6 +206,7 @@
 	initial_mag = /obj/item/ammo_box/magazine/a74
 	suitable_mags = list(/obj/item/ammo_box/magazine/a74, /obj/item/ammo_box/magazine/a74/krinkov)
 	w_class = SIZE_SMALL
+	two_hand_weapon = DESIRABLE_TWOHAND
 	icon_state = "a74"
 	item_state = "a74"
 	origin_tech = "combat=5;materials=4;syndicate=6"
@@ -213,6 +217,7 @@
 	desc = "Small and deadly, A74U is lighter than it's older brother, but nontheless packs a serious punch."
 	initial_mag = /obj/item/ammo_box/magazine/a74/krinkov
 	recoil = 1.5
+	two_hand_weapon = FALSE
 	icon_state = "krinkov"
 	item_state = "krinkov"
 
@@ -223,6 +228,7 @@
 	item_state = "drozd"
 	initial_mag = /obj/item/ammo_box/magazine/drozd
 	w_class = SIZE_SMALL
+	two_hand_weapon = DESIRABLE_TWOHAND
 	fire_sound = 'sound/weapons/guns/gunshot_drozd.ogg'
 	action_button_name = "Toggle GL"
 	fire_delay = 7

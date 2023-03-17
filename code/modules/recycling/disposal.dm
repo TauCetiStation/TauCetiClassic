@@ -1119,7 +1119,8 @@
 	else
 		return
 
-	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon)
+	var/market_price = export_item_and_contents(Item, FALSE, FALSE, dry_run=TRUE)
+	var/datum/shop_lot/Lot = new /datum/shop_lot(lot_name, lot_desc, lot_price, lot_category, lot_account, item_icon, market_price)
 
 	global.shop_categories[lot_category]++
 
