@@ -28,7 +28,7 @@
 
 // Whether this mob can choose to move to NewLoc. Return FALSE if not.
 /mob/proc/can_intentionally_move(atom/NewLoc, movedir)
-	return !(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
+	return !(SEND_SIGNAL(src, COMSIG_CLIENTMOB_MOVE, NewLoc, movedir) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
 
 /client/North()
 	..()
