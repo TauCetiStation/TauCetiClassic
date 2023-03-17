@@ -63,7 +63,7 @@ var/global/online_shop_profits = 0
 	var/datum/money_account/MA = get_account(account)
 	var/atom/A = locate(lot_item_ref)
 	var/area/A_area = get_area(A)
- 
+
 	var/price_str = "[get_discounted_price() + get_delivery_cost()]"
 	if(global.online_shop_discount)
 		price_str = "<S>[src.price + get_delivery_cost()]</S> <B>[get_discounted_price() + get_delivery_cost()]</B>"
@@ -153,3 +153,33 @@ var/global/online_shop_profits = 0
 
 		P.update_icon()
 	return TRUE
+
+/proc/onlineshop_mark_as_delivered(mob/user, id, account_number)
+	id = "[id]"
+
+	var/datum/shop_lot/Lot = global.online_shop_lots[id]
+	if(!Lot)
+		if(user)
+			to_chat(user, "<span class='warning'>Этот лот больше не существует.</span>")
+		return
+
+	var/datum/money_account/MA = get_account(account_number)
+	if(!MA)
+		if(user)
+			to_chat(user, "<span class='notice'>ОШИБКА: Никакой счёт не подвязан к данному КПК.</span>")
+		return
+
+	var/postpayment = global.online_shop_lots[id]
+	if(postpayment > MA.money)
+		if(user)
+			to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
+		return
+
+	Lot.mark_delivered()
+
+	if(global.online_shop_discount)
+		charge_to_account(Lot.account, global.cargo_account.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.price - postpayment)
+		charge_to_account(global.cargo_account.account_number, MA.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -(Lot.price - postpayment))
+
+	charge_to_account(MA.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -postpayment)
+	charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, postpayment)
