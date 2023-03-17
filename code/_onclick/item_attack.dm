@@ -236,13 +236,11 @@
 		if(M.check_shields(src, force, "the [name]", get_dir(user, M) ))
 			return FALSE
 
-	M.attacked_by(src, user, def_zone, power)
-
+	. = M.attacked_by(src, user, def_zone, power)
 	add_fingerprint(user)
 	SSdemo.mark_dirty(src)
 	SSdemo.mark_dirty(M)
 	SSdemo.mark_dirty(user)
-	return TRUE
 
 /mob/living/attacked_by(obj/item/I, mob/living/user, def_zone, power)
 	switch(I.damtype)
@@ -259,6 +257,7 @@
 			if (!(COLD_RESISTANCE in mutations))
 				to_chat(src, "Aargh it burns!")
 				take_bodypart_damage(0, power)
+	return TRUE
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for non mob targets.
 /obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user, params)
