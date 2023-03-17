@@ -685,10 +685,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 // Whether this mob can choose to move to NewLoc. Return FALSE if not.
 /mob/living/simple_animal/hostile/replicator/proc/can_intentionally_move(atom/NewLoc, movedir)
-	. = ..()
-	if(!.)
-		return TRUE
-
 	if(!ckey)
 		return TRUE
 
