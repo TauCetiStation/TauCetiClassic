@@ -18,6 +18,9 @@ SUBSYSTEM_DEF(economy)
 		for(var/datum/money_account/D in all_money_accounts)
 			if(D.owner_salary && !D.suspended)
 				charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)
+
+		monitor_cargo_shop()
+
 	payment_counter += 1
 
 /datum/controller/subsystem/economy/proc/set_endtime()
