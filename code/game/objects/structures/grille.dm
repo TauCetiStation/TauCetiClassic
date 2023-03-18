@@ -20,7 +20,7 @@
 	var/destroyed = 0
 	var/damaged = FALSE
 
-/obj/structure/grille/atom_init(unanchored = FALSE)
+/obj/structure/grille/atom_init(mapload, unanchored = FALSE)
 	. = ..()
 	if(destroyed)
 		destroyed = FALSE // let atom_break reset destroyed
