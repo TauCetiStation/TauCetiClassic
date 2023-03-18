@@ -331,7 +331,7 @@
 		/obj/structure/window/fulltile/reinforced/polarized, \
 		/obj/structure/window/fulltile/reinforced/indestructible, \
 		/obj/machinery/door/airlock, \
-		/obj/machinery/door/airlock/centcomm, \
+		/obj/machinery/door/airlock/centcom, \
 		/obj/machinery/door/airlock/command, \
 		/obj/machinery/door/airlock/security, \
 		/obj/machinery/door/airlock/engineering, \
@@ -358,10 +358,10 @@
 		/obj/machinery/door/airlock/atmos/glass, \
 		/obj/machinery/door/airlock/science/glass, \
 		/obj/machinery/door/airlock/science/neutral, \
+		/obj/machinery/door/airlock/maintenance_hatch, \
 )
 
 #define SMOOTH_ADAPTERS_WALLS list( \
-		/turf/unsimulated/wall = "wall", \
 		/turf/simulated/wall = "wall", \
 		/obj/structure/falsewall = "wall", \
 		/obj/machinery/door/airlock = "wall", \

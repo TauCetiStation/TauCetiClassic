@@ -22,17 +22,19 @@ SUBSYSTEM_DEF(station_coloring)
 	var/list/blue = list("#336f92", "#5d99bc", "#3f87ae", "#6eabce")
 
 	var/list/color_palette = list(
-		pick(red)    = typesof(/area/station/security),
-		pick(purple) = typesof(/area/station/rnd) + typesof(/area/asteroid/research_outpost) + /area/station/medical/genetics,
-		pick(brown)  = typesof(/area/station/cargo) + typesof(/area/asteroid/mine),
-		pick(green)  = list(/area/station/medical/virology,
-							/area/station/civilian/hydroponics,
-							/area/asteroid/research_outpost/maintstore1,
-							/area/asteroid/research_outpost/sample),
-		pick(blue)   = typesof(/area/station/medical),
-		pick(bar)    = list(/area/station/civilian/bar),
-		pick(dw)     = list(/area/asteroid/mine/dwarf),
-		COLOR_WHITE  = typesof(/area/shuttle),
+		pick(red)          = typesof(/area/station/security),
+		pick(purple)       = typesof(/area/station/rnd) + typesof(/area/asteroid/research_outpost) + /area/station/medical/genetics,
+		pick(brown)        = typesof(/area/station/cargo) + typesof(/area/asteroid/mine),
+		pick(green)        = list(/area/station/medical/virology,
+		                        /area/station/civilian/hydroponics,
+		                        /area/asteroid/research_outpost/maintstore1,
+		                        /area/asteroid/research_outpost/sample),
+		pick(blue)         = typesof(/area/station/medical),
+		pick(bar)          = list(/area/station/civilian/bar),
+		pick(dw)           = list(/area/asteroid/mine/dwarf),
+		COLOR_WHITE        = typesof(/area/shuttle),
+		COLOR_WHITE        = typesof(/area/centcom),
+		COLOR_DARK_GRAY    = typesof(/area/velocity)
 	)
 
 	for(var/color in color_palette)
@@ -42,7 +44,7 @@ SUBSYSTEM_DEF(station_coloring)
 
 /datum/controller/subsystem/station_coloring/proc/color_area_objects(list/possible_areas, color) // paint in areas
 	for(var/type in possible_areas)
-		for(var/obj/structure/window/W in get_area_by_type(type))
+		for(var/obj/structure/window/W in get_area_by_type(type)) // for in area is slow by refs, but we have a time while in lobby so just to-do-sometime
 			W.change_color(color)
 		for(var/obj/machinery/door/window/D in get_area_by_type(type))
 			D.color = color

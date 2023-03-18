@@ -42,6 +42,7 @@ def main():
 				flag_batch_smalltile_reinforced_phoron = 0
 				flag_batch_smalltile_reinforced_tinted = 0
 				flag_batch_smalltile_reinforced_polarized = 0
+				flag_batch_fakeglass = 0
 				#flag_batch_smalltile = 0
 
 				# second pass - fix grille under fw
@@ -99,6 +100,11 @@ def main():
 									batch = re.sub(r'/obj/structure/window/fulltile/reinforced(?!/)({[\sa-zA-Z0-9=;\" ]*})?(,)?\n?', '', batch) # priority to polarised fulltile
 									batch = batch[:-1] + ",\n/obj/structure/window/fulltile/reinforced/polarized{{\n\tgrilled = 1;\n\tid = \"{}\"\n}}\n".format(idcode)
 
+							if(flag_batch_fakeglass):
+								batch = re.sub(r'/turf/unsimulated/wall/fakeglass({\s+.*\s+})?(,)?\n?', '', batch)
+								batch = re.sub(r'/obj/structure/window/fulltile/reinforced(?!/)({[\sa-zA-Z0-9=;\" ]*})?(,)?\n?', '', batch)
+								batch = batch[:-1] + ",\n/obj/structure/window/fulltile/reinforced/indestructible,\n/turf/unsimulated/floor"
+
 							output += batch
 							output += line
 							batch = 0
@@ -108,6 +114,7 @@ def main():
 							flag_batch_smalltile_reinforced_phoron = 0
 							flag_batch_smalltile_reinforced_tinted = 0
 							flag_batch_smalltile_reinforced_polarized = 0
+							flag_batch_fakeglass = 0
 						else:
 							if(line.find("/obj/structure/grille")) != -1:
 								flag_batch_grille = 1
@@ -132,9 +139,14 @@ def main():
 							if(re.search(r'/obj/structure/window/reinforced/tinted(?!/)', line)):
 								flag_batch_smalltile_reinforced_tinted += 1
 
-							# polarised (no)
+							# polarised
 							if(re.search(r'/obj/structure/window/reinforced/polarized(?!/)', line)):
 								flag_batch_smalltile_reinforced_polarized += 1
+
+							# fakeglass
+							if(re.search(r'/turf/unsimulated/wall/fakeglass(?!/)', line)):
+								flag_batch_fakeglass += 1
+
 
 							batch += line
 

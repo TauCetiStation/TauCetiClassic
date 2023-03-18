@@ -211,3 +211,5 @@
 /obj/structure/window/fulltile/reinforced/indestructible
 	flags = NODECONSTRUCT
 	resistance_flags = FULL_INDESTRUCTIBLE
+
+	grilled = TRUE

@@ -50,7 +50,7 @@
 	else if(isturf(object) && ctrl_click && left_click) // todo: buildmode fulltiles
 		var/obj/structure/window/window
 		if(BM.build_dir in cornerdirs) // consistent with old behaviour
-			window = new /obj/structure/window/fulltile/reinforced(get_turf(object), grilled = TRUE)
+			window = new /obj/structure/window/fulltile/reinforced(get_turf(object), grill = TRUE)
 		else
 			window = new /obj/structure/window/thin/reinforced(get_turf(object))
 			window.set_dir(BM.build_dir)
