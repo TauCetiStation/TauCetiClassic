@@ -18,6 +18,10 @@ SUBSYSTEM_DEF(economy)
 		for(var/datum/money_account/D in all_money_accounts)
 			if(D.owner_salary && !D.suspended)
 				charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)
+				var/acc = get_med_account_number()
+				var/insurance_price = get_insurance_price(D.account_number)
+				charge_to_account(D.account_number, "Medical","Insurance", "NT Insurance", -1 * insurance_price)
+				charge_to_account(acc,acc,"Insurance",D.account_number,insurance_price)
 
 		monitor_cargo_shop()
 
@@ -25,3 +29,25 @@ SUBSYSTEM_DEF(economy)
 
 /datum/controller/subsystem/economy/proc/set_endtime()
 	endtime = world.timeofday + wait
+
+/datum/controller/subsystem/economy/proc/get_med_account_number()
+	for(var/datum/money_account/D in all_money_accounts)
+		if(D.owner_name == "Medical Account")
+			return D.account_number
+
+
+
+/proc/get_insurance_price(var/account_number)
+	for(var/mob/living/carbon/human/H in global.human_list)
+		if(H.mind)
+			if(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER) == account_number)
+				var/insurance_price = 0
+				var/insurance = H.insurance
+				if(insurance == "Standart")
+					insurance_price = 80
+				
+				else if (insurance == "Premium")
+					insurance_price = 200
+
+				return insurance_price
+				
