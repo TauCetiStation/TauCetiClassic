@@ -29,6 +29,9 @@
 		if(mind.original == src)
 			mind.original = null
 
+	for(var/datum/action/action as anything in actions)
+		action.Remove(src)
+
 	if(buckled) // simpler version of /unbuckle_mob
 		buckled.buckled_mob = null
 		SEND_SIGNAL(buckled, COMSIG_MOVABLE_UNBUCKLE, src)
@@ -844,13 +847,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 		SetWeakened(0, TRUE)
 	if(remove_flags & CANPARALYSE)
 		SetParalysis(0, TRUE)
-	if(remove_flags & (CANSTUN|CANPARALYSE|CANWEAKEN))
-		update_canmove()
 	status_flags &= ~remove_flags
+	if(remove_flags & (CANSTUN|CANPARALYSE|CANWEAKEN|FAKEDEATH))
+		update_canmove()
 
 /mob/proc/add_status_flags(add_flags)
 	if(add_flags & GODMODE)
 		stuttering = 0
+	if(add_flags & FAKEDEATH)
+		update_canmove()
 	status_flags |= add_flags
 
 // ========== CRAWLING ==========
@@ -1248,3 +1253,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/set_lastattacker_info(mob/M)
 	lastattacker_name = M.real_name
 	lastattacker_key = M.key
+
+/mob/proc/m_intent_delay()
+	. = 0
+	switch(m_intent)
+		if("run")
+			if(drowsyness > 0)
+				. += 6
+			. += 1 + config.run_speed
+		if("walk")
+			. += 2.5 + config.walk_speed

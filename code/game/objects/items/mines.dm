@@ -51,7 +51,7 @@
 	qdel(src)
 
 /obj/item/mine/proc/try_trigger(atom/movable/AM)
-	if(iscarbon(AM) || issilicon(AM) || istype(AM, /obj/mecha))
+	if(isliving(AM) || istype(AM, /obj/mecha))
 		if(anchored)
 			AM.visible_message("<span class='danger'>[AM] steps on [src]!</span>")
 			trigger_act(AM)
@@ -60,9 +60,7 @@
 /obj/item/mine/proc/trigger_act(obj)
 	explosion(loc, 1, 1, 3, 3)
 
-/obj/item/mine/attackby(obj/item/I, mob/user, params)
-	. = ..()
-
+/obj/item/mine/proc/try_disarm(obj/item/I, mob/user)
 	if((I && !ispulsing(I)) || !anchored)
 		return
 
@@ -70,8 +68,16 @@
 	if(I.use_tool(src, user, 40, volume = 50))
 		user.visible_message("<span class='notice'>[user] finishes disarming [src].</span>", "<span class='notice'>You finish disarming [src].</span>")
 
-		anchored = FALSE
-		update_icon()
+		disarm()
+
+/obj/item/mine/attackby(obj/item/I, mob/user, params)
+	. = ..()
+
+	try_disarm(I, user)
+
+/obj/item/mine/proc/disarm()
+	anchored = FALSE
+	update_icon()
 
 /obj/item/mine/anchored
 	anchored = TRUE
