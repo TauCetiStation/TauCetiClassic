@@ -1169,6 +1169,7 @@
 				to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[id].</span>")
 				return
 			if(onlineshop_mark_as_delivered(U, id, owner_account, shopping_cart["[id]"]["postpayment"]))
+				shopping_cart -= "[id]"
 				mode = 82
 
 //SYNDICATE FUNCTIONS===================================
