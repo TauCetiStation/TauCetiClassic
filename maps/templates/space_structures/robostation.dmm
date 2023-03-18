@@ -14,9 +14,8 @@
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)
 "ad" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/robostatoin)
@@ -467,9 +466,8 @@
 	},
 /area/space_structures/robostatoin)
 "bR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /turf/environment/space,
@@ -651,7 +649,7 @@
 /area/space_structures/robostatoin)
 "cx" = (
 /obj/structure/trap/stun,
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/barricade/wooden,
 /turf/simulated/floor/plating{
 	icon_state = "warnplate"
@@ -678,10 +676,10 @@
 /area/space_structures/robostatoin)
 "cE" = (
 /obj/structure/trap/stun,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/barricade/wooden,
@@ -746,7 +744,7 @@
 /area/space_structures/robostatoin)
 "cO" = (
 /obj/structure/trap/stun,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/structure/barricade/wooden,
@@ -775,14 +773,14 @@
 /area/space_structures/robostatoin)
 "cU" = (
 /obj/item/mecha_parts/mecha_equipment/weapon/honker,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating{
@@ -793,7 +791,7 @@
 /area/space_structures/robostatoin)
 "cV" = (
 /obj/structure/trap/stun,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/barricade/wooden,
@@ -804,10 +802,10 @@
 /area/space_structures/robostatoin)
 "cW" = (
 /obj/structure/trap/stun,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/barricade/wooden,
@@ -818,7 +816,7 @@
 /area/space_structures/robostatoin)
 "cX" = (
 /obj/structure/trap/stun,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/barricade/wooden,
@@ -866,10 +864,10 @@
 /area/space_structures/robostatoin)
 "di" = (
 /obj/structure/trap/stun,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/barricade/wooden,
 /turf/simulated/floor/plating{
 	dir = 10;
@@ -915,10 +913,10 @@
 /area/space_structures/robostatoin)
 "dI" = (
 /obj/structure/trap/stun,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/barricade/wooden,
 /turf/simulated/floor/plating{
 	dir = 6;
@@ -965,13 +963,13 @@
 /area/space_structures/robostatoin)
 "Cw" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating,

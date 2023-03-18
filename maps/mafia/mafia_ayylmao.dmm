@@ -28,7 +28,8 @@
 /area/mafia)
 "l" = (
 /obj/machinery/door/poddoor/mafia,
-/turf/unsimulated/wall/fakeglass,
+/obj/structure/window/fulltile/reinforced/indestructible,
+/turf/unsimulated/floor,
 /area/mafia)
 "m" = (
 /obj/effect/landmark/mafia,
