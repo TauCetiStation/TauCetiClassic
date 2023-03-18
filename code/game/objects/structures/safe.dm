@@ -2,6 +2,7 @@
 #define SOUND_CHANCE 10
 
 //SAFES
+ADD_TO_GLOBAL_LIST(/obj/structure/safe, safes_list)
 /obj/structure/safe
 	name = "safe"
 	desc = "A huge chunk of metal with a dial embedded in it. Fine print on the dial reads \"Scarborough Arms - 2 tumbler safe, guaranteed thermite resistant, explosion resistant, and assistant resistant.\""
@@ -234,4 +235,3 @@
 	invisibility = intact ? 101 : 0
 
 #undef SOUND_CHANCE
-ADD_TO_GLOBAL_LIST(/obj/structure/safe, safes_list)
