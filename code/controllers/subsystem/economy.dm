@@ -12,6 +12,7 @@ SUBSYSTEM_DEF(economy)
 
 	var/list/total_department_stocks
 	var/list/department_dividends
+	var/list/stock_splits
 
 /datum/controller/subsystem/economy/proc/set_dividend_rate(department, rate)
 	LAZYINITLIST(department_dividends)
@@ -19,6 +20,13 @@ SUBSYSTEM_DEF(economy)
 	LAZYSET(department_dividends, department, rate)
 
 /datum/controller/subsystem/economy/proc/split_shares(department, split)
+	LAZYINITLIST(stock_splits)
+
+	if(!stock_splits[department])
+		stock_splits[department] = 1.0
+
+	stock_splits[department] *= split
+
 	for(var/datum/money_account/MA as anything in global.all_money_accounts)
 		if(!MA.stocks[department])
 			continue
@@ -30,6 +38,7 @@ SUBSYSTEM_DEF(economy)
 
 	if(!total_department_stocks[department])
 		LAZYSET(total_department_stocks, department, 0)
+		LAZYSET(stock_splits, department, 1.0)
 
 	total_department_stocks[department] += amount
 

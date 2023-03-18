@@ -105,8 +105,9 @@
 	var/datum/money_account/M = create_account(H.real_name, start_money, null, H.age)
 
 	for(var/department in department_stocks)
-		SSeconomy.print_stocks(department, department_stocks[department])
-		transfer_stock_to_account(M.account_number, "CentComm", "Stock transfer - [department]: [department_stocks[department]]", "NTGalaxyNet Terminal #[rand(111,1111)]", department, department_stocks[department], pda_inform=FALSE)
+		var/stock_amount = department_stocks[department] * SSeconomy.stock_splits[department]
+		SSeconomy.print_stocks(department, stock_amount)
+		transfer_stock_to_account(M.account_number, "StockBond", "Stock transfer - [department]: [stock_amount]", "NTGalaxyNet Terminal #[rand(111,1111)]", department, stock_amount, pda_inform=FALSE)
 
 	if(H.mind)
 		var/remembered_info = ""
