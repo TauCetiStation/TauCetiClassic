@@ -27,7 +27,7 @@ var/global/online_shop_profits = 0
 	// How much would exporting this item via cargo shuttle pay up.
 	var/market_price = 0
 
-/datum/shop_lot/New(name, description, price, category, account, icon, market_price)
+/datum/shop_lot/New(name, description, price, category, account, icon, lot_item_ref, market_price)
 	global.online_shop_number++
 	global.online_shop_lots["[global.online_shop_number]"] = src
 

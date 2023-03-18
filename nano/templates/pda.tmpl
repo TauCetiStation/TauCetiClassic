@@ -1180,7 +1180,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 			{{:helper.link('<span class="good">Корзина заказов</span>(<span class="bad">'+data.shopping_cart_amount+'</span>)', 'cart', {'choice' : "Shop_Shopping_Cart"}, null, 'floatRight')}}
         </div>
 		<center><table class="shop" style="width: 100%;"><tbody>
-		<tr><th colspan="4" class="cargo" style="padding: 5px; font-size: medium;">Корзина заказов:</th></tr>
+		<tr><th colspan="5" class="cargo" style="padding: 5px; font-size: medium;">Корзина заказов:</th></tr>
 		{{for data.shopping_cart}}
 			{{if !value.delivered}}
 				<tr><th colspan="5" class="cargo">{{:value.name}}  №{{:value.number}}</th></tr>
