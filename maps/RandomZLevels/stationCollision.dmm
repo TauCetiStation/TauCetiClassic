@@ -104,7 +104,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/sign/warning/securearea{
 	pixel_x = 32
 	},
@@ -441,7 +441,7 @@
 /turf/simulated/shuttle/plating,
 /area/awaymission/stationcollision/syndishuttle)
 "bt" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -570,7 +570,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "bM" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -593,7 +593,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "bP" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -608,8 +608,8 @@
 	},
 /area/awaymission/stationcollision/research)
 "bR" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/machinery/door/window/eastleft,
@@ -667,7 +667,7 @@
 /turf/simulated/floor,
 /area/awaymission/stationcollision/research)
 "cb" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -685,7 +685,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "cd" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -706,7 +706,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "cg" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/grass,
@@ -783,16 +783,16 @@
 	},
 /area/awaymission/stationcollision/northblock)
 "co" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor{
 	icon_state = "warning"
 	},
 /area/awaymission/stationcollision/research)
 "cp" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
@@ -805,10 +805,10 @@
 	},
 /area/awaymission/stationcollision/research)
 "cr" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "warning"
@@ -829,23 +829,23 @@
 	},
 /area/awaymission/stationcollision/research)
 "cu" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/grass,
 /area/awaymission/stationcollision/research)
 "cv" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /mob/living/carbon/monkey,
 /turf/simulated/floor/grass,
 /area/awaymission/stationcollision/research)
 "cw" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/grass,
 /area/awaymission/stationcollision/research)
 "cx" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/effect/overlay/palmtree_l,
 /turf/simulated/floor/grass,
 /area/awaymission/stationcollision/research)
@@ -859,11 +859,11 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -874,7 +874,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "cB" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -948,11 +948,11 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -972,8 +972,8 @@
 	},
 /area/awaymission/stationcollision/research)
 "cM" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -987,8 +987,8 @@
 	},
 /area/awaymission/stationcollision/research)
 "cO" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -1036,17 +1036,9 @@
 	},
 /area/awaymission/stationcollision/research)
 "cV" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/research)
 "cW" = (
@@ -1058,7 +1050,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "cX" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -1069,7 +1061,7 @@
 /turf/environment/space,
 /area/awaymission/stationcollision/research)
 "cZ" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -1086,7 +1078,7 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/thin/reinforced/tinted,
 /turf/simulated/floor,
 /area/awaymission/stationcollision/research)
 "dc" = (
@@ -1107,7 +1099,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -1123,7 +1115,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "dg" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -1327,7 +1319,7 @@
 	dir = 4;
 	pixel_y = -10
 	},
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/thin/reinforced/tinted{
 	dir = 1
 	},
 /turf/simulated/floor,
@@ -1338,7 +1330,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "dE" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/cable,
 /obj/machinery/power/apc/mediumcell{
 	dir = 8;
@@ -1360,7 +1352,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "dG" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -1374,7 +1366,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "dI" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/effect/decal/remains/human,
 /obj/item/clothing/suit/storage/labcoat,
 /turf/simulated/floor{
@@ -1382,8 +1374,8 @@
 	},
 /area/awaymission/stationcollision/research)
 "dJ" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/item/clothing/suit/space/syndicate,
@@ -1398,10 +1390,10 @@
 	},
 /area/awaymission/stationcollision/research)
 "dL" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -1409,10 +1401,10 @@
 	},
 /area/awaymission/stationcollision/research)
 "dM" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -1501,7 +1493,7 @@
 /turf/simulated/floor,
 /area/awaymission/stationcollision/midblock)
 "dW" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -1542,7 +1534,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "eb" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -1553,14 +1545,10 @@
 /turf/simulated/wall,
 /area/awaymission/stationcollision/research)
 "ed" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
 /obj/item/weapon/shard,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
+	},
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/northblock)
 "ee" = (
@@ -1582,7 +1570,7 @@
 	},
 /area/awaymission/stationcollision/northblock)
 "eh" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -1624,14 +1612,14 @@
 /turf/simulated/floor,
 /area/awaymission/stationcollision/midblock)
 "em" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/machinery/computer/aiupload,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
 /area/awaymission/stationcollision/research)
 "en" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/machinery/door/window/brigdoor/eastleft,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -1650,7 +1638,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "eq" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -1658,13 +1646,9 @@
 	},
 /area/awaymission/stationcollision/research)
 "er" = (
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/northblock)
 "es" = (
@@ -1754,8 +1738,8 @@
 /turf/simulated/floor,
 /area/awaymission/stationcollision/midblock)
 "eC" = (
-/obj/structure/window/reinforced/tinted,
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/thin/reinforced/tinted,
+/obj/structure/window/thin/reinforced/tinted{
 	dir = 8
 	},
 /obj/structure/table,
@@ -1781,7 +1765,7 @@
 /turf/simulated/floor/greengrid,
 /area/awaymission/stationcollision/research)
 "eG" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/greengrid,
@@ -1820,17 +1804,17 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/awaymission/stationcollision/research)
 "eL" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/structure/grille,
@@ -1859,14 +1843,14 @@
 	},
 /area/awaymission/stationcollision/northblock)
 "eO" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blue"
 	},
 /area/awaymission/stationcollision/northblock)
 "eP" = (
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/thin/reinforced/tinted,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor,
 /area/awaymission/stationcollision/northblock)
@@ -1881,7 +1865,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "eR" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/table,
@@ -1890,7 +1874,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "eS" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/computerframe{
@@ -1901,7 +1885,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "eT" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/table,
@@ -1911,7 +1895,7 @@
 	},
 /area/awaymission/stationcollision/research)
 "eU" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/effect/decal/remains/human,
@@ -1975,20 +1959,20 @@
 /turf/simulated/floor,
 /area/awaymission/stationcollision/northblock)
 "fb" = (
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/thin/reinforced/tinted,
 /turf/simulated/floor,
 /area/awaymission/stationcollision/northblock)
 "fc" = (
 /turf/simulated/floor,
 /area/awaymission/stationcollision/northblock)
 "fd" = (
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/thin/reinforced/tinted,
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /turf/simulated/floor,
 /area/awaymission/stationcollision/northblock)
 "fe" = (
-/obj/structure/window/reinforced/tinted,
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/thin/reinforced/tinted,
+/obj/structure/window/thin/reinforced/tinted{
 	dir = 4
 	},
 /obj/structure/closet/secure_closet/engineering_electrical,
@@ -2128,7 +2112,7 @@
 	},
 /area/awaymission/stationcollision/northblock)
 "ft" = (
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/thin/reinforced/tinted,
 /obj/machinery/portable_atmospherics/powered/pump,
 /turf/simulated/floor,
 /area/awaymission/stationcollision/northblock)
@@ -2178,7 +2162,7 @@
 /area/awaymission/stationcollision/research)
 "fz" = (
 /obj/machinery/r_n_d/circuit_imprinter,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -2193,7 +2177,7 @@
 /area/awaymission/stationcollision/research)
 "fB" = (
 /obj/machinery/r_n_d/destructive_analyzer,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -2274,24 +2258,9 @@
 /turf/simulated/wall/cult,
 /area/awaymission/stationcollision/midblock)
 "fM" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/stationcollision/midblock)
-"fN" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/midblock)
 "fO" = (
@@ -2305,33 +2274,9 @@
 	},
 /area/awaymission/stationcollision/arrivalblock)
 "fQ" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
-"fR" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
-"fS" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
 /turf/simulated/shuttle/plating,
 /area/awaymission/stationcollision/arrivalblock)
 "fT" = (
@@ -2396,14 +2341,6 @@
 	icon_state = "dark"
 	},
 /area/awaymission/stationcollision/midblock)
-"gb" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/stationcollision/midblock)
 "gc" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall3"
@@ -2463,10 +2400,10 @@
 /area/awaymission/stationcollision/midblock)
 "gm" = (
 /obj/structure/closet/wardrobe/pjs,
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/thin/reinforced/tinted{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/thin/reinforced/tinted{
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -2526,29 +2463,6 @@
 	icon_state = "dark"
 	},
 /area/awaymission/stationcollision/midblock)
-"gy" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/stationcollision/midblock)
-"gz" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
 "gA" = (
 /obj/machinery/status_display{
 	pixel_y = 32
@@ -2556,20 +2470,6 @@
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
 	},
-/area/awaymission/stationcollision/arrivalblock)
-"gB" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/turf/simulated/shuttle/plating,
 /area/awaymission/stationcollision/arrivalblock)
 "gC" = (
 /turf/simulated/wall,
@@ -2698,16 +2598,6 @@
 	icon_state = "chapel"
 	},
 /area/awaymission/stationcollision/midblock)
-"gT" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
 "gU" = (
 /obj/machinery/door/unpowered/shuttle{
 	name = "Shuttle Airlock"
@@ -2767,7 +2657,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -2805,16 +2695,16 @@
 "hf" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/blue,
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/thin/reinforced/tinted{
 	dir = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/midblock)
 "hg" = (
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/thin/reinforced/tinted{
 	dir = 4
 	},
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/thin/reinforced/tinted{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -2822,7 +2712,7 @@
 "hh" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/purple,
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/thin/reinforced/tinted{
 	dir = 1
 	},
 /obj/effect/decal/remains/human,
@@ -2831,7 +2721,7 @@
 "hi" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/purple,
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/thin/reinforced/tinted{
 	dir = 1
 	},
 /turf/simulated/floor,
@@ -2884,41 +2774,9 @@
 	icon_state = "chapel"
 	},
 /area/awaymission/stationcollision/midblock)
-"hr" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
-"hs" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
 "ht" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/arrivalblock)
@@ -2961,7 +2819,7 @@
 /turf/simulated/floor,
 /area/awaymission/stationcollision/southblock)
 "hA" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor,
 /area/awaymission/stationcollision/arrivalblock)
 "hB" = (
@@ -3023,16 +2881,6 @@
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/midblock)
-"hI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/shuttle/plating,
-/area/awaymission/stationcollision/arrivalblock)
 "hJ" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -3114,34 +2962,6 @@
 	icon_state = "dark"
 	},
 /area/awaymission/stationcollision/midblock)
-"hX" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/stationcollision/midblock)
-"hY" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/stationcollision/midblock)
-"hZ" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/stationcollision/arrivalblock)
 "ia" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/item/ammo_casing/a12mm,
@@ -3349,10 +3169,10 @@
 /turf/simulated/floor,
 /area/awaymission/stationcollision/midblock)
 "iG" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/item/weapon/shard{
@@ -3365,36 +3185,6 @@
 /obj/effect/decal/remains/human,
 /obj/item/ammo_casing/a12mm,
 /turf/simulated/floor,
-/area/awaymission/stationcollision/arrivalblock)
-"iI" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/awaymission/stationcollision/arrivalblock)
-"iJ" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/stationcollision/arrivalblock)
-"iK" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
 /area/awaymission/stationcollision/arrivalblock)
 "iL" = (
 /obj/machinery/door/airlock/security,
@@ -3414,7 +3204,7 @@
 /turf/simulated/floor,
 /area/awaymission/stationcollision/midblock)
 "iO" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/structure/grille,
@@ -3463,7 +3253,7 @@
 	},
 /area/awaymission/stationcollision/syndishuttle)
 "iV" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor{
@@ -3479,13 +3269,13 @@
 /turf/simulated/floor/grass,
 /area/awaymission/stationcollision/syndishuttle)
 "iY" = (
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/thin/reinforced/tinted,
 /turf/simulated/floor{
 	icon_state = "damaged4"
 	},
 /area/awaymission/stationcollision/northblock)
 "iZ" = (
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/thin/reinforced/tinted,
 /turf/simulated/floor{
 	icon_state = "damaged3"
 	},
@@ -3500,10 +3290,10 @@
 	},
 /area/awaymission/stationcollision/northblock)
 "jb" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /mob/living/simple_animal/hostile/hivebot,
 /turf/simulated/floor{
 	dir = 10;
@@ -3514,7 +3304,7 @@
 /turf/simulated/wall,
 /area/awaymission/stationcollision/southblock)
 "jd" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/structure/grille,
@@ -3550,7 +3340,7 @@
 	},
 /area/awaymission/stationcollision/northblock)
 "ji" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/sign/warning/securearea{
@@ -3608,32 +3398,9 @@
 /turf/simulated/wall,
 /area/awaymission/stationcollision/gateroom)
 "jA" = (
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/stationcollision/southblock)
-"jB" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/stationcollision/southblock)
-"jC" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/southblock)
 "jD" = (
@@ -3765,27 +3532,6 @@
 /obj/structure/table/woodentable,
 /turf/simulated/floor/wood,
 /area/awaymission/stationcollision/southblock)
-"jZ" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/stationcollision/southblock)
-"ka" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/stationcollision/arrivalblock)
 "kb" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/item/ammo_casing/a12mm,
@@ -3895,32 +3641,10 @@
 /area/awaymission/stationcollision/southblock)
 "kr" = (
 /obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/awaymission/stationcollision/arrivalblock)
-"ks" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/stationcollision/arrivalblock)
-"kt" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
 /area/awaymission/stationcollision/arrivalblock)
 "ku" = (
 /obj/machinery/door/airlock/external{
@@ -4015,7 +3739,7 @@
 	dir = 1;
 	icon_state = "propulsion_l"
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/environment/space,
 /area/awaymission/stationcollision/arrivalblock)
 "kI" = (
@@ -4023,7 +3747,7 @@
 	dir = 1;
 	icon_state = "propulsion_r"
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/environment/space,
 /area/awaymission/stationcollision/arrivalblock)
 "kJ" = (
@@ -4214,25 +3938,25 @@
 	},
 /area/awaymission/stationcollision/gateroom)
 "li" = (
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/thin/reinforced/tinted{
 	dir = 8
 	},
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/thin/reinforced/tinted{
 	dir = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/southblock)
 "lj" = (
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/thin/reinforced/tinted{
 	dir = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/southblock)
 "lk" = (
 /obj/structure/stool/bed,
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/thin/reinforced/tinted,
 /obj/item/weapon/bedsheet/medical,
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/thin/reinforced/tinted{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -4285,14 +4009,14 @@
 	},
 /area/awaymission/stationcollision/southblock)
 "ls" = (
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/thin/reinforced/tinted{
 	dir = 8
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/southblock)
 "lt" = (
 /obj/structure/stool/bed,
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/thin/reinforced/tinted,
 /obj/item/weapon/bedsheet/medical,
 /turf/simulated/floor{
 	dir = 4;
@@ -4313,33 +4037,6 @@
 	icon_state = "warning"
 	},
 /area/awaymission/stationcollision/gateroom)
-"lw" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/stationcollision/southblock)
-"lx" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/stationcollision/southblock)
-"ly" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/stationcollision/southblock)
 "lz" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_s5"
@@ -4349,20 +4046,6 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall12"
 	},
-/area/awaymission/stationcollision/arrivalblock)
-"lB" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/shuttle/plating,
 /area/awaymission/stationcollision/arrivalblock)
 "lC" = (
 /turf/simulated/shuttle/wall{
@@ -4411,7 +4094,7 @@
 /area/awaymission/stationcollision/southblock)
 "lJ" = (
 /obj/structure/stool/bed,
-/obj/structure/window/reinforced/tinted,
+/obj/structure/window/thin/reinforced/tinted,
 /obj/item/weapon/bedsheet/medical,
 /obj/effect/decal/remains/human,
 /turf/simulated/floor{
@@ -4631,7 +4314,7 @@
 	},
 /area/awaymission/stationcollision/southblock)
 "mi" = (
-/obj/structure/window/reinforced/tinted{
+/obj/structure/window/thin/reinforced/tinted{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -4793,15 +4476,15 @@ aa
 aa
 fO
 gc
-gz
-gT
-hr
+fQ
+fQ
+fQ
 gc
 gc
 gc
-gz
-gT
-hr
+fQ
+fQ
+fQ
 gc
 gc
 gc
@@ -4989,7 +4672,7 @@ aa
 aa
 aa
 aa
-fR
+fQ
 gf
 ge
 ge
@@ -5055,7 +4738,7 @@ aa
 aa
 aa
 aa
-fS
+fQ
 ge
 ge
 ge
@@ -5189,15 +4872,15 @@ aa
 aa
 fT
 gc
-gB
+fQ
 gU
-hs
+fQ
 gc
 gc
 gc
-gz
+fQ
 iO
-hr
+fQ
 gc
 gc
 gc
@@ -5258,15 +4941,15 @@ aa
 gC
 gV
 ht
-hI
-hZ
-hZ
+fQ
+ht
+ht
 iG
 iP
 jd
-hI
-hZ
-ka
+fQ
+ht
+ht
 gC
 aa
 aa
@@ -5333,7 +5016,7 @@ hy
 iH
 hy
 kb
-ks
+ht
 fO
 gc
 gc
@@ -5399,7 +5082,7 @@ ip
 ip
 hu
 iH
-kt
+ht
 kH
 kX
 kX
@@ -5470,7 +5153,7 @@ gU
 kY
 ge
 gf
-lB
+fQ
 aa
 aa
 aa
@@ -5531,7 +5214,7 @@ je
 gC
 jE
 ia
-ks
+ht
 kI
 kZ
 kZ
@@ -5591,13 +5274,13 @@ hy
 hy
 ic
 is
-iI
+ht
 iS
 jf
 gC
 jF
 hy
-kt
+ht
 kJ
 gc
 gc
@@ -5657,7 +5340,7 @@ hy
 hK
 ic
 is
-iJ
+ht
 iS
 jf
 gC
@@ -5723,7 +5406,7 @@ dJ
 hL
 id
 is
-iK
+ht
 iS
 jg
 gC
@@ -7845,7 +7528,7 @@ jV
 jV
 jV
 kC
-lw
+jA
 aa
 aa
 aa
@@ -7904,14 +7587,14 @@ aa
 aa
 aa
 aa
-jB
+jA
 jY
 kq
 kD
 jY
 kq
 jY
-lx
+jA
 aa
 aa
 aa
@@ -7970,14 +7653,14 @@ aa
 aa
 aa
 aa
-jC
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
-ly
+jA
+jA
+jA
+jA
+jA
+jA
+jA
+jA
 aa
 aa
 aa
@@ -8222,14 +7905,14 @@ aq
 aa
 aa
 aa
-fN
-gb
+fM
+fM
 ga
 gS
 hq
 ga
-hX
-hY
+fM
+fM
 aa
 aa
 aa
@@ -8289,12 +7972,12 @@ aa
 aa
 aa
 aa
-fN
-gy
-gy
-gy
-gy
-hY
+fM
+fM
+fM
+fM
+fM
+fM
 aa
 aa
 aa
