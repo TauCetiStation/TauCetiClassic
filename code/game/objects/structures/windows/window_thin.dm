@@ -197,9 +197,9 @@
 
 	icon_state = "twindow"
 
- /**
- * Thin reinforced holo
- */
+/**
+* Thin reinforced holo
+*/
 
 /obj/structure/window/thin/reinforced/holowindow // should be moved from subtypes to flags
 	flags = NODECONSTRUCT | ON_BORDER
@@ -212,4 +212,8 @@
 	else
 		return ..()
 
-/obj/structure/window/thin/reinforced/holowindow/disappearing // wtf
+/**
+* Thin wtf
+*/
+
+/obj/structure/window/thin/reinforced/holowindow/disappearing

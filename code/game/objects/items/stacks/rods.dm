@@ -74,13 +74,10 @@
 
 	try_to_build_grille(user, build_loc)
 
-/obj/item/stack/rods/proc/try_to_build_grille(mob/living/user, build_loc)
-	if(get_amount() < 2)
-		to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")
-		return
+/obj/item/stack/rods/proc/try_to_build_grille(mob/living/user, build_loc, unanchored = TRUE)
 	to_chat(usr, "<span class='notice'>Assembling grille...</span>")
-	if (!use_tool(src, usr, 10, 2))
+	if (!use_tool(src, usr, 20, 2))
 		return
-	var/obj/structure/grille/F = new /obj/structure/grille(build_loc)
+	var/obj/structure/grille/F = new /obj/structure/grille(build_loc, unanchored)
 	to_chat(usr, "<span class='notice'>You assembled \a [F].</span>")
 	F.add_fingerprint(usr)

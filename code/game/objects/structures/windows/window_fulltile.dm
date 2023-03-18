@@ -197,7 +197,7 @@
 		set_opacity(1)
 
 /obj/structure/window/fulltile/reinforced/polarized/attackby(obj/item/W as obj, mob/user as mob)
-	if(ispulsing(W)) // todo: need something for access unlocking
+	if(ispulsing(W)) // todo: maybe need something for access unlocking. For now we assume that this access == access to multitool
 		var/t = sanitize(input(user, "Enter the ID for the window.", src.name, null), MAX_NAME_LEN)
 		src.id = t
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")

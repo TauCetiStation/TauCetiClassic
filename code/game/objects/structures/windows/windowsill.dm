@@ -48,7 +48,7 @@
 		if(!type) // should not happen
 			return
 		
-		if(!W.use_tool(usr, usr, 10, 2))
+		if(!W.use_tool(usr, usr, 20, 2))
 			return
 
 		new type(loc, !!grille_in_loc)

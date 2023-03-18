@@ -1,8 +1,6 @@
 /obj/structure/grille
 	desc = "A flimsy lattice of metal rods, with screws to secure it to the floor."
 	name = "grille"
-	//icon = 'icons/obj/structures.dmi' // todo: cleanup old icon
-	//icon_state = "grille"
 	icon = 'icons/obj/smooth_structures/grille.dmi'
 	icon_state = "box"
 
@@ -22,11 +20,13 @@
 	var/destroyed = 0
 	var/damaged = FALSE
 
-/obj/structure/grille/atom_init()
+/obj/structure/grille/atom_init(unanchored = FALSE)
 	. = ..()
 	if(destroyed)
 		destroyed = FALSE // let atom_break reset destroyed
 		update_integrity(get_integrity() * integrity_failure)
+	if(unanchored)
+		anchored = FALSE
 
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user)) shock(user, 70)
@@ -179,16 +179,16 @@
 /obj/structure/grille/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir)
 	. = ..()
 	if(. && !(destroyed || damaged))
-		//icon_state = "grille_damaged_[rand(1, 4)]" // todo ?
 		damaged = TRUE
+		update_icon()
 
 /obj/structure/grille/atom_break(damage_flag)
 	. = ..()
 	if(destroyed)
 		return
-	icon_state = "brokengrille"
 	density = FALSE
 	destroyed = TRUE
+	update_icon()
 	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/rods(loc)
 
@@ -197,6 +197,14 @@
 		return ..()
 	new /obj/item/stack/rods(loc, destroyed ? 1 : 2)
 	..()
+
+/obj/structure/grille/update_icon()
+	if(destroyed) // looks super bad currently, need to remove "destroyed" flag
+		add_filter("hole_in_the_grill", 1, alpha_mask_filter(icon = icon('icons/obj/structures.dmi', "grille_broken")))
+	/else if(damaged)
+		add_filter("hole_in_the_grill", 1, alpha_mask_filter(icon = icon('icons/obj/structures.dmi', "grille_damaged_[rand(1, 4)]")))
+	else
+		remove_filter("hole_in_the_grill")
 
 // shock user with probability prb (if all connections & power are working)
 // returns 1 if shocked, 0 otherwise
