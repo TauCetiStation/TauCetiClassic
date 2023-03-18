@@ -229,7 +229,7 @@ log transactions
 							dat += "List of owned <b>stocks:</b><br>"
 							for(var/department in authenticated_account.stocks)
 								var/ownership_percentage = authenticated_account.stocks[department] / SSeconomy.total_department_stocks[department]
-								var/dividend_payout = round(1000.0 * SSeconomy.department_dividends[department] * ownership_percentage)
+								var/dividend_payout = round(1000.0 * SSeconomy.department_dividends[department] * ownership_percentage, 0.1)
 								if(dividend_payout < 0.1)
 									dividend_payout = 0.0
 								dat += "* <b>[department]:</b> [authenticated_account.stocks[department]]/[SSeconomy.total_department_stocks[department]]. Dividend rate: [round(SSeconomy.department_dividends[department] * 100)]%. 15 minute dividend payout per 1000$: [dividend_payout]$.<br>"

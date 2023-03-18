@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(economy)
 
 				var/ownership_percentage = D.stocks[department] / total_department_stocks[department]
 				var/datum/money_account/DA = global.department_accounts[department]
-				var/dividend_payout = round(DA.money * department_dividends[department] * ownership_percentage)
+				var/dividend_payout = round(DA.money * department_dividends[department] * ownership_percentage, 0.1)
 
 				// No control package.
 				if(dividend_payout < 0.1)
