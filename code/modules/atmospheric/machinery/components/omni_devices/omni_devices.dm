@@ -78,7 +78,7 @@
 	return TRUE
 
 /obj/machinery/atmospherics/components/omni/attackby(obj/item/weapon/W, mob/user)
-	if(!iswrench(W))
+	if(!iswrenching(W))
 		return ..()
 
 	var/int_pressure = 0

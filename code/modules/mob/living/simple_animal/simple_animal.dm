@@ -60,6 +60,8 @@
 	var/has_arm = FALSE
 	var/has_leg = FALSE
 
+	can_point = FALSE
+
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
 	var/footstep_type
 

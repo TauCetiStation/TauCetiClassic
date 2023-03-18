@@ -25,7 +25,7 @@
 		report("Scan Complete: No antibodies detected.", user)
 		return
 
-	if (CLUMSY in user.mutations && prob(50))
+	if (user.ClumsyProbabilityCheck(50))
 		// I was tempted to be really evil and rot13 the output.
 		report("Antibodies detected: [reverse_text(antigens2string(C.antibodies))]", user)
 	else
@@ -55,7 +55,7 @@
 	//growth = 100//rand(5, 50)
 
 /obj/item/weapon/virusdish/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/tagger) || istype(I, /obj/item/weapon/reagent_containers/syringe))
+	if(istagger(I) || istype(I, /obj/item/weapon/reagent_containers/syringe))
 		return
 
 	. = ..()
@@ -84,7 +84,7 @@
 	desc = "The bacteria in the dish are completely dead."
 
 /obj/item/weapon/ruinedvirusdish/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/tagger) || istype(I, /obj/item/weapon/reagent_containers/syringe))
+	if(istagger(I) || istype(I, /obj/item/weapon/reagent_containers/syringe))
 		return
 
 	. = ..()

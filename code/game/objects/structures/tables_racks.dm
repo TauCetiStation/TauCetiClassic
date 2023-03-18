@@ -201,7 +201,7 @@
 
 // React to tools attacking src.
 /obj/structure/table/proc/attack_tools(obj/item/I, mob/user)
-	if(iswrench(I))
+	if(iswrenching(I))
 		if(user.is_busy(src))
 			return FALSE
 		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
@@ -495,6 +495,7 @@
 	max_integrity = 200
 	parts = /obj/item/weapon/table_parts/reinforced
 	flipable = FALSE
+	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table/reinforced/stall)
 
 	var/status = 2
 
@@ -519,7 +520,7 @@
 		return ..()
 
 /obj/structure/table/reinforced/attack_tools(obj/item/I, mob/user)
-	if(iswelder(I))
+	if(iswelding(I))
 		if(user.is_busy())
 			return FALSE
 		var/obj/item/weapon/weldingtool/WT = I
@@ -537,7 +538,7 @@
 			return TRUE
 		return FALSE
 
-	else if(status != 2 && iswrench(I))
+	else if(status != 2 && iswrenching(I))
 		if(user.is_busy(src))
 			return FALSE
 		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
@@ -554,6 +555,110 @@
 		return
 
 	return ..()
+
+/obj/lot_holder
+	name = "lot holder"
+	icon = 'icons/effects/32x32.dmi'
+	icon_state = "blank"
+	anchored = TRUE
+
+	flags = ABSTRACT
+
+	var/obj/structure/table/table_attached_to
+	var/obj/item/held_Item
+
+/obj/lot_holder/atom_init(mapload, obj/item/Item, obj/structure/table/Table)
+	. = ..()
+
+	table_attached_to = Table
+	RegisterSignal(table_attached_to, list(COMSIG_PARENT_QDELETING), .proc/on_table_destroy)
+
+	held_Item = Item
+	Item.forceMove(src)
+
+	add_overlay(Item)
+	name = Item.name
+
+/obj/lot_holder/examine(mob/user)
+	held_Item.examine(user)
+
+/obj/lot_holder/Destroy()
+	held_Item.forceMove(table_attached_to.loc)
+	held_Item = null
+	table_attached_to = null
+	return ..()
+
+/obj/lot_holder/proc/on_table_destroy()
+	qdel(src)
+
+/obj/lot_holder/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/card/id))
+		table_attached_to.visible_message("<span class='info'>[user] прикладывает карту к столу.</span>")
+		var/obj/item/weapon/card/id/Card = W
+		scan_card(Card, user)
+	else if(istype(W, /obj/item/device/pda) && W.GetID())
+		table_attached_to.visible_message("<span class='info'>[user] прикладывает КПК к столу.</span>")
+		var/obj/item/weapon/card/id/Card = W.GetID()
+		scan_card(Card, user)
+	else
+		return ..()
+
+/obj/lot_holder/proc/scan_card(obj/item/weapon/card/id/Card, mob/user)
+	var/datum/money_account/Buyer = get_account(Card.associated_account_number)
+	var/datum/money_account/Seller = get_account(held_Item.price_tag["account"])
+
+	if(!Buyer)
+		return
+
+	var/attempt_pin = 0
+	if(Buyer.security_level > 0)
+		attempt_pin = input("Введите ПИН-код", "Прилавок") as num
+		if(isnull(attempt_pin))
+			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
+			return
+		Buyer = attempt_account_access(Card.associated_account_number, attempt_pin, 2)
+
+		if(!Buyer)
+			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
+			return
+
+	var/cost = held_Item.price_tag["price"]
+
+	if(cost > 0 && Seller)
+		if(Seller.suspended)
+			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Подключённый аккаунт заблокирован.</span>")
+			return
+		if(cost <= Buyer.money)
+			charge_to_account(Buyer.account_number, Buyer.owner_name, "Покупка [held_Item.name]", "Прилавок", -cost)
+			charge_to_account(Seller.account_number, Seller.owner_name, "Прибыль за продажу [held_Item.name]", "Прилавок", cost)
+		else
+			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Недостаточно средств!</span>")
+			return
+
+	qdel(src)
+
+/obj/structure/table/reinforced/stall
+	name = "stall table"
+	desc = "A market stall table equipped with magnetic grip."
+	icon = 'icons/obj/smooth_structures/stall_table.dmi'
+	max_integrity = 200
+	parts = /obj/item/weapon/table_parts/stall
+	flipable = FALSE
+	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table/reinforced/stall)
+
+/obj/structure/table/reinforced/stall/atom_init()
+	. = ..()
+	AddComponent(/datum/component/clickplace, CALLBACK(src, .proc/try_magnet))
+
+/obj/structure/table/reinforced/stall/proc/try_magnet(atom/A, obj/item/I, mob/user)
+	if(I.price_tag)
+		addtimer(CALLBACK(src, .proc/magnet_item, I), 1 SECONDS)
+
+/obj/structure/table/reinforced/stall/proc/magnet_item(obj/item/I)
+	if(I.loc != get_turf(src))
+		return
+
+	new /obj/lot_holder(loc, I, src)
 
 /*
  * Racks
@@ -589,7 +694,7 @@
 		return 0
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
-	if (iswrench(W))
+	if (iswrenching(W))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		deconstruct(TRUE)
 		return

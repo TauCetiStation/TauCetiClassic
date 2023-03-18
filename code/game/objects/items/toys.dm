@@ -329,7 +329,7 @@
 /obj/item/toy/ammo/gun
 	name = "ammo-caps"
 	desc = "There are 7 caps left! Make sure to recyle the box in an autolathe when it gets empty."
-	icon = 'icons/obj/ammo.dmi'
+	icon = 'icons/obj/ammo/magazines.dmi'
 	icon_state = "357-7"
 	flags = CONDUCT
 	w_class = SIZE_MINUSCULE
@@ -481,10 +481,7 @@
 		src.item_state = "sword0"
 		src.w_class = SIZE_TINY
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
+	update_inv_mob()
 
 	add_fingerprint(user)
 	return
@@ -1389,11 +1386,7 @@ Owl & Griffin toys
 /obj/item/toy/prize/poly/polycompanion/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You have clicked a switch behind the toy.</span>")
 	src.icon_state = "poly_companion" + pick("1","2","")
-
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
+	update_inv_mob()
 
 /obj/item/toy/prize/poly/polygold
 	name = "golden Poly"
@@ -1408,10 +1401,7 @@ Owl & Griffin toys
 /obj/item/toy/prize/poly/polyspecial/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You have clicked a switch behind the toy.</span>")
 	src.icon_state = "poly_special" + pick("1","2","")
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
+	update_inv_mob()
 
 /*
  * Carp plushie

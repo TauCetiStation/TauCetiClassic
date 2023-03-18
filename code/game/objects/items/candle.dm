@@ -52,17 +52,10 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 		item_state = "[initial(icon_state)]_lit"
 	else
 		item_state = "[initial(icon_state)]"
-	if(istype(loc, /mob))
-		var/mob/M = loc
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.l_hand == src)
-				M.update_inv_l_hand()
-			if(H.r_hand == src)
-				M.update_inv_r_hand()
+	update_inv_mob()
 
 /obj/item/candle/attackby(obj/item/I, mob/user, params)
-	if(iswelder(I))
+	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.isOn()) // Badasses dont get blinded by lighting their candle with a welding tool
 			light("<span class='warning'>[user] casually lights the [name] with [I].</span>")

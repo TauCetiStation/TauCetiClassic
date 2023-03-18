@@ -63,7 +63,7 @@
 		name = "unsecured grenade with [beakers.len] containers[detonator?" and detonator":""]"
 		stage = 1
 
-	else if(isscrewdriver(I) && path != 2)
+	else if(isscrewing(I) && path != 2)
 		if(stage == 1)
 			path = 1
 			if(!detonator)

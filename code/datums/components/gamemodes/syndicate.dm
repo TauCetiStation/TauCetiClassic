@@ -177,7 +177,7 @@
 
 	if (traitor_mob.mind?.assigned_role == "Clown")
 		to_chat(traitor_mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-		traitor_mob.mutations.Remove(CLUMSY)
+		REMOVE_TRAIT(traitor_mob, TRAIT_CLUMSY, GENETIC_MUTATION_TRAIT)
 
 	if(uplink_uses > 0)
 		var/obj/item/device/uplink/hidden/guplink = find_syndicate_uplink(traitor_mob)

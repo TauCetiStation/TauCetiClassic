@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(ticker)
 	priority = SS_PRIORITY_TICKER
 
 	flags = SS_KEEP_TIMING
-	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
+	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME | SS_SHOW_IN_MC_TAB
 
 	msg_lobby = "Запускаем атомные сверхточные часы..."
 
@@ -77,6 +77,7 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(world, "<b><font color='blue'>Welcome to the pre-game lobby!</font></b>")
 			to_chat(world, "Please, setup your character and select ready. Game will start in [timeLeft/10] seconds")
 			current_state = GAME_STATE_PREGAME
+			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
 
 			log_initialization() // need to dump cached log
 
@@ -99,18 +100,25 @@ SUBSYSTEM_DEF(ticker)
 			if(timeLeft <= 0)
 				current_state = GAME_STATE_SETTING_UP
 				Master.SetRunLevel(RUNLEVEL_SETUP)
+				SEND_SIGNAL(src, COMSIG_TICKER_ENTER_SETTING_UP)
 
 		if(GAME_STATE_SETTING_UP)
 			if(!setup())
 				//setup failed
 				current_state = GAME_STATE_STARTUP
 				Master.SetRunLevel(RUNLEVEL_LOBBY)
+				SEND_SIGNAL(src, COMSIG_TICKER_ERROR_SETTING_UP)
 
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
 
 			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1)
-			if(!explosion_in_progress && mode_finished)
+			if(!explosion_in_progress && mode_finished && !SSrating.voting)
+
+				if(!SSrating.already_started)
+					start_rating_vote_if_unexpected_roundend()
+					return
+
 				current_state = GAME_STATE_FINISHED
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 				declare_completion()
@@ -147,6 +155,9 @@ SUBSYSTEM_DEF(ticker)
 
 					end_timer_id = addtimer(CALLBACK(src, .proc/try_to_end), restart_timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
+/datum/controller/subsystem/ticker/proc/start_rating_vote_if_unexpected_roundend()
+	to_chat(world, "<span class='info bold'><B>Конец раунда задержан из-за голосования.</B></span>")
+	SSrating.start_rating_collection()
 
 /datum/controller/subsystem/ticker/proc/try_to_end()
 	var/delayed = FALSE
@@ -164,7 +175,7 @@ SUBSYSTEM_DEF(ticker)
 		delayed = TRUE
 
 	var/static/vote_delay_announced = FALSE
-	if(SSvote.active_vote)
+	if(SSvote.active_poll)
 		if(!vote_delay_announced)
 			to_chat(world, "<span class='info bold'>Restart delayed due to vote</span>")
 			vote_delay_announced = TRUE
@@ -199,7 +210,7 @@ SUBSYSTEM_DEF(ticker)
 			current_state = GAME_STATE_PREGAME
 			to_chat(world, "<B>Unable to choose playable game mode.</B> Reverting to pre-game lobby.")
 			// Players can initiate gamemode vote again
-			var/datum/poll/gamemode_vote = SSvote.votes[/datum/poll/gamemode]
+			var/datum/poll/gamemode_vote = SSvote.possible_polls[/datum/poll/gamemode]
 			if(gamemode_vote)
 				gamemode_vote.reset_next_vote()
 			return FALSE
@@ -246,6 +257,7 @@ SUBSYSTEM_DEF(ticker)
 	if(!bundle || !bundle.hidden)
 		mode.announce()
 
+	SEND_SIGNAL(src, COMSIG_TICKER_ROUND_STARTING)
 	current_state = GAME_STATE_PLAYING
 	round_start_time = world.time
 	round_start_realtime = world.realtime
@@ -429,7 +441,15 @@ SUBSYSTEM_DEF(ticker)
 	var/completition = "<h1>Round End Information</h1><HR>"
 	completition += get_ai_completition()
 	completition += mode.declare_completion()
+	completition += get_ratings()
 	scoreboard(completition, one_mob)
+
+/datum/controller/subsystem/ticker/proc/get_ratings()
+	var/dat = "<h2>Round Ratings</h2>"
+	dat += "<div class='Section'>"
+	dat += SSrating.get_voting_results()
+	dat += "</div>"
+	return dat
 
 /datum/controller/subsystem/ticker/proc/get_ai_completition()
 	var/ai_completions = ""

@@ -68,6 +68,7 @@ var/global/current_date_string
 var/global/datum/money_account/vendor_account
 var/global/datum/money_account/cargo_account
 var/global/datum/money_account/station_account
+var/global/datum/money_account/centcomm_account
 var/global/list/datum/money_account/department_accounts = list()
 var/global/num_financial_terminals = 1
 var/global/next_account_number = 0
@@ -106,6 +107,10 @@ var/global/initial_station_money = 7500
 	vendor_account = department_accounts["Vendor"]
 	cargo_account = department_accounts["Cargo"]
 
+	create_department_account("CentComm")
+	global.centcomm_account = department_accounts["CentComm"]
+	global.centcomm_account.money = 10000000
+
 	current_date_string = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year]"
 
 	economy_init = TRUE
@@ -131,9 +136,7 @@ var/global/initial_station_money = 7500
 		T.time = "11:24"
 		T.source_terminal = "Biesel GalaxyNet Terminal #277"
 
-		//add the account
 		station_account.transaction_log.Add(T)
-		all_money_accounts.Add(station_account)
 
 /proc/create_department_account(department)
 	next_account_number = rand(111111, 999999)
@@ -156,6 +159,5 @@ var/global/initial_station_money = 7500
 
 	//add the account
 	department_account.transaction_log.Add(T)
-	all_money_accounts.Add(department_account)
 
 	department_accounts[department] = department_account

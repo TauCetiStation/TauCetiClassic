@@ -54,7 +54,7 @@
 	return
 
 /obj/item/clothing/gloves/pipboy/attackby(obj/item/I, mob/user, params)
-	if(iscoil(I) || istype(I, /obj/item/weapon/stock_parts/cell) || iswirecutter(I) || istype(I, /obj/item/weapon/scalpel))
+	if(iscoil(I) || istype(I, /obj/item/weapon/stock_parts/cell) || iscutter(I) || istype(I, /obj/item/weapon/scalpel))
 		return
 	return ..()
 

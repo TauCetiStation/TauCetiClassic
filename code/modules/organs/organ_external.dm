@@ -622,6 +622,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/organ/external/proc/is_broken()
 	return ((status & ORGAN_BROKEN) && !(status & ORGAN_SPLINTED))
 
+/obj/item/organ/external/proc/is_artery_cut()
+	return (status & ORGAN_ARTERY_CUT)
+
 /obj/item/organ/external/proc/is_malfunctioning()
 	return (is_robotic() && prob(brute_dam + burn_dam))
 
@@ -873,7 +876,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			else
 				return ..()
 
-	else if(istype(I, /obj/item/weapon/circular_saw) || iscrowbar(I) || istype(I, /obj/item/weapon/hatchet))
+	else if(istype(I, /obj/item/weapon/circular_saw) || isprying(I) || istype(I, /obj/item/weapon/hatchet))
 		switch(brain_op_stage)
 			if(1)
 				for(var/mob/O in (oviewers(brainmob) - user))

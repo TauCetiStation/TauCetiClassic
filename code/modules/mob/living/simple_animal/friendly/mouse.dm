@@ -40,6 +40,8 @@
 	has_arm = TRUE
 	has_leg = TRUE
 
+	show_examine_log = FALSE
+
 /mob/living/simple_animal/mouse/Life()
 	..()
 	if(stat == CONSCIOUS && prob(speak_chance))

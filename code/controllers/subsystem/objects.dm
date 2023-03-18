@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(obj)
 	name = "Objects"
 
 	priority   = SS_PRIORITY_OBJECTS
-	flags = SS_NO_INIT
+	flags = SS_NO_INIT | SS_SHOW_IN_MC_TAB
 
 	var/list/processing = list()
 	var/list/currentrun = list()

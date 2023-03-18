@@ -50,7 +50,7 @@
 	broadcast() // Bzzt
 /*
 /obj/machinery/media/transmitter/broadcast/attackby(obj/item/W, mob/user, params)
-	if(ismultitool(W))
+	if(ispulsing(W))
 		attack_hand(user)
 		return 1
 
@@ -143,9 +143,7 @@
 			update_on()
 
 		// Radiation
-		for(var/mob/living/carbon/M in view(src,3))
-			var/rads = RADS_PER_TICK * sqrt( 1 / (get_dist(M, src) + 1) )
-			M.apply_effect((rads*3),IRRADIATE)
+		irradiate_in_dist(get_turf(src), RADS_PER_TICK * 3, 3)
 
 		// Heat output
 		var/turf/simulated/L = loc

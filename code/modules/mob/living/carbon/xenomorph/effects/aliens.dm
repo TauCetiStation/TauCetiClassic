@@ -301,11 +301,20 @@
 	integrity_failure = 0.5
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 	var/timer
+	var/datum/proximity_monitor/proximity_monitor
 
 /obj/structure/alien/egg/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	timer = addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME), TIMER_STOPPABLE)
+	if(status == GROWN)
+		Grow()
+	else
+		timer = addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME), TIMER_STOPPABLE)
+
+/obj/structure/alien/egg/Destroy()
+	if(timer)
+		deltimer(timer)
+	return ..()
 
 /obj/structure/alien/egg/attack_paw(mob/user)
 	if(isxeno(user))
@@ -336,20 +345,25 @@
 /obj/structure/alien/egg/proc/Grow()
 	icon_state = "egg"
 	status = GROWN
-	new /obj/item/clothing/mask/facehugger(src)
+	proximity_monitor = new(src, 1)
+
+/obj/structure/alien/egg/proc/spawn_hugger(kill_fh = TRUE)
+	var/obj/item/clothing/mask/facehugger/FH = new (get_turf(src))
+	status = BURST
+	if(kill_fh)
+		FH.Die()
 
 /obj/structure/alien/egg/proc/Burst(kill_fh = TRUE)
+	if(status == BURST || status == BURSTING)
+		return
 	STOP_PROCESSING(SSobj, src)
 	deltimer(timer)
-	if(status == GROWN || status == GROWING)
-		icon_state = "egg_hatched"
-		flick("egg_opening", src)
-		status = BURSTING
-		spawn(15)
-			status = BURST
-			var/obj/item/clothing/mask/facehugger/FH = new /obj/item/clothing/mask/facehugger(get_turf(src))
-			if(kill_fh)
-				FH.Die()
+	timer = null
+	QDEL_NULL(proximity_monitor)
+	icon_state = "egg_hatched"
+	flick("egg_opening", src)
+	status = BURSTING
+	addtimer(CALLBACK(src, .proc/spawn_hugger, kill_fh), 15)
 
 /obj/structure/alien/egg/attack_ghost(mob/dead/observer/user)
 	if(facehuggers_control_type != FACEHUGGERS_PLAYABLE)
@@ -393,6 +407,18 @@
 /obj/structure/alien/egg/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 290)
 		take_damage(25, BURN, FIRE, FALSE)
+
+/obj/structure/alien/egg/HasProximity(mob/living/carbon/C)
+	if (!((ishuman(C) || ismonkey(C)) && C.is_facehuggable()))
+		return
+	if(istype(C.wear_mask, /obj/item/clothing/mask/facehugger))
+		return
+
+	Burst(FALSE)
+
+// for shitspawn
+/obj/structure/alien/egg/grown
+	status = GROWN
 
 #undef BURST
 #undef BURSTING

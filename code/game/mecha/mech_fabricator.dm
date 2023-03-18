@@ -502,7 +502,7 @@
 	return result
 
 
-/obj/machinery/mecha_part_fabricator/attackby(obj/W, mob/user, params)
+/obj/machinery/mecha_part_fabricator/attackby(obj/item/weapon/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab", "fab", W))
 		update_icon()
 		return
@@ -511,7 +511,7 @@
 		return
 
 	if(panel_open)
-		if(iscrowbar(W))
+		if(isprying(W))
 			default_deconstruction_crowbar(W)
 			return 1
 		else

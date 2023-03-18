@@ -70,7 +70,7 @@
 	to_chat(user, "A digital display on it reads \"[timer]\".")
 
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user)
-	if(iswrench(I))
+	if(iswrenching(I))
 		if(!anchored)
 			if(!isturf(src.loc) || isspaceturf(src.loc))
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it</span>")
@@ -90,7 +90,7 @@
 			else
 				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
 
-	else if(isscrewdriver(I))
+	else if(isscrewing(I))
 		open_panel = !open_panel
 		if(!active)
 			icon_state = "syndicate-bomb-inactive[open_panel ? "-wires" : ""]"
@@ -104,7 +104,7 @@
 		else
 			wires.interact(user)
 
-	else if(iscrowbar(I))
+	else if(isprying(I))
 		if(open_panel && !degutted && isWireCut(SYNDIEBOMB_WIRE_BOOM) && isWireCut(SYNDIEBOMB_WIRE_UNBOLT) && isWireCut(SYNDIEBOMB_WIRE_DELAY) && isWireCut(SYNDIEBOMB_WIRE_PROCEED) && isWireCut(SYNDIEBOMB_WIRE_ACTIVATE))
 			if(!do_skill_checks(user))
 				return

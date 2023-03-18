@@ -94,7 +94,7 @@
 	H.equip_or_collect(new /obj/item/clothing/suit/armor/vest/fullbody(H), SLOT_WEAR_SUIT)
 	H.equip_or_collect(new /obj/item/clothing/gloves/combat(H), SLOT_GLOVES)
 	H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/l13(H), SLOT_S_STORE)
-	H.equip_or_collect(new /obj/item/ammo_box/magazine/l13_38(H), SLOT_R_HAND)
+	H.equip_or_collect(new /obj/item/ammo_box/magazine/l13(H), SLOT_R_HAND)
 
 
 /datum/quality/positiveish/big_iron
@@ -113,8 +113,8 @@
 	H.equip_or_collect(new /obj/item/clothing/head/western/cowboy(H), SLOT_HEAD)
 	H.equip_or_collect(new /obj/item/clothing/shoes/western(H), SLOT_SHOES)
 	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/peacemaker/detective(H), SLOT_L_HAND)
-	H.equip_or_collect(new /obj/item/ammo_box/c45rubber(H), SLOT_L_STORE)
-	H.equip_or_collect(new /obj/item/ammo_box/c45rubber(H), SLOT_R_STORE)
+	H.equip_or_collect(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_L_STORE)
+	H.equip_or_collect(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_R_STORE)
 
 
 /datum/quality/positiveish/all_affairs
@@ -338,3 +338,11 @@
 
 /datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer(H), SLOT_R_STORE)
+
+/datum/quality/positiveish/cqc
+	name = "CQC"
+	desc = "Вы прошли курсы единоборств и теперь знаете на несколько приёмов больше."
+	requirement = "Нет."
+
+/datum/quality/positiveish/cqc/add_effect(mob/living/carbon/human/H)
+	H.add_moveset(new /datum/combat_moveset/cqc, MOVESET_QUALITY)

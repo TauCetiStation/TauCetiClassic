@@ -322,7 +322,7 @@
 				//			M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
 				//			human.set_species(/datum/species/fly)
 
-						human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
+						irradiate_one_mob(human, rand(120 - accurate * 40, 180 - accurate * 60))
 			calibrated = 0
 	return
 
@@ -403,7 +403,7 @@
 	return ..()
 
 /obj/machinery/teleport/station/attackby(obj/item/weapon/W, mob/user)
-	if(ismultitool(W) && !panel_open)
+	if(ispulsing(W) && !panel_open)
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
 			if(linked_stations.len < efficiency)
@@ -422,12 +422,12 @@
 	default_deconstruction_crowbar(W)
 
 	if(panel_open)
-		if(ismultitool(W))
+		if(ispulsing(W))
 			var/obj/item/device/multitool/M = W
 			M.buffer = src
 			to_chat(user, "<span class='notice'>You download the data to the [W.name]'s buffer.</span>")
 			return
-		if(iswirecutter(W))
+		if(iscutter(W))
 			link_console_and_hub()
 			to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
 			return

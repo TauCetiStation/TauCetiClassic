@@ -213,7 +213,7 @@
 	m_amt = 100
 
 /obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user, params)
-	if(ismultitool(I) && istype(loc, /turf))
+	if(ispulsing(I) && istype(loc, /turf))
 		new/obj/machinery/am_shielding(loc)
 		qdel(src)
 		return

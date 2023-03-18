@@ -96,6 +96,9 @@
 	// Mutation to give
 	var/mutation=0
 
+	// Trait to give with GENETIC_MUTATION_TRAIT source
+	var/trait_mutation = ""
+
 	// Activation probability
 	//var/activation_prob=45 //#Z2 not used here anymore, now in /datum/dna/gene
 
@@ -112,13 +115,19 @@
 	return probinj(activation_prob,(flags&MUTCHK_FORCED))
 
 /datum/dna/gene/basic/activate(mob/M)
-	M.mutations.Add(mutation)
+	if(mutation)
+		M.mutations.Add(mutation)
+	if(trait_mutation)
+		ADD_TRAIT(M, trait_mutation, GENETIC_MUTATION_TRAIT)
 	if(activation_messages.len)
 		var/msg = pick(activation_messages)
 		to_chat(M, "<span class='notice'>[msg]</span>")
 
 /datum/dna/gene/basic/deactivate(mob/M)
-	M.mutations.Remove(mutation)
+	if(mutation)
+		M.mutations.Remove(mutation)
+	if(trait_mutation)
+		REMOVE_TRAIT(M, trait_mutation, GENETIC_MUTATION_TRAIT)
 	if(deactivation_messages.len)
 		var/msg = pick(deactivation_messages)
 		to_chat(M, "<span class='warning'>[msg]</span>")

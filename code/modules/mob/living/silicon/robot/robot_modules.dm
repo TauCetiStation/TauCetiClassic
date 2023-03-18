@@ -85,8 +85,7 @@
 	name = "standard robot module"
 	stacktypes = list(
 		/obj/item/stack/medical/ointment = 5,
-		/obj/item/stack/medical/bruise_pack = 5,
-		/obj/item/stack/medical/suture = 3
+		/obj/item/stack/medical/bruise_pack = 5
 		)
 
 /obj/item/weapon/robot_module/standard/atom_init()
@@ -100,7 +99,6 @@
 	modules += new /obj/item/weapon/wirecutters(src)
 	modules += new /obj/item/stack/medical/ointment(src)
 	modules += new /obj/item/stack/medical/bruise_pack(src)
-	modules += new /obj/item/stack/medical/suture(src)
 	modules += new /obj/item/weapon/reagent_containers/borghypo/medical(src)
 	modules += new /obj/item/device/healthanalyzer(src)
 	modules += new /obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen(src)
@@ -113,8 +111,7 @@
 		/obj/item/stack/medical/advanced/bruise_pack = 6,
 		/obj/item/stack/medical/advanced/ointment = 6,
 		/obj/item/stack/nanopaste = 10,
-		/obj/item/stack/medical/splint = 5,
-		/obj/item/stack/medical/suture = 3
+		/obj/item/stack/medical/splint = 5
 		)
 
 /obj/item/weapon/robot_module/medical/atom_init()
@@ -146,7 +143,6 @@
 	modules += new /obj/item/weapon/reagent_containers/syringe(src)
 	modules += new /obj/item/weapon/shockpaddles/robot(src)
 	modules += new /obj/item/device/gps/cyborg(src)
-	modules += new /obj/item/stack/medical/suture(src)
 	modules += new /obj/item/weapon/reagent_containers/spray/cleaner/cyborg(src)
 
 	emag = new /obj/item/weapon/reagent_containers/spray(src)
