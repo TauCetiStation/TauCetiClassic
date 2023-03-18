@@ -1,3 +1,4 @@
+
 /obj/structure/stool/bed/chair/electrotherapy
 	name = "electrotherapy chair"
 	desc = "Latest development in the field of brainwashing. This thing is almost guaranteed to bring back loyalty to your crew!"
@@ -7,11 +8,6 @@
 
 /obj/structure/stool/bed/chair/electrotherapy/atom_init()
 	. = ..()
-	add_overlay(image('icons/obj/objects.dmi', src, "echair_over", MOB_LAYER + 1, dir))
-
-/obj/structure/stool/bed/chair/electrotherapy/rotate()
-	..()
-	cut_overlays()
 	add_overlay(image('icons/obj/objects.dmi', src, "echair_over", MOB_LAYER + 1, dir))
 
 /obj/structure/stool/bed/chair/electrotherapy/attackby(obj/item/weapon/W, mob/user)
