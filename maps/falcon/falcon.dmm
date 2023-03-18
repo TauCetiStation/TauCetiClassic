@@ -26887,6 +26887,9 @@
 /area/station/maintenance/science)
 "qHG" = (
 /obj/machinery/telecomms/server/presets/supply,
+/obj/machinery/telescience_jammer{
+	radius = 5
+	},
 /turf/simulated/floor/bluegrid{
 	name = "Server Base";
 	nitrogen = 500;

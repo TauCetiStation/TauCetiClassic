@@ -488,17 +488,18 @@
 /obj/machinery/disposal/deliveryChute/flush()
 	flushing = 1
 	flick("intake-closing", src)
-	var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
-												// travels through the pipes.
-	air_contents = new()		// new empty gas resv.
 
 	sleep(10)
 	playsound(src, 'sound/machines/disposalflush.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	sleep(5) // wait for animation to finish
 
-	H.init(src)	// copy the contents of disposer to holder
+	var/obj/structure/disposalholder/H = new(null, contents, new /datum/gas_mixture)
 
-	H.start(src) // start the holder processing movement
+	if(!trunk)
+		expel(H)
+		return
+
+	H.start(trunk) // start the holder processing movement
 	flushing = 0
 	// now reset disposal state
 	flush = 0
