@@ -123,8 +123,7 @@
 /area/mafia)
 "TX" = (
 /obj/machinery/door/poddoor/mafia,
-/obj/structure/window/fulltile/reinforced/indestructible,
-/turf/unsimulated/floor,
+/turf/unsimulated/wall/fakeglass,
 /area/mafia)
 "Zo" = (
 /turf/simulated/floor/engine/cult/lava,

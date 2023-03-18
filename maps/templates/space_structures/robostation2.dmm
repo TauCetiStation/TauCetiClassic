@@ -74,10 +74,10 @@
 	},
 /area/space_structures/robostation2)
 "cL" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "cM" = (
@@ -446,8 +446,9 @@
 	},
 /area/space_structures/robostation2)
 "tC" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
@@ -640,7 +641,7 @@
 /area/space_structures/robostation2)
 "Fu" = (
 /obj/structure/lattice,
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /turf/environment/space,
 /area/space)
 "FR" = (
@@ -768,7 +769,7 @@
 /area/space_structures/robostation2)
 "Ju" = (
 /obj/structure/lattice,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
 /turf/environment/space,
@@ -842,10 +843,10 @@
 	},
 /area/space_structures/robostation2)
 "Le" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/window/thin/reinforced,
+/obj/structure/window/reinforced,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
@@ -1031,7 +1032,7 @@
 	dir = 4;
 	icon_state = "heater1"
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating{
