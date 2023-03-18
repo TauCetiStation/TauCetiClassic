@@ -122,14 +122,15 @@
 	//So the ATM can set it so the EFTPOS can put a valid name on transactions.
 	var/owner_name = ""
 
+	var/owner_account_number
 	var/list/stocks
 
 /obj/item/weapon/spacecash/ewallet/examine(mob/user)
 	..()
 	if(src in view(1, user))
-		to_chat(user, "<span class='notice'>Charge card's issuer: [src.owner_name].</span>")
+		to_chat(user, "<span class='notice'>Charge card's issuer: [owner_name] ([owner_account_number]).</span>")
 		if(worth > 0)
-			to_chat(user, "<span class='notice'>Credits remaining: [src.worth].</span>")
+			to_chat(user, "<span class='notice'>Credits remaining: [worth].</span>")
 		if(stocks)
 			to_chat(user, "<span class='notice'>Charge card's stocks: [get_stocks_string(stocks)].</span>")
 

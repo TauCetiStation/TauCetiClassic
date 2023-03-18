@@ -98,8 +98,20 @@ log transactions
 			authenticated_account.adjust_money(SC.worth)
 			if(istype(SC, /obj/item/weapon/spacecash/ewallet))
 				var/obj/item/weapon/spacecash/ewallet/EW = SC
-				stock_string = get_stocks_string(EW.stocks)
-				authenticated_account.adjust_stocks(EW.stocks)
+				var/datum/money_account/MA = get_account(EW.owner_account_number)
+				if(MA)
+					var/valid = TRUE
+					for(var/department in EW.stocks)
+						if(MA.stocks[department] < EW.stocks[department])
+							valid = FALSE
+							break
+					if(valid)
+						stock_string = get_stocks_string(EW.stocks)
+						authenticated_account.adjust_stocks(EW.stocks)
+					else
+						to_chat(user, "<span class='warning'>Said stocks have already been redeemed from [EW.owner_name]'s account.</span>")
+				else
+					to_chat(user, "<span class='warning'>Account №[EW.owner_account_number] does not exist.</span>")
 
 			if(prob(50))
 				playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
@@ -444,7 +456,8 @@ log transactions
 					to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough [stock_type] stock to do that!</span>")
 					return
 				playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
-				authenticated_account.adjust_stock(stock_type, -stock_amount)
+				// We decrease the stock when it is deposited. That way you don't lose out on dividends if you put up your stock for sale.
+				// authenticated_account.adjust_stock(stock_type, -stock_amount)
 				spawn_ewallet(0.0, list("[stock_type]"=stock_amount), loc)
 
 			if("balance_statement")
@@ -571,6 +584,7 @@ log transactions
 	E.worth = sum
 	E.stocks = stocks
 	E.owner_name = authenticated_account.owner_name
+	E.owner_account_number = authenticated_account.account_number
 
 /obj/machinery/atm/proc/print_money_stock(sum)
 	if (money_stock < sum)
