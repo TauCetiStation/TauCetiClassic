@@ -471,6 +471,7 @@ SUBSYSTEM_DEF(job)
 
 	//give them an account in the station database
 	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)	//starting funds = salary
+	check_insurance(H, job.salary)
 
 	// If they're head, give them the account info for their department
 	if(H.mind && job.head_position)
@@ -558,6 +559,23 @@ SUBSYSTEM_DEF(job)
 
 	return TRUE
 
+/proc/check_insurance(var/mob/living/carbon/human/H, var/salary)
+	var/standartprice = 80
+	var/premiumprice = 200
+
+	if(H.insurance == "Standart" && salary < standartprice)
+		to_chat(H, "Sorry, but you don't have enough salary to use Standart insurance, it will be changed to None")
+		H.insurance = "None"
+
+	if(H.insurance == "Premium" && salary< premiumprice)
+		if(salary >= standartprice)
+			to_chat(H,"Sorry, but you don't have enough salary to use Premium insurance, it will be changed to Standart")
+			H.insurance = "Standart"
+			
+		else
+			to_chat(H, "Sorry, but you don't have enough salary to use Premium or Standart insurance, it will be changed to None")
+			H.insurance = "None"
+		
 /datum/controller/subsystem/job/proc/spawnId(mob/living/carbon/human/H, rank, title)
 	if(!H)	return FALSE
 	var/obj/item/weapon/card/id/C = null
