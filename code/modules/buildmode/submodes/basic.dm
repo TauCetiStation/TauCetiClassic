@@ -49,7 +49,7 @@
 		new/obj/machinery/door/airlock(get_turf(object))
 	else if(isturf(object) && ctrl_click && left_click) // todo: buildmode fulltiles
 		if(BM.build_dir in cornerdirs) // consistent with old behaviour
-			new /obj/structure/window/fulltile/reinforced(get_turf(object), grill = TRUE)
+			new /obj/structure/window/fulltile/reinforced(get_turf(object), TRUE)
 		else
 			var/obj/structure/window/thin/window = new(get_turf(object))
 			window.set_dir(BM.build_dir)
