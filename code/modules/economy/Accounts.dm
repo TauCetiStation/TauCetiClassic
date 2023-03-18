@@ -202,9 +202,10 @@
 	return FALSE
 
 /proc/transfer_stock_to_account(attempt_account_number, source_name, purpose, terminal_id, department, amount, pda_inform=TRUE)
+	to_chat(world, "TRANSFERING STOCK TO [attempt_account_number] [department] [amount]")
 	amount = round(amount, 1)
 	for(var/datum/money_account/D in all_money_accounts)
-		if(D.account_number != attempt_account_number || !D.suspended)
+		if(D.account_number != attempt_account_number || D.suspended)
 			continue
 		D.adjust_stock(department, amount)
 
