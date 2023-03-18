@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(economy)
 /datum/controller/subsystem/economy/proc/set_endtime()
 	endtime = world.timeofday + wait
 
-/datum/controller/subsystem/economy/proc/get_med_account_number()
+/proc/get_med_account_number()
 	for(var/datum/money_account/D in all_money_accounts)
 		if(D.owner_name == "Medical Account")
 			return D.account_number
