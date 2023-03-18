@@ -125,6 +125,8 @@
 	glass_color_blend_to_color = "#8000ff"
 	glass_color_blend_to_ratio = 0.5
 
+	disassemble_glass_type = /obj/item/stack/sheet/glass/phoronglass
+
 /obj/structure/window/fulltile/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 32000)
 		take_damage(round(exposed_volume / 1000), BURN, FIRE, FALSE)
@@ -159,6 +161,8 @@
 
 	glass_color_blend_to_color = "#8000ff"
 	glass_color_blend_to_ratio = 0.5
+
+	disassemble_glass_type = /obj/item/stack/sheet/glass/phoronrglass
 
 /obj/structure/window/fulltile/reinforced/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
