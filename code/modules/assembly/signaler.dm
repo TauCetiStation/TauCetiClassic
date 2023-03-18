@@ -26,7 +26,7 @@
 	. = ..()
 	if(my_new_frequency)
 		frequency = my_new_frequency
-	addtimer(CALLBACK(src, .proc/set_frequency, my_new_frequency), 40)
+	addtimer(CALLBACK(src, .proc/set_frequency, frequency), 40)
 
 /obj/item/device/assembly/signaler/Destroy()
 	if(radio_controller)
