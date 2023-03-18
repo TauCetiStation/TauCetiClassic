@@ -67,10 +67,11 @@ var/global/online_shop_profits = 0
 		price_str = "<S>[src.price + get_delivery_cost()]</S> <B>[get_discounted_price() + get_delivery_cost()]</B>"
 
 	return list(
-		"name" = MA ? MA.owner_name : "Unknown",
+		"name" = name,
 		"description" = src.description,
 		"price" = price_str,
 		"number" = number,
+		"seller" = MA ? MA.owner_name : "Unknown",
 		"account" = account,
 		"delivered" = delivered,
 		"postpayment" = get_discounted_price(),
