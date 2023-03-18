@@ -734,9 +734,10 @@
 				if(Item["lot_item_ref"])
 					var/atom/A = locate(Item["lot_item_ref"])
 					var/area/A_area = get_area(A)
-					var/dist_str = "([get_dist(A, src)]m)"
+					if(A && A_area)
+						var/dist_str = "([get_dist(A, src)]m)"
 
-					shopping_cart_frontend[shopping_cart_frontend.len]["area"] = "[A_area.name][dist_str]"
+						shopping_cart_frontend[shopping_cart_frontend.len]["area"] = "[A_area.name][dist_str]"
 		data["shopping_cart"] = shopping_cart_frontend
 
 		data["shopping_cart_amount"] = shopping_cart_frontend.len
@@ -1142,7 +1143,7 @@
 							for(var/datum/shop_lot/NewLot in online_shop_lots_hashed[Lot.hash])
 								if(NewLot && !NewLot.sold && (Lot.get_discounted_price() <= NewLot.get_discounted_price()))
 									if(order_onlineshop_item(owner, owner_account, NewLot, T))
-										shopping_cart[NewLot.number] = Lot.to_list()
+										shopping_cart["[NewLot.number]"] = Lot.to_list()
 									else
 										to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 										return
@@ -1150,7 +1151,7 @@
 						return
 
 					else if(order_onlineshop_item(owner, owner_account, Lot, T))
-						shopping_cart[Lot.number] = Lot.to_list()
+						shopping_cart["[Lot.number]"] = Lot.to_list()
 					else
 						to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 				else
@@ -1692,7 +1693,7 @@
 	if(istype(target, /obj/structure/bigDelivery))
 		var/obj/structure/bigDelivery/package = target
 		if(!shopping_cart["[package.lot_number]"])
-			to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[id].</span>")
+			to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[package.lot_number].</span>")
 			return
 		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, shopping_cart["[package.lot_number]"]["postpayment"]))
 			return
@@ -1700,7 +1701,7 @@
 	if(istype(target, /obj/item/smallDelivery))
 		var/obj/item/smallDelivery/package = target
 		if(!shopping_cart["[package.lot_number]"])
-			to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[id].</span>")
+			to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[package.lot_number].</span>")
 			return
 		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, shopping_cart["[package.lot_number]"]["postpayment"]))
 			return
@@ -1854,37 +1855,6 @@
 /obj/item/device/pda/proc/check_rank(rank)
 	if((rank in command_positions) || (rank == "Quartermaster"))
 		boss_PDA = 1
-
-/obj/item/device/pda/proc/mark_as_delivered(mob/user, id)
-	id = "[id]"
-
-	if(!shopping_cart[id])
-		to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[id].</span>")
-		return
-	var/datum/shop_lot/Lot = global.online_shop_lots[id]
-	if(!Lot)
-		to_chat(user, "<span class='warning'>Этот лот больше не существует.</span>")
-		return
-
-	var/datum/money_account/MA = get_account(owner_account)
-	if(!MA)
-		to_chat(user, "<span class='notice'>ОШИБКА: Никакой счёт не подвязан к данному КПК.</span>")
-		return
-
-	var/postpayment = shopping_cart[id]["postpayment"]
-	if(postpayment > MA.money)
-		to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
-		return
-
-	shopping_cart -= id
-	Lot.delivered = TRUE
-
-	if(global.online_shop_discount)
-		charge_to_account(Lot.account, global.cargo_account.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.price - postpayment)
-		charge_to_account(global.cargo_account.account_number, MA.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -(Lot.price - postpayment))
-
-	charge_to_account(MA.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -postpayment)
-	charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, postpayment)
 
 /obj/item/device/pda/proc/add_order_or_offer(name, desc)
 	global.orders_and_offers["[orders_and_offers_number]"] = list("name" = name, "description" = desc, "time" = worldtime2text())

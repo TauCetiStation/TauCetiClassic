@@ -160,18 +160,18 @@ var/global/online_shop_profits = 0
 	if(!Lot)
 		if(user)
 			to_chat(user, "<span class='warning'>Этот лот больше не существует.</span>")
-		return
+		return FALSE
 
 	var/datum/money_account/MA = get_account(account_number)
 	if(!MA)
 		if(user)
 			to_chat(user, "<span class='notice'>ОШИБКА: Никакой счёт не подвязан к данному КПК.</span>")
-		return
+		return FALSE
 
 	if(postpayment > MA.money)
 		if(user)
 			to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
-		return
+		return FALSE
 
 	Lot.mark_delivered()
 
@@ -181,3 +181,4 @@ var/global/online_shop_profits = 0
 
 	charge_to_account(MA.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -postpayment)
 	charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, postpayment)
+	return TRUE
