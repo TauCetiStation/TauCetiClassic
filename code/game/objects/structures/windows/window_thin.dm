@@ -24,6 +24,8 @@
 	if(dir in cornerdirs)
 		world.log << "WARNING: [x].[y].[z]: DIR [dir]"
 
+	update_nearby_tiles(need_rebuild = 1)
+
 /obj/structure/window/thin/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir)
 	. = ..()
 	if(attack_dir && . && get_integrity() < 7)
@@ -103,7 +105,9 @@
 		to_chat(usr, "It is fastened to the floor therefore you can't rotate it!")
 		return 0
 
+	update_nearby_tiles(need_rebuild=1) //Compel updates before
 	set_dir(turn(dir, 90))
+	update_nearby_tiles(need_rebuild=1)
 	ini_dir = dir
 	return
 
@@ -119,7 +123,9 @@
 		to_chat(usr, "It is fastened to the floor therefore you can't rotate it!")
 		return 0
 
+	update_nearby_tiles(need_rebuild=1) //Compel updates before
 	set_dir(turn(dir, 270))
+	update_nearby_tiles(need_rebuild=1)
 	ini_dir = dir
 	return
 
@@ -129,12 +135,14 @@
 	return ..()
 
 /obj/structure/window/thin/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	update_nearby_tiles(need_rebuild=1)
 	. = ..()
 
 	if(moving_diagonally)
 		return .
 
 	set_dir(ini_dir)
+	update_nearby_tiles(need_rebuild=1)
 
 
 /**

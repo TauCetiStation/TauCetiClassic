@@ -46,6 +46,10 @@
 
 	return ..()
 
+/obj/structure/window/Destroy()
+	update_nearby_tiles()
+	return ..()
+
 /obj/structure/window/atom_break(damage_flag)
 	. = ..()
 
