@@ -284,13 +284,14 @@
 		message += "<span class='notice'>Time of Death: [M.tod]</span><br>"
 	if(ishuman(M) && mode)
 		var/mob/living/carbon/human/H = M
-		var/list/damaged = H.get_damaged_bodyparts(1, 1)
-		message += "<span class='notice'>Localized Damage, Brute/Burn:</span><br>"
-		if(length(damaged))
-			for(var/obj/item/organ/external/BP in damaged)
-				message += "<span class='notice'>&emsp; [capitalize(BP.name)]: [(BP.brute_dam > 0) ? "<span class='warning'>[BP.brute_dam]</span>" : 0][(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'>\[Bleeding\]</span>" : "&emsp;"] - [(BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.burn_dam]</font>" : 0]</span><br>"
-		else
-			message += "<span class='notice'>&emsp; Limbs are OK.</span><br>"
+		if(H.insurance in list("Standart","Premium"))
+			var/list/damaged = H.get_damaged_bodyparts(1, 1)
+			message += "<span class='notice'>Localized Damage, Brute/Burn:</span><br>"
+			if(length(damaged))
+				for(var/obj/item/organ/external/BP in damaged)
+					message += "<span class='notice'>&emsp; [capitalize(BP.name)]: [(BP.brute_dam > 0) ? "<span class='warning'>[BP.brute_dam]</span>" : 0][(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'>\[Bleeding\]</span>" : "&emsp;"] - [(BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.burn_dam]</font>" : 0]</span><br>"
+			else
+				message += "<span class='notice'>&emsp; Limbs are OK.</span><br>"
 
 	OX = M.getOxyLoss() > 50 ? "<font color='blue'><b>Severe oxygen deprivation detected</b></font>" : "Subject bloodstream oxygen level normal"
 	TX = M.getToxLoss() > 50 ? "<font color='green'><b>Dangerous amount of toxins detected</b></font>" : "Subject bloodstream toxin level minimal"
@@ -325,46 +326,52 @@
 		message += "<span class='warning'>Significant brain damage detected. Subject may have had a concussion.</span><br>"
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
+		if(H.insurance in list("Premium"))
 
-		var/found_bleed
-		var/found_broken
-		for(var/obj/item/organ/external/BP in H.bodyparts)
-			if(BP.status & ORGAN_BROKEN)
-				if(((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)) && !(BP.status & ORGAN_SPLINTED))
-					message += "<span class='warning'>Unsecured fracture in subject [BP.name]. Splinting recommended for transport.</span><br>"
-				if(!found_broken)
-					found_broken = TRUE
+			var/found_bleed
+			var/found_broken
+			for(var/obj/item/organ/external/BP in H.bodyparts)
+				if(BP.status & ORGAN_BROKEN)
+					if(((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)) && !(BP.status & ORGAN_SPLINTED))
+						message += "<span class='warning'>Unsecured fracture in subject [BP.name]. Splinting recommended for transport.</span><br>"
+					if(!found_broken)
+						found_broken = TRUE
 
-			if(!found_bleed && (BP.status & ORGAN_ARTERY_CUT))
-				found_bleed = TRUE
+				if(!found_bleed && (BP.status & ORGAN_ARTERY_CUT))
+					found_bleed = TRUE
 
-			if(BP.has_infected_wound())
-				message += "<span class='warning'>Infected wound detected in subject [BP.name]. Disinfection recommended.</span><br>"
+				if(BP.has_infected_wound())
+					message += "<span class='warning'>Infected wound detected in subject [BP.name]. Disinfection recommended.</span><br>"
 
-		if(found_bleed)
-			message += "<span class='warning'>Arterial bleeding detected. Advanced scanner required for location.</span><br>"
-		if(found_broken)
-			message += "<span class='warning'>Bone fractures detected. Advanced scanner required for location.</span><br>"
+			if(found_bleed)
+				message += "<span class='warning'>Arterial bleeding detected. Advanced scanner required for location.</span><br>"
+			if(found_broken)
+				message += "<span class='warning'>Bone fractures detected. Advanced scanner required for location.</span><br>"
 
-		var/blood_volume = H.blood_amount()
-		var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
-		var/blood_type = H.dna.b_type
-		if(blood_volume <= BLOOD_VOLUME_SAFE && blood_volume > BLOOD_VOLUME_OKAY)
-			message += "<span class='warning bold'>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl.</span><span class='notice'>Type: [blood_type]</span><br>"
-		else if(blood_volume <= BLOOD_VOLUME_OKAY)
-			message += "<span class='warning bold'>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl.</span><span class='notice bold'>Type: [blood_type]</span><br>"
-		else
-			message += "<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span><br>"
+			var/blood_volume = H.blood_amount()
+			var/blood_percent =  100.0 * blood_volume / BLOOD_VOLUME_NORMAL
+			var/blood_type = H.dna.b_type
+			if(blood_volume <= BLOOD_VOLUME_SAFE && blood_volume > BLOOD_VOLUME_OKAY)
+				message += "<span class='warning bold'>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl.</span><span class='notice'>Type: [blood_type]</span><br>"
+			else if(blood_volume <= BLOOD_VOLUME_OKAY)
+				message += "<span class='warning bold'>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl.</span><span class='notice bold'>Type: [blood_type]</span><br>"
+			else
+				message += "<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span><br>"
 
-		var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
-		if(Heart)
-			switch(Heart.heart_status)
-				if(HEART_FAILURE)
-					message += "<span class='notice'><font color='red'>Warning! Subject's heart stopped!</font></span><br>"
-				if(HEART_FIBR)
-					message += "<span class='notice'>Subject's Heart status: <font color='blue'>Attention! Subject's heart fibrillating.</font></span><br>"
-			message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
+			var/obj/item/organ/internal/heart/Heart = H.organs_by_name[O_HEART]
+			if(Heart)
+				switch(Heart.heart_status)
+					if(HEART_FAILURE)
+						message += "<span class='notice'><font color='red'>Warning! Subject's heart stopped!</font></span><br>"
+					if(HEART_FIBR)
+						message += "<span class='notice'>Subject's Heart status: <font color='blue'>Attention! Subject's heart fibrillating.</font></span><br>"
+				message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
 
+
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		message += "<span class='notice'><font color='blue'>Страховка: [H.insurance]</font></span><br>"
+		
 	if(!output_to_chat)
 		message += "</BODY></HTML>"
 	return message
