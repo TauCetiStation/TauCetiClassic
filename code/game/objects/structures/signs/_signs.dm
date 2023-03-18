@@ -85,7 +85,7 @@
 			visible_message("<span class='warning'>[user] smashed [src] apart!</span>")
 
 /obj/structure/sign/deconstruct(disassembled)
-	if(resistance_flags & NODECONSTRUCT)
+	if(flags & NODECONSTRUCT)
 		return ..()
 	if(buildable_sign)
 		var/obj/item/sign_backing/SB = new(loc)
