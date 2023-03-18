@@ -31323,6 +31323,9 @@
 "iRo" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/folder/red,
+/obj/machinery/telescience_jammer{
+	radius = 5
+	},
 /turf/simulated/floor/bluegrid{
 	name = "Server Base";
 	nitrogen = 500;

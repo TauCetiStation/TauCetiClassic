@@ -1859,8 +1859,9 @@
 			Stun(2)
 			Weaken(2)
 		else if(istype(hit_atom, /obj/machinery/disposal))
-			INVOKE_ASYNC(src, /atom/movable.proc/do_simple_move_animation, hit_atom)
+			var/atom/old_loc = loc
 			forceMove(hit_atom)
+			INVOKE_ASYNC(src, /atom/movable.proc/do_simple_move_animation, hit_atom, old_loc)
 
 	update_canmove()
 
@@ -2096,7 +2097,7 @@
 			electrocuted_sprite += "_skrell"
 		if(VOX)
 			electrocuted_sprite += "_vox"
-	var/image/I = image(icon, src, electrocuted_sprite, MOB_LAYER+1)
+	var/image/I = image(icon, src, electrocuted_sprite, MOB_ELECTROCUTION_LAYER)
 	I = update_height(I)
 	flick_overlay(I, viewing, anim_duration)
 
