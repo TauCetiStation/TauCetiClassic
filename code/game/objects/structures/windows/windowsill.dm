@@ -48,13 +48,32 @@
 		if(!type) // should not happen
 			return
 		
-		if(!W.use_tool(usr, usr, 20, 2))
+		if(!W.use_tool(src, user, 20, 2))
 			return
 
 		new type(loc, !!grille_in_loc)
 		QDEL_NULL(grille_in_loc)
 		qdel(src)
 
+	else if(iswrenching(W))
+		if(grille_in_loc)
+			to_chat(user, "<span class='warning'>You need to remove [grille_in_loc] first!</span>")
+			return
+
+		to_chat(user, "<span class='notice'>You begin disassembling \the [src].</span>")
+		
+		if(W.use_tool(src, user, 20))
+			deconstruct(TRUE)
+
+		return
+
 	return ..()
 
-///obj/structure/windowsill/deconstruct(disassembled) // nothing
+/obj/structure/windowsill/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+
+	if(disassembled)
+		new /obj/item/stack/sheet/metal(loc, 2)
+
+	return ..()
