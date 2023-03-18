@@ -198,18 +198,25 @@
 	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/toxin/zombiepowder/on_general_digest(mob/living/M)
-	..()
-	M.add_status_flags(FAKEDEATH)
-	M.adjustOxyLoss(0.5 * REM)
-	M.Stun(10)
-	M.Weaken(10)
+	if(data["ticks"])
+		data["ticks"]++
+	else
+		data["ticks"] = 1
+
+	if(data["ticks"] < 5)
+		return
+	
+	if(data["ticks"] == 5)
+		M.add_status_flags(FAKEDEATH)
+		M.tod = worldtime2text()
+
 	M.silent = max(M.silent, 10)
-	M.tod = worldtime2text()
 
 /datum/reagent/toxin/zombiepowder/Destroy()
-	if(holder && ismob(holder.my_atom))
-		var/mob/M = holder.my_atom
+	if(holder && isliving(holder.my_atom))
+		var/mob/living/M = holder.my_atom
 		M.remove_status_flags(FAKEDEATH)
+		M.adjustToxLoss(toxpwr * REM * data["ticks"])
 	return ..()
 
 /datum/reagent/toxin/mindbreaker
