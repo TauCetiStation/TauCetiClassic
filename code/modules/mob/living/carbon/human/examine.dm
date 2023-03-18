@@ -531,7 +531,7 @@
 
 		msg += "<span class = 'deptradio'>Physical status:</span> <a href='?src=\ref[src];medical=1'>\[[medical]\]</a>\n"
 		msg += "<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
-
+		msg += "<span class='notice'><font color='blue'>Страховка: [src.insurance]</font></span><br>"
 		var/obj/item/clothing/under/C = w_uniform
 		if(C?.sensor_mode >= SUIT_SENSOR_VITAL)
 			msg += "<span class = 'deptradio'>Damage Specifics:</span> (<font color='blue'>[round(getOxyLoss(), 1)]</font>/<font color='green'>[round(getToxLoss(), 1)]</font>/<font color='#FFA500'>[round(getFireLoss(), 1)]</font>/<font color='red'>[round(getBruteLoss(), 1)]</font>)<br>"
