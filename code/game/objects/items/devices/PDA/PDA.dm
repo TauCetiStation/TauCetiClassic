@@ -1164,12 +1164,12 @@
 				to_chat(U, "<span class='notice'>ОШИБКА: КПК сервер не отвечает.</span>")
 				mode = 0
 				return
-			var/id = href_list["delivered_item"]
-			if(!shopping_cart["[id]"])
-				to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[id].</span>")
+			var/lot_id = href_list["delivered_item"]
+			if(!shopping_cart["[lot_id]"])
+				to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[lot_id].</span>")
 				return
-			if(onlineshop_mark_as_delivered(U, id, owner_account, shopping_cart["[id]"]["postpayment"]))
-				shopping_cart -= "[id]"
+			if(onlineshop_mark_as_delivered(U, lot_id, owner_account, shopping_cart["[lot_id]"]["postpayment"]))
+				shopping_cart -= "[lot_id]"
 				mode = 82
 
 //SYNDICATE FUNCTIONS===================================
@@ -1694,7 +1694,7 @@
 		if(!shopping_cart["[package.lot_number]"])
 			to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[id].</span>")
 			return
-		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, shopping_cart["[id]"]["postpayment"]))
+		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, shopping_cart["[package.lot_number]"]["postpayment"]))
 			return
 
 	if(istype(target, /obj/item/smallDelivery))
@@ -1702,7 +1702,7 @@
 		if(!shopping_cart["[package.lot_number]"])
 			to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[id].</span>")
 			return
-		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, shopping_cart["[id]"]["postpayment"]))
+		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, shopping_cart["[package.lot_number]"]["postpayment"]))
 			return
 
 	switch(scanmode)
