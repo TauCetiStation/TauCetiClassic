@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(vote)
 	wait = SS_WAIT_VOTE
 
 	flags = SS_KEEP_TIMING | SS_NO_INIT
-	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT | SS_SHOW_IN_MC_TAB
 
 	var/list/datum/poll/possible_polls = list()
 	var/datum/poll/active_poll
@@ -97,12 +97,12 @@ SUBSYSTEM_DEF(vote)
 				active_poll.vote(choice, usr.client)
 
 		if("callVote")
-			var/datum/poll/poll = locate(params["pollRef"]) in possible_polls
+			var/datum/poll/poll = locate(params["pollRef"])
 			if(istype(poll) && (check_rights(R_ADMIN) || (!poll.only_admin && poll.can_start())))
 				start_vote(poll.type)
 
 		if("toggleAdminOnly")
-			var/datum/poll/poll = locate(params["pollRef"]) in possible_polls
+			var/datum/poll/poll = locate(params["pollRef"])
 			if(istype(poll) && check_rights(R_ADMIN))
 				poll.only_admin = !poll.only_admin
 

@@ -11,6 +11,7 @@
 	initial_mag = /obj/item/ammo_box/magazine/internal/heavyrifle
 	fire_sound = 'sound/weapons/guns/gunshot_cannon.ogg'
 	can_be_holstered = FALSE
+	two_hand_weapon = ONLY_TWOHAND
 	var/bolt_open = FALSE
 	two_hand_weapon = TRUE
 

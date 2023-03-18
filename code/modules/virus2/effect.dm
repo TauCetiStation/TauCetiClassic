@@ -520,9 +520,9 @@
 			to_chat(mob, "<span class='notice'>[pick("You feel warmth.", "You feel weak.")]</span>")
 		if(2)
 			to_chat(mob, "<span class='warning'>[pick("Your skin is flaking.", "You have a headache.")]</span>")
-			mob.apply_effect(5, IRRADIATE, 0)
+			irradiate_one_mob(mob, 5)
 		if(3)
-			mob.apply_effect(20, IRRADIATE, 0)
+			irradiate_one_mob(mob, 20)
 
 /*/datum/disease2/effect/deaf
 	name = "Dead Ear Syndrome"

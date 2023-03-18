@@ -14716,6 +14716,17 @@
 	icon_state = "vault"
 	},
 /area/station/cargo/office)
+"dis" = (
+/obj/machinery/telescience_jammer{
+	radius = 5
+	},
+/turf/simulated/floor/bluegrid{
+	name = "Server Base";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/tcommsat/chamber)
 "diz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -51087,18 +51098,18 @@
 /area/station/security/brig)
 "lVq" = (
 /obj/structure/rack,
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = 4
 	},
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = 4
 	},
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = -4
 	},
-/obj/item/ammo_box/magazine/m9mm_2{
+/obj/item/ammo_box/magazine/glock{
 	pixel_x = -4
 	},
 /obj/machinery/light/small/emergency,
@@ -92019,18 +92030,18 @@
 /area/station/rnd/brainstorm_center)
 "whD" = (
 /obj/structure/rack,
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = 4
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = 4
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = -4
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber{
+/obj/item/ammo_box/magazine/glock/rubber{
 	pixel_x = -4
 	},
 /obj/machinery/light/small/emergency,
@@ -145859,7 +145870,7 @@ mMo
 jTd
 dZG
 myX
-myX
+dis
 dZG
 abd
 vVz
@@ -148429,7 +148440,7 @@ cjR
 uOj
 dZG
 myX
-myX
+dis
 dZG
 rAG
 vVz
