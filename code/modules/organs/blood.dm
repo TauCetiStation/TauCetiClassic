@@ -31,11 +31,11 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	var/datum/reagent/blood/B = blood_get()
 	if(istype(B))
 		if(clean)
-			B.data = list("donor" = src, "blood_DNA" = dna.unique_enzymes,
+			B.data = list("donor" = REF(src), "blood_DNA" = dna.unique_enzymes,
 						"blood_type" = dna.b_type, "trace_chem" = null,
 						"virus2" = null, "antibodies" = null, "changeling_marker" = null)
 		else // Change DNA to ours, left the rest intact
-			B.data["donor"] = src
+			B.data["donor"] = REF(src)
 			B.data["blood_DNA"] = dna.unique_enzymes
 			B.data["blood_type"] = dna.b_type
 
@@ -373,16 +373,12 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 
 // Gets blood from mob to the container, preserving all data in it
 /mob/living/carbon/proc/take_blood(obj/item/weapon/reagent_containers/container, amount)
-	var/datum/reagent/blood/B
-	if(container)
-		container.reagents.get_reagent(/datum/reagent/blood)
-	if(!istype(B))
-		B = new /datum/reagent/blood
+	var/datum/reagent/blood/B = new
 	B.holder = container
 	B.volume += amount
 
 	// Set reagent data:
-	B.data["donor"] = src
+	B.data["donor"] = REF(src)
 	if (!B.data["virus2"])
 		B.data["virus2"] = list()
 	B.data["virus2"] |= virus_copylist(virus2)
@@ -405,6 +401,13 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 		temp_chem += R.id
 		temp_chem[R.id] = R.volume
 	B.data["trace_chem"] = list2params(temp_chem)
+
+	if(container)
+		container.reagents.reagent_list += B
+		container.reagents.update_total()
+		container.on_reagent_change()
+		container.reagents.handle_reactions()
+
 	return B
 
 // For humans, blood does not appear from blue, it comes from vessels

@@ -91,7 +91,7 @@
 	if(isliving(hit_atom))
 		var/mob/living/L = hit_atom
 		var/obj/item/weapon/shield/shield = L.is_in_hands(/obj/item/weapon/shield)
-		if(shield && check_shield_dir(hit_atom))
+		if(shield && check_shield_dir(hit_atom, dir))
 			L.visible_message("<span class='danger'>[src] smashed into [L]'s [shield]!</span>", "<span class='userdanger'>[src] pounces on your [shield]!</span>")
 			Stun(2)
 			Weaken(2)
@@ -127,27 +127,6 @@
 	. = ..()
 	if(. && leaping && isliving(M) && M.is_in_hands(/obj/item/weapon/shield/riot))
 		STOP_THROWING(src, M)
-
-/mob/living/carbon/xenomorph/humanoid/hunter/proc/check_shield_dir(mob/M)
-	if(istype(M.l_hand, /obj/item/weapon/shield))
-		if(M.dir == NORTH && (dir in list(SOUTH, EAST)))
-			return TRUE
-		else if(M.dir == SOUTH && (dir in list(NORTH, WEST)))
-			return TRUE
-		else if(M.dir == EAST && (dir in list(WEST, SOUTH)))
-			return TRUE
-		else if(M.dir == WEST && (dir in list(EAST, NORTH)))
-			return TRUE
-	if(istype(M.r_hand, /obj/item/weapon/shield))
-		if(M.dir == NORTH && (dir in list(SOUTH, WEST)))
-			return TRUE
-		else if(M.dir == SOUTH && (dir in list(NORTH, EAST)))
-			return TRUE
-		else if(M.dir == EAST && (dir in list(WEST, NORTH)))
-			return TRUE
-		else if(M.dir == WEST && (dir in list(EAST, SOUTH)))
-			return TRUE
-	return FALSE
 
 /mob/living/carbon/xenomorph/humanoid/hunter/proc/toggle_invisible()
 	if(invisible)

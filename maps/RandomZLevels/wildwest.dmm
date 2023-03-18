@@ -621,7 +621,7 @@
 /area/awaymission/wildwest/mines)
 "cc" = (
 /obj/structure/table/woodentable,
-/obj/item/ammo_box/a357,
+/obj/item/ammo_box/speedloader/a357,
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
 "cd" = (
@@ -1351,7 +1351,7 @@
 "em" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/blue,
-/obj/item/ammo_box/a357,
+/obj/item/ammo_box/speedloader/a357,
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
 "en" = (
@@ -1731,7 +1731,7 @@
 /obj/structure/toilet{
 	dir = 1
 	},
-/obj/item/ammo_box/a357,
+/obj/item/ammo_box/speedloader/a357,
 /turf/simulated/floor/wood,
 /area/awaymission/wildwest/mines)
 "fr" = (

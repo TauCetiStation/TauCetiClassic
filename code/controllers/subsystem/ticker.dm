@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(ticker)
 	priority = SS_PRIORITY_TICKER
 
 	flags = SS_KEEP_TIMING
-	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
+	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME | SS_SHOW_IN_MC_TAB
 
 	msg_lobby = "Запускаем атомные сверхточные часы..."
 
@@ -113,10 +113,14 @@ SUBSYSTEM_DEF(ticker)
 			mode.process(wait * 0.1)
 
 			var/mode_finished = mode.check_finished() || (SSshuttle.location == SHUTTLE_AT_CENTCOM && SSshuttle.alert == 1)
-			if(!explosion_in_progress && mode_finished)
+			if(!explosion_in_progress && mode_finished && !SSrating.voting)
+
+				if(!SSrating.already_started)
+					start_rating_vote_if_unexpected_roundend()
+					return
+
 				current_state = GAME_STATE_FINISHED
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
-				SSrating.calculate_rating()
 				declare_completion()
 				spawn(50)
 					for(var/client/C in clients)
@@ -151,6 +155,9 @@ SUBSYSTEM_DEF(ticker)
 
 					end_timer_id = addtimer(CALLBACK(src, .proc/try_to_end), restart_timeout, TIMER_UNIQUE|TIMER_OVERRIDE)
 
+/datum/controller/subsystem/ticker/proc/start_rating_vote_if_unexpected_roundend()
+	to_chat(world, "<span class='info bold'><B>Конец раунда задержан из-за голосования.</B></span>")
+	SSrating.start_rating_collection()
 
 /datum/controller/subsystem/ticker/proc/try_to_end()
 	var/delayed = FALSE
@@ -352,6 +359,11 @@ SUBSYSTEM_DEF(ticker)
 				summary = "summary_malf"
 			else if(override == "nuclear emergency")
 				summary = "summary_nukewin"
+			else if(override == "replicators")
+				screen = "intro_malf"
+				explosion = "station_swarmed"
+				summary = "summary_replicators"
+				screen_time = 76
 
 			for(var/mob/M as anything in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
 				if(M.stat != DEAD)	//Just you wait for real destruction!

@@ -88,10 +88,14 @@
 /// from base of client/Move(): (atom/NewLoc, direction)
 #define COMSIG_CLIENTMOB_MOVE "client_move"
 	#define COMPONENT_CLIENTMOB_BLOCK_MOVE 1
+/// from base of client/Move(): (atom/NewLoc, direction), can not be blocked like the above one can.
+#define COMSIG_CLIENTMOB_MOVING "client_moving"
 /// from base of client/Move, after all movement is finished(): (atom/NewLoc, direction)
 #define COMSIG_CLIENTMOB_POSTMOVE "client_postmove"
 /// from base of mob/set_a_intent(): (new_intent)
 #define COMSIG_MOB_SET_A_INTENT "mob_set_a_intent"
+/// from base of mob/living/set_m_intent(): (new_intent)
+#define COMSIG_MOB_SET_M_INTENT "mob_set_m_intent"
 
 // /area signals
 ///from base of area/Entered(): (area/entered, atom/OldLoc)
@@ -263,6 +267,8 @@
 
 /// from  base of mob/ClickOn(): (atom/target, params)
 #define COMSIG_MOB_CLICK "mob_click"
+// from base of mob/RegularClickOn(): (atom/target, params)
+#define COMSIG_MOB_REGULAR_CLICK "regular_click"
 	#define COMPONENT_CANCEL_CLICK 1
 /// from mob/proc/slip(): (weaken_duration, obj/slipped_on, lube)
 #define COMSIG_MOB_SLIP "movable_slip"

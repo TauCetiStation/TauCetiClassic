@@ -32,6 +32,7 @@
 	STOP_PROCESSING(SSmood, src)
 	REMOVE_TRAIT(parent, TRAIT_AREA_SENSITIVE, MOOD_COMPONENT_TRAIT)
 	unmodify_hud()
+	QDEL_LIST_ASSOC_VAL(mood_events)
 	return ..()
 
 /datum/component/mood/proc/print_mood(mob/user)

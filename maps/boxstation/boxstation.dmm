@@ -902,12 +902,12 @@
 	name = "Weapons locker";
 	req_access = list(3)
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "vault"
@@ -3130,12 +3130,12 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	name = "Weapons locker"
@@ -12900,13 +12900,13 @@
 	},
 /area/station/security/prison)
 "avT" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/westleft{
 	dir = 2;
 	name = "Hydroponics";
 	req_access = list(35)
 	},
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
 "avU" = (
@@ -33270,6 +33270,9 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/machinery/telescience_jammer{
+	radius = 5
+	},
 /turf/simulated/floor/bluegrid{
 	icon_state = "dark";
 	name = "Server Walkway";
@@ -36199,8 +36202,7 @@
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/hop_office)
 "bmn" = (
-/obj/structure/table/reinforced,
-/obj/item/ashtray/plastic,
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -41668,6 +41670,10 @@
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
+/obj/item/weapon/flora/pottedplant/shoot{
+	pixel_x = 12;
+	pixel_y = 8
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -41683,12 +41689,8 @@
 	},
 /area/station/hallway/secondary/entry)
 "bwf" = (
-/obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
-/obj/item/weapon/flora/pottedplant/shoot{
-	pixel_x = -8;
-	pixel_y = 16
-	},
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -56288,6 +56290,7 @@
 	pixel_y = 23
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/table_parts/stall,
 /turf/simulated/floor/plating,
 /area/station/construction)
 "bZQ" = (
@@ -70860,7 +70863,6 @@
 /turf/simulated/floor/plating,
 /area/station/civilian/garden)
 "eAb" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
@@ -70877,6 +70879,7 @@
 	name = "Chemistry Desk";
 	req_access = list(33)
 	},
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor/plating,
 /area/station/medical/chemistry)
 "eBb" = (
@@ -71637,6 +71640,18 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
+"fAU" = (
+/obj/machinery/telescience_jammer{
+	radius = 5
+	},
+/turf/simulated/floor/bluegrid{
+	icon_state = "dark";
+	name = "Server Walkway";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/tcommsat/chamber)
 "fBb" = (
 /obj/machinery/access_button{
 	command = "cycle_exterior";
@@ -74582,6 +74597,7 @@
 /area/station/maintenance/medbay)
 "iJB" = (
 /obj/structure/table/reinforced,
+/obj/item/ashtray/plastic,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -84070,9 +84086,8 @@
 	},
 /area/station/cargo/storage)
 "ujL" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -84750,8 +84765,11 @@
 /area/station/maintenance/cargo)
 "vWz" = (
 /obj/machinery/door/firedoor,
-/obj/structure/table/reinforced,
 /obj/item/weapon/bell,
+/obj/structure/table/reinforced/stall,
+/obj/item/weapon/storage/fancy/donut_box{
+	pixel_y = 8
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -85120,6 +85138,10 @@
 /obj/item/weapon/crowbar,
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"wEP" = (
+/obj/item/weapon/table_parts/stall,
+/turf/simulated/floor,
+/area/station/construction)
 "wER" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 1
@@ -114499,7 +114521,7 @@ bUW
 bVo
 cga
 chV
-bTH
+wEP
 cmA
 cgP
 cMx
@@ -126376,7 +126398,7 @@ cIe
 crT
 crS
 csb
-cqN
+fAU
 bma
 cIe
 cIe
@@ -127664,7 +127686,7 @@ buU
 bbm
 bog
 csE
-cqN
+fAU
 bva
 cIe
 cCW
