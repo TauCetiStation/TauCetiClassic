@@ -444,7 +444,7 @@ log transactions
 					to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough [stock_type] stock to do that!</span>")
 					return
 				playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
-				spawn_ewallet(0.0, list(stock_type=stock_amount), src.loc)
+				spawn_ewallet(0.0, list("[stock_type]"=stock_amount), src.loc)
 
 			if("balance_statement")
 				if(authenticated_account)
