@@ -29,6 +29,9 @@
 		if(mind.original == src)
 			mind.original = null
 
+	for(var/datum/action/action as anything in actions)
+		action.Remove(src)
+
 	if(buckled) // simpler version of /unbuckle_mob
 		buckled.buckled_mob = null
 		SEND_SIGNAL(buckled, COMSIG_MOVABLE_UNBUCKLE, src)

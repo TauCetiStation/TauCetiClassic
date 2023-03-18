@@ -38,8 +38,6 @@
 			else
 				S.be_replaced()
 
-	remove_from_all_data_huds()
-
 	living_list -= src
 	return ..()
 
