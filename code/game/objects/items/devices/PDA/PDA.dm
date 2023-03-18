@@ -730,11 +730,13 @@
 				var/list/Item = shopping_cart[index]
 				shopping_cart_frontend.len++
 				shopping_cart_frontend[shopping_cart_frontend.len] = Item
-				var/atom/A = locate(Item["lot_item_ref"])
-				var/area/A_area = get_area(A)
-				var/dist_str = "([get_dist(A, src)]m)"
+				shopping_cart_frontend[shopping_cart_frontend.len]["area"] = "Unknown"
+				if(Item["lot_item_ref"])
+					var/atom/A = locate(Item["lot_item_ref"])
+					var/area/A_area = get_area(A)
+					var/dist_str = "([get_dist(A, src)]m)"
 
-				shopping_cart_frontend[shopping_cart_frontend.len]["area"] = "[A_area.name][dist_str]"
+					shopping_cart_frontend[shopping_cart_frontend.len]["area"] = "[A_area.name][dist_str]"
 		data["shopping_cart"] = shopping_cart_frontend
 
 		data["shopping_cart_amount"] = shopping_cart_frontend.len
@@ -1141,6 +1143,7 @@
 								if(NewLot && !NewLot.sold && (Lot.get_discounted_price() <= NewLot.get_discounted_price()))
 									if(order_onlineshop_item(owner, owner_account, NewLot, T))
 										shopping_cart[NewLot.number] = Lot.to_list()
+									else
 										to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 										return
 						to_chat(U, "<span class='notice'>ОШИБКА: Этот предмет уже куплен.</span>")
@@ -1148,6 +1151,7 @@
 
 					else if(order_onlineshop_item(owner, owner_account, Lot, T))
 						shopping_cart[Lot.number] = Lot.to_list()
+					else
 						to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 				else
 					to_chat(U, "<span class='notice'>ОШИБКА: Не введён адрес доставки.</span>")
@@ -1164,7 +1168,7 @@
 			if(!shopping_cart["[id]"])
 				to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[id].</span>")
 				return
-			if(onlineshop_mark_as_delivered(U, id, owner_account))
+			if(onlineshop_mark_as_delivered(U, id, owner_account, shopping_cart["[id]"]["postpayment"]))
 				mode = 82
 
 //SYNDICATE FUNCTIONS===================================
@@ -1689,7 +1693,7 @@
 		if(!shopping_cart["[package.lot_number]"])
 			to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[id].</span>")
 			return
-		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account))
+		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, shopping_cart["[id]"]["postpayment"]))
 			return
 
 	if(istype(target, /obj/item/smallDelivery))
@@ -1697,7 +1701,7 @@
 		if(!shopping_cart["[package.lot_number]"])
 			to_chat(user, "<span class='notice'>Это не один из твоих заказов. Это заказ номер №[id].</span>")
 			return
-		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account))
+		if(package.lot_number && onlineshop_mark_as_delivered(user, package.lot_number, owner_account, shopping_cart["[id]"]["postpayment"]))
 			return
 
 	switch(scanmode)

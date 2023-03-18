@@ -80,10 +80,10 @@ var/global/online_shop_profits = 0
 	)
 
 /datum/shop_lot/proc/get_delivery_cost()
-	return round(price * global.online_shop_delivery_cost)
+	return round(price * global.online_shop_delivery_cost, 0.1)
 
 /datum/shop_lot/proc/get_discounted_price()
-	return round((1 - global.online_shop_discount) * price)
+	return round((1 - global.online_shop_discount) * price, 0.1)
 
 /datum/shop_lot/proc/mark_delivered()
 	delivered = TRUE
@@ -153,7 +153,7 @@ var/global/online_shop_profits = 0
 		P.update_icon()
 	return TRUE
 
-/proc/onlineshop_mark_as_delivered(mob/user, id, account_number)
+/proc/onlineshop_mark_as_delivered(mob/user, id, account_number, postpayment)
 	id = "[id]"
 
 	var/datum/shop_lot/Lot = global.online_shop_lots[id]
@@ -168,7 +168,6 @@ var/global/online_shop_profits = 0
 			to_chat(user, "<span class='notice'>ОШИБКА: Никакой счёт не подвязан к данному КПК.</span>")
 		return
 
-	var/postpayment = global.online_shop_lots[id]
 	if(postpayment > MA.money)
 		if(user)
 			to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")

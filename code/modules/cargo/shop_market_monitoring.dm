@@ -47,7 +47,7 @@
 	if(!shop_lot)
 		return
 
-	if(!onlineshop_mark_as_delivered(null, lot_number, global.centcomm_account.account_number))
+	if(!onlineshop_mark_as_delivered(null, lot_number, global.centcomm_account.account_number, shop_lot["postpayment"]))
 		return
 
 	// Paying taxes on the item.
