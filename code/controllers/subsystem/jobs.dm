@@ -559,7 +559,7 @@ SUBSYSTEM_DEF(job)
 
 	return TRUE
 
-/proc/check_insurance(var/mob/living/carbon/human/H, var/salary)
+/proc/check_insurance(mob/living/carbon/human/H, var/salary)
 	var/standartprice = 80
 	var/premiumprice = 200
 
