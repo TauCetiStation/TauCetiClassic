@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(ticker)
 	priority = SS_PRIORITY_TICKER
 
 	flags = SS_KEEP_TIMING
-	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
+	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME | SS_SHOW_IN_MC_TAB
 
 	msg_lobby = "Запускаем атомные сверхточные часы..."
 
@@ -359,6 +359,11 @@ SUBSYSTEM_DEF(ticker)
 				summary = "summary_malf"
 			else if(override == "nuclear emergency")
 				summary = "summary_nukewin"
+			else if(override == "replicators")
+				screen = "intro_malf"
+				explosion = "station_swarmed"
+				summary = "summary_replicators"
+				screen_time = 76
 
 			for(var/mob/M as anything in mob_list)	//nuke kills everyone on station z-level to prevent "hurr-durr I survived"
 				if(M.stat != DEAD)	//Just you wait for real destruction!
