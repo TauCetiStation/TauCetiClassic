@@ -9,8 +9,6 @@
 	icon = 'icons/obj/podwindows.dmi'
 	icon_state = "window"
 
-	can_block_air = TRUE
-
 	max_integrity = 150
 
 	var/damage_threshold = 30

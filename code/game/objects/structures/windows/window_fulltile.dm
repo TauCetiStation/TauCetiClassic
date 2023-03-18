@@ -8,8 +8,6 @@
 	icon = 'icons/obj/smooth_structures/windows/placeholder.dmi'
 	icon_state = "window"
 
-	can_block_air = TRUE
-
 	smooth = SMOOTH_TRUE
 	canSmoothWith = CAN_SMOOTH_WITH_WALLS
 	smooth_adapters = SMOOTH_ADAPTERS_WALLS

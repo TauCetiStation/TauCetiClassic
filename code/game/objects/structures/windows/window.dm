@@ -14,6 +14,8 @@
 	integrity_failure = 0.75
 	resistance_flags = CAN_BE_HIT
 
+	can_block_air = TRUE
+
 	var/list/drops = list(/obj/item/weapon/shard)
 
 /obj/structure/window/play_attack_sound(damage_amount, damage_type, damage_flag)
