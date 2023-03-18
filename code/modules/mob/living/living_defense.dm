@@ -24,12 +24,33 @@
 /mob/living/proc/getarmor(def_zone, type)
 	return 0
 
+/mob/living/proc/is_impact_force_affected(impact_force, impact_dir)
+	if(status_flags & GODMODE)
+		return FALSE
+	if(buckled || anchored)
+		return FALSE
+	return impact_force > 0
+
+/mob/living/carbon/human/is_impact_force_affected(impact_force, impact_dir)
+	if(shoes && (shoes.flags & AIR_FLOW_PROTECT))
+		return lying || crawling
+	if(wear_suit && (wear_suit.flags & AIR_FLOW_PROTECT))
+		return lying || crawling
+
+	if(check_shield_dir(src, impact_dir))
+		return FALSE
+
+	return ..()
+
+/mob/living/proc/get_projectile_impact_force(obj/item/projectile/P, def_zone)
+	return P.impact_force
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-	if(P.impact_force) // we want this to be before everything as this is unblockable type of effect at this moment. If something changes, then mob_bullet_act() won't be needed probably as separate proc.
+	var/impact_force = get_projectile_impact_force(P, def_zone)
+	if(impact_force && is_impact_force_affected(P.impact_force, get_dir(P, src)))
 		if(isturf(loc))
 			loc.add_blood(src)
-		throw_at(get_edge_target_turf(src, P.dir), P.impact_force, 1, P.firer, spin = TRUE)
+		throw_at(get_edge_target_turf(src, P.dir), impact_force, 1, P.firer, spin = TRUE)
 
 	if(check_shields(P, P.damage, "the [P.name]", P.dir))
 		P.on_hit(src, def_zone, 100)
@@ -184,10 +205,12 @@
 		RegisterSignal(I, COMSIG_MOVABLE_MOVED, CALLBACK(src, .proc/unpin_signal, I))
 		update_canmove() // instant update, no need to wait Life() tick
 
-//This is called when the mob is thrown into a dense turf
-/mob/living/proc/turf_collision(turf/T)
-	visible_message("<span class='warning'>[src] crashed into \the [T]!</span>","<span class='danger'>You are crashed into \the [T]!</span>")
-	take_bodypart_damage(fly_speed * 5)
+/mob/living/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+
+	if(hit_atom.density)
+		visible_message("<span class='warning'>[src] crashed into \the [hit_atom]!</span>","<span class='danger'>You are crashed into \the [hit_atom]!</span>")
+		take_bodypart_damage(fly_speed * 5)
 
 /mob/living/proc/near_wall(direction, distance = 1, check_dense_objs = FALSE)
 	var/turf/T = get_step(get_turf(src), direction)

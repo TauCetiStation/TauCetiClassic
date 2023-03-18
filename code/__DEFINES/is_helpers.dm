@@ -92,6 +92,8 @@
 
 #define isgod(A) (istype(A, /mob/living/simple_animal/shade/god))
 
+#define isreplicator(A) (istype(A, /mob/living/simple_animal/hostile/replicator))
+
 // MOB
 
 #define isobserver(A) (istype(A, /mob/dead/observer))
@@ -111,6 +113,8 @@
 #define isbot(A) (istype(A, /obj/machinery/bot))
 
 #define ismachinery(A) (istype(A, /obj/machinery))
+
+#define istagger(A) (istype(A, /obj/item/device/tagger))
 
 // GOONCHAT PORT
 

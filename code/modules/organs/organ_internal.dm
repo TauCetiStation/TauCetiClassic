@@ -20,7 +20,7 @@
 
 /obj/item/organ/internal/Destroy()
 	if(parent)
-		parent.children -= src
+		parent.bodypart_organs -= src
 		parent = null
 	if(owner)
 		owner.organs -= src

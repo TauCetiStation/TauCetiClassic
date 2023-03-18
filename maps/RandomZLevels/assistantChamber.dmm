@@ -51,7 +51,7 @@
 	},
 /area/awaymission)
 "j" = (
-/obj/item/ammo_box/magazine/m50,
+/obj/item/ammo_box/magazine/deagle,
 /turf/simulated/floor{
 	icon_state = "white"
 	},

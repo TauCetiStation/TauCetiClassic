@@ -1,31 +1,19 @@
-/mob/living/silicon/robot/gib()
-	//robots don't die when gibbed. instead they drop their MMI'd brain
-	var/atom/movable/overlay/animation = null
-	notransform = TRUE
-	canmove = 0
-	icon = null
-	invisibility = 101
-
-	animation = new(loc)
-	animation.icon_state = "blank"
-	animation.icon = 'icons/mob/mob.dmi'
-	animation.master = src
-
-	flick("gibbed-r", animation)
+/mob/living/silicon/robot/spawn_gibs()
 	robogibs(loc)
 
-	alive_mob_list -= src
-	dead_mob_list -= src
-	spawn(15)
-		if(animation)	qdel(animation)
-		if(src)			qdel(src)
+/mob/living/silicon/robot/gib()
+	//robots don't die when gibbed. instead they drop their MMI'd brain
+	var/atom/movable/overlay/animation = new(loc)
+	flick(icon('icons/mob/mob.dmi', "gibbed-r"), animation)
+	..()
+	QDEL_IN(animation, 2 SECONDS)
 
 /mob/living/silicon/robot/dust()
-	dust_process()
+	if(mmi)
+		qdel(mmi)	//Delete the MMI first so that it won't go popping out.
 	new /obj/effect/decal/cleanable/ash(loc)
 	new /obj/effect/decal/remains/robot(loc)
-	if(mmi)		qdel(mmi)	//Delete the MMI first so that it won't go popping out.
-	dead_mob_list -= src
+	dust_process()
 
 /mob/living/silicon/robot/death(gibbed)
 	if(stat == DEAD)	return
