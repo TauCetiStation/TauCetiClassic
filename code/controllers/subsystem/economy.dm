@@ -33,6 +33,21 @@ SUBSYSTEM_DEF(economy)
 
 	total_department_stocks[department] += amount
 
+/datum/controller/subsystem/economy/proc/calculate_dividends(department, stock_amount)
+	if(!total_department_stocks[department])
+		return 0.0
+	if(!department_dividends[department])
+		return 0.0
+
+	var/ownership_percentage = stock_amount / total_department_stocks[department]
+	var/datum/money_account/DA = global.department_accounts[department]
+	var/dividend_payout = round(DA.money * department_dividends[department] * ownership_percentage, 0.1)
+
+	if(dividend_payout < 0.1)
+		return 0.0
+
+	return dividend_payout
+
 /datum/controller/subsystem/economy/fire()	//this prok is called once in "wait" minutes
 	set_endtime()
 	if(!global.economy_init)
@@ -43,27 +58,16 @@ SUBSYSTEM_DEF(economy)
 				charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)
 
 			var/total_dividend_payout = 0.0
-			for(var/department in total_department_stocks)
-				if(!total_department_stocks[department])
-					continue
-				if(!department_dividends[department])
-					continue
-				if(!D.stocks)
-					continue
-				if(!D.stocks[department])
-					continue
-
-				var/ownership_percentage = D.stocks[department] / total_department_stocks[department]
-				var/datum/money_account/DA = global.department_accounts[department]
-				var/dividend_payout = round(DA.money * department_dividends[department] * ownership_percentage, 0.1)
-
-				// No control package.
-				if(dividend_payout < 0.1)
-					continue
+			for(var/department in D.stocks)
+				total_dividend_payout += calculate_dividends(department, D.stocks[department])
 
 			if(total_dividend_payout > 0.0)
 				D.total_dividend_payouts += total_dividend_payout
 				charge_to_account(D.account_number, D.account_number, "Dividend payout", "StockBond", total_dividend_payout)
+
+		for(var/obj/item/weapon/spacecash/ewallet/EW as anything in global.ewallets)
+			for(var/department in EW.stocks)
+				EW.worth += calculate_dividends(department, EW.stocks[department])
 
 		monitor_cargo_shop()
 

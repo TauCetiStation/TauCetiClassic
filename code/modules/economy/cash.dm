@@ -113,6 +113,8 @@
 			new cash_type(spawnloc)
 	return
 
+var/global/list/obj/item/weapon/spacecash/ewallet/ewallets = list()
+ADD_TO_GLOBAL_LIST(/obj/item/weapon/spacecash/ewallet, ewallets)
 /obj/item/weapon/spacecash/ewallet
 	name = "Charge card"
 	icon_state = "efundcard"

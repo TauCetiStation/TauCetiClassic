@@ -98,20 +98,8 @@ log transactions
 			authenticated_account.adjust_money(SC.worth)
 			if(istype(SC, /obj/item/weapon/spacecash/ewallet))
 				var/obj/item/weapon/spacecash/ewallet/EW = SC
-				var/datum/money_account/MA = get_account(EW.owner_account_number)
-				if(MA)
-					var/valid = TRUE
-					for(var/department in EW.stocks)
-						if(MA.stocks[department] < EW.stocks[department])
-							valid = FALSE
-							break
-					if(valid)
-						stock_string = get_stocks_string(EW.stocks)
-						authenticated_account.adjust_stocks(EW.stocks)
-					else
-						to_chat(user, "<span class='warning'>Said stocks have already been redeemed from [EW.owner_name]'s account.</span>")
-				else
-					to_chat(user, "<span class='warning'>Account №[EW.owner_account_number] does not exist.</span>")
+				stock_string = get_stocks_string(EW.stocks)
+				authenticated_account.adjust_stocks(EW.stocks)
 
 			if(prob(50))
 				playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
@@ -455,10 +443,20 @@ log transactions
 				if(authenticated_account.stocks[stock_type] < stock_amount)
 					to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough [stock_type] stock to do that!</span>")
 					return
+
 				playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
-				// We decrease the stock when it is deposited. That way you don't lose out on dividends if you put up your stock for sale.
-				// authenticated_account.adjust_stock(stock_type, -stock_amount)
+				authenticated_account.adjust_stock(stock_type, -stock_amount)
 				spawn_ewallet(0.0, list("[stock_type]"=stock_amount), loc)
+
+				//create an entry in the account transaction log
+				var/datum/transaction/T = new()
+				T.target_name = authenticated_account.owner_name
+				T.purpose = "Stock withdrawal - [stock_type]: [stock_amount]"
+				T.amount = "0"
+				T.source_terminal = machine_id
+				T.date = current_date_string
+				T.time = worldtime2text()
+				authenticated_account.transaction_log.Add(T)
 
 			if("balance_statement")
 				if(authenticated_account)
