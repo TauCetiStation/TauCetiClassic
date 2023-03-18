@@ -232,7 +232,7 @@ log transactions
 								var/dividend_payout = round(1000.0 * SSeconomy.department_dividends[department] * ownership_percentage)
 								if(dividend_payout < 0.1)
 									dividend_payout = 0.0
-								dat += "<b>[department]:</b> [authenticated_account.stocks[department]]/[SSeconomy.total_department_stocks[department]]. Dividend rate: [round(SSeconomy.department_dividends[department] * 100)]%. 15 minute dividend payout per 1000$: [dividend_payout]$.<br>"
+								dat += "* <b>[department]:</b> [authenticated_account.stocks[department]]/[SSeconomy.total_department_stocks[department]]. Dividend rate: [round(SSeconomy.department_dividends[department] * 100)]%. 15 minute dividend payout per 1000$: [dividend_payout]$.<br>"
 							dat += "<form name='withdrawal_stocks' action='?src=\ref[src]' method='get'>"
 							dat += "<input type='hidden' name='src' value='\ref[src]'>"
 							dat += "<input type='hidden' name='choice' value='withdrawal_stocks'>"
@@ -444,7 +444,8 @@ log transactions
 					to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough [stock_type] stock to do that!</span>")
 					return
 				playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
-				spawn_ewallet(0.0, list("[stock_type]"=stock_amount), src.loc)
+				authenticated_account.adjust_stock(stock_type, -stock_amount)
+				spawn_ewallet(0.0, list("[stock_type]"=stock_amount), loc)
 
 			if("balance_statement")
 				if(authenticated_account)
