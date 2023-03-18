@@ -12,7 +12,7 @@
 
 /obj/item/clothing/shoes/magboots/attack_self(mob/user)
 	if(magpulse)
-		flags &= ~NOSLIP | AIR_FLOW_PROTECT
+		flags &= ~(NOSLIP | AIR_FLOW_PROTECT)
 		slowdown = SHOES_SLOWDOWN
 		magpulse = 0
 		icon_state = "[magboot_state]0"
