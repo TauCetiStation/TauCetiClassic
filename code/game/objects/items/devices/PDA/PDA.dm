@@ -679,8 +679,7 @@
 			if(!Lot)
 				online_shop_lots_latest_frontend[i] = null
 			else
-				var/datum/money_account/Acc = get_account(Lot.account)
-				online_shop_lots_latest_frontend[i] = Lot.to_list(Acc ? Acc.owner_name : "Unknown")
+				online_shop_lots_latest_frontend[i] = Lot.to_list()
 		data["latest_lots"] = online_shop_lots_latest_frontend
 
 		shop_lots = list()
@@ -731,6 +730,11 @@
 				var/list/Item = shopping_cart[index]
 				shopping_cart_frontend.len++
 				shopping_cart_frontend[shopping_cart_frontend.len] = Item
+				var/atom/A = locate(Item["lot_item_ref"])
+				var/area/A_area = get_area(A)
+				var/dist_str = "([get_dist(A, src)]m)"
+
+				shopping_cart_frontend[shopping_cart_frontend.len]["area"] = "[A_area.name][dist_str]"
 		data["shopping_cart"] = shopping_cart_frontend
 
 		data["shopping_cart_amount"] = shopping_cart_frontend.len

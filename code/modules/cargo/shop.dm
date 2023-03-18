@@ -61,8 +61,6 @@ var/global/online_shop_profits = 0
 
 /datum/shop_lot/proc/to_list()
 	var/datum/money_account/MA = get_account(account)
-	var/atom/A = locate(lot_item_ref)
-	var/area/A_area = get_area(A)
 
 	var/price_str = "[get_discounted_price() + get_delivery_cost()]"
 	if(global.online_shop_discount)
@@ -77,7 +75,7 @@ var/global/online_shop_profits = 0
 		"delivered" = delivered,
 		"postpayment" = get_discounted_price(),
 		"icon" = item_icon,
-		"area" = A_area.name,
+		"lot_item_ref" = lot_item_ref,
 	)
 
 /datum/shop_lot/proc/get_delivery_cost()
