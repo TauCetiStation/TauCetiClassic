@@ -18,6 +18,7 @@
 							//1 - require manual login / account number and pin
 							//2 - require card and manual login
 	var/list/stocks
+	var/total_dividend_payouts = 0.0
 
 /datum/money_account/New()
 	all_money_accounts += src
@@ -27,17 +28,19 @@
 	all_money_accounts -= src
 	return ..()
 
-/datum/money_account/proc/adjust_stocks(department, amount)
+/datum/money_account/proc/adjust_stock(department, amount)
 	LAZYINITLIST(stocks)
 
 	if(!stocks[department])
 		LAZYSET(stocks, department, 0)
 
 	stocks[department] += amount
+	if(stocks[department] <= 0.0)
+		LAZYREMOVE(stocks, department)
 
-/datum/money_account/proc/adjust_stocks_list(list/new_stocks)
+/datum/money_account/proc/adjust_stocks(list/new_stocks)
 	for(var/department in new_stocks)
-		adjust_stocks(department, new_stocks[department])
+		adjust_stock(department, new_stocks[department])
 
 /datum/money_account/proc/adjust_money(amount)
 	money = clamp(money + amount, MIN_MONEY_ON_ACCOUNT, MAX_MONEY_ON_ACCOUNT)
@@ -103,7 +106,7 @@
 
 	for(var/department in department_stocks)
 		SSeconomy.print_stocks(department, department_stocks[department])
-		M.adjust_stocks(department, department_stocks[department])
+		transfer_stock_to_account(M.account_number, "CentComm", "Stock transfer - [department]: [department_stocks[department]]", "NTGalaxyNet Terminal #[rand(111,1111)]", department, department_stocks[department], pda_inform=FALSE)
 
 	if(H.mind)
 		var/remembered_info = ""
@@ -196,6 +199,29 @@
 				global.online_shop_profits += money
 
 			return TRUE
+	return FALSE
+
+/proc/transfer_stock_to_account(attempt_account_number, source_name, purpose, terminal_id, department, amount, pda_inform=TRUE)
+	amount = round(amount, 1)
+	for(var/datum/money_account/D in all_money_accounts)
+		if(D.account_number != attempt_account_number || !D.suspended)
+			continue
+		D.adjust_stock(department, amount)
+
+		//create a transaction log entry
+		var/datum/transaction/T = new()
+		T.target_name = source_name
+		T.purpose = purpose
+		T.amount = "0"
+		T.date = current_date_string
+		T.time = worldtime2text()
+		T.source_terminal = terminal_id
+		D.transaction_log.Add(T)
+
+		if(D.owner_PDA && pda_inform)
+			D.owner_PDA.transaction_stock_inform(source_name, terminal_id, department, amount)
+
+		return TRUE
 	return FALSE
 
 //this returns the first account datum that matches the supplied accnum/pin combination, it returns null if the combination did not match any account

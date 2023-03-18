@@ -131,9 +131,9 @@
 		if(worth > 0)
 			to_chat(user, "<span class='notice'>Credits remaining: [src.worth].</span>")
 		if(stocks)
-			to_chat(user, "<span class='notice'>Charge card's stocks: [get_stocks_string()].</span>")
+			to_chat(user, "<span class='notice'>Charge card's stocks: [get_stocks_string(stocks)].</span>")
 
-/obj/item/weapon/spacecash/ewallet/proc/get_stocks_string()
+/proc/get_stocks_string(list/stocks)
 	. = ""
 	var/first = TRUE
 	for(var/department in stocks)

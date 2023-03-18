@@ -98,8 +98,8 @@ log transactions
 			authenticated_account.adjust_money(SC.worth)
 			if(istype(SC, /obj/item/weapon/spacecash/ewallet))
 				var/obj/item/weapon/spacecash/ewallet/EW = SC
-				stock_string = EW.get_stocks_string()
-				authenticated_account.adjust_stocks_list(EW.stocks)
+				stock_string = get_stocks_string(EW.stocks)
+				authenticated_account.adjust_stocks(EW.stocks)
 
 			if(prob(50))
 				playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
@@ -210,6 +210,8 @@ log transactions
 						dat += "<input type='hidden' name='choice' value='transfer'>"
 						dat += "Target account number: <input type='text' name='target_acc_number' value='' style='width:200px; background-color:white;'><br>"
 						dat += "Funds to transfer: <input type='text' name='funds_amount' value='' style='width:200px; background-color:white;'><br>"
+						if(authenticated_account.stocks)
+							dat += "Stock type to transfer: <input type='text' name='stock_type' value='' style='width:100px; background-color:white;'> Amount: <input type='text' name='stock_amount' value='' style='width:100px; background-color:white;'><br>"
 						dat += "Transaction purpose: <input type='text' name='purpose' value='Funds transfer' style='width:200px; background-color:white;'><br>"
 						dat += "<input type='submit' value='Transfer funds'><br>"
 						dat += "</form>"
@@ -222,6 +224,20 @@ log transactions
 						dat += "<input type='hidden' name='choice' value='withdrawal'>"
 						dat += "<input type='text' name='funds_amount' value='' style='width:200px; background-color:white;'><input type='submit' value='Withdraw funds'>"
 						dat += "</form>"
+						if(authenticated_account.stocks)
+							dat += "<b>Total dividend payouts:</b> [authenticated_account.total_dividend_payouts]$<br>"
+							dat += "List of owned <b>stocks:</b><br>"
+							for(var/department in authenticated_account.stocks)
+								var/ownership_percentage = authenticated_account.stocks[department] / SSeconomy.total_department_stocks[department]
+								var/dividend_payout = round(1000.0 * SSeconomy.department_dividends[department] * ownership_percentage)
+								if(dividend_payout < 0.1)
+									dividend_payout = 0.0
+								dat += "<b>[department]:</b> [authenticated_account.stocks[department]]/[SSeconomy.total_department_stocks[department]]. Dividend rate: [round(SSeconomy.department_dividends[department] * 100)]%. 15 minute dividend payout per 1000$: [dividend_payout]$.<br>"
+							dat += "<form name='withdrawal_stocks' action='?src=\ref[src]' method='get'>"
+							dat += "<input type='hidden' name='src' value='\ref[src]'>"
+							dat += "<input type='hidden' name='choice' value='withdrawal_stocks'>"
+							dat += "Type: <input type='text' name='stock_type' value='' style='width:100px; background-color:white;'> Amount: <input type='text' name='stock_amount' value='' style='width:100px; background-color:white;'><input type='submit' value='Withdraw stock'>"
+							dat += "</form>"
 						dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=1'>Change account security level</a><br>"
 						dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=2'>Make transfer</a><br>"
 						dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=3'>View transaction log</a><br>"
@@ -243,6 +259,55 @@ log transactions
 /obj/machinery/atm/is_operational()
 	return TRUE
 
+/obj/machinery/atm/proc/transfer_money(target_account, transfer_amount, transfer_purpose)
+	if(transfer_amount > authenticated_account.money)
+		to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough funds to do that!</span>")
+		return FALSE
+
+	if(!charge_to_account(target_account, authenticated_account.owner_name, transfer_purpose, machine_id, transfer_amount))
+		to_chat(usr, "[bicon(src)]<span class='warning'>Funds transfer failed.</span>")
+		return FALSE
+
+	to_chat(usr, "[bicon(src)]<span class='info'>Funds transfer successful.</span>")
+	authenticated_account.adjust_money(-transfer_amount)
+
+	//create an entry in the account transaction log
+	var/datum/transaction/T = new()
+	T.target_name = "Account #[target_account]"
+	T.purpose = transfer_purpose
+	T.source_terminal = machine_id
+	T.date = current_date_string
+	T.time = worldtime2text()
+	T.amount = "([transfer_amount])"
+	authenticated_account.transaction_log.Add(T)
+	return TRUE
+
+/obj/machinery/atm/proc/transfer_stocks(target_account, department, transfer_amount, transfer_purpose)
+	if(!authenticated_account.stocks)
+		to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough stock to do that!</span>")
+		return FALSE
+	if(transfer_amount > authenticated_account.stocks[department])
+		to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough stock to do that!</span>")
+		return FALSE
+
+	if(!transfer_stock_to_account(target_account, authenticated_account.owner_name, transfer_purpose, machine_id, department, transfer_amount))
+		to_chat(usr, "[bicon(src)]<span class='warning'>Funds transfer failed.</span>")
+		return FALSE
+
+	to_chat(usr, "[bicon(src)]<span class='info'>Funds transfer successful.</span>")
+	authenticated_account.adjust_stock(department, -transfer_amount)
+
+	//create an entry in the account transaction log
+	var/datum/transaction/T = new()
+	T.target_name = "Account #[target_account]"
+	T.purpose = transfer_purpose
+	T.source_terminal = machine_id
+	T.date = current_date_string
+	T.time = worldtime2text()
+	T.amount = "0"
+	authenticated_account.transaction_log.Add(T)
+	return TRUE
+
 /obj/machinery/atm/Topic(href, href_list)
 	. = ..()
 	if(!.)
@@ -251,31 +316,28 @@ log transactions
 	if(href_list["choice"])
 		switch(href_list["choice"])
 			if("transfer")
-				if(authenticated_account)
-					var/transfer_amount = text2num(href_list["funds_amount"])
-					if(transfer_amount <= 0)
-						tgui_alert(usr, "That is not a valid amount.")
-					else if(transfer_amount <= authenticated_account.money)
-						var/target_account = text2num(href_list["target_acc_number"])
-						var/transfer_purpose = href_list["purpose"]
-						if(charge_to_account(target_account, authenticated_account.owner_name, transfer_purpose, machine_id, transfer_amount))
-							to_chat(usr, "[bicon(src)]<span class='info'>Funds transfer successful.</span>")
-							authenticated_account.adjust_money(-transfer_amount)
+				if(!authenticated_account)
+					return
+				var/target_account = text2num(href_list["target_acc_number"])
+				var/money_amount = text2num(href_list["funds_amount"])
+				var/stock_type = text2num(href_list["stock_type"])
+				var/stock_amount = text2num(href_list["stock_amount"])
 
-							//create an entry in the account transaction log
-							var/datum/transaction/T = new()
-							T.target_name = "Account #[target_account]"
-							T.purpose = transfer_purpose
-							T.source_terminal = machine_id
-							T.date = current_date_string
-							T.time = worldtime2text()
-							T.amount = "([transfer_amount])"
-							authenticated_account.transaction_log.Add(T)
-						else
-							to_chat(usr, "[bicon(src)]<span class='warning'>Funds transfer failed.</span>")
+				var/show_invalid_amount_message = FALSE
 
-					else
-						to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough funds to do that!</span>")
+				if(money_amount > 0.0)
+					transfer_money(target_account, money_amount, href_list["purpose"])
+				else if(stock_amount <= 0.0)
+					show_invalid_amount_message = TRUE
+
+				if(stock_amount > 0.0)
+					transfer_stocks(target_account, stock_type, stock_amount, href_list["purpose"])
+				else if(money_amount <= 0.0)
+					show_invalid_amount_message = TRUE
+
+				if(show_invalid_amount_message)
+					tgui_alert(usr, "That is not a valid amount.")
+
 			if("view_screen")
 				view_screen = text2num(href_list["view_screen"])
 			if("change_security_level")
@@ -365,6 +427,25 @@ log transactions
 							authenticated_account.transaction_log.Add(T)
 						else
 							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough funds to do that!</span>")
+
+			if("withdrawal_stocks")
+				var/stock_amount = max(text2num(href_list["stock_amount"]),0)
+				if(stock_amount <= 0)
+					tgui_alert(usr, "That is not a valid amount.")
+					return
+
+				var/stock_type = href_list["stock_type"]
+				if(!authenticated_account.stocks)
+					return
+				if(!authenticated_account.stocks[stock_type])
+					tgui_alert(usr, "No stock of type [stock_type] on this account.")
+					return
+				if(authenticated_account.stocks[stock_type] < stock_amount)
+					to_chat(usr, "[bicon(src)]<span class='warning'>You don't have enough [stock_type] stock to do that!</span>")
+					return
+				playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
+				spawn_ewallet(0.0, list(stock_type=stock_amount), src.loc)
+
 			if("balance_statement")
 				if(authenticated_account)
 					var/obj/item/weapon/paper/R = new(src.loc)
@@ -373,6 +454,8 @@ log transactions
 					R.info += "<i>Account holder:</i> [authenticated_account.owner_name]<br>"
 					R.info += "<i>Account number:</i> [authenticated_account.account_number]<br>"
 					R.info += "<i>Balance:</i> $[authenticated_account.money]<br>"
+					if(authenticated_account.stocks)
+						R.info += "<i>Owned stocks:</i> [get_stocks_string(authenticated_account.stocks)]<br>"
 					R.info += "<i>Date and time:</i> [worldtime2text()], [current_date_string]<br><br>"
 					R.info += "<i>Service terminal ID:</i> [machine_id]<br>"
 					R.update_icon()

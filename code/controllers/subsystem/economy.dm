@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(economy)
 	name = "Economy"
-	wait = 15 MINUTES
+	wait = 1 MINUTE
 	init_order = SS_INIT_DEFAULT
 	flags = SS_NO_INIT
 
@@ -48,15 +48,21 @@ SUBSYSTEM_DEF(economy)
 					continue
 				if(!department_dividends[department])
 					continue
+				if(!D.stocks)
+					continue
+				if(!D.stocks[department])
+					continue
 
 				var/ownership_percentage = D.stocks[department] / total_department_stocks[department]
-				var/dividend_payout = round(global.department_accounts["Cargo"] * department_dividends[department] * ownership_percentage)
+				var/datum/money_account/DA = global.department_accounts[department]
+				var/dividend_payout = round(DA.money * department_dividends[department] * ownership_percentage)
 
 				// No control package.
 				if(dividend_payout < 0.1)
 					continue
 
 			if(total_dividend_payout > 0.0)
+				D.total_dividend_payouts += total_dividend_payout
 				charge_to_account(D.account_number, D.account_number, "Dividend payout", "StockBond", total_dividend_payout)
 
 		monitor_cargo_shop()
