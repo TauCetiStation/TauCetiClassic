@@ -37,7 +37,11 @@
 	if(!(volume >= 3))
 		return
 
-	if(!self.data["donor"] || istype(self.data["donor"], /mob/living/carbon/human))
+	var/mob/living/carbon/donor = locate(self.data["donor"])
+	if(!istype(donor)) // if donor was deleted and ref changed to random thing
+		donor = null
+
+	if(!donor || ishuman(donor))
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T //find some blood here
 		if(!blood_prop) //first blood!
 			blood_prop = new(T)
@@ -50,13 +54,13 @@
 		if(self.data["virus2"])
 			blood_prop.virus2 = virus_copylist(self.data["virus2"])
 
-	else if(istype(self.data["donor"], /mob/living/carbon/monkey))
+	else if(ismonkey(donor))
 		var/obj/effect/decal/cleanable/blood/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)
 			blood_prop.blood_DNA["Non-Human DNA"] = "A+"
 
-	else if(istype(self.data["donor"], /mob/living/carbon/xenomorph))
+	else if(isxeno(donor))
 		var/obj/effect/decal/cleanable/blood/xeno/blood_prop = locate() in T
 		if(!blood_prop)
 			blood_prop = new(T)

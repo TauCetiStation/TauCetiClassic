@@ -349,7 +349,7 @@
 			P.pixel_y = location.pixel_y
 			P.activate()
 
-/obj/item/projectile/proc/Fire(atom/A, mob/living/user)
+/obj/item/projectile/proc/Fire(atom/A, mob/living/user, params=null)
 	var/turf/T = get_turf(user)
 	var/turf/U = get_turf(A)
 	firer = user
@@ -359,6 +359,14 @@
 	current = T
 	yo = U.y - T.y
 	xo = U.x - T.x
+
+	if(params)
+		var/list/mouse_control = params2list(params)
+		if(mouse_control[ICON_X])
+			p_x = text2num(mouse_control[ICON_X])
+		if(mouse_control[ICON_Y])
+			p_y = text2num(mouse_control[ICON_Y])
+
 	process()
 
 /obj/item/projectile/test //Used to see if you can hit them.
