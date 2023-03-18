@@ -6,6 +6,7 @@
 	density = TRUE
 	var/sortTag = ""
 	var/lot_number = null
+	var/image/lot_lock_image
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
@@ -69,6 +70,7 @@
 	icon_state = "deliverycrateSmall"
 	var/sortTag = ""
 	var/lot_number = null
+	var/image/lot_lock_image
 
 	max_integrity = 5
 	damage_deflection = 0
