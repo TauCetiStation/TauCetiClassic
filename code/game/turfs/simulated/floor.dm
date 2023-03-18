@@ -126,6 +126,9 @@ var/global/list/wood_icons = list("wood","wood-broken")
 		if(W.dir == dir_to) //Same direction
 			W.fire_act(adj_air, adj_temp, adj_volume)
 
+	for(var/obj/structure/window/fulltile/W in src)
+		W.fire_act(adj_air, adj_temp, adj_volume)
+
 /turf/simulated/floor/blob_act()
 	return
 
