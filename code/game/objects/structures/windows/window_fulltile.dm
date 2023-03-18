@@ -143,6 +143,8 @@
 	max_integrity = 100
 	damage_threshold = 15
 
+	disassemble_glass_type = /obj/item/stack/sheet/rglass
+
 /**
  * Fulltile reinforced phoron
  */
