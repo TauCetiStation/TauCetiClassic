@@ -33271,6 +33271,9 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/machinery/telescience_jammer{
+	radius = 5
+	},
 /turf/simulated/floor/bluegrid{
 	icon_state = "dark";
 	name = "Server Walkway";
@@ -71638,6 +71641,18 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
+"fAU" = (
+/obj/machinery/telescience_jammer{
+	radius = 5
+	},
+/turf/simulated/floor/bluegrid{
+	icon_state = "dark";
+	name = "Server Walkway";
+	nitrogen = 500;
+	oxygen = 0;
+	temperature = 80
+	},
+/area/station/tcommsat/chamber)
 "fBb" = (
 /obj/machinery/access_button{
 	command = "cycle_exterior";
@@ -126384,7 +126399,7 @@ cIe
 crT
 crS
 csb
-cqN
+fAU
 bma
 cIe
 cIe
@@ -127672,7 +127687,7 @@ buU
 bbm
 bog
 csE
-cqN
+fAU
 bva
 cIe
 cCW

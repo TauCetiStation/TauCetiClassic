@@ -138,15 +138,6 @@
 	. = ..()
 	reagents.add_reagent("cyanide", 50)
 
-/obj/item/weapon/reagent_containers/pill/adminordrazine
-	name = "Adminordrazine pill"
-	desc = "It's magic. We don't have to explain it."
-	icon_state = "pill16"
-
-/obj/item/weapon/reagent_containers/pill/adminordrazine/atom_init()
-	. = ..()
-	reagents.add_reagent("adminordrazine", 50)
-
 /obj/item/weapon/reagent_containers/pill/stox
 	name = "Sleeping pill (15u)"
 	desc = "Commonly used to treat insomnia."
