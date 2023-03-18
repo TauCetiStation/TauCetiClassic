@@ -69,7 +69,7 @@
 	return ..()
 
 /obj/structure/window/fulltile/attackby(obj/item/W, mob/user)
-	if(isscrewing(W))
+	if(isprying(W))
 		if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to unfasten the window from the frame.</span>"))
 			return
 
