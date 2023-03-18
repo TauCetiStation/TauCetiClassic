@@ -1135,16 +1135,16 @@
 						if(online_shop_lots_hashed.Find(Lot.hash))
 							for(var/datum/shop_lot/NewLot in online_shop_lots_hashed[Lot.hash])
 								if(NewLot && !NewLot.sold && (Lot.get_discounted_price() <= NewLot.get_discounted_price()))
-									if(!order_onlineshop_item(owner, owner_account, NewLot, T))
+									if(order_onlineshop_item(owner, owner_account, NewLot, T))
 										shopping_cart[NewLot.number] = Lot.to_list()
 										to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
-									return
+										return
 						to_chat(U, "<span class='notice'>ОШИБКА: Этот предмет уже куплен.</span>")
 						return
-					else
-						if(!order_onlineshop_item(owner, owner_account, Lot, T))
-							shopping_cart[Lot.number] = Lot.to_list()
-							to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
+
+					else if(order_onlineshop_item(owner, owner_account, Lot, T))
+						shopping_cart[Lot.number] = Lot.to_list()
+						to_chat(U, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 				else
 					to_chat(U, "<span class='notice'>ОШИБКА: Не введён адрес доставки.</span>")
 
@@ -1836,53 +1836,6 @@
 /obj/item/device/pda/proc/check_rank(rank)
 	if((rank in command_positions) || (rank == "Quartermaster"))
 		boss_PDA = 1
-
-/obj/item/device/pda/proc/order_item(datum/shop_lot/Lot, destination)
-	var/datum/money_account/MA = get_account(owner_account)
-	if(!MA || !Lot)
-		return FALSE
-
-	var/discount_price = Lot.get_discounted_price()
-	var/delivery_cost = Lot.get_delivery_cost()
-
-	if(delivery_cost > MA.money)
-		return FALSE
-	Lot.sold = TRUE
-	for(var/i=1, i<=3, i++)
-		if(global.online_shop_lots_latest[i] == Lot)
-			global.online_shop_lots_latest[i] = null
-			break
-	var/datum/money_account/Acc = get_account(Lot.account)
-	shopping_cart[Lot.number] = Lot.to_list(Acc ? Acc.owner_name : "Unknown", discount_price)
-
-	global.shop_categories[Lot.category]--
-
-	charge_to_account(MA.account_number, global.cargo_account.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -delivery_cost)
-	charge_to_account(global.cargo_account.account_number, MA.account_number, "Предоплата за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, delivery_cost)
-
-	for(var/obj/machinery/computer/cargo/Console in global.cargo_consoles)
-		if(istype(Console, /obj/machinery/computer/cargo/request))
-			continue
-		var/obj/item/weapon/paper/P = new(get_turf(Console.loc))
-
-		P.name = "Заказ предмета №[Lot.number] из магазина"
-		P.info += "Посылка номер №[Lot.number]<br>"
-		P.info += "Наименование: [Lot.name]<br>"
-		P.info += "Цена: [Lot.price]$<br>"
-		P.info += "Заказал: [owner ? owner : "Unknown"]<br>"
-		P.info += "Подпись заказчика: <span class=\"sign_field\"></span><br>"
-		P.info += "Комментарий: [destination]<br>"
-		P.info += "<hr>"
-		P.info += "МЕСТО ДЛЯ ШТАМПОВ:<br>"
-
-		var/obj/item/weapon/pen/Pen = new(src)
-
-		P.parsepencode(P.info, Pen)
-		P.updateinfolinks()
-		qdel(Pen)
-
-		P.update_icon()
-	return TRUE
 
 /obj/item/device/pda/proc/mark_as_delivered(mob/user, id)
 	id = "[id]"

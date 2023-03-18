@@ -238,6 +238,8 @@
 
 	var/label = ""
 
+	var/next_instruction = 0
+
 /obj/item/device/tagger/shop
 	name = "shop tagger"
 	desc = "Используется для наклейки ценников и бирок."
@@ -387,7 +389,9 @@
 
 	target.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
 
-	to_chat(user, "<span class='notice'>Осталось отправить этот предмет по пневмопочте(смыть в мусорку) или выставить на прилавок - и денюжки будут у тебя в кармане!</span>")
+	if(next_instruction < world.time)
+		next_instruction = world.time + 30 SECONDS
+		to_chat(user, "<span class='notice'>Осталось отправить этот предмет по пневмопочте(смыть в мусорку) или выставить на прилавок - и денюжки будут у тебя в кармане!</span>")
 
 	if(user.client && LAZYACCESS(user.client.browsers, "destTagScreen"))
 		openwindow(user)
