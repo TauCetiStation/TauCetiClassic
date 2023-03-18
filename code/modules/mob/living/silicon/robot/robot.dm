@@ -224,6 +224,7 @@
 			module_sprites["Drone"] = "drone-service" // How does this even work...? Oh well.
 			module_sprites["Acheron"] = "mechoid-Service"
 			module_sprites["Kodiak"] = "kodiak-service"
+			module_sprites["Maid"] = "kerfusMaid"
 
 		if("Science")
 			module = new /obj/item/weapon/robot_module/science(src)
@@ -275,6 +276,7 @@
 				module_sprites["Drone"] = "drone-sec"
 				module_sprites["Acheron"] = "mechoid-Security"
 				module_sprites["Kodiak"] = "kodiak-sec"
+				module_sprites["NO ERP"] = "kerfusNoERP"
 			else
 				to_chat(src, "<span class='warning'>#Error: Safety Protocols enabled. Security module is not allowed.</span>")
 				return
@@ -292,6 +294,7 @@
 			module_sprites["Drone"] = "drone-engineer"
 			module_sprites["Acheron"] = "mechoid-Engineering"
 			module_sprites["Kodiak"] = "kodiak-eng"
+			module_sprites["Flushed"] = "kerfusFlushed"
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
@@ -309,9 +312,6 @@
 			module_sprites["Marina"] = "marina-peace"
 			module_sprites["Sleak"] = "sleek-peace"
 			module_sprites["Nanotrasen"] = "kerfusNT"
-			module_sprites["Flushed"] = "kerfusFlushed"
-			module_sprites["NO ERP"] = "kerfusNoERP"
-			module_sprites["Maid"] = "kerfusMaid"
 
 		if("Combat")
 			build_combat_borg()
