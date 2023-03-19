@@ -19,6 +19,15 @@ SUBSYSTEM_DEF(economy)
 
 	LAZYSET(department_dividends, department, rate)
 
+/datum/controller/subsystem/economy/proc/get_stock_split(department)
+	if(!stock_splits)
+		return 1.0
+
+	if(!stock_splits[department])
+		return 1.0
+
+	return stock_splits[department]
+
 /datum/controller/subsystem/economy/proc/split_shares(department, split)
 	LAZYINITLIST(stock_splits)
 
@@ -41,6 +50,12 @@ SUBSYSTEM_DEF(economy)
 		LAZYSET(stock_splits, department, 1.0)
 
 	total_department_stocks[department] += amount
+
+/datum/controller/subsystem/economy/proc/issue_founding_stock(account_number, department, amount)
+	var/stock_split = get_stock_split(department)
+	var/stock_amount = amount * stock_split
+	print_stocks(department, stock_amount)
+	transfer_stock_to_account(account_number, "StockBond", "Stock transfer - [department]: [stock_amount]", "NTGalaxyNet Terminal #[rand(111,1111)]", department, stock_amount, pda_inform=FALSE)
 
 /datum/controller/subsystem/economy/proc/calculate_dividends(capital, department, stock_amount)
 	if(!total_department_stocks[department])

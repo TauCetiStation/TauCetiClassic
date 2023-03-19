@@ -105,12 +105,7 @@
 	var/datum/money_account/M = create_account(H.real_name, start_money, null, H.age)
 
 	for(var/department in department_stocks)
-		var/stock_split = LAZYACCESS(SSeconomy.stock_splits, department)
-		if(!stock_split)
-			stock_split = 1.0
-		var/stock_amount = department_stocks[department] * stock_split
-		SSeconomy.print_stocks(department, stock_amount)
-		transfer_stock_to_account(M.account_number, "StockBond", "Stock transfer - [department]: [stock_amount]", "NTGalaxyNet Terminal #[rand(111,1111)]", department, stock_amount, pda_inform=FALSE)
+		SSeconomy.issue_founding_stock(M.account_number, department, department_stocks[department])
 
 	if(H.mind)
 		var/remembered_info = ""
@@ -216,7 +211,7 @@
 		var/datum/transaction/T = new()
 		T.target_name = source_name
 		T.purpose = purpose
-		T.amount = "0"
+		T.amount = "[get_stocks_string(list(department=amount))]"
 		T.date = current_date_string
 		T.time = worldtime2text()
 		T.source_terminal = terminal_id

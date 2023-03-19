@@ -109,6 +109,8 @@ var/global/initial_station_money = 7500
 
 	cargo_account = department_accounts["Cargo"]
 	SSeconomy.set_dividend_rate("Cargo", 0.05)
+	// Is needed in case no Cargo members but HoP wants to sell stock.
+	SSeconomy.issue_founding_stock(cargo_account.account_number, "Cargo", 10)
 
 	create_department_account("CentComm")
 	global.centcomm_account = department_accounts["CentComm"]
@@ -121,26 +123,29 @@ var/global/initial_station_money = 7500
 	return 1
 
 /proc/create_station_account()
-	if(!station_account)
-		next_account_number = rand(111111, 999999)
+	if(station_account)
+		return
+	next_account_number = rand(111111, 999999)
 
-		station_account = new()
-		station_account.owner_name = "[station_name()] Station Account"
-		station_account.account_number = rand(111111, 999999)
-		station_account.remote_access_pin = rand(1111, 111111)
-		station_account.security_level = 1
-		station_account.money = global.initial_station_money
+	station_account = new()
+	station_account.owner_name = "[station_name()] Station Account"
+	station_account.account_number = rand(111111, 999999)
+	station_account.remote_access_pin = rand(1111, 111111)
+	station_account.security_level = 1
+	station_account.money = global.initial_station_money
+	// Station gets a slight rebound on all cargo activity from stock ownership. In theory HoP or Captain can also sell this.
+	SSeconomy.issue_founding_stock(station_account.account_number, "Cargo", 10)
 
-		//create an entry in the account transaction log for when it was created
-		var/datum/transaction/T = new()
-		T.target_name = station_account.owner_name
-		T.purpose = "Account creation"
-		T.amount = station_account.money
-		T.date = "2nd April, [gamestory_start_year]"
-		T.time = "11:24"
-		T.source_terminal = "Biesel GalaxyNet Terminal #277"
+	//create an entry in the account transaction log for when it was created
+	var/datum/transaction/T = new()
+	T.target_name = station_account.owner_name
+	T.purpose = "Account creation"
+	T.amount = station_account.money
+	T.date = "2nd April, [gamestory_start_year]"
+	T.time = "11:24"
+	T.source_terminal = "Biesel GalaxyNet Terminal #277"
 
-		station_account.transaction_log.Add(T)
+	station_account.transaction_log.Add(T)
 
 /proc/create_department_account(department)
 	next_account_number = rand(111111, 999999)
