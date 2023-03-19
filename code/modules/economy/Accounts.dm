@@ -211,7 +211,7 @@
 		var/datum/transaction/T = new()
 		T.target_name = source_name
 		T.purpose = purpose
-		T.amount = "[get_stocks_string(list(department=amount))]"
+		T.amount = "0"
 		T.date = current_date_string
 		T.time = worldtime2text()
 		T.source_terminal = terminal_id
