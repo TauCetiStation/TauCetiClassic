@@ -334,7 +334,6 @@
 	data["ticks"]++
 
 /datum/reagent/consumable/psilocybin/on_skrell_digest(mob/living/M)
-
 	M.adjustDrugginess(3)
 	M.nutrition += 10 * REM
 	return FALSE
