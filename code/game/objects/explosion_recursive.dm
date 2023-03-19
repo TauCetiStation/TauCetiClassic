@@ -26,7 +26,7 @@ var/global/list/explosion_turfs = list()
 	playsound(epicenter, pick(SOUNDIN_EXPLOSION), VOL_EFFECTS_MASTER, null, FALSE, null, round(power,1) )
 
 	explosion_in_progress = 1
-	explosion_turfs = list()
+	explosion_turfs // = list()
 
 	explosion_turfs[epicenter] = power
 
@@ -111,11 +111,14 @@ var/global/list/explosion_turfs = list()
 		CHECK_TICK
 
 	var/turf/T = get_step(src, direction)
-	T.explosion_spread(spread_power, direction)
+	if(T)
+		T.explosion_spread(spread_power, direction)
 	T = get_step(src, turn(direction,90))
-	T.explosion_spread(side_spread_power, turn(direction,90))
+	if(T)
+		T.explosion_spread(side_spread_power, turn(direction,90))
 	T = get_step(src, turn(direction,-90))
-	T.explosion_spread(side_spread_power, turn(direction,90))
+	if(T)
+		T.explosion_spread(side_spread_power, turn(direction,90))
 
 	/*
 	for(var/direction in cardinal)
