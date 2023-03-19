@@ -75,7 +75,9 @@ SUBSYSTEM_DEF(economy)
 	addtimer(CALLBACK(src, .proc/dividend_payment), 1 MINUTE)
 
 /datum/controller/subsystem/economy/proc/dividend_payment()
+	// All investors should have an equal opportunity to profit. Thus capital amount should be tallied before dividend distribution.
 	var/list/capitals = list()
+	// If we want all dividend payouts to be traceable `total_dividend_payout` and `departmental_payouts` should be removed in favour of per-stock transactions.
 	var/list/departmental_payouts = list()
 
 	for(var/department in total_department_stocks)
