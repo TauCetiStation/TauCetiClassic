@@ -236,7 +236,7 @@ log transactions
 							dat += "<form name='withdrawal_stocks' action='?src=\ref[src]' method='get'>"
 							dat += "<input type='hidden' name='src' value='\ref[src]'>"
 							dat += "<input type='hidden' name='choice' value='withdrawal_stocks'>"
-							dat += "Type: <input type='text' name='stock_type' value='' style='width:100px; background-color:white;'> Amount: <input type='text' name='stock_amount' value='' style='width:100px; background-color:white;'><input type='submit' value='Withdraw stock'>"
+							dat += "Type: <input type='text' name='stock_type' value='' style='width:100px; background-color:white;'> Amount: <input type='text' name='stock_amount' value='' style='width:100px; background-color:white;'>&nbsp;<input type='submit' value='Withdraw stock'>"
 							dat += "</form>"
 						dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=1'>Change account security level</a><br>"
 						dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=2'>Make transfer</a><br>"
