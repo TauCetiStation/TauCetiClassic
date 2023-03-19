@@ -2,9 +2,10 @@
 	desc = "A flimsy lattice of metal rods, with screws to secure it to the floor."
 	name = "grille"
 	icon = 'icons/obj/smooth_structures/grille.dmi'
-	icon_state = "box"
+	//icon_state = "box"
+	icon_state = "center_8"
 
-	smooth = SMOOTH_TRUE
+	//smooth = SMOOTH_TRUE
 	//canSmoothWith = CAN_SMOOTH_WITH_WALLS
 
 	density = TRUE
@@ -21,6 +22,7 @@
 	var/damaged = FALSE
 
 /obj/structure/grille/window // experiment: subtype for better visual with windows
+	smooth = SMOOTH_TRUE
 	canSmoothWith = CAN_SMOOTH_WITH_WALLS
 
 /obj/structure/grille/atom_init(mapload, unanchored = FALSE)
