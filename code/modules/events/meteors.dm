@@ -110,16 +110,16 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 	switch(startSide)
 		if(NORTH)
 			starty = world.maxy - (TRANSITIONEDGE + MAP_EDGE_PAD)
-			startx = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxx - (TRANSITIONEDGE + MAP_EDGE_PAD))
+			startx = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxx - (TRANSITIONEDGE + MAP_EDGE_PAD))
 		if(EAST)
-			starty = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxy - (TRANSITIONEDGE + MAP_EDGE_PAD))
+			starty = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxy - (TRANSITIONEDGE + MAP_EDGE_PAD))
 			startx = world.maxx - (TRANSITIONEDGE + MAP_EDGE_PAD)
 		if(SOUTH)
-			starty = (TRANSITIONEDGE + MAP_EDGE_PAD)
-			startx = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxx - (TRANSITIONEDGE + MAP_EDGE_PAD))
+			starty = TRANSITIONEDGE + MAP_EDGE_PAD
+			startx = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxx - (TRANSITIONEDGE + MAP_EDGE_PAD))
 		if(WEST)
-			starty = rand((TRANSITIONEDGE + MAP_EDGE_PAD), world.maxy - (TRANSITIONEDGE + MAP_EDGE_PAD))
-			startx = (TRANSITIONEDGE + MAP_EDGE_PAD)
+			starty = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxy - (TRANSITIONEDGE + MAP_EDGE_PAD))
+			startx = TRANSITIONEDGE + MAP_EDGE_PAD
 	return locate(startx, starty, Z)
 
 /proc/spaceDebrisFinishLoc(startSide, Z)
@@ -128,16 +128,16 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 	switch(startSide)
 		if(NORTH)
 			endy = TRANSITIONEDGE + MAP_EDGE_PAD
-			endx = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxx - TRANSITIONEDGE + MAP_EDGE_PAD)
+			endx = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxx - (TRANSITIONEDGE + MAP_EDGE_PAD))
 		if(EAST)
-			endy = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxy - TRANSITIONEDGE + MAP_EDGE_PAD)
+			endy = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxy - (TRANSITIONEDGE + MAP_EDGE_PAD))
 			endx = TRANSITIONEDGE + MAP_EDGE_PAD
 		if(SOUTH)
-			endy = world.maxy - TRANSITIONEDGE + MAP_EDGE_PAD
-			endx = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxx - TRANSITIONEDGE + MAP_EDGE_PAD)
+			endy = world.maxy - (TRANSITIONEDGE + MAP_EDGE_PAD)
+			endx = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxx - (TRANSITIONEDGE + MAP_EDGE_PAD))
 		if(WEST)
-			endy = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxy - TRANSITIONEDGE + MAP_EDGE_PAD)
-			endx = world.maxx - TRANSITIONEDGE + MAP_EDGE_PAD
+			endy = rand(TRANSITIONEDGE + MAP_EDGE_PAD, world.maxy - (TRANSITIONEDGE + MAP_EDGE_PAD))
+			endx = world.maxx - (TRANSITIONEDGE + MAP_EDGE_PAD)
 	return locate(endx, endy, Z)
 
 ///////////////////////
