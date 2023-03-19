@@ -42,15 +42,14 @@ SUBSYSTEM_DEF(economy)
 
 	total_department_stocks[department] += amount
 
-/datum/controller/subsystem/economy/proc/calculate_dividends(department, stock_amount)
+/datum/controller/subsystem/economy/proc/calculate_dividends(capital, department, stock_amount)
 	if(!total_department_stocks[department])
 		return 0.0
 	if(!department_dividends[department])
 		return 0.0
 
 	var/ownership_percentage = stock_amount / total_department_stocks[department]
-	var/datum/money_account/DA = global.department_accounts[department]
-	var/dividend_payout = round(DA.money * department_dividends[department] * ownership_percentage, 0.1)
+	var/dividend_payout = round(capital * department_dividends[department] * ownership_percentage, 0.1)
 
 	if(dividend_payout < 0.1)
 		return 0.0
@@ -70,16 +69,27 @@ SUBSYSTEM_DEF(economy)
 	monitor_cargo_shop()
 
 	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
-	announcer.config(list("Supply" = 0))
-	announcer.autosay("Dividend payout in 1 minute. Secure as much capital in Cargo department account as possible until then.", "StockBond", "Supply", freq=1347)
+	announcer.config(list("Supply" = 1))
+	announcer.autosay("Выплата дивидендов через 1 минуту. Сконцентрируйте максимальное количество капитала на счету Карго к тому моменту.", "StockBond", "Supply", freq = radiochannels["Supply"])
 
 	addtimer(CALLBACK(src, .proc/dividend_payment), 1 MINUTE)
 
 /datum/controller/subsystem/economy/proc/dividend_payment()
+	var/list/capitals = list()
+	var/list/departmental_payouts = list()
+
+	for(var/department in total_department_stocks)
+		var/datum/money_account/DA = global.department_accounts[department]
+		capitals[department] = DA.money
+
 	for(var/datum/money_account/D in all_money_accounts)
 		var/total_dividend_payout = 0.0
 		for(var/department in D.stocks)
-			total_dividend_payout += calculate_dividends(department, D.stocks[department])
+			var/dividend_payout = calculate_dividends(capitals[department], department, D.stocks[department])
+			total_dividend_payout += dividend_payout
+			if(!departmental_payouts[department])
+				departmental_payouts[department] = 0.0
+			departmental_payouts[department] += dividend_payout
 
 		if(total_dividend_payout > 0.0)
 			D.total_dividend_payouts += total_dividend_payout
@@ -87,7 +97,15 @@ SUBSYSTEM_DEF(economy)
 
 	for(var/obj/item/weapon/spacecash/ewallet/EW as anything in global.ewallets)
 		for(var/department in EW.stocks)
-			EW.worth += calculate_dividends(department, EW.stocks[department])
+			var/dividend_payout = calculate_dividends(capitals[department], department, EW.stocks[department])
+			EW.worth += dividend_payout
+			if(!departmental_payouts[department])
+				departmental_payouts[department] = 0.0
+			departmental_payouts[department] += dividend_payout
+
+	for(var/department in departmental_payouts)
+		var/datum/money_account/DA = global.department_accounts[department]
+		charge_to_account(DA.account_number, DA.account_number, "Dividend payout to investors", "StockBond", -departmental_payouts[department])
 
 /datum/controller/subsystem/economy/proc/set_endtime()
 	endtime = world.timeofday + wait
