@@ -73,16 +73,20 @@
 
 /obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	//if it gets caught or the target can't be cuffed
-	if(!iscarbon(hit_atom))
+	if(!isliving(hit_atom))
 		return
-	var/mob/living/carbon/C = hit_atom
+	var/mob/living/L = hit_atom
+	if(!iscarbon(L))
+		L.Weaken(weaken)
+		qdel(src)
+		return
+	var/mob/living/carbon/C = L
 	if(C.equip_to_slot_if_possible(src, SLOT_LEGCUFFED, disable_warning = TRUE))
 		C.visible_message("<span class='danger'>\The [src] ensnares [C]!</span>",
 		                "<span class='userdanger'>\The [src] ensnares you!</span>",
 						"<span class='notice'>You hear something flying at a very fast speed.</span>")
 		feedback_add_details("handcuffs","B")
 		var/chances_to_fault = 100
-		//knockout avaible only for humans, because carbon dont have legs
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
 			var/BP_armor = 0
