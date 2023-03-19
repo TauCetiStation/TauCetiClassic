@@ -26,7 +26,7 @@
 
 	if(!grille_in_loc && istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = W
-		R.try_to_build_grille(user, loc)
+		R.try_to_build_grille(user, loc, window_type = TRUE)
 		return
 
 	else if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))

@@ -20,6 +20,9 @@
 	var/destroyed = 0
 	var/damaged = FALSE
 
+/obj/structure/grille/window // experiment: subtype for better visual with windows
+	canSmoothWith = CAN_SMOOTH_WITH_WALLS
+
 /obj/structure/grille/atom_init(mapload, unanchored = FALSE)
 	. = ..()
 	if(destroyed)

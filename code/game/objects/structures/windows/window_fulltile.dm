@@ -102,7 +102,7 @@
 		new disassemble_glass_type(loc, 2)
 
 	if(grilled)
-		new /obj/structure/grille(loc)
+		new /obj/structure/grille/window(loc)
 
 	new /obj/structure/windowsill(loc)
 
