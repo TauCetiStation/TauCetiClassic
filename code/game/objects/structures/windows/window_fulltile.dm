@@ -86,7 +86,7 @@
 	cut_overlay(crack_overlay)
 	if(ratio > 75)
 		return
-	crack_overlay = image('icons/obj/window.dmi',"damage[ratio]",-(layer+0.1))
+	crack_overlay = image('icons/obj/window.dmi',"damage[ratio]_[rand(1, 3)]",-(layer+0.1))
 	add_overlay(crack_overlay)
 
 /obj/structure/window/fulltile/CanPass(atom/movable/mover, turf/target, height=0)
