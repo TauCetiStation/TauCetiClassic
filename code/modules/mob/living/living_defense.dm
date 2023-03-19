@@ -82,7 +82,7 @@
 		flags &= ~(DAM_SHARP | DAM_EDGE | DAM_LASER)
 
 	if(!P.nodamage)
-		apply_damage(damage, P.damage_type, def_zone, absorb, flags, P)
+		apply_damage(damage, P.damage_type, def_zone, (absorb * P.armor_multiplier), flags, P)
 		if(length(P.proj_act_sound))
 			playsound(src, pick(P.proj_act_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 	P.on_hit(src, def_zone, absorb)
