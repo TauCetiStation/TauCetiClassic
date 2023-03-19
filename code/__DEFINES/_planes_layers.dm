@@ -101,7 +101,7 @@ What is the naming convention for planes or layers?
   #define GAS_FILTER_LAYER                2.48
   #define GAS_PUMP_LAYER                  2.49
   #define LOW_OBJ_LAYER                   2.491 // Currently used only by unused machinery
-  #define FIREDOOR_LAYER                  2.5
+  #define SAFEDOOR_LAYER                  2.5   // firedoors, poddoors, and someone used this for safe for some reason
   #define BELOW_CONTAINERS_LAYER          2.7   // Below closets, crates...
   #define CONTAINER_STRUCTURE_LAYER       2.8   // Layer for closets, crates, bags, racks, tables
   #define DOOR_LAYER                      2.82
@@ -179,5 +179,4 @@ What is the naming convention for planes or layers?
 //--------------------MISC-----------------------
 //modifiers for /obj/machinery/door (and subtypes) layers
 #define DOOR_CLOSED_MOD     0.3          // how much the layer is increased when the door is closed
-#define PODDOOR_CLOSED_MOD  0.31
-#define FIREDOOR_CLOSED_MOD (ABOVE_WINDOW_LAYER - FIREDOOR_LAYER)
+#define SAFEDOOR_CLOSED_MOD (ABOVE_WINDOW_LAYER - SAFEDOOR_LAYER)

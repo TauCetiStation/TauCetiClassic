@@ -10,7 +10,7 @@
 
 	density = TRUE
 	anchored = TRUE
-	layer = BELOW_MACHINERY_LAYER - 0.01 // below grilles (temp?)
+	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = TRUE
 	climbable = TRUE
 
