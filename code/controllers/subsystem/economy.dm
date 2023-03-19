@@ -87,6 +87,8 @@ SUBSYSTEM_DEF(economy)
 	announcer.config(list("Supply" = 1))
 	announcer.autosay("Выплата дивидендов через 1 минуту. Сконцентрируйте максимальное количество капитала на счету Карго к тому моменту.", "StockBond", "Supply", freq = radiochannels["Supply"])
 
+	qdel(announcer)
+
 	addtimer(CALLBACK(src, .proc/dividend_payment), 1 MINUTE)
 
 /datum/controller/subsystem/economy/proc/dividend_payment()
