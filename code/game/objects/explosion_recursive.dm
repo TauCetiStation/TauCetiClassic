@@ -26,7 +26,7 @@ var/global/list/explosion_turfs = list()
 	playsound(epicenter, pick(SOUNDIN_EXPLOSION), VOL_EFFECTS_MASTER, null, FALSE, null, round(power,1) )
 
 	explosion_in_progress = 1
-	explosion_turfs // = list()
+	// explosion_turfs = list()
 
 	explosion_turfs[epicenter] = power
 
