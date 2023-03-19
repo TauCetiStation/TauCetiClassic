@@ -420,7 +420,7 @@ log transactions
 							var/datum/transaction/T = new()
 							T.target_name = authenticated_account.owner_name
 							T.purpose = "Credit withdrawal"
-							T.amount = "([amount])"
+							T.amount = "[-amount]"
 							T.source_terminal = machine_id
 							T.date = current_date_string
 							T.time = worldtime2text()
