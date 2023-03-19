@@ -23,6 +23,9 @@
 	. = ..()
 	price = worth
 
+/obj/item/weapon/spacecash/proc/money_amount()
+	return worth
+
 /obj/item/weapon/spacecash/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/lighter))
 		var/obj/item/weapon/lighter/P = I
@@ -113,28 +116,50 @@
 			new cash_type(spawnloc)
 	return
 
-var/global/list/obj/item/weapon/spacecash/ewallet/ewallets = list()
-ADD_TO_GLOBAL_LIST(/obj/item/weapon/spacecash/ewallet, ewallets)
 /obj/item/weapon/spacecash/ewallet
-	name = "Charge card"
+	name = "charge card"
 	icon_state = "efundcard"
 	desc = "A card that holds an amount of money."
 	can_burn = FALSE
 
 	//So the ATM can set it so the EFTPOS can put a valid name on transactions.
 	var/owner_name = ""
-
 	var/owner_account_number
+
+	var/account_number
+
 	var/list/stocks
+
+/obj/item/weapon/spacecash/ewallet/atom_init()
+	. = ..()
+	name = "charge card ([rand(0, 999)]"
+	var/datum/money_account/M = create_account(name, 0, null, 0)
+	account_number = M.account_number
 
 /obj/item/weapon/spacecash/ewallet/examine(mob/user)
 	..()
-	if(src in view(1, user))
-		to_chat(user, "<span class='notice'>Charge card's issuer: [owner_name] ([owner_account_number]).</span>")
-		if(worth > 0)
-			to_chat(user, "<span class='notice'>Credits remaining: [worth].</span>")
-		if(stocks)
-			to_chat(user, "<span class='notice'>Charge card's stocks: [get_stocks_string(stocks)].</span>")
+	if(!(src in view(1, user)))
+		return
+
+	var/datum/money_account/MA = get_account(account_number)
+	to_chat(user, "<span class='notice'>Charge card's account number: [account_number]. PIN: [MA.remote_access_pin]</span>")
+	to_chat(user, "<span class='notice'>Charge card's issuer: [owner_name] ([owner_account_number]).</span>")
+
+	if(MA.money > 0.0)
+		to_chat(user, "<span class='notice'>Credits remaining: [MA.money].</span>")
+	if(MA.stocks)
+		to_chat(user, "<span class='notice'>Charge card's stocks: [get_stocks_string(MA.stocks)].</span>")
+
+/obj/item/weapon/spacecash/ewallet/money_amount()
+	var/datum/money_account/MA = get_account(account_number)
+	return MA.money
+
+/obj/item/weapon/spacecash/ewallet/proc/get_stocks()
+	var/datum/money_account/MA = get_account(account_number)
+	return MA.stocks
+
+/obj/item/weapon/spacecash/ewallet/proc/remove_money(amount, source_name, purpose)
+	charge_to_account(account_number, source_name, purpose, "E-Transaction", -amount)
 
 /proc/get_stocks_string(list/stocks)
 	. = ""
