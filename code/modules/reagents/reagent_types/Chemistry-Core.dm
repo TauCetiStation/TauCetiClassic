@@ -480,6 +480,13 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "metal"
 
+/datum/reagent/iron/on_skrell_digest(mob/living/M)
+	if(prob(15))
+		M.visible_message("<span class='warning'>You feel pain inside you body.</span>")
+	M.adjustToxLoss(1)
+	M.adjustHalLoss(1)
+	return FALSE
+
 /datum/reagent/gold
 	name = "Gold"
 	id = "gold"
