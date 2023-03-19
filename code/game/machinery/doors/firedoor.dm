@@ -278,6 +278,8 @@
 
 /obj/machinery/door/firedoor/do_close()
 	..()
+	if(locate(/obj/structure/window/fulltile) in loc)
+		alpha = 45
 	layer = base_layer + FIREDOOR_CLOSED_MOD
 	START_PROCESSING(SSmachines, src)
 	latetoggle()
@@ -289,6 +291,7 @@
 
 /obj/machinery/door/firedoor/do_open()
 	..()
+	alpha = initial(alpha)
 	layer = base_layer
 	if(hatch_open)
 		hatch_open = FALSE
