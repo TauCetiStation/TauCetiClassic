@@ -105,7 +105,10 @@
 	var/datum/money_account/M = create_account(H.real_name, start_money, null, H.age)
 
 	for(var/department in department_stocks)
-		var/stock_amount = department_stocks[department] * SSeconomy.stock_splits[department]
+		var/stock_split = LAZYACCESS(SSeconomy.stock_splits, department)
+		if(!stock_split)
+			stock_split = 1.0
+		var/stock_amount = department_stocks[department] * stock_split
 		SSeconomy.print_stocks(department, stock_amount)
 		transfer_stock_to_account(M.account_number, "StockBond", "Stock transfer - [department]: [stock_amount]", "NTGalaxyNet Terminal #[rand(111,1111)]", department, stock_amount, pda_inform=FALSE)
 

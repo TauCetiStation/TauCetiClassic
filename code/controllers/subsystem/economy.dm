@@ -61,26 +61,33 @@ SUBSYSTEM_DEF(economy)
 	set_endtime()
 	if(!global.economy_init)
 		return
-	else if (payment_counter)	//to skip first payment
+	if(payment_counter)	//to skip first payment
 		for(var/datum/money_account/D in all_money_accounts)
 			if(D.owner_salary && !D.suspended)
 				charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)
-
-			var/total_dividend_payout = 0.0
-			for(var/department in D.stocks)
-				total_dividend_payout += calculate_dividends(department, D.stocks[department])
-
-			if(total_dividend_payout > 0.0)
-				D.total_dividend_payouts += total_dividend_payout
-				charge_to_account(D.account_number, D.account_number, "Dividend payout", "StockBond", total_dividend_payout)
-
-		for(var/obj/item/weapon/spacecash/ewallet/EW as anything in global.ewallets)
-			for(var/department in EW.stocks)
-				EW.worth += calculate_dividends(department, EW.stocks[department])
-
-		monitor_cargo_shop()
-
 	payment_counter += 1
+
+	monitor_cargo_shop()
+
+	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
+	announcer.config(list("Supply" = 0))
+	announcer.autosay("Dividend payout in 1 minute. Secure as much capital in Cargo department account as possible until then.", "StockBond", "Supply")
+
+	addtimer(CALLBACK(src, .proc/dividend_payment), 1 MINUTE)
+
+/datum/controller/subsystem/economy/proc/dividend_payment()
+	for(var/datum/money_account/D in all_money_accounts)
+		var/total_dividend_payout = 0.0
+		for(var/department in D.stocks)
+			total_dividend_payout += calculate_dividends(department, D.stocks[department])
+
+		if(total_dividend_payout > 0.0)
+			D.total_dividend_payouts += total_dividend_payout
+			charge_to_account(D.account_number, D.account_number, "Dividend payout", "StockBond", total_dividend_payout)
+
+	for(var/obj/item/weapon/spacecash/ewallet/EW as anything in global.ewallets)
+		for(var/department in EW.stocks)
+			EW.worth += calculate_dividends(department, EW.stocks[department])
 
 /datum/controller/subsystem/economy/proc/set_endtime()
 	endtime = world.timeofday + wait
