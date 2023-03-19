@@ -35,15 +35,15 @@
 			return
 
 		var/type
-		switch(W.type)
-			if(/obj/item/stack/sheet/glass)
-				type = /obj/structure/window/fulltile
-			if(/obj/item/stack/sheet/glass/phoronglass)
-				type = /obj/structure/window/fulltile/phoron
-			if(/obj/item/stack/sheet/rglass)
-				type = /obj/structure/window/fulltile/reinforced
-			if(/obj/item/stack/sheet/glass/phoronrglass)
-				type = /obj/structure/window/fulltile/reinforced/phoron
+		
+		if(istype(W, /obj/item/stack/sheet/glass/phoronglass))
+			type = /obj/structure/window/fulltile/phoron
+		else if(istype(W, /obj/item/stack/sheet/glass/phoronrglass))
+			type = /obj/structure/window/fulltile/reinforced/phoron
+		else if(istype(W, /obj/item/stack/sheet/glass))
+			type = /obj/structure/window/fulltile
+		else if(istype(W, /obj/item/stack/sheet/rglass))
+			type = /obj/structure/window/fulltile/reinforced
 
 		if(!type) // should not happen
 			return
