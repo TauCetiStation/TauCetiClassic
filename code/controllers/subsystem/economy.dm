@@ -71,7 +71,7 @@ SUBSYSTEM_DEF(economy)
 
 	var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
 	announcer.config(list("Supply" = 0))
-	announcer.autosay("Dividend payout in 1 minute. Secure as much capital in Cargo department account as possible until then.", "StockBond", "Supply")
+	announcer.autosay("Dividend payout in 1 minute. Secure as much capital in Cargo department account as possible until then.", "StockBond", "Supply", freq=1347)
 
 	addtimer(CALLBACK(src, .proc/dividend_payment), 1 MINUTE)
 
