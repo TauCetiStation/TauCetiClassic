@@ -130,7 +130,7 @@
 			if(cloud_copy)
 				sync(null, cloud_copy)
 				return
-	//Without cloud syncing nanites can accumulate errors and/or defects TODO: REMOVE THAT SHIT
+	//Without cloud syncing nanites can accumulate errors and/or defects
 	if(prob(8) && programs.len)
 		var/datum/nanite_program/NP = pick(programs)
 		NP.software_error()
