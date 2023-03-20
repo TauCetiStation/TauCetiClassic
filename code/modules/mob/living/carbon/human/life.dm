@@ -394,7 +394,7 @@ var/global/list/tourette_bad_words= list(
 	//breathing in hot/cold air also heats/cools you a bit
 	var/affecting_temp = (breath.temperature - bodytemperature) * breath.return_relative_density()
 
-	adjust_bodytemperature(affecting_temp / 3000, use_insulation = FALSE, use_steps = FALSE)
+	adjust_bodytemperature(affecting_temp / BODYTEMP_BREATH_DIVISOR, use_insulation = FALSE, use_steps = FALSE)
 
 /mob/living/carbon/human/handle_suffocating(datum/gas_mixture/breath)
 	if(suiciding)
@@ -439,9 +439,7 @@ var/global/list/tourette_bad_words= list(
 			//Use heat transfer as proportional to the gas activity (density)
 			var/affecting_temp = (loc_temp - bodytemperature) * environment.return_relative_density()
 			//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
-			var/adjust = affecting_temp / 50
 			adjust_bodytemperature(affecting_temp, use_insulation = TRUE, use_steps = TRUE)
-			//message_admins("env. Difference = [affecting_temp]. Recovering [adjust]. Tick [life_tick]")
 
 	else if(!species.flags[IS_SYNTHETIC] && !species.flags[RAD_IMMUNE])
 		if(istype(loc, /obj/mecha) || istype(loc, /obj/structure/transit_tube_pod))
@@ -573,7 +571,6 @@ var/global/list/tourette_bad_words= list(
 		recovery_amt = min(max((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM), body_temperature_difference)
 	if(bodytemperature > species.body_temperature)
 		recovery_amt = max(min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM), body_temperature_difference)
-	message_admins("Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]. Tick [life_tick]")
 	adjust_bodytemperature(recovery_amt)
 
 //This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, UPPER_TORSO, LOWER_TORSO, etc. See setup.dm for the full list)
