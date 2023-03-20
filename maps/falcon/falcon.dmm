@@ -8280,7 +8280,6 @@
 /area/asteroid/mine/eva)
 "apz" = (
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /obj/machinery/camera{
 	c_tag = "Cargo Office";
 	dir = 8
