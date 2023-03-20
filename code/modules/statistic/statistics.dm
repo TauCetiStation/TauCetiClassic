@@ -77,6 +77,8 @@ var/global/datum/stat_collector/SSStatistics = new /datum/stat_collector
 	var/list/datum/stat/role/orphaned_roles = list()
 	// array of objects
 	var/list/datum/stat/faction/factions = list()
+	// array of objects
+	var/list/datum/stat/emp_stat/emps = list()
 
 /datum/stat_collector/New()
 	var/datum/default_datum = new

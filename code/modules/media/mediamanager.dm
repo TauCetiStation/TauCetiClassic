@@ -53,16 +53,12 @@ function SetVolume(volume) {
 	var/volume = MEDIA_VOLUME
 
 	var/client/owner
-	var/mob/living/mob
 
 	var/const/window = "rpane.hosttracker"
 	//var/const/window = "mediaplayer" // For debugging.
 
-/datum/media_manager/New(mob/living/holder)
-	if(!istype(holder))
-		return
-	mob = holder
-	owner = mob.client
+/datum/media_manager/New(client/owner_)
+	owner = owner_
 	volume = MEDIA_VOLUME * owner.get_sound_volume(VOL_JUKEBOX)
 
 // Actually pop open the player in the background.
@@ -90,9 +86,9 @@ function SetVolume(volume) {
 	if (!owner)
 		//testing("owner is null")
 		return
-	if(!isliving(mob))
+	if(!isliving(owner.mob))
 		return
-	var/area/A = get_area(mob)
+	var/area/A = get_area(owner.mob)
 	if(!A)
 		//testing("[owner] in [mob.loc].  Aborting.")
 		stop_music()

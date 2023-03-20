@@ -5,7 +5,7 @@
 /datum/religion_rites/standing/food
 	name = "Создание Еды"
 	desc = "Нужно больше и больше еды!"
-	ritual_length = (2.1 MINUTES)
+	ritual_length = (30 SECONDS)
 	ritual_invocations = list("O Lord, we pray to you: hear our prayer, that they may be delivered by thy mercy, for the glory of thy name...",
 						"...our crops and gardens, now it's fair for our sins that are destroyed and a real disaster is suffered, from birds, worms, mice, moles and other animals...",
 						"...and driven far away from this place by Your authority, may they not harm anyone, but these fields and waters...",
@@ -66,7 +66,7 @@
 /datum/religion_rites/standing/pray
 	name = "Молитва"
 	desc = "За добрые слова вы получаете немного favor'а."
-	ritual_length = (4 MINUTES)
+	ritual_length = (2 MINUTES)
 	ritual_invocations = list("Have mercy on us, O Lord, have mercy on us...",
 							  "...for at a loss for any defense, this prayer do we sinners offer Thee as Master...",
 							  "...have mercy on us...",
@@ -111,7 +111,7 @@
 /datum/religion_rites/standing/honk
 	name = "Клоунский Крик"
 	desc = "Разносит хонк по всей станции."
-	ritual_length = (1.9 MINUTES)
+	ritual_length = (1 MINUTES)
 	ritual_invocations = list("All able to hear, hear!...",
 							  "...This message is dedicated to all of you...",
 							  "...may all of you be healthy and smart...",
@@ -258,7 +258,7 @@
 /datum/religion_rites/standing/illuminate
 	name = "Озарение"
 	desc = "Создаёт пучок света над вами."
-	ritual_length = (50 SECONDS)
+	ritual_length = (30 SECONDS)
 	ritual_invocations = list("Come to me, wisp...",
 							  "...Appear to me the one whom everyone wants...",
 							  "...to whom they turn for help!..",
@@ -317,7 +317,7 @@
 /datum/religion_rites/standing/revive_animal
 	name = "Возрождение Животного"
 	desc = "Возвращает душу животного из лучшего мира."
-	ritual_length = (50 SECONDS)
+	ritual_length = (30 SECONDS)
 	ritual_invocations = list("I will say, whisper, quietly say such words...",
 							  "...May every disease leave you...",
 							  "...You will not know that you are in torment, pain and suffering...",
