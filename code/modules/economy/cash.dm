@@ -119,7 +119,7 @@
 	desc = "A card that links to an account and all it's assets."
 
 	icon = 'icons/obj/economy.dmi'
-	icon_state = "spacecash"
+	icon_state = "efundcard"
 	opacity = 0
 	density = FALSE
 	anchored = FALSE
@@ -137,7 +137,7 @@
 
 /obj/item/weapon/ewallet/atom_init()
 	. = ..()
-	name = "charge card ([rand(0, 999)]"
+	name = "charge card ([rand(0, 999)])"
 	var/datum/money_account/M = create_account(name, 0, null, 0)
 	account_number = M.account_number
 
