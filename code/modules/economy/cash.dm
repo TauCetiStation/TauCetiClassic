@@ -118,6 +118,17 @@
 	icon_state = "efundcard"
 	desc = "A card that links to an account and all it's assets."
 
+	icon = 'icons/obj/economy.dmi'
+	icon_state = "spacecash"
+	opacity = 0
+	density = FALSE
+	anchored = FALSE
+	force = 1.0
+	throwforce = 1.0
+	throw_speed = 1
+	throw_range = 2
+	w_class = SIZE_TINY
+
 	//So the ATM can set it so the EFTPOS can put a valid name on transactions.
 	var/issuer_name = ""
 	var/issuer_account_number
