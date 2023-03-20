@@ -59,7 +59,6 @@
 	if(!allow_repeats)
 		RegisterSignal(song.instrument, COMSIG_INSTRUMENT_REPEAT, .proc/stop_singing)
 
-
 	linked_song = song
 	if(particles_path && ismovable(linked_song.instrument))
 		var/mob/M = parent
