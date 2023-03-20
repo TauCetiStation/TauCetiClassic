@@ -109,7 +109,7 @@ var/global/initial_station_money = 7500
 
 	cargo_account = department_accounts["Cargo"]
 	SSeconomy.set_dividend_rate("Cargo", 0.1)
-	// Enough to stock to supply 2 cargos with it.
+	// Enough stock to supply 2 cargos of employees with it. TO-DO: calculate it programatically depending on map changes to jobs?
 	SSeconomy.issue_founding_stock(cargo_account.account_number, "Cargo", 260)
 
 	create_department_account("CentComm")
