@@ -68,7 +68,6 @@
 	linked_song.instrument.add_filter("smooth_tunes_outline", 9, list("type" = "outline", "color" = glow_color))
 
 ///Prevents changing tempo during a song to sneak in final effects quicker
-
 /datum/component/smooth_tunes/proc/tempo_change(datum/source, datum/music_player/modified_song)
 	SIGNAL_HANDLER
 	if(modified_song.playing && viable_for_final_effect)
