@@ -33,7 +33,7 @@
 	return ..()
 
 /datum/component/smooth_tunes/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT,.proc/start_singing)
+	RegisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT, .proc/start_singing)
 
 /datum/component/smooth_tunes/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT)
