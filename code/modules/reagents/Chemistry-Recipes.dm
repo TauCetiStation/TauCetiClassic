@@ -49,7 +49,6 @@
 	// 100 created volume = 4 heavy range & 7 light range. A few tiles smaller than traitor EMP grandes.
 	// 200 created volume = 8 heavy range & 14 light range. 4 tiles larger than traitor EMP grenades.
 	empulse(location, round(created_volume / 24), round(created_volume / 14), 1)
-	holder.del_reagent(id)
 	return
 
 /datum/chemical_reaction/stoxin
