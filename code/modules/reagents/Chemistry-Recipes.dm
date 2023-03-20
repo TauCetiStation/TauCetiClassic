@@ -392,7 +392,7 @@
 			e.amount *= 0.5
 	e.start()
 
-	holder.del_reagent(id)
+	holder.del_reagent(result)
 	return
 
 /datum/chemical_reaction/sodiumchloride
