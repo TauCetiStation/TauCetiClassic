@@ -4,13 +4,13 @@
 
 // Security gear
 /datum/export/gear/sec_helmet
-	cost = 100
+	cost = 10
 	include_subtypes = FALSE
 	unit_name = "helmet"
 	export_types = list(/obj/item/clothing/head/helmet)
 
 /datum/export/gear/sec_armor
-	cost = 100
+	cost = 10
 	include_subtypes = FALSE
 	unit_name = "armor vest"
 	export_types = list(/obj/item/clothing/suit/armor/vest,
@@ -19,50 +19,50 @@
 
 
 /datum/export/gear/riot_helmet
-	cost = 250
+	cost = 25
 	unit_name = "riot helmet"
 	export_types = list(/obj/item/clothing/head/helmet/riot)
 
 /datum/export/gear/riot_armor
-	cost = 250
+	cost = 25
 	unit_name = "riot armor suit"
 	export_types = list(/obj/item/clothing/suit/armor/riot)
 
 /datum/export/gear/bulletproof_helmet
-	cost = 250
+	cost = 25
 	unit_name = "bulletproof helmet"
 	export_types = list(/obj/item/clothing/head/helmet/bulletproof)
 
 /datum/export/gear/bulletproof_armor
-	cost = 250
+	cost = 25
 	unit_name = "bulletproof armor vest"
 	export_types = list(/obj/item/clothing/suit/storage/flak/bulletproof)
 
 /datum/export/gear/reflector_helmet
-	cost = 650
+	cost = 65
 	unit_name = "reflector helmet"
 	export_types = list(/obj/item/clothing/head/helmet/laserproof)
 
 /datum/export/gear/reflector_armor
-	cost = 650
+	cost = 65
 	unit_name = "reflector armor vest"
 	export_types = list(/obj/item/clothing/suit/armor/laserproof)
 
 
 /datum/export/gear/riot_shield
-	cost = 400
+	cost = 50
 	unit_name = "riot shield"
 	export_types = list(/obj/item/weapon/shield/riot)
 
 
 // Masks
 /datum/export/gear/mask/breath
-	cost = 2
+	cost = 1
 	unit_name = "breath mask"
 	export_types = list(/obj/item/clothing/mask/breath)
 
 /datum/export/gear/mask/gas
-	cost = 10
+	cost = 5
 	unit_name = "gas mask"
 	export_types = list(/obj/item/clothing/mask/gas/coloured)
 	include_subtypes = FALSE
@@ -74,12 +74,12 @@
 	include_subtypes = TRUE
 
 /datum/export/gear/space/helmet
-	cost = 500
+	cost = 50
 	unit_name = "space helmet"
 	export_types = list(/obj/item/clothing/head/helmet/space/globose)
 
 /datum/export/gear/space/suit
-	cost = 600
+	cost = 60
 	unit_name = "space suit"
 	export_types = list(/obj/item/clothing/suit/space/globose)
 
@@ -110,34 +110,34 @@
 
 // Radsuits
 /datum/export/gear/radhelmet
-	cost = 50
+	cost = 20
 	unit_name = "radsuit hood"
 	export_types = list(/obj/item/clothing/head/radiation)
 
 /datum/export/gear/radsuit
-	cost = 100
+	cost = 50
 	unit_name = "radsuit"
 	export_types = list(/obj/item/clothing/suit/radiation)
 
 // Biosuits
 /datum/export/gear/biohood
-	cost = 50
+	cost = 20
 	unit_name = "biosuit hood"
 	export_types = list(/obj/item/clothing/head/bio_hood)
 
 /datum/export/gear/biosuit
-	cost = 100
+	cost = 50
 	unit_name = "biosuit"
 	export_types = list(/obj/item/clothing/suit/bio_suit)
 
 // Bombsuits
 /datum/export/gear/bombhelmet
-	cost = 100
+	cost = 40
 	unit_name = "bomb suit hood"
 	export_types = list(/obj/item/clothing/head/bomb_hood)
 
 /datum/export/gear/bombsuit
-	cost = 300
+	cost = 90
 	unit_name = "bomb suit"
 	export_types = list(/obj/item/clothing/suit/bomb_suit)
 
@@ -146,24 +146,24 @@
 //--------------------------------------------
 
 /datum/export/gear/glasses
-	cost = 150
+	cost = 5
 	include_subtypes = FALSE
 	unit_name = "glasses"
 	export_types = list(/obj/item/clothing/glasses)
 
 /datum/export/gear/glasses/hud
-	cost = 200
+	cost = 100
 	include_subtypes = TRUE
 	unit_name = "hud glasses"
 	export_types = list(/obj/item/clothing/glasses/hud)
 
 /datum/export/gear/glasses/meson
-	cost = 350
+	cost = 50
 	unit_name = "meson glasses"
 	export_types = list(/obj/item/clothing/glasses/meson)
 
 /datum/export/gear/glasses/night
-	cost = 2700
+	cost = 200
 	unit_name = "night vision glasses"
 	export_types = list(/obj/item/clothing/glasses/night)
 
@@ -174,7 +174,7 @@
 	export_types = list(/obj/item/clothing/glasses/thermal)
 
 /datum/export/gear/glasses/welding
-	cost = 200
+	cost = 100
 	include_subtypes = TRUE
 	unit_name = "welding glasses"
 	export_types = list(/obj/item/clothing/glasses/welding)
@@ -191,12 +191,12 @@
 									/obj/item/clothing/shoes/boots/swat)
 
 /datum/export/gear/shoes/jackboots
-	cost = 200
+	cost = 5
 	unit_name = "jackboots"
 	export_types = list(/obj/item/clothing/shoes/boots)
 
 /datum/export/gear/shoes/magboots
-	cost = 3000
+	cost = 50
 	unit_name = "magboots"
 	export_types = list(/obj/item/clothing/shoes/magboots)
 
