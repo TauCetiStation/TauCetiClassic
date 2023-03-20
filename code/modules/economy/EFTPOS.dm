@@ -122,17 +122,8 @@
 
 						//transfer the money
 						E.remove_money(transaction_amount)
-						linked_account.money += transaction_amount
+						charge_to_account(linked_account.account_number, E.issuer_name, transaction_purpose, machine_id, transaction_amount)
 
-						//create entry in the EFTPOS linked account transaction log
-						var/datum/transaction/T = new()
-						T.target_name = E.issuer_name
-						T.purpose = transaction_purpose
-						T.amount = transaction_amount
-						T.source_terminal = machine_id
-						T.date = current_date_string
-						T.time = worldtime2text()
-						linked_account.transaction_log.Add(T)
 					else
 						to_chat(usr, "[bicon(src)]<span class='warning'>The charge card doesn't have that much money!</span>")
 			else
