@@ -789,3 +789,12 @@
 	desc = "Pair of old jeans combined with a red tank-top"
 	icon_state = "kung_suit"
 	w_class = SIZE_SMALL
+
+/obj/item/clothing/under/durathread
+	name = "durathread suit"
+	desc = "Made from duratread. It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
+	icon_state = "Durauniform"
+	item_state = "Durauniform"
+	flags = ONESIZEFITSALL
+	siemens_coefficient = 0.8
+	armor = list(melee = 5, bullet = 0, laser = 5, energy = 5, bomb = 0, bio = 0, rad = 0)
