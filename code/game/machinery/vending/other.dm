@@ -70,8 +70,8 @@
 		/obj/item/device/flashlight/seclite = 4,
 	)
 	syndie = list(
-		/obj/item/ammo_box/a357 = 1,
-		/obj/item/ammo_box/magazine/m9mm = 1,
+		/obj/item/ammo_box/speedloader/a357 = 1,
+		/obj/item/ammo_box/magazine/stechkin = 1,
 	)
 	private = TRUE
 

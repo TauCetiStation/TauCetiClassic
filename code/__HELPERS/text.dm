@@ -400,8 +400,8 @@
 	t = replacetext(t, "\[/quote\]", "</blockquote>")
 
 	// div
-	t = replacetext(t, "\[block\]", "<div style=\"border-width: 4px; border-style: dashed;\">")
-	t = replacetext(t, "\[/block\]", "</div>")
+	// t = replacetext(t, "\[block\]", "<div style=\"border-width: 4px; border-style: dashed;\">")
+	// t = replacetext(t, "\[/block\]", "</div>")
 
 	// date & time
 	t = replacetext(t, "\[date\]", "[current_date_string]")

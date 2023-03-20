@@ -71,7 +71,6 @@
 
 /datum/tgui_modal/Destroy(force, ...)
 	SStgui.close_uis(src)
-	QDEL_NULL(buttons)
 	. = ..()
 
 /**
@@ -442,6 +441,28 @@
 			so as to remain in compliance with the most up-to-date laws."
 	icon_state = "newlaw"
 	timeout = 300
+
+/atom/movable/screen/alert/swarm_hunger
+	name = "Swarm's Hunger"
+	desc = "This reality can not support your presence... You must consume to live."
+	icon_state = "swarm_hunger"
+
+/atom/movable/screen/alert/swarm_upgrade
+	name = "Array Upgrade"
+	desc = "There is an array upgrade available. Examine yourself to reflect on prospective adaptabilities."
+	icon_state = "swarm_upgrade"
+
+/atom/movable/screen/alert/swarm_upgrade/Click()
+	if(!mob_viewer)
+		return
+	if(mob_viewer.incapacitated())
+		return
+	if(!mob_viewer.mind)
+		return
+	if(!isreplicator(mob_viewer))
+		return
+	var/mob/living/simple_animal/hostile/replicator/R = mob_viewer
+	R.acquire_array_upgrade()
 
 //OBJECT-BASED
 

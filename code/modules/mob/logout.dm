@@ -16,4 +16,6 @@
 
 	..()
 
+	QDEL_NULL(hud_used)		//remove the hud objects
+
 	return 1

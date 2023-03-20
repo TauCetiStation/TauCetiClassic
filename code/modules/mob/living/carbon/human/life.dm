@@ -447,7 +447,7 @@ var/global/list/tourette_bad_words= list(
 		if(istype(loc, /obj/mecha) || istype(loc, /obj/structure/transit_tube_pod))
 			return
 		if(!(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space)) && radiation < 100)
-			apply_effect(5, IRRADIATE)
+			irradiate_one_mob(src, 5)
 
 	if(status_flags & GODMODE)
 		return 1	//godmode
@@ -728,7 +728,7 @@ var/global/list/tourette_bad_words= list(
 			var/pain = getHalLoss()
 			if(pain > 0)
 				nutrition = max(0, nutrition - met_factor * pain * 0.01)
-	if (nutrition > 450)
+	if (nutrition > NUTRITION_LEVEL_WELL_FED)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
 			overeatduration++
 	else
@@ -1178,7 +1178,10 @@ var/global/list/tourette_bad_words= list(
 /mob/living/carbon/human/handle_shock()
 	..()
 	if(status_flags & GODMODE)	return 0	//godmode
-	if(analgesic || (species && species.flags[NO_PAIN])) return // analgesic avoids all traumatic shock temporarily
+	if(species && species.flags[NO_PAIN])
+		return
+	if(analgesic && !reagents.has_reagent("prismaline"))
+		return // analgesic avoids all traumatic shock temporarily
 
 	if(health < config.health_threshold_softcrit)// health 0 makes you immediately collapse
 		shock_stage = max(shock_stage, 61)
