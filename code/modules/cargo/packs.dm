@@ -27,7 +27,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 	// Multiplier to calculated cost. Represents how much worse we want cargo to feel when importing packs compared to when exporting them.
 	var/overprice = CARGO_DEFAULT_OVERPRICE
-	// Additional costs to make smart buying-bundling interesting. Represents the cost of transporting/bundling items in the pack.
+	// Additional costs to make smart buying-bundling interesting. Represents the cost of transporting/packaging/bundling items in the pack.
 	var/additional_costs = 0.0
 
 /datum/supply_pack/New()
