@@ -62,13 +62,28 @@ log transactions
 		if(ticks_left_locked_down <= 0)
 			number_incorrect_tries = 0
 
-	for(var/obj/item/weapon/spacecash/S in src)
-		S.loc = src.loc
-		if(prob(50))
-			playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
-		else
-			playsound(src, 'sound/items/polaroid2.ogg', VOL_EFFECTS_MASTER)
-		break
+/obj/machinery/atm/proc/deposit(obj/item/I, mob/user, money_sum, stock_string)
+	if(prob(50))
+		playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
+	else
+		playsound(src, 'sound/items/polaroid2.ogg', VOL_EFFECTS_MASTER)
+
+	//create a transaction log entry
+	var/datum/transaction/T = new()
+	T.target_name = authenticated_account.owner_name
+	T.purpose = "Credit deposit"
+	if(stock_string)
+		T.purpose += ". Stock deposit: [stock_string]"
+
+	T.amount = money_sum
+	T.source_terminal = machine_id
+	T.date = current_date_string
+	T.time = worldtime2text()
+	authenticated_account.transaction_log.Add(T)
+
+	to_chat(user, "<span class='info'>You insert [I] into [src].</span>")
+	attack_hand(user)
+	qdel(I)
 
 /obj/machinery/atm/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card))
@@ -83,47 +98,31 @@ log transactions
 			held_card = idcard
 			if(authenticated_account && held_card.associated_account_number != authenticated_account.account_number)
 				authenticated_account = null
-	else if(authenticated_account)
-		if(istype(I,/obj/item/weapon/spacecash))
-			var/obj/item/weapon/spacecash/SC = I
-			//consume the money
-			if(!istype(SC, /obj/item/weapon/spacecash/ewallet))
-				if((money_stock + SC.worth) > money_stock_max)
-					tgui_alert(usr, "Sorry, the ATM cash storage is full and can only hold $[money_stock_max]")
-					return
-				else
-					money_stock += SC.worth
+		return
 
-			var/stock_string = ""
-			authenticated_account.adjust_money(SC.worth)
-			if(istype(SC, /obj/item/weapon/spacecash/ewallet))
-				var/obj/item/weapon/spacecash/ewallet/EW = SC
-				stock_string = get_stocks_string(EW.stocks)
-				authenticated_account.adjust_stocks(EW.stocks)
+	if(!authenticated_account)
+		return ..()
 
-			if(prob(50))
-				playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
-			else
-				playsound(src, 'sound/items/polaroid2.ogg', VOL_EFFECTS_MASTER)
+	if(istype(I, /obj/item/weapon/spacecash))
+		var/obj/item/weapon/spacecash/SC = I
+		if((money_stock + SC.worth) > money_stock_max)
+			tgui_alert(usr, "Sorry, the ATM cash storage is full and can only hold $[money_stock_max]")
+			return
 
-			//create a transaction log entry
-			var/datum/transaction/T = new()
-			T.target_name = authenticated_account.owner_name
-			T.purpose = "Credit deposit"
-			if(stock_string)
-				T.purpose += ". Stock deposit: [stock_string]"
+		money_stock += SC.worth
+		authenticated_account.adjust_money(SC.worth)
 
-			T.amount = SC.worth
-			T.source_terminal = machine_id
-			T.date = current_date_string
-			T.time = worldtime2text()
-			authenticated_account.transaction_log.Add(T)
+		deposit(SC, user, SC.worth, "")
+		return
 
-			to_chat(user, "<span class='info'>You insert [I] into [src].</span>")
-			attack_hand(user)
-			qdel(I)
-	else
-		..()
+	if(istype(I, /obj/item/weapon/ewallet))
+		var/obj/item/weapon/ewallet/EW
+
+		authenticated_account.adjust_stocks(EW.get_stocks())
+		authenticated_account.adjust_money(EW.get_money())
+
+		deposit(EW, user, EW.get_money(), get_stocks_string(EW.get_stocks()))
+		return
 
 /obj/machinery/atm/emag_act(mob/user)
 	//short out the machine, shoot sparks, spew money!
@@ -578,11 +577,17 @@ log transactions
 	held_card = null
 
 /obj/machinery/atm/proc/spawn_ewallet(sum, list/stocks, loc)
-	var/obj/item/weapon/spacecash/ewallet/E = new /obj/item/weapon/spacecash/ewallet(loc)
-	E.worth = sum
-	E.stocks = stocks
-	E.owner_name = authenticated_account.owner_name
-	E.owner_account_number = authenticated_account.account_number
+	var/obj/item/weapon/ewallet/E = new /obj/item/weapon/ewallet(loc)
+
+	if(sum > 0.0)
+		charge_to_account(E.account_number, "E-Transaction", "Cash withdrawal", machine_id, sum)
+
+	if(stocks)
+		for(var/department in stocks)
+			transfer_stock_to_account(E.account_number, "E-Transaction", "Cash withdrawal", machine_id, department, stocks[department])
+
+	E.issuer_name = authenticated_account.owner_name
+	E.issuer_account_number = authenticated_account.account_number
 
 /obj/machinery/atm/proc/print_money_stock(sum)
 	if (money_stock < sum)

@@ -114,14 +114,6 @@ SUBSYSTEM_DEF(economy)
 			D.total_dividend_payouts += total_dividend_payout
 			charge_to_account(D.account_number, D.account_number, "Dividend payout", "StockBond", total_dividend_payout)
 
-	for(var/obj/item/weapon/spacecash/ewallet/EW as anything in global.ewallets)
-		for(var/department in EW.stocks)
-			var/dividend_payout = calculate_dividends(capitals[department], department, EW.stocks[department])
-			EW.worth += dividend_payout
-			if(!departmental_payouts[department])
-				departmental_payouts[department] = 0.0
-			departmental_payouts[department] += dividend_payout
-
 	for(var/department in departmental_payouts)
 		var/datum/money_account/DA = global.department_accounts[department]
 		charge_to_account(DA.account_number, DA.account_number, "Dividend payout to investors", "StockBond", -departmental_payouts[department])

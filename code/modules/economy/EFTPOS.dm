@@ -110,23 +110,23 @@
 			scan_card(C)
 		else
 			to_chat(usr, "[bicon(src)]<span class='warning'>Unable to connect to linked account.</span>")
-	else if(istype(I, /obj/item/weapon/spacecash/ewallet))
-		var/obj/item/weapon/spacecash/ewallet/E = I
+	else if(istype(I, /obj/item/weapon/ewallet))
+		var/obj/item/weapon/ewallet/E = I
 		if (linked_account)
 			if(!linked_account.suspended)
 				if(transaction_locked && !transaction_paid)
-					if(transaction_amount <= E.worth)
+					if(transaction_amount <= E.get_money())
 						playsound(src, 'sound/machines/chime.ogg', VOL_EFFECTS_MASTER)
 						visible_message("[bicon(src)] The [src] chimes.")
 						transaction_paid = 1
 
 						//transfer the money
-						E.worth -= transaction_amount
+						E.remove_money(transaction_amount)
 						linked_account.money += transaction_amount
 
 						//create entry in the EFTPOS linked account transaction log
 						var/datum/transaction/T = new()
-						T.target_name = E.owner_name //D.owner_name
+						T.target_name = E.issuer_name
 						T.purpose = transaction_purpose
 						T.amount = transaction_amount
 						T.source_terminal = machine_id

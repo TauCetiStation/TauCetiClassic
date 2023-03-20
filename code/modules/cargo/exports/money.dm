@@ -9,6 +9,17 @@
 	return ..() * C.worth
 
 
+// EWallets.
+/datum/export/stack/ewallet
+	cost = 1 // Multiplied both by value of each bill and by amount of bills in stack.
+	unit_name = "charge card"
+	export_types = list(/obj/item/weapon/ewallet)
+
+/datum/export/stack/cash/get_amount(obj/O)
+	var/obj/item/weapon/ewallet/EW = O
+	return ..() * EW.get_money()
+
+
 // Coins. At least the coins that do not contain any materials.
 // Material-containing coins cost just as much as their materials do, see materials.dm for exact rates.
 /datum/export/coin
