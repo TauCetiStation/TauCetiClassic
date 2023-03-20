@@ -22,6 +22,7 @@
 	poison_alert = FALSE
 	pressure_alert = 0
 	temp_alert = 0
+	temp_internals_alert = 0
 
 /mob/living/carbon/proc/handle_alerts()
 	if(inhale_alert)
@@ -34,11 +35,11 @@
 	else
 		clear_alert("tox")
 
-	if(temp_alert > 0)
-		throw_alert("temp", /atom/movable/screen/alert/hot, temp_alert)
-	else if(temp_alert < 0)
-		throw_alert("temp", /atom/movable/screen/alert/cold, -temp_alert)
-	else
+	if(temp_alert > 0 || temp_internals_alert > 0)
+		throw_alert("temp", /atom/movable/screen/alert/hot, max(temp_alert,temp_internals_alert))
+	if(temp_alert < 0 || temp_internals_alert < 0)
+		throw_alert("temp", /atom/movable/screen/alert/cold, -min(temp_alert,temp_internals_alert))
+	if(temp_alert == 0 && temp_internals_alert == 0)
 		clear_alert("temp")
 
 	if(pressure_alert > 0)
@@ -244,7 +245,6 @@
 
 /mob/living/carbon/proc/stabilize_body_temperature()
 	adjust_bodytemperature((BODYTEMP_NORMAL - bodytemperature) / BODYTEMP_AUTORECOVERY_DIVISOR)
-	message_admins("This wrong")
 
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment)
 	if(stat != DEAD) // lets put this shit somewhere here

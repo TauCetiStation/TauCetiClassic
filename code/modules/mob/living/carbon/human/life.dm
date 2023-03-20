@@ -373,19 +373,23 @@ var/global/list/tourette_bad_words= list(
 /mob/living/carbon/human/handle_breath_temperature(datum/gas_mixture/breath)
 	// Hot air hurts :(
 	if(breath.temperature > species.heat_level_1)
+		var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
+		temp_internals_alert = 3
 		if(breath.temperature > species.heat_level_3)
-			apply_damage(HEAT_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Heat")
+			IO.take_damage(HEAT_GAS_DAMAGE_LEVEL_3)
 		else if(breath.temperature > species.heat_level_2)
-			apply_damage(HEAT_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Heat")
+			IO.take_damage(HEAT_GAS_DAMAGE_LEVEL_2)
 		else
-			apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Heat")
+			IO.take_damage(HEAT_GAS_DAMAGE_LEVEL_1)
 	else if(breath.temperature < species.breath_cold_level_1)
+		temp_internals_alert = -3
+		var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
 		if(breath.temperature >= species.breath_cold_level_2)
-			apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Cold")
+			IO.take_damage(COLD_GAS_DAMAGE_LEVEL_1)
 		else if(breath.temperature >= species.breath_cold_level_3)
-			apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Cold")
+			IO.take_damage(COLD_GAS_DAMAGE_LEVEL_2)
 		else
-			apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Cold")
+			IO.take_damage(COLD_GAS_DAMAGE_LEVEL_3)
 
 	//breathing in hot/cold air also heats/cools you a bit
 	var/affecting_temp = (breath.temperature - bodytemperature) * breath.return_relative_density()
@@ -406,13 +410,13 @@ var/global/list/tourette_bad_words= list(
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
 
-	if(temp_alert > 0)
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
+	if(temp_alert > 0 || temp_internals_alert > 0)
+		//SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hot", /datum/mood_event/hot)
-	else if(temp_alert < 0)
+	if(temp_alert < 0 || temp_internals_alert < 0)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "cold", /datum/mood_event/cold)
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
-	else
+		//SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
+	if(temp_alert == 0 && temp_internals_alert == 0)
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "hot")
 
@@ -564,7 +568,11 @@ var/global/list/tourette_bad_words= list(
 		//world << "Hot. Difference = [body_temperature_difference]. Recovering [recovery_amt]"
 //				log_debug("Hot. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
 		adjust_bodytemperature(recovery_amt)*/
-	var/recovery_amt = min(max((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM), body_temperature_difference)
+	var/recovery_amt = 0
+	if(bodytemperature < species.body_temperature)
+		recovery_amt = min(max((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM), body_temperature_difference)
+	if(bodytemperature > species.body_temperature)
+		recovery_amt = max(min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM), body_temperature_difference)
 	message_admins("Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]. Tick [life_tick]")
 	adjust_bodytemperature(recovery_amt)
 

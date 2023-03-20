@@ -27,6 +27,7 @@
 	var/inhale_alert = FALSE
 	var/poison_alert = FALSE
 	var/temp_alert = 0
+	var/temp_internals_alert = 0
 	var/pressure_alert = 0
 
 	var/co2overloadtime = null
