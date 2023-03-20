@@ -176,4 +176,4 @@
 			first = FALSE
 		else
 			. += ", "
-		. += "[department]: [stocks[department]]"
+		. += "[department]: [stocks[department]]/[SSeconomy.total_department_stocks[department]]"
