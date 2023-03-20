@@ -103,15 +103,15 @@
 	qdel(src)
 
 /datum/component/smooth_tunes/process()
-	if(linked_songtuner_rite && linked_song)
-		var/mob/M = parent
-		for(var/mob/living/listener in hearers(7, parent))//range(7, parent))
-			if(listener == parent)
-				continue
-			if(!linked_songtuner_rite.buff && listener.my_religion == M.my_religion)
-				continue
-			linked_songtuner_rite.song_effect(listener, linked_song.instrument)
-	else
+	if(!linked_songtuner_rite || !linked_song)
 		stop_singing()
+		return
+	var/mob/M = parent
+	for(var/mob/living/listener in hearers(7, parent))//range(7, parent))
+		if(listener == parent)
+			continue
+		if(!linked_songtuner_rite.buff && listener.my_religion == M.my_religion)
+			continue
+		linked_songtuner_rite.song_effect(listener, linked_song.instrument)
 
 #undef LONG_ENOUGH_SONG
