@@ -4965,9 +4965,6 @@
 /area/station/cargo/recycleroffice)
 "aAZ" = (
 /obj/structure/table,
-/obj/machinery/computer/stockexchange{
-	dir = 4
-	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkyellow"
@@ -55107,7 +55104,6 @@
 /area/station/medical/hallway)
 "qnz" = (
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
