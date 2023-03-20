@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(station_coloring)
 /datum/controller/subsystem/station_coloring/Initialize()
 
 	//RED (Only sec stuff honestly)
-	var/list/red = list("#855363", "#7d5263", "#a35364", "#a35364")
+	var/list/red = list("#855363", "#7d5263", "#a35364", "#520014")
 	//BAR
 	var/list/bar = list("#3790aa", "#5ca9c1", "#5cb092", "#78baac", "#4a9bdf", "#30cedf", "#b0825f", "#b0cedf")
 	//DWARFS
@@ -50,6 +50,6 @@ SUBSYSTEM_DEF(station_coloring)
 			D.color = color
 
 /datum/controller/subsystem/station_coloring/proc/get_default_color()
-	var/static/default_color = pick(list("#4c9b91", "#3790aa", "#5ca9c1", "#49e46e", "#55c196", "#969bdf", "#b0825f", "#4a9bdf", "#7b9aaa", "#ffffff"))
+	var/static/default_color = pick(list("#1a356e", "#361a6e", "#164f41"))
 
 	return default_color

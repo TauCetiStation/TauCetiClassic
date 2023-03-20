@@ -1095,7 +1095,7 @@ var/global/list/admin_verbs_hideable = list(
 
 /client/proc/repaint_area_windows()
 	set category = "Fun"
-	set name = "Repaint area windows"
+	set name = "Repaint Area Windows"
 
 	if(!check_rights(R_FUN))
 		return
