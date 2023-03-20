@@ -114,9 +114,9 @@
 	return
 
 /obj/item/weapon/ewallet
-	name = "Charge card"
+	name = "charge card"
 	icon_state = "efundcard"
-	desc = "A card that holds an amount of money."
+	desc = "A card that links to an account and all it's assets."
 
 	//So the ATM can set it so the EFTPOS can put a valid name on transactions.
 	var/issuer_name = ""
