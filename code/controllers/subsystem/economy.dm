@@ -41,6 +41,8 @@ SUBSYSTEM_DEF(economy)
 
 		MA.stocks[department] *= split
 
+	total_department_stocks[department] *= split
+
 /datum/controller/subsystem/economy/proc/print_stocks(department, amount)
 	LAZYINITLIST(total_department_stocks)
 
