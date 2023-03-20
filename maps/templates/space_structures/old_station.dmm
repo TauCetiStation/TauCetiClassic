@@ -1603,10 +1603,6 @@
 	icon_state = "purple"
 	},
 /area/space_structures/old_station/right/rnd)
-"iW" = (
-/obj/structure/sign/poster/revolution/cloning,
-/turf/simulated/wall/r_wall,
-/area/space_structures/old_station/central)
 "iX" = (
 /obj/structure/sign/poster/contraband/lusty_xenomorph,
 /turf/simulated/wall,
@@ -10731,7 +10727,7 @@ gO
 Ou
 Ou
 Ou
-iW
+Ou
 Ou
 Ou
 DT
