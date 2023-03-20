@@ -92,6 +92,8 @@
 	var/list/accounts[0]
 	for(var/i=1, i<=all_money_accounts.len, i++)
 		var/datum/money_account/D = all_money_accounts[i]
+		if(D.hidden)
+			continue
 		accounts.Add(list(list(\
 			"account_number"=D.account_number,\
 			"owner_name"=D.owner_name,\
