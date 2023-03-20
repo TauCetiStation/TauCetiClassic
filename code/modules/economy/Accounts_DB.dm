@@ -172,7 +172,9 @@
 			if("view_account_detail")
 				var/index = text2num(href_list["account_index"])
 				if(index && index <= all_money_accounts.len)
-					detailed_account_view = all_money_accounts[index]
+					var/datum/money_account/MA = all_money_accounts[index]
+					if(!MA.hidden)
+						detailed_account_view = all_money_accounts[index]
 
 			if("view_accounts_list")
 				detailed_account_view = null
