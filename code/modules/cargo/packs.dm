@@ -22,12 +22,12 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	var/special_enabled = FALSE
 	var/amount = 0
 
-	// Is calculated dynamically based on: crate type, manifest possible returns, contents, overprice and additional_costs.
+	// Is calculated dynamically based on: crate type, manifest's possible returns, contents, overprice and additional_costs.
 	var/cost = 0
 
 	// Multiplier to calculated cost. Represents how much worse we want cargo to feel when importing packs compared to when exporting them.
 	var/overprice = CARGO_DEFAULT_OVERPRICE
-	// Additional costs to make smart buying-bundling interesting. Represents the cost of transporting/packaging/bundling items in the pack.
+	// Additional costs to make the market imbalanced and create interesting choices for the Cargonians. "Represents" the "cost" of transporting/packaging/bundling items in the pack for those more lore-minded.
 	var/additional_costs = 0.0
 
 /datum/supply_pack/New()
@@ -55,7 +55,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	for(var/item_type in contains)
 		for(var/datum/export/E in exports_list)
 			if(E.applies_to_type(item_type))
-				contents_cost += E.get_type_cost(item_type)
+				contents_cost += E.get_type_cost(item_type, amount)
 
 	cost = max(CARGO_MIN_PACK_PRICE, crate_cost + CARGO_MANIFEST_COST + contents_cost * overprice + additional_costs)
 

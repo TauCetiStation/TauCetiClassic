@@ -75,7 +75,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/total_amount = 0
 
 // What would be the cost of the export type if it were to appear in a pack somewhere.
-/datum/export/proc/get_type_cost(export_type, contr = 0, emag = 0)
+/datum/export/proc/get_type_cost(export_type, amount = 1, contr = 0, emag = 0)
 	return cost
 
 /datum/export/proc/applies_to_type(export_type, contr = 0, emag = 0)
@@ -85,7 +85,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 		return FALSE
 	if(!include_subtypes && !(export_type in export_types))
 		return FALSE
-	if(include_subtypes && (!is_type_in_list(export_type, export_types) || is_type_in_list(export_type, exclude_types)))
+	if(include_subtypes && (!is_path_in_list(export_type, export_types) || is_path_in_list(export_type, exclude_types)))
 		return FALSE
 	return TRUE
 
