@@ -116,7 +116,7 @@ log transactions
 		return
 
 	if(istype(I, /obj/item/weapon/ewallet))
-		var/obj/item/weapon/ewallet/EW
+		var/obj/item/weapon/ewallet/EW = I
 
 		authenticated_account.adjust_stocks(EW.get_stocks())
 		authenticated_account.adjust_money(EW.get_money())
