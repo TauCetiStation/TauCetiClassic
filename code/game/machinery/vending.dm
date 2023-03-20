@@ -10,6 +10,9 @@
 	desc = "A generic vending machine."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "generic"
+
+	var/subname = null // subname for vendor's circuit name
+
 	var/light_range_on = 3
 	var/light_power_on = 1
 	layer = 2.9
@@ -308,7 +311,6 @@
 						if(transaction_amount <= D.money)
 
 							//transfer the money
-							D.adjust_money(-transaction_amount)
 							var/tax = round(transaction_amount * SSeconomy.tax_vendomat_sales * 0.01)
 							charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на продажу в вендомате", src.name, tax)
 

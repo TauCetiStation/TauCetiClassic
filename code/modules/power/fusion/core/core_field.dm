@@ -321,9 +321,7 @@
 		if(radiation)
 			var/rad_power = radiation * 0.001
 			var/range = min(round(sqrt(rad_power / 0.35)), 31)
-
-			for(var/mob/living/L in range(src, range))
-				L.apply_effect(round(rad_power), IRRADIATE)
+			irradiate_in_dist(get_turf(src), rad_power, range)
 
 	if(owned_core && owned_core.loc)
 		var/datum/gas_mixture/environment = owned_core.loc.return_air()

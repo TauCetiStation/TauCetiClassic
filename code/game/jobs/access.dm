@@ -70,6 +70,7 @@
 /var/const/access_paramedic = 70
 /var/const/access_engineering_lobby = 71
 /var/const/access_medbay_storage = 72
+/var/const/access_oldstation = 73
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.

@@ -830,11 +830,13 @@ The _flatIcons list is a cache for generated icon files.
 	flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.
 	return flat_icon
 
-/proc/build_disappear_icon(atom/A)
+/proc/build_disappear_icon(atom/A, turn_angle = 0)
 	var/icon/disappear_icon = new(getFlatIcon(A))
 	var/W = disappear_icon.Width()
 	var/H = disappear_icon.Height()
 	var/icon/T = icon('icons/effects/effects.dmi',"disappear")
+	if(turn_angle)
+		T.Turn(turn_angle)
 	if(W != world.icon_size || H != world.icon_size)
 		T.Scale(W, H)
 	T.BecomeAlphaMask()

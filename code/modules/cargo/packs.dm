@@ -156,12 +156,12 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/pistol_magazine
 	name = "9mm magazine"
-	contains = list(/obj/item/ammo_box/magazine/m9mm_2,
-					/obj/item/ammo_box/magazine/m9mm_2,
-					/obj/item/ammo_box/magazine/m9mm_2,
-					/obj/item/ammo_box/magazine/m9mm_2,
-					/obj/item/ammo_box/magazine/m9mm_2,
-					/obj/item/ammo_box/magazine/m9mm_2)
+	contains = list(/obj/item/ammo_box/magazine/glock,
+					/obj/item/ammo_box/magazine/glock,
+					/obj/item/ammo_box/magazine/glock,
+					/obj/item/ammo_box/magazine/glock,
+					/obj/item/ammo_box/magazine/glock,
+					/obj/item/ammo_box/magazine/glock)
 	cost = 2000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "9mm magazine"
@@ -170,12 +170,12 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/pistol_magazine_rubber
 	name = "9mm magazine (rubber)"
-	contains = list(/obj/item/ammo_box/magazine/m9mm_2/rubber,
-					/obj/item/ammo_box/magazine/m9mm_2/rubber,
-					/obj/item/ammo_box/magazine/m9mm_2/rubber,
-					/obj/item/ammo_box/magazine/m9mm_2/rubber,
-					/obj/item/ammo_box/magazine/m9mm_2/rubber,
-					/obj/item/ammo_box/magazine/m9mm_2/rubber)
+	contains = list(/obj/item/ammo_box/magazine/glock/rubber,
+					/obj/item/ammo_box/magazine/glock/rubber,
+					/obj/item/ammo_box/magazine/glock/rubber,
+					/obj/item/ammo_box/magazine/glock/rubber,
+					/obj/item/ammo_box/magazine/glock/rubber,
+					/obj/item/ammo_box/magazine/glock/rubber)
 	cost = 1000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "9mm magazine (rubber)"
