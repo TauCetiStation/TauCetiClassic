@@ -26,6 +26,11 @@
 
 /datum/money_account/Destroy()
 	all_money_accounts -= src
+
+	for(var/department in stocks)
+		var/datum/money_account/DA = global.department_accounts[department]
+		transfer_stock_to_account(DA.account_number, "StockBond", "Returning [department]: [stocks[department]] to owner due to account closure.", "NTGalaxyNet Terminal #[rand(111,1111)]", department, stocks[department])
+
 	return ..()
 
 /datum/money_account/proc/adjust_stock(department, amount)
@@ -105,7 +110,11 @@
 	var/datum/money_account/M = create_account(H.real_name, start_money, null, H.age)
 
 	for(var/department in department_stocks)
-		SSeconomy.issue_founding_stock(M.account_number, department, department_stocks[department])
+		var/stock_amount = department_stocks[department] * SSeconomy.get_stock_split(department)
+		var/datum/money_account/DA = global.department_accounts[department]
+		transfer_stock_to_account(DA.account_number, "StockBond", "Transfering employee stock [department]: [stock_amount] to [H.real_name]", "NTGalaxyNet Terminal #[rand(111,1111)]", department, -stock_amount)
+		transfer_stock_to_account(M.account_number, "StockBond", "Transfering employee stock [department]: [stock_amount] to [H.real_name]", "NTGalaxyNet Terminal #[rand(111,1111)]", department, stock_amount)
+
 
 	if(H.mind)
 		var/remembered_info = ""

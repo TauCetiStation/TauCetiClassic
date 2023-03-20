@@ -52,8 +52,7 @@ SUBSYSTEM_DEF(economy)
 	total_department_stocks[department] += amount
 
 /datum/controller/subsystem/economy/proc/issue_founding_stock(account_number, department, amount)
-	var/stock_split = get_stock_split(department)
-	var/stock_amount = amount * stock_split
+	var/stock_amount = amount * get_stock_split(department)
 	print_stocks(department, stock_amount)
 	transfer_stock_to_account(account_number, "StockBond", "Stock transfer - [department]: [stock_amount]", "NTGalaxyNet Terminal #[rand(111,1111)]", department, stock_amount, pda_inform=FALSE)
 
@@ -104,6 +103,9 @@ SUBSYSTEM_DEF(economy)
 	for(var/datum/money_account/D in all_money_accounts)
 		var/total_dividend_payout = 0.0
 		for(var/department in D.stocks)
+			// Don't pay stocks to ourselves, less transaction spam.
+			if(D == global.department_accounts[department])
+				continue
 			var/dividend_payout = calculate_dividends(capitals[department], department, D.stocks[department])
 			total_dividend_payout += dividend_payout
 			if(!departmental_payouts[department])

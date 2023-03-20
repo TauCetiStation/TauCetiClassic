@@ -108,14 +108,15 @@ var/global/initial_station_money = 7500
 	vendor_account = department_accounts["Vendor"]
 
 	cargo_account = department_accounts["Cargo"]
-	SSeconomy.set_dividend_rate("Cargo", 0.05)
-	// Is needed in case no Cargo members but HoP wants to sell stock.
-	SSeconomy.issue_founding_stock(cargo_account.account_number, "Cargo", 10)
+	SSeconomy.set_dividend_rate("Cargo", 0.1)
+	// Enough to stock to supply 2 cargos with it.
+	SSeconomy.issue_founding_stock(cargo_account.account_number, "Cargo", 260)
 
 	create_department_account("CentComm")
 	global.centcomm_account = department_accounts["CentComm"]
 	global.centcomm_account.money = 10000000
-
+	// Is needed in case admins want to have some !!!FUN!!!
+	SSeconomy.issue_founding_stock(global.centcomm_account.account_number, "Cargo", 10)
 
 	current_date_string = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year]"
 
