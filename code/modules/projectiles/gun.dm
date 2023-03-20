@@ -168,6 +168,10 @@
 
 	add_fingerprint(user)
 
+	for(var/mob/living/carbon/human/H in view(7))
+		if(H.GetComponent(/datum/component/bulletsponge))
+			target = H
+
 	if(!special_check(user, target))
 		return
 

@@ -460,7 +460,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 		new /obj/item/ammo_box/magazine/glock/extended/rubber(src)
 	for (var/i in 1 to 2)
 		new /obj/item/ammo_box/magazine/glock/extended(src)
-	new /obj/item/weapon/shield/riot/tele(src)
+	new /obj/item/weapon/shield/riot/tele/blueshield(src)
 	new /obj/item/weapon/storage/belt/security(src)
 
 	new /obj/item/device/radio/headset/headset_int/blueshield(src)

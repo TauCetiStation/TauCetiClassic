@@ -235,7 +235,7 @@
 	name = "telescopic shield"
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
 	icon = 'icons/obj/weapons.dmi'
-	icon_state = "teleriot0"
+	icon_state = "teleriot"
 	origin_tech = "materials=3;combat=4;engineering=4"
 	slot_flags = null
 	force = 3
@@ -248,6 +248,7 @@
 
 /obj/item/weapon/shield/riot/tele/atom_init()
 	. = ..()
+	update_icon()
 	var/datum/swipe_component_builder/SCB = new
 	SCB.interupt_on_sweep_hit_types = list(/turf)
 
@@ -279,9 +280,11 @@
 	if(active)
 		return ..()
 
+/obj/item/weapon/shield/riot/tele/update_icon()
+	icon_state = "[initial(icon_state)][active][wall_of_shield_on ? "_outline" : ""]"
+
 /obj/item/weapon/shield/riot/tele/attack_self(mob/living/user)
 	active = !active
-	icon_state = "teleriot[active]"
 	playsound(src, 'sound/weapons/batonextend.ogg', VOL_EFFECTS_MASTER)
 
 	if(active)
@@ -302,6 +305,27 @@
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 	add_fingerprint(user)
 	update_icon()
+
+/obj/item/weapon/shield/riot/tele/blueshield
+	name = "blueshield"
+	desc = "A blueshield's blueshield used to shield blue."
+	icon_state = "blueshield"
+	block_chance = 65
+
+/obj/item/weapon/shield/riot/tele/blueshield/attack_self(mob/living/user)
+	. = ..()
+	if(active)
+		user.AddComponent(/datum/component/bulletsponge)
+		to_chat(user, "<span class='warning'>With [src] deployed, every projectile in view will attract to you!</span>")
+	else
+		qdel(user.GetComponent(/datum/component/bulletsponge))
+
+/obj/item/weapon/shield/riot/tele/blueshield/dropped(mob/user)
+	..()
+	if(active)
+		qdel(user.GetComponent(/datum/component/bulletsponge))
+		active = FALSE
+		update_icon()
 
 /obj/item/weapon/shield/riot/roman
 	name = "roman shield"
