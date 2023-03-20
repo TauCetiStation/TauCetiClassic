@@ -875,7 +875,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	updateDrugginesOverlay()
 
 /mob/proc/updateDrugginesOverlay()
-	if(druggy)
+	if(druggy && get_species(src) != SKRELL)
 		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
 		throw_alert("high", /atom/movable/screen/alert/high)
 	else

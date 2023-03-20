@@ -485,7 +485,7 @@
 
 /turf/simulated/wall/bullet_act(obj/item/projectile/Proj, def_zone)
 	. = ..()
-	if(!Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN) && prob(75))
+	if(!Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN) && prob(75) && iswallturf(src))
 		add_dent(WALL_DENT_SHOT, Proj.p_x, Proj.p_y)
 
 /turf/simulated/wall/proc/add_dent(denttype, x, y)

@@ -100,6 +100,7 @@ var/global/initial_station_money = 7500
 		weighted_mundaneevent_locations[D] = D.viable_mundane_events.len
 
 	create_station_account()
+	create_centcomm_account()
 
 	for(var/department in station_departments)
 		create_department_account(department)
@@ -112,16 +113,35 @@ var/global/initial_station_money = 7500
 	// Enough stock to supply 2 cargos of employees with it. TO-DO: calculate it programatically depending on map changes to jobs?
 	SSeconomy.issue_founding_stock(cargo_account.account_number, "Cargo", 260)
 
-	create_department_account("CentComm")
-	global.centcomm_account = department_accounts["CentComm"]
-	global.centcomm_account.money = 10000000
-	// Is needed in case admins want to have some !!!FUN!!!
-	SSeconomy.issue_founding_stock(global.centcomm_account.account_number, "Cargo", 10)
-
 	current_date_string = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year]"
 
 	economy_init = TRUE
 	return 1
+
+/proc/create_centcomm_account()
+	if(global.centcomm_account)
+		return
+
+	global.centcomm_account = new
+	global.centcomm_account.owner_name = "CentComm Station Account"
+	global.centcomm_account.account_number = rand(111111, 999999)
+	global.centcomm_account.remote_access_pin = rand(1111, 111111)
+	global.centcomm_account.security_level = 2
+	global.centcomm_account.money = 10000000
+	global.centcomm_account.hidden = TRUE
+	// Is needed in case admins want to have some !!!FUN!!!
+	SSeconomy.issue_founding_stock(global.centcomm_account.account_number, "Cargo", 10)
+
+	//create an entry in the account transaction log for when it was created
+	var/datum/transaction/T = new()
+	T.target_name = global.centcomm_account.owner_name
+	T.purpose = "Account creation"
+	T.amount = global.centcomm_account.money
+	T.date = "2nd May, [gamestory_start_year - 10]"
+	T.time = "10:41"
+	T.source_terminal = "Biesel GalaxyNet Terminal #277"
+
+	station_account.transaction_log.Add(T)
 
 /proc/create_station_account()
 	if(station_account)

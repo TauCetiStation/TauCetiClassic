@@ -19,6 +19,8 @@
 
 /datum/reagent/toxin/on_skrell_digest(mob/living/M)
 	..()
+
+	M.nutrition += 4 * REM
 	return !flags[IS_ORGANIC]
 
 /datum/reagent/toxin/amatoxin
@@ -148,7 +150,7 @@
 	toxpwr = 4
 	custom_metabolism = 0.4
 	restrict_species = list(IPC, DIONA)
-	flags = list()
+	flags = list(IS_ORGANIC = TRUE) // We do not have a division into organic and inorganic cyanides.
 
 /datum/reagent/toxin/cyanide/on_general_digest(mob/living/M)
 	..()
@@ -326,7 +328,7 @@
 	custom_metabolism = 0.1
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
-	flags = list()
+	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/toxin/stoxin/on_general_digest(mob/living/M)
 	..()
@@ -557,6 +559,7 @@
 	description = "Deadly rapidly degrading toxin derived from certain species of mushrooms."
 	color = "#792300" //rgb: 121, 35, 0
 	custom_metabolism = 0.5
+	flags = list(IS_ORGANIC = TRUE)
 
 /datum/reagent/alphaamanitin/on_general_digest(mob/living/M)
 	..()
@@ -572,6 +575,7 @@
 	reagent_state = LIQUID
 	color = "#792300" //rgb: 59, 8, 5
 	custom_metabolism = 0.05
+	flags = list(IS_ORGANIC = TRUE)
 
 	data = list()
 
@@ -772,6 +776,11 @@
 		M.random_move()
 	if(prob(7))
 		M.emote(pick("twitch","drool","moan","giggle"))
+
+/datum/reagent/space_drugs/on_skrell_digest(mob/living/M)
+	M.nutrition += 4 * REM
+	M.adjustDrugginess(2)
+	return FALSE
 
 /datum/reagent/ambrosium
 	name = "Ambrosium"
