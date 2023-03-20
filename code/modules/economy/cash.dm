@@ -144,6 +144,8 @@
 	if(MA.stocks)
 		to_chat(user, "<span class='notice'>Charge card's stocks: [get_stocks_string(MA.stocks)].</span>")
 
+	to_chat(user, "<span class='notice'>You can try putting this card into the closest ATM to transfer everything from it onto your account!</span>")
+
 /obj/item/weapon/ewallet/proc/get_money()
 	var/datum/money_account/MA = get_account(account_number)
 	return MA.money
