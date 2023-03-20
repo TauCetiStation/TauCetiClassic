@@ -5,7 +5,6 @@ SUBSYSTEM_DEF(economy)
 	flags = SS_NO_INIT
 
 	var/endtime = 0 //this variable holds the sum of ticks until the next call to fire(). This is necessary to display the remaining time before salary in the PDA
-	var/payment_counter = 0
 //------------TAXES------------
 	var/tax_cargo_export = 10 //Station fee earned when supply shuttle exports things. 0 is 0%, 100 is 100%
 	var/tax_vendomat_sales = 25 //Station fee earned with every vendomat sale.
@@ -74,11 +73,10 @@ SUBSYSTEM_DEF(economy)
 	set_endtime()
 	if(!global.economy_init)
 		return
-	if(payment_counter)	//to skip first payment
-		for(var/datum/money_account/D in all_money_accounts)
-			if(D.owner_salary && !D.suspended)
-				charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)
-	payment_counter += 1
+
+	for(var/datum/money_account/D in all_money_accounts)
+		if(D.owner_salary && !D.suspended)
+			charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)
 
 	monitor_cargo_shop()
 
