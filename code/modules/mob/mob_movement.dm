@@ -148,7 +148,7 @@
 		//We are now going to move
 		moving = TRUE
 
-		if(SEND_SIGNAL(src, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
+		if(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
 			// Someone please investigate why we can't do moving = TRUE *after* this check. ~Luduk
 			moving = FALSE
 			return
