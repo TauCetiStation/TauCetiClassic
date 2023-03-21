@@ -409,7 +409,7 @@
 
 /obj/item/clothing/suit/armor/vest/durathread
 	name = "durathread vest"
-	desc = "A vest made of duraghead and a bunch of rags, tied with wires."
+	desc = "A vest made of durathread and a bunch of rags, tied with wires."
 	icon_state = "Duraarmor"
 	item_state = "Duraarmor"
 	armor = list(melee = 45, bullet = 15, laser = 50, energy = 35, bomb = 0, bio = 0, rad = 0)
