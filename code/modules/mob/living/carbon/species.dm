@@ -953,7 +953,7 @@
 	heat_level_3 = 2000
 
 	// This should cause IPCs to stabilize at ~52 C in a 20 C environment with fully functional cooling system
-	synth_temp_gain = 10
+	synth_temp_gain = 8
 	// IPCs heat up until ~306C. No more 2000C IPCs
 	synth_temp_max = 550
 
