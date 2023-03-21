@@ -134,12 +134,12 @@
 						if (comparable_value >= premiumprice)
 							insurance_price = premiumprice
 						else if (comparable_value < premiumprice && comparable_value >= standartprice)
-							to_chat(H,"Sorry, but you don't have enough money to use Premium insurance, it will be changed to Standart.</span>")
+							to_chat(H,"Sorry, but you don't have enough money to use Premium insurance, it will be changed to Standart.")
 							H.insurance = "Standart"
 							insurance_price = standartprice
 						
 						else if (comparable_value < standartprice)
-							to_chat(H, "Sorry, but you don't have enough money to use Premium or Standart insurance, it will be changed to None.</span>")
+							to_chat(H, "Sorry, but you don't have enough money to use Premium or Standart insurance, it will be changed to None.")
 							H.insurance = "None"
 							insurance_price = 0
 
@@ -148,7 +148,7 @@
 							insurance_price = standartprice
 							
 						else if (comparable_value < standartprice)
-							to_chat(H, "Sorry, but you don't have enough money to use Standart insurance, it will be changed to None.</span>")
+							to_chat(H, "Sorry, but you don't have enough money to use Standart insurance, it will be changed to None.")
 							H.insurance = "None"
 							insurance_price = 0
 
