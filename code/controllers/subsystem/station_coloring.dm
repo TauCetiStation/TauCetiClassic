@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(station_coloring)
 	//GREEN (Virology and Hydro areas)
 	var/list/green = list("#87b7a5", "#6eb671", "#5d9a6c", "#689883")
 	//BLUE (Some of Medbay areas)
-	var/list/blue = list("#336f92", "#5d99bc", "#3f87ae", "#6eabce")
+	var/list/blue = list("#336f92", "#5d99bc", "#3f87ae", "#6eabce", "#054166")
 
 	var/list/color_palette = list(
 		pick(red)          = typesof(/area/station/security),
