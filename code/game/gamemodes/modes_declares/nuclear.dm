@@ -8,6 +8,29 @@
 	minimum_player_count = 15
 	minimum_players_bundles = 25
 
+/datum/game_mode/nuclear/PopulateFactions()
+	if(!factions.len)
+		return ..()
+	var/list/all_players = get_ready_players(check_ready = TRUE)
+	var/number_of_possible_security = 0
+	var/pos_cadets = 0
+	for(var/mob/M in all_players)
+		for(var/level in JP_LEVELS)
+			if(M.client?.prefs?.job_preferences["Security Cadet"] == level)
+				pos_cadets += level / 3
+				break
+	var/pos_officers = 0
+	for(var/mob/M in all_players)
+		for(var/level in JP_LEVELS)
+			if(M.client?.prefs?.job_preferences["Security Officer"] == level)
+				pos_officers += level / 3
+				break
+	number_of_possible_security = pos_cadets / 2 + pos_officers
+	for(var/datum/faction/F in factions)
+		var/possible_max_roles = min(number_of_possible_security * 1.5, F.max_roles)
+		F.max_roles = clamp(possible_max_roles, F.min_roles, F.max_roles)
+	return ..()
+
 /datum/game_mode/nuclear/announce()
 	to_chat(world, "<B>The current game mode is - Nuclear Emergency!</B>")
 	to_chat(world, "<B>Gorlex Maradeurs are approaching [station_name()]!</B>")

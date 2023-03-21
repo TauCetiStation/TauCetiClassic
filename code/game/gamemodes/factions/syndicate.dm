@@ -53,24 +53,6 @@
 /datum/faction/nuclear/can_setup(num_players)
 	if (!..())
 		return FALSE
-	var/datum/game_mode/G = SSticker.mode
-	var/list/all_players = G.get_ready_players(check_ready = TRUE)
-	var/number_of_possible_security = 0
-	for(var/mob/M in all_players)
-		for(var/level in JP_LEVELS)
-			var/find_next_candidate = FALSE
-			for(var/job_title in global.security_positions)
-				if(M.client?.prefs?.job_preferences[job_title] == level)
-					//player with low prior most likely won't fit to that job
-					number_of_possible_security += level / 3
-					find_next_candidate = TRUE
-					break
-			if(find_next_candidate)
-				break
-
-	if(number_of_possible_security < ((min_roles + max_roles) / 2))
-		max_roles = clamp((max_roles), min_roles, number_of_possible_security * 1.5)
-
 	// Looking for map to nuclear spawn points
 	return length(landmarks_list["Syndicate-Commander"]) > 0 && length(landmarks_list["Syndicate-Spawn"]) > 0
 
