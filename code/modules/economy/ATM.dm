@@ -326,10 +326,10 @@ log transactions
 
 				if(money_amount > 0.0)
 					transfer_money(target_account, money_amount, href_list["purpose"])
-				else if(stock_amount <= 0.0)
+				else if(stock_amount <= 0)
 					show_invalid_amount_message = TRUE
 
-				if(stock_amount > 0.0)
+				if(stock_amount > 0)
 					transfer_stocks(target_account, stock_type, stock_amount, href_list["purpose"])
 				else if(money_amount <= 0.0)
 					show_invalid_amount_message = TRUE

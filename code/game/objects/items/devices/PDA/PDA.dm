@@ -1855,12 +1855,12 @@
 /obj/item/device/pda/proc/transaction_stock_inform(target, source, department, amount)
 	if(!can_use())
 		return
-	if(src.message_silent)
+	if(message_silent)
 		return
 	//Search for holder of the PDA. (some copy-paste from /obj/item/device/pda/proc/create_message)
 	var/mob/living/L = null
-	if(src.loc && isliving(src.loc))
-		L = src.loc
+	if(loc && isliving(loc))
+		L = loc
 	if(!L)
 		return
 
