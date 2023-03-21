@@ -471,7 +471,6 @@ SUBSYSTEM_DEF(job)
 
 	//give them an account in the station database
 	var/datum/money_account/M = create_random_account_and_store_in_mind(H, job.salary)	//starting funds = salary
-	check_insurance(H, job.salary)
 
 	// If they're head, give them the account info for their department
 	if(H.mind && job.head_position)
@@ -559,23 +558,6 @@ SUBSYSTEM_DEF(job)
 
 	return TRUE
 
-/proc/check_insurance(mob/living/carbon/human/H, var/salary)
-	var/standartprice = 80
-	var/premiumprice = 200
-
-	if(H.insurance == "Standart" && salary < standartprice)
-		to_chat(H, "Sorry, but you don't have enough salary to use Standart insurance, it will be changed to None")
-		H.insurance = "None"
-
-	if(H.insurance == "Premium" && salary< premiumprice)
-		if(salary >= standartprice)
-			to_chat(H,"Sorry, but you don't have enough salary to use Premium insurance, it will be changed to Standart")
-			H.insurance = "Standart"
-			
-		else
-			to_chat(H, "Sorry, but you don't have enough salary to use Premium or Standart insurance, it will be changed to None")
-			H.insurance = "None"
-		
 /datum/controller/subsystem/job/proc/spawnId(mob/living/carbon/human/H, rank, title)
 	if(!H)	return FALSE
 	var/obj/item/weapon/card/id/C = null
@@ -605,6 +587,10 @@ SUBSYSTEM_DEF(job)
 			if(MA)
 				C.associated_account_number = MA.account_number
 				MA.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
+				MA.check_insurance(roundstart=1)
+				MA.money -= MA.owner_insurance_price
+				var/datum/money_account/medaccount = get_account(global.department_accounts["Medical"].account_number)
+				medaccount.money += MA.owner_insurance_price
 
 		H.equip_or_collect(C, SLOT_WEAR_ID)
 
@@ -620,6 +606,10 @@ SUBSYSTEM_DEF(job)
 		pda.owner_account = MA.account_number //bind the account to the pda
 		pda.owner_fingerprints += C.fingerprint_hash //save fingerprints in pda from ID card
 		MA.owner_PDA = pda //add PDA in /datum/money_account
+		pda.owner_insurance_price = MA.owner_insurance_price
+		pda.owner_insurance_type = MA.owner_insurance_type
+		pda.owner_preferred_insurance_price = MA.owner_insurance_price
+		pda.owner_preferred_insurance_type = MA.owner_insurance_type
 
 	return TRUE
 
