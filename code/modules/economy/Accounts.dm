@@ -117,7 +117,7 @@
 				var/comparable_value
 				if(roundstart)
 					comparable_value = owner_salary
-				else:
+				else
 					comparable_value = money
 
 
