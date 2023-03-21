@@ -11,6 +11,10 @@
 	var/account_number = 0
 	var/remote_access_pin = 0
 	var/money = 0
+	var/owner_insurance_type = ""
+	var/owner_insurance_price = 0
+	var/owner_preferred_insurance_type = ""
+	var/owner_preferred_insurance_price = 0
 	var/list/transaction_log = list()
 	var/obj/item/device/pda/owner_PDA = null	//contains a PDA linked to an account
 	var/suspended = 0
@@ -102,6 +106,63 @@
 		H.mind.add_key_memory(MEM_ACCOUNT_PIN, M.remote_access_pin)
 
 	return M
+
+/datum/money_account/proc/check_insurance(roundstart=0)
+	for (var/mob/living/carbon/human/H in global.human_list)
+		if(H.mind)
+			if(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER) == account_number)
+				var/standartprice = global.possible_insurances["Standart"]
+				var/premiumprice = global.possible_insurances["Premium"]
+				var/insurance_price
+				var/comparable_value
+				if(roundstart)
+					comparable_value = owner_salary
+				else:
+					comparable_value = money
+
+
+				if (roundstart)
+					owner_insurance_type = H.insurance
+				else
+					H.insurance = owner_preferred_insurance_type
+					owner_insurance_type = owner_preferred_insurance_type
+					owner_insurance_price = owner_preferred_insurance_price
+
+
+				switch(owner_insurance_type)
+					if ("Premium")
+						if (comparable_value >= premiumprice)
+							insurance_price = premiumprice
+						else if (comparable_value < premiumprice && comparable_value >= standartprice)
+							to_chat(H,"Sorry, but you don't have enough money to use Premium insurance, it will be changed to Standart.</span>")
+							H.insurance = "Standart"
+							insurance_price = standartprice
+						
+						else if (comparable_value < standartprice)
+							to_chat(H, "Sorry, but you don't have enough money to use Premium or Standart insurance, it will be changed to None.</span>")
+							H.insurance = "None"
+							insurance_price = 0
+
+					if ("Standart")
+						if (comparable_value >= standartprice)
+							insurance_price = standartprice
+							
+						else if (comparable_value < standartprice)
+							to_chat(H, "Sorry, but you don't have enough money to use Standart insurance, it will be changed to None.</span>")
+							H.insurance = "None"
+							insurance_price = 0
+
+					if ("None")
+						insurance_price = 0
+				
+				owner_insurance_type = H.insurance
+				owner_insurance_price = insurance_price
+				owner_preferred_insurance_price = owner_insurance_price
+				owner_preferred_insurance_type = owner_insurance_type
+				
+
+
+
 
 /proc/create_account(new_owner_name = "Default user", starting_funds = 0, obj/machinery/account_database/source_db, age = 10)
 
