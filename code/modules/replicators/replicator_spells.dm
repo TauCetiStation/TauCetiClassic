@@ -291,6 +291,12 @@
 	BT.name = "[BT.name] ([user_replicator.generation][rand(0, 9)])"
 	playsound(user, 'sound/mecha/mech_detach_equip.ogg', VOL_EFFECTS_MASTER)
 
+	if(user_replicator.auto_construct_type != /obj/structure/bluespace_corridor)
+		return
+	if(!isturf(user_replicator.loc))
+		return
+	user_replicator.try_construct(user_replicator.loc)
+
 
 /obj/effect/proc_holder/spell/no_target/replicator_construct/generator
 	name = "Construct Generator"
