@@ -1200,6 +1200,7 @@
 	potency = 5
 	growthstages = 3
 
+
 // **********************
 // Other harvested materials from plants (that are not food)
 // **********************
@@ -1322,7 +1323,6 @@
 	name = "durathread bundle"
 	desc = "A tough bundle of durathread, good luck unraveling this."
 	icon_state = "durathread"
-	potency = 100
 
 // *************************************
 // Pestkiller defines for hydroponics
