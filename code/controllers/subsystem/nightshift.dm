@@ -76,3 +76,35 @@ var/global/list/lighting_presets_admin = list(
 )
 
 var/global/hard_lighting_arealist = typecacheof(typesof(/area/station/medical) + typesof(/area/station/rnd) + typesof(/area/asteroid/research_outpost))
+
+
+/client/proc/add_nightshift_preset()
+	set category = "Debug"
+	set name = "Add Nightshift Preset"
+
+	if(!check_rights(R_VAREDIT)) // todo: debug, maybe, we can't trust admin sanity
+		return
+
+	var/color = input("Select hex color for ligthing", "New Night Shift Preset") as null|color
+
+	if(!color)
+		return
+
+	var/power = clamp(input("Select power for ligthing, in range 0.1-5", "New Night Shift Preset", 0.8) as null|num, 0, 5)
+
+	if(!power)
+		return
+
+	var/range = clamp(round(input("Select range for ligthing, in range 1-10", "New Night Shift Preset", 8) as null|num), 1, 10)
+
+	if(!range)
+		return
+
+	var/preset_name = "[color]_[power]_[range]"
+
+	lighting_presets_admin[preset_name] = list("color" = color, "power" = power, "range" = range)
+
+	if(tgui_alert(usr, "Set new preset for station?", "Confirm", list("Yes","No")) == "Yes")
+		SSnightshift.update_nightshift(TRUE, preset_name)
+		message_admins("[key_name_admin(usr)] switched night shift mode to new preset '[preset_name]'.")
+		return
