@@ -23,11 +23,11 @@ var/global/online_shop_profits = 0
 	var/account = 111111
 	var/item_icon = ""
 	var/hash = ""
-
+	var/lot_item_ref = ""
 	// How much would exporting this item via cargo shuttle pay up.
 	var/market_price = 0
 
-/datum/shop_lot/New(name, description, price, category, account, icon, market_price)
+/datum/shop_lot/New(name, description, price, category, account, icon, lot_item_ref, market_price)
 	global.online_shop_number++
 	global.online_shop_lots["[global.online_shop_number]"] = src
 
@@ -38,9 +38,10 @@ var/global/online_shop_profits = 0
 	src.number = "[global.online_shop_number]"
 	src.account = account
 	src.item_icon = icon
-	src.hash = "[src.category]-[src.name]-[src.description]-[src.price]-[src.account]"
-
+	src.lot_item_ref = lot_item_ref
 	src.market_price = market_price
+
+	src.hash = "[src.category]-[src.name]-[src.description]-[src.price]-[src.account]"
 
 	LAZYADDASSOCLIST(global.online_shop_lots_hashed, src.hash, src)
 
@@ -66,21 +67,42 @@ var/global/online_shop_profits = 0
 		price_str = "<S>[src.price + get_delivery_cost()]</S> <B>[get_discounted_price() + get_delivery_cost()]</B>"
 
 	return list(
-		"name" = MA ? MA.owner_name : "Unknown",
+		"name" = name,
 		"description" = src.description,
 		"price" = price_str,
 		"number" = number,
+		"seller" = MA ? MA.owner_name : "Unknown",
 		"account" = account,
 		"delivered" = delivered,
 		"postpayment" = get_discounted_price(),
-		"icon" = item_icon
+		"icon" = item_icon,
+		"lot_item_ref" = lot_item_ref,
 	)
 
 /datum/shop_lot/proc/get_delivery_cost()
-	return round(price * global.online_shop_delivery_cost)
+	return round(price * global.online_shop_delivery_cost, 0.1)
 
 /datum/shop_lot/proc/get_discounted_price()
-	return round((1 - global.online_shop_discount) * price)
+	return round((1 - global.online_shop_discount) * price, 0.1)
+
+/datum/shop_lot/proc/mark_delivered()
+	delivered = TRUE
+
+	var/atom/A = locate(lot_item_ref)
+	if(!A)
+		return
+
+	if(istype(A, /obj/item/smallDelivery))
+		var/obj/item/smallDelivery/package = A
+		package.cut_overlay(package.lot_lock_image)
+		package.lot_lock_image = null
+		return
+
+	if(istype(A, /obj/structure/bigDelivery))
+		var/obj/structure/bigDelivery/package = A
+		package.cut_overlay(package.lot_lock_image)
+		package.lot_lock_image = null
+		return
 
 /proc/order_onlineshop_item(orderer_name, account, datum/shop_lot/Lot, destination)
 	if(!Lot)
@@ -129,4 +151,34 @@ var/global/online_shop_profits = 0
 		qdel(Pen)
 
 		P.update_icon()
+	return TRUE
+
+/proc/onlineshop_mark_as_delivered(mob/user, id, account_number, postpayment)
+	id = "[id]"
+
+	var/datum/shop_lot/Lot = global.online_shop_lots[id]
+	if(!Lot)
+		if(user)
+			to_chat(user, "<span class='warning'>Этот лот больше не существует.</span>")
+		return FALSE
+
+	var/datum/money_account/MA = get_account(account_number)
+	if(!MA)
+		if(user)
+			to_chat(user, "<span class='notice'>ОШИБКА: Никакой счёт не подвязан к данному КПК.</span>")
+		return FALSE
+
+	if(postpayment > MA.money)
+		if(user)
+			to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
+		return FALSE
+
+	Lot.mark_delivered()
+
+	if(global.online_shop_discount)
+		charge_to_account(Lot.account, global.cargo_account.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.price - postpayment)
+		charge_to_account(global.cargo_account.account_number, MA.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -(Lot.price - postpayment))
+
+	charge_to_account(MA.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -postpayment)
+	charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, postpayment)
 	return TRUE
