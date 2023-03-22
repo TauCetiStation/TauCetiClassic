@@ -11,7 +11,7 @@
 
 /datum/religion_tech/cult/memorizing_rune/proc/give_spell(datum/religion/R, mob/M, holy_role)
 	var/obj/effect/proc_holder/spell/no_target/memorize_rune/MR = M.GetSpell(/obj/effect/proc_holder/spell/no_target/memorize_rune)
-	if(MR)
+	if(MR || M.GetSpell(obj/effect/proc_holder/spell/no_target/scribe_rune))
 		return
 	MR = new
 	M.AddSpell(MR)
