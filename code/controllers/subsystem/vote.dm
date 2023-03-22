@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(vote)
 	wait = SS_WAIT_VOTE
 
 	flags = SS_KEEP_TIMING | SS_NO_INIT
-	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT | SS_SHOW_IN_MC_TAB
 
 	var/list/datum/poll/possible_polls = list()
 	var/datum/poll/active_poll

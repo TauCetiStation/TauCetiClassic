@@ -518,7 +518,7 @@ var/global/list/wood_icons = list("wood","wood-broken")
 			else
 				to_chat(user, "<span class='notice'>Похоже, лампочка в порядке, менять её не нужно.</span>")
 
-	if(isprying(C) && (!(is_plating())))
+	if(isprying(C) && !is_plating() && !is_catwalk())
 		if(broken || burnt)
 			to_chat(user, "<span class='warning'>Вы сняли поврежденное покрытие.</span>")
 		else

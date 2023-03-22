@@ -2,7 +2,7 @@
 	startswith = list(/obj/item/weapon/melee/baton = 1, /obj/item/weapon/grenade/flashbang = 2, /obj/item/weapon/handcuffs = 3, /obj/item/weapon/shield/riot/tele = 1)
 
 /obj/item/weapon/storage/belt/security/tactical/cops
-	startswith = list(/obj/item/weapon/melee/baton = 1, /obj/item/weapon/grenade/flashbang = 2, /obj/item/weapon/handcuffs = 2, /obj/item/ammo_box/magazine/m556 = 3, /obj/item/weapon/shield/riot/tele = 1)
+	startswith = list(/obj/item/weapon/melee/baton = 1, /obj/item/weapon/grenade/flashbang = 2, /obj/item/weapon/handcuffs = 2, /obj/item/ammo_box/magazine/a28 = 3, /obj/item/weapon/shield/riot/tele = 1)
 
 /datum/outfit/families_police/beatcop
 	name = "Families: Офицер"
@@ -23,7 +23,7 @@
 	survival_box = TRUE
 
 	backpack_contents = list(
-		/obj/item/ammo_box/magazine/c45m/rubber = 3,
+		/obj/item/ammo_box/magazine/colt/rubber = 3,
 		/obj/item/ammo_box/c45 = 2,
 		/obj/item/weapon/gun/projectile/automatic/colt1911 = 1,
 	)
@@ -40,7 +40,7 @@
 	backpack_contents = list(
 		/obj/item/weapon/storage/box/teargas = 1,
 		/obj/item/weapon/storage/box/shotgun/buckshot = 1,
-		/obj/item/ammo_box/magazine/c45m/rubber = 3,
+		/obj/item/ammo_box/magazine/colt/rubber = 3,
 		/obj/item/weapon/gun/projectile/automatic/colt1911 = 1,
 	)
 
@@ -56,7 +56,7 @@
 		/obj/item/weapon/storage/box/teargas = 1,
 		/obj/item/weapon/storage/box/shotgun/buckshot = 1,
 		/obj/item/weapon/gun/projectile/automatic/colt1911 = 1,
-		/obj/item/ammo_box/magazine/c45m/rubber = 3,
+		/obj/item/ammo_box/magazine/colt/rubber = 3,
 	)
 
 /datum/outfit/families_police/beatcop/fbi
@@ -68,7 +68,7 @@
 	suit_store = /obj/item/weapon/gun/projectile/automatic
 	backpack_contents = list(
 		/obj/item/weapon/storage/box/handcuffs = 1,
-		/obj/item/ammo_box/magazine/msmg9mm = 3,
+		/obj/item/ammo_box/magazine/smg = 3,
 		/obj/item/ammo_box/c9mm = 2,
 	)
 
@@ -84,7 +84,7 @@
 		/obj/item/weapon/storage/box/handcuffs = 1,
 		/obj/item/weapon/storage/box/teargas = 1,
 		/obj/item/weapon/storage/box/flashbangs = 1,
-		/obj/item/ammo_box/a357 = 2,
+		/obj/item/ammo_box/speedloader/a357 = 2,
 		/obj/item/weapon/gun/projectile/revolver/mateba = 1,
 		/obj/item/weapon/gun/projectile/automatic/a28 = 1,
 	)

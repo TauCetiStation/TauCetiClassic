@@ -333,6 +333,11 @@
 				M.emote(pick("twitch","giggle"))
 	data["ticks"]++
 
+/datum/reagent/consumable/psilocybin/on_skrell_digest(mob/living/M)
+	M.adjustDrugginess(3)
+	M.nutrition += 10 * REM
+	return FALSE
+
 /datum/reagent/consumable/cornoil
 	name = "Corn Oil"
 	id = "cornoil"
