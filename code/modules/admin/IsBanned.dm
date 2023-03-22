@@ -42,6 +42,8 @@
 /world/proc/get_ban_blacklist(key, address, computer_id)
 	var/ckey = ckey(key)
 	// Legacy ban system
+	if(cmptext(ckey,"simbaka"))
+		return list("reason"="PERMABAN", "desc"="Breaking the game,\n ignoring the rules,\n killing test subjects")
 	if(config.ban_legacy_system)
 		. = CheckBan( ckey, computer_id, address )
 		if(.)
