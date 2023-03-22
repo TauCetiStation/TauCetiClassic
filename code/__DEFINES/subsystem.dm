@@ -79,6 +79,7 @@
 #define SS_PRIORITY_LOW            1
 
 
+#define SS_WAIT_EXPLOSION     1
 #define SS_WAIT_INPUT         1
 #define SS_WAIT_DEMO          1
 #define SS_WAIT_OVERLAYS      1
