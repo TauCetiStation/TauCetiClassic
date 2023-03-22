@@ -326,6 +326,14 @@
 	},
 /area/awaymission/example)
 "aX" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/grille,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
@@ -333,8 +341,23 @@
 	name = "Privacy Shutters";
 	opacity = 0
 	},
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/turf/simulated/floor/plating,
+/area/awaymission/example)
+"aY" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "example";
+	name = "Privacy Shutters";
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/example)
@@ -428,9 +451,17 @@
 	},
 /area/awaymission/example)
 "bm" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/awaymission/example)
 "bn" = (
@@ -438,6 +469,36 @@
 	dir = 8;
 	icon_state = "stage_stairs"
 	},
+/area/awaymission/example)
+"bo" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/example)
+"bp" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
+/area/awaymission/example)
+"bq" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/grille,
+/turf/simulated/floor/plating,
 /area/awaymission/example)
 "br" = (
 /obj/structure/toilet{
@@ -1907,7 +1968,7 @@ ab
 bU
 ac
 ac
-bm
+bo
 aO
 aP
 ac
@@ -1973,7 +2034,7 @@ ab
 ac
 ac
 ac
-bm
+bp
 ac
 aP
 bj
@@ -2039,7 +2100,7 @@ ab
 bV
 ac
 ac
-bm
+bp
 ac
 aP
 bk
@@ -2105,7 +2166,7 @@ ab
 bW
 ac
 ac
-bm
+bq
 aM
 aP
 bl
@@ -2161,9 +2222,9 @@ ab
 ac
 aP
 ac
-bm
+bo
 aa
-bm
+bo
 bH
 bs
 bx
@@ -2227,9 +2288,9 @@ ab
 ad
 aP
 ac
-bm
+bp
 aa
-bm
+bp
 bI
 bs
 bQ
@@ -2293,9 +2354,9 @@ ab
 ac
 aP
 ac
-bm
+bq
 aa
-bm
+bq
 bJ
 bs
 bH
@@ -3730,7 +3791,7 @@ aQ
 aS
 aS
 aS
-aX
+aY
 ba
 bd
 bh
