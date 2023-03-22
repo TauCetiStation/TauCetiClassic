@@ -6401,14 +6401,14 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
-/obj/item/ammo_box/magazine/m9mm_2,
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock,
+/obj/item/ammo_box/magazine/glock,
 /obj/structure/window/reinforced,
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
@@ -31323,6 +31323,9 @@
 "iRo" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/folder/red,
+/obj/machinery/telescience_jammer{
+	radius = 5
+	},
 /turf/simulated/floor/bluegrid{
 	name = "Server Base";
 	nitrogen = 500;
@@ -44635,12 +44638,12 @@
 	name = "Weapons locker";
 	req_access = list(3)
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor{
 	dir = 8;

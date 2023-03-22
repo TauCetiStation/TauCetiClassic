@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(vote)
 	wait = SS_WAIT_VOTE
 
 	flags = SS_KEEP_TIMING | SS_NO_INIT
-	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
+	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT | SS_SHOW_IN_MC_TAB
 
 	var/list/datum/poll/possible_polls = list()
 	var/datum/poll/active_poll
@@ -39,7 +39,7 @@ SUBSYSTEM_DEF(vote)
 /datum/controller/subsystem/vote/tgui_data(mob/user)
 	var/list/data = ..()
 
-	var/is_admin = user.client.holder && (user.client.holder.rights & R_ADMIN)
+	var/is_admin = user.client.holder?.rights & R_ADMIN
 	data["isAdmin"] = is_admin
 
 	data["polls"] = list()
@@ -47,8 +47,6 @@ SUBSYSTEM_DEF(vote)
 
 	for(var/poll_path in possible_polls)
 		var/datum/poll/poll_inst = possible_polls[poll_path]
-		if(poll_inst.only_admin && !is_admin)
-			continue
 
 		var/list/poll = list(
 			"name" = poll_inst.name,
@@ -162,30 +160,6 @@ SUBSYSTEM_DEF(vote)
 		vote_period = config.vote_period
 
 	return round((vote_start_time + vote_period - world.time)/10)
-
-/datum/controller/subsystem/vote/Topic(href, href_list[], hsrc)
-	if(href_list["vote"])
-		if(active_poll)
-			var/datum/vote_choice/choice = locate(href_list["vote"]) in active_poll.choices
-			if(istype(choice) && usr && usr.client)
-				active_poll.vote(choice, usr.client)
-
-	if(href_list["toggle_admin"])
-		var/datum/poll/poll = locate(href_list["toggle_admin"])
-		if(istype(poll) && check_rights(R_ADMIN))
-			poll.only_admin = !poll.only_admin
-
-	if(href_list["start_vote"])
-		var/datum/poll/poll = locate(href_list["start_vote"])
-		if(istype(poll) && (check_rights(R_ADMIN) || (!poll.only_admin && poll.can_start())))
-			start_vote(poll.type)
-
-	if(href_list["cancel"])
-		if(active_poll && check_rights())
-			to_chat(world, "<span class='vote'><b>[usr.key] отменил голосование \"[active_poll.name]\".</b></span>")
-			stop_vote()
-
-	usr.vote()
 
 /mob/verb/vote()
 	set category = "OOC"
