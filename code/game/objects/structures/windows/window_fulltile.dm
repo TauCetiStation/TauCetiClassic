@@ -141,7 +141,7 @@
 	icon_state = "window_reinforced"
 
 	max_integrity = 100
-	damage_threshold = 15
+	damage_threshold = 10
 
 	disassemble_glass_type = /obj/item/stack/sheet/rglass
 
