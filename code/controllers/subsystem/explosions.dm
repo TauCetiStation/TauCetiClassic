@@ -104,7 +104,7 @@ SUBSYSTEM_DEF(explosions)
 	return (lowturf.len || medturf.len || highturf.len || low_mov_atom.len || med_mov_atom.len || high_mov_atom.len)
 
 /datum/controller/subsystem/explosions/fire(resumed = 0)
-	if (!is_exploding())
+	if(!is_exploding())
 		return
 	Master.current_ticklimit = TICK_LIMIT_RUNNING //force using the entire tick if we need it.
 
@@ -113,44 +113,38 @@ SUBSYSTEM_DEF(explosions)
 
 		var/list/low_turf = lowturf
 		lowturf = list()
-		for(var/thing in low_turf)
-			var/turf/turf_thing = thing
+		for(var/turf/turf_thing as anything in low_turf)
 			EX_ACT(turf_thing, EXPLODE_LIGHT)
 
 		var/list/med_turf = medturf
 		medturf = list()
-		for(var/thing in med_turf)
-			var/turf/turf_thing = thing
+		for(var/turf/turf_thing as anything in med_turf)
 			EX_ACT(turf_thing, EXPLODE_HEAVY)
 
 		var/list/high_turf = highturf
 		highturf = list()
-		for(var/thing in high_turf)
-			var/turf/turf_thing = thing
+		for(var/turf/turf_thing as anything in high_turf)
 			EX_ACT(turf_thing, EXPLODE_DEVASTATE)
 
 	if(currentpart == SSEXPLOSIONS_MOVABLES)
 
 		var/list/local_high_mov_atom = high_mov_atom
 		high_mov_atom = list()
-		for(var/thing in local_high_mov_atom)
-			var/atom/movable/movable_thing = thing
+		for(var/atom/movable/movable_thing as anything in local_high_mov_atom)
 			if(QDELETED(movable_thing))
 				continue
 			EX_ACT(movable_thing, EXPLODE_DEVASTATE)
 
 		var/list/local_med_mov_atom = med_mov_atom
 		med_mov_atom = list()
-		for(var/thing in local_med_mov_atom)
-			var/atom/movable/movable_thing = thing
+		for(var/atom/movable/movable_thing as anything in local_med_mov_atom)
 			if(QDELETED(movable_thing))
 				continue
 			EX_ACT(movable_thing, EXPLODE_HEAVY)
 
 		var/list/local_low_mov_atom = low_mov_atom
 		low_mov_atom = list()
-		for(var/thing in local_low_mov_atom)
-			var/atom/movable/movable_thing = thing
+		for(var/atom/movable/movable_thing as anything in local_low_mov_atom)
 			if(QDELETED(movable_thing))
 				continue
 			EX_ACT(movable_thing, EXPLODE_LIGHT)
