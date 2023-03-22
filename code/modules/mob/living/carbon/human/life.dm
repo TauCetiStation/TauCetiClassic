@@ -1268,18 +1268,6 @@ var/global/list/tourette_bad_words= list(
 
 /mob/living/carbon/human/handle_nutrition()
 	. = ..()
-	var/met_factor = get_metabolism_factor()
-	if(!met_factor)
-		return
-	var/nutrition_to_remove = 0
-	var/bumped_bodyparts_met = 0
-	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.pumped > 0)
-			bumped_bodyparts_met += BP.pumped / 100
-	if(bumped_bodyparts_met > 0)
-		nutrition_to_remove += (met_factor + bumped_bodyparts_met) * 0.1
-		AdjustNutrition(-nutrition_to_remove)
-
 	if(nutrition > NUTRITION_LEVEL_WELL_FED)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
 			overeatduration++
