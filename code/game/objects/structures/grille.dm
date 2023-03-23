@@ -2,11 +2,7 @@
 	desc = "A flimsy lattice of metal rods, with screws to secure it to the floor."
 	name = "grille"
 	icon = 'icons/obj/smooth_structures/grille.dmi'
-	//icon_state = "box"
 	icon_state = "center_8"
-
-	//smooth = SMOOTH_TRUE
-	//canSmoothWith = CAN_SMOOTH_WITH_WALLS
 
 	density = TRUE
 	anchored = TRUE
@@ -21,17 +17,28 @@
 	var/destroyed = 0
 	var/damaged = FALSE
 
-/obj/structure/grille/window // experiment: subtype for better visual with windows
-	smooth = SMOOTH_TRUE
-	canSmoothWith = CAN_SMOOTH_WITH_WALLS
-
-/obj/structure/grille/atom_init(mapload, unanchored = FALSE)
+/obj/structure/grille/atom_init(mapload, spawn_unanchored = FALSE)
 	. = ..()
 	if(destroyed)
 		destroyed = FALSE // let atom_break reset destroyed
 		update_integrity(get_integrity() * integrity_failure)
-	if(unanchored)
+
+	if(spawn_unanchored)
 		anchored = FALSE
+
+	if(anchored && (locate(/obj/structure/windowsill) in loc))
+		set_smooth(TRUE)
+
+/obj/structure/grille/proc/set_smooth(make_smooth = TRUE)
+	if(make_smooth)
+		smooth = SMOOTH_TRUE
+		canSmoothWith = CAN_SMOOTH_WITH_WALLS
+		queue_smooth(src)
+	else
+		smooth = FALSE
+		canSmoothWith = null
+		icon = initial(icon)
+		icon_state = initial(icon_state)
 
 /obj/structure/grille/Bumped(atom/user)
 	if(ismob(user)) shock(user, 70)
@@ -104,7 +111,14 @@
 		if(!shock(user, 90))
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			anchored = !anchored
-			var/obj/structure/windowsill = locate() in loc
+
+			var/obj/structure/windowsill/windowsill = locate() in loc
+
+			if(anchored && windowsill)
+				set_smooth(TRUE)
+			else if (!anchored)
+				set_smooth(FALSE)
+
 			user.visible_message("<span class='notice'>[user] [anchored ? "fastens" : "unfastens"] the grille.</span>", \
 								 "<span class='notice'>You have [anchored ? "fastened the grille to" : "unfastened the grill from"] [windowsill ? "\the [windowsill]" : "the floor"].</span>")
 			return

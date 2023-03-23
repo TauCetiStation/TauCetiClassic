@@ -74,15 +74,12 @@
 
 	try_to_build_grille(user, build_loc)
 
-/obj/item/stack/rods/proc/try_to_build_grille(mob/living/user, build_loc, unanchored = TRUE, window_type = FALSE)
+/obj/item/stack/rods/proc/try_to_build_grille(mob/living/user, build_loc, spawn_unanchored = TRUE)
 	to_chat(usr, "<span class='notice'>Assembling grille...</span>")
 	if (!use_tool(src, usr, 20, 2))
 		return
-	var/obj/structure/grille/F 
-	if(window_type)
-		F = new /obj/structure/grille/window(build_loc, unanchored)
-	else
-		F = new /obj/structure/grille(build_loc, unanchored)
+
+	var/obj/structure/grille/F = new(build_loc, spawn_unanchored)
 
 	to_chat(usr, "<span class='notice'>You assembled \a [F].</span>")
 	F.add_fingerprint(usr)
