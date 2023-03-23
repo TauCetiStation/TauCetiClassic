@@ -2014,12 +2014,6 @@
 	dir = 1;
 	name = "Weapons locker"
 	},
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -10027,7 +10021,6 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech/north)
 "aAf" = (
-/obj/structure/table/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/pie,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
@@ -10043,6 +10036,7 @@
 	req_access = list(28);
 	dir = 2
 	},
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -13553,7 +13547,7 @@
 	network = list("SS13","Medical");
 	dir = 4
 	},
-/obj/machinery/smartfridge/chemistry,
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aHs" = (
@@ -14101,7 +14095,6 @@
 	},
 /area/station/medical/surgeryobs)
 "aIu" = (
-/obj/structure/table,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -14111,6 +14104,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "yellow"
@@ -16629,7 +16623,6 @@
 	},
 /area/station/storage/tools)
 "aNk" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/weapon/storage/fancy/donut_box,
 /obj/machinery/door/poddoor/shutters{
@@ -16645,6 +16638,7 @@
 	name = "Kitchen";
 	req_access = list(28)
 	},
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -16815,7 +16809,6 @@
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
 "aNK" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/westleft{
 	dir = 2;
@@ -16823,6 +16816,7 @@
 	req_access = list(35)
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor,
 /area/station/civilian/hydroponics)
 "aNL" = (
@@ -27582,6 +27576,9 @@
 	name = "Station Intercom (General)";
 	pixel_y = -35
 	},
+/obj/item/weapon/table_parts/stall,
+/obj/item/weapon/table_parts/stall,
+/obj/item/weapon/table_parts/stall,
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -32156,7 +32153,6 @@
 	},
 /area/station/bridge/nuke_storage)
 "bsS" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
@@ -32165,6 +32161,7 @@
 	opacity = 0;
 	dir = 4
 	},
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -34859,7 +34856,6 @@
 	},
 /area/station/rnd/robotics)
 "bxH" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/eastright{
 	dir = 2;
@@ -34887,6 +34883,7 @@
 	name = "Chemistry Shutters";
 	opacity = 0
 	},
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -47875,6 +47872,7 @@
 	pixel_y = 23
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/table_parts/stall,
 /turf/simulated/floor/plating,
 /area/station/construction)
 "bZQ" = (
@@ -59959,6 +59957,10 @@
 	icon_state = "yellow"
 	},
 /area/station/engineering/break_room)
+"duS" = (
+/obj/item/weapon/table_parts/stall,
+/turf/simulated/floor,
+/area/station/construction)
 "duX" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube,
@@ -64959,7 +64961,6 @@
 	},
 /area/station/maintenance/brig)
 "gTX" = (
-/obj/structure/table/reinforced,
 /obj/item/ashtray/plastic,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
@@ -64975,6 +64976,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -67714,7 +67716,6 @@
 	},
 /area/station/engineering/engine)
 "izb" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
@@ -67723,6 +67724,7 @@
 	opacity = 0;
 	dir = 4
 	},
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -78863,7 +78865,6 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
@@ -78878,6 +78879,7 @@
 	name = "Kitchen";
 	req_access = list(28)
 	},
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -86274,7 +86276,6 @@
 /area/station/civilian/chapel/crematorium)
 "ujL" = (
 /obj/machinery/door/firedoor,
-/obj/structure/table/reinforced,
 /obj/item/weapon/bell,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
@@ -86289,6 +86290,7 @@
 	req_access = list(28);
 	dir = 8
 	},
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -91143,7 +91145,6 @@
 /turf/simulated/floor/plating,
 /area/station/security/processing)
 "ykh" = (
-/obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
 	icon_state = "shutter0";
@@ -91152,6 +91153,7 @@
 	opacity = 0;
 	dir = 4
 	},
+/obj/structure/table/reinforced/stall,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkred"
@@ -121973,7 +121975,7 @@ bUW
 bVo
 cga
 chV
-bTH
+duS
 cmA
 cgP
 cMx
