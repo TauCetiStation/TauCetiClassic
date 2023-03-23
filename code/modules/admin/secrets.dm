@@ -708,6 +708,7 @@
 						SSnightshift.update_nightshift(TRUE, custom_mode)
 			if(val)
 				message_admins("[key_name_admin(usr)] switched night shift mode to '[val]'[custom_mode && ": '[custom_mode]'"].")
+				log_admin("[key_name(usr)] switched night shift mode to '[val]'[custom_mode && ": '[custom_mode]'"].")
 		// Put everyone to sleep
 		if("mass_sleep")
 			for(var/mob/living/L in global.living_list)
