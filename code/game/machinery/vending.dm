@@ -78,6 +78,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	power_change()
 	update_wires_check()
 
+	build_menue()
+
 	if(SSticker.current_state == GAME_STATE_PLAYING)
 		load_products(FALSE)
 	else
@@ -88,11 +90,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	load_products(roundstart=TRUE)
 
 /obj/machinery/vending/proc/load_products(roundstart = TRUE)
-	build_inventory(products, roundstart)
+	build_inventory(product_records, roundstart)
 	 //Add hidden inventory
-	build_inventory(contraband, hidden = 1)
-	build_inventory(premium, req_coin = 1)
-	build_inventory(syndie, req_emag = 1)
+	build_inventory(hidden_records, hidden = 1)
+	build_inventory(coin_records, req_coin = 1)
+	build_inventory(emag_records, req_emag = 1)
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -119,9 +121,45 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	if(.)
 		malfunction()
 
+/obj/machinery/vending/proc/build_menue()
+	for(var/typepath in products)
+		var/datum/data/vending_product/R = new /datum/data/vending_product()
+		put_menue_typepath(typepath, R)
+
+		product_records += R
+
+	for(var/typepath in contraband)
+		var/datum/data/vending_product/R = new /datum/data/vending_product()
+		put_menue_typepath(typepath, R)
+
+		hidden_records += R
+
+	for(var/typepath in premium)
+		var/datum/data/vending_product/R = new /datum/data/vending_product()
+		put_menue_typepath(typepath, R)
+
+		coin_records += R
+
+	for(var/typepath in syndie)
+		var/datum/data/vending_product/R = new /datum/data/vending_product()
+		put_menue_typepath(typepath, R)
+
+		emag_records += R
+
+/obj/machinery/vending/proc/put_menue_typepath(typepath, datum/data/vending_product/R)
+	R.product_path = typepath
+	R.amount = premium[typepath]
+	var/price = prices[typepath]
+	R.price = price
+	R.product_path = typepath
+	var/atom/temp = typepath
+	R.product_name = initial(temp.name)
+
+	global.vending_products[typepath] = 1
+
 /obj/machinery/vending/proc/build_inventory(list/productlist, roundstart = FALSE, hidden = 0, req_coin = 0 , req_emag = 0)
-	for(var/typepath in productlist)
-		var/amount = productlist[typepath]
+	for(var/datum/data/vending_product/R in productlist)
+		var/amount = R.amount
 		var/product_max_amount = amount
 		if(!hidden && !req_coin && !req_emag)
 			if(roundstart && is_station_level(src.z) && !private)
@@ -135,27 +173,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 				if(!amount && prob(20)) //20% that empty slot will be not empty. For very low-pop rounds.
 					amount = 1
 
-		var/price = prices[typepath]
 		if(isnull(amount)) amount = 1
 
-		var/datum/data/vending_product/R = new /datum/data/vending_product()
-		global.vending_products[typepath] = 1
-		R.product_path = typepath
 		R.amount = amount
 		R.max_amount = product_max_amount
-		R.price = price
 
-		if(hidden)
-			hidden_records += R
-		else if(req_coin)
-			coin_records += R
-		else if(req_emag)
-			emag_records += R
-		else
-			product_records += R
-
-		var/atom/temp = typepath
-		R.product_name = initial(temp.name)
 	return
 
 /obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, mob/user)  //Restocking from TG
