@@ -107,59 +107,61 @@
 
 	return M
 
-/datum/money_account/proc/check_insurance(roundstart=0)
-	for (var/mob/living/carbon/human/H in global.human_list)
-		if(H.mind)
-			if(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER) == account_number)
-				var/standartprice = global.possible_insurances["Standart"]
-				var/premiumprice = global.possible_insurances["Premium"]
-				var/insurance_price
-				var/comparable_value
-				if(roundstart)
-					comparable_value = owner_salary
-				else
-					comparable_value = money
+/datum/money_account/proc/check_insurance_and_make_transaction(mob/living/carbon/human/H, roundstart=0)
+	var/standartprice = global.possible_insurances["Standart"]
+	var/premiumprice = global.possible_insurances["Premium"]
+	var/insurance_price
+	var/comparable_value
+	if(roundstart)
+		comparable_value = owner_salary
+	else
+		comparable_value = money
 
 
-				if (roundstart)
-					owner_insurance_type = H.insurance
-				else
-					H.insurance = owner_preferred_insurance_type
-					owner_insurance_type = owner_preferred_insurance_type
-					owner_insurance_price = owner_preferred_insurance_price
+	if (roundstart)
+		owner_insurance_type = H.insurance
+	else
+		H.insurance = owner_preferred_insurance_type
+		owner_insurance_type = owner_preferred_insurance_type
+		owner_insurance_price = owner_preferred_insurance_price
 
 
-				switch(owner_insurance_type)
-					if ("Premium")
-						if (comparable_value >= premiumprice)
-							insurance_price = premiumprice
-						else if (comparable_value < premiumprice && comparable_value >= standartprice)
-							to_chat(H,"Sorry, but you don't have enough money to use Premium insurance, it will be changed to Standart.")
-							H.insurance = "Standart"
-							insurance_price = standartprice
-						
-						else if (comparable_value < standartprice)
-							to_chat(H, "Sorry, but you don't have enough money to use Premium or Standart insurance, it will be changed to None.")
-							H.insurance = "None"
-							insurance_price = 0
+	switch(owner_insurance_type)
+		if ("Premium")
+			if (comparable_value >= premiumprice)
+				insurance_price = premiumprice
+			else if (comparable_value < premiumprice && comparable_value >= standartprice)
+				to_chat(H,"Sorry, but you don't have enough money to use Premium insurance, it will be changed to Standart.")
+				H.insurance = "Standart"
+				insurance_price = standartprice
+			
+			else if (comparable_value < standartprice)
+				to_chat(H, "Sorry, but you don't have enough money to use Premium or Standart insurance, it will be changed to None.")
+				H.insurance = "None"
+				insurance_price = 0
 
-					if ("Standart")
-						if (comparable_value >= standartprice)
-							insurance_price = standartprice
-							
-						else if (comparable_value < standartprice)
-							to_chat(H, "Sorry, but you don't have enough money to use Standart insurance, it will be changed to None.")
-							H.insurance = "None"
-							insurance_price = 0
-
-					if ("None")
-						insurance_price = 0
+		if ("Standart")
+			if (comparable_value >= standartprice)
+				insurance_price = standartprice
 				
-				owner_insurance_type = H.insurance
-				owner_insurance_price = insurance_price
-				owner_preferred_insurance_price = owner_insurance_price
-				owner_preferred_insurance_type = owner_insurance_type
-				
+			else if (comparable_value < standartprice)
+				to_chat(H, "Sorry, but you don't have enough money to use Standart insurance, it will be changed to None.")
+				H.insurance = "None"
+				insurance_price = 0
+
+		if ("None")
+			insurance_price = 0
+	
+	owner_insurance_type = H.insurance
+	owner_insurance_price = insurance_price
+	owner_preferred_insurance_price = owner_insurance_price
+	owner_preferred_insurance_type = owner_insurance_type
+
+	if (owner_insurance_price)
+		if (H.stat != DEAD)
+			var/med_account_number = global.department_accounts["Medical"].account_number
+			charge_to_account(account_number, "Medical","Insurance", "NT Insurance", -owner_insurance_price)
+			charge_to_account(med_account_number, med_account_number,"Insurance", account_number, insurance_price)
 
 
 
