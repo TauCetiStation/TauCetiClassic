@@ -20,10 +20,12 @@ var/global/list/possible_insurances = list("None" = 0, "roundstartStandart" = 80
 		for(var/datum/money_account/D in all_money_accounts)
 			if(D.owner_salary && !D.suspended)
 				charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)
-				D.check_insurance()
-				if(D.owner_insurance_price)
-					insurance_transaction(D)
 
+		for(var/mob/living/carbon/human/H in global.human_list)
+			if(H.mind)
+				if(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+					var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+					MA.check_insurance_and_make_transaction(H)
 
 		monitor_cargo_shop()
 
@@ -31,15 +33,3 @@ var/global/list/possible_insurances = list("None" = 0, "roundstartStandart" = 80
 
 /datum/controller/subsystem/economy/proc/set_endtime()
 	endtime = world.timeofday + wait
-
-
-
-/proc/insurance_transaction(datum/money_account/D)
-	for(var/mob/living/carbon/human/H in global.human_list)
-		if(H.mind)
-			if(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER) == D.account_number)
-				if(H.stat != DEAD)
-					var/insurance_price = D.owner_insurance_price
-					var/med_account_number = global.department_accounts["Medical"].account_number
-					charge_to_account(D.account_number, "Medical","Insurance", "NT Insurance", -1 * insurance_price)
-					charge_to_account(med_account_number, med_account_number,"Insurance", D.account_number,insurance_price)
