@@ -81,7 +81,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	if(SSticker.current_state == GAME_STATE_PLAYING)
 		load_products(FALSE)
 	else
-		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, .proc/load_products)
+		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, .proc/on_round_start)
+
+/obj/machinery/vending/proc/on_round_start(datum/source)
+	SIGNAL_HANDLER
+	load_products(roundstart=TRUE)
 
 /obj/machinery/vending/proc/load_products(roundstart = TRUE)
 	build_inventory(products, roundstart)
