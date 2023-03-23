@@ -95,7 +95,7 @@ var/global/hard_lighting_arealist = typecacheof(typesof(/area/station/medical) +
 	if(!power)
 		return
 
-	var/range = clamp(round(input("Select range for ligthing, in range 1-10", "New Night Shift Preset", 8) as null|num), 1, 10)
+	var/range = clamp(round(input("Select range for ligthing, in range 1-12", "New Night Shift Preset", 8) as null|num), 1, 12) // note: 1 will be adjusted to MINIMUM_USEFUL_LIGHT_RANGE (1.4 currently)
 
 	if(!range)
 		return
