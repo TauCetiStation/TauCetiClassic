@@ -1123,7 +1123,7 @@
 						if(tgui_alert(U, "Price of this insurance was already changed. Are you sure?", "Confirm", list("Yes", "No")) != "Yes")
 							return
 
-					var/input_rate = input(U, "Please select an add modifier", "Insurance changes") in list("0%", "+50", "+25%","-25%","-50%")
+					var/input_rate = input(U, "Please select an add modifier", "Insurance changes") in list("0%", "+50%", "+25%","-25%","-50%")
 					var/coefficient = (1 + text2num(replacetext(replacetext(input_rate, "+", ""), "%", "")) / 100)
 					var/newprice = global.possible_insurances["roundstart"+insurance_type] * coefficient
 					if(tgui_alert(U, "Now [insurance_type] insurance will costs [newprice] credits. Are you sure?", "Confirm", list("Yes", "No")) == "Yes")
