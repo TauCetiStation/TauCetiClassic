@@ -587,10 +587,7 @@ SUBSYSTEM_DEF(job)
 			if(MA)
 				C.associated_account_number = MA.account_number
 				MA.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
-				MA.check_insurance(roundstart=1)
-				MA.money -= MA.owner_insurance_price
-				var/datum/money_account/medaccount = get_account(global.department_accounts["Medical"].account_number)
-				medaccount.money += MA.owner_insurance_price
+				MA.check_insurance_and_make_transaction(H, roundstart=1)
 
 		H.equip_or_collect(C, SLOT_WEAR_ID)
 
