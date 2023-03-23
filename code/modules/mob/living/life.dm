@@ -14,8 +14,7 @@
 
 	handle_combat()
 
-	if(get_metabolism_factor())
-		handle_nutrition()
+	handle_nutrition()
 
 	if(client)
 		handle_regular_hud_updates()

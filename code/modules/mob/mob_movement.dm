@@ -124,13 +124,7 @@
 
 		mob.last_move_intent = world.time + 10
 
-		switch(mob.m_intent)
-			if("run")
-				if(mob.drowsyness > 0)
-					add_delay += 6
-				add_delay += 1 + config.run_speed
-			if("walk")
-				add_delay += 2.5 + config.walk_speed
+		add_delay += mob.m_intent_delay()
 
 		var/list/grabs = mob.GetGrabs()
 		if(grabs.len)
@@ -155,8 +149,11 @@
 		moving = TRUE
 
 		if(SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVE, n, direct) & COMPONENT_CLIENTMOB_BLOCK_MOVE)
+			// Someone please investigate why we can't do moving = TRUE *after* this check. ~Luduk
 			moving = FALSE
 			return
+
+		SEND_SIGNAL(mob, COMSIG_CLIENTMOB_MOVING, n, direct)
 
 		//Something with pulling things
 		if(grabs.len)

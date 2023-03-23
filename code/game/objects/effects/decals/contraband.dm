@@ -645,6 +645,8 @@
 
 /obj/structure/sign/poster/revolution/examine(mob/user)
 	. = ..()
+	if(!ishuman(user))
+		return
 	to_chat(user, "<span class='notice'>The image on the poster feels memetic. It makes you feel things you shouldn't be feeling staring on a QR code wannabe.</span>")
 	var/choice = tgui_alert(user, "Does this inspire me to join the cause?", "You think...", list("No!","Yes!"))
 	if(choice == "Yes!")

@@ -48,8 +48,12 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 					E.sell_object(thing, contraband, hacked)
 					sold_str += " [thing.name]"
 				break
-		if(!dry_run)
-			qdel(thing)
+
+		if(dry_run)
+			continue
+
+		SSeconomy.handle_centcomm_onlineshop_orders(thing)
+		qdel(thing)
 
 	if(dry_run)
 		return cost

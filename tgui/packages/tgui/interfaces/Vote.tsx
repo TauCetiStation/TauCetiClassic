@@ -15,7 +15,7 @@ import { Window } from '../layouts';
 
 type Poll = {
   name: string;
-  ref: string;
+  type: string;
   canStart: BooleanLike;
   forceBlocked: BooleanLike;
   adminOnly: BooleanLike;
@@ -65,7 +65,7 @@ export const Vote = (_, context) => {
         <VoteInfoModal />
         <Stack fill vertical>
           <Choices />
-          {(!currentPoll || isAdmin) && <ListPolls />}
+          {(!currentPoll || !!isAdmin) && <ListPolls />}
           {!!currentPoll && <Timer />}
         </Stack>
       </Window.Content>
@@ -235,7 +235,7 @@ const ListPolls = (_, context) => {
                         textAlign="center"
                         onClick={() =>
                           act('toggleAdminOnly', {
-                            pollRef: poll.ref,
+                            pollRef: poll.type,
                           })}>
                         {poll.adminOnly ? 'Только админы' : 'Разрешено всем'}
                       </Button>
@@ -257,7 +257,7 @@ const ListPolls = (_, context) => {
                       content={poll.name}
                       onClick={() =>
                         act('callVote', {
-                          pollRef: poll.ref,
+                          pollRef: poll.type,
                         })} />
                   </Stack.Item>
                 </Stack>
@@ -283,7 +283,7 @@ const Timer = (_, context) => {
           <Box fontSize={1.5}>
             Осталось времени: {currentPoll?.timeRemaining || 0}с
           </Box>
-          {isAdmin && currentPoll && (
+          {!!isAdmin && !!currentPoll && (
             <Button
               color="red"
               disabled={!isAdmin}

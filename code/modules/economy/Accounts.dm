@@ -17,6 +17,8 @@
 	var/security_level = 0	//0 - auto-identify from worn ID, require only account number
 							//1 - require manual login / account number and pin
 							//2 - require card and manual login
+	// Whether this account is hidden from databases. In the future, if required, abstract to Database ID, and make the financial database connect to said ID and view accounts only for that ID.
+	var/hidden = FALSE
 
 /datum/money_account/New()
 	all_money_accounts += src

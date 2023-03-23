@@ -29,6 +29,9 @@
 		if(mind.original == src)
 			mind.original = null
 
+	for(var/datum/action/action as anything in actions)
+		action.Remove(src)
+
 	if(buckled) // simpler version of /unbuckle_mob
 		buckled.buckled_mob = null
 		SEND_SIGNAL(buckled, COMSIG_MOVABLE_UNBUCKLE, src)
@@ -708,7 +711,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 					if(Master)
 						stat(null)
 						for(var/datum/controller/subsystem/SS in Master.subsystems)
-							SS.stat_entry()
+							if(SS.flags & SS_SHOW_IN_MC_TAB)
+								SS.stat_entry()
 					cameranet.stat_entry()
 
 	if(listed_turf && client)
@@ -843,13 +847,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 		SetWeakened(0, TRUE)
 	if(remove_flags & CANPARALYSE)
 		SetParalysis(0, TRUE)
-	if(remove_flags & (CANSTUN|CANPARALYSE|CANWEAKEN))
-		update_canmove()
 	status_flags &= ~remove_flags
+	if(remove_flags & (CANSTUN|CANPARALYSE|CANWEAKEN|FAKEDEATH))
+		update_canmove()
 
 /mob/proc/add_status_flags(add_flags)
 	if(add_flags & GODMODE)
 		stuttering = 0
+	if(add_flags & FAKEDEATH)
+		update_canmove()
 	status_flags |= add_flags
 
 // ========== CRAWLING ==========
@@ -869,7 +875,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	updateDrugginesOverlay()
 
 /mob/proc/updateDrugginesOverlay()
-	if(druggy)
+	if(druggy && get_species(src) != SKRELL)
 		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
 		throw_alert("high", /atom/movable/screen/alert/high)
 	else
@@ -1005,12 +1011,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/GetSpell(spell_type)
 	for(var/obj/effect/proc_holder/spell/spell in spell_list)
-		if(spell == spell_type)
+		if(spell.type == spell_type)
 			return spell
 
 	if(mind)
 		for(var/obj/effect/proc_holder/spell/spell in mind.spell_list)
-			if(spell == spell_type)
+			if(spell.type == spell_type)
 				return spell
 	return FALSE
 
@@ -1247,3 +1253,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/set_lastattacker_info(mob/M)
 	lastattacker_name = M.real_name
 	lastattacker_key = M.key
+
+/mob/proc/m_intent_delay()
+	. = 0
+	switch(m_intent)
+		if("run")
+			if(drowsyness > 0)
+				. += 6
+			. += 1 + config.run_speed
+		if("walk")
+			. += 2.5 + config.walk_speed
