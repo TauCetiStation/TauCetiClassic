@@ -107,4 +107,5 @@ var/global/hard_lighting_arealist = typecacheof(typesof(/area/station/medical) +
 	if(tgui_alert(usr, "Set new preset for station?", "Confirm", list("Yes","No")) == "Yes")
 		SSnightshift.update_nightshift(TRUE, preset_name)
 		message_admins("[key_name_admin(usr)] switched night shift mode to new preset '[preset_name]'.")
+		log_admin("[key_name(usr)] switched night shift mode to new preset '[preset_name]'.")
 		return
