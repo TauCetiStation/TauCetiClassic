@@ -1277,31 +1277,20 @@ var/global/list/tourette_bad_words= list(
 			take_overall_damage(2,0)
 			traumatic_shock++
 
+/mob/living/carbon/human/is_default_metabolise_active()
+	//Enable nutrition decrease for nonhumans
+	if(species.flags[IS_PLANT] || species.flags[IS_SYNTHETIC])
+		return TRUE
+	//Enable nutrition decrease for sportsmans
+	if(metabolism_factor.Get() > 1.0)
+		return TRUE
+	return ..()
+
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes
 	we only set those statuses and icons upon changes.  Then those HUD items will simply add those pre-made images.
 
 */
-
-/mob/living/carbon/human/handle_nutrition()
-	. = ..()
-	if(nutrition > NUTRITION_LEVEL_WELL_FED)
-		if(overeatduration < 600) //capped so people don't take forever to unfat
-			overeatduration++
-	else
-		if(overeatduration > 1)
-			overeatduration -= 2 //doubled the unfat rate
-
-	if(species.flags[REQUIRE_LIGHT])
-		if(nutrition < 200)
-			take_overall_damage(2,0)
-			traumatic_shock++
-
-/mob/living/carbon/human/is_default_metabolise_active()
-	//Enable nutrition decrease for nonhumans
-	if(species.flags[IS_PLANT] || species.flags[IS_SYNTHETIC])
-		return TRUE
-	return ..()
 
 #undef HUMAN_MAX_OXYLOSS
 #undef HUMAN_CRIT_MAX_OXYLOSS

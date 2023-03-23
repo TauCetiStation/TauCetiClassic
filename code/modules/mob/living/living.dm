@@ -1313,7 +1313,7 @@
 	return nutrition
 
 /mob/living/proc/is_default_metabolise_active()
-	if(nutrition > NUTRITION_LEVEL_NORMAL)
+	if(nutrition > NUTRITION_LEVEL_NO_HUNGRY)
 		return TRUE
 	return FALSE
 

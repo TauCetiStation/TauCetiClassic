@@ -162,11 +162,13 @@
 /mob/living/proc/AdjustNutrition(amount)
 	if(nutrition + amount < 0)
 		nutrition = 0
+		return
 	nutrition += amount
 
 /mob/living/proc/SetNutrition(amount)
 	if(amount < 0)
 		nutrition = 0
+		return
 	nutrition = amount
 
 /mob/living/proc/handle_nutrition()
