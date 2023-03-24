@@ -1,0 +1,1 @@
+#define MAX_INSURANCE_PRICE 5000
