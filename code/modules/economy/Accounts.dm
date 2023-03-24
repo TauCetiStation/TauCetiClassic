@@ -12,9 +12,7 @@
 	var/remote_access_pin = 0
 	var/money = 0
 	var/owner_insurance_type = ""
-	var/owner_insurance_price = 0
 	var/owner_preferred_insurance_type = ""
-	var/owner_preferred_insurance_price = 0
 	var/list/transaction_log = list()
 	var/obj/item/device/pda/owner_PDA = null	//contains a PDA linked to an account
 	var/suspended = 0
@@ -139,61 +137,28 @@
 
 	return M
 
-/datum/money_account/proc/check_insurance_and_make_transaction(mob/living/carbon/human/H, roundstart=0)
-	var/standartprice = global.possible_insurances["Standart"]
-	var/premiumprice = global.possible_insurances["Premium"]
-	var/insurance_price
-	var/comparable_value
-	if(roundstart)
-		comparable_value = owner_salary
-	else
-		comparable_value = money
+/datum/money_account/proc/check_insurance_and_return_price(mob/living/carbon/human/H)
+	if (owner_insurance_type == owner_preferred_insurance_type && money >= SSeconomy.insurance_prices[owner_insurance_type])
+		return SSeconomy.insurance_prices[owner_insurance_type]
 
 
-	if (roundstart)
-		owner_insurance_type = H.insurance
-	else
+	if (money >= SSeconomy.insurance_prices[owner_preferred_insurance_type])
 		H.insurance = owner_preferred_insurance_type
 		owner_insurance_type = owner_preferred_insurance_type
-		owner_insurance_price = owner_preferred_insurance_price
+		to_chat(H, "You successfully changed your insurance to [owner_insurance_type]")
+		return SSeconomy.insurance_prices[owner_insurance_type]
 
-
-	switch(owner_insurance_type)
-		if ("Premium")
-			if (comparable_value >= premiumprice)
-				insurance_price = premiumprice
-			else if (comparable_value < premiumprice && comparable_value >= standartprice)
-				to_chat(H,"Sorry, but you don't have enough money to use Premium insurance, it will be changed to Standart.")
-				H.insurance = "Standart"
-				insurance_price = standartprice
-			
-			else if (comparable_value < standartprice)
-				to_chat(H, "Sorry, but you don't have enough money to use Premium or Standart insurance, it will be changed to None.")
-				H.insurance = "None"
-				insurance_price = 0
-
-		if ("Standart")
-			if (comparable_value >= standartprice)
-				insurance_price = standartprice
-				
-			else if (comparable_value < standartprice)
-				to_chat(H, "Sorry, but you don't have enough money to use Standart insurance, it will be changed to None.")
-				H.insurance = "None"
-				insurance_price = 0
-
-		if ("None")
-			insurance_price = 0
-	
-	owner_insurance_type = H.insurance
-	owner_insurance_price = insurance_price
-	owner_preferred_insurance_price = owner_insurance_price
-	owner_preferred_insurance_type = owner_insurance_type
-
-	if (owner_insurance_price)
-		if (H.stat != DEAD)
-			var/med_account_number = global.department_accounts["Medical"].account_number
-			charge_to_account(account_number, "Medical","Insurance", "NT Insurance", -owner_insurance_price)
-			charge_to_account(med_account_number, med_account_number,"Insurance", account_number, insurance_price)
+	else if (money >= SSeconomy.insurance_prices[owner_insurance_type])
+		to_chat(H, "You don't have enough money to use [owner_preferred_insurance_type] insurance, it will keep being [owner_insurance_type]")
+		owner_preferred_insurance_type = owner_insurance_type
+		return SSeconomy.insurance_prices[owner_insurance_type]
+		
+	else
+		to_chat(H, "Sorry, but you don't have enough money to keep your [owner_preferred_insurance_type] insurance, it will be changed to None")
+		H.insurance = "None"
+		owner_insurance_type = "None"
+		owner_preferred_insurance_type = "None"
+		return 0
 
 
 
