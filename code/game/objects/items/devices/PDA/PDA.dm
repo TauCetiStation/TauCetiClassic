@@ -1099,15 +1099,13 @@
 						if ("Immediatly")
 							if (insurance_type != "Cancel")
 								var/timecoefficient = round((SSeconomy.endtime - world.timeofday) / 600)
-								var/insurance_price = global.possible_insurances[insurance_type] + 10 * timecoefficient
+								var/insurance_price = SSeconomy.insurance_prices[insurance_type] + 10 * timecoefficient
 								if (MA.money >= insurance_price)
-									if(tgui_alert(H, "Now you will have [insurance_type] insurance, which costs [insurance_price] credits for now, and [global.possible_insurances[insurance_type]] credits each salary payment. Are you sure?", "Confirm", list("Yes", "No")) == "Yes")
+									if(tgui_alert(H, "Now you will have [insurance_type] insurance, which costs [insurance_price] credits for now, and [SSeconomy.insurance_prices[insurance_type]] credits each salary payment. Are you sure?", "Confirm", list("Yes", "No")) == "Yes")
 										H.insurance = insurance_type
 										MA.money -= insurance_price
 										MA.owner_insurance_type = insurance_type
-										MA.owner_insurance_price = insurance_price
 										MA.owner_preferred_insurance_type = insurance_type
-										MA.owner_preferred_insurance_price = global.possible_insurances[insurance_type]
 										var/datum/money_account/Med = get_account(global.department_accounts["Medical"].account_number)
 										Med.money += insurance_price
 
@@ -1116,7 +1114,6 @@
 									tgui_alert(H, "Sorry, but you don't have enough money to buy [insurance_type] insurance, which costs [insurance_price] credits for now")
 						
 						if ("Make Preference")
-							MA.owner_preferred_insurance_price = global.possible_insurances[insurance_type]
 							MA.owner_preferred_insurance_type = insurance_type
 
 
@@ -1126,21 +1123,14 @@
 			if(check_owner_fingerprints(user))
 				var/insurance_type = input(U, "Please select an insurance level", "Insurance changes") in list("Cancel", "Standart", "Premium")
 				if (insurance_type != "Cancel")
-					if (global.possible_insurances[insurance_type] != global.possible_insurances["roundstart"+insurance_type])
-						if(tgui_alert(U, "Price of this insurance was already changed. Are you sure?", "Confirm", list("Yes", "No")) != "Yes")
-							return
 
-					var/input_rate = input(U, "Please select an add modifier", "Insurance changes") in list("0%", "+50%", "+25%","-25%","-50%")
-					var/coefficient = (1 + text2num(replacetext(replacetext(input_rate, "+", ""), "%", "")) / 100)
-					var/newprice = global.possible_insurances["roundstart"+insurance_type] * coefficient
+					var/newprice = text2num(input(user, "Insurance changes", "Write new price"))
+					if (!newprice || newprice < 0 || newprice > MAX_INSURANCE_PRICE)
+						tgui_alert(U, "You can set price from 0 to [MAX_INSURANCE_PRICE]")
+						return
+
 					if(tgui_alert(U, "Now [insurance_type] insurance will costs [newprice] credits. Are you sure?", "Confirm", list("Yes", "No")) == "Yes")
-						global.possible_insurances[insurance_type] = newprice
-						for (var/datum/money_account/MA in all_money_accounts)
-							if (MA.owner_insurance_type == insurance_type)
-								MA.owner_insurance_price = newprice
-							
-							if (MA.owner_preferred_insurance_type == insurance_type)
-								MA.owner_preferred_insurance_price = newprice
+						SSeconomy.insurance_prices[insurance_type] = newprice
 
 
 
