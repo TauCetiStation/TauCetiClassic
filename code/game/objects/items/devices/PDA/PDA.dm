@@ -518,9 +518,9 @@
 
 	data["owner"] = owner					// Who is your daddy...
 	data["ownjob"] = ownjob				// ...and what does he do?
-	data["owner_insurance_price"] = MA.owner_insurance_price
+	data["owner_insurance_price"] = SSeconomy.insurance_prices[MA.owner_insurance_type]
 	data["owner_insurance_type"] = MA.owner_insurance_type
-	data["owner_preferred_insurance_price"] = MA.owner_preferred_insurance_price
+	data["owner_preferred_insurance_price"] = SSeconomy.insurance_prices[MA.owner_preferred_insurance_type]
 	data["owner_preferred_insurance_type"] = MA.owner_preferred_insurance_type
 	data["money"] = MA ? MA.money : "error"
 	data["salary"] = MA ? MA.owner_salary : "error"
