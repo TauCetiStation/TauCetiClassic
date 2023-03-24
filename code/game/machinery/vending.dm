@@ -124,31 +124,34 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 /obj/machinery/vending/proc/build_menue()
 	for(var/typepath in products)
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
+		R.amount = products[typepath]
 		put_menue_typepath(typepath, R)
 
 		product_records += R
 
 	for(var/typepath in contraband)
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
+		R.amount = contraband[typepath]
 		put_menue_typepath(typepath, R)
 
 		hidden_records += R
 
 	for(var/typepath in premium)
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
+		R.amount = premium[typepath]
 		put_menue_typepath(typepath, R)
 
 		coin_records += R
 
 	for(var/typepath in syndie)
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
+		R.amount = syndie[typepath]
 		put_menue_typepath(typepath, R)
 
 		emag_records += R
 
 /obj/machinery/vending/proc/put_menue_typepath(typepath, datum/data/vending_product/R)
 	R.product_path = typepath
-	R.amount = premium[typepath]
 	var/price = prices[typepath]
 	R.price = price
 	R.product_path = typepath
