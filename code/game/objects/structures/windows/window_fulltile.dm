@@ -68,11 +68,15 @@
 
 /obj/structure/window/fulltile/attackby(obj/item/W, mob/user)
 	if(isprying(W) && !(resistance_flags & DECONSTRUCT_IMMUNE)) // bad use of resistance_flags? we need some flag to prevent deconstructs
-		if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to unfasten the window from the frame.</span>"))
+		if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to pry the glass out of the frame.</span>"))
 			return
 
-		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-		to_chat(user, "<span class='notice'>You have unfastened the window from the frame.</span>")
+		user.visible_message("<span class='warning'>[usr.name] starts to remove the glass from the [src].</span>", \
+							"<span class='warning'>You start removing the glass from the [src]!</span>", \
+							"<span class='warning'>You hear screwing.</span>")
+
+		W.use_tool(src, user, 40)
+		to_chat(user, "<span class='notice'>You have removed the glass from the frame.</span>")
 		
 		deconstruct(TRUE)
 		return
@@ -101,10 +105,10 @@
 	if(disassembled)
 		new disassemble_glass_type(loc, 2)
 
+	new /obj/structure/windowsill(loc)
+
 	if(grilled)
 		new /obj/structure/grille(loc)
-
-	new /obj/structure/windowsill(loc)
 
 	return ..()
 

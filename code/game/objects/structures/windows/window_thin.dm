@@ -62,29 +62,31 @@
 
 	user.SetNextMove(CLICK_CD_INTERACT)
 
+	var/isreinforced = istype(src, /obj/structure/window/thin/reinforced)
+
 	if(isscrewing(W))
-		if(istype(src, /obj/structure/window/thin/reinforced) && state >= 1)
+		if(isreinforced && state >= 1)
 			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [state == 1 ? "fasten the window to the frame." : "unfasten the window from the frame."]</span>" ))
 				return
 			state = 3 - state
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, (state == 1 ? "<span class='notice'>You have unfastened the window from the frame.</span>" : "<span class='notice'>You have fastened the window to the frame.</span>"))
 
-		else if(istype(src, /obj/structure/window/thin/reinforced) && state == 0)
+		else if(isreinforced && state == 0)
 			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [anchored ? "unfasten the frame from the floor." : "fasten the frame to the floor."]</span>" ))
 				return
 			anchored = !anchored
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, (anchored ? "<span class='notice'>You have fastened the frame to the floor.</span>" : "<span class='notice'>You have unfastened the frame from the floor.</span>"))
 
-		else if(!istype(src, /obj/structure/window/thin/reinforced))
+		else if(!isreinforced)
 			if(!handle_fumbling(user, src, SKILL_TASK_EASY,list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [anchored ? "fasten the window to the floor." : "unfasten the window."]</span>" ))
 				return
 			anchored = !anchored
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>"))
 
-	else if(isprying(W) && istype(src, /obj/structure/window/thin/reinforced) && state <= 1)
+	else if(isprying(W) && isreinforced && state <= 1)
 		if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [state ? "pry the window out of the frame." : "pry the window into the frame."]</span>" ))
 			return
 		state = 1 - state

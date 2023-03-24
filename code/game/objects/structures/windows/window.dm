@@ -28,13 +28,6 @@
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
-/obj/structure/window/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/airlock_painter))
-		change_paintjob(W, user)
-		return
-	
-	return ..()
-
 /obj/structure/window/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)
 		return ..()
@@ -78,6 +71,10 @@
 	return !density
 
 /obj/structure/window/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/airlock_painter))
+		change_paintjob(W, user)
+		return
+
 	if(istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if (isliving(G.affecting))
@@ -108,8 +105,9 @@
 					take_damage(12, BRUTE, MELEE)
 					visible_message("<span class='danger'><big>[A] crushes [M] against \the [src]!</big></span>")
 					M.log_combat(user, "crushed against [name]")
-	else
-		return ..()
+		return
+
+	return ..()
 
 /obj/structure/window/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.pass_flags & PASSGLASS)	//Lasers mostly use this flag.. Why should they able to focus damage with direct click...
