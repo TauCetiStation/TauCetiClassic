@@ -292,7 +292,11 @@
 	if(ref)
 		param = "\ref[ref]"
 
-	winset(user, windowid, "on-close=\".windowclose [param] [windowid]\"")
+	var/window_param = "null"
+	if(windowid)
+		window_param = windowid
+
+	winset(user, windowid, "on-close=\".windowclose \\\"[param]\\\" \\\"[window_param]\"")
 
 
 // the on-close client verb
