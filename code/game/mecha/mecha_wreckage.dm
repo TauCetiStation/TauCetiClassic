@@ -11,6 +11,9 @@
 	anchored = FALSE
 	opacity = 0
 	plane = GAME_PLANE
+	flags = NODECONSTRUCT
+	w_class = SIZE_MASSIVE
+
 	var/list/salvage  = list(
 		"welder" = list(
 			/obj/item/stack/sheet/metal,

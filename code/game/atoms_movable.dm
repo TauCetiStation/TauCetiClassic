@@ -412,6 +412,12 @@
 	UnregisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_AREA_SENSITIVE))
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 		LAZYREMOVE(location.area_sensitive_contents, src)
+
+/atom/movable/Destroy()
+	if(HAS_TRAIT(src, TRAIT_AREA_SENSITIVE))
+		on_area_sensitive_trait_loss()
+	return ..()
+
 /* Sizes stuff */
 
 /atom/movable/proc/get_size_flavor()

@@ -143,3 +143,18 @@
 	imp = new /obj/item/weapon/implant/uplink(src)
 	. = ..()
 	update()
+
+/obj/item/weapon/implanter/abductor
+	name = "Strange implanter"
+
+/obj/item/weapon/implanter/abductor/atom_init()
+	imp = new /obj/item/weapon/implant/abductor(src)
+	. = ..()
+	update()
+
+/obj/item/weapon/implanter/abductor/update()
+	if (imp)
+		icon_state = "cimplanter2"
+	else
+		icon_state = "cimplanter0"
+	return

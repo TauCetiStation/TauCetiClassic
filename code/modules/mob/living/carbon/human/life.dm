@@ -704,28 +704,6 @@ var/global/list/tourette_bad_words= list(
 				update_inv_wear_suit()
 				update_size_class()
 
-	// nutrition decrease
-	if (nutrition > 0 && stat != DEAD)
-		var/met_factor = get_metabolism_factor()
-		for(var/obj/item/organ/external/BP in bodyparts)
-			met_factor += BP.pumped / 100
-		nutrition = max(0, nutrition - met_factor * 0.1)
-		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
-			var/pain = getHalLoss()
-			if(pain > 0)
-				nutrition = max(0, nutrition - met_factor * pain * 0.01)
-	if (nutrition > NUTRITION_LEVEL_WELL_FED)
-		if(overeatduration < 600) //capped so people don't take forever to unfat
-			overeatduration++
-	else
-		if(overeatduration > 1)
-			overeatduration -= 2 //doubled the unfat rate
-
-	if(species.flags[REQUIRE_LIGHT])
-		if(nutrition < 200)
-			take_overall_damage(2,0)
-			traumatic_shock++
-
 	AdjustConfused(-1)
 	AdjustDrunkenness(-1)
 	// decrement dizziness counter, clamped to 0
@@ -1164,7 +1142,10 @@ var/global/list/tourette_bad_words= list(
 /mob/living/carbon/human/handle_shock()
 	..()
 	if(status_flags & GODMODE)	return 0	//godmode
-	if(analgesic || (species && species.flags[NO_PAIN])) return // analgesic avoids all traumatic shock temporarily
+	if(species && species.flags[NO_PAIN])
+		return
+	if(analgesic && !reagents.has_reagent("prismaline"))
+		return // analgesic avoids all traumatic shock temporarily
 
 	if(health < config.health_threshold_softcrit)// health 0 makes you immediately collapse
 		shock_stage = max(shock_stage, 61)
@@ -1281,6 +1262,20 @@ var/global/list/tourette_bad_words= list(
 				temp = PULSE_NONE
 
 	return temp
+
+/mob/living/carbon/human/handle_nutrition()
+	. = ..()
+	if(nutrition > NUTRITION_LEVEL_WELL_FED)
+		if(overeatduration < 600) //capped so people don't take forever to unfat
+			overeatduration++
+	else
+		if(overeatduration > 1)
+			overeatduration -= 2 //doubled the unfat rate
+
+	if(species.flags[REQUIRE_LIGHT])
+		if(nutrition < 200)
+			take_overall_damage(2,0)
+			traumatic_shock++
 
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes
