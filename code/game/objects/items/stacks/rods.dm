@@ -68,7 +68,7 @@
 			G.update_integrity(G.max_integrity)
 			G.density = TRUE
 			G.destroyed = FALSE
-			G.icon_state = "grille"
+			update_icon()
 
 		return FALSE
 
