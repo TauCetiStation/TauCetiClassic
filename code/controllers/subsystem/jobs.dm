@@ -587,7 +587,13 @@ SUBSYSTEM_DEF(job)
 			if(MA)
 				C.associated_account_number = MA.account_number
 				MA.set_salary(job.salary, job.salary_ratio)	//set the salary equal to job
-				MA.check_insurance_and_make_transaction(H, roundstart=1)
+				MA.owner_insurance_type = H.insurance
+				MA.owner_preferred_insurance_type = H.insurance
+				var/insurance_price = MA.check_insurance_and_return_price(H)
+				var/datum/money_account/medaccount = get_account(global.department_accounts["Medical"].account_number)
+				medaccount.money += insurance_price
+				MA.money -= insurance_price
+
 
 		H.equip_or_collect(C, SLOT_WEAR_ID)
 
@@ -603,10 +609,6 @@ SUBSYSTEM_DEF(job)
 		pda.owner_account = MA.account_number //bind the account to the pda
 		pda.owner_fingerprints += C.fingerprint_hash //save fingerprints in pda from ID card
 		MA.owner_PDA = pda //add PDA in /datum/money_account
-		pda.owner_insurance_price = MA.owner_insurance_price
-		pda.owner_insurance_type = MA.owner_insurance_type
-		pda.owner_preferred_insurance_price = MA.owner_insurance_price
-		pda.owner_preferred_insurance_type = MA.owner_insurance_type
 
 	return TRUE
 
