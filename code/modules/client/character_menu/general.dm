@@ -313,7 +313,7 @@
 
 				
 				if("insurance")
-					insurance = input("Please select an insurance level", "Character Generation", insurance) in list("None","Standart","Premium")
+					insurance = input("Please select an insurance level", "Character Generation", insurance) in SSeconomy.insurance_prices
 					
 
 				if("b_type")
