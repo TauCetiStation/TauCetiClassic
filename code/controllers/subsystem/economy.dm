@@ -14,7 +14,6 @@ SUBSYSTEM_DEF(economy)
 	var/list/stock_splits
 	var/list/insurance_prices = list("None" = 0, "Standart" = 80, "Premium" = 200)
 
-#define MAX_INSURANCE_PRICE 5000
 
 /datum/controller/subsystem/economy/proc/set_dividend_rate(department, rate)
 	LAZYINITLIST(department_dividends)
