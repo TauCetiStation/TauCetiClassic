@@ -646,7 +646,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(!home_system) home_system = "None"
 	if(!citizenship) citizenship = "None"
-	if(!insurance)   insurance = "None"
+	if(!insurance)   insurance = "Standart"
 	if(!faction)     faction =     "None"
 	if(!religion)    religion =    "None"
 	if(!vox_rank)    vox_rank =    "Larva"
