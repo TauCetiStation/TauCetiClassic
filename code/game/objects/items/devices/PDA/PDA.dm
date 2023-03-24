@@ -1852,6 +1852,24 @@
 				to_chat(L, "[bicon(src)]<span class='notice'>You have successfully transferred [amount]$ to [target] account number.</span>")
 		playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
+/obj/item/device/pda/proc/transaction_stock_inform(target, source, department, amount)
+	if(!can_use())
+		return
+	if(message_silent)
+		return
+	//Search for holder of the PDA. (some copy-paste from /obj/item/device/pda/proc/create_message)
+	var/mob/living/L = null
+	if(loc && isliving(loc))
+		L = loc
+	if(!L)
+		return
+
+	if(amount > 0)
+		to_chat(L, "[bicon(src)]<span class='notice'>[owner], the amount of [amount] of [department] stock from [source] was transferred to your account.</span>")
+	else
+		to_chat(L, "[bicon(src)]<span class='notice'>You have successfully transferred [amount] of [department] stock to [target] account number.</span>")
+	playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+
 /obj/item/device/pda/proc/check_rank(rank)
 	if((rank in command_positions) || (rank == "Quartermaster"))
 		boss_PDA = 1
