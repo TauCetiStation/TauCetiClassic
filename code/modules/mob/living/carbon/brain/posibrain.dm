@@ -112,7 +112,9 @@
 		spawn(50)
 			ping_cd = 0
 		audible_message("<span class='notice'>\The [src] pings softly.</span>", deaf_message = "\The [src] indicator blinks.")
-		playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, 10, FALSE)
+		playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER, 30, FALSE)
+		var/static/list/waddle_angles = list(-32, -22, 22, 32)
+		waddle(pick(waddle_angles), 0)
 
 /obj/item/device/mmi/posibrain/atom_init()
 
