@@ -58,10 +58,6 @@
 	//Variables for Finance Management
 	var/owner_account = 0
 	var/target_account = 0
-	var/owner_insurance_price = 0
-	var/owner_insurance_type = "error"
-	var/owner_preferred_insurance_price = 0
-	var/owner_preferred_insurance_type = "error"
 	var/funds_amount = 0
 	var/transfer_purpose = "Funds transfer"
 	var/pda_paymod = FALSE // if TRUE, click on someone to pay
