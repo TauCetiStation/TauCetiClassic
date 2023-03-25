@@ -1120,7 +1120,7 @@
 				var/insurance_type = input(U, "Please select an insurance level", "Insurance changes") in list("Cancel", "Standart", "Premium")
 				if (insurance_type != "Cancel")
 
-					var/newprice = text2num(input(user, "Insurance changes", "Write new price"))
+					var/newprice = input(user, "Insurance changes", "Write new price") as num
 					if (!newprice || newprice < 0 || newprice > MAX_INSURANCE_PRICE)
 						tgui_alert(U, "You can only set the price in range from 0 to [MAX_INSURANCE_PRICE]")
 						return
