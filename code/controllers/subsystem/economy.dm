@@ -82,23 +82,7 @@ SUBSYSTEM_DEF(economy)
 		if(D.owner_salary && !D.suspended)
 			charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)
 
-	var/insurance_sum = 0
-	for(var/mob/living/carbon/human/H as anything in global.human_list)
-		if(H.mind && H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
-			var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
-			var/insurance_price = MA.check_insurance_and_return_price(H)
-			if(insurance_price <= 0)
-				continue
-			insurance_sum += insurance_price
-			charge_to_account(MA.account_number, "Medical", "Insurance", "NT Insurance", -insurance_price)
-
-				
-
-		
-	var/datum/money_account/medaccount = get_account(global.department_accounts["Medical"].account_number)
-	var/med_account_number = medaccount.account_number
-	charge_to_account(med_account_number, med_account_number,"Insurance", "Insurance", insurance_sum)
-
+	handle_insurances()
 	
 
 	monitor_cargo_shop()
@@ -143,3 +127,22 @@ SUBSYSTEM_DEF(economy)
 
 /datum/controller/subsystem/economy/proc/set_endtime()
 	endtime = world.timeofday + wait
+	
+	
+	
+/datum/controller/subsystem/economy/proc/handle_insurances()
+	var/insurance_sum = 0
+	for(var/mob/living/carbon/human/H as anything in global.human_list)
+		if(H.mind && H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+			var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+			var/insurance_price = MA.check_insurance_and_return_price(H)
+			if(insurance_price <= 0)
+				continue
+			insurance_sum += insurance_price
+			charge_to_account(MA.account_number, "Medical", "Insurance", "NT Insurance", -insurance_price)
+				
+
+	if(insurance_sum > 0)
+		var/datum/money_account/medaccount = get_account(global.department_accounts["Medical"].account_number)
+		var/med_account_number = medaccount.account_number
+		charge_to_account(med_account_number, med_account_number,"Insurance", "Insurance", insurance_sum)
