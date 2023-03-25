@@ -1088,11 +1088,11 @@
 				var/insurance_type = input(H, "Please select an insurance level", "Insurance changes") in list("Cancel", "None","Standart", "Premium")
 
 				if (insurance_type != "Cancel")
-					var/choice = input(H, "You wanna change insurance immediatly, or make a preference?", "Insurance changes") in list("Cancel", "Immediatly", "Make Preference")
+					var/choice = input(H, "You wanna change insurance immediately, or make a preference?", "Insurance changes") in list("Cancel", "Immediately", "Make Preference")
 					var/datum/money_account/MA = get_account(owner_account)
 
 					switch(choice)
-						if ("Immediatly")
+						if ("Immediately")
 							if (insurance_type != "Cancel")
 								var/timecoefficient = round((SSeconomy.endtime - world.timeofday) / 600)
 								var/insurance_price = SSeconomy.insurance_prices[insurance_type] + 10 * timecoefficient
