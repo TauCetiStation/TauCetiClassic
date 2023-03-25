@@ -590,9 +590,10 @@ SUBSYSTEM_DEF(job)
 				MA.owner_insurance_type = H.insurance
 				MA.owner_preferred_insurance_type = H.insurance
 				var/insurance_price = MA.check_insurance_and_return_price(H)
-				var/datum/money_account/medaccount = get_account(global.department_accounts["Medical"].account_number)
-				medaccount.money += insurance_price
-				MA.money -= insurance_price
+				if(insurance_price > 0)
+					var/med_account_number = global.department_accounts["Medical"].account_number
+					charge_to_account(med_account_number, med_account_number,"Insurance", "Insurance", insurance_price)
+					charge_to_account(MA.account_number, "Medical", "Insurance", "NT Insurance", -insurance_price)
 
 
 		H.equip_or_collect(C, SLOT_WEAR_ID)
