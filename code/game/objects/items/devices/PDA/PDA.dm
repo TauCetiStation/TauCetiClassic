@@ -1125,7 +1125,7 @@
 						tgui_alert(U, "You can set price from 0 to [MAX_INSURANCE_PRICE]")
 						return
 
-					if(tgui_alert(U, "Now [insurance_type] insurance will costs [newprice] credits. Are you sure?", "Confirm", list("Yes", "No")) == "Yes")
+					if(tgui_alert(U, "Now [insurance_type] insurance will cost [newprice] credits. Are you sure?", "Confirm", list("Yes", "No")) == "Yes")
 						SSeconomy.insurance_prices[insurance_type] = newprice
 
 
