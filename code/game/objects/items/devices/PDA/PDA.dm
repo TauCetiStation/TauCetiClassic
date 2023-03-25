@@ -1122,7 +1122,7 @@
 
 					var/newprice = text2num(input(user, "Insurance changes", "Write new price"))
 					if (!newprice || newprice < 0 || newprice > MAX_INSURANCE_PRICE)
-						tgui_alert(U, "You can set price from 0 to [MAX_INSURANCE_PRICE]")
+						tgui_alert(U, "You can only set the price in range from 0 to [MAX_INSURANCE_PRICE]")
 						return
 
 					if(tgui_alert(U, "Now [insurance_type] insurance will cost [newprice] credits. Are you sure?", "Confirm", list("Yes", "No")) == "Yes")
