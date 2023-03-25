@@ -17,8 +17,11 @@
 
 /datum/religion_rites/song_tuner/invoke_effect(mob/user, obj/AOG)
 	. = ..()
-	to_chat(user, "<span class='notice'>[song_invocation_message]</span>")
-	user.AddComponent(/datum/component/smooth_tunes, src, repeats_okay, particles_path, glow_color)
+	for(var/mob/living/carbon/human/H in range(3, AOG))
+		if(!religion.is_member(H) || (H.GetComponent(/datum/component/smooth_tunes) && H != user))
+			continue
+		to_chat(H, "<span class='notice'>[song_invocation_message]</span>")
+		H.AddComponent(/datum/component/smooth_tunes, src, repeats_okay, particles_path, glow_color)
 
 /**
  * Perform the song effect.
