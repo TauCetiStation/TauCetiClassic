@@ -987,7 +987,7 @@
 /mob/living/carbon/proc/crawl_in_blood(obj/effect/decal/cleanable/blood/floor_blood)
 	return
 
-/mob/living/carbon/get_nutrition()
+/mob/living/carbon/get_satiation()
 	return nutrition + (reagents.get_reagent_amount("nutriment") \
 					+ reagents.get_reagent_amount("plantmatter") \
 					+ reagents.get_reagent_amount("protein") \
