@@ -42,8 +42,8 @@
 					else
 						set_dir(SOUTH)
 
-					if(isturf(movement_target.loc) )
-						movement_target.attack_animal(src)
+					if(isturf(movement_target.loc))
+						movement_target.bite_food(src)
 					else if(ishuman(movement_target.loc) )
 						if(prob(20))
 							me_emote("stares at the [movement_target] that [movement_target.loc] has with a sad puppy-face")
@@ -349,7 +349,7 @@
 			if( health <= 20 && prob(1) )
 				emote("gasp")
 			if(!reagents.has_reagent("inaprovaline"))
-				adjustOxyLoss(1)
+				losebreath = max(losebreath + 1, 2)
 			Paralyse(3)
 		if(halloss > 100)
 			to_chat(src, "<span class='notice'>You're in too much pain to keep going...</span>")
