@@ -83,14 +83,15 @@ SUBSYSTEM_DEF(economy)
 			charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)
 
 	var/insurance_sum = 0
-	for(var/mob/living/carbon/human/H in global.human_list)
-		if(H.mind)
-			if(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
-				var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
-				var/insurance_price = MA.check_insurance_and_return_price(H)
-				insurance_sum += insurance_price
-				if (insurance_price)
-					charge_to_account(MA.account_number, "Medical", "Insurance", "NT Insurance", -insurance_price)
+	for(var/mob/living/carbon/human/H as anything in global.human_list)
+		if(H.mind && H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+			var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+			var/insurance_price = MA.check_insurance_and_return_price(H)
+			if(insurance_price <= 0)
+				continue
+			insurance_sum += insurance_price
+			charge_to_account(MA.account_number, "Medical", "Insurance", "NT Insurance", -insurance_price)
+
 				
 
 		
