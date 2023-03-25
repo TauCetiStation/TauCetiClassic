@@ -204,7 +204,7 @@
 	if(!lying)
 		if(species && !species.flags[NO_PAIN])
 			emote("scream")
-		emote("collapse")
+		apply_effect(2, WEAKEN)
 
 	if(iszombie(src)) // workaroud for zombie attack without stance
 		if(!crawling)
