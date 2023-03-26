@@ -43,7 +43,8 @@
 	return ..()
 
 /turf/simulated/floor/plating/airless/catwalk/forcefield/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/stack/tile) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
+	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
+	if(istype(C, /obj/item/stack/tile) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
 		ChangeTurf(/turf/simulated/floor/plating)
 		return
 
@@ -52,8 +53,7 @@
 		to_chat(user, "<span class='warning'>What would that do to a forcefield?</span>")
 		return
 
-	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
-	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
+	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
 		ChangeTurf(SSenvironment.turf_type[z])
 		return
 
