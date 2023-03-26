@@ -236,7 +236,7 @@
 	var/lot_price = 0
 
 	var/autodescription = TRUE
-	var/autocategory = FALSE
+	var/autocategory = TRUE
 
 	var/label = ""
 
@@ -249,10 +249,13 @@
 
 /obj/item/device/tagger/proc/on_round_start(datum/source)
 	SIGNAL_HANDLER
-	if(istype(src, /obj/item/device/tagger/shop))
-		return
-
 	lot_account_number = global.cargo_account.account_number
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+
+/obj/item/device/tagger/shop/on_round_start(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
+	return
 
 /obj/item/device/tagger/shop
 	name = "shop tagger"
@@ -260,8 +263,6 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler0"
 	modes = list(1 = "Ценник", 2 = "Бирка")
-
-	autocategory = TRUE
 
 /obj/item/device/tagger/proc/openwindow(mob/user)
 	var/dat = "<tt>"
@@ -421,6 +422,9 @@
 	if(next_instruction < world.time)
 		next_instruction = world.time + 30 SECONDS
 		to_chat(user, "<span class='notice'>Осталось отправить этот предмет по пневмопочте(смыть в мусорку) или выставить на прилавок - и денюжки будут у тебя в кармане!</span>")
+
+	if(user.client && LAZYACCESS(user.client.browsers, "destTagScreen"))
+		openwindow(user)
 
 /obj/item/device/tagger/proc/label(obj/target, mob/user)
 	if(!label || !length(label))

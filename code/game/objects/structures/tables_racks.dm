@@ -600,15 +600,15 @@
 	qdel(src)
 
 /obj/lot_holder/attack_hand(mob/user)
-	if(istype(held_Item, /obj/item/smallDelivery))
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			var/obj/item/weapon/card/id/ID = H.get_idcard()
-			if(ID && global.access_cargo in ID.GetAccess())
-				var/obj/item/I = held_Item
-				qdel(src)
-				user.put_in_hands(I)
-	..()
+	if(ishuman(user) && istype(held_Item, /obj/item/smallDelivery))
+		var/mob/living/carbon/human/H = user
+		var/obj/item/weapon/card/id/ID = H.get_idcard()
+		if(ID && (global.access_cargo in ID.GetAccess()))
+			var/obj/item/I = held_Item
+			qdel(src)
+			user.put_in_hands(I)
+			return
+	return ..()
 
 /obj/lot_holder/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(held_Item, /obj/item/smallDelivery))
