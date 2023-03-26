@@ -141,7 +141,8 @@
 	to_chat(user, "<span class='notice'>Ah, the trickster's greatest achivement. A wall that allows everything to pass through but the most tiny of things.</span>")
 
 /obj/structure/stabilization_field/attackby(obj/item/C, mob/user)
-	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
+	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
+	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
 		playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 		qdel(src)
 		return
@@ -173,6 +174,13 @@
 /obj/structure/replicator_barricade/atom_init()
 	. = ..()
 	AddComponent(/datum/component/replicator_regeneration)
+
+/obj/structure/replicator_barricade/attackby(obj/item/C, mob/user)
+	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
+	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
+		playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
+		qdel(src)
+		return
 
 /obj/structure/replicator_barricade/Destroy()
 	if(leave_stabilization_field && !(locate(/obj/structure/stabilization_field) in loc))
