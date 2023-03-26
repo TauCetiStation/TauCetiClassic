@@ -433,7 +433,7 @@
 				scanner_ready = FALSE
 				playsound(user, 'sound/effects/triple_beep.ogg', VOL_EFFECTS_MASTER)
 				flash_color("red")
-		return
+			return
 
 	scanner_ready = FALSE
 
