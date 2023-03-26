@@ -1,0 +1,7 @@
+# Config for authorization net announcer
+# First server must by self with the key to authorize clients
+# Other servers url and keys use to broadcasts messages
+
+byond://127.0.0.1:2706 = SomeSuperSecretKey	# self
+byond://127.0.0.1:2706 = SomeSuperSecretKey	# if you need to broadcast self, just reapet it
+# byond://127.0.0.2:2707 = OtherSecretKey
