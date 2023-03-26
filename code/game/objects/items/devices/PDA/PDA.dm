@@ -1122,12 +1122,11 @@
 
 
 			if("Make Preference")
-				if(H.incapacitated())
-					return
-				var/obj/item/device/pda/P = locate(/obj/item/device/pda) in H.GetAllContents()
-				if(!P || P.owner != H.real_name)
-					return
-				MA.owner_preferred_insurance_type = insurance_type
+				if(!H.incapacitated())
+					var/obj/item/device/pda/P = locate(/obj/item/device/pda) in H.GetAllContents()
+					if(!P || P.owner != H.real_name)
+						return
+					MA.owner_preferred_insurance_type = insurance_type
 
 
 
