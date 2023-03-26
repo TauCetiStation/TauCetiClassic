@@ -347,7 +347,7 @@
 	return
 
 /obj/item/device/tagger/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/device/tagger))
+	if(istagger(W))
 		return ..()
 	else if(can_apply_action(W, user))
 		get_action(W, user)
