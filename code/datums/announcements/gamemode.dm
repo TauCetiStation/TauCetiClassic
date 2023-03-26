@@ -220,7 +220,7 @@
 /* Replicators */
 /datum/announcement/centcomm/replicator
 	name = "Bluespace Breach: Detected"
-	subtitle = "Тревога! Блюспейс прорыв"
+	subtitle = "Тревога! Блюспэйс прорыв"
 
 /datum/announcement/centcomm/replicator/construction_began/play(area/A)
 	message = "Обнаружено открытие блюспэйс прорыва в [initial(A.name)]. Полное раскрытие прорыва приведёт к дестабилизации реальности вокруг станции!"
@@ -233,12 +233,12 @@
 	..()
 
 /datum/announcement/centcomm/replicator/construction_half/play(area/A)
-	message = "Блюспейс прорыв в [initial(A.name)] достиг 50% от критического гиперобъема."
+	message = "Блюспэйс прорыв в [initial(A.name)] достиг 50% от критического гиперобъема."
 	sound = "construction_half"
 	..()
 
 /datum/announcement/centcomm/replicator/construction_three_quarters/play(area/A)
-	message = "Блюспейс прорыв в [initial(A.name)] достиг 75% от критического гиперобъема."
+	message = "Блюспэйс прорыв в [initial(A.name)] достиг 75% от критического гиперобъема."
 	sound = "construction_three_quarters"
 	..()
 
