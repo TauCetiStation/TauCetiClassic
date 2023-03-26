@@ -350,28 +350,33 @@
 /obj/item/device/tagger/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/device/tagger))
 		return ..()
-	else
+	else if(can_apply_action(W, user))
 		get_action(W, user)
 
 /obj/item/device/tagger/afterattack(obj/target, mob/user, proximity, params)
 	if(!proximity)
 		return
+
+	if(can_apply_action(target, user))
+		get_action(target, user)
+
+/obj/item/device/tagger/proc/can_apply_action(obj/target, mob/user)
 	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
-		return
+		return FALSE
 	if(target.anchored)
-		return
+		return FALSE
 	if(user in target)
-		return
+		return FALSE
 	if(target == loc)
-		return
+		return FALSE
 	if(target.flags & ABSTRACT)
-		return
+		return FALSE
 	if(istype(target, /obj/item))
 		var/obj/item/I = target
 		if(I.abstract)
-			return
+			return FALSE
 
-	get_action(target, user)
+	return TRUE
 
 /obj/item/device/tagger/proc/get_action(obj/target, mob/user)
 	switch(modes[mode])
