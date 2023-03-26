@@ -13,7 +13,7 @@
 	var/max_symptoms = 6
 	var/cooldown_mul = 1
 	var/list/affected_species = list(HUMAN , UNATHI , SKRELL , TAJARAN)
-	var/list/spread_types = list(DISEASE_SPREAD_AIRBORNE = 2, DISEASE_SPREAD_CONTACT = 3, DISEASE_SPREAD_BLOOD = 5)
+	var/list/spread_types = list(DISEASE_SPREAD_AIRBORNE = 2, DISEASE_SPREAD_CONTACT = 2, DISEASE_SPREAD_BLOOD = 6)
 
 /datum/disease2/disease/New()
 	uniqueID = rand(0,10000)
