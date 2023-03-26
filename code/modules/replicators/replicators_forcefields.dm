@@ -87,6 +87,14 @@
 	. = ..()
 	AddComponent(/datum/component/replicator_regeneration)
 
+/obj/structure/replicator_forcefield/attackby(obj/item/C, mob/user)
+	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
+	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
+		playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
+		qdel(src)
+		return
+	return ..()
+
 /obj/structure/replicator_forcefield/Destroy()
 	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 	if(!(locate(/obj/structure/stabilization_field) in loc))
@@ -146,7 +154,6 @@
 		playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 		qdel(src)
 		return
-
 	return ..()
 
 /obj/structure/stabilization_field/CanPass(atom/movable/mover, turf/target)
