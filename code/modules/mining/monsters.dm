@@ -97,10 +97,11 @@
 		Aggro()
 		stance = HOSTILE_STANCE_ATTACK
 		if(isliving(target))
-			var/mob/living/L = target
-			if(L.bodytemperature > 261)
-				L.bodytemperature = 261
-				visible_message("<span class='danger'>The [src.name]'s stare chills [L.name] to the bone!</span>")
+			if(get_dist(src, target) < 7)
+				var/mob/living/L = target
+				if(L.bodytemperature > 261)
+					L.bodytemperature = 261
+					visible_message("<span class='danger'>The [src.name]'s stare chills [L.name] to the bone!</span>")
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/ex_act(severity, target)
 	switch(severity)
