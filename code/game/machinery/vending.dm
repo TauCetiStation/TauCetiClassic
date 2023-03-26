@@ -122,39 +122,21 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		malfunction()
 
 /obj/machinery/vending/proc/build_menue()
-	for(var/typepath in products)
-		var/datum/data/vending_product/R = new /datum/data/vending_product()
-		R.amount = products[typepath]
-		put_menue_typepath(typepath, R)
+	var/list/menues = list(products = product_records, contraband = hidden_records, premium = coin_records, syndie = emag_records)
 
-		product_records += R
+	for(var/list/menue in menues)
+		for(var/typepath in menue)
+			var/datum/data/vending_product/R = new /datum/data/vending_product()
+			R.max_amount = menue[typepath]
+			put_menue_typepath(typepath, R)
 
-	for(var/typepath in contraband)
-		var/datum/data/vending_product/R = new /datum/data/vending_product()
-		R.amount = contraband[typepath]
-		put_menue_typepath(typepath, R)
-
-		hidden_records += R
-
-	for(var/typepath in premium)
-		var/datum/data/vending_product/R = new /datum/data/vending_product()
-		R.amount = premium[typepath]
-		put_menue_typepath(typepath, R)
-
-		coin_records += R
-
-	for(var/typepath in syndie)
-		var/datum/data/vending_product/R = new /datum/data/vending_product()
-		R.amount = syndie[typepath]
-		put_menue_typepath(typepath, R)
-
-		emag_records += R
+			var/list/records = menues[menue]
+			records += R
 
 /obj/machinery/vending/proc/put_menue_typepath(typepath, datum/data/vending_product/R)
 	R.product_path = typepath
 	var/price = prices[typepath]
 	R.price = price
-	R.product_path = typepath
 	var/atom/temp = typepath
 	R.product_name = initial(temp.name)
 
@@ -162,14 +144,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 /obj/machinery/vending/proc/build_inventory(list/productlist, roundstart = FALSE, hidden = 0, req_coin = 0 , req_emag = 0)
 	for(var/datum/data/vending_product/R in productlist)
-		var/amount = R.amount
-		var/product_max_amount = amount
+		var/amount = R.max_amount
 		if(!hidden && !req_coin && !req_emag)
 			if(roundstart && is_station_level(src.z) && !private)
 				var/players_coefficient = num_players() / 50 //100 players = double load, 50 players = max load, 0 players = min load
 				var/randomness_coefficient = rand(50,100) / 100 //50-100% randomness
 
-				var/final_coefficient = clamp(players_coefficient * randomness_coefficient, 0.1, 1.0) //10% minimum, 100% maximum
+				var/final_coefficient = clamp(players_coefficient * randomness_coefficient, 0.1, 2.0) //10% minimum, 200% maximum
 
 				amount = round(amount * final_coefficient) //10-100% roundstart load depending on player amount and randomness
 
@@ -179,7 +160,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		if(isnull(amount)) amount = 1
 
 		R.amount = amount
-		R.max_amount = product_max_amount
 
 	return
 
