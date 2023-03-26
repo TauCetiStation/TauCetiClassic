@@ -139,9 +139,8 @@ SUBSYSTEM_DEF(economy)
 			if(insurance_price <= 0)
 				continue
 			insurance_sum += insurance_price
-			charge_to_account(MA.account_number, "Medical", "Insurance", "NT Insurance", -insurance_price)
-				
+			charge_to_account(MA.account_number, "Medical", "[MA.owner_insurance_type] Insurance payment", "NT Insurance", -insurance_price)
 
 	if(insurance_sum > 0)
 		var/med_account_number = global.department_accounts["Medical"].account_number
-		charge_to_account(med_account_number, med_account_number,"Insurance", "Insurance", insurance_sum)
+		charge_to_account(med_account_number, med_account_number,"Insurance", "NT Insurance", insurance_sum)
