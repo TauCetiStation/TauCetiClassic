@@ -253,7 +253,6 @@
 	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
 
 /obj/item/device/tagger/shop/on_round_start(datum/source)
-	SIGNAL_HANDLER
 	UnregisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING)
 	return
 
