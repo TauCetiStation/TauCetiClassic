@@ -135,7 +135,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 			R.product_name = initial(temp.name)
 			global.vending_products[typepath] = 1
 
-			records[menus.Find(menue)] += R
+			records[menus.Find(menu)] += R
 
 /obj/machinery/vending/proc/build_inventory(list/productlist, roundstart = FALSE, hidden = 0, req_coin = 0 , req_emag = 0)
 	for(var/datum/data/vending_product/R in productlist)
