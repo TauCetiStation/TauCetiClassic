@@ -13,6 +13,7 @@ SUBSYSTEM_DEF(economy)
 	var/list/department_dividends
 	var/list/stock_splits
 	var/list/insurance_prices = list("None" = 0, "Standart" = 80, "Premium" = 200)
+	var/list/insurance_quality_decreasing = list("Premium", "Standart", "None")
 
 
 /datum/controller/subsystem/economy/proc/set_dividend_rate(department, rate)
