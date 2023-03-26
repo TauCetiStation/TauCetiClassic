@@ -27,6 +27,7 @@
 // Role IDs
 #define ABDUCTOR_AGENT "Abductor Agent"
 #define ABDUCTOR_SCI "Abductor Scientist"
+#define ABDUCTOR_ASSISTANT "Abductor Assistant"
 #define ABDUCTED "Abducted"
 #define BORER "Cortical Borer"
 #define BLOBOVERMIND "Blob Overmind"

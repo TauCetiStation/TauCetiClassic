@@ -104,9 +104,14 @@ var/global/initial_station_money = 7500
 
 	for(var/department in station_departments)
 		create_department_account(department)
+
 	create_department_account("Vendor")
 	vendor_account = department_accounts["Vendor"]
+
 	cargo_account = department_accounts["Cargo"]
+	SSeconomy.set_dividend_rate("Cargo", 0.1)
+	// Enough stock to supply 2 cargos of employees with it. TO-DO: calculate it programatically depending on map changes to jobs?
+	SSeconomy.issue_founding_stock(cargo_account.account_number, "Cargo", 260)
 
 	current_date_string = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], [game_year]"
 
@@ -124,6 +129,8 @@ var/global/initial_station_money = 7500
 	global.centcomm_account.security_level = 2
 	global.centcomm_account.money = 10000000
 	global.centcomm_account.hidden = TRUE
+	// Is needed in case admins want to have some !!!FUN!!!
+	SSeconomy.issue_founding_stock(global.centcomm_account.account_number, "Cargo", 10)
 
 	//create an entry in the account transaction log for when it was created
 	var/datum/transaction/T = new()
@@ -137,26 +144,29 @@ var/global/initial_station_money = 7500
 	station_account.transaction_log.Add(T)
 
 /proc/create_station_account()
-	if(!station_account)
-		next_account_number = rand(111111, 999999)
+	if(station_account)
+		return
+	next_account_number = rand(111111, 999999)
 
-		station_account = new()
-		station_account.owner_name = "[station_name()] Station Account"
-		station_account.account_number = rand(111111, 999999)
-		station_account.remote_access_pin = rand(1111, 111111)
-		station_account.security_level = 1
-		station_account.money = global.initial_station_money
+	station_account = new()
+	station_account.owner_name = "[station_name()] Station Account"
+	station_account.account_number = rand(111111, 999999)
+	station_account.remote_access_pin = rand(1111, 111111)
+	station_account.security_level = 1
+	station_account.money = global.initial_station_money
+	// Station gets a slight rebound on all cargo activity from stock ownership. In theory HoP or Captain can also sell this.
+	SSeconomy.issue_founding_stock(station_account.account_number, "Cargo", 10)
 
-		//create an entry in the account transaction log for when it was created
-		var/datum/transaction/T = new()
-		T.target_name = station_account.owner_name
-		T.purpose = "Account creation"
-		T.amount = station_account.money
-		T.date = "2nd April, [gamestory_start_year]"
-		T.time = "11:24"
-		T.source_terminal = "Biesel GalaxyNet Terminal #277"
+	//create an entry in the account transaction log for when it was created
+	var/datum/transaction/T = new()
+	T.target_name = station_account.owner_name
+	T.purpose = "Account creation"
+	T.amount = station_account.money
+	T.date = "2nd April, [gamestory_start_year]"
+	T.time = "11:24"
+	T.source_terminal = "Biesel GalaxyNet Terminal #277"
 
-		station_account.transaction_log.Add(T)
+	station_account.transaction_log.Add(T)
 
 /proc/create_department_account(department)
 	next_account_number = rand(111111, 999999)
