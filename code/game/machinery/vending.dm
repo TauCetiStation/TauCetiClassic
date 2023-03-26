@@ -78,7 +78,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	power_change()
 	update_wires_check()
 
-	build_menue()
+	build_menu()
 
 	if(SSticker.current_state == GAME_STATE_PLAYING)
 		load_products(FALSE)
@@ -121,23 +121,21 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	if(.)
 		malfunction()
 
-/obj/machinery/vending/proc/build_menue()
-	var/list/menues = list(products, contraband, premium, syndie)
+/obj/machinery/vending/proc/build_menu()
+	var/list/menus = list(products, contraband, premium, syndie)
 	var/list/records = list(product_records, hidden_records, coin_records, emag_records)
 
-	for(var/list/menue in menues)
-		for(var/typepath in menue)
+	for(var/list/menu in menus)
+		for(var/atom/typepath as anything in menu)
 			var/datum/data/vending_product/R = new /datum/data/vending_product()
-			R.max_amount = menue[typepath]
+			R.max_amount = menu[typepath]
 			R.product_path = typepath
-			var/price = prices[typepath]
-			R.price = price
+			R.price = prices[typepath]
 			var/atom/temp = typepath
 			R.product_name = initial(temp.name)
 			global.vending_products[typepath] = 1
 
-			var/list/needed_records = records[menues.Find(menue)]
-			needed_records += R
+			records[menus.Find(menue)] += R
 
 /obj/machinery/vending/proc/build_inventory(list/productlist, roundstart = FALSE, hidden = 0, req_coin = 0 , req_emag = 0)
 	for(var/datum/data/vending_product/R in productlist)
