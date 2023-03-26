@@ -173,6 +173,7 @@
 #define TRAIT_SHOCKIMMUNE         "shockimmune"
 #define TRAIT_NATURAL_AGILITY     "natural_agility"
 #define TRAIT_BLUESPACE_MOVING    "bluespace_moving"
+#define TRAIT_STEEL_NERVES        "steel_nerves"
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
@@ -214,3 +215,4 @@
 #define EYE_DAMAGE_TEMPORARY_TRAIT "eye_damage_temporary"
 #define GENETIC_MUTATION_TRAIT "genetic"
 #define QUIRK_TRAIT "quirk"
+#define VIRUS_TRAIT "virus"

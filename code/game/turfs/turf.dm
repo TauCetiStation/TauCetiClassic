@@ -509,3 +509,7 @@
 			V.light_color = V.color
 			V.set_light(3)
 			V.stop_light()
+	if(vomit_type == VOMIT_NANITE)
+		V.name = "metallic slurry"
+		V.desc = "A puddle of metallic slurry that looks vaguely like very fine sand. It almost seems like it's moving..."
+		V.icon_state = "vomitnanite_[pick(1,4)]"
