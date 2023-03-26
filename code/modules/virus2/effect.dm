@@ -514,7 +514,7 @@
 	max_stage = 3
 	cooldown = 60
 
-/datum/disease2/effect/vomit/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/vomit/activate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1)
 			to_chat(mob, "<span class='warning'>Your chest hurts!</span>")
@@ -522,7 +522,7 @@
 			mob.vomit(vomit_type = VOMIT_BLOOD, stun = FALSE)
 			if(ishuman(mob))
 				var/mob/living/carbon/human/H = mob
-				H.blood_remove(1)
+				H.blood_remove(2)
 		if(3)
 			mob.vomit(vomit_type = VOMIT_NANITE)
 			if(ishuman(mob))
@@ -746,11 +746,11 @@
 	desc = "The virus injects nanites into the host's body, which act as a secondary nervous system, protecting against nerve palsies."
 	level = 3
 	max_stage = 3
-	cooldown = 10
+	cooldown = 7
 	var/trait_added = FALSE
 	COOLDOWN_DECLARE(senses_message)
 
-/datum/disease2/effect/nerve_support/activate(mob/living/carbon/mob, datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+/datum/disease2/effect/nerve_support/activate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	switch(holder.stage)
 		if(1)
 			if(COOLDOWN_FINISHED(src, senses_message))
@@ -929,6 +929,21 @@
 /datum/disease2/effect/groan/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 	mob.say("*groan")*/
 ////////////////////////STAGE 2/////////////////////////////////
+
+/datum/disease2/effect/purging_advanced
+	name = "Selective Purification"
+	desc = "The virus purge toxins and dangerous chemicals from the host's bloodstream, while ignoring beneficial chemicals."
+	level = 2
+	max_stage = 1
+	cooldown = 30
+
+/datum/disease2/effect/purging_advanced/activate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(!mob.getToxLoss())
+		return
+	if(!mob.reagents)
+		return
+	for(var/datum/reagent/toxin/R in mob.reagents.reagent_list)
+		mob.reagents.remove_reagent(R.id, 1)
 
 /datum/disease2/effect/scream
 	name = "Loudness Syndrome"
@@ -1161,6 +1176,19 @@
 			mob.make_jittery(150)
 
 ////////////////////////STAGE 1/////////////////////////////////
+
+/datum/disease2/effect/monitoring
+	name = "Monitoring"
+	desc = "The virus produces nanites that track the host's vital organs and location, sending them to the station's sensor network."
+	level = 1
+	max_stage = 1
+	cooldown = 600
+
+/datum/disease2/effect/monitoring/activate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	SSmobs.virus_monitored_mobs |= mob
+
+/datum/disease2/effect/monitoring/deactivate(mob/living/carbon/mob, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	SSmobs.virus_monitored_mobs -= mob
 
 /datum/disease2/effect/cough
 	name = "Cough"
