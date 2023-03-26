@@ -635,6 +635,7 @@
 			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Недостаточно средств!</span>")
 			return
 
+	held_item.remove_price_tag()
 	qdel(src)
 
 /obj/structure/table/reinforced/stall
@@ -652,7 +653,7 @@
 
 /obj/structure/table/reinforced/stall/proc/try_magnet(atom/A, obj/item/I, mob/user)
 	if(I.price_tag)
-		addtimer(CALLBACK(src, .proc/magnet_item, I), 1 SECONDS)
+		magnet_item(I)
 
 /obj/structure/table/reinforced/stall/proc/magnet_item(obj/item/I)
 	if(I.loc != get_turf(src))
