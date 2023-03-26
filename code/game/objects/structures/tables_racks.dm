@@ -635,7 +635,7 @@
 			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Недостаточно средств!</span>")
 			return
 
-	held_item.remove_price_tag()
+	held_Item.remove_price_tag()
 	qdel(src)
 
 /obj/structure/table/reinforced/stall
