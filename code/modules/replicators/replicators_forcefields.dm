@@ -181,6 +181,7 @@
 		playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 		qdel(src)
 		return
+	return ..()
 
 /obj/structure/replicator_barricade/Destroy()
 	if(leave_stabilization_field && !(locate(/obj/structure/stabilization_field) in loc))
