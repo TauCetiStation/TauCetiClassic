@@ -572,6 +572,7 @@
 
 	table_attached_to = Table
 	RegisterSignal(table_attached_to, list(COMSIG_PARENT_QDELETING), .proc/on_table_destroy)
+	RegisterSignal(held_Item, list(COMSIG_PARENT_QDELETING), .proc/on_table_destroy)
 
 	held_Item = Item
 	Item.forceMove(src)
@@ -585,14 +586,37 @@
 /obj/lot_holder/Destroy()
 	held_Item.forceMove(table_attached_to.loc)
 	held_Item = null
+
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(table_attached_to.loc)
 	table_attached_to = null
+
 	return ..()
 
 /obj/lot_holder/proc/on_table_destroy()
 	qdel(src)
 
+/obj/lot_holder/container_resist()
+	qdel(src)
+
+/obj/lot_holder/attack_hand(mob/user)
+	if(istype(held_Item, /obj/item/smallDelivery))
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			var/obj/item/weapon/card/id/ID = H.get_idcard()
+			if(ID && global.access_cargo in ID.GetAccess())
+				var/obj/item/I = held_Item
+				qdel(src)
+				user.put_in_hands(I)
+	..()
+
 /obj/lot_holder/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/card/id))
+	if(istype(held_Item, /obj/item/smallDelivery))
+		return
+
+	if(W.price_tag)
+		table_attached_to.attackby(W, user, params)
+	else if(istype(W, /obj/item/weapon/card/id))
 		table_attached_to.visible_message("<span class='info'>[user] прикладывает карту к столу.</span>")
 		var/obj/item/weapon/card/id/Card = W
 		scan_card(Card, user)
@@ -624,7 +648,7 @@
 
 	var/cost = held_Item.price_tag["price"]
 
-	if(cost > 0 && Seller)
+	if(cost > 0 && Seller && Buyer != Seller)
 		if(Seller.suspended)
 			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Подключённый аккаунт заблокирован.</span>")
 			return
@@ -651,7 +675,7 @@
 	AddComponent(/datum/component/clickplace, CALLBACK(src, .proc/try_magnet))
 
 /obj/structure/table/reinforced/stall/proc/try_magnet(atom/A, obj/item/I, mob/user)
-	if(I.price_tag)
+	if(I.price_tag || istype(I, /obj/item/smallDelivery))
 		addtimer(CALLBACK(src, .proc/magnet_item, I), 1 SECONDS)
 
 /obj/structure/table/reinforced/stall/proc/magnet_item(obj/item/I)

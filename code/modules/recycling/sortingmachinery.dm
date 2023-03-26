@@ -236,11 +236,23 @@
 	var/lot_price = 0
 
 	var/autodescription = TRUE
-	var/autocategory = TRUE
+	var/autocategory = FALSE
 
 	var/label = ""
 
 	var/next_instruction = 0
+
+/obj/item/device/tagger/atom_init()
+	. = ..()
+
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, .proc/on_round_start)
+
+/obj/item/device/tagger/proc/on_round_start(datum/source)
+	SIGNAL_HANDLER
+	if(istype(src, /obj/item/device/tagger/shop))
+		return
+
+	lot_account_number = global.cargo_account.account_number
 
 /obj/item/device/tagger/shop
 	name = "shop tagger"
@@ -248,6 +260,8 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler0"
 	modes = list(1 = "Ценник", 2 = "Бирка")
+
+	autocategory = TRUE
 
 /obj/item/device/tagger/proc/openwindow(mob/user)
 	var/dat = "<tt>"
@@ -332,6 +346,12 @@
 	openwindow(user)
 	return
 
+/obj/item/device/tagger/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/device/tagger))
+		return ..()
+	else
+		get_action(W, user)
+
 /obj/item/device/tagger/afterattack(obj/target, mob/user, proximity, params)
 	if(!proximity)
 		return
@@ -343,7 +363,16 @@
 		return
 	if(target == loc)
 		return
+	if(target.flags & ABSTRACT)
+		return
+	if(istype(target, /obj/item))
+		var/obj/item/I = target
+		if(I.abstract)
+			return
 
+	get_action(target, user)
+
+/obj/item/device/tagger/proc/get_action(obj/target, mob/user)
 	switch(modes[mode])
 		if("Метка")
 			return
@@ -360,10 +389,8 @@
 		to_chat(user, "<span class='notice'>Нельзя повесить ценник на [target].</span>")
 		return
 
-	if(user.get_inactive_hand() == target)
+	if(user.get_inactive_hand() == target || user.get_active_hand() == target)
 		var/new_price = input("Введите цену:", "Маркировщик", input_default(lot_price), null)  as num
-		if(user.get_active_hand() != src || user.get_inactive_hand() != target)
-			return
 		if(user.incapacitated())
 			return
 
@@ -394,9 +421,6 @@
 	if(next_instruction < world.time)
 		next_instruction = world.time + 30 SECONDS
 		to_chat(user, "<span class='notice'>Осталось отправить этот предмет по пневмопочте(смыть в мусорку) или выставить на прилавок - и денюжки будут у тебя в кармане!</span>")
-
-	if(user.client && LAZYACCESS(user.client.browsers, "destTagScreen"))
-		openwindow(user)
 
 /obj/item/device/tagger/proc/label(obj/target, mob/user)
 	if(!label || !length(label))
