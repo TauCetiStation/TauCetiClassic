@@ -1121,8 +1121,9 @@
 					charge_to_account(med_account_number, med_account_number,"[insurance_type] Insurance payment", "NT Insurance", insurance_price)
 
 
-			if("Make Preference")
-				if(!H.incapacitated())
+				if("Make Preference")
+					if(H.incapacitated())
+						return
 					var/obj/item/device/pda/P = locate(/obj/item/device/pda) in H.GetAllContents()
 					if(!P || P.owner != H.real_name)
 						return
