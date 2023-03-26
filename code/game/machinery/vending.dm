@@ -122,25 +122,22 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		malfunction()
 
 /obj/machinery/vending/proc/build_menue()
-	var/list/menues = list(products = product_records, contraband = hidden_records, premium = coin_records, syndie = emag_records)
+	var/list/menues = list(products, contraband, premium, syndie)
+	var/list/records = list(product_records, hidden_records, coin_records, emag_records)
 
 	for(var/list/menue in menues)
 		for(var/typepath in menue)
 			var/datum/data/vending_product/R = new /datum/data/vending_product()
 			R.max_amount = menue[typepath]
-			put_menue_typepath(typepath, R)
+			R.product_path = typepath
+			var/price = prices[typepath]
+			R.price = price
+			var/atom/temp = typepath
+			R.product_name = initial(temp.name)
+			global.vending_products[typepath] = 1
 
-			var/list/records = menues[menue]
-			records += R
-
-/obj/machinery/vending/proc/put_menue_typepath(typepath, datum/data/vending_product/R)
-	R.product_path = typepath
-	var/price = prices[typepath]
-	R.price = price
-	var/atom/temp = typepath
-	R.product_name = initial(temp.name)
-
-	global.vending_products[typepath] = 1
+			var/list/needed_records = records[menues.Find(menue)]
+			needed_records += R
 
 /obj/machinery/vending/proc/build_inventory(list/productlist, roundstart = FALSE, hidden = 0, req_coin = 0 , req_emag = 0)
 	for(var/datum/data/vending_product/R in productlist)
