@@ -143,6 +143,5 @@ SUBSYSTEM_DEF(economy)
 				
 
 	if(insurance_sum > 0)
-		var/datum/money_account/medaccount = get_account(global.department_accounts["Medical"].account_number)
-		var/med_account_number = medaccount.account_number
+		var/med_account_number = global.department_accounts["Medical"].account_number
 		charge_to_account(med_account_number, med_account_number,"Insurance", "Insurance", insurance_sum)
