@@ -375,21 +375,23 @@ var/global/list/tourette_bad_words= list(
 	if(breath.temperature > species.heat_level_1)
 		var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
 		temp_internals_alert = 3
-		if(breath.temperature > species.heat_level_3)
-			IO.take_damage(HEAT_GAS_DAMAGE_LEVEL_3)
-		else if(breath.temperature > species.heat_level_2)
-			IO.take_damage(HEAT_GAS_DAMAGE_LEVEL_2)
-		else
-			IO.take_damage(HEAT_GAS_DAMAGE_LEVEL_1)
+		if(IO)
+			if(breath.temperature > species.heat_level_3)
+				IO.take_damage(HEAT_GAS_DAMAGE_LEVEL_3)
+			else if(breath.temperature > species.heat_level_2)
+				IO.take_damage(HEAT_GAS_DAMAGE_LEVEL_2)
+			else
+				IO.take_damage(HEAT_GAS_DAMAGE_LEVEL_1)
 	else if(breath.temperature < species.breath_cold_level_1)
 		temp_internals_alert = -3
 		var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
-		if(breath.temperature >= species.breath_cold_level_2)
-			IO.take_damage(COLD_GAS_DAMAGE_LEVEL_1)
-		else if(breath.temperature >= species.breath_cold_level_3)
-			IO.take_damage(COLD_GAS_DAMAGE_LEVEL_2)
-		else
-			IO.take_damage(COLD_GAS_DAMAGE_LEVEL_3)
+		if(IO)
+			if(breath.temperature >= species.breath_cold_level_2)
+				IO.take_damage(COLD_GAS_DAMAGE_LEVEL_1)
+			else if(breath.temperature >= species.breath_cold_level_3)
+				IO.take_damage(COLD_GAS_DAMAGE_LEVEL_2)
+			else
+				IO.take_damage(COLD_GAS_DAMAGE_LEVEL_3)
 
 	//breathing in hot/cold air also heats/cools you a bit
 	var/affecting_temp = (breath.temperature - bodytemperature) * breath.return_relative_density()
@@ -550,22 +552,6 @@ var/global/list/tourette_bad_words= list(
 	if(bodytemperature < species.cold_level_1) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
 		if(nutrition >= 2) //If we are very, very cold we'll use up quite a bit of nutriment to heat us up.
 			nutrition -= 2
-/*		var/recovery_amt = max((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
-//		message_admins("Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]. Tick [life_tick]")
-//		world << "Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]. Tick [life_tick]"
-//				log_debug("Cold. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
-		adjust_bodytemperature(recovery_amt)
-	else if(species.cold_level_1 <= bodytemperature && bodytemperature <= species.heat_level_1)
-		var/recovery_amt = body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR
-		//world << "Norm. Difference = [body_temperature_difference]. Recovering [recovery_amt]"
-//				log_debug("Norm. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
-		adjust_bodytemperature(recovery_amt)
-	else if(bodytemperature > species.heat_level_1) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
-		//We totally need a sweat system cause it totally makes sense...~
-		var/recovery_amt = min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
-		//world << "Hot. Difference = [body_temperature_difference]. Recovering [recovery_amt]"
-//				log_debug("Hot. Difference = [body_temperature_difference]. Recovering [recovery_amt]")
-		adjust_bodytemperature(recovery_amt)*/
 	var/recovery_amt = 0
 	if(bodytemperature < species.body_temperature)
 		recovery_amt = min(max((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM), body_temperature_difference)
