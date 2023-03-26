@@ -70,7 +70,7 @@
 	if(effects.len > min_symptoms)
 		effects -= pick(effects) //remove random effect
 
-/datum/disease2/disease/proc/makerandom(greater=0)
+/datum/disease2/disease/proc/makerandom(greater = 0, spread_vector)
 	for(var/i in 1 to 4) //random viruses always have 4 effects
 		if(greater)
 			addeffect(getrandomeffect(i, 4))
@@ -80,7 +80,10 @@
 	infectionchance = rand(30,60)
 	antigen |= text2num(pick(ANTIGENS))
 	antigen |= text2num(pick(ANTIGENS))
-	spreadtype = pickweight(spread_types)
+	if(spread_vector)
+		spreadtype = spread_vector
+	else
+		spreadtype = pickweight(spread_types)
 
 	if(all_species.len)
 		affected_species = get_infectable_species()

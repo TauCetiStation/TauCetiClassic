@@ -180,7 +180,7 @@
 	to_chat(host, "<span class='warning'>You feel sick.</span>")
 
 	var/datum/disease2/disease/D = new /datum/disease2/disease()
-	D.makerandom()
+	D.makerandom(spread_vector = DISEASE_SPREAD_AIRBORNE)
 	D.infectionchance = rand(1,100)
 
 	if(ishuman(host))
