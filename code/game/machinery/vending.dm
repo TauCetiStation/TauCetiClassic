@@ -125,7 +125,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	var/list/menus = list(products, contraband, premium, syndie)
 	var/list/records = list(product_records, hidden_records, coin_records, emag_records)
 
-	for(var/list/menu in menus)
+	var/i = 1
+	for(i, i<=menus.len, i++)
+		var/list/menu = menus[i]
 		for(var/atom/typepath as anything in menu)
 			var/datum/data/vending_product/R = new /datum/data/vending_product()
 			R.max_amount = menu[typepath]
@@ -135,7 +137,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 			R.product_name = initial(temp.name)
 			global.vending_products[typepath] = 1
 
-			records[menus.Find(menu)] += R
+			records[i] += R
 
 /obj/machinery/vending/proc/build_inventory(list/productlist, roundstart = FALSE, hidden = 0, req_coin = 0 , req_emag = 0)
 	for(var/datum/data/vending_product/R in productlist)
