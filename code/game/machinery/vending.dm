@@ -5,9 +5,6 @@
 	var/max_amount = 0
 	var/price = 0
 
-var/global/list/vending_machines = list()
-
-ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 /obj/machinery/vending
 	name = "Vendomat"
 	desc = "A generic vending machine."
