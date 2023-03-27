@@ -1,5 +1,5 @@
-///how many lines multiplied by tempo should at least be higher than this.
-#define LONG_ENOUGH_SONG 220
+///how many lines divided by tempo should at least be higher than this.
+#define LONG_ENOUGH_SONG 0.1
 
 ///Smooth tunes component! Applied to musicians to give the songs they play special effects, according to a rite!
 ///Comes with particles
@@ -29,7 +29,7 @@
 	var/mob/M = parent
 	if(M.particles?.type == particles_path)
 		QDEL_NULL(M.particles)
-	qdel(linked_songtuner_rite)
+	linked_song?.instrument?.remove_filter("smooth_tunes_outline")
 	return ..()
 
 /datum/component/smooth_tunes/RegisterWithParent()
@@ -43,7 +43,7 @@
 	SIGNAL_HANDLER
 	if(!song)
 		return
-	if(song.song_lines.len * song.song_tempo > LONG_ENOUGH_SONG)
+	if(song.song_lines.len / song.song_tempo > LONG_ENOUGH_SONG)
 		viable_for_final_effect = TRUE
 	else
 		to_chat(parent, "<span class='warning'>This song is too short, so it won't include the song finishing effect.</span>")
@@ -69,9 +69,10 @@
 ///Prevents changing tempo during a song to sneak in final effects quicker
 /datum/component/smooth_tunes/proc/tempo_change(datum/source, datum/music_player/modified_song)
 	SIGNAL_HANDLER
-	if(modified_song.playing && viable_for_final_effect)
-		to_chat(parent, "<span class='warning'>Modifying the song mid-performance has removed your ability to perform the song finishing effect.</span>")
-		viable_for_final_effect = FALSE
+	if(!modified_song.playing || !viable_for_final_effect)
+		return
+	to_chat(parent, "<span class='warning'>Modifying the song mid-performance has removed your ability to perform the song finishing effect.</span>")
+	viable_for_final_effect = FALSE
 
 ///Ends the effect when the song is no longer playing.
 /datum/component/smooth_tunes/proc/stop_singing(datum/source, finished)
@@ -80,7 +81,7 @@
 	if(viable_for_final_effect)
 		var/mob/M = parent
 		if(finished && linked_songtuner_rite && linked_song)
-			for(var/mob/living/listener in hearers(7, parent))//range(7, parent))
+			for(var/mob/living/listener in hearers(7, parent))
 				if(listener == parent)
 					continue
 				if(!linked_songtuner_rite.buff && listener.my_religion == M.my_religion)
@@ -105,7 +106,7 @@
 		stop_singing()
 		return
 	var/mob/M = parent
-	for(var/mob/living/listener in hearers(7, parent))//range(7, parent))
+	for(var/mob/living/listener in hearers(7, parent))
 		if(listener == parent)
 			continue
 		if(!linked_songtuner_rite.buff && listener.my_religion == M.my_religion)

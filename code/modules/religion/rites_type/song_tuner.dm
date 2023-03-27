@@ -66,7 +66,7 @@
 	//To stop monkey farms
 	if(listener.mind?.holy_role || !listener.ckey)
 		return
-	religion.adjust_favor(1)
+	religion.adjust_favor(2)
 
 /datum/religion_rites/song_tuner/evangelism/finish_effect(mob/living/listener, atom/song_source)
 	SEND_SIGNAL(listener, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
