@@ -26,4 +26,3 @@
 	R.OnPostSetup() // for huds
 
 	return R
-	
