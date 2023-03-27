@@ -271,7 +271,6 @@
 /obj/effect/proc_holder/spell/targeted/collective_mind/cast(list/targets)
 	for(var/mob/living/user in targets)
 		var/thralls = 0
-		//var/victory_threshold = 15
 		var/datum/faction/shadowlings/faction = find_faction_by_type(/datum/faction/shadowlings)
 		var/crew = faction.check_crew()
 		var/victory_threshold = max(15, round(crew/2))	
