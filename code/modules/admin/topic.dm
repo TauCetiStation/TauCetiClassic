@@ -2340,7 +2340,7 @@
 					log_admin("[key_name(usr)] turned a Lag Switch measure at index ([switch_index]) [LAZYACCESS(SSlag_switch.measures, switch_index) ? "ON" : "OFF"]")
 					message_admins("[key_name_admin(usr)] turned a Lag Switch measure [LAZYACCESS(SSlag_switch.measures, switch_index) ? "ON" : "OFF"]")
 
-		src.show_lag_switch_panel()
+		show_lag_switch_panel()
 
 	else if(href_list["change_lag_switch_option"])
 		if(!check_rights(R_SERVER))
@@ -2369,7 +2369,7 @@
 					log_admin("[key_name(usr)] set the Lag Switch slowmode cooldown to [new_num] seconds.")
 					message_admins("[key_name_admin(usr)] set the Lag Switch slowmode cooldown to [new_num] seconds.")
 
-		src.show_lag_switch_panel()
+		show_lag_switch_panel()
 
 	else if(href_list["lag_switch_special"])
 		if(!check_rights(R_SERVER))
@@ -2388,4 +2388,4 @@
 				message_admins("[key_name_admin(usr)] disabled Demo recording for this round.")
 
 
-		src.show_lag_switch_panel()
+		show_lag_switch_panel()
