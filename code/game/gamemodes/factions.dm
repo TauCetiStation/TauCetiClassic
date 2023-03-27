@@ -397,7 +397,6 @@
 		if(R.antag == M)
 			return R
 
-
 /datum/faction/proc/get_member_by_ckey(ckey)
 	for(var/datum/role/R in members)
 		if(R.antag && ckey(R.antag.key) == ckey)
