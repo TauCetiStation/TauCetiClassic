@@ -133,8 +133,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 			R.max_amount = menu[typepath]
 			R.product_path = typepath
 			R.price = prices[typepath]
-			var/atom/temp = typepath
-			R.product_name = initial(temp.name)
+			R.product_name = initial(typepath.name)
 			global.vending_products[typepath] = 1
 
 			records[i] += R
