@@ -81,10 +81,8 @@
 	if(status)
 		H.apply_effect(60,AGONY,0)
 		deductcharge(hitcost)
-		for(var/mob/M in player_list) if(M.key == src.fingerprintslast)
-			foundmob = M
-			break
-		H.visible_message("<span class='danger'>[src], thrown by [foundmob.name], strikes [H]!</span>")
+		var/mob/living/carbon/human/T = ishuman(throwingdatum.thrower) ? throwingdatum.thrower : null
+		H.visible_message("<span class='danger'>[src], thrown by [T.name], strikes [H]!</span>")
 		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Hit by thrown [src.name] last touched by ([src.fingerprintslast])</font>"
 		msg_admin_attack("Flying [src.name], last touched by ([src.fingerprintslast]) hit [key_name(H)]", H)
 
