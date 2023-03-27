@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(air)
 	priority      = SS_PRIORITY_AIR
 	wait          = SS_WAIT_AIR
 
-	flags = SS_BACKGROUND
+	flags = SS_BACKGROUND | SS_SHOW_IN_MC_TAB
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	msg_lobby = "Фильтруем кислород..."

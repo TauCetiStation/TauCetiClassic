@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(chat)
 	init_order = SS_INIT_CHAT
 	wait = SS_WAIT_CHAT
 	priority = SS_PRIORITY_CHAT
-	flags = SS_TICKER
+	flags = SS_TICKER | SS_SHOW_IN_MC_TAB
 
 	var/list/payload_by_client = list()
 

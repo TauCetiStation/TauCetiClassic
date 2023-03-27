@@ -6,6 +6,7 @@
 	density = TRUE
 	var/sortTag = ""
 	var/lot_number = null
+	var/image/lot_lock_image
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
@@ -42,7 +43,7 @@
 	qdel(src)
 
 /obj/structure/bigDelivery/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/tagger))
+	if(istagger(W))
 		var/obj/item/device/tagger/O = W
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
@@ -69,6 +70,7 @@
 	icon_state = "deliverycrateSmall"
 	var/sortTag = ""
 	var/lot_number = null
+	var/image/lot_lock_image
 
 	max_integrity = 5
 	damage_deflection = 0
@@ -104,7 +106,7 @@
 	qdel(src)
 
 /obj/item/smallDelivery/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/tagger))
+	if(istagger(I))
 		var/obj/item/device/tagger/O = I
 		if(src.sortTag != O.currTag)
 			to_chat(user, "<span class='notice'>*[O.currTag]*</span>")
@@ -213,7 +215,8 @@
 /obj/item/device/tagger
 	name = "tagger"
 	desc = "Используется для наклейки меток, ценников и бирок."
-	icon_state = "dest_tagger"
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "labeler_shop"
 	var/currTag = 0
 
 	w_class = SIZE_TINY
@@ -228,7 +231,7 @@
 	var/list/modes = list(1 = "Метка", 2 = "Ценник", 3 = "Бирка")
 
 	var/lot_description = "Это что-то"
-	var/lot_account_number = 111111
+	var/lot_account_number = null
 	var/lot_category = "Разное"
 	var/lot_price = 0
 
@@ -237,10 +240,13 @@
 
 	var/label = ""
 
+	var/next_instruction = 0
+
 /obj/item/device/tagger/shop
 	name = "shop tagger"
 	desc = "Используется для наклейки ценников и бирок."
-	icon_state = "shop_tagger"
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "labeler0"
 	modes = list(1 = "Ценник", 2 = "Бирка")
 
 /obj/item/device/tagger/proc/openwindow(mob/user)
@@ -265,8 +271,8 @@
 			else
 				dat += "Описание: <A href='?src=\ref[src];description=1'>[lot_description]</A>"
 			dat += " <A href='?src=\ref[src];autodesc=1'>авто</A><BR>\n"
-			dat += "Номер аккаунта: <A href='?src=\ref[src];number=1'>[lot_account_number]</A> <A href='?src=\ref[src];takeid=1'>id</A><BR>\n"
-			dat += "Цена: <A href='?src=\ref[src];price=1'>[lot_price]$</A><BR>\n"
+			dat += "Номер аккаунта: <A href='?src=\ref[src];number=1'>[lot_account_number ? lot_account_number : 111111]</A> <A href='?src=\ref[src];takeid=1'>id</A><BR>\n"
+			dat += "Цена: <A href='?src=\ref[src];price=1'>[lot_price]$</A> Наценка: +[global.online_shop_delivery_cost * 100]% ([lot_price * global.online_shop_delivery_cost]$)<BR>\n"
 			if(autocategory)
 				dat += "Категория: [lot_category]"
 			else
@@ -354,6 +360,16 @@
 		to_chat(user, "<span class='notice'>Нельзя повесить ценник на [target].</span>")
 		return
 
+	if(user.get_inactive_hand() == target)
+		var/new_price = input("Введите цену:", "Маркировщик", input_default(lot_price), null)  as num
+		if(user.get_active_hand() != src || user.get_inactive_hand() != target)
+			return
+		if(user.incapacitated())
+			return
+
+		if(new_price && isnum(new_price) && new_price >= 0)
+			lot_price = min(new_price, 5000)
+
 	user.visible_message("<span class='notice'>[user] adds a price tag to [target].</span>", \
 						 "<span class='notice'>You added a price tag to [target].</span>")
 
@@ -363,10 +379,24 @@
 	if(autocategory)
 		lot_category = get_category(target)
 
+	if(!lot_account_number)
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			var/obj/item/weapon/card/id/ID = H.get_idcard()
+			if(ID)
+				lot_account_number = ID.associated_account_number
+
 	target.price_tag = list("description" = lot_description, "price" = lot_price, "category" = lot_category, "account" = lot_account_number)
 	target.verbs += /obj/proc/remove_price_tag
 
 	target.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
+
+	if(next_instruction < world.time)
+		next_instruction = world.time + 30 SECONDS
+		to_chat(user, "<span class='notice'>Осталось отправить этот предмет по пневмопочте(смыть в мусорку) или выставить на прилавок - и денюжки будут у тебя в кармане!</span>")
+
+	if(user.client && LAZYACCESS(user.client.browsers, "destTagScreen"))
+		openwindow(user)
 
 /obj/item/device/tagger/proc/label(obj/target, mob/user)
 	if(!label || !length(label))
@@ -460,17 +490,18 @@
 /obj/machinery/disposal/deliveryChute/flush()
 	flushing = 1
 	flick("intake-closing", src)
-	var/obj/structure/disposalholder/H = new()	// virtual holder object which actually
-												// travels through the pipes.
-	air_contents = new()		// new empty gas resv.
 
 	sleep(10)
 	playsound(src, 'sound/machines/disposalflush.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 	sleep(5) // wait for animation to finish
 
-	H.init(src)	// copy the contents of disposer to holder
+	var/obj/structure/disposalholder/H = new(null, contents, new /datum/gas_mixture)
 
-	H.start(src) // start the holder processing movement
+	if(!trunk)
+		expel(H)
+		return
+
+	H.start(trunk) // start the holder processing movement
 	flushing = 0
 	// now reset disposal state
 	flush = 0

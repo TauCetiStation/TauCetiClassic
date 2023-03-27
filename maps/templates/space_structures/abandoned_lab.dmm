@@ -264,7 +264,7 @@
 	},
 /area/space_structures/derelict_lab)
 "aQ" = (
-/obj/item/ammo_box/magazine/m9mm_2/rubber,
+/obj/item/ammo_box/magazine/glock/rubber,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
