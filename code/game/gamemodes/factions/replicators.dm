@@ -250,7 +250,7 @@ Message ends."}
 		to_chat(world, "[i]")
 
 	sleep(10)
-	enter_allowed = FALSE
+	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, TRUE)
 	SSticker.station_explosion_cinematic(0, "replicators")
 	addtimer(CALLBACK(src, .proc/blue_screen), 17.6 SECONDS)
 

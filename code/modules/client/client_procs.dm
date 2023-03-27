@@ -350,8 +350,9 @@ var/global/list/blacklisted_builds = list(
 
 	handle_connect()
 
-	spawn(50)//should wait for goonchat initialization
-		handle_autokick_reasons()
+	spawn(50)//should wait for goonchat initialization for kick/redirect reasons
+		if(!handle_autokick_reasons())
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLIENT_CONNECT, src)
 
 	//////////////
 	//DISCONNECT//
@@ -380,6 +381,7 @@ var/global/list/blacklisted_builds = list(
 
 	return ..()
 
+// return TRUE if we need to kick/redirect player, else FALSE
 /client/proc/handle_autokick_reasons()
 	if(config.client_limit_panic_bunker_count != null)
 
@@ -407,7 +409,7 @@ var/global/list/blacklisted_builds = list(
 					to_chat(src, "<span class='danger'>Sorry, player limit is enabled. Try to connect later.</span>")
 					log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
 					QDEL_IN(src, 2 SECONDS)
-				return
+				return TRUE
 
 	if(config.registration_panic_bunker_age)
 		if(!(ckey in admin_datums) && !(src in mentors) && is_blocked_by_regisration_panic_bunker())
@@ -415,7 +417,7 @@ var/global/list/blacklisted_builds = list(
 			message_admins("<span class='adminnotice'>[key_name(src)] has been blocked by panic bunker. Connection rejected.</span>")
 			log_access("Failed Login: [key] [computer_id] [address] - blocked by panic bunker")
 			QDEL_IN(src, 2 SECONDS)
-			return
+			return TRUE
 
 	if(config.byond_version_min && byond_version < config.byond_version_min)
 		popup(src, "Your version of Byond is too old. Update to the [config.byond_version_min] or later for playing on our server.", "Byond Verion")
@@ -423,7 +425,7 @@ var/global/list/blacklisted_builds = list(
 		log_access("Failed Login: [key] [computer_id] [address] - byond version less that minimal required: [byond_version].[byond_build])")
 		if(!holder)
 			QDEL_IN(src, 2 SECONDS)
-			return
+			return TRUE
 
 	if(config.byond_version_recommend && byond_version < config.byond_version_recommend)
 		to_chat(src, "<span class='warning bold'>Your version of Byond is less that recommended. Update to the [config.byond_version_recommend] for better experiense.</span>")
@@ -434,7 +436,7 @@ var/global/list/blacklisted_builds = list(
 		log_access("Failed Login: [key] [computer_id] [address] - inappropriate byond version: [byond_version].[byond_build])")
 		if(!holder)
 			QDEL_IN(src, 2 SECONDS)
-			return
+			return TRUE
 
 
 /client/proc/log_client_to_db(connectiontopic)
