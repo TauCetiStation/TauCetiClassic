@@ -138,7 +138,6 @@
 	return M
 
 /datum/money_account/proc/check_insurance_and_return_price(mob/living/carbon/human/H)
-
 	if(security_level && (remote_access_pin != text2num(H.mind.get_key_memory(MEM_ACCOUNT_PIN)) || owner_name != H.real_name))
 		H.insurance = "None"
 		for(var/datum/money_account/MA as anything in global.all_money_accounts)
@@ -148,24 +147,23 @@
 			MA.owner_preferred_insurance_type = "None"
 			return 0
 
-
-	var/obj/item/device/pda/P = locate(/obj/item/device/pda) in H.GetAllContents()
 	if(owner_insurance_type == owner_preferred_insurance_type && money >= SSeconomy.insurance_prices[owner_insurance_type])
 		return SSeconomy.insurance_prices[owner_insurance_type]
 
+	var/obj/item/device/pda/P = locate(/obj/item/device/pda) in H
 	var/prefprice = SSeconomy.insurance_prices[owner_preferred_insurance_type]
 	if(money >= prefprice)
 		H.insurance = owner_preferred_insurance_type
 		owner_insurance_type = owner_preferred_insurance_type
 		if(P && P.owner == H.real_name)
-			to_chat(H, "[bicon(P)]Now you will have [owner_preferred_insurance_type] Insurance for [prefprice] credits")
+			to_chat(H, "[bicon(P)]<span class='notice'>Now you will have [owner_preferred_insurance_type] Insurance for [prefprice] credits.</span>")
 		return prefprice
 
 	for(var/insurance_type in SSeconomy.insurance_quality_decreasing)
 		var/insprice = SSeconomy.insurance_prices[insurance_type]
 		if(money >= insprice)
 			if(P && P.owner == H.real_name)
-				to_chat(H, "[bicon(P)]you don't have enough money to buy [owner_preferred_insurance_type] for [prefprice] credits, it will be changed to [insurance_type] for [insprice] credits")
+				to_chat(H, "[bicon(P)]<span class='notice'>you don't have enough money to buy [owner_preferred_insurance_type] for [prefprice] credits, it will be changed to [insurance_type] for [insprice] credits.</span>")
 			H.insurance = insurance_type
 			owner_insurance_type = insurance_type
 			owner_preferred_insurance_type = insurance_type
