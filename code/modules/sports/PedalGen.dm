@@ -1,5 +1,5 @@
 /obj/machinery/power/dynamo
-	var/power_produced = 10000
+	var/power_produced = 300000
 	var/raw_power = 0
 	invisibility = 70
 
