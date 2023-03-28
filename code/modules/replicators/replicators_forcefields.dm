@@ -235,6 +235,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	anchored = TRUE
 	opacity = 0
 
+/obj/structure/forcefield_node/attackby(obj/item/C, mob/user, params)
+	if(istype(C, /obj/item/stack/tile))
+		var/turf/simulated/floor/plating/airless/catwalk/forcefield/RB = locate()
+		if(istype(RB))
+			RB.attackby(C, user, params)
+			return
+	return ..()
+
 /obj/structure/forcefield_node/atom_init()
 	. = ..()
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
