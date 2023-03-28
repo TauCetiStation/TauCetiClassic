@@ -1100,7 +1100,7 @@
 					if(MA.money < insurance_price)
 						tgui_alert(H, "Sorry, but you don't have enough money to buy [insurance_type] insurance, which costs [insurance_price] credits if bought right now.")
 						return
-					var/decision = tgui_alert(H, "Now you will have [insurance_type] insurance, which costs [insurance_price] credits for now, and [SSeconomy.insurance_prices[insurance_type]] credits each salary payment. Are you sure?", "Confirm", list("Yes", "No"))
+					var/decision = tgui_alert(H, "Now you will have [insurance_type] insurance, which costs [insurance_price] credits if bought right now, and [SSeconomy.insurance_prices[insurance_type]] credits each salary payment. Are you sure?", "Confirm", list("Yes", "No"))
 					if(decision == "No")
 						return
 					if(H.incapacitated())
