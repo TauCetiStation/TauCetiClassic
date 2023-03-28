@@ -1,5 +1,13 @@
 #define INFESTATION_LOCATIONS list( \
 	"кухня"                 = /area/station/civilian/kitchen, \
+	"атмосферный отдел"     = /area/station/engineering/atmos, \
+	"мусоросжигатель"       = /area/station/maintenance/incinerator, \
+	"церковь"               = /area/station/civilian/chapel, \
+	"библиотека"            = /area/station/civilian/library, \
+	"гидропоника"           = /area/station/civilian/hydroponics, \
+	"центральное хранилище" = /area/station/bridge/nuke_storage, \
+	"строительная площадка" = /area/station/construction, \
+	"техническое хранилище"	= /area/station/storage/tech \
 	)
 
 /datum/event/infestation
@@ -53,11 +61,28 @@
 	speed = -1
 	turns_per_move = 1
 
+/mob/living/simple_animal/hostile/retaliate/clown/goblin/Move()
+	..()
+	if(stance != HOSTILE_STANCE_ATTACK)
+		return
+	for(var/obj/O in get_step(src, dir))
+		if(!O.Adjacent(src))
+			continue
+		O.attack_animal(src)
+		if(istype(O, /obj/machinery/door/airlock))
+			var/obj/machinery/door/airlock/A = O
+			A.open(TRUE)
+
+
 /mob/living/simple_animal/hostile/retaliate/clown/goblin/death()
 	..()
 	new/obj/item/clothing/mask/gas/clown_hat(loc)
 	new/obj/item/clothing/shoes/clown_shoes(loc)
 	qdel(src)
+
+/mob/living/simple_animal/hostile/retaliate/clown/goblin/bullet_act(obj/item/projectile/P, def_zone)
+	Retaliate()
+	return ..()
 
 /obj/effect/tear/honk
 	name="Honkmensional Tear"
