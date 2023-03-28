@@ -27,8 +27,6 @@
 	possible_types = list(
 		/mob/living/simple_animal/hostile/giant_spider,
 		/mob/living/simple_animal/hostile/pylon,
-		/mob/living/simple_animal/hostile/xenomorph/drone,
-		/mob/living/simple_animal/hostile/xenomorph,
 		/mob/living/simple_animal/hostile/hivebot,
 		/mob/living/carbon/slime,
 	)
