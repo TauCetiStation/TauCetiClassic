@@ -169,7 +169,7 @@
 /obj/item/stack/sheet/glass/after_throw(datum/callback/callback)
 	..()
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	new /obj/item/weapon/shard(loc)
+	new /obj/item/weapon/shard(loc) // todo: phoron shard types
 	set_amount(get_amount() - rand(5,35))
 
 /obj/item/stack/sheet/rglass/after_throw(datum/callback/callback)
