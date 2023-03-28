@@ -777,8 +777,29 @@
 	required_container = /obj/item/slime_extract/gold
 	required_other = 1
 
-/datum/chemical_reaction/slimecrit/on_reaction(datum/reagents/holder)
-	holder.my_atom.visible_message("<span class='warning'>The slime core fizzles disappointingly,</span>")
+/datum/chemical_reaction/slimecrit/on_reaction(datum/reagents/holder, created_volume)
+	var/blocked = list(/mob/living/simple_animal/hostile,
+					/mob/living/simple_animal/hostile/retaliate,
+					/mob/living/simple_animal/hostile/asteroid,
+					/mob/living/simple_animal/hostile/pirate,
+					/mob/living/simple_animal/hostile/pirate/ranged,
+					/mob/living/simple_animal/hostile/russian,
+					/mob/living/simple_animal/hostile/russian/ranged,
+					/mob/living/simple_animal/hostile/syndicate,
+					/mob/living/simple_animal/hostile/syndicate/melee,
+					/mob/living/simple_animal/hostile/syndicate/melee/space,
+					/mob/living/simple_animal/hostile/syndicate/ranged,
+					/mob/living/simple_animal/hostile/syndicate/ranged/space,
+					/mob/living/simple_animal/hostile/retaliate/clown
+					)//exclusion list for things you don't want the reaction to create.
+	var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
+	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+	for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom)))
+		if(M.eyecheck() <= 0)
+			M.flash_eyes()
+	for(var/i in 1 to created_volume)
+		var/chosen = pick(critters)
+		new chosen(get_turf(holder.my_atom))
 
 //Silver
 /datum/chemical_reaction/slimebork
