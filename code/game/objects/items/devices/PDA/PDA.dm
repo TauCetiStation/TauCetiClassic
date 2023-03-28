@@ -1087,7 +1087,7 @@
 				return
 			var/mob/living/carbon/human/H = U
 			var/datum/money_account/MA = get_account(owner_account)
-			if(MA.remote_access_pin != text2num(H.mind.get_key_memory(MEM_ACCOUNT_PIN)) || MA.owner_name != H.real_name)
+			if(MA.security_level && (MA.remote_access_pin != text2num(H.mind.get_key_memory(MEM_ACCOUNT_PIN)) || MA.owner_name != H.real_name))
 				tgui_alert(H, "Please check information about your money account")
 				return
 			var/insurance_type = input(H, "Please select an insurance level", "Insurance changes") in list("Cancel", "None","Standart", "Premium")
@@ -1099,7 +1099,7 @@
 			if(choice == "Make Preference")
 				if(H.incapacitated())
 					return
-				var/obj/item/device/pda/P = locate(/obj/item/device/pda) in H.GetAllContents()
+				var/obj/item/device/pda/P = locate(/obj/item/device/pda) in H
 				if(!P || P.owner != H.real_name)
 					return
 				MA.owner_preferred_insurance_type = insurance_type
@@ -1114,11 +1114,14 @@
 				return
 			if(H.incapacitated())
 				return
-			var/obj/item/device/pda/P = locate(/obj/item/device/pda) in H.GetAllContents()
+			var/obj/item/device/pda/P = locate(/obj/item/device/pda) in H
 			if(!P || P.owner != H.real_name)
 				return
-			if(MA.money < insurance_price || insurance_price != SSeconomy.insurance_prices[insurance_type])
-				tgui_alert(H, "Price of this insurance was changed or you don't have enough money")
+			if(insurance_price != SSeconomy.insurance_prices[insurance_type])
+				tgui_alert(H, "Price of this insurance was changed.")
+				return
+			if(MA.money < insurance_price)
+				tgui_alert(H, "You don't have enough money.")
 				return
 			H.insurance = insurance_type
 			MA.owner_insurance_type = insurance_type
@@ -1152,7 +1155,7 @@
 				return
 			SSeconomy.insurance_prices[insurance_type] = newprice
 			var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
-			announcer.autosay("CMO has changed the price of [insurance_type] insurance to [newprice] credits.", "Insurancer", "Common", freq = radiochannels["Common"])
+			announcer.autosay("CMO has changed the price of [insurance_type] Insurance to [newprice] credits.", "Insurancer", "Common", freq = radiochannels["Common"])
 			qdel(announcer)
 
 
