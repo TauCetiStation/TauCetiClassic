@@ -52,6 +52,8 @@
 	if(istype(I, /obj/item/weapon/storage/backpack/holding) && !I.crit_fail)
 		to_chat(user, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
 		qdel(I)
+		new/obj/singularity/gravitational(get_turf(src))
+		qdel(src)
 		return
 
 	return ..()
