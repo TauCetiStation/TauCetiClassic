@@ -44,9 +44,12 @@
 
 /turf/simulated/floor/plating/airless/catwalk/forcefield/attackby(obj/item/C, mob/user, params)
 	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
-	if(istype(C, /obj/item/stack/tile) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
-		ChangeTurf(/turf/simulated/floor/plating)
-		return
+	if(istype(C, /obj/item/stack/tile) && !user.is_busy())
+		user.visible_message("<span class='notice'>[user] starts replace [src].</span>", "<span class='notice'>You start replace [src].</span>")
+		if(do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
+			visible_message("<span class='notice'>[user] finishes replacing [src].</span>", "<span class='notice'>You finish replacing [src].</span>")
+			ChangeTurf(/turf/simulated/floor/plating)
+			return
 
 	if(isscrewing(C))
 		// Parent also has screwdriver disassembly so we ought to stop here...
@@ -58,9 +61,12 @@
 		BR.attackby(C, user, params)
 		return
 
-	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
-		ChangeTurf(SSenvironment.turf_type[z])
-		return
+	if(ispulsing(C) && !user.is_busy())
+		user.visible_message("<span class='notice'>[user] starts DESTROYING [src].</span>", "<span class='notice'>You start DESTROYING [src].</span>")
+		if(do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
+			visible_message("<span class='notice'>[user] finishes DESTROYING [src].</span>", "<span class='notice'>You finish DESTROYING [src].</span>")
+			ChangeTurf(SSenvironment.turf_type[z])
+			return
 
 	return ..()
 
@@ -236,7 +242,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	opacity = 0
 
 /obj/structure/forcefield_node/attackby(obj/item/C, mob/user, params)
-	if(istype(C, /obj/item/stack/tile))
+	if(istype(C, /obj/item/stack/tile) || istype(C, /obj/item/device/multitool))
 		var/turf/simulated/floor/plating/airless/catwalk/forcefield/RB = locate()
 		if(istype(RB))
 			RB.attackby(C, user, params)
