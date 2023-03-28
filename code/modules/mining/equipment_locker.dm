@@ -271,17 +271,17 @@
 	RefreshParts()
 	prize_list = list()
 	prize_list["Gear"] = list(
-		EQUIPMENT("GPS Device",						/obj/item/device/gps/mining,													100),
+		EQUIPMENT("GPS Device",						/obj/item/device/gps/mining,													200),
 	)
 	prize_list["Consumables"] = list(
-		EQUIPMENT("Stimpack",						/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,			100),
+		EQUIPMENT("Stimpack",						/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,			150),
 		EQUIPMENT("lipozine pill",					/obj/item/weapon/reagent_containers/pill/lipozine,								200),
 		EQUIPMENT("leporazine autoinjector",		/obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine,			300),
-		EQUIPMENT("Stimpack Bundle",				/obj/item/weapon/storage/box/autoinjector/stimpack,								400),
-		EQUIPMENT("Space first-aid kit",			/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,						1000),
-		EQUIPMENT("Standart capsule",				/obj/item/weapon/survivalcapsule,												500),
-		EQUIPMENT("Improved capsule",				/obj/item/weapon/survivalcapsule/improved,										1000),
-		EQUIPMENT("Elite capsule(Bar)",				/obj/item/weapon/survivalcapsule/elite,											1500),
+		EQUIPMENT("Stimpack Bundle",				/obj/item/weapon/storage/box/autoinjector/stimpack,								700),
+		EQUIPMENT("Space first-aid kit",			/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,						1200),
+		EQUIPMENT("Standart capsule",				/obj/item/weapon/survivalcapsule,												1300),
+		EQUIPMENT("Improved capsule",				/obj/item/weapon/survivalcapsule/improved,										1900),
+		EQUIPMENT("Elite capsule(Bar)",				/obj/item/weapon/survivalcapsule/elite,											3000),
 	)
 	prize_list["Upgrades"] = list(
 		EQUIPMENT("Accelerator resources upgrade",	/obj/item/kinetic_upgrade/resources,											1750),
@@ -293,7 +293,7 @@
 	prize_list["Miscellaneous"] = list(
 		EQUIPMENT("Chili",							/obj/item/weapon/reagent_containers/food/snacks/hotchili,						150),
 		EQUIPMENT("Vodka",							/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka,					200),
-		EQUIPMENT("Soap",							/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,				150),
+		EQUIPMENT("Soap",							/obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen,				250),
 		EQUIPMENT("Alien toy",						/obj/item/clothing/mask/facehugger_toy,											300),
 		EQUIPMENT("Point card",						/obj/item/weapon/card/mining_point_card,										1000),
 		EQUIPMENT("Space cash",						/obj/item/weapon/spacecash/c1000,												5000),
