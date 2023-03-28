@@ -139,7 +139,7 @@
 
 /datum/money_account/proc/check_insurance_and_return_price(mob/living/carbon/human/H)
 
-	if(remote_access_pin != text2num(H.mind.get_key_memory(MEM_ACCOUNT_PIN)) || owner_name != H.real_name)
+	if(security_level && (remote_access_pin != text2num(H.mind.get_key_memory(MEM_ACCOUNT_PIN)) || owner_name != H.real_name))
 		H.insurance = "None"
 		for(var/datum/money_account/MA as anything in global.all_money_accounts)
 			if(MA.owner_name != H.real_name)
