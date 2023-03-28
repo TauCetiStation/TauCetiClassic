@@ -1087,7 +1087,7 @@
 				return
 			var/mob/living/carbon/human/H = U
 			var/datum/money_account/MA = get_account(owner_account)
-			if(MA.remote_access_pin != H.mind.get_key_memory(MEM_ACCOUNT_PIN) || MA.owner_name != H.real_name)
+			if(MA.remote_access_pin != text2num(H.mind.get_key_memory(MEM_ACCOUNT_PIN)) || MA.owner_name != H.real_name)
 				tgui_alert(H, "Please check information about your money account")
 				return
 			var/insurance_type = input(H, "Please select an insurance level", "Insurance changes") in list("Cancel", "None","Standart", "Premium")
