@@ -1083,59 +1083,58 @@
 			subordinate_staff = my_subordinate_staff(ownrank)
 
 		if("Change insurance")
-			if(!check_owner_fingerprints(user))
+			if(!check_owner_fingerprints(U))
 				return
 			var/mob/living/carbon/human/H = U
+			var/datum/money_account/MA = get_account(owner_account)
+			if(MA.remote_access_pin != H.mind.get_key_memory(MEM_ACCOUNT_PIN) || MA.owner_name != H.real_name)
+				tgui_alert(H, "Please check information about your money account")
+				return
 			var/insurance_type = input(H, "Please select an insurance level", "Insurance changes") in list("Cancel", "None","Standart", "Premium")
 			if(insurance_type == "Cancel")
 				return
 			var/choice = input(H, "You wanna change insurance immediately, or make a preference?", "Insurance changes") in list("Cancel", "Immediately", "Make Preference")
 			if(choice=="Cancel")
 				return
-			var/datum/money_account/MA = get_account(owner_account)
-			switch(choice)
-				if("Immediately")
-					var/timecoefficient = round((SSeconomy.endtime - world.timeofday) / 600)
-					var/insurance_price = SSeconomy.insurance_prices[insurance_type] + 10 * timecoefficient
-					if(MA.money < insurance_price)
-						tgui_alert(H, "Sorry, but you don't have enough money to buy [insurance_type] insurance, which costs [insurance_price] credits if bought right now.")
-						return
-					var/decision = tgui_alert(H, "Now you will have [insurance_type] insurance, which costs [insurance_price] credits if bought right now, and [SSeconomy.insurance_prices[insurance_type]] credits each salary payment. Are you sure?", "Confirm", list("Yes", "No"))
-					if(decision == "No")
-						return
-					if(H.incapacitated())
-						return
-					var/obj/item/device/pda/P = locate(/obj/item/device/pda) in H.GetAllContents()
-					if(!P || P.owner != H.real_name)
-						return
-					if(MA.money < insurance_price || insurance_price != SSeconomy.insurance_prices[insurance_type])
-						tgui_alert(H, "Price of this insurance was changed or you don't have enough money")
-						return
-					H.insurance = insurance_type
-					MA.owner_insurance_type = insurance_type
-					MA.owner_preferred_insurance_type = insurance_type
-					if(insurance_price <= 0)
-						return
-					charge_to_account(MA.account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -insurance_price)
-					var/med_account_number = global.department_accounts["Medical"].account_number
-					charge_to_account(med_account_number, med_account_number,"[insurance_type] Insurance payment", "NT Insurance", insurance_price)
-
-
-				if("Make Preference")
-					if(H.incapacitated())
-						return
-					var/obj/item/device/pda/P = locate(/obj/item/device/pda) in H.GetAllContents()
-					if(!P || P.owner != H.real_name)
-						return
-					MA.owner_preferred_insurance_type = insurance_type
-
+			if(choice == "Make Preference")
+				if(H.incapacitated())
+					return
+				var/obj/item/device/pda/P = locate(/obj/item/device/pda) in H.GetAllContents()
+				if(!P || P.owner != H.real_name)
+					return
+				MA.owner_preferred_insurance_type = insurance_type
+				return
+			var/timecoefficient = round((SSeconomy.endtime - world.timeofday) / 600)
+			var/insurance_price = SSeconomy.insurance_prices[insurance_type] + 10 * timecoefficient
+			if(MA.money < insurance_price)
+				tgui_alert(H, "Sorry, but you don't have enough money to buy [insurance_type] insurance, which costs [insurance_price] credits if bought right now")
+				return
+			var/decision = tgui_alert(H, "Now you will have [insurance_type] insurance, which costs [insurance_price] credits if bought right now, and [SSeconomy.insurance_prices[insurance_type]] credits each salary payment. Are you sure?", "Confirm", list("Yes", "No"))
+			if(decision == "No")
+				return
+			if(H.incapacitated())
+				return
+			var/obj/item/device/pda/P = locate(/obj/item/device/pda) in H.GetAllContents()
+			if(!P || P.owner != H.real_name)
+				return
+			if(MA.money < insurance_price || insurance_price != SSeconomy.insurance_prices[insurance_type])
+				tgui_alert(H, "Price of this insurance was changed or you don't have enough money")
+				return
+			H.insurance = insurance_type
+			MA.owner_insurance_type = insurance_type
+			MA.owner_preferred_insurance_type = insurance_type
+			if(insurance_price <= 0)
+				return
+			charge_to_account(MA.account_number, "Medical", "[insurance_type] Insurance payment", "NT Insurance", -insurance_price)
+			var/med_account_number = global.department_accounts["Medical"].account_number
+			charge_to_account(med_account_number, med_account_number,"[insurance_type] Insurance payment", "NT Insurance", insurance_price)
 
 
 
 		if("Change insurance price")
-			var/mob/living/carbon/human/H = U
-			if(!check_owner_fingerprints(user))
+			if(!check_owner_fingerprints(U))
 				return
+			var/mob/living/carbon/human/H = U
 			var/insurance_type = input(U, "Please select an insurance level", "Insurance changes") in list("Cancel", "Standart", "Premium")
 			if(insurance_type == "Cancel")
 				return
