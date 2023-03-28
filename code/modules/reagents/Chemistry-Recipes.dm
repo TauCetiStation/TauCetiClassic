@@ -793,7 +793,7 @@
 					/mob/living/simple_animal/hostile/retaliate/clown
 					)//exclusion list for things you don't want the reaction to create.
 	var/list/critters = typesof(/mob/living/simple_animal/hostile) - blocked // list of possible hostile mobs
-	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
+	playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', VOL_EFFECTS_MASTER)
 	for(var/mob/living/carbon/human/M in viewers(get_turf(holder.my_atom)))
 		if(M.eyecheck() <= 0)
 			M.flash_eyes()
