@@ -395,7 +395,7 @@
 	. = ..()
 	reagents.add_reagent("nutriment", 2)
 	reagents.add_reagent("bicaridine", 1+round(potency / 6, 1))
-	reagents.add_reagent("synaptizine", 1+round(potency / 6, 1))
+	reagents.add_reagent("tricordrazine", 1+round(potency / 6, 1))
 	reagents.add_reagent("space_drugs", 1+round(potency / 9, 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
