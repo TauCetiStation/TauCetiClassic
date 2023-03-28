@@ -1153,7 +1153,7 @@
 				return
 			SSeconomy.insurance_prices[insurance_type] = newprice
 			var/obj/item/device/radio/intercom/announcer = new /obj/item/device/radio/intercom(null)
-			announcer.autosay("CMO has changed price of [insurance_type] insurance to [newprice] credits.", "Insurancer", "Common", freq = radiochannels["Common"])
+			announcer.autosay("CMO has changed the price of [insurance_type] insurance to [newprice] credits.", "Insurancer", "Common", freq = radiochannels["Common"])
 			qdel(announcer)
 
 
