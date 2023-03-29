@@ -116,6 +116,9 @@
 	max_ammo = 1
 	multiload = 0
 
+/obj/item/ammo_box/magazine/internal/cylinder/rocket/four
+	max_ammo = 4
+
 /obj/item/ammo_box/magazine/internal/cylinder/rev45
 	name = "Colt revolver cylinder"
 	desc = "Oh god, this shouldn't be here."
