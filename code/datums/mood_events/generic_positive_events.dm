@@ -74,6 +74,6 @@
 	timeout = 10 MINUTE
 
 /datum/mood_event/clown_evil
-	description = "<span class='nicegreen'>You did something clown. HONK!</span>"
+	description = "<span class='nicegreen'>You did something delightfully devilish. HONK!</span>"
 	mood_change = 5
 	timeout = 30 MINUTE
