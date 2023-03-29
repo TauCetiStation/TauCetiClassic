@@ -27,7 +27,7 @@
 	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
 	var/incorporeal_move = 0 //0 is off, 1 is normal, 2 is for ninjas.
 
-	var/now_pushing = null
+	var/now_pushing = null // flag to prevent infinity loops in bump code
 
 	var/mob/living/cameraFollow = null
 

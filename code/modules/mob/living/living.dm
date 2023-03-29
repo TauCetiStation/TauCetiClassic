@@ -137,8 +137,29 @@
 
 	//Fat
 	if(HAS_TRAIT(M, TRAIT_FAT))
-		to_chat(src, "<span class='danger'>You cant to push [M]'s fat ass out of the way.</span>")
-		return 1
+		if(!HAS_TRAIT(src, TRAIT_FAT))
+			to_chat(src, "<span class='danger'>You cant to push [M]'s fat ass out of the way.</span>")
+			return 1
+		else
+			return prob(50) // like sumo! But currently without any funny animation and techniques
+
+	//We fat, he is not, we harm, he is not in help, and it's a fools day
+	if(SSholiday.holidays[APRIL_FOOLS] && a_intent == INTENT_HARM && M.a_intent != INTENT_HELP && HAS_TRAIT(src, TRAIT_FAT))
+		now_pushing = TRUE
+		var/dir = get_dir(src, M)
+		var/turf/target = get_step(M, pick(turn(dir, 45), turn(dir, -45)))
+
+		if(M.throw_at(target, range = 1, speed = 1, thrower = src, spin = prob(50), diagonals_first = TRUE)) // godmode for M before and after?
+			shake_camera(M, 1, 1)
+			//M.Weaken(4) // abusive?
+			playsound(src, pick(SOUNDIN_PUNCH_HEAVY), VOL_EFFECTS_MASTER) // need sound
+			//visible_message(something something)
+			forceMove(get_step(src, dir))
+			now_pushing = FALSE
+			return 1
+
+		now_pushing = FALSE
+
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
