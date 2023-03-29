@@ -3,7 +3,7 @@
 	icon_state = "bullet"
 	damage = 60
 	damage_type = BRUTE
-	nodamage = 0
+	nodamage = TRUE
 	flag = BULLET
 	embed = 1
 	sharp = 1

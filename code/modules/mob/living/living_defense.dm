@@ -81,7 +81,11 @@
 			damage *= FLUIDLOSS_CONC_BURN / FLUIDLOSS_WIDE_BURN
 		flags &= ~(DAM_SHARP | DAM_EDGE | DAM_LASER)
 
-	if(!P.nodamage)
+	if(P.nodamage)
+		heal_overall_damage(damage, damage)
+		var/obj/effect/temp_visual/heal/V = new(get_turf(src))
+		V.color = COLOR_GREEN
+	else
 		apply_damage(damage, P.damage_type, def_zone, (absorb * P.armor_multiplier), flags, P)
 		if(length(P.proj_act_sound))
 			playsound(src, pick(P.proj_act_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
