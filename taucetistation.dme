@@ -1157,6 +1157,7 @@
 #include "code\game\objects\structures\false_walls.dm"
 #include "code\game\objects\structures\fireplace.dm"
 #include "code\game\objects\structures\flora.dm"
+#include "code\game\objects\structures\gib_me_button.dm"
 #include "code\game\objects\structures\girders.dm"
 #include "code\game\objects\structures\grille.dm"
 #include "code\game\objects\structures\headpole.dm"

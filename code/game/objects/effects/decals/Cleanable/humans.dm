@@ -49,7 +49,7 @@ var/global/list/image/splatter_cache=list()
 		addtimer(CALLBACK(src, .proc/dry), drytime)
 
 /obj/effect/decal/cleanable/blood/update_icon()
-	color = basedatum.color
+	color = pick(COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_CYAN, COLOR_BLUE, COLOR_PURPLE)
 
 /mob/living/carbon/proc/add_feet_dirt(datum/dirt_cover/dirt_cover, track_amount, blood = TRUE, list/dirt_DNA = list())
 	var/hasfeet = TRUE
@@ -203,9 +203,9 @@ var/global/list/image/splatter_cache=list()
 
 /obj/effect/decal/cleanable/blood/gibs/update_icon()
 	var/image/giblets = new(base_icon, "[icon_state]_flesh", dir)
-	giblets.color = fleshcolor
+	giblets.color = pick(COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_CYAN, COLOR_BLUE, COLOR_PURPLE)
 	var/icon/blood = new(base_icon,"[icon_state]",dir)
-	blood.Blend(basedatum.color, ICON_MULTIPLY)
+	blood.Blend(pick(COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_CYAN, COLOR_BLUE, COLOR_PURPLE), ICON_MULTIPLY)
 
 	icon = blood
 	cut_overlays()

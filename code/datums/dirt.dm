@@ -8,6 +8,7 @@
 		name = cover.name
 		color = cover.color
 		alpha = cover.alpha
+	color = pick(COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_CYAN, COLOR_BLUE, COLOR_PURPLE)
 	..()
 
 /datum/dirt_cover/dirt
