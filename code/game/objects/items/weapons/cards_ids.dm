@@ -122,6 +122,10 @@
 	fingerprint_hash = md5(H.dna.uni_identity)
 
 /obj/item/weapon/card/id/attack_self(mob/user)
+	show(user)
+	return
+
+/obj/item/weapon/card/id/proc/show(mob/user)
 	visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]")
 	add_fingerprint(user)
 	return
@@ -297,7 +301,7 @@
 
 /obj/item/weapon/card/id/syndicate/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
-	if(istype(target, /obj/item/weapon/card/id))
+	if((istype(target, /obj/item/weapon/card/id)) && (is_skill_competent(user, list(/datum/skill/research = SKILL_LEVEL_TRAINED))))
 		var/obj/item/weapon/card/id/I = target
 		src.access |= I.access
 		if(isliving(user) && user.mind)
@@ -305,6 +309,9 @@
 				to_chat(usr, "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>")
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user)
+	if(!is_skill_competent(user, list(/datum/skill/research = SKILL_LEVEL_TRAINED)))
+		show()
+		return
 	if(!src.registered_name)
 		//Stop giving the players unsanitized unputs! You are giving ways for players to intentionally crash clients! -Nodrak
 		var/t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)))
@@ -358,7 +365,7 @@
 				return
 
 			if("Show")
-				..()
+				show()
 	else
 		..()
 
