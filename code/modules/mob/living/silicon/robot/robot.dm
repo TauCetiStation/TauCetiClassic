@@ -176,15 +176,15 @@
 
 	if(!choose_module)
 		var/list/modules = list(
-				"Standard" = "robot_old",
-				"Engineering" = "Engineering",
-				"Medical" = "medicalrobot",
-				"Miner" = "Miner_old",
-				"Janitor" = "JanBot2",
-				"Service" = "Service",
-				"Security" = "secborg",
-				"Science" = "toxbot",
-				"PeaceKeeper" = "marina-peace"
+				"Standard" = "standbot",
+				"Engineering" = "engbot",
+				"Medical" = "medbot",
+				"Miner" = "minbot",
+				"Janitor" = "janbot",
+				"Service" = "servbot",
+				"Security" = "secbot",
+				"Science" = "scibot",
+				"PeaceKeeper" = "peabot"
 				)
 
 		choose_module = list()
@@ -206,34 +206,18 @@
 	switch(modtype)
 		if("Standard")
 			module = new /obj/item/weapon/robot_module/standard(src)
-			module_sprites["Basic"] = "robot_old"
-			module_sprites["Android"] = "droid"
-			module_sprites["Default"] = "robot"
-			module_sprites["Drone"] = "drone-standard"
-			module_sprites["Acheron"] = "mechoid-Standard"
-			module_sprites["Spider"] = "spider-standard"
-			module_sprites["Kodiak"] = "kodiak-standard"
+			module_sprites["Basic"] = "standbot"
 
 		if("Service")
 			module = new /obj/item/weapon/robot_module/butler(src)
-			module_sprites["Waitress"] = "Service"
-			module_sprites["Kent"] = "toiletbot"
-			module_sprites["Bro"] = "Brobot"
-			module_sprites["Rich"] = "maximillion"
-			module_sprites["Default"] = "Service2"
-			module_sprites["Drone"] = "drone-service" // How does this even work...? Oh well.
-			module_sprites["Acheron"] = "mechoid-Service"
-			module_sprites["Kodiak"] = "kodiak-service"
-			module_sprites["Maid"] = "kerfusMaid"
+			module_sprites["Basic"] = "servbot"
 
 		if("Science")
 			module = new /obj/item/weapon/robot_module/science(src)
 			module.channels = list("Science" = 1)
 			if(camera && ("Robots" in camera.network))
 				camera.add_network("Science")
-			module_sprites["Toxin"] = "toxbot"
-			module_sprites["Xenobio"] = "xenobot"
-			module_sprites["Acheron"] = "mechoid-Science"
+			module_sprites["Basic"] = "scibot"
 			give_hud(DATA_HUD_MINER)
 
 		if("Miner")
@@ -241,26 +225,14 @@
 			module.channels = list("Supply" = 1)
 			if(camera && ("Robots" in camera.network))
 				camera.add_network("MINE")
-			module_sprites["Basic"] = "Miner_old"
-			module_sprites["Advanced Droid"] = "droid-miner"
-			module_sprites["Treadhead"] = "Miner"
-			module_sprites["Drone"] = "drone-miner"
-			module_sprites["Acheron"] = "mechoid-Miner"
-			module_sprites["Kodiak"] = "kodiak-miner"
-			give_hud(DATA_HUD_MINER)
+			module_sprites["Basic"] = "minbot"
 
 		if("Medical")
 			module = new /obj/item/weapon/robot_module/medical(src)
 			module.channels = list("Medical" = 1)
 			if(camera && ("Robots" in camera.network))
 				camera.add_network("Medical")
-			module_sprites["Basic"] = "Medbot"
-			module_sprites["Standard"] = "surgeon"
-			module_sprites["Advanced Droid"] = "droid-medical"
-			module_sprites["Needles"] = "medicalrobot"
-			module_sprites["Drone Red"] = "drone-surgery"
-			module_sprites["Drone Green"] = "drone-medical"
-			module_sprites["Acheron"] = "mechoid-Medical"
+			module_sprites["Basic"] = "medbot"
 
 		if("Security")
 			if(can_be_security)
@@ -268,15 +240,7 @@
 				module.channels = list("Security" = 1)
 				if(camera && ("Robots" in camera.network))
 					camera.add_network("Security")
-				module_sprites["Basic"] = "secborg"
-				module_sprites["Red Knight"] = "Security"
-				module_sprites["Black Knight"] = "securityrobot"
-				module_sprites["Bloodhound"] = "bloodhound"
-				module_sprites["Bloodhound - Treaded"] = "secborg+tread"
-				module_sprites["Drone"] = "drone-sec"
-				module_sprites["Acheron"] = "mechoid-Security"
-				module_sprites["Kodiak"] = "kodiak-sec"
-				module_sprites["NO ERP"] = "kerfusNoERP"
+				module_sprites["Basic"] = "secbot"
 			else
 				to_chat(src, "<span class='warning'>#Error: Safety Protocols enabled. Security module is not allowed.</span>")
 				return
@@ -286,32 +250,18 @@
 			module.channels = list("Engineering" = 1)
 			if(camera && ("Robots" in camera.network))
 				camera.add_network("Engineering Robots")
-			module_sprites["Basic"] = "Engineering"
-			module_sprites["Antique"] = "engineerrobot"
-			module_sprites["Custom"] = "custom_astra_t3"
-			module_sprites["Landmate"] = "landmate"
-			module_sprites["Landmate - Treaded"] = "engiborg+tread"
-			module_sprites["Drone"] = "drone-engineer"
-			module_sprites["Acheron"] = "mechoid-Engineering"
-			module_sprites["Kodiak"] = "kodiak-eng"
-			module_sprites["Flushed"] = "kerfusFlushed"
+			module_sprites["Basic"] = "engbot"
 
 		if("Janitor")
 			module = new /obj/item/weapon/robot_module/janitor(src)
-			module_sprites["Basic"] = "JanBot2"
-			module_sprites["Mopbot"]  = "janitorrobot"
-			module_sprites["Mop Gear Rex"] = "mopgearrex"
-			module_sprites["Drone"] = "drone-janitor"
-			module_sprites["Acheron"] = "mechoid-Janitor"
+			module_sprites["Basic"] = "janbot"
 
 		if("PeaceKeeper")
 			if(!can_be_security)
 				to_chat(src, "<span class='warning'>#Error: Needed security circuitboard.</span>")
 				return
 			module = new /obj/item/weapon/robot_module/peacekeeper(src)
-			module_sprites["Marina"] = "marina-peace"
-			module_sprites["Sleak"] = "sleek-peace"
-			module_sprites["Nanotrasen"] = "kerfusNT"
+			module_sprites["Basic"] = "peabot"
 
 		if("Combat")
 			build_combat_borg()
