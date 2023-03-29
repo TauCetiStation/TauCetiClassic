@@ -82,7 +82,7 @@
 		H.apply_effect(60,AGONY,0)
 		deductcharge(hitcost)
 		var/mob/living/carbon/human/T = ishuman(throwingdatum.thrower) ? throwingdatum.thrower : null
-		if(isnull(T.name))
+		if(!T)
 			return
 		H.visible_message("<span class='danger'>[src], thrown by [T.name], strikes [H]!</span>")
 		H.attack_log += "\[[time_stamp()]\]<font color='orange'> Hit by thrown [src.name] last touched by ([src.fingerprintslast])</font>"
