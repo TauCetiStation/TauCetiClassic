@@ -299,6 +299,13 @@
 	customizable_view = TRAITOR_VIEW
 	var/list/radial_chooses
 
+/obj/item/weapon/card/id/syndicate/examine(mob/user)
+	..()
+	if(is_skill_competent(user, list(/datum/skill/command = SKILL_LEVEL_PRO)))
+		to_chat(user, "Вы замечаете, что с этой ID картой что-то не так.")
+	if(is_skill_competent(user, list(/datum/skill/research = SKILL_LEVEL_TRAINED)))
+		to_chat(user, "Судя по всему, эта ID карта была нелегально модифицирована, благодаря особому покрытию она может менять свой внешний вид без использования специальной машинерии.")
+
 /obj/item/weapon/card/id/syndicate/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if((istype(target, /obj/item/weapon/card/id)) && (is_skill_competent(user, list(/datum/skill/research = SKILL_LEVEL_TRAINED))))
