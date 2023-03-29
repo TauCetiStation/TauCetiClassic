@@ -15,7 +15,9 @@
 	l_pocket = /obj/item/device/pda/heads/hos
 	r_pocket = /obj/item/device/flash
 
-	implants = list(/obj/item/weapon/implant/mind_protect/loyalty)
+	implants = list(/obj/item/weapon/implant/mind_protect/loyalty,
+					/obj/item/weapon/implant/obedience
+					)
 
 	back_style = BACKPACK_STYLE_SECURITY
 

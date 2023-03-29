@@ -83,11 +83,12 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/big
 
 	l_ear = /obj/item/device/radio/headset/headset_int
-	belt = /obj/item/device/pda/lawyer
+	belt = /obj/item/weapon/melee/chainofcommand
 
 	l_hand = /obj/item/weapon/storage/briefcase/centcomm
 
 	l_pocket = /obj/item/device/flash
+	r_pocket = /obj/item/device/pda/lawyer
 
 	implants = list(
 		/obj/item/weapon/implant/mind_protect/loyalty

@@ -15,6 +15,8 @@
 
 	back_style = BACKPACK_STYLE_MEDICAL
 
+	implants = list(/obj/item/weapon/implant/obedience)
+
 // DOCTOR OUTFIT
 /datum/outfit/job/doctor
 	name = OUTFIT_JOB_NAME("Medical Doctor")

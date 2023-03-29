@@ -14,9 +14,9 @@
 	l_pocket = /obj/item/device/pda/captain
 	back_style = BACKPACK_STYLE_CAPTAIN
 
-	implants = list(
-		/obj/item/weapon/implant/mind_protect/loyalty
-		)
+	implants = list(/obj/item/weapon/implant/mind_protect/loyalty,
+					/obj/item/weapon/implant/obedience
+					)
 
 // HOP OUTFIT
 /datum/outfit/job/hop
@@ -29,3 +29,5 @@
 	belt = /obj/item/device/pda/heads/hop
 
 	r_hand_back = /obj/item/weapon/storage/box/ids
+
+	implants = list(/obj/item/weapon/implant/obedience)

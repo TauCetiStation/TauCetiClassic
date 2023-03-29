@@ -16,6 +16,8 @@
 	survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen/engi)
 	prevent_survival_kit_items = list(/obj/item/weapon/tank/emergency_oxygen)
 
+	implants = list(/obj/item/weapon/implant/obedience)
+
 // ENGINEER OUTFIT
 /datum/outfit/job/engineer
 	name = OUTFIT_JOB_NAME("Station Engineer")
