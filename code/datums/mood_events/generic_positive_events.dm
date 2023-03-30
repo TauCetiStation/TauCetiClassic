@@ -77,3 +77,12 @@
 	description = "<span class='nicegreen'>You did something delightfully devilish. HONK!</span>"
 	mood_change = 5
 	timeout = 30 MINUTE
+
+/datum/mood_event/swole
+	description = "<span class='nicegreen'>I am getting swole!</span>"
+	timeout = 6 MINUTES
+
+/datum/mood_event/swole/add_effects(pain)
+	// 2.5 is stronger then cigs, because we believe in a healthy lifestyle!
+	// also getting swole loses nutriments so it has a sizable debuff which we need offset
+	mood_change = 2.5 + pain * 0.5
