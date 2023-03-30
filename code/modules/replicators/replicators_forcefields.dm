@@ -56,12 +56,11 @@
 		to_chat(user, "<span class='warning'>What would that do to a forcefield?</span>")
 		return
 
-	var/obj/structure/bluespace_corridor/BR = locate() in src
-	if(BR)
-		BR.attackby(C, user, params)
-		return
-
 	if(ispulsing(C) && !user.is_busy())
+		var/obj/structure/bluespace_corridor/BR = locate() in src
+		if(BR)
+			BR.attackby(C, user, params)
+			return
 		user.visible_message("<span class='notice'>[user] starts DESTROYING [src].</span>", "<span class='notice'>You start DESTROYING [src].</span>")
 		if(do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
 			visible_message("<span class='notice'>[user] finishes DESTROYING [src].</span>", "<span class='notice'>You finish DESTROYING [src].</span>")
