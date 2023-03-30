@@ -67,8 +67,8 @@
 	initial_mag = /obj/item/ammo_box/magazine/internal/shotcom/nonlethal
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel
-	name = "double-barreled shotgun"
-	desc = "A true classic."
+	name = "ten-barreled shotgun"
+	desc = "A true classic X5!!!"
 	icon_state = "dshotgun"
 	item_state = "dshotgun"
 	w_class = SIZE_NORMAL

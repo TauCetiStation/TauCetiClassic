@@ -85,7 +85,7 @@
 	desc = "This doesn't even exist!"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	caliber = "shotgun"
-	max_ammo = 2
+	max_ammo = 10
 	multiload = 0
 
 /obj/item/ammo_box/magazine/internal/cylinder/dualshot/derringer
