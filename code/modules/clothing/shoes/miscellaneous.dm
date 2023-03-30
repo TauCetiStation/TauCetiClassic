@@ -76,6 +76,7 @@
 /obj/item/clothing/shoes/clown_shoes/proc/start_waddling(mob/user)
 	if(user.IsClumsy())
 		slowdown = SHOES_SLOWDOWN
+		flags = NOSLIP
 	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_PIXELMOVE))
 
 /obj/item/clothing/shoes/clown_shoes/proc/stop_waddling(mob/user)

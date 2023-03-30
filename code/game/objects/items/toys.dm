@@ -547,10 +547,10 @@
 	var/empty = 0
 
 /obj/item/toy/waterflower/atom_init()
-	var/datum/reagents/R = new/datum/reagents(10)
+	var/datum/reagents/R = new/datum/reagents(999)
 	reagents = R
 	R.my_atom = src
-	R.add_reagent("water", 10)
+	R.add_reagent("water", 999)
 	. = ..()
 
 /obj/item/toy/waterflower/attack(mob/living/carbon/human/M, mob/user)
@@ -589,7 +589,7 @@
 				for(var/atom/T in get_turf(D))
 					D.reagents.reaction(T)
 					if(ismob(T) && T:client)
-						to_chat(T:client, "<span class='warning'>[user] has sprayed you with water!</span>")
+						to_chat(T:client, "<span class='warning'>[user] has sprayed you with wAtEr!</span>")
 					if(ishuman(T))
 						var/mob/living/carbon/human/H = T
 						var/list/inv_contents = list()

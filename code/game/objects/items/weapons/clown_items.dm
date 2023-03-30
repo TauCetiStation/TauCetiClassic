@@ -205,14 +205,14 @@
 
 /obj/item/weapon/bikehorn/attack_self(mob/user)
 	if(cooldown <= world.time)
-		cooldown = world.time + 8
+		cooldown = world.time + 1
 		honk(user)
 		add_fingerprint(user)
 
 /obj/item/weapon/bikehorn/Crossed(atom/movable/AM)
 	. = ..()
 	if(isliving(AM) && cooldown <= world.time)
-		cooldown = world.time + 8
+		cooldown = world.time + 1
 		honk(AM)
 
 /obj/item/weapon/bikehorn/dogtoy

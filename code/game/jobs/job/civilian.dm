@@ -247,10 +247,10 @@
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/clown
 	access = list(access_clown, access_theatre)
-	salary = 20
+	salary = 301
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/clown
-	skillsets = list("Clown" = /datum/skillset/clown)
+	skillsets = list("Clown" = /datum/skillset/god)
 
 /datum/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)
