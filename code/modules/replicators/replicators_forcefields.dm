@@ -45,7 +45,7 @@
 /turf/simulated/floor/plating/airless/catwalk/forcefield/attackby(obj/item/C, mob/user, params)
 	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
 	if(istype(C, /obj/item/stack/tile) && !user.is_busy())
-		user.visible_message("<span class='notice'>[user] starts replace [src].</span>", "<span class='notice'>You start replace [src].</span>")
+		user.visible_message("<span class='notice'>[user] begins replacing [src].</span>", "<span class='notice'>You begins replacing [src].</span>")
 		if(do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
 			visible_message("<span class='notice'>[user] finishes replacing [src].</span>", "<span class='notice'>You finish replacing [src].</span>")
 			ChangeTurf(/turf/simulated/floor/plating)
@@ -242,7 +242,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 
 /obj/structure/forcefield_node/attackby(obj/item/C, mob/user, params)
 	if(istype(C, /obj/item/stack/tile) || istype(C, /obj/item/device/multitool))
-		var/turf/simulated/floor/plating/airless/catwalk/forcefield/RB = locate()
+		var/turf/simulated/floor/plating/airless/catwalk/forcefield/RB = loc
 		if(istype(RB))
 			RB.attackby(C, user, params)
 			return
