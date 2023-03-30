@@ -105,11 +105,11 @@
 			else
 				to_chat(user, "<span class='danger'>You hear a clicking sound and thank God that bullet casing was empty.</span>")
 			afterattack(user, user)	//will this work?
-			afterattack(user, user)	//it will. we call it twice, for twice the FUN
+			afterattack(user, user)	//it will. we call it twice, for twice the FUN //wish I could copypaste it ten times
 			return
 
-		to_chat(user, "<span class='notice'>You begin to shorten the barrel of \the [src].</span>")
-		if(!user.is_busy() && I.use_tool(src, user, 30, volume = 50, required_skills_override = list(/datum/skill/firearms = SKILL_LEVEL_TRAINED)))
+		to_chat(user, "<span class='notice'>You begin to shorten the many barrels of \the [src]. Oh God.</span>")
+		if(!user.is_busy() && I.use_tool(src, user, 120, volume = 50, required_skills_override = list(/datum/skill/firearms = SKILL_LEVEL_TRAINED)))
 			icon_state = "dshotgun"
 			item_state = "shotgun-short"
 			w_class = SIZE_SMALL
