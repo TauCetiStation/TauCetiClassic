@@ -250,7 +250,7 @@
 	salary = 301
 	minimal_player_ingame_minutes = 120
 	outfit = /datum/outfit/job/clown
-	skillsets = list("Clown" = /datum/skillset/god)
+	skillsets = list("Clown" = /datum/skillset/clown)
 
 /datum/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!visualsOnly)

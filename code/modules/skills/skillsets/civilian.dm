@@ -82,7 +82,9 @@
 /datum/skillset/clown
 	name = "Clown"
 	initial_skills = list(
-		/datum/skill/melee = SKILL_LEVEL_NONE
+		/datum/skill/melee = SKILL_LEVEL_NONE,
+		/datum/skill/firearms = SKILL_LEVEL_ROBUST,
+		/datum/skill/police = SKILL_LEVEL_ROBUST,
 	)
 
 /datum/skillset/janitor
