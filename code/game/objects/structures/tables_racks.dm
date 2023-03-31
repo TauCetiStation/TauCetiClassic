@@ -579,11 +579,9 @@
 	add_overlay(Item)
 	name = Item.name
 
+	var/old_invisibility = invisibility
 	invisibility = INVISIBILITY_ABSTRACT
-	addtimer(CALLBACK(src, .proc/become_visible), PUTDOWN_ANIMATION_DURATION)
-
-/obj/lot_holder/proc/become_visible()
-	invisibility = 0
+	VARSET_IN(src, invisibility, old_invisibility, PUTDOWN_ANIMATION_DURATION)
 
 /obj/lot_holder/examine(mob/user)
 	held_Item.examine(user)
