@@ -50,7 +50,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, vol = 50)
 		
 		if(do_after(user, rand(5, 20) SECONDS, needhand = FALSE, target = src))
-			COOLDOWN_START(user, wc_use_cooldown, rand(30, 60) MINUTES)
+			COOLDOWN_START(user, wc_use_cooldown, 30 MINUTES)
 			playsound(src, 'sound/effects/toilet_flush.ogg', VOL_EFFECTS_MASTER)
 
 			var/problem_chance = 0.5
@@ -176,7 +176,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, vol = 50)
 		
 		if(do_after(user, rand(5, 10) SECONDS, needhand = TRUE, target = src))
-			COOLDOWN_START(user, wc_use_cooldown, rand(30, 60) MINUTES)
+			COOLDOWN_START(user, wc_use_cooldown, 30 MINUTES)
 			playsound(src, 'sound/effects/toilet_flush.ogg', VOL_EFFECTS_MASTER, vol = 50)
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "wc_used", /datum/mood_event/wc_used)
 
