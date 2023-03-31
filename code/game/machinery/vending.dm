@@ -77,7 +77,7 @@
 
 	build_menu()
 
-	if((SSticker.current_state == GAME_STATE_PLAYING) || !is_station_level(src.z) || private)
+	if((SSticker.current_state == GAME_STATE_PLAYING) || !is_station_level(z) || private)
 		load_products(FALSE)
 	else
 		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, .proc/on_round_start)
