@@ -1302,7 +1302,7 @@
 /mob/living/proc/naturechild_check()
 	return TRUE
 
-/mob/living/proc/get_nutrition()
+/mob/living/proc/get_satiation()
 	// This proc gets nutrition value with all possible alters.
 	// E.g. see how in carbon nutriment, plant matter, meat reagents are accounted.
 	// The difference between this and just nutrition, is that this proc shows how much nutrition a mob has
