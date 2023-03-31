@@ -34,11 +34,11 @@
 	if(C)
 		var/pain_amount = 7 * C.adjust_pumped(1)
 		user.apply_effect(pain_amount, AGONY, 0)
-		SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 	if(G)
 		var/pain_amount = 7 * G.adjust_pumped(1)
 		user.apply_effect(pain_amount, AGONY, 0)
-		SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 
 	user.update_body()
 
