@@ -1,5 +1,6 @@
 /obj/structure/gib_me_button
 	name = "GIB ME!!!"
+	anchored = TRUE
 	desc = "GIB... ME!!!"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
