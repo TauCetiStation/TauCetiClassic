@@ -156,6 +156,17 @@
 	outfit = /datum/outfit/job/hydro
 	skillsets = list("Botanist" = /datum/skillset/botanist)
 
+/datum/job/hydro/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	H.set_species(PODMAN)
+	if(visualsOnly)
+		return
+
+	var/msg = "<span class='notice'><B>You awaken slowly, feeling your sap stir into sluggish motion as the warm air caresses your bark.</B></span><BR>"
+	msg += "<B>You are now in possession of Podmen's body. It's previous owner found it no longer appealing, by rejecting it - they brought you here. You are now, again, an empty shell full of hollow nothings, neither belonging to humans, nor them.</B><BR>"
+	msg += "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>"
+
+	to_chat(H, msg)
+
 
 /datum/job/janitor
 	title = "Janitor"
