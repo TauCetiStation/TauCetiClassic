@@ -1068,7 +1068,6 @@
 #include "code\game\objects\items\weapons\stunbaton.dm"
 #include "code\game\objects\items\weapons\surgery_tools.dm"
 #include "code\game\objects\items\weapons\swords_axes_etc.dm"
-#include "code\game\objects\items\weapons\syndie.dm"
 #include "code\game\objects\items\weapons\table_rack_parts.dm"
 #include "code\game\objects\items\weapons\tape.dm"
 #include "code\game\objects\items\weapons\teleportation.dm"
