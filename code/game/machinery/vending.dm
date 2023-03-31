@@ -75,7 +75,7 @@
 	power_change()
 	update_wires_check()
 
-	build_menu()
+	build_inventory()
 
 	if((SSticker.current_state == GAME_STATE_PLAYING) || !is_station_level(z) || private)
 		load_products(FALSE)
@@ -87,11 +87,11 @@
 	load_products(roundstart=TRUE)
 
 /obj/machinery/vending/proc/load_products(roundstart = TRUE)
-	build_inventory(product_records, roundstart)
+	load_inventory(product_records, roundstart)
 	 //Add hidden inventory
-	build_inventory(hidden_records, hidden = 1)
-	build_inventory(coin_records, req_coin = 1)
-	build_inventory(emag_records, req_emag = 1)
+	load_inventory(hidden_records, hidden = 1)
+	load_inventory(coin_records, req_coin = 1)
+	load_inventory(emag_records, req_emag = 1)
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -118,7 +118,7 @@
 	if(.)
 		malfunction()
 
-/obj/machinery/vending/proc/build_menu()
+/obj/machinery/vending/proc/build_inventory()
 	var/list/menus = list(products, contraband, premium, syndie)
 	var/list/records = list(product_records, hidden_records, coin_records, emag_records)
 
@@ -135,7 +135,7 @@
 
 			records[i] += R
 
-/obj/machinery/vending/proc/build_inventory(list/productlist, roundstart = FALSE, hidden = 0, req_coin = 0 , req_emag = 0)
+/obj/machinery/vending/proc/load_inventory(list/productlist, roundstart = FALSE, hidden = 0, req_coin = 0 , req_emag = 0)
 	for(var/datum/data/vending_product/R in productlist)
 		var/amount = R.max_amount
 		if(!hidden && !req_coin && !req_emag && roundstart)
