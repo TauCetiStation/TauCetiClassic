@@ -59,6 +59,9 @@ SUBSYSTEM_DEF(qualities)
 	return pickweight(pool_distribution)
 
 /datum/controller/subsystem/qualities/proc/roll_quality(client/C)
+	if(prob(10))
+		return qualities_by_type[/datum/quality/quirkieish/very_special]
+
 	var/quality_pool = roll_pool(C)
 
 	var/datum/quality/selected_quality
