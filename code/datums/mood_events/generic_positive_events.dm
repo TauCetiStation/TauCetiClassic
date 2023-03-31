@@ -68,6 +68,16 @@
 /datum/mood_event/besthug/add_effects(mob/friend)
 	description = "<span class='nicegreen'>[friend.name] is great to be around, [friend.name] makes me feel so happy!</span>"
 
+/datum/mood_event/wc_used
+	description = "<span class='nicegreen'>You feel clean and refreshed.</span>"
+	mood_change = 1
+	timeout = 10 MINUTE
+
+/datum/mood_event/clown_evil
+	description = "<span class='nicegreen'>You did something delightfully devilish. HONK!</span>"
+	mood_change = 5
+	timeout = 30 MINUTE
+
 /datum/mood_event/swole
 	description = "<span class='nicegreen'>I am getting swole!</span>"
 	timeout = 6 MINUTES

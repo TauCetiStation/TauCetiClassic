@@ -1366,7 +1366,7 @@
 
 	var/turf/simulated/T = loc
 	var/obj/structure/toilet/WC = locate(/obj/structure/toilet) in T
-	if(WC && WC.open)
+	if(WC && WC.lid_open)
 		return TRUE
 	if(locate(/obj/structure/sink) in T)
 		return TRUE
