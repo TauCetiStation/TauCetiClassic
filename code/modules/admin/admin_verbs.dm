@@ -88,6 +88,7 @@ var/global/list/admin_verbs_variables = list(
 	/client/proc/add_player_age,
 	/client/proc/grand_guard_pass,
 	/client/proc/mass_apply_status_effect,
+	/client/proc/add_nightshift_preset,
 )
 var/global/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -151,6 +152,7 @@ var/global/list/admin_verbs_server = list(
 	/client/proc/toggle_random_events,
 	/client/proc/nanomapgen_DumpImage,
 	/client/proc/adminchangemap,
+	/datum/admins/proc/show_lag_switch_panel,
 	/datum/admins/proc/toggle_deathmatch_arena,
 	)
 var/global/list/admin_verbs_debug = list(

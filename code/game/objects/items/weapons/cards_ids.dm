@@ -503,7 +503,7 @@
 	desc = "Старая ID карта, ранее она принадлежала капитану станции 'LCR'."
 	icon_state = "gold"
 	item_state = "gold_id"
-	access = list(access_oldstation, access_RC_announce, access_keycard_auth, access_engine_equip, access_medical, access_captain, access_engine, access_research)
+	access = list(access_oldstation, access_RC_announce, access_keycard_auth, access_engine_equip, access_medical, access_captain, access_engine, access_research, access_tox, access_robotics)
 
 /obj/item/weapon/card/id/old_station/eng
 	name = "engineer ID"
@@ -511,7 +511,8 @@
 	icon_state = "eng"
 	item_state = "eng_id"
 	rank = "Senior Engineer"
-	access = list(access_oldstation, access_engine, access_engine_equip, access_medical, access_research)
+	assignment = "Senior Engineer"
+	access = list(access_oldstation, access_engine, access_engine_equip, access_medical, access_research, access_tox, access_robotics)
 
 /obj/item/weapon/card/id/old_station/med
 	name = "medic ID"
@@ -519,4 +520,5 @@
 	icon_state = "med"
 	item_state = "med_id"
 	rank = "Senior Medic"
-	access = list(access_oldstation, access_engine, access_engine_equip, access_medical, access_research)
+	assignment = "Senior Medic"
+	access = list(access_oldstation, access_engine, access_engine_equip, access_medical, access_research, access_tox, access_robotics)

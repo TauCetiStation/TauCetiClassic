@@ -8,7 +8,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/extinguisher, extin
 	hitsound = 'sound/weapons/smash.ogg'
 	flags = CONDUCT
 	throwforce = 10
-	w_class = SIZE_SMALL
+	w_class = SIZE_NORMAL
 	throw_speed = 2
 	throw_range = 10
 	force = 10.0
