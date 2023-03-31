@@ -650,6 +650,9 @@
 	icon = 'icons/obj/smooth_structures/abductor_table.dmi'
 	flipable = FALSE // Fuck this shit, I am out...
 
+/obj/structure/table/abductor/no_decon
+	flags = NODECONSTRUCT
+
 /obj/structure/closet/abductor
 	name = "alien locker"
 	desc = "Contains secrets of the universe."

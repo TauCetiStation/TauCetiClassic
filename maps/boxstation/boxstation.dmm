@@ -19692,7 +19692,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/gib_me_button,
-/obj/structure/table/abductor,
+/obj/structure/table/abductor/no_decon,
 /turf/simulated/floor/exodus{
 	icon_state = "R5"
 	},
