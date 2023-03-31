@@ -200,7 +200,7 @@
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "access_button_standby"
 	name = "access button"
-
+	max_integrity = 25
 	layer = 3.3	//Above windows
 	anchored = TRUE
 	power_channel = STATIC_ENVIRON

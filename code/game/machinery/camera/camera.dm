@@ -6,6 +6,7 @@
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 10
+	max_integrity = 25
 	layer = 5
 
 	var/list/network = list("SS13")

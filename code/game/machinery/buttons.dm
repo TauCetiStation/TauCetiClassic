@@ -9,6 +9,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
+	max_integrity = 25
 
 /obj/machinery/ignition_switch
 	name = "ignition switch"
@@ -21,6 +22,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
+	max_integrity = 25
 
 /obj/machinery/flasher_button
 	name = "flasher button"
@@ -33,12 +35,14 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
+	max_integrity = 25
 
 /obj/machinery/crema_switch
 	desc = "Burn baby burn!"
 	name = "crematorium igniter"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "crema_switch"
+	max_integrity = 25
 	anchored = TRUE
 	req_access = list(access_crematorium)
 	var/on = FALSE
@@ -52,6 +56,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light0"
 	anchored = TRUE
+	max_integrity = 25
 	var/id = null
 	var/active = FALSE
 	var/range = 7

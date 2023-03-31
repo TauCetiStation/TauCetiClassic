@@ -283,6 +283,7 @@
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "telescreen"
+	max_integrity = 25
 	state_broken_preset = null
 	state_nopower_preset = null
 	light_color = "#ffffbb"

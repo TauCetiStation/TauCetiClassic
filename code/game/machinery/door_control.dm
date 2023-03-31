@@ -19,6 +19,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
+	max_integrity = 25
 	allowed_checks = ALLOWED_CHECK_A_HAND
 	var/id = null
 	var/list/obj/machinery/door/connected_doors = list()

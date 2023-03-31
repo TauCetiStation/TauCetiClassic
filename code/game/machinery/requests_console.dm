@@ -21,6 +21,7 @@ var/global/list/departments_genitive = list()
 	anchored = TRUE
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "req_comp0"
+	max_integrity = 25
 	var/department = "Неизвестный"
 	// The list of all departments on the station (Determined from this variable on each unit)
 	// Set this to the same thing if you want several consoles in one department

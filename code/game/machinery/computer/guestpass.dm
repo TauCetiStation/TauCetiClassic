@@ -5,6 +5,7 @@
 	name = "guest pass"
 	desc = "Allows temporary access to station areas."
 	icon_state = "guest"
+	max_integrity = 25
 	light_color = "#0099ff"
 	customizable_view = FORDBIDDEN_VIEW
 

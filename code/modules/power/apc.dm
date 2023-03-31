@@ -88,6 +88,7 @@
 	icon_state = "apc0"
 	anchored = TRUE
 	use_power = NO_POWER_USE
+	max_integrity = 25
 	req_access = list(access_engine_equip)
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/area/area

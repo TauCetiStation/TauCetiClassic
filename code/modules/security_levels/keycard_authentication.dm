@@ -18,6 +18,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
+	max_integrity = 25
 	power_channel = STATIC_ENVIRON
 	required_skills = list(/datum/skill/command = SKILL_LEVEL_TRAINED)
 	resistance_flags = FULL_INDESTRUCTIBLE

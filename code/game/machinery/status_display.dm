@@ -19,6 +19,7 @@
 	density = FALSE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
+	max_integrity = 25
 	var/mode = 5	// 0 = Blank
 					// 1 = Shuttle timer
 					// 2 = Arbitrary message(s)
@@ -230,6 +231,7 @@
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	name = "AI display"
+	max_integrity = 25
 	anchored = TRUE
 	density = FALSE
 

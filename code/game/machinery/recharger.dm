@@ -158,6 +158,7 @@
 	name = "wall recharger"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "wrecharger0"
+	max_integrity = 25
 
 /obj/machinery/recharger/wallcharger/process()
 	if(stat & (NOPOWER|BROKEN) || !anchored)

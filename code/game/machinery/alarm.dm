@@ -33,6 +33,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 80
 	active_power_usage = 1000 // For heating/cooling rooms. 1000 joules equates to about 1 degree every 2 seconds for a single tile of air.
+	max_integrity = 25
 	power_channel = STATIC_ENVIRON
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	frequency = 1439
@@ -956,6 +957,7 @@ FIRE ALARM
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 6
+	max_integrity = 25
 	power_channel = STATIC_ENVIRON
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/last_process = 0

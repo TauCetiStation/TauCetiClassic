@@ -8,6 +8,7 @@
 	icon_state = "light1"
 	anchored = TRUE
 	idle_power_usage = 20
+	max_integrity = 25
 	power_channel = STATIC_LIGHT
 	var/on = TRUE
 	var/area/area = null

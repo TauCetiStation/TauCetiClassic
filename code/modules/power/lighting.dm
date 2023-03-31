@@ -81,6 +81,7 @@
 	icon_state = "tube-construct-stage1"
 	anchored = TRUE
 	layer = 5
+	max_integrity = 25
 	var/stage = 1
 	var/fixture_type = "tube"
 	var/sheets_refunded = 2
