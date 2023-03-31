@@ -179,4 +179,5 @@ What is the naming convention for planes or layers?
 //--------------------MISC-----------------------
 //modifiers for /obj/machinery/door (and subtypes) layers
 #define DOOR_CLOSED_MOD     0.3          // how much the layer is increased when the door is closed
-#define SAFEDOOR_CLOSED_MOD (ABOVE_WINDOW_LAYER - SAFEDOOR_LAYER)
+#define SAFEDOOR_CLOSED_MOD_WINDOW (ABOVE_WINDOW_LAYER - SAFEDOOR_LAYER)
+#define SAFEDOOR_CLOSED_MOD        (DOOR_LAYER - SAFEDOOR_LAYER - 0.01) // before doors
