@@ -22,7 +22,7 @@
 	. = ..()
 	poddoor_list += src
 	if(density)
-		layer = base_layer + SAFEDOOR_CLOSED_MOD_WINDOW
+		layer = base_layer + SAFEDOOR_CLOSED_MOD_ABOVE_WINDOW
 
 /obj/machinery/door/poddoor/Destroy()
 	poddoor_list -= src
@@ -102,7 +102,7 @@
 	SSdemo.mark_dirty(src)
 	sleep(3)
 	explosion_resistance = initial(explosion_resistance)
-	layer = base_layer + SAFEDOOR_CLOSED_MOD_WINDOW
+	layer = base_layer + SAFEDOOR_CLOSED_MOD_ABOVE_WINDOW
 	density = TRUE
 	set_opacity(TRUE)
 	do_afterclose()

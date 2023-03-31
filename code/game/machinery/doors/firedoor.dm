@@ -280,9 +280,9 @@
 	..()
 	if(locate(/obj/structure/window/fulltile) in loc)
 		alpha = 45
-		layer = base_layer + SAFEDOOR_CLOSED_MOD_WINDOW
+		layer = base_layer + SAFEDOOR_CLOSED_MOD_ABOVE_WINDOW
 	else
-		layer = base_layer + SAFEDOOR_CLOSED_MOD
+		layer = base_layer + SAFEDOOR_CLOSED_MOD_BEFORE_DOOR
 	START_PROCESSING(SSmachines, src)
 	latetoggle()
 
