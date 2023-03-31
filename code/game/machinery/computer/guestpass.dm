@@ -5,7 +5,6 @@
 	name = "guest pass"
 	desc = "Allows temporary access to station areas."
 	icon_state = "guest"
-	max_integrity = 25
 	light_color = "#0099ff"
 	customizable_view = FORDBIDDEN_VIEW
 
@@ -40,8 +39,8 @@
 	name = "guest pass terminal"
 	icon_state = "guest"
 	desc = "It's a wall-mounted console that allows you to issue temporary access. Be careful when issuing guest passes. Maximum guest pass card time - one hour."
+	max_integrity = 25
 	density = FALSE
-
 
 	var/obj/item/weapon/card/id/scan
 	var/list/accesses = list()

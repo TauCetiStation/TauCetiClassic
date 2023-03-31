@@ -81,7 +81,6 @@
 	icon_state = "tube-construct-stage1"
 	anchored = TRUE
 	layer = 5
-	max_integrity = 25
 	var/stage = 1
 	var/fixture_type = "tube"
 	var/sheets_refunded = 2
@@ -211,6 +210,7 @@
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 20
+	max_integrity = 25
 	power_channel = STATIC_LIGHT //Lights are calc'd via area so they dont need to be in the machine list
 	interact_offline = TRUE
 	var/on = 0					// 1 if on, 0 if off

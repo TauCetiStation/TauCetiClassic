@@ -985,10 +985,9 @@ FIRE ALARM
 	return
 
 /obj/machinery/firealarm/bullet_act(obj/item/projectile/P, def_zone)
-	. = ..()
-	if(!is_operational())
-		return
-	alarm()
+	if(is_operational())
+		alarm()
+	return ..()
 
 /obj/machinery/firealarm/emp_act(severity)
 	if(prob(50/severity))
