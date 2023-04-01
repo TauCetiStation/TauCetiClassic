@@ -13641,9 +13641,7 @@
 /area/station/maintenance/dormitory)
 "ayv" = (
 /obj/machinery/door/firedoor,
-/obj/structure/window/fulltile{
-	grilled = 1
-	},
+/obj/structure/window/fulltile,
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "ayw" = (
@@ -30864,9 +30862,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/window/fulltile{
-	grilled = 1
-	},
+/obj/structure/window/fulltile,
 /turf/simulated/floor/plating,
 /area/station/civilian/bar)
 "beH" = (
@@ -42430,7 +42426,7 @@
 /area/station/bridge/teleporter)
 "bAb" = (
 /obj/machinery/shieldwallgen,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/thin{
 	dir = 8
 	},
 /turf/simulated/floor{
