@@ -395,8 +395,9 @@
 			return
 		else if(checkpass(PASSGRILLE))
 			return
-	if(checkpass(PASSGRILLE) && istype(A, /obj/structure/grille))
-		return
+	if(checkpass(PASSGRILLE))
+		if(istype(A, /obj/structure/grille) || (istype(A, /obj/structure/window/fulltile) && A.grilled))
+			return
 	result = A
 	bumped = TRUE
 
