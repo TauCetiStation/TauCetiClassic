@@ -102,7 +102,7 @@
 			//P.tnote += "<i><b>&larr; From [sender] (Unknown / spam?):</b></i><br>[message]<br>"
 
 			if (!P.message_silent)
-				playsound(P, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
+				playsound(P, 'sound/effects/adminhelp.ogg', VOL_EFFECTS_MASTER)
 			if(!P.message_silent)
 				P.audible_message("[bicon(P)] *[P.ttone]*", hearing_distance = 3)
 			//Search for holder of the PDA.
