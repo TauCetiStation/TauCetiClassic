@@ -163,6 +163,8 @@
 	if(!GlandTest)
 		visible_message("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
+	if(istype(GlandTest, /obj/item/gland/abductor))
+		return "<span class='bad'>Special gland interferes with an experiment!</span>"
 	if(H.mind != null && H.ckey != null)
 		history += H
 		visible_message("Processing specimen...")

@@ -113,14 +113,67 @@
 			new cash_type(spawnloc)
 	return
 
-/obj/item/weapon/spacecash/ewallet
-	name = "Charge card"
+/obj/item/weapon/ewallet
+	name = "charge card"
 	icon_state = "efundcard"
-	desc = "A card that holds an amount of money."
-	var/owner_name = "" //So the ATM can set it so the EFTPOS can put a valid name on transactions.
-	can_burn = FALSE
+	desc = "A card that links to an account and all it's assets."
 
-/obj/item/weapon/spacecash/ewallet/examine(mob/user)
+	icon = 'icons/obj/economy.dmi'
+	icon_state = "efundcard"
+	opacity = 0
+	density = FALSE
+	anchored = FALSE
+	force = 1.0
+	throwforce = 1.0
+	throw_speed = 1
+	throw_range = 2
+	w_class = SIZE_TINY
+
+	//So the ATM can set it so the EFTPOS can put a valid name on transactions.
+	var/issuer_name = ""
+	var/issuer_account_number
+
+	var/account_number
+
+/obj/item/weapon/ewallet/atom_init()
+	. = ..()
+	name = "charge card ([rand(0, 999)])"
+	var/datum/money_account/M = create_account(name, 0, null, 0)
+	account_number = M.account_number
+
+/obj/item/weapon/ewallet/examine(mob/user)
 	..()
-	if(src in view(1, user))
-		to_chat(user, "<span class='notice'>Charge card's owner: [src.owner_name]. Credits remaining: [src.worth].</span>")
+	if(!(src in view(1, user)))
+		return
+
+	var/datum/money_account/MA = get_account(account_number)
+	to_chat(user, "<span class='notice'>Charge card's account number: [account_number]. PIN: [MA.remote_access_pin]</span>")
+	to_chat(user, "<span class='notice'>Charge card's issuer: [issuer_name] ([issuer_account_number]).</span>")
+
+	if(MA.money > 0.0)
+		to_chat(user, "<span class='notice'>Credits remaining: [MA.money].</span>")
+	if(MA.stocks)
+		to_chat(user, "<span class='notice'>Charge card's stocks: [get_stocks_string(MA.stocks)].</span>")
+
+	to_chat(user, "<span class='notice'>You can try putting this card into the closest ATM to transfer everything from it onto your account!</span>")
+
+/obj/item/weapon/ewallet/proc/get_money()
+	var/datum/money_account/MA = get_account(account_number)
+	return MA.money
+
+/obj/item/weapon/ewallet/proc/get_stocks()
+	var/datum/money_account/MA = get_account(account_number)
+	return MA.stocks
+
+/obj/item/weapon/ewallet/proc/remove_money(amount, source_name, purpose)
+	charge_to_account(account_number, source_name, purpose, "E-Transaction", -amount)
+
+/proc/get_stocks_string(list/stocks)
+	. = ""
+	var/first = TRUE
+	for(var/department in stocks)
+		if(first)
+			first = FALSE
+		else
+			. += ", "
+		. += "[department]: [stocks[department]]/[SSeconomy.total_department_stocks[department]]"

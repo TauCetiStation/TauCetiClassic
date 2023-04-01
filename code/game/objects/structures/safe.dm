@@ -216,7 +216,7 @@
 	icon_state = "floorsafe"
 	level = 1
 	density = FALSE
-	layer = FIREDOOR_LAYER
+	layer = SAFEDOOR_LAYER
 
 /obj/structure/safe/floor/atom_init()
 	. = ..()

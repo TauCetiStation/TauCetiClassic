@@ -226,10 +226,9 @@
 	},
 /area/space_structures/listening_post)
 "au" = (
-/obj/structure/grille,
 /obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/listening_post)

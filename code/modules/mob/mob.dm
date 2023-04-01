@@ -1011,12 +1011,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/GetSpell(spell_type)
 	for(var/obj/effect/proc_holder/spell/spell in spell_list)
-		if(spell == spell_type)
+		if(spell.type == spell_type)
 			return spell
 
 	if(mind)
 		for(var/obj/effect/proc_holder/spell/spell in mind.spell_list)
-			if(spell == spell_type)
+			if(spell.type == spell_type)
 				return spell
 	return FALSE
 

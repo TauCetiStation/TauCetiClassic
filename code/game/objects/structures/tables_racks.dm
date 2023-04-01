@@ -579,6 +579,10 @@
 	add_overlay(Item)
 	name = Item.name
 
+	var/old_invisibility = invisibility
+	invisibility = INVISIBILITY_ABSTRACT
+	VARSET_IN(src, invisibility, old_invisibility, PUTDOWN_ANIMATION_DURATION)
+
 /obj/lot_holder/examine(mob/user)
 	held_Item.examine(user)
 
@@ -635,6 +639,7 @@
 			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Недостаточно средств!</span>")
 			return
 
+	held_Item.remove_price_tag()
 	qdel(src)
 
 /obj/structure/table/reinforced/stall
@@ -650,15 +655,32 @@
 	. = ..()
 	AddComponent(/datum/component/clickplace, CALLBACK(src, .proc/try_magnet))
 
-/obj/structure/table/reinforced/stall/proc/try_magnet(atom/A, obj/item/I, mob/user)
+/obj/structure/table/reinforced/stall/proc/try_magnet(atom/A, obj/item/I, mob/user, params)
 	if(I.price_tag)
-		addtimer(CALLBACK(src, .proc/magnet_item, I), 1 SECONDS)
+		magnet_item(I, params)
 
-/obj/structure/table/reinforced/stall/proc/magnet_item(obj/item/I)
+/obj/structure/table/reinforced/stall/proc/magnet_item(obj/item/I, list/params)
 	if(I.loc != get_turf(src))
 		return
 
-	new /obj/lot_holder(loc, I, src)
+	var/obj/lot_holder/LH = new(loc, I, src)
+
+	var/list/click_params = params2list(params)
+	//Center the icon where the user clicked.
+	if(!click_params || !click_params[ICON_X] || !click_params[ICON_Y])
+		return
+
+	var/icon_size = world.icon_size
+	var/half_icon_size = icon_size * 0.5
+
+	var/p_x = text2num(click_params[ICON_X]) + pixel_x
+	var/p_y = text2num(click_params[ICON_Y]) + pixel_y
+
+	p_x = clamp(p_x, 0, icon_size) - half_icon_size - I.pixel_x
+	p_y = clamp(p_y, 0, icon_size) - half_icon_size - I.pixel_y
+
+	LH.pixel_x = p_x
+	LH.pixel_y = p_y
 
 /*
  * Racks
