@@ -1100,8 +1100,9 @@ var/global/list/admin_verbs_hideable = list(
 	if(!check_rights(R_FUN))
 		return
 
-	if(SSticker.current_state <= GAME_STATE_SETTING_UP) // todo: need own flag for color_windows_init (subsystem?)
-		to_chat(usr, "<span class='warning'>Can't do this before round start</span>")
+	if(!SSstation_coloring.initialized)
+		to_chat(usr, "<span class='warning'>Subsystem has not finished initializing, please wait.</span>")
+		return
 
 	var/new_color = input(src, "Please select new colour.", "Windows colour") as color|null
 

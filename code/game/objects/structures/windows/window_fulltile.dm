@@ -28,7 +28,7 @@
 	var/disassemble_glass_type = /obj/item/stack/sheet/glass // any better ideas to handle drops and disassembles?
 
 /obj/structure/window/fulltile/atom_init(mapload, grill)
-	 // need to prepare atom before icon smoothing in ..()
+	// need to prepare atom before icon smoothing in ..()
 	if(grill)
 		grilled = TRUE
 
@@ -39,15 +39,6 @@
 		glass_color = new_color
 
 	. = ..()
-
-	for(var/atom/A in get_turf(src))
-		if(istype(A, /obj/structure/window) && A != src)
-			world.log << "WORNING: [x].[y].[z]: type [A.type]"
-		else if(istype(A, /obj/structure/grille))
-			world.log << "WORNING: [x].[y].[z]: type [A.type]"
-
-	if(dir in cornerdirs)
-		world.log << "WORNING: [x].[y].[z]: DIR [dir]"
 
 /obj/structure/window/fulltile/change_color(new_color)
 	if(glass_color_blend_to_color && glass_color_blend_to_ratio)

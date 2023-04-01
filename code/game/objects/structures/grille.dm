@@ -218,7 +218,7 @@
 	..()
 
 /obj/structure/grille/update_icon()
-	if(destroyed) // looks super bad currently, need to remove "destroyed" flag
+	if(destroyed)
 		add_filter("hole_in_the_grill", 1, alpha_mask_filter(icon = icon('icons/obj/structures.dmi', "grille_broken")))
 	else if(damaged)
 		add_filter("hole_in_the_grill", 1, alpha_mask_filter(icon = icon('icons/obj/structures.dmi', "grille_damaged_[rand(1, 4)]")))
