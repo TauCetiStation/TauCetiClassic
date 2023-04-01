@@ -7,7 +7,7 @@
 	icon = 'icons/obj/pipes/transit_tube.dmi'
 	icon_state = "E-W"
 	density = TRUE
-	layer = SHUTTERS_LAYER
+	layer = TRANSIT_TUBE_LAYER
 	anchored = TRUE
 	var/list/tube_dirs = null
 	var/exit_delay = 2
