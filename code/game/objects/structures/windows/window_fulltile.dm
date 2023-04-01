@@ -18,9 +18,6 @@
 	var/smooth_icon_grille = 'icons/obj/smooth_structures/grille.dmi'
 
 	var/grilled = FALSE
-	var/glass_color
-	var/glass_color_blend_to_color
-	var/glass_color_blend_to_ratio
 
 	var/damage_threshold = 5   // this will be deducted from any physical damage source. Main difference in sturdiness between fulltiles and thin windows
 	var/image/crack_overlay
@@ -45,7 +42,7 @@
 		glass_color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
 	else
 		glass_color = new_color
-	
+
 	regenerate_smooth_icon()
 
 /obj/structure/window/fulltile/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
@@ -68,7 +65,7 @@
 
 		W.use_tool(src, user, 40)
 		to_chat(user, "<span class='notice'>You have removed the glass from the frame.</span>")
-		
+
 		deconstruct(TRUE)
 		return
 

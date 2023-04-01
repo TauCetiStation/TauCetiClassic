@@ -19,7 +19,11 @@
 	. = ..()
 
 	ini_dir = dir
-	color = SSstation_coloring.get_default_color()
+	var/new_color = SSstation_coloring.get_default_color()
+	if(glass_color_blend_to_color && glass_color_blend_to_ratio)
+		color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
+	else
+		color = new_color
 
 	if(dir in cornerdirs)
 		world.log << "WARNING: [x].[y].[z]: DIR [dir]"
@@ -155,7 +159,8 @@
 	name = "phoron thin window"
 	desc = "A phoron-glass alloy window. It looks insanely tough to break. It appears it's also insanely tough to burn through."
 
-	icon_state = "phoronwindow"
+	glass_color_blend_to_color = "#8000ff"
+	glass_color_blend_to_ratio = 0.5
 
 	drops = list(/obj/item/weapon/shard/phoron)
 
@@ -187,7 +192,8 @@
 	name = "reinforced thin phoron window"
 	desc = "A phoron-glass alloy window, with rods supporting it. It looks hopelessly tough to break. It also looks completely fireproof, considering how basic phoron windows are insanely fireproof."
 
-	icon_state = "phoronrwindow"
+	glass_color_blend_to_color = "#8000ff"
+	glass_color_blend_to_ratio = 0.5
 
 	drops = list(/obj/item/stack/rods, /obj/item/weapon/shard/phoron)
 
@@ -205,7 +211,8 @@
 	desc = "It looks rather strong and opaque. Might take a few good hits to shatter it."
 	opacity = 1
 
-	icon_state = "twindow"
+	glass_color_blend_to_color = "#000000"
+	glass_color_blend_to_ratio = 0.7
 
 /**
 * Thin reinforced holo

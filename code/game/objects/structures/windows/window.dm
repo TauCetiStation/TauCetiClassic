@@ -14,6 +14,10 @@
 	integrity_failure = 0.75
 	resistance_flags = CAN_BE_HIT
 
+	var/glass_color
+	var/glass_color_blend_to_color
+	var/glass_color_blend_to_ratio
+
 	can_block_air = TRUE
 
 	var/list/drops = list(/obj/item/weapon/shard)
