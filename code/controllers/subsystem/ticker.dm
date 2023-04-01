@@ -18,6 +18,7 @@ SUBSYSTEM_DEF(ticker)
 	var/datum/game_mode/mode = null
 
 	var/login_music			// music played in pregame lobby
+	var/login_welcome		// dobro pozhalovat na server sizofreniya
 
 	var/list/datum/mind/minds = list() //The people in the game. Used for objective tracking.
 
@@ -46,6 +47,15 @@ SUBSYSTEM_DEF(ticker)
 	var/end_timer_id
 
 /datum/controller/subsystem/ticker/PreInit()
+	login_welcome = pick(\
+	'sound/music/welcome1.mp3',\
+	'sound/music/welcome2.mp3',\
+	'sound/music/welcome3.mp3',\
+	'sound/music/welcome4.mp3',\
+	'sound/music/welcome5.mp3',\
+	'sound/music/welcome6.mp3',\
+	'sound/music/welcome7.mp3')
+
 	login_music = pick(\
 	/*
 	'sound/music/space.ogg',\
