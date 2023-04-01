@@ -404,7 +404,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 	INVOKE_ASYNC(src, .proc/try_teleport, AM)
 
 /obj/machinery/power/replicator_generator/proc/teleportation_checks(mob/living/simple_animal/hostile/replicator/R, obj/machinery/power/replicator_generator/target)
-	if(!R.ckey)
+	if(!R.is_controlled())
 		return FALSE
 	if(target.next_teleportation > world.time)
 		return FALSE
@@ -419,7 +419,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 /obj/machinery/power/replicator_generator/proc/try_teleport(mob/living/simple_animal/hostile/replicator/R)
 	if(R.incapacitated())
 		return
-	if(!R.ckey)
+	if(!R.is_controlled())
 		return
 	if(next_teleportation > world.time)
 		to_chat(R, "<span class='notice'>Can not teleport at this moment, please wait for [CEIL((next_teleportation - world.time) * 0.1)] seconds.</span>")
@@ -454,7 +454,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/replicator_generator, replicator_generat
 		return
 	if(R.loc != loc)
 		return
-	if(!R.ckey)
+	if(!R.is_controlled())
 		return
 	if(R.incapacitated())
 		to_chat(R, "<span class='notice'>Unit too weak to support teleportation efforts.</span>")

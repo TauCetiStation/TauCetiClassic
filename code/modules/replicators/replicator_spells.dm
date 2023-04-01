@@ -459,7 +459,7 @@
 
 	for(var/r in global.alive_replicators)
 		var/mob/living/simple_animal/hostile/replicator/R = r
-		if(R.ckey || R.incapacitated())
+		if(R.is_controlled() || R.incapacitated())
 			continue
 		var/area/A = get_area(R)
 		pos_areas[A.name] = A

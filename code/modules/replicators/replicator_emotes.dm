@@ -25,7 +25,7 @@
 			continue
 		if(get_dist(user, R) > emote_range)
 			continue
-		 if(R.ckey)
+		 if(R.is_controlled())
 		 	to_chat(R, "<span class='notice'>[HELP_LINK(R, user)]</span>")
 		 	continue
 
