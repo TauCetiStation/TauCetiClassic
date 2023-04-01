@@ -351,7 +351,7 @@
 	requirement = "Да кто его знает!"
 
 /datum/quality/quirkieish/very_special/add_effect(mob/living/carbon/human/H, latespawn)
-	var/list/possible_qualities = subtypesof(/datum/quality)
+	var/list/possible_qualities = subtypesof(/datum/quality) - /datum/quality/quirkieish/very_special
 
 	for(var/i in 1 to 3)
 		var/quality_type = pick(possible_qualities)
@@ -359,5 +359,4 @@
 
 		var/datum/quality/quality = SSqualities.qualities_by_type[quality_type]
 		if(quality.satisfies_requirements(H, latespawn))
-			to_chat(H, quality.desc)
 			quality.add_effect(H, latespawn)
