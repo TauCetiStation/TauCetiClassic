@@ -30,6 +30,12 @@
 
 	update_nearby_tiles(need_rebuild = 1)
 
+/obj/structure/window/thin/change_color(new_color)
+	if(glass_color_blend_to_color && glass_color_blend_to_ratio)
+		color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
+	else
+		color = new_color
+
 /obj/structure/window/thin/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir)
 	. = ..()
 	if(attack_dir && . && get_integrity() < 7)
