@@ -618,6 +618,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	s.start()
 
 	Stun(impact * 0.75)
+	Weaken(impact)
 
 /mob/living/simple_animal/hostile/replicator/proc/set_last_controller(ckey, just_spawned=FALSE)
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
@@ -755,3 +756,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 
 /mob/living/simple_animal/hostile/replicator/proc/is_controlled()
 	return ckey
+
+/mob/living/simple_animal/hostile/replicator/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
+	take_bodypart_damage(0.0, shock_damage)
+	Weaken(2)
