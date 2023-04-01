@@ -71080,7 +71080,6 @@
 	},
 /area/station/rnd/mixing)
 "rqX" = (
-/obj/machinery/computer/stockexchange,
 /obj/structure/table/woodentable,
 /obj/machinery/firealarm{
 	dir = 8;
@@ -80083,7 +80082,6 @@
 /area/station/engineering/engine)
 "tGv" = (
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

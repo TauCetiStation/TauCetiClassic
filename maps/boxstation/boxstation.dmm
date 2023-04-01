@@ -13351,7 +13351,6 @@
 	pixel_y = 24
 	},
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -44100,7 +44099,6 @@
 	pixel_x = 32
 	},
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"

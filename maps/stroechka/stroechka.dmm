@@ -7046,7 +7046,6 @@
 /area/station/hallway/secondary/arrival)
 "Tj" = (
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
