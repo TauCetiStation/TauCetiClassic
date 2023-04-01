@@ -161,16 +161,6 @@
 	if(!AM.anchored)
 		now_pushing = 1
 		var/t = get_dir(src, AM)
-		if(istype(AM, /obj/structure/window)) // Why is it here?
-			var/obj/structure/window/W = AM
-			if(W.ini_dir == NORTHWEST || W.ini_dir == NORTHEAST || W.ini_dir == SOUTHWEST || W.ini_dir == SOUTHEAST)
-				for(var/obj/structure/window/win in get_step(AM,t))
-					now_pushing = 0
-					return
-//			if(W.fulltile)
-//				for(var/obj/structure/window/win in get_step(W,t))
-//					now_pushing = 0
-//					return
 		if(pulling == AM)
 			stop_pulling()
 		step(AM, t)

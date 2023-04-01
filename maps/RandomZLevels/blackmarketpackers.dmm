@@ -34,16 +34,9 @@
 	},
 /area/awaymission/BMPship3)
 "ai" = (
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
 /turf/simulated/floor/engine,
 /area/awaymission/BMPship3)
 "aj" = (
@@ -69,16 +62,6 @@
 	icon_state = "swall_f5"
 	},
 /area/awaymission/BMPship3)
-"ao" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/turf/simulated/floor/engine,
-/area/awaymission/BMPship3)
 "ap" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/plating,
@@ -90,17 +73,6 @@
 /obj/structure/lattice,
 /turf/environment/space,
 /area)
-"as" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/grille,
-/turf/simulated/floor/engine,
-/area/awaymission/BMPship3)
 "at" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/engine,
@@ -342,19 +314,6 @@
 	icon_state = "warnplate"
 	},
 /area/awaymission/BMPship1)
-"bj" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
-/turf/simulated/floor/engine,
-/area/awaymission/BMPship3)
 "bk" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/spacecash/c500,
@@ -901,7 +860,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -996,7 +955,7 @@
 	},
 /area/awaymission/BMPship2)
 "dc" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -1110,13 +1069,13 @@
 	},
 /area/awaymission/BMPship2)
 "dv" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor{
 	icon_state = "barber"
 	},
 /area/awaymission/BMPship2)
 "dw" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
@@ -1133,10 +1092,10 @@
 	},
 /area/awaymission/BMPship2)
 "dy" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor{
 	icon_state = "barber"
 	},
@@ -1400,7 +1359,7 @@
 /obj/structure/shuttle/engine/heater{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/airless{
@@ -1545,16 +1504,9 @@
 /turf/simulated/floor/engine,
 /area/awaymission/BMPship1)
 "ew" = (
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/awaymission/BMPship3)
 "ex" = (
@@ -1706,25 +1658,25 @@
 	},
 /area/awaymission/BMPship2)
 "eM" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/shuttle/plating,
 /area/awaymission/BMPship1)
 "eN" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/shuttle/plating,
 /area/awaymission/BMPship1)
 "eO" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/shuttle/plating,
@@ -1785,16 +1737,6 @@
 	icon_state = "warning"
 	},
 /area/awaymission/BMPship1)
-"eU" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/BMPship3)
 "eV" = (
 /obj/structure/table,
 /turf/simulated/floor{
@@ -1841,7 +1783,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/BMPship2)
 "fb" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -1905,7 +1847,7 @@
 	},
 /area/awaymission/BMPship1)
 "fj" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/structure/disposalpipe/trunk{
@@ -1924,7 +1866,7 @@
 /turf/simulated/shuttle/plating,
 /area/awaymission/BMPship1)
 "fm" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/shuttle/plating,
@@ -2045,7 +1987,7 @@
 	},
 /area/awaymission/BMPship1)
 "fA" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/shuttle/plating,
@@ -2066,17 +2008,6 @@
 	icon_state = "warning"
 	},
 /area/awaymission/BMPship1)
-"fD" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/awaymission/BMPship3)
 "fE" = (
 /turf/simulated/floor{
 	dir = 10;
@@ -2265,7 +2196,7 @@
 /turf/simulated/shuttle/plating,
 /area/awaymission/BMPship1)
 "gd" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/item/weapon/kitchenknife,
@@ -2308,7 +2239,7 @@
 	},
 /area/awaymission/BMPship2)
 "gj" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -2360,21 +2291,21 @@
 	},
 /area/awaymission/BMPship2)
 "gq" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/shuttle/plating,
 /area/awaymission/BMPship1)
 "gr" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/shuttle/plating,
 /area/awaymission/BMPship1)
 "gs" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/shuttle/plating,
 /area/awaymission/BMPship1)
 "gt" = (
@@ -2722,19 +2653,6 @@
 /obj/item/clothing/under/overalls,
 /turf/simulated/floor,
 /area/awaymission/BMPship1)
-"hu" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
-/turf/simulated/floor/engine,
-/area/awaymission/BMPship3)
 "hv" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -2867,7 +2785,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/awaymission)
 "hR" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/grille,
@@ -2938,14 +2856,6 @@
 /obj/item/clothing/suit/space/syndicate/striker,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/awaymission)
-"id" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
-/turf/simulated/floor/engine,
-/area/awaymission/BMPship3)
 "ie" = (
 /obj/effect/gibspawner/robot,
 /turf/simulated/floor/plating/airless{
@@ -3103,17 +3013,6 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "swall_f6"
 	},
-/area/awaymission/BMPship3)
-"iG" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
-/turf/simulated/floor/engine,
 /area/awaymission/BMPship3)
 "iH" = (
 /turf/environment/space,
@@ -9165,9 +9064,9 @@ aa
 cx
 cg
 ew
-eU
-eU
-fD
+ew
+ew
+ew
 bS
 gf
 aa
@@ -9675,9 +9574,9 @@ aa
 aa
 aa
 ae
-bj
-ao
-as
+ai
+ai
+ai
 cd
 cy
 cV
@@ -9694,9 +9593,9 @@ gy
 gL
 gW
 hh
-hu
+ai
 hR
-id
+ai
 ae
 ac
 ac
@@ -13700,8 +13599,8 @@ aa
 aa
 ae
 ai
-ao
-as
+ai
+ai
 aw
 aP
 bb
@@ -13730,9 +13629,9 @@ hN
 dn
 iv
 aw
-bj
-ao
-iG
+ai
+ai
+ai
 ae
 aa
 aa
