@@ -1,3 +1,5 @@
+#define SHOULD_DISABLE_FOOTSTEPS(source) ((SSlag_switch.measures[DISABLE_FOOTSTEPS] && !(HAS_TRAIT(source, TRAIT_BYPASS_MEASURES))))
+
 ///Footstep component. Plays footsteps at parents location when it is appropriate.
 /datum/component/footstep
 	///How many steps the parent has taken since the last time a footstep was played.
@@ -65,7 +67,12 @@
 		return
 	return T
 
-/datum/component/footstep/proc/play_simplestep()
+/datum/component/footstep/proc/play_simplestep(mob/living/source)
+	SIGNAL_HANDLER
+
+	if (SHOULD_DISABLE_FOOTSTEPS(source))
+		return
+
 	var/turf/T = prepare_step()
 	if(!T)
 		return
@@ -86,7 +93,12 @@
 		return
 	playsound(T, pick(footstep_sounds[turf_footstep][1]), VOL_EFFECTS_MASTER, footstep_sounds[turf_footstep][2] * volume, TRUE, null, footstep_sounds[turf_footstep][3] + e_range)
 
-/datum/component/footstep/proc/play_humanstep()
+/datum/component/footstep/proc/play_humanstep(mob/living/carbon/human/source)
+	SIGNAL_HANDLER
+
+	if (SHOULD_DISABLE_FOOTSTEPS(source))
+		return
+
 	var/turf/T = prepare_step()
 	if(!T)
 		return

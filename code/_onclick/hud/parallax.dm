@@ -51,6 +51,9 @@
 	C.parallax_layers = null
 
 /datum/hud/proc/apply_parallax_pref()
+	if (SSlag_switch.measures[DISABLE_PARALLAX] && !HAS_TRAIT(mymob, TRAIT_BYPASS_MEASURES))
+		return FALSE
+
 	var/client/C = mymob.client
 	switch(C.prefs.parallax)
 		if (PARALLAX_INSANE)

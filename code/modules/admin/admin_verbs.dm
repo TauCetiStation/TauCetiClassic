@@ -152,6 +152,7 @@ var/global/list/admin_verbs_server = list(
 	/client/proc/toggle_random_events,
 	/client/proc/nanomapgen_DumpImage,
 	/client/proc/adminchangemap,
+	/datum/admins/proc/show_lag_switch_panel,
 	/datum/admins/proc/toggle_deathmatch_arena,
 	)
 var/global/list/admin_verbs_debug = list(

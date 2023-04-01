@@ -74,7 +74,6 @@
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = SIZE_BIG
-	slot_flags = 0
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	initial_mag = /obj/item/ammo_box/magazine/saw
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
