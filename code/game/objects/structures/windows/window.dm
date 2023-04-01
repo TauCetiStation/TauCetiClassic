@@ -181,20 +181,17 @@
 /obj/structure/window/proc/change_color(new_color)
 	color = new_color
 
-/obj/structure/window/proc/change_paintjob(obj/item/C, mob/user)
-	var/obj/item/weapon/airlock_painter/W
-	if(istype(C, /obj/item/weapon/airlock_painter))
-		W = C
-	else
+/obj/structure/window/proc/change_paintjob(obj/item/weapon/airlock_painter/W, mob/user)
+	if(!istype(W))
 		return
 
 	if(!W.can_use(user, 1))
 		return
 
 	var/new_color = input(user, "Choose color!") as color|null
-	if(!new_color) return
-	// do_after
-	if(!Adjacent(usr) || !W.use(1))
+
+	if(!new_color)
 		return
-	else
+
+	if(W.use_tool(src, user, 50, 1))
 		change_color(new_color)
