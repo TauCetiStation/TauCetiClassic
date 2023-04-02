@@ -1240,11 +1240,6 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
-/obj/machinery/power/apc/largecell{
-	dir = 1;
-	name = "RnD APC";
-	pixel_y = 28
-	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "purple"
@@ -4464,11 +4459,8 @@
 /obj/structure/rack,
 /obj/item/weapon/switchblade,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "bot"
- /obj/machinery/turretid/stun{
-	control_area = "OldStation";
 	dir = 4;
+	icon_state = "bot" /obj/machinery/turretid/stun{control_area = "OldStation";
 	name = "Station turret control";
 	pixel_x = -3;
 	pixel_y = 1;
@@ -4545,11 +4537,6 @@
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 1
-	},
-/obj/machinery/power/apc/largecell{
-	dir = 1;
-	name = "R Station APC";
-	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -5485,16 +5472,10 @@
 	name = "Hydroponic APC";
 	pixel_y = 28
 	},
-
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 1
-	},
-/obj/machinery/power/apc/largecell{
-	dir = 1;
-	name = "Hydroponic APC";
-	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 5;
