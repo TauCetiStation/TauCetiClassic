@@ -15,6 +15,10 @@
 		if ((W.id == src.id || !W.id))
 			W.toggle()
 
+	for(var/obj/structure/window/fulltile/polarized/W in range(src,range))
+		if ((W.id == src.id || !W.id))
+			W.toggle()
+
 /obj/machinery/windowtint/power_change()
 	..()
 	if(active && !powered(power_channel))

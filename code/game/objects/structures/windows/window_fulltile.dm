@@ -156,12 +156,8 @@
 /obj/structure/window/fulltile/polarized/proc/toggle()
 	if(opacity) // todo: color change?
 		set_opacity(0)
-		glass_color_blend_to_ratio = 0.5
-		change_color(initial(glass_color))
 	else
 		set_opacity(1)
-		glass_color_blend_to_ratio = 0.9
-		change_color(initial(glass_color))
 
 /obj/structure/window/fulltile/polarized/attackby(obj/item/W as obj, mob/user as mob)
 	if(ispulsing(W)) // todo: maybe need something for access unlocking. For now we assume that this access == access to multitool
@@ -239,12 +235,8 @@
 /obj/structure/window/fulltile/reinforced/polarized/proc/toggle()
 	if(opacity) // todo: color change?
 		set_opacity(0)
-		glass_color_blend_to_ratio = 0.5
-		change_color(initial(glass_color))
 	else
 		set_opacity(1)
-		glass_color_blend_to_ratio = 0.9
-		change_color(initial(glass_color))
 
 /obj/structure/window/fulltile/reinforced/polarized/attackby(obj/item/W as obj, mob/user as mob)
 	if(ispulsing(W)) // todo: maybe need something for access unlocking. For now we assume that this access == access to multitool
