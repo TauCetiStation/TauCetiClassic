@@ -281,11 +281,11 @@
 	if(!attacking_item.force)
 		return
 
-	var/power = attacking_item.force
+	var/attackpower = attacking_item.force
 
-	power = scale_attack_bonuses(power, user, attacking_item.damtype)
+	attackpower = scale_attack_bonuses(attackpower, user, attacking_item.damtype)
 
-	var/damage = take_damage(power, attacking_item.damtype, MELEE, 1, get_dir(src, attacking_item))
+	var/damage = take_damage(attackpower, attacking_item.damtype, MELEE, 1, get_dir(src, attacking_item))
 	//only witnesses close by and the victim see a hit message.
 	user.visible_message(
 		"<span class='danger'>[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]</span>",
