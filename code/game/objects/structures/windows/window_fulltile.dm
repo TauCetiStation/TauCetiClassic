@@ -12,6 +12,8 @@
 	canSmoothWith = CAN_SMOOTH_WITH_WALLS
 	smooth_adapters = SMOOTH_ADAPTERS_WALLS
 
+	max_integrity = 25
+
 	// has own smoothing algoritm
 	var/smooth_icon_windowstill = 'icons/obj/smooth_structures/windows/window_sill.dmi'
 	var/smooth_icon_window = 'icons/obj/smooth_structures/windows/window.dmi'
@@ -22,7 +24,7 @@
 	var/glass_color_blend_to_color
 	var/glass_color_blend_to_ratio
 
-	var/damage_threshold = 5   // this will be deducted from any physical damage source. Main difference in sturdiness between fulltiles and thin windows
+	damage_deflection = 5
 	var/image/crack_overlay
 
 	var/disassemble_glass_type = /obj/item/stack/sheet/glass // any better ideas to handle drops and disassembles?
@@ -45,16 +47,14 @@
 		glass_color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
 	else
 		glass_color = new_color
-	
+
 	regenerate_smooth_icon()
 
 /obj/structure/window/fulltile/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
-	if(damage_threshold)
-		switch(damage_type)
-			if(BRUTE)
-				return max(0, damage_amount - damage_threshold)
-			if(BURN)
-				return damage_amount * 0.3
+	if(grilled)
+		damage_deflection = initial(damage_deflection) + 5
+	if(damage_type == BURN)
+		return ..(damage_amount * 0.3, damage_type, damage_flag, attack_dir)
 	return ..()
 
 /obj/structure/window/fulltile/attackby(obj/item/W, mob/user)
@@ -68,7 +68,7 @@
 
 		W.use_tool(src, user, 40)
 		to_chat(user, "<span class='notice'>You have removed the glass from the frame.</span>")
-		
+
 		deconstruct(TRUE)
 		return
 
@@ -114,6 +114,7 @@
 	icon_state = "window_phoron"
 
 	max_integrity = 120
+	damage_deflection = 7
 
 	glass_color_blend_to_color = "#8000ff"
 	glass_color_blend_to_ratio = 0.5
@@ -136,7 +137,7 @@
 	icon_state = "window_reinforced"
 
 	max_integrity = 100
-	damage_threshold = 10
+	damage_deflection = 15
 
 	disassemble_glass_type = /obj/item/stack/sheet/rglass
 
@@ -151,6 +152,7 @@
 	icon_state = "window_reinforced_phoron"
 
 	max_integrity = 160
+	damage_deflection = 17
 
 	glass_color_blend_to_color = "#8000ff"
 	glass_color_blend_to_ratio = 0.5
@@ -171,6 +173,8 @@
 
 	icon_state = "window_reinforced_tinted"
 
+	damage_deflection = 10
+
 	glass_color_blend_to_color = "#000000"
 	glass_color_blend_to_ratio = 0.7
 
@@ -183,6 +187,8 @@
 	desc = "Adjusts its tint with voltage. Might take a few good hits to shatter it."
 
 	icon_state = "window_reinforced_polarized"
+
+	damage_deflection = 10
 
 	glass_color_blend_to_color = "#bebebe"
 	glass_color_blend_to_ratio = 0.7
