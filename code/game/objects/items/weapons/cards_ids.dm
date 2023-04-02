@@ -521,4 +521,4 @@
 	item_state = "med_id"
 	rank = "Senior Medic"
 	assignment = "Senior Medic"
-	access = list(access_oldstation, access_engine, access_engine_equip, access_medical, access_research, access_tox, access_robotics)
+	access = list(access_oldstation, access_engine, access_engine_equip, access_medical, access_surgery, access_research, access_tox, access_robotics)
