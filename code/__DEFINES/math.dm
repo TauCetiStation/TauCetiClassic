@@ -215,4 +215,4 @@ var/global/normal_next
 #define TRANSLATE_RANGE(x, minx, maxx, miny, maxy) clamp(((x - minx) * (maxy - miny) / (maxx - minx)) + miny, miny, maxy)
 
 //A parabola y = multiplier*x^2 + pike
-#define PARABOLIC_SCALING(x, pike, multiplier) (pike + multiplier * (x ** 2))
+#define PARABOLIC_SCALING(x, pike, multiplier) (pike - multiplier * (x ** 2))
