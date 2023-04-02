@@ -34,6 +34,9 @@
 	if(grill)
 		grilled = TRUE
 
+	if(grilled)
+		damage_deflection += 5
+
 	var/new_color = SSstation_coloring.get_default_color()
 	if(glass_color_blend_to_color && glass_color_blend_to_ratio)
 		glass_color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
@@ -51,8 +54,6 @@
 	regenerate_smooth_icon()
 
 /obj/structure/window/fulltile/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
-	if(grilled)
-		damage_deflection = initial(damage_deflection) + 5
 	if(damage_type == BURN)
 		return ..(damage_amount * 0.3, damage_type, damage_flag, attack_dir)
 	return ..()
