@@ -43,14 +43,18 @@
 #define SMOOTH_DIAGONAL   (1<<2) //if atom should smooth diagonally, this should be present in 'smooth' var
 #define SMOOTH_BORDER     (1<<3) //atom will smooth with the borders of the map
 #define SMOOTH_QUEUED     (1<<4) //atom is currently queued to smooth.
+#define SMOOTH_SMOOTHED   (1<<5) //atom was already smoothed once
 
 #define NULLTURF_BORDER 123456789
 
 #define DEFAULT_UNDERLAY_ICON           'icons/turf/floors.dmi'
 #define DEFAULT_UNDERLAY_ICON_STATE     "plating"
 
+#define SMOOTH_ADAPTERS_ICON            'icons/obj/smooth_adapters/adapters.dmi'
+
 /atom/var/smooth = SMOOTH_FALSE
 /atom/var/list/canSmoothWith = null // TYPE PATHS I CAN SMOOTH WITH~~~~~ If this is null and atom is smooth, it smooths only with itself
+/atom/var/list/smooth_adapters = null // list of adapters we need to request from neighbors, list(/type/ = "state")
 /atom/var/icon/smooth_icon_initial // don't touch this, value assigned automatically in the process.
 /atom/movable/var/can_be_unanchored = FALSE
 /turf/var/list/fixed_underlay = null
@@ -111,7 +115,7 @@
 
 //do not use, use queue_smooth(atom)
 /proc/smooth_icon(atom/A)
-	if(!A || !A.smooth)
+	if(!A || !(A.smooth || length(A.smooth_adapters)))
 		return
 	A.smooth &= ~SMOOTH_QUEUED
 	if (!A.z)
@@ -125,6 +129,11 @@
 			A.diagonal_smooth(adjacencies)
 		else
 			cardinal_smooth(A, adjacencies)
+
+	if(length(A.smooth_adapters))
+		A.update_adapters()
+
+	A.smooth |= SMOOTH_SMOOTHED
 
 /atom/proc/diagonal_smooth(adjacencies, read_values = FALSE)
 	var/diagonal_states
@@ -155,7 +164,7 @@
 
 	if(diagonal_states)
 		if(!read_values)
-			smooth_set_icon(adjacencies, diagonal_states)
+			smooth_set_icon(adjacencies)
 		else
 			return diagonal_states
 
@@ -250,7 +259,7 @@
 			se = "4-e"
 
 	if(A)
-		A.smooth_set_icon(adjacencies, list(nw, ne, sw, se))
+		A.smooth_set_icon(adjacencies)
 	else
 		return list(nw, ne, sw, se)
 
@@ -308,16 +317,54 @@
 				else
 					queue_smooth(A)
 
-/atom/proc/smooth_set_icon(adjacencies, list/parts)
+/atom/proc/smooth_set_icon(adjacencies)
 #ifdef MANUAL_ICON_SMOOTH
 	return
 #endif
-
 	if(!smooth_icon_initial)
 		smooth_icon_initial = icon
 	var/cache_string = "["[type]"]"
 	if(!global.baked_smooth_icons[cache_string])
-		var/icon/I = SliceNDice(smooth_icon_initial)
+		// has_false_walls is a file PATH flag, yes
+		var/icon/I = SliceNDice(icon(smooth_icon_initial), !!findtext("[smooth_icon_initial]", "has_false_walls"))
+		global.baked_smooth_icons[cache_string] = I // todo: we can filecache it
+
+	icon = global.baked_smooth_icons[cache_string]
+	icon_state = "[adjacencies]"
+
+/atom/proc/regenerate_smooth_icon() // mostly for windows, so we can quickly regenerate same (with same adjacencies) icon with new colors
+	if(smooth & SMOOTH_SMOOTHED)
+		smooth_set_icon(icon_state) // better to do this through SSicon_smooth but idk how
+	else
+		queue_smooth(src)
+
+/obj/structure/window/fulltile/smooth_set_icon(adjacencies)
+#ifdef MANUAL_ICON_SMOOTH
+	return
+#endif
+
+	var/cache_string = "["[type]"]"
+
+	if(glass_color)
+		cache_string += "[glass_color]"
+
+	if(grilled)
+		cache_string += "_grilled"
+
+	if(!global.baked_smooth_icons[cache_string])
+
+		var/icon/blended = new(smooth_icon_windowstill)
+
+		if(grilled)
+			var/icon/grille = new(smooth_icon_grille)
+			blended.Blend(grille,ICON_OVERLAY)
+
+		var/icon/window = new(smooth_icon_window)
+		if(glass_color)
+			window.Blend(glass_color, ICON_MULTIPLY)
+		blended.Blend(window,ICON_OVERLAY)
+
+		var/icon/I = SliceNDice(blended)
 		global.baked_smooth_icons[cache_string] = I
 
 	icon = global.baked_smooth_icons[cache_string]
@@ -364,17 +411,18 @@
 /proc/queue_smooth_neighbors(atom/A)
 	for(var/V in orange(1,A))
 		var/atom/T = V
-		if(T.smooth)
+		if(T.smooth || length(T.smooth_adapters))
 			queue_smooth(T)
 
 //SSicon_smooth
 /proc/queue_smooth(atom/A)
-	if(!A.smooth || A.smooth & SMOOTH_QUEUED)
+	if(!(A.smooth || length(A.smooth_adapters)) || A.smooth & SMOOTH_QUEUED)
 		return
 
 	SSicon_smooth.smooth_queue += A
 	SSicon_smooth.can_fire = TRUE
 	A.smooth |= SMOOTH_QUEUED
+	A.smooth &= ~SMOOTH_SMOOTHED
 
 /turf/proc/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = icon
@@ -400,6 +448,41 @@
 		underlay_appearance.icon_state = initial(basetype.icon_state)
 		return TRUE
 	return ..()
+
+// adds apecial transition overlays depending on the `smooth_adapters`
+/atom/var/list/overlays_adapters
+/atom/proc/update_adapters()
+	if(!length(smooth_adapters))
+		return
+	
+	if(length(overlays_adapters))
+		cut_overlay(overlays_adapters)
+	
+	overlays_adapters = list()
+
+	for(var/direction in global.cardinal) // yeah, this is another get_step_around for smoothing system. Maybe need to merge it with `calculate_adjacencies` somehow. Anyway, it's not soo bad.
+		var/turf/T = get_step(src, direction)
+		
+		if(!T)
+			continue
+
+		var/skip_content_loop = FALSE
+		for(var/type in smooth_adapters)
+			if(istype(T, type))
+				overlays_adapters += image("icon" = SMOOTH_ADAPTERS_ICON, "icon_state" = smooth_adapters[type], dir = get_dir(src, T))
+				skip_content_loop = TRUE
+
+		if(skip_content_loop) // remove it in case if we need more that one adapter per dir
+			continue
+
+		for(var/atom/A in T)
+			for(var/type in smooth_adapters)
+				if(istype(A, type))
+					overlays_adapters += image("icon" = SMOOTH_ADAPTERS_ICON, "icon_state" = smooth_adapters[type], dir = get_dir(src, A))
+					break
+
+	if(length(overlays_adapters))
+		add_overlay(overlays_adapters)
 
 /*
 //Example smooth wall

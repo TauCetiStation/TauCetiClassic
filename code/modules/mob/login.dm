@@ -35,6 +35,12 @@
 
 /mob/Login()
 	player_list |= src
+	
+	if(client.holder)
+		global.keyloop_list |= src
+	else if(stat != DEAD || !SSlag_switch?.measures[DISABLE_DEAD_KEYLOOP])
+		global.keyloop_list |= src
+
 	update_Login_details()
 	world.update_status()
 

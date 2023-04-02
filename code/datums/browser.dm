@@ -308,8 +308,8 @@
 	set hidden = 1						// hide this verb from the user's panel
 	set name = ".windowclose"			// no autocomplete on cmd line
 
-	if(browsers[windowid])
-		qdel(browsers[windowid])
+	if(LAZYACCESS(browsers, windowid))
+		qdel(LAZYACCESS(browsers, windowid))
 
 	//world << "windowclose: [atomref]"
 	if(atomref!="null")				// if passed a real atomref

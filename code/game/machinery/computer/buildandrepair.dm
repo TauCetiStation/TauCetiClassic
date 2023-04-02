@@ -218,10 +218,6 @@
 	origin_tech = "programming=3"
 	var/contraband_enabled = FALSE
 	var/hacked = FALSE
-/obj/item/weapon/circuitboard/computer/stockexchange
-	name = "Circuit board (Stock exchange computer)"
-	build_path = /obj/machinery/computer/stockexchange
-	origin_tech = "programming=3"
 /*/obj/item/weapon/circuitboard/research_shuttle
 	name = "Circuit board (Research Shuttle)"
 	build_path = /obj/machinery/computer/research_shuttle
