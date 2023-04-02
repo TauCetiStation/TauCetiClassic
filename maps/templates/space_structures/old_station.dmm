@@ -4460,7 +4460,7 @@
 /obj/item/weapon/switchblade,
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "bot" /obj/machinery/turretid/stun{control_area = "OldStation";
+	icon_state = "bot" /obj/machinery/turretid/stun{control_area = "OldStation"};
 	name = "Station turret control";
 	pixel_x = -3;
 	pixel_y = 1;
