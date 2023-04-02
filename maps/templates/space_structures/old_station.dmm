@@ -512,6 +512,7 @@
 	pixel_x = 2;
 	pixel_y = 5
 	},
+/obj/structure/alien/air_plant,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -3875,13 +3876,13 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/item/ammo_box/magazine/smg{
+	pixel_x = -3
+	},
 /obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "Armory APC";
 	pixel_y = 25
-	},
-/obj/item/ammo_box/magazine/smg{
-	pixel_x = -3
 	},
 /obj/item/ammo_box/magazine/smg,
 /obj/item/ammo_box/magazine/smg{
@@ -4095,6 +4096,7 @@
 /area/space_structures/old_station/central)
 "zd" = (
 /obj/structure/alien/weeds/node,
+/obj/structure/alien/air_plant,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -6953,10 +6955,10 @@
 	},
 /area/space_structures/old_station/right)
 "Pl" = (
-/obj/structure/rack,
 /obj/item/weapon/kitchenknife/combat{
 	pixel_x = -3
 	},
+/obj/structure/rack,
 /obj/item/weapon/kitchenknife/combat,
 /obj/item/weapon/kitchenknife/combat{
 	pixel_x = 3
@@ -7147,6 +7149,7 @@
 "QM" = (
 /obj/structure/alien/weeds/node,
 /obj/item/weapon/circuitboard/telecomms/broadcaster,
+/obj/structure/alien/air_plant,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8312,15 +8315,6 @@
 /obj/item/weapon/storage/toolbox/electrical,
 /turf/simulated/floor,
 /area/space_structures/old_station/right/rnd)
-"XI" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 5;
-	pixel_y = -32
-	},
-/turf/simulated/floor{
-	icon_state = "whitepurple"
-	},
-/area/space_structures/old_station/right)
 "XJ" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/snacks/soap,
@@ -13184,7 +13178,7 @@ wi
 wi
 mc
 Se
-XI
+hz
 rf
 GY
 KZ
