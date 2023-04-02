@@ -509,8 +509,8 @@
 /obj/structure/alien/weeds/node,
 /obj/effect/decal/remains/human,
 /obj/item/clothing/head/caphat{
-	pixel_y = 5;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -748,8 +748,7 @@
 /obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "Warehouse APC";
-	pixel_x = -1;
-	pixel_y = 26
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -1112,7 +1111,7 @@
 	name = "Engineering External Access";
 	req_one_access = list(13,45,1)
 	},
-/turf/environment/space,
+/turf/simulated/floor/plating,
 /area/space_structures/old_station/right)
 "gz" = (
 /obj/item/trash/chips,
@@ -1246,16 +1245,15 @@
 "ht" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/largecell{
-	dir = 1;
-	name = "RnD APC";
-	pixel_y = 25;
-	cell_type = 1000
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 1
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 1;
+	name = "RnD APC";
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -1276,15 +1274,6 @@
 	icon_state = "whitepurple"
 	},
 /area/space_structures/old_station/right)
-"hv" = (
-/obj/structure/rack,
-/obj/item/weapon/tank/jetpack/carbondioxide{
-	pixel_y = 8
-	},
-/turf/simulated/floor{
-	icon_state = "yellow"
-	},
-/area/space_structures/old_station/central/solars_c)
 "hz" = (
 /turf/simulated/floor{
 	icon_state = "whitepurple"
@@ -1309,9 +1298,7 @@
 /obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "Brig APC";
-	pixel_x = 3;
-	cell_type = 1000;
-	pixel_y = 30
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -2677,9 +2664,10 @@
 	icon_state = "0-2"
 	},
 /obj/item/weapon/stock_parts/cell/apc,
-/obj/machinery/power/apc/smallcell{
+/obj/machinery/power/apc/largecell{
+	dir = 1;
 	name = "Medbay APC";
-	pixel_y = 25
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -2945,8 +2933,8 @@
 "rN" = (
 /obj/structure/table,
 /obj/item/weapon/flora/deskleaf{
-	pixel_y = 5;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = 5
 	},
 /obj/item/trash/candy,
 /turf/simulated/floor{
@@ -3345,8 +3333,8 @@
 "uN" = (
 /obj/machinery/light,
 /turf/simulated/floor{
-	icon_state = "neutralcorner";
-	dir = 8
+	dir = 8;
+	icon_state = "neutralcorner"
 	},
 /area/space_structures/old_station/central)
 "uO" = (
@@ -3475,8 +3463,8 @@
 	},
 /obj/structure/sign/directions/engineering{
 	buildable_sign = 0;
-	pixel_y = 32;
-	dir = 1
+	dir = 1;
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -3892,9 +3880,13 @@
 	name = "Armory APC";
 	pixel_y = 25
 	},
+/obj/item/ammo_box/magazine/smg{
+	pixel_x = -3
+	},
 /obj/item/ammo_box/magazine/smg,
-/obj/item/ammo_box/magazine/smg,
-/obj/item/ammo_box/magazine/smg,
+/obj/item/ammo_box/magazine/smg{
+	pixel_x = 3
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -3947,8 +3939,8 @@
 "xZ" = (
 /obj/structure/rack,
 /obj/item/weapon/stock_parts/cell/bluespace{
-	pixel_y = 1;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 1
 	},
 /obj/item/weapon/stock_parts/cell/high{
 	charge = 100;
@@ -3985,15 +3977,15 @@
 	amount = 25
 	},
 /obj/item/stack/sheet/mineral/gold{
+	amount = 15;
 	pixel_x = 1;
-	pixel_y = -2;
-	amount = 15
+	pixel_y = -2
 	},
 /obj/item/stack/sheet/mineral/diamond{
+	amount = 3;
 	layer = 4.1;
 	pixel_x = -6;
-	pixel_y = 6;
-	amount = 3
+	pixel_y = 6
 	},
 /obj/item/stack/sheet/mineral/uranium{
 	amount = 8
@@ -4222,8 +4214,8 @@
 	},
 /obj/structure/sign/directions/engineering{
 	buildable_sign = 0;
-	pixel_y = 34;
-	dir = 8
+	dir = 8;
+	pixel_y = 34
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -4359,8 +4351,8 @@
 "As" = (
 /obj/structure/table,
 /obj/item/weapon/kitchen/utensil/pfork{
-	pixel_y = 11;
-	pixel_x = 13
+	pixel_x = 13;
+	pixel_y = 11
 	},
 /obj/item/trash/snack_bowl,
 /turf/simulated/floor{
@@ -4517,16 +4509,13 @@
 /turf/simulated/floor/plating,
 /area/space_structures/carp_space)
 "By" = (
-/obj/machinery/turretid/stun{
-	control_area = "OldStation";
-	dir = 4;
-	name = "Station turret control";
-	pixel_y = 1;
-	req_access = list(73);
-	pixel_x = -3
+/obj/structure/rack,
+/obj/item/weapon/switchblade,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "bot"
 	},
-/turf/simulated/wall/r_wall,
-/area/space_structures/old_station/central/bridge)
+/area/space_structures/old_station/armory)
 "BB" = (
 /obj/structure/closet/secure_closet/atmos_personal,
 /turf/simulated/floor,
@@ -4587,17 +4576,15 @@
 /area/space_structures/old_station/satellite)
 "BY" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/largecell{
-	dir = 1;
-	name = "R Station APC";
-	pixel_y = 27;
-	pixel_x = 1;
-	cell_type = 1000
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 1
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 1;
+	name = "R Station APC";
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -4816,8 +4803,8 @@
 /area/space_structures/old_station/central)
 "CZ" = (
 /obj/item/weapon/storage/fancy/donut_box{
-	pixel_y = 9;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 9
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/central/brig)
@@ -5045,8 +5032,8 @@
 /obj/item/weapon/storage/firstaid/regular{
 	empty = 1;
 	name = "First-Aid (empty)";
-	pixel_y = -8;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = -8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -5348,8 +5335,8 @@
 	dir = 4
 	},
 /obj/structure/sign/directions/command{
-	pixel_y = 23;
-	dir = 4
+	dir = 4;
+	pixel_y = 23
 	},
 /obj/structure/sign/directions/science{
 	buildable_sign = 0;
@@ -5528,16 +5515,15 @@
 /area/space_structures/old_station/central/bridge)
 "GP" = (
 /obj/machinery/vending/hydroseeds,
-/obj/machinery/power/apc/largecell{
-	dir = 1;
-	name = "Hydroponic APC";
-	pixel_y = 25;
-	cell_type = 1000
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 1
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 1;
+	name = "Hydroponic APC";
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -5961,16 +5947,15 @@
 /turf/simulated/floor,
 /area/space_structures/old_station/central/solars_c)
 "Jg" = (
-/obj/machinery/power/apc/largecell{
-	dir = 1;
-	name = "Solars Panel Control room APC";
-	pixel_x = 4;
-	pixel_y = 27
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 1
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 1;
+	name = "Solars Panel Control room APC";
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -6069,9 +6054,7 @@
 /obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "Kitchen APC";
-	pixel_x = -3;
-	cell_type = 1000;
-	pixel_y = 30
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -6093,6 +6076,14 @@
 "JY" = (
 /obj/structure/stool/bed/chair/office/dark{
 	dir = 1
+	},
+/obj/machinery/turretid/stun{
+	control_area = "OldStation";
+	dir = 4;
+	name = "Station turret control";
+	pixel_x = 30;
+	pixel_y = 1;
+	req_access = list(73)
 	},
 /turf/simulated/floor{
 	dir = 6;
@@ -6867,8 +6858,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/device/flashlight/seclite{
-	pixel_y = 8;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 8
 	},
 /obj/item/device/flashlight/flare,
 /turf/simulated/floor{
@@ -6963,10 +6954,13 @@
 /area/space_structures/old_station/right)
 "Pl" = (
 /obj/structure/rack,
+/obj/item/weapon/kitchenknife/combat{
+	pixel_x = -3
+	},
 /obj/item/weapon/kitchenknife/combat,
-/obj/item/weapon/kitchenknife/combat,
-/obj/item/weapon/kitchenknife/combat,
-/obj/item/weapon/switchblade,
+/obj/item/weapon/kitchenknife/combat{
+	pixel_x = 3
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -7271,8 +7265,8 @@
 	dir = 5
 	},
 /obj/structure/sign/directions/command{
-	pixel_y = 28;
-	dir = 4
+	dir = 4;
+	pixel_y = 28
 	},
 /obj/structure/sign/directions/science{
 	buildable_sign = 0;
@@ -7686,8 +7680,8 @@
 /obj/machinery/door_control{
 	id = "Old_station";
 	name = "Shutters Control";
-	req_access = list(73);
-	pixel_y = -26
+	pixel_y = -26;
+	req_access = list(73)
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurple"
@@ -8045,16 +8039,15 @@
 /area/space)
 "VM" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/power/apc/largecell{
-	dir = 1;
-	name = "Bridge APC";
-	pixel_x = 4;
-	pixel_y = 27
-	},
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2";
 	pixel_y = 1
+	},
+/obj/machinery/power/apc/largecell{
+	dir = 1;
+	name = "Bridge APC";
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -8170,8 +8163,8 @@
 	pixel_y = 30
 	},
 /obj/item/weapon/reagent_containers/hypospray{
-	pixel_y = 4;
-	pixel_x = 13
+	pixel_x = 13;
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -8241,8 +8234,8 @@
 /area/space_structures/old_station/central/hydro)
 "WZ" = (
 /obj/item/weapon/scalpel/manager{
-	pixel_y = -9;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = -9
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -8464,8 +8457,7 @@
 /obj/machinery/power/apc/largecell{
 	dir = 1;
 	name = "C Station APC";
-	cell_type = 1000;
-	pixel_y = 29
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	icon_state = "purplecorner"
@@ -8529,8 +8521,8 @@
 /area/space_structures/old_station/left)
 "Zh" = (
 /obj/item/pizzabox/vegetable{
-	pixel_y = -6;
-	pixel_x = -21
+	pixel_x = -21;
+	pixel_y = -6
 	},
 /obj/effect/decal/cleanable/blood/writing,
 /turf/simulated/floor,
@@ -10564,7 +10556,7 @@ Bf
 VZ
 Af
 uI
-hv
+co
 Ou
 VN
 CG
@@ -11507,7 +11499,7 @@ pn
 pn
 pn
 pn
-By
+pn
 pn
 MA
 bQ
@@ -13993,7 +13985,7 @@ ik
 mc
 wi
 gO
-gO
+wi
 wi
 Fd
 wi
@@ -14289,7 +14281,7 @@ ed
 OZ
 gh
 OD
-pj
+By
 ed
 gO
 Fd
