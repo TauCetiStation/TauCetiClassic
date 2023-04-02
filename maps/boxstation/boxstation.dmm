@@ -19827,9 +19827,7 @@
 	},
 /area/station/rnd/mixing)
 "aKB" = (
-/obj/structure/window/fulltile/reinforced/tinted{
-	grilled = 1
-	},
+/obj/structure/window/fulltile/tinted,
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel/office)
 "aKC" = (
@@ -22736,7 +22734,8 @@
 	icon_state = "0-2";
 	pixel_y = 1
 	},
-/obj/structure/window/fulltile/reinforced/polarized{
+/obj/structure/window/fulltile/polarized{
+	grilled = 1;
 	id = "chapel"
 	},
 /turf/simulated/floor/plating,
@@ -24514,7 +24513,7 @@
 /area/station/civilian/bar)
 "aTq" = (
 /obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/reinforced/polarized{
+/obj/structure/window/fulltile/polarized{
 	id = "Patients"
 	},
 /turf/simulated/floor/plating,
@@ -36483,7 +36482,7 @@
 	name = "Surgery Shutters";
 	opacity = 0
 	},
-/obj/structure/window/fulltile/reinforced/polarized{
+/obj/structure/window/fulltile/polarized{
 	id = "op2"
 	},
 /turf/simulated/floor/plating,
@@ -36608,7 +36607,7 @@
 	name = "Surgery Shutters";
 	opacity = 0
 	},
-/obj/structure/window/fulltile/reinforced/polarized{
+/obj/structure/window/fulltile/polarized{
 	id = "op1"
 	},
 /turf/simulated/floor/plating,
@@ -37944,7 +37943,8 @@
 "bsf" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
-/obj/structure/window/fulltile/reinforced/polarized{
+/obj/structure/window/fulltile/polarized{
+	grilled = 1;
 	id = "chapel"
 	},
 /turf/simulated/floor/plating,
@@ -39415,7 +39415,8 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/structure/window/fulltile/reinforced/polarized{
+/obj/structure/window/fulltile/polarized{
+	grilled = 1;
 	id = "chapel"
 	},
 /turf/simulated/floor/plating,
@@ -59023,9 +59024,9 @@
 /area/station/aisat)
 "cox" = (
 /obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/reinforced/polarized{
-	id = "kitchen";
-	grilled = 1
+/obj/structure/window/fulltile/polarized{
+	grilled = 1;
+	id = "kitchen"
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/kitchen)
@@ -59121,7 +59122,7 @@
 /area/station/aisat/ai_chamber)
 "coM" = (
 /obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/reinforced/polarized{
+/obj/structure/window/fulltile/polarized{
 	id = "Library"
 	},
 /turf/simulated/floor/plating,
@@ -67528,7 +67529,8 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/structure/window/fulltile/reinforced/polarized{
+/obj/structure/window/fulltile/polarized{
+	grilled = 1;
 	id = "chapel"
 	},
 /turf/simulated/floor/plating,
@@ -81560,7 +81562,8 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/window/fulltile/reinforced/polarized{
+/obj/structure/window/fulltile/polarized{
+	grilled = 1;
 	id = "chapel"
 	},
 /turf/simulated/floor/plating,
@@ -81940,7 +81943,7 @@
 /area/station/maintenance/cargo)
 "vhl" = (
 /obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/reinforced/polarized{
+/obj/structure/window/fulltile/polarized{
 	id = "privateoffice"
 	},
 /turf/simulated/floor/plating,

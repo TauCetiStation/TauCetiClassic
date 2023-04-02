@@ -45,7 +45,7 @@
 		glass_color = BlendRGB(new_color, glass_color_blend_to_color, glass_color_blend_to_ratio)
 	else
 		glass_color = new_color
-	
+
 	regenerate_smooth_icon()
 
 /obj/structure/window/fulltile/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
@@ -68,7 +68,7 @@
 
 		W.use_tool(src, user, 40)
 		to_chat(user, "<span class='notice'>You have removed the glass from the frame.</span>")
-		
+
 		deconstruct(TRUE)
 		return
 
@@ -123,6 +123,53 @@
 /obj/structure/window/fulltile/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 32000)
 		take_damage(round(exposed_volume / 1000), BURN, FIRE, FALSE)
+
+/**
+ * Fulltile tinted
+ */
+
+/obj/structure/window/fulltile/tinted
+	name = "reinforced tinted window"
+	desc = "It looks rather strong and opaque. Might take a few good hits to shatter it."
+	opacity = 1
+
+	icon_state = "window_tinted"
+
+	glass_color_blend_to_color = "#000000"
+	glass_color_blend_to_ratio = 0.7
+
+/**
+ * Fulltile polarized
+ */
+
+/obj/structure/window/fulltile/polarized
+	name = "electrochromic window"
+	desc = "Adjusts its tint with voltage. Might take a few good hits to shatter it."
+
+	icon_state = "window_polarized"
+
+	glass_color_blend_to_color = "#bebebe"
+	glass_color_blend_to_ratio = 0.7
+
+	var/id
+
+/obj/structure/window/fulltile/polarized/proc/toggle()
+	if(opacity) // todo: color change?
+		set_opacity(0)
+		glass_color_blend_to_ratio = 0.5
+		change_color(initial(glass_color))
+	else
+		set_opacity(1)
+		glass_color_blend_to_ratio = 0.9
+		change_color(initial(glass_color))
+
+/obj/structure/window/fulltile/polarized/attackby(obj/item/W as obj, mob/user as mob)
+	if(ispulsing(W)) // todo: maybe need something for access unlocking. For now we assume that this access == access to multitool
+		var/t = sanitize(input(user, "Enter the ID for the window.", src.name, null), MAX_NAME_LEN)
+		src.id = t
+		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
+		return TRUE
+	return ..()
 
 /**
  * Fulltile reinforced
@@ -192,8 +239,12 @@
 /obj/structure/window/fulltile/reinforced/polarized/proc/toggle()
 	if(opacity) // todo: color change?
 		set_opacity(0)
+		glass_color_blend_to_ratio = 0.5
+		change_color(initial(glass_color))
 	else
 		set_opacity(1)
+		glass_color_blend_to_ratio = 0.9
+		change_color(initial(glass_color))
 
 /obj/structure/window/fulltile/reinforced/polarized/attackby(obj/item/W as obj, mob/user as mob)
 	if(ispulsing(W)) // todo: maybe need something for access unlocking. For now we assume that this access == access to multitool
