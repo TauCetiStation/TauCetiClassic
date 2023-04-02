@@ -287,7 +287,6 @@
 	if(!attacking_item.force)
 		return
 
-	var/attackforce = attacking_item.force
 	var/power = attacking_item.force
 	power = apply_skill_bonus(user, power, list(/datum/skill/melee = SKILL_LEVEL_NOVICE), 0.15) // 15% for each level
 	if(ishuman(user))
