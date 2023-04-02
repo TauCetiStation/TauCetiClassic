@@ -195,9 +195,9 @@
 	deconstruct(TRUE)
 	return TRUE
 
-/obj/structure/window/reinforced/shuttle/mining/replicator_act(mob/living/simple_animal/hostile/replicator/R)
+/obj/structure/window/shuttle/reinforced/mining/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	var/turf/T = get_turf(src)
-	if(is_fulltile() && !(locate(/obj/structure/replicator_forcefield) in T))
+	if(!(locate(/obj/structure/replicator_forcefield) in T))
 		new /obj/structure/replicator_forcefield(T)
 		var/obj/structure/replicator_barricade/RB = locate() in T
 		if(RB)
