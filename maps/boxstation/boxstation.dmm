@@ -12361,7 +12361,7 @@
 /area/station/rnd/xenobiology)
 "avM" = (
 /obj/item/weapon/flora/floorleaf,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/thin{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
@@ -35821,7 +35821,7 @@
 "bod" = (
 /obj/machinery/door/firedoor,
 /obj/structure/sign/departments/botany,
-/obj/structure/window/fulltile/reinforced{
+/obj/structure/window/fulltile{
 	grilled = 1
 	},
 /turf/simulated/floor/plating,
@@ -46352,9 +46352,7 @@
 /area/station/civilian/barbershop)
 "bHu" = (
 /obj/machinery/door/firedoor,
-/obj/structure/window/fulltile{
-	grilled = 1
-	},
+/obj/structure/window/fulltile,
 /turf/simulated/floor/plating,
 /area/station/civilian/barbershop)
 "bHv" = (
@@ -67485,7 +67483,7 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "dbM" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/thin{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
@@ -76018,7 +76016,7 @@
 	c_tag = "Bar North"
 	},
 /obj/structure/stool/bar,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/thin{
 	dir = 4
 	},
 /turf/simulated/floor/wood,
@@ -76379,7 +76377,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
 "nCQ" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/thin{
 	dir = 8
 	},
 /turf/simulated/floor/wood,
