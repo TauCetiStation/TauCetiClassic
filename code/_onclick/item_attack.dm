@@ -117,7 +117,7 @@
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/external/BP = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
 		if(BP.pumped)
-			power += max(round((PARABOLIC_SCALING(power, 1, 0.01) * BP.pumped * 0.5)), 0) //We need a pumped force multiplied by parabolic scaled item's force with a borders of 1 to 0
+			power += max(round((PARABOLIC_SCALING(power, 1, -0.01) * BP.pumped * 0.5)), 0) //We need a pumped force multiplied by parabolic scaled item's force with a borders of 1 to 0
 	if(HULK in user.mutations)
 		power *= 2
 	if(!ishuman(M))
@@ -288,13 +288,17 @@
 		return
 
 	var/attackforce = attacking_item.force
-	if(ishuman(user))
+	var/power = attacking_item.force
+	power = apply_skill_bonus(user, power, list(/datum/skill/melee = SKILL_LEVEL_NOVICE), 0.15) // 15% for each level
+	if(ishuman(user) && damtype == BRUTE)
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/external/BP = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
 		if(BP.pumped)
-			attackforce += max(round((PARABOLIC_SCALING(attackforce, 1, 0.01) * BP.pumped * 0.5)), 0) //We need a pumped force multiplied by parabolic scaled item's force with a borders of 1 to 0
+			power += max(round((PARABOLIC_SCALING(power, 1, -0.01) * BP.pumped * 0.5)), 0) //We need a pumped force multiplied by parabolic scaled item's force with a borders of 1 to 0
+	if(HULK in user.mutations)
+		power *= 2
 
-	var/damage = take_damage(attackforce, attacking_item.damtype, MELEE, 1, get_dir(src, attacking_item))
+	var/damage = take_damage(power, attacking_item.damtype, MELEE, 1, get_dir(src, attacking_item))
 	//only witnesses close by and the victim see a hit message.
 	user.visible_message(
 		"<span class='danger'>[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]</span>",
