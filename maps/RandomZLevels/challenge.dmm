@@ -201,7 +201,7 @@
 /turf/simulated/floor/airless,
 /area/awaymission/challenge/main)
 "aM" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -209,7 +209,7 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aN" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aO" = (
@@ -224,7 +224,7 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aQ" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
@@ -236,7 +236,7 @@
 /turf/simulated/floor/airless,
 /area/awaymission/challenge/main)
 "aS" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -254,24 +254,8 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aV" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless,
-/area/awaymission/challenge/main)
-"aW" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
@@ -290,10 +274,10 @@
 /turf/simulated/floor/airless,
 /area/awaymission/challenge/main)
 "ba" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/object_wall/erokez{
@@ -302,7 +286,7 @@
 /turf/environment/space,
 /area/awaymission/challenge/main)
 "bb" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/machinery/computer/telecrystals/boss{
@@ -311,7 +295,7 @@
 /turf/environment/space,
 /area/awaymission/challenge/main)
 "bc" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/machinery/computer/telecrystals/boss{
@@ -322,10 +306,10 @@
 	},
 /area/awaymission/challenge/main)
 "bd" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -337,7 +321,7 @@
 /turf/simulated/floor,
 /area/awaymission/challenge/main)
 "bf" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/machinery/door_control{
@@ -361,7 +345,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/challenge/main)
 "bi" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/object_wall/erokez{
@@ -377,7 +361,7 @@
 /turf/simulated/floor/airless,
 /area/awaymission/challenge/main)
 "bk" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/machinery/door_control{
@@ -403,7 +387,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/challenge/main)
 "bn" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/object_wall/erokez{
@@ -417,33 +401,33 @@
 /turf/simulated/floor/airless,
 /area/awaymission/challenge/main)
 "bp" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/object_wall/erokez{
 	icon_state = "13,3"
 	},
 /turf/environment/space,
 /area/awaymission/challenge/main)
 "bq" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "podhatch"
 	},
 /area/awaymission/challenge/main)
 "br" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/unsimulated/floor{
 	icon_state = "bar"
 	},
 /area/awaymission/challenge/main)
 "bs" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/unsimulated/wall{
@@ -467,14 +451,6 @@
 	icon_state = "warning"
 	},
 /area/awaymission/challenge/main)
-"bv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/awaymission/challenge/main)
 "bw" = (
 /obj/item/clothing/gloves/yellow,
 /turf/simulated/floor{
@@ -483,7 +459,7 @@
 	},
 /area/awaymission/challenge/main)
 "bx" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/unsimulated/wall{
@@ -512,31 +488,31 @@
 	},
 /area/awaymission/challenge/main)
 "bC" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bD" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bE" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bF" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/unsimulated/wall{
@@ -551,7 +527,7 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bH" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/unsimulated/wall{
@@ -560,7 +536,7 @@
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bI" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/unsimulated/wall{
@@ -598,7 +574,7 @@
 	},
 /area/awaymission/challenge/end)
 "bM" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/machinery/light,
@@ -615,7 +591,7 @@
 /turf/environment/space,
 /area/awaymission/challenge/main)
 "bO" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/machinery/light,
@@ -744,7 +720,7 @@
 	},
 /area/awaymission/challenge/end)
 "cg" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/environment/space,
@@ -765,7 +741,7 @@
 /turf/environment/space,
 /area/awaymission/challenge/end)
 "cj" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/environment/space,
@@ -818,15 +794,15 @@
 	},
 /area/awaymission/challenge/end)
 "cr" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/environment/space,
 /area)
 "cs" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/environment/space,
@@ -872,82 +848,50 @@
 /turf/simulated/floor/bluegrid,
 /area/awaymission/challenge/end)
 "cA" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/environment/space,
 /area)
 "cB" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/environment/space,
 /area)
 "cC" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/environment/space,
 /area)
 "cD" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/environment/space,
 /area)
 "cE" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/environment/space,
 /area)
 "cF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/awaymission/challenge/end)
-"cG" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/awaymission/challenge/end)
-"cH" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/awaymission/challenge/end)
-"cI" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/challenge/end)
@@ -1083,7 +1027,7 @@
 /turf/environment/space,
 /area/awaymission/challenge/end)
 "cV" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
@@ -1102,23 +1046,12 @@
 	},
 /area/awaymission/challenge/end)
 "cX" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/environment/space,
 /area)
-"cY" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/turf/simulated/floor/plating,
-/area/awaymission/challenge/end)
 "cZ" = (
 /obj/structure/table,
 /obj/item/weapon/paper/pamphlet,
@@ -1170,10 +1103,10 @@
 	},
 /area/awaymission/challenge/end)
 "de" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/environment/space,
 /area)
 "df" = (
@@ -1184,19 +1117,6 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/awaymission/challenge/end)
-"dg" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
 /area/awaymission/challenge/end)
 "dh" = (
 /obj/item/device/radio/intercom{
@@ -1611,7 +1531,7 @@ aH
 aH
 aH
 aO
-bv
+aV
 aX
 aH
 aH
@@ -1667,7 +1587,7 @@ aH
 aH
 aH
 aO
-aW
+aV
 aX
 aH
 aH
@@ -1677,7 +1597,7 @@ aH
 aH
 aH
 aO
-bv
+aV
 aX
 aH
 aH
@@ -1743,7 +1663,7 @@ aO
 aV
 aX
 aO
-aW
+aV
 aX
 aH
 aH
@@ -1793,7 +1713,7 @@ aR
 aH
 aH
 aO
-aW
+aV
 aX
 aH
 aH
@@ -1806,7 +1726,7 @@ aH
 aH
 aH
 aO
-aW
+aV
 aX
 aH
 aH
@@ -1814,7 +1734,7 @@ aH
 aH
 aH
 aO
-aW
+aV
 aX
 aH
 bC
@@ -1832,14 +1752,14 @@ bX
 ch
 cA
 cF
-cI
-cI
-cI
-cI
-cY
+cF
+cF
+cF
+cF
+cF
 df
-dg
-cY
+cF
+cF
 bJ
 "}
 (10,1,1) = {"
@@ -1897,7 +1817,7 @@ bX
 bX
 ch
 cA
-cG
+cF
 cJ
 cO
 cO
@@ -1941,7 +1861,7 @@ aH
 aH
 aH
 aO
-bv
+aV
 aX
 aH
 aH
@@ -1963,7 +1883,7 @@ bX
 bX
 ch
 cA
-cG
+cF
 cK
 cP
 cS
@@ -2007,12 +1927,12 @@ aH
 aH
 aH
 aO
-bv
+aV
 aX
 aH
 aH
 aO
-aW
+aV
 aX
 bA
 bA
@@ -2029,7 +1949,7 @@ bX
 bX
 ch
 cA
-cG
+cF
 cL
 cQ
 cT
@@ -2073,7 +1993,7 @@ aH
 aH
 aH
 aO
-aW
+aV
 aX
 aH
 aH
@@ -2095,7 +2015,7 @@ bX
 bX
 ch
 cA
-cG
+cF
 cM
 cR
 cU
@@ -2161,7 +2081,7 @@ bX
 bX
 ch
 cA
-cG
+cF
 cN
 cO
 cO
@@ -2189,7 +2109,7 @@ aH
 aH
 aH
 aO
-aW
+aV
 aX
 aH
 aH
@@ -2202,7 +2122,7 @@ aH
 aH
 aH
 aO
-aW
+aV
 aX
 aO
 aV
@@ -2210,7 +2130,7 @@ aX
 aH
 aH
 aO
-aW
+aV
 aX
 aH
 bC
@@ -2227,15 +2147,15 @@ bX
 bX
 ch
 cA
-cH
-cI
-cI
-cI
-cI
-cY
+cF
+cF
+cF
+cF
+cF
+cF
 df
-dg
-cY
+cF
+cF
 bJ
 "}
 (16,1,1) = {"
@@ -2271,7 +2191,7 @@ aH
 aH
 aH
 aO
-bv
+aV
 aX
 aH
 aH
@@ -2327,7 +2247,7 @@ aH
 aH
 aH
 aO
-aW
+aV
 aX
 aH
 aH
@@ -2337,7 +2257,7 @@ aH
 aH
 aH
 aO
-bv
+aV
 bw
 aH
 aH
@@ -2403,7 +2323,7 @@ aH
 aH
 aH
 bu
-aW
+aV
 aX
 aH
 aH

@@ -15,7 +15,7 @@ import { Window } from '../layouts';
 
 type Poll = {
   name: string;
-  ref: string;
+  type: string;
   canStart: BooleanLike;
   forceBlocked: BooleanLike;
   adminOnly: BooleanLike;
@@ -235,7 +235,7 @@ const ListPolls = (_, context) => {
                         textAlign="center"
                         onClick={() =>
                           act('toggleAdminOnly', {
-                            pollRef: poll.ref,
+                            pollRef: poll.type,
                           })}>
                         {poll.adminOnly ? 'Только админы' : 'Разрешено всем'}
                       </Button>
@@ -257,7 +257,7 @@ const ListPolls = (_, context) => {
                       content={poll.name}
                       onClick={() =>
                         act('callVote', {
-                          pollRef: poll.ref,
+                          pollRef: poll.type,
                         })} />
                   </Stack.Item>
                 </Stack>

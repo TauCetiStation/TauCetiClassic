@@ -313,15 +313,7 @@
 		return .
 
 	handle_phantom_move(NewLoc, Dir)
-	if(nutrition && stat != DEAD)
-		var/met_factor = get_metabolism_factor()
-		nutrition -= met_factor * 0.01
-		if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
-			var/pain = getHalLoss()
-			if(pain > 0)
-				nutrition -= met_factor * pain * (m_intent == "run" ? 0.02 : 0.01) // Which is actually a lot if you come to think of it.
-		if(m_intent == "run")
-			nutrition -= met_factor * 0.01
+
 	if(HAS_TRAIT(src, TRAIT_FAT) && m_intent == "run" && bodytemperature <= 360)
 		adjust_bodytemperature(2)
 
@@ -995,7 +987,7 @@
 /mob/living/carbon/proc/crawl_in_blood(obj/effect/decal/cleanable/blood/floor_blood)
 	return
 
-/mob/living/carbon/get_nutrition()
+/mob/living/carbon/get_satiation()
 	return nutrition + (reagents.get_reagent_amount("nutriment") \
 					+ reagents.get_reagent_amount("plantmatter") \
 					+ reagents.get_reagent_amount("protein") \
@@ -1316,3 +1308,16 @@
 				amount = max(amount, BODYTEMP_COOLING_MAX)
 
 	..(amount, min_temp, max_temp)
+
+/mob/living/carbon/handle_nutrition()
+	var/met_factor = get_metabolism_factor()
+	if(!met_factor)
+		return
+	var/nutrition_to_remove = 0
+	nutrition_to_remove += 0.16
+	if(HAS_TRAIT(src, TRAIT_STRESS_EATER))
+		var/pain = getHalLoss()
+		if(pain > 0)
+			nutrition_to_remove += pain * 0.01
+	nutrition_to_remove *= met_factor
+	nutrition = max(0.0, nutrition - nutrition_to_remove)

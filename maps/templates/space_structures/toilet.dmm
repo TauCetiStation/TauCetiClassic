@@ -7,7 +7,7 @@
 /turf/simulated/wall,
 /area/space)
 "c" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -21,7 +21,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "e" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor/plating,

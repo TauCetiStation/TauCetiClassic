@@ -149,7 +149,7 @@ var/global/world_topic_spam_protect_time = world.timeofday
 		s["version"] = game_version
 		s["mode"] = custom_event_msg ? "event" : master_mode
 		s["respawn"] = config ? abandon_allowed : 0
-		s["enter"] = enter_allowed
+		s["enter"] = !LAZYACCESS(SSlag_switch.measures, DISABLE_NON_OBSJOBS)
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
 		s["players"] = list()
@@ -437,7 +437,7 @@ var/global/shutdown_processed = FALSE
 	else
 		features += "<b>STARTING</b>"
 
-	if (!enter_allowed)
+	if (LAZYACCESS(SSlag_switch.measures, DISABLE_NON_OBSJOBS))
 		features += "closed"
 
 	features += abandon_allowed ? "respawn" : "no respawn"

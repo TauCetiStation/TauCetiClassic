@@ -294,14 +294,17 @@
 			if(iswallturf(T) || istype(T, /turf/simulated/mineral))
 				if(T.Adjacent(src))
 					T.attack_animal(src)
-			for(var/obj/structure/window/W in get_step(src, dir))
+			for(var/obj/structure/window/fulltile/W in T)
+				W.attack_animal(src)
+				return
+			for(var/obj/structure/window/thin/W in T)
 				if(W.dir == reverse_dir[dir]) // So that windows get smashed in the right order
 					W.attack_animal(src)
 					return
 			for(var/atom/A in T)
 				if(!A.Adjacent(src))
 					continue
-				if(istype(A, /obj/structure/window) || istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack) || istype(A, /obj/machinery/door/window))
+				if(istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/grille) || istype(A, /obj/structure/rack) || istype(A, /obj/machinery/door/window))
 					A.attack_animal(src)
 				if(istype(A, /obj/item/tape))
 					var/obj/item/tape/Tp = A
