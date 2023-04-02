@@ -112,14 +112,8 @@
 	M.log_combat(user, "attacked with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 
 	var/power = force
-	power = apply_skill_bonus(user, power, list(/datum/skill/melee = SKILL_LEVEL_NOVICE), 0.15) // 15% for each level
-	if(ishuman(user) && damtype == BRUTE)
-		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/external/BP = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
-		if(BP.pumped)
-			power += max(round((PARABOLIC_SCALING(power, 1, -0.01) * BP.pumped * 0.5)), 0) //We need a pumped force multiplied by parabolic scaled item's force with a borders of 1 to 0
-	if(HULK in user.mutations)
-		power *= 2
+	power = scale_attack_bonuses(power, user, damtype)
+
 	if(!ishuman(M))
 		if(isslime(M))
 			var/mob/living/carbon/slime/slime = M
@@ -288,14 +282,8 @@
 		return
 
 	var/power = attacking_item.force
-	power = apply_skill_bonus(user, power, list(/datum/skill/melee = SKILL_LEVEL_NOVICE), 0.15) // 15% for each level
-	if(ishuman(user) && attacking_item.damtype == BRUTE)
-		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/external/BP = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
-		if(BP.pumped)
-			power += max(round((PARABOLIC_SCALING(power, 1, -0.01) * BP.pumped * 0.5)), 0) //We need a pumped force multiplied by parabolic scaled item's force with a borders of 1 to 0
-	if(HULK in user.mutations)
-		power *= 2
+
+	power = scale_attack_bonuses(power, user, attacking_item.damtype)
 
 	var/damage = take_damage(power, attacking_item.damtype, MELEE, 1, get_dir(src, attacking_item))
 	//only witnesses close by and the victim see a hit message.
@@ -308,3 +296,14 @@
 
 /area/attacked_by(obj/item/attacking_item, mob/living/user)
 	CRASH("areas are NOT supposed to have attacked_by() called on them!")
+
+/proc/scale_attack_bonuses(power, mob/livling/user, damtype)
+	power = apply_skill_bonus(user, power, list(/datum/skill/melee = SKILL_LEVEL_NOVICE), 0.15) // 15% for each level
+	if(ishuman(user) && damtype == BRUTE)
+		var/mob/living/carbon/human/H = user
+		var/obj/item/organ/external/BP = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
+		if(BP.pumped)
+			power += max(round((PARABOLIC_SCALING(power, 1, -0.01) * BP.pumped * 0.5)), 0) //We need a pumped force multiplied by parabolic scaled item's force with a borders of 1 to 0
+	if(HULK in user.mutations)
+		power *= 2
+	return power
