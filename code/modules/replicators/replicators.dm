@@ -302,6 +302,8 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 /mob/living/simple_animal/hostile/replicator/update_icon()
 	if(is_controlled() || stat == DEAD)
 		return
+	if(!indicator)
+		return
 	overlays -= indicator
 	indicator.color = state2color[state]
 	overlays += indicator
