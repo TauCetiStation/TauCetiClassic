@@ -297,7 +297,7 @@
 /area/attacked_by(obj/item/attacking_item, mob/living/user)
 	CRASH("areas are NOT supposed to have attacked_by() called on them!")
 
-/proc/scale_attack_bonuses(power, mob/livling/user, damtype)
+/proc/scale_attack_bonuses(power, mob/living/user, damtype)
 	power = apply_skill_bonus(user, power, list(/datum/skill/melee = SKILL_LEVEL_NOVICE), 0.15) // 15% for each level
 	if(ishuman(user) && damtype == BRUTE)
 		var/mob/living/carbon/human/H = user
