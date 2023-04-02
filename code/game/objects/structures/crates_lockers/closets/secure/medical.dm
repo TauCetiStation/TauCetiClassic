@@ -127,6 +127,7 @@
 	new /obj/item/airbag(src)
 	new /obj/item/weapon/storage/pouch/medical_supply(src)
 	new /obj/item/weapon/storage/lockbox/medal/cmo(src)
+	new /obj/item/weapon/holosign_creator/quarantine(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "Animal Control"

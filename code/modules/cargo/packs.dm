@@ -436,6 +436,17 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Shock Mines Crate"
 	group = "Security"
 
+/datum/supply_pack/holosign_sec
+	name = "Security HoloBarrier Projectors"
+	cost = 5000
+	contains = list(/obj/item/weapon/holosign_creator/security,
+					/obj/item/weapon/holosign_creator/security,
+					/obj/item/weapon/holosign_creator/security,
+					/obj/item/weapon/holosign_creator/security
+					)
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "Security HoloBarrier Projectors"
+	group = "Security"
 //----------------------------------------------
 //-----------------HOSPITALITY------------------
 //----------------------------------------------
@@ -1123,6 +1134,29 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Singularity Buster Rockets Crate"
 	group = "Engineering"
 
+/datum/supply_pack/holosign_atmos
+	name = "ATMOS HoloBarrier projectors"
+	cost = 5000
+	contains  = list(/obj/item/weapon/holosign_creator/atmos,
+					/obj/item/weapon/holosign_creator/atmos,
+					/obj/item/weapon/holosign_creator/atmos,
+					/obj/item/weapon/holosign_creator/atmos
+				)
+	crate_type = /obj/structure/closet/crate/secure/engisec
+	crate_name = "ATMOS HoloBarrier projectors crate"
+	group = "Engineering"
+
+/datum/supply_pack/holosign_atmos
+	name = "Engineering HoloBarrier projector"
+	cost = 3000
+	contains  = list(/obj/item/weapon/holosign_creator/engineering,
+					/obj/item/weapon/holosign_creator/engineering,
+					/obj/item/weapon/holosign_creator/engineering,
+					/obj/item/weapon/holosign_creator/engineering)
+	crate_type = /obj/structure/closet/crate/secure/engisec
+	crate_name = "Engineering HoloBarrier projector"
+	group = "Engineering"
+
 //----------------------------------------------
 //------------MEDICAL / SCIENCE-----------------
 //----------------------------------------------
@@ -1319,6 +1353,17 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(/obj/machinery/life_assist/cardiopulmonary_bypass)
 	crate_type = /obj/structure/largecrate
 	crate_name = "CBM crate"
+	group = "Medical / Science"
+
+/datum/supply_pack/holosign_vir
+	name = "PANDEMIC HoloBarrier projectors"
+	contains = list(/obj/item/weapon/holosign_creator/quarantine,
+					/obj/item/weapon/holosign_creator/quarantine,
+					/obj/item/weapon/holosign_creator/quarantine,
+					/obj/item/weapon/holosign_creator/quarantine)
+	cost = 3000
+	crate_type = /obj/structure/closet/crate/medical
+	crate_name = "PANDEMIC HoloBarrier projectors"
 	group = "Medical / Science"
 //----------------------------------------------
 //-----------------HYDROPONICS------------------

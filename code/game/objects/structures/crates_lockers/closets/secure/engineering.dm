@@ -36,6 +36,7 @@
 	new /obj/item/taperoll/engineering(src)
 	new /obj/item/weapon/storage/pouch/engineering_supply(src)
 	new /obj/item/weapon/gun/energy/pyrometer/ce(src)
+	new /obj/item/weapon/holosign_creator/atmos(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "Electrical Supplies"
@@ -104,6 +105,7 @@
 	new /obj/item/weapon/cartridge/engineering(src)
 	new /obj/item/taperoll/engineering(src)
 	new /obj/item/weapon/gun/energy/pyrometer/engineering(src)
+	new /obj/item/weapon/holosign_creator/engineering(src)
 
 /obj/structure/closet/secure_closet/atmos_personal
 	name = "Technician's Locker"

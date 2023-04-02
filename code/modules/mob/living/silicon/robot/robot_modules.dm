@@ -103,6 +103,7 @@
 	modules += new /obj/item/device/healthanalyzer(src)
 	modules += new /obj/item/weapon/reagent_containers/food/snacks/soap/nanotrasen(src)
 	modules += new /obj/item/device/gps/cyborg(src)
+	modules += new/obj/item/weapon/holosign_creator/atmos(src)
 	emag = new /obj/item/weapon/melee/energy/sword(src)
 
 /obj/item/weapon/robot_module/medical
@@ -192,6 +193,7 @@
 	modules += new /obj/item/weapon/gripper(src)
 	modules += new /obj/item/weapon/matter_decompiler(src)
 	modules += new /obj/item/device/gps/cyborg(src)
+	modules += new/obj/item/weapon/holosign_creator/atmos(src)
 
 	emag = new /obj/item/borg/stun(src)
 
@@ -418,6 +420,7 @@
 	modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg(src)
 	modules += new /obj/item/weapon/crowbar/red(src)
 	modules += new /obj/item/device/gps/cyborg(src)
+	modules += new/obj/item/weapon/holosign_creator/security(src)
 
 	emag = new /obj/item/weapon/gun/grenadelauncher/cyborg(src)
 
