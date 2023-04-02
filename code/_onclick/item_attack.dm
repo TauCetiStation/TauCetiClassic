@@ -289,7 +289,7 @@
 
 	var/power = attacking_item.force
 	power = apply_skill_bonus(user, power, list(/datum/skill/melee = SKILL_LEVEL_NOVICE), 0.15) // 15% for each level
-	if(ishuman(user))
+	if(ishuman(user) && attacking_item.damtype == BRUTE)
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/external/BP = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
 		if(BP.pumped)
