@@ -160,6 +160,7 @@
 	drops = list(/obj/item/weapon/shard/phoron)
 
 	max_integrity = 120
+	damage_deflection = 2
 
 /obj/structure/window/thin/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 32000)
@@ -178,6 +179,7 @@
 	drops = list(/obj/item/stack/rods, /obj/item/weapon/shard)
 
 	max_integrity = 100
+	damage_deflection = 5
 
 /**
  * Fulltile reinforced phoron
@@ -192,6 +194,7 @@
 	drops = list(/obj/item/stack/rods, /obj/item/weapon/shard/phoron)
 
 	max_integrity = 160
+	damage_deflection = 7
 
 /obj/structure/window/fulltile/reinforced/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
@@ -206,6 +209,8 @@
 	opacity = 1
 
 	icon_state = "twindow"
+
+	damage_deflection = 3
 
 /**
 * Thin reinforced holo
