@@ -59024,7 +59024,8 @@
 "cox" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced/polarized{
-	id = "kitchen"
+	id = "kitchen";
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/civilian/kitchen)
@@ -59121,7 +59122,6 @@
 "coM" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced/polarized{
-	grilled = 1;
 	id = "Library"
 	},
 /turf/simulated/floor/plating,
