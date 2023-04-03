@@ -255,7 +255,8 @@
 /area/awaymission/challenge/main)
 "aV" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/airless,
 /area/awaymission/challenge/main)
@@ -891,7 +892,8 @@
 /area)
 "cF" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/challenge/end)
