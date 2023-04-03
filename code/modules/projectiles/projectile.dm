@@ -387,8 +387,14 @@
 		result = A
 		bumped = TRUE
 		return
-	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window))
+	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window/thin))
 		return
+	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window/fulltile))
+		var/obj/structure/window/fulltile/FTW = A
+		if(!FTW.grilled)
+			return
+		else if(checkpass(PASSGRILLE))
+			return
 	if(checkpass(PASSGRILLE) && istype(A, /obj/structure/grille))
 		return
 	result = A

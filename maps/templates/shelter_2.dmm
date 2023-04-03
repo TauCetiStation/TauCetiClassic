@@ -30,7 +30,7 @@
 /turf/simulated/floor/pod,
 /area/custom/survivalpod)
 "j" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/stool/bed/pod,
@@ -56,7 +56,7 @@
 /turf/simulated/floor/pod,
 /area/custom/survivalpod)
 "v" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 /obj/structure/table,
 /turf/simulated/floor/pod,
@@ -109,7 +109,7 @@
 /area/custom/survivalpod)
 "J" = (
 /obj/item/device/gps/computer,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/pod,
@@ -131,8 +131,8 @@
 /turf/simulated/floor/carpet/blue,
 /area/custom/survivalpod)
 "X" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/stool/bed/pod,

@@ -171,9 +171,9 @@
 				if(D.density)
 					continue check_next_dir
 
-			var/obj/structure/window/W = locate() in T
+			var/obj/structure/window/thin/W = locate() in T
 
-			if(W && W.density)
+			if(W && W.density && dirn == turn(dir,180)) // if window is facing us
 				continue
 
 			new /obj/structure/alien/weeds(T, linked_node)

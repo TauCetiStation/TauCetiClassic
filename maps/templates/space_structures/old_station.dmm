@@ -28,7 +28,7 @@
 	},
 /area/space_structures/old_station/central)
 "af" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -43,8 +43,8 @@
 	},
 /area/space_structures/old_station/warehouse)
 "aq" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -290,10 +290,9 @@
 	},
 /area/space_structures/old_station/right)
 "bC" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/space_structures/carp_space)
 "bD" = (
@@ -509,8 +508,8 @@
 /obj/structure/alien/weeds/node,
 /obj/effect/decal/remains/human,
 /obj/item/clothing/head/caphat{
-	pixel_y = 5;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 5
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -711,10 +710,9 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -869,13 +867,6 @@
 	icon_state = "blue"
 	},
 /area/space_structures/old_station/left)
-"eV" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/carp_space)
 "eW" = (
 /obj/structure/alien/weeds/node,
 /obj/structure/mineral_door/resin,
@@ -911,13 +902,6 @@
 	dir = 9;
 	icon_state = "blue"
 	},
-/area/space_structures/old_station/left)
-"fm" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/turf/simulated/floor/plating,
 /area/space_structures/old_station/left)
 "fn" = (
 /obj/item/weapon/reagent_containers/syringe{
@@ -977,10 +961,9 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "fM" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -1027,7 +1010,7 @@
 /turf/simulated/wall,
 /area/space_structures/old_station/left)
 "gf" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/machinery/door/window{
 	dir = 8
 	},
@@ -1247,10 +1230,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/largecell{
+	cell_type = 1000;
 	dir = 1;
 	name = "RnD APC";
-	pixel_y = 25;
-	cell_type = 1000
+	pixel_y = 25
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -1307,10 +1290,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/largecell{
+	cell_type = 1000;
 	dir = 1;
 	name = "Brig APC";
 	pixel_x = 3;
-	cell_type = 1000;
 	pixel_y = 30
 	},
 /turf/simulated/floor{
@@ -1319,7 +1302,7 @@
 	},
 /area/space_structures/old_station/central/brig)
 "hI" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/table/reinforced,
 /turf/simulated/floor{
 	dir = 10;
@@ -1437,15 +1420,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right)
-"ij" = (
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/space_structures/carp_space)
 "ik" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -1517,7 +1491,7 @@
 	},
 /area/space_structures/old_station/right)
 "iA" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /turf/environment/space,
@@ -1556,10 +1530,9 @@
 	},
 /area/space_structures/old_station/right/rnd)
 "iH" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/solars_c)
 "iJ" = (
@@ -1909,10 +1882,10 @@
 	},
 /area/space_structures/old_station/central)
 "kR" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -2199,15 +2172,6 @@
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/central/solars_c)
-"mW" = (
-/obj/structure/grille{
-	destroyed = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/old_station/left/med)
 "mX" = (
 /obj/structure/table,
 /obj/item/trash/tray,
@@ -2228,15 +2192,8 @@
 	icon_state = "purple"
 	},
 /area/space_structures/old_station/right/rnd)
-"mZ" = (
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/structure/grille,
-/turf/simulated/floor/plating,
-/area/space_structures/old_station/left/med)
 "na" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/table/reinforced,
 /obj/item/weapon/lighter/zippo{
 	pixel_x = 8;
@@ -2384,7 +2341,7 @@
 	},
 /area/space_structures/old_station/right)
 "nP" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station)
 "nQ" = (
@@ -2407,7 +2364,7 @@
 	},
 /area/space_structures/old_station/central)
 "oa" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -2887,10 +2844,10 @@
 /turf/simulated/floor,
 /area/space_structures/old_station/left/med)
 "rt" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
 	icon_state = "white"
@@ -2936,7 +2893,7 @@
 	},
 /area/space_structures/old_station/central/bridge)
 "rF" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -2945,8 +2902,8 @@
 "rN" = (
 /obj/structure/table,
 /obj/item/weapon/flora/deskleaf{
-	pixel_y = 5;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = 5
 	},
 /obj/item/trash/candy,
 /turf/simulated/floor{
@@ -3131,10 +3088,9 @@
 	},
 /area/space_structures/old_station/central/brig)
 "tE" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -3158,7 +3114,7 @@
 /area/space_structures/old_station/central)
 "tP" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/item/device/mmi/posibrain,
@@ -3196,10 +3152,10 @@
 /area/space_structures/old_station/central)
 "tV" = (
 /obj/structure/table,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/item/weapon/storage/visuals/surgery/full,
@@ -3219,7 +3175,7 @@
 	},
 /area/space_structures/old_station/central/brig)
 "uc" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
 /obj/structure/lattice,
@@ -3345,8 +3301,8 @@
 "uN" = (
 /obj/machinery/light,
 /turf/simulated/floor{
-	icon_state = "neutralcorner";
-	dir = 8
+	dir = 8;
+	icon_state = "neutralcorner"
 	},
 /area/space_structures/old_station/central)
 "uO" = (
@@ -3397,10 +3353,9 @@
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/brig)
 "vh" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central)
 "vi" = (
@@ -3450,7 +3405,7 @@
 	},
 /area/space_structures/old_station/central)
 "vv" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/disposalpipe/broken{
 	dir = 4
 	},
@@ -3475,8 +3430,8 @@
 	},
 /obj/structure/sign/directions/engineering{
 	buildable_sign = 0;
-	pixel_y = 32;
-	dir = 1
+	dir = 1;
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -3565,10 +3520,9 @@
 	},
 /area/space_structures/old_station/left)
 "vU" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/bridge)
 "vW" = (
@@ -3947,8 +3901,8 @@
 "xZ" = (
 /obj/structure/rack,
 /obj/item/weapon/stock_parts/cell/bluespace{
-	pixel_y = 1;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 1
 	},
 /obj/item/weapon/stock_parts/cell/high{
 	charge = 100;
@@ -3960,10 +3914,9 @@
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right)
 "ya" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/left)
 "yc" = (
@@ -3985,15 +3938,15 @@
 	amount = 25
 	},
 /obj/item/stack/sheet/mineral/gold{
+	amount = 15;
 	pixel_x = 1;
-	pixel_y = -2;
-	amount = 15
+	pixel_y = -2
 	},
 /obj/item/stack/sheet/mineral/diamond{
+	amount = 3;
 	layer = 4.1;
 	pixel_x = -6;
-	pixel_y = 6;
-	amount = 3
+	pixel_y = 6
 	},
 /obj/item/stack/sheet/mineral/uranium{
 	amount = 8
@@ -4039,7 +3992,7 @@
 /turf/environment/space,
 /area/space_structures/old_station/central/solars_c)
 "yw" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/environment/space,
 /area/space)
 "yy" = (
@@ -4222,8 +4175,8 @@
 	},
 /obj/structure/sign/directions/engineering{
 	buildable_sign = 0;
-	pixel_y = 34;
-	dir = 8
+	dir = 8;
+	pixel_y = 34
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -4347,20 +4300,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/space_structures/old_station/central/solars_c)
-"Ar" = (
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/structure/grille{
-	destroyed = 1
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/old_station/left)
 "As" = (
 /obj/structure/table,
 /obj/item/weapon/kitchen/utensil/pfork{
-	pixel_y = 11;
-	pixel_x = 13
+	pixel_x = 13;
+	pixel_y = 11
 	},
 /obj/item/trash/snack_bowl,
 /turf/simulated/floor{
@@ -4369,10 +4313,9 @@
 	},
 /area/space_structures/old_station/central/kitchen)
 "Ay" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
 /turf/simulated/wall/r_wall,
 /area/space_structures/old_station/central)
 "AB" = (
@@ -4521,9 +4464,9 @@
 	control_area = "OldStation";
 	dir = 4;
 	name = "Station turret control";
+	pixel_x = -3;
 	pixel_y = 1;
-	req_access = list(73);
-	pixel_x = -3
+	req_access = list(73)
 	},
 /turf/simulated/wall/r_wall,
 /area/space_structures/old_station/central/bridge)
@@ -4588,11 +4531,11 @@
 "BY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc/largecell{
+	cell_type = 1000;
 	dir = 1;
 	name = "R Station APC";
-	pixel_y = 27;
 	pixel_x = 1;
-	cell_type = 1000
+	pixel_y = 27
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -4636,8 +4579,8 @@
 /turf/simulated/floor/carpet/red,
 /area/space_structures/old_station/central)
 "Cf" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced,
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -4654,7 +4597,7 @@
 	},
 /area/space_structures/old_station/central/solars_c)
 "Cj" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -4816,8 +4759,8 @@
 /area/space_structures/old_station/central)
 "CZ" = (
 /obj/item/weapon/storage/fancy/donut_box{
-	pixel_y = 9;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 9
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/central/brig)
@@ -4979,10 +4922,10 @@
 	},
 /area/space_structures/old_station/right/rnd)
 "DR" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor/whitegreed,
 /area/space_structures/old_station/satellite)
 "DT" = (
@@ -5045,8 +4988,8 @@
 /obj/item/weapon/storage/firstaid/regular{
 	empty = 1;
 	name = "First-Aid (empty)";
-	pixel_y = -8;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = -8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -5152,14 +5095,13 @@
 	},
 /area/space_structures/old_station/satellite)
 "EB" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/hydro)
 "EF" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper{
 	info = "Медицинский ХУД с встроенным прибором ночного видения. В этом ХУДе установлена продвинутая система слежения за здоровьем, которая высчитывает информацию напрямую с тела, а не с датчиков на костюме."
@@ -5348,8 +5290,8 @@
 	dir = 4
 	},
 /obj/structure/sign/directions/command{
-	pixel_y = 23;
-	dir = 4
+	dir = 4;
+	pixel_y = 23
 	},
 /obj/structure/sign/directions/science{
 	buildable_sign = 0;
@@ -5529,10 +5471,10 @@
 "GP" = (
 /obj/machinery/vending/hydroseeds,
 /obj/machinery/power/apc/largecell{
+	cell_type = 1000;
 	dir = 1;
 	name = "Hydroponic APC";
-	pixel_y = 25;
-	cell_type = 1000
+	pixel_y = 25
 	},
 /obj/structure/cable{
 	d2 = 2;
@@ -5708,7 +5650,7 @@
 	},
 /area/space_structures/old_station/left/med)
 "HM" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/structure/rack,
@@ -5951,7 +5893,7 @@
 /turf/simulated/floor/carpet/green,
 /area/space_structures/old_station/central)
 "Jd" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -6017,9 +5959,8 @@
 /turf/simulated/floor,
 /area/space_structures/old_station/right/rnd)
 "Jz" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/left/med)
@@ -6067,10 +6008,10 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/largecell{
+	cell_type = 1000;
 	dir = 1;
 	name = "Kitchen APC";
 	pixel_x = -3;
-	cell_type = 1000;
 	pixel_y = 30
 	},
 /turf/simulated/floor{
@@ -6116,11 +6057,8 @@
 	},
 /area/space_structures/old_station/central)
 "Ki" = (
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/structure/grille{
-	destroyed = 1
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
@@ -6242,7 +6180,7 @@
 	},
 /area/space_structures/old_station/central/brig)
 "KV" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/machinery/door/window{
 	dir = 4
 	},
@@ -6314,15 +6252,6 @@
 	icon_state = "whitepurple"
 	},
 /area/space_structures/old_station/right)
-"Ls" = (
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/structure/grille{
-	destroyed = 1
-	},
-/turf/simulated/floor/plating,
-/area/space_structures/old_station/central/brig)
 "Lw" = (
 /obj/structure/table,
 /obj/item/weapon/tank/emergency_oxygen/double,
@@ -6436,18 +6365,17 @@
 	},
 /area/space_structures/old_station/central)
 "Mc" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
 /obj/structure/sign/warning/docking,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/left)
 "Me" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/whitegreed,
@@ -6618,9 +6546,8 @@
 /turf/simulated/wall/r_wall,
 /area/space_structures/old_station/warehouse)
 "Nv" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/whitegreed,
 /area/space_structures/old_station/satellite)
@@ -6867,8 +6794,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/item/device/flashlight/seclite{
-	pixel_y = 8;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 8
 	},
 /obj/item/device/flashlight/flare,
 /turf/simulated/floor{
@@ -7046,7 +6973,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central)
 "PM" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/ash,
@@ -7176,7 +7103,7 @@
 	},
 /area/space_structures/old_station/central/brig)
 "QR" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/lattice,
 /turf/environment/space,
 /area/space)
@@ -7247,10 +7174,9 @@
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/left)
 "Rr" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/brig)
 "Rt" = (
@@ -7271,8 +7197,8 @@
 	dir = 5
 	},
 /obj/structure/sign/directions/command{
-	pixel_y = 28;
-	dir = 4
+	dir = 4;
+	pixel_y = 28
 	},
 /obj/structure/sign/directions/science{
 	buildable_sign = 0;
@@ -7494,10 +7420,10 @@
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/solars_c)
 "SE" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor{
@@ -7589,10 +7515,9 @@
 	},
 /area/space_structures/old_station/central/solars_c)
 "Tv" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/kitchen)
 "Tw" = (
@@ -7651,10 +7576,9 @@
 /turf/simulated/mineral,
 /area/space_structures/old_station/central/solars_c)
 "TE" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right/rnd)
 "TF" = (
@@ -7686,8 +7610,8 @@
 /obj/machinery/door_control{
 	id = "Old_station";
 	name = "Shutters Control";
-	req_access = list(73);
-	pixel_y = -26
+	pixel_y = -26;
+	req_access = list(73)
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurple"
@@ -7791,10 +7715,9 @@
 	},
 /area/space_structures/old_station/central/hydro)
 "UA" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
 /turf/simulated/wall/r_wall,
 /area/space_structures/old_station/left)
 "UB" = (
@@ -7808,10 +7731,9 @@
 	},
 /area/space_structures/old_station/left/med)
 "UC" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right)
 "UD" = (
@@ -7845,7 +7767,7 @@
 	},
 /area/space_structures/old_station/satellite)
 "UK" = (
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper{
 	info = "Старая модель скафандра и шлема, использовавшаяся ударными группами наемников Горлекс. Этот бронескафандр, несмотря на то что является очень устаревшей моделью, невероятно прочен, а также имеет очень сложное внутренее устройство."
@@ -8170,8 +8092,8 @@
 	pixel_y = 30
 	},
 /obj/item/weapon/reagent_containers/hypospray{
-	pixel_y = 4;
-	pixel_x = 13
+	pixel_x = 13;
+	pixel_y = 4
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -8241,8 +8163,8 @@
 /area/space_structures/old_station/central/hydro)
 "WZ" = (
 /obj/item/weapon/scalpel/manager{
-	pixel_y = -9;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = -9
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -8298,10 +8220,9 @@
 	},
 /area/space_structures/old_station/central/bridge)
 "XB" = (
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
-/obj/structure/grille,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -8462,9 +8383,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/largecell{
+	cell_type = 1000;
 	dir = 1;
 	name = "C Station APC";
-	cell_type = 1000;
 	pixel_y = 29
 	},
 /turf/simulated/floor{
@@ -8529,8 +8450,8 @@
 /area/space_structures/old_station/left)
 "Zh" = (
 /obj/item/pizzabox/vegetable{
-	pixel_y = -6;
-	pixel_x = -21
+	pixel_x = -21;
+	pixel_y = -6
 	},
 /obj/effect/decal/cleanable/blood/writing,
 /turf/simulated/floor,
@@ -8820,7 +8741,7 @@ we
 we
 JF
 Jz
-mW
+Jz
 Jz
 Jz
 JF
@@ -9241,7 +9162,7 @@ ge
 JF
 IJ
 rp
-mZ
+Jz
 JF
 JF
 we
@@ -9304,13 +9225,13 @@ wZ
 ZB
 eO
 Ah
-fm
-fm
-fm
+ya
+ya
+ya
 Ha
 wf
-eV
-eV
+bC
+bC
 Us
 hq
 AK
@@ -9538,15 +9459,15 @@ ya
 ya
 ya
 Ah
-fm
-fm
-Ar
-fm
-fm
+ya
+ya
+ya
+ya
+ya
 Ah
-fm
-fm
-fm
+ya
+ya
+ya
 Ha
 Ha
 Ha
@@ -9672,9 +9593,9 @@ gO
 gO
 gO
 Us
-ij
+Ki
 ei
-ij
+Ki
 DF
 yn
 yn
@@ -11000,7 +10921,7 @@ Ou
 wi
 Ou
 Ou
-fm
+ya
 Ou
 Ou
 "}
@@ -11480,7 +11401,7 @@ Ou
 wi
 Ou
 Ou
-fm
+ya
 Ou
 Ou
 "}
@@ -12238,7 +12159,7 @@ kK
 Fd
 gP
 Rr
-Ls
+Rr
 Rr
 gP
 nb

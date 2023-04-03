@@ -1046,15 +1046,12 @@ var/global/list/airlock_overlays = list()
 	bolt()
 	return
 
-/obj/machinery/door/airlock/proc/change_paintjob(obj/item/C, mob/user)
-	var/obj/item/weapon/airlock_painter/W
-	if(istype(C, /obj/item/weapon/airlock_painter))
-		W = C
-	else
+/obj/machinery/door/airlock/proc/change_paintjob(obj/item/weapon/airlock_painter/W, mob/user)
+	if(!istype(W))
 		to_chat(user, "If you see this, it means airlock/change_paintjob() was called with something other than an airlock painter. Check your code!")
 		return
 
-	if(!W.can_use(user))
+	if(!W.can_use(user, 1))
 		return
 
 	var/list/optionlist
@@ -1064,7 +1061,7 @@ var/global/list/airlock_overlays = list()
 		optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Mining", "Maintenance", "External", "High Security")
 
 	var/paintjob = input(user, "Please select a paintjob for this airlock.") in optionlist
-	if((!Adjacent(usr) && loc != usr) || !W.use(10))
+	if(!W.use_tool(src, user, 50, 1))
 		return
 	switch(paintjob)
 		if("Public")
