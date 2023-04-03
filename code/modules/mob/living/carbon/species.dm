@@ -158,6 +158,8 @@
 
 	var/default_mood_event
 
+	var/prothesis_icobase = 'icons/mob/human_races/robotic.dmi'
+
 
 /datum/species/New()
 	blood_datum = new blood_datum_path
@@ -400,7 +402,11 @@
 	darksight = 8
 	nighteyes = 1
 
-	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 10
+	breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
+	breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
+	breath_cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 60
+
+	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 20
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
 	cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 60
 
@@ -580,6 +586,8 @@
 			)
 
 	skeleton_type = SKELETON_VOX
+
+	prothesis_icobase = 'icons/mob/human_races/robotic_vox.dmi'
 
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	..()

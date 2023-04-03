@@ -30,7 +30,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		icon_state = "[icon_state]"
 		base_state = icon_state
 
-	color = color_windows()
+	color = SSstation_coloring.get_default_color()
 
 /obj/machinery/door/window/Destroy()
 	density = FALSE
@@ -82,22 +82,19 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	qdel(src)
 
 //painter
-/obj/machinery/door/window/proc/change_paintjob(obj/item/C, mob/user)
-	var/obj/item/weapon/airlock_painter/W
-	if(istype(C, /obj/item/weapon/airlock_painter))
-		W = C
-	else
+/obj/machinery/door/window/proc/change_paintjob(obj/item/weapon/airlock_painter/W, mob/user)
+	if(!istype(W))
 		return
 
 	if(!W.can_use(user, 1))
 		return
 
 	var/new_color = input(user, "Choose color!") as color|null
-	if(!new_color) return
 
-	if((!Adjacent(usr) && src.loc != usr) || !W.use(1))
+	if(!new_color)
 		return
-	else
+
+	if(W.use_tool(src, user, 50, 1))
 		color = new_color
 
 /obj/machinery/door/window/Bumped(atom/movable/AM)

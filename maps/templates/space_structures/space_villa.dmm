@@ -268,15 +268,10 @@
 /turf/simulated/floor/beach/sand,
 /area/space_structures/space_villa)
 "jT" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
 /obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
+	},
 /turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "kf" = (
@@ -590,15 +585,6 @@
 	icon_state = "platebotc"
 	},
 /area/space_structures/space_villa)
-"uP" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/space_structures/space_villa)
 "vh" = (
 /obj/structure/flora/ausbushes/leafybush,
 /turf/simulated/floor/grass,
@@ -627,7 +613,7 @@
 	pixel_y = 4
 	},
 /obj/structure/curtain/open/shower,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -904,18 +890,6 @@
 	},
 /obj/item/device/camera/lomo,
 /turf/simulated/floor/wood,
-/area/space_structures/space_villa)
-"GS" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
 /area/space_structures/space_villa)
 "Hj" = (
 /obj/machinery/light/small,
@@ -2563,7 +2537,7 @@ kN
 Vg
 Bf
 Bi
-uP
+jT
 fZ
 fZ
 NF
@@ -2615,7 +2589,7 @@ dw
 Vg
 Bf
 VR
-GS
+jT
 Ji
 fZ
 zo
@@ -3031,7 +3005,7 @@ wq
 ex
 Kn
 By
-uP
+jT
 fZ
 fZ
 nD
@@ -3083,7 +3057,7 @@ br
 TQ
 rb
 ZO
-GS
+jT
 fZ
 fZ
 fZ

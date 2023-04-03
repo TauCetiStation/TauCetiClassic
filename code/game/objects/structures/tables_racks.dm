@@ -495,6 +495,7 @@
 	max_integrity = 200
 	parts = /obj/item/weapon/table_parts/reinforced
 	flipable = FALSE
+	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table/reinforced/stall)
 
 	var/status = 2
 
@@ -554,6 +555,132 @@
 		return
 
 	return ..()
+
+/obj/lot_holder
+	name = "lot holder"
+	icon = 'icons/effects/32x32.dmi'
+	icon_state = "blank"
+	anchored = TRUE
+
+	flags = ABSTRACT
+
+	var/obj/structure/table/table_attached_to
+	var/obj/item/held_Item
+
+/obj/lot_holder/atom_init(mapload, obj/item/Item, obj/structure/table/Table)
+	. = ..()
+
+	table_attached_to = Table
+	RegisterSignal(table_attached_to, list(COMSIG_PARENT_QDELETING), .proc/on_table_destroy)
+
+	held_Item = Item
+	Item.forceMove(src)
+
+	add_overlay(Item)
+	name = Item.name
+
+	var/old_invisibility = invisibility
+	invisibility = INVISIBILITY_ABSTRACT
+	VARSET_IN(src, invisibility, old_invisibility, PUTDOWN_ANIMATION_DURATION)
+
+/obj/lot_holder/examine(mob/user)
+	held_Item.examine(user)
+
+/obj/lot_holder/Destroy()
+	held_Item.forceMove(table_attached_to.loc)
+	held_Item = null
+	table_attached_to = null
+	return ..()
+
+/obj/lot_holder/proc/on_table_destroy()
+	qdel(src)
+
+/obj/lot_holder/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/card/id))
+		table_attached_to.visible_message("<span class='info'>[user] прикладывает карту к столу.</span>")
+		var/obj/item/weapon/card/id/Card = W
+		scan_card(Card, user)
+	else if(istype(W, /obj/item/device/pda) && W.GetID())
+		table_attached_to.visible_message("<span class='info'>[user] прикладывает КПК к столу.</span>")
+		var/obj/item/weapon/card/id/Card = W.GetID()
+		scan_card(Card, user)
+	else
+		return ..()
+
+/obj/lot_holder/proc/scan_card(obj/item/weapon/card/id/Card, mob/user)
+	var/datum/money_account/Buyer = get_account(Card.associated_account_number)
+	var/datum/money_account/Seller = get_account(held_Item.price_tag["account"])
+
+	if(!Buyer)
+		return
+
+	var/attempt_pin = 0
+	if(Buyer.security_level > 0)
+		attempt_pin = input("Введите ПИН-код", "Прилавок") as num
+		if(isnull(attempt_pin))
+			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
+			return
+		Buyer = attempt_account_access(Card.associated_account_number, attempt_pin, 2)
+
+		if(!Buyer)
+			to_chat(user, "[bicon(table_attached_to)]<span class='warning'>Неверный ПИН-код!</span>")
+			return
+
+	var/cost = held_Item.price_tag["price"]
+
+	if(cost > 0 && Seller)
+		if(Seller.suspended)
+			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Подключённый аккаунт заблокирован.</span>")
+			return
+		if(cost <= Buyer.money)
+			charge_to_account(Buyer.account_number, Buyer.owner_name, "Покупка [held_Item.name]", "Прилавок", -cost)
+			charge_to_account(Seller.account_number, Seller.owner_name, "Прибыль за продажу [held_Item.name]", "Прилавок", cost)
+		else
+			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Недостаточно средств!</span>")
+			return
+
+	held_Item.remove_price_tag()
+	qdel(src)
+
+/obj/structure/table/reinforced/stall
+	name = "stall table"
+	desc = "A market stall table equipped with magnetic grip."
+	icon = 'icons/obj/smooth_structures/stall_table.dmi'
+	max_integrity = 200
+	parts = /obj/item/weapon/table_parts/stall
+	flipable = FALSE
+	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table/reinforced/stall)
+
+/obj/structure/table/reinforced/stall/atom_init()
+	. = ..()
+	AddComponent(/datum/component/clickplace, CALLBACK(src, .proc/try_magnet))
+
+/obj/structure/table/reinforced/stall/proc/try_magnet(atom/A, obj/item/I, mob/user, params)
+	if(I.price_tag)
+		magnet_item(I, params)
+
+/obj/structure/table/reinforced/stall/proc/magnet_item(obj/item/I, list/params)
+	if(I.loc != get_turf(src))
+		return
+
+	var/obj/lot_holder/LH = new(loc, I, src)
+
+	var/list/click_params = params2list(params)
+	//Center the icon where the user clicked.
+	if(!click_params || !click_params[ICON_X] || !click_params[ICON_Y])
+		return
+
+	var/icon_size = world.icon_size
+	var/half_icon_size = icon_size * 0.5
+
+	var/p_x = text2num(click_params[ICON_X]) + pixel_x
+	var/p_y = text2num(click_params[ICON_Y]) + pixel_y
+
+	p_x = clamp(p_x, 0, icon_size) - half_icon_size - I.pixel_x
+	p_y = clamp(p_y, 0, icon_size) - half_icon_size - I.pixel_y
+
+	LH.pixel_x = p_x
+	LH.pixel_y = p_y
 
 /*
  * Racks

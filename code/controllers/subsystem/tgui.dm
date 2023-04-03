@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(tgui)
 	wait = SS_WAIT_TGUI
 	priority = SS_PRIORITY_TGUI
 
-	flags = SS_NO_INIT
+	flags = SS_NO_INIT | SS_SHOW_IN_MC_TAB
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	/// A list of UIs scheduled to process

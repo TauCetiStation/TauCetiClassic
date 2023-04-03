@@ -77,90 +77,6 @@
 	var/sender = FALSE
 	var/recipient = FALSE
 
-/obj/item/weapon/legcuffs
-	name = "legcuffs"
-	desc = "Use this to keep prisoners in line."
-	gender = PLURAL
-	icon = 'icons/obj/items.dmi'
-	icon_state = "handcuff"
-	flags = CONDUCT
-	throwforce = 0
-	w_class = SIZE_SMALL
-	origin_tech = "materials=1"
-	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
-
-/obj/item/weapon/legcuffs/beartrap
-	name = "bear trap"
-	throw_speed = 2
-	throw_range = 1
-	icon_state = "beartrap0"
-	desc = "A trap used to catch bears and other legged creatures."
-	var/armed = 0
-
-/obj/item/weapon/legcuffs/beartrap/suicide_act(mob/user)
-	to_chat(viewers(user), "<span class='danger'>[user] is putting the [src.name] on \his head! It looks like \he's trying to commit suicide.</span>")
-	return (BRUTELOSS)
-
-/obj/item/weapon/legcuffs/beartrap/attack_self(mob/user)
-	..()
-	if(ishuman(user) && user.stat == CONSCIOUS && !user.restrained())
-		armed = !armed
-		icon_state = "beartrap[armed]"
-		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"].</span>")
-
-/obj/item/weapon/legcuffs/beartrap/Crossed(atom/movable/AM)
-	. = ..()
-	if(armed)
-		if(ishuman(AM))
-			if(isturf(src.loc))
-				var/mob/living/carbon/H = AM
-				if(H.m_intent == "run" && !H.buckled && H.equip_to_slot_if_possible(src, SLOT_LEGCUFFED, disable_warning = TRUE))
-					armed = 0
-					H.visible_message("<span class='danger'>[H] steps on \the [src].</span>", "<span class='danger'>You step on \the [src]!</span>")
-					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
-		if(isanimal(AM) && !istype(AM, /mob/living/simple_animal/parrot) && !isconstruct(AM) && !isshade(AM) && !istype(AM, /mob/living/simple_animal/hostile/viscerator))
-			armed = 0
-			var/mob/living/simple_animal/SA = AM
-			SA.health -= 20
-
-		icon_state = "beartrap[armed]"
-
-/obj/item/weapon/legcuffs/beartrap/armed
-	icon_state = "beartrap1"
-	armed = TRUE
-
-/obj/item/weapon/legcuffs/bola
-	name = "bola"
-	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
-	icon_state = "bola"
-	breakouttime = 35 //easy to apply, easy to break out of
-	origin_tech = "engineering=3;combat=1"
-	throw_speed = 5
-	var/weaken = 0
-
-/obj/item/weapon/legcuffs/bola/after_throw(datum/callback/callback)
-	..()
-	playsound(src,'sound/weapons/bolathrow.ogg', VOL_EFFECTS_MASTER)
-
-/obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(!iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
-		return
-	var/mob/living/carbon/C = hit_atom
-	if(C.equip_to_slot_if_possible(src, SLOT_LEGCUFFED, disable_warning = TRUE))
-		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
-		feedback_add_details("handcuffs","B")
-		to_chat(C,"<span class='userdanger'>\The [src] ensnares you!</span>")
-		C.Weaken(weaken)
-
-/obj/item/weapon/legcuffs/bola/tactical//traitor variant
-	name = "reinforced bola"
-	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
-	icon_state = "bola_r"
-	breakouttime = 70
-	origin_tech = "engineering=4;combat=3"
-	weaken = 2
-	throw_range = 5
-
 /obj/item/weapon/caution
 	desc = "Caution! Wet Floor!"
 	name = "wet floor sign"
@@ -365,6 +281,16 @@
 	m_amt = 7500
 	flags = CONDUCT
 	table_type = /obj/structure/table/reinforced
+	debris = list(/obj/item/stack/sheet/metal, /obj/item/stack/rods)
+
+/obj/item/weapon/table_parts/stall
+	name = "stall table parts"
+	desc = "Stall table parts."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "stall_tableparts"
+	m_amt = 15000
+	flags = CONDUCT
+	table_type = /obj/structure/table/reinforced/stall
 	debris = list(/obj/item/stack/sheet/metal, /obj/item/stack/rods)
 
 /obj/item/weapon/table_parts/wood
@@ -709,7 +635,7 @@
 
 //Rating 3
 
-/obj/item/weapon/stock_parts/capacitor/super
+/obj/item/weapon/stock_parts/capacitor/adv/super
 	name = "super capacitor"
 	desc = "A super-high capacity capacitor used in the construction of a variety of devices."
 	icon_state = "super_capacitor"
@@ -718,7 +644,7 @@
 	m_amt = 50
 	g_amt = 50
 
-/obj/item/weapon/stock_parts/scanning_module/phasic
+/obj/item/weapon/stock_parts/scanning_module/adv/phasic
 	name = "phasic scanning module"
 	desc = "A compact, high resolution phasic scanning module used in the construction of certain devices."
 	icon_state = "super_scan_module"
@@ -727,7 +653,7 @@
 	m_amt = 50
 	g_amt = 20
 
-/obj/item/weapon/stock_parts/manipulator/pico
+/obj/item/weapon/stock_parts/manipulator/nano/pico
 	name = "pico-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "pico_mani"
@@ -735,7 +661,7 @@
 	rating = 3
 	m_amt = 30
 
-/obj/item/weapon/stock_parts/micro_laser/ultra
+/obj/item/weapon/stock_parts/micro_laser/high/ultra
 	name = "ultra-high-power micro-laser"
 	icon_state = "ultra_high_micro_laser"
 	desc = "A tiny laser used in certain devices."
@@ -744,7 +670,7 @@
 	m_amt = 10
 	g_amt = 20
 
-/obj/item/weapon/stock_parts/matter_bin/super
+/obj/item/weapon/stock_parts/matter_bin/adv/super
 	name = "super matter bin"
 	desc = "A container for hold compressed matter awaiting re-construction."
 	icon_state = "super_matter_bin"
@@ -754,7 +680,7 @@
 
 //Rating 4
 
-/obj/item/weapon/stock_parts/capacitor/quadratic
+/obj/item/weapon/stock_parts/capacitor/adv/super/quadratic
 	name = "quadratic capacitor"
 	desc = "An capacity capacitor used in the construction of a variety of devices."
 	icon_state = "quadratic_capacitor"
@@ -763,7 +689,7 @@
 	m_amt = 50
 	g_amt = 50
 
-/obj/item/weapon/stock_parts/scanning_module/triphasic
+/obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic
 	name = "triphasic scanning module"
 	desc = "A compact, ultra resolution triphasic scanning module used in the construction of certain devices."
 	icon_state = "triphasic_scan_module"
@@ -772,7 +698,7 @@
 	m_amt = 50
 	g_amt = 20
 
-/obj/item/weapon/stock_parts/manipulator/femto
+/obj/item/weapon/stock_parts/manipulator/nano/pico/femto
 	name = "femto-manipulator"
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "femto_mani"
@@ -780,7 +706,7 @@
 	rating = 4
 	m_amt = 30
 
-/obj/item/weapon/stock_parts/micro_laser/quadultra
+/obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra
 	name = "quad-ultra micro-laser"
 	icon_state = "quadultra_micro_laser"
 	desc = "A tiny laser used in certain devices."
@@ -789,7 +715,7 @@
 	m_amt = 10
 	g_amt = 20
 
-/obj/item/weapon/stock_parts/matter_bin/bluespace
+/obj/item/weapon/stock_parts/matter_bin/adv/super/bluespace
 	name = "bluespace matter bin"
 	desc = "A container for hold compressed matter awaiting re-construction."
 	icon_state = "bluespace_matter_bin"
