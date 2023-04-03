@@ -421,8 +421,19 @@
 			scanner_ready = FALSE
 			playsound(user, 'sound/effects/triple_beep.ogg', VOL_EFFECTS_MASTER)
 			flash_color("red")
-
 		return
+
+	if(user.is_busy())
+		return
+	if(ismob(target))
+		if(!do_after(user, SKILL_TASK_TRIVIAL, target = target))
+			return
+		if(!can_scan(target, user))
+			if(scanner_ready)
+				scanner_ready = FALSE
+				playsound(user, 'sound/effects/triple_beep.ogg', VOL_EFFECTS_MASTER)
+				flash_color("red")
+			return
 
 	scanner_ready = FALSE
 

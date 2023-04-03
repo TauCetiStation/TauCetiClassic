@@ -986,13 +986,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 					junction |= get_dir(src,W)
 		icon_state = "[basestate][junction]"
 
-//Window
-/obj/structure/window/shuttle/survival_pod
-	name = "pod window"
-	icon = 'icons/obj/survwindows.dmi'
-	icon_state = "window"
-	basestate = "window"
-
 //Door
 /obj/structure/inflatable/door/survival_pod
 	name = "inflatable airlock"

@@ -8,14 +8,15 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	icon_state = "toilet00"
 	density = FALSE
 	anchored = TRUE
-	var/open = 0			//if the lid is up
-	var/cistern = 0			//if the cistern bit is open
-	var/w_items = 0			//the combined w_class of all the items in the cistern
+	var/lid_open = FALSE      //if the lid is up
+	var/cistern_open = FALSE  //if the cistern bit is open
+	var/w_items = 0           //the combined w_class of all the items in the cistern
+	var/broken = FALSE
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 
 /obj/structure/toilet/atom_init()
 	. = ..()
-	open = round(rand(0, 1))
+	lid_open = round(rand(0, 1))
 	update_icon()
 
 /obj/structure/toilet/attack_hand(mob/living/user)
@@ -25,7 +26,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		swirlie.adjustBruteLoss(8)
 		return
 
-	if(cistern && !open)
+	if(cistern_open && !lid_open)
 		if(!contents.len)
 			to_chat(user, "<span class='notice'>The cistern is empty.</span>")
 			return
@@ -39,20 +40,71 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			w_items -= I.w_class
 			return
 
-	open = !open
+	if(lid_open && user.loc == loc)
+		if(!COOLDOWN_FINISHED(user, wc_use_cooldown))
+			to_chat(user, "<span class='notice'>You don't feel like you want to use it yet.</span>")
+			return
+
+		user.set_dir(dir)
+		to_chat(user, "<span class='notice'>You start doing your business...</span>")
+		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, vol = 50)
+		
+		if(do_after(user, rand(5, 20) SECONDS, needhand = FALSE, target = src))
+			COOLDOWN_START(user, wc_use_cooldown, 30 MINUTES)
+			playsound(src, 'sound/effects/toilet_flush.ogg', VOL_EFFECTS_MASTER)
+
+			var/problem_chance = 0.5
+
+			if(HAS_TRAIT(user, TRAIT_FAT))
+				problem_chance += 5
+			if(HAS_TRAIT(user, TRAIT_CLUMSY)) // clowns are known space assholes
+				problem_chance += 10
+
+				if(SSholiday.holidays[APRIL_FOOLS])
+					problem_chance += 25
+
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "wc_used", /datum/mood_event/wc_used)
+
+			if(prob(problem_chance))
+				broken = TRUE
+				START_PROCESSING(SSobj, src)
+				addtimer(CALLBACK(user, /mob.proc/playsound_local, null, 'sound/misc/s_asshole_short.ogg', VOL_EFFECTS_MASTER, 100, FALSE, null, null, null, null, null, TRUE), 2 SECOND) // so many nulls just to enable ignore_environment
+				if(HAS_TRAIT(user, TRAIT_CLUMSY))
+					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "clown_evil", /datum/mood_event/clown_evil)
+					to_chat(user, "<span class='notice bold'>Oh yes!</span>")
+				else
+					to_chat(user, "<span class='notice bold'>Oh no!</span>")
+		return
+
+	// default action
+	lid_open = !lid_open
+	playsound(src, 'sound/effects/click_off.ogg', VOL_EFFECTS_MASTER)
 	update_icon()
 
+/obj/structure/toilet/process()
+	if(!broken)
+		STOP_PROCESSING(SSobj, src)
+		return
+
+	spawn_fluid(loc, 20)
+
 /obj/structure/toilet/update_icon()
-	icon_state = "toilet[open][cistern]"
+	icon_state = "toilet[lid_open][cistern_open]"
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user)
-	if(isprying(I))
+	if(iswrenching(I) && broken) // we don't have any plunger around, so wrench is good
+		to_chat(user, "<span class='notice'>You start fixing \the [src].</span>")
+		if(I.use_tool(src, user, 60, volume = 100))
+			broken = FALSE
+			to_chat(user, "<span class='notice'>You fixed \the [src].</span>")
+		return
+	else if(isprying(I))
 		if(user.is_busy()) return
-		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>")
+		to_chat(user, "<span class='notice'>You start to [cistern_open ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>")
 		playsound(src, 'sound/effects/stonedoor_openclose.ogg', VOL_EFFECTS_MASTER)
 		if(I.use_tool(src, user, 30, volume = 0))
-			user.visible_message("<span class='notice'>[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "You hear grinding porcelain.")
-			cistern = !cistern
+			user.visible_message("<span class='notice'>[user] [cistern_open ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!</span>", "<span class='notice'>You [cistern_open ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "You hear grinding porcelain.")
+			cistern_open = !cistern_open
 			update_icon()
 			return
 
@@ -67,12 +119,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 				if(!GM.loc == get_turf(src))
 					to_chat(user, "<span class='notice'>[GM.name] needs to be on the toilet.</span>")
 					return
-				if(open && !swirlie)
+				if(lid_open && !swirlie)
 					if(user.is_busy()) return
 					user.visible_message("<span class='danger'>[user] starts to give [GM.name] a swirlie!</span>", "<span class='notice'>You start to give [GM.name] a swirlie!</span>")
 					swirlie = GM
 					if(do_after(user, 30, 5, 0, target = src))
 						user.visible_message("<span class='danger'>[user] gives [GM.name] a swirlie!</span>", "<span class='notice'>You give [GM.name] a swirlie!</span>", "You hear a toilet flushing.")
+						playsound(src, 'sound/effects/toilet_flush.ogg', VOL_EFFECTS_MASTER)
 						if(!GM.internal)
 							GM.adjustOxyLoss(5)
 					swirlie = null
@@ -82,7 +135,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			else
 				to_chat(user, "<span class='notice'>You need a tighter grip.</span>")
 
-	if(cistern)
+	if(cistern_open)
 		if(I.w_class > SIZE_SMALL)
 			to_chat(user, "<span class='notice'>\The [I] does not fit.</span>")
 			return
@@ -111,6 +164,21 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	icon_state = "urinal"
 	density = FALSE
 	anchored = TRUE
+
+/obj/structure/urinal/attack_hand(mob/living/user)
+	if(user.loc == loc) // no gender discrimination here!
+		if(!COOLDOWN_FINISHED(user, wc_use_cooldown))
+			to_chat(user, "<span class='notice'>You don't feel like you want to use it yet.</span>")
+			return
+
+		user.set_dir(turn(dir, 180))
+		to_chat(user, "<span class='notice'>You start doing your business...</span>")
+		playsound(src, SOUNDIN_RUSTLE, VOL_EFFECTS_MASTER, vol = 50)
+		
+		if(do_after(user, rand(5, 10) SECONDS, needhand = TRUE, target = src))
+			COOLDOWN_START(user, wc_use_cooldown, 30 MINUTES)
+			playsound(src, 'sound/effects/toilet_flush.ogg', VOL_EFFECTS_MASTER, vol = 50)
+			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "wc_used", /datum/mood_event/wc_used)
 
 /obj/structure/urinal/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/grab))

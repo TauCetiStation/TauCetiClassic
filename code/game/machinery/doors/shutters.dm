@@ -7,10 +7,6 @@
 	door_open_sound  = 'sound/machines/shutter_open.ogg'
 	door_close_sound = 'sound/machines/shutter_close.ogg'
 
-/obj/machinery/door/poddoor/shutters/atom_init()
-	. = ..()
-	layer = SHUTTERS_LAYER
-
 /obj/machinery/door/poddoor/shutters/do_animate(animation)
 	switch(animation)
 		if("opening")
@@ -20,6 +16,10 @@
 	return
 
 /obj/machinery/door/poddoor/shutters/syndi
+	var/open_allowed = FALSE
+
+/obj/machinery/door/poddoor/shutters/syndi/open_checks(forced)
+	return open_allowed
 
 /obj/machinery/door/poddoor/shutters/syndi/emag_act(mob/user)
 	return FALSE

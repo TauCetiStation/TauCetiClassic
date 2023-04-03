@@ -351,7 +351,7 @@
 
 /obj/machinery/chem_master/atom_init()
 	. = ..()
-	var/datum/reagents/R = new/datum/reagents(100)
+	var/datum/reagents/R = new/datum/reagents(150)
 	reagents = R
 	R.my_atom = src
 
@@ -773,7 +773,7 @@
 		/obj/item/stack/sheet/mineral/silver = list("silver" = 20),
 		/obj/item/stack/sheet/mineral/gold = list("gold" = 20),
 		/obj/item/weapon/grown/nettle = list("sacid" = 0),
-		/obj/item/weapon/grown/deathnettle = list("pacid" = 0),
+		/obj/item/weapon/grown/deathnettle = list("sanguisacid" = 0),
 
 		//Blender Stuff,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),
