@@ -21,7 +21,7 @@
 		var/image/magazine_icon = image('icons/obj/gun.dmi', "[magazine.overlay]")
 		add_overlay(magazine_icon)
 	if(silenced)
-		var/image/silencer_icon = image('icons/obj/gun_40x32.dmi', "[initial(icon_state)]-silencer")
+		var/image/silencer_icon = image('icons/obj/gun.dmi', "[initial(icon_state)]-silencer")
 		add_overlay(silencer_icon)
 
 /obj/item/weapon/gun/projectile/automatic/attackby(obj/item/I, mob/user, params)
@@ -54,7 +54,6 @@
 	can_be_holstered = TRUE
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	initial_mag = /obj/item/ammo_box/magazine/uzim9mm
-	can_be_silenced = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/c20r
 	name = "C-20r SMG"
@@ -132,7 +131,6 @@
 	origin_tech = "combat=4;materials=2"
 	initial_mag = /obj/item/ammo_box/magazine/l13_38
 	fire_sound = 'sound/weapons/guns/gunshot_l13.ogg'
-	can_be_silenced = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"
@@ -144,7 +142,6 @@
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	initial_mag = /obj/item/ammo_box/magazine/tommygunm45
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
-	can_be_silenced = TRUE
 
 /obj/item/weapon/gun/projectile/automatic/bar
 	name = "Browning M1918"
