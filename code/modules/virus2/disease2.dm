@@ -100,70 +100,86 @@
 			res += picked
 	return res
 
-/datum/disease2/disease/proc/activate(mob/living/carbon/mob)
-	if(dead)
-		cure(mob)
-		return
-
-	if(mob.stat == DEAD)
-		return
-
-	if(HAS_TRAIT(mob, TRAIT_VACCINATED))
-		return
-
-	if(stage <= 1 && clicks == 0 && !mob.is_infected_with_zombie_virus()) 	// with a certain chance, the mob may become immune to the disease before it starts properly
-		if(prob(5))
-			mob.antibodies |= antigen // 20% immunity is a good chance IMO, because it allows finding an immune person easily
-
-	//Space antibiotics stop disease completely
-	if(mob.reagents.has_reagent("spaceacillin"))
-		if(!mob.is_infected_with_zombie_virus())
-			if(stage == 1 && prob(20))
-				cure(mob)
+/datum/disease2/disease/proc/activate(atom/A)
+	if(iscarbon(A))
+		var/mob/living/carbon/mob = A
+		if(dead)
+			cure(mob)
 			return
-		else
-			if(prob(50)) //Antibiotics slow down zombie virus progression but dont stop it completely
-				return
 
-	//Virus food speeds up disease progress
-	if(mob.reagents.has_reagent("virusfood"))
-		mob.reagents.remove_reagent("virusfood",0.1)
-		clicks += 10
+		if(mob.stat == DEAD)
+			return
+
+		if(HAS_TRAIT(mob, TRAIT_VACCINATED))
+			return
+
+		if(stage <= 1 && clicks == 0 && !mob.is_infected_with_zombie_virus()) 	// with a certain chance, the mob may become immune to the disease before it starts properly
+			if(prob(5))
+				mob.antibodies |= antigen // 20% immunity is a good chance IMO, because it allows finding an immune person easily
+
+		//Space antibiotics stop disease completely
+		if(mob.reagents.has_reagent("spaceacillin"))
+			if(!mob.is_infected_with_zombie_virus())
+				if(stage == 1 && prob(20))
+					cure(mob)
+				return
+			else
+				if(prob(50)) //Antibiotics slow down zombie virus progression but dont stop it completely
+					return
+
+		//Virus food speeds up disease progress
+		if(mob.reagents.has_reagent("virusfood"))
+			mob.reagents.remove_reagent("virusfood",0.1)
+			clicks += 10
+
+		//fever
+		mob.adjust_bodytemperature(2 * stage, max_temp = BODYTEMP_NORMAL + 2 * stage)
 
 	//Moving to the next stage
-	if(clicks > stage*100 && prob(10) && stage<effects.len)
+	if(clicks > stage * 100 && prob(10) && stage < effects.len)
 		stage++
 
 	//Do nasty effects
 	for(var/i in 1 to effects.len)
 		var/datum/disease2/effectholder/e = effects[i]
 		if(i <= stage)
-			e.runeffect(mob, src)
+			e.runeffect(A, src)
 
 	//Short airborne spread
 	if(spreadtype == DISEASE_SPREAD_AIRBORNE && prob(10))
-		spread(mob, 1)
+		spread(A, 1)
 
-	//fever
-	mob.adjust_bodytemperature(2*stage, max_temp = BODYTEMP_NORMAL + 2*stage)
-	clicks+=speed
+	clicks += speed
 
 /datum/disease2/disease/proc/advance_stage()
 	if(stage<effects.len)
 		clicks = stage*100
 		stage++
 
-/datum/disease2/disease/proc/spread(mob/living/carbon/mob, radius = 1)
-	if (spreadtype == DISEASE_SPREAD_BLOOD)
+/datum/disease2/disease/proc/spread(atom/A, radius = 1)
+	if(spreadtype == DISEASE_SPREAD_BLOOD)
 		return
-	for(var/mob/living/carbon/M in oview(radius,mob))
-		if (airborne_can_reach(get_turf(mob), get_turf(M)))
-			infect_virus2(M,src)
-			mob.med_hud_set_status()
+	if(iscarbon(A))
+		var/mob/living/carbon/mob = A
+		for(var/mob/living/carbon/M in oview(radius, mob))
+			if(airborne_can_reach(get_turf(mob), get_turf(M)))
+				infect_virus2(M, src)
+				mob.med_hud_set_status()
+		return
+	if(istype(A, /obj/machinery/hydroponics))
+		if(spreadtype != DISEASE_SPREAD_AIRBORNE)
+			return
+		if(!DIONA in affected_species)
+			return
+		for(var/obj/machinery/hydroponics/tray in range(radius, A))
+			tray.infect_planttray_virus2(src)
+
+/datum/disease2/disease/proc/deactivate(atom/A)
+	for(var/datum/disease2/effectholder/e in effects)
+		e.effect.deactivate(A, e, src)
 
 /datum/disease2/disease/proc/cure(mob/living/carbon/mob)
-	for(var/datum/disease2/effectholder/e in effects)
-		e.effect.deactivate(mob, e, src)
+	deactivate(mob)
 	mob.virus2.Remove("[uniqueID]")
 	mob.med_hud_set_status()
 
