@@ -156,7 +156,7 @@
 		outbreak_announcement = 0
 		send_intercept()
 		for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
-			var/law = "The station is under quarantine. Do not permit anyone to leave so long as replicators are present. Disregard all other laws if necessary to preserve quarantine."
+			var/law = "Станция находится на карантине. Не позволяйте никому покинуть станцию, пока на ней присутствует живой Блоб. Игнорируйте все другие законы, если это необходимо для сохранения карантина."
 			aiPlayer.set_zeroth_law(law)
 		SSshuttle.fake_recall = TRUE //Quarantine
 
@@ -250,7 +250,7 @@ Message ends."}
 		to_chat(world, "[i]")
 
 	sleep(10)
-	enter_allowed = FALSE
+	SSlag_switch.set_measure(DISABLE_NON_OBSJOBS, TRUE)
 	SSticker.station_explosion_cinematic(0, "replicators")
 	addtimer(CALLBACK(src, .proc/blue_screen), 17.6 SECONDS)
 

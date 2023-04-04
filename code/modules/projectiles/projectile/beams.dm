@@ -139,6 +139,7 @@
 	icon_state = "laser"
 	damage = 50
 	stutter = 5
+	armor_multiplier = 0.5
 
 	muzzle_type = /obj/effect/projectile/laser/muzzle
 	tracer_type = /obj/effect/projectile/laser/tracer

@@ -47,24 +47,11 @@
 	if(!shop_lot)
 		return
 
-	var/postpayment = shop_lot["postpayment"]
-	var/datum/shop_lot/Lot = global.online_shop_lots[lot_number]
-
-	if(!Lot || !global.centcomm_account || postpayment > global.centcomm_account.money)
+	if(!onlineshop_mark_as_delivered(null, lot_number, global.centcomm_account.account_number, shop_lot["postpayment"]))
 		return
 
-	LAZYREMOVE(wanted_shop_lots, "[lot_number]")
-	Lot.delivered = TRUE
-
-	if(global.online_shop_discount)
-		charge_to_account(Lot.account, global.cargo_account.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, Lot.price - postpayment)
-		charge_to_account(global.cargo_account.account_number, global.centcomm_account.account_number, "Возмещение скидки на [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -(Lot.price - postpayment))
-
-	charge_to_account(global.centcomm_account.account_number, global.cargo_account.account_number, "Счёт за покупку [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, -postpayment)
-	charge_to_account(Lot.account, global.cargo_account.account_number, "Прибыль за продажу [Lot.name] в [CARGOSHOPNAME]", CARGOSHOPNAME, postpayment)
-
 	// Paying taxes on the item.
-	var/tax = round(postpayment * shop_lot["tax"] * 0.01)
+	var/tax = round(shop_lot["postpayment"] * shop_lot["tax"] * 0.01)
 
-	charge_to_account(global.centcomm_account.account_number, global.station_account.account_number, "Налог на экспорт [Lot.name] из [CARGOSHOPNAME]", "NTS Велосити", -tax)
+	charge_to_account(global.centcomm_account.account_number, global.station_account.account_number, "Налог на экспорт [shop_lot["name"]] из [CARGOSHOPNAME]", "NTS Велосити", -tax)
 	charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на экспорт", "NTS Велосити", tax)

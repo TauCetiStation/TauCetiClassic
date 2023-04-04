@@ -799,7 +799,7 @@
 		"siliconUser" = issilicon(user) || isobserver(user),
 		"malfCanHack" = get_malf_status(user),
 		"nightshiftLights" = nightshift_lights,
-		"nightshiftPreset" = nightshift_preset,
+		"nightshiftPreset" = SSnightshift.forced_admin_mode ? "unknown" : nightshift_preset,
 
 		"powerChannels" = list(
 			list(
@@ -888,9 +888,15 @@
 			toggle_breaker(usr)
 			. = TRUE
 		if("toggle_nightshift")
+			if(SSnightshift.forced_admin_mode)
+				to_chat(usr, "<span class='notice'>Nothing happens.</span>")
+				return
 			toggle_nightshift_lights()
 			. = TRUE
 		if("change_nightshift")
+			if(SSnightshift.forced_admin_mode)
+				to_chat(usr, "<span class='notice'>Nothing happens.</span>")
+				return
 			var/new_preset = input(usr, "Please choose night shift lighting.") as null|anything in lighting_presets
 			if(new_preset && lighting_presets[new_preset])
 				set_nightshift_preset(new_preset)
@@ -1286,13 +1292,18 @@
 	set waitfor = FALSE
 	nightshift_lights = on
 
-	if(on && preset && preset != nightshift_preset && lighting_presets[preset])
-		nightshift_preset = preset
-		for(var/obj/machinery/light/L in area)
-			var/list/preset_data = lighting_presets[nightshift_preset]
-			L.nightshift_light_range = preset_data["range"]
-			L.nightshift_light_power = preset_data["power"]
-			L.nightshift_light_color = preset_data["color"]
+	if(on && preset && preset != nightshift_preset)
+		var/list/preset_data
+
+		if((SSnightshift.forced_admin_mode && lighting_presets_admin[preset]) || lighting_presets[preset])
+			preset_data = lighting_presets[preset] || lighting_presets_admin[preset]
+
+		if(preset_data)
+			nightshift_preset = preset
+			for(var/obj/machinery/light/L in area)
+				L.nightshift_light_range = preset_data["range"]
+				L.nightshift_light_power = preset_data["power"]
+				L.nightshift_light_color = preset_data["color"]
 
 	for(var/obj/machinery/light/L in area)
 		if(L.nightshift_allowed)

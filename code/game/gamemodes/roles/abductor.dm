@@ -113,6 +113,22 @@
 		G.console = console
 		beamplant.home = console.pad
 
+/datum/role/abductor/assistant
+	name = "Assistant"
+	id = ABDUCTOR_ASSISTANT
+	skillset_type = /datum/skillset/abductor/scientist
+
+/datum/role/abductor/assistant/equip_common()
+	return
+
+/datum/role/abductor/assistant/Greet(greeting, custom)
+	if(!..())
+		return FALSE
+
+	to_chat(antag.current, "<span class='info'>Help your team. Do the operations for them, look for test subjects, or what is the assistant doing there?</span>")
+
+	return TRUE
+
 /datum/role/abducted
 	name = ABDUCTED
 	id = ABDUCTED

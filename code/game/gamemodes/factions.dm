@@ -401,3 +401,16 @@
 	for(var/datum/role/R in members)
 		if(R.antag && ckey(R.antag.key) == ckey)
 			return R
+
+/datum/faction/proc/check_crew()
+	var/total_human = 0
+	for(var/mob/living/carbon/human/H as anything in human_list)
+		var/turf/human_loc = get_turf(H)
+		if(!human_loc || !is_station_level(human_loc.z))
+			continue
+		if(H.stat == DEAD)
+			continue
+		if(!H.mind || !H.client)
+			continue
+		total_human++
+	return total_human

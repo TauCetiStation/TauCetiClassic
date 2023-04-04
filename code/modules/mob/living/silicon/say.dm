@@ -118,6 +118,10 @@
 				if(IS_PAI)
 					to_chat(src, "You do not appear to have that function")
 					return
+				if(IS_AI)
+					if (AI.aiRadio.disabledAi)
+						to_chat(src, "<span class='warning'>System Error - Transceiver Disabled</span>")
+						return
 
 			robot_talk(message)
 			return 1

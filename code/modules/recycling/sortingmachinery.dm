@@ -6,6 +6,7 @@
 	density = TRUE
 	var/sortTag = ""
 	var/lot_number = null
+	var/image/lot_lock_image
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
@@ -69,6 +70,7 @@
 	icon_state = "deliverycrateSmall"
 	var/sortTag = ""
 	var/lot_number = null
+	var/image/lot_lock_image
 
 	max_integrity = 5
 	damage_deflection = 0
@@ -145,6 +147,8 @@
 	if(!isobj(target))
 		return
 	var/obj/O = target
+	if(O.flags_2 & CANT_BE_INSERTED)
+		return
 	if(O.anchored)
 		return
 	if(O in user)
@@ -237,6 +241,8 @@
 	var/autocategory = TRUE
 
 	var/label = ""
+
+	var/next_instruction = 0
 
 /obj/item/device/tagger/shop
 	name = "shop tagger"
@@ -387,7 +393,9 @@
 
 	target.underlays += icon(icon = 'icons/obj/device.dmi', icon_state = "tag")
 
-	to_chat(user, "<span class='notice'>Осталось отправить этот предмет по пневмопочте(смыть в мусорку) или выставить на прилавок - и денюжки будут у тебя в кармане!</span>")
+	if(next_instruction < world.time)
+		next_instruction = world.time + 30 SECONDS
+		to_chat(user, "<span class='notice'>Осталось отправить этот предмет по пневмопочте(смыть в мусорку) или выставить на прилавок - и денюжки будут у тебя в кармане!</span>")
 
 	if(user.client && LAZYACCESS(user.client.browsers, "destTagScreen"))
 		openwindow(user)

@@ -161,16 +161,6 @@
 	if(!AM.anchored)
 		now_pushing = 1
 		var/t = get_dir(src, AM)
-		if(istype(AM, /obj/structure/window)) // Why is it here?
-			var/obj/structure/window/W = AM
-			if(W.ini_dir == NORTHWEST || W.ini_dir == NORTHEAST || W.ini_dir == SOUTHWEST || W.ini_dir == SOUTHEAST)
-				for(var/obj/structure/window/win in get_step(AM,t))
-					now_pushing = 0
-					return
-//			if(W.fulltile)
-//				for(var/obj/structure/window/win in get_step(W,t))
-//					now_pushing = 0
-//					return
 		if(pulling == AM)
 			stop_pulling()
 		step(AM, t)
@@ -991,7 +981,6 @@
 
 		else if(CM.legcuffed && (CM.last_special <= world.time))
 			if(!CM.canmove && !CM.crawling)	return
-			CM.next_move = world.time + 100
 			CM.last_special = world.time + 100
 			if(isxenoadult(CM) || (HULK in usr.mutations))//Don't want to do a lot of logic gating here.
 				to_chat(usr, )
@@ -1303,7 +1292,7 @@
 /mob/living/proc/naturechild_check()
 	return TRUE
 
-/mob/living/proc/get_nutrition()
+/mob/living/proc/get_satiation()
 	// This proc gets nutrition value with all possible alters.
 	// E.g. see how in carbon nutriment, plant matter, meat reagents are accounted.
 	// The difference between this and just nutrition, is that this proc shows how much nutrition a mob has
@@ -1367,7 +1356,7 @@
 
 	var/turf/simulated/T = loc
 	var/obj/structure/toilet/WC = locate(/obj/structure/toilet) in T
-	if(WC && WC.open)
+	if(WC && WC.lid_open)
 		return TRUE
 	if(locate(/obj/structure/sink) in T)
 		return TRUE

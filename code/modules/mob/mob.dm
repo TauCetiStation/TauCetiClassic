@@ -847,13 +847,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 		SetWeakened(0, TRUE)
 	if(remove_flags & CANPARALYSE)
 		SetParalysis(0, TRUE)
-	if(remove_flags & (CANSTUN|CANPARALYSE|CANWEAKEN))
-		update_canmove()
 	status_flags &= ~remove_flags
+	if(remove_flags & (CANSTUN|CANPARALYSE|CANWEAKEN|FAKEDEATH))
+		update_canmove()
 
 /mob/proc/add_status_flags(add_flags)
 	if(add_flags & GODMODE)
 		stuttering = 0
+	if(add_flags & FAKEDEATH)
+		update_canmove()
 	status_flags |= add_flags
 
 // ========== CRAWLING ==========
@@ -873,7 +875,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	updateDrugginesOverlay()
 
 /mob/proc/updateDrugginesOverlay()
-	if(druggy)
+	if(druggy && get_species(src) != SKRELL)
 		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
 		throw_alert("high", /atom/movable/screen/alert/high)
 	else
@@ -1009,12 +1011,12 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/proc/GetSpell(spell_type)
 	for(var/obj/effect/proc_holder/spell/spell in spell_list)
-		if(spell == spell_type)
+		if(spell.type == spell_type)
 			return spell
 
 	if(mind)
 		for(var/obj/effect/proc_holder/spell/spell in mind.spell_list)
-			if(spell == spell_type)
+			if(spell.type == spell_type)
 				return spell
 	return FALSE
 
