@@ -32,6 +32,12 @@
 		anchored = FALSE
 		step(src, reverse_dir[attack_dir])
 
+/obj/structure/window/thin/bullet_act(obj/item/projectile/Proj, def_zone)
+	if(Proj.checkpass(PASSGLASS))
+		return PROJECTILE_FORCE_MISS
+
+	return ..()
+
 /obj/structure/window/thin/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return TRUE

@@ -109,12 +109,6 @@
 
 	return ..()
 
-/obj/structure/window/bullet_act(obj/item/projectile/Proj, def_zone)
-	if(Proj.pass_flags & PASSGLASS)	//Lasers mostly use this flag.. Why should they able to focus damage with direct click...
-		return PROJECTILE_FORCE_MISS
-
-	return ..()
-
 /obj/structure/window/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
