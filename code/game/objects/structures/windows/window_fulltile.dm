@@ -126,6 +126,13 @@
 
 	return ..()
 
+/obj/structure/window/fulltile/atom_destruction(damage_flag)
+	switch(damage_flag)
+		if(BOMB, FIRE, ACID)
+			grilled = FALSE
+
+	return ..()
+
 /**
  * Fulltile phoron
  */

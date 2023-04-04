@@ -110,14 +110,20 @@
 
 	return ..()
 
+// almost same take_damage values as for turf/walls and /obj
+// need to reload because for some reason we have stupid parent /obj/structure/ex_act doing nothing
 /obj/structure/window/ex_act(severity)
+	if(resistance_flags & INDESTRUCTIBLE)
+		return
+	if(QDELETED(src))
+		return
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			qdel(src)
 		if(EXPLODE_HEAVY)
-			take_damage(rand(30, 50), BRUTE, BOMB)
+			take_damage(rand(150, 250), BRUTE, BOMB)
 		if(EXPLODE_LIGHT)
-			take_damage(rand(5, 15), BRUTE, BOMB)
+			take_damage(rand(0, 55), BRUTE, BOMB)
 
 /obj/structure/window/airlock_crush_act()
 	take_damage(DOOR_CRUSH_DAMAGE * 2, BRUTE, MELEE)
