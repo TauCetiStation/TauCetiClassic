@@ -28,11 +28,14 @@
 	logo_state = gang_id
 	..()
 
+
+var/datum/objective/gang/steal_lowrisk/all/A = new
+
 /datum/faction/gang/forgeObjectives()
 	. = ..()
 	AppendObjective(/datum/objective/gang/points)
 	AppendObjective(gang_objective_type)
-	AppendObjective(get_steal_objective())
+	AppendObjective(A.get_steal_objective())
 
 /datum/faction/gang/custom_result()
 	var/alive_gangsters = 0
