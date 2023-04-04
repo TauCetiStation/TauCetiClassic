@@ -43,7 +43,8 @@
 /area/space_structures/derelict/solar_control)
 "al" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/solar_control)
@@ -466,7 +467,8 @@
 /area/space_structures/derelict/bridge/access)
 "bn" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/bridge/access)
@@ -477,7 +479,8 @@
 	icon_state = "1-2"
 	},
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/bridge/access)
@@ -771,7 +774,8 @@
 /area/space_structures/derelict/singularity_engine)
 "cq" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
@@ -1176,7 +1180,8 @@
 /area/space_structures/derelict/singularity_engine)
 "dD" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/airless{
 	icon_state = "damaged2"
@@ -1242,7 +1247,8 @@
 /area/space_structures/derelict/bridge/access)
 "dO" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/bridge/access)
@@ -1364,7 +1370,8 @@
 	icon_state = "medium"
 	},
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/singularity_engine)
@@ -1586,7 +1593,8 @@
 /area/space_structures/derelict/medical)
 "fc" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/medical)
@@ -2197,7 +2205,8 @@
 /area/space_structures/derelict/arrival)
 "gS" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/derelict/arrival)
@@ -2633,7 +2642,8 @@
 /area/space_structures/derelict/hallway/primary)
 "hW" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/primary)
@@ -2757,7 +2767,8 @@
 /area/space)
 "iv" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -2893,7 +2904,8 @@
 /area/space_structures/derelict/hallway/secondary)
 "iV" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/hallway/secondary)
@@ -3164,7 +3176,8 @@
 /area/space_structures/derelict/bridge/ai_upload)
 "jP" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/derelict/bridge/ai_upload)

@@ -3275,7 +3275,8 @@
 /area/custom/syndicate_mothership)
 "aix" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/unsimulated/floor{
 	icon_state = "plating"
@@ -3860,7 +3861,8 @@
 	icon_state = "window_gray_w"
 	},
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -3891,7 +3893,8 @@
 	icon_state = "window_gray_e"
 	},
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -4398,7 +4401,8 @@
 	icon_state = "window_gray_we"
 	},
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -5435,7 +5439,8 @@
 /area/velocity)
 "ans" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -6141,7 +6146,8 @@
 /area/velocity)
 "apb" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -6560,7 +6566,8 @@
 /area/velocity)
 "aqa" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/poddoor{
@@ -7020,7 +7027,8 @@
 /area/shuttle/vox/arkship)
 "arj" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -7048,7 +7056,8 @@
 /area/velocity)
 "arl" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -7195,7 +7204,8 @@
 /area/shuttle/vox/arkship)
 "arz" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -7477,7 +7487,8 @@
 "ase" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -7961,7 +7972,8 @@
 /area/shuttle/vox/arkship)
 "atk" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -8266,7 +8278,8 @@
 /area/space)
 "atT" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -8508,7 +8521,8 @@
 /area/velocity)
 "auv" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -8943,7 +8957,8 @@
 /area/velocity)
 "avs" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -10300,7 +10315,8 @@
 /area/centcom/prison)
 "ayq" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -11093,7 +11109,8 @@
 /area/shuttle/vox/arkship)
 "aAa" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/effect/forcefield{
 	desc = "You can't get in. Heh.";
@@ -12232,7 +12249,8 @@
 /area/centcom/specops)
 "aCt" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/unsimulated/floor,
 /area/centcom/specops)
@@ -12387,7 +12405,8 @@
 /area/centcom/specops)
 "aCM" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -14809,7 +14828,8 @@
 /area/custom/syndicate_mothership)
 "aIc" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
@@ -15368,7 +15388,8 @@
 /area/centcom/control)
 "aJz" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/shuttle/plating,
 /area/centcom/evac)
@@ -15688,7 +15709,8 @@
 /area/centcom/control)
 "aKp" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
@@ -16580,7 +16602,8 @@
 /area/centcom/living)
 "aMz" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/unsimulated/floor,
 /area/centcom/living)
@@ -17836,7 +17859,8 @@
 /area/custom/syndicate_mothership/armory)
 "aPf" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/unsimulated/floor{
 	icon_state = "plating"
@@ -18455,7 +18479,8 @@
 	opacity = 0
 	},
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/unsimulated/floor,
 /area/centcom/living)
@@ -18598,7 +18623,8 @@
 /area/shuttle/escape/centcom)
 "aRH" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -18695,7 +18721,8 @@
 /area/centcom/control)
 "aSp" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -18710,7 +18737,8 @@
 	opacity = 0
 	},
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -23131,7 +23159,8 @@
 	dir = 1
 	},
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -24444,7 +24473,8 @@
 /area/shuttle/officer/velocity)
 "fdb" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/sign/tablo{
 	dir = 4;
@@ -29497,7 +29527,8 @@
 /area/custom/cult)
 "qTT" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplating"

@@ -338,7 +338,8 @@
 /area/space_structures/broken_breacher)
 "nh" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/shuttle/plating,
 /area/space_structures/broken_breacher)
