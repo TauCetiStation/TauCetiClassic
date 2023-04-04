@@ -496,6 +496,8 @@
 	var/list/types = list(
 		/obj/structure/window/fulltile,
 		/obj/structure/window/fulltile/phoron,
+		/obj/structure/window/fulltile/tinted,
+		/obj/structure/window/fulltile/polarized,
 		/obj/structure/window/fulltile/reinforced,
 		/obj/structure/window/fulltile/reinforced/phoron,
 		/obj/structure/window/fulltile/reinforced/tinted,
@@ -522,7 +524,7 @@
 		F.smooth_set_icon(0)
 		var/icon/state_grilled = icon(F.icon, "0")
 
-		if(type == /obj/structure/window/fulltile/reinforced/polarized) // polarized don't have own blend color so we need to make it different
+		if(type == /obj/structure/window/fulltile/reinforced/polarized || type == /obj/structure/window/fulltile/polarized) // polarized don't have own blend color so we need to make it different
 			for(var/x in 1 to 32)
 				for(var/y in 1 to 32)
 					if (x == y || x == (32-y+1))
