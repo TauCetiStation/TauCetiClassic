@@ -169,7 +169,7 @@
 	if(istype(A, /obj/machinery/hydroponics))
 		if(spreadtype != DISEASE_SPREAD_AIRBORNE)
 			return
-		if(!DIONA in affected_species)
+		if(!(DIONA in affected_species))
 			return
 		for(var/obj/machinery/hydroponics/tray in range(radius, A))
 			tray.infect_planttray_virus2(src)

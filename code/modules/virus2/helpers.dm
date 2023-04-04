@@ -115,7 +115,7 @@
 /obj/machinery/hydroponics/proc/infect_planttray_virus2(datum/disease2/disease/source)
 	if("[source.uniqueID]" in virus2)
 		return
-	if(!DIONA in source.affected_species)
+	if(!(DIONA in source.affected_species))
 		return
 	var/datum/disease2/disease/D = source.getcopy()
 	virus2["[D.uniqueID]"] = D
