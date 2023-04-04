@@ -29,7 +29,7 @@
 /atom/movable/proc/end_fall()
 	for(var/atom/movable/AM in loc)
 		if(AM != src)
-			AM.ex_act(EXPLODE_DEVASTATE)
+			SSexplosions.high_mov_atom += AM
 	for(var/mob/living/M in oviewers(6, src))
 		shake_camera(M, 2, 2)
 	if(istype(src, /obj/structure/scrap))

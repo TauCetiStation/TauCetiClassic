@@ -73,8 +73,10 @@
 
 	if(src)//Do not add to this if() statement, otherwise the meteor won't delete them
 		if(A)
-
-			A.ex_act(EXPLODE_HEAVY)
+			if(isturf(A))
+				SSexplosions.medturf += A
+			else
+				SSexplosions.med_mov_atom += A
 			playsound(src, 'sound/effects/meteorimpact.ogg', VOL_EFFECTS_MASTER, 40)
 
 			for(var/mob/M in range(10, src))

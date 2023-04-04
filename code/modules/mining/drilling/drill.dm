@@ -96,8 +96,7 @@
 			if(!T.dug)
 				T.gets_dug()
 		else if(istype(get_turf(src), /turf/simulated/floor))
-			var/turf/simulated/floor/T = get_turf(src)
-			T.ex_act(EXPLODE_HEAVY)
+			SSexplosions.medturf += get_turf(src)
 
 	dig_ore()
 

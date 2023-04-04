@@ -48,7 +48,12 @@
 			if(prob(5))
 				H.gib()
 		else
-			M.ex_act(pick(EXPLODE_DEVASTATE,EXPLODE_LIGHT))
+			var/sev = pick(EXPLODE_DEVASTATE,EXPLODE_LIGHT)
+			switch(sev)
+				if(EXPLODE_DEVASTATE)
+					SSexplosions.high_mov_atom += M
+				if(EXPLODE_LIGHT)
+					SSexplosions.low_mov_atom += M
 
 	asteroid.load(T)
 

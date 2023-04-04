@@ -753,4 +753,11 @@ steam.start() -- spawns the effect
 		else if (round(amount/2) > 0)
 			dmglevel = 3
 
-		if(dmglevel<4) holder.ex_act(dmglevel)
+		if(dmglevel<4)
+			switch(dmglevel)
+				if(EXPLODE_DEVASTATE)
+					SSexplosions.high_mov_atom += holder
+				if(EXPLODE_HEAVY)
+					SSexplosions.med_mov_atom += holder
+				if(EXPLODE_LIGHT)
+					SSexplosions.low_mov_atom += holder

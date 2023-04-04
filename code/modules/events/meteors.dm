@@ -198,18 +198,27 @@ var/global/list/obj/effect/meteor/meteors_dust = list(
 
 /obj/effect/meteor/proc/ram_turf(turf/T)
 	//first bust whatever is in the turf
-	for(var/obj/structure/window/W in T)	// window protects grille
-		W.ex_act(hitpwr)
-		if(!QDELETED(W))
-			return
-		break
-	for(var/atom/A in T.contents - src)
-		if(!istype(A, /obj/machinery/power/emitter) && !istype(A, /obj/machinery/field_generator)) //Protect the singularity from getting released every round!
-			A.ex_act(hitpwr) //Changing emitter/field gen ex_act would make it immune to bombs and C4
-
-	//then, ram the turf if it still exists
-	if(T)
-		T.ex_act(hitpwr)
+	switch(hitpwr)
+		if(EXPLODE_DEVASTATE)
+			SSexplosions.highturf += T
+		if(EXPLODE_HEAVY)
+			SSexplosions.medturf += T
+		if(EXPLODE_LIGHT)
+			SSexplosions.lowturf += T
+	for(var/atom/A in T)
+		//Protect the singularity from getting released every round!
+		if(istype(A, /obj/machinery/power/emitter))
+			continue
+		//Changing emitter/field gen ex_act would make it immune to bombs and C4
+		if(istype(A, /obj/machinery/field_generator))
+			continue
+		switch(hitpwr)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom += A
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom += A
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom += A
 
 //process getting 'hit' by colliding with a dense object
 //or randomly when ramming turfs
