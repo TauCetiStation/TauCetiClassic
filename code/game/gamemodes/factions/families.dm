@@ -29,7 +29,7 @@
 	..()
 
 
-var/datum/objective/gang/steal_lowrisk/all/A = new
+var/global/datum/objective/gang/steal_lowrisk/all/A = new
 
 /datum/faction/gang/forgeObjectives()
 	. = ..()
