@@ -152,16 +152,6 @@
 /obj/structure/window/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/window/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = TRUE)
-	if(!damage_amount)
-		return
-	if(damage_amount >= 10)
-		visible_message("<span class='danger'>[user] smashes into [src]!</span>")
-		return ..(user, damage_amount, damage_type, damage_flag, sound_effect)
-
-	visible_message("<span class='notice'>\The [user] bonks \the [src] harmlessly.</span>")
-	user.do_attack_animation(src)
-
 /obj/structure/window/attack_slime(mob/user)
 	if(!isslimeadult(user))
 		return

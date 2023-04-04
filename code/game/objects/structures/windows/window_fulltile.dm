@@ -22,8 +22,12 @@
 	var/glass_color_blend_to_color
 	var/glass_color_blend_to_ratio
 
-	var/damage_threshold = 5   // this will be deducted from any physical damage source. Main difference in sturdiness between fulltiles and thin windows
 	var/image/crack_overlay
+
+	max_integrity = 20
+	damage_deflection = 2
+
+	armor = list(melee = 50, fire = 70)
 
 	var/disassemble_glass_type = /obj/item/stack/sheet/glass // any better ideas to handle drops and disassembles?
 
@@ -47,15 +51,6 @@
 		glass_color = new_color
 	
 	regenerate_smooth_icon()
-
-/obj/structure/window/fulltile/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
-	if(damage_threshold)
-		switch(damage_type)
-			if(BRUTE)
-				return max(0, damage_amount - damage_threshold)
-			if(BURN)
-				return damage_amount * 0.3
-	return ..()
 
 /obj/structure/window/fulltile/attackby(obj/item/W, mob/user)
 	if(isprying(W) && !(resistance_flags & DECONSTRUCT_IMMUNE)) // bad use of resistance_flags? we need some flag to prevent deconstructs
@@ -142,15 +137,12 @@
 	icon_state = "window_phoron"
 
 	max_integrity = 120
+	armor = list(melee = 50, fire = 99)
 
 	glass_color_blend_to_color = "#8000ff"
 	glass_color_blend_to_ratio = 0.5
 
 	disassemble_glass_type = /obj/item/stack/sheet/glass/phoronglass
-
-/obj/structure/window/fulltile/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > T0C + 32000)
-		take_damage(round(exposed_volume / 1000), BURN, FIRE, FALSE)
 
 /**
  * Fulltile reinforced
@@ -164,7 +156,8 @@
 	icon_state = "window_reinforced"
 
 	max_integrity = 100
-	damage_threshold = 10
+	damage_deflection = 5
+	armor = list(melee = 80, fire = 70, bomb = 25)
 
 	disassemble_glass_type = /obj/item/stack/sheet/rglass
 
@@ -178,15 +171,13 @@
 
 	icon_state = "window_reinforced_phoron"
 
-	max_integrity = 160
+	max_integrity = 200
+	armor = list(melee = 80, fire = 100, bomb = 50)
 
 	glass_color_blend_to_color = "#8000ff"
 	glass_color_blend_to_ratio = 0.5
 
 	disassemble_glass_type = /obj/item/stack/sheet/glass/phoronrglass
-
-/obj/structure/window/fulltile/reinforced/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	return
 
 /**
  * Fulltile reinforced tinted
