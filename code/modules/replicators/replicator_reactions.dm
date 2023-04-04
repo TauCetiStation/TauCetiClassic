@@ -195,6 +195,16 @@
 	deconstruct(TRUE)
 	return TRUE
 
+/obj/structure/window/shuttle/replicator_act(mob/living/simple_animal/hostile/replicator/R)
+	var/turf/T = get_turf(src)
+	if(!(locate(/obj/structure/replicator_forcefield) in T))
+		new /obj/structure/replicator_forcefield(T)
+		var/obj/structure/replicator_barricade/RB = locate() in T
+		if(RB)
+			RB.leave_stabilization_field = FALSE
+			qdel(RB)
+	deconstruct(TRUE)
+	return TRUE
 
 /obj/structure/object_wall/replicator_act(mob/living/simple_animal/hostile/replicator/R)
 	var/turf/T = get_turf(src)
