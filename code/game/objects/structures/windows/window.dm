@@ -50,6 +50,7 @@
 
 	var/ratio = get_integrity() / max_integrity
 
+	// we owerwrite integrity_failure because we have multiple break stages and need to trigger atom_break() multiple times to use them
 	switch(ratio)
 		if(0 to 0.25)
 			if(!istype(src, /obj/structure/window/fulltile))

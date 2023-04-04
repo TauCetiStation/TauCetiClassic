@@ -84,16 +84,38 @@
 	crack_overlay = image('icons/obj/window.dmi',"damage[ratio]_[rand(1, 3)]",-(layer+0.1))
 	add_overlay(crack_overlay)
 
+// because of regenerate_smooth_icon this is not the cheapest method (if we don't have icon cached) and should not be used in mass
+// currently we need this only for projectiles with PASSGLASS but not PASSGRILLE (replicators)
+/obj/structure/window/fulltile/proc/break_grille()
+	if(!grilled)
+		return
+
+	grilled = FALSE
+
+	playsound(src, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
+
+	new /obj/item/stack/rods(loc, 1)
+
+	regenerate_smooth_icon()
+
 /obj/structure/window/fulltile/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS) && (!grilled || mover.checkpass(PASSGRILLE)))
 		return TRUE
 	return !density
 
+#define GRILLE_MAX_INTEGRITY 20 // /obj/structure/grille/max_integrity
+
 /obj/structure/window/fulltile/bullet_act(obj/item/projectile/Proj, def_zone)
 	if(Proj.checkpass(PASSGLASS) && (!grilled || Proj.checkpass(PASSGRILLE)))
 		return PROJECTILE_FORCE_MISS
 
+	if(grilled && Proj.checkpass(PASSGLASS)) // replics should be happy (im crying because of how awful this is)
+		if(prob((max_integrity - get_integrity()) * 100 / GRILLE_MAX_INTEGRITY))
+			break_grille()
+
 	return ..()
+
+#undef GRILLE_MAX_INTEGRITY
 
 /obj/structure/window/fulltile/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)
