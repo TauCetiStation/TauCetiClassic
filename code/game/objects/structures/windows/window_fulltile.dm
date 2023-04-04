@@ -89,6 +89,12 @@
 		return TRUE
 	return !density
 
+/obj/structure/window/fulltile/bullet_act(obj/item/projectile/Proj, def_zone)
+	if(Proj.checkpass(PASSGLASS) && (!grilled || Proj.checkpass(PASSGRILLE)))
+		return PROJECTILE_FORCE_MISS
+
+	return ..()
+
 /obj/structure/window/fulltile/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)
 		return ..()
