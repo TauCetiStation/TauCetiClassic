@@ -423,7 +423,8 @@
 /area/awaymission/labs/cave)
 "bx" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -800,7 +801,8 @@
 /area/awaymission/labs/researchdivision)
 "cy" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -1508,7 +1510,8 @@
 /area/awaymission/labs/researchdivision)
 "eo" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	id = "sandstorm shutters";
@@ -1816,7 +1819,8 @@
 /area/awaymission/labs/gateway)
 "eX" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/gateway)
@@ -2462,7 +2466,8 @@
 /area/awaymission/labs/researchdivision)
 "gr" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/labs/solars)
@@ -3407,7 +3412,8 @@
 /area/awaymission/labs/researchdivision)
 "iI" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
@@ -3551,7 +3557,8 @@
 /area/awaymission/labs/researchdivision)
 "ja" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -4093,7 +4100,8 @@
 /area/awaymission/labs/command)
 "km" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	id = "sandstorm shutters";
@@ -4154,7 +4162,8 @@
 /area/awaymission/labs/command)
 "ks" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -4851,7 +4860,8 @@
 	})
 "lF" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	id = "sandstorm shutters";
@@ -5218,7 +5228,8 @@
 /area/awaymission/labs/cargo)
 "mv" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	id = "sandstorm shutters";
@@ -5239,7 +5250,8 @@
 /area/awaymission/labs/civilian)
 "my" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	id = "sandstorm shutters";
@@ -5455,7 +5467,8 @@
 /area/awaymission/labs/command)
 "mY" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -5533,7 +5546,8 @@
 /area/awaymission/labs/cargo)
 "ni" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/cave)
@@ -6476,7 +6490,8 @@
 /area/awaymission/labs/cargo)
 "pr" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	id = "sandstorm shutters";
@@ -7330,7 +7345,8 @@
 /area/awaymission/labs/civilian)
 "ro" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -7734,7 +7750,8 @@
 /area/awaymission/labs/security)
 "st" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	id = "sandstorm shutters";
@@ -7748,7 +7765,8 @@
 /area/awaymission/labs/medical)
 "sv" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -7770,7 +7788,8 @@
 /area/awaymission/labs/security)
 "sy" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -8124,7 +8143,8 @@
 /area/awaymission/labs/medical)
 "tr" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/environment/space,
 /area/awaymission/labs/medical)

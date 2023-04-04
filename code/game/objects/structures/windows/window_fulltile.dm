@@ -66,10 +66,10 @@
 							"<span class='warning'>You start removing the glass from the [src]!</span>", \
 							"<span class='warning'>You hear screwing.</span>")
 
-		W.use_tool(src, user, 40)
-		to_chat(user, "<span class='notice'>You have removed the glass from the frame.</span>")
-		
-		deconstruct(TRUE)
+		if(W.use_tool(src, user, 40))
+			to_chat(user, "<span class='notice'>You have removed the glass from the frame.</span>")
+			deconstruct(TRUE)
+
 		return
 
 	return ..()

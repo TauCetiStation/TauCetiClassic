@@ -1007,7 +1007,8 @@
 /area/awaymission/spacebattle/cruiser)
 "da" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/cruiser)
@@ -1192,7 +1193,8 @@
 /area/awaymission/spacebattle/cruiser)
 "dH" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/engine,
 /area/awaymission/spacebattle/cruiser)
@@ -2327,7 +2329,8 @@
 /area/awaymission/spacebattle/cruiser)
 "hn" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/spacebattle/syndicate7)
