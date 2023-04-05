@@ -488,11 +488,11 @@
 /area/space)
 "aaX" = (
 /obj/machinery/camera{
-	c_tag = "Central Hallway South-West";
-	dir = 5
+	c_tag = "Central Hallway East";
+	dir = 9
 	},
 /turf/simulated/floor{
-	dir = 8;
+	dir = 4;
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
@@ -931,13 +931,14 @@
 /area/station/security/main)
 "abP" = (
 /obj/machinery/camera{
-	c_tag = "Starboard Primary Hallway 3"
+	c_tag = "Bar North";
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "purplecorner"
+	icon_state = "dark"
 	},
-/area/station/hallway/primary/starboard)
+/area/station/civilian/bar)
 "abQ" = (
 /obj/structure/table,
 /obj/structure/disposalpipe/segment,
@@ -7828,12 +7829,13 @@
 	},
 /area/station/maintenance/dormitory)
 "anB" = (
-/obj/machinery/camera{
-	c_tag = "Bar North";
-	dir = 4
+/obj/machinery/power/apc{
+	name = "Bar APC";
+	pixel_x = -30;
+	dir = 8
 	},
+/obj/structure/cable,
 /turf/simulated/floor{
-	dir = 4;
 	icon_state = "dark"
 	},
 /area/station/civilian/bar)
@@ -27535,6 +27537,16 @@
 /obj/item/weapon/aiModule/freeform,
 /turf/simulated/floor/whitegreed,
 /area/station/bridge/ai_upload)
+"aYL" = (
+/obj/machinery/cryopod,
+/obj/machinery/camera{
+	c_tag = "Cryogenic Storage"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/civilian/dormitories)
 "aYM" = (
 /obj/machinery/camera{
 	c_tag = "Containment Cell 6";
@@ -27544,16 +27556,15 @@
 /turf/simulated/floor/engine,
 /area/station/rnd/xenobiology)
 "aYN" = (
-/obj/machinery/power/apc{
-	name = "Bar APC";
-	pixel_x = -30;
-	dir = 8
+/obj/machinery/camera{
+	c_tag = "MiniSat Entrance";
+	dir = 9;
+	network = list("MiniSat")
 	},
-/obj/structure/cable,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/civilian/bar)
+/area/station/aisat/antechamber)
 "aYO" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -32311,14 +32322,13 @@
 /area/station/storage/emergency)
 "bhp" = (
 /obj/machinery/camera{
-	c_tag = "Brig Center-East";
-	network = list("SS13","Security");
-	dir = 10
+	c_tag = "Starboard Primary Hallway 3"
 	},
 /turf/simulated/floor{
-	icon_state = "redcorner"
+	dir = 4;
+	icon_state = "purplecorner"
 	},
-/area/station/security/brig)
+/area/station/hallway/primary/starboard)
 "bhq" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -33630,18 +33640,15 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/captain_quarters)
 "bkj" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
+/obj/structure/closet/emcloset,
 /obj/machinery/camera{
-	c_tag = "Recycler's Workplace";
-	dir = 10
+	c_tag = "Arrival Hallway Center"
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "dark"
+	dir = 1;
+	icon_state = "bot"
 	},
-/area/station/cargo/recycleroffice)
+/area/station/hallway/secondary/arrival)
 "bkk" = (
 /obj/machinery/door/window/eastright{
 	dir = 1;
@@ -34751,10 +34758,6 @@
 "bmd" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/beer{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Bar West";
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -42585,14 +42588,19 @@
 	},
 /area/station/medical/sleeper)
 "bAu" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
+/obj/machinery/camera{
+	c_tag = "Aft Primary Hallway 2";
+	dir = 4
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -28
 	},
 /turf/simulated/floor{
-	icon_state = "floorgrime"
+	dir = 1;
+	icon_state = "yellowcorner"
 	},
-/area/station/security/range)
+/area/station/hallway/primary/aft)
 "bAv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -42842,15 +42850,15 @@
 /turf/simulated/wall/r_wall,
 /area/station/rnd/hor)
 "bAV" = (
-/obj/machinery/cryopod,
 /obj/machinery/camera{
-	c_tag = "Cryogenic Storage"
+	c_tag = "Central Hallway East";
+	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutral"
+	dir = 1;
+	icon_state = "bluecorner"
 	},
-/area/station/civilian/dormitories)
+/area/station/hallway/primary/central)
 "bAW" = (
 /obj/machinery/computer/crew{
 	dir = 8
@@ -43912,16 +43920,6 @@
 	icon_state = "warning"
 	},
 /area/station/medical/cryo)
-"bCX" = (
-/obj/machinery/camera{
-	c_tag = "MiniSat Entrance";
-	dir = 9;
-	network = list("MiniSat")
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/aisat/antechamber)
 "bCY" = (
 /obj/structure/table/glass,
 /obj/item/device/flashlight/lamp{
@@ -44387,19 +44385,12 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
 "bDP" = (
-/obj/machinery/camera{
-	c_tag = "Aft Primary Hallway 2";
-	dir = 4
-	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = -28
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "yellowcorner"
-	},
-/area/station/hallway/primary/aft)
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/firedoor,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "bDQ" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper{
@@ -49307,14 +49298,13 @@
 /area/station/security/prison)
 "bNb" = (
 /obj/machinery/camera{
-	c_tag = "Central Hallway East";
-	dir = 9
+	c_tag = "Starboard Primary Hallway 5";
+	dir = 1
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
+	icon_state = "greencorner"
 	},
-/area/station/hallway/primary/central)
+/area/station/hallway/primary/starboard)
 "bNc" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/simulated/floor,
@@ -62487,13 +62477,14 @@
 	},
 /area/station/hallway/primary/central)
 "cxN" = (
+/obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
-	c_tag = "Central Hallway East";
+	c_tag = "Central Hallway West";
 	dir = 4
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "bluecorner"
+	dir = 8;
+	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/central)
 "cxO" = (
@@ -63492,12 +63483,18 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cAE" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/firedoor,
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Recycler's Workplace";
+	dir = 10
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "dark"
+	},
+/area/station/cargo/recycleroffice)
 "cAF" = (
 /obj/machinery/constructable_frame/machine_frame,
 /turf/simulated/floor/plating{
@@ -67158,6 +67155,10 @@
 	c_tag = "Central Hallway South-East";
 	dir = 8
 	},
+/obj/machinery/camera{
+	c_tag = "Central Hallway South-East";
+	dir = 8
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "neutral"
@@ -69489,6 +69490,16 @@
 	icon_state = "greencorner"
 	},
 /area/station/hallway/primary/port)
+"fEm" = (
+/obj/machinery/camera{
+	c_tag = "Central Hallway South-West";
+	dir = 4
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/primary/central)
 "fEy" = (
 /obj/machinery/access_button{
 	command = "cycle_interior";
@@ -70804,14 +70815,14 @@
 	},
 /area/station/engineering/engine)
 "hbH" = (
-/obj/machinery/camera{
-	c_tag = "Starboard Primary Hallway 5";
-	dir = 1
+/obj/machinery/camera/motion{
+	c_tag = "AI Chamber North";
+	network = list("RD","MiniSat")
 	},
 /turf/simulated/floor{
-	icon_state = "greencorner"
+	icon_state = "dark"
 	},
-/area/station/hallway/primary/starboard)
+/area/station/aisat/ai_chamber)
 "hbR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -80308,14 +80319,14 @@
 	},
 /area/station/medical/virology)
 "sqt" = (
-/obj/machinery/camera/motion{
-	c_tag = "AI Chamber North";
-	network = list("RD","MiniSat")
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "floorgrime"
 	},
-/area/station/aisat/ai_chamber)
+/area/station/security/range)
 "srb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -81550,16 +81561,15 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "ueK" = (
-/obj/structure/disposalpipe/segment,
 /obj/machinery/camera{
-	c_tag = "Central Hallway West";
-	dir = 4
+	c_tag = "Firing Range West";
+	dir = 10;
+	network = list("SS13","Security")
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutralcorner"
+	icon_state = "floorgrime"
 	},
-/area/station/hallway/primary/central)
+/area/station/security/range)
 "ufb" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan{
 	dir = 4
@@ -91343,7 +91353,7 @@ aGy
 aGy
 aaa
 iur
-buM
+bkj
 lZM
 bvU
 odL
@@ -103707,7 +103717,7 @@ bDk
 bNk
 mTP
 mtS
-bkj
+cAE
 bNk
 bNk
 aaa
@@ -107286,7 +107296,7 @@ ayv
 dWf
 avN
 dWf
-anB
+abP
 gTX
 brh
 gTX
@@ -107550,7 +107560,7 @@ aAF
 lLD
 aUu
 lLD
-aYN
+anB
 bDY
 aGn
 bET
@@ -109348,7 +109358,7 @@ bav
 bpt
 bwB
 bmp
-ueK
+cxN
 bmp
 bmZ
 btQ
@@ -109356,7 +109366,7 @@ bFy
 sVa
 aMM
 aFE
-aaX
+fEm
 bmS
 pOb
 aIR
@@ -109612,7 +109622,7 @@ bhJ
 bHF
 cux
 boW
-cAE
+bDP
 cro
 oYb
 cro
@@ -112624,7 +112634,7 @@ aaa
 aaj
 aao
 aao
-aao
+ueK
 abl
 abJ
 abJ
@@ -113487,7 +113497,7 @@ aKU
 czu
 cAk
 cAZ
-bDP
+bAu
 cim
 cBL
 czc
@@ -114679,7 +114689,7 @@ aaa
 aat
 aCb
 aaJ
-bAu
+sqt
 aJC
 abl
 abW
@@ -116000,7 +116010,7 @@ azs
 cea
 aBe
 awT
-bAV
+aYL
 azx
 bIF
 bKV
@@ -117569,7 +117579,7 @@ aRR
 aML
 bau
 aRR
-cxN
+bAV
 bDK
 aML
 aML
@@ -118092,8 +118102,8 @@ jAb
 bWl
 aPE
 bXR
+aaX
 aPE
-bNb
 aPE
 qMb
 gWp
@@ -125355,7 +125365,7 @@ cDy
 cmU
 cGo
 cFP
-sqt
+hbH
 cmk
 cqp
 cFP
@@ -126052,7 +126062,7 @@ bOz
 bOz
 bOz
 bJJ
-abP
+bhp
 bPu
 bMv
 ctM
@@ -127164,7 +127174,7 @@ aaa
 cEW
 cqP
 crN
-bCX
+aYN
 csP
 ctp
 aWZ
@@ -130680,7 +130690,7 @@ aRt
 aTs
 aTw
 aUT
-hbH
+bNb
 aKs
 bYM
 cvy
