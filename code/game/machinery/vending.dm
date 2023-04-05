@@ -75,13 +75,26 @@
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 	last_slogan = world.time + rand(0, slogan_delay)
 
-	build_inventory(products, mapload)
-	 //Add hidden inventory
-	build_inventory(contraband, mapload, hidden = 1)
-	build_inventory(premium, mapload, req_coin = 1)
-	build_inventory(syndie, mapload, req_emag = 1)
 	power_change()
 	update_wires_check()
+
+	build_inventory()
+
+	if((SSticker.current_state == GAME_STATE_PLAYING) || !is_station_level(z) || private)
+		load_products(FALSE)
+	else
+		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, .proc/on_round_start)
+
+/obj/machinery/vending/proc/on_round_start(datum/source)
+	SIGNAL_HANDLER
+	load_products(roundstart=TRUE)
+
+/obj/machinery/vending/proc/load_products(roundstart = TRUE)
+	load_inventory(product_records, roundstart)
+	 //Add hidden inventory
+	load_inventory(hidden_records, hidden = 1)
+	load_inventory(coin_records, req_coin = 1)
+	load_inventory(emag_records, req_emag = 1)
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -108,41 +121,41 @@
 	if(.)
 		malfunction()
 
-/obj/machinery/vending/proc/build_inventory(list/productlist, mapload, hidden = 0, req_coin = 0 , req_emag = 0)
-	for(var/typepath in productlist)
-		var/amount = productlist[typepath]
-		if(!hidden && !req_coin && !req_emag)
-			if(mapload && is_station_level(src.z) && !private)
-				var/players_coefficient = num_players() / 75 //75 players = max load, 0 players = min load
-				var/randomness_coefficient = rand(50,100) / 100 //50-100% randomness
-				var/final_coefficient = clamp(players_coefficient * randomness_coefficient, 0.1, 1.0) //10% minimum, 100% maximum
+/obj/machinery/vending/proc/build_inventory()
+	var/list/menus = list(products, contraband, premium, syndie)
+	var/list/records = list(product_records, hidden_records, coin_records, emag_records)
 
-				amount = round(amount * final_coefficient) //10-100% roundstart load depending on player amount and randomness
+	var/i = 1
+	for(i, i<=menus.len, i++)
+		var/list/menu = menus[i]
+		for(var/atom/typepath as anything in menu)
+			var/datum/data/vending_product/R = new /datum/data/vending_product()
+			R.max_amount = menu[typepath]
+			R.product_path = typepath
+			R.price = prices[typepath]
+			R.product_name = initial(typepath.name)
+			global.vending_products[typepath] = 1
 
-				if(!amount && prob(20)) //20% that empty slot will be not empty. For very low-pop rounds.
-					amount = 1
+			records[i] += R
 
-		var/price = prices[typepath]
+/obj/machinery/vending/proc/load_inventory(list/productlist, roundstart = FALSE, hidden = 0, req_coin = 0 , req_emag = 0)
+	for(var/datum/data/vending_product/R in productlist)
+		var/amount = R.max_amount
+		if(!hidden && !req_coin && !req_emag && roundstart)
+			var/players_coefficient = num_players() / 50 //100 players = double load, 50 players = max load, 0 players = min load
+			var/randomness_coefficient = rand(50,100) / 100 //50-100% randomness
+
+			var/final_coefficient = clamp(players_coefficient * randomness_coefficient, 0.1, 2.0) //10% minimum, 200% maximum
+
+			amount = round(amount * final_coefficient) //10-100% roundstart load depending on player amount and randomness
+
+			if(!amount && prob(20)) //20% that empty slot will be not empty. For very low-pop rounds.
+				amount = 1
+
 		if(isnull(amount)) amount = 1
 
-		var/datum/data/vending_product/R = new /datum/data/vending_product()
-		global.vending_products[typepath] = 1
-		R.product_path = typepath
 		R.amount = amount
-		R.max_amount = amount
-		R.price = price
 
-		if(hidden)
-			hidden_records += R
-		else if(req_coin)
-			coin_records += R
-		else if(req_emag)
-			emag_records += R
-		else
-			product_records += R
-
-		var/atom/temp = typepath
-		R.product_name = initial(temp.name)
 	return
 
 /obj/machinery/vending/proc/refill_inventory(obj/item/weapon/vending_refill/refill, mob/user)  //Restocking from TG
