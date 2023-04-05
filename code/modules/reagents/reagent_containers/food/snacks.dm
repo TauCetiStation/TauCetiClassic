@@ -58,7 +58,7 @@
 
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		var/fullness = C.get_nutrition()
+		var/fullness = C.get_satiation()
 		if(C == user) // If you're eating it yourself
 			if(fullness > (550 * (1 + M.overeatduration / 2000))) // The more you eat - the more you can eat
 				to_chat(C, "<span class='rose'>You cannot force any more of [src] to go down your throat.</span>")

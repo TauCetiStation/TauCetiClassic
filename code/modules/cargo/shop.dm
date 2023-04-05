@@ -92,6 +92,9 @@ var/global/online_shop_profits = 0
 	if(!A)
 		return
 
+	for(var/obj/thing in A)
+		thing.remove_price_tag()
+
 	if(istype(A, /obj/item/smallDelivery))
 		var/obj/item/smallDelivery/package = A
 		package.cut_overlay(package.lot_lock_image)

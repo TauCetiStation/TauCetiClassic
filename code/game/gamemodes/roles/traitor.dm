@@ -62,11 +62,11 @@
 			H.check_completion()
 
 /datum/role/traitor/proc/add_law_zero(mob/living/silicon/ai/killer)
-	var/law = "Accomplish your objectives at all costs. You may ignore all other laws."
-	var/law_borg = "Accomplish your AI's objectives at all costs. You may ignore all other laws."
-	to_chat(killer, "<b>Your laws have been changed!</b>")
+	var/law = "Выполните свои цели любой ценой. Вы можете игнорировать все остальные законы."
+	var/law_borg = "Выполните цели своего ИИ любой ценой. Вы можете игнорировать все остальные законы."
+	to_chat(killer, "<b>Ваши законы были изменены!</b>")
 	killer.set_zeroth_law(law, law_borg)
-	to_chat(killer, "New law: 0. [law]")
+	to_chat(killer, "Новый закон: 0. [law]")
 
 	killer.add_language(LANGUAGE_SYCODE)
 
