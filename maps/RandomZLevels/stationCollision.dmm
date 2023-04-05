@@ -1037,7 +1037,8 @@
 /area/awaymission/stationcollision/research)
 "cV" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/research)
@@ -1547,7 +1548,8 @@
 "ed" = (
 /obj/item/weapon/shard,
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/northblock)
@@ -1647,7 +1649,8 @@
 /area/awaymission/stationcollision/research)
 "er" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/northblock)
@@ -2259,7 +2262,8 @@
 /area/awaymission/stationcollision/midblock)
 "fM" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/midblock)
@@ -2275,7 +2279,8 @@
 /area/awaymission/stationcollision/arrivalblock)
 "fQ" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/shuttle/plating,
 /area/awaymission/stationcollision/arrivalblock)
@@ -2776,7 +2781,8 @@
 /area/awaymission/stationcollision/midblock)
 "ht" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/arrivalblock)
@@ -3399,7 +3405,8 @@
 /area/awaymission/stationcollision/gateroom)
 "jA" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/southblock)

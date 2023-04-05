@@ -7,7 +7,8 @@
 /area/awaymission/academy/headmaster)
 "ac" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/headmaster)
@@ -576,7 +577,8 @@
 /area/awaymission/academy/headmaster)
 "bP" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -660,7 +662,8 @@
 /area/awaymission/academy/headmaster)
 "cd" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -935,7 +938,8 @@
 /area/awaymission/academy/headmaster)
 "cS" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable,
 /turf/simulated/floor/plating,
@@ -1449,7 +1453,8 @@
 /area/awaymission/academy/classrooms)
 "eo" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/classrooms)
@@ -1966,7 +1971,8 @@
 /area/awaymission/academy/classrooms)
 "fy" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -1977,7 +1983,8 @@
 /area/awaymission/academy/classrooms)
 "fz" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -1988,7 +1995,8 @@
 /area/awaymission/academy/classrooms)
 "fA" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -2013,7 +2021,8 @@
 /area/awaymission/academy/academyaft)
 "fE" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -2139,7 +2148,8 @@
 /area/awaymission/academy/classrooms)
 "fW" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3237,7 +3247,8 @@
 /area/awaymission/academy/academyaft)
 "iJ" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -3261,7 +3272,8 @@
 /area/awaymission/academy/academyaft)
 "iL" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 2;
@@ -3318,7 +3330,8 @@
 /area/awaymission/academy/academyaft)
 "iR" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/academyaft)
@@ -3330,7 +3343,8 @@
 /area/awaymission/academy/academyaft)
 "iT" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -3368,7 +3382,8 @@
 /area/awaymission/academy/academyaft)
 "iW" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d2 = 8;
@@ -3530,7 +3545,8 @@
 /area/awaymission/academy/academyaft)
 "js" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable,
 /turf/simulated/floor/plating,
@@ -3639,7 +3655,8 @@
 /area/awaymission/academy/academygate)
 "jK" = (
 /obj/structure/window/fulltile/reinforced/indestructible{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/academygate)
