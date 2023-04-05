@@ -98,8 +98,3 @@
 			break
 	holder?.key_up(_key, src)
 	mob.key_up(_key, src)
-
-// Called every game tick
-/client/keyLoop()
-	holder?.keyLoop(src)
-	mob.keyLoop(src)

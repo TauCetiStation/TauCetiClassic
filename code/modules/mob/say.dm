@@ -13,6 +13,12 @@
 		to_chat(usr, "<span class='warning'>Speech is currently admin-disabled.</span>")
 		return
 
+	if(client && SSlag_switch.measures[SLOWMODE_IC_CHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))
+		if(!COOLDOWN_FINISHED(client, say_slowmode))
+			to_chat(src, to_chat("<span class='warning'>Message not sent due to slowmode. Please wait [SSlag_switch.slowmode_cooldown/10] seconds between messages.\n\"[message]\"</span>"))
+			return
+		COOLDOWN_START(client, say_slowmode, SSlag_switch.slowmode_cooldown)
+
 	usr.say(message)
 
 /mob/verb/me_verb(message as text)
@@ -25,6 +31,13 @@
 
 	if(!message)
 		return
+
+	if(client && SSlag_switch.measures[SLOWMODE_IC_CHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))
+		if(!COOLDOWN_FINISHED(client, say_slowmode))
+			to_chat(src, to_chat("<span class='warning'>Message not sent due to slowmode. Please wait [SSlag_switch.slowmode_cooldown/10] seconds between messages.\n\"[message]\"</span>"))
+			return
+		COOLDOWN_START(client, say_slowmode, SSlag_switch.slowmode_cooldown)
+
 
 	message = sanitize(message)
 	message = uncapitalize(message)

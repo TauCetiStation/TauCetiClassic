@@ -97,7 +97,7 @@
 		return FALSE
 
 	if(on_place)
-		on_place.Invoke(A, I, user)
+		on_place.Invoke(A, I, user, params)
 
 	A.add_fingerprint(user)
 	// Prevent hitting the thing if we're just putting it.

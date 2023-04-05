@@ -40,3 +40,10 @@
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rocket/anti_singulo
 	fire_sound = 'sound/weapons/guns/gunpulse_emitter2.ogg'
 	origin_tech = "combat=3;bluespace=6"
+
+/obj/item/weapon/gun/projectile/revolver/rocketlauncher/commando
+	name = "\'Commando\' rocket launcher"
+	desc = "Four-tube grenade launcher. When you don't really care about the integrity of the station."
+	icon_state = "commando"
+	item_state = "commando"
+	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rocket/four

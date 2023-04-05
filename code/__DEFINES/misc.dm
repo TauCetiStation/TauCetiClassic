@@ -313,3 +313,61 @@
 #define NOTIFY_JUMP "jump"
 #define NOTIFY_ATTACK "attack"
 #define NOTIFY_ORBIT "orbit"
+
+#define CAN_SMOOTH_WITH_WALLS list( \
+		/turf/unsimulated/wall, \
+		/turf/simulated/wall, \
+		/turf/simulated/wall/r_wall, \
+		/obj/structure/falsewall, \
+		/obj/structure/falsewall/reinforced, \
+		/obj/structure/girder, \
+		/obj/structure/girder/reinforced, \
+		/obj/structure/windowsill, \
+		/obj/structure/window/fulltile, \
+		/obj/structure/window/fulltile/phoron, \
+		/obj/structure/window/fulltile/reinforced, \
+		/obj/structure/window/fulltile/reinforced/phoron, \
+		/obj/structure/window/fulltile/reinforced/tinted, \
+		/obj/structure/window/fulltile/reinforced/polarized, \
+		/obj/structure/window/fulltile/reinforced/indestructible, \
+		/obj/machinery/door/airlock, \
+		/obj/machinery/door/airlock/centcom, \
+		/obj/machinery/door/airlock/command, \
+		/obj/machinery/door/airlock/security, \
+		/obj/machinery/door/airlock/engineering, \
+		/obj/machinery/door/airlock/medical, \
+		/obj/machinery/door/airlock/virology, \
+		/obj/machinery/door/airlock/maintenance, \
+		/obj/machinery/door/airlock/freezer, \
+		/obj/machinery/door/airlock/mining, \
+		/obj/machinery/door/airlock/atmos, \
+		/obj/machinery/door/airlock/research, \
+		/obj/machinery/door/airlock/science, \
+		/obj/machinery/door/airlock/neutral, \
+		/obj/machinery/door/airlock/highsecurity, \
+		/obj/machinery/door/airlock/vault, \
+		/obj/machinery/door/airlock/external, \
+		/obj/machinery/door/airlock/glass, \
+		/obj/machinery/door/airlock/command/glass, \
+		/obj/machinery/door/airlock/engineering/glass, \
+		/obj/machinery/door/airlock/security/glass, \
+		/obj/machinery/door/airlock/medical/glass, \
+		/obj/machinery/door/airlock/virology/glass, \
+		/obj/machinery/door/airlock/research/glass, \
+		/obj/machinery/door/airlock/mining/glass, \
+		/obj/machinery/door/airlock/atmos/glass, \
+		/obj/machinery/door/airlock/science/glass, \
+		/obj/machinery/door/airlock/science/neutral, \
+		/obj/machinery/door/airlock/maintenance_hatch, \
+)
+
+#define SMOOTH_ADAPTERS_WALLS list( \
+		/turf/simulated/wall = "wall", \
+		/obj/structure/falsewall = "wall", \
+		/obj/machinery/door/airlock = "wall", \
+)
+
+// wall don't need adapter with another wall
+#define SMOOTH_ADAPTERS_WALLS_FOR_WALLS list( \
+		/obj/machinery/door/airlock = "wall", \
+)
