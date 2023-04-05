@@ -91,17 +91,17 @@
 					to_chat(H, "<span class='warning'>[pick("Your [infected_organ.name] seems to become more green...", "Your [infected_organ.name] hurts...")]</span>")
 			if(7,8) //pain
 				to_chat(H, "<span class='danger'>[pick("Your brain hurts.", "Your [infected_organ.name] hurts a lot.", "Your muscles ache.", "Your muscles are sore.")]</span>")
-				H.apply_effect(20,AGONY,0)
+				H.apply_effect(20, AGONY, 0)
 				H.adjustBrainLoss(5)
 				H.adjustToxLoss(3)
 			if(9) //IT HURTS
 				if(prob(33))
 					to_chat(H, "<span class='danger'>[pick("IT HURTS", "You feel a sharp pain across your whole body!")]</span>")
-					H.adjustBruteLoss(rand(2,5))
-					H.apply_effect(50,AGONY,0)
+					H.adjustBruteLoss(rand(2, 5))
+					H.apply_effect(50, AGONY, 0)
 				else if(prob(33) && H.stat == CONSCIOUS)
 					to_chat(H, "<span class='danger'>[pick("Your heart stop for a second.", "It's hard for you to breathe.")]</span>")
-					H.adjustOxyLoss(rand(10,40))
+					H.adjustOxyLoss(rand(10, 40))
 				else
 					to_chat(H, "<span class='danger'>[pick("Your body is paralyzed.")]</span>")
 					H.Stun(4)
@@ -185,7 +185,7 @@
 		to_chat(mob, "<span class='warning'>[pick("You feel a sudden pain across your body.", "Drops of blood appear suddenly on your skin.")]</span>")
 	else if(holder.stage == 4)
 		to_chat(mob, "<span class='userdanger'>[pick("You cringe as a violent pain takes over your body.", "It feels like your body is eating itself inside out.", "IT HURTS.")]</span>")
-		mob.adjustBruteLoss(rand(15,25))
+		mob.adjustBruteLoss(rand(15, 25))
 
 /datum/disease2/effect/flesh_death
 	name = "Autophagocytosis Necrosis"
@@ -232,7 +232,7 @@
 		return
 	if(passive_message_condition(H, disease))
 		to_chat(H, passive_message)
-		COOLDOWN_START(src, heal_message, rand(1, 3) MINUTES)
+		COOLDOWN_START(src, heal_message, rand(1 MINUTE, 3 MINUTES))
 
 /datum/disease2/effect/heal/proc/can_heal(atom/A, datum/disease2/disease/disease)
 	return 1
@@ -674,7 +674,7 @@
 			H.invoke_vomit_async()
 	else if(holder.stage == 3)
 		to_chat(mob, "<span class='userdanger'>[pick("Your stomach hurts.", "You feel a sharp abdominal pain.")]</span>")
-		mob.reagents.add_reagent(pick("plasticide", "toxin", "amatoxin", "phoron", "lexorin", "carpotoxin", "mindbreaker", "plantbgone", "fluorine"), round(rand(1,3), 1)) // some random toxin
+		mob.reagents.add_reagent(pick("plasticide", "toxin", "amatoxin", "phoron", "lexorin", "carpotoxin", "mindbreaker", "plantbgone", "fluorine"), round(rand(1, 3), 1)) // some random toxin
 
 
 /datum/disease2/effect/dna
