@@ -54,7 +54,7 @@
 /obj/item/weapon/holosign_creator/security
 	name = "Security HoloBarrier projector"
 	holosign_type = /obj/structure/holosign/barrier
-	creation_time = 40
+	creation_time = 60
 	icon_state = "signmaker_sec"
 	max_signs = 8
 
@@ -70,7 +70,7 @@
 	holosign_type = /obj/structure/holosign/barrier/atmos
 	creation_time = 10
 	icon_state = "signmaker_atmos"
-	max_signs = 12
+	max_signs = 8
 
 /obj/item/weapon/holosign_creator/quarantine
 	name = "PANDEMIC HoloBarrier projector"
@@ -171,31 +171,30 @@
 		return CheckHuman(mover)
 	return TRUE
 
+/obj/structure/holosign/barrier/quarantine/proc/MedDeny()
+	if(buzzcd < world.time)
+		playsound(get_turf(src),'sound/machines/medscan_alarm.ogg',VOL_EFFECTS_MASTER)
+		buzzcd = (world.time + 15)
+	flick("holo_medical-deny",src)
+
+/obj/structure/holosign/barrier/quarantine/proc/MedAllow()
+	if(beepcd < world.time)
+		playsound(get_turf(src),'sound/machines/beep-quiet.ogg',VOL_EFFECTS_MASTER)
+		beepcd = (world.time + 15)
+
 /obj/structure/holosign/barrier/quarantine/Bumped(atom/movable/AM)
 	. = ..()
 	if(iscarbon(AM))
-		if(buzzcd < world.time)
-			playsound(get_turf(src),'sound/machines/buzz-sigh.ogg',VOL_EFFECTS_MASTER)
-			buzzcd = (world.time + 15)
-		icon_state = "holo_medical-deny"
-		sleep(40)
-		icon_state = "holo_medical"
+		MedDeny()
 		
 
 /obj/structure/holosign/barrier/quarantine/Crossed(atom/movable/AM)
 	icon_state = "holo_medical"
 	. = ..()
 	if(iscarbon(AM) && CheckHuman(AM))
-		if(beepcd < world.time)
-			playsound(get_turf(src),'sound/machines/beep-quiet.ogg',VOL_EFFECTS_MASTER)
-			beepcd = (world.time + 15)
+		MedAllow()
 	else
-		if(buzzcd < world.time)
-			playsound(get_turf(src),'sound/machines/buzz-sigh.ogg',VOL_EFFECTS_MASTER)
-			buzzcd = (world.time + 15)
-			icon_state = "holo_medical-deny"
-			sleep(40)
-			icon_state = "holo_medical"
+		MedDeny()
 
 /obj/structure/holosign/barrier/quarantine/proc/CheckHuman(mob/living/carbon/human/SB)
 	if(SB.virus2.len || locate(/obj/item/alien_embryo) in SB.contents)
