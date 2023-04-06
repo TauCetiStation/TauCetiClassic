@@ -28,12 +28,7 @@ function SetVolume(volume) {
 	</script>"}
 
 /mob/living/proc/update_music()
-	//world << "Update start"
-	if (client && client.media)
-		//world << "Media Exists"
-		client.media.update_music()
-	//else
-	//	testing("[src] - client: [client?"Y":"N"]; client.media: [client && client.media ? "Y":"N"]")
+	client?.media?.update_music()
 
 /area
 	// One media source per area.
@@ -60,11 +55,13 @@ function SetVolume(volume) {
 /datum/media_manager/New(client/owner_)
 	owner = owner_
 	volume = MEDIA_VOLUME * owner.get_sound_volume(VOL_JUKEBOX)
+	if(isliving(owner.mob))
+		open()
 
 // Actually pop open the player in the background.
 /datum/media_manager/proc/open()
 	owner << browse(PLAYER_HTML, "window=[window]")
-	send_update()
+	update_music()
 
 // Tell the player to play something via JS.
 /datum/media_manager/proc/send_update()

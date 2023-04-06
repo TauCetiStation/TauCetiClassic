@@ -50,7 +50,7 @@
 /turf/environment/space,
 /area/space_structures/cult_ship)
 "eD" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/shuttle/engine/heater{
@@ -132,7 +132,7 @@
 /turf/environment/space,
 /area/space_structures/cult_ship)
 "lJ" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/structure/shuttle/engine/heater{

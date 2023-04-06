@@ -25,7 +25,7 @@
 /mob/living/carbon/xenomorph/humanoid/hunter/handle_environment()
 	if(invisible)	//if the hunter is invisible
 		adjustToxLoss(-heal_rate)	//plasma is spent on invisibility
-	if(storedPlasma < heal_rate)
+	if(storedPlasma < heal_rate || incapacitated())
 		set_m_intent(MOVE_INTENT_RUN)	//get out of invisibility if plasma runs out
 	..()
 
@@ -93,8 +93,9 @@
 		var/obj/item/weapon/shield/shield = L.is_in_hands(/obj/item/weapon/shield)
 		if(shield && check_shield_dir(hit_atom, dir))
 			L.visible_message("<span class='danger'>[src] smashed into [L]'s [shield]!</span>", "<span class='userdanger'>[src] pounces on your [shield]!</span>")
-			Stun(2)
-			Weaken(2)
+			playsound(hit_atom, 'sound/weapons/metal_shield_hit.ogg', VOL_EFFECTS_MASTER)
+			Stun(2, TRUE)
+			Weaken(2, TRUE)
 		else
 			L.visible_message("<span class='danger'>[src] pounces on [L]!</span>", "<span class='userdanger'>[src] pounces on you!</span>")
 			if(issilicon(L))
@@ -109,8 +110,9 @@
 			playsound(src, pick(SOUNDIN_HUNTER_LEAP), VOL_EFFECTS_MASTER, vary = FALSE)
 	else if(hit_atom.density)
 		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='alertalien'>You smashes into [hit_atom]!</span>")
-		Stun(2)
-		Weaken(2)
+		playsound(hit_atom, 'sound/effects/hulk_attack.ogg', VOL_EFFECTS_MASTER)
+		Stun(2, TRUE)
+		Weaken(2, TRUE)
 
 	pounce_cooldown = TRUE
 	VARSET_IN(src, pounce_cooldown, FALSE, pounce_cooldown_time)
@@ -137,6 +139,8 @@
 		animate(src, alpha = 20, time = 5, loop = 1, LINEAR_EASING)
 
 /mob/living/carbon/xenomorph/humanoid/hunter/set_m_intent(intent)
+	if(incapacitated() && !invisible)
+		return
 	. = ..()
 	if(.)
 		toggle_invisible()

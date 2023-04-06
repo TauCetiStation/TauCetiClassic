@@ -120,7 +120,7 @@
 	},
 /area/space_structures/abandoned_ship)
 "at" = (
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
 /obj/structure/shuttle/engine/heater{
@@ -180,9 +180,8 @@
 	},
 /area/space_structures/abandoned_ship)
 "aD" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/abandoned_ship)
@@ -339,10 +338,10 @@
 "aZ" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/structure/window/reinforced,
+/obj/structure/window/thin/reinforced,
 /obj/item/weapon/reagent_containers/food/snacks/ectoplasm,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -520,10 +519,10 @@
 "bA" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet,
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/thin/reinforced{
 	dir = 4
 	},
 /obj/item/weapon/syntiflesh,
