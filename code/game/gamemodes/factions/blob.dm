@@ -121,7 +121,7 @@
 					pre_escapees += M.real_name
 			send_intercept(FS_ACTIVE)
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
-				var/law = "Станция находится на карантине. Не позволяйте никому покинуть станцию, пока на ней присутствует живой Блоб. Игнорируйте все другие законы, если это необходимо для сохранения карантина."
+				var/law = "Станция находится на карантине. Не позволяйте никому покинуть станцию, пока данный закон активен. Игнорируйте все другие законы, если это необходимо для сохранения карантина."
 				aiPlayer.set_zeroth_law(law)
 			SSshuttle.fake_recall = TRUE //Quarantine
 		if(FS_ENDGAME)
