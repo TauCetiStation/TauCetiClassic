@@ -645,6 +645,8 @@
 
 /obj/structure/sign/poster/revolution/examine(mob/user)
 	. = ..()
+	if(ruined)
+		return
 	if(!ishuman(user))
 		return
 	to_chat(user, "<span class='notice'>The image on the poster feels memetic. It makes you feel things you shouldn't be feeling staring on a QR code wannabe.</span>")
