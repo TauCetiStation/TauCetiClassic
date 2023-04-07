@@ -13321,7 +13321,6 @@
 	pixel_y = 24
 	},
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -21699,28 +21698,17 @@
 	},
 /area/station/rnd/mixing)
 "aOd" = (
+/obj/structure/window/fulltile/reinforced,
+/obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
 	icon_state = "pdoor0";
-	id = "bridge blast";
-	name = "Bridge Blast Doors";
+	id = "atmos";
+	name = "Atmos Blast Door";
 	opacity = 0
 	},
-/obj/structure/window/thin/reinforced/tinted,
-/obj/machinery/door/firedoor,
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/structure/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
-	},
 /turf/simulated/floor/plating,
-/area/station/bridge)
+/area/station/engineering/atmos)
 "aOe" = (
 /obj/random/vending/snack,
 /turf/simulated/floor{
@@ -34086,10 +34074,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/structure/window/fulltile/reinforced{
+/obj/structure/window/fulltile/reinforced/tinted{
 	grilled = 1
 	},
-/obj/structure/window/thin/reinforced/tinted,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "blb" = (
@@ -34107,10 +34094,6 @@
 	opacity = 0
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
-	},
-/obj/structure/window/thin/reinforced/tinted,
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -34119,6 +34102,9 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/structure/window/fulltile/reinforced/tinted{
+	grilled = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
@@ -44034,7 +44020,6 @@
 	pixel_x = 32
 	},
 /obj/structure/table,
-/obj/machinery/computer/stockexchange,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -54575,11 +54560,11 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 4
 	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/structure/window/thin{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -56560,9 +56545,6 @@
 	},
 /area/station/engineering/engine)
 "chq" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -56571,6 +56553,7 @@
 	name = "Atmos Blast Door";
 	opacity = 0
 	},
+/obj/structure/window/fulltile/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "chr" = (
@@ -57893,7 +57876,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 4
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/thin{
 	dir = 1
 	},
 /turf/simulated/floor{
@@ -58276,13 +58259,13 @@
 /area/station/aisat/antechamber_interior)
 "cmE" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
 /obj/machinery/camera{
 	c_tag = "Atmospherics West";
 	dir = 5;
 	network = list("SS13","Engineering")
+	},
+/obj/structure/window/thin{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "bot"
@@ -58434,10 +58417,10 @@
 	},
 /area/station/medical/virology)
 "cna" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/closet/firecloset,
+/obj/structure/window/thin{
 	dir = 1
 	},
-/obj/structure/closet/firecloset,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "caution"
@@ -63688,13 +63671,11 @@
 	},
 /area/station/solar/starboard)
 "cBb" = (
-/obj/structure/window/fulltile/reinforced{
-	grilled = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "cBg" = (
@@ -66250,7 +66231,7 @@
 /area/station/engineering/engine)
 "cJQ" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/structure/window/thin/reinforced{
+/obj/structure/window/thin{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -113641,7 +113622,7 @@ aHB
 aIQ
 aKD
 aMM
-aOd
+bla
 bnx
 bqu
 bts
@@ -116519,7 +116500,7 @@ bSV
 chq
 chq
 chq
-chq
+aOd
 bSV
 bSV
 bSV
