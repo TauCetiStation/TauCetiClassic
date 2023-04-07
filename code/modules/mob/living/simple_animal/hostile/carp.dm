@@ -48,6 +48,8 @@
 	if(randomify)
 		carp_randomify()
 
+	ADD_TRAIT(src, TRAIT_ARIBORN, TRAIT_ARIBORN_FLYING)
+
 /mob/living/simple_animal/hostile/carp/proc/carp_randomify()
 	melee_damage = initial(melee_damage) * rand(8, 12) * 0.1
 	maxHealth = rand(initial(maxHealth), (1.5 * initial(maxHealth)))
