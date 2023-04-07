@@ -484,6 +484,65 @@
 	if(length(overlays_adapters))
 		add_overlay(overlays_adapters)
 
+
+/client/proc/generate_fulltile_window_placeholders()
+	set name = ".gwp"
+	set hidden = TRUE
+
+	//no one should do it on the server, log just in case
+	log_admin("[key_name(src)] started generation of the new placeholders for fulltile windows")
+	message_admins("[key_name(src)] started generation of the new placeholders for fulltile windows")
+
+	var/list/types = list(
+		/obj/structure/window/fulltile,
+		/obj/structure/window/fulltile/phoron,
+		/obj/structure/window/fulltile/tinted,
+		/obj/structure/window/fulltile/polarized,
+		/obj/structure/window/fulltile/reinforced,
+		/obj/structure/window/fulltile/reinforced/phoron,
+		/obj/structure/window/fulltile/reinforced/tinted,
+		/obj/structure/window/fulltile/reinforced/polarized,
+	)
+
+	var/icon/placeholder = new
+	var/obj/structure/window/fulltile/F
+
+	for(var/type in types)
+		to_chat(usr, "Generating new placeholder for: [type]")
+
+		F = new type
+		F.grilled = FALSE
+		F.change_color("#ffffff")
+
+		while(!F.initialized)
+			sleep(10)
+
+		F.smooth_set_icon(0)
+		var/icon/state = icon(F.icon, "0")
+
+		F.grilled = TRUE
+		F.smooth_set_icon(0)
+		var/icon/state_grilled = icon(F.icon, "0")
+
+		if(type == /obj/structure/window/fulltile/reinforced/polarized || type == /obj/structure/window/fulltile/polarized) // polarized don't have own blend color so we need to make it different
+			for(var/x in 1 to 32)
+				for(var/y in 1 to 32)
+					if (x == y || x == (32-y+1))
+						state.DrawBox("#222222", x, y)
+						state_grilled.DrawBox("#222222", x, y)
+
+		to_chat(usr, "New: [bicon(state)]")
+		to_chat(usr, "New: [bicon(state_grilled)]")
+
+		// fuck "Runtime in : : bad icon operation"
+		// for some inner byond reasons this don't work first time when icon generated
+		placeholder.Insert(state, "[initial(F.icon_state)]")
+		placeholder.Insert(state_grilled, "gr_[initial(F.icon_state)]")
+
+	fcopy(placeholder, "cache/placeholder.dmi")
+	to_chat(usr, "New placeholder saved as \"cache/placeholder.dmi\". Run .gwp second time if icon is empty")
+
+
 /*
 //Example smooth wall
 /turf/simulated/wall/smooth

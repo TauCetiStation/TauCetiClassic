@@ -933,7 +933,8 @@
 /area/awaymission/jungle/crash_ship_source)
 "dB" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/unsimulated/floor,
 /area/awaymission/jungle/crash_ship_source)

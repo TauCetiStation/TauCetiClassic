@@ -291,7 +291,8 @@
 /area/space_structures/old_station/right)
 "bC" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/carp_space)
@@ -711,7 +712,8 @@
 	dir = 4
 	},
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
@@ -962,7 +964,8 @@
 /area/space)
 "fM" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -1531,7 +1534,8 @@
 /area/space_structures/old_station/right/rnd)
 "iH" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/solars_c)
@@ -3089,7 +3093,8 @@
 /area/space_structures/old_station/central/brig)
 "tE" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -3354,7 +3359,8 @@
 /area/space_structures/old_station/central/brig)
 "vh" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central)
@@ -3521,7 +3527,8 @@
 /area/space_structures/old_station/left)
 "vU" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/bridge)
@@ -3915,7 +3922,8 @@
 /area/space_structures/old_station/right)
 "ya" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/left)
@@ -4314,7 +4322,8 @@
 /area/space_structures/old_station/central/kitchen)
 "Ay" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/wall/r_wall,
 /area/space_structures/old_station/central)
@@ -5096,7 +5105,8 @@
 /area/space_structures/old_station/satellite)
 "EB" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/hydro)
@@ -5960,7 +5970,8 @@
 /area/space_structures/old_station/right/rnd)
 "Jz" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/left/med)
@@ -6058,7 +6069,8 @@
 /area/space_structures/old_station/central)
 "Ki" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating{
 	icon_state = "panelscorched"
@@ -6366,7 +6378,8 @@
 /area/space_structures/old_station/central)
 "Mc" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/sign/warning/docking,
 /turf/simulated/floor/plating,
@@ -6547,7 +6560,8 @@
 /area/space_structures/old_station/warehouse)
 "Nv" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/whitegreed,
 /area/space_structures/old_station/satellite)
@@ -7175,7 +7189,8 @@
 /area/space_structures/old_station/left)
 "Rr" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/brig)
@@ -7516,7 +7531,8 @@
 /area/space_structures/old_station/central/solars_c)
 "Tv" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/kitchen)
@@ -7577,7 +7593,8 @@
 /area/space_structures/old_station/central/solars_c)
 "TE" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right/rnd)
@@ -7716,7 +7733,8 @@
 /area/space_structures/old_station/central/hydro)
 "UA" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/wall/r_wall,
 /area/space_structures/old_station/left)
@@ -7732,7 +7750,8 @@
 /area/space_structures/old_station/left/med)
 "UC" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right)
@@ -8221,7 +8240,8 @@
 /area/space_structures/old_station/central/bridge)
 "XB" = (
 /obj/structure/window/fulltile/reinforced{
-	grilled = 1
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
 	},
 /obj/structure/cable{
 	d1 = 4;
