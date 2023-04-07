@@ -62,7 +62,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	pass_flags = PASSTABLE
 	max_integrity = 200
 	var/list/validturfs = list()
-	var/should_corrupt = CORRUPT_NOT_ALLOWED
+	var/corrupting = CORRUPT_NOT_ALLOWED
 	var/datum/religion/cult/C
 
 	var/corruption_delay = 50 //Increases currupting delay by 5 each time it procs
@@ -76,7 +76,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 /obj/structure/cult/pylon/proc/init_healing()
 	AddComponent(/datum/component/aura_healing, 5, TRUE, 0.4, 0.4, 0.1, 1, 1, 0.1, 0.4, null, 1.2, \
 	TRAIT_HEALS_FROM_PYLONS,"#960000")
-	START_PROCESSING(SSprocessing, src)
+	if(!is_centcom_level(z))
+		START_PROCESSING(SSobj, src)
 	C = cult_religion
 
 /obj/structure/cult/pylon/deconstruct(disassembled)
@@ -84,7 +85,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 		return ..()
 	new /obj/structure/cult/pylon_platform(loc)
 	new /obj/item/stack/sheet/metal(loc)
-	STOP_PROCESSING(SSprocessing, src)
+	STOP_PROCESSING(SSobj, src)
 	validturfs = null
 	return ..()
 
@@ -94,17 +95,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 			validturfs = list()
 		return
 
-	//Now we have to decide whether we need to corrupt or not
-	if(should_corrupt == CORRUPT_FORBIDDEN)
-		return
-	else if(should_corrupt == CORRUPT_ALLOWED)
-		if(COOLDOWN_FINISHED(src, corruption))
-			corrupt()
-	else if(should_corrupt == CORRUPT_NOT_ALLOWED)
-		if(is_centcom_level(z))//It is cult' area, after all
-			should_corrupt = CORRUPT_FORBIDDEN
-		else
-			should_corrupt = CORRUPT_ALLOWED
+	if(COOLDOWN_FINISHED(src, corruption))
+		corrupt()
 
 /obj/structure/cult/pylon/proc/corrupt()
 	if(!length(validturfs))
