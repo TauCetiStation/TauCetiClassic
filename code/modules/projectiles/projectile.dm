@@ -99,7 +99,7 @@
 			return grab.affecting
 	return H
 
-/obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
+/obj/item/projectile/proc/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0) // why we have this and on_impact at the same time
 	if(!isliving(target))
 		return 0
 	if(isanimal(target))
