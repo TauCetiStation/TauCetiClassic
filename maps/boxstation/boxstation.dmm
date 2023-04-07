@@ -10665,8 +10665,11 @@
 /turf/simulated/wall/r_wall,
 /area/station/gateway)
 "aCr" = (
-/turf/simulated/wall/r_wall,
-/area/station/hallway/primary/fore)
+/obj/machinery/door/firedoor,
+/turf/simulated/floor{
+	icon_state = "bluecorner"
+	},
+/area/station/hallway/primary/starboard)
 "aCs" = (
 /obj/machinery/light{
 	dir = 1
@@ -27215,12 +27218,17 @@
 	},
 /area/station/rnd/xenobiology)
 "bkO" = (
-/obj/machinery/door/firedoor,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "purplecorner"
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/area/station/hallway/primary/central)
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/airlock/glass{
+	name = "Central Access"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/starboard)
 "bkP" = (
 /obj/item/weapon/shard,
 /turf/simulated/floor/plating{
@@ -40863,7 +40871,6 @@
 	},
 /area/station/engineering/monitoring)
 "bMu" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/light,
 /turf/simulated/floor{
 	icon_state = "bluecorner"
@@ -42190,26 +42197,23 @@
 	},
 /area/station/security/iaa_office)
 "bOQ" = (
-/obj/machinery/door/airlock/glass{
-	name = "Central Access"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "bOR" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
+/obj/machinery/door/airlock/glass{
+	name = "Central Access"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "purplecorner"
 	},
-/turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "bOS" = (
 /obj/machinery/alarm{
@@ -43801,9 +43805,6 @@
 /turf/simulated/floor,
 /area/station/maintenance/atmos)
 "bSr" = (
-/obj/machinery/door/airlock/glass{
-	name = "Central Access"
-	},
 /obj/structure/sign/warning/exit_arrow{
 	dir = 8;
 	pixel_y = 32
@@ -119888,10 +119889,10 @@ aCu
 aCu
 aCu
 aCu
-aCr
-aCr
-aCr
-aNU
+aCu
+aCu
+aCu
+aCu
 hYb
 aHA
 aPy
@@ -125046,9 +125047,9 @@ bBs
 bBs
 bxJ
 bxJ
-bkO
-aKz
-aGs
+aBB
+aKx
+bbo
 bit
 bit
 dxv
@@ -125304,8 +125305,8 @@ bEG
 bIa
 bxJ
 bSr
-bOQ
-bfe
+bbG
+cpX
 bit
 bjm
 bmg
@@ -125560,8 +125561,8 @@ bom
 arP
 bIa
 bxJ
-bNu
-bOR
+bNd
+bbG
 bMu
 bit
 bkD
@@ -127102,9 +127103,9 @@ aOa
 bqT
 aZO
 bJn
-bNd
-bbG
-cpX
+bNu
+bOQ
+aCr
 bDP
 cIK
 bkH
@@ -127359,9 +127360,9 @@ mSx
 icx
 aLX
 bjt
-bNd
-bbG
-cpX
+bOR
+bkO
+bfe
 bVg
 jHb
 bFM
@@ -127616,9 +127617,9 @@ aOa
 brE
 bIj
 bJn
-bNd
-bbG
-cpX
+bNu
+bOQ
+aCr
 cIK
 jIb
 cxy
