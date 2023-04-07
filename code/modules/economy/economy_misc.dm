@@ -80,20 +80,6 @@ var/global/initial_station_money = 7500
 	if(economy_init)
 		return 2
 
-	var/datum/feed_channel/newChannel = new /datum/feed_channel
-	newChannel.channel_name = "[system_name()] Daily"
-	newChannel.author = "CentComm Minister of Information"
-	newChannel.locked = 1
-	newChannel.is_admin_channel = 1
-	news_network.network_channels += newChannel
-
-	newChannel = new /datum/feed_channel
-	newChannel.channel_name = "The Gibson Gazette"
-	newChannel.author = "Editor Mike Hammers"
-	newChannel.locked = 1
-	newChannel.is_admin_channel = 1
-	news_network.network_channels += newChannel
-
 	for(var/loc_type in subtypesof(/datum/trade_destination))
 		var/datum/trade_destination/D = new loc_type
 		weighted_randomevent_locations[D] = D.viable_random_events.len

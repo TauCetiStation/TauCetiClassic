@@ -184,8 +184,6 @@ var/global/list/severity_to_string = list(EVENT_LEVEL_FEATURE = "RoundStart", EV
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Lotto",        /datum/event/money_lotto,                             0,    list(ASSIGNMENT_ANY = 1), ONESHOT, 1, 0,  5, 15),
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Hacker",       /datum/event/money_hacker,                            0,    list(ASSIGNMENT_ANY = 4), ONESHOT, 1, 0, 10, 25),
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Economic Event",     /datum/event/economic_event,                          300),
-	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Trivial News",       /datum/event/trivial_news,                            400),
-	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Mundane News",       /datum/event/mundane_news,                            300),
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Vermin Infestation", /datum/event/infestation,                             100,  list(ASSIGNMENT_JANITOR = 100)),
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Wallrot",            /datum/event/wallrot,                                 0,    list(ASSIGNMENT_ENGINEER = 30, ASSIGNMENT_BOTANIST = 50)),
 	new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Xenohive",           /datum/event/feature/area/maintenance_spawn/xenohive, 300),
