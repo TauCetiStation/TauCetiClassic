@@ -322,6 +322,7 @@
 	var/obj/item/weapon/implant/death_alarm/DA = new(H)
 	DA.stealth_inject(H)
 
+
 /datum/quality/positiveish/anatomist
 	name = "Anatomist"
 	desc = "Ты с первого взгляда можешь по походке и телосложению узнать расу гуманоида перед тобой."
@@ -329,6 +330,7 @@
 
 /datum/quality/positiveish/anatomist/add_effect(mob/living/carbon/human/H, latespawn)
 	ADD_TRAIT(H, TRAIT_ANATOMIST, QUALITY_TRAIT)
+
 
 /datum/quality/positiveish/selfdefense
 	name = "Self Defense"
@@ -339,6 +341,7 @@
 /datum/quality/positiveish/selfdefense/add_effect(mob/living/carbon/human/H, latespawn)
 	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/doublebarrel/derringer(H), SLOT_R_STORE)
 
+
 /datum/quality/positiveish/cqc
 	name = "CQC"
 	desc = "Вы прошли курсы единоборств и теперь знаете на несколько приёмов больше."
@@ -346,3 +349,17 @@
 
 /datum/quality/positiveish/cqc/add_effect(mob/living/carbon/human/H)
 	H.add_moveset(new /datum/combat_moveset/cqc, MOVESET_QUALITY)
+
+
+/datum/quality/positiveish/investory
+	name = "Investor"
+	desc = "Вдоволь находившись на околофинансовые семинары, ты решил прикупить несколько акций Карго..."
+	requirement = "Нет."
+
+/datum/quality/positiveish/investory/add_effect(mob/living/carbon/human/H, latespawn)
+	if(!H.mind)
+		return
+	var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+	if(!MA)
+		return
+	SSeconomy.issue_founding_stock(MA.account_number, "Cargo", rand(10, 20))

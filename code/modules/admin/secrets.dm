@@ -689,7 +689,8 @@
 
 		// Set Night Shift Mode
 		if("night_shift_set")
-			var/val = tgui_alert(usr, "What do you want to set night shift to?", "Night Shift", list("On", "Off", "Automatic"))
+			var/val = tgui_alert(usr, "What do you want to set night shift to?", "Night Shift", list("On", "Off", "Automatic", "Force Custom"))
+			var/custom_mode
 			switch(val)
 				if("Automatic")
 					SSnightshift.can_fire = TRUE
@@ -700,8 +701,14 @@
 				if("Off")
 					SSnightshift.can_fire = FALSE
 					SSnightshift.update_nightshift(FALSE)
+				if("Force Custom")
+					SSnightshift.can_fire = FALSE
+					custom_mode = input("Select night shift mode.", "Night Shift") as null|anything in (lighting_presets + lighting_presets_admin)
+					if(custom_mode)
+						SSnightshift.update_nightshift(TRUE, custom_mode)
 			if(val)
-				message_admins("[key_name_admin(usr)] switched night shift mode to '[val]'.")
+				message_admins("[key_name_admin(usr)] switched night shift mode to '[val]'[custom_mode && ": '[custom_mode]'"].")
+				log_admin("[key_name(usr)] switched night shift mode to '[val]'[custom_mode && ": '[custom_mode]'"].")
 		// Put everyone to sleep
 		if("mass_sleep")
 			for(var/mob/living/L in global.living_list)

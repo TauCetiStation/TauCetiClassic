@@ -58,7 +58,7 @@
 	// Update valid spread directions and flow data.
 	if(isnull(fluid_blocked_dirs))
 		fluid_blocked_dirs = 0
-		for(var/obj/structure/window/W in src)
+		for(var/obj/structure/window/thin/W in src)
 			if(W.density)
 				fluid_blocked_dirs |= W.dir
 		for(var/obj/machinery/door/window/D in src)

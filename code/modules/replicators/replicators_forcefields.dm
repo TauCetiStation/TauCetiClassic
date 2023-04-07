@@ -42,19 +42,30 @@
 
 	return ..()
 
-/turf/simulated/floor/plating/airless/catwalk/forcefield/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/stack/tile) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
-		ChangeTurf(/turf/simulated/floor/plating)
-		return
+/turf/simulated/floor/plating/airless/catwalk/forcefield/attackby(obj/item/C, mob/user, params)
+	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
+	if(istype(C, /obj/item/stack/tile) && !user.is_busy())
+		user.visible_message("<span class='notice'>[user] begins replacing [src].</span>", "<span class='notice'>You begins replacing [src].</span>")
+		if(do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
+			visible_message("<span class='notice'>[user] finishes replacing [src].</span>", "<span class='notice'>You finish replacing [src].</span>")
+			ChangeTurf(/turf/simulated/floor/plating)
+			return
 
 	if(isscrewing(C))
 		// Parent also has screwdriver disassembly so we ought to stop here...
 		to_chat(user, "<span class='warning'>What would that do to a forcefield?</span>")
 		return
 
-	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
-		ChangeTurf(SSenvironment.turf_type[z])
-		return
+	if(ispulsing(C) && !user.is_busy())
+		var/obj/structure/bluespace_corridor/BR = locate() in src
+		if(BR)
+			BR.attackby(C, user, params)
+			return
+		user.visible_message("<span class='notice'>[user] starts DESTROYING [src].</span>", "<span class='notice'>You start DESTROYING [src].</span>")
+		if(do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
+			visible_message("<span class='notice'>[user] finishes DESTROYING [src].</span>", "<span class='notice'>You finish DESTROYING [src].</span>")
+			ChangeTurf(SSenvironment.turf_type[z])
+			return
 
 	return ..()
 
@@ -90,6 +101,14 @@
 	playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 	if(!(locate(/obj/structure/stabilization_field) in loc))
 		new /obj/structure/stabilization_field(loc)
+	return ..()
+
+/obj/structure/replicator_forcefield/attackby(obj/item/C, mob/user)
+	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
+	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
+		playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
+		qdel(src)
+		return
 	return ..()
 
 /obj/structure/replicator_forcefield/examine(mob/living/user)
@@ -140,11 +159,11 @@
 	to_chat(user, "<span class='notice'>Ah, the trickster's greatest achivement. A wall that allows everything to pass through but the most tiny of things.</span>")
 
 /obj/structure/stabilization_field/attackby(obj/item/C, mob/user)
-	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
+	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
+	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
 		playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 		qdel(src)
 		return
-
 	return ..()
 
 /obj/structure/stabilization_field/CanPass(atom/movable/mover, turf/target)
@@ -172,6 +191,14 @@
 /obj/structure/replicator_barricade/atom_init()
 	. = ..()
 	AddComponent(/datum/component/replicator_regeneration)
+
+/obj/structure/replicator_barricade/attackby(obj/item/C, mob/user)
+	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
+	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
+		playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
+		qdel(src)
+		return
+	return ..()
 
 /obj/structure/replicator_barricade/Destroy()
 	if(leave_stabilization_field && !(locate(/obj/structure/stabilization_field) in loc))
@@ -212,6 +239,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	density = FALSE
 	anchored = TRUE
 	opacity = 0
+
+/obj/structure/forcefield_node/attackby(obj/item/C, mob/user, params)
+	if(istype(C, /obj/item/stack/tile) || istype(C, /obj/item/device/multitool))
+		var/turf/simulated/floor/plating/airless/catwalk/forcefield/RB = loc
+		if(istype(RB))
+			RB.attackby(C, user, params)
+			return
+	return ..()
 
 /obj/structure/forcefield_node/atom_init()
 	. = ..()

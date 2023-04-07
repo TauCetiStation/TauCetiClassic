@@ -82,7 +82,7 @@
 /area/station/civilian/holodeck/source_basketball)
 "n" = (
 /obj/structure/holostool,
-/obj/structure/window/reinforced/holowindow{
+/obj/structure/window/thin/reinforced/holowindow{
 	dir = 1
 	},
 /turf/simulated/floor/holofloor{

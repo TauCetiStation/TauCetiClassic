@@ -88,6 +88,20 @@
 	icon_state = "bottle2"
 	list_reagents = list("chloralhydrate" = 15)
 
+/obj/item/weapon/reagent_containers/glass/bottle/sanguisacid
+	name = "Sanguis acid Bottle"
+	desc = "A small bottle of Sanguis Acid. Burns the blood inside the body. Only works on humanoids."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle2"
+	list_reagents = list("sanguisacid" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/bonebreaker
+	name = "BB EX-01 Bottle"
+	desc = "A small bottle of BB EX-01, also known as Bonebreaker toxin."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle2"
+	list_reagents = list("bonebreaker" = 5)
+
 /obj/item/weapon/reagent_containers/glass/bottle/antitoxin
 	name = "anti-toxin bottle"
 	desc = "A small bottle of Anti-toxins. Counters poisons, and repairs damage, a wonder drug."

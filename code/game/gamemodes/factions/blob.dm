@@ -121,7 +121,7 @@
 					pre_escapees += M.real_name
 			send_intercept(FS_ACTIVE)
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
-				var/law = "The station is under quarantine. Do not permit anyone to leave so long as blob overminds are present. Disregard all other laws if necessary to preserve quarantine."
+				var/law = "Станция находится на карантине. Не позволяйте никому покинуть станцию, пока данный закон активен. Игнорируйте все другие законы, если это необходимо для сохранения карантина."
 				aiPlayer.set_zeroth_law(law)
 			SSshuttle.fake_recall = TRUE //Quarantine
 		if(FS_ENDGAME)
@@ -136,7 +136,7 @@
 					if(is_station_level(bomb.z))
 						nukecode = bomb.r_code
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
-				var/law = "Directive 7-12 has been authorized. Allow no sentient being to escape the purge. The nuclear failsafe must be activated at any cost, the code is: [nukecode]."
+				var/law = "Была утверждена Директива 7-12. Не позвольте ни одному разумному существу избежать уничтожения. Ядерная боеголовка должна быть активирована любой ценой. Код от ядерной боеголовки: [nukecode]."
 				aiPlayer.set_zeroth_law(law)
 		if (FS_DEFEATED) //Cleanup time
 			var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new

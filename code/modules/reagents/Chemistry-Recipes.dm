@@ -35,7 +35,7 @@
 	var/datum/effect/effect/system/reagents_explosion/e = new()
 	e.set_up(round (created_volume/10, 1), location, 0, 0)
 	e.start()
-	holder.clear_reagents()
+	holder.del_reagent(id)
 
 /datum/chemical_reaction/emp_pulse
 	name = "EMP Pulse"
@@ -49,7 +49,6 @@
 	// 100 created volume = 4 heavy range & 7 light range. A few tiles smaller than traitor EMP grandes.
 	// 200 created volume = 8 heavy range & 14 light range. 4 tiles larger than traitor EMP grenades.
 	empulse(location, round(created_volume / 24), round(created_volume / 14), 1)
-	holder.clear_reagents()
 	return
 
 /datum/chemical_reaction/stoxin
@@ -393,7 +392,7 @@
 			e.amount *= 0.5
 	e.start()
 
-	holder.clear_reagents()
+	holder.del_reagent(result)
 	return
 
 /datum/chemical_reaction/sodiumchloride

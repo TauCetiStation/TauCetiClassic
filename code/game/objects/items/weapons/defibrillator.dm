@@ -499,6 +499,7 @@
 	Shockpaddles that are linked to a base unit
 */
 /obj/item/weapon/shockpaddles/linked
+	icon_state = "defibpaddleslinked0"
 	var/obj/item/weapon/defibrillator/base_unit
 
 /obj/item/weapon/shockpaddles/linked/atom_init(mapload, obj/item/weapon/defibrillator/defib)
@@ -528,6 +529,11 @@
 
 /obj/item/weapon/shockpaddles/linked/make_announcement(message)
 	base_unit.audible_message("<b>\The [base_unit]</b> [message]", "\The [base_unit] vibrates slightly.")
+
+/obj/item/weapon/shockpaddles/update_icon()
+	icon_state = "defibpaddleslinked[is_wielded()]"
+	if(cooldown)
+		icon_state = "defibpaddleslinked[is_wielded()]_cooldown"
 
 /*
 	Standalone Shockpaddles

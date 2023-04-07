@@ -111,6 +111,12 @@ var/global/list/announcement_sounds = list(
 	"rd" = 'sound/AI/rd.ogg',
 	"se" = 'sound/AI/se.ogg',
 	"kep" = 'sound/AI/kep.ogg',
+
+	"construction_began" = 'sound/AI/construction_began.ogg',
+	"construction_quarter" = 'sound/AI/construction_quarter.ogg',
+	"construction_half" = 'sound/AI/construction_half.ogg',
+	"construction_three_quarters" = 'sound/AI/construction_three_quarters.ogg',
+	"construction_doom" = 'sound/AI/construction_doom.ogg',
 )
 
 /* General announcement */
