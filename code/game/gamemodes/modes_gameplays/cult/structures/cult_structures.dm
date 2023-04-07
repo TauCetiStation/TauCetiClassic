@@ -48,9 +48,6 @@
 	light_power = 2
 	light_range = 3
 
-#define CORRUPT_FORBIDDEN 0
-#define CORRUPT_NOT_ALLOWED 1 //We don't know whether we should or not corrupt
-#define CORRUPT_ALLOWED 2
 ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 /obj/structure/cult/pylon
 	name = "pylon"
@@ -62,7 +59,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	pass_flags = PASSTABLE
 	max_integrity = 200
 	var/list/validturfs = list()
-	var/corrupting = CORRUPT_NOT_ALLOWED
 	var/datum/religion/cult/C
 
 	var/corruption_delay = 50 //Increases currupting delay by 5 each time it procs
@@ -70,7 +66,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 
 /obj/structure/cult/pylon/atom_init()
 	. = ..()
-	if(global.cult_religion && global.cult_religion.get_tech(RTECH_IMPROVED_PYLONS))
+	//if(global.cult_religion && global.cult_religion.get_tech(RTECH_IMPROVED_PYLONS))
+	if(global.cult_religion)
 		init_healing()
 
 /obj/structure/cult/pylon/proc/init_healing()
@@ -109,9 +106,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 		corruption_delay += 5
 
 	COOLDOWN_START(src, corruption, corruption_delay)
-#undef CORRUPT_FORBIDDEN
-#undef CORRUPT_NOT_ALLOWED
-#undef CORRUPT_ALLOWED
 
 /obj/structure/cult/pylon/proc/activate(time_to_stop, datum/religion/R)
 	var/mob/living/simple_animal/hostile/pylon/charged = new(loc)
