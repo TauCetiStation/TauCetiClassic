@@ -19732,6 +19732,12 @@
 /area/station/civilian/fitness)
 "aKf" = (
 /turf/simulated/floor{
+	dir = 10;
+	icon_state = "whitehall"
+	},
+/area/station/civilian/fitness)
+"aKf" = (
+/turf/simulated/floor{
 	icon_state = "whitehall"
 	},
 /area/station/civilian/fitness)
@@ -57597,6 +57603,7 @@
 /obj/machinery/camera{
 	c_tag = "Atmospherics Access";
 	network = list("SS13","Engineering");
+	dir = 6;
 	dir = 6
 	},
 /turf/simulated/floor{
@@ -62638,6 +62645,7 @@
 	dir = 4
 	},
 /turf/simulated/floor{
+	dir = 8;
 	dir = 8;
 	icon_state = "neutralcorner"
 	},
@@ -71003,6 +71011,15 @@
 	icon_state = "dark"
 	},
 /area/station/aisat/ai_chamber)
+"hbH" = (
+/obj/machinery/camera/motion{
+	c_tag = "AI Chamber North";
+	network = list("RD","MiniSat")
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat/ai_chamber)
 "hbR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -72258,7 +72275,7 @@
 "izb" = (
 /obj/machinery/camera{
 	c_tag = "Port Hallway";
-	dir = 10
+	dir = 100
 	},
 /turf/simulated/floor{
 	icon_state = "neutralcorner"
@@ -76680,6 +76697,7 @@
 /obj/machinery/camera{
 	c_tag = "Virology Access South";
 	network = list("SS13","Medical");
+	dir = 6;
 	dir = 6
 	},
 /turf/simulated/floor{
@@ -76905,6 +76923,16 @@
 	icon_state = "warnplate"
 	},
 /area/space)
+"nYO" = (
+/obj/machinery/camera{
+	c_tag = "Brainstorm Center";
+	network = list("SS13","Research");
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/rnd/brainstorm_center)
 "nYO" = (
 /obj/machinery/camera{
 	c_tag = "Brainstorm Center";
@@ -77762,6 +77790,16 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
+"pdR" = (
+/obj/machinery/camera{
+	c_tag = "Arrival Auxillar Dock's South";
+	dir = 6
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/station/hallway/secondary/entry)
 "peD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -78276,6 +78314,15 @@
 	icon_state = "whiteyellow"
 	},
 /area/station/medical/chemistry)
+"pRc" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "chapel"
+	},
+/area/station/civilian/chapel/mass_driver)
 "pRc" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -83412,8 +83459,6 @@
 /obj/structure/sign/warning/moving_parts,
 /turf/simulated/wall,
 /area/station/cargo/recycleroffice)
-"ybQ" = (
-)
 "ycW" = (
 /obj/structure/cable{
 	d2 = 4;
@@ -83726,7 +83771,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (2,1,1) = {"
 aaa
@@ -83984,7 +84028,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (3,1,1) = {"
 aaa
@@ -84242,7 +84285,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (4,1,1) = {"
 aaa
@@ -84500,7 +84542,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (5,1,1) = {"
 aaa
@@ -84758,7 +84799,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (6,1,1) = {"
 aaa
@@ -85016,7 +85056,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (7,1,1) = {"
 aaa
@@ -85274,7 +85313,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (8,1,1) = {"
 aaa
@@ -85532,7 +85570,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (9,1,1) = {"
 aaa
@@ -85790,7 +85827,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (10,1,1) = {"
 aaa
@@ -86048,7 +86084,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (11,1,1) = {"
 aaa
@@ -86306,7 +86341,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (12,1,1) = {"
 aaa
@@ -86564,7 +86598,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (13,1,1) = {"
 aaa
@@ -86822,7 +86855,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (14,1,1) = {"
 aaa
@@ -87080,7 +87112,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (15,1,1) = {"
 aaa
@@ -87338,7 +87369,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (16,1,1) = {"
 aaa
@@ -87596,7 +87626,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (17,1,1) = {"
 aaa
@@ -87854,7 +87883,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (18,1,1) = {"
 aaa
@@ -88112,7 +88140,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (19,1,1) = {"
 aaa
@@ -88370,7 +88397,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (20,1,1) = {"
 aaa
@@ -88628,7 +88654,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (21,1,1) = {"
 aaa
@@ -88886,7 +88911,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (22,1,1) = {"
 aaa
@@ -89144,7 +89168,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (23,1,1) = {"
 aaa
@@ -89402,7 +89425,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (24,1,1) = {"
 aaa
@@ -89660,7 +89682,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (25,1,1) = {"
 aaa
@@ -89918,7 +89939,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (26,1,1) = {"
 aaa
@@ -90176,7 +90196,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (27,1,1) = {"
 aaa
@@ -90434,7 +90453,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (28,1,1) = {"
 aaa
@@ -90692,7 +90710,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (29,1,1) = {"
 aaa
@@ -90950,7 +90967,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (30,1,1) = {"
 aaa
@@ -91208,7 +91224,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (31,1,1) = {"
 aaa
@@ -91466,7 +91481,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (32,1,1) = {"
 aaa
@@ -91724,7 +91738,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (33,1,1) = {"
 aaa
@@ -91982,7 +91995,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (34,1,1) = {"
 aaa
@@ -92240,7 +92252,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (35,1,1) = {"
 aaa
@@ -92498,7 +92509,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (36,1,1) = {"
 aaa
@@ -92756,7 +92766,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (37,1,1) = {"
 aaa
@@ -93014,7 +93023,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (38,1,1) = {"
 aaa
@@ -93272,7 +93280,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (39,1,1) = {"
 aaa
@@ -93530,7 +93537,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (40,1,1) = {"
 aaa
@@ -93788,7 +93794,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (41,1,1) = {"
 aaa
@@ -94046,7 +94051,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (42,1,1) = {"
 aaa
@@ -94304,7 +94308,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (43,1,1) = {"
 aaa
@@ -94562,7 +94565,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (44,1,1) = {"
 aaa
@@ -94820,7 +94822,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (45,1,1) = {"
 aaa
@@ -95336,7 +95337,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (47,1,1) = {"
 aaa
@@ -95594,7 +95594,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (48,1,1) = {"
 aaa
@@ -95852,7 +95851,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (49,1,1) = {"
 aaa
@@ -96110,7 +96108,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (50,1,1) = {"
 aaa
@@ -96368,7 +96365,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (51,1,1) = {"
 aaa
@@ -96626,7 +96622,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (52,1,1) = {"
 aaa
@@ -96884,7 +96879,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (53,1,1) = {"
 aaa
@@ -97142,7 +97136,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (54,1,1) = {"
 aaa
@@ -97400,7 +97393,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (55,1,1) = {"
 aaa
@@ -97658,7 +97650,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (56,1,1) = {"
 aaa
@@ -97916,7 +97907,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (57,1,1) = {"
 aaa
@@ -98174,7 +98164,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (58,1,1) = {"
 aaa
@@ -98432,7 +98421,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (59,1,1) = {"
 aaa
@@ -98690,7 +98678,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (60,1,1) = {"
 aaa
@@ -98948,7 +98935,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (61,1,1) = {"
 aaa
@@ -99206,7 +99192,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (62,1,1) = {"
 aaa
@@ -99464,7 +99449,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (63,1,1) = {"
 aaa
@@ -99722,7 +99706,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (64,1,1) = {"
 aaa
@@ -99980,7 +99963,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (65,1,1) = {"
 aaa
@@ -100238,7 +100220,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (66,1,1) = {"
 aaa
@@ -100496,7 +100477,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (67,1,1) = {"
 aaa
@@ -100754,7 +100734,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (68,1,1) = {"
 aaa
@@ -101012,7 +100991,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (69,1,1) = {"
 aaa
@@ -101270,7 +101248,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (70,1,1) = {"
 aaa
@@ -101528,7 +101505,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (71,1,1) = {"
 aaa
@@ -101786,7 +101762,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (72,1,1) = {"
 aaa
@@ -102044,7 +102019,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (73,1,1) = {"
 aaa
@@ -102302,7 +102276,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (74,1,1) = {"
 aaa
@@ -102560,7 +102533,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (75,1,1) = {"
 aaa
@@ -102818,7 +102790,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (76,1,1) = {"
 aaa
@@ -103076,7 +103047,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (77,1,1) = {"
 aaa
@@ -103334,7 +103304,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (78,1,1) = {"
 aaa
@@ -103592,7 +103561,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (79,1,1) = {"
 aaa
@@ -103850,7 +103818,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (80,1,1) = {"
 aaa
@@ -104108,7 +104075,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (81,1,1) = {"
 aaa
@@ -104366,7 +104332,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (82,1,1) = {"
 aaa
@@ -104624,7 +104589,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (83,1,1) = {"
 aaa
@@ -104882,7 +104846,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (84,1,1) = {"
 aaa
@@ -105140,7 +105103,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (85,1,1) = {"
 aaa
@@ -105398,7 +105360,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (86,1,1) = {"
 aaa
@@ -105656,7 +105617,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (87,1,1) = {"
 aaa
@@ -105914,7 +105874,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (88,1,1) = {"
 aaa
@@ -106172,7 +106131,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (89,1,1) = {"
 aaa
@@ -106430,7 +106388,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (90,1,1) = {"
 aaa
@@ -106688,7 +106645,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (91,1,1) = {"
 aaa
@@ -106946,7 +106902,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (92,1,1) = {"
 aaa
@@ -107204,7 +107159,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (93,1,1) = {"
 aaa
@@ -107462,7 +107416,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (94,1,1) = {"
 aaa
@@ -107720,7 +107673,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (95,1,1) = {"
 aaa
@@ -107978,7 +107930,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (96,1,1) = {"
 aaa
@@ -108236,7 +108187,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (97,1,1) = {"
 aaa
@@ -108494,7 +108444,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (98,1,1) = {"
 aaa
@@ -108752,7 +108701,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (99,1,1) = {"
 aaa
@@ -109010,7 +108958,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (100,1,1) = {"
 aaa
@@ -109268,7 +109215,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (101,1,1) = {"
 aaa
@@ -109526,7 +109472,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (102,1,1) = {"
 aaa
@@ -109784,7 +109729,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (103,1,1) = {"
 aaa
@@ -110300,7 +110244,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (105,1,1) = {"
 aaa
@@ -110558,7 +110501,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (106,1,1) = {"
 aaa
@@ -110816,7 +110758,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (107,1,1) = {"
 aaa
@@ -111074,7 +111015,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (108,1,1) = {"
 aaa
@@ -111332,7 +111272,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (109,1,1) = {"
 aaa
@@ -111590,7 +111529,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (110,1,1) = {"
 aaa
@@ -111848,7 +111786,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (111,1,1) = {"
 aaa
@@ -112106,7 +112043,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (112,1,1) = {"
 aaa
@@ -112364,7 +112300,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (113,1,1) = {"
 aaa
@@ -112622,7 +112557,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (114,1,1) = {"
 aaa
@@ -112880,7 +112814,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (115,1,1) = {"
 aaa
@@ -113138,7 +113071,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (116,1,1) = {"
 aaa
@@ -113396,7 +113328,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (117,1,1) = {"
 aaa
@@ -113654,7 +113585,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (118,1,1) = {"
 aaa
@@ -114170,7 +114100,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (120,1,1) = {"
 aaa
@@ -114428,7 +114357,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (121,1,1) = {"
 aaa
@@ -114686,7 +114614,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (122,1,1) = {"
 aaa
@@ -114944,7 +114871,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (123,1,1) = {"
 aaa
@@ -115202,7 +115128,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (124,1,1) = {"
 aaa
@@ -115460,7 +115385,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (125,1,1) = {"
 aaa
@@ -115718,7 +115642,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (126,1,1) = {"
 aaa
@@ -115976,7 +115899,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (127,1,1) = {"
 aaa
@@ -116234,7 +116156,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (128,1,1) = {"
 aaa
@@ -116492,7 +116413,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (129,1,1) = {"
 aaa
@@ -116750,7 +116670,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (130,1,1) = {"
 aaa
@@ -117008,7 +116927,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (131,1,1) = {"
 aaa
@@ -117266,7 +117184,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (132,1,1) = {"
 aaa
@@ -117524,7 +117441,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (133,1,1) = {"
 aaa
@@ -117782,7 +117698,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (134,1,1) = {"
 aaa
@@ -118040,7 +117955,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (135,1,1) = {"
 aaa
@@ -118298,7 +118212,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (136,1,1) = {"
 aaa
@@ -118556,7 +118469,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (137,1,1) = {"
 aaa
@@ -118814,7 +118726,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (138,1,1) = {"
 aaa
@@ -119072,7 +118983,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (139,1,1) = {"
 aaa
@@ -119330,7 +119240,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (140,1,1) = {"
 aaa
@@ -119588,7 +119497,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (141,1,1) = {"
 aaa
@@ -119846,7 +119754,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (142,1,1) = {"
 aaa
@@ -120104,7 +120011,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (143,1,1) = {"
 aaa
@@ -120362,7 +120268,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (144,1,1) = {"
 aaa
@@ -120620,7 +120525,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (145,1,1) = {"
 aaa
@@ -120878,7 +120782,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (146,1,1) = {"
 aaa
@@ -121136,7 +121039,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (147,1,1) = {"
 aaa
@@ -121394,7 +121296,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (148,1,1) = {"
 aaa
@@ -121652,7 +121553,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (149,1,1) = {"
 aaa
@@ -121910,7 +121810,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (150,1,1) = {"
 aaa
@@ -122168,7 +122067,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (151,1,1) = {"
 aaa
@@ -122426,7 +122324,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (152,1,1) = {"
 aaa
@@ -122684,7 +122581,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (153,1,1) = {"
 aaa
@@ -122942,7 +122838,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (154,1,1) = {"
 aaa
@@ -123200,7 +123095,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (155,1,1) = {"
 aaa
@@ -123458,7 +123352,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (156,1,1) = {"
 aaa
@@ -123716,7 +123609,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (157,1,1) = {"
 aaa
@@ -123974,7 +123866,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (158,1,1) = {"
 aaa
@@ -124232,7 +124123,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (159,1,1) = {"
 aaa
@@ -124490,7 +124380,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (160,1,1) = {"
 aaa
@@ -124748,7 +124637,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (161,1,1) = {"
 aaa
@@ -125006,7 +124894,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (162,1,1) = {"
 aaa
@@ -125264,7 +125151,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (163,1,1) = {"
 aaa
@@ -125522,7 +125408,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (164,1,1) = {"
 aaa
@@ -125780,7 +125665,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (165,1,1) = {"
 aaa
@@ -126038,7 +125922,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (166,1,1) = {"
 aaa
@@ -126296,7 +126179,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (167,1,1) = {"
 aaa
@@ -126554,7 +126436,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (168,1,1) = {"
 aaa
@@ -126812,7 +126693,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (169,1,1) = {"
 aaa
@@ -127070,7 +126950,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (170,1,1) = {"
 aaa
@@ -127328,7 +127207,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (171,1,1) = {"
 aaa
@@ -127586,7 +127464,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (172,1,1) = {"
 aaa
@@ -127844,7 +127721,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (173,1,1) = {"
 aaa
@@ -128102,7 +127978,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (174,1,1) = {"
 aaa
@@ -128360,7 +128235,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (175,1,1) = {"
 aaa
@@ -128618,7 +128492,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (176,1,1) = {"
 aaa
@@ -128876,7 +128749,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (177,1,1) = {"
 aaa
@@ -129134,7 +129006,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (178,1,1) = {"
 aaa
@@ -129392,7 +129263,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (179,1,1) = {"
 aaa
@@ -129650,7 +129520,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (180,1,1) = {"
 aaa
@@ -129908,7 +129777,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (181,1,1) = {"
 aaa
@@ -130166,7 +130034,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (182,1,1) = {"
 aaa
@@ -130424,7 +130291,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (183,1,1) = {"
 aaa
@@ -130682,7 +130548,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (184,1,1) = {"
 aaa
@@ -130940,7 +130805,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (185,1,1) = {"
 aaa
@@ -131198,7 +131062,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (186,1,1) = {"
 aaa
@@ -131456,7 +131319,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (187,1,1) = {"
 aaa
@@ -131714,7 +131576,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (188,1,1) = {"
 aaa
@@ -131972,7 +131833,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (189,1,1) = {"
 aaa
@@ -132230,7 +132090,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (190,1,1) = {"
 aaa
@@ -132488,7 +132347,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (191,1,1) = {"
 aaa
@@ -132746,7 +132604,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (192,1,1) = {"
 aaa
@@ -133004,7 +132861,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (193,1,1) = {"
 aaa
@@ -133262,7 +133118,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (194,1,1) = {"
 aaa
@@ -133520,7 +133375,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (195,1,1) = {"
 aaa
@@ -133778,7 +133632,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (196,1,1) = {"
 aaa
@@ -134036,7 +133889,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (197,1,1) = {"
 aaa
@@ -134294,7 +134146,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (198,1,1) = {"
 aaa
@@ -134552,7 +134403,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (199,1,1) = {"
 aaa
@@ -134810,7 +134660,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (200,1,1) = {"
 aaa
@@ -135068,7 +134917,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (201,1,1) = {"
 aaa
@@ -135326,7 +135174,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (202,1,1) = {"
 aaa
@@ -135584,7 +135431,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (203,1,1) = {"
 aaa
@@ -135842,7 +135688,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (204,1,1) = {"
 aaa
@@ -136100,7 +135945,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (205,1,1) = {"
 aaa
@@ -136358,7 +136202,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (206,1,1) = {"
 aaa
@@ -136616,7 +136459,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (207,1,1) = {"
 aaa
@@ -136874,7 +136716,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (208,1,1) = {"
 aaa
@@ -137132,7 +136973,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (209,1,1) = {"
 aaa
@@ -137390,7 +137230,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (210,1,1) = {"
 aaa
@@ -137648,7 +137487,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (211,1,1) = {"
 aaa
@@ -137906,7 +137744,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (212,1,1) = {"
 aaa
@@ -138164,7 +138001,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (213,1,1) = {"
 aaa
@@ -138422,7 +138258,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (214,1,1) = {"
 aaa
@@ -138680,7 +138515,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (215,1,1) = {"
 aaa
@@ -138938,7 +138772,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (216,1,1) = {"
 aaa
@@ -139196,7 +139029,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (217,1,1) = {"
 aaa
@@ -139454,7 +139286,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (218,1,1) = {"
 aaa
@@ -139712,7 +139543,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (219,1,1) = {"
 aaa
@@ -139970,7 +139800,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (220,1,1) = {"
 aaa
@@ -140228,7 +140057,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (221,1,1) = {"
 aaa
@@ -140486,7 +140314,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (222,1,1) = {"
 aaa
@@ -140744,7 +140571,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (223,1,1) = {"
 aaa
@@ -141002,7 +140828,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (224,1,1) = {"
 aaa
@@ -141260,7 +141085,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (225,1,1) = {"
 aaa
@@ -141518,7 +141342,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (226,1,1) = {"
 aaa
@@ -141776,7 +141599,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (227,1,1) = {"
 aaa
@@ -142034,7 +141856,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (228,1,1) = {"
 aaa
@@ -142292,7 +142113,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (229,1,1) = {"
 aaa
@@ -142550,7 +142370,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (230,1,1) = {"
 aaa
@@ -142808,7 +142627,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (231,1,1) = {"
 aaa
@@ -143066,7 +142884,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (232,1,1) = {"
 aaa
@@ -143324,7 +143141,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (233,1,1) = {"
 aaa
@@ -143582,7 +143398,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (234,1,1) = {"
 aaa
@@ -143840,7 +143655,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (235,1,1) = {"
 aaa
@@ -144098,7 +143912,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (236,1,1) = {"
 aaa
@@ -144356,7 +144169,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (237,1,1) = {"
 aaa
@@ -144614,7 +144426,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (238,1,1) = {"
 aaa
@@ -144872,7 +144683,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (239,1,1) = {"
 aaa
@@ -145130,7 +144940,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (240,1,1) = {"
 aaa
@@ -145388,7 +145197,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (241,1,1) = {"
 aaa
@@ -145646,7 +145454,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (242,1,1) = {"
 aaa
@@ -145904,7 +145711,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (243,1,1) = {"
 aaa
@@ -146162,7 +145968,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (244,1,1) = {"
 aaa
@@ -146420,7 +146225,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (245,1,1) = {"
 aaa
@@ -146678,7 +146482,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (246,1,1) = {"
 aaa
@@ -146936,7 +146739,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (247,1,1) = {"
 aaa
@@ -147194,7 +146996,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (248,1,1) = {"
 aaa
@@ -147452,7 +147253,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (249,1,1) = {"
 aaa
@@ -147710,7 +147510,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (250,1,1) = {"
 aaa
@@ -147968,7 +147767,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (251,1,1) = {"
 aaa
@@ -148226,7 +148024,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (252,1,1) = {"
 aaa
@@ -148484,7 +148281,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (253,1,1) = {"
 aaa
@@ -148742,7 +148538,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (254,1,1) = {"
 aaa
@@ -149000,7 +148795,6 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
 (255,1,1) = {"
 aaa
@@ -149258,5 +149052,4 @@ aaa
 aaa
 aaa
 aaa
-ybQ
 "}
