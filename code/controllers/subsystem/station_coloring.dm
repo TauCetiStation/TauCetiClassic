@@ -7,17 +7,17 @@ SUBSYSTEM_DEF(station_coloring)
 /datum/controller/subsystem/station_coloring/Initialize()
 
 	//RED (Only sec stuff honestly)
-	var/list/red = list("#D0294C", "#D6292F", "#D62F29", "#D63A29")
+	var/list/red = list("#d0294c", "#d6292f", "#d62f29", "#d63a29")
 	//BAR
-	var/list/bar = list("#3790aa", "#5ca9c1", "#5cb092", "#4DAF9B", "#4a9bdf", "#30cedf", "#C7804A", "#b0cedf")
+	var/list/bar = list("#3790aa", "#5ca9c1", "#5cb092", "#4daf9b", "#4a9bdf", "#30cedf", "#c7804a", "#b0cedf")
 	//DWARFS
 	var/list/dw = list("#7d685f", "#b0825f", "#b0b55f", "#b09b79")
 	//PURPLE (RnD + Research outpost)
-	var/list/purple = list("#674DBA", "#6B43BC", "#864EC5", "#8D40C3")
+	var/list/purple = list("#674dba", "#6b43bc", "#864ec5", "#8d40c3")
 	//BROWN (Mining + Cargo)
-	var/list/brown = list("#826627", "#825327", "#A9682B", "#A9542B")
+	var/list/brown = list("#826627", "#825327", "#a9682b", "#a9542b")
 	//GREEN (Virology and Hydro areas)
-	var/list/green = list("#50B47C", "#59B25D", "#46955A", "#4BA17B")
+	var/list/green = list("#50b47c", "#59b25d", "#46955a", "#4ba17b")
 	//BLUE (Some of Medbay areas)
 	var/list/blue = list("#336f92", "#5d99bc", "#3f87ae", "#6eabce", "#307199")
 
@@ -50,6 +50,6 @@ SUBSYSTEM_DEF(station_coloring)
 			D.color = color
 
 /datum/controller/subsystem/station_coloring/proc/get_default_color()
-	var/static/default_color = pick(list("#3C5DA5", "#63489E", "#4495BC"))
+	var/static/default_color = pick(list("#3c5da5", "#63489e", "#4495bc"))
 
 	return default_color
