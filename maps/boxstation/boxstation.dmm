@@ -2844,7 +2844,6 @@
 	c_tag = "Security Equipment";
 	dir = 4
 	},
-/obj/structure/window/thin,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -39027,6 +39026,10 @@
 /area/station/maintenance/escape)
 "btW" = (
 /obj/machinery/media/jukebox/bar,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -27
+	},
 /obj/structure/window/thin,
 /turf/simulated/floor{
 	dir = 4;
@@ -47028,6 +47031,7 @@
 /obj/structure/window/thin{
 	dir = 4
 	},
+/obj/machinery/life_assist/external_cooling_device,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitehall"
@@ -65389,8 +65393,15 @@
 	name = "Station Intercom (Medbay)";
 	pixel_x = -28
 	},
-/obj/structure/window/thin{
-	dir = 4
+/obj/machinery/camera{
+	c_tag = "Genetics Cloning";
+	dir = 1;
+	network = list("SS13","Medical")
+	},
+/obj/machinery/camera{
+	c_tag = "Genetics Cloning";
+	dir = 1;
+	network = list("SS13","Medical")
 	},
 /turf/simulated/floor{
 	dir = 5;
