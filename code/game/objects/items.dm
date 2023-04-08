@@ -678,7 +678,7 @@
 	usr.UnarmedAttack(src)
 	return
 
-/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null, required_skills_override = null, skills_speed_bonus = -0.4)
+/obj/item/proc/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks = null, required_skills_override = null, skills_speed_bonus = -0.4, can_move = FALSE)
 	// No delay means there is no start message, and no reason to call tool_start_check before use_tool.
 	// Run the start check here so we wouldn't have to call it manually.
 	if(user.is_busy())
@@ -718,7 +718,7 @@
 				return
 
 		else
-			if(!do_after(user, delay, target=target, extra_checks = tool_check))
+			if(!do_after(user, delay, target=target, can_move = can_move, extra_checks = tool_check))
 				return
 	else
 		// Invoke the extra checks once, just in case.
